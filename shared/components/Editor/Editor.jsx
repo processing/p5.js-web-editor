@@ -12,7 +12,7 @@ class Editor extends React.Component {
 	componentDidMount() {
 		this._cm = CodeMirror(this.refs.container, {
       theme: 'p5-widget',
-      value: this.props.file.content,
+      value: this.props.content,
       // value: "var a = 'Hello World!';",
       lineNumbers: true,
       mode: 'javascript'
@@ -23,9 +23,9 @@ class Editor extends React.Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		if (this.props.file.content !== prevProps.file.content &&
-        this.props.file.content !== this._cm.getValue()) {
-      this._cm.setValue(this.props.file.content);
+		if (this.props.content !== prevProps.content &&
+        this.props.content !== this._cm.getValue()) {
+      this._cm.setValue(this.props.content);
     }
 	}
 
