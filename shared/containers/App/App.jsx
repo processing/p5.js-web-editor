@@ -1,5 +1,6 @@
 import React from 'react';
 import Editor from '../../components/Editor/Editor'
+import Preview from '../../components/Preview/Preview'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as FileActions from '../../redux/actions'
@@ -7,9 +8,14 @@ import * as FileActions from '../../redux/actions'
 class App extends React.Component {
 	render() {
 		return (
-			<Editor 
-				content={this.props.file.content}
-				updateFile={this.props.updateFile}/>
+			<div class="app">
+				<Editor 
+					content={this.props.file.content}
+					updateFile={this.props.updateFile} />
+				<Preview>
+					<h1>Hello world!</h1>
+				</Preview>
+			</div>
 		);
 	}
 }
