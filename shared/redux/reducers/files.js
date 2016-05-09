@@ -2,7 +2,13 @@ import * as ActionTypes from '../constants/constants';
 
 const initialState = {
 	name: "sketch.js",
-	content: "setup() { } draw() { }"
+	content: `function setup() { 
+	createCanvas(400, 400);
+} 
+
+function draw() { 
+	background(220);
+}`
 }
 
 const file = (state = initialState, action) => {

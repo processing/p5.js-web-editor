@@ -2,31 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 class Preview extends React.Component {
-	
 	componentDidMount() {
-		this.renderFrameContents();
-	}
-
-	renderFrameContents() {
-		let doc = ReactDOM.findDOMNode(this).contentDocument;
-    if(doc.readyState === 'complete') {
-       ReactDOM.render(this.props.children, doc.body);
-    } else {
-       setTimeout(this.renderFrameContents, 0);
-    }
-	}
-
-	componentDidUpdate() {
-		this.renderFrameContents();
-	}
-
-	componentWillUnmount() {
-		React.unmountComponentAtNode(this.getDOMNode().contentDocument.body);
+		console.log(ReactDOM.findDOMNode(this));
 	}
 
 	render() {
-    return <iframe sandbox="allow-same-origin"></iframe>;
-  }
+		return (
+			<div>
+				<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.0/p5.min.js"></script>
+				<script type="text/javascript">
+					{this.props.content}
+				</script>
+			</div>
+		);
+	}
 }
 
 export default Preview;

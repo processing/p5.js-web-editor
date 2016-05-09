@@ -1,5 +1,6 @@
 import React from 'react';
 import Editor from '../../components/Editor/Editor'
+import PreviewFrame from '../../components/Preview/PreviewFrame'
 import Preview from '../../components/Preview/Preview'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -12,9 +13,7 @@ class App extends React.Component {
 				<Editor 
 					content={this.props.file.content}
 					updateFile={this.props.updateFile} />
-				<Preview>
-					<h1>Hello world!</h1>
-				</Preview>
+				<PreviewFrame content={this.props.file.content} />
 			</div>
 		);
 	}
