@@ -4,6 +4,8 @@ import { Provider } from 'react-redux'
 import configureStore from '../shared/redux/store/configureStore'
 import App from '../shared/containers/App/App'
 
+require('../static/styles/main.scss');
+
 const initialState = window.__INITIAL_STATE__
 const store = configureStore(initialState)
 

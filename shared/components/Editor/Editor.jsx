@@ -1,10 +1,6 @@
 import React from 'react';
-import CSSModules from 'react-css-modules';
 import CodeMirror from 'codemirror';
 import 'codemirror/mode/javascript/javascript';
-
-import '../../../node_modules/codemirror/lib/codemirror.css';
-import './p5-widget-codemirror-theme.css';
 
 class Editor extends React.Component {
 	_cm: CodeMirror.Editor

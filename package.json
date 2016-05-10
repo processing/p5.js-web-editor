@@ -20,6 +20,8 @@
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.8.0",
     "css-loader": "^0.23.1",
+    "node-sass": "^3.7.0",
+    "sass-loader": "^3.2.0",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.0",
     "webpack-dev-middleware": "^1.6.1",
@@ -31,7 +33,6 @@
   "dependencies": {
     "babel-core": "^6.8.0",
     "react": "^15.0.2",
-    "react-css-modules": "^3.7.6",
     "react-dom": "^15.0.2",
     "react-redux": "^4.4.5",
     "redux": "^3.5.2"

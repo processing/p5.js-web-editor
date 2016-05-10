@@ -1,6 +1,7 @@
 MERN Stack - MongoDB, Express, React/Redux, Node
 https://github.com/Hashnode/mern-starter
 
+* https://sass-guidelin.es/#the-7-1-pattern
 * https://github.com/petehunt/react-howto
 * https://github.com/gajus/react-css-modules
 * https://github.com/jsbin/jsbin (especially look at the console)
