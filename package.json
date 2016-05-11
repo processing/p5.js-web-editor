@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "babel-core": "^6.8.0",
+    "codemirror": "^5.14.2",
     "express": "^4.13.4",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
