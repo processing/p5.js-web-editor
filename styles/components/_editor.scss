@@ -1,6 +1,7 @@
 .CodeMirror {
 	font-family: Inconsolata, monospace;
 	height: 100%;
+	border: 1px solid $editor-border-color;
 }
 
 .CodeMirror-linenumbers {

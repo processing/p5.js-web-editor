@@ -1,0 +1,12 @@
+.toolbar__play-button {
+	@extend %toolbar-button;
+}
+
+.toolbar__logo {
+	margin-right: #{30 / $base-font-size}rem;
+}
+
+.toolbar {
+	padding: #{20 / $base-font-size}rem #{60 / $base-font-size}rem;
+	display: flex;
+}

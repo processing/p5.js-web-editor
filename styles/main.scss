@@ -1,4 +1,5 @@
 @import 'abstracts/variables';
+@import 'abstracts/placeholders';
 
 @import 'base/reset';
 @import 'base/base';
@@ -7,5 +8,6 @@
 
 @import 'components/p5-widget-codemirror-theme';
 @import 'components/editor';
+@import 'components/toolbar';
 
 @import 'layout/ide';

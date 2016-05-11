@@ -1,0 +1,12 @@
+%toolbar-button {
+	background-color: $light-button-background-color;
+	color: $light-button-color;
+	display: inline-block;
+	height: #{44 / $base-font-size}rem;
+	width: #{44 / $base-font-size}rem;
+	text-align: center;
+	border-radius: 100%;
+
+	line-height: #{50 / $base-font-size}rem;
+	cursor: pointer;
+}
