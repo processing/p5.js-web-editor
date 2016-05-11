@@ -2,6 +2,7 @@ import React from 'react';
 import Editor from '../../components/Editor/Editor'
 import PreviewFrame from '../../components/Preview/PreviewFrame'
 import Preview from '../../components/Preview/Preview'
+import Toolbar from '../../components/Toolbar/Toolbar'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as FileActions from '../../redux/actions'
@@ -10,6 +11,8 @@ class App extends React.Component {
 	render() {
 		return (
 			<div className="app">
+				<Toolbar 
+					className="toolbar" />
 				<Editor 
 					content={this.props.file.content}
 					updateFile={this.props.updateFile} />

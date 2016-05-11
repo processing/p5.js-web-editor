@@ -2,6 +2,7 @@
 	display: flex;
 	flex-direction: row;
 	height: 100%;
+	flex-wrap: wrap;
 }
 
 .editor-holder {
@@ -11,4 +12,8 @@
 
 .preview-frame {
 	width: 50%;
+}
+
+.toolbar {
+	width: 100%;
 }

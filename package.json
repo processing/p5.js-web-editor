@@ -21,6 +21,7 @@
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.8.0",
     "css-loader": "^0.23.1",
+    "file-loader": "^0.8.5",
     "node-sass": "^3.7.0",
     "sass-loader": "^3.2.0",
     "style-loader": "^0.13.1",
