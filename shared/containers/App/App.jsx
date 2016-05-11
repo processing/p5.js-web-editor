@@ -9,11 +9,15 @@ import * as FileActions from '../../redux/actions'
 class App extends React.Component {
 	render() {
 		return (
-			<div class="app">
+			<div className="app">
 				<Editor 
 					content={this.props.file.content}
 					updateFile={this.props.updateFile} />
-				<PreviewFrame content={this.props.file.content} />
+				<PreviewFrame 
+					content={this.props.file.content} 
+					head={
+			      <link type='text/css' rel='stylesheet' href='preview-styles.css' />
+			    }/>
 			</div>
 		);
 	}

@@ -9,7 +9,6 @@ class Editor extends React.Component {
 		this._cm = CodeMirror(this.refs.container, {
       theme: 'p5-widget',
       value: this.props.content,
-      // value: "var a = 'Hello World!';",
       lineNumbers: true,
       mode: 'javascript'
     });

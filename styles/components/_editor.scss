@@ -1,0 +1,17 @@
+.CodeMirror {
+	font-family: Inconsolata, monospace;
+	height: 100%;
+}
+
+.CodeMirror-linenumbers {
+	padding-right: #{10 / $base-font-size}rem;
+}
+
+.CodeMirror-linenumber {
+	width: #{35 / $base-font-size}rem;
+}
+
+.CodeMirror-lines {
+	padding-top: #{25 / $base-font-size}rem;
+	padding-left: #{5 / $base-font-size}rem;
+}

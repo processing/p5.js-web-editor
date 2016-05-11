@@ -1,0 +1,14 @@
+.app {
+	display: flex;
+	flex-direction: row;
+	height: 100%;
+}
+
+.editor-holder {
+	width: 50%;
+	height: 100%;
+}
+
+.preview-frame {
+	width: 50%;
+}

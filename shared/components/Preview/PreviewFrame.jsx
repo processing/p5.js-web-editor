@@ -10,7 +10,6 @@ class PreviewFrame extends React.Component {
 	renderFrameContents() {
 		let doc = ReactDOM.findDOMNode(this).contentDocument;
     if(doc.readyState === 'complete') {
-    	// ReactDOM.render(this.props.children, doc.body);
     	this.renderSketch();
     } else {
        setTimeout(this.renderFrameContents, 0);
@@ -21,6 +20,7 @@ class PreviewFrame extends React.Component {
 		let doc = ReactDOM.findDOMNode(this).contentDocument;
 		doc.write('');
 		doc.close();
+		ReactDOM.render(this.props.head, doc.head);
 		let p5Script = doc.createElement('script');
 		p5Script.setAttribute('src', 'https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.0/p5.min.js');
 		doc.body.appendChild(p5Script);
@@ -39,7 +39,7 @@ class PreviewFrame extends React.Component {
 	}
 
 	render() {
-    return <iframe sandbox="allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-modals allow-forms"></iframe>;
+    return <iframe className="preview-frame" frameBorder="0" sandbox="allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-modals allow-forms"></iframe>;
   }
 }
 
