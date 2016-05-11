@@ -8,7 +8,7 @@ class Toolbar extends React.Component {
 		return (
 			<div className="toolbar">
 				<img className="toolbar__logo" src={logoUrl}/>
-				<div className="toolbar__play-button">
+				<div className="toolbar__play-button" onClick={this.props.toggleSketch}>
 					<img src={playUrl}/>
 				</div>
 			</div>

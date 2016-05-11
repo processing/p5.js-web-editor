@@ -7,3 +7,9 @@ export function updateFile(name, content) {
 		content: content
 	}
 }
+
+export function toggleSketch() {
+	return {
+		type: ActionTypes.TOGGLE_SKETCH
+	}
+}

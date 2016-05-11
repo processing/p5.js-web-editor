@@ -12,7 +12,9 @@ class App extends React.Component {
 		return (
 			<div className="app">
 				<Toolbar 
-					className="toolbar" />
+					className="toolbar"
+					isPlaying={this.props.ide.isPlaying}
+					toggleSketch={this.props.toggleSketch} />
 				<Editor 
 					content={this.props.file.content}
 					updateFile={this.props.updateFile} />
@@ -20,7 +22,8 @@ class App extends React.Component {
 					content={this.props.file.content} 
 					head={
 			      <link type='text/css' rel='stylesheet' href='preview-styles.css' />
-			    }/>
+			    }
+			    isPlaying={this.props.ide.isPlaying}/>
 			</div>
 		);
 	}
@@ -28,7 +31,8 @@ class App extends React.Component {
 
 function mapStateToProps(state) {
 	return {
-		file: state.file
+		file: state.file,
+		ide: state.ide
 	}
 }
 
