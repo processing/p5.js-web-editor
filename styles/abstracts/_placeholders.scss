@@ -9,4 +9,17 @@
 
 	line-height: #{50 / $base-font-size}rem;
 	cursor: pointer;
+
+	& g {
+		fill: $light-toolbar-button-color;
+	}
+
+	&:hover {
+		background-color: $light-button-background-hover-color;
+		color: $light-button-hover-color;
+
+		& g {
+			fill: $light-button-hover-color;
+		}
+	}
 }

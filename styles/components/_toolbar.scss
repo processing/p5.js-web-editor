@@ -1,5 +1,10 @@
 .toolbar__play-button {
 	@extend %toolbar-button;
+	margin-right: #{15 / $base-font-size}rem;
+}
+
+.toolbar__stop-button {
+	@extend %toolbar-button;
 }
 
 .toolbar__logo {
