@@ -14,7 +14,8 @@ class App extends React.Component {
 				<Toolbar 
 					className="toolbar"
 					isPlaying={this.props.ide.isPlaying}
-					toggleSketch={this.props.toggleSketch} />
+					startSketch={this.props.startSketch} 
+					stopSketch={this.props.stopSketch}/>
 				<Editor 
 					content={this.props.file.content}
 					updateFile={this.props.updateFile} />

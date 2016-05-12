@@ -10,6 +10,14 @@ const ide = (state = initialState, action) => {
 			return {
 				isPlaying: !state.isPlaying
 			}
+		case ActionTypes.START_SKETCH:
+			return {
+				isPlaying: true
+			}
+		case ActionTypes.STOP_SKETCH: 
+			return {
+				isPlaying: false
+			}
 		default:
 			return state
 	}
