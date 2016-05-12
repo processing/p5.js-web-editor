@@ -46,6 +46,10 @@ class PreviewFrame extends React.Component {
 				this.clearPreview();
 			}
 		}
+
+		if (this.props.isPlaying && this.props.content != prevProps.content) {
+			this.renderSketch();
+		}
 	}
 
 	componentWillUnmount() {

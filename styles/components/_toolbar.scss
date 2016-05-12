@@ -1,6 +1,12 @@
 .toolbar__play-button {
 	@extend %toolbar-button;
 	margin-right: #{15 / $base-font-size}rem;
+	&.playing {
+		background-color: $light-button-background-hover-color;
+		& g {
+			fill: $light-button-hover-color;
+		}
+	}
 }
 
 .toolbar__stop-button {
