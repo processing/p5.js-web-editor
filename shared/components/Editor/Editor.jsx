@@ -1,6 +1,7 @@
 import React from 'react';
 import CodeMirror from 'codemirror';
 import 'codemirror/mode/javascript/javascript';
+import 'codemirror/addon/selection/active-line'
 
 class Editor extends React.Component {
 	_cm: CodeMirror.Editor
@@ -10,6 +11,7 @@ class Editor extends React.Component {
       theme: 'p5-widget',
       value: this.props.content,
       lineNumbers: true,
+      styleActiveLine: true,
       mode: 'javascript'
     });
     this._cm.on('change', () => {
