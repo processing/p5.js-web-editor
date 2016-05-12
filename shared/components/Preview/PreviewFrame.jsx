@@ -4,13 +4,15 @@ import ReactDOM from 'react-dom';
 class PreviewFrame extends React.Component {
 	
 	componentDidMount() {
-		this.renderFrameContents();
+		if (this.props.isPlaying) {
+			this.renderFrameContents();
+		}
 	}
 
 	renderFrameContents() {
 		let doc = ReactDOM.findDOMNode(this).contentDocument;
     if(doc.readyState === 'complete') {
-    	this.renderSketch();
+    	renderSketch();
     } else {
        setTimeout(this.renderFrameContents, 0);
     }
@@ -18,8 +20,7 @@ class PreviewFrame extends React.Component {
 
 	renderSketch() {
 		let doc = ReactDOM.findDOMNode(this).contentDocument;
-		doc.write('');
-		doc.close();
+		this.clearPreview();
 		ReactDOM.render(this.props.head, doc.head);
 		let p5Script = doc.createElement('script');
 		p5Script.setAttribute('src', 'https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.0/p5.min.js');
@@ -30,8 +31,21 @@ class PreviewFrame extends React.Component {
 		doc.body.appendChild(sketchScript);
 	}
 
-	componentDidUpdate() {
-		this.renderFrameContents();
+	clearPreview() {
+		let doc = ReactDOM.findDOMNode(this).contentDocument;
+		doc.write('');
+		doc.close();
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		if (this.props.isPlaying != prevProps.isPlaying) {
+			if (this.props.isPlaying) {
+				this.renderSketch();
+			}
+			else {
+				this.clearPreview();
+			}
+		}
 	}
 
 	componentWillUnmount() {
