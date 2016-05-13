@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import * as SessionController from '../controllers/session.controller';
 import passport from 'passport';
+
 const router = new Router();
 
 router.route('/login').get(SessionController.newSession);
