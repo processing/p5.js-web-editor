@@ -23,13 +23,13 @@ app.use(webpackHotMiddleware(compiler));
 import serverConfig from './config';
 
 //Body parser, cookie parser, sessions, serve public assets
+app.use(Express.static(path.resolve(__dirname, '../static')));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(session({secret: 'steve brule'}));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(Express.static(path.resolve(__dirname, '../static')));
 
 app.get("/", function(req, res) {
   res.sendFile(path.resolve(__dirname + '/../index.html'));
