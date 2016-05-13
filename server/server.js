@@ -26,6 +26,7 @@ import users from './routes/user.routes';
 //Body parser, cookie parser, sessions, serve public assets
 
 //Body parser, cookie parser, sessions, serve public assets
+app.use(Express.static(path.resolve(__dirname, '../static')));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cookieParser());
