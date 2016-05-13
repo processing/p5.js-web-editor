@@ -34,9 +34,12 @@
   },
   "dependencies": {
     "babel-core": "^6.8.0",
+    "body-parser": "^1.15.1",
     "classnames": "^2.2.5",
     "codemirror": "^5.14.2",
+    "cookie-parser": "^1.4.1",
     "express": "^4.13.4",
+    "mongoose": "^4.4.16",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
     "react-inlinesvg": "^0.4.2",

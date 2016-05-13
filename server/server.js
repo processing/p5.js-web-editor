@@ -1,4 +1,9 @@
 import Express from 'express';
+import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
+import passport from 'passport';
 import path from 'path';
 
 //Webpack Requirements
@@ -17,6 +22,13 @@ app.use(webpackHotMiddleware(compiler));
 //Import all required modules
 import serverConfig from './config';
 
+//Body parser, cookie parser, sessions, serve public assets
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(session({secret: 'steve brule'}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(Express.static(path.resolve(__dirname, '../static')));
 
 app.get("/", function(req, res) {
