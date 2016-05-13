@@ -35,6 +35,7 @@
   "dependencies": {
     "axios": "^0.12.0",
     "babel-core": "^6.8.0",
+<<<<<<< HEAD
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.1",
     "classnames": "^2.2.5",
@@ -49,6 +50,14 @@
     "passport-github": "^1.1.0",
     "passport-jwt": "^2.0.0",
     "passport-local": "^1.0.0",
+=======
+    "body-parser": "^1.15.1",
+    "classnames": "^2.2.5",
+    "codemirror": "^5.14.2",
+    "cookie-parser": "^1.4.1",
+    "express": "^4.13.4",
+    "mongoose": "^4.4.16",
+>>>>>>> add session and cookie and passport config for server
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
     "react-inlinesvg": "^0.4.2",
