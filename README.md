@@ -19,6 +19,7 @@ As this project is currently being developed, there is only development mode.
 ##Dump of links I'm saving for reference
 
 * https://github.com/Hashnode/mern-starter
+* https://github.com/mxstbr/react-boilerplate
 * https://sass-guidelin.es/#the-7-1-pattern
 * https://github.com/petehunt/react-howto
 * https://github.com/gajus/react-css-modules
