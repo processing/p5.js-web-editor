@@ -49,6 +49,9 @@ const passportConfig = require('./config/passport');
 app.get("/", function(req, res) {
   res.sendFile(path.resolve(__dirname + '/../index.html'));
 })
+app.get("/login", function(req, res) {
+  res.sendFile(path.resolve(__dirname + '/../index.html'));
+})
 
 // start app
 app.listen(serverConfig.port, (error) => {
