@@ -11,6 +11,12 @@
 
 .toolbar__stop-button {
 	@extend %toolbar-button;
+	&.stopped {
+		background-color: $light-button-background-hover-color;
+		& g {
+			fill: $light-button-hover-color;
+		}
+	}
 }
 
 .toolbar__logo {

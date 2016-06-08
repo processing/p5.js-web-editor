@@ -6,9 +6,9 @@
 	width: #{44 / $base-font-size}rem;
 	text-align: center;
 	border-radius: 100%;
-
 	line-height: #{50 / $base-font-size}rem;
 	cursor: pointer;
+	border: none;
 
 	& g {
 		fill: $light-toolbar-button-color;

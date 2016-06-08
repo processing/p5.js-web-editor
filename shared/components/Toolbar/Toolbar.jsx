@@ -12,18 +12,20 @@ class Toolbar extends React.Component {
 			"toolbar__play-button": true,
 			"playing": this.props.isPlaying
 		});
+		let stopButtonClass = classNames({
+			"toolbar__stop-button": true,
+			"stopped": !this.props.isPlaying
+		});
 
 		return (
 			<div className="toolbar">
 				<img className="toolbar__logo" src={logoUrl}/>
-				<div className={playButtonClass} onClick={this.props.startSketch}>
+				<button className={playButtonClass} onClick={this.props.startSketch}>
 					<Isvg src={playUrl} alt="Play Sketch" />
-				</div>
-				{ this.props.isPlaying ? 
-					<div className="toolbar__stop-button" onClick={this.props.stopSketch}>
-						<Isvg src={stopUrl} alt="Stop Sketch" />
-					</div> 
-				: null }
+				</button>
+				<button className={stopButtonClass} onClick={this.props.stopSketch}>
+					<Isvg src={stopUrl} alt="Stop Sketch" />
+				</button>
 			</div>
 		);
 	}
