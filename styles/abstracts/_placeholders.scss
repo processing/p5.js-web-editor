@@ -9,6 +9,7 @@
 	line-height: #{50 / $base-font-size}rem;
 	cursor: pointer;
 	border: none;
+	outline: none;
 
 	& g {
 		fill: $light-toolbar-button-color;
