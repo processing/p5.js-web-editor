@@ -26,3 +26,4 @@ As this project is currently being developed, there is only development mode.
 * https://github.com/jsbin/jsbin (especially look at the console)
 * Need to figure out how to solve the XSS issue, https://github.com/jsbin/jsbin/wiki/Best-practices-for-building-your-own-live-paste-bin
 	* https://www.npmjs.com/package/express-subdomain
+* https://medium.com/@rajaraodv/securing-react-redux-apps-with-jwt-tokens-fcfe81356ea0#.i3agwmf2w

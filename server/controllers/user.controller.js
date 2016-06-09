@@ -1,6 +1,7 @@
 import User from '../models/user'
 import passport from 'passport'
 import path from 'path'
+import { generateToken } from '../utils/jwt'
 
 export function newUser(req, res) {
 	//eventually, it would be cool to have some isomorphic rendering
@@ -8,6 +9,7 @@ export function newUser(req, res) {
 }
 
 export function createUser(req, res, next) {
+	console.log("in create user");
 	const user = new User({
     email: req.body.email,
     password: req.body.password
@@ -15,9 +17,7 @@ export function createUser(req, res, next) {
 
   User.findOne({email: req.body.email}, (err, existingUser) => {
 		if (existingUser) {
-			//error, already registered
-			//should probably redirect client side though?
-			return res.redirect('/signup');
+			return res.status(422).send({ error: 'Email is in use' });
 		}
 		user.save((err) => {
 			if (err) { return next(err); }
@@ -25,7 +25,7 @@ export function createUser(req, res, next) {
 				if (err) {
 					return next(err);
 				}
-				res.redirect('/');
+				res.json({ token: generateToken(user) });
 			});
 		});
   });
