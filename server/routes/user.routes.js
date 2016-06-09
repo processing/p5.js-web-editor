@@ -5,3 +5,5 @@ const router = new Router();
 router.route('/signup').get(UserController.newUser);
 
 router.route('/signup').post(UserController.createUser);
+
+export default router;

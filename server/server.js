@@ -21,6 +21,7 @@ app.use(webpackHotMiddleware(compiler));
 
 //Import all required modules
 import serverConfig from './config';
+import users from './routes/user.routes';
 
 //Body parser, cookie parser, sessions, serve public assets
 const MongoStore = require('connect-mongo')(session);
@@ -43,6 +44,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use('/', users);
 
 const passportConfig = require('./config/passport');
 

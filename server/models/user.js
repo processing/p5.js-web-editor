@@ -2,11 +2,11 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-	name: { type: 'String' },
-	username: { type: 'String', required: true, unique: true},
-	password: { type: 'String' },
-	github: { type: 'String' },
-	email: { type: 'String', unique: true },
+	name: { type: String, default: '' },
+	username: { type: String, required: true, unique: true},
+	password: { type: String },
+	github: { type: String },
+	email: { type: String, unique: true },
 	tokens: Array,
 	admin: { type: Boolean, default: false }
 }, {timestamps: true});
