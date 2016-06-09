@@ -1,5 +1,4 @@
 import React from 'react'
-<<<<<<< HEAD
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as UserActions from '../../redux/actions/user'

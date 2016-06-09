@@ -47,6 +47,7 @@
     "mongoose": "^4.4.16",
     "passport": "^0.3.2",
     "passport-github": "^1.1.0",
+    "passport-jwt": "^2.0.0",
     "passport-local": "^1.0.0",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
