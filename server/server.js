@@ -24,8 +24,6 @@ import serverConfig from './config';
 import users from './routes/user.routes';
 
 //Body parser, cookie parser, sessions, serve public assets
-
-//Body parser, cookie parser, sessions, serve public assets
 const MongoStore = require('connect-mongo')(session);
 
 app.use(Express.static(path.resolve(__dirname, '../static')));
@@ -57,8 +55,6 @@ mongoose.connection.on('error', () => {
   console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
   process.exit(1);
 });
-
-const passportConfig = require('./config/passport');
 
 app.get("/", function(req, res) {
   res.sendFile(path.resolve(__dirname + '/../index.html'));
