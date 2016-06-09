@@ -15,7 +15,7 @@ class Toolbar extends React.Component {
 
 		return (
 			<div className="toolbar">
-				<img className="toolbar__logo" src={logoUrl}/>
+				<img className="toolbar__logo" src={logoUrl} alt="p5js Logo"/>
 				<div className={playButtonClass} onClick={this.props.startSketch}>
 					<Isvg src={playUrl} alt="Play Sketch" />
 				</div>
