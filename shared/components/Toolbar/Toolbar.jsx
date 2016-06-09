@@ -10,11 +10,11 @@ class Toolbar extends React.Component {
 	render() {
 		let playButtonClass = classNames({
 			"toolbar__play-button": true,
-			"playing": this.props.isPlaying
+			"toolbar__play-button--selected": this.props.isPlaying
 		});
 		let stopButtonClass = classNames({
 			"toolbar__stop-button": true,
-			"stopped": !this.props.isPlaying
+			"toolbar__stop-button--selected": !this.props.isPlaying
 		});
 
 		return (
