@@ -24,8 +24,6 @@ import serverConfig from './config';
 import users from './routes/user.routes';
 
 //Body parser, cookie parser, sessions, serve public assets
-
-//Body parser, cookie parser, sessions, serve public assets
 const MongoStore = require('connect-mongo')(session);
 
 app.use(Express.static(path.resolve(__dirname, '../static')));
