@@ -24,24 +24,11 @@ import serverConfig from './config';
 import users from './routes/user.routes';
 
 //Body parser, cookie parser, sessions, serve public assets
-const MongoStore = require('connect-mongo')(session);
 
 app.use(Express.static(path.resolve(__dirname, '../static')));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(session({
-	//this should be SECRET AND IN A SECRET FILE
-	//TODO add dotenv
-	secret: 'steve brule',
-	resave: true,
-	saveUninitialized: true,
-	store: new MongoStore({
-    // url: process.env.MONGODB_URI || process.env.MONGOLAB_URI,
-    url: serverConfig.mongoURL,
-    autoReconnect: true
-  })
-}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(Express.static(path.resolve(__dirname, '../static')));
