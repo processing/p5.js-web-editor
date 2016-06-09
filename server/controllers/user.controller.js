@@ -9,7 +9,6 @@ export function newUser(req, res) {
 }
 
 export function createUser(req, res, next) {
-	console.log("in create user");
 	const user = new User({
 		username: req.body.username,
     email: req.body.email,
