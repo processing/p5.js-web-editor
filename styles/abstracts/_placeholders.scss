@@ -23,4 +23,10 @@
 			fill: $light-button-hover-color;
 		}
 	}
+	&--selected {
+    background-color: $light-button-background-hover-color;
+    & g {
+        fill: $light-button-hover-color;
+    }
+  }
 }

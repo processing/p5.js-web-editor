@@ -2,20 +2,14 @@
 	@extend %toolbar-button;
 	margin-right: #{15 / $base-font-size}rem;
 	&--selected {
-		background-color: $light-button-background-hover-color;
-		& g {
-			fill: $light-button-hover-color;
-		}
+		@extend %toolbar-button--selected;
 	}
 }
 
 .toolbar__stop-button {
 	@extend %toolbar-button;
 	&--selected {
-		background-color: $light-button-background-hover-color;
-		& g {
-			fill: $light-button-hover-color;
-		}
+		@extend %toolbar-button--selected;
 	}
 }
 
