@@ -3,6 +3,7 @@ import Editor from '../../components/Editor/Editor'
 import PreviewFrame from '../../components/Preview/PreviewFrame'
 import Toolbar from '../../components/Toolbar/Toolbar'
 import Preferences from '../../components/Preferences/Preferences'
+import Nav from '../../components/Nav/Nav'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as FileActions from '../../redux/actions'
@@ -11,6 +12,7 @@ class IDEView extends React.Component {
 	render() {
 		return (
 			<div className="ide">
+				<Nav />
 				<Toolbar 
 					className="Toolbar"
 					isPlaying={this.props.ide.isPlaying}

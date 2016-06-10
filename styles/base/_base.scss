@@ -6,7 +6,21 @@ html {
 	font-size: #{$base-font-size}px;
 }
 
+body {
+	font-family: Montserrat, sans-serif;
+	color: $light-primary-text-color;
+}
+
 .root-app, .app {
 	min-height: 100%;
 	height: 100%;
+}
+
+a {
+	text-decoration: none;
+	color: $light-secondary-text-color;
+	&:hover {
+		text-decoration: none;
+		color: $light-primary-text-color;
+	}
 }

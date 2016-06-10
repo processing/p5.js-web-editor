@@ -53,7 +53,7 @@ class PreviewFrame extends React.Component {
 	}
 
 	componentWillUnmount() {
-		React.unmountComponentAtNode(this.getDOMNode().contentDocument.body);
+		ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(this).contentDocument.body);
 	}
 
 	render() {

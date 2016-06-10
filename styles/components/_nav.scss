@@ -1,0 +1,16 @@
+.nav {
+	width: 100%;
+	padding: #{10 / $base-font-size}rem #{40 / $base-font-size}rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+}
+
+.nav__items {
+	list-style: none;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	padding: #{5 / $base-font-size}rem #{10 / $base-font-size}rem;
+	border-bottom: 2px dashed;
+}
