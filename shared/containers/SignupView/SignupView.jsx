@@ -7,7 +7,6 @@ import SignupForm from '../../components/SignupForm/SignupForm'
 
 class SignupView extends React.Component {
 	render() {
-		const {fields: { username, email, password, confirmPassword }, handleSubmit} = this.props;
 		return (
 			<SignupForm {...this.props} />
 		)
