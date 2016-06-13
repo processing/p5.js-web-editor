@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
+const MongoStore = require('connect-mongo')(session);
 import passport from 'passport';
 import path from 'path';
 
@@ -29,12 +30,21 @@ app.use(Express.static(path.resolve(__dirname, '../static')));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(Express.static(path.resolve(__dirname, '../static')));
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
-app.use(cookieParser());
+app.use(session({
+  resave: true,
+  saveUninitialized: false,
+  secret: process.env.SESSION_SECRET,
+  proxy: true,
+  name: 'sessionId',
+  cookie: {
+    httpOnly: true,
+    secure: false,
+  },
+  store: new MongoStore({
+    url: process.env.MONGO_URL,
+    autoReconnect: true
+  })
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/', users);

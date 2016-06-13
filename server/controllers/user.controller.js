@@ -1,7 +1,6 @@
 import User from '../models/user'
 import passport from 'passport'
 import path from 'path'
-import { generateToken } from '../utils/jwt'
 
 export function newUser(req, res) {
 	//eventually, it would be cool to have some isomorphic rendering
@@ -25,7 +24,7 @@ export function createUser(req, res, next) {
 				if (err) {
 					return next(err);
 				}
-				res.json({ token: generateToken(user) });
+				res.json({success: true});
 			});
 		});
   });

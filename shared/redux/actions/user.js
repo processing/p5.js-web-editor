@@ -7,10 +7,9 @@ const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000
 
 export function signUpUser(formValues) {
   return function(dispatch) {
-    axios.post(`${ROOT_URL}/signup`, formValues)
+    axios.post(`${ROOT_URL}/signup`, formValues, {withCredentials: true})
       .then(response => {
         dispatch({ type: ActionTypes.AUTH_USER });
-        localStorage.setItem('token', response.data.token);
         browserHistory.push('/');
       })
       .catch(response => dispatch(authError(response.data.error)));

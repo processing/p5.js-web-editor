@@ -1,16 +1,8 @@
 const passport = require('passport');
-const JwtStrategy = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
 const GitHubStrategy = require('passport-github').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 
 const User = require('../models/user');
-
-// Setup options for JWT Strategy
-const jwtOptions = {
-  jwtFromRequest: ExtractJwt.fromHeader('authorization'),
-  secretOrKey: "steve brule"
-};
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
@@ -36,22 +28,6 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, don
       }
       return done(null, false, { msg: 'Invalid email or password.' });
     });
-  });
-}));
-
-// Create JWT strategy
-passport.use(new JwtStrategy(jwtOptions, function(payload, done) {
-  // See if the user ID in the payload exists in our database
-  // If it does, call 'done' with that other
-  // otherwise, call done without a user object
-  User.findById(payload.sub, function(err, user) {
-    if (err) { return done(err, false); }
-
-    if (user) {
-      done(null, user);
-    } else {
-      done(null, false);
-    }
   });
 }));
 
