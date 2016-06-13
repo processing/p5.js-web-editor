@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 class PreviewFrame extends React.Component {
-	
+
 	componentDidMount() {
 		if (this.props.isPlaying) {
 			this.renderFrameContents();
@@ -57,7 +57,7 @@ class PreviewFrame extends React.Component {
 	}
 
 	render() {
-    return <iframe className="preview-frame" frameBorder="0" sandbox="allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-modals allow-forms"></iframe>;
+    return <iframe className="preview-frame" frameBorder="0" sandbox="allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-modals allow-forms" title="sketch output"></iframe>;
   }
 }
 
