@@ -35,6 +35,6 @@ input {
 	border: 1px solid $input-border-color;
 }
 
-button, input[type="submit"] {
+input[type="submit"] {
 	@extend %button;
 }
