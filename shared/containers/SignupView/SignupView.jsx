@@ -8,7 +8,10 @@ import SignupForm from '../../components/SignupForm/SignupForm'
 class SignupView extends React.Component {
 	render() {
 		return (
-			<SignupForm {...this.props} />
+			<div className="signup">
+				<h1>Sign Up</h1>
+				<SignupForm {...this.props} />
+			</div>
 		)
 	}
 }

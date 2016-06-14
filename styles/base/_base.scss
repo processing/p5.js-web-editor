@@ -2,11 +2,11 @@
 	box-sizing: border-box;
 }
 
-html {
+html, body {
 	font-size: #{$base-font-size}px;
 }
 
-body {
+body, input, button {
 	font-family: Montserrat, sans-serif;
 	color: $light-primary-text-color;
 }
@@ -23,4 +23,18 @@ a {
 		text-decoration: none;
 		color: $light-primary-text-color;
 	}
+}
+
+input, button {
+	font-size: 1rem;
+}
+
+input {
+	padding: #{5 / $base-font-size}rem;
+	border-radius: 2px;
+	border: 1px solid $input-border-color;
+}
+
+button, input[type="submit"] {
+	@extend %button;
 }

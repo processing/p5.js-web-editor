@@ -33,6 +33,25 @@
   }
 }
 
+%button {
+	background-color: $light-button-background-color;
+	color: $light-button-color;
+	cursor: pointer;
+	border: 1px solid $light-button-border-color;
+	border-radius: 2px;
+	padding: #{10 / $base-font-size}rem #{30 / $base-font-size}rem;
+	&:hover {
+		border-color: $light-button-background-hover-color;
+		background-color: $light-button-background-hover-color;
+		color: $light-button-hover-color;
+	}
+	&:active {
+		border-color: $light-button-background-active-color;
+		background-color: $light-button-background-active-color;
+		color: $light-button-active-color;
+	}
+}
+
 %preferences-button {
 	@extend %button;
 	background-color: $light-preferences-button-background-color;
