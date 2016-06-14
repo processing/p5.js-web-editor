@@ -28,3 +28,13 @@ export function createSession(req, res, next) {
 		});
 	})(req, res, next);
 }
+
+export function getSession(req, res, next) {
+	if (req.user) {
+		return res.json({
+			email: req.user.email,
+			username: req.user.username
+		});
+	}
+	res.status(404).send({message: 'Session does not exist'});
+}

@@ -31,6 +31,18 @@ export function loginUser(formValues) {
   }
 }
 
+export function getUser() {
+  return function(dispatch) {
+    axios.get(`${ROOT_URL}/session`, {withCredentials: true})
+      .then(response => {
+        dispatch({type: ActionTypes.AUTH_USER,
+          user: response.data
+        });
+      })
+      .catch(response => dispatch(authError(response.data.error)));
+  }
+}
+
 export function authError(error) {
   return {
     type: ActionTypes.AUTH_ERROR,

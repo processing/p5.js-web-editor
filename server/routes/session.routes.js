@@ -10,6 +10,8 @@ router.route('/login').post(SessionController.createSession);
 
 router.route('/logout').get(SessionController.destroySession);
 
+router.route('/session').get(SessionController.getSession);
+
 export default router;
 
 //TODO add github authentication stuff
