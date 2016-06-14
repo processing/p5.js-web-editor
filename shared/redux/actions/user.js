@@ -18,6 +18,18 @@ export function signUpUser(formValues) {
   }
 }
 
+export function loginUser(formValues) {
+  return function(dispatch) {
+    axios.post(`${ROOT_URL}/login`, formValues, {withCredentials: true})
+      .then(response => {
+        dispatch({ type: ActionTypes.AUTH_USER,
+                    user: response.data
+        });
+        browserHistory.push('/');
+      })
+      .catch(response => dispatch(authError(response.data.error)));
+  }
+}
 
 export function authError(error) {
   return {

@@ -23,6 +23,7 @@ app.use(webpackHotMiddleware(compiler));
 //Import all required modules
 import serverConfig from './config';
 import users from './routes/user.routes';
+import sessions from './routes/session.routes';
 
 //Body parser, cookie parser, sessions, serve public assets
 
@@ -48,6 +49,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/', users);
+app.use('/', sessions);
 
 const passportConfig = require('./config/passport');
 
@@ -60,9 +62,6 @@ mongoose.connection.on('error', () => {
 });
 
 app.get("/", function(req, res) {
-  res.sendFile(path.resolve(__dirname + '/../index.html'));
-})
-app.get("/login", function(req, res) {
   res.sendFile(path.resolve(__dirname + '/../index.html'));
 })
 

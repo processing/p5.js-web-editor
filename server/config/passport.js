@@ -2,7 +2,7 @@ const passport = require('passport');
 const GitHubStrategy = require('passport-github').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 
-const User = require('../models/user');
+import User from '../models/user'
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
