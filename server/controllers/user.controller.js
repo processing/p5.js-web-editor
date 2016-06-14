@@ -24,7 +24,10 @@ export function createUser(req, res, next) {
 				if (err) {
 					return next(err);
 				}
-				res.json({success: true});
+				res.json({
+					email: req.user.email,
+					username: req.user.username
+				});
 			});
 		});
   });

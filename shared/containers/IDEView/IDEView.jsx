@@ -12,7 +12,7 @@ class IDEView extends React.Component {
 	render() {
 		return (
 			<div className="ide">
-				<Nav />
+				<Nav user={this.props.user}/>
 				<Toolbar 
 					className="Toolbar"
 					isPlaying={this.props.ide.isPlaying}
@@ -46,7 +46,8 @@ function mapStateToProps(state) {
 	return {
 		file: state.file,
 		ide: state.ide,
-		preferences: state.preferences
+		preferences: state.preferences,
+		user: state.user
 	}
 }
 
