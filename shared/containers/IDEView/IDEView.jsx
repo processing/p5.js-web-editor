@@ -18,6 +18,8 @@ class IDEView extends React.Component {
 					isPlaying={this.props.ide.isPlaying}
 					startSketch={this.props.startSketch}
 					stopSketch={this.props.stopSketch}
+					projectName={this.props.project.name}
+					setProjectName={this.props.setProjectName}
 					openPreferences={this.props.openPreferences}
 					isPreferencesShowing = {this.props.preferences.isPreferencesShowing}
 					/>
@@ -47,7 +49,8 @@ function mapStateToProps(state) {
 		file: state.file,
 		ide: state.ide,
 		preferences: state.preferences,
-		user: state.user
+		user: state.user,
+		project: state.project
 	}
 }
 

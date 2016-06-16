@@ -28,4 +28,25 @@
 .toolbar {
 	padding: #{20 / $base-font-size}rem #{60 / $base-font-size}rem;
 	display: flex;
+	align-items: center;
+}
+
+.toolbar__project-name-container {
+	border-left: 2px dashed;
+	margin-left: #{10 / $base-font-size}rem;
+	padding-left: #{10 / $base-font-size}rem;
+	height: 70%;
+  display: flex;
+  align-items: center;
+}
+
+.toolbar__project-name {
+	color: $light-secondary-text-color;
+	cursor: pointer;
+	&:hover {
+		color: $light-primary-text-color;
+	}
+	&:focus {
+		color: $light-secondary-text-color;
+	}
 }
