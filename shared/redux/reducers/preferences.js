@@ -6,9 +6,13 @@ const initialState = {
 
 const preferences = (state = initialState, action) => {
 	switch (action.type) {
-		case ActionTypes.TOGGLE_PREFERENCES:
+		case ActionTypes.OPEN_PREFERENCES:
 			return {
-				isPreferencesShowing: !state.isPreferencesShowing
+				isPreferencesShowing: true
+			}
+		case ActionTypes.CLOSE_PREFERENCES:
+			return {
+				isPreferencesShowing: false
 			}
 		default:
 			return state

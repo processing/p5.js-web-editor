@@ -6,13 +6,15 @@ var classNames = require('classnames');
 
 class Preferences extends React.Component {
 	render() {
-		let preferencesButtonClass = classNames({
+		let preferencesContainerClass = classNames({
 			"preferences": true,
 			"preferences--selected": this.props.isPreferencesShowing
 		});
 		return (
-			<div className={preferencesButtonClass}>
-				GIANT POTATO
+			<div className={preferencesContainerClass}>
+				<button className="preferences__exit-button" onClick={this.props.closePreferences}>
+					X
+				</button>
 			</div>
 		);
 	}

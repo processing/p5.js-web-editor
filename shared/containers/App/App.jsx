@@ -17,7 +17,7 @@ class App extends React.Component {
 					isPlaying={this.props.ide.isPlaying}
 					startSketch={this.props.startSketch}
 					stopSketch={this.props.stopSketch}
-					togglePreferences={this.props.togglePreferences}
+					openPreferences={this.props.openPreferences}
 					isPreferencesShowing = {this.props.preferences.isPreferencesShowing}
 					/>
 				<Editor
@@ -30,7 +30,8 @@ class App extends React.Component {
 			    }
 			    isPlaying={this.props.ide.isPlaying}/>
 				<Preferences
-					isPreferencesShowing = {this.props.preferences.isPreferencesShowing}/>
+					isPreferencesShowing = {this.props.preferences.isPreferencesShowing}
+					closePreferences={this.props.closePreferences}/>
 			</div>
 		);
 	}

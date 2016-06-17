@@ -31,7 +31,7 @@ class Toolbar extends React.Component {
 				<button className={stopButtonClass} onClick={this.props.stopSketch}>
 					<Isvg src={stopUrl} alt="Stop Sketch" />
 				</button>
-				<button className={preferencesButtonClass} onClick={this.props.togglePreferences}>
+				<button className={preferencesButtonClass} onClick={this.props.openPreferences}>
 					<Isvg src={preferencesUrl} alt="Show Preferences" />
 				</button>
 			</div>

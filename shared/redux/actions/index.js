@@ -26,8 +26,14 @@ export function stopSketch() {
 	}
 }
 
-export function togglePreferences() {
+export function openPreferences() {
 	return {
-		type: ActionTypes.TOGGLE_PREFERENCES
+		type: ActionTypes.OPEN_PREFERENCES
+	}
+}
+
+export function closePreferences() {
+	return {
+		type: ActionTypes.CLOSE_PREFERENCES
 	}
 }

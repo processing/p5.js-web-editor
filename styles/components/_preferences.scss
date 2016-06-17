@@ -1,10 +1,21 @@
 .preferences {
-	position: absolute;
-	right: 0;
-	top:0;
+	background-color: $preferences-background-color;
 	display: none;
+	&--selected {
+		display: flex;
+	}
 }
 
-.preferences--selected {
-	display: block;
+.preferences__exit-button {
+	background-color: $light-button-background-color;
+	color: $light-button-color;
+	display: inline-block;
+	height: #{44 / $base-font-size}rem;
+	width: #{44 / $base-font-size}rem;
+	text-align: center;
+	line-height: #{50 / $base-font-size}rem;
+	cursor: pointer;
+	border: none;
+	outline: none;
+	margin-left: auto;
 }
