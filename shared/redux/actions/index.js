@@ -27,7 +27,6 @@ export function stopSketch() {
 }
 
 export function togglePreferences() {
-	console.log('pressed');
 	return {
 		type: ActionTypes.TOGGLE_PREFERENCES
 	}
