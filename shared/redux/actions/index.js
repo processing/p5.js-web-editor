@@ -25,3 +25,10 @@ export function stopSketch() {
 		type: ActionTypes.STOP_SKETCH
 	}
 }
+
+export function togglePreferences() {
+	console.log('pressed');
+	return {
+		type: ActionTypes.TOGGLE_PREFERENCES
+	}
+}

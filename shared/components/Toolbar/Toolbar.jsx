@@ -4,6 +4,7 @@ var Isvg = require('react-inlinesvg');
 var playUrl = require('../../../images/play.svg');
 var logoUrl = require('../../../images/p5js-logo.svg');
 var stopUrl = require('../../../images/stop.svg');
+var preferencesUrl = require('../../../images/preferences.svg');
 var classNames = require('classnames');
 
 class Toolbar extends React.Component {
@@ -16,6 +17,10 @@ class Toolbar extends React.Component {
 			"toolbar__stop-button": true,
 			"toolbar__stop-button--selected": !this.props.isPlaying
 		});
+		let preferencesButtonClass = classNames({
+			"toolbar__preferences-button": true,
+			"toolbar__preferences-button--selected": this.props.isPreferencesShowing
+		});
 
 		return (
 			<div className="toolbar">
@@ -25,6 +30,9 @@ class Toolbar extends React.Component {
 				</button>
 				<button className={stopButtonClass} onClick={this.props.stopSketch}>
 					<Isvg src={stopUrl} alt="Stop Sketch" />
+				</button>
+				<button className={preferencesButtonClass} onClick={this.props.togglePreferences}>
+					<Isvg src={preferencesUrl} alt="Show Preferences" />
 				</button>
 			</div>
 		);
