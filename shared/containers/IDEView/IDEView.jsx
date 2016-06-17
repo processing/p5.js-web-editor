@@ -13,8 +13,6 @@ class IDEView extends React.Component {
 		return (
 			<div className="ide">
 				<Nav user={this.props.user}
-						 project={this.props.project}
-						 file={this.props.file}
 						 createProject={this.props.createProject}
 						 saveProject={this.props.saveProject}/>
 				<Toolbar 
