@@ -8,6 +8,7 @@ export function createProject(req, res) {
 		}, function(err, newProject) {
 			if (err) { return res.json({success: false}) }
 			return res.json({
+				id: newProject._id,
 				name: newProject.name,
 				file: {
 					name: newProject.file.name,

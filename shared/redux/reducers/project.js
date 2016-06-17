@@ -12,6 +12,7 @@ const project = (state = initialState, action) => {
 			}
 		case ActionTypes.NEW_PROJECT:
 			return {
+				id: action.id,
 				name: action.name
 			}
 		default:

@@ -66,8 +66,9 @@ export function saveProject() {
 	// 			type: ActionTypes.PROJECT_SAVE_FAIL
 	// 		}));
 	// }
-	return function(dispatch) {
-
+	return function(dispatch, getState) {
+		var state = getState();
+		
 	}
 }
 
@@ -78,8 +79,14 @@ export function createProject() {
 			.then(response => {
 				dispatch({
 					type: ActionTypes.NEW_PROJECT,
-					name: response.data.name
+					name: response.data.name,
+					id: response.data.id,
+					file: {
+						name: response.data.file.name,
+						content: response.data.file.content
+					}
 				});
+				browserHistory.push('/' + response.data.id);
 			})
 			.catch(response => dispatch({
 				type: ActionTypes.PROJECT_SAVE_FAIL
