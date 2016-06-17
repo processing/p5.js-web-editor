@@ -1,16 +1,27 @@
 .nav {
 	width: 100%;
 	padding: #{10 / $base-font-size}rem #{40 / $base-font-size}rem;
+	padding-left: #{170 / $base-font-size}rem;
 	display: flex;
 	flex-direction: row;
-	justify-content: flex-end;
+	justify-content: space-between;
 }
 
-.nav__items {
+.nav__items-left, .nav__items-right {
 	list-style: none;
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-end;
 	padding: #{5 / $base-font-size}rem #{10 / $base-font-size}rem;
 	border-bottom: 2px dashed;
+}
+
+.nav__save, .nav__new {
+	@extend %fake-link;
+}
+
+.nav__item {
+	& + & {
+		margin-left: #{20 / $base-font-size}rem;
+	}
 }

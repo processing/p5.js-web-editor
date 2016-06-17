@@ -15,3 +15,8 @@ export const UNAUTH_USER = 'UNAUTH_USER';
 export const AUTH_ERROR = 'AUTH_ERROR';
 
 export const SET_PROJECT_NAME = 'SET_PROJECT_NAME';
+
+export const PROJECT_SAVE_SUCCESS = 'PROJECT_SAVE_SUCCESS';
+export const PROJECT_SAVE_FAIL = 'PROJECT_SAVE_FAIL';
+export const NEW_PROJECT = 'NEW_PROJECT';
+

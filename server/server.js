@@ -24,6 +24,7 @@ app.use(webpackHotMiddleware(compiler));
 import serverConfig from './config';
 import users from './routes/user.routes';
 import sessions from './routes/session.routes';
+import projects from './routes/project.routes';
 
 //Body parser, cookie parser, sessions, serve public assets
 
@@ -50,6 +51,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use('/', users);
 app.use('/', sessions);
+app.use('/', projects);
 
 const passportConfig = require('./config/passport');
 

@@ -1,4 +1,7 @@
 import * as ActionTypes from '../constants/constants';
+import axios from 'axios'
+
+const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000' : '/';
 
 export function updateFile(name, content) {
 	return {
@@ -47,5 +50,39 @@ export function increaseFont() {
 export function decreaseFont() {
 	return {
 		type: ActionTypes.DECREASE_FONTSIZE
+	}
+}
+
+export function saveProject() {
+	// return function(dispatch) {
+	// 	let projectValues = {};
+	// 	axios.put(`${ROOT_URL}/projects`, projectValues, {withCredentials: true})
+	// 		.then(response => {
+	// 			dispatch({
+	// 				type: ActionTypes.PROJECT_SAVE_SUCCESS
+	// 			});
+	// 		})
+	// 		.catch(response => dispatch({
+	// 			type: ActionTypes.PROJECT_SAVE_FAIL
+	// 		}));
+	// }
+	return function(dispatch) {
+
+	}
+}
+
+
+export function createProject() {
+	return function(dispatch) {
+		axios.post(`${ROOT_URL}/projects`, {}, {withCredentials: true})
+			.then(response => {
+				dispatch({
+					type: ActionTypes.NEW_PROJECT,
+					name: response.data.name
+				});
+			})
+			.catch(response => dispatch({
+				type: ActionTypes.PROJECT_SAVE_FAIL
+			}));
 	}
 }

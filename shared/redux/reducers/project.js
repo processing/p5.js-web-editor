@@ -10,6 +10,10 @@ const project = (state = initialState, action) => {
 			return {
 				name: action.name
 			}
+		case ActionTypes.NEW_PROJECT:
+			return {
+				name: action.name
+			}
 		default:
 			return state;
 	}
