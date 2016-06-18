@@ -3,11 +3,6 @@ import passport from 'passport'
 import path from 'path'
 
 
-export function newSession(req, res, next) {
-	//eventually, it would be cool to have some isomorphic rendering
-	res.sendFile(path.resolve(__dirname + '/../../index.html'));
-}
-
 export function destroySession(req, res) {
 
 }

@@ -25,6 +25,7 @@ import serverConfig from './config';
 import users from './routes/user.routes';
 import sessions from './routes/session.routes';
 import projects from './routes/project.routes';
+import serverRoutes from './routes/server.routes';
 
 //Body parser, cookie parser, sessions, serve public assets
 
@@ -49,9 +50,12 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/', users);
-app.use('/', sessions);
-app.use('/', projects);
+app.use('/api', users);
+app.use('/api', sessions);
+app.use('/api', projects);
+//this is supposed to be TEMPORARY -- until i figure out 
+// isomorphic rendering
+app.use('/', serverRoutes);
 
 const passportConfig = require('./config/passport');
 

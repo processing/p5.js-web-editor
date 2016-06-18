@@ -2,11 +2,6 @@ import User from '../models/user'
 import passport from 'passport'
 import path from 'path'
 
-export function newUser(req, res) {
-	//eventually, it would be cool to have some isomorphic rendering
-	res.sendFile(path.resolve(__dirname + '/../../index.html'));
-}
-
 export function createUser(req, res, next) {
 	const user = new User({
 		username: req.body.username,

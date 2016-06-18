@@ -4,7 +4,11 @@ export function createProject(req, res) {
 	if (req.user) {
 		Project.create({
 			user: req.user._id,
-			file: {}						
+			name: req.body.name,
+			file: {
+				name: req.body.file.name,
+				content: req.body.file.content
+			}
 		}, function(err, newProject) {
 			if (err) { return res.json({success: false}) }
 			return res.json({
@@ -19,4 +23,25 @@ export function createProject(req, res) {
 	} else {
 		res.json({success: false});
 	}
+}
+
+export function updateProject(req, res) {
+	Project.update({_id: req.params.project_id}, 
+		{
+			$set: req.body
+		}, function(err, updatedProject) {
+			if (err) { return res.json({success: false}) }
+			return res.json({
+				id: updatedProject._id,
+				name: updatedProject.name,
+				file: {
+					name: updatedProject.file.name,
+					content: updatedProject.file.content
+				}
+			});
+	});
+}
+
+export function getProject(req, res) {
+	
 }
