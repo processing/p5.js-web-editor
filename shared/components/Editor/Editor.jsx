@@ -4,7 +4,7 @@ import 'codemirror/mode/javascript/javascript';
 import 'codemirror/addon/selection/active-line'
 
 class Editor extends React.Component {
-	_cm: CodeMirror.Editor
+  _cm: CodeMirror.Editor
 
 	componentDidMount() {
 		this._cm = CodeMirror(this.refs.container, {

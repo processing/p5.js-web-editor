@@ -19,12 +19,12 @@
 	}
 }
 
-.preferences__plus-button {
+.preference__plus-button {
 	@extend %preferences-button;
 	margin-right: auto;
 }
 
-.preferences__minus-button {
+.preference__minus-button {
 	@extend %preferences-button;
 }
 
@@ -33,7 +33,7 @@
 	flex-direction: rows;
 	margin-left: #{20 / $base-font-size}rem;
 }
-.preferences__title-text {
+.preferences__title {
 	margin: 0 0;
 	font-size: #{$menu-font-size}px;
 	font-weight: 700;
@@ -45,7 +45,7 @@
 	margin: 0 #{20 / $base-font-size}rem;
 }
 
-.preference__title-text {
+.preference__title {
 	margin: 0 0;
 	font-size: #{$base-font-size}px;
 	font-weight: 400;
