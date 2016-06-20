@@ -1,5 +1,5 @@
 .preferences {
-	background-color: $preferences-background-color;
+	background-color: $light-preferences-background-color;
 	display: none;
 	&--selected {
 		display: flex;
@@ -7,15 +7,11 @@
 }
 
 .preferences__exit-button {
-	background-color: $light-button-background-color;
-	color: $light-button-color;
-	display: inline-block;
-	height: #{44 / $base-font-size}rem;
-	width: #{44 / $base-font-size}rem;
-	text-align: center;
-	line-height: #{50 / $base-font-size}rem;
-	cursor: pointer;
-	border: none;
-	outline: none;
+	@extend %preferences-button;
 	margin-left: auto;
+	background-color: $light-preferences-background-color;
+
+	&:hover {
+		background-color: $light-preferences-background-color;
+	}
 }

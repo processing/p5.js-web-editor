@@ -20,6 +20,9 @@ class App extends React.Component {
 					openPreferences={this.props.openPreferences}
 					isPreferencesShowing = {this.props.preferences.isPreferencesShowing}
 					/>
+				<Preferences
+					isPreferencesShowing = {this.props.preferences.isPreferencesShowing}
+					closePreferences={this.props.closePreferences}/>
 				<Editor
 					content={this.props.file.content}
 					updateFile={this.props.updateFile} />
@@ -29,9 +32,6 @@ class App extends React.Component {
 			      <link type='text/css' rel='stylesheet' href='preview-styles.css' />
 			    }
 			    isPlaying={this.props.ide.isPlaying}/>
-				<Preferences
-					isPreferencesShowing = {this.props.preferences.isPreferencesShowing}
-					closePreferences={this.props.closePreferences}/>
 			</div>
 		);
 	}

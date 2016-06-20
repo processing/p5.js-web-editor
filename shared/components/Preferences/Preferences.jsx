@@ -1,7 +1,7 @@
 import React from 'react';
 
 var Isvg = require('react-inlinesvg');
-var preferences = require('../../../images/preferences.svg');
+var exitUrl = require('../../../images/exit.svg');
 var classNames = require('classnames');
 
 class Preferences extends React.Component {
@@ -11,9 +11,9 @@ class Preferences extends React.Component {
 			"preferences--selected": this.props.isPreferencesShowing
 		});
 		return (
-			<div className={preferencesContainerClass}>
+			<div className={preferencesContainerClass} tabindex="0">
 				<button className="preferences__exit-button" onClick={this.props.closePreferences}>
-					X
+					<Isvg src={exitUrl} alt="Exit Preferences" />
 				</button>
 			</div>
 		);
