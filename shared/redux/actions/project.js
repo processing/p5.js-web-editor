@@ -41,6 +41,7 @@ export function saveProject() {
 		var state = getState();
 		var formParams = Object.assign({}, state.project);
 		formParams.file = state.file;
+		debugger;
 		if (state.id) {
 			axios.put(`${ROOT_URL}/projects/${state.id}`, formParams, {withCredentials: true})
 				.then(response => {
@@ -78,6 +79,7 @@ export function createProject() {
 	return function(dispatch) {
 		axios.post(`${ROOT_URL}/projects`, {}, {withCredentials: true})
 			.then(response => {
+				browserHistory.push('/projects/' + response.data.id);
 				dispatch({
 					type: ActionTypes.NEW_PROJECT,
 					name: response.data.name,
@@ -87,7 +89,6 @@ export function createProject() {
 						content: response.data.file.content
 					}
 				});
-				browserHistory.push('/' + response.data.id);
 			})
 			.catch(response => dispatch({
 				type: ActionTypes.PROJECT_SAVE_FAIL

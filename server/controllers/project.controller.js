@@ -1,14 +1,14 @@
 import Project from '../models/project'
 
 export function createProject(req, res) {
-	Project.create({
+	let projectValues = {
 		user: req.user ? req.user._id : undefined,
-		name: req.body.name,
-		file: {
-			name: req.body.file.name,
-			content: req.body.file.content
-		}
-	}, function(err, newProject) {
+		file: {}
+	}
+
+	Object.assign(projectValues, req.body);
+
+	Project.create(projectValues, function(err, newProject) {
 		if (err) { return res.json({success: false}); }
 		return res.json({
 			id: newProject._id,
