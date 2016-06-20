@@ -3,7 +3,7 @@ import { browserHistory } from 'react-router'
 import axios from 'axios'
 
 
-const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api/' : '/api';
+const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
 export function signUpUser(formValues) {
   return function(dispatch) {

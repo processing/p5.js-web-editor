@@ -15,6 +15,15 @@ const project = (state = initialState, action) => {
 				id: action.id,
 				name: action.name
 			}
+		case ActionTypes.SET_PROJECT:
+			return {
+				id: action.project.id,
+				name: action.project.name,
+				file: {
+					name: action.project.file.name,
+					content: action.project.file.content
+				}
+			}
 		default:
 			return state;
 	}

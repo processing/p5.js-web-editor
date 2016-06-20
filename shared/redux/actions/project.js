@@ -1,47 +1,37 @@
-import * as ActionTypes from '../constants/constants';
+import * as ActionTypes from '../constants/constants'
 import axios from 'axios'
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
-export function toggleSketch() {
+export function updateFile(name, content) {
 	return {
-		type: ActionTypes.TOGGLE_SKETCH
+		type: ActionTypes.CHANGE_SELECTED_FILE,
+		name: name,
+		content: content
 	}
 }
 
-export function startSketch() {
-	return {
-		type: ActionTypes.START_SKETCH
+export function getProject(id) {
+	return function(dispatch) {
+		axios.get(`${ROOT_URL}/projects/${id}`, {withCredentials: true})
+			.then(response => {
+				browserHistory.push(`/projects/${id}`);
+				dispatch({
+					type: ActionTypes.SET_PROJECT_NAME,
+					project: response.data
+				})
+			})
+			.catch(response => dispatch({
+				type: ActionTypes.ERROR
+			}));
 	}
 }
 
-export function stopSketch() {
+export function setProjectName(event) {
+	var name = event.target.textContent;
 	return {
-		type: ActionTypes.STOP_SKETCH
-	}
-}
-
-export function openPreferences() {
-	return {
-		type: ActionTypes.OPEN_PREFERENCES
-	}
-}
-
-export function closePreferences() {
-	return {
-		type: ActionTypes.CLOSE_PREFERENCES
-	}
-}
-
-export function increaseFont() {
-	return {
-		type: ActionTypes.INCREASE_FONTSIZE
-	}
-}
-
-export function decreaseFont() {
-	return {
-		type: ActionTypes.DECREASE_FONTSIZE
+		type: ActionTypes.SET_PROJECT_NAME,
+		name: name
 	}
 }
 

@@ -43,5 +43,18 @@ export function updateProject(req, res) {
 }
 
 export function getProject(req, res) {
-	
+	Project.findById(req.params.project_id, function(err, project) {
+		if (err) { 
+			return res.status(404).send({message: 'Project with that id does not exist'}); 
+		}
+
+		return res.json({
+			id: project._id,
+			name: project.name,
+			file: {
+				name: project.file.name,
+				content: project.file.conent
+			}
+		});
+	})
 }

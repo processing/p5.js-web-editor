@@ -4,6 +4,7 @@ import App from './containers/App'
 import IDEView from './containers/IDEView/IDEView'
 import LoginView from './containers/LoginView/LoginView'
 import SignupView from './containers/SignupView/SignupView'
+import ProjectView from './containers/ProjectView/ProjectView'
 import { getUser } from './redux/actions/user';
 
 const routes = (store) => {
@@ -12,6 +13,7 @@ const routes = (store) => {
 			<IndexRoute component={IDEView} onEnter={checkAuth(store)}/>
 			<Route path="/login" component={LoginView}/>
 			<Route path="/signup" component={SignupView}/>
+			<Route path="/projects/:project_id" component={IDEView}/>
 		</Route>
 	);
 }

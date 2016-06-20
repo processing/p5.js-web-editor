@@ -20,3 +20,7 @@ export const PROJECT_SAVE_SUCCESS = 'PROJECT_SAVE_SUCCESS';
 export const PROJECT_SAVE_FAIL = 'PROJECT_SAVE_FAIL';
 export const NEW_PROJECT = 'NEW_PROJECT';
 
+export const SET_PROJECT = 'SET_PROJECT';
+
+//eventually, handle errors more specifically and better
+export const ERROR = 'ERROR';
