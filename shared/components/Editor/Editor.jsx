@@ -17,6 +17,7 @@ class Editor extends React.Component {
     this._cm.on('change', () => {
       this.props.updateFile("sketch.js", this._cm.getValue());
     });
+		console.log('test here');
 	}
 
 	componentDidUpdate(prevProps) {
