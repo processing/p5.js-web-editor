@@ -13,6 +13,14 @@
 	}
 }
 
+.toolbar__preferences-button {
+	@extend %toolbar-button;
+	margin-left: auto;
+	&--selected {
+		@extend %toolbar-button--selected;
+	}
+}
+
 .toolbar__logo {
 	margin-right: #{30 / $base-font-size}rem;
 }

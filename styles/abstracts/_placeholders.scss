@@ -1,6 +1,4 @@
-%toolbar-button {
-	background-color: $light-button-background-color;
-	color: $light-button-color;
+%button {
 	display: inline-block;
 	height: #{44 / $base-font-size}rem;
 	width: #{44 / $base-font-size}rem;
@@ -10,11 +8,15 @@
 	cursor: pointer;
 	border: none;
 	outline: none;
+}
 
+%toolbar-button {
+	@extend %button;
+	background-color: $light-button-background-color;
+	color: $light-button-color;
 	& g {
 		fill: $light-toolbar-button-color;
 	}
-
 	&:hover {
 		background-color: $light-button-background-hover-color;
 		color: $light-button-hover-color;
@@ -29,4 +31,20 @@
         fill: $light-button-hover-color;
     }
   }
+}
+
+%preferences-button {
+	@extend %button;
+	background-color: $light-preferences-button-background-color;
+	color: $light-preferences-button-color;
+	& g {
+		fill: $light-preferences-button-color;
+	}
+	&:hover {
+		background-color: $light-preferences-button-background-color;
+		color: $light-preferences-button-hover-color;
+		& g {
+			fill: $light-preferences-button-hover-color;
+		}
+	}
 }

@@ -17,3 +17,10 @@
 .toolbar {
 	width: 100%;
 }
+
+.preferences {
+	width: 22.5%;
+	position: absolute;
+	top: #{20 / $base-font-size}rem;
+	right:#{60 / $base-font-size}rem;
+}
