@@ -46,7 +46,7 @@ export function saveProject() {
 			axios.put(`${ROOT_URL}/projects/${state.id}`, formParams, {withCredentials: true})
 				.then(response => {
 					dispatch({
-						type: ActionTYpes.PROJECT_SAVE_SUCCESS
+						type: ActionTypes.PROJECT_SAVE_SUCCESS
 					})
 					.catch(response => dispatch({
 						type: ActionTypes.PROJECT_SAVE_FAIL

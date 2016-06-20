@@ -1,4 +1,4 @@
-%button {
+%toolbar-button {
 	display: inline-block;
 	height: #{44 / $base-font-size}rem;
 	width: #{44 / $base-font-size}rem;
@@ -8,10 +8,6 @@
 	cursor: pointer;
 	border: none;
 	outline: none;
-}
-
-%toolbar-button {
-	@extend %button;
 	background-color: $light-button-background-color;
 	color: $light-button-color;
 	& g {
