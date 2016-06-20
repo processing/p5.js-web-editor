@@ -46,7 +46,7 @@ class IDEView extends React.Component {
 				<PreviewFrame
 					content={this.props.file.content}
 					head={
-			      <link type='text/css' rel='stylesheet' href='preview-styles.css' />
+			      <link type='text/css' rel='stylesheet' href='/preview-styles.css' />
 			    }
 			    isPlaying={this.props.ide.isPlaying}/>
 			</div>
