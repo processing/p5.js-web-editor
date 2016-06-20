@@ -1,6 +1,7 @@
 .preferences {
 	background-color: $light-preferences-background-color;
 	display: none;
+	font-family: 'Montserrat', sans-serif;
 	&--selected {
 		display: flex;
 	}
@@ -14,4 +15,12 @@
 	&:hover {
 		background-color: $light-preferences-background-color;
 	}
+}
+
+.preferences__title-text {
+	margin-left: #{20 / $base-font-size}rem;
+	font-size: $menu-font-size;
+	font-color: white;
+	height: #{44 / $base-font-size}rem;
+	line-height: #{44 / $base-font-size}rem;
 }

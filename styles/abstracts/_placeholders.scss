@@ -36,12 +36,13 @@
 %preferences-button {
 	@extend %button;
 	background-color: $light-preferences-button-background-color;
+	color: $light-preferences-button-color;
 	& g {
 		fill: $light-preferences-button-color;
 	}
 	&:hover {
 		background-color: $light-preferences-button-background-color;
-
+		color: $light-preferences-button-hover-color;
 		& g {
 			fill: $light-preferences-button-hover-color;
 		}

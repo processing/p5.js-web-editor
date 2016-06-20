@@ -12,6 +12,7 @@ class Preferences extends React.Component {
 		});
 		return (
 			<div className={preferencesContainerClass} tabindex="0">
+				<div className="preferences__title-text">Preferences</div>
 				<button className="preferences__exit-button" onClick={this.props.closePreferences}>
 					<Isvg src={exitUrl} alt="Exit Preferences" />
 				</button>
