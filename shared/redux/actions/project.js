@@ -1,4 +1,5 @@
 import * as ActionTypes from '../constants/constants'
+import { browserHistory } from 'react-router'
 import axios from 'axios'
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
@@ -54,7 +55,7 @@ export function saveProject() {
 		else {
 			axios.post(`${ROOT_URL}/projects`, formParams, {withCredentials: true})
 				.then(response => {
-					browserHistory.push('/' + response.data.id);
+					browserHistory.push('/projects/' + response.data.id);
 					dispatch({
 						type: ActionTypes.NEW_PROJECT,
 						name: response.data.name,

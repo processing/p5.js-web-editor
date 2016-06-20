@@ -1,28 +1,24 @@
 import Project from '../models/project'
 
 export function createProject(req, res) {
-	if (req.user) {
-		Project.create({
-			user: req.user._id,
-			name: req.body.name,
+	Project.create({
+		user: req.user ? req.user._id : undefined,
+		name: req.body.name,
+		file: {
+			name: req.body.file.name,
+			content: req.body.file.content
+		}
+	}, function(err, newProject) {
+		if (err) { return res.json({success: false}); }
+		return res.json({
+			id: newProject._id,
+			name: newProject.name,
 			file: {
-				name: req.body.file.name,
-				content: req.body.file.content
+				name: newProject.file.name,
+				content: newProject.file.content
 			}
-		}, function(err, newProject) {
-			if (err) { return res.json({success: false}) }
-			return res.json({
-				id: newProject._id,
-				name: newProject.name,
-				file: {
-					name: newProject.file.name,
-					content: newProject.file.content
-				}
-			});
-		});	
-	} else {
-		res.json({success: false});
-	}
+		});
+	});	
 }
 
 export function updateProject(req, res) {
