@@ -2,8 +2,10 @@
 	background-color: $light-preferences-background-color;
 	display: none;
 	font-family: 'Montserrat', sans-serif;
+	padding-bottom: #{20 / $base-font-size}rem;
 	&--selected {
 		display: flex;
+		flex-direction: column;
 	}
 }
 
@@ -17,11 +19,44 @@
 	}
 }
 
-.preferences__title-text {
+.preferences__plus-button {
+	@extend %preferences-button;
+	margin-right: auto;
+}
+
+.preferences__minus-button {
+	@extend %preferences-button;
+}
+
+.preferences__heading {
+	display: flex;
+	flex-direction: rows;
 	margin-left: #{20 / $base-font-size}rem;
-	font-size: $menu-font-size;
+}
+.preferences__title-text {
+	margin: 0 0;
+	font-size: #{$menu-font-size}px;
 	font-weight: 700;
-	font-color: white;
 	height: #{44 / $base-font-size}rem;
 	line-height: #{44 / $base-font-size}rem;
+}
+
+.preference {
+	margin: 0 #{20 / $base-font-size}rem;
+}
+
+.preference__title-text {
+	margin: 0 0;
+	font-size: #{$base-font-size}px;
+	font-weight: 400;
+	height: #{44 / $base-font-size}rem;
+	line-height: #{44 / $base-font-size}rem;
+}
+
+.preference__value {
+	@extend %button;
+	border-radius: 0%;
+	border: 2px solid $light-preferences-button-color;
+	line-height: #{44 / $base-font-size}rem;
+	margin: 0 #{20 / $base-font-size}rem;
 }

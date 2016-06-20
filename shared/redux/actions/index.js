@@ -37,3 +37,15 @@ export function closePreferences() {
 		type: ActionTypes.CLOSE_PREFERENCES
 	}
 }
+
+export function increaseFont() {
+	return {
+		type: ActionTypes.INCREASE_FONTSIZE
+	}
+}
+
+export function decreaseFont() {
+	return {
+		type: ActionTypes.DECREASE_FONTSIZE
+	}
+}

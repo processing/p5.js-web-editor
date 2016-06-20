@@ -17,7 +17,7 @@ class Editor extends React.Component {
     this._cm.on('change', () => {
       this.props.updateFile("sketch.js", this._cm.getValue());
     });
-		console.log('test here');
+		this._cm.getWrapperElement().style['font-size'] = this.props.fontSize+'px';
 	}
 
 	componentDidUpdate(prevProps) {
@@ -25,6 +25,9 @@ class Editor extends React.Component {
         this.props.content !== this._cm.getValue()) {
       this._cm.setValue(this.props.content);
     }
+		if (this.props.fontSize !== prevProps.fontSize) {
+			this._cm.getWrapperElement().style['font-size'] = this.props.fontSize+'px';
+		}
 	}
 
 	componentWillUnmount() {

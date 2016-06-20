@@ -22,10 +22,14 @@ class App extends React.Component {
 					/>
 				<Preferences
 					isPreferencesShowing = {this.props.preferences.isPreferencesShowing}
-					closePreferences={this.props.closePreferences}/>
+					closePreferences={this.props.closePreferences}
+					increaseFont={this.props.increaseFont}
+					decreaseFont={this.props.decreaseFont}
+					fontSize={this.props.preferences.fontSize}/>
 				<Editor
 					content={this.props.file.content}
-					updateFile={this.props.updateFile} />
+					updateFile={this.props.updateFile}
+					fontSize={this.props.preferences.fontSize} />
 				<PreviewFrame
 					content={this.props.file.content}
 					head={
