@@ -21,7 +21,7 @@ class Preferences extends React.Component {
 					</button>
 				</div>
 				<div className="preference">
-					<h3 className="preference__title">Font Size</h3>
+					<h3 className="preference__title">Text Size</h3>
 						<button className="preference__plus-button" onClick={this.props.decreaseFont}>
 							<Isvg src={minusUrl} alt="Decrease Font Size" />
 						</button>

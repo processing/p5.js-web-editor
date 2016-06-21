@@ -4,7 +4,7 @@
 	width: #{44 / $base-font-size}rem;
 	text-align: center;
 	border-radius: 100%;
-	line-height: #{50 / $base-font-size}rem;
+	line-height: #{46 / $base-font-size}rem;
 	cursor: pointer;
 	border: none;
 	outline: none;
@@ -29,6 +29,23 @@
   }
 }
 
+%icon {
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+	color: $light-icon-color;
+	& g {
+		fill: $light-icon-color;
+	}
+	&:hover {
+		color: $light-icon-hover-color;
+		& g {
+			fill: $light-icon-hover-color;
+		}
+	}
+}
+
 %button {
 	background-color: $light-button-background-color;
 	color: $light-button-color;
@@ -49,17 +66,17 @@
 }
 
 %preferences-button {
-	@extend %button;
-	background-color: $light-preferences-button-background-color;
-	color: $light-preferences-button-color;
+	@extend %toolbar-button;
+	color: $light-primary-text-color;
+	background-color: $light-modal-button-background-color;
 	& g {
-		fill: $light-preferences-button-color;
+		fill: $light-primary-text-color;
 	}
 	&:hover {
-		background-color: $light-preferences-button-background-color;
-		color: $light-preferences-button-hover-color;
+		background-color: $light-button-background-hover-color;
+		color: $light-button-hover-color;
 		& g {
-			fill: $light-preferences-button-hover-color;
+			fill: $light-button-hover-color;
 		}
 	}
 }

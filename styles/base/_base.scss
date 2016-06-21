@@ -38,3 +38,11 @@ input {
 input[type="submit"] {
 	@extend %button;
 }
+
+h2 {
+	font-size: #{21 / $base-font-size}em;
+}
+
+h3 {
+	font-weight: normal;
+}

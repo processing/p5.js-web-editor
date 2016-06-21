@@ -1,11 +1,9 @@
 $base-font-size: 16;
-$menu-font-size: 21;
 
 //colors
 $p5js-pink: #ed225d;
 $white: #fff;
 $black: #000;
-
 
 $light-primary-text-color: #333;
 $light-secondary-text-color: #6b6b6b;
@@ -20,6 +18,9 @@ $light-button-background-hover-color: $p5js-pink;
 $light-button-background-active-color: #f10046;
 $light-button-hover-color: $white;
 $light-button-active-color: $white;
+$light-modal-button-background-color: #e6e6e6; 
+$light-icon-color: #8b8b8b;
+$light-icon-hover-color: $light-primary-text-color;
 
 $dark-primary-text-color: $white;
 $dark-secondary-text-color: #c2c2c2;
@@ -37,10 +38,3 @@ $dark-button-active-color: $white;
 $editor-border-color: #f4f4f4;
 $editor-selected-line-color: #f3f3f3;
 $input-border-color: #979797;
-
-$light-preferences-background-color: #f4f4f4;
-
-$light-preferences-button-color: #8e8e8f;
-$light-preferences-button-hover-color: #333333;
-
-$light-preferences-button-background-color: #e6e6e6;

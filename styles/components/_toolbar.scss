@@ -4,6 +4,9 @@
 	&--selected {
 		@extend %toolbar-button--selected;
 	}
+	& span {
+		padding-left: #{2 / $base-font-size}rem;
+	}
 }
 
 .toolbar__stop-button {
@@ -15,6 +18,7 @@
 
 .toolbar__preferences-button {
 	@extend %toolbar-button;
+	line-height: #{50 / $base-font-size}rem;
 	margin-left: auto;
 	&--selected {
 		@extend %toolbar-button--selected;
