@@ -5,7 +5,7 @@ import { Router, browserHistory } from 'react-router'
 import configureStore from './store'
 import routes from './routes'
 
-require('../styles/main.scss');
+require('./styles/main.scss');
 
 const history = browserHistory
 const initialState = window.__INITIAL_STATE__

@@ -1,9 +1,9 @@
 import React from 'react';
 
 var Isvg = require('react-inlinesvg');
-var exitUrl = require('../../../../images/exit.svg');
-var plusUrl = require('../../../../images/plus.svg');
-var minusUrl = require('../../../../images/minus.svg');
+var exitUrl = require('../../../images/exit.svg');
+var plusUrl = require('../../../images/plus.svg');
+var minusUrl = require('../../../images/minus.svg');
 var classNames = require('classnames');
 
 class Preferences extends React.Component {

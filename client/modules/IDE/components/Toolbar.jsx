@@ -1,10 +1,10 @@
 import React from 'react';
 
 var Isvg = require('react-inlinesvg');
-var playUrl = require('../../../../images/play.svg');
-var logoUrl = require('../../../../images/p5js-logo.svg');
-var stopUrl = require('../../../../images/stop.svg');
-var preferencesUrl = require('../../../../images/preferences.svg');
+var playUrl = require('../../../images/play.svg');
+var logoUrl = require('../../../images/p5js-logo.svg');
+var stopUrl = require('../../../images/stop.svg');
+var preferencesUrl = require('../../../images/preferences.svg');
 var classNames = require('classnames');
 
 class Toolbar extends React.Component {
