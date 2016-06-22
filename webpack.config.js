@@ -14,7 +14,13 @@ module.exports = {
     extensions: ['', '.js', '.jsx'],
   },
 	plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        CLIENT: JSON.stringify(true),
+        'NODE_ENV': JSON.stringify('development'),
+      }
+    })
   ],
   module: {
     loaders: [
