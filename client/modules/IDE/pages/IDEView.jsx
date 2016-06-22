@@ -1,13 +1,13 @@
 import React from 'react'
-import Editor from '../../components/Editor/Editor'
-import PreviewFrame from '../../components/Preview/PreviewFrame'
-import Toolbar from '../../components/Toolbar/Toolbar'
-import Preferences from '../../components/Preferences/Preferences'
-import Nav from '../../components/Nav/Nav'
+import Editor from '../components/Editor'
+import PreviewFrame from '../components/PreviewFrame'
+import Toolbar from '../components/Toolbar'
+import Preferences from '../components/Preferences'
+import Nav from '../../../components/Nav'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as IndexActions from '../../redux/actions'
-import * as ProjectActions from '../../redux/actions/project'
+import * as IndexActions from '../../../redux/actions'
+import * as ProjectActions from '../../../redux/actions/project'
 
 class IDEView extends React.Component {
 	componentDidMount() {

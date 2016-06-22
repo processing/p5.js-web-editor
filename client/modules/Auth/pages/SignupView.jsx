@@ -1,9 +1,9 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as UserActions from '../../redux/actions/user'
+import * as UserActions from '../../../redux/actions/user'
 import { reduxForm } from 'redux-form'
-import SignupForm from '../../components/SignupForm/SignupForm'
+import SignupForm from '../components/SignupForm'
 
 class SignupView extends React.Component {
 	render() {

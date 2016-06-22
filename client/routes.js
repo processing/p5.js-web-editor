@@ -1,11 +1,10 @@
 import { Route, IndexRoute } from 'react-router'
 import React from 'react'
-import App from './containers/App'
-import IDEView from './containers/IDEView/IDEView'
-import LoginView from './containers/LoginView/LoginView'
-import SignupView from './containers/SignupView/SignupView'
-import ProjectView from './containers/ProjectView/ProjectView'
-import { getUser } from './redux/actions/user';
+import App from './modules/App/App'
+import IDEView from './modules/IDE/pages/IDEView'
+import LoginView from './modules/Auth/pages/LoginView'
+import SignupView from './modules/Auth/pages/SignupView'
+import { getUser } from './redux/actions/user'
 
 const routes = (store) => {
 	return (
