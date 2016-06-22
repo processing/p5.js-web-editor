@@ -5,7 +5,7 @@ export function createProject(req, res) {
 		user: req.user ? req.user._id : undefined,
 		file: {}
 	}
-
+	
 	Object.assign(projectValues, req.body);
 
 	Project.create(projectValues, function(err, newProject) {
