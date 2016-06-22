@@ -33,10 +33,9 @@ class IDEView extends React.Component {
 					projectName={this.props.project.name}
 					setProjectName={this.props.setProjectName}
 					openPreferences={this.props.openPreferences}
-					isPreferencesShowing = {this.props.preferences.isPreferencesShowing}
-					/>
+					isPreferencesVisible={this.props.preferences.isVisible}/>
 				<Preferences
-					isPreferencesShowing = {this.props.preferences.isPreferencesShowing}
+					isVisible={this.props.preferences.isVisible}
 					closePreferences={this.props.closePreferences}
 					increaseFont={this.props.increaseFont}
 					decreaseFont={this.props.decreaseFont}

@@ -10,7 +10,7 @@ class Preferences extends React.Component {
 	render() {
 		let preferencesContainerClass = classNames({
 			"preferences": true,
-			"preferences--selected": this.props.isPreferencesShowing
+			"preferences--selected": this.props.isVisible
 		});
 		return (
 			<div className={preferencesContainerClass} tabindex="0">

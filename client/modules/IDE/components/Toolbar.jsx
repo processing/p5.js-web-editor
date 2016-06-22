@@ -19,7 +19,7 @@ class Toolbar extends React.Component {
 		});
 		let preferencesButtonClass = classNames({
 			"toolbar__preferences-button": true,
-			"toolbar__preferences-button--selected": this.props.isPreferencesShowing
+			"toolbar__preferences-button--selected": this.props.isPreferencesVisible
 		});
 
 		return (
