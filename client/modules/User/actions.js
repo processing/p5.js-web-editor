@@ -1,4 +1,4 @@
-import * as ActionTypes from '../constants/constants'
+import * as ActionTypes from '../../constants'
 import { browserHistory } from 'react-router'
 import axios from 'axios'
 

@@ -1,16 +1,8 @@
-import * as ActionTypes from '../constants/constants'
+import * as ActionTypes from '../../../constants';
 import { browserHistory } from 'react-router'
 import axios from 'axios'
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
-
-export function updateFile(name, content) {
-	return {
-		type: ActionTypes.CHANGE_SELECTED_FILE,
-		name: name,
-		content: content
-	}
-}
 
 export function getProject(id) {
 	return function(dispatch) {

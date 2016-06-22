@@ -1,7 +1,7 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import {reduxForm} from 'redux-form'
-import * as UserActions from '../../../redux/actions/user'
+import * as UserActions from '../actions'
 import LoginForm from '../components/LoginForm'
 
 class LoginView extends React.Component {

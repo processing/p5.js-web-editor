@@ -6,8 +6,10 @@ import Preferences from '../components/Preferences'
 import Nav from '../../../components/Nav'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as IndexActions from '../../../redux/actions'
-import * as ProjectActions from '../../../redux/actions/project'
+import * as FileActions from '../actions/files'
+import * as IDEActions from '../actions/ide'
+import * as PreferencesActions from '../actions/preferences'
+import * as ProjectActions from '../actions/project'
 
 class IDEView extends React.Component {
 	componentDidMount() {
@@ -65,7 +67,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators(Object.assign({}, IndexActions, ProjectActions), dispatch);
+	return bindActionCreators(Object.assign({}, FileActions, ProjectActions, IDEActions, PreferencesActions), dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(IDEView);

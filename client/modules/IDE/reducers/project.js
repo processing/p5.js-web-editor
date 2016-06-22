@@ -1,4 +1,4 @@
-import * as ActionTypes from '../constants/constants';
+import * as ActionTypes from '../../../constants';
 
 const initialState = {
 	name: "Hello p5.js"
