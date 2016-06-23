@@ -22,5 +22,5 @@ export const NEW_PROJECT = 'NEW_PROJECT';
 
 export const SET_PROJECT = 'SET_PROJECT';
 
-//eventually, handle errors more specifically and better
+// eventually, handle errors more specifically and better
 export const ERROR = 'ERROR';
