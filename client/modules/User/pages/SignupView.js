@@ -4,15 +4,13 @@ import * as UserActions from '../actions';
 import { reduxForm } from 'redux-form';
 import SignupForm from '../components/SignupForm';
 
-class SignupView extends React.Component {
-  render() {
-    return (
-      <div className="signup">
-        <h1>Sign Up</h1>
-        <SignupForm {...this.props} />
-      </div>
-    );
-  }
+function SignupView(props) {
+  return (
+    <div className="signup">
+      <h1>Sign Up</h1>
+      <SignupForm {...props} />
+    </div>
+  );
 }
 
 function mapStateToProps(state) {

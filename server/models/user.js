@@ -32,6 +32,7 @@ userSchema.pre('save', function (next) {
  * Helper method for validating user's password.
  */
 userSchema.methods.comparePassword = function (candidatePassword, cb) {
+// userSchema.methods.comparePassword = (candidatePassword, cb) => {
   bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
     cb(err, isMatch);
   });
