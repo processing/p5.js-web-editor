@@ -41,15 +41,16 @@ function validate(formProps) {
     errors.confirmPassword = 'Please enter a password confirmation';
   }
 
-  if (formProps.password !== formProps.passwordConfirm) {
+  if (formProps.password !== formProps.confirmPassword) {
     errors.password = 'Passwords must match';
   }
+
   return errors;
 }
 
 // export default connect(mapStateToProps, mapDispatchToProps)(SignupView);
 export default reduxForm({
   form: 'signup',
-  fields: ['username', 'email', 'password', 'passwordConfirm'],
+  fields: ['username', 'email', 'password', 'confirmPassword'],
   validate
 }, mapStateToProps, mapDispatchToProps)(SignupView);
