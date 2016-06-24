@@ -38,7 +38,8 @@ class SignupForm extends React.Component {
         <p className="signup-form__field">
           <label
             className="signup-form__confirm-password-label"
-            htmlFor="confirm-password">
+            htmlFor="confirm-password"
+          >
             Confirm Password:
           </label>
           <input

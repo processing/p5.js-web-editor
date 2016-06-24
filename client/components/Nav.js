@@ -26,7 +26,7 @@ class Nav extends React.Component {
         <ul className="nav__items-right">
           <li className="nav__item">
             {this.props.user.authenticated && <p>Hello, {this.props.user.username}!</p>}
-            {!this.props.user.authenticated && <p><Link to='/login'>Login</Link> or <Link to='/signup'>Sign Up</Link></p>}
+            {!this.props.user.authenticated && <p><Link to="/login">Login</Link> or <Link to="/signup">Sign Up</Link></p>}
           </li>
         </ul>
       </nav>
