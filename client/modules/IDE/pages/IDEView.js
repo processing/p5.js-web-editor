@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Editor from '../components/Editor';
 import PreviewFrame from '../components/PreviewFrame';
 import Toolbar from '../components/Toolbar';
@@ -60,6 +60,37 @@ class IDEView extends React.Component {
     );
   }
 }
+
+IDEView.propTypes = {
+  params: PropTypes.shape({
+    project_id: PropTypes.string
+  }),
+  getProject: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+  createProject: PropTypes.func.isRequired,
+  saveProject: PropTypes.func.isRequired,
+  ide: PropTypes.shape({
+    isPlaying: PropTypes.bool.isRequired
+  }).isRequired,
+  startSketch: PropTypes.func.isRequired,
+  stopSketch: PropTypes.func.isRequired,
+  project: PropTypes.shape({
+    name: PropTypes.string.isRequired
+  }).isRequired,
+  setProjectName: PropTypes.func.isRequired,
+  openPreferences: PropTypes.func.isRequired,
+  preferences: PropTypes.shape({
+    isVisible: PropTypes.bool.isRequired,
+    fontSize: PropTypes.number.isRequired
+  }).isRequired,
+  closePreferences: PropTypes.func.isRequired,
+  increaseFont: PropTypes.func.isRequired,
+  decreaseFont: PropTypes.func.isRequired,
+  file: PropTypes.shape({
+    content: PropTypes.string.isRequired
+  }).isRequired,
+  updateFile: PropTypes.func.isRequired
+};
 
 function mapStateToProps(state) {
   return {
