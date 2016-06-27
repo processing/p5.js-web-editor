@@ -69,7 +69,7 @@ class PreviewFrame extends React.Component {
 
 PreviewFrame.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
-  head: PropTypes.string.isRequired,
+  head: PropTypes.object.isRequired,
   content: PropTypes.string.isRequired
 };
 
