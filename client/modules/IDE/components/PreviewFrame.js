@@ -49,7 +49,7 @@ class PreviewFrame extends React.Component {
   renderFrameContents() {
     const doc = ReactDOM.findDOMNode(this).contentDocument;
     if (doc.readyState === 'complete') {
-      renderSketch();
+      this.renderSketch();
     } else {
       setTimeout(this.renderFrameContents, 0);
     }
