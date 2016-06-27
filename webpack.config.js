@@ -25,12 +25,9 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.jsx*$/,
+        test: /\.jsx?$/,
         exclude: [/node_modules/, /.+\.config.js/],
-        loader: 'babel',
-        query: {
-          presets: ['react-hmre'],
-        },
+        loaders: ['babel?presets[]=react-hmre', 'eslint-loader']
       },
       {
         test: /\.scss$/,
