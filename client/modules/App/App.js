@@ -9,7 +9,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({ isMounted: true });
+    this.setState({ isMounted: true }); // eslint-disable-line no-did-mount-set-state
   }
 
   render() {

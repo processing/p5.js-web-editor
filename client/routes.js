@@ -10,15 +10,14 @@ const checkAuth = (store) => {
   store.dispatch(getUser());
 };
 
-const routes = (store) => {
-  return (
-    <Route path="/" component={App}>
-      <IndexRoute component={IDEView} onEnter={checkAuth(store)} />
-      <Route path="/login" component={LoginView} />
-      <Route path="/signup" component={SignupView} />
-      <Route path="/projects/:project_id" component={IDEView} />
-    </Route>
+const routes = (store) =>
+  (
+  <Route path="/" component={App}>
+    <IndexRoute component={IDEView} onEnter={checkAuth(store)} />
+    <Route path="/login" component={LoginView} />
+    <Route path="/signup" component={SignupView} />
+    <Route path="/projects/:project_id" component={IDEView} />
+  </Route>
   );
-};
 
 export default routes;
