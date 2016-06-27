@@ -31,7 +31,7 @@ function LoginForm(props) {
 
 LoginForm.propTypes = {
   fields: PropTypes.shape({
-    username: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
     password: PropTypes.string.isRequired
   }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
