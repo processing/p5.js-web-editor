@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import CodeMirror from 'codemirror';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/addon/selection/active-line';
@@ -39,5 +39,11 @@ class Editor extends React.Component {
     return <div ref="container" className="editor-holder"></div>;
   }
 }
+
+Editor.propTypes = {
+  content: PropTypes.string.isRequired,
+  updateFile: PropTypes.func.isRequired,
+  fontSize: PropTypes.number.isRequired
+};
 
 export default Editor;

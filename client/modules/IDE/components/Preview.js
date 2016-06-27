@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 class Preview extends React.Component {
   componentDidMount() {
@@ -16,5 +16,9 @@ class Preview extends React.Component {
     );
   }
 }
+
+Preview.propTypes = {
+  content: PropTypes.string.isRequired
+};
 
 export default Preview;
