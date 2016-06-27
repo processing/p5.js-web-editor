@@ -5,6 +5,7 @@
   "scripts": {
     "start": "BABEL_DISABLE_CACHE=1 NODE_ENV=development nodemon index.js",
     "lint": "eslint client server",
+    "build": "NODE_ENV=production webpack --config webpack.config.prod.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Cassie Tarakajian",
@@ -31,6 +32,7 @@
     "eslint-plugin-import": "^1.9.2",
     "eslint-plugin-jsx-a11y": "^1.5.3",
     "eslint-plugin-react": "^5.2.2",
+    "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
     "node-sass": "^3.7.0",
     "nodemon": "^1.9.2",
