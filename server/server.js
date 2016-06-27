@@ -58,7 +58,8 @@ app.use('/api', projects);
 app.use('/', serverRoutes);
 
 // configure passport
-const passportConfig = require('./config/passport');
+require('./config/passport');
+// const passportConfig = require('./config/passport');
 
 // Connect to MongoDB
 // mongoose.connect(process.env.MONGODB_URI || process.env.MONGOLAB_URI);

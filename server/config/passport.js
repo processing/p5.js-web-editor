@@ -1,8 +1,8 @@
 const passport = require('passport');
-const GitHubStrategy = require('passport-github').Strategy;
+// const GitHubStrategy = require('passport-github').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 
-import User from '../models/user'
+import User from '../models/user';
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
@@ -18,11 +18,11 @@ passport.deserializeUser((id, done) => {
  * Sign in using Email and Password.
  */
 passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
-  User.findOne({ email: email.toLowerCase() }, (err, user) => {
+  User.findOne({ email: email.toLowerCase() }, (err, user) => { // eslint-disable-line consistent-return
     if (!user) {
       return done(null, false, { msg: `Email ${email} not found.` });
     }
-    user.comparePassword(password, (err, isMatch) => {
+    user.comparePassword(password, (innerErr, isMatch) => {
       if (isMatch) {
         return done(null, user);
       }
@@ -34,7 +34,7 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, don
 /**
  * Sign in with GitHub.
  */
-//TODO add dotenv so I can add github login
+// TODO add github login
 // passport.use(new GitHubStrategy({
 //   clientID: process.env.GITHUB_ID,
 //   clientSecret: process.env.GITHUB_SECRET,

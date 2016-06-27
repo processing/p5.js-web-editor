@@ -4,26 +4,26 @@ const bcrypt = require('bcrypt-nodejs');
 
 const userSchema = new Schema({
   name: { type: String, default: '' },
-  username: { type: String, required: true, unique: true},
+  username: { type: String, required: true, unique: true },
   password: { type: String },
   github: { type: String },
   email: { type: String, unique: true },
   tokens: Array,
   admin: { type: Boolean, default: false }
-}, {timestamps: true});
+}, { timestamps: true });
 
 /**
  * Password hash middleware.
  */
-userSchema.pre('save', function (next) {
+userSchema.pre('save', function checkPassword(next) { // eslint-disable-line consistent-return
   const user = this;
   if (!user.isModified('password')) { return next(); }
-  bcrypt.genSalt(10, (err, salt) => {
+  bcrypt.genSalt(10, (err, salt) => { // eslint-disable-line consistent-return
     if (err) { return next(err); }
-    bcrypt.hash(user.password, salt, null, (err, hash) => {
-      if (err) { return next(err); }
+    bcrypt.hash(user.password, salt, null, (innerErr, hash) => {
+      if (innerErr) { return next(innerErr); }
       user.password = hash;
-      next();
+      return next();
     });
   });
 });
@@ -31,7 +31,7 @@ userSchema.pre('save', function (next) {
 /**
  * Helper method for validating user's password.
  */
-userSchema.methods.comparePassword = function (candidatePassword, cb) {
+userSchema.methods.comparePassword = function comparePassword(candidatePassword, cb) {
 // userSchema.methods.comparePassword = (candidatePassword, cb) => {
   bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
     cb(err, isMatch);
