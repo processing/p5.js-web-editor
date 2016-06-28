@@ -15,12 +15,12 @@ SESSION_SECRET=whatever_you_want_this_to_be_it_only_matters_for_production
 ```
 Or, if you don't want to do that, just ask me to send you mine.
 5. `$ npm start`
-6. Navigate to http://localhost:8000 on your browser
+6. Navigate to (http://localhost:8000)[http://localhost:8000] in your browser
 7. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en).
 8. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
 
 ##Production Installation
-1. Clone this repostory and cd into it
+1. Clone this repostory and `cd` into it
 2. `$ npm install`
 3. Install MongoDB and make sure it is running
 4. Create a file called `.env` in the root of this directory that looks like
@@ -33,7 +33,7 @@ Or, if you don't want to do that, just ask me to send you mine.
 5. `$ npm run build`
 6. `$ npm run start:prod`
 
-###For Setup with PM2
+###For Production Setup with PM2
 1. `$ npm install -g pm2`
 2. `$ pm2 start ecosystem.json`
 
