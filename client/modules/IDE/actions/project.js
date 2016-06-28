@@ -10,7 +10,7 @@ export function getProject(id) {
       .then(response => {
         browserHistory.push(`/projects/${id}`);
         dispatch({
-          type: ActionTypes.SET_PROJECT_NAME,
+          type: ActionTypes.SET_PROJECT,
           project: response.data
         });
       })
@@ -34,17 +34,17 @@ export function saveProject() {
     const state = getState();
     const formParams = Object.assign({}, state.project);
     formParams.file = state.file;
-    if (state.id) {
-      axios.put(`${ROOT_URL}/projects/${state.id}`, formParams, { withCredentials: true })
+    if (state.project.id) {
+      axios.put(`${ROOT_URL}/projects/${state.project.id}`, formParams, { withCredentials: true })
         .then(() => {
           dispatch({
             type: ActionTypes.PROJECT_SAVE_SUCCESS
-          })
-          .catch((response) => dispatch({
-            type: ActionTypes.PROJECT_SAVE_FAIL,
-            error: response.data
-          }));
-        });
+          });
+        })
+        .catch((response) => dispatch({
+          type: ActionTypes.PROJECT_SAVE_FAIL,
+          error: response.data
+        }));
     } else {
       axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
         .then(response => {

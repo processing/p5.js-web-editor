@@ -22,7 +22,7 @@ export function createProject(req, res) {
 }
 
 export function updateProject(req, res) {
-  Project.update({ _id: req.params.project_id },
+  Project.findByIdAndUpdate(req.params.project_id,
     {
       $set: req.body
     }, (err, updatedProject) => {
