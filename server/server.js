@@ -15,10 +15,12 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 
 const app = new Express();
 
-// add check if production environment here
-const compiler = webpack(config);
-app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
-app.use(webpackHotMiddleware(compiler));
+// Run Webpack dev server in development mode
+if (process.env.NODE_ENV === 'development') {
+  const compiler = webpack(config);
+  app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
+  app.use(webpackHotMiddleware(compiler));
+}
 
 // Import all required modules
 import serverConfig from './config';

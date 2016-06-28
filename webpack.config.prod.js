@@ -1,19 +1,19 @@
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var cssnext = require('postcss-cssnext');
+var postcssFocus = require('postcss-focus');
+var postcssReporter = require('postcss-reporter');
+var cssnano = require('cssnano');
 
 module.exports = {
-  entry: {
-    app: [
-      './client/index.js'
-    ],
-    vendor: [
-      'react',
-      'react-dom'
-    ]
-  },
+  devtool: 'hidden-source-map',
+
+  entry: [
+    './client/index.js'
+  ],
 
   output: {
-    path: __dirname + '/dist',
+    path: __dirname + '/static/dist',
     filename: 'bundle.js',
     publicPath: '/dist/'
   },
@@ -27,7 +27,7 @@ module.exports = {
       {
         test: /\.scss$/,
         exclude: /node_modules/,
-        loader: ExtractTextPlugin.extract('style', 'css?importLoaders=2&sourceMap!sass?outputStyle=expanded&sourceMap=true&sourceMapContents=true!postcss-loader')
+        loaders: ['style', 'css', 'sass', 'postcss']
       },
       {
         test: /\.jsx?$/,
@@ -51,6 +51,19 @@ module.exports = {
       compressor: {
         warnings: false
       }
+    })
+  ],
+
+  postcss: () => [
+    postcssFocus(),
+    cssnext({
+      browsers: ['last 2 versions', 'IE > 9']
+    }),
+    cssnano({
+      autoprefixer: false
+    }),
+    postcssReporter({
+      clearMessages: true
     })
   ]
 };
