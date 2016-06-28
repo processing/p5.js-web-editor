@@ -1,0 +1,7 @@
+{
+  "name": "p5js-web-editor",
+  "script": "index.js",
+  "env": {
+    "NODE_ENV": "production"
+  }
+}
