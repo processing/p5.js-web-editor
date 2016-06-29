@@ -2,9 +2,16 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 import shortid from 'shortid';
 
+const defaultSketch = `setup() {
+  createCanvas(400, 400);
+}
+draw() {
+  background(220);
+}`
+
 const fileSchema = new Schema({
   name: { type: String, default: 'sketch.js' },
-  content: { type: String }
+  content: { type: String, default: defaultSketch }
 }, { timestamps: true });
 
 const projectSchema = new Schema({

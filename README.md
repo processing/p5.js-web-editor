@@ -48,6 +48,7 @@ I'm new to using ESLint, but I decided on a configuration based on some popular 
 
 ##Dump of links I'm saving for reference
 
+* https://github.com/brigade/scss-lint
 * https://github.com/petehunt/react-howto
 * https://github.com/jsbin/jsbin (especially look at the console)
 * Need to figure out how to solve the XSS issue, https://github.com/jsbin/jsbin/wiki/Best-practices-for-building-your-own-live-paste-bin

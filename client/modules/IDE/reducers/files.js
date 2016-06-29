@@ -21,7 +21,12 @@ const file = (state = initialState, action) => {
     case ActionTypes.NEW_PROJECT:
       return {
         name: action.file.name,
-        content: action.file.conent
+        content: action.file.content
+      };
+    case ActionTypes.SET_PROJECT:
+      return {
+        name: action.file.name,
+        content: action.file.content
       };
     default:
       return state;

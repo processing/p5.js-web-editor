@@ -49,7 +49,7 @@ export function getProject(req, res) {
       name: project.name,
       file: {
         name: project.file.name,
-        content: project.file.conent
+        content: project.file.content
       }
     });
   });

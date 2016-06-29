@@ -11,7 +11,8 @@ export function getProject(id) {
         browserHistory.push(`/projects/${id}`);
         dispatch({
           type: ActionTypes.SET_PROJECT,
-          project: response.data
+          project: response.data,
+          file: response.data.file
         });
       })
       .catch(response => dispatch({
