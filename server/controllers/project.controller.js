@@ -54,3 +54,18 @@ export function getProject(req, res) {
     });
   });
 }
+
+export function getProjects(req, res) {
+  if (req.user) {
+    Project.find({user: req.user._id}) // eslint-disable-line no-underscore-dangle
+      .sort('-createdAt')
+      .select('name file _id')
+      .exec((err, projects) => {
+        res.json(projects);
+      });
+  } else {
+    // could just move this to client side
+    return res.json([]);
+  }
+
+}
