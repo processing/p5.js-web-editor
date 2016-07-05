@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import moment from 'moment';
+import { Link } from 'react-router';
 import Nav from '../../../components/Nav';
 import * as SketchActions from '../actions';
 import * as ProjectActions from '../../IDE/actions/project';
@@ -18,11 +20,22 @@ class SketchListView extends React.Component {
           createProject={this.props.createProject}
           saveProject={this.props.saveProject}
         />
-        <ul className="sketch-list__items">
-        {this.props.sketches.map(sketch =>
-          <li>{sketch.name}</li>
-        )}
-        </ul>
+        <table className="sketches-table">
+          <thead>
+            <th>Name</th>
+            <th>Created</th>
+            <th>Last Updated</th>
+          </thead>
+          <tbody>
+            {this.props.sketches.map(sketch =>
+              <tr className="sketches-table__row">
+                <td><Link to={`/projects/${sketch._id}`}>{sketch.name}</Link></td>
+                <td>{moment(sketch.createdAt).format('MMM D, YYYY')}</td>
+                <td>{moment(sketch.updatedAt).format('MMM D, YYYY')}</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
     );
   }
