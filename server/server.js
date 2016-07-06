@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
-const MongoStore = require('connect-mongo')(session);
+const MongoStore = require('connect-mongo/es5')(session);
 import passport from 'passport';
 import path from 'path';
 
@@ -83,4 +83,3 @@ app.listen(serverConfig.port, (error) => {
 });
 
 export default app;
-

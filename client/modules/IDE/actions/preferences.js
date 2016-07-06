@@ -23,3 +23,15 @@ export function decreaseFont() {
     type: ActionTypes.DECREASE_FONTSIZE
   };
 }
+
+export function increaseIndentation() {
+  return {
+    type: ActionTypes.INCREASE_INDENTATION
+  };
+}
+
+export function decreaseIndentation() {
+  return {
+    type: ActionTypes.DECREASE_INDENTATION
+  };
+}

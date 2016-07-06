@@ -36,6 +36,8 @@
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
+	padding-bottom: #{20 / $base-font-size}rem;
+	border-bottom: 2px dashed $light-button-border-color;
 }
 
 .preference__title {

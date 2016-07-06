@@ -2,31 +2,36 @@ import * as ActionTypes from '../../../constants';
 
 const initialState = {
   isVisible: false,
-  fontSize: 18
+  fontSize: 18,
+  indentationAmount: 4
 };
 
 const preferences = (state = initialState, action) => {
   switch (action.type) {
     case ActionTypes.OPEN_PREFERENCES:
-      return {
-        isVisible: true,
-        fontSize: state.fontSize
-      };
+      return Object.assign({}, state, {
+        isVisible: true
+      });
     case ActionTypes.CLOSE_PREFERENCES:
-      return {
-        isVisible: false,
-        fontSize: state.fontSize
-      };
+      return Object.assign({}, state, {
+        isVisible: false
+      });
     case ActionTypes.INCREASE_FONTSIZE:
-      return {
-        isVisible: state.isVisible,
+      return Object.assign({}, state, {
         fontSize: state.fontSize + 2
-      };
+      });
     case ActionTypes.DECREASE_FONTSIZE:
-      return {
-        isVisible: state.isVisible,
+      return Object.assign({}, state, {
         fontSize: state.fontSize - 2
-      };
+      });
+    case ActionTypes.INCREASE_INDENTATION:
+      return Object.assign({}, state, {
+        indentationAmount: state.indentationAmount + 2
+      });
+    case ActionTypes.DECREASE_INDENTATION:
+      return Object.assign({}, state, {
+        indentationAmount: state.indentationAmount - 2
+      });
     default:
       return state;
   }

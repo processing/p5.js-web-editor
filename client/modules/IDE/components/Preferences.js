@@ -19,8 +19,9 @@ function Preferences(props) {
           <Isvg src={exitUrl} alt="Exit Preferences" />
         </button>
       </div>
+
       <div className="preference">
-        <h3 className="preference__title">Text Size</h3>
+        <h4 className="preference__title">Text Size</h4>
         <button className="preference__plus-button" onClick={props.decreaseFont}>
           <Isvg src={minusUrl} alt="Decrease Font Size" />
         </button>
@@ -29,6 +30,18 @@ function Preferences(props) {
           <Isvg src={plusUrl} alt="Increase Font Size" />
         </button>
       </div>
+
+      <div className="preference">
+        <h4 className="preference__title">Indentation Amount</h4>
+        <button className="preference__plus-button" onClick={props.decreaseIndentation}>
+          <Isvg src={minusUrl} alt="DecreaseIndentation Amount" />
+        </button>
+        <p className="preference__value">{props.indentationAmount}</p>
+        <button className="preference__minus-button" onClick={props.increaseIndentation}>
+          <Isvg src={plusUrl} alt="IncreaseIndentation Amount" />
+        </button>
+      </div>
+
     </div>
   );
 }
@@ -38,7 +51,10 @@ Preferences.propTypes = {
   closePreferences: PropTypes.func.isRequired,
   decreaseFont: PropTypes.func.isRequired,
   fontSize: PropTypes.number.isRequired,
-  increaseFont: PropTypes.func.isRequired
+  increaseFont: PropTypes.func.isRequired,
+  indentationAmount: PropTypes.number.isRequired,
+  decreaseIndentation: PropTypes.func.isRequired,
+  increaseIndentation: PropTypes.func.isRequired
 };
 
 export default Preferences;

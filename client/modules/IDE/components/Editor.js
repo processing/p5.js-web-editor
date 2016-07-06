@@ -17,6 +17,7 @@ class Editor extends React.Component {
       this.props.updateFile('sketch.js', this._cm.getValue());
     });
     this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
+    this._cm.setOption('tabSize', this.props.indentationAmount);
   }
 
   componentDidUpdate(prevProps) {
@@ -26,6 +27,9 @@ class Editor extends React.Component {
     }
     if (this.props.fontSize !== prevProps.fontSize) {
       this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
+    }
+    if (this.props.indentationAmount !== prevProps.indentationAmount) {
+      this._cm.setOption('tabSize', this.props.indentationAmount);
     }
   }
 
@@ -43,7 +47,8 @@ class Editor extends React.Component {
 Editor.propTypes = {
   content: PropTypes.string.isRequired,
   updateFile: PropTypes.func.isRequired,
-  fontSize: PropTypes.number.isRequired
+  fontSize: PropTypes.number.isRequired,
+  indentationAmount: PropTypes.number.isRequired
 };
 
 export default Editor;
