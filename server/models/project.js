@@ -9,6 +9,18 @@ draw() {
   background(220);
 }`
 
+const defaultHTML = 
+`
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    <script src="sketch.js"></script>
+  </body>
+</html>
+`
+
 const fileSchema = new Schema({
   name: { type: String, default: 'sketch.js' },
   content: { type: String, default: defaultSketch }
@@ -17,7 +29,7 @@ const fileSchema = new Schema({
 const projectSchema = new Schema({
   name: { type: String, default: "Hello p5.js, it's the server" },
   user: { type: Schema.Types.ObjectId, ref: 'User' },
-  file: { type: fileSchema },
+  files: {type: [ fileSchema ], default: [{ name: 'sketch.js', content: defaultSketch }, { name: 'index.html', content: defaultHTML }]},
   _id: { type: String, default: shortid.generate }
 }, { timestamps: true });
 

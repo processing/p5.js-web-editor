@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import Editor from '../components/Editor';
+import Sidebar from '../components/Sidebar';
 import PreviewFrame from '../components/PreviewFrame';
 import Toolbar from '../components/Toolbar';
 import Preferences from '../components/Preferences';
@@ -44,13 +45,14 @@ class IDEView extends React.Component {
           decreaseFont={this.props.decreaseFont}
           fontSize={this.props.preferences.fontSize}
         />
+        <Sidebar files={this.props.files} />
         <Editor
-          content={this.props.file.content}
+          content={this.props.files[0].content}
           updateFile={this.props.updateFile}
           fontSize={this.props.preferences.fontSize}
         />
         <PreviewFrame
-          content={this.props.file.content}
+          content={this.props.files[0].content}
           head={
             <link type="text/css" rel="stylesheet" href="/preview-styles.css" />
           }
@@ -86,15 +88,13 @@ IDEView.propTypes = {
   closePreferences: PropTypes.func.isRequired,
   increaseFont: PropTypes.func.isRequired,
   decreaseFont: PropTypes.func.isRequired,
-  file: PropTypes.shape({
-    content: PropTypes.string.isRequired
-  }).isRequired,
+  files: PropTypes.array.isRequired,
   updateFile: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    file: state.file,
+    files: state.files,
     ide: state.ide,
     preferences: state.preferences,
     user: state.user,
