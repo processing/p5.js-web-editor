@@ -12,7 +12,7 @@ export function getProject(id) {
         dispatch({
           type: ActionTypes.SET_PROJECT,
           project: response.data,
-          file: response.data.file
+          files: response.data.files
         });
       })
       .catch(response => dispatch({
@@ -54,10 +54,7 @@ export function saveProject() {
             type: ActionTypes.NEW_PROJECT,
             name: response.data.name,
             id: response.data.id,
-            file: {
-              name: response.data.file.name,
-              content: response.data.file.content
-            }
+            files: response.data.files
           });
         })
         .catch(response => dispatch({
@@ -78,10 +75,7 @@ export function createProject() {
           type: ActionTypes.NEW_PROJECT,
           name: response.data.name,
           id: response.data.id,
-          file: {
-            name: response.data.file.name,
-            content: response.data.file.content
-          }
+          files: response.data.files
         });
       })
       .catch(response => dispatch({

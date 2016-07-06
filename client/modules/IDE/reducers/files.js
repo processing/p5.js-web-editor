@@ -45,9 +45,9 @@ const files = (state = initialState, action) => {
         };
       });
     case ActionTypes.NEW_PROJECT:
-      return { ...action.files };
+      return [...action.files];
     case ActionTypes.SET_PROJECT:
-      return { ...action.files };
+      return [...action.files];
     default:
       return state;
   }

@@ -13,10 +13,7 @@ export function createProject(req, res) {
     return res.json({
       id: newProject._id, // eslint-disable-line no-underscore-dangle
       name: newProject.name,
-      file: {
-        name: newProject.file.name,
-        content: newProject.file.content
-      }
+      files: newProject.files
     });
   });
 }
@@ -30,10 +27,7 @@ export function updateProject(req, res) {
       return res.json({
         id: updatedProject._id, // eslint-disable-line no-underscore-dangle
         name: updatedProject.name,
-        file: {
-          name: updatedProject.file.name,
-          content: updatedProject.file.content
-        }
+        file: updatedProject.files
       });
     });
 }
@@ -47,10 +41,7 @@ export function getProject(req, res) {
     return res.json({
       id: project._id, // eslint-disable-line no-underscore-dangle
       name: project.name,
-      file: {
-        name: project.file.name,
-        content: project.file.content
-      }
+      files: project.files
     });
   });
 }

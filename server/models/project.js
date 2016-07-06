@@ -2,10 +2,10 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 import shortid from 'shortid';
 
-const defaultSketch = `setup() {
+const defaultSketch = `function setup() {
   createCanvas(400, 400);
 }
-draw() {
+function draw() {
   background(220);
 }`
 
