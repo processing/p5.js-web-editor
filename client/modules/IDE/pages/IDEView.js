@@ -48,7 +48,7 @@ class IDEView extends React.Component {
         <Sidebar files={this.props.files} />
         <Editor
           content={this.props.files[0].content}
-          updateFile={this.props.updateFile}
+          updateFileContent={this.props.updateFileContent}
           fontSize={this.props.preferences.fontSize}
         />
         <PreviewFrame
@@ -89,7 +89,7 @@ IDEView.propTypes = {
   increaseFont: PropTypes.func.isRequired,
   decreaseFont: PropTypes.func.isRequired,
   files: PropTypes.array.isRequired,
-  updateFile: PropTypes.func.isRequired
+  updateFileContent: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

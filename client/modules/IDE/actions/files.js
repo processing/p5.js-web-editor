@@ -1,8 +1,8 @@
 import * as ActionTypes from '../../../constants';
 
-export function updateFile(name, content) {
+export function updateFileContent(name, content) {
   return {
-    type: ActionTypes.UPDATE_FILE,
+    type: ActionTypes.UPDATE_FILE_CONTENT,
     name,
     content
   };

@@ -1,4 +1,4 @@
-export const UPDATE_FILE = 'UPDATE_FILE';
+export const UPDATE_FILE_CONTENT = 'UPDATE_FILE_CONTENT';
 export const TOGGLE_SKETCH = 'TOGGLE_SKETCH';
 
 export const START_SKETCH = 'START_SKETCH';

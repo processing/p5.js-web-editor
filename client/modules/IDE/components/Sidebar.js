@@ -5,7 +5,10 @@ function Sidebar(props) {
     <section className="sidebar">
       <ul className="sidebar__file-list">
         {props.files.map(file =>
-          <li className="sidebar__file-item">{file.name}</li>
+          <li
+            className="sidebar__file-item"
+            key={file.id}
+          >{file.name}</li>
         )}
       </ul>
     </section>

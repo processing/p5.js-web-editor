@@ -10,11 +10,7 @@ export function createProject(req, res) {
 
   Project.create(projectValues, (err, newProject) => {
     if (err) { return res.json({ success: false }); }
-    return res.json({
-      id: newProject._id, // eslint-disable-line no-underscore-dangle
-      name: newProject.name,
-      files: newProject.files
-    });
+    return res.json(newProject);
   });
 }
 
@@ -24,11 +20,7 @@ export function updateProject(req, res) {
       $set: req.body
     }, (err, updatedProject) => {
       if (err) { return res.json({ success: false }); }
-      return res.json({
-        id: updatedProject._id, // eslint-disable-line no-underscore-dangle
-        name: updatedProject.name,
-        file: updatedProject.files
-      });
+      return res.json(updatedProject);
     });
 }
 
@@ -38,11 +30,7 @@ export function getProject(req, res) {
       return res.status(404).send({ message: 'Project with that id does not exist' });
     }
 
-    return res.json({
-      id: project._id, // eslint-disable-line no-underscore-dangle
-      name: project.name,
-      files: project.files
-    });
+    return res.json(project);
   });
 }
 

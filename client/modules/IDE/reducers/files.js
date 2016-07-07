@@ -33,16 +33,13 @@ const initialState = [
 
 const files = (state = initialState, action) => {
   switch (action.type) {
-    case ActionTypes.UPDATE_FILE:
+    case ActionTypes.UPDATE_FILE_CONTENT:
       return state.map(file => {
         if (file.name !== action.name) {
           return file;
         }
 
-        return {
-          name: file.name,
-          content: action.content
-        };
+        return Object.assign({}, file, { content: action.content });
       });
     case ActionTypes.NEW_PROJECT:
       return [...action.files];

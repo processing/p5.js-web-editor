@@ -14,7 +14,7 @@ class Editor extends React.Component {
       mode: 'javascript'
     });
     this._cm.on('change', () => { // eslint-disable-line
-      this.props.updateFile('sketch.js', this._cm.getValue());
+      this.props.updateFileContent('sketch.js', this._cm.getValue());
     });
     this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
   }
@@ -42,7 +42,7 @@ class Editor extends React.Component {
 
 Editor.propTypes = {
   content: PropTypes.string.isRequired,
-  updateFile: PropTypes.func.isRequired,
+  updateFileContent: PropTypes.func.isRequired,
   fontSize: PropTypes.number.isRequired
 };
 

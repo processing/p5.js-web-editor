@@ -28,11 +28,27 @@ const fileSchema = new Schema({
   content: { type: String, default: defaultSketch }
 }, { timestamps: true, _id: true });
 
+fileSchema.virtual('id').get(function(){
+    return this._id.toHexString();
+});
+
+fileSchema.set('toJSON', {
+    virtuals: true
+});
+
 const projectSchema = new Schema({
   name: { type: String, default: "Hello p5.js, it's the server" },
   user: { type: Schema.Types.ObjectId, ref: 'User' },
   files: {type: [ fileSchema ], default: [{ name: 'sketch.js', content: defaultSketch, _id: new ObjectId() }, { name: 'index.html', content: defaultHTML, _id: new ObjectId() }]},
   _id: { type: String, default: shortid.generate }
 }, { timestamps: true });
+
+projectSchema.virtual('id').get(function(){
+    return this._id;
+});
+
+projectSchema.set('toJSON', {
+    virtuals: true
+});
 
 export default mongoose.model('Project', projectSchema);
