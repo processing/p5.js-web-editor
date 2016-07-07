@@ -34,7 +34,7 @@ export function saveProject() {
   return (dispatch, getState) => {
     const state = getState();
     const formParams = Object.assign({}, state.project);
-    formParams.file = state.file;
+    formParams.files = state.files;
     if (state.project.id) {
       axios.put(`${ROOT_URL}/projects/${state.project.id}`, formParams, { withCredentials: true })
         .then(() => {
