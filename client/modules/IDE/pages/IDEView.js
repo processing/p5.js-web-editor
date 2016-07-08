@@ -11,6 +11,7 @@ import * as FileActions from '../actions/files';
 import * as IDEActions from '../actions/ide';
 import * as PreferencesActions from '../actions/preferences';
 import * as ProjectActions from '../actions/project';
+import { getFile } from '../reducers/files';
 
 class IDEView extends React.Component {
   componentDidMount() {
@@ -45,14 +46,18 @@ class IDEView extends React.Component {
           decreaseFont={this.props.decreaseFont}
           fontSize={this.props.preferences.fontSize}
         />
-        <Sidebar files={this.props.files} />
+        <Sidebar
+          files={this.props.files}
+          selectedFile={this.props.selectedFile}
+        />
         <Editor
-          content={this.props.files[0].content}
+          content={this.props.selectedFile.content}
           updateFileContent={this.props.updateFileContent}
           fontSize={this.props.preferences.fontSize}
+          files={this.props.files}
         />
         <PreviewFrame
-          content={this.props.files[0].content}
+          content={this.props.selectedFile.content}
           head={
             <link type="text/css" rel="stylesheet" href="/preview-styles.css" />
           }
@@ -89,12 +94,17 @@ IDEView.propTypes = {
   increaseFont: PropTypes.func.isRequired,
   decreaseFont: PropTypes.func.isRequired,
   files: PropTypes.array.isRequired,
-  updateFileContent: PropTypes.func.isRequired
+  updateFileContent: PropTypes.func.isRequired,
+  selectedFile: PropTypes.shape({
+    id: PropTypes.string,
+    content: PropTypes.string.isRequired
+  })
 };
 
 function mapStateToProps(state) {
   return {
     files: state.files,
+    selectedFile: getFile(state.files, state.ide.selectedFile),
     ide: state.ide,
     preferences: state.preferences,
     user: state.user,

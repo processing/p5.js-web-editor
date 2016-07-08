@@ -20,14 +20,18 @@ const defaultHTML =
 </html>
 `;
 
+
+// if the project has never been saved,
 const initialState = [
   {
     name: 'sketch.js',
-    content: defaultSketch
+    content: defaultSketch,
+    id: '1'
   },
   {
     name: 'index.html',
-    content: defaultHTML
+    content: defaultHTML,
+    id: '2'
   }];
 
 
@@ -49,5 +53,7 @@ const files = (state = initialState, action) => {
       return state;
   }
 };
+
+export const getFile = (state, id) => state.filter(file => file.id === id)[0];
 
 export default files;

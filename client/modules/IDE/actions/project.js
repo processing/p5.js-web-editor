@@ -12,7 +12,8 @@ export function getProject(id) {
         dispatch({
           type: ActionTypes.SET_PROJECT,
           project: response.data,
-          files: response.data.files
+          files: response.data.files,
+          selectedFile: response.data.selectedFile
         });
       })
       .catch(response => dispatch({
@@ -34,7 +35,7 @@ export function saveProject() {
   return (dispatch, getState) => {
     const state = getState();
     const formParams = Object.assign({}, state.project);
-    formParams.files = state.files;
+    formParams.files = [...state.files];
     if (state.project.id) {
       axios.put(`${ROOT_URL}/projects/${state.project.id}`, formParams, { withCredentials: true })
         .then(() => {
@@ -47,6 +48,12 @@ export function saveProject() {
           error: response.data
         }));
     } else {
+      // this might be unnecessary, but to prevent collisions in mongodb
+      formParams.files.map(file => {
+        const newFile = Object.assign({}, file);
+        delete newFile.id;
+        return newFile;
+      });
       axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
         .then(response => {
           browserHistory.push(`/projects/${response.data.id}`);
@@ -54,6 +61,7 @@ export function saveProject() {
             type: ActionTypes.NEW_PROJECT,
             name: response.data.name,
             id: response.data.id,
+            selectedFile: response.data.selectedFile,
             files: response.data.files
           });
         })
@@ -75,6 +83,7 @@ export function createProject() {
           type: ActionTypes.NEW_PROJECT,
           name: response.data.name,
           id: response.data.id,
+          selectedFile: response.data.selectedFile,
           files: response.data.files
         });
       })

@@ -60,6 +60,7 @@
     "babel-core": "^6.8.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.1",
+    "bson-objectid": "^1.1.4",
     "classnames": "^2.2.5",
     "codemirror": "^5.14.2",
     "connect-mongo": "^1.2.0",

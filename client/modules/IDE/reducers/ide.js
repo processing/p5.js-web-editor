@@ -1,7 +1,8 @@
 import * as ActionTypes from '../../../constants';
 
 const initialState = {
-  isPlaying: false
+  isPlaying: false,
+  selectedFile: '1'
 };
 
 const ide = (state = initialState, action) => {
@@ -18,6 +19,10 @@ const ide = (state = initialState, action) => {
       return {
         isPlaying: false
       };
+    case ActionTypes.SET_SELECTED_FILE:
+    case ActionTypes.SET_PROJECT:
+    case ActionTypes.NEW_PROJECT:
+      return Object.assign({}, state, { selectedFile: action.selectedFile });
     default:
       return state;
   }
