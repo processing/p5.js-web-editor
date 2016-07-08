@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom';
 class PreviewFrame extends React.Component {
 
   componentDidMount() {
+    this.hijackConsole();
+
     if (this.props.isPlaying) {
       this.renderFrameContents();
     }
@@ -31,6 +33,25 @@ class PreviewFrame extends React.Component {
     const doc = ReactDOM.findDOMNode(this).contentDocument;
     doc.write('');
     doc.close();
+  }
+
+  hijackConsole() {
+    const iframeWindow = ReactDOM.findDOMNode(this).contentWindow;
+    const originalConsole = iframeWindow.console;
+    iframeWindow.console = {};
+
+    const methods = [
+      'debug', 'clear', 'error', 'info', 'log', 'warn'
+    ];
+
+    methods.forEach((method) => {
+      iframeWindow.console[method] = (...theArgs) => {
+        originalConsole[method].apply(originalConsole, theArgs);
+
+        // TO DO: do something with the arguments
+        // window.alert(JSON.stringify(theArgs));
+      };
+    });
   }
 
   renderSketch() {
