@@ -14,6 +14,7 @@ function Sidebar(props) {
             <li
               className={itemClass}
               key={file.id}
+              onClick={() => props.setSelectedFile(file.id)}
             >{file.name}</li>
           );
         })}
@@ -26,7 +27,8 @@ Sidebar.propTypes = {
   files: PropTypes.array.isRequired,
   selectedFile: PropTypes.shape({
     id: PropTypes.string.isRequired
-  })
+  }),
+  setSelectedFile: PropTypes.func.isRequired
 };
 
 export default Sidebar;

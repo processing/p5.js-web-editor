@@ -17,3 +17,10 @@ export function stopSketch() {
     type: ActionTypes.STOP_SKETCH
   };
 }
+
+export function setSelectedFile(fileId) {
+  return {
+    type: ActionTypes.SET_SELECTED_FILE,
+    selectedFile: fileId
+  };
+}

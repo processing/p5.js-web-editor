@@ -49,9 +49,10 @@ class IDEView extends React.Component {
         <Sidebar
           files={this.props.files}
           selectedFile={this.props.selectedFile}
+          setSelectedFile={this.props.setSelectedFile}
         />
         <Editor
-          content={this.props.selectedFile.content}
+          file={this.props.selectedFile}
           updateFileContent={this.props.updateFileContent}
           fontSize={this.props.preferences.fontSize}
           files={this.props.files}
@@ -96,9 +97,10 @@ IDEView.propTypes = {
   files: PropTypes.array.isRequired,
   updateFileContent: PropTypes.func.isRequired,
   selectedFile: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
-  })
+  }),
+  setSelectedFile: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
