@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import escapeStringRegexp from 'escape-string-regexp';
-import 'srcdoc-polyfill';
 
 // sandbox="allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-modals allow-forms"
 
