@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
+import escapeStringRegexp from 'escape-string-regexp';
 
 class PreviewFrame extends React.Component {
 
@@ -11,11 +12,12 @@ class PreviewFrame extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.isPlaying !== prevProps.isPlaying) {
-      if (this.props.isPlaying) {
-        this.renderSketch();
-      } else {
-        this.clearPreview();
-      }
+      this.renderSketch();
+      // if (this.props.isPlaying) {
+      //   this.renderSketch();
+      // } else {
+      //   this.clearPreview();
+      // }
     }
 
     if (this.props.isPlaying && this.props.content !== prevProps.content) {
@@ -28,22 +30,47 @@ class PreviewFrame extends React.Component {
   }
 
   clearPreview() {
-    const doc = ReactDOM.findDOMNode(this).contentDocument;
-    doc.write('');
-    doc.close();
+    const doc = ReactDOM.findDOMNode(this);
+    doc.srcDoc = '';
+  }
+
+  injectLocalFiles() {
+    let htmlFile = this.props.htmlFile.content;
+
+    this.props.jsFiles.forEach(jsFile => {
+      const fileName = escapeStringRegexp(jsFile.name);
+      const fileRegex = new RegExp(`<script.*?src=('|")((\.\/)|\/)?${fileName}('|").*?>([\s\S]*?)<\/script>`, 'gmi');
+      htmlFile = htmlFile.replace(fileRegex, `<script>\n${jsFile.content}\n</script>`);
+    });
+
+    const htmlHead = htmlFile.match(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi);
+    const headRegex = new RegExp('head', 'i');
+    let htmlHeadContents = htmlHead[0].split(headRegex)[1];
+    htmlHeadContents = htmlHeadContents.slice(1, htmlHeadContents.length - 2);
+    htmlHeadContents += '<link rel="stylesheet" type="text/css" href="/preview-styles.css" />\n';
+    htmlFile = htmlFile.replace(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi, `<head>\n${htmlHeadContents}\n</head>`);
+
+    return htmlFile;
   }
 
   renderSketch() {
-    const doc = ReactDOM.findDOMNode(this).contentDocument;
-    this.clearPreview();
-    ReactDOM.render(this.props.head, doc.head);
-    const p5Script = doc.createElement('script');
-    p5Script.setAttribute('src', 'https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.0/p5.min.js');
-    doc.body.appendChild(p5Script);
+    const doc = ReactDOM.findDOMNode(this);
+    if (this.props.isPlaying) {
+      doc.srcdoc = this.injectLocalFiles();
+    } else {
+      doc.srcdoc = '';
+    }
 
-    const sketchScript = doc.createElement('script');
-    sketchScript.textContent = this.props.content;
-    doc.body.appendChild(sketchScript);
+    // this.clearPreview();
+    // ReactDOM.render(this.props.head, doc.head);
+    // const p5Script = doc.createElement('script');
+    // p5Script.setAttribute('src', 'https://cdnjs.cloudflare.com/ajax/libs/
+    //   p5.js/0.5.0/p5.min.js');
+    // doc.body.appendChild(p5Script);
+
+    // const sketchScript = doc.createElement('script');
+    // sketchScript.textContent = this.props.content;
+    // doc.body.appendChild(sketchScript);
   }
 
   renderFrameContents() {
@@ -70,7 +97,11 @@ class PreviewFrame extends React.Component {
 PreviewFrame.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   head: PropTypes.object.isRequired,
-  content: PropTypes.string.isRequired
+  content: PropTypes.string.isRequired,
+  htmlFile: PropTypes.shape({
+    content: PropTypes.string.isRequired
+  }),
+  jsFiles: PropTypes.array.isRequired
 };
 
 export default PreviewFrame;

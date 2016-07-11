@@ -13,6 +13,7 @@ const defaultHTML =
 <!DOCTYPE html>
 <html>
   <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.0/p5.min.js"></script>
   </head>
   <body>
     <script src="sketch.js"></script>
@@ -55,5 +56,7 @@ const files = (state = initialState, action) => {
 };
 
 export const getFile = (state, id) => state.filter(file => file.id === id)[0];
+export const getHTMLFile = (state) => state.filter(file => file.name.match(/.*html$/))[0];
+export const getJSFiles = (state) => state.filter(file => file.name.match(/.*.js$/));
 
 export default files;

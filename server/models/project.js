@@ -16,6 +16,7 @@ const defaultHTML =
 <!DOCTYPE html>
 <html>
   <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.0/p5.min.js"></script>
   </head>
   <body>
     <script src="sketch.js"></script>

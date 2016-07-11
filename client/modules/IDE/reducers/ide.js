@@ -8,17 +8,11 @@ const initialState = {
 const ide = (state = initialState, action) => {
   switch (action.type) {
     case ActionTypes.TOGGLE_SKETCH:
-      return {
-        isPlaying: !state.isPlaying
-      };
+      return Object.assign({}, state, { isPlaying: !state.isPlaying });
     case ActionTypes.START_SKETCH:
-      return {
-        isPlaying: true
-      };
+      return Object.assign({}, state, { isPlaying: true });
     case ActionTypes.STOP_SKETCH:
-      return {
-        isPlaying: false
-      };
+      return Object.assign({}, state, { isPlaying: false });
     case ActionTypes.SET_SELECTED_FILE:
     case ActionTypes.SET_PROJECT:
     case ActionTypes.NEW_PROJECT:
