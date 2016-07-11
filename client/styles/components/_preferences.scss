@@ -2,7 +2,7 @@
 	position: absolute;
 	top: #{66 / $base-font-size}rem;
 	right: #{40 / $base-font-size}rem;
-	width: #{300 / $base-font-size}rem;
+	width: #{332 / $base-font-size}rem;
 	background-color: $light-button-background-color;
 	display: none;
 	padding: #{16 / $base-font-size}rem #{26 / $base-font-size}rem;
@@ -45,20 +45,22 @@
 }
 
 .preference__value {
-	border: 1px solid $light-button-border-color;
+	border: 2px solid $light-value-border-color;
 	text-align: center;
+	border-radius: 0%;
 	width: #{48 / $base-font-size}rem;
-	line-height: #{48 / $base-font-size}rem;
-	margin: 0 #{20 / $base-font-size}rem;
+	height: #{44 / $base-font-size}rem;
+	margin: 0 #{28 / $base-font-size}rem;
+	padding: 0;
 	background-color: $light-button-background-color;
 }
 
 .preference__label {
 	margin: 0;
 	line-height: #{20 / $base-font-size}rem;
-	color: $light-button-border-color;
+	color: $light-inactive-text-color;
 	&:hover {
-		color: $light-button-border-color;
+		color: $light-inactive-text-color;
 	}
 }
 
@@ -70,7 +72,7 @@
 .preference__option {
 	@extend %preference-option;
 	list-style-type: none;
-	padding-left: #{12 / $base-font-size}rem;
+	padding-left: #{28 / $base-font-size}rem;
 	&--selected {
 		@extend %preference-option--selected;
 	}
