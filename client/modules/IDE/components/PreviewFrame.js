@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import escapeStringRegexp from 'escape-string-regexp';
 import 'srcdoc-polyfill';
 
+// sandbox="allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-modals allow-forms"
+
 class PreviewFrame extends React.Component {
 
   componentDidMount() {
@@ -89,7 +91,6 @@ class PreviewFrame extends React.Component {
       <iframe
         className="preview-frame"
         frameBorder="0"
-        sandbox="allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-modals allow-forms"
         title="sketch output"
       ></iframe>
     );
