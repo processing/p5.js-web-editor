@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import escapeStringRegexp from 'escape-string-regexp';
+import srcDoc from 'srcdoc-polyfill';
 
 // sandbox="allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-modals allow-forms"
 
@@ -59,9 +60,14 @@ class PreviewFrame extends React.Component {
     const doc = ReactDOM.findDOMNode(this);
     if (this.props.isPlaying) {
       // TODO add polyfill for this
-      doc.srcdoc = this.injectLocalFiles();
+      // doc.srcdoc = this.injectLocalFiles();
+      srcDoc.set(doc, this.injectLocalFiles());
     } else {
-      doc.srcdoc = '';
+      // doc.srcdoc = '';
+      srcDoc.set(doc, '');
+      doc.contentWindow.document.open();
+      doc.contentWindow.document.write('');
+      doc.contentWindow.document.close();
     }
 
     // this.clearPreview();
