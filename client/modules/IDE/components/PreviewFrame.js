@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import escapeStringRegexp from 'escape-string-regexp';
+import 'srcdoc-polyfill';
 
 class PreviewFrame extends React.Component {
 
