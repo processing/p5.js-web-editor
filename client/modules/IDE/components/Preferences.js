@@ -40,8 +40,6 @@ function Preferences(props) {
           <Isvg src={plusUrl} alt="Increase Font Size" />
           <h6 className="preference__label">Increase</h6>
         </button>
-
-
       </div>
 
       <div className="preference">
@@ -60,7 +58,6 @@ function Preferences(props) {
           <button className={preferencesTabOptionClass} onClick={props.indentWithTab}>Tabs</button>
         </div>
       </div>
-
     </div>
   );
 }

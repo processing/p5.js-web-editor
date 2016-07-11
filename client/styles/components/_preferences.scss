@@ -48,7 +48,7 @@
 	border: 1px solid $light-button-border-color;
 	text-align: center;
 	width: #{48 / $base-font-size}rem;
-	height: #{48 / $base-font-size}rem;
+	line-height: #{48 / $base-font-size}rem;
 	margin: 0 #{20 / $base-font-size}rem;
 	background-color: $light-button-background-color;
 }
