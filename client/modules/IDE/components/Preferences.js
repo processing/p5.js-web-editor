@@ -25,7 +25,7 @@ function Preferences(props) {
         <button className="preference__plus-button" onClick={props.decreaseFont}>
           <Isvg src={minusUrl} alt="Decrease Font Size" />
         </button>
-        <p className="preference__value">{props.fontSize}</p>
+        <input className="preference__value" defaultValue={props.fontSize} value={props.fontSize} onChange={props.updateFont}></input>
         <button className="preference__minus-button" onClick={props.increaseFont}>
           <Isvg src={plusUrl} alt="Increase Font Size" />
         </button>
@@ -36,7 +36,7 @@ function Preferences(props) {
         <button className="preference__plus-button" onClick={props.decreaseIndentation}>
           <Isvg src={minusUrl} alt="DecreaseIndentation Amount" />
         </button>
-        <p className="preference__value">{props.indentationAmount}</p>
+        <input className="preference__value" defaultValue={props.indentationAmount} value={props.indentationAmount} onChange={props.updateIndentation}></input>
         <button className="preference__minus-button" onClick={props.increaseIndentation}>
           <Isvg src={plusUrl} alt="IncreaseIndentation Amount" />
         </button>
@@ -50,11 +50,13 @@ Preferences.propTypes = {
   isVisible: PropTypes.bool.isRequired,
   closePreferences: PropTypes.func.isRequired,
   decreaseFont: PropTypes.func.isRequired,
+  updateFont: PropTypes.func.isRequired,
   fontSize: PropTypes.number.isRequired,
   increaseFont: PropTypes.func.isRequired,
   indentationAmount: PropTypes.number.isRequired,
   decreaseIndentation: PropTypes.func.isRequired,
-  increaseIndentation: PropTypes.func.isRequired
+  increaseIndentation: PropTypes.func.isRequired,
+  updateIndentation: PropTypes.func.isRequired
 };
 
 export default Preferences;

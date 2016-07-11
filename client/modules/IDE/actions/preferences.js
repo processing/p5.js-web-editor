@@ -24,6 +24,14 @@ export function decreaseFont() {
   };
 }
 
+export function updateFont(event) {
+  const value = event.target.value;
+  return {
+    type: ActionTypes.UPDATE_FONTSIZE,
+    value
+  };
+}
+
 export function increaseIndentation() {
   return {
     type: ActionTypes.INCREASE_INDENTATION
@@ -33,5 +41,13 @@ export function increaseIndentation() {
 export function decreaseIndentation() {
   return {
     type: ActionTypes.DECREASE_INDENTATION
+  };
+}
+
+export function updateIndentation() {
+  const value = event.target.value;
+  return {
+    type: ActionTypes.UPDATE_INDENTATION,
+    value
   };
 }

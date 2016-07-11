@@ -42,9 +42,11 @@ class IDEView extends React.Component {
           closePreferences={this.props.closePreferences}
           increaseFont={this.props.increaseFont}
           decreaseFont={this.props.decreaseFont}
+          updateFont={this.props.updateFont}
           fontSize={this.props.preferences.fontSize}
           increaseIndentation={this.props.increaseIndentation}
           decreaseIndentation={this.props.decreaseIndentation}
+          updateIndentation={this.props.updateIndentation}
           indentationAmount={this.props.preferences.indentationAmount}
         />
         <Editor
@@ -91,8 +93,10 @@ IDEView.propTypes = {
   closePreferences: PropTypes.func.isRequired,
   increaseFont: PropTypes.func.isRequired,
   decreaseFont: PropTypes.func.isRequired,
+  updateFont: PropTypes.func.isRequired,
   increaseIndentation: PropTypes.func.isRequired,
   decreaseIndentation: PropTypes.func.isRequired,
+  updateIndentation: PropTypes.func.isRequired,
   file: PropTypes.shape({
     content: PropTypes.string.isRequired
   }).isRequired,

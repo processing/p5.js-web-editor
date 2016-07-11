@@ -48,6 +48,6 @@
 .preference__value {
 	border: 1px solid $light-button-border-color;
 	text-align: center;
-	line-height: #{48 / $base-font-size}rem;
 	width: #{48 / $base-font-size}rem;
+	background-color: $light-button-background-color;
 }

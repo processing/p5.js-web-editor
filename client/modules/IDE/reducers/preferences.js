@@ -24,6 +24,10 @@ const preferences = (state = initialState, action) => {
       return Object.assign({}, state, {
         fontSize: state.fontSize - 2
       });
+    case ActionTypes.UPDATE_FONTSIZE:
+      return Object.assign({}, state, {
+        fontSize: action.value
+      });
     case ActionTypes.INCREASE_INDENTATION:
       return Object.assign({}, state, {
         indentationAmount: state.indentationAmount + 2
@@ -31,6 +35,10 @@ const preferences = (state = initialState, action) => {
     case ActionTypes.DECREASE_INDENTATION:
       return Object.assign({}, state, {
         indentationAmount: state.indentationAmount - 2
+      });
+    case ActionTypes.UPDATE_INDENTATION:
+      return Object.assign({}, state, {
+        indentationAmount: action.value
       });
     default:
       return state;
