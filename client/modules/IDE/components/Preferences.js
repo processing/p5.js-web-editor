@@ -55,10 +55,10 @@ function Preferences(props) {
           <Isvg src={plusUrl} alt="IncreaseIndentation Amount" />
           <h6 className="preference__label">Increase</h6>
         </button>
-        <ul>
-          <li className={preferencesSpaceOptionClass} onClick={props.indentWithSpace}>Spaces</li>
-          <li className={preferencesTabOptionClass} onClick={props.indentWithTab}>Tabs</li>
-        </ul>
+        <div className="preference__vertical-list">
+          <button className={preferencesSpaceOptionClass} onClick={props.indentWithSpace}>Spaces</button>
+          <button className={preferencesTabOptionClass} onClick={props.indentWithTab}>Tabs</button>
+        </div>
       </div>
 
     </div>
