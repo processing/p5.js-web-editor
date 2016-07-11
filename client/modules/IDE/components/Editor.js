@@ -17,7 +17,10 @@ class Editor extends React.Component {
       this.props.updateFile('sketch.js', this._cm.getValue());
     });
     this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
+
+    this._cm.setOption('indentWithTabs', this.props.indentWithTab);
     this._cm.setOption('tabSize', this.props.indentationAmount);
+    this._cm.setOption('indentUnit', this.props.indentationAmount);
   }
 
   componentDidUpdate(prevProps) {
@@ -48,7 +51,8 @@ Editor.propTypes = {
   content: PropTypes.string.isRequired,
   updateFile: PropTypes.func.isRequired,
   fontSize: PropTypes.number.isRequired,
-  indentationAmount: PropTypes.number.isRequired
+  indentationAmount: PropTypes.number.isRequired,
+  isTabIndent: PropTypes.bool.isRequired
 };
 
 export default Editor;

@@ -69,6 +69,7 @@
 	@extend %toolbar-button;
 	color: $light-primary-text-color;
 	background-color: $light-modal-button-background-color;
+	padding: 0;
 	& g {
 		fill: $light-primary-text-color;
 	}
@@ -87,4 +88,18 @@
 	&:hover {
 		color: $light-primary-text-color;
 	}
+}
+
+%preference-option {
+	color: $light-secondary-text-color;
+	font-size: #{14 / $base-font-size}rem;
+	cursor: pointer;
+	text-align: left;
+	margin-bottom: #{5 / $base-font-size}rem;
+	&:hover {
+		color: $light-primary-text-color;
+	}
+	&--selected {
+    color: $light-primary-text-color;
+  }
 }

@@ -11,6 +11,14 @@ function Preferences(props) {
     preferences: true,
     'preferences--selected': props.isVisible
   });
+  let preferencesTabOptionClass = classNames({
+    preference__option: true,
+    'preference__option--selected': props.isTabIndent
+  });
+  let preferencesSpaceOptionClass = classNames({
+    preference__option: true,
+    'preference__option--selected': !props.isTabIndent
+  });
   return (
     <div className={preferencesContainerClass} tabIndex="0">
       <div className="preferences__heading">
@@ -24,22 +32,33 @@ function Preferences(props) {
         <h4 className="preference__title">Text Size</h4>
         <button className="preference__plus-button" onClick={props.decreaseFont}>
           <Isvg src={minusUrl} alt="Decrease Font Size" />
+          <h6 className="preference__label">Decrease</h6>
         </button>
-        <input className="preference__value" defaultValue={props.fontSize} value={props.fontSize} onChange={props.updateFont}></input>
+
+        <input className="preference__value" value={props.fontSize} onChange={props.updateFont}></input>
         <button className="preference__minus-button" onClick={props.increaseFont}>
           <Isvg src={plusUrl} alt="Increase Font Size" />
+          <h6 className="preference__label">Increase</h6>
         </button>
+
+
       </div>
 
       <div className="preference">
         <h4 className="preference__title">Indentation Amount</h4>
         <button className="preference__plus-button" onClick={props.decreaseIndentation}>
           <Isvg src={minusUrl} alt="DecreaseIndentation Amount" />
+          <h6 className="preference__label">Decrease</h6>
         </button>
-        <input className="preference__value" defaultValue={props.indentationAmount} value={props.indentationAmount} onChange={props.updateIndentation}></input>
+        <input className="preference__value" value={props.indentationAmount} onChange={props.updateIndentation}></input>
         <button className="preference__minus-button" onClick={props.increaseIndentation}>
           <Isvg src={plusUrl} alt="IncreaseIndentation Amount" />
+          <h6 className="preference__label">Increase</h6>
         </button>
+        <ul>
+          <li className={preferencesSpaceOptionClass} onClick={props.indentWithSpace}>Spaces</li>
+          <li className={preferencesTabOptionClass} onClick={props.indentWithTab}>Tabs</li>
+        </ul>
       </div>
 
     </div>
@@ -56,7 +75,10 @@ Preferences.propTypes = {
   indentationAmount: PropTypes.number.isRequired,
   decreaseIndentation: PropTypes.func.isRequired,
   increaseIndentation: PropTypes.func.isRequired,
-  updateIndentation: PropTypes.func.isRequired
+  updateIndentation: PropTypes.func.isRequired,
+  indentWithSpace: PropTypes.func.isRequired,
+  indentWithTab: PropTypes.func.isRequired,
+  isTabIndent: PropTypes.bool.isRequired
 };
 
 export default Preferences;

@@ -2,7 +2,7 @@
 	position: absolute;
 	top: #{66 / $base-font-size}rem;
 	right: #{40 / $base-font-size}rem;
-	width: #{276 / $base-font-size}rem;
+	width: #{300 / $base-font-size}rem;
 	background-color: $light-button-background-color;
 	display: none;
 	padding: #{16 / $base-font-size}rem #{26 / $base-font-size}rem;
@@ -35,8 +35,7 @@
 .preference {
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-between;
-	padding-bottom: #{20 / $base-font-size}rem;
+	padding-bottom: #{40 / $base-font-size}rem;
 	border-bottom: 2px dashed $light-button-border-color;
 }
 
@@ -49,5 +48,25 @@
 	border: 1px solid $light-button-border-color;
 	text-align: center;
 	width: #{48 / $base-font-size}rem;
+	height: #{48 / $base-font-size}rem;
+	margin: 0 #{20 / $base-font-size}rem;
 	background-color: $light-button-background-color;
+}
+
+.preference__label {
+	margin: 0;
+	line-height: #{20 / $base-font-size}rem;
+	color: $light-button-border-color;
+	&:hover {
+		color: $light-button-border-color;
+	}
+}
+
+.preference__option {
+	@extend %preference-option;
+	list-style-type: none;
+	padding-left: #{12 / $base-font-size}rem;
+	&--selected {
+		@extend %preference-option--selected;
+	}
 }

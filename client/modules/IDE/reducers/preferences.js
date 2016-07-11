@@ -3,7 +3,8 @@ import * as ActionTypes from '../../../constants';
 const initialState = {
   isVisible: false,
   fontSize: 18,
-  indentationAmount: 4
+  indentationAmount: 4,
+  isTabIndent: true
 };
 
 const preferences = (state = initialState, action) => {
@@ -39,6 +40,14 @@ const preferences = (state = initialState, action) => {
     case ActionTypes.UPDATE_INDENTATION:
       return Object.assign({}, state, {
         indentationAmount: action.value
+      });
+    case ActionTypes.INDENT_WITH_TAB:
+      return Object.assign({}, state, {
+        isTabIndent: true
+      });
+    case ActionTypes.INDENT_WITH_SPACE:
+      return Object.assign({}, state, {
+        isTabIndent: false
       });
     default:
       return state;

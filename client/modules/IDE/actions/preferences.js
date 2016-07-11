@@ -51,3 +51,15 @@ export function updateIndentation() {
     value
   };
 }
+
+export function indentWithTab() {
+  return {
+    type: ActionTypes.INDENT_WITH_TAB
+  };
+}
+
+export function indentWithSpace() {
+  return {
+    type: ActionTypes.INDENT_WITH_SPACE
+  };
+}
