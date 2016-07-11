@@ -97,6 +97,7 @@ class PreviewFrame extends React.Component {
         className="preview-frame"
         frameBorder="0"
         title="sketch output"
+        sandbox="allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-modals allow-forms"
       ></iframe>
     );
   }
