@@ -18,7 +18,7 @@ class Editor extends React.Component {
     });
     this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
     this._cm.setOption('indentWithTabs', this.props.isTabIndent);
-    this._cm.setOption('indentUnit', this.props.indentationAmount);
+    this._cm.setOption('tabSize', this.props.indentationAmount);
   }
 
   componentDidUpdate(prevProps) {

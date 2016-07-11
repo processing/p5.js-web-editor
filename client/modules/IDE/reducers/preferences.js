@@ -3,7 +3,7 @@ import * as ActionTypes from '../../../constants';
 const initialState = {
   isVisible: false,
   fontSize: 18,
-  indentationAmount: 4,
+  indentationAmount: 2,
   isTabIndent: true
 };
 
