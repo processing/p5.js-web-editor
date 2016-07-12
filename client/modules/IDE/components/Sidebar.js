@@ -11,11 +11,14 @@ function Sidebar(props) {
             'sidebar__file-item--selected': file.id === props.selectedFile.id
           });
           return (
-            <li
-              className={itemClass}
-              key={file.id}
-              onClick={() => props.setSelectedFile(file.id)}
-            >{file.name}</li>
+            <li>
+              <button
+                className={itemClass}
+                key={file.id}
+                onClick={() => props.setSelectedFile(file.id)}
+              >{file.name}
+              </button>
+            </li>
           );
         })}
       </ul>
