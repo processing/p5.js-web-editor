@@ -11,7 +11,8 @@ class Editor extends React.Component {
       value: this.props.file.content,
       lineNumbers: true,
       styleActiveLine: true,
-      mode: 'javascript'
+      mode: 'javascript',
+      lineWrapping: true
     });
     this._cm.on('change', () => { // eslint-disable-line
       // this.props.updateFileContent('sketch.js', this._cm.getValue());
