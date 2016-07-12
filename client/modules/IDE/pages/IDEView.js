@@ -11,7 +11,7 @@ import * as FileActions from '../actions/files';
 import * as IDEActions from '../actions/ide';
 import * as PreferencesActions from '../actions/preferences';
 import * as ProjectActions from '../actions/project';
-import { getFile, getHTMLFile, getJSFiles } from '../reducers/files';
+import { getFile, getHTMLFile, getJSFiles, getCSSFiles } from '../reducers/files';
 
 class IDEView extends React.Component {
   componentDidMount() {
@@ -60,6 +60,7 @@ class IDEView extends React.Component {
         <PreviewFrame
           htmlFile={this.props.htmlFile}
           jsFiles={this.props.jsFiles}
+          cssFiles={this.props.cssFiles}
           files={this.props.files}
           content={this.props.selectedFile.content}
           head={
@@ -105,7 +106,8 @@ IDEView.propTypes = {
   }),
   setSelectedFile: PropTypes.func.isRequired,
   htmlFile: PropTypes.object.isRequired,
-  jsFiles: PropTypes.array.isRequired
+  jsFiles: PropTypes.array.isRequired,
+  cssFiles: PropTypes.array.isRequired
 };
 
 function mapStateToProps(state) {
@@ -114,6 +116,7 @@ function mapStateToProps(state) {
     selectedFile: getFile(state.files, state.ide.selectedFile),
     htmlFile: getHTMLFile(state.files),
     jsFiles: getJSFiles(state.files),
+    cssFiles: getCSSFiles(state.files),
     ide: state.ide,
     preferences: state.preferences,
     user: state.user,

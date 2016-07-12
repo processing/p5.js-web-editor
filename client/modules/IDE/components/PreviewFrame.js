@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import escapeStringRegexp from 'escape-string-regexp';
 import srcDoc from 'srcdoc-polyfill';
 
-// sandbox="allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-modals allow-forms"
-
 class PreviewFrame extends React.Component {
 
   componentDidMount() {
@@ -16,11 +14,6 @@ class PreviewFrame extends React.Component {
   componentDidUpdate(prevProps) {
     if (this.props.isPlaying !== prevProps.isPlaying) {
       this.renderSketch();
-      // if (this.props.isPlaying) {
-      //   this.renderSketch();
-      // } else {
-      //   this.clearPreview();
-      // }
     }
 
     if (this.props.isPlaying && this.props.content !== prevProps.content) {
@@ -46,12 +39,18 @@ class PreviewFrame extends React.Component {
       htmlFile = htmlFile.replace(fileRegex, `<script>\n${jsFile.content}\n</script>`);
     });
 
-    const htmlHead = htmlFile.match(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi);
-    const headRegex = new RegExp('head', 'i');
-    let htmlHeadContents = htmlHead[0].split(headRegex)[1];
-    htmlHeadContents = htmlHeadContents.slice(1, htmlHeadContents.length - 2);
-    htmlHeadContents += '<link rel="stylesheet" type="text/css" href="/preview-styles.css" />\n';
-    htmlFile = htmlFile.replace(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi, `<head>\n${htmlHeadContents}\n</head>`);
+    this.props.cssFiles.forEach(cssFile => {
+      const fileName = escapeStringRegexp(cssFile.name);
+      const fileRegex = new RegExp(`<link.*?href=('|")((\.\/)|\/)?${fileName}('|").*?>`, 'gmi');
+      htmlFile = htmlFile.replace(fileRegex, `<style>\n${cssFile.content}\n</style>`);
+    });
+
+    // const htmlHead = htmlFile.match(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi);
+    // const headRegex = new RegExp('head', 'i');
+    // let htmlHeadContents = htmlHead[0].split(headRegex)[1];
+    // htmlHeadContents = htmlHeadContents.slice(1, htmlHeadContents.length - 2);
+    // htmlHeadContents += '<link rel="stylesheet" type="text/css" href="/preview-styles.css" />\n';
+    // htmlFile = htmlFile.replace(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi, `<head>\n${htmlHeadContents}\n</head>`);
 
     return htmlFile;
   }
@@ -69,17 +68,6 @@ class PreviewFrame extends React.Component {
       doc.contentWindow.document.write('');
       doc.contentWindow.document.close();
     }
-
-    // this.clearPreview();
-    // ReactDOM.render(this.props.head, doc.head);
-    // const p5Script = doc.createElement('script');
-    // p5Script.setAttribute('src', 'https://cdnjs.cloudflare.com/ajax/libs/
-    //   p5.js/0.5.0/p5.min.js');
-    // doc.body.appendChild(p5Script);
-
-    // const sketchScript = doc.createElement('script');
-    // sketchScript.textContent = this.props.content;
-    // doc.body.appendChild(sketchScript);
   }
 
   renderFrameContents() {
@@ -110,7 +98,8 @@ PreviewFrame.propTypes = {
   htmlFile: PropTypes.shape({
     content: PropTypes.string.isRequired
   }),
-  jsFiles: PropTypes.array.isRequired
+  jsFiles: PropTypes.array.isRequired,
+  cssFiles: PropTypes.array.isRequired
 };
 
 export default PreviewFrame;
