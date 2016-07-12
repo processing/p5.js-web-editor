@@ -2,6 +2,10 @@ import React, { PropTypes } from 'react';
 import CodeMirror from 'codemirror';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/addon/selection/active-line';
+import 'codemirror/addon/lint/lint';
+import 'codemirror/addon/lint/javascript-lint';
+import { JSHINT } from 'jshint';
+window.JSHINT = JSHINT;
 
 class Editor extends React.Component {
 
@@ -12,7 +16,9 @@ class Editor extends React.Component {
       lineNumbers: true,
       styleActiveLine: true,
       mode: 'javascript',
-      lineWrapping: true
+      lineWrapping: true,
+      gutters: ['CodeMirror-lint-markers'],
+      lint: true
     });
     this._cm.on('change', () => { // eslint-disable-line
       // this.props.updateFileContent('sketch.js', this._cm.getValue());
