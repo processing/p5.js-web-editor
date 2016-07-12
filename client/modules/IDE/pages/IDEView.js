@@ -44,7 +44,15 @@ class IDEView extends React.Component {
           closePreferences={this.props.closePreferences}
           increaseFont={this.props.increaseFont}
           decreaseFont={this.props.decreaseFont}
+          updateFont={this.props.updateFont}
           fontSize={this.props.preferences.fontSize}
+          increaseIndentation={this.props.increaseIndentation}
+          decreaseIndentation={this.props.decreaseIndentation}
+          updateIndentation={this.props.updateIndentation}
+          indentationAmount={this.props.preferences.indentationAmount}
+          isTabIndent={this.props.preferences.isTabIndent}
+          indentWithSpace={this.props.indentWithSpace}
+          indentWithTab={this.props.indentWithTab}
         />
         <Sidebar
           files={this.props.files}
@@ -55,6 +63,8 @@ class IDEView extends React.Component {
           file={this.props.selectedFile}
           updateFileContent={this.props.updateFileContent}
           fontSize={this.props.preferences.fontSize}
+          indentationAmount={this.props.preferences.indentationAmount}
+          isTabIndent={this.props.preferences.isTabIndent}
           files={this.props.files}
         />
         <PreviewFrame
@@ -93,11 +103,19 @@ IDEView.propTypes = {
   openPreferences: PropTypes.func.isRequired,
   preferences: PropTypes.shape({
     isVisible: PropTypes.bool.isRequired,
-    fontSize: PropTypes.number.isRequired
+    fontSize: PropTypes.number.isRequired,
+    indentationAmount: PropTypes.number.isRequired,
+    isTabIndent: PropTypes.bool.isRequired
   }).isRequired,
   closePreferences: PropTypes.func.isRequired,
   increaseFont: PropTypes.func.isRequired,
   decreaseFont: PropTypes.func.isRequired,
+  updateFont: PropTypes.func.isRequired,
+  increaseIndentation: PropTypes.func.isRequired,
+  decreaseIndentation: PropTypes.func.isRequired,
+  updateIndentation: PropTypes.func.isRequired,
+  indentWithSpace: PropTypes.func.isRequired,
+  indentWithTab: PropTypes.func.isRequired,
   files: PropTypes.array.isRequired,
   updateFileContent: PropTypes.func.isRequired,
   selectedFile: PropTypes.shape({
