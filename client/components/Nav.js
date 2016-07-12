@@ -21,6 +21,13 @@ function Nav(props) {
             Save
           </p>
         </li>
+        <li className="nav__item">
+          <p className="nav__open">
+            <Link to="/sketches">
+              Open
+            </Link>
+          </p>
+        </li>
       </ul>
       <ul className="nav__items-right">
         <li className="nav__item">

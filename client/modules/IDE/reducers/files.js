@@ -1,50 +1,75 @@
 import * as ActionTypes from '../../../constants';
 
-const initialState = {
-  name: 'sketch.js',
-  content: `function setup() { 
+const defaultSketch = `function setup() { 
   createCanvas(400, 400);
 } 
 
 function draw() { 
   background(220);
-}`
-};
+}`;
 
-const file = (state = initialState, action) => {
+const defaultHTML =
+`<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.0/p5.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <script src="sketch.js"></script>
+  </body>
+</html>
+`;
+
+const defaultCSS =
+`html, body {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+`;
+
+// if the project has never been saved,
+const initialState = [
+  {
+    name: 'sketch.js',
+    content: defaultSketch,
+    id: '1'
+  },
+  {
+    name: 'index.html',
+    content: defaultHTML,
+    id: '2'
+  },
+  {
+    name: 'style.css',
+    content: defaultCSS,
+    id: '3'
+  }];
+
+
+const files = (state = initialState, action) => {
   switch (action.type) {
-    case ActionTypes.CHANGE_SELECTED_FILE:
-      return {
-        name: action.name,
-        content: action.content
-      };
+    case ActionTypes.UPDATE_FILE_CONTENT:
+      return state.map(file => {
+        if (file.name !== action.name) {
+          return file;
+        }
+
+        return Object.assign({}, file, { content: action.content });
+      });
     case ActionTypes.NEW_PROJECT:
-      return {
-        name: action.file.name,
-        content: action.file.content
-      };
+      return [...action.files];
     case ActionTypes.SET_PROJECT:
-      return {
-        name: action.file.name,
-        content: action.file.content
-      };
+      return [...action.files];
     default:
       return state;
   }
 };
 
-export default file;
+export const getFile = (state, id) => state.filter(file => file.id === id)[0];
+export const getHTMLFile = (state) => state.filter(file => file.name.match(/.*\.html$/))[0];
+export const getJSFiles = (state) => state.filter(file => file.name.match(/.*\.js$/));
+export const getCSSFiles = (state) => state.filter(file => file.name.match(/.*\.css$/));
 
-// i'll add this in when there are multiple files
-// const files = (state = [], action) => {
-//  switch (action.type) {
-//    case ActionTypes.CHANGE_SELECTED_FILE:
-//      //find the file with the name
-//      //update it
-//      //put in into the new array of files
-//    default:
-//      return state
-//  }
-// }
-
-// export default files
+export default files;

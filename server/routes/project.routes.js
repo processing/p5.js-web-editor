@@ -9,4 +9,6 @@ router.route('/projects/:project_id').put(ProjectController.updateProject);
 
 router.route('/projects/:project_id').get(ProjectController.getProject);
 
+router.route('/projects').get(ProjectController.getProjects);
+
 export default router;

@@ -18,7 +18,7 @@ body, input, button {
 
 a {
 	text-decoration: none;
-	color: $light-secondary-text-color;
+	color: $light-inactive-text-color;
 	&:hover {
 		text-decoration: none;
 		color: $light-primary-text-color;
@@ -46,11 +46,12 @@ h2 {
 h3 {
 	font-weight: normal;
 }
-
 h4 {
 	font-weight: normal;
 }
-
 h6 {
 	font-weight: normal;
+}
+thead {
+	text-align: left;
 }

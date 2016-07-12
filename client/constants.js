@@ -1,4 +1,4 @@
-export const CHANGE_SELECTED_FILE = 'CHANGE_SELECTED_FILE';
+export const UPDATE_FILE_CONTENT = 'UPDATE_FILE_CONTENT';
 export const TOGGLE_SKETCH = 'TOGGLE_SKETCH';
 
 export const START_SKETCH = 'START_SKETCH';
@@ -27,6 +27,9 @@ export const PROJECT_SAVE_FAIL = 'PROJECT_SAVE_FAIL';
 export const NEW_PROJECT = 'NEW_PROJECT';
 
 export const SET_PROJECT = 'SET_PROJECT';
+export const SET_PROJECTS = 'SET_PROJECTS';
+
+export const SET_SELECTED_FILE = 'SET_SELECTED_FILE';
 
 // eventually, handle errors more specifically and better
 export const ERROR = 'ERROR';

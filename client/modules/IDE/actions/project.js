@@ -12,7 +12,8 @@ export function getProject(id) {
         dispatch({
           type: ActionTypes.SET_PROJECT,
           project: response.data,
-          file: response.data.file
+          files: response.data.files,
+          selectedFile: response.data.selectedFile
         });
       })
       .catch(response => dispatch({
@@ -34,7 +35,7 @@ export function saveProject() {
   return (dispatch, getState) => {
     const state = getState();
     const formParams = Object.assign({}, state.project);
-    formParams.file = state.file;
+    formParams.files = [...state.files];
     if (state.project.id) {
       axios.put(`${ROOT_URL}/projects/${state.project.id}`, formParams, { withCredentials: true })
         .then(() => {
@@ -47,6 +48,12 @@ export function saveProject() {
           error: response.data
         }));
     } else {
+      // this might be unnecessary, but to prevent collisions in mongodb
+      formParams.files.map(file => {
+        const newFile = Object.assign({}, file);
+        delete newFile.id;
+        return newFile;
+      });
       axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
         .then(response => {
           browserHistory.push(`/projects/${response.data.id}`);
@@ -54,10 +61,8 @@ export function saveProject() {
             type: ActionTypes.NEW_PROJECT,
             name: response.data.name,
             id: response.data.id,
-            file: {
-              name: response.data.file.name,
-              content: response.data.file.content
-            }
+            selectedFile: response.data.selectedFile,
+            files: response.data.files
           });
         })
         .catch(response => dispatch({
@@ -78,10 +83,8 @@ export function createProject() {
           type: ActionTypes.NEW_PROJECT,
           name: response.data.name,
           id: response.data.id,
-          file: {
-            name: response.data.file.name,
-            content: response.data.file.content
-          }
+          selectedFile: response.data.selectedFile,
+          files: response.data.files
         });
       })
       .catch(response => dispatch({
