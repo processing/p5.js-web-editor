@@ -9,10 +9,13 @@ function draw() {
 }`;
 
 const defaultHTML =
-`
-<!DOCTYPE html>
+`<!DOCTYPE html>
 <html>
   <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.2/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.2/addons/p5.dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.2/addons/p5.sound.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
     <script src="sketch.js"></script>
@@ -20,14 +23,30 @@ const defaultHTML =
 </html>
 `;
 
+const defaultCSS =
+`html, body {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+`;
+
+// if the project has never been saved,
 const initialState = [
   {
     name: 'sketch.js',
-    content: defaultSketch
+    content: defaultSketch,
+    id: '1'
   },
   {
     name: 'index.html',
-    content: defaultHTML
+    content: defaultHTML,
+    id: '2'
+  },
+  {
+    name: 'style.css',
+    content: defaultCSS,
+    id: '3'
   }];
 
 
@@ -49,5 +68,10 @@ const files = (state = initialState, action) => {
       return state;
   }
 };
+
+export const getFile = (state, id) => state.filter(file => file.id === id)[0];
+export const getHTMLFile = (state) => state.filter(file => file.name.match(/.*\.html$/))[0];
+export const getJSFiles = (state) => state.filter(file => file.name.match(/.*\.js$/));
+export const getCSSFiles = (state) => state.filter(file => file.name.match(/.*\.css$/));
 
 export default files;

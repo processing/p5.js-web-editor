@@ -23,3 +23,43 @@ export function decreaseFont() {
     type: ActionTypes.DECREASE_FONTSIZE
   };
 }
+
+export function updateFont(event) {
+  const value = event.target.value;
+  return {
+    type: ActionTypes.UPDATE_FONTSIZE,
+    value
+  };
+}
+
+export function increaseIndentation() {
+  return {
+    type: ActionTypes.INCREASE_INDENTATION
+  };
+}
+
+export function decreaseIndentation() {
+  return {
+    type: ActionTypes.DECREASE_INDENTATION
+  };
+}
+
+export function updateIndentation() {
+  const value = event.target.value;
+  return {
+    type: ActionTypes.UPDATE_INDENTATION,
+    value
+  };
+}
+
+export function indentWithTab() {
+  return {
+    type: ActionTypes.INDENT_WITH_TAB
+  };
+}
+
+export function indentWithSpace() {
+  return {
+    type: ActionTypes.INDENT_WITH_SPACE
+  };
+}

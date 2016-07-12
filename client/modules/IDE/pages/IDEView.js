@@ -11,6 +11,7 @@ import * as FileActions from '../actions/files';
 import * as IDEActions from '../actions/ide';
 import * as PreferencesActions from '../actions/preferences';
 import * as ProjectActions from '../actions/project';
+import { getFile, getHTMLFile, getJSFiles, getCSSFiles } from '../reducers/files';
 
 class IDEView extends React.Component {
   componentDidMount() {
@@ -43,16 +44,35 @@ class IDEView extends React.Component {
           closePreferences={this.props.closePreferences}
           increaseFont={this.props.increaseFont}
           decreaseFont={this.props.decreaseFont}
+          updateFont={this.props.updateFont}
           fontSize={this.props.preferences.fontSize}
+          increaseIndentation={this.props.increaseIndentation}
+          decreaseIndentation={this.props.decreaseIndentation}
+          updateIndentation={this.props.updateIndentation}
+          indentationAmount={this.props.preferences.indentationAmount}
+          isTabIndent={this.props.preferences.isTabIndent}
+          indentWithSpace={this.props.indentWithSpace}
+          indentWithTab={this.props.indentWithTab}
         />
-        <Sidebar files={this.props.files} />
+        <Sidebar
+          files={this.props.files}
+          selectedFile={this.props.selectedFile}
+          setSelectedFile={this.props.setSelectedFile}
+        />
         <Editor
-          content={this.props.files[0].content}
+          file={this.props.selectedFile}
           updateFileContent={this.props.updateFileContent}
           fontSize={this.props.preferences.fontSize}
+          indentationAmount={this.props.preferences.indentationAmount}
+          isTabIndent={this.props.preferences.isTabIndent}
+          files={this.props.files}
         />
         <PreviewFrame
-          content={this.props.files[0].content}
+          htmlFile={this.props.htmlFile}
+          jsFiles={this.props.jsFiles}
+          cssFiles={this.props.cssFiles}
+          files={this.props.files}
+          content={this.props.selectedFile.content}
           head={
             <link type="text/css" rel="stylesheet" href="/preview-styles.css" />
           }
@@ -83,18 +103,38 @@ IDEView.propTypes = {
   openPreferences: PropTypes.func.isRequired,
   preferences: PropTypes.shape({
     isVisible: PropTypes.bool.isRequired,
-    fontSize: PropTypes.number.isRequired
+    fontSize: PropTypes.number.isRequired,
+    indentationAmount: PropTypes.number.isRequired,
+    isTabIndent: PropTypes.bool.isRequired
   }).isRequired,
   closePreferences: PropTypes.func.isRequired,
   increaseFont: PropTypes.func.isRequired,
   decreaseFont: PropTypes.func.isRequired,
+  updateFont: PropTypes.func.isRequired,
+  increaseIndentation: PropTypes.func.isRequired,
+  decreaseIndentation: PropTypes.func.isRequired,
+  updateIndentation: PropTypes.func.isRequired,
+  indentWithSpace: PropTypes.func.isRequired,
+  indentWithTab: PropTypes.func.isRequired,
   files: PropTypes.array.isRequired,
-  updateFileContent: PropTypes.func.isRequired
+  updateFileContent: PropTypes.func.isRequired,
+  selectedFile: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired
+  }),
+  setSelectedFile: PropTypes.func.isRequired,
+  htmlFile: PropTypes.object.isRequired,
+  jsFiles: PropTypes.array.isRequired,
+  cssFiles: PropTypes.array.isRequired
 };
 
 function mapStateToProps(state) {
   return {
     files: state.files,
+    selectedFile: getFile(state.files, state.ide.selectedFile),
+    htmlFile: getHTMLFile(state.files),
+    jsFiles: getJSFiles(state.files),
+    cssFiles: getCSSFiles(state.files),
     ide: state.ide,
     preferences: state.preferences,
     user: state.user,

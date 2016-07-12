@@ -2,8 +2,7 @@ import Project from '../models/project';
 
 export function createProject(req, res) {
   const projectValues = {
-    user: req.user ? req.user._id : undefined, // eslint-disable-line no-underscore-dangle
-    file: {}
+    user: req.user ? req.user._id : undefined // eslint-disable-line no-underscore-dangle
   };
 
   Object.assign(projectValues, req.body);

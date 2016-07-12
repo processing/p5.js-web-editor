@@ -83,4 +83,3 @@ app.listen(serverConfig.port, (error) => {
 });
 
 export default app;
-
