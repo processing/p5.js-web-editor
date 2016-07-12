@@ -22,14 +22,14 @@ class SketchListView extends React.Component {
         />
         <table className="sketches-table">
           <thead>
-            <th>Name</th>
-            <th>Created</th>
-            <th>Last Updated</th>
+            <th scope="col">Name</th>
+            <th scope="col">Created</th>
+            <th scope="col">Last Updated</th>
           </thead>
           <tbody>
             {this.props.sketches.map(sketch =>
               <tr className="sketches-table__row">
-                <td><Link to={`/projects/${sketch._id}`}>{sketch.name}</Link></td>
+                <td scope="row"><Link to={`/projects/${sketch._id}`}>{sketch.name}</Link></td>
                 <td>{moment(sketch.createdAt).format('MMM D, YYYY')}</td>
                 <td>{moment(sketch.updatedAt).format('MMM D, YYYY')}</td>
               </tr>
