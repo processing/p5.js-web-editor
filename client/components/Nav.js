@@ -6,20 +6,20 @@ function Nav(props) {
     <nav className="nav">
       <ul className="nav__items-left">
         <li className="nav__item">
-          <p
+          <a
             className="nav__new"
             onClick={props.createProject}
           >
             New
-          </p>
+          </a>
         </li>
         <li className="nav__item">
-          <p
+          <a
             className="nav__save"
             onClick={props.saveProject}
           >
             Save
-          </p>
+          </a>
         </li>
         <li className="nav__item">
           <p className="nav__open">

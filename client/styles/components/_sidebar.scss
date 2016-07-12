@@ -1,12 +1,12 @@
 .sidebar__file-list {
-  border-top: 1px solid $ide-border-color; 
+  border-top: 1px solid $ide-border-color;
 }
 
 .sidebar__file-item {
   padding: #{8 / $base-font-size}rem #{20 / $base-font-size}rem;
   color: $light-inactive-text-color;
-}
-
-.sidebar__file-item--selected {
-  background-color: $ide-border-color;
+  cursor: pointer;
+  &--selected {
+    background-color: $ide-border-color;
+  }
 }
