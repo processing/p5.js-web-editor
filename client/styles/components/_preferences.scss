@@ -36,7 +36,9 @@
 	display: flex;
 	flex-wrap: wrap;
 	padding-bottom: #{40 / $base-font-size}rem;
-	border-bottom: 2px dashed $light-button-border-color;
+	& + & {
+  	border-top: 2px dashed $light-button-border-color;
+	}
 }
 
 .preference__title {
