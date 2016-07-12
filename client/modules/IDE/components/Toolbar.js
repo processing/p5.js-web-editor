@@ -34,7 +34,7 @@ function Toolbar(props) {
         <span
           className="toolbar__project-name"
           // TODO change this span into an input
-          onBlur={props.setProjectName.bind(this)} // eslint-disable-line 
+          onBlur={props.setProjectName.bind(this)} // eslint-disable-line
           contentEditable
           suppressContentEditableWarning
         >

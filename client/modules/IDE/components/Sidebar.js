@@ -14,8 +14,11 @@ function Sidebar(props) {
             <li
               className={itemClass}
               key={file.id}
-              onClick={() => props.setSelectedFile(file.id)}
-            >{file.name}</li>
+            >
+              <a
+                onClick={() => props.setSelectedFile(file.id)}
+              >{file.name}</a>
+            </li>
           );
         })}
       </ul>
