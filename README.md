@@ -15,7 +15,7 @@ This project is currently in the early stages of development! It will definitely
   ```
   Or, if you don't want to do that, just ask me to send you mine.
 5. `$ npm start`
-6. Navigate to (http://localhost:8000)[http://localhost:8000] in your browser
+6. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
 7. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en).
 8. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
 
