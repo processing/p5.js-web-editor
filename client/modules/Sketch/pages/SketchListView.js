@@ -20,7 +20,7 @@ class SketchListView extends React.Component {
           createProject={this.props.createProject}
           saveProject={this.props.saveProject}
         />
-        <table className="sketches-table">
+        <table className="sketches-table" summary="table containing all saved projects">
           <thead>
             <th scope="col">Name</th>
             <th scope="col">Created</th>
