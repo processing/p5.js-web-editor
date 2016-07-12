@@ -50,17 +50,14 @@ class Editor extends React.Component {
 }
 
 Editor.propTypes = {
-  content: PropTypes.string.isRequired,
-  updateFile: PropTypes.func.isRequired,
-  fontSize: PropTypes.number.isRequired,
   indentationAmount: PropTypes.number.isRequired,
-  isTabIndent: PropTypes.bool.isRequired
+  isTabIndent: PropTypes.bool.isRequired,
+  updateFileContent: PropTypes.func.isRequired,
+  fontSize: PropTypes.number.isRequired,
   file: PropTypes.shape({
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
-  }),
-  updateFileContent: PropTypes.func.isRequired,
-  fontSize: PropTypes.number.isRequired
+  })
 };
 
 export default Editor;

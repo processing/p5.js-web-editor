@@ -110,20 +110,16 @@ IDEView.propTypes = {
   closePreferences: PropTypes.func.isRequired,
   increaseFont: PropTypes.func.isRequired,
   decreaseFont: PropTypes.func.isRequired,
-<<<<<<< HEAD
   updateFont: PropTypes.func.isRequired,
   increaseIndentation: PropTypes.func.isRequired,
   decreaseIndentation: PropTypes.func.isRequired,
   updateIndentation: PropTypes.func.isRequired,
   indentWithSpace: PropTypes.func.isRequired,
   indentWithTab: PropTypes.func.isRequired,
-  file: PropTypes.shape({
-=======
   files: PropTypes.array.isRequired,
   updateFileContent: PropTypes.func.isRequired,
   selectedFile: PropTypes.shape({
     id: PropTypes.string.isRequired,
->>>>>>> b89a1103b9c5616820f4b6b005c118d9f1f9bf13
     content: PropTypes.string.isRequired
   }),
   setSelectedFile: PropTypes.func.isRequired,
