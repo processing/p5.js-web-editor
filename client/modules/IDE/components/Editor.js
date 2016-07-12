@@ -18,6 +18,8 @@ class Editor extends React.Component {
       this.props.updateFileContent(this.props.file.name, this._cm.getValue());
     });
     this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
+    this._cm.setOption('indentWithTabs', this.props.isTabIndent);
+    this._cm.setOption('tabSize', this.props.indentationAmount);
   }
 
   componentDidUpdate(prevProps) {
@@ -27,6 +29,12 @@ class Editor extends React.Component {
     }
     if (this.props.fontSize !== prevProps.fontSize) {
       this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
+    }
+    if (this.props.indentationAmount !== prevProps.indentationAmount) {
+      this._cm.setOption('tabSize', this.props.indentationAmount);
+    }
+    if (this.props.isTabIndent !== prevProps.isTabIndent) {
+      this._cm.setOption('indentWithTabs', this.props.isTabIndent);
     }
   }
 
@@ -42,12 +50,14 @@ class Editor extends React.Component {
 }
 
 Editor.propTypes = {
+  indentationAmount: PropTypes.number.isRequired,
+  isTabIndent: PropTypes.bool.isRequired,
+  updateFileContent: PropTypes.func.isRequired,
+  fontSize: PropTypes.number.isRequired,
   file: PropTypes.shape({
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
-  }),
-  updateFileContent: PropTypes.func.isRequired,
-  fontSize: PropTypes.number.isRequired
+  })
 };
 
 export default Editor;
