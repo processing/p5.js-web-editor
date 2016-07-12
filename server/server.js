@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
-const MongoStore = require('connect-mongo/es5')(session);
+const MongoStore = require('connect-mongo')(session);
 import passport from 'passport';
 import path from 'path';
 
