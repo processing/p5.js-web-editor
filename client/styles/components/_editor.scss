@@ -26,12 +26,16 @@
   bottom: 0;
 }
 
-
 .CodeMirror-lint-marker-warning, .CodeMirror-lint-marker-error, .CodeMirror-lint-marker-multiple {
   background-image: none;
   width: 70px;
   position: absolute;
   height: 100%;
+}
+
+.CodeMirror-lint-message-error, .CodeMirror-lint-message-warning {
+  background-image: none;
+  padding-left: inherit;
 }
 
 .CodeMirror-lint-marker-warning {
@@ -47,4 +51,12 @@
   width: 70px !important;
   height: 100%;
   // background-color: rgb(255, 95, 82);
+}
+
+.CodeMirror-lint-tooltip {
+  font-family: Montserrat, sans-serif;
+  border-radius: 2px;
+  border: 1px solid #B9D0E1;
+  background-color: $light-button-background-color;
+
 }
