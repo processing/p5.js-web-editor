@@ -27,6 +27,7 @@ import serverConfig from './config';
 import users from './routes/user.routes';
 import sessions from './routes/session.routes';
 import projects from './routes/project.routes';
+import files from './routes/file.routes';
 import serverRoutes from './routes/server.routes';
 
 // Body parser, cookie parser, sessions, serve public assets
@@ -55,6 +56,7 @@ app.use(passport.session());
 app.use('/api', users);
 app.use('/api', sessions);
 app.use('/api', projects);
+app.use('/api', files);
 // this is supposed to be TEMPORARY -- until i figure out
 // isomorphic rendering
 app.use('/', serverRoutes);
