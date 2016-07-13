@@ -4,7 +4,7 @@ import classNames from 'classnames';
 function Sidebar(props) {
   return (
     <section className="sidebar">
-      <ul className="sidebar__file-list">
+      <ul className="sidebar__file-list" title="file-list">
         {props.files.map(file => {
           let itemClass = classNames({
             'sidebar__file-item': true,

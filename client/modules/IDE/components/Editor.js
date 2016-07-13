@@ -11,6 +11,7 @@ class Editor extends React.Component {
       value: this.props.file.content,
       lineNumbers: true,
       styleActiveLine: true,
+      inputStyle: 'contenteditable',
       mode: 'javascript'
     });
     this._cm.on('change', () => { // eslint-disable-line
@@ -45,7 +46,7 @@ class Editor extends React.Component {
   _cm: CodeMirror.Editor
 
   render() {
-    return <div ref="container" className="editor-holder"></div>;
+    return <div ref="container" className="editor-holder" tabIndex="0" title="code-editor"></div>;
   }
 }
 

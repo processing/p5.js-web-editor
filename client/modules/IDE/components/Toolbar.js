@@ -41,7 +41,7 @@ function Toolbar(props) {
           {props.projectName}
         </span>
       </div>
-      <button className={preferencesButtonClass} onClick={props.openPreferences}>
+      <button className={preferencesButtonClass} onClick={props.openPreferences} role="menuitem" aria-haspopup="true" aria-owns="preferences-menu">
         <Isvg src={preferencesUrl} alt="Show Preferences" />
       </button>
     </div>
