@@ -1,11 +1,19 @@
 import React, { PropTypes } from 'react';
 import CodeMirror from 'codemirror';
 import 'codemirror/mode/javascript/javascript';
+import 'codemirror/mode/css/css';
+import 'codemirror/mode/htmlmixed/htmlmixed';
 import 'codemirror/addon/selection/active-line';
 import 'codemirror/addon/lint/lint';
 import 'codemirror/addon/lint/javascript-lint';
+import 'codemirror/addon/lint/css-lint';
+import 'codemirror/addon/lint/html-lint';
 import { JSHINT } from 'jshint';
 window.JSHINT = JSHINT;
+import { CSSLint } from 'csslint';
+window.CSSLint = CSSLint;
+import { HTMLHint } from 'htmlhint';
+window.HTMLHint = HTMLHint;
 
 class Editor extends React.Component {
 
@@ -42,6 +50,15 @@ class Editor extends React.Component {
     }
     if (this.props.isTabIndent !== prevProps.isTabIndent) {
       this._cm.setOption('indentWithTabs', this.props.isTabIndent);
+    }
+    if (this.props.file.name !== prevProps.name) {
+      if (this.props.file.name.match(/.+\.js$/)) {
+        this._cm.setOption('mode', 'javascript');
+      } else if (this.props.file.name.match(/.+\.css$/)) {
+        this._cm.setOption('mode', 'css');
+      } else if (this.props.file.name.match(/.+\.html$/)) {
+        this._cm.setOption('mode', 'htmlmixed');
+      }
     }
   }
 
