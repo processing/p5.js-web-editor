@@ -20,7 +20,7 @@ function Preferences(props) {
     'preference__option--selected': !props.isTabIndent
   });
   return (
-    <div className={preferencesContainerClass} tabIndex="0" title="preference-menu" id="preferences-menu">
+    <div className={preferencesContainerClass} tabIndex="0" title="preference-menu">
       <div className="preferences__heading">
         <h2 className="preferences__title">Preferences</h2>
         <button className="preferences__exit-button" onClick={props.closePreferences}>
@@ -35,7 +35,15 @@ function Preferences(props) {
           <h6 className="preference__label">Decrease</h6>
         </button>
 
-        <input className="preference__value" aria-live="status" aria-live="polite" role="status" value={props.fontSize} onChange={props.updateFont}></input>
+        <input
+          className="preference__value"
+          aria-live="status"
+          aria-live="polite"
+          role="status"
+          value={props.fontSize}
+          onChange={props.updateFont}
+        >
+        </input>
         <button className="preference__minus-button" onClick={props.increaseFont}>
           <Isvg src={plusUrl} alt="Increase Font Size" />
           <h6 className="preference__label">Increase</h6>
@@ -48,7 +56,15 @@ function Preferences(props) {
           <Isvg src={minusUrl} alt="DecreaseIndentation Amount" />
           <h6 className="preference__label">Decrease</h6>
         </button>
-        <input className="preference__value" aria-live="status" aria-live="polite" role="status" value={props.indentationAmount} onChange={props.updateIndentation}></input>
+        <input
+          className="preference__value"
+          aria-live="status"
+          aria-live="polite"
+          role="status"
+          value={props.indentationAmount}
+          onChange={props.updateIndentation}
+        >
+        </input>
         <button className="preference__minus-button" onClick={props.increaseIndentation}>
           <Isvg src={plusUrl} alt="IncreaseIndentation Amount" />
           <h6 className="preference__label">Increase</h6>

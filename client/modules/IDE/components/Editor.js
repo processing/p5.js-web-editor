@@ -47,7 +47,7 @@ class Editor extends React.Component {
   _cm: CodeMirror.Editor
 
   render() {
-    return <div ref="container" className="editor-holder" tabIndex="0" title="code-editor"></div>;
+    return <div ref="container" className="editor-holder" tabIndex="0" title="code editor" role="region"></div>;
   }
 }
 
