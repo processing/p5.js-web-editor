@@ -7,3 +7,11 @@ export function updateFileContent(name, content) {
     content
   };
 }
+
+// TODO make req to server
+export function createFile(name) {
+  return {
+    type: ActionTypes.CREATE_FILE,
+    name
+  };
+}

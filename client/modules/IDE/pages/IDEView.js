@@ -4,6 +4,7 @@ import Sidebar from '../components/Sidebar';
 import PreviewFrame from '../components/PreviewFrame';
 import Toolbar from '../components/Toolbar';
 import Preferences from '../components/Preferences';
+import NewFileModal from '../components/NewFileModal';
 import Nav from '../../../components/Nav';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -58,6 +59,7 @@ class IDEView extends React.Component {
           files={this.props.files}
           selectedFile={this.props.selectedFile}
           setSelectedFile={this.props.setSelectedFile}
+          newFile={this.props.newFile}
         />
         <Editor
           file={this.props.selectedFile}
@@ -78,6 +80,10 @@ class IDEView extends React.Component {
           }
           isPlaying={this.props.ide.isPlaying}
         />
+        <NewFileModal
+          isVisible={this.props.ide.modalIsVisible}
+          closeModal={this.props.closeNewFileModal}
+        />
       </div>
     );
   }
@@ -92,7 +98,8 @@ IDEView.propTypes = {
   createProject: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
   ide: PropTypes.shape({
-    isPlaying: PropTypes.bool.isRequired
+    isPlaying: PropTypes.bool.isRequired,
+    modalIsVisible: PropTypes.bool.isRequired
   }).isRequired,
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
@@ -125,7 +132,9 @@ IDEView.propTypes = {
   setSelectedFile: PropTypes.func.isRequired,
   htmlFile: PropTypes.object.isRequired,
   jsFiles: PropTypes.array.isRequired,
-  cssFiles: PropTypes.array.isRequired
+  cssFiles: PropTypes.array.isRequired,
+  newFile: PropTypes.func.isRequired,
+  closeNewFileModal: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

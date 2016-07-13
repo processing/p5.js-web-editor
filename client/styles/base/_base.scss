@@ -31,8 +31,9 @@ input, button {
 
 input {
 	padding: #{5 / $base-font-size}rem;
-	border-radius: 2px;
+	// border-radius: 2px;
 	border: 1px solid $input-border-color;
+	padding: #{10 / $base-font-size}rem;
 }
 
 input[type="submit"] {

@@ -30,6 +30,9 @@ export const SET_PROJECT = 'SET_PROJECT';
 export const SET_PROJECTS = 'SET_PROJECTS';
 
 export const SET_SELECTED_FILE = 'SET_SELECTED_FILE';
+export const SHOW_MODAL = 'SHOW_MODAL';
+export const HIDE_MODAL = 'HIDE_MODAL';
+export const CREATE_FILE = 'CREATE_FILE';
 
 // eventually, handle errors more specifically and better
 export const ERROR = 'ERROR';

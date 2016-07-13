@@ -4,6 +4,15 @@ import classNames from 'classnames';
 function Sidebar(props) {
   return (
     <section className="sidebar">
+      <div className="sidebar__header">
+        <h3 className="sidebar__title">Sketch Files</h3>
+        <a
+          className="sidebar__add"
+          onClick={props.newFile}
+        >
+          +
+        </a>
+      </div>
       <ul className="sidebar__file-list">
         {props.files.map(file => {
           let itemClass = classNames({

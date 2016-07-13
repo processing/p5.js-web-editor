@@ -1,8 +1,25 @@
+.sidebar__header {
+  padding: #{10 / $base-font-size}rem #{6 / $base-font-size}rem;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid $ide-border-color;
+}
+
+.sidebar__title {
+  font-size: #{12 / $base-font-size}rem;
+  display: inline-block;
+}
+
+.sidebar__add {
+  cursor: pointer;
+}
+
 .sidebar__file-list {
   border-top: 1px solid $ide-border-color;
 }
 
 .sidebar__file-item {
+  font-size: #{12 / $base-font-size}rem;
   padding: #{8 / $base-font-size}rem #{20 / $base-font-size}rem;
   color: $light-inactive-text-color;
   cursor: pointer;
