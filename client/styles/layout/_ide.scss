@@ -6,12 +6,13 @@
 }
 
 .editor-holder {
-	flex-grow: 1;
+	flex: 1 0 0;
+  max-width: 45%;
 	height: 100%;
 }
 
 .preview-frame {
-	flex-grow: 1;
+	flex: 1 0 0;
 }
 
 .toolbar {
