@@ -15,6 +15,8 @@ window.CSSLint = CSSLint;
 import { HTMLHint } from 'htmlhint';
 window.HTMLHint = HTMLHint;
 
+import { debounce } from 'throttle-debounce';
+
 class Editor extends React.Component {
 
   componentDidMount() {
@@ -28,10 +30,14 @@ class Editor extends React.Component {
       gutters: ['CodeMirror-lint-markers'],
       lint: true
     });
-    this._cm.on('change', () => { // eslint-disable-line
-      // this.props.updateFileContent('sketch.js', this._cm.getValue());
+    this._cm.on('change', debounce(200, () => {
       this.props.updateFileContent(this.props.file.name, this._cm.getValue());
-    });
+    }));
+    // this._cm.on('change', () => { // eslint-disable-line
+    //   // this.props.updateFileContent('sketch.js', this._cm.getValue());
+    //   throttle(1000, () => console.log('debounce is working!'));
+    //   this.props.updateFileContent(this.props.file.name, this._cm.getValue());
+    // });
     this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
     this._cm.setOption('indentWithTabs', this.props.isTabIndent);
     this._cm.setOption('tabSize', this.props.indentationAmount);

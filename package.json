@@ -87,6 +87,7 @@
     "redux-form": "^5.2.5",
     "redux-thunk": "^2.1.0",
     "shortid": "^2.2.6",
-    "srcdoc-polyfill": "^0.2.0"
+    "srcdoc-polyfill": "^0.2.0",
+    "throttle-debounce": "^1.0.1"
   }
 }
