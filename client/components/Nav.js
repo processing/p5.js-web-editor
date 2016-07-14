@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 function Nav(props) {
   return (
-    <nav className="nav" role="navigation">
+    <nav className="nav" role="navigation" title="main-navigation">
       <ul className="nav__items-left" title="project-menu">
         <li className="nav__item">
           <a

@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 function Sidebar(props) {
   return (
-    <section className="sidebar">
+    <nav className="sidebar" role="navigation" title="file-navigation">
       <ul className="sidebar__file-list" title="file-list">
         {props.files.map(file => {
           let itemClass = classNames({
@@ -22,7 +22,7 @@ function Sidebar(props) {
           );
         })}
       </ul>
-    </section>
+    </nav>
   );
 }
 

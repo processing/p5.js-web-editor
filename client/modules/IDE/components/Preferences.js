@@ -20,7 +20,7 @@ function Preferences(props) {
     'preference__option--selected': !props.isTabIndent
   });
   return (
-    <div className={preferencesContainerClass} tabIndex="0" title="preference-menu">
+    <section className={preferencesContainerClass} tabIndex="0" title="preference-menu">
       <div className="preferences__heading">
         <h2 className="preferences__title">Preferences</h2>
         <button className="preferences__exit-button" onClick={props.closePreferences}>
@@ -74,7 +74,7 @@ function Preferences(props) {
           <button className={preferencesTabOptionClass} onClick={props.indentWithTab}>Tabs</button>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
