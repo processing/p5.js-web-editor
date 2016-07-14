@@ -3,7 +3,8 @@ import * as ActionTypes from '../../../constants';
 const initialState = {
   isPlaying: false,
   selectedFile: '1',
-  modalIsVisible: false
+  modalIsVisible: false,
+  sidebarIsExpanded: true
 };
 
 const ide = (state = initialState, action) => {
@@ -22,6 +23,10 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { modalIsVisible: true });
     case ActionTypes.HIDE_MODAL:
       return Object.assign({}, state, { modalIsVisible: false });
+    case ActionTypes.COLLAPSE_SIDEBAR:
+      return Object.assign({}, state, { sidebarIsExpanded: false });
+    case ActionTypes.EXPAND_SIDEBAR:
+      return Object.assign({}, state, { sidebarIsExpanded: true });
     default:
       return state;
   }

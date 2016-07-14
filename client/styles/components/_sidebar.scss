@@ -3,27 +3,69 @@
   display: flex;
   justify-content: space-between;
   border-top: 1px solid $ide-border-color;
+  align-items: center;
+  height: #{47 / $base-font-size}rem;
 }
 
 .sidebar__title {
-  font-size: #{12 / $base-font-size}rem;
+  font-size: #{16 / $base-font-size}rem;
   display: inline-block;
+  .sidebar--contracted & {
+    display: none;
+  }
 }
 
 .sidebar__add {
   cursor: pointer;
+  height: #{26 / $base-font-size}rem;
+  margin-right: #{16 / $base-font-size}rem;
+  font-size: #{24 / $base-font-size}rem;
+  .sidebar--contracted & {
+    display: none;
+  }
 }
 
 .sidebar__file-list {
   border-top: 1px solid $ide-border-color;
+  .sidebar--contracted & {
+    display: none;
+  }
 }
 
 .sidebar__file-item {
-  font-size: #{12 / $base-font-size}rem;
+  font-size: #{16 / $base-font-size}rem;
   padding: #{8 / $base-font-size}rem #{20 / $base-font-size}rem;
   color: $light-inactive-text-color;
   cursor: pointer;
   &--selected {
     background-color: $ide-border-color;
   }
+}
+
+.sidebar__contract {
+  @extend %icon;
+  height: #{14 / $base-font-size}rem;
+  & svg {
+    height: #{14 / $base-font-size}rem;
+  }
+  .sidebar--contracted & {
+    display: none;
+  }
+}
+
+.sidebar__expand {
+  @extend %icon;
+  height: #{14 / $base-font-size}rem;
+  & svg {
+    height: #{14 / $base-font-size}rem;
+  }
+  display: none;
+  .sidebar--contracted & {
+    display: inline-block;
+  }
+}
+
+.sidebar__icons {
+  display: flex;
+  align-items: center;
 }

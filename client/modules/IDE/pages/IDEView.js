@@ -60,6 +60,9 @@ class IDEView extends React.Component {
           selectedFile={this.props.selectedFile}
           setSelectedFile={this.props.setSelectedFile}
           newFile={this.props.newFile}
+          isExpanded={this.props.ide.sidebarIsExpanded}
+          expandSidebar={this.props.expandSidebar}
+          collapseSidebar={this.props.collapseSidebar}
         />
         <Editor
           file={this.props.selectedFile}
@@ -99,7 +102,8 @@ IDEView.propTypes = {
   saveProject: PropTypes.func.isRequired,
   ide: PropTypes.shape({
     isPlaying: PropTypes.bool.isRequired,
-    modalIsVisible: PropTypes.bool.isRequired
+    modalIsVisible: PropTypes.bool.isRequired,
+    sidebarIsExpanded: PropTypes.bool.isRequired
   }).isRequired,
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
@@ -134,7 +138,9 @@ IDEView.propTypes = {
   jsFiles: PropTypes.array.isRequired,
   cssFiles: PropTypes.array.isRequired,
   newFile: PropTypes.func.isRequired,
-  closeNewFileModal: PropTypes.func.isRequired
+  closeNewFileModal: PropTypes.func.isRequired,
+  expandSidebar: PropTypes.func.isRequired,
+  collapseSidebar: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

@@ -36,3 +36,15 @@ export function closeNewFileModal() {
     type: ActionTypes.HIDE_MODAL
   };
 }
+
+export function expandSidebar() {
+  return {
+    type: ActionTypes.EXPAND_SIDEBAR
+  };
+}
+
+export function collapseSidebar() {
+  return {
+    type: ActionTypes.COLLAPSE_SIDEBAR
+  };
+}
