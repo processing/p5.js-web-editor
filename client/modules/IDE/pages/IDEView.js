@@ -30,6 +30,7 @@ class IDEView extends React.Component {
           createProject={this.props.createProject}
           saveProject={this.props.saveProject}
           exportProjectAsZip={this.props.exportProjectAsZip}
+          cloneProject={this.props.cloneProject}
         />
         <Toolbar
           className="Toolbar"
@@ -146,7 +147,8 @@ IDEView.propTypes = {
   closeNewFileModal: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
   collapseSidebar: PropTypes.func.isRequired,
-  exportProjectAsZip: PropTypes.func.isRequired
+  exportProjectAsZip: PropTypes.func.isRequired,
+  cloneProject: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

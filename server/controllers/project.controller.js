@@ -1,11 +1,11 @@
 import Project from '../models/project';
 
 export function createProject(req, res) {
-  const projectValues = {
+  let projectValues = {
     user: req.user ? req.user._id : undefined // eslint-disable-line no-underscore-dangle
   };
 
-  Object.assign(projectValues, req.body);
+  projectValues = Object.assign(projectValues, req.body);
 
   Project.create(projectValues, (err, newProject) => {
     if (err) { return res.json({ success: false }); }

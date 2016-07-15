@@ -83,7 +83,6 @@ export function createProject() {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/projects`, {}, { withCredentials: true })
       .then(response => {
-        console.log(response.data);
         browserHistory.push(`/projects/${response.data.id}`);
         dispatch({
           type: ActionTypes.NEW_PROJECT,
@@ -113,6 +112,29 @@ export function exportProjectAsZip() {
     zip.generateAsync({ type: 'blob' }).then((content) => {
       saveAs(content, `${state.project.name}.zip`);
     });
+  };
+}
+
+export function cloneProject() {
+  return (dispatch, getState) => {
+    const state = getState();
+    const formParams = Object.assign({}, { name: state.project.name }, { files: state.files });
+    axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
+      .then(response => {
+        browserHistory.push(`/projects/${response.data.id}`);
+        dispatch({
+          type: ActionTypes.NEW_PROJECT,
+          name: response.data.name,
+          id: response.data.id,
+          owner: response.data.user,
+          selectedFile: response.data.selectedFile,
+          files: response.data.files
+        });
+      })
+      .catch(response => dispatch({
+        type: ActionTypes.PROJECT_SAVE_FAIL,
+        error: response.data
+      }));
   };
 }
 

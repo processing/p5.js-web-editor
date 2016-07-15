@@ -33,7 +33,7 @@ function Nav(props) {
             Export (zip)
           </a>
         </li>
-        <li className="nav__item">
+        <li className="nav__item" onClick={props.cloneProject}>
           <a className="nav__clone">
             Clone
           </a>
@@ -53,6 +53,7 @@ Nav.propTypes = {
   createProject: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
   exportProjectAsZip: PropTypes.func.isRequired,
+  cloneProject: PropTypes.func.isRequired,
   user: PropTypes.shape({
     authenticated: PropTypes.bool.isRequired,
     username: PropTypes.string
