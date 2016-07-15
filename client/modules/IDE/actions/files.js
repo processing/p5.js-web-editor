@@ -11,7 +11,6 @@ export function updateFileContent(name, content) {
   };
 }
 
-// TODO make req to server
 export function createFile(formProps) {
   return (dispatch, getState) => {
     const state = getState();

@@ -7,6 +7,8 @@ import classNames from 'classnames';
 import InlineSVG from 'react-inlinesvg';
 const exitUrl = require('../../../images/exit.svg');
 
+import FileUploader from './FileUploader';
+
 // At some point this will probably be generalized to a generic modal
 // in which you can insert different content
 // but for now, let's just make this work
@@ -26,6 +28,8 @@ function NewFileModal(props) {
           </button>
         </div>
         <NewFileForm {...props} />
+        <p className="modal__divider">OR</p>
+        <FileUploader />
       </div>
     </section>
   );

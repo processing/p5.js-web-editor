@@ -12,7 +12,7 @@
 .modal-content {
   border: 1px solid $light-modal-border-color;
   background-color: $light-button-background-color;
-  height: #{150 / $base-font-size}rem;
+  height: #{400 / $base-font-size}rem;
   width: #{400 / $base-font-size}rem;
   padding: #{20 / $base-font-size}rem;
 }
@@ -33,4 +33,14 @@
 
 .new-file-form__name-input {
   margin-right: #{10 / $base-font-size}rem;
+}
+
+.modal__divider {
+  text-align: center;
+  margin: #{20 / $base-font-size}rem 0;
+}
+
+.uploader {
+  height: #{200 / $base-font-size}rem;
+  width: 100%;
 }
