@@ -79,3 +79,7 @@
 		@extend %preference-option--selected;
 	}
 }
+
+.preference__button-label {
+	@extend %fake-label
+}

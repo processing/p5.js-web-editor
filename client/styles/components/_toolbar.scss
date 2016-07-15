@@ -54,3 +54,7 @@
 		color: $light-inactive-text-color;
 	}
 }
+
+.toolbar__button-label {
+	@extend %fake-label
+}
