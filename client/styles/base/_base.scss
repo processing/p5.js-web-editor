@@ -19,6 +19,7 @@ body, input, button {
 a {
 	text-decoration: none;
 	color: $light-inactive-text-color;
+	cursor: pointer;
 	&:hover {
 		text-decoration: none;
 		color: $light-primary-text-color;

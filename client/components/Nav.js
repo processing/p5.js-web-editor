@@ -28,6 +28,16 @@ function Nav(props) {
             </Link>
           </p>
         </li>
+        <li className="nav__item">
+          <a className="nav__export" onClick={props.exportProjectAsZip}>
+            Export (zip)
+          </a>
+        </li>
+        <li className="nav__item">
+          <a className="nav__clone">
+            Clone
+          </a>
+        </li>
       </ul>
       <ul className="nav__items-right">
         <li className="nav__item">
@@ -42,6 +52,7 @@ function Nav(props) {
 Nav.propTypes = {
   createProject: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
+  exportProjectAsZip: PropTypes.func.isRequired,
   user: PropTypes.shape({
     authenticated: PropTypes.bool.isRequired,
     username: PropTypes.string

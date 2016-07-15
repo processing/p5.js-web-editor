@@ -63,7 +63,9 @@ Toolbar.propTypes = {
   setProjectName: PropTypes.func.isRequired,
   projectName: PropTypes.string.isRequired,
   openPreferences: PropTypes.func.isRequired,
-  owner: PropTypes.string.isRequired
+  owner: PropTypes.shape({
+    username: PropTypes.string
+  })
 };
 
 export default Toolbar;

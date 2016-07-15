@@ -1,6 +1,8 @@
 import * as ActionTypes from '../../../constants';
 import { browserHistory } from 'react-router';
 import axios from 'axios';
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
@@ -98,3 +100,19 @@ export function createProject() {
       }));
   };
 }
+
+export function exportProjectAsZip() {
+  return (dispatch, getState) => {
+    console.log('exporting project!');
+    const state = getState();
+    const zip = new JSZip();
+    state.files.forEach(file => {
+      zip.file(file.name, file.content);
+    });
+
+    zip.generateAsync({ type: 'blob' }).then((content) => {
+      saveAs(content, `${state.project.name}.zip`);
+    });
+  };
+}
+
