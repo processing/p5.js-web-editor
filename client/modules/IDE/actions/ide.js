@@ -24,3 +24,27 @@ export function setSelectedFile(fileId) {
     selectedFile: fileId
   };
 }
+
+export function newFile() {
+  return {
+    type: ActionTypes.SHOW_MODAL
+  };
+}
+
+export function closeNewFileModal() {
+  return {
+    type: ActionTypes.HIDE_MODAL
+  };
+}
+
+export function expandSidebar() {
+  return {
+    type: ActionTypes.EXPAND_SIDEBAR
+  };
+}
+
+export function collapseSidebar() {
+  return {
+    type: ActionTypes.COLLAPSE_SIDEBAR
+  };
+}

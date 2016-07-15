@@ -4,6 +4,7 @@ import Sidebar from '../components/Sidebar';
 import PreviewFrame from '../components/PreviewFrame';
 import Toolbar from '../components/Toolbar';
 import Preferences from '../components/Preferences';
+import NewFileModal from '../components/NewFileModal';
 import Nav from '../../../components/Nav';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -28,6 +29,8 @@ class IDEView extends React.Component {
           user={this.props.user}
           createProject={this.props.createProject}
           saveProject={this.props.saveProject}
+          exportProjectAsZip={this.props.exportProjectAsZip}
+          cloneProject={this.props.cloneProject}
         />
         <Toolbar
           className="Toolbar"
@@ -38,6 +41,7 @@ class IDEView extends React.Component {
           setProjectName={this.props.setProjectName}
           openPreferences={this.props.openPreferences}
           isPreferencesVisible={this.props.preferences.isVisible}
+          owner={this.props.project.owner}
         />
         <Preferences
           isVisible={this.props.preferences.isVisible}
@@ -58,6 +62,10 @@ class IDEView extends React.Component {
           files={this.props.files}
           selectedFile={this.props.selectedFile}
           setSelectedFile={this.props.setSelectedFile}
+          newFile={this.props.newFile}
+          isExpanded={this.props.ide.sidebarIsExpanded}
+          expandSidebar={this.props.expandSidebar}
+          collapseSidebar={this.props.collapseSidebar}
         />
         <Editor
           file={this.props.selectedFile}
@@ -78,6 +86,10 @@ class IDEView extends React.Component {
           }
           isPlaying={this.props.ide.isPlaying}
         />
+        <NewFileModal
+          isVisible={this.props.ide.modalIsVisible}
+          closeModal={this.props.closeNewFileModal}
+        />
       </div>
     );
   }
@@ -92,12 +104,17 @@ IDEView.propTypes = {
   createProject: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
   ide: PropTypes.shape({
-    isPlaying: PropTypes.bool.isRequired
+    isPlaying: PropTypes.bool.isRequired,
+    modalIsVisible: PropTypes.bool.isRequired,
+    sidebarIsExpanded: PropTypes.bool.isRequired
   }).isRequired,
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
   project: PropTypes.shape({
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    owner: PropTypes.shape({
+      username: PropTypes.string
+    })
   }).isRequired,
   setProjectName: PropTypes.func.isRequired,
   openPreferences: PropTypes.func.isRequired,
@@ -125,7 +142,13 @@ IDEView.propTypes = {
   setSelectedFile: PropTypes.func.isRequired,
   htmlFile: PropTypes.object.isRequired,
   jsFiles: PropTypes.array.isRequired,
-  cssFiles: PropTypes.array.isRequired
+  cssFiles: PropTypes.array.isRequired,
+  newFile: PropTypes.func.isRequired,
+  closeNewFileModal: PropTypes.func.isRequired,
+  expandSidebar: PropTypes.func.isRequired,
+  collapseSidebar: PropTypes.func.isRequired,
+  exportProjectAsZip: PropTypes.func.isRequired,
+  cloneProject: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

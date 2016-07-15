@@ -1,10 +1,41 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
+import InlineSVG from 'react-inlinesvg';
+const rightArrowUrl = require('../../../images/right-arrow.svg');
+const leftArrowUrl = require('../../../images/left-arrow.svg');
 
 function Sidebar(props) {
+  const sidebarClass = classNames({
+    sidebar: true,
+    'sidebar--contracted': !props.isExpanded
+  });
+
   return (
-    <nav className="sidebar" role="navigation" title="file-navigation">
-      <ul className="sidebar__file-list" title="file-list">
+    <nav className={sidebarClass} title="file-navigation">
+      <div className="sidebar__header">
+        <h3 className="sidebar__title">Sketch Files</h3>
+        <div className="sidebar__icons">
+          <a
+            className="sidebar__add"
+            onClick={props.newFile}
+          >
+            +
+          </a>
+          <a
+            className="sidebar__contract"
+            onClick={props.collapseSidebar}
+          >
+            <InlineSVG src={leftArrowUrl} />
+          </a>
+          <a
+            className="sidebar__expand"
+            onClick={props.expandSidebar}
+          >
+            <InlineSVG src={rightArrowUrl} />
+          </a>
+        </div>
+      </div>
+      <ul className="sidebar__file-list">
         {props.files.map(file => {
           let itemClass = classNames({
             'sidebar__file-item': true,

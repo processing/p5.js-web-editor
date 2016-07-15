@@ -64,6 +64,8 @@ const files = (state = initialState, action) => {
       return [...action.files];
     case ActionTypes.SET_PROJECT:
       return [...action.files];
+    case ActionTypes.CREATE_FILE:
+      return [...state, { name: action.name, id: action.id, content: '' }];
     default:
       return state;
   }

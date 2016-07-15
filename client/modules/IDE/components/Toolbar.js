@@ -46,6 +46,13 @@ function Toolbar(props) {
         >
           {props.projectName}
         </span>
+        {(() => { // eslint-disable-line
+          if (props.owner) {
+            return (
+              <p className="toolbar__project-owner">by <span>{props.owner.username}</span></p>
+            );
+          }
+        })()}
       </div>
       <button
         className={preferencesButtonClass}
@@ -68,7 +75,10 @@ Toolbar.propTypes = {
   stopSketch: PropTypes.func.isRequired,
   setProjectName: PropTypes.func.isRequired,
   projectName: PropTypes.string.isRequired,
-  openPreferences: PropTypes.func.isRequired
+  openPreferences: PropTypes.func.isRequired,
+  owner: PropTypes.shape({
+    username: PropTypes.string
+  })
 };
 
 export default Toolbar;
