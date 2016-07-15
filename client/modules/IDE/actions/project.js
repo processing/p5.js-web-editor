@@ -8,12 +8,14 @@ export function getProject(id) {
   return (dispatch) => {
     axios.get(`${ROOT_URL}/projects/${id}`, { withCredentials: true })
       .then(response => {
+        console.log(response.data);
         browserHistory.push(`/projects/${id}`);
         dispatch({
           type: ActionTypes.SET_PROJECT,
           project: response.data,
           files: response.data.files,
-          selectedFile: response.data.selectedFile
+          selectedFile: response.data.selectedFile,
+          owner: response.data.user
         });
       })
       .catch(response => dispatch({
@@ -61,6 +63,7 @@ export function saveProject() {
             type: ActionTypes.NEW_PROJECT,
             name: response.data.name,
             id: response.data.id,
+            owner: response.data.user,
             selectedFile: response.data.selectedFile,
             files: response.data.files
           });
@@ -78,11 +81,13 @@ export function createProject() {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/projects`, {}, { withCredentials: true })
       .then(response => {
+        console.log(response.data);
         browserHistory.push(`/projects/${response.data.id}`);
         dispatch({
           type: ActionTypes.NEW_PROJECT,
           name: response.data.name,
           id: response.data.id,
+          owner: response.data.user,
           selectedFile: response.data.selectedFile,
           files: response.data.files
         });

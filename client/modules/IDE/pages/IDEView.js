@@ -39,6 +39,7 @@ class IDEView extends React.Component {
           setProjectName={this.props.setProjectName}
           openPreferences={this.props.openPreferences}
           isPreferencesVisible={this.props.preferences.isVisible}
+          owner={this.props.project.owner}
         />
         <Preferences
           isVisible={this.props.preferences.isVisible}
@@ -108,7 +109,10 @@ IDEView.propTypes = {
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
   project: PropTypes.shape({
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    owner: PropTypes.shape({
+      username: PropTypes.string
+    })
   }).isRequired,
   setProjectName: PropTypes.func.isRequired,
   openPreferences: PropTypes.func.isRequired,
