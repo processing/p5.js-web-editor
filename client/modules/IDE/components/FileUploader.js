@@ -7,7 +7,8 @@ import { dropzoneAcceptCallback,
 
 class FileUploader extends React.Component {
   componentDidMount() {
-    Dropzone.options.uploader = {
+    Dropzone.autoDiscover = false;
+    this.uploader = new Dropzone('div#uploader', {
       url: s3Bucket,
       method: 'post',
       autoProcessQueue: true,
@@ -22,7 +23,7 @@ class FileUploader extends React.Component {
       accept: dropzoneAcceptCallback,
       sending: dropzoneSendingCallback,
       complete: dropzoneCompleteCallback
-    };
+    });
   }
 
   render() {

@@ -9,7 +9,7 @@ export function dropzoneAcceptCallback(file, done) {
     name: file.name,
     type: file.type,
     size: file.size,
-    _csrf: document.findElementById('__createPostToken').value
+    // _csrf: document.getElementById('__createPostToken').value
   },
     {
       withCredentials: true
@@ -47,5 +47,6 @@ export function dropzoneCompleteCallback(file) {
   };
   console.log(json, JSON.stringify(json), JSON.stringify(json).replace('"', '\\"'));
   inputHidden += `${window.btoa(JSON.stringify(json))}" />`;
-  document.findElementById('createPost').appendChild(inputHidden);
+  // document.getElementById('uploader').appendChild(inputHidden);
+  document.getElementById('uploader').innerHTML += inputHidden;
 }
