@@ -1,0 +1,36 @@
+.modal {
+  position: absolute;
+  top: #{66 / $base-font-size}rem;
+  right: #{400 / $base-font-size}rem;
+  z-index: 100;
+}
+
+.modal--hidden {
+  display: none;
+}
+
+.modal-content {
+  border: 1px solid $light-modal-border-color;
+  background-color: $light-button-background-color;
+  height: #{150 / $base-font-size}rem;
+  width: #{400 / $base-font-size}rem;
+  padding: #{20 / $base-font-size}rem;
+}
+
+.modal__exit-button {
+  @extend %icon;
+}
+
+.modal__header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: #{20 / $base-font-size}rem;
+}
+
+.new-file-form__name-label {
+  display: none;
+}
+
+.new-file-form__name-input {
+  margin-right: #{10 / $base-font-size}rem;
+}

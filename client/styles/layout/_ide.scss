@@ -6,12 +6,13 @@
 }
 
 .editor-holder {
-	flex-grow: 1;
+	flex: 1 0 0;
+  max-width: 45%;
 	height: 100%;
 }
 
 .preview-frame {
-	flex-grow: 1;
+	flex: 1 0 0;
 }
 
 .toolbar {
@@ -19,5 +20,8 @@
 }
 
 .sidebar {
-  width: #{140 / $base-font-size}rem;
+  width: #{180 / $base-font-size}rem;
+  &.sidebar--contracted {
+  	width: #{20 / $base-font-size}rem;
+  }
 }

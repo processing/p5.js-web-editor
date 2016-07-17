@@ -19,3 +19,44 @@
 .CodeMirror-line {
 	padding-left: #{5 / $base-font-size}rem;
 }
+
+.CodeMirror-gutter-wrapper {
+  right: 100%;
+  top: 0;
+  bottom: 0;
+}
+
+.CodeMirror-lint-marker-warning, .CodeMirror-lint-marker-error, .CodeMirror-lint-marker-multiple {
+  background-image: none;
+  width: 70px;
+  position: absolute;
+  height: 100%;
+}
+
+.CodeMirror-lint-message-error, .CodeMirror-lint-message-warning {
+  background-image: none;
+  padding-left: inherit;
+}
+
+.CodeMirror-lint-marker-warning {
+  background-color: rgb(255, 190, 5);
+}
+
+.CodeMirror-lint-marker-error {
+  background-color: rgb(255, 95, 82);
+}
+
+.CodeMirror-gutter-elt:not(.CodeMirror-linenumber) {
+  opacity: 0.3;
+  width: 70px !important;
+  height: 100%;
+  // background-color: rgb(255, 95, 82);
+}
+
+.CodeMirror-lint-tooltip {
+  font-family: Montserrat, sans-serif;
+  border-radius: 2px;
+  border: 1px solid $light-modal-border-color;
+  background-color: $light-button-background-color;
+
+}

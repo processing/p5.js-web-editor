@@ -1,7 +1,21 @@
 import React, { PropTypes } from 'react';
 import CodeMirror from 'codemirror';
 import 'codemirror/mode/javascript/javascript';
+import 'codemirror/mode/css/css';
+import 'codemirror/mode/htmlmixed/htmlmixed';
 import 'codemirror/addon/selection/active-line';
+import 'codemirror/addon/lint/lint';
+import 'codemirror/addon/lint/javascript-lint';
+import 'codemirror/addon/lint/css-lint';
+import 'codemirror/addon/lint/html-lint';
+import { JSHINT } from 'jshint';
+window.JSHINT = JSHINT;
+import { CSSLint } from 'csslint';
+window.CSSLint = CSSLint;
+import { HTMLHint } from 'htmlhint';
+window.HTMLHint = HTMLHint;
+
+import { debounce } from 'throttle-debounce';
 
 class Editor extends React.Component {
 
@@ -11,12 +25,19 @@ class Editor extends React.Component {
       value: this.props.file.content,
       lineNumbers: true,
       styleActiveLine: true,
-      mode: 'javascript'
+      mode: 'javascript',
+      lineWrapping: true,
+      gutters: ['CodeMirror-lint-markers'],
+      lint: true
     });
-    this._cm.on('change', () => { // eslint-disable-line
-      // this.props.updateFileContent('sketch.js', this._cm.getValue());
+    this._cm.on('change', debounce(200, () => {
       this.props.updateFileContent(this.props.file.name, this._cm.getValue());
-    });
+    }));
+    // this._cm.on('change', () => { // eslint-disable-line
+    //   // this.props.updateFileContent('sketch.js', this._cm.getValue());
+    //   throttle(1000, () => console.log('debounce is working!'));
+    //   this.props.updateFileContent(this.props.file.name, this._cm.getValue());
+    // });
     this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
     this._cm.setOption('indentWithTabs', this.props.isTabIndent);
     this._cm.setOption('tabSize', this.props.indentationAmount);
@@ -35,6 +56,15 @@ class Editor extends React.Component {
     }
     if (this.props.isTabIndent !== prevProps.isTabIndent) {
       this._cm.setOption('indentWithTabs', this.props.isTabIndent);
+    }
+    if (this.props.file.name !== prevProps.name) {
+      if (this.props.file.name.match(/.+\.js$/)) {
+        this._cm.setOption('mode', 'javascript');
+      } else if (this.props.file.name.match(/.+\.css$/)) {
+        this._cm.setOption('mode', 'css');
+      } else if (this.props.file.name.match(/.+\.html$/)) {
+        this._cm.setOption('mode', 'htmlmixed');
+      }
     }
   }
 

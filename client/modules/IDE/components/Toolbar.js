@@ -34,12 +34,19 @@ function Toolbar(props) {
         <span
           className="toolbar__project-name"
           // TODO change this span into an input
-          onBlur={props.setProjectName.bind(this)} // eslint-disable-line 
+          onBlur={props.setProjectName.bind(this)} // eslint-disable-line
           contentEditable
           suppressContentEditableWarning
         >
           {props.projectName}
         </span>
+        {(() => { // eslint-disable-line
+          if (props.owner) {
+            return (
+              <p className="toolbar__project-owner">by <span>{props.owner.username}</span></p>
+            );
+          }
+        })()}
       </div>
       <button className={preferencesButtonClass} onClick={props.openPreferences}>
         <Isvg src={preferencesUrl} alt="Show Preferences" />
@@ -55,7 +62,10 @@ Toolbar.propTypes = {
   stopSketch: PropTypes.func.isRequired,
   setProjectName: PropTypes.func.isRequired,
   projectName: PropTypes.string.isRequired,
-  openPreferences: PropTypes.func.isRequired
+  openPreferences: PropTypes.func.isRequired,
+  owner: PropTypes.shape({
+    username: PropTypes.string
+  })
 };
 
 export default Toolbar;
