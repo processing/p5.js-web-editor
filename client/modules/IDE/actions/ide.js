@@ -24,3 +24,10 @@ export function setSelectedFile(fileId) {
     selectedFile: fileId
   };
 }
+
+export function dispatchConsoleEvent(...args) {
+  return {
+    type: ActionTypes.CONSOLE_EVENT,
+    event: args[0].data
+  };
+}

@@ -2,7 +2,11 @@ import * as ActionTypes from '../../../constants';
 
 const initialState = {
   isPlaying: false,
-  selectedFile: '1'
+  selectedFile: '1',
+  consoleEvent: {
+    method: undefined,
+    arguments: []
+  }
 };
 
 const ide = (state = initialState, action) => {
@@ -17,6 +21,8 @@ const ide = (state = initialState, action) => {
     case ActionTypes.SET_PROJECT:
     case ActionTypes.NEW_PROJECT:
       return Object.assign({}, state, { selectedFile: action.selectedFile });
+    case ActionTypes.CONSOLE_EVENT:
+      return Object.assign({}, state, { consoleEvent: action.event });
     default:
       return state;
   }

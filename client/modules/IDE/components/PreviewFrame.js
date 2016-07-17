@@ -3,14 +3,68 @@ import ReactDOM from 'react-dom';
 import escapeStringRegexp from 'escape-string-regexp';
 import srcDoc from 'srcdoc-polyfill';
 
+const hijackConsoleScript = `<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var iframeWindow = window;
+    var originalConsole = iframeWindow.console;
+    iframeWindow.console = {};
+
+    var methods = [
+      'debug', 'clear', 'error', 'info', 'log', 'warn'
+    ];
+
+    methods.forEach( function(method) {
+      iframeWindow.console[method] = function() {
+        originalConsole[method].apply(originalConsole, arguments);
+
+        var args = Array.from(arguments);
+        args = args.map(function(i) {
+          // catch objects
+          return (typeof i === 'string') ? i : JSON.stringify(i);
+        });
+
+        // post message to parent window
+        window.parent.postMessage({
+          method: method,
+          arguments: args,
+          source: 'sketch'
+        }, '*');
+      };
+    });
+
+    // catch reference errors, via http://stackoverflow.com/a/12747364/2994108
+    window.onerror = function (msg, url, lineNo, columnNo, error) {
+        var string = msg.toLowerCase();
+        var substring = "script error";
+        var data = {};
+
+        if (string.indexOf(substring) > -1){
+          data = 'Script Error: See Browser Console for Detail';
+        } else {
+          data = msg + ' Line: ' + lineNo + 'column: ' + columnNo;
+        }
+        window.parent.postMessage({
+          method: 'error',
+          arguments: data,
+          source: 'sketch'
+        }, '*');
+      return false;
+    };
+  });
+</script>`;
+
 class PreviewFrame extends React.Component {
 
   componentDidMount() {
-    this.hijackConsole();
-
     if (this.props.isPlaying) {
       this.renderFrameContents();
     }
+
+    window.addEventListener('message', (msg) => {
+      if (msg.data.source === 'sketch') {
+        this.props.dispatchConsoleEvent(msg);
+      }
+    });
   }
 
   componentDidUpdate(prevProps) {
@@ -53,27 +107,9 @@ class PreviewFrame extends React.Component {
     // htmlHeadContents = htmlHeadContents.slice(1, htmlHeadContents.length - 2);
     // htmlHeadContents += '<link rel="stylesheet" type="text/css" href="/preview-styles.css" />\n';
     // htmlFile = htmlFile.replace(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi, `<head>\n${htmlHeadContents}\n</head>`);
+    htmlFile += hijackConsoleScript;
 
     return htmlFile;
-  }
-
-  hijackConsole() {
-    const iframeWindow = ReactDOM.findDOMNode(this).contentWindow;
-    const originalConsole = iframeWindow.console;
-    iframeWindow.console = {};
-
-    const methods = [
-      'debug', 'clear', 'error', 'info', 'log', 'warn'
-    ];
-
-    methods.forEach((method) => {
-      iframeWindow.console[method] = (...theArgs) => {
-        originalConsole[method].apply(originalConsole, theArgs);
-
-        // TO DO: do something with the arguments
-        // window.alert(JSON.stringify(theArgs));
-      };
-    });
   }
 
   renderSketch() {
@@ -107,7 +143,7 @@ class PreviewFrame extends React.Component {
         frameBorder="0"
         title="sketch output"
         sandbox="allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-modals allow-forms"
-      ></iframe>
+      />
     );
   }
 }
@@ -120,7 +156,9 @@ PreviewFrame.propTypes = {
     content: PropTypes.string.isRequired
   }),
   jsFiles: PropTypes.array.isRequired,
-  cssFiles: PropTypes.array.isRequired
+  cssFiles: PropTypes.array.isRequired,
+  dispatchConsoleEvent: PropTypes.func.isRequired,
+  children: PropTypes.element
 };
 
 export default PreviewFrame;

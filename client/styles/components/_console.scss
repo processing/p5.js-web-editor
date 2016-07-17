@@ -1,0 +1,14 @@
+.preview-console {
+	position: fixed;
+	width:100%;
+	height:60px;
+	right:0px;
+	bottom: 0px;
+	background:grey;
+	z-index:1000;
+
+	& > {
+		position:relative;
+		text-align:left;
+	}
+}

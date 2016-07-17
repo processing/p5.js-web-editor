@@ -31,5 +31,7 @@ export const SET_PROJECTS = 'SET_PROJECTS';
 
 export const SET_SELECTED_FILE = 'SET_SELECTED_FILE';
 
+export const CONSOLE_EVENT = 'CONSOLE_EVENT';
+
 // eventually, handle errors more specifically and better
 export const ERROR = 'ERROR';
