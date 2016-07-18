@@ -4,5 +4,5 @@ node_modules/
 npm-debug.log
 dump.rdb
 public/*
-static/dist
+static/dist/
 static/css/app.min.css
