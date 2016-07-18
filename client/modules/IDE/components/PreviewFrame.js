@@ -115,15 +115,10 @@ class PreviewFrame extends React.Component {
   renderSketch() {
     const doc = ReactDOM.findDOMNode(this);
     if (this.props.isPlaying) {
-      // TODO add polyfill for this
-      // doc.srcdoc = this.injectLocalFiles();
       srcDoc.set(doc, this.injectLocalFiles());
     } else {
-      // doc.srcdoc = '';
-      srcDoc.set(doc, '');
-      doc.contentWindow.document.open();
-      doc.contentWindow.document.write('');
-      doc.contentWindow.document.close();
+      doc.srcdoc = '';
+      srcDoc.set(doc, '  ');
     }
   }
 
