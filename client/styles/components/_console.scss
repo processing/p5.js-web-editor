@@ -11,4 +11,17 @@
 		position:relative;
 		text-align:left;
 	}
+
+	// assign styles to different types of console messages
+	.log {
+		color: black;
+	}
+
+	.error {
+		color: red;
+	}
+
+	.warn {
+		color: yellow;
+	}
 }
