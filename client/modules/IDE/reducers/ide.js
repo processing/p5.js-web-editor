@@ -3,6 +3,10 @@ import * as ActionTypes from '../../../constants';
 const initialState = {
   isPlaying: false,
   selectedFile: '1',
+  consoleEvent: {
+    method: undefined,
+    arguments: []
+  },
   modalIsVisible: false,
   sidebarIsExpanded: true
 };
@@ -19,6 +23,8 @@ const ide = (state = initialState, action) => {
     case ActionTypes.SET_PROJECT:
     case ActionTypes.NEW_PROJECT:
       return Object.assign({}, state, { selectedFile: action.selectedFile });
+    case ActionTypes.CONSOLE_EVENT:
+      return Object.assign({}, state, { consoleEvent: action.event });
     case ActionTypes.SHOW_MODAL:
       return Object.assign({}, state, { modalIsVisible: true });
     case ActionTypes.HIDE_MODAL:
