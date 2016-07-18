@@ -1,11 +1,20 @@
 import React, { PropTypes } from 'react';
 
+/**
+ *  How many console messages to store
+ *  @type {Number}
+ */
 const consoleMax = 5;
 
 class Console extends React.Component {
 
   constructor(props) {
     super(props);
+
+    /**
+     *  An array of React Elements that include previous console messages
+     *  @type {Array}
+     */
     this.children = [];
   }
 
