@@ -4,7 +4,7 @@
 	height:60px;
 	right:0px;
 	bottom: 0px;
-	background:grey;
+	background:$dark-background-color;
 	z-index:1000;
 
 	& > {
@@ -13,15 +13,15 @@
 	}
 
 	// assign styles to different types of console messages
-	.log {
-		color: black;
+	.preview-console__log {
+		color: $dark-secondary-text-color;
 	}
 
-	.error {
-		color: red;
+	.preview-console__error {
+		color: $console-error-color;
 	}
 
-	.warn {
-		color: yellow;
+	.preview-console__warn {
+		color: $console-warn-color;
 	}
 }

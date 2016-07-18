@@ -25,7 +25,7 @@ class Console extends React.Component {
       const args = nextProps.consoleEvent.arguments;
       const method = nextProps.consoleEvent.method;
       const nextChild = (
-        <div key={this.children.length} className={method}>
+        <div key={this.children.length} className={`preview-console__${method}`}>
           {Object.keys(args).map((key) => <span key={`${this.children.length}-${key}`}>{args[key]}</span>)}
         </div>
       );
