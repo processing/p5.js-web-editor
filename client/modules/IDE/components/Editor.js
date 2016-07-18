@@ -25,6 +25,7 @@ class Editor extends React.Component {
       value: this.props.file.content,
       lineNumbers: true,
       styleActiveLine: true,
+      inputStyle: 'contenteditable',
       mode: 'javascript',
       lineWrapping: true,
       gutters: ['CodeMirror-lint-markers'],
@@ -75,7 +76,7 @@ class Editor extends React.Component {
   _cm: CodeMirror.Editor
 
   render() {
-    return <div ref="container" className="editor-holder"></div>;
+    return <div ref="container" className="editor-holder" tabIndex="0" title="code editor" role="region"></div>;
   }
 }
 

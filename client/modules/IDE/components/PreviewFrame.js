@@ -135,6 +135,8 @@ class PreviewFrame extends React.Component {
     return (
       <iframe
         className="preview-frame"
+        role="region"
+        tabIndex="0"
         frameBorder="0"
         title="sketch output"
         sandbox="allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-modals allow-forms"

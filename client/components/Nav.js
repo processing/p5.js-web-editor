@@ -3,8 +3,8 @@ import { Link } from 'react-router';
 
 function Nav(props) {
   return (
-    <nav className="nav">
-      <ul className="nav__items-left">
+    <nav className="nav" role="navigation" title="main-navigation">
+      <ul className="nav__items-left" title="project-menu">
         <li className="nav__item">
           <a
             className="nav__new"
@@ -39,7 +39,7 @@ function Nav(props) {
           </a>
         </li>
       </ul>
-      <ul className="nav__items-right">
+      <ul className="nav__items-right" title="user-menu">
         <li className="nav__item">
           {props.user.authenticated && <p>Hello, {props.user.username}!</p>}
           {!props.user.authenticated && <p><Link to="/login">Login</Link> or <Link to="/signup">Sign Up</Link></p>}
