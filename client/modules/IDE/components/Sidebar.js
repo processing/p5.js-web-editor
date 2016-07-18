@@ -11,7 +11,7 @@ function Sidebar(props) {
   });
 
   return (
-    <section className={sidebarClass}>
+    <nav className={sidebarClass} title="file-navigation" role="navigation">
       <div className="sidebar__header">
         <h3 className="sidebar__title">Sketch Files</h3>
         <div className="sidebar__icons">
@@ -53,7 +53,7 @@ function Sidebar(props) {
           );
         })}
       </ul>
-    </section>
+    </nav>
   );
 }
 

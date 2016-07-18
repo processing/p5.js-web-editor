@@ -11,7 +11,7 @@ function draw() {
   background(220);
 }`
 
-const defaultHTML = 
+const defaultHTML =
 `<!DOCTYPE html>
 <html>
   <head>

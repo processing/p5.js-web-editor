@@ -44,7 +44,7 @@ export function decreaseIndentation() {
   };
 }
 
-export function updateIndentation() {
+export function updateIndentation(event) {
   const value = event.target.value;
   return {
     type: ActionTypes.UPDATE_INDENTATION,
