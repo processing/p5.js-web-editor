@@ -1,4 +1,4 @@
-import Project from '../models/Project'
+import Project from '../models/project'
 
 // Bug -> timestamps don't get created, but it seems like this will
 // be fixed in mongoose soon
