@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Dropzone from 'dropzone';
 const s3Bucket = 'http://p5js-web-editor-test.s3.amazonaws.com/';
-import { dropzoneAcceptCallback,
-        dropzoneSendingCallback,
-        dropzoneCompleteCallback } from '../actions/uploader';
+import * as UploaderActions from '../actions/uploader';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 class FileUploader extends React.Component {
   componentDidMount() {
@@ -20,9 +20,9 @@ class FileUploader extends React.Component {
       thumbnailWidth: 150,
       thumbnailHeight: 150,
       acceptedMimeTypes: 'image/bmp,image/gif,image/jpg,image/jpeg,image/png',
-      accept: dropzoneAcceptCallback,
-      sending: dropzoneSendingCallback,
-      complete: dropzoneCompleteCallback
+      accept: this.props.dropzoneAcceptCallback,
+      sending: this.props.dropzoneSendingCallback,
+      complete: this.props.dropzoneCompleteCallback
     });
   }
 
@@ -33,4 +33,21 @@ class FileUploader extends React.Component {
   }
 }
 
-export default FileUploader;
+FileUploader.propTypes = {
+  dropzoneAcceptCallback: PropTypes.func.isRequired,
+  dropzoneSendingCallback: PropTypes.func.isRequired,
+  dropzoneCompleteCallback: PropTypes.func.isRequired
+};
+
+function mapStateToProps(state) {
+  return {
+    files: state.files,
+    project: state.project
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(UploaderActions, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FileUploader);

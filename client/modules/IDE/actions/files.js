@@ -13,10 +13,12 @@ export function updateFileContent(name, content) {
 
 export function createFile(formProps) {
   return (dispatch, getState) => {
+    debugger; // eslint-disable-line
     const state = getState();
     if (state.project.id) {
       const postParams = {
-        name: formProps.name
+        name: formProps.name,
+        url: formProps.url
       };
       axios.post(`${ROOT_URL}/projects/${state.project.id}/files`, postParams, { withCredentials: true })
         .then(response => {
