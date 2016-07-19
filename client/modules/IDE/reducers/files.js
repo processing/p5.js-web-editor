@@ -60,6 +60,13 @@ const files = (state = initialState, action) => {
 
         return Object.assign({}, file, { content: action.content });
       });
+    case ActionTypes.SET_BLOB_URL:
+      return state.map(file => {
+        if (file.name !== action.name) {
+          return file;
+        }
+        return Object.assign({}, file, { blobURL: action.blobURL });
+      });
     case ActionTypes.NEW_PROJECT:
       return [...action.files];
     case ActionTypes.SET_PROJECT:

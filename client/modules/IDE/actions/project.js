@@ -3,14 +3,33 @@ import { browserHistory } from 'react-router';
 import axios from 'axios';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+import blobUtil from 'blob-util';
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
+export function getProjectBlobUrls() {
+  return (dispatch, getState) => {
+    const state = getState();
+    state.files.forEach(file => {
+      if (file.url) {
+        blobUtil.imgSrcToBlob(file.url, undefined, { crossOrigin: 'Anonymous' })
+          .then(blobUtil.createObjectURL)
+          .then(objectURL => {
+            dispatch({
+              type: ActionTypes.SET_BLOB_URL,
+              name: file.name,
+              blobURL: objectURL
+            });
+          });
+      }
+    });
+  };
+}
+
 export function getProject(id) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     axios.get(`${ROOT_URL}/projects/${id}`, { withCredentials: true })
       .then(response => {
-        console.log(response.data);
         browserHistory.push(`/projects/${id}`);
         dispatch({
           type: ActionTypes.SET_PROJECT,
@@ -19,6 +38,7 @@ export function getProject(id) {
           selectedFile: response.data.selectedFile,
           owner: response.data.user
         });
+        getProjectBlobUrls()(dispatch, getState);
       })
       .catch(response => dispatch({
         type: ActionTypes.ERROR,
