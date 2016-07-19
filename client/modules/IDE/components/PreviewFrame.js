@@ -32,8 +32,22 @@ class PreviewFrame extends React.Component {
 
   injectLocalFiles() {
     let htmlFile = this.props.htmlFile.content;
+    const jsFiles = this.props.jsFiles.map(jsFile => {
+      const jsFileStrings = jsFile.content.match(/(['"])((\\\1|.)*?)\1/gm);
+      jsFileStrings.forEach(jsFileString => {
+        if (jsFileString.match(/^('|")(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp)('|")$/)) {
+          const fileName = jsFileString.substr(1, jsFileString.length - 2);
+          this.props.files.forEach(file => {
+            if (file.name === fileName) {
+              jsFile.content = jsFile.content.replace(fileName, file.blobURL); // eslint-disable-line
+            }
+          });
+        }
+      });
+      return jsFile;
+    });
 
-    this.props.jsFiles.forEach(jsFile => {
+    jsFiles.forEach(jsFile => {
       const fileName = escapeStringRegexp(jsFile.name);
       const fileRegex = new RegExp(`<script.*?src=('|")((\.\/)|\/)?${fileName}('|").*?>([\s\S]*?)<\/script>`, 'gmi');
       htmlFile = htmlFile.replace(fileRegex, `<script>\n${jsFile.content}\n</script>`);
@@ -44,13 +58,6 @@ class PreviewFrame extends React.Component {
       const fileRegex = new RegExp(`<link.*?href=('|")((\.\/)|\/)?${fileName}('|").*?>`, 'gmi');
       htmlFile = htmlFile.replace(fileRegex, `<style>\n${cssFile.content}\n</style>`);
     });
-
-    // const htmlHead = htmlFile.match(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi);
-    // const headRegex = new RegExp('head', 'i');
-    // let htmlHeadContents = htmlHead[0].split(headRegex)[1];
-    // htmlHeadContents = htmlHeadContents.slice(1, htmlHeadContents.length - 2);
-    // htmlHeadContents += '<link rel="stylesheet" type="text/css" href="/preview-styles.css" />\n';
-    // htmlFile = htmlFile.replace(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi, `<head>\n${htmlHeadContents}\n</head>`);
 
     return htmlFile;
   }
@@ -101,7 +108,8 @@ PreviewFrame.propTypes = {
     content: PropTypes.string.isRequired
   }),
   jsFiles: PropTypes.array.isRequired,
-  cssFiles: PropTypes.array.isRequired
+  cssFiles: PropTypes.array.isRequired,
+  files: PropTypes.array.isRequired
 };
 
 export default PreviewFrame;
