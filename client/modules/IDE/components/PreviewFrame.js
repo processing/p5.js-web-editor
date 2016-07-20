@@ -32,19 +32,30 @@ class PreviewFrame extends React.Component {
 
   injectLocalFiles() {
     let htmlFile = this.props.htmlFile.content;
-    const jsFiles = this.props.jsFiles.map(jsFile => {
-      const jsFileStrings = jsFile.content.match(/(['"])((\\\1|.)*?)\1/gm);
+
+    // have to build the array manually because the spread operator is only
+    // one level down...
+    const jsFiles = [];
+    this.props.jsFiles.forEach(jsFile => {
+      const newJSFile = { ...jsFile };
+      const jsFileStrings = newJSFile.content.match(/(['"])((\\\1|.)*?)\1/gm);
       jsFileStrings.forEach(jsFileString => {
         if (jsFileString.match(/^('|")(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp)('|")$/)) {
-          const fileName = jsFileString.substr(1, jsFileString.length - 2);
+          const filePath = jsFileString.substr(1, jsFileString.length - 2);
+          let fileName = filePath;
+          if (fileName.match(/^\.\//)) {
+            fileName = fileName.substr(2, fileName.length - 1);
+          } else if (fileName.match(/^\//)) {
+            fileName = fileName.substr(1, fileName.length - 1);
+          }
           this.props.files.forEach(file => {
             if (file.name === fileName) {
-              jsFile.content = jsFile.content.replace(fileName, file.blobURL); // eslint-disable-line
+              newJSFile.content = newJSFile.content.replace(filePath, file.blobURL); // eslint-disable-line
             }
           });
         }
       });
-      return jsFile;
+      jsFiles.push(newJSFile);
     });
 
     jsFiles.forEach(jsFile => {

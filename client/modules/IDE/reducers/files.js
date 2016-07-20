@@ -82,5 +82,6 @@ export const getFile = (state, id) => state.filter(file => file.id === id)[0];
 export const getHTMLFile = (state) => state.filter(file => file.name.match(/.*\.html$/))[0];
 export const getJSFiles = (state) => state.filter(file => file.name.match(/.*\.js$/));
 export const getCSSFiles = (state) => state.filter(file => file.name.match(/.*\.css$/));
+export const getLinkedFiles = (state) => state.filter(file => file.url);
 
 export default files;
