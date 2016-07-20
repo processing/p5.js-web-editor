@@ -12,8 +12,11 @@ This project is currently in the early stages of development! It will definitely
 MONGO_URL=mongodb://localhost:27017/p5js-web-editor
 PORT=8000
 SESSION_SECRET=whatever_you_want_this_to_be_it_only_matters_for_production
+AWS_ACCESS_KEY=<your-aws-access-key>
+AWS_SECRET_KEY=<your-aws-secret-key>
+S3_BUCKET=<your-s3-bucket>
 ```
-Or, if you don't want to do that, just ask me to send you mine.
+Or, if you don't want to do that, just ask me to send you mine. Refer to this gist for creating an S3 bucket for testing, or if you don't want to do that, I will send you my AWS credentials. 
 5. `$ npm start`
 6. Navigate to (http://localhost:8000)[http://localhost:8000] in your browser
 7. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en).
@@ -28,6 +31,9 @@ Or, if you don't want to do that, just ask me to send you mine.
 MONGO_URL=mongodb://localhost:27017/p5js-web-editor
 PORT=8000
 SESSION_SECRET=make_this_a_long-random_string_like_maybe_126_characters_long
+AWS_ACCESS_KEY=<your-aws-access-key>
+AWS_SECRET_KEY=<your-aws-secret-key>
+S3_BUCKET=<your-s3-bucket>
 ```
 Or, if you don't want to do that, just ask me to send you mine.
 5. `$ npm run build`

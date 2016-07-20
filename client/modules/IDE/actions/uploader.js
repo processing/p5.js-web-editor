@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { createFile } from './files';
 
-const s3Bucket = 'http://p5js-web-editor-test.s3.amazonaws.com/';
+const s3Bucket = `http://${process.env.S3_BUCKET}.s3.amazonaws.com/`;
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
 export function dropzoneAcceptCallback(file, done) {

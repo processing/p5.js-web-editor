@@ -1,4 +1,5 @@
 var webpack = require('webpack');
+require('dotenv').config();
 
 module.exports = {
 	devtool: 'cheap-module-eval-source-map',
@@ -19,6 +20,7 @@ module.exports = {
       'process.env': {
         CLIENT: JSON.stringify(true),
         'NODE_ENV': JSON.stringify('development'),
+        'S3_BUCKET': '"' + process.env.S3_BUCKET + '"'
       }
     })
   ],
