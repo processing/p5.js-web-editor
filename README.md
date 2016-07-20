@@ -16,7 +16,7 @@ AWS_ACCESS_KEY=<your-aws-access-key>
 AWS_SECRET_KEY=<your-aws-secret-key>
 S3_BUCKET=<your-s3-bucket>
 ```
-Or, if you don't want to do that, just ask me to send you mine. Refer to this gist for creating an S3 bucket for testing, or if you don't want to do that, I will send you my AWS credentials. 
+Or, if you don't want to do that, just ask me to send you mine. Refer to [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) for creating an S3 bucket for testing, or if you don't want to do that, I will send you my AWS credentials. 
 5. `$ npm start`
 6. Navigate to (http://localhost:8000)[http://localhost:8000] in your browser
 7. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en).
@@ -35,7 +35,7 @@ AWS_ACCESS_KEY=<your-aws-access-key>
 AWS_SECRET_KEY=<your-aws-secret-key>
 S3_BUCKET=<your-s3-bucket>
 ```
-Or, if you don't want to do that, just ask me to send you mine.
+Or, if you don't want to do that, just ask me to send you mine. Refer to [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) for creating an S3 bucket for testing, or if you don't want to do that, I will send you my AWS credentials. 
 5. `$ npm run build`
 6. `$ npm run start:prod`
 
