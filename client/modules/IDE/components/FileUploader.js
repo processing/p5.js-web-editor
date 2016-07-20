@@ -7,7 +7,11 @@ import { connect } from 'react-redux';
 
 class FileUploader extends React.Component {
   componentDidMount() {
+    this.createDropzone();
     Dropzone.autoDiscover = false;
+  }
+
+  createDropzone() {
     this.uploader = new Dropzone('div#uploader', {
       url: s3Bucket,
       method: 'post',

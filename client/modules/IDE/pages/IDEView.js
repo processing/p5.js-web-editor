@@ -86,10 +86,17 @@ class IDEView extends React.Component {
           }
           isPlaying={this.props.ide.isPlaying}
         />
-        <NewFileModal
-          isVisible={this.props.ide.modalIsVisible}
-          closeModal={this.props.closeNewFileModal}
-        />
+        {(() => {
+          if (this.props.ide.modalIsVisible) {
+            return (
+              <NewFileModal
+                isVisible={this.props.ide.modalIsVisible}
+                closeModal={this.props.closeNewFileModal}
+              />
+            );
+          }
+          return '';
+        })()}
       </div>
     );
   }
