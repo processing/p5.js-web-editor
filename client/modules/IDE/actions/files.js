@@ -13,7 +13,6 @@ export function updateFileContent(name, content) {
 
 export function createFile(formProps) {
   return (dispatch, getState) => {
-    debugger; // eslint-disable-line
     const state = getState();
     if (state.project.id) {
       const postParams = {
@@ -25,6 +24,9 @@ export function createFile(formProps) {
           dispatch({
             type: ActionTypes.CREATE_FILE,
             ...response.data
+          });
+          dispatch({
+            type: ActionTypes.HIDE_MODAL
           });
         })
         .catch(response => dispatch({
