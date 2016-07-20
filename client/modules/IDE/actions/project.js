@@ -3,7 +3,7 @@ import { browserHistory } from 'react-router';
 import axios from 'axios';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
-import blobUtil from 'blob-util';
+import { getBlobUrl } from './files';
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
@@ -12,15 +12,7 @@ export function getProjectBlobUrls() {
     const state = getState();
     state.files.forEach(file => {
       if (file.url) {
-        blobUtil.imgSrcToBlob(file.url, undefined, { crossOrigin: 'Anonymous' })
-          .then(blobUtil.createObjectURL)
-          .then(objectURL => {
-            dispatch({
-              type: ActionTypes.SET_BLOB_URL,
-              name: file.name,
-              blobURL: objectURL
-            });
-          });
+        getBlobUrl(file)(dispatch);
       }
     });
   };
