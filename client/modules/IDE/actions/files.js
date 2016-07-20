@@ -64,7 +64,8 @@ export function createFile(formProps) {
       dispatch({
         type: ActionTypes.CREATE_FILE,
         name: formProps.name,
-        id: `${maxFileId + 1}`
+        id: `${maxFileId + 1}`,
+        url: formProps.url
       });
       dispatch({
         type: ActionTypes.HIDE_MODAL

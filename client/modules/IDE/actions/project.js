@@ -2,8 +2,10 @@ import * as ActionTypes from '../../../constants';
 import { browserHistory } from 'react-router';
 import axios from 'axios';
 import JSZip from 'jszip';
+import JSZipUtils from 'jszip-utils';
 import { saveAs } from 'file-saver';
 import { getBlobUrl } from './files';
+import async from 'async';
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
@@ -117,12 +119,22 @@ export function exportProjectAsZip() {
     console.log('exporting project!');
     const state = getState();
     const zip = new JSZip();
-    state.files.forEach(file => {
-      zip.file(file.name, file.content);
-    });
-
-    zip.generateAsync({ type: 'blob' }).then((content) => {
-      saveAs(content, `${state.project.name}.zip`);
+    async.each(state.files, (file, cb) => {
+      console.log(file);
+      if (file.url) {
+        JSZipUtils.getBinaryContent(file.url, (err, data) => {
+          zip.file(file.name, data, { binary: true });
+          cb();
+        });
+      } else {
+        zip.file(file.name, file.content);
+        cb();
+      }
+    }, err => {
+      if (err) console.log(err);
+      zip.generateAsync({ type: 'blob' }).then((content) => {
+        saveAs(content, `${state.project.name}.zip`);
+      });
     });
   };
 }

@@ -56,6 +56,7 @@
     "node": ">=4"
   },
   "dependencies": {
+    "async": "^2.0.0",
     "axios": "^0.12.0",
     "babel-core": "^6.8.0",
     "bcrypt-nodejs": "0.0.3",
@@ -77,6 +78,7 @@
     "htmlhint": "^0.9.13",
     "jshint": "^2.9.2",
     "jszip": "^3.0.0",
+    "jszip-utils": "0.0.2",
     "moment": "^2.14.1",
     "mongoose": "^4.4.16",
     "node-uuid": "^1.4.7",
