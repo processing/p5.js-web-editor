@@ -90,7 +90,7 @@ class IDEView extends React.Component {
           if (this.props.ide.modalIsVisible) {
             return (
               <NewFileModal
-                isVisible={this.props.ide.modalIsVisible}
+                canUploadMedia={this.props.user.authenticated}
                 closeModal={this.props.closeNewFileModal}
               />
             );
@@ -107,7 +107,9 @@ IDEView.propTypes = {
     project_id: PropTypes.string
   }),
   getProject: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired,
+  user: PropTypes.shape({
+    authenticated: PropTypes.bool.isRequired
+  }).isRequired,
   createProject: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
   ide: PropTypes.shape({

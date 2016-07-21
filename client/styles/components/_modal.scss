@@ -5,16 +5,15 @@
   z-index: 100;
 }
 
-.modal--hidden {
-  display: none;
-}
-
 .modal-content {
   border: 1px solid $light-modal-border-color;
   background-color: $light-button-background-color;
   height: #{400 / $base-font-size}rem;
   width: #{400 / $base-font-size}rem;
   padding: #{20 / $base-font-size}rem;
+  .modal--reduced & {
+    height: #{150 / $base-font-size}rem;
+  }
 }
 
 .modal__exit-button {

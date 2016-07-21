@@ -15,7 +15,7 @@ import FileUploader from './FileUploader';
 function NewFileModal(props) {
   const modalClass = classNames({
     modal: true,
-    'modal--hidden': !props.isVisible
+    'modal--reduced': !props.canUploadMedia
   });
 
   return (
@@ -28,16 +28,25 @@ function NewFileModal(props) {
           </button>
         </div>
         <NewFileForm {...props} />
-        <p className="modal__divider">OR</p>
-        <FileUploader />
+        {(() => {
+          if (props.canUploadMedia) {
+            return (
+              <div>
+                <p className="modal__divider">OR</p>
+                <FileUploader />
+              </div>
+            );
+          }
+          return '';
+        })()}
       </div>
     </section>
   );
 }
 
 NewFileModal.propTypes = {
-  isVisible: PropTypes.bool.isRequired,
-  closeModal: PropTypes.func.isRequired
+  closeModal: PropTypes.func.isRequired,
+  canUploadMedia: PropTypes.bool.isRequired
 };
 
 function mapStateToProps(state) {
