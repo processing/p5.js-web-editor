@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import Dropzone from 'dropzone';
-const s3Bucket = 'http://p5js-web-editor-test.s3.amazonaws.com/';
+const s3Bucket = `http://${process.env.S3_BUCKET}.s3.amazonaws.com/`;
 import * as UploaderActions from '../actions/uploader';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
