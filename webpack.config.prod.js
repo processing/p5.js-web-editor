@@ -4,6 +4,7 @@ var cssnext = require('postcss-cssnext');
 var postcssFocus = require('postcss-focus');
 var postcssReporter = require('postcss-reporter');
 var cssnano = require('cssnano');
+require('dotenv').config();
 
 module.exports = {
   devtool: 'hidden-source-map',
