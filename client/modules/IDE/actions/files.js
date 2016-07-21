@@ -4,6 +4,25 @@ import blobUtil from 'blob-util';
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
+function appendToFilename(filename, string) {
+  const dotIndex = filename.lastIndexOf('.');
+  if (dotIndex === -1) return filename + string;
+  return filename.substring(0, dotIndex) + string + filename.substring(dotIndex);
+}
+
+function createUniqueName(name, files) {
+  let testName = name;
+  let index = 1;
+  let existingName = files.find((file) => name === file.name);
+
+  while (existingName) {
+    testName = appendToFilename(name, `-${index}`);
+    index++;
+    existingName = files.find((file) => testName === file.name); // eslint-disable-line
+  }
+  return testName;
+}
+
 export function updateFileContent(name, content) {
   return {
     type: ActionTypes.UPDATE_FILE_CONTENT,
@@ -31,7 +50,7 @@ export function createFile(formProps) {
     const state = getState();
     if (state.project.id) {
       const postParams = {
-        name: formProps.name,
+        name: createUniqueName(formProps.name, state.files),
         url: formProps.url
       };
       axios.post(`${ROOT_URL}/projects/${state.project.id}/files`, postParams, { withCredentials: true })
@@ -63,7 +82,7 @@ export function createFile(formProps) {
       }
       dispatch({
         type: ActionTypes.CREATE_FILE,
-        name: formProps.name,
+        name: createUniqueName(formProps.name, state.files),
         id: `${maxFileId + 1}`,
         url: formProps.url
       });
