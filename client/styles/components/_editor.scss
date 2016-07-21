@@ -54,9 +54,9 @@
 }
 
 .CodeMirror-lint-tooltip {
-  font-family: Montserrat, sans-serif;
-  border-radius: 2px;
+  background-color: $light-modal-background-color;
   border: 1px solid $light-modal-border-color;
-  background-color: $light-button-background-color;
-
+  border-radius: 2px;
+  box-shadow: 0 12px 12px $light-shadow-color;
+  font-family: Montserrat, sans-serif;
 }

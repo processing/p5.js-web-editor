@@ -6,8 +6,7 @@
 }
 
 .modal-content {
-  border: 1px solid $light-modal-border-color;
-  background-color: $light-button-background-color;
+  @extend %modal;
   height: #{400 / $base-font-size}rem;
   width: #{400 / $base-font-size}rem;
   padding: #{20 / $base-font-size}rem;
