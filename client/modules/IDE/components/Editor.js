@@ -8,6 +8,8 @@ import 'codemirror/addon/lint/lint';
 import 'codemirror/addon/lint/javascript-lint';
 import 'codemirror/addon/lint/css-lint';
 import 'codemirror/addon/lint/html-lint';
+import 'codemirror/addon/comment/comment';
+import 'codemirror/keymap/sublime';
 import { JSHINT } from 'jshint';
 window.JSHINT = JSHINT;
 import { CSSLint } from 'csslint';
@@ -29,7 +31,8 @@ class Editor extends React.Component {
       mode: 'javascript',
       lineWrapping: true,
       gutters: ['CodeMirror-lint-markers'],
-      lint: true
+      lint: true,
+      keyMap: 'sublime'
     });
     this._cm.on('change', debounce(200, () => {
       this.props.updateFileContent(this.props.file.name, this._cm.getValue());
