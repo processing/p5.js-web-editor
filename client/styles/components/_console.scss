@@ -1,11 +1,13 @@
 .preview-console {
-	position: fixed;
-	width:100%;
-	height:60px;
-	right:0px;
-	bottom: 0px;
-	background:$dark-background-color;
-	z-index:1000;
+	position: absolute;
+	width: 100%;
+	height: #{150 / $base-font-size}rem;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: $console-light-background-color;
+	z-index: 1000;
+	overflow: hidden;
 
 	& > {
 		position:relative;
@@ -24,4 +26,20 @@
 	.preview-console__warn {
 		color: $console-warn-color;
 	}
+}
+
+.preview-console__header {
+	background-color: $console-header-background-color;
+	color: $console-header-color;
+	font-size: #{16 / $base-font-size}rem;
+	font-weight: normal;
+	padding: #{5 / $base-font-size}rem;
+}
+
+.preview-console__messages {
+	display: flex;
+	flex-direction: column;
+	overflow-y: auto;
+	height: #{121 / $base-font-size}rem;
+
 }

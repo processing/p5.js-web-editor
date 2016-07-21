@@ -59,39 +59,43 @@ class IDEView extends React.Component {
           indentWithSpace={this.props.indentWithSpace}
           indentWithTab={this.props.indentWithTab}
         />
-        <Sidebar
-          files={this.props.files}
-          selectedFile={this.props.selectedFile}
-          setSelectedFile={this.props.setSelectedFile}
-          newFile={this.props.newFile}
-          isExpanded={this.props.ide.sidebarIsExpanded}
-          expandSidebar={this.props.expandSidebar}
-          collapseSidebar={this.props.collapseSidebar}
-        />
-        <Editor
-          file={this.props.selectedFile}
-          updateFileContent={this.props.updateFileContent}
-          fontSize={this.props.preferences.fontSize}
-          indentationAmount={this.props.preferences.indentationAmount}
-          isTabIndent={this.props.preferences.isTabIndent}
-          files={this.props.files}
-        />
-        <PreviewFrame
-          htmlFile={this.props.htmlFile}
-          jsFiles={this.props.jsFiles}
-          cssFiles={this.props.cssFiles}
-          files={this.props.files}
-          content={this.props.selectedFile.content}
-          head={
-            <link type="text/css" rel="stylesheet" href="/preview-styles.css" />
-          }
-          isPlaying={this.props.ide.isPlaying}
-          dispatchConsoleEvent={this.props.dispatchConsoleEvent}
-        />
-        <Console
-          consoleEvent={this.props.ide.consoleEvent}
-          isPlaying={this.props.ide.isPlaying}
-        />
+        <div className="editor-preview-container">
+          <Sidebar
+            files={this.props.files}
+            selectedFile={this.props.selectedFile}
+            setSelectedFile={this.props.setSelectedFile}
+            newFile={this.props.newFile}
+            isExpanded={this.props.ide.sidebarIsExpanded}
+            expandSidebar={this.props.expandSidebar}
+            collapseSidebar={this.props.collapseSidebar}
+          />
+          <div className="editor-console-container">
+            <Editor
+              file={this.props.selectedFile}
+              updateFileContent={this.props.updateFileContent}
+              fontSize={this.props.preferences.fontSize}
+              indentationAmount={this.props.preferences.indentationAmount}
+              isTabIndent={this.props.preferences.isTabIndent}
+              files={this.props.files}
+            />
+            <Console
+              consoleEvent={this.props.ide.consoleEvent}
+              isPlaying={this.props.ide.isPlaying}
+            />
+          </div>
+          <PreviewFrame
+            htmlFile={this.props.htmlFile}
+            jsFiles={this.props.jsFiles}
+            cssFiles={this.props.cssFiles}
+            files={this.props.files}
+            content={this.props.selectedFile.content}
+            head={
+              <link type="text/css" rel="stylesheet" href="/preview-styles.css" />
+            }
+            isPlaying={this.props.ide.isPlaying}
+            dispatchConsoleEvent={this.props.dispatchConsoleEvent}
+          />
+        </div>
         {(() => {
           if (this.props.ide.modalIsVisible) {
             return (

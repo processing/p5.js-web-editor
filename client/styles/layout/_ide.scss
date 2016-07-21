@@ -1,13 +1,24 @@
 .ide {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	height: 100%;
 	flex-wrap: wrap;
 }
 
-.editor-holder {
-	flex: 1 0 0;
+.editor-preview-container {
+  width: 100%;
+  flex: 1 0 0;
+  display: flex;
+}
+
+.editor-console-container {
+  flex: 1 0 0;
   max-width: 45%;
+  height: 100%;
+  position: relative;
+}
+
+.editor-holder {
 	height: 100%;
 }
 
