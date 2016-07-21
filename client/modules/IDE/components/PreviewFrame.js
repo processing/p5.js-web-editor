@@ -97,7 +97,7 @@ class PreviewFrame extends React.Component {
       let jsFileStrings = newJSFile.content.match(/(['"])((\\\1|.)*?)\1/gm);
       jsFileStrings = jsFileStrings || [];
       jsFileStrings.forEach(jsFileString => {
-        if (jsFileString.match(/^('|")(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp)('|")$/)) {
+        if (jsFileString.match(/^('|")(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg)('|")$/)) {
           const filePath = jsFileString.substr(1, jsFileString.length - 2);
           let fileName = filePath;
           if (fileName.match(/^\.\//)) {

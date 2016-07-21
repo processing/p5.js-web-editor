@@ -23,7 +23,7 @@ class FileUploader extends React.Component {
       maxThumbnailFilesize: 8, // 3MB
       thumbnailWidth: 200,
       thumbnailHeight: 200,
-      acceptedMimeTypes: 'image/bmp,image/gif,image/jpg,image/jpeg,image/png',
+      acceptedFiles: 'image/bmp,image/gif,image/jpg,image/jpeg,image/png,audio/*',
       dictDefaultMessage: 'Drop files here to upload or click to use the file browser',
       accept: this.props.dropzoneAcceptCallback,
       sending: this.props.dropzoneSendingCallback,

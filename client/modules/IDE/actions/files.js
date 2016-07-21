@@ -1,6 +1,8 @@
 import * as ActionTypes from '../../../constants';
 import axios from 'axios';
 import blobUtil from 'blob-util';
+import xhr from 'xhr';
+import fileType from 'file-type';
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
@@ -33,15 +35,33 @@ export function updateFileContent(name, content) {
 
 export function getBlobUrl(file) {
   return (dispatch) => {
-    blobUtil.imgSrcToBlob(file.url, undefined, { crossOrigin: 'Anonymous' })
-    .then(blobUtil.createObjectURL)
-    .then(objectURL => {
-      dispatch({
-        type: ActionTypes.SET_BLOB_URL,
-        name: file.name,
-        blobURL: objectURL
+    xhr({
+      uri: file.url,
+      responseType: 'arraybuffer',
+      useXDR: true
+    }, (err, body, res) => {
+      if (err) throw err;
+      const typeOfFile = fileType(new Uint8Array(res));
+      blobUtil.arrayBufferToBlob(res, typeOfFile.mime)
+      .then(blobUtil.createObjectURL)
+      .then(objectURL => {
+        dispatch({
+          type: ActionTypes.SET_BLOB_URL,
+          name: file.name,
+          blobURL: objectURL
+        });
       });
     });
+
+    // blobUtil.imgSrcToBlob(file.url, undefined, { crossOrigin: 'Anonymous' })
+    // .then(blobUtil.createObjectURL)
+    // .then(objectURL => {
+    //   dispatch({
+    //     type: ActionTypes.SET_BLOB_URL,
+    //     name: file.name,
+    //     blobURL: objectURL
+    //   });
+    // });
   };
 }
 
