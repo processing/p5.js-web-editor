@@ -55,3 +55,17 @@ export function collapseSidebar() {
     type: ActionTypes.COLLAPSE_SIDEBAR
   };
 }
+
+export function expandConsole() {
+  console.log('expand console!');
+  return {
+    type: ActionTypes.EXPAND_CONSOLE
+  };
+}
+
+export function collapseConsole() {
+  return {
+    type: ActionTypes.COLLAPSE_CONSOLE
+  };
+}
+

@@ -39,6 +39,8 @@ export const EXPAND_SIDEBAR = 'EXPAND_SIDEBAR';
 export const COLLAPSE_SIDEBAR = 'COLLAPSE_SIDEBAR';
 
 export const CONSOLE_EVENT = 'CONSOLE_EVENT';
+export const EXPAND_CONSOLE = 'EXPAND_CONSOLE';
+export const COLLAPSE_CONSOLE = 'COLLAPSE_CONSOLE';
 
 // eventually, handle errors more specifically and better
 export const ERROR = 'ERROR';

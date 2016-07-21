@@ -81,6 +81,9 @@ class IDEView extends React.Component {
             <Console
               consoleEvent={this.props.ide.consoleEvent}
               isPlaying={this.props.ide.isPlaying}
+              isExpanded={this.props.ide.consoleIsExpanded}
+              expandConsole={this.props.expandConsole}
+              collapseConsole={this.props.collapseConsole}
             />
           </div>
           <PreviewFrame
@@ -127,7 +130,8 @@ IDEView.propTypes = {
     isPlaying: PropTypes.bool.isRequired,
     consoleEvent: PropTypes.object,
     modalIsVisible: PropTypes.bool.isRequired,
-    sidebarIsExpanded: PropTypes.bool.isRequired
+    sidebarIsExpanded: PropTypes.bool.isRequired,
+    consoleIsExpanded: PropTypes.bool.isRequired
   }).isRequired,
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
@@ -170,7 +174,9 @@ IDEView.propTypes = {
   expandSidebar: PropTypes.func.isRequired,
   collapseSidebar: PropTypes.func.isRequired,
   exportProjectAsZip: PropTypes.func.isRequired,
-  cloneProject: PropTypes.func.isRequired
+  cloneProject: PropTypes.func.isRequired,
+  expandConsole: PropTypes.func.isRequired,
+  collapseConsole: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {

@@ -1,4 +1,8 @@
 import React, { PropTypes } from 'react';
+import InlineSVG from 'react-inlinesvg';
+const upArrowUrl = require('../../../images/up-arrow.svg');
+const downArrowUrl = require('../../../images/down-arrow.svg');
+import classNames from 'classnames';
 
 /**
  *  How many console messages to store
@@ -34,7 +38,9 @@ class Console extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    return (nextProps.consoleEvent !== this.props.consoleEvent) || (nextProps.isPlaying && !this.props.isPlaying);
+    return (nextProps.consoleEvent !== this.props.consoleEvent)
+      || (nextProps.isPlaying && !this.props.isPlaying)
+      || (this.props.isExpanded !== nextProps.isExpanded);
   }
 
   componentDidUpdate() {
@@ -43,10 +49,22 @@ class Console extends React.Component {
 
   render() {
     const childrenToDisplay = this.children.slice(-consoleMax);
+    const consoleClass = classNames({
+      'preview-console': true,
+      'preview-console--collapsed': !this.props.isExpanded
+    });
 
     return (
-      <div ref="console" className="preview-console">
-        <h2 className="preview-console__header">console</h2>
+      <div ref="console" className={consoleClass}>
+        <div className="preview-console__header">
+          <h2 className="preview-console__header-title">console</h2>
+          <a className="preview-console__collapse" onClick={this.props.collapseConsole} >
+            <InlineSVG src={downArrowUrl} />
+          </a>
+          <a className="preview-console__expand" onClick={this.props.expandConsole} >
+            <InlineSVG src={upArrowUrl} />
+          </a>
+        </div>
         <div ref="console_messages" className="preview-console__messages">
           {childrenToDisplay}
         </div>
@@ -58,7 +76,10 @@ class Console extends React.Component {
 
 Console.propTypes = {
   consoleEvent: PropTypes.object,
-  isPlaying: PropTypes.bool.isRequired
+  isPlaying: PropTypes.bool.isRequired,
+  isExpanded: PropTypes.bool.isRequired,
+  collapseConsole: PropTypes.func.isRequired,
+  expandConsole: PropTypes.func.isRequired
 };
 
 export default Console;

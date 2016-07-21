@@ -8,7 +8,8 @@ const initialState = {
     arguments: []
   },
   modalIsVisible: false,
-  sidebarIsExpanded: true
+  sidebarIsExpanded: true,
+  consoleIsExpanded: false
 };
 
 const ide = (state = initialState, action) => {
@@ -33,6 +34,10 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { sidebarIsExpanded: false });
     case ActionTypes.EXPAND_SIDEBAR:
       return Object.assign({}, state, { sidebarIsExpanded: true });
+    case ActionTypes.COLLAPSE_CONSOLE:
+      return Object.assign({}, state, { consoleIsExpanded: false });
+    case ActionTypes.EXPAND_CONSOLE:
+      return Object.assign({}, state, { consoleIsExpanded: true });
     default:
       return state;
   }
