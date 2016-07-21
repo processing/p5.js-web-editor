@@ -6,6 +6,7 @@ import Toolbar from '../components/Toolbar';
 import Preferences from '../components/Preferences';
 import NewFileModal from '../components/NewFileModal';
 import Nav from '../../../components/Nav';
+import Console from '../components/Console';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as FileActions from '../actions/files';
@@ -85,6 +86,11 @@ class IDEView extends React.Component {
             <link type="text/css" rel="stylesheet" href="/preview-styles.css" />
           }
           isPlaying={this.props.ide.isPlaying}
+          dispatchConsoleEvent={this.props.dispatchConsoleEvent}
+        />
+        <Console
+          consoleEvent={this.props.ide.consoleEvent}
+          isPlaying={this.props.ide.isPlaying}
         />
         {(() => {
           if (this.props.ide.modalIsVisible) {
@@ -98,6 +104,7 @@ class IDEView extends React.Component {
           return '';
         })()}
       </div>
+
     );
   }
 }
@@ -114,6 +121,7 @@ IDEView.propTypes = {
   saveProject: PropTypes.func.isRequired,
   ide: PropTypes.shape({
     isPlaying: PropTypes.bool.isRequired,
+    consoleEvent: PropTypes.object,
     modalIsVisible: PropTypes.bool.isRequired,
     sidebarIsExpanded: PropTypes.bool.isRequired
   }).isRequired,
@@ -152,6 +160,7 @@ IDEView.propTypes = {
   htmlFile: PropTypes.object.isRequired,
   jsFiles: PropTypes.array.isRequired,
   cssFiles: PropTypes.array.isRequired,
+  dispatchConsoleEvent: PropTypes.func.isRequired,
   newFile: PropTypes.func.isRequired,
   closeNewFileModal: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,

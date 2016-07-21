@@ -3,12 +3,68 @@ import ReactDOM from 'react-dom';
 import escapeStringRegexp from 'escape-string-regexp';
 import srcDoc from 'srcdoc-polyfill';
 
+const hijackConsoleScript = `<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var iframeWindow = window;
+    var originalConsole = iframeWindow.console;
+    iframeWindow.console = {};
+
+    var methods = [
+      'debug', 'clear', 'error', 'info', 'log', 'warn'
+    ];
+
+    methods.forEach( function(method) {
+      iframeWindow.console[method] = function() {
+        originalConsole[method].apply(originalConsole, arguments);
+
+        var args = Array.from(arguments);
+        args = args.map(function(i) {
+          // catch objects
+          return (typeof i === 'string') ? i : JSON.stringify(i);
+        });
+
+        // post message to parent window
+        window.parent.postMessage({
+          method: method,
+          arguments: args,
+          source: 'sketch'
+        }, '*');
+      };
+    });
+
+    // catch reference errors, via http://stackoverflow.com/a/12747364/2994108
+    window.onerror = function (msg, url, lineNo, columnNo, error) {
+        var string = msg.toLowerCase();
+        var substring = "script error";
+        var data = {};
+
+        if (string.indexOf(substring) > -1){
+          data = 'Script Error: See Browser Console for Detail';
+        } else {
+          data = msg + ' Line: ' + lineNo + 'column: ' + columnNo;
+        }
+        window.parent.postMessage({
+          method: 'error',
+          arguments: data,
+          source: 'sketch'
+        }, '*');
+      return false;
+    };
+  });
+</script>`;
+
 class PreviewFrame extends React.Component {
 
   componentDidMount() {
     if (this.props.isPlaying) {
       this.renderFrameContents();
     }
+
+    window.addEventListener('message', (msg) => {
+      if (msg.data.source === 'sketch') {
+        this.props.dispatchConsoleEvent(msg);
+      }
+    });
   }
 
   componentDidUpdate(prevProps) {
@@ -70,21 +126,24 @@ class PreviewFrame extends React.Component {
       htmlFile = htmlFile.replace(fileRegex, `<style>\n${cssFile.content}\n</style>`);
     });
 
+    // const htmlHead = htmlFile.match(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi);
+    // const headRegex = new RegExp('head', 'i');
+    // let htmlHeadContents = htmlHead[0].split(headRegex)[1];
+    // htmlHeadContents = htmlHeadContents.slice(1, htmlHeadContents.length - 2);
+    // htmlHeadContents += '<link rel="stylesheet" type="text/css" href="/preview-styles.css" />\n';
+    // htmlFile = htmlFile.replace(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi, `<head>\n${htmlHeadContents}\n</head>`);
+    htmlFile += hijackConsoleScript;
+
     return htmlFile;
   }
 
   renderSketch() {
     const doc = ReactDOM.findDOMNode(this);
     if (this.props.isPlaying) {
-      // TODO add polyfill for this
-      // doc.srcdoc = this.injectLocalFiles();
       srcDoc.set(doc, this.injectLocalFiles());
     } else {
-      // doc.srcdoc = '';
-      srcDoc.set(doc, '');
-      doc.contentWindow.document.open();
-      doc.contentWindow.document.write('');
-      doc.contentWindow.document.close();
+      doc.srcdoc = '';
+      srcDoc.set(doc, '  ');
     }
   }
 
@@ -106,7 +165,7 @@ class PreviewFrame extends React.Component {
         frameBorder="0"
         title="sketch output"
         sandbox="allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-modals allow-forms"
-      ></iframe>
+      />
     );
   }
 }
@@ -120,7 +179,9 @@ PreviewFrame.propTypes = {
   }),
   jsFiles: PropTypes.array.isRequired,
   cssFiles: PropTypes.array.isRequired,
-  files: PropTypes.array.isRequired
+  files: PropTypes.array.isRequired,
+  dispatchConsoleEvent: PropTypes.func.isRequired,
+  children: PropTypes.element
 };
 
 export default PreviewFrame;

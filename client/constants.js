@@ -38,5 +38,7 @@ export const SET_BLOB_URL = 'SET_BLOB_URL';
 export const EXPAND_SIDEBAR = 'EXPAND_SIDEBAR';
 export const COLLAPSE_SIDEBAR = 'COLLAPSE_SIDEBAR';
 
+export const CONSOLE_EVENT = 'CONSOLE_EVENT';
+
 // eventually, handle errors more specifically and better
 export const ERROR = 'ERROR';
