@@ -50,11 +50,11 @@ module.exports = {
         'S3_BUCKET': '"' + process.env.S3_BUCKET + '"'
       }
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      compressor: {
-        warnings: false
-      }
-    })
+    // new webpack.optimize.UglifyJsPlugin({
+    //   compressor: {
+    //     warnings: false
+    //   }
+    // })
   ],
 
   postcss: () => [
