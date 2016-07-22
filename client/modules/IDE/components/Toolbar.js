@@ -1,11 +1,10 @@
 import React, { PropTypes } from 'react';
-
-const Isvg = require('react-inlinesvg');
+const InlineSVG = require('react-inlinesvg');
 const playUrl = require('../../../images/play.svg');
 const logoUrl = require('../../../images/p5js-logo.svg');
 const stopUrl = require('../../../images/stop.svg');
 const preferencesUrl = require('../../../images/preferences.svg');
-const classNames = require('classnames');
+import classNames from 'classnames';
 
 function Toolbar(props) {
   let playButtonClass = classNames({
@@ -25,13 +24,13 @@ function Toolbar(props) {
     <div className="toolbar">
       <img className="toolbar__logo" src={logoUrl} alt="p5js Logo" />
       <button className={playButtonClass} onClick={props.startSketch} id="play-button">
-        <Isvg src={playUrl} alt="Play Sketch" />
+        <InlineSVG src={playUrl} alt="Play Sketch" />
       </button>
       <label htmlFor="play-button" className="toolbar__button-label">
         play
       </label>
       <button className={stopButtonClass} onClick={props.stopSketch} id="stop-button">
-        <Isvg src={stopUrl} alt="Stop Sketch" />
+        <InlineSVG src={stopUrl} alt="Stop Sketch" />
       </button>
       <label htmlFor="stop-button" className="toolbar__button-label">
         stop
@@ -59,7 +58,7 @@ function Toolbar(props) {
         onClick={props.openPreferences}
         id="preferences-button"
       >
-        <Isvg src={preferencesUrl} alt="Show Preferences" />
+        <InlineSVG src={preferencesUrl} alt="Show Preferences" />
       </button>
       <label htmlFor="preferences-button" className="toolbar__button-label">
         preferences
