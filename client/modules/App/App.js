@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import DevTools from './components/DevTools';
-require('es6-promise').polyfill();
 
 class App extends React.Component {
   constructor(props, context) {
