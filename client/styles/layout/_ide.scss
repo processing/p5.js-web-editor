@@ -7,12 +7,12 @@
 
 .editor-preview-container {
   width: 100%;
-  flex: 1 0 0;
+  flex: 1 0 0px;
   display: flex;
 }
 
 .editor-console-container {
-  flex: 1 0 0;
+  flex: 1 0 0px;
   max-width: 45%;
   height: 100%;
   position: relative;
@@ -23,7 +23,8 @@
 }
 
 .preview-frame {
-	flex: 1 0 0;
+	flex: 1 0 0px;
+  height: 100%;
 }
 
 .toolbar {
