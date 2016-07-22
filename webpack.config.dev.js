@@ -29,7 +29,7 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: [/node_modules/, /.+\.config.js/],
-        loaders: ['babel?presets[]=react-hmre', 'eslint-loader']
+        loaders: ['babel', 'eslint-loader']
       },
       {
         test: /\.scss$/,
