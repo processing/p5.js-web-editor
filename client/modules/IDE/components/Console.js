@@ -55,15 +55,15 @@ class Console extends React.Component {
     });
 
     return (
-      <div ref="console" className={consoleClass}>
+      <div ref="console" className={consoleClass} role="region" tabIndex="0">
         <div className="preview-console__header">
           <h2 className="preview-console__header-title">console</h2>
-          <a className="preview-console__collapse" onClick={this.props.collapseConsole} >
+          <button className="preview-console__collapse" onClick={this.props.collapseConsole} aria-label="collapse console">
             <InlineSVG src={downArrowUrl} />
-          </a>
-          <a className="preview-console__expand" onClick={this.props.expandConsole} >
+          </button>
+          <button className="preview-console__expand" onClick={this.props.expandConsole} aria-label="expand console">
             <InlineSVG src={upArrowUrl} />
-          </a>
+          </button>
         </div>
         <div ref="console_messages" className="preview-console__messages">
           {childrenToDisplay}

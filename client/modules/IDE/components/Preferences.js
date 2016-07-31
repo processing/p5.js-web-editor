@@ -27,6 +27,7 @@ function Preferences(props) {
           className="preferences__exit-button"
           onClick={props.closePreferences}
           title="exit"
+          aria-label="exit preferences"
         >
           <Isvg src={exitUrl} alt="Exit Preferences" />
         </button>
@@ -37,14 +38,11 @@ function Preferences(props) {
         <button
           className="preference__plus-button"
           onClick={props.decreaseFont}
-          id="preference-decrease-font-size"
+          aria-label="decrease font size"
         >
           <Isvg src={minusUrl} alt="Decrease Font Size" />
           <h6 className="preference__label">Decrease</h6>
         </button>
-        <label htmlFor="preference-decrease-font-size" className="preference__button-label">
-          Decrease Font Size
-        </label>
         <input
           className="preference__value"
           aria-live="status"
@@ -57,14 +55,11 @@ function Preferences(props) {
         <button
           className="preference__minus-button"
           onClick={props.increaseFont}
-          id="preference-increase-font-size"
+          aria-label="increase font size"
         >
           <Isvg src={plusUrl} alt="Increase Font Size" />
           <h6 className="preference__label">Increase</h6>
         </button>
-        <label htmlFor="preference-increase-font-size" className="preference__button-label">
-          Increase Font Size
-        </label>
       </div>
 
       <div className="preference">
@@ -72,14 +67,11 @@ function Preferences(props) {
         <button
           className="preference__plus-button"
           onClick={props.decreaseIndentation}
-          id="preference-decrease-indentation"
+          aria-label="decrease indentation amount"
         >
           <Isvg src={minusUrl} alt="DecreaseIndentation Amount" />
           <h6 className="preference__label">Decrease</h6>
         </button>
-        <label htmlFor="preference-decrease-indentation" className="preference__button-label">
-          Decrease Indentation Amount
-        </label>
         <input
           className="preference__value"
           aria-live="status"
@@ -92,17 +84,14 @@ function Preferences(props) {
         <button
           className="preference__minus-button"
           onClick={props.increaseIndentation}
-          id="preference-increase-indentation"
+          aria-label="increase indentation amount"
         >
           <Isvg src={plusUrl} alt="IncreaseIndentation Amount" />
           <h6 className="preference__label">Increase</h6>
         </button>
-        <label htmlFor="preference-increase-indentation" className="preference__button-label">
-          Increase Indentation Amount
-        </label>
         <div className="preference__vertical-list">
-          <button className={preferencesSpaceOptionClass} onClick={props.indentWithSpace}>Spaces</button>
-          <button className={preferencesTabOptionClass} onClick={props.indentWithTab}>Tabs</button>
+          <button className={preferencesSpaceOptionClass} onClick={props.indentWithSpace} aria-label="indentation with space">Spaces</button>
+          <button className={preferencesTabOptionClass} onClick={props.indentWithTab} aria-label="indentation with tab">Tabs</button>
         </div>
       </div>
     </section>

@@ -12,7 +12,7 @@ function NewFileForm(props) {
         placeholder="Name"
         {...name}
       />
-      <input type="submit" value="Add File" />
+      <input type="submit" value="Add File" aria-label="add file" />
     </form>
   );
 }

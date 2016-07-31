@@ -23,18 +23,13 @@ function Toolbar(props) {
   return (
     <div className="toolbar">
       <img className="toolbar__logo" src={logoUrl} alt="p5js Logo" />
-      <button className={playButtonClass} onClick={props.startSketch} id="play-button">
+      <button className={playButtonClass} onClick={props.startSketch} aria-label="play sketch">
         <InlineSVG src={playUrl} alt="Play Sketch" />
       </button>
-      <label htmlFor="play-button" className="toolbar__button-label">
-        play
-      </label>
-      <button className={stopButtonClass} onClick={props.stopSketch} id="stop-button">
+
+      <button className={stopButtonClass} onClick={props.stopSketch} aria-label="stop sketch">
         <InlineSVG src={stopUrl} alt="Stop Sketch" />
       </button>
-      <label htmlFor="stop-button" className="toolbar__button-label">
-        stop
-      </label>
       <div className="toolbar__project-name-container">
         <span
           className="toolbar__project-name"
@@ -56,13 +51,10 @@ function Toolbar(props) {
       <button
         className={preferencesButtonClass}
         onClick={props.openPreferences}
-        id="preferences-button"
+        aria-label="open preferences"
       >
         <InlineSVG src={preferencesUrl} alt="Show Preferences" />
       </button>
-      <label htmlFor="preferences-button" className="toolbar__button-label">
-        preferences
-      </label>
     </div>
   );
 }
