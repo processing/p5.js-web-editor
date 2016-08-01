@@ -6,12 +6,7 @@
 	justify-content: center;
 }
 
-.login-form__email-label, 
-.login-form__password-label {
-	display: none;
-}
-
-.login-form__email-input, 
+.login-form__email-input,
 .login-form__password-input {
 	width: #{300 / $base-font-size}rem;
 }

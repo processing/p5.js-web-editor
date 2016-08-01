@@ -15,24 +15,27 @@ function Sidebar(props) {
       <div className="sidebar__header">
         <h3 className="sidebar__title">Sketch Files</h3>
         <div className="sidebar__icons">
-          <a
+          <button
+            aria-label="add file"
             className="sidebar__add"
             onClick={props.newFile}
           >
             +
-          </a>
-          <a
+          </button>
+          <button
+            aria-label="collapse file navigation"
             className="sidebar__contract"
             onClick={props.collapseSidebar}
           >
             <InlineSVG src={leftArrowUrl} />
-          </a>
-          <a
+          </button>
+          <button
+            aria-label="expand file navigation"
             className="sidebar__expand"
             onClick={props.expandSidebar}
           >
             <InlineSVG src={rightArrowUrl} />
-          </a>
+          </button>
         </div>
       </div>
       <ul className="sidebar__file-list">
