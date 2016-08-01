@@ -19,7 +19,7 @@ This project is currently in the early stages of development! It will definitely
   ```
   Or, if you don't want to do that, just ask me to send you mine. Refer to [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) for creating an S3 bucket for testing, or if you don't want to do that, I will send you my AWS credentials. 
 5. `$ npm start`
-6. Navigate to (http://localhost:8000)[http://localhost:8000] in your browser
+6. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
 7. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en).
 8. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
 
