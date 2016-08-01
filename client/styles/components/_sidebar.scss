@@ -16,6 +16,7 @@
 }
 
 .sidebar__add {
+  @extend %icon;
   cursor: pointer;
   height: #{26 / $base-font-size}rem;
   margin-right: #{16 / $base-font-size}rem;

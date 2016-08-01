@@ -5,26 +5,24 @@ function LoginForm(props) {
   return (
     <form className="login-form" onSubmit={handleSubmit(props.loginUser.bind(this))}>
       <p className="login-form__field">
-        <label className="login-form__email-label" htmlFor="email">Email:</label>
         <input
           className="login-form__email-input"
-          id="email"
+          aria-label="email"
           type="text"
           placeholder="Email"
           {...email}
         />
       </p>
       <p className="login-form__field">
-        <label className="signup-form__password-label" htmlFor="password">Password:</label>
         <input
           className="signup-form__password-input"
-          id="password"
+          aria-label="password"
           type="password"
           placeholder="Password"
           {...password}
         />
       </p>
-      <input type="submit" value="Login" />
+      <input type="submit" value="Login" aria-label="login" />
     </form>
   );
 }

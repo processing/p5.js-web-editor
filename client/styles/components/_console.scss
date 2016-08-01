@@ -54,12 +54,14 @@
 }
 
 .preview-console__collapse {
+	@extend %icon;
 	.preview-console--collapsed & {
 		display: none;
 	}
 }
 
 .preview-console__expand {
+	@extend %icon;
 	display: none;
 	.preview-console--collapsed & {
 		display: inline-block;
