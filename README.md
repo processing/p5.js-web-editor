@@ -8,17 +8,18 @@ This project is currently in the early stages of development! It will definitely
 2. `$ npm install`
 3. Install MongoDB and make sure it is running
 4. Create a file called `.env` in the root of this directory that looks like
-```bash
-MONGO_URL=mongodb://localhost:27017/p5js-web-editor
-PORT=8000
-SESSION_SECRET=whatever_you_want_this_to_be_it_only_matters_for_production
-AWS_ACCESS_KEY=<your-aws-access-key>
-AWS_SECRET_KEY=<your-aws-secret-key>
-S3_BUCKET=<your-s3-bucket>
-```
-Or, if you don't want to do that, just ask me to send you mine. Refer to [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) for creating an S3 bucket for testing, or if you don't want to do that, I will send you my AWS credentials. 
+  
+  ```
+  MONGO_URL=mongodb://localhost:27017/p5js-web-editor
+  PORT=8000
+  SESSION_SECRET=whatever_you_want_this_to_be_it_only_matters_for_production
+  AWS_ACCESS_KEY=<your-aws-access-key>
+  AWS_SECRET_KEY=<your-aws-secret-key>
+  S3_BUCKET=<your-s3-bucket>
+  ```
+  Or, if you don't want to do that, just ask me to send you mine. Refer to [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) for creating an S3 bucket for testing, or if you don't want to do that, I will send you my AWS credentials. 
 5. `$ npm start`
-6. Navigate to (http://localhost:8000)[http://localhost:8000] in your browser
+6. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
 7. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en).
 8. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
 
@@ -27,15 +28,17 @@ Or, if you don't want to do that, just ask me to send you mine. Refer to [this g
 2. `$ npm install`
 3. Install MongoDB and make sure it is running
 4. Create a file called `.env` in the root of this directory that looks like
-```bash
-MONGO_URL=mongodb://localhost:27017/p5js-web-editor
-PORT=8000
-SESSION_SECRET=make_this_a_long-random_string_like_maybe_126_characters_long
-AWS_ACCESS_KEY=<your-aws-access-key>
-AWS_SECRET_KEY=<your-aws-secret-key>
-S3_BUCKET=<your-s3-bucket>
-```
-Or, if you don't want to do that, just ask me to send you mine. Refer to [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) for creating an S3 bucket for testing, or if you don't want to do that, I will send you my AWS credentials. 
+  
+  ```
+  MONGO_URL=mongodb://localhost:27017/p5js-web-editor
+  PORT=8000
+  SESSION_SECRET=make_this_a_long-random_string_like_maybe_126_characters_long
+  AWS_ACCESS_KEY=<your-aws-access-key>
+  AWS_SECRET_KEY=<your-aws-secret-key>
+  S3_BUCKET=<your-s3-bucket>
+  ```
+  
+  Or, if you don't want to do that, just ask me to send you mine. Refer to [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) for creating an S3 bucket for testing, or if you don't want to do that, I will send you my AWS credentials. 
 5. `$ npm run build`
 6. `$ npm run start:prod`
 
@@ -58,5 +61,5 @@ I'm new to using ESLint, but I decided on a configuration based on some popular 
 * https://github.com/petehunt/react-howto
 * https://github.com/jsbin/jsbin (especially look at the console)
 * Need to figure out how to solve the XSS issue, https://github.com/jsbin/jsbin/wiki/Best-practices-for-building-your-own-live-paste-bin
-	* https://www.npmjs.com/package/express-subdomain
+* https://www.npmjs.com/package/express-subdomain
 * https://github.com/jsbin/jsbin/blob/master/public/js/render/console.js - the code is a little messy but it might be our only hope for a console 
