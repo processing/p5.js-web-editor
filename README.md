@@ -8,6 +8,7 @@ This project is currently in the early stages of development! It will definitely
 2. `$ npm install`
 3. Install MongoDB and make sure it is running
 4. Create a file called `.env` in the root of this directory that looks like
+  
   ```bash
   MONGO_URL=mongodb://localhost:27017/p5js-web-editor
   PORT=8000
@@ -27,6 +28,7 @@ This project is currently in the early stages of development! It will definitely
 2. `$ npm install`
 3. Install MongoDB and make sure it is running
 4. Create a file called `.env` in the root of this directory that looks like
+  
   ```bash
   MONGO_URL=mongodb://localhost:27017/p5js-web-editor
   PORT=8000
