@@ -4,11 +4,13 @@ var cssnext = require('postcss-cssnext');
 var postcssFocus = require('postcss-focus');
 var postcssReporter = require('postcss-reporter');
 var cssnano = require('cssnano');
+require('dotenv').config();
 
 module.exports = {
   devtool: 'hidden-source-map',
 
   entry: [
+    'babel-polyfill',
     './client/index.js'
   ],
 
@@ -44,7 +46,8 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify('production')
+        'NODE_ENV': JSON.stringify('production'),
+        'S3_BUCKET': '"' + process.env.S3_BUCKET + '"'
       }
     }),
     new webpack.optimize.UglifyJsPlugin({

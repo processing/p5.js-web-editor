@@ -41,6 +41,7 @@
 	&:hover {
 		color: $light-icon-hover-color;
 		& g {
+			opacity: 1;
 			fill: $light-icon-hover-color;
 		}
 	}
@@ -69,6 +70,8 @@
 	@extend %toolbar-button;
 	color: $light-primary-text-color;
 	background-color: $light-modal-button-background-color;
+	padding: 0;
+	line-height: #{50 / $base-font-size}rem;
 	& g {
 		fill: $light-primary-text-color;
 	}
@@ -87,4 +90,36 @@
 	&:hover {
 		color: $light-primary-text-color;
 	}
+}
+
+%preference-option {
+	background-color: $light-button-background-color;
+	color: $light-inactive-text-color;
+	font-size: #{14 / $base-font-size}rem;
+	cursor: pointer;
+	text-align: left;
+	margin-bottom: #{5 / $base-font-size}rem;
+	border: 0px;
+	&:hover {
+		color: $light-primary-text-color;
+	}
+	&--selected {
+    color: $light-primary-text-color;
+  }
+}
+
+%hidden-label {
+	position:absolute;
+	left:-10000px;
+	top:auto;
+	width:1px;
+	height:1px;
+	overflow:hidden;
+}
+
+%modal {
+	background-color: $light-modal-background-color;
+	border: 1px solid $light-modal-border-color;
+	border-radius: 2px;
+	box-shadow: 0 12px 12px $light-shadow-color;
 }

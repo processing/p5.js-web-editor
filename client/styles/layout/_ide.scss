@@ -1,17 +1,30 @@
 .ide {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	height: 100%;
 	flex-wrap: wrap;
 }
 
+.editor-preview-container {
+  width: 100%;
+  flex: 1 0 0px;
+  display: flex;
+}
+
+.editor-console-container {
+  flex: 1 0 0px;
+  max-width: 45%;
+  height: 100%;
+  position: relative;
+}
+
 .editor-holder {
-	flex-grow: 1;
 	height: 100%;
 }
 
 .preview-frame {
-	flex-grow: 1;
+	flex: 1 0 0px;
+  min-height: 100%;
 }
 
 .toolbar {
@@ -19,5 +32,8 @@
 }
 
 .sidebar {
-  width: #{140 / $base-font-size}rem;
+  width: #{180 / $base-font-size}rem;
+  &.sidebar--contracted {
+  	width: #{20 / $base-font-size}rem;
+  }
 }

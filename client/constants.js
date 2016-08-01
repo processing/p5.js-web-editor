@@ -8,6 +8,12 @@ export const OPEN_PREFERENCES = 'OPEN_PREFERENCES';
 export const CLOSE_PREFERENCES = 'CLOSE_PREFERENCES';
 export const INCREASE_FONTSIZE = 'INCREASE_FONTSIZE';
 export const DECREASE_FONTSIZE = 'DECREASE_FONTSIZE';
+export const UPDATE_FONTSIZE = 'UPDATE_FONTSIZE';
+export const INCREASE_INDENTATION = 'INCREASE_INDENTATION';
+export const DECREASE_INDENTATION = 'DECREASE_INDENTATION';
+export const UPDATE_INDENTATION = 'UPDATE_INDENTATION';
+export const INDENT_WITH_SPACE = 'INDENT_WITH_SPACE';
+export const INDENT_WITH_TAB = 'INDENT_WITH_TAB';
 
 export const AUTH_USER = 'AUTH_USER';
 export const UNAUTH_USER = 'UNAUTH_USER';
@@ -24,6 +30,17 @@ export const SET_PROJECT = 'SET_PROJECT';
 export const SET_PROJECTS = 'SET_PROJECTS';
 
 export const SET_SELECTED_FILE = 'SET_SELECTED_FILE';
+export const SHOW_MODAL = 'SHOW_MODAL';
+export const HIDE_MODAL = 'HIDE_MODAL';
+export const CREATE_FILE = 'CREATE_FILE';
+export const SET_BLOB_URL = 'SET_BLOB_URL';
+
+export const EXPAND_SIDEBAR = 'EXPAND_SIDEBAR';
+export const COLLAPSE_SIDEBAR = 'COLLAPSE_SIDEBAR';
+
+export const CONSOLE_EVENT = 'CONSOLE_EVENT';
+export const EXPAND_CONSOLE = 'EXPAND_CONSOLE';
+export const COLLAPSE_CONSOLE = 'COLLAPSE_CONSOLE';
 
 // eventually, handle errors more specifically and better
 export const ERROR = 'ERROR';

@@ -1,11 +1,27 @@
 import * as ActionTypes from '../../../constants';
 import { browserHistory } from 'react-router';
 import axios from 'axios';
+import JSZip from 'jszip';
+import JSZipUtils from 'jszip-utils';
+import { saveAs } from 'file-saver';
+import { getBlobUrl } from './files';
+import async from 'async';
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
+export function getProjectBlobUrls() {
+  return (dispatch, getState) => {
+    const state = getState();
+    state.files.forEach(file => {
+      if (file.url) {
+        getBlobUrl(file)(dispatch);
+      }
+    });
+  };
+}
+
 export function getProject(id) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     axios.get(`${ROOT_URL}/projects/${id}`, { withCredentials: true })
       .then(response => {
         browserHistory.push(`/projects/${id}`);
@@ -13,8 +29,10 @@ export function getProject(id) {
           type: ActionTypes.SET_PROJECT,
           project: response.data,
           files: response.data.files,
-          selectedFile: response.data.selectedFile
+          selectedFile: response.data.selectedFile,
+          owner: response.data.user
         });
+        getProjectBlobUrls()(dispatch, getState);
       })
       .catch(response => dispatch({
         type: ActionTypes.ERROR,
@@ -61,6 +79,7 @@ export function saveProject() {
             type: ActionTypes.NEW_PROJECT,
             name: response.data.name,
             id: response.data.id,
+            owner: response.data.user,
             selectedFile: response.data.selectedFile,
             files: response.data.files
           });
@@ -83,6 +102,7 @@ export function createProject() {
           type: ActionTypes.NEW_PROJECT,
           name: response.data.name,
           id: response.data.id,
+          owner: response.data.user,
           selectedFile: response.data.selectedFile,
           files: response.data.files
         });
@@ -93,3 +113,52 @@ export function createProject() {
       }));
   };
 }
+
+export function exportProjectAsZip() {
+  return (dispatch, getState) => {
+    console.log('exporting project!');
+    const state = getState();
+    const zip = new JSZip();
+    async.each(state.files, (file, cb) => {
+      console.log(file);
+      if (file.url) {
+        JSZipUtils.getBinaryContent(file.url, (err, data) => {
+          zip.file(file.name, data, { binary: true });
+          cb();
+        });
+      } else {
+        zip.file(file.name, file.content);
+        cb();
+      }
+    }, err => {
+      if (err) console.log(err);
+      zip.generateAsync({ type: 'blob' }).then((content) => {
+        saveAs(content, `${state.project.name}.zip`);
+      });
+    });
+  };
+}
+
+export function cloneProject() {
+  return (dispatch, getState) => {
+    const state = getState();
+    const formParams = Object.assign({}, { name: state.project.name }, { files: state.files });
+    axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
+      .then(response => {
+        browserHistory.push(`/projects/${response.data.id}`);
+        dispatch({
+          type: ActionTypes.NEW_PROJECT,
+          name: response.data.name,
+          id: response.data.id,
+          owner: response.data.user,
+          selectedFile: response.data.selectedFile,
+          files: response.data.files
+        });
+      })
+      .catch(response => dispatch({
+        type: ActionTypes.PROJECT_SAVE_FAIL,
+        error: response.data
+      }));
+  };
+}
+

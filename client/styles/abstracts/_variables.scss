@@ -18,9 +18,12 @@ $light-button-background-hover-color: $p5js-pink;
 $light-button-background-active-color: #f10046;
 $light-button-hover-color: $white;
 $light-button-active-color: $white;
-$light-modal-button-background-color: #e6e6e6; 
+$light-modal-background-color: #f4f4f4;
+$light-modal-button-background-color: #e6e6e6;
+$light-modal-border-color: #B9D0E1;
 $light-icon-color: #8b8b8b;
 $light-icon-hover-color: $light-primary-text-color;
+$light-shadow-color: rgba(0, 0, 0, 0.16);
 
 $dark-primary-text-color: $white;
 $dark-secondary-text-color: #c2c2c2;
@@ -38,3 +41,10 @@ $dark-button-active-color: $white;
 $ide-border-color: #f4f4f4;
 $editor-selected-line-color: #f3f3f3;
 $input-border-color: #979797;
+
+$console-light-background-color: #eee;
+$console-header-background-color: #d6d6d6;
+$console-header-color: #b1b1b1;
+$console-warn-color: #ffbe05;
+$console-error-color: #ff5f52;
+

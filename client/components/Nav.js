@@ -3,23 +3,23 @@ import { Link } from 'react-router';
 
 function Nav(props) {
   return (
-    <nav className="nav">
-      <ul className="nav__items-left">
+    <nav className="nav" role="navigation" title="main-navigation">
+      <ul className="nav__items-left" title="project-menu">
         <li className="nav__item">
-          <p
+          <a
             className="nav__new"
             onClick={props.createProject}
           >
             New
-          </p>
+          </a>
         </li>
         <li className="nav__item">
-          <p
+          <a
             className="nav__save"
             onClick={props.saveProject}
           >
             Save
-          </p>
+          </a>
         </li>
         <li className="nav__item">
           <p className="nav__open">
@@ -28,8 +28,18 @@ function Nav(props) {
             </Link>
           </p>
         </li>
+        <li className="nav__item">
+          <a className="nav__export" onClick={props.exportProjectAsZip}>
+            Export (zip)
+          </a>
+        </li>
+        <li className="nav__item" onClick={props.cloneProject}>
+          <a className="nav__clone">
+            Clone
+          </a>
+        </li>
       </ul>
-      <ul className="nav__items-right">
+      <ul className="nav__items-right" title="user-menu">
         <li className="nav__item">
           {props.user.authenticated && <p>Hello, {props.user.username}!</p>}
           {!props.user.authenticated && <p><Link to="/login">Login</Link> or <Link to="/signup">Sign Up</Link></p>}
@@ -42,6 +52,8 @@ function Nav(props) {
 Nav.propTypes = {
   createProject: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
+  exportProjectAsZip: PropTypes.func.isRequired,
+  cloneProject: PropTypes.func.isRequired,
   user: PropTypes.shape({
     authenticated: PropTypes.bool.isRequired,
     username: PropTypes.string

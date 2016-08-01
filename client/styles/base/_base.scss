@@ -19,6 +19,7 @@ body, input, button {
 a {
 	text-decoration: none;
 	color: $light-inactive-text-color;
+	cursor: pointer;
 	&:hover {
 		text-decoration: none;
 		color: $light-primary-text-color;
@@ -31,8 +32,9 @@ input, button {
 
 input {
 	padding: #{5 / $base-font-size}rem;
-	border-radius: 2px;
+	// border-radius: 2px;
 	border: 1px solid $input-border-color;
+	padding: #{10 / $base-font-size}rem;
 }
 
 input[type="submit"] {
@@ -46,7 +48,12 @@ h2 {
 h3 {
 	font-weight: normal;
 }
-
+h4 {
+	font-weight: normal;
+}
+h6 {
+	font-weight: normal;
+}
 thead {
 	text-align: left;
 }

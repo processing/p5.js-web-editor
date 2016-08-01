@@ -4,7 +4,9 @@ import Sidebar from '../components/Sidebar';
 import PreviewFrame from '../components/PreviewFrame';
 import Toolbar from '../components/Toolbar';
 import Preferences from '../components/Preferences';
+import NewFileModal from '../components/NewFileModal';
 import Nav from '../../../components/Nav';
+import Console from '../components/Console';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as FileActions from '../actions/files';
@@ -28,6 +30,8 @@ class IDEView extends React.Component {
           user={this.props.user}
           createProject={this.props.createProject}
           saveProject={this.props.saveProject}
+          exportProjectAsZip={this.props.exportProjectAsZip}
+          cloneProject={this.props.cloneProject}
         />
         <Toolbar
           className="Toolbar"
@@ -38,37 +42,76 @@ class IDEView extends React.Component {
           setProjectName={this.props.setProjectName}
           openPreferences={this.props.openPreferences}
           isPreferencesVisible={this.props.preferences.isVisible}
+          owner={this.props.project.owner}
         />
         <Preferences
           isVisible={this.props.preferences.isVisible}
           closePreferences={this.props.closePreferences}
           increaseFont={this.props.increaseFont}
           decreaseFont={this.props.decreaseFont}
+          updateFont={this.props.updateFont}
           fontSize={this.props.preferences.fontSize}
+          increaseIndentation={this.props.increaseIndentation}
+          decreaseIndentation={this.props.decreaseIndentation}
+          updateIndentation={this.props.updateIndentation}
+          indentationAmount={this.props.preferences.indentationAmount}
+          isTabIndent={this.props.preferences.isTabIndent}
+          indentWithSpace={this.props.indentWithSpace}
+          indentWithTab={this.props.indentWithTab}
         />
-        <Sidebar
-          files={this.props.files}
-          selectedFile={this.props.selectedFile}
-          setSelectedFile={this.props.setSelectedFile}
-        />
-        <Editor
-          file={this.props.selectedFile}
-          updateFileContent={this.props.updateFileContent}
-          fontSize={this.props.preferences.fontSize}
-          files={this.props.files}
-        />
-        <PreviewFrame
-          htmlFile={this.props.htmlFile}
-          jsFiles={this.props.jsFiles}
-          cssFiles={this.props.cssFiles}
-          files={this.props.files}
-          content={this.props.selectedFile.content}
-          head={
-            <link type="text/css" rel="stylesheet" href="/preview-styles.css" />
+        <div className="editor-preview-container">
+          <Sidebar
+            files={this.props.files}
+            selectedFile={this.props.selectedFile}
+            setSelectedFile={this.props.setSelectedFile}
+            newFile={this.props.newFile}
+            isExpanded={this.props.ide.sidebarIsExpanded}
+            expandSidebar={this.props.expandSidebar}
+            collapseSidebar={this.props.collapseSidebar}
+          />
+          <div className="editor-console-container">
+            <Editor
+              file={this.props.selectedFile}
+              updateFileContent={this.props.updateFileContent}
+              fontSize={this.props.preferences.fontSize}
+              indentationAmount={this.props.preferences.indentationAmount}
+              isTabIndent={this.props.preferences.isTabIndent}
+              files={this.props.files}
+            />
+            <Console
+              consoleEvent={this.props.ide.consoleEvent}
+              isPlaying={this.props.ide.isPlaying}
+              isExpanded={this.props.ide.consoleIsExpanded}
+              expandConsole={this.props.expandConsole}
+              collapseConsole={this.props.collapseConsole}
+            />
+          </div>
+          <PreviewFrame
+            htmlFile={this.props.htmlFile}
+            jsFiles={this.props.jsFiles}
+            cssFiles={this.props.cssFiles}
+            files={this.props.files}
+            content={this.props.selectedFile.content}
+            head={
+              <link type="text/css" rel="stylesheet" href="/preview-styles.css" />
+            }
+            isPlaying={this.props.ide.isPlaying}
+            dispatchConsoleEvent={this.props.dispatchConsoleEvent}
+          />
+        </div>
+        {(() => {
+          if (this.props.ide.modalIsVisible) {
+            return (
+              <NewFileModal
+                canUploadMedia={this.props.user.authenticated}
+                closeModal={this.props.closeNewFileModal}
+              />
+            );
           }
-          isPlaying={this.props.ide.isPlaying}
-        />
+          return '';
+        })()}
       </div>
+
     );
   }
 }
@@ -78,26 +121,43 @@ IDEView.propTypes = {
     project_id: PropTypes.string
   }),
   getProject: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired,
+  user: PropTypes.shape({
+    authenticated: PropTypes.bool.isRequired
+  }).isRequired,
   createProject: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
   ide: PropTypes.shape({
-    isPlaying: PropTypes.bool.isRequired
+    isPlaying: PropTypes.bool.isRequired,
+    consoleEvent: PropTypes.object,
+    modalIsVisible: PropTypes.bool.isRequired,
+    sidebarIsExpanded: PropTypes.bool.isRequired,
+    consoleIsExpanded: PropTypes.bool.isRequired
   }).isRequired,
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
   project: PropTypes.shape({
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    owner: PropTypes.shape({
+      username: PropTypes.string
+    })
   }).isRequired,
   setProjectName: PropTypes.func.isRequired,
   openPreferences: PropTypes.func.isRequired,
   preferences: PropTypes.shape({
     isVisible: PropTypes.bool.isRequired,
-    fontSize: PropTypes.number.isRequired
+    fontSize: PropTypes.number.isRequired,
+    indentationAmount: PropTypes.number.isRequired,
+    isTabIndent: PropTypes.bool.isRequired
   }).isRequired,
   closePreferences: PropTypes.func.isRequired,
   increaseFont: PropTypes.func.isRequired,
   decreaseFont: PropTypes.func.isRequired,
+  updateFont: PropTypes.func.isRequired,
+  increaseIndentation: PropTypes.func.isRequired,
+  decreaseIndentation: PropTypes.func.isRequired,
+  updateIndentation: PropTypes.func.isRequired,
+  indentWithSpace: PropTypes.func.isRequired,
+  indentWithTab: PropTypes.func.isRequired,
   files: PropTypes.array.isRequired,
   updateFileContent: PropTypes.func.isRequired,
   selectedFile: PropTypes.shape({
@@ -107,7 +167,16 @@ IDEView.propTypes = {
   setSelectedFile: PropTypes.func.isRequired,
   htmlFile: PropTypes.object.isRequired,
   jsFiles: PropTypes.array.isRequired,
-  cssFiles: PropTypes.array.isRequired
+  cssFiles: PropTypes.array.isRequired,
+  dispatchConsoleEvent: PropTypes.func.isRequired,
+  newFile: PropTypes.func.isRequired,
+  closeNewFileModal: PropTypes.func.isRequired,
+  expandSidebar: PropTypes.func.isRequired,
+  collapseSidebar: PropTypes.func.isRequired,
+  exportProjectAsZip: PropTypes.func.isRequired,
+  cloneProject: PropTypes.func.isRequired,
+  expandConsole: PropTypes.func.isRequired,
+  collapseConsole: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {

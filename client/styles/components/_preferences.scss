@@ -1,9 +1,9 @@
 .preferences {
+	@extend %modal;
 	position: absolute;
 	top: #{66 / $base-font-size}rem;
 	right: #{40 / $base-font-size}rem;
-	width: #{276 / $base-font-size}rem;
-	background-color: $light-button-background-color;
+	width: #{336 / $base-font-size}rem;
 	display: none;
 	padding: #{16 / $base-font-size}rem #{26 / $base-font-size}rem;
 	&--selected {
@@ -35,7 +35,10 @@
 .preference {
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-between;
+	padding-bottom: #{40 / $base-font-size}rem;
+	& + & {
+  	border-top: 2px dashed $light-button-border-color;
+	}
 }
 
 .preference__title {
@@ -44,8 +47,39 @@
 }
 
 .preference__value {
-	border: 1px solid $light-button-border-color;
+	border: 2px solid $light-button-border-color;
 	text-align: center;
-	line-height: #{48 / $base-font-size}rem;
+	border-radius: 0%;
 	width: #{48 / $base-font-size}rem;
+	height: #{44 / $base-font-size}rem;
+	margin: 0 #{28 / $base-font-size}rem;
+	padding: 0;
+	background-color: $light-button-background-color;
+}
+
+.preference__label {
+	margin: 0;
+	line-height: #{20 / $base-font-size}rem;
+	color: $light-inactive-text-color;
+	&:hover {
+		color: $light-inactive-text-color;
+	}
+}
+
+.preference__vertical-list {
+	display: flex;
+	flex-direction: column;
+}
+
+.preference__option {
+	@extend %preference-option;
+	list-style-type: none;
+	padding-left: #{28 / $base-font-size}rem;
+	&--selected {
+		@extend %preference-option--selected;
+	}
+}
+
+.preference__button-label {
+	@extend %hidden-label
 }

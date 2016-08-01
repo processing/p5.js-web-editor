@@ -2,7 +2,14 @@ import * as ActionTypes from '../../../constants';
 
 const initialState = {
   isPlaying: false,
-  selectedFile: '1'
+  selectedFile: '1',
+  consoleEvent: {
+    method: undefined,
+    arguments: []
+  },
+  modalIsVisible: false,
+  sidebarIsExpanded: true,
+  consoleIsExpanded: false
 };
 
 const ide = (state = initialState, action) => {
@@ -17,6 +24,20 @@ const ide = (state = initialState, action) => {
     case ActionTypes.SET_PROJECT:
     case ActionTypes.NEW_PROJECT:
       return Object.assign({}, state, { selectedFile: action.selectedFile });
+    case ActionTypes.CONSOLE_EVENT:
+      return Object.assign({}, state, { consoleEvent: action.event });
+    case ActionTypes.SHOW_MODAL:
+      return Object.assign({}, state, { modalIsVisible: true });
+    case ActionTypes.HIDE_MODAL:
+      return Object.assign({}, state, { modalIsVisible: false });
+    case ActionTypes.COLLAPSE_SIDEBAR:
+      return Object.assign({}, state, { sidebarIsExpanded: false });
+    case ActionTypes.EXPAND_SIDEBAR:
+      return Object.assign({}, state, { sidebarIsExpanded: true });
+    case ActionTypes.COLLAPSE_CONSOLE:
+      return Object.assign({}, state, { consoleIsExpanded: false });
+    case ActionTypes.EXPAND_CONSOLE:
+      return Object.assign({}, state, { consoleIsExpanded: true });
     default:
       return state;
   }

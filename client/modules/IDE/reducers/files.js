@@ -12,7 +12,9 @@ const defaultHTML =
 `<!DOCTYPE html>
 <html>
   <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.0/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.2/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.2/addons/p5.dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.2/addons/p5.sound.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
@@ -58,10 +60,19 @@ const files = (state = initialState, action) => {
 
         return Object.assign({}, file, { content: action.content });
       });
+    case ActionTypes.SET_BLOB_URL:
+      return state.map(file => {
+        if (file.name !== action.name) {
+          return file;
+        }
+        return Object.assign({}, file, { blobURL: action.blobURL });
+      });
     case ActionTypes.NEW_PROJECT:
       return [...action.files];
     case ActionTypes.SET_PROJECT:
       return [...action.files];
+    case ActionTypes.CREATE_FILE:
+      return [...state, { name: action.name, id: action.id, content: '', url: action.url }];
     default:
       return state;
   }
@@ -71,5 +82,6 @@ export const getFile = (state, id) => state.filter(file => file.id === id)[0];
 export const getHTMLFile = (state) => state.filter(file => file.name.match(/.*\.html$/))[0];
 export const getJSFiles = (state) => state.filter(file => file.name.match(/.*\.js$/));
 export const getCSSFiles = (state) => state.filter(file => file.name.match(/.*\.css$/));
+export const getLinkedFiles = (state) => state.filter(file => file.url);
 
 export default files;
