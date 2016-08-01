@@ -55,7 +55,7 @@ class Console extends React.Component {
     });
 
     return (
-      <div ref="console" className={consoleClass} role="region" tabIndex="0">
+      <div ref="console" className={consoleClass} role="region" tabIndex="0" title="console">
         <div className="preview-console__header">
           <h2 className="preview-console__header-title">console</h2>
           <button className="preview-console__collapse" onClick={this.props.collapseConsole} aria-label="collapse console">
