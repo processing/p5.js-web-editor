@@ -1,10 +1,13 @@
 import React, { PropTypes } from 'react';
+import InlineSVG from 'react-inlinesvg';
+import classNames from 'classnames';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as PreferencesActions from '../actions/preferences';
 
-const Isvg = require('react-inlinesvg');
 const exitUrl = require('../../../images/exit.svg');
 const plusUrl = require('../../../images/plus.svg');
 const minusUrl = require('../../../images/minus.svg');
-const classNames = require('classnames');
 
 function Preferences(props) {
   const preferencesContainerClass = classNames({
@@ -28,7 +31,7 @@ function Preferences(props) {
           onClick={props.closePreferences}
           title="exit"
         >
-          <Isvg src={exitUrl} alt="Exit Preferences" />
+          <InlineSVG src={exitUrl} alt="Exit Preferences" />
         </button>
       </div>
 
@@ -39,7 +42,7 @@ function Preferences(props) {
           onClick={props.decreaseFont}
           id="preference-decrease-font-size"
         >
-          <Isvg src={minusUrl} alt="Decrease Font Size" />
+          <InlineSVG src={minusUrl} alt="Decrease Font Size" />
           <h6 className="preference__label">Decrease</h6>
         </button>
         <label htmlFor="preference-decrease-font-size" className="preference__button-label">
@@ -59,7 +62,7 @@ function Preferences(props) {
           onClick={props.increaseFont}
           id="preference-increase-font-size"
         >
-          <Isvg src={plusUrl} alt="Increase Font Size" />
+          <InlineSVG src={plusUrl} alt="Increase Font Size" />
           <h6 className="preference__label">Increase</h6>
         </button>
         <label htmlFor="preference-increase-font-size" className="preference__button-label">
@@ -74,7 +77,7 @@ function Preferences(props) {
           onClick={props.decreaseIndentation}
           id="preference-decrease-indentation"
         >
-          <Isvg src={minusUrl} alt="DecreaseIndentation Amount" />
+          <InlineSVG src={minusUrl} alt="DecreaseIndentation Amount" />
           <h6 className="preference__label">Decrease</h6>
         </button>
         <label htmlFor="preference-decrease-indentation" className="preference__button-label">
@@ -94,7 +97,7 @@ function Preferences(props) {
           onClick={props.increaseIndentation}
           id="preference-increase-indentation"
         >
-          <Isvg src={plusUrl} alt="IncreaseIndentation Amount" />
+          <InlineSVG src={plusUrl} alt="IncreaseIndentation Amount" />
           <h6 className="preference__label">Increase</h6>
         </button>
         <label htmlFor="preference-increase-indentation" className="preference__button-label">
@@ -107,6 +110,16 @@ function Preferences(props) {
       </div>
     </section>
   );
+}
+
+function mapStateToProps(state) {
+  return {
+    ...state.preferences
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(PreferencesActions, dispatch);
 }
 
 Preferences.propTypes = {
@@ -125,4 +138,4 @@ Preferences.propTypes = {
   isTabIndent: PropTypes.bool.isRequired
 };
 
-export default Preferences;
+export default connect(mapStateToProps, mapDispatchToProps)(Preferences);

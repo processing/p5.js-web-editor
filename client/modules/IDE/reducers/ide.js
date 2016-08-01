@@ -9,7 +9,8 @@ const initialState = {
   },
   modalIsVisible: false,
   sidebarIsExpanded: true,
-  consoleIsExpanded: false
+  consoleIsExpanded: false,
+  preferencesIsVisible: false
 };
 
 const ide = (state = initialState, action) => {
@@ -38,6 +39,10 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { consoleIsExpanded: false });
     case ActionTypes.EXPAND_CONSOLE:
       return Object.assign({}, state, { consoleIsExpanded: true });
+    case ActionTypes.OPEN_PREFERENCES:
+      return Object.assign({}, state, { preferencesIsVisible: true });
+    case ActionTypes.CLOSE_PREFERENCES:
+      return Object.assign({}, state, { preferencesIsVisible: false });
     default:
       return state;
   }

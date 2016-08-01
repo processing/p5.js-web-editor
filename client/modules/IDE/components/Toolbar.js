@@ -17,7 +17,7 @@ function Toolbar(props) {
   });
   let preferencesButtonClass = classNames({
     'toolbar__preferences-button': true,
-    'toolbar__preferences-button--selected': props.isPreferencesVisible
+    'toolbar__preferences-button--selected': props.preferencesIsVisible
   });
 
   return (
@@ -69,7 +69,7 @@ function Toolbar(props) {
 
 Toolbar.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
-  isPreferencesVisible: PropTypes.bool.isRequired,
+  preferencesIsVisible: PropTypes.bool.isRequired,
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
   setProjectName: PropTypes.func.isRequired,

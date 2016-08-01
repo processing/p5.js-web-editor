@@ -1,7 +1,6 @@
 import * as ActionTypes from '../../../constants';
 
 const initialState = {
-  isVisible: false,
   fontSize: 18,
   indentationAmount: 2,
   isTabIndent: true
@@ -9,14 +8,6 @@ const initialState = {
 
 const preferences = (state = initialState, action) => {
   switch (action.type) {
-    case ActionTypes.OPEN_PREFERENCES:
-      return Object.assign({}, state, {
-        isVisible: true
-      });
-    case ActionTypes.CLOSE_PREFERENCES:
-      return Object.assign({}, state, {
-        isVisible: false
-      });
     case ActionTypes.INCREASE_FONTSIZE:
       return Object.assign({}, state, {
         fontSize: state.fontSize + 2

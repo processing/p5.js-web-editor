@@ -57,7 +57,6 @@ export function collapseSidebar() {
 }
 
 export function expandConsole() {
-  console.log('expand console!');
   return {
     type: ActionTypes.EXPAND_CONSOLE
   };
@@ -66,6 +65,18 @@ export function expandConsole() {
 export function collapseConsole() {
   return {
     type: ActionTypes.COLLAPSE_CONSOLE
+  };
+}
+
+export function openPreferences() {
+  return {
+    type: ActionTypes.OPEN_PREFERENCES
+  };
+}
+
+export function closePreferences() {
+  return {
+    type: ActionTypes.CLOSE_PREFERENCES
   };
 }
 

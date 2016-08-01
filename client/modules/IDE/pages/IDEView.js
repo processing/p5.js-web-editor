@@ -11,7 +11,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as FileActions from '../actions/files';
 import * as IDEActions from '../actions/ide';
-import * as PreferencesActions from '../actions/preferences';
 import * as ProjectActions from '../actions/project';
 import { getFile, getHTMLFile, getJSFiles, getCSSFiles } from '../reducers/files';
 
@@ -41,23 +40,12 @@ class IDEView extends React.Component {
           projectName={this.props.project.name}
           setProjectName={this.props.setProjectName}
           openPreferences={this.props.openPreferences}
-          isPreferencesVisible={this.props.preferences.isVisible}
+          preferencesIsVisible={this.props.ide.preferencesIsVisible}
           owner={this.props.project.owner}
         />
         <Preferences
-          isVisible={this.props.preferences.isVisible}
+          isVisible={this.props.ide.preferencesIsVisible}
           closePreferences={this.props.closePreferences}
-          increaseFont={this.props.increaseFont}
-          decreaseFont={this.props.decreaseFont}
-          updateFont={this.props.updateFont}
-          fontSize={this.props.preferences.fontSize}
-          increaseIndentation={this.props.increaseIndentation}
-          decreaseIndentation={this.props.decreaseIndentation}
-          updateIndentation={this.props.updateIndentation}
-          indentationAmount={this.props.preferences.indentationAmount}
-          isTabIndent={this.props.preferences.isTabIndent}
-          indentWithSpace={this.props.indentWithSpace}
-          indentWithTab={this.props.indentWithTab}
         />
         <div className="editor-preview-container">
           <Sidebar
@@ -131,7 +119,8 @@ IDEView.propTypes = {
     consoleEvent: PropTypes.object,
     modalIsVisible: PropTypes.bool.isRequired,
     sidebarIsExpanded: PropTypes.bool.isRequired,
-    consoleIsExpanded: PropTypes.bool.isRequired
+    consoleIsExpanded: PropTypes.bool.isRequired,
+    preferencesIsVisible: PropTypes.bool.isRequired
   }).isRequired,
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
@@ -144,20 +133,11 @@ IDEView.propTypes = {
   setProjectName: PropTypes.func.isRequired,
   openPreferences: PropTypes.func.isRequired,
   preferences: PropTypes.shape({
-    isVisible: PropTypes.bool.isRequired,
     fontSize: PropTypes.number.isRequired,
     indentationAmount: PropTypes.number.isRequired,
     isTabIndent: PropTypes.bool.isRequired
   }).isRequired,
   closePreferences: PropTypes.func.isRequired,
-  increaseFont: PropTypes.func.isRequired,
-  decreaseFont: PropTypes.func.isRequired,
-  updateFont: PropTypes.func.isRequired,
-  increaseIndentation: PropTypes.func.isRequired,
-  decreaseIndentation: PropTypes.func.isRequired,
-  updateIndentation: PropTypes.func.isRequired,
-  indentWithSpace: PropTypes.func.isRequired,
-  indentWithTab: PropTypes.func.isRequired,
   files: PropTypes.array.isRequired,
   updateFileContent: PropTypes.func.isRequired,
   selectedFile: PropTypes.shape({
@@ -197,8 +177,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({},
     FileActions,
     ProjectActions,
-    IDEActions,
-    PreferencesActions),
+    IDEActions),
   dispatch);
 }
 
