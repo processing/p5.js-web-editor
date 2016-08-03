@@ -8,6 +8,7 @@ class SidebarItem extends React.Component {
     super(props);
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleFileNameChange = this.handleFileNameChange.bind(this);
+    this.validateFileName = this.validateFileName.bind(this);
   }
 
   handleFileNameChange(event) {
@@ -18,6 +19,12 @@ class SidebarItem extends React.Component {
     console.log(event.key);
     if (event.key === 'Enter') {
       this.props.hideEditFileName(this.props.file.id);
+    }
+  }
+
+  validateFileName() {
+    if (!this.props.file.name.match(/.*\.(js|css|html|json)$/)) {
+      this.props.updateFileName(this.props.file.id, this.originalFileName);
     }
   }
 
@@ -45,7 +52,10 @@ class SidebarItem extends React.Component {
           value={this.props.file.name}
           onChange={this.handleFileNameChange}
           ref="fileNameInput"
-          onBlur={() => this.props.hideEditFileName(this.props.file.id)}
+          onBlur={() => {
+            this.validateFileName();
+            this.props.hideEditFileName(this.props.file.id);
+          }}
           onKeyPress={this.handleKeyPress}
         />
         <a
@@ -59,6 +69,7 @@ class SidebarItem extends React.Component {
             <li>
               <a
                 onClick={() => {
+                  this.originalFileName = this.props.file.name;
                   this.props.showEditFileName(this.props.file.id);
                   setTimeout(() => this.refs.fileNameInput.focus(), 0);
                 }}
