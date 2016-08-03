@@ -12,7 +12,6 @@ class Sidebar extends React.Component {
   }
 
   resetSelectedFile() {
-    debugger; // eslint-disable-line
     this.props.setSelectedFile(this.props.files[0].id);
   }
 
