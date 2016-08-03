@@ -47,6 +47,8 @@ export const HIDE_FILE_OPTIONS = 'HIDE_FILE_OPTIONS';
 
 export const UPDATE_FILE_NAME = 'UPDATE_FILE_NAME';
 export const DELETE_FILE = 'DELETE_FILE';
+export const SHOW_EDIT_FILE_NAME = 'SHOW_EDIT_FILE_NAME';
+export const HIDE_EDIT_FILE_NAME = 'HIDE_EDIT_FILE_NAME';
 
 // eventually, handle errors more specifically and better
 export const ERROR = 'ERROR';

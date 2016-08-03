@@ -99,6 +99,22 @@ const files = (state = initialState, action) => {
       });
     case ActionTypes.DELETE_FILE:
       return state.filter(file => file.id !== action.id);
+    case ActionTypes.SHOW_EDIT_FILE_NAME:
+      return state.map(file => {
+        if (file.id !== action.id) {
+          return file;
+        }
+
+        return Object.assign({}, file, { isEditingName: true });
+      });
+    case ActionTypes.HIDE_EDIT_FILE_NAME:
+      return state.map(file => {
+        if (file.id !== action.id) {
+          return file;
+        }
+
+        return Object.assign({}, file, { isEditingName: false });
+      });
     default:
       return state;
   }

@@ -4,16 +4,31 @@ import classNames from 'classnames';
 const downArrowUrl = require('../../../images/down-arrow.svg');
 
 class SidebarItem extends React.Component {
-  onFocus() {
+  constructor(props) {
+    super(props);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.handleFileNameChange = this.handleFileNameChange.bind(this);
+  }
 
+  handleFileNameChange(event) {
+    this.props.updateFileName(this.props.file.id, event.target.value);
+  }
+
+  handleKeyPress(event) {
+    console.log(event.key);
+    if (event.key === 'Enter') {
+      this.props.hideEditFileName(this.props.file.id);
+    }
   }
 
   render() {
     let itemClass = classNames({
       'sidebar__file-item': true,
       'sidebar__file-item--selected': this.props.file.isSelected,
-      'sidebar__file-item--open': this.props.file.isOptionsOpen
+      'sidebar__file-item--open': this.props.file.isOptionsOpen,
+      'sidebar__file-item--editing': this.props.file.isEditingName
     });
+
     return (
       <li
         className={itemClass}
@@ -21,8 +36,18 @@ class SidebarItem extends React.Component {
         tabIndex={this.props.fileIndex}
       >
         <a
+          className="sidebar__file-item-name"
           onClick={() => this.props.setSelectedFile(this.props.file.id)}
         >{this.props.file.name}</a>
+        <input
+          type="text"
+          className="sidebar__file-item-input"
+          value={this.props.file.name}
+          onChange={this.handleFileNameChange}
+          ref="fileNameInput"
+          onBlur={() => this.props.hideEditFileName(this.props.file.id)}
+          onKeyPress={this.handleKeyPress}
+        />
         <a
           className="sidebar__file-item-show-options"
           onClick={() => this.props.showFileOptions(this.props.file.id)}
@@ -32,7 +57,12 @@ class SidebarItem extends React.Component {
         <div ref="fileOptions" className="sidebar__file-item-options">
           <ul>
             <li>
-              <a>
+              <a
+                onClick={() => {
+                  this.props.showEditFileName(this.props.file.id);
+                  setTimeout(() => this.refs.fileNameInput.focus(), 0);
+                }}
+              >
                 Rename
               </a>
             </li>
@@ -60,14 +90,18 @@ SidebarItem.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     isSelected: PropTypes.bool,
-    isOptionsOpen: PropTypes.bool
+    isOptionsOpen: PropTypes.bool,
+    isEditingName: PropTypes.bool
   }).isRequired,
   setSelectedFile: PropTypes.func.isRequired,
   fileIndex: PropTypes.number.isRequired,
   showFileOptions: PropTypes.func.isRequired,
   hideFileOptions: PropTypes.func.isRequired,
   deleteFile: PropTypes.func.isRequired,
-  resetSelectedFile: PropTypes.func.isRequired
+  resetSelectedFile: PropTypes.func.isRequired,
+  showEditFileName: PropTypes.func.isRequired,
+  hideEditFileName: PropTypes.func.isRequired,
+  updateFileName: PropTypes.func.isRequired
 };
 
 export default SidebarItem;

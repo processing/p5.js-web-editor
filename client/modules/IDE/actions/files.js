@@ -127,6 +127,20 @@ export function hideFileOptions(fileId) {
   };
 }
 
+export function showEditFileName(id) {
+  return {
+    type: ActionTypes.SHOW_EDIT_FILE_NAME,
+    id
+  };
+}
+
+export function hideEditFileName(id) {
+  return {
+    type: ActionTypes.HIDE_EDIT_FILE_NAME,
+    id
+  };
+}
+
 export function updateFileName(id, name) {
   return {
     type: ActionTypes.UPDATE_FILE_NAME,

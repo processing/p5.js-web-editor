@@ -61,6 +61,9 @@ class Sidebar extends React.Component {
               hideFileOptions={this.props.hideFileOptions}
               deleteFile={this.props.deleteFile}
               resetSelectedFile={this.resetSelectedFile}
+              showEditFileName={this.props.showEditFileName}
+              hideEditFileName={this.props.hideEditFileName}
+              updateFileName={this.props.updateFileName}
             />
           )}
         </ul>
@@ -78,7 +81,10 @@ Sidebar.propTypes = {
   expandSidebar: PropTypes.func.isRequired,
   showFileOptions: PropTypes.func.isRequired,
   hideFileOptions: PropTypes.func.isRequired,
-  deleteFile: PropTypes.func.isRequired
+  deleteFile: PropTypes.func.isRequired,
+  showEditFileName: PropTypes.func.isRequired,
+  hideEditFileName: PropTypes.func.isRequired,
+  updateFileName: PropTypes.func.isRequired
 };
 
 export default Sidebar;
