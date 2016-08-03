@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 import * as FileActions from '../actions/files';
 import * as IDEActions from '../actions/ide';
 import * as ProjectActions from '../actions/project';
-import { getFile, getHTMLFile, getJSFiles, getCSSFiles } from '../reducers/files';
+import { getFile, getHTMLFile, getJSFiles, getCSSFiles, setSelectedFile } from '../reducers/files';
 
 class IDEView extends React.Component {
   componentDidMount() {
@@ -50,12 +50,14 @@ class IDEView extends React.Component {
         <div className="editor-preview-container">
           <Sidebar
             files={this.props.files}
-            selectedFile={this.props.selectedFile}
             setSelectedFile={this.props.setSelectedFile}
             newFile={this.props.newFile}
             isExpanded={this.props.ide.sidebarIsExpanded}
             expandSidebar={this.props.expandSidebar}
             collapseSidebar={this.props.collapseSidebar}
+            showFileOptions={this.props.showFileOptions}
+            hideFileOptions={this.props.hideFileOptions}
+            deleteFile={this.props.deleteFile}
           />
           <div className="editor-console-container">
             <Editor
@@ -157,11 +159,14 @@ IDEView.propTypes = {
   cloneProject: PropTypes.func.isRequired,
   expandConsole: PropTypes.func.isRequired,
   collapseConsole: PropTypes.func.isRequired,
+  showFileOptions: PropTypes.func.isRequired,
+  hideFileOptions: PropTypes.func.isRequired,
+  deleteFile: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    files: state.files,
+    files: setSelectedFile(state.files, state.ide.selectedFile),
     selectedFile: getFile(state.files, state.ide.selectedFile),
     htmlFile: getHTMLFile(state.files),
     jsFiles: getJSFiles(state.files),

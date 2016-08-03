@@ -112,3 +112,32 @@ export function createFile(formProps) {
     }
   };
 }
+
+export function showFileOptions(fileId) {
+  return {
+    type: ActionTypes.SHOW_FILE_OPTIONS,
+    id: fileId
+  };
+}
+
+export function hideFileOptions(fileId) {
+  return {
+    type: ActionTypes.HIDE_FILE_OPTIONS,
+    id: fileId
+  };
+}
+
+export function updateFileName(id, name) {
+  return {
+    type: ActionTypes.UPDATE_FILE_NAME,
+    id,
+    name
+  };
+}
+
+export function deleteFile(id) {
+  return {
+    type: ActionTypes.DELETE_FILE,
+    id
+  };
+}

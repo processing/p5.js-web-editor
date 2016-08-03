@@ -42,5 +42,11 @@ export const CONSOLE_EVENT = 'CONSOLE_EVENT';
 export const EXPAND_CONSOLE = 'EXPAND_CONSOLE';
 export const COLLAPSE_CONSOLE = 'COLLAPSE_CONSOLE';
 
+export const SHOW_FILE_OPTIONS = 'SHOW_FILE_OPTIONS';
+export const HIDE_FILE_OPTIONS = 'HIDE_FILE_OPTIONS';
+
+export const UPDATE_FILE_NAME = 'UPDATE_FILE_NAME';
+export const DELETE_FILE = 'DELETE_FILE';
+
 // eventually, handle errors more specifically and better
 export const ERROR = 'ERROR';
