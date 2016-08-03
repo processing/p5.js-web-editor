@@ -29,21 +29,21 @@ class Sidebar extends React.Component {
             <button
               aria-label="add file"
               className="sidebar__add"
-              onClick={props.newFile}
+              onClick={this.props.newFile}
             >
               +
             </button>
             <button
               aria-label="collapse file navigation"
               className="sidebar__contract"
-              onClick={props.collapseSidebar}
+              onClick={this.props.collapseSidebar}
             >
               <InlineSVG src={leftArrowUrl} />
             </button>
             <button
               aria-label="expand file navigation"
               className="sidebar__expand"
-              onClick={props.expandSidebar}
+              onClick={this.props.expandSidebar}
             >
               <InlineSVG src={rightArrowUrl} />
             </button>
