@@ -9,7 +9,12 @@ const userSchema = new Schema({
   github: { type: String },
   email: { type: String, unique: true },
   tokens: Array,
-  admin: { type: Boolean, default: false }
+  preferences: {
+    textSize: { type: Number, default: 18 },
+    indentationAmount: { type: Number, default: 2 },
+    isTabIndent: { type: Boolean, default: false },
+    autosave: { type: Boolean, default: true }
+  }
 }, { timestamps: true });
 
 /**

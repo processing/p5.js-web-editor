@@ -1,41 +1,18 @@
 import * as ActionTypes from '../../../constants';
+// import axios from 'axios';
 
-export function increaseFont() {
-  return {
-    type: ActionTypes.INCREASE_FONTSIZE
-  };
-}
+// const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
-export function decreaseFont() {
+export function setFontSize(value) {
   return {
-    type: ActionTypes.DECREASE_FONTSIZE
-  };
-}
-
-export function updateFont(event) {
-  const value = event.target.value;
-  return {
-    type: ActionTypes.UPDATE_FONTSIZE,
+    type: ActionTypes.SET_FONT_SIZE,
     value
   };
 }
 
-export function increaseIndentation() {
+export function setIndentation(value) {
   return {
-    type: ActionTypes.INCREASE_INDENTATION
-  };
-}
-
-export function decreaseIndentation() {
-  return {
-    type: ActionTypes.DECREASE_INDENTATION
-  };
-}
-
-export function updateIndentation(event) {
-  const value = event.target.value;
-  return {
-    type: ActionTypes.UPDATE_INDENTATION,
+    type: ActionTypes.SET_INDENTATION,
     value
   };
 }
