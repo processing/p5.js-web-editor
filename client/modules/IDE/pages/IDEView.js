@@ -25,6 +25,12 @@ class IDEView extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (!this.autosaveInterval && this.props.project.id && !prevProps.project.id) {
+      this.autosaveInterval = setInterval(this.props.saveProject, 30000);
+    }
+  }
+
   componentWillUnmount() {
     clearInterval(this.autosaveInterval);
     this.autosaveInterval = null;
@@ -138,6 +144,7 @@ IDEView.propTypes = {
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
   project: PropTypes.shape({
+    id: PropTypes.string,
     name: PropTypes.string.isRequired,
     owner: PropTypes.shape({
       username: PropTypes.string
