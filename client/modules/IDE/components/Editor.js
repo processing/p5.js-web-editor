@@ -10,6 +10,7 @@ import 'codemirror/addon/lint/css-lint';
 import 'codemirror/addon/lint/html-lint';
 import 'codemirror/addon/comment/comment';
 import 'codemirror/keymap/sublime';
+import 'codemirror/addon/search/jump-to-line';
 import { JSHINT } from 'jshint';
 window.JSHINT = JSHINT;
 import { CSSLint } from 'csslint';
@@ -32,13 +33,21 @@ class Editor extends React.Component {
       lineWrapping: true,
       gutters: ['CodeMirror-lint-markers'],
       lint: true,
-      keyMap: 'sublime'
+      keyMap: 'sublime',
+      lint: {
+       onUpdateLinting: (annotations) => {
+         document.getElementById('editor-lintmessages').innerHTML='';
+         annotations.forEach(function (x) {
+           document.getElementById('editor-lintmessages').innerHTML += (x.severity + ' in line number ' + (x.from.line + 1) + ' : ' + x.message); }); // eslint-disable-line
+       }
+      }
     });
     this._cm.on('change', debounce(200, () => {
       this.props.updateFileContent(this.props.file.name, this._cm.getValue());
-      let annotations = this._cm.state.lint.marked;
-      annotations.forEach(function (x) { console.log(x.__annotation.severity + ' in line number ' + (x.__annotation.from.line + 1) + ' : ' + x.__annotation.message); });
     }));
+    this._cm.on('keyup', () => {
+      document.getElementById('editor-linenumber').innerHTML = parseInt((this._cm.getCursor().line) + 1, 10);
+    });
     // this._cm.on('change', () => { // eslint-disable-line
     //   // this.props.updateFileContent('sketch.js', this._cm.getValue());
     //   throttle(1000, () => console.log('debounce is working!'));
@@ -50,6 +59,8 @@ class Editor extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    const annotations = this._cm.state.lint.marked;
+    annotations.forEach(function (x) { console.log(x.__annotation.severity + ' in line number ' + (x.__annotation.from.line + 1) + ' : ' + x.__annotation.message); }); // eslint-disable-line
     if (this.props.file.content !== prevProps.file.content &&
         this.props.file.content !== this._cm.getValue()) {
       this._cm.setValue(this.props.file.content); // eslint-disable-line no-underscore-dangle
@@ -81,7 +92,10 @@ class Editor extends React.Component {
   _cm: CodeMirror.Editor
 
   render() {
-    return <div ref="container" className="editor-holder" tabIndex="0" title="code editor" role="region"></div>;
+    return (
+      <div ref="container" className="editor-holder" tabIndex="0" title="code editor" role="region">
+      </div>
+    );
   }
 }
 
