@@ -69,6 +69,7 @@
 .preference__vertical-list {
 	display: flex;
 	flex-direction: column;
+	width: #{90 / $base-font-size}rem;
 }
 
 .preference__option {

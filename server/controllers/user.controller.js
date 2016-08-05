@@ -28,3 +28,15 @@ export function createUser(req, res, next) {
       });
     });
 }
+
+export function updatePreferences(req, res) {
+  User.findByIdAndUpdate(req.user._id,
+  {
+    $set: req.body
+  })
+  .populate('preferences')
+  .exec((err, updatedPreferences) => {
+    if (err) return res.json({ success: false });
+    return res.json(updatedPreferences);
+  });
+}

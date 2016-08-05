@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import * as FileActions from '../actions/files';
 import * as IDEActions from '../actions/ide';
 import * as ProjectActions from '../actions/project';
+import * as PreferencesActions from '../actions/preferences';
 import { getFile, getHTMLFile, getJSFiles, getCSSFiles, setSelectedFile } from '../reducers/files';
 
 class IDEView extends React.Component {
@@ -60,6 +61,13 @@ class IDEView extends React.Component {
         <Preferences
           isVisible={this.props.ide.preferencesIsVisible}
           closePreferences={this.props.closePreferences}
+          fontSize={this.props.preferences.fontSize}
+          indentationAmount={this.props.preferences.indentationAmount}
+          setIndentation={this.props.setIndentation}
+          indentWithSpace={this.props.indentWithSpace}
+          indentWithTab={this.props.indentWithTab}
+          isTabIndent={this.props.preferences.isTabIndent}
+          setFontSize={this.props.setFontSize}
         />
         <div className="editor-preview-container">
           <Sidebar
@@ -158,6 +166,10 @@ IDEView.propTypes = {
     isTabIndent: PropTypes.bool.isRequired
   }).isRequired,
   closePreferences: PropTypes.func.isRequired,
+  setFontSize: PropTypes.func.isRequired,
+  setIndentation: PropTypes.func.isRequired,
+  indentWithTab: PropTypes.func.isRequired,
+  indentWithSpace: PropTypes.func.isRequired,
   files: PropTypes.array.isRequired,
   updateFileContent: PropTypes.func.isRequired,
   selectedFile: PropTypes.shape({
@@ -203,7 +215,8 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({},
     FileActions,
     ProjectActions,
-    IDEActions),
+    IDEActions,
+    PreferencesActions),
   dispatch);
 }
 

@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
 import InlineSVG from 'react-inlinesvg';
 import classNames from 'classnames';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import * as PreferencesActions from '../actions/preferences';
+// import { bindActionCreators } from 'redux';
+// import { connect } from 'react-redux';
+// import * as PreferencesActions from '../actions/preferences';
 
 const exitUrl = require('../../../images/exit.svg');
 const plusUrl = require('../../../images/plus.svg');
@@ -111,16 +111,6 @@ class Preferences extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    ...state.preferences
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(PreferencesActions, dispatch);
-}
-
 Preferences.propTypes = {
   isVisible: PropTypes.bool.isRequired,
   closePreferences: PropTypes.func.isRequired,
@@ -133,4 +123,4 @@ Preferences.propTypes = {
   setFontSize: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Preferences);
+export default Preferences;
