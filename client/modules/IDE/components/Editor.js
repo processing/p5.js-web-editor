@@ -36,6 +36,8 @@ class Editor extends React.Component {
     });
     this._cm.on('change', debounce(200, () => {
       this.props.updateFileContent(this.props.file.name, this._cm.getValue());
+      let annotations = this._cm.state.lint.marked;
+      annotations.forEach(function (x) { console.log(x.__annotation.severity + ' in line number ' + (x.__annotation.from.line + 1) + ' : ' + x.__annotation.message); });
     }));
     // this._cm.on('change', () => { // eslint-disable-line
     //   // this.props.updateFileContent('sketch.js', this._cm.getValue());
