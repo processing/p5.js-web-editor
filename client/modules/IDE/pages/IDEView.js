@@ -58,7 +58,7 @@ class IDEView extends React.Component {
             collapseSidebar={this.props.collapseSidebar}
           />
           <div className="editor-console-container">
-            <div className="editor-linenumber" id="editor-linenumber"></div>
+            <div className="editor-linenumber" aria-live="assertive" id="editor-linenumber"></div>
             <div className="editor-lintmessages" id="editor-lintmessages"></div>
             <Editor
               file={this.props.selectedFile}
