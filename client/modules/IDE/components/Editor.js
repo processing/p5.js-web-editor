@@ -35,7 +35,7 @@ class Editor extends React.Component {
       gutters: ['CodeMirror-lint-markers'],
       keyMap: 'sublime',
       lint: {
-        onUpdateLinting: (annotations) => {
+        onUpdateLinting: debounce(2000, (annotations) => {
           let isVisible = false;
           document.getElementById('editor-lintmessages').innerHTML = '';
           annotations.forEach((x) => {
@@ -47,7 +47,8 @@ class Editor extends React.Component {
           if (isVisible) {
             this.beep.play();
           }
-        }
+        })
+
       }
     });
     this._cm.on('change', debounce(200, () => {
