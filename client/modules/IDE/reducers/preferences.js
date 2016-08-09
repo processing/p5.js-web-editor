@@ -21,6 +21,8 @@ const preferences = (state = initialState, action) => {
       return Object.assign({}, state, {
         isTabIndent: false
       });
+    case ActionTypes.SET_AUTOSAVE:
+      return Object.assign({}, state, { autosave: action.value });
     default:
       return state;
   }

@@ -68,6 +68,8 @@ class IDEView extends React.Component {
           indentWithTab={this.props.indentWithTab}
           isTabIndent={this.props.preferences.isTabIndent}
           setFontSize={this.props.setFontSize}
+          autosave={this.props.preferences.autosave}
+          setAutosave={this.props.setAutosave}
         />
         <div className="editor-preview-container">
           <Sidebar
@@ -163,13 +165,15 @@ IDEView.propTypes = {
   preferences: PropTypes.shape({
     fontSize: PropTypes.number.isRequired,
     indentationAmount: PropTypes.number.isRequired,
-    isTabIndent: PropTypes.bool.isRequired
+    isTabIndent: PropTypes.bool.isRequired,
+    autosave: PropTypes.bool.isRequired
   }).isRequired,
   closePreferences: PropTypes.func.isRequired,
   setFontSize: PropTypes.func.isRequired,
   setIndentation: PropTypes.func.isRequired,
   indentWithTab: PropTypes.func.isRequired,
   indentWithSpace: PropTypes.func.isRequired,
+  setAutosave: PropTypes.func.isRequired,
   files: PropTypes.array.isRequired,
   updateFileContent: PropTypes.func.isRequired,
   selectedFile: PropTypes.shape({

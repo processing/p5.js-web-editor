@@ -51,7 +51,7 @@ export const DELETE_FILE = 'DELETE_FILE';
 export const SHOW_EDIT_FILE_NAME = 'SHOW_EDIT_FILE_NAME';
 export const HIDE_EDIT_FILE_NAME = 'HIDE_EDIT_FILE_NAME';
 
-export const TOGGLE_AUTOSAVE = 'SET_AUTOSAVE';
+export const SET_AUTOSAVE = 'SET_AUTOSAVE';
 
 // eventually, handle errors more specifically and better
 export const ERROR = 'ERROR';

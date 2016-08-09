@@ -84,8 +84,19 @@ export function indentWithSpace() {
 }
 
 export function setAutosave(value) {
-  return {
-    type: ActionTypes.SET_AUTOSAVE,
-    value
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.SET_AUTOSAVE,
+      value
+    });
+    const state = getState();
+    if (state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          autosave: value
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
   };
 }

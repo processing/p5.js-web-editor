@@ -10,12 +10,22 @@ const plusUrl = require('../../../images/plus.svg');
 const minusUrl = require('../../../images/minus.svg');
 
 class Preferences extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleUpdateAutosave = this.handleUpdateAutosave.bind(this);
+  }
+
   handleUpdateFont(event) {
     this.props.setFontSize(parseInt(event.target.value, 10));
   }
 
   handleUpdateIndentation(event) {
     this.props.setIndentation(parseInt(event.target.value, 10));
+  }
+
+  handleUpdateAutosave(event) {
+    const value = event.target.value === 'true';
+    this.props.setAutosave(value);
   }
 
   render() {
@@ -106,6 +116,13 @@ class Preferences extends React.Component {
             <button className={preferencesTabOptionClass} onClick={this.props.indentWithTab} aria-label="indentation with tab">Tabs</button>
           </div>
         </div>
+        <div className="preference">
+          <h4 className="preference__title">Autosave</h4>
+          <label htmlFor="autosave-on">On</label>
+          <input type="radio" id="autosave-on" name="autosave" value="true" checked={this.props.autosave} onChange={this.handleUpdateAutosave} />
+          <label htmlFor="autosave-off">Off</label>
+          <input type="radio" id="autosave-off" name="autosave" value="false" checked={!this.props.autosave} onChange={this.handleUpdateAutosave} />
+        </div>
       </section>
     );
   }
@@ -120,7 +137,9 @@ Preferences.propTypes = {
   indentWithSpace: PropTypes.func.isRequired,
   indentWithTab: PropTypes.func.isRequired,
   isTabIndent: PropTypes.bool.isRequired,
-  setFontSize: PropTypes.func.isRequired
+  setFontSize: PropTypes.func.isRequired,
+  autosave: PropTypes.bool.isRequired,
+  setAutosave: PropTypes.func.isRequired
 };
 
 export default Preferences;
