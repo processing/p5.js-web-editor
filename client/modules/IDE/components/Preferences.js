@@ -41,6 +41,14 @@ class Preferences extends React.Component {
       preference__option: true,
       'preference__option--selected': !this.props.isTabIndent
     });
+    let autosaveOnClass = classNames({
+      preference__option: true,
+      'preference__option--selected': this.props.autosave
+    });
+    let autosaveOffClass = classNames({
+      preference__option: true,
+      'preference__option--selected': !this.props.autosave
+    });
     return (
       <section className={preferencesContainerClass} tabIndex="0" title="preference-menu">
         <div className="preferences__heading">
@@ -118,10 +126,18 @@ class Preferences extends React.Component {
         </div>
         <div className="preference">
           <h4 className="preference__title">Autosave</h4>
-          <label htmlFor="autosave-on">On</label>
-          <input type="radio" id="autosave-on" name="autosave" value="true" checked={this.props.autosave} onChange={this.handleUpdateAutosave} />
-          <label htmlFor="autosave-off">Off</label>
-          <input type="radio" id="autosave-off" name="autosave" value="false" checked={!this.props.autosave} onChange={this.handleUpdateAutosave} />
+          <div className="preference__options">
+            <button
+              className={autosaveOnClass}
+              onClick={() => this.props.setAutosave(true)}
+              aria-label="autosave on"
+            >On</button>
+            <button
+              className={autosaveOffClass}
+              onClick={() => this.props.setAutosave(false)}
+              aria-label="autosave off"
+            >Off</button>
+          </div>
         </div>
       </section>
     );
