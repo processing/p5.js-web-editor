@@ -3,7 +3,8 @@ import * as ActionTypes from '../../../constants';
 const initialState = {
   fontSize: 18,
   indentationAmount: 2,
-  isTabIndent: true
+  isTabIndent: true,
+  autosave: true
 };
 
 const preferences = (state = initialState, action) => {

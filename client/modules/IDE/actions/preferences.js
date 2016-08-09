@@ -82,3 +82,10 @@ export function indentWithSpace() {
     }
   };
 }
+
+export function setAutosave(value) {
+  return {
+    type: ActionTypes.SET_AUTOSAVE,
+    value
+  };
+}

@@ -30,13 +30,23 @@ export function createUser(req, res, next) {
 }
 
 export function updatePreferences(req, res) {
-  User.findByIdAndUpdate(req.user._id,
-  {
-    $set: req.body
+  User.findById(req.user.id, (err, user) => {
+    if (err) {
+      return res.status(500).json({error: err});
+    }
+    if (!user){
+      return res.status(404).json({error: 'Document not found'});
+    }
+
+    const preferences = Object.assign({}, user.preferences, req.body.preferences);
+    user.preferences = preferences;
+
+    user.save((err) => {
+      if (err) {
+        return res.status(500).json({error: err});
+      }
+
+      return res.json(user.preferences);
+    });
   })
-  .populate('preferences')
-  .exec((err, updatedPreferences) => {
-    if (err) return res.json({ success: false });
-    return res.json(updatedPreferences);
-  });
 }
