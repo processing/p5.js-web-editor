@@ -83,23 +83,6 @@
 	}
 }
 
-.preference__autosave-input {
-	// display: none;
-}
-
-.preference__autosave-label {
-	font-size: #{12 / $base-font-size}rem;
-	color: $light-inactive-text-color;
-	cursor: pointer;
-	&:hover {
-		color: $light-primary-text-color;
-	}
-}
-
-.preference__autosave-input:checked + .preference__autosave-label {
-	color: $light-primary-text-color;
-}
-
 .preference__options {
 	display: flex;
 	justify-content: space-between;
