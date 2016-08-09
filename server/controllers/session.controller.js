@@ -11,7 +11,9 @@ export function createSession(req, res, next) {
       if (innerErr) { return next(innerErr); }
       return res.json({
         email: req.user.email,
-        username: req.user.username
+        username: req.user.username,
+        preferences: req.user.preferences,
+        id: req.user._id
       });
     });
   })(req, res, next);
@@ -22,7 +24,8 @@ export function getSession(req, res) {
     return res.json({
       email: req.user.email,
       username: req.user.username,
-      preferences: req.user.preferences
+      preferences: req.user.preferences,
+      id: req.user._id
     });
   }
   return res.status(404).send({ message: 'Session does not exist' });

@@ -10,7 +10,7 @@ const userSchema = new Schema({
   email: { type: String, unique: true },
   tokens: Array,
   preferences: {
-    textSize: { type: Number, default: 18 },
+    fontSize: { type: Number, default: 18 },
     indentationAmount: { type: Number, default: 2 },
     isTabIndent: { type: Boolean, default: false },
     autosave: { type: Boolean, default: true }
@@ -32,6 +32,15 @@ userSchema.pre('save', function checkPassword(next) { // eslint-disable-line con
     });
   });
 });
+
+userSchema.virtual('id').get(function(){
+    return this._id.toHexString();
+});
+
+userSchema.set('toJSON', {
+    virtuals: true
+});
+
 
 /**
  * Helper method for validating user's password.

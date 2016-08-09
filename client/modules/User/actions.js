@@ -51,6 +51,8 @@ export function getUser() {
           preferences: response.data.preferences
         });
       })
-      .catch(response => dispatch(authError(response.data.error)));
+      .catch(response => {
+        dispatch(authError(response.data.error));
+      });
   };
 }

@@ -21,20 +21,29 @@ class IDEView extends React.Component {
       const id = this.props.params.project_id;
       this.props.getProject(id);
 
-      if (this.props.preferences.autosave) {
+      // if autosave is on and the user is the owner of the project
+      if (this.props.preferences.autosave
+        && this.props.project.owner
+        && this.props.project.owner.id === this.props.user.id) {
         this.autosaveInterval = setInterval(this.props.saveProject, 30000);
       }
     }
   }
 
   componentDidUpdate(prevProps) {
-    if (!this.autosaveInterval &&
-      ((this.props.preferences.autosave && !prevProps.preferences.autosave) ||
-      (this.props.project.id && !prevProps.project.id))) {
-      this.autosaveInterval = setInterval(this.props.saveProject, 30000);
-    } else if (this.autosaveInterval && !this.props.preferences.autosave && prevProps.preferences.autosave) {
-      clearInterval(this.autosaveInterval);
-      this.autosaveInterval = null;
+    // if user is the owner of the project
+    if (this.props.project.owner && this.props.project.owner.id === this.props.user.id) {
+      // if the user turns on autosave
+      // or the user saves the project for the first time
+      if (!this.autosaveInterval &&
+        ((this.props.preferences.autosave && !prevProps.preferences.autosave) ||
+        (this.props.project.id && !prevProps.project.id))) {
+        this.autosaveInterval = setInterval(this.props.saveProject, 30000);
+      // if user turns off autosave preference
+      } else if (this.autosaveInterval && !this.props.preferences.autosave && prevProps.preferences.autosave) {
+        clearInterval(this.autosaveInterval);
+        this.autosaveInterval = null;
+      }
     }
   }
 
@@ -145,7 +154,8 @@ IDEView.propTypes = {
   }),
   getProject: PropTypes.func.isRequired,
   user: PropTypes.shape({
-    authenticated: PropTypes.bool.isRequired
+    authenticated: PropTypes.bool.isRequired,
+    id: PropTypes.string
   }).isRequired,
   createProject: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
@@ -163,7 +173,8 @@ IDEView.propTypes = {
     id: PropTypes.string,
     name: PropTypes.string.isRequired,
     owner: PropTypes.shape({
-      username: PropTypes.string
+      username: PropTypes.string,
+      id: PropTypes.string
     })
   }).isRequired,
   setProjectName: PropTypes.func.isRequired,

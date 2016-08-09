@@ -23,7 +23,7 @@ export function setFontSize(value) {
     if (state.user.authenticated) {
       const formParams = {
         preferences: {
-          textSize: value
+          fontSize: value
         }
       };
       updatePreferences(formParams, dispatch);

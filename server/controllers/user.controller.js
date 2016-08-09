@@ -22,7 +22,9 @@ export function createUser(req, res, next) {
           }
           res.json({
             email: req.user.email,
-            username: req.user.username
+            username: req.user.username,
+            preferences: req.user.preferences,
+            id: req.user._id
           });
         });
       });
