@@ -52,6 +52,7 @@ export const SHOW_EDIT_FILE_NAME = 'SHOW_EDIT_FILE_NAME';
 export const HIDE_EDIT_FILE_NAME = 'HIDE_EDIT_FILE_NAME';
 
 export const SET_AUTOSAVE = 'SET_AUTOSAVE';
+export const SET_PREFERENCES = 'SET_PREFERENCES';
 
 // eventually, handle errors more specifically and better
 export const ERROR = 'ERROR';

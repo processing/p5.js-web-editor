@@ -21,7 +21,8 @@ export function getSession(req, res) {
   if (req.user) {
     return res.json({
       email: req.user.email,
-      username: req.user.username
+      username: req.user.username,
+      preferences: req.user.preferences
     });
   }
   return res.status(404).send({ message: 'Session does not exist' });

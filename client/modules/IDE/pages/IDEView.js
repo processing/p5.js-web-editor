@@ -21,14 +21,20 @@ class IDEView extends React.Component {
       const id = this.props.params.project_id;
       this.props.getProject(id);
 
-      // if autosave is enabled
-      this.autosaveInterval = setInterval(this.props.saveProject, 30000);
+      if (this.props.preferences.autosave) {
+        this.autosaveInterval = setInterval(this.props.saveProject, 30000);
+      }
     }
   }
 
   componentDidUpdate(prevProps) {
-    if (!this.autosaveInterval && this.props.project.id && !prevProps.project.id) {
+    if (!this.autosaveInterval &&
+      ((this.props.preferences.autosave && !prevProps.preferences.autosave) ||
+      (this.props.project.id && !prevProps.project.id))) {
       this.autosaveInterval = setInterval(this.props.saveProject, 30000);
+    } else if (this.autosaveInterval && !this.props.preferences.autosave && prevProps.preferences.autosave) {
+      clearInterval(this.autosaveInterval);
+      this.autosaveInterval = null;
     }
   }
 

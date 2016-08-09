@@ -23,6 +23,8 @@ const preferences = (state = initialState, action) => {
       });
     case ActionTypes.SET_AUTOSAVE:
       return Object.assign({}, state, { autosave: action.value });
+    case ActionTypes.SET_PREFERENCES:
+      return action.preferences;
     default:
       return state;
   }
