@@ -19,16 +19,20 @@ class SketchListView extends React.Component {
           user={this.props.user}
           createProject={this.props.createProject}
           saveProject={this.props.saveProject}
+          exportProjectAsZip={this.props.exportProjectAsZip}
+          cloneProject={this.props.cloneProject}
         />
         <table className="sketches-table" summary="table containing all saved projects">
           <thead>
-            <th scope="col">Name</th>
-            <th scope="col">Created</th>
-            <th scope="col">Last Updated</th>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Created</th>
+              <th scope="col">Last Updated</th>
+            </tr>
           </thead>
           <tbody>
             {this.props.sketches.map(sketch =>
-              <tr className="sketches-table__row">
+              <tr className="sketches-table__row" key={sketch.id}>
                 <td scope="row"><Link to={`/projects/${sketch._id}`}>{sketch.name}</Link></td>
                 <td>{moment(sketch.createdAt).format('MMM D, YYYY')}</td>
                 <td>{moment(sketch.updatedAt).format('MMM D, YYYY')}</td>
@@ -46,7 +50,9 @@ SketchListView.propTypes = {
   createProject: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
   getProjects: PropTypes.func.isRequired,
-  sketches: PropTypes.array.isRequired
+  sketches: PropTypes.array.isRequired,
+  exportProjectAsZip: PropTypes.func.isRequired,
+  cloneProject: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

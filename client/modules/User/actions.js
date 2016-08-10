@@ -46,7 +46,13 @@ export function getUser() {
           type: ActionTypes.AUTH_USER,
           user: response.data
         });
+        dispatch({
+          type: ActionTypes.SET_PREFERENCES,
+          preferences: response.data.preferences
+        });
       })
-      .catch(response => dispatch(authError(response.data.error)));
+      .catch(response => {
+        dispatch(authError(response.data.error));
+      });
   };
 }

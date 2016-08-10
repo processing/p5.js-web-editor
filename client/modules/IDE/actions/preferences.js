@@ -1,53 +1,102 @@
 import * as ActionTypes from '../../../constants';
+import axios from 'axios';
 
-export function increaseFont() {
-  return {
-    type: ActionTypes.INCREASE_FONTSIZE
+const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
+
+function updatePreferences(formParams, dispatch) {
+  axios.put(`${ROOT_URL}/preferences`, formParams, { withCredentials: true })
+    .then(() => {
+    })
+    .catch((response) => dispatch({
+      type: ActionTypes.ERROR,
+      error: response.data
+    }));
+}
+
+export function setFontSize(value) {
+  return (dispatch, getState) => { // eslint-disable-line
+    dispatch({
+      type: ActionTypes.SET_FONT_SIZE,
+      value
+    });
+    const state = getState();
+    if (state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          fontSize: value
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
   };
 }
 
-export function decreaseFont() {
-  return {
-    type: ActionTypes.DECREASE_FONTSIZE
-  };
-}
-
-export function updateFont(event) {
-  const value = event.target.value;
-  return {
-    type: ActionTypes.UPDATE_FONTSIZE,
-    value
-  };
-}
-
-export function increaseIndentation() {
-  return {
-    type: ActionTypes.INCREASE_INDENTATION
-  };
-}
-
-export function decreaseIndentation() {
-  return {
-    type: ActionTypes.DECREASE_INDENTATION
-  };
-}
-
-export function updateIndentation(event) {
-  const value = event.target.value;
-  return {
-    type: ActionTypes.UPDATE_INDENTATION,
-    value
+export function setIndentation(value) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.SET_INDENTATION,
+      value
+    });
+    const state = getState();
+    if (state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          indentationAmount: value
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
   };
 }
 
 export function indentWithTab() {
-  return {
-    type: ActionTypes.INDENT_WITH_TAB
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.INDENT_WITH_TAB
+    });
+    const state = getState();
+    if (state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          isTabIndent: true
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
   };
 }
 
 export function indentWithSpace() {
-  return {
-    type: ActionTypes.INDENT_WITH_SPACE
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.INDENT_WITH_SPACE
+    });
+    const state = getState();
+    if (state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          isTabIndent: false
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
+  };
+}
+
+export function setAutosave(value) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.SET_AUTOSAVE,
+      value
+    });
+    const state = getState();
+    if (state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          autosave: value
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
   };
 }

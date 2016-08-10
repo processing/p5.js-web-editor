@@ -22,9 +22,33 @@ export function createUser(req, res, next) {
           }
           res.json({
             email: req.user.email,
-            username: req.user.username
+            username: req.user.username,
+            preferences: req.user.preferences,
+            id: req.user._id
           });
         });
       });
     });
+}
+
+export function updatePreferences(req, res) {
+  User.findById(req.user.id, (err, user) => {
+    if (err) {
+      return res.status(500).json({error: err});
+    }
+    if (!user){
+      return res.status(404).json({error: 'Document not found'});
+    }
+
+    const preferences = Object.assign({}, user.preferences, req.body.preferences);
+    user.preferences = preferences;
+
+    user.save((err) => {
+      if (err) {
+        return res.status(500).json({error: err});
+      }
+
+      return res.json(user.preferences);
+    });
+  })
 }

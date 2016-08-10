@@ -1,130 +1,161 @@
 import React, { PropTypes } from 'react';
 import InlineSVG from 'react-inlinesvg';
 import classNames from 'classnames';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import * as PreferencesActions from '../actions/preferences';
+// import { bindActionCreators } from 'redux';
+// import { connect } from 'react-redux';
+// import * as PreferencesActions from '../actions/preferences';
 
 const exitUrl = require('../../../images/exit.svg');
 const plusUrl = require('../../../images/plus.svg');
 const minusUrl = require('../../../images/minus.svg');
 
-function Preferences(props) {
-  const preferencesContainerClass = classNames({
-    preferences: true,
-    'preferences--selected': props.isVisible
-  });
-  let preferencesTabOptionClass = classNames({
-    preference__option: true,
-    'preference__option--selected': props.isTabIndent
-  });
-  let preferencesSpaceOptionClass = classNames({
-    preference__option: true,
-    'preference__option--selected': !props.isTabIndent
-  });
-  return (
-    <section className={preferencesContainerClass} tabIndex="0" title="preference-menu">
-      <div className="preferences__heading">
-        <h2 className="preferences__title">Preferences</h2>
-        <button
-          className="preferences__exit-button"
-          onClick={props.closePreferences}
-          title="exit"
-          aria-label="exit preferences"
-        >
-          <InlineSVG src={exitUrl} alt="Exit Preferences" />
-        </button>
-      </div>
+class Preferences extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleUpdateAutosave = this.handleUpdateAutosave.bind(this);
+  }
 
-      <div className="preference">
-        <h4 className="preference__title">Text Size</h4>
-        <button
-          className="preference__plus-button"
-          onClick={props.decreaseFont}
-          aria-label="decrease font size"
-        >
-          <InlineSVG src={minusUrl} alt="Decrease Font Size" />
-          <h6 className="preference__label">Decrease</h6>
-        </button>
-        <input
-          className="preference__value"
-          aria-live="status"
-          aria-live="polite"
-          role="status"
-          value={props.fontSize}
-          onChange={props.updateFont}
-        >
-        </input>
-        <button
-          className="preference__minus-button"
-          onClick={props.increaseFont}
-          aria-label="increase font size"
-        >
-          <InlineSVG src={plusUrl} alt="Increase Font Size" />
-          <h6 className="preference__label">Increase</h6>
-        </button>
-      </div>
+  handleUpdateFont(event) {
+    this.props.setFontSize(parseInt(event.target.value, 10));
+  }
 
-      <div className="preference">
-        <h4 className="preference__title">Indentation Amount</h4>
-        <button
-          className="preference__plus-button"
-          onClick={props.decreaseIndentation}
-          aria-label="decrease indentation amount"
-        >
-          <InlineSVG src={minusUrl} alt="DecreaseIndentation Amount" />
-          <h6 className="preference__label">Decrease</h6>
-        </button>
-        <input
-          className="preference__value"
-          aria-live="status"
-          aria-live="polite"
-          role="status"
-          value={props.indentationAmount}
-          onChange={props.updateIndentation}
-        >
-        </input>
-        <button
-          className="preference__minus-button"
-          onClick={props.increaseIndentation}
-          aria-label="increase indentation amount"
-        >
-          <InlineSVG src={plusUrl} alt="IncreaseIndentation Amount" />
-          <h6 className="preference__label">Increase</h6>
-        </button>
-        <div className="preference__vertical-list">
-          <button className={preferencesSpaceOptionClass} onClick={props.indentWithSpace} aria-label="indentation with space">Spaces</button>
-          <button className={preferencesTabOptionClass} onClick={props.indentWithTab} aria-label="indentation with tab">Tabs</button>
+  handleUpdateIndentation(event) {
+    this.props.setIndentation(parseInt(event.target.value, 10));
+  }
+
+  handleUpdateAutosave(event) {
+    const value = event.target.value === 'true';
+    this.props.setAutosave(value);
+  }
+
+  render() {
+    const preferencesContainerClass = classNames({
+      preferences: true,
+      'preferences--selected': this.props.isVisible
+    });
+    let preferencesTabOptionClass = classNames({
+      preference__option: true,
+      'preference__option--selected': this.props.isTabIndent
+    });
+    let preferencesSpaceOptionClass = classNames({
+      preference__option: true,
+      'preference__option--selected': !this.props.isTabIndent
+    });
+    let autosaveOnClass = classNames({
+      preference__option: true,
+      'preference__option--selected': this.props.autosave
+    });
+    let autosaveOffClass = classNames({
+      preference__option: true,
+      'preference__option--selected': !this.props.autosave
+    });
+    return (
+      <section className={preferencesContainerClass} tabIndex="0" title="preference-menu">
+        <div className="preferences__heading">
+          <h2 className="preferences__title">Preferences</h2>
+          <button
+            className="preferences__exit-button"
+            onClick={this.props.closePreferences}
+            title="exit"
+            aria-label="exit preferences"
+          >
+            <InlineSVG src={exitUrl} alt="Exit Preferences" />
+          </button>
         </div>
-      </div>
-    </section>
-  );
-}
 
-function mapStateToProps(state) {
-  return {
-    ...state.preferences
-  };
-}
+        <div className="preference">
+          <h4 className="preference__title">Text Size</h4>
+          <button
+            className="preference__minus-button"
+            onClick={() => this.props.setFontSize(this.props.fontSize - 2)}
+            aria-label="decrease font size"
+          >
+            <InlineSVG src={minusUrl} alt="Decrease Font Size" />
+            <h6 className="preference__label">Decrease</h6>
+          </button>
+          <input
+            className="preference__value"
+            aria-live="status"
+            aria-live="polite"
+            role="status"
+            value={this.props.fontSize}
+            onChange={this.handleUpdateFont}
+          >
+          </input>
+          <button
+            className="preference__plus-button"
+            onClick={() => this.props.setFontSize(this.props.fontSize + 2)}
+            aria-label="increase font size"
+          >
+            <InlineSVG src={plusUrl} alt="Increase Font Size" />
+            <h6 className="preference__label">Increase</h6>
+          </button>
+        </div>
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(PreferencesActions, dispatch);
+        <div className="preference">
+          <h4 className="preference__title">Indentation Amount</h4>
+          <button
+            className="preference__minus-button"
+            onClick={() => this.props.setIndentation(this.props.indentationAmount - 2)}
+            aria-label="decrease indentation amount"
+          >
+            <InlineSVG src={minusUrl} alt="DecreaseIndentation Amount" />
+            <h6 className="preference__label">Decrease</h6>
+          </button>
+          <input
+            className="preference__value"
+            aria-live="status"
+            aria-live="polite"
+            role="status"
+            value={this.props.indentationAmount}
+            onChange={this.handleUpdateIndentation}
+          >
+          </input>
+          <button
+            className="preference__plus-button"
+            onClick={() => this.props.setIndentation(this.props.indentationAmount + 2)}
+            aria-label="increase indentation amount"
+          >
+            <InlineSVG src={plusUrl} alt="IncreaseIndentation Amount" />
+            <h6 className="preference__label">Increase</h6>
+          </button>
+          <div className="preference__vertical-list">
+            <button className={preferencesSpaceOptionClass} onClick={this.props.indentWithSpace} aria-label="indentation with space">Spaces</button>
+            <button className={preferencesTabOptionClass} onClick={this.props.indentWithTab} aria-label="indentation with tab">Tabs</button>
+          </div>
+        </div>
+        <div className="preference">
+          <h4 className="preference__title">Autosave</h4>
+          <div className="preference__options">
+            <button
+              className={autosaveOnClass}
+              onClick={() => this.props.setAutosave(true)}
+              aria-label="autosave on"
+            >On</button>
+            <button
+              className={autosaveOffClass}
+              onClick={() => this.props.setAutosave(false)}
+              aria-label="autosave off"
+            >Off</button>
+          </div>
+        </div>
+      </section>
+    );
+  }
 }
 
 Preferences.propTypes = {
   isVisible: PropTypes.bool.isRequired,
   closePreferences: PropTypes.func.isRequired,
-  decreaseFont: PropTypes.func.isRequired,
-  updateFont: PropTypes.func.isRequired,
   fontSize: PropTypes.number.isRequired,
-  increaseFont: PropTypes.func.isRequired,
   indentationAmount: PropTypes.number.isRequired,
-  decreaseIndentation: PropTypes.func.isRequired,
-  increaseIndentation: PropTypes.func.isRequired,
-  updateIndentation: PropTypes.func.isRequired,
+  setIndentation: PropTypes.func.isRequired,
   indentWithSpace: PropTypes.func.isRequired,
   indentWithTab: PropTypes.func.isRequired,
-  isTabIndent: PropTypes.bool.isRequired
+  isTabIndent: PropTypes.bool.isRequired,
+  setFontSize: PropTypes.func.isRequired,
+  autosave: PropTypes.bool.isRequired,
+  setAutosave: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Preferences);
+export default Preferences;

@@ -46,7 +46,7 @@ export function getProjects(req, res) {
   if (req.user) {
     Project.find({user: req.user._id}) // eslint-disable-line no-underscore-dangle
       .sort('-createdAt')
-      .select('name files _id createdAt updatedAt')
+      .select('name files id createdAt updatedAt')
       .exec((err, projects) => {
         res.json(projects);
       });

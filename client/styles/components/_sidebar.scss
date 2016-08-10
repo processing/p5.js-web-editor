@@ -38,8 +38,51 @@
   padding: #{8 / $base-font-size}rem #{20 / $base-font-size}rem;
   color: $light-inactive-text-color;
   cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
   &--selected {
     background-color: $ide-border-color;
+  }
+}
+
+.sidebar__file-item-name {
+  .sidebar__file-item--editing & {
+    display: none;
+  }
+}
+
+.sidebar__file-item-show-options {
+  @extend %icon;
+  display: none;
+  .sidebar__file-item--selected & {
+    display: inline-block;
+  }
+}
+
+.sidebar__file-item-options {
+  @extend %modal;
+  position: absolute;
+  top: 95%;
+  left: 77%;
+  display: none;
+  z-index: 100;
+  padding: #{8 / $base-font-size}rem #{16 / $base-font-size}rem;
+  background-color: $light-modal-background-color;
+  z-index: 100;
+  .sidebar__file-item--open & {
+    display: block;
+  }
+}
+
+.sidebar__file-item-input {
+  display: none;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  max-width: 90%;
+  .sidebar__file-item--editing & {
+    display: inline-block;
   }
 }
 

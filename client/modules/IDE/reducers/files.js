@@ -73,10 +73,60 @@ const files = (state = initialState, action) => {
       return [...action.files];
     case ActionTypes.CREATE_FILE:
       return [...state, { name: action.name, id: action.id, content: '', url: action.url }];
+    case ActionTypes.SHOW_FILE_OPTIONS:
+      return state.map(file => {
+        if (file.id !== action.id) {
+          return file;
+        }
+
+        return Object.assign({}, file, { isOptionsOpen: true });
+      });
+    case ActionTypes.HIDE_FILE_OPTIONS:
+      return state.map(file => {
+        if (file.id !== action.id) {
+          return file;
+        }
+
+        return Object.assign({}, file, { isOptionsOpen: false });
+      });
+    case ActionTypes.UPDATE_FILE_NAME:
+      return state.map(file => {
+        if (file.id !== action.id) {
+          return file;
+        }
+
+        return Object.assign({}, file, { name: action.name });
+      });
+    case ActionTypes.DELETE_FILE:
+      return state.filter(file => file.id !== action.id);
+    case ActionTypes.SHOW_EDIT_FILE_NAME:
+      return state.map(file => {
+        if (file.id !== action.id) {
+          return file;
+        }
+
+        return Object.assign({}, file, { isEditingName: true });
+      });
+    case ActionTypes.HIDE_EDIT_FILE_NAME:
+      return state.map(file => {
+        if (file.id !== action.id) {
+          return file;
+        }
+
+        return Object.assign({}, file, { isEditingName: false });
+      });
     default:
       return state;
   }
 };
+
+export const setSelectedFile = (state, id) =>
+  state.map(file => {
+    if (file.id === id) {
+      return Object.assign({}, file, { isSelected: true });
+    }
+    return file;
+  });
 
 export const getFile = (state, id) => state.filter(file => file.id === id)[0];
 export const getHTMLFile = (state) => state.filter(file => file.name.match(/.*\.html$/))[0];

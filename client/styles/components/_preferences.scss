@@ -61,6 +61,7 @@
 	margin: 0;
 	line-height: #{20 / $base-font-size}rem;
 	color: $light-inactive-text-color;
+	font-size: #{9 / $base-font-size}rem;
 	&:hover {
 		color: $light-inactive-text-color;
 	}
@@ -69,13 +70,22 @@
 .preference__vertical-list {
 	display: flex;
 	flex-direction: column;
+	width: #{90 / $base-font-size}rem;
+	padding-left: #{28 / $base-font-size}rem;
 }
 
 .preference__option {
 	@extend %preference-option;
 	list-style-type: none;
-	padding-left: #{28 / $base-font-size}rem;
+	padding: 0;
 	&--selected {
 		@extend %preference-option--selected;
 	}
 }
+
+.preference__options {
+	display: flex;
+	justify-content: space-between;
+	width: #{70 / $base-font-size}rem;
+}
+

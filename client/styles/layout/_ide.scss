@@ -16,10 +16,15 @@
   max-width: 45%;
   height: 100%;
   position: relative;
+
+  // temporary fix for safari
+  min-height: 75vh;
 }
 
 .editor-holder {
 	height: 100%;
+  width: 100%;
+  position: absolute;
 }
 
 .preview-frame {
