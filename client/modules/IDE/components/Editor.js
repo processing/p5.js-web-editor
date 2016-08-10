@@ -44,7 +44,7 @@ class Editor extends React.Component {
               isVisible = true;
             }
           });
-          if (isVisible) {
+          if (isVisible && this.props.enableBeep) {
             this.beep.play();
           }
         })
@@ -109,6 +109,7 @@ class Editor extends React.Component {
 }
 
 Editor.propTypes = {
+  enableBeep: PropTypes.bool.isRequired,
   indentationAmount: PropTypes.number.isRequired,
   isTabIndent: PropTypes.bool.isRequired,
   updateFileContent: PropTypes.func.isRequired,

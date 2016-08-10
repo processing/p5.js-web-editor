@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import * as FileActions from '../actions/files';
 import * as IDEActions from '../actions/ide';
 import * as ProjectActions from '../actions/project';
+import * as EditorHiddenActions from '../actions/editorHidden';
 import { getFile, getHTMLFile, getJSFiles, getCSSFiles } from '../reducers/files';
 
 class IDEView extends React.Component {
@@ -60,7 +61,9 @@ class IDEView extends React.Component {
           <div className="editor-console-container">
             <div className="editor-linenumber" aria-live="assertive" id="editor-linenumber"></div>
             <div className="editor-lintmessages" id="editor-lintmessages"></div>
+            <button className="editor-lintbutton" onClick={this.props.toggleBeep}>Beep</button>
             <Editor
+              enableBeep={this.props.editorHidden.enableBeep}
               file={this.props.selectedFile}
               updateFileContent={this.props.updateFileContent}
               fontSize={this.props.preferences.fontSize}
@@ -134,6 +137,10 @@ IDEView.propTypes = {
   }).isRequired,
   setProjectName: PropTypes.func.isRequired,
   openPreferences: PropTypes.func.isRequired,
+  editorHidden: PropTypes.shape({
+    enableBeep: PropTypes.bool.isRequired
+  }).isRequired,
+  toggleBeep: PropTypes.func.isRequired,
   preferences: PropTypes.shape({
     fontSize: PropTypes.number.isRequired,
     indentationAmount: PropTypes.number.isRequired,
@@ -170,6 +177,7 @@ function mapStateToProps(state) {
     cssFiles: getCSSFiles(state.files),
     ide: state.ide,
     preferences: state.preferences,
+    editorHidden: state.editorHidden,
     user: state.user,
     project: state.project
   };
@@ -177,6 +185,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({},
+    EditorHiddenActions,
     FileActions,
     ProjectActions,
     IDEActions),

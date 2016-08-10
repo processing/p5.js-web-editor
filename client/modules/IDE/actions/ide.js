@@ -79,4 +79,3 @@ export function closePreferences() {
     type: ActionTypes.CLOSE_PREFERENCES
   };
 }
-

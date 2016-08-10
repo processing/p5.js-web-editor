@@ -42,5 +42,7 @@ export const CONSOLE_EVENT = 'CONSOLE_EVENT';
 export const EXPAND_CONSOLE = 'EXPAND_CONSOLE';
 export const COLLAPSE_CONSOLE = 'COLLAPSE_CONSOLE';
 
+export const TOGGLE_BEEP = 'TOGGLE_BEEP';
+
 // eventually, handle errors more specifically and better
 export const ERROR = 'ERROR';
