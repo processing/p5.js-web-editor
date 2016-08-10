@@ -49,7 +49,7 @@ class Sidebar extends React.Component {
             </button>
           </div>
         </div>
-        <ul className="sidebar__file-list">
+        <ul className="sidebar__file-list" title="project files">
           {this.props.files.map((file, fileIndex) =>
             <SidebarItem
               key={file.id}
