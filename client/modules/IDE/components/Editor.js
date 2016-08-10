@@ -102,7 +102,7 @@ class Editor extends React.Component {
 
   render() {
     return (
-      <div ref="container" className="editor-holder" tabIndex="0" title="code editor" role="region">
+      <div ref="container" className="editor-holder" tabIndex="0" title="code editor" role="main">
       </div>
     );
   }

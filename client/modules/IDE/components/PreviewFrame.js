@@ -161,7 +161,8 @@ class PreviewFrame extends React.Component {
     return (
       <iframe
         className="preview-frame"
-        role="region"
+        aria-label="sketch output"
+        role="main"
         tabIndex="0"
         frameBorder="0"
         title="sketch output"
