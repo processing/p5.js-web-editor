@@ -23,10 +23,12 @@ class EditorAccessibility extends React.Component {
     }
     return (
       <div className="editor-accessibility">
-        <p className="editor-linenumber" aria-live="polite" id="editor-linenumber"> {this.props.lineNo} </p>
-        <ul className="editor-lintmessages" id="editor-lintmessages" title="lint messages">
+        <ul className="editor-lintmessages" title="lint messages">
           {messages}
         </ul>
+        <p> Current line
+          <span className="editor-linenumber" aria-live="polite" id="current-line"> {this.props.lineNo} </span>
+        </p>
       </div>
     );
   }
