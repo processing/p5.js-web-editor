@@ -9,11 +9,13 @@
   width: 100%;
   flex: 1 0 0px;
   display: flex;
+  position: relative;
 }
 
 .editor-console-container {
-  flex: 1 0 0px;
-  max-width: 45%;
+  // flex: 1 0 0px;
+  // max-width: 45%;
+  width: 100%;
   height: 100%;
   position: relative;
 
@@ -28,8 +30,16 @@
 }
 
 .preview-frame {
-	flex: 1 0 0px;
-  min-height: 100%;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+.preview-frame-overlay {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 10;
 }
 
 .toolbar {
@@ -37,8 +47,10 @@
 }
 
 .sidebar {
-  width: #{180 / $base-font-size}rem;
-  &.sidebar--contracted {
-  	width: #{20 / $base-font-size}rem;
-  }
+  // width: #{180 / $base-font-size}rem;
+  // &.sidebar--contracted {
+  // 	width: #{20 / $base-font-size}rem;
+  // }
+  width: 100%;
+  height: 100%;
 }

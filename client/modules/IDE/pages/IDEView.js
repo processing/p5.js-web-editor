@@ -14,6 +14,7 @@ import * as IDEActions from '../actions/ide';
 import * as ProjectActions from '../actions/project';
 import * as PreferencesActions from '../actions/preferences';
 import { getFile, getHTMLFile, getJSFiles, getCSSFiles, setSelectedFile } from '../reducers/files';
+import SplitPane from 'react-split-pane';
 
 class IDEView extends React.Component {
   componentDidMount() {
@@ -87,49 +88,62 @@ class IDEView extends React.Component {
           setAutosave={this.props.setAutosave}
         />
         <div className="editor-preview-container">
-          <Sidebar
-            files={this.props.files}
-            setSelectedFile={this.props.setSelectedFile}
-            newFile={this.props.newFile}
-            isExpanded={this.props.ide.sidebarIsExpanded}
-            expandSidebar={this.props.expandSidebar}
-            collapseSidebar={this.props.collapseSidebar}
-            showFileOptions={this.props.showFileOptions}
-            hideFileOptions={this.props.hideFileOptions}
-            deleteFile={this.props.deleteFile}
-            showEditFileName={this.props.showEditFileName}
-            hideEditFileName={this.props.hideEditFileName}
-            updateFileName={this.props.updateFileName}
-          />
-          <div className="editor-console-container">
-            <Editor
-              file={this.props.selectedFile}
-              updateFileContent={this.props.updateFileContent}
-              fontSize={this.props.preferences.fontSize}
-              indentationAmount={this.props.preferences.indentationAmount}
-              isTabIndent={this.props.preferences.isTabIndent}
+          <SplitPane split="vertical" defaultSize={180}>
+            <Sidebar
               files={this.props.files}
+              setSelectedFile={this.props.setSelectedFile}
+              newFile={this.props.newFile}
+              isExpanded={this.props.ide.sidebarIsExpanded}
+              expandSidebar={this.props.expandSidebar}
+              collapseSidebar={this.props.collapseSidebar}
+              showFileOptions={this.props.showFileOptions}
+              hideFileOptions={this.props.hideFileOptions}
+              deleteFile={this.props.deleteFile}
+              showEditFileName={this.props.showEditFileName}
+              hideEditFileName={this.props.hideEditFileName}
+              updateFileName={this.props.updateFileName}
             />
-            <Console
-              consoleEvent={this.props.ide.consoleEvent}
-              isPlaying={this.props.ide.isPlaying}
-              isExpanded={this.props.ide.consoleIsExpanded}
-              expandConsole={this.props.expandConsole}
-              collapseConsole={this.props.collapseConsole}
-            />
-          </div>
-          <PreviewFrame
-            htmlFile={this.props.htmlFile}
-            jsFiles={this.props.jsFiles}
-            cssFiles={this.props.cssFiles}
-            files={this.props.files}
-            content={this.props.selectedFile.content}
-            head={
-              <link type="text/css" rel="stylesheet" href="/preview-styles.css" />
-            }
-            isPlaying={this.props.ide.isPlaying}
-            dispatchConsoleEvent={this.props.dispatchConsoleEvent}
-          />
+            <SplitPane
+              split="vertical"
+              defaultSize={'50%'}
+              onChange={() => (this.refs.overlay.style.display = 'block')}
+              onDragFinished={() => (this.refs.overlay.style.display = 'none')}
+            >
+              <SplitPane split="horizontal" primary="second" defaultSize={29} minSize={29} ref="consolePane">
+                <Editor
+                  file={this.props.selectedFile}
+                  updateFileContent={this.props.updateFileContent}
+                  fontSize={this.props.preferences.fontSize}
+                  indentationAmount={this.props.preferences.indentationAmount}
+                  isTabIndent={this.props.preferences.isTabIndent}
+                  files={this.props.files}
+                />
+                <Console
+                  consoleEvent={this.props.ide.consoleEvent}
+                  isPlaying={this.props.ide.isPlaying}
+                  isExpanded={this.props.ide.consoleIsExpanded}
+                  expandConsole={this.props.expandConsole}
+                  collapseConsole={this.props.collapseConsole}
+                />
+              </SplitPane>
+              <div>
+                <div className="preview-frame-overlay" ref="overlay">
+                </div>
+                <PreviewFrame
+                  htmlFile={this.props.htmlFile}
+                  jsFiles={this.props.jsFiles}
+                  cssFiles={this.props.cssFiles}
+                  files={this.props.files}
+                  content={this.props.selectedFile.content}
+                  head={
+                    <link type="text/css" rel="stylesheet" href="/preview-styles.css" />
+                  }
+                  isPlaying={this.props.ide.isPlaying}
+                  dispatchConsoleEvent={this.props.dispatchConsoleEvent}
+                />
+              </div>
+            </SplitPane>
+          </SplitPane>
         </div>
         {(() => {
           if (this.props.ide.modalIsVisible) {
