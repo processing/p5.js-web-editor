@@ -17,6 +17,12 @@ import { getFile, getHTMLFile, getJSFiles, getCSSFiles, setSelectedFile } from '
 import SplitPane from 'react-split-pane';
 
 class IDEView extends React.Component {
+  constructor(props) {
+    super(props);
+    this._handleConsolePaneOnDragFinished = this._handleConsolePaneOnDragFinished.bind(this);
+    this._handleSidebarPaneOnDragFinished = this._handleSidebarPaneOnDragFinished.bind(this);
+  }
+
   componentDidMount() {
     if (this.props.params.project_id) {
       const id = this.props.params.project_id;
@@ -28,6 +34,19 @@ class IDEView extends React.Component {
         && this.props.project.owner.id === this.props.user.id) {
         this.autosaveInterval = setInterval(this.props.saveProject, 30000);
       }
+    }
+
+    this.consoleSize = this.props.ide.consoleIsExpanded ? 180 : 29;
+    this.sidebarSize = this.props.ide.sidebarIsExpanded ? 180 : 20;
+  }
+
+  componentWillUpdate(nextProps) {
+    if (this.props.ide.consoleIsExpanded !== nextProps.ide.consoleIsExpanded) {
+      this.consoleSize = nextProps.ide.consoleIsExpanded ? 180 : 29;
+    }
+
+    if (this.props.ide.sidebarIsExpanded !== nextProps.ide.sidebarIsExpanded) {
+      this.sidebarSize = nextProps.ide.sidebarIsExpanded ? 180 : 20;
     }
   }
 
@@ -51,6 +70,22 @@ class IDEView extends React.Component {
   componentWillUnmount() {
     clearInterval(this.autosaveInterval);
     this.autosaveInterval = null;
+  }
+
+  _handleConsolePaneOnDragFinished() {
+    this.consoleSize = this.refs.consolePane.state.draggedSize;
+    this.refs.consolePane.setState({
+      resized: false,
+      draggedSize: undefined,
+    });
+  }
+
+  _handleSidebarPaneOnDragFinished() {
+    this.sidebarSize = this.refs.sidebarPane.state.draggedSize;
+    this.refs.sidebarPane.setState({
+      resized: false,
+      draggedSize: undefined
+    });
   }
 
   render() {
@@ -88,7 +123,13 @@ class IDEView extends React.Component {
           setAutosave={this.props.setAutosave}
         />
         <div className="editor-preview-container">
-          <SplitPane split="vertical" defaultSize={180}>
+          <SplitPane
+            split="vertical"
+            defaultSize={this.sidebarSize}
+            ref="sidebarPane"
+            onDragFinished={this._handleSidebarPaneOnDragFinished}
+            allowResize={this.props.ide.sidebarIsExpanded}
+          >
             <Sidebar
               files={this.props.files}
               setSelectedFile={this.props.setSelectedFile}
@@ -109,7 +150,15 @@ class IDEView extends React.Component {
               onChange={() => (this.refs.overlay.style.display = 'block')}
               onDragFinished={() => (this.refs.overlay.style.display = 'none')}
             >
-              <SplitPane split="horizontal" primary="second" defaultSize={29} minSize={29} ref="consolePane">
+              <SplitPane
+                split="horizontal"
+                primary="second"
+                defaultSize={this.consoleSize}
+                minSize={29}
+                ref="consolePane"
+                onDragFinished={this._handleConsolePaneOnDragFinished}
+                allowResize={this.props.ide.consoleIsExpanded}
+              >
                 <Editor
                   file={this.props.selectedFile}
                   updateFileContent={this.props.updateFileContent}
