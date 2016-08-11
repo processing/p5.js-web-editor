@@ -44,6 +44,9 @@
   &--selected {
     background-color: $ide-border-color;
   }
+  &:hover .sidebar__file-item-name {
+    color: $light-primary-text-color;
+  }
 }
 
 .sidebar__file-item-name {

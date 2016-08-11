@@ -41,10 +41,10 @@ class SidebarItem extends React.Component {
         className={itemClass}
         onBlur={() => this.props.hideFileOptions(this.props.file.id)}
         tabIndex={this.props.fileIndex}
+        onClick={() => this.props.setSelectedFile(this.props.file.id)}
       >
         <a
           className="sidebar__file-item-name"
-          onClick={() => this.props.setSelectedFile(this.props.file.id)}
         >{this.props.file.name}</a>
         <input
           type="text"
