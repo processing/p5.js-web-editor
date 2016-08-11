@@ -1,7 +1,7 @@
 import * as ActionTypes from '../../../constants';
 
 const initialState = {
-  lineNo: 0,
+  lineNo: 'line',
   lintMessages: []
 };
 
@@ -15,7 +15,7 @@ const editorAccessibility = (state = initialState, action) => {
     case ActionTypes.CLEAR_LINT_MESSAGE:
       return Object.assign({}, state, { lintMessages: [] });
     case ActionTypes.UPDATE_LINENUMBER:
-      return Object.assign({}, state, { lineNo: action.lineNo });
+      return Object.assign({}, state, { lineNo: `line ${action.lineNo}` });
     default:
       return state;
   }

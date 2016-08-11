@@ -27,6 +27,10 @@
   position: absolute;
 }
 
+.editor-accessibility {
+  @extend %hidden-element;
+}
+
 .preview-frame {
 	flex: 1 0 0px;
   min-height: 100%;

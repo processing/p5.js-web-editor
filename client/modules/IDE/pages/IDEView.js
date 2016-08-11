@@ -106,10 +106,6 @@ class IDEView extends React.Component {
             updateFileName={this.props.updateFileName}
           />
           <div className="editor-console-container">
-            <EditorAccessibility
-              lintMessages={this.props.editorAccessibility.lintMessages}
-              lineNo={this.props.editorAccessibility.lineNo}
-            />
             <Editor
               lintWarning={this.props.preferences.lintWarning}
               lintMessages={this.props.editorAccessibility.lintMessages}
@@ -122,6 +118,10 @@ class IDEView extends React.Component {
               indentationAmount={this.props.preferences.indentationAmount}
               isTabIndent={this.props.preferences.isTabIndent}
               files={this.props.files}
+            />
+            <EditorAccessibility
+              lintMessages={this.props.editorAccessibility.lintMessages}
+              lineNo={this.props.editorAccessibility.lineNo}
             />
             <Console
               consoleEvent={this.props.ide.consoleEvent}
@@ -194,7 +194,7 @@ IDEView.propTypes = {
   openPreferences: PropTypes.func.isRequired,
   editorAccessibility: PropTypes.shape({
     lintMessages: PropTypes.array.isRequired,
-    lineNo: PropTypes.number.isRequired
+    lineNo: PropTypes.string.isRequired
   }).isRequired,
   updateLintMessage: PropTypes.func.isRequired,
   clearLintMessage: PropTypes.func.isRequired,
