@@ -6,7 +6,7 @@ const initialState = {
   lintMessages: []
 };
 
-const editorHidden = (state = initialState, action) => {
+const editorAccessibility = (state = initialState, action) => {
   switch (action.type) {
     case ActionTypes.TOGGLE_BEEP:
       return Object.assign({}, state, { enableBeep: !state.enableBeep });
@@ -24,4 +24,4 @@ const editorHidden = (state = initialState, action) => {
   }
 };
 
-export default editorHidden;
+export default editorAccessibility;

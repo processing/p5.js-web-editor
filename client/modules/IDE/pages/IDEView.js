@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import Editor from '../components/Editor';
-import EditorHidden from '../components/EditorHidden';
+import EditorAccessibility from '../components/EditorAccessibility';
 import Sidebar from '../components/Sidebar';
 import PreviewFrame from '../components/PreviewFrame';
 import Toolbar from '../components/Toolbar';
@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import * as FileActions from '../actions/files';
 import * as IDEActions from '../actions/ide';
 import * as ProjectActions from '../actions/project';
-import * as EditorHiddenActions from '../actions/editorHidden';
+import * as EditorAccessibilityActions from '../actions/editorAccessibility';
 import * as PreferencesActions from '../actions/preferences';
 import { getFile, getHTMLFile, getJSFiles, getCSSFiles, setSelectedFile } from '../reducers/files';
 
@@ -104,14 +104,14 @@ class IDEView extends React.Component {
             updateFileName={this.props.updateFileName}
           />
           <div className="editor-console-container">
-            <EditorHidden
+            <EditorAccessibility
               toggleBeep={this.props.toggleBeep}
-              lintMessages={this.props.editorHidden.lintMessages}
-              lineNo={this.props.editorHidden.lineNo}
+              lintMessages={this.props.editorAccessibility.lintMessages}
+              lineNo={this.props.editorAccessibility.lineNo}
             />
             <Editor
-              enableBeep={this.props.editorHidden.enableBeep}
-              lintMessages={this.props.editorHidden.lintMessages}
+              enableBeep={this.props.editorAccessibility.enableBeep}
+              lintMessages={this.props.editorAccessibility.lintMessages}
               updateLineNumber={this.props.updateLineNumber}
               updateLintMessage={this.props.updateLintMessage}
               clearLintMessage={this.props.clearLintMessage}
@@ -191,7 +191,7 @@ IDEView.propTypes = {
   }).isRequired,
   setProjectName: PropTypes.func.isRequired,
   openPreferences: PropTypes.func.isRequired,
-  editorHidden: PropTypes.shape({
+  editorAccessibility: PropTypes.shape({
     enableBeep: PropTypes.bool.isRequired,
     lintMessages: PropTypes.array.isRequired,
     lineNo: PropTypes.number.isRequired
@@ -248,7 +248,7 @@ function mapStateToProps(state) {
     cssFiles: getCSSFiles(state.files),
     ide: state.ide,
     preferences: state.preferences,
-    editorHidden: state.editorHidden,
+    editorAccessibility: state.editorAccessibility,
     user: state.user,
     project: state.project
   };
@@ -256,7 +256,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({},
-    EditorHiddenActions,
+    EditorAccessibilityActions,
     FileActions,
     ProjectActions,
     IDEActions,

@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-class EditorHidden extends React.Component {
+class EditorAccessibility extends React.Component {
   componentDidMount() {
 
   }
@@ -27,10 +27,10 @@ class EditorHidden extends React.Component {
   }
 }
 
-EditorHidden.propTypes = {
+EditorAccessibility.propTypes = {
   toggleBeep: PropTypes.func.isRequired,
   lintMessages: PropTypes.array.isRequired,
   lineNo: PropTypes.number.isRequired,
 };
 
-export default EditorHidden;
+export default EditorAccessibility;
