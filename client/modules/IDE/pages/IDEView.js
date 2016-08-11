@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import Editor from '../components/Editor';
+import EditorHidden from '../components/EditorHidden';
 import Sidebar from '../components/Sidebar';
 import PreviewFrame from '../components/PreviewFrame';
 import Toolbar from '../components/Toolbar';
@@ -103,11 +104,17 @@ class IDEView extends React.Component {
             updateFileName={this.props.updateFileName}
           />
           <div className="editor-console-container">
-            <div className="editor-linenumber" aria-live="assertive" id="editor-linenumber"></div>
-            <div className="editor-lintmessages" id="editor-lintmessages"></div>
-            <button className="editor-lintbutton" onClick={this.props.toggleBeep}>Beep</button>
+            <EditorHidden
+              toggleBeep={this.props.toggleBeep}
+              lintMessages={this.props.editorHidden.lintMessages}
+              lineNo={this.props.editorHidden.lineNo}
+            />
             <Editor
               enableBeep={this.props.editorHidden.enableBeep}
+              lintMessages={this.props.editorHidden.lintMessages}
+              updateLineNumber={this.props.updateLineNumber}
+              updateLintMessage={this.props.updateLintMessage}
+              clearLintMessage={this.props.clearLintMessage}
               file={this.props.selectedFile}
               updateFileContent={this.props.updateFileContent}
               fontSize={this.props.preferences.fontSize}
@@ -185,9 +192,14 @@ IDEView.propTypes = {
   setProjectName: PropTypes.func.isRequired,
   openPreferences: PropTypes.func.isRequired,
   editorHidden: PropTypes.shape({
-    enableBeep: PropTypes.bool.isRequired
+    enableBeep: PropTypes.bool.isRequired,
+    lintMessages: PropTypes.array.isRequired,
+    lineNo: PropTypes.number.isRequired
   }).isRequired,
   toggleBeep: PropTypes.func.isRequired,
+  updateLintMessage: PropTypes.func.isRequired,
+  clearLintMessage: PropTypes.func.isRequired,
+  updateLineNumber: PropTypes.func.isRequired,
   preferences: PropTypes.shape({
     fontSize: PropTypes.number.isRequired,
     indentationAmount: PropTypes.number.isRequired,

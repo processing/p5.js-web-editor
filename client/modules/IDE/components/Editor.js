@@ -36,15 +36,13 @@ class Editor extends React.Component {
       keyMap: 'sublime',
       lint: {
         onUpdateLinting: debounce(2000, (annotations) => {
-          let isVisible = false;
-          document.getElementById('editor-lintmessages').innerHTML = '';
+          this.props.clearLintMessage();
           annotations.forEach((x) => {
             if (x.from.line > -1) {
-              document.getElementById('editor-lintmessages').innerHTML += (x.severity + ' in line number ' + (x.from.line + 1) + ' : ' + x.message); // eslint-disable-line
-              isVisible = true;
+              this.props.updateLintMessage(x.severity, (x.from.line + 1), x.message);
             }
           });
-          if (isVisible && this.props.enableBeep) {
+          if (this.props.lintMessages.length > 0 && this.props.enableBeep) {
             this.beep.play();
           }
         })
@@ -55,7 +53,7 @@ class Editor extends React.Component {
       this.props.updateFileContent(this.props.file.name, this._cm.getValue());
     }));
     this._cm.on('keyup', () => {
-      document.getElementById('editor-linenumber').innerHTML = 'line ' + parseInt((this._cm.getCursor().line) + 1, 10);
+      this.props.updateLineNumber(parseInt((this._cm.getCursor().line) + 1, 10));
     });
     // this._cm.on('change', () => { // eslint-disable-line
     //   // this.props.updateFileContent('sketch.js', this._cm.getValue());
@@ -68,8 +66,6 @@ class Editor extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const annotations = this._cm.state.lint.marked;
-    annotations.forEach(function (x) { console.log(x.__annotation.severity + ' in line number ' + (x.__annotation.from.line + 1) + ' : ' + x.__annotation.message); }); // eslint-disable-line
     if (this.props.file.content !== prevProps.file.content &&
         this.props.file.content !== this._cm.getValue()) {
       this._cm.setValue(this.props.file.content); // eslint-disable-line no-underscore-dangle
@@ -110,6 +106,10 @@ class Editor extends React.Component {
 
 Editor.propTypes = {
   enableBeep: PropTypes.bool.isRequired,
+  lintMessages: PropTypes.array.isRequired,
+  updateLintMessage: PropTypes.func.isRequired,
+  clearLintMessage: PropTypes.func.isRequired,
+  updateLineNumber: PropTypes.func.isRequired,
   indentationAmount: PropTypes.number.isRequired,
   isTabIndent: PropTypes.bool.isRequired,
   updateFileContent: PropTypes.func.isRequired,
