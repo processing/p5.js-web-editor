@@ -22,10 +22,6 @@
 	.preview-console__warn {
 		color: $console-warn-color;
 	}
-
-	&.preview-console--collapsed {
-		// height: #{29 / $base-font-size}rem;
-	}
 }
 
 .preview-console__header {
