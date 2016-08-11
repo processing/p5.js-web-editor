@@ -43,9 +43,8 @@ export const CONSOLE_EVENT = 'CONSOLE_EVENT';
 export const EXPAND_CONSOLE = 'EXPAND_CONSOLE';
 export const COLLAPSE_CONSOLE = 'COLLAPSE_CONSOLE';
 
-export const TOGGLE_BEEP = 'TOGGLE_BEEP';
-export const UPDATE_LINTMESSAGE = 'UPDATE_LINTMESSAGE';
-export const CLEAR_LINTMESSAGE = 'CLEAR_LINTMESSAGE';
+export const UPDATE_LINT_MESSAGE = 'UPDATE_LINT_MESSAGE';
+export const CLEAR_LINT_MESSAGE = 'CLEAR_LINT_MESSAGE';
 export const UPDATE_LINENUMBER = 'UPDATE_LINENUMBER';
 
 export const SHOW_FILE_OPTIONS = 'SHOW_FILE_OPTIONS';
@@ -57,6 +56,7 @@ export const SHOW_EDIT_FILE_NAME = 'SHOW_EDIT_FILE_NAME';
 export const HIDE_EDIT_FILE_NAME = 'HIDE_EDIT_FILE_NAME';
 
 export const SET_AUTOSAVE = 'SET_AUTOSAVE';
+export const SET_LINT_WARNING = 'SET_LINT_WARNING';
 export const SET_PREFERENCES = 'SET_PREFERENCES';
 
 // eventually, handle errors more specifically and better

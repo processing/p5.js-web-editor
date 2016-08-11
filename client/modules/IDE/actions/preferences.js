@@ -100,3 +100,21 @@ export function setAutosave(value) {
     }
   };
 }
+
+export function setLintWarning(value) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.SET_LINT_WARNING,
+      value
+    });
+    const state = getState();
+    if (state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          lintWarning: value
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
+  };
+}

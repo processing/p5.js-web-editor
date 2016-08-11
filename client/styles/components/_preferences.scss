@@ -89,3 +89,6 @@
 	width: #{70 / $base-font-size}rem;
 }
 
+.preference--hidden {
+	@extend %hidden-element;
+}

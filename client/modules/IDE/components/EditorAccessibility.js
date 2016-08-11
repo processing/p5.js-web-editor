@@ -21,14 +21,12 @@ class EditorAccessibility extends React.Component {
         <ul className="editor-lintmessages" id="editor-lintmessages" title="lint messages">
           {messages}
         </ul>
-        <button className="editor-lintbutton" onClick={this.props.toggleBeep}>Beep</button>
       </div>
     );
   }
 }
 
 EditorAccessibility.propTypes = {
-  toggleBeep: PropTypes.func.isRequired,
   lintMessages: PropTypes.array.isRequired,
   lineNo: PropTypes.number.isRequired,
 };

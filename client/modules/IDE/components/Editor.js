@@ -42,7 +42,7 @@ class Editor extends React.Component {
               this.props.updateLintMessage(x.severity, (x.from.line + 1), x.message);
             }
           });
-          if (this.props.lintMessages.length > 0 && this.props.enableBeep) {
+          if (this.props.lintMessages.length > 0 && this.props.lintWarning) {
             this.beep.play();
           }
         })
@@ -105,7 +105,7 @@ class Editor extends React.Component {
 }
 
 Editor.propTypes = {
-  enableBeep: PropTypes.bool.isRequired,
+  lintWarning: PropTypes.bool.isRequired,
   lintMessages: PropTypes.array.isRequired,
   updateLintMessage: PropTypes.func.isRequired,
   clearLintMessage: PropTypes.func.isRequired,

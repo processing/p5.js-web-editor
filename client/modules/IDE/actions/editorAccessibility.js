@@ -1,14 +1,8 @@
 import * as ActionTypes from '../../../constants';
 
-export function toggleBeep() {
-  return {
-    type: ActionTypes.TOGGLE_BEEP
-  };
-}
-
 export function updateLintMessage(severity, line, message) {
   return {
-    type: ActionTypes.UPDATE_LINTMESSAGE,
+    type: ActionTypes.UPDATE_LINT_MESSAGE,
     severity,
     line,
     message
@@ -17,7 +11,7 @@ export function updateLintMessage(severity, line, message) {
 
 export function clearLintMessage() {
   return {
-    type: ActionTypes.CLEAR_LINTMESSAGE
+    type: ActionTypes.CLEAR_LINT_MESSAGE
   };
 }
 

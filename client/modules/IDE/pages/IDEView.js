@@ -87,6 +87,8 @@ class IDEView extends React.Component {
           setFontSize={this.props.setFontSize}
           autosave={this.props.preferences.autosave}
           setAutosave={this.props.setAutosave}
+          lintWarning={this.props.preferences.lintWarning}
+          setLintWarning={this.props.setLintWarning}
         />
         <div className="editor-preview-container">
           <Sidebar
@@ -105,12 +107,11 @@ class IDEView extends React.Component {
           />
           <div className="editor-console-container">
             <EditorAccessibility
-              toggleBeep={this.props.toggleBeep}
               lintMessages={this.props.editorAccessibility.lintMessages}
               lineNo={this.props.editorAccessibility.lineNo}
             />
             <Editor
-              enableBeep={this.props.editorAccessibility.enableBeep}
+              lintWarning={this.props.preferences.lintWarning}
               lintMessages={this.props.editorAccessibility.lintMessages}
               updateLineNumber={this.props.updateLineNumber}
               updateLintMessage={this.props.updateLintMessage}
@@ -192,11 +193,9 @@ IDEView.propTypes = {
   setProjectName: PropTypes.func.isRequired,
   openPreferences: PropTypes.func.isRequired,
   editorAccessibility: PropTypes.shape({
-    enableBeep: PropTypes.bool.isRequired,
     lintMessages: PropTypes.array.isRequired,
     lineNo: PropTypes.number.isRequired
   }).isRequired,
-  toggleBeep: PropTypes.func.isRequired,
   updateLintMessage: PropTypes.func.isRequired,
   clearLintMessage: PropTypes.func.isRequired,
   updateLineNumber: PropTypes.func.isRequired,
@@ -204,7 +203,8 @@ IDEView.propTypes = {
     fontSize: PropTypes.number.isRequired,
     indentationAmount: PropTypes.number.isRequired,
     isTabIndent: PropTypes.bool.isRequired,
-    autosave: PropTypes.bool.isRequired
+    autosave: PropTypes.bool.isRequired,
+    lintWarning: PropTypes.bool.isRequired
   }).isRequired,
   closePreferences: PropTypes.func.isRequired,
   setFontSize: PropTypes.func.isRequired,
@@ -212,6 +212,7 @@ IDEView.propTypes = {
   indentWithTab: PropTypes.func.isRequired,
   indentWithSpace: PropTypes.func.isRequired,
   setAutosave: PropTypes.func.isRequired,
+  setLintWarning: PropTypes.func.isRequired,
   files: PropTypes.array.isRequired,
   updateFileContent: PropTypes.func.isRequired,
   selectedFile: PropTypes.shape({
