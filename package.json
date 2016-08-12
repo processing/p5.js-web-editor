@@ -93,6 +93,7 @@
     "react-inlinesvg": "^0.4.2",
     "react-redux": "^4.4.5",
     "react-router": "^2.4.1",
+    "react-split-pane": "^0.1.44",
     "redux": "^3.5.2",
     "redux-form": "^5.2.5",
     "redux-thunk": "^2.1.0",

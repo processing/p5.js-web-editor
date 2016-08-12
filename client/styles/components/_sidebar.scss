@@ -13,6 +13,8 @@
   .sidebar--contracted & {
     display: none;
   }
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .sidebar__add {

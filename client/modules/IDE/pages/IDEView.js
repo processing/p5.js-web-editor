@@ -16,8 +16,15 @@ import * as ProjectActions from '../actions/project';
 import * as EditorAccessibilityActions from '../actions/editorAccessibility';
 import * as PreferencesActions from '../actions/preferences';
 import { getFile, getHTMLFile, getJSFiles, getCSSFiles, setSelectedFile } from '../reducers/files';
+import SplitPane from 'react-split-pane';
 
 class IDEView extends React.Component {
+  constructor(props) {
+    super(props);
+    this._handleConsolePaneOnDragFinished = this._handleConsolePaneOnDragFinished.bind(this);
+    this._handleSidebarPaneOnDragFinished = this._handleSidebarPaneOnDragFinished.bind(this);
+  }
+
   componentDidMount() {
     if (this.props.params.project_id) {
       const id = this.props.params.project_id;
@@ -29,6 +36,19 @@ class IDEView extends React.Component {
         && this.props.project.owner.id === this.props.user.id) {
         this.autosaveInterval = setInterval(this.props.saveProject, 30000);
       }
+    }
+
+    this.consoleSize = this.props.ide.consoleIsExpanded ? 180 : 29;
+    this.sidebarSize = this.props.ide.sidebarIsExpanded ? 180 : 20;
+  }
+
+  componentWillUpdate(nextProps) {
+    if (this.props.ide.consoleIsExpanded !== nextProps.ide.consoleIsExpanded) {
+      this.consoleSize = nextProps.ide.consoleIsExpanded ? 180 : 29;
+    }
+
+    if (this.props.ide.sidebarIsExpanded !== nextProps.ide.sidebarIsExpanded) {
+      this.sidebarSize = nextProps.ide.sidebarIsExpanded ? 180 : 20;
     }
   }
 
@@ -52,6 +72,22 @@ class IDEView extends React.Component {
   componentWillUnmount() {
     clearInterval(this.autosaveInterval);
     this.autosaveInterval = null;
+  }
+
+  _handleConsolePaneOnDragFinished() {
+    this.consoleSize = this.refs.consolePane.state.draggedSize;
+    this.refs.consolePane.setState({
+      resized: false,
+      draggedSize: undefined,
+    });
+  }
+
+  _handleSidebarPaneOnDragFinished() {
+    this.sidebarSize = this.refs.sidebarPane.state.draggedSize;
+    this.refs.sidebarPane.setState({
+      resized: false,
+      draggedSize: undefined
+    });
   }
 
   render() {
@@ -91,58 +127,84 @@ class IDEView extends React.Component {
           setLintWarning={this.props.setLintWarning}
         />
         <div className="editor-preview-container">
-          <Sidebar
-            files={this.props.files}
-            setSelectedFile={this.props.setSelectedFile}
-            newFile={this.props.newFile}
-            isExpanded={this.props.ide.sidebarIsExpanded}
-            expandSidebar={this.props.expandSidebar}
-            collapseSidebar={this.props.collapseSidebar}
-            showFileOptions={this.props.showFileOptions}
-            hideFileOptions={this.props.hideFileOptions}
-            deleteFile={this.props.deleteFile}
-            showEditFileName={this.props.showEditFileName}
-            hideEditFileName={this.props.hideEditFileName}
-            updateFileName={this.props.updateFileName}
-          />
-          <div className="editor-console-container">
-            <Editor
-              lintWarning={this.props.preferences.lintWarning}
-              lintMessages={this.props.editorAccessibility.lintMessages}
-              updateLineNumber={this.props.updateLineNumber}
-              updateLintMessage={this.props.updateLintMessage}
-              clearLintMessage={this.props.clearLintMessage}
-              file={this.props.selectedFile}
-              updateFileContent={this.props.updateFileContent}
-              fontSize={this.props.preferences.fontSize}
-              indentationAmount={this.props.preferences.indentationAmount}
-              isTabIndent={this.props.preferences.isTabIndent}
+          <SplitPane
+            split="vertical"
+            defaultSize={this.sidebarSize}
+            ref="sidebarPane"
+            onDragFinished={this._handleSidebarPaneOnDragFinished}
+            allowResize={this.props.ide.sidebarIsExpanded}
+          >
+            <Sidebar
               files={this.props.files}
+              setSelectedFile={this.props.setSelectedFile}
+              newFile={this.props.newFile}
+              isExpanded={this.props.ide.sidebarIsExpanded}
+              expandSidebar={this.props.expandSidebar}
+              collapseSidebar={this.props.collapseSidebar}
+              showFileOptions={this.props.showFileOptions}
+              hideFileOptions={this.props.hideFileOptions}
+              deleteFile={this.props.deleteFile}
+              showEditFileName={this.props.showEditFileName}
+              hideEditFileName={this.props.hideEditFileName}
+              updateFileName={this.props.updateFileName}
             />
-            <EditorAccessibility
-              lintMessages={this.props.editorAccessibility.lintMessages}
-              lineNo={this.props.editorAccessibility.lineNo}
-            />
-            <Console
-              consoleEvent={this.props.ide.consoleEvent}
-              isPlaying={this.props.ide.isPlaying}
-              isExpanded={this.props.ide.consoleIsExpanded}
-              expandConsole={this.props.expandConsole}
-              collapseConsole={this.props.collapseConsole}
-            />
-          </div>
-          <PreviewFrame
-            htmlFile={this.props.htmlFile}
-            jsFiles={this.props.jsFiles}
-            cssFiles={this.props.cssFiles}
-            files={this.props.files}
-            content={this.props.selectedFile.content}
-            head={
-              <link type="text/css" rel="stylesheet" href="/preview-styles.css" />
-            }
-            isPlaying={this.props.ide.isPlaying}
-            dispatchConsoleEvent={this.props.dispatchConsoleEvent}
-          />
+            <SplitPane
+              split="vertical"
+              defaultSize={'50%'}
+              onChange={() => (this.refs.overlay.style.display = 'block')}
+              onDragFinished={() => (this.refs.overlay.style.display = 'none')}
+            >
+              <SplitPane
+                split="horizontal"
+                primary="second"
+                defaultSize={this.consoleSize}
+                minSize={29}
+                ref="consolePane"
+                onDragFinished={this._handleConsolePaneOnDragFinished}
+                allowResize={this.props.ide.consoleIsExpanded}
+              >
+                <Editor
+                  lintWarning={this.props.preferences.lintWarning}
+                  lintMessages={this.props.editorAccessibility.lintMessages}
+                  updateLineNumber={this.props.updateLineNumber}
+                  updateLintMessage={this.props.updateLintMessage}
+                  clearLintMessage={this.props.clearLintMessage}
+                  file={this.props.selectedFile}
+                  updateFileContent={this.props.updateFileContent}
+                  fontSize={this.props.preferences.fontSize}
+                  indentationAmount={this.props.preferences.indentationAmount}
+                  isTabIndent={this.props.preferences.isTabIndent}
+                />
+                <EditorAccessibility
+                  lintMessages={this.props.editorAccessibility.lintMessages}
+                  lineNo={this.props.editorAccessibility.lineNo}
+                />
+                <Console
+                  consoleEvent={this.props.ide.consoleEvent}
+                  isPlaying={this.props.ide.isPlaying}
+                  isExpanded={this.props.ide.consoleIsExpanded}
+                  expandConsole={this.props.expandConsole}
+                  collapseConsole={this.props.collapseConsole}
+                />
+              </SplitPane>
+              <div>
+                <div className="preview-frame-overlay" ref="overlay">
+                </div>
+                <PreviewFrame
+                  htmlFile={this.props.htmlFile}
+                  jsFiles={this.props.jsFiles}
+                  cssFiles={this.props.cssFiles}
+                  files={this.props.files}
+                  content={this.props.selectedFile.content}
+                  head={
+                    <link type="text/css" rel="stylesheet" href="/preview-styles.css" />
+                  }
+                  isPlaying={this.props.ide.isPlaying}
+                  dispatchConsoleEvent={this.props.dispatchConsoleEvent}
+                />
+              </div>
+            </SplitPane>
+          </SplitPane>
         </div>
         {(() => {
           if (this.props.ide.modalIsVisible) {
