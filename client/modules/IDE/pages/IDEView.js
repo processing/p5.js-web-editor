@@ -173,6 +173,7 @@ class IDEView extends React.Component {
                   fontSize={this.props.preferences.fontSize}
                   indentationAmount={this.props.preferences.indentationAmount}
                   isTabIndent={this.props.preferences.isTabIndent}
+                  files={this.props.files}
                   lintMessages={this.props.editorAccessibility.lintMessages}
                   lineNo={this.props.editorAccessibility.lineNo}
                 />
