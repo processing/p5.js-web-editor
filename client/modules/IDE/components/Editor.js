@@ -104,7 +104,7 @@ class Editor extends React.Component {
         </div>
         <EditorAccessibility
           lintMessages={this.props.lintMessages}
-          lineNo={this.props.lineNo}
+          lineNumber={this.props.lineNumber}
         />
       </div>
     );
@@ -113,7 +113,7 @@ class Editor extends React.Component {
 
 Editor.propTypes = {
   lintWarning: PropTypes.bool.isRequired,
-  lineNo: PropTypes.string.isRequired,
+  lineNumber: PropTypes.string.isRequired,
   lintMessages: PropTypes.array.isRequired,
   updateLintMessage: PropTypes.func.isRequired,
   clearLintMessage: PropTypes.func.isRequired,

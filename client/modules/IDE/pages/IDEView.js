@@ -175,7 +175,7 @@ class IDEView extends React.Component {
                   isTabIndent={this.props.preferences.isTabIndent}
                   files={this.props.files}
                   lintMessages={this.props.editorAccessibility.lintMessages}
-                  lineNo={this.props.editorAccessibility.lineNo}
+                  lineNumber={this.props.editorAccessibility.lineNumber}
                 />
                 <Console
                   consoleEvent={this.props.ide.consoleEvent}
@@ -254,7 +254,7 @@ IDEView.propTypes = {
   openPreferences: PropTypes.func.isRequired,
   editorAccessibility: PropTypes.shape({
     lintMessages: PropTypes.array.isRequired,
-    lineNo: PropTypes.string.isRequired
+    lineNumber: PropTypes.string.isRequired
   }).isRequired,
   updateLintMessage: PropTypes.func.isRequired,
   clearLintMessage: PropTypes.func.isRequired,

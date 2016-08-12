@@ -15,9 +15,9 @@ export function clearLintMessage() {
   };
 }
 
-export function updateLineNumber(lineNo) {
+export function updateLineNumber(lineNumber) {
   return {
     type: ActionTypes.UPDATE_LINENUMBER,
-    lineNo
+    lineNumber
   };
 }
