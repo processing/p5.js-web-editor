@@ -52,6 +52,9 @@ export function setProjectName(event) {
 export function saveProject() {
   return (dispatch, getState) => {
     const state = getState();
+    if (state.user.id && state.project.owner && state.project.owner.id !== state.user.id) {
+      return;
+    }
     const formParams = Object.assign({}, state.project);
     formParams.files = [...state.files];
     if (state.project.id) {
