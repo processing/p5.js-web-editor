@@ -13,7 +13,8 @@ const userSchema = new Schema({
     fontSize: { type: Number, default: 18 },
     indentationAmount: { type: Number, default: 2 },
     isTabIndent: { type: Boolean, default: false },
-    autosave: { type: Boolean, default: true }
+    autosave: { type: Boolean, default: true },
+    lintWarning: { type: Boolean, default: false }
   }
 }, { timestamps: true });
 
