@@ -90,6 +90,7 @@ class Preferences extends React.Component {
             className="preference__value"
             aria-live="status"
             aria-live="polite"
+            aria-atomic="true"
             role="status"
             value={this.props.fontSize}
             onChange={this.handleUpdateFont}
@@ -119,6 +120,7 @@ class Preferences extends React.Component {
             className="preference__value"
             aria-live="status"
             aria-live="polite"
+            aria-atomic="true"
             role="status"
             value={this.props.indentationAmount}
             onChange={this.handleUpdateIndentation}
