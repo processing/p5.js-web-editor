@@ -51,7 +51,8 @@ const hijackConsoleScript = `<script>
       return false;
     };
   });
-</script>`;
+</script>
+<div id="canvas-sub"> </div>`;
 
 class PreviewFrame extends React.Component {
 
@@ -131,8 +132,10 @@ class PreviewFrame extends React.Component {
     const headRegex = new RegExp('head', 'i');
     let htmlHeadContents = htmlHead[0].split(headRegex)[1];
     htmlHeadContents = htmlHeadContents.slice(1, htmlHeadContents.length - 2);
+    htmlHeadContents += '<script src="/data.js"></script>\n';
     htmlHeadContents += '<script src="/interceptor-functions.js"></script>\n';
     htmlHeadContents += '<script src="/intercept-p5.js"></script>\n';
+    htmlHeadContents += `<script type="text/javascript" src="http://chir.ag/projects/ntc/ntc.js"></script>`;
     htmlFile = htmlFile.replace(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi, `<head>\n${htmlHeadContents}\n</head>`);
 
     // const htmlHead = htmlFile.match(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi);
@@ -167,15 +170,15 @@ class PreviewFrame extends React.Component {
 
   render() {
     return (
-      <iframe
-        className="preview-frame"
-        aria-label="sketch output"
-        role="main"
-        tabIndex="0"
-        frameBorder="0"
-        title="sketch output"
-        sandbox="allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-modals allow-forms"
-      />
+        <iframe
+          className="preview-frame"
+          aria-label="sketch output"
+          role="main"
+          tabIndex="0"
+          frameBorder="0"
+          title="sketch output"
+          sandbox="allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-modals allow-forms"
+        />
     );
   }
 }

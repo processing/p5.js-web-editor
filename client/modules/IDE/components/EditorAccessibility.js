@@ -29,6 +29,8 @@ class EditorAccessibility extends React.Component {
         <p> Current line
           <span className="editor-linenumber" aria-live="polite" aria-atomic="true" id="current-line"> {this.props.lineNo} </span>
         </p>
+        <div id="canvas-sub">
+        </div>
       </div>
     );
   }
