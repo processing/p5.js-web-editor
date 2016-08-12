@@ -154,7 +154,7 @@ class Preferences extends React.Component {
             >Off</button>
           </div>
         </div>
-        <div className="preference preference--hidden">
+        <div className="preference">
           <h4 className="preference__title">Lint Warning Sound</h4>
           <div className="preference__options">
             <button
