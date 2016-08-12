@@ -104,10 +104,13 @@ class IDEView extends React.Component {
           isPlaying={this.props.ide.isPlaying}
           startSketch={this.props.startSketch}
           stopSketch={this.props.stopSketch}
+          startTextOutput={this.props.startTextOutput}
+          stopTextOutput={this.props.stopTextOutput}
           projectName={this.props.project.name}
           setProjectName={this.props.setProjectName}
           openPreferences={this.props.openPreferences}
           preferencesIsVisible={this.props.ide.preferencesIsVisible}
+          setTextOutput={this.props.setTextOutput}
           owner={this.props.project.owner}
         />
         <Preferences
@@ -200,6 +203,7 @@ class IDEView extends React.Component {
                     <link type="text/css" rel="stylesheet" href="/preview-styles.css" />
                   }
                   isPlaying={this.props.ide.isPlaying}
+                  isTextOutputPlaying={this.props.ide.isTextOutputPlaying}
                   textOutput={this.props.preferences.textOutput}
                   dispatchConsoleEvent={this.props.dispatchConsoleEvent}
                 />
@@ -237,6 +241,7 @@ IDEView.propTypes = {
   saveProject: PropTypes.func.isRequired,
   ide: PropTypes.shape({
     isPlaying: PropTypes.bool.isRequired,
+    isTextOutputPlaying: PropTypes.bool.isRequired,
     consoleEvent: PropTypes.object,
     modalIsVisible: PropTypes.bool.isRequired,
     sidebarIsExpanded: PropTypes.bool.isRequired,
@@ -245,6 +250,8 @@ IDEView.propTypes = {
   }).isRequired,
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
+  startTextOutput: PropTypes.func.isRequired,
+  stopTextOutput: PropTypes.func.isRequired,
   project: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string.isRequired,

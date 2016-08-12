@@ -26,8 +26,18 @@ function Toolbar(props) {
       <button className={playButtonClass} onClick={props.startSketch} aria-label="play sketch">
         <InlineSVG src={playUrl} alt="Play Sketch" />
       </button>
-
-      <button className={stopButtonClass} onClick={props.stopSketch} aria-label="stop sketch">
+      <button
+        className={playButtonClass}
+        onClick={() => { props.startTextOutput(); props.startSketch(); }}
+        aria-label="play sketch with output text"
+      >
+        <InlineSVG src={playUrl} alt="Play Sketch with output text" />
+      </button>
+      <button
+        className={stopButtonClass}
+        onClick={() => { props.stopTextOutput(); props.stopSketch(); }}
+        aria-label="stop sketch"
+      >
         <InlineSVG src={stopUrl} alt="Stop Sketch" />
       </button>
       <div className="toolbar__project-name-container">
@@ -64,6 +74,8 @@ Toolbar.propTypes = {
   preferencesIsVisible: PropTypes.bool.isRequired,
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
+  startTextOutput: PropTypes.func.isRequired,
+  stopTextOutput: PropTypes.func.isRequired,
   setProjectName: PropTypes.func.isRequired,
   projectName: PropTypes.string.isRequired,
   openPreferences: PropTypes.func.isRequired,

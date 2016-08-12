@@ -128,7 +128,7 @@ class PreviewFrame extends React.Component {
       htmlFile = htmlFile.replace(fileRegex, `<style>\n${cssFile.content}\n</style>`);
     });
 
-    if (this.props.textOutput) {
+    if (this.props.textOutput||this.props.isTextOutputPlaying) {
       const htmlHead = htmlFile.match(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi);
       const headRegex = new RegExp('head', 'i');
       let htmlHeadContents = htmlHead[0].split(headRegex)[1];
@@ -181,6 +181,7 @@ class PreviewFrame extends React.Component {
 
 PreviewFrame.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
+  isTextOutputPlaying: PropTypes.bool.isRequired,
   textOutput: PropTypes.bool.isRequired,
   head: PropTypes.object.isRequired,
   content: PropTypes.string.isRequired,

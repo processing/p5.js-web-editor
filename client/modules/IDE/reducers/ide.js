@@ -2,6 +2,7 @@ import * as ActionTypes from '../../../constants';
 
 const initialState = {
   isPlaying: false,
+  isTextOutputPlaying: false,
   selectedFile: '1',
   consoleEvent: {
     method: undefined,
@@ -21,6 +22,10 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { isPlaying: true });
     case ActionTypes.STOP_SKETCH:
       return Object.assign({}, state, { isPlaying: false });
+    case ActionTypes.START_TEXT_OUTPUT:
+      return Object.assign({}, state, { isTextOutputPlaying: true });
+    case ActionTypes.STOP_TEXT_OUTPUT:
+      return Object.assign({}, state, { isTextOutputPlaying: false });
     case ActionTypes.SET_SELECTED_FILE:
     case ActionTypes.SET_PROJECT:
     case ActionTypes.NEW_PROJECT:
