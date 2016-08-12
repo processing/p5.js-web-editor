@@ -21,22 +21,22 @@ function Nav(props) {
             Save
           </a>
         </li>
+        <li className="nav__item" onClick={props.cloneProject}>
+          <a className="nav__clone">
+            Duplicate
+          </a>
+        </li>
+        <li className="nav__item">
+          <a className="nav__export" onClick={props.exportProjectAsZip}>
+            Download
+          </a>
+        </li>
         <li className="nav__item">
           <p className="nav__open">
             <Link to="/sketches">
               Open
             </Link>
           </p>
-        </li>
-        <li className="nav__item">
-          <a className="nav__export" onClick={props.exportProjectAsZip}>
-            Export (zip)
-          </a>
-        </li>
-        <li className="nav__item" onClick={props.cloneProject}>
-          <a className="nav__clone">
-            Clone
-          </a>
         </li>
       </ul>
       <ul className="nav__items-right" title="user-menu">
