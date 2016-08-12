@@ -124,6 +124,8 @@ class IDEView extends React.Component {
           setAutosave={this.props.setAutosave}
           lintWarning={this.props.preferences.lintWarning}
           setLintWarning={this.props.setLintWarning}
+          textOutput={this.props.preferences.textOutput}
+          setTextOutput={this.props.setTextOutput}
         />
         <div className="editor-preview-container">
           <SplitPane
@@ -198,6 +200,7 @@ class IDEView extends React.Component {
                     <link type="text/css" rel="stylesheet" href="/preview-styles.css" />
                   }
                   isPlaying={this.props.ide.isPlaying}
+                  textOutput={this.props.preferences.textOutput}
                   dispatchConsoleEvent={this.props.dispatchConsoleEvent}
                 />
               </div>
@@ -264,7 +267,8 @@ IDEView.propTypes = {
     indentationAmount: PropTypes.number.isRequired,
     isTabIndent: PropTypes.bool.isRequired,
     autosave: PropTypes.bool.isRequired,
-    lintWarning: PropTypes.bool.isRequired
+    lintWarning: PropTypes.bool.isRequired,
+    textOutput: PropTypes.bool.isRequired
   }).isRequired,
   closePreferences: PropTypes.func.isRequired,
   setFontSize: PropTypes.func.isRequired,
@@ -273,6 +277,7 @@ IDEView.propTypes = {
   indentWithSpace: PropTypes.func.isRequired,
   setAutosave: PropTypes.func.isRequired,
   setLintWarning: PropTypes.func.isRequired,
+  setTextOutput: PropTypes.func.isRequired,
   files: PropTypes.array.isRequired,
   updateFileContent: PropTypes.func.isRequired,
   selectedFile: PropTypes.shape({

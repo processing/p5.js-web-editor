@@ -118,3 +118,21 @@ export function setLintWarning(value) {
     }
   };
 }
+
+export function setTextOutput(value) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.SET_TEXT_OUTPUT,
+      value
+    });
+    const state = getState();
+    if (state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          textOutput: value
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
+  };
+}
