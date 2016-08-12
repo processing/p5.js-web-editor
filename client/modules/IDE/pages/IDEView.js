@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import Editor from '../components/Editor';
-import EditorAccessibility from '../components/EditorAccessibility';
 import Sidebar from '../components/Sidebar';
 import PreviewFrame from '../components/PreviewFrame';
 import Toolbar from '../components/Toolbar';
@@ -174,8 +173,6 @@ class IDEView extends React.Component {
                   fontSize={this.props.preferences.fontSize}
                   indentationAmount={this.props.preferences.indentationAmount}
                   isTabIndent={this.props.preferences.isTabIndent}
-                />
-                <EditorAccessibility
                   lintMessages={this.props.editorAccessibility.lintMessages}
                   lineNo={this.props.editorAccessibility.lineNo}
                 />

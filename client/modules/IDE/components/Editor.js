@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import EditorAccessibility from '../components/EditorAccessibility';
 import CodeMirror from 'codemirror';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/css/css';
@@ -98,7 +99,13 @@ class Editor extends React.Component {
 
   render() {
     return (
-      <div ref="container" className="editor-holder" tabIndex="0" title="code editor" role="main">
+      <div>
+        <div ref="container" className="editor-holder" tabIndex="0" title="code editor" role="main">
+        </div>
+        <EditorAccessibility
+          lintMessages={this.props.lintMessages}
+          lineNo={this.props.lineNo}
+        />
       </div>
     );
   }
@@ -106,6 +113,7 @@ class Editor extends React.Component {
 
 Editor.propTypes = {
   lintWarning: PropTypes.bool.isRequired,
+  lineNo: PropTypes.string.isRequired,
   lintMessages: PropTypes.array.isRequired,
   updateLintMessage: PropTypes.func.isRequired,
   clearLintMessage: PropTypes.func.isRequired,
