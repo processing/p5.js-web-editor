@@ -70,6 +70,8 @@ class Editor extends React.Component {
         this._cm.setOption('mode', 'htmlmixed');
       }
     }
+
+    console.log('componentDidUpdate in editor');
   }
 
   componentWillUnmount() {

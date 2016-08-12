@@ -8,7 +8,7 @@ function Nav(props) {
         <li className="nav__item">
           <a
             className="nav__new"
-            onClick={props.createProject}
+            onClick={props.newProject}
           >
             New
           </a>
@@ -50,7 +50,7 @@ function Nav(props) {
 }
 
 Nav.propTypes = {
-  createProject: PropTypes.func.isRequired,
+  newProject: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
   exportProjectAsZip: PropTypes.func.isRequired,
   cloneProject: PropTypes.func.isRequired,

@@ -20,6 +20,8 @@ const project = (state = initialState, action) => {
         name: action.project.name,
         owner: action.owner
       };
+    case ActionTypes.RESET_PROJECT:
+      return initialState;
     default:
       return state;
   }

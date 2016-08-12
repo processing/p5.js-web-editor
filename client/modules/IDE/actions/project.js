@@ -116,7 +116,6 @@ export function createProject() {
 
 export function exportProjectAsZip() {
   return (dispatch, getState) => {
-    console.log('exporting project!');
     const state = getState();
     const zip = new JSZip();
     async.each(state.files, (file, cb) => {
@@ -136,6 +135,13 @@ export function exportProjectAsZip() {
         saveAs(content, `${state.project.name}.zip`);
       });
     });
+  };
+}
+
+export function newProject() {
+  browserHistory.push('/');
+  return {
+    type: ActionTypes.RESET_PROJECT
   };
 }
 
