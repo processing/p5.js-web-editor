@@ -21,7 +21,7 @@ function Toolbar(props) {
   });
 
   return (
-    <div className="toolbar">
+    <section className="toolbar" title="toolbar" role="main">
       <img className="toolbar__logo" src={logoUrl} alt="p5js Logo" />
       <button className={playButtonClass} onClick={props.startSketch} aria-label="play sketch">
         <InlineSVG src={playUrl} alt="Play Sketch" />
@@ -55,7 +55,7 @@ function Toolbar(props) {
       >
         <InlineSVG src={preferencesUrl} alt="Show Preferences" />
       </button>
-    </div>
+    </section>
   );
 }
 

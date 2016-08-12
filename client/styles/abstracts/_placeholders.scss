@@ -71,6 +71,7 @@
 	color: $light-primary-text-color;
 	background-color: $light-modal-button-background-color;
 	padding: 0;
+	margin-bottom: #{20 / $base-font-size}rem;
 	line-height: #{50 / $base-font-size}rem;
 	& g {
 		fill: $light-primary-text-color;

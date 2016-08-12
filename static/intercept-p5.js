@@ -1,9 +1,6 @@
 var shadowDOMElement;
 var canvasLocation ='';
 
-//for object in setpu (??)
-
-
 funcNames = refData["classitems"].map(function(x){
   return {
     name: x["name"],
@@ -15,7 +12,7 @@ funcNames = refData["classitems"].map(function(x){
 });
 
 funcNames = funcNames.filter(function(x) {
-  let className = x["class"];
+  var className = x["class"];
   return (x["name"] && x["params"] && (className==='p5'));
 })
 
