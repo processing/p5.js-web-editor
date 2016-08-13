@@ -52,6 +52,9 @@ export function setProjectName(event) {
 export function saveProject() {
   return (dispatch, getState) => {
     const state = getState();
+    if (state.user.id && state.project.owner && state.project.owner.id !== state.user.id) {
+      return;
+    }
     const formParams = Object.assign({}, state.project);
     formParams.files = [...state.files];
     if (state.project.id) {
@@ -116,7 +119,6 @@ export function createProject() {
 
 export function exportProjectAsZip() {
   return (dispatch, getState) => {
-    console.log('exporting project!');
     const state = getState();
     const zip = new JSZip();
     async.each(state.files, (file, cb) => {
@@ -136,6 +138,13 @@ export function exportProjectAsZip() {
         saveAs(content, `${state.project.name}.zip`);
       });
     });
+  };
+}
+
+export function newProject() {
+  browserHistory.push('/');
+  return {
+    type: ActionTypes.RESET_PROJECT
   };
 }
 

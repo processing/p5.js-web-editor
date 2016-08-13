@@ -8,7 +8,7 @@ function Nav(props) {
         <li className="nav__item">
           <a
             className="nav__new"
-            onClick={props.createProject}
+            onClick={props.newProject}
           >
             New
           </a>
@@ -21,22 +21,22 @@ function Nav(props) {
             Save
           </a>
         </li>
+        <li className="nav__item" onClick={props.cloneProject}>
+          <a className="nav__clone">
+            Duplicate
+          </a>
+        </li>
+        <li className="nav__item">
+          <a className="nav__export" onClick={props.exportProjectAsZip}>
+            Download
+          </a>
+        </li>
         <li className="nav__item">
           <p className="nav__open">
             <Link to="/sketches">
               Open
             </Link>
           </p>
-        </li>
-        <li className="nav__item">
-          <a className="nav__export" onClick={props.exportProjectAsZip}>
-            Export (zip)
-          </a>
-        </li>
-        <li className="nav__item">
-          <a className="nav__clone" onClick={props.cloneProject}>
-            Clone
-          </a>
         </li>
       </ul>
       <ul className="nav__items-right" title="user-menu">
@@ -50,7 +50,7 @@ function Nav(props) {
 }
 
 Nav.propTypes = {
-  createProject: PropTypes.func.isRequired,
+  newProject: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
   exportProjectAsZip: PropTypes.func.isRequired,
   cloneProject: PropTypes.func.isRequired,

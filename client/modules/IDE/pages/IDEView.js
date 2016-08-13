@@ -39,6 +39,7 @@ class IDEView extends React.Component {
 
     this.consoleSize = this.props.ide.consoleIsExpanded ? 180 : 29;
     this.sidebarSize = this.props.ide.sidebarIsExpanded ? 180 : 20;
+    this.forceUpdate();
   }
 
   componentWillUpdate(nextProps) {
@@ -66,11 +67,18 @@ class IDEView extends React.Component {
         this.autosaveInterval = null;
       }
     }
+
+    if (this.autosaveInterval && !this.props.project.id) {
+      clearInterval(this.autosaveInterval);
+      this.autosaveInterval = null;
+    }
   }
 
   componentWillUnmount() {
     clearInterval(this.autosaveInterval);
     this.autosaveInterval = null;
+    this.consoleSize = undefined;
+    this.sidebarSize = undefined;
   }
 
   _handleConsolePaneOnDragFinished() {
@@ -82,6 +90,7 @@ class IDEView extends React.Component {
   }
 
   _handleSidebarPaneOnDragFinished() {
+    console.log('setting sidebar size');
     this.sidebarSize = this.refs.sidebarPane.state.draggedSize;
     this.refs.sidebarPane.setState({
       resized: false,
@@ -94,7 +103,7 @@ class IDEView extends React.Component {
       <div className="ide">
         <Nav
           user={this.props.user}
-          createProject={this.props.createProject}
+          newProject={this.props.newProject}
           saveProject={this.props.saveProject}
           exportProjectAsZip={this.props.exportProjectAsZip}
           cloneProject={this.props.cloneProject}
@@ -132,6 +141,7 @@ class IDEView extends React.Component {
             ref="sidebarPane"
             onDragFinished={this._handleSidebarPaneOnDragFinished}
             allowResize={this.props.ide.sidebarIsExpanded}
+            minSize={20}
           >
             <Sidebar
               files={this.props.files}
@@ -230,7 +240,7 @@ IDEView.propTypes = {
     authenticated: PropTypes.bool.isRequired,
     id: PropTypes.string
   }).isRequired,
-  createProject: PropTypes.func.isRequired,
+  newProject: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
   ide: PropTypes.shape({
     isPlaying: PropTypes.bool.isRequired,
