@@ -4,3 +4,8 @@
   height: 100%;
   flex-flow: column;
 }
+
+.sketches-table-container {
+  flex: 1 0 0%;
+  overflow-y: scroll;
+}
