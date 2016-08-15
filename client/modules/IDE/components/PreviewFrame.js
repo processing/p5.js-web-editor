@@ -128,12 +128,11 @@ class PreviewFrame extends React.Component {
     });
 
     if (this.props.textOutput || this.props.isTextOutputPlaying) {
-      console.log(htmlFile);
       const htmlHead = htmlFile.match(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi);
       const headRegex = new RegExp('head', 'i');
       let htmlHeadContents = htmlHead[0].split(headRegex)[1];
       htmlHeadContents = htmlHeadContents.slice(1, htmlHeadContents.length - 2);
-      htmlHeadContents += '<script src="/data.js"></script>\n';
+      htmlHeadContents += '<script src="/loadData.js"></script>\n';
       htmlHeadContents += '<script src="/interceptor-functions.js"></script>\n';
       htmlHeadContents += '<script src="/intercept-p5.js"></script>\n';
       htmlHeadContents += '<script type="text/javascript" src="http://chir.ag/projects/ntc/ntc.js"></script>';

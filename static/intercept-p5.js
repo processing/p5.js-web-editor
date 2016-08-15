@@ -1,24 +1,27 @@
 var textOutputElement;
 var canvasLocation ='';
 
-funcNames = refData["classitems"].map(function(x){
+funcNames = allData["classitems"].map(function(x){
+  if(x["overloads"]) {
+    tempParam = x["overloads"][0]["params"];
+  } else {
+    tempParam = x["params"];
+  }
   return {
     name: x["name"],
-    params: x["params"],
+    params: tempParam,
     class: x["class"],
     module: x["module"],
     submodule: x["submodule"]
   };
 });
-
 funcNames = funcNames.filter(function(x) {
   var className = x["class"];
   return (x["name"] && x["params"] && (className==='p5'));
 })
 
-
 funcNames.forEach(function(x){
-  let document = parent.document;
+  var document = parent.document;
   var originalFunc = p5.prototype[x.name];
   p5.prototype[x.name] = function(){
     orgArg = arguments;

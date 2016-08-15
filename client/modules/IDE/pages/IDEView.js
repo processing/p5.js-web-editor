@@ -204,6 +204,7 @@ class IDEView extends React.Component {
               <div>
                 <div className="preview-frame-overlay" ref="overlay">
                 </div>
+                <div>
                 {(() => {
                   if (this.props.preferences.textOutput || this.props.ide.isTextOutputPlaying) {
                     return (
@@ -212,6 +213,7 @@ class IDEView extends React.Component {
                   }
                   return '';
                 })()}
+                </div>
                 <PreviewFrame
                   htmlFile={this.props.htmlFile}
                   jsFiles={this.props.jsFiles}
