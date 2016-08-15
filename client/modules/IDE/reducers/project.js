@@ -22,6 +22,10 @@ const project = (state = initialState, action) => {
       };
     case ActionTypes.RESET_PROJECT:
       return initialState;
+    case ActionTypes.SHOW_EDIT_PROJECT_NAME:
+      return Object.assign({}, state, { isEditingName: true });
+    case ActionTypes.HIDE_EDIT_PROJECT_NAME:
+      return Object.assign({}, state, { isEditingName: false });
     default:
       return state;
   }

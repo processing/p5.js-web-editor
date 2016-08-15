@@ -6,57 +6,96 @@ const stopUrl = require('../../../images/stop.svg');
 const preferencesUrl = require('../../../images/preferences.svg');
 import classNames from 'classnames';
 
-function Toolbar(props) {
-  let playButtonClass = classNames({
-    'toolbar__play-button': true,
-    'toolbar__play-button--selected': props.isPlaying
-  });
-  let stopButtonClass = classNames({
-    'toolbar__stop-button': true,
-    'toolbar__stop-button--selected': !props.isPlaying
-  });
-  let preferencesButtonClass = classNames({
-    'toolbar__preferences-button': true,
-    'toolbar__preferences-button--selected': props.preferencesIsVisible
-  });
+class Toolbar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.handleProjectNameChange = this.handleProjectNameChange.bind(this);
+  }
 
-  return (
-    <div className="toolbar">
-      <img className="toolbar__logo" src={logoUrl} alt="p5js Logo" />
-      <button className={playButtonClass} onClick={props.startSketch} aria-label="play sketch">
-        <InlineSVG src={playUrl} alt="Play Sketch" />
-      </button>
+  handleKeyPress(event) {
+    if (event.key === 'Enter') {
+      this.props.hideEditProjectName();
+    }
+  }
 
-      <button className={stopButtonClass} onClick={props.stopSketch} aria-label="stop sketch">
-        <InlineSVG src={stopUrl} alt="Stop Sketch" />
-      </button>
-      <div className="toolbar__project-name-container">
-        <span
-          className="toolbar__project-name"
-          // TODO change this span into an input
-          onBlur={props.setProjectName.bind(this)} // eslint-disable-line
-          contentEditable
-          suppressContentEditableWarning
+  handleProjectNameChange(event) {
+    this.props.setProjectName(event.target.value);
+  }
+
+  validateProjectName() {
+    if (this.props.project.name === '') {
+      this.props.setProjectName(this.originalProjectName);
+    }
+  }
+
+  render() {
+    let playButtonClass = classNames({
+      'toolbar__play-button': true,
+      'toolbar__play-button--selected': this.props.isPlaying
+    });
+    let stopButtonClass = classNames({
+      'toolbar__stop-button': true,
+      'toolbar__stop-button--selected': !this.props.isPlaying
+    });
+    let preferencesButtonClass = classNames({
+      'toolbar__preferences-button': true,
+      'toolbar__preferences-button--selected': this.props.preferencesIsVisible
+    });
+    let nameContainerClass = classNames({
+      'toolbar__project-name-container': true,
+      'toolbar__project-name-container--editing': this.props.project.isEditingName
+    });
+
+    return (
+      <div className="toolbar">
+        <img className="toolbar__logo" src={logoUrl} alt="p5js Logo" />
+        <button className={playButtonClass} onClick={this.props.startSketch} aria-label="play sketch">
+          <InlineSVG src={playUrl} alt="Play Sketch" />
+        </button>
+
+        <button className={stopButtonClass} onClick={this.props.stopSketch} aria-label="stop sketch">
+          <InlineSVG src={stopUrl} alt="Stop Sketch" />
+        </button>
+        <div className={nameContainerClass}>
+          <a
+            className="toolbar__project-name"
+            onClick={() => {
+              this.originalProjectName = this.props.project.name;
+              this.props.showEditProjectName();
+              setTimeout(() => this.refs.projectNameInput.focus(), 0);
+            }}
+          >{this.props.project.name}</a>
+          <input
+            type="text"
+            className="toolbar__project-name-input"
+            value={this.props.project.name}
+            onChange={this.handleProjectNameChange}
+            ref="projectNameInput"
+            onBlur={() => {
+              this.validateProjectName();
+              this.props.hideEditProjectName();
+            }}
+            onKeyPress={this.handleKeyPress}
+          />
+          {(() => { // eslint-disable-line
+            if (this.props.owner) {
+              return (
+                <p className="toolbar__project-owner">by <span>{this.props.owner.username}</span></p>
+              );
+            }
+          })()}
+        </div>
+        <button
+          className={preferencesButtonClass}
+          onClick={this.props.openPreferences}
+          aria-label="open preferences"
         >
-          {props.projectName}
-        </span>
-        {(() => { // eslint-disable-line
-          if (props.owner) {
-            return (
-              <p className="toolbar__project-owner">by <span>{props.owner.username}</span></p>
-            );
-          }
-        })()}
+          <InlineSVG src={preferencesUrl} alt="Show Preferences" />
+        </button>
       </div>
-      <button
-        className={preferencesButtonClass}
-        onClick={props.openPreferences}
-        aria-label="open preferences"
-      >
-        <InlineSVG src={preferencesUrl} alt="Show Preferences" />
-      </button>
-    </div>
-  );
+    );
+  }
 }
 
 Toolbar.propTypes = {
@@ -65,11 +104,16 @@ Toolbar.propTypes = {
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
   setProjectName: PropTypes.func.isRequired,
-  projectName: PropTypes.string.isRequired,
   openPreferences: PropTypes.func.isRequired,
   owner: PropTypes.shape({
     username: PropTypes.string
-  })
+  }),
+  project: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    isEditingName: PropTypes.bool
+  }).isRequired,
+  showEditProjectName: PropTypes.func.isRequired,
+  hideEditProjectName: PropTypes.func.isRequired
 };
 
 export default Toolbar;

@@ -113,11 +113,13 @@ class IDEView extends React.Component {
           isPlaying={this.props.ide.isPlaying}
           startSketch={this.props.startSketch}
           stopSketch={this.props.stopSketch}
-          projectName={this.props.project.name}
           setProjectName={this.props.setProjectName}
+          showEditProjectName={this.props.showEditProjectName}
+          hideEditProjectName={this.props.hideEditProjectName}
           openPreferences={this.props.openPreferences}
           preferencesIsVisible={this.props.ide.preferencesIsVisible}
           owner={this.props.project.owner}
+          project={this.props.project}
         />
         <Preferences
           isVisible={this.props.ide.preferencesIsVisible}
@@ -307,7 +309,9 @@ IDEView.propTypes = {
   deleteFile: PropTypes.func.isRequired,
   showEditFileName: PropTypes.func.isRequired,
   hideEditFileName: PropTypes.func.isRequired,
-  updateFileName: PropTypes.func.isRequired
+  updateFileName: PropTypes.func.isRequired,
+  showEditProjectName: PropTypes.func.isRequired,
+  hideEditProjectName: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

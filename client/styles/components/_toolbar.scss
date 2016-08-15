@@ -53,6 +53,18 @@
 	&:focus {
 		color: $light-inactive-text-color;
 	}
+
+	.toolbar__project-name-container--editing & {
+		display: none;
+	}
+}
+
+.toolbar__project-name-input {
+	display: none;
+	border: 0px;
+	.toolbar__project-name-container--editing & {
+		display: block;
+	}
 }
 
 .toolbar__project-owner {
