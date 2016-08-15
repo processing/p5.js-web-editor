@@ -3,6 +3,7 @@ import Editor from '../components/Editor';
 import Sidebar from '../components/Sidebar';
 import PreviewFrame from '../components/PreviewFrame';
 import Toolbar from '../components/Toolbar';
+import TextOutput from '../components/TextOutput';
 import Preferences from '../components/Preferences';
 import NewFileModal from '../components/NewFileModal';
 import Nav from '../../../components/Nav';
@@ -193,6 +194,14 @@ class IDEView extends React.Component {
               <div>
                 <div className="preview-frame-overlay" ref="overlay">
                 </div>
+                {(() => {
+                  if (this.props.preferences.textOutput || this.props.ide.isTextOutputPlaying) {
+                    return (
+                      <TextOutput />
+                    );
+                  }
+                  return '';
+                })()}
                 <PreviewFrame
                   htmlFile={this.props.htmlFile}
                   jsFiles={this.props.jsFiles}

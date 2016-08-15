@@ -65,40 +65,6 @@ var Interceptor = {
     objectTypeCount : {}
   },
   isCleared : false,
-  createShadowDOMElement : function() {
-
-    // var c = document.getElementsByTagName('canvas')[0];
-    var c = document.getElementById('canvas-sub');
-    c.setAttribute("tabIndex","0");
-    c.setAttribute("role","region");
-
-    var section = document.createElement('section');
-    section.id = "shadowDOM-content";
-    section.className = "shadowDOM-content";
-    c.appendChild(section);
-
-    var summary = document.createElement('div');
-    summary.setAttribute("tabIndex","0");
-    summary.setAttribute("role","region");
-    summary.id = "shadowDOM-content-summary";
-    summary.className = "shadowDOM-content-summary";
-    section.appendChild(summary);
-
-    var details = document.createElement('div');
-    details.setAttribute("tabIndex","0");
-    details.setAttribute("role","region");
-    details.id = "shadowDOM-content-details";
-    details.className = "shadowDOM-content-details";
-    section.appendChild(details);
-
-    var contentTable = document.createElement('table');
-    contentTable.id="shadowDOM-content-table";
-    contentTable.className ="shadowDOM-content-table";
-    contentTable.setAttribute('summary','details of object in the canvas');
-
-    details.appendChild(contentTable);
-    shadowDOMElement = document.getElementById('shadowDOM-content');
-  },
   getColorName : function(arguments) {
     if(arguments.length==3) {
       //assuming that we are doing RGB - convert RGB values to a name

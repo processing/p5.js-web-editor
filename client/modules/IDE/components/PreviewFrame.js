@@ -51,8 +51,7 @@ const hijackConsoleScript = `<script>
       return false;
     };
   });
-</script>
-<div id="canvas-sub"> </div>`;
+</script>`;
 
 class PreviewFrame extends React.Component {
 
@@ -128,7 +127,8 @@ class PreviewFrame extends React.Component {
       htmlFile = htmlFile.replace(fileRegex, `<style>\n${cssFile.content}\n</style>`);
     });
 
-    if (this.props.textOutput||this.props.isTextOutputPlaying) {
+    if (this.props.textOutput || this.props.isTextOutputPlaying) {
+      console.log(htmlFile);
       const htmlHead = htmlFile.match(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi);
       const headRegex = new RegExp('head', 'i');
       let htmlHeadContents = htmlHead[0].split(headRegex)[1];
