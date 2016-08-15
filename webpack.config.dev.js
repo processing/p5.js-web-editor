@@ -36,7 +36,7 @@ module.exports = {
         loaders: ['style', 'css', 'sass']
       },
       {
-        test: /\.svg$/,
+        test: /\.(svg|mp3)$/,
         loader: 'file'
       }
     ],

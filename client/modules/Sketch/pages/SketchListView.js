@@ -17,7 +17,7 @@ class SketchListView extends React.Component {
       <div className="sketch-list">
         <Nav
           user={this.props.user}
-          createProject={this.props.createProject}
+          newProject={this.props.newProject}
           saveProject={this.props.saveProject}
           exportProjectAsZip={this.props.exportProjectAsZip}
           cloneProject={this.props.cloneProject}
@@ -47,7 +47,7 @@ class SketchListView extends React.Component {
 
 SketchListView.propTypes = {
   user: PropTypes.object.isRequired,
-  createProject: PropTypes.func.isRequired,
+  newProject: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
   getProjects: PropTypes.func.isRequired,
   sketches: PropTypes.array.isRequired,

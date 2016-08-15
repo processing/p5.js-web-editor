@@ -37,7 +37,7 @@ module.exports = {
         loader: 'babel'
       },
       {
-        test: /\.svg$/,
+        test: /\.(svg|mp3)$/,
         loader: 'file'
       }
     ]

@@ -48,6 +48,8 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { preferencesIsVisible: true });
     case ActionTypes.CLOSE_PREFERENCES:
       return Object.assign({}, state, { preferencesIsVisible: false });
+    case ActionTypes.RESET_PROJECT:
+      return initialState;
     default:
       return state;
   }

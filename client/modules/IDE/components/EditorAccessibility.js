@@ -27,7 +27,7 @@ class EditorAccessibility extends React.Component {
           {messages}
         </ul>
         <p> Current line
-          <span className="editor-linenumber" aria-live="polite" aria-atomic="true" id="current-line"> {this.props.lineNo} </span>
+          <span className="editor-linenumber" aria-live="polite" aria-atomic="true" id="current-line"> {this.props.lineNumber} </span>
         </p>
       </div>
     );
@@ -36,7 +36,7 @@ class EditorAccessibility extends React.Component {
 
 EditorAccessibility.propTypes = {
   lintMessages: PropTypes.array.isRequired,
-  lineNo: PropTypes.string.isRequired,
+  lineNumber: PropTypes.string.isRequired,
 };
 
 export default EditorAccessibility;
