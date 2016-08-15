@@ -35,8 +35,8 @@ class SketchList extends React.Component {
               {this.props.sketches.map(sketch =>
                 <tr className="sketches-table__row" key={sketch.id}>
                   <td scope="row"><Link to={`/projects/${sketch._id}`}>{sketch.name}</Link></td>
-                  <td>{moment(sketch.createdAt).format('MMM D, YYYY')}</td>
-                  <td>{moment(sketch.updatedAt).format('MMM D, YYYY')}</td>
+                  <td>{moment(sketch.createdAt).format('MMM D, YYYY h:mm:ss A')}</td>
+                  <td>{moment(sketch.updatedAt).format('MMM D, YYYY h:mm:ss A')}</td>
                 </tr>
               )}
             </tbody>
