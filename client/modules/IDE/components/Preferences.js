@@ -28,6 +28,11 @@ class Preferences extends React.Component {
     this.props.setAutosave(value);
   }
 
+  handleLintWarning(event) {
+    const value = event.target.value === 'true';
+    this.props.setLintWarning(value);
+  }
+
   render() {
     const preferencesContainerClass = classNames({
       preferences: true,
@@ -48,6 +53,14 @@ class Preferences extends React.Component {
     let autosaveOffClass = classNames({
       preference__option: true,
       'preference__option--selected': !this.props.autosave
+    });
+    let lintWarningOnClass = classNames({
+      preference__option: true,
+      'preference__option--selected': this.props.lintWarning
+    });
+    let lintWarningOffClass = classNames({
+      preference__option: true,
+      'preference__option--selected': !this.props.lintWarning
     });
     return (
       <section className={preferencesContainerClass} tabIndex="0" title="preference-menu">
@@ -77,6 +90,7 @@ class Preferences extends React.Component {
             className="preference__value"
             aria-live="status"
             aria-live="polite"
+            aria-atomic="true"
             role="status"
             value={this.props.fontSize}
             onChange={this.handleUpdateFont}
@@ -106,6 +120,7 @@ class Preferences extends React.Component {
             className="preference__value"
             aria-live="status"
             aria-live="polite"
+            aria-atomic="true"
             role="status"
             value={this.props.indentationAmount}
             onChange={this.handleUpdateIndentation}
@@ -139,6 +154,21 @@ class Preferences extends React.Component {
             >Off</button>
           </div>
         </div>
+        <div className="preference">
+          <h4 className="preference__title">Lint Warning Sound</h4>
+          <div className="preference__options">
+            <button
+              className={lintWarningOnClass}
+              onClick={() => this.props.setLintWarning(true)}
+              aria-label="lint warning on"
+            >On</button>
+            <button
+              className={lintWarningOffClass}
+              onClick={() => this.props.setLintWarning(false)}
+              aria-label="lint warning off"
+            >Off</button>
+          </div>
+        </div>
       </section>
     );
   }
@@ -155,7 +185,9 @@ Preferences.propTypes = {
   isTabIndent: PropTypes.bool.isRequired,
   setFontSize: PropTypes.func.isRequired,
   autosave: PropTypes.bool.isRequired,
-  setAutosave: PropTypes.func.isRequired
+  setAutosave: PropTypes.func.isRequired,
+  lintWarning: PropTypes.bool.isRequired,
+  setLintWarning: PropTypes.func.isRequired
 };
 
 export default Preferences;

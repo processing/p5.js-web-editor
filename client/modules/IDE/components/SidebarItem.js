@@ -58,14 +58,15 @@ class SidebarItem extends React.Component {
           }}
           onKeyPress={this.handleKeyPress}
         />
-        <a
+        <button
           className="sidebar__file-item-show-options"
+          aria-label="view file options"
           onClick={() => this.props.showFileOptions(this.props.file.id)}
         >
           <InlineSVG src={downArrowUrl} />
-        </a>
+        </button>
         <div ref="fileOptions" className="sidebar__file-item-options">
-          <ul>
+          <ul title="file options">
             <li>
               <a
                 onClick={() => {

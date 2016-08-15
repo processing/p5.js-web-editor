@@ -21,8 +21,8 @@ function Nav(props) {
             Save
           </a>
         </li>
-        <li className="nav__item" onClick={props.cloneProject}>
-          <a className="nav__clone">
+        <li className="nav__item">
+          <a className="nav__clone" onClick={props.cloneProject}>
             Duplicate
           </a>
         </li>

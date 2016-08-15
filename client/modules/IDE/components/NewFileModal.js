@@ -12,36 +12,40 @@ import FileUploader from './FileUploader';
 // At some point this will probably be generalized to a generic modal
 // in which you can insert different content
 // but for now, let's just make this work
-function NewFileModal(props) {
-  const modalClass = classNames({
-    modal: true,
-    'modal--reduced': !props.canUploadMedia
-  });
-
-  return (
-    <section className={modalClass}>
-      <div className="modal-content">
-        <div className="modal__header">
-          <h2 className="modal__title">Add File</h2>
-          <button className="modal__exit-button" onClick={props.closeModal}>
-            <InlineSVG src={exitUrl} alt="Close New File Modal" />
-          </button>
+class NewFileModal extends React.Component {
+  componentDidMount() {
+    document.getElementById('name').focus();
+  }
+  render() {
+    const modalClass = classNames({
+      modal: true,
+      'modal--reduced': !this.props.canUploadMedia
+    });
+    return (
+      <section className={modalClass}>
+        <div className="modal-content">
+          <div className="modal__header">
+            <h2 className="modal__title">Add File</h2>
+            <button className="modal__exit-button" onClick={this.props.closeModal}>
+              <InlineSVG src={exitUrl} alt="Close New File Modal" />
+            </button>
+          </div>
+          <NewFileForm {...this.props} />
+          {(() => {
+            if (this.props.canUploadMedia) {
+              return (
+                <div>
+                  <p className="modal__divider">OR</p>
+                  <FileUploader />
+                </div>
+              );
+            }
+            return '';
+          })()}
         </div>
-        <NewFileForm {...props} />
-        {(() => {
-          if (props.canUploadMedia) {
-            return (
-              <div>
-                <p className="modal__divider">OR</p>
-                <FileUploader />
-              </div>
-            );
-          }
-          return '';
-        })()}
-      </div>
-    </section>
-  );
+      </section>
+    );
+  }
 }
 
 NewFileModal.propTypes = {

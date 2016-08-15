@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import * as FileActions from '../actions/files';
 import * as IDEActions from '../actions/ide';
 import * as ProjectActions from '../actions/project';
+import * as EditorAccessibilityActions from '../actions/editorAccessibility';
 import * as PreferencesActions from '../actions/preferences';
 import { getFile, getHTMLFile, getJSFiles, getCSSFiles, setSelectedFile } from '../reducers/files';
 import SplitPane from 'react-split-pane';
@@ -130,6 +131,8 @@ class IDEView extends React.Component {
           setFontSize={this.props.setFontSize}
           autosave={this.props.preferences.autosave}
           setAutosave={this.props.setAutosave}
+          lintWarning={this.props.preferences.lintWarning}
+          setLintWarning={this.props.setLintWarning}
         />
         <div className="editor-preview-container">
           <SplitPane
@@ -170,12 +173,19 @@ class IDEView extends React.Component {
                 allowResize={this.props.ide.consoleIsExpanded}
               >
                 <Editor
+                  lintWarning={this.props.preferences.lintWarning}
+                  lintMessages={this.props.editorAccessibility.lintMessages}
+                  updateLineNumber={this.props.updateLineNumber}
+                  updateLintMessage={this.props.updateLintMessage}
+                  clearLintMessage={this.props.clearLintMessage}
                   file={this.props.selectedFile}
                   updateFileContent={this.props.updateFileContent}
                   fontSize={this.props.preferences.fontSize}
                   indentationAmount={this.props.preferences.indentationAmount}
                   isTabIndent={this.props.preferences.isTabIndent}
                   files={this.props.files}
+                  lintMessages={this.props.editorAccessibility.lintMessages}
+                  lineNumber={this.props.editorAccessibility.lineNumber}
                 />
                 <Console
                   consoleEvent={this.props.ide.consoleEvent}
@@ -252,11 +262,19 @@ IDEView.propTypes = {
   }).isRequired,
   setProjectName: PropTypes.func.isRequired,
   openPreferences: PropTypes.func.isRequired,
+  editorAccessibility: PropTypes.shape({
+    lintMessages: PropTypes.array.isRequired,
+    lineNumber: PropTypes.string.isRequired
+  }).isRequired,
+  updateLintMessage: PropTypes.func.isRequired,
+  clearLintMessage: PropTypes.func.isRequired,
+  updateLineNumber: PropTypes.func.isRequired,
   preferences: PropTypes.shape({
     fontSize: PropTypes.number.isRequired,
     indentationAmount: PropTypes.number.isRequired,
     isTabIndent: PropTypes.bool.isRequired,
-    autosave: PropTypes.bool.isRequired
+    autosave: PropTypes.bool.isRequired,
+    lintWarning: PropTypes.bool.isRequired
   }).isRequired,
   closePreferences: PropTypes.func.isRequired,
   setFontSize: PropTypes.func.isRequired,
@@ -264,6 +282,7 @@ IDEView.propTypes = {
   indentWithTab: PropTypes.func.isRequired,
   indentWithSpace: PropTypes.func.isRequired,
   setAutosave: PropTypes.func.isRequired,
+  setLintWarning: PropTypes.func.isRequired,
   files: PropTypes.array.isRequired,
   updateFileContent: PropTypes.func.isRequired,
   selectedFile: PropTypes.shape({
@@ -300,6 +319,7 @@ function mapStateToProps(state) {
     cssFiles: getCSSFiles(state.files),
     ide: state.ide,
     preferences: state.preferences,
+    editorAccessibility: state.editorAccessibility,
     user: state.user,
     project: state.project
   };
@@ -307,6 +327,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({},
+    EditorAccessibilityActions,
     FileActions,
     ProjectActions,
     IDEActions,

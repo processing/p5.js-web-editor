@@ -35,7 +35,7 @@
 .preference {
 	display: flex;
 	flex-wrap: wrap;
-	padding-bottom: #{40 / $base-font-size}rem;
+	padding-bottom: #{12 / $base-font-size}rem;
 	& + & {
   	border-top: 2px dashed $light-button-border-color;
 	}
@@ -89,3 +89,6 @@
 	width: #{70 / $base-font-size}rem;
 }
 
+.preference--hidden {
+	@extend %hidden-element;
+}

@@ -33,7 +33,7 @@ const hijackConsoleScript = `<script>
     });
 
     // catch reference errors, via http://stackoverflow.com/a/12747364/2994108
-    window.onerror = function (msg, url, lineNo, columnNo, error) {
+    window.onerror = function (msg, url, lineNumber, columnNo, error) {
         var string = msg.toLowerCase();
         var substring = "script error";
         var data = {};
@@ -41,7 +41,7 @@ const hijackConsoleScript = `<script>
         if (string.indexOf(substring) > -1){
           data = 'Script Error: See Browser Console for Detail';
         } else {
-          data = msg + ' Line: ' + lineNo + 'column: ' + columnNo;
+          data = msg + ' Line: ' + lineNumber + 'column: ' + columnNo;
         }
         window.parent.postMessage({
           method: 'error',
@@ -161,7 +161,8 @@ class PreviewFrame extends React.Component {
     return (
       <iframe
         className="preview-frame"
-        role="region"
+        aria-label="sketch output"
+        role="main"
         tabIndex="0"
         frameBorder="0"
         title="sketch output"

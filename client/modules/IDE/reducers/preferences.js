@@ -4,7 +4,8 @@ const initialState = {
   fontSize: 18,
   indentationAmount: 2,
   isTabIndent: true,
-  autosave: true
+  autosave: true,
+  lintWarning: false
 };
 
 const preferences = (state = initialState, action) => {
@@ -23,6 +24,8 @@ const preferences = (state = initialState, action) => {
       });
     case ActionTypes.SET_AUTOSAVE:
       return Object.assign({}, state, { autosave: action.value });
+    case ActionTypes.SET_LINT_WARNING:
+      return Object.assign({}, state, { lintWarning: action.value });
     case ActionTypes.SET_PREFERENCES:
       return action.preferences;
     default:
