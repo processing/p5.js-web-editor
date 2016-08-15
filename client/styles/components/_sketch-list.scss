@@ -1,10 +1,25 @@
+.sketch-list__header {
+  display: flex;
+  justify-content: space-between;
+  padding: #{20 / $base-font-size}rem;
+}
+
+.sketches-table-container {
+  flex: 1 0 0%;
+  overflow-y: scroll;
+}
+
 .sketches-table {
   width: 100%;
   padding: #{10 / $base-font-size}rem 0;
-  padding-left: #{170 / $base-font-size}rem;
+  padding-left: #{20 / $base-font-size}rem;
   height: 100%;
 }
 
 .sketches-table__row {
   margin: #{10 / $base-font-size}rem;
+}
+
+.sketch-list__exit-button {
+  @extend %icon;
 }

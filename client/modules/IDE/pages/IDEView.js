@@ -16,9 +16,12 @@ import * as EditorAccessibilityActions from '../actions/editorAccessibility';
 import * as PreferencesActions from '../actions/preferences';
 import { getFile, getHTMLFile, getJSFiles, getCSSFiles, setSelectedFile } from '../reducers/files';
 import SplitPane from 'react-split-pane';
+import Overlay from '../../App/components/Overlay';
+import SketchList from '../components/SketchList';
 
 class IDEView extends React.Component {
   constructor(props) {
+    console.log(props);
     super(props);
     this._handleConsolePaneOnDragFinished = this._handleConsolePaneOnDragFinished.bind(this);
     this._handleSidebarPaneOnDragFinished = this._handleSidebarPaneOnDragFinished.bind(this);
@@ -49,6 +52,10 @@ class IDEView extends React.Component {
 
     if (this.props.ide.sidebarIsExpanded !== nextProps.ide.sidebarIsExpanded) {
       this.sidebarSize = nextProps.ide.sidebarIsExpanded ? 180 : 20;
+    }
+
+    if (nextProps.params.project_id && !this.props.params.project_id) {
+      this.props.getProject(nextProps.params.project_id);
     }
   }
 
@@ -227,6 +234,15 @@ class IDEView extends React.Component {
           }
           return '';
         })()}
+        {(() => { // eslint-disable-line
+          if (this.props.location.pathname === '/sketches') {
+            return (
+              <Overlay>
+                <SketchList />
+              </Overlay>
+            );
+          }
+        })()}
       </div>
 
     );
@@ -236,6 +252,9 @@ class IDEView extends React.Component {
 IDEView.propTypes = {
   params: PropTypes.shape({
     project_id: PropTypes.string
+  }),
+  location: PropTypes.shape({
+    pathname: PropTypes.string
   }),
   getProject: PropTypes.func.isRequired,
   user: PropTypes.shape({

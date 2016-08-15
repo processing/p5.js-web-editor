@@ -1,11 +1,8 @@
 .sketch-list {
+  @extend %modal;
   display: flex;
   flex-wrap: wrap;
-  height: 100%;
   flex-flow: column;
-}
-
-.sketches-table-container {
-  flex: 1 0 0%;
-  overflow-y: scroll;
+  width: #{1000 / $base-font-size}rem;
+  height: #{700 / $base-font-size}rem;
 }
