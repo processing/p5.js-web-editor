@@ -27,7 +27,7 @@ function Toolbar(props) {
         <InlineSVG src={playUrl} alt="Play Sketch" />
       </button>
       <button
-        className={playButtonClass}
+        className="toolbar__play-sketch-button"
         onClick={() => { props.startTextOutput(); props.startSketch(); }}
         aria-label="play sketch with output text"
       >

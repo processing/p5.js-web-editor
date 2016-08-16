@@ -7,7 +7,7 @@ class TextOutput extends React.Component {
   render() {
     return (
       <section
-        className="textoutput"
+        className="text-output"
         id="canvas-sub"
         tabIndex="0"
         role="main"
