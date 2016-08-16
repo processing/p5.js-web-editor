@@ -41,8 +41,7 @@ export function getProject(id) {
   };
 }
 
-export function setProjectName(event) {
-  const name = event.target.textContent;
+export function setProjectName(name) {
   return {
     type: ActionTypes.SET_PROJECT_NAME,
     name
@@ -168,6 +167,18 @@ export function cloneProject() {
         type: ActionTypes.PROJECT_SAVE_FAIL,
         error: response.data
       }));
+  };
+}
+
+export function showEditProjectName() {
+  return {
+    type: ActionTypes.SHOW_EDIT_PROJECT_NAME
+  };
+}
+
+export function hideEditProjectName() {
+  return {
+    type: ActionTypes.HIDE_EDIT_PROJECT_NAME
   };
 }
 

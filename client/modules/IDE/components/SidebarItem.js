@@ -16,7 +16,6 @@ class SidebarItem extends React.Component {
   }
 
   handleKeyPress(event) {
-    console.log(event.key);
     if (event.key === 'Enter') {
       this.props.hideEditFileName(this.props.file.id);
     }

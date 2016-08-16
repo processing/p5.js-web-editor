@@ -188,7 +188,7 @@ var Interceptor = {
         if(!(typeof(arguments[i])).localeCompare('number')){
           arguments[i] = round(arguments[i]);
         }
-        objectArray[objectCount][x.params[i].description]=arguments[i];
+        objectArray[objectCount][x.params[i].description.slice(3,-5)]=arguments[i];
       }
       if(objectTypeCount[x.name]) {
         objectTypeCount[x.name]++;
@@ -215,7 +215,7 @@ var Interceptor = {
           var tempCol = row.children.length;
           var properties =  Object.keys(objectArray[j]);
 
-          if(tempCol<properties.length){ //ie - there are more cols now
+          if(tempCol<=properties.length){ //ie - there are more cols now
             for(var i =0;i<tempCol;i++) {
               row.children[i].innerHTML = properties[i] + ' : ' + objectArray[j][properties[i]];
             }
@@ -247,8 +247,8 @@ var Interceptor = {
           var tempCol = row.children.length;
           var properties =  Object.keys(objectArray[j]);
 
-          if(tempCol<properties.length){ //ie - there are more cols now
-            for(var i =0;i<=tempCol;i++) {
+          if(tempCol<=properties.length){ //ie - there are more cols now
+              for(var i =0;i<tempCol;i++) {
               row.children[i].innerHTML = properties[i] + ' : ' + objectArray[j][properties[i]];
             }
             for(var i=tempCol;i < properties.length;i++) {
