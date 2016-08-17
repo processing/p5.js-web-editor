@@ -60,11 +60,13 @@ class PreviewFrame extends React.Component {
       this.renderFrameContents();
     }
 
-    window.addEventListener('message', (msg) => {
-      if (msg.data.source === 'sketch') {
-        this.props.dispatchConsoleEvent(msg);
-      }
-    });
+    if (this.props.dispatchConsoleEvent) {
+      window.addEventListener('message', (msg) => {
+        if (msg.data.source === 'sketch') {
+          this.props.dispatchConsoleEvent(msg);
+        }
+      });
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -73,6 +75,11 @@ class PreviewFrame extends React.Component {
     }
 
     if (this.props.isPlaying && this.props.content !== prevProps.content) {
+      this.renderSketch();
+    }
+
+    // I apologize for this, it is a hack.
+    if (this.props.isPlaying && this.props.files[0].id !== prevProps.files[0].id) {
       this.renderSketch();
     }
   }
@@ -175,14 +182,14 @@ class PreviewFrame extends React.Component {
 PreviewFrame.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   head: PropTypes.object.isRequired,
-  content: PropTypes.string.isRequired,
+  content: PropTypes.string,
   htmlFile: PropTypes.shape({
     content: PropTypes.string.isRequired
   }),
   jsFiles: PropTypes.array.isRequired,
   cssFiles: PropTypes.array.isRequired,
   files: PropTypes.array.isRequired,
-  dispatchConsoleEvent: PropTypes.func.isRequired,
+  dispatchConsoleEvent: PropTypes.func,
   children: PropTypes.element
 };
 

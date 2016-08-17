@@ -17,6 +17,10 @@ router.route('/projects/:project_id').get((req, res) => {
   res.sendFile(path.resolve(`${__dirname}/../../index.html`));
 });
 
+router.route('/full/:project_id').get((req, res) => {
+  res.sendFile(path.resolve(`${__dirname}/../../index.html`));
+});
+
 router.route('/login').get((req, res) => {
   res.sendFile(path.resolve(`${__dirname}/../../index.html`));
 });

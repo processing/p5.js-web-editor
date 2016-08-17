@@ -24,7 +24,7 @@ export function getProject(id) {
   return (dispatch, getState) => {
     axios.get(`${ROOT_URL}/projects/${id}`, { withCredentials: true })
       .then(response => {
-        browserHistory.push(`/projects/${id}`);
+        // browserHistory.push(`/projects/${id}`);
         dispatch({
           type: ActionTypes.SET_PROJECT,
           project: response.data,

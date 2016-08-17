@@ -1,0 +1,16 @@
+.fullscreen-preview {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-flow: column;
+}
+
+.fullscreen-preview__title {
+  width: 100%;
+}
+
+.fullscreen-preview__frame-wrapper {
+  width: 100%;
+  flex: 1 0 0%;
+  position: relative;
+}
