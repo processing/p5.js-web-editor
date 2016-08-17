@@ -4,9 +4,15 @@ import axios from 'axios';
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
-export function getProjects() {
+export function getProjects(username) {
   return (dispatch) => {
-    axios.get(`${ROOT_URL}/projects`, { withCredentials: true })
+    let url;
+    if (username) {
+      url = `${ROOT_URL}/${username}/projects`;
+    } else {
+      url = `${ROOT_URL}/projects`;
+    }
+    axios.get(url, { withCredentials: true })
       .then(response => {
         dispatch({
           type: ActionTypes.SET_PROJECTS,

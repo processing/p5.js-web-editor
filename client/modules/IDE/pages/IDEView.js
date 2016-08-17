@@ -235,10 +235,10 @@ class IDEView extends React.Component {
           return '';
         })()}
         {(() => { // eslint-disable-line
-          if (this.props.location.pathname === '/sketches') {
+          if (this.props.location.pathname.match(/sketches$/)) {
             return (
               <Overlay>
-                <SketchList />
+                <SketchList username={this.props.params.username} />
               </Overlay>
             );
           }
@@ -251,7 +251,8 @@ class IDEView extends React.Component {
 
 IDEView.propTypes = {
   params: PropTypes.shape({
-    project_id: PropTypes.string
+    project_id: PropTypes.string,
+    username: PropTypes.string
   }),
   location: PropTypes.shape({
     pathname: PropTypes.string

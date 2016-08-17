@@ -10,7 +10,7 @@ const exitUrl = require('../../../images/exit.svg');
 
 class SketchList extends React.Component {
   componentDidMount() {
-    this.props.getProjects();
+    this.props.getProjects(this.props.username);
   }
 
   render() {
@@ -51,7 +51,8 @@ SketchList.propTypes = {
   user: PropTypes.object.isRequired,
   getProjects: PropTypes.func.isRequired,
   sketches: PropTypes.array.isRequired,
-  closeSketchList: PropTypes.func.isRequired
+  closeSketchList: PropTypes.func.isRequired,
+  username: PropTypes.string
 };
 
 function mapStateToProps(state) {
