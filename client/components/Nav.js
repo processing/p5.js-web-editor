@@ -21,28 +21,52 @@ function Nav(props) {
             Save
           </a>
         </li>
-        <li className="nav__item">
-          <a className="nav__clone" onClick={props.cloneProject}>
-            Duplicate
-          </a>
-        </li>
-        <li className="nav__item">
-          <a className="nav__export" onClick={props.exportProjectAsZip}>
-            Download
-          </a>
-        </li>
-        <li className="nav__item">
-          <Link to={`/full/${props.project.id}`} target="_blank">
-            Fullscreen
-          </Link>
-        </li>
-        <li className="nav__item">
-          <p className="nav__open">
-            <Link to="/sketches">
-              Open
-            </Link>
-          </p>
-        </li>
+        {(() => { // eslint-disable-line
+          if (props.project.id) {
+            return (
+              <li className="nav__item">
+                <a className="nav__clone" onClick={props.cloneProject}>
+                  Duplicate
+                </a>
+              </li>
+            );
+          }
+        })()}
+        {(() => { // eslint-disable-line
+          if (props.project.id) {
+            return (
+              <li className="nav__item">
+                <a className="nav__export" onClick={props.exportProjectAsZip}>
+                  Download
+                </a>
+              </li>
+            );
+          }
+        })()}
+        {(() => { // eslint-disable-line
+          if (props.project.id) {
+            return (
+              <li className="nav__item">
+                <Link to={`/full/${props.project.id}`} target="_blank">
+                  Fullscreen
+                </Link>
+              </li>
+            );
+          }
+        })()}
+        {(() => { // eslint-disable-line
+          if (props.user.authenticated) {
+            return (
+              <li className="nav__item">
+                <p className="nav__open">
+                  <Link to="/sketches">
+                    Open
+                  </Link>
+                </p>
+              </li>
+            );
+          }
+        })()}
       </ul>
       <ul className="nav__items-right" title="user-menu">
         <li className="nav__item">
