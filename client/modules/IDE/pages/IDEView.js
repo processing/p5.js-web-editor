@@ -114,6 +114,7 @@ class IDEView extends React.Component {
           saveProject={this.props.saveProject}
           exportProjectAsZip={this.props.exportProjectAsZip}
           cloneProject={this.props.cloneProject}
+          project={this.props.project}
         />
         <Toolbar
           className="Toolbar"

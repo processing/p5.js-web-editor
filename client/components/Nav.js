@@ -32,6 +32,11 @@ function Nav(props) {
           </a>
         </li>
         <li className="nav__item">
+          <Link to={`/full/${props.project.id}`} target="_blank">
+            Fullscreen
+          </Link>
+        </li>
+        <li className="nav__item">
           <p className="nav__open">
             <Link to="/sketches">
               Open
@@ -57,7 +62,10 @@ Nav.propTypes = {
   user: PropTypes.shape({
     authenticated: PropTypes.bool.isRequired,
     username: PropTypes.string
-  }).isRequired
+  }).isRequired,
+  project: PropTypes.shape({
+    id: PropTypes.string
+  })
 };
 
 export default Nav;
