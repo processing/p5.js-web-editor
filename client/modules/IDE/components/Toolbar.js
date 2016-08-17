@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { Link } from 'react-router';
 const InlineSVG = require('react-inlinesvg');
 const playUrl = require('../../../images/play.svg');
 const logoUrl = require('../../../images/p5js-logo.svg');
@@ -81,7 +82,9 @@ class Toolbar extends React.Component {
           {(() => { // eslint-disable-line
             if (this.props.owner) {
               return (
-                <p className="toolbar__project-owner">by <span>{this.props.owner.username}</span></p>
+                <p className="toolbar__project-owner">
+                  by <Link to={`/${this.props.owner.username}/sketches`}>{this.props.owner.username}</Link>
+                </p>
               );
             }
           })()}
