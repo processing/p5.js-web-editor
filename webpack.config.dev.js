@@ -38,6 +38,10 @@ module.exports = {
       {
         test: /\.(svg|mp3)$/,
         loader: 'file'
+      },
+      {
+          test: /fonts\/.*\.(eot|svg|ttf|woff|woff2)$/,
+          loader: 'file'
       }
     ],
   },
