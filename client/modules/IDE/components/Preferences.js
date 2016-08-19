@@ -178,7 +178,8 @@ class Preferences extends React.Component {
           </div>
         </div>
         <div className="preference">
-          <h4 className="preference__title">Hidden Text Output</h4>
+          <h4 className="preference__title">Accessible Text-based Canvas</h4>
+          <h6 className="preference__subtitle">Used with screen reader</h6>
           <div className="preference__options">
             <button
               className={textOutputOnClass}

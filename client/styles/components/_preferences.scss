@@ -46,6 +46,13 @@
 	margin-bottom: #{10 / $base-font-size}rem;
 }
 
+.preference__subtitle {
+	width: 100%;
+	margin-bottom: #{10 / $base-font-size}rem;
+	margin-top: 0;
+	color: $light-inactive-text-color;
+}
+
 .preference__value {
 	border: 2px solid $light-button-border-color;
 	text-align: center;
