@@ -134,12 +134,18 @@ class PreviewFrame extends React.Component {
       htmlFile = htmlFile.replace(fileRegex, `<style>\n${cssFile.content}\n</style>`);
     });
 
-    // const htmlHead = htmlFile.match(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi);
-    // const headRegex = new RegExp('head', 'i');
-    // let htmlHeadContents = htmlHead[0].split(headRegex)[1];
-    // htmlHeadContents = htmlHeadContents.slice(1, htmlHeadContents.length - 2);
-    // htmlHeadContents += '<link rel="stylesheet" type="text/css" href="/preview-styles.css" />\n';
-    // htmlFile = htmlFile.replace(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi, `<head>\n${htmlHeadContents}\n</head>`);
+    if (this.props.textOutput || this.props.isTextOutputPlaying) {
+      const htmlHead = htmlFile.match(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi);
+      const headRegex = new RegExp('head', 'i');
+      let htmlHeadContents = htmlHead[0].split(headRegex)[1];
+      htmlHeadContents = htmlHeadContents.slice(1, htmlHeadContents.length - 2);
+      htmlHeadContents += '<script src="/loadData.js"></script>\n';
+      htmlHeadContents += '<script src="/interceptor-functions.js"></script>\n';
+      htmlHeadContents += '<script src="/intercept-p5.js"></script>\n';
+      htmlHeadContents += '<script type="text/javascript" src="/ntc.min.js"></script>';
+      htmlFile = htmlFile.replace(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi, `<head>\n${htmlHeadContents}\n</head>`);
+    }
+
     htmlFile += hijackConsoleScript;
 
     return htmlFile;
@@ -181,6 +187,8 @@ class PreviewFrame extends React.Component {
 
 PreviewFrame.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
+  isTextOutputPlaying: PropTypes.bool.isRequired,
+  textOutput: PropTypes.bool.isRequired,
   head: PropTypes.object.isRequired,
   content: PropTypes.string,
   htmlFile: PropTypes.shape({

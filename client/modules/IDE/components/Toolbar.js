@@ -54,8 +54,18 @@ class Toolbar extends React.Component {
         <button className={playButtonClass} onClick={this.props.startSketch} aria-label="play sketch">
           <InlineSVG src={playUrl} alt="Play Sketch" />
         </button>
-
-        <button className={stopButtonClass} onClick={this.props.stopSketch} aria-label="stop sketch">
+        <button
+          className="toolbar__play-sketch-button"
+          onClick={() => { this.props.startTextOutput(); this.props.startSketch(); }}
+          aria-label="play sketch with output text"
+        >
+          <InlineSVG src={playUrl} alt="Play Sketch with output text" />
+        </button>
+        <button
+          className={stopButtonClass}
+          onClick={() => { this.props.stopTextOutput(); this.props.stopSketch(); }}
+          aria-label="stop sketch"
+        >
           <InlineSVG src={stopUrl} alt="Stop Sketch" />
         </button>
         <div className={nameContainerClass}>
@@ -106,6 +116,8 @@ Toolbar.propTypes = {
   preferencesIsVisible: PropTypes.bool.isRequired,
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
+  startTextOutput: PropTypes.func.isRequired,
+  stopTextOutput: PropTypes.func.isRequired,
   setProjectName: PropTypes.func.isRequired,
   openPreferences: PropTypes.func.isRequired,
   owner: PropTypes.shape({

@@ -18,6 +18,18 @@ export function stopSketch() {
   };
 }
 
+export function startTextOutput() {
+  return {
+    type: ActionTypes.START_TEXT_OUTPUT
+  };
+}
+
+export function stopTextOutput() {
+  return {
+    type: ActionTypes.STOP_TEXT_OUTPUT
+  };
+}
+
 export function setSelectedFile(fileId) {
   return {
     type: ActionTypes.SET_SELECTED_FILE,

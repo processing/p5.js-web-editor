@@ -62,6 +62,14 @@ class Preferences extends React.Component {
       preference__option: true,
       'preference__option--selected': !this.props.lintWarning
     });
+    let textOutputOnClass = classNames({
+      preference__option: true,
+      'preference__option--selected': this.props.textOutput
+    });
+    let textOutputOffClass = classNames({
+      preference__option: true,
+      'preference__option--selected': !this.props.textOutput
+    });
     return (
       <section className={preferencesContainerClass} tabIndex="0" title="preference-menu">
         <div className="preferences__heading">
@@ -169,6 +177,22 @@ class Preferences extends React.Component {
             >Off</button>
           </div>
         </div>
+        <div className="preference">
+          <h4 className="preference__title">Accessible Text-based Canvas</h4>
+          <h6 className="preference__subtitle">Used with screen reader</h6>
+          <div className="preference__options">
+            <button
+              className={textOutputOnClass}
+              onClick={() => this.props.setTextOutput(true)}
+              aria-label="text output on"
+            >On</button>
+            <button
+              className={textOutputOffClass}
+              onClick={() => this.props.setTextOutput(false)}
+              aria-label="text output off"
+            >Off</button>
+          </div>
+        </div>
       </section>
     );
   }
@@ -186,6 +210,8 @@ Preferences.propTypes = {
   setFontSize: PropTypes.func.isRequired,
   autosave: PropTypes.bool.isRequired,
   setAutosave: PropTypes.func.isRequired,
+  textOutput: PropTypes.bool.isRequired,
+  setTextOutput: PropTypes.func.isRequired,
   lintWarning: PropTypes.bool.isRequired,
   setLintWarning: PropTypes.func.isRequired
 };

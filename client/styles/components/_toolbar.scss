@@ -9,6 +9,10 @@
 	}
 }
 
+.toolbar__play-sketch-button {
+	@extend %hidden-element;
+}
+
 .toolbar__stop-button {
 	@extend %toolbar-button;
 	&--selected {

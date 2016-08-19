@@ -3,6 +3,7 @@ import Editor from '../components/Editor';
 import Sidebar from '../components/Sidebar';
 import PreviewFrame from '../components/PreviewFrame';
 import Toolbar from '../components/Toolbar';
+import TextOutput from '../components/TextOutput';
 import Preferences from '../components/Preferences';
 import NewFileModal from '../components/NewFileModal';
 import Nav from '../../../components/Nav';
@@ -121,11 +122,15 @@ class IDEView extends React.Component {
           isPlaying={this.props.ide.isPlaying}
           startSketch={this.props.startSketch}
           stopSketch={this.props.stopSketch}
+          startTextOutput={this.props.startTextOutput}
+          stopTextOutput={this.props.stopTextOutput}
+          projectName={this.props.project.name}
           setProjectName={this.props.setProjectName}
           showEditProjectName={this.props.showEditProjectName}
           hideEditProjectName={this.props.hideEditProjectName}
           openPreferences={this.props.openPreferences}
           preferencesIsVisible={this.props.ide.preferencesIsVisible}
+          setTextOutput={this.props.setTextOutput}
           owner={this.props.project.owner}
           project={this.props.project}
         />
@@ -143,6 +148,8 @@ class IDEView extends React.Component {
           setAutosave={this.props.setAutosave}
           lintWarning={this.props.preferences.lintWarning}
           setLintWarning={this.props.setLintWarning}
+          textOutput={this.props.preferences.textOutput}
+          setTextOutput={this.props.setTextOutput}
         />
         <div className="editor-preview-container">
           <SplitPane
@@ -208,6 +215,16 @@ class IDEView extends React.Component {
               <div>
                 <div className="preview-frame-overlay" ref="overlay">
                 </div>
+                <div>
+                {(() => {
+                  if ((this.props.preferences.textOutput && this.props.ide.isPlaying) || this.props.ide.isTextOutputPlaying) {
+                    return (
+                      <TextOutput />
+                    );
+                  }
+                  return '';
+                })()}
+                </div>
                 <PreviewFrame
                   htmlFile={this.props.htmlFile}
                   jsFiles={this.props.jsFiles}
@@ -218,6 +235,8 @@ class IDEView extends React.Component {
                     <link type="text/css" rel="stylesheet" href="/preview-styles.css" />
                   }
                   isPlaying={this.props.ide.isPlaying}
+                  isTextOutputPlaying={this.props.ide.isTextOutputPlaying}
+                  textOutput={this.props.preferences.textOutput}
                   dispatchConsoleEvent={this.props.dispatchConsoleEvent}
                 />
               </div>
@@ -267,6 +286,7 @@ IDEView.propTypes = {
   saveProject: PropTypes.func.isRequired,
   ide: PropTypes.shape({
     isPlaying: PropTypes.bool.isRequired,
+    isTextOutputPlaying: PropTypes.bool.isRequired,
     consoleEvent: PropTypes.object,
     modalIsVisible: PropTypes.bool.isRequired,
     sidebarIsExpanded: PropTypes.bool.isRequired,
@@ -275,6 +295,8 @@ IDEView.propTypes = {
   }).isRequired,
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
+  startTextOutput: PropTypes.func.isRequired,
+  stopTextOutput: PropTypes.func.isRequired,
   project: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string.isRequired,
@@ -297,7 +319,8 @@ IDEView.propTypes = {
     indentationAmount: PropTypes.number.isRequired,
     isTabIndent: PropTypes.bool.isRequired,
     autosave: PropTypes.bool.isRequired,
-    lintWarning: PropTypes.bool.isRequired
+    lintWarning: PropTypes.bool.isRequired,
+    textOutput: PropTypes.bool.isRequired
   }).isRequired,
   closePreferences: PropTypes.func.isRequired,
   setFontSize: PropTypes.func.isRequired,
@@ -306,6 +329,7 @@ IDEView.propTypes = {
   indentWithSpace: PropTypes.func.isRequired,
   setAutosave: PropTypes.func.isRequired,
   setLintWarning: PropTypes.func.isRequired,
+  setTextOutput: PropTypes.func.isRequired,
   files: PropTypes.array.isRequired,
   updateFileContent: PropTypes.func.isRequired,
   selectedFile: PropTypes.shape({

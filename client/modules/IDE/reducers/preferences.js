@@ -5,7 +5,8 @@ const initialState = {
   indentationAmount: 2,
   isTabIndent: true,
   autosave: true,
-  lintWarning: false
+  lintWarning: false,
+  textOutput: false
 };
 
 const preferences = (state = initialState, action) => {
@@ -26,6 +27,8 @@ const preferences = (state = initialState, action) => {
       return Object.assign({}, state, { autosave: action.value });
     case ActionTypes.SET_LINT_WARNING:
       return Object.assign({}, state, { lintWarning: action.value });
+    case ActionTypes.SET_TEXT_OUTPUT:
+      return Object.assign({}, state, { textOutput: action.value });
     case ActionTypes.SET_PREFERENCES:
       return action.preferences;
     default:
