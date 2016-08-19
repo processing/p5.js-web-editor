@@ -12,6 +12,7 @@ function fetchJSONFile(path, callback) {
     httpRequest.open('GET', path,false);
     httpRequest.send();
 }
-fetchJSONFile('https://raw.githubusercontent.com/processing/p5.js-website/9f1a4cd299c1330b046373407d42894e274d20e7/reference/data.min.json', function(data){
-    allData = data;
+
+fetchJSONFile('data.min.json', function(data){
+  allData = data;
 });

@@ -135,7 +135,7 @@ class PreviewFrame extends React.Component {
       htmlHeadContents += '<script src="/loadData.js"></script>\n';
       htmlHeadContents += '<script src="/interceptor-functions.js"></script>\n';
       htmlHeadContents += '<script src="/intercept-p5.js"></script>\n';
-      htmlHeadContents += '<script type="text/javascript" src="http://chir.ag/projects/ntc/ntc.js"></script>';
+      htmlHeadContents += '<script type="text/javascript" src="/ntc.min.js"></script>';
       htmlFile = htmlFile.replace(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi, `<head>\n${htmlHeadContents}\n</head>`);
     }
 

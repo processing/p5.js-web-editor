@@ -216,7 +216,7 @@ class IDEView extends React.Component {
                 </div>
                 <div>
                 {(() => {
-                  if (this.props.preferences.textOutput || this.props.ide.isTextOutputPlaying) {
+                  if ((this.props.preferences.textOutput && this.props.ide.isPlaying) || this.props.ide.isTextOutputPlaying) {
                     return (
                       <TextOutput />
                     );
