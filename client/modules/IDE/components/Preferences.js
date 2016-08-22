@@ -180,8 +180,75 @@ class Preferences extends React.Component {
               aria-label="lint warning off"
             >Off</button>
           </div>
-          <div className="preference_options">
-
+        </div>
+        <div className="preference">
+          <h4 className="preference__title">{'Select Lint Warning Sound'}</h4>
+          <div className="preference__options">
+            <div>
+              <input
+                type="radio"
+                id="beep1"
+                name="beep1"
+                value="beep1"
+                onClick={() => this.props.setLintSound('beep1')}
+                aria-label="lint sound 1"
+              />
+              <label
+                htmlFor="beep1"
+              >Lint Sound 1</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                id="beep2"
+                name="beep2"
+                value="beep2"
+                onClick={() => this.props.setLintSound('beep2')}
+                aria-label="lint sound 2"
+              />
+              <label
+                htmlFor="beep2"
+              >Lint Sound 2</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                id="beep3"
+                name="beep3"
+                value="beep3"
+                onClick={() => this.props.setLintSound('beep3')}
+                aria-label="lint sound 3"
+              />
+              <label
+                htmlFor="beep3"
+              >Lint Sound 3</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                id="beep4"
+                name="beep4"
+                value="beep4"
+                onClick={() => this.props.setLintSound('beep4')}
+                aria-label="lint sound 4"
+              />
+              <label
+                htmlFor="beep4"
+              >Lint Sound 4</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                id="beep5"
+                name="beep5"
+                value="beep5"
+                onClick={() => this.props.setLintSound('beep5')}
+                aria-label="lint sound 5"
+              />
+              <label
+                htmlFor="beep5"
+              >Lint Sound 5</label>
+            </div>
           </div>
         </div>
         <div className="preference">

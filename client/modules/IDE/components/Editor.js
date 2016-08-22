@@ -103,6 +103,7 @@ class Editor extends React.Component {
     if (this.props.lintSound !== prevProps.lintSound) {
       const newBeep = this.beeps[this.props.lintSound];
       this.beep = new Audio(newBeep);
+      this.beep.play();
     }
   }
 
