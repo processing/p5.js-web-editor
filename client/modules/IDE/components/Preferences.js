@@ -190,7 +190,8 @@ class Preferences extends React.Component {
                 id="beep1"
                 name="beep1"
                 value="beep1"
-                onClick={() => this.props.setLintSound('beep1')}
+                checked={this.props.lintSound === 'beep1'}
+                onChange={() => this.props.setLintSound('beep1')}
                 aria-label="lint sound 1"
               />
               <label
@@ -203,7 +204,8 @@ class Preferences extends React.Component {
                 id="beep2"
                 name="beep2"
                 value="beep2"
-                onClick={() => this.props.setLintSound('beep2')}
+                checked={this.props.lintSound === 'beep2'}
+                onChange={() => this.props.setLintSound('beep2')}
                 aria-label="lint sound 2"
               />
               <label
@@ -216,7 +218,8 @@ class Preferences extends React.Component {
                 id="beep3"
                 name="beep3"
                 value="beep3"
-                onClick={() => this.props.setLintSound('beep3')}
+                checked={this.props.lintSound === 'beep3'}
+                onChange={() => this.props.setLintSound('beep3')}
                 aria-label="lint sound 3"
               />
               <label
@@ -229,7 +232,8 @@ class Preferences extends React.Component {
                 id="beep4"
                 name="beep4"
                 value="beep4"
-                onClick={() => this.props.setLintSound('beep4')}
+                checked={this.props.lintSound === 'beep4'}
+                onChange={() => this.props.setLintSound('beep4')}
                 aria-label="lint sound 4"
               />
               <label
@@ -242,7 +246,8 @@ class Preferences extends React.Component {
                 id="beep5"
                 name="beep5"
                 value="beep5"
-                onClick={() => this.props.setLintSound('beep5')}
+                checked={this.props.lintSound === 'beep5'}
+                onChange={() => this.props.setLintSound('beep5')}
                 aria-label="lint sound 5"
               />
               <label
@@ -287,6 +292,7 @@ Preferences.propTypes = {
   textOutput: PropTypes.bool.isRequired,
   setTextOutput: PropTypes.func.isRequired,
   lintWarning: PropTypes.bool.isRequired,
+  lintSound: PropTypes.string.isRequired,
   setLintWarning: PropTypes.func.isRequired,
   setLintSound: PropTypes.func.isRequired
 };
