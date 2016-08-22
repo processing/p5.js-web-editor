@@ -22,7 +22,12 @@ class SidebarItem extends React.Component {
   }
 
   validateFileName() {
-    if (!this.props.file.name.match(/.*\.(js|css|html|json)$/)) {
+    const oldFileExtension = this.originalFileName.match(/\.[0-9a-z]+$/i);
+    const newFileExtension = this.props.file.name.match(/\.[0-9a-z]+$/i);
+    if (oldFileExtension && !newFileExtension) {
+      this.props.updateFileName(this.props.file.id, this.originalFileName);
+    }
+    if (oldFileExtension && newFileExtension && oldFileExtension[0] !== newFileExtension[0]) {
       this.props.updateFileName(this.props.file.id, this.originalFileName);
     }
   }
@@ -38,7 +43,7 @@ class SidebarItem extends React.Component {
     return (
       <li
         className={itemClass}
-        onBlur={() => this.props.hideFileOptions(this.props.file.id)}
+        onBlur={() => setTimeout(() => this.props.hideFileOptions(this.props.file.id), 100)}
         tabIndex={this.props.fileIndex}
         onClick={() => this.props.setSelectedFile(this.props.file.id)}
       >
@@ -69,6 +74,7 @@ class SidebarItem extends React.Component {
             <li>
               <a
                 onClick={() => {
+                  console.log('before show edit file name');
                   this.originalFileName = this.props.file.name;
                   this.props.showEditFileName(this.props.file.id);
                   setTimeout(() => this.refs.fileNameInput.focus(), 0);
