@@ -181,81 +181,83 @@ class Preferences extends React.Component {
             >Off</button>
           </div>
         </div>
-        <div className="preference">
-          <h4 className="preference__title">{'Select Lint Warning Sound'}</h4>
-          <div className="preference__options">
-            <div>
-              <input
-                type="radio"
-                id="beep1"
-                name="beep1"
-                value="beep1"
-                checked={this.props.lintSound === 'beep1'}
-                onChange={() => this.props.setLintSound('beep1')}
-                aria-label="lint sound 1"
-              />
-              <label
-                htmlFor="beep1"
-              >Lint Sound 1</label>
-            </div>
-            <div>
-              <input
-                type="radio"
-                id="beep2"
-                name="beep2"
-                value="beep2"
-                checked={this.props.lintSound === 'beep2'}
-                onChange={() => this.props.setLintSound('beep2')}
-                aria-label="lint sound 2"
-              />
-              <label
-                htmlFor="beep2"
-              >Lint Sound 2</label>
-            </div>
-            <div>
-              <input
-                type="radio"
-                id="beep3"
-                name="beep3"
-                value="beep3"
-                checked={this.props.lintSound === 'beep3'}
-                onChange={() => this.props.setLintSound('beep3')}
-                aria-label="lint sound 3"
-              />
-              <label
-                htmlFor="beep3"
-              >Lint Sound 3</label>
-            </div>
-            <div>
-              <input
-                type="radio"
-                id="beep4"
-                name="beep4"
-                value="beep4"
-                checked={this.props.lintSound === 'beep4'}
-                onChange={() => this.props.setLintSound('beep4')}
-                aria-label="lint sound 4"
-              />
-              <label
-                htmlFor="beep4"
-              >Lint Sound 4</label>
-            </div>
-            <div>
-              <input
-                type="radio"
-                id="beep5"
-                name="beep5"
-                value="beep5"
-                checked={this.props.lintSound === 'beep5'}
-                onChange={() => this.props.setLintSound('beep5')}
-                aria-label="lint sound 5"
-              />
-              <label
-                htmlFor="beep5"
-              >Lint Sound 5</label>
+        {this.props.lintWarning ?
+          <div className="preference">
+            <h4 className="preference__title">{'Select Sound'}</h4>
+            <div className="preference__options">
+              <p className="preference__option">
+                <input
+                  type="radio"
+                  id="beep1"
+                  name="beep1"
+                  value="beep1"
+                  checked={this.props.lintSound === 'beep1'}
+                  onChange={() => this.props.setLintSound('beep1')}
+                  aria-label="lint sound 1"
+                />
+                <label
+                  htmlFor="beep1"
+                >1</label>
+              </p>
+              <p className="preference__option">
+                <input
+                  type="radio"
+                  id="beep2"
+                  name="beep2"
+                  value="beep2"
+                  checked={this.props.lintSound === 'beep2'}
+                  onChange={() => this.props.setLintSound('beep2')}
+                  aria-label="lint sound 2"
+                />
+                <label
+                  htmlFor="beep2"
+                >2</label>
+              </p>
+              <p className="preference__option">
+                <input
+                  type="radio"
+                  id="beep3"
+                  name="beep3"
+                  value="beep3"
+                  checked={this.props.lintSound === 'beep3'}
+                  onChange={() => this.props.setLintSound('beep3')}
+                  aria-label="lint sound 3"
+                />
+                <label
+                  htmlFor="beep3"
+                >3</label>
+              </p>
+              <p className="preference__option">
+                <input
+                  type="radio"
+                  id="beep4"
+                  name="beep4"
+                  value="beep4"
+                  checked={this.props.lintSound === 'beep4'}
+                  onChange={() => this.props.setLintSound('beep4')}
+                  aria-label="lint sound 4"
+                />
+                <label
+                  htmlFor="beep4"
+                >4</label>
+              </p>
+              <p className="preference__option">
+                <input
+                  type="radio"
+                  id="beep5"
+                  name="beep5"
+                  value="beep5"
+                  checked={this.props.lintSound === 'beep5'}
+                  onChange={() => this.props.setLintSound('beep5')}
+                  aria-label="lint sound 5"
+                />
+                <label
+                  htmlFor="beep5"
+                >5</label>
+              </p>
             </div>
           </div>
-        </div>
+        : null}
         <div className="preference">
           <h4 className="preference__title">Accessible Text-based Canvas</h4>
           <h6 className="preference__subtitle">Used with screen reader</h6>
@@ -294,7 +296,8 @@ Preferences.propTypes = {
   lintWarning: PropTypes.bool.isRequired,
   lintSound: PropTypes.string.isRequired,
   setLintWarning: PropTypes.func.isRequired,
-  setLintSound: PropTypes.func.isRequired
+  setLintSound: PropTypes.func.isRequired,
+  showLintSoundOptions: PropTypes.func.isRequired
 };
 
 export default Preferences;
