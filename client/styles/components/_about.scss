@@ -1,0 +1,20 @@
+.about {
+  @extend %modal;
+  display: flex;
+  flex-wrap: wrap;
+  flex-flow: column;
+}
+
+.about__header {
+  display: flex;
+  justify-content: space-between;
+  padding: #{20 / $base-font-size}rem;
+}
+
+.about__exit-button {
+  @extend %icon;
+}
+
+.about__copy {
+  padding: #{20 / $base-font-size}rem;
+}

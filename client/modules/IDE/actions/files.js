@@ -128,6 +128,7 @@ export function hideFileOptions(fileId) {
 }
 
 export function showEditFileName(id) {
+  console.log('in show edit file name');
   return {
     type: ActionTypes.SHOW_EDIT_FILE_NAME,
     id

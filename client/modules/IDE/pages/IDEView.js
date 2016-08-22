@@ -19,6 +19,7 @@ import { getFile, getHTMLFile, getJSFiles, getCSSFiles, setSelectedFile } from '
 import SplitPane from 'react-split-pane';
 import Overlay from '../../App/components/Overlay';
 import SketchList from '../components/SketchList';
+import About from '../components/About';
 
 class IDEView extends React.Component {
   constructor(props) {
@@ -262,6 +263,15 @@ class IDEView extends React.Component {
             return (
               <Overlay>
                 <SketchList username={this.props.params.username} />
+              </Overlay>
+            );
+          }
+        })()}
+        {(() => { // eslint-disable-line
+          if (this.props.location.pathname === '/about') {
+            return (
+              <Overlay>
+                <About />
               </Overlay>
             );
           }

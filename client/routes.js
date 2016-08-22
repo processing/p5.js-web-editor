@@ -22,6 +22,7 @@ const routes = (store) =>
     <Route path="/full/:project_id" component={FullView} />
     <Route path="/sketches" component={IDEView} />
     <Route path="/:username/sketches" component={IDEView} />
+    <Route path="/about" component={IDEView} />
   </Route>
   );
 

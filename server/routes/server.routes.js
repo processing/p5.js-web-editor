@@ -29,6 +29,10 @@ router.route('/sketches').get((req, res) => {
   res.sendFile(path.resolve(`${__dirname}/../../index.html`));
 });
 
+router.route('/about').get((req, res) => {
+  res.sendFile(path.resolve(`${__dirname}/../../index.html`));
+});
+
 router.route('/:username/sketches').get((req, res) => {
   res.sendFile(path.resolve(`${__dirname}/../../index.html`));
 });

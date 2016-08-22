@@ -67,6 +67,13 @@ function Nav(props) {
             );
           }
         })()}
+        <li className="nav__item">
+          <p className="nav__about">
+            <Link to="/about">
+              About
+            </Link>
+          </p>
+        </li>
       </ul>
       <ul className="nav__items-right" title="user-menu">
         <li className="nav__item">
