@@ -18,14 +18,25 @@ import { CSSLint } from 'csslint';
 window.CSSLint = CSSLint;
 import { HTMLHint } from 'htmlhint';
 window.HTMLHint = HTMLHint;
-const beepUrl = require('../../../sounds/audioAlert.mp3');
+const _beep1 = require('../../../sounds/beep1.mp3');
+const _beep2 = require('../../../sounds/beep2.mp3');
+const _beep3 = require('../../../sounds/beep3.mp3');
+const _beep4 = require('../../../sounds/beep4.mp3');
+const _beep5 = require('../../../sounds/beep5.mp3');
 
 import { debounce } from 'throttle-debounce';
 
 class Editor extends React.Component {
 
   componentDidMount() {
-    this.beep = new Audio(beepUrl);
+    this.beeps = {
+      beep1: _beep1,
+      beep2: _beep2,
+      beep3: _beep3,
+      beep4: _beep4,
+      beep5: _beep5
+    };
+    this.beep = new Audio(this.beeps.beep1);
     this._cm = CodeMirror(this.refs.container, { // eslint-disable-line
       theme: 'p5-widget',
       value: this.props.file.content,
@@ -89,6 +100,10 @@ class Editor extends React.Component {
         this._cm.setOption('mode', 'htmlmixed');
       }
     }
+    if (this.props.lintSound !== prevProps.lintSound) {
+      const newBeep = this.beeps[this.props.lintSound];
+      this.beep = new Audio(newBeep);
+    }
   }
 
   componentWillUnmount() {
@@ -125,7 +140,8 @@ Editor.propTypes = {
   file: PropTypes.shape({
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
-  })
+  }),
+  lintSound: PropTypes.string.isRequired
 };
 
 export default Editor;

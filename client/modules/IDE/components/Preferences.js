@@ -33,6 +33,10 @@ class Preferences extends React.Component {
     this.props.setLintWarning(value);
   }
 
+  handleLintSound(event) {
+    this.props.setLintSound(event.target.value);
+  }
+
   render() {
     const preferencesContainerClass = classNames({
       preferences: true,
@@ -176,6 +180,9 @@ class Preferences extends React.Component {
               aria-label="lint warning off"
             >Off</button>
           </div>
+          <div className="preference_options">
+
+          </div>
         </div>
         <div className="preference">
           <h4 className="preference__title">Accessible Text-based Canvas</h4>
@@ -213,7 +220,8 @@ Preferences.propTypes = {
   textOutput: PropTypes.bool.isRequired,
   setTextOutput: PropTypes.func.isRequired,
   lintWarning: PropTypes.bool.isRequired,
-  setLintWarning: PropTypes.func.isRequired
+  setLintWarning: PropTypes.func.isRequired,
+  setLintSound: PropTypes.func.isRequired
 };
 
 export default Preferences;

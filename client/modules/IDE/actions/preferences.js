@@ -119,6 +119,24 @@ export function setLintWarning(value) {
   };
 }
 
+export function setLintSound(value) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.SET_LINT_SOUND,
+      value
+    });
+    const state = getState();
+    if (state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          lintSound: value
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
+  };
+}
+
 export function setTextOutput(value) {
   return (dispatch, getState) => {
     dispatch({
