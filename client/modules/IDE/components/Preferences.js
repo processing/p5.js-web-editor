@@ -296,8 +296,7 @@ Preferences.propTypes = {
   lintWarning: PropTypes.bool.isRequired,
   lintSound: PropTypes.string.isRequired,
   setLintWarning: PropTypes.func.isRequired,
-  setLintSound: PropTypes.func.isRequired,
-  showLintSoundOptions: PropTypes.func.isRequired
+  setLintSound: PropTypes.func.isRequired
 };
 
 export default Preferences;
