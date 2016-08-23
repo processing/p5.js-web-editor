@@ -34,6 +34,11 @@ const defaultCSS =
 // if the project has never been saved,
 const initialState = [
   {
+    name: 'root',
+    id: '0',
+    children: ['1', '2', '3']
+  },
+  {
     name: 'sketch.js',
     content: defaultSketch,
     id: '1'
@@ -47,11 +52,6 @@ const initialState = [
     name: 'style.css',
     content: defaultCSS,
     id: '3'
-  },
-  {
-    name: 'root',
-    id: '0',
-    children: ['1', '2', '3']
   }];
 
 

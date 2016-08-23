@@ -13,7 +13,7 @@ class Sidebar extends React.Component {
   }
 
   resetSelectedFile() {
-    this.props.setSelectedFile(this.props.files[0].id);
+    this.props.setSelectedFile(this.props.files[1].id);
   }
 
   render() {
@@ -50,7 +50,7 @@ class Sidebar extends React.Component {
             </button>
           </div>
         </div>
-        <ul className="sidebar__file-list" title="project files">
+        { /* <ul className="sidebar__file-list" title="project files">
           {this.props.files.map((file, fileIndex) =>
             <SidebarItem
               key={file.id}
@@ -66,7 +66,7 @@ class Sidebar extends React.Component {
               updateFileName={this.props.updateFileName}
             />
           )}
-        </ul>
+        </ul> */ }
         <ConnectedFileNode id={'0'} />
       </nav>
     );

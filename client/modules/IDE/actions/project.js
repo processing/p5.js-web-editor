@@ -121,7 +121,6 @@ export function exportProjectAsZip() {
     const state = getState();
     const zip = new JSZip();
     async.each(state.files, (file, cb) => {
-      console.log(file);
       if (file.url) {
         JSZipUtils.getBinaryContent(file.url, (err, data) => {
           zip.file(file.name, data, { binary: true });

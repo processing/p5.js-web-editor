@@ -37,6 +37,13 @@ export function setSelectedFile(fileId) {
   };
 }
 
+export function resetSelectedFile() {
+  return (dispatch, getState) => {
+    const state = getState();
+    setSelectedFile(state.files[1].id);
+  };
+}
+
 export function dispatchConsoleEvent(...args) {
   return {
     type: ActionTypes.CONSOLE_EVENT,

@@ -1,10 +1,12 @@
 import React, { PropTypes } from 'react';
 import * as FileActions from '../actions/files';
+import * as IDEActions from '../actions/ide';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import InlineSVG from 'react-inlinesvg';
 const downArrowUrl = require('../../../images/down-arrow.svg');
 import classNames from 'classnames';
+import { setSelectedFile } from '../reducers/files';
 
 export class FileNode extends React.Component {
   constructor(props) {
@@ -13,6 +15,12 @@ export class FileNode extends React.Component {
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleFileNameChange = this.handleFileNameChange.bind(this);
     this.validateFileName = this.validateFileName.bind(this);
+    this.handleFileClick = this.handleFileClick.bind(this);
+  }
+
+  handleFileClick(e) {
+    e.stopPropagation();
+    this.props.setSelectedFile(this.props.id);
   }
 
   handleFileNameChange(event) {
@@ -46,63 +54,73 @@ export class FileNode extends React.Component {
 
   render() {
     let itemClass = classNames({
-      'sidebar__file-item': true,
+      'sidebar__file-item': this.props.name !== 'root',
       'sidebar__file-item--selected': this.props.isSelected,
       'sidebar__file-item--open': this.props.isOptionsOpen,
       'sidebar__file-item--editing': this.props.isEditingName
     });
     return (
-      <div className={itemClass}>
-        <a className="sidebar__file-item-name">{this.props.name}</a>
-        <input
-          type="text"
-          className="sidebar__file-item-input"
-          value={this.props.name}
-          onChange={this.handleFileNameChange}
-          ref="fileNameInput"
-          onBlur={() => {
-            this.validateFileName();
-            this.props.hideEditFileName(this.props.id);
-          }}
-          onKeyPress={this.handleKeyPress}
-        />
-        <button
-          className="sidebar__file-item-show-options"
-          aria-label="view file options"
-          onClick={() => this.props.showFileOptions(this.props.id)}
-        >
-          <InlineSVG src={downArrowUrl} />
-        </button>
-        <div ref="fileOptions" className="sidebar__file-item-options">
-          <ul title="file options">
-            <li>
-              <a
-                onClick={() => {
-                  console.log('before show edit file name');
-                  this.originalFileName = this.props.name;
-                  this.props.showEditFileName(this.props.id);
-                  setTimeout(() => this.refs.fileNameInput.focus(), 0);
-                }}
-              >
-                Rename
-              </a>
-            </li>
-            <li>
-              <a
-                onClick={() => {
-                  if (window.confirm(`Are you sure you want to delete ${this.props.name}?`)) {
-                    this.props.deleteFile(this.props.id);
-                    this.props.resetSelectedFile();
-                  }
-                }}
-              >
-                Delete
-              </a>
-            </li>
-          </ul>
-        </div>
+      <div
+        className={itemClass}
+        onClick={this.handleFileClick}
+        onBlur={() => setTimeout(() => this.props.hideFileOptions(this.props.id), 100)}
+      >
         {(() => { // eslint-disable-line
-          console.log(this.props.children);
+          if (this.props.name !== 'root') {
+            return (
+              <div className="file-item__content">
+                <a className="sidebar__file-item-name">{this.props.name}</a>
+                <input
+                  type="text"
+                  className="sidebar__file-item-input"
+                  value={this.props.name}
+                  onChange={this.handleFileNameChange}
+                  ref="fileNameInput"
+                  onBlur={() => {
+                    this.validateFileName();
+                    this.props.hideEditFileName(this.props.id);
+                  }}
+                  onKeyPress={this.handleKeyPress}
+                />
+                <button
+                  className="sidebar__file-item-show-options"
+                  aria-label="view file options"
+                  onClick={() => this.props.showFileOptions(this.props.id)}
+                >
+                  <InlineSVG src={downArrowUrl} />
+                </button>
+                <div ref="fileOptions" className="sidebar__file-item-options">
+                  <ul title="file options">
+                    <li>
+                      <a
+                        onClick={() => {
+                          this.originalFileName = this.props.name;
+                          this.props.showEditFileName(this.props.id);
+                          setTimeout(() => this.refs.fileNameInput.focus(), 0);
+                        }}
+                      >
+                        Rename
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        onClick={() => {
+                          if (window.confirm(`Are you sure you want to delete ${this.props.name}?`)) {
+                            this.props.deleteFile(this.props.id);
+                            this.props.resetSelectedFile();
+                          }
+                        }}
+                      >
+                        Delete
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            );
+          }
+        })()}
+        {(() => { // eslint-disable-line
           if (this.props.children) {
             return (
               <ul>
@@ -124,22 +142,21 @@ FileNode.propTypes = {
   isOptionsOpen: PropTypes.bool,
   isEditingName: PropTypes.bool,
   setSelectedFile: PropTypes.func.isRequired,
-  fileIndex: PropTypes.number.isRequired,
   showFileOptions: PropTypes.func.isRequired,
   hideFileOptions: PropTypes.func.isRequired,
   deleteFile: PropTypes.func.isRequired,
-  resetSelectedFile: PropTypes.func.isRequired,
   showEditFileName: PropTypes.func.isRequired,
   hideEditFileName: PropTypes.func.isRequired,
-  updateFileName: PropTypes.func.isRequired
+  updateFileName: PropTypes.func.isRequired,
+  resetSelectedFile: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
-  return state.files.find((file) => file.id === ownProps.id);
+  return setSelectedFile(state.files, state.ide.selectedFile).find((file) => file.id === ownProps.id);
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(FileActions, dispatch);
+  return bindActionCreators(Object.assign(FileActions, IDEActions), dispatch);
 }
 
 const ConnectedFileNode = connect(mapStateToProps, mapDispatchToProps)(FileNode);

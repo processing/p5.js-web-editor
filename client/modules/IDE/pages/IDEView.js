@@ -24,7 +24,6 @@ import About from '../components/About';
 
 class IDEView extends React.Component {
   constructor(props) {
-    console.log(props);
     super(props);
     this._handleConsolePaneOnDragFinished = this._handleConsolePaneOnDragFinished.bind(this);
     this._handleSidebarPaneOnDragFinished = this._handleSidebarPaneOnDragFinished.bind(this);
