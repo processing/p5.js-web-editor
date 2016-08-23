@@ -36,7 +36,9 @@ const defaultCSS =
 const fileSchema = new Schema({
   name: { type: String, default: 'sketch.js' },
   content: { type: String },
-  url: { type: String }
+  url: { type: String },
+  children: { type: [Schema.Types.ObjectId], default: [] },
+  fileType: { type: String }
 }, { timestamps: true, _id: true });
 
 fileSchema.virtual('id').get(function(){

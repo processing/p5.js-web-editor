@@ -4,6 +4,7 @@ import InlineSVG from 'react-inlinesvg';
 import SidebarItem from './SidebarItem';
 const rightArrowUrl = require('../../../images/right-arrow.svg');
 const leftArrowUrl = require('../../../images/left-arrow.svg');
+import ConnectedFileNode from './FileNode';
 
 class Sidebar extends React.Component {
   constructor(props) {
@@ -66,6 +67,7 @@ class Sidebar extends React.Component {
             />
           )}
         </ul>
+        <ConnectedFileNode id={'0'} />
       </nav>
     );
   }
