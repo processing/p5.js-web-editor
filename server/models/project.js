@@ -54,7 +54,8 @@ const projectSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User' },
   files: { type: [ fileSchema ], default: [{ name: 'sketch.js', content: defaultSketch, _id: new ObjectId() },
     { name: 'index.html', content: defaultHTML, _id: new ObjectId() },
-    { name: 'style.css', content: defaultCSS, _id: new ObjectId() }]},
+    { name: 'style.css', content: defaultCSS, _id: new ObjectId() },
+    { name: 'root', _id: '0'}]},
   _id: { type: String, default: shortid.generate },
   selectedFile: Schema.Types.ObjectId
 }, { timestamps: true });

@@ -78,8 +78,16 @@ const files = (state = initialState, action) => {
       return [...action.files];
     case ActionTypes.RESET_PROJECT:
       return initialState;
-    case ActionTypes.CREATE_FILE:
-      return [...state, { name: action.name, id: action.id, content: action.content, url: action.url }];
+    case ActionTypes.CREATE_FILE: // eslint-disable-line
+      const newState = state.map((file) => {
+        if (file.id === action.parentId) {
+          const newFile = Object.assign({}, file);
+          newFile.children = [...newFile.children, action.id];
+          return newFile;
+        }
+        return file;
+      });
+      return [...newState, { name: action.name, id: action.id, content: action.content, url: action.url }];
     case ActionTypes.SHOW_FILE_OPTIONS:
       return state.map(file => {
         if (file.id !== action.id) {

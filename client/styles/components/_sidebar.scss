@@ -40,15 +40,18 @@
   padding: #{8 / $base-font-size}rem #{20 / $base-font-size}rem;
   color: $light-inactive-text-color;
   cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  position: relative;
   &--selected {
     background-color: $ide-border-color;
   }
   &:hover .sidebar__file-item-name {
     color: $light-primary-text-color;
   }
+}
+
+.file-item__content {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
 }
 
 .sidebar__file-item-name {
