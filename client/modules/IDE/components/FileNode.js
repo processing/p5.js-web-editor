@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import InlineSVG from 'react-inlinesvg';
 const downArrowUrl = require('../../../images/down-arrow.svg');
 import classNames from 'classnames';
-import { setSelectedFile } from '../reducers/files';
 
 export class FileNode extends React.Component {
   constructor(props) {
@@ -152,7 +151,7 @@ FileNode.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-  return setSelectedFile(state.files, state.ide.selectedFile || state.files[1].id).find((file) => file.id === ownProps.id);
+  return state.files.find((file) => file.id === ownProps.id);
 }
 
 function mapDispatchToProps(dispatch) {

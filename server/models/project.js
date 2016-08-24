@@ -38,7 +38,8 @@ const fileSchema = new Schema({
   content: { type: String },
   url: { type: String },
   children: { type: [ String ], default: [] },
-  fileType: { type: String }
+  fileType: { type: String },
+  isSelected: { type: Boolean }
 }, { timestamps: true, _id: true });
 
 fileSchema.virtual('id').get(function(){
@@ -53,8 +54,7 @@ const projectSchema = new Schema({
   name: { type: String, default: "Hello p5.js, it's the server" },
   user: { type: Schema.Types.ObjectId, ref: 'User' },
   files: { type: [ fileSchema ] },
-  _id: { type: String, default: shortid.generate },
-  selectedFile: Schema.Types.ObjectId
+  _id: { type: String, default: shortid.generate }
 }, { timestamps: true });
 
 projectSchema.virtual('id').get(function(){
@@ -65,21 +65,18 @@ projectSchema.set('toJSON', {
     virtuals: true
 });
 
-projectSchema.pre('save', function createSelectedFile(next) {
-  const project = this;
-  if (!project.selectedFile) {
-    project.selectedFile = project.files[0]._id; // eslint-disable-line no-underscore-dangle
-    return next();
-  }
-  if (project.isNew && project.files.length === 0) {
-    let a = new ObjectId();
-    let b = new ObjectId();
-    let c = new ObjectId();
-    project.files = [{ name: 'sketch.js', content: defaultSketch, _id: a },
-    { name: 'index.html', content: defaultHTML, _id: b },
-    { name: 'style.css', content: defaultCSS, _id: c },
-    { name: 'root', _id: '0', children: [a, b, c] }];
-  }
-});
+// projectSchema.pre('save', function createSelectedFile(next) {
+//   const project = this;
+//   if (project.isNew && project.files.length === 0) {
+//     let a = new ObjectId();
+//     let b = new ObjectId();
+//     let c = new ObjectId();
+//     project.files = [{ name: 'sketch.js', content: defaultSketch, _id: a, isSelected: true },
+//     { name: 'index.html', content: defaultHTML, _id: b },
+//     { name: 'style.css', content: defaultCSS, _id: c },
+//     { name: 'root', _id: new ObjectId(), children: [a, b, c] }];
+//   }
+//   return next();
+// });
 
 export default mongoose.model('Project', projectSchema);

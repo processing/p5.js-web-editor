@@ -36,26 +36,32 @@ function initialState() {
   const a = objectID().toHexString();
   const b = objectID().toHexString();
   const c = objectID().toHexString();
+  const r = objectID().toHexString();
   return [
     {
       name: 'root',
-      id: '0',
+      id: r,
+      _id: r,
       children: [a, b, c]
     },
     {
       name: 'sketch.js',
       content: defaultSketch,
-      id: a
+      id: a,
+      _id: a,
+      isSelected: true
     },
     {
       name: 'index.html',
       content: defaultHTML,
-      id: b
+      id: b,
+      _id: b
     },
     {
       name: 'style.css',
       content: defaultCSS,
-      id: c
+      id: c,
+      _id: c
     }];
 }
 
@@ -137,20 +143,18 @@ const files = (state, action) => {
 
         return Object.assign({}, file, { isEditingName: false });
       });
+    case ActionTypes.SET_SELECTED_FILE:
+      return state.map(file => {
+        if (file.id === action.selectedFile) {
+          return Object.assign({}, file, { isSelected: true });
+        }
+        return Object.assign({}, file, { isSelected: false });
+      });
     default:
       return state;
   }
 };
 
-export const setSelectedFile = (state, id) =>
-  state.map(file => {
-    if (file.id === id) {
-      return Object.assign({}, file, { isSelected: true });
-    }
-    return file;
-  });
-
-export const getFile = (state, id) => state.filter(file => file.id === id)[0];
 export const getHTMLFile = (state) => state.filter(file => file.name.match(/.*\.html$/i))[0];
 export const getJSFiles = (state) => state.filter(file => file.name.match(/.*\.js$/i));
 export const getCSSFiles = (state) => state.filter(file => file.name.match(/.*\.css$/i));

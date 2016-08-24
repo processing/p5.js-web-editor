@@ -29,7 +29,6 @@ export function getProject(id) {
           type: ActionTypes.SET_PROJECT,
           project: response.data,
           files: response.data.files,
-          selectedFile: response.data.selectedFile,
           owner: response.data.user
         });
         getProjectBlobUrls()(dispatch, getState);
@@ -85,7 +84,6 @@ export function saveProject() {
             name: response.data.name,
             id: response.data.id,
             owner: response.data.user,
-            selectedFile: response.data.selectedFile,
             files: response.data.files
           });
         })
@@ -108,7 +106,6 @@ export function createProject() {
           name: response.data.name,
           id: response.data.id,
           owner: response.data.user,
-          selectedFile: response.data.selectedFile,
           files: response.data.files
         });
       })

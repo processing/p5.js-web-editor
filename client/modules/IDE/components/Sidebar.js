@@ -67,7 +67,7 @@ class Sidebar extends React.Component {
             />
           )}
         </ul> */ }
-        <ConnectedFileNode id={'0'} />
+        <ConnectedFileNode id={this.props.files.filter(file => file.name === 'root')[0].id} />
       </nav>
     );
   }

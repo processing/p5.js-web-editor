@@ -25,10 +25,6 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { isTextOutputPlaying: true });
     case ActionTypes.STOP_TEXT_OUTPUT:
       return Object.assign({}, state, { isTextOutputPlaying: false });
-    case ActionTypes.SET_SELECTED_FILE:
-    case ActionTypes.SET_PROJECT:
-    case ActionTypes.NEW_PROJECT:
-      return Object.assign({}, state, { selectedFile: action.selectedFile });
     case ActionTypes.CONSOLE_EVENT:
       return Object.assign({}, state, { consoleEvent: action.event });
     case ActionTypes.SHOW_MODAL:
@@ -52,17 +48,6 @@ const ide = (state = initialState, action) => {
     default:
       return state;
   }
-};
-
-export const setDefaultSelectedFile = (state, files) => {
-  if (!state.selectedFile) {
-    files.forEach((file) => {
-      if (file.name !== 'root') {
-        state.selectedFile = file.id; // eslint-disable-line
-      }
-    });
-  }
-  return state;
 };
 
 export default ide;
