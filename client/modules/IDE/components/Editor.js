@@ -55,7 +55,7 @@ class Editor extends React.Component {
               this.props.updateLintMessage(x.severity, (x.from.line + 1), x.message);
             }
           });
-          if (this.props.lintMessages.length > 0 && this.props.lintWarning) {
+          if (this.props.lintMessages.length > 0 && this.props.lintWarning !== 'off') {
             this.beep.play();
           }
         })
@@ -100,8 +100,8 @@ class Editor extends React.Component {
         this._cm.setOption('mode', 'htmlmixed');
       }
     }
-    if (this.props.lintSound !== prevProps.lintSound) {
-      const newBeep = this.beeps[this.props.lintSound];
+    if (this.props.lintWarning !== prevProps.lintWarning && this.props.lintWarning !== 'off') {
+      const newBeep = this.beeps[this.props.lintWarning];
       this.beep = new Audio(newBeep);
       this.beep.play();
     }
@@ -128,7 +128,7 @@ class Editor extends React.Component {
 }
 
 Editor.propTypes = {
-  lintWarning: PropTypes.bool.isRequired,
+  lintWarning: PropTypes.string.isRequired,
   lineNumber: PropTypes.string.isRequired,
   lintMessages: PropTypes.array.isRequired,
   updateLintMessage: PropTypes.func.isRequired,
@@ -141,8 +141,7 @@ Editor.propTypes = {
   file: PropTypes.shape({
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
-  }),
-  lintSound: PropTypes.string.isRequired
+  })
 };
 
 export default Editor;

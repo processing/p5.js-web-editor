@@ -149,8 +149,6 @@ class IDEView extends React.Component {
           setAutosave={this.props.setAutosave}
           lintWarning={this.props.preferences.lintWarning}
           setLintWarning={this.props.setLintWarning}
-          lintSound={this.props.preferences.lintSound}
-          setLintSound={this.props.setLintSound}
           textOutput={this.props.preferences.textOutput}
           setTextOutput={this.props.setTextOutput}
         />
@@ -194,7 +192,6 @@ class IDEView extends React.Component {
               >
                 <Editor
                   lintWarning={this.props.preferences.lintWarning}
-                  lintSound={this.props.preferences.lintSound}
                   lintMessages={this.props.editorAccessibility.lintMessages}
                   updateLineNumber={this.props.updateLineNumber}
                   updateLintMessage={this.props.updateLintMessage}
@@ -332,8 +329,7 @@ IDEView.propTypes = {
     indentationAmount: PropTypes.number.isRequired,
     isTabIndent: PropTypes.bool.isRequired,
     autosave: PropTypes.bool.isRequired,
-    lintWarning: PropTypes.bool.isRequired,
-    lintSound: PropTypes.string.isRequired,
+    lintWarning: PropTypes.string.isRequired,
     textOutput: PropTypes.bool.isRequired
   }).isRequired,
   closePreferences: PropTypes.func.isRequired,
@@ -343,7 +339,6 @@ IDEView.propTypes = {
   indentWithSpace: PropTypes.func.isRequired,
   setAutosave: PropTypes.func.isRequired,
   setLintWarning: PropTypes.func.isRequired,
-  setLintSound: PropTypes.func.isRequired,
   setTextOutput: PropTypes.func.isRequired,
   files: PropTypes.array.isRequired,
   updateFileContent: PropTypes.func.isRequired,
