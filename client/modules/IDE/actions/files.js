@@ -85,7 +85,8 @@ export function createFile(formProps) {
           }
           dispatch({
             type: ActionTypes.CREATE_FILE,
-            ...response.data
+            ...response.data,
+            parentId: rootFile.id
           });
           dispatch({
             type: ActionTypes.HIDE_MODAL

@@ -26,7 +26,25 @@ export function updateProject(req, res) {
     })
     .populate('user', 'username')
     .exec((err, updatedProject) => {
-      if (err) { return res.json({ success: false }); }
+      if (err) {
+        console.log(err);
+        return res.json({ success: false });
+      }
+      if (updatedProject.files.length !== req.body.files.length) {
+        const oldFileIds = updatedProject.files.map(file => file.id);
+        const newFileIds = req.body.files.map(file => file.id);
+        const staleIds = oldFileIds.filter(id => newFileIds.indexOf(id) === -1);
+        staleIds.forEach(staleId => {
+          updatedProject.files.id(staleId).remove();
+        });
+        updatedProject.save((innerErr) => {
+          if (innerErr) {
+            console.log(innerErr);
+            return res.json({ success: false });
+          }
+          return res.json(updatedProject);
+        });
+      }
       return res.json(updatedProject);
     });
 }
