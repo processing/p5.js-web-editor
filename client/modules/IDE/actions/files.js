@@ -3,6 +3,7 @@ import axios from 'axios';
 import blobUtil from 'blob-util';
 import xhr from 'xhr';
 import fileType from 'file-type';
+import objectID from 'bson-objectid';
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
@@ -68,13 +69,14 @@ export function getBlobUrl(file) {
 export function createFile(formProps) {
   return (dispatch, getState) => {
     const state = getState();
+    const rootFile = state.files.filter(file => file.name === 'root')[0];
     if (state.project.id) {
       const postParams = {
         name: createUniqueName(formProps.name, state.files),
         url: formProps.url,
         content: formProps.content || ''
         // TODO pass parent id to API, once there are folders
-        parentId: '0'
+        parentId: rootFile.id
       };
       axios.post(`${ROOT_URL}/projects/${state.project.id}/files`, postParams, { withCredentials: true })
         .then(response => {
@@ -94,23 +96,19 @@ export function createFile(formProps) {
           error: response.data
         }));
     } else {
-      let maxFileId = 0;
-      state.files.forEach(file => {
-        if (parseInt(file.id, 10) > maxFileId) {
-          maxFileId = parseInt(file.id, 10);
-        }
-      });
       if (formProps.url) {
         getBlobUrl(formProps)(dispatch);
       }
+      const id = objectID().toHexString();
       dispatch({
         type: ActionTypes.CREATE_FILE,
         name: createUniqueName(formProps.name, state.files),
-        id: `${maxFileId + 1}`,
+        id,
+        _id: id,
         url: formProps.url,
         content: formProps.content || ''
         // TODO pass parent id from File Tree
-        parentId: '0'
+        parentId: rootFile.id
       });
       dispatch({
         type: ActionTypes.HIDE_MODAL
