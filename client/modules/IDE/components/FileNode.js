@@ -19,7 +19,9 @@ export class FileNode extends React.Component {
 
   handleFileClick(e) {
     e.stopPropagation();
-    this.props.setSelectedFile(this.props.id);
+    if (!this.isDeleting) {
+      this.props.setSelectedFile(this.props.id);
+    }
   }
 
   handleFileNameChange(event) {
@@ -105,8 +107,9 @@ export class FileNode extends React.Component {
                       <a
                         onClick={() => {
                           if (window.confirm(`Are you sure you want to delete ${this.props.name}?`)) {
-                            this.props.deleteFile(this.props.id, this.props.parentId);
-                            this.props.resetSelectedFile();
+                            this.isDeleting = true;
+                            this.props.resetSelectedFile(this.props.id);
+                            setTimeout(() => this.props.deleteFile(this.props.id, this.props.parentId), 0);
                           }
                         }}
                       >

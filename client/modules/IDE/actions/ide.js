@@ -37,10 +37,14 @@ export function setSelectedFile(fileId) {
   };
 }
 
-export function resetSelectedFile() {
+export function resetSelectedFile(previousId) {
   return (dispatch, getState) => {
     const state = getState();
-    setSelectedFile(state.files[1].id);
+    const newId = state.files.find(file => file.name !== 'root' && file.id !== previousId).id;
+    dispatch({
+      type: ActionTypes.SET_SELECTED_FILE,
+      selectedFile: newId
+    });
   };
 }
 
