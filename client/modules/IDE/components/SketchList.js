@@ -11,15 +11,15 @@ const exitUrl = require('../../../images/exit.svg');
 class SketchList extends React.Component {
   componentDidMount() {
     this.props.getProjects(this.props.username);
-    document.getElementById('sketchlistbutton').focus();
+    document.getElementById('sketchlist').focus();
   }
 
   render() {
     return (
-      <div className="sketch-list">
+      <section className="sketch-list" aria-label="project list" tabIndex="0" role="main" id="sketchlist">
         <header className="sketch-list__header">
           <h2>Sketches</h2>
-          <button className="sketch-list__exit-button" onClick={this.props.closeSketchList} id="sketchlistbutton">
+          <button className="sketch-list__exit-button" onClick={this.props.closeSketchList}>
             <InlineSVG src={exitUrl} alt="Close Sketch List Overlay" />
           </button>
         </header>
@@ -43,7 +43,7 @@ class SketchList extends React.Component {
             </tbody>
           </table>
         </div>
-      </div>
+      </section>
     );
   }
 }
