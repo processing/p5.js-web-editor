@@ -35,7 +35,7 @@ const defaultCSS =
 
 const fileSchema = new Schema({
   name: { type: String, default: 'sketch.js' },
-  content: { type: String },
+  content: { type: String, default: '' },
   url: { type: String },
   children: { type: [ String ], default: [] },
   fileType: { type: String },

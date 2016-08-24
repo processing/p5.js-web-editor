@@ -155,9 +155,25 @@ export function updateFileName(id, name) {
 }
 
 export function deleteFile(id, parentId) {
-  return {
-    type: ActionTypes.DELETE_FILE,
-    id,
-    parentId
+  return (dispatch, getState) => {
+    const state = getState();
+    const deleteConfig = {
+      params: {
+        parentId
+      }
+    };
+    axios.delete(`${ROOT_URL}/projects/${state.project.id}/files/${id}`, deleteConfig, { withCredentials: true })
+      .then(() => {
+        dispatch({
+          type: ActionTypes.DELETE_FILE,
+          id,
+          parentId
+        });
+      })
+      .catch(response => dispatch({
+        type: ActionTypes.ERROR,
+        error: response.data
+      })
+    );
   };
 }

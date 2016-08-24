@@ -46,3 +46,14 @@ export function createFile(req, res) {
       //   });
     });
 }
+
+export function deleteFile(req, res) {
+  Project.findById(req.params.project_id, (err, project) => {
+    project.files.id(req.params.file_id).remove();
+    const childrenArray = project.files.id(req.query.parentId).children;
+    project.files.id(req.query.parentId).children = childrenArray.filter(id => id !== req.params.file_id);
+    project.save(innerErr => {
+      res.json(project.files);
+    })
+  });
+}
