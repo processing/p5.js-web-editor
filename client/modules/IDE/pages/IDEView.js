@@ -21,6 +21,7 @@ import SplitPane from 'react-split-pane';
 import Overlay from '../../App/components/Overlay';
 import SketchList from '../components/SketchList';
 import About from '../components/About';
+import { setDefaultSelectedFile } from '../reducers/ide';
 
 class IDEView extends React.Component {
   constructor(props) {
@@ -376,11 +377,11 @@ IDEView.propTypes = {
 function mapStateToProps(state) {
   return {
     files: setSelectedFile(state.files, state.ide.selectedFile),
-    selectedFile: getFile(state.files, state.ide.selectedFile),
+    selectedFile: getFile(state.files, state.ide.selectedFile || state.files[1].id),
     htmlFile: getHTMLFile(state.files),
     jsFiles: getJSFiles(state.files),
     cssFiles: getCSSFiles(state.files),
-    ide: state.ide,
+    ide: setDefaultSelectedFile(state.ide, state.files),
     preferences: state.preferences,
     editorAccessibility: state.editorAccessibility,
     user: state.user,

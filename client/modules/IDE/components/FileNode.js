@@ -152,7 +152,7 @@ FileNode.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-  return setSelectedFile(state.files, state.ide.selectedFile).find((file) => file.id === ownProps.id);
+  return setSelectedFile(state.files, state.ide.selectedFile || state.files[1].id).find((file) => file.id === ownProps.id);
 }
 
 function mapDispatchToProps(dispatch) {

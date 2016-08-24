@@ -38,7 +38,6 @@ export function getProject(req, res) {
       if (err) {
         return res.status(404).send({ message: 'Project with that id does not exist' });
       }
-
       return res.json(project);
     });
 }

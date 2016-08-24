@@ -125,7 +125,7 @@ class PreviewFrame extends React.Component {
       this.renderSketch();
     }
 
-    // I apologize for this, it is a hack.
+    // I apologize for this, it is a hack. A simple way to check if the files have changed.
     if (this.props.isPlaying && this.props.files[0].id !== prevProps.files[0].id) {
       this.renderSketch();
     }
@@ -242,8 +242,6 @@ class PreviewFrame extends React.Component {
 
 PreviewFrame.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
-  isTextOutputPlaying: PropTypes.bool.isRequired,
-  textOutput: PropTypes.bool.isRequired,
   head: PropTypes.object.isRequired,
   content: PropTypes.string,
   htmlFile: PropTypes.shape({

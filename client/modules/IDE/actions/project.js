@@ -69,11 +69,14 @@ export function saveProject() {
         }));
     } else {
       // this might be unnecessary, but to prevent collisions in mongodb
-      formParams.files.map(file => {
-        const newFile = Object.assign({}, file);
-        delete newFile.id;
-        return newFile;
-      });
+      // formParams.files.map(file => {
+      //   if (file.name !== 'root') {
+      //     const newFile = Object.assign({}, file);
+      //     delete newFile.id;
+      //     return newFile;
+      //   }
+      //   return file;
+      // });
       axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
         .then(response => {
           browserHistory.push(`/projects/${response.data.id}`);

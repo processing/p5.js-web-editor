@@ -3,7 +3,6 @@ import * as ActionTypes from '../../../constants';
 const initialState = {
   isPlaying: false,
   isTextOutputPlaying: false,
-  selectedFile: '1',
   consoleEvent: {
     method: undefined,
     arguments: []
@@ -53,6 +52,17 @@ const ide = (state = initialState, action) => {
     default:
       return state;
   }
+};
+
+export const setDefaultSelectedFile = (state, files) => {
+  if (!state.selectedFile) {
+    files.forEach((file) => {
+      if (file.name !== 'root') {
+        state.selectedFile = file.id; // eslint-disable-line
+      }
+    });
+  }
+  return state;
 };
 
 export default ide;

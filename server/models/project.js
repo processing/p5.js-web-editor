@@ -37,7 +37,7 @@ const fileSchema = new Schema({
   name: { type: String, default: 'sketch.js' },
   content: { type: String },
   url: { type: String },
-  children: { type: [Schema.Types.ObjectId], default: [] },
+  children: { type: [ String ], default: [] },
   fileType: { type: String }
 }, { timestamps: true, _id: true });
 
@@ -52,10 +52,7 @@ fileSchema.set('toJSON', {
 const projectSchema = new Schema({
   name: { type: String, default: "Hello p5.js, it's the server" },
   user: { type: Schema.Types.ObjectId, ref: 'User' },
-  files: { type: [ fileSchema ], default: [{ name: 'sketch.js', content: defaultSketch, _id: new ObjectId() },
-    { name: 'index.html', content: defaultHTML, _id: new ObjectId() },
-    { name: 'style.css', content: defaultCSS, _id: new ObjectId() },
-    { name: 'root', _id: '0'}]},
+  files: { type: [ fileSchema ] },
   _id: { type: String, default: shortid.generate },
   selectedFile: Schema.Types.ObjectId
 }, { timestamps: true });
@@ -73,6 +70,15 @@ projectSchema.pre('save', function createSelectedFile(next) {
   if (!project.selectedFile) {
     project.selectedFile = project.files[0]._id; // eslint-disable-line no-underscore-dangle
     return next();
+  }
+  if (project.isNew && project.files.length === 0) {
+    let a = new ObjectId();
+    let b = new ObjectId();
+    let c = new ObjectId();
+    project.files = [{ name: 'sketch.js', content: defaultSketch, _id: a },
+    { name: 'index.html', content: defaultHTML, _id: b },
+    { name: 'style.css', content: defaultCSS, _id: c },
+    { name: 'root', _id: '0', children: [a, b, c] }];
   }
 });
 

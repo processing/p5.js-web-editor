@@ -1,4 +1,5 @@
 import * as ActionTypes from '../../../constants';
+import objectID from 'bson-objectid';
 
 const defaultSketch = `function setup() { 
   createCanvas(400, 400);
@@ -31,31 +32,37 @@ const defaultCSS =
 }
 `;
 
-// if the project has never been saved,
-const initialState = [
-  {
-    name: 'root',
-    id: '0',
-    children: ['1', '2', '3']
-  },
-  {
-    name: 'sketch.js',
-    content: defaultSketch,
-    id: '1'
-  },
-  {
-    name: 'index.html',
-    content: defaultHTML,
-    id: '2'
-  },
-  {
-    name: 'style.css',
-    content: defaultCSS,
-    id: '3'
-  }];
+function initialState() {
+  const a = objectID().toHexString();
+  const b = objectID().toHexString();
+  const c = objectID().toHexString();
+  return [
+    {
+      name: 'root',
+      id: '0',
+      children: [a, b, c]
+    },
+    {
+      name: 'sketch.js',
+      content: defaultSketch,
+      id: a
+    },
+    {
+      name: 'index.html',
+      content: defaultHTML,
+      id: b
+    },
+    {
+      name: 'style.css',
+      content: defaultCSS,
+      id: c
+    }];
+}
 
-
-const files = (state = initialState, action) => {
+const files = (state, action) => {
+  if (state === undefined) {
+    state = initialState(); // eslint-disable-line
+  }
   switch (action.type) {
     case ActionTypes.UPDATE_FILE_CONTENT:
       return state.map(file => {
