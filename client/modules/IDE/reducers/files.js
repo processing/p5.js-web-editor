@@ -92,15 +92,17 @@ const files = (state, action) => {
     case ActionTypes.RESET_PROJECT:
       return initialState();
     case ActionTypes.CREATE_FILE: // eslint-disable-line
-      const newState = state.map((file) => {
-        if (file.id === action.parentId) {
-          const newFile = Object.assign({}, file);
-          newFile.children = [...newFile.children, action.id];
-          return newFile;
-        }
-        return file;
-      });
-      return [...newState, { name: action.name, id: action.id, _id: action._id, content: action.content, url: action.url }];
+      {
+        const newState = state.map((file) => {
+          if (file.id === action.parentId) {
+            const newFile = Object.assign({}, file);
+            newFile.children = [...newFile.children, action.id];
+            return newFile;
+          }
+          return file;
+        });
+        return [...newState, { name: action.name, id: action.id, _id: action._id, content: action.content, url: action.url }];
+      }
     case ActionTypes.SHOW_FILE_OPTIONS:
       return state.map(file => {
         if (file.id !== action.id) {
@@ -126,7 +128,16 @@ const files = (state, action) => {
         return Object.assign({}, file, { name: action.name });
       });
     case ActionTypes.DELETE_FILE:
-      return state.filter(file => file.id !== action.id);
+      {
+        const newState = state.map((file) => {
+          if (file.id === action.parentId) {
+            const newChildren = file.children.filter(child => child !== action.id);
+            return { ...file, children: newChildren };
+          }
+          return file;
+        });
+        return newState.filter(file => file.id !== action.id);
+      }
     case ActionTypes.SHOW_EDIT_FILE_NAME:
       return state.map(file => {
         if (file.id !== action.id) {

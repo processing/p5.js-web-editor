@@ -105,7 +105,7 @@ export class FileNode extends React.Component {
                       <a
                         onClick={() => {
                           if (window.confirm(`Are you sure you want to delete ${this.props.name}?`)) {
-                            this.props.deleteFile(this.props.id);
+                            this.props.deleteFile(this.props.id, this.props.parentId);
                             this.props.resetSelectedFile();
                           }
                         }}
@@ -135,6 +135,7 @@ export class FileNode extends React.Component {
 
 FileNode.propTypes = {
   id: PropTypes.string.isRequired,
+  parentId: PropTypes.string,
   children: PropTypes.array,
   name: PropTypes.string.isRequired,
   isSelected: PropTypes.bool,

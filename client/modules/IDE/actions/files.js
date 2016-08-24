@@ -153,9 +153,10 @@ export function updateFileName(id, name) {
   };
 }
 
-export function deleteFile(id) {
+export function deleteFile(id, parentId) {
   return {
     type: ActionTypes.DELETE_FILE,
-    id
+    id,
+    parentId
   };
 }
