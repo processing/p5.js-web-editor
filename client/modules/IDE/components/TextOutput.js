@@ -17,14 +17,14 @@ class TextOutput extends React.Component {
         </section>
         <p
           tabIndex="0"
-          role="region"
+          role="main"
           id="textOutput-content-summary"
           aria-label="text output summary"
         >
         </p>
         <table
           tabIndex="0"
-          role="region"
+          role="main"
           id="textOutput-content-details"
           aria-label="text output summary details"
         >
