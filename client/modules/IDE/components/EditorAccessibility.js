@@ -9,7 +9,7 @@ class EditorAccessibility extends React.Component {
     if (this.props.lintMessages.length > 0) {
       for (let i = 0; i < this.props.lintMessages.length; i++) {
         messages.push(
-          <li>
+          <li key={i}>
             {this.props.lintMessages[i].severity} in line
             {this.props.lintMessages[i].line} :
             {this.props.lintMessages[i].message}
@@ -18,7 +18,12 @@ class EditorAccessibility extends React.Component {
       }
     } else {
       messages.push(
-        <p tabIndex="0"> There are no lint messages </p>
+        // react wants dom items from an array or
+        // iterator to have a key property. since this
+        // is the only item we're pushing to the array
+        // and don't have a counter to include,
+        // let's just call it 0.
+        <p tabIndex="0" key={0}> There are no lint messages </p>
       );
     }
     return (
