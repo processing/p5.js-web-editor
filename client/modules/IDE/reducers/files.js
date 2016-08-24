@@ -100,7 +100,7 @@ const files = (state, action) => {
         }
         return file;
       });
-      return [...newState, { name: action.name, id: action.id, content: action.content, url: action.url }];
+      return [...newState, { name: action.name, id: action.id, _id: action._id, content: action.content, url: action.url }];
     case ActionTypes.SHOW_FILE_OPTIONS:
       return state.map(file => {
         if (file.id !== action.id) {

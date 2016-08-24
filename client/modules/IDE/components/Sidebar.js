@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 import InlineSVG from 'react-inlinesvg';
-import SidebarItem from './SidebarItem';
+// import SidebarItem from './SidebarItem';
 const rightArrowUrl = require('../../../images/right-arrow.svg');
 const leftArrowUrl = require('../../../images/left-arrow.svg');
 import ConnectedFileNode from './FileNode';

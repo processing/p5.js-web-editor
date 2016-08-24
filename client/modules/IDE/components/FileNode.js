@@ -151,7 +151,7 @@ FileNode.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-  return state.files.find((file) => file.id === ownProps.id);
+  return state.files.find((file) => file.id === ownProps.id) || { ...ownProps, name: 'test' };
 }
 
 function mapDispatchToProps(dispatch) {
