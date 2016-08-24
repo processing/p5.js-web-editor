@@ -90,7 +90,7 @@ const files = (state, action) => {
     case ActionTypes.SET_PROJECT:
       return [...action.files];
     case ActionTypes.RESET_PROJECT:
-      return initialState;
+      return initialState();
     case ActionTypes.CREATE_FILE: // eslint-disable-line
       const newState = state.map((file) => {
         if (file.id === action.parentId) {
