@@ -4,6 +4,8 @@ import InlineSVG from 'react-inlinesvg';
 // import SidebarItem from './SidebarItem';
 const rightArrowUrl = require('../../../images/right-arrow.svg');
 const leftArrowUrl = require('../../../images/left-arrow.svg');
+const folderUrl = require('../../../images/folder.svg');
+const downArrowUrl = require('../../../images/down-arrow.svg');
 import ConnectedFileNode from './FileNode';
 
 class Sidebar extends React.Component {
@@ -25,14 +27,19 @@ class Sidebar extends React.Component {
     return (
       <nav className={sidebarClass} title="file-navigation" role="navigation">
         <div className="sidebar__header">
-          <h3 className="sidebar__title">Sketch Files</h3>
+          <h3 className="sidebar__title">
+            <span className="sidebar__folder-icon">
+              <InlineSVG src={folderUrl} />
+            </span>
+            <span>project-folder</span>
+          </h3>
           <div className="sidebar__icons">
             <button
               aria-label="add file"
               className="sidebar__add"
               onClick={this.props.newFile}
             >
-              +
+              <InlineSVG src={downArrowUrl} />
             </button>
             <button
               aria-label="collapse file navigation"

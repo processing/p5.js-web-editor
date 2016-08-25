@@ -42,26 +42,30 @@ function initialState() {
       name: 'root',
       id: r,
       _id: r,
-      children: [a, b, c]
+      children: [a, b, c],
+      type: 'folder'
     },
     {
       name: 'sketch.js',
       content: defaultSketch,
       id: a,
       _id: a,
-      isSelected: true
+      isSelected: true,
+      type: 'file'
     },
     {
       name: 'index.html',
       content: defaultHTML,
       id: b,
-      _id: b
+      _id: b,
+      type: 'file'
     },
     {
       name: 'style.css',
       content: defaultCSS,
       id: c,
-      _id: c
+      _id: c,
+      type: 'file'
     }];
 }
 
@@ -101,7 +105,7 @@ const files = (state, action) => {
           }
           return file;
         });
-        return [...newState, { name: action.name, id: action.id, _id: action._id, content: action.content, url: action.url }];
+        return [...newState, { name: action.name, id: action.id, _id: action._id, content: action.content, url: action.url, type: 'file' }];
       }
     case ActionTypes.SHOW_FILE_OPTIONS:
       return state.map(file => {

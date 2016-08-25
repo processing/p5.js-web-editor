@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import InlineSVG from 'react-inlinesvg';
 const downArrowUrl = require('../../../images/down-arrow.svg');
+const fileUrl = require('../../../images/file.svg');
 import classNames from 'classnames';
 
 export class FileNode extends React.Component {
@@ -70,6 +71,15 @@ export class FileNode extends React.Component {
           if (this.props.name !== 'root') {
             return (
               <div className="file-item__content">
+                {(() => { // eslint-disable-line
+                  if (this.props.type === 'file') {
+                    return (
+                      <span className="sidebar__file-item-icon">
+                        <InlineSVG src={fileUrl} />
+                      </span>
+                    );
+                  }
+                })()}
                 <a className="sidebar__file-item-name">{this.props.name}</a>
                 <input
                   type="text"
@@ -141,6 +151,7 @@ FileNode.propTypes = {
   parentId: PropTypes.string,
   children: PropTypes.array,
   name: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
   isSelected: PropTypes.bool,
   isOptionsOpen: PropTypes.bool,
   isEditingName: PropTypes.bool,

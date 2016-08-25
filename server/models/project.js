@@ -38,7 +38,7 @@ const fileSchema = new Schema({
   content: { type: String, default: '' },
   url: { type: String },
   children: { type: [ String ], default: [] },
-  fileType: { type: String },
+  fileType: { type: String, default: 'file' },
   isSelected: { type: Boolean }
 }, { timestamps: true, _id: true });
 

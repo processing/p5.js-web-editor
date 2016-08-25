@@ -74,7 +74,7 @@ export function createFile(formProps) {
       const postParams = {
         name: createUniqueName(formProps.name, state.files),
         url: formProps.url,
-        content: formProps.content || ''
+        content: formProps.content || '',
         // TODO pass parent id to API, once there are folders
         parentId: rootFile.id
       };
@@ -107,7 +107,7 @@ export function createFile(formProps) {
         id,
         _id: id,
         url: formProps.url,
-        content: formProps.content || ''
+        content: formProps.content || '',
         // TODO pass parent id from File Tree
         parentId: rootFile.id
       });
