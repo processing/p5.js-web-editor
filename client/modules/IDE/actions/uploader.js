@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { createFile } from './files';
+const textFileRegex = /text\//;
 
 const s3Bucket = `http://${process.env.S3_BUCKET}.s3.amazonaws.com/`;
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
@@ -34,7 +35,7 @@ export function dropzoneAcceptCallback(file, done) {
     // check mime type
     // if text, local interceptor
     console.log(file.type);
-    if (file.type.match(/text\//)) {
+    if (file.type.match(textFileRegex)) {
       localIntercept(file).then(result => {
         file.content = result; // eslint-disable-line
         done();
@@ -74,7 +75,7 @@ export function dropzoneAcceptCallback(file, done) {
 
 export function dropzoneSendingCallback(file, xhr, formData) {
   return () => {
-    if (!file.type.match(/text\//)) {
+    if (!file.type.match(textFileRegex)) {
       Object.keys(file.postData).forEach(key => {
         formData.append(key, file.postData[key]);
       });
@@ -87,7 +88,7 @@ export function dropzoneSendingCallback(file, xhr, formData) {
 
 export function dropzoneCompleteCallback(file) {
   return (dispatch, getState) => { // eslint-disable-line
-    if (!file.type.match(/text\//)) {
+    if (!file.type.match(textFileRegex)) {
       let inputHidden = '<input type="hidden" name="attachments[]" value="';
       const json = {
         url: `${s3Bucket}${file.postData.key}`,
