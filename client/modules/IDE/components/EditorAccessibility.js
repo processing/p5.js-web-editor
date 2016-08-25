@@ -19,7 +19,7 @@ class EditorAccessibility extends React.Component {
     } else {
       messages.push(
         // no array index so let's just call it 0
-        <p tabIndex="0" key={0}> There are no lint messages </p>
+        <li tabIndex="0" key={0}> There are no lint messages </li>
       );
     }
     return (
