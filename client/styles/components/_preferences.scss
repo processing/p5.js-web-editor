@@ -81,6 +81,10 @@
 	padding-left: #{28 / $base-font-size}rem;
 }
 
+.preference__radio-button {
+	@extend %hidden-element;
+}
+
 .preference__option {
 	@extend %preference-option;
 	list-style-type: none;

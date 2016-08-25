@@ -150,47 +150,85 @@ class Preferences extends React.Component {
         <div className="preference">
           <h4 className="preference__title">Autosave</h4>
           <div className="preference__options">
-            <button
-              className={autosaveOnClass}
+            <input
+              type="radio"
               onClick={() => this.props.setAutosave(true)}
               aria-label="autosave on"
-            >On</button>
-            <button
-              className={autosaveOffClass}
+              name="autosave"
+              id="autosave-on"
+              className="preference__radio-button"
+              value="On"
+              checked={this.props.autosave}
+            />
+            <label htmlFor="autosave-on" className={autosaveOnClass}>On</label>
+            <input
+              type="radio"
               onClick={() => this.props.setAutosave(false)}
               aria-label="autosave off"
-            >Off</button>
+              name="autosave"
+              id="autosave-off"
+              className="preference__radio-button"
+              value="Off"
+              checked={!this.props.autosave}
+            />
+            <label htmlFor="autosave-off" className={autosaveOffClass}>Off</label>
           </div>
         </div>
         <div className="preference">
           <h4 className="preference__title">Lint Warning Sound</h4>
           <div className="preference__options">
-            <button
-              className={lintWarningOnClass}
+            <input
+              type="radio"
               onClick={() => this.props.setLintWarning(true)}
               aria-label="lint warning on"
-            >On</button>
-            <button
-              className={lintWarningOffClass}
+              name="lint warning"
+              id="lint-warning-on"
+              className="preference__radio-button"
+              value="On"
+              checked={this.props.lintWarning}
+            />
+            <label htmlFor="lint-warning-on" className={lintWarningOnClass}>On</label>
+            <input
+              type="radio"
               onClick={() => this.props.setLintWarning(false)}
               aria-label="lint warning off"
-            >Off</button>
+              name="lint warning"
+              id="lint-warning-off"
+              className="preference__radio-button"
+              value="Off"
+              checked={!this.props.lintWarning}
+            />
+            <label htmlFor="lint-warning-off" className={lintWarningOffClass}>Off</label>
           </div>
         </div>
         <div className="preference">
           <h4 className="preference__title">Accessible Text-based Canvas</h4>
           <h6 className="preference__subtitle">Used with screen reader</h6>
+
           <div className="preference__options">
-            <button
-              className={textOutputOnClass}
+            <input
+              type="radio"
               onClick={() => this.props.setTextOutput(true)}
               aria-label="text output on"
-            >On</button>
-            <button
-              className={textOutputOffClass}
+              name="text output"
+              id="text-output-on"
+              className="preference__radio-button"
+              value="On"
+              checked={this.props.textOutput}
+            />
+            <label htmlFor="text-output-on" className={textOutputOnClass}>On</label>
+            <input
+              type="radio"
               onClick={() => this.props.setTextOutput(false)}
               aria-label="text output off"
-            >Off</button>
+              name="text output"
+              id="text-output-off"
+              className="preference__radio-button"
+              value="Off"
+              checked={!this.props.textOutput}
+            />
+            <label htmlFor="text-output-off" className={textOutputOffClass}>Off</label>
+
           </div>
         </div>
       </section>
