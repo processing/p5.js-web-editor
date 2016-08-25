@@ -74,7 +74,7 @@ const files = (state = initialState, action) => {
     case ActionTypes.RESET_PROJECT:
       return initialState;
     case ActionTypes.CREATE_FILE:
-      return [...state, { name: action.name, id: action.id, content: '', url: action.url }];
+      return [...state, { name: action.name, id: action.id, content: action.content, url: action.url }];
     case ActionTypes.SHOW_FILE_OPTIONS:
       return state.map(file => {
         if (file.id !== action.id) {
@@ -131,9 +131,9 @@ export const setSelectedFile = (state, id) =>
   });
 
 export const getFile = (state, id) => state.filter(file => file.id === id)[0];
-export const getHTMLFile = (state) => state.filter(file => file.name.match(/.*\.html$/))[0];
-export const getJSFiles = (state) => state.filter(file => file.name.match(/.*\.js$/));
-export const getCSSFiles = (state) => state.filter(file => file.name.match(/.*\.css$/));
+export const getHTMLFile = (state) => state.filter(file => file.name.match(/.*\.html$/i))[0];
+export const getJSFiles = (state) => state.filter(file => file.name.match(/.*\.js$/i));
+export const getCSSFiles = (state) => state.filter(file => file.name.match(/.*\.css$/i));
 export const getLinkedFiles = (state) => state.filter(file => file.url);
 
 export default files;
