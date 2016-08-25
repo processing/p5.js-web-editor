@@ -33,6 +33,7 @@ export function dropzoneAcceptCallback(file, done) {
     // for text files and small files
     // check mime type
     // if text, local interceptor
+    console.log(file.type);
     if (file.type.match(/text\//)) {
       localIntercept(file).then(result => {
         file.content = result; // eslint-disable-line

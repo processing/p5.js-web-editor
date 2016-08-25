@@ -71,7 +71,8 @@ export function createFile(formProps) {
     if (state.project.id) {
       const postParams = {
         name: createUniqueName(formProps.name, state.files),
-        url: formProps.url
+        url: formProps.url,
+        content: formProps.content || ''
       };
       axios.post(`${ROOT_URL}/projects/${state.project.id}/files`, postParams, { withCredentials: true })
         .then(response => {
