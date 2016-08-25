@@ -104,7 +104,8 @@ export function createFile(formProps) {
         type: ActionTypes.CREATE_FILE,
         name: createUniqueName(formProps.name, state.files),
         id: `${maxFileId + 1}`,
-        url: formProps.url
+        url: formProps.url,
+        content: formProps.content || ''
       });
       dispatch({
         type: ActionTypes.HIDE_MODAL

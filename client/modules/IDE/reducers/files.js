@@ -74,7 +74,7 @@ const files = (state = initialState, action) => {
     case ActionTypes.RESET_PROJECT:
       return initialState;
     case ActionTypes.CREATE_FILE:
-      return [...state, { name: action.name, id: action.id, content: '', url: action.url }];
+      return [...state, { name: action.name, id: action.id, content: action.content, url: action.url }];
     case ActionTypes.SHOW_FILE_OPTIONS:
       return state.map(file => {
         if (file.id !== action.id) {
