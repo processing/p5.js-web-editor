@@ -3,55 +3,74 @@ import ReactDOM from 'react-dom';
 import escapeStringRegexp from 'escape-string-regexp';
 import srcDoc from 'srcdoc-polyfill';
 
-const hijackConsoleScript = `<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var iframeWindow = window;
-    var originalConsole = iframeWindow.console;
-    iframeWindow.console = {};
 
-    var methods = [
-      'debug', 'clear', 'error', 'info', 'log', 'warn'
-    ];
+/**
+ * Stringify all of the console objects from an array for proxying
+ */
+function stringifyArgs(args) {
+  var newArgs = [];
+  // TODO this was forEach but when the array is [undefined] it wouldn't
+  // iterate over them
+  var i = 0, length = args.length, arg;
+  for(; i < length; i++) {
+    arg = args[i];
+    if (typeof arg === 'undefined') {
+      newArgs.push('undefined');
+    } else {
+      newArgs.push(stringify(arg));
+    }
+  }
+  return newArgs;
+};
 
-    methods.forEach( function(method) {
-      iframeWindow.console[method] = function() {
-        originalConsole[method].apply(originalConsole, arguments);
+function hijackConsoleScript(lineOffset) {
+  return `<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var iframeWindow = window;
+      var originalConsole = iframeWindow.console;
+      iframeWindow.console = {};
 
-        var args = Array.from(arguments);
-        args = args.map(function(i) {
-          // catch objects
-          return (typeof i === 'string') ? i : JSON.stringify(i);
-        });
+      var methods = [
+        'debug', 'clear', 'error', 'info', 'log', 'warn'
+      ];
 
-        // post message to parent window
-        window.parent.postMessage({
-          method: method,
-          arguments: args,
-          source: 'sketch'
-        }, '*');
+      methods.forEach( function(method) {
+        iframeWindow.console[method] = function() {
+          originalConsole[method].apply(originalConsole, arguments);
+
+          var args = Array.from(arguments);
+          args = stringifyArgs(args);
+
+          // post message to parent window
+          window.parent.postMessage({
+            method: method,
+            arguments: args,
+            source: 'sketch'
+          }, '*');
+        };
+      });
+
+      // catch reference errors, via http://stackoverflow.com/a/12747364/2994108
+      window.onerror = function (msg, url, lineNumber, columnNo, error) {
+          var string = msg.toLowerCase();
+          var substring = "script error";
+          var data = {};
+
+          if (string.indexOf(substring) !== -1){
+            data = 'Script Error: See Browser Console for Detail';
+          } else {
+            data = msg + ' (Line: ' + (lineNumber - `+lineOffset+`) + ')';
+          }
+          window.parent.postMessage({
+            method: 'error',
+            arguments: data,
+            source: 'sketch'
+          }, '*');
+        return false;
       };
     });
-
-    // catch reference errors, via http://stackoverflow.com/a/12747364/2994108
-    window.onerror = function (msg, url, lineNumber, columnNo, error) {
-        var string = msg.toLowerCase();
-        var substring = "script error";
-        var data = {};
-
-        if (string.indexOf(substring) > -1){
-          data = 'Script Error: See Browser Console for Detail';
-        } else {
-          data = msg + ' Line: ' + lineNumber + 'column: ' + columnNo;
-        }
-        window.parent.postMessage({
-          method: 'error',
-          arguments: data,
-          source: 'sketch'
-        }, '*');
-      return false;
-    };
-  });
-</script>`;
+  </script>`;
+}
 
 class PreviewFrame extends React.Component {
 
@@ -146,7 +165,10 @@ class PreviewFrame extends React.Component {
       htmlFile = htmlFile.replace(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi, `<head>\n${htmlHeadContents}\n</head>`);
     }
 
-    htmlFile += hijackConsoleScript;
+    var lineOffset = htmlFile.substring(0, htmlFile.indexOf('<script>')).split('\n').length;
+    console.log(lineOffset)
+
+    htmlFile += hijackConsoleScript(lineOffset);
 
     return htmlFile;
   }
