@@ -65,6 +65,16 @@ function Nav(props) {
                 </p>
               </li>
             );
+          } else {
+            return (
+              <li className="nav__item">
+                <p className="nav__open">
+                  <a href="http://alpha.editor.p5js.org/p5/sketches">
+                    Open
+                  </a>
+                </p>
+              </li>
+            );
           }
         })()}
         <li className="nav__item">
