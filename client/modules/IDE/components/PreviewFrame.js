@@ -3,28 +3,44 @@ import ReactDOM from 'react-dom';
 import escapeStringRegexp from 'escape-string-regexp';
 import srcDoc from 'srcdoc-polyfill';
 
-
-/**
- * Stringify all of the console objects from an array for proxying
- */
-function stringifyArgs(args) {
-  var newArgs = [];
-  // TODO this was forEach but when the array is [undefined] it wouldn't
-  // iterate over them
-  var i = 0, length = args.length, arg;
-  for(; i < length; i++) {
-    arg = args[i];
-    if (typeof arg === 'undefined') {
-      newArgs.push('undefined');
+function getAllScriptOffsets(htmlFile) {
+  var offs = [];
+  var found = true;
+  var lastInd = 0;
+  var startTag = 'filestart-';
+  while (found) {
+    var ind = htmlFile.indexOf(startTag, lastInd);
+    if (ind == -1) {
+      found = false;
     } else {
-      newArgs.push(stringify(arg));
+      var endFilenameInd = htmlFile.indexOf('.js', ind+startTag.length);
+      var filename = htmlFile.substring(ind+startTag.length, endFilenameInd);
+      var lineOffset = htmlFile.substring(0, ind).split('\n').length;
+      offs.push([lineOffset, filename+'.js']);
+      lastInd = ind + 1;
     }
   }
-  return newArgs;
-};
+  return offs;
+}
 
-function hijackConsoleScript(lineOffset) {
+function hijackConsoleScript(offs) {
   return `<script>
+
+    function getScriptOff(line) {
+      var offs = `+offs+`;
+      var l = 0;
+      var file = '';
+      for (var i=0; i<offs.length; i++) {
+        var n = offs[i][0];
+        if (n < line && n > l) {
+          l = n;
+          file = offs[i][1];
+        }
+      }
+      return [line - l, file];
+    }
+
+
     document.addEventListener('DOMContentLoaded', function() {
       var iframeWindow = window;
       var originalConsole = iframeWindow.console;
@@ -39,7 +55,10 @@ function hijackConsoleScript(lineOffset) {
           originalConsole[method].apply(originalConsole, arguments);
 
           var args = Array.from(arguments);
-          args = stringifyArgs(args);
+          args = args.map(function(i) {
+            // catch objects
+            return (typeof i === 'undefined') ? 'undefined' : JSON.stringify(i);
+          });
 
           // post message to parent window
           window.parent.postMessage({
@@ -59,7 +78,8 @@ function hijackConsoleScript(lineOffset) {
           if (string.indexOf(substring) !== -1){
             data = 'Script Error: See Browser Console for Detail';
           } else {
-            data = msg + ' (Line: ' + (lineNumber - `+lineOffset+`) + ')';
+            var fileInfo = getScriptOff(lineNumber);
+            data = msg + ' (' + fileInfo[1] + ': line ' + fileInfo[0] + ')';
           }
           window.parent.postMessage({
             method: 'error',
@@ -144,7 +164,7 @@ class PreviewFrame extends React.Component {
     jsFiles.forEach(jsFile => {
       const fileName = escapeStringRegexp(jsFile.name);
       const fileRegex = new RegExp(`<script.*?src=('|")((\.\/)|\/)?${fileName}('|").*?>([\s\S]*?)<\/script>`, 'gmi');
-      htmlFile = htmlFile.replace(fileRegex, `<script>\n${jsFile.content}\n</script>`);
+      htmlFile = htmlFile.replace(fileRegex, `<script data-tag="filestart-`+jsFile.name+`">\n${jsFile.content}\n</script>`);
     });
 
     this.props.cssFiles.forEach(cssFile => {
@@ -165,10 +185,8 @@ class PreviewFrame extends React.Component {
       htmlFile = htmlFile.replace(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi, `<head>\n${htmlHeadContents}\n</head>`);
     }
 
-    var lineOffset = htmlFile.substring(0, htmlFile.indexOf('<script>')).split('\n').length;
-    console.log(lineOffset)
-
-    htmlFile += hijackConsoleScript(lineOffset);
+    var scriptOffs = getAllScriptOffsets(htmlFile);
+    htmlFile += hijackConsoleScript(JSON.stringify(scriptOffs));
 
     return htmlFile;
   }
