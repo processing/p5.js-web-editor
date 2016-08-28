@@ -3,55 +3,100 @@ import ReactDOM from 'react-dom';
 import escapeStringRegexp from 'escape-string-regexp';
 import srcDoc from 'srcdoc-polyfill';
 
-const hijackConsoleScript = `<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var iframeWindow = window;
-    var originalConsole = iframeWindow.console;
-    iframeWindow.console = {};
 
-    var methods = [
-      'debug', 'clear', 'error', 'info', 'log', 'warn'
-    ];
+const startTag = 'filestart-';
 
-    methods.forEach( function(method) {
-      iframeWindow.console[method] = function() {
-        originalConsole[method].apply(originalConsole, arguments);
+function getAllScriptOffsets(htmlFile) {
+  const offs = [];
+  let found = true;
+  let lastInd = 0;
+  let ind = 0;
+  let endFilenameInd = 0;
+  let filename = '';
+  let lineOffset = 0;
+  while (found) {
+    ind = htmlFile.indexOf(startTag, lastInd);
+    if (ind === -1) {
+      found = false;
+    } else {
+      endFilenameInd = htmlFile.indexOf('.js', ind + startTag.length + 3);
+      filename = htmlFile.substring(ind + startTag.length, endFilenameInd);
+      lineOffset = htmlFile.substring(0, ind).split('\n').length;
+      offs.push([lineOffset, filename]);
+      lastInd = ind + 1;
+    }
+  }
+  return offs;
+}
 
-        var args = Array.from(arguments);
-        args = args.map(function(i) {
-          // catch objects
-          return (typeof i === 'string') ? i : JSON.stringify(i);
-        });
+function hijackConsoleScript(offs) {
+  const s = `<script>
+    function getScriptOff(line) {
+      var offs = ${offs};
+      var l = 0;
+      var file = '';
+      for (var i=0; i<offs.length; i++) {
+        var n = offs[i][0];
+        if (n < line && n > l) {
+          l = n;
+          file = offs[i][1];
+        }
+      }
+      return [line - l, file];
+    }
 
-        // post message to parent window
-        window.parent.postMessage({
-          method: method,
-          arguments: args,
-          source: 'sketch'
-        }, '*');
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var iframeWindow = window;
+      var originalConsole = iframeWindow.console;
+      iframeWindow.console = {};
+
+      var methods = [
+        'debug', 'clear', 'error', 'info', 'log', 'warn'
+      ];
+
+      methods.forEach( function(method) {
+        iframeWindow.console[method] = function() {
+          originalConsole[method].apply(originalConsole, arguments);
+
+          var args = Array.from(arguments);
+          args = args.map(function(i) {
+            // catch objects
+            return (typeof i === 'undefined') ? 'undefined' : JSON.stringify(i);
+          });
+
+          // post message to parent window
+          window.parent.postMessage({
+            method: method,
+            arguments: args,
+            source: 'sketch'
+          }, '*');
+        };
+      });
+
+      // catch reference errors, via http://stackoverflow.com/a/12747364/2994108
+      window.onerror = function (msg, url, lineNumber, columnNo, error) {
+          var string = msg.toLowerCase();
+          var substring = "script error";
+          var data = {};
+
+          if (string.indexOf(substring) !== -1){
+            data = 'Script Error: See Browser Console for Detail';
+          } else {
+            var fileInfo = getScriptOff(lineNumber);
+            data = msg + ' (' + fileInfo[1] + ': line ' + fileInfo[0] + ')';
+          }
+          window.parent.postMessage({
+            method: 'error',
+            arguments: data,
+            source: 'sketch'
+          }, '*');
+        return false;
       };
     });
-
-    // catch reference errors, via http://stackoverflow.com/a/12747364/2994108
-    window.onerror = function (msg, url, lineNumber, columnNo, error) {
-        var string = msg.toLowerCase();
-        var substring = "script error";
-        var data = {};
-
-        if (string.indexOf(substring) > -1){
-          data = 'Script Error: See Browser Console for Detail';
-        } else {
-          data = msg + ' Line: ' + lineNumber + 'column: ' + columnNo;
-        }
-        window.parent.postMessage({
-          method: 'error',
-          arguments: data,
-          source: 'sketch'
-        }, '*');
-      return false;
-    };
-  });
-</script>`;
+  </script>`;
+  return s;
+}
 
 class PreviewFrame extends React.Component {
 
@@ -95,6 +140,7 @@ class PreviewFrame extends React.Component {
 
   injectLocalFiles() {
     let htmlFile = this.props.htmlFile.content;
+    let scriptOffs = [];
 
     // have to build the array manually because the spread operator is only
     // one level down...
@@ -102,9 +148,10 @@ class PreviewFrame extends React.Component {
     this.props.jsFiles.forEach(jsFile => {
       const newJSFile = { ...jsFile };
       let jsFileStrings = newJSFile.content.match(/(['"])((\\\1|.)*?)\1/gm);
+      const jsFileRegex = /^('|")(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json)('|")$/i;
       jsFileStrings = jsFileStrings || [];
       jsFileStrings.forEach(jsFileString => {
-        if (jsFileString.match(/^('|")(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json)('|")$/i)) {
+        if (jsFileString.match(jsFileRegex)) {
           const filePath = jsFileString.substr(1, jsFileString.length - 2);
           let fileName = filePath;
           if (fileName.match(/^\.\//)) {
@@ -125,7 +172,8 @@ class PreviewFrame extends React.Component {
     jsFiles.forEach(jsFile => {
       const fileName = escapeStringRegexp(jsFile.name);
       const fileRegex = new RegExp(`<script.*?src=('|")((\.\/)|\/)?${fileName}('|").*?>([\s\S]*?)<\/script>`, 'gmi');
-      htmlFile = htmlFile.replace(fileRegex, `<script>\n${jsFile.content}\n</script>`);
+      const replacementString = `<script data-tag="${startTag}${jsFile.name}">\n${jsFile.content}\n</script>`;
+      htmlFile = htmlFile.replace(fileRegex, replacementString);
     });
 
     this.props.cssFiles.forEach(cssFile => {
@@ -146,7 +194,8 @@ class PreviewFrame extends React.Component {
       htmlFile = htmlFile.replace(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi, `<head>\n${htmlHeadContents}\n</head>`);
     }
 
-    htmlFile += hijackConsoleScript;
+    scriptOffs = getAllScriptOffsets(htmlFile);
+    htmlFile += hijackConsoleScript(JSON.stringify(scriptOffs));
 
     return htmlFile;
   }
