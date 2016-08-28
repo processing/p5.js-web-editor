@@ -333,7 +333,7 @@ IDEView.propTypes = {
     indentationAmount: PropTypes.number.isRequired,
     isTabIndent: PropTypes.bool.isRequired,
     autosave: PropTypes.bool.isRequired,
-    lintWarning: PropTypes.bool.isRequired,
+    lintWarning: PropTypes.string.isRequired,
     textOutput: PropTypes.bool.isRequired
   }).isRequired,
   closePreferences: PropTypes.func.isRequired,

@@ -5,7 +5,7 @@ const initialState = {
   indentationAmount: 2,
   isTabIndent: true,
   autosave: true,
-  lintWarning: false,
+  lintWarning: 'off',
   textOutput: false
 };
 

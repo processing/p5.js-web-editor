@@ -29,8 +29,7 @@ class Preferences extends React.Component {
   }
 
   handleLintWarning(event) {
-    const value = event.target.value === 'true';
-    this.props.setLintWarning(value);
+    this.props.setLintWarning(event.target.value);
   }
 
   render() {
@@ -54,13 +53,29 @@ class Preferences extends React.Component {
       preference__option: true,
       'preference__option--selected': !this.props.autosave
     });
-    let lintWarningOnClass = classNames({
+    let lintWarning1Class = classNames({
       preference__option: true,
-      'preference__option--selected': this.props.lintWarning
+      'preference__option--selected': this.props.lintWarning === 'beep1'
+    });
+    let lintWarning2Class = classNames({
+      preference__option: true,
+      'preference__option--selected': this.props.lintWarning === 'beep2'
+    });
+    let lintWarning3Class = classNames({
+      preference__option: true,
+      'preference__option--selected': this.props.lintWarning === 'beep3'
+    });
+    let lintWarning4Class = classNames({
+      preference__option: true,
+      'preference__option--selected': this.props.lintWarning === 'beep4'
+    });
+    let lintWarning5Class = classNames({
+      preference__option: true,
+      'preference__option--selected': this.props.lintWarning === 'beep5'
     });
     let lintWarningOffClass = classNames({
       preference__option: true,
-      'preference__option--selected': !this.props.lintWarning
+      'preference__option--selected': this.props.lintWarning === 'off'
     });
     let textOutputOnClass = classNames({
       preference__option: true,
@@ -166,15 +181,35 @@ class Preferences extends React.Component {
           <h4 className="preference__title">Lint Warning Sound</h4>
           <div className="preference__options">
             <button
-              className={lintWarningOnClass}
-              onClick={() => this.props.setLintWarning(true)}
-              aria-label="lint warning on"
-            >On</button>
-            <button
               className={lintWarningOffClass}
-              onClick={() => this.props.setLintWarning(false)}
+              onClick={() => this.props.setLintWarning('off')}
               aria-label="lint warning off"
             >Off</button>
+            <button
+              className={lintWarning1Class}
+              onClick={() => this.props.setLintWarning('beep1')}
+              aria-label="lint warning 1"
+            >1</button>
+            <button
+              className={lintWarning2Class}
+              onClick={() => this.props.setLintWarning('beep2')}
+              aria-label="lint warning 2"
+            >2</button>
+            <button
+              className={lintWarning3Class}
+              onClick={() => this.props.setLintWarning('beep3')}
+              aria-label="lint warning 3"
+            >3</button>
+            <button
+              className={lintWarning4Class}
+              onClick={() => this.props.setLintWarning('beep4')}
+              aria-label="lint warning 4"
+            >4</button>
+            <button
+              className={lintWarning5Class}
+              onClick={() => this.props.setLintWarning('beep5')}
+              aria-label="lint warning 5"
+            >5</button>
           </div>
         </div>
         <div className="preference">
@@ -212,8 +247,8 @@ Preferences.propTypes = {
   setAutosave: PropTypes.func.isRequired,
   textOutput: PropTypes.bool.isRequired,
   setTextOutput: PropTypes.func.isRequired,
-  lintWarning: PropTypes.bool.isRequired,
-  setLintWarning: PropTypes.func.isRequired
+  lintWarning: PropTypes.string.isRequired,
+  setLintWarning: PropTypes.func.isRequired,
 };
 
 export default Preferences;
