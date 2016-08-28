@@ -31,6 +31,7 @@ class IDEView extends React.Component {
   }
 
   componentDidMount() {
+    this.props.stopSketch();
     if (this.props.params.project_id) {
       const id = this.props.params.project_id;
       this.props.getProject(id);
@@ -119,6 +120,7 @@ class IDEView extends React.Component {
           cloneProject={this.props.cloneProject}
           project={this.props.project}
           logoutUser={this.props.logoutUser}
+          stopSketch={this.props.stopSketch}
         />
         <Toolbar
           className="Toolbar"

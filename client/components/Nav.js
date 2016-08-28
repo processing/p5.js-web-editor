@@ -59,7 +59,10 @@ function Nav(props) {
             return (
               <li className="nav__item">
                 <p className="nav__open">
-                  <Link to="/sketches">
+                  <Link
+                    to="/sketches"
+                    onClick={props.stopSketch}
+                  >
                     Open
                   </Link>
                 </p>
@@ -130,7 +133,8 @@ Nav.propTypes = {
   project: PropTypes.shape({
     id: PropTypes.string
   }),
-  logoutUser: PropTypes.func.isRequired
+  logoutUser: PropTypes.func.isRequired,
+  stopSketch: PropTypes.func.isRequired
 };
 
 export default Nav;
