@@ -65,7 +65,8 @@ function Nav(props) {
                 </p>
               </li>
             );
-          } else {
+          }
+          if (!props.user.authenticated) {
             return (
               <li className="nav__item">
                 <p className="nav__open">

@@ -3,20 +3,26 @@ import ReactDOM from 'react-dom';
 import escapeStringRegexp from 'escape-string-regexp';
 import srcDoc from 'srcdoc-polyfill';
 
+
+const startTag = 'filestart-';
+
 function getAllScriptOffsets(htmlFile) {
-  var offs = [];
-  var found = true;
-  var lastInd = 0;
-  var startTag = 'filestart-';
+  const offs = [];
+  let found = true;
+  let lastInd = 0;
+  let ind = 0;
+  let endFilenameInd = 0;
+  let filename = '';
+  let lineOffset = 0;
   while (found) {
-    var ind = htmlFile.indexOf(startTag, lastInd);
-    if (ind == -1) {
+    ind = htmlFile.indexOf(startTag, lastInd);
+    if (ind === -1) {
       found = false;
     } else {
-      var endFilenameInd = htmlFile.indexOf('.js', ind+startTag.length);
-      var filename = htmlFile.substring(ind+startTag.length, endFilenameInd);
-      var lineOffset = htmlFile.substring(0, ind).split('\n').length;
-      offs.push([lineOffset, filename+'.js']);
+      endFilenameInd = htmlFile.indexOf('.js', ind + startTag.length + 3);
+      filename = htmlFile.substring(ind + startTag.length, endFilenameInd);
+      lineOffset = htmlFile.substring(0, ind).split('\n').length;
+      offs.push([lineOffset, filename]);
       lastInd = ind + 1;
     }
   }
@@ -24,10 +30,9 @@ function getAllScriptOffsets(htmlFile) {
 }
 
 function hijackConsoleScript(offs) {
-  return `<script>
-
+  const s = `<script>
     function getScriptOff(line) {
-      var offs = `+offs+`;
+      var offs = ${offs};
       var l = 0;
       var file = '';
       for (var i=0; i<offs.length; i++) {
@@ -90,6 +95,7 @@ function hijackConsoleScript(offs) {
       };
     });
   </script>`;
+  return s;
 }
 
 class PreviewFrame extends React.Component {
@@ -134,6 +140,7 @@ class PreviewFrame extends React.Component {
 
   injectLocalFiles() {
     let htmlFile = this.props.htmlFile.content;
+    let scriptOffs = [];
 
     // have to build the array manually because the spread operator is only
     // one level down...
@@ -141,9 +148,10 @@ class PreviewFrame extends React.Component {
     this.props.jsFiles.forEach(jsFile => {
       const newJSFile = { ...jsFile };
       let jsFileStrings = newJSFile.content.match(/(['"])((\\\1|.)*?)\1/gm);
+      const jsFileRegex = /^('|")(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json)('|")$/i;
       jsFileStrings = jsFileStrings || [];
       jsFileStrings.forEach(jsFileString => {
-        if (jsFileString.match(/^('|")(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json)('|")$/i)) {
+        if (jsFileString.match(jsFileRegex)) {
           const filePath = jsFileString.substr(1, jsFileString.length - 2);
           let fileName = filePath;
           if (fileName.match(/^\.\//)) {
@@ -164,7 +172,8 @@ class PreviewFrame extends React.Component {
     jsFiles.forEach(jsFile => {
       const fileName = escapeStringRegexp(jsFile.name);
       const fileRegex = new RegExp(`<script.*?src=('|")((\.\/)|\/)?${fileName}('|").*?>([\s\S]*?)<\/script>`, 'gmi');
-      htmlFile = htmlFile.replace(fileRegex, `<script data-tag="filestart-`+jsFile.name+`">\n${jsFile.content}\n</script>`);
+      const replacementString = `<script data-tag="${startTag}${jsFile.name}">\n${jsFile.content}\n</script>`;
+      htmlFile = htmlFile.replace(fileRegex, replacementString);
     });
 
     this.props.cssFiles.forEach(cssFile => {
@@ -185,7 +194,7 @@ class PreviewFrame extends React.Component {
       htmlFile = htmlFile.replace(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi, `<head>\n${htmlHeadContents}\n</head>`);
     }
 
-    var scriptOffs = getAllScriptOffsets(htmlFile);
+    scriptOffs = getAllScriptOffsets(htmlFile);
     htmlFile += hijackConsoleScript(JSON.stringify(scriptOffs));
 
     return htmlFile;
