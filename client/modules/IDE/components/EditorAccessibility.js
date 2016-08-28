@@ -7,18 +7,18 @@ class EditorAccessibility extends React.Component {
   render() {
     let messages = [];
     if (this.props.lintMessages.length > 0) {
-      for (let i = 0; i < this.props.lintMessages.length; i++) {
+      this.props.lintMessages.forEach((lintMessage, i) => {
         messages.push(
-          <li>
-            {this.props.lintMessages[i].severity} in line
-            {this.props.lintMessages[i].line} :
-            {this.props.lintMessages[i].message}
+          <li key={i}>
+            {lintMessage.severity} in line
+            {lintMessage.line} :
+            {lintMessage.message}
           </li>
         );
-      }
+      });
     } else {
       messages.push(
-        <p tabIndex="0"> There are no lint messages </p>
+        <li tabIndex="0" key={0}> There are no lint messages </li>
       );
     }
     return (

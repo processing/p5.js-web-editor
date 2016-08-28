@@ -59,24 +59,25 @@ function Nav(props) {
             return (
               <li className="nav__item">
                 <p className="nav__open">
-                  <Link to="/sketches">
+                  <Link
+                    to="/sketches"
+                    onClick={props.stopSketch}
+                  >
                     Open
                   </Link>
                 </p>
               </li>
             );
           }
-          if (!props.user.authenticated) {
-            return (
-              <li className="nav__item">
-                <p className="nav__open">
-                  <a href="http://alpha.editor.p5js.org/p5/sketches">
-                    Open
-                  </a>
-                </p>
-              </li>
-            );
-          }
+          return (
+            <li className="nav__item">
+              <p className="nav__open">
+                <Link to="/p5js/sketches">
+                  Open
+                </Link>
+              </p>
+            </li>
+          );
         })()}
         <li className="nav__item">
           <p className="nav__about">
@@ -87,10 +88,34 @@ function Nav(props) {
         </li>
       </ul>
       <ul className="nav__items-right" title="user-menu">
-        <li className="nav__item">
-          {props.user.authenticated && <p>Hello, {props.user.username}!</p>}
-          {!props.user.authenticated && <p><Link to="/login">Login</Link> or <Link to="/signup">Sign Up</Link></p>}
-        </li>
+        {(() => {
+          if (!props.user.authenticated) {
+            return (
+              <li className="nav__item">
+                <p>
+                  <Link to="/login">Login</Link> or <Link to="/signup">Sign Up</Link>
+                </p>
+              </li>
+            );
+          }
+          return (
+            <li className="nav__item">
+              <a>Hello, {props.user.username}!</a>
+              <ul className="nav__dropdown">
+                <li>
+                  <Link to="/sketches">
+                    My Sketches
+                  </Link>
+                </li>
+                <li>
+                  <a onClick={props.logoutUser} >
+                    Logout
+                  </a>
+                </li>
+              </ul>
+            </li>
+          );
+        })()}
       </ul>
     </nav>
   );
@@ -107,7 +132,9 @@ Nav.propTypes = {
   }).isRequired,
   project: PropTypes.shape({
     id: PropTypes.string
-  })
+  }),
+  logoutUser: PropTypes.func.isRequired,
+  stopSketch: PropTypes.func.isRequired
 };
 
 export default Nav;

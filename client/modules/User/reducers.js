@@ -5,6 +5,10 @@ const user = (state = { authenticated: false }, action) => {
     case ActionTypes.AUTH_USER:
       return { ...action.user,
               authenticated: true };
+    case ActionTypes.UNAUTH_USER:
+      return {
+        authenticated: false
+      };
     case ActionTypes.AUTH_ERROR:
       return {
         authenticated: false

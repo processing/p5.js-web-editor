@@ -1,6 +1,6 @@
 .nav {
 	width: 100%;
-	padding: #{10 / $base-font-size}rem #{40 / $base-font-size}rem;
+	padding: #{10 / $base-font-size}rem #{70 / $base-font-size}rem;
 	padding-left: #{170 / $base-font-size}rem;
 	display: flex;
 	flex-direction: row;
@@ -24,4 +24,22 @@
 	& + & {
 		margin-left: #{20 / $base-font-size}rem;
 	}
+	position: relative;
+	&:hover .nav__dropdown {
+		display: flex;
+	}
+}
+
+.nav__dropdown {
+	display: none;
+	position: absolute;
+	flex-direction: column;
+	background-color: $light-background-color;
+	padding: #{10 / $base-font-size}rem;
+	left: #{-10 / $base-font-size}rem;
+	border: 1px solid $ide-border-color;
+	& li + li {
+		margin-top: #{10 / $base-font-size}rem;
+	}
+	width: #{140 / $base-font-size}rem;
 }

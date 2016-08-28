@@ -15,6 +15,7 @@ import * as IDEActions from '../actions/ide';
 import * as ProjectActions from '../actions/project';
 import * as EditorAccessibilityActions from '../actions/editorAccessibility';
 import * as PreferencesActions from '../actions/preferences';
+import * as UserActions from '../../User/actions';
 import { getFile, getHTMLFile, getJSFiles, getCSSFiles, setSelectedFile } from '../reducers/files';
 import SplitPane from 'react-split-pane';
 import Overlay from '../../App/components/Overlay';
@@ -30,6 +31,7 @@ class IDEView extends React.Component {
   }
 
   componentDidMount() {
+    this.props.stopSketch();
     if (this.props.params.project_id) {
       const id = this.props.params.project_id;
       this.props.getProject(id);
@@ -117,6 +119,8 @@ class IDEView extends React.Component {
           exportProjectAsZip={this.props.exportProjectAsZip}
           cloneProject={this.props.cloneProject}
           project={this.props.project}
+          logoutUser={this.props.logoutUser}
+          stopSketch={this.props.stopSketch}
         />
         <Toolbar
           className="Toolbar"
@@ -366,7 +370,8 @@ IDEView.propTypes = {
   hideEditFileName: PropTypes.func.isRequired,
   updateFileName: PropTypes.func.isRequired,
   showEditProjectName: PropTypes.func.isRequired,
-  hideEditProjectName: PropTypes.func.isRequired
+  hideEditProjectName: PropTypes.func.isRequired,
+  logoutUser: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -390,7 +395,8 @@ function mapDispatchToProps(dispatch) {
     FileActions,
     ProjectActions,
     IDEActions,
-    PreferencesActions),
+    PreferencesActions,
+    UserActions),
   dispatch);
 }
 
