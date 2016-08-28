@@ -72,7 +72,7 @@ function Nav(props) {
           return (
             <li className="nav__item">
               <p className="nav__open">
-                <Link to="/p5js/sketches">
+                <Link to="/p5/sketches">
                   Open
                 </Link>
               </p>
