@@ -11,6 +11,10 @@ body, input, button {
 	color: $light-primary-text-color;
 }
 
+body {
+	background-color: $light-background-color;
+}
+
 .root-app, .app {
 	min-height: 100%;
 	height: 100%;

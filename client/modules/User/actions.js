@@ -56,3 +56,16 @@ export function getUser() {
       });
   };
 }
+
+export function logoutUser() {
+  return (dispatch) => {
+    axios.get(`${ROOT_URL}/logout`, { withCredentials: true })
+      .then(() => {
+        dispatch({
+          type: ActionTypes.UNAUTH_USER
+        });
+      })
+      .catch(response => dispatch(authError(response.data.error)));
+  };
+}
+
