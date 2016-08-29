@@ -242,6 +242,8 @@ class PreviewFrame extends React.Component {
 
 PreviewFrame.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
+  isTextOutputPlaying: PropTypes.bool.isRequired,
+  textOutput: PropTypes.bool.isRequired,
   head: PropTypes.object.isRequired,
   content: PropTypes.string,
   htmlFile: PropTypes.shape({
