@@ -38,38 +38,7 @@ class Preferences extends React.Component {
       preferences: true,
       'preferences--selected': this.props.isVisible
     });
-    let preferencesTabOptionClass = classNames({
-      preference__option: true,
-      'preference__option--selected': this.props.isTabIndent
-    });
-    let preferencesSpaceOptionClass = classNames({
-      preference__option: true,
-      'preference__option--selected': !this.props.isTabIndent
-    });
-    let autosaveOnClass = classNames({
-      preference__option: true,
-      'preference__option--selected': this.props.autosave
-    });
-    let autosaveOffClass = classNames({
-      preference__option: true,
-      'preference__option--selected': !this.props.autosave
-    });
-    let lintWarningOnClass = classNames({
-      preference__option: true,
-      'preference__option--selected': this.props.lintWarning
-    });
-    let lintWarningOffClass = classNames({
-      preference__option: true,
-      'preference__option--selected': !this.props.lintWarning
-    });
-    let textOutputOnClass = classNames({
-      preference__option: true,
-      'preference__option--selected': this.props.textOutput
-    });
-    let textOutputOffClass = classNames({
-      preference__option: true,
-      'preference__option--selected': !this.props.textOutput
-    });
+
     return (
       <section className={preferencesContainerClass} tabIndex="0" title="preference-menu">
         <div className="preferences__heading">
@@ -143,8 +112,28 @@ class Preferences extends React.Component {
             <h6 className="preference__label">Increase</h6>
           </button>
           <div className="preference__vertical-list">
-            <button className={preferencesSpaceOptionClass} onClick={this.props.indentWithSpace} aria-label="indentation with space">Spaces</button>
-            <button className={preferencesTabOptionClass} onClick={this.props.indentWithTab} aria-label="indentation with tab">Tabs</button>
+            <input
+              type="radio"
+              onClick={this.props.indentWithSpace}
+              aria-label="indentation with space"
+              name="indentation"
+              id="indentation-space"
+              className="preference__radio-button"
+              value="Spaces"
+              checked={!this.props.isTabIndent}
+            />
+            <label htmlFor="indentation-space" className="preference__option">Spaces</label>
+            <input
+              type="radio"
+              onClick={this.props.indentWithTab}
+              aria-label="indentation with tab"
+              name="indentation"
+              id="indentation-tab"
+              className="preference__radio-button"
+              value="Tabs"
+              checked={this.props.isTabIndent}
+            />
+            <label htmlFor="indentation-tab" className="preference__option">Tabs</label>
           </div>
         </div>
         <div className="preference">
@@ -160,7 +149,7 @@ class Preferences extends React.Component {
               value="On"
               checked={this.props.autosave}
             />
-            <label htmlFor="autosave-on" className={autosaveOnClass}>On</label>
+            <label htmlFor="autosave-on" className="preference__option">On</label>
             <input
               type="radio"
               onClick={() => this.props.setAutosave(false)}
@@ -171,7 +160,7 @@ class Preferences extends React.Component {
               value="Off"
               checked={!this.props.autosave}
             />
-            <label htmlFor="autosave-off" className={autosaveOffClass}>Off</label>
+            <label htmlFor="autosave-off" className="preference__option">Off</label>
           </div>
         </div>
         <div className="preference">
@@ -187,7 +176,7 @@ class Preferences extends React.Component {
               value="On"
               checked={this.props.lintWarning}
             />
-            <label htmlFor="lint-warning-on" className={lintWarningOnClass}>On</label>
+            <label htmlFor="lint-warning-on" className="preference__option">On</label>
             <input
               type="radio"
               onClick={() => this.props.setLintWarning(false)}
@@ -198,7 +187,7 @@ class Preferences extends React.Component {
               value="Off"
               checked={!this.props.lintWarning}
             />
-            <label htmlFor="lint-warning-off" className={lintWarningOffClass}>Off</label>
+            <label htmlFor="lint-warning-off" className="preference__option">Off</label>
           </div>
         </div>
         <div className="preference">
@@ -216,7 +205,7 @@ class Preferences extends React.Component {
               value="On"
               checked={this.props.textOutput}
             />
-            <label htmlFor="text-output-on" className={textOutputOnClass}>On</label>
+            <label htmlFor="text-output-on" className="preference__option">On</label>
             <input
               type="radio"
               onClick={() => this.props.setTextOutput(false)}
@@ -227,7 +216,7 @@ class Preferences extends React.Component {
               value="Off"
               checked={!this.props.textOutput}
             />
-            <label htmlFor="text-output-off" className={textOutputOffClass}>Off</label>
+            <label htmlFor="text-output-off" className="preference__option">Off</label>
 
           </div>
         </div>
