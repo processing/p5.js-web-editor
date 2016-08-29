@@ -114,7 +114,7 @@ class Preferences extends React.Component {
           <div className="preference__vertical-list">
             <input
               type="radio"
-              onClick={this.props.indentWithSpace}
+              onChange={this.props.indentWithSpace}
               aria-label="indentation with space"
               name="indentation"
               id="indentation-space"
@@ -125,7 +125,7 @@ class Preferences extends React.Component {
             <label htmlFor="indentation-space" className="preference__option">Spaces</label>
             <input
               type="radio"
-              onClick={this.props.indentWithTab}
+              onChange={this.props.indentWithTab}
               aria-label="indentation with tab"
               name="indentation"
               id="indentation-tab"
@@ -141,7 +141,7 @@ class Preferences extends React.Component {
           <div className="preference__options">
             <input
               type="radio"
-              onClick={() => this.props.setAutosave(true)}
+              onChange={() => this.props.setAutosave(true)}
               aria-label="autosave on"
               name="autosave"
               id="autosave-on"
@@ -152,7 +152,7 @@ class Preferences extends React.Component {
             <label htmlFor="autosave-on" className="preference__option">On</label>
             <input
               type="radio"
-              onClick={() => this.props.setAutosave(false)}
+              onChange={() => this.props.setAutosave(false)}
               aria-label="autosave off"
               name="autosave"
               id="autosave-off"
@@ -168,7 +168,7 @@ class Preferences extends React.Component {
           <div className="preference__options">
             <input
               type="radio"
-              onClick={() => this.props.setLintWarning(true)}
+              onChange={() => this.props.setLintWarning(true)}
               aria-label="lint warning on"
               name="lint warning"
               id="lint-warning-on"
@@ -179,7 +179,7 @@ class Preferences extends React.Component {
             <label htmlFor="lint-warning-on" className="preference__option">On</label>
             <input
               type="radio"
-              onClick={() => this.props.setLintWarning(false)}
+              onChange={() => this.props.setLintWarning(false)}
               aria-label="lint warning off"
               name="lint warning"
               id="lint-warning-off"
@@ -197,7 +197,7 @@ class Preferences extends React.Component {
           <div className="preference__options">
             <input
               type="radio"
-              onClick={() => this.props.setTextOutput(true)}
+              onChange={() => this.props.setTextOutput(true)}
               aria-label="text output on"
               name="text output"
               id="text-output-on"
@@ -208,7 +208,7 @@ class Preferences extends React.Component {
             <label htmlFor="text-output-on" className="preference__option">On</label>
             <input
               type="radio"
-              onClick={() => this.props.setTextOutput(false)}
+              onChange={() => this.props.setTextOutput(false)}
               aria-label="text output off"
               name="text output"
               id="text-output-off"
