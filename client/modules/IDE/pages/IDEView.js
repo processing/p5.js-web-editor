@@ -6,6 +6,7 @@ import Toolbar from '../components/Toolbar';
 import TextOutput from '../components/TextOutput';
 import Preferences from '../components/Preferences';
 import NewFileModal from '../components/NewFileModal';
+import NewFolderModal from '../components/NewFolderModal';
 import Nav from '../../../components/Nav';
 import Console from '../components/Console';
 import { bindActionCreators } from 'redux';
@@ -177,6 +178,10 @@ class IDEView extends React.Component {
               showEditFileName={this.props.showEditFileName}
               hideEditFileName={this.props.hideEditFileName}
               updateFileName={this.props.updateFileName}
+              projectOptionsVisible={this.props.ide.projectOptionsVisible}
+              openProjectOptions={this.props.openProjectOptions}
+              closeProjectOptions={this.props.closeProjectOptions}
+              newFolder={this.props.newFolder}
             />
             <SplitPane
               split="vertical"
@@ -258,6 +263,17 @@ class IDEView extends React.Component {
           }
           return '';
         })()}
+        {(() => {
+          if (this.props.ide.newFolderModalVisible) {
+            return (
+              <NewFolderModal
+                closeModal={this.props.closeNewFolderModal}
+                createFolder={this.props.createFolder}
+              />
+            );
+          }
+          return '';
+        })()}
         {(() => { // eslint-disable-line
           if (this.props.location.pathname.match(/sketches$/)) {
             return (
@@ -304,7 +320,9 @@ IDEView.propTypes = {
     modalIsVisible: PropTypes.bool.isRequired,
     sidebarIsExpanded: PropTypes.bool.isRequired,
     consoleIsExpanded: PropTypes.bool.isRequired,
-    preferencesIsVisible: PropTypes.bool.isRequired
+    preferencesIsVisible: PropTypes.bool.isRequired,
+    projectOptionsVisible: PropTypes.bool.isRequired,
+    newFolderModalVisible: PropTypes.bool.isRequired
   }).isRequired,
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
@@ -370,7 +388,12 @@ IDEView.propTypes = {
   updateFileName: PropTypes.func.isRequired,
   showEditProjectName: PropTypes.func.isRequired,
   hideEditProjectName: PropTypes.func.isRequired,
-  logoutUser: PropTypes.func.isRequired
+  logoutUser: PropTypes.func.isRequired,
+  openProjectOptions: PropTypes.func.isRequired,
+  closeProjectOptions: PropTypes.func.isRequired,
+  newFolder: PropTypes.func.isRequired,
+  closeNewFolderModal: PropTypes.func.isRequired,
+  createFolder: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

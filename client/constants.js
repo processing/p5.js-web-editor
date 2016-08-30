@@ -65,5 +65,10 @@ export const SET_LINT_WARNING = 'SET_LINT_WARNING';
 export const SET_PREFERENCES = 'SET_PREFERENCES';
 export const SET_TEXT_OUTPUT = 'SET_TEXT_OUTPUT';
 
+export const OPEN_PROJECT_OPTIONS = 'OPEN_PROJECT_OPTIONS';
+export const CLOSE_PROJECT_OPTIONS = 'CLOSE_PROJECT_OPTIONS';
+export const SHOW_NEW_FOLDER_MODAL = 'SHOW_NEW_FOLDER_MODAL';
+export const CLOSE_NEW_FOLDER_MODAL = 'CLOSE_NEW_FOLDER_MODAL';
+
 // eventually, handle errors more specifically and better
 export const ERROR = 'ERROR';

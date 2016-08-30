@@ -102,3 +102,27 @@ export function closePreferences() {
     type: ActionTypes.CLOSE_PREFERENCES
   };
 }
+
+export function openProjectOptions() {
+  return {
+    type: ActionTypes.OPEN_PROJECT_OPTIONS
+  };
+}
+
+export function closeProjectOptions() {
+  return {
+    type: ActionTypes.CLOSE_PROJECT_OPTIONS
+  };
+}
+
+export function newFolder() {
+  return {
+    type: ActionTypes.SHOW_NEW_FOLDER_MODAL
+  };
+}
+
+export function closeNewFolderModal() {
+  return {
+    type: ActionTypes.CLOSE_NEW_FOLDER_MODAL
+  };
+}

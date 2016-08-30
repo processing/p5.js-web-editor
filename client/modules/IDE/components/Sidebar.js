@@ -21,7 +21,8 @@ class Sidebar extends React.Component {
   render() {
     const sidebarClass = classNames({
       sidebar: true,
-      'sidebar--contracted': !this.props.isExpanded
+      'sidebar--contracted': !this.props.isExpanded,
+      'sidebar--project-options': this.props.projectOptionsVisible
     });
 
     return (
@@ -35,12 +36,25 @@ class Sidebar extends React.Component {
           </h3>
           <div className="sidebar__icons">
             <button
-              aria-label="add file"
+              aria-label="add file or folder"
               className="sidebar__add"
-              onClick={this.props.newFile}
+              onClick={this.props.openProjectOptions}
+              onBlur={() => setTimeout(this.props.closeProjectOptions, 200)}
             >
               <InlineSVG src={downArrowUrl} />
             </button>
+            <ul className="sidebar__project-options">
+              <li>
+                <a onClick={this.props.newFolder} >
+                  Add Folder
+                </a>
+              </li>
+              <li>
+                <a onClick={this.props.newFile} >
+                  Add File
+                </a>
+              </li>
+            </ul>
             <button
               aria-label="collapse file navigation"
               className="sidebar__contract"
@@ -84,6 +98,7 @@ Sidebar.propTypes = {
   files: PropTypes.array.isRequired,
   setSelectedFile: PropTypes.func.isRequired,
   isExpanded: PropTypes.bool.isRequired,
+  projectOptionsVisible: PropTypes.bool.isRequired,
   newFile: PropTypes.func.isRequired,
   collapseSidebar: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
@@ -92,7 +107,10 @@ Sidebar.propTypes = {
   deleteFile: PropTypes.func.isRequired,
   showEditFileName: PropTypes.func.isRequired,
   hideEditFileName: PropTypes.func.isRequired,
-  updateFileName: PropTypes.func.isRequired
+  updateFileName: PropTypes.func.isRequired,
+  openProjectOptions: PropTypes.func.isRequired,
+  closeProjectOptions: PropTypes.func.isRequired,
+  newFolder: PropTypes.func.isRequired
 };
 
 export default Sidebar;

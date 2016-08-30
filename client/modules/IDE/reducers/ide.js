@@ -10,7 +10,9 @@ const initialState = {
   modalIsVisible: false,
   sidebarIsExpanded: true,
   consoleIsExpanded: false,
-  preferencesIsVisible: false
+  preferencesIsVisible: false,
+  projectOptionsVisible: false,
+  newFolderModalVisible: false
 };
 
 const ide = (state = initialState, action) => {
@@ -45,6 +47,14 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { preferencesIsVisible: false });
     case ActionTypes.RESET_PROJECT:
       return initialState;
+    case ActionTypes.OPEN_PROJECT_OPTIONS:
+      return Object.assign({}, state, { projectOptionsVisible: true });
+    case ActionTypes.CLOSE_PROJECT_OPTIONS:
+      return Object.assign({}, state, { projectOptionsVisible: false });
+    case ActionTypes.SHOW_NEW_FOLDER_MODAL:
+      return Object.assign({}, state, { newFolderModalVisible: true });
+    case ActionTypes.CLOSE_NEW_FOLDER_MODAL:
+      return Object.assign({}, state, { newFolderModalVisible: false });
     default:
       return state;
   }

@@ -126,6 +126,7 @@
 .sidebar__icons {
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 .sidebar__folder-icon {
@@ -137,4 +138,16 @@
 
 .sidebar__file-item-icon {
   margin-right: #{5 / $base-font-size}rem;
+}
+
+.sidebar__project-options {
+  @extend %modal;
+  display: none;
+  position: absolute;
+  .sidebar--project-options & {
+    display: block;
+  }
+  top: 100%;
+  padding: #{8 / $base-font-size}rem;
+  width: #{110 / $base-font-size}rem;
 }

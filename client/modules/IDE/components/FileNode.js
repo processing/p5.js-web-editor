@@ -65,14 +65,14 @@ export class FileNode extends React.Component {
       <div
         className={itemClass}
         onClick={this.handleFileClick}
-        onBlur={() => setTimeout(() => this.props.hideFileOptions(this.props.id), 100)}
+        onBlur={() => setTimeout(() => this.props.hideFileOptions(this.props.id), 200)}
       >
         {(() => { // eslint-disable-line
           if (this.props.name !== 'root') {
             return (
               <div className="file-item__content">
                 {(() => { // eslint-disable-line
-                  if (this.props.type === 'file') {
+                  if (this.props.fileType === 'file') {
                     return (
                       <span className="sidebar__file-item-icon">
                         <InlineSVG src={fileUrl} />
@@ -151,7 +151,7 @@ FileNode.propTypes = {
   parentId: PropTypes.string,
   children: PropTypes.array,
   name: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
+  fileType: PropTypes.string.isRequired,
   isSelected: PropTypes.bool,
   isOptionsOpen: PropTypes.bool,
   isEditingName: PropTypes.bool,

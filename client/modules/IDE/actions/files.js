@@ -118,6 +118,51 @@ export function createFile(formProps) {
   };
 }
 
+export function createFolder(formProps) {
+  return (dispatch, getState) => {
+    const state = getState();
+    const rootFile = state.files.filter(file => file.name === 'root')[0];
+    if (state.project.id) {
+      const postParams = {
+        name: createUniqueName(formProps.name, state.files),
+        content: '',
+        parentId: rootFile.id,
+        fileType: 'folder'
+      };
+      axios.post(`${ROOT_URL}/projects/${state.project.id}/files`, postParams, { withCredentials: true })
+        .then(response => {
+          dispatch({
+            type: ActionTypes.CREATE_FILE,
+            ...response.data,
+            parentId: rootFile.id
+          });
+          dispatch({
+            type: ActionTypes.CLOSE_NEW_FOLDER_MODAL
+          });
+        })
+        .catch(response => dispatch({
+          type: ActionTypes.ERROR,
+          error: response.data
+        }));
+    } else {
+      const id = objectID().toHexString();
+      dispatch({
+        type: ActionTypes.CREATE_FILE,
+        name: createUniqueName(formProps.name, state.files),
+        id,
+        _id: id,
+        content: '',
+        // TODO pass parent id from File Tree
+        parentId: rootFile.id,
+        fileType: 'folder'
+      });
+      dispatch({
+        type: ActionTypes.CLOSE_NEW_FOLDER_MODAL
+      });
+    }
+  };
+}
+
 export function showFileOptions(fileId) {
   return {
     type: ActionTypes.SHOW_FILE_OPTIONS,
