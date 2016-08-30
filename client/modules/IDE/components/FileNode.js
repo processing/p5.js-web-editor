@@ -102,6 +102,28 @@ export class FileNode extends React.Component {
                 </button>
                 <div ref="fileOptions" className="sidebar__file-item-options">
                   <ul title="file options">
+                    {(() => { // eslint-disable-line
+                      if (this.props.fileType === 'folder') {
+                        return (
+                          <li>
+                            <a aria-label="add file" onClick={this.props.newFile} >
+                              Add File
+                            </a>
+                          </li>
+                        );
+                      }
+                    })()}
+                    {(() => { // eslint-disable-line
+                      if (this.props.fileType === 'folder') {
+                        return (
+                          <li>
+                            <a aria-label="add folder" onClick={this.props.newFolder} >
+                              Add Folder
+                            </a>
+                          </li>
+                        );
+                      }
+                    })()}
                     <li>
                       <a
                         onClick={() => {
@@ -162,7 +184,9 @@ FileNode.propTypes = {
   showEditFileName: PropTypes.func.isRequired,
   hideEditFileName: PropTypes.func.isRequired,
   updateFileName: PropTypes.func.isRequired,
-  resetSelectedFile: PropTypes.func.isRequired
+  resetSelectedFile: PropTypes.func.isRequired,
+  newFile: PropTypes.func.isRequired,
+  newFolder: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state, ownProps) {

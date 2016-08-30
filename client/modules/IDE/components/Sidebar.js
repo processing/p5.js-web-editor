@@ -45,12 +45,12 @@ class Sidebar extends React.Component {
             </button>
             <ul className="sidebar__project-options">
               <li>
-                <a onClick={this.props.newFolder} >
+                <a aria-label="add folder" onClick={this.props.newFolder} >
                   Add Folder
                 </a>
               </li>
               <li>
-                <a onClick={this.props.newFile} >
+                <a aria-label="add file" onClick={this.props.newFile} >
                   Add File
                 </a>
               </li>
