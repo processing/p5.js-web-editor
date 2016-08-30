@@ -172,6 +172,20 @@ const files = (state, action) => {
         }
         return Object.assign({}, file, { isSelected: false });
       });
+    case ActionTypes.SHOW_FOLDER_CHILDREN:
+      return state.map(file => {
+        if (file.id === action.id) {
+          return Object.assign({}, file, { isFolderClosed: false });
+        }
+        return file;
+      });
+    case ActionTypes.HIDE_FOLDER_CHILDREN:
+      return state.map(file => {
+        if (file.id === action.id) {
+          return Object.assign({}, file, { isFolderClosed: true });
+        }
+        return file;
+      });
     default:
       return state;
   }

@@ -69,6 +69,8 @@ export const OPEN_PROJECT_OPTIONS = 'OPEN_PROJECT_OPTIONS';
 export const CLOSE_PROJECT_OPTIONS = 'CLOSE_PROJECT_OPTIONS';
 export const SHOW_NEW_FOLDER_MODAL = 'SHOW_NEW_FOLDER_MODAL';
 export const CLOSE_NEW_FOLDER_MODAL = 'CLOSE_NEW_FOLDER_MODAL';
+export const SHOW_FOLDER_CHILDREN = 'SHOW_FOLDER_CHILDREN';
+export const HIDE_FOLDER_CHILDREN = 'HIDE_FOLDER_CHILDREN';
 
 // eventually, handle errors more specifically and better
 export const ERROR = 'ERROR';

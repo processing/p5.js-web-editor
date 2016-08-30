@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import InlineSVG from 'react-inlinesvg';
 const downArrowUrl = require('../../../images/down-arrow.svg');
+const folderRightUrl = require('../../../images/triangle-arrow-right.svg');
+const folderDownUrl = require('../../../images/triangle-arrow-down.svg');
 const fileUrl = require('../../../images/file.svg');
 import classNames from 'classnames';
 
@@ -60,7 +62,8 @@ export class FileNode extends React.Component {
       'sidebar__file-item': this.props.name !== 'root',
       'sidebar__file-item--selected': this.props.isSelected,
       'sidebar__file-item--open': this.props.isOptionsOpen,
-      'sidebar__file-item--editing': this.props.isEditingName
+      'sidebar__file-item--editing': this.props.isEditingName,
+      'sidebar__file-item--closed': this.props.isFolderClosed
     });
     return (
       <div
@@ -80,7 +83,24 @@ export class FileNode extends React.Component {
                         <InlineSVG src={fileUrl} />
                       </span>
                     );
+                  } else if (this.props.isFolderClosed) {
+                    return (
+                      <span
+                        className="sidebar__file-item-icon"
+                        onClick={() => this.props.showFolderChildren(this.props.id)}
+                      >
+                        <InlineSVG src={folderRightUrl} />
+                      </span>
+                    );
                   }
+                  return (
+                    <span
+                      className="sidebar__file-item-icon"
+                      onClick={() => this.props.hideFolderChildren(this.props.id)}
+                    >
+                      <InlineSVG src={folderDownUrl} />
+                    </span>
+                  );
                 })()}
                 <a className="sidebar__file-item-name">{this.props.name}</a>
                 <input
@@ -179,6 +199,7 @@ FileNode.propTypes = {
   isSelected: PropTypes.bool,
   isOptionsOpen: PropTypes.bool,
   isEditingName: PropTypes.bool,
+  isFolderClosed: PropTypes.bool,
   setSelectedFile: PropTypes.func.isRequired,
   showFileOptions: PropTypes.func.isRequired,
   hideFileOptions: PropTypes.func.isRequired,
@@ -188,7 +209,9 @@ FileNode.propTypes = {
   updateFileName: PropTypes.func.isRequired,
   resetSelectedFile: PropTypes.func.isRequired,
   newFile: PropTypes.func.isRequired,
-  newFolder: PropTypes.func.isRequired
+  newFolder: PropTypes.func.isRequired,
+  showFolderChildren: PropTypes.func.isRequired,
+  hideFolderChildren: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state, ownProps) {

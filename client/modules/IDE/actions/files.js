@@ -247,3 +247,17 @@ export function deleteFile(id, parentId) {
     }
   };
 }
+
+export function showFolderChildren(id) {
+  return {
+    type: ActionTypes.SHOW_FOLDER_CHILDREN,
+    id
+  };
+}
+
+export function hideFolderChildren(id) {
+  return {
+    type: ActionTypes.HIDE_FOLDER_CHILDREN,
+    id
+  };
+}
