@@ -1,8 +1,6 @@
 import React, { PropTypes } from 'react';
-import { bindActionCreators } from 'redux';
 import { reduxForm } from 'redux-form';
 import NewFileForm from './NewFileForm';
-import * as FileActions from '../actions/files';
 import classNames from 'classnames';
 import InlineSVG from 'react-inlinesvg';
 const exitUrl = require('../../../images/exit.svg');
@@ -48,14 +46,6 @@ NewFileModal.propTypes = {
   canUploadMedia: PropTypes.bool.isRequired
 };
 
-function mapStateToProps() {
-  return {};
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(FileActions, dispatch);
-}
-
 function validate(formProps) {
   const errors = {};
 
@@ -73,4 +63,4 @@ export default reduxForm({
   form: 'new-file',
   fields: ['name'],
   validate
-}, mapStateToProps, mapDispatchToProps)(NewFileModal);
+})(NewFileModal);

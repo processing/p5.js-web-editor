@@ -258,6 +258,7 @@ class IDEView extends React.Component {
               <NewFileModal
                 canUploadMedia={this.props.user.authenticated}
                 closeModal={this.props.closeNewFileModal}
+                createFile={this.props.createFile}
               />
             );
           }
@@ -393,7 +394,8 @@ IDEView.propTypes = {
   closeProjectOptions: PropTypes.func.isRequired,
   newFolder: PropTypes.func.isRequired,
   closeNewFolderModal: PropTypes.func.isRequired,
-  createFolder: PropTypes.func.isRequired
+  createFolder: PropTypes.func.isRequired,
+  createFile: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {

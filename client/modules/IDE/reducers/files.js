@@ -111,6 +111,7 @@ const files = (state, action) => {
             _id: action._id,
             content: action.content,
             url: action.url,
+            children: action.children,
             fileType: action.fileType || 'file' }];
       }
     case ActionTypes.SHOW_FILE_OPTIONS:

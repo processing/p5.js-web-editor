@@ -69,14 +69,21 @@ export function getBlobUrl(file) {
 export function createFile(formProps) {
   return (dispatch, getState) => {
     const state = getState();
-    const rootFile = state.files.filter(file => file.name === 'root')[0];
+    const selectedFile = state.files.find(file => file.isSelected);
+    const rootFile = state.files.find(file => file.name === 'root');
+    let parentId;
+    if (selectedFile.fileType === 'folder') {
+      parentId = selectedFile.id;
+    } else {
+      parentId = rootFile.id;
+    }
     if (state.project.id) {
       const postParams = {
         name: createUniqueName(formProps.name, state.files),
         url: formProps.url,
         content: formProps.content || '',
         // TODO pass parent id to API, once there are folders
-        parentId: rootFile.id
+        parentId
       };
       axios.post(`${ROOT_URL}/projects/${state.project.id}/files`, postParams, { withCredentials: true })
         .then(response => {
@@ -86,7 +93,7 @@ export function createFile(formProps) {
           dispatch({
             type: ActionTypes.CREATE_FILE,
             ...response.data,
-            parentId: rootFile.id
+            parentId
           });
           dispatch({
             type: ActionTypes.HIDE_MODAL
@@ -109,7 +116,7 @@ export function createFile(formProps) {
         url: formProps.url,
         content: formProps.content || '',
         // TODO pass parent id from File Tree
-        parentId: rootFile.id
+        parentId
       });
       dispatch({
         type: ActionTypes.HIDE_MODAL
@@ -121,12 +128,20 @@ export function createFile(formProps) {
 export function createFolder(formProps) {
   return (dispatch, getState) => {
     const state = getState();
-    const rootFile = state.files.filter(file => file.name === 'root')[0];
+    const selectedFile = state.files.find(file => file.isSelected);
+    const rootFile = state.files.find(file => file.name === 'root');
+    let parentId;
+    if (selectedFile.fileType === 'folder') {
+      parentId = selectedFile.id;
+    } else {
+      parentId = rootFile.id;
+    }
     if (state.project.id) {
       const postParams = {
         name: createUniqueName(formProps.name, state.files),
         content: '',
-        parentId: rootFile.id,
+        children: [],
+        parentId,
         fileType: 'folder'
       };
       axios.post(`${ROOT_URL}/projects/${state.project.id}/files`, postParams, { withCredentials: true })
@@ -134,7 +149,7 @@ export function createFolder(formProps) {
           dispatch({
             type: ActionTypes.CREATE_FILE,
             ...response.data,
-            parentId: rootFile.id
+            parentId
           });
           dispatch({
             type: ActionTypes.CLOSE_NEW_FOLDER_MODAL
@@ -153,8 +168,9 @@ export function createFolder(formProps) {
         _id: id,
         content: '',
         // TODO pass parent id from File Tree
-        parentId: rootFile.id,
-        fileType: 'folder'
+        parentId,
+        fileType: 'folder',
+        children: []
       });
       dispatch({
         type: ActionTypes.CLOSE_NEW_FOLDER_MODAL

@@ -56,6 +56,7 @@ export class FileNode extends React.Component {
 
   render() {
     let itemClass = classNames({
+      'sidebar__root-item': this.props.name === 'root',
       'sidebar__file-item': this.props.name !== 'root',
       'sidebar__file-item--selected': this.props.isSelected,
       'sidebar__file-item--open': this.props.isOptionsOpen,
@@ -71,6 +72,7 @@ export class FileNode extends React.Component {
           if (this.props.name !== 'root') {
             return (
               <div className="file-item__content">
+                <span className="file-item__spacer"></span>
                 {(() => { // eslint-disable-line
                   if (this.props.fileType === 'file') {
                     return (
@@ -157,7 +159,7 @@ export class FileNode extends React.Component {
         {(() => { // eslint-disable-line
           if (this.props.children) {
             return (
-              <ul>
+              <ul className="file-item__children">
                 {this.props.children.map(this.renderChild)}
               </ul>
             );

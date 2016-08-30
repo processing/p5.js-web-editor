@@ -35,25 +35,49 @@
   }
 }
 
+.sidebar__root-item {
+  position: relative;
+}
+
 .sidebar__file-item {
   font-size: #{16 / $base-font-size}rem;
-  padding: #{8 / $base-font-size}rem #{20 / $base-font-size}rem;
+  padding: #{8 / $base-font-size}rem 0;
   color: $light-inactive-text-color;
   cursor: pointer;
   &--selected {
     background-color: $ide-border-color;
   }
-  &:hover .sidebar__file-item-name {
+  &:hover > .file-item__content .sidebar__file-item-name {
     color: $light-primary-text-color;
   }
-  &:hover .sidebar__file-item-icon g {
+  &:hover > .file-item__content .sidebar__file-item-icon g {
     fill: $light-primary-text-color;
+  }
+}
+
+// to indent each row in the file tree
+// not sure how to do this in a better way
+// it won't work if the file tree is too nested
+.file-item__spacer {
+  .sidebar__file-item & {
+    width: #{20 / $base-font-size}rem;
+    .sidebar__file-item & {
+      width: #{40 / $base-font-size}rem;
+      .sidebar__file-item & {
+        width: #{60 / $base-font-size}rem;
+        .sidebar__file-item & {
+          width: #{80 / $base-font-size}rem;
+          .sidebar__file-item & {
+            width: #{100 / $base-font-size}rem;
+          }
+        }
+      }
+    }
   }
 }
 
 .file-item__content {
   display: flex;
-  // justify-content: space-between;
   position: relative;
 }
 
@@ -66,9 +90,9 @@
 .sidebar__file-item-show-options {
   @extend %icon;
   display: none;
-  margin-left: auto;
-  margin-right: 0;
-  .sidebar__file-item--selected & {
+  position: absolute;
+  right: #{20 / $base-font-size}rem;
+  .sidebar__file-item--selected > .file-item__content & {
     display: inline-block;
   }
 }
@@ -84,7 +108,7 @@
   padding: #{8 / $base-font-size}rem #{16 / $base-font-size}rem;
   background-color: $light-modal-background-color;
   z-index: 100;
-  .sidebar__file-item--open & {
+  .sidebar__file-item--open > .file-item__content & {
     display: block;
   }
 }
