@@ -27,7 +27,7 @@ class NewFolderForm extends React.Component {
 
 NewFolderForm.propTypes = {
   fields: PropTypes.shape({
-    name: PropTypes.string.isRequired
+    name: PropTypes.object.isRequired
   }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   createFolder: PropTypes.func.isRequired

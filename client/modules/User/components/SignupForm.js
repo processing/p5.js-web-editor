@@ -51,10 +51,10 @@ function SignupForm(props) {
 
 SignupForm.propTypes = {
   fields: PropTypes.shape({
-    username: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    password: PropTypes.string.isRequired,
-    confirmPassword: PropTypes.string.isRequired
+    username: PropTypes.object.isRequired,
+    email: PropTypes.object.isRequired,
+    password: PropTypes.object.isRequired,
+    confirmPassword: PropTypes.object.isRequired
   }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   signUpUser: PropTypes.func.isRequired,
