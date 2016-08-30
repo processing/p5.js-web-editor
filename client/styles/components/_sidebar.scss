@@ -41,12 +41,8 @@
 
 .sidebar__file-item {
   font-size: #{16 / $base-font-size}rem;
-  padding: #{8 / $base-font-size}rem 0;
   color: $light-inactive-text-color;
   cursor: pointer;
-  &--selected {
-    background-color: $ide-border-color;
-  }
   &:hover > .file-item__content .sidebar__file-item-name {
     color: $light-primary-text-color;
   }
@@ -79,6 +75,11 @@
 .file-item__content {
   display: flex;
   position: relative;
+  padding: #{8 / $base-font-size}rem 0;
+  .sidebar__file-item--selected > & {
+    background-color: $ide-border-color;
+  }
+
 }
 
 .sidebar__file-item-name {
