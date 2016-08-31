@@ -47,12 +47,11 @@ passport.use(new GitHubStrategy({
         done(err);
       } else {
         User.findById(req.user.id, (err, user) => {
+          user.email = user.email || profile._json.email;
           user.github = profile.id;
+          user.username = user.username || profile.username;
           user.tokens.push({ kind: 'github', accessToken });
-          user.profile.name = user.profile.name || profile.displayName;
-          user.profile.picture = user.profile.picture || profile._json.avatar_url;
-          user.profile.location = user.profile.location || profile._json.location;
-          user.profile.website = user.profile.website || profile._json.blog;
+          user.name = user.name || profile.displayName;
           user.save((err) => {
             req.flash('info', { msg: 'GitHub account has been linked.' });
             done(err, user);
@@ -73,11 +72,9 @@ passport.use(new GitHubStrategy({
           const user = new User();
           user.email = profile._json.email;
           user.github = profile.id;
+          user.username = profile.username;
           user.tokens.push({ kind: 'github', accessToken });
-          user.profile.name = profile.displayName;
-          user.profile.picture = profile._json.avatar_url;
-          user.profile.location = profile._json.location;
-          user.profile.website = profile._json.blog;
+          user.name = profile.displayName;
           user.save((err) => {
             done(err, user);
           });
