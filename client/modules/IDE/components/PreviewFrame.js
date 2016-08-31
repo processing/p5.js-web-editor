@@ -4,7 +4,7 @@ import escapeStringRegexp from 'escape-string-regexp';
 import srcDoc from 'srcdoc-polyfill';
 
 
-const startTag = 'filestart-';
+const startTag = '@fs-';
 
 function getAllScriptOffsets(htmlFile) {
   const offs = [];
@@ -29,7 +29,39 @@ function getAllScriptOffsets(htmlFile) {
   return offs;
 }
 
-function hijackConsoleScript(offs) {
+
+function hijackConsoleLogsScript() {
+  const s = `<script>
+    var iframeWindow = window;
+    var originalConsole = iframeWindow.console;
+    iframeWindow.console = {};
+
+    var methods = [
+      'debug', 'clear', 'error', 'info', 'log', 'warn'
+    ];
+
+    methods.forEach( function(method) {
+      iframeWindow.console[method] = function() {
+        originalConsole[method].apply(originalConsole, arguments);
+
+        var args = Array.from(arguments);
+        args = args.map(function(i) {
+          // catch objects
+          return (typeof i === 'string') ? i : JSON.stringify(i);
+        });
+
+        // post message to parent window
+        window.parent.postMessage({
+          method: method,
+          arguments: args,
+          source: 'sketch'
+        }, '*');
+      };
+    });
+  </script>`;
+  return s;
+}
+function hijackConsoleErrorsScript(offs) {
   const s = `<script>
     function getScriptOff(line) {
       var offs = ${offs};
@@ -45,55 +77,25 @@ function hijackConsoleScript(offs) {
       return [line - l, file];
     }
 
+    // catch reference errors, via http://stackoverflow.com/a/12747364/2994108
+    window.onerror = function (msg, url, lineNumber, columnNo, error) {
+        var string = msg.toLowerCase();
+        var substring = "script error";
+        var data = {};
 
-    document.addEventListener('DOMContentLoaded', function() {
-      var iframeWindow = window;
-      var originalConsole = iframeWindow.console;
-      iframeWindow.console = {};
-
-      var methods = [
-        'debug', 'clear', 'error', 'info', 'log', 'warn'
-      ];
-
-      methods.forEach( function(method) {
-        iframeWindow.console[method] = function() {
-          originalConsole[method].apply(originalConsole, arguments);
-
-          var args = Array.from(arguments);
-          args = args.map(function(i) {
-            // catch objects
-            return (typeof i === 'undefined') ? 'undefined' : JSON.stringify(i);
-          });
-
-          // post message to parent window
-          window.parent.postMessage({
-            method: method,
-            arguments: args,
-            source: 'sketch'
-          }, '*');
-        };
-      });
-
-      // catch reference errors, via http://stackoverflow.com/a/12747364/2994108
-      window.onerror = function (msg, url, lineNumber, columnNo, error) {
-          var string = msg.toLowerCase();
-          var substring = "script error";
-          var data = {};
-
-          if (string.indexOf(substring) !== -1){
-            data = 'Script Error: See Browser Console for Detail';
-          } else {
-            var fileInfo = getScriptOff(lineNumber);
-            data = msg + ' (' + fileInfo[1] + ': line ' + fileInfo[0] + ')';
-          }
-          window.parent.postMessage({
-            method: 'error',
-            arguments: data,
-            source: 'sketch'
-          }, '*');
-        return false;
-      };
-    });
+        if (string.indexOf(substring) !== -1){
+          data = 'Script Error: See Browser Console for Detail';
+        } else {
+          var fileInfo = getScriptOff(lineNumber);
+          data = msg + ' (' + fileInfo[1] + ': line ' + fileInfo[0] + ')';
+        }
+        window.parent.postMessage({
+          method: 'error',
+          arguments: data,
+          source: 'sketch'
+        }, '*');
+      return false;
+    };
   </script>`;
   return s;
 }
@@ -144,6 +146,9 @@ class PreviewFrame extends React.Component {
 
     // have to build the array manually because the spread operator is only
     // one level down...
+
+    htmlFile = hijackConsoleLogsScript() + htmlFile;
+
     const jsFiles = [];
     this.props.jsFiles.forEach(jsFile => {
       const newJSFile = { ...jsFile };
@@ -195,7 +200,8 @@ class PreviewFrame extends React.Component {
     }
 
     scriptOffs = getAllScriptOffsets(htmlFile);
-    htmlFile += hijackConsoleScript(JSON.stringify(scriptOffs));
+    htmlFile += hijackConsoleErrorsScript(JSON.stringify(scriptOffs));
+
 
     return htmlFile;
   }
