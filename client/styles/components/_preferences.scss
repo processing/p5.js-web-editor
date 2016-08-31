@@ -81,19 +81,25 @@
 	padding-left: #{28 / $base-font-size}rem;
 }
 
+.preference__radio-button {
+	@extend %hidden-element;
+}
+
 .preference__option {
 	@extend %preference-option;
 	list-style-type: none;
 	padding: 0;
-	&--selected {
-		@extend %preference-option--selected;
-	}
+	color: $light-inactive-text-color;
 }
 
 .preference__options {
 	display: flex;
 	justify-content: space-between;
 	width: #{70 / $base-font-size}rem;
+}
+
+.preference__radio-button:checked + .preference__option {
+    color: $light-primary-text-color;
 }
 
 .preference--hidden {

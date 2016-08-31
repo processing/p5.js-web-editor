@@ -51,15 +51,15 @@ class Toolbar extends React.Component {
     return (
       <div className="toolbar">
         <img className="toolbar__logo" src={logoUrl} alt="p5js Logo" />
-        <button className={playButtonClass} onClick={this.props.startSketch} aria-label="play sketch">
-          <InlineSVG src={playUrl} alt="Play Sketch" />
-        </button>
         <button
           className="toolbar__play-sketch-button"
           onClick={() => { this.props.startTextOutput(); this.props.startSketch(); }}
-          aria-label="play sketch with output text"
+          aria-label="play sketch"
         >
-          <InlineSVG src={playUrl} alt="Play Sketch with output text" />
+          <InlineSVG src={playUrl} alt="Play Sketch" />
+        </button>
+        <button className={playButtonClass} onClick={this.props.startSketch} aria-label="play only visual sketch">
+          <InlineSVG src={playUrl} alt="Play only visual Sketch" />
         </button>
         <button
           className={stopButtonClass}
@@ -102,9 +102,9 @@ class Toolbar extends React.Component {
         <button
           className={preferencesButtonClass}
           onClick={this.props.openPreferences}
-          aria-label="open preferences"
+          aria-label="preferences"
         >
-          <InlineSVG src={preferencesUrl} alt="Show Preferences" />
+          <InlineSVG src={preferencesUrl} alt="Preferences" />
         </button>
       </div>
     );
