@@ -3,15 +3,12 @@ import { bindActionCreators } from 'redux';
 import * as UserActions from '../actions';
 import { reduxForm } from 'redux-form';
 import SignupForm from '../components/SignupForm';
-import GithubButton from '../components/GithubButton';
 
 function SignupView(props) {
   return (
     <div className="signup">
       <h1>Sign Up</h1>
       <SignupForm {...props} />
-      <h2 className="signup__divider">Or</h2>
-      <GithubButton buttonText="Sign Up with Github" />
     </div>
   );
 }
