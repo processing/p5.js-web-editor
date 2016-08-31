@@ -83,23 +83,22 @@ export class FileNode extends React.Component {
                         <InlineSVG src={fileUrl} />
                       </span>
                     );
-                  } else if (this.props.isFolderClosed) {
-                    return (
-                      <span
-                        className="sidebar__file-item-icon"
-                        onClick={() => this.props.showFolderChildren(this.props.id)}
-                      >
-                        <InlineSVG src={folderRightUrl} />
-                      </span>
-                    );
                   }
                   return (
-                    <span
-                      className="sidebar__file-item-icon"
-                      onClick={() => this.props.hideFolderChildren(this.props.id)}
-                    >
-                      <InlineSVG src={folderDownUrl} />
-                    </span>
+                    <div>
+                      <span
+                        className="sidebar__file-item-closed"
+                        onClick={() => this.props.showFolderChildren(this.props.id)}
+                      >
+                        <InlineSVG className="folder-right" src={folderRightUrl} />
+                      </span>
+                      <span
+                        className="sidebar__file-item-open"
+                        onClick={() => this.props.hideFolderChildren(this.props.id)}
+                      >
+                        <InlineSVG className="folder-down" src={folderDownUrl} />
+                      </span>
+                    </div>
                   );
                 })()}
                 <a className="sidebar__file-item-name">{this.props.name}</a>

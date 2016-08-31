@@ -166,6 +166,21 @@
   margin-right: #{5 / $base-font-size}rem;
 }
 
+.sidebar__file-item-closed {
+  @extend .sidebar__file-item-icon;
+  display: none;
+  .sidebar__file-item--closed & {
+    display: inline-block;
+  }
+}
+
+.sidebar__file-item-open {
+  @extend .sidebar__file-item-icon;
+  .sidebar__file-item--closed & {
+    display: none;
+  }
+}
+
 .sidebar__project-options {
   @extend %modal;
   display: none;
