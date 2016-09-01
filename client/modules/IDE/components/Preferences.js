@@ -8,6 +8,7 @@ import classNames from 'classnames';
 const exitUrl = require('../../../images/exit.svg');
 const plusUrl = require('../../../images/plus.svg');
 const minusUrl = require('../../../images/minus.svg');
+const beepUrl = require('../../../sounds/audioAlert.mp3');
 
 class Preferences extends React.Component {
   constructor(props) {
@@ -34,6 +35,7 @@ class Preferences extends React.Component {
   }
 
   render() {
+    const beep = new Audio(beepUrl);
     const preferencesContainerClass = classNames({
       preferences: true,
       'preferences--selected': this.props.isVisible
@@ -189,6 +191,13 @@ class Preferences extends React.Component {
             />
             <label htmlFor="lint-warning-off" className="preference__option">Off</label>
           </div>
+          <button
+            className="preference__preview-button"
+            onClick={() => beep.play()}
+            aria-label="preview sound"
+          >
+            Preview Sound
+          </button>
         </div>
         <div className="preference">
           <h4 className="preference__title">Accessible Text-based Canvas</h4>
