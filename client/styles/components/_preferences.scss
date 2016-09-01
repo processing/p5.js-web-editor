@@ -92,6 +92,13 @@
 	color: $light-inactive-text-color;
 }
 
+.preference__preview-button {
+	@extend %preference-option;
+	padding: 0;
+	padding-left: #{110 / $base-font-size}rem;
+	outline: none;
+}
+
 .preference__options {
 	display: flex;
 	justify-content: space-between;
