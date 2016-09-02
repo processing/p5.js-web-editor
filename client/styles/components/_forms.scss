@@ -5,3 +5,7 @@
   width: #{300 / $base-font-size}rem;
   font-size: #{12 / $base-font-size}rem;
 }
+
+.form__cancel-button {
+  margin-top: #{10 / $base-font-size}rem;
+}

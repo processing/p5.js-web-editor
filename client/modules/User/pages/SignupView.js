@@ -4,12 +4,14 @@ import * as UserActions from '../actions';
 import { reduxForm } from 'redux-form';
 import SignupForm from '../components/SignupForm';
 import axios from 'axios';
+import { Link } from 'react-router';
 
 function SignupView(props) {
   return (
     <div className="signup">
       <h1>Sign Up</h1>
       <SignupForm {...props} />
+      <Link to="/">Cancel</Link>
     </div>
   );
 }
