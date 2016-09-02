@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 
 function SignupForm(props) {
   const { fields: { username, email, password, confirmPassword }, handleSubmit } = props;
+  console.log(props.fields);
   return (
     <form className="signup-form" onSubmit={handleSubmit(props.signUpUser.bind(this))}>
       <p className="signup-form__field">
@@ -12,6 +13,7 @@ function SignupForm(props) {
           placeholder="Username"
           {...username}
         />
+        {username.touched && username.error && <span className="form-error">{username.error}</span>}
       </p>
       <p className="signup-form__field">
         <input
@@ -21,6 +23,7 @@ function SignupForm(props) {
           placeholder="Email"
           {...email}
         />
+        {email.touched && email.error && <span className="form-error">{email.error}</span>}
       </p>
       <p className="signup-form__field">
         <input
@@ -30,6 +33,7 @@ function SignupForm(props) {
           placeholder="Password"
           {...password}
         />
+        {password.touched && password.error && <span className="form-error">{password.error}</span>}
       </p>
       <p className="signup-form__field">
         <input
@@ -39,6 +43,7 @@ function SignupForm(props) {
           aria-label="confirm password"
           {...confirmPassword}
         />
+        {confirmPassword.touched && confirmPassword.error && <span className="form-error">{confirmPassword.error}</span>}
       </p>
       <input type="submit" value="Sign Up" aria-label="sign up" />
     </form>

@@ -27,11 +27,19 @@ function validate(formProps) {
   const errors = {};
 
   if (!formProps.username) {
-    errors.username = 'Please enter a username';
+    errors.username = 'Please enter a username.';
+  } else if (!formProps.username.match(/^.{1,20}$/)) {
+    errors.username = 'Username must be less than 20 characters.';
+  } else if (!formProps.username.match(/^[a-zA-Z0-9._-]{1,20}$/)) {
+    errors.username = 'Username must only consist of numbers, letters, periods, dashes, and underscores.';
   }
+
   if (!formProps.email) {
-    errors.email = 'Please enter an email';
+    errors.email = 'Please enter an email.';
+  } else if (!formProps.email.match(/^[-a-z0-9~!$%^&*_=+}{'?]+(\.[-a-z0-9~!$%^&*_=+}{'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i)) {
+    errors.email = 'Please enter a valid email address.';
   }
+
   if (!formProps.password) {
     errors.password = 'Please enter a password';
   }
@@ -46,7 +54,6 @@ function validate(formProps) {
   return errors;
 }
 
-// export default connect(mapStateToProps, mapDispatchToProps)(SignupView);
 export default reduxForm({
   form: 'signup',
   fields: ['username', 'email', 'password', 'confirmPassword'],
