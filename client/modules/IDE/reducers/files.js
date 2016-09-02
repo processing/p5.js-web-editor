@@ -76,6 +76,18 @@ function getAllDescendantIds(state, nodeId) {
   ), []);
 }
 
+function deleteChild(state, parentId, id) {
+  const newState = state.map((file) => {
+    if (file.id === parentId) {
+      const newFile = Object.assign({}, file);
+      newFile.children = newFile.children.filter(child => child !== id);
+      return newFile;
+    }
+    return file;
+  });
+  return newState;
+}
+
 function deleteMany(state, ids) {
   const newState = [...state];
   ids.forEach(id => {
@@ -162,14 +174,16 @@ const files = (state, action) => {
       });
     case ActionTypes.DELETE_FILE:
       {
-        const newState = state.map((file) => {
-          if (file.id === action.parentId) {
-            const newChildren = file.children.filter(child => child !== action.id);
-            return { ...file, children: newChildren };
-          }
-          return file;
-        });
-        return newState.filter(file => file.id !== action.id);
+        const newState = deleteMany(state, [action.id, ...getAllDescendantIds(state, action.id)]);
+        return deleteChild(newState, action.parentId, action.id);
+        // const newState = state.map((file) => {
+        //   if (file.id === action.parentId) {
+        //     const newChildren = file.children.filter(child => child !== action.id);
+        //     return { ...file, children: newChildren };
+        //   }
+        //   return file;
+        // });
+        // return newState.filter(file => file.id !== action.id);
       }
     case ActionTypes.SHOW_EDIT_FILE_NAME:
       return state.map(file => {

@@ -82,8 +82,8 @@ export function createFile(formProps) {
         name: createUniqueName(formProps.name, state.files),
         url: formProps.url,
         content: formProps.content || '',
-        // TODO pass parent id to API, once there are folders
-        parentId
+        parentId,
+        children: []
       };
       axios.post(`${ROOT_URL}/projects/${state.project.id}/files`, postParams, { withCredentials: true })
         .then(response => {
@@ -115,8 +115,8 @@ export function createFile(formProps) {
         _id: id,
         url: formProps.url,
         content: formProps.content || '',
-        // TODO pass parent id from File Tree
-        parentId
+        parentId,
+        children: []
       });
       dispatch({
         type: ActionTypes.HIDE_MODAL
