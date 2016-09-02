@@ -69,6 +69,28 @@ function initialState() {
     }];
 }
 
+function getAllDescendantIds(state, nodeId) {
+  return state.find(file => file.id === nodeId).children
+  .reduce((acc, childId) => (
+    [...acc, childId, ...getAllDescendantIds(state, childId)]
+  ), []);
+}
+
+function deleteMany(state, ids) {
+  const newState = [...state];
+  ids.forEach(id => {
+    let fileIndex;
+    newState.find((file, index) => {
+      if (file.id === id) {
+        fileIndex = index;
+      }
+      return file.id === id;
+    });
+    newState.splice(fileIndex, 1);
+  });
+  return newState;
+}
+
 const files = (state, action) => {
   if (state === undefined) {
     state = initialState(); // eslint-disable-line
