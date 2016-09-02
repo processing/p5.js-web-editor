@@ -95,7 +95,7 @@
     "react-router": "^2.4.1",
     "react-split-pane": "^0.1.44",
     "redux": "^3.5.2",
-    "redux-form": "^5.2.5",
+    "redux-form": "^5.3.3",
     "redux-thunk": "^2.1.0",
     "s3-policy": "^0.2.0",
     "shortid": "^2.2.6",

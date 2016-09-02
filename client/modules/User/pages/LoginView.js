@@ -1,7 +1,6 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
 import { reduxForm } from 'redux-form';
-import * as UserActions from '../actions';
+import { validateAndLoginUser } from '../actions';
 import LoginForm from '../components/LoginForm';
 import GithubButton from '../components/GithubButton';
 
@@ -23,8 +22,10 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(UserActions, dispatch);
+function mapDispatchToProps() {
+  return {
+    validateAndLoginUser
+  };
 }
 
 function validate(formProps) {

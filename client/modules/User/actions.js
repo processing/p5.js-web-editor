@@ -25,17 +25,53 @@ export function signUpUser(formValues) {
   };
 }
 
+// export function loginUser(formValues) {
+//   return (dispatch) => {
+//     axios.post(`${ROOT_URL}/login`, formValues, { withCredentials: true })
+//       .then(response => {
+//         dispatch({ type: ActionTypes.AUTH_USER,
+//                     user: response.data
+//         });
+//         browserHistory.push('/');
+//       })
+//       .catch(response => {
+//         return Promise.reject({ email: response.data.message, _error: 'Login failed!' });
+//       });
+//   };
+// }
+
 export function loginUser(formValues) {
-  return (dispatch) => {
-    axios.post(`${ROOT_URL}/login`, formValues, { withCredentials: true })
+  return axios.post(`${ROOT_URL}/login`, formValues, { withCredentials: true });
+}
+
+export function loginUserSuccess(user) {
+  return {
+    type: ActionTypes.AUTH_USER,
+    user
+  };
+}
+
+export function loginUserFailure(error) {
+  return {
+    type: ActionTypes.AUTH_ERROR,
+    error
+  };
+}
+
+export function validateAndLoginUser(formProps, dispatch) {
+  return new Promise((resolve, reject) => {
+    loginUser(formProps)
       .then(response => {
         dispatch({ type: ActionTypes.AUTH_USER,
-                    user: response.data
+                  user: response.data
         });
         browserHistory.push('/');
+        resolve();
       })
-      .catch(response => dispatch(authError(response.data.error)));
-  };
+      .catch(response => {
+        reject({ email: response.data.message, _error: 'Login failed!' });
+      });
+  });
 }
 
 export function getUser() {
