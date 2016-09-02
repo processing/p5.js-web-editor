@@ -16,6 +16,8 @@ This project is currently in the early stages of development! It will definitely
   AWS_ACCESS_KEY=<your-aws-access-key>
   AWS_SECRET_KEY=<your-aws-secret-key>
   S3_BUCKET=<your-s3-bucket>
+  GITHUB_ID=<your-github-client-id>
+  GITHUB_SECRET=<your-github-client-secret>
   ```
   Or, if you don't want to do that, just ask me to send you mine. Refer to [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) for creating an S3 bucket for testing, or if you don't want to do that, I will send you my AWS credentials. 
 5. `$ npm start`
@@ -36,6 +38,8 @@ This project is currently in the early stages of development! It will definitely
   AWS_ACCESS_KEY=<your-aws-access-key>
   AWS_SECRET_KEY=<your-aws-secret-key>
   S3_BUCKET=<your-s3-bucket>
+  GITHUB_ID=<your-github-client-id>
+  GITHUB_SECRET=<your-github-client-secret>
   ```
   
   Or, if you don't want to do that, just ask me to send you mine. Refer to [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) for creating an S3 bucket for testing, or if you don't want to do that, I will send you my AWS credentials. 
