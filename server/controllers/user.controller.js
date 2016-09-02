@@ -31,6 +31,26 @@ export function createUser(req, res, next) {
     });
 }
 
+export function duplicateUserCheck(req, res) {
+  const checkType = req.query.check_type;
+  const value = req.query[checkType];
+  const query = {};
+  query[checkType] = value;
+  User.findOne(query, (err, user) => {
+    if (user) {
+      return res.json({
+        exists: true,
+        message: `This ${checkType} is already taken.`,
+        type: checkType
+      });
+    }
+    return res.json({
+      exists: false,
+      type: checkType
+    });
+  });
+}
+
 export function updatePreferences(req, res) {
   User.findById(req.user.id, (err, user) => {
     if (err) {

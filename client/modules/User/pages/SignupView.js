@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import * as UserActions from '../actions';
 import { reduxForm } from 'redux-form';
 import SignupForm from '../components/SignupForm';
+import axios from 'axios';
 
 function SignupView(props) {
   return (
@@ -21,6 +22,24 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(UserActions, dispatch);
+}
+
+function asyncValidate(formProps, dispatch, props) {
+  const fieldToValidate = props.form._active;
+  if (fieldToValidate) {
+    const queryParams = {};
+    queryParams[fieldToValidate] = formProps[fieldToValidate];
+    queryParams.check_type = fieldToValidate;
+    return axios.get('/api/signup/duplicate_check', { params: queryParams })
+      .then(response => {
+        if (response.data.exists) {
+          const error = {};
+          error[fieldToValidate] = response.data.message;
+          throw error;
+        }
+      });
+  }
+  return Promise.resolve(true).then(() => {});
 }
 
 function validate(formProps) {
@@ -54,8 +73,15 @@ function validate(formProps) {
   return errors;
 }
 
+function onSubmitFail(errors) {
+  console.log(errors);
+}
+
 export default reduxForm({
   form: 'signup',
   fields: ['username', 'email', 'password', 'confirmPassword'],
-  validate
+  onSubmitFail,
+  validate,
+  asyncValidate,
+  asyncBlurFields: ['username', 'email']
 }, mapStateToProps, mapDispatchToProps)(SignupView);

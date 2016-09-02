@@ -1,8 +1,7 @@
 import React, { PropTypes } from 'react';
 
 function SignupForm(props) {
-  const { fields: { username, email, password, confirmPassword }, handleSubmit } = props;
-  console.log(props.fields);
+  const { fields: { username, email, password, confirmPassword }, handleSubmit, submitting, invalid, pristine } = props;
   return (
     <form className="signup-form" onSubmit={handleSubmit(props.signUpUser.bind(this))}>
       <p className="signup-form__field">
@@ -45,7 +44,7 @@ function SignupForm(props) {
         />
         {confirmPassword.touched && confirmPassword.error && <span className="form-error">{confirmPassword.error}</span>}
       </p>
-      <input type="submit" value="Sign Up" aria-label="sign up" />
+      <input type="submit" disabled={submitting || invalid || pristine} value="Sign Up" aria-label="sign up" />
     </form>
   );
 }
@@ -58,7 +57,10 @@ SignupForm.propTypes = {
     confirmPassword: PropTypes.string.isRequired
   }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  signUpUser: PropTypes.func.isRequired
+  signUpUser: PropTypes.func.isRequired,
+  submitting: PropTypes.bool,
+  invalid: PropTypes.bool,
+  pristine: PropTypes.bool
 };
 
 export default SignupForm;
