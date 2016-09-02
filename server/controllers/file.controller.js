@@ -26,32 +26,40 @@ export function createFile(req, res) {
         }
         return res.json(updatedProject.files[updatedProject.files.length - 1]);
       });
-      // console.log(updatedProject.files);
-      // console.log(req.body.parentId);
-      // Project.findByIdAndUpdate(
-      //   {"_id":  req.params.project_id, "files._id": ObjectId(req.body.parentId)},
-      //   {
-      //     $push: {
-      //       'files.$.children': newFile._id
-      //     }
-      //   },
-      //   {
-      //     new: true
-      //   }, (errAgain, updatedProjectAgain) => {
-      //     if (errAgain) {
-      //       console.log(errAgain);
-      //       return res.json({ success: false });
-      //     }
-      //     return res.json(updatedProject.files[updatedProject.files.length - 1]);
-      //   });
     });
+}
+
+function getAllDescendantIds(files, nodeId) {
+  return files.find(file => file.id === nodeId).children
+  .reduce((acc, childId) => (
+    [...acc, childId, ...getAllDescendantIds(files, childId)]
+  ), []);
+}
+
+function deleteMany(files, ids) {
+  ids.forEach(id => {
+    files.id(id).remove();
+  });
+}
+
+function deleteChild(files, parentId, id) {
+  files = files.map((file) => {
+    if (file.id === parentId) {
+      file.children = file.children.filter(child => child !== id);
+      return file
+    }
+    return file;
+  });
 }
 
 export function deleteFile(req, res) {
   Project.findById(req.params.project_id, (err, project) => {
-    project.files.id(req.params.file_id).remove();
-    const childrenArray = project.files.id(req.query.parentId).children;
-    project.files.id(req.query.parentId).children = childrenArray.filter(id => id !== req.params.file_id);
+    const idsToDelete = getAllDescendantIds(project.files, req.params.file_id);
+    deleteMany(project.files, [req.params.file_id, ...idsToDelete]);
+    deleteChild(project.files, req.query.parentId, req.params.file_id);
+    // project.files.id(req.params.file_id).remove();
+    // const childrenArray = project.files.id(req.query.parentId).children;
+    // project.files.id(req.query.parentId).children = childrenArray.filter(id => id !== req.params.file_id);
     project.save(innerErr => {
       res.json(project.files);
     })
