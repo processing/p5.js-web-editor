@@ -116,26 +116,72 @@ export function createProject() {
   };
 }
 
+function buildZip(state) {
+  const zip = new JSZip();
+  const rootFile = state.files.find(file => file.name === 'root');
+  const numFiles = state.files.filter(file => file.fileType !== 'folder').length;
+  const files = state.files;
+  const projectName = state.project.name;
+  let numCompletedFiles = 0;
+
+  function addFileToZip(file, path) {
+    if (file.fileType === 'folder') {
+      const newPath = file.name === 'root' ? path : `${path}${file.name}/`;
+      file.children.forEach(fileId => {
+        const childFile = files.find(f => f.id === fileId);
+        (() => {
+          addFileToZip(childFile, newPath);
+        })();
+      });
+    } else {
+      if (file.url) {
+        JSZipUtils.getBinaryContent(file.url, (err, data) => {
+          zip.file(`${path}${file.name}`, data, { binary: true });
+          numCompletedFiles += 1;
+          if (numCompletedFiles === numFiles) {
+            zip.generateAsync({ type: 'blob' }).then((content) => {
+              saveAs(content, `${projectName}.zip`);
+            });
+          }
+        });
+      } else {
+        console.log('adding', `${path}${file.name}`);
+        zip.file(`${path}${file.name}`, file.content);
+        numCompletedFiles += 1;
+        console.log('numFiles', numFiles);
+        console.log('numCompletedFiles', numCompletedFiles);
+        if (numCompletedFiles === numFiles) {
+          zip.generateAsync({ type: 'blob' }).then((content) => {
+            saveAs(content, `${projectName}.zip`);
+          });
+        }
+      }
+    }
+  }
+  addFileToZip(rootFile, '/');
+}
+
 export function exportProjectAsZip() {
   return (dispatch, getState) => {
     const state = getState();
-    const zip = new JSZip();
-    async.each(state.files, (file, cb) => {
-      if (file.url) {
-        JSZipUtils.getBinaryContent(file.url, (err, data) => {
-          zip.file(file.name, data, { binary: true });
-          cb();
-        });
-      } else {
-        zip.file(file.name, file.content);
-        cb();
-      }
-    }, err => {
-      if (err) console.log(err);
-      zip.generateAsync({ type: 'blob' }).then((content) => {
-        saveAs(content, `${state.project.name}.zip`);
-      });
-    });
+    buildZip(state);
+  //   async.each(state.files, (file, cb) => {
+  //     if (file.url) {
+  //       JSZipUtils.getBinaryContent(file.url, (err, data) => {
+  //         zip.file(file.name, data, { binary: true });
+  //         cb();
+  //       });
+  //     } else {
+  //       zip.file(file.name, file.content);
+  //       cb();
+  //     }
+  //   }, err => {
+  //     if (err) console.log(err);
+  //     zip.generateAsync({ type: 'blob' }).then((content) => {
+  //       saveAs(content, `${state.project.name}.zip`);
+  //     });
+  //   });
+  // };
   };
 }
 
