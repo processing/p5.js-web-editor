@@ -6,6 +6,10 @@ class NewFolderForm extends React.Component {
     this.createFolder = this.props.createFolder.bind(this);
   }
 
+  componentDidMount() {
+    this.refs.fileName.focus();
+  }
+
   render() {
     const { fields: { name }, handleSubmit } = this.props;
     return (
