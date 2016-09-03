@@ -5,7 +5,6 @@ import JSZip from 'jszip';
 import JSZipUtils from 'jszip-utils';
 import { saveAs } from 'file-saver';
 import { getBlobUrl } from './files';
-import async from 'async';
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
@@ -67,15 +66,6 @@ export function saveProject() {
           error: response.data
         }));
     } else {
-      // this might be unnecessary, but to prevent collisions in mongodb
-      // formParams.files.map(file => {
-      //   if (file.name !== 'root') {
-      //     const newFile = Object.assign({}, file);
-      //     delete newFile.id;
-      //     return newFile;
-      //   }
-      //   return file;
-      // });
       axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
         .then(response => {
           browserHistory.push(`/projects/${response.data.id}`);

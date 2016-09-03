@@ -13,15 +13,17 @@ function appendToFilename(filename, string) {
   return filename.substring(0, dotIndex) + string + filename.substring(dotIndex);
 }
 
-function createUniqueName(name, files) {
+function createUniqueName(name, parentId, files) {
+  const siblingFiles = files.find(file => file.id === parentId)
+    .children.map(childFileId => files.find(file => file.id === childFileId));
   let testName = name;
   let index = 1;
-  let existingName = files.find((file) => name === file.name);
+  let existingName = siblingFiles.find((file) => name === file.name);
 
   while (existingName) {
     testName = appendToFilename(name, `-${index}`);
     index++;
-    existingName = files.find((file) => testName === file.name); // eslint-disable-line
+    existingName = siblingFiles.find((file) => testName === file.name); // eslint-disable-line
   }
   return testName;
 }
@@ -79,7 +81,7 @@ export function createFile(formProps) {
     }
     if (state.project.id) {
       const postParams = {
-        name: createUniqueName(formProps.name, state.files),
+        name: createUniqueName(formProps.name, parentId, state.files),
         url: formProps.url,
         content: formProps.content || '',
         parentId,
@@ -110,7 +112,7 @@ export function createFile(formProps) {
       const id = objectID().toHexString();
       dispatch({
         type: ActionTypes.CREATE_FILE,
-        name: createUniqueName(formProps.name, state.files),
+        name: createUniqueName(formProps.name, parentId, state.files),
         id,
         _id: id,
         url: formProps.url,
@@ -138,7 +140,7 @@ export function createFolder(formProps) {
     }
     if (state.project.id) {
       const postParams = {
-        name: createUniqueName(formProps.name, state.files),
+        name: createUniqueName(formProps.name, parentId, state.files),
         content: '',
         children: [],
         parentId,
@@ -163,7 +165,7 @@ export function createFolder(formProps) {
       const id = objectID().toHexString();
       dispatch({
         type: ActionTypes.CREATE_FILE,
-        name: createUniqueName(formProps.name, state.files),
+        name: createUniqueName(formProps.name, parentId, state.files),
         id,
         _id: id,
         content: '',
