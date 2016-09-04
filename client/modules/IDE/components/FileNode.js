@@ -215,7 +215,7 @@ FileNode.propTypes = {
 
 function mapStateToProps(state, ownProps) {
                                                             // this is a hack, state is updated before ownProps
-  return state.files.find((file) => file.id === ownProps.id) || { ...ownProps, name: 'test' };
+  return state.files.find((file) => file.id === ownProps.id) || { ...ownProps, name: 'test', fileType: 'file' };
 }
 
 function mapDispatchToProps(dispatch) {
