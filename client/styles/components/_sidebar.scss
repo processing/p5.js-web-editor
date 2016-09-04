@@ -79,7 +79,9 @@
   .sidebar__file-item--selected > & {
     background-color: $ide-border-color;
   }
-
+  .sidebar--contracted & {
+    display: none;
+  }
 }
 
 .sidebar__file-item-name {
@@ -92,7 +94,7 @@
   @extend %icon;
   display: none;
   position: absolute;
-  right: #{20 / $base-font-size}rem;
+  right: #{26 / $base-font-size}rem;
   .sidebar__file-item--selected > .file-item__content & {
     display: inline-block;
   }
@@ -127,7 +129,7 @@
 
 .sidebar__contract {
   @extend %icon;
-  margin-left: #{4 / $base-font-size}rem;
+  margin-left: #{10 / $base-font-size}rem;
   height: #{14 / $base-font-size}rem;
   & svg {
     height: #{14 / $base-font-size}rem;
