@@ -51,21 +51,24 @@ function initialState() {
       id: a,
       _id: a,
       isSelected: true,
-      fileType: 'file'
+      fileType: 'file',
+      children: []
     },
     {
       name: 'index.html',
       content: defaultHTML,
       id: b,
       _id: b,
-      fileType: 'file'
+      fileType: 'file',
+      children: []
     },
     {
       name: 'style.css',
       content: defaultCSS,
       id: c,
       _id: c,
-      fileType: 'file'
+      fileType: 'file',
+      children: []
     }];
 }
 
