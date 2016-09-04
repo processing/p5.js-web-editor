@@ -8,7 +8,7 @@ const initialState = {
     arguments: []
   },
   modalIsVisible: false,
-  sidebarIsExpanded: true,
+  sidebarIsExpanded: false,
   consoleIsExpanded: false,
   preferencesIsVisible: false,
   projectOptionsVisible: false,
