@@ -148,6 +148,7 @@ class PreviewFrame extends React.Component {
     // one level down...
 
     htmlFile = hijackConsoleLogsScript() + htmlFile;
+    const mediaFiles = this.props.files.filder(file => file.url);
 
     const jsFiles = [];
     this.props.jsFiles.forEach(jsFile => {
@@ -158,13 +159,9 @@ class PreviewFrame extends React.Component {
       jsFileStrings.forEach(jsFileString => {
         if (jsFileString.match(jsFileRegex)) {
           const filePath = jsFileString.substr(1, jsFileString.length - 2);
-          let fileName = filePath;
-          if (fileName.match(/^\.\//)) {
-            fileName = fileName.substr(2, fileName.length - 1);
-          } else if (fileName.match(/^\//)) {
-            fileName = fileName.substr(1, fileName.length - 1);
-          }
-          this.props.files.forEach(file => {
+          const filePathArray = filePath.split('/');
+          const fileName = filePathArray[filePathArray.length - 1];
+          mediaFiles.forEach(file => {
             if (file.name === fileName) {
               newJSFile.content = newJSFile.content.replace(filePath, file.blobURL); // eslint-disable-line
             }

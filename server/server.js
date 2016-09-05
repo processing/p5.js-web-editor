@@ -30,6 +30,7 @@ import projects from './routes/project.routes';
 import files from './routes/file.routes';
 import aws from './routes/aws.routes';
 import serverRoutes from './routes/server.routes';
+import embedRoutes from './routes/embed.routes';
 
 // Body parser, cookie parser, sessions, serve public assets
 
@@ -62,6 +63,8 @@ app.use('/api', aws);
 // this is supposed to be TEMPORARY -- until i figure out
 // isomorphic rendering
 app.use('/', serverRoutes);
+
+app.use('/', embedRoutes);
 app.get('/auth/github', passport.authenticate('github'));
 app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), (req, res) => {
   res.redirect('/');
