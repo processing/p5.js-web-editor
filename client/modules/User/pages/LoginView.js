@@ -2,7 +2,7 @@ import React from 'react';
 import { reduxForm } from 'redux-form';
 import { validateAndLoginUser } from '../actions';
 import LoginForm from '../components/LoginForm';
-import GithubButton from '../components/GithubButton';
+// import GithubButton from '../components/GithubButton';
 import { Link } from 'react-router';
 
 
@@ -11,8 +11,8 @@ function LoginView(props) {
     <div className="login">
       <h1>Login</h1>
       <LoginForm {...props} />
-      <h2 className="login__divider">Or</h2>
-      <GithubButton buttonText="Login with Github" />
+      {/* <h2 className="login__divider">Or</h2>
+      <GithubButton buttonText="Login with Github" /> */}
       <Link className="form__cancel-button" to="/">Cancel</Link>
     </div>
   );
