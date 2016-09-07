@@ -1,0 +1,18 @@
+.toast {
+  background-color: $toast-background-color;
+  color: $toast-text-color;
+  padding: #{20 / $base-font-size}rem;
+  position: absolute;
+  top: 0;
+  right: 40%;
+  display: flex;
+  z-index: 9999;
+}
+
+.toast__close {
+  @extend %icon;
+  & g {
+    fill: $toast-text-color;
+  }
+  margin-left: #{10 / $base-font-size}rem;
+}

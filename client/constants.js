@@ -78,6 +78,9 @@ export const SHOW_EDITOR_OPTIONS = 'SHOW_EDITOR_OPTIONS';
 export const CLOSE_EDITOR_OPTIONS = 'CLOSE_EDITOR_OPTIONS';
 export const SHOW_KEYBOARD_SHORTCUT_MODAL = 'SHOW_KEYBOARD_SHORTCUT_MODAL';
 export const CLOSE_KEYBOARD_SHORTCUT_MODAL = 'CLOSE_KEYBOARD_SHORTCUT_MODAL';
+export const SHOW_TOAST = 'SHOW_TOAST';
+export const HIDE_TOAST = 'HIDE_TOAST';
+export const SET_TOAST_TEXT = 'SET_TOAST_TEXT';
 
 // eventually, handle errors more specifically and better
 export const ERROR = 'ERROR';

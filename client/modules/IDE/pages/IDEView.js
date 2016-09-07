@@ -11,6 +11,7 @@ import ShareModal from '../components/ShareModal';
 import KeyboardShortcutModal from '../components/KeyboardShortcutModal';
 import Nav from '../../../components/Nav';
 import Console from '../components/Console';
+import Toast from '../components/Toast';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as FileActions from '../actions/files';
@@ -19,6 +20,7 @@ import * as ProjectActions from '../actions/project';
 import * as EditorAccessibilityActions from '../actions/editorAccessibility';
 import * as PreferencesActions from '../actions/preferences';
 import * as UserActions from '../../User/actions';
+import * as ToastActions from '../actions/toast';
 import { getHTMLFile, getJSFiles, getCSSFiles } from '../reducers/files';
 import SplitPane from 'react-split-pane';
 import Overlay from '../../App/components/Overlay';
@@ -114,6 +116,7 @@ class IDEView extends React.Component {
   render() {
     return (
       <div className="ide">
+        {this.props.toast.isVisible && <Toast />}
         <Nav
           user={this.props.user}
           newProject={this.props.newProject}
@@ -124,6 +127,8 @@ class IDEView extends React.Component {
           logoutUser={this.props.logoutUser}
           stopSketch={this.props.stopSketch}
           showShareModal={this.props.showShareModal}
+          showToast={this.props.showToast}
+          setToastText={this.props.setToastText}
         />
         <Toolbar
           className="Toolbar"
@@ -434,7 +439,12 @@ IDEView.propTypes = {
   showEditorOptions: PropTypes.func.isRequired,
   closeEditorOptions: PropTypes.func.isRequired,
   showKeyboardShortcutModal: PropTypes.func.isRequired,
-  closeKeyboardShortcutModal: PropTypes.func.isRequired
+  closeKeyboardShortcutModal: PropTypes.func.isRequired,
+  toast: PropTypes.shape({
+    isVisible: PropTypes.bool.isRequired
+  }).isRequired,
+  showToast: PropTypes.func.isRequired,
+  setToastText: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -448,7 +458,8 @@ function mapStateToProps(state) {
     preferences: state.preferences,
     editorAccessibility: state.editorAccessibility,
     user: state.user,
-    project: state.project
+    project: state.project,
+    toast: state.toast
   };
 }
 
@@ -459,7 +470,8 @@ function mapDispatchToProps(dispatch) {
     ProjectActions,
     IDEActions,
     PreferencesActions,
-    UserActions),
+    UserActions,
+    ToastActions),
   dispatch);
 }
 

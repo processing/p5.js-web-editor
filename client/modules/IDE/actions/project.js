@@ -5,6 +5,7 @@ import JSZip from 'jszip';
 import JSZipUtils from 'jszip-utils';
 import { saveAs } from 'file-saver';
 import { getBlobUrl } from './files';
+import { showToast, setToastText } from './toast';
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
@@ -60,6 +61,8 @@ export function saveProject() {
           dispatch({
             type: ActionTypes.PROJECT_SAVE_SUCCESS
           });
+          dispatch(showToast());
+          dispatch(setToastText('Project saved.'));
         })
         .catch((response) => dispatch({
           type: ActionTypes.PROJECT_SAVE_FAIL,
@@ -76,6 +79,8 @@ export function saveProject() {
             owner: response.data.user,
             files: response.data.files
           });
+          dispatch(showToast());
+          dispatch(setToastText('Project saved.'));
         })
         .catch(response => dispatch({
           type: ActionTypes.PROJECT_SAVE_FAIL,
