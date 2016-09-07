@@ -80,7 +80,11 @@ export function saveProject() {
             files: response.data.files
           });
           dispatch(showToast());
-          dispatch(setToastText('Project saved.'));
+          if (state.preferences.autosave) {
+            dispatch(setToastText('Autosave enabled.'));
+          } else {
+            dispatch(setToastText('Project saved.'));
+          }
         })
         .catch(response => dispatch({
           type: ActionTypes.PROJECT_SAVE_FAIL,

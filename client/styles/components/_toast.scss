@@ -12,7 +12,7 @@
 .toast__close {
   @extend %icon;
   & g {
-    fill: $toast-text-color;
+    fill: $toast-text-color; 
   }
   margin-left: #{10 / $base-font-size}rem;
 }

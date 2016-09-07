@@ -127,8 +127,6 @@ class IDEView extends React.Component {
           logoutUser={this.props.logoutUser}
           stopSketch={this.props.stopSketch}
           showShareModal={this.props.showShareModal}
-          showToast={this.props.showToast}
-          setToastText={this.props.setToastText}
         />
         <Toolbar
           className="Toolbar"
@@ -443,8 +441,6 @@ IDEView.propTypes = {
   toast: PropTypes.shape({
     isVisible: PropTypes.bool.isRequired
   }).isRequired,
-  showToast: PropTypes.func.isRequired,
-  setToastText: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
