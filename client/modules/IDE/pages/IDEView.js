@@ -7,6 +7,7 @@ import TextOutput from '../components/TextOutput';
 import Preferences from '../components/Preferences';
 import NewFileModal from '../components/NewFileModal';
 import NewFolderModal from '../components/NewFolderModal';
+import ShareModal from '../components/ShareModal';
 import Nav from '../../../components/Nav';
 import Console from '../components/Console';
 import { bindActionCreators } from 'redux';
@@ -121,6 +122,7 @@ class IDEView extends React.Component {
           project={this.props.project}
           logoutUser={this.props.logoutUser}
           stopSketch={this.props.stopSketch}
+          showShareModal={this.props.showShareModal}
         />
         <Toolbar
           className="Toolbar"
@@ -293,6 +295,18 @@ class IDEView extends React.Component {
             );
           }
         })()}
+        {(() => { // eslint-disable-line
+          if (this.props.ide.shareModalVisible) {
+            return (
+              <Overlay>
+                <ShareModal
+                  projectId={this.props.project.id}
+                  closeShareModal={this.props.closeShareModal}
+                />
+              </Overlay>
+            );
+          }
+        })()}
       </div>
 
     );
@@ -323,7 +337,8 @@ IDEView.propTypes = {
     consoleIsExpanded: PropTypes.bool.isRequired,
     preferencesIsVisible: PropTypes.bool.isRequired,
     projectOptionsVisible: PropTypes.bool.isRequired,
-    newFolderModalVisible: PropTypes.bool.isRequired
+    newFolderModalVisible: PropTypes.bool.isRequired,
+    shareModalVisible: PropTypes.bool.isRequired
   }).isRequired,
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
@@ -396,6 +411,8 @@ IDEView.propTypes = {
   closeNewFolderModal: PropTypes.func.isRequired,
   createFolder: PropTypes.func.isRequired,
   createFile: PropTypes.func.isRequired,
+  showShareModal: PropTypes.func.isRequired,
+  closeShareModal: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

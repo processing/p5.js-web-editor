@@ -126,3 +126,15 @@ export function closeNewFolderModal() {
     type: ActionTypes.CLOSE_NEW_FOLDER_MODAL
   };
 }
+
+export function showShareModal() {
+  return {
+    type: ActionTypes.SHOW_SHARE_MODAL
+  };
+}
+
+export function closeShareModal() {
+  return {
+    type: ActionTypes.CLOSE_SHARE_MODAL
+  };
+}

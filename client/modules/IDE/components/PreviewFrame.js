@@ -148,7 +148,7 @@ class PreviewFrame extends React.Component {
     // one level down...
 
     htmlFile = hijackConsoleLogsScript() + htmlFile;
-    const mediaFiles = this.props.files.filder(file => file.url);
+    const mediaFiles = this.props.files.filter(file => file.url);
 
     const jsFiles = [];
     this.props.jsFiles.forEach(jsFile => {

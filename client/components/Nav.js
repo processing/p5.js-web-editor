@@ -47,9 +47,9 @@ function Nav(props) {
           if (props.project.id) {
             return (
               <li className="nav__item">
-                <Link to={`/full/${props.project.id}`} target="_blank">
-                  Fullscreen
-                </Link>
+                <a onClick={props.showShareModal}>
+                  Share
+                </a>
               </li>
             );
           }
@@ -134,7 +134,8 @@ Nav.propTypes = {
     id: PropTypes.string
   }),
   logoutUser: PropTypes.func.isRequired,
-  stopSketch: PropTypes.func.isRequired
+  stopSketch: PropTypes.func.isRequired,
+  showShareModal: PropTypes.func.isRequired
 };
 
 export default Nav;

@@ -12,7 +12,8 @@ const initialState = {
   consoleIsExpanded: false,
   preferencesIsVisible: false,
   projectOptionsVisible: false,
-  newFolderModalVisible: false
+  newFolderModalVisible: false,
+  shareModalVisible: false
 };
 
 const ide = (state = initialState, action) => {
@@ -55,6 +56,10 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { newFolderModalVisible: true });
     case ActionTypes.CLOSE_NEW_FOLDER_MODAL:
       return Object.assign({}, state, { newFolderModalVisible: false });
+    case ActionTypes.SHOW_SHARE_MODAL:
+      return Object.assign({}, state, { shareModalVisible: true });
+    case ActionTypes.CLOSE_SHARE_MODAL:
+      return Object.assign({}, state, { shareModalVisible: false });
     default:
       return state;
   }

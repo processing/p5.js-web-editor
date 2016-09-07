@@ -72,5 +72,8 @@ export const CLOSE_NEW_FOLDER_MODAL = 'CLOSE_NEW_FOLDER_MODAL';
 export const SHOW_FOLDER_CHILDREN = 'SHOW_FOLDER_CHILDREN';
 export const HIDE_FOLDER_CHILDREN = 'HIDE_FOLDER_CHILDREN';
 
+export const SHOW_SHARE_MODAL = 'SHOW_SHARE_MODAL';
+export const CLOSE_SHARE_MODAL = 'CLOSE_SHARE_MODAL';
+
 // eventually, handle errors more specifically and better
 export const ERROR = 'ERROR';
