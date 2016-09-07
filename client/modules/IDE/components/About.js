@@ -5,7 +5,7 @@ import { browserHistory } from 'react-router';
 
 class About extends React.Component {
   closeAboutModal() {
-    browserHistory.push('/');
+    browserHistory.goBack();
   }
 
   render() {

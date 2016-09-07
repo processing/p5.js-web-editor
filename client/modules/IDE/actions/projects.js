@@ -27,5 +27,5 @@ export function getProjects(username) {
 }
 
 export function closeSketchList() {
-  browserHistory.push('/');
+  browserHistory.goBack();
 }
