@@ -14,7 +14,8 @@ const initialState = {
   projectOptionsVisible: false,
   newFolderModalVisible: false,
   shareModalVisible: false,
-  editorOptionsVisible: false
+  editorOptionsVisible: false,
+  keyboardShortcutVisible: false
 };
 
 const ide = (state = initialState, action) => {
@@ -65,6 +66,10 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { editorOptionsVisible: true });
     case ActionTypes.CLOSE_EDITOR_OPTIONS:
       return Object.assign({}, state, { editorOptionsVisible: false });
+    case ActionTypes.SHOW_KEYBOARD_SHORTCUT_MODAL:
+      return Object.assign({}, state, { keyboardShortcutVisible: true });
+    case ActionTypes.CLOSE_KEYBOARD_SHORTCUT_MODAL:
+      return Object.assign({}, state, { keyboardShortcutVisible: false });
     default:
       return state;
   }

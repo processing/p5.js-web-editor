@@ -150,3 +150,16 @@ export function closeEditorOptions() {
     type: ActionTypes.CLOSE_EDITOR_OPTIONS
   };
 }
+
+export function showKeyboardShortcutModal() {
+  return {
+    type: ActionTypes.SHOW_KEYBOARD_SHORTCUT_MODAL
+  };
+}
+
+export function closeKeyboardShortcutModal() {
+  return {
+    type: ActionTypes.CLOSE_KEYBOARD_SHORTCUT_MODAL
+  };
+}
+

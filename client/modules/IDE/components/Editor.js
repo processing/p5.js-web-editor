@@ -154,7 +154,7 @@ class Editor extends React.Component {
             <a onClick={this.tidyCode}>Tidy</a>
           </li>
           <li>
-            <a>Keyboard Shortcuts</a>
+            <a onClick={this.props.showKeyboardShortcutModal}>Keyboard Shortcuts</a>
           </li>
         </ul>
         <div ref="container" className="editor-holder" tabIndex="0">
@@ -185,7 +185,8 @@ Editor.propTypes = {
   }),
   editorOptionsVisible: PropTypes.bool.isRequired,
   showEditorOptions: PropTypes.func.isRequired,
-  closeEditorOptions: PropTypes.func.isRequired
+  closeEditorOptions: PropTypes.func.isRequired,
+  showKeyboardShortcutModal: PropTypes.func.isRequired
 };
 
 export default Editor;

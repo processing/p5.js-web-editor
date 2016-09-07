@@ -8,6 +8,7 @@ import Preferences from '../components/Preferences';
 import NewFileModal from '../components/NewFileModal';
 import NewFolderModal from '../components/NewFolderModal';
 import ShareModal from '../components/ShareModal';
+import KeyboardShortcutModal from '../components/KeyboardShortcutModal';
 import Nav from '../../../components/Nav';
 import Console from '../components/Console';
 import { bindActionCreators } from 'redux';
@@ -217,6 +218,7 @@ class IDEView extends React.Component {
                   editorOptionsVisible={this.props.ide.editorOptionsVisible}
                   showEditorOptions={this.props.showEditorOptions}
                   closeEditorOptions={this.props.closeEditorOptions}
+                  showKeyboardShortcutModal={this.props.showKeyboardShortcutModal}
                 />
                 <Console
                   consoleEvent={this.props.ide.consoleEvent}
@@ -310,6 +312,17 @@ class IDEView extends React.Component {
             );
           }
         })()}
+        {(() => { // eslint-disable-line
+          if (this.props.ide.keyboardShortcutVisible) {
+            return (
+              <Overlay>
+                <KeyboardShortcutModal
+                  closeModal={this.props.closeKeyboardShortcutModal}
+                />
+              </Overlay>
+            );
+          }
+        })()}
       </div>
 
     );
@@ -342,7 +355,8 @@ IDEView.propTypes = {
     projectOptionsVisible: PropTypes.bool.isRequired,
     newFolderModalVisible: PropTypes.bool.isRequired,
     shareModalVisible: PropTypes.bool.isRequired,
-    editorOptionsVisible: PropTypes.bool.isRequired
+    editorOptionsVisible: PropTypes.bool.isRequired,
+    keyboardShortcutVisible: PropTypes.bool.isRequired
   }).isRequired,
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
@@ -418,7 +432,9 @@ IDEView.propTypes = {
   showShareModal: PropTypes.func.isRequired,
   closeShareModal: PropTypes.func.isRequired,
   showEditorOptions: PropTypes.func.isRequired,
-  closeEditorOptions: PropTypes.func.isRequired
+  closeEditorOptions: PropTypes.func.isRequired,
+  showKeyboardShortcutModal: PropTypes.func.isRequired,
+  closeKeyboardShortcutModal: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

@@ -76,6 +76,8 @@ export const SHOW_SHARE_MODAL = 'SHOW_SHARE_MODAL';
 export const CLOSE_SHARE_MODAL = 'CLOSE_SHARE_MODAL';
 export const SHOW_EDITOR_OPTIONS = 'SHOW_EDITOR_OPTIONS';
 export const CLOSE_EDITOR_OPTIONS = 'CLOSE_EDITOR_OPTIONS';
+export const SHOW_KEYBOARD_SHORTCUT_MODAL = 'SHOW_KEYBOARD_SHORTCUT_MODAL';
+export const CLOSE_KEYBOARD_SHORTCUT_MODAL = 'CLOSE_KEYBOARD_SHORTCUT_MODAL';
 
 // eventually, handle errors more specifically and better
 export const ERROR = 'ERROR';
