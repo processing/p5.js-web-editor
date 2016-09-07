@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import EditorAccessibility from '../components/EditorAccessibility';
 import CodeMirror from 'codemirror';
+import beautify from 'js-beautify';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/css/css';
 import 'codemirror/mode/htmlmixed/htmlmixed';
@@ -65,6 +66,14 @@ class Editor extends React.Component {
     this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
     this._cm.setOption('indentWithTabs', this.props.isTabIndent);
     this._cm.setOption('tabSize', this.props.indentationAmount);
+
+    this._cm.on('keydown', (_cm, e) => {
+      if (e.key === 'Tab' && e.shiftKey) {
+        _cm.doc.setValue(beautify(_cm.doc.getValue(),
+          { indent_size: this.props.indentationAmount,
+            indent_with_tabs: this.props.isTabIndent }));
+      }
+    });
   }
 
   componentDidUpdate(prevProps) {
@@ -100,7 +109,10 @@ class Editor extends React.Component {
 
   render() {
     return (
-      <section title="code editor" role="main">
+      <section
+        title="code editor"
+        role="main"
+      >
         <div ref="container" className="editor-holder" tabIndex="0">
         </div>
         <EditorAccessibility
