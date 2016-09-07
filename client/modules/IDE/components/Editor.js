@@ -29,6 +29,10 @@ import classNames from 'classnames';
 import { debounce } from 'throttle-debounce';
 
 class Editor extends React.Component {
+  constructor(props) {
+    super(props);
+    this.tidyCode = this.tidyCode.bind(this);
+  }
 
   componentDidMount() {
     this.beep = new Audio(beepUrl);
@@ -74,19 +78,7 @@ class Editor extends React.Component {
 
     this._cm.on('keydown', (_cm, e) => {
       if (e.key === 'Tab' && e.shiftKey) {
-        const beautifyOptions = {
-          indent_size: this.props.indentationAmount,
-          indent_with_tabs: this.props.isTabIndent
-        };
-
-        const mode = _cm.getOption('mode');
-        if (mode === 'javascript') {
-          _cm.doc.setValue(beautifyJS(_cm.doc.getValue(), beautifyOptions));
-        } else if (mode === 'css') {
-          _cm.doc.setValue(beautifyCSS(_cm.doc.getValue(), beautifyOptions));
-        } else if (mode === 'htmlmixed') {
-          _cm.doc.setValue(beautifyHTML(_cm.doc.getValue(), beautifyOptions));
-        }
+        this.tidyCode();
       }
     });
   }
@@ -120,6 +112,22 @@ class Editor extends React.Component {
     this._cm = null;
   }
 
+  tidyCode() {
+    const beautifyOptions = {
+      indent_size: this.props.indentationAmount,
+      indent_with_tabs: this.props.isTabIndent
+    };
+
+    const mode = this._cm.getOption('mode');
+    if (mode === 'javascript') {
+      this._cm.doc.setValue(beautifyJS(this._cm.doc.getValue(), beautifyOptions));
+    } else if (mode === 'css') {
+      this._cm.doc.setValue(beautifyCSS(this._cm.doc.getValue(), beautifyOptions));
+    } else if (mode === 'htmlmixed') {
+      this._cm.doc.setValue(beautifyHTML(this._cm.doc.getValue(), beautifyOptions));
+    }
+  }
+
   _cm: CodeMirror.Editor
 
   render() {
@@ -137,13 +145,13 @@ class Editor extends React.Component {
         <button
           className="editor__options-button"
           onClick={this.props.showEditorOptions}
-          onBlur={this.props.closeEditorOptions}
+          onBlur={() => setTimeout(this.props.closeEditorOptions, 200)}
         >
           <InlineSVG src={downArrowUrl} />
         </button>
         <ul className="editor__options">
           <li>
-            <a>Tidy</a>
+            <a onClick={this.tidyCode}>Tidy</a>
           </li>
           <li>
             <a>Keyboard Shortcuts</a>
