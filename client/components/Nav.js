@@ -13,14 +13,20 @@ function Nav(props) {
             New
           </a>
         </li>
-        <li className="nav__item">
-          <a
-            className="nav__save"
-            onClick={props.saveProject}
-          >
-            Save
-          </a>
-        </li>
+        {(() => { // eslint-disable-line
+          if (!props.project.owner || props.project.owner && props.project.owner.id === props.user.id) {
+            return (
+              <li className="nav__item">
+                <a
+                  className="nav__save"
+                  onClick={props.saveProject}
+                >
+                  Save
+                </a>
+              </li>
+            );
+          }
+        })()}
         {(() => { // eslint-disable-line
           if (props.project.id) {
             return (
@@ -128,10 +134,14 @@ Nav.propTypes = {
   cloneProject: PropTypes.func.isRequired,
   user: PropTypes.shape({
     authenticated: PropTypes.bool.isRequired,
-    username: PropTypes.string
+    username: PropTypes.string,
+    id: PropTypes.string
   }).isRequired,
   project: PropTypes.shape({
-    id: PropTypes.string
+    id: PropTypes.string,
+    owner: PropTypes.shape({
+      id: PropTypes.string
+    })
   }),
   logoutUser: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
