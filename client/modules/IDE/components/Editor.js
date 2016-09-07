@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react';
 import EditorAccessibility from '../components/EditorAccessibility';
 import CodeMirror from 'codemirror';
-import beautify from 'js-beautify';
+import beautifyJS from 'js-beautify';
+const beautifyCSS = beautifyJS.css;
+const beautifyHTML = beautifyJS.html;
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/css/css';
 import 'codemirror/mode/htmlmixed/htmlmixed';
@@ -69,9 +71,19 @@ class Editor extends React.Component {
 
     this._cm.on('keydown', (_cm, e) => {
       if (e.key === 'Tab' && e.shiftKey) {
-        _cm.doc.setValue(beautify(_cm.doc.getValue(),
-          { indent_size: this.props.indentationAmount,
-            indent_with_tabs: this.props.isTabIndent }));
+        const beautifyOptions = {
+          indent_size: this.props.indentationAmount,
+          indent_with_tabs: this.props.isTabIndent
+        };
+
+        const mode = _cm.getOption('mode');
+        if (mode === 'javascript') {
+          _cm.doc.setValue(beautifyJS(_cm.doc.getValue(), beautifyOptions));
+        } else if (mode === 'css') {
+          _cm.doc.setValue(beautifyCSS(_cm.doc.getValue(), beautifyOptions));
+        } else if (mode === 'htmlmixed') {
+          _cm.doc.setValue(beautifyHTML(_cm.doc.getValue(), beautifyOptions));
+        }
       }
     });
   }
