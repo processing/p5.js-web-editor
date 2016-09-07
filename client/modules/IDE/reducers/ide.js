@@ -13,7 +13,8 @@ const initialState = {
   preferencesIsVisible: false,
   projectOptionsVisible: false,
   newFolderModalVisible: false,
-  shareModalVisible: false
+  shareModalVisible: false,
+  editorOptionsVisible: false
 };
 
 const ide = (state = initialState, action) => {
@@ -60,6 +61,10 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { shareModalVisible: true });
     case ActionTypes.CLOSE_SHARE_MODAL:
       return Object.assign({}, state, { shareModalVisible: false });
+    case ActionTypes.SHOW_EDITOR_OPTIONS:
+      return Object.assign({}, state, { editorOptionsVisible: true });
+    case ActionTypes.CLOSE_EDITOR_OPTIONS:
+      return Object.assign({}, state, { editorOptionsVisible: false });
     default:
       return state;
   }

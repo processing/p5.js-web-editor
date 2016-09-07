@@ -60,3 +60,24 @@
   box-shadow: 0 12px 12px $light-shadow-color;
   font-family: Montserrat, sans-serif;
 }
+
+.editor__options-button {
+  @extend %icon;
+  position: absolute;
+  top: #{5 / $base-font-size}rem;
+  right: #{5 / $base-font-size}rem;
+  z-index: 1;
+}
+
+.editor__options {
+  display: none;
+  @extend %modal;
+  position: absolute;
+  top: #{20 / $base-font-size}rem;
+  right: #{5 / $base-font-size}rem;
+  padding: #{10 / $base-font-size}rem;
+
+  .editor--options & {
+    display: block;
+  }
+}

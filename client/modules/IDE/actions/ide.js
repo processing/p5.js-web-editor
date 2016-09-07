@@ -138,3 +138,15 @@ export function closeShareModal() {
     type: ActionTypes.CLOSE_SHARE_MODAL
   };
 }
+
+export function showEditorOptions() {
+  return {
+    type: ActionTypes.SHOW_EDITOR_OPTIONS
+  };
+}
+
+export function closeEditorOptions() {
+  return {
+    type: ActionTypes.CLOSE_EDITOR_OPTIONS
+  };
+}

@@ -214,6 +214,9 @@ class IDEView extends React.Component {
                   files={this.props.files}
                   lintMessages={this.props.editorAccessibility.lintMessages}
                   lineNumber={this.props.editorAccessibility.lineNumber}
+                  editorOptionsVisible={this.props.ide.editorOptionsVisible}
+                  showEditorOptions={this.props.showEditorOptions}
+                  closeEditorOptions={this.props.closeEditorOptions}
                 />
                 <Console
                   consoleEvent={this.props.ide.consoleEvent}
@@ -338,7 +341,8 @@ IDEView.propTypes = {
     preferencesIsVisible: PropTypes.bool.isRequired,
     projectOptionsVisible: PropTypes.bool.isRequired,
     newFolderModalVisible: PropTypes.bool.isRequired,
-    shareModalVisible: PropTypes.bool.isRequired
+    shareModalVisible: PropTypes.bool.isRequired,
+    editorOptionsVisible: PropTypes.bool.isRequired
   }).isRequired,
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
@@ -412,7 +416,9 @@ IDEView.propTypes = {
   createFolder: PropTypes.func.isRequired,
   createFile: PropTypes.func.isRequired,
   showShareModal: PropTypes.func.isRequired,
-  closeShareModal: PropTypes.func.isRequired
+  closeShareModal: PropTypes.func.isRequired,
+  showEditorOptions: PropTypes.func.isRequired,
+  closeEditorOptions: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

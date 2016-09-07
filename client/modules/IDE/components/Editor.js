@@ -22,6 +22,9 @@ window.CSSLint = CSSLint;
 import { HTMLHint } from 'htmlhint';
 window.HTMLHint = HTMLHint;
 const beepUrl = require('../../../sounds/audioAlert.mp3');
+import InlineSVG from 'react-inlinesvg';
+const downArrowUrl = require('../../../images/down-arrow.svg');
+import classNames from 'classnames';
 
 import { debounce } from 'throttle-debounce';
 
@@ -120,11 +123,32 @@ class Editor extends React.Component {
   _cm: CodeMirror.Editor
 
   render() {
+    const editorSectionClass = classNames({
+      editor: true,
+      'editor--options': this.props.editorOptionsVisible
+    });
+
     return (
       <section
         title="code editor"
         role="main"
+        className={editorSectionClass}
       >
+        <button
+          className="editor__options-button"
+          onClick={this.props.showEditorOptions}
+          onBlur={this.props.closeEditorOptions}
+        >
+          <InlineSVG src={downArrowUrl} />
+        </button>
+        <ul className="editor__options">
+          <li>
+            <a>Tidy</a>
+          </li>
+          <li>
+            <a>Keyboard Shortcuts</a>
+          </li>
+        </ul>
         <div ref="container" className="editor-holder" tabIndex="0">
         </div>
         <EditorAccessibility
@@ -150,7 +174,10 @@ Editor.propTypes = {
   file: PropTypes.shape({
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
-  })
+  }),
+  editorOptionsVisible: PropTypes.bool.isRequired,
+  showEditorOptions: PropTypes.func.isRequired,
+  closeEditorOptions: PropTypes.func.isRequired
 };
 
 export default Editor;
