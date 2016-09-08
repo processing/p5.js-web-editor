@@ -47,7 +47,7 @@ export function setProjectName(name) {
   };
 }
 
-export function saveProject() {
+export function saveProject(autosave) {
   return (dispatch, getState) => {
     const state = getState();
     if (state.user.id && state.project.owner && state.project.owner.id !== state.user.id) {
@@ -61,8 +61,10 @@ export function saveProject() {
           dispatch({
             type: ActionTypes.PROJECT_SAVE_SUCCESS
           });
-          dispatch(showToast());
-          dispatch(setToastText('Project saved.'));
+          if (!autosave) {
+            dispatch(showToast());
+            dispatch(setToastText('Project saved.'));
+          }
         })
         .catch((response) => dispatch({
           type: ActionTypes.PROJECT_SAVE_FAIL,
@@ -79,10 +81,8 @@ export function saveProject() {
             owner: response.data.user,
             files: response.data.files
           });
-          dispatch(showToast());
-          if (state.preferences.autosave) {
-            dispatch(setToastText('Autosave enabled.'));
-          } else {
+          if (!autosave) {
+            dispatch(showToast());
             dispatch(setToastText('Project saved.'));
           }
         })
@@ -94,6 +94,11 @@ export function saveProject() {
   };
 }
 
+export function autosaveProject() {
+  return (dispatch, getState) => {
+    saveProject(true)(dispatch, getState);
+  };
+}
 
 export function createProject() {
   return (dispatch) => {

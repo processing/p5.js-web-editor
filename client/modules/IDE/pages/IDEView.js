@@ -45,7 +45,7 @@ class IDEView extends React.Component {
       if (this.props.preferences.autosave
         && this.props.project.owner
         && this.props.project.owner.id === this.props.user.id) {
-        this.autosaveInterval = setInterval(this.props.saveProject, 30000);
+        this.autosaveInterval = setInterval(this.props.autosaveProject, 30000);
       }
     }
 
@@ -79,7 +79,7 @@ class IDEView extends React.Component {
       if (!this.autosaveInterval &&
         ((this.props.preferences.autosave && !prevProps.preferences.autosave) ||
         (this.props.project.id && !prevProps.project.id))) {
-        this.autosaveInterval = setInterval(this.props.saveProject, 30000);
+        this.autosaveInterval = setInterval(this.props.autosaveProject, 30000);
       // if user turns off autosave preference
       } else if (this.autosaveInterval && !this.props.preferences.autosave && prevProps.preferences.autosave) {
         clearInterval(this.autosaveInterval);
@@ -454,6 +454,9 @@ IDEView.propTypes = {
   toast: PropTypes.shape({
     isVisible: PropTypes.bool.isRequired
   }).isRequired,
+  showToast: PropTypes.func.isRequired,
+  setToastText: PropTypes.func.isRequired,
+  autosaveProject: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
