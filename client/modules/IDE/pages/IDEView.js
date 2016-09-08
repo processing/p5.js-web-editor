@@ -32,6 +32,7 @@ class IDEView extends React.Component {
     super(props);
     this._handleConsolePaneOnDragFinished = this._handleConsolePaneOnDragFinished.bind(this);
     this._handleSidebarPaneOnDragFinished = this._handleSidebarPaneOnDragFinished.bind(this);
+    this.handleGlobalKeydown = this.handleGlobalKeydown.bind(this);
   }
 
   componentDidMount() {
@@ -51,6 +52,9 @@ class IDEView extends React.Component {
     this.consoleSize = this.props.ide.consoleIsExpanded ? 180 : 29;
     this.sidebarSize = this.props.ide.sidebarIsExpanded ? 200 : 20;
     this.forceUpdate();
+
+    this.isMac = navigator.userAgent.toLowerCase().indexOf('mac') !== -1;
+    document.addEventListener('keydown', this.handleGlobalKeydown, false);
   }
 
   componentWillUpdate(nextProps) {
@@ -111,6 +115,15 @@ class IDEView extends React.Component {
       resized: false,
       draggedSize: undefined
     });
+  }
+
+  handleGlobalKeydown(e) {
+    if (e.key === 's' && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
+      console.log('about to save project');
+      e.preventDefault();
+      e.stopPropagation();
+      this.props.saveProject();
+    }
   }
 
   render() {
