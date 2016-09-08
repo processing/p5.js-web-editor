@@ -1,3 +1,12 @@
+.sketch-list {
+  @extend %modal;
+  display: flex;
+  flex-wrap: wrap;
+  flex-flow: column;
+  width: #{1000 / $base-font-size}rem;
+  height: 80%;
+}
+
 .sketch-list__header {
   display: flex;
   justify-content: space-between;
