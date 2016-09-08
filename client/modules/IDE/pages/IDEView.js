@@ -50,7 +50,7 @@ class IDEView extends React.Component {
     }
 
     this.consoleSize = this.props.ide.consoleIsExpanded ? 180 : 29;
-    this.sidebarSize = this.props.ide.sidebarIsExpanded ? 200 : 20;
+    this.sidebarSize = this.props.ide.sidebarIsExpanded ? 200 : 25;
     this.forceUpdate();
 
     this.isMac = navigator.userAgent.toLowerCase().indexOf('mac') !== -1;
@@ -63,7 +63,7 @@ class IDEView extends React.Component {
     }
 
     if (this.props.ide.sidebarIsExpanded !== nextProps.ide.sidebarIsExpanded) {
-      this.sidebarSize = nextProps.ide.sidebarIsExpanded ? 200 : 20;
+      this.sidebarSize = nextProps.ide.sidebarIsExpanded ? 200 : 25;
     }
 
     if (nextProps.params.project_id && !this.props.params.project_id) {

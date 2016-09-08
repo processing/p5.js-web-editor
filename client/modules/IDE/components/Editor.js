@@ -144,7 +144,11 @@ class Editor extends React.Component {
       >
         <button
           className="editor__options-button"
-          onClick={this.props.showEditorOptions}
+          tabIndex="0"
+          onClick={(e) => {
+            e.target.focus();
+            this.props.showEditorOptions();
+          }}
           onBlur={() => setTimeout(this.props.closeEditorOptions, 200)}
         >
           <InlineSVG src={downArrowUrl} />

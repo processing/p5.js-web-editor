@@ -117,7 +117,10 @@ export class FileNode extends React.Component {
                 <button
                   className="sidebar__file-item-show-options"
                   aria-label="view file options"
-                  onClick={() => this.props.showFileOptions(this.props.id)}
+                  onClick={(e) => {
+                    e.target.focus();
+                    this.props.showFileOptions(this.props.id);
+                  }}
                 >
                   <InlineSVG src={downArrowUrl} />
                 </button>

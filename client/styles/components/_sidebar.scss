@@ -191,6 +191,7 @@
     display: block;
   }
   top: 100%;
+  right: #{-70 / $base-font-size}rem;
   padding: #{8 / $base-font-size}rem;
   width: #{110 / $base-font-size}rem;
 }

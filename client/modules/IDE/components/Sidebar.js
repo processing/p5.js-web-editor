@@ -38,7 +38,10 @@ class Sidebar extends React.Component {
             <button
               aria-label="add file or folder"
               className="sidebar__add"
-              onClick={this.props.openProjectOptions}
+              onClick={(e) => {
+                e.target.focus();
+                this.props.openProjectOptions();
+              }}
               onBlur={() => setTimeout(this.props.closeProjectOptions, 200)}
             >
               <InlineSVG src={downArrowUrl} />
