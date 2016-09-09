@@ -92,7 +92,7 @@ export function dropzoneCompleteCallback(file) {
     if (!file.type.match(textFileRegex)) {
       let inputHidden = '<input type="hidden" name="attachments[]" value="';
       const json = {
-        url: `${s3Bucket}${file.postData.key}`,
+        url: `${s3BucketHttps}${file.postData.key}`,
         originalFilename: file.name
       };
       // console.log(json, JSON.stringify(json), JSON.stringify(json).replace('"', '\\"'));
