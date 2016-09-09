@@ -3,6 +3,7 @@ import { createFile } from './files';
 const textFileRegex = /text\//;
 
 const s3Bucket = `http://${process.env.S3_BUCKET}.s3.amazonaws.com/`;
+const s3BucketHttps = `https://s3-us-west-2.amazonaws.com/${process.env.S3_BUCKET}/`;
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
 function localIntercept(file, options = {}) {
@@ -94,22 +95,22 @@ export function dropzoneCompleteCallback(file) {
         url: `${s3Bucket}${file.postData.key}`,
         originalFilename: file.name
       };
-      console.log(json, JSON.stringify(json), JSON.stringify(json).replace('"', '\\"'));
+      // console.log(json, JSON.stringify(json), JSON.stringify(json).replace('"', '\\"'));
       inputHidden += `${window.btoa(JSON.stringify(json))}" />`;
       // document.getElementById('uploader').appendChild(inputHidden);
       document.getElementById('uploader').innerHTML += inputHidden;
 
       const formParams = {
         name: file.name,
-        url: `${s3Bucket}${file.postData.key}`
+        url: `${s3BucketHttps}${file.postData.key}`
       };
+      console.log(formParams);
       createFile(formParams)(dispatch, getState);
     } else {
       const formParams = {
         name: file.name,
         content: file.content
       };
-      console.log(formParams);
       createFile(formParams)(dispatch, getState);
     }
   };

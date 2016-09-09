@@ -8,41 +8,41 @@ mongoose.connection.on('error', () => {
 
 import Project from '../models/project';
 
-let projectsNotToUpdate;
-Project.find({'files.name': 'root'})
-  .exec((err, projects) => {
-    projectsNotToUpdate = projects.map(project => project.id);
-    console.log(projectsNotToUpdate);
+// let projectsNotToUpdate;
+// Project.find({'files.name': 'root'})
+//   .exec((err, projects) => {
+//     projectsNotToUpdate = projects.map(project => project.id);
+//     console.log(projectsNotToUpdate);
 
-    Project.find({})
-      .exec((err, projects) => {
-        projects.forEach( (project, projectIndex) => {
-          if (!projectsNotToUpdate.find(projectId => projectId === project.id)) {
-            const childIdArray = project.files.map(file => file._id.valueOf());
-            const newId = new ObjectId();
-            project.files.push({
-              name: 'root',
-              _id: newId,
-              id: newId,
-              fileType: 'folder',
-              children: childIdArray,
-              content: ''
-            });
+//     Project.find({})
+//       .exec((err, projects) => {
+//         projects.forEach( (project, projectIndex) => {
+//           if (!projectsNotToUpdate.find(projectId => projectId === project.id)) {
+//             const childIdArray = project.files.map(file => file._id.valueOf());
+//             const newId = new ObjectId();
+//             project.files.push({
+//               name: 'root',
+//               _id: newId,
+//               id: newId,
+//               fileType: 'folder',
+//               children: childIdArray,
+//               content: ''
+//             });
 
-            project.files = project.files.map(file => {
-              if (file.name === "sketch.js") {
-                file.isSelected = true;
-                return file;
-              }
-              return file;
-            });
-            project.save((err, savedProject) => {
-              console.log('project', projectIndex, 'is saved.');
-            });
-          }
-        });
-      });
-  });
+//             project.files = project.files.map(file => {
+//               if (file.name === "sketch.js") {
+//                 file.isSelected = true;
+//                 return file;
+//               }
+//               return file;
+//             });
+//             project.save((err, savedProject) => {
+//               console.log('project', projectIndex, 'is saved.');
+//             });
+//           }
+//         });
+//       });
+//   });
 
 // Project.find({'files.name': 'root'})
 //   .exec((err, projects) => {
@@ -63,6 +63,25 @@ Project.find({'files.name': 'root'})
 //       });
 //     });
 //   });
+
+const s3Bucket = `http://p5.js-webeditor.s3.amazonaws.com/`;
+const s3BucketHttps = `https://s3-us-west-2.amazonaws.com/p5.js-webeditor/`;
+
+Project.find({})
+  .exec((err, projects) => {
+    projects.forEach((project, projectIndex) => {
+      project.files.forEach((file) => {
+        if (file.url) {
+          file.url = file.url.replace(s3Bucket, s3BucketHttps);
+          console.log('Updating', file.name);
+          console.log(file.url);
+        }
+      });
+      project.save((err, savedProject) => {
+        console.log('project', projectIndex, 'is saved.');
+      });
+    });
+  });
 
 
 
