@@ -82,5 +82,7 @@ export const SHOW_TOAST = 'SHOW_TOAST';
 export const HIDE_TOAST = 'HIDE_TOAST';
 export const SET_TOAST_TEXT = 'SET_TOAST_TEXT';
 
+export const DETECT_INFINITE_LOOPS = 'DETECT_INFINITE_LOOPS';
+export const RESET_INFINITE_LOOPS = 'RESET_INFINITE_LOOPS';
 // eventually, handle errors more specifically and better
 export const ERROR = 'ERROR';

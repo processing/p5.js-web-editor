@@ -243,6 +243,12 @@ class IDEView extends React.Component {
                   showEditorOptions={this.props.showEditorOptions}
                   closeEditorOptions={this.props.closeEditorOptions}
                   showKeyboardShortcutModal={this.props.showKeyboardShortcutModal}
+                  infiniteLoop={this.props.ide.infiniteLoop}
+                  detectInfiniteLoops={this.props.detectInfiniteLoops}
+                  resetInfiniteLoops={this.props.resetInfiniteLoops}
+                  stopSketch={this.props.stopSketch}
+                  startSketch={this.props.startSketch}
+                  isPlaying={this.props.ide.isPlaying}
                 />
                 <Console
                   consoleEvent={this.props.ide.consoleEvent}
@@ -278,6 +284,8 @@ class IDEView extends React.Component {
                   isTextOutputPlaying={this.props.ide.isTextOutputPlaying}
                   textOutput={this.props.preferences.textOutput}
                   dispatchConsoleEvent={this.props.dispatchConsoleEvent}
+                  infiniteLoop={this.props.ide.infiniteLoop}
+                  resetInfiniteLoops={this.props.resetInfiniteLoops}
                 />
               </div>
             </SplitPane>
@@ -380,12 +388,15 @@ IDEView.propTypes = {
     newFolderModalVisible: PropTypes.bool.isRequired,
     shareModalVisible: PropTypes.bool.isRequired,
     editorOptionsVisible: PropTypes.bool.isRequired,
-    keyboardShortcutVisible: PropTypes.bool.isRequired
+    keyboardShortcutVisible: PropTypes.bool.isRequired,
+    infiniteLoop: PropTypes.bool.isRequired
   }).isRequired,
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
   startTextOutput: PropTypes.func.isRequired,
   stopTextOutput: PropTypes.func.isRequired,
+  detectInfiniteLoops: PropTypes.func.isRequired,
+  resetInfiniteLoops: PropTypes.func.isRequired,
   project: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string.isRequired,

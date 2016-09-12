@@ -15,7 +15,8 @@ const initialState = {
   newFolderModalVisible: false,
   shareModalVisible: false,
   editorOptionsVisible: false,
-  keyboardShortcutVisible: false
+  keyboardShortcutVisible: false,
+  infiniteLoop: false
 };
 
 const ide = (state = initialState, action) => {
@@ -70,6 +71,10 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { keyboardShortcutVisible: true });
     case ActionTypes.CLOSE_KEYBOARD_SHORTCUT_MODAL:
       return Object.assign({}, state, { keyboardShortcutVisible: false });
+    case ActionTypes.DETECT_INFINITE_LOOPS:
+      return Object.assign({}, state, { infiniteLoop: true });
+    case ActionTypes.RESET_INFINITE_LOOPS:
+      return Object.assign({}, state, { infiniteLoop: false });
     default:
       return state;
   }

@@ -205,7 +205,13 @@ class PreviewFrame extends React.Component {
 
   renderSketch() {
     const doc = ReactDOM.findDOMNode(this);
-    if (this.props.isPlaying) {
+    if (this.props.infiniteLoop) {
+      window.alert('There is an infinite loop in the code, please remove it before running the sketch.');
+      this.props.resetInfiniteLoops();
+      doc.srcdoc = '';
+      srcDoc.set(doc, '  ');
+    }
+    if (this.props.isPlaying && !this.props.infiniteLoop) {
       srcDoc.set(doc, this.injectLocalFiles());
     } else {
       doc.srcdoc = '';
@@ -250,7 +256,9 @@ PreviewFrame.propTypes = {
   cssFiles: PropTypes.array.isRequired,
   files: PropTypes.array.isRequired,
   dispatchConsoleEvent: PropTypes.func,
-  children: PropTypes.element
+  children: PropTypes.element,
+  infiniteLoop: PropTypes.bool.isRequired,
+  resetInfiniteLoops: PropTypes.func.isRequired
 };
 
 export default PreviewFrame;

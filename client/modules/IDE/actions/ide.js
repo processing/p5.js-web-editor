@@ -163,3 +163,14 @@ export function closeKeyboardShortcutModal() {
   };
 }
 
+export function detectInfiniteLoops() {
+  return {
+    type: ActionTypes.DETECT_INFINITE_LOOPS
+  };
+}
+
+export function resetInfiniteLoops() {
+  return {
+    type: ActionTypes.RESET_INFINITE_LOOPS
+  };
+}
