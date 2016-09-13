@@ -166,6 +166,33 @@ class Preferences extends React.Component {
           </div>
         </div>
         <div className="preference">
+          <h4 className="preference__title">Theme</h4>
+          <div className="preference__options">
+            <input
+              type="radio"
+              onChange={() => this.props.setTheme('light')}
+              aria-label="light theme on"
+              name="light theme"
+              id="light-theme-on"
+              className="preference__radio-button"
+              value="light"
+              checked={this.props.theme === 'light'}
+            />
+            <label htmlFor="light-theme-on" className="preference__option">Light</label>
+            <input
+              type="radio"
+              onChange={() => this.props.setTheme('dark')}
+              aria-label="dark theme on"
+              name="dark theme"
+              id="dark-theme-on"
+              className="preference__radio-button"
+              value="dark"
+              checked={this.props.theme === 'dark'}
+            />
+            <label htmlFor="dark-theme-on" className="preference__option">Dark</label>
+          </div>
+        </div>
+        <div className="preference">
           <h4 className="preference__title">Lint Warning Sound</h4>
           <div className="preference__options">
             <input
@@ -249,7 +276,9 @@ Preferences.propTypes = {
   textOutput: PropTypes.bool.isRequired,
   setTextOutput: PropTypes.func.isRequired,
   lintWarning: PropTypes.bool.isRequired,
-  setLintWarning: PropTypes.func.isRequired
+  setLintWarning: PropTypes.func.isRequired,
+  theme: PropTypes.string.isRequired,
+  setTheme: PropTypes.func.isRequired
 };
 
 export default Preferences;

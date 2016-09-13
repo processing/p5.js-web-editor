@@ -136,3 +136,11 @@ export function setTextOutput(value) {
     }
   };
 }
+
+export function setTheme(value) {
+  return {
+    type: ActionTypes.SET_THEME,
+    value
+  };
+}
+

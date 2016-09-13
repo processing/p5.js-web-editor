@@ -27,6 +27,7 @@ import SplitPane from 'react-split-pane';
 import Overlay from '../../App/components/Overlay';
 import SketchList from '../components/SketchList';
 import About from '../components/About';
+import classNames from 'classnames';
 
 class IDEView extends React.Component {
   constructor(props) {
@@ -156,8 +157,13 @@ class IDEView extends React.Component {
   }
 
   render() {
+    let ideClass = classNames({
+      ide: true,
+      light: this.props.preferences.theme === 'light',
+      dark: this.props.preferences.theme === 'dark',
+    });
     return (
-      <div className="ide">
+      <div className={ideClass}>
         {this.props.toast.isVisible && <Toast />}
         <Nav
           user={this.props.user}
@@ -203,6 +209,8 @@ class IDEView extends React.Component {
           setLintWarning={this.props.setLintWarning}
           textOutput={this.props.preferences.textOutput}
           setTextOutput={this.props.setTextOutput}
+          theme={this.props.preferences.theme}
+          setTheme={this.props.setTheme}
         />
         <div className="editor-preview-container">
           <SplitPane
@@ -432,7 +440,8 @@ IDEView.propTypes = {
     isTabIndent: PropTypes.bool.isRequired,
     autosave: PropTypes.bool.isRequired,
     lintWarning: PropTypes.bool.isRequired,
-    textOutput: PropTypes.bool.isRequired
+    textOutput: PropTypes.bool.isRequired,
+    theme: PropTypes.string.isRequired
   }).isRequired,
   closePreferences: PropTypes.func.isRequired,
   setFontSize: PropTypes.func.isRequired,
@@ -492,7 +501,8 @@ IDEView.propTypes = {
     setRouteLeaveHook: PropTypes.func
   }).isRequired,
   route: PropTypes.object.isRequired,
-  setUnsavedChanges: PropTypes.func.isRequired
+  setUnsavedChanges: PropTypes.func.isRequired,
+  setTheme: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
