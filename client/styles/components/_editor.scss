@@ -62,11 +62,13 @@
 }
 
 .editor__options-button {
-  @extend %icon;
-  position: absolute;
-  top: #{5 / $base-font-size}rem;
-  right: #{5 / $base-font-size}rem;
-  z-index: 1;
+  @include themify() {
+    @extend %icon;
+    position: absolute;
+    top: #{5 / $base-font-size}rem;
+    right: #{5 / $base-font-size}rem;
+    z-index: 1;
+  }
 }
 
 .editor__options {

@@ -1,11 +1,13 @@
 .toolbar__play-button {
-	@extend %toolbar-button;
-	margin-right: #{15 / $base-font-size}rem;
-	&--selected {
-		@extend %toolbar-button--selected;
-	}
-	& span {
-		padding-left: #{2 / $base-font-size}rem;
+	@include themify() {
+		@extend %toolbar-button;
+		margin-right: #{15 / $base-font-size}rem;
+		&--selected {
+			@extend %toolbar-button--selected;
+		}
+		& span {
+			padding-left: #{2 / $base-font-size}rem;
+		}
 	}
 }
 
@@ -14,23 +16,23 @@
 }
 
 .toolbar__stop-button {
-	@extend %toolbar-button;
-	&--selected {
-		@extend %toolbar-button--selected;
+	@include themify() {
+		@extend %toolbar-button;
+		&--selected {
+			@extend %toolbar-button--selected;
+		}
 	}
 }
 
 .toolbar__preferences-button {
-	@extend %toolbar-button;
-	line-height: #{50 / $base-font-size}rem;
-	margin-left: auto;
-	&--selected {
-		@extend %toolbar-button--selected;
+	@include themify() {
+		@extend %toolbar-button;
+		line-height: #{50 / $base-font-size}rem;
+		margin-left: auto;
+		&--selected {
+			@extend %toolbar-button--selected;
+		}
 	}
-}
-
-.toolbar__shortcut-button {
-
 }
 
 .toolbar__logo {

@@ -13,8 +13,10 @@
 }
 
 .preferences__exit-button {
-	@extend %icon;
-	padding-top: #{5 / $base-font-size}rem;
+	@include themify() {
+		@extend %icon;
+		padding-top: #{5 / $base-font-size}rem;
+	}
 }
 
 .preference__plus-button {

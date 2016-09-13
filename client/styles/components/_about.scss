@@ -12,7 +12,9 @@
 }
 
 .about__exit-button {
-  @extend %icon;
+  @include themify() {
+    @extend %icon;
+  }
 }
 
 .about__copy {

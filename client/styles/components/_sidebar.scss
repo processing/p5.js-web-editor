@@ -18,13 +18,15 @@
 }
 
 .sidebar__add {
-  @extend %icon;
-  cursor: pointer;
-  // height: #{26 / $base-font-size}rem;
-  // margin-right: #{16 / $base-font-size}rem;
-  // font-size: #{24 / $base-font-size}rem;
-  .sidebar--contracted & {
-    display: none;
+  @include themify() {
+    @extend %icon;
+    cursor: pointer;
+    // height: #{26 / $base-font-size}rem;
+    // margin-right: #{16 / $base-font-size}rem;
+    // font-size: #{24 / $base-font-size}rem;
+    .sidebar--contracted & {
+      display: none;
+    }
   }
 }
 
@@ -91,12 +93,14 @@
 }
 
 .sidebar__file-item-show-options {
-  @extend %icon;
-  display: none;
-  position: absolute;
-  right: #{26 / $base-font-size}rem;
-  .sidebar__file-item--selected > .file-item__content & {
-    display: inline-block;
+  @include themify() {
+    @extend %icon;
+    display: none;
+    position: absolute;
+    right: #{26 / $base-font-size}rem;
+    .sidebar__file-item--selected > .file-item__content & {
+      display: inline-block;
+    }
   }
 }
 
@@ -128,26 +132,30 @@
 }
 
 .sidebar__contract {
-  @extend %icon;
-  margin-left: #{10 / $base-font-size}rem;
-  height: #{14 / $base-font-size}rem;
-  & svg {
+  @include themify() {
+    @extend %icon;
+    margin-left: #{10 / $base-font-size}rem;
     height: #{14 / $base-font-size}rem;
-  }
-  .sidebar--contracted & {
-    display: none;
+    & svg {
+      height: #{14 / $base-font-size}rem;
+    }
+    .sidebar--contracted & {
+      display: none;
+    }
   }
 }
 
 .sidebar__expand {
-  @extend %icon;
-  height: #{14 / $base-font-size}rem;
-  & svg {
+  @include themify() {
+    @extend %icon;
     height: #{14 / $base-font-size}rem;
-  }
-  display: none;
-  .sidebar--contracted & {
-    display: inline-block;
+    & svg {
+      height: #{14 / $base-font-size}rem;
+    }
+    display: none;
+    .sidebar--contracted & {
+      display: inline-block;
+    }
   }
 }
 

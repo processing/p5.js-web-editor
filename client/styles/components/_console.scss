@@ -51,16 +51,20 @@
 }
 
 .preview-console__collapse {
-	@extend %icon;
-	.preview-console--collapsed & {
-		display: none;
+	@include themify() {
+		@extend %icon;
+		.preview-console--collapsed & {
+			display: none;
+		}
 	}
 }
 
 .preview-console__expand {
-	@extend %icon;
-	display: none;
-	.preview-console--collapsed & {
-		display: inline-block;
+	@include themify() {
+		@extend %icon;
+		display: none;
+		.preview-console--collapsed & {
+			display: inline-block;
+		}
 	}
 }
