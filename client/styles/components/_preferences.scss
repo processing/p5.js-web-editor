@@ -15,8 +15,8 @@
 .preferences__exit-button {
 	@include themify() {
 		@extend %icon;
-		padding-top: #{5 / $base-font-size}rem;
 	}
+	padding-top: #{5 / $base-font-size}rem;
 }
 
 .preference__plus-button {

@@ -12,10 +12,10 @@
 .toast__close {
   @include themify() {
     @extend %icon;
-    color: $toast-text-color;
-    & g {
-      fill: $toast-text-color; 
-    }
-    margin-left: #{10 / $base-font-size}rem;
   }
+  color: $toast-text-color;
+  & g {
+    fill: $toast-text-color; 
+  }
+  margin-left: #{10 / $base-font-size}rem;
 }

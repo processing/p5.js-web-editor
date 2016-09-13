@@ -42,7 +42,9 @@ input {
 }
 
 input[type="submit"] {
-	@extend %button;
+	@include themify() {
+		@extend %button;
+	}
 }
 
 h2 {

@@ -53,18 +53,18 @@
 .preview-console__collapse {
 	@include themify() {
 		@extend %icon;
-		.preview-console--collapsed & {
-			display: none;
-		}
+	}
+	.preview-console--collapsed & {
+		display: none;
 	}
 }
 
 .preview-console__expand {
 	@include themify() {
 		@extend %icon;
-		display: none;
-		.preview-console--collapsed & {
-			display: inline-block;
-		}
+	}
+	display: none;
+	.preview-console--collapsed & {
+		display: inline-block;
 	}
 }

@@ -33,10 +33,6 @@
 
 %icon {
 	@include themify() {
-		background-color: transparent;
-		border: none;
-		cursor: pointer;
-		padding: 0;
 		color: getThemifyVariable('icon-color');
 		& g {
 			fill: getThemifyVariable('icon-color');
@@ -49,24 +45,30 @@
 			}
 		}
 	}
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	padding: 0;
 }
 
 %button {
-	background-color: $light-button-background-color;
-	color: $light-button-color;
-	cursor: pointer;
-	border: 1px solid $light-button-border-color;
-	border-radius: 2px;
-	padding: #{10 / $base-font-size}rem #{30 / $base-font-size}rem;
-	&:hover {
-		border-color: $light-button-background-hover-color;
-		background-color: $light-button-background-hover-color;
-		color: $light-button-hover-color;
-	}
-	&:active {
-		border-color: $light-button-background-active-color;
-		background-color: $light-button-background-active-color;
-		color: $light-button-active-color;
+	@include themify() {
+		background-color: getThemifyVariable('button-background-color');
+		color: getThemifyVariable('button-color');
+		cursor: pointer;
+		border: 1px solid getThemifyVariable('button-border-color');
+		border-radius: 2px;
+		padding: #{10 / $base-font-size}rem #{30 / $base-font-size}rem;
+		&:hover {
+			border-color: getThemifyVariable('button-background-hover-color');
+			background-color: getThemifyVariable('button-background-hover-color');
+			color: getThemifyVariable('button-hover-color');
+		}
+		&:active {
+			border-color: getThemifyVariable('button-background-active-color');
+			background-color: getThemifyVariable('button-background-active-color');
+			color: getThemifyVariable('button-active-color');
+		}
 	}
 }
 

@@ -1,18 +1,20 @@
 .github-button {
-  @extend %button;
-  width: #{300 / $base-font-size}rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  & path {
-    color: $light-primary-text-color;
-  }
-  &:hover path, &:active path {
-    fill: $white;
-  }
-  &:hover, &:active {
-    background-color: $light-secondary-text-color;
-    border-color: $light-secondary-text-color
+  @include themify() {
+    @extend %button;
+    width: #{300 / $base-font-size}rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & path {
+      color: getThemifyVariable('primary-text-color');
+    }
+    &:hover path, &:active path {
+      fill: $white;
+    }
+    &:hover, &:active {
+      background-color: getThemifyVariable('secondary-text-color');
+      border-color: getThemifyVariable('secondary-text-color');
+    }
   }
 }
 

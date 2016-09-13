@@ -20,13 +20,9 @@
 .sidebar__add {
   @include themify() {
     @extend %icon;
-    cursor: pointer;
-    // height: #{26 / $base-font-size}rem;
-    // margin-right: #{16 / $base-font-size}rem;
-    // font-size: #{24 / $base-font-size}rem;
-    .sidebar--contracted & {
-      display: none;
-    }
+  }
+  .sidebar--contracted & {
+    display: none;
   }
 }
 
@@ -95,12 +91,12 @@
 .sidebar__file-item-show-options {
   @include themify() {
     @extend %icon;
-    display: none;
-    position: absolute;
-    right: #{26 / $base-font-size}rem;
-    .sidebar__file-item--selected > .file-item__content & {
-      display: inline-block;
-    }
+  }
+  display: none;
+  position: absolute;
+  right: #{26 / $base-font-size}rem;
+  .sidebar__file-item--selected > .file-item__content & {
+    display: inline-block;
   }
 }
 
@@ -131,31 +127,31 @@
   }
 }
 
-.sidebar__contract {
-  @include themify() {
-    @extend %icon;
-    margin-left: #{10 / $base-font-size}rem;
-    height: #{14 / $base-font-size}rem;
-    & svg {
-      height: #{14 / $base-font-size}rem;
-    }
-    .sidebar--contracted & {
-      display: none;
-    }
-  }
-}
-
 .sidebar__expand {
   @include themify() {
     @extend %icon;
+  }
+  height: #{14 / $base-font-size}rem;
+  & svg {
     height: #{14 / $base-font-size}rem;
-    & svg {
-      height: #{14 / $base-font-size}rem;
-    }
+  }
+  display: none;
+  .sidebar--contracted & {
+    display: inline-block;
+  }
+}
+
+.sidebar__contract {
+  @include themify() {
+    @extend %icon;
+  }
+  margin-left: #{10 / $base-font-size}rem;
+  height: #{14 / $base-font-size}rem;
+  & svg {
+    height: #{14 / $base-font-size}rem;
+  }
+  .sidebar--contracted & {
     display: none;
-    .sidebar--contracted & {
-      display: inline-block;
-    }
   }
 }
 
