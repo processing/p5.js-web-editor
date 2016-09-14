@@ -123,6 +123,14 @@ class IDEView extends React.Component {
       e.preventDefault();
       e.stopPropagation();
       this.props.saveProject();
+    } else if (e.key === 'Enter' && e.shiftKey && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
+      e.preventDefault();
+      e.stopPropagation();
+      this.props.stopSketch();
+    } else if (e.key === 'Enter' && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
+      e.preventDefault();
+      e.stopPropagation();
+      this.props.startSketch();
     }
   }
 
