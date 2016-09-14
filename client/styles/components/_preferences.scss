@@ -39,7 +39,9 @@
 	flex-wrap: wrap;
 	padding-bottom: #{12 / $base-font-size}rem;
 	& + & {
-  	border-top: 2px dashed $light-button-border-color;
+		@include themify() {
+	  	border-top: 2px dashed getThemifyVariable('button-border-color');
+	  }
 	}
 }
 
@@ -56,14 +58,17 @@
 }
 
 .preference__value {
-	border: 2px solid $light-button-border-color;
+	@include themify() {
+		border: 2px solid getThemifyVariable('button-border-color');
+		background-color: getThemifyVariable('button-background-color');
+		color: $light-primary-text-color;
+	}
 	text-align: center;
 	border-radius: 0%;
 	width: #{48 / $base-font-size}rem;
 	height: #{44 / $base-font-size}rem;
 	margin: 0 #{28 / $base-font-size}rem;
 	padding: 0;
-	background-color: $light-button-background-color;
 }
 
 .preference__label {
