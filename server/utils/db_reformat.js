@@ -87,7 +87,7 @@ Project.find({})
   .exec((err, projects) => {
     projects.forEach((project, projectIndex) => {
       project.files.forEach((file) => {
-        if (file.isSelected === true || file.isSelected === false) {
+        if (file.isSelected) {
           file.isSelectedFile = file.isSelected;
           delete file.isSelected;
           console.log(file);
