@@ -87,13 +87,15 @@ Project.find({})
   .exec((err, projects) => {
     projects.forEach((project, projectIndex) => {
       project.files.forEach((file) => {
-        if (file.isSelected) {
-          file.isSelectedFile = file.isSelected;
+        if (file.name === 'sketch.js') {
+          file.isSelectedFile = true;
           delete file.isSelected;
           console.log(file);
           // file.save((err, savedFile) => {
           //   console.log('file saved');
           // });
+        } else {
+          file.isSelctedFile = false;
         }
         // console.log('project', projectIndex);
         // if (file.isSelected) {
