@@ -87,36 +87,32 @@ Project.find({})
   .exec((err, projects) => {
     projects.forEach((project, projectIndex) => {
       project.files.forEach((file) => {
-        // if (file.isSelected && !file.isSelectedFile) {
-        //   file.isSelectedFile = file.isSelected;
-        //   delete file.isSelected;
-        // }
-
-        // if (file.name === 'sketch.js') {
-        //   file.isSelectedFile = true;
-        //   delete file.isSelected;
-        //   console.log(file);
-        //   // file.save((err, savedFile) => {
-        //   //   console.log('file saved');
-        //   // });
-        // } else {
-        //   file.isSelctedFile = false;
-        // }
-        // // console.log('project', projectIndex);
-        // // if (file.isSelected) {
-        // //   console.log('is selected remains');
-        // // }
-
-        // // if (file.isSelctedFile) {
-        // //   console.log('changed to isSelected file');
-        // // }
-        // project.save((err, savedProject) => {
-        //   console.log('project', projectIndex, 'is saved.');
-        // });
-
-        if (file.fileType === 'folder' && file.isSelctedFile) {
-          console.log('there is an error');
+        if (file.isSelected) {
+          delete file.isSelected;
         }
+
+        if (file.name === 'sketch.js') {
+          file.isSelectedFile = true;
+          delete file.isSelected;
+          console.log(file);
+          // file.save((err, savedFile) => {
+          //   console.log('file saved');
+          // });
+        } else {
+          file.isSelectedFile = false;
+        }
+        // console.log('project', projectIndex);
+        // if (file.isSelected) {
+        //   console.log('is selected remains');
+        // }
+
+        // if (file.isSelctedFile) {
+        //   console.log('changed to isSelected file');
+        // }
+        project.save((err, savedProject) => {
+          console.log('project', projectIndex, 'is saved.');
+        });
+
       });
     });
   });

@@ -462,7 +462,7 @@ IDEView.propTypes = {
 function mapStateToProps(state) {
   return {
     files: state.files,
-    selectedFile: state.files.filter(file => file.isSelectedFile)[0],
+    selectedFile: state.files.find(file => file.isSelectedFile),
     htmlFile: getHTMLFile(state.files),
     jsFiles: getJSFiles(state.files),
     cssFiles: getCSSFiles(state.files),
