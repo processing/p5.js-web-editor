@@ -1,10 +1,6 @@
 .github-button {
   @include themify() {
     @extend %button;
-    width: #{300 / $base-font-size}rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     & path {
       color: getThemifyVariable('primary-text-color');
     }
@@ -16,6 +12,10 @@
       border-color: getThemifyVariable('secondary-text-color');
     }
   }
+  width: #{300 / $base-font-size}rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .github-icon {

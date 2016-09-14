@@ -14,7 +14,7 @@ const checkAuth = (store) => {
 
 const routes = (store) =>
   (
-  <Route path="/" component={App}>
+  <Route path="/" component={App} theme={store.getState().preferences.theme}>
     <IndexRoute component={IDEView} onEnter={checkAuth(store)} />
     <Route path="/login" component={LoginView} />
     <Route path="/signup" component={SignupView} />

@@ -3,13 +3,12 @@
     .#{$theme} & {
       // Define theme color
       $theme-map : (
-          color-alpha: blue
       ) !global;
       
       @each $key, $submap in $map {
         $value: map-fetch($themes, $theme '#{$key}');
         $theme-map: map-merge($theme-map, ($key: $value)) !global;
-      }
+      } 
       
       @content;
       

@@ -7,8 +7,10 @@ html, body {
 }
 
 body, input, button {
+	@include themify() {
+		color: getThemifyVariable('primary-text-color');
+	}
 	font-family: 'Avenir Next', Montserrat, sans-serif;
-	color: $light-primary-text-color;
 }
 
 body {

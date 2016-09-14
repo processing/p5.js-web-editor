@@ -88,17 +88,16 @@
 }
 
 .preference__option {
-	@extend %preference-option;
-	list-style-type: none;
-	padding: 0;
-	color: $light-inactive-text-color;
+	@include themify() {
+		@extend %preference-option;
+	}
 }
 
 .preference__preview-button {
-	@extend %preference-option;
-	padding: 0;
-	padding-left: #{110 / $base-font-size}rem;
-	outline: none;
+	@include themify() {
+		@extend %preference-option;
+		padding-left: #{110 / $base-font-size}rem;
+	}
 }
 
 .preference__options {
@@ -108,7 +107,10 @@
 }
 
 .preference__radio-button:checked + .preference__option {
-    color: $light-primary-text-color;
+	@include themify() {	
+		//for some reason this won't work for getThemifyVariable
+	  color: map-get($theme-map, 'primary-text-color');
+	}
 }
 
 .preference--hidden {

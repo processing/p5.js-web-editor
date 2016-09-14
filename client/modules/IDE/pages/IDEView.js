@@ -27,7 +27,6 @@ import SplitPane from 'react-split-pane';
 import Overlay from '../../App/components/Overlay';
 import SketchList from '../components/SketchList';
 import About from '../components/About';
-import classNames from 'classnames';
 
 class IDEView extends React.Component {
   constructor(props) {
@@ -157,13 +156,8 @@ class IDEView extends React.Component {
   }
 
   render() {
-    let ideClass = classNames({
-      ide: true,
-      light: this.props.preferences.theme === 'light',
-      dark: this.props.preferences.theme === 'dark',
-    });
     return (
-      <div className={ideClass}>
+      <div className="ide">
         {this.props.toast.isVisible && <Toast />}
         <Nav
           user={this.props.user}

@@ -1,13 +1,13 @@
 .toolbar__play-button {
 	@include themify() {
 		@extend %toolbar-button;
-		margin-right: #{15 / $base-font-size}rem;
 		&--selected {
 			@extend %toolbar-button--selected;
 		}
-		& span {
-			padding-left: #{2 / $base-font-size}rem;
-		}
+	}
+	margin-right: #{15 / $base-font-size}rem;
+	& span {
+		padding-left: #{2 / $base-font-size}rem;
 	}
 }
 
@@ -27,12 +27,12 @@
 .toolbar__preferences-button {
 	@include themify() {
 		@extend %toolbar-button;
-		line-height: #{50 / $base-font-size}rem;
-		margin-left: auto;
 		&--selected {
 			@extend %toolbar-button--selected;
 		}
 	}
+	line-height: #{50 / $base-font-size}rem;
+	margin-left: auto;
 }
 
 .toolbar__logo {

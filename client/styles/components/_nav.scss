@@ -16,10 +16,6 @@
 	border-bottom: 2px dashed;
 }
 
-.nav__save, .nav__new {
-	@extend %fake-link;
-}
-
 .nav__item {
 	& + & {
 		margin-left: #{20 / $base-font-size}rem;
