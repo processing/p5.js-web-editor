@@ -87,6 +87,11 @@ Project.find({})
   .exec((err, projects) => {
     projects.forEach((project, projectIndex) => {
       project.files.forEach((file) => {
+        if (file.isSelected && !file.isSelectedFile) {
+          file.isSelectedFile = file.isSelected;
+          delete file.isSelected;
+        }
+
         if (file.name === 'sketch.js') {
           file.isSelectedFile = true;
           delete file.isSelected;
@@ -105,9 +110,9 @@ Project.find({})
         // if (file.isSelctedFile) {
         //   console.log('changed to isSelected file');
         // }
-      });
-      project.save((err, savedProject) => {
-        console.log('project', projectIndex, 'is saved.');
+        project.save((err, savedProject) => {
+          console.log('project', projectIndex, 'is saved.');
+        });
       });
     });
   });
