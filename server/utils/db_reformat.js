@@ -93,8 +93,7 @@ Project.find({})
 
         if (file.name === 'sketch.js') {
           file.isSelectedFile = true;
-          delete file.isSelected;
-          console.log(file);
+          console.log(file.name, 'is now selected');
           // file.save((err, savedFile) => {
           //   console.log('file saved');
           // });
@@ -116,6 +115,3 @@ Project.find({})
       });
     });
   });
-
-
-
