@@ -39,7 +39,7 @@ const fileSchema = new Schema({
   url: { type: String },
   children: { type: [ String ], default: [] },
   fileType: { type: String, default: 'file' },
-  isSelected: { type: Boolean }
+  isSelectedFile: { type: Boolean }
 }, { timestamps: true, _id: true });
 
 fileSchema.virtual('id').get(function(){
@@ -71,7 +71,7 @@ projectSchema.set('toJSON', {
 //     let a = new ObjectId();
 //     let b = new ObjectId();
 //     let c = new ObjectId();
-//     project.files = [{ name: 'sketch.js', content: defaultSketch, _id: a, isSelected: true },
+//     project.files = [{ name: 'sketch.js', content: defaultSketch, _id: a, isSelectedFile: true },
 //     { name: 'index.html', content: defaultHTML, _id: b },
 //     { name: 'style.css', content: defaultCSS, _id: c },
 //     { name: 'root', _id: new ObjectId(), children: [a, b, c] }];

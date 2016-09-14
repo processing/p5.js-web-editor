@@ -2,7 +2,6 @@ import axios from 'axios';
 import { createFile } from './files';
 const textFileRegex = /text\//;
 
-const s3Bucket = `http://${process.env.S3_BUCKET}.s3.amazonaws.com/`;
 const s3BucketHttps = `https://s3-us-west-2.amazonaws.com/${process.env.S3_BUCKET}/`;
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 

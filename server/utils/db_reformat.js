@@ -64,17 +64,32 @@ import Project from '../models/project';
 //     });
 //   });
 
-const s3Bucket = `http://p5.js-webeditor.s3.amazonaws.com/`;
-const s3BucketHttps = `https://s3-us-west-2.amazonaws.com/p5.js-webeditor/`;
+// const s3Bucket = `http://p5.js-webeditor.s3.amazonaws.com/`;
+// const s3BucketHttps = `https://s3-us-west-2.amazonaws.com/p5.js-webeditor/`;
+
+// Project.find({})
+//   .exec((err, projects) => {
+//     projects.forEach((project, projectIndex) => {
+//       project.files.forEach((file) => {
+//         if (file.url) {
+//           file.url = file.url.replace(s3Bucket, s3BucketHttps);
+//           console.log('Updating', file.name);
+//           console.log(file.url);
+//         }
+//       });
+//       project.save((err, savedProject) => {
+//         console.log('project', projectIndex, 'is saved.');
+//       });
+//     });
+//   });
 
 Project.find({})
   .exec((err, projects) => {
     projects.forEach((project, projectIndex) => {
       project.files.forEach((file) => {
-        if (file.url) {
-          file.url = file.url.replace(s3Bucket, s3BucketHttps);
-          console.log('Updating', file.name);
-          console.log(file.url);
+        if (file.isSelected === true || file.isSelected === false) {
+          file.isSelectedFile = file.isSelected;
+          delete file.isSelected;
         }
       });
       project.save((err, savedProject) => {

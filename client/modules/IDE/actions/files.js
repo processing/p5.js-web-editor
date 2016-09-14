@@ -71,7 +71,7 @@ export function getBlobUrl(file) {
 export function createFile(formProps) {
   return (dispatch, getState) => {
     const state = getState();
-    const selectedFile = state.files.find(file => file.isSelected);
+    const selectedFile = state.files.find(file => file.isSelectedFile);
     const rootFile = state.files.find(file => file.name === 'root');
     let parentId;
     if (selectedFile.fileType === 'folder') {
@@ -130,7 +130,7 @@ export function createFile(formProps) {
 export function createFolder(formProps) {
   return (dispatch, getState) => {
     const state = getState();
-    const selectedFile = state.files.find(file => file.isSelected);
+    const selectedFile = state.files.find(file => file.isSelectedFile);
     const rootFile = state.files.find(file => file.name === 'root');
     let parentId;
     if (selectedFile.fileType === 'folder') {

@@ -60,7 +60,7 @@ export class FileNode extends React.Component {
     let itemClass = classNames({
       'sidebar__root-item': this.props.name === 'root',
       'sidebar__file-item': this.props.name !== 'root',
-      'sidebar__file-item--selected': this.props.isSelected,
+      'sidebar__file-item--selected': this.props.isSelectedFile,
       'sidebar__file-item--open': this.props.isOptionsOpen,
       'sidebar__file-item--editing': this.props.isEditingName,
       'sidebar__file-item--closed': this.props.isFolderClosed
@@ -198,7 +198,7 @@ FileNode.propTypes = {
   children: PropTypes.array,
   name: PropTypes.string.isRequired,
   fileType: PropTypes.string.isRequired,
-  isSelected: PropTypes.bool,
+  isSelectedFile: PropTypes.bool,
   isOptionsOpen: PropTypes.bool,
   isEditingName: PropTypes.bool,
   isFolderClosed: PropTypes.bool,

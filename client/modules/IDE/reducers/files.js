@@ -50,7 +50,7 @@ function initialState() {
       content: defaultSketch,
       id: a,
       _id: a,
-      isSelected: true,
+      isSelectedFile: true,
       fileType: 'file',
       children: []
     },
@@ -207,9 +207,9 @@ const files = (state, action) => {
     case ActionTypes.SET_SELECTED_FILE:
       return state.map(file => {
         if (file.id === action.selectedFile) {
-          return Object.assign({}, file, { isSelected: true });
+          return Object.assign({}, file, { isSelectedFile: true });
         }
-        return Object.assign({}, file, { isSelected: false });
+        return Object.assign({}, file, { isSelectedFile: false });
       });
     case ActionTypes.SHOW_FOLDER_CHILDREN:
       return state.map(file => {

@@ -35,7 +35,7 @@ class SidebarItem extends React.Component {
   render() {
     let itemClass = classNames({
       'sidebar__file-item': true,
-      'sidebar__file-item--selected': this.props.file.isSelected,
+      'sidebar__file-item--selected': this.props.file.isSelectedFile,
       'sidebar__file-item--open': this.props.file.isOptionsOpen,
       'sidebar__file-item--editing': this.props.file.isEditingName
     });
@@ -106,7 +106,7 @@ SidebarItem.propTypes = {
   file: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    isSelected: PropTypes.bool,
+    isSelectedFile: PropTypes.bool,
     isOptionsOpen: PropTypes.bool,
     isEditingName: PropTypes.bool
   }).isRequired,
