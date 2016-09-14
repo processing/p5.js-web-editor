@@ -13,22 +13,20 @@ body, input, button {
 	font-family: 'Avenir Next', Montserrat, sans-serif;
 }
 
-body {
-	background-color: $light-background-color;
-}
-
 .root-app, .app {
 	min-height: 100%;
 	height: 100%;
 }
 
 a {
-	text-decoration: none;
-	color: $light-inactive-text-color;
-	cursor: pointer;
-	&:hover {
+	@include themify() {
 		text-decoration: none;
-		color: $light-primary-text-color;
+		color: getThemifyVariable('inactive-text-color');
+		cursor: pointer;
+		&:hover {
+			text-decoration: none;
+			color: getThemifyVariable('primary-text-color');
+		}
 	}
 }
 

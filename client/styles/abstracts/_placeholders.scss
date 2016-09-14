@@ -111,10 +111,12 @@
 }
 
 %modal {
-	background-color: $light-modal-background-color;
-	border: 1px solid $light-modal-border-color;
+	@include themify() {
+		background-color: getThemifyVariable('modal-background-color');
+		border: 1px solid getThemifyVariable('modal-border-color');
+		box-shadow: 0 12px 12px getThemifyVariable('shadow-color');
+	}
 	border-radius: 2px;
-	box-shadow: 0 12px 12px $light-shadow-color;
 	z-index: 20;
 }
 

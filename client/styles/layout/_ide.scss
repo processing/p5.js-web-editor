@@ -1,8 +1,17 @@
 .ide {
-	display: flex;
-	flex-direction: column;
 	height: 100%;
-	flex-wrap: wrap;
+  width: 100%;
+}
+
+.ide-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  flex-wrap: wrap;
+  @include themify() {
+    color: getThemifyVariable('primary-text-color');
+    background-color: getThemifyVariable('background-color');
+  }
 }
 
 .editor-preview-container {
