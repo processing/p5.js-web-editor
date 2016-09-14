@@ -1,7 +1,9 @@
 .preview-console {
+	@include themify() {
+		background: getThemifyVariable('console-background-color');
+	}
 	width: 100%;
 	height: 100%;
-	background: $console-light-background-color;
 	z-index: 1000;
 	overflow: hidden;
 	display: flex;
@@ -14,7 +16,9 @@
 
 	// assign styles to different types of console messages
 	.preview-console__log {
-		color: $dark-secondary-text-color;
+		@include themify(){
+			color: getThemifyVariable('secondary-text-color');
+		}
 		flex: 1 0 auto;
 	}
 
@@ -30,7 +34,9 @@
 }
 
 .preview-console__header {
-	background-color: $console-header-background-color;
+	@include themify() {
+		background-color: getThemifyVariable('console-header-background-color');
+	}
 	color: $console-header-color;
 	padding: #{5 / $base-font-size}rem;
 	display: flex;
