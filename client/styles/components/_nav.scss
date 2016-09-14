@@ -8,12 +8,14 @@
 }
 
 .nav__items-left, .nav__items-right {
+	@include themify() {
+		border-bottom: 2px dashed map-get($theme-map, 'inactive-text-color');
+	}
 	list-style: none;
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-end;
 	padding: #{5 / $base-font-size}rem #{10 / $base-font-size}rem;
-	border-bottom: 2px dashed;
 }
 
 .nav__item {

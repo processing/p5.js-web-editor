@@ -46,7 +46,9 @@
 }
 
 .toolbar__project-name-container {
-	border-left: 2px dashed;
+	@include themify() {
+		border-left: 2px dashed map-get($theme-map, 'inactive-text-color');
+	}
 	margin-left: #{10 / $base-font-size}rem;
 	padding-left: #{10 / $base-font-size}rem;
 	height: 70%;
