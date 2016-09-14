@@ -87,14 +87,22 @@ Project.find({})
   .exec((err, projects) => {
     projects.forEach((project, projectIndex) => {
       project.files.forEach((file) => {
-        if (file.isSelected === true || file.isSelected === false) {
-          file.isSelectedFile = file.isSelected;
-          delete file.isSelected;
+        // if (file.isSelected === true || file.isSelected === false) {
+        //   file.isSelectedFile = file.isSelected;
+        //   delete file.isSelected;
+        // }
+        console.log('project', projectIndex);
+        if (file.isSelected) {
+          console.log('is selected remains');
+        }
+
+        if (file.isSelctedFile) {
+          console.log('changed to isSelected file');
         }
       });
-      project.save((err, savedProject) => {
-        console.log('project', projectIndex, 'is saved.');
-      });
+      // project.save((err, savedProject) => {
+      //   console.log('project', projectIndex, 'is saved.');
+      // });
     });
   });
 
