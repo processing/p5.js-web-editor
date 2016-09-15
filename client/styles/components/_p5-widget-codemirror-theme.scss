@@ -1,3 +1,27 @@
+// brown: #6C4D13
+// black: #333
+// blue: #0F9DD7
+// pink: #D9328F
+// gray: #999999
+// dark blue: #318094
+// white: #fdfdfd
+
+//numbers
+//light gray: #f4f4f4
+//dark gray: #b5b5b5
+
+$p5-light-brown: #6C4D13;
+$p5-light-black: #333;
+$p5-light-blue: #0F9DD7;
+$p5-light-pink: #D9328F;
+$p5-light-gray: #999999;
+$p5-light-darkblue: #318094;
+$p5-light-white: #FDFDFD;
+
+$p5-light-lightgray: #f4f4f4;
+$p5-light-darkgray: #b5b5b5;
+
+
 :root {
   --light-gray: #A0A0A0;
   --dark-gray: #666;
@@ -6,6 +30,35 @@
   --light-brown: #a67f59;
   --pinkish: #DC3787; /* not p5 pink, but related */
   --dark-blueish: #00A1D3;
+}
+
+.cm-s-p5-widget {
+  background-color: $p5-light-white;
+  color: $p5-light-black;
+}
+
+.cm-s-p5-widget .cm-comment {
+  color: $p5-light-gray;
+}
+
+.cm-s-p5-widget .cm-string {
+  color: $p5-light-blue;
+}
+
+.cm-s-p5-widget .cm-number {
+  color: $p5-light-pink;
+}
+
+.cm-s-p5-widget .cm-keyword {
+  color: $p5-light-brown;
+}
+
+.cm-s-p5-widget .cm-variable {
+  color: $p5-light-blue;
+}
+
+.cm-s-p5-widget .cm-variable {
+  color: $p5-light-blue;
 }
 
 .cm-s-p5-widget span { color: var(--dark-gray); }
