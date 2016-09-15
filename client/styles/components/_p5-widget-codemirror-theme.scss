@@ -20,6 +20,7 @@ $p5-light-white: #FDFDFD;
 
 $p5-light-lightgray: #f4f4f4;
 $p5-light-darkgray: #b5b5b5;
+$p5-light-selected: rbga(45, 123, 182, 25);
 
 
 :root {
@@ -50,15 +51,35 @@ $p5-light-darkgray: #b5b5b5;
 }
 
 .cm-s-p5-widget .cm-keyword {
-  color: $p5-light-brown;
+  color: $p5-light-darkblue;
 }
 
 .cm-s-p5-widget .cm-variable {
   color: $p5-light-blue;
 }
 
-.cm-s-p5-widget .cm-variable {
-  color: $p5-light-blue;
+.cm-s-p5-widget .cm-variable-2 {
+  color: $p5-light-black;
+}
+
+.cm-s-p5-widget .cm-property {
+  color: $p5-light-black;
+}
+
+.cm-s-p5-widget .cm-atom {
+  color: $p5-light-pink;
+}
+
+.cm-s-p5-widget .cm-operator {
+  color: $p5-light-black;
+}
+
+.cm-s-p5-widget .cm-linenumber {
+  color: $p5-light-darkgray;
+}
+
+.cm-s-p5-widget .CodeMirror-selected {
+  background: $p5-light-selected;
 }
 
 .cm-s-p5-widget span { color: var(--dark-gray); }
