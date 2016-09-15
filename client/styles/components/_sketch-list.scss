@@ -34,3 +34,28 @@
     @extend %icon;
   }
 }
+
+.visibility-toggle .sketch-list__trash-button {
+  @include themify() {
+    margin: 0;
+    padding: 0;
+    visibility: hidden;
+    width: 20px;
+  }
+}
+
+.visibility-toggle:hover .sketch-list__trash-button {
+   @include themify() {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    visibility: visible;
+    width: 20px;
+      & g {
+        opacity: 1;
+        fill: getThemifyVariable('icon-hover-color');
+      }
+  }
+}

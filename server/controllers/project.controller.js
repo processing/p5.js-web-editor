@@ -60,6 +60,15 @@ export function getProject(req, res) {
     });
 }
 
+export function deleteProject(req, res) {
+  Project.remove({_id: req.params.project_id}, (err) => {
+    if (err) {
+      return res.status(404).send({ message: 'Project with that id does not exist' });
+    }
+    return res.json({ success: true });
+  });
+}
+
 export function getProjects(req, res) {
   if (req.user) {
     Project.find({user: req.user._id}) // eslint-disable-line no-underscore-dangle
