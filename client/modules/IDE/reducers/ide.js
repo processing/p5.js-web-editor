@@ -72,15 +72,12 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { keyboardShortcutVisible: true });
     case ActionTypes.CLOSE_KEYBOARD_SHORTCUT_MODAL:
       return Object.assign({}, state, { keyboardShortcutVisible: false });
-<<<<<<< HEAD
     case ActionTypes.SET_UNSAVED_CHANGES:
       return Object.assign({}, state, { unsavedChanges: action.value });
-=======
     case ActionTypes.DETECT_INFINITE_LOOPS:
       return Object.assign({}, state, { infiniteLoop: true });
     case ActionTypes.RESET_INFINITE_LOOPS:
       return Object.assign({}, state, { infiniteLoop: false });
->>>>>>> 43052cb675fa0bc500467f5c7c6643f3636493ae
     default:
       return state;
   }
