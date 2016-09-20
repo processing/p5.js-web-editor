@@ -83,6 +83,7 @@
     "jshint": "^2.9.2",
     "jszip": "^3.0.0",
     "jszip-utils": "0.0.2",
+    "loop-protect": "git+https://git@github.com/sagar-sm/loop-protect.git",
     "moment": "^2.14.1",
     "mongoose": "^4.4.16",
     "node-uuid": "^1.4.7",

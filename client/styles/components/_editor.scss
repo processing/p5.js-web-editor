@@ -81,3 +81,11 @@
     display: block;
   }
 }
+
+.lint-error {
+  font-family: Inconsolata, monospace;
+  font-size: 100%;
+  background: #FFBEC1;
+  color: red;
+  padding: 2px 5px 3px;
+}
