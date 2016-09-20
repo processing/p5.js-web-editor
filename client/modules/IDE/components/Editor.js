@@ -37,7 +37,7 @@ class Editor extends React.Component {
   componentDidMount() {
     this.beep = new Audio(beepUrl);
     this._cm = CodeMirror(this.refs.container, { // eslint-disable-line
-      theme: 'p5-widget',
+      theme: `p5-${this.props.theme}`,
       value: this.props.file.content,
       lineNumbers: true,
       styleActiveLine: true,
@@ -105,6 +105,10 @@ class Editor extends React.Component {
       } else if (this.props.file.name.match(/.+\.html$/)) {
         this._cm.setOption('mode', 'htmlmixed');
       }
+    }
+
+    if (this.props.theme !== prevProps.theme) {
+      this._cm.setOption('theme', `p5-${this.props.theme}`);
     }
   }
 
@@ -191,7 +195,8 @@ Editor.propTypes = {
   showEditorOptions: PropTypes.func.isRequired,
   closeEditorOptions: PropTypes.func.isRequired,
   showKeyboardShortcutModal: PropTypes.func.isRequired,
-  setUnsavedChanges: PropTypes.func.isRequired
+  setUnsavedChanges: PropTypes.func.isRequired,
+  theme: PropTypes.string.isRequired,
 };
 
 export default Editor;

@@ -274,6 +274,7 @@ class IDEView extends React.Component {
                     closeEditorOptions={this.props.closeEditorOptions}
                     showKeyboardShortcutModal={this.props.showKeyboardShortcutModal}
                     setUnsavedChanges={this.props.setUnsavedChanges}
+                    theme={this.props.preferences.theme}
                   />
                   <Console
                     consoleEvent={this.props.ide.consoleEvent}
