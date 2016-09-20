@@ -82,5 +82,7 @@ export const SHOW_TOAST = 'SHOW_TOAST';
 export const HIDE_TOAST = 'HIDE_TOAST';
 export const SET_TOAST_TEXT = 'SET_TOAST_TEXT';
 
+export const SET_UNSAVED_CHANGES = 'SET_UNSAVED_CHANGES';
+
 // eventually, handle errors more specifically and better
 export const ERROR = 'ERROR';

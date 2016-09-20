@@ -163,3 +163,10 @@ export function closeKeyboardShortcutModal() {
   };
 }
 
+export function setUnsavedChanges(value) {
+  return {
+    type: ActionTypes.SET_UNSAVED_CHANGES,
+    value
+  };
+}
+

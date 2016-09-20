@@ -14,6 +14,7 @@ import Console from '../components/Console';
 import Toast from '../components/Toast';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import * as FileActions from '../actions/files';
 import * as IDEActions from '../actions/ide';
 import * as ProjectActions from '../actions/project';
@@ -33,6 +34,7 @@ class IDEView extends React.Component {
     this._handleConsolePaneOnDragFinished = this._handleConsolePaneOnDragFinished.bind(this);
     this._handleSidebarPaneOnDragFinished = this._handleSidebarPaneOnDragFinished.bind(this);
     this.handleGlobalKeydown = this.handleGlobalKeydown.bind(this);
+    this.warnIfUnsavedChanges = this.warnIfUnsavedChanges.bind(this);
   }
 
   componentDidMount() {
@@ -55,6 +57,10 @@ class IDEView extends React.Component {
 
     this.isMac = navigator.userAgent.toLowerCase().indexOf('mac') !== -1;
     document.addEventListener('keydown', this.handleGlobalKeydown, false);
+
+    this.props.router.setRouteLeaveHook(this.props.route, () => this.warnIfUnsavedChanges());
+
+    window.onbeforeunload = () => this.warnIfUnsavedChanges();
   }
 
   componentWillUpdate(nextProps) {
@@ -90,6 +96,10 @@ class IDEView extends React.Component {
     if (this.autosaveInterval && !this.props.project.id) {
       clearInterval(this.autosaveInterval);
       this.autosaveInterval = null;
+    }
+
+    if (this.props.route.path !== prevProps.route.path) {
+      this.props.router.setRouteLeaveHook(this.props.route, () => this.warnIfUnsavedChanges());
     }
   }
 
@@ -131,6 +141,17 @@ class IDEView extends React.Component {
       e.preventDefault();
       e.stopPropagation();
       this.props.startSketch();
+    }
+  }
+
+  warnIfUnsavedChanges() { // eslint-disable-line
+    if (this.props.ide.unsavedChanges
+      && ((this.props.project.owner && this.props.project.owner.id === this.props.user.id)
+      || (!this.props.project.owner))) {
+      if (!window.confirm('Are you sure you want to leave this page? You have unsaved changes.')) {
+        return false;
+      }
+      this.props.setUnsavedChanges(false);
     }
   }
 
@@ -243,6 +264,7 @@ class IDEView extends React.Component {
                   showEditorOptions={this.props.showEditorOptions}
                   closeEditorOptions={this.props.closeEditorOptions}
                   showKeyboardShortcutModal={this.props.showKeyboardShortcutModal}
+                  setUnsavedChanges={this.props.setUnsavedChanges}
                 />
                 <Console
                   consoleEvent={this.props.ide.consoleEvent}
@@ -380,7 +402,8 @@ IDEView.propTypes = {
     newFolderModalVisible: PropTypes.bool.isRequired,
     shareModalVisible: PropTypes.bool.isRequired,
     editorOptionsVisible: PropTypes.bool.isRequired,
-    keyboardShortcutVisible: PropTypes.bool.isRequired
+    keyboardShortcutVisible: PropTypes.bool.isRequired,
+    unsavedChanges: PropTypes.bool.isRequired
   }).isRequired,
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
@@ -464,7 +487,12 @@ IDEView.propTypes = {
   }).isRequired,
   showToast: PropTypes.func.isRequired,
   setToastText: PropTypes.func.isRequired,
-  autosaveProject: PropTypes.func.isRequired
+  autosaveProject: PropTypes.func.isRequired,
+  router: PropTypes.shape({
+    setRouteLeaveHook: PropTypes.func
+  }).isRequired,
+  route: PropTypes.object.isRequired,
+  setUnsavedChanges: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -495,4 +523,4 @@ function mapDispatchToProps(dispatch) {
   dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(IDEView);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(IDEView));

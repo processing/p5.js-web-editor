@@ -6,6 +6,7 @@ import JSZipUtils from 'jszip-utils';
 import { saveAs } from 'file-saver';
 import { getBlobUrl } from './files';
 import { showToast, setToastText } from './toast';
+import { setUnsavedChanges } from './ide';
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
@@ -32,6 +33,7 @@ export function getProject(id) {
           owner: response.data.user
         });
         getProjectBlobUrls()(dispatch, getState);
+        dispatch(setUnsavedChanges(false));
       })
       .catch(response => dispatch({
         type: ActionTypes.ERROR,
@@ -58,6 +60,7 @@ export function saveProject(autosave) {
     if (state.project.id) {
       axios.put(`${ROOT_URL}/projects/${state.project.id}`, formParams, { withCredentials: true })
         .then(() => {
+          dispatch(setUnsavedChanges(false));
           dispatch({
             type: ActionTypes.PROJECT_SAVE_SUCCESS
           });
@@ -73,6 +76,7 @@ export function saveProject(autosave) {
     } else {
       axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
         .then(response => {
+          dispatch(setUnsavedChanges(false));
           browserHistory.push(`/projects/${response.data.id}`);
           dispatch({
             type: ActionTypes.NEW_PROJECT,
@@ -112,6 +116,7 @@ export function createProject() {
           owner: response.data.user,
           files: response.data.files
         });
+        dispatch(setUnsavedChanges(false));
       })
       .catch(response => dispatch({
         type: ActionTypes.PROJECT_SAVE_FAIL,

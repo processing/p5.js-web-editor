@@ -60,33 +60,33 @@ class Editor extends React.Component {
         })
       }
     });
+
     this._cm.on('change', debounce(200, () => {
+      this.props.setUnsavedChanges(true);
       this.props.updateFileContent(this.props.file.name, this._cm.getValue());
     }));
+
     this._cm.on('keyup', () => {
       const temp = `line ${parseInt((this._cm.getCursor().line) + 1, 10)}`;
       document.getElementById('current-line').innerHTML = temp;
     });
-    // this._cm.on('change', () => { // eslint-disable-line
-    //   // this.props.updateFileContent('sketch.js', this._cm.getValue());
-    //   throttle(1000, () => console.log('debounce is working!'));
-    //   this.props.updateFileContent(this.props.file.name, this._cm.getValue());
-    // });
-    this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
-    this._cm.setOption('indentWithTabs', this.props.isTabIndent);
-    this._cm.setOption('tabSize', this.props.indentationAmount);
 
     this._cm.on('keydown', (_cm, e) => {
       if (e.key === 'Tab' && e.shiftKey) {
         this.tidyCode();
       }
     });
+
+    this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
+    this._cm.setOption('indentWithTabs', this.props.isTabIndent);
+    this._cm.setOption('tabSize', this.props.indentationAmount);
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.file.content !== prevProps.file.content &&
         this.props.file.content !== this._cm.getValue()) {
       this._cm.setValue(this.props.file.content); // eslint-disable-line no-underscore-dangle
+      setTimeout(() => this.props.setUnsavedChanges(false), 500);
     }
     if (this.props.fontSize !== prevProps.fontSize) {
       this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
@@ -190,7 +190,8 @@ Editor.propTypes = {
   editorOptionsVisible: PropTypes.bool.isRequired,
   showEditorOptions: PropTypes.func.isRequired,
   closeEditorOptions: PropTypes.func.isRequired,
-  showKeyboardShortcutModal: PropTypes.func.isRequired
+  showKeyboardShortcutModal: PropTypes.func.isRequired,
+  setUnsavedChanges: PropTypes.func.isRequired
 };
 
 export default Editor;

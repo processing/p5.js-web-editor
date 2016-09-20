@@ -15,7 +15,8 @@ const initialState = {
   newFolderModalVisible: false,
   shareModalVisible: false,
   editorOptionsVisible: false,
-  keyboardShortcutVisible: false
+  keyboardShortcutVisible: false,
+  unsavedChanges: false
 };
 
 const ide = (state = initialState, action) => {
@@ -70,6 +71,8 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { keyboardShortcutVisible: true });
     case ActionTypes.CLOSE_KEYBOARD_SHORTCUT_MODAL:
       return Object.assign({}, state, { keyboardShortcutVisible: false });
+    case ActionTypes.SET_UNSAVED_CHANGES:
+      return Object.assign({}, state, { unsavedChanges: action.value });
     default:
       return state;
   }
