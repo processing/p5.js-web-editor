@@ -199,6 +199,7 @@
 
 .sidebar__file-item-open {
   @extend .sidebar__file-item-icon;
+  display: inline-block;
   .sidebar__file-item--closed & {
     display: none;
   }
