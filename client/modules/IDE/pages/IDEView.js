@@ -27,7 +27,6 @@ import SplitPane from 'react-split-pane';
 import Overlay from '../../App/components/Overlay';
 import SketchList from '../components/SketchList';
 import About from '../components/About';
-import classNames from 'classnames';
 
 class IDEView extends React.Component {
   constructor(props) {
@@ -62,6 +61,8 @@ class IDEView extends React.Component {
     this.props.router.setRouteLeaveHook(this.props.route, () => this.warnIfUnsavedChanges());
 
     window.onbeforeunload = () => this.warnIfUnsavedChanges();
+
+    document.body.className = this.props.preferences.theme;
   }
 
   componentWillUpdate(nextProps) {
@@ -75,6 +76,10 @@ class IDEView extends React.Component {
 
     if (nextProps.params.project_id && !this.props.params.project_id) {
       this.props.getProject(nextProps.params.project_id);
+    }
+
+    if (nextProps.preferences.theme !== this.props.preferences.theme) {
+      document.body.className = nextProps.preferences.theme;
     }
   }
 
@@ -157,164 +162,157 @@ class IDEView extends React.Component {
   }
 
   render() {
-    let ideClass = classNames({
-      ide: true,
-      light: this.props.preferences.theme === 'light',
-      dark: this.props.preferences.theme === 'dark',
-    });
     return (
-      <div className={ideClass}>
-        <div className="ide-content">
-          {this.props.toast.isVisible && <Toast />}
-          <Nav
-            user={this.props.user}
-            newProject={this.props.newProject}
-            saveProject={this.props.saveProject}
-            exportProjectAsZip={this.props.exportProjectAsZip}
-            cloneProject={this.props.cloneProject}
-            project={this.props.project}
-            logoutUser={this.props.logoutUser}
-            stopSketch={this.props.stopSketch}
-            showShareModal={this.props.showShareModal}
-          />
-          <Toolbar
-            className="Toolbar"
-            isPlaying={this.props.ide.isPlaying}
-            startSketch={this.props.startSketch}
-            stopSketch={this.props.stopSketch}
-            startTextOutput={this.props.startTextOutput}
-            stopTextOutput={this.props.stopTextOutput}
-            projectName={this.props.project.name}
-            setProjectName={this.props.setProjectName}
-            showEditProjectName={this.props.showEditProjectName}
-            hideEditProjectName={this.props.hideEditProjectName}
-            openPreferences={this.props.openPreferences}
-            preferencesIsVisible={this.props.ide.preferencesIsVisible}
-            setTextOutput={this.props.setTextOutput}
-            owner={this.props.project.owner}
-            project={this.props.project}
-          />
-          <Preferences
-            isVisible={this.props.ide.preferencesIsVisible}
-            closePreferences={this.props.closePreferences}
-            fontSize={this.props.preferences.fontSize}
-            indentationAmount={this.props.preferences.indentationAmount}
-            setIndentation={this.props.setIndentation}
-            indentWithSpace={this.props.indentWithSpace}
-            indentWithTab={this.props.indentWithTab}
-            isTabIndent={this.props.preferences.isTabIndent}
-            setFontSize={this.props.setFontSize}
-            autosave={this.props.preferences.autosave}
-            setAutosave={this.props.setAutosave}
-            lintWarning={this.props.preferences.lintWarning}
-            setLintWarning={this.props.setLintWarning}
-            textOutput={this.props.preferences.textOutput}
-            setTextOutput={this.props.setTextOutput}
-            theme={this.props.preferences.theme}
-            setTheme={this.props.setTheme}
-          />
-          <div className="editor-preview-container">
+      <div className="ide">
+        {this.props.toast.isVisible && <Toast />}
+        <Nav
+          user={this.props.user}
+          newProject={this.props.newProject}
+          saveProject={this.props.saveProject}
+          exportProjectAsZip={this.props.exportProjectAsZip}
+          cloneProject={this.props.cloneProject}
+          project={this.props.project}
+          logoutUser={this.props.logoutUser}
+          stopSketch={this.props.stopSketch}
+          showShareModal={this.props.showShareModal}
+        />
+        <Toolbar
+          className="Toolbar"
+          isPlaying={this.props.ide.isPlaying}
+          startSketch={this.props.startSketch}
+          stopSketch={this.props.stopSketch}
+          startTextOutput={this.props.startTextOutput}
+          stopTextOutput={this.props.stopTextOutput}
+          projectName={this.props.project.name}
+          setProjectName={this.props.setProjectName}
+          showEditProjectName={this.props.showEditProjectName}
+          hideEditProjectName={this.props.hideEditProjectName}
+          openPreferences={this.props.openPreferences}
+          preferencesIsVisible={this.props.ide.preferencesIsVisible}
+          setTextOutput={this.props.setTextOutput}
+          owner={this.props.project.owner}
+          project={this.props.project}
+        />
+        <Preferences
+          isVisible={this.props.ide.preferencesIsVisible}
+          closePreferences={this.props.closePreferences}
+          fontSize={this.props.preferences.fontSize}
+          indentationAmount={this.props.preferences.indentationAmount}
+          setIndentation={this.props.setIndentation}
+          indentWithSpace={this.props.indentWithSpace}
+          indentWithTab={this.props.indentWithTab}
+          isTabIndent={this.props.preferences.isTabIndent}
+          setFontSize={this.props.setFontSize}
+          autosave={this.props.preferences.autosave}
+          setAutosave={this.props.setAutosave}
+          lintWarning={this.props.preferences.lintWarning}
+          setLintWarning={this.props.setLintWarning}
+          textOutput={this.props.preferences.textOutput}
+          setTextOutput={this.props.setTextOutput}
+          theme={this.props.preferences.theme}
+          setTheme={this.props.setTheme}
+        />
+        <div className="editor-preview-container">
+          <SplitPane
+            split="vertical"
+            defaultSize={this.sidebarSize}
+            ref="sidebarPane"
+            onDragFinished={this._handleSidebarPaneOnDragFinished}
+            allowResize={this.props.ide.sidebarIsExpanded}
+            minSize={20}
+          >
+            <Sidebar
+              files={this.props.files}
+              setSelectedFile={this.props.setSelectedFile}
+              newFile={this.props.newFile}
+              isExpanded={this.props.ide.sidebarIsExpanded}
+              expandSidebar={this.props.expandSidebar}
+              collapseSidebar={this.props.collapseSidebar}
+              showFileOptions={this.props.showFileOptions}
+              hideFileOptions={this.props.hideFileOptions}
+              deleteFile={this.props.deleteFile}
+              showEditFileName={this.props.showEditFileName}
+              hideEditFileName={this.props.hideEditFileName}
+              updateFileName={this.props.updateFileName}
+              projectOptionsVisible={this.props.ide.projectOptionsVisible}
+              openProjectOptions={this.props.openProjectOptions}
+              closeProjectOptions={this.props.closeProjectOptions}
+              newFolder={this.props.newFolder}
+            />
             <SplitPane
               split="vertical"
-              defaultSize={this.sidebarSize}
-              ref="sidebarPane"
-              onDragFinished={this._handleSidebarPaneOnDragFinished}
-              allowResize={this.props.ide.sidebarIsExpanded}
-              minSize={20}
+              defaultSize={'50%'}
+              onChange={() => (this.refs.overlay.style.display = 'block')}
+              onDragFinished={() => (this.refs.overlay.style.display = 'none')}
             >
-              <Sidebar
-                files={this.props.files}
-                setSelectedFile={this.props.setSelectedFile}
-                newFile={this.props.newFile}
-                isExpanded={this.props.ide.sidebarIsExpanded}
-                expandSidebar={this.props.expandSidebar}
-                collapseSidebar={this.props.collapseSidebar}
-                showFileOptions={this.props.showFileOptions}
-                hideFileOptions={this.props.hideFileOptions}
-                deleteFile={this.props.deleteFile}
-                showEditFileName={this.props.showEditFileName}
-                hideEditFileName={this.props.hideEditFileName}
-                updateFileName={this.props.updateFileName}
-                projectOptionsVisible={this.props.ide.projectOptionsVisible}
-                openProjectOptions={this.props.openProjectOptions}
-                closeProjectOptions={this.props.closeProjectOptions}
-                newFolder={this.props.newFolder}
-              />
               <SplitPane
-                split="vertical"
-                defaultSize={'50%'}
-                onChange={() => (this.refs.overlay.style.display = 'block')}
-                onDragFinished={() => (this.refs.overlay.style.display = 'none')}
+                split="horizontal"
+                primary="second"
+                defaultSize={this.consoleSize}
+                minSize={29}
+                ref="consolePane"
+                onDragFinished={this._handleConsolePaneOnDragFinished}
+                allowResize={this.props.ide.consoleIsExpanded}
               >
-                <SplitPane
-                  split="horizontal"
-                  primary="second"
-                  defaultSize={this.consoleSize}
-                  minSize={29}
-                  ref="consolePane"
-                  onDragFinished={this._handleConsolePaneOnDragFinished}
-                  allowResize={this.props.ide.consoleIsExpanded}
-                >
-                  <Editor
-                    lintWarning={this.props.preferences.lintWarning}
-                    lintMessages={this.props.editorAccessibility.lintMessages}
-                    updateLineNumber={this.props.updateLineNumber}
-                    updateLintMessage={this.props.updateLintMessage}
-                    clearLintMessage={this.props.clearLintMessage}
-                    file={this.props.selectedFile}
-                    updateFileContent={this.props.updateFileContent}
-                    fontSize={this.props.preferences.fontSize}
-                    indentationAmount={this.props.preferences.indentationAmount}
-                    isTabIndent={this.props.preferences.isTabIndent}
-                    files={this.props.files}
-                    lintMessages={this.props.editorAccessibility.lintMessages}
-                    lineNumber={this.props.editorAccessibility.lineNumber}
-                    editorOptionsVisible={this.props.ide.editorOptionsVisible}
-                    showEditorOptions={this.props.showEditorOptions}
-                    closeEditorOptions={this.props.closeEditorOptions}
-                    showKeyboardShortcutModal={this.props.showKeyboardShortcutModal}
-                    setUnsavedChanges={this.props.setUnsavedChanges}
-                    theme={this.props.preferences.theme}
-                  />
-                  <Console
-                    consoleEvent={this.props.ide.consoleEvent}
-                    isPlaying={this.props.ide.isPlaying}
-                    isExpanded={this.props.ide.consoleIsExpanded}
-                    expandConsole={this.props.expandConsole}
-                    collapseConsole={this.props.collapseConsole}
-                  />
-                </SplitPane>
-                <div>
-                  <div className="preview-frame-overlay" ref="overlay">
-                  </div>
-                  <div>
-                  {(() => {
-                    if ((this.props.preferences.textOutput && this.props.ide.isPlaying) || this.props.ide.isTextOutputPlaying) {
-                      return (
-                        <TextOutput />
-                      );
-                    }
-                    return '';
-                  })()}
-                  </div>
-                  <PreviewFrame
-                    htmlFile={this.props.htmlFile}
-                    jsFiles={this.props.jsFiles}
-                    cssFiles={this.props.cssFiles}
-                    files={this.props.files}
-                    content={this.props.selectedFile.content}
-                    head={
-                      <link type="text/css" rel="stylesheet" href="/preview-styles.css" />
-                    }
-                    isPlaying={this.props.ide.isPlaying}
-                    isTextOutputPlaying={this.props.ide.isTextOutputPlaying}
-                    textOutput={this.props.preferences.textOutput}
-                    dispatchConsoleEvent={this.props.dispatchConsoleEvent}
-                  />
-                </div>
+                <Editor
+                  lintWarning={this.props.preferences.lintWarning}
+                  lintMessages={this.props.editorAccessibility.lintMessages}
+                  updateLineNumber={this.props.updateLineNumber}
+                  updateLintMessage={this.props.updateLintMessage}
+                  clearLintMessage={this.props.clearLintMessage}
+                  file={this.props.selectedFile}
+                  updateFileContent={this.props.updateFileContent}
+                  fontSize={this.props.preferences.fontSize}
+                  indentationAmount={this.props.preferences.indentationAmount}
+                  isTabIndent={this.props.preferences.isTabIndent}
+                  files={this.props.files}
+                  lintMessages={this.props.editorAccessibility.lintMessages}
+                  lineNumber={this.props.editorAccessibility.lineNumber}
+                  editorOptionsVisible={this.props.ide.editorOptionsVisible}
+                  showEditorOptions={this.props.showEditorOptions}
+                  closeEditorOptions={this.props.closeEditorOptions}
+                  showKeyboardShortcutModal={this.props.showKeyboardShortcutModal}
+                  setUnsavedChanges={this.props.setUnsavedChanges}
+                  theme={this.props.preferences.theme}
+                />
+                <Console
+                  consoleEvent={this.props.ide.consoleEvent}
+                  isPlaying={this.props.ide.isPlaying}
+                  isExpanded={this.props.ide.consoleIsExpanded}
+                  expandConsole={this.props.expandConsole}
+                  collapseConsole={this.props.collapseConsole}
+                />
               </SplitPane>
+              <div>
+                <div className="preview-frame-overlay" ref="overlay">
+                </div>
+                <div>
+                {(() => {
+                  if ((this.props.preferences.textOutput && this.props.ide.isPlaying) || this.props.ide.isTextOutputPlaying) {
+                    return (
+                      <TextOutput />
+                    );
+                  }
+                  return '';
+                })()}
+                </div>
+                <PreviewFrame
+                  htmlFile={this.props.htmlFile}
+                  jsFiles={this.props.jsFiles}
+                  cssFiles={this.props.cssFiles}
+                  files={this.props.files}
+                  content={this.props.selectedFile.content}
+                  head={
+                    <link type="text/css" rel="stylesheet" href="/preview-styles.css" />
+                  }
+                  isPlaying={this.props.ide.isPlaying}
+                  isTextOutputPlaying={this.props.ide.isTextOutputPlaying}
+                  textOutput={this.props.preferences.textOutput}
+                  dispatchConsoleEvent={this.props.dispatchConsoleEvent}
+                />
+              </div>
             </SplitPane>
-          </div>
+          </SplitPane>
         </div>
         {(() => {
           if (this.props.ide.modalIsVisible) {

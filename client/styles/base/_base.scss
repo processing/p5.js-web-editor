@@ -39,6 +39,9 @@ input {
 	// border-radius: 2px;
 	border: 1px solid $input-border-color;
 	padding: #{10 / $base-font-size}rem;
+	@include themify() {
+		color: $primary-text-color;
+	}
 }
 
 input[type="submit"] {

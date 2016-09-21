@@ -29,6 +29,8 @@ $themes: (
     console-background-color: #eee,
     console-header-background-color: #d6d6d6,
     ide-border-color: #f4f4f4,
+    editor-gutter-color: #f7f7f7,
+    file-selected-color: #f4f4f4,
   ),
   dark: (
     primary-text-color: $white,
@@ -54,6 +56,8 @@ $themes: (
     console-header-background-color: #3f3f3f,
     console-header-color: #b5b5b5,
     ide-border-color: #949494,
+    editor-gutter-color: #363636,
+    file-selected-color: #404040,
   )
 );
 

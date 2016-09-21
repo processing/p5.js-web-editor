@@ -27,8 +27,10 @@
 .toolbar__preferences-button {
 	@include themify() {
 		@extend %toolbar-button;
+		line-height: #{50 / $base-font-size}rem;
 		&--selected {
 			@extend %toolbar-button--selected;
+			line-height: #{50 / $base-font-size}rem;
 		}
 	}
 	line-height: #{50 / $base-font-size}rem;

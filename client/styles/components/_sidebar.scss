@@ -77,10 +77,9 @@
 .file-item__content {
   display: flex;
   position: relative;
-  padding: #{8 / $base-font-size}rem 0;
   .sidebar__file-item--selected > & {
     @include themify() {
-      background-color: map-get($theme-map, 'ide-border-color');
+      background-color: map-get($theme-map, 'file-selected-color');
     }
   }
   .sidebar--contracted & {
@@ -89,6 +88,7 @@
 }
 
 .sidebar__file-item-name {
+  padding: #{8 / $base-font-size}rem 0;
   .sidebar__file-item--editing & {
     display: none;
   }
@@ -97,6 +97,7 @@
 .sidebar__file-item-show-options {
   @include themify() {
     @extend %icon;
+    padding: #{8 / $base-font-size}rem 0;
   }
   display: none;
   position: absolute;
@@ -128,8 +129,7 @@
   display: none;
   padding: 0;
   border: 0;
-  background-color: transparent;
-  max-width: 90%;
+  width: calc(100% - #{100 / $base-font-size}rem);
   .sidebar__file-item--editing & {
     display: inline-block;
   }
@@ -170,6 +170,7 @@
 }
 
 .sidebar__folder-icon {
+  padding: #{8 / $base-font-size}rem 0;
   margin-right: #{5 / $base-font-size}rem;
   & g {
     @include themify() {
@@ -179,6 +180,7 @@
 }
 
 .sidebar__file-item-icon {
+  padding: #{8 / $base-font-size}rem 0;
   margin-right: #{5 / $base-font-size}rem;
   & g {
     @include themify() {

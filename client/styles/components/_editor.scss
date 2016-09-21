@@ -60,9 +60,17 @@
     background-color: getThemifyVariable('modal-background-color');
     border: 1px solid getThemifyVariable('modal-border-color');
     box-shadow: 0 12px 12px getThemifyVariable('shadow-color');
+    color: getThemifyVariable('primary-text-color');
   }
   border-radius: 2px;
   font-family: 'Avenir Next', Montserrat, sans-serif;
+}
+
+.CodeMirror-gutters {
+  @include themify() {
+    background-color: getThemifyVariable('editor-gutter-color');
+    border-color: getThemifyVariable('ide-border-color');
+  }
 }
 
 .editor__options-button {
