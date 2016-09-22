@@ -7,12 +7,10 @@ html, body {
 }
 
 body, input, button {
+	@include themify() {
+		color: getThemifyVariable('primary-text-color');
+	}
 	font-family: 'Avenir Next', Montserrat, sans-serif;
-	color: $light-primary-text-color;
-}
-
-body {
-	background-color: $light-background-color;
 }
 
 .root-app, .app {
@@ -21,12 +19,14 @@ body {
 }
 
 a {
-	text-decoration: none;
-	color: $light-inactive-text-color;
-	cursor: pointer;
-	&:hover {
+	@include themify() {
 		text-decoration: none;
-		color: $light-primary-text-color;
+		color: getThemifyVariable('inactive-text-color');
+		cursor: pointer;
+		&:hover {
+			text-decoration: none;
+			color: getThemifyVariable('primary-text-color');
+		}
 	}
 }
 
@@ -36,13 +36,18 @@ input, button {
 
 input {
 	padding: #{5 / $base-font-size}rem;
-	// border-radius: 2px;
-	border: 1px solid $input-border-color;
+	border: 1px solid;
 	padding: #{10 / $base-font-size}rem;
+	@include themify() {
+		color: getThemifyVariable('input-text-color');
+		border-color: getThemifyVariable('input-border-color');
+	}
 }
 
 input[type="submit"] {
-	@extend %button;
+	@include themify() {
+		@extend %button;
+	}
 }
 
 h2 {

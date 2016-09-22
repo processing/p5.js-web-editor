@@ -39,7 +39,7 @@ class Editor extends React.Component {
     this.beep = new Audio(beepUrl);
     this.widgets = [];
     this._cm = CodeMirror(this.refs.container, { // eslint-disable-line
-      theme: 'p5-widget',
+      theme: `p5-${this.props.theme}`,
       value: this.props.file.content,
       lineNumbers: true,
       styleActiveLine: true,
@@ -115,6 +115,10 @@ class Editor extends React.Component {
         this._cm.setOption('mode', 'htmlmixed');
       }
     }
+
+    if (this.props.theme !== prevProps.theme) {
+      this._cm.setOption('theme', `p5-${this.props.theme}`);
+    }
   }
 
   componentWillUnmount() {
@@ -140,6 +144,7 @@ class Editor extends React.Component {
   checkForInfiniteLoop(callback) {
     const prevIsplaying = this.props.isPlaying;
     let infiniteLoop = false;
+    let prevLine;
     this.props.stopSketch();
     this.props.resetInfiniteLoops();
 
@@ -155,14 +160,17 @@ class Editor extends React.Component {
     loopProtect.alias = 'protect';
 
     loopProtect.hit = (line) => {
-      this.props.detectInfiniteLoops();
-      infiniteLoop = true;
-      callback(infiniteLoop, prevIsplaying);
-      const msg = document.createElement('div');
-      const loopError = `line ${line}: This loop is taking too long to run.`;
-      msg.appendChild(document.createTextNode(loopError));
-      msg.className = 'lint-error';
-      this.widgets.push(this._cm.addLineWidget(line - 1, msg, { coverGutter: false, noHScroll: true }));
+      if (line !== prevLine) {
+        this.props.detectInfiniteLoops();
+        infiniteLoop = true;
+        callback(infiniteLoop, prevIsplaying);
+        const msg = document.createElement('div');
+        const loopError = `line ${line}: This loop is taking too long to run.`;
+        msg.appendChild(document.createTextNode(loopError));
+        msg.className = 'lint-error';
+        this.widgets.push(this._cm.addLineWidget(line - 1, msg, { coverGutter: false, noHScroll: true }));
+        prevLine = line;
+      }
     };
 
     const processed = loopProtect(this.props.file.content);
@@ -193,7 +201,7 @@ class Editor extends React.Component {
         </body>
       </html>`);
     doc.close();
-    callback(infiniteLoop, prevIsplaying);
+    callback(infiniteLoop, prevIsplaying, prevLine);
   }
 
   _cm: CodeMirror.Editor
@@ -265,7 +273,8 @@ Editor.propTypes = {
   resetInfiniteLoops: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
   startSketch: PropTypes.func.isRequired,
-  isPlaying: PropTypes.bool.isRequired
+  isPlaying: PropTypes.bool.isRequired,
+  theme: PropTypes.string.isRequired
 };
 
 export default Editor;

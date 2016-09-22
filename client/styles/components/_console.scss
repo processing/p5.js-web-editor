@@ -1,7 +1,12 @@
 .preview-console {
+	@include themify() {
+		background: getThemifyVariable('console-background-color');
+		border-color: getThemifyVariable('ide-border-color');
+	}
+	border-left: 1px solid;
+	border-right: 1px solid;
 	width: 100%;
 	height: 100%;
-	background: $console-light-background-color;
 	z-index: 1000;
 	overflow: hidden;
 	display: flex;
@@ -14,7 +19,9 @@
 
 	// assign styles to different types of console messages
 	.preview-console__log {
-		color: $dark-secondary-text-color;
+		@include themify(){
+			color: getThemifyVariable('secondary-text-color');
+		}
 		flex: 1 0 auto;
 	}
 
@@ -30,8 +37,10 @@
 }
 
 .preview-console__header {
-	background-color: $console-header-background-color;
-	color: $console-header-color;
+	@include themify() {
+		background-color: getThemifyVariable('console-header-background-color');
+		color: getThemifyVariable('console-header-color');
+	}
 	padding: #{5 / $base-font-size}rem;
 	display: flex;
 	justify-content: space-between;
@@ -51,14 +60,18 @@
 }
 
 .preview-console__collapse {
-	@extend %icon;
+	@include themify() {
+		@extend %icon;
+	}
 	.preview-console--collapsed & {
 		display: none;
 	}
 }
 
 .preview-console__expand {
-	@extend %icon;
+	@include themify() {
+		@extend %icon;
+	}
 	display: none;
 	.preview-console--collapsed & {
 		display: inline-block;

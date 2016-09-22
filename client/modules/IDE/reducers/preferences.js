@@ -6,7 +6,8 @@ const initialState = {
   isTabIndent: true,
   autosave: true,
   lintWarning: false,
-  textOutput: false
+  textOutput: false,
+  theme: 'light'
 };
 
 const preferences = (state = initialState, action) => {
@@ -31,6 +32,8 @@ const preferences = (state = initialState, action) => {
       return Object.assign({}, state, { textOutput: action.value });
     case ActionTypes.SET_PREFERENCES:
       return action.preferences;
+    case ActionTypes.SET_THEME:
+      return Object.assign({}, state, { theme: action.value });
     default:
       return state;
   }

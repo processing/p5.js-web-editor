@@ -1,9 +1,11 @@
 .toolbar__play-button {
-	@extend %toolbar-button;
-	margin-right: #{15 / $base-font-size}rem;
-	&--selected {
-		@extend %toolbar-button--selected;
+	@include themify() {
+		@extend %toolbar-button;
+		&--selected {
+			@extend %toolbar-button--selected;
+		}
 	}
+	margin-right: #{15 / $base-font-size}rem;
 	& span {
 		padding-left: #{2 / $base-font-size}rem;
 	}
@@ -14,23 +16,25 @@
 }
 
 .toolbar__stop-button {
-	@extend %toolbar-button;
-	&--selected {
-		@extend %toolbar-button--selected;
+	@include themify() {
+		@extend %toolbar-button;
+		&--selected {
+			@extend %toolbar-button--selected;
+		}
 	}
 }
 
 .toolbar__preferences-button {
-	@extend %toolbar-button;
+	@include themify() {
+		@extend %toolbar-button;
+		line-height: #{50 / $base-font-size}rem;
+		&--selected {
+			@extend %toolbar-button--selected;
+			line-height: #{50 / $base-font-size}rem;
+		}
+	}
 	line-height: #{50 / $base-font-size}rem;
 	margin-left: auto;
-	&--selected {
-		@extend %toolbar-button--selected;
-	}
-}
-
-.toolbar__shortcut-button {
-
 }
 
 .toolbar__logo {
@@ -44,6 +48,9 @@
 }
 
 .toolbar__project-name-container {
+	@include themify() {
+		border-color: getThemifyVariable('inactive-text-color');
+	}
 	border-left: 2px dashed;
 	margin-left: #{10 / $base-font-size}rem;
 	padding-left: #{10 / $base-font-size}rem;
@@ -53,14 +60,13 @@
 }
 
 .toolbar__project-name {
-	color: $light-inactive-text-color;
+	@include themify() {
+		color: getThemifyVariable('inactive-text-color');
+		&:hover {
+		color: getThemifyVariable('primary-text-color');
+		}
+	}
 	cursor: pointer;
-	&:hover {
-		color: $light-primary-text-color;
-	}
-	&:focus {
-		color: $light-inactive-text-color;
-	}
 
 	.toolbar__project-name-container--editing & {
 		display: none;

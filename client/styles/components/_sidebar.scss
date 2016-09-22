@@ -1,8 +1,10 @@
 .sidebar__header {
+  @include themify() {
+    border-top: 1px solid map-get($theme-map, 'ide-border-color');
+  }
   padding: #{10 / $base-font-size}rem #{6 / $base-font-size}rem;
   display: flex;
   justify-content: space-between;
-  border-top: 1px solid $ide-border-color;
   align-items: center;
   height: #{47 / $base-font-size}rem;
 }
@@ -18,18 +20,19 @@
 }
 
 .sidebar__add {
-  @extend %icon;
-  cursor: pointer;
-  // height: #{26 / $base-font-size}rem;
-  // margin-right: #{16 / $base-font-size}rem;
-  // font-size: #{24 / $base-font-size}rem;
+  @include themify() {
+    @extend %icon;
+  }
   .sidebar--contracted & {
     display: none;
   }
 }
 
 .sidebar__file-list {
-  border-top: 1px solid $ide-border-color;
+  @include themify() {
+    border-color: getThemifyVariable('ide-border-color')
+  }
+  border-top: 1px solid;
   .sidebar--contracted & {
     display: none;
   }
@@ -41,13 +44,15 @@
 
 .sidebar__file-item {
   font-size: #{16 / $base-font-size}rem;
-  color: $light-inactive-text-color;
   cursor: pointer;
-  &:hover > .file-item__content .sidebar__file-item-name {
-    color: $light-primary-text-color;
-  }
-  &:hover > .file-item__content .sidebar__file-item-icon g {
-    fill: $light-primary-text-color;
+  @include themify() {
+    color: map-get($theme-map, 'inactive-text-color');
+    &:hover > .file-item__content .sidebar__file-item-name {
+      color: map-get($theme-map, 'primary-text-color');
+    }
+    &:hover > .file-item__content .sidebar__file-item-icon g {
+      fill: map-get($theme-map, 'primary-text-color');
+    }
   }
 }
 
@@ -75,9 +80,10 @@
 .file-item__content {
   display: flex;
   position: relative;
-  padding: #{8 / $base-font-size}rem 0;
   .sidebar__file-item--selected > & {
-    background-color: $ide-border-color;
+    @include themify() {
+      background-color: map-get($theme-map, 'file-selected-color');
+    }
   }
   .sidebar--contracted & {
     display: none;
@@ -85,13 +91,17 @@
 }
 
 .sidebar__file-item-name {
+  padding: #{8 / $base-font-size}rem 0;
   .sidebar__file-item--editing & {
     display: none;
   }
 }
 
 .sidebar__file-item-show-options {
-  @extend %icon;
+  @include themify() {
+    @extend %icon;
+    padding: #{8 / $base-font-size}rem 0;
+  }
   display: none;
   position: absolute;
   right: #{26 / $base-font-size}rem;
@@ -102,6 +112,9 @@
 
 .sidebar__file-item-options {
   @extend %modal;
+  @include themify() {
+    background-color: getThemeColor('modal-background-color');
+  }
   position: absolute;
   top: 95%;
   left: 77%;
@@ -109,7 +122,6 @@
   display: none;
   z-index: 100;
   padding: #{8 / $base-font-size}rem #{16 / $base-font-size}rem;
-  background-color: $light-modal-background-color;
   z-index: 100;
   .sidebar__file-item--open > .file-item__content & {
     display: block;
@@ -120,27 +132,16 @@
   display: none;
   padding: 0;
   border: 0;
-  background-color: transparent;
-  max-width: 90%;
+  width: calc(100% - #{100 / $base-font-size}rem);
   .sidebar__file-item--editing & {
     display: inline-block;
   }
 }
 
-.sidebar__contract {
-  @extend %icon;
-  margin-left: #{10 / $base-font-size}rem;
-  height: #{14 / $base-font-size}rem;
-  & svg {
-    height: #{14 / $base-font-size}rem;
-  }
-  .sidebar--contracted & {
-    display: none;
-  }
-}
-
 .sidebar__expand {
-  @extend %icon;
+  @include themify() {
+    @extend %icon;
+  }
   height: #{14 / $base-font-size}rem;
   & svg {
     height: #{14 / $base-font-size}rem;
@@ -151,6 +152,20 @@
   }
 }
 
+.sidebar__contract {
+  @include themify() {
+    @extend %icon;
+  }
+  margin-left: #{10 / $base-font-size}rem;
+  height: #{14 / $base-font-size}rem;
+  & svg {
+    height: #{14 / $base-font-size}rem;
+  }
+  .sidebar--contracted & {
+    display: none;
+  }
+}
+
 .sidebar__icons {
   display: flex;
   align-items: center;
@@ -158,14 +173,23 @@
 }
 
 .sidebar__folder-icon {
+  padding: #{8 / $base-font-size}rem 0;
   margin-right: #{5 / $base-font-size}rem;
   & g {
-    fill: $light-primary-text-color;
+    @include themify() {
+      fill: map-get($theme-map, 'primary-text-color');
+    }
   }
 }
 
 .sidebar__file-item-icon {
+  padding: #{8 / $base-font-size}rem 0;
   margin-right: #{5 / $base-font-size}rem;
+  & g {
+    @include themify() {
+      fill: getThemifyVariable('inactive-text-color');
+    }
+  }
 }
 
 .sidebar__file-item-closed {
@@ -178,6 +202,7 @@
 
 .sidebar__file-item-open {
   @extend .sidebar__file-item-icon;
+  display: inline-block;
   .sidebar__file-item--closed & {
     display: none;
   }

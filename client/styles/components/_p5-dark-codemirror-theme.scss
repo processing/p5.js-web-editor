@@ -1,0 +1,119 @@
+// brown: #6C4D13
+// black: #333
+// blue: #0F9DD7
+// pink: #D9328F
+// gray: #999999
+// dark blue: #318094
+// white: #fdfdfd
+
+//numbers
+//light gray: #f4f4f4
+//dark gray: #b5b5b5
+
+$p5-dark-lightbrown: #A67F59;
+$p5-dark-brown: #6C4D13;
+$p5-dark-black: #333;
+$p5-dark-pink: #D9328F;
+$p5-dark-gray: #A0A0A0;
+$p5-dark-lightblue: #00A1D3;
+$p5-dark-darkblue: #2D7BB6;
+$p5-dark-white: #FDFDFD;
+$p5-dark-orange: #EE9900;
+$p5-dark-lightgray: #E0D7D1;
+$p5-dark-darkgray: #666666;
+
+$p5-dark-gutter: #f4f4f4;
+$p5-dark-number: #b5b5b5;
+$p5-dark-selected: rgba(45, 123, 182, 25);
+$p5-dark-activeline: rgb(207, 207, 207);
+
+.cm-s-p5-dark {
+  background-color: $p5-dark-black;
+  color: $p5-dark-white;
+}
+
+.cm-s-p5-dark .cm-comment {
+  color: $p5-dark-gray;
+}
+
+.cm-s-p5-dark .cm-def {
+  color: $p5-dark-darkblue;
+}
+
+.cm-s-p5-dark .cm-string {
+  color: $p5-dark-lightblue;
+}
+
+.cm-s-p5-dark .cm-string-2 {
+  color: $p5-dark-orange;
+}
+
+.cm-s-p5-dark .cm-number {
+  color: $p5-dark-pink;
+}
+
+.cm-s-p5-dark .cm-keyword {
+  color: $p5-dark-brown;
+}
+
+.cm-s-p5-dark .cm-variable {
+  color: $p5-dark-lightblue;
+}
+
+.cm-s-p5-dark .cm-variable-2 {
+  color: $p5-dark-white;
+}
+
+.cm-s-p5-dark .cm-property {
+  color: $p5-dark-white;
+}
+
+.cm-s-p5-dark .cm-atom {
+  color: $p5-dark-pink;
+}
+
+.cm-s-p5-dark .cm-operator {
+  color: $p5-dark-lightbrown;
+}
+
+.cm-s-p5-dark .cm-linenumber {
+  color: $p5-dark-number;
+}
+
+.cm-s-p5-dark .CodeMirror-selected {
+  background-color: $p5-dark-selected;
+}
+
+.cm-s-p5-dark .CodeMirror-activeline-background {
+  background-color: #404040;
+}
+
+.cm-s-p5-dark .CodeMirror-activeline-gutter {
+  background-color: #454545;
+  border-right: 1px solid #949494;
+}
+
+.cm-s-p5-dark .cm-error {
+  color: #f00;
+}
+
+.cm-s-p5-dark .CodeMirror-matchingbracket {
+  outline: 1px solid $p5-dark-darkgray;
+  color: black !important;
+}
+
+.cm-s-p5-dark .cm-qualifier {
+  color: $p5-dark-lightblue;
+}
+
+.cm-s-p5-dark .cm-tag {
+  color: $p5-dark-pink;
+}
+
+.cm-s-p5-dark .cm-builtin {
+  color: $p5-dark-lightblue;
+}
+
+.cm-s-p5-dark .cm-attribute {
+  color: $p5-dark-lightblue;
+}

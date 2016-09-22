@@ -10,7 +10,10 @@
 }
 
 .toast__close {
-  @extend %icon;
+  @include themify() {
+    @extend %icon;
+  }
+  color: $toast-text-color;
   & g {
     fill: $toast-text-color; 
   }

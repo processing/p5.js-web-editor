@@ -21,7 +21,9 @@
 }
 
 .modal__exit-button {
-  @extend %icon;
+  @include themify() {
+    @extend %icon;
+  }
 }
 
 .modal__header {
@@ -88,7 +90,9 @@
 }
 
 .keyboard-shortcuts__close {
-  @extend %icon;
+  @include themify() {
+    @extend %icon;
+  }
 }
 
 .keyboard-shortcut-item {

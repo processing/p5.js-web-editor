@@ -13,7 +13,9 @@
 }
 
 .preferences__exit-button {
-	@extend %icon;
+	@include themify() {
+		@extend %icon;
+	}
 	padding-top: #{5 / $base-font-size}rem;
 }
 
@@ -37,7 +39,9 @@
 	flex-wrap: wrap;
 	padding-bottom: #{12 / $base-font-size}rem;
 	& + & {
-  	border-top: 2px dashed $light-button-border-color;
+		@include themify() {
+	  	border-top: 2px dashed getThemifyVariable('button-border-color');
+	  }
 	}
 }
 
@@ -47,31 +51,38 @@
 }
 
 .preference__subtitle {
+	@include themify() {
+		color: getThemifyVariable('inactive-text-color');
+	}
 	width: 100%;
 	margin-bottom: #{10 / $base-font-size}rem;
 	margin-top: 0;
-	color: $light-inactive-text-color;
 }
 
 .preference__value {
-	border: 2px solid $light-button-border-color;
+	@include themify() {
+		border: 2px solid getThemifyVariable('button-border-color');
+		background-color: getThemifyVariable('button-background-color');
+		color: getThemifyVariable('input-text-color');
+	}
 	text-align: center;
 	border-radius: 0%;
 	width: #{48 / $base-font-size}rem;
 	height: #{44 / $base-font-size}rem;
 	margin: 0 #{28 / $base-font-size}rem;
 	padding: 0;
-	background-color: $light-button-background-color;
 }
 
 .preference__label {
+	@include themify() {
+		color: getThemifyColor('inactive-text-color');
+		&:hover {
+			color: getThemifyColor('inactive-text-color');
+		}
+	}
 	margin: 0;
 	line-height: #{20 / $base-font-size}rem;
-	color: $light-inactive-text-color;
 	font-size: #{9 / $base-font-size}rem;
-	&:hover {
-		color: $light-inactive-text-color;
-	}
 }
 
 .preference__vertical-list {
@@ -86,17 +97,16 @@
 }
 
 .preference__option {
-	@extend %preference-option;
-	list-style-type: none;
-	padding: 0;
-	color: $light-inactive-text-color;
+	@include themify() {
+		@extend %preference-option;
+	}
 }
 
 .preference__preview-button {
-	@extend %preference-option;
-	padding: 0;
-	padding-left: #{110 / $base-font-size}rem;
-	outline: none;
+	@include themify() {
+		@extend %preference-option;
+		padding-left: #{110 / $base-font-size}rem;
+	}
 }
 
 .preference__options {
@@ -106,7 +116,10 @@
 }
 
 .preference__radio-button:checked + .preference__option {
-    color: $light-primary-text-color;
+	@include themify() {	
+		//for some reason this won't work for getThemifyVariable
+	  color: map-get($theme-map, 'primary-text-color');
+	}
 }
 
 .preference--hidden {

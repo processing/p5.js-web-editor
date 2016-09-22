@@ -8,16 +8,14 @@
 }
 
 .nav__items-left, .nav__items-right {
+	@include themify() {
+		border-bottom: 2px dashed map-get($theme-map, 'inactive-text-color');
+	}
 	list-style: none;
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-end;
 	padding: #{5 / $base-font-size}rem #{10 / $base-font-size}rem;
-	border-bottom: 2px dashed;
-}
-
-.nav__save, .nav__new {
-	@extend %fake-link;
 }
 
 .nav__item {
@@ -25,21 +23,24 @@
 		margin-left: #{20 / $base-font-size}rem;
 	}
 	position: relative;
-	&:hover .nav__dropdown {
-		display: flex;
-	}
 }
 
 .nav__dropdown {
-	display: none;
-	position: absolute;
-	flex-direction: column;
-	background-color: $light-background-color;
-	padding: #{10 / $base-font-size}rem;
-	left: #{-10 / $base-font-size}rem;
-	border: 1px solid $ide-border-color;
+	@include themify() {
+		background-color: map-get($theme-map, 'background-color');
+		border: 1px solid map-get($theme-map, 'ide-border-color');
+	}
+	@extend %hidden-element;
 	& li + li {
 		margin-top: #{10 / $base-font-size}rem;
 	}
 	width: #{140 / $base-font-size}rem;
+	.nav__item:hover & {
+		display: flex;
+		position: absolute;
+		flex-direction: column;
+		padding: #{10 / $base-font-size}rem;
+		left: #{-10 / $base-font-size}rem;
+		height: auto;
+	}
 }

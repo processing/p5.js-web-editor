@@ -61,6 +61,8 @@ class IDEView extends React.Component {
     this.props.router.setRouteLeaveHook(this.props.route, () => this.warnIfUnsavedChanges());
 
     window.onbeforeunload = () => this.warnIfUnsavedChanges();
+
+    document.body.className = this.props.preferences.theme;
   }
 
   componentWillUpdate(nextProps) {
@@ -74,6 +76,10 @@ class IDEView extends React.Component {
 
     if (nextProps.params.project_id && !this.props.params.project_id) {
       this.props.getProject(nextProps.params.project_id);
+    }
+
+    if (nextProps.preferences.theme !== this.props.preferences.theme) {
+      document.body.className = nextProps.preferences.theme;
     }
   }
 
@@ -203,6 +209,8 @@ class IDEView extends React.Component {
           setLintWarning={this.props.setLintWarning}
           textOutput={this.props.preferences.textOutput}
           setTextOutput={this.props.setTextOutput}
+          theme={this.props.preferences.theme}
+          setTheme={this.props.setTheme}
         />
         <div className="editor-preview-container">
           <SplitPane
@@ -271,6 +279,7 @@ class IDEView extends React.Component {
                   stopSketch={this.props.stopSketch}
                   startSketch={this.props.startSketch}
                   isPlaying={this.props.ide.isPlaying}
+                  theme={this.props.preferences.theme}
                 />
                 <Console
                   consoleEvent={this.props.ide.consoleEvent}
@@ -443,7 +452,8 @@ IDEView.propTypes = {
     isTabIndent: PropTypes.bool.isRequired,
     autosave: PropTypes.bool.isRequired,
     lintWarning: PropTypes.bool.isRequired,
-    textOutput: PropTypes.bool.isRequired
+    textOutput: PropTypes.bool.isRequired,
+    theme: PropTypes.string.isRequired
   }).isRequired,
   closePreferences: PropTypes.func.isRequired,
   setFontSize: PropTypes.func.isRequired,
@@ -503,7 +513,8 @@ IDEView.propTypes = {
     setRouteLeaveHook: PropTypes.func
   }).isRequired,
   route: PropTypes.object.isRequired,
-  setUnsavedChanges: PropTypes.func.isRequired
+  setUnsavedChanges: PropTypes.func.isRequired,
+  setTheme: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
