@@ -49,8 +49,9 @@
 
 .toolbar__project-name-container {
 	@include themify() {
-		border-left: 2px dashed map-get($theme-map, 'inactive-text-color');
+		border-color: getThemifyVariable('inactive-text-color');
 	}
+	border-left: 2px dashed;
 	margin-left: #{10 / $base-font-size}rem;
 	padding-left: #{10 / $base-font-size}rem;
 	height: 70%;
@@ -59,14 +60,13 @@
 }
 
 .toolbar__project-name {
-	color: $light-inactive-text-color;
+	@include themify() {
+		color: getThemifyVariable('inactive-text-color');
+		&:hover {
+		color: getThemifyVariable('primary-text-color');
+		}
+	}
 	cursor: pointer;
-	&:hover {
-		color: $light-primary-text-color;
-	}
-	&:focus {
-		color: $light-inactive-text-color;
-	}
 
 	.toolbar__project-name-container--editing & {
 		display: none;

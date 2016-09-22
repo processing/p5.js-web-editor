@@ -39,8 +39,8 @@
 .preview-console__header {
 	@include themify() {
 		background-color: getThemifyVariable('console-header-background-color');
+		color: getThemifyVariable('console-header-color');
 	}
-	color: $console-header-color;
 	padding: #{5 / $base-font-size}rem;
 	display: flex;
 	justify-content: space-between;

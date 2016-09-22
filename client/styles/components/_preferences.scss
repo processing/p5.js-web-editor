@@ -51,17 +51,19 @@
 }
 
 .preference__subtitle {
+	@include themify() {
+		color: getThemifyVariable('inactive-text-color');
+	}
 	width: 100%;
 	margin-bottom: #{10 / $base-font-size}rem;
 	margin-top: 0;
-	color: $light-inactive-text-color;
 }
 
 .preference__value {
 	@include themify() {
 		border: 2px solid getThemifyVariable('button-border-color');
 		background-color: getThemifyVariable('button-background-color');
-		color: $light-primary-text-color;
+		color: getThemifyVariable('input-text-color');
 	}
 	text-align: center;
 	border-radius: 0%;
@@ -72,13 +74,15 @@
 }
 
 .preference__label {
+	@include themify() {
+		color: getThemifyColor('inactive-text-color');
+		&:hover {
+			color: getThemifyColor('inactive-text-color');
+		}
+	}
 	margin: 0;
 	line-height: #{20 / $base-font-size}rem;
-	color: $light-inactive-text-color;
 	font-size: #{9 / $base-font-size}rem;
-	&:hover {
-		color: $light-inactive-text-color;
-	}
 }
 
 .preference__vertical-list {

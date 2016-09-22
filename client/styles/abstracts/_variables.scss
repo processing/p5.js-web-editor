@@ -28,9 +28,12 @@ $themes: (
     shadow-color: rgba(0, 0, 0, 0.16),
     console-background-color: #eee,
     console-header-background-color: #d6d6d6,
+    console-header-color: #b1b1b1,
     ide-border-color: #f4f4f4,
     editor-gutter-color: #f7f7f7,
     file-selected-color: #f4f4f4,
+    input-text-color: #333,
+    input-border-color: #979797,
   ),
   dark: (
     primary-text-color: $white,
@@ -58,78 +61,14 @@ $themes: (
     ide-border-color: #949494,
     editor-gutter-color: #363636,
     file-selected-color: #404040,
+    input-text-color: #333,
+    input-border-color: #979797,
   )
 );
 
-$primary-text-color: #333;
-$secondary-text-color: #6b6b6b;
-$inactive-text-color: #b5b5b5;
-$background-color: #fdfdfd;
-$button-background-color: #f4f4f4;
-$button-color: $black;
-$button-border-color: #979797;
-$toolbar-button-color: $p5js-pink;
-$button-background-hover-color: $p5js-pink;
-$button-background-active-color: #f10046;
-$button-hover-color: $white;
-$button-active-color: $white;
-$modal-background-color: #f4f4f4;
-$modal-button-background-color: #e6e6e6;
-$modal-border-color: #B9D0E1;
-$icon-color: #8b8b8b;
-$icon-hover-color: #333;
-$shadow-color: rgba(0, 0, 0, 0.16);
-$console-background-color: #eee;
-$console-header-background-color: #d6d6d6;
-$ide-border-color: #f4f4f4;
-
-
-// other variables i may or may not need later
-$ide-border-color: #f4f4f4;
-$editor-selected-line-color: #f3f3f3;
-$input-border-color: #979797;
-
-$console-light-background-color: #eee;
-$console-header-background-color: #d6d6d6;
-$console-header-color: #b1b1b1;
 $console-warn-color: #ffbe05;
 $console-error-color: #ff5f52;
 
 $toast-background-color: #979797;
 $toast-text-color: $white;
-
-//light and dark colors
-
-$light-primary-text-color: #333;
-$light-secondary-text-color: #6b6b6b;
-$light-inactive-text-color: #b5b5b5;
-$light-background-color: #fdfdfd;
-
-$light-button-background-color: #f4f4f4;
-$light-button-color: $black;
-$light-button-border-color: #979797;
-$light-toolbar-button-color: $p5js-pink;
-$light-button-background-hover-color: $p5js-pink;
-$light-button-background-active-color: #f10046;
-$light-button-hover-color: $white;
-$light-button-active-color: $white;
-$light-modal-background-color: #f4f4f4;
-$light-modal-button-background-color: #e6e6e6;
-$light-modal-border-color: #B9D0E1;
-$light-icon-color: #8b8b8b;
-$light-icon-hover-color: $light-primary-text-color;
-$light-shadow-color: rgba(0, 0, 0, 0.16);
-
-$dark-primary-text-color: $white;
-$dark-secondary-text-color: #c2c2c2;
-$dark-inactive-color: #7d7d7d;
-$dark-background-color: #333;
-
-$dark-button-background-color: $white;
-$dark-button-color: $black;
-$dark-toolbar-button-color: $p5js-pink;
-$dark-button-background-hover-color: $p5js-pink;
-$dark-button-background-active-color: #f10046;
-$dark-button-hover-color: $white;
-$dark-button-active-color: $white;
 
