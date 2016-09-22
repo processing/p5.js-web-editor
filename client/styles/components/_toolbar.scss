@@ -42,15 +42,12 @@
 }
 
 .toolbar {
-	padding: #{20 / $base-font-size}rem #{60 / $base-font-size}rem;
+	padding: #{15 / $base-font-size}rem #{34 / $base-font-size}rem;
 	display: flex;
 	align-items: center;
 }
 
 .toolbar__project-name-container {
-	@include themify() {
-		border-left: 2px dashed map-get($theme-map, 'inactive-text-color');
-	}
 	margin-left: #{10 / $base-font-size}rem;
 	padding-left: #{10 / $base-font-size}rem;
 	height: 70%;
