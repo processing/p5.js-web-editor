@@ -65,14 +65,14 @@ class Editor extends React.Component {
       }
     });
 
-    this._cm.on('change', debounce(200, () => {
+    this._cm.on('change', debounce(1000, () => {
       this.props.setUnsavedChanges(true);
       this.props.updateFileContent(this.props.file.name, this._cm.getValue());
-      this.checkForInfiniteLoop(debounce(200, (infiniteLoop, prevs) => {
+      this.checkForInfiniteLoop((infiniteLoop, prevs) => {
         if (!infiniteLoop && prevs) {
           this.props.startSketch();
         }
-      }));
+      });
     }));
 
     this._cm.on('keyup', () => {
@@ -147,15 +147,12 @@ class Editor extends React.Component {
     let prevLine;
     this.props.stopSketch();
     this.props.resetInfiniteLoops();
+    let iframe;
 
     for (let i = 0; i < this.widgets.length; ++i) {
       this._cm.removeLineWidget(this.widgets[i]);
     }
     this.widgets.length = 0;
-    const OriginalIframe = document.getElementById('OriginalIframe');
-    if (OriginalIframe !== null) {
-      document.body.removeChild(OriginalIframe);
-    }
 
     loopProtect.alias = 'protect';
 
@@ -165,7 +162,7 @@ class Editor extends React.Component {
         infiniteLoop = true;
         callback(infiniteLoop, prevIsplaying);
         const msg = document.createElement('div');
-        const loopError = `line ${line}: This loop is taking too long to run.`;
+        const loopError = `line ${line}: This loop is taking too long to run. This might be an infinite loop.`;
         msg.appendChild(document.createTextNode(loopError));
         msg.className = 'lint-error';
         this.widgets.push(this._cm.addLineWidget(line - 1, msg, { coverGutter: false, noHScroll: true }));
@@ -175,32 +172,35 @@ class Editor extends React.Component {
 
     const processed = loopProtect(this.props.file.content);
 
-    const iframe = document.createElement('iframe');
-    iframe.id = 'OriginalIframe';
-    iframe.style.display = 'none';
+    const iframeForLoop = document.getElementById('iframeForLoop');
+    if (iframeForLoop === null) {
+      iframe = document.createElement('iframe');
+      iframe.id = 'iframeForLoop';
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+    } else {
+      iframeForLoop.srcdoc = '';
+      const win = iframeForLoop.contentWindow;
+      const doc = win.document;
+      doc.open();
 
-    document.body.appendChild(iframe);
+      win.protect = loopProtect;
 
-    const win = iframe.contentWindow;
-    const doc = win.document;
-    doc.open();
-
-    win.protect = loopProtect;
-
-    doc.write(`<!DOCTYPE html>
-      <html>
-        <head>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.2/p5.min.js"></script>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.2/addons/p5.dom.min.js"></script>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.2/addons/p5.sound.min.js"></script>
-        </head>
-        <body>
-          <script> 
-            ${processed}
-          </script>
-        </body>
-      </html>`);
-    doc.close();
+      doc.write(`<!DOCTYPE html>
+        <html>
+          <head>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.2/p5.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.2/addons/p5.dom.min.js"></script>
+          </head>
+          <body>
+            <script> 
+              ${processed}
+            </script>
+          </body>
+        </html>`);
+      win.onerror = () => true;
+      doc.close();
+    }
     callback(infiniteLoop, prevIsplaying, prevLine);
   }
 

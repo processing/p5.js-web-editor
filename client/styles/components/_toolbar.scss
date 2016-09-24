@@ -4,6 +4,18 @@
 		&--selected {
 			@extend %toolbar-button--selected;
 		}
+		&:disabled {
+			cursor: auto;
+			& g {
+				fill: getThemifyVariable('button-border-color');
+			}
+			&:hover {
+				background-color: getThemifyVariable('toolbar-button-background-color');
+				& g {
+					fill: getThemifyVariable('button-border-color');
+				}
+			}
+	    }
 	}
 	margin-right: #{15 / $base-font-size}rem;
 	& span {

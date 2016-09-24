@@ -192,6 +192,7 @@ class IDEView extends React.Component {
           setTextOutput={this.props.setTextOutput}
           owner={this.props.project.owner}
           project={this.props.project}
+          infiniteLoop={this.props.ide.infiniteLoop}
         />
         <Preferences
           isVisible={this.props.ide.preferencesIsVisible}

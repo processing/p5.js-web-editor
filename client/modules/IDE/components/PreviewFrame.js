@@ -206,7 +206,6 @@ class PreviewFrame extends React.Component {
   renderSketch() {
     const doc = ReactDOM.findDOMNode(this);
     if (this.props.infiniteLoop) {
-      window.alert('There is an infinite loop in the code, please remove it before running the sketch.');
       this.props.resetInfiniteLoops();
       doc.srcdoc = '';
       srcDoc.set(doc, '  ');
