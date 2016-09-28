@@ -117,18 +117,30 @@ class PreviewFrame extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    // if previously the sketch was not playing, render sketch
+    // if playing, and autorun is on
+      // if content has changed or files have changed
     if (this.props.isPlaying !== prevProps.isPlaying) {
       this.renderSketch();
+      return;
     }
 
-    if (this.props.isPlaying && this.props.content !== prevProps.content) {
-      this.renderSketch();
+    console.log(this.props, prevProps);
+    if (this.props.isPlaying && this.props.autorefresh) {
+      if (this.props.content !== prevProps.content
+        || this.props.files[0].id !== prevProps.files[0].id) {
+        this.renderSketch();
+      }
     }
 
-    // I apologize for this, it is a hack. A simple way to check if the files have changed.
-    if (this.props.isPlaying && this.props.files[0].id !== prevProps.files[0].id) {
-      this.renderSketch();
-    }
+    // if (this.props.isPlaying && this.props.content !== prevProps.content) {
+    //   this.renderSketch();
+    // }
+
+    // // I apologize for this, it is a hack. A simple way to check if the files have changed.
+    // if (this.props.isPlaying && this.props.files[0].id !== prevProps.files[0].id) {
+    //   this.renderSketch();
+    // }
   }
 
   componentWillUnmount() {
@@ -257,7 +269,8 @@ PreviewFrame.propTypes = {
   dispatchConsoleEvent: PropTypes.func,
   children: PropTypes.element,
   infiniteLoop: PropTypes.bool.isRequired,
-  resetInfiniteLoops: PropTypes.func.isRequired
+  resetInfiniteLoops: PropTypes.func.isRequired,
+  autorefresh: PropTypes.bool.isRequired
 };
 
 export default PreviewFrame;

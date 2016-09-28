@@ -318,8 +318,12 @@ class IDEView extends React.Component {
                   isTextOutputPlaying={this.props.ide.isTextOutputPlaying}
                   textOutput={this.props.preferences.textOutput}
                   dispatchConsoleEvent={this.props.dispatchConsoleEvent}
+<<<<<<< HEAD
                   infiniteLoop={this.props.ide.infiniteLoop}
                   resetInfiniteLoops={this.props.resetInfiniteLoops}
+=======
+                  autorefresh={this.props.preferences.autorefresh}
+>>>>>>> did stuff
                 />
               </div>
             </SplitPane>
