@@ -69,6 +69,15 @@ class Toolbar extends React.Component {
         >
           <InlineSVG src={stopUrl} alt="Stop Sketch" />
         </button>
+        <div className="toolbar__autorefresh">
+          <input
+            id="autorefresh"
+            type="checkbox"
+          />
+          <label htmlFor="autorefresh" className="toolbar__autorefresh-label">
+            Auto-refresh
+          </label>
+        </div>
         <div className={nameContainerClass}>
           <a
             className="toolbar__project-name"

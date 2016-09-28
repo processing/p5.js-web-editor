@@ -30,6 +30,7 @@
 .toolbar__stop-button {
 	@include themify() {
 		@extend %toolbar-button;
+		margin-right: #{15 / $base-font-size}rem;
 		&--selected {
 			@extend %toolbar-button--selected;
 		}
@@ -95,4 +96,12 @@
 
 .toolbar__project-owner {
 	margin-left: #{5 / $base-font-size}rem;
+}
+
+.toolbar__autorefresh-label {
+	@include themify() {
+		color: getThemifyVariable('inactive-text-color');
+	}
+	margin-left: #{5 / $base-font-size}rem;
+	font-size: #{12 / $base-font-size}rem;
 }
