@@ -15,6 +15,7 @@ import 'codemirror/addon/lint/html-lint';
 import 'codemirror/addon/comment/comment';
 import 'codemirror/keymap/sublime';
 import 'codemirror/addon/search/jump-to-line';
+
 import { JSHINT } from 'jshint';
 window.JSHINT = JSHINT;
 import { CSSLint } from 'csslint';
@@ -27,15 +28,16 @@ const downArrowUrl = require('../../../images/down-arrow.svg');
 import classNames from 'classnames';
 
 import { debounce } from 'throttle-debounce';
+import loopProtect from 'loop-protect';
 
 class Editor extends React.Component {
   constructor(props) {
     super(props);
     this.tidyCode = this.tidyCode.bind(this);
   }
-
   componentDidMount() {
     this.beep = new Audio(beepUrl);
+    this.widgets = [];
     this._cm = CodeMirror(this.refs.container, { // eslint-disable-line
       theme: `p5-${this.props.theme}`,
       value: this.props.file.content,
@@ -47,23 +49,30 @@ class Editor extends React.Component {
       gutters: ['CodeMirror-lint-markers'],
       keyMap: 'sublime',
       lint: {
-        onUpdateLinting: debounce(2000, (annotations) => {
-          this.props.clearLintMessage();
-          annotations.forEach((x) => {
-            if (x.from.line > -1) {
-              this.props.updateLintMessage(x.severity, (x.from.line + 1), x.message);
+        onUpdateLinting: () => {
+          debounce(2000, (annotations) => {
+            this.props.clearLintMessage();
+            annotations.forEach((x) => {
+              if (x.from.line > -1) {
+                this.props.updateLintMessage(x.severity, (x.from.line + 1), x.message);
+              }
+            });
+            if (this.props.lintMessages.length > 0 && this.props.lintWarning) {
+              this.beep.play();
             }
           });
-          if (this.props.lintMessages.length > 0 && this.props.lintWarning) {
-            this.beep.play();
-          }
-        })
+        }
       }
     });
 
-    this._cm.on('change', debounce(200, () => {
+    this._cm.on('change', debounce(1000, () => {
       this.props.setUnsavedChanges(true);
       this.props.updateFileContent(this.props.file.name, this._cm.getValue());
+      this.checkForInfiniteLoop((infiniteLoop, prevs) => {
+        if (!infiniteLoop && prevs) {
+          this.props.startSketch();
+        }
+      });
     }));
 
     this._cm.on('keyup', () => {
@@ -132,6 +141,69 @@ class Editor extends React.Component {
     }
   }
 
+  checkForInfiniteLoop(callback) {
+    const prevIsplaying = this.props.isPlaying;
+    let infiniteLoop = false;
+    let prevLine;
+    this.props.stopSketch();
+    this.props.resetInfiniteLoops();
+    let iframe;
+
+    for (let i = 0; i < this.widgets.length; ++i) {
+      this._cm.removeLineWidget(this.widgets[i]);
+    }
+    this.widgets.length = 0;
+
+    loopProtect.alias = 'protect';
+
+    loopProtect.hit = (line) => {
+      if (line !== prevLine) {
+        this.props.detectInfiniteLoops();
+        infiniteLoop = true;
+        callback(infiniteLoop, prevIsplaying);
+        const msg = document.createElement('div');
+        const loopError = `line ${line}: This loop is taking too long to run. This might be an infinite loop.`;
+        msg.appendChild(document.createTextNode(loopError));
+        msg.className = 'lint-error';
+        this.widgets.push(this._cm.addLineWidget(line - 1, msg, { coverGutter: false, noHScroll: true }));
+        prevLine = line;
+      }
+    };
+
+    const processed = loopProtect(this.props.file.content);
+
+    const iframeForLoop = document.getElementById('iframeForLoop');
+    if (iframeForLoop === null) {
+      iframe = document.createElement('iframe');
+      iframe.id = 'iframeForLoop';
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+    } else {
+      iframeForLoop.srcdoc = '';
+      const win = iframeForLoop.contentWindow;
+      const doc = win.document;
+      doc.open();
+
+      win.protect = loopProtect;
+
+      doc.write(`<!DOCTYPE html>
+        <html>
+          <head>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.2/p5.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.2/addons/p5.dom.min.js"></script>
+          </head>
+          <body>
+            <script> 
+              ${processed}
+            </script>
+          </body>
+        </html>`);
+      win.onerror = () => true;
+      doc.close();
+    }
+    callback(infiniteLoop, prevIsplaying, prevLine);
+  }
+
   _cm: CodeMirror.Editor
 
   render() {
@@ -197,7 +269,13 @@ Editor.propTypes = {
   closeEditorOptions: PropTypes.func.isRequired,
   showKeyboardShortcutModal: PropTypes.func.isRequired,
   setUnsavedChanges: PropTypes.func.isRequired,
-  theme: PropTypes.string.isRequired,
+  infiniteLoop: PropTypes.bool.isRequired,
+  detectInfiniteLoops: PropTypes.func.isRequired,
+  resetInfiniteLoops: PropTypes.func.isRequired,
+  stopSketch: PropTypes.func.isRequired,
+  startSketch: PropTypes.func.isRequired,
+  isPlaying: PropTypes.bool.isRequired,
+  theme: PropTypes.string.isRequired
 };
 
 export default Editor;

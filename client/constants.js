@@ -85,5 +85,8 @@ export const SET_THEME = 'SET_THEME';
 
 export const SET_UNSAVED_CHANGES = 'SET_UNSAVED_CHANGES';
 
+export const DETECT_INFINITE_LOOPS = 'DETECT_INFINITE_LOOPS';
+export const RESET_INFINITE_LOOPS = 'RESET_INFINITE_LOOPS';
+
 // eventually, handle errors more specifically and better
 export const ERROR = 'ERROR';

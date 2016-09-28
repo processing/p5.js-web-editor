@@ -16,7 +16,8 @@ const initialState = {
   shareModalVisible: false,
   editorOptionsVisible: false,
   keyboardShortcutVisible: false,
-  unsavedChanges: false
+  unsavedChanges: false,
+  infiniteLoop: false
 };
 
 const ide = (state = initialState, action) => {
@@ -73,6 +74,10 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { keyboardShortcutVisible: false });
     case ActionTypes.SET_UNSAVED_CHANGES:
       return Object.assign({}, state, { unsavedChanges: action.value });
+    case ActionTypes.DETECT_INFINITE_LOOPS:
+      return Object.assign({}, state, { infiniteLoop: true });
+    case ActionTypes.RESET_INFINITE_LOOPS:
+      return Object.assign({}, state, { infiniteLoop: false });
     default:
       return state;
   }

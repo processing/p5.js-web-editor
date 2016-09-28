@@ -55,10 +55,11 @@ class Toolbar extends React.Component {
           className="toolbar__play-sketch-button"
           onClick={() => { this.props.startTextOutput(); this.props.startSketch(); }}
           aria-label="play sketch"
+          disabled={this.props.infiniteLoop}
         >
           <InlineSVG src={playUrl} alt="Play Sketch" />
         </button>
-        <button className={playButtonClass} onClick={this.props.startSketch} aria-label="play only visual sketch">
+        <button className={playButtonClass} onClick={this.props.startSketch} aria-label="play only visual sketch" disabled={this.props.infiniteLoop} >
           <InlineSVG src={playUrl} alt="Play only visual Sketch" />
         </button>
         <button
@@ -128,7 +129,8 @@ Toolbar.propTypes = {
     isEditingName: PropTypes.bool
   }).isRequired,
   showEditProjectName: PropTypes.func.isRequired,
-  hideEditProjectName: PropTypes.func.isRequired
+  hideEditProjectName: PropTypes.func.isRequired,
+  infiniteLoop: PropTypes.bool.isRequired
 };
 
 export default Toolbar;
