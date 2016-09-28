@@ -1,14 +1,23 @@
 import * as ActionTypes from '../../../constants';
 
-export function toggleSketch() {
+export function startSketchRefresh() {
   return {
-    type: ActionTypes.TOGGLE_SKETCH
+    type: ActionTypes.START_SKETCH_REFRESH
+  };
+}
+
+export function endSketchRefresh() {
+  return {
+    type: ActionTypes.END_SKETCH_REFRESH
   };
 }
 
 export function startSketch() {
-  return {
-    type: ActionTypes.START_SKETCH
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.START_SKETCH
+    });
+    dispatch(startSketchRefresh());
   };
 }
 

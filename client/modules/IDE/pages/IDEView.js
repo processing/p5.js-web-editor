@@ -323,7 +323,12 @@ class IDEView extends React.Component {
                   resetInfiniteLoops={this.props.resetInfiniteLoops}
 =======
                   autorefresh={this.props.preferences.autorefresh}
+<<<<<<< HEAD
 >>>>>>> did stuff
+=======
+                  previewIsRefreshing={this.props.ide.previewIsRefreshing}
+                  endSketchRefresh={this.props.endSketchRefresh}
+>>>>>>> add previewIsRefreshing to redux state
                 />
               </div>
             </SplitPane>
@@ -428,7 +433,11 @@ IDEView.propTypes = {
     editorOptionsVisible: PropTypes.bool.isRequired,
     keyboardShortcutVisible: PropTypes.bool.isRequired,
     unsavedChanges: PropTypes.bool.isRequired,
+<<<<<<< HEAD
     infiniteLoop: PropTypes.bool.isRequired,
+=======
+    previewIsRefreshing: PropTypes.bool.isRequired
+>>>>>>> add previewIsRefreshing to redux state
   }).isRequired,
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
@@ -523,7 +532,8 @@ IDEView.propTypes = {
   route: PropTypes.object.isRequired,
   setUnsavedChanges: PropTypes.func.isRequired,
   setTheme: PropTypes.func.isRequired,
-  setAutorefresh: PropTypes.func.isRequired
+  setAutorefresh: PropTypes.func.isRequired,
+  endSketchRefresh: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
