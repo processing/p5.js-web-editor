@@ -193,6 +193,8 @@ class IDEView extends React.Component {
           owner={this.props.project.owner}
           project={this.props.project}
           infiniteLoop={this.props.ide.infiniteLoop}
+          autorefresh={this.props.preferences.autorefresh}
+          setAutorefresh={this.props.setAutorefresh}
         />
         <Preferences
           isVisible={this.props.ide.preferencesIsVisible}
@@ -454,7 +456,8 @@ IDEView.propTypes = {
     autosave: PropTypes.bool.isRequired,
     lintWarning: PropTypes.bool.isRequired,
     textOutput: PropTypes.bool.isRequired,
-    theme: PropTypes.string.isRequired
+    theme: PropTypes.string.isRequired,
+    autorefresh: PropTypes.bool.isRequired
   }).isRequired,
   closePreferences: PropTypes.func.isRequired,
   setFontSize: PropTypes.func.isRequired,
@@ -516,6 +519,7 @@ IDEView.propTypes = {
   route: PropTypes.object.isRequired,
   setUnsavedChanges: PropTypes.func.isRequired,
   setTheme: PropTypes.func.isRequired,
+  setAutorefresh: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

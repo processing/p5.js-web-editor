@@ -7,7 +7,8 @@ const initialState = {
   autosave: true,
   lintWarning: false,
   textOutput: false,
-  theme: 'light'
+  theme: 'light',
+  autorefresh: true
 };
 
 const preferences = (state = initialState, action) => {
@@ -34,6 +35,8 @@ const preferences = (state = initialState, action) => {
       return action.preferences;
     case ActionTypes.SET_THEME:
       return Object.assign({}, state, { theme: action.value });
+    case ActionTypes.SET_AUTOREFRESH:
+      return Object.assign({}, state, { autorefresh: action.value });
     default:
       return state;
   }

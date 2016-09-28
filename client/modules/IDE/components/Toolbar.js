@@ -73,6 +73,10 @@ class Toolbar extends React.Component {
           <input
             id="autorefresh"
             type="checkbox"
+            checked={this.props.autorefresh}
+            onChange={(event) => {
+              this.props.setAutorefresh(event.target.checked);
+            }}
           />
           <label htmlFor="autorefresh" className="toolbar__autorefresh-label">
             Auto-refresh
@@ -139,7 +143,9 @@ Toolbar.propTypes = {
   }).isRequired,
   showEditProjectName: PropTypes.func.isRequired,
   hideEditProjectName: PropTypes.func.isRequired,
-  infiniteLoop: PropTypes.bool.isRequired
+  infiniteLoop: PropTypes.bool.isRequired,
+  autorefresh: PropTypes.bool.isRequired,
+  setAutorefresh: PropTypes.func.isRequired
 };
 
 export default Toolbar;
