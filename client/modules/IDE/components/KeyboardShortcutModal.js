@@ -28,16 +28,33 @@ class KeyboardShortcutModal extends React.Component {
             <span>Save</span>
           </li>
           <li className="keyboard-shortcut-item">
-            <span className="keyboard-shortcut__command">Command + [</span>
-            <span>Indent Code Right</span>
-          </li>
-          <li className="keyboard-shortcut-item">
-            <span className="keyboard-shortcut__command">Command + ]</span>
+            <span className="keyboard-shortcut__command">
+              {this.isMac ? 'Command + [' : 'Control + ['}
+            </span>
             <span>Indent Code Left</span>
           </li>
           <li className="keyboard-shortcut-item">
-            <span className="keyboard-shortcut__command">Command + /</span>
+            <span className="keyboard-shortcut__command">
+              {this.isMac ? 'Command + ]' : 'Control + ]'}
+            </span>
+            <span>Indent Code Right</span>
+          </li>
+          <li className="keyboard-shortcut-item">
+            <span className="keyboard-shortcut__command">
+              {this.isMac ? 'Command + /' : 'Control + /'}
+            </span>
             <span>Comment Line</span>
+          </li>
+          <li className="keyboard-shortcut-item">
+            <span className="keyboard-shortcut__command">
+              {this.isMac ? 'Command + Enter' : 'Control + Enter'}</span>
+            <span>Start Sketch</span>
+          </li>
+          <li className="keyboard-shortcut-item">
+            <span className="keyboard-shortcut__command">
+              {this.isMac ? 'Command + Shift + Enter' : 'Control + Shift + Enter'}
+            </span>
+            <span>Stop Sketch</span>
           </li>
         </ul>
       </section>

@@ -80,7 +80,7 @@
 .keyboard-shortcuts {
   @extend %modal;
   padding: #{20 / $base-font-size}rem;
-  width: #{400 / $base-font-size}rem;
+  width: #{450 / $base-font-size}rem;
 }
 
 .keyboard-shortcuts__header {
@@ -104,7 +104,7 @@
 }
 
 .keyboard-shortcut__command {
-  width: 40%;
+  width: 50%;
   font-weight: bold;
   text-align: right;
   padding-right: #{10 / $base-font-size}rem;
