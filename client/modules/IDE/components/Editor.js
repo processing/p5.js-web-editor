@@ -148,6 +148,7 @@ class Editor extends React.Component {
       >
         <button
           className="editor__options-button"
+          aria-label="editor options"
           tabIndex="0"
           onClick={(e) => {
             e.target.focus();
@@ -157,7 +158,7 @@ class Editor extends React.Component {
         >
           <InlineSVG src={downArrowUrl} />
         </button>
-        <ul className="editor__options">
+        <ul className="editor__options" title="editor options">
           <li>
             <a onClick={this.tidyCode}>Tidy</a>
           </li>
