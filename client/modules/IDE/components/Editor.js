@@ -69,8 +69,8 @@ class Editor extends React.Component {
       this.props.setUnsavedChanges(true);
       this.props.updateFileContent(this.props.file.name, this._cm.getValue());
       this.checkForInfiniteLoop((infiniteLoop, prevs) => {
-        if (!infiniteLoop && prevs) {
-          this.props.startSketch();
+        if (!infiniteLoop && prevs && this.props.autorefresh) {
+          this.props.startRefreshSketch();
         }
       });
     }));
@@ -145,7 +145,6 @@ class Editor extends React.Component {
     const prevIsplaying = this.props.isPlaying;
     let infiniteLoop = false;
     let prevLine;
-    this.props.stopSketch();
     this.props.resetInfiniteLoops();
     let iframe;
 
@@ -156,9 +155,12 @@ class Editor extends React.Component {
 
     loopProtect.alias = 'protect';
 
+    let foundInfiniteLoop = false;
     loopProtect.hit = (line) => {
+      foundInfiniteLoop = true;
       if (line !== prevLine) {
         this.props.detectInfiniteLoops();
+        this.props.stopSketch();
         infiniteLoop = true;
         callback(infiniteLoop, prevIsplaying);
         const msg = document.createElement('div');
@@ -172,36 +174,42 @@ class Editor extends React.Component {
 
     const processed = loopProtect(this.props.file.content);
 
-    const iframeForLoop = document.getElementById('iframeForLoop');
+    let iframeForLoop = document.getElementById('iframeForLoop');
     if (iframeForLoop === null) {
       iframe = document.createElement('iframe');
       iframe.id = 'iframeForLoop';
       iframe.style.display = 'none';
       document.body.appendChild(iframe);
+      iframeForLoop = iframe;
     } else {
       iframeForLoop.srcdoc = '';
-      const win = iframeForLoop.contentWindow;
-      const doc = win.document;
-      doc.open();
-
-      win.protect = loopProtect;
-
-      doc.write(`<!DOCTYPE html>
-        <html>
-          <head>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.2/p5.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.2/addons/p5.dom.min.js"></script>
-          </head>
-          <body>
-            <script> 
-              ${processed}
-            </script>
-          </body>
-        </html>`);
-      win.onerror = () => true;
-      doc.close();
     }
-    callback(infiniteLoop, prevIsplaying, prevLine);
+    const win = iframeForLoop.contentWindow;
+    const doc = win.document;
+    doc.open();
+
+    win.protect = loopProtect;
+
+    doc.write(`<!DOCTYPE html>
+      <html>
+        <head>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.2/p5.min.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.2/addons/p5.dom.min.js"></script>
+        </head>
+        <body>
+          <script> 
+            ${processed}
+          </script>
+        </body>
+      </html>`);
+    win.onerror = () => true;
+    doc.close();
+
+    setTimeout(() => {
+      if (!foundInfiniteLoop) {
+        callback(infiniteLoop, prevIsplaying, prevLine);
+      }
+    }, 200);
   }
 
   _cm: CodeMirror.Editor
@@ -272,10 +280,11 @@ Editor.propTypes = {
   infiniteLoop: PropTypes.bool.isRequired,
   detectInfiniteLoops: PropTypes.func.isRequired,
   resetInfiniteLoops: PropTypes.func.isRequired,
-  stopSketch: PropTypes.func.isRequired,
-  startSketch: PropTypes.func.isRequired,
+  startRefreshSketch: PropTypes.func.isRequired,
+  autorefresh: PropTypes.bool.isRequired,
   isPlaying: PropTypes.bool.isRequired,
-  theme: PropTypes.string.isRequired
+  theme: PropTypes.string.isRequired,
+  stopSketch: PropTypes.func.isRequired
 };
 
 export default Editor;

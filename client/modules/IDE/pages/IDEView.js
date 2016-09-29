@@ -146,7 +146,7 @@ class IDEView extends React.Component {
     } else if (e.key === 'Enter' && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
       e.preventDefault();
       e.stopPropagation();
-      this.props.startSketch();
+      this.props.startSketchAndRefresh();
     }
   }
 
@@ -195,6 +195,7 @@ class IDEView extends React.Component {
           infiniteLoop={this.props.ide.infiniteLoop}
           autorefresh={this.props.preferences.autorefresh}
           setAutorefresh={this.props.setAutorefresh}
+          startSketchAndRefresh={this.props.startSketchAndRefresh}
         />
         <Preferences
           isVisible={this.props.ide.preferencesIsVisible}
@@ -279,10 +280,11 @@ class IDEView extends React.Component {
                   infiniteLoop={this.props.ide.infiniteLoop}
                   detectInfiniteLoops={this.props.detectInfiniteLoops}
                   resetInfiniteLoops={this.props.resetInfiniteLoops}
-                  stopSketch={this.props.stopSketch}
-                  startSketch={this.props.startSketch}
                   isPlaying={this.props.ide.isPlaying}
                   theme={this.props.preferences.theme}
+                  startRefreshSketch={this.props.startRefreshSketch}
+                  stopSketch={this.props.stopSketch}
+                  autorefresh={this.props.preferences.autorefresh}
                 />
                 <Console
                   consoleEvent={this.props.ide.consoleEvent}
@@ -318,17 +320,11 @@ class IDEView extends React.Component {
                   isTextOutputPlaying={this.props.ide.isTextOutputPlaying}
                   textOutput={this.props.preferences.textOutput}
                   dispatchConsoleEvent={this.props.dispatchConsoleEvent}
-<<<<<<< HEAD
                   infiniteLoop={this.props.ide.infiniteLoop}
                   resetInfiniteLoops={this.props.resetInfiniteLoops}
-=======
                   autorefresh={this.props.preferences.autorefresh}
-<<<<<<< HEAD
->>>>>>> did stuff
-=======
                   previewIsRefreshing={this.props.ide.previewIsRefreshing}
                   endSketchRefresh={this.props.endSketchRefresh}
->>>>>>> add previewIsRefreshing to redux state
                 />
               </div>
             </SplitPane>
@@ -433,11 +429,8 @@ IDEView.propTypes = {
     editorOptionsVisible: PropTypes.bool.isRequired,
     keyboardShortcutVisible: PropTypes.bool.isRequired,
     unsavedChanges: PropTypes.bool.isRequired,
-<<<<<<< HEAD
     infiniteLoop: PropTypes.bool.isRequired,
-=======
     previewIsRefreshing: PropTypes.bool.isRequired
->>>>>>> add previewIsRefreshing to redux state
   }).isRequired,
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
@@ -533,7 +526,9 @@ IDEView.propTypes = {
   setUnsavedChanges: PropTypes.func.isRequired,
   setTheme: PropTypes.func.isRequired,
   setAutorefresh: PropTypes.func.isRequired,
+  startSketchAndRefresh: PropTypes.func.isRequired,
   endSketchRefresh: PropTypes.func.isRequired,
+  startRefreshSketch: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

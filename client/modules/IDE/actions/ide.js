@@ -1,29 +1,33 @@
 import * as ActionTypes from '../../../constants';
 
-export function startSketchRefresh() {
-  return {
-    type: ActionTypes.START_SKETCH_REFRESH
-  };
-}
-
-export function endSketchRefresh() {
-  return {
-    type: ActionTypes.END_SKETCH_REFRESH
-  };
-}
-
 export function startSketch() {
-  return (dispatch) => {
-    dispatch({
-      type: ActionTypes.START_SKETCH
-    });
-    dispatch(startSketchRefresh());
+  return {
+    type: ActionTypes.START_SKETCH
   };
 }
 
 export function stopSketch() {
   return {
     type: ActionTypes.STOP_SKETCH
+  };
+}
+
+export function startRefreshSketch() {
+  return {
+    type: ActionTypes.START_SKETCH_REFRESH
+  };
+}
+
+export function startSketchAndRefresh() {
+  return (dispatch) => {
+    dispatch(startSketch());
+    dispatch(startRefreshSketch());
+  };
+}
+
+export function endSketchRefresh() {
+  return {
+    type: ActionTypes.END_SKETCH_REFRESH
   };
 }
 

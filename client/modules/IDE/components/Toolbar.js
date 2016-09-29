@@ -53,13 +53,16 @@ class Toolbar extends React.Component {
         <img className="toolbar__logo" src={logoUrl} alt="p5js Logo" />
         <button
           className="toolbar__play-sketch-button"
-          onClick={() => { this.props.startTextOutput(); this.props.startSketch(); }}
+          onClick={() => {
+            this.props.startTextOutput();
+            this.props.startSketchAndRefresh();
+          }}
           aria-label="play sketch"
           disabled={this.props.infiniteLoop}
         >
           <InlineSVG src={playUrl} alt="Play Sketch" />
         </button>
-        <button className={playButtonClass} onClick={this.props.startSketch} aria-label="play only visual sketch" disabled={this.props.infiniteLoop} >
+        <button className={playButtonClass} onClick={this.props.startSketchAndRefresh} aria-label="play only visual sketch" disabled={this.props.infiniteLoop} >
           <InlineSVG src={playUrl} alt="Play only visual Sketch" />
         </button>
         <button
@@ -145,7 +148,8 @@ Toolbar.propTypes = {
   hideEditProjectName: PropTypes.func.isRequired,
   infiniteLoop: PropTypes.bool.isRequired,
   autorefresh: PropTypes.bool.isRequired,
-  setAutorefresh: PropTypes.func.isRequired
+  setAutorefresh: PropTypes.func.isRequired,
+  startSketchAndRefresh: PropTypes.func.isRequired
 };
 
 export default Toolbar;

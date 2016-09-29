@@ -117,9 +117,7 @@ class PreviewFrame extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    // if previously the sketch was not playing, render sketch
-    // if playing, and autorun is on
-      // if content has changed or files have changed
+    // if sketch starts or stops playing, want to rerender
     if (this.props.isPlaying !== prevProps.isPlaying) {
       this.renderSketch();
       return;
@@ -131,14 +129,8 @@ class PreviewFrame extends React.Component {
       return;
     }
 
-    if (this.props.isPlaying && this.props.autorefresh) {
-      // if the content of the file changes
-      // or the set of files changes
-      if (this.props.content !== prevProps.content
-        || this.props.files[0].id !== prevProps.files[0].id) {
-        this.renderSketch();
-      }
-    }
+    // small bug - if autorefresh is on, and the usr changes files
+    // in the sketch, preview will reload
   }
 
   componentWillUnmount() {
@@ -215,11 +207,6 @@ class PreviewFrame extends React.Component {
 
   renderSketch() {
     const doc = ReactDOM.findDOMNode(this);
-    if (this.props.infiniteLoop) {
-      this.props.resetInfiniteLoops();
-      doc.srcdoc = '';
-      srcDoc.set(doc, '  ');
-    }
     if (this.props.isPlaying && !this.props.infiniteLoop) {
       srcDoc.set(doc, this.injectLocalFiles());
       this.props.endSketchRefresh();
