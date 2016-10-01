@@ -36,11 +36,11 @@ input, button {
 
 input {
 	padding: #{5 / $base-font-size}rem;
-	// border-radius: 2px;
-	border: 1px solid $input-border-color;
+	border: 1px solid;
 	padding: #{10 / $base-font-size}rem;
 	@include themify() {
-		color: $primary-text-color;
+		color: getThemifyVariable('input-text-color');
+		border-color: getThemifyVariable('input-border-color');
 	}
 }
 

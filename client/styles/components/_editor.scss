@@ -95,3 +95,11 @@
     display: block;
   }
 }
+
+.lint-error {
+  font-family: Inconsolata, monospace;
+  font-size: 100%;
+  background: rgba($console-error-color, 0.3);
+  color: $console-error-color;
+  padding: 2px 5px 3px;
+}

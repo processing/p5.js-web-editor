@@ -146,7 +146,7 @@ class IDEView extends React.Component {
     } else if (e.key === 'Enter' && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
       e.preventDefault();
       e.stopPropagation();
-      this.props.startSketch();
+      this.props.startSketchAndRefresh();
     }
   }
 
@@ -192,6 +192,10 @@ class IDEView extends React.Component {
           setTextOutput={this.props.setTextOutput}
           owner={this.props.project.owner}
           project={this.props.project}
+          infiniteLoop={this.props.ide.infiniteLoop}
+          autorefresh={this.props.preferences.autorefresh}
+          setAutorefresh={this.props.setAutorefresh}
+          startSketchAndRefresh={this.props.startSketchAndRefresh}
         />
         <Preferences
           isVisible={this.props.ide.preferencesIsVisible}
@@ -273,7 +277,14 @@ class IDEView extends React.Component {
                   closeEditorOptions={this.props.closeEditorOptions}
                   showKeyboardShortcutModal={this.props.showKeyboardShortcutModal}
                   setUnsavedChanges={this.props.setUnsavedChanges}
+                  infiniteLoop={this.props.ide.infiniteLoop}
+                  detectInfiniteLoops={this.props.detectInfiniteLoops}
+                  resetInfiniteLoops={this.props.resetInfiniteLoops}
+                  isPlaying={this.props.ide.isPlaying}
                   theme={this.props.preferences.theme}
+                  startRefreshSketch={this.props.startRefreshSketch}
+                  stopSketch={this.props.stopSketch}
+                  autorefresh={this.props.preferences.autorefresh}
                 />
                 <Console
                   consoleEvent={this.props.ide.consoleEvent}
@@ -309,6 +320,11 @@ class IDEView extends React.Component {
                   isTextOutputPlaying={this.props.ide.isTextOutputPlaying}
                   textOutput={this.props.preferences.textOutput}
                   dispatchConsoleEvent={this.props.dispatchConsoleEvent}
+                  infiniteLoop={this.props.ide.infiniteLoop}
+                  resetInfiniteLoops={this.props.resetInfiniteLoops}
+                  autorefresh={this.props.preferences.autorefresh}
+                  previewIsRefreshing={this.props.ide.previewIsRefreshing}
+                  endSketchRefresh={this.props.endSketchRefresh}
                 />
               </div>
             </SplitPane>
@@ -412,12 +428,16 @@ IDEView.propTypes = {
     shareModalVisible: PropTypes.bool.isRequired,
     editorOptionsVisible: PropTypes.bool.isRequired,
     keyboardShortcutVisible: PropTypes.bool.isRequired,
-    unsavedChanges: PropTypes.bool.isRequired
+    unsavedChanges: PropTypes.bool.isRequired,
+    infiniteLoop: PropTypes.bool.isRequired,
+    previewIsRefreshing: PropTypes.bool.isRequired
   }).isRequired,
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
   startTextOutput: PropTypes.func.isRequired,
   stopTextOutput: PropTypes.func.isRequired,
+  detectInfiniteLoops: PropTypes.func.isRequired,
+  resetInfiniteLoops: PropTypes.func.isRequired,
   project: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string.isRequired,
@@ -442,7 +462,8 @@ IDEView.propTypes = {
     autosave: PropTypes.bool.isRequired,
     lintWarning: PropTypes.bool.isRequired,
     textOutput: PropTypes.bool.isRequired,
-    theme: PropTypes.string.isRequired
+    theme: PropTypes.string.isRequired,
+    autorefresh: PropTypes.bool.isRequired
   }).isRequired,
   closePreferences: PropTypes.func.isRequired,
   setFontSize: PropTypes.func.isRequired,
@@ -504,6 +525,10 @@ IDEView.propTypes = {
   route: PropTypes.object.isRequired,
   setUnsavedChanges: PropTypes.func.isRequired,
   setTheme: PropTypes.func.isRequired,
+  setAutorefresh: PropTypes.func.isRequired,
+  startSketchAndRefresh: PropTypes.func.isRequired,
+  endSketchRefresh: PropTypes.func.isRequired,
+  startRefreshSketch: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

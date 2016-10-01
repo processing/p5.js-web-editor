@@ -4,6 +4,18 @@
 		&--selected {
 			@extend %toolbar-button--selected;
 		}
+		&:disabled {
+			cursor: auto;
+			& g {
+				fill: getThemifyVariable('button-border-color');
+			}
+			&:hover {
+				background-color: getThemifyVariable('toolbar-button-background-color');
+				& g {
+					fill: getThemifyVariable('button-border-color');
+				}
+			}
+	    }
 	}
 	margin-right: #{15 / $base-font-size}rem;
 	& span {
@@ -18,6 +30,7 @@
 .toolbar__stop-button {
 	@include themify() {
 		@extend %toolbar-button;
+		margin-right: #{15 / $base-font-size}rem;
 		&--selected {
 			@extend %toolbar-button--selected;
 		}
@@ -48,6 +61,10 @@
 }
 
 .toolbar__project-name-container {
+	@include themify() {
+		border-color: getThemifyVariable('inactive-text-color');
+	}
+	border-left: 2px dashed;
 	margin-left: #{10 / $base-font-size}rem;
 	padding-left: #{10 / $base-font-size}rem;
 	height: 70%;
@@ -56,14 +73,13 @@
 }
 
 .toolbar__project-name {
-	color: $light-inactive-text-color;
+	@include themify() {
+		color: getThemifyVariable('inactive-text-color');
+		&:hover {
+		color: getThemifyVariable('primary-text-color');
+		}
+	}
 	cursor: pointer;
-	&:hover {
-		color: $light-primary-text-color;
-	}
-	&:focus {
-		color: $light-inactive-text-color;
-	}
 
 	.toolbar__project-name-container--editing & {
 		display: none;
@@ -80,4 +96,12 @@
 
 .toolbar__project-owner {
 	margin-left: #{5 / $base-font-size}rem;
+}
+
+.toolbar__autorefresh-label {
+	@include themify() {
+		color: getThemifyVariable('inactive-text-color');
+	}
+	margin-left: #{5 / $base-font-size}rem;
+	font-size: #{12 / $base-font-size}rem;
 }

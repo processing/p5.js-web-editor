@@ -138,9 +138,46 @@ export function setTextOutput(value) {
 }
 
 export function setTheme(value) {
-  return {
-    type: ActionTypes.SET_THEME,
-    value
+  // return {
+  //   type: ActionTypes.SET_THEME,
+  //   value
+  // };
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.SET_THEME,
+      value
+    });
+    const state = getState();
+    if (state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          theme: value
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
+  };
+}
+
+export function setAutorefresh(value) {
+  // return {
+  //   type: ActionTypes.SET_AUTOREFRESH,
+  //   value
+  // };
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.SET_AUTOREFRESH,
+      value
+    });
+    const state = getState();
+    if (state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          autorefresh: value
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
   };
 }
 

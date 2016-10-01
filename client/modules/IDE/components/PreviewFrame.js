@@ -117,18 +117,20 @@ class PreviewFrame extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    // if sketch starts or stops playing, want to rerender
     if (this.props.isPlaying !== prevProps.isPlaying) {
       this.renderSketch();
+      return;
     }
 
-    if (this.props.isPlaying && this.props.content !== prevProps.content) {
+    // if the user explicitly clicks on the play button
+    if (this.props.isPlaying && this.props.previewIsRefreshing) {
       this.renderSketch();
+      return;
     }
 
-    // I apologize for this, it is a hack. A simple way to check if the files have changed.
-    if (this.props.isPlaying && this.props.files[0].id !== prevProps.files[0].id) {
-      this.renderSketch();
-    }
+    // small bug - if autorefresh is on, and the usr changes files
+    // in the sketch, preview will reload
   }
 
   componentWillUnmount() {
@@ -205,8 +207,9 @@ class PreviewFrame extends React.Component {
 
   renderSketch() {
     const doc = ReactDOM.findDOMNode(this);
-    if (this.props.isPlaying) {
+    if (this.props.isPlaying && !this.props.infiniteLoop) {
       srcDoc.set(doc, this.injectLocalFiles());
+      this.props.endSketchRefresh();
     } else {
       doc.srcdoc = '';
       srcDoc.set(doc, '  ');
@@ -250,7 +253,12 @@ PreviewFrame.propTypes = {
   cssFiles: PropTypes.array.isRequired,
   files: PropTypes.array.isRequired,
   dispatchConsoleEvent: PropTypes.func,
-  children: PropTypes.element
+  children: PropTypes.element,
+  infiniteLoop: PropTypes.bool.isRequired,
+  resetInfiniteLoops: PropTypes.func.isRequired,
+  autorefresh: PropTypes.bool.isRequired,
+  endSketchRefresh: PropTypes.func.isRequired,
+  previewIsRefreshing: PropTypes.bool.isRequired,
 };
 
 export default PreviewFrame;
