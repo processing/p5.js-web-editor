@@ -77,7 +77,7 @@ function hijackConsoleLogsScript() {
           arguments: args,
           source: 'sketch'
         }, '*');
-      }, 250);
+      }, 100);
     });
   </script>`;
   return s;
