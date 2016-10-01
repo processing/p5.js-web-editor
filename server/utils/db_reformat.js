@@ -7,6 +7,7 @@ mongoose.connection.on('error', () => {
 });
 
 import Project from '../models/project';
+import User from '../models/user';
 
 // let projectsNotToUpdate;
 // Project.find({'files.name': 'root'})
@@ -83,35 +84,44 @@ import Project from '../models/project';
 //     });
 //   });
 
-Project.find({})
-  .exec((err, projects) => {
-    projects.forEach((project, projectIndex) => {
-      project.files.forEach((file) => {
-        if (file.isSelected) {
-          delete file.isSelected;
-        }
+// Project.find({})
+//   .exec((err, projects) => {
+//     projects.forEach((project, projectIndex) => {
+//       project.files.forEach((file) => {
+//         if (file.isSelected) {
+//           delete file.isSelected;
+//         }
 
-        if (file.name === 'sketch.js') {
-          file.isSelectedFile = true;
-          console.log(file.name, 'is now selected');
-          // file.save((err, savedFile) => {
-          //   console.log('file saved');
-          // });
-        } else {
-          file.isSelectedFile = false;
-        }
-        // console.log('project', projectIndex);
-        // if (file.isSelected) {
-        //   console.log('is selected remains');
-        // }
+//         if (file.name === 'sketch.js') {
+//           file.isSelectedFile = true;
+//           console.log(file.name, 'is now selected');
+//           // file.save((err, savedFile) => {
+//           //   console.log('file saved');
+//           // });
+//         } else {
+//           file.isSelectedFile = false;
+//         }
+//         // console.log('project', projectIndex);
+//         // if (file.isSelected) {
+//         //   console.log('is selected remains');
+//         // }
 
-        // if (file.isSelctedFile) {
-        //   console.log('changed to isSelected file');
-        // }
-        project.save((err, savedProject) => {
-          console.log('project', projectIndex, 'is saved.');
-        });
+//         // if (file.isSelctedFile) {
+//         //   console.log('changed to isSelected file');
+//         // }
+//         project.save((err, savedProject) => {
+//           console.log('project', projectIndex, 'is saved.');
+//         });
 
-      });
+//       });
+//     });
+//   });
+
+User.findOne({email: 'test@test.com'})
+  .exec((err, user) => {
+    console.log(user);
+    user.password = '1234';
+    user.save((err, savedUser) => {
+      console.log('user saved');
     });
   });
