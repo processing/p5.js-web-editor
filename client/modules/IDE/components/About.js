@@ -4,13 +4,17 @@ const exitUrl = require('../../../images/exit.svg');
 import { browserHistory } from 'react-router';
 
 class About extends React.Component {
+  componentDidMount() {
+    this.refs.about.focus();
+  }
+
   closeAboutModal() {
     browserHistory.goBack();
   }
 
   render() {
     return (
-      <div className="about">
+      <section className="about" ref="about" tabIndex="0">
         <header className="about__header">
           <h2>About</h2>
           <button className="about__exit-button" onClick={this.closeAboutModal}>
@@ -33,7 +37,7 @@ class About extends React.Component {
             > report a bug.</a>
           </p>
         </div>
-      </div>
+      </section>
     );
   }
 }

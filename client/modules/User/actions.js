@@ -69,7 +69,7 @@ export function validateAndLoginUser(formProps, dispatch) {
         resolve();
       })
       .catch(response => {
-        reject({ email: response.data.message, _error: 'Login failed!' });
+        reject({ password: response.data.message, _error: 'Login failed!' });
       });
   });
 }

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 
 function LoginForm(props) {
-  const { fields: { email, password }, handleSubmit, submitting, invalid, pristine } = props;
+  const { fields: { email, password }, handleSubmit, submitting, pristine } = props;
   return (
     <form className="login-form" onSubmit={handleSubmit(props.validateAndLoginUser.bind(this))}>
       <p className="login-form__field">
@@ -24,7 +24,7 @@ function LoginForm(props) {
         />
         {password.touched && password.error && <span className="form-error">{password.error}</span>}
       </p>
-      <input type="submit" disabled={submitting || invalid || pristine} value="Login" aria-label="login" />
+      <input type="submit" disabled={submitting || pristine} value="Login" aria-label="login" />
     </form>
   );
 }

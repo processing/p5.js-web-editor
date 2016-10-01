@@ -16,7 +16,8 @@ const userSchema = new Schema({
     autosave: { type: Boolean, default: true },
     lintWarning: { type: Boolean, default: false },
     textOutput: { type: Boolean, default: false },
-    theme: { type: String, default: 'light' }
+    theme: { type: String, default: 'light' },
+    autorefresh: { type: Boolean, default: true }
   }
 }, { timestamps: true });
 

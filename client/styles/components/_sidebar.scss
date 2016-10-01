@@ -29,7 +29,10 @@
 }
 
 .sidebar__file-list {
-  border-top: 1px solid $ide-border-color;
+  @include themify() {
+    border-color: getThemifyVariable('ide-border-color')
+  }
+  border-top: 1px solid;
   .sidebar--contracted & {
     display: none;
   }

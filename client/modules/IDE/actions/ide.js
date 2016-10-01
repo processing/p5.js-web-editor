@@ -1,11 +1,5 @@
 import * as ActionTypes from '../../../constants';
 
-export function toggleSketch() {
-  return {
-    type: ActionTypes.TOGGLE_SKETCH
-  };
-}
-
 export function startSketch() {
   return {
     type: ActionTypes.START_SKETCH
@@ -15,6 +9,25 @@ export function startSketch() {
 export function stopSketch() {
   return {
     type: ActionTypes.STOP_SKETCH
+  };
+}
+
+export function startRefreshSketch() {
+  return {
+    type: ActionTypes.START_SKETCH_REFRESH
+  };
+}
+
+export function startSketchAndRefresh() {
+  return (dispatch) => {
+    dispatch(startSketch());
+    dispatch(startRefreshSketch());
+  };
+}
+
+export function endSketchRefresh() {
+  return {
+    type: ActionTypes.END_SKETCH_REFRESH
   };
 }
 
@@ -170,3 +183,14 @@ export function setUnsavedChanges(value) {
   };
 }
 
+export function detectInfiniteLoops() {
+  return {
+    type: ActionTypes.DETECT_INFINITE_LOOPS
+  };
+}
+
+export function resetInfiniteLoops() {
+  return {
+    type: ActionTypes.RESET_INFINITE_LOOPS
+  };
+}

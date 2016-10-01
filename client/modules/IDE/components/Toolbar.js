@@ -53,12 +53,16 @@ class Toolbar extends React.Component {
         <img className="toolbar__logo" src={logoUrl} alt="p5js Logo" />
         <button
           className="toolbar__play-sketch-button"
-          onClick={() => { this.props.startTextOutput(); this.props.startSketch(); }}
+          onClick={() => {
+            this.props.startTextOutput();
+            this.props.startSketchAndRefresh();
+          }}
           aria-label="play sketch"
+          disabled={this.props.infiniteLoop}
         >
           <InlineSVG src={playUrl} alt="Play Sketch" />
         </button>
-        <button className={playButtonClass} onClick={this.props.startSketch} aria-label="play only visual sketch">
+        <button className={playButtonClass} onClick={this.props.startSketchAndRefresh} aria-label="play only visual sketch" disabled={this.props.infiniteLoop} >
           <InlineSVG src={playUrl} alt="Play only visual Sketch" />
         </button>
         <button
@@ -68,6 +72,19 @@ class Toolbar extends React.Component {
         >
           <InlineSVG src={stopUrl} alt="Stop Sketch" />
         </button>
+        <div className="toolbar__autorefresh">
+          <input
+            id="autorefresh"
+            type="checkbox"
+            checked={this.props.autorefresh}
+            onChange={(event) => {
+              this.props.setAutorefresh(event.target.checked);
+            }}
+          />
+          <label htmlFor="autorefresh" className="toolbar__autorefresh-label">
+            Auto-refresh
+          </label>
+        </div>
         <div className={nameContainerClass}>
           <a
             className="toolbar__project-name"
@@ -128,7 +145,11 @@ Toolbar.propTypes = {
     isEditingName: PropTypes.bool
   }).isRequired,
   showEditProjectName: PropTypes.func.isRequired,
-  hideEditProjectName: PropTypes.func.isRequired
+  hideEditProjectName: PropTypes.func.isRequired,
+  infiniteLoop: PropTypes.bool.isRequired,
+  autorefresh: PropTypes.bool.isRequired,
+  setAutorefresh: PropTypes.func.isRequired,
+  startSketchAndRefresh: PropTypes.func.isRequired
 };
 
 export default Toolbar;
