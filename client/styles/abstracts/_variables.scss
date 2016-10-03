@@ -63,6 +63,35 @@ $themes: (
     file-selected-color: #404040,
     input-text-color: #333,
     input-border-color: #979797,
+  ),
+  contrast: (
+    primary-text-color: $white,
+    secondary-text-color: #c2c2c2,
+    inactive-text-color: #7d7d7d,
+    background-color: #333,
+    button-background-color: $white,
+    button-color: $black,
+    button-border-color: #979797,
+    toolbar-button-color: $p5js-pink,
+    toolbar-button-background-color: #424242,
+    button-background-hover-color: $p5js-pink,
+    button-background-active-color: #f10046,
+    button-hover-color: $white,
+    button-active-color: $white,
+    modal-background-color: #444,
+    modal-button-background-color: #5f5f5f,
+    modal-border-color: #949494,
+    icon-color: #a9a9a9,
+    icon-hover-color: $white,
+    shadow-color: rgba(0, 0, 0, 0.16),
+    console-background-color: #4f4f4f,
+    console-header-background-color: #3f3f3f,
+    console-header-color: #b5b5b5,
+    ide-border-color: #949494,
+    editor-gutter-color: #363636,
+    file-selected-color: #404040,
+    input-text-color: #333,
+    input-border-color: #979797,
   )
 );
 
@@ -71,4 +100,3 @@ $console-error-color: #ff5f52;
 
 $toast-background-color: #979797;
 $toast-text-color: $white;
-
