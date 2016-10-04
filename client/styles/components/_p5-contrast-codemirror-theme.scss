@@ -21,8 +21,8 @@ $p5-contrast-yellow: #F5DC23;
 $p5-contrast-orange: #FFA95D;
 $p5-contrast-pink: #FFA9D9;
 
-$p5-contrast-gutter: #999999;
-$p5-contrast-number: #c1c1c1;
+$p5-contrast-gutter: #454545;
+$p5-contrast-number: #FDFDFD;
 $p5-contrast-selected: rgba(45, 123, 182, 25);
 $p5-contrast-activeline: #999999;
 
@@ -32,7 +32,7 @@ $p5-contrast-activeline: #999999;
 }
 
 .cm-s-p5-contrast .cm-comment {
-  color: $p5-contrast-green;
+  color: $p5-contrast-lightgray;
 }
 
 .cm-s-p5-contrast .cm-def {
@@ -40,11 +40,11 @@ $p5-contrast-activeline: #999999;
 }
 
 .cm-s-p5-contrast .cm-string {
-  color: $p5-contrast-orange;
+  color: $p5-contrast-green;
 }
 
 .cm-s-p5-contrast .cm-string-2 {
-  color: $p5-contrast-orange;
+  color: $p5-contrast-green;
 }
 
 .cm-s-p5-contrast .cm-number {
@@ -56,7 +56,7 @@ $p5-contrast-activeline: #999999;
 }
 
 .cm-s-p5-contrast .cm-variable {
-  color: $p5-contrast-blue;
+  color: $p5-contrast-white;
 }
 
 .cm-s-p5-contrast .cm-variable-2 {
@@ -72,7 +72,7 @@ $p5-contrast-activeline: #999999;
 }
 
 .cm-s-p5-contrast .cm-operator {
-  color: $p5-contrast-yellow;
+  color: $p5-contrast-lightgray;
 }
 
 .cm-s-p5-contrast .cm-linenumber {
@@ -102,17 +102,17 @@ $p5-contrast-activeline: #999999;
 }
 
 .cm-s-p5-contrast .cm-qualifier {
-  color: $p5-contrast-blue;
+  color: $p5-contrast-yellow;
 }
 
 .cm-s-p5-contrast .cm-tag {
-  color: $p5-contrast-pink;
+  color: $p5-contrast-orange;
 }
 
 .cm-s-p5-contrast .cm-builtin {
-  color: $p5-contrast-blue;
+  color: $p5-contrast-yellow;
 }
 
 .cm-s-p5-contrast .cm-attribute {
-  color: $p5-contrast-blue;
+  color: $p5-contrast-white;
 }

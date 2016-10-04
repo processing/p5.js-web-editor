@@ -112,11 +112,11 @@
 .preference__options {
 	display: flex;
 	justify-content: space-between;
-	width: #{70 / $base-font-size}rem;
+	width: #{80 / $base-font-size}rem;
 }
 
 .preference__radio-button:checked + .preference__option {
-	@include themify() {	
+	@include themify() {
 		//for some reason this won't work for getThemifyVariable
 	  color: map-get($theme-map, 'primary-text-color');
 	}
