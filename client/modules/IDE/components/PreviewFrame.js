@@ -40,8 +40,29 @@ function hijackConsoleLogsScript() {
       'debug', 'clear', 'error', 'info', 'log', 'warn'
     ];
 
+
+    function throttle(fn, threshhold, scope) {
+      var last, deferTimer;
+      return function() {
+        var context = scope || this;
+        var now = +new Date,
+            args = arguments;
+        if (last && now < last + threshhold) {
+          // hold on to it
+          clearTimeout(deferTimer);
+          deferTimer = setTimeout(function() {
+            last = now;
+            fn.apply(context, args);
+          }, threshhold);
+        } else {
+          last = now;
+          fn.apply(context, args);
+        }
+      };
+    }
+
     methods.forEach( function(method) {
-      iframeWindow.console[method] = function() {
+      iframeWindow.console[method] = throttle(function() {
         originalConsole[method].apply(originalConsole, arguments);
 
         var args = Array.from(arguments);
@@ -56,11 +77,12 @@ function hijackConsoleLogsScript() {
           arguments: args,
           source: 'sketch'
         }, '*');
-      };
+      }, 100);
     });
   </script>`;
   return s;
 }
+
 function hijackConsoleErrorsScript(offs) {
   const s = `<script>
     function getScriptOff(line) {
