@@ -8,7 +8,7 @@ const initialState = {
   lintWarning: false,
   textOutput: false,
   theme: 'light',
-  autorefresh: true
+  autorefresh: false
 };
 
 const preferences = (state = initialState, action) => {

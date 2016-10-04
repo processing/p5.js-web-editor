@@ -117,11 +117,21 @@ import User from '../models/user';
 //     });
 //   });
 
-User.findOne({email: 'test@test.com'})
-  .exec((err, user) => {
-    console.log(user);
-    user.password = '1234';
-    user.save((err, savedUser) => {
-      console.log('user saved');
+// User.findOne({email: 'test@test.com'})
+//   .exec((err, user) => {
+//     console.log(user);
+//     user.password = '1234';
+//     user.save((err, savedUser) => {
+//       console.log('user saved');
+//     });
+//   });
+
+User.find({})
+  .exec((err, users) => {
+    users.forEach(user => {
+      user.preferences.autorefresh = false;
+      user.save((err, savedUser) => {
+        console.log('user saved');
+      });
     });
   });
