@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import escapeStringRegexp from 'escape-string-regexp';
 import srcDoc from 'srcdoc-polyfill';
 
+import loopProtect from 'loop-protect';
+
 
 const startTag = '@fs-';
 
@@ -192,7 +194,7 @@ class PreviewFrame extends React.Component {
           });
         }
       });
-      jsFiles.push(newJSFile);
+      jsFiles.push(loopProtect(newJSFile));
     });
 
     jsFiles.forEach(jsFile => {
