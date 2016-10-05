@@ -167,6 +167,8 @@ class PreviewFrame extends React.Component {
   }
 
   injectLocalFiles() {
+    loopProtect.alias = 'protect';
+    
     let htmlFile = this.props.htmlFile.content;
     let scriptOffs = [];
 
