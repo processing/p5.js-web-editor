@@ -1,21 +1,28 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
-import { validateAndLoginUser } from '../actions';
+import { validateAndLoginUser } from '../../User/actions';
 import LoginForm from '../components/LoginForm';
 // import GithubButton from '../components/GithubButton';
 import { Link } from 'react-router';
 
 
-function LoginView(props) {
-  return (
-    <div className="login">
-      <h1>Login</h1>
-      <LoginForm {...props} />
-      {/* <h2 className="login__divider">Or</h2>
-      <GithubButton buttonText="Login with Github" /> */}
-      <Link className="form__cancel-button" to="/">Cancel</Link>
-    </div>
-  );
+// function LoginView(props) {
+class LoginView extends React.Component {
+  componentDidMount() {
+    this.refs.login.focus();
+  }
+
+  render() {
+    return (
+      <div className="login" ref="login" tabIndex="0">
+        <h1>Login</h1>
+        <LoginForm {...this.props} />
+        {/* <h2 className="login__divider">Or</h2>
+        <GithubButton buttonText="Login with Github" /> */}
+        <Link className="form__cancel-button" to="/">Cancel</Link>
+      </div>
+    );
+  }
 }
 
 function mapStateToProps(state) {
