@@ -25,7 +25,7 @@ class Console extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.isPlaying && !this.props.isPlaying) {
       this.children = [];
-    } else if (nextProps.consoleEvent !== this.props.consoleEvent) {
+    } else if (nextProps.isExpanded && nextProps.consoleEvent !== this.props.consoleEvent) {
       const args = nextProps.consoleEvent.arguments;
       const method = nextProps.consoleEvent.method;
       const nextChild = (
