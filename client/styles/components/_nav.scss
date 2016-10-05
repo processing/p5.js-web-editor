@@ -20,11 +20,9 @@
 }
 
 .nav__item {
-	& + & {
-		margin-left: #{0 / $base-font-size}rem;
-	}
 	position: relative;
 	min-width: #{72 / $base-font-size}rem;
+	text-align: center;
 }
 
 .nav__dropdown {
