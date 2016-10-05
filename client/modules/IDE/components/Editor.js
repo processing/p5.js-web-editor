@@ -45,7 +45,8 @@ class Editor extends React.Component {
       styleActiveLine: true,
       inputStyle: 'contenteditable',
       mode: 'javascript',
-      lineWrapping: true,
+      lineWrapping: false,
+      fixedGutter: false,
       gutters: ['CodeMirror-lint-markers'],
       keyMap: 'sublime',
       lint: {
