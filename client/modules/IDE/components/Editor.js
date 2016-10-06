@@ -28,7 +28,6 @@ const downArrowUrl = require('../../../images/down-arrow.svg');
 import classNames from 'classnames';
 
 import { debounce } from 'throttle-debounce';
-import loopProtect from 'loop-protect';
 
 class Editor extends React.Component {
   constructor(props) {
@@ -66,17 +65,12 @@ class Editor extends React.Component {
       }
     });
 
-    this._cm.on('change', debounce(1000, () => {
+    this._cm.on('change', debounce(200, () => {
       this.props.setUnsavedChanges(true);
       this.props.updateFileContent(this.props.file.name, this._cm.getValue());
       if (this.props.autorefresh && this.props.isPlaying) {
         this.props.startRefreshSketch();
       }
-      // this.checkForInfiniteLoop((infiniteLoop, prevs) => {
-      //   if (!infiniteLoop && prevs && this.props.autorefresh) {
-      //     this.props.startRefreshSketch();
-      //   }
-      // });
     }));
 
     this._cm.on('keyup', () => {
@@ -123,14 +117,6 @@ class Editor extends React.Component {
     if (this.props.theme !== prevProps.theme) {
       this._cm.setOption('theme', `p5-${this.props.theme}`);
     }
-
-    if (this.props.infiniteLoop && this.props.infiniteLoop !== prevProps.infiniteLoop) {
-      const msg = document.createElement('div');
-      const loopError = 'Loop is taking too long to run. This might be an infinite loop.';
-      msg.appendChild(document.createTextNode(loopError));
-      msg.className = 'lint-error';
-      this.widgets.push(this._cm.addLineWidget(1, msg, { coverGutter: false, noHScroll: true }));
-    }
   }
 
   componentWillUnmount() {
@@ -151,77 +137,6 @@ class Editor extends React.Component {
     } else if (mode === 'htmlmixed') {
       this._cm.doc.setValue(beautifyHTML(this._cm.doc.getValue(), beautifyOptions));
     }
-  }
-
-  checkForInfiniteLoop(callback) {
-    const prevIsplaying = this.props.isPlaying;
-    let infiniteLoop = false;
-    let prevLine;
-    this.props.resetInfiniteLoops();
-    let iframe;
-
-    for (let i = 0; i < this.widgets.length; ++i) {
-      this._cm.removeLineWidget(this.widgets[i]);
-    }
-    this.widgets.length = 0;
-
-    loopProtect.alias = 'protect';
-
-    let foundInfiniteLoop = false;
-    loopProtect.hit = (line) => {
-      foundInfiniteLoop = true;
-      if (line !== prevLine) {
-        this.props.detectInfiniteLoops();
-        this.props.stopSketch();
-        infiniteLoop = true;
-        callback(infiniteLoop, prevIsplaying);
-        const msg = document.createElement('div');
-        const loopError = `line ${line}: This loop is taking too long to run. This might be an infinite loop.`;
-        msg.appendChild(document.createTextNode(loopError));
-        msg.className = 'lint-error';
-        this.widgets.push(this._cm.addLineWidget(line - 1, msg, { coverGutter: false, noHScroll: true }));
-        prevLine = line;
-      }
-    };
-
-    const processed = loopProtect(this.props.file.content);
-
-    let iframeForLoop = document.getElementById('iframeForLoop');
-    if (iframeForLoop === null) {
-      iframe = document.createElement('iframe');
-      iframe.id = 'iframeForLoop';
-      iframe.style.display = 'none';
-      document.body.appendChild(iframe);
-      iframeForLoop = iframe;
-    } else {
-      iframeForLoop.srcdoc = '';
-    }
-    const win = iframeForLoop.contentWindow;
-    const doc = win.document;
-    doc.open();
-
-    win.protect = loopProtect;
-
-    doc.write(`<!DOCTYPE html>
-      <html>
-        <head>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.2/p5.min.js"></script>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.2/addons/p5.dom.min.js"></script>
-        </head>
-        <body>
-          <script> 
-            ${processed}
-          </script>
-        </body>
-      </html>`);
-    win.onerror = () => true;
-    doc.close();
-
-    setTimeout(() => {
-      if (!foundInfiniteLoop) {
-        callback(infiniteLoop, prevIsplaying, prevLine);
-      }
-    }, 200);
   }
 
   _cm: CodeMirror.Editor
@@ -289,14 +204,10 @@ Editor.propTypes = {
   closeEditorOptions: PropTypes.func.isRequired,
   showKeyboardShortcutModal: PropTypes.func.isRequired,
   setUnsavedChanges: PropTypes.func.isRequired,
-  infiniteLoop: PropTypes.bool.isRequired,
-  detectInfiniteLoops: PropTypes.func.isRequired,
-  resetInfiniteLoops: PropTypes.func.isRequired,
   startRefreshSketch: PropTypes.func.isRequired,
   autorefresh: PropTypes.bool.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   theme: PropTypes.string.isRequired,
-  stopSketch: PropTypes.func.isRequired
 };
 
 export default Editor;
