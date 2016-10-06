@@ -80,6 +80,7 @@
   width: #{48 / $base-font-size}rem;
 }
 
+
 .editor__options-button {
   @include themify() {
     @extend %icon;

@@ -100,7 +100,7 @@
 .sidebar__file-item-show-options {
   @include themify() {
     @extend %icon;
-    padding: #{8 / $base-font-size}rem 0;
+    padding: #{5 / $base-font-size}rem 0;
   }
   display: none;
   position: absolute;
@@ -142,7 +142,7 @@
   @include themify() {
     @extend %icon;
   }
-  height: #{14 / $base-font-size}rem;
+  height: #{29 / $base-font-size}rem;
   & svg {
     height: #{14 / $base-font-size}rem;
   }
@@ -150,6 +150,7 @@
   .sidebar--contracted & {
     display: inline-block;
   }
+  float: right;
 }
 
 .sidebar__contract {
@@ -157,13 +158,16 @@
     @extend %icon;
   }
   margin-left: #{10 / $base-font-size}rem;
-  height: #{14 / $base-font-size}rem;
+  height: #{29 / $base-font-size}rem;
   & svg {
     height: #{14 / $base-font-size}rem;
   }
   .sidebar--contracted & {
     display: none;
   }
+  width: #{191 / $base-font-size}rem;
+  text-align: right;
+  padding-right: #{11 / $base-font-size}rem !important;
 }
 
 .sidebar__icons {
