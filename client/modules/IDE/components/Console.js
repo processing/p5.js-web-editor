@@ -8,7 +8,7 @@ import classNames from 'classnames';
  *  How many console messages to store
  *  @type {Number}
  */
-const consoleMax = 100;
+const consoleMax = 200;
 
 class Console extends React.Component {
 
@@ -20,20 +20,28 @@ class Console extends React.Component {
      *  @type {Array}
      */
     this.children = [];
+    this.appendConsoleEvent = this.appendConsoleEvent.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.isPlaying && !this.props.isPlaying) {
       this.children = [];
-    } else if (nextProps.isExpanded && nextProps.consoleEvent !== this.props.consoleEvent) {
-      const args = nextProps.consoleEvent.arguments;
-      const method = nextProps.consoleEvent.method;
-      const nextChild = (
-        <div key={this.children.length} className={`preview-console__${method}`}>
-          {Object.keys(args).map((key) => <span key={`${this.children.length}-${key}`}>{args[key]}</span>)}
-        </div>
-      );
-      this.children.push(nextChild);
+    } else if (nextProps.consoleEvent !== this.props.consoleEvent && this.props.isPlaying) {
+      nextProps.consoleEvent.forEach(consoleEvent => {
+        if (consoleEvent.source === 'sketch') {
+          const args = consoleEvent.arguments;
+          Object.keys(args).forEach((key) => {
+            if (args[key].includes('Exiting potential infinite loop')) {
+              this.props.stopSketch();
+              this.props.expandConsole();
+              this.appendConsoleEvent(consoleEvent);
+            }
+          });
+          if (nextProps.isExpanded) {
+            this.appendConsoleEvent(consoleEvent);
+          }
+        }
+      });
     }
   }
 
@@ -45,6 +53,17 @@ class Console extends React.Component {
 
   componentDidUpdate() {
     this.refs.console_messages.scrollTop = this.refs.console_messages.scrollHeight;
+  }
+
+  appendConsoleEvent(consoleEvent) {
+    const args = consoleEvent.arguments;
+    const method = consoleEvent.method;
+    const nextChild = (
+      <div key={this.children.length} className={`preview-console__${method}`}>
+        {Object.keys(args).map((key) => <span key={`${this.children.length}-${key}`}>{args[key]}</span>)}
+      </div>
+    );
+    this.children.push(nextChild);
   }
 
   render() {
@@ -75,11 +94,12 @@ class Console extends React.Component {
 }
 
 Console.propTypes = {
-  consoleEvent: PropTypes.object,
+  consoleEvent: PropTypes.array,
   isPlaying: PropTypes.bool.isRequired,
   isExpanded: PropTypes.bool.isRequired,
   collapseConsole: PropTypes.func.isRequired,
-  expandConsole: PropTypes.func.isRequired
+  expandConsole: PropTypes.func.isRequired,
+  stopSketch: PropTypes.func.isRequired,
 };
 
 export default Console;

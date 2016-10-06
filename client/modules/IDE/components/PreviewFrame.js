@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import escapeStringRegexp from 'escape-string-regexp';
 import srcDoc from 'srcdoc-polyfill';
 
+import loopProtect from 'loop-protect';
+
 
 const startTag = '@fs-';
 
@@ -40,29 +42,11 @@ function hijackConsoleLogsScript() {
       'debug', 'clear', 'error', 'info', 'log', 'warn'
     ];
 
-
-    function throttle(fn, threshhold, scope) {
-      var last, deferTimer;
-      return function() {
-        var context = scope || this;
-        var now = +new Date,
-            args = arguments;
-        if (last && now < last + threshhold) {
-          // hold on to it
-          clearTimeout(deferTimer);
-          deferTimer = setTimeout(function() {
-            last = now;
-            fn.apply(context, args);
-          }, threshhold);
-        } else {
-          last = now;
-          fn.apply(context, args);
-        }
-      };
-    }
+    var consoleBuffer = [];
+    var LOGWAIT = 500;
 
     methods.forEach( function(method) {
-      iframeWindow.console[method] = throttle(function() {
+      iframeWindow.console[method] = function() {
         originalConsole[method].apply(originalConsole, arguments);
 
         var args = Array.from(arguments);
@@ -71,14 +55,20 @@ function hijackConsoleLogsScript() {
           return (typeof i === 'string') ? i : JSON.stringify(i);
         });
 
-        // post message to parent window
-        window.parent.postMessage({
+        consoleBuffer.push({
           method: method,
           arguments: args,
           source: 'sketch'
-        }, '*');
-      }, 100);
+        });
+      };
     });
+
+    setInterval(function() {
+      if (consoleBuffer.length > 0) {
+        window.parent.postMessage(consoleBuffer, '*');
+        consoleBuffer.length = 0;
+      }
+    }, LOGWAIT);
   </script>`;
   return s;
 }
@@ -131,9 +121,7 @@ class PreviewFrame extends React.Component {
 
     if (this.props.dispatchConsoleEvent) {
       window.addEventListener('message', (msg) => {
-        if (msg.data.source === 'sketch') {
-          this.props.dispatchConsoleEvent(msg);
-        }
+        this.props.dispatchConsoleEvent(msg);
       });
     }
   }
@@ -192,6 +180,8 @@ class PreviewFrame extends React.Component {
           });
         }
       });
+      newJSFile.content = loopProtect(newJSFile.content);
+      console.log(newJSFile.content);
       jsFiles.push(newJSFile);
     });
 
@@ -208,28 +198,30 @@ class PreviewFrame extends React.Component {
       htmlFile = htmlFile.replace(fileRegex, `<style>\n${cssFile.content}\n</style>`);
     });
 
+    const htmlHead = htmlFile.match(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi);
+    const headRegex = new RegExp('head', 'i');
+    let htmlHeadContents = htmlHead[0].split(headRegex)[1];
+    htmlHeadContents = htmlHeadContents.slice(1, htmlHeadContents.length - 2);
+    htmlHeadContents += '<script type="text/javascript" src="/loop-protect.min.js"></script>\n';
+
     if (this.props.textOutput || this.props.isTextOutputPlaying) {
-      const htmlHead = htmlFile.match(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi);
-      const headRegex = new RegExp('head', 'i');
-      let htmlHeadContents = htmlHead[0].split(headRegex)[1];
-      htmlHeadContents = htmlHeadContents.slice(1, htmlHeadContents.length - 2);
       htmlHeadContents += '<script src="/loadData.js"></script>\n';
       htmlHeadContents += '<script src="/interceptor-functions.js"></script>\n';
       htmlHeadContents += '<script src="/intercept-p5.js"></script>\n';
       htmlHeadContents += '<script type="text/javascript" src="/ntc.min.js"></script>';
-      htmlFile = htmlFile.replace(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi, `<head>\n${htmlHeadContents}\n</head>`);
     }
+
+    htmlFile = htmlFile.replace(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi, `<head>\n${htmlHeadContents}\n</head>`);
 
     scriptOffs = getAllScriptOffsets(htmlFile);
     htmlFile += hijackConsoleErrorsScript(JSON.stringify(scriptOffs));
-
 
     return htmlFile;
   }
 
   renderSketch() {
     const doc = ReactDOM.findDOMNode(this);
-    if (this.props.isPlaying && !this.props.infiniteLoop) {
+    if (this.props.isPlaying) {
       srcDoc.set(doc, this.injectLocalFiles());
       this.props.endSketchRefresh();
     } else {
@@ -255,6 +247,7 @@ class PreviewFrame extends React.Component {
         role="main"
         tabIndex="0"
         frameBorder="0"
+        ref="iframe"
         title="sketch output"
         sandbox="allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-modals allow-forms"
       />
@@ -276,8 +269,6 @@ PreviewFrame.propTypes = {
   files: PropTypes.array.isRequired,
   dispatchConsoleEvent: PropTypes.func,
   children: PropTypes.element,
-  infiniteLoop: PropTypes.bool.isRequired,
-  resetInfiniteLoops: PropTypes.func.isRequired,
   autorefresh: PropTypes.bool.isRequired,
   endSketchRefresh: PropTypes.func.isRequired,
   previewIsRefreshing: PropTypes.bool.isRequired,
