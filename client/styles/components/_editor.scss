@@ -71,6 +71,7 @@
     background-color: getThemifyVariable('editor-gutter-color');
     border-color: getThemifyVariable('ide-border-color');
   }
+  // left: 0 !important;
 }
 
 .editor__options-button {

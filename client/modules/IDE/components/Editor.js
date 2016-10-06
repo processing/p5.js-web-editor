@@ -45,7 +45,8 @@ class Editor extends React.Component {
       styleActiveLine: true,
       inputStyle: 'contenteditable',
       mode: 'javascript',
-      lineWrapping: true,
+      lineWrapping: false,
+      fixedGutter: false,
       gutters: ['CodeMirror-lint-markers'],
       keyMap: 'sublime',
       lint: {
@@ -68,11 +69,14 @@ class Editor extends React.Component {
     this._cm.on('change', debounce(1000, () => {
       this.props.setUnsavedChanges(true);
       this.props.updateFileContent(this.props.file.name, this._cm.getValue());
-      this.checkForInfiniteLoop((infiniteLoop, prevs) => {
-        if (!infiniteLoop && prevs && this.props.autorefresh) {
-          this.props.startRefreshSketch();
-        }
-      });
+      if (this.props.autorefresh && this.props.isPlaying) {
+        this.props.startRefreshSketch();
+      }
+      // this.checkForInfiniteLoop((infiniteLoop, prevs) => {
+      //   if (!infiniteLoop && prevs && this.props.autorefresh) {
+      //     this.props.startRefreshSketch();
+      //   }
+      // });
     }));
 
     this._cm.on('keyup', () => {

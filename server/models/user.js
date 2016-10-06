@@ -17,7 +17,7 @@ const userSchema = new Schema({
     lintWarning: { type: Boolean, default: false },
     textOutput: { type: Boolean, default: false },
     theme: { type: String, default: 'light' },
-    autorefresh: { type: Boolean, default: true }
+    autorefresh: { type: Boolean, default: false }
   }
 }, { timestamps: true });
 
