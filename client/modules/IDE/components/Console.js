@@ -8,7 +8,7 @@ import classNames from 'classnames';
  *  How many console messages to store
  *  @type {Number}
  */
-const consoleMax = 100;
+const consoleMax = 200;
 
 class Console extends React.Component {
 
@@ -27,17 +27,21 @@ class Console extends React.Component {
     if (nextProps.isPlaying && !this.props.isPlaying) {
       this.children = [];
     } else if (nextProps.consoleEvent !== this.props.consoleEvent && this.props.isPlaying) {
-      const args = nextProps.consoleEvent.arguments;
-      Object.keys(args).forEach((key) => {
-        if (args[key].includes('Exiting potential infinite loop')) {
-          this.props.stopSketch();
-          this.props.expandConsole();
-          this.appendConsoleEvent(nextProps.consoleEvent);
+      nextProps.consoleEvent.forEach(consoleEvent => {
+        if (consoleEvent.source === 'sketch') {
+          const args = consoleEvent.arguments;
+          Object.keys(args).forEach((key) => {
+            if (args[key].includes('Exiting potential infinite loop')) {
+              this.props.stopSketch();
+              this.props.expandConsole();
+              this.appendConsoleEvent(consoleEvent);
+            }
+          });
+          if (nextProps.isExpanded) {
+            this.appendConsoleEvent(consoleEvent);
+          }
         }
       });
-      if (nextProps.isExpanded) {
-        this.appendConsoleEvent(nextProps.consoleEvent);
-      }
     }
   }
 
@@ -90,7 +94,7 @@ class Console extends React.Component {
 }
 
 Console.propTypes = {
-  consoleEvent: PropTypes.object,
+  consoleEvent: PropTypes.array,
   isPlaying: PropTypes.bool.isRequired,
   isExpanded: PropTypes.bool.isRequired,
   collapseConsole: PropTypes.func.isRequired,

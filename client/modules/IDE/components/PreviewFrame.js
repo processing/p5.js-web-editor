@@ -42,29 +42,11 @@ function hijackConsoleLogsScript() {
       'debug', 'clear', 'error', 'info', 'log', 'warn'
     ];
 
-
-    function throttle(fn, threshhold, scope) {
-      var last, deferTimer;
-      return function() {
-        var context = scope || this;
-        var now = +new Date,
-            args = arguments;
-        if (last && now < last + threshhold) {
-          // hold on to it
-          clearTimeout(deferTimer);
-          deferTimer = setTimeout(function() {
-            last = now;
-            fn.apply(context, args);
-          }, threshhold);
-        } else {
-          last = now;
-          fn.apply(context, args);
-        }
-      };
-    }
+    var consoleBuffer = [];
+    var LOGWAIT = 500;
 
     methods.forEach( function(method) {
-      iframeWindow.console[method] = throttle(function() {
+      iframeWindow.console[method] = function() {
         originalConsole[method].apply(originalConsole, arguments);
 
         var args = Array.from(arguments);
@@ -73,14 +55,20 @@ function hijackConsoleLogsScript() {
           return (typeof i === 'string') ? i : JSON.stringify(i);
         });
 
-        // post message to parent window
-        window.parent.postMessage({
+        consoleBuffer.push({
           method: method,
           arguments: args,
           source: 'sketch'
-        }, '*');
-      }, 100);
+        });
+      };
     });
+
+    setInterval(function() {
+      if (consoleBuffer.length > 0) {
+        window.parent.postMessage(consoleBuffer, '*');
+        consoleBuffer.length = 0;
+      }
+    }, LOGWAIT);
   </script>`;
   return s;
 }
@@ -133,9 +121,7 @@ class PreviewFrame extends React.Component {
 
     if (this.props.dispatchConsoleEvent) {
       window.addEventListener('message', (msg) => {
-        if (msg.data.source === 'sketch') {
-          this.props.dispatchConsoleEvent(msg);
-        }
+        this.props.dispatchConsoleEvent(msg);
       });
     }
   }

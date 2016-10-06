@@ -415,7 +415,7 @@ IDEView.propTypes = {
   ide: PropTypes.shape({
     isPlaying: PropTypes.bool.isRequired,
     isTextOutputPlaying: PropTypes.bool.isRequired,
-    consoleEvent: PropTypes.object,
+    consoleEvent: PropTypes.array,
     modalIsVisible: PropTypes.bool.isRequired,
     sidebarIsExpanded: PropTypes.bool.isRequired,
     consoleIsExpanded: PropTypes.bool.isRequired,
