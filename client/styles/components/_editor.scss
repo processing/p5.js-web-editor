@@ -8,10 +8,15 @@
 
 .CodeMirror-linenumbers {
 	padding-right: #{10 / $base-font-size}rem;
+
 }
 
 .CodeMirror-linenumber {
 	width: #{35 / $base-font-size}rem;
+  left: 0 !important;
+  @include themify() {
+    color: getThemifyVariable('inactive-text-color');
+  }
 }
 
 .CodeMirror-lines {
@@ -30,7 +35,7 @@
 
 .CodeMirror-lint-marker-warning, .CodeMirror-lint-marker-error, .CodeMirror-lint-marker-multiple {
   background-image: none;
-  width: 70px;
+  width: #{48 / $base-font-size}rem;
   position: absolute;
   height: 100%;
 }
@@ -50,7 +55,7 @@
 
 .CodeMirror-gutter-elt:not(.CodeMirror-linenumber) {
   opacity: 0.3;
-  width: 70px !important;
+  width: #{48 / $base-font-size}rem !important;
   height: 100%;
   // background-color: rgb(255, 95, 82);
 }
@@ -72,6 +77,7 @@
     border-color: getThemifyVariable('ide-border-color');
   }
   // left: 0 !important;
+  width: #{48 / $base-font-size}rem;
 }
 
 .editor__options-button {
