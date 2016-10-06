@@ -25,15 +25,26 @@ class Console extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.isPlaying && !this.props.isPlaying) {
       this.children = [];
-    } else if (nextProps.isExpanded && nextProps.consoleEvent !== this.props.consoleEvent) {
+    } else if (nextProps.consoleEvent !== this.props.consoleEvent) {
       const args = nextProps.consoleEvent.arguments;
-      const method = nextProps.consoleEvent.method;
-      const nextChild = (
-        <div key={this.children.length} className={`preview-console__${method}`}>
-          {Object.keys(args).map((key) => <span key={`${this.children.length}-${key}`}>{args[key]}</span>)}
-        </div>
-      );
-      this.children.push(nextChild);
+      Object.keys(args).forEach((key) => {
+        if (args[key].includes('Exiting potential infinite loop')) {
+          // stop sketch
+          // dispatch infinite loop found
+          this.props.stopSketch();
+          this.props.detectInfiniteLoops();
+        }
+      });
+      if (nextProps.isExpanded) {
+        // const args = nextProps.consoleEvent.arguments;
+        const method = nextProps.consoleEvent.method;
+        const nextChild = (
+          <div key={this.children.length} className={`preview-console__${method}`}>
+            {Object.keys(args).map((key) => <span key={`${this.children.length}-${key}`}>{args[key]}</span>)}
+          </div>
+        );
+        this.children.push(nextChild);
+      }
     }
   }
 
@@ -79,7 +90,9 @@ Console.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   isExpanded: PropTypes.bool.isRequired,
   collapseConsole: PropTypes.func.isRequired,
-  expandConsole: PropTypes.func.isRequired
+  expandConsole: PropTypes.func.isRequired,
+  stopSketch: PropTypes.func.isRequired,
+  detectInfiniteLoops: PropTypes.func.isRequired
 };
 
 export default Console;

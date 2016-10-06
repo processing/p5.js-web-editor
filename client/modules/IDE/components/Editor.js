@@ -123,6 +123,14 @@ class Editor extends React.Component {
     if (this.props.theme !== prevProps.theme) {
       this._cm.setOption('theme', `p5-${this.props.theme}`);
     }
+
+    if (this.props.infiniteLoop && this.props.infiniteLoop !== prevProps.infiniteLoop) {
+      const msg = document.createElement('div');
+      const loopError = 'Loop is taking too long to run. This might be an infinite loop.';
+      msg.appendChild(document.createTextNode(loopError));
+      msg.className = 'lint-error';
+      this.widgets.push(this._cm.addLineWidget(1, msg, { coverGutter: false, noHScroll: true }));
+    }
   }
 
   componentWillUnmount() {

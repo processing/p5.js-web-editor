@@ -167,8 +167,6 @@ class PreviewFrame extends React.Component {
   }
 
   injectLocalFiles() {
-    loopProtect.alias = 'protect';
-    
     let htmlFile = this.props.htmlFile.content;
     let scriptOffs = [];
 
@@ -196,7 +194,9 @@ class PreviewFrame extends React.Component {
           });
         }
       });
-      jsFiles.push(loopProtect(newJSFile));
+      newJSFile.content = loopProtect(newJSFile.content);
+      console.log(newJSFile.content);
+      jsFiles.push(newJSFile);
     });
 
     jsFiles.forEach(jsFile => {
@@ -211,6 +211,13 @@ class PreviewFrame extends React.Component {
       const fileRegex = new RegExp(`<link.*?href=('|")((\.\/)|\/)?${fileName}('|").*?>`, 'gmi');
       htmlFile = htmlFile.replace(fileRegex, `<style>\n${cssFile.content}\n</style>`);
     });
+
+    const htmlHead = htmlFile.match(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi);
+    const headRegex = new RegExp('head', 'i');
+    let htmlHeadContents = htmlHead[0].split(headRegex)[1];
+    htmlHeadContents = htmlHeadContents.slice(1, htmlHeadContents.length - 2);
+    htmlHeadContents += '<script type="text/javascript" src="/loop-protect.min.js"></script>\n';
+    htmlFile = htmlFile.replace(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi, `<head>\n${htmlHeadContents}\n</head>`);
 
     if (this.props.textOutput || this.props.isTextOutputPlaying) {
       const htmlHead = htmlFile.match(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi);
@@ -227,11 +234,11 @@ class PreviewFrame extends React.Component {
     scriptOffs = getAllScriptOffsets(htmlFile);
     htmlFile += hijackConsoleErrorsScript(JSON.stringify(scriptOffs));
 
-
     return htmlFile;
   }
 
   renderSketch() {
+    this.props.resetInfiniteLoops();
     const doc = ReactDOM.findDOMNode(this);
     if (this.props.isPlaying && !this.props.infiniteLoop) {
       srcDoc.set(doc, this.injectLocalFiles());
@@ -259,6 +266,7 @@ class PreviewFrame extends React.Component {
         role="main"
         tabIndex="0"
         frameBorder="0"
+        ref="iframe"
         title="sketch output"
         sandbox="allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-modals allow-forms"
       />

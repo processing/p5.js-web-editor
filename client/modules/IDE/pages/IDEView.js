@@ -292,6 +292,8 @@ class IDEView extends React.Component {
                   isExpanded={this.props.ide.consoleIsExpanded}
                   expandConsole={this.props.expandConsole}
                   collapseConsole={this.props.collapseConsole}
+                  stopSketch={this.props.stopSketch}
+                  detectInfiniteLoops={this.props.detectInfiniteLoops}
                 />
               </SplitPane>
               <div>
@@ -325,6 +327,7 @@ class IDEView extends React.Component {
                   autorefresh={this.props.preferences.autorefresh}
                   previewIsRefreshing={this.props.ide.previewIsRefreshing}
                   endSketchRefresh={this.props.endSketchRefresh}
+                  stopSketch={this.props.stopSketch}
                 />
               </div>
             </SplitPane>
