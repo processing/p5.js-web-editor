@@ -10,7 +10,7 @@ body, input, button {
 	@include themify() {
 		color: getThemifyVariable('primary-text-color');
 	}
-	font-family: 'Avenir Next', Montserrat, sans-serif;
+	font-family: Montserrat, sans-serif;
 }
 
 .root-app, .app {

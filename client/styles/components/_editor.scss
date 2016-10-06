@@ -63,7 +63,7 @@
     color: getThemifyVariable('primary-text-color');
   }
   border-radius: 2px;
-  font-family: 'Avenir Next', Montserrat, sans-serif;
+  font-family: Montserrat, sans-serif;
 }
 
 .CodeMirror-gutters {
@@ -83,6 +83,7 @@
   right: #{5 / $base-font-size}rem;
   z-index: 1;
 }
+
 
 .editor__options {
   display: none;
