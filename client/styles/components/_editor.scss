@@ -88,12 +88,19 @@
   display: none;
   @extend %modal;
   position: absolute;
-  top: #{20 / $base-font-size}rem;
+  top: #{30 / $base-font-size}rem;
   right: #{5 / $base-font-size}rem;
   padding: #{10 / $base-font-size}rem;
 
+  // when editor options menu is opened,
+  // its parent will have .editor--options class,
+  // thus set .editor__options with display: block;
   .editor--options & {
     display: block;
+  }
+
+  li {
+    padding: #{10 / $base-font-size}rem;
   }
 }
 
