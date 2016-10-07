@@ -9,6 +9,11 @@
   }
 }
 
+
+.editor-preview-subpanel {
+  margin-top: #{29 / $base-font-size}rem;
+}
+
 .editor-preview-container {
   width: 100%;
   flex: 1 0 0px;
@@ -47,12 +52,22 @@
   position: absolute;
 }
 
+
 .preview-frame-overlay {
   height: 100%;
   width: 100%;
   position: absolute;
   z-index: 10;
   display: none;
+}
+
+.preview-frame-placeholder {
+  width: #{400 / $base-font-size}rem;
+  height: #{400 / $base-font-size}rem;
+  position: absolute;
+  @include themify() {
+    background: getThemifyVariable('preview-placeholder-color');
+  }
 }
 
 .toolbar {

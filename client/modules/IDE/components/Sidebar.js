@@ -27,6 +27,20 @@ class Sidebar extends React.Component {
 
     return (
       <nav className={sidebarClass} title="file-navigation" role="navigation">
+        <button
+          aria-label="collapse file navigation"
+          className="sidebar__contract"
+          onClick={this.props.collapseSidebar}
+        >
+          <InlineSVG src={leftArrowUrl} />
+        </button>
+        <button
+          aria-label="expand file navigation"
+          className="sidebar__expand"
+          onClick={this.props.expandSidebar}
+        >
+          <InlineSVG src={rightArrowUrl} />
+        </button>
         <div className="sidebar__header">
           <h3 className="sidebar__title">
             <span className="sidebar__folder-icon">
@@ -58,20 +72,6 @@ class Sidebar extends React.Component {
                 </a>
               </li>
             </ul>
-            <button
-              aria-label="collapse file navigation"
-              className="sidebar__contract"
-              onClick={this.props.collapseSidebar}
-            >
-              <InlineSVG src={leftArrowUrl} />
-            </button>
-            <button
-              aria-label="expand file navigation"
-              className="sidebar__expand"
-              onClick={this.props.expandSidebar}
-            >
-              <InlineSVG src={rightArrowUrl} />
-            </button>
           </div>
         </div>
         { /* <ul className="sidebar__file-list" title="project files">

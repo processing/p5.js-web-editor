@@ -257,6 +257,7 @@ class IDEView extends React.Component {
                 ref="consolePane"
                 onDragFinished={this._handleConsolePaneOnDragFinished}
                 allowResize={this.props.ide.consoleIsExpanded}
+                className="editor-preview-subpanel"
               >
                 <Editor
                   lintWarning={this.props.preferences.lintWarning}
@@ -292,7 +293,7 @@ class IDEView extends React.Component {
                   stopSketch={this.props.stopSketch}
                 />
               </SplitPane>
-              <div>
+              <div className="preview-frame-holder">
                 <div className="preview-frame-overlay" ref="overlay">
                 </div>
                 <div>
