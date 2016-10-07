@@ -80,7 +80,8 @@
   }
   position: absolute;
   top: #{5 / $base-font-size}rem;
-  right: #{5 / $base-font-size}rem;
+  // right: #{5 / $base-font-size}rem;
+  right: #{5 / $base-font-size * 4}rem; // move a little left to avoid vertical scroll bar
   z-index: 1;
 }
 
