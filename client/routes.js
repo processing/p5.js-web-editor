@@ -3,8 +3,6 @@ import React from 'react';
 import App from './modules/App/App';
 import IDEView from './modules/IDE/pages/IDEView';
 import FullView from './modules/IDE/pages/FullView';
-// import LoginView from './modules/User/pages/LoginView';
-// import SignupView from './modules/User/pages/SignupView';
 // import SketchListView from './modules/Sketch/pages/SketchListView';
 import { getUser } from './modules/User/actions';
 

@@ -6,7 +6,6 @@ import LoginForm from '../components/LoginForm';
 import { Link } from 'react-router';
 
 
-// function LoginView(props) {
 class LoginView extends React.Component {
   componentDidMount() {
     this.refs.login.focus();

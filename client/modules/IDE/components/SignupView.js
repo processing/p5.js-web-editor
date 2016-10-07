@@ -6,7 +6,6 @@ import SignupForm from '../components/SignupForm';
 import axios from 'axios';
 import { Link } from 'react-router';
 
-// function SignupView(props) {
 class SignupView extends React.Component {
   componentDidMount() {
     this.refs.signup.focus();
