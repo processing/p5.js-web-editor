@@ -1,9 +1,10 @@
 .signup {
+	@extend %modal;
 	text-align: center;
-	height: 100%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	padding: #{20 / $base-font-size}rem;
   align-items: center;
 }
 
