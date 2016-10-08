@@ -139,6 +139,11 @@ class PreviewFrame extends React.Component {
       return;
     }
 
+    if (this.props.fullView && this.props.files[0].id !== prevProps.files[0].id) {
+      this.renderSketch();
+      return;
+    }
+
     // small bug - if autorefresh is on, and the usr changes files
     // in the sketch, preview will reload
   }
@@ -223,7 +228,9 @@ class PreviewFrame extends React.Component {
     const doc = ReactDOM.findDOMNode(this);
     if (this.props.isPlaying) {
       srcDoc.set(doc, this.injectLocalFiles());
-      this.props.endSketchRefresh();
+      if (this.props.endSketchRefresh) {
+        this.props.endSketchRefresh();
+      }
     } else {
       doc.srcdoc = '';
       srcDoc.set(doc, '  ');
@@ -272,6 +279,7 @@ PreviewFrame.propTypes = {
   autorefresh: PropTypes.bool.isRequired,
   endSketchRefresh: PropTypes.func.isRequired,
   previewIsRefreshing: PropTypes.bool.isRequired,
+  fullView: PropTypes.bool,
 };
 
 export default PreviewFrame;
