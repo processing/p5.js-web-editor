@@ -27,6 +27,7 @@ class Console extends React.Component {
     if (nextProps.isPlaying && !this.props.isPlaying) {
       this.children = [];
     } else if (nextProps.consoleEvent !== this.props.consoleEvent && this.props.isPlaying) {
+      console.log(nextProps.consoleEvent);
       nextProps.consoleEvent.forEach(consoleEvent => {
         if (consoleEvent.source === 'sketch') {
           const args = consoleEvent.arguments;

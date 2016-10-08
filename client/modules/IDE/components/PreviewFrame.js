@@ -101,11 +101,12 @@ function hijackConsoleErrorsScript(offs) {
           var fileInfo = getScriptOff(lineNumber);
           data = msg + ' (' + fileInfo[1] + ': line ' + fileInfo[0] + ')';
         }
-        window.parent.postMessage({
+
+        window.parent.postMessage([{
           method: 'error',
           arguments: data,
           source: 'sketch'
-        }, '*');
+        }], '*');
       return false;
     };
   </script>`;
