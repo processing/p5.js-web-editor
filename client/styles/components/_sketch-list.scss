@@ -23,6 +23,10 @@
   padding: #{10 / $base-font-size}rem 0;
   padding-left: #{20 / $base-font-size}rem;
   max-height: 100%;
+
+  & .sketch-list__trash-column {
+  width: #{25 / $base-font-size}rem;
+  }
 }
 
 .sketches-table__row {
@@ -36,12 +40,7 @@
 }
 
 .visibility-toggle .sketch-list__trash-button {
-  @include themify() {
-    margin: 0;
-    padding: 0;
-    visibility: hidden;
-    width: 20px;
-  }
+  @extend %hidden-element;
 }
 
 .visibility-toggle:hover .sketch-list__trash-button {
@@ -49,10 +48,13 @@
     background-color: transparent;
     border: none;
     cursor: pointer;
-    margin: 0;
+    margin: #{4 / $base-font-size}rem #{-10 / $base-font-size}rem #{-10 / $base-font-size}rem 0;
     padding: 0;
-    visibility: visible;
-    width: 20px;
+    position: relative;
+    left:0px;
+    top:auto;
+    width:#{20 / $base-font-size}rem;
+    height:#{20 / $base-font-size}rem;
       & g {
         opacity: 1;
         fill: getThemifyVariable('icon-hover-color');

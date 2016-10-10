@@ -28,7 +28,7 @@ class SketchList extends React.Component {
           <table className="sketches-table" summary="table containing all saved projects">
             <thead>
               <tr>
-                <th scope="col"></th>
+                <th className="sketch-list__trash-column" scope="col"></th>
                 <th scope="col">Name</th>
                 <th scope="col">Created</th>
                 <th scope="col">Last Updated</th>
@@ -36,8 +36,8 @@ class SketchList extends React.Component {
             </thead>
             <tbody>
               {this.props.sketches.map(sketch =>
-                <tr className="sketches-table__row" key={sketch.id}>
-                  <td className="visibility-toggle">
+                <tr className="sketches-table__row visibility-toggle" key={sketch.id}>
+                  <td>
                     <button
                       className="sketch-list__trash-button"
                       onClick={() => {
