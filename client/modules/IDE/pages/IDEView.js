@@ -27,6 +27,8 @@ import SplitPane from 'react-split-pane';
 import Overlay from '../../App/components/Overlay';
 import SketchList from '../components/SketchList';
 import About from '../components/About';
+import LoginView from '../components/LoginView';
+import SignupView from '../components/SignupView';
 
 class IDEView extends React.Component {
   constructor(props) {
@@ -277,9 +279,6 @@ class IDEView extends React.Component {
                   closeEditorOptions={this.props.closeEditorOptions}
                   showKeyboardShortcutModal={this.props.showKeyboardShortcutModal}
                   setUnsavedChanges={this.props.setUnsavedChanges}
-                  infiniteLoop={this.props.ide.infiniteLoop}
-                  detectInfiniteLoops={this.props.detectInfiniteLoops}
-                  resetInfiniteLoops={this.props.resetInfiniteLoops}
                   isPlaying={this.props.ide.isPlaying}
                   theme={this.props.preferences.theme}
                   startRefreshSketch={this.props.startRefreshSketch}
@@ -292,6 +291,7 @@ class IDEView extends React.Component {
                   isExpanded={this.props.ide.consoleIsExpanded}
                   expandConsole={this.props.expandConsole}
                   collapseConsole={this.props.collapseConsole}
+                  stopSketch={this.props.stopSketch}
                 />
               </SplitPane>
               <div>
@@ -320,11 +320,10 @@ class IDEView extends React.Component {
                   isTextOutputPlaying={this.props.ide.isTextOutputPlaying}
                   textOutput={this.props.preferences.textOutput}
                   dispatchConsoleEvent={this.props.dispatchConsoleEvent}
-                  infiniteLoop={this.props.ide.infiniteLoop}
-                  resetInfiniteLoops={this.props.resetInfiniteLoops}
                   autorefresh={this.props.preferences.autorefresh}
                   previewIsRefreshing={this.props.ide.previewIsRefreshing}
                   endSketchRefresh={this.props.endSketchRefresh}
+                  stopSketch={this.props.stopSketch}
                 />
               </div>
             </SplitPane>
@@ -394,6 +393,24 @@ class IDEView extends React.Component {
             );
           }
         })()}
+        {(() => { // eslint-disable-line
+          if (this.props.location.pathname === '/login') {
+            return (
+              <Overlay>
+                <LoginView />
+              </Overlay>
+            );
+          }
+        })()}
+        {(() => { // eslint-disable-line
+          if (this.props.location.pathname === '/signup') {
+            return (
+              <Overlay>
+                <SignupView />
+              </Overlay>
+            );
+          }
+        })()}
       </div>
 
     );
@@ -418,7 +435,7 @@ IDEView.propTypes = {
   ide: PropTypes.shape({
     isPlaying: PropTypes.bool.isRequired,
     isTextOutputPlaying: PropTypes.bool.isRequired,
-    consoleEvent: PropTypes.object,
+    consoleEvent: PropTypes.array,
     modalIsVisible: PropTypes.bool.isRequired,
     sidebarIsExpanded: PropTypes.bool.isRequired,
     consoleIsExpanded: PropTypes.bool.isRequired,
@@ -430,7 +447,8 @@ IDEView.propTypes = {
     keyboardShortcutVisible: PropTypes.bool.isRequired,
     unsavedChanges: PropTypes.bool.isRequired,
     infiniteLoop: PropTypes.bool.isRequired,
-    previewIsRefreshing: PropTypes.bool.isRequired
+    previewIsRefreshing: PropTypes.bool.isRequired,
+    infiniteLoopMessage: PropTypes.string.isRequired
   }).isRequired,
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,

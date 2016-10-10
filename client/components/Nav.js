@@ -86,6 +86,14 @@ function Nav(props) {
           );
         })()}
         <li className="nav__item">
+          <p className="nav__reference">
+            <a
+              href="https://p5js.org/reference/"
+              target="_blank"
+            >Reference</a>
+          </p>
+        </li>
+        <li className="nav__item">
           <p className="nav__about">
             <Link to="/about">
               About

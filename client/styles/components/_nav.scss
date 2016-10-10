@@ -1,15 +1,16 @@
 .nav {
 	width: 100%;
 	padding: #{10 / $base-font-size}rem #{70 / $base-font-size}rem;
-	padding-left: #{170 / $base-font-size}rem;
+	padding-left: #{33 / $base-font-size}rem;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
+	font-size: #{12 / $base-font-size}rem; 
 }
 
 .nav__items-left, .nav__items-right {
 	@include themify() {
-		border-bottom: 2px dashed map-get($theme-map, 'inactive-text-color');
+		border-bottom: 1px dashed map-get($theme-map, 'inactive-text-color');
 	}
 	list-style: none;
 	display: flex;
@@ -19,10 +20,9 @@
 }
 
 .nav__item {
-	& + & {
-		margin-left: #{20 / $base-font-size}rem;
-	}
 	position: relative;
+	min-width: #{72 / $base-font-size}rem;
+	text-align: center;
 }
 
 .nav__dropdown {

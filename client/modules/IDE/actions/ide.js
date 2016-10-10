@@ -183,9 +183,10 @@ export function setUnsavedChanges(value) {
   };
 }
 
-export function detectInfiniteLoops() {
+export function detectInfiniteLoops(message) {
   return {
-    type: ActionTypes.DETECT_INFINITE_LOOPS
+    type: ActionTypes.DETECT_INFINITE_LOOPS,
+    message
   };
 }
 
