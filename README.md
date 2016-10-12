@@ -41,7 +41,6 @@ This project is currently in the early stages of development! It will definitely
   GITHUB_ID=<your-github-client-id>
   GITHUB_SECRET=<your-github-client-secret>
   ```
-
   For production, you will need to have real Github and Amazon credentions. Refer to [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) for creating an S3 bucket for testing.
 5. `$ npm run build`
 6. `$ npm run start:prod`

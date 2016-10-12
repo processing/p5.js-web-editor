@@ -7,6 +7,7 @@ import * as SketchActions from '../actions/projects';
 import * as ProjectActions from '../actions/project';
 import InlineSVG from 'react-inlinesvg';
 const exitUrl = require('../../../images/exit.svg');
+const trashCan = require('../../../images/trash-can.svg');
 
 class SketchList extends React.Component {
   componentDidMount() {
@@ -27,6 +28,7 @@ class SketchList extends React.Component {
           <table className="sketches-table" summary="table containing all saved projects">
             <thead>
               <tr>
+                <th className="sketch-list__trash-column" scope="col"></th>
                 <th scope="col">Name</th>
                 <th scope="col">Created</th>
                 <th scope="col">Last Updated</th>
@@ -34,7 +36,19 @@ class SketchList extends React.Component {
             </thead>
             <tbody>
               {this.props.sketches.map(sketch =>
-                <tr className="sketches-table__row" key={sketch.id}>
+                <tr className="sketches-table__row visibility-toggle" key={sketch.id}>
+                  <td>
+                    <button
+                      className="sketch-list__trash-button"
+                      onClick={() => {
+                        if (window.confirm(`Are you sure you want to delete "${sketch.name}"?`)) {
+                          this.props.deleteProject(sketch.id);
+                        }
+                      }}
+                    >
+                      <InlineSVG src={trashCan} alt="Delete Project" />
+                    </button>
+                  </td>
                   <td scope="row"><Link to={`/projects/${sketch._id}`}>{sketch.name}</Link></td>
                   <td>{moment(sketch.createdAt).format('MMM D, YYYY h:mm:ss A')}</td>
                   <td>{moment(sketch.updatedAt).format('MMM D, YYYY h:mm:ss A')}</td>
@@ -53,7 +67,8 @@ SketchList.propTypes = {
   getProjects: PropTypes.func.isRequired,
   sketches: PropTypes.array.isRequired,
   closeSketchList: PropTypes.func.isRequired,
-  username: PropTypes.string
+  username: PropTypes.string,
+  deleteProject: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

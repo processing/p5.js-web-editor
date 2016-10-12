@@ -29,3 +29,15 @@ export function getProjects(username) {
 export function closeSketchList() {
   browserHistory.goBack();
 }
+
+export function deleteProject(id) {
+  return (dispatch) => {
+    axios.delete(`${ROOT_URL}/projects/${id}`, { withCredentials: true })
+      .then(() => {
+        dispatch({
+          type: ActionTypes.DELETE_PROJECT,
+          id
+        });
+      });
+  };
+}
