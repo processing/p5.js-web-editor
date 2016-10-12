@@ -4,10 +4,13 @@ $base-font-size: 16;
 $p5js-pink: #ed225d;
 $white: #fff;
 $black: #000;
+$yellow: #F5DC23;
 
 $themes: (
   light: (
     primary-text-color: #333,
+    modal-button-color: #333,
+    heading-text-color: #333,
     secondary-text-color: #6b6b6b,
     inactive-text-color: #b5b5b5,
     background-color: #fbfbfb,
@@ -37,6 +40,8 @@ $themes: (
   ),
   dark: (
     primary-text-color: $white,
+    modal-button-color: $white,
+    heading-text-color: $white,
     secondary-text-color: #c2c2c2,
     inactive-text-color: #7d7d7d,
     background-color: #333,
@@ -63,6 +68,37 @@ $themes: (
     file-selected-color: #404040,
     input-text-color: #333,
     input-border-color: #979797,
+  ),
+  contrast: (
+    primary-text-color: $yellow,
+    modal-button-color: #333,
+    heading-text-color: #e1e1e1,
+    secondary-text-color: #e1e1e1,
+    inactive-text-color: #c1c1c1,
+    background-color: #333,
+    button-background-color: $white,
+    button-color: $black,
+    button-border-color: #979797,
+    toolbar-button-color: #333333,
+    toolbar-button-background-color: #C1C1C1,
+    button-background-hover-color: $yellow,
+    button-background-active-color: #f10046,
+    button-hover-color: #333333,
+    button-active-color: #333333,
+    modal-background-color: #444,
+    modal-button-background-color: #C1C1C1,
+    modal-border-color: #949494,
+    icon-color: #a9a9a9,
+    icon-hover-color: $yellow,
+    shadow-color: rgba(0, 0, 0, 0.16),
+    console-background-color: #4f4f4f,
+    console-header-background-color: #3f3f3f,
+    console-header-color: #b5b5b5,
+    ide-border-color: #949494,
+    editor-gutter-color: #454545,
+    file-selected-color: #404040,
+    input-text-color: #333,
+    input-border-color: #979797,
   )
 );
 
@@ -71,4 +107,3 @@ $console-error-color: #ff5f52;
 
 $toast-background-color: #979797;
 $toast-text-color: $white;
-
