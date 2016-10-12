@@ -25,6 +25,10 @@ router.route('/login').get((req, res) => {
   res.sendFile(path.resolve(`${__dirname}/../../index.html`));
 });
 
+router.route('/reset-password').get((req, res) => {
+  res.sendFile(path.resolve(`${__dirname}/../../index.html`));
+});
+
 router.route('/sketches').get((req, res) => {
   res.sendFile(path.resolve(`${__dirname}/../../index.html`));
 });

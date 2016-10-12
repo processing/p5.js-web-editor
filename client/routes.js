@@ -16,6 +16,7 @@ const routes = (store) =>
     <IndexRoute component={IDEView} onEnter={checkAuth(store)} />
     <Route path="/login" component={IDEView} />
     <Route path="/signup" component={IDEView} />
+    <Route path="/reset-password" component={IDEView} />
     <Route path="/projects/:project_id" component={IDEView} />
     <Route path="/full/:project_id" component={FullView} />
     <Route path="/sketches" component={IDEView} />

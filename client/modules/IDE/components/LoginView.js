@@ -18,6 +18,9 @@ class LoginView extends React.Component {
         <LoginForm {...this.props} />
         {/* <h2 className="login__divider">Or</h2>
         <GithubButton buttonText="Login with Github" /> */}
+        <Link className="form__signup-button" to="/signup">Signup</Link>
+        Or
+        <Link className="form__reset-password-button" to="/reset-password">Reset your password</Link>
         <Link className="form__cancel-button" to="/">Cancel</Link>
       </div>
     );

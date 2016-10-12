@@ -6,6 +6,8 @@ const userSchema = new Schema({
   name: { type: String, default: '' },
   username: { type: String, required: true, unique: true },
   password: { type: String },
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
   github: { type: String },
   email: { type: String, unique: true },
   tokens: Array,

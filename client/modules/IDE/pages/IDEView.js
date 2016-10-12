@@ -29,6 +29,7 @@ import SketchList from '../components/SketchList';
 import About from '../components/About';
 import LoginView from '../components/LoginView';
 import SignupView from '../components/SignupView';
+import ResetPasswordView from '../components/ResetPasswordView';
 
 class IDEView extends React.Component {
   constructor(props) {
@@ -406,6 +407,15 @@ class IDEView extends React.Component {
             return (
               <Overlay>
                 <SignupView />
+              </Overlay>
+            );
+          }
+        })()}
+        {(() => { // eslint-disable-line
+          if (this.props.location.pathname === '/reset-password') {
+            return (
+              <Overlay>
+                <ResetPasswordView />
               </Overlay>
             );
           }
