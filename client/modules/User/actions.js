@@ -105,15 +105,23 @@ export function logoutUser() {
   };
 }
 
-export function initiatePasswordReset(formValues) {
+export function initiateResetPassword(formValues) {
   return (dispatch) => {
-    axios.post(`${ROOT_URL}/reset-password`, formValues, { withCredentials: true})
-      .then(response => {
+    axios.post(`${ROOT_URL}/reset-password`, formValues, { withCredentials: true })
+      .then(() => {
         dispatch({
           type: ActionTypes.RESET_PASSWORD_INITIATE
         });
       })
-      .catch(response => dispatch({ActionTypes.ERROR}));
-  }
+      .catch(response => dispatch({
+        type: ActionTypes.ERROR,
+        message: response.data
+      }));
+  };
 }
 
+export function resetPasswordReset() {
+  return {
+    type: ActionTypes.RESET_PASSWORD_RESET
+  };
+}

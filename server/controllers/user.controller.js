@@ -1,4 +1,6 @@
 import User from '../models/user';
+import crypto from 'crypto';
+import async from 'async';
 
 export function createUser(req, res, next) {
   const user = new User({
@@ -74,11 +76,31 @@ export function updatePreferences(req, res) {
 }
 
 export function resetPasswordInitiate(req, res) {
-  User.findOne({ email: req.body.email }, (err, user) => {
-    if (!user) {
-      return res.json({message: 'If the email is registered with the editor, an email has been sent.'});
+  async.waterfall([
+    (done) => {
+      crypto.randomBytes(20, function(err, buf) {
+        var token = buf.toString('hex');
+        done(err, token);
+      });
+    },
+    (token, done) => {
+        User.findOne({ email: req.body.email }, (err, user) => {
+        if (!user) {
+          return res.json({success: true, message: 'If the email is registered with the editor, an email has been sent.'});
+        }
+        user.resetPasswordToken = token;
+        user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+
+        user.save(function(err) {
+          done(err, token, user);
+        });
+      });
     }
-    user.resetPasswordToken = token;
-    user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+  ], (err) => {
+    if (err) {
+      console.log(err);
+      return res.json({success: false});
+    }
+    return res.json({success: true, message: 'If the email is registered with the editor, an email has been sent.'});
   });
 }
