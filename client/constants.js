@@ -93,5 +93,7 @@ export const END_SKETCH_REFRESH = 'END_SKETCH_REFRESH';
 export const DETECT_INFINITE_LOOPS = 'DETECT_INFINITE_LOOPS';
 export const RESET_INFINITE_LOOPS = 'RESET_INFINITE_LOOPS';
 
+export const RESET_PASSWORD_INITIATE = 'RESET_PASSWORD_INITIATE';
+
 // eventually, handle errors more specifically and better
 export const ERROR = 'ERROR';

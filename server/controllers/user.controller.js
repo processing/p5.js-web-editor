@@ -72,3 +72,13 @@ export function updatePreferences(req, res) {
     });
   })
 }
+
+export function resetPasswordInitiate(req, res) {
+  User.findOne({ email: req.body.email }, (err, user) => {
+    if (!user) {
+      return res.json({message: 'If the email is registered with the editor, an email has been sent.'});
+    }
+    user.resetPasswordToken = token;
+    user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+  });
+}

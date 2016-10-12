@@ -18,9 +18,14 @@ class LoginView extends React.Component {
         <LoginForm {...this.props} />
         {/* <h2 className="login__divider">Or</h2>
         <GithubButton buttonText="Login with Github" /> */}
-        <Link className="form__signup-button" to="/signup">Signup</Link>
-        Or
-        <Link className="form__reset-password-button" to="/reset-password">Reset your password</Link>
+        <p className="form__navigation-options">
+          Don't have an account?&nbsp;
+          <Link className="form__signup-button" to="/signup">Sign Up</Link>
+        </p>
+        <p className="form__navigation-options">
+          Forgot your password?&nbsp;
+          <Link className="form__reset-password-button" to="/reset-password">Reset your password</Link>
+        </p>
         <Link className="form__cancel-button" to="/">Cancel</Link>
       </div>
     );
@@ -42,7 +47,7 @@ function mapDispatchToProps() {
 function validate(formProps) {
   const errors = {};
   if (!formProps.email) {
-    errors.email = 'Please enter a email';
+    errors.email = 'Please enter an email';
   }
   if (!formProps.password) {
     errors.password = 'Please enter a password';

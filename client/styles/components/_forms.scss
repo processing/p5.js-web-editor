@@ -8,4 +8,10 @@
 
 .form__cancel-button {
   margin-top: #{10 / $base-font-size}rem;
+  font-size: #{12 / $base-font-size}rem;
+}
+
+.form__navigation-options {
+  margin-top: #{10 / $base-font-size}rem;
+  font-size: #{12 / $base-font-size}rem;
 }

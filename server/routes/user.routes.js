@@ -8,4 +8,6 @@ router.route('/signup/duplicate_check').get(UserController.duplicateUserCheck);
 
 router.route('/preferences').put(UserController.updatePreferences);
 
+router.route('/reset-password').post(UserController.resetPasswordInitiate);
+
 export default router;
