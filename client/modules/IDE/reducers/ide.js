@@ -3,10 +3,7 @@ import * as ActionTypes from '../../../constants';
 const initialState = {
   isPlaying: false,
   isTextOutputPlaying: false,
-  consoleEvent: {
-    method: undefined,
-    arguments: []
-  },
+  consoleEvent: [],
   modalIsVisible: false,
   sidebarIsExpanded: false,
   consoleIsExpanded: false,
@@ -18,7 +15,8 @@ const initialState = {
   keyboardShortcutVisible: false,
   unsavedChanges: false,
   infiniteLoop: false,
-  previewIsRefreshing: false
+  previewIsRefreshing: false,
+  infiniteLoopMessage: ''
 };
 
 const ide = (state = initialState, action) => {
@@ -74,9 +72,9 @@ const ide = (state = initialState, action) => {
     case ActionTypes.SET_UNSAVED_CHANGES:
       return Object.assign({}, state, { unsavedChanges: action.value });
     case ActionTypes.DETECT_INFINITE_LOOPS:
-      return Object.assign({}, state, { infiniteLoop: true });
+      return Object.assign({}, state, { infiniteLoop: true, infiniteLoopMessage: action.message });
     case ActionTypes.RESET_INFINITE_LOOPS:
-      return Object.assign({}, state, { infiniteLoop: false });
+      return Object.assign({}, state, { infiniteLoop: false, infiniteLoopMessage: '' });
     case ActionTypes.START_SKETCH_REFRESH:
       return Object.assign({}, state, { previewIsRefreshing: true });
     case ActionTypes.END_SKETCH_REFRESH:

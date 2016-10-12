@@ -26,6 +26,7 @@ class FullView extends React.Component {
             head={
               <link type="text/css" rel="stylesheet" href="/preview-styles.css" />
             }
+            fullView
             isPlaying
           />
         </div>

@@ -71,6 +71,7 @@
     background-color: getThemifyVariable('editor-gutter-color');
     border-color: getThemifyVariable('ide-border-color');
   }
+  // left: 0 !important;
 }
 
 .editor__options-button {
@@ -79,7 +80,7 @@
   }
   position: absolute;
   top: #{5 / $base-font-size}rem;
-  right: #{5 / $base-font-size}rem;
+  right: #{20 / $base-font-size}rem; // move left to avoid vertical scroll bar
   z-index: 1;
 }
 
