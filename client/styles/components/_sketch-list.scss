@@ -25,12 +25,13 @@
   max-height: 100%;
 
   & .sketch-list__trash-column {
-  width: #{25 / $base-font-size}rem;
+    width: #{22 / $base-font-size}rem;
   }
 }
 
 .sketches-table__row {
   margin: #{10 / $base-font-size}rem;
+  height: #{25 / $base-font-size}rem;
 }
 
 .sketch-list__exit-button {
@@ -48,11 +49,10 @@
     background-color: transparent;
     border: none;
     cursor: pointer;
-    margin: #{4 / $base-font-size}rem #{-10 / $base-font-size}rem #{-10 / $base-font-size}rem 0;
     padding: 0;
-    position: relative;
-    left:0px;
-    top:auto;
+    position: initial;
+    left: 0;
+    top: 0;
     width:#{20 / $base-font-size}rem;
     height:#{20 / $base-font-size}rem;
       & g {
