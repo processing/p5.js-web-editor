@@ -50,7 +50,8 @@
 
 .preference__title {
 	width: 100%;
-	margin-bottom: #{10 / $base-font-size}rem;@include themify() {
+	margin-bottom: #{10 / $base-font-size}rem;
+	@include themify() {
 		color: getThemifyVariable('heading-text-color');
 	}
 }
