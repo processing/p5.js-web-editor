@@ -9,6 +9,8 @@ $yellow: #F5DC23;
 $themes: (
   light: (
     primary-text-color: #333,
+    modal-button-color: #333,
+    heading-text-color: #333,
     secondary-text-color: #6b6b6b,
     inactive-text-color: #b5b5b5,
     background-color: #fdfdfd,
@@ -38,6 +40,8 @@ $themes: (
   ),
   dark: (
     primary-text-color: $white,
+    modal-button-color: $white,
+    heading-text-color: $white,
     secondary-text-color: #c2c2c2,
     inactive-text-color: #7d7d7d,
     background-color: #333,
@@ -66,9 +70,11 @@ $themes: (
     input-border-color: #979797,
   ),
   contrast: (
-    primary-text-color: $white,
-    secondary-text-color: #c2c2c2,
-    inactive-text-color: #7d7d7d,
+    primary-text-color: $yellow,
+    modal-button-color: #333,
+    heading-text-color: #e1e1e1,
+    secondary-text-color: #e1e1e1,
+    inactive-text-color: #c1c1c1,
     background-color: #333,
     button-background-color: $white,
     button-color: $black,

@@ -32,6 +32,9 @@
 	flex-direction: row;
 	justify-content: space-between;
 	margin-bottom: #{20 / $base-font-size}rem;
+	@include themify() {
+		color: getThemifyVariable('heading-text-color');
+	}
 }
 
 .preference {
@@ -47,7 +50,9 @@
 
 .preference__title {
 	width: 100%;
-	margin-bottom: #{10 / $base-font-size}rem;
+	margin-bottom: #{10 / $base-font-size}rem;@include themify() {
+		color: getThemifyVariable('heading-text-color');
+	}
 }
 
 .preference__subtitle {
