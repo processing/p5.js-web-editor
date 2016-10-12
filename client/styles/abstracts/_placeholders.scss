@@ -75,7 +75,7 @@
 %preferences-button {
 	@extend %toolbar-button;
 	@include themify() {
-		color: getThemifyVariable('primary-button-color');
+		color: getThemifyVariable('primary-text-color');
 		background-color: getThemifyVariable('modal-button-background-color');
 		padding: 0;
 		margin-bottom: #{28 / $base-font-size}rem;
