@@ -190,6 +190,17 @@ class Preferences extends React.Component {
               checked={this.props.theme === 'dark'}
             />
             <label htmlFor="dark-theme-on" className="preference__option">Dark</label>
+            <input
+              type="radio"
+              onChange={() => this.props.setTheme('contrast')}
+              aria-label="contrast theme on"
+              name="contrast theme"
+              id="contrast-theme-on"
+              className="preference__radio-button"
+              value="contrast"
+              checked={this.props.theme === 'contrast'}
+            />
+            <label htmlFor="contrast-theme-on" className="preference__option">High Contrast</label>
           </div>
         </div>
         <div className="preference">

@@ -81,7 +81,7 @@
 		margin-bottom: #{28 / $base-font-size}rem;
 		line-height: #{50 / $base-font-size}rem;
 		& g {
-			fill: getThemifyVariable('primary-text-color');
+			fill: getThemifyVariable('modal-button-color');
 		}
 		&:hover {
 			background-color: getThemifyVariable('button-background-hover-color');
@@ -104,9 +104,10 @@
 	font-size: #{12 / $base-font-size}rem;
 	cursor: pointer;
 	text-align: left;
-	margin-bottom: #{5 / $base-font-size}rem;
-	border: 0;
 	padding: 0;
+	margin-bottom: #{5 / $base-font-size}rem;
+	padding-right: #{5 / $base-font-size}rem;
+	border: 0;
 	list-style-type: none;
 }
 
