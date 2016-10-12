@@ -80,9 +80,9 @@
 
 .preference__label {
 	@include themify() {
-		color: getThemifyColor('inactive-text-color');
+		color: getThemifyVariable('inactive-text-color');
 		&:hover {
-			color: getThemifyColor('inactive-text-color');
+			color: getThemifyVariable('primary-text-color');
 		}
 	}
 	margin: 0;
@@ -104,6 +104,7 @@
 .preference__option {
 	@include themify() {
 		@extend %preference-option;
+		padding-right: #{20 / $base-font-size}rem;
 	}
 }
 
@@ -116,8 +117,6 @@
 
 .preference__options {
 	display: flex;
-	justify-content: space-between;
-	width: #{80 / $base-font-size}rem;
 }
 
 .preference__radio-button:checked + .preference__option {

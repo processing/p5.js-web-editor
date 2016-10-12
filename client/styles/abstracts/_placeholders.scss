@@ -75,13 +75,13 @@
 %preferences-button {
 	@extend %toolbar-button;
 	@include themify() {
-		color: getThemifyVariable('modal-button-color');
+		color: getThemifyVariable('primary-button-color');
 		background-color: getThemifyVariable('modal-button-background-color');
 		padding: 0;
 		margin-bottom: #{28 / $base-font-size}rem;
 		line-height: #{50 / $base-font-size}rem;
 		& g {
-			fill: getThemifyVariable('primary-text-color');
+			fill: getThemifyVariable('modal-button-color');
 		}
 		&:hover {
 			background-color: getThemifyVariable('button-background-hover-color');
