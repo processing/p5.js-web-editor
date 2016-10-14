@@ -15,6 +15,8 @@ const user = (state = { authenticated: false }, action) => {
       };
     case ActionTypes.RESET_PASSWORD_INITIATE:
       return Object.assign(state, {}, { resetPasswordInitiate: true });
+    case ActionTypes.RESET_PASSWORD_RESET:
+      return Object.assign(state, {}, { resetPasswordInitiate: false });
     default:
       return state;
   }

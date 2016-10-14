@@ -16,10 +16,12 @@ class ResetPasswordView extends React.Component {
   }
 
   render() {
+    console.log(this.props.user);
     const resetPasswordClass = classNames({
       'reset-password': true,
-      'reset-password--submitted': this.props.user.passwordResetInitialized
+      'reset-password--submitted': this.props.user.resetPasswordInitiate
     });
+    console.log(resetPasswordClass);
     return (
       <div className={resetPasswordClass} ref="resetPassword" tabIndex="0">
         <h1>Reset Your Password</h1>
@@ -42,7 +44,7 @@ class ResetPasswordView extends React.Component {
 ResetPasswordView.propTypes = {
   resetPasswordReset: PropTypes.func.isRequired,
   user: PropTypes.shape({
-    passwordResetInitialized: PropTypes.bool
+    resetPasswordInitiate: PropTypes.bool
   }).isRequired,
 };
 
