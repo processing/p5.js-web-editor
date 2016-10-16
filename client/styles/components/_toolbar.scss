@@ -52,6 +52,11 @@
 
 .toolbar__logo {
 	margin-right: #{30 / $base-font-size}rem;
+	@include themify() {
+		& g {
+			fill: getThemifyVariable('logo-color');
+		}
+	}
 }
 
 .toolbar {
