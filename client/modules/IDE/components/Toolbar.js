@@ -50,7 +50,7 @@ class Toolbar extends React.Component {
 
     return (
       <div className="toolbar">
-        <img className="toolbar__logo" src={logoUrl} alt="p5js Logo" />
+        <InlineSVG className="toolbar__logo" src={logoUrl} alt="p5js Logo" />
         <button
           className="toolbar__play-sketch-button"
           onClick={() => {
