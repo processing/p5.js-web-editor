@@ -1,6 +1,8 @@
 import User from '../models/user';
 import crypto from 'crypto';
 import async from 'async';
+import nodemailer from 'nodemailer';
+import mg from 'nodemailer-mailgun-transport';
 
 export function createUser(req, res, next) {
   const user = new User({
@@ -95,12 +97,36 @@ export function resetPasswordInitiate(req, res) {
           done(err, token, user);
         });
       });
+    },
+    (token, user, done) => {
+      const auth = {
+        auth: {
+          api_key: process.env.MAILGUN_KEY,
+          domain: process.env.MAILGUN_DOMAIN
+        }
+      };
+
+      const transporter = nodemailer.createTransport(mg(auth));
+      const message = {
+        to: user.email,
+        from: 'passwordreset@mg.p5js.org',
+        subject: 'p5.js Web Editor Password Reset',
+        text: `You are receiving this email because you (or someone else) have requested
+        the reset of the password for your account. \n\n Please click on the following link, 
+        or paste this into your browser to complete the process: \n\n
+        http://${req.headers.host}/reset-password/${token}\n\n
+        If you did not request this, please ignore this email and your password will remain unchanged.\n`
+      };
+      transporter.sendMail(message, (error, info) => {
+        done(error);
+      });
     }
   ], (err) => {
     if (err) {
       console.log(err);
       return res.json({success: false});
     }
+    //send email here
     return res.json({success: true, message: 'If the email is registered with the editor, an email has been sent.'});
   });
 }

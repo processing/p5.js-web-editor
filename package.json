@@ -88,6 +88,7 @@
     "mongoose": "^4.4.16",
     "node-uuid": "^1.4.7",
     "nodemailer": "^2.6.4",
+    "nodemailer-mailgun-transport": "^1.2.2",
     "passport": "^0.3.2",
     "passport-github": "^1.1.0",
     "passport-local": "^1.0.0",
