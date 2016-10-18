@@ -49,19 +49,17 @@ class Editor extends React.Component {
       gutters: ['CodeMirror-lint-markers'],
       keyMap: 'sublime',
       lint: {
-        onUpdateLinting: () => {
-          debounce(2000, (annotations) => {
-            this.props.clearLintMessage();
-            annotations.forEach((x) => {
-              if (x.from.line > -1) {
-                this.props.updateLintMessage(x.severity, (x.from.line + 1), x.message);
-              }
-            });
-            if (this.props.lintMessages.length > 0 && this.props.lintWarning) {
-              this.beep.play();
+        onUpdateLinting: debounce(2000, (annotations) => {
+          this.props.clearLintMessage();
+          annotations.forEach((x) => {
+            if (x.from.line > -1) {
+              this.props.updateLintMessage(x.severity, (x.from.line + 1), x.message);
             }
           });
-        }
+          if (this.props.lintMessages.length > 0 && this.props.lintWarning) {
+            this.beep.play();
+          }
+        })
       }
     });
 
