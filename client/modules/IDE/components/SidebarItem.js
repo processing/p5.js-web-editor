@@ -74,7 +74,6 @@ class SidebarItem extends React.Component {
             <li>
               <a
                 onClick={() => {
-                  console.log('before show edit file name');
                   this.originalFileName = this.props.file.name;
                   this.props.showEditFileName(this.props.file.id);
                   setTimeout(() => this.refs.fileNameInput.focus(), 0);

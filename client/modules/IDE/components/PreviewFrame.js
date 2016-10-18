@@ -187,7 +187,6 @@ class PreviewFrame extends React.Component {
         }
       });
       newJSFile.content = loopProtect(newJSFile.content);
-      console.log(newJSFile.content);
       jsFiles.push(newJSFile);
     });
 

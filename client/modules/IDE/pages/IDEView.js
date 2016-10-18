@@ -127,7 +127,6 @@ class IDEView extends React.Component {
   }
 
   _handleSidebarPaneOnDragFinished() {
-    console.log('setting sidebar size');
     this.sidebarSize = this.refs.sidebarPane.state.draggedSize;
     this.refs.sidebarPane.setState({
       resized: false,
@@ -137,7 +136,6 @@ class IDEView extends React.Component {
 
   handleGlobalKeydown(e) {
     if (e.key === 's' && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
-      console.log('about to save project');
       e.preventDefault();
       e.stopPropagation();
       this.props.saveProject();

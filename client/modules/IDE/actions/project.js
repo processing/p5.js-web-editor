@@ -154,11 +154,8 @@ function buildZip(state) {
           }
         });
       } else {
-        console.log('adding', `${path}${file.name}`);
         zip.file(`${path}${file.name}`, file.content);
         numCompletedFiles += 1;
-        console.log('numFiles', numFiles);
-        console.log('numCompletedFiles', numCompletedFiles);
         if (numCompletedFiles === numFiles) {
           zip.generateAsync({ type: 'blob' }).then((content) => {
             saveAs(content, `${projectName}.zip`);
@@ -174,23 +171,6 @@ export function exportProjectAsZip() {
   return (dispatch, getState) => {
     const state = getState();
     buildZip(state);
-  //   async.each(state.files, (file, cb) => {
-  //     if (file.url) {
-  //       JSZipUtils.getBinaryContent(file.url, (err, data) => {
-  //         zip.file(file.name, data, { binary: true });
-  //         cb();
-  //       });
-  //     } else {
-  //       zip.file(file.name, file.content);
-  //       cb();
-  //     }
-  //   }, err => {
-  //     if (err) console.log(err);
-  //     zip.generateAsync({ type: 'blob' }).then((content) => {
-  //       saveAs(content, `${state.project.name}.zip`);
-  //     });
-  //   });
-  // };
   };
 }
 
