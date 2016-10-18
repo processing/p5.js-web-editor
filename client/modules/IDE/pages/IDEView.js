@@ -422,7 +422,7 @@ class IDEView extends React.Component {
           }
         })()}
         {(() => { // eslint-disable-line
-          if (this.props.location.pathname.match(/\/reset-password\/[a-fA-F0-9]{40}/)) {
+          if (this.props.location.pathname.match(/\/reset-password\/[a-fA-F0-9]+/)) {
             return (
               <Overlay>
                 <NewPasswordView token={this.props.params.reset_password_token} />

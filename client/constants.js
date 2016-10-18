@@ -95,6 +95,6 @@ export const RESET_INFINITE_LOOPS = 'RESET_INFINITE_LOOPS';
 
 export const RESET_PASSWORD_INITIATE = 'RESET_PASSWORD_INITIATE';
 export const RESET_PASSWORD_RESET = 'RESET_PASSWORD_RESET';
-
+export const INVALID_RESET_PASSWORD_TOKEN = 'INVALID_RESET_PASSWORD_TOKEN';
 // eventually, handle errors more specifically and better
 export const ERROR = 'ERROR';

@@ -3,6 +3,8 @@ import { reduxForm } from 'redux-form';
 import NewPasswordForm from './NewPasswordForm';
 import * as UserActions from '../../User/actions';
 import { bindActionCreators } from 'redux';
+import classNames from 'classnames';
+import { Link } from 'react-router';
 
 class NewPasswordView extends React.Component {
   componentDidMount() {
@@ -12,10 +14,20 @@ class NewPasswordView extends React.Component {
   }
 
   render() {
+    const newPasswordClass = classNames({
+      'new-password': true,
+      'new-password--invalid': this.props.user.resetPasswordInvalid
+    });
+    console.log(this.props.user);
+    console.log('rerendering!!');
     return (
-      <div className="new-password" ref="newPassword" tabIndex="0">
+      <div className={newPasswordClass} ref="newPassword" tabIndex="0">
         <h1>Set a New Password</h1>
         <NewPasswordForm {...this.props} />
+        <p className="new-password__invalid">
+          The password reset token is invalid or has expired.
+        </p>
+        <Link className="form__cancel-button" to="/">Close</Link>
       </div>
     );
   }
@@ -23,7 +35,10 @@ class NewPasswordView extends React.Component {
 
 NewPasswordView.propTypes = {
   token: PropTypes.string.isRequired,
-  validateResetPasswordToken: PropTypes.func.isRequired
+  validateResetPasswordToken: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    resetPasswordInvalid: PropTypes.bool
+  })
 };
 
 function validate(formProps) {

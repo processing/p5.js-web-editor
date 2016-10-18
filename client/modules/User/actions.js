@@ -131,7 +131,6 @@ export function validateResetPasswordToken(token) {
     axios.get(`${ROOT_URL}/reset-password/${token}`)
       .then(() => {
         // do nothing if the token is valid
-        // add the token to the state?
       })
       .catch(() => dispatch({
         type: ActionTypes.INVALID_RESET_PASSWORD_TOKEN
