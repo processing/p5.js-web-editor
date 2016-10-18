@@ -109,13 +109,12 @@ export function resetPasswordInitiate(req, res) {
       const transporter = nodemailer.createTransport(mg(auth));
       const message = {
         to: user.email,
-        from: 'passwordreset@mg.p5js.org',
+        from: 'p5.js Web Editor <support@p5js.org>',
         subject: 'p5.js Web Editor Password Reset',
-        text: `You are receiving this email because you (or someone else) have requested
-        the reset of the password for your account. \n\n Please click on the following link, 
-        or paste this into your browser to complete the process: \n\n
-        http://${req.headers.host}/reset-password/${token}\n\n
-        If you did not request this, please ignore this email and your password will remain unchanged.\n`
+        text: `You are receiving this email because you (or someone else) have requested the reset of the password for your account.
+        \n\nPlease click on the following link, or paste this into your browser to complete the process:
+        \n\nhttp://${req.headers.host}/reset-password/${token}
+        \n\nIf you did not request this, please ignore this email and your password will remain unchanged.\n`
       };
       transporter.sendMail(message, (error, info) => {
         done(error);
@@ -129,4 +128,38 @@ export function resetPasswordInitiate(req, res) {
     //send email here
     return res.json({success: true, message: 'If the email is registered with the editor, an email has been sent.'});
   });
+}
+
+export function validateResetPasswordToken(req, res) {
+  User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, (err, user) => {
+    if (!user) {
+      return res.status(401).json({success: false, message: 'Password reset token is invalid or has expired.'});
+    }
+    res.json({ success: true });
+  });
+}
+
+export function updatePassword(req, res) {
+  User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+    if (!user) {
+      return res.status(401).json({success: false, message: 'Password reset token is invalid or has expired.'});
+    }
+
+    user.password = req.body.password;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+
+    user.save(function(err) {
+      req.logIn(user, function(err) {
+        return res.json({
+          email: req.user.email,
+          username: req.user.username,
+          preferences: req.user.preferences,
+          id: req.user._id
+        });
+      });
+    });
+  });
+
+  //eventually send email that the password has been reset
 }

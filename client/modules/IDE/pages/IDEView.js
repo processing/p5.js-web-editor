@@ -30,6 +30,7 @@ import About from '../components/About';
 import LoginView from '../components/LoginView';
 import SignupView from '../components/SignupView';
 import ResetPasswordView from '../components/ResetPasswordView';
+import NewPasswordView from '../components/NewPasswordView';
 
 class IDEView extends React.Component {
   constructor(props) {
@@ -420,6 +421,15 @@ class IDEView extends React.Component {
             );
           }
         })()}
+        {(() => { // eslint-disable-line
+          if (this.props.location.pathname.match(/\/reset-password\/[a-fA-F0-9]{40}/)) {
+            return (
+              <Overlay>
+                <NewPasswordView token={this.props.params.reset_password_token} />
+              </Overlay>
+            );
+          }
+        })()}
       </div>
 
     );
@@ -429,7 +439,8 @@ class IDEView extends React.Component {
 IDEView.propTypes = {
   params: PropTypes.shape({
     project_id: PropTypes.string,
-    username: PropTypes.string
+    username: PropTypes.string,
+    reset_password_token: PropTypes.string,
   }),
   location: PropTypes.shape({
     pathname: PropTypes.string

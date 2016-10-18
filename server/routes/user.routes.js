@@ -10,4 +10,8 @@ router.route('/preferences').put(UserController.updatePreferences);
 
 router.route('/reset-password').post(UserController.resetPasswordInitiate);
 
+router.route('/reset-password/:token').get(UserController.validateResetPasswordToken);
+
+router.route('/reset-password/:token').post(UserController.updatePassword);
+
 export default router;

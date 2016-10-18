@@ -125,3 +125,29 @@ export function resetPasswordReset() {
     type: ActionTypes.RESET_PASSWORD_RESET
   };
 }
+
+export function validateResetPasswordToken(token) {
+  return (dispatch) => {
+    axios.get(`${ROOT_URL}/reset-password/${token}`)
+      .then(() => {
+        // do nothing if the token is valid
+        // add the token to the state?
+      })
+      .catch(() => dispatch({
+        type: ActionTypes.INVALID_RESET_PASSWORD_TOKEN
+      }));
+  };
+}
+
+export function updatePassword(token, formValues) {
+  return (dispatch) => {
+    axios.post(`${ROOT_URL}/reset-password/${token}`, formValues)
+      .then((response) => {
+        dispatch(loginUserSuccess(response.data));
+        browserHistory.push('/');
+      })
+      .catch(() => dispatch({
+        type: ActionTypes.INVALID_RESET_PASSWORD_TOKEN
+      }));
+  };
+}
