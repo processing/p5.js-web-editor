@@ -196,6 +196,7 @@ class IDEView extends React.Component {
           autorefresh={this.props.preferences.autorefresh}
           setAutorefresh={this.props.setAutorefresh}
           startSketchAndRefresh={this.props.startSketchAndRefresh}
+          saveProject={this.props.saveProject}
         />
         <Preferences
           isVisible={this.props.ide.preferencesIsVisible}
