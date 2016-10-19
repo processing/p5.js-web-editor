@@ -77,7 +77,8 @@ class Editor extends React.Component {
     });
 
     this._cm.on('keydown', (_cm, e) => {
-      if (e.key === 'Tab' && e.shiftKey) {
+      // 9 === Tab
+      if (e.keyCode === 9 && e.shiftKey) {
         this.tidyCode();
       }
     });

@@ -137,15 +137,17 @@ class IDEView extends React.Component {
   }
 
   handleGlobalKeydown(e) {
-    if (e.key === 's' && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
+    // 83 === s
+    if (e.keyCode === 83 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
       e.preventDefault();
       e.stopPropagation();
       this.props.saveProject();
-    } else if (e.key === 'Enter' && e.shiftKey && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
+      // 13 === enter
+    } else if (e.keyCode === 13 && e.shiftKey && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
       e.preventDefault();
       e.stopPropagation();
       this.props.stopSketch();
-    } else if (e.key === 'Enter' && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
+    } else if (e.keyCode === 13 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
       e.preventDefault();
       e.stopPropagation();
       this.props.startSketchAndRefresh();

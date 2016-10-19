@@ -65,7 +65,7 @@
     "body-parser": "^1.15.1",
     "bson-objectid": "^1.1.4",
     "classnames": "^2.2.5",
-    "codemirror": "^5.14.2",
+    "codemirror": "^5.19.0",
     "connect-mongo": "^1.2.0",
     "cookie-parser": "^1.4.1",
     "csslint": "^0.10.0",
