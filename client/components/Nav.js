@@ -19,7 +19,7 @@ function Nav(props) {
               <li className="nav__item">
                 <a
                   className="nav__save"
-                  onClick={props.saveProject}
+                  onClick={() => props.saveProject()}
                 >
                   Save
                 </a>

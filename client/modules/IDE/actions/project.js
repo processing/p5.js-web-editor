@@ -49,7 +49,7 @@ export function setProjectName(name) {
   };
 }
 
-export function saveProject(autosave) {
+export function saveProject(autosave = false) {
   return (dispatch, getState) => {
     const state = getState();
     if (state.user.id && state.project.owner && state.project.owner.id !== state.user.id) {
