@@ -16,6 +16,10 @@ class SignupView extends React.Component {
       <div className="signup" ref="signup" tabIndex="0">
         <h1>Sign Up</h1>
         <SignupForm {...this.props} />
+        <p className="form__navigation-options">
+          Already have an account?&nbsp;
+          <Link className="form__login-button" to="/login">Login</Link>
+        </p>
         <Link className="form__cancel-button" to="/">Cancel</Link>
       </div>
     );
