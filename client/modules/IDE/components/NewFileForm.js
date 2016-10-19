@@ -24,6 +24,7 @@ class NewFileForm extends React.Component {
           {...name}
         />
         <input type="submit" value="Add File" aria-label="add file" />
+        {name.touched && name.error && <span className="form-error">{name.error}</span>}
       </form>
     );
   }

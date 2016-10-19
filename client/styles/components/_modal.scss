@@ -32,6 +32,11 @@
   margin-bottom: #{20 / $base-font-size}rem;
 }
 
+.new-file-form, .new-file-folder {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .new-file-form__name-label, .new-folder-form__name-label {
   @extend %hidden-element;
 }
