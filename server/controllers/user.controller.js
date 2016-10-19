@@ -114,7 +114,8 @@ export function resetPasswordInitiate(req, res) {
         text: `You are receiving this email because you (or someone else) have requested the reset of the password for your account.
         \n\nPlease click on the following link, or paste this into your browser to complete the process:
         \n\nhttp://${req.headers.host}/reset-password/${token}
-        \n\nIf you did not request this, please ignore this email and your password will remain unchanged.\n`
+        \n\nIf you did not request this, please ignore this email and your password will remain unchanged.
+        \n\nThanks for using the p5.js Web Editor!\n`
       };
       transporter.sendMail(message, (error, info) => {
         done(error);
