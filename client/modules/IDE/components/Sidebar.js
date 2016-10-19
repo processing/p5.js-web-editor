@@ -38,8 +38,10 @@ class Sidebar extends React.Component {
             <button
               aria-label="add file or folder"
               className="sidebar__add"
-              onClick={(e) => {
-                e.target.focus();
+              tabIndex="0"
+              ref="sidebarOptions"
+              onClick={() => {
+                this.refs.sidebarOptions.focus();
                 this.props.openProjectOptions();
               }}
               onBlur={() => setTimeout(this.props.closeProjectOptions, 200)}

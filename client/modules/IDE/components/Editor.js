@@ -103,11 +103,11 @@ class Editor extends React.Component {
       this._cm.setOption('indentWithTabs', this.props.isTabIndent);
     }
     if (this.props.file.name !== prevProps.name) {
-      if (this.props.file.name.match(/.+\.js$/)) {
+      if (this.props.file.name.match(/.+\.js$/i)) {
         this._cm.setOption('mode', 'javascript');
-      } else if (this.props.file.name.match(/.+\.css$/)) {
+      } else if (this.props.file.name.match(/.+\.css$/i)) {
         this._cm.setOption('mode', 'css');
-      } else if (this.props.file.name.match(/.+\.html$/)) {
+      } else if (this.props.file.name.match(/.+\.html$/i)) {
         this._cm.setOption('mode', 'htmlmixed');
       }
     }
@@ -155,8 +155,9 @@ class Editor extends React.Component {
           className="editor__options-button"
           aria-label="editor options"
           tabIndex="0"
-          onClick={(e) => {
-            e.target.focus();
+          ref="optionsButton"
+          onClick={() => {
+            this.refs.optionsButton.focus();
             this.props.showEditorOptions();
           }}
           onBlur={() => setTimeout(this.props.closeEditorOptions, 200)}

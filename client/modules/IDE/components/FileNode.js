@@ -117,8 +117,10 @@ export class FileNode extends React.Component {
                 <button
                   className="sidebar__file-item-show-options"
                   aria-label="view file options"
-                  onClick={(e) => {
-                    e.target.focus();
+                  ref={`fileOptions-${this.props.id}`}
+                  tabIndex="0"
+                  onClick={() => {
+                    this.refs[`fileOptions-${this.props.id}`].focus();
                     this.props.showFileOptions(this.props.id);
                   }}
                 >
