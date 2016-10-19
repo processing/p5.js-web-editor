@@ -27,7 +27,7 @@ import InlineSVG from 'react-inlinesvg';
 const downArrowUrl = require('../../../images/down-arrow.svg');
 import classNames from 'classnames';
 
-import { debounce } from 'throttle-debounce';
+import { debounce } from 'lodash';
 
 class Editor extends React.Component {
   constructor(props) {
@@ -49,7 +49,7 @@ class Editor extends React.Component {
       gutters: ['CodeMirror-lint-markers'],
       keyMap: 'sublime',
       lint: {
-        onUpdateLinting: debounce(2000, (annotations) => {
+        onUpdateLinting: debounce((annotations) => {
           this.props.clearLintMessage();
           annotations.forEach((x) => {
             if (x.from.line > -1) {
@@ -59,17 +59,17 @@ class Editor extends React.Component {
           if (this.props.lintMessages.length > 0 && this.props.lintWarning) {
             this.beep.play();
           }
-        })
+        }, 2000)
       }
     });
 
-    this._cm.on('change', debounce(400, () => {
+    this._cm.on('change', debounce(() => {
       this.props.setUnsavedChanges(true);
       this.props.updateFileContent(this.props.file.name, this._cm.getValue());
       if (this.props.autorefresh && this.props.isPlaying) {
         this.props.startRefreshSketch();
       }
-    }));
+    }, 400));
 
     this._cm.on('keyup', () => {
       const temp = `line ${parseInt((this._cm.getCursor().line) + 1, 10)}`;
