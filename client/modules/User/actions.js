@@ -107,11 +107,12 @@ export function logoutUser() {
 
 export function initiateResetPassword(formValues) {
   return (dispatch) => {
+    dispatch({
+      type: ActionTypes.RESET_PASSWORD_INITIATE
+    });
     axios.post(`${ROOT_URL}/reset-password`, formValues, { withCredentials: true })
       .then(() => {
-        dispatch({
-          type: ActionTypes.RESET_PASSWORD_INITIATE
-        });
+        // do nothing
       })
       .catch(response => dispatch({
         type: ActionTypes.ERROR,

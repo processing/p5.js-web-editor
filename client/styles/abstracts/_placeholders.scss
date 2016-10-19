@@ -59,12 +59,12 @@
 		border: 1px solid getThemifyVariable('button-border-color');
 		border-radius: 2px;
 		padding: #{10 / $base-font-size}rem #{30 / $base-font-size}rem;
-		&:hover {
+		&:enabled:hover {
 			border-color: getThemifyVariable('button-background-hover-color');
 			background-color: getThemifyVariable('button-background-hover-color');
 			color: getThemifyVariable('button-hover-color');
 		}
-		&:active {
+		&:enabled:active {
 			border-color: getThemifyVariable('button-background-active-color');
 			background-color: getThemifyVariable('button-background-active-color');
 			color: getThemifyVariable('button-active-color');

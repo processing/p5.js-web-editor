@@ -13,7 +13,7 @@ function ResetPasswordForm(props) {
           {...email}
         />
       </p>
-      <input type="submit" disabled={submitting || invalid || pristine} value="Send password reset email" aria-label="Send email to reset password" />
+      <input type="submit" disabled={submitting || invalid || pristine || props.user.resetPasswordInitiate} value="Send password reset email" aria-label="Send email to reset password" />
     </form>
   );
 }
@@ -26,7 +26,10 @@ ResetPasswordForm.propTypes = {
   initiateResetPassword: PropTypes.func.isRequired,
   submitting: PropTypes.bool,
   invalid: PropTypes.bool,
-  pristine: PropTypes.bool
+  pristine: PropTypes.bool,
+  user: PropTypes.shape({
+    resetPasswordInitiate: PropTypes.bool
+  })
 };
 
 export default ResetPasswordForm;
