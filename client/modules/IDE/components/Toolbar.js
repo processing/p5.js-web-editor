@@ -103,6 +103,9 @@ class Toolbar extends React.Component {
             onBlur={() => {
               this.validateProjectName();
               this.props.hideEditProjectName();
+              if (this.props.project.id) {
+                this.props.saveProject();
+              }
             }}
             onKeyPress={this.handleKeyPress}
           />
@@ -142,14 +145,16 @@ Toolbar.propTypes = {
   }),
   project: PropTypes.shape({
     name: PropTypes.string.isRequired,
-    isEditingName: PropTypes.bool
+    isEditingName: PropTypes.bool,
+    id: PropTypes.string
   }).isRequired,
   showEditProjectName: PropTypes.func.isRequired,
   hideEditProjectName: PropTypes.func.isRequired,
   infiniteLoop: PropTypes.bool.isRequired,
   autorefresh: PropTypes.bool.isRequired,
   setAutorefresh: PropTypes.func.isRequired,
-  startSketchAndRefresh: PropTypes.func.isRequired
+  startSketchAndRefresh: PropTypes.func.isRequired,
+  saveProject: PropTypes.func.isRequired
 };
 
 export default Toolbar;
