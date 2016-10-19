@@ -4,25 +4,13 @@ import axios from 'axios';
 import JSZip from 'jszip';
 import JSZipUtils from 'jszip-utils';
 import { saveAs } from 'file-saver';
-import { getBlobUrl } from './files';
 import { showToast, setToastText } from './toast';
 import { setUnsavedChanges } from './ide';
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
-export function getProjectBlobUrls() {
-  return (dispatch, getState) => {
-    const state = getState();
-    state.files.forEach(file => {
-      if (file.url) {
-        getBlobUrl(file)(dispatch);
-      }
-    });
-  };
-}
-
 export function getProject(id) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     axios.get(`${ROOT_URL}/projects/${id}`, { withCredentials: true })
       .then(response => {
         // browserHistory.push(`/projects/${id}`);
@@ -32,7 +20,6 @@ export function getProject(id) {
           files: response.data.files,
           owner: response.data.user
         });
-        getProjectBlobUrls()(dispatch, getState);
         dispatch(setUnsavedChanges(false));
       })
       .catch(response => dispatch({

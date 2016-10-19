@@ -1,8 +1,5 @@
 import * as ActionTypes from '../../../constants';
 import axios from 'axios';
-import blobUtil from 'blob-util';
-import xhr from 'xhr';
-import fileType from 'file-type';
 import objectID from 'bson-objectid';
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
@@ -36,38 +33,6 @@ export function updateFileContent(name, content) {
   };
 }
 
-export function getBlobUrl(file) {
-  return (dispatch) => {
-    xhr({
-      uri: file.url,
-      responseType: 'arraybuffer',
-      useXDR: true
-    }, (err, body, res) => {
-      if (err) throw err;
-      const typeOfFile = fileType(new Uint8Array(res));
-      blobUtil.arrayBufferToBlob(res, typeOfFile.mime)
-      .then(blobUtil.createObjectURL)
-      .then(objectURL => {
-        dispatch({
-          type: ActionTypes.SET_BLOB_URL,
-          name: file.name,
-          blobURL: objectURL
-        });
-      });
-    });
-
-    // blobUtil.imgSrcToBlob(file.url, undefined, { crossOrigin: 'Anonymous' })
-    // .then(blobUtil.createObjectURL)
-    // .then(objectURL => {
-    //   dispatch({
-    //     type: ActionTypes.SET_BLOB_URL,
-    //     name: file.name,
-    //     blobURL: objectURL
-    //   });
-    // });
-  };
-}
-
 export function createFile(formProps) {
   return (dispatch, getState) => {
     const state = getState();
@@ -89,9 +54,6 @@ export function createFile(formProps) {
       };
       axios.post(`${ROOT_URL}/projects/${state.project.id}/files`, postParams, { withCredentials: true })
         .then(response => {
-          if (response.data.url) {
-            getBlobUrl(response.data)(dispatch);
-          }
           dispatch({
             type: ActionTypes.CREATE_FILE,
             ...response.data,
@@ -106,9 +68,6 @@ export function createFile(formProps) {
           error: response.data
         }));
     } else {
-      if (formProps.url) {
-        getBlobUrl(formProps)(dispatch);
-      }
       const id = objectID().toHexString();
       dispatch({
         type: ActionTypes.CREATE_FILE,

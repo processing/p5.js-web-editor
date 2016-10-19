@@ -181,7 +181,7 @@ class PreviewFrame extends React.Component {
           const fileName = filePathArray[filePathArray.length - 1];
           mediaFiles.forEach(file => {
             if (file.name === fileName) {
-              newJSFile.content = newJSFile.content.replace(filePath, file.blobURL); // eslint-disable-line
+              newJSFile.content = newJSFile.content.replace(filePath, file.url); // eslint-disable-line
             }
           });
         }
