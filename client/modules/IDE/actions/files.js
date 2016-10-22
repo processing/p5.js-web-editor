@@ -1,6 +1,7 @@
 import * as ActionTypes from '../../../constants';
 import axios from 'axios';
 import objectID from 'bson-objectid';
+import blobUtil from 'blob-util';
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
@@ -221,4 +222,22 @@ export function hideFolderChildren(id) {
     type: ActionTypes.HIDE_FOLDER_CHILDREN,
     id
   };
+}
+
+export function setBlobUrl(file, blobURL) {
+  return {
+    type: ActionTypes.SET_BLOB_URL,
+    name: file.name,
+    blobURL
+  };
+}
+
+export function getBlobUrl(file) {
+  if (file.blobUrl) {
+    blobUtil.revokeObjectURL(file.blobUrl);
+  }
+
+  const fileBlob = blobUtil.createBlob([file.content], { type: 'text/plain' });
+  const blobURL = blobUtil.createObjectURL(fileBlob);
+  return blobURL;
 }

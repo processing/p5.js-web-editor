@@ -327,6 +327,7 @@ class IDEView extends React.Component {
                   previewIsRefreshing={this.props.ide.previewIsRefreshing}
                   endSketchRefresh={this.props.endSketchRefresh}
                   stopSketch={this.props.stopSketch}
+                  setBlobUrl={this.props.setBlobUrl}
                 />
               </div>
             </SplitPane>
@@ -568,7 +569,8 @@ IDEView.propTypes = {
   setAutorefresh: PropTypes.func.isRequired,
   startSketchAndRefresh: PropTypes.func.isRequired,
   endSketchRefresh: PropTypes.func.isRequired,
-  startRefreshSketch: PropTypes.func.isRequired
+  startRefreshSketch: PropTypes.func.isRequired,
+  setBlobUrl: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

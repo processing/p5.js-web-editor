@@ -4,7 +4,7 @@ import escapeStringRegexp from 'escape-string-regexp';
 import srcDoc from 'srcdoc-polyfill';
 
 import loopProtect from 'loop-protect';
-
+import { getBlobUrl } from '../actions/files';
 
 const startTag = '@fs-';
 
@@ -167,12 +167,13 @@ class PreviewFrame extends React.Component {
 
     htmlFile = hijackConsoleLogsScript() + htmlFile;
     const mediaFiles = this.props.files.filter(file => file.url);
+    const textFiles = this.props.files.filter(file => file.name.match(/(.+\.json$|.+\.txt$)/i));
 
     const jsFiles = [];
     this.props.jsFiles.forEach(jsFile => {
       const newJSFile = { ...jsFile };
       let jsFileStrings = newJSFile.content.match(/(['"])((\\\1|.)*?)\1/gm);
-      const jsFileRegex = /^('|")(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json)('|")$/i;
+      const jsFileRegex = /^('|")(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt)('|")$/i;
       jsFileStrings = jsFileStrings || [];
       jsFileStrings.forEach(jsFileString => {
         if (jsFileString.match(jsFileRegex)) {
@@ -182,6 +183,13 @@ class PreviewFrame extends React.Component {
           mediaFiles.forEach(file => {
             if (file.name === fileName) {
               newJSFile.content = newJSFile.content.replace(filePath, file.url); // eslint-disable-line
+            }
+          });
+          textFiles.forEach(file => {
+            if (file.name === fileName) {
+              const blobURL = getBlobUrl(file);
+              this.props.setBlobUrl(file, blobURL);
+              newJSFile.content = newJSFile.content.replace(filePath, blobURL);
             }
           });
         }
@@ -280,6 +288,7 @@ PreviewFrame.propTypes = {
   endSketchRefresh: PropTypes.func.isRequired,
   previewIsRefreshing: PropTypes.bool.isRequired,
   fullView: PropTypes.bool,
+  setBlobUrl: PropTypes.func.isRequired
 };
 
 export default PreviewFrame;
