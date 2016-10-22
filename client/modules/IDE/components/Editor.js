@@ -110,6 +110,10 @@ class Editor extends React.Component {
         this._cm.setOption('mode', 'css');
       } else if (this.props.file.name.match(/.+\.html$/i)) {
         this._cm.setOption('mode', 'htmlmixed');
+      } else if (this.props.file.name.match(/.+\.json$/i)) {
+        this._cm.setOption('mode', 'application/json');
+      } else {
+        this._cm.setOption('mode', 'text/plain');
       }
     }
 
