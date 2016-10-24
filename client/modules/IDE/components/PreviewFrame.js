@@ -167,19 +167,21 @@ class PreviewFrame extends React.Component {
 
     htmlFile = hijackConsoleLogsScript() + htmlFile;
     const mediaFiles = this.props.files.filter(file => file.url);
-    const textFiles = this.props.files.filter(file => file.name.match(/(.+\.json$|.+\.txt$)/i));
+    const textFiles = this.props.files.filter(file => file.name.match(/(.+\.json$|.+\.txt$|.+\.csv$)/i) && file.url === undefined);
+    console.log(textFiles);
 
     const jsFiles = [];
     this.props.jsFiles.forEach(jsFile => {
       const newJSFile = { ...jsFile };
       let jsFileStrings = newJSFile.content.match(/(['"])((\\\1|.)*?)\1/gm);
-      const jsFileRegex = /^('|")(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt)('|")$/i;
+      const jsFileRegex = /^('|")(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv)('|")$/i;
       jsFileStrings = jsFileStrings || [];
       jsFileStrings.forEach(jsFileString => {
         if (jsFileString.match(jsFileRegex)) {
           const filePath = jsFileString.substr(1, jsFileString.length - 2);
           const filePathArray = filePath.split('/');
           const fileName = filePathArray[filePathArray.length - 1];
+          console.log(fileName);
           mediaFiles.forEach(file => {
             if (file.name === fileName) {
               newJSFile.content = newJSFile.content.replace(filePath, file.url); // eslint-disable-line
