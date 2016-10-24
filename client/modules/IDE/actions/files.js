@@ -2,6 +2,7 @@ import * as ActionTypes from '../../../constants';
 import axios from 'axios';
 import objectID from 'bson-objectid';
 import blobUtil from 'blob-util';
+import { setUnsavedChanges } from './ide';
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
@@ -63,6 +64,7 @@ export function createFile(formProps) {
           dispatch({
             type: ActionTypes.HIDE_MODAL
           });
+          dispatch(setUnsavedChanges(true));
         })
         .catch(response => dispatch({
           type: ActionTypes.ERROR,
@@ -83,6 +85,7 @@ export function createFile(formProps) {
       dispatch({
         type: ActionTypes.HIDE_MODAL
       });
+      dispatch(setUnsavedChanges(true));
     }
   };
 }
