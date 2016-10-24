@@ -24,7 +24,7 @@ class FileUploader extends React.Component {
       thumbnailWidth: 200,
       thumbnailHeight: 200,
       // TODO what is a good list of MIME types????
-      acceptedFiles: 'image/*,audio/*,text/javascript,text/html,text/css,application/json,application/x-font-ttf,application/x-font-truetype',
+      acceptedFiles: 'image/*,audio/*,text/javascript,text/html,text/css,application/json,application/x-font-ttf,application/x-font-truetype,text/plain',
       dictDefaultMessage: 'Drop files here to upload or click to use the file browser',
       accept: this.props.dropzoneAcceptCallback,
       sending: this.props.dropzoneSendingCallback,

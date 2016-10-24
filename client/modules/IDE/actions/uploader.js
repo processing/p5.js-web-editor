@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { createFile } from './files';
-const textFileRegex = /text\//;
+const textFileRegex = /(text\/|application\/json)/;
 
 const s3BucketHttps = `https://s3-us-west-2.amazonaws.com/${process.env.S3_BUCKET}/`;
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
@@ -38,7 +38,7 @@ export function dropzoneAcceptCallback(file, done) {
     if (file.type.match(textFileRegex)) {
       localIntercept(file).then(result => {
         file.content = result; // eslint-disable-line
-        done();
+        done('Uploading plaintext file locally.');
       })
       .catch(result => {
         done(`Failed to download file ${file.name}: ${result}`);
