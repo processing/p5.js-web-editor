@@ -155,9 +155,7 @@ class IDEView extends React.Component {
   }
 
   warnIfUnsavedChanges() { // eslint-disable-line
-    if (this.props.ide.unsavedChanges
-      && ((this.props.project.owner && this.props.project.owner.id === this.props.user.id)
-      || (!this.props.project.owner))) {
+    if (this.props.ide.unsavedChanges) {
       if (!window.confirm('Are you sure you want to leave this page? You have unsaved changes.')) {
         return false;
       }
