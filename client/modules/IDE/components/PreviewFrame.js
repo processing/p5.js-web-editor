@@ -7,6 +7,8 @@ import loopProtect from 'loop-protect';
 import { getBlobUrl } from '../actions/files';
 
 const startTag = '@fs-';
+const MEDIA_FILE_REGEX = /^('|")(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov)('|")$/i;
+const STRING_REGEX = /(['"])((\\\1|.)*?)\1/gm;
 
 function getAllScriptOffsets(htmlFile) {
   const offs = [];
@@ -168,20 +170,17 @@ class PreviewFrame extends React.Component {
     htmlFile = hijackConsoleLogsScript() + htmlFile;
     const mediaFiles = this.props.files.filter(file => file.url);
     const textFiles = this.props.files.filter(file => file.name.match(/(.+\.json$|.+\.txt$|.+\.csv$)/i) && file.url === undefined);
-    console.log(textFiles);
 
     const jsFiles = [];
     this.props.jsFiles.forEach(jsFile => {
       const newJSFile = { ...jsFile };
-      let jsFileStrings = newJSFile.content.match(/(['"])((\\\1|.)*?)\1/gm);
-      const jsFileRegex = /^('|")(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov)('|")$/i;
+      let jsFileStrings = newJSFile.content.match(STRING_REGEX);
       jsFileStrings = jsFileStrings || [];
       jsFileStrings.forEach(jsFileString => {
-        if (jsFileString.match(jsFileRegex)) {
+        if (jsFileString.match(MEDIA_FILE_REGEX)) {
           const filePath = jsFileString.substr(1, jsFileString.length - 2);
           const filePathArray = filePath.split('/');
           const fileName = filePathArray[filePathArray.length - 1];
-          console.log(fileName);
           mediaFiles.forEach(file => {
             if (file.name === fileName) {
               newJSFile.content = newJSFile.content.replace(filePath, file.url); // eslint-disable-line
@@ -200,6 +199,26 @@ class PreviewFrame extends React.Component {
       jsFiles.push(newJSFile);
     });
 
+    const cssFiles = [];
+    this.props.cssFiles.forEach(cssFile => {
+      const newCSSFile = { ...cssFile };
+      let cssFileStrings = newCSSFile.content.match(STRING_REGEX);
+      cssFileStrings = cssFileStrings || [];
+      cssFileStrings.forEach(cssFileString => {
+        if (cssFileString.match(MEDIA_FILE_REGEX)) {
+          const filePath = cssFileString.substr(1, cssFileString.length - 2);
+          const filePathArray = filePath.split('/');
+          const fileName = filePathArray[filePathArray.length - 1];
+          mediaFiles.forEach(file => {
+            if (file.name === fileName) {
+              newCSSFile.content = newCSSFile.content.replace(filePath, file.url); // eslint-disable-line
+            }
+          });
+        }
+      });
+      cssFiles.push(newCSSFile);
+    });
+
     jsFiles.forEach(jsFile => {
       const fileName = escapeStringRegexp(jsFile.name);
       const fileRegex = new RegExp(`<script.*?src=('|")((\.\/)|\/)?${fileName}('|").*?>([\s\S]*?)<\/script>`, 'gmi');
@@ -207,7 +226,7 @@ class PreviewFrame extends React.Component {
       htmlFile = htmlFile.replace(fileRegex, replacementString);
     });
 
-    this.props.cssFiles.forEach(cssFile => {
+    cssFiles.forEach(cssFile => {
       const fileName = escapeStringRegexp(cssFile.name);
       const fileRegex = new RegExp(`<link.*?href=('|")((\.\/)|\/)?${fileName}('|").*?>`, 'gmi');
       htmlFile = htmlFile.replace(fileRegex, `<style>\n${cssFile.content}\n</style>`);
