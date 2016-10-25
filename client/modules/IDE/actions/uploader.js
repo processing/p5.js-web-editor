@@ -34,7 +34,6 @@ export function dropzoneAcceptCallback(file, done) {
     // for text files and small files
     // check mime type
     // if text, local interceptor
-    console.log(file.type);
     if (file.type.match(textFileRegex)) {
       localIntercept(file).then(result => {
         file.content = result; // eslint-disable-line
@@ -88,7 +87,7 @@ export function dropzoneSendingCallback(file, xhr, formData) {
 
 export function dropzoneCompleteCallback(file) {
   return (dispatch, getState) => { // eslint-disable-line
-    if (!file.type.match(textFileRegex)) {
+    if (!file.type.match(textFileRegex) && file.status !== 'error') {
       let inputHidden = '<input type="hidden" name="attachments[]" value="';
       const json = {
         url: `${s3BucketHttps}${file.postData.key}`,
@@ -103,9 +102,8 @@ export function dropzoneCompleteCallback(file) {
         name: file.name,
         url: `${s3BucketHttps}${file.postData.key}`
       };
-      console.log(formParams);
       createFile(formParams)(dispatch, getState);
-    } else {
+    } else if (file.content !== undefined) {
       const formParams = {
         name: file.name,
         content: file.content
