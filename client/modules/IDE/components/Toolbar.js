@@ -5,6 +5,7 @@ const playUrl = require('../../../images/play.svg');
 const logoUrl = require('../../../images/p5js-logo.svg');
 const stopUrl = require('../../../images/stop.svg');
 const preferencesUrl = require('../../../images/preferences.svg');
+const editProjectNameUrl = require('../../../images/pencil.svg');
 import classNames from 'classnames';
 
 class Toolbar extends React.Component {
@@ -46,6 +47,10 @@ class Toolbar extends React.Component {
     let nameContainerClass = classNames({
       'toolbar__project-name-container': true,
       'toolbar__project-name-container--editing': this.props.project.isEditingName
+    });
+    let editProjectNameButtonClass = classNames({
+      'toolbar__edit-name-button': true,
+      'toolbar__edit-name-button--selected': !this.props.isPlaying
     });
 
     return (
@@ -94,6 +99,11 @@ class Toolbar extends React.Component {
               setTimeout(() => this.refs.projectNameInput.focus(), 0);
             }}
           >{this.props.project.name}</a>
+          <button
+            className={editProjectNameButtonClass}
+          >
+            <InlineSVG src={editProjectNameUrl} alt="Edit Project Name" />
+          </button>
           <input
             type="text"
             className="toolbar__project-name-input"

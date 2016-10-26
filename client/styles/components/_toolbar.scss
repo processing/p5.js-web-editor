@@ -110,3 +110,17 @@
 	margin-left: #{5 / $base-font-size}rem;
 	font-size: #{12 / $base-font-size}rem;
 }
+
+.toolbar__edit-name-button {
+	@include themify() {
+		@extend %toolbar-button;
+		background-color: transparent;
+		line-height: #{50 / $base-font-size}rem;
+		&--selected {
+			@extend %toolbar-button--selected;
+			line-height: #{50 / $base-font-size}rem;
+		}
+	}
+	line-height: #{50 / $base-font-size}rem;
+	margin-left: auto;
+}
