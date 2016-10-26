@@ -82,6 +82,9 @@
 		color: getThemifyVariable('inactive-text-color');
 		&:hover {
 		color: getThemifyVariable('primary-text-color');
+		  & .toolbar__edit-name-button path {
+		  	fill: getThemifyVariable('primary-text-color');
+		  }
 		}
 	}
 	cursor: pointer;
@@ -113,14 +116,8 @@
 
 .toolbar__edit-name-button {
 	@include themify() {
-		@extend %toolbar-button;
-		background-color: transparent;
-		line-height: #{50 / $base-font-size}rem;
-		&--selected {
-			@extend %toolbar-button--selected;
-			line-height: #{50 / $base-font-size}rem;
+		& path { 
+			fill: getThemifyVariable('inactive-text-color');
 		}
 	}
-	line-height: #{50 / $base-font-size}rem;
-	margin-left: auto;
 }

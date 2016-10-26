@@ -48,10 +48,6 @@ class Toolbar extends React.Component {
       'toolbar__project-name-container': true,
       'toolbar__project-name-container--editing': this.props.project.isEditingName
     });
-    let editProjectNameButtonClass = classNames({
-      'toolbar__edit-name-button': true,
-      'toolbar__edit-name-button--selected': !this.props.isPlaying
-    });
 
     return (
       <div className="toolbar">
@@ -98,12 +94,7 @@ class Toolbar extends React.Component {
               this.props.showEditProjectName();
               setTimeout(() => this.refs.projectNameInput.focus(), 0);
             }}
-          >{this.props.project.name}</a>
-          <button
-            className={editProjectNameButtonClass}
-          >
-            <InlineSVG src={editProjectNameUrl} alt="Edit Project Name" />
-          </button>
+          >{this.props.project.name} <InlineSVG className="toolbar__edit-name-button" src={editProjectNameUrl} alt="Edit Project Name" /></a>
           <input
             type="text"
             className="toolbar__project-name-input"
