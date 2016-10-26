@@ -82,6 +82,9 @@
 		color: getThemifyVariable('inactive-text-color');
 		&:hover {
 		color: getThemifyVariable('primary-text-color');
+		  & .toolbar__edit-name-button path {
+		  	fill: getThemifyVariable('primary-text-color');
+		  }
 		}
 	}
 	cursor: pointer;
@@ -109,4 +112,12 @@
 	}
 	margin-left: #{5 / $base-font-size}rem;
 	font-size: #{12 / $base-font-size}rem;
+}
+
+.toolbar__edit-name-button {
+	@include themify() {
+		& path { 
+			fill: getThemifyVariable('inactive-text-color');
+		}
+	}
 }
