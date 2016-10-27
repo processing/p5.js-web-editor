@@ -196,14 +196,14 @@ export function resetInfiniteLoops() {
   };
 }
 
-export function justOpenProject() {
+export function justOpenedProject() {
   return {
-    type: ActionTypes.JUST_OPEN_PROJECT,
+    type: ActionTypes.JUST_OPENED_PROJECT,
   };
 }
 
-export function resetJustOpenProject() {
+export function resetJustOpenedProject() {
   return {
-    type: ActionTypes.RESET_JUST_OPEN_PROJECT
+    type: ActionTypes.RESET_JUST_OPENED_PROJECT
   };
 }

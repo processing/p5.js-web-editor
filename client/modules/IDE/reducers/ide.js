@@ -80,10 +80,10 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { previewIsRefreshing: true });
     case ActionTypes.END_SKETCH_REFRESH:
       return Object.assign({}, state, { previewIsRefreshing: false });
-    case ActionTypes.JUST_OPEN_PROJECT:
-      return Object.assign({}, state, { projectJustOpened: true });
-    case ActionTypes.RESET_JUST_OPEN_PROJECT:
-      return Object.assign({}, state, { projectJustOpened: false });
+    case ActionTypes.JUST_OPENED_PROJECT:
+      return Object.assign({}, state, { justOpenedProject: true });
+    case ActionTypes.RESET_JUST_OPENED_PROJECT:
+      return Object.assign({}, state, { justOpenedProject: false });
     default:
       return state;
   }
