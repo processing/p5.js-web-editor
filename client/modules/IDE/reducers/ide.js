@@ -16,7 +16,8 @@ const initialState = {
   unsavedChanges: false,
   infiniteLoop: false,
   previewIsRefreshing: false,
-  infiniteLoopMessage: ''
+  infiniteLoopMessage: '',
+  projectJustOpened: false
 };
 
 const ide = (state = initialState, action) => {
@@ -79,6 +80,10 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { previewIsRefreshing: true });
     case ActionTypes.END_SKETCH_REFRESH:
       return Object.assign({}, state, { previewIsRefreshing: false });
+    case ActionTypes.JUST_OPEN_PROJECT:
+      return Object.assign({}, state, { projectJustOpened: true });
+    case ActionTypes.RESET_JUST_OPEN_PROJECT:
+      return Object.assign({}, state, { projectJustOpened: false });
     default:
       return state;
   }

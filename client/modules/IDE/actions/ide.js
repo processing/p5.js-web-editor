@@ -195,3 +195,15 @@ export function resetInfiniteLoops() {
     type: ActionTypes.RESET_INFINITE_LOOPS
   };
 }
+
+export function justOpenProject() {
+  return {
+    type: ActionTypes.JUST_OPEN_PROJECT,
+  };
+}
+
+export function resetJustOpenProject() {
+  return {
+    type: ActionTypes.RESET_JUST_OPEN_PROJECT
+  };
+}
