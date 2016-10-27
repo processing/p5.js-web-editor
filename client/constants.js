@@ -99,5 +99,5 @@ export const INVALID_RESET_PASSWORD_TOKEN = 'INVALID_RESET_PASSWORD_TOKEN';
 // eventually, handle errors more specifically and better
 export const ERROR = 'ERROR';
 
-export const JUST_OPEN_PROJECT = 'JUST_OPENED_PROJECT';
-export const RESET_JUST_OPEN_PROJECT = 'RESET_JUST_OPENED_PROJECT';
+export const JUST_OPENED_PROJECT = 'JUST_OPENED_PROJECT';
+export const RESET_JUST_OPENED_PROJECT = 'RESET_JUST_OPENED_PROJECT';
