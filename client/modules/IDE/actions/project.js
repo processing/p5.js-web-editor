@@ -5,12 +5,13 @@ import JSZip from 'jszip';
 import JSZipUtils from 'jszip-utils';
 import { saveAs } from 'file-saver';
 import { showToast, setToastText } from './toast';
-import { setUnsavedChanges } from './ide';
+import { setUnsavedChanges, justOpenedProject, resetJustOpenedProject } from './ide';
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
 export function getProject(id) {
   return (dispatch) => {
+    dispatch(justOpenedProject());
     axios.get(`${ROOT_URL}/projects/${id}`, { withCredentials: true })
       .then(response => {
         // browserHistory.push(`/projects/${id}`);
@@ -52,8 +53,15 @@ export function saveProject(autosave = false) {
             type: ActionTypes.PROJECT_SAVE_SUCCESS
           });
           if (!autosave) {
-            dispatch(showToast());
-            dispatch(setToastText('Project saved.'));
+            if (state.ide.justOpenedProject && state.preferences.autosave) {
+              dispatch(showToast(5500));
+              dispatch(setToastText('Project saved.'));
+              setTimeout(() => dispatch(setToastText('Autosave enabled.')), 1500);
+              dispatch(resetJustOpenedProject());
+            } else {
+              dispatch(showToast(1500));
+              dispatch(setToastText('Project saved.'));
+            }
           }
         })
         .catch((response) => dispatch({
@@ -73,8 +81,15 @@ export function saveProject(autosave = false) {
             files: response.data.files
           });
           if (!autosave) {
-            dispatch(showToast());
-            dispatch(setToastText('Project saved.'));
+            if (state.preferences.autosave) {
+              dispatch(showToast(5500));
+              dispatch(setToastText('Project saved.'));
+              setTimeout(() => dispatch(setToastText('Autosave enabled.')), 1500);
+              dispatch(resetJustOpenedProject());
+            } else {
+              dispatch(showToast(1500));
+              dispatch(setToastText('Project saved.'));
+            }
           }
         })
         .catch(response => dispatch({

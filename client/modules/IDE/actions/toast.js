@@ -6,12 +6,12 @@ export function hideToast() {
   };
 }
 
-export function showToast() {
+export function showToast(time) {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SHOW_TOAST
     });
-    setTimeout(() => dispatch(hideToast()), 1500);
+    setTimeout(() => dispatch(hideToast()), time);
   };
 }
 
