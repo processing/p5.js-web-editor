@@ -19,7 +19,7 @@ class FileUploader extends React.Component {
       clickable: true,
       maxFiles: 1,
       parallelUploads: 1,
-      maxFilesize: 10, // in mb
+      maxFilesize: 5, // in mb
       maxThumbnailFilesize: 8, // 3MB
       thumbnailWidth: 200,
       thumbnailHeight: 200,
