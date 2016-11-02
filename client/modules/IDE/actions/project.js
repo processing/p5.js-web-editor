@@ -139,7 +139,7 @@ export function newProject() {
 export function cloneProject() {
   return (dispatch, getState) => {
     const state = getState();
-    const formParams = Object.assign({}, { name: state.project.name }, { files: state.files });
+    const formParams = Object.assign({}, { name: `${state.project.name} copy` }, { files: state.files });
     axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
       .then(response => {
         browserHistory.push(`/projects/${response.data.id}`);
