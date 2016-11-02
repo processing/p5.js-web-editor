@@ -3,6 +3,9 @@ import { browserHistory } from 'react-router';
 import axios from 'axios';
 import { showToast, setToastText } from './toast';
 import { setUnsavedChanges, justOpenedProject, resetJustOpenedProject } from './ide';
+const generate = require('project-name-generator');
+// where does this go?
+generate({ words: 2, alliterative: true }).spaced;
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
