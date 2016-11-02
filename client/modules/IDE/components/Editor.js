@@ -146,7 +146,7 @@ class Editor extends React.Component {
 
   showSavedTime() {
     if (Math.abs(moment().diff(this.props.projectSavedTime)) < 10000) {
-      return 'Just saved';
+      return 'Saved: just now';
     }
     return `Saved: ${moment(this.props.projectSavedTime).fromNow()}`;
   }
