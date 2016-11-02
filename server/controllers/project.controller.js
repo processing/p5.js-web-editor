@@ -1,5 +1,8 @@
 import Project from '../models/project';
 import User from '../models/user';
+import archiver from 'archiver';
+import request from 'request';
+
 
 export function createProject(req, res) {
   let projectValues = {
@@ -99,3 +102,56 @@ export function getProjectsForUser(req, res) {
     return res.json([]);
   }
 }
+
+function buildZip(project, req, res) {
+  const zip = archiver('zip');
+  const rootFile = project.files.find(file => file.name === 'root');
+  const numFiles = project.files.filter(file => file.fileType !== 'folder').length;
+  const files = project.files;
+  const projectName = project.name;
+  let numCompletedFiles = 0;
+
+  zip.on('error', function(err) {
+    res.status(500).send({error: err.message});
+  });
+
+  res.attachment(`${project.name}.zip`);
+  zip.pipe(res);
+
+  function addFileToZip(file, path) {
+    if (file.fileType === 'folder') {
+      const newPath = file.name === 'root' ? path : `${path}${file.name}/`;
+      file.children.forEach(fileId => {
+        const childFile = files.find(f => f.id === fileId);
+        (() => {
+          addFileToZip(childFile, newPath);
+        })();
+      });
+    } else {
+      if (file.url) {
+        request({ method: 'GET', url: file.url, encoding: null }, (err, response, body) => {
+          zip.append(body, { name: `${path}${file.name}` });
+          numCompletedFiles += 1;
+          if (numCompletedFiles === numFiles) {
+            zip.finalize();
+          }
+        });
+      } else {
+        zip.append(file.content, { name: `${path}${file.name}` });
+        numCompletedFiles += 1;
+        if (numCompletedFiles === numFiles) {
+          zip.finalize();
+        }
+      }
+    }
+  }
+  addFileToZip(rootFile, '/');
+}
+
+export function downloadProjectAsZip(req, res) {
+  Project.findById(req.params.project_id, (err, project) => {
+    //save project to some path
+    buildZip(project, req, res);
+  });
+}
+

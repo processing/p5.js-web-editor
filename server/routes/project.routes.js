@@ -15,4 +15,6 @@ router.route('/projects').get(ProjectController.getProjects);
 
 router.route('/:username/projects').get(ProjectController.getProjectsForUser);
 
+router.route('/projects/:project_id/zip').get(ProjectController.downloadProjectAsZip);
+
 export default router;

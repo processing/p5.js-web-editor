@@ -42,7 +42,7 @@ function Nav(props) {
           if (props.project.id) {
             return (
               <li className="nav__item">
-                <a className="nav__export" onClick={props.exportProjectAsZip}>
+                <a className="nav__export" onClick={() => props.exportProjectAsZip(props.project.id)}>
                   Download
                 </a>
               </li>
