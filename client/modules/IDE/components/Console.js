@@ -58,11 +58,20 @@ class Console extends React.Component {
   appendConsoleEvent(consoleEvent) {
     const args = consoleEvent.arguments;
     const method = consoleEvent.method;
-    const nextChild = (
-      <div key={this.children.length} className={`preview-console__${method}`}>
-        {Object.keys(args).map((key) => <span key={`${this.children.length}-${key}`}>{args[key]}</span>)}
-      </div>
-    );
+    let nextChild;
+    if (Object.keys(args).length === 0) {
+      nextChild = (
+        <div key={this.children.length} className="preview-console__undefined">
+          <span key={`${this.children.length}-0`}>{'undefined'}</span>
+        </div>
+      );
+    } else {
+      nextChild = (
+        <div key={this.children.length} className={`preview-console__${method}`}>
+          {Object.keys(args).map((key) => <span key={`${this.children.length}-${key}`}>{args[key]}</span>)}
+        </div>
+      );
+    }
     this.children.push(nextChild);
   }
 
