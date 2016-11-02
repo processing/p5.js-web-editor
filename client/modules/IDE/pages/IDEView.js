@@ -285,6 +285,8 @@ class IDEView extends React.Component {
                   startRefreshSketch={this.props.startRefreshSketch}
                   stopSketch={this.props.stopSketch}
                   autorefresh={this.props.preferences.autorefresh}
+                  unsavedChanges={this.props.ide.unsavedChanges}
+                  projectSavedTime={this.props.ide.projectSavedTime}
                 />
                 <Console
                   consoleEvent={this.props.ide.consoleEvent}
@@ -469,7 +471,8 @@ IDEView.propTypes = {
     unsavedChanges: PropTypes.bool.isRequired,
     infiniteLoop: PropTypes.bool.isRequired,
     previewIsRefreshing: PropTypes.bool.isRequired,
-    infiniteLoopMessage: PropTypes.string.isRequired
+    infiniteLoopMessage: PropTypes.string.isRequired,
+    projectSavedTime: PropTypes.string.isRequired
   }).isRequired,
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
