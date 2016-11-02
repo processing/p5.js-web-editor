@@ -82,7 +82,7 @@
     "js-beautify": "^1.6.4",
     "jshint": "^2.9.2",
     "lodash": "^4.16.4",
-    "loop-protect": "git+https://git@github.com/sagar-sm/loop-protect.git",
+    "loop-protect": "git+https://git@github.com/catarak/loop-protect.git",
     "moment": "^2.14.1",
     "mongoose": "^4.4.16",
     "node-uuid": "^1.4.7",
