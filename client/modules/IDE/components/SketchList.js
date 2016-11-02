@@ -38,16 +38,24 @@ class SketchList extends React.Component {
               {this.props.sketches.map(sketch =>
                 <tr className="sketches-table__row visibility-toggle" key={sketch.id}>
                   <td>
-                    <button
-                      className="sketch-list__trash-button"
-                      onClick={() => {
-                        if (window.confirm(`Are you sure you want to delete "${sketch.name}"?`)) {
-                          this.props.deleteProject(sketch.id);
-                        }
-                      }}
-                    >
-                      <InlineSVG src={trashCan} alt="Delete Project" />
-                    </button>
+                  {(() => { // eslint-disable-line
+                    console.log(this.props.username);
+                    console.log(this.props.user.username);
+                    if (this.props.username === this.props.user.username || this.props.username === undefined) {
+                      return (
+                        <button
+                          className="sketch-list__trash-button"
+                          onClick={() => {
+                            if (window.confirm(`Are you sure you want to delete "${sketch.name}"?`)) {
+                              this.props.deleteProject(sketch.id);
+                            }
+                          }}
+                        >
+                          <InlineSVG src={trashCan} alt="Delete Project" />
+                        </button>
+                      );
+                    }
+                  })()}
                   </td>
                   <td scope="row"><Link to={`/projects/${sketch._id}`}>{sketch.name}</Link></td>
                   <td>{moment(sketch.createdAt).format('MMM D, YYYY h:mm:ss A')}</td>
