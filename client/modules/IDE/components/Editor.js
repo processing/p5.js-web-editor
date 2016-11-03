@@ -28,13 +28,12 @@ const downArrowUrl = require('../../../images/down-arrow.svg');
 import classNames from 'classnames';
 
 import { debounce } from 'lodash';
-import moment from 'moment';
+import Timer from '../components/Timer';
 
 class Editor extends React.Component {
   constructor(props) {
     super(props);
     this.tidyCode = this.tidyCode.bind(this);
-    this.showSavedTime = this.showSavedTime.bind(this);
   }
   componentDidMount() {
     this.beep = new Audio(beepUrl);
@@ -144,13 +143,6 @@ class Editor extends React.Component {
     }
   }
 
-  showSavedTime() {
-    if (Math.abs(moment().diff(this.props.projectSavedTime)) < 10000) {
-      return 'Saved: just now';
-    }
-    return `Saved: ${moment(this.props.projectSavedTime).fromNow()}`;
-  }
-
   _cm: CodeMirror.Editor
 
   render() {
@@ -168,7 +160,9 @@ class Editor extends React.Component {
         <div className="editor__file-name">
           <span>{this.props.file.name}
           {this.props.unsavedChanges ? '*' : null}</span>
-          <span className="editor__file-name editor__save-time">{this.props.projectSavedTime !== '' ? this.showSavedTime() : null}</span>
+          <Timer
+            projectSavedTime={this.props.projectSavedTime}
+          />
         </div>
         <button
           className="editor__options-button"

@@ -1,0 +1,8 @@
+.timer__saved-time {
+  @include themify() {
+    color: getThemifyVariable('inactive-text-color');
+  }
+  font-size: #{12 / $base-font-size}rem;
+  padding-right: #{30 / $base-font-size}rem;
+  float: right;
+}

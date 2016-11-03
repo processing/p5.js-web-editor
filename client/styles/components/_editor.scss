@@ -79,7 +79,7 @@
     @extend %icon;
   }
   position: absolute;
-  top: #{0 / $base-font-size}rem;
+  top: 0;
   right: #{1.5 / $base-font-size}rem; // move left to avoid vertical scroll bar
   z-index: 1;
 }
