@@ -39,8 +39,6 @@ class SketchList extends React.Component {
                 <tr className="sketches-table__row visibility-toggle" key={sketch.id}>
                   <td>
                   {(() => { // eslint-disable-line
-                    console.log(this.props.username);
-                    console.log(this.props.user.username);
                     if (this.props.username === this.props.user.username || this.props.username === undefined) {
                       return (
                         <button
