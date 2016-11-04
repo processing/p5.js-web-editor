@@ -201,6 +201,7 @@ class IDEView extends React.Component {
           setAutorefresh={this.props.setAutorefresh}
           startSketchAndRefresh={this.props.startSketchAndRefresh}
           saveProject={this.props.saveProject}
+          currentUser={this.props.user.username}
         />
         <Preferences
           isVisible={this.props.ide.preferencesIsVisible}
@@ -451,7 +452,8 @@ IDEView.propTypes = {
   getProject: PropTypes.func.isRequired,
   user: PropTypes.shape({
     authenticated: PropTypes.bool.isRequired,
-    id: PropTypes.string
+    id: PropTypes.string,
+    username: PropTypes.string
   }).isRequired,
   newProject: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
