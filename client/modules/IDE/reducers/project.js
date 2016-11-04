@@ -1,7 +1,10 @@
 import * as ActionTypes from '../../../constants';
+const generate = require('project-name-generator');
+
+const generatedName = generate({ words: 2 }).dashed;
 
 const initialState = {
-  name: 'Hello p5.js'
+  name: `${generatedName}`
 };
 
 const project = (state = initialState, action) => {
