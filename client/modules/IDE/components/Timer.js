@@ -7,14 +7,14 @@ class Timer extends React.Component {
     this.showSavedTime = this.showSavedTime.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    this.interval = setInterval(() => this.forceUpdate(), 10000);
+  }
+
+  componentWillUnmount() {
     if (this.interval) {
       clearInterval(this.interval);
     }
-  }
-
-  componentDidMount() {
-    this.interval = setInterval(() => this.forceUpdate(), 10000);
   }
 
   showSavedTime() {
