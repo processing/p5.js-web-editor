@@ -20,6 +20,12 @@ class Timer extends React.Component {
   showSavedTime() {
     if (Math.abs(moment().diff(this.props.projectSavedTime)) < 10000) {
       return 'Saved: just now';
+    } else if (Math.abs(moment().diff(this.props.projectSavedTime)) < 20000) {
+      return 'Saved: 15 seconds ago';
+    } else if (Math.abs(moment().diff(this.props.projectSavedTime)) < 30000) {
+      return 'Saved: 25 seconds ago';
+    } else if (Math.abs(moment().diff(this.props.projectSavedTime)) < 46000) {
+      return 'Saved: 35 seconds ago';
     }
     return `Saved: ${moment(this.props.projectSavedTime).fromNow()}`;
   }
