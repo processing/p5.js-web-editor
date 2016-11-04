@@ -25,21 +25,6 @@ export function signUpUser(formValues) {
   };
 }
 
-// export function loginUser(formValues) {
-//   return (dispatch) => {
-//     axios.post(`${ROOT_URL}/login`, formValues, { withCredentials: true })
-//       .then(response => {
-//         dispatch({ type: ActionTypes.AUTH_USER,
-//                     user: response.data
-//         });
-//         browserHistory.push('/');
-//       })
-//       .catch(response => {
-//         return Promise.reject({ email: response.data.message, _error: 'Login failed!' });
-//       });
-//   };
-// }
-
 export function loginUser(formValues) {
   return axios.post(`${ROOT_URL}/login`, formValues, { withCredentials: true });
 }
@@ -64,6 +49,10 @@ export function validateAndLoginUser(formProps, dispatch) {
       .then(response => {
         dispatch({ type: ActionTypes.AUTH_USER,
                   user: response.data
+        });
+        dispatch({
+          type: ActionTypes.SET_PREFERENCES,
+          preferences: response.data.preferences
         });
         browserHistory.push('/');
         resolve();
