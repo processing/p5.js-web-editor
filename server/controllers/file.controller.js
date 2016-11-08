@@ -65,3 +65,16 @@ export function deleteFile(req, res) {
     })
   });
 }
+
+export function getFileContent(req, res) {
+  Project.findById(req.params.project_id, (err, project) => {
+    if (err) {
+      return res.status(404).send({success: false, message: 'Project with that id does not exist.'});
+    }
+    const file = project.files.find(file => file.name === req.params.file_name);
+    if (!file) {
+      return res.status(404).send({success: false, message: 'File with that name does not exist.'});
+    }
+    res.send(file.content);
+  });
+}

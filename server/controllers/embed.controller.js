@@ -2,7 +2,7 @@ import Project from '../models/project';
 import escapeStringRegexp from 'escape-string-regexp';
 const startTag = '@fs-';
 
-function injectMediaUrls(filesToInject, mediaFiles) {
+function injectMediaUrls(filesToInject, mediaFiles, textFiles, projectId) {
   filesToInject.forEach(file => {
     let fileStrings = file.content.match(/(['"])((\\\1|.)*?)\1/gm);
     const fileStringRegex = /^('|")(?!(http:\/\/|https:\/\/)).*('|")$/i;
@@ -17,7 +17,14 @@ function injectMediaUrls(filesToInject, mediaFiles) {
           if (mediaFile.name === fileName) {
             file.content = file.content.replace(filePath, mediaFile.url);
           }
-        })
+        });
+        if (textFiles) {
+          textFiles.forEach(textFile => {
+            if (textFile.name === fileName) {
+              file.content = file.content.replace(filePath, `/api/projects/${projectId}/${textFile.name}`);
+            }
+          });
+        }
       }
     });
   });
@@ -31,8 +38,9 @@ export function serveProject(req, res) {
       const jsFiles = files.filter(file => file.name.match(/\.js$/i));
       const cssFiles = files.filter(file => file.name.match(/\.css$/i));
       const mediaFiles = files.filter(file => file.url);
+      const textFiles = files.filter(file => file.name.match(/(.+\.json$|.+\.txt$|.+\.csv$)/i) && file.url === undefined);
 
-      injectMediaUrls(jsFiles, mediaFiles);
+      injectMediaUrls(jsFiles, mediaFiles, textFiles, req.params.project_id);
       injectMediaUrls(cssFiles, mediaFiles);
 
       jsFiles.forEach(jsFile => {
