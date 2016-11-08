@@ -294,6 +294,7 @@ class IDEView extends React.Component {
                   startRefreshSketch={this.props.startRefreshSketch}
                   stopSketch={this.props.stopSketch}
                   autorefresh={this.props.preferences.autorefresh}
+                  unsavedChanges={this.props.ide.unsavedChanges}
                 />
                 <Console
                   consoleEvent={this.props.ide.consoleEvent}
