@@ -14,7 +14,7 @@ module.exports = {
   entry: {
     app: [
       'babel-polyfill',
-      './client/index.js'
+      './client/index.jsx'
     ],
     vendor: [
       'react',

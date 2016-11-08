@@ -324,9 +324,6 @@ class IDEView extends React.Component {
                   cssFiles={this.props.cssFiles}
                   files={this.props.files}
                   content={this.props.selectedFile.content}
-                  head={
-                    <link type="text/css" rel="stylesheet" href="/preview-styles.css" />
-                  }
                   isPlaying={this.props.ide.isPlaying}
                   isTextOutputPlaying={this.props.ide.isTextOutputPlaying}
                   textOutput={this.props.preferences.textOutput}
