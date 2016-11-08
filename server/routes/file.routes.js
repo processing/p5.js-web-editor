@@ -5,6 +5,6 @@ const router = new Router();
 
 router.route('/projects/:project_id/files').post(FileController.createFile);
 router.route('/projects/:project_id/files/:file_id').delete(FileController.deleteFile);
-router.route('/projects/:project_id/:file_name').get(FileController.getFileContent);
+router.route('/projects/:project_id/*?').get(FileController.getFileContent);
 
 export default router;

@@ -1,8 +1,9 @@
 import Project from '../models/project';
 import escapeStringRegexp from 'escape-string-regexp';
 const startTag = '@fs-';
+import { resolvePathToFile } from '../utils/filePath';
 
-function injectMediaUrls(filesToInject, mediaFiles, textFiles, projectId) {
+function injectMediaUrls(filesToInject, allFiles, projectId) {
   filesToInject.forEach(file => {
     let fileStrings = file.content.match(/(['"])((\\\1|.)*?)\1/gm);
     const fileStringRegex = /^('|")(?!(http:\/\/|https:\/\/)).*('|")$/i;
@@ -11,19 +12,20 @@ function injectMediaUrls(filesToInject, mediaFiles, textFiles, projectId) {
       //if string does not begin with http or https
       if (fileString.match(fileStringRegex)) {
         const filePath = fileString.substr(1, fileString.length - 2);
-        const filePathArray = filePath.split('/');
-        const fileName = filePathArray[filePathArray.length - 1];
-        mediaFiles.forEach(mediaFile => {
-          if (mediaFile.name === fileName) {
-            file.content = file.content.replace(filePath, mediaFile.url);
-          }
-        });
-        if (textFiles) {
-          textFiles.forEach(textFile => {
-            if (textFile.name === fileName) {
-              file.content = file.content.replace(filePath, `/api/projects/${projectId}/${textFile.name}`);
+        const resolvedFile = resolvePathToFile(filePath, allFiles);
+        if (resolvedFile) {
+          if (resolvedFile.url) {
+            file.content = file.content.replace(filePath,resolvedFile.url);
+          } else if (resolvedFile.name.match(/(.+\.json$|.+\.txt$|.+\.csv$)/i)) {
+            let resolvedFilePath = filePath;
+            if (resolvedFilePath.startsWith('.')) {
+              resolvedFilePath = resolvedFilePath.substr(1);
             }
-          });
+            while (resolvedFilePath.startsWith('/')) {
+              resolvedFilePath = resolvedFilePath.substr(1);
+            }
+            file.content = file.content.replace(filePath, `/api/projects/${projectId}/${resolvedFilePath}`);
+          }
         }
       }
     });
@@ -33,15 +35,14 @@ function injectMediaUrls(filesToInject, mediaFiles, textFiles, projectId) {
 export function serveProject(req, res) {
   Project.findById(req.params.project_id)
     .exec((err, project) => {
+      //TODO this does not parse html
       const files = project.files;
       let htmlFile = files.find(file => file.name.match(/\.html$/i)).content;
       const jsFiles = files.filter(file => file.name.match(/\.js$/i));
       const cssFiles = files.filter(file => file.name.match(/\.css$/i));
-      const mediaFiles = files.filter(file => file.url);
-      const textFiles = files.filter(file => file.name.match(/(.+\.json$|.+\.txt$|.+\.csv$)/i) && file.url === undefined);
 
-      injectMediaUrls(jsFiles, mediaFiles, textFiles, req.params.project_id);
-      injectMediaUrls(cssFiles, mediaFiles);
+      injectMediaUrls(jsFiles, files, req.params.project_id);
+      injectMediaUrls(cssFiles, files, req.params.project_id);
 
       jsFiles.forEach(jsFile => {
         const fileName = escapeStringRegexp(jsFile.name);
