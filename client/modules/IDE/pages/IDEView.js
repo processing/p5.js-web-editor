@@ -153,6 +153,12 @@ class IDEView extends React.Component {
       e.preventDefault();
       e.stopPropagation();
       this.props.startSketchAndRefresh();
+    } else if (e.keyCode === 50 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac)) && e.shiftKey) {
+      e.preventDefault();
+      this.props.setTextOutput(false);
+    } else if (e.keyCode === 49 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac)) && e.shiftKey) {
+      e.preventDefault();
+      this.props.setTextOutput(true);
     }
   }
 
