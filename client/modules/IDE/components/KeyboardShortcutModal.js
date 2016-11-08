@@ -58,12 +58,6 @@ class KeyboardShortcutModal extends React.Component {
           </li>
           <li className="keyboard-shortcut-item">
             <span className="keyboard-shortcut__command">
-              {this.isMac ? 'Command + Shift + Enter' : 'Control + Shift + Enter'}
-            </span>
-            <span>Stop Sketch</span>
-          </li>
-          <li className="keyboard-shortcut-item">
-            <span className="keyboard-shortcut__command">
               {this.isMac ? 'Command + Shift + 1' : 'Control + Shift + 1'}
             </span>
             <span>Turn On Text-based Canvas</span>
