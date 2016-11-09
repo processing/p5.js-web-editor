@@ -103,4 +103,6 @@
   }
   padding: 0 0 #{7 / $base-font-size}rem #{76 / $base-font-size}rem;
   font-size: #{12 / $base-font-size}rem;
+  display: flex;
+  justify-content: space-between;
 }
