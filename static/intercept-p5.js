@@ -7,7 +7,7 @@ funcNames = allData["classitems"].map(function(x){
   } else {
     tempParam = x["params"];
   }
-  return {
+   return {
     name: x["name"],
     params: tempParam,
     class: x["class"],
@@ -15,17 +15,18 @@ funcNames = allData["classitems"].map(function(x){
     submodule: x["submodule"]
   };
 });
+
 funcNames = funcNames.filter(function(x) {
   var className = x["class"];
   return (x["name"] && x["params"] && (className==='p5'));
 })
+
 
 funcNames.forEach(function(x){
   var document = parent.document;
   var originalFunc = p5.prototype[x.name];
   p5.prototype[x.name] = function(){
     orgArg = arguments;
-
     if(frameCount == 0) { //for setup
       Interceptor.setupObject = Interceptor.populateObject(x,arguments, Interceptor.setupObject,  document.getElementById('textOutput-content-details'),false);
       Interceptor.getSummary(Interceptor.setupObject,Interceptor.drawObject,document.getElementById('textOutput-content-summary'));

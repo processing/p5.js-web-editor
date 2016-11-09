@@ -142,6 +142,17 @@ class PreviewFrame extends React.Component {
       return;
     }
 
+    // if user switches textoutput preferences
+    if (this.props.isTextOutputPlaying !== prevProps.isTextOutputPlaying) {
+      this.renderSketch();
+      return;
+    }
+
+    if (this.props.textOutput !== prevProps.textOutput) {
+      this.renderSketch();
+      return;
+    }
+
     if (this.props.fullView && this.props.files[0].id !== prevProps.files[0].id) {
       this.renderSketch();
       return;
@@ -240,6 +251,7 @@ class PreviewFrame extends React.Component {
 
     if (this.props.textOutput || this.props.isTextOutputPlaying) {
       htmlHeadContents += '<script src="/loadData.js"></script>\n';
+      htmlHeadContents += '<script src="/intercept-helper-functions.js"></script>\n';
       htmlHeadContents += '<script src="/interceptor-functions.js"></script>\n';
       htmlHeadContents += '<script src="/intercept-p5.js"></script>\n';
       htmlHeadContents += '<script type="text/javascript" src="/ntc.min.js"></script>';
@@ -256,6 +268,7 @@ class PreviewFrame extends React.Component {
   renderSketch() {
     const doc = ReactDOM.findDOMNode(this);
     if (this.props.isPlaying) {
+      console.log('rendering');
       srcDoc.set(doc, this.injectLocalFiles());
       if (this.props.endSketchRefresh) {
         this.props.endSketchRefresh();
