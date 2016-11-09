@@ -219,8 +219,8 @@ var Interceptor = {
           }
 
           else{ // ie - there are fewer cols now
-            for(var i =minCols;i<properties.length;i++) {
-              console.log(properties[i].localeCompare('type'));
+            for(var i =0;i<properties.length;i++) {
+              // console.log(properties[i].localeCompare('type'));
               if(properties[i].localeCompare('type')) {
                 row.children[i].innerHTML = properties[i] + ' = ' + objectArray[j][properties[i]];
               }
@@ -241,7 +241,6 @@ var Interceptor = {
           table.removeChild(tempRow);
         }
       } else if(this.prevTotalCount <= this.totalCount) {
-
         for(var j =0;j<this.prevTotalCount;j++) {
           var row = table.children[j];
           var tempCol = row.children.length;
@@ -249,7 +248,7 @@ var Interceptor = {
 
           if(tempCol<properties.length){ //ie - there are more cols now
 
-            for(var i =minCols;i<=tempCol;i++) {
+            for(var i =0;i<=tempCol;i++) {
               if(properties[i].localeCompare('type')) {
                 row.children[i].innerHTML = properties[i] + ' = ' + objectArray[j][properties[i]];
               }

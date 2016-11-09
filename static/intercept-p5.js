@@ -31,7 +31,7 @@ funcNames.forEach(function(x){
       Interceptor.setupObject = Interceptor.populateObject(x,arguments, Interceptor.setupObject,  document.getElementById('textOutput-content-details'),false);
       Interceptor.getSummary(Interceptor.setupObject,Interceptor.drawObject,document.getElementById('textOutput-content-summary'));
       var table = document.getElementById('textOutput-content-details');
-      table.innerHTML = '';
+      // table.innerHTML = '';
       Interceptor.populateTable(table,Interceptor.setupObject.objectArray);
     }
 
