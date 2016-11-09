@@ -137,7 +137,7 @@ var Interceptor = {
         this.objectDescription = x.name;
       }
       else {
-        this.objectDescription = arguments[0].substring(0,20);
+        this.objectDescription = String(arguments[0]).substring(0,20);
       }
 
       this.coordinates = [];
