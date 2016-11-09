@@ -79,8 +79,8 @@
     @extend %icon;
   }
   position: absolute;
-  top: #{5 / $base-font-size}rem;
-  right: #{20 / $base-font-size}rem; // move left to avoid vertical scroll bar
+  top: 0;
+  right: #{1.5 / $base-font-size}rem; // move left to avoid vertical scroll bar
   z-index: 1;
 }
 
@@ -97,10 +97,12 @@
   }
 }
 
-.lint-error {
-  font-family: Inconsolata, monospace;
-  font-size: 100%;
-  background: rgba($console-error-color, 0.3);
-  color: $console-error-color;
-  padding: 2px 5px 3px;
+.editor__file-name {
+  @include themify() {
+    color: getThemifyVariable('inactive-text-color');
+  }
+  padding: 0 0 #{7 / $base-font-size}rem #{76 / $base-font-size}rem;
+  font-size: #{12 / $base-font-size}rem;
+  display: flex;
+  justify-content: space-between;
 }
