@@ -37,9 +37,7 @@ class Console extends React.Component {
               this.appendConsoleEvent(consoleEvent);
             }
           });
-          if (nextProps.isExpanded) {
-            this.appendConsoleEvent(consoleEvent);
-          }
+          this.appendConsoleEvent(consoleEvent);
         }
       });
     }

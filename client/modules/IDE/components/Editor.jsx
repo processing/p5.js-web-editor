@@ -92,7 +92,9 @@ class Editor extends React.Component {
     if (this.props.file.content !== prevProps.file.content &&
         this.props.file.content !== this._cm.getValue()) {
       this._cm.setValue(this.props.file.content); // eslint-disable-line no-underscore-dangle
-      setTimeout(() => this.props.setUnsavedChanges(false), 500);
+      if (!prevProps.unsavedChanges) {
+        setTimeout(() => this.props.setUnsavedChanges(false), 400);
+      }
     }
     if (this.props.fontSize !== prevProps.fontSize) {
       this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;

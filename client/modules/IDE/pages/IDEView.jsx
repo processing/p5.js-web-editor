@@ -141,7 +141,9 @@ class IDEView extends React.Component {
     if (e.keyCode === 83 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
       e.preventDefault();
       e.stopPropagation();
-      this.props.saveProject();
+      if (this.props.project.owner && this.props.project.owner.id === this.props.user.id) {
+        this.props.saveProject();
+      }
       // 13 === enter
     } else if (e.keyCode === 13 && e.shiftKey && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
       e.preventDefault();
@@ -151,6 +153,12 @@ class IDEView extends React.Component {
       e.preventDefault();
       e.stopPropagation();
       this.props.startSketchAndRefresh();
+    } else if (e.keyCode === 50 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac)) && e.shiftKey) {
+      e.preventDefault();
+      this.props.setTextOutput(false);
+    } else if (e.keyCode === 49 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac)) && e.shiftKey) {
+      e.preventDefault();
+      this.props.setTextOutput(true);
     }
   }
 
@@ -199,6 +207,7 @@ class IDEView extends React.Component {
           setAutorefresh={this.props.setAutorefresh}
           startSketchAndRefresh={this.props.startSketchAndRefresh}
           saveProject={this.props.saveProject}
+          currentUser={this.props.user.username}
         />
         <Preferences
           isVisible={this.props.ide.preferencesIsVisible}
@@ -285,6 +294,7 @@ class IDEView extends React.Component {
                   startRefreshSketch={this.props.startRefreshSketch}
                   stopSketch={this.props.stopSketch}
                   autorefresh={this.props.preferences.autorefresh}
+                  unsavedChanges={this.props.ide.unsavedChanges}
                 />
                 <Console
                   consoleEvent={this.props.ide.consoleEvent}
@@ -314,9 +324,6 @@ class IDEView extends React.Component {
                   cssFiles={this.props.cssFiles}
                   files={this.props.files}
                   content={this.props.selectedFile.content}
-                  head={
-                    <link type="text/css" rel="stylesheet" href="/preview-styles.css" />
-                  }
                   isPlaying={this.props.ide.isPlaying}
                   isTextOutputPlaying={this.props.ide.isTextOutputPlaying}
                   textOutput={this.props.preferences.textOutput}
@@ -449,7 +456,8 @@ IDEView.propTypes = {
   getProject: PropTypes.func.isRequired,
   user: PropTypes.shape({
     authenticated: PropTypes.bool.isRequired,
-    id: PropTypes.string
+    id: PropTypes.string,
+    username: PropTypes.string
   }).isRequired,
   newProject: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,

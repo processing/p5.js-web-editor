@@ -9,19 +9,31 @@ const exitUrl = require('../../../images/exit.svg');
 const plusUrl = require('../../../images/plus.svg');
 const minusUrl = require('../../../images/minus.svg');
 const beepUrl = require('../../../sounds/audioAlert.mp3');
+// import { debounce } from 'lodash';
 
 class Preferences extends React.Component {
   constructor(props) {
     super(props);
     this.handleUpdateAutosave = this.handleUpdateAutosave.bind(this);
+    this.handleUpdateFont = this.handleUpdateFont.bind(this);
+    this.handleUpdateIndentation = this.handleUpdateIndentation.bind(this);
+    this.handleLintWarning = this.handleLintWarning.bind(this);
   }
 
   handleUpdateFont(event) {
-    this.props.setFontSize(parseInt(event.target.value, 10));
+    let value = parseInt(event.target.value, 10);
+    if (isNaN(value)) {
+      value = 16;
+    }
+    this.props.setFontSize(value);
   }
 
   handleUpdateIndentation(event) {
-    this.props.setIndentation(parseInt(event.target.value, 10));
+    let value = parseInt(event.target.value, 10);
+    if (isNaN(value)) {
+      value = 2;
+    }
+    this.props.setIndentation(value);
   }
 
   handleUpdateAutosave(event) {
@@ -73,6 +85,10 @@ class Preferences extends React.Component {
             role="status"
             value={this.props.fontSize}
             onChange={this.handleUpdateFont}
+            ref="fontSizeInput"
+            onClick={() => {
+              this.refs.fontSizeInput.select();
+            }}
           >
           </input>
           <button
@@ -103,6 +119,10 @@ class Preferences extends React.Component {
             role="status"
             value={this.props.indentationAmount}
             onChange={this.handleUpdateIndentation}
+            ref="indentationInput"
+            onClick={() => {
+              this.refs.indentationInput.select();
+            }}
           >
           </input>
           <button

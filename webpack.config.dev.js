@@ -3,19 +3,35 @@ require('dotenv').config();
 
 module.exports = {
 	devtool: 'cheap-module-eval-source-map',
-	entry: ['babel-polyfill', 'webpack-hot-middleware/client',
-          './client/index.js',
-  ],
+	entry: {
+    app: ['babel-polyfill',
+          'webpack-hot-middleware/client',
+          './client/index.jsx',
+    ],
+    vendor: [
+      'react',
+      'react-dom'
+    ]
+  },
   output: {
 		path: __dirname + '/dist/',
-		filename: 'bundle.js',
+		filename: 'app.js',
 		publicPath: '/dist/'
   },
   resolve: {
     extensions: ['', '.js', '.jsx'],
+    modules: [
+      'client',
+      'node_modules',
+    ]
   },
 	plugins: [
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: Infinity,
+      filename: 'vendor.js',
+    }),
     new webpack.DefinePlugin({
       'process.env': {
         CLIENT: JSON.stringify(true),

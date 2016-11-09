@@ -31,6 +31,12 @@ class Toolbar extends React.Component {
     }
   }
 
+  canEditProjectName() {
+    return (this.props.owner && this.props.owner.username
+      && this.props.owner.username === this.props.currentUser)
+      || !this.props.owner || !this.props.owner.username;
+  }
+
   render() {
     let playButtonClass = classNames({
       'toolbar__play-button': true,
@@ -89,12 +95,19 @@ class Toolbar extends React.Component {
         <div className={nameContainerClass}>
           <a
             className="toolbar__project-name"
-            onClick={() => {
-              this.originalProjectName = this.props.project.name;
-              this.props.showEditProjectName();
-              setTimeout(() => this.refs.projectNameInput.focus(), 0);
+            href={`/projects/${this.props.project.id}`}
+            onClick={(e) => {
+              if (this.canEditProjectName()) {
+                e.preventDefault();
+                this.originalProjectName = this.props.project.name;
+                this.props.showEditProjectName();
+                setTimeout(() => this.refs.projectNameInput.focus(), 0);
+              }
             }}
-          >{this.props.project.name} <InlineSVG className="toolbar__edit-name-button" src={editProjectNameUrl} alt="Edit Project Name" /></a>
+          >
+            {this.props.project.name}&nbsp;
+            {this.canEditProjectName() && <InlineSVG className="toolbar__edit-name-button" src={editProjectNameUrl} alt="Edit Project Name" />}
+          </a>
           <input
             type="text"
             className="toolbar__project-name-input"
@@ -155,7 +168,8 @@ Toolbar.propTypes = {
   autorefresh: PropTypes.bool.isRequired,
   setAutorefresh: PropTypes.func.isRequired,
   startSketchAndRefresh: PropTypes.func.isRequired,
-  saveProject: PropTypes.func.isRequired
+  saveProject: PropTypes.func.isRequired,
+  currentUser: PropTypes.string
 };
 
 export default Toolbar;
