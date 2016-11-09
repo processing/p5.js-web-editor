@@ -330,7 +330,7 @@ var Interceptor = {
       objectArea = arguments[2]*arguments[3];
     }
     else if(!objectType.localeCompare('triangle')) {
-      objectArea = arguments[0]*(arguments[3] - arguments[5]) + arguments[2]*(arguments[5] - arguments[1]) + arguments[4]*(arguments[1] - arguments[3]);
+      objectArea = abs( arguments[0]*(arguments[3] - arguments[5]) + arguments[2]*(arguments[5] - arguments[1]) + arguments[4]*(arguments[1] - arguments[3]));
       //A	x 	 (	 B	y 	−	 C	y 	) 	+	 B	x 	 (	 C	y 	−	 A	y 	) 	+	 C	x 	 (	 A	y 	−	 B	y 	)
     }
     return objectArea;

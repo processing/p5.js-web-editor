@@ -268,7 +268,6 @@ class PreviewFrame extends React.Component {
   renderSketch() {
     const doc = ReactDOM.findDOMNode(this);
     if (this.props.isPlaying) {
-      console.log('rendering');
       srcDoc.set(doc, this.injectLocalFiles());
       if (this.props.endSketchRefresh) {
         this.props.endSketchRefresh();
