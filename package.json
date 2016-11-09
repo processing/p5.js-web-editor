@@ -30,6 +30,7 @@
     "babel-preset-react-optimize": "^1.0.1",
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.8.0",
+    "chunk-manifest-webpack-plugin": "^0.1.0",
     "css-loader": "^0.23.1",
     "cssnano": "^3.7.1",
     "eslint": "^2.13.1",
@@ -52,7 +53,8 @@
     "style-loader": "^0.13.1",
     "webpack": "^1.13.0",
     "webpack-dev-middleware": "^1.6.1",
-    "webpack-hot-middleware": "^2.10.0"
+    "webpack-hot-middleware": "^2.10.0",
+    "webpack-manifest-plugin": "^1.1.0"
   },
   "engines": {
     "node": ">=4"
@@ -82,7 +84,7 @@
     "js-beautify": "^1.6.4",
     "jshint": "^2.9.2",
     "lodash": "^4.16.4",
-    "loop-protect": "git+https://git@github.com/sagar-sm/loop-protect.git",
+    "loop-protect": "git+https://git@github.com/catarak/loop-protect.git",
     "moment": "^2.14.1",
     "mongoose": "^4.4.16",
     "node-uuid": "^1.4.7",

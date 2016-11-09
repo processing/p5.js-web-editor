@@ -18,8 +18,6 @@ class NewPasswordView extends React.Component {
       'new-password': true,
       'new-password--invalid': this.props.user.resetPasswordInvalid
     });
-    console.log(this.props.user);
-    console.log('rerendering!!');
     return (
       <div className={newPasswordClass} ref="newPassword" tabIndex="0">
         <h1>Set a New Password</h1>

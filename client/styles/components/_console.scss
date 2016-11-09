@@ -25,6 +25,13 @@
 		flex: 1 0 auto;
 	}
 
+	.preview-console__undefined {
+		@include themify(){
+			color: getThemifyVariable('inactive-text-color');
+		}
+		flex: 1 0 auto;
+	}
+
 	.preview-console__error {
 		color: $console-error-color;
 		flex: 1 0 auto;
