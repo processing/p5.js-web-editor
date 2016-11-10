@@ -136,11 +136,15 @@ export function exportProjectAsZip(projectId) {
   win.focus();
 }
 
-export function newProject() {
-  browserHistory.push('/');
+export function resetProject() {
   return {
     type: ActionTypes.RESET_PROJECT
   };
+}
+
+export function newProject() {
+  browserHistory.push('/');
+  return resetProject();
 }
 
 export function cloneProject() {

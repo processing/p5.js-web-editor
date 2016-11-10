@@ -45,7 +45,9 @@ class IDEView extends React.Component {
     this.props.stopSketch();
     if (this.props.params.project_id) {
       const id = this.props.params.project_id;
-      this.props.getProject(id);
+      if (id !== this.props.project.id) {
+        this.props.getProject(id);
+      }
 
       // if autosave is on and the user is the owner of the project
       if (this.props.preferences.autosave
@@ -62,7 +64,7 @@ class IDEView extends React.Component {
     this.isMac = navigator.userAgent.toLowerCase().indexOf('mac') !== -1;
     document.addEventListener('keydown', this.handleGlobalKeydown, false);
 
-    this.props.router.setRouteLeaveHook(this.props.route, () => this.warnIfUnsavedChanges());
+    this.props.router.setRouteLeaveHook(this.props.route, (route) => this.warnIfUnsavedChanges(route));
 
     window.onbeforeunload = () => this.warnIfUnsavedChanges();
 
@@ -85,7 +87,13 @@ class IDEView extends React.Component {
     }
 
     if (nextProps.params.project_id && !this.props.params.project_id) {
-      this.props.getProject(nextProps.params.project_id);
+      if (nextProps.params.project_id !== nextProps.project.id) {
+        this.props.getProject(nextProps.params.project_id);
+      }
+    }
+
+    if (!nextProps.params.project_id && this.props.params.project_id) {
+      this.props.resetProject();
     }
 
     if (nextProps.preferences.theme !== this.props.preferences.theme) {
@@ -115,7 +123,7 @@ class IDEView extends React.Component {
     }
 
     if (this.props.route.path !== prevProps.route.path) {
-      this.props.router.setRouteLeaveHook(this.props.route, () => this.warnIfUnsavedChanges());
+      this.props.router.setRouteLeaveHook(this.props.route, (route) => this.warnIfUnsavedChanges(route));
     }
   }
 
@@ -168,8 +176,12 @@ class IDEView extends React.Component {
     }
   }
 
-  warnIfUnsavedChanges() { // eslint-disable-line
-    if (this.props.ide.unsavedChanges) {
+  warnIfUnsavedChanges(route) { // eslint-disable-line
+    if (route && (route.action === 'PUSH' && (route.pathname === '/login' || route.pathname === '/signup'))) {
+      // don't warn
+    } else if (route && this.props.location.pathname === '/login' || this.props.location.pathname === '/signup') {
+      // don't warn
+    } else if (this.props.ide.unsavedChanges) {
       if (!window.confirm('Are you sure you want to leave this page? You have unsaved changes.')) {
         return false;
       }
@@ -591,7 +603,8 @@ IDEView.propTypes = {
   endSketchRefresh: PropTypes.func.isRequired,
   startRefreshSketch: PropTypes.func.isRequired,
   setBlobUrl: PropTypes.func.isRequired,
-  setPreviousPath: PropTypes.func.isRequired
+  setPreviousPath: PropTypes.func.isRequired,
+  resetProject: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
