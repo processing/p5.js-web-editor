@@ -26,9 +26,10 @@ class SignupView extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   return {
-    user: state.user
+    user: state.user,
+    previousPath: ownProps.previousPath
   };
 }
 

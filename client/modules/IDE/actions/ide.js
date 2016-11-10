@@ -220,3 +220,10 @@ export function resetProjectSavedTime() {
     type: ActionTypes.RESET_PROJECT_SAVED_TIME,
   };
 }
+
+export function setPreviousPath(path) {
+  return {
+    type: ActionTypes.SET_PREVIOUS_PATH,
+    path
+  };
+}

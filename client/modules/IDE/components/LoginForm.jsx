@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 function LoginForm(props) {
   const { fields: { email, password }, handleSubmit, submitting, pristine } = props;
   return (
-    <form className="login-form" onSubmit={handleSubmit(props.validateAndLoginUser.bind(this))}>
+    <form className="login-form" onSubmit={handleSubmit(props.validateAndLoginUser.bind(this, props.previousPath))}>
       <p className="login-form__field">
         <input
           className="login-form__email-input"
@@ -38,7 +38,8 @@ LoginForm.propTypes = {
   validateAndLoginUser: PropTypes.func.isRequired,
   submitting: PropTypes.bool,
   invalid: PropTypes.bool,
-  pristine: PropTypes.bool
+  pristine: PropTypes.bool,
+  previousPath: PropTypes.string.isRequired
 };
 
 export default LoginForm;

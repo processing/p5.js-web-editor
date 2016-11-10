@@ -69,6 +69,12 @@ class IDEView extends React.Component {
     document.body.className = this.props.preferences.theme;
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.location !== this.props.location) {
+      this.props.setPreviousPath(this.props.location.pathname);
+    }
+  }
+
   componentWillUpdate(nextProps) {
     if (this.props.ide.consoleIsExpanded !== nextProps.ide.consoleIsExpanded) {
       this.consoleSize = nextProps.ide.consoleIsExpanded ? 180 : 29;
@@ -366,7 +372,10 @@ class IDEView extends React.Component {
           if (this.props.location.pathname.match(/sketches$/)) {
             return (
               <Overlay>
-                <SketchList username={this.props.params.username} />
+                <SketchList
+                  username={this.props.params.username}
+                  previousPath={this.props.ide.previousPath}
+                />
               </Overlay>
             );
           }
@@ -375,7 +384,7 @@ class IDEView extends React.Component {
           if (this.props.location.pathname === '/about') {
             return (
               <Overlay>
-                <About />
+                <About previousPath={this.props.ide.previousPath} />
               </Overlay>
             );
           }
@@ -407,7 +416,7 @@ class IDEView extends React.Component {
           if (this.props.location.pathname === '/login') {
             return (
               <Overlay>
-                <LoginView />
+                <LoginView previousPath={this.props.ide.previousPath} />
               </Overlay>
             );
           }
@@ -416,7 +425,7 @@ class IDEView extends React.Component {
           if (this.props.location.pathname === '/signup') {
             return (
               <Overlay>
-                <SignupView />
+                <SignupView previousPath={this.props.ide.previousPath} />
               </Overlay>
             );
           }
@@ -434,7 +443,9 @@ class IDEView extends React.Component {
           if (this.props.location.pathname.match(/\/reset-password\/[a-fA-F0-9]+/)) {
             return (
               <Overlay>
-                <NewPasswordView token={this.props.params.reset_password_token} />
+                <NewPasswordView
+                  token={this.props.params.reset_password_token}
+                />
               </Overlay>
             );
           }
@@ -479,7 +490,8 @@ IDEView.propTypes = {
     infiniteLoop: PropTypes.bool.isRequired,
     previewIsRefreshing: PropTypes.bool.isRequired,
     infiniteLoopMessage: PropTypes.string.isRequired,
-    projectSavedTime: PropTypes.string.isRequired
+    projectSavedTime: PropTypes.string.isRequired,
+    previousPath: PropTypes.string.isRequired
   }).isRequired,
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
@@ -578,7 +590,8 @@ IDEView.propTypes = {
   startSketchAndRefresh: PropTypes.func.isRequired,
   endSketchRefresh: PropTypes.func.isRequired,
   startRefreshSketch: PropTypes.func.isRequired,
-  setBlobUrl: PropTypes.func.isRequired
+  setBlobUrl: PropTypes.func.isRequired,
+  setPreviousPath: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

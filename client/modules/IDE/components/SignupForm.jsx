@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 function SignupForm(props) {
   const { fields: { username, email, password, confirmPassword }, handleSubmit, submitting, invalid, pristine } = props;
   return (
-    <form className="signup-form" onSubmit={handleSubmit(props.signUpUser.bind(this))}>
+    <form className="signup-form" onSubmit={handleSubmit(props.signUpUser.bind(this, props.previousPath))}>
       <p className="signup-form__field">
         <input
           className="signup-form__username-input"
@@ -60,7 +60,8 @@ SignupForm.propTypes = {
   signUpUser: PropTypes.func.isRequired,
   submitting: PropTypes.bool,
   invalid: PropTypes.bool,
-  pristine: PropTypes.bool
+  pristine: PropTypes.bool,
+  previousPath: PropTypes.string.isRequired
 };
 
 export default SignupForm;
