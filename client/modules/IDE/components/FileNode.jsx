@@ -167,7 +167,7 @@ export class FileNode extends React.Component {
                           if (window.confirm(`Are you sure you want to delete ${this.props.name}?`)) {
                             this.isDeleting = true;
                             this.props.resetSelectedFile(this.props.id);
-                            setTimeout(() => this.props.deleteFile(this.props.id, this.props.parentId), 0);
+                            setTimeout(() => this.props.deleteFile(this.props.id, this.props.parentId), 100);
                           }
                         }}
                       >
