@@ -233,14 +233,25 @@ class PreviewFrame extends React.Component {
     jsFiles.forEach(jsFile => {
       const fileName = escapeStringRegexp(jsFile.name);
       const fileRegex = new RegExp(`<script.*?src=('|")((\.\/)|\/)?${fileName}('|").*?>([\s\S]*?)<\/script>`, 'gmi');
-      const replacementString = `<script data-tag="${startTag}${jsFile.name}">\n${jsFile.content}\n</script>`;
+      let replacementString;
+      if (jsFile.url) {
+        replacementString = `<script data-tag="${startTag}${jsFile.name}" src="${jsFile.url}"></script>`;
+      } else {
+        replacementString = `<script data-tag="${startTag}${jsFile.name}">\n${jsFile.content}\n</script>`;
+      }
       htmlFile = htmlFile.replace(fileRegex, replacementString);
     });
 
     cssFiles.forEach(cssFile => {
       const fileName = escapeStringRegexp(cssFile.name);
       const fileRegex = new RegExp(`<link.*?href=('|")((\.\/)|\/)?${fileName}('|").*?>`, 'gmi');
-      htmlFile = htmlFile.replace(fileRegex, `<style>\n${cssFile.content}\n</style>`);
+      let replacementString;
+      if (cssFile.url) {
+        replacementString = `<link rel="stylesheet" href="${cssFile.url}" >`;
+      } else {
+        replacementString = `<style>\n${cssFile.content}\n</style>`;
+      }
+      htmlFile = htmlFile.replace(fileRegex, replacementString);
     });
 
     const htmlHead = htmlFile.match(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi);
