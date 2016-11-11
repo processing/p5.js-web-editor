@@ -252,9 +252,10 @@ class PreviewFrame extends React.Component {
     if (this.props.textOutput || this.props.isTextOutputPlaying) {
       htmlHeadContents += '<script src="/loadData.js"></script>\n';
       htmlHeadContents += '<script src="/intercept-helper-functions.js"></script>\n';
-      // htmlHeadContents += '<script src="/interceptor-functions.js"></script>\n';
-      htmlHeadContents += '<script src="/intercept-grid.js"></script>\n';
-      htmlHeadContents += '<script src="/intercept-p5-grid.js"></script>\n';
+      htmlHeadContents += '<script src="/interceptor-functions.js"></script>\n';
+      // htmlHeadContents += '<script src="/intercept-grid.js"></script>\n';
+      // htmlHeadContents += '<script src="/intercept-p5-grid.js"></script>\n';
+      htmlHeadContents += '<script src="/intercept-p5.js"></script>\n';
       htmlHeadContents += '<script type="text/javascript" src="/ntc.min.js"></script>';
       // htmlHeadContents += '<script src="/intercept-pan.js"></script>\n';
     }
