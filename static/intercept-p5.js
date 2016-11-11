@@ -30,7 +30,6 @@ funcNames.forEach(function(x){
       Interceptor.setupObject = Interceptor.populateObject(x,arguments, Interceptor.setupObject,  document.getElementById('textOutput-content-table'),false);
       Interceptor.getSummary(Interceptor.setupObject,Interceptor.drawObject,document.getElementById('textOutput-content-summary'));
       var table = document.getElementById('textOutput-content-table');
-      // table.innerHTML = '';
       Interceptor.populateTable(table,Interceptor.setupObject.objectArray);
     }
 

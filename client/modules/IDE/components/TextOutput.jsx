@@ -31,6 +31,13 @@ class TextOutput extends React.Component {
           aria-label="text output details"
         >
         </table>
+        <div
+          tabIndex="0"
+          role="main"
+          id="textOutput-content-details"
+          aria-label="text output details"
+        >
+        </div>
       </section>
     );
   }

@@ -220,7 +220,6 @@ var Interceptor = {
 
           else{ // ie - there are fewer cols now
             for(var i =0;i<properties.length;i++) {
-              // console.log(properties[i].localeCompare('type'));
               if(properties[i].localeCompare('type')) {
                 row.children[i].innerHTML = properties[i] + ' = ' + objectArray[j][properties[i]];
               }

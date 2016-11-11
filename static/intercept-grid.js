@@ -145,11 +145,7 @@ var Interceptor = {
   },
 
   createShadowDOMElement : function(document) {
-    console.log('creating');
-      var contentTable = document.createElement('table');
-      contentTable.id="textOutput-content-table";
-      contentTable.className ="textOutput-content-table";
-      contentTable.setAttribute('summary','details of object in the canvas');
+      var contentTable = document.getElementById('textOutput-content-table');
 
       for(var i=0; i<this.noRows; i++) {
         var row = document.createElement('tr');
@@ -162,7 +158,6 @@ var Interceptor = {
         }
         contentTable.appendChild(row);
       }
-      document.getElementById('textOutput-content').appendChild(contentTable);
       shadowDOMElement = document.getElementById('textOutput-content');
 
     },
