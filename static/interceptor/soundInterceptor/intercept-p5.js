@@ -80,20 +80,26 @@ funcNames.forEach(function(x){
       }
       //pull out only the x coord values and compare with prev value
       for(var i =0; i < x.params.length; i++) {
-        if(x.params[i].description.indexOf('x-coordinate')>-1){
-
-          objects[objectCount-1].xPosCurr = arguments[i];
-          objects[objectCount-1].xPosDiff = objects[objectCount-1].xPosCurr - objects[objectCount-1].xPosPrev;
-          objects[objectCount-1].xPosPrev = objects[objectCount-1].xPosCurr;
-        }
         if(x.params[i].description.indexOf('y-coordinate')>-1){
           objects[objectCount-1].yPosCurr = arguments[i];
           objects[objectCount-1].yPosDiff = objects[objectCount-1].yPosCurr - objects[objectCount-1].yPosPrev;
           objects[objectCount-1].yPosPrev = objects[objectCount-1].yPosCurr;
+          break;
         }
       }
+
+      for(var i =0; i < x.params.length; i++) {
+        if(x.params[i].description.indexOf('x-coordinate')>-1){
+          objects[objectCount-1].xPosCurr = arguments[i];
+          objects[objectCount-1].xPosDiff = objects[objectCount-1].xPosCurr - objects[objectCount-1].xPosPrev;
+          objects[objectCount-1].xPosPrev = objects[objectCount-1].xPosCurr;
+          break;
+        }
+      }
+
       if(abs(objects[objectCount-1].xPosDiff>0)||abs(objects[objectCount-1].yPosDiff>0))
       {
+
         currNote = (1-objects[objectCount-1].yPosCurr/height)*(12); // mapping hieghts to notes from 1-100
         //fn = f0 * (a)n
         currLogFreq = 440 * Math.pow(Math.pow(2,(1/12)),currNote);
