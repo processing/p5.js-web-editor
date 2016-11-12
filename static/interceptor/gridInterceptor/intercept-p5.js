@@ -24,13 +24,14 @@ funcNames = funcNames.filter(function(x) {
 
 funcNames.forEach(function(x){
   var document = parent.document;
-  if(!shadowDOMElement){
-      Interceptor.createShadowDOMElement(document);
-    }
   var originalFunc = p5.prototype[x.name];
   p5.prototype[x.name] = function(){
     orgArg = arguments;
     if(frameCount == 0) { //for setup
+      document.getElementById('textOutput-content-table').innerHTML = '';
+      document.getElementById('textOutput-content-details').innerHTML = '';
+      document.getElementById('textOutput-content-summary').innerHTML = '';
+      Interceptor.createShadowDOMElement(document);
       Interceptor.setupObject = Interceptor.populateObject(x,arguments, Interceptor.setupObject,  document.getElementById('textOutput-content-details'),false);
       Interceptor.populateObjectDetails(Interceptor.setupObject,Interceptor.drawObject,document.getElementById('textOutput-content-summary'),document.getElementById('textOutput-content-details'));
       var table = document.getElementById('textOutput-content-details');

@@ -249,15 +249,21 @@ class PreviewFrame extends React.Component {
     htmlHeadContents = htmlHeadContents.slice(1, htmlHeadContents.length - 2);
     htmlHeadContents += '<script type="text/javascript" src="/loop-protect.min.js"></script>\n';
 
-    if (this.props.textOutput || this.props.isTextOutputPlaying) {
-      htmlHeadContents += '<script src="/loadData.js"></script>\n';
-      htmlHeadContents += '<script src="/intercept-helper-functions.js"></script>\n';
-      htmlHeadContents += '<script src="/interceptor-functions.js"></script>\n';
-      // htmlHeadContents += '<script src="/intercept-grid.js"></script>\n';
-      // htmlHeadContents += '<script src="/intercept-p5-grid.js"></script>\n';
-      htmlHeadContents += '<script src="/intercept-p5.js"></script>\n';
-      htmlHeadContents += '<script type="text/javascript" src="/ntc.min.js"></script>';
-      // htmlHeadContents += '<script src="/intercept-pan.js"></script>\n';
+    if (this.props.textOutput === 1 || this.props.isTextOutputPlaying) {
+      htmlHeadContents += '<script src="/interceptor/loadData.js"></script>\n';
+      htmlHeadContents += '<script src="/interceptor/intercept-helper-functions.js"></script>\n';
+      htmlHeadContents += '<script src="/interceptor/textInterceptor/interceptor-functions.js"></script>\n';
+      htmlHeadContents += '<script src="/interceptor/textInterceptor/intercept-p5.js"></script>\n';
+      htmlHeadContents += '<script type="text/javascript" src="/interceptor/ntc.min.js"></script>';
+    } else if (this.props.textOutput === 2 || this.props.isTextOutputPlaying) {
+      htmlHeadContents += '<script src="/interceptor/loadData.js"></script>\n';
+      htmlHeadContents += '<script src="/interceptor/intercept-helper-functions.js"></script>\n';
+      htmlHeadContents += '<script src="/interceptor/gridInterceptor/interceptor-functions.js"></script>\n';
+      htmlHeadContents += '<script src="/interceptor/gridInterceptor/intercept-p5.js"></script>\n';
+      htmlHeadContents += '<script type="text/javascript" src="/interceptor/ntc.min.js"></script>';
+    } else if (this.props.textOutput === 3 || this.props.isTextOutputPlaying) {
+      htmlHeadContents += '<script src="/interceptor/loadData.js"></script>\n';
+      htmlHeadContents += '<script src="/interceptor/soundInterceptor/intercept-p5.js"></script>\n';
     }
 
     htmlFile = htmlFile.replace(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi, `<head>\n${htmlHeadContents}\n</head>`);
@@ -309,7 +315,7 @@ class PreviewFrame extends React.Component {
 PreviewFrame.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   isTextOutputPlaying: PropTypes.bool.isRequired,
-  textOutput: PropTypes.bool.isRequired,
+  textOutput: PropTypes.number.isRequired,
   content: PropTypes.string,
   htmlFile: PropTypes.shape({
     content: PropTypes.string.isRequired

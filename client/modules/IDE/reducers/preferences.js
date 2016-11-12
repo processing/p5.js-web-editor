@@ -6,7 +6,7 @@ const initialState = {
   isTabIndent: true,
   autosave: true,
   lintWarning: false,
-  textOutput: false,
+  textOutput: 0,
   theme: 'light',
   autorefresh: false
 };

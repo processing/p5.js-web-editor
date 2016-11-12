@@ -27,6 +27,9 @@ funcNames.forEach(function(x){
   p5.prototype[x.name] = function(){
     orgArg = arguments;
     if(frameCount == 0) { //for setup
+      document.getElementById('textOutput-content-table').innerHTML = '';
+      document.getElementById('textOutput-content-details').innerHTML = '';
+      document.getElementById('textOutput-content-summary').innerHTML = '';
       Interceptor.setupObject = Interceptor.populateObject(x,arguments, Interceptor.setupObject,  document.getElementById('textOutput-content-table'),false);
       Interceptor.getSummary(Interceptor.setupObject,Interceptor.drawObject,document.getElementById('textOutput-content-summary'));
       var table = document.getElementById('textOutput-content-table');
