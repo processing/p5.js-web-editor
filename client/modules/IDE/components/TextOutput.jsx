@@ -27,10 +27,17 @@ class TextOutput extends React.Component {
         <table
           tabIndex="0"
           role="main"
-          id="textOutput-content-details"
+          id="textOutput-content-table"
           aria-label="text output details"
         >
         </table>
+        <div
+          tabIndex="0"
+          role="main"
+          id="textOutput-content-details"
+          aria-label="text output details"
+        >
+        </div>
       </section>
     );
   }

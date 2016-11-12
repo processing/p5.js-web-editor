@@ -1,4 +1,3 @@
-var textOutputElement;
 var canvasLocation ='';
 
 funcNames = allData["classitems"].map(function(x){
@@ -28,10 +27,12 @@ funcNames.forEach(function(x){
   p5.prototype[x.name] = function(){
     orgArg = arguments;
     if(frameCount == 0) { //for setup
-      Interceptor.setupObject = Interceptor.populateObject(x,arguments, Interceptor.setupObject,  document.getElementById('textOutput-content-details'),false);
+      document.getElementById('textOutput-content-table').innerHTML = '';
+      document.getElementById('textOutput-content-details').innerHTML = '';
+      document.getElementById('textOutput-content-summary').innerHTML = '';
+      Interceptor.setupObject = Interceptor.populateObject(x,arguments, Interceptor.setupObject,  document.getElementById('textOutput-content-table'),false);
       Interceptor.getSummary(Interceptor.setupObject,Interceptor.drawObject,document.getElementById('textOutput-content-summary'));
-      var table = document.getElementById('textOutput-content-details');
-      // table.innerHTML = '';
+      var table = document.getElementById('textOutput-content-table');
       Interceptor.populateTable(table,Interceptor.setupObject.objectArray);
     }
 
@@ -42,7 +43,7 @@ funcNames.forEach(function(x){
     //reset some of the variables
     else if(frameCount%100 == 1 ) {
       if(!Interceptor.isCleared){
-        var table = document.getElementById('textOutput-content-details');
+        var table = document.getElementById('textOutput-content-table');
         Interceptor.getSummary(Interceptor.setupObject,Interceptor.drawObject,document.getElementById('textOutput-content-summary'));
         Interceptor.populateTable(table,Interceptor.setupObject.objectArray.concat(Interceptor.drawObject.objectArray));
       }
