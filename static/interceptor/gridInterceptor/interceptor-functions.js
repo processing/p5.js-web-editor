@@ -146,7 +146,6 @@ var Interceptor = {
 
   createShadowDOMElement : function(document) {
       var contentTable = document.getElementById('textOutput-content-table');
-      console.log('create');
       for(var i=0; i<this.noRows; i++) {
         var row = document.createElement('tr');
 

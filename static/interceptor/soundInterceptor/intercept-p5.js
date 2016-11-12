@@ -91,22 +91,22 @@ funcNames.forEach(function(x){
           objects[objectCount-1].yPosDiff = objects[objectCount-1].yPosCurr - objects[objectCount-1].yPosPrev;
           objects[objectCount-1].yPosPrev = objects[objectCount-1].yPosCurr;
         }
-        if(abs(objects[objectCount-1].xPosDiff>0)||abs(objects[objectCount-1].yPosDiff>0))
-        {
-          currNote = (1-objects[objectCount-1].yPosCurr/height)*(12); // mapping hieghts to notes from 1-100
-          //fn = f0 * (a)n
-          currLogFreq = 440 * Math.pow(Math.pow(2,(1/12)),currNote);
-          currVol = 0.4;
-          x_coord = frameCount%10 - 5;
-          currVol = 2*objectCount*Math.exp(-((x_coord+2*objectCount)*(x_coord+2*objectCount)));
-          currPan = (objects[objectCount-1].xPosCurr/width)*2 - 1;
-          oscillatorNode.frequency.value = currLogFreq;
-          gainNode.gain.value = currVol;
-          panNode.pan.value = currPan;
-        }
-        else {
-          gainNode.gain.value = 0;
-        }
+      }
+      if(abs(objects[objectCount-1].xPosDiff>0)||abs(objects[objectCount-1].yPosDiff>0))
+      {
+        currNote = (1-objects[objectCount-1].yPosCurr/height)*(12); // mapping hieghts to notes from 1-100
+        //fn = f0 * (a)n
+        currLogFreq = 440 * Math.pow(Math.pow(2,(1/12)),currNote);
+        currVol = 0.4;
+        x_coord = frameCount%10 - 5;
+        currVol = 2*objectCount*Math.exp(-((x_coord+2*objectCount)*(x_coord+2*objectCount)));
+        currPan = (objects[objectCount-1].xPosCurr/width)*2 - 1;
+        oscillatorNode.frequency.value = currLogFreq;
+        gainNode.gain.value = currVol;
+        panNode.pan.value = currPan;
+      }
+      else {
+        gainNode.gain.value = 0;
       }
     }
   return originalFunc.apply(this,arguments);

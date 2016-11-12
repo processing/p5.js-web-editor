@@ -283,7 +283,7 @@ class Preferences extends React.Component {
               value="Grid On"
               checked={Boolean(this.props.textOutput === 2)}
             />
-            <label htmlFor="grid-output-on" className="preference__option">Grid-Text</label>
+            <label htmlFor="grid-output-on" className="preference__option">Table-Text</label>
             <input
               type="radio"
               onChange={() => this.props.setTextOutput(3)}
