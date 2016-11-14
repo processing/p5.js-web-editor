@@ -160,8 +160,16 @@ class Editor extends React.Component {
         className={editorSectionClass}
       >
         <div className="editor__file-name">
-          <span>{this.props.file.name}
-          {this.props.unsavedChanges ? '*' : null}</span>
+          <span>
+            {this.props.file.name}
+            {this.props.unsavedChanges ?
+              <svg width="9.2" height="11" fill="currentColor">
+                <circle cx="6.2" cy="3" r="2.8" />
+              </svg>
+            :
+              null
+            }
+          </span>
           <Timer
             projectSavedTime={this.props.projectSavedTime}
           />
