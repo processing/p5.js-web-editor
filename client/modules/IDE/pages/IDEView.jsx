@@ -22,7 +22,7 @@ import * as EditorAccessibilityActions from '../actions/editorAccessibility';
 import * as PreferencesActions from '../actions/preferences';
 import * as UserActions from '../../User/actions';
 import * as ToastActions from '../actions/toast';
-import { getHTMLFile, getJSFiles, getCSSFiles } from '../reducers/files';
+import { getHTMLFile } from '../reducers/files';
 import SplitPane from 'react-split-pane';
 import Overlay from '../../App/components/Overlay';
 import SketchList from '../components/SketchList';
@@ -344,8 +344,6 @@ class IDEView extends React.Component {
                 </div>
                 <PreviewFrame
                   htmlFile={this.props.htmlFile}
-                  jsFiles={this.props.jsFiles}
-                  cssFiles={this.props.cssFiles}
                   files={this.props.files}
                   content={this.props.selectedFile.content}
                   isPlaying={this.props.ide.isPlaying}
@@ -559,8 +557,6 @@ IDEView.propTypes = {
   }),
   setSelectedFile: PropTypes.func.isRequired,
   htmlFile: PropTypes.object.isRequired,
-  jsFiles: PropTypes.array.isRequired,
-  cssFiles: PropTypes.array.isRequired,
   dispatchConsoleEvent: PropTypes.func.isRequired,
   newFile: PropTypes.func.isRequired,
   closeNewFileModal: PropTypes.func.isRequired,
@@ -617,8 +613,6 @@ function mapStateToProps(state) {
     files: state.files,
     selectedFile: state.files.find(file => file.isSelectedFile),
     htmlFile: getHTMLFile(state.files),
-    jsFiles: getJSFiles(state.files),
-    cssFiles: getCSSFiles(state.files),
     ide: state.ide,
     preferences: state.preferences,
     editorAccessibility: state.editorAccessibility,

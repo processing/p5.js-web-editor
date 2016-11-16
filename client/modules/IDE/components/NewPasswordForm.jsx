@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { domOnlyProps } from '../../../utils/reduxFormUtils';
 
 function NewPasswordForm(props) {
   const { fields: { password, confirmPassword }, handleSubmit, submitting, invalid, pristine } = props;
@@ -10,7 +11,7 @@ function NewPasswordForm(props) {
           aria-label="password"
           type="password"
           placeholder="Password"
-          {...password}
+          {...domOnlyProps(password)}
         />
         {password.touched && password.error && <span className="form-error">{password.error}</span>}
       </p>
@@ -20,7 +21,7 @@ function NewPasswordForm(props) {
           type="password"
           placeholder="Confirm Password"
           aria-label="confirm password"
-          {...confirmPassword}
+          {...domOnlyProps(confirmPassword)}
         />
         {confirmPassword.touched && confirmPassword.error && <span className="form-error">{confirmPassword.error}</span>}
       </p>
