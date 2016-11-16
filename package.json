@@ -94,6 +94,7 @@
     "passport": "^0.3.2",
     "passport-github": "^1.1.0",
     "passport-local": "^1.0.0",
+    "project-name-generator": "^2.1.3",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
     "react-inlinesvg": "^0.4.2",

@@ -32,7 +32,7 @@ const defaultCSS =
 }
 `;
 
-function initialState() {
+const initialState = () => {
   const a = objectID().toHexString();
   const b = objectID().toHexString();
   const c = objectID().toHexString();
@@ -70,7 +70,7 @@ function initialState() {
       fileType: 'file',
       children: []
     }];
-}
+};
 
 function getAllDescendantIds(state, nodeId) {
   return state.find(file => file.id === nodeId).children
