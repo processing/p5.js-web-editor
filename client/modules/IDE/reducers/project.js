@@ -1,13 +1,18 @@
 import * as ActionTypes from '../../../constants';
-const generate = require('project-name-generator');
+import generate from 'project-name-generator';
 
-const generatedName = generate({ words: 2 }).dashed;
+function initialState() {
+  const generatedString = generate({ words: 2 }).spaced;
+  const generatedName = generatedString.charAt(0).toUpperCase() + generatedString.slice(1);
+  return {
+    name: generatedName
+  };
+}
 
-const initialState = {
-  name: `${generatedName}`
-};
-
-const project = (state = initialState, action) => {
+const project = (state, action) => {
+  if (state === undefined) {
+    state = initialState(); // eslint-disable-line
+  }
   switch (action.type) {
     case ActionTypes.SET_PROJECT_NAME:
       return Object.assign({}, { ...state }, { name: action.name });
@@ -24,7 +29,7 @@ const project = (state = initialState, action) => {
         owner: action.owner
       };
     case ActionTypes.RESET_PROJECT:
-      return initialState;
+      return initialState();
     case ActionTypes.SHOW_EDIT_PROJECT_NAME:
       return Object.assign({}, state, { isEditingName: true });
     case ActionTypes.HIDE_EDIT_PROJECT_NAME:
