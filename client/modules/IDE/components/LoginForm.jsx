@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { domOnlyProps } from '../../../utils/reduxFormUtils';
 
 function LoginForm(props) {
   const { fields: { email, password }, handleSubmit, submitting, pristine } = props;
@@ -10,7 +11,7 @@ function LoginForm(props) {
           aria-label="email"
           type="text"
           placeholder="Email"
-          {...email}
+          {...domOnlyProps(email)}
         />
         {email.touched && email.error && <span className="form-error">{email.error}</span>}
       </p>
@@ -20,7 +21,7 @@ function LoginForm(props) {
           aria-label="password"
           type="password"
           placeholder="Password"
-          {...password}
+          {...domOnlyProps(password)}
         />
         {password.touched && password.error && <span className="form-error">{password.error}</span>}
       </p>
