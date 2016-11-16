@@ -17,7 +17,9 @@ const initialState = {
   infiniteLoop: false,
   previewIsRefreshing: false,
   infiniteLoopMessage: '',
-  projectJustOpened: false
+  projectJustOpened: false,
+  projectSavedTime: '',
+  previousPath: '/'
 };
 
 const ide = (state = initialState, action) => {
@@ -84,6 +86,12 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { justOpenedProject: true });
     case ActionTypes.RESET_JUST_OPENED_PROJECT:
       return Object.assign({}, state, { justOpenedProject: false });
+    case ActionTypes.SET_PROJECT_SAVED_TIME:
+      return Object.assign({}, state, { projectSavedTime: action.value });
+    case ActionTypes.RESET_PROJECT_SAVED_TIME:
+      return Object.assign({}, state, { projectSavedTime: '' });
+    case ActionTypes.SET_PREVIOUS_PATH:
+      return Object.assign({}, state, { previousPath: action.path });
     default:
       return state;
   }

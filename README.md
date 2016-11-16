@@ -77,7 +77,12 @@ This project does not use CSS Modules, but uses Sass. I like to follow [BEM rule
 
 I'm using [ES6](http://es6-features.org/) and transpiling to ES5 using [Babel](https://babeljs.io/). For reference to the JavaScript style guide, see the [Airbnb Style Guide](https://github.com/airbnb/javascript), [React ESLint Plugin](https://github.com/yannickcr/eslint-plugin-react).
 
-I'm new to using ESLint, but I decided on a configuration based on some popular React/Redux boilerplates. Open to suggestions on this. If in development, you're getting annoyed with ESLint, you can remove it from `webpack.config.dev.js` in the JavaScript loader, or disable any line from eslint by commenting at the end of the line `// eslint-disable-line`.
+The ESLint configuration is based on a few popular React/Redux boilerplates. Open to suggestions on this. If in development, you're getting annoyed with ESLint, you can remove it from `webpack.config.dev.js` in the JavaScript loader, or disable any line from eslint by commenting at the end of the line `// eslint-disable-line`.
+
+## AWS information
+This project is currently hosted on an EC2 instance and uses S3 for media hosting.
+
+Backups on the MongoDB are also hosted on an S3 bucket, based on the following [gist](https://gist.github.com/eladnava/96bd9771cd2e01fb4427230563991c8d). The backup script runs nightly via a cronjob at 8AM UTC/3AM EST/12AM PST. Backups are deleted after 30 days.
 
 ##Dump of links I'm saving for reference
 
@@ -86,4 +91,4 @@ I'm new to using ESLint, but I decided on a configuration based on some popular 
 * https://github.com/jsbin/jsbin (especially look at the console)
 * Need to figure out how to solve the XSS issue, https://github.com/jsbin/jsbin/wiki/Best-practices-for-building-your-own-live-paste-bin
 * https://www.npmjs.com/package/express-subdomain
-* https://github.com/jsbin/jsbin/blob/master/public/js/render/console.js - the code is a little messy but it might be our only hope for a console
+* https://github.com/jsbin/jsbin/blob/master/public/js/render/console.js - the code is a little messy but it might be useful

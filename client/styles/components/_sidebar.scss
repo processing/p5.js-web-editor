@@ -1,7 +1,10 @@
-.sidebar__header {
+.sidebar {
   @include themify() {
-    border-top: 1px solid map-get($theme-map, 'ide-border-color');
+    border: 1px solid map-get($theme-map, 'ide-border-color');
   }
+}
+
+.sidebar__header {
   padding: #{10 / $base-font-size}rem #{6 / $base-font-size}rem;
   display: flex;
   justify-content: space-between;

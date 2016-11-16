@@ -16,7 +16,7 @@ class KeyboardShortcutModal extends React.Component {
             <InlineSVG src={exitUrl} alt="Close Keyboard Shortcuts Overlay" />
           </button>
         </header>
-        <ul>
+        <ul title="keyboard shortcuts">
           <li className="keyboard-shortcut-item">
             <span className="keyboard-shortcut__command">Shift + Tab</span>
             <span>Tidy</span>
@@ -55,6 +55,18 @@ class KeyboardShortcutModal extends React.Component {
               {this.isMac ? 'Command + Shift + Enter' : 'Control + Shift + Enter'}
             </span>
             <span>Stop Sketch</span>
+          </li>
+          <li className="keyboard-shortcut-item">
+            <span className="keyboard-shortcut__command">
+              {this.isMac ? 'Command + Shift + 1' : 'Control + Shift + 1'}
+            </span>
+            <span>Toggle Text-based Canvas</span>
+          </li>
+          <li className="keyboard-shortcut-item">
+            <span className="keyboard-shortcut__command">
+              {this.isMac ? 'Command + Shift + 2' : 'Control + Shift + 2'}
+            </span>
+            <span>Turn Off Text-based Canvas</span>
           </li>
         </ul>
       </section>

@@ -13,6 +13,6 @@ function fetchJSONFile(path, callback) {
     httpRequest.send();
 }
 
-fetchJSONFile('data.min.json', function(data){
+fetchJSONFile('/interceptor/data.min.json', function(data){
   allData = data;
 });

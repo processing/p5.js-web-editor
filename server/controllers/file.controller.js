@@ -1,4 +1,5 @@
 import Project from '../models/project';
+import { resolvePathToFile } from '../utils/filePath';
 
 // Bug -> timestamps don't get created, but it seems like this will
 // be fixed in mongoose soon
@@ -63,5 +64,19 @@ export function deleteFile(req, res) {
     project.save(innerErr => {
       res.json(project.files);
     })
+  });
+}
+
+export function getFileContent(req, res) {
+  Project.findById(req.params.project_id, (err, project) => {
+    if (err) {
+      return res.status(404).send({success: false, message: 'Project with that id does not exist.'});
+    }
+    const filePath = req.params[0];
+    const resolvedFile = resolvePathToFile(filePath, project.files);
+    if (!resolvedFile) {
+      return res.status(404).send({success: false, message: 'File with that name and path does not exist.'});
+    }
+    res.send(resolvedFile.content);
   });
 }

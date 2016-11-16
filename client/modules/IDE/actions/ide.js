@@ -207,3 +207,23 @@ export function resetJustOpenedProject() {
     type: ActionTypes.RESET_JUST_OPENED_PROJECT
   };
 }
+
+export function setProjectSavedTime(value) {
+  return {
+    type: ActionTypes.SET_PROJECT_SAVED_TIME,
+    value
+  };
+}
+
+export function resetProjectSavedTime() {
+  return {
+    type: ActionTypes.RESET_PROJECT_SAVED_TIME,
+  };
+}
+
+export function setPreviousPath(path) {
+  return {
+    type: ActionTypes.SET_PREVIOUS_PATH,
+    path
+  };
+}

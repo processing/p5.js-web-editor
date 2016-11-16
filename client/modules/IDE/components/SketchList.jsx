@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import * as SketchActions from '../actions/projects';
 import * as ProjectActions from '../actions/project';
 import InlineSVG from 'react-inlinesvg';
@@ -10,9 +10,18 @@ const exitUrl = require('../../../images/exit.svg');
 const trashCan = require('../../../images/trash-can.svg');
 
 class SketchList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.closeSketchList = this.closeSketchList.bind(this);
+  }
+
   componentDidMount() {
     this.props.getProjects(this.props.username);
     document.getElementById('sketchlist').focus();
+  }
+
+  closeSketchList() {
+    browserHistory.push(this.props.previousPath);
   }
 
   render() {
@@ -20,7 +29,7 @@ class SketchList extends React.Component {
       <section className="sketch-list" aria-label="project list" tabIndex="0" role="main" id="sketchlist">
         <header className="sketch-list__header">
           <h2>Sketches</h2>
-          <button className="sketch-list__exit-button" onClick={this.props.closeSketchList}>
+          <button className="sketch-list__exit-button" onClick={this.closeSketchList}>
             <InlineSVG src={exitUrl} alt="Close Sketch List Overlay" />
           </button>
         </header>
@@ -39,8 +48,6 @@ class SketchList extends React.Component {
                 <tr className="sketches-table__row visibility-toggle" key={sketch.id}>
                   <td>
                   {(() => { // eslint-disable-line
-                    console.log(this.props.username);
-                    console.log(this.props.user.username);
                     if (this.props.username === this.props.user.username || this.props.username === undefined) {
                       return (
                         <button
@@ -74,9 +81,9 @@ SketchList.propTypes = {
   user: PropTypes.object.isRequired,
   getProjects: PropTypes.func.isRequired,
   sketches: PropTypes.array.isRequired,
-  closeSketchList: PropTypes.func.isRequired,
   username: PropTypes.string,
-  deleteProject: PropTypes.func.isRequired
+  deleteProject: PropTypes.func.isRequired,
+  previousPath: PropTypes.string.isRequired
 };
 
 function mapStateToProps(state) {

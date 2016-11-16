@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import InlineSVG from 'react-inlinesvg';
 const exitUrl = require('../../../images/exit.svg');
 import { browserHistory } from 'react-router';
 
 class About extends React.Component {
+  constructor(props) {
+    super(props);
+    this.closeAboutModal = this.closeAboutModal.bind(this);
+  }
+
   componentDidMount() {
     this.refs.about.focus();
   }
 
   closeAboutModal() {
-    browserHistory.goBack();
+    browserHistory.push(this.props.previousPath);
   }
 
   render() {
@@ -41,5 +46,9 @@ class About extends React.Component {
     );
   }
 }
+
+About.propTypes = {
+  previousPath: PropTypes.string.isRequired
+};
 
 export default About;
