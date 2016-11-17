@@ -22,7 +22,6 @@ class SketchList extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log(this.props.sketches);
     if (this.props.sketches.length === 0) {
       this.props.setToastText('No sketches were found.');
       this.props.showToast(3000);
