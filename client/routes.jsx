@@ -1,4 +1,4 @@
-import { Route, IndexRoute, Redirect } from 'react-router';
+import { Route, IndexRoute } from 'react-router';
 import React from 'react';
 import App from './modules/App/App';
 import IDEView from './modules/IDE/pages/IDEView';
@@ -23,7 +23,6 @@ const routes = (store) =>
     <Route path="/sketches" component={IDEView} />
     <Route path="/:username/sketches" component={IDEView} />
     <Route path="/about" component={IDEView} />
-    <Redirect from="*" to="/" />
   </Route>
   );
 

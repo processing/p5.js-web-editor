@@ -33,6 +33,7 @@ import serverRoutes from './routes/server.routes';
 import embedRoutes from './routes/embed.routes';
 
 import { renderIndex } from './views/index';
+import { render404Page } from './views/404Page';
 
 // Body parser, cookie parser, sessions, serve public assets
 
@@ -86,6 +87,20 @@ mongoose.connection.on('error', () => {
 
 app.get('/', (req, res) => {
   res.sendFile(renderIndex());
+});
+
+// Handle missing routes.
+app.get('*', (req, res) => {
+  res.status(404);
+  if (req.accepts('html')) {
+    res.send(render404Page());
+    return;
+  }
+  if (req.accepts('json')) {
+    res.send({ error: 'Not found.' });
+    return;
+  }
+  res.type('txt').send('Not found.');
 });
 
 // start app
