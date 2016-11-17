@@ -25,6 +25,7 @@ window.HTMLHint = HTMLHint;
 const beepUrl = require('../../../sounds/audioAlert.mp3');
 import InlineSVG from 'react-inlinesvg';
 const downArrowUrl = require('../../../images/down-arrow.svg');
+const unsavedChangesDotUrl = require('../../../images/unsaved-changes-dot.svg');
 import classNames from 'classnames';
 
 import { debounce } from 'lodash';
@@ -162,13 +163,7 @@ class Editor extends React.Component {
         <div className="editor__file-name">
           <span>
             {this.props.file.name}
-            {this.props.unsavedChanges ?
-              <svg width="9.2" height="11" fill="currentColor">
-                <circle cx="6.2" cy="3" r="2.8" />
-              </svg>
-            :
-              null
-            }
+            {this.props.unsavedChanges ? <InlineSVG src={unsavedChangesDotUrl} /> : null}
           </span>
           <Timer
             projectSavedTime={this.props.projectSavedTime}
