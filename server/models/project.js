@@ -1,10 +1,8 @@
-// import mongoose from 'mongoose';
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 const ObjectIdSchema = Schema.ObjectId;
 const ObjectId = mongoose.Types.ObjectId;
-// import shortid from 'shortid';
-const shortid = require('shortid');
+import shortid from 'shortid';
 
 const defaultSketch = `function setup() {
   createCanvas(400, 400);
@@ -81,5 +79,4 @@ projectSchema.set('toJSON', {
 //   return next();
 // });
 
-// export default mongoose.model('Project', projectSchema);
-module.exports = mongoose.model('Project', projectSchema);
+export default mongoose.model('Project', projectSchema);
