@@ -1,14 +1,19 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import escapeStringRegexp from 'escape-string-regexp';
+// import escapeStringRegexp from 'escape-string-regexp';
 import srcDoc from 'srcdoc-polyfill';
 
 import loopProtect from 'loop-protect';
 import { getBlobUrl } from '../actions/files';
+import { resolvePathToFile } from '../../../../server/utils/filePath';
 
 const startTag = '@fs-';
 const MEDIA_FILE_REGEX = /^('|")(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov)('|")$/i;
+const MEDIA_FILE_REGEX_NO_QUOTES = /^(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov)$/i;
 const STRING_REGEX = /(['"])((\\\1|.)*?)\1/gm;
+const TEXT_FILE_REGEX = /(.+\.json$|.+\.txt$|.+\.csv$)/i;
+const NOT_EXTERNAL_LINK_REGEX = /^(?!(http:\/\/|https:\/\/))/;
+const EXTERNAL_LINK_REGEX = /^(http:\/\/|https:\/\/)/;
 
 function getAllScriptOffsets(htmlFile) {
   const offs = [];
@@ -33,50 +38,8 @@ function getAllScriptOffsets(htmlFile) {
   return offs;
 }
 
-
-function hijackConsoleLogsScript() {
-  const s = `<script>
-    var iframeWindow = window;
-    var originalConsole = iframeWindow.console;
-    iframeWindow.console = {};
-
-    var methods = [
-      'debug', 'clear', 'error', 'info', 'log', 'warn'
-    ];
-
-    var consoleBuffer = [];
-    var LOGWAIT = 500;
-
-    methods.forEach( function(method) {
-      iframeWindow.console[method] = function() {
-        originalConsole[method].apply(originalConsole, arguments);
-
-        var args = Array.from(arguments);
-        args = args.map(function(i) {
-          // catch objects
-          return (typeof i === 'string') ? i : JSON.stringify(i);
-        });
-
-        consoleBuffer.push({
-          method: method,
-          arguments: args,
-          source: 'sketch'
-        });
-      };
-    });
-
-    setInterval(function() {
-      if (consoleBuffer.length > 0) {
-        window.parent.postMessage(consoleBuffer, '*');
-        consoleBuffer.length = 0;
-      }
-    }, LOGWAIT);
-  </script>`;
-  return s;
-}
-
 function hijackConsoleErrorsScript(offs) {
-  const s = `<script>
+  const s = `
     function getScriptOff(line) {
       var offs = ${offs};
       var l = 0;
@@ -111,7 +74,7 @@ function hijackConsoleErrorsScript(offs) {
         }], '*');
       return false;
     };
-  </script>`;
+  `;
   return s;
 }
 
@@ -172,117 +135,178 @@ class PreviewFrame extends React.Component {
   }
 
   injectLocalFiles() {
-    let htmlFile = this.props.htmlFile.content;
+    const htmlFile = this.props.htmlFile.content;
     let scriptOffs = [];
 
-    // have to build the array manually because the spread operator is only
-    // one level down...
+    const resolvedFiles = this.resolveJSAndCSSLinks(this.props.files);
 
-    htmlFile = hijackConsoleLogsScript() + htmlFile;
-    const mediaFiles = this.props.files.filter(file => file.url);
-    const textFiles = this.props.files.filter(file => file.name.match(/(.+\.json$|.+\.txt$|.+\.csv$)/i) && file.url === undefined);
+    const parser = new DOMParser();
+    const sketchDoc = parser.parseFromString(htmlFile, 'text/html');
 
-    const jsFiles = [];
-    this.props.jsFiles.forEach(jsFile => {
-      const newJSFile = { ...jsFile };
-      let jsFileStrings = newJSFile.content.match(STRING_REGEX);
-      jsFileStrings = jsFileStrings || [];
-      jsFileStrings.forEach(jsFileString => {
-        if (jsFileString.match(MEDIA_FILE_REGEX)) {
-          const filePath = jsFileString.substr(1, jsFileString.length - 2);
-          const filePathArray = filePath.split('/');
-          const fileName = filePathArray[filePathArray.length - 1];
-          mediaFiles.forEach(file => {
-            if (file.name === fileName) {
-              newJSFile.content = newJSFile.content.replace(filePath, file.url); // eslint-disable-line
-            }
-          });
-          textFiles.forEach(file => {
-            if (file.name === fileName) {
-              const blobURL = getBlobUrl(file);
-              this.props.setBlobUrl(file, blobURL);
-              newJSFile.content = newJSFile.content.replace(filePath, blobURL);
-            }
-          });
-        }
-      });
-      newJSFile.content = loopProtect(newJSFile.content);
-      jsFiles.push(newJSFile);
-    });
+    this.resolvePathsForElementsWithAttribute('src', sketchDoc, resolvedFiles);
+    this.resolvePathsForElementsWithAttribute('href', sketchDoc, resolvedFiles);
+    // should also include background, data, poster, but these are used way less often
 
-    const cssFiles = [];
-    this.props.cssFiles.forEach(cssFile => {
-      const newCSSFile = { ...cssFile };
-      let cssFileStrings = newCSSFile.content.match(STRING_REGEX);
-      cssFileStrings = cssFileStrings || [];
-      cssFileStrings.forEach(cssFileString => {
-        if (cssFileString.match(MEDIA_FILE_REGEX)) {
-          const filePath = cssFileString.substr(1, cssFileString.length - 2);
-          const filePathArray = filePath.split('/');
-          const fileName = filePathArray[filePathArray.length - 1];
-          mediaFiles.forEach(file => {
-            if (file.name === fileName) {
-              newCSSFile.content = newCSSFile.content.replace(filePath, file.url); // eslint-disable-line
-            }
-          });
-        }
-      });
-      cssFiles.push(newCSSFile);
-    });
+    this.resolveScripts(sketchDoc, resolvedFiles);
+    this.resolveStyles(sketchDoc, resolvedFiles);
 
-    jsFiles.forEach(jsFile => {
-      const fileName = escapeStringRegexp(jsFile.name);
-      const fileRegex = new RegExp(`<script.*?src=('|")((\.\/)|\/)?${fileName}('|").*?>([\s\S]*?)<\/script>`, 'gmi');
-      let replacementString;
-      if (jsFile.url) {
-        replacementString = `<script data-tag="${startTag}${jsFile.name}" src="${jsFile.url}"></script>`;
-      } else {
-        replacementString = `<script data-tag="${startTag}${jsFile.name}">\n${jsFile.content}\n</script>`;
+    let scriptsToInject = [
+      '/loop-protect.min.js',
+      '/hijackConsole.js'
+    ];
+    if (this.props.isTextOutputPlaying) {
+      let interceptorScripts = [];
+      if (this.props.textOutput === 1) {
+        interceptorScripts = [
+          '/interceptor/loadData.js',
+          '/interceptor/intercept-helper-functions.js',
+          '/interceptor/textInterceptor/interceptor-functions.js',
+          '/interceptor/textInterceptor/intercept-p5.js',
+          '/interceptor/ntc.min.js'
+        ];
+      } else if (this.props.textOutput === 2) {
+        interceptorScripts = [
+          '/interceptor/loadData.js',
+          '/interceptor/intercept-helper-functions.js',
+          '/interceptor/gridInterceptor/interceptor-functions.js',
+          '/interceptor/gridInterceptor/intercept-p5.js',
+          '/interceptor/ntc.min.js'
+        ];
+      } else if (this.props.textOutput === 3) {
+        interceptorScripts = [
+          '/interceptor/loadData.js',
+          '/interceptor/soundInterceptor/intercept-p5.js'
+        ];
       }
-      htmlFile = htmlFile.replace(fileRegex, replacementString);
-    });
-
-    cssFiles.forEach(cssFile => {
-      const fileName = escapeStringRegexp(cssFile.name);
-      const fileRegex = new RegExp(`<link.*?href=('|")((\.\/)|\/)?${fileName}('|").*?>`, 'gmi');
-      let replacementString;
-      if (cssFile.url) {
-        replacementString = `<link rel="stylesheet" href="${cssFile.url}" >`;
-      } else {
-        replacementString = `<style>\n${cssFile.content}\n</style>`;
-      }
-      htmlFile = htmlFile.replace(fileRegex, replacementString);
-    });
-
-    const htmlHead = htmlFile.match(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi);
-    const headRegex = new RegExp('head', 'i');
-    let htmlHeadContents = htmlHead[0].split(headRegex)[1];
-    htmlHeadContents = htmlHeadContents.slice(1, htmlHeadContents.length - 2);
-    htmlHeadContents += '<script type="text/javascript" src="/loop-protect.min.js"></script>\n';
-
-    if (this.props.textOutput === 1 || this.props.isTextOutputPlaying) {
-      htmlHeadContents += '<script src="/interceptor/loadData.js"></script>\n';
-      htmlHeadContents += '<script src="/interceptor/intercept-helper-functions.js"></script>\n';
-      htmlHeadContents += '<script src="/interceptor/textInterceptor/interceptor-functions.js"></script>\n';
-      htmlHeadContents += '<script src="/interceptor/textInterceptor/intercept-p5.js"></script>\n';
-      htmlHeadContents += '<script type="text/javascript" src="/interceptor/ntc.min.js"></script>';
-    } else if (this.props.textOutput === 2 || this.props.isTextOutputPlaying) {
-      htmlHeadContents += '<script src="/interceptor/loadData.js"></script>\n';
-      htmlHeadContents += '<script src="/interceptor/intercept-helper-functions.js"></script>\n';
-      htmlHeadContents += '<script src="/interceptor/gridInterceptor/interceptor-functions.js"></script>\n';
-      htmlHeadContents += '<script src="/interceptor/gridInterceptor/intercept-p5.js"></script>\n';
-      htmlHeadContents += '<script type="text/javascript" src="/interceptor/ntc.min.js"></script>';
-    } else if (this.props.textOutput === 3 || this.props.isTextOutputPlaying) {
-      htmlHeadContents += '<script src="/interceptor/loadData.js"></script>\n';
-      htmlHeadContents += '<script src="/interceptor/soundInterceptor/intercept-p5.js"></script>\n';
+      scriptsToInject = scriptsToInject.concat(interceptorScripts);
     }
 
-    htmlFile = htmlFile.replace(/(?:<head.*?>)([\s\S]*?)(?:<\/head>)/gmi, `<head>\n${htmlHeadContents}\n</head>`);
+    scriptsToInject.forEach(scriptToInject => {
+      const script = sketchDoc.createElement('script');
+      script.src = scriptToInject;
+      sketchDoc.head.appendChild(script);
+    });
 
-    scriptOffs = getAllScriptOffsets(htmlFile);
-    htmlFile += hijackConsoleErrorsScript(JSON.stringify(scriptOffs));
+    const sketchDocString = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
+    scriptOffs = getAllScriptOffsets(sketchDocString);
+    const consoleErrorsScript = sketchDoc.createElement('script');
+    consoleErrorsScript.innerHTML = hijackConsoleErrorsScript(JSON.stringify(scriptOffs));
+    sketchDoc.head.appendChild(consoleErrorsScript);
 
-    return htmlFile;
+    return `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
+  }
+
+  resolvePathsForElementsWithAttribute(attr, sketchDoc, files) {
+    const elements = sketchDoc.querySelectorAll(`[${attr}]`);
+    elements.forEach(element => {
+      if (element.getAttribute(attr).match(MEDIA_FILE_REGEX_NO_QUOTES)) {
+        const resolvedFile = resolvePathToFile(element.getAttribute(attr), files);
+        if (resolvedFile) {
+          element.setAttribute(attr, resolvedFile.url);
+        }
+      }
+    });
+  }
+
+  resolveJSAndCSSLinks(files) {
+    const newFiles = [];
+    files.forEach(file => {
+      const newFile = { ...file };
+      if (file.name.match(/.*\.js$/i)) {
+        newFile.content = this.resolveJSLinksInString(newFile.content, files);
+      } else if (file.name.match(/.*\.css$/i)) {
+        newFile.content = this.resolveCSSLinksInString(newFile.content, files);
+      }
+      newFiles.push(newFile);
+    });
+    return newFiles;
+  }
+
+  resolveJSLinksInString(content, files) {
+    let newContent = content;
+    let jsFileStrings = content.match(STRING_REGEX);
+    jsFileStrings = jsFileStrings || [];
+    jsFileStrings.forEach(jsFileString => {
+      if (jsFileString.match(MEDIA_FILE_REGEX)) {
+        const filePath = jsFileString.substr(1, jsFileString.length - 2);
+        const resolvedFile = resolvePathToFile(filePath, files);
+        if (resolvedFile) {
+          if (resolvedFile.url) {
+            newContent = newContent.replace(filePath, resolvedFile.url);
+          } else if (resolvedFile.name.match(TEXT_FILE_REGEX)) {
+            // could also pull file from API instead of using bloburl
+            const blobURL = getBlobUrl(resolvedFile);
+            this.props.setBlobUrl(resolvedFile, blobURL);
+            newContent = newContent.replace(filePath, blobURL);
+          }
+        }
+      }
+    });
+    newContent = loopProtect(newContent);
+    return newContent;
+  }
+
+  resolveCSSLinksInString(content, files) {
+    let newContent = content;
+    let cssFileStrings = content.match(STRING_REGEX);
+    cssFileStrings = cssFileStrings || [];
+    cssFileStrings.forEach(cssFileString => {
+      if (cssFileString.match(MEDIA_FILE_REGEX)) {
+        const filePath = cssFileString.substr(1, cssFileString.length - 2);
+        const resolvedFile = resolvePathToFile(filePath, files);
+        if (resolvedFile) {
+          if (resolvedFile.url) {
+            newContent = newContent.replace(filePath, resolvedFile.url);
+          }
+        }
+      }
+    });
+    return newContent;
+  }
+
+  resolveScripts(sketchDoc, files) {
+    const scriptsInHTML = sketchDoc.getElementsByTagName('script');
+    const scriptsInHTMLArray = Array.prototype.slice.call(scriptsInHTML);
+    scriptsInHTMLArray.forEach(script => {
+      if (script.getAttribute('src') && script.getAttribute('src').match(NOT_EXTERNAL_LINK_REGEX) !== null) {
+        const resolvedFile = resolvePathToFile(script.getAttribute('src'), files);
+        if (resolvedFile) {
+          if (resolvedFile.url) {
+            script.setAttribute('src', resolvedFile.url);
+          } else {
+            script.removeAttribute('src');
+            script.innerHTML = resolvedFile.content; // eslint-disable-line
+          }
+        }
+      } else if (!(script.getAttribute('src') && script.getAttribute('src').match(EXTERNAL_LINK_REGEX)) !== null) {
+        script.innerHTML = this.resolveJSLinksInString(script.innerHTML, files); // eslint-disable-line
+      }
+    });
+  }
+
+  resolveStyles(sketchDoc, files) {
+    const inlineCSSInHTML = sketchDoc.getElementsByTagName('style');
+    const inlineCSSInHTMLArray = Array.prototype.slice.call(inlineCSSInHTML);
+    inlineCSSInHTMLArray.forEach(style => {
+      style.innerHTML = this.resolveCSSLinksInString(style.innerHTML, files); // eslint-disable-line
+    });
+
+    const cssLinksInHTML = sketchDoc.querySelectorAll('link[rel="stylesheet"]');
+    cssLinksInHTML.forEach(css => {
+      if (css.getAttribute('href') && css.getAttribute('href').match(NOT_EXTERNAL_LINK_REGEX) !== null) {
+        const resolvedFile = resolvePathToFile(css.getAttribute('href'), files);
+        if (resolvedFile) {
+          if (resolvedFile.url) {
+            css.href = resolvedFile.url; // eslint-disable-line
+          } else {
+            const style = sketchDoc.createElement('style');
+            style.innerHTML = `\n${resolvedFile.content}`;
+            sketchDoc.head.appendChild(style);
+            css.parentElement.removeChild(css);
+          }
+        }
+      }
+    });
   }
 
   renderSketch() {
@@ -331,8 +355,6 @@ PreviewFrame.propTypes = {
   htmlFile: PropTypes.shape({
     content: PropTypes.string.isRequired
   }),
-  jsFiles: PropTypes.array.isRequired,
-  cssFiles: PropTypes.array.isRequired,
   files: PropTypes.array.isRequired,
   dispatchConsoleEvent: PropTypes.func,
   children: PropTypes.element,

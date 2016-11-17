@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { domOnlyProps } from '../../../utils/reduxFormUtils';
 
 function ResetPasswordForm(props) {
   const { fields: { email }, handleSubmit, submitting, invalid, pristine } = props;
@@ -10,7 +11,7 @@ function ResetPasswordForm(props) {
           aria-label="email"
           type="text"
           placeholder="Email used for registration"
-          {...email}
+          {...domOnlyProps(email)}
         />
       </p>
       <input type="submit" disabled={submitting || invalid || pristine || props.user.resetPasswordInitiate} value="Send password reset email" aria-label="Send email to reset password" />
