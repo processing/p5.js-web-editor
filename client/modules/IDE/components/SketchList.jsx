@@ -22,10 +22,9 @@ class SketchList extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.props.sketches[0] === 'user not found') {
-      this.props.getProjects('p5');
-      browserHistory.push('/');
-      this.props.setToastText('User not found.');
+    console.log(this.props.sketches);
+    if (this.props.sketches.length === 0) {
+      this.props.setToastText('No sketches were found.');
       this.props.showToast(3000);
     }
   }

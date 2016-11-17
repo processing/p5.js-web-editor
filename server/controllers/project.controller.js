@@ -89,32 +89,22 @@ export function getProjects(req, res) {
 
 export function getProjectsForUser(req, res) {
   if (req.params.username) {
-    // Should we return all sketches when the username is p5? Maybe just public ones?
-    if (req.params.username === 'p5') {
-      Project.find({}) // eslint-disable-line no-underscore-dangle
-        .sort('-createdAt')
-        .select('name files id createdAt updatedAt')
-        .exec((err, projects) => {
-          return res.json(projects);
-        });
-    } else {
-      User.findOne({ username: req.params.username }, (err, user) => {
-        if (!user) {
-          return res.send(['user not found']);
-        } else {
-          Project.find({user: user._id}) // eslint-disable-line no-underscore-dangle
-            .sort('-createdAt')
-            .select('name files id createdAt updatedAt')
-            .exec((err, projects) => {
-              return res.json(projects);
-            });
-        }
-      });
-    }
+    User.findOne({ username: req.params.username }, (err, user) => {
+      if (!user) {
+        return res.status(404).json({ message: 'User with that username does not exist.' });
+      } else {
+        Project.find({ user: user._id }) // eslint-disable-line no-underscore-dangle
+          .sort('-createdAt')
+          .select('name files id createdAt updatedAt')
+          .exec((err, projects) => res.json(projects));
+      }
+      return null;
+    });
   } else {
     // could just move this to client side
     return res.json([]);
   }
+  return null;
 }
 
 function buildZip(project, req, res) {
