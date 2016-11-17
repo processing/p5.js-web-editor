@@ -39,12 +39,12 @@ userSchema.pre('save', function checkPassword(next) { // eslint-disable-line con
   });
 });
 
-userSchema.virtual('id').get(function(){
-    return this._id.toHexString();
+userSchema.virtual('id').get(function () {
+  return this._id.toHexString();
 });
 
 userSchema.set('toJSON', {
-    virtuals: true
+  virtuals: true
 });
 
 

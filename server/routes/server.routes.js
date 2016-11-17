@@ -1,7 +1,7 @@
 import { Router } from 'express';
 const router = new Router();
 import path from 'path';
-import { renderIndex } from '../views/index'
+import { renderIndex } from '../views/index';
 
 // this is intended to be a temporary file
 // until i figure out isomorphic rendering

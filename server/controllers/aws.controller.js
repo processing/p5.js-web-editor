@@ -11,7 +11,7 @@ export function signS3(req, res) {
     filename = uuid.v4() + fileExtension,
     acl = 'public-read',
     p = policy({
-      acl: acl,
+      acl,
       secret: process.env.AWS_SECRET_KEY,
       length: 5000000, // in bytes?
       bucket: process.env.S3_BUCKET,
@@ -25,4 +25,4 @@ export function signS3(req, res) {
       'signature': p.signature
     };
   return res.json(result);
-};
+}

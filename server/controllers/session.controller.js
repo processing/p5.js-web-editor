@@ -33,6 +33,6 @@ export function getSession(req, res) {
 
 export function destroySession(req, res) {
   req.logout();
-  res.json({success: true});
+  res.json({ success: true });
 }
 
