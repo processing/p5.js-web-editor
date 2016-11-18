@@ -12,7 +12,7 @@ import jsdom, { serializeDocument } from 'jsdom';
 export function serveProject(req, res) {
   Project.findById(req.params.project_id)
     .exec((err, project) => {
-      //TODO this does not parse html
+      // TODO this does not parse html
       const files = project.files;
       let htmlFile = files.find(file => file.name.match(/\.html$/i)).content;
       const filesToInject = files.filter(file => file.name.match(/\.(js|css)$/i));

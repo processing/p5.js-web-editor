@@ -14,11 +14,11 @@ export function createProject(req, res) {
   Project.create(projectValues, (err, newProject) => {
     if (err) { return res.json({ success: false }); }
     Project.populate(newProject,
-      {path: 'user', select: 'username'},
+      { path: 'user', select: 'username' },
       (innerErr, newProjectWithUser) => {
         if (innerErr) { return res.json({ success: false }); }
         return res.json(newProjectWithUser);
-    });
+      });
   });
 }
 
@@ -64,7 +64,7 @@ export function getProject(req, res) {
 }
 
 export function deleteProject(req, res) {
-  Project.remove({_id: req.params.project_id}, (err) => {
+  Project.remove({ _id: req.params.project_id }, (err) => {
     if (err) {
       return res.status(404).send({ message: 'Project with that id does not exist' });
     }
@@ -74,7 +74,7 @@ export function deleteProject(req, res) {
 
 export function getProjects(req, res) {
   if (req.user) {
-    Project.find({user: req.user._id}) // eslint-disable-line no-underscore-dangle
+    Project.find({ user: req.user._id }) // eslint-disable-line no-underscore-dangle
       .sort('-createdAt')
       .select('name files id createdAt updatedAt')
       .exec((err, projects) => {
@@ -84,7 +84,6 @@ export function getProjects(req, res) {
     // could just move this to client side
     return res.json([]);
   }
-
 }
 
 export function getProjectsForUser(req, res) {
@@ -115,8 +114,8 @@ function buildZip(project, req, res) {
   const projectName = project.name;
   let numCompletedFiles = 0;
 
-  zip.on('error', function(err) {
-    res.status(500).send({error: err.message});
+  zip.on('error', function (err) {
+    res.status(500).send({ error: err.message });
   });
 
   res.attachment(`${project.name}.zip`);
@@ -154,7 +153,7 @@ function buildZip(project, req, res) {
 
 export function downloadProjectAsZip(req, res) {
   Project.findById(req.params.project_id, (err, project) => {
-    //save project to some path
+    // save project to some path
     buildZip(project, req, res);
   });
 }

@@ -58,10 +58,10 @@ export function duplicateUserCheck(req, res) {
 export function updatePreferences(req, res) {
   User.findById(req.user.id, (err, user) => {
     if (err) {
-      return res.status(500).json({error: err});
+      return res.status(500).json({ error: err });
     }
-    if (!user){
-      return res.status(404).json({error: 'Document not found'});
+    if (!user) {
+      return res.status(404).json({ error: 'Document not found' });
     }
 
     const preferences = Object.assign({}, user.preferences, req.body.preferences);
@@ -69,31 +69,31 @@ export function updatePreferences(req, res) {
 
     user.save((err) => {
       if (err) {
-        return res.status(500).json({error: err});
+        return res.status(500).json({ error: err });
       }
 
       return res.json(user.preferences);
     });
-  })
+  });
 }
 
 export function resetPasswordInitiate(req, res) {
   async.waterfall([
     (done) => {
-      crypto.randomBytes(20, function(err, buf) {
+      crypto.randomBytes(20, function (err, buf) {
         var token = buf.toString('hex');
         done(err, token);
       });
     },
     (token, done) => {
-        User.findOne({ email: req.body.email }, (err, user) => {
+      User.findOne({ email: req.body.email }, (err, user) => {
         if (!user) {
-          return res.json({success: true, message: 'If the email is registered with the editor, an email has been sent.'});
+          return res.json({ success: true, message: 'If the email is registered with the editor, an email has been sent.' });
         }
         user.resetPasswordToken = token;
         user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
 
-        user.save(function(err) {
+        user.save(function (err) {
           done(err, token, user);
         });
       });
@@ -124,34 +124,34 @@ export function resetPasswordInitiate(req, res) {
   ], (err) => {
     if (err) {
       console.log(err);
-      return res.json({success: false});
+      return res.json({ success: false });
     }
-    //send email here
-    return res.json({success: true, message: 'If the email is registered with the editor, an email has been sent.'});
+    // send email here
+    return res.json({ success: true, message: 'If the email is registered with the editor, an email has been sent.' });
   });
 }
 
 export function validateResetPasswordToken(req, res) {
   User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, (err, user) => {
     if (!user) {
-      return res.status(401).json({success: false, message: 'Password reset token is invalid or has expired.'});
+      return res.status(401).json({ success: false, message: 'Password reset token is invalid or has expired.' });
     }
     res.json({ success: true });
   });
 }
 
 export function updatePassword(req, res) {
-  User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+  User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function (err, user) {
     if (!user) {
-      return res.status(401).json({success: false, message: 'Password reset token is invalid or has expired.'});
+      return res.status(401).json({ success: false, message: 'Password reset token is invalid or has expired.' });
     }
 
     user.password = req.body.password;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;
 
-    user.save(function(err) {
-      req.logIn(user, function(err) {
+    user.save(function (err) {
+      req.logIn(user, function (err) {
         return res.json({
           email: req.user.email,
           username: req.user.username,
@@ -162,5 +162,5 @@ export function updatePassword(req, res) {
     });
   });
 
-  //eventually send email that the password has been reset
+  // eventually send email that the password has been reset
 }
