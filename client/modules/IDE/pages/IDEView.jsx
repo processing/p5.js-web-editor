@@ -349,6 +349,7 @@ class IDEView extends React.Component {
                   isPlaying={this.props.ide.isPlaying}
                   isTextOutputPlaying={this.props.ide.isTextOutputPlaying}
                   textOutput={this.props.preferences.textOutput}
+                  setTextOutput={this.props.setTextOutput}
                   dispatchConsoleEvent={this.props.dispatchConsoleEvent}
                   autorefresh={this.props.preferences.autorefresh}
                   previewIsRefreshing={this.props.ide.previewIsRefreshing}
