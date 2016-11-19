@@ -5,7 +5,6 @@ npm-debug.log
 dump.rdb
 public/*
 static/dist/
-static/p5-interceptor
 static/css/app.min.css
 alpha_editor_p5js_org.key
 alpha_editor_p5js_org.ca-bundle
