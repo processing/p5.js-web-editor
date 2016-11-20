@@ -111,6 +111,6 @@
     "xhr": "^2.2.1"
   },
   "scripts": {
-    "postinstall" : "git submodule update --init --recursive"
+    "postinstall" : "git submodule foreach --recursive git pull origin master"
   }
 }
