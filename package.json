@@ -7,7 +7,8 @@
     "start:prod": "NODE_ENV=production node index.js",
     "lint": "eslint client server",
     "build": "NODE_ENV=production webpack --config webpack.config.prod.js --progress",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall" : "git submodule foreach --recursive git pull origin master"
   },
   "main": "index.js",
   "author": "Cassie Tarakajian",
@@ -109,8 +110,5 @@
     "shortid": "^2.2.6",
     "srcdoc-polyfill": "^0.2.0",
     "xhr": "^2.2.1"
-  },
-  "scripts": {
-    "postinstall" : "git submodule foreach --recursive git pull origin master"
   }
 }
