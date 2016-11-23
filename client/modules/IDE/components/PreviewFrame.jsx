@@ -154,28 +154,31 @@ class PreviewFrame extends React.Component {
       '/loop-protect.min.js',
       '/hijackConsole.js'
     ];
-    if (this.props.isTextOutputPlaying) {
+    if (this.props.isTextOutputPlaying || (this.props.textOutput !== 0 && this.props.isPlaying)) {
       let interceptorScripts = [];
+      if (this.props.textOutput === 0) {
+        this.props.setTextOutput(1);
+      }
       if (this.props.textOutput === 1) {
         interceptorScripts = [
-          '/interceptor/loadData.js',
-          '/interceptor/intercept-helper-functions.js',
-          '/interceptor/textInterceptor/interceptor-functions.js',
-          '/interceptor/textInterceptor/intercept-p5.js',
-          '/interceptor/ntc.min.js'
+          '/p5-interceptor/loadData.js',
+          '/p5-interceptor/intercept-helper-functions.js',
+          '/p5-interceptor/textInterceptor/interceptor-functions.js',
+          '/p5-interceptor/textInterceptor/intercept-p5.js',
+          '/p5-interceptor/ntc.min.js'
         ];
       } else if (this.props.textOutput === 2) {
         interceptorScripts = [
-          '/interceptor/loadData.js',
-          '/interceptor/intercept-helper-functions.js',
-          '/interceptor/gridInterceptor/interceptor-functions.js',
-          '/interceptor/gridInterceptor/intercept-p5.js',
-          '/interceptor/ntc.min.js'
+          '/p5-interceptor/loadData.js',
+          '/p5-interceptor/intercept-helper-functions.js',
+          '/p5-interceptor/gridInterceptor/interceptor-functions.js',
+          '/p5-interceptor/gridInterceptor/intercept-p5.js',
+          '/p5-interceptor/ntc.min.js'
         ];
       } else if (this.props.textOutput === 3) {
         interceptorScripts = [
-          '/interceptor/loadData.js',
-          '/interceptor/soundInterceptor/intercept-p5.js'
+          '/p5-interceptor/loadData.js',
+          '/p5-interceptor/soundInterceptor/intercept-p5.js'
         ];
       }
       scriptsToInject = scriptsToInject.concat(interceptorScripts);
@@ -351,6 +354,7 @@ PreviewFrame.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   isTextOutputPlaying: PropTypes.bool.isRequired,
   textOutput: PropTypes.number.isRequired,
+  setTextOutput: PropTypes.func.isRequired,
   content: PropTypes.string,
   htmlFile: PropTypes.shape({
     content: PropTypes.string.isRequired
