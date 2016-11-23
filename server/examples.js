@@ -1,24 +1,10 @@
-import request from 'request';
+import rp from 'request-promise';
+import Q from 'q';
 import mongoose from 'mongoose';
 import objectID from 'bson-objectid'
 import shortid from 'shortid';
-
-mongoose.connect('mongodb://localhost:27017/p5js-web-editor');
-mongoose.connection.on('error', () => {
-  console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
-  process.exit(1);
-});
-
 import User from './models/user';
 import Project from './models/project';
-
-const defaultSketch = `function setup() { 
-  createCanvas(400, 400);
-} 
-
-function draw() { 
-  background(220);
-}`;
 
 const defaultHTML =
 `<!DOCTYPE html>
@@ -48,92 +34,20 @@ const b = objectID().toHexString();
 const c = objectID().toHexString();
 const r = objectID().toHexString();
 
+const client_id = process.env.CLIENT_ID;
+const client_secret = process.env.CLIENT_SECRET;
+
 const headers = {'User-Agent': 'p5js-web-editor/0.0.1'};
-const options = {
-    url: 'https://api.github.com/repos/processing/p5.js-website/contents/dist/assets/examples/en',
-    method: 'GET',
-    headers: headers,
-    client_id: process.env.CLIENT_ID,
-    client_secret: process.env.CLIENT_SECRET
-};
-let requestParams = [];
 
-// request skecthes from p5 website github
-request(options, (error, response, body) => {
-  const json = JSON.parse(body);
-  json.forEach(metadata => {
-    // extract category for filename
-    const category = metadata.name.split("_")[1];
-    requestParams.push({url: metadata.url, category: category});
-  });
-  saveDataForCategory(requestParams);
+mongoose.connect('mongodb://localhost:27017/p5js-web-editor');
+mongoose.connection.on('error', () => {
+  console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
+  process.exit(1);
 });
-// get example assets
-// options.url = 'https://api.github.com/repos/processing/p5.js-website/contents/dist/assets/examples/assets';
-// request(options, function (error, response, body) {
-//   var assetsDest = "./public/mode_assets/p5/example_assets/";
-//   if (!error && response.statusCode == 200) {
-//     var json = JSON.parse(body);
-//     json.forEach(function(data) {
-//       var fileName = data.name;
-//       download(data.download_url)
-//         .pipe(gulp.dest(assetsDest));
-//     });
-//   }
-// });
 
-function saveDataForCategory(requestParams) {
-  const headers = {'User-Agent': 'p5js-web-editor/0.0.1'};
-  requestParams.forEach(function(params)  {
-    // extract download URL for examples in this category
-    const options = {
-      url: params.url,
-      method: 'GET',
-      headers: headers,
-      client_id: process.env.CLIENT_ID,
-      client_secret: process.env.CLIENT_SECRET
-    };
-    let fileMetadata = [];
-    request(options, (error, response, body) => {
-      if (!error && response.statusCode == 200) {
-        const json = JSON.parse(body);
-        // console.log(json[0].download_url);
-        json.forEach( data => {
-          let projectName;
-          if (data.name.split("_")[1]) {
-            projectName = params.category + ': '+ data.name.split("_").slice(1).join(' ').replace(".js", "");
-          } else {
-            projectName = params.category + ': '+ data.name.replace(".js", "");
-          }
-          getSketchContent(data.download_url, projectName);
-        });
-      }
-    });
-  });
-}
+getp5User();
 
-// get sketch content
-function getSketchContent(sketchUrl, projectName) {
-  const headers = {'User-Agent': 'p5js-web-editor/0.0.1'};
-  const options = {
-    url: sketchUrl,
-    method: 'GET',
-    headers: headers,
-    client_id: process.env.CLIENT_ID,
-    client_secret: process.env.CLIENT_SECRET
-  };
-
-  request(options, (error, response, body) => {
-    if (!error && response.statusCode == 200) {
-      // console.log(body);
-      let sketchContent = body;
-      createProjectInP5user(projectName, sketchContent);
-    }
-  });
-}
-
-function createProjectInP5user(projectName, sketchContent) {
-  // get p5 user, if no, create one
+function getp5User() {
   User.findOne({username: 'p5'}, (err, user) => {
     if (err) throw err;
 
@@ -145,66 +59,151 @@ function createProjectInP5user(projectName, sketchContent) {
       });
       user.save(err => {
         if (err) throw err;
-        console.log('create a user p5' + user);
-        console.log(user);
+        console.log('Created a user p5' + user);
       });
     }
 
     Project.find({user: user._id}, (err, projects) => {
-      // console.log(projects);
       // if there are already some sketches, delete them
-      // projects.forEach(project => {
-      //   Project.remove({_id: project._id}, err => {
-      //     if (err) throw err;
-      //     console.log('Projects successfully deleted!');
-      //   });
-      // });
+      console.log('Deleting old projects...');
+      projects.forEach(project => {
+        Project.remove({_id: project._id}, err => {
+          if (err) throw err;
+        });
+      });
     });
 
-    // create a new project for p5 user
-    const project0 = new Project({
-      name: projectName,
-      user: user._id,
-      files: [
-        {
-          name: 'root',
-          id: r,
-          _id: r,
-          children: [a, b, c],
-          fileType: 'folder'
-        },
-        {
-          name: 'sketch.js',
-          content: sketchContent,
-          id: a,
-          _id: a,
-          isSelectedFile: true,
-          fileType: 'file',
-          children: []
-        },
-        {
-          name: 'index.html',
-          content: defaultHTML,
-          id: b,
-          _id: b,
-          fileType: 'file',
-          children: []
-        },
-        {
-          name: 'style.css',
-          content: defaultCSS,
-          id: c,
-          _id: c,
-          fileType: 'file',
-          children: []
+    return getCategories()
+      .then(getSketchesInCategories)
+      .then(getSketchContent)
+      .then(createProjectsInP5user);
+  });
+}
+
+function getCategories() {
+  let categories = [];
+  const options = {
+    url: 'https://api.github.com/repos/processing/p5.js-website/contents/dist/assets/examples/en?client_id='+
+    client_id+'&client_secret='+client_secret,
+    method: 'GET',
+    headers: headers
+  };
+  return rp(options).then(res => {
+    const json = JSON.parse(res);
+
+    json.forEach(metadata => {
+      let category = '';
+      for (let j = 1; j < metadata.name.split("_").length; j++) {
+        category += metadata.name.split("_")[j] + ' ';
+      }
+      categories.push({url: metadata.url, name: category});
+    });
+
+    return categories;
+  }).catch(err => {
+    throw err;
+  });
+}
+
+function getSketchesInCategories(categories) {
+  return Q.all(categories.map(category => {
+    const options = {
+      url: category.url.replace('?ref=master', '')+'?client_id='+client_id+'&client_secret='+client_secret,
+      method: 'GET',
+      headers: headers
+    };
+
+    return rp(options).then(res => {
+      let projectsInOneCategory = [];
+      const examples = JSON.parse(res);
+      examples.forEach(example => {
+        let projectName;
+        if (example.name.split("_")[1]) {
+          projectName = category.name + ': '+ example.name.split("_").slice(1).join(' ').replace(".js", "");
+        } else {
+          projectName = category.name + ': '+ example.name.replace(".js", "");
         }
-      ],
-      _id: shortid.generate()
+        projectsInOneCategory.push({sketchUrl: example.download_url, projectName: projectName});
+      });
+      return projectsInOneCategory;
+    }).catch(err => {
+      throw err;
     });
-    console.log('create a new project in p5 user' + project0);
 
-    project0.save((err, savedProject) => {
-      console.log('project is saved.');
+  }));
+}
+
+function getSketchContent(projectsInAllCategories) {
+  return Q.all(projectsInAllCategories.map(projectsInOneCategory => {
+    return Q.all(projectsInOneCategory.map(project =>  {
+      const options = {
+        url: project.sketchUrl.replace('?ref=master', '')+'?client_id='+client_id+'&client_secret='+client_secret,
+        method: 'GET',
+        headers: headers
+      };
+
+      return rp(options).then(res => {
+        project.sketchContent = res;
+        return project;
+      }).catch(err => {
+        throw err;
+      });
+    }));
+  }));
+}
+
+function createProjectsInP5user(projectsInAllCategories) {
+  User.findOne({username: 'p5'}, (err, user) => {
+    if (err) throw err;
+
+    projectsInAllCategories.forEach(projectsInOneCategory => {
+      projectsInOneCategory.forEach(project => {
+        const newProject = new Project({
+          name: project.projectName,
+          user: user._id,
+          files: [
+            {
+              name: 'root',
+              id: r,
+              _id: r,
+              children: [a, b, c],
+              fileType: 'folder'
+            },
+            {
+              name: 'sketch.js',
+              content: project.sketchContent,
+              id: a,
+              _id: a,
+              isSelectedFile: true,
+              fileType: 'file',
+              children: []
+            },
+            {
+              name: 'index.html',
+              content: defaultHTML,
+              id: b,
+              _id: b,
+              fileType: 'file',
+              children: []
+            },
+            {
+              name: 'style.css',
+              content: defaultCSS,
+              id: c,
+              _id: c,
+              fileType: 'file',
+              children: []
+            }
+          ],
+          _id: shortid.generate()
+        });
+
+        newProject.save( (err, newProject) => {
+          if (err) throw err;
+          console.log('Created a new project in p5 user: ' + newProject.name);
+        });
+
+      });
     });
   });
 }
