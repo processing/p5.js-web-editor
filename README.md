@@ -5,9 +5,10 @@ This project is currently in the early stages of development! It will definitely
 ##Development Installation
 
 1. Clone this repostory and cd into it
-2. `$ npm install`
-3. Install MongoDB and make sure it is running
-4. Create a file called `.env` in the root of this directory that looks like
+2. `$ git submodule init`
+3. `$ npm install`
+4. Install MongoDB and make sure it is running
+5. Create a file called `.env` in the root of this directory that looks like
 
   ```
   MONGO_URL=mongodb://localhost:27017/p5js-web-editor
@@ -20,16 +21,17 @@ This project is currently in the early stages of development! It will definitely
   GITHUB_SECRET=<your-github-client-secret>
   ```
    If you don't care about being able to upload media files to S3 or Login with Github, you can drop in the file exactly how it is. Or, if you don't want to do that, just ask me to send you mine. Refer to [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) for creating an S3 bucket for testing, or if you don't want to do that, I can add you to one of my S3 buckets.
-5. `$ npm start`
-6. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
-7. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en).
-8. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
+6. `$ npm start`
+7. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
+8. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en).
+9. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
 
 ##Production Installation
 1. Clone this repostory and `cd` into it
-2. `$ npm install`
-3. Install MongoDB and make sure it is running
-4. Create a file called `.env` in the root of this directory that looks like
+2. `$ git submodule init`
+3. `$ npm install`
+4. Install MongoDB and make sure it is running
+5. Create a file called `.env` in the root of this directory that looks like
 
   ```
   MONGO_URL=mongodb://localhost:27017/p5js-web-editor
@@ -42,8 +44,8 @@ This project is currently in the early stages of development! It will definitely
   GITHUB_SECRET=<your-github-client-secret>
   ```
   For production, you will need to have real Github and Amazon credentions. Refer to [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) for creating an S3 bucket for testing.
-5. `$ npm run build`
-6. `$ npm run start:prod`
+6. `$ npm run build`
+7. `$ npm run start:prod`
 
 ###For Production Setup with PM2
 1. `$ npm install -g pm2`
@@ -72,6 +74,8 @@ For more information on accessibility see the [teach access tutorial](https://te
 I am currently open to contributors! Email me if you are looking for a task, or look at the open issues and reply that you are working on a task.
 
 The p5.js Web Editor is built on a MERN stack - MongoDB, Express, React/Redux, and Node. For a reference to the file structure format I am using, please look at the [Mern Starter](https://github.com/Hashnode/mern-starter) and [this comment](https://github.com/Hashnode/mern-starter/issues/90#issuecomment-221553573).
+
+This project uses an in-development [p5.js interceptor library](https://github.com/MathuraMG/p5-interceptor) for accessibility as git submodule. Every time you run `npm install`, it will update the interceptor to HEAD, so it is important to do this often.  
 
 This project does not use CSS Modules, but uses Sass. I like to follow [BEM rules](http://getbem.com/) for CSS naming conventions, write OOSCSS with placeholders and mixins, and follow the [7-1 Pattern](https://sass-guidelin.es/#the-7-1-pattern) for Sass.
 
