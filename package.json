@@ -8,7 +8,8 @@
     "lint": "eslint client server",
     "build": "NODE_ENV=production webpack --config webpack.config.prod.js --progress",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "fetch-examples": "node fetch-examples.js"
+    "fetch-examples": "node fetch-examples.js",
+    "postinstall" : "git submodule update --remote --recursive"
   },
   "main": "index.js",
   "author": "Cassie Tarakajian",

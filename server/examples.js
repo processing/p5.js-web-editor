@@ -34,12 +34,12 @@ const b = objectID().toHexString();
 const c = objectID().toHexString();
 const r = objectID().toHexString();
 
-const client_id = process.env.CLIENT_ID;
-const client_secret = process.env.CLIENT_SECRET;
+const client_id = process.env.GITHUB_ID;
+const client_secret = process.env.GITHUB_SECRET;
 
 const headers = {'User-Agent': 'p5js-web-editor/0.0.1'};
 
-mongoose.connect('mongodb://localhost:27017/p5js-web-editor');
+mongoose.connect(process.env.MONGO_URL);
 mongoose.connection.on('error', () => {
   console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
   process.exit(1);
