@@ -1,16 +1,17 @@
 import React, { PropTypes } from 'react';
+import { domOnlyProps } from '../../../utils/reduxFormUtils';
 
 function SignupForm(props) {
   const { fields: { username, email, password, confirmPassword }, handleSubmit, submitting, invalid, pristine } = props;
   return (
-    <form className="signup-form" onSubmit={handleSubmit(props.signUpUser.bind(this))}>
+    <form className="signup-form" onSubmit={handleSubmit(props.signUpUser.bind(this, props.previousPath))}>
       <p className="signup-form__field">
         <input
           className="signup-form__username-input"
           aria-label="username"
           type="text"
           placeholder="Username"
-          {...username}
+          {...domOnlyProps(username)}
         />
         {username.touched && username.error && <span className="form-error">{username.error}</span>}
       </p>
@@ -20,7 +21,7 @@ function SignupForm(props) {
           aria-label="email"
           type="text"
           placeholder="Email"
-          {...email}
+          {...domOnlyProps(email)}
         />
         {email.touched && email.error && <span className="form-error">{email.error}</span>}
       </p>
@@ -30,7 +31,7 @@ function SignupForm(props) {
           aria-label="password"
           type="password"
           placeholder="Password"
-          {...password}
+          {...domOnlyProps(password)}
         />
         {password.touched && password.error && <span className="form-error">{password.error}</span>}
       </p>
@@ -40,7 +41,7 @@ function SignupForm(props) {
           type="password"
           placeholder="Confirm Password"
           aria-label="confirm password"
-          {...confirmPassword}
+          {...domOnlyProps(confirmPassword)}
         />
         {confirmPassword.touched && confirmPassword.error && <span className="form-error">{confirmPassword.error}</span>}
       </p>
@@ -60,7 +61,8 @@ SignupForm.propTypes = {
   signUpUser: PropTypes.func.isRequired,
   submitting: PropTypes.bool,
   invalid: PropTypes.bool,
-  pristine: PropTypes.bool
+  pristine: PropTypes.bool,
+  previousPath: PropTypes.string.isRequired
 };
 
 export default SignupForm;

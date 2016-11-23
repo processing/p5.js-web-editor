@@ -1,16 +1,17 @@
 import React, { PropTypes } from 'react';
+import { domOnlyProps } from '../../../utils/reduxFormUtils';
 
 function LoginForm(props) {
   const { fields: { email, password }, handleSubmit, submitting, pristine } = props;
   return (
-    <form className="login-form" onSubmit={handleSubmit(props.validateAndLoginUser.bind(this))}>
+    <form className="login-form" onSubmit={handleSubmit(props.validateAndLoginUser.bind(this, props.previousPath))}>
       <p className="login-form__field">
         <input
           className="login-form__email-input"
           aria-label="email"
           type="text"
           placeholder="Email"
-          {...email}
+          {...domOnlyProps(email)}
         />
         {email.touched && email.error && <span className="form-error">{email.error}</span>}
       </p>
@@ -20,7 +21,7 @@ function LoginForm(props) {
           aria-label="password"
           type="password"
           placeholder="Password"
-          {...password}
+          {...domOnlyProps(password)}
         />
         {password.touched && password.error && <span className="form-error">{password.error}</span>}
       </p>
@@ -38,7 +39,8 @@ LoginForm.propTypes = {
   validateAndLoginUser: PropTypes.func.isRequired,
   submitting: PropTypes.bool,
   invalid: PropTypes.bool,
-  pristine: PropTypes.bool
+  pristine: PropTypes.bool,
+  previousPath: PropTypes.string.isRequired
 };
 
 export default LoginForm;

@@ -22,7 +22,7 @@ module.exports = {
     extensions: ['', '.js', '.jsx'],
     modules: [
       'client',
-      'node_modules',
+      'node_modules'
     ]
   },
 	plugins: [

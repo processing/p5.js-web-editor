@@ -22,7 +22,7 @@ import * as EditorAccessibilityActions from '../actions/editorAccessibility';
 import * as PreferencesActions from '../actions/preferences';
 import * as UserActions from '../../User/actions';
 import * as ToastActions from '../actions/toast';
-import { getHTMLFile, getJSFiles, getCSSFiles } from '../reducers/files';
+import { getHTMLFile } from '../reducers/files';
 import SplitPane from 'react-split-pane';
 import Overlay from '../../App/components/Overlay';
 import SketchList from '../components/SketchList';
@@ -45,7 +45,9 @@ class IDEView extends React.Component {
     this.props.stopSketch();
     if (this.props.params.project_id) {
       const id = this.props.params.project_id;
-      this.props.getProject(id);
+      if (id !== this.props.project.id) {
+        this.props.getProject(id);
+      }
 
       // if autosave is on and the user is the owner of the project
       if (this.props.preferences.autosave
@@ -62,11 +64,17 @@ class IDEView extends React.Component {
     this.isMac = navigator.userAgent.toLowerCase().indexOf('mac') !== -1;
     document.addEventListener('keydown', this.handleGlobalKeydown, false);
 
-    this.props.router.setRouteLeaveHook(this.props.route, () => this.warnIfUnsavedChanges());
+    this.props.router.setRouteLeaveHook(this.props.route, (route) => this.warnIfUnsavedChanges(route));
 
     window.onbeforeunload = () => this.warnIfUnsavedChanges();
 
     document.body.className = this.props.preferences.theme;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.location !== this.props.location) {
+      this.props.setPreviousPath(this.props.location.pathname);
+    }
   }
 
   componentWillUpdate(nextProps) {
@@ -79,7 +87,13 @@ class IDEView extends React.Component {
     }
 
     if (nextProps.params.project_id && !this.props.params.project_id) {
-      this.props.getProject(nextProps.params.project_id);
+      if (nextProps.params.project_id !== nextProps.project.id) {
+        this.props.getProject(nextProps.params.project_id);
+      }
+    }
+
+    if (!nextProps.params.project_id && this.props.params.project_id) {
+      this.props.resetProject();
     }
 
     if (nextProps.preferences.theme !== this.props.preferences.theme) {
@@ -109,7 +123,7 @@ class IDEView extends React.Component {
     }
 
     if (this.props.route.path !== prevProps.route.path) {
-      this.props.router.setRouteLeaveHook(this.props.route, () => this.warnIfUnsavedChanges());
+      this.props.router.setRouteLeaveHook(this.props.route, (route) => this.warnIfUnsavedChanges(route));
     }
   }
 
@@ -155,15 +169,24 @@ class IDEView extends React.Component {
       this.props.startSketchAndRefresh();
     } else if (e.keyCode === 50 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac)) && e.shiftKey) {
       e.preventDefault();
-      this.props.setTextOutput(false);
+      this.props.setTextOutput(0);
     } else if (e.keyCode === 49 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac)) && e.shiftKey) {
       e.preventDefault();
-      this.props.setTextOutput(true);
+      if (this.props.preferences.textOutput === 3) {
+        this.props.preferences.textOutput = 1;
+      } else {
+        this.props.preferences.textOutput += 1;
+      }
+      this.props.setTextOutput(this.props.preferences.textOutput);
     }
   }
 
-  warnIfUnsavedChanges() { // eslint-disable-line
-    if (this.props.ide.unsavedChanges) {
+  warnIfUnsavedChanges(route) { // eslint-disable-line
+    if (route && (route.action === 'PUSH' && (route.pathname === '/login' || route.pathname === '/signup'))) {
+      // don't warn
+    } else if (route && this.props.location.pathname === '/login' || this.props.location.pathname === '/signup') {
+      // don't warn
+    } else if (this.props.ide.unsavedChanges) {
       if (!window.confirm('Are you sure you want to leave this page? You have unsaved changes.')) {
         return false;
       }
@@ -321,8 +344,6 @@ class IDEView extends React.Component {
                 </div>
                 <PreviewFrame
                   htmlFile={this.props.htmlFile}
-                  jsFiles={this.props.jsFiles}
-                  cssFiles={this.props.cssFiles}
                   files={this.props.files}
                   content={this.props.selectedFile.content}
                   isPlaying={this.props.ide.isPlaying}
@@ -366,7 +387,10 @@ class IDEView extends React.Component {
           if (this.props.location.pathname.match(/sketches$/)) {
             return (
               <Overlay>
-                <SketchList username={this.props.params.username} />
+                <SketchList
+                  username={this.props.params.username}
+                  previousPath={this.props.ide.previousPath}
+                />
               </Overlay>
             );
           }
@@ -375,7 +399,7 @@ class IDEView extends React.Component {
           if (this.props.location.pathname === '/about') {
             return (
               <Overlay>
-                <About />
+                <About previousPath={this.props.ide.previousPath} />
               </Overlay>
             );
           }
@@ -407,7 +431,7 @@ class IDEView extends React.Component {
           if (this.props.location.pathname === '/login') {
             return (
               <Overlay>
-                <LoginView />
+                <LoginView previousPath={this.props.ide.previousPath} />
               </Overlay>
             );
           }
@@ -416,7 +440,7 @@ class IDEView extends React.Component {
           if (this.props.location.pathname === '/signup') {
             return (
               <Overlay>
-                <SignupView />
+                <SignupView previousPath={this.props.ide.previousPath} />
               </Overlay>
             );
           }
@@ -434,7 +458,9 @@ class IDEView extends React.Component {
           if (this.props.location.pathname.match(/\/reset-password\/[a-fA-F0-9]+/)) {
             return (
               <Overlay>
-                <NewPasswordView token={this.props.params.reset_password_token} />
+                <NewPasswordView
+                  token={this.props.params.reset_password_token}
+                />
               </Overlay>
             );
           }
@@ -479,7 +505,8 @@ IDEView.propTypes = {
     infiniteLoop: PropTypes.bool.isRequired,
     previewIsRefreshing: PropTypes.bool.isRequired,
     infiniteLoopMessage: PropTypes.string.isRequired,
-    projectSavedTime: PropTypes.string.isRequired
+    projectSavedTime: PropTypes.string.isRequired,
+    previousPath: PropTypes.string.isRequired
   }).isRequired,
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
@@ -510,7 +537,7 @@ IDEView.propTypes = {
     isTabIndent: PropTypes.bool.isRequired,
     autosave: PropTypes.bool.isRequired,
     lintWarning: PropTypes.bool.isRequired,
-    textOutput: PropTypes.bool.isRequired,
+    textOutput: PropTypes.number.isRequired,
     theme: PropTypes.string.isRequired,
     autorefresh: PropTypes.bool.isRequired
   }).isRequired,
@@ -530,8 +557,6 @@ IDEView.propTypes = {
   }),
   setSelectedFile: PropTypes.func.isRequired,
   htmlFile: PropTypes.object.isRequired,
-  jsFiles: PropTypes.array.isRequired,
-  cssFiles: PropTypes.array.isRequired,
   dispatchConsoleEvent: PropTypes.func.isRequired,
   newFile: PropTypes.func.isRequired,
   closeNewFileModal: PropTypes.func.isRequired,
@@ -578,7 +603,9 @@ IDEView.propTypes = {
   startSketchAndRefresh: PropTypes.func.isRequired,
   endSketchRefresh: PropTypes.func.isRequired,
   startRefreshSketch: PropTypes.func.isRequired,
-  setBlobUrl: PropTypes.func.isRequired
+  setBlobUrl: PropTypes.func.isRequired,
+  setPreviousPath: PropTypes.func.isRequired,
+  resetProject: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -586,8 +613,6 @@ function mapStateToProps(state) {
     files: state.files,
     selectedFile: state.files.find(file => file.isSelectedFile),
     htmlFile: getHTMLFile(state.files),
-    jsFiles: getJSFiles(state.files),
-    cssFiles: getCSSFiles(state.files),
     ide: state.ide,
     preferences: state.preferences,
     editorAccessibility: state.editorAccessibility,

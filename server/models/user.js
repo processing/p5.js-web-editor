@@ -17,7 +17,7 @@ const userSchema = new Schema({
     isTabIndent: { type: Boolean, default: false },
     autosave: { type: Boolean, default: true },
     lintWarning: { type: Boolean, default: false },
-    textOutput: { type: Boolean, default: false },
+    textOutput: { type: Number, default: 0 },
     theme: { type: String, default: 'light' },
     autorefresh: { type: Boolean, default: false }
   }
@@ -39,12 +39,12 @@ userSchema.pre('save', function checkPassword(next) { // eslint-disable-line con
   });
 });
 
-userSchema.virtual('id').get(function(){
-    return this._id.toHexString();
+userSchema.virtual('id').get(function () {
+  return this._id.toHexString();
 });
 
 userSchema.set('toJSON', {
-    virtuals: true
+  virtuals: true
 });
 
 
