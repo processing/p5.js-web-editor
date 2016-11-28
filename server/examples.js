@@ -93,8 +93,8 @@ function getCategories() {
 
     json.forEach(metadata => {
       let category = '';
-      for (let j = 1; j < metadata.name.split("_").length; j++) {
-        category += metadata.name.split("_")[j] + ' ';
+      for (let j = 1; j < metadata.name.split('_').length; j++) {
+        category += metadata.name.split('_')[j] + ' ';
       }
       categories.push({url: metadata.url, name: category});
     });
@@ -118,10 +118,10 @@ function getSketchesInCategories(categories) {
       const examples = JSON.parse(res);
       examples.forEach(example => {
         let projectName;
-        if (example.name.split("_")[1]) {
-          projectName = category.name + ': '+ example.name.split("_").slice(1).join(' ').replace(".js", "");
+        if (example.name.split('_')[1]) {
+          projectName = category.name + ': '+ example.name.split('_').slice(1).join(' ').replace('.js', '');
         } else {
-          projectName = category.name + ': '+ example.name.replace(".js", "");
+          projectName = category.name + ': '+ example.name.replace('.js', '');
         }
         projectsInOneCategory.push({sketchUrl: example.download_url, projectName: projectName});
       });
@@ -153,57 +153,112 @@ function getSketchContent(projectsInAllCategories) {
 }
 
 function createProjectsInP5user(projectsInAllCategories) {
-  User.findOne({username: 'p5'}, (err, user) => {
-    if (err) throw err;
+  let assetsfiles = [];
+  const options = {
+    url: 'https://api.github.com/repos/processing/p5.js-website/contents/dist/assets/examples/assets?client_id='+
+    client_id+'&client_secret='+client_secret,
+    method: 'GET',
+    headers: headers
+  };
 
-    projectsInAllCategories.forEach(projectsInOneCategory => {
-      projectsInOneCategory.forEach(project => {
-        const newProject = new Project({
-          name: project.projectName,
-          user: user._id,
-          files: [
-            {
-              name: 'root',
-              id: r,
-              _id: r,
-              children: [a, b, c],
-              fileType: 'folder'
-            },
-            {
-              name: 'sketch.js',
-              content: project.sketchContent,
-              id: a,
-              _id: a,
-              isSelectedFile: true,
-              fileType: 'file',
-              children: []
-            },
-            {
-              name: 'index.html',
-              content: defaultHTML,
-              id: b,
-              _id: b,
-              fileType: 'file',
-              children: []
-            },
-            {
-              name: 'style.css',
-              content: defaultCSS,
-              id: c,
-              _id: c,
-              fileType: 'file',
-              children: []
+  rp(options).then(res => {
+    const assets = JSON.parse(res);
+
+    User.findOne({username: 'p5'}, (err, user) => {
+      if (err) throw err;
+
+      projectsInAllCategories.forEach(projectsInOneCategory => {
+        projectsInOneCategory.forEach(project => {
+          let newProject = new Project({
+            name: project.projectName,
+            user: user._id,
+            files: [
+              {
+                name: 'root',
+                id: r,
+                _id: r,
+                children: [a, b, c],
+                fileType: 'folder'
+              },
+              {
+                name: 'sketch.js',
+                content: project.sketchContent,
+                id: a,
+                _id: a,
+                isSelectedFile: true,
+                fileType: 'file',
+                children: []
+              },
+              {
+                name: 'index.html',
+                content: defaultHTML,
+                id: b,
+                _id: b,
+                fileType: 'file',
+                children: []
+              },
+              {
+                name: 'style.css',
+                content: defaultCSS,
+                id: c,
+                _id: c,
+                fileType: 'file',
+                children: []
+              }
+            ],
+            _id: shortid.generate()
+          });
+
+          let assetsInProject = project.sketchContent.match(/assets\/[\w-]+\.[\w]*/g) || project.sketchContent.match(/assets\/[\w-]*/g) || [];
+          // if (assetsInProject === []) {
+          //   assetsInProject = project.sketchContent.match(/assets\/[\w-]*/g) || [];
+          // }
+
+          assetsInProject.forEach((assetName, i) => {
+            assetName = assetName.split('assets/')[1];
+
+            assets.forEach(asset => {
+              if (asset.name === assetName || asset.name.split('.')[0] === assetName) {
+                assetName = asset.name;
+              }
+            });
+            if (i === 0) {
+              const id = objectID().toHexString();
+              newProject.files.push({
+                name: 'assets',
+                id,
+                _id: id,
+                children: [],
+                fileType: 'folder'
+              });
+              // add assets folder inside root
+              newProject.files[0].children.push(id);
             }
-          ],
-          _id: shortid.generate()
-        });
 
-        newProject.save( (err, newProject) => {
-          if (err) throw err;
-          console.log('Created a new project in p5 user: ' + newProject.name);
-        });
+            const fileID = objectID().toHexString();
+            newProject.files.push({
+              name: assetName,
+              url: `https://raw.githubusercontent.com/processing/p5.js-website/master/dist/assets/examples/assets/${assetName}?client_id=${
+    client_id}&client_secret=${client_secret}`,
+              id: fileID,
+              _id: fileID,
+              children: [],
+              fileType: 'file'
+            });
+            console.log('create assets: ' + assetName);
+            // add asset file inside the newly created assets folder at index 4
+            newProject.files[4].children.push(fileID);
+          });
+          newProject.save( (err, newProject) => {
+            if (err) throw err;
+            console.log('Created a new project in p5 user: ' + newProject.name);
+          });
 
+        });
       });
     });
+
+  }).catch(err => {
+    throw err;
   });
 }
