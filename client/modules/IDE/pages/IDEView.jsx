@@ -9,6 +9,7 @@ import NewFileModal from '../components/NewFileModal';
 import NewFolderModal from '../components/NewFolderModal';
 import ShareModal from '../components/ShareModal';
 import KeyboardShortcutModal from '../components/KeyboardShortcutModal';
+import ForceAuthentication from '../components/ForceAuthentication';
 import Nav from '../../../components/Nav';
 import Console from '../components/Console';
 import Toast from '../components/Toast';
@@ -208,6 +209,7 @@ class IDEView extends React.Component {
           logoutUser={this.props.logoutUser}
           stopSketch={this.props.stopSketch}
           showShareModal={this.props.showShareModal}
+          openForceAuthentication={this.props.openForceAuthentication}
         />
         <Toolbar
           className="Toolbar"
@@ -466,6 +468,17 @@ class IDEView extends React.Component {
             );
           }
         })()}
+        {(() => { // eslint-disable-line
+          if (this.props.ide.forceAuthenticationVisible) {
+            return (
+              <Overlay>
+                <ForceAuthentication
+                  closeModal={this.props.closeForceAuthentication}
+                />
+              </Overlay>
+            );
+          }
+        })()}
       </div>
 
     );
@@ -507,7 +520,8 @@ IDEView.propTypes = {
     previewIsRefreshing: PropTypes.bool.isRequired,
     infiniteLoopMessage: PropTypes.string.isRequired,
     projectSavedTime: PropTypes.string.isRequired,
-    previousPath: PropTypes.string.isRequired
+    previousPath: PropTypes.string.isRequired,
+    forceAuthenticationVisible: PropTypes.bool.isRequired
   }).isRequired,
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
@@ -606,7 +620,9 @@ IDEView.propTypes = {
   startRefreshSketch: PropTypes.func.isRequired,
   setBlobUrl: PropTypes.func.isRequired,
   setPreviousPath: PropTypes.func.isRequired,
-  resetProject: PropTypes.func.isRequired
+  resetProject: PropTypes.func.isRequired,
+  closeForceAuthentication: PropTypes.func.isRequired,
+  openForceAuthentication: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {

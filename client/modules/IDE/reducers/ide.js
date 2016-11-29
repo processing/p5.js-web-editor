@@ -19,7 +19,8 @@ const initialState = {
   infiniteLoopMessage: '',
   projectJustOpened: false,
   projectSavedTime: '',
-  previousPath: '/'
+  previousPath: '/',
+  forceAuthenticationVisible: false,
 };
 
 const ide = (state = initialState, action) => {
@@ -92,6 +93,10 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { projectSavedTime: '' });
     case ActionTypes.SET_PREVIOUS_PATH:
       return Object.assign({}, state, { previousPath: action.path });
+    case ActionTypes.OPEN_FORCE_AUTHENTICATION:
+      return Object.assign({}, state, { forceAuthenticationVisible: true });
+    case ActionTypes.CLOSE_FORCE_AUTHENTICATION:
+      return Object.assign({}, state, { forceAuthenticationVisible: false });
     default:
       return state;
   }
