@@ -1,7 +1,7 @@
 import { resolvePathToFile } from '../utils/filePath';
 
-const MEDIA_FILE_REGEX = /^('|")(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov)('|")$/i;
-const MEDIA_FILE_REGEX_NO_QUOTES = /^(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov)$/i;
+const MEDIA_FILE_REGEX = /^('|")(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov|otf|ttf)('|")$/i;
+const MEDIA_FILE_REGEX_NO_QUOTES = /^(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov|otf|ttf)$/i;
 const STRING_REGEX = /(['"])((\\\1|.)*?)\1/gm;
 const TEXT_FILE_REGEX = /(.+\.json$|.+\.txt$|.+\.csv$)/i;
 const EXTERNAL_LINK_REGEX = /^(http:\/\/|https:\/\/)/;
