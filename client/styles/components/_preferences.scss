@@ -1,7 +1,7 @@
 .preferences {
 	@extend %modal;
 	position: absolute;
-	top: #{66 / $base-font-size}rem;
+	top: #{60 / $base-font-size}rem;
 	right: #{40 / $base-font-size}rem;
 	width: #{336 / $base-font-size}rem;
 	display: none;
