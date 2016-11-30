@@ -414,6 +414,7 @@ class IDEView extends React.Component {
                 <ShareModal
                   projectId={this.props.project.id}
                   closeShareModal={this.props.closeShareModal}
+                  ownerUsername={this.props.project.owner.username}
                 />
               </Overlay>
             );

@@ -25,6 +25,7 @@ class SketchList extends React.Component {
   }
 
   render() {
+    const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
     return (
       <section className="sketch-list" aria-label="project list" tabIndex="0" role="main" id="sketchlist">
         <header className="sketch-list__header">
@@ -64,7 +65,7 @@ class SketchList extends React.Component {
                     }
                   })()}
                   </td>
-                  <td scope="row"><Link to={`/projects/${sketch._id}`}>{sketch.name}</Link></td>
+                  <td scope="row"><Link to={`/${username}/sketches/${sketch._id}`}>{sketch.name}</Link></td>
                   <td>{moment(sketch.createdAt).format('MMM D, YYYY h:mm:ss A')}</td>
                   <td>{moment(sketch.updatedAt).format('MMM D, YYYY h:mm:ss A')}</td>
                 </tr>

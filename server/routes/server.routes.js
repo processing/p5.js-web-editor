@@ -18,6 +18,10 @@ router.route('/projects/:project_id').get((req, res) => {
   res.send(renderIndex());
 });
 
+router.route('/:username/sketches/:project_id').get((req, res) => {
+  res.send(renderIndex());
+});
+
 // router.route('/full/:project_id').get((req, res) => {
 //   res.send(renderIndex());
 // });

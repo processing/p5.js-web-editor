@@ -37,7 +37,7 @@ class ShareModal extends React.Component {
           <input
             type="text"
             className="share-modal__input"
-            value={`${hostname}/projects/${this.props.projectId}`}
+            value={`${hostname}/${this.props.ownerUsername}/sketches/${this.props.projectId}`}
           />
         </div>
       </section>
@@ -47,7 +47,8 @@ class ShareModal extends React.Component {
 
 ShareModal.propTypes = {
   projectId: PropTypes.string.isRequired,
-  closeShareModal: PropTypes.func.isRequired
+  closeShareModal: PropTypes.func.isRequired,
+  ownerUsername: PropTypes.string
 };
 
 export default ShareModal;

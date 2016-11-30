@@ -76,7 +76,7 @@ export function saveProject(autosave = false) {
         .then(response => {
           dispatch(setUnsavedChanges(false));
           dispatch(setProjectSavedTime(moment().format()));
-          browserHistory.push(`/projects/${response.data.id}`);
+          browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
           dispatch({
             type: ActionTypes.NEW_PROJECT,
             name: response.data.name,
@@ -114,7 +114,7 @@ export function createProject() {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/projects`, {}, { withCredentials: true })
       .then(response => {
-        browserHistory.push(`/projects/${response.data.id}`);
+        browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
         dispatch({
           type: ActionTypes.NEW_PROJECT,
           name: response.data.name,
@@ -153,7 +153,7 @@ export function cloneProject() {
     const formParams = Object.assign({}, { name: `${state.project.name} copy` }, { files: state.files });
     axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
       .then(response => {
-        browserHistory.push(`/projects/${response.data.id}`);
+        browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
         dispatch({
           type: ActionTypes.NEW_PROJECT,
           name: response.data.name,
