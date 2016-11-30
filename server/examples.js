@@ -5,6 +5,8 @@ import objectID from 'bson-objectid'
 import shortid from 'shortid';
 import User from './models/user';
 import Project from './models/project';
+import async from 'async';
+import eachSeries from 'async/eachSeries';
 
 const defaultHTML =
 `<!DOCTYPE html>
@@ -167,8 +169,8 @@ function createProjectsInP5user(projectsInAllCategories) {
     User.findOne({username: 'p5'}, (err, user) => {
       if (err) throw err;
 
-      projectsInAllCategories.forEach(projectsInOneCategory => {
-        projectsInOneCategory.forEach(project => {
+      async.eachSeries(projectsInAllCategories, (projectsInOneCategory, categoryCallback) => {
+        async.eachSeries(projectsInOneCategory, (project, projectCallback) => {
           let newProject = new Project({
             name: project.projectName,
             user: user._id,
@@ -245,12 +247,17 @@ function createProjectsInP5user(projectsInAllCategories) {
             // add asset file inside the newly created assets folder at index 4
             newProject.files[4].children.push(fileID);
           });
+
           newProject.save( (err, newProject) => {
             if (err) throw err;
             console.log('Created a new project in p5 user: ' + newProject.name);
+            projectCallback();
           });
-
+        }, (err) => {
+          categoryCallback();
         });
+      }, (err) => {
+        process.exit();
       });
     });
 
