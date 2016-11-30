@@ -210,9 +210,6 @@ function createProjectsInP5user(projectsInAllCategories) {
           });
 
           let assetsInProject = project.sketchContent.match(/assets\/[\w-]+\.[\w]*/g) || project.sketchContent.match(/assets\/[\w-]*/g) || [];
-          // if (assetsInProject === []) {
-          //   assetsInProject = project.sketchContent.match(/assets\/[\w-]*/g) || [];
-          // }
 
           assetsInProject.forEach((assetName, i) => {
             assetName = assetName.split('assets/')[1];
@@ -238,8 +235,7 @@ function createProjectsInP5user(projectsInAllCategories) {
             const fileID = objectID().toHexString();
             newProject.files.push({
               name: assetName,
-              url: `https://raw.githubusercontent.com/processing/p5.js-website/master/dist/assets/examples/assets/${assetName}?client_id=${
-    client_id}&client_secret=${client_secret}`,
+              url: `https://rawgit.com/processing/p5.js-website/master/dist/assets/examples/assets/${assetName}`,
               id: fileID,
               _id: fileID,
               children: [],
