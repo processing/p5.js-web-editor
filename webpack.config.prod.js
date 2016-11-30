@@ -18,7 +18,18 @@ module.exports = {
     ],
     vendor: [
       'react',
-      'react-dom'
+      'react-dom',
+      'redux',
+      'codemirror',
+      'moment',
+      'redux-form',
+      'react-redux',
+      'dropzone',
+      'axios',
+      'classnames',
+      'react-inlinesvg',
+      'react-router',
+      'redux-thunk'
     ]
   },
   output: {
