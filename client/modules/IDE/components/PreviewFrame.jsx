@@ -8,8 +8,8 @@ import { getBlobUrl } from '../actions/files';
 import { resolvePathToFile } from '../../../../server/utils/filePath';
 
 const startTag = '@fs-';
-const MEDIA_FILE_REGEX = /^('|")(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov)('|")$/i;
-const MEDIA_FILE_REGEX_NO_QUOTES = /^(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov)$/i;
+const MEDIA_FILE_REGEX = /^('|")(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov|otf|ttf)('|")$/i;
+const MEDIA_FILE_REGEX_NO_QUOTES = /^(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov|otf|ttf)$/i;
 const STRING_REGEX = /(['"])((\\\1|.)*?)\1/gm;
 const TEXT_FILE_REGEX = /(.+\.json$|.+\.txt$|.+\.csv$)/i;
 const NOT_EXTERNAL_LINK_REGEX = /^(?!(http:\/\/|https:\/\/))/;
@@ -143,6 +143,10 @@ class PreviewFrame extends React.Component {
     const parser = new DOMParser();
     const sketchDoc = parser.parseFromString(htmlFile, 'text/html');
 
+    const base = sketchDoc.createElement('base');
+    base.href = `${window.location.href}/`;
+    sketchDoc.head.appendChild(base);
+
     this.resolvePathsForElementsWithAttribute('src', sketchDoc, resolvedFiles);
     this.resolvePathsForElementsWithAttribute('href', sketchDoc, resolvedFiles);
     // should also include background, data, poster, but these are used way less often
@@ -154,28 +158,31 @@ class PreviewFrame extends React.Component {
       '/loop-protect.min.js',
       '/hijackConsole.js'
     ];
-    if (this.props.isTextOutputPlaying) {
+    if (this.props.isTextOutputPlaying || (this.props.textOutput !== 0 && this.props.isPlaying)) {
       let interceptorScripts = [];
+      if (this.props.textOutput === 0) {
+        this.props.setTextOutput(1);
+      }
       if (this.props.textOutput === 1) {
         interceptorScripts = [
-          '/interceptor/loadData.js',
-          '/interceptor/intercept-helper-functions.js',
-          '/interceptor/textInterceptor/interceptor-functions.js',
-          '/interceptor/textInterceptor/intercept-p5.js',
-          '/interceptor/ntc.min.js'
+          '/p5-interceptor/loadData.js',
+          '/p5-interceptor/intercept-helper-functions.js',
+          '/p5-interceptor/textInterceptor/interceptor-functions.js',
+          '/p5-interceptor/textInterceptor/intercept-p5.js',
+          '/p5-interceptor/ntc.min.js'
         ];
       } else if (this.props.textOutput === 2) {
         interceptorScripts = [
-          '/interceptor/loadData.js',
-          '/interceptor/intercept-helper-functions.js',
-          '/interceptor/gridInterceptor/interceptor-functions.js',
-          '/interceptor/gridInterceptor/intercept-p5.js',
-          '/interceptor/ntc.min.js'
+          '/p5-interceptor/loadData.js',
+          '/p5-interceptor/intercept-helper-functions.js',
+          '/p5-interceptor/gridInterceptor/interceptor-functions.js',
+          '/p5-interceptor/gridInterceptor/intercept-p5.js',
+          '/p5-interceptor/ntc.min.js'
         ];
       } else if (this.props.textOutput === 3) {
         interceptorScripts = [
-          '/interceptor/loadData.js',
-          '/interceptor/soundInterceptor/intercept-p5.js'
+          '/p5-interceptor/loadData.js',
+          '/p5-interceptor/soundInterceptor/intercept-p5.js'
         ];
       }
       scriptsToInject = scriptsToInject.concat(interceptorScripts);
@@ -351,6 +358,7 @@ PreviewFrame.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   isTextOutputPlaying: PropTypes.bool.isRequired,
   textOutput: PropTypes.number.isRequired,
+  setTextOutput: PropTypes.func.isRequired,
   content: PropTypes.string,
   htmlFile: PropTypes.shape({
     content: PropTypes.string.isRequired

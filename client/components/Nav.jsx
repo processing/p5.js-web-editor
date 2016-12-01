@@ -19,7 +19,13 @@ function Nav(props) {
               <li className="nav__item">
                 <a
                   className="nav__save"
-                  onClick={() => props.saveProject()}
+                  onClick={() => {
+                    if (props.user.authenticated) {
+                      props.saveProject();
+                    } else {
+                      props.openForceAuthentication();
+                    }
+                  }}
                 >
                   Save
                 </a>
@@ -153,7 +159,8 @@ Nav.propTypes = {
   }),
   logoutUser: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
-  showShareModal: PropTypes.func.isRequired
+  showShareModal: PropTypes.func.isRequired,
+  openForceAuthentication: PropTypes.func.isRequired
 };
 
 export default Nav;

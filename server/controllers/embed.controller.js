@@ -20,6 +20,12 @@ export function serveProject(req, res) {
 
       jsdom.env(htmlFile, (err, window) => {
         const sketchDoc = window.document;
+
+        const base = sketchDoc.createElement('base');
+        const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+        base.href = `${fullUrl}/`;
+        sketchDoc.head.appendChild(base);
+
         resolvePathsForElementsWithAttribute('src', sketchDoc, files);
         resolvePathsForElementsWithAttribute('href', sketchDoc, files);
         resolveScripts(sketchDoc, files);

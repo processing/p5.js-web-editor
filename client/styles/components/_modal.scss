@@ -1,17 +1,17 @@
 .modal {
   position: absolute;
-  top: #{66 / $base-font-size}rem;
+  top: #{60 / $base-font-size}rem;
   right: #{400 / $base-font-size}rem;
   z-index: 100;
 }
 
 .modal-content {
   @extend %modal;
-  height: #{400 / $base-font-size}rem;
+  min-height: #{150 / $base-font-size}rem;
   width: #{400 / $base-font-size}rem;
   padding: #{20 / $base-font-size}rem;
   .modal--reduced & {
-    height: #{150 / $base-font-size}rem;
+    //min-height: #{150 / $base-font-size}rem;
   }
 }
 
@@ -51,7 +51,7 @@
 }
 
 .uploader {
-  height: #{200 / $base-font-size}rem;
+  min-height: #{200 / $base-font-size}rem;
   width: 100%;
   text-align: center;
 }

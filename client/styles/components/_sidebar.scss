@@ -2,6 +2,9 @@
   @include themify() {
     border: 1px solid map-get($theme-map, 'ide-border-color');
   }
+  display: flex;
+  flex-flow: column;
+
 }
 
 .sidebar__header {
@@ -10,6 +13,7 @@
   justify-content: space-between;
   align-items: center;
   height: #{47 / $base-font-size}rem;
+  min-height: #{47 / $base-font-size}rem;
 }
 
 .sidebar__title {
@@ -43,6 +47,8 @@
 
 .sidebar__root-item {
   position: relative;
+  overflow-y: scroll;
+  flex: 1 1 auto;
 }
 
 .sidebar__file-item {

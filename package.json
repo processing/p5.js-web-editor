@@ -7,7 +7,8 @@
     "start:prod": "NODE_ENV=production node index.js",
     "lint": "eslint client server",
     "build": "NODE_ENV=production webpack --config webpack.config.prod.js --progress",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall" : "git submodule update --remote --recursive"
   },
   "main": "index.js",
   "author": "Cassie Tarakajian",
@@ -69,7 +70,7 @@
     "body-parser": "^1.15.1",
     "bson-objectid": "^1.1.4",
     "classnames": "^2.2.5",
-    "codemirror": "^5.19.0",
+    "codemirror": "^5.21.0",
     "connect-mongo": "^1.2.0",
     "cookie-parser": "^1.4.1",
     "csslint": "^0.10.0",
