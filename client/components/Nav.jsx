@@ -81,16 +81,14 @@ function Nav(props) {
               </li>
             );
           }
-          return (
-            <li className="nav__item">
-              <p className="nav__open">
-                <Link to="/p5/sketches">
-                  Open
-                </Link>
-              </p>
-            </li>
-          );
         })()}
+        <li className="nav__item">
+          <p className="nav__open">
+            <Link to="/p5/sketches">
+              Examples
+            </Link>
+          </p>
+        </li>
         <li className="nav__item">
           <p className="nav__reference">
             <a
