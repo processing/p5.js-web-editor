@@ -95,7 +95,7 @@ class Toolbar extends React.Component {
         <div className={nameContainerClass}>
           <a
             className="toolbar__project-name"
-            href={`/projects/${this.props.project.id}`}
+            href={this.props.owner ? `/${this.props.owner.username}/sketches/${this.props.project.id}` : ''}
             onClick={(e) => {
               if (this.canEditProjectName()) {
                 e.preventDefault();
