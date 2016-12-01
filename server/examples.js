@@ -221,31 +221,34 @@ function createProjectsInP5user(projectsInAllCategories) {
                 assetName = asset.name;
               }
             });
-            if (i === 0) {
-              const id = objectID().toHexString();
-              newProject.files.push({
-                name: 'assets',
-                id,
-                _id: id,
-                children: [],
-                fileType: 'folder'
-              });
-              // add assets folder inside root
-              newProject.files[0].children.push(id);
-            }
 
-            const fileID = objectID().toHexString();
-            newProject.files.push({
-              name: assetName,
-              url: `https://rawgit.com/processing/p5.js-website/master/dist/assets/examples/assets/${assetName}`,
-              id: fileID,
-              _id: fileID,
-              children: [],
-              fileType: 'file'
-            });
-            console.log('create assets: ' + assetName);
-            // add asset file inside the newly created assets folder at index 4
-            newProject.files[4].children.push(fileID);
+            if (assetName !== '') {
+              if (i === 0) {
+                const id = objectID().toHexString();
+                newProject.files.push({
+                  name: 'assets',
+                  id,
+                  _id: id,
+                  children: [],
+                  fileType: 'folder'
+                });
+                // add assets folder inside root
+                newProject.files[0].children.push(id);
+              }
+
+              const fileID = objectID().toHexString();
+              newProject.files.push({
+                name: assetName,
+                url: `https://rawgit.com/processing/p5.js-website/master/dist/assets/examples/assets/${assetName}`,
+                id: fileID,
+                _id: fileID,
+                children: [],
+                fileType: 'file'
+              });
+              console.log('create assets: ' + assetName);
+              // add asset file inside the newly created assets folder at index 4
+              newProject.files[4].children.push(fileID);
+            }
           });
 
           newProject.save( (err, newProject) => {
