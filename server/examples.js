@@ -122,7 +122,7 @@ function getSketchesInCategories(categories) {
         let projectName;
         if (example.name === '02_Instance_Container.js') {
           for (let i = 1; i < 5; i++) {
-            const instanceProjectName = category.name + ': ' + 'Instance Container' + i;
+            const instanceProjectName = category.name + ': ' + 'Instance Container ' + i;
             projectsInOneCategory.push({sketchUrl: example.download_url, projectName: instanceProjectName});
           }
         } else {
@@ -153,7 +153,7 @@ function getSketchContent(projectsInAllCategories) {
 
       return rp(options).then(res => {
         const noNumberprojectName = project.projectName.replace(/(\d+)/g, '');
-        if (noNumberprojectName === 'Instance Mode : Instance Container') {
+        if (noNumberprojectName === 'Instance Mode : Instance Container ') {
           for (let i = 0; i < 4; i++) {
             let splitedRes = res.split('*/')[1].split('</html>')[i] + '</html>\n';
             project.sketchContent = splitedRes.replace('p5.js', 'https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.4/p5.min.js');
@@ -188,7 +188,7 @@ function createProjectsInP5user(projectsInAllCategories) {
         async.eachSeries(projectsInOneCategory, (project, projectCallback) => {
           let newProject;
           const noNumberprojectName = project.projectName.replace(/(\d+)/g, '');
-          if (noNumberprojectName === 'Instance Mode : Instance Container') {
+          if (noNumberprojectName === 'Instance Mode : Instance Container ') {
             newProject = new Project({
               name: project.projectName,
               user: user._id,
