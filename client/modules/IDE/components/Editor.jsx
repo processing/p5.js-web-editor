@@ -146,7 +146,7 @@ class Editor extends React.Component {
   initializeDocuments(files) {
     this._docs = {};
     files.forEach(file => {
-      if (file.fileType === 'file') {
+      if (file.name !== 'root') {
         this._docs[file.id] = CodeMirror.Doc(file.content, this.getFileMode(file.name)); // eslint-disable-line
       }
     });
