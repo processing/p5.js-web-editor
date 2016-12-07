@@ -28,7 +28,6 @@ import SplitPane from 'react-split-pane';
 import Overlay from '../../App/components/Overlay';
 import SketchList from '../components/SketchList';
 import About from '../components/About';
-import LoginView from '../components/LoginView';
 import SignupView from '../components/SignupView';
 import ResetPasswordView from '../components/ResetPasswordView';
 import NewPasswordView from '../components/NewPasswordView';
@@ -427,15 +426,6 @@ class IDEView extends React.Component {
                 <KeyboardShortcutModal
                   closeModal={this.props.closeKeyboardShortcutModal}
                 />
-              </Overlay>
-            );
-          }
-        })()}
-        {(() => { // eslint-disable-line
-          if (this.props.location.pathname === '/login') {
-            return (
-              <Overlay>
-                <LoginView previousPath={this.props.ide.previousPath} />
               </Overlay>
             );
           }
