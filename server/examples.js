@@ -120,12 +120,19 @@ function getSketchesInCategories(categories) {
       const examples = JSON.parse(res);
       examples.forEach(example => {
         let projectName;
-        if (example.name.split('_')[1]) {
-          projectName = category.name + ': '+ example.name.split('_').slice(1).join(' ').replace('.js', '');
+        if (example.name === '02_Instance_Container.js') {
+          for (let i = 1; i < 5; i++) {
+            const instanceProjectName = category.name + ': ' + 'Instance Container' + i;
+            projectsInOneCategory.push({sketchUrl: example.download_url, projectName: instanceProjectName});
+          }
         } else {
-          projectName = category.name + ': '+ example.name.replace('.js', '');
+          if (example.name.split('_')[1]) {
+            projectName = category.name + ': '+ example.name.split('_').slice(1).join(' ').replace('.js', '');
+          } else {
+            projectName = category.name + ': '+ example.name.replace('.js', '');
+          }
+          projectsInOneCategory.push({sketchUrl: example.download_url, projectName: projectName});
         }
-        projectsInOneCategory.push({sketchUrl: example.download_url, projectName: projectName});
       });
       return projectsInOneCategory;
     }).catch(err => {
@@ -145,7 +152,15 @@ function getSketchContent(projectsInAllCategories) {
       };
 
       return rp(options).then(res => {
-        project.sketchContent = res;
+        const noNumberprojectName = project.projectName.replace(/(\d+)/g, '');
+        if (noNumberprojectName === 'Instance Mode : Instance Container') {
+          for (let i = 0; i < 4; i++) {
+            let splitedRes = res.split('*/')[1].split('</html>')[i] + '</html>\n';
+            project.sketchContent = splitedRes.replace('p5.js', 'https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.4/p5.min.js');
+          }
+        } else {
+          project.sketchContent = res;
+        }
         return project;
       }).catch(err => {
         throw err;
@@ -171,45 +186,89 @@ function createProjectsInP5user(projectsInAllCategories) {
 
       async.eachSeries(projectsInAllCategories, (projectsInOneCategory, categoryCallback) => {
         async.eachSeries(projectsInOneCategory, (project, projectCallback) => {
-          let newProject = new Project({
-            name: project.projectName,
-            user: user._id,
-            files: [
-              {
-                name: 'root',
-                id: r,
-                _id: r,
-                children: [a, b, c],
-                fileType: 'folder'
-              },
-              {
-                name: 'sketch.js',
-                content: project.sketchContent,
-                id: a,
-                _id: a,
-                isSelectedFile: true,
-                fileType: 'file',
-                children: []
-              },
-              {
-                name: 'index.html',
-                content: defaultHTML,
-                id: b,
-                _id: b,
-                fileType: 'file',
-                children: []
-              },
-              {
-                name: 'style.css',
-                content: defaultCSS,
-                id: c,
-                _id: c,
-                fileType: 'file',
-                children: []
-              }
-            ],
-            _id: shortid.generate()
-          });
+          let newProject;
+          const noNumberprojectName = project.projectName.replace(/(\d+)/g, '');
+          if (noNumberprojectName === 'Instance Mode : Instance Container') {
+            newProject = new Project({
+              name: project.projectName,
+              user: user._id,
+              files: [
+                {
+                  name: 'root',
+                  id: r,
+                  _id: r,
+                  children: [a, b, c],
+                  fileType: 'folder'
+                },
+                {
+                  name: 'sketch.js',
+                  content: '// Instance Mode : Instance Container, please check its index.html file',
+                  id: a,
+                  _id: a,
+                  isSelectedFile: true,
+                  fileType: 'file',
+                  children: []
+                },
+                {
+                  name: 'index.html',
+                  content: project.sketchContent,
+                  id: b,
+                  _id: b,
+                  fileType: 'file',
+                  children: []
+                },
+                {
+                  name: 'style.css',
+                  content: defaultCSS,
+                  id: c,
+                  _id: c,
+                  fileType: 'file',
+                  children: []
+                }
+              ],
+              _id: shortid.generate()
+            });
+          } else {
+            newProject = new Project({
+              name: project.projectName,
+              user: user._id,
+              files: [
+                {
+                  name: 'root',
+                  id: r,
+                  _id: r,
+                  children: [a, b, c],
+                  fileType: 'folder'
+                },
+                {
+                  name: 'sketch.js',
+                  content: project.sketchContent,
+                  id: a,
+                  _id: a,
+                  isSelectedFile: true,
+                  fileType: 'file',
+                  children: []
+                },
+                {
+                  name: 'index.html',
+                  content: defaultHTML,
+                  id: b,
+                  _id: b,
+                  fileType: 'file',
+                  children: []
+                },
+                {
+                  name: 'style.css',
+                  content: defaultCSS,
+                  id: c,
+                  _id: c,
+                  fileType: 'file',
+                  children: []
+                }
+              ],
+              _id: shortid.generate()
+            });
+          }
 
           let assetsInProject = project.sketchContent.match(/assets\/[\w-]+\.[\w]*/g) || project.sketchContent.match(/assets\/[\w-]*/g) || [];
 
