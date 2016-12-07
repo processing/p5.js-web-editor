@@ -205,7 +205,8 @@ class PreviewFrame extends React.Component {
 
   resolvePathsForElementsWithAttribute(attr, sketchDoc, files) {
     const elements = sketchDoc.querySelectorAll(`[${attr}]`);
-    elements.forEach(element => {
+    const elementsArray = Array.prototype.slice.call(elements);
+    elementsArray.forEach(element => {
       if (element.getAttribute(attr).match(MEDIA_FILE_REGEX_NO_QUOTES)) {
         const resolvedFile = resolvePathToFile(element.getAttribute(attr), files);
         if (resolvedFile) {
@@ -299,7 +300,8 @@ class PreviewFrame extends React.Component {
     });
 
     const cssLinksInHTML = sketchDoc.querySelectorAll('link[rel="stylesheet"]');
-    cssLinksInHTML.forEach(css => {
+    const cssLinksInHTMLArray = Array.prototype.slice.call(cssLinksInHTML);
+    cssLinksInHTMLArray.forEach(css => {
       if (css.getAttribute('href') && css.getAttribute('href').match(NOT_EXTERNAL_LINK_REGEX) !== null) {
         const resolvedFile = resolvePathToFile(css.getAttribute('href'), files);
         if (resolvedFile) {
