@@ -5,6 +5,7 @@ import beautifyJS from 'js-beautify';
 const beautifyCSS = beautifyJS.css;
 const beautifyHTML = beautifyJS.html;
 import 'codemirror/mode/javascript/javascript';
+import '../../../utils/p5-javascript';
 import 'codemirror/mode/css/css';
 import 'codemirror/mode/htmlmixed/htmlmixed';
 import 'codemirror/addon/selection/active-line';
@@ -129,7 +130,7 @@ class Editor extends React.Component {
   getFileMode(fileName) {
     let mode;
     if (fileName.match(/.+\.js$/i)) {
-      mode = 'javascript';
+      mode = 'p5-javascript';
     } else if (fileName.match(/.+\.css$/i)) {
       mode = 'css';
     } else if (fileName.match(/.+\.html$/i)) {

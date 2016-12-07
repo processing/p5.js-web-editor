@@ -117,3 +117,12 @@ $p5-dark-activeline: rgb(207, 207, 207);
 .cm-s-p5-dark .cm-attribute {
   color: $p5-dark-lightblue;
 }
+
+.cm-s-p5-dark .cm-p5-function {
+  color: $p5-dark-darkblue;
+}
+
+.cm-s-p5-dark .cm-p5-variable {
+  color: $p5-dark-pink;
+  font-weight: bold;
+}
