@@ -30,11 +30,12 @@ function getAllScriptOffsets(htmlFile) {
     } else {
       endFilenameInd = htmlFile.indexOf('.js', ind + startTag.length + 3);
       filename = htmlFile.substring(ind + startTag.length, endFilenameInd);
-      lineOffset = htmlFile.substring(0, ind).split('\n').length;
+      lineOffset = htmlFile.substring(0, ind).split('\n').length - 1;
       offs.push([lineOffset, filename]);
       lastInd = ind + 1;
     }
   }
+  console.log(offs);
   return offs;
 }
 
@@ -198,7 +199,7 @@ class PreviewFrame extends React.Component {
     scriptOffs = getAllScriptOffsets(sketchDocString);
     const consoleErrorsScript = sketchDoc.createElement('script');
     consoleErrorsScript.innerHTML = hijackConsoleErrorsScript(JSON.stringify(scriptOffs));
-    sketchDoc.head.appendChild(consoleErrorsScript);
+    sketchDoc.body.appendChild(consoleErrorsScript);
 
     return `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
   }
@@ -282,6 +283,7 @@ class PreviewFrame extends React.Component {
           if (resolvedFile.url) {
             script.setAttribute('src', resolvedFile.url);
           } else {
+            script.setAttribute('data-tag', `${startTag}${resolvedFile.name}`);
             script.removeAttribute('src');
             script.innerHTML = resolvedFile.content; // eslint-disable-line
           }
@@ -310,7 +312,7 @@ class PreviewFrame extends React.Component {
           } else {
             const style = sketchDoc.createElement('style');
             style.innerHTML = `\n${resolvedFile.content}`;
-            sketchDoc.head.appendChild(style);
+            sketchDoc.body.appendChild(style);
             css.parentElement.removeChild(css);
           }
         }
