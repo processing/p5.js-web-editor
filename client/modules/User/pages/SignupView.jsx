@@ -1,29 +1,23 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
-import * as UserActions from '../../User/actions';
+import * as UserActions from '../actions';
 import { reduxForm } from 'redux-form';
 import SignupForm from '../components/SignupForm';
 import axios from 'axios';
 import { Link } from 'react-router';
 
-class SignupView extends React.Component {
-  componentDidMount() {
-    this.refs.signup.focus();
-  }
-
-  render() {
-    return (
-      <div className="signup" ref="signup" tabIndex="0">
-        <h1>Sign Up</h1>
-        <SignupForm {...this.props} />
-        <p className="form__navigation-options">
-          Already have an account?&nbsp;
-          <Link className="form__login-button" to="/login">Login</Link>
-        </p>
-        <Link className="form__cancel-button" to="/">Cancel</Link>
-      </div>
-    );
-  }
+function SignupView(props) {
+  return (
+    <div className="signup">
+      <h1>Sign Up</h1>
+      <SignupForm {...props} />
+      <p className="form__navigation-options">
+        Already have an account?&nbsp;
+        <Link className="form__login-button" to="/login">Login</Link>
+      </p>
+      <Link className="form__cancel-button" to="/">Cancel</Link>
+    </div>
+  );
 }
 
 function mapStateToProps(state, ownProps) {
