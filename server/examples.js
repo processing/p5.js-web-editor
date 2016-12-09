@@ -205,13 +205,13 @@ function createProjectsInP5user(projectsInAllCategories) {
                   content: '// Instance Mode : Instance Container, please check its index.html file',
                   id: a,
                   _id: a,
-                  isSelectedFile: true,
                   fileType: 'file',
                   children: []
                 },
                 {
                   name: 'index.html',
                   content: project.sketchContent,
+                  isSelectedFile: true,
                   id: b,
                   _id: b,
                   fileType: 'file',
