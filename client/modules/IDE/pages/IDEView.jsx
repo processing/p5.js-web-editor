@@ -52,8 +52,7 @@ class IDEView extends React.Component {
 
       // if autosave is on and the user is the owner of the project
       if (this.props.preferences.autosave
-        && this.props.project.owner
-        && this.props.project.owner.id === this.props.user.id) {
+        && this.isUserOwner()) {
         this.autosaveInterval = setInterval(this.props.autosaveProject, 30000);
       }
     }
@@ -104,7 +103,7 @@ class IDEView extends React.Component {
 
   componentDidUpdate(prevProps) {
     // if user is the owner of the project
-    if (this.props.project.owner && this.props.project.owner.id === this.props.user.id) {
+    if (this.isUserOwner()) {
       // if the user turns on autosave
       // or the user saves the project for the first time
       if (!this.autosaveInterval &&
@@ -135,6 +134,10 @@ class IDEView extends React.Component {
     this.sidebarSize = undefined;
   }
 
+  isUserOwner() {
+    return this.props.project.owner && this.props.project.owner.id === this.props.user.id;
+  }
+
   _handleConsolePaneOnDragFinished() {
     this.consoleSize = this.refs.consolePane.state.draggedSize;
     this.refs.consolePane.setState({
@@ -156,7 +159,7 @@ class IDEView extends React.Component {
     if (e.keyCode === 83 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
       e.preventDefault();
       e.stopPropagation();
-      if (this.props.project.owner && this.props.project.owner.id === this.props.user.id) {
+      if (this.isUserOwner() || this.props.user.authenticated && !this.props.project.owner) {
         this.props.saveProject();
       }
       // 13 === enter
