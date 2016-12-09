@@ -1,5 +1,7 @@
 import Project from '../models/project';
+import each from 'async/each';
 import { resolvePathToFile } from '../utils/filePath';
+import { deleteObjectsFromS3 } from '../utils/s3Operations';
 
 // Bug -> timestamps don't get created, but it seems like this will
 // be fixed in mongoose soon
@@ -38,8 +40,15 @@ function getAllDescendantIds(files, nodeId) {
 }
 
 function deleteMany(files, ids) {
-  ids.forEach(id => {
+  let s3ObjectUrlList = [];
+  each(ids, (id, callback) => {
+    if (files.id(id).url !== undefined) {
+      s3ObjectUrlList.push(files.id(id).url);
+    }
     files.id(id).remove();
+    callback();
+  }, (err) => {
+    deleteObjectsFromS3(s3ObjectUrlList);
   });
 }
 

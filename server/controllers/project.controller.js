@@ -2,6 +2,8 @@ import Project from '../models/project';
 import User from '../models/user';
 import archiver from 'archiver';
 import request from 'request';
+import each from 'async/each';
+import { deleteObjectsFromS3 } from '../utils/s3Operations';
 
 
 export function createProject(req, res) {
@@ -63,12 +65,29 @@ export function getProject(req, res) {
     });
 }
 
-export function deleteProject(req, res) {
-  Project.remove({ _id: req.params.project_id }, (err) => {
-    if (err) {
-      return res.status(404).send({ message: 'Project with that id does not exist' });
+function deleteFilesFromS3(files, fileCallback) {
+  let s3ObjectUrlList = [];
+  each(files, (file, callback) => {
+    if (file.url !== undefined) {
+      s3ObjectUrlList.push(file.url);
     }
-    return res.json({ success: true });
+    callback();
+  }, (err) => {
+    fileCallback();
+    deleteObjectsFromS3(s3ObjectUrlList);
+  });
+}
+
+export function deleteProject(req, res) {
+  Project.findById(req.params.project_id, (err, project) => {
+    deleteFilesFromS3(project.files, () => {
+      Project.remove({ _id: req.params.project_id }, (err) => {
+        if (err) {
+          return res.status(404).send({ message: 'Project with that id does not exist' });
+        }
+        return res.json({ success: true });
+      });
+    });
   });
 }
 

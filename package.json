@@ -109,6 +109,7 @@
     "redux-thunk": "^2.1.0",
     "request": "^2.76.0",
     "request-promise": "^4.1.1",
+    "s3": "^4.4.0",
     "s3-policy": "^0.2.0",
     "shortid": "^2.2.6",
     "srcdoc-polyfill": "^0.2.0",
