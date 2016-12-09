@@ -122,12 +122,12 @@
 .sidebar__file-item-options {
   @extend %modal;
   @include themify() {
-    background-color: getThemeColor('modal-background-color');
+    background-color: getThemifyVariable('modal-background-color');
   }
   position: absolute;
   top: 95%;
-  left: 77%;
-  right: -65%;
+  left: #{15 / $base-font-size}rem;
+  right: #{15 / $base-font-size}rem;
   display: none;
   z-index: 100;
   padding: #{8 / $base-font-size}rem #{16 / $base-font-size}rem;
