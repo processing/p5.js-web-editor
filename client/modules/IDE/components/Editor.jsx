@@ -97,6 +97,9 @@ class Editor extends React.Component {
       // then need to make CodeMirror documents
       this.initializeDocuments(nextProps.files);
     }
+    if (this.props.files.length !== nextProps.files.length) {
+      this.initializeDocuments(nextProps.files);
+    }
   }
 
   componentDidUpdate(prevProps) {
