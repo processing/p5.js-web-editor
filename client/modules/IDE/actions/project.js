@@ -1,28 +1,19 @@
 import * as ActionTypes from '../../../constants';
 import { browserHistory } from 'react-router';
 import axios from 'axios';
-import JSZip from 'jszip';
-import JSZipUtils from 'jszip-utils';
-import { saveAs } from 'file-saver';
-import { getBlobUrl } from './files';
 import { showToast, setToastText } from './toast';
-import { setUnsavedChanges } from './ide';
+import { setUnsavedChanges, justOpenedProject, resetJustOpenedProject, setProjectSavedTime, resetProjectSavedTime } from './ide';
+import moment from 'moment';
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
-export function getProjectBlobUrls() {
-  return (dispatch, getState) => {
-    const state = getState();
-    state.files.forEach(file => {
-      if (file.url) {
-        getBlobUrl(file)(dispatch);
-      }
-    });
-  };
-}
-
 export function getProject(id) {
   return (dispatch, getState) => {
+    const state = getState();
+    dispatch(justOpenedProject());
+    if (state.ide.justOpenedProject) {
+      dispatch(resetProjectSavedTime());
+    }
     axios.get(`${ROOT_URL}/projects/${id}`, { withCredentials: true })
       .then(response => {
         // browserHistory.push(`/projects/${id}`);
@@ -32,7 +23,6 @@ export function getProject(id) {
           files: response.data.files,
           owner: response.data.user
         });
-        getProjectBlobUrls()(dispatch, getState);
         dispatch(setUnsavedChanges(false));
       })
       .catch(response => dispatch({
@@ -49,7 +39,7 @@ export function setProjectName(name) {
   };
 }
 
-export function saveProject(autosave) {
+export function saveProject(autosave = false) {
   return (dispatch, getState) => {
     const state = getState();
     if (state.user.id && state.project.owner && state.project.owner.id !== state.user.id) {
@@ -61,12 +51,20 @@ export function saveProject(autosave) {
       axios.put(`${ROOT_URL}/projects/${state.project.id}`, formParams, { withCredentials: true })
         .then(() => {
           dispatch(setUnsavedChanges(false));
+          dispatch(setProjectSavedTime(moment().format()));
           dispatch({
             type: ActionTypes.PROJECT_SAVE_SUCCESS
           });
           if (!autosave) {
-            dispatch(showToast());
-            dispatch(setToastText('Project saved.'));
+            if (state.ide.justOpenedProject && state.preferences.autosave) {
+              dispatch(showToast(5500));
+              dispatch(setToastText('Project saved.'));
+              setTimeout(() => dispatch(setToastText('Autosave enabled.')), 1500);
+              dispatch(resetJustOpenedProject());
+            } else {
+              dispatch(showToast(1500));
+              dispatch(setToastText('Project saved.'));
+            }
           }
         })
         .catch((response) => dispatch({
@@ -77,7 +75,8 @@ export function saveProject(autosave) {
       axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
         .then(response => {
           dispatch(setUnsavedChanges(false));
-          browserHistory.push(`/projects/${response.data.id}`);
+          dispatch(setProjectSavedTime(moment().format()));
+          browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
           dispatch({
             type: ActionTypes.NEW_PROJECT,
             name: response.data.name,
@@ -86,8 +85,15 @@ export function saveProject(autosave) {
             files: response.data.files
           });
           if (!autosave) {
-            dispatch(showToast());
-            dispatch(setToastText('Project saved.'));
+            if (state.preferences.autosave) {
+              dispatch(showToast(5500));
+              dispatch(setToastText('Project saved.'));
+              setTimeout(() => dispatch(setToastText('Autosave enabled.')), 1500);
+              dispatch(resetJustOpenedProject());
+            } else {
+              dispatch(showToast(1500));
+              dispatch(setToastText('Project saved.'));
+            }
           }
         })
         .catch(response => dispatch({
@@ -108,7 +114,7 @@ export function createProject() {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/projects`, {}, { withCredentials: true })
       .then(response => {
-        browserHistory.push(`/projects/${response.data.id}`);
+        browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
         dispatch({
           type: ActionTypes.NEW_PROJECT,
           name: response.data.name,
@@ -125,89 +131,29 @@ export function createProject() {
   };
 }
 
-function buildZip(state) {
-  const zip = new JSZip();
-  const rootFile = state.files.find(file => file.name === 'root');
-  const numFiles = state.files.filter(file => file.fileType !== 'folder').length;
-  const files = state.files;
-  const projectName = state.project.name;
-  let numCompletedFiles = 0;
-
-  function addFileToZip(file, path) {
-    if (file.fileType === 'folder') {
-      const newPath = file.name === 'root' ? path : `${path}${file.name}/`;
-      file.children.forEach(fileId => {
-        const childFile = files.find(f => f.id === fileId);
-        (() => {
-          addFileToZip(childFile, newPath);
-        })();
-      });
-    } else {
-      if (file.url) {
-        JSZipUtils.getBinaryContent(file.url, (err, data) => {
-          zip.file(`${path}${file.name}`, data, { binary: true });
-          numCompletedFiles += 1;
-          if (numCompletedFiles === numFiles) {
-            zip.generateAsync({ type: 'blob' }).then((content) => {
-              saveAs(content, `${projectName}.zip`);
-            });
-          }
-        });
-      } else {
-        console.log('adding', `${path}${file.name}`);
-        zip.file(`${path}${file.name}`, file.content);
-        numCompletedFiles += 1;
-        console.log('numFiles', numFiles);
-        console.log('numCompletedFiles', numCompletedFiles);
-        if (numCompletedFiles === numFiles) {
-          zip.generateAsync({ type: 'blob' }).then((content) => {
-            saveAs(content, `${projectName}.zip`);
-          });
-        }
-      }
-    }
-  }
-  addFileToZip(rootFile, '/');
+export function exportProjectAsZip(projectId) {
+  const win = window.open(`${ROOT_URL}/projects/${projectId}/zip`, '_blank');
+  win.focus();
 }
 
-export function exportProjectAsZip() {
-  return (dispatch, getState) => {
-    const state = getState();
-    buildZip(state);
-  //   async.each(state.files, (file, cb) => {
-  //     if (file.url) {
-  //       JSZipUtils.getBinaryContent(file.url, (err, data) => {
-  //         zip.file(file.name, data, { binary: true });
-  //         cb();
-  //       });
-  //     } else {
-  //       zip.file(file.name, file.content);
-  //       cb();
-  //     }
-  //   }, err => {
-  //     if (err) console.log(err);
-  //     zip.generateAsync({ type: 'blob' }).then((content) => {
-  //       saveAs(content, `${state.project.name}.zip`);
-  //     });
-  //   });
-  // };
-  };
-}
-
-export function newProject() {
-  browserHistory.push('/');
+export function resetProject() {
   return {
     type: ActionTypes.RESET_PROJECT
   };
 }
 
+export function newProject() {
+  browserHistory.push('/');
+  return resetProject();
+}
+
 export function cloneProject() {
   return (dispatch, getState) => {
     const state = getState();
-    const formParams = Object.assign({}, { name: state.project.name }, { files: state.files });
+    const formParams = Object.assign({}, { name: `${state.project.name} copy` }, { files: state.files });
     axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
       .then(response => {
-        browserHistory.push(`/projects/${response.data.id}`);
+        browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
         dispatch({
           type: ActionTypes.NEW_PROJECT,
           name: response.data.name,

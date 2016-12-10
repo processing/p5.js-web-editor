@@ -12,33 +12,18 @@ export function authError(error) {
   };
 }
 
-export function signUpUser(formValues) {
+export function signUpUser(previousPath, formValues) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/signup`, formValues, { withCredentials: true })
       .then(response => {
         dispatch({ type: ActionTypes.AUTH_USER,
                     user: response.data
         });
-        browserHistory.push('/');
+        browserHistory.push(previousPath);
       })
       .catch(response => dispatch(authError(response.data.error)));
   };
 }
-
-// export function loginUser(formValues) {
-//   return (dispatch) => {
-//     axios.post(`${ROOT_URL}/login`, formValues, { withCredentials: true })
-//       .then(response => {
-//         dispatch({ type: ActionTypes.AUTH_USER,
-//                     user: response.data
-//         });
-//         browserHistory.push('/');
-//       })
-//       .catch(response => {
-//         return Promise.reject({ email: response.data.message, _error: 'Login failed!' });
-//       });
-//   };
-// }
 
 export function loginUser(formValues) {
   return axios.post(`${ROOT_URL}/login`, formValues, { withCredentials: true });
@@ -58,14 +43,18 @@ export function loginUserFailure(error) {
   };
 }
 
-export function validateAndLoginUser(formProps, dispatch) {
+export function validateAndLoginUser(previousPath, formProps, dispatch) {
   return new Promise((resolve, reject) => {
     loginUser(formProps)
       .then(response => {
         dispatch({ type: ActionTypes.AUTH_USER,
                   user: response.data
         });
-        browserHistory.push('/');
+        dispatch({
+          type: ActionTypes.SET_PREFERENCES,
+          preferences: response.data.preferences
+        });
+        browserHistory.push(previousPath);
         resolve();
       })
       .catch(response => {
@@ -105,3 +94,49 @@ export function logoutUser() {
   };
 }
 
+export function initiateResetPassword(formValues) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.RESET_PASSWORD_INITIATE
+    });
+    axios.post(`${ROOT_URL}/reset-password`, formValues, { withCredentials: true })
+      .then(() => {
+        // do nothing
+      })
+      .catch(response => dispatch({
+        type: ActionTypes.ERROR,
+        message: response.data
+      }));
+  };
+}
+
+export function resetPasswordReset() {
+  return {
+    type: ActionTypes.RESET_PASSWORD_RESET
+  };
+}
+
+export function validateResetPasswordToken(token) {
+  return (dispatch) => {
+    axios.get(`${ROOT_URL}/reset-password/${token}`)
+      .then(() => {
+        // do nothing if the token is valid
+      })
+      .catch(() => dispatch({
+        type: ActionTypes.INVALID_RESET_PASSWORD_TOKEN
+      }));
+  };
+}
+
+export function updatePassword(token, formValues) {
+  return (dispatch) => {
+    axios.post(`${ROOT_URL}/reset-password/${token}`, formValues)
+      .then((response) => {
+        dispatch(loginUserSuccess(response.data));
+        browserHistory.push('/');
+      })
+      .catch(() => dispatch({
+        type: ActionTypes.INVALID_RESET_PASSWORD_TOKEN
+      }));
+  };
+}

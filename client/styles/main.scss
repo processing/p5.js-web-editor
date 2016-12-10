@@ -12,12 +12,15 @@
 
 @import 'components/p5-light-codemirror-theme';
 @import 'components/p5-dark-codemirror-theme';
+@import 'components/p5-contrast-codemirror-theme';
 @import 'components/editor';
 @import 'components/nav';
 @import 'components/toolbar';
 @import 'components/preferences';
 @import 'components/signup';
 @import 'components/login';
+@import 'components/reset-password';
+@import 'components/new-password';
 @import 'components/sketch-list';
 @import 'components/sidebar';
 @import 'components/modal';
@@ -28,6 +31,8 @@
 @import 'components/github-button';
 @import 'components/forms';
 @import 'components/toast';
+@import 'components/timer';
+@import 'components/force-authentication';
 
 @import 'layout/ide';
 @import 'layout/fullscreen';

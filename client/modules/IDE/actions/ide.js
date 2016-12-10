@@ -195,3 +195,47 @@ export function resetInfiniteLoops() {
     type: ActionTypes.RESET_INFINITE_LOOPS
   };
 }
+
+export function justOpenedProject() {
+  return {
+    type: ActionTypes.JUST_OPENED_PROJECT,
+  };
+}
+
+export function resetJustOpenedProject() {
+  return {
+    type: ActionTypes.RESET_JUST_OPENED_PROJECT
+  };
+}
+
+export function setProjectSavedTime(value) {
+  return {
+    type: ActionTypes.SET_PROJECT_SAVED_TIME,
+    value
+  };
+}
+
+export function resetProjectSavedTime() {
+  return {
+    type: ActionTypes.RESET_PROJECT_SAVED_TIME,
+  };
+}
+
+export function setPreviousPath(path) {
+  return {
+    type: ActionTypes.SET_PREVIOUS_PATH,
+    path
+  };
+}
+
+export function openForceAuthentication() {
+  return {
+    type: ActionTypes.OPEN_FORCE_AUTHENTICATION
+  };
+}
+
+export function closeForceAuthentication() {
+  return {
+    type: ActionTypes.CLOSE_FORCE_AUTHENTICATION
+  };
+}

@@ -1,9 +1,9 @@
 import * as ActionTypes from '../../../constants';
 import axios from 'axios';
-import blobUtil from 'blob-util';
-import xhr from 'xhr';
-import fileType from 'file-type';
 import objectID from 'bson-objectid';
+import blobUtil from 'blob-util';
+import { setUnsavedChanges } from './ide';
+import { reset } from 'redux-form';
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
@@ -36,38 +36,6 @@ export function updateFileContent(name, content) {
   };
 }
 
-export function getBlobUrl(file) {
-  return (dispatch) => {
-    xhr({
-      uri: file.url,
-      responseType: 'arraybuffer',
-      useXDR: true
-    }, (err, body, res) => {
-      if (err) throw err;
-      const typeOfFile = fileType(new Uint8Array(res));
-      blobUtil.arrayBufferToBlob(res, typeOfFile.mime)
-      .then(blobUtil.createObjectURL)
-      .then(objectURL => {
-        dispatch({
-          type: ActionTypes.SET_BLOB_URL,
-          name: file.name,
-          blobURL: objectURL
-        });
-      });
-    });
-
-    // blobUtil.imgSrcToBlob(file.url, undefined, { crossOrigin: 'Anonymous' })
-    // .then(blobUtil.createObjectURL)
-    // .then(objectURL => {
-    //   dispatch({
-    //     type: ActionTypes.SET_BLOB_URL,
-    //     name: file.name,
-    //     blobURL: objectURL
-    //   });
-    // });
-  };
-}
-
 export function createFile(formProps) {
   return (dispatch, getState) => {
     const state = getState();
@@ -89,26 +57,22 @@ export function createFile(formProps) {
       };
       axios.post(`${ROOT_URL}/projects/${state.project.id}/files`, postParams, { withCredentials: true })
         .then(response => {
-          if (response.data.url) {
-            getBlobUrl(response.data)(dispatch);
-          }
           dispatch({
             type: ActionTypes.CREATE_FILE,
             ...response.data,
             parentId
           });
-          dispatch({
-            type: ActionTypes.HIDE_MODAL
-          });
+          dispatch(reset('new-file'));
+          // dispatch({
+          //   type: ActionTypes.HIDE_MODAL
+          // });
+          dispatch(setUnsavedChanges(true));
         })
         .catch(response => dispatch({
           type: ActionTypes.ERROR,
           error: response.data
         }));
     } else {
-      if (formProps.url) {
-        getBlobUrl(formProps)(dispatch);
-      }
       const id = objectID().toHexString();
       dispatch({
         type: ActionTypes.CREATE_FILE,
@@ -120,9 +84,11 @@ export function createFile(formProps) {
         parentId,
         children: []
       });
-      dispatch({
-        type: ActionTypes.HIDE_MODAL
-      });
+      dispatch(reset('new-file'));
+      // dispatch({
+      //   type: ActionTypes.HIDE_MODAL
+      // });
+      dispatch(setUnsavedChanges(true));
     }
   };
 }
@@ -262,4 +228,22 @@ export function hideFolderChildren(id) {
     type: ActionTypes.HIDE_FOLDER_CHILDREN,
     id
   };
+}
+
+export function setBlobUrl(file, blobURL) {
+  return {
+    type: ActionTypes.SET_BLOB_URL,
+    name: file.name,
+    blobURL
+  };
+}
+
+export function getBlobUrl(file) {
+  if (file.blobUrl) {
+    blobUtil.revokeObjectURL(file.blobUrl);
+  }
+
+  const fileBlob = blobUtil.createBlob([file.content], { type: 'text/plain' });
+  const blobURL = blobUtil.createObjectURL(fileBlob);
+  return blobURL;
 }

@@ -1,5 +1,7 @@
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var ManifestPlugin = require('webpack-manifest-plugin');
+var ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
 var cssnext = require('postcss-cssnext');
 var postcssFocus = require('postcss-focus');
 var postcssReporter = require('postcss-reporter');
@@ -9,19 +11,39 @@ require('dotenv').config();
 module.exports = {
   devtool: 'hidden-source-map',
 
-  entry: [
-    'babel-polyfill',
-    './client/index.js'
-  ],
-
+  entry: {
+    app: [
+      'babel-polyfill',
+      './client/index.jsx'
+    ],
+    vendor: [
+      'react',
+      'react-dom',
+      'redux',
+      'codemirror',
+      'moment',
+      'redux-form',
+      'react-redux',
+      'dropzone',
+      'axios',
+      'classnames',
+      'react-inlinesvg',
+      'react-router',
+      'redux-thunk'
+    ]
+  },
   output: {
     path: __dirname + '/static/dist',
-    filename: 'bundle.js',
+    filename: '[name].[chunkhash].js',
     publicPath: '/dist/'
   },
 
   resolve: {
     extensions: ['', '.js', '.jsx'],
+    modules: [
+      'client',
+      'node_modules',
+    ]
   },
 
   module: {
@@ -29,7 +51,7 @@ module.exports = {
       {
         test: /\.scss$/,
         exclude: /node_modules/,
-        loaders: ['style', 'css', 'sass', 'postcss']
+        loader: ExtractTextPlugin.extract('style', 'css!sass!postcss')
       },
       {
         test: /\.jsx?$/,
@@ -54,8 +76,21 @@ module.exports = {
         'S3_BUCKET': '"' + process.env.S3_BUCKET + '"'
       }
     }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: Infinity,
+      filename: 'vendor.js',
+    }),
+    new ExtractTextPlugin('app.[chunkhash].css', { allChunks: true }),
+    new ManifestPlugin({
+      basePath: '/',
+    }),
+    new ChunkManifestPlugin({
+      filename: "chunk-manifest.json",
+      manifestVariable: "webpackManifest",
+    }),
     new webpack.optimize.UglifyJsPlugin({
-      compressor: {
+      compress: {
         warnings: false
       }
     })

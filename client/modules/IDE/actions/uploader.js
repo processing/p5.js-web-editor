@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { createFile } from './files';
-const textFileRegex = /text\//;
+const textFileRegex = /(text\/|application\/json)/;
 
 const s3BucketHttps = `https://s3-us-west-2.amazonaws.com/${process.env.S3_BUCKET}/`;
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
+const MAX_LOCAL_FILE_SIZE = 80000; // bytes, aka 80 KB
 
 function localIntercept(file, options = {}) {
   return new Promise((resolve, reject) => {
@@ -34,11 +35,10 @@ export function dropzoneAcceptCallback(file, done) {
     // for text files and small files
     // check mime type
     // if text, local interceptor
-    console.log(file.type);
-    if (file.type.match(textFileRegex)) {
+    if (file.type.match(textFileRegex) && file.size < MAX_LOCAL_FILE_SIZE) {
       localIntercept(file).then(result => {
         file.content = result; // eslint-disable-line
-        done();
+        done('Uploading plaintext file locally.');
       })
       .catch(result => {
         done(`Failed to download file ${file.name}: ${result}`);
@@ -75,7 +75,7 @@ export function dropzoneAcceptCallback(file, done) {
 
 export function dropzoneSendingCallback(file, xhr, formData) {
   return () => {
-    if (!file.type.match(textFileRegex)) {
+    if (!file.type.match(textFileRegex) || file.size >= MAX_LOCAL_FILE_SIZE) {
       Object.keys(file.postData).forEach(key => {
         formData.append(key, file.postData[key]);
       });
@@ -88,7 +88,7 @@ export function dropzoneSendingCallback(file, xhr, formData) {
 
 export function dropzoneCompleteCallback(file) {
   return (dispatch, getState) => { // eslint-disable-line
-    if (!file.type.match(textFileRegex)) {
+    if ((!file.type.match(textFileRegex) || file.size >= MAX_LOCAL_FILE_SIZE) && file.status !== 'error') {
       let inputHidden = '<input type="hidden" name="attachments[]" value="';
       const json = {
         url: `${s3BucketHttps}${file.postData.key}`,
@@ -103,9 +103,8 @@ export function dropzoneCompleteCallback(file) {
         name: file.name,
         url: `${s3BucketHttps}${file.postData.key}`
       };
-      console.log(formParams);
       createFile(formParams)(dispatch, getState);
-    } else {
+    } else if (file.content !== undefined) {
       const formParams = {
         name: file.name,
         content: file.content

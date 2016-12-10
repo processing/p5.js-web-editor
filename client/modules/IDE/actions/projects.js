@@ -1,5 +1,4 @@
 import * as ActionTypes from '../../../constants';
-import { browserHistory } from 'react-router';
 import axios from 'axios';
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
@@ -26,6 +25,14 @@ export function getProjects(username) {
   };
 }
 
-export function closeSketchList() {
-  browserHistory.goBack();
+export function deleteProject(id) {
+  return (dispatch) => {
+    axios.delete(`${ROOT_URL}/projects/${id}`, { withCredentials: true })
+      .then(() => {
+        dispatch({
+          type: ActionTypes.DELETE_PROJECT,
+          id
+        });
+      });
+  };
 }

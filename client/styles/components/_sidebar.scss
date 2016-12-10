@@ -1,16 +1,23 @@
-.sidebar__header {
+.sidebar {
   @include themify() {
-    border-top: 1px solid map-get($theme-map, 'ide-border-color');
+    border: 1px solid map-get($theme-map, 'ide-border-color');
   }
-  padding: #{1 / $base-font-size}rem 0 #{1 / $base-font-size}rem #{19 / $base-font-size}rem;
+  display: flex;
+  flex-flow: column;
+
+}
+
+.sidebar__header {
+  padding: #{10 / $base-font-size}rem #{6 / $base-font-size}rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: #{20 / $base-font-size}rem;
+  height: #{47 / $base-font-size}rem;
+  min-height: #{47 / $base-font-size}rem;
 }
 
 .sidebar__title {
-  font-size: #{12 / $base-font-size}rem;
+  font-size: #{16 / $base-font-size}rem;
   display: inline-block;
   .sidebar--contracted & {
     display: none;
@@ -40,10 +47,12 @@
 
 .sidebar__root-item {
   position: relative;
+  overflow-y: scroll;
+  flex: 1 1 auto;
 }
 
 .sidebar__file-item {
-  font-size: #{12 / $base-font-size}rem;
+  font-size: #{16 / $base-font-size}rem;
   cursor: pointer;
   @include themify() {
     color: map-get($theme-map, 'inactive-text-color');
@@ -61,15 +70,15 @@
 // it won't work if the file tree is too nested
 .file-item__spacer {
   .sidebar__file-item & {
-    width: #{36 / $base-font-size}rem;
+    width: #{20 / $base-font-size}rem;
     .sidebar__file-item & {
-      width: #{51 / $base-font-size}rem;
+      width: #{40 / $base-font-size}rem;
       .sidebar__file-item & {
-        width: #{66 / $base-font-size}rem;
+        width: #{60 / $base-font-size}rem;
         .sidebar__file-item & {
-          width: #{81 / $base-font-size}rem;
+          width: #{80 / $base-font-size}rem;
           .sidebar__file-item & {
-            width: #{96 / $base-font-size}rem;
+            width: #{100 / $base-font-size}rem;
           }
         }
       }
@@ -91,7 +100,7 @@
 }
 
 .sidebar__file-item-name {
-  padding: #{4 / $base-font-size}rem 0;
+  padding: #{8 / $base-font-size}rem 0;
   .sidebar__file-item--editing & {
     display: none;
   }
@@ -100,7 +109,7 @@
 .sidebar__file-item-show-options {
   @include themify() {
     @extend %icon;
-    padding: #{5 / $base-font-size}rem 0;
+    padding: #{8 / $base-font-size}rem 0;
   }
   display: none;
   position: absolute;
@@ -113,12 +122,12 @@
 .sidebar__file-item-options {
   @extend %modal;
   @include themify() {
-    background-color: getThemeColor('modal-background-color');
+    background-color: getThemifyVariable('modal-background-color');
   }
   position: absolute;
   top: 95%;
-  left: 77%;
-  right: -65%;
+  left: #{15 / $base-font-size}rem;
+  right: #{15 / $base-font-size}rem;
   display: none;
   z-index: 100;
   padding: #{8 / $base-font-size}rem #{16 / $base-font-size}rem;
@@ -142,7 +151,7 @@
   @include themify() {
     @extend %icon;
   }
-  height: #{29 / $base-font-size}rem;
+  height: #{14 / $base-font-size}rem;
   & svg {
     height: #{14 / $base-font-size}rem;
   }
@@ -150,7 +159,6 @@
   .sidebar--contracted & {
     display: inline-block;
   }
-  float: right;
 }
 
 .sidebar__contract {
@@ -158,16 +166,13 @@
     @extend %icon;
   }
   margin-left: #{10 / $base-font-size}rem;
-  height: #{29 / $base-font-size}rem;
+  height: #{14 / $base-font-size}rem;
   & svg {
     height: #{14 / $base-font-size}rem;
   }
   .sidebar--contracted & {
     display: none;
   }
-  width: #{191 / $base-font-size}rem;
-  text-align: right;
-  padding-right: #{11 / $base-font-size}rem !important;
 }
 
 .sidebar__icons {
@@ -187,7 +192,7 @@
 }
 
 .sidebar__file-item-icon {
-  padding: #{4 / $base-font-size}rem 0;
+  padding: #{8 / $base-font-size}rem 0;
   margin-right: #{5 / $base-font-size}rem;
   & g {
     @include themify() {

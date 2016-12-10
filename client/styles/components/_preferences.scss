@@ -1,7 +1,7 @@
 .preferences {
 	@extend %modal;
 	position: absolute;
-	top: #{66 / $base-font-size}rem;
+	top: #{60 / $base-font-size}rem;
 	right: #{40 / $base-font-size}rem;
 	width: #{336 / $base-font-size}rem;
 	display: none;
@@ -32,6 +32,9 @@
 	flex-direction: row;
 	justify-content: space-between;
 	margin-bottom: #{20 / $base-font-size}rem;
+	@include themify() {
+		color: getThemifyVariable('heading-text-color');
+	}
 }
 
 .preference {
@@ -48,6 +51,9 @@
 .preference__title {
 	width: 100%;
 	margin-bottom: #{10 / $base-font-size}rem;
+	@include themify() {
+		color: getThemifyVariable('heading-text-color');
+	}
 }
 
 .preference__subtitle {
@@ -75,9 +81,9 @@
 
 .preference__label {
 	@include themify() {
-		color: getThemifyColor('inactive-text-color');
+		color: getThemifyVariable('inactive-text-color');
 		&:hover {
-			color: getThemifyColor('inactive-text-color');
+			color: getThemifyVariable('primary-text-color');
 		}
 	}
 	margin: 0;
@@ -99,6 +105,7 @@
 .preference__option {
 	@include themify() {
 		@extend %preference-option;
+		padding-right: #{20 / $base-font-size}rem;
 	}
 }
 
@@ -111,12 +118,10 @@
 
 .preference__options {
 	display: flex;
-	justify-content: space-between;
-	width: #{70 / $base-font-size}rem;
 }
 
 .preference__radio-button:checked + .preference__option {
-	@include themify() {	
+	@include themify() {
 		//for some reason this won't work for getThemifyVariable
 	  color: map-get($theme-map, 'primary-text-color');
 	}

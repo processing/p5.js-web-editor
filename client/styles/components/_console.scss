@@ -25,6 +25,13 @@
 		flex: 1 0 auto;
 	}
 
+	.preview-console__undefined {
+		@include themify(){
+			color: getThemifyVariable('inactive-text-color');
+		}
+		flex: 1 0 auto;
+	}
+
 	.preview-console__error {
 		color: $console-error-color;
 		flex: 1 0 auto;
@@ -41,6 +48,7 @@
 		background-color: getThemifyVariable('console-header-background-color');
 		color: getThemifyVariable('console-header-color');
 	}
+	min-height: #{30 / $base-font-size}rem;
 	padding: #{5 / $base-font-size}rem;
 	display: flex;
 	justify-content: space-between;
@@ -59,8 +67,6 @@
 	display: flex;
 	flex-direction: column;
 	overflow-y: auto;
-	flex: 1 0 0%;
-
 }
 
 .preview-console__collapse {

@@ -32,6 +32,8 @@ import aws from './routes/aws.routes';
 import serverRoutes from './routes/server.routes';
 import embedRoutes from './routes/embed.routes';
 
+import { renderIndex } from './views/index';
+
 // Body parser, cookie parser, sessions, serve public assets
 
 app.use(Express.static(path.resolve(__dirname, '../static')));
@@ -83,7 +85,7 @@ mongoose.connection.on('error', () => {
 });
 
 app.get('/', (req, res) => {
-  res.sendFile(path.resolve(`${__dirname}/../index.html`));
+  res.sendFile(renderIndex());
 });
 
 // start app
