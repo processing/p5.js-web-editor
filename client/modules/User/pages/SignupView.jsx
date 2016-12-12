@@ -20,10 +20,10 @@ function SignupView(props) {
   );
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   return {
     user: state.user,
-    previousPath: ownProps.previousPath
+    previousPath: state.ide.previousPath
   };
 }
 
