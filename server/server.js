@@ -71,6 +71,12 @@ app.get('/auth/github', passport.authenticate('github'));
 app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), (req, res) => {
   res.redirect('/');
 });
+app.get('/auth/google', passport.authenticate('google', {
+  scope: ['email', 'profile']
+}));
+app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
+  res.redirect('/');
+});
 
 // configure passport
 require('./config/passport');

@@ -1,6 +1,7 @@
 const passport = require('passport');
 const GitHubStrategy = require('passport-github').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
+const GoogleStrategy = require('passport-google-oauth2').Strategy;
 
 import User from '../models/user';
 
@@ -60,6 +61,45 @@ passport.use(new GitHubStrategy({
         user.github = profile.id;
         user.username = profile.username;
         user.tokens.push({ kind: 'github', accessToken });
+        user.name = profile.displayName;
+        user.save((err) => {
+          return done(null, user);
+        });
+      }
+    });
+  });
+}));
+
+/**
+ * Sign in with GitHub.
+ */
+passport.use(new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL: '/auth/google/callback',
+  passReqToCallback: true
+}, (request, accessToken, refreshToken, profile, done) => {
+  User.findOne({ google: profile.id }, (err, existingUser) => {
+    const email = profile.emails[0].value;
+    if (existingUser) {
+      return done(null, existingUser);
+    }
+    User.findOne({ email }, (err, existingEmailUser) => {
+      if (existingEmailUser) {
+        existingEmailUser.email = existingEmailUser.email || email;
+        existingEmailUser.google = profile.id;
+        existingEmailUser.username = existingEmailUser.username || email;
+        existingEmailUser.tokens.push({ kind: 'google', accessToken });
+        existingEmailUser.name = existingEmailUser.name || profile.displayName;
+        existingEmailUser.save((err) => {
+          return done(null, existingEmailUser);
+        });
+      } else {
+        const user = new User();
+        user.email = email;
+        user.google = profile.id;
+        user.username = email;
+        user.tokens.push({ kind: 'google', accessToken });
         user.name = profile.displayName;
         user.save((err) => {
           return done(null, user);

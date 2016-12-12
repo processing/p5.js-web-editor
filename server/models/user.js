@@ -9,6 +9,7 @@ const userSchema = new Schema({
   resetPasswordToken: String,
   resetPasswordExpires: Date,
   github: { type: String },
+  google: { type: String },
   email: { type: String, unique: true },
   tokens: Array,
   preferences: {
