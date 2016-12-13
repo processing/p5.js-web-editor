@@ -17,7 +17,7 @@ function expressionAllowed(stream, state, backUp) {
     (state.lastType == "quasi" && /\{\s*$/.test(stream.string.slice(0, stream.pos - (backUp || 0))))
 }
 
-CodeMirror.defineMode("p5-javascript", function(config, parserConfig) {
+CodeMirror.defineMode("javascript", function(config, parserConfig) {
   var indentUnit = config.indentUnit;
   var statementIndent = parserConfig.statementIndent;
   var jsonldMode = parserConfig.jsonld;
@@ -830,7 +830,7 @@ CodeMirror.defineMode("p5-javascript", function(config, parserConfig) {
     fold: "brace",
     closeBrackets: "()[]{}''\"\"``",
 
-    helperType: jsonMode ? "json" : "p5-javascript",
+    helperType: jsonMode ? "json" : "javascript",
     jsonldMode: jsonldMode,
     jsonMode: jsonMode,
 
@@ -842,14 +842,17 @@ CodeMirror.defineMode("p5-javascript", function(config, parserConfig) {
   };
 });
 
-CodeMirror.registerHelper("wordChars", "p5-javascript", /[\w$]/);
+CodeMirror.registerHelper("wordChars", "javascript", /[\w$]/);
 
-CodeMirror.defineMIME("text/javascript", "p5-javascript");
-CodeMirror.defineMIME("text/ecmascript", "p5-javascript");
-CodeMirror.defineMIME("application/javascript", "p5-javascript");
-CodeMirror.defineMIME("application/x-javascript", "p5-javascript");
-CodeMirror.defineMIME("application/ecmascript", "p5-javascript");
-CodeMirror.defineMIME("text/typescript", { name: "p5-javascript", typescript: true });
-CodeMirror.defineMIME("application/typescript", { name: "p5-javascript", typescript: true });
+CodeMirror.defineMIME("text/javascript", "javascript");
+CodeMirror.defineMIME("text/ecmascript", "javascript");
+CodeMirror.defineMIME("application/javascript", "javascript");
+CodeMirror.defineMIME("application/x-javascript", "javascript");
+CodeMirror.defineMIME("application/ecmascript", "javascript");
+CodeMirror.defineMIME("application/json", {name: "javascript", json: true});
+CodeMirror.defineMIME("application/x-json", {name: "javascript", json: true});
+CodeMirror.defineMIME("application/ld+json", {name: "javascript", jsonld: true});
+CodeMirror.defineMIME("text/typescript", { name: "javascript", typescript: true });
+CodeMirror.defineMIME("application/typescript", { name: "javascript", typescript: true });
 
 });
