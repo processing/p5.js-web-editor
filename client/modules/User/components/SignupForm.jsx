@@ -5,42 +5,46 @@ function SignupForm(props) {
   const { fields: { username, email, password, confirmPassword }, handleSubmit, submitting, invalid, pristine } = props;
   return (
     <form className="signup-form" onSubmit={handleSubmit(props.signUpUser.bind(this, props.previousPath))}>
-      <label className="login-form__subtitle">User Name</label>
-      <p className="signup-form__field">
+      <p className="form__field">
+        <label htmlFor="username" className="form__label">User Name</label>
         <input
-          className="signup-form__username-input"
+          className="form__input"
           aria-label="username"
           type="text"
+          id="username"
           {...domOnlyProps(username)}
         />
         {username.touched && username.error && <span className="form-error">{username.error}</span>}
       </p>
-      <label className="login-form__subtitle">Email</label>
-      <p className="signup-form__field">
+      <p className="form__field">
+        <label htmlFor="email" className="form__label">Email</label>
         <input
-          className="signup-form__email-input"
+          className="form__input"
           aria-label="email"
           type="text"
+          id="email"
           {...domOnlyProps(email)}
         />
         {email.touched && email.error && <span className="form-error">{email.error}</span>}
       </p>
-      <label className="login-form__subtitle">Password</label>
-      <p className="signup-form__field">
+      <p className="form__field">
+        <label htmlFor="password" className="form__label">Password</label>
         <input
-          className="signup-form__password-input"
+          className="form__input"
           aria-label="password"
           type="password"
+          id="password"
           {...domOnlyProps(password)}
         />
         {password.touched && password.error && <span className="form-error">{password.error}</span>}
       </p>
-      <label className="login-form__subtitle">Confirm Password</label>
-      <p className="signup-form__field">
+      <p className="form__field">
+        <label htmlFor="confirm password" className="form__label">Confirm Password</label>
         <input
-          className="signup-form__confirm-password-input"
+          className="form__input"
           type="password"
           aria-label="confirm password"
+          id="confirm password"
           {...domOnlyProps(confirmPassword)}
         />
         {confirmPassword.touched && confirmPassword.error && <span className="form-error">{confirmPassword.error}</span>}

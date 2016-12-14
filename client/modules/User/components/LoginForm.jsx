@@ -5,22 +5,24 @@ function LoginForm(props) {
   const { fields: { email, password }, handleSubmit, submitting, pristine } = props;
   return (
     <form className="login-form" onSubmit={handleSubmit(props.validateAndLoginUser.bind(this, props.previousPath))}>
-      <label className="login-form__subtitle">Email</label>
-      <p className="login-form__field">
+      <p className="form__field">
+        <label htmlFor="email" className="form__label">Email</label>
         <input
-          className="login-form__email-input"
+          className="form__input"
           aria-label="email"
           type="text"
+          id="email"
           {...domOnlyProps(email)}
         />
         {email.touched && email.error && <span className="form-error">{email.error}</span>}
       </p>
-      <label className="login-form__subtitle">Password</label>
-      <p className="login-form__field">
+      <p className="form__field">
+        <label htmlFor="password" className="form__label">Password</label>
         <input
-          className="login-form__password-input"
+          className="form__input"
           aria-label="password"
           type="password"
+          id="password"
           {...domOnlyProps(password)}
         />
         {password.touched && password.error && <span className="form-error">{password.error}</span>}

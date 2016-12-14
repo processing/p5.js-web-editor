@@ -17,3 +17,16 @@
   font-size: #{12 / $base-font-size}rem;
   color: $form-navigation-options-color;
 }
+
+.form__label {
+  color: $secondary-form-title-color;
+  font-size: #{12 / $base-font-size}rem;
+  margin-top: #{25 / $base-font-size}rem;
+  margin-bottom: #{7 / $base-font-size}rem;
+  display:block;
+}
+
+.form__input {
+  width: #{360 / $base-font-size}rem;
+  height: #{40 / $base-font-size}rem;
+}

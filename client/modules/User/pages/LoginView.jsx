@@ -26,19 +26,19 @@ class LoginView extends React.Component {
 
   render() {
     return (
-      <div className="login">
-        <div className="login__header">
-          <button className="login__logo-button" onClick={this.gotoHomePage}>
+      <div className="form-container">
+        <div className="form-container__header">
+          <button className="form-container__logo-button" onClick={this.gotoHomePage}>
             <InlineSVG src={logoUrl} alt="p5js Logo" />
           </button>
-          <button className="login__exit-button" onClick={this.closeLoginPage}>
+          <button className="form-container__exit-button" onClick={this.closeLoginPage}>
             <InlineSVG src={exitUrl} alt="Close Login Page" />
           </button>
         </div>
-        <div className="login__content">
-          <h2 className="login__title">Log In</h2>
+        <div className="form-container__content">
+          <h2 className="form-container__title">Log In</h2>
           <LoginForm {...this.props} />
-          {/* <h2 className="login__divider">Or</h2>
+          {/* <h2 className="form-container__divider">Or</h2>
           <GithubButton buttonText="Login with Github" /> */}
           <p className="form__navigation-options">
             Don't have an account?&nbsp;
