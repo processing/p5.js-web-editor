@@ -4,7 +4,6 @@ import CodeMirror from 'codemirror';
 import beautifyJS from 'js-beautify';
 const beautifyCSS = beautifyJS.css;
 const beautifyHTML = beautifyJS.html;
-import 'codemirror/mode/javascript/javascript';
 import '../../../utils/p5-javascript';
 import 'codemirror/mode/css/css';
 import 'codemirror/mode/htmlmixed/htmlmixed';
@@ -59,7 +58,10 @@ class Editor extends React.Component {
           if (this.props.lintMessages.length > 0 && this.props.lintWarning) {
             this.beep.play();
           }
-        }, 2000)
+        }, 2000),
+        options: {
+          asi: true
+        }
       }
     });
 
@@ -133,7 +135,7 @@ class Editor extends React.Component {
   getFileMode(fileName) {
     let mode;
     if (fileName.match(/.+\.js$/i)) {
-      mode = 'p5-javascript';
+      mode = 'javascript';
     } else if (fileName.match(/.+\.css$/i)) {
       mode = 'css';
     } else if (fileName.match(/.+\.html$/i)) {
