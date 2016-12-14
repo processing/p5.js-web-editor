@@ -68,13 +68,13 @@ objectsResponse.on('end', () => {
       Objects: filesToDelete,
     },
   };
-  let del = client.deleteObjects(params);
-  del.on('err', (err) => {
-    console.log(err);
-  });
-  del.on('end', () => {
-    console.log('deleted extra S3 files!');
-  });
+  // let del = client.deleteObjects(params);
+  // del.on('err', (err) => {
+  //   console.log(err);
+  // });
+  // del.on('end', () => {
+  //   console.log('deleted extra S3 files!');
+  // });
   console.log("To delete: ", filesToDelete.length);
   console.log("Total S3 files: ", uploadedFiles.length);
   console.log("Total S3 files in mongo: ", s3Files.length);
