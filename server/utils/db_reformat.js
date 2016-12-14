@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import path from 'path';
+import { uniqWith, isEqual } from 'lodash';
 require('dotenv').config({path: path.resolve('.env')});
 const ObjectId = mongoose.Types.ObjectId;
 mongoose.connect('mongodb://localhost:27017/p5js-web-editor');
@@ -26,7 +27,7 @@ let client = s3.createClient({
   },
 });
 
-const s3Files = [];
+let s3Files = [];
 
 Project.find({})
   .exec((err, projects) => {
@@ -37,6 +38,8 @@ Project.find({})
         }
       });
     });
+    console.log(s3Files.length);
+    s3Files = uniqWith(s3Files, isEqual);
     console.log(s3Files.length);
   });
 
