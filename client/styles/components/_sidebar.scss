@@ -17,7 +17,7 @@
 }
 
 .sidebar__title {
-  font-size: #{16 / $base-font-size}rem;
+  font-size: #{12 / $base-font-size}rem;
   display: inline-block;
   .sidebar--contracted & {
     display: none;
@@ -52,7 +52,7 @@
 }
 
 .sidebar__file-item {
-  font-size: #{16 / $base-font-size}rem;
+  font-size: #{12 / $base-font-size}rem;
   cursor: pointer;
   @include themify() {
     color: map-get($theme-map, 'inactive-text-color');
