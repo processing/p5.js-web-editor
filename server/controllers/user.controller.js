@@ -1,9 +1,8 @@
 import User from '../models/user';
 import crypto from 'crypto';
 import async from 'async';
-import nodemailer from 'nodemailer';
-import mg from 'nodemailer-mailgun-transport';
-import mail from '../utils/mail'
+import mail from '../utils/mail';
+import auth from '../util/auth';
 
 export function createUser(req, res, next) {
   const user = new User({
@@ -25,11 +24,19 @@ export function createUser(req, res, next) {
           if (loginErr) {
             return next(loginErr);
           }
-          res.json({
-            email: req.user.email,
-            username: req.user.username,
-            preferences: req.user.preferences,
-            id: req.user._id
+          mail.send('email-verification', {
+            body: {
+              link: `http://${req.headers.host}/verify?t=${auth.createVerificationToken(req.body.email)}`
+            },
+            toAddress: req.body.email,
+            subject: 'Email Verification',
+          }, (result) => { // eslint-disable-line no-unused-vars
+            res.json({
+              email: req.user.email,
+              username: req.user.username,
+              preferences: req.user.preferences,
+              id: req.user._id
+            });
           });
         });
       });
@@ -124,6 +131,28 @@ export function validateResetPasswordToken(req, res) {
       return res.status(401).json({ success: false, message: 'Password reset token is invalid or has expired.' });
     }
     res.json({ success: true });
+  });
+}
+
+export function verifyEmail(req, res) {
+  const token = req.query.t;
+  // verify the token
+  auth.verifyEmailToken(token)
+  .then((data) => {
+    const email = data.email;
+    // change the verified field for the user or throw if the user is not found
+    User.findByEmail(email, true)
+    .then((user) => {
+      // change the field for the user, and send the new cookie
+      user.verified = true; // eslint-disable-line
+      user.save()
+      .then((result) => { // eslint-disable-line
+        res.json({ user });
+      });
+    });
+  })
+  .catch((err) => {
+    res.json(err);
   });
 }
 
