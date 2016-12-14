@@ -11,11 +11,12 @@
 .signup-form__email-input,
 .signup-form__password-input,
 .signup-form__confirm-password-input {
-	width: #{300 / $base-font-size}rem;
+	width: #{360 / $base-font-size}rem;
+	height: #{40 / $base-font-size}rem;
 }
 
 .signup-form__field {
-	margin: #{20 / $base-font-size}rem 0;
+	margin: 0 0 #{24 / $base-font-size}rem 0;
 }
 
 .signup__divider {

@@ -5,7 +5,7 @@ function LoginForm(props) {
   const { fields: { email, password }, handleSubmit, submitting, pristine } = props;
   return (
     <form className="login-form" onSubmit={handleSubmit(props.validateAndLoginUser.bind(this, props.previousPath))}>
-      <p className="login-form__email-title">Email</p>
+      <p className="login-form__subtitle">Email</p>
       <p className="login-form__field">
         <input
           className="login-form__email-input"
@@ -15,7 +15,7 @@ function LoginForm(props) {
         />
         {email.touched && email.error && <span className="form-error">{email.error}</span>}
       </p>
-      <p className="login-form__password-title">Password</p>
+      <p className="login-form__subtitle">Password</p>
       <p className="login-form__field">
         <input
           className="login-form__password-input"

@@ -5,41 +5,41 @@ function SignupForm(props) {
   const { fields: { username, email, password, confirmPassword }, handleSubmit, submitting, invalid, pristine } = props;
   return (
     <form className="signup-form" onSubmit={handleSubmit(props.signUpUser.bind(this, props.previousPath))}>
+      <p className="login-form__subtitle">Username</p>
       <p className="signup-form__field">
         <input
           className="signup-form__username-input"
           aria-label="username"
           type="text"
-          placeholder="Username"
           {...domOnlyProps(username)}
         />
         {username.touched && username.error && <span className="form-error">{username.error}</span>}
       </p>
+      <p className="login-form__subtitle">Email</p>
       <p className="signup-form__field">
         <input
           className="signup-form__email-input"
           aria-label="email"
           type="text"
-          placeholder="Email"
           {...domOnlyProps(email)}
         />
         {email.touched && email.error && <span className="form-error">{email.error}</span>}
       </p>
+      <p className="login-form__subtitle">Password</p>
       <p className="signup-form__field">
         <input
           className="signup-form__password-input"
           aria-label="password"
           type="password"
-          placeholder="Password"
           {...domOnlyProps(password)}
         />
         {password.touched && password.error && <span className="form-error">{password.error}</span>}
       </p>
+      <p className="login-form__subtitle">Confirm Password</p>
       <p className="signup-form__field">
         <input
           className="signup-form__confirm-password-input"
           type="password"
-          placeholder="Confirm Password"
           aria-label="confirm password"
           {...domOnlyProps(confirmPassword)}
         />

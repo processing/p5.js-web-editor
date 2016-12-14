@@ -9,11 +9,11 @@ import { Link } from 'react-router';
 function SignupView(props) {
   return (
     <div className="signup">
-      <h1>Sign Up</h1>
+      <h2 className="login__title">Sign Up</h2>
       <SignupForm {...props} />
       <p className="form__navigation-options">
         Already have an account?&nbsp;
-        <Link className="form__login-button" to="/login">Login</Link>
+        <Link className="form__login-button" to="/login">Log In</Link>
       </p>
       <Link className="form__cancel-button" to="/">Cancel</Link>
     </div>
