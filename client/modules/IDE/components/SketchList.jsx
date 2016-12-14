@@ -29,7 +29,7 @@ class SketchList extends React.Component {
     return (
       <section className="sketch-list" aria-label="project list" tabIndex="0" role="main" id="sketchlist">
         <header className="sketch-list__header">
-          <h2>Sketches</h2>
+          <h2>Open a Sketch</h2>
           <button className="sketch-list__exit-button" onClick={this.closeSketchList}>
             <InlineSVG src={exitUrl} alt="Close Sketch List Overlay" />
           </button>
@@ -39,9 +39,9 @@ class SketchList extends React.Component {
             <thead>
               <tr>
                 <th className="sketch-list__trash-column" scope="col"></th>
-                <th scope="col">Name</th>
-                <th scope="col">Created</th>
-                <th scope="col">Last Updated</th>
+                <th scope="col">Sketch</th>
+                <th scope="col">Date created</th>
+                <th scope="col">Date updated</th>
               </tr>
             </thead>
             <tbody>
