@@ -66,8 +66,8 @@ class SketchList extends React.Component {
                   })()}
                   </td>
                   <td scope="row"><Link to={`/${username}/sketches/${sketch._id}`}>{sketch.name}</Link></td>
-                  <td>{moment(sketch.createdAt).format('MMM D, YYYY h:mm:ss A')}</td>
-                  <td>{moment(sketch.updatedAt).format('MMM D, YYYY h:mm:ss A')}</td>
+                  <td>{moment(sketch.createdAt).format('MMM D, YYYY h:mm A')}</td>
+                  <td>{moment(sketch.updatedAt).format('MMM D, YYYY h:mm A')}</td>
                 </tr>
               )}
             </tbody>
