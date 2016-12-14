@@ -3,8 +3,21 @@
 	height: 100%;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
   align-items: center;
+}
+
+.login__content {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.login__header {
+	width: 100%;
+	padding: #{15 / $base-font-size}rem #{34 / $base-font-size}rem;
+	display: flex;
+  justify-content: space-between;
 }
 
 .login__title {
@@ -16,6 +29,7 @@
 	color: $secondary-form-title-color;
 	font-size: #{12 / $base-font-size}rem;
 	margin: #{25 / $base-font-size}rem 0 #{7 / $base-font-size}rem 0;
+	display: inline-block;
 }
 
 .login-form__email-input,
@@ -24,10 +38,16 @@
 	height: #{40 / $base-font-size}rem;
 }
 
-.login-form__field {
-	margin: 0 0 #{24 / $base-font-size}rem 0;
-}
-
 .login__divider {
   padding: #{20 / $base-font-size}rem 0;
+}
+
+.login__exit-button {
+  @include themify() {
+    @extend %icon;
+  }
+}
+
+.login__logo-button {
+  @extend %none-themify-icon;
 }

@@ -51,6 +51,13 @@
 	padding: 0;
 }
 
+%none-themify-icon {
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+}
+
 %button {
 	@include themify() {
 		background-color: getThemifyVariable('button-background-color');
@@ -80,7 +87,7 @@
 	border-radius: 2px;
 	padding: #{8 / $base-font-size}rem #{25 / $base-font-size}rem;
 	line-height: 1;
-  margin: #{11 / $base-font-size}rem 0;
+  margin: #{39 / $base-font-size}rem 0 #{24 / $base-font-size}rem 0;
 	&:enabled:hover {
 		border-color: $form-button-background-hover-color;
 		background-color: $form-button-background-hover-color;

@@ -5,7 +5,7 @@ function SignupForm(props) {
   const { fields: { username, email, password, confirmPassword }, handleSubmit, submitting, invalid, pristine } = props;
   return (
     <form className="signup-form" onSubmit={handleSubmit(props.signUpUser.bind(this, props.previousPath))}>
-      <p className="login-form__subtitle">Username</p>
+      <label className="login-form__subtitle">User Name</label>
       <p className="signup-form__field">
         <input
           className="signup-form__username-input"
@@ -15,7 +15,7 @@ function SignupForm(props) {
         />
         {username.touched && username.error && <span className="form-error">{username.error}</span>}
       </p>
-      <p className="login-form__subtitle">Email</p>
+      <label className="login-form__subtitle">Email</label>
       <p className="signup-form__field">
         <input
           className="signup-form__email-input"
@@ -25,7 +25,7 @@ function SignupForm(props) {
         />
         {email.touched && email.error && <span className="form-error">{email.error}</span>}
       </p>
-      <p className="login-form__subtitle">Password</p>
+      <label className="login-form__subtitle">Password</label>
       <p className="signup-form__field">
         <input
           className="signup-form__password-input"
@@ -35,7 +35,7 @@ function SignupForm(props) {
         />
         {password.touched && password.error && <span className="form-error">{password.error}</span>}
       </p>
-      <p className="login-form__subtitle">Confirm Password</p>
+      <label className="login-form__subtitle">Confirm Password</label>
       <p className="signup-form__field">
         <input
           className="signup-form__confirm-password-input"
