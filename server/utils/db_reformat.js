@@ -55,12 +55,13 @@ objectsResponse.on('end', () => {
   uploadedFiles.forEach(fileKey => {
     if (s3Files.indexOf(fileKey) === -1) {
       //delete file
-      filesToDelete.push(fileKey);
+      filesToDelete.push({Key: fileKey});
       // console.log("would delete file: ", fileKey);
     }
   });
   console.log("To delete: ", filesToDelete.length);
   console.log("Total S3 files: ", uploadedFiles.length);
+  console.log("Total S3 files in mongo: ", s3Files.length);
 });
 
 // let projectsNotToUpdate;
