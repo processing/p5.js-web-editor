@@ -13,6 +13,10 @@
   padding: #{20 / $base-font-size}rem;
 }
 
+.sketch-list__header h2 {  
+  font-size: #{21 / $base-font-size}rem;
+}
+
 .sketches-table-container {
   flex: 1 0 0%;
   overflow-y: scroll;
