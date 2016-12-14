@@ -37,7 +37,6 @@ Project.find({})
         }
       });
     });
-    console.log(s3Files);
     console.log(s3Files.length);
   });
 
