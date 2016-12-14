@@ -9,7 +9,7 @@ import { Link } from 'react-router';
 function LoginView(props) {
   return (
     <div className="login">
-      <h1>Login</h1>
+      <h2 className="login__title">Log In</h2>
       <LoginForm {...props} />
       {/* <h2 className="login__divider">Or</h2>
       <GithubButton buttonText="Login with Github" /> */}

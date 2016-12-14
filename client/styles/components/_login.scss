@@ -7,13 +7,26 @@
   align-items: center;
 }
 
+.login__title {
+	font-weight: normal;
+	color: $form-title-color;
+}
+
+.login-form__email-title,
+.login-form__password-title {
+	color: $secondary-form-title-color;
+	font-size: #{12 / $base-font-size}rem;
+	margin: #{25 / $base-font-size}rem 0 #{7 / $base-font-size}rem 0;
+}
+
 .login-form__email-input,
 .login-form__password-input {
-	width: #{300 / $base-font-size}rem;
+	width: #{360 / $base-font-size}rem;
+	height: #{40 / $base-font-size}rem;
 }
 
 .login-form__field {
-	margin: #{20 / $base-font-size}rem 0;
+	margin: 0 0 #{24 / $base-font-size}rem 0;
 }
 
 .login__divider {
