@@ -49,14 +49,18 @@ objectsResponse.on('data', function(objects) {
   });
 });
 
+const filesToDelete = [];
 objectsResponse.on('end', () => {
   console.log(uploadedFiles.length);
   uploadedFiles.forEach(fileKey => {
     if (s3Files.indexOf(fileKey) === -1) {
       //delete file
-      console.log("would delete file: ", fileKey);
+      filesToDelete.push(fileKey);
+      // console.log("would delete file: ", fileKey);
     }
   });
+  console.log("To delete: ", filesToDelete.length);
+  console.log("Total S3 files: ", uploadedFiles.length);
 });
 
 // let projectsNotToUpdate;
