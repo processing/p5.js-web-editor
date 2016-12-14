@@ -30,12 +30,12 @@ function getAllScriptOffsets(htmlFile) {
     } else {
       endFilenameInd = htmlFile.indexOf('.js', ind + startTag.length + 3);
       filename = htmlFile.substring(ind + startTag.length, endFilenameInd);
-      lineOffset = htmlFile.substring(0, ind).split('\n').length - 1;
+      // the length of hijackConsoleErrorsScript is 35 lines, already needed a -1 offset.
+      lineOffset = htmlFile.substring(0, ind).split('\n').length + 34;
       offs.push([lineOffset, filename]);
       lastInd = ind + 1;
     }
   }
-  console.log(offs);
   return offs;
 }
 
@@ -71,7 +71,7 @@ function hijackConsoleErrorsScript(offs) {
         window.parent.postMessage([{
           method: 'error',
           arguments: data,
-          source: 'sketch'
+          source: fileInfo[1]
         }], '*');
       return false;
     };
@@ -199,7 +199,8 @@ class PreviewFrame extends React.Component {
     scriptOffs = getAllScriptOffsets(sketchDocString);
     const consoleErrorsScript = sketchDoc.createElement('script');
     consoleErrorsScript.innerHTML = hijackConsoleErrorsScript(JSON.stringify(scriptOffs));
-    sketchDoc.body.appendChild(consoleErrorsScript);
+    // sketchDoc.head.appendChild(consoleErrorsScript);
+    sketchDoc.head.insertBefore(consoleErrorsScript, sketchDoc.head.firstElement);
 
     return `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
   }
@@ -312,7 +313,7 @@ class PreviewFrame extends React.Component {
           } else {
             const style = sketchDoc.createElement('style');
             style.innerHTML = `\n${resolvedFile.content}`;
-            sketchDoc.body.appendChild(style);
+            sketchDoc.head.appendChild(style);
             css.parentElement.removeChild(css);
           }
         }

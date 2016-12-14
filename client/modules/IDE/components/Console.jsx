@@ -28,17 +28,15 @@ class Console extends React.Component {
       this.children = [];
     } else if (nextProps.consoleEvent !== this.props.consoleEvent && this.props.isPlaying) {
       nextProps.consoleEvent.forEach(consoleEvent => {
-        if (consoleEvent.source === 'sketch') {
-          const args = consoleEvent.arguments;
-          Object.keys(args).forEach((key) => {
-            if (args[key].includes('Exiting potential infinite loop')) {
-              this.props.stopSketch();
-              this.props.expandConsole();
-              this.appendConsoleEvent(consoleEvent);
-            }
-          });
-          this.appendConsoleEvent(consoleEvent);
-        }
+        const args = consoleEvent.arguments;
+        Object.keys(args).forEach((key) => {
+          if (args[key].includes('Exiting potential infinite loop')) {
+            this.props.stopSketch();
+            this.props.expandConsole();
+            this.appendConsoleEvent(consoleEvent);
+          }
+        });
+        this.appendConsoleEvent(consoleEvent);
       });
     }
   }
