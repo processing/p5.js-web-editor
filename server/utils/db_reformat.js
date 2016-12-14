@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import path from 'path';
+require('dotenv').config({path: path.resolve('.env')});
 const ObjectId = mongoose.Types.ObjectId;
 mongoose.connect('mongodb://localhost:27017/p5js-web-editor');
 mongoose.connection.on('error', () => {
@@ -8,6 +10,55 @@ mongoose.connection.on('error', () => {
 
 import Project from '../models/project';
 import User from '../models/user';
+
+import s3 from 's3';
+
+let client = s3.createClient({
+  maxAsyncS3: 20,
+  s3RetryCount: 3,
+  s3RetryDelay: 1000,
+  multipartUploadThreshold: 20971520, // this is the default (20 MB) 
+  multipartUploadSize: 15728640, // this is the default (15 MB) 
+  s3Options: {
+    accessKeyId: `${process.env.AWS_ACCESS_KEY}`,
+    secretAccessKey: `${process.env.AWS_SECRET_KEY}`,
+    region: 'us-west-2'
+  },
+});
+
+const s3Files = [];
+
+Project.find({})
+  .exec((err, projects) => {
+    projects.forEach((project, projectIndex) => {
+      project.files.forEach((file, fileIndex) => {
+        if (file.url && !file.url.includes("https://rawgit.com/")) {
+          s3Files.push(file.url.split('/').pop());
+        }
+      });
+    });
+    console.log(s3Files);
+    console.log(s3Files.length);
+  });
+
+const uploadedFiles = [];
+const params = {'s3Params': {'Bucket': `${process.env.S3_BUCKET}`}};
+let objectsResponse = client.listObjects(params);
+objectsResponse.on('data', function(objects) {
+  objects.Contents.forEach(object => {
+    uploadedFiles.push(object.Key);
+  });
+});
+
+objectsResponse.on('end', () => {
+  console.log(uploadedFiles.length);
+  uploadedFiles.forEach(fileKey => {
+    if (s3Files.indexOf(fileKey) === -1) {
+      //delete file
+      console.log("would delete file: ", fileKey);
+    }
+  });
+});
 
 // let projectsNotToUpdate;
 // Project.find({'files.name': 'root'})
@@ -126,12 +177,12 @@ import User from '../models/user';
 //     });
 //   });
 
-User.find({})
-  .exec((err, users) => {
-    users.forEach(user => {
-      user.preferences.autorefresh = false;
-      user.save((err, savedUser) => {
-        console.log('user saved');
-      });
-    });
-  });
+// User.find({})
+//   .exec((err, users) => {
+//     users.forEach(user => {
+//       user.preferences.autorefresh = false;
+//       user.save((err, savedUser) => {
+//         console.log('user saved');
+//       });
+//     });
+//   });

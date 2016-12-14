@@ -31,7 +31,9 @@ function localIntercept(file, options = {}) {
 }
 
 export function dropzoneAcceptCallback(file, done) {
-  return () => {
+  return (dispatch, getState) => {
+    const state = getState();
+    console.log(state);
     // for text files and small files
     // check mime type
     // if text, local interceptor
