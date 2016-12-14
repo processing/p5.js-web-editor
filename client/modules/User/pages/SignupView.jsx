@@ -1,23 +1,51 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import * as UserActions from '../actions';
 import { reduxForm } from 'redux-form';
 import SignupForm from '../components/SignupForm';
 import axios from 'axios';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
+import InlineSVG from 'react-inlinesvg';
+const exitUrl = require('../../../images/exit.svg');
+const logoUrl = require('../../../images/p5js-logo.svg');
 
-function SignupView(props) {
-  return (
-    <div className="signup">
-      <h2 className="login__title">Sign Up</h2>
-      <SignupForm {...props} />
-      <p className="form__navigation-options">
-        Already have an account?&nbsp;
-        <Link className="form__login-button" to="/login">Log In</Link>
-      </p>
-      <Link className="form__cancel-button" to="/">Cancel</Link>
-    </div>
-  );
+class SignupView extends React.Component {
+  constructor(props) {
+    super(props);
+    this.closeSignupPage = this.closeSignupPage.bind(this);
+    this.gotoHomePage = this.gotoHomePage.bind(this);
+  }
+
+  closeSignupPage() {
+    browserHistory.push(this.props.previousPath);
+  }
+
+  gotoHomePage() {
+    browserHistory.push('/');
+  }
+
+  render() {
+    return (
+      <div className="signup">
+        <div className="login__header">
+          <button className="login__logo-button" onClick={this.gotoHomePage}>
+            <InlineSVG src={logoUrl} alt="p5js Logo" />
+          </button>
+          <button className="login__exit-button" onClick={this.closeSignupPage}>
+            <InlineSVG src={exitUrl} alt="Close Signup Page" />
+          </button>
+        </div>
+        <div className="login__content">
+          <h2 className="login__title">Sign Up</h2>
+          <SignupForm {...this.props} />
+          <p className="form__navigation-options">
+            Already have an account?&nbsp;
+            <Link className="form__login-button" to="/login">Log In</Link>
+          </p>
+        </div>
+      </div>
+    );
+  }
 }
 
 function mapStateToProps(state) {
@@ -83,6 +111,10 @@ function validate(formProps) {
 function onSubmitFail(errors) {
   console.log(errors);
 }
+
+SignupView.propTypes = {
+  previousPath: PropTypes.string.isRequired
+};
 
 export default reduxForm({
   form: 'signup',
