@@ -4,7 +4,7 @@
  */
 
 import fsp from 'fs-promise';
-import jade from 'jade';
+import pug from 'pug';
 import is from 'is_js';
 import nodemailer from 'nodemailer';
 import mg from 'nodemailer-mailgun-transport';
@@ -48,7 +48,7 @@ class Mail {
     const self = this;
     return fsp.readFile(template, 'utf8')
     .then((file) => {
-      const compiled = jade.compile(file, {
+      const compiled = pug.compile(file, {
         filename: template,
       });
       const body = compiled(data.body);
