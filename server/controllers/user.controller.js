@@ -2,7 +2,7 @@ import User from '../models/user';
 import crypto from 'crypto';
 import async from 'async';
 import mail from '../utils/mail';
-import auth from '../util/auth';
+import auth from '../utils/auth';
 
 export function createUser(req, res, next) {
   const user = new User({
@@ -26,9 +26,9 @@ export function createUser(req, res, next) {
           }
           mail.send('email-verification', {
             body: {
-              link: `http://${req.headers.host}/verify?t=${auth.createVerificationToken(req.body.email)}`
+              link: `http://${req.headers.host}/api/verify?t=${auth.createVerificationToken(req.body.email)}`
             },
-            toAddress: req.body.email,
+            to: req.body.email,
             subject: 'Email Verification',
           }, (result) => { // eslint-disable-line no-unused-vars
             res.json({
@@ -141,10 +141,10 @@ export function verifyEmail(req, res) {
   .then((data) => {
     const email = data.email;
     // change the verified field for the user or throw if the user is not found
-    User.findByEmail(email, true)
+    User.findOne({ email })
     .then((user) => {
       // change the field for the user, and send the new cookie
-      user.verified = true; // eslint-disable-line
+      user.verified = 0; // eslint-disable-line
       user.save()
       .then((result) => { // eslint-disable-line
         res.json({ user });

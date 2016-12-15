@@ -16,7 +16,6 @@ const auth = {
 
 class Mail {
   constructor() {
-    console.log(auth);
     this.client = nodemailer.createTransport(mg({ auth }));
     this.sendOptions = {
       from: process.env.EMAIL_SENDER,
@@ -31,7 +30,7 @@ class Mail {
         mailTemp = 'server/views/mailTemplates/reset-password.jade';
         break;
       case 'email-verification':
-        mailTemp = './../views/mailTemplates/email-verification.jade';
+        mailTemp = 'server/views/mailTemplates/email-verification.jade';
         break;
     }
     return mailTemp;
