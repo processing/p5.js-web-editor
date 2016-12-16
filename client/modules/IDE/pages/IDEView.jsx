@@ -28,8 +28,6 @@ import SplitPane from 'react-split-pane';
 import Overlay from '../../App/components/Overlay';
 import SketchList from '../components/SketchList';
 import About from '../components/About';
-import ResetPasswordView from '../components/ResetPasswordView';
-import NewPasswordView from '../components/NewPasswordView';
 
 class IDEView extends React.Component {
   constructor(props) {
@@ -427,26 +425,6 @@ class IDEView extends React.Component {
               <Overlay>
                 <KeyboardShortcutModal
                   closeModal={this.props.closeKeyboardShortcutModal}
-                />
-              </Overlay>
-            );
-          }
-        })()}
-        {(() => { // eslint-disable-line
-          if (this.props.location.pathname === '/reset-password') {
-            return (
-              <Overlay>
-                <ResetPasswordView />
-              </Overlay>
-            );
-          }
-        })()}
-        {(() => { // eslint-disable-line
-          if (this.props.location.pathname.match(/\/reset-password\/[a-fA-F0-9]+/)) {
-            return (
-              <Overlay>
-                <NewPasswordView
-                  token={this.props.params.reset_password_token}
                 />
               </Overlay>
             );

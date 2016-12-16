@@ -5,16 +5,17 @@ function ResetPasswordForm(props) {
   const { fields: { email }, handleSubmit, submitting, invalid, pristine } = props;
   return (
     <form className="reset-password-form" onSubmit={handleSubmit(props.initiateResetPassword.bind(this))}>
-      <p className="reset-password-form__field">
+      <p className="form__field">
+        <label htmlFor="email" className="form__label">Email used for registration</label>
         <input
-          className="reset-password-form__email-input"
+          className="form__input"
           aria-label="email"
           type="text"
-          placeholder="Email used for registration"
+          id="email"
           {...domOnlyProps(email)}
         />
       </p>
-      <input type="submit" disabled={submitting || invalid || pristine || props.user.resetPasswordInitiate} value="Send password reset email" aria-label="Send email to reset password" />
+      <input type="submit" disabled={submitting || invalid || pristine || props.user.resetPasswordInitiate} value="Send Password Reset Email" aria-label="Send email to reset password" />
     </form>
   );
 }

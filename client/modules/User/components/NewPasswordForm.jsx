@@ -5,22 +5,24 @@ function NewPasswordForm(props) {
   const { fields: { password, confirmPassword }, handleSubmit, submitting, invalid, pristine } = props;
   return (
     <form className="new-password-form" onSubmit={handleSubmit(props.updatePassword.bind(this, props.token))}>
-      <p className="new-password-form__field">
+      <p className="form__field">
+        <label htmlFor="password" className="form__label">Password</label>
         <input
-          className="new-password-form__password-input"
+          className="form__input"
           aria-label="password"
           type="password"
-          placeholder="Password"
+          id="Password"
           {...domOnlyProps(password)}
         />
         {password.touched && password.error && <span className="form-error">{password.error}</span>}
       </p>
-      <p className="new-password-form__field">
+      <p className="form__field">
+        <label htmlFor="confirm password" className="form__label">Confirm Password</label>
         <input
-          className="new-password-form__confirm-password-input"
+          className="form__input"
           type="password"
-          placeholder="Confirm Password"
           aria-label="confirm password"
+          id="confirm password"
           {...domOnlyProps(confirmPassword)}
         />
         {confirmPassword.touched && confirmPassword.error && <span className="form-error">{confirmPassword.error}</span>}

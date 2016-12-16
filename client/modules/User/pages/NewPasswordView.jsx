@@ -1,31 +1,53 @@
 import React, { PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
-import NewPasswordForm from './NewPasswordForm';
-import * as UserActions from '../../User/actions';
+import NewPasswordForm from '../components/NewPasswordForm';
+import * as UserActions from '../actions';
 import { bindActionCreators } from 'redux';
 import classNames from 'classnames';
-import { Link } from 'react-router';
+import { browserHistory } from 'react-router';
+import InlineSVG from 'react-inlinesvg';
+const exitUrl = require('../../../images/exit.svg');
+const logoUrl = require('../../../images/p5js-logo.svg');
 
 class NewPasswordView extends React.Component {
+  constructor(props) {
+    super(props);
+    this.gotoHomePage = this.gotoHomePage.bind(this);
+  }
+
   componentDidMount() {
     this.refs.newPassword.focus();
     // need to check if this is a valid token
     this.props.validateResetPasswordToken(this.props.token);
   }
 
+  gotoHomePage() {
+    browserHistory.push('/');
+  }
+
   render() {
     const newPasswordClass = classNames({
       'new-password': true,
-      'new-password--invalid': this.props.user.resetPasswordInvalid
+      'new-password--invalid': this.props.user.resetPasswordInvalid,
+      'form-container': true
     });
     return (
-      <div className={newPasswordClass} ref="newPassword" tabIndex="0">
-        <h1>Set a New Password</h1>
-        <NewPasswordForm {...this.props} />
-        <p className="new-password__invalid">
-          The password reset token is invalid or has expired.
-        </p>
-        <Link className="form__cancel-button" to="/">Close</Link>
+      <div className={newPasswordClass}>
+        <div className="form-container__header">
+          <button className="form-container__logo-button" onClick={this.gotoHomePage}>
+            <InlineSVG src={logoUrl} alt="p5js Logo" />
+          </button>
+          <button className="form-container__exit-button" onClick={this.gotoHomePage}>
+            <InlineSVG src={exitUrl} alt="Close NewPassword Page" />
+          </button>
+        </div>
+        <div className="form-container__content">
+          <h2 className="form-container__title">Set a New Password</h2>
+          <NewPasswordForm {...this.props} />
+          <p className="new-password__invalid">
+            The password reset token is invalid or has expired.
+          </p>
+        </div>
       </div>
     );
   }
