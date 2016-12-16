@@ -21,7 +21,7 @@ const routes = (store) =>
     <Route path="/login" component={LoginView} />
     <Route path="/signup" component={SignupView} />
     <Route path="/reset-password" component={ResetPasswordView} />
-    <Route path="/reset-password/1234" component={NewPasswordView} />
+    <Route path="/reset-password/:reset_password_token" component={NewPasswordView} />
     <Route path="/projects/:project_id" component={IDEView} />
     <Route path="/full/:project_id" component={FullView} />
     <Route path="/sketches" component={IDEView} />
