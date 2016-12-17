@@ -16,9 +16,8 @@ class NewPasswordView extends React.Component {
   }
 
   componentDidMount() {
-    this.refs.newPassword.focus();
     // need to check if this is a valid token
-    this.props.validateResetPasswordToken(this.props.token);
+    this.props.validateResetPasswordToken(this.props.params.reset_password_token);
   }
 
   gotoHomePage() {
@@ -54,7 +53,9 @@ class NewPasswordView extends React.Component {
 }
 
 NewPasswordView.propTypes = {
-  token: PropTypes.string.isRequired,
+  params: PropTypes.shape({
+    reset_password_token: PropTypes.string,
+  }),
   validateResetPasswordToken: PropTypes.func.isRequired,
   user: PropTypes.shape({
     resetPasswordInvalid: PropTypes.bool
@@ -78,10 +79,9 @@ function validate(formProps) {
   return errors;
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   return {
-    user: state.user,
-    token: ownProps.token
+    user: state.user
   };
 }
 

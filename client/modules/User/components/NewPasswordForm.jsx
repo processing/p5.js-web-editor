@@ -4,7 +4,7 @@ import { domOnlyProps } from '../../../utils/reduxFormUtils';
 function NewPasswordForm(props) {
   const { fields: { password, confirmPassword }, handleSubmit, submitting, invalid, pristine } = props;
   return (
-    <form className="new-password-form" onSubmit={handleSubmit(props.updatePassword.bind(this, props.token))}>
+    <form className="new-password-form" onSubmit={handleSubmit(props.updatePassword.bind(this, props.params.reset_password_token))}>
       <p className="form__field">
         <label htmlFor="password" className="form__label">Password</label>
         <input
@@ -42,7 +42,9 @@ NewPasswordForm.propTypes = {
   submitting: PropTypes.bool,
   invalid: PropTypes.bool,
   pristine: PropTypes.bool,
-  token: PropTypes.string.isRequired
+  params: PropTypes.shape({
+    reset_password_token: PropTypes.string,
+  }),
 };
 
 export default NewPasswordForm;
