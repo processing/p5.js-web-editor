@@ -52,12 +52,9 @@
 	}
 }
 
-.login__items {
+.nav__item-spacer {
 	@include themify() {
 		color: map-get($theme-map, 'inactive-text-color');
 	}	
-}
-
-.login__items span.spacer {
 	padding: 0 #{15 / $base-font-size}rem;
 }
