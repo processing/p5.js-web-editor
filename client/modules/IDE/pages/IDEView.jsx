@@ -54,7 +54,7 @@ class IDEView extends React.Component {
     }
 
     this.consoleSize = this.props.ide.consoleIsExpanded ? 180 : 29;
-    this.sidebarSize = this.props.ide.sidebarIsExpanded ? 200 : 25;
+    this.sidebarSize = this.props.ide.sidebarIsExpanded ? 160 : 20;
     this.forceUpdate();
 
     this.isMac = navigator.userAgent.toLowerCase().indexOf('mac') !== -1;
@@ -79,7 +79,7 @@ class IDEView extends React.Component {
     }
 
     if (this.props.ide.sidebarIsExpanded !== nextProps.ide.sidebarIsExpanded) {
-      this.sidebarSize = nextProps.ide.sidebarIsExpanded ? 200 : 25;
+      this.sidebarSize = nextProps.ide.sidebarIsExpanded ? 160 : 20;
     }
 
     if (nextProps.params.project_id && !this.props.params.project_id) {
@@ -266,8 +266,6 @@ class IDEView extends React.Component {
               setSelectedFile={this.props.setSelectedFile}
               newFile={this.props.newFile}
               isExpanded={this.props.ide.sidebarIsExpanded}
-              expandSidebar={this.props.expandSidebar}
-              collapseSidebar={this.props.collapseSidebar}
               showFileOptions={this.props.showFileOptions}
               hideFileOptions={this.props.hideFileOptions}
               deleteFile={this.props.deleteFile}
@@ -293,6 +291,7 @@ class IDEView extends React.Component {
                 ref="consolePane"
                 onDragFinished={this._handleConsolePaneOnDragFinished}
                 allowResize={this.props.ide.consoleIsExpanded}
+                className="editor-preview-subpanel"
               >
                 <Editor
                   lintWarning={this.props.preferences.lintWarning}
@@ -320,6 +319,9 @@ class IDEView extends React.Component {
                   autorefresh={this.props.preferences.autorefresh}
                   unsavedChanges={this.props.ide.unsavedChanges}
                   projectSavedTime={this.props.ide.projectSavedTime}
+                  isExpanded={this.props.ide.sidebarIsExpanded}
+                  expandSidebar={this.props.expandSidebar}
+                  collapseSidebar={this.props.collapseSidebar}
                 />
                 <Console
                   consoleEvent={this.props.ide.consoleEvent}
@@ -330,7 +332,7 @@ class IDEView extends React.Component {
                   stopSketch={this.props.stopSketch}
                 />
               </SplitPane>
-              <div>
+              <div className="preview-frame-holder">
                 <div className="preview-frame-overlay" ref="overlay">
                 </div>
                 <div>
