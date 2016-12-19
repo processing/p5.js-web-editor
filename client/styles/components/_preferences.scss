@@ -1,15 +1,19 @@
 .preferences {
 	@extend %modal;
 	position: absolute;
-	top: #{60 / $base-font-size}rem;
-	right: #{40 / $base-font-size}rem;
-	width: #{336 / $base-font-size}rem;
+	top: #{51 / $base-font-size}rem;
+	right: #{29 / $base-font-size}rem;
+	width: #{288 / $base-font-size}rem;
 	display: none;
-	padding: #{16 / $base-font-size}rem #{26 / $base-font-size}rem;
+	padding: #{14 / $base-font-size}rem #{20 / $base-font-size}rem #{2 / $base-font-size}rem  #{20 / $base-font-size}rem ;
 	&--selected {
 		display: flex;
 		flex-direction: column;
 	}
+	@include themify() {
+		background-color: getThemifyVariable('editor-gutter-color');
+	}
+	outline: none;
 }
 
 .preferences__exit-button {
@@ -17,14 +21,20 @@
 		@extend %icon;
 	}
 	padding-top: #{5 / $base-font-size}rem;
+	margin-right: #{-6 / $base-font-size}rem;
 }
 
-.preference__plus-button {
-	@extend %preferences-button;
-}
-
-.preference__minus-button {
-	@extend %preferences-button;
+.preference button {
+	@include themify() {
+		@extend %preferences-button;
+		width: #{32 / $base-font-size}rem;
+		height: #{32 / $base-font-size}rem;
+		margin-left: #{6 / $base-font-size}rem;
+		line-height: #{40 / $base-font-size}rem;
+		& svg {
+			width: #{10 / $base-font-size}rem;
+		}
+	}
 }
 
 .preferences__heading {
@@ -43,14 +53,16 @@
 	padding-bottom: #{12 / $base-font-size}rem;
 	& + & {
 		@include themify() {
-	  	border-top: 2px dashed getThemifyVariable('button-border-color');
+	  	border-top: 1px dashed getThemifyVariable('button-border-color');
 	  }
 	}
 }
 
 .preference__title {
 	width: 100%;
-	margin-bottom: #{10 / $base-font-size}rem;
+	font-size: #{16 / $base-font-size}rem;
+	margin-top: #{13 / $base-font-size}rem;
+	margin-bottom: #{7 / $base-font-size}rem;
 	@include themify() {
 		color: getThemifyVariable('heading-text-color');
 	}
@@ -67,16 +79,19 @@
 
 .preference__value {
 	@include themify() {
-		border: 2px solid getThemifyVariable('button-border-color');
+		border: #{1 / $base-font-size}rem solid getThemifyVariable('button-border-color');
 		background-color: getThemifyVariable('button-background-color');
 		color: getThemifyVariable('input-text-color');
 	}
 	text-align: center;
 	border-radius: 0%;
-	width: #{48 / $base-font-size}rem;
-	height: #{44 / $base-font-size}rem;
-	margin: 0 #{28 / $base-font-size}rem;
+	outline: none;
+	width: #{44 / $base-font-size}rem;
+	height: #{40 / $base-font-size}rem;
+	margin: 0 #{26 / $base-font-size}rem;
 	padding: 0;
+	font-size: #{16 / $base-font-size}rem;
+	font-family: Inconsolata;
 }
 
 .preference__label {
@@ -86,16 +101,16 @@
 			color: getThemifyVariable('primary-text-color');
 		}
 	}
-	margin: 0;
-	line-height: #{20 / $base-font-size}rem;
+	margin: #{-15 / $base-font-size}rem 0 0 #{-5 / $base-font-size}rem;
 	font-size: #{9 / $base-font-size}rem;
+	width: #{44 / $base-font-size}rem;
 }
 
 .preference__vertical-list {
 	display: flex;
 	flex-direction: column;
-	width: #{90 / $base-font-size}rem;
-	padding-left: #{28 / $base-font-size}rem;
+	width: #{44 / $base-font-size}rem;
+	padding-left: #{25 / $base-font-size}rem;
 }
 
 .preference__radio-button {
@@ -105,14 +120,17 @@
 .preference__option {
 	@include themify() {
 		@extend %preference-option;
-		padding-right: #{20 / $base-font-size}rem;
+		padding-right: #{44 / $base-font-size}rem;
 	}
+}
+
+.preference__option:last-child {
+	padding-right: 0;	
 }
 
 .preference__preview-button {
 	@include themify() {
 		@extend %preference-option;
-		padding-left: #{110 / $base-font-size}rem;
 	}
 }
 
@@ -129,4 +147,8 @@
 
 .preference--hidden {
 	@extend %hidden-element;
+}
+
+.preference__option.preference__canvas:not(:last-child) {
+	padding-right: #{20 / $base-font-size}rem;
 }

@@ -248,14 +248,14 @@ class Preferences extends React.Component {
               checked={!this.props.lintWarning}
             />
             <label htmlFor="lint-warning-off" className="preference__option">Off</label>
+            <div
+              className="preference__preview-button"
+              onClick={() => beep.play()}
+              aria-label="preview sound"
+            >
+              Preview Sound
+            </div>
           </div>
-          <button
-            className="preference__preview-button"
-            onClick={() => beep.play()}
-            aria-label="preview sound"
-          >
-            Preview Sound
-          </button>
         </div>
         <div className="preference">
           <h4 className="preference__title">Accessible Text-based Canvas</h4>
@@ -272,7 +272,7 @@ class Preferences extends React.Component {
               value="On"
               checked={Boolean(this.props.textOutput === 1)}
             />
-            <label htmlFor="text-output-on" className="preference__option">Plain-Text</label>
+            <label htmlFor="text-output-on" className="preference__option preference__canvas">Plain-Text</label>
             <input
               type="radio"
               onChange={() => this.props.setTextOutput(2)}
@@ -283,7 +283,7 @@ class Preferences extends React.Component {
               value="Grid On"
               checked={Boolean(this.props.textOutput === 2)}
             />
-            <label htmlFor="grid-output-on" className="preference__option">Table-Text</label>
+            <label htmlFor="grid-output-on" className="preference__option preference__canvas">Table-Text</label>
             <input
               type="radio"
               onChange={() => this.props.setTextOutput(3)}
@@ -294,7 +294,7 @@ class Preferences extends React.Component {
               value="On"
               checked={Boolean(this.props.textOutput === 3)}
             />
-            <label htmlFor="sound-output-on" className="preference__option">Sound</label>
+            <label htmlFor="sound-output-on" className="preference__option preference__canvas">Sound</label>
             <input
               type="radio"
               onChange={() => this.props.setTextOutput(0)}
@@ -305,7 +305,7 @@ class Preferences extends React.Component {
               value="Off"
               checked={!Boolean(this.props.textOutput)}
             />
-            <label htmlFor="text-output-off" className="preference__option">Off</label>
+            <label htmlFor="text-output-off" className="preference__option preference__canvas">Off</label>
 
           </div>
         </div>
