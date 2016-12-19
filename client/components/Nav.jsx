@@ -109,9 +109,9 @@ function Nav(props) {
         {(() => {
           if (!props.user.authenticated) {
             return (
-              <li className="nav__item login__items">
+              <li className="nav__item">
                 <p>
-                  <Link to="/login">Login</Link> <span className="spacer">or</span> <Link to="/signup">Sign up</Link>
+                  <Link to="/login">Login</Link> <span className="nav__item-spacer">or</span> <Link to="/signup">Sign up</Link>
                 </p>
               </li>
             );
