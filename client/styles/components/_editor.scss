@@ -86,8 +86,8 @@
     @extend %icon;
   }
   position: absolute;
-  top: 0;
-  right: #{1.5 / $base-font-size}rem; // move left to avoid vertical scroll bar
+  top: #{10 / $base-font-size}rem;
+  right: #{2 / $base-font-size}rem;
   z-index: 1;
 }
 
@@ -110,7 +110,8 @@
     color: getThemifyVariable('secondary-text-color');
   }
   height: #{29 / $base-font-size}rem;
-  padding: #{7 / $base-font-size}rem 0 0 #{56 / $base-font-size}rem;
+  padding-top: #{7 / $base-font-size}rem;
+  padding-left: #{56 / $base-font-size}rem;
   font-size: #{12 / $base-font-size}rem;
   display: flex;
   justify-content: space-between;
