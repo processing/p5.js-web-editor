@@ -51,12 +51,19 @@
 	padding: 0;
 }
 
+%none-themify-icon {
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+}
+
 %button {
 	@include themify() {
 		background-color: getThemifyVariable('button-background-color');
 		color: getThemifyVariable('button-color');
 		cursor: pointer;
-		border: 1px solid getThemifyVariable('button-border-color');
+		border: 2px solid getThemifyVariable('button-border-color');
 		border-radius: 2px;
 		padding: #{10 / $base-font-size}rem #{30 / $base-font-size}rem;
 		&:enabled:hover {
@@ -69,6 +76,27 @@
 			background-color: getThemifyVariable('button-background-active-color');
 			color: getThemifyVariable('button-active-color');
 		}
+	}
+}
+
+%forms-button {
+	background-color: $form-button-background-color;
+	color: $form-button-color;
+	cursor: pointer;
+	border: 2px solid $form-button-color;
+	border-radius: 2px;
+	padding: #{8 / $base-font-size}rem #{25 / $base-font-size}rem;
+	line-height: 1;
+  margin: #{39 / $base-font-size}rem 0 #{24 / $base-font-size}rem 0;
+	&:enabled:hover {
+		border-color: $form-button-background-hover-color;
+		background-color: $form-button-background-hover-color;
+		color: $form-button-hover-color;
+	}
+	&:enabled:active {
+		border-color: $form-button-background-active-color;
+		background-color: $form-button-background-active-color;
+		color: $form-button-active-color;
 	}
 }
 

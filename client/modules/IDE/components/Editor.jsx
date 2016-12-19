@@ -6,7 +6,7 @@ const beautifyCSS = beautifyJS.css;
 const beautifyHTML = beautifyJS.html;
 import '../../../utils/p5-javascript';
 import 'codemirror/mode/css/css';
-import 'codemirror/mode/htmlmixed/htmlmixed';
+import '../../../utils/htmlmixed';
 import 'codemirror/addon/selection/active-line';
 import 'codemirror/addon/lint/lint';
 import 'codemirror/addon/lint/javascript-lint';
