@@ -68,7 +68,7 @@ class Preferences extends React.Component {
         </div>
 
         <div className="preference">
-          <h4 className="preference__title">Text Size</h4>
+          <h4 className="preference__title">Text size</h4>
           <button
             className="preference__minus-button"
             onClick={() => this.props.setFontSize(this.props.fontSize - 2)}
@@ -102,7 +102,7 @@ class Preferences extends React.Component {
         </div>
 
         <div className="preference">
-          <h4 className="preference__title">Indentation Amount</h4>
+          <h4 className="preference__title">Indentation amount</h4>
           <button
             className="preference__minus-button"
             onClick={() => this.props.setIndentation(this.props.indentationAmount - 2)}
@@ -220,11 +220,11 @@ class Preferences extends React.Component {
               value="contrast"
               checked={this.props.theme === 'contrast'}
             />
-            <label htmlFor="contrast-theme-on" className="preference__option">High Contrast</label>
+            <label htmlFor="contrast-theme-on" className="preference__option">High contrast</label>
           </div>
         </div>
         <div className="preference">
-          <h4 className="preference__title">Lint Warning Sound</h4>
+          <h4 className="preference__title">Lint warning sound</h4>
           <div className="preference__options">
             <input
               type="radio"
@@ -253,12 +253,12 @@ class Preferences extends React.Component {
               onClick={() => beep.play()}
               aria-label="preview sound"
             >
-              Preview Sound
+              Preview sound
             </div>
           </div>
         </div>
         <div className="preference">
-          <h4 className="preference__title">Accessible Text-based Canvas</h4>
+          <h4 className="preference__title">Accessible text-based canvas</h4>
           <h6 className="preference__subtitle">Used with screen reader</h6>
 
           <div className="preference__options">
@@ -272,7 +272,7 @@ class Preferences extends React.Component {
               value="On"
               checked={Boolean(this.props.textOutput === 1)}
             />
-            <label htmlFor="text-output-on" className="preference__option preference__canvas">Plain-Text</label>
+            <label htmlFor="text-output-on" className="preference__option preference__canvas">Plain-text</label>
             <input
               type="radio"
               onChange={() => this.props.setTextOutput(2)}
@@ -283,7 +283,7 @@ class Preferences extends React.Component {
               value="Grid On"
               checked={Boolean(this.props.textOutput === 2)}
             />
-            <label htmlFor="grid-output-on" className="preference__option preference__canvas">Table-Text</label>
+            <label htmlFor="grid-output-on" className="preference__option preference__canvas">Table-text</label>
             <input
               type="radio"
               onChange={() => this.props.setTextOutput(3)}

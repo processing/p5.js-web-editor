@@ -111,7 +111,7 @@ function Nav(props) {
             return (
               <li className="nav__item login__items">
                 <p>
-                  <Link to="/login">Login</Link> <span className="spacer">or</span> <Link to="/signup">Sign Up</Link>
+                  <Link to="/login">Login</Link> <span className="spacer">or</span> <Link to="/signup">Sign up</Link>
                 </p>
               </li>
             );
