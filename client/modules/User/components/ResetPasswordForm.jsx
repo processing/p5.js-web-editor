@@ -4,7 +4,7 @@ import { domOnlyProps } from '../../../utils/reduxFormUtils';
 function ResetPasswordForm(props) {
   const { fields: { email }, handleSubmit, submitting, invalid, pristine } = props;
   return (
-    <form className="reset-password-form" onSubmit={handleSubmit(props.initiateResetPassword.bind(this))}>
+    <form className="form" onSubmit={handleSubmit(props.initiateResetPassword.bind(this))}>
       <p className="form__field">
         <label htmlFor="email" className="form__label">Email used for registration</label>
         <input

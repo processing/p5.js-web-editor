@@ -4,7 +4,7 @@ import { domOnlyProps } from '../../../utils/reduxFormUtils';
 function SignupForm(props) {
   const { fields: { username, email, password, confirmPassword }, handleSubmit, submitting, invalid, pristine } = props;
   return (
-    <form className="signup-form" onSubmit={handleSubmit(props.signUpUser.bind(this, props.previousPath))}>
+    <form className="form" onSubmit={handleSubmit(props.signUpUser.bind(this, props.previousPath))}>
       <p className="form__field">
         <label htmlFor="username" className="form__label">User Name</label>
         <input

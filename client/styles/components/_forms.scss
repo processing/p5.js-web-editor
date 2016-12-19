@@ -23,10 +23,16 @@
   font-size: #{12 / $base-font-size}rem;
   margin-top: #{25 / $base-font-size}rem;
   margin-bottom: #{7 / $base-font-size}rem;
-  display:block;
+  display: block;
 }
 
 .form__input {
   width: #{360 / $base-font-size}rem;
   height: #{40 / $base-font-size}rem;
+  color: $icon-hover-color;
+  border-color: $secondary-form-title-color;
+}
+
+.form input[type="submit"] {
+  @extend %forms-button;
 }
