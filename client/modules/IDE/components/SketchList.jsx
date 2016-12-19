@@ -29,7 +29,7 @@ class SketchList extends React.Component {
     return (
       <section className="sketch-list" aria-label="project list" tabIndex="0" role="main" id="sketchlist">
         <header className="sketch-list__header">
-          <h2>Open a Sketch</h2>
+          <h2 className="sketch-list__header-title">Open a Sketch</h2>
           <button className="sketch-list__exit-button" onClick={this.closeSketchList}>
             <InlineSVG src={exitUrl} alt="Close Sketch List Overlay" />
           </button>
