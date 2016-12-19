@@ -12,7 +12,7 @@
 }
 
 .CodeMirror-linenumber {
-	width: #{35 / $base-font-size}rem;
+	width: #{32 / $base-font-size}rem;
   left: 0 !important;
   @include themify() {
     color: getThemifyVariable('inactive-text-color');
@@ -107,9 +107,10 @@
 
 .editor__file-name {
   @include themify() {
-    color: getThemifyVariable('inactive-text-color');
+    color: getThemifyVariable('secondary-text-color');
   }
-  padding: 0 0 #{7 / $base-font-size}rem #{56 / $base-font-size}rem;
+  height: #{29 / $base-font-size}rem;
+  padding: #{7 / $base-font-size}rem 0 0 #{56 / $base-font-size}rem;
   font-size: #{12 / $base-font-size}rem;
   display: flex;
   justify-content: space-between;

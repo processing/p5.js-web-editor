@@ -1,19 +1,16 @@
 .sidebar {
-  @include themify() {
-    border: 1px solid map-get($theme-map, 'ide-border-color');
-  }
   display: flex;
   flex-flow: column;
 
 }
 
 .sidebar__header {
-  padding: #{10 / $base-font-size}rem #{6 / $base-font-size}rem;
+  padding: 0 #{6 / $base-font-size}rem 0 #{19 / $base-font-size}rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: #{47 / $base-font-size}rem;
-  min-height: #{47 / $base-font-size}rem;
+  height: #{29 / $base-font-size}rem;
+  min-height: #{29 / $base-font-size}rem;
 }
 
 .sidebar__title {
@@ -32,6 +29,9 @@
   }
   .sidebar--contracted & {
     display: none;
+  }
+  & svg {
+    width: #{10 / $base-font-size}rem;
   }
 }
 
@@ -52,6 +52,7 @@
 }
 
 .sidebar__file-item {
+  height: #{20 / $base-font-size}rem;
   font-size: #{12 / $base-font-size}rem;
   cursor: pointer;
   @include themify() {
@@ -70,15 +71,15 @@
 // it won't work if the file tree is too nested
 .file-item__spacer {
   .sidebar__file-item & {
-    width: #{20 / $base-font-size}rem;
+    width: #{33 / $base-font-size}rem;
     .sidebar__file-item & {
-      width: #{40 / $base-font-size}rem;
+      width: #{53 / $base-font-size}rem;
       .sidebar__file-item & {
-        width: #{60 / $base-font-size}rem;
+        width: #{73 / $base-font-size}rem;
         .sidebar__file-item & {
-          width: #{80 / $base-font-size}rem;
+          width: #{93 / $base-font-size}rem;
           .sidebar__file-item & {
-            width: #{100 / $base-font-size}rem;
+            width: #{113 / $base-font-size}rem;
           }
         }
       }
@@ -100,7 +101,7 @@
 }
 
 .sidebar__file-item-name {
-  padding: #{8 / $base-font-size}rem 0;
+  padding: #{4 / $base-font-size}rem 0;
   .sidebar__file-item--editing & {
     display: none;
   }
@@ -109,13 +110,16 @@
 .sidebar__file-item-show-options {
   @include themify() {
     @extend %icon;
-    padding: #{8 / $base-font-size}rem 0;
+    padding: #{4 / $base-font-size}rem 0;
   }
   display: none;
   position: absolute;
-  right: #{26 / $base-font-size}rem;
+  right: #{6 / $base-font-size}rem;
   .sidebar__file-item--selected > .file-item__content & {
     display: inline-block;
+  }
+  & svg {
+    width: #{10 / $base-font-size}rem;
   }
 }
 
@@ -130,7 +134,7 @@
   right: #{15 / $base-font-size}rem;
   display: none;
   z-index: 100;
-  padding: #{8 / $base-font-size}rem #{16 / $base-font-size}rem;
+  padding: #{4 / $base-font-size}rem #{16 / $base-font-size}rem;
   z-index: 100;
   .sidebar__file-item--open > .file-item__content & {
     display: block;
@@ -151,6 +155,9 @@
   @include themify() {
     @extend %icon;
   }
+  position: absolute;
+  top: #{7 / $base-font-size}rem;
+  left: #{1 / $base-font-size}rem;
   height: #{14 / $base-font-size}rem;
   & svg {
     height: #{14 / $base-font-size}rem;
@@ -165,7 +172,9 @@
   @include themify() {
     @extend %icon;
   }
-  margin-left: #{10 / $base-font-size}rem;
+  position: absolute;
+  top: #{7 / $base-font-size}rem;
+  left: #{34 / $base-font-size}rem;
   height: #{14 / $base-font-size}rem;
   & svg {
     height: #{14 / $base-font-size}rem;
@@ -182,22 +191,28 @@
 }
 
 .sidebar__folder-icon {
-  padding: #{8 / $base-font-size}rem 0;
+  padding: #{4 / $base-font-size}rem 0;
   margin-right: #{5 / $base-font-size}rem;
   & g {
     @include themify() {
       fill: map-get($theme-map, 'primary-text-color');
     }
   }
+  & svg {
+    width: #{10 / $base-font-size}rem;
+  }
 }
 
 .sidebar__file-item-icon {
-  padding: #{8 / $base-font-size}rem 0;
+  padding: #{4 / $base-font-size}rem 0;
   margin-right: #{5 / $base-font-size}rem;
   & g {
     @include themify() {
       fill: getThemifyVariable('inactive-text-color');
     }
+  }
+  & svg {
+    height: #{10 / $base-font-size}rem;
   }
 }
 
@@ -226,7 +241,7 @@
   }
   top: 100%;
   right: #{-70 / $base-font-size}rem;
-  padding: #{8 / $base-font-size}rem;
+  padding: #{4 / $base-font-size}rem;
   width: #{110 / $base-font-size}rem;
 }
 

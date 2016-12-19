@@ -30,6 +30,9 @@ import classNames from 'classnames';
 import { debounce } from 'lodash';
 import Timer from '../components/Timer';
 
+const rightArrowUrl = require('../../../images/right-arrow.svg');
+const leftArrowUrl = require('../../../images/left-arrow.svg');
+
 class Editor extends React.Component {
   constructor(props) {
     super(props);
@@ -178,6 +181,7 @@ class Editor extends React.Component {
   render() {
     const editorSectionClass = classNames({
       editor: true,
+      'sidebar--contracted': !this.props.isExpanded,
       'editor--options': this.props.editorOptionsVisible
     });
 
@@ -187,6 +191,20 @@ class Editor extends React.Component {
         role="main"
         className={editorSectionClass}
       >
+        <button
+          aria-label="collapse file navigation"
+          className="sidebar__contract"
+          onClick={this.props.collapseSidebar}
+        >
+          <InlineSVG src={leftArrowUrl} />
+        </button>
+        <button
+          aria-label="expand file navigation"
+          className="sidebar__expand"
+          onClick={this.props.expandSidebar}
+        >
+          <InlineSVG src={rightArrowUrl} />
+        </button>
         <div className="editor__file-name">
           <span>{this.props.file.name}
           {this.props.unsavedChanges ? '*' : null}</span>
@@ -253,7 +271,10 @@ Editor.propTypes = {
   theme: PropTypes.string.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
   projectSavedTime: PropTypes.string.isRequired,
-  files: PropTypes.array.isRequired
+  files: PropTypes.array.isRequired,
+  isExpanded: PropTypes.bool.isRequired,
+  collapseSidebar: PropTypes.func.isRequired,
+  expandSidebar: PropTypes.func.isRequired
 };
 
 export default Editor;
