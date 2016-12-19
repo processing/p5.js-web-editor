@@ -5,7 +5,8 @@
 }
 
 .sidebar__header {
-  padding: 0 #{6 / $base-font-size}rem 0 #{19 / $base-font-size}rem;
+  padding-right: #{6 / $base-font-size}rem;
+  padding-left: #{19 / $base-font-size}rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
