@@ -51,7 +51,7 @@ input {
 
 input[type="submit"] {
 	@include themify() {
-		@extend %forms-button;
+		@extend %button;
 	}
 }
 
