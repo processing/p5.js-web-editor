@@ -38,7 +38,7 @@ $themes: (
     editor-gutter-color: #f4f4f4,
     file-selected-color: #f4f4f4,
     input-text-color: #333,
-    input-border-color: #979797,
+    input-border-color: #b5b5b5,
   ),
   dark: (
     logo-color: $p5js-pink,
@@ -71,7 +71,7 @@ $themes: (
     editor-gutter-color: #363636,
     file-selected-color: #404040,
     input-text-color: #333,
-    input-border-color: #979797,
+    input-border-color: #b5b5b5,
   ),
   contrast: (
     logo-color: $yellow,
@@ -103,7 +103,7 @@ $themes: (
     editor-gutter-color: #454545,
     file-selected-color: #404040,
     input-text-color: #333,
-    input-border-color: #979797,
+    input-border-color: #b5b5b5,
   )
 );
 
@@ -112,3 +112,13 @@ $console-error-color: #ff5f52;
 
 $toast-background-color: #979797;
 $toast-text-color: $white;
+
+$form-title-color: rgba(51, 51, 51, 0.87);
+$secondary-form-title-color: #b5b5b5;
+$form-button-background-color: $white;
+$form-button-color: #f10046;
+$form-button-background-hover-color: $p5js-pink;
+$form-button-background-active-color: #f10046;
+$form-button-hover-color: $white;
+$form-button-active-color: $white;
+$form-navigation-options-color: #999999;

@@ -1,0 +1,40 @@
+.form-container {
+	text-align: center;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+  align-items: center;
+}
+
+.form-container__header {
+	width: 100%;
+	padding: #{15 / $base-font-size}rem #{34 / $base-font-size}rem;
+	display: flex;
+  justify-content: space-between;
+}
+
+.form-container__content {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.form-container__title {
+	font-weight: normal;
+	color: $form-title-color;
+}
+
+.form-container__divider {
+  padding: #{20 / $base-font-size}rem 0;
+}
+
+.form-container__logo-button {
+  @extend %none-themify-icon;
+}
+
+.form-container__exit-button {
+  @include themify() {
+    @extend %icon;
+  }
+}
