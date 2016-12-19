@@ -34,6 +34,10 @@ input, button {
 	font-size: 1rem;
 }
 
+button:focus {
+	outline: none;
+}
+
 input {
 	padding: #{5 / $base-font-size}rem;
 	border: 1px solid ;
@@ -47,7 +51,7 @@ input {
 
 input[type="submit"] {
 	@include themify() {
-		@extend %forms-button;
+		@extend %button;
 	}
 }
 

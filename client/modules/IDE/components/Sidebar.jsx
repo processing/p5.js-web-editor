@@ -2,8 +2,6 @@ import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 import InlineSVG from 'react-inlinesvg';
 // import SidebarItem from './SidebarItem';
-const rightArrowUrl = require('../../../images/right-arrow.svg');
-const leftArrowUrl = require('../../../images/left-arrow.svg');
 const folderUrl = require('../../../images/folder.svg');
 const downArrowUrl = require('../../../images/down-arrow.svg');
 import ConnectedFileNode from './FileNode';
@@ -60,20 +58,6 @@ class Sidebar extends React.Component {
                 </a>
               </li>
             </ul>
-            <button
-              aria-label="collapse file navigation"
-              className="sidebar__contract"
-              onClick={this.props.collapseSidebar}
-            >
-              <InlineSVG src={leftArrowUrl} />
-            </button>
-            <button
-              aria-label="expand file navigation"
-              className="sidebar__expand"
-              onClick={this.props.expandSidebar}
-            >
-              <InlineSVG src={rightArrowUrl} />
-            </button>
           </div>
         </div>
         { /* <ul className="sidebar__file-list" title="project files">
@@ -105,8 +89,6 @@ Sidebar.propTypes = {
   isExpanded: PropTypes.bool.isRequired,
   projectOptionsVisible: PropTypes.bool.isRequired,
   newFile: PropTypes.func.isRequired,
-  collapseSidebar: PropTypes.func.isRequired,
-  expandSidebar: PropTypes.func.isRequired,
   showFileOptions: PropTypes.func.isRequired,
   hideFileOptions: PropTypes.func.isRequired,
   deleteFile: PropTypes.func.isRequired,

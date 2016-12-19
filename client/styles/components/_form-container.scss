@@ -34,7 +34,5 @@
 }
 
 .form-container__exit-button {
-  @include themify() {
-    @extend %icon;
-  }
+  @extend %none-themify-icon-with-hover;
 }

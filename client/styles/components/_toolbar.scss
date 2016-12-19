@@ -69,7 +69,6 @@
 	@include themify() {
 		border-color: getThemifyVariable('inactive-text-color');
 	}
-	border-left: 2px dashed;
 	margin-left: #{10 / $base-font-size}rem;
 	padding-left: #{10 / $base-font-size}rem;
 	height: 70%;

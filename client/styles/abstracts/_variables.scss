@@ -1,4 +1,4 @@
-$base-font-size: 16;
+$base-font-size: 12;
 
 //colors
 $p5js-pink: #ed225d;
@@ -15,6 +15,7 @@ $themes: (
     secondary-text-color: #6b6b6b,
     inactive-text-color: #b5b5b5,
     background-color: #fbfbfb,
+    preview-placeholder-color: #dcdcdc,
     button-background-color: #f4f4f4,
     button-color: $black,
     button-border-color: #979797,
@@ -45,8 +46,9 @@ $themes: (
     modal-button-color: $white,
     heading-text-color: $white,
     secondary-text-color: #c2c2c2,
-    inactive-text-color: #7d7d7d,
+    inactive-text-color: #b5b5b5,
     background-color: #333,
+    preview-placeholder-color: #dcdcdc,
     button-background-color: $white,
     button-color: $black,
     button-border-color: #979797,
@@ -120,3 +122,6 @@ $form-button-background-active-color: #f10046;
 $form-button-hover-color: $white;
 $form-button-active-color: $white;
 $form-navigation-options-color: #999999;
+
+$icon-color: #8b8b8b;
+$icon-hover-color: #333;
