@@ -111,7 +111,7 @@ function Nav(props) {
             return (
               <li className="nav__item">
                 <p>
-                  <Link to="/login">Login</Link> <span className="nav__item-spacer">or</span> <Link to="/signup">Sign Up</Link>
+                  <Link to="/login">Log in</Link> <span className="nav__item-spacer">or</span> <Link to="/signup">Sign up</Link>
                 </p>
               </li>
             );
@@ -120,14 +120,17 @@ function Nav(props) {
             <li className="nav__item">
               <a>Hello, {props.user.username}!</a>
               <ul className="nav__dropdown">
+                <li className="nav__dropdown-heading">
+                  <a>Hello, {props.user.username}!</a>
+                </li>
                 <li>
                   <Link to="/sketches">
-                    My Sketches
+                    My sketches
                   </Link>
                 </li>
                 <li>
                   <a onClick={props.logoutUser} >
-                    Logout
+                    Log out
                   </a>
                 </li>
               </ul>
