@@ -162,23 +162,27 @@ class PreviewFrame extends React.Component {
       if (this.props.textOutput === 1) {
         interceptorScripts = [
           '/p5-interceptor/loadData.js',
-          '/p5-interceptor/intercept-helper-functions.js',
-          '/p5-interceptor/textInterceptor/interceptor-functions.js',
-          '/p5-interceptor/textInterceptor/intercept-p5.js',
+          '/p5-interceptor/interceptorHelperFunctions.js',
+          '/p5-interceptor/baseInterceptor.js',
+          '/p5-interceptor/entities/entity.min.js',
+          '/p5-interceptor/textInterceptor/interceptorFunctions.js',
+          '/p5-interceptor/textInterceptor/interceptorP5.js',
           '/p5-interceptor/ntc.min.js'
         ];
       } else if (this.props.textOutput === 2) {
         interceptorScripts = [
           '/p5-interceptor/loadData.js',
-          '/p5-interceptor/intercept-helper-functions.js',
-          '/p5-interceptor/gridInterceptor/interceptor-functions.js',
-          '/p5-interceptor/gridInterceptor/intercept-p5.js',
+          '/p5-interceptor/interceptorHelperFunctions.js',
+          '/p5-interceptor/baseInterceptor.js',
+          '/p5-interceptor/entities/entity.min.js',
+          '/p5-interceptor/gridInterceptor/interceptorFunctions.js',
+          '/p5-interceptor/gridInterceptor/interceptorP5.js',
           '/p5-interceptor/ntc.min.js'
         ];
       } else if (this.props.textOutput === 3) {
         interceptorScripts = [
           '/p5-interceptor/loadData.js',
-          '/p5-interceptor/soundInterceptor/intercept-p5.js'
+          '/p5-interceptor/soundInterceptor/interceptorP5.js'
         ];
       }
       scriptsToInject = scriptsToInject.concat(interceptorScripts);
