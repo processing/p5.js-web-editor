@@ -4,9 +4,9 @@ import CodeMirror from 'codemirror';
 import beautifyJS from 'js-beautify';
 const beautifyCSS = beautifyJS.css;
 const beautifyHTML = beautifyJS.html;
-import 'codemirror/mode/javascript/javascript';
+import '../../../utils/p5-javascript';
 import 'codemirror/mode/css/css';
-import 'codemirror/mode/htmlmixed/htmlmixed';
+import '../../../utils/htmlmixed';
 import 'codemirror/addon/selection/active-line';
 import 'codemirror/addon/lint/lint';
 import 'codemirror/addon/lint/javascript-lint';
@@ -30,6 +30,9 @@ import classNames from 'classnames';
 import { debounce } from 'lodash';
 import Timer from '../components/Timer';
 
+const rightArrowUrl = require('../../../images/right-arrow.svg');
+const leftArrowUrl = require('../../../images/left-arrow.svg');
+
 class Editor extends React.Component {
   constructor(props) {
     super(props);
@@ -40,11 +43,9 @@ class Editor extends React.Component {
     this.widgets = [];
     this._cm = CodeMirror(this.refs.container, { // eslint-disable-line
       theme: `p5-${this.props.theme}`,
-      value: this.props.file.content,
       lineNumbers: true,
       styleActiveLine: true,
       inputStyle: 'contenteditable',
-      mode: 'javascript',
       lineWrapping: false,
       fixedGutter: false,
       gutters: ['CodeMirror-lint-markers'],
@@ -60,9 +61,15 @@ class Editor extends React.Component {
           if (this.props.lintMessages.length > 0 && this.props.lintWarning) {
             this.beep.play();
           }
-        }, 2000)
+        }, 2000),
+        options: {
+          asi: true
+        }
       }
     });
+
+    this.initializeDocuments(this.props.files);
+    this._cm.swapDoc(this._docs[this.props.file.id]);
 
     this._cm.on('change', debounce(() => {
       this.props.setUnsavedChanges(true);
@@ -89,10 +96,23 @@ class Editor extends React.Component {
     this._cm.setOption('tabSize', this.props.indentationAmount);
   }
 
+  componentWillUpdate(nextProps) {
+    // check if files have changed
+    if (this.props.files[0].id !== nextProps.files[0].id) {
+      // then need to make CodeMirror documents
+      this.initializeDocuments(nextProps.files);
+    }
+    if (this.props.files.length !== nextProps.files.length) {
+      this.initializeDocuments(nextProps.files);
+    }
+  }
+
   componentDidUpdate(prevProps) {
     if (this.props.file.content !== prevProps.file.content &&
         this.props.file.content !== this._cm.getValue()) {
-      this._cm.setValue(this.props.file.content); // eslint-disable-line no-underscore-dangle
+      const oldDoc = this._cm.swapDoc(this._docs[this.props.file.id]);
+      this._docs[prevProps.file.id] = oldDoc;
+      this._cm.focus();
       if (!prevProps.unsavedChanges) {
         setTimeout(() => this.props.setUnsavedChanges(false), 400);
       }
@@ -106,20 +126,6 @@ class Editor extends React.Component {
     if (this.props.isTabIndent !== prevProps.isTabIndent) {
       this._cm.setOption('indentWithTabs', this.props.isTabIndent);
     }
-    if (this.props.file.name !== prevProps.name) {
-      if (this.props.file.name.match(/.+\.js$/i)) {
-        this._cm.setOption('mode', 'javascript');
-      } else if (this.props.file.name.match(/.+\.css$/i)) {
-        this._cm.setOption('mode', 'css');
-      } else if (this.props.file.name.match(/.+\.html$/i)) {
-        this._cm.setOption('mode', 'htmlmixed');
-      } else if (this.props.file.name.match(/.+\.json$/i)) {
-        this._cm.setOption('mode', 'application/json');
-      } else {
-        this._cm.setOption('mode', 'text/plain');
-      }
-    }
-
     if (this.props.theme !== prevProps.theme) {
       this._cm.setOption('theme', `p5-${this.props.theme}`);
     }
@@ -127,6 +133,31 @@ class Editor extends React.Component {
 
   componentWillUnmount() {
     this._cm = null;
+  }
+
+  getFileMode(fileName) {
+    let mode;
+    if (fileName.match(/.+\.js$/i)) {
+      mode = 'javascript';
+    } else if (fileName.match(/.+\.css$/i)) {
+      mode = 'css';
+    } else if (fileName.match(/.+\.html$/i)) {
+      mode = 'htmlmixed';
+    } else if (fileName.match(/.+\.json$/i)) {
+      mode = 'application/json';
+    } else {
+      mode = 'text/plain';
+    }
+    return mode;
+  }
+
+  initializeDocuments(files) {
+    this._docs = {};
+    files.forEach(file => {
+      if (file.name !== 'root') {
+        this._docs[file.id] = CodeMirror.Doc(file.content, this.getFileMode(file.name)); // eslint-disable-line
+      }
+    });
   }
 
   tidyCode() {
@@ -150,6 +181,7 @@ class Editor extends React.Component {
   render() {
     const editorSectionClass = classNames({
       editor: true,
+      'sidebar--contracted': !this.props.isExpanded,
       'editor--options': this.props.editorOptionsVisible
     });
 
@@ -159,6 +191,20 @@ class Editor extends React.Component {
         role="main"
         className={editorSectionClass}
       >
+        <button
+          aria-label="collapse file navigation"
+          className="sidebar__contract"
+          onClick={this.props.collapseSidebar}
+        >
+          <InlineSVG src={leftArrowUrl} />
+        </button>
+        <button
+          aria-label="expand file navigation"
+          className="sidebar__expand"
+          onClick={this.props.expandSidebar}
+        >
+          <InlineSVG src={rightArrowUrl} />
+        </button>
         <div className="editor__file-name">
           <span>{this.props.file.name}
           {this.props.unsavedChanges ? '*' : null}</span>
@@ -184,7 +230,7 @@ class Editor extends React.Component {
             <a onClick={this.tidyCode}>Tidy</a>
           </li>
           <li>
-            <a onClick={this.props.showKeyboardShortcutModal}>Keyboard Shortcuts</a>
+            <a onClick={this.props.showKeyboardShortcutModal}>Keyboard shortcuts</a>
           </li>
         </ul>
         <div ref="container" className="editor-holder" tabIndex="0">
@@ -211,7 +257,8 @@ Editor.propTypes = {
   fontSize: PropTypes.number.isRequired,
   file: PropTypes.shape({
     name: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired
+    content: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired
   }),
   editorOptionsVisible: PropTypes.bool.isRequired,
   showEditorOptions: PropTypes.func.isRequired,
@@ -223,7 +270,11 @@ Editor.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   theme: PropTypes.string.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
-  projectSavedTime: PropTypes.string.isRequired
+  projectSavedTime: PropTypes.string.isRequired,
+  files: PropTypes.array.isRequired,
+  isExpanded: PropTypes.bool.isRequired,
+  collapseSidebar: PropTypes.func.isRequired,
+  expandSidebar: PropTypes.func.isRequired
 };
 
 export default Editor;

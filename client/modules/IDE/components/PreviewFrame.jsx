@@ -8,8 +8,8 @@ import { getBlobUrl } from '../actions/files';
 import { resolvePathToFile } from '../../../../server/utils/filePath';
 
 const startTag = '@fs-';
-const MEDIA_FILE_REGEX = /^('|")(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov)('|")$/i;
-const MEDIA_FILE_REGEX_NO_QUOTES = /^(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov)$/i;
+const MEDIA_FILE_REGEX = /^('|")(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov|otf|ttf)('|")$/i;
+const MEDIA_FILE_REGEX_NO_QUOTES = /^(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov|otf|ttf)$/i;
 const STRING_REGEX = /(['"])((\\\1|.)*?)\1/gm;
 const TEXT_FILE_REGEX = /(.+\.json$|.+\.txt$|.+\.csv$)/i;
 const NOT_EXTERNAL_LINK_REGEX = /^(?!(http:\/\/|https:\/\/))/;
@@ -30,7 +30,8 @@ function getAllScriptOffsets(htmlFile) {
     } else {
       endFilenameInd = htmlFile.indexOf('.js', ind + startTag.length + 3);
       filename = htmlFile.substring(ind + startTag.length, endFilenameInd);
-      lineOffset = htmlFile.substring(0, ind).split('\n').length;
+      // the length of hijackConsoleErrorsScript is 35 lines, already needed a -1 offset.
+      lineOffset = htmlFile.substring(0, ind).split('\n').length + 34;
       offs.push([lineOffset, filename]);
       lastInd = ind + 1;
     }
@@ -70,7 +71,7 @@ function hijackConsoleErrorsScript(offs) {
         window.parent.postMessage([{
           method: 'error',
           arguments: data,
-          source: 'sketch'
+          source: fileInfo[1]
         }], '*');
       return false;
     };
@@ -143,6 +144,10 @@ class PreviewFrame extends React.Component {
     const parser = new DOMParser();
     const sketchDoc = parser.parseFromString(htmlFile, 'text/html');
 
+    const base = sketchDoc.createElement('base');
+    base.href = `${window.location.href}/`;
+    sketchDoc.head.appendChild(base);
+
     this.resolvePathsForElementsWithAttribute('src', sketchDoc, resolvedFiles);
     this.resolvePathsForElementsWithAttribute('href', sketchDoc, resolvedFiles);
     // should also include background, data, poster, but these are used way less often
@@ -172,11 +177,9 @@ class PreviewFrame extends React.Component {
       } else if (this.props.textOutput === 2) {
         interceptorScripts = [
           '/p5-interceptor/loadData.js',
-          '/p5-interceptor/interceptorHelperFunctions.js',
-          '/p5-interceptor/baseInterceptor.js',
-          '/p5-interceptor/entities/entity.min.js',
-          '/p5-interceptor/gridInterceptor/interceptorFunctions.js',
-          '/p5-interceptor/gridInterceptor/interceptorP5.js',
+          '/p5-interceptor/intercept-helper-functions.js',
+          '/p5-interceptor/gridInterceptor/interceptor-functions.js',
+          '/p5-interceptor/gridInterceptor/intercept-p5.js',
           '/p5-interceptor/ntc.min.js'
         ];
       } else if (this.props.textOutput === 3) {
@@ -198,14 +201,16 @@ class PreviewFrame extends React.Component {
     scriptOffs = getAllScriptOffsets(sketchDocString);
     const consoleErrorsScript = sketchDoc.createElement('script');
     consoleErrorsScript.innerHTML = hijackConsoleErrorsScript(JSON.stringify(scriptOffs));
-    sketchDoc.head.appendChild(consoleErrorsScript);
+    // sketchDoc.head.appendChild(consoleErrorsScript);
+    sketchDoc.head.insertBefore(consoleErrorsScript, sketchDoc.head.firstElement);
 
     return `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
   }
 
   resolvePathsForElementsWithAttribute(attr, sketchDoc, files) {
     const elements = sketchDoc.querySelectorAll(`[${attr}]`);
-    elements.forEach(element => {
+    const elementsArray = Array.prototype.slice.call(elements);
+    elementsArray.forEach(element => {
       if (element.getAttribute(attr).match(MEDIA_FILE_REGEX_NO_QUOTES)) {
         const resolvedFile = resolvePathToFile(element.getAttribute(attr), files);
         if (resolvedFile) {
@@ -281,6 +286,7 @@ class PreviewFrame extends React.Component {
           if (resolvedFile.url) {
             script.setAttribute('src', resolvedFile.url);
           } else {
+            script.setAttribute('data-tag', `${startTag}${resolvedFile.name}`);
             script.removeAttribute('src');
             script.innerHTML = resolvedFile.content; // eslint-disable-line
           }
@@ -299,7 +305,8 @@ class PreviewFrame extends React.Component {
     });
 
     const cssLinksInHTML = sketchDoc.querySelectorAll('link[rel="stylesheet"]');
-    cssLinksInHTML.forEach(css => {
+    const cssLinksInHTMLArray = Array.prototype.slice.call(cssLinksInHTML);
+    cssLinksInHTMLArray.forEach(css => {
       if (css.getAttribute('href') && css.getAttribute('href').match(NOT_EXTERNAL_LINK_REGEX) !== null) {
         const resolvedFile = resolvePathToFile(css.getAttribute('href'), files);
         if (resolvedFile) {

@@ -8,6 +8,10 @@
     "lint": "eslint client server",
     "build": "NODE_ENV=production webpack --config webpack.config.prod.js --progress",
     "test": "echo \"Error: no test specified\" && exit 1",
+<<<<<<< HEAD
+=======
+    "fetch-examples": "node fetch-examples.js",
+>>>>>>> 28323ffc090514d82a95e53fa48ea01117bb09be
     "postinstall" : "git submodule update --remote --recursive"
   },
   "main": "index.js",
@@ -52,7 +56,7 @@
     "redux-devtools-log-monitor": "^1.0.11",
     "sass-loader": "^3.2.0",
     "style-loader": "^0.13.1",
-    "webpack": "^1.13.0",
+    "webpack": "^1.14.0",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.10.0",
     "webpack-manifest-plugin": "^1.1.0"
@@ -70,7 +74,7 @@
     "body-parser": "^1.15.1",
     "bson-objectid": "^1.1.4",
     "classnames": "^2.2.5",
-    "codemirror": "^5.19.0",
+    "codemirror": "^5.21.0",
     "connect-mongo": "^1.2.0",
     "cookie-parser": "^1.4.1",
     "csslint": "^0.10.0",
@@ -95,6 +99,7 @@
     "passport": "^0.3.2",
     "passport-github": "^1.1.0",
     "passport-local": "^1.0.0",
+    "q": "^1.4.1",
     "project-name-generator": "^2.1.3",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
@@ -106,6 +111,7 @@
     "redux-form": "^5.3.3",
     "redux-thunk": "^2.1.0",
     "request": "^2.76.0",
+    "request-promise": "^4.1.1",
     "s3-policy": "^0.2.0",
     "shortid": "^2.2.6",
     "srcdoc-polyfill": "^0.2.0",

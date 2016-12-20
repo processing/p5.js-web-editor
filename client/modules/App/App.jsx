@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import DevTools from './components/DevTools';
+import { setPreviousPath } from '../IDE/actions/ide';
 
 class App extends React.Component {
   constructor(props, context) {
@@ -10,6 +11,12 @@ class App extends React.Component {
 
   componentDidMount() {
     this.setState({ isMounted: true }); // eslint-disable-line react/no-did-mount-set-state
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.location !== this.props.location) {
+      this.props.setPreviousPath(this.props.location.pathname);
+    }
   }
 
   render() {
@@ -23,7 +30,11 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  children: PropTypes.object
+  children: PropTypes.object,
+  location: PropTypes.shape({
+    pathname: PropTypes.string
+  }),
+  setPreviousPath: PropTypes.func.isRequired,
 };
 
-export default connect()(App);
+export default connect(() => ({}), { setPreviousPath })(App);

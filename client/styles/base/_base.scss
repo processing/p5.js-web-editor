@@ -10,7 +10,7 @@ body, input, button {
 	@include themify() {
 		color: getThemifyVariable('primary-text-color');
 	}
-	font-family: 'Avenir Next', Montserrat, sans-serif;
+	font-family: Montserrat, sans-serif;
 }
 
 .root-app, .app {
@@ -34,9 +34,14 @@ input, button {
 	font-size: 1rem;
 }
 
+button:focus {
+	outline: none;
+}
+
 input {
 	padding: #{5 / $base-font-size}rem;
-	border: 1px solid;
+	border: 1px solid ;
+	border-radius: 2px;
 	padding: #{10 / $base-font-size}rem;
 	@include themify() {
 		color: getThemifyVariable('input-text-color');

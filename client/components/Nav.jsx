@@ -19,7 +19,13 @@ function Nav(props) {
               <li className="nav__item">
                 <a
                   className="nav__save"
-                  onClick={() => props.saveProject()}
+                  onClick={() => {
+                    if (props.user.authenticated) {
+                      props.saveProject();
+                    } else {
+                      props.openForceAuthentication();
+                    }
+                  }}
                 >
                   Save
                 </a>
@@ -75,16 +81,14 @@ function Nav(props) {
               </li>
             );
           }
-          return (
-            <li className="nav__item">
-              <p className="nav__open">
-                <Link to="/p5/sketches">
-                  Open
-                </Link>
-              </p>
-            </li>
-          );
         })()}
+        <li className="nav__item">
+          <p className="nav__open">
+            <Link to="/p5/sketches">
+              Examples
+            </Link>
+          </p>
+        </li>
         <li className="nav__item">
           <p className="nav__reference">
             <a
@@ -107,7 +111,7 @@ function Nav(props) {
             return (
               <li className="nav__item">
                 <p>
-                  <Link to="/login">Login</Link> or <Link to="/signup">Sign Up</Link>
+                  <Link to="/login">Log in</Link> <span className="nav__item-spacer">or</span> <Link to="/signup">Sign up</Link>
                 </p>
               </li>
             );
@@ -116,14 +120,17 @@ function Nav(props) {
             <li className="nav__item">
               <a>Hello, {props.user.username}!</a>
               <ul className="nav__dropdown">
+                <li className="nav__dropdown-heading">
+                  <a>Hello, {props.user.username}!</a>
+                </li>
                 <li>
                   <Link to="/sketches">
-                    My Sketches
+                    My sketches
                   </Link>
                 </li>
                 <li>
                   <a onClick={props.logoutUser} >
-                    Logout
+                    Log out
                   </a>
                 </li>
               </ul>
@@ -153,7 +160,8 @@ Nav.propTypes = {
   }),
   logoutUser: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
-  showShareModal: PropTypes.func.isRequired
+  showShareModal: PropTypes.func.isRequired,
+  openForceAuthentication: PropTypes.func.isRequired
 };
 
 export default Nav;

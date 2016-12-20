@@ -1,0 +1,24 @@
+.force-authentication {
+  @extend %modal;
+  display: flex;
+  flex-wrap: wrap;
+  flex-flow: column;
+}
+
+.force-authentication__header {
+  display: flex;
+  justify-content: flex-end;
+  padding: #{20 / $base-font-size}rem;
+}
+
+.force-authentication__exit-button {
+  @include themify() {
+    @extend %icon;
+  }
+}
+
+.force-authentication__copy {
+  padding: #{20 / $base-font-size}rem;
+  padding-top: 0;
+  padding-bottom: #{60 / $base-font-size}rem;
+}

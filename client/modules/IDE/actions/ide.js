@@ -227,3 +227,15 @@ export function setPreviousPath(path) {
     path
   };
 }
+
+export function openForceAuthentication() {
+  return {
+    type: ActionTypes.OPEN_FORCE_AUTHENTICATION
+  };
+}
+
+export function closeForceAuthentication() {
+  return {
+    type: ActionTypes.CLOSE_FORCE_AUTHENTICATION
+  };
+}

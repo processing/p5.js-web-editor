@@ -55,8 +55,12 @@
 }
 
 .preview-console__header-title {
-	font-size: #{16 / $base-font-size}rem;
+	font-size: #{12 / $base-font-size}rem;
 	font-weight: normal;
+}
+
+.preview-console__icon {
+	padding-right: #{20 / $base-font-size}rem;
 }
 
 .preview-console__messages {

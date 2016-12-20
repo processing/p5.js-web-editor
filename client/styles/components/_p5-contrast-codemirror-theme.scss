@@ -116,3 +116,12 @@ $p5-contrast-activeline: #999999;
 .cm-s-p5-contrast .cm-attribute {
   color: $p5-contrast-white;
 }
+
+.cm-s-p5-contrast .cm-p5-function {
+  color: $p5-contrast-blue;
+}
+
+.cm-s-p5-contrast .cm-p5-variable {
+  color: $p5-contrast-pink;
+  font-weight: bold;
+}

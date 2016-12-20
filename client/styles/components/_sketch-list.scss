@@ -5,12 +5,16 @@
   flex-flow: column;
   width: #{1000 / $base-font-size}rem;
   height: 80%;
+  outline: none;
 }
 
 .sketch-list__header {
   display: flex;
   justify-content: space-between;
-  padding: #{20 / $base-font-size}rem;
+}
+
+.sketch-list__header-title {  
+  padding: #{40 / $base-font-size}rem #{16 / $base-font-size}rem #{12 / $base-font-size}rem #{21 / $base-font-size}rem;
 }
 
 .sketches-table-container {
@@ -20,24 +24,53 @@
 
 .sketches-table {
   width: 100%;
-  padding: #{10 / $base-font-size}rem 0;
-  padding-left: #{20 / $base-font-size}rem;
+  padding: #{10 / $base-font-size}rem #{20 / $base-font-size}rem;
   max-height: 100%;
-
+  border-spacing: 0;
   & .sketch-list__trash-column {
     width: #{22 / $base-font-size}rem;
   }
 }
 
+.sketches-table thead th {
+  height: #{32 / $base-font-size}rem;
+}
+
 .sketches-table__row {
   margin: #{10 / $base-font-size}rem;
-  height: #{25 / $base-font-size}rem;
+  height: #{72 / $base-font-size}rem;
+  font-size: #{16 / $base-font-size}rem;
+}
+
+.sketches-table__row:nth-child(odd) {
+  @include themify() {
+    background: getThemifyVariable('console-header-background-color');
+  }
+}
+
+.sketches-table__row a {
+  @include themify() {
+    color: getThemifyVariable('primary-text-color');
+  }
+}
+
+
+.sketches-table thead {
+  font-size: #{12 / $base-font-size}rem;
+  @include themify() {
+    color: getThemifyVariable('inactive-text-color')
+  }
+}
+
+.sketches-table th {
+  font-weight: normal;
 }
 
 .sketch-list__exit-button {
   @include themify() {
     @extend %icon;
   }
+  margin: #{12 / $base-font-size}rem #{16 / $base-font-size}rem;
 }
 
 .visibility-toggle .sketch-list__trash-button {

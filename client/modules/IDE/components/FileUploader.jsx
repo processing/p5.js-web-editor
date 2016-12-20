@@ -17,13 +17,12 @@ class FileUploader extends React.Component {
       method: 'post',
       autoProcessQueue: true,
       clickable: true,
-      maxFiles: 1,
-      parallelUploads: 1,
+      maxFiles: 6,
+      parallelUploads: 2,
       maxFilesize: 5, // in mb
-      maxThumbnailFilesize: 8, // 3MB
+      maxThumbnailFilesize: 8, // 8 mb
       thumbnailWidth: 200,
       thumbnailHeight: 200,
-      addRemoveLinks: true,
       // TODO what is a good list of MIME types????
       acceptedFiles: `image/*,audio/*,text/javascript,text/html,text/css,
       application/json,application/x-font-ttf,application/x-font-truetype,

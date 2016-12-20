@@ -7,21 +7,22 @@ class NewFileForm extends React.Component {
     this.createFile = this.props.createFile.bind(this);
   }
 
-  componentDidMount() {
-    this.refs.fileName.focus();
-  }
-
   render() {
     const { fields: { name }, handleSubmit } = this.props;
     return (
-      <form className="new-file-form" onSubmit={handleSubmit(this.createFile)}>
+      <form
+        className="new-file-form"
+        onSubmit={(data) => {
+          this.props.focusOnModal();
+          handleSubmit(this.createFile)(data);
+        }}
+      >
         <label className="new-file-form__name-label" htmlFor="name">Name:</label>
         <input
           className="new-file-form__name-input"
           id="name"
           type="text"
           placeholder="Name"
-          ref="fileName"
           {...domOnlyProps(name)}
         />
         <input type="submit" value="Add File" aria-label="add file" />
@@ -36,7 +37,8 @@ NewFileForm.propTypes = {
     name: PropTypes.object.isRequired
   }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  createFile: PropTypes.func.isRequired
+  createFile: PropTypes.func.isRequired,
+  focusOnModal: PropTypes.func.isRequired
 };
 
 export default NewFileForm;

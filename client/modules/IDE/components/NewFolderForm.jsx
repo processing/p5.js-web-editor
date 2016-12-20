@@ -14,7 +14,13 @@ class NewFolderForm extends React.Component {
   render() {
     const { fields: { name }, handleSubmit } = this.props;
     return (
-      <form className="new-folder-form" onSubmit={handleSubmit(this.createFolder)}>
+      <form
+        className="new-folder-form"
+        onSubmit={(data) => {
+          handleSubmit(this.createFolder)(data);
+          this.props.closeModal();
+        }}
+      >
         <label className="new-folder-form__name-label" htmlFor="name">Name:</label>
         <input
           className="new-folder-form__name-input"
@@ -35,7 +41,8 @@ NewFolderForm.propTypes = {
     name: PropTypes.object.isRequired
   }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  createFolder: PropTypes.func.isRequired
+  createFolder: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired
 };
 
 export default NewFolderForm;

@@ -28,17 +28,15 @@ class Console extends React.Component {
       this.children = [];
     } else if (nextProps.consoleEvent !== this.props.consoleEvent && this.props.isPlaying) {
       nextProps.consoleEvent.forEach(consoleEvent => {
-        if (consoleEvent.source === 'sketch') {
-          const args = consoleEvent.arguments;
-          Object.keys(args).forEach((key) => {
-            if (args[key].includes('Exiting potential infinite loop')) {
-              this.props.stopSketch();
-              this.props.expandConsole();
-              this.appendConsoleEvent(consoleEvent);
-            }
-          });
-          this.appendConsoleEvent(consoleEvent);
-        }
+        const args = consoleEvent.arguments;
+        Object.keys(args).forEach((key) => {
+          if (args[key].includes('Exiting potential infinite loop')) {
+            this.props.stopSketch();
+            this.props.expandConsole();
+            this.appendConsoleEvent(consoleEvent);
+          }
+        });
+        this.appendConsoleEvent(consoleEvent);
       });
     }
   }
@@ -83,7 +81,7 @@ class Console extends React.Component {
     return (
       <div ref="console" className={consoleClass} role="main" tabIndex="0" title="console">
         <div className="preview-console__header">
-          <h2 className="preview-console__header-title">console</h2>
+          <h2 className="preview-console__header-title"><span className="preview-console__icon">>_</span>console</h2>
           <button className="preview-console__collapse" onClick={this.props.collapseConsole} aria-label="collapse console">
             <InlineSVG src={downArrowUrl} />
           </button>

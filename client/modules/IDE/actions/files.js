@@ -3,6 +3,7 @@ import axios from 'axios';
 import objectID from 'bson-objectid';
 import blobUtil from 'blob-util';
 import { setUnsavedChanges } from './ide';
+import { reset } from 'redux-form';
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
@@ -61,9 +62,10 @@ export function createFile(formProps) {
             ...response.data,
             parentId
           });
-          dispatch({
-            type: ActionTypes.HIDE_MODAL
-          });
+          dispatch(reset('new-file'));
+          // dispatch({
+          //   type: ActionTypes.HIDE_MODAL
+          // });
           dispatch(setUnsavedChanges(true));
         })
         .catch(response => dispatch({
@@ -82,9 +84,10 @@ export function createFile(formProps) {
         parentId,
         children: []
       });
-      dispatch({
-        type: ActionTypes.HIDE_MODAL
-      });
+      dispatch(reset('new-file'));
+      // dispatch({
+      //   type: ActionTypes.HIDE_MODAL
+      // });
       dispatch(setUnsavedChanges(true));
     }
   };
