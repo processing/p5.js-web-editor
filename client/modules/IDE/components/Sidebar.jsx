@@ -49,12 +49,12 @@ class Sidebar extends React.Component {
             <ul className="sidebar__project-options">
               <li>
                 <a aria-label="add folder" onClick={this.props.newFolder} >
-                  Add Folder
+                  Add folder
                 </a>
               </li>
               <li>
                 <a aria-label="add file" onClick={this.props.newFile} >
-                  Add File
+                  Add file
                 </a>
               </li>
             </ul>
