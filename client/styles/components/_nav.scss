@@ -34,22 +34,22 @@
 
 .nav__dropdown {
 	@include themify() {
-		background-color: map-get($theme-map, 'background-color');
-		border: 1px solid map-get($theme-map, 'ide-border-color');
+		background-color: map-get($theme-map, 'modal-background-color');
+		border: 1px solid map-get($theme-map, 'modal-border-color');
+		box-shadow: 0 0 18px getThemifyVariable('shadow-color');
 	}
-	@extend %hidden-element;
-	& li + li {
-		margin-top: #{10 / $base-font-size}rem;
-	}
+  @extend %hidden-element;
+	text-align: left;
 	width: #{140 / $base-font-size}rem;
 	.nav__item:hover & {
 		display: flex;
 		position: absolute;
 		flex-direction: column;
-		padding: #{10 / $base-font-size}rem;
-		left: #{-10 / $base-font-size}rem;
+  	top: #{-8 / $base-font-size}rem;;
+		left: #{-11 / $base-font-size}rem;
 		height: auto;
 	}
+	padding-bottom: #{8 / $base-font-size}rem;
 }
 
 .nav__item-spacer {
@@ -58,3 +58,38 @@
 	}	
 	padding: 0 #{15 / $base-font-size}rem;
 }
+
+.nav__dropdown li {
+  padding: #{4 / $base-font-size}rem #{16 / $base-font-size}rem;
+  width: 100%;
+}
+
+.nav__dropdown a {
+  @include themify() {
+    color: getThemifyVariable('secondary-text-color');
+  }
+}
+
+.nav__dropdown a:hover {
+  @include themify() {
+    color: getThemifyVariable('primary-text-color');
+  }
+}
+
+.nav__dropdown-heading {
+  @include themify() {
+		border-bottom: 1px dashed map-get($theme-map, 'inactive-text-color');
+  }
+  margin-top: #{3 / $base-font-size}rem;
+  text-align: center;
+  margin-bottom: #{4 / $base-font-size}rem;
+}
+
+.nav__dropdown-heading a, .nav__dropdown-heading a:hover {
+  @include themify() {
+    color: getThemifyVariable('inactive-text-color');
+  }
+  cursor: default;
+  width: 100%;
+}
+

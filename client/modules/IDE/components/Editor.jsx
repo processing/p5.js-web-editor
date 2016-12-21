@@ -230,7 +230,7 @@ class Editor extends React.Component {
             <a onClick={this.tidyCode}>Tidy</a>
           </li>
           <li>
-            <a onClick={this.props.showKeyboardShortcutModal}>Keyboard Shortcuts</a>
+            <a onClick={this.props.showKeyboardShortcutModal}>Keyboard shortcuts</a>
           </li>
         </ul>
         <div ref="container" className="editor-holder" tabIndex="0">
