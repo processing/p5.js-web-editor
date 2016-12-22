@@ -28,10 +28,6 @@ import SplitPane from 'react-split-pane';
 import Overlay from '../../App/components/Overlay';
 import SketchList from '../components/SketchList';
 import About from '../components/About';
-import LoginView from '../components/LoginView';
-import SignupView from '../components/SignupView';
-import ResetPasswordView from '../components/ResetPasswordView';
-import NewPasswordView from '../components/NewPasswordView';
 
 class IDEView extends React.Component {
   constructor(props) {
@@ -52,14 +48,13 @@ class IDEView extends React.Component {
 
       // if autosave is on and the user is the owner of the project
       if (this.props.preferences.autosave
-        && this.props.project.owner
-        && this.props.project.owner.id === this.props.user.id) {
+        && this.isUserOwner()) {
         this.autosaveInterval = setInterval(this.props.autosaveProject, 30000);
       }
     }
 
     this.consoleSize = this.props.ide.consoleIsExpanded ? 180 : 29;
-    this.sidebarSize = this.props.ide.sidebarIsExpanded ? 200 : 25;
+    this.sidebarSize = this.props.ide.sidebarIsExpanded ? 160 : 20;
     this.forceUpdate();
 
     this.isMac = navigator.userAgent.toLowerCase().indexOf('mac') !== -1;
@@ -84,7 +79,7 @@ class IDEView extends React.Component {
     }
 
     if (this.props.ide.sidebarIsExpanded !== nextProps.ide.sidebarIsExpanded) {
-      this.sidebarSize = nextProps.ide.sidebarIsExpanded ? 200 : 25;
+      this.sidebarSize = nextProps.ide.sidebarIsExpanded ? 160 : 20;
     }
 
     if (nextProps.params.project_id && !this.props.params.project_id) {
@@ -104,7 +99,7 @@ class IDEView extends React.Component {
 
   componentDidUpdate(prevProps) {
     // if user is the owner of the project
-    if (this.props.project.owner && this.props.project.owner.id === this.props.user.id) {
+    if (this.isUserOwner()) {
       // if the user turns on autosave
       // or the user saves the project for the first time
       if (!this.autosaveInterval &&
@@ -135,6 +130,10 @@ class IDEView extends React.Component {
     this.sidebarSize = undefined;
   }
 
+  isUserOwner() {
+    return this.props.project.owner && this.props.project.owner.id === this.props.user.id;
+  }
+
   _handleConsolePaneOnDragFinished() {
     this.consoleSize = this.refs.consolePane.state.draggedSize;
     this.refs.consolePane.setState({
@@ -156,7 +155,7 @@ class IDEView extends React.Component {
     if (e.keyCode === 83 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
       e.preventDefault();
       e.stopPropagation();
-      if (this.props.project.owner && this.props.project.owner.id === this.props.user.id) {
+      if (this.isUserOwner() || this.props.user.authenticated && !this.props.project.owner) {
         this.props.saveProject();
       }
       // 13 === enter
@@ -267,8 +266,6 @@ class IDEView extends React.Component {
               setSelectedFile={this.props.setSelectedFile}
               newFile={this.props.newFile}
               isExpanded={this.props.ide.sidebarIsExpanded}
-              expandSidebar={this.props.expandSidebar}
-              collapseSidebar={this.props.collapseSidebar}
               showFileOptions={this.props.showFileOptions}
               hideFileOptions={this.props.hideFileOptions}
               deleteFile={this.props.deleteFile}
@@ -294,6 +291,7 @@ class IDEView extends React.Component {
                 ref="consolePane"
                 onDragFinished={this._handleConsolePaneOnDragFinished}
                 allowResize={this.props.ide.consoleIsExpanded}
+                className="editor-preview-subpanel"
               >
                 <Editor
                   lintWarning={this.props.preferences.lintWarning}
@@ -321,6 +319,9 @@ class IDEView extends React.Component {
                   autorefresh={this.props.preferences.autorefresh}
                   unsavedChanges={this.props.ide.unsavedChanges}
                   projectSavedTime={this.props.ide.projectSavedTime}
+                  isExpanded={this.props.ide.sidebarIsExpanded}
+                  expandSidebar={this.props.expandSidebar}
+                  collapseSidebar={this.props.collapseSidebar}
                 />
                 <Console
                   consoleEvent={this.props.ide.consoleEvent}
@@ -331,7 +332,7 @@ class IDEView extends React.Component {
                   stopSketch={this.props.stopSketch}
                 />
               </SplitPane>
-              <div>
+              <div className="preview-frame-holder">
                 <div className="preview-frame-overlay" ref="overlay">
                 </div>
                 <div>
@@ -414,6 +415,7 @@ class IDEView extends React.Component {
                 <ShareModal
                   projectId={this.props.project.id}
                   closeShareModal={this.props.closeShareModal}
+                  ownerUsername={this.props.project.owner.username}
                 />
               </Overlay>
             );
@@ -425,44 +427,6 @@ class IDEView extends React.Component {
               <Overlay>
                 <KeyboardShortcutModal
                   closeModal={this.props.closeKeyboardShortcutModal}
-                />
-              </Overlay>
-            );
-          }
-        })()}
-        {(() => { // eslint-disable-line
-          if (this.props.location.pathname === '/login') {
-            return (
-              <Overlay>
-                <LoginView previousPath={this.props.ide.previousPath} />
-              </Overlay>
-            );
-          }
-        })()}
-        {(() => { // eslint-disable-line
-          if (this.props.location.pathname === '/signup') {
-            return (
-              <Overlay>
-                <SignupView previousPath={this.props.ide.previousPath} />
-              </Overlay>
-            );
-          }
-        })()}
-        {(() => { // eslint-disable-line
-          if (this.props.location.pathname === '/reset-password') {
-            return (
-              <Overlay>
-                <ResetPasswordView />
-              </Overlay>
-            );
-          }
-        })()}
-        {(() => { // eslint-disable-line
-          if (this.props.location.pathname.match(/\/reset-password\/[a-fA-F0-9]+/)) {
-            return (
-              <Overlay>
-                <NewPasswordView
-                  token={this.props.params.reset_password_token}
                 />
               </Overlay>
             );

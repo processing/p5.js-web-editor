@@ -8,10 +8,15 @@
 
 .CodeMirror-linenumbers {
 	padding-right: #{10 / $base-font-size}rem;
+
 }
 
 .CodeMirror-linenumber {
-	width: #{35 / $base-font-size}rem;
+	width: #{32 / $base-font-size}rem;
+  left: 0 !important;
+  @include themify() {
+    color: getThemifyVariable('inactive-text-color');
+  }
 }
 
 .CodeMirror-lines {
@@ -30,7 +35,7 @@
 
 .CodeMirror-lint-marker-warning, .CodeMirror-lint-marker-error, .CodeMirror-lint-marker-multiple {
   background-image: none;
-  width: 70px;
+  width: #{48 / $base-font-size}rem;
   position: absolute;
   height: 100%;
 }
@@ -50,7 +55,7 @@
 
 .CodeMirror-gutter-elt:not(.CodeMirror-linenumber) {
   opacity: 0.3;
-  width: 70px !important;
+  width: #{48 / $base-font-size}rem !important;
   height: 100%;
   // background-color: rgb(255, 95, 82);
 }
@@ -63,7 +68,7 @@
     color: getThemifyVariable('primary-text-color');
   }
   border-radius: 2px;
-  font-family: 'Avenir Next', Montserrat, sans-serif;
+  font-family: Montserrat, sans-serif;
 }
 
 .CodeMirror-gutters {
@@ -72,36 +77,54 @@
     border-color: getThemifyVariable('ide-border-color');
   }
   // left: 0 !important;
+  width: #{48 / $base-font-size}rem;
 }
+
 
 .editor__options-button {
   @include themify() {
     @extend %icon;
   }
   position: absolute;
-  top: 0;
-  right: #{1.5 / $base-font-size}rem; // move left to avoid vertical scroll bar
+  top: #{10 / $base-font-size}rem;
+  right: #{2 / $base-font-size}rem;
   z-index: 1;
 }
+
 
 .editor__options {
   display: none;
   @extend %modal;
   position: absolute;
-  top: #{20 / $base-font-size}rem;
-  right: #{5 / $base-font-size}rem;
-  padding: #{10 / $base-font-size}rem;
-
+  right: #{0 / $base-font-size}rem;
+  padding: #{8 / $base-font-size}rem #{20 / $base-font-size}rem;
+  font-size: #{12 / $base-font-size}rem;
+  @include themify() {
+    background-color: getThemifyVariable('modal-background-color');
+    box-shadow: 0 0 18px getThemifyVariable('shadow-color');
+  }
   .editor--options & {
     display: block;
   }
 }
 
+.editor__options li {
+  padding: #{4 / $base-font-size}rem 0;
+}
+
+.editor__options a {
+  @include themify() {
+    color: getThemifyVariable('secondary-text-color');
+  }
+}
+
 .editor__file-name {
   @include themify() {
-    color: getThemifyVariable('inactive-text-color');
+    color: getThemifyVariable('secondary-text-color');
   }
-  padding: 0 0 #{7 / $base-font-size}rem #{76 / $base-font-size}rem;
+  height: #{29 / $base-font-size}rem;
+  padding-top: #{7 / $base-font-size}rem;
+  padding-left: #{56 / $base-font-size}rem;
   font-size: #{12 / $base-font-size}rem;
   display: flex;
   justify-content: space-between;

@@ -29,7 +29,11 @@ module.exports = {
       'classnames',
       'react-inlinesvg',
       'react-router',
-      'redux-thunk'
+      'redux-thunk',
+      'csslint',
+      'jshint',
+      'htmlhint',
+      'js-beautify',
     ]
   },
   output: {

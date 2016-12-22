@@ -109,7 +109,7 @@ export function resetPasswordInitiate(req, res) {
       const transporter = nodemailer.createTransport(mg(auth));
       const message = {
         to: user.email,
-        from: 'p5.js Web Editor <noreply@mg.p5js.org>',
+        from: 'p5.js Web Editor <noreply@p5js.org>',
         subject: 'p5.js Web Editor Password Reset',
         text: `You are receiving this email because you (or someone else) have requested the reset of the password for your account.
         \n\nPlease click on the following link, or paste this into your browser to complete the process:

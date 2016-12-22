@@ -33,10 +33,11 @@ class SketchList extends React.Component {
   }
 
   render() {
+    const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
     return (
       <section className="sketch-list" aria-label="project list" tabIndex="0" role="main" id="sketchlist">
         <header className="sketch-list__header">
-          <h2>Sketches</h2>
+          <h2 className="sketch-list__header-title">Open a Sketch</h2>
           <button className="sketch-list__exit-button" onClick={this.closeSketchList}>
             <InlineSVG src={exitUrl} alt="Close Sketch List Overlay" />
           </button>
@@ -46,9 +47,9 @@ class SketchList extends React.Component {
             <thead>
               <tr>
                 <th className="sketch-list__trash-column" scope="col"></th>
-                <th scope="col">Name</th>
-                <th scope="col">Created</th>
-                <th scope="col">Last Updated</th>
+                <th scope="col">Sketch</th>
+                <th scope="col">Date created</th>
+                <th scope="col">Date updated</th>
               </tr>
             </thead>
             <tbody>
@@ -72,9 +73,9 @@ class SketchList extends React.Component {
                     }
                   })()}
                   </td>
-                  <td scope="row"><Link to={`/projects/${sketch._id}`}>{sketch.name}</Link></td>
-                  <td>{moment(sketch.createdAt).format('MMM D, YYYY h:mm:ss A')}</td>
-                  <td>{moment(sketch.updatedAt).format('MMM D, YYYY h:mm:ss A')}</td>
+                  <td scope="row"><Link to={`/${username}/sketches/${sketch._id}`}>{sketch.name}</Link></td>
+                  <td>{moment(sketch.createdAt).format('MMM D, YYYY h:mm A')}</td>
+                  <td>{moment(sketch.updatedAt).format('MMM D, YYYY h:mm A')}</td>
                 </tr>
               )}
             </tbody>
