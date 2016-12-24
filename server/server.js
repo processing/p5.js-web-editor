@@ -33,7 +33,7 @@ import serverRoutes from './routes/server.routes';
 import embedRoutes from './routes/embed.routes';
 
 import { renderIndex } from './views/index';
-import { render404Page } from './views/404Page';
+import { get404Sketch } from './views/404Page';
 
 // Body parser, cookie parser, sessions, serve public assets
 
@@ -93,7 +93,7 @@ app.get('/', (req, res) => {
 app.get('*', (req, res) => {
   res.status(404);
   if (req.accepts('html')) {
-    res.send(render404Page());
+    get404Sketch(html => res.send(html));
     return;
   }
   if (req.accepts('json')) {
