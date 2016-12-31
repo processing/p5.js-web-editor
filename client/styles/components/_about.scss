@@ -5,9 +5,8 @@
   flex-flow: column;
   width: #{720 / $base-font-size}rem;
   outline: none;
-
   & a {
-    color: $about-link-text-color;
+    color: $form-navigation-options-color;
   }
 }
 
@@ -65,9 +64,10 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: #{20 / $base-font-size}rem;
   padding-top: #{17 / $base-font-size}rem;
   padding-right: #{78 / $base-font-size}rem;
+  padding-bottom: #{20 / $base-font-size}rem;
+  padding-left: #{20 / $base-font-size}rem;
 }
 
 .about__content-column {
@@ -103,10 +103,10 @@
 .about__footer {
   display: flex;
   justify-content: space-between;
-  padding: #{20 / $base-font-size}rem;
   padding-top: #{18 / $base-font-size}rem;
-  padding-left: #{291 / $base-font-size}rem;
+  padding-right: #{20 / $base-font-size}rem;
   padding-bottom: #{21 / $base-font-size}rem;
+  padding-left: #{291 / $base-font-size}rem;
 }
 
 .about__footer-list {
