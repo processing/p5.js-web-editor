@@ -3,12 +3,26 @@
   display: flex;
   flex-wrap: wrap;
   flex-flow: column;
+  width: #{720 / $base-font-size}rem;
+  outline: none;
+
+  & a {
+    color: $about-link-text-color;
+  }
 }
 
 .about__header {
   display: flex;
   justify-content: space-between;
-  padding: #{20 / $base-font-size}rem;
+  padding-top: #{12 / $base-font-size}rem;
+  padding-right: #{14 / $base-font-size}rem;
+  padding-bottom: #{20 / $base-font-size}rem;
+  padding-left: #{21 / $base-font-size}rem;
+}
+
+.about__header-title {
+  font-size: #{38 / $base-font-size}rem;
+  font-weight: normal;
 }
 
 .about__exit-button {
@@ -17,6 +31,93 @@
   }
 }
 
-.about__copy {
+.about__logo {
+  @include themify() {
+    & path {
+      fill: getThemifyVariable('logo-color');
+    }
+  }
+}
+
+.about__play-video {
+  padding-top: #{9 / $base-font-size}rem;
+  padding-left: #{5 / $base-font-size}rem;
+}
+
+.about__play-video-button {
+  @include themify() {
+    @extend %toolbar-button;
+    width: #{32 / $base-font-size}rem;
+    height: #{32 / $base-font-size}rem;
+    line-height: #{34 / $base-font-size}rem;
+    border-radius: #{24 / $base-font-size}rem;
+    background-color: $about-play-background-color;
+    border: solid 0.5px $about-button-border-color;
+    &:hover {
+      border-color: getThemifyVariable('button-background-hover-color');
+    }
+  }
+  padding-left: 2px;
+  margin-right: #{9 / $base-font-size}rem;
+}
+
+.about__content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   padding: #{20 / $base-font-size}rem;
+  padding-top: #{17 / $base-font-size}rem;
+  padding-right: #{78 / $base-font-size}rem;
+}
+
+.about__content-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.about__content-column-title {
+  font-size: #{21 / $base-font-size}rem;
+  padding-left: #{17 / $base-font-size}rem;
+}
+
+.about__content-column-asterisk {
+  padding-right: #{5 / $base-font-size}rem;
+  @include themify() {
+    & path {
+      fill: getThemifyVariable('logo-color');
+      stroke: getThemifyVariable('logo-color');
+    }
+  }
+}
+
+.about__content-column-list {
+  @include themify() {
+    padding-top: #{10 / $base-font-size}rem;
+    font-size: #{16 / $base-font-size}rem;
+    & a {
+      color: getThemifyVariable(about-list-text-color);
+    }
+  }
+}
+
+.about__footer {
+  display: flex;
+  justify-content: space-between;
+  padding: #{20 / $base-font-size}rem;
+  padding-top: #{18 / $base-font-size}rem;
+  padding-left: #{291 / $base-font-size}rem;
+  padding-bottom: #{21 / $base-font-size}rem;
+}
+
+.about__footer-list {
+  padding-top: #{12 / $base-font-size}rem;
+}
+
+.about__ok-button {
+  @include themify() {
+    @extend %button;
+    padding: #{7 / $base-font-size}rem #{13 / $base-font-size}rem;
+    font-size: #{16 / $base-font-size}rem;
+    border: #{0.5 / $base-font-size}rem solid $toast-background-color;
+  }
 }

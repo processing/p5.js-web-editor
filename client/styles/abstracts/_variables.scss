@@ -39,6 +39,7 @@ $themes: (
     file-selected-color: #f4f4f4,
     input-text-color: #333,
     input-border-color: #b5b5b5,
+    about-list-text-color: #4a4a4a,
   ),
   dark: (
     logo-color: $p5js-pink,
@@ -72,6 +73,7 @@ $themes: (
     file-selected-color: #404040,
     input-text-color: #333,
     input-border-color: #b5b5b5,
+    about-list-text-color: #f4f4f4,
   ),
   contrast: (
     logo-color: $yellow,
@@ -104,6 +106,7 @@ $themes: (
     file-selected-color: #404040,
     input-text-color: #333,
     input-border-color: #b5b5b5,
+    about-list-text-color: #f4f4f4,
   )
 );
 
@@ -125,3 +128,7 @@ $form-navigation-options-color: #999999;
 
 $icon-color: #8b8b8b;
 $icon-hover-color: #333;
+
+$about-link-text-color: #999;
+$about-play-background-color: rgba(255, 255, 255, 0.7);
+$about-button-border-color: rgba(151, 151, 151, 0.7);
