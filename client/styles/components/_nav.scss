@@ -50,6 +50,7 @@
 		height: auto;
 	}
 	padding-bottom: #{8 / $base-font-size}rem;
+  z-index: 1;
 }
 
 .nav__item-spacer {
@@ -91,5 +92,20 @@
   }
   cursor: default;
   width: 100%;
+}
+
+.nav__announce {
+  position: absolute;
+  top: #{40 / $base-font-size}rem;
+  right: #{88 / $base-font-size}rem;
+  width: #{398 / $base-font-size}rem;
+  padding: #{5 / $base-font-size}rem 0;
+  text-transform: uppercase;
+  background-color: #ffbc00;
+  color: white;
+  text-align: center;
+  padding: #{7 / $base-font-size}rem #{8 / $base-font-size}rem;
+  line-height: 145%;
+  z-index: 0;
 }
 
