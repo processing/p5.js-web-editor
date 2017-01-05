@@ -8,7 +8,11 @@ function Nav(props) {
         <li className="nav__item">
           <a
             className="nav__new"
-            onClick={props.newProject}
+            onClick={() => {
+              if (props.warnIfUnsavedChanges()) {
+                props.newProject();
+              }
+            }}
           >
             New
           </a>
