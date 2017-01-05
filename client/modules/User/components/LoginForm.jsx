@@ -6,7 +6,7 @@ function LoginForm(props) {
   return (
     <form className="form" onSubmit={handleSubmit(props.validateAndLoginUser.bind(this, props.previousPath))}>
       <p className="form__field">
-        <label htmlFor="email" className="form__label">Email</label>
+        <label htmlFor="email" className="form__label">Email/Username</label>
         <input
           className="form__input"
           aria-label="email"

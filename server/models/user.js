@@ -58,4 +58,15 @@ userSchema.methods.comparePassword = function comparePassword(candidatePassword,
   });
 };
 
+userSchema.statics.findByMailOrName = function findByMailOrName(email) {
+  const query = {
+    $or: [{
+      email,
+    }, {
+      username: email,
+    }],
+  };
+  return this.findOne(query).exec();
+};
+
 export default mongoose.model('User', userSchema);
