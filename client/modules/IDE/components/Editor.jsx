@@ -191,48 +191,50 @@ class Editor extends React.Component {
         role="main"
         className={editorSectionClass}
       >
-        <button
-          aria-label="collapse file navigation"
-          className="sidebar__contract"
-          onClick={this.props.collapseSidebar}
-        >
-          <InlineSVG src={leftArrowUrl} />
-        </button>
-        <button
-          aria-label="expand file navigation"
-          className="sidebar__expand"
-          onClick={this.props.expandSidebar}
-        >
-          <InlineSVG src={rightArrowUrl} />
-        </button>
-        <div className="editor__file-name">
-          <span>{this.props.file.name}
-          {this.props.unsavedChanges ? '*' : null}</span>
-          <Timer
-            projectSavedTime={this.props.projectSavedTime}
-          />
-        </div>
-        <button
-          className="editor__options-button"
-          aria-label="editor options"
-          tabIndex="0"
-          ref="optionsButton"
-          onClick={() => {
-            this.refs.optionsButton.focus();
-            this.props.showEditorOptions();
-          }}
-          onBlur={() => setTimeout(this.props.closeEditorOptions, 200)}
-        >
-          <InlineSVG src={downArrowUrl} />
-        </button>
-        <ul className="editor__options" title="editor options">
-          <li>
-            <a onClick={this.tidyCode}>Tidy</a>
-          </li>
-          <li>
-            <a onClick={this.props.showKeyboardShortcutModal}>Keyboard shortcuts</a>
-          </li>
-        </ul>
+        <header className="editor__header">
+          <button
+            aria-label="collapse file navigation"
+            className="sidebar__contract"
+            onClick={this.props.collapseSidebar}
+          >
+            <InlineSVG src={leftArrowUrl} />
+          </button>
+          <button
+            aria-label="expand file navigation"
+            className="sidebar__expand"
+            onClick={this.props.expandSidebar}
+          >
+            <InlineSVG src={rightArrowUrl} />
+          </button>
+          <div className="editor__file-name">
+            <span>{this.props.file.name}
+            {this.props.unsavedChanges ? '*' : null}</span>
+            <Timer
+              projectSavedTime={this.props.projectSavedTime}
+            />
+          </div>
+          <button
+            className="editor__options-button"
+            aria-label="editor options"
+            tabIndex="0"
+            ref="optionsButton"
+            onClick={() => {
+              this.refs.optionsButton.focus();
+              this.props.showEditorOptions();
+            }}
+            onBlur={() => setTimeout(this.props.closeEditorOptions, 200)}
+          >
+            <InlineSVG src={downArrowUrl} />
+          </button>
+          <ul className="editor__options" title="editor options">
+            <li>
+              <a onClick={this.tidyCode}>Tidy</a>
+            </li>
+            <li>
+              <a onClick={this.props.showKeyboardShortcutModal}>Keyboard shortcuts</a>
+            </li>
+          </ul>
+        </header>
         <div ref="container" className="editor-holder" tabIndex="0">
         </div>
         <EditorAccessibility

@@ -27,12 +27,6 @@
   min-height: 75vh;
 }
 
-.editor-holder {
-	height: 100%;
-  width: 100%;
-  position: absolute;
-}
-
 .editor-accessibility {
   @extend %hidden-element;
 }
