@@ -143,7 +143,9 @@ export function resetProject() {
 }
 
 export function newProject() {
-  browserHistory.push('/');
+  setTimeout(() => {
+    browserHistory.push('/');
+  }, 0);
   return resetProject();
 }
 

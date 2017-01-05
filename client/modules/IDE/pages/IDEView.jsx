@@ -191,6 +191,7 @@ class IDEView extends React.Component {
         return false;
       }
       this.props.setUnsavedChanges(false);
+      return true;
     }
   }
 
@@ -209,6 +210,7 @@ class IDEView extends React.Component {
           stopSketch={this.props.stopSketch}
           showShareModal={this.props.showShareModal}
           openForceAuthentication={this.props.openForceAuthentication}
+          warnIfUnsavedChanges={this.warnIfUnsavedChanges}
         />
         <Toolbar
           className="Toolbar"
