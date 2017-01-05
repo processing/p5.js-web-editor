@@ -27,10 +27,10 @@ class Mail {
     let mailTemp;
     switch (type) {
       case 'reset-password':
-        mailTemp = 'server/views/mailTemplates/reset-password.jade';
+        mailTemp = 'server/views/mailTemplates/reset-password.pug';
         break;
       case 'email-verification':
-        mailTemp = 'server/views/mailTemplates/email-verification.jade';
+        mailTemp = 'server/views/mailTemplates/email-verification.pug';
         break;
     }
     return mailTemp;
