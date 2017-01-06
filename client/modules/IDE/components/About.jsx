@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import InlineSVG from 'react-inlinesvg';
 const exitUrl = require('../../../images/exit.svg');
 const squareLogoUrl = require('../../../images/p5js-square-logo.svg');
-const playUrl = require('../../../images/small-play.svg');
+const playUrl = require('../../../images/play.svg');
 const asteriskUrl = require('../../../images/p5-asterisk.svg');
 import { browserHistory } from 'react-router';
 

@@ -58,6 +58,10 @@
   }
   padding-left: 2px;
   margin-right: #{9 / $base-font-size}rem;
+  svg {
+    width: #{11 / $base-font-size}rem;
+    height: #{11 / $base-font-size}rem;
+  }
 }
 
 .about__content {
