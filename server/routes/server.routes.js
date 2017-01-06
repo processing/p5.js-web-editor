@@ -2,6 +2,8 @@ import { Router } from 'express';
 const router = new Router();
 import path from 'path';
 import { renderIndex } from '../views/index';
+import { get404Sketch } from '../views/404page';
+import { userExists } from '../controllers/user.controller.js';
 
 // this is intended to be a temporary file
 // until i figure out isomorphic rendering
@@ -47,7 +49,9 @@ router.route('/about').get((req, res) => {
 });
 
 router.route('/:username/sketches').get((req, res) => {
-  res.send(renderIndex());
+  userExists(req.params.username, (exists) => (
+    exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
+  ));
 });
 
 export default router;

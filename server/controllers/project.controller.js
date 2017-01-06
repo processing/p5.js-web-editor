@@ -89,17 +89,21 @@ export function getProjects(req, res) {
 export function getProjectsForUser(req, res) {
   if (req.params.username) {
     User.findOne({ username: req.params.username }, (err, user) => {
-      Project.find({ user: user._id }) // eslint-disable-line no-underscore-dangle
-        .sort('-createdAt')
-        .select('name files id createdAt updatedAt')
-        .exec((err, projects) => {
-          res.json(projects);
-        });
+      if (!user) {
+        return res.status(404).json({ message: 'User with that username does not exist.' });
+      } else {
+        Project.find({ user: user._id }) // eslint-disable-line no-underscore-dangle
+          .sort('-createdAt')
+          .select('name files id createdAt updatedAt')
+          .exec((err, projects) => res.json(projects));
+      }
+      return null;
     });
   } else {
     // could just move this to client side
     return res.json([]);
   }
+  return null;
 }
 
 function buildZip(project, req, res) {
@@ -153,4 +157,3 @@ export function downloadProjectAsZip(req, res) {
     buildZip(project, req, res);
   });
 }
-
