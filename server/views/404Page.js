@@ -10,7 +10,6 @@ export function get404Sketch(callback) {
         // Choose a random sketch
         const randomIndex = Math.floor(Math.random() * projects.length);
         const sketch = projects[randomIndex];
-        console.log(sketch);
         let instanceMode = false;
 
         // Get sketch files

@@ -157,4 +157,3 @@ export function downloadProjectAsZip(req, res) {
     buildZip(project, req, res);
   });
 }
-

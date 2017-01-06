@@ -164,3 +164,9 @@ export function updatePassword(req, res) {
 
   // eventually send email that the password has been reset
 }
+
+export function userExists(username, callback) {
+  User.findOne({ username }, (err, user) => (
+    user ? callback(true) : callback(false)
+  ));
+}
