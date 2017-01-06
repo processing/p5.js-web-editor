@@ -21,13 +21,6 @@ class SketchList extends React.Component {
     document.getElementById('sketchlist').focus();
   }
 
-  componentDidUpdate() {
-    if (this.props.sketches.length === 0) {
-      this.props.setToastText('No sketches were found.');
-      this.props.showToast(3000);
-    }
-  }
-
   closeSketchList() {
     browserHistory.push(this.props.previousPath);
   }
