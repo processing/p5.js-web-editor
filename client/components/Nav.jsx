@@ -142,6 +142,7 @@ function Nav(props) {
           );
         })()}
       </ul>
+      <div className="nav__announce">This is a preview version of the editor, that has not yet been officially released. It is in development, you can report bugs <a href="https://github.com/processing/p5.js-web-editor/issues" target="_blank">here</a>. Please use with caution.</div>
     </nav>
   );
 }
