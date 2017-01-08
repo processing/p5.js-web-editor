@@ -88,10 +88,6 @@ class IDEView extends React.Component {
       }
     }
 
-    if (!nextProps.params.project_id && this.props.params.project_id) {
-      this.props.resetProject();
-    }
-
     if (nextProps.preferences.theme !== this.props.preferences.theme) {
       document.body.className = nextProps.preferences.theme;
     }
