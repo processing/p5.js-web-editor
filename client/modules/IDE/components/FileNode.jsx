@@ -48,6 +48,15 @@ export class FileNode extends React.Component {
     }
   }
 
+  toggleFileOptions() {
+    if (this.props.isOptionsOpen) {
+      this.props.hideFileOptions(this.props.id);
+    } else {
+      this.refs[`fileOptions-${this.props.id}`].focus();
+      this.props.showFileOptions(this.props.id);
+    }
+  }
+
   renderChild(childId) {
     return (
       <li key={childId}>
@@ -120,8 +129,7 @@ export class FileNode extends React.Component {
                   ref={`fileOptions-${this.props.id}`}
                   tabIndex="0"
                   onClick={() => {
-                    this.refs[`fileOptions-${this.props.id}`].focus();
-                    this.props.showFileOptions(this.props.id);
+                    this.toggleFileOptions();
                   }}
                 >
                   <InlineSVG src={downArrowUrl} />

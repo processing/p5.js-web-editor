@@ -178,7 +178,6 @@ class Editor extends React.Component {
   }
 
   toggleEditorOptions() {
-    console.log(this.props.editorOptionsVisible);
     if (this.props.editorOptionsVisible) {
       this.props.closeEditorOptions();
     } else {
