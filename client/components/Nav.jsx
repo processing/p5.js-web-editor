@@ -9,7 +9,9 @@ function Nav(props) {
           <a
             className="nav__new"
             onClick={() => {
-              if (props.warnIfUnsavedChanges()) {
+              if (!props.unsavedChanges) {
+                props.newProject();
+              } else if (props.warnIfUnsavedChanges()) {
                 props.newProject();
               }
             }}

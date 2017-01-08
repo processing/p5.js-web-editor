@@ -210,6 +210,7 @@ class IDEView extends React.Component {
           stopSketch={this.props.stopSketch}
           showShareModal={this.props.showShareModal}
           openForceAuthentication={this.props.openForceAuthentication}
+          unsavedChanges={this.props.ide.unsavedChanges}
           warnIfUnsavedChanges={this.warnIfUnsavedChanges}
         />
         <Toolbar
