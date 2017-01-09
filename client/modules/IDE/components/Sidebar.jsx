@@ -16,6 +16,15 @@ class Sidebar extends React.Component {
     this.props.setSelectedFile(this.props.files[1].id);
   }
 
+  toggleProjectOptions() {
+    if (this.props.projectOptionsVisible) {
+      this.props.closeProjectOptions();
+    } else {
+      this.refs.sidebarOptions.focus();
+      this.props.openProjectOptions();
+    }
+  }
+
   render() {
     const sidebarClass = classNames({
       sidebar: true,
@@ -39,8 +48,7 @@ class Sidebar extends React.Component {
               tabIndex="0"
               ref="sidebarOptions"
               onClick={() => {
-                this.refs.sidebarOptions.focus();
-                this.props.openProjectOptions();
+                this.toggleProjectOptions();
               }}
               onBlur={() => setTimeout(this.props.closeProjectOptions, 200)}
             >

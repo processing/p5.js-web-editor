@@ -177,6 +177,15 @@ class Editor extends React.Component {
     }
   }
 
+  toggleEditorOptions() {
+    if (this.props.editorOptionsVisible) {
+      this.props.closeEditorOptions();
+    } else {
+      this.refs.optionsButton.focus();
+      this.props.showEditorOptions();
+    }
+  }
+
   _cm: CodeMirror.Editor
 
   render() {
@@ -222,8 +231,7 @@ class Editor extends React.Component {
             tabIndex="0"
             ref="optionsButton"
             onClick={() => {
-              this.refs.optionsButton.focus();
-              this.props.showEditorOptions();
+              this.toggleEditorOptions();
             }}
             onBlur={() => setTimeout(this.props.closeEditorOptions, 200)}
           >
