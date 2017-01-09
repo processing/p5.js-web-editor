@@ -6,7 +6,7 @@ const initialState = {
   consoleEvent: [],
   modalIsVisible: false,
   sidebarIsExpanded: false,
-  consoleIsExpanded: false,
+  consoleIsExpanded: true,
   preferencesIsVisible: false,
   projectOptionsVisible: false,
   newFolderModalVisible: false,

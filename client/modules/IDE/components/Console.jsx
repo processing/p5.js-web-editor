@@ -81,7 +81,7 @@ class Console extends React.Component {
     return (
       <div ref="console" className={consoleClass} role="main" tabIndex="0" title="console">
         <div className="preview-console__header">
-          <h2 className="preview-console__header-title"><span className="preview-console__icon">>_</span>console</h2>
+          <h2 className="preview-console__header-title">console</h2>
           <button className="preview-console__collapse" onClick={this.props.collapseConsole} aria-label="collapse console">
             <InlineSVG src={downArrowUrl} />
           </button>
