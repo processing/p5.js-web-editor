@@ -23,6 +23,7 @@ import * as EditorAccessibilityActions from '../actions/editorAccessibility';
 import * as PreferencesActions from '../actions/preferences';
 import * as UserActions from '../../User/actions';
 import * as ToastActions from '../actions/toast';
+import * as ConsoleActions from '../actions/console';
 import { getHTMLFile } from '../reducers/files';
 import SplitPane from 'react-split-pane';
 import Overlay from '../../App/components/Overlay';
@@ -323,7 +324,7 @@ class IDEView extends React.Component {
                   collapseSidebar={this.props.collapseSidebar}
                 />
                 <Console
-                  consoleEvent={this.props.ide.consoleEvent}
+                  consoleLines={this.props.console}
                   isPlaying={this.props.ide.isPlaying}
                   isExpanded={this.props.ide.consoleIsExpanded}
                   expandConsole={this.props.expandConsole}
@@ -586,6 +587,7 @@ IDEView.propTypes = {
   resetProject: PropTypes.func.isRequired,
   closeForceAuthentication: PropTypes.func.isRequired,
   openForceAuthentication: PropTypes.func.isRequired,
+  console: PropTypes.array.isRequired
 };
 
 function mapStateToProps(state) {
@@ -598,7 +600,8 @@ function mapStateToProps(state) {
     editorAccessibility: state.editorAccessibility,
     user: state.user,
     project: state.project,
-    toast: state.toast
+    toast: state.toast,
+    console: state.console
   };
 }
 
@@ -610,7 +613,8 @@ function mapDispatchToProps(dispatch) {
     IDEActions,
     PreferencesActions,
     UserActions,
-    ToastActions),
+    ToastActions,
+    ConsoleActions),
   dispatch);
 }
 

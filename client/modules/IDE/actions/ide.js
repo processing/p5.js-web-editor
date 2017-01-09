@@ -61,13 +61,6 @@ export function resetSelectedFile(previousId) {
   };
 }
 
-export function dispatchConsoleEvent(...args) {
-  return {
-    type: ActionTypes.CONSOLE_EVENT,
-    event: args[0].data
-  };
-}
-
 export function newFile() {
   return {
     type: ActionTypes.SHOW_MODAL

@@ -3,7 +3,6 @@ import * as ActionTypes from '../../../constants';
 const initialState = {
   isPlaying: false,
   isTextOutputPlaying: false,
-  consoleEvent: [],
   modalIsVisible: false,
   sidebarIsExpanded: false,
   consoleIsExpanded: true,

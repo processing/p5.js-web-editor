@@ -14,13 +14,8 @@ class Console extends React.Component {
 
   constructor(props) {
     super(props);
-
-    /**
-     *  An array of React Elements that include previous console messages
-     *  @type {Array}
-     */
-    this.children = [];
     this.appendConsoleEvent = this.appendConsoleEvent.bind(this);
+    this.clearConsole = this.clearConsole.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -41,11 +36,12 @@ class Console extends React.Component {
     }
   }
 
-  shouldComponentUpdate(nextProps) {
-    return (nextProps.consoleEvent !== this.props.consoleEvent)
-      || (nextProps.isPlaying && !this.props.isPlaying)
-      || (this.props.isExpanded !== nextProps.isExpanded);
-  }
+  // shouldComponentUpdate(nextProps) {
+  //   return (nextProps.consoleEvent !== this.props.consoleEvent)
+  //     || (nextProps.isPlaying && !this.props.isPlaying)
+  //     || (this.props.isExpanded !== nextProps.isExpanded)
+  //     || ;
+  // }
 
   componentDidUpdate() {
     this.refs.console_messages.scrollTop = this.refs.console_messages.scrollHeight;
@@ -71,6 +67,10 @@ class Console extends React.Component {
     this.children.push(nextChild);
   }
 
+  clearConsole() {
+    this.children = [];
+  }
+
   render() {
     const childrenToDisplay = this.children.slice(-consoleMax);
     const consoleClass = classNames({
@@ -82,12 +82,17 @@ class Console extends React.Component {
       <div ref="console" className={consoleClass} role="main" tabIndex="0" title="console">
         <div className="preview-console__header">
           <h2 className="preview-console__header-title">console</h2>
-          <button className="preview-console__collapse" onClick={this.props.collapseConsole} aria-label="collapse console">
-            <InlineSVG src={downArrowUrl} />
-          </button>
-          <button className="preview-console__expand" onClick={this.props.expandConsole} aria-label="expand console">
-            <InlineSVG src={upArrowUrl} />
-          </button>
+          <div className="preview-console__header-buttons">
+            <button className="preview-console__clear" onClick={this.clearConsole} aria-label="clear console">
+              Clear
+            </button>
+            <button className="preview-console__collapse" onClick={this.props.collapseConsole} aria-label="collapse console">
+              <InlineSVG src={downArrowUrl} />
+            </button>
+            <button className="preview-console__expand" onClick={this.props.expandConsole} aria-label="expand console">
+              <InlineSVG src={upArrowUrl} />
+            </button>
+          </div>
         </div>
         <div ref="console_messages" className="preview-console__messages">
           {childrenToDisplay}
@@ -99,7 +104,7 @@ class Console extends React.Component {
 }
 
 Console.propTypes = {
-  consoleEvent: PropTypes.array,
+  consoleLines: PropTypes.array,
   isPlaying: PropTypes.bool.isRequired,
   isExpanded: PropTypes.bool.isRequired,
   collapseConsole: PropTypes.func.isRequired,
