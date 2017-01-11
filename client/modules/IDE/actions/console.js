@@ -6,9 +6,9 @@ export function clearConsole() {
   };
 }
 
-export function dispatchConsoleEvent(...args) {
+export function dispatchConsoleEvent(messages) {
   return {
     type: ActionTypes.CONSOLE_EVENT,
-    event: args[0].data
+    event: messages
   };
 }

@@ -324,12 +324,12 @@ class IDEView extends React.Component {
                   collapseSidebar={this.props.collapseSidebar}
                 />
                 <Console
-                  consoleLines={this.props.console}
+                  consoleEvents={this.props.console}
                   isPlaying={this.props.ide.isPlaying}
                   isExpanded={this.props.ide.consoleIsExpanded}
                   expandConsole={this.props.expandConsole}
                   collapseConsole={this.props.collapseConsole}
-                  stopSketch={this.props.stopSketch}
+                  clearConsole={this.props.clearConsole}
                 />
               </SplitPane>
               <div className="preview-frame-holder">
@@ -359,6 +359,8 @@ class IDEView extends React.Component {
                   endSketchRefresh={this.props.endSketchRefresh}
                   stopSketch={this.props.stopSketch}
                   setBlobUrl={this.props.setBlobUrl}
+                  stopSketch={this.props.stopSketch}
+                  expandConsole={this.props.expandConsole}
                 />
               </div>
             </SplitPane>
@@ -587,7 +589,8 @@ IDEView.propTypes = {
   resetProject: PropTypes.func.isRequired,
   closeForceAuthentication: PropTypes.func.isRequired,
   openForceAuthentication: PropTypes.func.isRequired,
-  console: PropTypes.array.isRequired
+  console: PropTypes.array.isRequired,
+  clearConsole: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

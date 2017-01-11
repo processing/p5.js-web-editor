@@ -6,7 +6,7 @@ const initialState = [];
 const console = (state = initialState, action) => {
   switch (action.type) {
     case ActionTypes.CONSOLE_EVENT:
-      return [...state, action.event].slice(-consoleMax);
+      return state.concat(action.event).slice(-consoleMax);
     case ActionTypes.CLEAR_CONSOLE:
       return [];
     default:
