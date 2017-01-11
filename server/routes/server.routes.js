@@ -1,6 +1,5 @@
 import { Router } from 'express';
 const router = new Router();
-import path from 'path';
 import { renderIndex } from '../views/index';
 import { get404Sketch } from '../views/404Page';
 import { userExists } from '../controllers/user.controller.js';

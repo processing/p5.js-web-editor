@@ -8,7 +8,7 @@ export function createFile(req, res) {
   Project.findByIdAndUpdate(req.params.project_id,
     {
       $push: {
-        'files': req.body
+        files: req.body
       }
     },
     {

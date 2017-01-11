@@ -1,7 +1,4 @@
 import Project from '../models/project';
-import escapeStringRegexp from 'escape-string-regexp';
-const startTag = '@fs-';
-import { resolvePathToFile } from '../utils/filePath';
 import {
   injectMediaUrls,
   resolvePathsForElementsWithAttribute,
@@ -14,15 +11,15 @@ export function serveProject(req, res) {
     .exec((err, project) => {
       // TODO this does not parse html
       const files = project.files;
-      let htmlFile = files.find(file => file.name.match(/\.html$/i)).content;
+      const htmlFile = files.find(file => file.name.match(/\.html$/i)).content;
       const filesToInject = files.filter(file => file.name.match(/\.(js|css)$/i));
       injectMediaUrls(filesToInject, files, req.params.project_id);
 
-      jsdom.env(htmlFile, (err, window) => {
+      jsdom.env(htmlFile, (innerErr, window) => {
         const sketchDoc = window.document;
 
         const base = sketchDoc.createElement('base');
-        const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+        const fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
         base.href = `${fullUrl}/`;
         sketchDoc.head.appendChild(base);
 
