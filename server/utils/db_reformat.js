@@ -1,3 +1,4 @@
+/* eslint-disable */
 import mongoose from 'mongoose';
 import path from 'path';
 import { uniqWith, isEqual } from 'lodash';
