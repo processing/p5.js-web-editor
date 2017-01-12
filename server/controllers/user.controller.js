@@ -26,7 +26,7 @@ export function createUser(req, res, next) {
           }
           mail.send('email-verification', {
             body: {
-              link: `http://${req.headers.host}/api/verify?t=${auth.createVerificationToken(req.body.email)}`
+              link: `http://${req.headers.host}/verify?t=${auth.createVerificationToken(req.body.email)}`
             },
             to: req.body.email,
             subject: 'Email Verification',
