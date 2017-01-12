@@ -1,9 +1,10 @@
 .form-error {
   display: block;
-  padding-top: #{10 / $base-font-size}rem;
-  color: $console-error-color;
+  padding-top: #{4 / $base-font-size}rem;
+  color: $p5js-pink;
   width: #{300 / $base-font-size}rem;
-  font-size: #{12 / $base-font-size}rem;
+  font-size: #{9 / $base-font-size}rem;
+  text-align: left;
 }
 
 .form__cancel-button {
@@ -12,6 +13,26 @@
 }
 
 .form__navigation-options {
-  margin-top: #{10 / $base-font-size}rem;
+  margin-top: #{16 / $base-font-size}rem;
   font-size: #{12 / $base-font-size}rem;
+  color: $form-navigation-options-color;
+}
+
+.form__label {
+  color: $secondary-form-title-color;
+  font-size: #{12 / $base-font-size}rem;
+  margin-top: #{25 / $base-font-size}rem;
+  margin-bottom: #{7 / $base-font-size}rem;
+  display: block;
+}
+
+.form__input {
+  width: #{360 / $base-font-size}rem;
+  height: #{40 / $base-font-size}rem;
+  color: $icon-hover-color;
+  border-color: $secondary-form-title-color;
+}
+
+.form input[type="submit"] {
+  @extend %forms-button;
 }

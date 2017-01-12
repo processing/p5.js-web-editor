@@ -88,8 +88,8 @@ export function updatePreferences(req, res) {
 export function resetPasswordInitiate(req, res) {
   async.waterfall([
     (done) => {
-      crypto.randomBytes(20, function (err, buf) {
-        var token = buf.toString('hex');
+      crypto.randomBytes(20, (err, buf) => {
+        const token = buf.toString('hex');
         done(err, token);
       });
     },
@@ -101,7 +101,7 @@ export function resetPasswordInitiate(req, res) {
         user.resetPasswordToken = token;
         user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
 
-        user.save(function (err) {
+        user.save((err) => {
           done(err, token, user);
         });
       });
@@ -179,4 +179,10 @@ export function updatePassword(req, res) {
   });
 
   // eventually send email that the password has been reset
+}
+
+export function userExists(username, callback) {
+  User.findOne({ username }, (err, user) => (
+    user ? callback(true) : callback(false)
+  ));
 }

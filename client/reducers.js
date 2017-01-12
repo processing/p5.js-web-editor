@@ -7,6 +7,7 @@ import editorAccessibility from './modules/IDE/reducers/editorAccessibility';
 import user from './modules/User/reducers';
 import sketches from './modules/IDE/reducers/projects';
 import toast from './modules/IDE/reducers/toast';
+import console from './modules/IDE/reducers/console';
 import { reducer as form } from 'redux-form';
 
 const rootReducer = combineReducers({
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
   project,
   sketches,
   editorAccessibility,
-  toast
+  toast,
+  console
 });
 
 export default rootReducer;

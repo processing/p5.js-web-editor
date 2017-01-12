@@ -26,7 +26,6 @@ const defaultHTML =
 
 const defaultCSS =
 `html, body {
-  overflow: hidden;
   margin: 0;
   padding: 0;
 }

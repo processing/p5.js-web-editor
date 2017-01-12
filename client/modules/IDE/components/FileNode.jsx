@@ -18,6 +18,7 @@ export class FileNode extends React.Component {
     this.handleFileNameChange = this.handleFileNameChange.bind(this);
     this.validateFileName = this.validateFileName.bind(this);
     this.handleFileClick = this.handleFileClick.bind(this);
+    this.toggleFileOptions = this.toggleFileOptions.bind(this);
   }
 
   handleFileClick(e) {
@@ -48,6 +49,16 @@ export class FileNode extends React.Component {
     }
   }
 
+  toggleFileOptions(e) {
+    e.preventDefault();
+    if (this.props.isOptionsOpen) {
+      this.props.hideFileOptions(this.props.id);
+    } else {
+      this.refs[`fileOptions-${this.props.id}`].focus();
+      this.props.showFileOptions(this.props.id);
+    }
+  }
+
   renderChild(childId) {
     return (
       <li key={childId}>
@@ -74,7 +85,7 @@ export class FileNode extends React.Component {
         {(() => { // eslint-disable-line
           if (this.props.name !== 'root') {
             return (
-              <div className="file-item__content">
+              <div className="file-item__content" onContextMenu={this.toggleFileOptions}>
                 <span className="file-item__spacer"></span>
                 {(() => { // eslint-disable-line
                   if (this.props.fileType === 'file') {
@@ -119,10 +130,7 @@ export class FileNode extends React.Component {
                   aria-label="view file options"
                   ref={`fileOptions-${this.props.id}`}
                   tabIndex="0"
-                  onClick={() => {
-                    this.refs[`fileOptions-${this.props.id}`].focus();
-                    this.props.showFileOptions(this.props.id);
-                  }}
+                  onClick={this.toggleFileOptions}
                 >
                   <InlineSVG src={downArrowUrl} />
                 </button>

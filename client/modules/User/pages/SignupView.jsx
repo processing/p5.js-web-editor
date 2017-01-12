@@ -1,35 +1,57 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
-import * as UserActions from '../../User/actions';
+import * as UserActions from '../actions';
 import { reduxForm } from 'redux-form';
 import SignupForm from '../components/SignupForm';
 import axios from 'axios';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
+import InlineSVG from 'react-inlinesvg';
+const exitUrl = require('../../../images/exit.svg');
+const logoUrl = require('../../../images/p5js-logo.svg');
 
 class SignupView extends React.Component {
-  componentDidMount() {
-    this.refs.signup.focus();
+  constructor(props) {
+    super(props);
+    this.closeSignupPage = this.closeSignupPage.bind(this);
+    this.gotoHomePage = this.gotoHomePage.bind(this);
+  }
+
+  closeSignupPage() {
+    browserHistory.push(this.props.previousPath);
+  }
+
+  gotoHomePage() {
+    browserHistory.push('/');
   }
 
   render() {
     return (
-      <div className="signup" ref="signup" tabIndex="0">
-        <h1>Sign Up</h1>
-        <SignupForm {...this.props} />
-        <p className="form__navigation-options">
-          Already have an account?&nbsp;
-          <Link className="form__login-button" to="/login">Login</Link>
-        </p>
-        <Link className="form__cancel-button" to="/">Cancel</Link>
+      <div className="form-container">
+        <div className="form-container__header">
+          <button className="form-container__logo-button" onClick={this.gotoHomePage}>
+            <InlineSVG src={logoUrl} alt="p5js Logo" />
+          </button>
+          <button className="form-container__exit-button" onClick={this.closeSignupPage}>
+            <InlineSVG src={exitUrl} alt="Close Signup Page" />
+          </button>
+        </div>
+        <div className="form-container__content">
+          <h2 className="form-container__title">Sign Up</h2>
+          <SignupForm {...this.props} />
+          <p className="form__navigation-options">
+            Already have an account?&nbsp;
+            <Link className="form__login-button" to="/login">Log In</Link>
+          </p>
+        </div>
       </div>
     );
   }
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   return {
     user: state.user,
-    previousPath: ownProps.previousPath
+    previousPath: state.ide.previousPath
   };
 }
 
@@ -89,6 +111,10 @@ function validate(formProps) {
 function onSubmitFail(errors) {
   console.log(errors);
 }
+
+SignupView.propTypes = {
+  previousPath: PropTypes.string.isRequired
+};
 
 export default reduxForm({
   form: 'signup',

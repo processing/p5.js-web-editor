@@ -52,11 +52,16 @@
 	padding: #{5 / $base-font-size}rem;
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 }
 
 .preview-console__header-title {
-	font-size: #{16 / $base-font-size}rem;
+	font-size: #{12 / $base-font-size}rem;
 	font-weight: normal;
+}
+
+.preview-console__icon {
+	padding-right: #{20 / $base-font-size}rem;
 }
 
 .preview-console__messages {
@@ -66,6 +71,7 @@
 }
 
 .preview-console__collapse {
+	padding-top: #{3 / $base-font-size}rem;
 	@include themify() {
 		@extend %icon;
 	}
@@ -75,11 +81,24 @@
 }
 
 .preview-console__expand {
+	padding-top: #{3 / $base-font-size}rem;
 	@include themify() {
 		@extend %icon;
 	}
 	display: none;
 	.preview-console--collapsed & {
 		display: inline-block;
+	}
+}
+
+.preview-console__header-buttons {
+	display: flex;
+	align-items: center;
+}
+
+.preview-console__clear {
+	padding-right: #{10 / $base-font-size}rem;
+	.preview-console--collapsed & {
+		display: none;
 	}
 }

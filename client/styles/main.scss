@@ -17,8 +17,6 @@
 @import 'components/nav';
 @import 'components/toolbar';
 @import 'components/preferences';
-@import 'components/signup';
-@import 'components/login';
 @import 'components/reset-password';
 @import 'components/new-password';
 @import 'components/sketch-list';
@@ -33,6 +31,7 @@
 @import 'components/toast';
 @import 'components/timer';
 @import 'components/force-authentication';
+@import 'components/form-container';
 
 @import 'layout/ide';
 @import 'layout/fullscreen';

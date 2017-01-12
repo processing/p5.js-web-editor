@@ -8,7 +8,13 @@ function Nav(props) {
         <li className="nav__item">
           <a
             className="nav__new"
-            onClick={props.newProject}
+            onClick={() => {
+              if (!props.unsavedChanges) {
+                props.newProject();
+              } else if (props.warnIfUnsavedChanges()) {
+                props.newProject();
+              }
+            }}
           >
             New
           </a>
@@ -111,7 +117,7 @@ function Nav(props) {
             return (
               <li className="nav__item">
                 <p>
-                  <Link to="/login">Login</Link> or <Link to="/signup">Sign Up</Link>
+                  <Link to="/login">Log in</Link> <span className="nav__item-spacer">or</span> <Link to="/signup">Sign up</Link>
                 </p>
               </li>
             );
@@ -120,14 +126,17 @@ function Nav(props) {
             <li className="nav__item">
               <a>Hello, {props.user.username}!</a>
               <ul className="nav__dropdown">
+                <li className="nav__dropdown-heading">
+                  <a>Hello, {props.user.username}!</a>
+                </li>
                 <li>
                   <Link to="/sketches">
-                    My Sketches
+                    My sketches
                   </Link>
                 </li>
                 <li>
                   <a onClick={props.logoutUser} >
-                    Logout
+                    Log out
                   </a>
                 </li>
               </ul>
@@ -135,6 +144,7 @@ function Nav(props) {
           );
         })()}
       </ul>
+      <div className="nav__announce">This is a preview version of the editor, that has not yet been officially released. It is in development, you can report bugs <a href="https://github.com/processing/p5.js-web-editor/issues" target="_blank">here</a>. Please use with caution.</div>
     </nav>
   );
 }
