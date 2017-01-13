@@ -107,10 +107,16 @@ export function saveProject(autosave = false) {
             }
           }
         })
-        .catch(response => dispatch({
-          type: ActionTypes.PROJECT_SAVE_FAIL,
-          error: response.data
-        }));
+        .catch(response => {
+          if (response.status === 403) {
+            dispatch(showAuthenticationError());
+          } else {
+            dispatch({
+              type: ActionTypes.PROJECT_SAVE_FAIL,
+              error: response.data
+            });
+          }
+        });
     }
   };
 }

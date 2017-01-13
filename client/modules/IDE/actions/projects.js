@@ -1,5 +1,6 @@
 import * as ActionTypes from '../../../constants';
 import axios from 'axios';
+import { showAuthenticationError } from './ide';
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
@@ -33,6 +34,16 @@ export function deleteProject(id) {
           type: ActionTypes.DELETE_PROJECT,
           id
         });
+      })
+      .catch(response => {
+        if (response.status === 403) {
+          dispatch(showAuthenticationError());
+        } else {
+          dispatch({
+            type: ActionTypes.ERROR,
+            error: response.data
+          });
+        }
       });
   };
 }

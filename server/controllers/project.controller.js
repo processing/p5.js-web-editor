@@ -5,8 +5,12 @@ import request from 'request';
 
 
 export function createProject(req, res) {
+  if (!req.user) {
+    return res.status(403).send({ success: false, message: 'Session does not match owner of project.'});
+  }
+
   let projectValues = {
-    user: req.user ? req.user._id : undefined // eslint-disable-line no-underscore-dangle
+    user: req.user._id
   };
 
   projectValues = Object.assign(projectValues, req.body);
