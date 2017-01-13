@@ -20,6 +20,7 @@ const initialState = {
   projectSavedTime: '',
   previousPath: '/',
   forceAuthenticationVisible: false,
+  authenticationError: false
 };
 
 const ide = (state = initialState, action) => {
@@ -96,6 +97,10 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { forceAuthenticationVisible: true });
     case ActionTypes.CLOSE_FORCE_AUTHENTICATION:
       return Object.assign({}, state, { forceAuthenticationVisible: false });
+    case ActionTypes.SHOW_AUTHENTICATION_ERROR:
+      return Object.assign({}, state, { authenticationError: true });
+    case ActionTypes.HIDE_AUTHENTICATION_ERROR:
+      return Object.assign({}, state, { authenticationError: false });
     default:
       return state;
   }

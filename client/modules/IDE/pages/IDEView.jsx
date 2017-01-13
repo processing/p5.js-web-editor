@@ -10,6 +10,7 @@ import NewFolderModal from '../components/NewFolderModal';
 import ShareModal from '../components/ShareModal';
 import KeyboardShortcutModal from '../components/KeyboardShortcutModal';
 import ForceAuthentication from '../components/ForceAuthentication';
+import AuthenticationError from '../components/AuthenticationError';
 import Nav from '../../../components/Nav';
 import Console from '../components/Console';
 import Toast from '../components/Toast';
@@ -446,6 +447,17 @@ class IDEView extends React.Component {
             );
           }
         })()}
+        {(() => { // eslint-disable-line
+          if (this.props.ide.authenticationError) {
+            return (
+              <Overlay>
+                <AuthenticationError
+                  closeModal={this.props.hideAuthenticationError}
+                />
+              </Overlay>
+            );
+          }
+        })()}
       </div>
 
     );
@@ -488,7 +500,8 @@ IDEView.propTypes = {
     infiniteLoopMessage: PropTypes.string.isRequired,
     projectSavedTime: PropTypes.string.isRequired,
     previousPath: PropTypes.string.isRequired,
-    forceAuthenticationVisible: PropTypes.bool.isRequired
+    forceAuthenticationVisible: PropTypes.bool.isRequired,
+    authenticationError: PropTypes.bool.isRequired
   }).isRequired,
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
@@ -591,7 +604,8 @@ IDEView.propTypes = {
   closeForceAuthentication: PropTypes.func.isRequired,
   openForceAuthentication: PropTypes.func.isRequired,
   console: PropTypes.array.isRequired,
-  clearConsole: PropTypes.func.isRequired
+  clearConsole: PropTypes.func.isRequired,
+  hideAuthenticationError: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
