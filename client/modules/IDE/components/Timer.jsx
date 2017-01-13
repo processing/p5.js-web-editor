@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import moment from 'moment';
+import classNames from 'classnames';
 
 class Timer extends React.Component {
   constructor(props) {
@@ -31,8 +32,12 @@ class Timer extends React.Component {
   }
 
   render() {
+    const timerClass = classNames({
+      'timer__saved-time': true,
+      'timer__saved-time--notOwner': !this.props.isUserOwner
+    });
     return (
-      <span className="timer__saved-time">
+      <span className={timerClass}>
         {this.props.projectSavedTime !== '' ? this.showSavedTime() : null}
       </span>
     );
@@ -40,7 +45,8 @@ class Timer extends React.Component {
 }
 
 Timer.propTypes = {
-  projectSavedTime: PropTypes.string.isRequired
+  projectSavedTime: PropTypes.string.isRequired,
+  isUserOwner: PropTypes.bool
 };
 
 export default Timer;

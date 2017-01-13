@@ -223,6 +223,7 @@ class Editor extends React.Component {
             </span>
             <Timer
               projectSavedTime={this.props.projectSavedTime}
+              isUserOwner={this.props.isUserOwner}
             />
           </div>
           <button
@@ -287,7 +288,8 @@ Editor.propTypes = {
   files: PropTypes.array.isRequired,
   isExpanded: PropTypes.bool.isRequired,
   collapseSidebar: PropTypes.func.isRequired,
-  expandSidebar: PropTypes.func.isRequired
+  expandSidebar: PropTypes.func.isRequired,
+  isUserOwner: PropTypes.bool
 };
 
 export default Editor;

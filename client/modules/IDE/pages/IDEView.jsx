@@ -110,7 +110,7 @@ class IDEView extends React.Component {
       }
     }
 
-    if (this.autosaveInterval && !this.props.project.id) {
+    if (this.autosaveInterval && (!this.props.project.id || !this.isUserOwner())) {
       clearInterval(this.autosaveInterval);
       this.autosaveInterval = null;
     }
@@ -322,6 +322,7 @@ class IDEView extends React.Component {
                   isExpanded={this.props.ide.sidebarIsExpanded}
                   expandSidebar={this.props.expandSidebar}
                   collapseSidebar={this.props.collapseSidebar}
+                  isUserOwner={this.isUserOwner()}
                 />
                 <Console
                   consoleEvents={this.props.console}
