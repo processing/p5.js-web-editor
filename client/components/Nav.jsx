@@ -40,7 +40,7 @@ function Nav(props) {
           }
         })()}
         {(() => { // eslint-disable-line
-          if (props.project.id) {
+          if (props.project.id && props.user.authenticated) {
             return (
               <li className="nav__item">
                 <a className="nav__clone" onClick={props.cloneProject}>

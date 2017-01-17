@@ -151,6 +151,7 @@ export function newProject() {
 
 export function cloneProject() {
   return (dispatch, getState) => {
+    dispatch(setUnsavedChanges(false));
     const state = getState();
     const formParams = Object.assign({}, { name: `${state.project.name} copy` }, { files: state.files });
     axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
