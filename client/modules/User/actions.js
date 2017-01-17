@@ -1,6 +1,7 @@
 import * as ActionTypes from '../../constants';
 import { browserHistory } from 'react-router';
 import axios from 'axios';
+import { showAuthenticationError } from '../IDE/actions/ide';
 
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
@@ -80,6 +81,23 @@ export function getUser() {
         dispatch(authError(response.data.error));
       });
   };
+}
+
+export function validateSession() {
+  return (dispatch, getState) => {
+    axios.get(`${ROOT_URL}/session`, { withCredentials: true })
+      .then(response => {
+        const state = getState();
+        if (state.user.username !== response.data.username) {
+          dispatch(showAuthenticationError());
+        }
+      })
+      .catch(response => {
+        if (response.status === 404) {
+          dispatch(showAuthenticationError());
+        }
+      });
+  }
 }
 
 export function logoutUser() {

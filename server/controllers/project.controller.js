@@ -5,8 +5,12 @@ import request from 'request';
 
 
 export function createProject(req, res) {
+  if (!req.user) {
+    return res.status(403).send({ success: false, message: 'Session does not match owner of project.'});
+  }
+
   let projectValues = {
-    user: req.user ? req.user._id : undefined // eslint-disable-line no-underscore-dangle
+    user: req.user._id
   };
 
   projectValues = Object.assign(projectValues, req.body);
@@ -23,33 +27,38 @@ export function createProject(req, res) {
 }
 
 export function updateProject(req, res) {
-  Project.findByIdAndUpdate(req.params.project_id,
-    {
-      $set: req.body
-    })
-    .populate('user', 'username')
-    .exec((err, updatedProject) => {
-      if (err) {
-        console.log(err);
-        return res.json({ success: false });
-      }
-      if (updatedProject.files.length !== req.body.files.length) {
-        const oldFileIds = updatedProject.files.map(file => file.id);
-        const newFileIds = req.body.files.map(file => file.id);
-        const staleIds = oldFileIds.filter(id => newFileIds.indexOf(id) === -1);
-        staleIds.forEach(staleId => {
-          updatedProject.files.id(staleId).remove();
-        });
-        updatedProject.save((innerErr) => {
-          if (innerErr) {
-            console.log(innerErr);
-            return res.json({ success: false });
-          }
-          return res.json(updatedProject);
-        });
-      }
-      return res.json(updatedProject);
-    });
+  Project.findById(req.params.project_id, (err, project) => {
+    if (!req.user || !project.user.equals(req.user._id)) {
+      return res.status(403).send({ success: false, message: 'Session does not match owner of project.'});
+    }
+    Project.findByIdAndUpdate(req.params.project_id,
+      {
+        $set: req.body
+      })
+      .populate('user', 'username')
+      .exec((err, updatedProject) => {
+        if (err) {
+          console.log(err);
+          return res.json({ success: false });
+        }
+        if (updatedProject.files.length !== req.body.files.length) {
+          const oldFileIds = updatedProject.files.map(file => file.id);
+          const newFileIds = req.body.files.map(file => file.id);
+          const staleIds = oldFileIds.filter(id => newFileIds.indexOf(id) === -1);
+          staleIds.forEach(staleId => {
+            updatedProject.files.id(staleId).remove();
+          });
+          updatedProject.save((innerErr) => {
+            if (innerErr) {
+              console.log(innerErr);
+              return res.json({ success: false });
+            }
+            return res.json(updatedProject);
+          });
+        }
+        return res.json(updatedProject);
+      });
+  });
 }
 
 export function getProject(req, res) {
@@ -64,11 +73,16 @@ export function getProject(req, res) {
 }
 
 export function deleteProject(req, res) {
-  Project.remove({ _id: req.params.project_id }, (err) => {
-    if (err) {
-      return res.status(404).send({ message: 'Project with that id does not exist' });
+  Project.findById(req.params.project_id, (err, project) => {
+    if (!req.user || !project.user.equals(req.user._id)) {
+      return res.status(403).json({ success: false, message: 'Session does not match owner of project.'});
     }
-    return res.json({ success: true });
+    Project.remove({ _id: req.params.project_id }, (err) => {
+      if (err) {
+        return res.status(404).send({ message: 'Project with that id does not exist' });
+      }
+      return res.json({ success: true });
+    });
   });
 }
 

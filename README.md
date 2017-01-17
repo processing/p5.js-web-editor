@@ -11,6 +11,8 @@ The p5.js interceptor code has been moved into its own directory! Make sure that
 2. `$ git submodule init`
 3. `$ npm install`
 4. Install MongoDB and make sure it is running
+   * For Mac OSX with [homebrew](http://brew.sh/): `brew install mongodb` then `brew services start mongodb`
+   * For Windows and Linux: [MongoDB Installation](https://docs.mongodb.com/manual/installation/)
 5. Create a file called `.env` in the root of this directory that looks like
 
   ```

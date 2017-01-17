@@ -2,7 +2,12 @@ import * as ActionTypes from '../../../constants';
 import { browserHistory } from 'react-router';
 import axios from 'axios';
 import { showToast, setToastText } from './toast';
-import { setUnsavedChanges, justOpenedProject, resetJustOpenedProject, setProjectSavedTime, resetProjectSavedTime } from './ide';
+import { setUnsavedChanges,
+  justOpenedProject,
+  resetJustOpenedProject,
+  setProjectSavedTime,
+  resetProjectSavedTime,
+  showAuthenticationError } from './ide';
 import moment from 'moment';
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
@@ -67,10 +72,16 @@ export function saveProject(autosave = false) {
             }
           }
         })
-        .catch((response) => dispatch({
-          type: ActionTypes.PROJECT_SAVE_FAIL,
-          error: response.data
-        }));
+        .catch((response) => {
+          if (response.status === 403) {
+            dispatch(showAuthenticationError());
+          } else {
+            dispatch({
+              type: ActionTypes.PROJECT_SAVE_FAIL,
+              error: response.data
+            });
+          }
+        });
     } else {
       axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
         .then(response => {
@@ -96,10 +107,16 @@ export function saveProject(autosave = false) {
             }
           }
         })
-        .catch(response => dispatch({
-          type: ActionTypes.PROJECT_SAVE_FAIL,
-          error: response.data
-        }));
+        .catch(response => {
+          if (response.status === 403) {
+            dispatch(showAuthenticationError());
+          } else {
+            dispatch({
+              type: ActionTypes.PROJECT_SAVE_FAIL,
+              error: response.data
+            });
+          }
+        });
     }
   };
 }

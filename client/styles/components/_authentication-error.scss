@@ -1,0 +1,13 @@
+.authentication-error {
+  @extend %modal; 
+}
+
+.authentication-error__header {
+  padding: #{20 / $base-font-size}rem;
+}
+
+.authentication-error__copy {
+  padding: #{20 / $base-font-size}rem;
+  padding-top: 0;
+  padding-bottom: #{60 / $base-font-size}rem;
+}

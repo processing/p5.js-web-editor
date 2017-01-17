@@ -232,3 +232,15 @@ export function closeForceAuthentication() {
     type: ActionTypes.CLOSE_FORCE_AUTHENTICATION
   };
 }
+
+export function showAuthenticationError() {
+  return {
+    type: ActionTypes.SHOW_AUTHENTICATION_ERROR
+  };
+}
+
+export function hideAuthenticationError() {
+  return {
+    type: ActionTypes.HIDE_AUTHENTICATION_ERROR
+  };
+}
