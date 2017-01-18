@@ -49,10 +49,10 @@ class IDEView extends React.Component {
       }
 
       // if autosave is on and the user is the owner of the project
-      if (this.props.preferences.autosave
-        && this.isUserOwner()) {
-        this.autosaveInterval = setInterval(this.props.autosaveProject, 30000);
-      }
+      // if (this.props.preferences.autosave
+      //   && this.isUserOwner()) {
+      //   this.autosaveInterval = setInterval(this.props.autosaveProject, 30000);
+      // }
     }
 
     this.consoleSize = this.props.ide.consoleIsExpanded ? 150 : 29;
@@ -96,25 +96,37 @@ class IDEView extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    // if user is the owner of the project
-    if (this.isUserOwner()) {
-      // if the user turns on autosave
-      // or the user saves the project for the first time
-      if (!this.autosaveInterval &&
-        ((this.props.preferences.autosave && !prevProps.preferences.autosave) ||
-        (this.props.project.id && !prevProps.project.id))) {
-        this.autosaveInterval = setInterval(this.props.autosaveProject, 30000);
-      // if user turns off autosave preference
+    if (this.isUserOwner() && this.props.project.id) {
+      if (this.props.preferences.autosave && this.props.ide.unsavedChanges && !prevProps.ide.unsavedChanges) {
+        this.autosaveInterval = setTimeout(this.props.autosaveProject, 30000);
       } else if (this.autosaveInterval && !this.props.preferences.autosave && prevProps.preferences.autosave) {
-        clearInterval(this.autosaveInterval);
+        clearTimeout(this.autosaveInterval);
         this.autosaveInterval = null;
       }
-    }
-
-    if (this.autosaveInterval && (!this.props.project.id || !this.isUserOwner())) {
-      clearInterval(this.autosaveInterval);
+    } else if (this.autosaveInterval) {
+      clearTimeout(this.autosaveInterval);
       this.autosaveInterval = null;
     }
+
+    // // if user is the owner of the project
+    // if (this.isUserOwner()) {
+    //   // if the user turns on autosave
+    //   // or the user saves the project for the first time
+    //   if (!this.autosaveInterval &&
+    //     ((this.props.preferences.autosave && !prevProps.preferences.autosave) ||
+    //     (this.props.project.id && !prevProps.project.id))) {
+    //     this.autosaveInterval = setInterval(this.props.autosaveProject, 30000);
+    //   // if user turns off autosave preference
+    //   } else if (this.autosaveInterval && !this.props.preferences.autosave && prevProps.preferences.autosave) {
+    //     clearInterval(this.autosaveInterval);
+    //     this.autosaveInterval = null;
+    //   }
+    // }
+
+    // if (this.autosaveInterval && (!this.props.project.id || !this.isUserOwner())) {
+    //   clearInterval(this.autosaveInterval);
+    //   this.autosaveInterval = null;
+    // }
 
     if (this.props.route.path !== prevProps.route.path) {
       this.props.router.setRouteLeaveHook(this.props.route, (route) => this.warnIfUnsavedChanges(route));
@@ -122,7 +134,7 @@ class IDEView extends React.Component {
   }
 
   componentWillUnmount() {
-    clearInterval(this.autosaveInterval);
+    clearTimeout(this.autosaveInterval);
     this.autosaveInterval = null;
     this.consoleSize = undefined;
     this.sidebarSize = undefined;
