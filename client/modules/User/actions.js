@@ -97,7 +97,7 @@ export function validateSession() {
           dispatch(showAuthenticationError());
         }
       });
-  }
+  };
 }
 
 export function logoutUser() {
