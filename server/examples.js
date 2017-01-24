@@ -25,16 +25,10 @@ const defaultHTML =
 
 const defaultCSS =
 `html, body {
-  overflow: hidden;
   margin: 0;
   padding: 0;
 }
 `;
-
-const a = objectID().toHexString();
-const b = objectID().toHexString();
-const c = objectID().toHexString();
-const r = objectID().toHexString();
 
 const client_id = process.env.GITHUB_ID;
 const client_secret = process.env.GITHUB_SECRET;
@@ -186,6 +180,10 @@ function createProjectsInP5user(projectsInAllCategories) {
       async.eachSeries(projectsInAllCategories, (projectsInOneCategory, categoryCallback) => {
         async.eachSeries(projectsInOneCategory, (project, projectCallback) => {
           let newProject;
+          const a = objectID().toHexString();
+          const b = objectID().toHexString();
+          const c = objectID().toHexString();
+          const r = objectID().toHexString();
           const noNumberprojectName = project.projectName.replace(/(\d+)/g, '');
           if (noNumberprojectName === 'Instance Mode : Instance Container ') {
             newProject = new Project({
