@@ -20,19 +20,19 @@ export function get404Sketch(callback) {
 
         instanceMode = jsFiles.find(file => file.name === 'sketch.js').content.includes('Instance Mode');
 
-        jsFiles.forEach(file => { // Add js files as script tags
+        jsFiles.forEach((file) => { // Add js files as script tags
           const html = htmlFile.split('</body>');
           html[0] = `${html[0]}<script>${file.content}</script>`;
           htmlFile = html.join('</body>');
         });
 
-        cssFiles.forEach(file => { // Add css files as style tags
+        cssFiles.forEach((file) => { // Add css files as style tags
           const html = htmlFile.split('</head>');
           html[0] = `${html[0]}<style>${file.content}</style>`;
           htmlFile = html.join('</head>');
         });
 
-        linkedFiles.forEach(file => { // Add linked files as link tags
+        linkedFiles.forEach((file) => { // Add linked files as link tags
           const html = htmlFile.split('<head>');
           html[1] = `<link href=${file.url}>${html[1]}`;
           htmlFile = html.join('<head>');

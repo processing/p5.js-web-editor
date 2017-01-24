@@ -18,7 +18,7 @@ function createUniqueName(name, parentId, files) {
     .children.map(childFileId => files.find(file => file.id === childFileId));
   let testName = name;
   let index = 1;
-  let existingName = siblingFiles.find((file) => name === file.name);
+  let existingName = siblingFiles.find(file => name === file.name);
 
   while (existingName) {
     testName = appendToFilename(name, `-${index}`);
@@ -56,7 +56,7 @@ export function createFile(formProps) {
         children: []
       };
       axios.post(`${ROOT_URL}/projects/${state.project.id}/files`, postParams, { withCredentials: true })
-        .then(response => {
+        .then((response) => {
           dispatch({
             type: ActionTypes.CREATE_FILE,
             ...response.data,
@@ -113,7 +113,7 @@ export function createFolder(formProps) {
         fileType: 'folder'
       };
       axios.post(`${ROOT_URL}/projects/${state.project.id}/files`, postParams, { withCredentials: true })
-        .then(response => {
+        .then((response) => {
           dispatch({
             type: ActionTypes.CREATE_FILE,
             ...response.data,
@@ -200,7 +200,7 @@ export function deleteFile(id, parentId) {
             parentId
           });
         })
-        .catch(response => {
+        .catch((response) => {
           dispatch({
             type: ActionTypes.ERROR,
             error: response.data

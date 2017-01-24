@@ -20,7 +20,7 @@ export function createFile(req, res) {
       }
       const newFile = updatedProject.files[updatedProject.files.length - 1];
       updatedProject.files.id(req.body.parentId).children.push(newFile.id);
-      updatedProject.save(innerErr => {
+      updatedProject.save((innerErr) => {
         if (innerErr) {
           console.log(innerErr);
           return res.json({ success: false });
@@ -38,7 +38,7 @@ function getAllDescendantIds(files, nodeId) {
 }
 
 function deleteMany(files, ids) {
-  ids.forEach(id => {
+  ids.forEach((id) => {
     files.id(id).remove();
   });
 }
@@ -61,7 +61,7 @@ export function deleteFile(req, res) {
     // project.files.id(req.params.file_id).remove();
     // const childrenArray = project.files.id(req.query.parentId).children;
     // project.files.id(req.query.parentId).children = childrenArray.filter(id => id !== req.params.file_id);
-    project.save(innerErr => {
+    project.save((innerErr) => {
       res.json(project.files);
     });
   });

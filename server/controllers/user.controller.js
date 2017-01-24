@@ -141,7 +141,7 @@ export function validateResetPasswordToken(req, res) {
 }
 
 export function updatePassword(req, res) {
-  User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function (err, user) {
+  User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, (err, user) => {
     if (!user) {
       return res.status(401).json({ success: false, message: 'Password reset token is invalid or has expired.' });
     }
@@ -150,15 +150,13 @@ export function updatePassword(req, res) {
     user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;
 
-    user.save(function (err) {
-      req.logIn(user, function (err) {
-        return res.json({
-          email: req.user.email,
-          username: req.user.username,
-          preferences: req.user.preferences,
-          id: req.user._id
-        });
-      });
+    user.save((err) => {
+      req.logIn(user, err => res.json({
+        email: req.user.email,
+        username: req.user.username,
+        preferences: req.user.preferences,
+        id: req.user._id
+      }));
     });
   });
 

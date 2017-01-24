@@ -4,7 +4,7 @@ const user = (state = { authenticated: false }, action) => {
   switch (action.type) {
     case ActionTypes.AUTH_USER:
       return { ...action.user,
-              authenticated: true };
+        authenticated: true };
     case ActionTypes.UNAUTH_USER:
       return {
         authenticated: false

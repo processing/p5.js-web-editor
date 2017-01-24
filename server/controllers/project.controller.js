@@ -49,7 +49,7 @@ export function updateProject(req, res) {
           const oldFileIds = updatedProject.files.map(file => file.id);
           const newFileIds = req.body.files.map(file => file.id);
           const staleIds = oldFileIds.filter(id => newFileIds.indexOf(id) === -1);
-          staleIds.forEach(staleId => {
+          staleIds.forEach((staleId) => {
             updatedProject.files.id(staleId).remove();
           });
           updatedProject.save((innerErr) => {
@@ -140,27 +140,25 @@ function buildZip(project, req, res) {
   function addFileToZip(file, path) {
     if (file.fileType === 'folder') {
       const newPath = file.name === 'root' ? path : `${path}${file.name}/`;
-      file.children.forEach(fileId => {
+      file.children.forEach((fileId) => {
         const childFile = files.find(f => f.id === fileId);
         (() => {
           addFileToZip(childFile, newPath);
         })();
       });
-    } else {
-      if (file.url) {
-        request({ method: 'GET', url: file.url, encoding: null }, (err, response, body) => {
-          zip.append(body, { name: `${path}${file.name}` });
-          numCompletedFiles += 1;
-          if (numCompletedFiles === numFiles) {
-            zip.finalize();
-          }
-        });
-      } else {
-        zip.append(file.content, { name: `${path}${file.name}` });
+    } else if (file.url) {
+      request({ method: 'GET', url: file.url, encoding: null }, (err, response, body) => {
+        zip.append(body, { name: `${path}${file.name}` });
         numCompletedFiles += 1;
         if (numCompletedFiles === numFiles) {
           zip.finalize();
         }
+      });
+    } else {
+      zip.append(file.content, { name: `${path}${file.name}` });
+      numCompletedFiles += 1;
+      if (numCompletedFiles === numFiles) {
+        zip.finalize();
       }
     }
   }

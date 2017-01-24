@@ -48,7 +48,7 @@ router.route('/about').get((req, res) => {
 });
 
 router.route('/:username/sketches').get((req, res) => {
-  userExists(req.params.username, (exists) => (
+  userExists(req.params.username, exists => (
     exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
   ));
 });

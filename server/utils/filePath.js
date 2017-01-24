@@ -15,7 +15,7 @@ export function resolvePathToFile(filePath, files) {
         file._id.valueOf().toString() === childFileId.valueOf()
       )
     );
-    childFiles.some(childFile => {
+    childFiles.some((childFile) => {
       if (childFile.name === filePathSegment) {
         currentFile = childFile;
         foundChild = true;
