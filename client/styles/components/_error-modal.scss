@@ -1,23 +1,23 @@
-.force-authentication {
+.error-modal {
   @extend %modal;
   display: flex;
   flex-wrap: wrap;
   flex-flow: column;
 }
 
-.force-authentication__header {
+.error-modal__header {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   padding: #{20 / $base-font-size}rem;
 }
 
-.force-authentication__exit-button {
+.error-modal__exit-button {
   @include themify() {
     @extend %icon;
   }
 }
 
-.force-authentication__copy {
+.error-modal__content {
   padding: #{20 / $base-font-size}rem;
   padding-top: 0;
   padding-bottom: #{60 / $base-font-size}rem;

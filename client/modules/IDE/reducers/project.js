@@ -18,14 +18,16 @@ const project = (state, action) => {
       return Object.assign({}, { ...state }, { name: action.name });
     case ActionTypes.NEW_PROJECT:
       return {
-        id: action.id,
-        name: action.name,
+        id: action.project.id,
+        name: action.project.name,
+        updatedAt: action.project.updatedAt,
         owner: action.owner
       };
     case ActionTypes.SET_PROJECT:
       return {
         id: action.project.id,
         name: action.project.name,
+        updatedAt: action.project.updatedAt,
         owner: action.owner
       };
     case ActionTypes.RESET_PROJECT:

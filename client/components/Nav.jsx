@@ -29,7 +29,7 @@ function Nav(props) {
                     if (props.user.authenticated) {
                       props.saveProject();
                     } else {
-                      props.openForceAuthentication();
+                      props.showErrorModal('forceAuthentication');
                     }
                   }}
                 >
@@ -168,7 +168,7 @@ Nav.propTypes = {
   logoutUser: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
   showShareModal: PropTypes.func.isRequired,
-  openForceAuthentication: PropTypes.func.isRequired
+  showErrorModal: PropTypes.func.isRequired
 };
 
 export default Nav;

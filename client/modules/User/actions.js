@@ -1,7 +1,7 @@
 import * as ActionTypes from '../../constants';
 import { browserHistory } from 'react-router';
 import axios from 'axios';
-import { showAuthenticationError, justOpenedProject } from '../IDE/actions/ide';
+import { showErrorModal, justOpenedProject } from '../IDE/actions/ide';
 
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
@@ -91,12 +91,12 @@ export function validateSession() {
       .then(response => {
         const state = getState();
         if (state.user.username !== response.data.username) {
-          dispatch(showAuthenticationError());
+          dispatch(showErrorModal('staleSession'));
         }
       })
       .catch(response => {
         if (response.status === 404) {
-          dispatch(showAuthenticationError());
+          dispatch(showErrorModal('staleSession'));
         }
       });
   };

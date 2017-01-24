@@ -9,8 +9,7 @@ import NewFileModal from '../components/NewFileModal';
 import NewFolderModal from '../components/NewFolderModal';
 import ShareModal from '../components/ShareModal';
 import KeyboardShortcutModal from '../components/KeyboardShortcutModal';
-import ForceAuthentication from '../components/ForceAuthentication';
-import AuthenticationError from '../components/AuthenticationError';
+import ErrorModal from '../components/ErrorModal';
 import Nav from '../../../components/Nav';
 import Console from '../components/Console';
 import Toast from '../components/Toast';
@@ -195,7 +194,7 @@ class IDEView extends React.Component {
           logoutUser={this.props.logoutUser}
           stopSketch={this.props.stopSketch}
           showShareModal={this.props.showShareModal}
-          openForceAuthentication={this.props.openForceAuthentication}
+          showErrorModal={this.props.showErrorModal}
           unsavedChanges={this.props.ide.unsavedChanges}
           warnIfUnsavedChanges={this.warnIfUnsavedChanges}
         />
@@ -425,22 +424,12 @@ class IDEView extends React.Component {
           }
         })()}
         {(() => { // eslint-disable-line
-          if (this.props.ide.forceAuthenticationVisible) {
+          if (this.props.ide.errorType) {
             return (
               <Overlay>
-                <ForceAuthentication
-                  closeModal={this.props.closeForceAuthentication}
-                />
-              </Overlay>
-            );
-          }
-        })()}
-        {(() => { // eslint-disable-line
-          if (this.props.ide.authenticationError) {
-            return (
-              <Overlay>
-                <AuthenticationError
-                  closeModal={this.props.hideAuthenticationError}
+                <ErrorModal
+                  type={this.props.ide.errorType}
+                  closeModal={this.props.hideErrorModal}
                 />
               </Overlay>
             );
@@ -488,9 +477,8 @@ IDEView.propTypes = {
     infiniteLoopMessage: PropTypes.string.isRequired,
     projectSavedTime: PropTypes.string.isRequired,
     previousPath: PropTypes.string.isRequired,
-    forceAuthenticationVisible: PropTypes.bool.isRequired,
-    authenticationError: PropTypes.bool.isRequired,
-    justOpenedProject: PropTypes.bool.isRequired
+    justOpenedProject: PropTypes.bool.isRequired,
+    errorType: PropTypes.string
   }).isRequired,
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
@@ -590,11 +578,10 @@ IDEView.propTypes = {
   setBlobUrl: PropTypes.func.isRequired,
   setPreviousPath: PropTypes.func.isRequired,
   resetProject: PropTypes.func.isRequired,
-  closeForceAuthentication: PropTypes.func.isRequired,
-  openForceAuthentication: PropTypes.func.isRequired,
   console: PropTypes.array.isRequired,
   clearConsole: PropTypes.func.isRequired,
-  hideAuthenticationError: PropTypes.func.isRequired
+  showErrorModal: PropTypes.func.isRequired,
+  hideErrorModal: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

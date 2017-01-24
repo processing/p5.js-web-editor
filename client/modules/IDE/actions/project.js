@@ -7,7 +7,7 @@ import { setUnsavedChanges,
   resetJustOpenedProject,
   setProjectSavedTime,
   resetProjectSavedTime,
-  showAuthenticationError } from './ide';
+  showErrorModal } from './ide';
 import moment from 'moment';
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
@@ -21,7 +21,6 @@ export function getProject(id) {
     }
     axios.get(`${ROOT_URL}/projects/${id}`, { withCredentials: true })
       .then(response => {
-        // browserHistory.push(`/projects/${id}`);
         dispatch({
           type: ActionTypes.SET_PROJECT,
           project: response.data,
@@ -74,7 +73,9 @@ export function saveProject(autosave = false) {
         })
         .catch((response) => {
           if (response.status === 403) {
-            dispatch(showAuthenticationError());
+            dispatch(showErrorModal('staleSession'));
+          } else if (response.status === 409) {
+            dispatch(showErrorModal('staleProject'));
           } else {
             dispatch({
               type: ActionTypes.PROJECT_SAVE_FAIL,
@@ -90,8 +91,7 @@ export function saveProject(autosave = false) {
           browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
           dispatch({
             type: ActionTypes.NEW_PROJECT,
-            name: response.data.name,
-            id: response.data.id,
+            project: response.data,
             owner: response.data.user,
             files: response.data.files
           });
@@ -109,7 +109,7 @@ export function saveProject(autosave = false) {
         })
         .catch(response => {
           if (response.status === 403) {
-            dispatch(showAuthenticationError());
+            dispatch(showErrorModal('staleSession'));
           } else {
             dispatch({
               type: ActionTypes.PROJECT_SAVE_FAIL,
@@ -134,8 +134,7 @@ export function createProject() {
         browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
         dispatch({
           type: ActionTypes.NEW_PROJECT,
-          name: response.data.name,
-          id: response.data.id,
+          project: response.data,
           owner: response.data.user,
           files: response.data.files
         });
@@ -176,10 +175,8 @@ export function cloneProject() {
         browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
         dispatch({
           type: ActionTypes.NEW_PROJECT,
-          name: response.data.name,
-          id: response.data.id,
+          project: response.data,
           owner: response.data.user,
-          selectedFile: response.data.selectedFile,
           files: response.data.files
         });
       })

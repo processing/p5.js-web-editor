@@ -221,26 +221,15 @@ export function setPreviousPath(path) {
   };
 }
 
-export function openForceAuthentication() {
+export function showErrorModal(modalType) {
   return {
-    type: ActionTypes.OPEN_FORCE_AUTHENTICATION
+    type: ActionTypes.SHOW_ERROR_MODAL,
+    modalType
   };
 }
 
-export function closeForceAuthentication() {
+export function hideErrorModal() {
   return {
-    type: ActionTypes.CLOSE_FORCE_AUTHENTICATION
-  };
-}
-
-export function showAuthenticationError() {
-  return {
-    type: ActionTypes.SHOW_AUTHENTICATION_ERROR
-  };
-}
-
-export function hideAuthenticationError() {
-  return {
-    type: ActionTypes.HIDE_AUTHENTICATION_ERROR
+    type: ActionTypes.HIDE_ERROR_MODAL
   };
 }
