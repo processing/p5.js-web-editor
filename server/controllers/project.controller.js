@@ -7,7 +7,7 @@ import moment from 'moment';
 
 export function createProject(req, res) {
   if (!req.user) {
-    return res.status(403).send({ success: false, message: 'Session does not match owner of project.'});
+    return res.status(403).send({ success: false, message: 'Session does not match owner of project.' });
   }
 
   let projectValues = {
@@ -33,7 +33,7 @@ export function updateProject(req, res) {
       return res.status(403).send({ success: false, message: 'Session does not match owner of project.' });
     }
     if (req.body.updatedAt && moment(req.body.updatedAt) < moment(project.updatedAt)) {
-      return res.status(409).send({ success: false, message: 'Attempted to save stale version of project.' })
+      return res.status(409).send({ success: false, message: 'Attempted to save stale version of project.' });
     }
     Project.findByIdAndUpdate(req.params.project_id,
       {
@@ -79,7 +79,7 @@ export function getProject(req, res) {
 export function deleteProject(req, res) {
   Project.findById(req.params.project_id, (err, project) => {
     if (!req.user || !project.user.equals(req.user._id)) {
-      return res.status(403).json({ success: false, message: 'Session does not match owner of project.'});
+      return res.status(403).json({ success: false, message: 'Session does not match owner of project.' });
     }
     Project.remove({ _id: req.params.project_id }, (err) => {
       if (err) {
@@ -109,13 +109,11 @@ export function getProjectsForUser(req, res) {
     User.findOne({ username: req.params.username }, (err, user) => {
       if (!user) {
         return res.status(404).json({ message: 'User with that username does not exist.' });
-      } else {
-        Project.find({ user: user._id }) // eslint-disable-line no-underscore-dangle
-          .sort('-createdAt')
-          .select('name files id createdAt updatedAt')
-          .exec((err, projects) => res.json(projects));
       }
-      return null;
+      Project.find({ user: user._id }) // eslint-disable-line no-underscore-dangle
+        .sort('-createdAt')
+        .select('name files id createdAt updatedAt')
+        .exec((err, projects) => res.json(projects));
     });
   } else {
     // could just move this to client side
@@ -132,7 +130,7 @@ function buildZip(project, req, res) {
   const projectName = project.name;
   let numCompletedFiles = 0;
 
-  zip.on('error', function (err) {
+  zip.on('error', (err) => {
     res.status(500).send({ error: err.message });
   });
 
