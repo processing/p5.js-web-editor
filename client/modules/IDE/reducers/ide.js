@@ -16,7 +16,7 @@ const initialState = {
   infiniteLoop: false,
   previewIsRefreshing: false,
   infiniteLoopMessage: '',
-  projectJustOpened: false,
+  justOpenedProject: false,
   projectSavedTime: '',
   previousPath: '/',
   forceAuthenticationVisible: false,
