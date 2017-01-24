@@ -1,8 +1,7 @@
 import * as ActionTypes from '../../../constants';
 import axios from 'axios';
-import { setPreviousPath } from './ide';
+import { showAuthenticationError, setPreviousPath } from './ide';
 import { resetProject } from './project';
-import { showAuthenticationError } from './ide';
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
