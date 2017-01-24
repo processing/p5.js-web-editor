@@ -5,7 +5,7 @@ const sketches = (state = [], action) => {
     case ActionTypes.SET_PROJECTS:
       return action.projects;
     case ActionTypes.DELETE_PROJECT:
-      return state.filter((sketch) =>
+      return state.filter(sketch =>
         sketch.id !== action.id
       );
     default:

@@ -30,7 +30,7 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, don
       return done(null, false, { msg: 'Invalid email or password.' });
     });
   })
-  .catch((err) => done(null, false, { msg: err }));
+  .catch(err => done(null, false, { msg: err }));
 }));
 
 /**
@@ -53,9 +53,7 @@ passport.use(new GitHubStrategy({
         existingEmailUser.username = existingEmailUser.username || profile.username;
         existingEmailUser.tokens.push({ kind: 'github', accessToken });
         existingEmailUser.name = existingEmailUser.name || profile.displayName;
-        existingEmailUser.save((err) => {
-          return done(null, existingEmailUser);
-        });
+        existingEmailUser.save(err => done(null, existingEmailUser));
       } else {
         const user = new User();
         user.email = profile._json.email;
@@ -63,9 +61,7 @@ passport.use(new GitHubStrategy({
         user.username = profile.username;
         user.tokens.push({ kind: 'github', accessToken });
         user.name = profile.displayName;
-        user.save((err) => {
-          return done(null, user);
-        });
+        user.save(err => done(null, user));
       }
     });
   });

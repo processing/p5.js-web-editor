@@ -7,7 +7,7 @@ function updatePreferences(formParams, dispatch) {
   axios.put(`${ROOT_URL}/preferences`, formParams, { withCredentials: true })
     .then(() => {
     })
-    .catch((response) => dispatch({
+    .catch(response => dispatch({
       type: ActionTypes.ERROR,
       error: response.data
     }));

@@ -10,7 +10,7 @@
     "build": "NODE_ENV=production webpack --config webpack.config.prod.js --progress",
     "test": "echo \"Error: no test specified\" && exit 1",
     "fetch-examples": "node fetch-examples.js",
-    "postinstall" : "git submodule update --remote --recursive"
+    "postinstall": "git submodule update --remote --recursive"
   },
   "main": "index.js",
   "author": "Cassie Tarakajian",
@@ -20,7 +20,7 @@
     "url": "git+https://github.com/catarak/p5.js-web-editor.git"
   },
   "devDependencies": {
-    "babel-eslint": "^6.1.0",
+    "babel-eslint": "^7.1.1",
     "babel-loader": "^6.2.4",
     "babel-plugin-transform-react-constant-elements": "^6.8.0",
     "babel-plugin-transform-react-inline-elements": "^6.8.0",
@@ -36,11 +36,11 @@
     "chunk-manifest-webpack-plugin": "^0.1.0",
     "css-loader": "^0.23.1",
     "cssnano": "^3.7.1",
-    "eslint": "^2.13.1",
-    "eslint-config-airbnb": "^9.0.1",
-    "eslint-plugin-import": "^1.9.2",
-    "eslint-plugin-jsx-a11y": "^1.5.3",
-    "eslint-plugin-react": "^5.2.2",
+    "eslint": "^3.14.0",
+    "eslint-config-airbnb": "^14.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^3.0.2",
+    "eslint-plugin-react": "^6.9.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
     "node-sass": "^3.7.0",

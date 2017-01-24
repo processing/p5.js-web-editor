@@ -14,7 +14,7 @@ export function getProjects(username) {
       url = `${ROOT_URL}/projects`;
     }
     axios.get(url, { withCredentials: true })
-      .then(response => {
+      .then((response) => {
         dispatch({
           type: ActionTypes.SET_PROJECTS,
           projects: response.data
@@ -41,7 +41,7 @@ export function deleteProject(id) {
           id
         });
       })
-      .catch(response => {
+      .catch((response) => {
         if (response.status === 403) {
           dispatch(showErrorModal('staleSession'));
         } else {
