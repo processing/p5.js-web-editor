@@ -78,7 +78,7 @@ function Nav(props) {
               <li className="nav__item">
                 <p className="nav__open">
                   <Link
-                    to="/sketches"
+                    to={`/${props.user.username}/sketches`}
                     onClick={props.stopSketch}
                   >
                     Open
@@ -130,7 +130,7 @@ function Nav(props) {
                   <a>Hello, {props.user.username}!</a>
                 </li>
                 <li>
-                  <Link to="/sketches">
+                  <Link to={`/${props.user.username}/sketches`}>
                     My sketches
                   </Link>
                 </li>
