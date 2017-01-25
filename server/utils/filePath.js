@@ -30,3 +30,5 @@ export function resolvePathToFile(filePath, files) {
   });
   return resolvedFile;
 }
+
+export default resolvePathToFile;

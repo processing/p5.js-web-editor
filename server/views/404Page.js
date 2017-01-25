@@ -112,3 +112,6 @@ export function get404Sketch(callback) {
     }
   });
 }
+
+export default get404Sketch;
+

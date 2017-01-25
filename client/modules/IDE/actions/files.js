@@ -1,9 +1,9 @@
-import * as ActionTypes from '../../../constants';
 import axios from 'axios';
 import objectID from 'bson-objectid';
 import blobUtil from 'blob-util';
-import { setUnsavedChanges } from './ide';
 import { reset } from 'redux-form';
+import * as ActionTypes from '../../../constants';
+import { setUnsavedChanges } from './ide';
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
@@ -22,7 +22,7 @@ function createUniqueName(name, parentId, files) {
 
   while (existingName) {
     testName = appendToFilename(name, `-${index}`);
-    index++;
+    index += 1;
     existingName = siblingFiles.find((file) => testName === file.name); // eslint-disable-line
   }
   return testName;

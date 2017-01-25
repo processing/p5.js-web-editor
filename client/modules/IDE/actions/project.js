@@ -1,7 +1,8 @@
-import * as ActionTypes from '../../../constants';
 import { browserHistory } from 'react-router';
 import axios from 'axios';
 import objectID from 'bson-objectid';
+import moment from 'moment';
+import * as ActionTypes from '../../../constants';
 import { showToast, setToastText } from './toast';
 import { setUnsavedChanges,
   justOpenedProject,
@@ -9,7 +10,6 @@ import { setUnsavedChanges,
   setProjectSavedTime,
   resetProjectSavedTime,
   showErrorModal } from './ide';
-import moment from 'moment';
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 

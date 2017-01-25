@@ -1,5 +1,5 @@
-import * as ActionTypes from '../../../constants';
 import axios from 'axios';
+import * as ActionTypes from '../../../constants';
 import { showErrorModal, setPreviousPath } from './ide';
 import { resetProject } from './project';
 
