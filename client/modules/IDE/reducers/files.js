@@ -1,5 +1,5 @@
-import * as ActionTypes from '../../../constants';
 import objectID from 'bson-objectid';
+import * as ActionTypes from '../../../constants';
 
 const defaultSketch = `function setup() { 
   createCanvas(400, 400);

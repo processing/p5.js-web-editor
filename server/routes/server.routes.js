@@ -1,8 +1,9 @@
 import { Router } from 'express';
-const router = new Router();
 import { renderIndex } from '../views/index';
 import { get404Sketch } from '../views/404Page';
-import { userExists } from '../controllers/user.controller.js';
+import { userExists } from '../controllers/user.controller';
+
+const router = new Router();
 
 // this is intended to be a temporary file
 // until i figure out isomorphic rendering

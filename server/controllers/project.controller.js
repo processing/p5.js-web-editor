@@ -1,8 +1,8 @@
-import Project from '../models/project';
-import User from '../models/user';
 import archiver from 'archiver';
 import request from 'request';
 import moment from 'moment';
+import Project from '../models/project';
+import User from '../models/user';
 
 
 export function createProject(req, res) {
@@ -127,7 +127,6 @@ function buildZip(project, req, res) {
   const rootFile = project.files.find(file => file.name === 'root');
   const numFiles = project.files.filter(file => file.fileType !== 'folder').length;
   const files = project.files;
-  const projectName = project.name;
   let numCompletedFiles = 0;
 
   zip.on('error', (err) => {

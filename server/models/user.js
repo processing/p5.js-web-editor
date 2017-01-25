@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
-const Schema = mongoose.Schema;
+
 const bcrypt = require('bcrypt-nodejs');
+
+const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
   name: { type: String, default: '' },

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { createFile } from './files';
-const textFileRegex = /(text\/|application\/json)/;
 
+const textFileRegex = /(text\/|application\/json)/;
 const s3BucketHttps = `https://s3-us-west-2.amazonaws.com/${process.env.S3_BUCKET}/`;
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 const MAX_LOCAL_FILE_SIZE = 80000; // bytes, aka 80 KB

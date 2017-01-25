@@ -1,8 +1,8 @@
-import User from '../models/user';
 import crypto from 'crypto';
 import async from 'async';
 import nodemailer from 'nodemailer';
 import mg from 'nodemailer-mailgun-transport';
+import User from '../models/user';
 
 export function createUser(req, res, next) {
   const user = new User({
