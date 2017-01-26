@@ -3,24 +3,15 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
-const MongoStore = require('connect-mongo')(session);
+import connectMongo from 'connect-mongo';
 import passport from 'passport';
 import path from 'path';
 
 // Webpack Requirements
 import webpack from 'webpack';
-import config from '../webpack.config.dev';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
-
-const app = new Express();
-
-// Run Webpack dev server in development mode
-if (process.env.NODE_ENV === 'development') {
-  const compiler = webpack(config);
-  app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
-  app.use(webpackHotMiddleware(compiler));
-}
+import config from '../webpack.config.dev';
 
 // Import all required modules
 import serverConfig from './config';
@@ -34,6 +25,16 @@ import embedRoutes from './routes/embed.routes';
 
 import { renderIndex } from './views/index';
 import { get404Sketch } from './views/404Page';
+
+const app = new Express();
+const MongoStore = connectMongo(session);
+
+// Run Webpack dev server in development mode
+if (process.env.NODE_ENV === 'development') {
+  const compiler = webpack(config);
+  app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
+  app.use(webpackHotMiddleware(compiler));
+}
 
 // Body parser, cookie parser, sessions, serve public assets
 

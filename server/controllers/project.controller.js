@@ -1,6 +1,5 @@
 import archiver from 'archiver';
 import request from 'request';
-import moment from 'moment';
 import Project from '../models/project';
 import User from '../models/user';
 
@@ -28,7 +27,7 @@ export function createProject(req, res) {
 }
 
 export function updateProject(req, res) {
-  Project.findById(req.params.project_id, (err, project) => {
+  Project.findById(req.params.project_id, (findProjectErr, project) => {
     if (!req.user || !project.user.equals(req.user._id)) {
       return res.status(403).send({ success: false, message: 'Session does not match owner of project.' });
     }
@@ -40,9 +39,9 @@ export function updateProject(req, res) {
         $set: req.body
       })
       .populate('user', 'username')
-      .exec((err, updatedProject) => {
-        if (err) {
-          console.log(err);
+      .exec((updateProjectErr, updatedProject) => {
+        if (updateProjectErr) {
+          console.log(updateProjectErr);
           return res.json({ success: false });
         }
         if (updatedProject.files.length !== req.body.files.length) {
@@ -77,12 +76,12 @@ export function getProject(req, res) {
 }
 
 export function deleteProject(req, res) {
-  Project.findById(req.params.project_id, (err, project) => {
+  Project.findById(req.params.project_id, (findProjectErr, project) => {
     if (!req.user || !project.user.equals(req.user._id)) {
       return res.status(403).json({ success: false, message: 'Session does not match owner of project.' });
     }
-    Project.remove({ _id: req.params.project_id }, (err) => {
-      if (err) {
+    Project.remove({ _id: req.params.project_id }, (removeProjectError) => {
+      if (removeProjectError) {
         return res.status(404).send({ message: 'Project with that id does not exist' });
       }
       return res.json({ success: true });
@@ -113,7 +112,7 @@ export function getProjectsForUser(req, res) {
       Project.find({ user: user._id }) // eslint-disable-line no-underscore-dangle
         .sort('-createdAt')
         .select('name files id createdAt updatedAt')
-        .exec((err, projects) => res.json(projects));
+        .exec((innerErr, projects) => res.json(projects));
     });
   } else {
     // could just move this to client side
