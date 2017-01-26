@@ -32,3 +32,5 @@ export function serveProject(req, res) {
       });
     });
 }
+
+export default serveProject;

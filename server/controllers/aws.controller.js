@@ -26,3 +26,5 @@ export function signS3(req, res) {
   };
   return res.json(result);
 }
+
+export default signS3;

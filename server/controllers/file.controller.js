@@ -44,7 +44,7 @@ function deleteMany(files, ids) {
 }
 
 function deleteChild(files, parentId, id) {
-  files = files.map((file) => {
+  return files.map((file) => {
     if (file.id === parentId) {
       file.children = file.children.filter(child => child !== id);
       return file;
@@ -57,7 +57,7 @@ export function deleteFile(req, res) {
   Project.findById(req.params.project_id, (err, project) => {
     const idsToDelete = getAllDescendantIds(project.files, req.params.file_id);
     deleteMany(project.files, [req.params.file_id, ...idsToDelete]);
-    deleteChild(project.files, req.query.parentId, req.params.file_id);
+    project.files = deleteChild(project.files, req.query.parentId, req.params.file_id);
     // project.files.id(req.params.file_id).remove();
     // const childrenArray = project.files.id(req.query.parentId).children;
     // project.files.id(req.query.parentId).children = childrenArray.filter(id => id !== req.params.file_id);
