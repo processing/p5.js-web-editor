@@ -6,7 +6,8 @@ import User from '../models/user';
 
 export function createProject(req, res) {
   if (!req.user) {
-    return res.status(403).send({ success: false, message: 'Session does not match owner of project.' });
+    res.status(403).send({ success: false, message: 'Session does not match owner of project.' });
+    return;
   }
 
   let projectValues = {
@@ -16,12 +17,18 @@ export function createProject(req, res) {
   projectValues = Object.assign(projectValues, req.body);
 
   Project.create(projectValues, (err, newProject) => {
-    if (err) { return res.json({ success: false }); }
+    if (err) {
+      res.json({ success: false });
+      return;
+    }
     Project.populate(newProject,
       { path: 'user', select: 'username' },
       (innerErr, newProjectWithUser) => {
-        if (innerErr) { return res.json({ success: false }); }
-        return res.json(newProjectWithUser);
+        if (innerErr) {
+          res.json({ success: false });
+          return;
+        }
+        res.json(newProjectWithUser);
       });
   });
 }
@@ -29,7 +36,8 @@ export function createProject(req, res) {
 export function updateProject(req, res) {
   Project.findById(req.params.project_id, (findProjectErr, project) => {
     if (!req.user || !project.user.equals(req.user._id)) {
-      return res.status(403).send({ success: false, message: 'Session does not match owner of project.' });
+      res.status(403).send({ success: false, message: 'Session does not match owner of project.' });
+      return;
     }
     // if (req.body.updatedAt && moment(req.body.updatedAt) < moment(project.updatedAt)) {
     //   return res.status(409).send({ success: false, message: 'Attempted to save stale version of project.' });
@@ -42,7 +50,8 @@ export function updateProject(req, res) {
       .exec((updateProjectErr, updatedProject) => {
         if (updateProjectErr) {
           console.log(updateProjectErr);
-          return res.json({ success: false });
+          res.json({ success: false });
+          return;
         }
         if (updatedProject.files.length !== req.body.files.length) {
           const oldFileIds = updatedProject.files.map(file => file.id);
@@ -54,12 +63,13 @@ export function updateProject(req, res) {
           updatedProject.save((innerErr) => {
             if (innerErr) {
               console.log(innerErr);
-              return res.json({ success: false });
+              res.json({ success: false });
+              return;
             }
-            return res.json(updatedProject);
+            res.json(updatedProject);
           });
         }
-        return res.json(updatedProject);
+        res.json(updatedProject);
       });
   });
 }
@@ -78,13 +88,15 @@ export function getProject(req, res) {
 export function deleteProject(req, res) {
   Project.findById(req.params.project_id, (findProjectErr, project) => {
     if (!req.user || !project.user.equals(req.user._id)) {
-      return res.status(403).json({ success: false, message: 'Session does not match owner of project.' });
+      res.status(403).json({ success: false, message: 'Session does not match owner of project.' });
+      return;
     }
     Project.remove({ _id: req.params.project_id }, (removeProjectError) => {
       if (removeProjectError) {
-        return res.status(404).send({ message: 'Project with that id does not exist' });
+        res.status(404).send({ message: 'Project with that id does not exist' });
+        return;
       }
-      return res.json({ success: true });
+      res.json({ success: true });
     });
   });
 }
@@ -99,7 +111,7 @@ export function getProjects(req, res) {
       });
   } else {
     // could just move this to client side
-    return res.json([]);
+    res.json([]);
   }
 }
 
@@ -107,7 +119,8 @@ export function getProjectsForUser(req, res) {
   if (req.params.username) {
     User.findOne({ username: req.params.username }, (err, user) => {
       if (!user) {
-        return res.status(404).json({ message: 'User with that username does not exist.' });
+        res.status(404).json({ message: 'User with that username does not exist.' });
+        return;
       }
       Project.find({ user: user._id }) // eslint-disable-line no-underscore-dangle
         .sort('-createdAt')
@@ -116,9 +129,8 @@ export function getProjectsForUser(req, res) {
     });
   } else {
     // could just move this to client side
-    return res.json([]);
+    res.json([]);
   }
-  return null;
 }
 
 function buildZip(project, req, res) {

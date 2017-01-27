@@ -12,9 +12,7 @@ const fileSchema = new Schema({
   isSelectedFile: { type: Boolean }
 }, { timestamps: true, _id: true });
 
-fileSchema.virtual('id').get(() => {
-  return this._id.toHexString();
-});
+fileSchema.virtual('id').get(() => this._id.toHexString());
 
 fileSchema.set('toJSON', {
   virtuals: true
@@ -27,9 +25,7 @@ const projectSchema = new Schema({
   _id: { type: String, default: shortid.generate }
 }, { timestamps: true });
 
-projectSchema.virtual('id').get(() => {
-  return this._id;
-});
+projectSchema.virtual('id').get(() => this._id);
 
 projectSchema.set('toJSON', {
   virtuals: true
