@@ -166,6 +166,7 @@ class PreviewFrame extends React.Component {
       }
       if (this.props.textOutput === 1) {
         interceptorScripts = [
+          '/p5-interceptor/registry.js',
           '/p5-interceptor/loadData.js',
           '/p5-interceptor/interceptorHelperFunctions.js',
           '/p5-interceptor/baseInterceptor.js',
@@ -176,6 +177,7 @@ class PreviewFrame extends React.Component {
         ];
       } else if (this.props.textOutput === 2) {
         interceptorScripts = [
+          '/p5-interceptor/registry.js',
           '/p5-interceptor/loadData.js',
           '/p5-interceptor/interceptorHelperFunctions.js',
           '/p5-interceptor/baseInterceptor.js',
