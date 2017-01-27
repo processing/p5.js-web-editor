@@ -102,6 +102,7 @@
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
     "react-inlinesvg": "^0.4.2",
+    "react-prefixer": "^1.1.4",
     "react-redux": "^4.4.5",
     "react-router": "^2.6.0",
     "react-split-pane": "^0.1.44",
