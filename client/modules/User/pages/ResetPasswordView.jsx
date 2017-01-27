@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
 import { Link, browserHistory } from 'react-router';
-import * as UserActions from '../actions';
-import { bindActionCreators } from 'redux';
-import { reduxForm } from 'redux-form';
-import ResetPasswordForm from '../components/ResetPasswordForm';
 import classNames from 'classnames';
 import InlineSVG from 'react-inlinesvg';
+import { bindActionCreators } from 'redux';
+import { reduxForm } from 'redux-form';
+import * as UserActions from '../actions';
+import ResetPasswordForm from '../components/ResetPasswordForm';
+
 const exitUrl = require('../../../images/exit.svg');
 const logoUrl = require('../../../images/p5js-logo.svg');
 
