@@ -28,7 +28,7 @@ const userSchema = new Schema({
 /**
  * Password hash middleware.
  */
-userSchema.pre('save', (next) => { // eslint-disable-line consistent-return
+userSchema.pre('save', function checkPassword(next) { // eslint-disable-line consistent-return
   const user = this;
   if (!user.isModified('password')) { return next(); }
   bcrypt.genSalt(10, (err, salt) => { // eslint-disable-line consistent-return
@@ -41,7 +41,9 @@ userSchema.pre('save', (next) => { // eslint-disable-line consistent-return
   });
 });
 
-userSchema.virtual('id').get(() => this._id.toHexString());
+userSchema.virtual('id').get(function () {
+  return this._id.toHexString();
+});
 
 userSchema.set('toJSON', {
   virtuals: true
@@ -51,14 +53,14 @@ userSchema.set('toJSON', {
 /**
  * Helper method for validating user's password.
  */
-userSchema.methods.comparePassword = (candidatePassword, cb) => {
+userSchema.methods.comparePassword = function comparePassword(candidatePassword, cb) {
 // userSchema.methods.comparePassword = (candidatePassword, cb) => {
   bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
     cb(err, isMatch);
   });
 };
 
-userSchema.statics.findByMailOrName = (email) => {
+userSchema.statics.findByMailOrName = function findByMailOrName(email) {
   const query = {
     $or: [{
       email,
