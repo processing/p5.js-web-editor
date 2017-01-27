@@ -80,6 +80,15 @@
   width: #{48 / $base-font-size}rem;
 }
 
+.editor-holder {
+  height: calc(100% - #{29 / $base-font-size}rem);
+  width: 100%;
+  position: absolute;
+}
+
+.editor__header {
+  height: #{29 / $base-font-size}rem;
+}
 
 .editor__options-button {
   @include themify() {

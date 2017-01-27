@@ -5,6 +5,7 @@ import moment from 'moment';
 import { Link, browserHistory } from 'react-router';
 import * as SketchActions from '../actions/projects';
 import * as ProjectActions from '../actions/project';
+import * as ToastActions from '../actions/toast';
 import InlineSVG from 'react-inlinesvg';
 const exitUrl = require('../../../images/exit.svg');
 const trashCan = require('../../../images/trash-can.svg');
@@ -84,7 +85,9 @@ SketchList.propTypes = {
   sketches: PropTypes.array.isRequired,
   username: PropTypes.string,
   deleteProject: PropTypes.func.isRequired,
-  previousPath: PropTypes.string.isRequired
+  previousPath: PropTypes.string.isRequired,
+  showToast: PropTypes.func.isRequired,
+  setToastText: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -95,7 +98,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}, SketchActions, ProjectActions), dispatch);
+  return bindActionCreators(Object.assign({}, SketchActions, ProjectActions, ToastActions), dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SketchList);

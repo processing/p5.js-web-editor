@@ -61,13 +61,6 @@ export function resetSelectedFile(previousId) {
   };
 }
 
-export function dispatchConsoleEvent(...args) {
-  return {
-    type: ActionTypes.CONSOLE_EVENT,
-    event: args[0].data
-  };
-}
-
 export function newFile() {
   return {
     type: ActionTypes.SHOW_MODAL
@@ -228,14 +221,15 @@ export function setPreviousPath(path) {
   };
 }
 
-export function openForceAuthentication() {
+export function showErrorModal(modalType) {
   return {
-    type: ActionTypes.OPEN_FORCE_AUTHENTICATION
+    type: ActionTypes.SHOW_ERROR_MODAL,
+    modalType
   };
 }
 
-export function closeForceAuthentication() {
+export function hideErrorModal() {
   return {
-    type: ActionTypes.CLOSE_FORCE_AUTHENTICATION
+    type: ActionTypes.HIDE_ERROR_MODAL
   };
 }

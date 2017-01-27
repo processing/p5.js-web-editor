@@ -25,6 +25,7 @@ window.HTMLHint = HTMLHint;
 const beepUrl = require('../../../sounds/audioAlert.mp3');
 import InlineSVG from 'react-inlinesvg';
 const downArrowUrl = require('../../../images/down-arrow.svg');
+const unsavedChangesDotUrl = require('../../../images/unsaved-changes-dot.svg');
 import classNames from 'classnames';
 
 import { debounce } from 'lodash';
@@ -176,6 +177,15 @@ class Editor extends React.Component {
     }
   }
 
+  toggleEditorOptions() {
+    if (this.props.editorOptionsVisible) {
+      this.props.closeEditorOptions();
+    } else {
+      this.refs.optionsButton.focus();
+      this.props.showEditorOptions();
+    }
+  }
+
   _cm: CodeMirror.Editor
 
   render() {
@@ -191,48 +201,52 @@ class Editor extends React.Component {
         role="main"
         className={editorSectionClass}
       >
-        <button
-          aria-label="collapse file navigation"
-          className="sidebar__contract"
-          onClick={this.props.collapseSidebar}
-        >
-          <InlineSVG src={leftArrowUrl} />
-        </button>
-        <button
-          aria-label="expand file navigation"
-          className="sidebar__expand"
-          onClick={this.props.expandSidebar}
-        >
-          <InlineSVG src={rightArrowUrl} />
-        </button>
-        <div className="editor__file-name">
-          <span>{this.props.file.name}
-          {this.props.unsavedChanges ? '*' : null}</span>
-          <Timer
-            projectSavedTime={this.props.projectSavedTime}
-          />
-        </div>
-        <button
-          className="editor__options-button"
-          aria-label="editor options"
-          tabIndex="0"
-          ref="optionsButton"
-          onClick={() => {
-            this.refs.optionsButton.focus();
-            this.props.showEditorOptions();
-          }}
-          onBlur={() => setTimeout(this.props.closeEditorOptions, 200)}
-        >
-          <InlineSVG src={downArrowUrl} />
-        </button>
-        <ul className="editor__options" title="editor options">
-          <li>
-            <a onClick={this.tidyCode}>Tidy</a>
-          </li>
-          <li>
-            <a onClick={this.props.showKeyboardShortcutModal}>Keyboard shortcuts</a>
-          </li>
-        </ul>
+        <header className="editor__header">
+          <button
+            aria-label="collapse file navigation"
+            className="sidebar__contract"
+            onClick={this.props.collapseSidebar}
+          >
+            <InlineSVG src={leftArrowUrl} />
+          </button>
+          <button
+            aria-label="expand file navigation"
+            className="sidebar__expand"
+            onClick={this.props.expandSidebar}
+          >
+            <InlineSVG src={rightArrowUrl} />
+          </button>
+          <div className="editor__file-name">
+            <span>
+              {this.props.file.name}
+              {this.props.unsavedChanges ? <InlineSVG src={unsavedChangesDotUrl} /> : null}
+            </span>
+            <Timer
+              projectSavedTime={this.props.projectSavedTime}
+              isUserOwner={this.props.isUserOwner}
+            />
+          </div>
+          <button
+            className="editor__options-button"
+            aria-label="editor options"
+            tabIndex="0"
+            ref="optionsButton"
+            onClick={() => {
+              this.toggleEditorOptions();
+            }}
+            onBlur={() => setTimeout(this.props.closeEditorOptions, 200)}
+          >
+            <InlineSVG src={downArrowUrl} />
+          </button>
+          <ul className="editor__options" title="editor options">
+            <li>
+              <a onClick={this.tidyCode}>Tidy</a>
+            </li>
+            <li>
+              <a onClick={this.props.showKeyboardShortcutModal}>Keyboard shortcuts</a>
+            </li>
+          </ul>
+        </header>
         <div ref="container" className="editor-holder" tabIndex="0">
         </div>
         <EditorAccessibility
@@ -274,7 +288,8 @@ Editor.propTypes = {
   files: PropTypes.array.isRequired,
   isExpanded: PropTypes.bool.isRequired,
   collapseSidebar: PropTypes.func.isRequired,
-  expandSidebar: PropTypes.func.isRequired
+  expandSidebar: PropTypes.func.isRequired,
+  isUserOwner: PropTypes.bool
 };
 
 export default Editor;

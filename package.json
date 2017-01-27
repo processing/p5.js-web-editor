@@ -6,6 +6,7 @@
     "start": "BABEL_DISABLE_CACHE=1 NODE_ENV=development nodemon index.js",
     "start:prod": "NODE_ENV=production node index.js",
     "lint": "eslint client server",
+    "lint-fix": "eslint client server --fix",
     "build": "NODE_ENV=production webpack --config webpack.config.prod.js --progress",
     "test": "echo \"Error: no test specified\" && exit 1",
     "fetch-examples": "node fetch-examples.js",

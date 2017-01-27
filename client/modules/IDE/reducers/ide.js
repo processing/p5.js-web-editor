@@ -3,10 +3,9 @@ import * as ActionTypes from '../../../constants';
 const initialState = {
   isPlaying: false,
   isTextOutputPlaying: false,
-  consoleEvent: [],
   modalIsVisible: false,
   sidebarIsExpanded: false,
-  consoleIsExpanded: false,
+  consoleIsExpanded: true,
   preferencesIsVisible: false,
   projectOptionsVisible: false,
   newFolderModalVisible: false,
@@ -17,10 +16,10 @@ const initialState = {
   infiniteLoop: false,
   previewIsRefreshing: false,
   infiniteLoopMessage: '',
-  projectJustOpened: false,
+  justOpenedProject: false,
   projectSavedTime: '',
   previousPath: '/',
-  forceAuthenticationVisible: false,
+  errorType: undefined
 };
 
 const ide = (state = initialState, action) => {
@@ -93,10 +92,10 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { projectSavedTime: '' });
     case ActionTypes.SET_PREVIOUS_PATH:
       return Object.assign({}, state, { previousPath: action.path });
-    case ActionTypes.OPEN_FORCE_AUTHENTICATION:
-      return Object.assign({}, state, { forceAuthenticationVisible: true });
-    case ActionTypes.CLOSE_FORCE_AUTHENTICATION:
-      return Object.assign({}, state, { forceAuthenticationVisible: false });
+    case ActionTypes.SHOW_ERROR_MODAL:
+      return Object.assign({}, state, { errorType: action.modalType });
+    case ActionTypes.HIDE_ERROR_MODAL:
+      return Object.assign({}, state, { errorType: undefined });
     default:
       return state;
   }

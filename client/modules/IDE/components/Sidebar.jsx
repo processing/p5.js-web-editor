@@ -10,10 +10,21 @@ class Sidebar extends React.Component {
   constructor(props) {
     super(props);
     this.resetSelectedFile = this.resetSelectedFile.bind(this);
+    this.toggleProjectOptions = this.toggleProjectOptions.bind(this);
   }
 
   resetSelectedFile() {
     this.props.setSelectedFile(this.props.files[1].id);
+  }
+
+  toggleProjectOptions(e) {
+    e.preventDefault();
+    if (this.props.projectOptionsVisible) {
+      this.props.closeProjectOptions();
+    } else {
+      this.refs.sidebarOptions.focus();
+      this.props.openProjectOptions();
+    }
   }
 
   render() {
@@ -25,7 +36,7 @@ class Sidebar extends React.Component {
 
     return (
       <nav className={sidebarClass} title="file-navigation" role="navigation">
-        <div className="sidebar__header">
+        <div className="sidebar__header" onContextMenu={this.toggleProjectOptions}>
           <h3 className="sidebar__title">
             <span className="sidebar__folder-icon">
               <InlineSVG src={folderUrl} />
@@ -38,10 +49,7 @@ class Sidebar extends React.Component {
               className="sidebar__add"
               tabIndex="0"
               ref="sidebarOptions"
-              onClick={() => {
-                this.refs.sidebarOptions.focus();
-                this.props.openProjectOptions();
-              }}
+              onClick={this.toggleProjectOptions}
               onBlur={() => setTimeout(this.props.closeProjectOptions, 200)}
             >
               <InlineSVG src={downArrowUrl} />
@@ -60,23 +68,6 @@ class Sidebar extends React.Component {
             </ul>
           </div>
         </div>
-        { /* <ul className="sidebar__file-list" title="project files">
-          {this.props.files.map((file, fileIndex) =>
-            <SidebarItem
-              key={file.id}
-              file={file}
-              setSelectedFile={this.props.setSelectedFile}
-              fileIndex={fileIndex}
-              showFileOptions={this.props.showFileOptions}
-              hideFileOptions={this.props.hideFileOptions}
-              deleteFile={this.props.deleteFile}
-              resetSelectedFile={this.resetSelectedFile}
-              showEditFileName={this.props.showEditFileName}
-              hideEditFileName={this.props.hideEditFileName}
-              updateFileName={this.props.updateFileName}
-            />
-          )}
-        </ul> */ }
         <ConnectedFileNode id={this.props.files.filter(file => file.name === 'root')[0].id} />
       </nav>
     );

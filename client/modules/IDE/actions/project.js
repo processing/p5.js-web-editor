@@ -2,7 +2,12 @@ import * as ActionTypes from '../../../constants';
 import { browserHistory } from 'react-router';
 import axios from 'axios';
 import { showToast, setToastText } from './toast';
-import { setUnsavedChanges, justOpenedProject, resetJustOpenedProject, setProjectSavedTime, resetProjectSavedTime } from './ide';
+import { setUnsavedChanges,
+  justOpenedProject,
+  resetJustOpenedProject,
+  setProjectSavedTime,
+  resetProjectSavedTime,
+  showErrorModal } from './ide';
 import moment from 'moment';
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
@@ -16,7 +21,6 @@ export function getProject(id) {
     }
     axios.get(`${ROOT_URL}/projects/${id}`, { withCredentials: true })
       .then(response => {
-        // browserHistory.push(`/projects/${id}`);
         dispatch({
           type: ActionTypes.SET_PROJECT,
           project: response.data,
@@ -67,10 +71,18 @@ export function saveProject(autosave = false) {
             }
           }
         })
-        .catch((response) => dispatch({
-          type: ActionTypes.PROJECT_SAVE_FAIL,
-          error: response.data
-        }));
+        .catch((response) => {
+          if (response.status === 403) {
+            dispatch(showErrorModal('staleSession'));
+          } else if (response.status === 409) {
+            dispatch(showErrorModal('staleProject'));
+          } else {
+            dispatch({
+              type: ActionTypes.PROJECT_SAVE_FAIL,
+              error: response.data
+            });
+          }
+        });
     } else {
       axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
         .then(response => {
@@ -79,8 +91,7 @@ export function saveProject(autosave = false) {
           browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
           dispatch({
             type: ActionTypes.NEW_PROJECT,
-            name: response.data.name,
-            id: response.data.id,
+            project: response.data,
             owner: response.data.user,
             files: response.data.files
           });
@@ -96,10 +107,16 @@ export function saveProject(autosave = false) {
             }
           }
         })
-        .catch(response => dispatch({
-          type: ActionTypes.PROJECT_SAVE_FAIL,
-          error: response.data
-        }));
+        .catch(response => {
+          if (response.status === 403) {
+            dispatch(showErrorModal('staleSession'));
+          } else {
+            dispatch({
+              type: ActionTypes.PROJECT_SAVE_FAIL,
+              error: response.data
+            });
+          }
+        });
     }
   };
 }
@@ -117,8 +134,7 @@ export function createProject() {
         browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
         dispatch({
           type: ActionTypes.NEW_PROJECT,
-          name: response.data.name,
-          id: response.data.id,
+          project: response.data,
           owner: response.data.user,
           files: response.data.files
         });
@@ -143,12 +159,15 @@ export function resetProject() {
 }
 
 export function newProject() {
-  browserHistory.push('/');
+  setTimeout(() => {
+    browserHistory.push('/');
+  }, 0);
   return resetProject();
 }
 
 export function cloneProject() {
   return (dispatch, getState) => {
+    dispatch(setUnsavedChanges(false));
     const state = getState();
     const formParams = Object.assign({}, { name: `${state.project.name} copy` }, { files: state.files });
     axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
@@ -156,10 +175,8 @@ export function cloneProject() {
         browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
         dispatch({
           type: ActionTypes.NEW_PROJECT,
-          name: response.data.name,
-          id: response.data.id,
+          project: response.data,
           owner: response.data.user,
-          selectedFile: response.data.selectedFile,
           files: response.data.files
         });
       })

@@ -52,6 +52,7 @@
 	padding: #{5 / $base-font-size}rem;
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 }
 
 .preview-console__header-title {
@@ -70,6 +71,7 @@
 }
 
 .preview-console__collapse {
+	padding-top: #{3 / $base-font-size}rem;
 	@include themify() {
 		@extend %icon;
 	}
@@ -79,11 +81,24 @@
 }
 
 .preview-console__expand {
+	padding-top: #{3 / $base-font-size}rem;
 	@include themify() {
 		@extend %icon;
 	}
 	display: none;
 	.preview-console--collapsed & {
 		display: inline-block;
+	}
+}
+
+.preview-console__header-buttons {
+	display: flex;
+	align-items: center;
+}
+
+.preview-console__clear {
+	padding-right: #{10 / $base-font-size}rem;
+	.preview-console--collapsed & {
+		display: none;
 	}
 }

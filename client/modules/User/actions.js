@@ -1,6 +1,7 @@
 import * as ActionTypes from '../../constants';
 import { browserHistory } from 'react-router';
 import axios from 'axios';
+import { showErrorModal, justOpenedProject } from '../IDE/actions/ide';
 
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
@@ -19,6 +20,7 @@ export function signUpUser(previousPath, formValues) {
         dispatch({ type: ActionTypes.AUTH_USER,
                     user: response.data
         });
+        dispatch(justOpenedProject());
         browserHistory.push(previousPath);
       })
       .catch(response => dispatch(authError(response.data.error)));
@@ -54,6 +56,7 @@ export function validateAndLoginUser(previousPath, formProps, dispatch) {
           type: ActionTypes.SET_PREFERENCES,
           preferences: response.data.preferences
         });
+        dispatch(justOpenedProject());
         browserHistory.push(previousPath);
         resolve();
       })
@@ -78,6 +81,23 @@ export function getUser() {
       })
       .catch(response => {
         dispatch(authError(response.data.error));
+      });
+  };
+}
+
+export function validateSession() {
+  return (dispatch, getState) => {
+    axios.get(`${ROOT_URL}/session`, { withCredentials: true })
+      .then(response => {
+        const state = getState();
+        if (state.user.username !== response.data.username) {
+          dispatch(showErrorModal('staleSession'));
+        }
+      })
+      .catch(response => {
+        if (response.status === 404) {
+          dispatch(showErrorModal('staleSession'));
+        }
       });
   };
 }

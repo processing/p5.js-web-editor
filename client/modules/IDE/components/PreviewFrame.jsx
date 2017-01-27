@@ -87,8 +87,17 @@ class PreviewFrame extends React.Component {
     }
 
     if (this.props.dispatchConsoleEvent) {
-      window.addEventListener('message', (msg) => {
-        this.props.dispatchConsoleEvent(msg);
+      window.addEventListener('message', (messageEvent) => {
+        messageEvent.data.forEach(message => {
+          const args = message.arguments;
+          Object.keys(args).forEach((key) => {
+            if (args[key].includes('Exiting potential infinite loop')) {
+              this.props.stopSketch();
+              this.props.expandConsole();
+            }
+          });
+        });
+        this.props.dispatchConsoleEvent(messageEvent.data);
       });
     }
   }
@@ -381,7 +390,9 @@ PreviewFrame.propTypes = {
   endSketchRefresh: PropTypes.func.isRequired,
   previewIsRefreshing: PropTypes.bool.isRequired,
   fullView: PropTypes.bool,
-  setBlobUrl: PropTypes.func.isRequired
+  setBlobUrl: PropTypes.func.isRequired,
+  stopSketch: PropTypes.func.isRequired,
+  expandConsole: PropTypes.func.isRequired
 };
 
 export default PreviewFrame;
