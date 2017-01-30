@@ -157,10 +157,10 @@ class IDEView extends React.Component {
       this.props.setTextOutput(0);
     } else if (e.keyCode === 49 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac)) && e.shiftKey) {
       e.preventDefault();
-      if (this.props.preferences.textOutput === 3) {
-        this.props.preferences.textOutput = 1;
+      if (this.props.preferences.textOutput) {
+        this.props.preferences.textOutput = false;
       } else {
-        this.props.preferences.textOutput += 1;
+        this.props.preferences.textOutput = true;
       }
       this.props.setTextOutput(this.props.preferences.textOutput);
     }
@@ -509,7 +509,7 @@ IDEView.propTypes = {
     isTabIndent: PropTypes.bool.isRequired,
     autosave: PropTypes.bool.isRequired,
     lintWarning: PropTypes.bool.isRequired,
-    textOutput: PropTypes.number.isRequired,
+    textOutput: PropTypes.bool.isRequired,
     theme: PropTypes.string.isRequired,
     autorefresh: PropTypes.bool.isRequired
   }).isRequired,

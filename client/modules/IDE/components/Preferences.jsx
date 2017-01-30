@@ -264,46 +264,24 @@ class Preferences extends React.Component {
           <div className="preference__options">
             <input
               type="checkbox"
-              onClick={() => this.props.setTextOutput(1)}
+              onClick={() => this.props.setTextOutput(true)}
               aria-label="text output on"
               name="text output"
               id="text-output-on"
               // className="preference__radio-button"
               value="On"
-              checked={Boolean(this.props.textOutput === 1)}
+              checked={(this.props.textOutput)}
             />
             <label htmlFor="text-output-on" className="preference__option preference__canvas">Plain-text</label>
             <input
               type="checkbox"
-              onClick={() => this.props.setTextOutput(2)}
-              aria-label="grid output on"
-              name="grid output"
-              id="grid-output-on"
-              // className="preference__radio-button"
-              value="Grid On"
-              checked={Boolean(this.props.textOutput === 2)}
-            />
-            <label htmlFor="grid-output-on" className="preference__option preference__canvas">Table-text</label>
-            <input
-              type="checkbox"
-              onClick={() => this.props.setTextOutput(3)}
-              aria-label="sound output on"
-              name="sound output"
-              id="sound-output-on"
-              // className="preference__radio-button"
-              value="On"
-              checked={Boolean(this.props.textOutput === 3)}
-            />
-            <label htmlFor="sound-output-on" className="preference__option preference__canvas">Sound</label>
-            <input
-              type="checkbox"
-              onClick={() => this.props.setTextOutput(0)}
+              onClick={() => this.props.setTextOutput(false)}
               aria-label="text output off"
               name="text output"
               id="text-output-off"
               // className="preference__radio-button"
               value="Off"
-              checked={!Boolean(this.props.textOutput)}
+              checked={(!this.props.textOutput)}
             />
             <label htmlFor="text-output-off" className="preference__option preference__canvas">Off</label>
 
@@ -326,7 +304,7 @@ Preferences.propTypes = {
   setFontSize: PropTypes.func.isRequired,
   autosave: PropTypes.bool.isRequired,
   setAutosave: PropTypes.func.isRequired,
-  textOutput: PropTypes.number.isRequired,
+  textOutput: PropTypes.bool.isRequired,
   setTextOutput: PropTypes.func.isRequired,
   lintWarning: PropTypes.bool.isRequired,
   setLintWarning: PropTypes.func.isRequired,
