@@ -151,6 +151,7 @@ class IDEView extends React.Component {
     } else if (e.keyCode === 13 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
       e.preventDefault();
       e.stopPropagation();
+      this.props.clearConsole();
       this.props.startSketchAndRefresh();
     } else if (e.keyCode === 50 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac)) && e.shiftKey) {
       e.preventDefault();
@@ -220,6 +221,7 @@ class IDEView extends React.Component {
           startSketchAndRefresh={this.props.startSketchAndRefresh}
           saveProject={this.props.saveProject}
           currentUser={this.props.user.username}
+          clearConsole={this.props.clearConsole}
         />
         <Preferences
           isVisible={this.props.ide.preferencesIsVisible}

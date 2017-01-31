@@ -61,6 +61,7 @@ class Toolbar extends React.Component {
         <button
           className="toolbar__play-sketch-button"
           onClick={() => {
+            this.props.clearConsole();
             this.props.startTextOutput();
             this.props.startSketchAndRefresh();
           }}
@@ -69,7 +70,15 @@ class Toolbar extends React.Component {
         >
           <InlineSVG src={playUrl} alt="Play Sketch" />
         </button>
-        <button className={playButtonClass} onClick={this.props.startSketchAndRefresh} aria-label="play only visual sketch" disabled={this.props.infiniteLoop} >
+        <button
+          className={playButtonClass}
+          onClick={() => {
+            this.props.clearConsole();
+            this.props.startSketchAndRefresh();
+          }}
+          aria-label="play only visual sketch"
+          disabled={this.props.infiniteLoop}
+        >
           <InlineSVG src={playUrl} alt="Play only visual Sketch" />
         </button>
         <button
@@ -169,7 +178,8 @@ Toolbar.propTypes = {
   setAutorefresh: PropTypes.func.isRequired,
   startSketchAndRefresh: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
-  currentUser: PropTypes.string
+  currentUser: PropTypes.string,
+  clearConsole: PropTypes.func.isRequired
 };
 
 export default Toolbar;
