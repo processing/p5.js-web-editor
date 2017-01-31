@@ -44,7 +44,7 @@ class ResetPasswordView extends React.Component {
           <h2 className="form-container__title">Reset Your Password</h2>
           <ResetPasswordForm {...this.props} />
           <p className="reset-password__submitted">
-            Your password reset email should arrive shortly. If you don't see it, check
+            Your password reset email should arrive shortly. If you don&apos;t see it, check
             in your spam folder as sometimes it can end up there.
           </p>
           <p className="form__navigation-options">

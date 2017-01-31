@@ -2,8 +2,9 @@ import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import InlineSVG from 'react-inlinesvg';
-const exitUrl = require('../../../images/exit.svg');
 import * as ToastActions from '../actions/toast';
+
+const exitUrl = require('../../../images/exit.svg');
 
 function Toast(props) {
   return (

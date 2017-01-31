@@ -1,14 +1,15 @@
 import React, { PropTypes } from 'react';
-import * as FileActions from '../actions/files';
-import * as IDEActions from '../actions/ide';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import InlineSVG from 'react-inlinesvg';
+import classNames from 'classnames';
+import * as IDEActions from '../actions/ide';
+import * as FileActions from '../actions/files';
+
 const downArrowUrl = require('../../../images/down-arrow.svg');
 const folderRightUrl = require('../../../images/triangle-arrow-right.svg');
 const folderDownUrl = require('../../../images/triangle-arrow-down.svg');
 const fileUrl = require('../../../images/file.svg');
-import classNames from 'classnames';
 
 export class FileNode extends React.Component {
   constructor(props) {
@@ -68,7 +69,7 @@ export class FileNode extends React.Component {
   }
 
   render() {
-    let itemClass = classNames({
+    const itemClass = classNames({
       'sidebar__root-item': this.props.name === 'root',
       'sidebar__file-item': this.props.name !== 'root',
       'sidebar__file-item--selected': this.props.isSelectedFile,
@@ -228,7 +229,7 @@ FileNode.propTypes = {
 
 function mapStateToProps(state, ownProps) {
                                                             // this is a hack, state is updated before ownProps
-  return state.files.find((file) => file.id === ownProps.id) || { ...ownProps, name: 'test', fileType: 'file' };
+  return state.files.find(file => file.id === ownProps.id) || { ...ownProps, name: 'test', fileType: 'file' };
 }
 
 function mapDispatchToProps(dispatch) {

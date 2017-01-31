@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react';
 import InlineSVG from 'react-inlinesvg';
+import { browserHistory } from 'react-router';
+
 const exitUrl = require('../../../images/exit.svg');
 const squareLogoUrl = require('../../../images/p5js-square-logo.svg');
 const playUrl = require('../../../images/play.svg');
 const asteriskUrl = require('../../../images/p5-asterisk.svg');
-import { browserHistory } from 'react-router';
 
 class About extends React.Component {
   constructor(props) {

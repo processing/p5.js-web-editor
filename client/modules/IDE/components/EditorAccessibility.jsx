@@ -5,7 +5,7 @@ class EditorAccessibility extends React.Component {
 
   }
   render() {
-    let messages = [];
+    const messages = [];
     if (this.props.lintMessages.length > 0) {
       this.props.lintMessages.forEach((lintMessage, i) => {
         messages.push(
@@ -36,7 +36,6 @@ class EditorAccessibility extends React.Component {
 
 EditorAccessibility.propTypes = {
   lintMessages: PropTypes.array.isRequired,
-  lineNumber: PropTypes.string.isRequired,
 };
 
 export default EditorAccessibility;

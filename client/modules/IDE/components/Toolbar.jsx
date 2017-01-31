@@ -1,12 +1,13 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
-const InlineSVG = require('react-inlinesvg');
+import classNames from 'classnames';
+import InlineSVG from 'react-inlinesvg';
+
 const playUrl = require('../../../images/play.svg');
 const logoUrl = require('../../../images/p5js-logo.svg');
 const stopUrl = require('../../../images/stop.svg');
 const preferencesUrl = require('../../../images/preferences.svg');
 const editProjectNameUrl = require('../../../images/pencil.svg');
-import classNames from 'classnames';
 
 class Toolbar extends React.Component {
   constructor(props) {
@@ -38,19 +39,19 @@ class Toolbar extends React.Component {
   }
 
   render() {
-    let playButtonClass = classNames({
+    const playButtonClass = classNames({
       'toolbar__play-button': true,
       'toolbar__play-button--selected': this.props.isPlaying
     });
-    let stopButtonClass = classNames({
+    const stopButtonClass = classNames({
       'toolbar__stop-button': true,
       'toolbar__stop-button--selected': !this.props.isPlaying
     });
-    let preferencesButtonClass = classNames({
+    const preferencesButtonClass = classNames({
       'toolbar__preferences-button': true,
       'toolbar__preferences-button--selected': this.props.preferencesIsVisible
     });
-    let nameContainerClass = classNames({
+    const nameContainerClass = classNames({
       'toolbar__project-name-container': true,
       'toolbar__project-name-container--editing': this.props.project.isEditingName
     });

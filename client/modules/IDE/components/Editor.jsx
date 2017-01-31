@@ -1,12 +1,7 @@
 import React, { PropTypes } from 'react';
-import EditorAccessibility from '../components/EditorAccessibility';
 import CodeMirror from 'codemirror';
 import beautifyJS from 'js-beautify';
-const beautifyCSS = beautifyJS.css;
-const beautifyHTML = beautifyJS.html;
-import '../../../utils/p5-javascript';
 import 'codemirror/mode/css/css';
-import '../../../utils/htmlmixed';
 import 'codemirror/addon/selection/active-line';
 import 'codemirror/addon/lint/lint';
 import 'codemirror/addon/lint/javascript-lint';
@@ -15,22 +10,27 @@ import 'codemirror/addon/lint/html-lint';
 import 'codemirror/addon/comment/comment';
 import 'codemirror/keymap/sublime';
 import 'codemirror/addon/search/jump-to-line';
-
 import { JSHINT } from 'jshint';
-window.JSHINT = JSHINT;
 import { CSSLint } from 'csslint';
-window.CSSLint = CSSLint;
 import { HTMLHint } from 'htmlhint';
-window.HTMLHint = HTMLHint;
-const beepUrl = require('../../../sounds/audioAlert.mp3');
 import InlineSVG from 'react-inlinesvg';
+import classNames from 'classnames';
+import { debounce } from 'lodash';
+import '../../../utils/htmlmixed';
+import '../../../utils/p5-javascript';
+import Timer from '../components/Timer';
+import EditorAccessibility from '../components/EditorAccessibility';
+
+const beautifyCSS = beautifyJS.css;
+const beautifyHTML = beautifyJS.html;
+
+window.JSHINT = JSHINT;
+window.CSSLint = CSSLint;
+window.HTMLHint = HTMLHint;
+
+const beepUrl = require('../../../sounds/audioAlert.mp3');
 const downArrowUrl = require('../../../images/down-arrow.svg');
 const unsavedChangesDotUrl = require('../../../images/unsaved-changes-dot.svg');
-import classNames from 'classnames';
-
-import { debounce } from 'lodash';
-import Timer from '../components/Timer';
-
 const rightArrowUrl = require('../../../images/right-arrow.svg');
 const leftArrowUrl = require('../../../images/left-arrow.svg');
 
@@ -162,7 +162,7 @@ class Editor extends React.Component {
 
   initializeDocuments(files) {
     this._docs = {};
-    files.forEach(file => {
+    files.forEach((file) => {
       if (file.name !== 'root') {
         this._docs[file.id] = CodeMirror.Doc(file.content, this.getFileMode(file.name)); // eslint-disable-line
       }
@@ -198,7 +198,7 @@ class Editor extends React.Component {
 
   render() {
     const editorSectionClass = classNames({
-      editor: true,
+      'editor': true,
       'sidebar--contracted': !this.props.isExpanded,
       'editor--options': this.props.editorOptionsVisible
     });
@@ -259,7 +259,6 @@ class Editor extends React.Component {
         </div>
         <EditorAccessibility
           lintMessages={this.props.lintMessages}
-          lineNumber={this.props.lineNumber}
         />
       </section>
     );
@@ -268,11 +267,9 @@ class Editor extends React.Component {
 
 Editor.propTypes = {
   lintWarning: PropTypes.bool.isRequired,
-  lineNumber: PropTypes.string.isRequired,
   lintMessages: PropTypes.array.isRequired,
   updateLintMessage: PropTypes.func.isRequired,
   clearLintMessage: PropTypes.func.isRequired,
-  updateLineNumber: PropTypes.func.isRequired,
   indentationAmount: PropTypes.number.isRequired,
   isTabIndent: PropTypes.bool.isRequired,
   updateFileContent: PropTypes.func.isRequired,
