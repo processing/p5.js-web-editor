@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
 import { Link, browserHistory } from 'react-router';
+import InlineSVG from 'react-inlinesvg';
 import * as SketchActions from '../actions/projects';
 import * as ProjectActions from '../actions/project';
 import * as ToastActions from '../actions/toast';
-import InlineSVG from 'react-inlinesvg';
+
 const exitUrl = require('../../../images/exit.svg');
 const trashCan = require('../../../images/trash-can.svg');
 

@@ -1,9 +1,10 @@
 import React, { PropTypes } from 'react';
 import Dropzone from 'dropzone';
-const s3Bucket = `https://s3-us-west-2.amazonaws.com/${process.env.S3_BUCKET}/`;
-import * as UploaderActions from '../actions/uploader';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import * as UploaderActions from '../actions/uploader';
+
+const s3Bucket = `https://s3-us-west-2.amazonaws.com/${process.env.S3_BUCKET}/`;
 
 class FileUploader extends React.Component {
   componentDidMount() {

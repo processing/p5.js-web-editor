@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 import InlineSVG from 'react-inlinesvg';
-// import SidebarItem from './SidebarItem';
+import ConnectedFileNode from './FileNode';
+
 const folderUrl = require('../../../images/folder.svg');
 const downArrowUrl = require('../../../images/down-arrow.svg');
-import ConnectedFileNode from './FileNode';
 
 class Sidebar extends React.Component {
   constructor(props) {
@@ -29,7 +29,7 @@ class Sidebar extends React.Component {
 
   render() {
     const sidebarClass = classNames({
-      sidebar: true,
+      'sidebar': true,
       'sidebar--contracted': !this.props.isExpanded,
       'sidebar--project-options': this.props.projectOptionsVisible
     });
