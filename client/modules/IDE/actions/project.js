@@ -1,6 +1,7 @@
 import * as ActionTypes from '../../../constants';
 import { browserHistory } from 'react-router';
 import axios from 'axios';
+import objectID from 'bson-objectid';
 import { showToast, setToastText } from './toast';
 import { setUnsavedChanges,
   justOpenedProject,
@@ -169,7 +170,13 @@ export function cloneProject() {
   return (dispatch, getState) => {
     dispatch(setUnsavedChanges(false));
     const state = getState();
-    const formParams = Object.assign({}, { name: `${state.project.name} copy` }, { files: state.files });
+    const newFiles = state.files.map(file => {
+      const newFile = Object.assign({}, file);
+      newFile._id = objectID().toHexString();
+      newFile.id = newFile._id;
+      return newFile;
+    });
+    const formParams = Object.assign({}, { name: `${state.project.name} copy` }, { files: newFiles });
     axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
       .then(response => {
         browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
