@@ -14,7 +14,7 @@ class TextOutput extends React.Component {
         aria-label="accessible-output"
         title="canvas text output"
       >
-        <section id="gridOutput-content">
+        <section id="textOutput-content">
           <h2> Text Output </h2>
           <p
             tabIndex="0"

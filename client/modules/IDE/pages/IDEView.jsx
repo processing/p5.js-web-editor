@@ -212,6 +212,7 @@ class IDEView extends React.Component {
           openPreferences={this.props.openPreferences}
           preferencesIsVisible={this.props.ide.preferencesIsVisible}
           setTextOutput={this.props.setTextOutput}
+          setGridOutput={this.props.setGridOutput}
           owner={this.props.project.owner}
           project={this.props.project}
           infiniteLoop={this.props.ide.infiniteLoop}
@@ -236,7 +237,9 @@ class IDEView extends React.Component {
           lintWarning={this.props.preferences.lintWarning}
           setLintWarning={this.props.setLintWarning}
           textOutput={this.props.preferences.textOutput}
+          gridOutput={this.props.preferences.gridOutput}
           setTextOutput={this.props.setTextOutput}
+          setGridOutput={this.props.setGridOutput}
           theme={this.props.preferences.theme}
           setTheme={this.props.setTheme}
         />
@@ -326,7 +329,7 @@ class IDEView extends React.Component {
                 </div>
                 <div>
                 {(() => {
-                  if ((this.props.preferences.textOutput && this.props.ide.isPlaying) || this.props.ide.isTextOutputPlaying) {
+                  if (((this.props.preferences.textOutput || this.props.preferences.gridOutput) && this.props.ide.isPlaying) || this.props.ide.isTextOutputPlaying) {
                     return (
                       <TextOutput />
                     );
@@ -341,7 +344,9 @@ class IDEView extends React.Component {
                   isPlaying={this.props.ide.isPlaying}
                   isTextOutputPlaying={this.props.ide.isTextOutputPlaying}
                   textOutput={this.props.preferences.textOutput}
+                  gridOutput={this.props.preferences.gridOutput}
                   setTextOutput={this.props.setTextOutput}
+                  setGridOutput={this.props.setGridOutput}
                   dispatchConsoleEvent={this.props.dispatchConsoleEvent}
                   autorefresh={this.props.preferences.autorefresh}
                   previewIsRefreshing={this.props.ide.previewIsRefreshing}
@@ -510,6 +515,7 @@ IDEView.propTypes = {
     autosave: PropTypes.bool.isRequired,
     lintWarning: PropTypes.bool.isRequired,
     textOutput: PropTypes.bool.isRequired,
+    gridOutput: PropTypes.bool.isRequired,
     theme: PropTypes.string.isRequired,
     autorefresh: PropTypes.bool.isRequired
   }).isRequired,
@@ -521,6 +527,7 @@ IDEView.propTypes = {
   setAutosave: PropTypes.func.isRequired,
   setLintWarning: PropTypes.func.isRequired,
   setTextOutput: PropTypes.func.isRequired,
+  setGridOutput: PropTypes.func.isRequired,
   files: PropTypes.array.isRequired,
   updateFileContent: PropTypes.func.isRequired,
   selectedFile: PropTypes.shape({

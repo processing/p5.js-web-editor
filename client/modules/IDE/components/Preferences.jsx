@@ -264,27 +264,30 @@ class Preferences extends React.Component {
           <div className="preference__options">
             <input
               type="checkbox"
-              onClick={() => this.props.setTextOutput(true)}
+              onChange={(event) => {
+                this.props.setTextOutput(event.target.checked);
+              }}
               aria-label="text output on"
               name="text output"
               id="text-output-on"
               // className="preference__radio-button"
               value="On"
-              checked={(this.props.textOutput)}
+              // checked={(this.props.textOutput)}
             />
             <label htmlFor="text-output-on" className="preference__option preference__canvas">Plain-text</label>
             <input
               type="checkbox"
-              onClick={() => this.props.setTextOutput(false)}
-              aria-label="text output off"
-              name="text output"
-              id="text-output-off"
+              onChange={(event) => {
+                this.props.setGridOutput(event.target.checked);
+              }}
+              aria-label="grid output on"
+              name="grid output"
+              id="grid-output-on"
               // className="preference__radio-button"
-              value="Off"
-              checked={(!this.props.textOutput)}
+              value="On"
+              // checked={(this.props.gridOutput)}
             />
-            <label htmlFor="text-output-off" className="preference__option preference__canvas">Off</label>
-
+            <label htmlFor="grid-output-on" className="preference__option preference__canvas">Gird-text</label>
           </div>
         </div>
       </section>
@@ -305,7 +308,9 @@ Preferences.propTypes = {
   autosave: PropTypes.bool.isRequired,
   setAutosave: PropTypes.func.isRequired,
   textOutput: PropTypes.bool.isRequired,
+  gridOutput: PropTypes.bool.isRequired,
   setTextOutput: PropTypes.func.isRequired,
+  setGridOutput: PropTypes.func.isRequired,
   lintWarning: PropTypes.bool.isRequired,
   setLintWarning: PropTypes.func.isRequired,
   theme: PropTypes.string.isRequired,

@@ -137,6 +137,24 @@ export function setTextOutput(value) {
   };
 }
 
+export function setGridOutput(value) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.SET_GRID_OUTPUT,
+      value
+    });
+    const state = getState();
+    if (state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          gridOutput: value
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
+  };
+}
+
 export function setTheme(value) {
   // return {
   //   type: ActionTypes.SET_THEME,
@@ -180,4 +198,3 @@ export function setAutorefresh(value) {
     }
   };
 }
-

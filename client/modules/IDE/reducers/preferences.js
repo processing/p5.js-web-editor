@@ -7,6 +7,7 @@ const initialState = {
   autosave: true,
   lintWarning: false,
   textOutput: false,
+  gridOutput: false,
   theme: 'light',
   autorefresh: false
 };
@@ -31,6 +32,8 @@ const preferences = (state = initialState, action) => {
       return Object.assign({}, state, { lintWarning: action.value });
     case ActionTypes.SET_TEXT_OUTPUT:
       return Object.assign({}, state, { textOutput: action.value });
+    case ActionTypes.SET_GRID_OUTPUT:
+      return Object.assign({}, state, { gridOutput: action.value });
     case ActionTypes.SET_PREFERENCES:
       return action.preferences;
     case ActionTypes.SET_THEME:

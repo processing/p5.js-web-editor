@@ -126,6 +126,11 @@ class PreviewFrame extends React.Component {
       return;
     }
 
+    if (this.props.gridOutput !== prevProps.gridOutput) {
+      this.renderSketch();
+      return;
+    }
+
     if (this.props.fullView && this.props.files[0].id !== prevProps.files[0].id) {
       this.renderSketch();
       return;
@@ -168,22 +173,34 @@ class PreviewFrame extends React.Component {
       '/loop-protect.min.js',
       '/hijackConsole.js'
     ];
-    if (this.props.isTextOutputPlaying || (this.props.textOutput && this.props.isPlaying)) {
+    if (this.props.isTextOutputPlaying || ((this.props.textOutput || this.props.gridOutput) && this.props.isPlaying)) {
       let interceptorScripts = [];
-      if (!this.props.textOutput) {
+      interceptorScripts = [
+        '/p5-interceptor/registry.js',
+        '/p5-interceptor/loadData.js',
+        '/p5-interceptor/interceptorHelperFunctions.js',
+        '/p5-interceptor/baseInterceptor.js',
+        '/p5-interceptor/entities/entity.min.js',
+        '/p5-interceptor/ntc.min.js'
+      ];
+      if (!this.props.textOutput && !this.props.gridOutput) {
         this.props.setTextOutput(true);
       }
       if (this.props.textOutput) {
-        interceptorScripts = [
-          '/p5-interceptor/registry.js',
-          '/p5-interceptor/loadData.js',
-          '/p5-interceptor/interceptorHelperFunctions.js',
-          '/p5-interceptor/baseInterceptor.js',
-          '/p5-interceptor/entities/entity.min.js',
+        let textInterceptorScripts = [];
+        textInterceptorScripts = [
           '/p5-interceptor/textInterceptor/interceptorFunctions.js',
-          '/p5-interceptor/textInterceptor/interceptorP5.js',
-          '/p5-interceptor/ntc.min.js'
+          '/p5-interceptor/textInterceptor/interceptorP5.js'
         ];
+        interceptorScripts = interceptorScripts.concat(textInterceptorScripts);
+      }
+      if (this.props.gridOutput) {
+        let gridInterceptorScripts = [];
+        gridInterceptorScripts = [
+          '/p5-interceptor/gridInterceptor/interceptorFunctions.js',
+          '/p5-interceptor/gridInterceptor/interceptorP5.js'
+        ];
+        interceptorScripts = interceptorScripts.concat(gridInterceptorScripts);
       }
       scriptsToInject = scriptsToInject.concat(interceptorScripts);
     }
@@ -362,7 +379,9 @@ PreviewFrame.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   isTextOutputPlaying: PropTypes.bool.isRequired,
   textOutput: PropTypes.bool.isRequired,
+  gridOutput: PropTypes.bool.isRequired,
   setTextOutput: PropTypes.func.isRequired,
+  setGridOutput: PropTypes.func.isRequired,
   content: PropTypes.string,
   htmlFile: PropTypes.shape({
     content: PropTypes.string.isRequired
