@@ -42,7 +42,7 @@ class Editor extends React.Component {
   componentDidMount() {
     this.beep = new Audio(beepUrl);
     this.widgets = [];
-    this._cm = CodeMirror(this.refs.container, { // eslint-disable-line
+    this._cm = CodeMirror(this.codemirrorContainer, { // eslint-disable-line
       theme: `p5-${this.props.theme}`,
       lineNumbers: true,
       styleActiveLine: true,
@@ -189,7 +189,7 @@ class Editor extends React.Component {
     if (this.props.editorOptionsVisible) {
       this.props.closeEditorOptions();
     } else {
-      this.refs.optionsButton.focus();
+      this.optionsButton.focus();
       this.props.showEditorOptions();
     }
   }
@@ -238,7 +238,7 @@ class Editor extends React.Component {
             className="editor__options-button"
             aria-label="editor options"
             tabIndex="0"
-            ref="optionsButton"
+            ref={(element) => { this.optionsButton = element; }}
             onClick={() => {
               this.toggleEditorOptions();
             }}
@@ -255,7 +255,7 @@ class Editor extends React.Component {
             </li>
           </ul>
         </header>
-        <div ref="container" className="editor-holder" tabIndex="0">
+        <div ref={(element) => { this.codemirrorContainer = element; }} className="editor-holder" tabIndex="0">
         </div>
         <EditorAccessibility
           lintMessages={this.props.lintMessages}
