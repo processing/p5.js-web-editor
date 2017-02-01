@@ -92,8 +92,6 @@ SketchList.propTypes = {
   username: PropTypes.string,
   deleteProject: PropTypes.func.isRequired,
   previousPath: PropTypes.string.isRequired,
-  showToast: PropTypes.func.isRequired,
-  setToastText: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

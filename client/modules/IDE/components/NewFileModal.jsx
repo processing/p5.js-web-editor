@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
-import NewFileForm from './NewFileForm';
 import classNames from 'classnames';
 import InlineSVG from 'react-inlinesvg';
+import NewFileForm from './NewFileForm';
+import FileUploader from './FileUploader';
+
 const exitUrl = require('../../../images/exit.svg');
 
-import FileUploader from './FileUploader';
 
 // At some point this will probably be generalized to a generic modal
 // in which you can insert different content
@@ -21,16 +22,16 @@ class NewFileModal extends React.Component {
   }
 
   focusOnModal() {
-    this.refs.modal.focus();
+    this.modal.focus();
   }
 
   render() {
     const modalClass = classNames({
-      modal: true,
+      'modal': true,
       'modal--reduced': !this.props.canUploadMedia
     });
     return (
-      <section className={modalClass} tabIndex="0" ref="modal">
+      <section className={modalClass} tabIndex="0" ref={(element) => { this.modal = element; }}>
         <div className="modal-content">
           <div className="modal__header">
             <h2 className="modal__title">Add File</h2>

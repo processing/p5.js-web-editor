@@ -55,7 +55,7 @@ export class FileNode extends React.Component {
     if (this.props.isOptionsOpen) {
       this.props.hideFileOptions(this.props.id);
     } else {
-      this.refs[`fileOptions-${this.props.id}`].focus();
+      this[`fileOptions-${this.props.id}`].focus();
       this.props.showFileOptions(this.props.id);
     }
   }
@@ -119,7 +119,7 @@ export class FileNode extends React.Component {
                   className="sidebar__file-item-input"
                   value={this.props.name}
                   onChange={this.handleFileNameChange}
-                  ref="fileNameInput"
+                  ref={(element) => { this.fileNameInput = element; }}
                   onBlur={() => {
                     this.validateFileName();
                     this.props.hideEditFileName(this.props.id);
@@ -129,13 +129,13 @@ export class FileNode extends React.Component {
                 <button
                   className="sidebar__file-item-show-options"
                   aria-label="view file options"
-                  ref={`fileOptions-${this.props.id}`}
+                  ref={(element) => { this[`fileOptions-${this.props.id}`] = element; }}
                   tabIndex="0"
                   onClick={this.toggleFileOptions}
                 >
                   <InlineSVG src={downArrowUrl} />
                 </button>
-                <div ref="fileOptions" className="sidebar__file-item-options">
+                <div className="sidebar__file-item-options">
                   <ul title="file options">
                     {(() => { // eslint-disable-line
                       if (this.props.fileType === 'folder') {
@@ -164,7 +164,7 @@ export class FileNode extends React.Component {
                         onClick={() => {
                           this.originalFileName = this.props.name;
                           this.props.showEditFileName(this.props.id);
-                          setTimeout(() => this.refs.fileNameInput.focus(), 0);
+                          setTimeout(() => this.fileNameInput.focus(), 0);
                         }}
                       >
                         Rename

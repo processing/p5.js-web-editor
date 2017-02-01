@@ -14,7 +14,7 @@ class About extends React.Component {
   }
 
   componentDidMount() {
-    this.refs.about.focus();
+    this.aboutSection.focus();
   }
 
   closeAboutModal() {
@@ -23,7 +23,7 @@ class About extends React.Component {
 
   render() {
     return (
-      <section className="about" ref="about" tabIndex="0">
+      <section className="about" ref={(element) => { this.aboutSection = element; }} tabIndex="0">
         <header className="about__header">
           <h2 className="about__header-title">Welcome</h2>
           <button className="about__exit-button" onClick={this.closeAboutModal}>

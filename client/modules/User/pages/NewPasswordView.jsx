@@ -6,6 +6,7 @@ import InlineSVG from 'react-inlinesvg';
 import { bindActionCreators } from 'redux';
 import NewPasswordForm from '../components/NewPasswordForm';
 import * as UserActions from '../actions';
+
 const exitUrl = require('../../../images/exit.svg');
 const logoUrl = require('../../../images/p5js-logo.svg');
 
