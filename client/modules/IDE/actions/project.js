@@ -170,12 +170,13 @@ export function cloneProject() {
   return (dispatch, getState) => {
     dispatch(setUnsavedChanges(false));
     const state = getState();
-    const newFiles = state.files.map(file => {
-      const newFile = Object.assign({}, file);
-      newFile._id = objectID().toHexString();
-      newFile.id = newFile._id;
-      return newFile;
-    });
+    // const newFiles = state.files.map(file => {
+    //   const newFile = Object.assign({}, file);
+    //   newFile._id = objectID().toHexString();
+    //   newFile.id = newFile._id;
+    //   return newFile;
+    // });
+    const newFiles = state.files;
     const formParams = Object.assign({}, { name: `${state.project.name} copy` }, { files: newFiles });
     axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
       .then(response => {
