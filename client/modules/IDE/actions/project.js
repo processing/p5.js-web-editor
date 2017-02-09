@@ -206,4 +206,3 @@ export function hideEditProjectName() {
     type: ActionTypes.HIDE_EDIT_PROJECT_NAME
   };
 }
-
