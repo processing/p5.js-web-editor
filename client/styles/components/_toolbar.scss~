@@ -104,7 +104,6 @@
 
 .toolbar__project-owner {
 	margin-left: #{5 / $base-font-size}rem;
-	color: #bfbfbf;
 }
 
 .toolbar__autorefresh-label {
