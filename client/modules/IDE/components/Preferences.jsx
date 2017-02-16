@@ -287,7 +287,7 @@ class Preferences extends React.Component {
               value="On"
               // checked={(this.props.gridOutput)}
             />
-            <label htmlFor="grid-output-on" className="preference__option preference__canvas">Gird-text</label>
+            <label htmlFor="grid-output-on" className="preference__option preference__canvas">Grid-text</label>
           </div>
         </div>
       </section>
