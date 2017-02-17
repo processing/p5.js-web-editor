@@ -58,7 +58,8 @@ class SketchList extends React.Component {
                       return (
                         <button
                           className="sketch-list__trash-button"
-                          onClick={() => {
+                          onClick={(e) => {
+                            e.stopPropagation();
                             if (window.confirm(`Are you sure you want to delete "${sketch.name}"?`)) {
                               this.props.deleteProject(sketch.id);
                             }
