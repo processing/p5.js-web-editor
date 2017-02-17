@@ -106,6 +106,7 @@
 	@include themify() {
 		color: getThemifyVariable('inactive-text-color');
 	}
+}
 
 .toolbar__autorefresh-label {
 	@include themify() {
