@@ -14,10 +14,10 @@ class SketchList extends React.Component {
   constructor(props) {
     super(props);
     this.closeSketchList = this.closeSketchList.bind(this);
+    this.props.getProjects(this.props.username);
   }
 
   componentDidMount() {
-    this.props.getProjects(this.props.username);
     document.getElementById('sketchlist').focus();
   }
 
@@ -48,7 +48,7 @@ class SketchList extends React.Component {
             <tbody>
               {this.props.sketches.map(sketch =>
                 <tr className="sketches-table__row visibility-toggle" key={sketch.id}>
-                  <td>
+                  <td className="sketch-list__trash-column">
                   {(() => { // eslint-disable-line
                     if (this.props.username === this.props.user.username || this.props.username === undefined) {
                       return (
