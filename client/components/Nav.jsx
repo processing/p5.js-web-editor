@@ -1,152 +1,159 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 
-function Nav(props) {
-  return (
-    <nav className="nav" role="navigation" title="main-navigation">
-      <ul className="nav__items-left" title="project-menu">
-        <li className="nav__item">
-          <a
-            className="nav__new"
-            onClick={() => {
-              if (!props.unsavedChanges) {
-                props.newProject();
-              } else if (props.warnIfUnsavedChanges()) {
-                props.newProject();
-              }
-            }}
-          >
-            New
-          </a>
-        </li>
-        {(() => { // eslint-disable-line
-          if (!props.project.owner || props.project.owner && props.project.owner.id === props.user.id) {
-            return (
-              <li className="nav__item">
-                <a
-                  className="nav__save"
-                  onClick={() => {
-                    if (props.user.authenticated) {
-                      props.saveProject();
-                    } else {
-                      props.showErrorModal('forceAuthentication');
-                    }
-                  }}
-                >
-                  Save
-                </a>
-              </li>
-            );
-          }
-        })()}
-        {(() => { // eslint-disable-line
-          if (props.project.id && props.user.authenticated) {
-            return (
-              <li className="nav__item">
-                <a className="nav__clone" onClick={props.cloneProject}>
-                  Duplicate
-                </a>
-              </li>
-            );
-          }
-        })()}
-        {(() => { // eslint-disable-line
-          if (props.project.id) {
-            return (
-              <li className="nav__item">
-                <a className="nav__export" onClick={() => props.exportProjectAsZip(props.project.id)}>
-                  Download
-                </a>
-              </li>
-            );
-          }
-        })()}
-        {(() => { // eslint-disable-line
-          if (props.project.id) {
-            return (
-              <li className="nav__item">
-                <a onClick={props.showShareModal}>
-                  Share
-                </a>
-              </li>
-            );
-          }
-        })()}
-        {(() => { // eslint-disable-line
-          if (props.user.authenticated) {
-            return (
-              <li className="nav__item">
-                <p className="nav__open">
-                  <Link
-                    to={`/${props.user.username}/sketches`}
-                    onClick={props.stopSketch}
-                  >
-                    Open
-                  </Link>
-                </p>
-              </li>
-            );
-          }
-        })()}
-        <li className="nav__item">
-          <p className="nav__open">
-            <Link to="/p5/sketches">
-              Examples
-            </Link>
-          </p>
-        </li>
-        <li className="nav__item">
-          <p className="nav__reference">
+class Nav extends React.PureComponent {
+  render() {
+    return (
+      <nav className="nav" role="navigation" title="main-navigation">
+        <ul className="nav__items-left" title="project-menu">
+          <li className="nav__item">
             <a
-              href="https://p5js.org/reference/"
-              target="_blank"
-            >Reference</a>
-          </p>
-        </li>
-        <li className="nav__item">
-          <p className="nav__about">
-            <Link to="/about">
-              About
-            </Link>
-          </p>
-        </li>
-      </ul>
-      <ul className="nav__items-right" title="user-menu">
-        {(() => {
-          if (!props.user.authenticated) {
-            return (
-              <li className="nav__item">
-                <p>
-                  <Link to="/login">Log in</Link> <span className="nav__item-spacer">or</span> <Link to="/signup">Sign up</Link>
-                </p>
-              </li>
-            );
-          }
-          return (
-            <li className="nav__item">
-              <a>Hello, {props.user.username}!</a>
-              <ul className="nav__dropdown">
-                <li className="nav__dropdown-heading">
-                  <a>Hello, {props.user.username}!</a>
-                </li>
-                <li>
-                  <Link to={`/${props.user.username}/sketches`}>
-                    My sketches
-                  </Link>
-                </li>
-                <li>
-                  <a onClick={props.logoutUser} >
-                    Log out
+              className="nav__new"
+              onClick={() => {
+                if (!this.props.unsavedChanges) {
+                  this.props.newProject();
+                } else if (this.props.warnIfUnsavedChanges()) {
+                  this.props.newProject();
+                }
+              }}
+            >
+              New
+            </a>
+          </li>
+          {(() => { // eslint-disable-line
+            if (!this.props.project.owner || this.props.project.owner && this.props.project.owner.id === this.props.user.id) {
+              return (
+                <li className="nav__item">
+                  <a
+                    className="nav__save"
+                    onClick={() => {
+                      if (this.props.user.authenticated) {
+                        this.props.saveProject();
+                      } else {
+                        this.props.showErrorModal('forceAuthentication');
+                      }
+                    }}
+                  >
+                    Save
                   </a>
                 </li>
-              </ul>
-            </li>
-          );
-        })()}
-      </ul>
-      <div className="nav__announce">This is a preview version of the editor, that has not yet been officially released. It is in development, you can report bugs <a href="https://github.com/processing/p5.js-web-editor/issues" target="_blank">here</a>. Please use with caution.</div>
-    </nav>
-  );
+              );
+            }
+          })()}
+          {(() => { // eslint-disable-line
+            if (this.props.project.id && this.props.user.authenticated) {
+              return (
+                <li className="nav__item">
+                  <a className="nav__clone" onClick={this.props.cloneProject}>
+                    Duplicate
+                  </a>
+                </li>
+              );
+            }
+          })()}
+          {(() => { // eslint-disable-line
+            if (this.props.project.id) {
+              return (
+                <li className="nav__item">
+                  <a className="nav__export" onClick={() => this.props.exportProjectAsZip(this.props.project.id)}>
+                    Download
+                  </a>
+                </li>
+              );
+            }
+          })()}
+          {(() => { // eslint-disable-line
+            if (this.props.project.id) {
+              return (
+                <li className="nav__item">
+                  <a onClick={this.props.showShareModal}>
+                    Share
+                  </a>
+                </li>
+              );
+            }
+          })()}
+          {(() => { // eslint-disable-line
+            if (this.props.user.authenticated) {
+              return (
+                <li className="nav__item">
+                  <p className="nav__open">
+                    <Link
+                      to={`/${this.props.user.username}/sketches`}
+                      onClick={this.props.stopSketch}
+                    >
+                      Open
+                    </Link>
+                  </p>
+                </li>
+              );
+            }
+          })()}
+          <li className="nav__item">
+            <p className="nav__open">
+              <Link to="/p5/sketches">
+                Examples
+              </Link>
+            </p>
+          </li>
+          <li className="nav__item">
+            <p className="nav__reference">
+              <a
+                href="https://p5js.org/reference/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >Reference</a>
+            </p>
+          </li>
+          <li className="nav__item">
+            <p className="nav__about">
+              <Link to="/about">
+                About
+              </Link>
+            </p>
+          </li>
+        </ul>
+        <ul className="nav__items-right" title="user-menu">
+          {(() => {
+            if (!this.props.user.authenticated) {
+              return (
+                <li className="nav__item">
+                  <p>
+                    <Link to="/login">Log in</Link> <span className="nav__item-spacer">or</span> <Link to="/signup">Sign up</Link>
+                  </p>
+                </li>
+              );
+            }
+            return (
+              <li className="nav__item">
+                <a>Hello, {this.props.user.username}!</a>
+                <ul className="nav__dropdown">
+                  <li className="nav__dropdown-heading">
+                    <a>Hello, {this.props.user.username}!</a>
+                  </li>
+                  <li>
+                    <Link to={`/${this.props.user.username}/sketches`}>
+                      My sketches
+                    </Link>
+                  </li>
+                  <li>
+                    <a onClick={this.props.logoutUser} >
+                      Log out
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            );
+          })()}
+        </ul>
+        <div className="nav__announce">
+          This is a preview version of the editor, that has not yet been officially released. It is in development, you can report bugs 
+          <a href="https://github.com/processing/p5.js-web-editor/issues" target="_blank" rel="noopener noreferrer">here</a>.
+          Please use with caution.
+        </div>
+      </nav>
+    );
+  }
 }
 
 Nav.propTypes = {

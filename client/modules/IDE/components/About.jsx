@@ -37,6 +37,7 @@ class About extends React.Component {
               <a
                 href="http://hello.p5js.org/"
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 <InlineSVG className="about__play-video-button" src={playUrl} alt="Play Hello Video" />
               Play hello! video</a>
@@ -48,6 +49,7 @@ class About extends React.Component {
               <a
                 href="https://p5js.org/examples/"
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
               Examples</a>
@@ -56,6 +58,7 @@ class About extends React.Component {
               <a
                 href="https://p5js.org/tutorials/"
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
               Tutorials</a>
@@ -67,6 +70,7 @@ class About extends React.Component {
               <a
                 href="https://p5js.org/libraries/"
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
               Libraries</a>
@@ -75,6 +79,7 @@ class About extends React.Component {
               <a
                 href="https://p5js.org/reference/"
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
               Reference</a>
@@ -83,6 +88,7 @@ class About extends React.Component {
               <a
                 href="https://forum.processing.org/two/"
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
               Forum</a>
@@ -94,18 +100,21 @@ class About extends React.Component {
             <a
               href="https://github.com/processing/p5.js-web-editor"
               target="_blank"
+              rel="noopener noreferrer"
             >Contribute</a>
           </p>
           <p className="about__footer-list">
             <a
               href="https://github.com/processing/p5.js-web-editor/issues/new"
               target="_blank"
+              rel="noopener noreferrer"
             >Report a bug</a>
           </p>
           <p className="about__footer-list">
             <a
               href="https://twitter.com/p5xjs?lang=en"
               target="_blank"
+              rel="noopener noreferrer"
             >Twitter</a>
           </p>
           <button className="about__ok-button" onClick={this.closeAboutModal}>OK!</button>

@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
 import InlineSVG from 'react-inlinesvg';
-const exitUrl = require('../../../images/exit.svg');
 import { Link } from 'react-router';
+
+const exitUrl = require('../../../images/exit.svg');
 
 class ErrorModal extends React.Component {
   componentDidMount() {
-    this.refs.modal.focus();
+    this.errorModal.focus();
   }
 
 
@@ -23,7 +24,7 @@ class ErrorModal extends React.Component {
   staleSession() {
     return (
       <p>
-        It looks like you've been logged out. Please&nbsp;
+        It looks like you&apos;ve been logged out. Please&nbsp;
         <Link to="/login" onClick={this.props.closeModal}>log in</Link>.
       </p>
     );
@@ -39,7 +40,7 @@ class ErrorModal extends React.Component {
 
   render() {
     return (
-      <section className="error-modal" ref="modal" tabIndex="0">
+      <section className="error-modal" ref={(element) => { this.errorModal = element; }} tabIndex="0">
         <header className="error-modal__header">
           <h2 className="error-modal__title">Error</h2>
           <button className="error-modal__exit-button" onClick={this.props.closeModal}>
