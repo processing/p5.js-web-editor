@@ -19,7 +19,7 @@
 	}
 	margin-right: #{15 / $base-font-size}rem;
 	& span {
-		padding-left: #{2 / $base-font-size}rem;
+		padding-left: #{3 / $base-font-size}rem;
 	}
 }
 
@@ -40,14 +40,17 @@
 .toolbar__preferences-button {
 	@include themify() {
 		@extend %toolbar-button;
-		line-height: #{50 / $base-font-size}rem;
+		line-height: #{52 / $base-font-size}rem;
 		&--selected {
 			@extend %toolbar-button--selected;
-			line-height: #{50 / $base-font-size}rem;
+			line-height: #{52 / $base-font-size}rem;
 		}
 	}
-	line-height: #{50 / $base-font-size}rem;
+	line-height: #{52 / $base-font-size}rem;
 	margin-left: auto;
+	& span {
+		padding-left: #{1 / $base-font-size}rem;
+	}
 }
 
 .toolbar__logo {
