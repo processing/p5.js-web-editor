@@ -68,8 +68,7 @@ function getCategories() {
 function getSketchesInCategories(categories) {
   return Q.all(categories.map((category) => {
     const options = {
-      url: `${category.url
-        .replace('?ref=master', '')}?client_id=${clientId}&client_secret=${clientSecret}`,
+      url: `${category.url.replace('?ref=master', '')}?client_id=${clientId}&client_secret=${clientSecret}`,
       method: 'GET',
       headers
     };

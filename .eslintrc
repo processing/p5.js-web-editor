@@ -32,6 +32,10 @@
     "react/self-closing-comp": ["error", {
       "component": true,
       "html": false
+    }],
+    "newline-per-chained-call": 0,
+    "react/prefer-stateless-function": [2, 
+      { "ignorePureComponents": true 
     }]
   },
   "plugins": [
