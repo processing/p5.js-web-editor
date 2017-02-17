@@ -47,7 +47,11 @@ class SketchList extends React.Component {
             </thead>
             <tbody>
               {this.props.sketches.map(sketch =>
-                <tr className="sketches-table__row visibility-toggle" key={sketch.id}>
+                <tr
+                  className="sketches-table__row visibility-toggle"
+                  key={sketch.id}
+                  onClick={() => browserHistory.push(`/${username}/sketches/${sketch._id}`)}
+                >
                   <td className="sketch-list__trash-column">
                   {(() => { // eslint-disable-line
                     if (this.props.username === this.props.user.username || this.props.username === undefined) {

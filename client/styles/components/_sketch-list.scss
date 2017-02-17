@@ -40,6 +40,7 @@
   margin: #{10 / $base-font-size}rem;
   height: #{72 / $base-font-size}rem;
   font-size: #{16 / $base-font-size}rem;
+  cursor: pointer;
 }
 
 .sketches-table__row:nth-child(odd) {
