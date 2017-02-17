@@ -166,30 +166,17 @@ export function newProject() {
   return resetProject();
 }
 
-function generateNewIdsForChildren(file, files) {
-  const newChildren = [];
-  file.children.forEach((childId) => {
-    const child = files.find(childFile => childFile.id === childId);
-    const newId = objectID().toHexString();
-    child.id = newId;
-    child._id = newId;
-    newChildren.push(newId);
-    generateNewIdsForChildren(child, files);
-  });
-  file.children = newChildren; // eslint-disable-line
-}
-
 export function cloneProject() {
   return (dispatch, getState) => {
     dispatch(setUnsavedChanges(false));
     const state = getState();
-    const newFiles = [...state.files];
-    const rootFile = newFiles.find(file => file.name === 'root');
-    const newRootFileId = objectID().toHexString();
-    rootFile.id = newRootFileId;
-    rootFile._id = newRootFileId;
-    generateNewIdsForChildren(rootFile, newFiles);
-    // const newFiles = state.files;
+    // const newFiles = state.files.map(file => {
+    //   const newFile = Object.assign({}, file);
+    //   newFile._id = objectID().toHexString();
+    //   newFile.id = newFile._id;
+    //   return newFile;
+    // });
+    const newFiles = state.files;
     const formParams = Object.assign({}, { name: `${state.project.name} copy` }, { files: newFiles });
     axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
       .then(response => {
