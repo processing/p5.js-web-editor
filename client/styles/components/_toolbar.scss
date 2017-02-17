@@ -103,8 +103,9 @@
 
 .toolbar__project-owner {
 	margin-left: #{5 / $base-font-size}rem;
-	color: getThemifyVariable('inactive-text-color');
-}
+	@include themify() {
+		color: getThemifyVariable('inactive-text-color');
+	}
 
 .toolbar__autorefresh-label {
 	@include themify() {
