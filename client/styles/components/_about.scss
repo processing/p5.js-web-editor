@@ -61,7 +61,7 @@
   svg {
     width: #{11 / $base-font-size}rem;
     height: #{11 / $base-font-size}rem;
-    margin-left: 1px;
+    margin-left: #{1 / $base-font-size}rem;
   }
 }
 
