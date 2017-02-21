@@ -82,6 +82,8 @@ export class FileNode extends React.Component {
         className={itemClass}
         onClick={this.handleFileClick}
         onBlur={() => setTimeout(() => this.props.hideFileOptions(this.props.id), 200)}
+        role="button"
+        tabIndex="0"
       >
         {(() => { // eslint-disable-line
           if (this.props.name !== 'root') {
@@ -98,18 +100,18 @@ export class FileNode extends React.Component {
                   }
                   return (
                     <div>
-                      <span
+                      <button
                         className="sidebar__file-item-closed"
                         onClick={() => this.props.showFolderChildren(this.props.id)}
                       >
                         <InlineSVG className="folder-right" src={folderRightUrl} />
-                      </span>
-                      <span
+                      </button>
+                      <button
                         className="sidebar__file-item-open"
                         onClick={() => this.props.hideFolderChildren(this.props.id)}
                       >
                         <InlineSVG className="folder-down" src={folderDownUrl} />
-                      </span>
+                      </button>
                     </div>
                   );
                 })()}
@@ -141,9 +143,13 @@ export class FileNode extends React.Component {
                       if (this.props.fileType === 'folder') {
                         return (
                           <li>
-                            <a aria-label="add file" onClick={this.props.newFile} >
+                            <button
+                              aria-label="add file"
+                              onClick={this.props.newFile}
+                              className="sidebar__file-item-option"
+                            >
                               Add File
-                            </a>
+                            </button>
                           </li>
                         );
                       }
@@ -152,26 +158,31 @@ export class FileNode extends React.Component {
                       if (this.props.fileType === 'folder') {
                         return (
                           <li>
-                            <a aria-label="add folder" onClick={this.props.newFolder} >
+                            <button
+                              aria-label="add folder"
+                              onClick={this.props.newFolder}
+                              className="sidebar__file-item-option"
+                            >
                               Add Folder
-                            </a>
+                            </button>
                           </li>
                         );
                       }
                     })()}
                     <li>
-                      <a
+                      <button
                         onClick={() => {
                           this.originalFileName = this.props.name;
                           this.props.showEditFileName(this.props.id);
                           setTimeout(() => this.fileNameInput.focus(), 0);
                         }}
+                        className="sidebar__file-item-option"
                       >
                         Rename
-                      </a>
+                      </button>
                     </li>
                     <li>
-                      <a
+                      <button
                         onClick={() => {
                           if (window.confirm(`Are you sure you want to delete ${this.props.name}?`)) {
                             this.isDeleting = true;
@@ -179,9 +190,10 @@ export class FileNode extends React.Component {
                             setTimeout(() => this.props.deleteFile(this.props.id, this.props.parentId), 100);
                           }
                         }}
+                        className="sidebar__file-item-option"
                       >
                         Delete
-                      </a>
+                      </button>
                     </li>
                   </ul>
                 </div>
@@ -206,7 +218,7 @@ export class FileNode extends React.Component {
 FileNode.propTypes = {
   id: PropTypes.string.isRequired,
   parentId: PropTypes.string,
-  children: PropTypes.array,
+  children: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   name: PropTypes.string.isRequired,
   fileType: PropTypes.string.isRequired,
   isSelectedFile: PropTypes.bool,
@@ -227,9 +239,22 @@ FileNode.propTypes = {
   hideFolderChildren: PropTypes.func.isRequired
 };
 
+FileNode.defaultProps = {
+  id: '1',
+  name: 'test',
+  fileType: 'file',
+  children: [],
+  parentId: '0',
+  isSelectedFile: false,
+  isOptionsOpen: false,
+  isEditingName: false,
+  isFolderClosed: false
+};
+
 function mapStateToProps(state, ownProps) {
-                                                            // this is a hack, state is updated before ownProps
-  return state.files.find(file => file.id === ownProps.id) || { ...ownProps, name: 'test', fileType: 'file' };
+  //                                                           // this is a hack, state is updated before ownProps
+  // return state.files.find(file => file.id === ownProps.id) || { ...ownProps, name: 'test', fileType: 'file' };
+  return state.files.find(file => file.id === ownProps.id);
 }
 
 function mapDispatchToProps(dispatch) {

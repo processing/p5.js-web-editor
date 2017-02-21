@@ -225,6 +225,8 @@
   & svg {
     height: #{10 / $base-font-size}rem;
   }
+  background-color: transparent;
+  border: none;
 }
 
 .sidebar__file-item-closed {
@@ -258,6 +260,14 @@
   right: #{-6 / $base-font-size}rem;
   padding: #{8 / $base-font-size}rem #{16 / $base-font-size}rem;
   width: #{145 / $base-font-size}rem;
+}
+
+.sidebar__file-item-option {
+  @include themify() {
+    @extend %link;
+  }
+  background-color: transparent;
+  border: none;
 }
 
 

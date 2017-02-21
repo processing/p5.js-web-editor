@@ -20,22 +20,12 @@ body, input, button {
 
 a {
 	@include themify() {
-		text-decoration: none;
-		color: getThemifyVariable('inactive-text-color');
-		cursor: pointer;
-		&:hover {
-			text-decoration: none;
-			color: getThemifyVariable('primary-text-color');
-		}
+		@extend %link;
 	}
 }
 
 input, button {
 	font-size: 1rem;
-}
-
-button:focus {
-	outline: none;
 }
 
 input {

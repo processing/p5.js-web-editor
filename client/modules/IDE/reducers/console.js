@@ -5,9 +5,10 @@ const initialState = [];
 let messageId = 0;
 
 const console = (state = initialState, action) => {
+  let messages;
   switch (action.type) {
     case ActionTypes.CONSOLE_EVENT:
-      const messages = [...action.event];
+      messages = [...action.event];
       messages.forEach((message) => {
         message.id = messageId;
         messageId += 1;
