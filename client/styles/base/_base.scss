@@ -6,10 +6,13 @@ html, body {
 	font-size: #{$base-font-size}px;
 }
 
-body, input, button {
+body, input {
 	@include themify() {
 		color: getThemifyVariable('primary-text-color');
 	}
+}
+
+body, input, button {
 	font-family: Montserrat, sans-serif;
 }
 
@@ -45,6 +48,14 @@ input[type="submit"] {
 	}
 }
 
+button {
+	@include themify() {
+		@extend %link;
+	}
+	background: transparent;
+	border: none;
+}
+
 h2 {
 	font-size: #{21 / $base-font-size}em;
 }
@@ -59,5 +70,8 @@ h6 {
 	font-weight: normal;
 }
 thead {
+	text-align: left;
+}
+th {
 	text-align: left;
 }

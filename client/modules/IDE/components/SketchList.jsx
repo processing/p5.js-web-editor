@@ -51,7 +51,8 @@ class SketchList extends React.Component {
                 <tr
                   className="sketches-table__row visibility-toggle"
                   key={sketch.id}
-                  onClick={() => browserHistory.push(`/${username}/sketches/${sketch._id}`)}
+                  onClick={() => browserHistory.push(`/${username}/sketches/${sketch.id}`)}
+                  role="button"
                 >
                   <td className="sketch-list__trash-column">
                   {(() => { // eslint-disable-line
@@ -72,7 +73,7 @@ class SketchList extends React.Component {
                     }
                   })()}
                   </td>
-                  <td scope="row"><Link to={`/${username}/sketches/${sketch._id}`}>{sketch.name}</Link></td>
+                  <th scope="row"><Link to={`/${username}/sketches/${sketch.id}`}>{sketch.name}</Link></th>
                   <td>{moment(sketch.createdAt).format('MMM D, YYYY h:mm A')}</td>
                   <td>{moment(sketch.updatedAt).format('MMM D, YYYY h:mm A')}</td>
                 </tr>
@@ -86,12 +87,23 @@ class SketchList extends React.Component {
 }
 
 SketchList.propTypes = {
-  user: PropTypes.object.isRequired,
+  user: PropTypes.shape({
+    username: PropTypes.string
+  }).isRequired,
   getProjects: PropTypes.func.isRequired,
-  sketches: PropTypes.array.isRequired,
+  sketches: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired,
+    updatedAt: PropTypes.string.isRequired
+  })).isRequired,
   username: PropTypes.string,
   deleteProject: PropTypes.func.isRequired,
   previousPath: PropTypes.string.isRequired,
+};
+
+SketchList.defaultProps = {
+  username: undefined
 };
 
 function mapStateToProps(state) {

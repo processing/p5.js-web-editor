@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import InlineSVG from 'react-inlinesvg';
+
 const exitUrl = require('../../../images/exit.svg');
 
 class KeyboardShortcutModal extends React.Component {

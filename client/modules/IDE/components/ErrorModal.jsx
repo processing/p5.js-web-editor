@@ -64,7 +64,7 @@ class ErrorModal extends React.Component {
 }
 
 ErrorModal.propTypes = {
-  type: PropTypes.string,
+  type: PropTypes.string.isRequired,
   closeModal: PropTypes.func.isRequired
 };
 

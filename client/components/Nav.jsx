@@ -7,7 +7,7 @@ class Nav extends React.PureComponent {
       <nav className="nav" role="navigation" title="main-navigation">
         <ul className="nav__items-left" title="project-menu">
           <li className="nav__item">
-            <a
+            <button
               className="nav__new"
               onClick={() => {
                 if (!this.props.unsavedChanges) {
@@ -18,13 +18,13 @@ class Nav extends React.PureComponent {
               }}
             >
               New
-            </a>
+            </button>
           </li>
           {(() => { // eslint-disable-line
-            if (!this.props.project.owner || this.props.project.owner && this.props.project.owner.id === this.props.user.id) {
+            if (!this.props.project.owner || (this.props.project.owner && this.props.project.owner.id === this.props.user.id)) {
               return (
                 <li className="nav__item">
-                  <a
+                  <button
                     className="nav__save"
                     onClick={() => {
                       if (this.props.user.authenticated) {
@@ -35,7 +35,7 @@ class Nav extends React.PureComponent {
                     }}
                   >
                     Save
-                  </a>
+                  </button>
                 </li>
               );
             }
@@ -44,9 +44,9 @@ class Nav extends React.PureComponent {
             if (this.props.project.id && this.props.user.authenticated) {
               return (
                 <li className="nav__item">
-                  <a className="nav__clone" onClick={this.props.cloneProject}>
+                  <button className="nav__clone" onClick={this.props.cloneProject}>
                     Duplicate
-                  </a>
+                  </button>
                 </li>
               );
             }
@@ -55,9 +55,9 @@ class Nav extends React.PureComponent {
             if (this.props.project.id) {
               return (
                 <li className="nav__item">
-                  <a className="nav__export" onClick={() => this.props.exportProjectAsZip(this.props.project.id)}>
+                  <button className="nav__export" onClick={() => this.props.exportProjectAsZip(this.props.project.id)}>
                     Download
-                  </a>
+                  </button>
                 </li>
               );
             }
@@ -66,9 +66,9 @@ class Nav extends React.PureComponent {
             if (this.props.project.id) {
               return (
                 <li className="nav__item">
-                  <a onClick={this.props.showShareModal}>
+                  <button onClick={this.props.showShareModal}>
                     Share
-                  </a>
+                  </button>
                 </li>
               );
             }
@@ -137,9 +137,9 @@ class Nav extends React.PureComponent {
                     </Link>
                   </li>
                   <li>
-                    <a onClick={this.props.logoutUser} >
+                    <button onClick={this.props.logoutUser} >
                       Log out
-                    </a>
+                    </button>
                   </li>
                 </ul>
               </li>
@@ -147,7 +147,7 @@ class Nav extends React.PureComponent {
           })()}
         </ul>
         <div className="nav__announce">
-          This is a preview version of the editor, that has not yet been officially released. It is in development, you can report bugs 
+          This is a preview version of the editor, that has not yet been officially released. It is in development, you can report bugs
           <a href="https://github.com/processing/p5.js-web-editor/issues" target="_blank" rel="noopener noreferrer">here</a>.
           Please use with caution.
         </div>
@@ -175,7 +175,16 @@ Nav.propTypes = {
   logoutUser: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
   showShareModal: PropTypes.func.isRequired,
-  showErrorModal: PropTypes.func.isRequired
+  showErrorModal: PropTypes.func.isRequired,
+  unsavedChanges: PropTypes.bool.isRequired,
+  warnIfUnsavedChanges: PropTypes.func.isRequired
+};
+
+Nav.defaultProps = {
+  project: {
+    id: undefined,
+    owner: undefined
+  }
 };
 
 export default Nav;

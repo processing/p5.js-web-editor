@@ -21,9 +21,9 @@ class Console extends React.Component {
         <div className="preview-console__header">
           <h2 className="preview-console__header-title">Console</h2>
           <div className="preview-console__header-buttons">
-            <a className="preview-console__clear" onClick={this.props.clearConsole} aria-label="clear console">
+            <button className="preview-console__clear" onClick={this.props.clearConsole} aria-label="clear console">
               Clear
-            </a>
+            </button>
             <button className="preview-console__collapse" onClick={this.props.collapseConsole} aria-label="collapse console">
               <InlineSVG src={downArrowUrl} />
             </button>
@@ -57,12 +57,18 @@ class Console extends React.Component {
 }
 
 Console.propTypes = {
-  consoleEvents: PropTypes.array,
-  isPlaying: PropTypes.bool.isRequired,
+  consoleEvents: PropTypes.arrayOf(PropTypes.shape({
+    method: PropTypes.string.isRequired,
+    args: PropTypes.arrayOf(PropTypes.string)
+  })),
   isExpanded: PropTypes.bool.isRequired,
   collapseConsole: PropTypes.func.isRequired,
   expandConsole: PropTypes.func.isRequired,
   clearConsole: PropTypes.func.isRequired
+};
+
+Console.defaultProps = {
+  consoleEvents: []
 };
 
 export default Console;

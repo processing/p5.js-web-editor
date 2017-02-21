@@ -97,6 +97,11 @@
 }
 
 .preview-console__clear {
+	@include themify() {
+		@extend %link;
+	}
+	background: transparent;
+	border: none;
 	padding-right: #{10 / $base-font-size}rem;
 	.preview-console--collapsed & {
 		display: none;
