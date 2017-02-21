@@ -111,7 +111,7 @@ class Toolbar extends React.Component {
                 e.preventDefault();
                 this.originalProjectName = this.props.project.name;
                 this.props.showEditProjectName();
-                setTimeout(() => this.refs.projectNameInput.focus(), 0);
+                setTimeout(() => this.projectNameInput.focus(), 0);
               }
             }}
           >
@@ -123,7 +123,7 @@ class Toolbar extends React.Component {
             className="toolbar__project-name-input"
             value={this.props.project.name}
             onChange={this.handleProjectNameChange}
-            ref="projectNameInput"
+            ref={(element) => { this.projectNameInput = element; }}
             onBlur={() => {
               this.validateProjectName();
               this.props.hideEditProjectName();
@@ -158,7 +158,6 @@ class Toolbar extends React.Component {
 Toolbar.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   preferencesIsVisible: PropTypes.bool.isRequired,
-  startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
   startTextOutput: PropTypes.func.isRequired,
   stopTextOutput: PropTypes.func.isRequired,
@@ -181,6 +180,11 @@ Toolbar.propTypes = {
   saveProject: PropTypes.func.isRequired,
   currentUser: PropTypes.string,
   clearConsole: PropTypes.func.isRequired
+};
+
+Toolbar.defaultProps = {
+  owner: undefined,
+  currentUser: undefined
 };
 
 export default Toolbar;

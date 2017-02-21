@@ -56,11 +56,11 @@ class NewPasswordView extends React.Component {
 NewPasswordView.propTypes = {
   params: PropTypes.shape({
     reset_password_token: PropTypes.string,
-  }),
+  }).isRequired,
   validateResetPasswordToken: PropTypes.func.isRequired,
   user: PropTypes.shape({
     resetPasswordInvalid: PropTypes.bool
-  })
+  }).isRequired
 };
 
 function validate(formProps) {

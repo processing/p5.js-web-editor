@@ -38,18 +38,34 @@ class FullView extends React.Component {
 FullView.propTypes = {
   params: PropTypes.shape({
     project_id: PropTypes.string
-  }),
+  }).isRequired,
   project: PropTypes.shape({
     name: PropTypes.string,
     owner: PropTypes.shape({
       username: PropTypes.string
     })
   }).isRequired,
-  htmlFile: PropTypes.object,
-  jsFiles: PropTypes.array,
-  cssFiles: PropTypes.array,
+  htmlFile: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
+  }).isRequired,
+  jsFiles: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
+  })).isRequired,
+  cssFiles: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
+  })).isRequired,
   getProject: PropTypes.func.isRequired,
-  files: PropTypes.array
+  files: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
+  })).isRequired,
 };
 
 function mapStateToProps(state) {

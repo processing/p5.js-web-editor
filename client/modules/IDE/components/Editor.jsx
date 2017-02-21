@@ -64,8 +64,8 @@ class Editor extends React.Component {
           }
         }, 2000),
         options: {
-          asi: true,
-          eqeqeq: false,
+          'asi': true,
+          'eqeqeq': false,
           '-W041': false
         }
       }
@@ -248,10 +248,10 @@ class Editor extends React.Component {
           </button>
           <ul className="editor__options" title="editor options">
             <li>
-              <a onClick={this.tidyCode}>Tidy</a>
+              <button onClick={this.tidyCode}>Tidy</button>
             </li>
             <li>
-              <a onClick={this.props.showKeyboardShortcutModal}>Keyboard shortcuts</a>
+              <button onClick={this.props.showKeyboardShortcutModal}>Keyboard shortcuts</button>
             </li>
           </ul>
         </header>
@@ -267,7 +267,12 @@ class Editor extends React.Component {
 
 Editor.propTypes = {
   lintWarning: PropTypes.bool.isRequired,
-  lintMessages: PropTypes.array.isRequired,
+  lintMessages: PropTypes.arrayOf(PropTypes.shape({
+    severity: PropTypes.string.isRequired,
+    line: PropTypes.number.isRequired,
+    message: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired
+  })).isRequired,
   updateLintMessage: PropTypes.func.isRequired,
   clearLintMessage: PropTypes.func.isRequired,
   indentationAmount: PropTypes.number.isRequired,
@@ -278,7 +283,7 @@ Editor.propTypes = {
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired
-  }),
+  }).isRequired,
   editorOptionsVisible: PropTypes.bool.isRequired,
   showEditorOptions: PropTypes.func.isRequired,
   closeEditorOptions: PropTypes.func.isRequired,
@@ -290,12 +295,20 @@ Editor.propTypes = {
   theme: PropTypes.string.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
   projectSavedTime: PropTypes.string.isRequired,
-  files: PropTypes.array.isRequired,
+  files: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired
+  })).isRequired,
   isExpanded: PropTypes.bool.isRequired,
   collapseSidebar: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
   isUserOwner: PropTypes.bool,
   clearConsole: PropTypes.func.isRequired
+};
+
+Editor.defaultProps = {
+  isUserOwner: false
 };
 
 export default Editor;

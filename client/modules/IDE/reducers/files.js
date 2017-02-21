@@ -42,7 +42,8 @@ const initialState = () => {
       id: r,
       _id: r,
       children: [a, b, c],
-      fileType: 'folder'
+      fileType: 'folder',
+      content: ''
     },
     {
       name: 'sketch.js',
