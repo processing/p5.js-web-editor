@@ -71,6 +71,11 @@ class Editor extends React.Component {
       }
     });
 
+    this._cm.setOption('extraKeys', {
+      'Cmd-Enter': () => null,
+      'Shift-Cmd-Enter': () => null
+    });
+
     this.initializeDocuments(this.props.files);
     this._cm.swapDoc(this._docs[this.props.file.id]);
 
@@ -79,6 +84,7 @@ class Editor extends React.Component {
       this.props.updateFileContent(this.props.file.name, this._cm.getValue());
       if (this.props.autorefresh && this.props.isPlaying) {
         this.props.startRefreshSketch();
+        this.props.clearConsole();
       }
     }, 400));
 
@@ -291,7 +297,8 @@ Editor.propTypes = {
   isExpanded: PropTypes.bool.isRequired,
   collapseSidebar: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
-  isUserOwner: PropTypes.bool
+  isUserOwner: PropTypes.bool,
+  clearConsole: PropTypes.func.isRequired
 };
 
 export default Editor;

@@ -14,10 +14,10 @@ class SketchList extends React.Component {
   constructor(props) {
     super(props);
     this.closeSketchList = this.closeSketchList.bind(this);
+    this.props.getProjects(this.props.username);
   }
 
   componentDidMount() {
-    this.props.getProjects(this.props.username);
     document.getElementById('sketchlist').focus();
   }
 
@@ -47,14 +47,19 @@ class SketchList extends React.Component {
             </thead>
             <tbody>
               {this.props.sketches.map(sketch =>
-                <tr className="sketches-table__row visibility-toggle" key={sketch.id}>
-                  <td>
+                <tr
+                  className="sketches-table__row visibility-toggle"
+                  key={sketch.id}
+                  onClick={() => browserHistory.push(`/${username}/sketches/${sketch._id}`)}
+                >
+                  <td className="sketch-list__trash-column">
                   {(() => { // eslint-disable-line
                     if (this.props.username === this.props.user.username || this.props.username === undefined) {
                       return (
                         <button
                           className="sketch-list__trash-button"
-                          onClick={() => {
+                          onClick={(e) => {
+                            e.stopPropagation();
                             if (window.confirm(`Are you sure you want to delete "${sketch.name}"?`)) {
                               this.props.deleteProject(sketch.id);
                             }
