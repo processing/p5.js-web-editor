@@ -1,6 +1,6 @@
-import * as ActionTypes from '../../constants';
 import { browserHistory } from 'react-router';
 import axios from 'axios';
+import * as ActionTypes from '../../constants';
 import { showErrorModal, justOpenedProject } from '../IDE/actions/ide';
 
 
@@ -16,9 +16,9 @@ export function authError(error) {
 export function signUpUser(previousPath, formValues) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/signup`, formValues, { withCredentials: true })
-      .then(response => {
+      .then((response) => {
         dispatch({ type: ActionTypes.AUTH_USER,
-                    user: response.data
+          user: response.data
         });
         dispatch(justOpenedProject());
         browserHistory.push(previousPath);
@@ -48,9 +48,9 @@ export function loginUserFailure(error) {
 export function validateAndLoginUser(previousPath, formProps, dispatch) {
   return new Promise((resolve, reject) => {
     loginUser(formProps)
-      .then(response => {
+      .then((response) => {
         dispatch({ type: ActionTypes.AUTH_USER,
-                  user: response.data
+          user: response.data
         });
         dispatch({
           type: ActionTypes.SET_PREFERENCES,
@@ -60,7 +60,7 @@ export function validateAndLoginUser(previousPath, formProps, dispatch) {
         browserHistory.push(previousPath);
         resolve();
       })
-      .catch(response => {
+      .catch((response) => {
         reject({ password: response.data.message, _error: 'Login failed!' });
       });
   });
@@ -69,7 +69,7 @@ export function validateAndLoginUser(previousPath, formProps, dispatch) {
 export function getUser() {
   return (dispatch) => {
     axios.get(`${ROOT_URL}/session`, { withCredentials: true })
-      .then(response => {
+      .then((response) => {
         dispatch({
           type: ActionTypes.AUTH_USER,
           user: response.data
@@ -79,7 +79,7 @@ export function getUser() {
           preferences: response.data.preferences
         });
       })
-      .catch(response => {
+      .catch((response) => {
         dispatch(authError(response.data.error));
       });
   };
@@ -88,13 +88,13 @@ export function getUser() {
 export function validateSession() {
   return (dispatch, getState) => {
     axios.get(`${ROOT_URL}/session`, { withCredentials: true })
-      .then(response => {
+      .then((response) => {
         const state = getState();
         if (state.user.username !== response.data.username) {
           dispatch(showErrorModal('staleSession'));
         }
       })
-      .catch(response => {
+      .catch((response) => {
         if (response.status === 404) {
           dispatch(showErrorModal('staleSession'));
         }

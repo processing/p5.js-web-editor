@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 import InlineSVG from 'react-inlinesvg';
-// import SidebarItem from './SidebarItem';
+import ConnectedFileNode from './FileNode';
+
 const folderUrl = require('../../../images/folder.svg');
 const downArrowUrl = require('../../../images/down-arrow.svg');
-import ConnectedFileNode from './FileNode';
 
 class Sidebar extends React.Component {
   constructor(props) {
@@ -22,14 +22,14 @@ class Sidebar extends React.Component {
     if (this.props.projectOptionsVisible) {
       this.props.closeProjectOptions();
     } else {
-      this.refs.sidebarOptions.focus();
+      this.sidebarOptions.focus();
       this.props.openProjectOptions();
     }
   }
 
   render() {
     const sidebarClass = classNames({
-      sidebar: true,
+      'sidebar': true,
       'sidebar--contracted': !this.props.isExpanded,
       'sidebar--project-options': this.props.projectOptionsVisible
     });
@@ -48,7 +48,7 @@ class Sidebar extends React.Component {
               aria-label="add file or folder"
               className="sidebar__add"
               tabIndex="0"
-              ref="sidebarOptions"
+              ref={(element) => { this.sidebarOptions = element; }}
               onClick={this.toggleProjectOptions}
               onBlur={() => setTimeout(this.props.closeProjectOptions, 200)}
             >
@@ -56,14 +56,14 @@ class Sidebar extends React.Component {
             </button>
             <ul className="sidebar__project-options">
               <li>
-                <a aria-label="add folder" onClick={this.props.newFolder} >
+                <button aria-label="add folder" onClick={this.props.newFolder} >
                   Add folder
-                </a>
+                </button>
               </li>
               <li>
-                <a aria-label="add file" onClick={this.props.newFile} >
+                <button aria-label="add file" onClick={this.props.newFile} >
                   Add file
-                </a>
+                </button>
               </li>
             </ul>
           </div>
@@ -75,17 +75,14 @@ class Sidebar extends React.Component {
 }
 
 Sidebar.propTypes = {
-  files: PropTypes.array.isRequired,
+  files: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired
+  })).isRequired,
   setSelectedFile: PropTypes.func.isRequired,
   isExpanded: PropTypes.bool.isRequired,
   projectOptionsVisible: PropTypes.bool.isRequired,
   newFile: PropTypes.func.isRequired,
-  showFileOptions: PropTypes.func.isRequired,
-  hideFileOptions: PropTypes.func.isRequired,
-  deleteFile: PropTypes.func.isRequired,
-  showEditFileName: PropTypes.func.isRequired,
-  hideEditFileName: PropTypes.func.isRequired,
-  updateFileName: PropTypes.func.isRequired,
   openProjectOptions: PropTypes.func.isRequired,
   closeProjectOptions: PropTypes.func.isRequired,
   newFolder: PropTypes.func.isRequired

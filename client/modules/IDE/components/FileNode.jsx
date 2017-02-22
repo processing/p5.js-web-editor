@@ -1,14 +1,15 @@
 import React, { PropTypes } from 'react';
-import * as FileActions from '../actions/files';
-import * as IDEActions from '../actions/ide';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import InlineSVG from 'react-inlinesvg';
+import classNames from 'classnames';
+import * as IDEActions from '../actions/ide';
+import * as FileActions from '../actions/files';
+
 const downArrowUrl = require('../../../images/down-arrow.svg');
 const folderRightUrl = require('../../../images/triangle-arrow-right.svg');
 const folderDownUrl = require('../../../images/triangle-arrow-down.svg');
 const fileUrl = require('../../../images/file.svg');
-import classNames from 'classnames';
 
 export class FileNode extends React.Component {
   constructor(props) {
@@ -54,7 +55,7 @@ export class FileNode extends React.Component {
     if (this.props.isOptionsOpen) {
       this.props.hideFileOptions(this.props.id);
     } else {
-      this.refs[`fileOptions-${this.props.id}`].focus();
+      this[`fileOptions-${this.props.id}`].focus();
       this.props.showFileOptions(this.props.id);
     }
   }
@@ -68,7 +69,7 @@ export class FileNode extends React.Component {
   }
 
   render() {
-    let itemClass = classNames({
+    const itemClass = classNames({
       'sidebar__root-item': this.props.name === 'root',
       'sidebar__file-item': this.props.name !== 'root',
       'sidebar__file-item--selected': this.props.isSelectedFile,
@@ -77,11 +78,7 @@ export class FileNode extends React.Component {
       'sidebar__file-item--closed': this.props.isFolderClosed
     });
     return (
-      <div
-        className={itemClass}
-        onClick={this.handleFileClick}
-        onBlur={() => setTimeout(() => this.props.hideFileOptions(this.props.id), 200)}
-      >
+      <div className={itemClass}>
         {(() => { // eslint-disable-line
           if (this.props.name !== 'root') {
             return (
@@ -97,28 +94,28 @@ export class FileNode extends React.Component {
                   }
                   return (
                     <div>
-                      <span
+                      <button
                         className="sidebar__file-item-closed"
                         onClick={() => this.props.showFolderChildren(this.props.id)}
                       >
                         <InlineSVG className="folder-right" src={folderRightUrl} />
-                      </span>
-                      <span
+                      </button>
+                      <button
                         className="sidebar__file-item-open"
                         onClick={() => this.props.hideFolderChildren(this.props.id)}
                       >
                         <InlineSVG className="folder-down" src={folderDownUrl} />
-                      </span>
+                      </button>
                     </div>
                   );
                 })()}
-                <a className="sidebar__file-item-name">{this.props.name}</a>
+                <button className="sidebar__file-item-name" onClick={this.handleFileClick}>{this.props.name}</button>
                 <input
                   type="text"
                   className="sidebar__file-item-input"
                   value={this.props.name}
                   onChange={this.handleFileNameChange}
-                  ref="fileNameInput"
+                  ref={(element) => { this.fileNameInput = element; }}
                   onBlur={() => {
                     this.validateFileName();
                     this.props.hideEditFileName(this.props.id);
@@ -128,21 +125,26 @@ export class FileNode extends React.Component {
                 <button
                   className="sidebar__file-item-show-options"
                   aria-label="view file options"
-                  ref={`fileOptions-${this.props.id}`}
+                  ref={(element) => { this[`fileOptions-${this.props.id}`] = element; }}
                   tabIndex="0"
                   onClick={this.toggleFileOptions}
+                  onBlur={() => setTimeout(() => this.props.hideFileOptions(this.props.id), 200)}
                 >
                   <InlineSVG src={downArrowUrl} />
                 </button>
-                <div ref="fileOptions" className="sidebar__file-item-options">
+                <div className="sidebar__file-item-options">
                   <ul title="file options">
                     {(() => { // eslint-disable-line
                       if (this.props.fileType === 'folder') {
                         return (
                           <li>
-                            <a aria-label="add file" onClick={this.props.newFile} >
+                            <button
+                              aria-label="add file"
+                              onClick={this.props.newFile}
+                              className="sidebar__file-item-option"
+                            >
                               Add File
-                            </a>
+                            </button>
                           </li>
                         );
                       }
@@ -151,26 +153,31 @@ export class FileNode extends React.Component {
                       if (this.props.fileType === 'folder') {
                         return (
                           <li>
-                            <a aria-label="add folder" onClick={this.props.newFolder} >
+                            <button
+                              aria-label="add folder"
+                              onClick={this.props.newFolder}
+                              className="sidebar__file-item-option"
+                            >
                               Add Folder
-                            </a>
+                            </button>
                           </li>
                         );
                       }
                     })()}
                     <li>
-                      <a
+                      <button
                         onClick={() => {
                           this.originalFileName = this.props.name;
                           this.props.showEditFileName(this.props.id);
-                          setTimeout(() => this.refs.fileNameInput.focus(), 0);
+                          setTimeout(() => this.fileNameInput.focus(), 0);
                         }}
+                        className="sidebar__file-item-option"
                       >
                         Rename
-                      </a>
+                      </button>
                     </li>
                     <li>
-                      <a
+                      <button
                         onClick={() => {
                           if (window.confirm(`Are you sure you want to delete ${this.props.name}?`)) {
                             this.isDeleting = true;
@@ -178,9 +185,10 @@ export class FileNode extends React.Component {
                             setTimeout(() => this.props.deleteFile(this.props.id, this.props.parentId), 100);
                           }
                         }}
+                        className="sidebar__file-item-option"
                       >
                         Delete
-                      </a>
+                      </button>
                     </li>
                   </ul>
                 </div>
@@ -205,7 +213,7 @@ export class FileNode extends React.Component {
 FileNode.propTypes = {
   id: PropTypes.string.isRequired,
   parentId: PropTypes.string,
-  children: PropTypes.array,
+  children: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   name: PropTypes.string.isRequired,
   fileType: PropTypes.string.isRequired,
   isSelectedFile: PropTypes.bool,
@@ -226,9 +234,22 @@ FileNode.propTypes = {
   hideFolderChildren: PropTypes.func.isRequired
 };
 
+FileNode.defaultProps = {
+  id: '1',
+  name: 'test',
+  fileType: 'file',
+  children: [],
+  parentId: '0',
+  isSelectedFile: false,
+  isOptionsOpen: false,
+  isEditingName: false,
+  isFolderClosed: false
+};
+
 function mapStateToProps(state, ownProps) {
                                                             // this is a hack, state is updated before ownProps
-  return state.files.find((file) => file.id === ownProps.id) || { ...ownProps, name: 'test', fileType: 'file' };
+  return state.files.find(file => file.id === ownProps.id) || { ...ownProps, name: 'test', fileType: 'file' };
+  // return state.files.find(file => file.id === ownProps.id);
 }
 
 function mapDispatchToProps(dispatch) {

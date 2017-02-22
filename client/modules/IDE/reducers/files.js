@@ -1,5 +1,5 @@
-import * as ActionTypes from '../../../constants';
 import objectID from 'bson-objectid';
+import * as ActionTypes from '../../../constants';
 
 const defaultSketch = `function setup() { 
   createCanvas(400, 400);
@@ -42,7 +42,8 @@ const initialState = () => {
       id: r,
       _id: r,
       children: [a, b, c],
-      fileType: 'folder'
+      fileType: 'folder',
+      content: ''
     },
     {
       name: 'sketch.js',
@@ -92,7 +93,7 @@ function deleteChild(state, parentId, id) {
 
 function deleteMany(state, ids) {
   const newState = [...state];
-  ids.forEach(id => {
+  ids.forEach((id) => {
     let fileIndex;
     newState.find((file, index) => {
       if (file.id === id) {
@@ -111,7 +112,7 @@ const files = (state, action) => {
   }
   switch (action.type) {
     case ActionTypes.UPDATE_FILE_CONTENT:
-      return state.map(file => {
+      return state.map((file) => {
         if (file.name !== action.name) {
           return file;
         }
@@ -119,7 +120,7 @@ const files = (state, action) => {
         return Object.assign({}, file, { content: action.content });
       });
     case ActionTypes.SET_BLOB_URL:
-      return state.map(file => {
+      return state.map((file) => {
         if (file.name !== action.name) {
           return file;
         }
@@ -151,7 +152,7 @@ const files = (state, action) => {
             fileType: action.fileType || 'file' }];
       }
     case ActionTypes.SHOW_FILE_OPTIONS:
-      return state.map(file => {
+      return state.map((file) => {
         if (file.id !== action.id) {
           return file;
         }
@@ -159,7 +160,7 @@ const files = (state, action) => {
         return Object.assign({}, file, { isOptionsOpen: true });
       });
     case ActionTypes.HIDE_FILE_OPTIONS:
-      return state.map(file => {
+      return state.map((file) => {
         if (file.id !== action.id) {
           return file;
         }
@@ -167,7 +168,7 @@ const files = (state, action) => {
         return Object.assign({}, file, { isOptionsOpen: false });
       });
     case ActionTypes.UPDATE_FILE_NAME:
-      return state.map(file => {
+      return state.map((file) => {
         if (file.id !== action.id) {
           return file;
         }
@@ -188,7 +189,7 @@ const files = (state, action) => {
         // return newState.filter(file => file.id !== action.id);
       }
     case ActionTypes.SHOW_EDIT_FILE_NAME:
-      return state.map(file => {
+      return state.map((file) => {
         if (file.id !== action.id) {
           return file;
         }
@@ -196,7 +197,7 @@ const files = (state, action) => {
         return Object.assign({}, file, { isEditingName: true });
       });
     case ActionTypes.HIDE_EDIT_FILE_NAME:
-      return state.map(file => {
+      return state.map((file) => {
         if (file.id !== action.id) {
           return file;
         }
@@ -204,21 +205,21 @@ const files = (state, action) => {
         return Object.assign({}, file, { isEditingName: false });
       });
     case ActionTypes.SET_SELECTED_FILE:
-      return state.map(file => {
+      return state.map((file) => {
         if (file.id === action.selectedFile) {
           return Object.assign({}, file, { isSelectedFile: true });
         }
         return Object.assign({}, file, { isSelectedFile: false });
       });
     case ActionTypes.SHOW_FOLDER_CHILDREN:
-      return state.map(file => {
+      return state.map((file) => {
         if (file.id === action.id) {
           return Object.assign({}, file, { isFolderClosed: false });
         }
         return file;
       });
     case ActionTypes.HIDE_FOLDER_CHILDREN:
-      return state.map(file => {
+      return state.map((file) => {
         if (file.id === action.id) {
           return Object.assign({}, file, { isFolderClosed: true });
         }
@@ -229,9 +230,9 @@ const files = (state, action) => {
   }
 };
 
-export const getHTMLFile = (state) => state.filter(file => file.name.match(/.*\.html$/i))[0];
-export const getJSFiles = (state) => state.filter(file => file.name.match(/.*\.js$/i));
-export const getCSSFiles = (state) => state.filter(file => file.name.match(/.*\.css$/i));
-export const getLinkedFiles = (state) => state.filter(file => file.url);
+export const getHTMLFile = state => state.filter(file => file.name.match(/.*\.html$/i))[0];
+export const getJSFiles = state => state.filter(file => file.name.match(/.*\.js$/i));
+export const getCSSFiles = state => state.filter(file => file.name.match(/.*\.css$/i));
+export const getLinkedFiles = state => state.filter(file => file.url);
 
 export default files;

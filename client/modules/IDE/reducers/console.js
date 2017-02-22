@@ -2,11 +2,18 @@ import * as ActionTypes from '../../../constants';
 
 const consoleMax = 200;
 const initialState = [];
+let messageId = 0;
 
 const console = (state = initialState, action) => {
+  let messages;
   switch (action.type) {
     case ActionTypes.CONSOLE_EVENT:
-      return state.concat(action.event).slice(-consoleMax);
+      messages = [...action.event];
+      messages.forEach((message) => {
+        message.id = messageId;
+        messageId += 1;
+      });
+      return state.concat(messages).slice(-consoleMax);
     case ActionTypes.CLEAR_CONSOLE:
       return [];
     default:

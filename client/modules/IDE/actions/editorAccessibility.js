@@ -14,10 +14,3 @@ export function clearLintMessage() {
     type: ActionTypes.CLEAR_LINT_MESSAGE
   };
 }
-
-export function updateLineNumber(lineNumber) {
-  return {
-    type: ActionTypes.UPDATE_LINENUMBER,
-    lineNumber
-  };
-}

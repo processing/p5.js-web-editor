@@ -1,10 +1,10 @@
+import jsdom, { serializeDocument } from 'jsdom';
 import Project from '../models/project';
 import {
   injectMediaUrls,
   resolvePathsForElementsWithAttribute,
   resolveScripts,
   resolveStyles } from '../utils/previewGeneration';
-import jsdom, { serializeDocument } from 'jsdom';
 
 export function serveProject(req, res) {
   Project.findById(req.params.project_id)
@@ -32,3 +32,5 @@ export function serveProject(req, res) {
       });
     });
 }
+
+export default serveProject;

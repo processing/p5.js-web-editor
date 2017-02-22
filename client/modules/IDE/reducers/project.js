@@ -1,5 +1,5 @@
-import * as ActionTypes from '../../../constants';
 import generate from 'project-name-generator';
+import * as ActionTypes from '../../../constants';
 
 const initialState = () => {
   const generatedString = generate({ words: 2 }).spaced;

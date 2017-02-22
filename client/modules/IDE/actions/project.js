@@ -1,7 +1,8 @@
-import * as ActionTypes from '../../../constants';
 import { browserHistory } from 'react-router';
 import axios from 'axios';
 import objectID from 'bson-objectid';
+import moment from 'moment';
+import * as ActionTypes from '../../../constants';
 import { showToast, setToastText } from './toast';
 import { setUnsavedChanges,
   justOpenedProject,
@@ -9,7 +10,6 @@ import { setUnsavedChanges,
   setProjectSavedTime,
   resetProjectSavedTime,
   showErrorModal } from './ide';
-import moment from 'moment';
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
@@ -21,7 +21,7 @@ export function getProject(id) {
       dispatch(resetProjectSavedTime());
     }
     axios.get(`${ROOT_URL}/projects/${id}`, { withCredentials: true })
-      .then(response => {
+      .then((response) => {
         dispatch({
           type: ActionTypes.SET_PROJECT,
           project: response.data,
@@ -86,7 +86,7 @@ export function saveProject(autosave = false) {
         });
     } else {
       axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
-        .then(response => {
+        .then((response) => {
           dispatch(setUnsavedChanges(false));
           dispatch(setProjectSavedTime(moment().format()));
           browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
@@ -108,7 +108,7 @@ export function saveProject(autosave = false) {
             }
           }
         })
-        .catch(response => {
+        .catch((response) => {
           if (response.status === 403) {
             dispatch(showErrorModal('staleSession'));
           } else {
@@ -131,7 +131,7 @@ export function autosaveProject() {
 export function createProject() {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/projects`, {}, { withCredentials: true })
-      .then(response => {
+      .then((response) => {
         browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
         dispatch({
           type: ActionTypes.NEW_PROJECT,
@@ -192,7 +192,7 @@ export function cloneProject() {
     // const newFiles = state.files;
     const formParams = Object.assign({}, { name: `${state.project.name} copy` }, { files: newFiles });
     axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
-      .then(response => {
+      .then((response) => {
         browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
         dispatch({
           type: ActionTypes.NEW_PROJECT,

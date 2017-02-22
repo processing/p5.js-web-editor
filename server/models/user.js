@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
-const Schema = mongoose.Schema;
+
 const bcrypt = require('bcrypt-nodejs');
+
+const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
   name: { type: String, default: '' },
@@ -39,7 +41,7 @@ userSchema.pre('save', function checkPassword(next) { // eslint-disable-line con
   });
 });
 
-userSchema.virtual('id').get(function () {
+userSchema.virtual('id').get(function idToString() {
   return this._id.toHexString();
 });
 

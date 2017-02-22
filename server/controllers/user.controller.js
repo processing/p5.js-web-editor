@@ -1,8 +1,8 @@
-import User from '../models/user';
 import crypto from 'crypto';
 import async from 'async';
 import nodemailer from 'nodemailer';
 import mg from 'nodemailer-mailgun-transport';
+import User from '../models/user';
 
 export function createUser(req, res, next) {
   const user = new User({
@@ -12,17 +12,25 @@ export function createUser(req, res, next) {
   });
 
   User.findOne({ email: req.body.email },
-    (err, existingUser) => { // eslint-disable-line consistent-return
-      if (err) { res.status(404).send({ error: err }); }
+    (err, existingUser) => {
+      if (err) {
+        res.status(404).send({ error: err });
+        return;
+      }
 
       if (existingUser) {
-        return res.status(422).send({ error: 'Email is in use' });
+        res.status(422).send({ error: 'Email is in use' });
+        return;
       }
-      user.save((saveErr) => { // eslint-disable-line consistent-return
-        if (saveErr) { return next(saveErr); }
-        req.logIn(user, (loginErr) => { // eslint-disable-line consistent-return
+      user.save((saveErr) => {
+        if (saveErr) {
+          next(saveErr);
+          return;
+        }
+        req.logIn(user, (loginErr) => {
           if (loginErr) {
-            return next(loginErr);
+            next(loginErr);
+            return;
           }
           res.json({
             email: req.user.email,
@@ -58,21 +66,24 @@ export function duplicateUserCheck(req, res) {
 export function updatePreferences(req, res) {
   User.findById(req.user.id, (err, user) => {
     if (err) {
-      return res.status(500).json({ error: err });
+      res.status(500).json({ error: err });
+      return;
     }
     if (!user) {
-      return res.status(404).json({ error: 'Document not found' });
+      res.status(404).json({ error: 'Document not found' });
+      return;
     }
 
     const preferences = Object.assign({}, user.preferences, req.body.preferences);
     user.preferences = preferences;
 
-    user.save((err) => {
-      if (err) {
-        return res.status(500).json({ error: err });
+    user.save((saveErr) => {
+      if (saveErr) {
+        res.status(500).json({ error: saveErr });
+        return;
       }
 
-      return res.json(user.preferences);
+      res.json(user.preferences);
     });
   });
 }
@@ -88,13 +99,14 @@ export function resetPasswordInitiate(req, res) {
     (token, done) => {
       User.findOne({ email: req.body.email }, (err, user) => {
         if (!user) {
-          return res.json({ success: true, message: 'If the email is registered with the editor, an email has been sent.' });
+          res.json({ success: true, message: 'If the email is registered with the editor, an email has been sent.' });
+          return;
         }
         user.resetPasswordToken = token;
         user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
 
-        user.save((err) => {
-          done(err, token, user);
+        user.save((saveErr) => {
+          done(saveErr, token, user);
         });
       });
     },
@@ -124,41 +136,41 @@ export function resetPasswordInitiate(req, res) {
   ], (err) => {
     if (err) {
       console.log(err);
-      return res.json({ success: false });
+      res.json({ success: false });
+      return;
     }
-    // send email here
-    return res.json({ success: true, message: 'If the email is registered with the editor, an email has been sent.' });
+    res.json({ success: true, message: 'If the email is registered with the editor, an email has been sent.' });
   });
 }
 
 export function validateResetPasswordToken(req, res) {
   User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, (err, user) => {
     if (!user) {
-      return res.status(401).json({ success: false, message: 'Password reset token is invalid or has expired.' });
+      res.status(401).json({ success: false, message: 'Password reset token is invalid or has expired.' });
+      return;
     }
     res.json({ success: true });
   });
 }
 
 export function updatePassword(req, res) {
-  User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function (err, user) {
+  User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, (err, user) => {
     if (!user) {
-      return res.status(401).json({ success: false, message: 'Password reset token is invalid or has expired.' });
+      res.status(401).json({ success: false, message: 'Password reset token is invalid or has expired.' });
+      return;
     }
 
     user.password = req.body.password;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;
 
-    user.save(function (err) {
-      req.logIn(user, function (err) {
-        return res.json({
-          email: req.user.email,
-          username: req.user.username,
-          preferences: req.user.preferences,
-          id: req.user._id
-        });
-      });
+    user.save((saveErr) => {
+      req.logIn(user, loginErr => res.json({
+        email: req.user.email,
+        username: req.user.username,
+        preferences: req.user.preferences,
+        id: req.user._id
+      }));
     });
   });
 
