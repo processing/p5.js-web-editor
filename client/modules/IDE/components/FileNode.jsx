@@ -78,13 +78,7 @@ export class FileNode extends React.Component {
       'sidebar__file-item--closed': this.props.isFolderClosed
     });
     return (
-      <div
-        className={itemClass}
-        onClick={this.handleFileClick}
-        onBlur={() => setTimeout(() => this.props.hideFileOptions(this.props.id), 200)}
-        role="button"
-        tabIndex="0"
-      >
+      <div className={itemClass}>
         {(() => { // eslint-disable-line
           if (this.props.name !== 'root') {
             return (
@@ -115,7 +109,7 @@ export class FileNode extends React.Component {
                     </div>
                   );
                 })()}
-                <a className="sidebar__file-item-name">{this.props.name}</a>
+                <button className="sidebar__file-item-name" onClick={this.handleFileClick}>{this.props.name}</button>
                 <input
                   type="text"
                   className="sidebar__file-item-input"
@@ -134,6 +128,7 @@ export class FileNode extends React.Component {
                   ref={(element) => { this[`fileOptions-${this.props.id}`] = element; }}
                   tabIndex="0"
                   onClick={this.toggleFileOptions}
+                  onBlur={() => setTimeout(() => this.props.hideFileOptions(this.props.id), 200)}
                 >
                   <InlineSVG src={downArrowUrl} />
                 </button>

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { withRouter, PropTypes as RouterPropTypes } from 'react-router';
+import { withRouter } from 'react-router';
 import SplitPane from 'react-split-pane';
 import Editor from '../components/Editor';
 import Sidebar from '../components/Sidebar';
@@ -566,7 +566,7 @@ IDEView.propTypes = {
   router: PropTypes.shape({
     setRouteLeaveHook: PropTypes.func
   }).isRequired,
-  route: RouterPropTypes.route,
+  route: PropTypes.oneOfType([PropTypes.object, PropTypes.element]).isRequired,
   setUnsavedChanges: PropTypes.func.isRequired,
   setTheme: PropTypes.func.isRequired,
   setAutorefresh: PropTypes.func.isRequired,

@@ -48,11 +48,11 @@ class SketchList extends React.Component {
             </thead>
             <tbody>
               {this.props.sketches.map(sketch =>
-                <tr
+                // eslint-disable-next-line
+                <tr 
                   className="sketches-table__row visibility-toggle"
                   key={sketch.id}
                   onClick={() => browserHistory.push(`/${username}/sketches/${sketch.id}`)}
-                  role="button"
                 >
                   <td className="sketch-list__trash-column">
                   {(() => { // eslint-disable-line

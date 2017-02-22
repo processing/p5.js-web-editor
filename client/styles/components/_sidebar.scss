@@ -56,6 +56,7 @@
   height: #{20 / $base-font-size}rem;
   font-size: #{12 / $base-font-size}rem;
   cursor: pointer;
+  position: relative;
   @include themify() {
     color: map-get($theme-map, 'inactive-text-color');
     &:hover > .file-item__content .sidebar__file-item-name {
@@ -105,6 +106,15 @@
   padding: #{4 / $base-font-size}rem 0;
   .sidebar__file-item--editing & {
     display: none;
+  }
+  &:before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    content: '';
+    width: 100vw;
   }
 }
 
