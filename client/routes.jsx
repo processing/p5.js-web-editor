@@ -10,6 +10,11 @@ import NewPasswordView from './modules/User/pages/NewPasswordView';
 // import SketchListView from './modules/Sketch/pages/SketchListView';
 import { getUser } from './modules/User/actions';
 
+// TODO: Move somewhere else
+import forceProtocol from './forceProtocol';
+
+const forceToHttps = forceProtocol({ targetProtocol: 'https:' });
+
 const checkAuth = (store) => {
   store.dispatch(getUser());
 };
@@ -18,7 +23,7 @@ const routes = store =>
   (
     <Route path="/" component={App}>
       <IndexRoute component={IDEView} onEnter={checkAuth(store)} />
-      <Route path="/login" component={LoginView} />
+      <Route path="/login" component={forceToHttps(LoginView)} />
       <Route path="/signup" component={SignupView} />
       <Route path="/reset-password" component={ResetPasswordView} />
       <Route path="/reset-password/:reset_password_token" component={NewPasswordView} />
