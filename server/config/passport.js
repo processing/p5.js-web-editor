@@ -1,8 +1,8 @@
+import User from '../models/user';
+
 const passport = require('passport');
 const GitHubStrategy = require('passport-github').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
-
-import User from '../models/user';
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
@@ -30,7 +30,7 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, don
       return done(null, false, { msg: 'Invalid email or password.' });
     });
   })
-  .catch((err) => done(null, false, { msg: err }));
+  .catch(err => done(null, false, { msg: err }));
 }));
 
 /**
@@ -42,20 +42,19 @@ passport.use(new GitHubStrategy({
   callbackURL: '/auth/github/callback',
   passReqToCallback: true
 }, (req, accessToken, refreshToken, profile, done) => {
-  User.findOne({ github: profile.id }, (err, existingUser) => {
+  User.findOne({ github: profile.id }, (findByGithubErr, existingUser) => {
     if (existingUser) {
-      return done(null, existingUser);
+      done(null, existingUser);
+      return;
     }
-    User.findOne({ email: profile._json.email }, (err, existingEmailUser) => {
+    User.findOne({ email: profile._json.email }, (findByEmailErr, existingEmailUser) => {
       if (existingEmailUser) {
         existingEmailUser.email = existingEmailUser.email || profile._json.email;
         existingEmailUser.github = profile.id;
         existingEmailUser.username = existingEmailUser.username || profile.username;
         existingEmailUser.tokens.push({ kind: 'github', accessToken });
         existingEmailUser.name = existingEmailUser.name || profile.displayName;
-        existingEmailUser.save((err) => {
-          return done(null, existingEmailUser);
-        });
+        existingEmailUser.save(saveErr => done(null, existingEmailUser));
       } else {
         const user = new User();
         user.email = profile._json.email;
@@ -63,9 +62,7 @@ passport.use(new GitHubStrategy({
         user.username = profile.username;
         user.tokens.push({ kind: 'github', accessToken });
         user.name = profile.displayName;
-        user.save((err) => {
-          return done(null, user);
-        });
+        user.save(saveErr => done(null, user));
       }
     });
   });

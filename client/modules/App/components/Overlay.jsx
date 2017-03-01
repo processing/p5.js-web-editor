@@ -11,7 +11,11 @@ function Overlay(props) {
 }
 
 Overlay.propTypes = {
-  children: PropTypes.object
+  children: PropTypes.element
+};
+
+Overlay.defaultProps = {
+  children: null
 };
 
 export default Overlay;

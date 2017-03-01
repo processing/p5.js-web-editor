@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
-import * as UserActions from '../actions';
-import { reduxForm } from 'redux-form';
-import SignupForm from '../components/SignupForm';
 import axios from 'axios';
 import { Link, browserHistory } from 'react-router';
 import InlineSVG from 'react-inlinesvg';
+import { reduxForm } from 'redux-form';
+import * as UserActions from '../actions';
+import SignupForm from '../components/SignupForm';
+
 const exitUrl = require('../../../images/exit.svg');
 const logoUrl = require('../../../images/p5js-logo.svg');
 
@@ -66,7 +67,7 @@ function asyncValidate(formProps, dispatch, props) {
     queryParams[fieldToValidate] = formProps[fieldToValidate];
     queryParams.check_type = fieldToValidate;
     return axios.get('/api/signup/duplicate_check', { params: queryParams })
-      .then(response => {
+      .then((response) => {
         if (response.data.exists) {
           const error = {};
           error[fieldToValidate] = response.data.message;
@@ -90,7 +91,7 @@ function validate(formProps) {
 
   if (!formProps.email) {
     errors.email = 'Please enter an email.';
-  } else if (!formProps.email.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i)) {
+  } else if (!formProps.email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i)) {
     errors.email = 'Please enter a valid email address.';
   }
 

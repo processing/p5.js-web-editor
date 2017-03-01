@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
 import { Link, browserHistory } from 'react-router';
-import * as UserActions from '../actions';
-import { bindActionCreators } from 'redux';
-import { reduxForm } from 'redux-form';
-import ResetPasswordForm from '../components/ResetPasswordForm';
 import classNames from 'classnames';
 import InlineSVG from 'react-inlinesvg';
+import { bindActionCreators } from 'redux';
+import { reduxForm } from 'redux-form';
+import * as UserActions from '../actions';
+import ResetPasswordForm from '../components/ResetPasswordForm';
+
 const exitUrl = require('../../../images/exit.svg');
 const logoUrl = require('../../../images/p5js-logo.svg');
 
@@ -43,7 +44,7 @@ class ResetPasswordView extends React.Component {
           <h2 className="form-container__title">Reset Your Password</h2>
           <ResetPasswordForm {...this.props} />
           <p className="reset-password__submitted">
-            Your password reset email should arrive shortly. If you don't see it, check
+            Your password reset email should arrive shortly. If you don&apos;t see it, check
             in your spam folder as sometimes it can end up there.
           </p>
           <p className="form__navigation-options">

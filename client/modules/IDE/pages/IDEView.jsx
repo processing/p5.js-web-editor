@@ -1,4 +1,8 @@
 import React, { PropTypes } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+import SplitPane from 'react-split-pane';
 import Editor from '../components/Editor';
 import Sidebar from '../components/Sidebar';
 import PreviewFrame from '../components/PreviewFrame';
@@ -13,9 +17,6 @@ import ErrorModal from '../components/ErrorModal';
 import Nav from '../../../components/Nav';
 import Console from '../components/Console';
 import Toast from '../components/Toast';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import * as FileActions from '../actions/files';
 import * as IDEActions from '../actions/ide';
 import * as ProjectActions from '../actions/project';
@@ -25,7 +26,6 @@ import * as UserActions from '../../User/actions';
 import * as ToastActions from '../actions/toast';
 import * as ConsoleActions from '../actions/console';
 import { getHTMLFile } from '../reducers/files';
-import SplitPane from 'react-split-pane';
 import Overlay from '../../App/components/Overlay';
 import SketchList from '../components/SketchList';
 import About from '../components/About';
@@ -55,7 +55,7 @@ class IDEView extends React.Component {
     this.isMac = navigator.userAgent.toLowerCase().indexOf('mac') !== -1;
     document.addEventListener('keydown', this.handleGlobalKeydown, false);
 
-    this.props.router.setRouteLeaveHook(this.props.route, (route) => this.warnIfUnsavedChanges(route));
+    this.props.router.setRouteLeaveHook(this.props.route, route => this.warnIfUnsavedChanges(route));
 
     window.onbeforeunload = () => this.warnIfUnsavedChanges();
 
@@ -104,7 +104,7 @@ class IDEView extends React.Component {
     }
 
     if (this.props.route.path !== prevProps.route.path) {
-      this.props.router.setRouteLeaveHook(this.props.route, (route) => this.warnIfUnsavedChanges(route));
+      this.props.router.setRouteLeaveHook(this.props.route, route => this.warnIfUnsavedChanges(route));
     }
   }
 
@@ -120,16 +120,16 @@ class IDEView extends React.Component {
   }
 
   _handleConsolePaneOnDragFinished() {
-    this.consoleSize = this.refs.consolePane.state.draggedSize;
-    this.refs.consolePane.setState({
+    this.consoleSize = this.consolePane.state.draggedSize;
+    this.consolePane.setState({
       resized: false,
       draggedSize: undefined,
     });
   }
 
   _handleSidebarPaneOnDragFinished() {
-    this.sidebarSize = this.refs.sidebarPane.state.draggedSize;
-    this.refs.sidebarPane.setState({
+    this.sidebarSize = this.sidebarPane.state.draggedSize;
+    this.sidebarPane.setState({
       resized: false,
       draggedSize: undefined
     });
@@ -140,7 +140,7 @@ class IDEView extends React.Component {
     if (e.keyCode === 83 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
       e.preventDefault();
       e.stopPropagation();
-      if (this.isUserOwner() || this.props.user.authenticated && !this.props.project.owner) {
+      if (this.isUserOwner() || (this.props.user.authenticated && !this.props.project.owner)) {
         this.props.saveProject();
       }
       // 13 === enter
@@ -170,7 +170,7 @@ class IDEView extends React.Component {
   warnIfUnsavedChanges(route) { // eslint-disable-line
     if (route && (route.action === 'PUSH' && (route.pathname === '/login' || route.pathname === '/signup'))) {
       // don't warn
-    } else if (route && this.props.location.pathname === '/login' || this.props.location.pathname === '/signup') {
+    } else if (route && (this.props.location.pathname === '/login' || this.props.location.pathname === '/signup')) {
       // don't warn
     } else if (this.props.ide.unsavedChanges) {
       if (!window.confirm('Are you sure you want to leave this page? You have unsaved changes.')) {
@@ -202,7 +202,6 @@ class IDEView extends React.Component {
         <Toolbar
           className="Toolbar"
           isPlaying={this.props.ide.isPlaying}
-          startSketch={this.props.startSketch}
           stopSketch={this.props.stopSketch}
           startTextOutput={this.props.startTextOutput}
           stopTextOutput={this.props.stopTextOutput}
@@ -246,7 +245,7 @@ class IDEView extends React.Component {
           <SplitPane
             split="vertical"
             defaultSize={this.sidebarSize}
-            ref="sidebarPane"
+            ref={(element) => { this.sidebarPane = element; }}
             onDragFinished={this._handleSidebarPaneOnDragFinished}
             allowResize={this.props.ide.sidebarIsExpanded}
             minSize={20}
@@ -270,15 +269,15 @@ class IDEView extends React.Component {
             <SplitPane
               split="vertical"
               defaultSize={'50%'}
-              onChange={() => (this.refs.overlay.style.display = 'block')}
-              onDragFinished={() => (this.refs.overlay.style.display = 'none')}
+              onChange={() => (this.overlay.style.display = 'block')}
+              onDragFinished={() => (this.overlay.style.display = 'none')}
             >
               <SplitPane
                 split="horizontal"
                 primary="second"
                 defaultSize={this.consoleSize}
                 minSize={29}
-                ref="consolePane"
+                ref={(element) => { this.consolePane = element; }}
                 onDragFinished={this._handleConsolePaneOnDragFinished}
                 allowResize={this.props.ide.consoleIsExpanded}
                 className="editor-preview-subpanel"
@@ -286,7 +285,6 @@ class IDEView extends React.Component {
                 <Editor
                   lintWarning={this.props.preferences.lintWarning}
                   lintMessages={this.props.editorAccessibility.lintMessages}
-                  updateLineNumber={this.props.updateLineNumber}
                   updateLintMessage={this.props.updateLintMessage}
                   clearLintMessage={this.props.clearLintMessage}
                   file={this.props.selectedFile}
@@ -295,8 +293,6 @@ class IDEView extends React.Component {
                   indentationAmount={this.props.preferences.indentationAmount}
                   isTabIndent={this.props.preferences.isTabIndent}
                   files={this.props.files}
-                  lintMessages={this.props.editorAccessibility.lintMessages}
-                  lineNumber={this.props.editorAccessibility.lineNumber}
                   editorOptionsVisible={this.props.ide.editorOptionsVisible}
                   showEditorOptions={this.props.showEditorOptions}
                   closeEditorOptions={this.props.closeEditorOptions}
@@ -317,7 +313,6 @@ class IDEView extends React.Component {
                 />
                 <Console
                   consoleEvents={this.props.console}
-                  isPlaying={this.props.ide.isPlaying}
                   isExpanded={this.props.ide.consoleIsExpanded}
                   expandConsole={this.props.expandConsole}
                   collapseConsole={this.props.collapseConsole}
@@ -325,17 +320,17 @@ class IDEView extends React.Component {
                 />
               </SplitPane>
               <div className="preview-frame-holder">
-                <div className="preview-frame-overlay" ref="overlay">
+                <div className="preview-frame-overlay" ref={(element) => { this.overlay = element; }}>
                 </div>
                 <div>
-                {(() => {
-                  if ((this.props.preferences.textOutput && this.props.ide.isPlaying) || this.props.ide.isTextOutputPlaying) {
-                    return (
-                      <TextOutput />
-                    );
-                  }
-                  return '';
-                })()}
+                  {(() => {
+                    if ((this.props.preferences.textOutput && this.props.ide.isPlaying) || this.props.ide.isTextOutputPlaying) {
+                      return (
+                        <TextOutput />
+                      );
+                    }
+                    return '';
+                  })()}
                 </div>
                 <PreviewFrame
                   htmlFile={this.props.htmlFile}
@@ -351,7 +346,6 @@ class IDEView extends React.Component {
                   endSketchRefresh={this.props.endSketchRefresh}
                   stopSketch={this.props.stopSketch}
                   setBlobUrl={this.props.setBlobUrl}
-                  stopSketch={this.props.stopSketch}
                   expandConsole={this.props.expandConsole}
                 />
               </div>
@@ -449,10 +443,10 @@ IDEView.propTypes = {
     project_id: PropTypes.string,
     username: PropTypes.string,
     reset_password_token: PropTypes.string,
-  }),
+  }).isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string
-  }),
+  }).isRequired,
   getProject: PropTypes.func.isRequired,
   user: PropTypes.shape({
     authenticated: PropTypes.bool.isRequired,
@@ -483,12 +477,9 @@ IDEView.propTypes = {
     justOpenedProject: PropTypes.bool.isRequired,
     errorType: PropTypes.string
   }).isRequired,
-  startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
   startTextOutput: PropTypes.func.isRequired,
   stopTextOutput: PropTypes.func.isRequired,
-  detectInfiniteLoops: PropTypes.func.isRequired,
-  resetInfiniteLoops: PropTypes.func.isRequired,
   project: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string.isRequired,
@@ -501,11 +492,9 @@ IDEView.propTypes = {
   openPreferences: PropTypes.func.isRequired,
   editorAccessibility: PropTypes.shape({
     lintMessages: PropTypes.array.isRequired,
-    lineNumber: PropTypes.string.isRequired
   }).isRequired,
   updateLintMessage: PropTypes.func.isRequired,
   clearLintMessage: PropTypes.func.isRequired,
-  updateLineNumber: PropTypes.func.isRequired,
   preferences: PropTypes.shape({
     fontSize: PropTypes.number.isRequired,
     indentationAmount: PropTypes.number.isRequired,
@@ -524,14 +513,22 @@ IDEView.propTypes = {
   setAutosave: PropTypes.func.isRequired,
   setLintWarning: PropTypes.func.isRequired,
   setTextOutput: PropTypes.func.isRequired,
-  files: PropTypes.array.isRequired,
+  files: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired
+  })).isRequired,
   updateFileContent: PropTypes.func.isRequired,
   selectedFile: PropTypes.shape({
     id: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
-  }),
+  }).isRequired,
   setSelectedFile: PropTypes.func.isRequired,
-  htmlFile: PropTypes.object.isRequired,
+  htmlFile: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired
+  }).isRequired,
   dispatchConsoleEvent: PropTypes.func.isRequired,
   newFile: PropTypes.func.isRequired,
   closeNewFileModal: PropTypes.func.isRequired,
@@ -565,13 +562,11 @@ IDEView.propTypes = {
   toast: PropTypes.shape({
     isVisible: PropTypes.bool.isRequired
   }).isRequired,
-  showToast: PropTypes.func.isRequired,
-  setToastText: PropTypes.func.isRequired,
   autosaveProject: PropTypes.func.isRequired,
   router: PropTypes.shape({
     setRouteLeaveHook: PropTypes.func
   }).isRequired,
-  route: PropTypes.object.isRequired,
+  route: PropTypes.oneOfType([PropTypes.object, PropTypes.element]).isRequired,
   setUnsavedChanges: PropTypes.func.isRequired,
   setTheme: PropTypes.func.isRequired,
   setAutorefresh: PropTypes.func.isRequired,
@@ -580,8 +575,10 @@ IDEView.propTypes = {
   startRefreshSketch: PropTypes.func.isRequired,
   setBlobUrl: PropTypes.func.isRequired,
   setPreviousPath: PropTypes.func.isRequired,
-  resetProject: PropTypes.func.isRequired,
-  console: PropTypes.array.isRequired,
+  console: PropTypes.arrayOf(PropTypes.shape({
+    method: PropTypes.string.isRequired,
+    args: PropTypes.arrayOf(PropTypes.string)
+  })).isRequired,
   clearConsole: PropTypes.func.isRequired,
   showErrorModal: PropTypes.func.isRequired,
   hideErrorModal: PropTypes.func.isRequired

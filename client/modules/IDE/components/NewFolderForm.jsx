@@ -8,7 +8,7 @@ class NewFolderForm extends React.Component {
   }
 
   componentDidMount() {
-    this.refs.fileName.focus();
+    this.fileName.focus();
   }
 
   render() {
@@ -27,7 +27,7 @@ class NewFolderForm extends React.Component {
           id="name"
           type="text"
           placeholder="Name"
-          ref="fileName"
+          ref={(element) => { this.fileName = element; }}
           {...domOnlyProps(name)}
         />
         <input type="submit" value="Add Folder" aria-label="add folder" />

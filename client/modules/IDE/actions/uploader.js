@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { createFile } from './files';
-const textFileRegex = /(text\/|application\/json)/;
 
+const textFileRegex = /(text\/|application\/json)/;
 const s3BucketHttps = `https://s3-us-west-2.amazonaws.com/${process.env.S3_BUCKET}/`;
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 const MAX_LOCAL_FILE_SIZE = 80000; // bytes, aka 80 KB
@@ -36,11 +36,11 @@ export function dropzoneAcceptCallback(file, done) {
     // check mime type
     // if text, local interceptor
     if (file.type.match(textFileRegex) && file.size < MAX_LOCAL_FILE_SIZE) {
-      localIntercept(file).then(result => {
+      localIntercept(file).then((result) => {
         file.content = result; // eslint-disable-line
         done('Uploading plaintext file locally.');
       })
-      .catch(result => {
+      .catch((result) => {
         done(`Failed to download file ${file.name}: ${result}`);
         console.warn(file);
       });
@@ -55,14 +55,14 @@ export function dropzoneAcceptCallback(file, done) {
         {
           withCredentials: true
         })
-      .then(response => {
+      .then((response) => {
         file.custom_status = 'ready'; // eslint-disable-line
         file.postData = response.data; // eslint-disable-line
         file.s3 = response.data.key; // eslint-disable-line
         file.previewTemplate.className += ' uploading'; // eslint-disable-line
         done();
       })
-      .catch(response => {
+      .catch((response) => {
         file.custom_status = 'rejected'; // eslint-disable-line
         if (response.data.responseText && response.data.responseText.message) {
           done(response.data.responseText.message);
@@ -76,7 +76,7 @@ export function dropzoneAcceptCallback(file, done) {
 export function dropzoneSendingCallback(file, xhr, formData) {
   return () => {
     if (!file.type.match(textFileRegex) || file.size >= MAX_LOCAL_FILE_SIZE) {
-      Object.keys(file.postData).forEach(key => {
+      Object.keys(file.postData).forEach((key) => {
         formData.append(key, file.postData[key]);
       });
       formData.append('Content-type', '');

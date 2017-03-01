@@ -2,14 +2,14 @@ import React from 'react';
 
 class TextOutput extends React.Component {
   componentDidMount() {
-    this.refs.canvasTextOutput.focus();
+    this.canvasTextOutput.focus();
   }
   render() {
     return (
       <section
         className="text-output"
         id="canvas-sub"
-        ref="canvasTextOutput"
+        ref={(element) => { this.canvasTextOutput = element; }}
         tabIndex="0"
         aria-label="text-output"
         title="canvas text output"

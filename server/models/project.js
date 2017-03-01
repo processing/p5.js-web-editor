@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
-const Schema = mongoose.Schema;
 import shortid from 'shortid';
+
+const Schema = mongoose.Schema;
 
 const fileSchema = new Schema({
   name: { type: String, default: 'sketch.js' },
@@ -11,7 +12,7 @@ const fileSchema = new Schema({
   isSelectedFile: { type: Boolean }
 }, { timestamps: true, _id: true });
 
-fileSchema.virtual('id').get(function () {
+fileSchema.virtual('id').get(function getFileId() {
   return this._id.toHexString();
 });
 
@@ -26,7 +27,7 @@ const projectSchema = new Schema({
   _id: { type: String, default: shortid.generate }
 }, { timestamps: true });
 
-projectSchema.virtual('id').get(function () {
+projectSchema.virtual('id').get(function getProjectId() {
   return this._id;
 });
 

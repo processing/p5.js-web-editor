@@ -31,7 +31,13 @@ ResetPasswordForm.propTypes = {
   pristine: PropTypes.bool,
   user: PropTypes.shape({
     resetPasswordInitiate: PropTypes.bool
-  })
+  }).isRequired
+};
+
+ResetPasswordForm.defaultProps = {
+  submitting: false,
+  pristine: true,
+  invalid: false
 };
 
 export default ResetPasswordForm;

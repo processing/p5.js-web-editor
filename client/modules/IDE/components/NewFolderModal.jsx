@@ -1,17 +1,18 @@
 import React, { PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 import InlineSVG from 'react-inlinesvg';
-const exitUrl = require('../../../images/exit.svg');
 import NewFolderForm from './NewFolderForm';
+
+const exitUrl = require('../../../images/exit.svg');
 
 class NewFolderModal extends React.Component {
   componentDidMount() {
-    this.refs.modal.focus();
+    this.newFolderModal.focus();
   }
 
   render() {
     return (
-      <section className="modal" ref="modal" tabIndex="0">
+      <section className="modal" ref={(element) => { this.newFolderModal = element; }} tabIndex="0">
         <div className="modal-content-folder">
           <div className="modal__header">
             <h2 className="modal__title">Add Folder</h2>

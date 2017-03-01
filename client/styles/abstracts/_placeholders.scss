@@ -175,3 +175,16 @@
 	height:1px;
 	overflow:hidden;
 }
+
+
+%link {
+	@include themify() {
+		text-decoration: none;
+		color: getThemifyVariable('inactive-text-color');
+		cursor: pointer;
+		&:hover {
+			text-decoration: none;
+			color: getThemifyVariable('primary-text-color');
+		}
+	}
+}
