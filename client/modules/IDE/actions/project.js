@@ -1,39 +1,21 @@
 import { browserHistory } from 'react-router';
 import axios from 'axios';
 import objectID from 'bson-objectid';
-import moment from 'moment';
 import * as ActionTypes from '../../../constants';
 import { showToast, setToastText } from './toast';
 import { setUnsavedChanges,
   justOpenedProject,
   resetJustOpenedProject,
-  setProjectSavedTime,
-  resetProjectSavedTime,
   showErrorModal } from './ide';
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
-export function getProject(id) {
-  return (dispatch, getState) => {
-    const state = getState();
-    dispatch(justOpenedProject());
-    if (state.ide.justOpenedProject) {
-      dispatch(resetProjectSavedTime());
-    }
-    axios.get(`${ROOT_URL}/projects/${id}`, { withCredentials: true })
-      .then((response) => {
-        dispatch({
-          type: ActionTypes.SET_PROJECT,
-          project: response.data,
-          files: response.data.files,
-          owner: response.data.user
-        });
-        dispatch(setUnsavedChanges(false));
-      })
-      .catch(response => dispatch({
-        type: ActionTypes.ERROR,
-        error: response.data
-      }));
+export function setProject(project) {
+  return {
+    type: ActionTypes.SET_PROJECT,
+    project,
+    files: project.files,
+    owner: project.user
   };
 }
 
@@ -41,6 +23,21 @@ export function setProjectName(name) {
   return {
     type: ActionTypes.SET_PROJECT_NAME,
     name
+  };
+}
+
+export function getProject(id) {
+  return (dispatch, getState) => {
+    dispatch(justOpenedProject());
+    axios.get(`${ROOT_URL}/projects/${id}`, { withCredentials: true })
+      .then((response) => {
+        dispatch(setProject(response.data));
+        dispatch(setUnsavedChanges(false));
+      })
+      .catch(response => dispatch({
+        type: ActionTypes.ERROR,
+        error: response.data
+      }));
   };
 }
 
@@ -54,9 +51,9 @@ export function saveProject(autosave = false) {
     formParams.files = [...state.files];
     if (state.project.id) {
       axios.put(`${ROOT_URL}/projects/${state.project.id}`, formParams, { withCredentials: true })
-        .then(() => {
+        .then((response) => {
           dispatch(setUnsavedChanges(false));
-          dispatch(setProjectSavedTime(moment().format()));
+          dispatch(setProject(response.data));
           dispatch({
             type: ActionTypes.PROJECT_SAVE_SUCCESS
           });
@@ -88,7 +85,7 @@ export function saveProject(autosave = false) {
       axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
         .then((response) => {
           dispatch(setUnsavedChanges(false));
-          dispatch(setProjectSavedTime(moment().format()));
+          dispatch(setProject(response.data));
           browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
           dispatch({
             type: ActionTypes.NEW_PROJECT,

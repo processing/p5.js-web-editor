@@ -304,7 +304,7 @@ class IDEView extends React.Component {
                   stopSketch={this.props.stopSketch}
                   autorefresh={this.props.preferences.autorefresh}
                   unsavedChanges={this.props.ide.unsavedChanges}
-                  projectSavedTime={this.props.ide.projectSavedTime}
+                  projectSavedTime={this.props.project.updatedAt}
                   isExpanded={this.props.ide.sidebarIsExpanded}
                   expandSidebar={this.props.expandSidebar}
                   collapseSidebar={this.props.collapseSidebar}
@@ -486,7 +486,8 @@ IDEView.propTypes = {
     owner: PropTypes.shape({
       username: PropTypes.string,
       id: PropTypes.string
-    })
+    }),
+    updatedAt: PropTypes.string
   }).isRequired,
   setProjectName: PropTypes.func.isRequired,
   openPreferences: PropTypes.func.isRequired,
