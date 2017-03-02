@@ -320,6 +320,9 @@ class IDEView extends React.Component {
                 />
               </SplitPane>
               <div className="preview-frame-holder">
+                <header className="preview-frame__header">
+                  <h2 className="preview-frame__title">Preview</h2>
+                </header>
                 <div className="preview-frame-overlay" ref={(element) => { this.overlay = element; }}>
                 </div>
                 <div>
