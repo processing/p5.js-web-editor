@@ -41,7 +41,8 @@ export function updateProject(req, res) {
       return;
     }
     if (req.body.updatedAt && moment(req.body.updatedAt) < moment(project.updatedAt)) {
-      return res.status(409).send({ success: false, message: 'Attempted to save stale version of project.' });
+      res.status(409).send({ success: false, message: 'Attempted to save stale version of project.' });
+      return;
     }
     Project.findByIdAndUpdate(req.params.project_id,
       {
