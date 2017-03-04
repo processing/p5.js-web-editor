@@ -36,6 +36,8 @@ const project = (state, action) => {
       return Object.assign({}, state, { isEditingName: true });
     case ActionTypes.HIDE_EDIT_PROJECT_NAME:
       return Object.assign({}, state, { isEditingName: false });
+    case ActionTypes.SET_PROJECT_SAVED_TIME:
+      return Object.assign({}, state, { updatedAt: action.value });
     default:
       return state;
   }

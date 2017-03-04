@@ -1,5 +1,6 @@
 import archiver from 'archiver';
 import request from 'request';
+import moment from 'moment';
 import Project from '../models/project';
 import User from '../models/user';
 
@@ -39,12 +40,16 @@ export function updateProject(req, res) {
       res.status(403).send({ success: false, message: 'Session does not match owner of project.' });
       return;
     }
-    // if (req.body.updatedAt && moment(req.body.updatedAt) < moment(project.updatedAt)) {
-    //   return res.status(409).send({ success: false, message: 'Attempted to save stale version of project.' });
-    // }
+    if (req.body.updatedAt && moment(req.body.updatedAt) < moment(project.updatedAt)) {
+      res.status(409).send({ success: false, message: 'Attempted to save stale version of project.' });
+      return;
+    }
     Project.findByIdAndUpdate(req.params.project_id,
       {
         $set: req.body
+      },
+      {
+        new: true
       })
       .populate('user', 'username')
       .exec((updateProjectErr, updatedProject) => {
@@ -60,13 +65,13 @@ export function updateProject(req, res) {
           staleIds.forEach((staleId) => {
             updatedProject.files.id(staleId).remove();
           });
-          updatedProject.save((innerErr) => {
+          updatedProject.save((innerErr, savedProject) => {
             if (innerErr) {
               console.log(innerErr);
               res.json({ success: false });
               return;
             }
-            res.json(updatedProject);
+            res.json(savedProject);
           });
         }
         res.json(updatedProject);

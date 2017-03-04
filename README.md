@@ -58,6 +58,8 @@ The p5.js interceptor code has been moved into its own directory! Make sure that
 
 ##Accessibility Guidelines
 
+Here is guide on [how to use the accessible editor](https://gist.github.com/MathuraMG/e86666b7b41fbc8c078bad9aff3f666d)
+
 The code for the p5.js web editor adheres to web accessibility standards. The following guidelines will help to ensure that accessibility continues to be a priority as development continues.
 
 **Code Structure**

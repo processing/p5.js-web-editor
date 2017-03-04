@@ -274,8 +274,8 @@ class Preferences extends React.Component {
             <input
               type="radio"
               onChange={() => this.props.setTextOutput(2)}
-              aria-label="grid output on"
-              name="grid output"
+              aria-label="table text output on"
+              name="table text output"
               id="grid-output-on"
               className="preference__radio-button"
               value="Grid On"
