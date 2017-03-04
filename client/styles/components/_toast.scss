@@ -1,21 +1,18 @@
 .toast {
   background-color: $toast-background-color;
   color: $toast-text-color;
-  padding: #{20 / $base-font-size}rem;
+  padding: #{10 / $base-font-size}rem;
   position: absolute;
   top: 0;
   right: 40%;
   display: flex;
   z-index: 9999;
+  box-shadow: 0 6px 6px 0 rgba(0,0,0,0.10);
 }
 
 .toast__close {
   @include themify() {
-    @extend %icon;
+    @extend %icon-toast;
   }
-  color: $toast-text-color;
-  & g {
-    fill: $toast-text-color; 
-  }
-  margin-left: #{10 / $base-font-size}rem;
+  margin-left: #{20 / $base-font-size}rem;
 }
