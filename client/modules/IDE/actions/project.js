@@ -53,6 +53,7 @@ export function saveProject(autosave = false) {
       axios.put(`${ROOT_URL}/projects/${state.project.id}`, formParams, { withCredentials: true })
         .then((response) => {
           dispatch(setUnsavedChanges(false));
+          console.log(response.data);
           dispatch(setProject(response.data));
           dispatch({
             type: ActionTypes.PROJECT_SAVE_SUCCESS
@@ -180,7 +181,10 @@ export function cloneProject() {
   return (dispatch, getState) => {
     dispatch(setUnsavedChanges(false));
     const state = getState();
-    const newFiles = [...state.files];
+    const newFiles = state.files.map((file) => { // eslint-disable-line
+      return { ...file };
+    });
+
     const rootFile = newFiles.find(file => file.name === 'root');
     const newRootFileId = objectID().toHexString();
     rootFile.id = newRootFileId;
@@ -191,6 +195,7 @@ export function cloneProject() {
     axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
       .then((response) => {
         browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
+        console.log(response.data);
         dispatch({
           type: ActionTypes.NEW_PROJECT,
           project: response.data,
