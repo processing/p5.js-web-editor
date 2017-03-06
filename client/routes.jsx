@@ -14,21 +14,21 @@ const checkAuth = (store) => {
   store.dispatch(getUser());
 };
 
-const routes = (store) =>
+const routes = store =>
   (
-  <Route path="/" component={App}>
-    <IndexRoute component={IDEView} onEnter={checkAuth(store)} />
-    <Route path="/login" component={LoginView} />
-    <Route path="/signup" component={SignupView} />
-    <Route path="/reset-password" component={ResetPasswordView} />
-    <Route path="/reset-password/:reset_password_token" component={NewPasswordView} />
-    <Route path="/projects/:project_id" component={IDEView} />
-    <Route path="/full/:project_id" component={FullView} />
-    <Route path="/sketches" component={IDEView} />
-    <Route path="/:username/sketches/:project_id" component={IDEView} />
-    <Route path="/:username/sketches" component={IDEView} />
-    <Route path="/about" component={IDEView} />
-  </Route>
+    <Route path="/" component={App}>
+      <IndexRoute component={IDEView} onEnter={checkAuth(store)} />
+      <Route path="/login" component={LoginView} />
+      <Route path="/signup" component={SignupView} />
+      <Route path="/reset-password" component={ResetPasswordView} />
+      <Route path="/reset-password/:reset_password_token" component={NewPasswordView} />
+      <Route path="/projects/:project_id" component={IDEView} />
+      <Route path="/full/:project_id" component={FullView} />
+      <Route path="/sketches" component={IDEView} />
+      <Route path="/:username/sketches/:project_id" component={IDEView} />
+      <Route path="/:username/sketches" component={IDEView} />
+      <Route path="/about" component={IDEView} />
+    </Route>
   );
 
 export default routes;

@@ -8,8 +8,8 @@ import { getBlobUrl } from '../actions/files';
 import { resolvePathToFile } from '../../../../server/utils/filePath';
 
 const startTag = '@fs-';
-const MEDIA_FILE_REGEX = /^('|")(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov|otf|ttf)('|")$/i;
-const MEDIA_FILE_REGEX_NO_QUOTES = /^(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov|otf|ttf)$/i;
+const MEDIA_FILE_REGEX = /^('|")(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov|otf|ttf|m4a)('|")$/i;
+const MEDIA_FILE_REGEX_NO_QUOTES = /^(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov|otf|ttf|m4a)$/i;
 const STRING_REGEX = /(['"])((\\\1|.)*?)\1/gm;
 const TEXT_FILE_REGEX = /(.+\.json$|.+\.txt$|.+\.csv$)/i;
 const NOT_EXTERNAL_LINK_REGEX = /^(?!(http:\/\/|https:\/\/))/;
@@ -86,20 +86,18 @@ class PreviewFrame extends React.Component {
       this.renderFrameContents();
     }
 
-    if (this.props.dispatchConsoleEvent) {
-      window.addEventListener('message', (messageEvent) => {
-        messageEvent.data.forEach(message => {
-          const args = message.arguments;
-          Object.keys(args).forEach((key) => {
-            if (args[key].includes('Exiting potential infinite loop')) {
-              this.props.stopSketch();
-              this.props.expandConsole();
-            }
-          });
+    window.addEventListener('message', (messageEvent) => {
+      messageEvent.data.forEach((message) => {
+        const args = message.arguments;
+        Object.keys(args).forEach((key) => {
+          if (args[key].includes('Exiting potential infinite loop')) {
+            this.props.stopSketch();
+            this.props.expandConsole();
+          }
         });
-        this.props.dispatchConsoleEvent(messageEvent.data);
       });
-    }
+      this.props.dispatchConsoleEvent(messageEvent.data);
+    });
   }
 
   componentDidUpdate(prevProps) {
@@ -133,7 +131,6 @@ class PreviewFrame extends React.Component {
 
     if (this.props.fullView && this.props.files[0].id !== prevProps.files[0].id) {
       this.renderSketch();
-      return;
     }
 
     // small bug - if autorefresh is on, and the usr changes files
@@ -141,11 +138,11 @@ class PreviewFrame extends React.Component {
   }
 
   componentWillUnmount() {
-    ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(this).contentDocument.body);
+    ReactDOM.unmountComponentAtNode(this.iframeElement.contentDocument.body);
   }
 
   clearPreview() {
-    const doc = ReactDOM.findDOMNode(this);
+    const doc = this.iframeElement;
     doc.srcDoc = '';
   }
 
@@ -205,7 +202,7 @@ class PreviewFrame extends React.Component {
       scriptsToInject = scriptsToInject.concat(interceptorScripts);
     }
 
-    scriptsToInject.forEach(scriptToInject => {
+    scriptsToInject.forEach((scriptToInject) => {
       const script = sketchDoc.createElement('script');
       script.src = scriptToInject;
       sketchDoc.head.appendChild(script);
@@ -224,7 +221,7 @@ class PreviewFrame extends React.Component {
   resolvePathsForElementsWithAttribute(attr, sketchDoc, files) {
     const elements = sketchDoc.querySelectorAll(`[${attr}]`);
     const elementsArray = Array.prototype.slice.call(elements);
-    elementsArray.forEach(element => {
+    elementsArray.forEach((element) => {
       if (element.getAttribute(attr).match(MEDIA_FILE_REGEX_NO_QUOTES)) {
         const resolvedFile = resolvePathToFile(element.getAttribute(attr), files);
         if (resolvedFile) {
@@ -236,7 +233,7 @@ class PreviewFrame extends React.Component {
 
   resolveJSAndCSSLinks(files) {
     const newFiles = [];
-    files.forEach(file => {
+    files.forEach((file) => {
       const newFile = { ...file };
       if (file.name.match(/.*\.js$/i)) {
         newFile.content = this.resolveJSLinksInString(newFile.content, files);
@@ -252,7 +249,7 @@ class PreviewFrame extends React.Component {
     let newContent = content;
     let jsFileStrings = content.match(STRING_REGEX);
     jsFileStrings = jsFileStrings || [];
-    jsFileStrings.forEach(jsFileString => {
+    jsFileStrings.forEach((jsFileString) => {
       if (jsFileString.match(MEDIA_FILE_REGEX)) {
         const filePath = jsFileString.substr(1, jsFileString.length - 2);
         const resolvedFile = resolvePathToFile(filePath, files);
@@ -276,7 +273,7 @@ class PreviewFrame extends React.Component {
     let newContent = content;
     let cssFileStrings = content.match(STRING_REGEX);
     cssFileStrings = cssFileStrings || [];
-    cssFileStrings.forEach(cssFileString => {
+    cssFileStrings.forEach((cssFileString) => {
       if (cssFileString.match(MEDIA_FILE_REGEX)) {
         const filePath = cssFileString.substr(1, cssFileString.length - 2);
         const resolvedFile = resolvePathToFile(filePath, files);
@@ -293,7 +290,7 @@ class PreviewFrame extends React.Component {
   resolveScripts(sketchDoc, files) {
     const scriptsInHTML = sketchDoc.getElementsByTagName('script');
     const scriptsInHTMLArray = Array.prototype.slice.call(scriptsInHTML);
-    scriptsInHTMLArray.forEach(script => {
+    scriptsInHTMLArray.forEach((script) => {
       if (script.getAttribute('src') && script.getAttribute('src').match(NOT_EXTERNAL_LINK_REGEX) !== null) {
         const resolvedFile = resolvePathToFile(script.getAttribute('src'), files);
         if (resolvedFile) {
@@ -314,13 +311,13 @@ class PreviewFrame extends React.Component {
   resolveStyles(sketchDoc, files) {
     const inlineCSSInHTML = sketchDoc.getElementsByTagName('style');
     const inlineCSSInHTMLArray = Array.prototype.slice.call(inlineCSSInHTML);
-    inlineCSSInHTMLArray.forEach(style => {
+    inlineCSSInHTMLArray.forEach((style) => {
       style.innerHTML = this.resolveCSSLinksInString(style.innerHTML, files); // eslint-disable-line
     });
 
     const cssLinksInHTML = sketchDoc.querySelectorAll('link[rel="stylesheet"]');
     const cssLinksInHTMLArray = Array.prototype.slice.call(cssLinksInHTML);
-    cssLinksInHTMLArray.forEach(css => {
+    cssLinksInHTMLArray.forEach((css) => {
       if (css.getAttribute('href') && css.getAttribute('href').match(NOT_EXTERNAL_LINK_REGEX) !== null) {
         const resolvedFile = resolvePathToFile(css.getAttribute('href'), files);
         if (resolvedFile) {
@@ -338,7 +335,7 @@ class PreviewFrame extends React.Component {
   }
 
   renderSketch() {
-    const doc = ReactDOM.findDOMNode(this);
+    const doc = this.iframeElement;
     if (this.props.isPlaying) {
       srcDoc.set(doc, this.injectLocalFiles());
       if (this.props.endSketchRefresh) {
@@ -351,7 +348,7 @@ class PreviewFrame extends React.Component {
   }
 
   renderFrameContents() {
-    const doc = ReactDOM.findDOMNode(this).contentDocument;
+    const doc = this.iframeElement.contentDocument;
     if (doc.readyState === 'complete') {
       this.renderSketch();
     } else {
@@ -367,8 +364,8 @@ class PreviewFrame extends React.Component {
         role="main"
         tabIndex="0"
         frameBorder="0"
-        ref="iframe"
         title="sketch output"
+        ref={(element) => { this.iframeElement = element; }}
         sandbox="allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-forms"
       />
     );
@@ -385,17 +382,24 @@ PreviewFrame.propTypes = {
   content: PropTypes.string,
   htmlFile: PropTypes.shape({
     content: PropTypes.string.isRequired
-  }),
-  files: PropTypes.array.isRequired,
-  dispatchConsoleEvent: PropTypes.func,
-  children: PropTypes.element,
-  autorefresh: PropTypes.bool.isRequired,
+  }).isRequired,
+  files: PropTypes.arrayOf(PropTypes.shape({
+    content: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    url: PropTypes.string,
+    id: PropTypes.string.isRequired
+  })).isRequired,
+  dispatchConsoleEvent: PropTypes.func.isRequired,
   endSketchRefresh: PropTypes.func.isRequired,
   previewIsRefreshing: PropTypes.bool.isRequired,
   fullView: PropTypes.bool,
   setBlobUrl: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
   expandConsole: PropTypes.func.isRequired
+};
+
+PreviewFrame.defaultProps = {
+  fullView: false
 };
 
 export default PreviewFrame;

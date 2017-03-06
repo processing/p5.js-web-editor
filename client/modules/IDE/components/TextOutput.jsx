@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 class TextOutput extends React.Component {
   componentDidMount() {
-    this.refs.canvasTextOutput.focus();
+    this.canvasTextOutput.focus();
+  }
+  componentDidUpdate(prevProps) {
+    // if the user explicitly clicks on the play button, want to refocus on the text output
+    if (this.props.isPlaying && this.props.previewIsRefreshing) {
+      this.canvasTextOutput.focus();
+    }
   }
   render() {
     return (
       <section
         className="accessible-output"
         id="canvas-sub"
-        ref="canvasTextOutput"
+        ref={(element) => { this.canvasTextOutput = element; }}
         tabIndex="0"
         aria-label="accessible-output"
         title="canvas text output"
@@ -67,5 +73,10 @@ class TextOutput extends React.Component {
     );
   }
 }
+
+TextOutput.propTypes = {
+  isPlaying: PropTypes.bool.isRequired,
+  previewIsRefreshing: PropTypes.bool.isRequired
+};
 
 export default TextOutput;

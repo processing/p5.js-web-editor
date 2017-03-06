@@ -5,7 +5,7 @@
 		width: #{44 / $base-font-size}rem;
 		text-align: center;
 		border-radius: 100%;
-		line-height: #{46 / $base-font-size}rem;
+		line-height: #{49 / $base-font-size}rem;
 		cursor: pointer;
 		border: none;
 		outline: none;
@@ -51,6 +51,25 @@
 	padding: 0;
 }
 
+%icon-toast{
+	@include themify() {
+		color: $toast-text-color
+		& g {
+			fill: $toast-text-color
+		}
+		&:hover {
+			color: getThemifyVariable('icon-toast-hover-color');
+			& g {
+				opacity: 1;
+				fill: getThemifyVariable('icon-toast-hover-color');
+			}
+		}
+	}
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+}
 %none-themify-icon {
 	background-color: transparent;
 	border: none;
@@ -174,4 +193,17 @@
 	width:1px;
 	height:1px;
 	overflow:hidden;
+}
+
+
+%link {
+	@include themify() {
+		text-decoration: none;
+		color: getThemifyVariable('inactive-text-color');
+		cursor: pointer;
+		&:hover {
+			text-decoration: none;
+			color: getThemifyVariable('primary-text-color');
+		}
+	}
 }

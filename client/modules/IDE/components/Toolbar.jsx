@@ -1,12 +1,13 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
-const InlineSVG = require('react-inlinesvg');
+import classNames from 'classnames';
+import InlineSVG from 'react-inlinesvg';
+
 const playUrl = require('../../../images/play.svg');
 const logoUrl = require('../../../images/p5js-logo.svg');
 const stopUrl = require('../../../images/stop.svg');
 const preferencesUrl = require('../../../images/preferences.svg');
 const editProjectNameUrl = require('../../../images/pencil.svg');
-import classNames from 'classnames';
 
 class Toolbar extends React.Component {
   constructor(props) {
@@ -38,19 +39,19 @@ class Toolbar extends React.Component {
   }
 
   render() {
-    let playButtonClass = classNames({
+    const playButtonClass = classNames({
       'toolbar__play-button': true,
       'toolbar__play-button--selected': this.props.isPlaying
     });
-    let stopButtonClass = classNames({
+    const stopButtonClass = classNames({
       'toolbar__stop-button': true,
       'toolbar__stop-button--selected': !this.props.isPlaying
     });
-    let preferencesButtonClass = classNames({
+    const preferencesButtonClass = classNames({
       'toolbar__preferences-button': true,
       'toolbar__preferences-button--selected': this.props.preferencesIsVisible
     });
-    let nameContainerClass = classNames({
+    const nameContainerClass = classNames({
       'toolbar__project-name-container': true,
       'toolbar__project-name-container--editing': this.props.project.isEditingName
     });
@@ -61,6 +62,7 @@ class Toolbar extends React.Component {
         <button
           className="toolbar__play-sketch-button"
           onClick={() => {
+            this.props.clearConsole();
             this.props.startTextOutput();
             this.props.startSketchAndRefresh();
           }}
@@ -69,7 +71,15 @@ class Toolbar extends React.Component {
         >
           <InlineSVG src={playUrl} alt="Play Sketch" />
         </button>
-        <button className={playButtonClass} onClick={this.props.startSketchAndRefresh} aria-label="play only visual sketch" disabled={this.props.infiniteLoop} >
+        <button
+          className={playButtonClass}
+          onClick={() => {
+            this.props.clearConsole();
+            this.props.startSketchAndRefresh();
+          }}
+          aria-label="play only visual sketch"
+          disabled={this.props.infiniteLoop}
+        >
           <InlineSVG src={playUrl} alt="Play only visual Sketch" />
         </button>
         <button
@@ -101,7 +111,7 @@ class Toolbar extends React.Component {
                 e.preventDefault();
                 this.originalProjectName = this.props.project.name;
                 this.props.showEditProjectName();
-                setTimeout(() => this.refs.projectNameInput.focus(), 0);
+                setTimeout(() => this.projectNameInput.focus(), 0);
               }
             }}
           >
@@ -113,7 +123,7 @@ class Toolbar extends React.Component {
             className="toolbar__project-name-input"
             value={this.props.project.name}
             onChange={this.handleProjectNameChange}
-            ref="projectNameInput"
+            ref={(element) => { this.projectNameInput = element; }}
             onBlur={() => {
               this.validateProjectName();
               this.props.hideEditProjectName();
@@ -148,7 +158,6 @@ class Toolbar extends React.Component {
 Toolbar.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   preferencesIsVisible: PropTypes.bool.isRequired,
-  startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
   startTextOutput: PropTypes.func.isRequired,
   stopTextOutput: PropTypes.func.isRequired,
@@ -169,7 +178,13 @@ Toolbar.propTypes = {
   setAutorefresh: PropTypes.func.isRequired,
   startSketchAndRefresh: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
-  currentUser: PropTypes.string
+  currentUser: PropTypes.string,
+  clearConsole: PropTypes.func.isRequired
+};
+
+Toolbar.defaultProps = {
+  owner: undefined,
+  currentUser: undefined
 };
 
 export default Toolbar;

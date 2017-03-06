@@ -30,11 +30,15 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  children: PropTypes.object,
+  children: PropTypes.element,
   location: PropTypes.shape({
     pathname: PropTypes.string
-  }),
+  }).isRequired,
   setPreviousPath: PropTypes.func.isRequired,
+};
+
+App.defaultProps = {
+  children: null
 };
 
 export default connect(() => ({}), { setPreviousPath })(App);

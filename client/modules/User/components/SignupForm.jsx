@@ -69,4 +69,10 @@ SignupForm.propTypes = {
   previousPath: PropTypes.string.isRequired
 };
 
+SignupForm.defaultProps = {
+  submitting: false,
+  pristine: true,
+  invalid: false
+};
+
 export default SignupForm;

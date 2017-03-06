@@ -49,7 +49,7 @@ class Preferences extends React.Component {
   render() {
     const beep = new Audio(beepUrl);
     const preferencesContainerClass = classNames({
-      preferences: true,
+      'preferences': true,
       'preferences--selected': this.props.isVisible
     });
 
@@ -79,15 +79,14 @@ class Preferences extends React.Component {
           </button>
           <input
             className="preference__value"
-            aria-live="status"
             aria-live="polite"
             aria-atomic="true"
             role="status"
             value={this.props.fontSize}
             onChange={this.handleUpdateFont}
-            ref="fontSizeInput"
+            ref={(element) => { this.fontSizeInput = element; }}
             onClick={() => {
-              this.refs.fontSizeInput.select();
+              this.fontSizeInput.select();
             }}
           >
           </input>
@@ -113,15 +112,14 @@ class Preferences extends React.Component {
           </button>
           <input
             className="preference__value"
-            aria-live="status"
             aria-live="polite"
             aria-atomic="true"
             role="status"
             value={this.props.indentationAmount}
             onChange={this.handleUpdateIndentation}
-            ref="indentationInput"
+            ref={(element) => { this.indentationInput = element; }}
             onClick={() => {
-              this.refs.indentationInput.select();
+              this.indentationInput.select();
             }}
           >
           </input>
@@ -248,13 +246,13 @@ class Preferences extends React.Component {
               checked={!this.props.lintWarning}
             />
             <label htmlFor="lint-warning-off" className="preference__option">Off</label>
-            <div
+            <button
               className="preference__preview-button"
               onClick={() => beep.play()}
               aria-label="preview sound"
             >
               Preview sound
-            </div>
+            </button>
           </div>
         </div>
         <div className="preference">

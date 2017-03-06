@@ -44,7 +44,13 @@ NewPasswordForm.propTypes = {
   pristine: PropTypes.bool,
   params: PropTypes.shape({
     reset_password_token: PropTypes.string,
-  }),
+  }).isRequired,
+};
+
+NewPasswordForm.defaultProps = {
+  invalid: false,
+  pristine: true,
+  submitting: false
 };
 
 export default NewPasswordForm;

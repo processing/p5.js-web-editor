@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
+import { Link, browserHistory } from 'react-router';
+import InlineSVG from 'react-inlinesvg';
 import { validateAndLoginUser } from '../actions';
 import LoginForm from '../components/LoginForm';
 // import GithubButton from '../components/GithubButton';
-import { Link, browserHistory } from 'react-router';
-import InlineSVG from 'react-inlinesvg';
 const exitUrl = require('../../../images/exit.svg');
 const logoUrl = require('../../../images/p5js-logo.svg');
 
@@ -41,7 +41,7 @@ class LoginView extends React.Component {
           {/* <h2 className="form-container__divider">Or</h2>
           <GithubButton buttonText="Login with Github" /> */}
           <p className="form__navigation-options">
-            Don't have an account?&nbsp;
+            Don&apos;t have an account?&nbsp;
             <Link className="form__signup-button" to="/signup">Sign Up</Link>
           </p>
           <p className="form__navigation-options">

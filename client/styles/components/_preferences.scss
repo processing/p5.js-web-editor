@@ -24,7 +24,8 @@
 	margin-right: #{-6 / $base-font-size}rem;
 }
 
-.preference button {
+.preference__minus-button,
+.preference__plus-button {
 	@include themify() {
 		@extend %preferences-button;
 		width: #{32 / $base-font-size}rem;

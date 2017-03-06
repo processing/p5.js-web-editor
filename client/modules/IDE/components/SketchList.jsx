@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
 import { Link, browserHistory } from 'react-router';
+import InlineSVG from 'react-inlinesvg';
 import * as SketchActions from '../actions/projects';
 import * as ProjectActions from '../actions/project';
 import * as ToastActions from '../actions/toast';
-import InlineSVG from 'react-inlinesvg';
+
 const exitUrl = require('../../../images/exit.svg');
 const trashCan = require('../../../images/trash-can.svg');
 
@@ -14,10 +15,10 @@ class SketchList extends React.Component {
   constructor(props) {
     super(props);
     this.closeSketchList = this.closeSketchList.bind(this);
+    this.props.getProjects(this.props.username);
   }
 
   componentDidMount() {
-    this.props.getProjects(this.props.username);
     document.getElementById('sketchlist').focus();
   }
 
@@ -47,14 +48,20 @@ class SketchList extends React.Component {
             </thead>
             <tbody>
               {this.props.sketches.map(sketch =>
-                <tr className="sketches-table__row visibility-toggle" key={sketch.id}>
-                  <td>
+                // eslint-disable-next-line
+                <tr 
+                  className="sketches-table__row visibility-toggle"
+                  key={sketch.id}
+                  onClick={() => browserHistory.push(`/${username}/sketches/${sketch.id}`)}
+                >
+                  <td className="sketch-list__trash-column">
                   {(() => { // eslint-disable-line
                     if (this.props.username === this.props.user.username || this.props.username === undefined) {
                       return (
                         <button
                           className="sketch-list__trash-button"
-                          onClick={() => {
+                          onClick={(e) => {
+                            e.stopPropagation();
                             if (window.confirm(`Are you sure you want to delete "${sketch.name}"?`)) {
                               this.props.deleteProject(sketch.id);
                             }
@@ -66,7 +73,7 @@ class SketchList extends React.Component {
                     }
                   })()}
                   </td>
-                  <td scope="row"><Link to={`/${username}/sketches/${sketch._id}`}>{sketch.name}</Link></td>
+                  <th scope="row"><Link to={`/${username}/sketches/${sketch.id}`}>{sketch.name}</Link></th>
                   <td>{moment(sketch.createdAt).format('MMM D, YYYY h:mm A')}</td>
                   <td>{moment(sketch.updatedAt).format('MMM D, YYYY h:mm A')}</td>
                 </tr>
@@ -80,14 +87,23 @@ class SketchList extends React.Component {
 }
 
 SketchList.propTypes = {
-  user: PropTypes.object.isRequired,
+  user: PropTypes.shape({
+    username: PropTypes.string
+  }).isRequired,
   getProjects: PropTypes.func.isRequired,
-  sketches: PropTypes.array.isRequired,
+  sketches: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired,
+    updatedAt: PropTypes.string.isRequired
+  })).isRequired,
   username: PropTypes.string,
   deleteProject: PropTypes.func.isRequired,
   previousPath: PropTypes.string.isRequired,
-  showToast: PropTypes.func.isRequired,
-  setToastText: PropTypes.func.isRequired
+};
+
+SketchList.defaultProps = {
+  username: undefined
 };
 
 function mapStateToProps(state) {

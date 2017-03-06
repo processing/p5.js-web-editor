@@ -1,6 +1,6 @@
 import { resolvePathToFile } from '../utils/filePath';
 
-const MEDIA_FILE_REGEX_NO_QUOTES = /^(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov|otf|ttf)$/i;
+const MEDIA_FILE_REGEX_NO_QUOTES = /^(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov|otf|ttf|m4a)$/i;
 const STRING_REGEX = /(['"])((\\\1|.)*?)\1/gm;
 const EXTERNAL_LINK_REGEX = /^(http:\/\/|https:\/\/)/;
 const NOT_EXTERNAL_LINK_REGEX = /^(?!(http:\/\/|https:\/\/))/;
@@ -10,7 +10,7 @@ function resolveLinksInString(content, files, projectId) {
   let fileStrings = content.match(STRING_REGEX);
   const fileStringRegex = /^('|")(?!(http:\/\/|https:\/\/)).*('|")$/i;
   fileStrings = fileStrings || [];
-  fileStrings.forEach(fileString => {
+  fileStrings.forEach((fileString) => {
     // if string does not begin with http or https
     if (fileString.match(fileStringRegex)) {
       const filePath = fileString.substr(1, fileString.length - 2);
@@ -35,7 +35,7 @@ function resolveLinksInString(content, files, projectId) {
 }
 
 export function injectMediaUrls(filesToInject, allFiles, projectId) {
-  filesToInject.forEach(file => {
+  filesToInject.forEach((file) => {
     file.content = resolveLinksInString(file.content, allFiles, projectId);
   });
 }
@@ -43,7 +43,7 @@ export function injectMediaUrls(filesToInject, allFiles, projectId) {
 export function resolvePathsForElementsWithAttribute(attr, sketchDoc, files) {
   const elements = sketchDoc.querySelectorAll(`[${attr}]`);
   const elementsArray = Array.prototype.slice.call(elements);
-  elementsArray.forEach(element => {
+  elementsArray.forEach((element) => {
     if (element.getAttribute(attr).match(MEDIA_FILE_REGEX_NO_QUOTES)) {
       const resolvedFile = resolvePathToFile(element.getAttribute(attr), files);
       if (resolvedFile) {
@@ -56,7 +56,7 @@ export function resolvePathsForElementsWithAttribute(attr, sketchDoc, files) {
 export function resolveScripts(sketchDoc, files, projectId) {
   const scriptsInHTML = sketchDoc.getElementsByTagName('script');
   const scriptsInHTMLArray = Array.prototype.slice.call(scriptsInHTML);
-  scriptsInHTMLArray.forEach(script => {
+  scriptsInHTMLArray.forEach((script) => {
     if (script.getAttribute('src') && script.getAttribute('src').match(NOT_EXTERNAL_LINK_REGEX) !== null) {
       const resolvedFile = resolvePathToFile(script.getAttribute('src'), files);
       if (resolvedFile) {
@@ -76,13 +76,13 @@ export function resolveScripts(sketchDoc, files, projectId) {
 export function resolveStyles(sketchDoc, files, projectId) {
   const inlineCSSInHTML = sketchDoc.getElementsByTagName('style');
   const inlineCSSInHTMLArray = Array.prototype.slice.call(inlineCSSInHTML);
-  inlineCSSInHTMLArray.forEach(style => {
+  inlineCSSInHTMLArray.forEach((style) => {
     style.innerHTML = resolveLinksInString(style.innerHTML, files, projectId);
   });
 
   const cssLinksInHTML = sketchDoc.querySelectorAll('link[rel="stylesheet"]');
   const cssLinksInHTMLArray = Array.prototype.slice.call(cssLinksInHTML);
-  cssLinksInHTMLArray.forEach(css => {
+  cssLinksInHTMLArray.forEach((css) => {
     if (css.getAttribute('href') && css.getAttribute('href').match(NOT_EXTERNAL_LINK_REGEX) !== null) {
       const resolvedFile = resolvePathToFile(css.getAttribute('href'), files);
       if (resolvedFile) {

@@ -35,30 +35,6 @@
 	// @extend %hidden- element;
 }
 
-.preview-frame {
-  min-height: 100%;
-  min-width: 100%;
-  position: absolute;
-}
-
-
-.preview-frame-overlay {
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  z-index: 10;
-  display: none;
-}
-
-.preview-frame-placeholder {
-  width: #{400 / $base-font-size}rem;
-  height: #{400 / $base-font-size}rem;
-  position: absolute;
-  @include themify() {
-    background: getThemifyVariable('preview-placeholder-color');
-  }
-}
-
 .toolbar {
 	width: 100%;
 }

@@ -40,9 +40,14 @@ LoginForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   validateAndLoginUser: PropTypes.func.isRequired,
   submitting: PropTypes.bool,
-  invalid: PropTypes.bool,
   pristine: PropTypes.bool,
   previousPath: PropTypes.string.isRequired
+};
+
+LoginForm.defaultProps = {
+  submitting: false,
+  pristine: true,
+  invalid: false
 };
 
 export default LoginForm;

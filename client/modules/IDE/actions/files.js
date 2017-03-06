@@ -1,9 +1,9 @@
-import * as ActionTypes from '../../../constants';
 import axios from 'axios';
 import objectID from 'bson-objectid';
 import blobUtil from 'blob-util';
-import { setUnsavedChanges } from './ide';
 import { reset } from 'redux-form';
+import * as ActionTypes from '../../../constants';
+import { setUnsavedChanges } from './ide';
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
@@ -18,11 +18,11 @@ function createUniqueName(name, parentId, files) {
     .children.map(childFileId => files.find(file => file.id === childFileId));
   let testName = name;
   let index = 1;
-  let existingName = siblingFiles.find((file) => name === file.name);
+  let existingName = siblingFiles.find(file => name === file.name);
 
   while (existingName) {
     testName = appendToFilename(name, `-${index}`);
-    index++;
+    index += 1;
     existingName = siblingFiles.find((file) => testName === file.name); // eslint-disable-line
   }
   return testName;
@@ -56,7 +56,7 @@ export function createFile(formProps) {
         children: []
       };
       axios.post(`${ROOT_URL}/projects/${state.project.id}/files`, postParams, { withCredentials: true })
-        .then(response => {
+        .then((response) => {
           dispatch({
             type: ActionTypes.CREATE_FILE,
             ...response.data,
@@ -113,7 +113,7 @@ export function createFolder(formProps) {
         fileType: 'folder'
       };
       axios.post(`${ROOT_URL}/projects/${state.project.id}/files`, postParams, { withCredentials: true })
-        .then(response => {
+        .then((response) => {
           dispatch({
             type: ActionTypes.CREATE_FILE,
             ...response.data,
@@ -200,7 +200,7 @@ export function deleteFile(id, parentId) {
             parentId
           });
         })
-        .catch(response => {
+        .catch((response) => {
           dispatch({
             type: ActionTypes.ERROR,
             error: response.data

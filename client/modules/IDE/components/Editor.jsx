@@ -1,12 +1,7 @@
 import React, { PropTypes } from 'react';
-import EditorAccessibility from '../components/EditorAccessibility';
 import CodeMirror from 'codemirror';
 import beautifyJS from 'js-beautify';
-const beautifyCSS = beautifyJS.css;
-const beautifyHTML = beautifyJS.html;
-import '../../../utils/p5-javascript';
 import 'codemirror/mode/css/css';
-import '../../../utils/htmlmixed';
 import 'codemirror/addon/selection/active-line';
 import 'codemirror/addon/lint/lint';
 import 'codemirror/addon/lint/javascript-lint';
@@ -15,22 +10,27 @@ import 'codemirror/addon/lint/html-lint';
 import 'codemirror/addon/comment/comment';
 import 'codemirror/keymap/sublime';
 import 'codemirror/addon/search/jump-to-line';
-
 import { JSHINT } from 'jshint';
-window.JSHINT = JSHINT;
 import { CSSLint } from 'csslint';
-window.CSSLint = CSSLint;
 import { HTMLHint } from 'htmlhint';
-window.HTMLHint = HTMLHint;
-const beepUrl = require('../../../sounds/audioAlert.mp3');
 import InlineSVG from 'react-inlinesvg';
+import classNames from 'classnames';
+import { debounce } from 'lodash';
+import '../../../utils/htmlmixed';
+import '../../../utils/p5-javascript';
+import Timer from '../components/Timer';
+import EditorAccessibility from '../components/EditorAccessibility';
+
+const beautifyCSS = beautifyJS.css;
+const beautifyHTML = beautifyJS.html;
+
+window.JSHINT = JSHINT;
+window.CSSLint = CSSLint;
+window.HTMLHint = HTMLHint;
+
+const beepUrl = require('../../../sounds/audioAlert.mp3');
 const downArrowUrl = require('../../../images/down-arrow.svg');
 const unsavedChangesDotUrl = require('../../../images/unsaved-changes-dot.svg');
-import classNames from 'classnames';
-
-import { debounce } from 'lodash';
-import Timer from '../components/Timer';
-
 const rightArrowUrl = require('../../../images/right-arrow.svg');
 const leftArrowUrl = require('../../../images/left-arrow.svg');
 
@@ -42,7 +42,7 @@ class Editor extends React.Component {
   componentDidMount() {
     this.beep = new Audio(beepUrl);
     this.widgets = [];
-    this._cm = CodeMirror(this.refs.container, { // eslint-disable-line
+    this._cm = CodeMirror(this.codemirrorContainer, { // eslint-disable-line
       theme: `p5-${this.props.theme}`,
       lineNumbers: true,
       styleActiveLine: true,
@@ -64,10 +64,16 @@ class Editor extends React.Component {
           }
         }, 2000),
         options: {
-          asi: true,
-          eqeqeq: false
+          'asi': true,
+          'eqeqeq': false,
+          '-W041': false
         }
       }
+    });
+
+    this._cm.setOption('extraKeys', {
+      'Cmd-Enter': () => null,
+      'Shift-Cmd-Enter': () => null
     });
 
     this.initializeDocuments(this.props.files);
@@ -78,6 +84,7 @@ class Editor extends React.Component {
       this.props.updateFileContent(this.props.file.name, this._cm.getValue());
       if (this.props.autorefresh && this.props.isPlaying) {
         this.props.startRefreshSketch();
+        this.props.clearConsole();
       }
     }, 400));
 
@@ -154,8 +161,9 @@ class Editor extends React.Component {
   }
 
   initializeDocuments(files) {
+    console.log('calling initialize documents');
     this._docs = {};
-    files.forEach(file => {
+    files.forEach((file) => {
       if (file.name !== 'root') {
         this._docs[file.id] = CodeMirror.Doc(file.content, this.getFileMode(file.name)); // eslint-disable-line
       }
@@ -182,7 +190,7 @@ class Editor extends React.Component {
     if (this.props.editorOptionsVisible) {
       this.props.closeEditorOptions();
     } else {
-      this.refs.optionsButton.focus();
+      this.optionsButton.focus();
       this.props.showEditorOptions();
     }
   }
@@ -191,7 +199,7 @@ class Editor extends React.Component {
 
   render() {
     const editorSectionClass = classNames({
-      editor: true,
+      'editor': true,
       'sidebar--contracted': !this.props.isExpanded,
       'editor--options': this.props.editorOptionsVisible
     });
@@ -231,7 +239,7 @@ class Editor extends React.Component {
             className="editor__options-button"
             aria-label="editor options"
             tabIndex="0"
-            ref="optionsButton"
+            ref={(element) => { this.optionsButton = element; }}
             onClick={() => {
               this.toggleEditorOptions();
             }}
@@ -241,18 +249,17 @@ class Editor extends React.Component {
           </button>
           <ul className="editor__options" title="editor options">
             <li>
-              <a onClick={this.tidyCode}>Tidy</a>
+              <button onClick={this.tidyCode}>Tidy</button>
             </li>
             <li>
-              <a onClick={this.props.showKeyboardShortcutModal}>Keyboard shortcuts</a>
+              <button onClick={this.props.showKeyboardShortcutModal}>Keyboard shortcuts</button>
             </li>
           </ul>
         </header>
-        <div ref="container" className="editor-holder" tabIndex="0">
+        <div ref={(element) => { this.codemirrorContainer = element; }} className="editor-holder" tabIndex="0">
         </div>
         <EditorAccessibility
           lintMessages={this.props.lintMessages}
-          lineNumber={this.props.lineNumber}
         />
       </section>
     );
@@ -261,11 +268,14 @@ class Editor extends React.Component {
 
 Editor.propTypes = {
   lintWarning: PropTypes.bool.isRequired,
-  lineNumber: PropTypes.string.isRequired,
-  lintMessages: PropTypes.array.isRequired,
+  lintMessages: PropTypes.arrayOf(PropTypes.shape({
+    severity: PropTypes.string.isRequired,
+    line: PropTypes.number.isRequired,
+    message: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired
+  })).isRequired,
   updateLintMessage: PropTypes.func.isRequired,
   clearLintMessage: PropTypes.func.isRequired,
-  updateLineNumber: PropTypes.func.isRequired,
   indentationAmount: PropTypes.number.isRequired,
   isTabIndent: PropTypes.bool.isRequired,
   updateFileContent: PropTypes.func.isRequired,
@@ -274,7 +284,7 @@ Editor.propTypes = {
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired
-  }),
+  }).isRequired,
   editorOptionsVisible: PropTypes.bool.isRequired,
   showEditorOptions: PropTypes.func.isRequired,
   closeEditorOptions: PropTypes.func.isRequired,
@@ -286,11 +296,20 @@ Editor.propTypes = {
   theme: PropTypes.string.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
   projectSavedTime: PropTypes.string.isRequired,
-  files: PropTypes.array.isRequired,
+  files: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired
+  })).isRequired,
   isExpanded: PropTypes.bool.isRequired,
   collapseSidebar: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
-  isUserOwner: PropTypes.bool
+  isUserOwner: PropTypes.bool,
+  clearConsole: PropTypes.func.isRequired
+};
+
+Editor.defaultProps = {
+  isUserOwner: false
 };
 
 export default Editor;

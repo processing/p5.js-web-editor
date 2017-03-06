@@ -49,4 +49,8 @@ Timer.propTypes = {
   isUserOwner: PropTypes.bool
 };
 
+Timer.defaultProps = {
+  isUserOwner: false
+};
+
 export default Timer;

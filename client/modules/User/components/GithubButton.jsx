@@ -1,6 +1,7 @@
 import InlineSVG from 'react-inlinesvg';
-const githubUrl = require('../../../images/github.svg');
 import React, { PropTypes } from 'react';
+
+const githubUrl = require('../../../images/github.svg');
 
 function GithubButton(props) {
   return (

@@ -1,5 +1,5 @@
-import * as ActionTypes from '../../../constants';
 import axios from 'axios';
+import * as ActionTypes from '../../../constants';
 
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
@@ -7,7 +7,7 @@ function updatePreferences(formParams, dispatch) {
   axios.put(`${ROOT_URL}/preferences`, formParams, { withCredentials: true })
     .then(() => {
     })
-    .catch((response) => dispatch({
+    .catch(response => dispatch({
       type: ActionTypes.ERROR,
       error: response.data
     }));
