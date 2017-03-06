@@ -129,6 +129,11 @@ class PreviewFrame extends React.Component {
       return;
     }
 
+    if (this.props.soundOutput !== prevProps.soundOutput) {
+      this.renderSketch();
+      return;
+    }
+
     if (this.props.fullView && this.props.files[0].id !== prevProps.files[0].id) {
       this.renderSketch();
     }
@@ -198,6 +203,13 @@ class PreviewFrame extends React.Component {
           '/p5-interceptor/gridInterceptor/interceptorP5.js'
         ];
         interceptorScripts = interceptorScripts.concat(gridInterceptorScripts);
+      }
+      if (this.props.soundOutput) {
+        let soundInterceptorScripts = [];
+        soundInterceptorScripts = [
+          '/p5-interceptor/soundInterceptor/interceptorP5.js'
+        ];
+        interceptorScripts = interceptorScripts.concat(soundInterceptorScripts);
       }
       scriptsToInject = scriptsToInject.concat(interceptorScripts);
     }
@@ -377,9 +389,8 @@ PreviewFrame.propTypes = {
   isTextOutputPlaying: PropTypes.bool.isRequired,
   textOutput: PropTypes.bool.isRequired,
   gridOutput: PropTypes.bool.isRequired,
+  soundOutput: PropTypes.bool.isRequired,
   setTextOutput: PropTypes.func.isRequired,
-  setGridOutput: PropTypes.func.isRequired,
-  content: PropTypes.string,
   htmlFile: PropTypes.shape({
     content: PropTypes.string.isRequired
   }).isRequired,

@@ -21,6 +21,7 @@ const userSchema = new Schema({
     lintWarning: { type: Boolean, default: false },
     textOutput: { type: Boolean, default: false },
     gridOutput: { type: Boolean, default: false },
+    soundOutput: { type: Boolean, default: false },
     theme: { type: String, default: 'light' },
     autorefresh: { type: Boolean, default: false }
   }

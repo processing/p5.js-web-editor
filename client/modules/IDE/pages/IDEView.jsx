@@ -213,6 +213,7 @@ class IDEView extends React.Component {
           preferencesIsVisible={this.props.ide.preferencesIsVisible}
           setTextOutput={this.props.setTextOutput}
           setGridOutput={this.props.setGridOutput}
+          setSoundOutput={this.props.setSoundOutput}
           owner={this.props.project.owner}
           project={this.props.project}
           infiniteLoop={this.props.ide.infiniteLoop}
@@ -241,6 +242,7 @@ class IDEView extends React.Component {
           gridOutput={this.props.preferences.gridOutput}
           setTextOutput={this.props.setTextOutput}
           setGridOutput={this.props.setGridOutput}
+          setSoundOutput={this.props.setSoundOutput}
           theme={this.props.preferences.theme}
           setTheme={this.props.setTheme}
         />
@@ -329,14 +331,17 @@ class IDEView extends React.Component {
                 <div className="preview-frame-overlay" ref={(element) => { this.overlay = element; }}>
                 </div>
                 <div>
-                {(() => {
-                  if (((this.props.preferences.textOutput || this.props.preferences.gridOutput) && this.props.ide.isPlaying) || this.props.ide.isTextOutputPlaying) {
-                    return (
-                      <TextOutput />
-                    );
-                  }
-                  return '';
-                })()}
+                  {(() => {
+                    if (((this.props.preferences.textOutput || this.props.preferences.gridOutput) && this.props.ide.isPlaying) || this.props.ide.isTextOutputPlaying) {
+                      return (
+                        <TextOutput
+                          isPlaying={this.props.ide.isPlaying}
+                          previewIsRefreshing={this.props.ide.previewIsRefreshing}
+                        />
+                      );
+                    }
+                    return '';
+                  })()}
                 </div>
                 <PreviewFrame
                   htmlFile={this.props.htmlFile}
@@ -346,8 +351,10 @@ class IDEView extends React.Component {
                   isTextOutputPlaying={this.props.ide.isTextOutputPlaying}
                   textOutput={this.props.preferences.textOutput}
                   gridOutput={this.props.preferences.gridOutput}
+                  soundOutput={this.props.preferences.soundOutput}
                   setTextOutput={this.props.setTextOutput}
                   setGridOutput={this.props.setGridOutput}
+                  setSoundOutput={this.props.setSoundOutput}
                   dispatchConsoleEvent={this.props.dispatchConsoleEvent}
                   autorefresh={this.props.preferences.autorefresh}
                   previewIsRefreshing={this.props.ide.previewIsRefreshing}
@@ -512,6 +519,7 @@ IDEView.propTypes = {
     lintWarning: PropTypes.bool.isRequired,
     textOutput: PropTypes.bool.isRequired,
     gridOutput: PropTypes.bool.isRequired,
+    soundOutput: PropTypes.bool.isRequired,
     theme: PropTypes.string.isRequired,
     autorefresh: PropTypes.bool.isRequired
   }).isRequired,
@@ -524,6 +532,7 @@ IDEView.propTypes = {
   setLintWarning: PropTypes.func.isRequired,
   setTextOutput: PropTypes.func.isRequired,
   setGridOutput: PropTypes.func.isRequired,
+  setSoundOutput: PropTypes.func.isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,

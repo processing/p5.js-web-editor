@@ -155,6 +155,24 @@ export function setGridOutput(value) {
   };
 }
 
+export function setSoundOutput(value) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.SET_SOUND_OUTPUT,
+      value
+    });
+    const state = getState();
+    if (state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          soundOutput: value
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
+  };
+}
+
 export function setTheme(value) {
   // return {
   //   type: ActionTypes.SET_THEME,

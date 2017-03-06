@@ -270,7 +270,7 @@ class Preferences extends React.Component {
               id="text-output-on"
               // className="preference__radio-button"
               value="On"
-              // checked={(this.props.textOutput)}
+              checked={(this.props.textOutput)}
             />
             <label htmlFor="text-output-on" className="preference__option preference__canvas">Plain-text</label>
             <input
@@ -283,9 +283,22 @@ class Preferences extends React.Component {
               id="grid-output-on"
               // className="preference__radio-button"
               value="On"
-              // checked={(this.props.gridOutput)}
+              checked={(this.props.gridOutput)}
             />
-            <label htmlFor="grid-output-on" className="preference__option preference__canvas">Grid-text</label>
+            <label htmlFor="sound-output-on" className="preference__option preference__canvas">Grid-text</label>
+            <input
+              type="checkbox"
+              onChange={(event) => {
+                this.props.setSoundOutput(event.target.checked);
+              }}
+              aria-label="sound output on"
+              name="sound output"
+              id="sound-output-on"
+              // className="preference__radio-button"
+              value="On"
+              checked={(this.props.soundOutput)}
+            />
+            <label htmlFor="sound-output-on" className="preference__option preference__canvas">Sound</label>
           </div>
         </div>
       </section>
@@ -307,8 +320,10 @@ Preferences.propTypes = {
   setAutosave: PropTypes.func.isRequired,
   textOutput: PropTypes.bool.isRequired,
   gridOutput: PropTypes.bool.isRequired,
+  soundOutput: PropTypes.bool.isRequired,
   setTextOutput: PropTypes.func.isRequired,
   setGridOutput: PropTypes.func.isRequired,
+  setSoundOutput: PropTypes.func.isRequired,
   lintWarning: PropTypes.bool.isRequired,
   setLintWarning: PropTypes.func.isRequired,
   theme: PropTypes.string.isRequired,
