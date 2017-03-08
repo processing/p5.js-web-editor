@@ -24,9 +24,12 @@ const routes = store =>
     <Route path="/" component={App}>
       <IndexRoute component={IDEView} onEnter={checkAuth(store)} />
       <Route path="/login" component={forceToHttps(LoginView)} />
-      <Route path="/signup" component={SignupView} />
-      <Route path="/reset-password" component={ResetPasswordView} />
-      <Route path="/reset-password/:reset_password_token" component={NewPasswordView} />
+      <Route path="/signup" component={forceToHttps(SignupView)} />
+      <Route path="/reset-password" component={forceToHttps(ResetPasswordView)} />
+      <Route
+        path="/reset-password/:reset_password_token"
+        component={forceToHttps(NewPasswordView)}
+      />
       <Route path="/projects/:project_id" component={IDEView} />
       <Route path="/full/:project_id" component={FullView} />
       <Route path="/sketches" component={IDEView} />
