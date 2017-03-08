@@ -13,14 +13,21 @@ import { getUser } from './modules/User/actions';
 // TODO: Move somewhere else
 import forceProtocol from './forceProtocol';
 
-const forceToHttps = forceProtocol({ targetProtocol: 'https:' });
-
 const checkAuth = (store) => {
   store.dispatch(getUser());
 };
 
-const routes = store =>
-  (
+const routes = (store) => {
+  const sourceProtocol = store.getState().project.serveSecure === true ?
+    'https:' :
+    'http:';
+
+  const forceToHttps = forceProtocol({
+    targetProtocol: 'https:',
+    sourceProtocol,
+  });
+
+  return (
     <Route path="/" component={App}>
       <IndexRoute component={IDEView} onEnter={checkAuth(store)} />
       <Route path="/login" component={forceToHttps(LoginView)} />
@@ -38,5 +45,6 @@ const routes = store =>
       <Route path="/about" component={IDEView} />
     </Route>
   );
+};
 
 export default routes;

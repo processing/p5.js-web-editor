@@ -5,7 +5,8 @@ const initialState = () => {
   const generatedString = generate({ words: 2 }).spaced;
   const generatedName = generatedString.charAt(0).toUpperCase() + generatedString.slice(1);
   return {
-    name: generatedName
+    name: generatedName,
+    serveSecure: false,
   };
 };
 
