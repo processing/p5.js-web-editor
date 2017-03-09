@@ -90,6 +90,7 @@
 		}
 	}
 	cursor: pointer;
+	line-height: 18px;
 
 	.toolbar__project-name-container--editing & {
 		display: none;
@@ -129,7 +130,7 @@
 		height: #{18 / $base-font-size}rem;
 	}
 	@include themify() {
-		& path { 
+		& path {
 			fill: getThemifyVariable('inactive-text-color');
 		}
 	}
