@@ -1,9 +1,6 @@
 #p5.js Web Editor
 
-This project is currently in the early stages of development! It will definitely be announced when it is in alpha/beta/etc.
-
-##Important anouncements
-The p5.js interceptor code has been moved into its own directory! Make sure that you run `$ git submodule init && npm install` to ensure you have the files.
+This project is currently in development! It will be announced when there is a (public) beta release.
 
 ##Development Installation
 
