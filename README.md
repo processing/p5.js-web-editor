@@ -1,6 +1,6 @@
 #p5.js Web Editor
 
-This project is currently in development! It will be announced when there is a (public) beta release.
+This project is currently in development! It will be announced when there is a (public) beta release. 
 
 ##Development Installation
 
