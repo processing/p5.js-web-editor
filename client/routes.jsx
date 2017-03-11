@@ -7,6 +7,7 @@ import LoginView from './modules/User/pages/LoginView';
 import SignupView from './modules/User/pages/SignupView';
 import ResetPasswordView from './modules/User/pages/ResetPasswordView';
 import NewPasswordView from './modules/User/pages/NewPasswordView';
+import AccountView from './modules/User/pages/AccountView';
 // import SketchListView from './modules/Sketch/pages/SketchListView';
 import { getUser } from './modules/User/actions';
 
@@ -27,6 +28,7 @@ const routes = store =>
       <Route path="/sketches" component={IDEView} />
       <Route path="/:username/sketches/:project_id" component={IDEView} />
       <Route path="/:username/sketches" component={IDEView} />
+      <Route path="/:username/account" component={AccountView} />
       <Route path="/about" component={IDEView} />
     </Route>
   );
