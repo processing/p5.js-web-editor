@@ -1,5 +1,6 @@
 import { Route, IndexRoute } from 'react-router';
 import React from 'react';
+import forceProtocol from './components/forceProtocol';
 import App from './modules/App/App';
 import IDEView from './modules/IDE/pages/IDEView';
 import FullView from './modules/IDE/pages/FullView';
@@ -9,9 +10,6 @@ import ResetPasswordView from './modules/User/pages/ResetPasswordView';
 import NewPasswordView from './modules/User/pages/NewPasswordView';
 // import SketchListView from './modules/Sketch/pages/SketchListView';
 import { getUser } from './modules/User/actions';
-
-// TODO: Move somewhere else
-import forceProtocol from './forceProtocol';
 
 const checkAuth = (store) => {
   store.dispatch(getUser());
