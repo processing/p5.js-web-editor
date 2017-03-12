@@ -2,6 +2,7 @@ import Express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import session from 'express-session';
 import connectMongo from 'connect-mongo';
 import passport from 'passport';
@@ -35,6 +36,11 @@ if (process.env.NODE_ENV === 'development') {
   app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
   app.use(webpackHotMiddleware(compiler));
 }
+
+// Enable Cross-Origin Resource Sharing (CORS) for all origins
+app.use(cors());
+// Enable pre-flight OPTIONS route for all end-points
+app.options('*', cors());
 
 // Body parser, cookie parser, sessions, serve public assets
 
