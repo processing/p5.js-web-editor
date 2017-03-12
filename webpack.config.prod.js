@@ -76,6 +76,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
+        'API_URL': '"' + process.env.API_URL + '"',
         'NODE_ENV': JSON.stringify('production'),
         'S3_BUCKET': '"' + process.env.S3_BUCKET + '"'
       }
