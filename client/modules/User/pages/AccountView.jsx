@@ -1,10 +1,12 @@
 import React, { PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
-import { Link, browserHistory } from 'react-router';
+import { bindActionCreators } from 'redux';
+import { browserHistory } from 'react-router';
 import InlineSVG from 'react-inlinesvg';
-import { validateAndLoginUser } from '../actions';
+import axios from 'axios';
+import { updateSettings } from '../actions';
 import AccountForm from '../components/AccountForm';
-// import GithubButton from '../components/GithubButton';
+
 const exitUrl = require('../../../images/exit.svg');
 const logoUrl = require('../../../images/p5js-logo.svg');
 
@@ -48,26 +50,63 @@ class AccountView extends React.Component {
 
 function mapStateToProps(state) {
   return {
+    initialValues: state.user, // <- initialValues for reduxForm
     user: state.user,
     previousPath: state.ide.previousPath
   };
 }
 
-function mapDispatchToProps() {
-  return {
-    validateAndLoginUser
-  };
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ updateSettings }, dispatch);
+}
+
+function asyncValidate(formProps, dispatch, props) {
+  const fieldToValidate = props.form._active;
+  if (fieldToValidate) {
+    const queryParams = {};
+    queryParams[fieldToValidate] = formProps[fieldToValidate];
+    queryParams.check_type = fieldToValidate;
+    return axios.get('/api/signup/duplicate_check', { params: queryParams })
+      .then((response) => {
+        if (response.data.exists) {
+          const error = {};
+          error[fieldToValidate] = response.data.message;
+          throw error;
+        }
+      });
+  }
+  return Promise.resolve(true).then(() => {});
 }
 
 function validate(formProps) {
   const errors = {};
+
+  if (!formProps.username) {
+    errors.username = 'Please enter a username.';
+  } else if (!formProps.username.match(/^.{1,20}$/)) {
+    errors.username = 'Username must be less than 20 characters.';
+  } else if (!formProps.username.match(/^[a-zA-Z0-9._-]{1,20}$/)) {
+    errors.username = 'Username must only consist of numbers, letters, periods, dashes, and underscores.';
+  }
+
   if (!formProps.email) {
-    errors.email = 'Please enter an email';
+    errors.email = 'Please enter an email.';
+  } else if (!formProps.email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i)) {
+    errors.email = 'Please enter a valid email address.';
   }
-  if (!formProps.password) {
-    errors.password = 'Please enter a password';
-  }
+
+  // if (!formProps.currentPassword) {
+  //   errors.currentPassword = 'Please enter current password';
+  // }
+  // if (!formProps.newPassword) {
+  //   errors.newPassword = 'Please enter a new password';
+  // }
+
   return errors;
+}
+
+function onSubmitFail(errors) {
+  console.log(errors);
 }
 
 AccountView.propTypes = {
@@ -75,7 +114,10 @@ AccountView.propTypes = {
 };
 
 export default reduxForm({
-  form: 'login',
-  fields: ['currentPassword', 'newPassword'],
-  validate
+  form: 'updateAllSettings',
+  fields: ['username', 'email', 'currentPassword', 'newPassword'],
+  onSubmitFail,
+  validate,
+  asyncValidate,
+  asyncBlurFields: ['username', 'email']
 }, mapStateToProps, mapDispatchToProps)(AccountView);

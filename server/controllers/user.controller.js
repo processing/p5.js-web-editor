@@ -182,3 +182,28 @@ export function userExists(username, callback) {
     user ? callback(true) : callback(false)
   ));
 }
+
+export function updateSettings(req, res) {
+  User.findById(req.user.id, (err, user) => {
+    if (err) {
+      res.status(500).json({ error: err });
+      return;
+    }
+    if (!user) {
+      res.status(404).json({ error: 'Document not found' });
+      return;
+    }
+
+    user.email = req.body.email;
+    user.username = req.body.username;
+
+    user.save((saveErr) => {
+      if (saveErr) {
+        res.status(500).json({ error: saveErr });
+        return;
+      }
+
+      res.json(user);
+    });
+  });
+}

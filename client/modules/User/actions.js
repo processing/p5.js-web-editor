@@ -160,3 +160,21 @@ export function updatePassword(token, formValues) {
       }));
   };
 }
+
+export function saveSettingsSuccess(user) {
+  return {
+    type: ActionTypes.AUTH_USER,
+    user
+  };
+}
+
+export function updateSettings(formValues) {
+  return (dispatch) => {
+    axios.put(`${ROOT_URL}/account`, formValues, { withCredentials: true })
+      .then((response) => {
+        dispatch(saveSettingsSuccess(response.data));
+        browserHistory.push('/');
+      })
+      .catch(response => dispatch(authError(response.data.error)));
+  };
+}
