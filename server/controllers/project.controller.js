@@ -40,10 +40,10 @@ export function updateProject(req, res) {
       res.status(403).send({ success: false, message: 'Session does not match owner of project.' });
       return;
     }
-    if (req.body.updatedAt && moment(req.body.updatedAt) < moment(project.updatedAt)) {
-      res.status(409).send({ success: false, message: 'Attempted to save stale version of project.' });
-      return;
-    }
+    // if (req.body.updatedAt && moment(req.body.updatedAt) < moment(project.updatedAt)) {
+    //   res.status(409).send({ success: false, message: 'Attempted to save stale version of project.' });
+    //   return;
+    // }
     Project.findByIdAndUpdate(req.params.project_id,
       {
         $set: req.body
