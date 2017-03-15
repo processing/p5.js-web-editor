@@ -170,11 +170,15 @@ export function saveSettingsSuccess(user) {
 
 export function updateSettings(formValues) {
   return (dispatch) => {
+    console.log(formValues);
     axios.put(`${ROOT_URL}/account`, formValues, { withCredentials: true })
       .then((response) => {
         dispatch(saveSettingsSuccess(response.data));
         browserHistory.push('/');
       })
-      .catch(response => dispatch(authError(response.data.error)));
+      .catch(response => dispatch({
+        type: ActionTypes.INVALID_CURRENT_PASSWORD,
+        message: response.data.error
+      }));
   };
 }
