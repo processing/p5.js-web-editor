@@ -19,6 +19,7 @@ const user = (state = { authenticated: false }, action) => {
       return Object.assign({}, state, { resetPasswordInitiate: false });
     case ActionTypes.INVALID_RESET_PASSWORD_TOKEN:
       return Object.assign({}, state, { resetPasswordInvalid: true });
+
     default:
       return state;
   }

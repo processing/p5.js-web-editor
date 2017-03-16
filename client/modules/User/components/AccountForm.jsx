@@ -18,7 +18,7 @@ function AccountForm(props) {
           aria-label="email"
           type="text"
           id="email"
-          {...email}
+          {...domOnlyProps(email)}
         />
         {email.touched && email.error && <span className="form-error">{email.error}</span>}
       </p>
@@ -30,7 +30,7 @@ function AccountForm(props) {
           type="text"
           id="username"
           defaultValue={username}
-          {...username}
+          {...domOnlyProps(username)}
         />
         {username.touched && username.error && <span className="form-error">{username.error}</span>}
       </p>

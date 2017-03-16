@@ -212,7 +212,7 @@ export function updateSettings(req, res) {
     }
 
     if (!validPassword) {
-      res.status(401).json({ error: 'Invalid current password.' });
+      res.status(401).json({ error: 'Current password is invalid.' });
       return;
     }
 

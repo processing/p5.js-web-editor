@@ -98,10 +98,6 @@ function validate(formProps) {
   return errors;
 }
 
-function onSubmitFail(errors) {
-  console.log(errors);
-}
-
 AccountView.propTypes = {
   previousPath: PropTypes.string.isRequired
 };
@@ -109,8 +105,7 @@ AccountView.propTypes = {
 export default reduxForm({
   form: 'updateAllSettings',
   fields: ['username', 'email', 'currentPassword', 'newPassword'],
-  onSubmitFail,
   validate,
   asyncValidate,
-  asyncBlurFields: ['username', 'email']
+  asyncBlurFields: ['username', 'email', 'currentPassword']
 }, mapStateToProps, mapDispatchToProps)(AccountView);
