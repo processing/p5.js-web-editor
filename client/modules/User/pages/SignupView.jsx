@@ -6,6 +6,7 @@ import InlineSVG from 'react-inlinesvg';
 import { reduxForm } from 'redux-form';
 import * as UserActions from '../actions';
 import SignupForm from '../components/SignupForm';
+import { validateSignup } from '../../../utils/reduxFormUtils';
 
 const exitUrl = require('../../../images/exit.svg');
 const logoUrl = require('../../../images/p5js-logo.svg');
@@ -78,37 +79,6 @@ function asyncValidate(formProps, dispatch, props) {
   return Promise.resolve(true).then(() => {});
 }
 
-function validate(formProps) {
-  const errors = {};
-
-  if (!formProps.username) {
-    errors.username = 'Please enter a username.';
-  } else if (!formProps.username.match(/^.{1,20}$/)) {
-    errors.username = 'Username must be less than 20 characters.';
-  } else if (!formProps.username.match(/^[a-zA-Z0-9._-]{1,20}$/)) {
-    errors.username = 'Username must only consist of numbers, letters, periods, dashes, and underscores.';
-  }
-
-  if (!formProps.email) {
-    errors.email = 'Please enter an email.';
-  } else if (!formProps.email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i)) {
-    errors.email = 'Please enter a valid email address.';
-  }
-
-  if (!formProps.password) {
-    errors.password = 'Please enter a password';
-  }
-  if (!formProps.confirmPassword) {
-    errors.confirmPassword = 'Please enter a password confirmation';
-  }
-
-  if (formProps.password !== formProps.confirmPassword) {
-    errors.password = 'Passwords must match';
-  }
-
-  return errors;
-}
-
 function onSubmitFail(errors) {
   console.log(errors);
 }
@@ -121,7 +91,7 @@ export default reduxForm({
   form: 'signup',
   fields: ['username', 'email', 'password', 'confirmPassword'],
   onSubmitFail,
-  validate,
+  validate: validateSignup,
   asyncValidate,
   asyncBlurFields: ['username', 'email']
 }, mapStateToProps, mapDispatchToProps)(SignupView);

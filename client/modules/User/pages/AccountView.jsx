@@ -6,6 +6,7 @@ import InlineSVG from 'react-inlinesvg';
 import axios from 'axios';
 import { updateSettings } from '../actions';
 import AccountForm from '../components/AccountForm';
+import { validateSettings } from '../../../utils/reduxFormUtils';
 
 const exitUrl = require('../../../images/exit.svg');
 const logoUrl = require('../../../images/p5js-logo.svg');
@@ -78,30 +79,6 @@ function asyncValidate(formProps, dispatch, props) {
   return Promise.resolve(true).then(() => {});
 }
 
-function validate(formProps) {
-  const errors = {};
-
-  if (!formProps.username) {
-    errors.username = 'Please enter a username.';
-  } else if (!formProps.username.match(/^.{1,20}$/)) {
-    errors.username = 'Username must be less than 20 characters.';
-  } else if (!formProps.username.match(/^[a-zA-Z0-9._-]{1,20}$/)) {
-    errors.username = 'Username must only consist of numbers, letters, periods, dashes, and underscores.';
-  }
-
-  if (!formProps.email) {
-    errors.email = 'Please enter an email.';
-  } else if (!formProps.email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i)) {
-    errors.email = 'Please enter a valid email address.';
-  }
-
-  if (formProps.currentPassword && !formProps.newPassword) {
-    errors.newPassword = 'Please enter a new password or leave the current password empty.';
-  }
-
-  return errors;
-}
-
 AccountView.propTypes = {
   previousPath: PropTypes.string.isRequired
 };
@@ -109,7 +86,7 @@ AccountView.propTypes = {
 export default reduxForm({
   form: 'updateAllSettings',
   fields: ['username', 'email', 'currentPassword', 'newPassword'],
-  validate,
+  validate: validateSettings,
   asyncValidate,
   asyncBlurFields: ['username', 'email', 'currentPassword']
 }, mapStateToProps, mapDispatchToProps)(AccountView);
