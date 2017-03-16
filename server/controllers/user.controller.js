@@ -197,32 +197,30 @@ export function updateSettings(req, res) {
     user.email = req.body.email;
     user.username = req.body.username;
 
-    let validPassword = true;
     if (req.body.currentPassword) {
-      validPassword = false;
       user.comparePassword(req.body.currentPassword, (err, isMatch) => {
         if (err) throw err;
         if (!isMatch) {
-          validPassword = false;
+          res.status(401).json({ error: 'Current password is invalid.' });
+          return;
         } else {
-          validPassword = true;
           user.password = req.body.newPassword;
+          saveUser(res, user);
         }
       });
+    } else {
+      saveUser(res, user);
     }
+  });
+}
 
-    if (!validPassword) {
-      res.status(401).json({ error: 'Current password is invalid.' });
+export function saveUser(res, user) {
+  user.save((saveErr) => {
+    if (saveErr) {
+      res.status(500).json({ error: saveErr });
       return;
     }
 
-    user.save((saveErr) => {
-      if (saveErr) {
-        res.status(500).json({ error: saveErr });
-        return;
-      }
-
-      res.json(user);
-    });
+    res.json(user);
   });
 }

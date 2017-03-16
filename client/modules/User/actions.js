@@ -161,9 +161,19 @@ export function updatePassword(token, formValues) {
   };
 }
 
+export function updateSettingsSuccess(user) {
+  return {
+    type: ActionTypes.SETTINGS_UPDATED,
+    user
+  };
+}
+
 export function updateSettings(formValues) {
   return dispatch =>
     axios.put(`${ROOT_URL}/account`, formValues, { withCredentials: true })
-      .then(response => browserHistory.push('/'))
+      .then((response) => {
+        dispatch(updateSettingsSuccess(response.data));
+        browserHistory.push('/');
+      })
       .catch(response => Promise.reject({ currentPassword: response.data.error }));
 }
