@@ -95,6 +95,10 @@ function validate(formProps) {
     errors.email = 'Please enter a valid email address.';
   }
 
+  if (formProps.currentPassword && !formProps.newPassword) {
+    errors.newPassword = 'Please enter a new password or leave the current password empty.';
+  }
+
   return errors;
 }
 
