@@ -4,7 +4,7 @@ import * as ActionTypes from '../../constants';
 import { showErrorModal, justOpenedProject } from '../IDE/actions/ide';
 
 
-const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
+const ROOT_URL = process.env.API_URL;
 
 export function authError(error) {
   return {

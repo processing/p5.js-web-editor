@@ -34,6 +34,7 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       'process.env': {
+        API_URL: '"' + process.env.API_URL + '"',
         CLIENT: JSON.stringify(true),
         'NODE_ENV': JSON.stringify('development'),
         'S3_BUCKET': '"' + process.env.S3_BUCKET + '"'
