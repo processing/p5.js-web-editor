@@ -15,4 +15,6 @@ router.route('/reset-password/:token').get(UserController.validateResetPasswordT
 
 router.route('/reset-password/:token').post(UserController.updatePassword);
 
+router.route('/account').put(UserController.updateSettings);
+
 export default router;

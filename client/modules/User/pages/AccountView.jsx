@@ -1,24 +1,25 @@
 import React, { PropTypes } from 'react';
-import { bindActionCreators } from 'redux';
-import axios from 'axios';
-import { Link, browserHistory } from 'react-router';
-import InlineSVG from 'react-inlinesvg';
 import { reduxForm } from 'redux-form';
-import * as UserActions from '../actions';
-import SignupForm from '../components/SignupForm';
-import { validateSignup } from '../../../utils/reduxFormUtils';
+import { bindActionCreators } from 'redux';
+import { browserHistory } from 'react-router';
+import InlineSVG from 'react-inlinesvg';
+import axios from 'axios';
+import { updateSettings } from '../actions';
+import AccountForm from '../components/AccountForm';
+import { validateSettings } from '../../../utils/reduxFormUtils';
 
 const exitUrl = require('../../../images/exit.svg');
 const logoUrl = require('../../../images/p5js-logo.svg');
 
-class SignupView extends React.Component {
+
+class AccountView extends React.Component {
   constructor(props) {
     super(props);
-    this.closeSignupPage = this.closeSignupPage.bind(this);
+    this.closeAccountPage = this.closeAccountPage.bind(this);
     this.gotoHomePage = this.gotoHomePage.bind(this);
   }
 
-  closeSignupPage() {
+  closeAccountPage() {
     browserHistory.push(this.props.previousPath);
   }
 
@@ -33,17 +34,15 @@ class SignupView extends React.Component {
           <button className="form-container__logo-button" onClick={this.gotoHomePage}>
             <InlineSVG src={logoUrl} alt="p5js Logo" />
           </button>
-          <button className="form-container__exit-button" onClick={this.closeSignupPage}>
-            <InlineSVG src={exitUrl} alt="Close Signup Page" />
+          <button className="form-container__exit-button" onClick={this.closeAccountPage}>
+            <InlineSVG src={exitUrl} alt="Close Account Page" />
           </button>
         </div>
         <div className="form-container__content">
-          <h2 className="form-container__title">Sign Up</h2>
-          <SignupForm {...this.props} />
-          <p className="form__navigation-options">
-            Already have an account?&nbsp;
-            <Link className="form__login-button" to="/login">Log In</Link>
-          </p>
+          <h2 className="form-container__title">My Account</h2>
+          <AccountForm {...this.props} />
+          {/* <h2 className="form-container__divider">Or</h2>
+          <GithubButton buttonText="Login with Github" /> */}
         </div>
       </div>
     );
@@ -52,13 +51,14 @@ class SignupView extends React.Component {
 
 function mapStateToProps(state) {
   return {
+    initialValues: state.user, // <- initialValues for reduxForm
     user: state.user,
     previousPath: state.ide.previousPath
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(UserActions, dispatch);
+  return bindActionCreators({ updateSettings }, dispatch);
 }
 
 function asyncValidate(formProps, dispatch, props) {
@@ -79,19 +79,14 @@ function asyncValidate(formProps, dispatch, props) {
   return Promise.resolve(true).then(() => {});
 }
 
-function onSubmitFail(errors) {
-  console.log(errors);
-}
-
-SignupView.propTypes = {
+AccountView.propTypes = {
   previousPath: PropTypes.string.isRequired
 };
 
 export default reduxForm({
-  form: 'signup',
-  fields: ['username', 'email', 'password', 'confirmPassword'],
-  onSubmitFail,
-  validate: validateSignup,
+  form: 'updateAllSettings',
+  fields: ['username', 'email', 'currentPassword', 'newPassword'],
+  validate: validateSettings,
   asyncValidate,
-  asyncBlurFields: ['username', 'email']
-}, mapStateToProps, mapDispatchToProps)(SignupView);
+  asyncBlurFields: ['username', 'email', 'currentPassword']
+}, mapStateToProps, mapDispatchToProps)(AccountView);
