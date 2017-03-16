@@ -8,7 +8,7 @@ import { setUnsavedChanges,
   resetJustOpenedProject,
   showErrorModal } from './ide';
 
-const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
+const ROOT_URL = process.env.API_URL;
 
 export function setProject(project) {
   return {

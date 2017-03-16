@@ -13,6 +13,7 @@ This project is currently in development! It will be announced when there is a (
 5. Create a file called `.env` in the root of this directory that looks like
 
   ```
+  API_URL=/api
   MONGO_URL=mongodb://localhost:27017/p5js-web-editor
   PORT=8000
   SESSION_SECRET=whatever_you_want_this_to_be_it_only_matters_for_production
@@ -36,6 +37,7 @@ This project is currently in development! It will be announced when there is a (
 5. Create a file called `.env` in the root of this directory that looks like
 
   ```
+  API_URL=/api
   MONGO_URL=mongodb://localhost:27017/p5js-web-editor
   PORT=8000
   SESSION_SECRET=make_this_a_long-random_string_like_maybe_126_characters_long
