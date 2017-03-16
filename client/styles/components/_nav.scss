@@ -56,7 +56,7 @@
 .nav__item-spacer {
 	@include themify() {
 		color: map-get($theme-map, 'inactive-text-color');
-	}	
+	}
 	padding: 0 #{15 / $base-font-size}rem;
 }
 
@@ -65,10 +65,14 @@
   width: 100%;
 }
 
-.nav__dropdown a {
+.nav__dropdown a, button {
   @include themify() {
     color: getThemifyVariable('secondary-text-color');
   }
+}
+
+.nav__dropdown button {
+  padding: 0;
 }
 
 .nav__dropdown a:hover {
