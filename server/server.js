@@ -30,17 +30,27 @@ import { get404Sketch } from './views/404Page';
 const app = new Express();
 const MongoStore = connectMongo(session);
 
+const corsOriginsWhitelist = [
+  /p5js\.org$/,
+];
+
 // Run Webpack dev server in development mode
 if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(config);
   app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
   app.use(webpackHotMiddleware(compiler));
+
+  corsOriginsWhitelist.push(/localhost/);
 }
 
 // Enable Cross-Origin Resource Sharing (CORS) for all origins
-app.use(cors());
+const corsMiddleware = cors({
+  credentials: true,
+  origin: corsOriginsWhitelist,
+});
+app.use(corsMiddleware);
 // Enable pre-flight OPTIONS route for all end-points
-app.options('*', cors());
+app.options('*', corsMiddleware);
 
 // Body parser, cookie parser, sessions, serve public assets
 
