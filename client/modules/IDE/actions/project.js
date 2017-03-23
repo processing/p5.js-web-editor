@@ -7,6 +7,7 @@ import { setUnsavedChanges,
   justOpenedProject,
   resetJustOpenedProject,
   showErrorModal } from './ide';
+import each from 'async/each';
 
 const ROOT_URL = process.env.API_URL;
 
@@ -190,23 +191,39 @@ export function cloneProject() {
     rootFile.id = newRootFileId;
     rootFile._id = newRootFileId;
     generateNewIdsForChildren(rootFile, newFiles);
-    // const newFiles = state.files;
-    const formParams = Object.assign({}, { name: `${state.project.name} copy` }, { files: newFiles });
-    axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
-      .then((response) => {
-        browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
-        console.log(response.data);
-        dispatch({
-          type: ActionTypes.NEW_PROJECT,
-          project: response.data,
-          owner: response.data.user,
-          files: response.data.files
-        });
-      })
-      .catch(response => dispatch({
-        type: ActionTypes.PROJECT_SAVE_FAIL,
-        error: response.data
-      }));
+    //need to duplicate all files hosted on S3
+    each(newFiles, (file, callback) => {
+      if (file.url) {
+        const formParams = {
+          url: file.url
+        };
+        axios.post(`${ROOT_URL}/S3/copy`, formParams, {withCredentials: true})
+          .then((response) => {
+            file.url = response.data.url;
+            callback(null);
+          });
+      } else {
+        callback(null);
+      }
+    }, (err) => {
+      // if not errors in duplicating the files on S3, then duplicate it
+      const formParams = Object.assign({}, { name: `${state.project.name} copy` }, { files: newFiles });
+      axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
+        .then((response) => {
+          browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
+          console.log(response.data);
+          dispatch({
+            type: ActionTypes.NEW_PROJECT,
+            project: response.data,
+            owner: response.data.user,
+            files: response.data.files
+          });
+        })
+        .catch(response => dispatch({
+          type: ActionTypes.PROJECT_SAVE_FAIL,
+          error: response.data
+        }));
+    });
   };
 }
 
