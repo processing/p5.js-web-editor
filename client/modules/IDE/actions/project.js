@@ -1,13 +1,13 @@
 import { browserHistory } from 'react-router';
 import axios from 'axios';
 import objectID from 'bson-objectid';
+import each from 'async/each';
 import * as ActionTypes from '../../../constants';
 import { showToast, setToastText } from './toast';
 import { setUnsavedChanges,
   justOpenedProject,
   resetJustOpenedProject,
   showErrorModal } from './ide';
-import each from 'async/each';
 
 const ROOT_URL = process.env.API_URL;
 
@@ -186,18 +186,20 @@ export function cloneProject() {
       return { ...file };
     });
 
+    // generate new IDS for all files
     const rootFile = newFiles.find(file => file.name === 'root');
     const newRootFileId = objectID().toHexString();
     rootFile.id = newRootFileId;
     rootFile._id = newRootFileId;
     generateNewIdsForChildren(rootFile, newFiles);
-    //need to duplicate all files hosted on S3
+
+    // duplicate all files hosted on S3
     each(newFiles, (file, callback) => {
       if (file.url) {
         const formParams = {
           url: file.url
         };
-        axios.post(`${ROOT_URL}/S3/copy`, formParams, {withCredentials: true})
+        axios.post(`${ROOT_URL}/S3/copy`, formParams, { withCredentials: true })
           .then((response) => {
             file.url = response.data.url;
             callback(null);

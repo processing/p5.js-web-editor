@@ -51,10 +51,10 @@ export function copyObjectInS3(req, res) {
   const params = {
     Bucket: `${process.env.S3_BUCKET}`,
     CopySource: `${process.env.S3_BUCKET}/${objectKey}`,
-    key: newFilename
+    Key: newFilename
   };
   const copy = client.copyObject(params);
-  del.on('end', function() {
-    res.json({url: `${s3Bucket}/${newFilename}`});
+  copy.on('end', function() {
+    res.json({url: `${s3Bucket}${newFilename}`});
   });
 }
