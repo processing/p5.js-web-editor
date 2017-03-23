@@ -195,7 +195,7 @@ export function cloneProject() {
 
     // duplicate all files hosted on S3
     each(newFiles, (file, callback) => {
-      if (file.url) {
+      if (file.url && file.url.includes('amazonaws')) {
         const formParams = {
           url: file.url
         };
