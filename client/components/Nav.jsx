@@ -137,6 +137,11 @@ class Nav extends React.PureComponent {
                     </Link>
                   </li>
                   <li>
+                    <Link to={`/${this.props.user.username}/account`}>
+                      My account
+                    </Link>
+                  </li>
+                  <li>
                     <button onClick={this.props.logoutUser} >
                       Log out
                     </button>

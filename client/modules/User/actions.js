@@ -4,7 +4,7 @@ import * as ActionTypes from '../../constants';
 import { showErrorModal, justOpenedProject } from '../IDE/actions/ide';
 
 
-const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
+const ROOT_URL = process.env.API_URL;
 
 export function authError(error) {
   return {
@@ -159,4 +159,21 @@ export function updatePassword(token, formValues) {
         type: ActionTypes.INVALID_RESET_PASSWORD_TOKEN
       }));
   };
+}
+
+export function updateSettingsSuccess(user) {
+  return {
+    type: ActionTypes.SETTINGS_UPDATED,
+    user
+  };
+}
+
+export function updateSettings(formValues) {
+  return dispatch =>
+    axios.put(`${ROOT_URL}/account`, formValues, { withCredentials: true })
+      .then((response) => {
+        dispatch(updateSettingsSuccess(response.data));
+        browserHistory.push('/');
+      })
+      .catch(response => Promise.reject({ currentPassword: response.data.error }));
 }

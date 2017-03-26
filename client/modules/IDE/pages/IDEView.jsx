@@ -304,7 +304,7 @@ class IDEView extends React.Component {
                   stopSketch={this.props.stopSketch}
                   autorefresh={this.props.preferences.autorefresh}
                   unsavedChanges={this.props.ide.unsavedChanges}
-                  projectSavedTime={this.props.ide.projectSavedTime}
+                  projectSavedTime={this.props.project.updatedAt}
                   isExpanded={this.props.ide.sidebarIsExpanded}
                   expandSidebar={this.props.expandSidebar}
                   collapseSidebar={this.props.collapseSidebar}
@@ -320,13 +320,19 @@ class IDEView extends React.Component {
                 />
               </SplitPane>
               <div className="preview-frame-holder">
+                <header className="preview-frame__header">
+                  <h2 className="preview-frame__title">Preview</h2>
+                </header>
                 <div className="preview-frame-overlay" ref={(element) => { this.overlay = element; }}>
                 </div>
                 <div>
                   {(() => {
                     if ((this.props.preferences.textOutput && this.props.ide.isPlaying) || this.props.ide.isTextOutputPlaying) {
                       return (
-                        <TextOutput />
+                        <TextOutput
+                          isPlaying={this.props.ide.isPlaying}
+                          previewIsRefreshing={this.props.ide.previewIsRefreshing}
+                        />
                       );
                     }
                     return '';
@@ -486,7 +492,8 @@ IDEView.propTypes = {
     owner: PropTypes.shape({
       username: PropTypes.string,
       id: PropTypes.string
-    })
+    }),
+    updatedAt: PropTypes.string
   }).isRequired,
   setProjectName: PropTypes.func.isRequired,
   openPreferences: PropTypes.func.isRequired,

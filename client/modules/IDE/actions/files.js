@@ -5,7 +5,7 @@ import { reset } from 'redux-form';
 import * as ActionTypes from '../../../constants';
 import { setUnsavedChanges } from './ide';
 
-const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
+const ROOT_URL = process.env.API_URL;
 
 function appendToFilename(filename, string) {
   const dotIndex = filename.lastIndexOf('.');

@@ -1,9 +1,6 @@
 #p5.js Web Editor
 
-This project is currently in the early stages of development! It will definitely be announced when it is in alpha/beta/etc.
-
-##Important anouncements
-The p5.js interceptor code has been moved into its own directory! Make sure that you run `$ git submodule init && npm install` to ensure you have the files.
+This project is currently in development! It will be announced when there is a (public) beta release. 
 
 ##Development Installation
 
@@ -16,6 +13,7 @@ The p5.js interceptor code has been moved into its own directory! Make sure that
 5. Create a file called `.env` in the root of this directory that looks like
 
   ```
+  API_URL=/api
   MONGO_URL=mongodb://localhost:27017/p5js-web-editor
   PORT=8000
   SESSION_SECRET=whatever_you_want_this_to_be_it_only_matters_for_production
@@ -31,6 +29,9 @@ The p5.js interceptor code has been moved into its own directory! Make sure that
 8. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en).
 9. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
 
+###Testing SSL on your local machine
+Please refer to [this gist](https://gist.github.com/andrewn/953ffd5cb17ac2634dc969fc7bdaff3f). This allows you to access the editor using both HTTP and HTTPS. Don't worry about this unless you need to make changes or test HTTPS behavior. 
+
 ##Production Installation
 1. Clone this repostory and `cd` into it
 2. `$ git submodule init`
@@ -39,6 +40,7 @@ The p5.js interceptor code has been moved into its own directory! Make sure that
 5. Create a file called `.env` in the root of this directory that looks like
 
   ```
+  API_URL=/api
   MONGO_URL=mongodb://localhost:27017/p5js-web-editor
   PORT=8000
   SESSION_SECRET=make_this_a_long-random_string_like_maybe_126_characters_long
@@ -57,6 +59,8 @@ The p5.js interceptor code has been moved into its own directory! Make sure that
 2. `$ pm2 start ecosystem.json`
 
 ##Accessibility Guidelines
+
+Here is guide on [how to use the accessible editor](https://gist.github.com/MathuraMG/e86666b7b41fbc8c078bad9aff3f666d)
 
 The code for the p5.js web editor adheres to web accessibility standards. The following guidelines will help to ensure that accessibility continues to be a priority as development continues.
 

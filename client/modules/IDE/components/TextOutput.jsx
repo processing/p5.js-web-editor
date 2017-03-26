@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 class TextOutput extends React.Component {
   componentDidMount() {
     this.canvasTextOutput.focus();
+  }
+  componentDidUpdate(prevProps) {
+    // if the user explicitly clicks on the play button, want to refocus on the text output
+    if (this.props.isPlaying && this.props.previewIsRefreshing) {
+      this.canvasTextOutput.focus();
+    }
   }
   render() {
     return (
@@ -42,5 +48,10 @@ class TextOutput extends React.Component {
     );
   }
 }
+
+TextOutput.propTypes = {
+  isPlaying: PropTypes.bool.isRequired,
+  previewIsRefreshing: PropTypes.bool.isRequired
+};
 
 export default TextOutput;

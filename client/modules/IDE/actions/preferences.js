@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as ActionTypes from '../../../constants';
 
-const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
+const ROOT_URL = process.env.API_URL;
 
 function updatePreferences(formParams, dispatch) {
   axios.put(`${ROOT_URL}/preferences`, formParams, { withCredentials: true })

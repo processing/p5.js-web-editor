@@ -4,6 +4,7 @@ import { Link, browserHistory } from 'react-router';
 import InlineSVG from 'react-inlinesvg';
 import { validateAndLoginUser } from '../actions';
 import LoginForm from '../components/LoginForm';
+import { validateLogin } from '../../../utils/reduxFormUtils';
 // import GithubButton from '../components/GithubButton';
 const exitUrl = require('../../../images/exit.svg');
 const logoUrl = require('../../../images/p5js-logo.svg');
@@ -67,17 +68,6 @@ function mapDispatchToProps() {
   };
 }
 
-function validate(formProps) {
-  const errors = {};
-  if (!formProps.email) {
-    errors.email = 'Please enter an email';
-  }
-  if (!formProps.password) {
-    errors.password = 'Please enter a password';
-  }
-  return errors;
-}
-
 LoginView.propTypes = {
   previousPath: PropTypes.string.isRequired
 };
@@ -85,5 +75,5 @@ LoginView.propTypes = {
 export default reduxForm({
   form: 'login',
   fields: ['email', 'password'],
-  validate
+  validate: validateLogin
 }, mapStateToProps, mapDispatchToProps)(LoginView);

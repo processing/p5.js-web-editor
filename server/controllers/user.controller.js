@@ -182,3 +182,45 @@ export function userExists(username, callback) {
     user ? callback(true) : callback(false)
   ));
 }
+
+export function updateSettings(req, res) {
+  User.findById(req.user.id, (err, user) => {
+    if (err) {
+      res.status(500).json({ error: err });
+      return;
+    }
+    if (!user) {
+      res.status(404).json({ error: 'Document not found' });
+      return;
+    }
+
+    user.email = req.body.email;
+    user.username = req.body.username;
+
+    if (req.body.currentPassword) {
+      user.comparePassword(req.body.currentPassword, (err, isMatch) => {
+        if (err) throw err;
+        if (!isMatch) {
+          res.status(401).json({ error: 'Current password is invalid.' });
+          return;
+        } else {
+          user.password = req.body.newPassword;
+          saveUser(res, user);
+        }
+      });
+    } else {
+      saveUser(res, user);
+    }
+  });
+}
+
+export function saveUser(res, user) {
+  user.save((saveErr) => {
+    if (saveErr) {
+      res.status(500).json({ error: saveErr });
+      return;
+    }
+
+    res.json(user);
+  });
+}
