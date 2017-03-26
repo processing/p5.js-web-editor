@@ -21,9 +21,12 @@ const routes = (store) => {
     'https:' :
     'http:';
 
+  // If the flag is false, we stay on HTTP
   const forceToHttps = forceProtocol({
     targetProtocol: 'https:',
     sourceProtocol,
+    // prints debugging but does not reload page
+    disable: process.env.FORCE_TO_HTTPS === false,
   });
 
   return (

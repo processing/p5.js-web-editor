@@ -30,7 +30,9 @@ This project is currently in development! It will be announced when there is a (
 9. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
 
 ###Testing SSL on your local machine
-Please refer to [this gist](https://gist.github.com/andrewn/953ffd5cb17ac2634dc969fc7bdaff3f). This allows you to access the editor using both HTTP and HTTPS. Don't worry about this unless you need to make changes or test HTTPS behavior. 
+Please refer to [this gist](https://gist.github.com/andrewn/953ffd5cb17ac2634dc969fc7bdaff3f). This allows you to access the editor using both HTTP and HTTPS. Don't worry about this unless you need to make changes or test HTTPS behavior.
+
+The automatic redirection to HTTPS is turned off by default in development. If you need to test this behavior, put `FORCE_TO_HTTPS=true` in your `.env` file.
 
 ##Production Installation
 1. Clone this repostory and `cd` into it
