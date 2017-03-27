@@ -268,7 +268,6 @@ class Preferences extends React.Component {
               aria-label="text output on"
               name="text output"
               id="text-output-on"
-              // className="preference__radio-button"
               value="On"
               checked={(this.props.textOutput)}
             />
@@ -281,7 +280,6 @@ class Preferences extends React.Component {
               aria-label="grid output on"
               name="grid output"
               id="grid-output-on"
-              // className="preference__radio-button"
               value="On"
               checked={(this.props.gridOutput)}
             />
@@ -294,7 +292,6 @@ class Preferences extends React.Component {
               aria-label="sound output on"
               name="sound output"
               id="sound-output-on"
-              // className="preference__radio-button"
               value="On"
               checked={(this.props.soundOutput)}
             />

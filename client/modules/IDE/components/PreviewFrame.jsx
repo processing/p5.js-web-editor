@@ -114,7 +114,7 @@ class PreviewFrame extends React.Component {
     }
 
     // if user switches textoutput preferences
-    if (this.props.isTextOutputPlaying !== prevProps.isTextOutputPlaying) {
+    if (this.props.isAccessibleOutputPlaying !== prevProps.isAccessibleOutputPlaying) {
       this.renderSketch();
       return;
     }
@@ -175,7 +175,7 @@ class PreviewFrame extends React.Component {
       '/loop-protect.min.js',
       '/hijackConsole.js'
     ];
-    if (this.props.isTextOutputPlaying || ((this.props.textOutput || this.props.gridOutput) && this.props.isPlaying)) {
+    if (this.props.isAccessibleOutputPlaying || ((this.props.textOutput || this.props.gridOutput || this.props.soundOutput) && this.props.isPlaying)) {
       let interceptorScripts = [];
       interceptorScripts = [
         '/p5-interceptor/registry.js',
@@ -185,7 +185,7 @@ class PreviewFrame extends React.Component {
         '/p5-interceptor/entities/entity.min.js',
         '/p5-interceptor/ntc.min.js'
       ];
-      if (!this.props.textOutput && !this.props.gridOutput) {
+      if (!this.props.textOutput && !this.props.gridOutput && !this.props.soundOutput) {
         this.props.setTextOutput(true);
       }
       if (this.props.textOutput) {
@@ -386,7 +386,7 @@ class PreviewFrame extends React.Component {
 
 PreviewFrame.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
-  isTextOutputPlaying: PropTypes.bool.isRequired,
+  isAccessibleOutputPlaying: PropTypes.bool.isRequired,
   textOutput: PropTypes.bool.isRequired,
   gridOutput: PropTypes.bool.isRequired,
   soundOutput: PropTypes.bool.isRequired,
