@@ -283,7 +283,7 @@ class Preferences extends React.Component {
               value="On"
               checked={(this.props.gridOutput)}
             />
-            <label htmlFor="sound-output-on" className="preference__option preference__canvas">Grid-text</label>
+            <label htmlFor="grid-output-on" className="preference__option preference__canvas">Grid-text</label>
             <input
               type="checkbox"
               onChange={(event) => {
