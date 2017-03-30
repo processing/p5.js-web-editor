@@ -3,7 +3,7 @@ import request from 'request';
 import moment from 'moment';
 import Project from '../models/project';
 import User from '../models/user';
-
+import { deleteObjectsFromS3 } from './aws.controller';
 
 export function createProject(req, res) {
   if (!req.user) {
@@ -90,12 +90,20 @@ export function getProject(req, res) {
     });
 }
 
+function deleteFilesFromS3(files) {
+  deleteObjectsFromS3(
+    files.filter((file) => file.url && moment(process.env.S3_DATE) < moment(file.createdAt))
+      .map((file) => file.url.split('/').pop())
+  );
+}
+
 export function deleteProject(req, res) {
   Project.findById(req.params.project_id, (findProjectErr, project) => {
     if (!req.user || !project.user.equals(req.user._id)) {
       res.status(403).json({ success: false, message: 'Session does not match owner of project.' });
       return;
     }
+    deleteFilesFromS3(project.files);
     Project.remove({ _id: req.params.project_id }, (removeProjectError) => {
       if (removeProjectError) {
         res.status(404).send({ message: 'Project with that id does not exist' });

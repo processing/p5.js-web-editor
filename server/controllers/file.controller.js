@@ -1,5 +1,8 @@
 import Project from '../models/project';
+import each from 'async/each';
+import moment from 'moment';
 import { resolvePathToFile } from '../utils/filePath';
+import { deleteObjectsFromS3 } from './aws.controller';
 
 // Bug -> timestamps don't get created, but it seems like this will
 // be fixed in mongoose soon
@@ -40,8 +43,16 @@ function getAllDescendantIds(files, nodeId) {
 }
 
 function deleteMany(files, ids) {
-  ids.forEach((id) => {
+  const objectKeys = [];
+
+  each(ids, (id, cb) => {
+    if (files.id(id).url && moment(process.env.S3_DATE) < moment(files.id(id).createdAt)) {
+      objectKeys.push(files.id(id).url.split("/").pop());      
+    }
     files.id(id).remove();
+    cb();
+  }, (err) => {
+    deleteObjectsFromS3(objectKeys);
   });
 }
 

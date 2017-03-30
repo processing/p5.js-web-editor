@@ -21,17 +21,13 @@ function getExtension(filename) {
   return (i < 0) ? '' : filename.substr(i);
 }
 
-export function deleteObjectsFromS3(urlList, callback) {
-  if (urlList.length > 0) {
-    const objectKeyList = [];
-    each(urlList, (url) => {
-      const objectKey = url.split("/").pop();
-      objectKeyList.push({Key: objectKey})
-    });
+export function deleteObjectsFromS3(keyList, callback) {
+  const keys = keyList.map((key) => { return {Key: key}; });
+  if (keyList.length > 0) {
     const params = {
       Bucket: `${process.env.S3_BUCKET}`,
       Delete: {
-        Objects: objectKeyList,
+        Objects: keys,
       },
     };
     const del = client.deleteObjects(params);
@@ -45,6 +41,13 @@ export function deleteObjectsFromS3(urlList, callback) {
       callback();
     }
   }
+}
+
+export function deleteObjectFromS3(req, res) {
+  const objectKey = req.params.object_key;
+  deleteObjectsFromS3([objectKey], function() {
+    res.json({ success:true });
+  });
 }
 
 export function signS3(req, res) {
