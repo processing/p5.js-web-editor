@@ -92,8 +92,15 @@ export function getProject(req, res) {
 
 function deleteFilesFromS3(files) {
   deleteObjectsFromS3(
-    files.filter((file) => file.url && moment(process.env.S3_DATE) < moment(file.createdAt))
-      .map((file) => file.url.split('/').pop())
+    files.filter((file) => {
+      if (file.url) {
+        if (!process.env.S3_DATE || (process.env.S3_DATE && moment(process.env.S3_DATE) < moment(file.createdAt))) {
+          return true;
+        }
+      }
+      return false;
+    })
+    .map((file) => file.url.split('/').pop())
   );
 }
 

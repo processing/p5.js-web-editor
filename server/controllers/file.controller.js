@@ -46,8 +46,10 @@ function deleteMany(files, ids) {
   const objectKeys = [];
 
   each(ids, (id, cb) => {
-    if (files.id(id).url && moment(process.env.S3_DATE) < moment(files.id(id).createdAt)) {
-      objectKeys.push(files.id(id).url.split("/").pop());      
+    if (files.id(id).url) {
+      if (!process.env.S3_DATE || (process.env.S3_DATE && moment(process.env.S3_DATE) < moment(files.id(id).createdAt))) {
+        objectKeys.push(files.id(id).url.split("/").pop());
+      }
     }
     files.id(id).remove();
     cb();
