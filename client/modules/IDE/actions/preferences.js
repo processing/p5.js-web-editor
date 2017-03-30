@@ -122,7 +122,7 @@ export function setLintWarning(value) {
 export function setTextOutput(value) {
   return (dispatch, getState) => {
     dispatch({
-      type: ActionTypes.SET_ACCESSIBLE_OUTPUT,
+      type: ActionTypes.SET_TEXT_OUTPUT,
       value
     });
     const state = getState();
