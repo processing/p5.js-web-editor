@@ -17,6 +17,14 @@
 	padding: #{3 / $base-font-size}rem 0;
 }
 
+.nav__items-left {
+  & button {
+    @include themify() {
+      color: getThemifyVariable('inactive-text-color');
+    }
+  }
+}
+
 .nav__item {
 	position: relative;
 	padding: 0 #{24 / $base-font-size}rem;
