@@ -1,8 +1,8 @@
-#p5.js Web Editor
+# p5.js Web Editor
 
 This project is currently in development! It will be announced when there is a (public) beta release. 
 
-##Development Installation
+## Development Installation
 
 1. Clone this repostory and cd into it
 2. `$ git submodule init`
@@ -29,12 +29,12 @@ This project is currently in development! It will be announced when there is a (
 8. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en).
 9. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
 
-###Testing SSL on your local machine
+### Testing SSL on your local machine
 Please refer to [this gist](https://gist.github.com/andrewn/953ffd5cb17ac2634dc969fc7bdaff3f). This allows you to access the editor using both HTTP and HTTPS. Don't worry about this unless you need to make changes or test HTTPS behavior.
 
 The automatic redirection to HTTPS is turned off by default in development. If you need to test this behavior, put `FORCE_TO_HTTPS=true` in your `.env` file.
 
-##Production Installation
+## Production Installation
 1. Clone this repostory and `cd` into it
 2. `$ git submodule init`
 3. `$ npm install`
@@ -53,14 +53,15 @@ The automatic redirection to HTTPS is turned off by default in development. If y
   GITHUB_SECRET=<your-github-client-secret>
   ```
   For production, you will need to have real Github and Amazon credentions. Refer to [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) for creating an S3 bucket for testing.
+
 6. `$ npm run build`
 7. `$ npm run start:prod`
 
-###For Production Setup with PM2
+### For Production Setup with PM2
 1. `$ npm install -g pm2`
 2. `$ pm2 start ecosystem.json`
 
-##Accessibility Guidelines
+## Accessibility Guidelines
 
 Here is guide on [how to use the accessible editor](https://gist.github.com/MathuraMG/e86666b7b41fbc8c078bad9aff3f666d)
 
@@ -81,7 +82,7 @@ The code for the p5.js web editor adheres to web accessibility standards. The fo
 
 For more information on accessibility see the [teach access tutorial](https://teachaccess.github.io/tutorial/)
 
-##Contribution Guide
+## Contribution Guide
 I am currently open to contributors! Email me if you are looking for a task, or look at the open issues and reply that you are working on a task.
 
 The p5.js Web Editor is built on a MERN stack - MongoDB, Express, React/Redux, and Node. For a reference to the file structure format I am using, please look at the [Mern Starter](https://github.com/Hashnode/mern-starter) and [this comment](https://github.com/Hashnode/mern-starter/issues/90#issuecomment-221553573).
@@ -99,7 +100,7 @@ This project is currently hosted on an EC2 instance and uses S3 for media hostin
 
 Backups on the MongoDB are also hosted on an S3 bucket, based on the following [gist](https://gist.github.com/eladnava/96bd9771cd2e01fb4427230563991c8d). The backup script runs nightly via a cronjob at 8AM UTC/3AM EST/12AM PST. Backups are deleted after 30 days.
 
-##Dump of links I'm saving for reference
+## Dump of links I'm saving for reference
 
 * https://github.com/brigade/scss-lint
 * https://github.com/petehunt/react-howto
