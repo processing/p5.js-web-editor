@@ -102,6 +102,19 @@ class Toolbar extends React.Component {
             Auto-refresh
           </label>
         </div>
+        <div className="toolbar__serve-secure">
+          <input
+            id="serve-secure"
+            type="checkbox"
+            checked={this.props.project.serveSecure}
+            onChange={(event) => {
+              this.props.setServeSecure(event.target.checked);
+            }}
+          />
+          <label htmlFor="serve-secure" className="toolbar__serve-secure-label">
+            HTTPS
+          </label>
+        </div>
         <div className={nameContainerClass}>
           <a
             className="toolbar__project-name"
@@ -169,13 +182,15 @@ Toolbar.propTypes = {
   project: PropTypes.shape({
     name: PropTypes.string.isRequired,
     isEditingName: PropTypes.bool,
-    id: PropTypes.string
+    id: PropTypes.string,
+    serveSecure: PropTypes.bool,
   }).isRequired,
   showEditProjectName: PropTypes.func.isRequired,
   hideEditProjectName: PropTypes.func.isRequired,
   infiniteLoop: PropTypes.bool.isRequired,
   autorefresh: PropTypes.bool.isRequired,
   setAutorefresh: PropTypes.func.isRequired,
+  setServeSecure: PropTypes.func.isRequired,
   startSketchAndRefresh: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
   currentUser: PropTypes.string,

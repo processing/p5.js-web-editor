@@ -28,6 +28,13 @@ export function setProjectName(name) {
   };
 }
 
+export function setServeSecure(serveSecure) {
+  return {
+    type: ActionTypes.SET_SERVE_SECURE,
+    serveSecure
+  };
+}
+
 export function getProject(id) {
   return (dispatch, getState) => {
     dispatch(justOpenedProject());

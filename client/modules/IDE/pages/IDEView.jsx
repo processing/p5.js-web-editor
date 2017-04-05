@@ -219,6 +219,8 @@ class IDEView extends React.Component {
           hideEditProjectName={this.props.hideEditProjectName}
           openPreferences={this.props.openPreferences}
           preferencesIsVisible={this.props.ide.preferencesIsVisible}
+          serveSecure={this.props.project.serveSecure}
+          setServeSecure={this.props.setServeSecure}
           setTextOutput={this.props.setTextOutput}
           owner={this.props.project.owner}
           project={this.props.project}
@@ -499,6 +501,7 @@ IDEView.propTypes = {
   project: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string.isRequired,
+    serveSecure: PropTypes.bool,
     owner: PropTypes.shape({
       username: PropTypes.string,
       id: PropTypes.string
@@ -506,6 +509,7 @@ IDEView.propTypes = {
     updatedAt: PropTypes.string
   }).isRequired,
   setProjectName: PropTypes.func.isRequired,
+  setServeSecure: PropTypes.func.isRequired,
   openPreferences: PropTypes.func.isRequired,
   editorAccessibility: PropTypes.shape({
     lintMessages: PropTypes.array.isRequired,

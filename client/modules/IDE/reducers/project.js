@@ -16,6 +16,8 @@ const project = (state, action) => {
     state = initialState(); // eslint-disable-line
   }
   switch (action.type) {
+    case ActionTypes.SET_SERVE_SECURE:
+      return Object.assign({}, { ...state }, { serveSecure: action.serveSecure });
     case ActionTypes.SET_PROJECT_NAME:
       return Object.assign({}, { ...state }, { name: action.name });
     case ActionTypes.NEW_PROJECT:
