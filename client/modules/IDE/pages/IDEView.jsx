@@ -170,8 +170,10 @@ class IDEView extends React.Component {
   warnIfUnsavedChanges(route) { // eslint-disable-line
     if (route && (route.action === 'PUSH' && (route.pathname === '/login' || route.pathname === '/signup'))) {
       // don't warn
+      this.props.persistState();
     } else if (route && (this.props.location.pathname === '/login' || this.props.location.pathname === '/signup')) {
       // don't warn
+      this.props.persistState();
     } else if (this.props.ide.unsavedChanges) {
       if (!window.confirm('Are you sure you want to leave this page? You have unsaved changes.')) {
         return false;
@@ -588,7 +590,8 @@ IDEView.propTypes = {
   })).isRequired,
   clearConsole: PropTypes.func.isRequired,
   showErrorModal: PropTypes.func.isRequired,
-  hideErrorModal: PropTypes.func.isRequired
+  hideErrorModal: PropTypes.func.isRequired,
+  persistState: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
