@@ -4,12 +4,12 @@ import TextOutput from '../components/TextOutput';
 
 class AccessibleOutput extends React.Component {
   componentDidMount() {
-    this.AccessibleOutputModal.focus();
+    this.accessibleOutputModal.focus();
   }
   componentDidUpdate(prevProps) {
     // if the user explicitly clicks on the play button, want to refocus on the text output
     if (this.props.isPlaying && this.props.previewIsRefreshing) {
-      this.AccessibleOutputModal.focus();
+      this.accessibleOutputModal.focus();
     }
   }
   render() {
@@ -17,7 +17,7 @@ class AccessibleOutput extends React.Component {
       <section
         className="accessible-output"
         id="canvas-sub"
-        ref={(element) => { this.AccessibleOutputModal = element; }}
+        ref={(element) => { this.accessibleOutputModal = element; }}
         tabIndex="0"
         aria-label="accessible-output"
         title="canvas text output"
