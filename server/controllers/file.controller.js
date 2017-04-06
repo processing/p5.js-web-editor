@@ -1,6 +1,7 @@
-import Project from '../models/project';
 import each from 'async/each';
 import moment from 'moment';
+
+import Project from '../models/project';
 import { resolvePathToFile } from '../utils/filePath';
 import { deleteObjectsFromS3 } from './aws.controller';
 
@@ -48,7 +49,10 @@ function deleteMany(files, ids) {
   each(ids, (id, cb) => {
     if (files.id(id).url) {
       if (!process.env.S3_DATE || (process.env.S3_DATE && moment(process.env.S3_DATE) < moment(files.id(id).createdAt))) {
-        objectKeys.push(files.id(id).url.split("/").pop());
+        const urlComponents = files.id(id).url.split('/');
+        const key = urlComponents.pop();
+        const userId = urlComponents.pop();
+        objectKeys.push(`${userId}/${key}`);
       }
     }
     files.id(id).remove();

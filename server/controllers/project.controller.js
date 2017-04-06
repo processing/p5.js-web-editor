@@ -100,7 +100,12 @@ function deleteFilesFromS3(files) {
       }
       return false;
     })
-    .map((file) => file.url.split('/').pop())
+    .map((file) => {
+      const urlComponents = file.url.split('/');
+      const key = urlComponents.pop();
+      const userId = urlComponents.pop();
+      return `${userId}/${key}`;
+    })
   );
 }
 

@@ -30,7 +30,7 @@ function localIntercept(file, options = {}) {
   });
 }
 
-export function dropzoneAcceptCallback(file, done) {
+export function dropzoneAcceptCallback(userId, file, done) {
   return () => {
     // for text files and small files
     // check mime type
@@ -50,6 +50,7 @@ export function dropzoneAcceptCallback(file, done) {
         name: file.name,
         type: file.type,
         size: file.size,
+        userId
         // _csrf: document.getElementById('__createPostToken').value
       },
         {

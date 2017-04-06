@@ -30,9 +30,9 @@ class FileUploader extends React.Component {
       text/plain,text/csv,.obj,video/webm,video/ogg,video/quicktime,video/mp4,
       .otf,.ttf`,
       dictDefaultMessage: 'Drop files here to upload or click to use the file browser',
-      accept: this.props.dropzoneAcceptCallback,
+      accept: this.props.dropzoneAcceptCallback.bind(this, this.props.project.owner.id),
       sending: this.props.dropzoneSendingCallback,
-      complete: this.props.dropzoneCompleteCallback,
+      complete: this.props.dropzoneCompleteCallback
       // error: (file, errorMessage) => {
       //   console.log(file);
       //   console.log(errorMessage);
@@ -50,7 +50,21 @@ class FileUploader extends React.Component {
 FileUploader.propTypes = {
   dropzoneAcceptCallback: PropTypes.func.isRequired,
   dropzoneSendingCallback: PropTypes.func.isRequired,
-  dropzoneCompleteCallback: PropTypes.func.isRequired
+  dropzoneCompleteCallback: PropTypes.func.isRequired,
+  project: PropTypes.shape({
+    owner: PropTypes.shape({
+      id: PropTypes.string.isRequired
+    })
+  })
+};
+
+FileUploader.defaultProps = {
+  project: {
+    id: undefined,
+    owner: {
+      id: undefined
+    }
+  }
 };
 
 function mapStateToProps(state) {

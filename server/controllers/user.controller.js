@@ -183,6 +183,17 @@ export function userExists(username, callback) {
   ));
 }
 
+export function saveUser(res, user) {
+  user.save((saveErr) => {
+    if (saveErr) {
+      res.status(500).json({ error: saveErr });
+      return;
+    }
+
+    res.json(user);
+  });
+}
+
 export function updateSettings(req, res) {
   User.findById(req.user.id, (err, user) => {
     if (err) {
@@ -198,29 +209,17 @@ export function updateSettings(req, res) {
     user.username = req.body.username;
 
     if (req.body.currentPassword) {
-      user.comparePassword(req.body.currentPassword, (err, isMatch) => {
-        if (err) throw err;
+      user.comparePassword(req.body.currentPassword, (passwordErr, isMatch) => {
+        if (passwordErr) throw passwordErr;
         if (!isMatch) {
           res.status(401).json({ error: 'Current password is invalid.' });
           return;
-        } else {
-          user.password = req.body.newPassword;
-          saveUser(res, user);
         }
+        user.password = req.body.newPassword;
+        saveUser(res, user);
       });
     } else {
       saveUser(res, user);
     }
-  });
-}
-
-export function saveUser(res, user) {
-  user.save((saveErr) => {
-    if (saveErr) {
-      res.status(500).json({ error: saveErr });
-      return;
-    }
-
-    res.json(user);
   });
 }

@@ -6,8 +6,8 @@ const client = s3.createClient({
   maxAsyncS3: 20,
   s3RetryCount: 3,
   s3RetryDelay: 1000,
-  multipartUploadThreshold: 20971520, // this is the default (20 MB) 
-  multipartUploadSize: 15728640, // this is the default (15 MB) 
+  multipartUploadThreshold: 20971520, // this is the default (20 MB)
+  multipartUploadSize: 15728640, // this is the default (15 MB)
   s3Options: {
     accessKeyId: `${process.env.AWS_ACCESS_KEY}`,
     secretAccessKey: `${process.env.AWS_SECRET_KEY}`,
@@ -22,7 +22,7 @@ function getExtension(filename) {
 }
 
 export function deleteObjectsFromS3(keyList, callback) {
-  const keys = keyList.map((key) => { return {Key: key}; });
+  const keys = keyList.map((key) => { return { Key: key }; }); // eslint-disable-line
   if (keyList.length > 0) {
     const params = {
       Bucket: `${process.env.S3_BUCKET}`,
@@ -31,22 +31,20 @@ export function deleteObjectsFromS3(keyList, callback) {
       },
     };
     const del = client.deleteObjects(params);
-    del.on('end', function() {
-      if(callback) {
+    del.on('end', () => {
+      if (callback) {
         callback();
       }
     });
-  } else {
-    if(callback) {
-      callback();
-    }
+  } else if (callback) {
+    callback();
   }
 }
 
 export function deleteObjectFromS3(req, res) {
   const objectKey = req.params.object_key;
-  deleteObjectsFromS3([objectKey], function() {
-    res.json({ success:true });
+  deleteObjectsFromS3([objectKey], () => {
+    res.json({ success: true });
   });
 }
 
@@ -64,7 +62,7 @@ export function signS3(req, res) {
   });
   const result = {
     AWSAccessKeyId: process.env.AWS_ACCESS_KEY,
-    key: filename,
+    key: `${req.body.userId}/${filename}`,
     policy: p.policy,
     signature: p.signature
   };
@@ -73,7 +71,7 @@ export function signS3(req, res) {
 
 export function copyObjectInS3(req, res) {
   const url = req.body.url;
-  const objectKey = url.split("/").pop();
+  const objectKey = url.split('/').pop();
 
   const fileExtension = getExtension(objectKey);
   const newFilename = uuid.v4() + fileExtension;
@@ -83,7 +81,7 @@ export function copyObjectInS3(req, res) {
     Key: newFilename
   };
   const copy = client.copyObject(params);
-  copy.on('end', function() {
-    res.json({url: `${s3Bucket}${newFilename}`});
+  copy.on('end', () => {
+    res.json({ url: `${s3Bucket}${newFilename}` });
   });
 }
