@@ -73,7 +73,9 @@ class Editor extends React.Component {
 
     this._cm.setOption('extraKeys', {
       'Cmd-Enter': () => null,
-      'Shift-Cmd-Enter': () => null
+      'Shift-Cmd-Enter': () => null,
+      'Ctrl-Enter': () => null,
+      'Shift-Ctrl-Enter': () => null
     });
 
     this.initializeDocuments(this.props.files);
