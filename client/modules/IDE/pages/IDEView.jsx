@@ -171,9 +171,11 @@ class IDEView extends React.Component {
     if (route && (route.action === 'PUSH' && (route.pathname === '/login' || route.pathname === '/signup'))) {
       // don't warn
       this.props.persistState();
+      window.onbeforeunload = null;
     } else if (route && (this.props.location.pathname === '/login' || this.props.location.pathname === '/signup')) {
       // don't warn
       this.props.persistState();
+      window.onbeforeunload = null;
     } else if (this.props.ide.unsavedChanges) {
       if (!window.confirm('Are you sure you want to leave this page? You have unsaved changes.')) {
         return false;
