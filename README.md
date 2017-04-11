@@ -24,6 +24,7 @@ This project is currently in development! It will be announced when there is a (
   GITHUB_SECRET=<your-github-client-secret>
   ```
    If you don't care about being able to upload media files to S3 or Login with Github, you can drop in the file exactly how it is. Or, if you don't want to do that, just ask me to send you mine. Refer to [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) for creating an S3 bucket for testing, or if you don't want to do that, I can add you to one of my S3 buckets.
+
 6. `$ npm start`
 7. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
 8. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en).
