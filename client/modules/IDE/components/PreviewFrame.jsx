@@ -114,12 +114,22 @@ class PreviewFrame extends React.Component {
     }
 
     // if user switches textoutput preferences
-    if (this.props.isTextOutputPlaying !== prevProps.isTextOutputPlaying) {
+    if (this.props.isAccessibleOutputPlaying !== prevProps.isAccessibleOutputPlaying) {
       this.renderSketch();
       return;
     }
 
     if (this.props.textOutput !== prevProps.textOutput) {
+      this.renderSketch();
+      return;
+    }
+
+    if (this.props.gridOutput !== prevProps.gridOutput) {
+      this.renderSketch();
+      return;
+    }
+
+    if (this.props.soundOutput !== prevProps.soundOutput) {
       this.renderSketch();
       return;
     }
@@ -165,38 +175,41 @@ class PreviewFrame extends React.Component {
       '/loop-protect.min.js',
       '/hijackConsole.js'
     ];
-    if (this.props.isTextOutputPlaying || (this.props.textOutput !== 0 && this.props.isPlaying)) {
+    if (this.props.isAccessibleOutputPlaying || ((this.props.textOutput || this.props.gridOutput || this.props.soundOutput) && this.props.isPlaying)) {
       let interceptorScripts = [];
-      if (this.props.textOutput === 0) {
-        this.props.setTextOutput(1);
+      interceptorScripts = [
+        '/p5-interceptor/registry.js',
+        '/p5-interceptor/loadData.js',
+        '/p5-interceptor/interceptorHelperFunctions.js',
+        '/p5-interceptor/baseInterceptor.js',
+        '/p5-interceptor/entities/entity.min.js',
+        '/p5-interceptor/ntc.min.js'
+      ];
+      if (!this.props.textOutput && !this.props.gridOutput && !this.props.soundOutput) {
+        this.props.setTextOutput(true);
       }
-      if (this.props.textOutput === 1) {
-        interceptorScripts = [
-          '/p5-interceptor/registry.js',
-          '/p5-interceptor/loadData.js',
-          '/p5-interceptor/interceptorHelperFunctions.js',
-          '/p5-interceptor/baseInterceptor.js',
-          '/p5-interceptor/entities/entity.min.js',
+      if (this.props.textOutput) {
+        let textInterceptorScripts = [];
+        textInterceptorScripts = [
           '/p5-interceptor/textInterceptor/interceptorFunctions.js',
-          '/p5-interceptor/textInterceptor/interceptorP5.js',
-          '/p5-interceptor/ntc.min.js'
+          '/p5-interceptor/textInterceptor/interceptorP5.js'
         ];
-      } else if (this.props.textOutput === 2) {
-        interceptorScripts = [
-          '/p5-interceptor/registry.js',
-          '/p5-interceptor/loadData.js',
-          '/p5-interceptor/interceptorHelperFunctions.js',
-          '/p5-interceptor/baseInterceptor.js',
-          '/p5-interceptor/entities/entity.min.js',
+        interceptorScripts = interceptorScripts.concat(textInterceptorScripts);
+      }
+      if (this.props.gridOutput) {
+        let gridInterceptorScripts = [];
+        gridInterceptorScripts = [
           '/p5-interceptor/gridInterceptor/interceptorFunctions.js',
-          '/p5-interceptor/gridInterceptor/interceptorP5.js',
-          '/p5-interceptor/ntc.min.js'
+          '/p5-interceptor/gridInterceptor/interceptorP5.js'
         ];
-      } else if (this.props.textOutput === 3) {
-        interceptorScripts = [
-          '/p5-interceptor/loadData.js',
+        interceptorScripts = interceptorScripts.concat(gridInterceptorScripts);
+      }
+      if (this.props.soundOutput) {
+        let soundInterceptorScripts = [];
+        soundInterceptorScripts = [
           '/p5-interceptor/soundInterceptor/interceptorP5.js'
         ];
+        interceptorScripts = interceptorScripts.concat(soundInterceptorScripts);
       }
       scriptsToInject = scriptsToInject.concat(interceptorScripts);
     }
@@ -373,8 +386,10 @@ class PreviewFrame extends React.Component {
 
 PreviewFrame.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
-  isTextOutputPlaying: PropTypes.bool.isRequired,
-  textOutput: PropTypes.number.isRequired,
+  isAccessibleOutputPlaying: PropTypes.bool.isRequired,
+  textOutput: PropTypes.bool.isRequired,
+  gridOutput: PropTypes.bool.isRequired,
+  soundOutput: PropTypes.bool.isRequired,
   setTextOutput: PropTypes.func.isRequired,
   htmlFile: PropTypes.shape({
     content: PropTypes.string.isRequired
