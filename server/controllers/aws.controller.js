@@ -11,10 +11,11 @@ const client = s3.createClient({
   s3Options: {
     accessKeyId: `${process.env.AWS_ACCESS_KEY}`,
     secretAccessKey: `${process.env.AWS_SECRET_KEY}`,
+    region: `${process.env.AWS_REGION}`
   },
 });
 
-const s3Bucket = `https://s3-us-west-2.amazonaws.com/${process.env.S3_BUCKET}/`;
+const s3Bucket = `https://s3-${process.env.AWS_REGION}.amazonaws.com/${process.env.S3_BUCKET}/`;
 
 function getExtension(filename) {
   const i = filename.lastIndexOf('.');

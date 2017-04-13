@@ -19,6 +19,7 @@ This project is currently in development! It will be announced when there is a (
   SESSION_SECRET=whatever_you_want_this_to_be_it_only_matters_for_production
   AWS_ACCESS_KEY=<your-aws-access-key>
   AWS_SECRET_KEY=<your-aws-secret-key>
+  AWS_REGION=<your-aws-region>
   S3_BUCKET=<your-s3-bucket>
   GITHUB_ID=<your-github-client-id>
   GITHUB_SECRET=<your-github-client-secret>
@@ -49,6 +50,7 @@ The automatic redirection to HTTPS is turned off by default in development. If y
   SESSION_SECRET=make_this_a_long-random_string_like_maybe_126_characters_long
   AWS_ACCESS_KEY=<your-aws-access-key>
   AWS_SECRET_KEY=<your-aws-secret-key>
+  AWS_REGION=<your-aws-region>
   S3_BUCKET=<your-s3-bucket>
   GITHUB_ID=<your-github-client-id>
   GITHUB_SECRET=<your-github-client-secret>
