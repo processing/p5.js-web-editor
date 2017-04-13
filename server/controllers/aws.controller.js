@@ -21,6 +21,20 @@ function getExtension(filename) {
   return (i < 0) ? '' : filename.substr(i);
 }
 
+export function getObjectKey(url) {
+  const urlArray = url.split('/');
+  let objectKey;
+  if (urlArray.length === 6) {
+    const key = urlArray.pop();
+    const userId = urlArray.pop();
+    objectKey = `${userId}/${key}`
+  } else {
+    const key = urlArray.pop();
+    objectKey = key;
+  }
+  return objectKey; 
+}
+
 export function deleteObjectsFromS3(keyList, callback) {
   const keys = keyList.map((key) => { return { Key: key }; }); // eslint-disable-line
   if (keyList.length > 0) {
@@ -71,8 +85,7 @@ export function signS3(req, res) {
 
 export function copyObjectInS3(req, res) {
   const url = req.body.url;
-  const objectKey = url.split('/').pop();
-
+  const objectKey = getObjectKey(url);
   const fileExtension = getExtension(objectKey);
   const newFilename = uuid.v4() + fileExtension;
   const params = {

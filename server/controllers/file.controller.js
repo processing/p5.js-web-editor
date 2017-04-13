@@ -3,7 +3,7 @@ import moment from 'moment';
 
 import Project from '../models/project';
 import { resolvePathToFile } from '../utils/filePath';
-import { deleteObjectsFromS3 } from './aws.controller';
+import { deleteObjectsFromS3, getObjectKey } from './aws.controller';
 
 // Bug -> timestamps don't get created, but it seems like this will
 // be fixed in mongoose soon
@@ -49,10 +49,8 @@ function deleteMany(files, ids) {
   each(ids, (id, cb) => {
     if (files.id(id).url) {
       if (!process.env.S3_DATE || (process.env.S3_DATE && moment(process.env.S3_DATE) < moment(files.id(id).createdAt))) {
-        const urlComponents = files.id(id).url.split('/');
-        const key = urlComponents.pop();
-        const userId = urlComponents.pop();
-        objectKeys.push(`${userId}/${key}`);
+        const objectKey = getObjectKey(files.id(id).url);
+        objectKeys.push(objectKey);
       }
     }
     files.id(id).remove();
