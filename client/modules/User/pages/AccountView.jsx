@@ -7,6 +7,7 @@ import axios from 'axios';
 import { updateSettings } from '../actions';
 import AccountForm from '../components/AccountForm';
 import { validateSettings } from '../../../utils/reduxFormUtils';
+import GithubButton from '../components/GithubButton';
 
 const exitUrl = require('../../../images/exit.svg');
 const logoUrl = require('../../../images/p5js-logo.svg');
@@ -41,8 +42,8 @@ class AccountView extends React.Component {
         <div className="form-container__content">
           <h2 className="form-container__title">My Account</h2>
           <AccountForm {...this.props} />
-          {/* <h2 className="form-container__divider">Or</h2>
-          <GithubButton buttonText="Login with Github" /> */}
+          <h2 className="form-container__divider">Or</h2>
+          <GithubButton buttonText="Login with Github" />
         </div>
       </div>
     );

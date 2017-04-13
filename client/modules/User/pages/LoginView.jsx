@@ -5,7 +5,8 @@ import InlineSVG from 'react-inlinesvg';
 import { validateAndLoginUser } from '../actions';
 import LoginForm from '../components/LoginForm';
 import { validateLogin } from '../../../utils/reduxFormUtils';
-// import GithubButton from '../components/GithubButton';
+import GithubButton from '../components/GithubButton';
+
 const exitUrl = require('../../../images/exit.svg');
 const logoUrl = require('../../../images/p5js-logo.svg');
 
@@ -39,8 +40,8 @@ class LoginView extends React.Component {
         <div className="form-container__content">
           <h2 className="form-container__title">Log In</h2>
           <LoginForm {...this.props} />
-          {/* <h2 className="form-container__divider">Or</h2>
-          <GithubButton buttonText="Login with Github" /> */}
+          <h2 className="form-container__divider">Or</h2>
+          <GithubButton buttonText="Login with Github" />
           <p className="form__navigation-options">
             Don&apos;t have an account?&nbsp;
             <Link className="form__signup-button" to="/signup">Sign Up</Link>
