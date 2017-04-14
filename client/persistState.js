@@ -6,7 +6,6 @@ const key = 'p5js-editor';
 const storage = sessionStorage;
 
 export const saveState = (state) => {
-  console.warn('save');
   try {
     storage.setItem(key, JSON.stringify(state));
   } catch (error) {
