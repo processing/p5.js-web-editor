@@ -7,7 +7,7 @@ import { setUnsavedChanges,
   justOpenedProject,
   resetJustOpenedProject,
   showErrorModal } from './ide';
-import { saveState } from '../../../persistState';
+import { clearState, saveState } from '../../../persistState';
 
 const ROOT_URL = process.env.API_URL;
 
@@ -44,8 +44,20 @@ export function getProject(id) {
 
 export function persistState() {
   return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.PERSIST_STATE,
+    });
     const state = getState();
     saveState(state);
+  };
+}
+
+export function clearPersistedState() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.CLEAR_PERSISTED_STATE,
+    });
+    clearState();
   };
 }
 

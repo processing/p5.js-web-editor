@@ -40,6 +40,10 @@ class IDEView extends React.Component {
   }
 
   componentDidMount() {
+    // If page doesn't reload after Sign In then we need
+    // to force cleared state to be cleared
+    this.props.clearPersistedState();
+
     this.props.stopSketch();
     if (this.props.params.project_id) {
       const id = this.props.params.project_id;
@@ -593,6 +597,7 @@ IDEView.propTypes = {
   clearConsole: PropTypes.func.isRequired,
   showErrorModal: PropTypes.func.isRequired,
   hideErrorModal: PropTypes.func.isRequired,
+  clearPersistedState: PropTypes.func.isRequired,
   persistState: PropTypes.func.isRequired
 };
 
