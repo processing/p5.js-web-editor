@@ -111,6 +111,7 @@
     "s3-policy": "^0.2.0",
     "shortid": "^2.2.6",
     "srcdoc-polyfill": "^0.2.0",
+    "url": "^0.11.0",
     "webpack": "^1.14.0",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.10.0",
