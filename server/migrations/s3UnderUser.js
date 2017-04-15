@@ -20,7 +20,7 @@ let client = s3.createClient({
   s3Options: {
     accessKeyId: `${process.env.AWS_ACCESS_KEY}`,
     secretAccessKey: `${process.env.AWS_SECRET_KEY}`,
-    region: 'us-west-2'
+    region: `${process.env.AWS_REGION}`
   },
 });
 
@@ -42,7 +42,7 @@ Project.find({}, (err, projects) => {
           console.log(err);
         })
         .on('end', () => {
-          file.url = `https://s3-us-west-2.amazonaws.com/${process.env.S3_BUCKET}/${userId}/${key}`;
+          file.url = `https://s3-${process.env.AWS_REGION}.amazonaws.com/${process.env.S3_BUCKET}/${userId}/${key}`;
           project.save((err, savedProject) => {
             console.log(`updated file ${key}`);
           });

@@ -269,6 +269,8 @@ class IDEView extends React.Component {
               openProjectOptions={this.props.openProjectOptions}
               closeProjectOptions={this.props.closeProjectOptions}
               newFolder={this.props.newFolder}
+              user={this.props.user}
+              owner={this.props.project.owner}
             />
             <SplitPane
               split="vertical"

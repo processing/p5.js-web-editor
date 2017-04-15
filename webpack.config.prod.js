@@ -78,7 +78,8 @@ module.exports = {
       'process.env': {
         'API_URL': '"' + process.env.API_URL + '"',
         'NODE_ENV': JSON.stringify('production'),
-        'S3_BUCKET': '"' + process.env.S3_BUCKET + '"'
+        'S3_BUCKET': '"' + process.env.S3_BUCKET + '"',
+        'AWS_REGION': '"' + process.env.AWS_REGION + '"'
       }
     }),
     new webpack.optimize.CommonsChunkPlugin({

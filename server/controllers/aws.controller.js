@@ -11,14 +11,29 @@ const client = s3.createClient({
   s3Options: {
     accessKeyId: `${process.env.AWS_ACCESS_KEY}`,
     secretAccessKey: `${process.env.AWS_SECRET_KEY}`,
+    region: `${process.env.AWS_REGION}`
   },
 });
 
-const s3Bucket = `https://s3-us-west-2.amazonaws.com/${process.env.S3_BUCKET}/`;
+const s3Bucket = `https://s3-${process.env.AWS_REGION}.amazonaws.com/${process.env.S3_BUCKET}/`;
 
 function getExtension(filename) {
   const i = filename.lastIndexOf('.');
   return (i < 0) ? '' : filename.substr(i);
+}
+
+export function getObjectKey(url) {
+  const urlArray = url.split('/');
+  let objectKey;
+  if (urlArray.length === 6) {
+    const key = urlArray.pop();
+    const userId = urlArray.pop();
+    objectKey = `${userId}/${key}`
+  } else {
+    const key = urlArray.pop();
+    objectKey = key;
+  }
+  return objectKey; 
 }
 
 export function deleteObjectsFromS3(keyList, callback) {
@@ -71,8 +86,7 @@ export function signS3(req, res) {
 
 export function copyObjectInS3(req, res) {
   const url = req.body.url;
-  const objectKey = url.split('/').pop();
-
+  const objectKey = getObjectKey(url);
   const fileExtension = getExtension(objectKey);
   const newFilename = uuid.v4() + fileExtension;
   const params = {

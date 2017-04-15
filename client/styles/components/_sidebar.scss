@@ -131,6 +131,9 @@
   right: 0;
   .sidebar__file-item--selected > .file-item__content & {
     display: inline-block;
+    .sidebar--cant-edit & {
+      display: none;
+    }
   }
   & svg {
     width: #{10 / $base-font-size}rem;
@@ -212,6 +215,9 @@
   display: flex;
   align-items: center;
   position: relative;
+  .sidebar--cant-edit & {
+    display: none;
+  }
 }
 
 .sidebar__folder-icon {
