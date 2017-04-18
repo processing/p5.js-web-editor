@@ -19,10 +19,8 @@ class GridOutput extends React.Component {
         >
         </p>
         <table
-          tabIndex="0"
-          role="main"
           id="gridOutput-content-table"
-          aria-label="grid output details"
+          summary="grid output details"
         >
         </table>
         <div
