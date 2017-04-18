@@ -3,7 +3,7 @@ import request from 'request';
 import moment from 'moment';
 import Project from '../models/project';
 import User from '../models/user';
-import { deleteObjectsFromS3 } from './aws.controller';
+import { deleteObjectsFromS3, getObjectKey } from './aws.controller';
 
 export function createProject(req, res) {
   if (!req.user) {
@@ -101,10 +101,7 @@ function deleteFilesFromS3(files) {
       return false;
     })
     .map((file) => {
-      const urlComponents = file.url.split('/');
-      const key = urlComponents.pop();
-      const userId = urlComponents.pop();
-      return `${userId}/${key}`;
+      return getObjectKey(file.url);
     })
   );
 }
