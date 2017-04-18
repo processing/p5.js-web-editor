@@ -19,10 +19,8 @@ class TextOutput extends React.Component {
         >
         </p>
         <table
-          tabIndex="0"
-          role="main"
           id="textOutput-content-table"
-          aria-label="text output details"
+          summary="text output details"
         >
         </table>
         <div
