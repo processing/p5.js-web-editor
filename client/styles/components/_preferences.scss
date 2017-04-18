@@ -126,7 +126,7 @@
 }
 
 .preference__option:last-child {
-	padding-right: 0;	
+	padding-right: 0;
 }
 
 .preference__preview-button {
@@ -151,5 +151,5 @@
 }
 
 .preference__option.preference__canvas:not(:last-child) {
-	padding-right: #{20 / $base-font-size}rem;
+	padding-right: #{14 / $base-font-size}rem;
 }

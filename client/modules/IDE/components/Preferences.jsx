@@ -277,13 +277,13 @@ class Preferences extends React.Component {
               onChange={(event) => {
                 this.props.setGridOutput(event.target.checked);
               }}
-              aria-label="grid output on"
-              name="grid output"
-              id="grid-output-on"
+              aria-label="table output on"
+              name="table output"
+              id="table-output-on"
               value="On"
               checked={(this.props.gridOutput)}
             />
-            <label htmlFor="grid-output-on" className="preference__option preference__canvas">Grid-text</label>
+            <label htmlFor="table-output-on" className="preference__option preference__canvas">Table-text</label>
             <input
               type="checkbox"
               onChange={(event) => {
