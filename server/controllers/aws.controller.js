@@ -1,6 +1,7 @@
 import uuid from 'node-uuid';
 import policy from 's3-policy';
 import s3 from 's3';
+import { getProjectsForUserId } from './project.controller';
 
 const client = s3.createClient({
   maxAsyncS3: 20,
@@ -103,4 +104,45 @@ export function copyObjectInS3(req, res) {
   copy.on('end', (data) => {
     res.json({ url: `${s3Bucket}${userId}/${newFilename}` });
   });
+}
+
+export function listObjectsInS3ForUser(req, res) {
+  const userId = req.params.user_id;
+  const params = {
+    s3Params: {
+      Bucket: `${process.env.S3_BUCKET}`,
+      Prefix: `${userId}/`
+    }
+  };
+  let keys = [];
+  const list = client.listObjects(params)
+    .on('data', (data) => {
+      keys = keys.concat(data["Contents"].map((object) => {
+        return object["Key"];
+      }));
+    })
+    .on('end', () => {
+      console.log(keys);
+      // res.json({keys});
+      //map objects to project
+      const assets = [];
+      getProjectsForUserId(userId).then((projects) => {
+        projects.forEach((project) => {
+          project.files.forEach((file) => {
+            if (!file.url) return;
+
+            const key = keys.find((key) => file.url.includes(key));
+            if (!key) return;
+            assets.push({
+              name: file.name,
+              sketchName: project.name,
+              sketchId: project.id,
+              url: file.url,
+              key
+            });
+          });
+        });
+        res.json({assets});
+      });
+    });
 }

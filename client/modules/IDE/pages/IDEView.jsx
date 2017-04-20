@@ -30,6 +30,7 @@ import * as ConsoleActions from '../actions/console';
 import { getHTMLFile } from '../reducers/files';
 import Overlay from '../../App/components/Overlay';
 import SketchList from '../components/SketchList';
+import AssetList from '../components/AssetList';
 import About from '../components/About';
 
 class IDEView extends React.Component {
@@ -427,6 +428,18 @@ class IDEView extends React.Component {
             return (
               <Overlay>
                 <SketchList
+                  user={this.props.user}
+                  previousPath={this.props.ide.previousPath}
+                />
+              </Overlay>
+            );
+          }
+        })()}
+        {(() => { // eslint-disable-line
+          if (this.props.location.pathname.match(/assets$/)) {
+            return (
+              <Overlay>
+                <AssetList
                   username={this.props.params.username}
                   previousPath={this.props.ide.previousPath}
                 />
