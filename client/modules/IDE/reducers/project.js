@@ -25,6 +25,7 @@ const project = (state, action) => {
         id: action.project.id,
         name: action.project.name,
         updatedAt: action.project.updatedAt,
+        serveSecure: action.project.serveSecure,
         owner: action.owner
       };
     case ActionTypes.SET_PROJECT:
@@ -32,6 +33,7 @@ const project = (state, action) => {
         id: action.project.id,
         name: action.project.name,
         updatedAt: action.project.updatedAt,
+        serveSecure: action.project.serveSecure,
         owner: action.owner
       };
     case ActionTypes.RESET_PROJECT:
