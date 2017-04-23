@@ -14,6 +14,7 @@ import NewFolderModal from '../components/NewFolderModal';
 import ShareModal from '../components/ShareModal';
 import KeyboardShortcutModal from '../components/KeyboardShortcutModal';
 import ErrorModal from '../components/ErrorModal';
+import HelpModal from '../components/HelpModal';
 import Nav from '../../../components/Nav';
 import Console from '../components/Console';
 import Toast from '../components/Toast';
@@ -231,6 +232,7 @@ class IDEView extends React.Component {
           saveProject={this.props.saveProject}
           currentUser={this.props.user.username}
           clearConsole={this.props.clearConsole}
+          showHelpModal={this.props.showHelpModal}
         />
         <Preferences
           isVisible={this.props.ide.preferencesIsVisible}
@@ -450,6 +452,18 @@ class IDEView extends React.Component {
             );
           }
         })()}
+        {(() => { // eslint-disable-line
+          if (this.props.ide.helpType) {
+            return (
+              <Overlay>
+                <HelpModal
+                  type={this.props.ide.helpType}
+                  closeModal={this.props.hideHelpModal}
+                />
+              </Overlay>
+            );
+          }
+        })()}
       </div>
 
     );
@@ -493,7 +507,8 @@ IDEView.propTypes = {
     projectSavedTime: PropTypes.string.isRequired,
     previousPath: PropTypes.string.isRequired,
     justOpenedProject: PropTypes.bool.isRequired,
-    errorType: PropTypes.string
+    errorType: PropTypes.string,
+    helpType: PropTypes.string
   }).isRequired,
   stopSketch: PropTypes.func.isRequired,
   startTextOutput: PropTypes.func.isRequired,
@@ -604,7 +619,9 @@ IDEView.propTypes = {
   showErrorModal: PropTypes.func.isRequired,
   hideErrorModal: PropTypes.func.isRequired,
   clearPersistedState: PropTypes.func.isRequired,
-  persistState: PropTypes.func.isRequired
+  persistState: PropTypes.func.isRequired,
+  showHelpModal: PropTypes.func.isRequired,
+  hideHelpModal: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
