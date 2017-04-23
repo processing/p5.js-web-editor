@@ -110,7 +110,7 @@ class Toolbar extends React.Component {
               <input
                 id="serve-secure"
                 type="checkbox"
-                value={this.props.project.serveSecure}
+                checked={this.props.project.serveSecure || false}
                 onChange={(event) => {
                   this.props.setServeSecure(event.target.checked);
                 }}
