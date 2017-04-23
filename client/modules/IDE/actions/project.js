@@ -73,12 +73,12 @@ export function saveProject(autosave = false) {
   return (dispatch, getState) => {
     const state = getState();
     if (state.user.id && state.project.owner && state.project.owner.id !== state.user.id) {
-      return;
+      return Promise.reject();
     }
     const formParams = Object.assign({}, state.project);
     formParams.files = [...state.files];
     if (state.project.id) {
-      axios.put(`${ROOT_URL}/projects/${state.project.id}`, formParams, { withCredentials: true })
+      return axios.put(`${ROOT_URL}/projects/${state.project.id}`, formParams, { withCredentials: true })
         .then((response) => {
           dispatch(setUnsavedChanges(false));
           console.log(response.data);
@@ -110,11 +110,6 @@ export function saveProject(autosave = false) {
             });
           }
         });
-    } else {
-      axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
-        .then((response) => {
-          dispatch(setUnsavedChanges(false));
-          dispatch(setProject(response.data));
           browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
           dispatch({
             type: ActionTypes.NEW_PROJECT,
@@ -137,14 +132,20 @@ export function saveProject(autosave = false) {
         .catch((response) => {
           if (response.status === 403) {
             dispatch(showErrorModal('staleSession'));
+    }
+
+    return axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
+      .then((response) => {
+        dispatch(setUnsavedChanges(false));
+        dispatch(setProject(response.data));
           } else {
             dispatch({
               type: ActionTypes.PROJECT_SAVE_FAIL,
               error: response.data
-            });
           }
-        });
-    }
+          });
+        }
+      });
   };
 }
 
