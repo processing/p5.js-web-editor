@@ -14,6 +14,13 @@ import { redirectToProtocol, protocols } from '../../../components/forceProtocol
 const ROOT_URL = process.env.API_URL;
 
 export function setProject(project) {
+  const targetProtocol = project.serveSecure === true ?
+    protocols.https :
+    protocols.http;
+
+  // This will not reload if on same protocol
+  redirectToProtocol(targetProtocol);
+
   return {
     type: ActionTypes.SET_PROJECT,
     project,
