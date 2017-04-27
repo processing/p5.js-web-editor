@@ -426,10 +426,13 @@ class IDEView extends React.Component {
         {(() => { // eslint-disable-line
           if (this.props.location.pathname.match(/sketches$/)) {
             return (
-              <Overlay>
+              <Overlay
+                ariaLabel="project list"
+                title="Open a Sketch"
+                previousPath={this.props.ide.previousPath}
+              >
                 <SketchList
                   user={this.props.user}
-                  previousPath={this.props.ide.previousPath}
                 />
               </Overlay>
             );
@@ -450,7 +453,11 @@ class IDEView extends React.Component {
         {(() => { // eslint-disable-line
           if (this.props.location.pathname === '/about') {
             return (
-              <Overlay>
+              <Overlay
+                previousPath={this.props.ide.previousPath}
+                title="Welcome"
+                ariaLabel="about"
+              >
                 <About previousPath={this.props.ide.previousPath} />
               </Overlay>
             );
@@ -459,10 +466,13 @@ class IDEView extends React.Component {
         {(() => { // eslint-disable-line
           if (this.props.ide.shareModalVisible) {
             return (
-              <Overlay>
+              <Overlay
+                title="Share Sketch"
+                ariaLabel="share"
+                closeOverlay={this.props.closeShareModal}
+              >
                 <ShareModal
                   projectId={this.props.project.id}
-                  closeShareModal={this.props.closeShareModal}
                   ownerUsername={this.props.project.owner.username}
                 />
               </Overlay>

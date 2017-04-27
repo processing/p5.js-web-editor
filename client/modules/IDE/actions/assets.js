@@ -15,7 +15,7 @@ export function getAssets(userId) {
   return (dispatch, getState) => {
     axios.get(`${ROOT_URL}/S3/${userId}/objects`, { withCredentials: true })
       .then((response) => {
-        dispatch(setAssets(response.data));
+        dispatch(setAssets(response.data.assets));
       })
       .catch(response => dispatch({
         type: ActionTypes.ERROR

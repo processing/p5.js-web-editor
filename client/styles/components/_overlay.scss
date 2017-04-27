@@ -9,10 +9,33 @@
   overflow-y: hidden;
 }
 
-.overlay-content {
+.overlay__content {
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.overlay__body {
+  @extend %modal;
+  display: flex;
+  flex-wrap: wrap;
+  flex-flow: column;
+  max-height: 80%;
+  max-width: 65%;
+}
+
+.overlay__header {
+  display: flex;
+  justify-content: space-between;
+  padding: #{40 / $base-font-size}rem #{20 / $base-font-size}rem #{30 / $base-font-size}rem #{20 / $base-font-size}rem;
+  flex: 1 0 auto;
+}
+
+.overlay__close-button {
+  @include themify() {
+    @extend %icon;
+  }
+  padding: #{12 / $base-font-size}rem #{16 / $base-font-size}rem;
 }

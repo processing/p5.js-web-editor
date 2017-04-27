@@ -1,25 +1,9 @@
-.sketch-list {
-  @extend %modal;
-  display: flex;
-  flex-wrap: wrap;
-  flex-flow: column;
-  width: #{1000 / $base-font-size}rem;
-  height: 80%;
-  outline: none;
-}
-
-.sketch-list__header {
-  display: flex;
-  justify-content: space-between;
-}
-
-.sketch-list__header-title {  
-  padding: #{40 / $base-font-size}rem #{16 / $base-font-size}rem #{12 / $base-font-size}rem #{21 / $base-font-size}rem;
-}
 
 .sketches-table-container {
-  flex: 1 0 0%;
+  flex: 1 1 0%;
   overflow-y: scroll;
+  max-width: 100%;
+  width: #{1000 / $base-font-size}rem;
 }
 
 .sketches-table {
