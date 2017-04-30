@@ -152,8 +152,8 @@ class Nav extends React.PureComponent {
           })()}
         </ul>
         <div className="nav__announce">
-          This is a preview version of the editor, that has not yet been officially released. It is in development, you can report bugs
-          <a href="https://github.com/processing/p5.js-web-editor/issues" target="_blank" rel="noopener noreferrer">here</a>.
+          This is a preview version of the editor, that has not yet been officially released.
+          It is in development, you can report bugs <a href="https://github.com/processing/p5.js-web-editor/issues" target="_blank" rel="noopener noreferrer">here</a>.
           Please use with caution.
         </div>
       </nav>
