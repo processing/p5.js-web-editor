@@ -14,6 +14,7 @@ import NewFolderModal from '../components/NewFolderModal';
 import ShareModal from '../components/ShareModal';
 import KeyboardShortcutModal from '../components/KeyboardShortcutModal';
 import ErrorModal from '../components/ErrorModal';
+import HelpModal from '../components/HelpModal';
 import Nav from '../../../components/Nav';
 import Console from '../components/Console';
 import Toast from '../components/Toast';
@@ -219,6 +220,8 @@ class IDEView extends React.Component {
           hideEditProjectName={this.props.hideEditProjectName}
           openPreferences={this.props.openPreferences}
           preferencesIsVisible={this.props.ide.preferencesIsVisible}
+          serveSecure={this.props.project.serveSecure}
+          setServeSecure={this.props.setServeSecure}
           setTextOutput={this.props.setTextOutput}
           owner={this.props.project.owner}
           project={this.props.project}
@@ -229,6 +232,7 @@ class IDEView extends React.Component {
           saveProject={this.props.saveProject}
           currentUser={this.props.user.username}
           clearConsole={this.props.clearConsole}
+          showHelpModal={this.props.showHelpModal}
         />
         <Preferences
           isVisible={this.props.ide.preferencesIsVisible}
@@ -448,6 +452,18 @@ class IDEView extends React.Component {
             );
           }
         })()}
+        {(() => { // eslint-disable-line
+          if (this.props.ide.helpType) {
+            return (
+              <Overlay>
+                <HelpModal
+                  type={this.props.ide.helpType}
+                  closeModal={this.props.hideHelpModal}
+                />
+              </Overlay>
+            );
+          }
+        })()}
       </div>
 
     );
@@ -491,7 +507,8 @@ IDEView.propTypes = {
     projectSavedTime: PropTypes.string.isRequired,
     previousPath: PropTypes.string.isRequired,
     justOpenedProject: PropTypes.bool.isRequired,
-    errorType: PropTypes.string
+    errorType: PropTypes.string,
+    helpType: PropTypes.string
   }).isRequired,
   stopSketch: PropTypes.func.isRequired,
   startTextOutput: PropTypes.func.isRequired,
@@ -499,6 +516,7 @@ IDEView.propTypes = {
   project: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string.isRequired,
+    serveSecure: PropTypes.bool,
     owner: PropTypes.shape({
       username: PropTypes.string,
       id: PropTypes.string
@@ -506,6 +524,7 @@ IDEView.propTypes = {
     updatedAt: PropTypes.string
   }).isRequired,
   setProjectName: PropTypes.func.isRequired,
+  setServeSecure: PropTypes.func.isRequired,
   openPreferences: PropTypes.func.isRequired,
   editorAccessibility: PropTypes.shape({
     lintMessages: PropTypes.array.isRequired,
@@ -600,7 +619,9 @@ IDEView.propTypes = {
   showErrorModal: PropTypes.func.isRequired,
   hideErrorModal: PropTypes.func.isRequired,
   clearPersistedState: PropTypes.func.isRequired,
-  persistState: PropTypes.func.isRequired
+  persistState: PropTypes.func.isRequired,
+  showHelpModal: PropTypes.func.isRequired,
+  hideHelpModal: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

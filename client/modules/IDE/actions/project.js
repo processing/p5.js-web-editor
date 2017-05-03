@@ -9,10 +9,18 @@ import { setUnsavedChanges,
   resetJustOpenedProject,
   showErrorModal } from './ide';
 import { clearState, saveState } from '../../../persistState';
+import { redirectToProtocol, protocols } from '../../../components/forceProtocol';
 
 const ROOT_URL = process.env.API_URL;
 
 export function setProject(project) {
+  const targetProtocol = project.serveSecure === true ?
+    protocols.https :
+    protocols.http;
+
+  // This will not reload if on same protocol
+  redirectToProtocol(targetProtocol);
+
   return {
     type: ActionTypes.SET_PROJECT,
     project,
@@ -66,12 +74,12 @@ export function saveProject(autosave = false) {
   return (dispatch, getState) => {
     const state = getState();
     if (state.user.id && state.project.owner && state.project.owner.id !== state.user.id) {
-      return;
+      return Promise.reject();
     }
     const formParams = Object.assign({}, state.project);
     formParams.files = [...state.files];
     if (state.project.id) {
-      axios.put(`${ROOT_URL}/projects/${state.project.id}`, formParams, { withCredentials: true })
+      return axios.put(`${ROOT_URL}/projects/${state.project.id}`, formParams, { withCredentials: true })
         .then((response) => {
           dispatch(setUnsavedChanges(false));
           console.log(response.data);
@@ -103,41 +111,41 @@ export function saveProject(autosave = false) {
             });
           }
         });
-    } else {
-      axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
-        .then((response) => {
-          dispatch(setUnsavedChanges(false));
-          dispatch(setProject(response.data));
-          browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
-          dispatch({
-            type: ActionTypes.NEW_PROJECT,
-            project: response.data,
-            owner: response.data.user,
-            files: response.data.files
-          });
-          if (!autosave) {
-            if (state.preferences.autosave) {
-              dispatch(showToast(5500));
-              dispatch(setToastText('Project saved.'));
-              setTimeout(() => dispatch(setToastText('Autosave enabled.')), 1500);
-              dispatch(resetJustOpenedProject());
-            } else {
-              dispatch(showToast(1500));
-              dispatch(setToastText('Project saved.'));
-            }
-          }
-        })
-        .catch((response) => {
-          if (response.status === 403) {
-            dispatch(showErrorModal('staleSession'));
-          } else {
-            dispatch({
-              type: ActionTypes.PROJECT_SAVE_FAIL,
-              error: response.data
-            });
-          }
-        });
     }
+
+    return axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
+      .then((response) => {
+        dispatch(setUnsavedChanges(false));
+        dispatch(setProject(response.data));
+        browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
+        dispatch({
+          type: ActionTypes.NEW_PROJECT,
+          project: response.data,
+          owner: response.data.user,
+          files: response.data.files
+        });
+        if (!autosave) {
+          if (state.preferences.autosave) {
+            dispatch(showToast(5500));
+            dispatch(setToastText('Project saved.'));
+            setTimeout(() => dispatch(setToastText('Autosave enabled.')), 1500);
+            dispatch(resetJustOpenedProject());
+          } else {
+            dispatch(showToast(1500));
+            dispatch(setToastText('Project saved.'));
+          }
+        }
+      })
+      .catch((response) => {
+        if (response.status === 403) {
+          dispatch(showErrorModal('staleSession'));
+        } else {
+          dispatch({
+            type: ActionTypes.PROJECT_SAVE_FAIL,
+            error: response.data
+          });
+        }
+      });
   };
 }
 
@@ -246,6 +254,24 @@ export function cloneProject() {
           error: response.data
         }));
     });
+  };
+}
+
+export function setServeSecure(serveSecure, { redirect = true } = {}) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.SET_SERVE_SECURE,
+      serveSecure
+    });
+
+    if (redirect === true) {
+      dispatch(saveProject(false /* autosave */))
+        .then(
+          () => redirectToProtocol(serveSecure === true ? protocols.https : protocols.http)
+        );
+    }
+
+    return null;
   };
 }
 
