@@ -80,6 +80,119 @@
   width: #{48 / $base-font-size}rem;
 }
 
+/*
+  Search dialog
+*/
+.CodeMirror-advanced-dialog {
+  padding: #{14 / $base-font-size}rem #{20 / $base-font-size}rem #{14 / $base-font-size}rem #{18 / $base-font-size}rem;
+
+  border-radius: 2px;
+
+  @include themify() {
+    background-color: getThemifyVariable('modal-background-color');
+    box-shadow: 0 12px 12px 0 getThemifyVariable('shadow-color');
+    border: solid 0.5px getThemifyVariable('modal-border-color');
+  }
+}
+
+.CodeMirror-advanced-dialog .find label {
+  display: block;
+  margin-bottom: #{12 / $base-font-size}rem;
+
+  font-size: #{21 / $base-font-size}rem;
+  font-weight: bold;
+}
+
+.CodeMirror-search-field {
+  display: block;
+  width: 100%;
+  margin-bottom: #{12 / $base-font-size}rem;
+}
+
+.CodeMirror-search-hint {
+  display: none;
+}
+
+.CodeMirror-search-count {
+  display: block;
+  height: #{20 / $base-font-size}rem;
+  text-align: right;
+}
+
+.CodeMirror-advanced-dialog .buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/*
+  Previous / Next buttons
+*/
+.CodeMirror-advanced-dialog .buttons button:first-child,
+.CodeMirror-advanced-dialog .buttons button:nth-child(2) {
+  display: flex;
+  flex-direction: row;
+}
+
+.CodeMirror-advanced-dialog .buttons button:first-child::after,
+.CodeMirror-advanced-dialog .buttons button:nth-child(2)::after {
+  display: block;
+  content: ' ';
+
+  width: 14px;
+  height: 14px;
+
+  margin-left: #{8 / $base-font-size}rem;
+
+  @include themify() {
+    @extend %icon;
+  }
+
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+// Previous button
+.CodeMirror-advanced-dialog .buttons button:first-child::after {
+  background-image: url(../images/up-arrow.svg)
+}
+
+// Next button
+.CodeMirror-advanced-dialog .buttons button {
+  margin-left: #{12 / $base-font-size}rem;
+}
+
+.CodeMirror-advanced-dialog .buttons button:nth-child(2)::after {
+  background-image: url(../images/down-arrow.svg)
+}
+
+/*
+  Close button
+*/
+.CodeMirror-advanced-dialog .buttons button:last-child {
+  position: absolute;
+  top: #{14 / $base-font-size}rem;
+  right: #{18 / $base-font-size}rem;
+
+  display: flex;
+  flex-direction: row;
+}
+
+.CodeMirror-advanced-dialog .buttons button:last-child:after {
+  display: block;
+  content: ' ';
+
+  width: 16px;
+  height: 16px;
+
+  margin-left: #{8 / $base-font-size}rem;
+
+  @include themify() {
+    @extend %icon;
+  }
+
+  background: transparent url(../images/exit.svg) no-repeat;
+}
+
 .editor-holder {
   height: calc(100% - #{29 / $base-font-size}rem);
   width: 100%;

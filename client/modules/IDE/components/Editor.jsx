@@ -9,7 +9,11 @@ import 'codemirror/addon/lint/css-lint';
 import 'codemirror/addon/lint/html-lint';
 import 'codemirror/addon/comment/comment';
 import 'codemirror/keymap/sublime';
+import 'codemirror/addon/search/searchcursor';
+import 'codemirror/addon/search/matchesonscrollbar';
+import 'codemirror/addon/search/match-highlighter';
 import 'codemirror/addon/search/jump-to-line';
+
 import { JSHINT } from 'jshint';
 import { CSSLint } from 'csslint';
 import { HTMLHint } from 'htmlhint';
