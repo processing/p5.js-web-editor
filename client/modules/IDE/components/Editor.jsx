@@ -10,6 +10,8 @@ import 'codemirror/addon/lint/html-lint';
 import 'codemirror/addon/comment/comment';
 import 'codemirror/keymap/sublime';
 import 'codemirror/addon/search/jump-to-line';
+import 'codemirror/addon/display/panel';
+import 'codemirror-revisedsearch';
 import { JSHINT } from 'jshint';
 import { CSSLint } from 'csslint';
 import { HTMLHint } from 'htmlhint';
