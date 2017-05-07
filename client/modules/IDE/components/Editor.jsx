@@ -24,6 +24,9 @@ import '../../../utils/htmlmixed';
 import '../../../utils/p5-javascript';
 import Timer from '../components/Timer';
 import EditorAccessibility from '../components/EditorAccessibility';
+import search from '../../../utils/codemirror-search';
+
+search(CodeMirror);
 
 const beautifyCSS = beautifyJS.css;
 const beautifyHTML = beautifyJS.html;
