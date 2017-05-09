@@ -24,6 +24,7 @@ import '../../../utils/htmlmixed';
 import '../../../utils/p5-javascript';
 import Timer from '../components/Timer';
 import EditorAccessibility from '../components/EditorAccessibility';
+
 import search from '../../../utils/codemirror-search';
 
 search(CodeMirror);
@@ -40,6 +41,16 @@ const downArrowUrl = require('../../../images/down-arrow.svg');
 const unsavedChangesDotUrl = require('../../../images/unsaved-changes-dot.svg');
 const rightArrowUrl = require('../../../images/right-arrow.svg');
 const leftArrowUrl = require('../../../images/left-arrow.svg');
+
+const metaKey = (() => {
+  if (navigator != null && navigator.platform != null) {
+    return /^MAC/i.test(navigator.platform) ?
+      'Cmd' :
+      'Ctrl';
+  }
+
+  return 'Ctrl';
+})();
 
 class Editor extends React.Component {
   constructor(props) {
@@ -58,6 +69,7 @@ class Editor extends React.Component {
       fixedGutter: false,
       gutters: ['CodeMirror-lint-markers'],
       keyMap: 'sublime',
+      highlightSelectionMatches: true, // highlight current search match
       lint: {
         onUpdateLinting: debounce((annotations) => {
           this.props.clearLintMessage();
@@ -82,7 +94,10 @@ class Editor extends React.Component {
       'Cmd-Enter': () => null,
       'Shift-Cmd-Enter': () => null,
       'Ctrl-Enter': () => null,
-      'Shift-Ctrl-Enter': () => null
+      'Shift-Ctrl-Enter': () => null,
+      [`${metaKey}-F`]: 'findPersistent',
+      [`${metaKey}-G`]: 'findNext',
+      [`Shift-${metaKey}-G`]: 'findPrev',
     });
 
     this.initializeDocuments(this.props.files);
