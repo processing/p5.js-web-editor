@@ -162,12 +162,32 @@ export default function(CodeMirror) {
     return query;
   }
 
-  var queryDialog =
-    '<input type="text" class="search-input CodeMirror-search-field"/>' +
-    '<div class="button-wrap">' +
-      '<span class="CodeMirror-search-button icon up-arrow prev"></span>' +
-      '<span class="CodeMirror-search-button icon down-arrow next"></span>' +
-    '</div><div class="close icon"></div>';
+  var queryDialog = `
+    <h3 class="CodeMirror-search-title">Find</h3>
+    <input type="text" class="search-input CodeMirror-search-field" placeholder="Search for" />
+    <div class="CodeMirror-modifier-buttons button-wrap">
+      <button class="CodeMirror-regexp-button">
+        <span class="label">Regular expression</span>
+      </button>
+      <button class="CodeMirror-case-button">
+        <span class="label">Case sensitive</span>
+      </button>
+      <button class="CodeMirror-case-button">
+        <span class="label">Case sensitive</span>
+      </button>
+    </div>
+    <div class="CodeMirror-search-buttons button-wrap">
+      <button class="CodeMirror-search-button icon up-arrow prev">
+        <span class="label">Previous</span>
+      </button>
+      <button class="CodeMirror-search-button icon down-arrow next">
+        <span class="label">Next</span>
+      </button>
+    </div>
+    <button class="CodeMirror-close-button close icon">
+      <span class="label">Close</span>
+    </button>
+  `;
 
   function startSearch(cm, state, query) {
     state.queryText = query;
