@@ -53,7 +53,7 @@
 }
 
 .sidebar__file-item {
-  height: #{20 / $base-font-size}rem;
+  // height: #{20 / $base-font-size}rem;
   font-size: #{12 / $base-font-size}rem;
   cursor: pointer;
   position: relative;
@@ -66,6 +66,10 @@
       fill: map-get($theme-map, 'primary-text-color');
     }
   }
+}
+
+.sidebar__file-item--folder {
+  z-index: 1;
 }
 
 // to indent each row in the file tree
