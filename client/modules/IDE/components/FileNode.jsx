@@ -93,7 +93,7 @@ export class FileNode extends React.Component {
                     );
                   }
                   return (
-                    <div>
+                    <div className="sidebar__file-item--folder">
                       <button
                         className="sidebar__file-item-closed"
                         onClick={() => this.props.showFolderChildren(this.props.id)}
