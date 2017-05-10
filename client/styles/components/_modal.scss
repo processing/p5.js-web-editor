@@ -56,11 +56,12 @@
 }
 
 .keyboard-shortcuts {
-  @extend %modal;
   padding: #{20 / $base-font-size}rem;
+  padding-bottom: #{40 / $base-font-size}rem;
   width: #{450 / $base-font-size}rem;
 }
 
+<<<<<<< HEAD
 .keyboard-shortcuts__header {
   display: flex;
   justify-content: space-between;
@@ -71,6 +72,8 @@
   @include icon();
 }
 
+=======
+>>>>>>> refactoring of overlays, asset list styles
 .keyboard-shortcut-item {
   display: flex;
   & + & {

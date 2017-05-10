@@ -11,9 +11,9 @@ function setAssets(assets) {
   };
 }
 
-export function getAssets(userId) {
+export function getAssets(username) {
   return (dispatch, getState) => {
-    axios.get(`${ROOT_URL}/S3/${userId}/objects`, { withCredentials: true })
+    axios.get(`${ROOT_URL}/S3/${username}/objects`, { withCredentials: true })
       .then((response) => {
         dispatch(setAssets(response.data.assets));
       })

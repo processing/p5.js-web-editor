@@ -107,7 +107,7 @@ export function copyObjectInS3(req, res) {
 }
 
 export function listObjectsInS3ForUser(req, res) {
-  const userId = req.params.user_id;
+  const username = req.params.username;
   const params = {
     s3Params: {
       Bucket: `${process.env.S3_BUCKET}`,

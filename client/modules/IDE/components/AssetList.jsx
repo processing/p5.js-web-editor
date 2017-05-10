@@ -5,64 +5,50 @@ import { Link, browserHistory } from 'react-router';
 import InlineSVG from 'react-inlinesvg';
 import * as AssetActions from '../actions/assets';
 
-const exitUrl = require('../../../images/exit.svg');
 const trashCan = require('../../../images/trash-can.svg');
 
 class AssetList extends React.Component {
   constructor(props) {
     super(props);
-    this.closeAssetList = this.closeAssetList.bind(this);
-    this.props.getAssets(this.props.user.id);
-  }
-
-  closeAssetList() {
-    browserHistory.push(this.props.previousPath);
+    this.props.getAssets(this.props.username);
   }
 
   render() {
     return (
-      <section className="asset-list" aria-label="asset list" tabIndex="0" role="main" id="assetlist">
-        <header className="asset-list__header">
-          <h2 className="asset-list__header-title">Assets</h2>
-          <button className="asset-list__exit-button" onClick={this.closeAssetList}>
-            <InlineSVG src={exitUrl} alt="Close Asset List Overlay" />
-          </button>
-        </header>
-        <div className="asset-table-container">
-          <table className="asset-table">
-            <thead>
-              <tr>
-                <th className="asset-list__delete-column" scope="col"></th>
-                <th>Name</th>
-                <th>View</th>
-                <th>Sketch</th>
+      <div className="asset-table-container">
+        <table className="asset-table">
+          <thead>
+            <tr>
+              <th className="asset-list__delete-column" scope="col"></th>
+              <th>Name</th>
+              <th>View</th>
+              <th>Sketch</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.props.assets.map(asset =>
+              <tr className="asset-table__row" key={asset.key}>
+                <td className="asset-table__delete">
+                  <button
+                    className="asset-list__delete-button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (window.confirm(`Are you sure you want to delete ${asset.name}?`)) {
+                        this.props.deleteAsset(asset.key, this.props.user.id);
+                      }
+                    }}
+                  >
+                    <InlineSVG src={trashCan} alt="Delete Asset" />
+                  </button>
+                </td>
+                <td>{asset.name}</td>
+                <td><Link to={asset.url} target="_blank">View</Link></td>
+                <td><Link to={`/${this.props.user.username}/sketches/${asset.sketchId}`}>{asset.sketchName}</Link></td>
               </tr>
-            </thead>
-            <tbody>
-              {this.props.assets.map(asset =>
-                <tr className="asset-table__row" key={asset.key}>
-                  <td className="asset-table__delete">
-                    <button
-                      className="asset-list__delete-button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        if (window.confirm(`Are you sure you want to delete ${asset.name}?`)) {
-                          this.props.deleteAsset(asset.key, this.props.user.id);
-                        }
-                      }}
-                    >
-                      <InlineSVG src={trashCan} alt="Delete Asset" />
-                    </button>
-                  </td>
-                  <td>{asset.name}</td>
-                  <td><Link to={asset.url} target="_blank">View</Link></td>
-                  <td><Link to={`/${this.props.user.username}/sketches/${asset.sketchId}`}>{asset.sketchName}</Link></td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </section>
+            )}
+          </tbody>
+        </table>
+      </div>
     );
   }
 }
@@ -81,7 +67,6 @@ AssetList.propTypes = {
   })).isRequired,
   getAssets: PropTypes.func.isRequired,
   deleteAsset: PropTypes.func.isRequired,
-  previousPath: PropTypes.string.isRequired
 };
 
 function mapStateToProps(state) {

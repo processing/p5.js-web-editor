@@ -135,6 +135,10 @@ export function getProjectsForUserId(userId) {
   });
 }
 
+export function getProjectsForUserName(username) {
+  
+}
+
 export function getProjects(req, res) {
   if (req.user) {
     getProjectsForUserId(req.user._id)

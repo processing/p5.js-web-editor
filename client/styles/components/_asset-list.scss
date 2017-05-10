@@ -1,63 +1,58 @@
-
-.sketches-table-container {
+.asset-table-container {
   flex: 1 1 0%;
   overflow-y: scroll;
   max-width: 100%;
   width: #{1000 / $base-font-size}rem;
 }
 
-.sketches-table {
+.asset-table {
   width: 100%;
   padding: #{10 / $base-font-size}rem #{20 / $base-font-size}rem;
   max-height: 100%;
   border-spacing: 0;
-  & .sketch-list__trash-column {
+  & .asset-list__delete-column {
     width: #{23 / $base-font-size}rem;
+  }
+
+  & thead {
+    font-size: #{12 / $base-font-size}rem;
+    @include themify() {
+      color: getThemifyVariable('inactive-text-color')
+    }
+  }
+
+  & th {
+    height: #{32 / $base-font-size}rem;
+    font-weight: normal;
   }
 }
 
-.sketches-table thead th {
-  height: #{32 / $base-font-size}rem;
-}
-
-.sketches-table__row {
+.asset-table__row {
   margin: #{10 / $base-font-size}rem;
   height: #{72 / $base-font-size}rem;
   font-size: #{16 / $base-font-size}rem;
   cursor: pointer;
-}
 
-.sketches-table__row:nth-child(odd) {
-  @include themify() {
-    background: getThemifyVariable('console-header-background-color');
+  &:nth-child(odd) {
+    @include themify() {
+      background: getThemifyVariable('console-header-background-color');
+    }
+  }
+
+  & a {
+    @include themify() {
+      color: getThemifyVariable('primary-text-color');
+    }
   }
 }
 
-.sketches-table__row a {
-  @include themify() {
-    color: getThemifyVariable('primary-text-color');
-  }
-}
-
-
-.sketches-table thead {
-  font-size: #{12 / $base-font-size}rem;
-  @include themify() {
-    color: getThemifyVariable('inactive-text-color')
-  }
-}
-
-.sketches-table th {
-  font-weight: normal;
-}
-
-.visibility-toggle .sketch-list__trash-button {
+.visibility-toggle .asset-list__delete-button {
   @extend %hidden-element;
   width:#{20 / $base-font-size}rem;
   height:#{20 / $base-font-size}rem;
 }
 
-.visibility-toggle:hover .sketch-list__trash-button {
+.visibility-toggle:hover .asset-list__delete-button {
    @include themify() {
     background-color: transparent;
     border: none;

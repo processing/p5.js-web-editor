@@ -432,6 +432,7 @@ class IDEView extends React.Component {
                 previousPath={this.props.ide.previousPath}
               >
                 <SketchList
+                  username={this.props.params.username}
                   user={this.props.user}
                 />
               </Overlay>
@@ -441,10 +442,14 @@ class IDEView extends React.Component {
         {(() => { // eslint-disable-line
           if (this.props.location.pathname.match(/assets$/)) {
             return (
-              <Overlay>
+              <Overlay
+                title="Assets"
+                ariaLabel="asset list"
+                previousPath={this.props.ide.previousPath}
+              >
                 <AssetList
                   username={this.props.params.username}
-                  previousPath={this.props.ide.previousPath}
+                  user={this.props.user}
                 />
               </Overlay>
             );
@@ -482,10 +487,12 @@ class IDEView extends React.Component {
         {(() => { // eslint-disable-line
           if (this.props.ide.keyboardShortcutVisible) {
             return (
-              <Overlay>
-                <KeyboardShortcutModal
-                  closeModal={this.props.closeKeyboardShortcutModal}
-                />
+              <Overlay
+                title="Keyboard Shortcuts"
+                ariaLabel="keyboard shortcuts"
+                closeOverlay={this.props.closeKeyboardShortcutModal}
+              >
+                <KeyboardShortcutModal />
               </Overlay>
             );
           }
@@ -493,10 +500,13 @@ class IDEView extends React.Component {
         {(() => { // eslint-disable-line
           if (this.props.ide.errorType) {
             return (
-              <Overlay>
+              <Overlay
+                title="Error"
+                ariaLabel="error"
+                closeOverlay={this.props.hideErrorModal}
+              >
                 <ErrorModal
                   type={this.props.ide.errorType}
-                  closeModal={this.props.hideErrorModal}
                 />
               </Overlay>
             );
