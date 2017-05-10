@@ -134,11 +134,11 @@
 
 .toolbar__serve-secure-help {
 	display: inline-block;
-	vertical-align: top;
-	height: #{12 / $base-font-size}rem;
+	padding-top: 0;
+	padding-bottom: 0;
 	& svg {
-		width: #{12 / $base-font-size}rem;
-		height: #{12 / $base-font-size}rem;
+		width: #{10 / $base-font-size}rem;
+		height: #{10 / $base-font-size}rem;
 	}
 	@include themify() {
 		& path {
