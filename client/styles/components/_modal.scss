@@ -61,19 +61,6 @@
   width: #{450 / $base-font-size}rem;
 }
 
-<<<<<<< HEAD
-.keyboard-shortcuts__header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: #{20 / $base-font-size}rem;
-}
-
-.keyboard-shortcuts__close {
-  @include icon();
-}
-
-=======
->>>>>>> refactoring of overlays, asset list styles
 .keyboard-shortcut-item {
   display: flex;
   & + & {

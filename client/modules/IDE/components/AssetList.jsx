@@ -1,9 +1,10 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Link, browserHistory } from 'react-router';
+import { Link } from 'react-router';
 import InlineSVG from 'react-inlinesvg';
 import * as AssetActions from '../actions/assets';
+import prettyBytes from 'pretty-bytes';
 
 const trashCan = require('../../../images/trash-can.svg');
 
@@ -21,13 +22,14 @@ class AssetList extends React.Component {
             <tr>
               <th className="asset-list__delete-column" scope="col"></th>
               <th>Name</th>
+              <th>Size</th>
               <th>View</th>
               <th>Sketch</th>
             </tr>
           </thead>
           <tbody>
             {this.props.assets.map(asset =>
-              <tr className="asset-table__row" key={asset.key}>
+              <tr className="asset-table__row visibility-toggle" key={asset.key}>
                 <td className="asset-table__delete">
                   <button
                     className="asset-list__delete-button"
@@ -42,8 +44,9 @@ class AssetList extends React.Component {
                   </button>
                 </td>
                 <td>{asset.name}</td>
+                <td>{prettyBytes(asset.size)}</td>
                 <td><Link to={asset.url} target="_blank">View</Link></td>
-                <td><Link to={`/${this.props.user.username}/sketches/${asset.sketchId}`}>{asset.sketchName}</Link></td>
+                <td><Link to={`/${this.props.username}/sketches/${asset.sketchId}`}>{asset.sketchName}</Link></td>
               </tr>
             )}
           </tbody>
@@ -55,9 +58,9 @@ class AssetList extends React.Component {
 
 AssetList.propTypes = {
   user: PropTypes.shape({
-    username: PropTypes.string,
     id: PropTypes.string
   }).isRequired,
+  username: PropTypes.string.isRequired,
   assets: PropTypes.arrayOf(PropTypes.shape({
     key: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,

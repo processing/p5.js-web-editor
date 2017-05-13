@@ -2,6 +2,7 @@ import uuid from 'node-uuid';
 import policy from 's3-policy';
 import s3 from 's3';
 import { getProjectsForUserId } from './project.controller';
+import { findUserByUsername } from './user.controller';
 
 const client = s3.createClient({
   maxAsyncS3: 20,
@@ -108,41 +109,46 @@ export function copyObjectInS3(req, res) {
 
 export function listObjectsInS3ForUser(req, res) {
   const username = req.params.username;
-  const params = {
-    s3Params: {
-      Bucket: `${process.env.S3_BUCKET}`,
-      Prefix: `${userId}/`
-    }
-  };
-  let keys = [];
-  const list = client.listObjects(params)
-    .on('data', (data) => {
-      keys = keys.concat(data["Contents"].map((object) => {
-        return object["Key"];
-      }));
-    })
-    .on('end', () => {
-      console.log(keys);
-      // res.json({keys});
-      //map objects to project
-      const assets = [];
-      getProjectsForUserId(userId).then((projects) => {
-        projects.forEach((project) => {
-          project.files.forEach((file) => {
-            if (!file.url) return;
+  findUserByUsername(username, (user) => {
+    const userId = user.id;
+    const params = {
+      s3Params: {
+        Bucket: `${process.env.S3_BUCKET}`,
+        Prefix: `${userId}/`
+      }
+    };
+    let assets = [];
+    const list = client.listObjects(params)
+      .on('data', (data) => {
+        console.log(data);
+        assets = assets.concat(data["Contents"].map((object) => {
+          return { key: object["Key"], size: object["Size"] };
+        }));
+      })
+      .on('end', () => {
+        console.log(assets);
+        // res.json({assets});
+        //map objects to project
+        const projectAssets = [];
+        getProjectsForUserId(userId).then((projects) => {
+          projects.forEach((project) => {
+            project.files.forEach((file) => {
+              if (!file.url) return;
 
-            const key = keys.find((key) => file.url.includes(key));
-            if (!key) return;
-            assets.push({
-              name: file.name,
-              sketchName: project.name,
-              sketchId: project.id,
-              url: file.url,
-              key
+              const foundAsset = assets.find((asset) => file.url.includes(asset.key));
+              if (!foundAsset) return;
+              projectAssets.push({
+                name: file.name,
+                sketchName: project.name,
+                sketchId: project.id,
+                url: file.url,
+                key: foundAsset.key,
+                size: foundAsset.size
+              });
             });
           });
+          res.json({assets});
         });
-        res.json({assets});
       });
-    });
+  });
 }

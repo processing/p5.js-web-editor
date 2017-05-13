@@ -1,17 +1,10 @@
-import React, { PropTypes } from 'react';
-import InlineSVG from 'react-inlinesvg';
+import React from 'react';
 
 import {
   metaKeyName,
 } from '../../../utils/metaKey';
 
-const exitUrl = require('../../../images/exit.svg');
-
 class KeyboardShortcutModal extends React.Component {
-  componentDidMount() {
-    this.isMac = navigator.userAgent.toLowerCase().indexOf('mac') !== -1;
-  }
-
   render() {
     return (
       <ul className="keyboard-shortcuts" title="keyboard shortcuts">
