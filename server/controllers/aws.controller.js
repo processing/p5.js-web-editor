@@ -93,15 +93,14 @@ export function copyObjectInS3(req, res) {
   const params = {
     Bucket: `${process.env.S3_BUCKET}`,
     CopySource: `${process.env.S3_BUCKET}/${objectKey}`,
-    Key: `${userId}/${newFilename}`
+    Key: `${userId}/${newFilename}`,
+    ACL: 'public-read'
   };
   const copy = client.copyObject(params);
   copy.on('err', (err) => {
-    console.log('in error');
     console.log(err);
   });
   copy.on('end', (data) => {
-    console.log(data);
     res.json({ url: `${s3Bucket}${userId}/${newFilename}` });
   });
 }
