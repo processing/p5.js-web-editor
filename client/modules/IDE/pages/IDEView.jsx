@@ -96,9 +96,14 @@ class IDEView extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.isUserOwner() && this.props.project.id) {
-      if (this.props.preferences.autosave && this.props.ide.unsavedChanges && this.autosaveInterval === null && !this.props.ide.justOpenedProject) {
-        console.log('saving project in 30 seconds');
-        this.autosaveInterval = setTimeout(this.props.autosaveProject, 30000);
+      if (this.props.preferences.autosave && this.props.ide.unsavedChanges && !this.props.ide.justOpenedProject) {
+        if (this.props.selectedFile.name === prevProps.selectedFile.name && this.props.selectedFile.content !== prevProps.selectedFile.content) {
+          if (this.autosaveInterval) {
+            clearTimeout(this.autosaveInterval);
+          }
+          console.log('will save project in 20 seconds');
+          this.autosaveInterval = setTimeout(this.props.autosaveProject, 20000);
+        }
       } else if (this.autosaveInterval && !this.props.preferences.autosave) {
         clearTimeout(this.autosaveInterval);
         this.autosaveInterval = null;
@@ -557,7 +562,8 @@ IDEView.propTypes = {
   updateFileContent: PropTypes.func.isRequired,
   selectedFile: PropTypes.shape({
     id: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired
+    content: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
   }).isRequired,
   setSelectedFile: PropTypes.func.isRequired,
   htmlFile: PropTypes.shape({
