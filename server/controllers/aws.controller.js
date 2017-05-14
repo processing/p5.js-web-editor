@@ -89,13 +89,14 @@ export function copyObjectInS3(req, res) {
   const objectKey = getObjectKey(url);
   const fileExtension = getExtension(objectKey);
   const newFilename = uuid.v4() + fileExtension;
+  const userId = req.user.id;
   const params = {
     Bucket: `${process.env.S3_BUCKET}`,
     CopySource: `${process.env.S3_BUCKET}/${objectKey}`,
-    Key: newFilename
+    Key: `${userId}/${newFilename}`
   };
   const copy = client.copyObject(params);
   copy.on('end', () => {
-    res.json({ url: `${s3Bucket}${newFilename}` });
+    res.json({ url: `${s3Bucket}${userId}/${newFilename}` });
   });
 }
