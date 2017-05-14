@@ -97,9 +97,11 @@ export function copyObjectInS3(req, res) {
   };
   const copy = client.copyObject(params);
   copy.on('err', (err) => {
+    console.log('in error');
     console.log(err);
   });
-  copy.on('end', () => {
+  copy.on('end', (data) => {
+    console.log(data);
     res.json({ url: `${s3Bucket}${userId}/${newFilename}` });
   });
 }
