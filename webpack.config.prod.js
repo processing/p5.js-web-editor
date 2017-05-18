@@ -9,7 +9,7 @@ var cssnano = require('cssnano');
 require('dotenv').config();
 
 module.exports = {
-  devtool: 'hidden-source-map',
+  devtool: 'source-map',
 
   entry: {
     app: [
