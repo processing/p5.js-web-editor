@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import InlineSVG from 'react-inlinesvg';
-import * as AssetActions from '../actions/assets';
 import prettyBytes from 'pretty-bytes';
+
+import * as AssetActions from '../actions/assets';
 
 const trashCan = require('../../../images/trash-can.svg');
 

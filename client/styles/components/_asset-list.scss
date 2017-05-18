@@ -3,6 +3,7 @@
   overflow-y: scroll;
   max-width: 100%;
   width: #{1000 / $base-font-size}rem;
+  min-height: #{400 / $base-font-size}rem;
 }
 
 .asset-table {
@@ -31,7 +32,6 @@
   margin: #{10 / $base-font-size}rem;
   height: #{72 / $base-font-size}rem;
   font-size: #{16 / $base-font-size}rem;
-  cursor: pointer;
 
   &:nth-child(odd) {
     @include themify() {
@@ -52,18 +52,18 @@
   height:#{20 / $base-font-size}rem;
 }
 
-.visibility-toggle:hover .asset-list__delete-button {
-   @include themify() {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    position: initial;
-    left: 0;
-    top: 0;
-      & g {
-        opacity: 1;
-        fill: getThemifyVariable('icon-hover-color');
-      }
-  }
-}
+// .visibility-toggle:hover .asset-list__delete-button {
+//    @include themify() {
+//     background-color: transparent;
+//     border: none;
+//     cursor: pointer;
+//     padding: 0;
+//     position: initial;
+//     left: 0;
+//     top: 0;
+//       & g {
+//         opacity: 1;
+//         fill: getThemifyVariable('icon-hover-color');
+//       }
+//   }
+// }

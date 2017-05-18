@@ -120,15 +120,11 @@ export function listObjectsInS3ForUser(req, res) {
     let assets = [];
     const list = client.listObjects(params)
       .on('data', (data) => {
-        console.log(data);
         assets = assets.concat(data["Contents"].map((object) => {
           return { key: object["Key"], size: object["Size"] };
         }));
       })
       .on('end', () => {
-        console.log(assets);
-        // res.json({assets});
-        //map objects to project
         const projectAssets = [];
         getProjectsForUserId(userId).then((projects) => {
           projects.forEach((project) => {
@@ -145,9 +141,9 @@ export function listObjectsInS3ForUser(req, res) {
                 key: foundAsset.key,
                 size: foundAsset.size
               });
+              res.json({assets: projectAssets});
             });
           });
-          res.json({assets});
         });
       });
   });
