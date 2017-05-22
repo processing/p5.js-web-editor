@@ -36,6 +36,7 @@ export default function(CodeMirror) {
   function SearchState() {
     this.posFrom = this.posTo = this.lastQuery = this.query = null;
     this.overlay = null;
+    this.regexp = false;
   }
 
   function getSearchState(cm) {
@@ -94,6 +95,13 @@ export default function(CodeMirror) {
         CodeMirror.commands.findNext(cm);
         searchField.blur();
         cm.focus();
+      });
+
+      var regexpButton = dialog.getElementsByClassName("CodeMirror-regexp-button")[0];
+      CodeMirror.on(regexpButton, "click", function () {
+        var state = getSearchState(cm);
+        state.regexp = regexpButton.classList.toggle("CodeMirror-is-active");
+        startSearch(cm, getSearchState(cm), searchField.value);
       });
     } else {
       searchField.focus();
@@ -190,8 +198,12 @@ export default function(CodeMirror) {
   `;
 
   function startSearch(cm, state, query) {
+    if (state.regexp === true) {
+      query = `/${query}/`;
+    }
     state.queryText = query;
     state.query = parseQuery(query);
+
     cm.removeOverlay(state.overlay, queryCaseInsensitive(state.query));
     state.overlay = searchOverlay(state.query, queryCaseInsensitive(state.query));
     cm.addOverlay(state.overlay);
