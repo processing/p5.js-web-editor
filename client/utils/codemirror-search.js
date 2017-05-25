@@ -358,6 +358,7 @@ export default function(CodeMirror) {
     });
   }
 
+  // TODO: This will need updating if replace is implemented
   function replace(cm, all) {
     var prevDialog = document.getElementsByClassName("CodeMirror-dialog")[0];
     if (prevDialog) {
@@ -409,6 +410,6 @@ export default function(CodeMirror) {
   CodeMirror.commands.findNext = doSearch;
   CodeMirror.commands.findPrev = function(cm) {doSearch(cm, true);};
   CodeMirror.commands.clearSearch = clearSearch;
-  CodeMirror.commands.replace = replace;
-  CodeMirror.commands.replaceAll = function(cm) {replace(cm, true);};
+  // CodeMirror.commands.replace = replace;
+  // CodeMirror.commands.replaceAll = function(cm) {replace(cm, true);};
 };
