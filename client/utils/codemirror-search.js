@@ -37,19 +37,15 @@ export default function(CodeMirror) {
     this.posFrom = this.posTo = this.lastQuery = this.query = null;
     this.overlay = null;
     this.regexp = false;
+    this.caseInsensitive = true;
   }
 
   function getSearchState(cm) {
     return cm.state.search || (cm.state.search = new SearchState());
   }
 
-  function queryCaseInsensitive(query) {
-    return typeof query == "string" && query == query.toLowerCase();
-  }
-
   function getSearchCursor(cm, query, pos) {
-    // Heuristic: if the query string is all lowercase, do a case insensitive search.
-    return cm.getSearchCursor(query, pos, queryCaseInsensitive(query));
+    return cm.getSearchCursor(query, pos, getSearchState(cm).caseInsensitive);
   }
 
   function persistentDialog(cm, text, deflt, onEnter, onKeyDown) {
@@ -70,6 +66,8 @@ export default function(CodeMirror) {
 
       var dialog = document.getElementsByClassName("CodeMirror-dialog")[0];
       var closeButton = dialog.getElementsByClassName("close")[0];
+
+      var state = getSearchState(cm);
 
       CodeMirror.on(searchField, "keyup", function (e) {
         if (e.keyCode !== 13 && searchField.value.length > 1) { // not enter and more than 1 character to search
@@ -103,6 +101,22 @@ export default function(CodeMirror) {
         state.regexp = regexpButton.classList.toggle("CodeMirror-search-modifier-is-active");
         startSearch(cm, getSearchState(cm), searchField.value);
       });
+
+      state.regexp ?
+        regexpButton.classList.add("CodeMirror-search-modifier-is-active") :
+        regexpButton.classList.remove("CodeMirror-search-modifier-is-active");
+
+      var caseSensitiveButton = dialog.getElementsByClassName("CodeMirror-case-button")[0];
+      CodeMirror.on(caseSensitiveButton, "click", function () {
+        var state = getSearchState(cm);
+        state.caseInsensitive = !caseSensitiveButton.classList.toggle("CodeMirror-search-modifier-is-active");
+        startSearch(cm, getSearchState(cm), searchField.value);
+      });
+
+      state.caseInsensitive ?
+        caseSensitiveButton.classList.remove("CodeMirror-search-modifier-is-active") :
+        caseSensitiveButton.classList.add("CodeMirror-search-modifier-is-active");
+
     } else {
       searchField.focus();
     }
@@ -205,12 +219,12 @@ export default function(CodeMirror) {
     state.queryText = query;
     state.query = parseQuery(query);
 
-    cm.removeOverlay(state.overlay, queryCaseInsensitive(state.query));
-    state.overlay = searchOverlay(state.query, queryCaseInsensitive(state.query));
+    cm.removeOverlay(state.overlay, state.caseInsensitive);
+    state.overlay = searchOverlay(state.query, state.caseInsensitive);
     cm.addOverlay(state.overlay);
     if (cm.showMatchesOnScrollbar) {
       if (state.annotate) { state.annotate.clear(); state.annotate = null; }
-      state.annotate = cm.showMatchesOnScrollbar(state.query, queryCaseInsensitive(state.query));
+      state.annotate = cm.showMatchesOnScrollbar(state.query,  state.caseInsensitive);
     }
   }
 
