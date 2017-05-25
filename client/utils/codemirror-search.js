@@ -214,7 +214,7 @@ export default function(CodeMirror) {
 
   function startSearch(cm, state, query) {
     if (state.regexp === true) {
-      query = `/${query}/`;
+      query = `/${query}/${state.caseInsensitive ? 'i' : ''}`;
     }
     state.queryText = query;
     state.query = parseQuery(query);
