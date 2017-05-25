@@ -13,17 +13,7 @@
 export default function(CodeMirror) {
   "use strict";
 
-  function searchOverlay(query, caseInsensitive, wholeWord) {
-    if (typeof query == "string") {
-      query = query.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
-      if (wholeWord) {
-        query += '\\b';
-      }
-      query = new RegExp(query, caseInsensitive ? "gi" : "g");
-    } else if (!query.global) {
-      query = new RegExp(query.source, query.ignoreCase ? "gi" : "g");
-    }
-
+  function searchOverlay(query) {
     return {token: function(stream) {
       query.lastIndex = stream.pos;
       var match = query.exec(stream.string);
@@ -43,7 +33,7 @@ export default function(CodeMirror) {
     this.overlay = null;
     this.regexp = false;
     this.caseInsensitive = true;
-    this.wholeWord = true;
+    this.wholeWord = false;
   }
 
   function getSearchState(cm) {
@@ -189,17 +179,40 @@ export default function(CodeMirror) {
     })
   }
 
-  function parseQuery(query) {
-    var isRE = query.match(/^\/(.*)\/([a-z]*)$/);
-    if (isRE) {
-      try { query = new RegExp(isRE[1], isRE[2].indexOf("i") == -1 ? "" : "i"); }
-      catch(e) {} // Not a regular expression after all, do a string search
+  /*
+    Parses the query text and state and returns
+    a RegExp ready for searching
+  */
+  function parseQuery(query, state) {
+    var emptyQuery = 'x^'; // matches nothing
+
+    if (query === '') { // empty string matches nothing
+      query = emptyQuery;
     } else {
-      query = parseString(query)
+      if (state.regexp === false) {
+        query = parseString(query);
+        query = query.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+      }
+
+      if (state.wholeWord) {
+        query += '\\b';
+      }
     }
-    if (typeof query == "string" ? query == "" : query.test(""))
-      query = /x^/;
-    return query;
+
+    var regexp;
+
+    try {
+      regexp = new RegExp(query, state.caseInsensitive ? "gi" : "g");
+    } catch (e) {
+      regexp = new RegExp(emptyQuery, 'g');
+    }
+
+    // If the resulting regexp will match everything, do not use it
+    if (regexp.test('')) {
+      return new RegExp(emptyQuery, 'g');
+    }
+
+    return regexp;
   }
 
   var queryDialog = `
@@ -252,15 +265,11 @@ export default function(CodeMirror) {
   `;
 
   function startSearch(cm, state, originalQuery) {
-    var query = originalQuery;
-    if (state.regexp === true) {
-      query = `/${originalQuery}/${state.caseInsensitive ? 'i' : ''}`;
-    }
     state.queryText = originalQuery;
-    state.query = parseQuery(query);
+    state.query = parseQuery(originalQuery, state);
 
     cm.removeOverlay(state.overlay, state.caseInsensitive);
-    state.overlay = searchOverlay(state.query, state.caseInsensitive, state.wholeWord);
+    state.overlay = searchOverlay(state.query);
     cm.addOverlay(state.overlay);
     if (cm.showMatchesOnScrollbar) {
       if (state.annotate) { state.annotate.clear(); state.annotate = null; }
