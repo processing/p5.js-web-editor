@@ -1,8 +1,9 @@
 import crypto from 'crypto';
 import async from 'async';
-import nodemailer from 'nodemailer';
-import mg from 'nodemailer-mailgun-transport';
+
 import User from '../models/user';
+import mail from '../utils/mail';
+import auth from '../utils/auth';
 
 export function createUser(req, res, next) {
   const user = new User({
@@ -32,11 +33,19 @@ export function createUser(req, res, next) {
             next(loginErr);
             return;
           }
-          res.json({
-            email: req.user.email,
-            username: req.user.username,
-            preferences: req.user.preferences,
-            id: req.user._id
+          mail.send('email-verification', {
+            body: {
+              link: `http://${req.headers.host}/verify?t=${auth.createVerificationToken(req.body.email)}`
+            },
+            to: req.body.email,
+            subject: 'Email Verification',
+          }, (result) => { // eslint-disable-line no-unused-vars
+            res.json({
+              email: req.user.email,
+              username: req.user.username,
+              preferences: req.user.preferences,
+              id: req.user._id
+            });
           });
         });
       });
@@ -111,27 +120,13 @@ export function resetPasswordInitiate(req, res) {
       });
     },
     (token, user, done) => {
-      const auth = {
-        auth: {
-          api_key: process.env.MAILGUN_KEY,
-          domain: process.env.MAILGUN_DOMAIN
-        }
-      };
-
-      const transporter = nodemailer.createTransport(mg(auth));
-      const message = {
+      mail.send('reset-password', {
+        body: {
+          link: `http://${req.headers.host}/reset-password/${token}`,
+        },
         to: user.email,
-        from: 'p5.js Web Editor <noreply@p5js.org>',
         subject: 'p5.js Web Editor Password Reset',
-        text: `You are receiving this email because you (or someone else) have requested the reset of the password for your account.
-        \n\nPlease click on the following link, or paste this into your browser to complete the process:
-        \n\nhttp://${req.headers.host}/reset-password/${token}
-        \n\nIf you did not request this, please ignore this email and your password will remain unchanged.
-        \n\nThanks for using the p5.js Web Editor!\n`
-      };
-      transporter.sendMail(message, (error) => {
-        done(error);
-      });
+      }, done);
     }
   ], (err) => {
     if (err) {
@@ -150,6 +145,28 @@ export function validateResetPasswordToken(req, res) {
       return;
     }
     res.json({ success: true });
+  });
+}
+
+export function verifyEmail(req, res) {
+  const token = req.query.t;
+  // verify the token
+  auth.verifyEmailToken(token)
+  .then((data) => {
+    const email = data.email;
+    // change the verified field for the user or throw if the user is not found
+    User.findOne({ email })
+    .then((user) => {
+      // change the field for the user, and send the new cookie
+      user.verified = 0; // eslint-disable-line
+      user.save()
+      .then((result) => { // eslint-disable-line
+        res.json({ user });
+      });
+    });
+  })
+  .catch((err) => {
+    res.json(err);
   });
 }
 
