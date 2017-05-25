@@ -130,11 +130,11 @@
 .CodeMirror-modifier-buttons {
   display: flex;
   justify-content: flex-end;
-
-  // Hide until functionality implemented
-  display: none;
 }
 
+.CodeMirror-regexp-button {
+  border: 1px solid transparent;
+}
 
 /*
   Previous / Next buttons
@@ -216,6 +216,16 @@
   }
 
   background: transparent url(../images/exit.svg) no-repeat;
+}
+
+/*
+
+*/
+.CodeMirror-is-active {
+  @include themify() {
+    border: 1px solid getThemifyVariable('button-border-color');
+    background: getThemifyVariable('button-active-color');
+  }
 }
 
 .editor-holder {
