@@ -13,11 +13,16 @@
 export default function(CodeMirror) {
   "use strict";
 
-  function searchOverlay(query, caseInsensitive) {
-    if (typeof query == "string")
-      query = new RegExp(query.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"), caseInsensitive ? "gi" : "g");
-    else if (!query.global)
+  function searchOverlay(query, caseInsensitive, wholeWord) {
+    if (typeof query == "string") {
+      query = query.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+      if (wholeWord) {
+        query += '\\b';
+      }
+      query = new RegExp(query, caseInsensitive ? "gi" : "g");
+    } else if (!query.global) {
       query = new RegExp(query.source, query.ignoreCase ? "gi" : "g");
+    }
 
     return {token: function(stream) {
       query.lastIndex = stream.pos;
@@ -38,6 +43,7 @@ export default function(CodeMirror) {
     this.overlay = null;
     this.regexp = false;
     this.caseInsensitive = true;
+    this.wholeWord = true;
   }
 
   function getSearchState(cm) {
@@ -116,6 +122,18 @@ export default function(CodeMirror) {
       state.caseInsensitive ?
         caseSensitiveButton.classList.remove("CodeMirror-search-modifier-is-active") :
         caseSensitiveButton.classList.add("CodeMirror-search-modifier-is-active");
+
+      var wholeWordButton = dialog.getElementsByClassName("CodeMirror-word-button")[0];
+      CodeMirror.on(wholeWordButton, "click", function () {
+        var state = getSearchState(cm);
+        state.wholeWord = wholeWordButton.classList.toggle("CodeMirror-search-modifier-is-active");
+        startSearch(cm, getSearchState(cm), searchField.value);
+      });
+
+      state.wholeWord ?
+        wholeWordButton.classList.remove("CodeMirror-search-modifier-is-active") :
+        wholeWordButton.classList.add("CodeMirror-search-modifier-is-active");
+
 
     } else {
       searchField.focus();
@@ -197,6 +215,10 @@ export default function(CodeMirror) {
           <span aria-hidden="true" class="button">Aa</span>
           <span class="label">Case sensitive</span>
         </button>
+        <button class="CodeMirror-search-modifier-button CodeMirror-word-button">
+          <span aria-hidden="true" class="button">" "</span>
+          <span class="label">Whole words</span>
+        </button>
       </div>
       <div class="CodeMirror-search-nav">
         <button class="CodeMirror-search-button icon up-arrow prev">
@@ -221,7 +243,7 @@ export default function(CodeMirror) {
     state.query = parseQuery(query);
 
     cm.removeOverlay(state.overlay, state.caseInsensitive);
-    state.overlay = searchOverlay(state.query, state.caseInsensitive);
+    state.overlay = searchOverlay(state.query, state.caseInsensitive, state.wholeWord);
     cm.addOverlay(state.overlay);
     if (cm.showMatchesOnScrollbar) {
       if (state.annotate) { state.annotate.clear(); state.annotate = null; }
