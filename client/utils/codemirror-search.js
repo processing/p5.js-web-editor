@@ -131,8 +131,8 @@ export default function(CodeMirror) {
       });
 
       state.wholeWord ?
-        wholeWordButton.classList.remove("CodeMirror-search-modifier-is-active") :
-        wholeWordButton.classList.add("CodeMirror-search-modifier-is-active");
+        wholeWordButton.classList.add("CodeMirror-search-modifier-is-active") :
+        wholeWordButton.classList.remove("CodeMirror-search-modifier-is-active");
 
 
     } else {
