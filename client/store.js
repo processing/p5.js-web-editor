@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import DevTools from './modules/App/components/DevTools';
 import rootReducer from './reducers';
+import { clearState, loadState } from './persistState';
 
 export default function configureStore(initialState) {
   const enhancers = [
@@ -13,9 +14,12 @@ export default function configureStore(initialState) {
     enhancers.push(window.devToolsExtension ? window.devToolsExtension() : DevTools.instrument());
   }
 
+  const savedState = loadState();
+  clearState();
+
   const store = createStore(
     rootReducer,
-    initialState,
+    savedState != null ? savedState : initialState,
     compose(...enhancers)
   );
 

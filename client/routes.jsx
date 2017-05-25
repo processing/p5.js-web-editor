@@ -1,6 +1,6 @@
 import { Route, IndexRoute } from 'react-router';
 import React from 'react';
-import forceProtocol from './components/forceProtocol';
+import forceProtocol, { protocols, findSourceProtocol } from './components/forceProtocol';
 import App from './modules/App/App';
 import IDEView from './modules/IDE/pages/IDEView';
 import FullView from './modules/IDE/pages/FullView';
@@ -17,13 +17,11 @@ const checkAuth = (store) => {
 };
 
 const routes = (store) => {
-  const sourceProtocol = store.getState().project.serveSecure === true ?
-    'https:' :
-    'http:';
+  const sourceProtocol = findSourceProtocol(store.getState());
 
   // If the flag is false, we stay on HTTP
   const forceToHttps = forceProtocol({
-    targetProtocol: 'https:',
+    targetProtocol: protocols.https,
     sourceProtocol,
     // prints debugging but does not reload page
     disable: process.env.FORCE_TO_HTTPS === false,

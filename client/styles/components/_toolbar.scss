@@ -120,6 +120,33 @@
 	font-size: #{12 / $base-font-size}rem;
 }
 
+.toolbar__serve-secure {
+	margin-left: #{20 / $base-font-size}rem;
+}
+
+.toolbar__serve-secure-label {
+	@include themify() {
+		color: getThemifyVariable('inactive-text-color');
+	}
+	margin-left: #{5 / $base-font-size}rem;
+	font-size: #{12 / $base-font-size}rem;
+}
+
+.toolbar__serve-secure-help {
+	display: inline-block;
+	padding-top: 0;
+	padding-bottom: 0;
+	& svg {
+		width: #{10 / $base-font-size}rem;
+		height: #{10 / $base-font-size}rem;
+	}
+	@include themify() {
+		& path {
+			fill: getThemifyVariable('inactive-text-color');
+		}
+	}
+}
+
 .toolbar__edit-name-button {
 	display: inline-block;
 	vertical-align: top;

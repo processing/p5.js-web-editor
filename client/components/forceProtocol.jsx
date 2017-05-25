@@ -1,4 +1,26 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import { format, parse } from 'url';
+
+const findCurrentProtocol = () => (
+  parse(window.location.href).protocol
+);
+
+const redirectToProtocol = (protocol, { appendSource, disable = false } = {}) => {
+  const currentProtocol = findCurrentProtocol();
+
+  if (protocol !== currentProtocol) {
+    if (disable === true) {
+      console.info(`forceProtocol: would have redirected from "${currentProtocol}" to "${protocol}"`);
+    } else {
+      const url = parse(window.location.href, true /* parse query string */);
+      url.protocol = protocol;
+      if (appendSource === true) {
+        url.query.source = currentProtocol;
+      }
+      window.location = format(url);
+    }
+  }
+};
 
 /**
  * A Higher Order Component that forces the protocol to change on mount
@@ -8,29 +30,17 @@ import React, { PropTypes } from 'react';
  * disable: if true, the redirection will not happen but what should
  *          have happened will be logged to the console
  */
-const forceProtocol = ({ targetProtocol = 'https:', sourceProtocol, disable = false }) => WrappedComponent => (
+const forceProtocol = ({ targetProtocol = 'https', sourceProtocol, disable = false }) => WrappedComponent => (
   class ForceProtocol extends React.Component {
     static propTypes = {}
 
     componentDidMount() {
-      this.redirectToProtocol(targetProtocol);
+      redirectToProtocol(targetProtocol, { appendSource: true, disable });
     }
 
     componentWillUnmount() {
       if (sourceProtocol != null) {
-        this.redirectToProtocol(sourceProtocol);
-      }
-    }
-
-    redirectToProtocol(protocol) {
-      const currentProtocol = window.location.protocol;
-
-      if (protocol !== currentProtocol) {
-        if (disable === true) {
-          console.info(`forceProtocol: would have redirected from "${currentProtocol}" to "${protocol}"`);
-        } else {
-          window.location = window.location.href.replace(currentProtocol, protocol);
-        }
+        redirectToProtocol(sourceProtocol, { appendSource: false, disable });
       }
     }
 
@@ -40,5 +50,27 @@ const forceProtocol = ({ targetProtocol = 'https:', sourceProtocol, disable = fa
   }
 );
 
+const protocols = {
+  http: 'http:',
+  https: 'https:',
+};
+
+const findSourceProtocol = (state, location) => {
+  if (/source=https/.test(window.location.search)) {
+    return protocols.https;
+  } else if (/source=http/.test(window.location.search)) {
+    return protocols.http;
+  } else if (state.project.serveSecure === true) {
+    return protocols.https;
+  }
+
+  return protocols.http;
+};
 
 export default forceProtocol;
+export {
+  findCurrentProtocol,
+  findSourceProtocol,
+  redirectToProtocol,
+  protocols,
+};

@@ -14,6 +14,7 @@ import NewFolderModal from '../components/NewFolderModal';
 import ShareModal from '../components/ShareModal';
 import KeyboardShortcutModal from '../components/KeyboardShortcutModal';
 import ErrorModal from '../components/ErrorModal';
+import HelpModal from '../components/HelpModal';
 import Nav from '../../../components/Nav';
 import Console from '../components/Console';
 import Toast from '../components/Toast';
@@ -40,6 +41,10 @@ class IDEView extends React.Component {
   }
 
   componentDidMount() {
+    // If page doesn't reload after Sign In then we need
+    // to force cleared state to be cleared
+    this.props.clearPersistedState();
+
     this.props.stopSketch();
     if (this.props.params.project_id) {
       const id = this.props.params.project_id;
@@ -91,9 +96,14 @@ class IDEView extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.isUserOwner() && this.props.project.id) {
-      if (this.props.preferences.autosave && this.props.ide.unsavedChanges && this.autosaveInterval === null && !this.props.ide.justOpenedProject) {
-        console.log('saving project in 30 seconds');
-        this.autosaveInterval = setTimeout(this.props.autosaveProject, 30000);
+      if (this.props.preferences.autosave && this.props.ide.unsavedChanges && !this.props.ide.justOpenedProject) {
+        if (this.props.selectedFile.name === prevProps.selectedFile.name && this.props.selectedFile.content !== prevProps.selectedFile.content) {
+          if (this.autosaveInterval) {
+            clearTimeout(this.autosaveInterval);
+          }
+          console.log('will save project in 20 seconds');
+          this.autosaveInterval = setTimeout(this.props.autosaveProject, 20000);
+        }
       } else if (this.autosaveInterval && !this.props.preferences.autosave) {
         clearTimeout(this.autosaveInterval);
         this.autosaveInterval = null;
@@ -169,8 +179,12 @@ class IDEView extends React.Component {
   warnIfUnsavedChanges(route) { // eslint-disable-line
     if (route && (route.action === 'PUSH' && (route.pathname === '/login' || route.pathname === '/signup'))) {
       // don't warn
+      this.props.persistState();
+      window.onbeforeunload = null;
     } else if (route && (this.props.location.pathname === '/login' || this.props.location.pathname === '/signup')) {
       // don't warn
+      this.props.persistState();
+      window.onbeforeunload = null;
     } else if (this.props.ide.unsavedChanges) {
       if (!window.confirm('Are you sure you want to leave this page? You have unsaved changes.')) {
         return false;
@@ -210,6 +224,8 @@ class IDEView extends React.Component {
           hideEditProjectName={this.props.hideEditProjectName}
           openPreferences={this.props.openPreferences}
           preferencesIsVisible={this.props.ide.preferencesIsVisible}
+          serveSecure={this.props.project.serveSecure}
+          setServeSecure={this.props.setServeSecure}
           setTextOutput={this.props.setTextOutput}
           setGridOutput={this.props.setGridOutput}
           setSoundOutput={this.props.setSoundOutput}
@@ -222,6 +238,7 @@ class IDEView extends React.Component {
           saveProject={this.props.saveProject}
           currentUser={this.props.user.username}
           clearConsole={this.props.clearConsole}
+          showHelpModal={this.props.showHelpModal}
         />
         <Preferences
           isVisible={this.props.ide.preferencesIsVisible}
@@ -450,6 +467,18 @@ class IDEView extends React.Component {
             );
           }
         })()}
+        {(() => { // eslint-disable-line
+          if (this.props.ide.helpType) {
+            return (
+              <Overlay>
+                <HelpModal
+                  type={this.props.ide.helpType}
+                  closeModal={this.props.hideHelpModal}
+                />
+              </Overlay>
+            );
+          }
+        })()}
       </div>
 
     );
@@ -493,7 +522,8 @@ IDEView.propTypes = {
     projectSavedTime: PropTypes.string.isRequired,
     previousPath: PropTypes.string.isRequired,
     justOpenedProject: PropTypes.bool.isRequired,
-    errorType: PropTypes.string
+    errorType: PropTypes.string,
+    helpType: PropTypes.string
   }).isRequired,
   stopSketch: PropTypes.func.isRequired,
   startAccessibleOutput: PropTypes.func.isRequired,
@@ -501,6 +531,7 @@ IDEView.propTypes = {
   project: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string.isRequired,
+    serveSecure: PropTypes.bool,
     owner: PropTypes.shape({
       username: PropTypes.string,
       id: PropTypes.string
@@ -508,6 +539,7 @@ IDEView.propTypes = {
     updatedAt: PropTypes.string
   }).isRequired,
   setProjectName: PropTypes.func.isRequired,
+  setServeSecure: PropTypes.func.isRequired,
   openPreferences: PropTypes.func.isRequired,
   editorAccessibility: PropTypes.shape({
     lintMessages: PropTypes.array.isRequired,
@@ -544,7 +576,8 @@ IDEView.propTypes = {
   updateFileContent: PropTypes.func.isRequired,
   selectedFile: PropTypes.shape({
     id: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired
+    content: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
   }).isRequired,
   setSelectedFile: PropTypes.func.isRequired,
   htmlFile: PropTypes.shape({
@@ -604,7 +637,11 @@ IDEView.propTypes = {
   })).isRequired,
   clearConsole: PropTypes.func.isRequired,
   showErrorModal: PropTypes.func.isRequired,
-  hideErrorModal: PropTypes.func.isRequired
+  hideErrorModal: PropTypes.func.isRequired,
+  clearPersistedState: PropTypes.func.isRequired,
+  persistState: PropTypes.func.isRequired,
+  showHelpModal: PropTypes.func.isRequired,
+  hideHelpModal: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
