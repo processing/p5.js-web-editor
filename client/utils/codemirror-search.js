@@ -212,11 +212,12 @@ export default function(CodeMirror) {
     </button>
   `;
 
-  function startSearch(cm, state, query) {
+  function startSearch(cm, state, originalQuery) {
+    var query = originalQuery;
     if (state.regexp === true) {
-      query = `/${query}/${state.caseInsensitive ? 'i' : ''}`;
+      query = `/${originalQuery}/${state.caseInsensitive ? 'i' : ''}`;
     }
-    state.queryText = query;
+    state.queryText = originalQuery;
     state.query = parseQuery(query);
 
     cm.removeOverlay(state.overlay, state.caseInsensitive);
@@ -294,7 +295,7 @@ export default function(CodeMirror) {
 
   function clearSearch(cm) {cm.operation(function() {
     var state = getSearchState(cm);
-    state.lastQuery = state.query;
+    state.lastQuery = state.queryText;
     if (!state.query) return;
     state.query = state.queryText = null;
     cm.removeOverlay(state.overlay);
