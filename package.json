@@ -88,6 +88,7 @@
     "jsonwebtoken": "^7.2.1",
     "lodash": "^4.16.4",
     "loop-protect": "git+https://git@github.com/catarak/loop-protect.git",
+    "mjml": "^3.3.2",
     "moment": "^2.14.1",
     "mongoose": "^4.4.16",
     "node-uuid": "^1.4.7",

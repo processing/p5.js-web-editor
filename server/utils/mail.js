@@ -8,6 +8,9 @@ import pug from 'pug';
 import is from 'is_js';
 import nodemailer from 'nodemailer';
 import mg from 'nodemailer-mailgun-transport';
+import { mjml2html } from 'mjml'
+
+import templates from '../views/mailTemplates';
 
 const auth = {
   api_key: process.env.MAILGUN_KEY,
@@ -24,16 +27,11 @@ class Mail {
   }
 
   getMailTemplate(type) {
-    let mailTemp;
-    switch (type) {
-      case 'reset-password':
-        mailTemp = 'server/views/mailTemplates/reset-password.pug';
-        break;
-      case 'email-verification':
-        mailTemp = 'server/views/mailTemplates/email-verification.pug';
-        break;
+    if (templates[type] != null) {
+      return templates[type];
     }
-    return mailTemp;
+
+    console.warn(`mail template '${type} not found`);
   }
 
   sendMail(mailOptions) {
@@ -45,25 +43,20 @@ class Mail {
   }
 
   dispatchMail(template, data, callback) {
-    const self = this;
-    return fsp.readFile(template, 'utf8')
-    .then((file) => {
-      const compiled = pug.compile(file, {
-        filename: template,
+    const output = mjml2html(template(data.body));
+
+    const mailOptions = {
+      to: data.to,
+      subject: data.subject,
+      from: this.sendOptions.from,
+      'h:Reply-To': this.sendOptions.replyTo,
+      html: output.html,
+    };
+
+    return this.sendMail(mailOptions)
+      .then((err, res) => {
+        callback(err, res);
       });
-      const body = compiled(data.body);
-      const mailOptions = {
-        to: data.to,
-        subject: data.subject,
-        from: self.sendOptions.from,
-        'h:Reply-To': self.sendOptions.replyTo,
-        html: body,
-      };
-      return self.sendMail(mailOptions);
-    })
-    .then((err, res) => {
-      callback(err, res);
-    });
   }
 
   send(type, data, callback) {
