@@ -100,7 +100,7 @@ export default function(CodeMirror) {
       var regexpButton = dialog.getElementsByClassName("CodeMirror-regexp-button")[0];
       CodeMirror.on(regexpButton, "click", function () {
         var state = getSearchState(cm);
-        state.regexp = regexpButton.classList.toggle("CodeMirror-is-active");
+        state.regexp = regexpButton.classList.toggle("CodeMirror-search-modifier-is-active");
         startSearch(cm, getSearchState(cm), searchField.value);
       });
     } else {
@@ -173,24 +173,25 @@ export default function(CodeMirror) {
   var queryDialog = `
     <h3 class="CodeMirror-search-title">Find</h3>
     <input type="text" class="search-input CodeMirror-search-field" placeholder="Search for" />
-    <div class="CodeMirror-modifier-buttons button-wrap">
-      <button class="CodeMirror-regexp-button">
-        <span class="label">Regular expression</span>
-      </button>
-      <button class="CodeMirror-case-button">
-        <span class="label">Case sensitive</span>
-      </button>
-      <button class="CodeMirror-case-button">
-        <span class="label">Case sensitive</span>
-      </button>
-    </div>
-    <div class="CodeMirror-search-buttons button-wrap">
-      <button class="CodeMirror-search-button icon up-arrow prev">
-        <span class="label">Previous</span>
-      </button>
-      <button class="CodeMirror-search-button icon down-arrow next">
-        <span class="label">Next</span>
-      </button>
+    <div class="CodeMirror-search-actions">
+      <div class="CodeMirror-search-modifiers button-wrap">
+        <button class="CodeMirror-search-modifier-button CodeMirror-regexp-button">
+          <span aria-hidden="true" class="button">.*</span>
+          <span class="label">Regular expression</span>
+        </button>
+        <button class="CodeMirror-search-modifier-button CodeMirror-case-button">
+          <span aria-hidden="true" class="button">Aa</span>
+          <span class="label">Case sensitive</span>
+        </button>
+      </div>
+      <div class="CodeMirror-search-nav">
+        <button class="CodeMirror-search-button icon up-arrow prev">
+          <span class="label">Previous</span>
+        </button>
+        <button class="CodeMirror-search-button icon down-arrow next">
+          <span class="label">Next</span>
+        </button>
+      </div>
     </div>
     <button class="CodeMirror-close-button close icon">
       <span class="label">Close</span>
