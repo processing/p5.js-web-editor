@@ -207,30 +207,47 @@ export default function(CodeMirror) {
     <input type="text" class="search-input CodeMirror-search-field" placeholder="Search for" />
     <div class="CodeMirror-search-actions">
       <div class="CodeMirror-search-modifiers button-wrap">
-        <button class="CodeMirror-search-modifier-button CodeMirror-regexp-button">
+        <button
+          title="Regular expression"
+          aria-label="Regular expression"
+          class="CodeMirror-search-modifier-button CodeMirror-regexp-button"
+        >
           <span aria-hidden="true" class="button">.*</span>
-          <span class="label">Regular expression</span>
         </button>
-        <button class="CodeMirror-search-modifier-button CodeMirror-case-button">
+        <button
+          title="Case sensitive"
+          aria-label="Case sensitive"
+          class="CodeMirror-search-modifier-button CodeMirror-case-button"
+        >
           <span aria-hidden="true" class="button">Aa</span>
-          <span class="label">Case sensitive</span>
         </button>
-        <button class="CodeMirror-search-modifier-button CodeMirror-word-button">
+        <button
+          title="Whole words"
+          aria-label="Whole words"
+          class="CodeMirror-search-modifier-button CodeMirror-word-button"
+        >
           <span aria-hidden="true" class="button">" "</span>
-          <span class="label">Whole words</span>
         </button>
       </div>
       <div class="CodeMirror-search-nav">
-        <button class="CodeMirror-search-button icon up-arrow prev">
-          <span class="label">Previous</span>
+        <button
+          title="Previous"
+          aria-label="Previous"
+          class="CodeMirror-search-button icon up-arrow prev"
+        >
         </button>
-        <button class="CodeMirror-search-button icon down-arrow next">
-          <span class="label">Next</span>
+        <button
+          title="Next"
+          aria-label="Next"
+          class="CodeMirror-search-button icon down-arrow next"
+        >
         </button>
       </div>
     </div>
-    <button class="CodeMirror-close-button close icon">
-      <span class="label">Close</span>
+    <button
+      title="Close"
+      aria-label="Close"
+      class="CodeMirror-close-button close icon">
     </button>
   `;
 
