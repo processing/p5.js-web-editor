@@ -4,6 +4,10 @@ import async from 'async';
 import User from '../models/user';
 import mail from '../utils/mail';
 import auth from '../utils/auth';
+import {
+  renderEmailConfirmation,
+  renderResetPassword,
+} from '../views/mail';
 
 export function createUser(req, res, next) {
   const user = new User({
@@ -33,13 +37,16 @@ export function createUser(req, res, next) {
             next(loginErr);
             return;
           }
-          mail.send('email-verification', {
+
+          const mailOptions = renderEmailConfirmation({
             body: {
+              domain: `http://${req.headers.host}`,
               link: `http://${req.headers.host}/verify?t=${auth.createVerificationToken(req.body.email)}`
             },
             to: req.body.email,
-            subject: 'Email Verification',
-          }, (result) => { // eslint-disable-line no-unused-vars
+          });
+
+          mail.send(mailOptions, (result) => { // eslint-disable-line no-unused-vars
             res.json({
               email: req.user.email,
               username: req.user.username,
@@ -120,13 +127,15 @@ export function resetPasswordInitiate(req, res) {
       });
     },
     (token, user, done) => {
-      mail.send('reset-password', {
+      const mailOptions = renderResetPassword({
         body: {
+          domain: `http://${req.headers.host}`,
           link: `http://${req.headers.host}/reset-password/${token}`,
         },
         to: user.email,
-        subject: 'p5.js Web Editor Password Reset',
-      }, done);
+      });
+
+      mail.send(mailOptions, done);
     }
   ], (err) => {
     if (err) {
