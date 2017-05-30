@@ -91,7 +91,10 @@ class Nav extends React.PureComponent {
           })()}
           <li className="nav__item">
             <p className="nav__open">
-              <Link to="/p5/sketches">
+              <Link
+                to="/p5/sketches"
+                onClick={this.props.stopSketch}
+              >
                 Examples
               </Link>
             </p>
