@@ -19,7 +19,9 @@ const userSchema = new Schema({
     isTabIndent: { type: Boolean, default: false },
     autosave: { type: Boolean, default: true },
     lintWarning: { type: Boolean, default: false },
-    textOutput: { type: Number, default: 0 },
+    textOutput: { type: Boolean, default: false },
+    gridOutput: { type: Boolean, default: false },
+    soundOutput: { type: Boolean, default: false },
     theme: { type: String, default: 'light' },
     autorefresh: { type: Boolean, default: false }
   }
