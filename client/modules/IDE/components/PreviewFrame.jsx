@@ -8,7 +8,9 @@ import { getBlobUrl } from '../actions/files';
 import { resolvePathToFile } from '../../../../server/utils/filePath';
 
 const startTag = '@fs-';
+// eslint-disable-next-line max-len
 const MEDIA_FILE_REGEX = /^('|")(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov|otf|ttf|m4a)('|")$/i;
+// eslint-disable-next-line max-len
 const MEDIA_FILE_REGEX_NO_QUOTES = /^(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov|otf|ttf|m4a)$/i;
 const STRING_REGEX = /(['"])((\\\1|.)*?)\1/gm;
 const TEXT_FILE_REGEX = /(.+\.json$|.+\.txt$|.+\.csv$)/i;
@@ -175,7 +177,9 @@ class PreviewFrame extends React.Component {
       '/loop-protect.min.js',
       '/hijackConsole.js'
     ];
-    if (this.props.isAccessibleOutputPlaying || ((this.props.textOutput || this.props.gridOutput || this.props.soundOutput) && this.props.isPlaying)) {
+    if (
+      this.props.isAccessibleOutputPlaying ||
+      ((this.props.textOutput || this.props.gridOutput || this.props.soundOutput) && this.props.isPlaying)) {
       let interceptorScripts = [];
       interceptorScripts = [
         '/p5-interceptor/registry.js',

@@ -21,7 +21,10 @@ class Nav extends React.PureComponent {
             </button>
           </li>
           {(() => { // eslint-disable-line
-            if (!this.props.project.owner || (this.props.project.owner && this.props.project.owner.id === this.props.user.id)) {
+            if (
+              !this.props.project.owner ||
+              (this.props.project.owner && this.props.project.owner.id === this.props.user.id)
+            ) {
               return (
                 <li className="nav__item">
                   <button
@@ -119,7 +122,9 @@ class Nav extends React.PureComponent {
               return (
                 <li className="nav__item">
                   <p>
-                    <Link to="/login">Log in</Link> <span className="nav__item-spacer">or</span> <Link to="/signup">Sign up</Link>
+                    <Link to="/login">Log in</Link>
+                    <span className="nav__item-spacer">or</span>
+                    <Link to="/signup">Sign up</Link>
                   </p>
                 </li>
               );
@@ -153,7 +158,11 @@ class Nav extends React.PureComponent {
         </ul>
         <div className="nav__announce">
           This is a preview version of the editor, that has not yet been officially released.
-          It is in development, you can report bugs <a href="https://github.com/processing/p5.js-web-editor/issues" target="_blank" rel="noopener noreferrer">here</a>.
+          It is in development, you can report bugs <a
+            href="https://github.com/processing/p5.js-web-editor/issues"
+            target="_blank"
+            rel="noopener noreferrer"
+          >here</a>.
           Please use with caution.
         </div>
       </nav>
