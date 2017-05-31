@@ -24,6 +24,9 @@ import '../../../utils/htmlmixed';
 import '../../../utils/p5-javascript';
 import Timer from '../components/Timer';
 import EditorAccessibility from '../components/EditorAccessibility';
+import {
+  metaKey,
+} from '../../../utils/metaKey';
 
 import search from '../../../utils/codemirror-search';
 
@@ -41,16 +44,6 @@ const downArrowUrl = require('../../../images/down-arrow.svg');
 const unsavedChangesDotUrl = require('../../../images/unsaved-changes-dot.svg');
 const rightArrowUrl = require('../../../images/right-arrow.svg');
 const leftArrowUrl = require('../../../images/left-arrow.svg');
-
-const metaKey = (() => {
-  if (navigator != null && navigator.platform != null) {
-    return /^MAC/i.test(navigator.platform) ?
-      'Cmd' :
-      'Ctrl';
-  }
-
-  return 'Ctrl';
-})();
 
 class Editor extends React.Component {
   constructor(props) {
@@ -91,10 +84,8 @@ class Editor extends React.Component {
     });
 
     this._cm.setOption('extraKeys', {
-      'Cmd-Enter': () => null,
-      'Shift-Cmd-Enter': () => null,
-      'Ctrl-Enter': () => null,
-      'Shift-Ctrl-Enter': () => null,
+      [`${metaKey}-Enter`]: () => null,
+      [`Shift-${metaKey}-Enter`]: () => null,
       [`${metaKey}-F`]: 'findPersistent',
       [`${metaKey}-G`]: 'findNext',
       [`Shift-${metaKey}-G`]: 'findPrev',
