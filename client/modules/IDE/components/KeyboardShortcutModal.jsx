@@ -34,6 +34,24 @@ class KeyboardShortcutModal extends React.Component {
           </li>
           <li className="keyboard-shortcut-item">
             <span className="keyboard-shortcut__command">
+              {metaKeyName} + F
+            </span>
+            <span>Find Text</span>
+          </li>
+          <li className="keyboard-shortcut-item">
+            <span className="keyboard-shortcut__command">
+              {metaKeyName} + G
+            </span>
+            <span>Find Next Text Match</span>
+          </li>
+          <li className="keyboard-shortcut-item">
+            <span className="keyboard-shortcut__command">
+              {metaKeyName} + Shift + G
+            </span>
+            <span>Find Previous Text Match</span>
+          </li>
+          <li className="keyboard-shortcut-item">
+            <span className="keyboard-shortcut__command">
               {metaKeyName} + [
             </span>
             <span>Indent Code Left</span>
