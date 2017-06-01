@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 
 const collectionSchema = new Schema({
   name: { type: String, default: "New Collection" },
-  owner: { type: Schema.Types.ObjectId, ref: 'User' },
+  owners: { type: [Schema.Types.ObjectId] },
   members: { type: [Schema.Types.ObjectId] },
   projects: { type: [Schema.Types.ObjectId] },
   _id: { type: String, default: shortid.generate }
