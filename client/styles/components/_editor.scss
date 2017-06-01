@@ -161,7 +161,7 @@
   @extend %hidden-element;
 }
 
-.CodeMirror-search-modifier-is-active {
+[aria-checked="true"] {
   @include themify() {
     color: getThemifyVariable('primary-text-color');
   }

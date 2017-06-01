@@ -94,37 +94,43 @@ export default function(CodeMirror) {
       var regexpButton = dialog.getElementsByClassName("CodeMirror-regexp-button")[0];
       CodeMirror.on(regexpButton, "click", function () {
         var state = getSearchState(cm);
-        state.regexp = regexpButton.classList.toggle("CodeMirror-search-modifier-is-active");
+        state.regexp = toggle(regexpButton);
         startSearch(cm, getSearchState(cm), searchField.value);
       });
 
-      state.regexp ?
-        regexpButton.classList.add("CodeMirror-search-modifier-is-active") :
-        regexpButton.classList.remove("CodeMirror-search-modifier-is-active");
+      toggle(regexpButton, state.regexp);
 
       var caseSensitiveButton = dialog.getElementsByClassName("CodeMirror-case-button")[0];
       CodeMirror.on(caseSensitiveButton, "click", function () {
         var state = getSearchState(cm);
-        state.caseInsensitive = !caseSensitiveButton.classList.toggle("CodeMirror-search-modifier-is-active");
+        state.caseInsensitive = !toggle(caseSensitiveButton);
         startSearch(cm, getSearchState(cm), searchField.value);
       });
 
-      state.caseInsensitive ?
-        caseSensitiveButton.classList.remove("CodeMirror-search-modifier-is-active") :
-        caseSensitiveButton.classList.add("CodeMirror-search-modifier-is-active");
+      toggle(caseSensitiveButton, !state.caseInsensitive);
 
       var wholeWordButton = dialog.getElementsByClassName("CodeMirror-word-button")[0];
       CodeMirror.on(wholeWordButton, "click", function () {
         var state = getSearchState(cm);
-        state.wholeWord = wholeWordButton.classList.toggle("CodeMirror-search-modifier-is-active");
+        state.wholeWord = toggle(wholeWordButton);
         startSearch(cm, getSearchState(cm), searchField.value);
       });
 
-      state.wholeWord ?
-        wholeWordButton.classList.add("CodeMirror-search-modifier-is-active") :
-        wholeWordButton.classList.remove("CodeMirror-search-modifier-is-active");
+      toggle(wholeWordButton, state.wholeWord);
 
+      function toggle(el, initialState) {
+        var currentState, nextState;
 
+        if (initialState == null) {
+          currentState = el.getAttribute('aria-checked') === 'true';
+          nextState = !currentState;
+        } else {
+          nextState = initialState;
+        }
+        
+        el.setAttribute('aria-checked', nextState);
+        return nextState;
+      }
     } else {
       searchField.focus();
     }
