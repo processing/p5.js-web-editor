@@ -105,6 +105,46 @@ export function updatePreferences(req, res) {
   });
 }
 
+export function emailVerificationInitiate(req, res) {
+  User.findById(req.user.id, (err, user) => {
+    if (err) {
+      res.status(500).json({ error: err });
+      return;
+    }
+    if (!user) {
+      res.status(404).json({ error: 'Document not found' });
+      return;
+    }
+
+    if (user.verified === 1) {
+      res.status(400).json({ error: 'Email already verified' });
+      return;
+    }
+
+    const mailOptions = renderEmailConfirmation({
+      body: {
+        domain: `http://${req.headers.host}`,
+        link: `http://${req.headers.host}/verify?t=${auth.createVerificationToken(req.body.email)}`
+      },
+      to: user.email,
+    });
+
+    mail.send(mailOptions, (mailErr, result) => { // eslint-disable-line no-unused-vars
+      if (mailErr != null) {
+        res.status(500).send(mailErr);
+      } else {
+        res.json({
+          email: req.user.email,
+          username: req.user.username,
+          preferences: req.user.preferences,
+          verified: user.verified,
+          id: req.user._id
+        });
+      }
+    });
+  });
+}
+
 export function resetPasswordInitiate(req, res) {
   async.waterfall([
     (done) => {
