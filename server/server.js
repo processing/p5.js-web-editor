@@ -20,6 +20,7 @@ import users from './routes/user.routes';
 import sessions from './routes/session.routes';
 import projects from './routes/project.routes';
 import files from './routes/file.routes';
+import collections from './routes/collection.routes';
 import aws from './routes/aws.routes';
 import serverRoutes from './routes/server.routes';
 import embedRoutes from './routes/embed.routes';
@@ -79,6 +80,7 @@ app.use('/api', users);
 app.use('/api', sessions);
 app.use('/api', projects);
 app.use('/api', files);
+app.use('/api', collections);
 app.use('/api', aws);
 // this is supposed to be TEMPORARY -- until i figure out
 // isomorphic rendering
