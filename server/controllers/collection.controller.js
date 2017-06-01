@@ -21,7 +21,14 @@ export function deleteCollection(req, res) {
 	res.send('Workin on this...');
 }
 
-export function getCollectionsForUser(req, res) {
-	console.log("oh hey")
+export function getCollectionsOwnedByUser(req, res) {
+	res.send('Workin on this...');
+}
+
+export function getCollectionsUserIsMemberOf(req, res) {
+	res.send('Workin on this...');
+}
+
+export function downloadCollectionAsZip(req, res) {
 	res.send('Workin on this...');
 }

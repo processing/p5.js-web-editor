@@ -13,6 +13,10 @@ router.route('/collections/:collection_id').delete(CollectionController.deleteCo
 
 router.route('/collections').get(CollectionController.getCollection);
 
-router.route('/:username/collections').get(CollectionController.getCollectionsForUser);
+router.route('/:username/my-collections').get(CollectionController.getCollectionsOwnedByUser);
+
+router.route('/:username/collections-im-in').get(CollectionController.getCollectionsUserIsMemberOf);
+
+router.route('/:username/:collection_id/zip').get(CollectionController.downloadCollectionAsZip);
 
 export default router;
