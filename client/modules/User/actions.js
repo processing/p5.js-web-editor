@@ -130,6 +130,22 @@ export function initiateResetPassword(formValues) {
   };
 }
 
+export function initiateVerification() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.EMAIL_VERIFICATION_INITIATE
+    });
+    axios.post(`${ROOT_URL}/verify/send`, {}, { withCredentials: true })
+      .then(() => {
+        // do nothing
+      })
+      .catch(response => dispatch({
+        type: ActionTypes.ERROR,
+        message: response.data
+      }));
+  };
+}
+
 export function resetPasswordReset() {
   return {
     type: ActionTypes.RESET_PASSWORD_RESET

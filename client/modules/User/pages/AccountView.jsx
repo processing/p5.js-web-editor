@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 import InlineSVG from 'react-inlinesvg';
 import axios from 'axios';
-import { updateSettings } from '../actions';
+import { updateSettings, initiateVerification } from '../actions';
 import AccountForm from '../components/AccountForm';
 import { validateSettings } from '../../../utils/reduxFormUtils';
 import GithubButton from '../components/GithubButton';
@@ -59,7 +59,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ updateSettings }, dispatch);
+  return bindActionCreators({ updateSettings, initiateVerification }, dispatch);
 }
 
 function asyncValidate(formProps, dispatch, props) {
@@ -81,7 +81,7 @@ function asyncValidate(formProps, dispatch, props) {
 }
 
 AccountView.propTypes = {
-  previousPath: PropTypes.string.isRequired
+  previousPath: PropTypes.string.isRequired,
 };
 
 export default reduxForm({

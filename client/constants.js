@@ -102,6 +102,8 @@ export const RESET_PASSWORD_INITIATE = 'RESET_PASSWORD_INITIATE';
 export const RESET_PASSWORD_RESET = 'RESET_PASSWORD_RESET';
 export const INVALID_RESET_PASSWORD_TOKEN = 'INVALID_RESET_PASSWORD_TOKEN';
 
+export const EMAIL_VERIFICATION_INITIATE = 'EMAIL_VERIFICATION_INITIATE';
+
 // eventually, handle errors more specifically and better
 export const ERROR = 'ERROR';
 

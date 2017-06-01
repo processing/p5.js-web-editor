@@ -33,6 +33,15 @@
   border-color: $secondary-form-title-color;
 }
 
+.form__context {
+  text-align: left;
+  margin-top: #{15 / $base-font-size}rem;
+}
+
+.form__status {
+  color: $form-navigation-options-color;
+}
+
 .form input[type="submit"] {
   @extend %forms-button;
 }
