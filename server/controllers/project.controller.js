@@ -123,6 +123,32 @@ export function deleteProject(req, res) {
   });
 }
 
+export function getProjectAsset(req, res) {
+  Project.findById(req.params.project_id)
+    .populate('user', 'username')
+    .exec((err, project) => {
+      if (err) {
+        return res.status(404).send({ message: 'Project with that id does not exist' });
+      }
+
+      var assetURL = null;
+      var seekFilename = req.params.asset_path;
+      project.files.forEach((file) => {
+        if(file.name === seekFilename) {
+          assetURL = file.url;
+        }
+      });
+
+      if(!assetURL) {
+        return res.status(404).send({ message: 'Asset does not exist' });
+      } else {
+        request({ method: 'GET', url: assetURL, encoding: null }, (err, response, body) => {
+          res.send(body);
+        });
+      }
+    });
+}
+
 export function getProjects(req, res) {
   if (req.user) {
     Project.find({ user: req.user._id }) // eslint-disable-line no-underscore-dangle
