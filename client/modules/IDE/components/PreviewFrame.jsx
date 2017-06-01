@@ -7,6 +7,8 @@ import loopProtect from 'loop-protect';
 import { getBlobUrl } from '../actions/files';
 import { resolvePathToFile } from '../../../../server/utils/filePath';
 
+const decomment = require('decomment');
+
 const startTag = '@fs-';
 const MEDIA_FILE_REGEX = /^('|")(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov|otf|ttf|m4a)('|")$/i;
 const MEDIA_FILE_REGEX_NO_QUOTES = /^(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov|otf|ttf|m4a)$/i;
@@ -54,20 +56,17 @@ function hijackConsoleErrorsScript(offs) {
       }
       return [line - l, file];
     }
-
     // catch reference errors, via http://stackoverflow.com/a/12747364/2994108
     window.onerror = function (msg, url, lineNumber, columnNo, error) {
         var string = msg.toLowerCase();
         var substring = "script error";
         var data = {};
-
         if (string.indexOf(substring) !== -1){
           data = 'Script Error: See Browser Console for Detail';
         } else {
           var fileInfo = getScriptOff(lineNumber);
           data = msg + ' (' + fileInfo[1] + ': line ' + fileInfo[0] + ')';
         }
-
         window.parent.postMessage([{
           method: 'error',
           arguments: data,
@@ -264,6 +263,7 @@ class PreviewFrame extends React.Component {
         }
       }
     });
+    newContent = decomment(newContent);
     newContent = loopProtect(newContent);
     return newContent;
   }
