@@ -46,11 +46,12 @@ export function createUser(req, res, next) {
             to: req.body.email,
           });
 
-          mail.send(mailOptions, (result) => { // eslint-disable-line no-unused-vars
+          mail.send(mailOptions, (mailErr, result) => { // eslint-disable-line no-unused-vars
             res.json({
               email: req.user.email,
               username: req.user.username,
               preferences: req.user.preferences,
+              verified: req.user.verified,
               id: req.user._id
             });
           });
