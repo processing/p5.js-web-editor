@@ -9,7 +9,7 @@ class Auth {
     return jwt.sign({
       email,
       fromEmail,
-    }, process.env.SECRET_TOKEN, {
+    }, process.env.EMAIL_VERIFY_SECRET_TOKEN, {
       expiresIn: '1 day',
       subject: 'email-verification',
     });
@@ -20,7 +20,7 @@ class Auth {
   */
   verifyEmailToken(token) {
     return new Promise((resolve, reject) => {
-      jwt.verify(token, process.env.SECRET_TOKEN, (err, data) => {
+      jwt.verify(token, process.env.EMAIL_VERIFY_SECRET_TOKEN, (err, data) => {
         if (err) {
           if (err.name === 'TokenExpiredError') {
             reject('The verification link has expired');
