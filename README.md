@@ -55,6 +55,11 @@ The automatic redirection to HTTPS is turned off by default in development. If y
   S3_BUCKET=<your-s3-bucket>
   GITHUB_ID=<your-github-client-id>
   GITHUB_SECRET=<your-github-client-secret>
+  EMAIL_SENDER=<email-address-to-send-from>
+  EMAIL_REPLY_TO=<email-to-reply-to>
+  MAILGUN_KEY=<mailgun-api-key>
+  MAILGUN_DOMAIN=<mailgun-domain>
+  EMAIL_VERIFY_SECRET_TOKEN=whatever_you_want_this_to_be_it_only_matters_for_production
   ```
   For production, you will need to have real Github and Amazon credentions. Refer to [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) for creating an S3 bucket for testing.
 
