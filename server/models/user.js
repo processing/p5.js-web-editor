@@ -2,6 +2,12 @@ import mongoose from 'mongoose';
 
 const bcrypt = require('bcrypt-nodejs');
 
+const EmailConfirmationStates = {
+  Verified: 'verified',
+  Sent: 'sent',
+  Resent: 'resent',
+};
+
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -10,7 +16,7 @@ const userSchema = new Schema({
   password: { type: String },
   resetPasswordToken: String,
   resetPasswordExpires: Date,
-  verified: { type: Number, default: -1 },
+  verified: { type: String, default: EmailConfirmationStates.Sent },
   github: { type: String },
   email: { type: String, unique: true },
   tokens: Array,
@@ -73,5 +79,7 @@ userSchema.statics.findByMailOrName = function findByMailOrName(email) {
   };
   return this.findOne(query).exec();
 };
+
+userSchema.statics.EmailConfirmation = EmailConfirmationStates;
 
 export default mongoose.model('User', userSchema);

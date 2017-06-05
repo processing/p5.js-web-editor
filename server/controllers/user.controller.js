@@ -116,8 +116,8 @@ export function emailVerificationInitiate(req, res) {
       return;
     }
 
-    if (user.verified === 1) {
-      res.status(400).json({ error: 'Email already verified' });
+    if (user.verified === User.EmailConfirmation.Verified) {
+      res.status(409).json({ error: 'Email already verified' });
       return;
     }
 
@@ -133,6 +133,9 @@ export function emailVerificationInitiate(req, res) {
       if (mailErr != null) {
         res.status(500).send({ error: 'Error sending mail' });
       } else {
+        user.verified = User.EmailConfirmation.Resent;
+        user.save();
+
         res.json({
           email: req.user.email,
           username: req.user.username,
@@ -202,17 +205,17 @@ export function verifyEmail(req, res) {
   const token = req.query.t;
   // verify the token
   auth.verifyEmailToken(token)
-  .then((data) => {
-    const email = data.email;
-    // change the verified field for the user or throw if the user is not found
-    User.findOne({ email })
-    .then((user) => {
-      // change the field for the user, and send the new cookie
-      user.verified = 0; // eslint-disable-line
-      user.save()
-      .then((result) => { // eslint-disable-line
-        res.json({ user });
-      });
+    .then((data) => {
+      const email = data.email;
+      // change the verified field for the user or throw if the user is not found
+      User.findOne({ email })
+        .then((user) => {
+          user.verified = User.EmailConfirmation.Verified;
+          user.save()
+            .then((result) => { // eslint-disable-line
+              res.json({ user });
+            });
+        });
     })
     .catch((err) => {
       res.json({ error: err });
