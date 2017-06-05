@@ -41,9 +41,9 @@ export function createUser(req, res, next) {
           const mailOptions = renderEmailConfirmation({
             body: {
               domain: `http://${req.headers.host}`,
-              link: `http://${req.headers.host}/verify?t=${auth.createVerificationToken(req.body.email)}`
+              link: `http://${req.headers.host}/verify?t=${auth.createVerificationToken(req.user.email)}`
             },
-            to: req.body.email,
+            to: req.user.email,
           });
 
           mail.send(mailOptions, (mailErr, result) => { // eslint-disable-line no-unused-vars
@@ -124,7 +124,7 @@ export function emailVerificationInitiate(req, res) {
     const mailOptions = renderEmailConfirmation({
       body: {
         domain: `http://${req.headers.host}`,
-        link: `http://${req.headers.host}/verify?t=${auth.createVerificationToken(req.body.email)}`
+        link: `http://${req.headers.host}/verify?t=${auth.createVerificationToken(user.email)}`
       },
       to: user.email,
     });
@@ -213,11 +213,10 @@ export function verifyEmail(req, res) {
       .then((result) => { // eslint-disable-line
         res.json({ user });
       });
+    })
+    .catch((err) => {
+      res.json({ error: err });
     });
-  })
-  .catch((err) => {
-    res.json(err);
-  });
 }
 
 export function updatePassword(req, res) {
