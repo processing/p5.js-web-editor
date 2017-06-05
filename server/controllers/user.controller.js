@@ -131,7 +131,7 @@ export function emailVerificationInitiate(req, res) {
 
     mail.send(mailOptions, (mailErr, result) => { // eslint-disable-line no-unused-vars
       if (mailErr != null) {
-        res.status(500).send(mailErr);
+        res.status(500).send({ error: 'Error sending mail' });
       } else {
         res.json({
           email: req.user.email,
