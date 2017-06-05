@@ -213,7 +213,7 @@ export function verifyEmail(req, res) {
           user.verified = User.EmailConfirmation.Verified;
           user.save()
             .then((result) => { // eslint-disable-line
-              res.json({ user });
+              res.json({ success: true });
             });
         });
     })
