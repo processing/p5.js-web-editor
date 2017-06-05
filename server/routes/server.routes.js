@@ -40,6 +40,10 @@ router.route('/reset-password/:reset_password_token').get((req, res) => {
   res.send(renderIndex());
 });
 
+router.route('/verify').get((req, res) => {
+  res.send(renderIndex());
+});
+
 router.route('/sketches').get((req, res) => {
   res.send(renderIndex());
 });

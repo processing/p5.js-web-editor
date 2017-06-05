@@ -146,6 +146,21 @@ export function initiateVerification() {
   };
 }
 
+export function verifyEmailConfirmation(token) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.EMAIL_VERIFICATION_VERIFY
+    });
+    return axios.get(`${ROOT_URL}/verify?t=${token}`, {}, { withCredentials: true })
+      .then(response => response.data)
+      .catch(response => dispatch({
+        type: ActionTypes.ERROR,
+        message: response.data
+      }));
+  };
+}
+
+
 export function resetPasswordReset() {
   return {
     type: ActionTypes.RESET_PASSWORD_RESET
