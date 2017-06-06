@@ -1,6 +1,10 @@
 import React, { PropTypes } from 'react';
 import InlineSVG from 'react-inlinesvg';
 
+import {
+  metaKeyName,
+} from '../../../utils/metaKey';
+
 const exitUrl = require('../../../images/exit.svg');
 
 class KeyboardShortcutModal extends React.Component {
@@ -24,48 +28,67 @@ class KeyboardShortcutModal extends React.Component {
           </li>
           <li className="keyboard-shortcut-item">
             <span className="keyboard-shortcut__command">
-              {this.isMac ? 'Command + S' : 'Control + S'}
+              {metaKeyName} + S
             </span>
             <span>Save</span>
           </li>
           <li className="keyboard-shortcut-item">
             <span className="keyboard-shortcut__command">
-              {this.isMac ? 'Command + [' : 'Control + ['}
+              {metaKeyName} + F
+            </span>
+            <span>Find Text</span>
+          </li>
+          <li className="keyboard-shortcut-item">
+            <span className="keyboard-shortcut__command">
+              {metaKeyName} + G
+            </span>
+            <span>Find Next Text Match</span>
+          </li>
+          <li className="keyboard-shortcut-item">
+            <span className="keyboard-shortcut__command">
+              {metaKeyName} + Shift + G
+            </span>
+            <span>Find Previous Text Match</span>
+          </li>
+          <li className="keyboard-shortcut-item">
+            <span className="keyboard-shortcut__command">
+              {metaKeyName} + [
             </span>
             <span>Indent Code Left</span>
           </li>
           <li className="keyboard-shortcut-item">
             <span className="keyboard-shortcut__command">
-              {this.isMac ? 'Command + ]' : 'Control + ]'}
+              {metaKeyName} + ]
             </span>
             <span>Indent Code Right</span>
           </li>
           <li className="keyboard-shortcut-item">
             <span className="keyboard-shortcut__command">
-              {this.isMac ? 'Command + /' : 'Control + /'}
+              {metaKeyName} + /
             </span>
             <span>Comment Line</span>
           </li>
           <li className="keyboard-shortcut-item">
             <span className="keyboard-shortcut__command">
-              {this.isMac ? 'Command + Enter' : 'Control + Enter'}</span>
+              {metaKeyName} + Enter
+            </span>
             <span>Start Sketch</span>
           </li>
           <li className="keyboard-shortcut-item">
             <span className="keyboard-shortcut__command">
-              {this.isMac ? 'Command + Shift + Enter' : 'Control + Shift + Enter'}
+              {metaKeyName} + Shift + Enter
             </span>
             <span>Stop Sketch</span>
           </li>
           <li className="keyboard-shortcut-item">
             <span className="keyboard-shortcut__command">
-              {this.isMac ? 'Command + Shift + 1' : 'Control + Shift + 1'}
+              {metaKeyName} + Shift + 1
             </span>
             <span>Toggle Text-based Canvas</span>
           </li>
           <li className="keyboard-shortcut-item">
             <span className="keyboard-shortcut__command">
-              {this.isMac ? 'Command + Shift + 2' : 'Control + Shift + 2'}
+              {metaKeyName} + Shift + 2
             </span>
             <span>Turn Off Text-based Canvas</span>
           </li>
