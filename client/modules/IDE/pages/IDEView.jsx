@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { Helmet } from 'react-helmet';
 import SplitPane from 'react-split-pane';
 import Editor from '../components/Editor';
 import Sidebar from '../components/Sidebar';
@@ -199,6 +200,9 @@ class IDEView extends React.Component {
   render() {
     return (
       <div className="ide">
+        <Helmet>
+          <title>{this.props.project.name}</title>
+        </Helmet>
         {this.props.toast.isVisible && <Toast />}
         <Nav
           user={this.props.user}
