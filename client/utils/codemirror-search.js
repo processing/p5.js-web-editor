@@ -229,6 +229,7 @@ export default function(CodeMirror) {
         <button
           title="Regular expression"
           aria-label="Regular expression"
+          role="checkbox"
           class="CodeMirror-search-modifier-button CodeMirror-regexp-button"
         >
           <span aria-hidden="true" class="button">.*</span>
@@ -236,6 +237,7 @@ export default function(CodeMirror) {
         <button
           title="Case sensitive"
           aria-label="Case sensitive"
+          role="checkbox"
           class="CodeMirror-search-modifier-button CodeMirror-case-button"
         >
           <span aria-hidden="true" class="button">Aa</span>
@@ -243,6 +245,7 @@ export default function(CodeMirror) {
         <button
           title="Whole words"
           aria-label="Whole words"
+          role="checkbox"
           class="CodeMirror-search-modifier-button CodeMirror-word-button"
         >
           <span aria-hidden="true" class="button">" "</span>
