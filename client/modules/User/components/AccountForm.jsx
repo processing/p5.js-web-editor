@@ -43,7 +43,11 @@ function AccountForm(props) {
           id="currentPassword"
           {...domOnlyProps(currentPassword)}
         />
-        {currentPassword.touched && currentPassword.error && <span className="form-error">{currentPassword.error}</span>}
+        {
+          currentPassword.touched &&
+          currentPassword.error &&
+          <span className="form-error">{currentPassword.error}</span>
+        }
       </p>
       <p className="form__field">
         <label htmlFor="new password" className="form__label">New Password</label>
@@ -56,7 +60,12 @@ function AccountForm(props) {
         />
         {newPassword.touched && newPassword.error && <span className="form-error">{newPassword.error}</span>}
       </p>
-      <input type="submit" disabled={submitting || invalid || pristine} value="Save All Settings" aria-label="updateSettings" />
+      <input
+        type="submit"
+        disabled={submitting || invalid || pristine}
+        value="Save All Settings"
+        aria-label="updateSettings"
+      />
     </form>
   );
 }

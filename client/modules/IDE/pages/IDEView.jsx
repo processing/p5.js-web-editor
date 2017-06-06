@@ -97,7 +97,9 @@ class IDEView extends React.Component {
   componentDidUpdate(prevProps) {
     if (this.isUserOwner() && this.props.project.id) {
       if (this.props.preferences.autosave && this.props.ide.unsavedChanges && !this.props.ide.justOpenedProject) {
-        if (this.props.selectedFile.name === prevProps.selectedFile.name && this.props.selectedFile.content !== prevProps.selectedFile.content) {
+        if (
+          this.props.selectedFile.name === prevProps.selectedFile.name &&
+          this.props.selectedFile.content !== prevProps.selectedFile.content) {
           if (this.autosaveInterval) {
             clearTimeout(this.autosaveInterval);
           }
@@ -350,7 +352,13 @@ class IDEView extends React.Component {
                 </div>
                 <div>
                   {(() => {
-                    if (((this.props.preferences.textOutput || this.props.preferences.gridOutput || this.props.preferences.soundOutput) && this.props.ide.isPlaying) || this.props.ide.isAccessibleOutputPlaying) {
+                    if (
+                      (
+                        (this.props.preferences.textOutput ||
+                         this.props.preferences.gridOutput ||
+                         this.props.preferences.soundOutput
+                        ) && this.props.ide.isPlaying
+                      ) || this.props.ide.isAccessibleOutputPlaying) {
                       return (
                         <AccessibleOutput
                           isPlaying={this.props.ide.isPlaying}
