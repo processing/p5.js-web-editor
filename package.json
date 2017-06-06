@@ -71,6 +71,7 @@
     "cookie-parser": "^1.4.1",
     "cors": "^2.8.1",
     "csslint": "^0.10.0",
+    "decomment": "^0.8.7",
     "dotenv": "^2.0.0",
     "dropzone": "^4.3.0",
     "escape-string-regexp": "^1.0.5",
