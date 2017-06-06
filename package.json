@@ -67,6 +67,7 @@
     "bson-objectid": "^1.1.4",
     "classnames": "^2.2.5",
     "codemirror": "^5.21.0",
+    "codemirror-revisedsearch": "^1.0.12",
     "connect-mongo": "^1.2.0",
     "cookie-parser": "^1.4.1",
     "cors": "^2.8.1",
