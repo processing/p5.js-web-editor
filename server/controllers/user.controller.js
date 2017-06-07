@@ -264,6 +264,7 @@ export function saveUser(res, user) {
 }
 
 export function updateSettings(req, res) {
+  let emailIsNowUnverified = false;
   User.findById(req.user.id, (err, user) => {
     if (err) {
       res.status(500).json({ error: err });
@@ -272,6 +273,11 @@ export function updateSettings(req, res) {
     if (!user) {
       res.status(404).json({ error: 'Document not found' });
       return;
+    }
+
+    if (user.email !== req.body.email) {
+      user.verified = User.EmailConfirmation.Sent;
+      emailIsNowUnverified = true;
     }
 
     user.email = req.body.email;
@@ -289,6 +295,18 @@ export function updateSettings(req, res) {
       });
     } else {
       saveUser(res, user);
+    }
+
+    if (emailIsNowUnverified) {
+      const mailOptions = renderEmailConfirmation({
+        body: {
+          domain: `http://${req.headers.host}`,
+          link: `http://${req.headers.host}/verify?t=${auth.createVerificationToken(user.email)}`
+        },
+        to: user.email,
+      });
+
+      mail.send(mailOptions);
     }
   });
 }
