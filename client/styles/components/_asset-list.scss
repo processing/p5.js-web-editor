@@ -45,7 +45,7 @@
     }
   }
 
-  & td:first {
+  & td:first-child {
     padding-left: #{10 / $base-font-size}rem;
   }
 }
