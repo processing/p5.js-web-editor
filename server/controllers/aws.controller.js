@@ -125,7 +125,6 @@ export function listObjectsInS3ForUser(req, res) {
         }));
       })
       .on('end', () => {
-        console.log(assets);
         const projectAssets = [];
         getProjectsForUserId(userId).then((projects) => {
           projects.forEach((project) => {
