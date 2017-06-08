@@ -44,26 +44,13 @@
       color: getThemifyVariable('primary-text-color');
     }
   }
+
+  & td:first {
+    padding-left: #{10 / $base-font-size}rem;
+  }
 }
 
-.visibility-toggle .asset-list__delete-button {
-  @extend %hidden-element;
-  width:#{20 / $base-font-size}rem;
-  height:#{20 / $base-font-size}rem;
+.asset-table__empty {
+  text-align: center;
+  font-size: #{16 / $base-font-size}rem;
 }
-
-// .visibility-toggle:hover .asset-list__delete-button {
-//    @include themify() {
-//     background-color: transparent;
-//     border: none;
-//     cursor: pointer;
-//     padding: 0;
-//     position: initial;
-//     left: 0;
-//     top: 0;
-//       & g {
-//         opacity: 1;
-//         fill: getThemifyVariable('icon-hover-color');
-//       }
-//   }
-// }
