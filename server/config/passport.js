@@ -84,7 +84,7 @@ passport.use(new GitHubStrategy({
         existingEmailUser.username = existingEmailUser.username || profile.username;
         existingEmailUser.tokens.push({ kind: 'github', accessToken });
         existingEmailUser.name = existingEmailUser.name || profile.displayName;
-        existingEmailUser.verified = 0;
+        existingEmailUser.verified = User.EmailConfirmation.Verified;
         existingEmailUser.save(saveErr => done(null, existingEmailUser));
       } else {
         const user = new User();
@@ -93,7 +93,7 @@ passport.use(new GitHubStrategy({
         user.username = profile.username;
         user.tokens.push({ kind: 'github', accessToken });
         user.name = profile.displayName;
-        user.verified = 0;
+        user.verified = User.EmailConfirmation.Verified;
         user.save(saveErr => done(null, user));
       }
     });
