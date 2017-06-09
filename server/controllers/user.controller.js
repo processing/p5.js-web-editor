@@ -16,6 +16,8 @@ const random = (done) => {
   });
 };
 
+const EMAIL_VERIFY_TOKEN_EXPIRY_TIME = Date.now() + (3600000 * 24); // 24 hours
+
 export function createUser(req, res, next) {
   const user = new User({
     username: req.body.username,
@@ -161,67 +163,72 @@ export function validateResetPasswordToken(req, res) {
 }
 
 export function emailVerificationInitiate(req, res) {
-  User.findById(req.user.id, (err, user) => {
-    if (err) {
-      res.status(500).json({ error: err });
-      return;
-    }
-    if (!user) {
-      res.status(404).json({ error: 'Document not found' });
-      return;
-    }
+  async.waterfall([
+    random,
+    (token, done) => {
+      User.findById(req.user.id, (err, user) => {
+        if (err) {
+          res.status(500).json({ error: err });
+          return;
+        }
+        if (!user) {
+          res.status(404).json({ error: 'Document not found' });
+          return;
+        }
 
-    if (user.verified === User.EmailConfirmation.Verified) {
-      res.status(409).json({ error: 'Email already verified' });
-      return;
-    }
+        if (user.verified === User.EmailConfirmation.Verified) {
+          res.status(409).json({ error: 'Email already verified' });
+          return;
+        }
 
-    const mailOptions = renderEmailConfirmation({
-      body: {
-        domain: `http://${req.headers.host}`,
-        link: `http://${req.headers.host}/verify?t=${auth.createVerificationToken(user.email)}`
-      },
-      to: user.email,
-    });
-
-    mail.send(mailOptions, (mailErr, result) => { // eslint-disable-line no-unused-vars
-      if (mailErr != null) {
-        res.status(500).send({ error: 'Error sending mail' });
-      } else {
-        user.verified = User.EmailConfirmation.Resent;
-        user.save();
-
-        res.json({
-          email: req.user.email,
-          username: req.user.username,
-          preferences: req.user.preferences,
-          verified: user.verified,
-          id: req.user._id
+        const mailOptions = renderEmailConfirmation({
+          body: {
+            domain: `http://${req.headers.host}`,
+            link: `http://${req.headers.host}/verify?t=${token}`
+          },
+          to: user.email,
         });
-      }
-    });
-  });
+
+        mail.send(mailOptions, (mailErr, result) => { // eslint-disable-line no-unused-vars
+          if (mailErr != null) {
+            res.status(500).send({ error: 'Error sending mail' });
+          } else {
+            user.verified = User.EmailConfirmation.Resent;
+            user.verifiedToken = token;
+            user.verifiedTokenExpires = EMAIL_VERIFY_TOKEN_EXPIRY_TIME; // 24 hours
+            user.save();
+
+            res.json({
+              email: req.user.email,
+              username: req.user.username,
+              preferences: req.user.preferences,
+              verified: user.verified,
+              id: req.user._id
+            });
+          }
+        });
+      });
+    },
+  ]);
 }
 
 export function verifyEmail(req, res) {
   const token = req.query.t;
-  // verify the token
-  auth.verifyEmailToken(token)
-    .then((data) => {
-      const email = data.email;
-      // change the verified field for the user or throw if the user is not found
-      User.findOne({ email })
-        .then((user) => {
-          user.verified = User.EmailConfirmation.Verified;
-          user.save()
-            .then((result) => { // eslint-disable-line
-              res.json({ success: true });
-            });
-        });
-    })
-    .catch((err) => {
-      res.json({ error: err });
-    });
+
+  User.findOne({ verifiedToken: token, verifiedTokenExpires: { $gt: Date.now() } }, (err, user) => {
+    if (!user) {
+      res.status(401).json({ success: false, message: 'Token is invalid or has expired.' });
+      return;
+    }
+
+    user.verified = User.EmailConfirmation.Verified;
+    user.verifiedToken = null;
+    user.verifiedTokenExpires = null;
+    user.save()
+      .then((result) => { // eslint-disable-line
+        res.json({ success: true });
+      });
+  });
 }
 
 export function updatePassword(req, res) {
@@ -266,7 +273,6 @@ export function saveUser(res, user) {
 }
 
 export function updateSettings(req, res) {
-  let emailIsNowUnverified = false;
   User.findById(req.user.id, (err, user) => {
     if (err) {
       res.status(500).json({ error: err });
@@ -277,12 +283,6 @@ export function updateSettings(req, res) {
       return;
     }
 
-    if (user.email !== req.body.email) {
-      user.verified = User.EmailConfirmation.Sent;
-      emailIsNowUnverified = true;
-    }
-
-    user.email = req.body.email;
     user.username = req.body.username;
 
     if (req.body.currentPassword) {
@@ -295,20 +295,29 @@ export function updateSettings(req, res) {
         user.password = req.body.newPassword;
         saveUser(res, user);
       });
+    } else if (user.email !== req.body.email) {
+      user.verified = User.EmailConfirmation.Sent;
+
+      user.email = req.body.email;
+
+      random((token) => {
+        user.verifiedToken = token;
+        user.verifiedTokenExpires = EMAIL_VERIFY_TOKEN_EXPIRY_TIME;
+
+        saveUser(res, user);
+
+        const mailOptions = renderEmailConfirmation({
+          body: {
+            domain: `http://${req.headers.host}`,
+            link: `http://${req.headers.host}/verify?t=${token}`
+          },
+          to: user.email,
+        });
+
+        mail.send(mailOptions);
+      });
     } else {
       saveUser(res, user);
-    }
-
-    if (emailIsNowUnverified) {
-      const mailOptions = renderEmailConfirmation({
-        body: {
-          domain: `http://${req.headers.host}`,
-          link: `http://${req.headers.host}/verify?t=${auth.createVerificationToken(user.email)}`
-        },
-        to: user.email,
-      });
-
-      mail.send(mailOptions);
     }
   });
 }

@@ -17,6 +17,8 @@ const userSchema = new Schema({
   resetPasswordToken: String,
   resetPasswordExpires: Date,
   verified: { type: String, default: EmailConfirmationStates.Sent },
+  verifiedToken: String,
+  verifiedTokenExpires: Date,
   github: { type: String },
   email: { type: String, unique: true },
   tokens: Array,
