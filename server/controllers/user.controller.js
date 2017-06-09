@@ -9,6 +9,13 @@ import {
   renderResetPassword,
 } from '../views/mail';
 
+const random = (done) => {
+  crypto.randomBytes(20, (err, buf) => {
+    const token = buf.toString('hex');
+    done(err, token);
+  });
+};
+
 export function createUser(req, res, next) {
   const user = new User({
     username: req.body.username,
@@ -107,12 +114,7 @@ export function updatePreferences(req, res) {
 
 export function resetPasswordInitiate(req, res) {
   async.waterfall([
-    (done) => {
-      crypto.randomBytes(20, (err, buf) => {
-        const token = buf.toString('hex');
-        done(err, token);
-      });
-    },
+    random,
     (token, done) => {
       User.findOne({ email: req.body.email }, (err, user) => {
         if (!user) {
