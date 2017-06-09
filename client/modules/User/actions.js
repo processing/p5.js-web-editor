@@ -149,12 +149,16 @@ export function initiateVerification() {
 export function verifyEmailConfirmation(token) {
   return (dispatch) => {
     dispatch({
-      type: ActionTypes.EMAIL_VERIFICATION_VERIFY
+      type: ActionTypes.EMAIL_VERIFICATION_VERIFY,
+      state: 'checking',
     });
     return axios.get(`${ROOT_URL}/verify?t=${token}`, {}, { withCredentials: true })
-      .then(response => response.data)
+      .then(response => dispatch({
+        type: ActionTypes.EMAIL_VERIFICATION_VERIFIED,
+        message: response.data,
+      }))
       .catch(response => dispatch({
-        type: ActionTypes.ERROR,
+        type: ActionTypes.EMAIL_VERIFICATION_INVALID,
         message: response.data
       }));
   };

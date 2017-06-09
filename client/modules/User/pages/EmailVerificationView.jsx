@@ -11,29 +11,28 @@ const logoUrl = require('../../../images/p5js-logo.svg');
 
 
 class EmailVerificationView extends React.Component {
+  static defaultProps = {
+    emailVerificationTokenState: null,
+  }
+
   constructor(props) {
     super(props);
     this.closeLoginPage = this.closeLoginPage.bind(this);
     this.gotoHomePage = this.gotoHomePage.bind(this);
 
     this.state = {
-      response: null,
+      error: null,
     };
   }
 
   componentWillMount() {
-    const verificationToken = get(this.props, 'location.query.t', null);
+    const verificationToken = this.verificationToken();
     if (verificationToken != null) {
-      this.props.verifyEmailConfirmation(verificationToken)
-        .then(
-          response => this.setState({ response }),
-        );
-    } else {
-      this.setState({
-        response: { error: 'Link invalid' },
-      });
+      this.props.verifyEmailConfirmation(verificationToken);
     }
   }
+
+  verificationToken = () => get(this.props, 'location.query.t', null);
 
   closeLoginPage() {
     browserHistory.push(this.props.previousPath);
@@ -45,18 +44,25 @@ class EmailVerificationView extends React.Component {
 
   render() {
     let status = null;
+    const {
+      emailVerificationTokenState,
+    } = this.props;
 
-    if (this.state.response == null) {
+    if (this.verificationToken() == null) {
       status = (
-        <p>Wait...</p>
+        <p>That link is invalid</p>
       );
-    } else if (this.state.response != null && this.state.response.error) {
+    } else if (emailVerificationTokenState === 'checking') {
       status = (
-        <p>Something went wrong. {this.state.response.error}</p>
+        <p>Validating token, please wait...</p>
       );
-    } else if (this.state.response != null && this.state.response.success) {
+    } else if (emailVerificationTokenState === 'verified') {
       status = (
-        <p>All done, your email has been verified.</p>
+        <p>All done, your email address has been verified.</p>
+      );
+    } else if (emailVerificationTokenState === 'invalid') {
+      status = (
+        <p>Something went wrong.</p>
       );
     }
 
@@ -81,7 +87,7 @@ class EmailVerificationView extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    user: state.user,
+    emailVerificationTokenState: state.user.emailVerificationTokenState,
     previousPath: state.ide.previousPath
   };
 }
@@ -95,6 +101,9 @@ function mapDispatchToProps(dispatch) {
 
 EmailVerificationView.propTypes = {
   previousPath: PropTypes.string.isRequired,
+  emailVerificationTokenState: PropTypes.oneOf([
+    'checking', 'verified', 'invalid'
+  ]),
   verifyEmailConfirmation: PropTypes.func.isRequired,
 };
 

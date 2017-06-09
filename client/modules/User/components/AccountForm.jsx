@@ -35,10 +35,18 @@ function AccountForm(props) {
           (
             <p className="form__context">
               <span className="form__status">Unconfirmed.</span>
-              <button
-                className="form__action"
-                onClick={handleInitiateVerification}
-              >Resend confirmation email</button>
+              {
+                user.emailVerificationInitiate === true ?
+                  (
+                    <span className="form__status"> Confirmation sent, check your email.</span>
+                  ) :
+                  (
+                    <button
+                      className="form__action"
+                      onClick={handleInitiateVerification}
+                    >Resend confirmation email</button>
+                  )
+              }
             </p>
           )
       }
@@ -99,6 +107,7 @@ AccountForm.propTypes = {
   }).isRequired,
   user: PropTypes.shape({
     verified: PropTypes.number.isRequired,
+    emailVerificationInitiate: PropTypes.bool.isRequired,
   }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   initiateVerification: PropTypes.func.isRequired,
