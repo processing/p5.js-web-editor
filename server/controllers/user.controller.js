@@ -3,7 +3,6 @@ import async from 'async';
 
 import User from '../models/user';
 import mail from '../utils/mail';
-import auth from '../utils/auth';
 import {
   renderEmailConfirmation,
   renderResetPassword,
@@ -19,13 +18,17 @@ const random = (done) => {
 const EMAIL_VERIFY_TOKEN_EXPIRY_TIME = Date.now() + (3600000 * 24); // 24 hours
 
 export function createUser(req, res, next) {
-  const user = new User({
-    username: req.body.username,
-    email: req.body.email,
-    password: req.body.password
-  });
+  random((err, token) => {
+    const user = new User({
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password,
+      verified: User.EmailConfirmation.Sent,
+      verifiedToken: token,
+      verifiedTokenExpires: EMAIL_VERIFY_TOKEN_EXPIRY_TIME,
+    });
 
-  User.findOne({ email: req.body.email },
+    User.findOne({ email: req.body.email },
     (err, existingUser) => {
       if (err) {
         res.status(404).send({ error: err });
@@ -50,7 +53,7 @@ export function createUser(req, res, next) {
           const mailOptions = renderEmailConfirmation({
             body: {
               domain: `http://${req.headers.host}`,
-              link: `http://${req.headers.host}/verify?t=${auth.createVerificationToken(req.user.email)}`
+              link: `http://${req.headers.host}/verify?t=${token}`
             },
             to: req.user.email,
           });
@@ -67,6 +70,7 @@ export function createUser(req, res, next) {
         });
       });
     });
+  });
 }
 
 export function duplicateUserCheck(req, res) {
@@ -300,7 +304,7 @@ export function updateSettings(req, res) {
 
       user.email = req.body.email;
 
-      random((token) => {
+      random((error, token) => {
         user.verifiedToken = token;
         user.verifiedTokenExpires = EMAIL_VERIFY_TOKEN_EXPIRY_TIME;
 
