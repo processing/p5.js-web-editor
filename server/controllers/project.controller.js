@@ -132,7 +132,9 @@ export function getProjectAsset(req, res) {
       }
 
       var assetURL = null;
-      var seekFilename = req.params.asset_path;
+      var seekPath = req.params[0]; // req.params.asset_path;
+      var seekPathSplit = seekPath.split('/');
+      var seekFilename = seekPathSplit[seekPathSplit.length-1];
       project.files.forEach((file) => {
         if(file.name === seekFilename) {
           assetURL = file.url;

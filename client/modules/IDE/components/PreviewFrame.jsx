@@ -249,7 +249,8 @@ class PreviewFrame extends React.Component {
     let jsFileStrings = content.match(STRING_REGEX);
     jsFileStrings = jsFileStrings || [];
     jsFileStrings.forEach((jsFileString) => {
-      if (jsFileString.match(MEDIA_FILE_REGEX)) {
+      console.log(this.props.setBlobUrl);
+      /* if (jsFileString.match(MEDIA_FILE_REGEX)) {
         const filePath = jsFileString.substr(1, jsFileString.length - 2);
         const resolvedFile = resolvePathToFile(filePath, files);
         if (resolvedFile) {
@@ -262,7 +263,7 @@ class PreviewFrame extends React.Component {
             newContent = newContent.replace(filePath, blobURL);
           }
         }
-      }
+      }*/
     });
     newContent = loopProtect(newContent);
     return newContent;
