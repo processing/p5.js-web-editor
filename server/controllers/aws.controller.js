@@ -28,12 +28,12 @@ export function getObjectKey(url) {
   if (urlArray.length === 6) {
     const key = urlArray.pop();
     const userId = urlArray.pop();
-    objectKey = `${userId}/${key}`
+    objectKey = `${userId}/${key}`;
   } else {
     const key = urlArray.pop();
     objectKey = key;
   }
-  return objectKey; 
+  return objectKey;
 }
 
 export function deleteObjectsFromS3(keyList, callback) {

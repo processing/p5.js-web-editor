@@ -112,7 +112,8 @@ function getSketchContent(projectsInAllCategories) {
       if (noNumberprojectName === 'Instance Mode : Instance Container ') {
         for (let i = 0; i < 4; i += 1) {
           const splitedRes = `${res.split('*/')[1].split('</html>')[i]}</html>\n`;
-          project.sketchContent = splitedRes.replace('p5.js', 'https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.4/p5.min.js');
+          project.sketchContent = splitedRes.replace('p5.js',
+            'https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.4/p5.min.js');
         }
       } else {
         project.sketchContent = res;
@@ -228,7 +229,8 @@ function createProjectsInP5user(projectsInAllCategories) {
             });
           }
 
-          const assetsInProject = project.sketchContent.match(/assets\/[\w-]+\.[\w]*/g) || project.sketchContent.match(/assets\/[\w-]*/g) || [];
+          const assetsInProject = project.sketchContent.match(/assets\/[\w-]+\.[\w]*/g)
+            || project.sketchContent.match(/assets\/[\w-]*/g) || [];
 
           assetsInProject.forEach((assetNamePath, i) => {
             let assetName = assetNamePath.split('assets/')[1];

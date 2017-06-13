@@ -100,9 +100,7 @@ function deleteFilesFromS3(files) {
       }
       return false;
     })
-    .map((file) => {
-      return getObjectKey(file.url);
-    })
+    .map(file => getObjectKey(file.url))
   );
 }
 
