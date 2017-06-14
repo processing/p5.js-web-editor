@@ -1,4 +1,3 @@
-'use strict';
 /**
  * Mail service wrapping around mailgun
  */
@@ -30,11 +29,11 @@ class Mail {
 
   dispatchMail(data, callback) {
     const mailOptions = {
-      to: data.to,
-      subject: data.subject,
-      from: this.sendOptions.from,
+      'to': data.to,
+      'subject': data.subject,
+      'from': this.sendOptions.from,
       'h:Reply-To': this.sendOptions.replyTo,
-      html: data.html,
+      'html': data.html,
     };
 
     return this.sendMail(mailOptions)

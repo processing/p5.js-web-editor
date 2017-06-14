@@ -7,11 +7,11 @@ export const renderResetPassword = (data) => {
     domain: data.body.domain,
     headingText: 'Reset your password',
     greetingText: 'Hello,',
-    messageText: 'We received a request to reset the password for your account. To reset your password, click on the button below:',
+    messageText: 'We received a request to reset the password for your account. To reset your password, click on the button below:', // eslint-disable-line max-len
     link: data.body.link,
     buttonText: 'Reset password',
     directLinkText: 'Or copy and paste the URL into your browser:',
-    noteText: 'If you did not request this, please ignore this email and your password will remain unchanged. Thanks for using the p5.js Web Editor!',
+    noteText: 'If you did not request this, please ignore this email and your password will remain unchanged. Thanks for using the p5.js Web Editor!',  // eslint-disable-line max-len
   };
 
   // Return MJML string
