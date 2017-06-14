@@ -35,15 +35,12 @@ const initialState = () => {
   const b = objectID().toHexString();
   const c = objectID().toHexString();
   const r = objectID().toHexString();
-  const pa = objectID().toHexString();
-  const pb = objectID().toHexString();
-  const pc = objectID().toHexString();
   return [
     {
       name: 'root',
       id: r,
       _id: r,
-      children: [a, b, c, pa, pb, pc],
+      children: [a, b, c],
       fileType: 'folder',
       content: ''
     },
@@ -69,36 +66,6 @@ const initialState = () => {
       content: defaultCSS,
       id: c,
       _id: c,
-      fileType: 'file',
-      children: []
-    },
-    {
-      name: 'p5.min.js',
-      url: 'https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.10/p5.min.js',
-      content: '',
-      id: pa,
-      _id: pa,
-      isSelectedFile: true,
-      fileType: 'file',
-      children: []
-    },
-    {
-      name: 'p5.dom.min.js',
-      url: 'https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.10/addons/p5.dom.min.js',
-      content: '',
-      id: pb,
-      _id: pb,
-      isSelectedFile: true,
-      fileType: 'file',
-      children: []
-    },
-    {
-      name: 'p5.sound.min.js',
-      url: 'https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.10/addons/p5.sound.min.js',
-      content: '',
-      id: pc,
-      _id: pc,
-      isSelectedFile: true,
       fileType: 'file',
       children: []
     }];
