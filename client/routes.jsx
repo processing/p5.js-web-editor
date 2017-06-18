@@ -11,9 +11,14 @@ import NewPasswordView from './modules/User/pages/NewPasswordView';
 import AccountView from './modules/User/pages/AccountView';
 // import SketchListView from './modules/Sketch/pages/SketchListView';
 import { getUser } from './modules/User/actions';
+import { stopSketch } from './modules/IDE/actions/ide';
 
 const checkAuth = (store) => {
   store.dispatch(getUser());
+};
+
+const onRouteChange = (store) => {
+  store.dispatch(stopSketch());
 };
 
 const routes = (store) => {
@@ -28,7 +33,7 @@ const routes = (store) => {
   });
 
   return (
-    <Route path="/" component={App}>
+    <Route path="/" component={App} onChange={() => { onRouteChange(store); }}>
       <IndexRoute component={IDEView} onEnter={checkAuth(store)} />
       <Route path="/login" component={forceToHttps(LoginView)} />
       <Route path="/signup" component={forceToHttps(SignupView)} />

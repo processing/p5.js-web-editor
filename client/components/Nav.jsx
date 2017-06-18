@@ -83,7 +83,6 @@ class Nav extends React.PureComponent {
                   <p className="nav__open">
                     <Link
                       to={`/${this.props.user.username}/sketches`}
-                      onClick={this.props.stopSketch}
                     >
                       Open
                     </Link>
@@ -94,7 +93,9 @@ class Nav extends React.PureComponent {
           })()}
           <li className="nav__item">
             <p className="nav__open">
-              <Link to="/p5/sketches">
+              <Link
+                to="/p5/sketches"
+              >
                 Examples
               </Link>
             </p>
@@ -187,7 +188,6 @@ Nav.propTypes = {
     })
   }),
   logoutUser: PropTypes.func.isRequired,
-  stopSketch: PropTypes.func.isRequired,
   showShareModal: PropTypes.func.isRequired,
   showErrorModal: PropTypes.func.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
