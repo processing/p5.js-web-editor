@@ -56,7 +56,6 @@ The automatic redirection to HTTPS is turned off by default in development. If y
   GITHUB_ID=<your-github-client-id>
   GITHUB_SECRET=<your-github-client-secret>
   EMAIL_SENDER=<email-address-to-send-from>
-  EMAIL_REPLY_TO=<email-to-reply-to>
   MAILGUN_KEY=<mailgun-api-key>
   MAILGUN_DOMAIN=<mailgun-domain>
   EMAIL_VERIFY_SECRET_TOKEN=whatever_you_want_this_to_be_it_only_matters_for_production

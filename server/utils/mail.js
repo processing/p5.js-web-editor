@@ -15,7 +15,6 @@ class Mail {
     this.client = nodemailer.createTransport(mg({ auth }));
     this.sendOptions = {
       from: process.env.EMAIL_SENDER,
-      replyTo: process.env.EMAIL_REPLY_TO,
     };
   }
 
@@ -29,11 +28,10 @@ class Mail {
 
   dispatchMail(data, callback) {
     const mailOptions = {
-      'to': data.to,
-      'subject': data.subject,
-      'from': this.sendOptions.from,
-      'h:Reply-To': this.sendOptions.replyTo,
-      'html': data.html,
+      to: data.to,
+      subject: data.subject,
+      from: this.sendOptions.from,
+      html: data.html,
     };
 
     return this.sendMail(mailOptions)
