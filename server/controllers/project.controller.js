@@ -4,6 +4,7 @@ import moment from 'moment';
 import Project from '../models/project';
 import User from '../models/user';
 import { deleteObjectsFromS3, getObjectKey } from './aws.controller';
+import jsdom, { serializeDocument } from 'jsdom';
 
 export function createProject(req, res) {
   if (!req.user) {
@@ -155,6 +156,43 @@ export function getProjectsForUser(req, res) {
   }
 }
 
+function bundleExternalLibs(project, zip, callback) {
+  const rootFile = project.files.find(file => file.name === 'root');
+  const indexHtml = project.files.find(file => file.name === 'index.html');
+  let numScriptsResolved = 0;
+  let numScriptTags = 0;
+
+  function resolveScriptTagSrc(scriptTag, document) {
+    const path = scriptTag.src.split('/');
+    const filename = path[path.length-1];
+    const src = scriptTag.src;
+
+    request({ method: 'GET', url: src, encoding: null }, (err, response, body) => {
+      if(err) {
+
+      } else {
+        zip.append(body, { name: filename });
+        scriptTag.src = filename;
+      }
+
+      numScriptsResolved += 1;
+      if(numScriptsResolved === numScriptTags) {
+        indexHtml.content = serializeDocument(document);
+        callback();
+      }
+    });
+  }
+
+  jsdom.env(indexHtml.content, (innerErr, window) => {
+    const indexHtmlDoc = window.document;
+    const scriptTags = indexHtmlDoc.getElementsByTagName('script');
+    numScriptTags = scriptTags.length;
+    for(var i = 0; i < numScriptTags; i++) {
+      resolveScriptTagSrc(scriptTags[i], indexHtmlDoc);
+    }
+  });
+}
+
 function buildZip(project, req, res) {
   const zip = archiver('zip');
   const rootFile = project.files.find(file => file.name === 'root');
@@ -194,7 +232,10 @@ function buildZip(project, req, res) {
       }
     }
   }
-  addFileToZip(rootFile, '/');
+
+  bundleExternalLibs(project, zip, function () {
+    addFileToZip(rootFile, '/');
+  });
 }
 
 export function downloadProjectAsZip(req, res) {
