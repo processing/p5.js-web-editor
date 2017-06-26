@@ -23,6 +23,7 @@ import files from './routes/file.routes';
 import aws from './routes/aws.routes';
 import serverRoutes from './routes/server.routes';
 import embedRoutes from './routes/embed.routes';
+import { requestsOfTypeJSON } from './utils/requestsOfType';
 
 import { renderIndex } from './views/index';
 import { get404Sketch } from './views/404Page';
@@ -75,11 +76,11 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/api', users);
-app.use('/api', sessions);
-app.use('/api', projects);
-app.use('/api', files);
-app.use('/api', aws);
+app.use('/api', requestsOfTypeJSON(), users);
+app.use('/api', requestsOfTypeJSON(), sessions);
+app.use('/api', requestsOfTypeJSON(), projects);
+app.use('/api', requestsOfTypeJSON(), files);
+app.use('/api', requestsOfTypeJSON(), aws);
 // this is supposed to be TEMPORARY -- until i figure out
 // isomorphic rendering
 app.use('/', serverRoutes);
