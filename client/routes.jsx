@@ -7,6 +7,7 @@ import FullView from './modules/IDE/pages/FullView';
 import LoginView from './modules/User/pages/LoginView';
 import SignupView from './modules/User/pages/SignupView';
 import ResetPasswordView from './modules/User/pages/ResetPasswordView';
+import EmailVerificationView from './modules/User/pages/EmailVerificationView';
 import NewPasswordView from './modules/User/pages/NewPasswordView';
 import AccountView from './modules/User/pages/AccountView';
 // import SketchListView from './modules/Sketch/pages/SketchListView';
@@ -38,6 +39,7 @@ const routes = (store) => {
       <Route path="/login" component={forceToHttps(LoginView)} />
       <Route path="/signup" component={forceToHttps(SignupView)} />
       <Route path="/reset-password" component={forceToHttps(ResetPasswordView)} />
+      <Route path="/verify" component={forceToHttps(EmailVerificationView)} />
       <Route
         path="/reset-password/:reset_password_token"
         component={forceToHttps(NewPasswordView)}

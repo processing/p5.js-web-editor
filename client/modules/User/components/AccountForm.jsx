@@ -4,11 +4,19 @@ import { domOnlyProps } from '../../../utils/reduxFormUtils';
 function AccountForm(props) {
   const {
     fields: { username, email, currentPassword, newPassword },
+    user,
     handleSubmit,
+    initiateVerification,
     submitting,
     invalid,
     pristine
   } = props;
+
+  const handleInitiateVerification = (evt) => {
+    evt.preventDefault();
+    initiateVerification();
+  };
+
   return (
     <form className="form" onSubmit={handleSubmit(props.updateSettings)}>
       <p className="form__field">
@@ -22,6 +30,26 @@ function AccountForm(props) {
         />
         {email.touched && email.error && <span className="form-error">{email.error}</span>}
       </p>
+      {
+        user.verified !== 'verified' &&
+          (
+            <p className="form__context">
+              <span className="form__status">Unconfirmed.</span>
+              {
+                user.emailVerificationInitiate === true ?
+                  (
+                    <span className="form__status"> Confirmation sent, check your email.</span>
+                  ) :
+                  (
+                    <button
+                      className="form__action"
+                      onClick={handleInitiateVerification}
+                    >Resend confirmation email</button>
+                  )
+              }
+            </p>
+          )
+      }
       <p className="form__field">
         <label htmlFor="username" className="form__label">User Name</label>
         <input
@@ -75,9 +103,14 @@ AccountForm.propTypes = {
     username: PropTypes.object.isRequired,
     email: PropTypes.object.isRequired,
     currentPassword: PropTypes.object.isRequired,
-    newPassword: PropTypes.object.isRequired
+    newPassword: PropTypes.object.isRequired,
+  }).isRequired,
+  user: PropTypes.shape({
+    verified: PropTypes.number.isRequired,
+    emailVerificationInitiate: PropTypes.bool.isRequired,
   }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  initiateVerification: PropTypes.func.isRequired,
   updateSettings: PropTypes.func.isRequired,
   submitting: PropTypes.bool,
   invalid: PropTypes.bool,
