@@ -187,9 +187,7 @@
   width: 14px;
   height: 14px;
 
-  @include themify() {
-    @extend %icon;
-  }
+  @include icon();
 
   background-repeat: no-repeat;
   background-position: center;
@@ -231,9 +229,7 @@
 
   margin-left: #{8 / $base-font-size}rem;
 
-  @include themify() {
-    @extend %icon;
-  }
+  @include icon();
 
   background: transparent url(../images/exit.svg) no-repeat;
 }
@@ -249,9 +245,7 @@
 }
 
 .editor__options-button {
-  @include themify() {
-    @extend %icon;
-  }
+  @include icon();
   position: absolute;
   top: #{10 / $base-font-size}rem;
   right: #{2 / $base-font-size}rem;

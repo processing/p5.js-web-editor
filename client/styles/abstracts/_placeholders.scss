@@ -31,26 +31,6 @@
 	}
 }
 
-%icon {
-	@include themify() {
-		color: getThemifyVariable('icon-color');
-		& g {
-			fill: getThemifyVariable('icon-color');
-		}
-		&:hover {
-			color: getThemifyVariable('icon-hover-color');
-			& g {
-				opacity: 1;
-				fill: getThemifyVariable('icon-hover-color');
-			}
-		}
-	}
-	background-color: transparent;
-	border: none;
-	cursor: pointer;
-	padding: 0;
-}
-
 %icon-toast{
 	@include themify() {
 		color: $toast-text-color

@@ -25,9 +25,7 @@
 }
 
 .about__exit-button {
-  @include themify() {
-    @extend %icon;
-  }
+  @include icon();
 }
 
 .about__logo {
