@@ -50,10 +50,11 @@ export function createUser(req, res, next) {
             return;
           }
 
+          const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
           const mailOptions = renderEmailConfirmation({
             body: {
-              domain: `http://${req.headers.host}`,
-              link: `http://${req.headers.host}/verify?t=${token}`
+              domain: `${protocol}://${req.headers.host}`,
+              link: `${protocol}://${req.headers.host}/verify?t=${token}`
             },
             to: req.user.email,
           });
@@ -136,10 +137,11 @@ export function resetPasswordInitiate(req, res) {
       });
     },
     (token, user, done) => {
+      const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
       const mailOptions = renderResetPassword({
         body: {
-          domain: `http://${req.headers.host}`,
-          link: `http://${req.headers.host}/reset-password/${token}`,
+          domain: `${protocol}://${req.headers.host}`,
+          link: `${protocol}://${req.headers.host}/reset-password/${token}`,
         },
         to: user.email,
       });
@@ -185,10 +187,11 @@ export function emailVerificationInitiate(req, res) {
           return;
         }
 
+        const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
         const mailOptions = renderEmailConfirmation({
           body: {
-            domain: `http://${req.headers.host}`,
-            link: `http://${req.headers.host}/verify?t=${token}`
+            domain: `${protocol}://${req.headers.host}`,
+            link: `${protocol}://${req.headers.host}/verify?t=${token}`
           },
           to: user.email,
         });
@@ -310,10 +313,11 @@ export function updateSettings(req, res) {
 
         saveUser(res, user);
 
+        const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
         const mailOptions = renderEmailConfirmation({
           body: {
-            domain: `http://${req.headers.host}`,
-            link: `http://${req.headers.host}/verify?t=${token}`
+            domain: `${protocol}://${req.headers.host}`,
+            link: `${protocol}://${req.headers.host}/verify?t=${token}`
           },
           to: user.email,
         });
