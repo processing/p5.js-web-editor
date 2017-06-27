@@ -193,6 +193,8 @@ function buildZip(project, req, res) {
     }
   }
   addFileToZip(rootFile, '/');
+
+  
 }
 
 export function downloadProjectAsZip(req, res) {
