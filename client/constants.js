@@ -40,6 +40,11 @@ export const SET_PROJECTS = 'SET_PROJECTS';
 
 export const DELETE_PROJECT = 'DELETE_PROJECT';
 
+export const SET_CLASSROOM = 'SET_CLASSROOM';
+export const SET_CLASSROOMS = 'SET_CLASSROOMS';
+
+export const DELETE_CLASSROOM = 'DELETE_CLASSROOM';
+
 export const SET_SELECTED_FILE = 'SET_SELECTED_FILE';
 export const SHOW_MODAL = 'SHOW_MODAL';
 export const HIDE_MODAL = 'HIDE_MODAL';

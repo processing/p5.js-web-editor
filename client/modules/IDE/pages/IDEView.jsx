@@ -29,6 +29,7 @@ import * as ConsoleActions from '../actions/console';
 import { getHTMLFile } from '../reducers/files';
 import Overlay from '../../App/components/Overlay';
 import SketchList from '../components/SketchList';
+import ClassroomList from '../components/ClassroomList';
 import About from '../components/About';
 
 class IDEView extends React.Component {
@@ -415,6 +416,58 @@ class IDEView extends React.Component {
             return (
               <Overlay>
                 <SketchList
+                  username={this.props.params.username}
+                  previousPath={this.props.ide.previousPath}
+                />
+              </Overlay>
+            );
+          }
+        })()}
+        {(() => { // eslint-disable-line
+          if (this.props.location.pathname.match('/createclassroom')) {
+            console.log('Show create classroom page');
+            return (
+              <Overlay>
+                <CreateClassroom
+                  username={this.props.params.username}
+                  previousPath={this.props.ide.previousPath}
+                />
+              </Overlay>
+            );
+          }
+        })()}
+        {(() => { // eslint-disable-line
+          if (this.props.location.pathname.match('/classroom')) {
+            console.log('Show assignments for a classroom');
+            return (
+              <Overlay>
+                <AssignmentList
+                  username={this.props.params.username}
+                  previousPath={this.props.ide.previousPath}
+                />
+              </Overlay>
+            );
+          }
+        })()}
+        {(() => { // eslint-disable-line
+          if (this.props.location.pathname.match('/assignment')) {
+            console.log('Show submissions/description for an assignment');
+            return (
+              <Overlay>
+                <AssignmentSubmissions
+                  username={this.props.params.username}
+                  previousPath={this.props.ide.previousPath}
+                />
+              </Overlay>
+            );
+          }
+        })()}
+        {(() => { // eslint-disable-line
+          if (this.props.location.pathname.match('/myclassrooms')) {
+            console.log('List all classrooms user is a student/teacher of');
+            return (
+              <Overlay>
+                <ClassroomList
                   username={this.props.params.username}
                   previousPath={this.props.ide.previousPath}
                 />

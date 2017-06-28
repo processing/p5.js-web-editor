@@ -16,4 +16,4 @@ collectionSchema.virtual('id').get(function getCollectionId() {
   return this._id;
 });
 
-export default mongoose.model('Collection', collectionSchema);
+// export default mongoose.model('Collection', collectionSchema);

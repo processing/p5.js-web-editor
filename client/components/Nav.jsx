@@ -97,6 +97,13 @@ class Nav extends React.PureComponent {
             </p>
           </li>
           <li className="nav__item">
+            <p className="nav__open">
+              <Link to={`/${this.props.user.username}/classrooms`}>
+                Classrooms
+              </Link>
+            </p>
+          </li>
+          <li className="nav__item">
             <p className="nav__reference">
               <a
                 href="https://p5js.org/reference/"
