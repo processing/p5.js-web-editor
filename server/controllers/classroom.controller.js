@@ -2,7 +2,6 @@ import archiver from 'archiver';
 import request from 'request';
 import moment from 'moment';
 import Classroom from '../models/classroom';
-import Collection from '../models/collection';
 import Project from '../models/project';
 import User from '../models/user';
 
@@ -64,7 +63,7 @@ export function getClassrooms(req, res) {
       .sort('-createdAt')
       .select('name files id createdAt updatedAt')
       .exec((err, classrooms) => {
-        // console.log(classrooms);
+        console.log(classrooms);
         res.json(classrooms);
       });
   } else {

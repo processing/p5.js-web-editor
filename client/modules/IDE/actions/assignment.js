@@ -1,25 +1,18 @@
 import axios from 'axios';
 import * as ActionTypes from '../../../constants';
+import { showErrorModal, setPreviousPath } from './ide';
 import { resetProject } from './project';
-import { setUnsavedChanges,
-  justOpenedProject,
-  resetJustOpenedProject,
-  showErrorModal,
-  setPreviousPath } from './ide';
 
 const ROOT_URL = process.env.API_URL;
 
-export function getClassroom(id) {
-  console.log('getClassroom');
+export function getAssignment(id) {
   return (dispatch, getState) => {
-    dispatch(justOpenedProject());
+    // dispatch(justOpenedProject());
     axios.get(`${ROOT_URL}/classrooms/${id}`, { withCredentials: true })
       .then((response) => {
-        dispatch({
-          type: ActionTypes.SET_CLASSROOM,
-          classroom: response.data
-        });
-        dispatch(setUnsavedChanges(false));
+        console.log(response);
+        // dispatch(setClassoom(response.data));
+        // dispatch(setUnsavedChanges(false));
       })
       .catch(response => dispatch({
         type: ActionTypes.ERROR,
@@ -28,16 +21,11 @@ export function getClassroom(id) {
   };
 }
 
-export function getClassrooms(username) {
-  console.log('getClassrooms');
+export function getAssignments(classroomid) {
+  console.log('getAssignments');
 
   return (dispatch) => {
-    let url;
-    if (username) {
-      url = `${ROOT_URL}/${username}/classrooms`;
-    } else {
-      url = `${ROOT_URL}/classrooms`;
-    }
+    const url = `${ROOT_URL}/assignment/${classroomid}`;
     console.log(url);
     axios.get(url, { withCredentials: true })
       .then((response) => {
@@ -55,7 +43,7 @@ export function getClassrooms(username) {
   };
 }
 
-export function deleteClassroom(id) {
+export function deleteAssignment(id) {
   return (dispatch, getState) => {
     axios.delete(`${ROOT_URL}/projects/${id}`, { withCredentials: true })
       .then(() => {
@@ -82,7 +70,7 @@ export function deleteClassroom(id) {
   };
 }
 
-export function createNewClassroom() {
+export function createNewAssignment() {
   return (dispatch, getState) => {
     axios.post(`${ROOT_URL}/classrooms`, {}, { withCredentials: true })
       .then((response) => {

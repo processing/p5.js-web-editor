@@ -11,7 +11,7 @@ router.route('/classrooms/:classroom_id').get(ClassroomController.getClassroom);
 
 router.route('/classrooms/:classroom_id').delete(ClassroomController.deleteClassroom);
 
-router.route('/classrooms').get(ClassroomController.getClassroom);
+router.route('/classrooms').get(ClassroomController.getClassrooms);
 
 router.route('/:username/classrooms/:classroom_id').get(ClassroomController.getClassroom);
 

@@ -56,7 +56,7 @@ class ClassroomList extends React.Component {
                 <tr 
                   className="sketches-table__row visibility-toggle"
                   key={classroom._id}
-                  onClick={() => browserHistory.push(`/${username}/classrooms/${classroom._id}`)}
+                  onClick={() => browserHistory.push(`/classroom/${classroom._id}`)}
                 >
                   <td className="sketch-list__trash-column">
                   {(() => { // eslint-disable-line
@@ -77,7 +77,7 @@ class ClassroomList extends React.Component {
                     }
                   })()}
                   </td>
-                  <th scope="row"><Link to={`/${username}/classroom/${classroom._id}`}>{classroom.name}</Link></th>
+                  <th scope="row"><Link to={`/classroom/${classroom._id}`}>{classroom.name}</Link></th>
                   <td>{moment(classroom.createdAt).format('MMM D, YYYY h:mm A')}</td>
                   <td>{moment(classroom.updatedAt).format('MMM D, YYYY h:mm A')}</td>
                 </tr>

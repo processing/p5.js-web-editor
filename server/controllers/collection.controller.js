@@ -1,7 +1,6 @@
 import archiver from 'archiver';
 import request from 'request';
 import moment from 'moment';
-import Collection from '../models/collection';
 import Project from '../models/project';
 import User from '../models/user';
 
