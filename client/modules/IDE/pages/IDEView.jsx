@@ -441,7 +441,7 @@ class IDEView extends React.Component {
             );
           }
         })()}
-        { /* {(() => { // eslint-disable-line
+        {(() => { // eslint-disable-line
           if (this.props.location.pathname.match('/createclassroom')) {
             console.log('Show create classroom page');
             return (
@@ -454,19 +454,6 @@ class IDEView extends React.Component {
             );
           }
         })()}
-        {(() => { // eslint-disable-line
-          if (this.props.location.pathname.match('/assignment')) {
-            console.log('Show submissions/description for an assignment');
-            return (
-              <Overlay>
-                <AssignmentSubmissions
-                  username={this.props.params.username}
-                  previousPath={this.props.ide.previousPath}
-                />
-              </Overlay>
-            );
-          }
-        })()}*/ }
         {(() => { // eslint-disable-line
           if (this.props.location.pathname.match('/myclassrooms')) {
             console.log('List all classrooms user is a student/teacher of');
@@ -485,6 +472,18 @@ class IDEView extends React.Component {
             return (
               <Overlay>
                 <AssignmentList
+                  username={this.props.params.username}
+                  previousPath={this.props.ide.previousPath}
+                />
+              </Overlay>
+            );
+          }
+        })()}
+        {(() => { // eslint-disable-line
+          if (this.props.location.pathname.match('/assignment')) {
+            return (
+              <Overlay>
+                <AssignmentSubmissions
                   username={this.props.params.username}
                   previousPath={this.props.ide.previousPath}
                 />

@@ -47,15 +47,15 @@ class AssignmentList extends React.Component {
             Create new Assignment
           </button>
           <button className="sketch-list__exit-button" onClick={this.closeAssignmentList}>
-            <InlineSVG src={exitUrl} alt="Close Classroom List Overlay" />
+            <InlineSVG src={exitUrl} alt="Close Assignments List Overlay" />
           </button>
         </header>
         <div className="sketches-table-container">
-          <table className="sketches-table" summary="table containing all classes you own or are a member of">
+          <table className="sketches-table" summary="table containing all assignments in this classroom">
             <thead>
               <tr>
                 <th className="sketch-list__trash-column" scope="col"></th>
-                <th scope="col">Classroom Name</th>
+                <th scope="col">Assignment Name</th>
                 <th scope="col">Date created</th>
                 <th scope="col">Date updated</th>
               </tr>
@@ -66,8 +66,9 @@ class AssignmentList extends React.Component {
                 <tr
                   className="sketches-table__row visibility-toggle"
                   key={assignment._id}
-                  onClick={() => browserHistory.push(`/assignment/${assignment._id}`)}
+                  onClick={() => browserHistory.push(`/assignment/${this.props.classroom._id}/${assignment._id}`)}
                 >
+                  <td className="sketch-list__trash-column"></td>
                   <th scope="row"><Link to={`/assignment/${assignment._id}`}>{assignment.name}</Link></th>
                   <td>{moment(assignment.createdAt).format('MMM D, YYYY h:mm A')}</td>
                 </tr>
