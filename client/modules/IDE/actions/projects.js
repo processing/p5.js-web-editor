@@ -6,7 +6,6 @@ import { resetProject } from './project';
 const ROOT_URL = process.env.API_URL;
 
 export function getProjects(username) {
-  console.log('getProjects');
   return (dispatch) => {
     let url;
     if (username) {
@@ -16,8 +15,6 @@ export function getProjects(username) {
     }
     axios.get(url, { withCredentials: true })
       .then((response) => {
-        console.log('data:');
-        console.log(response.data);
         dispatch({
           type: ActionTypes.SET_PROJECTS,
           projects: response.data

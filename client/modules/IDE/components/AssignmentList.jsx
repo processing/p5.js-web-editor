@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import moment from 'moment';
 import { Link, browserHistory } from 'react-router';
 import InlineSVG from 'react-inlinesvg';
-import * as AssignmentActions from '../actions/assignment';
 import * as ClassroomActions from '../actions/classroom';
 import * as ProjectActions from '../actions/project';
 import * as ToastActions from '../actions/toast';
@@ -18,8 +17,6 @@ class AssignmentList extends React.Component {
     super(props);
     this.closeAssignmentList = this.closeAssignmentList.bind(this);
     // this.props.getAssignments(this.props.classroomid);
-    console.log(this.props.classroom);
-    console.log(this.props);
   }
 
   componentDidMount() {
@@ -35,6 +32,9 @@ class AssignmentList extends React.Component {
       <section className="sketch-list" aria-label="classroom list" tabIndex="0" role="main" id="assignmentlist">
         <header className="sketch-list__header">
           <h2 className="sketch-list__header-title">Assignments in CLASSROOM_NAME_HERE</h2>
+          <button className="sketch-list__exit-button" onClick={() => { this.props.createNewAssignment(this.props.classroom._id); }}>
+            Create new Assignment
+          </button>
           <button className="sketch-list__exit-button" onClick={this.closeClassroomList}>
             <InlineSVG src={exitUrl} alt="Close Classroom List Overlay" />
           </button>
@@ -50,7 +50,7 @@ class AssignmentList extends React.Component {
               </tr>
             </thead>
             <tbody>
-              { /* {this.props.assignments.map(assignment =>
+              {this.props.classroom.assignments.map(assignment =>
                 // eslint-disable-next-line
                 <tr
                   className="sketches-table__row visibility-toggle"
@@ -60,7 +60,7 @@ class AssignmentList extends React.Component {
                   <th scope="row"><Link to={`/assignment/${assignment._id}`}>{assignment.name}</Link></th>
                   <td>{moment(assignment.createdAt).format('MMM D, YYYY h:mm A')}</td>
                 </tr>
-              )} */}
+              )}
             </tbody>
           </table>
         </div>
@@ -77,14 +77,16 @@ AssignmentList.propTypes = {
     createdAt: PropTypes.string.isRequired
   })).isRequired, */
   classroom: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
+    _id: PropTypes.string,
+    name: PropTypes.string,
+    assignments: PropTypes.arrayOf(PropTypes.string).isRequired
   }).isRequired,
+  createNewAssignment: PropTypes.func.isRequired,
   previousPath: PropTypes.string.isRequired,
 };
 
 AssignmentList.defaultProps = {
-  // classroom: undefined
+  classroom: {}
 };
 
 function mapStateToProps(state) {
@@ -95,7 +97,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}, ClassroomActions, ProjectActions, ToastActions, AssignmentActions), dispatch);
+  return bindActionCreators(Object.assign({}, ClassroomActions, ProjectActions, ToastActions), dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AssignmentList);
