@@ -16,6 +16,7 @@ class AssignmentList extends React.Component {
   constructor(props) {
     super(props);
     this.closeAssignmentList = this.closeAssignmentList.bind(this);
+    this.createNewAssignment = this.createNewAssignment.bind(this);
     // this.props.getAssignments(this.props.classroomid);
   }
 
@@ -24,7 +25,17 @@ class AssignmentList extends React.Component {
   }
 
   closeAssignmentList() {
+    // console.log(this.props.previousPath);
     browserHistory.push(this.props.previousPath);
+  }
+
+  createNewAssignment() {
+    this.props.classroom.assignments.push({
+      name: 'New Assignment',
+      submissions: []
+    });
+    console.log(this.props.classroom);
+    this.props.saveClassroom();
   }
 
   render() {
@@ -32,10 +43,10 @@ class AssignmentList extends React.Component {
       <section className="sketch-list" aria-label="classroom list" tabIndex="0" role="main" id="assignmentlist">
         <header className="sketch-list__header">
           <h2 className="sketch-list__header-title">Assignments in CLASSROOM_NAME_HERE</h2>
-          <button className="sketch-list__exit-button" onClick={() => { this.props.createNewAssignment(this.props.classroom._id); }}>
+          <button className="sketch-list__exit-button" onClick={() => { this.createNewAssignment(this.props.classroom._id); }}>
             Create new Assignment
           </button>
-          <button className="sketch-list__exit-button" onClick={this.closeClassroomList}>
+          <button className="sketch-list__exit-button" onClick={this.closeAssignmentList}>
             <InlineSVG src={exitUrl} alt="Close Classroom List Overlay" />
           </button>
         </header>
@@ -79,10 +90,14 @@ AssignmentList.propTypes = {
   classroom: PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.string,
-    assignments: PropTypes.arrayOf(PropTypes.string).isRequired
+    assignments: PropTypes.arrayOf(PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      createdAt: PropTypes.string.isRequired
+    })).isRequired
   }).isRequired,
-  createNewAssignment: PropTypes.func.isRequired,
   previousPath: PropTypes.string.isRequired,
+  saveClassroom: PropTypes.func.isRequired
 };
 
 AssignmentList.defaultProps = {

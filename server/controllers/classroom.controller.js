@@ -32,7 +32,37 @@ export function createClassroom(req, res) {
 }
 
 export function updateClassroom(req, res) {
-	res.send('Workin on this...');
+// ALRIGHT BIG TIME FUN TO BE HAD LETS DO IT!
+  console.log(req);
+
+	Classroom.findById(req.params.classroom_id, (findClassroomErr, classroom) => {
+    console.log(classroom);
+    // !!!!!!!! Need to check ownership of classroom here. !!!!!!!!
+    /*if (!req.user || !classroom.user.equals(req.user._id)) {
+      res.status(403).send({ success: false, message: 'Session does not match owner of project.' });
+      return;
+    }*/
+    // if (req.body.updatedAt && moment(req.body.updatedAt) < moment(project.updatedAt)) {
+    //   res.status(409).send({ success: false, message: 'Attempted to save stale version of project.' });
+    //   return;
+    // }
+    Classroom.findByIdAndUpdate(req.params.classroom_id,
+      {
+        $set: req.body
+      },
+      {
+        new: true
+      })
+      .populate('user', 'username')
+      .exec((updateClassroomErr, updatedClassroom) => {
+        if (updateClassroomErr) {
+          console.log(updateClassroomErr);
+          res.json({ success: false });
+          return;
+        }
+        res.json(updatedClassroom);
+      });
+  });
 }
 
 export function getClassroom(req, res) {

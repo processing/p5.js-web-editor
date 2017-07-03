@@ -103,7 +103,8 @@ export function createNewClassroom() {
   };
 }
 
-export function saveClassroom(autosave = false) {
+export function saveClassroom() {
+  console.log('saveClassroom');
   return (dispatch, getState) => {
     const state = getState();
     /* if (state.user.id && state.class.owner && state.project.owner.id !== state.user.id) {
@@ -112,16 +113,17 @@ export function saveClassroom(autosave = false) {
     const formParams = Object.assign({}, state.classroom);
     // formParams.files = [...state.files];
     // if (state.classroom.id) {
-    return axios.put(`${ROOT_URL}/classroom/${state.classroom._id}`, formParams, { withCredentials: true })
+    return axios.put(`${ROOT_URL}/classrooms/${state.classroom._id}`, formParams, { withCredentials: true })
       .then((response) => {
         dispatch(setUnsavedChanges(false));
         dispatch({
           type: ActionTypes.SET_CLASSROOM,
-          classrooms: response.data
+          classroom: response.data
         });
         dispatch({
           type: ActionTypes.CLASSROOM_SAVE_SUCCESS
         });
+        console.log('i think it worked?');
       })
       .catch((response) => {
         if (response.status === 403) {
@@ -129,6 +131,9 @@ export function saveClassroom(autosave = false) {
         } else if (response.status === 409) {
           dispatch(showErrorModal('staleProject'));
         } else {
+          console.log('oh no. i dont think it worked.');
+          console.log(response.data);
+          console.log(response);
           dispatch({
             type: ActionTypes.CLASSROOM_SAVE_FAIL,
             error: response.data
