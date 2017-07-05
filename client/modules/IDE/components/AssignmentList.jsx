@@ -17,6 +17,7 @@ class AssignmentList extends React.Component {
     super(props);
     this.closeAssignmentList = this.closeAssignmentList.bind(this);
     this.createNewAssignment = this.createNewAssignment.bind(this);
+    this.openAssignment = this.openAssignment.bind(this);
     // this.props.getAssignments(this.props.classroomid);
   }
 
@@ -36,6 +37,12 @@ class AssignmentList extends React.Component {
     });
     console.log(this.props.classroom);
     this.props.saveClassroom();
+  }
+
+  openAssignment(assignment) {
+    // this.props.assignment = assignment;
+    this.props.setAssignment(assignment);
+    browserHistory.push(`/assignment/${this.props.classroom._id}/${assignment._id}`);
   }
 
   render() {
@@ -66,7 +73,7 @@ class AssignmentList extends React.Component {
                 <tr
                   className="sketches-table__row visibility-toggle"
                   key={assignment._id}
-                  onClick={() => browserHistory.push(`/assignment/${this.props.classroom._id}/${assignment._id}`)}
+                  onClick={() => this.openAssignment(assignment)}
                 >
                   <td className="sketch-list__trash-column"></td>
                   <th scope="row"><Link to={`/assignment/${assignment._id}`}>{assignment.name}</Link></th>
@@ -88,6 +95,12 @@ AssignmentList.propTypes = {
     name: PropTypes.string.isRequired,
     createdAt: PropTypes.string.isRequired
   })).isRequired, */
+  /* assignment: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired
+  }), */
+  setAssignment: PropTypes.func.isRequired,
   classroom: PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.string,
@@ -102,7 +115,8 @@ AssignmentList.propTypes = {
 };
 
 AssignmentList.defaultProps = {
-  classroom: {}
+  classroom: {},
+  assignment: undefined
 };
 
 function mapStateToProps(state) {

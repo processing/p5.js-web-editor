@@ -114,3 +114,39 @@ export function getClassroomsUserIsMemberOf(req, res) {
 export function downloadClassroomAsZip(req, res) {
 	res.send('Workin on this...');
 }
+
+export function getAssignmentProjects(req, res) {
+  console.log('getAssignmentProjects');
+
+  Classroom.findById(req.params.classroom_id)
+    .populate('user', 'username')
+    .exec((err, classroom) => {
+      if (err) {
+        console.log('no classroom found...');
+        return res.status(404).send({ message: 'Classroom with that id does not exist' });
+      }
+      console.log('found classroom');
+      let foundAssignment = undefined;
+      classroom.assignments.forEach((assignment) => {
+        if(assignment.id === req.params.assignment_id) {
+          foundAssignment = assignment;
+        }
+      });
+      if(foundAssignment) {
+        let projectids = [];
+        foundAssignment.submissions.forEach((submission) => {
+          projectids.push(submission.id);
+        });
+        Project.find({ 
+          _id: {
+            $in: projectids
+          }
+        }).exec((err, projects) => {
+          res.json(projects);
+        });
+      } else {
+        return res.status(404).send({ message: 'Assignment with that id in that classroom does not exist' });
+      }
+      //return res.json(classroom);
+    });
+}

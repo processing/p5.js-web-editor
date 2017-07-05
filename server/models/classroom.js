@@ -17,7 +17,7 @@ const classroomSchema = new Schema({
   _id: { type: String, default: shortid.generate } 
 }, { timestamps: true });
 
-classroomSchema.virtual('id').get(function getCollectionId() {
+classroomSchema.virtual('id').get(function getClassroomId() {
   return this._id;
 });
 

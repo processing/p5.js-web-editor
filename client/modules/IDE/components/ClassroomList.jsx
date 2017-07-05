@@ -16,11 +16,16 @@ class ClassroomList extends React.Component {
   constructor(props) {
     super(props);
     this.closeClassroomList = this.closeClassroomList.bind(this);
+    this.createNewClassroom = this.createNewClassroom.bind(this);
     this.props.getClassrooms(this.props.username);
   }
 
   componentDidMount() {
     document.getElementById('classroomlist').focus();
+  }
+
+  createNewClassroom() {
+    browserHistory.push('createclassroom');
   }
 
   closeClassroomList() {
@@ -33,7 +38,7 @@ class ClassroomList extends React.Component {
       <section className="sketch-list" aria-label="classroom list" tabIndex="0" role="main" id="classroomlist">
         <header className="sketch-list__header">
           <h2 className="sketch-list__header-title">Open a Classroom</h2>
-          <button className="sketch-list__exit-button" onClick={() => { this.props.createNewClassroom(); }}>
+          <button className="sketch-list__exit-button" onClick={() => { this.createNewClassroom(); }}>
             Create new Classroom
           </button>
           <button className="sketch-list__exit-button" onClick={this.closeClassroomList}>
@@ -95,7 +100,7 @@ ClassroomList.propTypes = {
     username: PropTypes.string
   }).isRequired,
   getClassrooms: PropTypes.func.isRequired,
-  createNewClassroom: PropTypes.func.isRequired,
+  // createNewClassroom: PropTypes.func.isRequired,
   classrooms: PropTypes.arrayOf(PropTypes.shape({
     _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,

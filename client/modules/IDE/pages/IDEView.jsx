@@ -442,7 +442,7 @@ class IDEView extends React.Component {
           }
         })()}
         {(() => { // eslint-disable-line
-          if (this.props.location.pathname.match('/createclassroom')) {
+          if (this.props.location.pathname.match('createclassroom')) {
             console.log('Show create classroom page');
             return (
               <Overlay>

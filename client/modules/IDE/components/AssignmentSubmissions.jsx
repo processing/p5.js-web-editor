@@ -16,6 +16,7 @@ class AssignmentSubmissions extends React.Component {
   constructor(props) {
     super(props);
     this.closeSubmissionList = this.closeSubmissionList.bind(this);
+    this.props.getSubmissions(this.props.classroom, this.props.assignment);
   }
 
   componentDidMount() {
@@ -32,6 +33,7 @@ class AssignmentSubmissions extends React.Component {
   }
 
   render() {
+    const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
     return (
       <section className="sketch-list" aria-label="submissions list" tabIndex="0" role="main" id="submissionlist">
         <header className="sketch-list__header">
@@ -54,18 +56,37 @@ class AssignmentSubmissions extends React.Component {
               </tr>
             </thead>
             <tbody>
-              { /* {this.props.classroom.assignments.map(assignment =>
+              {this.props.sketches.map(sketch =>
                 // eslint-disable-next-line
-                <tr
+                <tr 
                   className="sketches-table__row visibility-toggle"
-                  key={assignment._id}
-                  onClick={() => browserHistory.push(`/assignment/${this.props.classroom._id}/${assignment._id}`)}
+                  key={sketch.id}
+                  onClick={() => browserHistory.push(`/${username}/sketches/${sketch.id}`)}
                 >
-                  <td className="sketch-list__trash-column"></td>
-                  <th scope="row"><Link to={`/assignment/${assignment._id}`}>{assignment.name}</Link></th>
-                  <td>{moment(assignment.createdAt).format('MMM D, YYYY h:mm A')}</td>
+                  <td className="sketch-list__trash-column">
+                  {(() => { // eslint-disable-line
+                    if (this.props.username === this.props.user.username || this.props.username === undefined) {
+                      return (
+                        <button
+                          className="sketch-list__trash-button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (window.confirm(`Are you sure you want to delete "${sketch.name}"?`)) {
+                              // this.props.deleteProject(sketch.id);
+                            }
+                          }}
+                        >
+                          <InlineSVG src={trashCan} alt="Delete Project" />
+                        </button>
+                      );
+                    }
+                  })()}
+                  </td>
+                  <th scope="row"><Link to={`/${username}/sketches/${sketch.id}`}>{sketch.name}</Link></th>
+                  <td>{moment(sketch.createdAt).format('MMM D, YYYY h:mm A')}</td>
+                  <td>{moment(sketch.updatedAt).format('MMM D, YYYY h:mm A')}</td>
                 </tr>
-              )} */ }
+              )}
             </tbody>
           </table>
         </div>
@@ -75,12 +96,16 @@ class AssignmentSubmissions extends React.Component {
 }
 
 AssignmentSubmissions.propTypes = {
+  getSubmissions: PropTypes.func.isRequired,
   // getAssignments: PropTypes.func.isRequired,
-  /* assignments: PropTypes.arrayOf(PropTypes.shape({
+  assignment: PropTypes.shape({
     _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     createdAt: PropTypes.string.isRequired
-  })).isRequired, */
+  }).isRequired,
+  user: PropTypes.shape({
+    username: PropTypes.string
+  }).isRequired,
   classroom: PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.string,
@@ -90,16 +115,28 @@ AssignmentSubmissions.propTypes = {
       createdAt: PropTypes.string.isRequired
     })).isRequired
   }).isRequired,
+  // getProjects: PropTypes.func.isRequired,
+  sketches: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired,
+    updatedAt: PropTypes.string.isRequired
+  })).isRequired,
+  username: PropTypes.string,
   previousPath: PropTypes.string.isRequired
 };
 
 AssignmentSubmissions.defaultProps = {
-  classroom: {}
+  classroom: {},
+  username: undefined,
 };
 
 function mapStateToProps(state) {
   return {
     classroom: state.classroom,
+    user: state.user,
+    sketches: state.sketches,
+    assignment: state.assignment
     // assignments: state.assignments
   };
 }

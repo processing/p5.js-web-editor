@@ -177,3 +177,39 @@ export function saveClassroom() {
       }); */
   };
 }
+
+export function getSubmissions(classroom, assignment) {
+  console.log('getSubmissions');
+  console.log(classroom);
+  console.log(classroom._id);
+  console.log(assignment);
+  console.log(assignment._id);
+  /* return (dispatch, getState) => {
+    // WHOOPS NOT DONE!!!!!!!!!!!!!!!!!!!!!!!!!!
+    dispatch(showErrorModal('staleSession'));
+  }; */
+
+  return (dispatch) => {
+    const url = `${ROOT_URL}/classroom/${classroom._id}/${assignment._id}/projects`;
+    axios.get(url, { withCredentials: true })
+      .then((response) => {
+        dispatch({
+          type: ActionTypes.SET_PROJECTS,
+          projects: response.data
+        });
+      })
+      .catch(response => dispatch({
+        type: ActionTypes.ERROR,
+        error: response.data
+      }));
+  };
+}
+
+export function setAssignment(assignment) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.SET_ASSIGNMENT,
+      assignment
+    });
+  };
+}

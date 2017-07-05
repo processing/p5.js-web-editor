@@ -11,6 +11,8 @@ router.route('/classrooms/:classroom_id').get(ClassroomController.getClassroom);
 
 router.route('/classrooms/:classroom_id').delete(ClassroomController.deleteClassroom);
 
+router.route('/classroom/:classroom_id/:assignment_id/projects').get(ClassroomController.getAssignmentProjects);
+
 router.route('/classrooms').get(ClassroomController.getClassrooms);
 
 router.route('/:username/classrooms/:classroom_id').get(ClassroomController.getClassroom);
