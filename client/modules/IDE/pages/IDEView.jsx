@@ -34,6 +34,7 @@ import ClassroomList from '../components/ClassroomList';
 import AssignmentList from '../components/AssignmentList';
 import AssignmentSubmissions from '../components/AssignmentSubmissions';
 import CreateClassroom from '../components/CreateClassroom';
+import CreateAssignment from '../components/CreateAssignment';
 import About from '../components/About';
 
 class IDEView extends React.Component {
@@ -447,6 +448,19 @@ class IDEView extends React.Component {
             return (
               <Overlay>
                 <CreateClassroom
+                  username={this.props.params.username}
+                  previousPath={this.props.ide.previousPath}
+                />
+              </Overlay>
+            );
+          }
+        })()}
+        {(() => { // eslint-disable-line
+          if (this.props.location.pathname.match('createassignment')) {
+            console.log('Show create assignment page');
+            return (
+              <Overlay>
+                <CreateAssignment
                   username={this.props.params.username}
                   previousPath={this.props.ide.previousPath}
                 />

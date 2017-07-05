@@ -29,6 +29,7 @@ class AssignmentSubmissions extends React.Component {
   }
 
   submitAssignment() {
+    console.log('submitAssignment');
     console.log(this.props.classroom);
   }
 

@@ -31,6 +31,8 @@ class AssignmentList extends React.Component {
   }
 
   createNewAssignment() {
+    browserHistory.push('/createassignment');
+    // move this
     this.props.classroom.assignments.push({
       name: 'New Assignment',
       submissions: []
