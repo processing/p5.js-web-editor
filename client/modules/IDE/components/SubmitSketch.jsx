@@ -12,42 +12,34 @@ import * as ToastActions from '../actions/toast';
 const exitUrl = require('../../../images/exit.svg');
 const trashCan = require('../../../images/trash-can.svg');
 
-class AssignmentSubmissions extends React.Component {
+class SubmitSketch extends React.Component {
   constructor(props) {
     super(props);
-    this.closeSubmissionList = this.closeSubmissionList.bind(this);
+    this.closeSumbitSketchList = this.closeSumbitSketchList.bind(this);
     this.props.getSubmissions(this.props.classroom, this.props.assignment);
   }
 
   componentDidMount() {
-    document.getElementById('submissionlist').focus();
+    document.getElementById('submitsketch').focus();
   }
 
-  closeSubmissionList() {
+  closeSumbitSketchList() {
     // console.log(this.props.previousPath);
     browserHistory.push(this.props.previousPath);
-  }
-
-  submitAssignment() {
-    console.log('submitAssignment');
-    console.log(this.props.classroom);
   }
 
   render() {
     const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
     return (
-      <section className="sketch-list" aria-label="submissions list" tabIndex="0" role="main" id="submissionlist">
+      <section className="sketch-list" aria-label="submissions list" tabIndex="0" role="main" id="submitsketch">
         <header className="sketch-list__header">
-          <h2 className="sketch-list__header-title">Submissions for ASSIGNMENT_NAME_HERE in CLASSROOM_NAME_HERE</h2>
-          <button className="sketch-list__exit-button" onClick={() => { browserHistory.push('/submitsketch'); /* this.submitAssignment(); */ }}>
-            Submit Assignment
-          </button>
-          <button className="sketch-list__exit-button" onClick={this.closeSubmissionList}>
+          <h2 className="sketch-list__header-title">Submit a sketch to ASSIGNMENT_NAME_HERE</h2>
+          <button className="sketch-list__exit-button" onClick={this.closeSumbitSketchList}>
             <InlineSVG src={exitUrl} alt="Close Submissions List Overlay" />
           </button>
         </header>
         <div className="sketches-table-container">
-          <table className="sketches-table" summary="table containing all submissions in this assignment">
+          <table className="sketches-table" summary="table containing all sketches that can be submitted to this assignment">
             <thead>
               <tr>
                 <th className="sketch-list__trash-column" scope="col"></th>
@@ -96,7 +88,7 @@ class AssignmentSubmissions extends React.Component {
   }
 }
 
-AssignmentSubmissions.propTypes = {
+SubmitSketch.propTypes = {
   getSubmissions: PropTypes.func.isRequired,
   // getAssignments: PropTypes.func.isRequired,
   assignment: PropTypes.shape({
@@ -127,7 +119,7 @@ AssignmentSubmissions.propTypes = {
   previousPath: PropTypes.string.isRequired
 };
 
-AssignmentSubmissions.defaultProps = {
+SubmitSketch.defaultProps = {
   classroom: {},
   username: undefined,
 };
@@ -146,4 +138,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({}, ClassroomActions, ProjectActions, ToastActions), dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AssignmentSubmissions);
+export default connect(mapStateToProps, mapDispatchToProps)(SubmitSketch);

@@ -35,6 +35,7 @@ import AssignmentList from '../components/AssignmentList';
 import AssignmentSubmissions from '../components/AssignmentSubmissions';
 import CreateClassroom from '../components/CreateClassroom';
 import CreateAssignment from '../components/CreateAssignment';
+import SubmitSketch from '../components/SubmitSketch';
 import About from '../components/About';
 
 class IDEView extends React.Component {
@@ -461,6 +462,19 @@ class IDEView extends React.Component {
             return (
               <Overlay>
                 <CreateAssignment
+                  username={this.props.params.username}
+                  previousPath={this.props.ide.previousPath}
+                />
+              </Overlay>
+            );
+          }
+        })()}
+        {(() => { // eslint-disable-line
+          if (this.props.location.pathname.match('submitsketch')) {
+            console.log('Show submit sketch page');
+            return (
+              <Overlay>
+                <SubmitSketch
                   username={this.props.params.username}
                   previousPath={this.props.ide.previousPath}
                 />
