@@ -14,7 +14,7 @@ export function classroomExists(classroom_id, callback) {
 }
 
 export function assignmentExists(classroom_id, assignment_id, callback) {
-  Classroom.findById(req.params.classroom_id, (findClassroomErr, classroom) => {
+  Classroom.findById(classroom_id, (findClassroomErr, classroom) => {
     if(classroom) {
       let foundAssignment = false;
       classroom.assignments.forEach((assignment) => {
@@ -144,7 +144,7 @@ export function getAssignmentProjects(req, res) {
   Classroom.findById(req.params.classroom_id)
     .populate('user', 'username')
     .exec((err, classroom) => {
-      if (err) {
+      if (err || !classroom) {
         console.log('no classroom found...');
         return res.status(404).send({ message: 'Classroom with that id does not exist' });
       }

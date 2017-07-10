@@ -88,8 +88,7 @@ class CreateAssignment extends React.Component {
   }
 
   closeCreateAssignmentPage() {
-    // browserHistory.push(this.props.previousPath);
-    browserHistory.push('/');
+    browserHistory.push(this.props.previousPath);
   }
 
   handleNameUpdate(e) {
@@ -105,7 +104,8 @@ class CreateAssignment extends React.Component {
     this.props.classroom.assignments.push(assignment);
     this.props.saveClassroom();
     // browserHistory.push('/createassignment');
-    browserHistory.push('/myclassrooms');
+    // browserHistory.push('/myclassrooms');
+    browserHistory.push(this.props.previousPath);
   }
 
   render() {
@@ -139,7 +139,7 @@ class CreateAssignment extends React.Component {
 }
 
 CreateAssignment.propTypes = {
-  // previousPath: PropTypes.string.isRequired,
+  previousPath: PropTypes.string.isRequired,
   saveClassroom: PropTypes.func.isRequired,
   classroom: PropTypes.shape({
     _id: PropTypes.string,

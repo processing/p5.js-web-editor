@@ -37,8 +37,7 @@ class SubmitSketch extends React.Component {
   }
 
   closeSumbitSketchList() {
-    // browserHistory.push(this.props.previousPath);
-    browserHistory.push('/');
+    browserHistory.push(this.props.previousPath);
   }
 
   render() {

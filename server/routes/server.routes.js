@@ -95,6 +95,7 @@ router.route('/classroom/:classroom_id').get((req, res) => {
 });
 
 router.route('/assignment/:classroom_id/:assignment_id').get((req, res) => {
+  console.log(req);
   assignmentExists(req.params.classroom_id, req.params.assignment_id, exists => (
     exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
   ));
