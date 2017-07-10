@@ -346,6 +346,15 @@ class PreviewFrame extends React.Component {
     });
   }
 
+  generateThumbnail() {
+    console.log('generateThumbnail');
+    if (this.iframeElement) {
+      console.log(this.iframeElement.contentDocument);
+      console.log(this.iframeElement.contentDocument.getElementsByClassName('preview-frame'));
+      // window.open(this.iframeElement.toDataURL());
+    }
+  }
+
   renderSketch() {
     const doc = this.iframeElement;
     if (this.props.isPlaying) {
