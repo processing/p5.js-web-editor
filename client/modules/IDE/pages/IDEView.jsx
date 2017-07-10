@@ -60,11 +60,8 @@ class IDEView extends React.Component {
       }
     }
     if (this.props.params.classroom_id) {
-      console.log('oh hey!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-      console.log(this.props.params.classroom_id);
       const id = this.props.params.classroom_id;
       if (id !== this.props.classroom.id) {
-        console.log(this.props.getClassroom);
         // this.props.getClassroom(id);
       }
     }
@@ -101,13 +98,11 @@ class IDEView extends React.Component {
 
     if (nextProps.params.project_id && !this.props.params.project_id) {
       if (nextProps.params.project_id !== nextProps.project.id) {
-        console.log('getProject');
         this.props.getProject(nextProps.params.project_id);
       }
     }
 
     if (nextProps.params.classroom_id && !this.props.params.classroom_id) {
-      console.log('get classroom!!!!!!!!!!!!!!!!!!!!');
       this.props.getClassroom(nextProps.params.classroom_id);
     }
 
@@ -446,7 +441,6 @@ class IDEView extends React.Component {
         })()}
         {(() => { // eslint-disable-line
           if (this.props.location.pathname.match('createclassroom')) {
-            console.log('Show create classroom page');
             return (
               <Overlay>
                 <CreateClassroom
@@ -459,7 +453,6 @@ class IDEView extends React.Component {
         })()}
         {(() => { // eslint-disable-line
           if (this.props.location.pathname.match('createassignment')) {
-            console.log('Show create assignment page');
             return (
               <Overlay>
                 <CreateAssignment
@@ -472,7 +465,6 @@ class IDEView extends React.Component {
         })()}
         {(() => { // eslint-disable-line
           if (this.props.location.pathname.match('submitsketch')) {
-            console.log('Show submit sketch page');
             return (
               <Overlay>
                 <SubmitSketch
@@ -485,7 +477,6 @@ class IDEView extends React.Component {
         })()}
         {(() => { // eslint-disable-line
           if (this.props.location.pathname.match('/myclassrooms')) {
-            console.log('List all classrooms user is a student/teacher of');
             return (
               <Overlay>
                 <ClassroomList

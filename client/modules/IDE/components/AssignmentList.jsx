@@ -26,7 +26,6 @@ class AssignmentList extends React.Component {
   }
 
   closeAssignmentList() {
-    // console.log(this.props.previousPath);
     browserHistory.push(this.props.previousPath);
   }
 
@@ -51,7 +50,7 @@ class AssignmentList extends React.Component {
     return (
       <section className="sketch-list" aria-label="classroom list" tabIndex="0" role="main" id="assignmentlist">
         <header className="sketch-list__header">
-          <h2 className="sketch-list__header-title">Assignments in CLASSROOM_NAME_HERE</h2>
+          <h2 className="sketch-list__header-title">Assignments in {this.props.classroom.name}</h2>
           <button className="sketch-list__exit-button" onClick={() => { this.createNewAssignment(this.props.classroom._id); }}>
             Create new Assignment
           </button>

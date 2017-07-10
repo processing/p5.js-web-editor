@@ -24,7 +24,6 @@ const trashCan = require('../../../images/trash-can.svg');
   } = props;
 
   const updateAssignment = ((formParams) => {
-    console.log(props);
     props.classroom.assignments.push({
       name: formParams.name,
       submissions: []
@@ -89,19 +88,15 @@ class CreateAssignment extends React.Component {
   }
 
   closeCreateAssignmentPage() {
-    // console.log(this.props.previousPath);
     browserHistory.push(this.props.previousPath);
   }
 
   handleNameUpdate(e) {
-    console.log('handleNameUpdate');
-    console.log(e.target.value);
     // this.props.assignment.name = e.target.value;
     this.assignmentName = e.target.value;
   }
 
   handleSubmit() {
-    console.log('handleSubmit');
     const assignment = {
       name: this.assignmentName,
       submissions: []
@@ -116,7 +111,7 @@ class CreateAssignment extends React.Component {
     return (
       <section className="sketch-list" aria-label="submissions list" tabIndex="0" role="main" id="createclassroomfields">
         <header className="sketch-list__header">
-          <h2 className="sketch-list__header-title">Create new classroom</h2>
+          <h2 className="sketch-list__header-title">Create new assignment</h2>
           <button className="sketch-list__exit-button" onClick={this.closeCreateAssignmentPage}>
             <InlineSVG src={exitUrl} alt="Close Create Classroom Overlay" />
           </button>

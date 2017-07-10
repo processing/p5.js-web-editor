@@ -17,6 +17,8 @@ class SubmitSketch extends React.Component {
   constructor(props) {
     super(props);
     this.closeSumbitSketchList = this.closeSumbitSketchList.bind(this);
+    this.submitSketch = this.submitSketch.bind(this);
+
     this.props.getProjects(this.props.username);
   }
 
@@ -24,18 +26,26 @@ class SubmitSketch extends React.Component {
     document.getElementById('submitsketch').focus();
   }
 
+  submitSketch(sketchID) {
+    this.props.classroom.assignments.forEach((assignment) => {
+      if (assignment.name === this.props.assignment.name) {
+        assignment.submissions.push(sketchID);
+      }
+    });
+    this.props.saveClassroom();
+    browserHistory.push('/');
+  }
+
   closeSumbitSketchList() {
-    // console.log(this.props.previousPath);
     browserHistory.push(this.props.previousPath);
   }
 
   render() {
     const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
-    console.log(this.props.sketches);
     return (
       <section className="sketch-list" aria-label="submissions list" tabIndex="0" role="main" id="submitsketch">
         <header className="sketch-list__header">
-          <h2 className="sketch-list__header-title">Submit a sketch to ASSIGNMENT_NAME_HERE</h2>
+          <h2 className="sketch-list__header-title">Submit a sketch to {this.props.assignment.name}</h2>
           <button className="sketch-list__exit-button" onClick={this.closeSumbitSketchList}>
             <InlineSVG src={exitUrl} alt="Close Submissions List Overlay" />
           </button>
@@ -56,7 +66,7 @@ class SubmitSketch extends React.Component {
                 <tr 
                   className="sketches-table__row visibility-toggle"
                   key={sketch.id}
-                  onClick={() => browserHistory.push(`/${username}/sketches/${sketch.id}`)}
+                  onClick={() => { this.submitSketch(sketch.id); }}
                 >
                   <td className="sketch-list__trash-column">
                   {(() => { // eslint-disable-line
@@ -101,7 +111,7 @@ SubmitSketch.propTypes = {
   user: PropTypes.shape({
     username: PropTypes.string
   }).isRequired,
-  /* classroom: PropTypes.shape({
+  classroom: PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.string,
     assignments: PropTypes.arrayOf(PropTypes.shape({
@@ -109,7 +119,12 @@ SubmitSketch.propTypes = {
       name: PropTypes.string.isRequired,
       createdAt: PropTypes.string.isRequired
     })).isRequired
-  }).isRequired, */
+  }).isRequired,
+  assignment: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired
+  }).isRequired,
   getProjects: PropTypes.func.isRequired,
   sketches: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -118,7 +133,8 @@ SubmitSketch.propTypes = {
     updatedAt: PropTypes.string.isRequired
   })).isRequired,
   username: PropTypes.string,
-  previousPath: PropTypes.string.isRequired
+  previousPath: PropTypes.string.isRequired,
+  saveClassroom: PropTypes.func.isRequired
 };
 
 SubmitSketch.defaultProps = {

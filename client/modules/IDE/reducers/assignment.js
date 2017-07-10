@@ -12,8 +12,6 @@ const assignment = (state, action) => {
   }
   switch (action.type) {
     case ActionTypes.SET_ASSIGNMENT:
-      console.log('assignment reducer: SET_ASSIGNMENT');
-      console.log(action.assignment);
       return action.assignment;
     default:
       return state;

@@ -67,7 +67,6 @@ class CreateClassroom extends React.Component {
   }
 
   closeCreateClassroomPage() {
-    // console.log(this.props.previousPath);
     browserHistory.push(this.props.previousPath);
   }
 
