@@ -67,7 +67,8 @@ class CreateClassroom extends React.Component {
   }
 
   closeCreateClassroomPage() {
-    browserHistory.push(this.props.previousPath);
+    // browserHistory.push(this.props.previousPath);
+    browserHistory.push('/');
   }
 
   render() {
@@ -88,7 +89,7 @@ class CreateClassroom extends React.Component {
 }
 
 CreateClassroom.propTypes = {
-  previousPath: PropTypes.string.isRequired,
+  // previousPath: PropTypes.string.isRequired,
 };
 
 CreateClassroom.defaultProps = {

@@ -24,7 +24,8 @@ class AssignmentSubmissions extends React.Component {
   }
 
   closeSubmissionList() {
-    browserHistory.push(this.props.previousPath);
+    // browserHistory.push(this.props.previousPath);
+    browserHistory.push('/');
   }
 
   render() {
@@ -118,7 +119,7 @@ AssignmentSubmissions.propTypes = {
     updatedAt: PropTypes.string.isRequired
   })).isRequired,
   username: PropTypes.string,
-  previousPath: PropTypes.string.isRequired
+  // previousPath: PropTypes.string.isRequired
 };
 
 AssignmentSubmissions.defaultProps = {

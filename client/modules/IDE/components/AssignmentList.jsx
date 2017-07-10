@@ -26,7 +26,8 @@ class AssignmentList extends React.Component {
   }
 
   closeAssignmentList() {
-    browserHistory.push(this.props.previousPath);
+    // browserHistory.push(this.props.previousPath);
+    browserHistory.push('/');
   }
 
   createNewAssignment() {
@@ -112,7 +113,7 @@ AssignmentList.propTypes = {
       createdAt: PropTypes.string.isRequired
     })).isRequired
   }).isRequired,
-  previousPath: PropTypes.string.isRequired
+  // previousPath: PropTypes.string.isRequired
 };
 
 AssignmentList.defaultProps = {

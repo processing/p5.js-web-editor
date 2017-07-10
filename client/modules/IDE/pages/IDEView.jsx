@@ -62,7 +62,7 @@ class IDEView extends React.Component {
     if (this.props.params.classroom_id) {
       const id = this.props.params.classroom_id;
       if (id !== this.props.classroom.id) {
-        // this.props.getClassroom(id);
+        this.props.getClassroom(id);
       }
     }
 
@@ -750,7 +750,8 @@ function mapStateToProps(state) {
     user: state.user,
     project: state.project,
     toast: state.toast,
-    console: state.console
+    console: state.console,
+    classroom: state.classroom
   };
 }
 

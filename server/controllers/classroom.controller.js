@@ -5,6 +5,30 @@ import Classroom from '../models/classroom';
 import Project from '../models/project';
 import User from '../models/user';
 
+export function classroomExists(classroom_id, callback) {
+  Classroom.findById(classroom_id, (findClassroomErr, classroom) => {
+    console.log(classroom_id);
+    console.log(classroom);
+    classroom ? callback(true) : callback(false)
+  });
+}
+
+export function assignmentExists(classroom_id, assignment_id, callback) {
+  Classroom.findById(req.params.classroom_id, (findClassroomErr, classroom) => {
+    if(classroom) {
+      let foundAssignment = false;
+      classroom.assignments.forEach((assignment) => {
+        if(assignment.id === assignment_id) {
+          foundAssignment = true;
+        }
+      });
+      callback(foundAssignment);
+    } else {
+      callback(false);
+    }
+  });
+}
+
 export function createClassroom(req, res) {
 
   // console.log(req.user);
@@ -32,7 +56,6 @@ export function createClassroom(req, res) {
 }
 
 export function updateClassroom(req, res) {
-// ALRIGHT BIG TIME FUN TO BE HAD LETS DO IT!
   console.log(req);
 
 	Classroom.findById(req.params.classroom_id, (findClassroomErr, classroom) => {
@@ -135,13 +158,16 @@ export function getAssignmentProjects(req, res) {
       if(foundAssignment) {
         let projectids = [];
         foundAssignment.submissions.forEach((submission) => {
-          projectids.push(submission.id);
+          console.log(submission);
+          projectids.push(submission);
         });
+        console.log(projectids);
         Project.find({ 
           _id: {
             $in: projectids
           }
         }).exec((err, projects) => {
+          console.log(projects);
           res.json(projects);
         });
       } else {

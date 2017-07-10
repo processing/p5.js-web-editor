@@ -23,7 +23,8 @@ class SketchList extends React.Component {
   }
 
   closeSketchList() {
-    browserHistory.push(this.props.previousPath);
+    // browserHistory.push(this.props.previousPath);
+    browserHistory.push('/');
   }
 
   render() {
@@ -99,7 +100,7 @@ SketchList.propTypes = {
   })).isRequired,
   username: PropTypes.string,
   deleteProject: PropTypes.func.isRequired,
-  previousPath: PropTypes.string.isRequired,
+  // previousPath: PropTypes.string.isRequired,
 };
 
 SketchList.defaultProps = {

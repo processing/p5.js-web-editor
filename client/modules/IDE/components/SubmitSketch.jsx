@@ -33,11 +33,12 @@ class SubmitSketch extends React.Component {
       }
     });
     this.props.saveClassroom();
-    browserHistory.push('/');
+    browserHistory.push(this.props.previousPath);
   }
 
   closeSumbitSketchList() {
-    browserHistory.push(this.props.previousPath);
+    // browserHistory.push(this.props.previousPath);
+    browserHistory.push('/');
   }
 
   render() {

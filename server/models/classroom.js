@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 
 const assignmentSchema = new Schema({
   name: { type: String, default: 'sketch.js' },
-  submissions: { type: [Schema.Types.ObjectId] },
+  submissions: { type: [String] },
 }, { timestamps: true });
 
 const classroomSchema = new Schema({

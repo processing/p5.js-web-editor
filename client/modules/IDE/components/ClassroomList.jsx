@@ -30,7 +30,8 @@ class ClassroomList extends React.Component {
   }
 
   closeClassroomList() {
-    browserHistory.push(this.props.previousPath);
+    // browserHistory.push(this.props.previousPath);
+    browserHistory.push('/');
   }
 
   render() {
@@ -110,7 +111,7 @@ ClassroomList.propTypes = {
   })).isRequired,
   username: PropTypes.string,
   deleteClassroom: PropTypes.func.isRequired,
-  previousPath: PropTypes.string.isRequired,
+  // previousPath: PropTypes.string.isRequired,
 };
 
 ClassroomList.defaultProps = {
