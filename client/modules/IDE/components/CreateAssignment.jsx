@@ -14,7 +14,7 @@ import { domOnlyProps } from '../../../utils/reduxFormUtils';
 const exitUrl = require('../../../images/exit.svg');
 const trashCan = require('../../../images/trash-can.svg');
 
-function CreateAssignmentForm(props) {
+/* function CreateAssignmentForm(props) {
   const {
     fields: { name },
     handleSubmit,
@@ -73,12 +73,15 @@ CreateAssignmentForm.defaultProps = {
   submitting: false,
   pristine: true,
   invalid: false
-};
+}; */
 
 class CreateAssignment extends React.Component {
   constructor(props) {
     super(props);
     this.closeCreateAssignmentPage = this.closeCreateAssignmentPage.bind(this);
+    this.handleNameUpdate = this.handleNameUpdate.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.assignmentName = 'New Assignment';
   }
 
   componentDidMount() {
@@ -88,6 +91,25 @@ class CreateAssignment extends React.Component {
   closeCreateAssignmentPage() {
     // console.log(this.props.previousPath);
     browserHistory.push(this.props.previousPath);
+  }
+
+  handleNameUpdate(e) {
+    console.log('handleNameUpdate');
+    console.log(e.target.value);
+    // this.props.assignment.name = e.target.value;
+    this.assignmentName = e.target.value;
+  }
+
+  handleSubmit() {
+    console.log('handleSubmit');
+    const assignment = {
+      name: this.assignmentName,
+      submissions: []
+    };
+    this.props.classroom.assignments.push(assignment);
+    this.props.saveClassroom();
+    // browserHistory.push('/createassignment');
+    browserHistory.push('/myclassrooms');
   }
 
   render() {
@@ -100,7 +122,20 @@ class CreateAssignment extends React.Component {
           </button>
         </header>
         <div className="sketches-table-container">
-          <CreateAssignmentForm {...this.props} />
+          <form className="form">
+            <p className="form__field">
+              <label htmlFor="name" className="form__label">Name</label>
+              <input
+                className="form__input"
+                aria-label="name"
+                type="text"
+                id="name"
+                onChange={this.handleNameUpdate}
+                {...domOnlyProps(name)}
+              />
+            </p>
+            <input type="submit" value="Save" onClick={this.handleSubmit} aria-label="updateAssignment" />
+          </form>
         </div>
       </section>
     );
@@ -108,16 +143,27 @@ class CreateAssignment extends React.Component {
 }
 
 CreateAssignment.propTypes = {
-  previousPath: PropTypes.string.isRequired
+  previousPath: PropTypes.string.isRequired,
+  saveClassroom: PropTypes.func.isRequired,
+  classroom: PropTypes.shape({
+    _id: PropTypes.string,
+    name: PropTypes.string,
+    assignments: PropTypes.arrayOf(PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      createdAt: PropTypes.string.isRequired
+    })).isRequired
+  }).isRequired,
 };
 
 CreateAssignment.defaultProps = {
-  classroom: {},
+  assignment: {}
 };
 
 function mapStateToProps(state) {
   return {
-    classroom: state.classroom
+    classroom: state.classroom,
+    assignment: state.assignment
   };
 }
 

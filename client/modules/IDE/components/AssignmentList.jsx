@@ -31,14 +31,14 @@ class AssignmentList extends React.Component {
   }
 
   createNewAssignment() {
-    browserHistory.push('/createassignment');
-    // move this to create assignment page
-    /* this.props.classroom.assignments.push({
+    /* const assignment = {
       name: 'New Assignment',
       submissions: []
-    });
-    console.log(this.props.classroom);
+    };
+    this.props.classroom.assignments.push(assignment);
     this.props.saveClassroom(); */
+
+    browserHistory.push('/createassignment');
   }
 
   openAssignment(assignment) {
@@ -103,6 +103,7 @@ AssignmentList.propTypes = {
     createdAt: PropTypes.string.isRequired
   }), */
   setAssignment: PropTypes.func.isRequired,
+  /* saveClassroom: PropTypes.func.isRequired, */
   classroom: PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.string,

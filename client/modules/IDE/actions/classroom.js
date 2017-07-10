@@ -113,6 +113,7 @@ export function saveClassroom() {
   console.log('saveClassroom');
   return (dispatch, getState) => {
     const state = getState();
+    console.log(state.classroom.assignments);
     /* if (state.user.id && state.class.owner && state.project.owner.id !== state.user.id) {
       return Promise.reject();
     }*/
