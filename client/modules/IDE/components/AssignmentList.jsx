@@ -33,12 +33,12 @@ class AssignmentList extends React.Component {
   createNewAssignment() {
     browserHistory.push('/createassignment');
     // move this to create assignment page
-    this.props.classroom.assignments.push({
+    /* this.props.classroom.assignments.push({
       name: 'New Assignment',
       submissions: []
     });
     console.log(this.props.classroom);
-    this.props.saveClassroom();
+    this.props.saveClassroom(); */
   }
 
   openAssignment(assignment) {
@@ -112,8 +112,7 @@ AssignmentList.propTypes = {
       createdAt: PropTypes.string.isRequired
     })).isRequired
   }).isRequired,
-  previousPath: PropTypes.string.isRequired,
-  saveClassroom: PropTypes.func.isRequired
+  previousPath: PropTypes.string.isRequired
 };
 
 AssignmentList.defaultProps = {
