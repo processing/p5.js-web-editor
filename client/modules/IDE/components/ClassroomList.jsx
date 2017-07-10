@@ -25,6 +25,7 @@ class ClassroomList extends React.Component {
   }
 
   createNewClassroom() {
+    this.props.createNewClassroom();
     browserHistory.push('createclassroom');
   }
 
@@ -100,7 +101,7 @@ ClassroomList.propTypes = {
     username: PropTypes.string
   }).isRequired,
   getClassrooms: PropTypes.func.isRequired,
-  // createNewClassroom: PropTypes.func.isRequired,
+  createNewClassroom: PropTypes.func.isRequired,
   classrooms: PropTypes.arrayOf(PropTypes.shape({
     _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,

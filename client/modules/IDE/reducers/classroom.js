@@ -13,6 +13,9 @@ const classroom = (state, action) => {
   switch (action.type) {
     case ActionTypes.SET_CLASSROOM:
       return action.classroom;
+    case ActionTypes.CLASSROOM_SAVE_SUCCESS:
+      console.log('CLASSROOM_SAVE_SUCCESS');
+      return state;
     default:
       return state;
   }

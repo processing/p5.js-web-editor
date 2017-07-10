@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { browserHistory } from 'react-router';
 import * as ActionTypes from '../../../constants';
 import { resetProject } from './project';
 import { setUnsavedChanges,
@@ -80,6 +81,11 @@ export function createNewClassroom() {
   return (dispatch, getState) => {
     axios.post(`${ROOT_URL}/classrooms`, {}, { withCredentials: true })
       .then((response) => {
+        console.log(response.data);
+        dispatch({
+          type: ActionTypes.SET_CLASSROOM,
+          classroom: response.data
+        });
         /* dispatch(setUnsavedChanges(false));
         dispatch(setProject(response.data));
         browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
@@ -113,6 +119,7 @@ export function saveClassroom() {
     const formParams = Object.assign({}, state.classroom);
     // formParams.files = [...state.files];
     // if (state.classroom.id) {
+    console.log(formParams);
     return axios.put(`${ROOT_URL}/classrooms/${state.classroom._id}`, formParams, { withCredentials: true })
       .then((response) => {
         dispatch(setUnsavedChanges(false));
@@ -211,5 +218,41 @@ export function setAssignment(assignment) {
       type: ActionTypes.SET_ASSIGNMENT,
       assignment
     });
+  };
+}
+
+export function updateClassroom(formParams) {
+  return (dispatch, getState) => {
+    const state = getState();
+    console.log(formParams);
+    console.log(state.classroom);
+    return axios.put(`${ROOT_URL}/classrooms/${state.classroom._id}`, formParams, { withCredentials: true })
+      .then((response) => {
+        dispatch(setUnsavedChanges(false));
+        dispatch({
+          type: ActionTypes.SET_CLASSROOM,
+          classroom: response.data
+        });
+        dispatch({
+          type: ActionTypes.CLASSROOM_SAVE_SUCCESS
+        });
+        console.log('i think it worked?');
+        browserHistory.push(`/classroom/${state.classroom._id}`);
+      })
+      .catch((response) => {
+        if (response.status === 403) {
+          dispatch(showErrorModal('staleSession'));
+        } else if (response.status === 409) {
+          dispatch(showErrorModal('staleProject'));
+        } else {
+          console.log('oh no. i dont think it worked.');
+          console.log(response.data);
+          console.log(response);
+          dispatch({
+            type: ActionTypes.CLASSROOM_SAVE_FAIL,
+            error: response.data
+          });
+        }
+      });
   };
 }

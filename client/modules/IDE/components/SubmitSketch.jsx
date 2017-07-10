@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import moment from 'moment';
 import { Link, browserHistory } from 'react-router';
 import InlineSVG from 'react-inlinesvg';
+import * as SketchActions from '../actions/projects';
 import * as ClassroomActions from '../actions/classroom';
 import * as ProjectActions from '../actions/project';
 import * as ToastActions from '../actions/toast';
@@ -16,7 +17,7 @@ class SubmitSketch extends React.Component {
   constructor(props) {
     super(props);
     this.closeSumbitSketchList = this.closeSumbitSketchList.bind(this);
-    this.props.getSubmissions(this.props.classroom, this.props.assignment);
+    this.props.getProjects(this.props.username);
   }
 
   componentDidMount() {
@@ -30,6 +31,7 @@ class SubmitSketch extends React.Component {
 
   render() {
     const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
+    console.log(this.props.sketches);
     return (
       <section className="sketch-list" aria-label="submissions list" tabIndex="0" role="main" id="submitsketch">
         <header className="sketch-list__header">
@@ -89,17 +91,17 @@ class SubmitSketch extends React.Component {
 }
 
 SubmitSketch.propTypes = {
-  getSubmissions: PropTypes.func.isRequired,
+  // getSubmissions: PropTypes.func.isRequired,
   // getAssignments: PropTypes.func.isRequired,
-  assignment: PropTypes.shape({
+  /* assignment: PropTypes.shape({
     _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     createdAt: PropTypes.string.isRequired
-  }).isRequired,
+  }).isRequired, */
   user: PropTypes.shape({
     username: PropTypes.string
   }).isRequired,
-  classroom: PropTypes.shape({
+  /* classroom: PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.string,
     assignments: PropTypes.arrayOf(PropTypes.shape({
@@ -107,8 +109,8 @@ SubmitSketch.propTypes = {
       name: PropTypes.string.isRequired,
       createdAt: PropTypes.string.isRequired
     })).isRequired
-  }).isRequired,
-  // getProjects: PropTypes.func.isRequired,
+  }).isRequired, */
+  getProjects: PropTypes.func.isRequired,
   sketches: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -135,7 +137,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}, ClassroomActions, ProjectActions, ToastActions), dispatch);
+  return bindActionCreators(Object.assign({}, SketchActions, ClassroomActions, ProjectActions, ToastActions), dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SubmitSketch);

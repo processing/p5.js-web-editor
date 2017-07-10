@@ -107,6 +107,7 @@ class IDEView extends React.Component {
     }
 
     if (nextProps.params.classroom_id && !this.props.params.classroom_id) {
+      console.log('get classroom!!!!!!!!!!!!!!!!!!!!');
       this.props.getClassroom(nextProps.params.classroom_id);
     }
 
