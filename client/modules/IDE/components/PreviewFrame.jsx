@@ -104,14 +104,12 @@ class PreviewFrame extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log(this.props.thumbnailIsBeingGenerated);
     if (this.props.thumbnailIsBeingGenerated) {
-      console.log('thumbnailIsBeingGenerated prop true');
-      console.log('thumbnailIsBeingGenerated');
       if (this.iframeElement) {
-        console.log(this.iframeElement.contentDocument);
-        console.log(this.iframeElement.contentDocument.getElementsByTagName('canvas'));
-        // window.open(this.iframeElement.toDataURL());
+        const canvases = this.iframeElement.contentDocument.getElementsByTagName('canvas');
+        if (canvases.length > 0) {
+          window.open(canvases[0].toDataURL());
+        }
       }
     }
 
