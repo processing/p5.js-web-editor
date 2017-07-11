@@ -18,7 +18,8 @@ const initialState = {
   infiniteLoopMessage: '',
   justOpenedProject: false,
   previousPath: '/',
-  errorType: undefined
+  errorType: undefined,
+  thumbnailIsBeingGenerated: false
 };
 
 const ide = (state = initialState, action) => {
@@ -95,6 +96,8 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { helpType: action.helpType });
     case ActionTypes.HIDE_HELP_MODAL:
       return Object.assign({}, state, { helpType: undefined });
+    case ActionTypes.GENERATE_THUMBNAIL:
+      return Object.assign({}, state, { thumbnailIsBeingGenerated: true });
     default:
       return state;
   }

@@ -233,3 +233,9 @@ export function hideHelpModal() {
     type: ActionTypes.HIDE_HELP_MODAL
   };
 }
+
+export function generateThumbnail() {
+  return {
+    type: ActionTypes.GENERATE_THUMBNAIL
+  };
+}

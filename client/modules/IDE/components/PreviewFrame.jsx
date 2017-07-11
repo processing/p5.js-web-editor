@@ -1,10 +1,13 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 // import escapeStringRegexp from 'escape-string-regexp';
 import srcDoc from 'srcdoc-polyfill';
 
 import loopProtect from 'loop-protect';
 import { getBlobUrl } from '../actions/files';
+import * as IDEActions from '../actions/ide';
 import { resolvePathToFile } from '../../../../server/utils/filePath';
 
 const startTag = '@fs-';
@@ -101,6 +104,17 @@ class PreviewFrame extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    console.log(this.props.thumbnailIsBeingGenerated);
+    if (this.props.thumbnailIsBeingGenerated) {
+      console.log('thumbnailIsBeingGenerated prop true');
+      console.log('thumbnailIsBeingGenerated');
+      if (this.iframeElement) {
+        console.log(this.iframeElement.contentDocument);
+        console.log(this.iframeElement.contentDocument.getElementsByTagName('canvas'));
+        // window.open(this.iframeElement.toDataURL());
+      }
+    }
+
     // if sketch starts or stops playing, want to rerender
     if (this.props.isPlaying !== prevProps.isPlaying) {
       this.renderSketch();
@@ -346,15 +360,6 @@ class PreviewFrame extends React.Component {
     });
   }
 
-  generateThumbnail() {
-    console.log('generateThumbnail');
-    if (this.iframeElement) {
-      console.log(this.iframeElement.contentDocument);
-      console.log(this.iframeElement.contentDocument.getElementsByClassName('preview-frame'));
-      // window.open(this.iframeElement.toDataURL());
-    }
-  }
-
   renderSketch() {
     const doc = this.iframeElement;
     if (this.props.isPlaying) {
@@ -415,7 +420,8 @@ PreviewFrame.propTypes = {
   fullView: PropTypes.bool,
   setBlobUrl: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
-  expandConsole: PropTypes.func.isRequired
+  expandConsole: PropTypes.func.isRequired,
+  thumbnailIsBeingGenerated: PropTypes.bool.isRequired
 };
 
 PreviewFrame.defaultProps = {

@@ -346,6 +346,14 @@ class IDEView extends React.Component {
                 <header className="preview-frame__header">
                   <h2 className="preview-frame__title">Preview</h2>
                 </header>
+                <button
+                  className="preview-frame__generate-thumb-button"
+                  onClick={() => {
+                    this.props.generateThumbnail();
+                  }}
+                >
+                  Generate Thumbnail
+                </button>
                 <div className="preview-frame-overlay" ref={(element) => { this.overlay = element; }}>
                 </div>
                 <div>
@@ -382,6 +390,7 @@ class IDEView extends React.Component {
                   stopSketch={this.props.stopSketch}
                   setBlobUrl={this.props.setBlobUrl}
                   expandConsole={this.props.expandConsole}
+                  thumbnailIsBeingGenerated={this.props.ide.thumbnailIsBeingGenerated}
                 />
               </div>
             </SplitPane>
@@ -523,7 +532,8 @@ IDEView.propTypes = {
     previousPath: PropTypes.string.isRequired,
     justOpenedProject: PropTypes.bool.isRequired,
     errorType: PropTypes.string,
-    helpType: PropTypes.string
+    helpType: PropTypes.string,
+    thumbnailIsBeingGenerated: PropTypes.bool.isRequired
   }).isRequired,
   stopSketch: PropTypes.func.isRequired,
   startAccessibleOutput: PropTypes.func.isRequired,
@@ -641,7 +651,8 @@ IDEView.propTypes = {
   clearPersistedState: PropTypes.func.isRequired,
   persistState: PropTypes.func.isRequired,
   showHelpModal: PropTypes.func.isRequired,
-  hideHelpModal: PropTypes.func.isRequired
+  hideHelpModal: PropTypes.func.isRequired,
+  generateThumbnail: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
