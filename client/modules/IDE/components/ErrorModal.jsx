@@ -1,15 +1,7 @@
 import React, { PropTypes } from 'react';
-import InlineSVG from 'react-inlinesvg';
 import { Link } from 'react-router';
 
-const exitUrl = require('../../../images/exit.svg');
-
 class ErrorModal extends React.Component {
-  componentDidMount() {
-    this.errorModal.focus();
-  }
-
-
   forceAuthentication() {
     return (
       <p>
@@ -40,25 +32,17 @@ class ErrorModal extends React.Component {
 
   render() {
     return (
-      <section className="error-modal" ref={(element) => { this.errorModal = element; }} tabIndex="0">
-        <header className="error-modal__header">
-          <h2 className="error-modal__title">Error</h2>
-          <button className="error-modal__exit-button" onClick={this.props.closeModal}>
-            <InlineSVG src={exitUrl} alt="Close Error Modal" />
-          </button>
-        </header>
-        <div className="error-modal__content">
-          {(() => { // eslint-disable-line
-            if (this.props.type === 'forceAuthentication') {
-              return this.forceAuthentication();
-            } else if (this.props.type === 'staleSession') {
-              return this.staleSession();
-            } else if (this.props.type === 'staleProject') {
-              return this.staleProject();
-            }
-          })()}
-        </div>
-      </section>
+      <div className="error-modal__content">
+        {(() => { // eslint-disable-line
+          if (this.props.type === 'forceAuthentication') {
+            return this.forceAuthentication();
+          } else if (this.props.type === 'staleSession') {
+            return this.staleSession();
+          } else if (this.props.type === 'staleProject') {
+            return this.staleProject();
+          }
+        })()}
+      </div>
     );
   }
 }

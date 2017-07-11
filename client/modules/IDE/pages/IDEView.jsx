@@ -30,6 +30,7 @@ import * as ConsoleActions from '../actions/console';
 import { getHTMLFile } from '../reducers/files';
 import Overlay from '../../App/components/Overlay';
 import SketchList from '../components/SketchList';
+import AssetList from '../components/AssetList';
 import About from '../components/About';
 
 class IDEView extends React.Component {
@@ -425,10 +426,30 @@ class IDEView extends React.Component {
         {(() => { // eslint-disable-line
           if (this.props.location.pathname.match(/sketches$/)) {
             return (
-              <Overlay>
+              <Overlay
+                ariaLabel="project list"
+                title="Open a Sketch"
+                previousPath={this.props.ide.previousPath}
+              >
                 <SketchList
                   username={this.props.params.username}
-                  previousPath={this.props.ide.previousPath}
+                  user={this.props.user}
+                />
+              </Overlay>
+            );
+          }
+        })()}
+        {(() => { // eslint-disable-line
+          if (this.props.location.pathname.match(/assets$/)) {
+            return (
+              <Overlay
+                title="Assets"
+                ariaLabel="asset list"
+                previousPath={this.props.ide.previousPath}
+              >
+                <AssetList
+                  username={this.props.params.username}
+                  user={this.props.user}
                 />
               </Overlay>
             );
@@ -437,7 +458,11 @@ class IDEView extends React.Component {
         {(() => { // eslint-disable-line
           if (this.props.location.pathname === '/about') {
             return (
-              <Overlay>
+              <Overlay
+                previousPath={this.props.ide.previousPath}
+                title="Welcome"
+                ariaLabel="about"
+              >
                 <About previousPath={this.props.ide.previousPath} />
               </Overlay>
             );
@@ -446,10 +471,13 @@ class IDEView extends React.Component {
         {(() => { // eslint-disable-line
           if (this.props.ide.shareModalVisible) {
             return (
-              <Overlay>
+              <Overlay
+                title="Share Sketch"
+                ariaLabel="share"
+                closeOverlay={this.props.closeShareModal}
+              >
                 <ShareModal
                   projectId={this.props.project.id}
-                  closeShareModal={this.props.closeShareModal}
                   ownerUsername={this.props.project.owner.username}
                 />
               </Overlay>
@@ -459,10 +487,12 @@ class IDEView extends React.Component {
         {(() => { // eslint-disable-line
           if (this.props.ide.keyboardShortcutVisible) {
             return (
-              <Overlay>
-                <KeyboardShortcutModal
-                  closeModal={this.props.closeKeyboardShortcutModal}
-                />
+              <Overlay
+                title="Keyboard Shortcuts"
+                ariaLabel="keyboard shortcuts"
+                closeOverlay={this.props.closeKeyboardShortcutModal}
+              >
+                <KeyboardShortcutModal />
               </Overlay>
             );
           }
@@ -470,10 +500,13 @@ class IDEView extends React.Component {
         {(() => { // eslint-disable-line
           if (this.props.ide.errorType) {
             return (
-              <Overlay>
+              <Overlay
+                title="Error"
+                ariaLabel="error"
+                closeOverlay={this.props.hideErrorModal}
+              >
                 <ErrorModal
                   type={this.props.ide.errorType}
-                  closeModal={this.props.hideErrorModal}
                 />
               </Overlay>
             );
