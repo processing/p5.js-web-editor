@@ -34,8 +34,6 @@
 }
 
 .overlay__close-button {
-  @include themify() {
-    @extend %icon;
-  }
+  @include icon();
   padding: #{12 / $base-font-size}rem #{16 / $base-font-size}rem;
 }
