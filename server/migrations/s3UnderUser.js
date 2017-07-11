@@ -29,7 +29,7 @@ Project.find({}, (err, projects) => {
     if (!project.user) return;
     const userId = project.user.valueOf();
     project.files.forEach((file, fileIndex) => {
-      if (file.url && file.url.includes(process.env.S3_BUCKET)) {
+      if (file.url && file.url.includes(process.env.S3_BUCKET) && !file.url.includes(userId)) {
         const key = file.url.split('/').pop();
         console.log(key);
         const params = {
