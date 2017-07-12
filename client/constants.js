@@ -1,3 +1,5 @@
+// TODO Organize this file by reducer type, ot break this apart into
+// multiple files
 export const UPDATE_FILE_CONTENT = 'UPDATE_FILE_CONTENT';
 export const TOGGLE_SKETCH = 'TOGGLE_SKETCH';
 
@@ -124,3 +126,4 @@ export const CLEAR_PERSISTED_STATE = 'CLEAR_PERSISTED_STATE';
 
 export const SHOW_HELP_MODAL = 'SHOW_HELP_MODAL';
 export const HIDE_HELP_MODAL = 'HIDE_HELP_MODAL';
+export const SET_ASSETS = 'SET_ASSETS';

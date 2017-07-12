@@ -121,12 +121,28 @@ export function deleteProject(req, res) {
   });
 }
 
-export function getProjects(req, res) {
-  if (req.user) {
-    Project.find({ user: req.user._id }) // eslint-disable-line no-underscore-dangle
+export function getProjectsForUserId(userId) {
+  return new Promise((resolve, reject) => {
+    Project.find({ user: userId })
       .sort('-createdAt')
       .select('name files id createdAt updatedAt')
       .exec((err, projects) => {
+        if (err) {
+          console.log(err);
+        }
+        resolve(projects);
+      });
+  });
+}
+
+export function getProjectsForUserName(username) {
+  
+}
+
+export function getProjects(req, res) {
+  if (req.user) {
+    getProjectsForUserId(req.user._id)
+      .then((projects) => {
         res.json(projects);
       });
   } else {
@@ -142,7 +158,7 @@ export function getProjectsForUser(req, res) {
         res.status(404).json({ message: 'User with that username does not exist.' });
         return;
       }
-      Project.find({ user: user._id }) // eslint-disable-line no-underscore-dangle
+      Project.find({ user: user._id })
         .sort('-createdAt')
         .select('name files id createdAt updatedAt')
         .exec((innerErr, projects) => res.json(projects));

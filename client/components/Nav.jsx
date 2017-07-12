@@ -143,6 +143,11 @@ class Nav extends React.PureComponent {
                     </Link>
                   </li>
                   <li>
+                    <Link to={`/${this.props.user.username}/assets`}>
+                      My assets
+                    </Link>
+                  </li>
+                  <li>
                     <Link to={`/${this.props.user.username}/account`}>
                       My account
                     </Link>
