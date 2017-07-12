@@ -239,3 +239,9 @@ export function generateThumbnail() {
     type: ActionTypes.GENERATE_THUMBNAIL
   };
 }
+
+export function dispatchThumbnailRenderedEvent() {
+  return {
+    type: ActionTypes.THUMBNAIL_GENERATED
+  };
+}

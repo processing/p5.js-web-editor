@@ -98,6 +98,8 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { helpType: undefined });
     case ActionTypes.GENERATE_THUMBNAIL:
       return Object.assign({}, state, { thumbnailIsBeingGenerated: true });
+    case ActionTypes.THUMBNAIL_GENERATED:
+      return Object.assign({}, state, { thumbnailIsBeingGenerated: false });
     default:
       return state;
   }

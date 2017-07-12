@@ -111,6 +111,7 @@ class PreviewFrame extends React.Component {
           window.open(canvases[0].toDataURL());
         }
       }
+      this.props.dispatchThumbnailRenderedEvent();
     }
 
     // if sketch starts or stops playing, want to rerender
@@ -419,11 +420,21 @@ PreviewFrame.propTypes = {
   setBlobUrl: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
   expandConsole: PropTypes.func.isRequired,
-  thumbnailIsBeingGenerated: PropTypes.bool.isRequired
+  thumbnailIsBeingGenerated: PropTypes.bool.isRequired,
+  dispatchThumbnailRenderedEvent: PropTypes.func.isRequired
 };
 
 PreviewFrame.defaultProps = {
   fullView: false
 };
 
-export default PreviewFrame;
+function mapStateToProps(state, ownProps) {
+  return {};
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(Object.assign(IDEActions), dispatch);
+}
+
+const ConnectedPreviewFrame = connect(mapStateToProps, mapDispatchToProps)(PreviewFrame);
+export default ConnectedPreviewFrame;
