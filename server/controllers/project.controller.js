@@ -1,10 +1,10 @@
 import archiver from 'archiver';
 import request from 'request';
 import moment from 'moment';
+import jsdom, { serializeDocument } from 'jsdom';
 import Project from '../models/project';
 import User from '../models/user';
 import { deleteObjectsFromS3, getObjectKey } from './aws.controller';
-import jsdom, { serializeDocument } from 'jsdom';
 
 export function createProject(req, res) {
   if (!req.user) {
@@ -101,10 +101,7 @@ function deleteFilesFromS3(files) {
       }
       return false;
     })
-    .map((file) => {
-      return getObjectKey(file.url);
-    })
-  );
+    .map(file => getObjectKey(file.url)));
 }
 
 export function deleteProject(req, res) {
@@ -164,19 +161,19 @@ function bundleExternalLibs(project, zip, callback) {
 
   function resolveScriptTagSrc(scriptTag, document) {
     const path = scriptTag.src.split('/');
-    const filename = path[path.length-1];
+    const filename = path[path.length - 1];
     const src = scriptTag.src;
 
     request({ method: 'GET', url: src, encoding: null }, (err, response, body) => {
-      if(err) {
-
+      if (err) {
+        console.log(err);
       } else {
         zip.append(body, { name: filename });
         scriptTag.src = filename;
       }
 
       numScriptsResolved += 1;
-      if(numScriptsResolved === numScriptTags) {
+      if (numScriptsResolved === numScriptTags) {
         indexHtml.content = serializeDocument(document);
         callback();
       }
@@ -187,7 +184,7 @@ function bundleExternalLibs(project, zip, callback) {
     const indexHtmlDoc = window.document;
     const scriptTags = indexHtmlDoc.getElementsByTagName('script');
     numScriptTags = scriptTags.length;
-    for(var i = 0; i < numScriptTags; i++) {
+    for (let i = 0; i < numScriptTags; i += 1) {
       resolveScriptTagSrc(scriptTags[i], indexHtmlDoc);
     }
   });
@@ -233,7 +230,7 @@ function buildZip(project, req, res) {
     }
   }
 
-  bundleExternalLibs(project, zip, function () {
+  bundleExternalLibs(project, zip, () => {
     addFileToZip(rootFile, '/');
   });
 }
