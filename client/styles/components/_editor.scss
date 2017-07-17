@@ -87,7 +87,7 @@
 .CodeMirror-dialog {
   position: absolute;
   top: 0;
-  right: 0;
+  right: 330px;
 
   z-index: 10;
 
@@ -118,6 +118,13 @@
   display: block;
   width: 100%;
   margin-bottom: #{12 / $base-font-size}rem;
+  @include themify() {
+    background-color: getThemifyVariable('search-background-color');
+    border: solid 0.5px getThemifyVariable('button-border-color');
+  }
+  &:focus {
+    background-color: $white;
+  }
 }
 
 .CodeMirror-search-count {

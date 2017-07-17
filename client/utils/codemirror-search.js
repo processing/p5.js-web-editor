@@ -223,7 +223,7 @@ export default function(CodeMirror) {
 
   var queryDialog = `
     <h3 class="CodeMirror-search-title">Find</h3>
-    <input type="text" class="search-input CodeMirror-search-field" placeholder="Search for" />
+    <input type="text" class="search-input CodeMirror-search-field" placeholder="Find in files" />
     <div class="CodeMirror-search-actions">
       <div class="CodeMirror-search-modifiers button-wrap">
         <button
