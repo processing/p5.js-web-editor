@@ -341,6 +341,7 @@ class IDEView extends React.Component {
                   collapseSidebar={this.props.collapseSidebar}
                   isUserOwner={this.isUserOwner()}
                   clearConsole={this.props.clearConsole}
+                  consoleEvents={this.props.console}
                 />
                 <Console
                   consoleEvents={this.props.console}
