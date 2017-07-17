@@ -7,9 +7,15 @@ import 'codemirror/addon/lint/lint';
 import 'codemirror/addon/lint/javascript-lint';
 import 'codemirror/addon/lint/css-lint';
 import 'codemirror/addon/lint/html-lint';
+import 'codemirror/addon/fold/brace-fold';
+import 'codemirror/addon/fold/comment-fold';
+import 'codemirror/addon/fold/foldcode';
+import 'codemirror/addon/fold/foldgutter';
+import 'codemirror/addon/fold/indent-fold';
 import 'codemirror/addon/comment/comment';
 import 'codemirror/keymap/sublime';
 import 'codemirror/addon/search/jump-to-line';
+import 'codemirror/addon/fold/foldgutter.css';
 import { JSHINT } from 'jshint';
 import { CSSLint } from 'csslint';
 import { HTMLHint } from 'htmlhint';
@@ -49,7 +55,8 @@ class Editor extends React.Component {
       inputStyle: 'contenteditable',
       lineWrapping: false,
       fixedGutter: false,
-      gutters: ['CodeMirror-lint-markers'],
+      foldGutter: true,
+      gutters: [/* 'CodeMirror-lint-markers', 'CodeMirror-linenumbers', */'CodeMirror-foldgutter'],
       keyMap: 'sublime',
       lint: {
         onUpdateLinting: debounce((annotations) => {
@@ -70,6 +77,7 @@ class Editor extends React.Component {
         }
       }
     });
+
 
     this._cm.setOption('extraKeys', {
       'Cmd-Enter': () => null,

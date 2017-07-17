@@ -27,6 +27,18 @@
 	padding-left: #{5 / $base-font-size}rem;
 }
 
+.CodeMirror-activeline-background {
+  background-color: rgba(0,0,0,0.025) !important;
+}
+.CodeMirror-linebackground {
+  
+}
+
+.line-runtime-error {
+  background-color: #ffaaaa !important;
+  border-radius: 5px;
+}
+
 .CodeMirror-gutter-wrapper {
   right: 100%;
   top: 0;
@@ -78,6 +90,16 @@
   }
   // left: 0 !important;
   width: #{48 / $base-font-size}rem;
+}
+
+.CodeMirror-guttermarker-subtle {
+  
+}
+.CodeMirror-foldgutter-folded {
+  
+}
+.CodeMirror-foldgutter-open {
+  
 }
 
 .editor-holder {
