@@ -1,20 +1,20 @@
 .nav {
 	width: 100%;
-	padding: #{10 / $base-font-size}rem #{32 / $base-font-size}rem 0 #{32 / $base-font-size}rem;
+  height: #{42 / $base-font-size}rem;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-}
-
-.nav__items-left, .nav__items-right {
 	@include themify() {
 		border-bottom: 1px dashed map-get($theme-map, 'inactive-text-color');
 	}
+}
+
+.nav__items-left, .nav__items-right {
 	list-style: none;
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-end;
-	padding: #{3 / $base-font-size}rem 0;
+  height: 100%;
 }
 
 .nav__items-left {
@@ -29,6 +29,9 @@
 	position: relative;
 	padding: 0 #{24 / $base-font-size}rem;
 	text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .nav__item:first-child {

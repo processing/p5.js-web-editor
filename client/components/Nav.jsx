@@ -1,11 +1,105 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
+import InlineSVG from 'react-inlinesvg';
+
+const triangleUrl = require('../images/down-filled-triangle.svg');
+const logoUrl = require('../images/p5js-logo-small.svg');
 
 class Nav extends React.PureComponent {
   render() {
     return (
       <nav className="nav" role="navigation" title="main-navigation">
         <ul className="nav__items-left" title="project-menu">
+          <li>
+            <InlineSVG src={logoUrl} alt="p5.js logo" />
+          </li>
+          <li className="nav__item">
+            <button>
+              File
+              <InlineSVG src={triangleUrl} />
+            </button>
+            <ul className="nav__dropdown">
+              <li>
+                <button
+                  onClick={() => {
+                    if (!this.props.unsavedChanges) {
+                      this.props.newProject();
+                    } else if (this.props.warnIfUnsavedChanges()) {
+                      this.props.newProject();
+                    }
+                  }}
+                >
+                  New
+                </button>
+              </li>
+              <li>
+                <button>
+                  Save
+                </button>
+              </li>
+              <li>
+                <button>
+                  Duplicate
+                </button>
+              </li>
+              <li>
+                <button>
+                  Open
+                </button>
+              </li>
+              <li>
+                <button>
+                  Download
+                </button>
+              </li>
+            </ul>
+          </li>
+          <li className="nav__item">
+            <button>
+              Edit
+              <InlineSVG src={triangleUrl} />
+            </button>
+            <ul className="nav__dropdown">
+              <li>
+                Tidy Code
+              </li>
+              <li>
+                Find
+              </li>
+            </ul>
+          </li>
+          <li className="nav__item">
+            <button>
+              Sketch
+              <InlineSVG src={triangleUrl} />
+            </button>
+            <ul className="nav__dropdown">
+              <li>
+                Run
+              </li>
+              <li>
+                Stop
+              </li>
+            </ul>
+          </li>
+          <li className="nav__item">
+            <button>
+              Help
+              <InlineSVG src={triangleUrl} />
+            </button>
+            <ul className="nav__dropdown">
+              <li>
+                Keyboard Shortcuts
+              </li>
+              <li>
+                Reference
+              </li>
+              <li>
+                About
+              </li>
+            </ul>
+          </li>
+
           <li className="nav__item">
             <button
               className="nav__new"
