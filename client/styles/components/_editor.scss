@@ -27,6 +27,31 @@
 	padding-left: #{5 / $base-font-size}rem;
 }
 
+.CodeMirror-activeline-background {
+  background-color: rgba(0,0,0,0.025) !important;
+}
+
+.CodeMirror-linebackground {
+  
+}
+
+.line-runtime-error {
+  background-color: #ffaaaa !important;
+  border-radius: 5px;
+}
+
+.CodeMirror-guttermarker-subtle {
+  
+}
+
+.CodeMirror-foldgutter-folded {
+  
+}
+
+.CodeMirror-foldgutter-open {
+  
+}
+
 .CodeMirror-gutter-wrapper {
   right: 100%;
   top: 0;
