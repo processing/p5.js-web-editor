@@ -105,8 +105,6 @@ class Editor extends React.Component {
     this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
     this._cm.setOption('indentWithTabs', this.props.isTabIndent);
     this._cm.setOption('tabSize', this.props.indentationAmount);
-
-    this._cm.addLineClass(1, null, 'line-runtime-error');
   }
 
   componentWillUpdate(nextProps) {
@@ -142,6 +140,20 @@ class Editor extends React.Component {
     if (this.props.theme !== prevProps.theme) {
       this._cm.setOption('theme', `p5-${this.props.theme}`);
     }
+    for (let i = 0; i < 1000; i += 1) {
+      this._cm.removeLineClass(i, 'background', 'line-runtime-error');
+    }
+    this.props.consoleEvents.forEach((consoleEvent) => {
+      if (consoleEvent.method === 'error') {
+        console.log(consoleEvent.arguments);
+        console.log(consoleEvent.source);
+
+        const n = consoleEvent.arguments.replace(')', '').split(' ');
+        const lineNumber = parseInt(n[n.length - 1], 10) - 1;
+        console.log(lineNumber);
+        this._cm.addLineClass(lineNumber, 'background', 'line-runtime-error');
+      }
+    });
   }
 
   componentWillUnmount() {
@@ -278,6 +290,10 @@ Editor.propTypes = {
     message: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired
   })).isRequired,
+  consoleEvents: PropTypes.arrayOf(PropTypes.shape({
+    method: PropTypes.string.isRequired,
+    args: PropTypes.arrayOf(PropTypes.string)
+  })),
   updateLintMessage: PropTypes.func.isRequired,
   clearLintMessage: PropTypes.func.isRequired,
   indentationAmount: PropTypes.number.isRequired,
@@ -313,7 +329,8 @@ Editor.propTypes = {
 };
 
 Editor.defaultProps = {
-  isUserOwner: false
+  isUserOwner: false,
+  consoleEvents: []
 };
 
 export default Editor;
