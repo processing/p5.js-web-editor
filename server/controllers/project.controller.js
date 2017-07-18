@@ -1,6 +1,7 @@
 import archiver from 'archiver';
 import request from 'request';
 import moment from 'moment';
+import isUrl from 'is-url';
 import jsdom, { serializeDocument } from 'jsdom';
 import Project from '../models/project';
 import User from '../models/user';
@@ -163,6 +164,11 @@ function bundleExternalLibs(project, zip, callback) {
     const path = scriptTag.src.split('/');
     const filename = path[path.length - 1];
     const src = scriptTag.src;
+
+    if (!isUrl(src)) {
+      numScriptsResolved += 1;
+      return;
+    }
 
     request({ method: 'GET', url: src, encoding: null }, (err, response, body) => {
       if (err) {
