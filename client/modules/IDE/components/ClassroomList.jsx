@@ -37,60 +37,52 @@ class ClassroomList extends React.Component {
   render() {
     const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
     return (
-      <section className="sketch-list" aria-label="classroom list" tabIndex="0" role="main" id="classroomlist">
-        <header className="sketch-list__header">
-          <h2 className="sketch-list__header-title">Open a Classroom</h2>
-          <button className="sketch-list__exit-button" onClick={() => { this.createNewClassroom(); }}>
+      <section className="classroom-list" aria-label="classroom list" tabIndex="0" role="main" id="classroomlist">
+        <header className="classroom-list__header">
+          <h2 className="classroom-list__header-title">Open a Classroom</h2>
+          <button className="classroom-list__exit-button" onClick={() => { this.createNewClassroom(); }}>
             Create new Classroom
           </button>
-          <button className="sketch-list__exit-button" onClick={this.closeClassroomList}>
+          <button className="classroom-list__exit-button" onClick={this.closeClassroomList}>
             <InlineSVG src={exitUrl} alt="Close Classroom List Overlay" />
           </button>
         </header>
-        <div className="sketches-table-container">
-          <table className="sketches-table" summary="table containing all classes you own or are a member of">
-            <thead>
-              <tr>
-                <th className="sketch-list__trash-column" scope="col"></th>
-                <th scope="col">Classroom Name</th>
-                <th scope="col">Date created</th>
-                <th scope="col">Date updated</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.props.classrooms.map(classroom =>
-                // eslint-disable-next-line
-                <tr 
-                  className="sketches-table__row visibility-toggle"
-                  key={classroom._id}
-                  onClick={() => browserHistory.push(`/classroom/${classroom._id}`)}
-                >
-                  <td className="sketch-list__trash-column">
-                  {(() => { // eslint-disable-line
-                    if (this.props.username === this.props.user.username || this.props.username === undefined) {
-                      return (
-                        <button
-                          className="sketch-list__trash-button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            if (window.confirm(`Are you sure you want to delete "${classroom.name}"?`)) {
-                              this.props.deleteClassroom(classroom._id);
-                            }
-                          }}
-                        >
-                          <InlineSVG src={trashCan} alt="Delete Classroom" />
-                        </button>
-                      );
-                    }
-                  })()}
-                  </td>
-                  <th scope="row"><Link to={`/classroom/${classroom._id}`}>{classroom.name}</Link></th>
-                  <td>{moment(classroom.createdAt).format('MMM D, YYYY h:mm A')}</td>
-                  <td>{moment(classroom.updatedAt).format('MMM D, YYYY h:mm A')}</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+        <div className="classrooms-grid-container">
+          <div className="classrooms-grid" summary="grid containing all classes you own or are a member of">
+            {this.props.classrooms.map(classroom =>
+              // eslint-disable-next-line
+              <div 
+                key={classroom._id}
+                className="classrooms-grid-tile"
+              >
+                <div className="classrooms-grid-tile-thumbnail">
+                  <div className="classrooms-grid-tile-thumbnail-buttons">
+                    <div className="classrooms-grid-tile-button classrooms-grid-tile-button-share"></div>
+                    <div className="classrooms-grid-tile-button classrooms-grid-tile-button-delete"></div>
+                    <div className="classrooms-grid-tile-button classrooms-grid-tile-button-download"></div>
+                  </div>
+                </div>
+                <div className="classrooms-grid-tile-title">{classroom.name}</div>
+                {(() => { // eslint-disable-line
+                  if (this.props.username === this.props.user.username || this.props.username === undefined) {
+                    return (
+                      <button
+                        className="classroom-list__trash-button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (window.confirm(`Are you sure you want to delete "${classroom.name}"?`)) {
+                            this.props.deleteClassroom(classroom._id);
+                          }
+                        }}
+                      >
+                        <InlineSVG src={trashCan} alt="Delete Classroom" />
+                      </button>
+                    );
+                  }
+                })()}
+              </div>
+            )}
+          </div>
         </div>
       </section>
     );

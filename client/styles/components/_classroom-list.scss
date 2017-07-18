@@ -1,0 +1,119 @@
+.classroom-list {
+  @extend %modal;
+  display: flex;
+  flex-wrap: wrap;
+  flex-flow: column;
+  width: #{825 / $base-font-size}rem;
+  height: 80%;
+  outline: none;
+}
+
+.classroom-list__header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.classroom-list__header-title {  
+  padding: #{40 / $base-font-size}rem #{16 / $base-font-size}rem #{12 / $base-font-size}rem #{21 / $base-font-size}rem;
+}
+
+.classrooms-grid-container {
+  flex: 1 0 0%;
+  overflow-y: scroll;
+}
+
+.classrooms-grid {
+  width: 100%;
+  padding: #{10 / $base-font-size}rem #{20 / $base-font-size}rem;
+  max-height: 100%;
+  border-spacing: 0;
+  & .sketch-list__trash-column {
+    width: #{23 / $base-font-size}rem;
+  }
+}
+
+.classrooms-grid-tile {
+  float: left;
+  width: 175px;
+  height: 205px;
+  margin-right: 17px;
+  cursor: pointer;
+}
+
+.classrooms-grid-tile-thumbnail {
+  width: 175px;
+  height: 175px;
+  background-color: #AAAAAA;
+}
+
+.classrooms-grid-tile-thumbnail-buttons {
+  width: 100%;
+  height: 100%;
+  opacity: 0.0;
+  position: relative;
+  transition: opacity 0.2s;
+  &:hover {
+      opacity: 1.0;
+  }
+}
+.classrooms-grid-tile-thumbnail-buttons:hover {
+    opactiy: 1.0;
+}
+
+.classrooms-grid-tile-button {
+  width: 34px;
+  height: 34px;
+  position: absolute;
+  background-color: white;
+}
+
+.classrooms-grid-tile-button-download {
+  left: 0px;
+  bottom: 0px;
+}
+
+.classrooms-grid-tile-button-delete {
+  right: 0px;
+  bottom: 0px;
+}
+
+.classrooms-grid-tile-button-share {
+  right: 0px;
+  top: 0px;
+}
+
+.classrooms-grid-tile-title {
+  width: 120px;
+  height: 30px;
+  font-size: #{14 / $base-font-size}rem;
+}
+
+
+.classroom-list__exit-button {
+  @include themify() {
+    @extend %icon;
+  }
+  margin: #{12 / $base-font-size}rem #{16 / $base-font-size}rem;
+}
+
+.visibility-toggle .classroom-list__trash-button {
+  @extend %hidden-element;
+  width:#{20 / $base-font-size}rem;
+  height:#{20 / $base-font-size}rem;
+}
+
+.visibility-toggle:hover .classroom-list__trash-button {
+   @include themify() {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    position: initial;
+    left: 0;
+    top: 0;
+      & g {
+        opacity: 1;
+        fill: getThemifyVariable('icon-hover-color');
+      }
+  }
+}
