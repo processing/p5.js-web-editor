@@ -15,7 +15,6 @@ import 'codemirror/addon/fold/indent-fold';
 import 'codemirror/addon/comment/comment';
 import 'codemirror/keymap/sublime';
 import 'codemirror/addon/search/jump-to-line';
-import 'codemirror/addon/fold/foldgutter.css';
 import { JSHINT } from 'jshint';
 import { CSSLint } from 'csslint';
 import { HTMLHint } from 'htmlhint';
@@ -56,7 +55,8 @@ class Editor extends React.Component {
       lineWrapping: false,
       fixedGutter: false,
       foldGutter: true,
-      gutters: [/* 'CodeMirror-lint-markers', 'CodeMirror-linenumbers', */'CodeMirror-foldgutter'],
+      foldOptions: { widget: '\u2026' },
+      gutters: ['CodeMirror-foldgutter'],
       keyMap: 'sublime',
       lint: {
         onUpdateLinting: debounce((annotations) => {

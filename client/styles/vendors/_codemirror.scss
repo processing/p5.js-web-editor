@@ -336,3 +336,31 @@ div.CodeMirror-dragcursors {
 
 /* Help users use markselection to safely style text background */
 span.CodeMirror-selectedtext { background: none; }
+
+/* CODE FOLDING (FOLDGUTTER.JS) */
+
+.CodeMirror-foldmarker {
+  color: #FFF;
+  background-color: rgba(237, 34, 93, 0.42);
+  border-radius: 3px;
+  font-weight: bold;
+  font-family: arial;
+  line-height: .3;
+  cursor: pointer;
+}
+.CodeMirror-foldgutter {
+  width: 2.7em;
+}
+.CodeMirror-foldgutter-open,
+.CodeMirror-foldgutter-folded {
+  cursor: pointer;
+  padding-bottom: 0.4em;
+  text-align: right;
+  line-height: 1.0;
+}
+.CodeMirror-foldgutter-open:after {
+  content: "\25BE";
+}
+.CodeMirror-foldgutter-folded:after {
+  content: "\25B8";
+}
