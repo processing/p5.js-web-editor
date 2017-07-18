@@ -79,6 +79,7 @@
     "express-session": "^1.13.0",
     "file-type": "^3.8.0",
     "htmlhint": "^0.9.13",
+    "is-url": "^1.2.2",
     "js-beautify": "^1.6.4",
     "jsdom": "^9.8.3",
     "jshint": "^2.9.4",
