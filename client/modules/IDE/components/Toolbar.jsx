@@ -64,7 +64,7 @@ class Toolbar extends React.Component {
           className="toolbar__play-sketch-button"
           onClick={() => {
             this.props.clearConsole();
-            this.props.startTextOutput();
+            this.props.startAccessibleOutput();
             this.props.startSketchAndRefresh();
           }}
           aria-label="play sketch"
@@ -85,7 +85,7 @@ class Toolbar extends React.Component {
         </button>
         <button
           className={stopButtonClass}
-          onClick={() => { this.props.stopTextOutput(); this.props.stopSketch(); }}
+          onClick={() => { this.props.stopAccessibleOutput(); this.props.stopSketch(); }}
           aria-label="stop sketch"
         >
           <InlineSVG src={stopUrl} alt="Stop Sketch" />
@@ -141,7 +141,10 @@ class Toolbar extends React.Component {
             }}
           >
             {this.props.project.name}&nbsp;
-            {this.canEditProjectName() && <InlineSVG className="toolbar__edit-name-button" src={editProjectNameUrl} alt="Edit Project Name" />}
+            {
+              this.canEditProjectName() &&
+              <InlineSVG className="toolbar__edit-name-button" src={editProjectNameUrl} alt="Edit Project Name" />
+            }
           </a>
           <input
             type="text"
@@ -184,8 +187,8 @@ Toolbar.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   preferencesIsVisible: PropTypes.bool.isRequired,
   stopSketch: PropTypes.func.isRequired,
-  startTextOutput: PropTypes.func.isRequired,
-  stopTextOutput: PropTypes.func.isRequired,
+  startAccessibleOutput: PropTypes.func.isRequired,
+  stopAccessibleOutput: PropTypes.func.isRequired,
   setProjectName: PropTypes.func.isRequired,
   openPreferences: PropTypes.func.isRequired,
   owner: PropTypes.shape({

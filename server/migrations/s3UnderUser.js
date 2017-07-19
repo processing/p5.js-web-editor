@@ -29,7 +29,7 @@ Project.find({}, (err, projects) => {
     if (!project.user) return;
     const userId = project.user.valueOf();
     project.files.forEach((file, fileIndex) => {
-      if (file.url && file.url.includes(process.env.S3_BUCKET)) {
+      if (file.url && file.url.includes(process.env.S3_BUCKET) && !file.url.includes(userId)) {
         const key = file.url.split('/').pop();
         console.log(key);
         const params = {
@@ -37,16 +37,20 @@ Project.find({}, (err, projects) => {
           CopySource: `${process.env.S3_BUCKET}/${key}`,
           Key: `${userId}/${key}`
         };
-        client.moveObject(params)
-        .on('err', (err) => {
-          console.log(err);
-        })
-        .on('end', () => {
-          file.url = `https://s3-${process.env.AWS_REGION}.amazonaws.com/${process.env.S3_BUCKET}/${userId}/${key}`;
-          project.save((err, savedProject) => {
-            console.log(`updated file ${key}`);
+        try {
+          client.moveObject(params)
+          .on('err', (err) => {
+            console.log(err);
+          })
+          .on('end', () => {
+            file.url = `https://s3-${process.env.AWS_REGION}.amazonaws.com/${process.env.S3_BUCKET}/${userId}/${key}`;
+            project.save((err, savedProject) => {
+              console.log(`updated file ${key}`);
+            });
           });
-        });
+        } catch(e) {
+          console.log(e);
+        }
       }
     });
   });
