@@ -28,7 +28,6 @@
 .nav__item {
 	position: relative;
 	padding: 0 #{24 / $base-font-size}rem;
-	text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -49,15 +48,15 @@
 		border: 1px solid map-get($theme-map, 'modal-border-color');
 		box-shadow: 0 0 18px getThemifyVariable('shadow-color');
 	}
-  @extend %hidden-element;
+  display: none;
 	text-align: left;
 	width: #{140 / $base-font-size}rem;
-	.nav__item:hover & {
+	.nav__item:hover &, .nav__item--open & {
 		display: flex;
 		position: absolute;
 		flex-direction: column;
-  	top: #{-8 / $base-font-size}rem;;
-		left: #{-11 / $base-font-size}rem;
+  	top: 50%;
+		left: 0;
 		height: auto;
 	}
 	padding-bottom: #{8 / $base-font-size}rem;
