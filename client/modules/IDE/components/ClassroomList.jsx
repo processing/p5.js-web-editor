@@ -55,13 +55,16 @@ class ClassroomList extends React.Component {
                 key={classroom._id}
                 className="classrooms-grid-tile"
               >
-                <div className="classrooms-grid-tile-thumbnail">
+                <button
+                  className="classrooms-grid-tile-thumbnail"
+                  onClick={() => browserHistory.push(`/classroom/${classroom._id}`)}
+                >
                   <div className="classrooms-grid-tile-thumbnail-buttons">
-                    <div className="classrooms-grid-tile-button classrooms-grid-tile-button-share"></div>
-                    <div className="classrooms-grid-tile-button classrooms-grid-tile-button-delete"></div>
-                    <div className="classrooms-grid-tile-button classrooms-grid-tile-button-download"></div>
+                    <button className="classrooms-grid-tile-button classrooms-grid-tile-button-share"></button>
+                    <button className="classrooms-grid-tile-button classrooms-grid-tile-button-delete"></button>
+                    <button className="classrooms-grid-tile-button classrooms-grid-tile-button-download"></button>
                   </div>
-                </div>
+                </button>
                 <div className="classrooms-grid-tile-title">{classroom.name}</div>
                 {(() => { // eslint-disable-line
                   if (this.props.username === this.props.user.username || this.props.username === undefined) {
