@@ -55,6 +55,23 @@ class ClassroomList extends React.Component {
                 key={classroom._id}
                 className="classrooms-grid-tile"
               >
+                <button
+                  className="classroom-actions-ellipsis"
+                  onClick={() => browserHistory.push(`/classroom/${classroom._id}`)}
+                >
+                  ...
+                </button>
+                <div className="classroom-actions-popup">
+                  <button className="classroom-actions-popup-close"></button>
+                  <div className="classroom-actions-popup-label">Classroom actions</div>
+                  <div className="classroom-actions-popup-hr"></div>
+                  <button className="classroom-actions-popup-label">Rename</button>
+                  <button className="classroom-actions-popup-label">Change thumbnail</button>
+                  <button className="classroom-actions-popup-label">Download</button>
+                  <button className="classroom-actions-popup-label">Duplicate</button>
+                  <button className="classroom-actions-popup-label">Share</button>
+                  <button className="classroom-actions-popup-label">Delete</button>
+                </div>
                 <div className="classrooms-grid-tile-thumbnail">
                   <div className="classrooms-grid-tile-thumbnail-buttons">
                     <button

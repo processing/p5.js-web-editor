@@ -37,7 +37,7 @@
   width: 175px;
   height: 205px;
   margin-right: 17px;
-  cursor: pointer;
+  position: relative;
 }
 
 .classrooms-grid-tile-thumbnail {
@@ -54,7 +54,7 @@
   position: relative;
   transition: opacity 0.2s;
   &:hover {
-      opacity: 1.0;
+    opacity: 1.0;
   }
 }
 .classrooms-grid-tile-thumbnail-buttons:hover {
@@ -74,6 +74,9 @@
   height: 34px;
   position: absolute;
   background-color: white;
+  &:hover {
+    background-color: blue;
+  }
   padding: 0px;
 }
 
@@ -95,15 +98,66 @@
 .classrooms-grid-tile-title {
   width: 120px;
   height: 30px;
-  font-size: #{14 / $base-font-size}rem;
+  margin-top: 2px;
+  font-size: #{12 / $base-font-size}rem;
 }
-
 
 .classroom-list__exit-button {
   @include themify() {
     @extend %icon;
   }
   margin: #{12 / $base-font-size}rem #{16 / $base-font-size}rem;
+}
+
+.classroom-actions-ellipsis {
+  width: 30px;
+  height: 30px;
+  margin-left: 145px;
+  position: absolute;
+  top: 175px;
+  background-color: pink;
+}
+
+.classroom-actions-popup {
+  z-index: 2;
+  position: absolute;
+  width: 180px;
+  height: 242px;
+  border-radius: 6px;
+  background-color: #ffffff;
+  background-color: #ffffff; /* var(--white); */
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.12);
+  border: solid 1px #0f9dd7;
+  top: 175px;
+  left: -3px;
+  padding-left: 16px;
+  padding-top: 4px;
+}
+
+.classroom-actions-popup-label {
+  width: 151px;
+  height: 32px;
+  font-size: 12px;
+  line-height: 2.67;
+  text-align: left;
+  color: #757575;
+  margin: 0px;
+  padding: 0px;
+}
+
+.classroom-actions-popup-hr {
+  width: 148px;
+  height: 1px;
+  border-top: 1px dashed #b7b7b7;
+}
+
+.classroom-actions-popup-close {
+  width: 14px;
+  height: 14px;
+  background-color: red;
+  float: right;
+  margin-top: 8px;
+  margin-right: 12px;
 }
 
 .visibility-toggle .classroom-list__trash-button {
