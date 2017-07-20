@@ -1,6 +1,8 @@
 import archiver from 'archiver';
 import request from 'request';
 import moment from 'moment';
+import isUrl from 'is-url';
+import jsdom, { serializeDocument } from 'jsdom';
 import Project from '../models/project';
 import User from '../models/user';
 import { deleteObjectsFromS3, getObjectKey } from './aws.controller';
@@ -100,8 +102,7 @@ function deleteFilesFromS3(files) {
       }
       return false;
     })
-    .map(file => getObjectKey(file.url))
-  );
+    .map(file => getObjectKey(file.url)));
 }
 
 export function deleteProject(req, res) {
@@ -169,6 +170,48 @@ export function getProjectsForUser(req, res) {
   }
 }
 
+function bundleExternalLibs(project, zip, callback) {
+  const rootFile = project.files.find(file => file.name === 'root');
+  const indexHtml = project.files.find(file => file.name === 'index.html');
+  let numScriptsResolved = 0;
+  let numScriptTags = 0;
+
+  function resolveScriptTagSrc(scriptTag, document) {
+    const path = scriptTag.src.split('/');
+    const filename = path[path.length - 1];
+    const src = scriptTag.src;
+
+    if (!isUrl(src)) {
+      numScriptsResolved += 1;
+      return;
+    }
+
+    request({ method: 'GET', url: src, encoding: null }, (err, response, body) => {
+      if (err) {
+        console.log(err);
+      } else {
+        zip.append(body, { name: filename });
+        scriptTag.src = filename;
+      }
+
+      numScriptsResolved += 1;
+      if (numScriptsResolved === numScriptTags) {
+        indexHtml.content = serializeDocument(document);
+        callback();
+      }
+    });
+  }
+
+  jsdom.env(indexHtml.content, (innerErr, window) => {
+    const indexHtmlDoc = window.document;
+    const scriptTags = indexHtmlDoc.getElementsByTagName('script');
+    numScriptTags = scriptTags.length;
+    for (let i = 0; i < numScriptTags; i += 1) {
+      resolveScriptTagSrc(scriptTags[i], indexHtmlDoc);
+    }
+  });
+}
+
 function buildZip(project, req, res) {
   const zip = archiver('zip');
   const rootFile = project.files.find(file => file.name === 'root');
@@ -208,7 +251,10 @@ function buildZip(project, req, res) {
       }
     }
   }
-  addFileToZip(rootFile, '/');
+
+  bundleExternalLibs(project, zip, () => {
+    addFileToZip(rootFile, '/');
+  });
 }
 
 export function downloadProjectAsZip(req, res) {
