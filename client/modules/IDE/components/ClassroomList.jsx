@@ -55,34 +55,28 @@ class ClassroomList extends React.Component {
                 key={classroom._id}
                 className="classrooms-grid-tile"
               >
-                <button
-                  className="classrooms-grid-tile-thumbnail"
-                  onClick={() => browserHistory.push(`/classroom/${classroom._id}`)}
-                >
+                <div className="classrooms-grid-tile-thumbnail">
                   <div className="classrooms-grid-tile-thumbnail-buttons">
+                    <button
+                      className="classrooms-grid-tile-button-open"
+                      onClick={() => browserHistory.push(`/classroom/${classroom._id}`)}
+                    >
+                    </button>
                     <button className="classrooms-grid-tile-button classrooms-grid-tile-button-share"></button>
-                    <button className="classrooms-grid-tile-button classrooms-grid-tile-button-delete"></button>
+                    <button
+                      className="classrooms-grid-tile-button classrooms-grid-tile-button-delete"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (window.confirm(`Are you sure you want to delete "${classroom.name}"?`)) {
+                          this.props.deleteClassroom(classroom._id);
+                        }
+                      }}
+                    >
+                    </button>
                     <button className="classrooms-grid-tile-button classrooms-grid-tile-button-download"></button>
                   </div>
-                </button>
+                </div>
                 <div className="classrooms-grid-tile-title">{classroom.name}</div>
-                {(() => { // eslint-disable-line
-                  if (this.props.username === this.props.user.username || this.props.username === undefined) {
-                    return (
-                      <button
-                        className="classroom-list__trash-button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          if (window.confirm(`Are you sure you want to delete "${classroom.name}"?`)) {
-                            this.props.deleteClassroom(classroom._id);
-                          }
-                        }}
-                      >
-                        <InlineSVG src={trashCan} alt="Delete Classroom" />
-                      </button>
-                    );
-                  }
-                })()}
               </div>
             )}
           </div>
