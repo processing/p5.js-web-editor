@@ -85,13 +85,15 @@
 */
 
 .CodeMirror-dialog {
-  position: absolute;
+  position: fixed;
   top: 0;
-  right: 0;
+  left: 50%;
+  margin-left: - #{365/2/$base-font-size}rem;
 
   z-index: 10;
 
-  min-width: 365px;
+  width: 100%;
+  max-width: #{365 / $base-font-size}rem;
 
   font-family: Montserrat, sans-serif;
 
@@ -118,6 +120,13 @@
   display: block;
   width: 100%;
   margin-bottom: #{12 / $base-font-size}rem;
+  @include themify() {
+    background-color: getThemifyVariable('search-background-color');
+    border: solid 0.5px getThemifyVariable('button-border-color');
+  }
+  &:focus {
+    background-color: $white;
+  }
 }
 
 .CodeMirror-search-count {
