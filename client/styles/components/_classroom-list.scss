@@ -70,12 +70,13 @@
 }
 
 .classrooms-grid-tile-button {
+  font-family: 'Material Icons';
   width: 34px;
   height: 34px;
   position: absolute;
   background-color: white;
   &:hover {
-    background-color: blue;
+    /* background-color: blue; */
   }
   padding: 0px;
 }
@@ -98,8 +99,8 @@
 .classrooms-grid-tile-title {
   width: 120px;
   height: 30px;
-  margin-top: 2px;
-  font-size: #{12 / $base-font-size}rem;
+  margin-top: 5px;
+  font-size: #{13 / $base-font-size}rem;
 }
 
 .classroom-list__exit-button {
@@ -115,7 +116,6 @@
   margin-left: 145px;
   position: absolute;
   top: 175px;
-  background-color: pink;
 }
 
 .classroom-actions-popup {
@@ -132,6 +132,7 @@
   left: -3px;
   padding-left: 16px;
   padding-top: 4px;
+  display: none;
 }
 
 .classroom-actions-popup-label {
@@ -152,12 +153,12 @@
 }
 
 .classroom-actions-popup-close {
-  width: 14px;
-  height: 14px;
-  background-color: red;
+  width: 24px;
+  height: 24px;
   float: right;
-  margin-top: 8px;
+  padding: 0px;
   margin-right: 12px;
+  margin-top: 3px;
 }
 
 .visibility-toggle .classroom-list__trash-button {
@@ -180,4 +181,26 @@
         fill: getThemifyVariable('icon-hover-color');
       }
   }
+}
+
+.material-icons.md-16 { 
+  opacity: 0.54;
+  color: #333333;
+  font-style: normal;
+  font-weight: 400;
+  font-size: #{24 / $base-font-size}rem;
+}
+
+.material-icons.md-20 { 
+  color: #ed225d;
+  font-style: normal;
+  font-weight: 400;
+  font-size: #{20 / $base-font-size}rem;
+}
+
+.material-icons.md-22 {
+  color: #414141;
+  font-style: normal;
+  font-weight: 400;
+  font-size: #{20 / $base-font-size}rem;
 }

@@ -17,6 +17,8 @@ class ClassroomList extends React.Component {
     super(props);
     this.closeClassroomList = this.closeClassroomList.bind(this);
     this.createNewClassroom = this.createNewClassroom.bind(this);
+    this.openClassroomActionsPopup = this.openClassroomActionsPopup.bind(this);
+    this.closeClassroomActionsPopup = this.closeClassroomActionsPopup.bind(this);
     this.props.getClassrooms(this.props.username);
   }
 
@@ -32,6 +34,18 @@ class ClassroomList extends React.Component {
   closeClassroomList() {
     // browserHistory.push(this.props.previousPath);
     browserHistory.push('/');
+  }
+
+  openClassroomActionsPopup(id) {
+    const classroomElem = document.getElementById(id);
+    const popupElem = classroomElem.getElementsByClassName('classroom-actions-popup')[0];
+    popupElem.style.display = 'block';
+  }
+
+  closeClassroomActionsPopup(id) {
+    const classroomElem = document.getElementById(id);
+    const popupElem = classroomElem.getElementsByClassName('classroom-actions-popup')[0];
+    popupElem.style.display = 'none';
   }
 
   render() {
@@ -53,16 +67,22 @@ class ClassroomList extends React.Component {
               // eslint-disable-next-line
               <div 
                 key={classroom._id}
+                id={classroom._id}
                 className="classrooms-grid-tile"
               >
                 <button
                   className="classroom-actions-ellipsis"
-                  onClick={() => browserHistory.push(`/classroom/${classroom._id}`)}
+                  onClick={() => this.openClassroomActionsPopup(classroom._id)}
                 >
-                  ...
+                  <i className="material-icons md-22">more_horiz</i>
                 </button>
                 <div className="classroom-actions-popup">
-                  <button className="classroom-actions-popup-close"></button>
+                  <button
+                    className="classroom-actions-popup-close"
+                    onClick={() => this.closeClassroomActionsPopup(classroom._id)}
+                  >
+                    <i className="material-icons md-16">close</i>
+                  </button>
                   <div className="classroom-actions-popup-label">Classroom actions</div>
                   <div className="classroom-actions-popup-hr"></div>
                   <button className="classroom-actions-popup-label">Rename</button>
@@ -79,7 +99,9 @@ class ClassroomList extends React.Component {
                       onClick={() => browserHistory.push(`/classroom/${classroom._id}`)}
                     >
                     </button>
-                    <button className="classrooms-grid-tile-button classrooms-grid-tile-button-share"></button>
+                    <button className="classrooms-grid-tile-button classrooms-grid-tile-button-share">
+                      <i className="material-icons md-20">share</i>
+                    </button>
                     <button
                       className="classrooms-grid-tile-button classrooms-grid-tile-button-delete"
                       onClick={(e) => {
@@ -89,8 +111,11 @@ class ClassroomList extends React.Component {
                         }
                       }}
                     >
+                      <i className="material-icons md-20">delete</i>
                     </button>
-                    <button className="classrooms-grid-tile-button classrooms-grid-tile-button-download"></button>
+                    <button className="classrooms-grid-tile-button classrooms-grid-tile-button-download">
+                      <i className="material-icons md-20">file_download</i>
+                    </button>
                   </div>
                 </div>
                 <div className="classrooms-grid-tile-title">{classroom.name}</div>
