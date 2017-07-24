@@ -263,6 +263,7 @@ class IDEView extends React.Component {
           setLintWarning={this.props.setLintWarning}
           textOutput={this.props.preferences.textOutput}
           gridOutput={this.props.preferences.gridOutput}
+          soundOutput={this.props.preferences.soundOutput}
           setTextOutput={this.props.setTextOutput}
           setGridOutput={this.props.setGridOutput}
           setSoundOutput={this.props.setSoundOutput}
@@ -564,7 +565,7 @@ IDEView.propTypes = {
     infiniteLoop: PropTypes.bool.isRequired,
     previewIsRefreshing: PropTypes.bool.isRequired,
     infiniteLoopMessage: PropTypes.string.isRequired,
-    projectSavedTime: PropTypes.string.isRequired,
+    projectSavedTime: PropTypes.string,
     previousPath: PropTypes.string.isRequired,
     justOpenedProject: PropTypes.bool.isRequired,
     errorType: PropTypes.string,

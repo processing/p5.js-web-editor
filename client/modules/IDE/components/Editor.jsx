@@ -176,7 +176,6 @@ class Editor extends React.Component {
   }
 
   initializeDocuments(files) {
-    console.log('calling initialize documents');
     this._docs = {};
     files.forEach((file) => {
       if (file.name !== 'root') {

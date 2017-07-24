@@ -22,14 +22,6 @@ export function findUserByUsername(username, cb) {
     });
 }
 
-export function createUser(req, res, next) {
-  const user = new User({
-    username: req.body.username,
-    email: req.body.email,
-    password: req.body.password
-  });
-};
-
 const EMAIL_VERIFY_TOKEN_EXPIRY_TIME = Date.now() + (3600000 * 24); // 24 hours
 
 export function createUser(req, res, next) {
