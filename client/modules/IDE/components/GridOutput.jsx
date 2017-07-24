@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 
 class GridOutput extends React.Component {
   componentDidMount() {

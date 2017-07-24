@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { Helmet } from 'react-helmet';
 import SplitPane from 'react-split-pane';
 import Editor from '../components/Editor';
 import Sidebar from '../components/Sidebar';
@@ -29,6 +30,7 @@ import * as ConsoleActions from '../actions/console';
 import { getHTMLFile } from '../reducers/files';
 import Overlay from '../../App/components/Overlay';
 import SketchList from '../components/SketchList';
+import AssetList from '../components/AssetList';
 import About from '../components/About';
 
 class IDEView extends React.Component {
@@ -97,7 +99,9 @@ class IDEView extends React.Component {
   componentDidUpdate(prevProps) {
     if (this.isUserOwner() && this.props.project.id) {
       if (this.props.preferences.autosave && this.props.ide.unsavedChanges && !this.props.ide.justOpenedProject) {
-        if (this.props.selectedFile.name === prevProps.selectedFile.name && this.props.selectedFile.content !== prevProps.selectedFile.content) {
+        if (
+          this.props.selectedFile.name === prevProps.selectedFile.name &&
+          this.props.selectedFile.content !== prevProps.selectedFile.content) {
           if (this.autosaveInterval) {
             clearTimeout(this.autosaveInterval);
           }
@@ -197,6 +201,9 @@ class IDEView extends React.Component {
   render() {
     return (
       <div className="ide">
+        <Helmet>
+          <title>{this.props.project.name}</title>
+        </Helmet>
         {this.props.toast.isVisible && <Toast />}
         <Nav
           user={this.props.user}
@@ -256,6 +263,7 @@ class IDEView extends React.Component {
           setLintWarning={this.props.setLintWarning}
           textOutput={this.props.preferences.textOutput}
           gridOutput={this.props.preferences.gridOutput}
+          soundOutput={this.props.preferences.soundOutput}
           setTextOutput={this.props.setTextOutput}
           setGridOutput={this.props.setGridOutput}
           setSoundOutput={this.props.setSoundOutput}
@@ -350,7 +358,13 @@ class IDEView extends React.Component {
                 </div>
                 <div>
                   {(() => {
-                    if (((this.props.preferences.textOutput || this.props.preferences.gridOutput || this.props.preferences.soundOutput) && this.props.ide.isPlaying) || this.props.ide.isAccessibleOutputPlaying) {
+                    if (
+                      (
+                        (this.props.preferences.textOutput ||
+                         this.props.preferences.gridOutput ||
+                         this.props.preferences.soundOutput
+                        ) && this.props.ide.isPlaying
+                      ) || this.props.ide.isAccessibleOutputPlaying) {
                       return (
                         <AccessibleOutput
                           isPlaying={this.props.ide.isPlaying}
@@ -413,10 +427,30 @@ class IDEView extends React.Component {
         {(() => { // eslint-disable-line
           if (this.props.location.pathname.match(/sketches$/)) {
             return (
-              <Overlay>
+              <Overlay
+                ariaLabel="project list"
+                title="Open a Sketch"
+                previousPath={this.props.ide.previousPath}
+              >
                 <SketchList
                   username={this.props.params.username}
-                  previousPath={this.props.ide.previousPath}
+                  user={this.props.user}
+                />
+              </Overlay>
+            );
+          }
+        })()}
+        {(() => { // eslint-disable-line
+          if (this.props.location.pathname.match(/assets$/)) {
+            return (
+              <Overlay
+                title="Assets"
+                ariaLabel="asset list"
+                previousPath={this.props.ide.previousPath}
+              >
+                <AssetList
+                  username={this.props.params.username}
+                  user={this.props.user}
                 />
               </Overlay>
             );
@@ -425,7 +459,11 @@ class IDEView extends React.Component {
         {(() => { // eslint-disable-line
           if (this.props.location.pathname === '/about') {
             return (
-              <Overlay>
+              <Overlay
+                previousPath={this.props.ide.previousPath}
+                title="Welcome"
+                ariaLabel="about"
+              >
                 <About previousPath={this.props.ide.previousPath} />
               </Overlay>
             );
@@ -434,10 +472,13 @@ class IDEView extends React.Component {
         {(() => { // eslint-disable-line
           if (this.props.ide.shareModalVisible) {
             return (
-              <Overlay>
+              <Overlay
+                title="Share Sketch"
+                ariaLabel="share"
+                closeOverlay={this.props.closeShareModal}
+              >
                 <ShareModal
                   projectId={this.props.project.id}
-                  closeShareModal={this.props.closeShareModal}
                   ownerUsername={this.props.project.owner.username}
                 />
               </Overlay>
@@ -447,10 +488,12 @@ class IDEView extends React.Component {
         {(() => { // eslint-disable-line
           if (this.props.ide.keyboardShortcutVisible) {
             return (
-              <Overlay>
-                <KeyboardShortcutModal
-                  closeModal={this.props.closeKeyboardShortcutModal}
-                />
+              <Overlay
+                title="Keyboard Shortcuts"
+                ariaLabel="keyboard shortcuts"
+                closeOverlay={this.props.closeKeyboardShortcutModal}
+              >
+                <KeyboardShortcutModal />
               </Overlay>
             );
           }
@@ -458,10 +501,13 @@ class IDEView extends React.Component {
         {(() => { // eslint-disable-line
           if (this.props.ide.errorType) {
             return (
-              <Overlay>
+              <Overlay
+                title="Error"
+                ariaLabel="error"
+                closeOverlay={this.props.hideErrorModal}
+              >
                 <ErrorModal
                   type={this.props.ide.errorType}
-                  closeModal={this.props.hideErrorModal}
                 />
               </Overlay>
             );
@@ -519,7 +565,7 @@ IDEView.propTypes = {
     infiniteLoop: PropTypes.bool.isRequired,
     previewIsRefreshing: PropTypes.bool.isRequired,
     infiniteLoopMessage: PropTypes.string.isRequired,
-    projectSavedTime: PropTypes.string.isRequired,
+    projectSavedTime: PropTypes.string,
     previousPath: PropTypes.string.isRequired,
     justOpenedProject: PropTypes.bool.isRequired,
     errorType: PropTypes.string,

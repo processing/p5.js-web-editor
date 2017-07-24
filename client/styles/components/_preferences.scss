@@ -17,9 +17,7 @@
 }
 
 .preferences__exit-button {
-	@include themify() {
-		@extend %icon;
-	}
+	@include icon();
 	padding-top: #{5 / $base-font-size}rem;
 	margin-right: #{-6 / $base-font-size}rem;
 }

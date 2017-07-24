@@ -1,6 +1,8 @@
 import uuid from 'node-uuid';
 import policy from 's3-policy';
 import s3 from 's3';
+import { getProjectsForUserId } from './project.controller';
+import { findUserByUsername } from './user.controller';
 
 const client = s3.createClient({
   maxAsyncS3: 20,
@@ -28,12 +30,12 @@ export function getObjectKey(url) {
   if (urlArray.length === 6) {
     const key = urlArray.pop();
     const userId = urlArray.pop();
-    objectKey = `${userId}/${key}`
+    objectKey = `${userId}/${key}`;
   } else {
     const key = urlArray.pop();
     objectKey = key;
   }
-  return objectKey; 
+  return objectKey;
 }
 
 export function deleteObjectsFromS3(keyList, callback) {
@@ -102,5 +104,47 @@ export function copyObjectInS3(req, res) {
   });
   copy.on('end', (data) => {
     res.json({ url: `${s3Bucket}${userId}/${newFilename}` });
+  });
+}
+
+export function listObjectsInS3ForUser(req, res) {
+  const username = req.params.username;
+  findUserByUsername(username, (user) => {
+    const userId = user.id;
+    const params = {
+      s3Params: {
+        Bucket: `${process.env.S3_BUCKET}`,
+        Prefix: `${userId}/`
+      }
+    };
+    let assets = [];
+    const list = client.listObjects(params)
+      .on('data', (data) => {
+        assets = assets.concat(data["Contents"].map((object) => {
+          return { key: object["Key"], size: object["Size"] };
+        }));
+      })
+      .on('end', () => {
+        const projectAssets = [];
+        getProjectsForUserId(userId).then((projects) => {
+          projects.forEach((project) => {
+            project.files.forEach((file) => {
+              if (!file.url) return;
+
+              const foundAsset = assets.find((asset) => file.url.includes(asset.key));
+              if (!foundAsset) return;
+              projectAssets.push({
+                name: file.name,
+                sketchName: project.name,
+                sketchId: project.id,
+                url: file.url,
+                key: foundAsset.key,
+                size: foundAsset.size
+              });
+            });
+          });
+          res.json({assets: projectAssets});
+        });
+      });
   });
 }

@@ -130,6 +130,41 @@ export function initiateResetPassword(formValues) {
   };
 }
 
+export function initiateVerification() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.EMAIL_VERIFICATION_INITIATE
+    });
+    axios.post(`${ROOT_URL}/verify/send`, {}, { withCredentials: true })
+      .then(() => {
+        // do nothing
+      })
+      .catch(response => dispatch({
+        type: ActionTypes.ERROR,
+        message: response.data
+      }));
+  };
+}
+
+export function verifyEmailConfirmation(token) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.EMAIL_VERIFICATION_VERIFY,
+      state: 'checking',
+    });
+    return axios.get(`${ROOT_URL}/verify?t=${token}`, {}, { withCredentials: true })
+      .then(response => dispatch({
+        type: ActionTypes.EMAIL_VERIFICATION_VERIFIED,
+        message: response.data,
+      }))
+      .catch(response => dispatch({
+        type: ActionTypes.EMAIL_VERIFICATION_INVALID,
+        message: response.data
+      }));
+  };
+}
+
+
 export function resetPasswordReset() {
   return {
     type: ActionTypes.RESET_PASSWORD_RESET

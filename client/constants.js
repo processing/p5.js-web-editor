@@ -1,3 +1,5 @@
+// TODO Organize this file by reducer type, ot break this apart into
+// multiple files
 export const UPDATE_FILE_CONTENT = 'UPDATE_FILE_CONTENT';
 export const TOGGLE_SKETCH = 'TOGGLE_SKETCH';
 
@@ -102,6 +104,11 @@ export const RESET_PASSWORD_INITIATE = 'RESET_PASSWORD_INITIATE';
 export const RESET_PASSWORD_RESET = 'RESET_PASSWORD_RESET';
 export const INVALID_RESET_PASSWORD_TOKEN = 'INVALID_RESET_PASSWORD_TOKEN';
 
+export const EMAIL_VERIFICATION_INITIATE = 'EMAIL_VERIFICATION_INITIATE';
+export const EMAIL_VERIFICATION_VERIFY = 'EMAIL_VERIFICATION_VERIFY';
+export const EMAIL_VERIFICATION_VERIFIED = 'EMAIL_VERIFICATION_VERIFIED';
+export const EMAIL_VERIFICATION_INVALID = 'EMAIL_VERIFICATION_INVALID';
+
 // eventually, handle errors more specifically and better
 export const ERROR = 'ERROR';
 
@@ -119,3 +126,4 @@ export const CLEAR_PERSISTED_STATE = 'CLEAR_PERSISTED_STATE';
 
 export const SHOW_HELP_MODAL = 'SHOW_HELP_MODAL';
 export const HIDE_HELP_MODAL = 'HIDE_HELP_MODAL';
+export const SET_ASSETS = 'SET_ASSETS';

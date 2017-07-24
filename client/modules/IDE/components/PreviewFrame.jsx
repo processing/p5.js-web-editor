@@ -7,8 +7,12 @@ import loopProtect from 'loop-protect';
 import { getBlobUrl } from '../actions/files';
 import { resolvePathToFile } from '../../../../server/utils/filePath';
 
+const decomment = require('decomment');
+
 const startTag = '@fs-';
+// eslint-disable-next-line max-len
 const MEDIA_FILE_REGEX = /^('|")(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov|otf|ttf|m4a)('|")$/i;
+// eslint-disable-next-line max-len
 const MEDIA_FILE_REGEX_NO_QUOTES = /^(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov|otf|ttf|m4a)$/i;
 const STRING_REGEX = /(['"])((\\\1|.)*?)\1/gm;
 const TEXT_FILE_REGEX = /(.+\.json$|.+\.txt$|.+\.csv$)/i;
@@ -54,20 +58,17 @@ function hijackConsoleErrorsScript(offs) {
       }
       return [line - l, file];
     }
-
     // catch reference errors, via http://stackoverflow.com/a/12747364/2994108
     window.onerror = function (msg, url, lineNumber, columnNo, error) {
         var string = msg.toLowerCase();
         var substring = "script error";
         var data = {};
-
         if (string.indexOf(substring) !== -1){
           data = 'Script Error: See Browser Console for Detail';
         } else {
           var fileInfo = getScriptOff(lineNumber);
           data = msg + ' (' + fileInfo[1] + ': line ' + fileInfo[0] + ')';
         }
-
         window.parent.postMessage([{
           method: 'error',
           arguments: data,
@@ -175,7 +176,9 @@ class PreviewFrame extends React.Component {
       '/loop-protect.min.js',
       '/hijackConsole.js'
     ];
-    if (this.props.isAccessibleOutputPlaying || ((this.props.textOutput || this.props.gridOutput || this.props.soundOutput) && this.props.isPlaying)) {
+    if (
+      this.props.isAccessibleOutputPlaying ||
+      ((this.props.textOutput || this.props.gridOutput || this.props.soundOutput) && this.props.isPlaying)) {
       let interceptorScripts = [];
       interceptorScripts = [
         '/p5-interceptor/registry.js',
@@ -277,6 +280,7 @@ class PreviewFrame extends React.Component {
         }
       }
     });
+    newContent = decomment(newContent, { ignore: /noprotect/g });
     newContent = loopProtect(newContent);
     return newContent;
   }
