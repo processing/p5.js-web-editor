@@ -26,10 +26,11 @@ This project is currently in development! It will be announced when there is a (
   ```
    If you don't care about being able to upload media files to S3 or Login with Github, you can drop in the file exactly how it is. Or, if you don't want to do that, just ask me to send you mine. Refer to [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) for creating an S3 bucket for testing, or if you don't want to do that, I can add you to one of my S3 buckets.
 
-6. `$ npm start`
-7. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
-8. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en).
-9. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
+6. `$ npm run fetch-examples` - this downloads the example sketches into a user called 'p5'
+7. `$ npm start`
+8. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
+9. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en).
+10. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
 
 ### Testing SSL on your local machine
 Please refer to [this gist](https://gist.github.com/andrewn/953ffd5cb17ac2634dc969fc7bdaff3f). This allows you to access the editor using both HTTP and HTTPS. Don't worry about this unless you need to make changes or test HTTPS behavior.
@@ -54,11 +55,16 @@ The automatic redirection to HTTPS is turned off by default in development. If y
   S3_BUCKET=<your-s3-bucket>
   GITHUB_ID=<your-github-client-id>
   GITHUB_SECRET=<your-github-client-secret>
+  EMAIL_SENDER=<email-address-to-send-from>
+  MAILGUN_KEY=<mailgun-api-key>
+  MAILGUN_DOMAIN=<mailgun-domain>
+  EMAIL_VERIFY_SECRET_TOKEN=whatever_you_want_this_to_be_it_only_matters_for_production
   ```
   For production, you will need to have real Github and Amazon credentions. Refer to [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) for creating an S3 bucket for testing.
 
-6. `$ npm run build`
-7. `$ npm run start:prod`
+6. `$ npm run fetch-examples` - this downloads the example sketches into a user called 'p5'
+7. `$ npm run build`
+8. `$ npm run start:prod`
 
 ### For Production Setup with PM2
 1. `$ npm install -g pm2`

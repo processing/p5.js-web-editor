@@ -45,7 +45,11 @@ export class FileNode extends React.Component {
     if (oldFileExtension && !newFileExtension) {
       this.props.updateFileName(this.props.id, this.originalFileName);
     }
-    if (oldFileExtension && newFileExtension && oldFileExtension[0] !== newFileExtension[0]) {
+    if (
+      oldFileExtension &&
+      newFileExtension &&
+      oldFileExtension[0].toLowerCase() !== newFileExtension[0].toLowerCase()
+    ) {
       this.props.updateFileName(this.props.id, this.originalFileName);
     }
   }
@@ -93,7 +97,7 @@ export class FileNode extends React.Component {
                     );
                   }
                   return (
-                    <div>
+                    <div className="sidebar__file-item--folder">
                       <button
                         className="sidebar__file-item-closed"
                         onClick={() => this.props.showFolderChildren(this.props.id)}

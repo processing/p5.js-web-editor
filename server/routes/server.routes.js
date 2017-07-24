@@ -40,6 +40,10 @@ router.route('/reset-password/:reset_password_token').get((req, res) => {
   res.send(renderIndex());
 });
 
+router.route('/verify').get((req, res) => {
+  res.send(renderIndex());
+});
+
 router.route('/sketches').get((req, res) => {
   res.send(renderIndex());
 });
@@ -49,6 +53,12 @@ router.route('/about').get((req, res) => {
 });
 
 router.route('/:username/sketches').get((req, res) => {
+  userExists(req.params.username, exists => (
+    exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
+  ));
+});
+
+router.route('/:username/assets').get((req, res) => {
   userExists(req.params.username, exists => (
     exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
   ));

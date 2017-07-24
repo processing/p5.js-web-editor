@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 
 class GridOutput extends React.Component {
   componentDidMount() {
@@ -10,24 +10,24 @@ class GridOutput extends React.Component {
         id="gridOutput-content"
         ref={(element) => { this.GridOutputModal = element; }}
       >
-        <h2> Grid Output </h2>
+        <h2> table Output </h2>
         <p
           tabIndex="0"
           role="main"
           id="gridOutput-content-summary"
-          aria-label="grid output summary"
+          aria-label="table output summary"
         >
         </p>
         <table
           id="gridOutput-content-table"
-          summary="grid output details"
+          summary="table output details"
         >
         </table>
         <div
           tabIndex="0"
           role="main"
           id="gridOutput-content-details"
-          aria-label="grid output details"
+          aria-label="table output details"
         >
         </div>
       </section>

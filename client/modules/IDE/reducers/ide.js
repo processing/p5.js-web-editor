@@ -91,6 +91,10 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { errorType: action.modalType });
     case ActionTypes.HIDE_ERROR_MODAL:
       return Object.assign({}, state, { errorType: undefined });
+    case ActionTypes.SHOW_HELP_MODAL:
+      return Object.assign({}, state, { helpType: action.helpType });
+    case ActionTypes.HIDE_HELP_MODAL:
+      return Object.assign({}, state, { helpType: undefined });
     default:
       return state;
   }

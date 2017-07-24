@@ -220,3 +220,16 @@ export function hideErrorModal() {
     type: ActionTypes.HIDE_ERROR_MODAL
   };
 }
+
+export function showHelpModal(helpType) {
+  return {
+    type: ActionTypes.SHOW_HELP_MODAL,
+    helpType
+  };
+}
+
+export function hideHelpModal() {
+  return {
+    type: ActionTypes.HIDE_HELP_MODAL
+  };
+}

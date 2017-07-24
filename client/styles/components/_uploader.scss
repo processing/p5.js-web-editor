@@ -1,3 +1,9 @@
 .dropzone {
   color: $primary-text-color;
 }
+
+.uploader {
+  min-height: #{200 / $base-font-size}rem;
+  width: 100%;
+  text-align: center;
+}

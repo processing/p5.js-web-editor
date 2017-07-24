@@ -1,12 +1,14 @@
 import generate from 'project-name-generator';
 import * as ActionTypes from '../../../constants';
+import isSecurePage from '../../../utils/isSecurePage';
 
 const initialState = () => {
   const generatedString = generate({ words: 2 }).spaced;
   const generatedName = generatedString.charAt(0).toUpperCase() + generatedString.slice(1);
   return {
     name: generatedName,
-    serveSecure: false,
+    serveSecure: isSecurePage(),
+    updatedAt: ''
   };
 };
 
@@ -15,6 +17,8 @@ const project = (state, action) => {
     state = initialState(); // eslint-disable-line
   }
   switch (action.type) {
+    case ActionTypes.SET_SERVE_SECURE:
+      return Object.assign({}, { ...state }, { serveSecure: action.serveSecure });
     case ActionTypes.SET_PROJECT_NAME:
       return Object.assign({}, { ...state }, { name: action.name });
     case ActionTypes.NEW_PROJECT:
@@ -22,6 +26,7 @@ const project = (state, action) => {
         id: action.project.id,
         name: action.project.name,
         updatedAt: action.project.updatedAt,
+        serveSecure: action.project.serveSecure,
         owner: action.owner
       };
     case ActionTypes.SET_PROJECT:
@@ -29,6 +34,7 @@ const project = (state, action) => {
         id: action.project.id,
         name: action.project.name,
         updatedAt: action.project.updatedAt,
+        serveSecure: action.project.serveSecure,
         owner: action.owner
       };
     case ActionTypes.RESET_PROJECT:

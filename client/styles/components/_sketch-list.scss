@@ -1,25 +1,8 @@
-.sketch-list {
-  @extend %modal;
-  display: flex;
-  flex-wrap: wrap;
-  flex-flow: column;
-  width: #{1000 / $base-font-size}rem;
-  height: 80%;
-  outline: none;
-}
-
-.sketch-list__header {
-  display: flex;
-  justify-content: space-between;
-}
-
-.sketch-list__header-title {  
-  padding: #{40 / $base-font-size}rem #{16 / $base-font-size}rem #{12 / $base-font-size}rem #{21 / $base-font-size}rem;
-}
-
 .sketches-table-container {
-  flex: 1 0 0%;
   overflow-y: scroll;
+  max-width: 100%;
+  width: #{1000 / $base-font-size}rem;
+  min-height: #{400 / $base-font-size}rem;
 }
 
 .sketches-table {
@@ -67,13 +50,6 @@
   font-weight: normal;
 }
 
-.sketch-list__exit-button {
-  @include themify() {
-    @extend %icon;
-  }
-  margin: #{12 / $base-font-size}rem #{16 / $base-font-size}rem;
-}
-
 .visibility-toggle .sketch-list__trash-button {
   @extend %hidden-element;
   width:#{20 / $base-font-size}rem;
@@ -94,4 +70,9 @@
         fill: getThemifyVariable('icon-hover-color');
       }
   }
+}
+
+.sketches-table__empty {
+  text-align: center;
+  font-size: #{16 / $base-font-size}rem;
 }
