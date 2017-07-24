@@ -1,9 +1,8 @@
-
 .sketches-table-container {
-  flex: 1 1 0%;
   overflow-y: scroll;
   max-width: 100%;
   width: #{1000 / $base-font-size}rem;
+  min-height: #{400 / $base-font-size}rem;
 }
 
 .sketches-table {
@@ -71,4 +70,9 @@
         fill: getThemifyVariable('icon-hover-color');
       }
   }
+}
+
+.sketches-table__empty {
+  text-align: center;
+  font-size: #{16 / $base-font-size}rem;
 }

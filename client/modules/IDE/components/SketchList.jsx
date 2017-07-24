@@ -20,49 +20,53 @@ class SketchList extends React.Component {
     const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
     return (
       <div className="sketches-table-container">
-        <table className="sketches-table" summary="table containing all saved projects">
-          <thead>
-            <tr>
-              <th className="sketch-list__trash-column" scope="col"></th>
-              <th scope="col">Sketch</th>
-              <th scope="col">Date created</th>
-              <th scope="col">Date updated</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.props.sketches.map(sketch =>
-              // eslint-disable-next-line
-              <tr 
-                className="sketches-table__row visibility-toggle"
-                key={sketch.id}
-                onClick={() => browserHistory.push(`/${username}/sketches/${sketch.id}`)}
-              >
-                <td className="sketch-list__trash-column">
-                {(() => { // eslint-disable-line
-                  if (this.props.username === this.props.user.username || this.props.username === undefined) {
-                    return (
-                      <button
-                        className="sketch-list__trash-button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          if (window.confirm(`Are you sure you want to delete "${sketch.name}"?`)) {
-                            this.props.deleteProject(sketch.id);
-                          }
-                        }}
-                      >
-                        <InlineSVG src={trashCan} alt="Delete Project" />
-                      </button>
-                    );
-                  }
-                })()}
-                </td>
-                <th scope="row"><Link to={`/${username}/sketches/${sketch.id}`}>{sketch.name}</Link></th>
-                <td>{moment(sketch.createdAt).format('MMM D, YYYY h:mm A')}</td>
-                <td>{moment(sketch.updatedAt).format('MMM D, YYYY h:mm A')}</td>
+        { this.props.sketches.length === 0 &&
+          <p className="sketches-table__empty">No sketches.</p>
+        }
+        { this.props.sketches.length > 0 &&
+          <table className="sketches-table" summary="table containing all saved projects">
+            <thead>
+              <tr>
+                <th className="sketch-list__trash-column" scope="col"></th>
+                <th scope="col">Sketch</th>
+                <th scope="col">Date created</th>
+                <th scope="col">Date updated</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {this.props.sketches.map(sketch =>
+                // eslint-disable-next-line
+                <tr 
+                  className="sketches-table__row visibility-toggle"
+                  key={sketch.id}
+                  onClick={() => browserHistory.push(`/${username}/sketches/${sketch.id}`)}
+                >
+                  <td className="sketch-list__trash-column">
+                  {(() => { // eslint-disable-line
+                    if (this.props.username === this.props.user.username || this.props.username === undefined) {
+                      return (
+                        <button
+                          className="sketch-list__trash-button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (window.confirm(`Are you sure you want to delete "${sketch.name}"?`)) {
+                              this.props.deleteProject(sketch.id);
+                            }
+                          }}
+                        >
+                          <InlineSVG src={trashCan} alt="Delete Project" />
+                        </button>
+                      );
+                    }
+                  })()}
+                  </td>
+                  <th scope="row"><Link to={`/${username}/sketches/${sketch.id}`}>{sketch.name}</Link></th>
+                  <td>{moment(sketch.createdAt).format('MMM D, YYYY h:mm A')}</td>
+                  <td>{moment(sketch.updatedAt).format('MMM D, YYYY h:mm A')}</td>
+                </tr>
+              )}
+            </tbody>
+          </table>}
       </div>
     );
   }
