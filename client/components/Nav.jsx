@@ -19,10 +19,14 @@ class Nav extends React.PureComponent {
           </li>
           <li className="nav__item">
             <button>
-              File
+              <span className="nav__item-header">File</span>
               <InlineSVG src={triangleUrl} />
             </button>
             <ul className="nav__dropdown">
+              <li className="nav__dropdown-heading">
+                <span>File</span>
+                <InlineSVG src={triangleUrl} />
+              </li>
               <li className="nav__dropdown-item">
                 <button
                   onClick={() => {
@@ -85,24 +89,32 @@ class Nav extends React.PureComponent {
           </li>
           <li className="nav__item">
             <button>
-              Edit
+              <span className="nav__item-header">Edit</span>
               <InlineSVG src={triangleUrl} />
             </button>
             <ul className="nav__dropdown">
+              <li className="nav__dropdown-heading">
+                <span>Edit</span>
+                <InlineSVG src={triangleUrl} />
+              </li>
               <li className="nav__dropdown-item">
                 Tidy Code
               </li>
-              <li cclassName="nav__dropdown-item">
+              <li className="nav__dropdown-item">
                 Find
               </li>
             </ul>
           </li>
           <li className="nav__item">
             <button>
-              Sketch
+              <span className="nav__item-header">Sketch</span>
               <InlineSVG src={triangleUrl} />
             </button>
             <ul className="nav__dropdown">
+              <li className="nav__dropdown-heading">
+                <span>Sketch</span>
+                <InlineSVG src={triangleUrl} />
+              </li>
               <li className="nav__dropdown-item">
                 Run
               </li>
@@ -113,10 +125,14 @@ class Nav extends React.PureComponent {
           </li>
           <li className="nav__item">
             <button>
-              Help
+              <span className="nav__item-header">Help</span>
               <InlineSVG src={triangleUrl} />
             </button>
             <ul className="nav__dropdown">
+              <li className="nav__dropdown-heading">
+                <span>Help</span>
+                <InlineSVG src={triangleUrl} />
+              </li>
               <li className="nav__dropdown-item">
                 Keyboard Shortcuts
               </li>
@@ -135,51 +151,53 @@ class Nav extends React.PureComponent {
             </ul>
           </li>
         </ul>
-        <ul className="nav__items-right" title="user-menu">
-          {(() => {
-            if (!this.props.user.authenticated) {
-              return (
-                <li className="nav__item">
-                  <p>
-                    <Link to="/login">Log in</Link>
-                    <span className="nav__item-spacer">or</span>
-                    <Link to="/signup">Sign up</Link>
-                  </p>
+        { !this.props.user.authenticated &&
+          <ul className="nav__items-right" title="user-menu">
+            <li className="nav__item">
+              <p>
+                <Link to="/login">Log in</Link>
+                <span className="nav__item-spacer">or</span>
+                <Link to="/signup">Sign up</Link>
+              </p>
+            </li>
+          </ul>}
+        { this.props.user.authenticated &&
+          <ul className="nav__items-right" title="user-menu">
+            <li className="nav__item">
+              <span>Hello, {this.props.user.username}!</span>
+            </li>
+            <span className="nav__item-spacer">|</span>
+            <li className="nav__item">
+              <button className="nav__item-header">My Account</button>
+              <InlineSVG src={triangleUrl} />
+              <ul className="nav__dropdown">
+                <li className="nav__dropdown-heading">
+                  <button>My Account</button>
+                  <InlineSVG src={triangleUrl} />
                 </li>
-              );
-            }
-            return (
-              <li className="nav__item">
-                <a>Hello, {this.props.user.username}!</a>
-                <ul className="nav__dropdown">
-                  <li className="nav__dropdown-heading">
-                    <a>Hello, {this.props.user.username}!</a>
-                  </li>
-                  <li>
-                    <Link to={`/${this.props.user.username}/sketches`}>
-                      My sketches
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to={`/${this.props.user.username}/assets`}>
-                      My assets
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to={`/${this.props.user.username}/account`}>
-                      My account
-                    </Link>
-                  </li>
-                  <li>
-                    <button onClick={this.props.logoutUser} >
-                      Log out
-                    </button>
-                  </li>
-                </ul>
-              </li>
-            );
-          })()}
-        </ul>
+                <li className="nav__dropdown-item">
+                  <Link to={`/${this.props.user.username}/sketches`}>
+                    My sketches
+                  </Link>
+                </li>
+                <li className="nav__dropdown-item">
+                  <Link to={`/${this.props.user.username}/assets`}>
+                    My assets
+                  </Link>
+                </li>
+                <li className="nav__dropdown-item">
+                  <Link to={`/${this.props.user.username}/account`}>
+                    Settings
+                  </Link>
+                </li>
+                <li className="nav__dropdown-item">
+                  <button onClick={this.props.logoutUser} >
+                    Log out
+                  </button>
+                </li>
+              </ul>
+            </li>
+          </ul> }
         <div className="nav__announce">
           This is a preview version of the editor, that has not yet been officially released.
           It is in development, you can report bugs <a
