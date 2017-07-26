@@ -233,3 +233,15 @@ export function hideHelpModal() {
     type: ActionTypes.HIDE_HELP_MODAL
   };
 }
+
+export function hideRuntimeErrorWarning() {
+  return {
+    type: ActionTypes.HIDE_RUNTIME_ERROR_WARNING
+  };
+}
+
+export function showRuntimeErrorWarning() {
+  return {
+    type: ActionTypes.SHOW_RUNTIME_ERROR_WARNING
+  };
+}

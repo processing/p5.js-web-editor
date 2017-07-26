@@ -49,6 +49,7 @@ class Editor extends React.Component {
   constructor(props) {
     super(props);
     this.tidyCode = this.tidyCode.bind(this);
+    this.onUpdateLinting = this.onUpdateLinting.bind(this);
   }
   componentDidMount() {
     this.beep = new Audio(beepUrl);
@@ -64,17 +65,7 @@ class Editor extends React.Component {
       keyMap: 'sublime',
       highlightSelectionMatches: true, // highlight current search match
       lint: {
-        onUpdateLinting: debounce((annotations) => {
-          this.props.clearLintMessage();
-          annotations.forEach((x) => {
-            if (x.from.line > -1) {
-              this.props.updateLintMessage(x.severity, (x.from.line + 1), x.message);
-            }
-          });
-          if (this.props.lintMessages.length > 0 && this.props.lintWarning) {
-            this.beep.play();
-          }
-        }, 2000),
+        onUpdateLinting: this.onUpdateLinting,
         options: {
           'asi': true,
           'eqeqeq': false,
@@ -153,24 +144,42 @@ class Editor extends React.Component {
     if (this.props.theme !== prevProps.theme) {
       this._cm.setOption('theme', `p5-${this.props.theme}`);
     }
+
+    if (prevProps.consoleEvents !== this.props.consoleEvents) {
+      this.props.showRuntimeErrorWarning();
+    }
     for (let i = 0; i < 1000; i += 1) {
       this._cm.removeLineClass(i, 'background', 'line-runtime-error');
     }
-    this.props.consoleEvents.forEach((consoleEvent) => {
-      if (consoleEvent.method === 'error') {
-        console.log(consoleEvent.arguments);
-        console.log(consoleEvent.source);
-
-        const n = consoleEvent.arguments.replace(')', '').split(' ');
-        const lineNumber = parseInt(n[n.length - 1], 10) - 1;
-        console.log(lineNumber);
-        this._cm.addLineClass(lineNumber, 'background', 'line-runtime-error');
-      }
-    });
+    if (this.props.runtimeErrorWarningVisible) {
+      this.props.consoleEvents.forEach((consoleEvent) => {
+        if (consoleEvent.method === 'error') {
+          const n = consoleEvent.arguments.replace(')', '').split(' ');
+          const lineNumber = parseInt(n[n.length - 1], 10) - 1;
+          this._cm.addLineClass(lineNumber, 'background', 'line-runtime-error');
+        }
+      });
+    }
   }
 
   componentWillUnmount() {
     this._cm = null;
+  }
+
+  onUpdateLinting() {
+    this.props.hideRuntimeErrorWarning();
+
+    debounce((annotations) => {
+      this.props.clearLintMessage();
+      annotations.forEach((x) => {
+        if (x.from.line > -1) {
+          this.props.updateLintMessage(x.severity, (x.from.line + 1), x.message);
+        }
+      });
+      if (this.props.lintMessages.length > 0 && this.props.lintWarning) {
+        this.beep.play();
+      }
+    }, 2000);
   }
 
   getFileMode(fileName) {
@@ -337,12 +346,15 @@ Editor.propTypes = {
   collapseSidebar: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
   isUserOwner: PropTypes.bool,
-  clearConsole: PropTypes.func.isRequired
+  clearConsole: PropTypes.func.isRequired,
+  showRuntimeErrorWarning: PropTypes.func.isRequired,
+  hideRuntimeErrorWarning: PropTypes.func.isRequired,
+  runtimeErrorWarningVisible: PropTypes.bool.isRequired,
 };
 
 Editor.defaultProps = {
   isUserOwner: false,
-  consoleEvents: []
+  consoleEvents: [],
 };
 
 export default Editor;
