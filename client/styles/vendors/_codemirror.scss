@@ -340,13 +340,15 @@ span.CodeMirror-selectedtext { background: none; }
 /* CODE FOLDING (FOLDGUTTER.JS) */
 
 .CodeMirror-foldmarker {
+  text-shadow: -1px 0 #ed225d, 0 1px #ed225d, 1px 0 #ed225d, 0 -1px #ed225d;
   color: #FFF;
-  background-color: rgba(237, 34, 93, 0.42);
-  border-radius: 3px;
+  /* background-color: rgba(237, 34, 93, 0.42); */
+  /* border-radius: 3px; */
   font-weight: bold;
   font-family: arial;
   line-height: .3;
   cursor: pointer;
+  opacity: 0.75;
 }
 .CodeMirror-foldgutter {
   width: 2.7em;
