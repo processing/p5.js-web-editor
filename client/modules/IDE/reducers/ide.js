@@ -18,7 +18,8 @@ const initialState = {
   infiniteLoopMessage: '',
   justOpenedProject: false,
   previousPath: '/',
-  errorType: undefined
+  errorType: undefined,
+  projectHasSyntaxErrors: false,
 };
 
 const ide = (state = initialState, action) => {
@@ -95,6 +96,8 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { helpType: action.helpType });
     case ActionTypes.HIDE_HELP_MODAL:
       return Object.assign({}, state, { helpType: undefined });
+    case ActionTypes.SET_PROJECT_HAS_SYNTAX_ERRORS:
+      return Object.assign({}, state, { projectHasSyntaxErrors: action.projectHasSyntaxErrors });
     default:
       return state;
   }

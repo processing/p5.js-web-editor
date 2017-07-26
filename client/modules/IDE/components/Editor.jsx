@@ -38,7 +38,18 @@ class Editor extends React.Component {
   constructor(props) {
     super(props);
     this.tidyCode = this.tidyCode.bind(this);
-    this.onUpdateLinting = this.onUpdateLinting.bind(this);
+
+    this.updateLintingMessageAccessibility = debounce((annotations) => {
+      this.props.clearLintMessage();
+      annotations.forEach((x) => {
+        if (x.from.line > -1) {
+          this.props.updateLintMessage(x.severity, (x.from.line + 1), x.message);
+        }
+      });
+      if (this.props.lintMessages.length > 0 && this.props.lintWarning) {
+        this.beep.play();
+      }
+    }, 2000);
   }
   componentDidMount() {
     this.beep = new Audio(beepUrl);
@@ -53,7 +64,16 @@ class Editor extends React.Component {
       gutters: ['CodeMirror-lint-markers'],
       keyMap: 'sublime',
       lint: {
-        onUpdateLinting: this.onUpdateLinting,
+        onUpdateLinting: ((annotations) => {
+          if (annotations.length === 0) {
+            this.props.setProjectHasSyntaxErrors(false);
+          } else if (isNaN(annotations[0].from.line)) {
+            this.props.setProjectHasSyntaxErrors(false);
+          } else {
+            this.props.setProjectHasSyntaxErrors(true);
+          }
+          this.updateLintingMessageAccessibility(annotations);
+        }),
         options: {
           'asi': true,
           'eqeqeq': false,
@@ -135,25 +155,6 @@ class Editor extends React.Component {
 
   componentWillUnmount() {
     this._cm = null;
-  }
-
-  onUpdateLinting() {
-    debounce((annotations) => {
-      console.log(annotations);
-    }, 1);
-
-    debounce((annotations) => {
-      console.log(annotations);
-      this.props.clearLintMessage();
-      annotations.forEach((x) => {
-        if (x.from.line > -1) {
-          this.props.updateLintMessage(x.severity, (x.from.line + 1), x.message);
-        }
-      });
-      if (this.props.lintMessages.length > 0 && this.props.lintWarning) {
-        this.beep.play();
-      }
-    }, 2000);
   }
 
   getFileMode(fileName) {
@@ -317,11 +318,13 @@ Editor.propTypes = {
   collapseSidebar: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
   isUserOwner: PropTypes.bool,
-  clearConsole: PropTypes.func.isRequired
+  clearConsole: PropTypes.func.isRequired,
+  setProjectHasSyntaxErrors: PropTypes.func.isRequired,
 };
 
 Editor.defaultProps = {
-  isUserOwner: false
+  isUserOwner: false,
+  consoleEvents: [],
 };
 
 export default Editor;
