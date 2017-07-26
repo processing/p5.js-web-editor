@@ -75,8 +75,9 @@
   height: 34px;
   position: absolute;
   background-color: white;
+  opacity: 1.0;
   &:hover {
-    /* background-color: blue; */
+    opacity: 0.8;
   }
   padding: 0px;
 }

@@ -9,6 +9,7 @@ import * as ClassroomActions from '../actions/classroom';
 import * as ProjectActions from '../actions/project';
 import * as ToastActions from '../actions/toast';
 
+const leftArrow = require('../../../images/left-arrow.svg');
 const exitUrl = require('../../../images/exit.svg');
 const trashCan = require('../../../images/trash-can.svg');
 
@@ -18,6 +19,7 @@ class AssignmentList extends React.Component {
     this.closeAssignmentList = this.closeAssignmentList.bind(this);
     this.createNewAssignment = this.createNewAssignment.bind(this);
     this.openAssignment = this.openAssignment.bind(this);
+    this.goBackToClassroomList = this.goBackToClassroomList.bind(this);
     // this.props.getAssignments(this.props.classroomid);
   }
 
@@ -47,6 +49,10 @@ class AssignmentList extends React.Component {
     browserHistory.push(`/assignment/${this.props.classroom._id}/${assignment._id}`);
   }
 
+  goBackToClassroomList() {
+    browserHistory.push('/myclassrooms');
+  }
+
   render() {
     return (
       <section className="sketch-list" aria-label="classroom list" tabIndex="0" role="main" id="assignmentlist">
@@ -54,6 +60,9 @@ class AssignmentList extends React.Component {
           <h2 className="sketch-list__header-title">Assignments in {this.props.classroom.name}</h2>
           <button className="sketch-list__exit-button" onClick={() => { this.createNewAssignment(this.props.classroom._id); }}>
             Create new Assignment
+          </button>
+          <button className="sketch-list__exit-button" onClick={this.goBackToClassroomList}>
+            <InlineSVG src={leftArrow} alt="Go Back To Classroom List" />
           </button>
           <button className="sketch-list__exit-button" onClick={this.closeAssignmentList}>
             <InlineSVG src={exitUrl} alt="Close Assignments List Overlay" />
