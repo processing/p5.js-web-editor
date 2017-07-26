@@ -238,6 +238,7 @@ class IDEView extends React.Component {
           currentUser={this.props.user.username}
           clearConsole={this.props.clearConsole}
           showHelpModal={this.props.showHelpModal}
+          lintMessages={this.props.editorAccessibility.lintMessages}
         />
         <Preferences
           isVisible={this.props.ide.preferencesIsVisible}

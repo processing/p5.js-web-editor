@@ -38,6 +38,7 @@ class Editor extends React.Component {
   constructor(props) {
     super(props);
     this.tidyCode = this.tidyCode.bind(this);
+    this.onUpdateLinting = this.onUpdateLinting.bind(this);
   }
   componentDidMount() {
     this.beep = new Audio(beepUrl);
@@ -52,17 +53,7 @@ class Editor extends React.Component {
       gutters: ['CodeMirror-lint-markers'],
       keyMap: 'sublime',
       lint: {
-        onUpdateLinting: debounce((annotations) => {
-          this.props.clearLintMessage();
-          annotations.forEach((x) => {
-            if (x.from.line > -1) {
-              this.props.updateLintMessage(x.severity, (x.from.line + 1), x.message);
-            }
-          });
-          if (this.props.lintMessages.length > 0 && this.props.lintWarning) {
-            this.beep.play();
-          }
-        }, 2000),
+        onUpdateLinting: this.onUpdateLinting,
         options: {
           'asi': true,
           'eqeqeq': false,
@@ -144,6 +135,25 @@ class Editor extends React.Component {
 
   componentWillUnmount() {
     this._cm = null;
+  }
+
+  onUpdateLinting() {
+    debounce((annotations) => {
+      console.log(annotations);
+    }, 1);
+
+    debounce((annotations) => {
+      console.log(annotations);
+      this.props.clearLintMessage();
+      annotations.forEach((x) => {
+        if (x.from.line > -1) {
+          this.props.updateLintMessage(x.severity, (x.from.line + 1), x.message);
+        }
+      });
+      if (this.props.lintMessages.length > 0 && this.props.lintWarning) {
+        this.beep.play();
+      }
+    }, 2000);
   }
 
   getFileMode(fileName) {

@@ -63,6 +63,7 @@ class Toolbar extends React.Component {
         <button
           className="toolbar__play-sketch-button"
           onClick={() => {
+            console.log(this.props.sketchHasSyntaxErrors);
             this.props.clearConsole();
             this.props.startTextOutput();
             this.props.startSketchAndRefresh();
@@ -75,6 +76,7 @@ class Toolbar extends React.Component {
         <button
           className={playButtonClass}
           onClick={() => {
+            console.log(this.props.sketchHasSyntaxErrors);
             this.props.clearConsole();
             this.props.startSketchAndRefresh();
           }}
@@ -207,7 +209,8 @@ Toolbar.propTypes = {
   startSketchAndRefresh: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
   currentUser: PropTypes.string,
-  clearConsole: PropTypes.func.isRequired
+  clearConsole: PropTypes.func.isRequired,
+  sketchHasSyntaxErrors: PropTypes.bool.isRequired,
 };
 
 Toolbar.defaultProps = {
