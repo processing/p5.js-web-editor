@@ -330,6 +330,9 @@ class IDEView extends React.Component {
                   isUserOwner={this.isUserOwner()}
                   clearConsole={this.props.clearConsole}
                   consoleEvents={this.props.console}
+                  showRuntimeErrorWarning={this.props.showRuntimeErrorWarning}
+                  hideRuntimeErrorWarning={this.props.hideRuntimeErrorWarning}
+                  runtimeErrorWarningVisible={this.props.ide.runtimeErrorWarningVisible}
                 />
                 <Console
                   consoleEvents={this.props.console}
@@ -514,7 +517,8 @@ IDEView.propTypes = {
     previousPath: PropTypes.string.isRequired,
     justOpenedProject: PropTypes.bool.isRequired,
     errorType: PropTypes.string,
-    helpType: PropTypes.string
+    helpType: PropTypes.string,
+    runtimeErrorWarningVisible: PropTypes.bool.isRequired,
   }).isRequired,
   stopSketch: PropTypes.func.isRequired,
   startTextOutput: PropTypes.func.isRequired,
@@ -628,7 +632,9 @@ IDEView.propTypes = {
   clearPersistedState: PropTypes.func.isRequired,
   persistState: PropTypes.func.isRequired,
   showHelpModal: PropTypes.func.isRequired,
-  hideHelpModal: PropTypes.func.isRequired
+  hideHelpModal: PropTypes.func.isRequired,
+  showRuntimeErrorWarning: PropTypes.func.isRequired,
+  hideRuntimeErrorWarning: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

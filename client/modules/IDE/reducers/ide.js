@@ -18,7 +18,8 @@ const initialState = {
   infiniteLoopMessage: '',
   justOpenedProject: false,
   previousPath: '/',
-  errorType: undefined
+  errorType: undefined,
+  runtimeErrorWarningVisible: true,
 };
 
 const ide = (state = initialState, action) => {
@@ -95,6 +96,10 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { helpType: action.helpType });
     case ActionTypes.HIDE_HELP_MODAL:
       return Object.assign({}, state, { helpType: undefined });
+    case ActionTypes.HIDE_RUNTIME_ERROR_WARNING:
+      return Object.assign({}, state, { runtimeErrorWarningVisible: false });
+    case ActionTypes.SHOW_RUNTIME_ERROR_WARNING:
+      return Object.assign({}, state, { runtimeErrorWarningVisible: true });
     default:
       return state;
   }
