@@ -1,28 +1,16 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 
 class TextOutput extends React.Component {
   componentDidMount() {
-    this.canvasTextOutput.focus();
-  }
-  componentDidUpdate(prevProps) {
-    // if the user explicitly clicks on the play button, want to refocus on the text output
-    if (this.props.isPlaying && this.props.previewIsRefreshing) {
-      this.canvasTextOutput.focus();
-    }
+    this.TextOutputModal.focus();
   }
   render() {
     return (
       <section
-        className="text-output"
-        id="canvas-sub"
-        ref={(element) => { this.canvasTextOutput = element; }}
-        tabIndex="0"
-        aria-label="text-output"
-        title="canvas text output"
+        id="textOutput-content"
+        ref={(element) => { this.TextOutputModal = element; }}
       >
-        <h2> Output </h2>
-        <section id="textOutput-content">
-        </section>
+        <h2> Text Output </h2>
         <p
           tabIndex="0"
           role="main"
@@ -31,10 +19,8 @@ class TextOutput extends React.Component {
         >
         </p>
         <table
-          tabIndex="0"
-          role="main"
           id="textOutput-content-table"
-          aria-label="text output details"
+          summary="text output details"
         >
         </table>
         <div
@@ -48,10 +34,5 @@ class TextOutput extends React.Component {
     );
   }
 }
-
-TextOutput.propTypes = {
-  isPlaying: PropTypes.bool.isRequired,
-  previewIsRefreshing: PropTypes.bool.isRequired
-};
 
 export default TextOutput;

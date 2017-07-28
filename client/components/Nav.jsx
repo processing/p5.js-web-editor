@@ -21,7 +21,10 @@ class Nav extends React.PureComponent {
             </button>
           </li>
           {(() => { // eslint-disable-line
-            if (!this.props.project.owner || (this.props.project.owner && this.props.project.owner.id === this.props.user.id)) {
+            if (
+              !this.props.project.owner ||
+              (this.props.project.owner && this.props.project.owner.id === this.props.user.id)
+            ) {
               return (
                 <li className="nav__item">
                   <button
@@ -80,7 +83,6 @@ class Nav extends React.PureComponent {
                   <p className="nav__open">
                     <Link
                       to={`/${this.props.user.username}/sketches`}
-                      onClick={this.props.stopSketch}
                     >
                       Open
                     </Link>
@@ -91,7 +93,9 @@ class Nav extends React.PureComponent {
           })()}
           <li className="nav__item">
             <p className="nav__open">
-              <Link to="/p5/sketches">
+              <Link
+                to="/p5/sketches"
+              >
                 Examples
               </Link>
             </p>
@@ -119,7 +123,9 @@ class Nav extends React.PureComponent {
               return (
                 <li className="nav__item">
                   <p>
-                    <Link to="/login">Log in</Link> <span className="nav__item-spacer">or</span> <Link to="/signup">Sign up</Link>
+                    <Link to="/login">Log in</Link>
+                    <span className="nav__item-spacer">or</span>
+                    <Link to="/signup">Sign up</Link>
                   </p>
                 </li>
               );
@@ -134,6 +140,11 @@ class Nav extends React.PureComponent {
                   <li>
                     <Link to={`/${this.props.user.username}/sketches`}>
                       My sketches
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to={`/${this.props.user.username}/assets`}>
+                      My assets
                     </Link>
                   </li>
                   <li>
@@ -153,7 +164,11 @@ class Nav extends React.PureComponent {
         </ul>
         <div className="nav__announce">
           This is a preview version of the editor, that has not yet been officially released.
-          It is in development, you can report bugs <a href="https://github.com/processing/p5.js-web-editor/issues" target="_blank" rel="noopener noreferrer">here</a>.
+          It is in development, you can report bugs <a
+            href="https://github.com/processing/p5.js-web-editor/issues"
+            target="_blank"
+            rel="noopener noreferrer"
+          >here</a>.
           Please use with caution.
         </div>
       </nav>
@@ -178,7 +193,6 @@ Nav.propTypes = {
     })
   }),
   logoutUser: PropTypes.func.isRequired,
-  stopSketch: PropTypes.func.isRequired,
   showShareModal: PropTypes.func.isRequired,
   showErrorModal: PropTypes.func.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
