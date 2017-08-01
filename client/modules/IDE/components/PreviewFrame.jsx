@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 // import escapeStringRegexp from 'escape-string-regexp';
 import srcDoc from 'srcdoc-polyfill';
+import Pica from 'pica';
 
 import loopProtect from 'loop-protect';
 import { getBlobUrl } from '../actions/files';
@@ -105,13 +106,7 @@ class PreviewFrame extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.thumbnailIsBeingGenerated) {
-      if (this.iframeElement) {
-        const canvases = this.iframeElement.contentDocument.getElementsByTagName('canvas');
-        if (canvases.length > 0) {
-          window.open(canvases[0].toDataURL());
-        }
-      }
-      this.props.dispatchThumbnailRenderedEvent();
+      this.generateThumbnail();
     }
 
     // if sketch starts or stops playing, want to rerender
@@ -357,6 +352,27 @@ class PreviewFrame extends React.Component {
         }
       }
     });
+  }
+
+  generateThumbnail() {
+    if (this.iframeElement) {
+      const canvases = this.iframeElement.contentDocument.getElementsByTagName('canvas');
+      if (canvases.length > 0) {
+        const canvas = canvases[0];
+        const to = document.createElement('canvas');
+        const pica = new Pica();
+        pica.resize(canvas, to, {
+          quality: 0.1
+        })
+          .then((result) => {
+            console.log(result.toDataURL());
+            window.open(result.toDataURL());
+            this.props.dispatchThumbnailRenderedEvent();
+          });
+        // .then(blob => window.open(blob));
+        // window.open(canvases[0].toDataURL());
+      }
+    }
   }
 
   renderSketch() {
