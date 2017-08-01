@@ -7,6 +7,7 @@ import session from 'express-session';
 import connectMongo from 'connect-mongo';
 import passport from 'passport';
 import path from 'path';
+import csurf from 'csurf';
 
 // Webpack Requirements
 import webpack from 'webpack';
@@ -23,6 +24,7 @@ import files from './routes/file.routes';
 import aws from './routes/aws.routes';
 import serverRoutes from './routes/server.routes';
 import embedRoutes from './routes/embed.routes';
+import { requestsOfTypeJSON } from './utils/requestsOfType';
 
 import { renderIndex } from './views/index';
 import { get404Sketch } from './views/404Page';
@@ -73,18 +75,27 @@ app.use(session({
     autoReconnect: true
   })
 }));
+
+// Enables CSRF protection and stores secret in session
+app.use(csurf());
+// Middleware to add CSRF token as cookie to some requests
+const csrfToken = (req, res, next) => {
+  res.cookie('XSRF-TOKEN', req.csrfToken());
+  next();
+};
+
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/api', users);
-app.use('/api', sessions);
-app.use('/api', projects);
-app.use('/api', files);
-app.use('/api', aws);
+app.use('/api', requestsOfTypeJSON(), users);
+app.use('/api', requestsOfTypeJSON(), sessions);
+app.use('/api', requestsOfTypeJSON(), projects);
+app.use('/api', requestsOfTypeJSON(), files);
+app.use('/api', requestsOfTypeJSON(), aws);
 // this is supposed to be TEMPORARY -- until i figure out
 // isomorphic rendering
-app.use('/', serverRoutes);
+app.use('/', csrfToken, serverRoutes);
 
-app.use('/', embedRoutes);
+app.use('/', csrfToken, embedRoutes);
 app.get('/auth/github', passport.authenticate('github'));
 app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), (req, res) => {
   res.redirect('/');

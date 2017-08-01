@@ -31,15 +31,15 @@ export function endSketchRefresh() {
   };
 }
 
-export function startTextOutput() {
+export function startAccessibleOutput() {
   return {
-    type: ActionTypes.START_TEXT_OUTPUT
+    type: ActionTypes.START_ACCESSIBLE_OUTPUT
   };
 }
 
-export function stopTextOutput() {
+export function stopAccessibleOutput() {
   return {
-    type: ActionTypes.STOP_TEXT_OUTPUT
+    type: ActionTypes.STOP_ACCESSIBLE_OUTPUT
   };
 }
 

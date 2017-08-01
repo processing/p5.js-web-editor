@@ -8,6 +8,7 @@ const initialState = () => {
   return {
     name: generatedName,
     serveSecure: isSecurePage(),
+    updatedAt: ''
   };
 };
 

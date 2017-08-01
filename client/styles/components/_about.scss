@@ -1,35 +1,3 @@
-.about {
-  @extend %modal;
-  display: flex;
-  flex-wrap: wrap;
-  flex-flow: column;
-  width: #{720 / $base-font-size}rem;
-  outline: none;
-  & a {
-    color: $form-navigation-options-color;
-  }
-}
-
-.about__header {
-  display: flex;
-  justify-content: space-between;
-  padding-top: #{12 / $base-font-size}rem;
-  padding-right: #{14 / $base-font-size}rem;
-  padding-bottom: #{20 / $base-font-size}rem;
-  padding-left: #{21 / $base-font-size}rem;
-}
-
-.about__header-title {
-  font-size: #{38 / $base-font-size}rem;
-  font-weight: normal;
-}
-
-.about__exit-button {
-  @include themify() {
-    @extend %icon;
-  }
-}
-
 .about__logo {
   @include themify() {
     & path {
@@ -69,10 +37,15 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  flex-wrap: wrap;
   padding-top: #{17 / $base-font-size}rem;
   padding-right: #{78 / $base-font-size}rem;
   padding-bottom: #{20 / $base-font-size}rem;
   padding-left: #{20 / $base-font-size}rem;
+  width: #{720 / $base-font-size}rem;
+  & a {
+    color: $form-navigation-options-color;
+  }
 }
 
 .about__content-column {
@@ -112,6 +85,7 @@
   padding-right: #{20 / $base-font-size}rem;
   padding-bottom: #{21 / $base-font-size}rem;
   padding-left: #{291 / $base-font-size}rem;
+  width: 100%;
 }
 
 .about__footer-list {

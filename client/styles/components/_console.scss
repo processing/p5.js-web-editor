@@ -72,9 +72,7 @@
 
 .preview-console__collapse {
 	padding-top: #{3 / $base-font-size}rem;
-	@include themify() {
-		@extend %icon;
-	}
+	@include icon();
 	.preview-console--collapsed & {
 		display: none;
 	}
@@ -82,9 +80,7 @@
 
 .preview-console__expand {
 	padding-top: #{3 / $base-font-size}rem;
-	@include themify() {
-		@extend %icon;
-	}
+	@include icon();
 	display: none;
 	.preview-console--collapsed & {
 		display: inline-block;

@@ -12,9 +12,7 @@
 }
 
 .error-modal__exit-button {
-  @include themify() {
-    @extend %icon;
-  }
+  @include icon();
 }
 
 .error-modal__content {

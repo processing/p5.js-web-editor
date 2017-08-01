@@ -9,7 +9,11 @@ import 'codemirror/addon/lint/css-lint';
 import 'codemirror/addon/lint/html-lint';
 import 'codemirror/addon/comment/comment';
 import 'codemirror/keymap/sublime';
+import 'codemirror/addon/search/searchcursor';
+import 'codemirror/addon/search/matchesonscrollbar';
+import 'codemirror/addon/search/match-highlighter';
 import 'codemirror/addon/search/jump-to-line';
+
 import { JSHINT } from 'jshint';
 import { CSSLint } from 'csslint';
 import { HTMLHint } from 'htmlhint';
@@ -20,6 +24,13 @@ import '../../../utils/htmlmixed';
 import '../../../utils/p5-javascript';
 import Timer from '../components/Timer';
 import EditorAccessibility from '../components/EditorAccessibility';
+import {
+  metaKey,
+} from '../../../utils/metaKey';
+
+import search from '../../../utils/codemirror-search';
+
+search(CodeMirror);
 
 const beautifyCSS = beautifyJS.css;
 const beautifyHTML = beautifyJS.html;
@@ -63,6 +74,7 @@ class Editor extends React.Component {
       fixedGutter: false,
       gutters: ['CodeMirror-lint-markers'],
       keyMap: 'sublime',
+      highlightSelectionMatches: true, // highlight current search match
       lint: {
         onUpdateLinting: ((annotations) => {
           this.props.hideRuntimeErrorWarning();
@@ -77,10 +89,11 @@ class Editor extends React.Component {
     });
 
     this._cm.setOption('extraKeys', {
-      'Cmd-Enter': () => null,
-      'Shift-Cmd-Enter': () => null,
-      'Ctrl-Enter': () => null,
-      'Shift-Ctrl-Enter': () => null
+      [`${metaKey}-Enter`]: () => null,
+      [`Shift-${metaKey}-Enter`]: () => null,
+      [`${metaKey}-F`]: 'findPersistent',
+      [`${metaKey}-G`]: 'findNext',
+      [`Shift-${metaKey}-G`]: 'findPrev',
     });
 
     this.initializeDocuments(this.props.files);
@@ -184,7 +197,6 @@ class Editor extends React.Component {
   }
 
   initializeDocuments(files) {
-    console.log('calling initialize documents');
     this._docs = {};
     files.forEach((file) => {
       if (file.name !== 'root') {
