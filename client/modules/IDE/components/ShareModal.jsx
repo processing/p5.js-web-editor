@@ -1,15 +1,22 @@
 import React, { PropTypes } from 'react';
+// import AssetList from '../components/AssetList';
 
 function ShareModal(props) {
   const {
     projectId,
-    ownerUsername
+    ownerUsername,
+    projectName
   } = props;
   const hostname = window.location.origin;
   return (
     <div className="share-modal">
+      <div className="sketch-name-label">
+        {`${projectName}`}
+      </div>
       <div className="share-modal__section">
         <label className="share-modal__label" htmlFor="share-modal__embed">Embed</label>
+      </div>
+      <div className="share-modal__section" id="text-field">
         <input
           type="text"
           className="share-modal__input"
@@ -19,6 +26,8 @@ function ShareModal(props) {
       </div>
       <div className="share-modal__section">
         <label className="share-modal__label" htmlFor="share-modal__fullscreen">Fullscreen</label>
+      </div>
+      <div className="share-modal__section" id="text-field">
         <input
           type="text"
           className="share-modal__input"
@@ -28,6 +37,8 @@ function ShareModal(props) {
       </div>
       <div className="share-modal__section">
         <label className="share-modal__label" htmlFor="share-modal__edit">Edit</label>
+      </div>
+      <div className="share-modal__section" id="text-field">
         <input
           type="text"
           className="share-modal__input"
@@ -41,7 +52,8 @@ function ShareModal(props) {
 
 ShareModal.propTypes = {
   projectId: PropTypes.string.isRequired,
-  ownerUsername: PropTypes.string.isRequired
+  ownerUsername: PropTypes.string.isRequired,
+  projectName: PropTypes.string.isRequired
 };
 
 export default ShareModal;

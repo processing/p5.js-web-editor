@@ -1,6 +1,8 @@
 .share-modal {
-  padding: #{20 / $base-font-size}rem;
-  width: #{500 / $base-font-size}rem;
+  padding: #{30 / $base-font-size}rem;
+  width: #{704 / $base-font-size}rem;
+  height: #{440 / $base-font-size}rem;
+  border-radius: 4px;
 }
 
 .share-modal__header {
@@ -12,13 +14,32 @@
   width: 100%;
   display: flex;
   align-items: center;
-  padding: #{10 / $base-font-size}rem 0;
+  padding: #{7 / $base-font-size}rem 0;
 }
 
 .share-modal__label {
+  @include themify() {
+    color: getThemifyVariable('input-border-color');
+  }
+  
   width: #{86 / $base-font-size}rem;
 }
 
 .share-modal__input {
   flex: 1;
+}
+
+.sketch-name-label {
+  font-size: #{16 / $base-font-size}rem;
+  line-height: 1.25;
+  text-align: left;
+  color: $black;
+  font-family: Montserrat;
+  margin-bottom: #{40 / $base-font-size}rem;
+  padding: 0;
+  margin-left: #{79 / $base-font-size}rem;
+}
+
+#text-field {
+  margin-bottom: #{25 / $base-font-size}rem;
 }
