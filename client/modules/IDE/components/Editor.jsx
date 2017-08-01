@@ -7,6 +7,11 @@ import 'codemirror/addon/lint/lint';
 import 'codemirror/addon/lint/javascript-lint';
 import 'codemirror/addon/lint/css-lint';
 import 'codemirror/addon/lint/html-lint';
+import 'codemirror/addon/fold/brace-fold';
+import 'codemirror/addon/fold/comment-fold';
+import 'codemirror/addon/fold/foldcode';
+import 'codemirror/addon/fold/foldgutter';
+import 'codemirror/addon/fold/indent-fold';
 import 'codemirror/addon/comment/comment';
 import 'codemirror/keymap/sublime';
 import 'codemirror/addon/search/searchcursor';
@@ -60,7 +65,9 @@ class Editor extends React.Component {
       inputStyle: 'contenteditable',
       lineWrapping: false,
       fixedGutter: false,
-      gutters: ['CodeMirror-lint-markers'],
+      foldGutter: true,
+      foldOptions: { widget: '\u2026' },
+      gutters: ['CodeMirror-foldgutter'],
       keyMap: 'sublime',
       highlightSelectionMatches: true, // highlight current search match
       lint: {
@@ -82,6 +89,7 @@ class Editor extends React.Component {
         }
       }
     });
+
 
     this._cm.setOption('extraKeys', {
       [`${metaKey}-Enter`]: () => null,
