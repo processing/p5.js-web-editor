@@ -12,7 +12,7 @@
 
 $p5-light-lightbrown: #A67F59;
 $p5-light-brown: #704F21;
-$p5-light-black: #333;
+$p5-light-black: #333333;
 $p5-light-pink: #D9328F;
 $p5-light-gray: #A0A0A0;
 $p5-light-lightblue: #00A1D3;
@@ -21,6 +21,7 @@ $p5-light-white: #FDFDFD;
 $p5-light-orange: #EE9900;
 $p5-light-lightgray: #E0D7D1;
 $p5-light-darkgray: #666666;
+$p5-light-green: #58a10b; 
 
 $p5-light-gutter: #f4f4f4;
 $p5-light-number: #b5b5b5;
@@ -37,11 +38,11 @@ $p5-light-activeline: rgb(207, 207, 207);
 }
 
 .cm-s-p5-light .cm-def {
-  color: $p5-light-darkblue;
+  color: $p5-light-lightblue;
 }
 
 .cm-s-p5-light .cm-string {
-  color: $p5-light-lightblue;
+  color: $p5-light-green;
 }
 
 .cm-s-p5-light .cm-string-2 {
@@ -49,7 +50,7 @@ $p5-light-activeline: rgb(207, 207, 207);
 }
 
 .cm-s-p5-light .cm-number {
-  color: $p5-light-pink;
+  color: $p5-light-black;
 }
 
 .cm-s-p5-light .cm-keyword {
@@ -60,7 +61,7 @@ $p5-light-activeline: rgb(207, 207, 207);
   color: $p5-light-lightblue;
 }
 
-.cm-s-p5-light .cm-variable-2 {
+.cm-s-p5-light .cm-variable2 {
   color: $p5-light-black;
 }
 
@@ -114,14 +115,14 @@ $p5-light-activeline: rgb(207, 207, 207);
 }
 
 .cm-s-p5-light .cm-attribute {
-  color: $p5-light-lightblue;
+  color: $p5-light-black;
 }
 
 .cm-s-p5-light .cm-p5-function {
   color: $p5-light-darkblue;
+  font-weight: bold;
 }
 
 .cm-s-p5-light .cm-p5-variable {
   color: $p5-light-pink;
-  font-weight: bold;
 }
