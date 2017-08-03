@@ -280,7 +280,10 @@ class PreviewFrame extends React.Component {
         }
       }
     });
-    newContent = decomment(newContent, { ignore: /noprotect/g });
+    newContent = decomment(newContent, {
+      ignore: /noprotect/g,
+      space: true
+    });
     newContent = loopProtect(newContent);
     return newContent;
   }
