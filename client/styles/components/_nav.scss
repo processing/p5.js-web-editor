@@ -82,6 +82,7 @@
 .nav__item-spacer {
 	@include themify() {
 		color: map-get($theme-map, 'inactive-text-color');
+    margin: 0 #{8 / $base-font-size}rem;
 	}
 }
 
