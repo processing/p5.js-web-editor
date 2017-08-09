@@ -63,7 +63,7 @@
 .preference__subheadings {
 	display: flex;
 	flex-wrap: wrap;
-	padding-bottom: #{7 / $base-font-size}rem;
+	padding-bottom: #{0.1 / $base-font-size}rem;
 	@include themify() {
 	border-bottom: 1px solid getThemifyVariable('button-border-color');
 	}
