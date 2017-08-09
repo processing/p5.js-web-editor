@@ -1,10 +1,15 @@
 .preferences {
 	@extend %modal;
 	position: absolute;
-	top: #{51 / $base-font-size}rem;
-	right: #{29 / $base-font-size}rem;
-	width: #{288 / $base-font-size}rem;
+	top: #{113 / $base-font-size}rem;
+	right: #{192 / $base-font-size}rem;
+	width: #{640 / $base-font-size}rem;
+	height: #{540 / $base-font-size}rem;
+	bottom: #{371 / $base-font-size}rem;
+	margin-bottom: #{100 / $base-font-size}rem;
+	margin-right: #{100 / $base-font-size}rem;
 	display: none;
+	z-index: 9999;
 	padding: #{14 / $base-font-size}rem #{20 / $base-font-size}rem #{2 / $base-font-size}rem  #{20 / $base-font-size}rem ;
 	&--selected {
 		display: flex;
@@ -40,11 +45,30 @@
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	margin-bottom: #{20 / $base-font-size}rem;
+	marhin-left: #{19 / $base-font-size}rem;
 	@include themify() {
 		color: getThemifyVariable('heading-text-color');
 	}
 }
+
+.preferences__title{
+	width: #{90 / $base-font-size}rem;
+  	height: #{25 / $base-font-size}rem;
+    font-family: Montserrat;
+    font-size: #{21 / $base-font-size}rem;
+    font-weight: bold;
+    text-align: left;
+}
+
+.preference__subheadings {
+	display: flex;
+	flex-wrap: wrap;
+	padding-bottom: #{7 / $base-font-size}rem;
+	@include themify() {
+	border-bottom: 1px solid getThemifyVariable('button-border-color');
+	}
+}
+
 
 .preference {
 	display: flex;
@@ -103,6 +127,59 @@
 	margin: #{-15 / $base-font-size}rem 0 0 #{-5 / $base-font-size}rem;
 	font-size: #{9 / $base-font-size}rem;
 	width: #{44 / $base-font-size}rem;
+}
+
+.preference__subheading1 {
+	@include themify() {
+		color: getThemifyVariable('inactive-text-color');
+		&:hover {
+			color: getThemifyVariable('primary-text-color');
+			border-bottom: #{4 / $base-font-size}rem solid getThemifyVariable('button-background-hover-color');
+		}
+	}
+	font-size: #{12 / $base-font-size}rem;
+	height: #{25 / $base-font-size}rem;
+	text-align: left;
+	margin-top: #{30 / $base-font-size}rem;
+	margin-left: #{5 / $base-font-size}rem;
+	margin-bottom: #{0.1 / $base-font-size}rem;
+	font-family: Montserrat;
+	width: #{100 / $base-font-size}rem;
+}
+
+.preference__subheading2 {
+	@include themify() {
+		color: getThemifyVariable('inactive-text-color');
+		&:hover {
+			color: getThemifyVariable('primary-text-color');
+			border-bottom: #{4 / $base-font-size}rem solid getThemifyVariable('button-background-hover-color');
+		}
+	}
+	font-size: #{12 / $base-font-size}rem;
+	height: #{25 / $base-font-size}rem;
+	text-align: left;
+	margin-top: #{30 / $base-font-size}rem;
+	margin-left: #{46 / $base-font-size}rem;
+	margin-bottom: #{0.1 / $base-font-size}rem;
+	font-family: Montserrat;
+}
+
+.preference__subheading3 {
+	@include themify() {
+		color: getThemifyVariable('inactive-text-color');
+		&:hover {
+			color: getThemifyVariable('primary-text-color');
+			border-bottom: #{4 / $base-font-size}rem solid getThemifyVariable('button-background-hover-color');
+		}
+	}
+	font-size: #{12 / $base-font-size}rem;
+	height: #{25 / $base-font-size}rem;
+	text-align: left;
+	margin-top: #{30 / $base-font-size}rem;
+	margin-left: #{48 / $base-font-size}rem;
+	margin-bottom: #{0.1 / $base-font-size}rem;
+	width: #{78 / $base-font-size}rem;
+	font-family: Montserrat;
 }
 
 .preference__vertical-list {

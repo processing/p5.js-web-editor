@@ -18,6 +18,7 @@ class Preferences extends React.Component {
     this.handleUpdateFont = this.handleUpdateFont.bind(this);
     this.handleUpdateIndentation = this.handleUpdateIndentation.bind(this);
     this.handleLintWarning = this.handleLintWarning.bind(this);
+//  this.handleTab = this.handleTab.bind(this);
   }
 
   handleUpdateFont(event) {
@@ -46,6 +47,10 @@ class Preferences extends React.Component {
     this.props.setLintWarning(value);
   }
 
+  // handleTab(event, TabName) {
+  //   this.props.openTab(event, TabName);
+  // }
+
   render() {
     const beep = new Audio(beepUrl);
     const preferencesContainerClass = classNames({
@@ -56,7 +61,7 @@ class Preferences extends React.Component {
     return (
       <section className={preferencesContainerClass} tabIndex="0" title="preference-menu">
         <div className="preferences__heading">
-          <h2 className="preferences__title">Preferences</h2>
+          <h2 className="preferences__title">Settings</h2>
           <button
             className="preferences__exit-button"
             onClick={this.props.closePreferences}
@@ -66,7 +71,49 @@ class Preferences extends React.Component {
             <InlineSVG src={exitUrl} alt="Exit Preferences" />
           </button>
         </div>
-
+        <div className="preference__subheadings">
+          <h4 className="preference__subheading1">General Settings</h4>
+          <h4 className="preference__subheading2">Sketch Settings</h4>
+          <h4 className="preference__subheading2">Accessibility</h4>
+        </div>
+        <div className="preference">
+          <h4 className="preference__title">Theme</h4>
+          <div className="preference__options">
+            <input
+              type="radio"
+              onChange={() => this.props.setTheme('light')}
+              aria-label="light theme on"
+              name="light theme"
+              id="light-theme-on"
+              className="preference__radio-button"
+              value="light"
+              checked={this.props.theme === 'light'}
+            />
+            <label htmlFor="light-theme-on" className="preference__option">Light</label>
+            <input
+              type="radio"
+              onChange={() => this.props.setTheme('dark')}
+              aria-label="dark theme on"
+              name="dark theme"
+              id="dark-theme-on"
+              className="preference__radio-button"
+              value="dark"
+              checked={this.props.theme === 'dark'}
+            />
+            <label htmlFor="dark-theme-on" className="preference__option">Dark</label>
+            <input
+              type="radio"
+              onChange={() => this.props.setTheme('contrast')}
+              aria-label="contrast theme on"
+              name="contrast theme"
+              id="contrast-theme-on"
+              className="preference__radio-button"
+              value="contrast"
+              checked={this.props.theme === 'contrast'}
+            />
+            <label htmlFor="contrast-theme-on" className="preference__option">High contrast</label>
+          </div>
+        </div>
         <div className="preference">
           <h4 className="preference__title">Text size</h4>
           <button
@@ -99,7 +146,6 @@ class Preferences extends React.Component {
             <h6 className="preference__label">Increase</h6>
           </button>
         </div>
-
         <div className="preference">
           <h4 className="preference__title">Indentation amount</h4>
           <button
@@ -184,81 +230,8 @@ class Preferences extends React.Component {
           </div>
         </div>
         <div className="preference">
-          <h4 className="preference__title">Theme</h4>
-          <div className="preference__options">
-            <input
-              type="radio"
-              onChange={() => this.props.setTheme('light')}
-              aria-label="light theme on"
-              name="light theme"
-              id="light-theme-on"
-              className="preference__radio-button"
-              value="light"
-              checked={this.props.theme === 'light'}
-            />
-            <label htmlFor="light-theme-on" className="preference__option">Light</label>
-            <input
-              type="radio"
-              onChange={() => this.props.setTheme('dark')}
-              aria-label="dark theme on"
-              name="dark theme"
-              id="dark-theme-on"
-              className="preference__radio-button"
-              value="dark"
-              checked={this.props.theme === 'dark'}
-            />
-            <label htmlFor="dark-theme-on" className="preference__option">Dark</label>
-            <input
-              type="radio"
-              onChange={() => this.props.setTheme('contrast')}
-              aria-label="contrast theme on"
-              name="contrast theme"
-              id="contrast-theme-on"
-              className="preference__radio-button"
-              value="contrast"
-              checked={this.props.theme === 'contrast'}
-            />
-            <label htmlFor="contrast-theme-on" className="preference__option">High contrast</label>
-          </div>
-        </div>
-        <div className="preference">
-          <h4 className="preference__title">Lint warning sound</h4>
-          <div className="preference__options">
-            <input
-              type="radio"
-              onChange={() => this.props.setLintWarning(true)}
-              aria-label="lint warning on"
-              name="lint warning"
-              id="lint-warning-on"
-              className="preference__radio-button"
-              value="On"
-              checked={this.props.lintWarning}
-            />
-            <label htmlFor="lint-warning-on" className="preference__option">On</label>
-            <input
-              type="radio"
-              onChange={() => this.props.setLintWarning(false)}
-              aria-label="lint warning off"
-              name="lint warning"
-              id="lint-warning-off"
-              className="preference__radio-button"
-              value="Off"
-              checked={!this.props.lintWarning}
-            />
-            <label htmlFor="lint-warning-off" className="preference__option">Off</label>
-            <button
-              className="preference__preview-button"
-              onClick={() => beep.play()}
-              aria-label="preview sound"
-            >
-              Preview sound
-            </button>
-          </div>
-        </div>
-        <div className="preference">
           <h4 className="preference__title">Accessible text-based canvas</h4>
           <h6 className="preference__subtitle">Used with screen reader</h6>
-
           <div className="preference__options">
             <input
               type="checkbox"
@@ -298,6 +271,40 @@ class Preferences extends React.Component {
             <label htmlFor="sound-output-on" className="preference__option preference__canvas">Sound</label>
           </div>
         </div>
+        <div className="preference">
+          <h4 className="preference__title">Lint warning sound</h4>
+          <div className="preference__options">
+            <input
+              type="radio"
+              onChange={() => this.props.setLintWarning(true)}
+              aria-label="lint warning on"
+              name="lint warning"
+              id="lint-warning-on"
+              className="preference__radio-button"
+              value="On"
+              checked={this.props.lintWarning}
+            />
+            <label htmlFor="lint-warning-on" className="preference__option">On</label>
+            <input
+              type="radio"
+              onChange={() => this.props.setLintWarning(false)}
+              aria-label="lint warning off"
+              name="lint warning"
+              id="lint-warning-off"
+              className="preference__radio-button"
+              value="Off"
+              checked={!this.props.lintWarning}
+            />
+            <label htmlFor="lint-warning-off" className="preference__option">Off</label>
+            <button
+              className="preference__preview-button"
+              onClick={() => beep.play()}
+              aria-label="preview sound"
+            >
+              Preview sound
+            </button>
+          </div>
+        </div>
       </section>
     );
   }
@@ -323,6 +330,7 @@ Preferences.propTypes = {
   setSoundOutput: PropTypes.func.isRequired,
   lintWarning: PropTypes.bool.isRequired,
   setLintWarning: PropTypes.func.isRequired,
+//  openTab: PropTypes.func.isRequired,
   theme: PropTypes.string.isRequired,
   setTheme: PropTypes.func.isRequired
 };
