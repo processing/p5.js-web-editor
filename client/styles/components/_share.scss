@@ -1,7 +1,7 @@
 .share-modal {
   padding: #{30 / $base-font-size}rem;
-  width: #{704 / $base-font-size}rem;
-  height: #{440 / $base-font-size}rem;
+  width: #{770/ $base-font-size}rem;
+  height: #{400 / $base-font-size}rem;
   border-radius: 4px;
 }
 
@@ -14,7 +14,7 @@
   width: 100%;
   display: flex;
   align-items: center;
-  padding: #{7 / $base-font-size}rem 0;
+  padding: #{5 / $base-font-size}rem 0;
 }
 
 .share-modal__label {
@@ -23,6 +23,8 @@
   }
   
   width: #{86 / $base-font-size}rem;
+  display: inline-block;
+  vertical-align: top;
 }
 
 .share-modal__input {
@@ -35,11 +37,88 @@
   text-align: left;
   color: $black;
   font-family: Montserrat;
-  margin-bottom: #{40 / $base-font-size}rem;
-  padding: 0;
-  margin-left: #{79 / $base-font-size}rem;
+  margin-bottom: #{10 / $base-font-size}rem;
 }
 
 #text-field {
-  margin-bottom: #{25 / $base-font-size}rem;
+  margin-bottom: #{10 / $base-font-size}rem;
+}
+
+.talk-bubble {
+  margin-top: #{0 / $base-font-size}rem;
+  margin-bottom: #{0 / $base-font-size}rem;
+  margin-left: #{130 / $base-font-size}rem;
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  width: #{205 / $base-font-size}rem;
+  height: auto;
+  background-color: $p5js-pink;
+}
+
+.hide {
+  visibility: hidden;
+}
+
+@keyframes display {
+  0% { opacity: 0 }
+  100% { opacity: 1 }
+}
+
+.show {
+  animation: display 2s;
+}
+
+.round{
+  border-radius: 5px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+
+}
+
+.tri-right.border.btm-left-in:before {
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: #{15 / $base-font-size}rem; 
+  right: auto;
+  top: auto;
+  bottom: -40px;
+  border: #{20 / $base-font-size}rem solid;
+  border-color: $p5js-pink transparent transparent $p5js-pink;
+}
+
+.tri-right.btm-left-in:after{
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: #{100 / $base-font-size}rem;
+  right: auto;
+  top: auto;
+  bottom: -10px;
+  border: #{6 / $base-font-size}rem solid;
+  border-color: $p5js-pink transparent transparent $p5js-pink;
+}
+
+.talktext{
+  padding: 0.5em;
+  text-align: center;
+  line-height: 1.5em;
+  color: $white;
+}
+
+.talktext p{
+  /* remove webkit p margins */
+  -webkit-margin-before: 0em;
+  -webkit-margin-after: 0em;
+}
+
+.green {
+    background-color: lightgreen;
+}
+
+.blue {
+    background-color: lightblue;
 }
