@@ -75,9 +75,9 @@ class Preferences extends React.Component {
         <Tabs>
           <TabList>
             <div className="preference__subheadings">
-              <Tab><h4 className="preference__subheading1">General Settings</h4></Tab>
-              <h4 className="preference__subheading2">Sketch Settings</h4>
-              <Tab><h4 className="preference__subheading2">Accessibility</h4></Tab>
+              <Tab><h4 className="preference__subheading">General Settings</h4></Tab>
+              <Tab><h4 className="preference__subheading">Sketch Settings</h4></Tab>
+              <Tab><h4 className="preference__subheading">Accessibility</h4></Tab>
             </div>
           </TabList>
           <TabPanel>
@@ -233,6 +233,15 @@ class Preferences extends React.Component {
                 />
                 <label htmlFor="autosave-off" className="preference__option">Off</label>
               </div>
+            </div>
+          </TabPanel>
+          <TabPanel>
+            <br></br>
+            <div className="preference">
+              <h4 className="preference__title">Add a p5.js or an external library</h4>
+              <h4 className="preference__sketch1">Add a script library resource field</h4>
+              <h4 className="preference__title">Security Protocol</h4>
+              <h4>Serve over HTTPS</h4>
             </div>
           </TabPanel>
           <TabPanel>

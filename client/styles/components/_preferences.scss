@@ -45,7 +45,6 @@
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	marhin-left: #{19 / $base-font-size}rem;
 	@include themify() {
 		color: getThemifyVariable('heading-text-color');
 	}
@@ -68,7 +67,6 @@
 	border-bottom: 1px solid getThemifyVariable('button-border-color');
 	}
 }
-
 
 .preference {
 	display: flex;
@@ -129,7 +127,7 @@
 	width: #{44 / $base-font-size}rem;
 }
 
-.preference__subheading1 {
+.preference__subheading {
 	@include themify() {
 		color: getThemifyVariable('inactive-text-color');
 		&:hover {
@@ -139,47 +137,12 @@
 	}
 	font-size: #{12 / $base-font-size}rem;
 	height: #{25 / $base-font-size}rem;
-	text-align: left;
 	margin-top: #{30 / $base-font-size}rem;
 	margin-left: #{5 / $base-font-size}rem;
 	margin-bottom: #{0.1 / $base-font-size}rem;
+	margin-right: #{60 / $base-font-size}rem;
 	font-family: Montserrat;
-	width: #{100 / $base-font-size}rem;
-}
-
-.preference__subheading2 {
-	@include themify() {
-		color: getThemifyVariable('inactive-text-color');
-		&:hover {
-			color: getThemifyVariable('primary-text-color');
-			border-bottom: #{4 / $base-font-size}rem solid getThemifyVariable('button-background-hover-color');
-		}
-	}
-	font-size: #{12 / $base-font-size}rem;
-	height: #{25 / $base-font-size}rem;
-	text-align: left;
-	margin-top: #{30 / $base-font-size}rem;
-	margin-left: #{46 / $base-font-size}rem;
-	margin-bottom: #{0.1 / $base-font-size}rem;
-	font-family: Montserrat;
-}
-
-.preference__subheading3 {
-	@include themify() {
-		color: getThemifyVariable('inactive-text-color');
-		&:hover {
-			color: getThemifyVariable('primary-text-color');
-			border-bottom: #{4 / $base-font-size}rem solid getThemifyVariable('button-background-hover-color');
-		}
-	}
-	font-size: #{12 / $base-font-size}rem;
-	height: #{25 / $base-font-size}rem;
-	text-align: left;
-	margin-top: #{30 / $base-font-size}rem;
-	margin-left: #{48 / $base-font-size}rem;
-	margin-bottom: #{0.1 / $base-font-size}rem;
-	width: #{78 / $base-font-size}rem;
-	font-family: Montserrat;
+	width: #{98 / $base-font-size}rem;
 }
 
 .preference__vertical-list {
@@ -187,6 +150,22 @@
 	flex-direction: column;
 	width: #{44 / $base-font-size}rem;
 	padding-left: #{25 / $base-font-size}rem;
+}
+
+.preference__sketch1{
+	width: #{601 / $base-font-size}rem;
+    height: #{100 / $base-font-size}rem;
+  	font-family: Montserrat;
+  	font-size: #{14 / $base-font-size}rem;
+  	line-height: 1.43;
+  	text-align: left;
+  	margin-left: #{5 / $base-font-size}rem;
+  	margin-top: #{40 / $base-font-size}rem;
+  	margin-bottom: #{10 / $base-font-size}rem;
+  	@include themify() {
+		color: getThemifyVariable('inactive-text-color');
+		border-bottom: 1px dashed getThemifyVariable('button-border-color');
+	}
 }
 
 .preference__radio-button {
@@ -228,3 +207,37 @@
 .preference__option.preference__canvas:not(:last-child) {
 	padding-right: #{14 / $base-font-size}rem;
 }
+
+/*.tooltip {
+    display: inline-block;
+}
+
+/* Tooltip text */
+/*.tooltip .tooltiptext {
+	margin-top: #{0 / $base-font-size}rem;
+  margin-bottom: #{50 / $base-font-size}rem;
+  margin-left: #{130 / $base-font-size}rem;
+    visibility: hidden;
+    width: 120px;
+    height: 120px;
+ 	border-color: $p5js-pink transparent transparent $p5js-pink;
+    padding: 5px 0;
+    border-radius: 5px;
+    webkit-border-radius: 20px;
+    moz-border-radius: 20px;
+  	text-align: center;
+  	color: $white;
+    background-color: $p5js-pink; 
+    vertical-align: top;
+    /* Position the tooltip text - see examples below! */
+/*    content: ' ';
+  position: absolute;
+  left: #{15 / $base-font-size}rem; 
+  -webkit-margin-before: 0em;
+  -webkit-margin-after: 0em;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+/*.tooltip:hover .tooltiptext {
+    visibility: visible;
+}*//*/*/
