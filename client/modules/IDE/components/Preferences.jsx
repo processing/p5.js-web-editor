@@ -106,17 +106,6 @@ class Preferences extends React.Component {
                   checked={this.props.theme === 'dark'}
                 />
                 <label htmlFor="dark-theme-on" className="preference__option">Dark</label>
-                <input
-                  type="radio"
-                  onChange={() => this.props.setTheme('contrast')}
-                  aria-label="contrast theme on"
-                  name="contrast theme"
-                  id="contrast-theme-on"
-                  className="preference__radio-button"
-                  value="contrast"
-                  checked={this.props.theme === 'contrast'}
-                />
-                <label htmlFor="contrast-theme-on" className="preference__option">High contrast</label>
               </div>
             </div>
             <div className="preference">
@@ -182,30 +171,28 @@ class Preferences extends React.Component {
                 <InlineSVG src={plusUrl} alt="IncreaseIndentation Amount" />
                 <h6 className="preference__label">Increase</h6>
               </button>
-              <div className="preference__vertical-list">
-                <input
-                  type="radio"
-                  onChange={this.props.indentWithSpace}
-                  aria-label="indentation with space"
-                  name="indentation"
-                  id="indentation-space"
-                  className="preference__radio-button"
-                  value="Spaces"
-                  checked={!this.props.isTabIndent}
-                />
-                <label htmlFor="indentation-space" className="preference__option">Spaces</label>
-                <input
-                  type="radio"
-                  onChange={this.props.indentWithTab}
-                  aria-label="indentation with tab"
-                  name="indentation"
-                  id="indentation-tab"
-                  className="preference__radio-button"
-                  value="Tabs"
-                  checked={this.props.isTabIndent}
-                />
-                <label htmlFor="indentation-tab" className="preference__option">Tabs</label>
-              </div>
+              <input
+                type="radio"
+                onChange={this.props.indentWithSpace}
+                aria-label="indentation with space"
+                name="indentation"
+                id="indentation-space"
+                className="preference__radio-button"
+                value="Spaces"
+                checked={!this.props.isTabIndent}
+              />
+              <label htmlFor="indentation-space" className="preference__option">Spaces</label>
+              <input
+                type="radio"
+                onChange={this.props.indentWithTab}
+                aria-label="indentation with tab"
+                name="indentation"
+                id="indentation-tab"
+                className="preference__radio-button"
+                value="Tabs"
+                checked={this.props.isTabIndent}
+              />
+              <label htmlFor="indentation-tab" className="preference__option">Tabs</label>
             </div>
             <div className="preference">
               <h4 className="preference__title">Autosave</h4>
@@ -250,41 +237,38 @@ class Preferences extends React.Component {
               <h6 className="preference__subtitle">Used with screen reader</h6>
               <div className="preference__options">
                 <input
-                  type="checkbox"
+                  type="radio"
                   onChange={(event) => {
                     this.props.setTextOutput(event.target.checked);
                   }}
                   aria-label="text output on"
                   name="text output"
                   id="text-output-on"
+                  className="preference__radio-button"
                   value="On"
                   checked={(this.props.textOutput)}
                 />
-                <label htmlFor="text-output-on" className="preference__option preference__canvas">Plain-text</label>
+                <label htmlFor="text-output-on" className="preference__option preference__canvas">On</label>
                 <input
-                  type="checkbox"
+                  type="radio"
                   onChange={(event) => {
                     this.props.setGridOutput(event.target.checked);
                   }}
                   aria-label="table output on"
                   name="table output"
                   id="table-output-on"
+                  className="preference__radio-button"
                   value="On"
                   checked={(this.props.gridOutput)}
                 />
-                <label htmlFor="table-output-on" className="preference__option preference__canvas">Table-text</label>
-                <input
-                  type="checkbox"
-                  onChange={(event) => {
-                    this.props.setSoundOutput(event.target.checked);
-                  }}
-                  aria-label="sound output on"
-                  name="sound output"
-                  id="sound-output-on"
-                  value="On"
-                  checked={(this.props.soundOutput)}
-                />
-                <label htmlFor="sound-output-on" className="preference__option preference__canvas">Sound</label>
+                <label htmlFor="table-output-on" className="preference__option preference__canvas">Off</label>
+                <button
+                  className="preference__preview-button"
+                  onClick={() => beep.play()}
+                  aria-label="preview sound"
+                >
+                  Preview sound
+                </button>
               </div>
             </div>
             <div className="preference">
@@ -312,13 +296,6 @@ class Preferences extends React.Component {
                   checked={!this.props.lintWarning}
                 />
                 <label htmlFor="lint-warning-off" className="preference__option">Off</label>
-                <button
-                  className="preference__preview-button"
-                  onClick={() => beep.play()}
-                  aria-label="preview sound"
-                >
-                  Preview sound
-                </button>
               </div>
             </div>
           </TabPanel>
@@ -342,10 +319,10 @@ Preferences.propTypes = {
   setAutosave: PropTypes.func.isRequired,
   textOutput: PropTypes.bool.isRequired,
   gridOutput: PropTypes.bool.isRequired,
-  soundOutput: PropTypes.bool.isRequired,
+ // soundOutput: PropTypes.bool.isRequired,
   setTextOutput: PropTypes.func.isRequired,
   setGridOutput: PropTypes.func.isRequired,
-  setSoundOutput: PropTypes.func.isRequired,
+ // setSoundOutput: PropTypes.func.isRequired,
   lintWarning: PropTypes.bool.isRequired,
   setLintWarning: PropTypes.func.isRequired,
 //  openTab: PropTypes.func.isRequired,
