@@ -34,6 +34,7 @@
 		width: #{32 / $base-font-size}rem;
 		height: #{32 / $base-font-size}rem;
 		margin-left: #{6 / $base-font-size}rem;
+		margin-right: #{10 / $base-font-size}rem;
 		line-height: #{40 / $base-font-size}rem;
 		& svg {
 			width: #{10 / $base-font-size}rem;
@@ -177,6 +178,12 @@
 		@extend %preference-option;
 		padding-right: #{44 / $base-font-size}rem;
 	}
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	margin-top: #{10 / $base-font-size}rem;
+	width: #{50 / $base-font-size}rem;
+	margin-left: #{5 / $base-font-size}rem;
 }
 
 .preference__option:last-child {
@@ -186,7 +193,12 @@
 .preference__preview-button {
 	@include themify() {
 		@extend %preference-option;
+		&:hover {
+			color: getThemifyVariable('button-background-hover-color');
+		}
 	}
+	margin-top: #{7 / $base-font-size}rem;
+	margin-left: #{30 / $base-font-size}rem;
 }
 
 .preference__options {
