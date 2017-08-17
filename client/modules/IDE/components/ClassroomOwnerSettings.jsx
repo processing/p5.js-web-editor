@@ -11,12 +11,13 @@ import * as ProjectActions from '../actions/project';
 import * as ToastActions from '../actions/toast';
 import { domOnlyProps } from '../../../utils/reduxFormUtils';
 
+const leftArrow = require('../../../images/left-arrow.svg');
 const exitUrl = require('../../../images/exit.svg');
 const trashCan = require('../../../images/trash-can.svg');
 
-function CreateClassroomForm(props) {
+function ClassroomOwnerSettingsForm(props) {
   const {
-    fields: { name },
+    fields: { name, students },
     handleSubmit,
     submitting,
     invalid,
@@ -39,7 +40,7 @@ function CreateClassroomForm(props) {
   );
 }
 
-CreateClassroomForm.propTypes = {
+ClassroomOwnerSettingsForm.propTypes = {
   fields: PropTypes.shape({
     name: PropTypes.object.isRequired,
   }).isRequired,
@@ -50,55 +51,64 @@ CreateClassroomForm.propTypes = {
   pristine: PropTypes.bool,
 };
 
-CreateClassroomForm.defaultProps = {
+ClassroomOwnerSettingsForm.defaultProps = {
   submitting: false,
   pristine: true,
   invalid: false
 };
 
-class CreateClassroom extends React.Component {
+class ClassroomOwnerSettings extends React.Component {
   constructor(props) {
     super(props);
-    this.closeCreateClassroomPage = this.closeCreateClassroomPage.bind(this);
+    this.closeClassroomSettingsPage = this.closeClassroomSettingsPage.bind(this);
+    this.goBackToClassroom = this.goBackToClassroom.bind(this);
   }
 
   componentDidMount() {
     document.getElementById('createclassroomfields').focus();
   }
 
-  closeCreateClassroomPage() {
+  closeClassroomSettingsPage() {
     // browserHistory.push(this.props.previousPath);
     browserHistory.push('/');
+  }
+
+  goBackToClassroom() {
+    browserHistory.push(`/classroom/${this.props.classroom._id}`);
   }
 
   render() {
     return (
       <section className="sketch-list" aria-label="submissions list" tabIndex="0" role="main" id="createclassroomfields">
         <header className="sketch-list__header">
-          <h2 className="sketch-list__header-title">Create new classroom</h2>
-          <button className="sketch-list__exit-button" onClick={this.closeCreateClassroomPage}>
+          <h2 className="sketch-list__header-title">Classroom Settings</h2>
+          <button className="sketch-list__exit-button" onClick={this.goBackToClassroom}>
+            <InlineSVG src={leftArrow} alt="Go Back To Classroom" />
+          </button>
+          <button className="sketch-list__exit-button" onClick={this.closeClassroomSettingsPage}>
             <InlineSVG src={exitUrl} alt="Close Create Classroom Overlay" />
           </button>
         </header>
         <div className="sketches-table-container">
-          <CreateClassroomForm {...this.props} />
+          <ClassroomOwnerSettingsForm {...this.props} />
         </div>
       </section>
     );
   }
 }
 
-CreateClassroom.propTypes = {
+ClassroomOwnerSettings.propTypes = {
   // previousPath: PropTypes.string.isRequired,
+  classroom: {},
 };
 
-CreateClassroom.defaultProps = {
+ClassroomOwnerSettings.defaultProps = {
   classroom: {},
 };
 
 function mapStateToProps(state) {
   return {
-    // assignments: state.assignments
+    classroom: state.classroom,
   };
 }
 
@@ -112,4 +122,4 @@ export default reduxForm({
   /* validate: validateSettings,
   asyncValidate,
   asyncBlurFields: ['username', 'email', 'currentPassword'] */
-}, mapStateToProps, mapDispatchToProps)(CreateClassroom);
+}, mapStateToProps, mapDispatchToProps)(ClassroomOwnerSettings);

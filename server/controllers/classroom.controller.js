@@ -38,9 +38,9 @@ export function createClassroom(req, res) {
   }
 
   const classroom = new Classroom({
-    owners: [req.user._id],
+    owners: [{name:req.user.username,id:req.user._id}],
     members: [req.user._id],
-    isPrivate: false,
+    isPrivate: true,
   });
   classroom.save((saveErr) => {
     if (saveErr) {
@@ -104,7 +104,23 @@ export function getClassroom(req, res) {
 }
 
 export function deleteClassroom(req, res) {
-	res.send('Workin on this...');
+  console.log('delete classroom');
+  console.log(req);
+	//Project.findById(req.params.project_id, (findProjectErr, project) => {
+  Classroom.findById(req.params.classroom_id, (err, classroom) => {
+    if (!req.user/* || !classroom.user.equals(req.user._id) */) {
+      res.status(403).json({ success: false, message: 'Session does not match owner of project.' });
+      return;
+    }
+    //deleteFilesFromS3(project.files);
+    Classroom.remove({ _id: req.params.classroom_id }, (removeProjectError) => {
+      if (err) {
+        res.status(404).send({ message: 'Classroom with that id does not exist' });
+        return;
+      }
+      res.json({ success: true });
+    });
+  });
 }
 
 export function getClassrooms(req, res) {
@@ -112,10 +128,11 @@ export function getClassrooms(req, res) {
 
   if (req.user) {
     // console.log(req.user);
-    Classroom.find({}, {owners:{$elemMatch:{$eq:req.user._id}}}) // eslint-disable-line no-underscore-dangle
+    Classroom.find({}, {owners:{$elemMatch:{name:{$eq:req.user._id}   }}}) // eslint-disable-line no-underscore-dangle
       .sort('-createdAt')
       .select('name files id createdAt updatedAt')
       .exec((err, classrooms) => {
+        console.log(err);
         console.log(classrooms);
         res.json(classrooms);
       });

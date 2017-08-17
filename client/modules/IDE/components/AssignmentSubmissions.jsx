@@ -9,12 +9,14 @@ import * as ClassroomActions from '../actions/classroom';
 import * as ProjectActions from '../actions/project';
 import * as ToastActions from '../actions/toast';
 
+const leftArrow = require('../../../images/left-arrow.svg');
 const exitUrl = require('../../../images/exit.svg');
 const trashCan = require('../../../images/trash-can.svg');
 
 class AssignmentSubmissions extends React.Component {
   constructor(props) {
     super(props);
+    this.goBackToAssignmentList = this.goBackToAssignmentList.bind(this);
     this.closeSubmissionList = this.closeSubmissionList.bind(this);
     this.props.getSubmissions(this.props.classroom, this.props.assignment);
   }
@@ -28,6 +30,10 @@ class AssignmentSubmissions extends React.Component {
     browserHistory.push('/');
   }
 
+  goBackToAssignmentList() {
+    browserHistory.push(`/classroom/${this.props.classroom._id}`);
+  }
+
   render() {
     const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
     return (
@@ -36,6 +42,9 @@ class AssignmentSubmissions extends React.Component {
           <h2 className="sketch-list__header-title">Submissions for {this.props.assignment.name} in {this.props.classroom.name}</h2>
           <button className="sketch-list__exit-button" onClick={() => { browserHistory.push('/submitsketch'); /* this.submitAssignment(); */ }}>
             Submit Assignment
+          </button>
+          <button className="sketch-list__exit-button" onClick={this.goBackToAssignmentList}>
+            <InlineSVG src={leftArrow} alt="Go Back To Assignment List" />
           </button>
           <button className="sketch-list__exit-button" onClick={this.closeSubmissionList}>
             <InlineSVG src={exitUrl} alt="Close Submissions List Overlay" />

@@ -20,11 +20,27 @@ class AssignmentList extends React.Component {
     this.createNewAssignment = this.createNewAssignment.bind(this);
     this.openAssignment = this.openAssignment.bind(this);
     this.goBackToClassroomList = this.goBackToClassroomList.bind(this);
+    this.getInstructorUsernames = this.getInstructorUsernames.bind(this);
     // this.props.getAssignments(this.props.classroomid);
   }
 
   componentDidMount() {
     document.getElementById('assignmentlist').focus();
+  }
+
+  getInstructorUsernames() {
+    const instructors = this.props.classroom.owners;
+    if (!instructors) return '';
+    const firstInstructor = instructors[0].name;
+    const lastInstructor = instructors[instructors.length - 1].name;
+
+    let instructorsString = 'Instructors: ';
+    instructors.forEach((instructor) => {
+      console.log(instructor);
+    });
+
+    instructorsString += 'someone';
+    return instructorsString;
   }
 
   closeAssignmentList() {
@@ -40,7 +56,16 @@ class AssignmentList extends React.Component {
     this.props.classroom.assignments.push(assignment);
     this.props.saveClassroom(); */
 
-    browserHistory.push('/createassignment');
+    // browserHistory.push('/createassignment');
+
+    const assignment = {
+      name: 'New Assignment',
+      submissions: []
+    };
+    this.props.classroom.assignments.push(assignment);
+    this.props.saveClassroom();
+    this.props.setAssignment(assignment);
+    // browserHistory.push(`/assignment/${this.props.classroom._id}/${assignment._id}`);
   }
 
   openAssignment(assignment) {
@@ -53,13 +78,21 @@ class AssignmentList extends React.Component {
     browserHistory.push('/myclassrooms');
   }
 
+  openClassroomSettings() {
+    browserHistory.push(`/ownerclassroomsettings/${this.props.classroom._id}`);
+  }
+
   render() {
     return (
       <section className="sketch-list" aria-label="classroom list" tabIndex="0" role="main" id="assignmentlist">
         <header className="sketch-list__header">
-          <h2 className="sketch-list__header-title">Assignments in {this.props.classroom.name}</h2>
-          <button className="sketch-list__exit-button" onClick={() => { this.createNewAssignment(this.props.classroom._id); }}>
+          <h2 className="sketch-list__header-title">{this.props.classroom.name}</h2>
+          <h2 className="sketch-list__header-title">{this.getInstructorUsernames()}</h2>
+          <button className="sketch-list__exit-button" onClick={() => { this.createNewAssignment(); }}>
             Create new Assignment
+          </button>
+          <button className="sketch-list__exit-button" onClick={() => { this.openClassroomSettings(); }}>
+            Classroom Settings
           </button>
           <button className="sketch-list__exit-button" onClick={this.goBackToClassroomList}>
             <InlineSVG src={leftArrow} alt="Go Back To Classroom List" />
@@ -112,10 +145,14 @@ AssignmentList.propTypes = {
     createdAt: PropTypes.string.isRequired
   }), */
   setAssignment: PropTypes.func.isRequired,
-  /* saveClassroom: PropTypes.func.isRequired, */
+  saveClassroom: PropTypes.func.isRequired,
   classroom: PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.string,
+    owners: PropTypes.arrayOf(PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired
+    })).isRequired,
     assignments: PropTypes.arrayOf(PropTypes.shape({
       _id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,

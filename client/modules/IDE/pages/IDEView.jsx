@@ -33,8 +33,7 @@ import SketchList from '../components/SketchList';
 import ClassroomList from '../components/ClassroomList';
 import AssignmentList from '../components/AssignmentList';
 import AssignmentSubmissions from '../components/AssignmentSubmissions';
-import CreateClassroom from '../components/CreateClassroom';
-import CreateAssignment from '../components/CreateAssignment';
+import ClassroomOwnerSettings from '../components/ClassroomOwnerSettings';
 import SubmitSketch from '../components/SubmitSketch';
 import About from '../components/About';
 
@@ -440,22 +439,10 @@ class IDEView extends React.Component {
           }
         })()}
         {(() => { // eslint-disable-line
-          if (this.props.location.pathname.match('createclassroom')) {
+          if (this.props.location.pathname.match('ownerclassroomsettings/')) {
             return (
               <Overlay>
-                <CreateClassroom
-                  username={this.props.params.username}
-                  previousPath={this.props.ide.previousPath}
-                />
-              </Overlay>
-            );
-          }
-        })()}
-        {(() => { // eslint-disable-line
-          if (this.props.location.pathname.match('createassignment')) {
-            return (
-              <Overlay>
-                <CreateAssignment
+                <ClassroomOwnerSettings
                   username={this.props.params.username}
                   previousPath={this.props.ide.previousPath}
                 />

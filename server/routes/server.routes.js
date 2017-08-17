@@ -88,14 +88,18 @@ router.route('/submitsketch').get((req, res) => {
 });
 
 router.route('/classroom/:classroom_id').get((req, res) => {
-  console.log('check classroom exists?');
+  classroomExists(req.params.classroom_id, exists => (
+    exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
+  ));
+});
+
+router.route('/ownerclassroomsettings/:classroom_id').get((req, res) => {
   classroomExists(req.params.classroom_id, exists => (
     exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
   ));
 });
 
 router.route('/assignment/:classroom_id/:assignment_id').get((req, res) => {
-  console.log(req);
   assignmentExists(req.params.classroom_id, req.params.assignment_id, exists => (
     exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
   ));

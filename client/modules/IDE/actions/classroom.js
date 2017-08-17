@@ -52,7 +52,7 @@ export function getClassrooms(username) {
 
 export function deleteClassroom(id) {
   return (dispatch, getState) => {
-    axios.delete(`${ROOT_URL}/projects/${id}`, { withCredentials: true })
+    axios.delete(`${ROOT_URL}/classrooms/${id}`, { withCredentials: true })
       .then(() => {
         const state = getState();
         if (id === state.project.id) {
@@ -85,6 +85,8 @@ export function createNewClassroom() {
           type: ActionTypes.SET_CLASSROOM,
           classroom: response.data
         });
+        console.log(response.data);
+        browserHistory.push(`/classroom/${response.data._id}`);
         /* dispatch(setUnsavedChanges(false));
         dispatch(setProject(response.data));
         browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);

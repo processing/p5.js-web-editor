@@ -8,17 +8,18 @@ const assignmentSchema = new Schema({
   submissions: { type: [String] },
 }, { timestamps: true });
 
+const memberSchema = new Schema({
+  name: { type: String },
+  id: { type: Schema.Types.ObjectId },
+}, { timestamps: true });
+
 const classroomSchema = new Schema({
   name: { type: String, default: "New Classroom" },
-  owners: { type: [Schema.Types.ObjectId] },
+  owners: { type: [memberSchema] },
   members: { type: [Schema.Types.ObjectId] },
   isPrivate: { type: Boolean },
   assignments: { type: [assignmentSchema] },
-  _id: { type: String, default: shortid.generate } 
+  id: { type: String, default: shortid.generate } 
 }, { timestamps: true });
-
-classroomSchema.virtual('id').get(function getClassroomId() {
-  return this._id;
-});
 
 export default mongoose.model('Classroom', classroomSchema);
