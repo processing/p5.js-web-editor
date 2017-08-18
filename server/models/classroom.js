@@ -19,7 +19,8 @@ const classroomSchema = new Schema({
   members: { type: [Schema.Types.ObjectId] },
   isPrivate: { type: Boolean },
   assignments: { type: [assignmentSchema] },
-  id: { type: String, default: shortid.generate } 
+  id: { type: String, default: shortid.generate },
+  description: { type: String, default: '' } 
 }, { timestamps: true });
 
 export default mongoose.model('Classroom', classroomSchema);

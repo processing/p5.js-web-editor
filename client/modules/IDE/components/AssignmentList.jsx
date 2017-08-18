@@ -13,6 +13,8 @@ const leftArrow = require('../../../images/left-arrow.svg');
 const exitUrl = require('../../../images/exit.svg');
 const trashCan = require('../../../images/trash-can.svg');
 
+const humanizeList = require('humanize-list');
+
 class AssignmentList extends React.Component {
   constructor(props) {
     super(props);
@@ -31,16 +33,37 @@ class AssignmentList extends React.Component {
   getInstructorUsernames() {
     const instructors = this.props.classroom.owners;
     if (!instructors) return '';
-    const firstInstructor = instructors[0].name;
-    const lastInstructor = instructors[instructors.length - 1].name;
 
-    let instructorsString = 'Instructors: ';
+    return humanizeList(instructors);
+
+    /*
+
+    const nInstructors = instructors.length;
+    let instructorsString = '';
+    if (nInstructors === 1) {
+      instructorsString += 'Instructor: ';
+    } else {
+      instructorsString += 'Instructors: ';
+    }
     instructors.forEach((instructor) => {
-      console.log(instructor);
+      const i = instructors.indexOf(instructor);
+
+      if (i === 0 && nInstructors === 1) {
+        instructorsString += instructor;
+      } else if (i === nInstructors - 1) {
+        instructorsString += ' and ';
+        instructorsString += instructor;
+      } else {
+        if (i !== nInstructors - 2) {
+          instructorsString += ',';
+        }
+        instructorsString += ' ';
+        instructorsString += instructor;
+      }
     });
 
     instructorsString += 'someone';
-    return instructorsString;
+    return instructorsString;*/
   }
 
   closeAssignmentList() {
@@ -88,6 +111,7 @@ class AssignmentList extends React.Component {
         <header className="sketch-list__header">
           <h2 className="sketch-list__header-title">{this.props.classroom.name}</h2>
           <h2 className="sketch-list__header-title">{this.getInstructorUsernames()}</h2>
+          <h2 className="sketch-list__header-title">{this.props.classroom.description}</h2>
           <button className="sketch-list__exit-button" onClick={() => { this.createNewAssignment(); }}>
             Create new Assignment
           </button>
@@ -149,6 +173,7 @@ AssignmentList.propTypes = {
   classroom: PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.string,
+    description: PropTypes.string,
     owners: PropTypes.arrayOf(PropTypes.shape({
       _id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired
