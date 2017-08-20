@@ -34,7 +34,12 @@ class AssignmentList extends React.Component {
     const instructors = this.props.classroom.owners;
     if (!instructors) return '';
 
-    return humanizeList(instructors);
+    const instructorNames = [];
+    instructors.forEach((instructor) => {
+      instructorNames.push(instructor.name);
+    });
+
+    return humanizeList(instructorNames);
 
     /*
 

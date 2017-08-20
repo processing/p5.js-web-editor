@@ -60,7 +60,7 @@ export function deleteClassroom(id) {
           dispatch(setPreviousPath('/'));
         }
         dispatch({
-          type: ActionTypes.DELETE_PROJECT,
+          type: ActionTypes.DELETE_CLASSROOM,
           id
         });
       })

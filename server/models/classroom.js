@@ -11,16 +11,16 @@ const assignmentSchema = new Schema({
 const memberSchema = new Schema({
   name: { type: String },
   id: { type: Schema.Types.ObjectId },
-}, { timestamps: true });
+}, { timestamps: false });
 
 const classroomSchema = new Schema({
   name: { type: String, default: "New Classroom" },
-  owners: { type: [memberSchema] },
-  members: { type: [Schema.Types.ObjectId] },
+  owners: { type: [memberSchema], default: [] },
+  members: { type: [memberSchema], default: [] },
   isPrivate: { type: Boolean },
   assignments: { type: [assignmentSchema] },
   id: { type: String, default: shortid.generate },
-  description: { type: String, default: '' } 
+  description: { type: String, default: 'Add a description!' } 
 }, { timestamps: true });
 
 export default mongoose.model('Classroom', classroomSchema);

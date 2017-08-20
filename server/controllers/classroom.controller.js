@@ -7,8 +7,6 @@ import User from '../models/user';
 
 export function classroomExists(classroom_id, callback) {
   Classroom.findById(classroom_id, (findClassroomErr, classroom) => {
-    console.log(classroom_id);
-    console.log(classroom);
     classroom ? callback(true) : callback(false)
   });
 }
@@ -31,7 +29,6 @@ export function assignmentExists(classroom_id, assignment_id, callback) {
 
 export function createClassroom(req, res) {
 
-  // console.log(req.user);
   if (!req.user) {
     res.status(403).send({ success: false, message: 'Session does not match owner of project.' });
     return;
@@ -39,7 +36,7 @@ export function createClassroom(req, res) {
 
   const classroom = new Classroom({
     owners: [{name:req.user.username,id:req.user._id}],
-    members: [req.user._id],
+    members: [],
     isPrivate: true,
   });
   classroom.save((saveErr) => {
@@ -48,18 +45,13 @@ export function createClassroom(req, res) {
       res.json({ success: false });
       return;
     }
-    console.log('classroom saved');
-    console.log(classroom);
     res.json(classroom);
   });
 
 }
 
 export function updateClassroom(req, res) {
-  console.log(req);
-
 	Classroom.findById(req.params.classroom_id, (findClassroomErr, classroom) => {
-    console.log(classroom);
     // !!!!!!!! Need to check ownership of classroom here. !!!!!!!!
     /*if (!req.user || !classroom.user.equals(req.user._id)) {
       res.status(403).send({ success: false, message: 'Session does not match owner of project.' });
@@ -89,8 +81,6 @@ export function updateClassroom(req, res) {
 }
 
 export function getClassroom(req, res) {
-  console.log('getClassroom');
-
 	Classroom.findById(req.params.classroom_id)
     .populate('user', 'username')
     .exec((err, classroom) => {
@@ -98,14 +88,11 @@ export function getClassroom(req, res) {
         console.log('no classroom found...');
         return res.status(404).send({ message: 'Classroom with that id does not exist' });
       }
-      console.log('found classroom');
       return res.json(classroom);
     });
 }
 
 export function deleteClassroom(req, res) {
-  console.log('delete classroom');
-  console.log(req);
 	//Project.findById(req.params.project_id, (findProjectErr, project) => {
   Classroom.findById(req.params.classroom_id, (err, classroom) => {
     if (!req.user/* || !classroom.user.equals(req.user._id) */) {
@@ -124,17 +111,22 @@ export function deleteClassroom(req, res) {
 }
 
 export function getClassrooms(req, res) {
-  console.log('getClassrooms');
-
+  console.log(req.user);
   if (req.user) {
-    // console.log(req.user);
-    Classroom.find({}, {owners:{$elemMatch:{name:{$eq:req.user._id}   }}}) // eslint-disable-line no-underscore-dangle
+    Classroom.find({owners:{$elemMatch:{id:req.user._id}   }}) // eslint-disable-line no-underscore-dangle
       .sort('-createdAt')
-      .select('name files id createdAt updatedAt')
+      .select('name owners members id createdAt updatedAt')
       .exec((err, classrooms) => {
-        console.log(err);
-        console.log(classrooms);
-        res.json(classrooms);
+        if(err) {
+          console.log(err);
+          res.json(err);
+        } else {
+          console.log(classrooms);
+          classrooms.forEach((classroom) => {
+            console.log(classroom.owners);
+          });
+          res.json(classrooms);
+        }
       });
   } else {
     // could just move this to client side
@@ -156,8 +148,6 @@ export function downloadClassroomAsZip(req, res) {
 }
 
 export function getAssignmentProjects(req, res) {
-  console.log('getAssignmentProjects');
-
   Classroom.findById(req.params.classroom_id)
     .populate('user', 'username')
     .exec((err, classroom) => {
@@ -165,7 +155,6 @@ export function getAssignmentProjects(req, res) {
         console.log('no classroom found...');
         return res.status(404).send({ message: 'Classroom with that id does not exist' });
       }
-      console.log('found classroom');
       let foundAssignment = undefined;
       classroom.assignments.forEach((assignment) => {
         if(assignment.id === req.params.assignment_id) {
@@ -175,16 +164,13 @@ export function getAssignmentProjects(req, res) {
       if(foundAssignment) {
         let projectids = [];
         foundAssignment.submissions.forEach((submission) => {
-          console.log(submission);
           projectids.push(submission);
         });
-        console.log(projectids);
         Project.find({ 
           _id: {
             $in: projectids
           }
         }).exec((err, projects) => {
-          console.log(projects);
           res.json(projects);
         });
       } else {
