@@ -113,7 +113,12 @@ export function deleteClassroom(req, res) {
 export function getClassrooms(req, res) {
   console.log(req.user);
   if (req.user) {
-    Classroom.find({owners:{$elemMatch:{id:req.user._id}   }}) // eslint-disable-line no-underscore-dangle
+    Classroom.find(
+      {$or: [
+        {owners:{$elemMatch:{id:req.user._id}}},
+        {members:{$elemMatch:{id:req.user._id}}}
+      ]}
+    )
       .sort('-createdAt')
       .select('name owners members id createdAt updatedAt')
       .exec((err, classrooms) => {
