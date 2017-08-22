@@ -443,6 +443,7 @@ class IDEView extends React.Component {
             return (
               <Overlay>
                 <ClassroomOwnerSettings
+                  classroom={this.props.classroom}
                   username={this.props.params.username}
                   previousPath={this.props.ide.previousPath}
                 />

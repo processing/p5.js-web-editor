@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+/* import React, { PropTypes } from 'react';
 import axios from 'axios';
 import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
@@ -17,7 +17,7 @@ const trashCan = require('../../../images/trash-can.svg');
 
 function ClassroomOwnerSettingsForm(props) {
   const {
-    fields: { name, students },
+    fields: { name, description },
     handleSubmit,
     submitting,
     invalid,
@@ -35,6 +35,16 @@ function ClassroomOwnerSettingsForm(props) {
           {...domOnlyProps(name)}
         />
       </p>
+      <p className="form__field">
+        <label htmlFor="description" className="form__label">Description</label>
+        <input
+          className="form__input"
+          aria-label="description"
+          type="text"
+          id="description"
+          {...domOnlyProps(description)}
+        />
+      </p>
       <input type="submit" disabled={submitting || invalid || pristine} value="Save" aria-label="updateClassroom" />
     </form>
   );
@@ -42,7 +52,8 @@ function ClassroomOwnerSettingsForm(props) {
 
 ClassroomOwnerSettingsForm.propTypes = {
   fields: PropTypes.shape({
-    name: PropTypes.object.isRequired,
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired
   }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   updateClassroom: PropTypes.func.isRequired,
@@ -118,8 +129,100 @@ function mapDispatchToProps(dispatch) {
 
 export default reduxForm({
   form: 'updateAllSettings',
-  fields: ['name'],
-  /* validate: validateSettings,
-  asyncValidate,
-  asyncBlurFields: ['username', 'email', 'currentPassword'] */
-}, mapStateToProps, mapDispatchToProps)(ClassroomOwnerSettings);
+  fields: ['name', 'description'],
+  // validate: validateSettings,
+  // asyncValidate,
+  // asyncBlurFields: ['username', 'email', 'currentPassword']
+}, mapStateToProps, mapDispatchToProps)(ClassroomOwnerSettings);*/
+
+
+// //////////////////////////////////////////////////////////////
+
+
+import React, { PropTypes } from 'react';
+import InlineSVG from 'react-inlinesvg';
+import classNames from 'classnames';
+
+const leftArrow = require('../../../images/left-arrow.svg');
+const exitUrl = require('../../../images/exit.svg');
+const plusUrl = require('../../../images/plus.svg');
+const minusUrl = require('../../../images/minus.svg');
+const beepUrl = require('../../../sounds/audioAlert.mp3');
+// import { debounce } from 'lodash';
+
+class ClassroomOwnerSettingsForm extends React.Component {
+  constructor(props) {
+    super(props);
+    console.log('this is not a useless contructor');
+  }
+
+  handleUpdateFont(event) {
+    let value = parseInt(event.target.value, 10);
+    if (isNaN(value)) {
+      value = 16;
+    }
+    // this.props.setFontSize(value);
+  }
+
+  render() {
+    const beep = new Audio(beepUrl);
+
+    return (
+      <section className="sketch-list" aria-label="submissions list" tabIndex="0" role="main" id="submissionlist">
+        <div className="preferences__heading">
+          <h2 className="preferences__title">Classroom Settings</h2>
+          <button
+            className="preferences__exit-button"
+            onClick={console.log}
+            title="exit"
+            aria-label="exit preferences"
+          >
+            <InlineSVG src={exitUrl} alt="Exit Classroom Settings" />
+          </button>
+          <button
+            className="preferences__exit-button"
+            onClick={console.log}
+            title="back"
+            aria-label="back to classroom"
+          >
+            <InlineSVG src={leftArrow} alt="Back To Classroom" />
+          </button>
+        </div>
+        <input
+          type="text"
+          onChange={e => console.log(e)}
+          aria-label="TODO: LABEL"
+          name="TODO: NAME"
+          id="lint-warning-off"
+          className="TODO:CLASSNAME"
+          value={this.props.classroom.name}
+        />
+        <input
+          type="text"
+          onChange={e => console.log(e)}
+          aria-label="TODO: LABEL"
+          name="TODO: NAME"
+          id="lint-warning-off"
+          className="TODO:CLASSNAME"
+          value={this.props.classroom.description}
+        />
+        <input type="submit" disabled={false} value="Save" aria-label="updateClassroom" />
+      </section>
+    );
+  }
+}
+
+ClassroomOwnerSettingsForm.propTypes = {
+  classroom: PropTypes.shape({
+    _id: PropTypes.string,
+    name: PropTypes.string,
+    description: PropTypes.string.isRequired,
+    assignments: PropTypes.arrayOf(PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      createdAt: PropTypes.string.isRequired
+    })).isRequired
+  }).isRequired,
+};
+
+export default ClassroomOwnerSettingsForm;
