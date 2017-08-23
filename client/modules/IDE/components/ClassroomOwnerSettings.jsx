@@ -140,6 +140,8 @@ export default reduxForm({
 
 
 import React, { PropTypes } from 'react';
+import ReactDOM from 'react-dom';
+import { WithContext as ReactTags } from 'react-tag-input';
 import InlineSVG from 'react-inlinesvg';
 import classNames from 'classnames';
 
@@ -153,7 +155,40 @@ const beepUrl = require('../../../sounds/audioAlert.mp3');
 class ClassroomOwnerSettingsForm extends React.Component {
   constructor(props) {
     super(props);
-    console.log('this is not a useless contructor');
+
+    this.state = {
+      tags: [{ id: 1, text: 'instructor1' }, { id: 2, text: 'instructor2' }],
+      suggestions: []
+    };
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleAddition = this.handleAddition.bind(this);
+    this.handleDrag = this.handleDrag.bind(this);
+  }
+
+  handleDelete(i) {
+    const tags = this.state.tags;
+    tags.splice(i, 1);
+    this.setState({ tags });
+  }
+
+  handleAddition(tag) {
+    const tags = this.state.tags;
+    tags.push({
+      id: tags.length + 1,
+      text: tag
+    });
+    this.setState({ tags });
+  }
+
+  handleDrag(tag, currPos, newPos) {
+    const tags = this.state.tags;
+
+    // mutate array
+    tags.splice(currPos, 1);
+    tags.splice(newPos, 0, tag);
+
+    // re-render
+    this.setState({ tags });
   }
 
   handleUpdateFont(event) {
@@ -166,6 +201,7 @@ class ClassroomOwnerSettingsForm extends React.Component {
 
   render() {
     const beep = new Audio(beepUrl);
+    const { tags, suggestions } = this.state;
 
     return (
       <section className="sketch-list" aria-label="submissions list" tabIndex="0" role="main" id="submissionlist">
@@ -206,6 +242,15 @@ class ClassroomOwnerSettingsForm extends React.Component {
           className="TODO:CLASSNAME"
           value={this.props.classroom.description}
         />
+        <div>
+          <ReactTags
+            tags={tags}
+            suggestions={suggestions}
+            handleDelete={this.handleDelete}
+            handleAddition={this.handleAddition}
+            handleDrag={this.handleDrag}
+          />
+        </div>
         <input type="submit" disabled={false} value="Save" aria-label="updateClassroom" />
       </section>
     );

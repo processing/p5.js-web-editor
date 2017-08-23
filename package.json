@@ -101,6 +101,7 @@
     "react-redux": "^4.4.5",
     "react-router": "^2.6.0",
     "react-split-pane": "^0.1.44",
+    "react-tag-input": "^4.7.2",
     "redux": "^3.5.2",
     "redux-devtools": "^3.3.1",
     "redux-devtools-dock-monitor": "^1.1.1",
