@@ -157,51 +157,80 @@ class ClassroomOwnerSettingsForm extends React.Component {
     super(props);
 
     this.state = {
-      tags: [{ id: 1, text: 'instructor1' }, { id: 2, text: 'instructor2' }],
-      suggestions: []
+      currentID: 0,
+      instructorNames: [],
+      studentNames: [],
+      suggestions: [],
+      newName: '',
+      newDescription: ''
     };
-    this.handleDelete = this.handleDelete.bind(this);
-    this.handleAddition = this.handleAddition.bind(this);
-    this.handleDrag = this.handleDrag.bind(this);
+
+    this.handleUpdateClassroom = this.handleUpdateClassroom.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+    this.handleInstructorDelete = this.handleInstructorDelete.bind(this);
+    this.handleInstructorAddition = this.handleInstructorAddition.bind(this);
+    this.handleStudentDelete = this.handleStudentDelete.bind(this);
+    this.handleStudentAddition = this.handleStudentAddition.bind(this);
   }
 
-  handleDelete(i) {
-    const tags = this.state.tags;
-    tags.splice(i, 1);
-    this.setState({ tags });
+  componentDidUpdate(prevProps) {
+    console.log(this.props.classroom.members);
+    console.log(this.props.classroom.owners);
+    this.state.newName = this.props.classroom.name;
+    this.state.newDescription = this.props.classroom.description;
+    this.state.instructorNames = [];
+    this.state.instructorNames.push({
+      id: 1,
+      text: 'instructor1'
+    });
   }
 
-  handleAddition(tag) {
-    const tags = this.state.tags;
-    tags.push({
-      id: tags.length + 1,
+  handleUpdateClassroom(e) {
+    alert(this.state);
+  }
+
+  handleNameChange(event) {
+    this.setState({ newName: event.target.value });
+  }
+
+  handleDescriptionChange(event) {
+    this.setState({ newDescription: event.target.value });
+  }
+
+  handleInstructorDelete(i) {
+    const instructorNames = this.state.instructorNames;
+    instructorNames.splice(i, 1);
+    this.setState({ instructorNames });
+  }
+
+  handleInstructorAddition(tag) {
+    const instructorNames = this.state.instructorNames;
+    instructorNames.push({
+      id: instructorNames.length + 1,
       text: tag
     });
-    this.setState({ tags });
+    this.setState({ instructorNames });
   }
 
-  handleDrag(tag, currPos, newPos) {
-    const tags = this.state.tags;
-
-    // mutate array
-    tags.splice(currPos, 1);
-    tags.splice(newPos, 0, tag);
-
-    // re-render
-    this.setState({ tags });
+  handleStudentDelete(i) {
+    const studentNames = this.state.studentNames;
+    studentNames.splice(i, 1);
+    this.setState({ studentNames });
   }
 
-  handleUpdateFont(event) {
-    let value = parseInt(event.target.value, 10);
-    if (isNaN(value)) {
-      value = 16;
-    }
-    // this.props.setFontSize(value);
+  handleStudentAddition(tag) {
+    const studentNames = this.state.studentNames;
+    studentNames.push({
+      id: studentNames.length + 1,
+      text: tag
+    });
+    this.setState({ studentNames });
   }
 
   render() {
     const beep = new Audio(beepUrl);
-    const { tags, suggestions } = this.state;
+    const { instructorNames, studentNames } = this.state;
 
     return (
       <section className="sketch-list" aria-label="submissions list" tabIndex="0" role="main" id="submissionlist">
@@ -224,34 +253,36 @@ class ClassroomOwnerSettingsForm extends React.Component {
             <InlineSVG src={leftArrow} alt="Back To Classroom" />
           </button>
         </div>
-        <input
-          type="text"
-          onChange={e => console.log(e)}
-          aria-label="TODO: LABEL"
-          name="TODO: NAME"
-          id="lint-warning-off"
-          className="TODO:CLASSNAME"
-          value={this.props.classroom.name}
-        />
-        <input
-          type="text"
-          onChange={e => console.log(e)}
-          aria-label="TODO: LABEL"
-          name="TODO: NAME"
-          id="lint-warning-off"
-          className="TODO:CLASSNAME"
-          value={this.props.classroom.description}
-        />
-        <div>
-          <ReactTags
-            tags={tags}
-            suggestions={suggestions}
-            handleDelete={this.handleDelete}
-            handleAddition={this.handleAddition}
-            handleDrag={this.handleDrag}
+        <form>
+          Name:
+          <input
+            type="text"
+            value={this.state.newName}
+            onChange={this.handleNameChange}
           />
-        </div>
-        <input type="submit" disabled={false} value="Save" aria-label="updateClassroom" />
+          <input
+            type="text"
+            value={this.state.newDescription}
+            onChange={this.handleDescriptionChange}
+          />
+          <div>
+            <ReactTags
+              tags={instructorNames}
+              handleDelete={this.handleInstructorDelete}
+              handleAddition={this.handleInstructorAddition}
+              placeholder={'Add instructor'}
+            />
+          </div>
+          <div>
+            <ReactTags
+              tags={studentNames}
+              handleDelete={this.handleStudentDelete}
+              handleAddition={this.handleStudentAddition}
+              placeholder={'Add student'}
+            />
+          </div>
+          <input type="button" value="Update" onClick={this.handleUpdateClassroom} />
+        </form>
       </section>
     );
   }
@@ -266,6 +297,14 @@ ClassroomOwnerSettingsForm.propTypes = {
       _id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       createdAt: PropTypes.string.isRequired
+    })).isRequired,
+    owners: PropTypes.arrayOf(PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired
+    })).isRequired,
+    members: PropTypes.arrayOf(PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired
     })).isRequired
   }).isRequired,
 };
