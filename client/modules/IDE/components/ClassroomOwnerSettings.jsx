@@ -140,10 +140,14 @@ export default reduxForm({
 
 
 import React, { PropTypes } from 'react';
+import axios from 'axios';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import ReactDOM from 'react-dom';
 import { WithContext as ReactTags } from 'react-tag-input';
 import InlineSVG from 'react-inlinesvg';
 import classNames from 'classnames';
+import * as ClassroomActions from '../actions/classroom';
 
 const leftArrow = require('../../../images/left-arrow.svg');
 const exitUrl = require('../../../images/exit.svg');
@@ -174,20 +178,48 @@ class ClassroomOwnerSettingsForm extends React.Component {
     this.handleStudentAddition = this.handleStudentAddition.bind(this);
   }
 
-  componentDidUpdate(prevProps) {
-    console.log(this.props.classroom.members);
-    console.log(this.props.classroom.owners);
-    this.state.newName = this.props.classroom.name;
-    this.state.newDescription = this.props.classroom.description;
+  componentWillUpdate(nextProps) {
+    if (!nextProps.classroom.owners) return;
+
+    this.state.newName = nextProps.classroom.name;
+    this.state.newDescription = nextProps.classroom.description;
+
     this.state.instructorNames = [];
-    this.state.instructorNames.push({
-      id: 1,
-      text: 'instructor1'
+    nextProps.classroom.owners.forEach((owner) => {
+      this.state.instructorNames.push({
+        id: this.state.instructorNames.length + 1,
+        text: owner.name
+      });
+    });
+
+    this.state.studentNames = [];
+    nextProps.classroom.members.forEach((member) => {
+      this.state.studentNames.push({
+        id: this.state.studentNames.length + 1,
+        text: member.name
+      });
     });
   }
 
   handleUpdateClassroom(e) {
-    alert(this.state);
+    this.props.classroom.name = this.state.newName;
+    this.props.classroom.description = this.state.newDescription;
+
+    this.props.classroom.owners = [];
+    this.state.instructorNames.forEach((instructorName) => {
+      this.props.classroom.owners.push({
+        name: instructorName.text
+      });
+    });
+
+    this.props.classroom.members = [];
+    this.state.studentNames.forEach((studentName) => {
+      this.props.classroom.members.push({
+        name: studentName.text
+      });
+    });
+
+    this.props.updateClassroom();
   }
 
   handleNameChange(event) {
@@ -260,12 +292,14 @@ class ClassroomOwnerSettingsForm extends React.Component {
             value={this.state.newName}
             onChange={this.handleNameChange}
           />
+          Description:
           <input
             type="text"
             value={this.state.newDescription}
             onChange={this.handleDescriptionChange}
           />
           <div>
+            Instructors:
             <ReactTags
               tags={instructorNames}
               handleDelete={this.handleInstructorDelete}
@@ -274,6 +308,7 @@ class ClassroomOwnerSettingsForm extends React.Component {
             />
           </div>
           <div>
+            Students:
             <ReactTags
               tags={studentNames}
               handleDelete={this.handleStudentDelete}
@@ -307,6 +342,17 @@ ClassroomOwnerSettingsForm.propTypes = {
       name: PropTypes.string.isRequired
     })).isRequired
   }).isRequired,
+  updateClassroom: PropTypes.func.isRequired,
 };
 
-export default ClassroomOwnerSettingsForm;
+ClassroomOwnerSettingsForm.defaultProps = {};
+
+function mapStateToProps(state) {
+  return {};
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(Object.assign({}, ClassroomActions), dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ClassroomOwnerSettingsForm);

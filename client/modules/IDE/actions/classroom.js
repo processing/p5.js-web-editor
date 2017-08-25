@@ -211,9 +211,11 @@ export function setAssignment(assignment) {
   };
 }
 
-export function updateClassroom(formParams) {
+export function updateClassroom() {
   return (dispatch, getState) => {
     const state = getState();
+    const formParams = Object.assign({}, state.classroom);
+    console.log(formParams);
     return axios.put(`${ROOT_URL}/classrooms/${state.classroom._id}`, formParams, { withCredentials: true })
       .then((response) => {
         dispatch(setUnsavedChanges(false));

@@ -98,7 +98,6 @@ class AssignmentList extends React.Component {
 
   openAssignment(assignment) {
     // this.props.assignment = assignment;
-    this.props.setAssignment(assignment);
     browserHistory.push(`/assignment/${this.props.classroom._id}/${assignment._id}`);
   }
 
@@ -107,6 +106,7 @@ class AssignmentList extends React.Component {
   }
 
   openClassroomSettings() {
+    this.props.getClassroom(this.props.classroom._id);
     browserHistory.push(`/ownerclassroomsettings/${this.props.classroom._id}`);
   }
 
@@ -175,6 +175,7 @@ AssignmentList.propTypes = {
   }), */
   setAssignment: PropTypes.func.isRequired,
   saveClassroom: PropTypes.func.isRequired,
+  getClassroom: PropTypes.func.isRequired,
   classroom: PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.string,
