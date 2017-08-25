@@ -98,6 +98,7 @@ class AssignmentList extends React.Component {
 
   openAssignment(assignment) {
     // this.props.assignment = assignment;
+    this.props.setAssignment(assignment);
     browserHistory.push(`/assignment/${this.props.classroom._id}/${assignment._id}`);
   }
 

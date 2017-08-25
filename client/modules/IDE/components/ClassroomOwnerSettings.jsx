@@ -147,6 +147,7 @@ import ReactDOM from 'react-dom';
 import { WithContext as ReactTags } from 'react-tag-input';
 import InlineSVG from 'react-inlinesvg';
 import classNames from 'classnames';
+import { Link, browserHistory } from 'react-router';
 import * as ClassroomActions from '../actions/classroom';
 
 const leftArrow = require('../../../images/left-arrow.svg');
@@ -168,6 +169,9 @@ class ClassroomOwnerSettingsForm extends React.Component {
       newName: '',
       newDescription: ''
     };
+
+    this.closeClassroomSettingsPage = this.closeClassroomSettingsPage.bind(this);
+    this.goBackToClassroom = this.goBackToClassroom.bind(this);
 
     this.handleUpdateClassroom = this.handleUpdateClassroom.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -199,6 +203,15 @@ class ClassroomOwnerSettingsForm extends React.Component {
         text: member.name
       });
     });
+  }
+
+  closeClassroomSettingsPage() {
+    // browserHistory.push(this.props.previousPath);
+    browserHistory.push('/');
+  }
+
+  goBackToClassroom() {
+    browserHistory.push(`/classroom/${this.props.classroom._id}`);
   }
 
   handleUpdateClassroom(e) {
@@ -270,19 +283,19 @@ class ClassroomOwnerSettingsForm extends React.Component {
           <h2 className="preferences__title">Classroom Settings</h2>
           <button
             className="preferences__exit-button"
-            onClick={console.log}
-            title="exit"
-            aria-label="exit preferences"
-          >
-            <InlineSVG src={exitUrl} alt="Exit Classroom Settings" />
-          </button>
-          <button
-            className="preferences__exit-button"
-            onClick={console.log}
+            onClick={this.goBackToClassroom}
             title="back"
             aria-label="back to classroom"
           >
             <InlineSVG src={leftArrow} alt="Back To Classroom" />
+          </button>
+          <button
+            className="preferences__exit-button"
+            onClick={this.closeClassroomSettingsPage}
+            title="exit"
+            aria-label="exit preferences"
+          >
+            <InlineSVG src={exitUrl} alt="Exit Classroom Settings" />
           </button>
         </div>
         <form>

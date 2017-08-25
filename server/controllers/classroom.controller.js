@@ -115,8 +115,8 @@ export function getClassrooms(req, res) {
   if (req.user) {
     Classroom.find(
       {$or: [
-        {owners:{$elemMatch:{id:req.user._id}}},
-        {members:{$elemMatch:{id:req.user._id}}}
+        {owners:{$elemMatch:{name:req.user.username}}},
+        {members:{$elemMatch:{name:req.user.username}}}
       ]}
     )
       .sort('-createdAt')

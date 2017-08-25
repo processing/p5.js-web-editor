@@ -36,6 +36,7 @@ class AssignmentSubmissions extends React.Component {
 
   render() {
     const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
+    console.log(this.props.assignment);
     return (
       <section className="sketch-list" aria-label="submissions list" tabIndex="0" role="main" id="submissionlist">
         <header className="sketch-list__header">
