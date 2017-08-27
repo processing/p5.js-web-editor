@@ -3,9 +3,16 @@ import shortid from 'shortid';
 
 const Schema = mongoose.Schema;
 
+const submissionSchema = new Schema({
+  name: { type: String },
+  id: { type: String },
+  username: { type: String }
+}, {timestamps: true});
+
 const assignmentSchema = new Schema({
-  name: { type: String, default: 'sketch.js' },
-  submissions: { type: [String] },
+  name: { type: String, default: 'New Assignment' },
+  submissions: { type: [submissionSchema], default: [] },
+  description: { type: String, default: 'Add a description!' } 
 }, { timestamps: true });
 
 const memberSchema = new Schema({

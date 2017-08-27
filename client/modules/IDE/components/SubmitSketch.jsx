@@ -26,14 +26,19 @@ class SubmitSketch extends React.Component {
     document.getElementById('submitsketch').focus();
   }
 
-  submitSketch(sketchID) {
+  submitSketch(sketch) {
     this.props.classroom.assignments.forEach((assignment) => {
       if (assignment.name === this.props.assignment.name) {
-        assignment.submissions.push(sketchID);
+        assignment.submissions.push({
+          id: sketch.id,
+          name: sketch.name,
+          user: this.props.username
+        });
+        console.log(assignment.submissions);
       }
     });
-    this.props.saveClassroom();
     browserHistory.push(this.props.previousPath);
+    this.props.saveClassroom();
   }
 
   closeSumbitSketchList() {
@@ -66,7 +71,7 @@ class SubmitSketch extends React.Component {
                 <tr 
                   className="sketches-table__row visibility-toggle"
                   key={sketch.id}
-                  onClick={() => { this.submitSketch(sketch.id); }}
+                  onClick={() => { this.submitSketch(sketch); }}
                 >
                   <td className="sketch-list__trash-column">
                   {(() => { // eslint-disable-line

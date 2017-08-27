@@ -31,8 +31,7 @@ import { getHTMLFile } from '../reducers/files';
 import Overlay from '../../App/components/Overlay';
 import SketchList from '../components/SketchList';
 import ClassroomList from '../components/ClassroomList';
-import AssignmentList from '../components/AssignmentList';
-import AssignmentSubmissions from '../components/AssignmentSubmissions';
+import ClassroomView from '../components/ClassroomView';
 import ClassroomOwnerSettings from '../components/ClassroomOwnerSettings';
 import SubmitSketch from '../components/SubmitSketch';
 import About from '../components/About';
@@ -479,19 +478,7 @@ class IDEView extends React.Component {
           if (this.props.location.pathname.match('/classroom')) {
             return (
               <Overlay>
-                <AssignmentList
-                  username={this.props.params.username}
-                  previousPath={this.props.ide.previousPath}
-                />
-              </Overlay>
-            );
-          }
-        })()}
-        {(() => { // eslint-disable-line
-          if (this.props.location.pathname.match('/assignment')) {
-            return (
-              <Overlay>
-                <AssignmentSubmissions
+                <ClassroomView
                   username={this.props.params.username}
                   previousPath={this.props.ide.previousPath}
                 />

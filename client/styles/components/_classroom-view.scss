@@ -1,0 +1,52 @@
+.assignment-list {
+  @extend %modal;
+  display: flex;
+  flex-wrap: wrap;
+  flex-flow: column;
+  width: #{1000 / $base-font-size}rem;
+  height: 80%;
+  outline: none;
+}
+
+.assignment-list__header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.assignment-list__header-title {  
+  padding: #{40 / $base-font-size}rem #{16 / $base-font-size}rem #{12 / $base-font-size}rem #{21 / $base-font-size}rem;
+}
+
+.sketches-table-container {
+  flex: 1 0 0%;
+  overflow-y: scroll;
+}
+
+.assignment-list__exit-button {
+  @include themify() {
+    @extend %icon;
+  }
+  margin: #{12 / $base-font-size}rem #{16 / $base-font-size}rem;
+}
+
+.visibility-toggle .assignment-list__trash-button {
+  @extend %hidden-element;
+  width:#{20 / $base-font-size}rem;
+  height:#{20 / $base-font-size}rem;
+}
+
+.visibility-toggle:hover .assignment-list__trash-button {
+   @include themify() {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    position: initial;
+    left: 0;
+    top: 0;
+      & g {
+        opacity: 1;
+        fill: getThemifyVariable('icon-hover-color');
+      }
+  }
+}

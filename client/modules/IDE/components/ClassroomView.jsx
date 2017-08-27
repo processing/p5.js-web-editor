@@ -15,12 +15,12 @@ const trashCan = require('../../../images/trash-can.svg');
 
 const humanizeList = require('humanize-list');
 
-class AssignmentList extends React.Component {
+class ClassroomView extends React.Component {
   constructor(props) {
     super(props);
-    this.closeAssignmentList = this.closeAssignmentList.bind(this);
+    this.closeClassroomView = this.closeClassroomView.bind(this);
     this.createNewAssignment = this.createNewAssignment.bind(this);
-    this.openAssignment = this.openAssignment.bind(this);
+    this.goToAssignmentSubmissionPage = this.goToAssignmentSubmissionPage.bind(this);
     this.goBackToClassroomList = this.goBackToClassroomList.bind(this);
     this.getInstructorUsernames = this.getInstructorUsernames.bind(this);
     // this.props.getAssignments(this.props.classroomid);
@@ -40,38 +40,9 @@ class AssignmentList extends React.Component {
     });
 
     return humanizeList(instructorNames);
-
-    /*
-
-    const nInstructors = instructors.length;
-    let instructorsString = '';
-    if (nInstructors === 1) {
-      instructorsString += 'Instructor: ';
-    } else {
-      instructorsString += 'Instructors: ';
-    }
-    instructors.forEach((instructor) => {
-      const i = instructors.indexOf(instructor);
-
-      if (i === 0 && nInstructors === 1) {
-        instructorsString += instructor;
-      } else if (i === nInstructors - 1) {
-        instructorsString += ' and ';
-        instructorsString += instructor;
-      } else {
-        if (i !== nInstructors - 2) {
-          instructorsString += ',';
-        }
-        instructorsString += ' ';
-        instructorsString += instructor;
-      }
-    });
-
-    instructorsString += 'someone';
-    return instructorsString;*/
   }
 
-  closeAssignmentList() {
+  closeClassroomView() {
     // browserHistory.push(this.props.previousPath);
     browserHistory.push('/');
   }
@@ -96,10 +67,11 @@ class AssignmentList extends React.Component {
     // browserHistory.push(`/assignment/${this.props.classroom._id}/${assignment._id}`);
   }
 
-  openAssignment(assignment) {
+  goToAssignmentSubmissionPage(assignment) {
     // this.props.assignment = assignment;
     this.props.setAssignment(assignment);
-    browserHistory.push(`/assignment/${this.props.classroom._id}/${assignment._id}`);
+    browserHistory.push('/submitsketch');
+    // browserHistory.push(`/assignment/${this.props.classroom._id}/${assignment._id}`);
   }
 
   goBackToClassroomList() {
@@ -112,57 +84,53 @@ class AssignmentList extends React.Component {
   }
 
   render() {
+    console.log(this.props.classroom);
     return (
-      <section className="sketch-list" aria-label="classroom list" tabIndex="0" role="main" id="assignmentlist">
-        <header className="sketch-list__header">
-          <h2 className="sketch-list__header-title">{this.props.classroom.name}</h2>
-          <h2 className="sketch-list__header-title">{this.getInstructorUsernames()}</h2>
-          <h2 className="sketch-list__header-title">{this.props.classroom.description}</h2>
-          <button className="sketch-list__exit-button" onClick={() => { this.createNewAssignment(); }}>
+      <section className="assignment-list" aria-label="classroom list" tabIndex="0" role="main" id="assignmentlist">
+        <header className="assignment-list__header">
+          <h2 className="assignment-list__header-title">{this.props.classroom.name}</h2>
+          <h2 className="assignment-list__header-title">{this.getInstructorUsernames()}</h2>
+          <h2 className="assignment-list__header-title">{this.props.classroom.description}</h2>
+          <button className="assignment-list__exit-button" onClick={() => { this.createNewAssignment(); }}>
             Create new Assignment
           </button>
-          <button className="sketch-list__exit-button" onClick={() => { this.openClassroomSettings(); }}>
+          <button className="assignment-list__exit-button" onClick={() => { this.openClassroomSettings(); }}>
             Classroom Settings
           </button>
-          <button className="sketch-list__exit-button" onClick={this.goBackToClassroomList}>
+          <button className="assignment-list__exit-button" onClick={this.goBackToClassroomList}>
             <InlineSVG src={leftArrow} alt="Go Back To Classroom List" />
           </button>
-          <button className="sketch-list__exit-button" onClick={this.closeAssignmentList}>
+          <button className="assignment-list__exit-button" onClick={this.closeClassroomView}>
             <InlineSVG src={exitUrl} alt="Close Assignments List Overlay" />
           </button>
         </header>
-        <div className="sketches-table-container">
-          <table className="sketches-table" summary="table containing all assignments in this classroom">
-            <thead>
-              <tr>
-                <th className="sketch-list__trash-column" scope="col"></th>
-                <th scope="col">Assignment Name</th>
-                <th scope="col">Date created</th>
-                <th scope="col">Date updated</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.props.classroom.assignments.map(assignment =>
-                // eslint-disable-next-line
-                <tr
-                  className="sketches-table__row visibility-toggle"
-                  key={assignment._id}
-                  onClick={() => this.openAssignment(assignment)}
-                >
-                  <td className="sketch-list__trash-column"></td>
-                  <th scope="row"><Link to={`/assignment/${assignment._id}`}>{assignment.name}</Link></th>
-                  <td>{moment(assignment.createdAt).format('MMM D, YYYY h:mm A')}</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+        <div className="assignments-container">
+          {this.props.classroom.assignments.map(assignment =>
+            <div key={assignment._id} className="assignment-container">
+              <div className="assignment-name">{assignment.name}</div>
+              <div className="assignment-description">{assignment.description}</div>
+              <button
+                className="assignment-submit-link"
+                onClick={() => { this.goToAssignmentSubmissionPage(assignment); }}
+              >
+                Submit Sketch
+              </button>
+              <div key={assignment._id} className="assignment-submissions">
+                {assignment.submissions.map(sketch =>
+                  <div key={sketch._id} className="assignment-submission">
+                    <Link to={`/username/sketches/${sketch.id}`}>{sketch.name}</Link>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </section>
     );
   }
 }
 
-AssignmentList.propTypes = {
+ClassroomView.propTypes = {
   // getAssignments: PropTypes.func.isRequired,
   /* assignments: PropTypes.arrayOf(PropTypes.shape({
     _id: PropTypes.string.isRequired,
@@ -188,13 +156,17 @@ AssignmentList.propTypes = {
     assignments: PropTypes.arrayOf(PropTypes.shape({
       _id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
-      createdAt: PropTypes.string.isRequired
-    })).isRequired
+      createdAt: PropTypes.string.isRequired,
+      submissions: PropTypes.arrayOf(PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        id: PropTypes.string.isRequired,
+        user: PropTypes.string.isRequired
+      })).isRequired,
+    })).isRequired,
   }).isRequired,
-  // previousPath: PropTypes.string.isRequired
 };
 
-AssignmentList.defaultProps = {
+ClassroomView.defaultProps = {
   classroom: {},
   assignment: undefined
 };
@@ -210,4 +182,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({}, ClassroomActions, ProjectActions, ToastActions), dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AssignmentList);
+export default connect(mapStateToProps, mapDispatchToProps)(ClassroomView);
