@@ -23,6 +23,7 @@ class ClassroomView extends React.Component {
     this.goToAssignmentSubmissionPage = this.goToAssignmentSubmissionPage.bind(this);
     this.goBackToClassroomList = this.goBackToClassroomList.bind(this);
     this.getInstructorUsernames = this.getInstructorUsernames.bind(this);
+    this.openSketch = this.openSketch.bind(this);
     // this.props.getAssignments(this.props.classroomid);
   }
 
@@ -39,7 +40,12 @@ class ClassroomView extends React.Component {
       instructorNames.push(instructor.name);
     });
 
-    return humanizeList(instructorNames);
+    let instructorsString = 'Instructors: ';
+    if (instructorNames.length === 1) {
+      instructorsString = 'Instructor: ';
+    }
+    instructorsString += humanizeList(instructorNames);
+    return instructorsString;
   }
 
   closeClassroomView() {
@@ -83,17 +89,15 @@ class ClassroomView extends React.Component {
     browserHistory.push(`/ownerclassroomsettings/${this.props.classroom._id}`);
   }
 
+  openSketch(sketch) {
+    browserHistory.push(`/username/sketches/${sketch.id}`);
+  }
+
   render() {
-    console.log(this.props.classroom);
     return (
       <section className="assignment-list" aria-label="classroom list" tabIndex="0" role="main" id="assignmentlist">
         <header className="assignment-list__header">
           <h2 className="assignment-list__header-title">{this.props.classroom.name}</h2>
-          <h2 className="assignment-list__header-title">{this.getInstructorUsernames()}</h2>
-          <h2 className="assignment-list__header-title">{this.props.classroom.description}</h2>
-          <button className="assignment-list__exit-button" onClick={() => { this.createNewAssignment(); }}>
-            Create new Assignment
-          </button>
           <button className="assignment-list__exit-button" onClick={() => { this.openClassroomSettings(); }}>
             Classroom Settings
           </button>
@@ -104,28 +108,37 @@ class ClassroomView extends React.Component {
             <InlineSVG src={exitUrl} alt="Close Assignments List Overlay" />
           </button>
         </header>
-        <div className="assignments-container">
+        <div className="assignment-list__classroom-info">
+          <h3 className="assignment-list__instructors">{this.getInstructorUsernames()}</h3>
+          <h3 className="assignment-list__description">{this.props.classroom.description}</h3>
+        </div>
+        <div className="assignment-list__assignments-container">
           {this.props.classroom.assignments.map(assignment =>
-            <div key={assignment._id} className="assignment-container">
-              <div className="assignment-name">{assignment.name}</div>
-              <div className="assignment-description">{assignment.description}</div>
+            <div key={assignment._id} className="assignment-list__assignment-container">
+              <h3 className="assignment-list__assignment-name">{assignment.name}</h3>
+              <h3 className="assignment-list__assignment-description">{assignment.description}</h3>
+              <hr className="assignment-list__hr" />
               <button
-                className="assignment-submit-link"
+                className="assignment-list__assignment-submit-link"
                 onClick={() => { this.goToAssignmentSubmissionPage(assignment); }}
               >
                 Submit Sketch
               </button>
-              <div key={assignment._id} className="assignment-submissions">
+              <div key={assignment._id} className="assignment-list__assignment-submissions">
                 {assignment.submissions.map(sketch =>
-                  <div key={sketch._id} className="assignment-submission">
-                    <Link to={`/username/sketches/${sketch.id}`}>{sketch.name}</Link>
-                    <div>By {sketch.user}</div>
-                  </div>
+                  <button onClick={() => { this.openSketch(sketch); }} key={sketch._id} className="assignment-list__assignment-submission">
+                    <img alt={sketch.name} src="http://www.allneopets.com/images/1.gif" className="assignment-list__assignment-submission-thumbnail" />
+                    <div className="assignment-list__assignment-submission-name">{sketch.name}</div>
+                    <div className="assignment-list__assignment-submission-attribution">By {sketch.user}</div>
+                  </button>
                 )}
               </div>
             </div>
           )}
         </div>
+        <button className="assignment-list__exit-button" onClick={() => { this.createNewAssignment(); }}>
+          Create new Assignment
+        </button>
       </section>
     );
   }

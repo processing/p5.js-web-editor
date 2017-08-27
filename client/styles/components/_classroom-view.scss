@@ -50,3 +50,46 @@
       }
   }
 }
+
+.assignment-list__classroom-info {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 35px;
+}
+
+.assignment-list__assignments-container {
+  overflow-y: scroll;
+  padding: 20px;
+  background-color: #DDD;
+}
+
+.assignment-list__assignment-container {
+  padding-bottom: 25px;
+}
+
+.assignment-list__assignment-name {
+  font-weight: bold;
+}
+
+.assignment-list__assignment-description {
+  
+}
+
+.assignment-list__assignment-submission-thumbnail {
+  width: 100px;
+  height: 100px;
+}
+
+.assignment-list__assignment-submission-name {
+  font-weight: bold;
+}
+
+.assignment-list__assignment-submission-attribution {
+  
+}
+
+.assignment-list__hr {
+  border: 0;
+  height: 1px;
+  background-color: #BBB;
+}

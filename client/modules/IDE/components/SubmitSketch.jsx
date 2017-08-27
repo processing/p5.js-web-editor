@@ -28,7 +28,7 @@ class SubmitSketch extends React.Component {
 
   submitSketch(sketch) {
     this.props.classroom.assignments.forEach((assignment) => {
-      if (assignment.name === this.props.assignment.name) {
+      if (assignment._id === this.props.assignment._id) {
         assignment.submissions.push({
           id: sketch.id,
           name: sketch.name,

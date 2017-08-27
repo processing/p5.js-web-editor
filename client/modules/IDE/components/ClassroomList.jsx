@@ -48,7 +48,7 @@ class ClassroomList extends React.Component {
       <section className="classroom-list" aria-label="classroom list" tabIndex="0" role="main" id="classroomlist">
         <header className="classroom-list__header">
           <h2 className="classroom-list__header-title">Open a Classroom</h2>
-          <button className="classroom-list__exit-button" onClick={() => { this.props.createNewClassroom(); }}>
+          <button className="classroom-list__exit-button" onClick={() => { this.props.createNewClassroom(); this.props.getClassrooms(this.props.username); }}>
             Create new Classroom
           </button>
           <button className="classroom-list__exit-button" onClick={this.closeClassroomList}>

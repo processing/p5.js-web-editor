@@ -157,7 +157,7 @@ const minusUrl = require('../../../images/minus.svg');
 const beepUrl = require('../../../sounds/audioAlert.mp3');
 // import { debounce } from 'lodash';
 
-class ClassroomOwnerSettingsForm extends React.Component {
+class ClassroomSettingsForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -278,11 +278,11 @@ class ClassroomOwnerSettingsForm extends React.Component {
     const { instructorNames, studentNames } = this.state;
 
     return (
-      <section className="sketch-list" aria-label="submissions list" tabIndex="0" role="main" id="submissionlist">
-        <div className="preferences__heading">
-          <h2 className="preferences__title">Classroom Settings</h2>
+      <section className="classroom-settings" aria-label="classroom settings" tabIndex="0" role="main" id="classroomSettings">
+        <div className="classroom-settings__heading">
+          <h2 className="classroom-settings__title">Classroom Settings</h2>
           <button
-            className="preferences__exit-button"
+            className="classroom-settings__exit-button"
             onClick={this.goBackToClassroom}
             title="back"
             aria-label="back to classroom"
@@ -290,7 +290,7 @@ class ClassroomOwnerSettingsForm extends React.Component {
             <InlineSVG src={leftArrow} alt="Back To Classroom" />
           </button>
           <button
-            className="preferences__exit-button"
+            className="classroom-settings__exit-button"
             onClick={this.closeClassroomSettingsPage}
             title="exit"
             aria-label="exit preferences"
@@ -336,7 +336,7 @@ class ClassroomOwnerSettingsForm extends React.Component {
   }
 }
 
-ClassroomOwnerSettingsForm.propTypes = {
+ClassroomSettingsForm.propTypes = {
   classroom: PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.string,
@@ -358,7 +358,7 @@ ClassroomOwnerSettingsForm.propTypes = {
   updateClassroom: PropTypes.func.isRequired,
 };
 
-ClassroomOwnerSettingsForm.defaultProps = {};
+ClassroomSettingsForm.defaultProps = {};
 
 function mapStateToProps(state) {
   return {};
@@ -368,4 +368,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({}, ClassroomActions), dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ClassroomOwnerSettingsForm);
+export default connect(mapStateToProps, mapDispatchToProps)(ClassroomSettingsForm);

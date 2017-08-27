@@ -32,7 +32,7 @@ import Overlay from '../../App/components/Overlay';
 import SketchList from '../components/SketchList';
 import ClassroomList from '../components/ClassroomList';
 import ClassroomView from '../components/ClassroomView';
-import ClassroomOwnerSettings from '../components/ClassroomOwnerSettings';
+import ClassroomSettingsForm from '../components/ClassroomSettings';
 import SubmitSketch from '../components/SubmitSketch';
 import About from '../components/About';
 
@@ -441,7 +441,7 @@ class IDEView extends React.Component {
           if (this.props.location.pathname.match('ownerclassroomsettings/')) {
             return (
               <Overlay>
-                <ClassroomOwnerSettings
+                <ClassroomSettingsForm
                   classroom={this.props.classroom}
                   username={this.props.params.username}
                   previousPath={this.props.ide.previousPath}

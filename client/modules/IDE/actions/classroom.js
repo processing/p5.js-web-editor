@@ -85,8 +85,8 @@ export function createNewClassroom() {
           type: ActionTypes.SET_CLASSROOM,
           classroom: response.data
         });
-        console.log(response.data);
-        browserHistory.push(`/classroom/${response.data._id}`);
+        // console.log(response.data);
+        // browserHistory.push(`/classroom/${response.data._id}`);
         /* dispatch(setUnsavedChanges(false));
         dispatch(setProject(response.data));
         browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);

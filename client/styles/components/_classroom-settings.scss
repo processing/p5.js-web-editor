@@ -1,0 +1,18 @@
+.classroom-settings {
+  @extend %modal;
+  display: flex;
+  flex-wrap: wrap;
+  flex-flow: column;
+  width: #{1000 / $base-font-size}rem;
+  height: 80%;
+  outline: none;
+}
+
+.classroom-settings__header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.classroom-settings__header-title {  
+  padding: #{40 / $base-font-size}rem #{16 / $base-font-size}rem #{12 / $base-font-size}rem #{21 / $base-font-size}rem;
+}
