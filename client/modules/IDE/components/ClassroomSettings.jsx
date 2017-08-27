@@ -279,8 +279,8 @@ class ClassroomSettingsForm extends React.Component {
 
     return (
       <section className="classroom-settings" aria-label="classroom settings" tabIndex="0" role="main" id="classroomSettings">
-        <div className="classroom-settings__heading">
-          <h2 className="classroom-settings__title">Classroom Settings</h2>
+        <header className="classroom-settings__header">
+          <h2 className="classroom-settings__header-title">Classroom Settings</h2>
           <button
             className="classroom-settings__exit-button"
             onClick={this.goBackToClassroom}
@@ -297,14 +297,15 @@ class ClassroomSettingsForm extends React.Component {
           >
             <InlineSVG src={exitUrl} alt="Exit Classroom Settings" />
           </button>
-        </div>
-        <form>
+        </header>
+        <form className="classroom-settings__form">
           Name:
           <input
             type="text"
             value={this.state.newName}
             onChange={this.handleNameChange}
           />
+          <br />
           Description:
           <input
             type="text"
