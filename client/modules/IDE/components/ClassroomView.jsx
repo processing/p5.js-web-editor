@@ -119,6 +119,7 @@ class ClassroomView extends React.Component {
                 {assignment.submissions.map(sketch =>
                   <div key={sketch._id} className="assignment-submission">
                     <Link to={`/username/sketches/${sketch.id}`}>{sketch.name}</Link>
+                    <div>By {sketch.user}</div>
                   </div>
                 )}
               </div>

@@ -32,7 +32,7 @@ class SubmitSketch extends React.Component {
         assignment.submissions.push({
           id: sketch.id,
           name: sketch.name,
-          user: this.props.username
+          user: this.props.user.username
         });
         console.log(assignment.submissions);
       }

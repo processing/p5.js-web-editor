@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 const submissionSchema = new Schema({
   name: { type: String },
   id: { type: String },
-  username: { type: String }
+  user: { type: String }
 }, {timestamps: true});
 
 const assignmentSchema = new Schema({
