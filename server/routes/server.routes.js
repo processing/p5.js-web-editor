@@ -93,7 +93,7 @@ router.route('/classroom/:classroom_id').get((req, res) => {
   ));
 });
 
-router.route('/ownerclassroomsettings/:classroom_id').get((req, res) => {
+router.route('/classroomsettings/:classroom_id').get((req, res) => {
   classroomExists(req.params.classroom_id, exists => (
     exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
   ));

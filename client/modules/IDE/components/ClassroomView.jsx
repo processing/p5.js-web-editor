@@ -24,6 +24,8 @@ class ClassroomView extends React.Component {
     this.goBackToClassroomList = this.goBackToClassroomList.bind(this);
     this.getInstructorUsernames = this.getInstructorUsernames.bind(this);
     this.openSketch = this.openSketch.bind(this);
+    this.deleteAssignment = this.deleteAssignment.bind(this);
+    this.goToAssignmentSettingsPage = this.goToAssignmentSettingsPage.bind(this);
     // this.props.getAssignments(this.props.classroomid);
   }
 
@@ -80,17 +82,39 @@ class ClassroomView extends React.Component {
     // browserHistory.push(`/assignment/${this.props.classroom._id}/${assignment._id}`);
   }
 
+  goToAssignmentSettingsPage(assignment) {
+    this.props.setAssignment(assignment);
+    browserHistory.push('/assignmentsettings');
+  }
+
   goBackToClassroomList() {
     browserHistory.push('/myclassrooms');
   }
 
   openClassroomSettings() {
     this.props.getClassroom(this.props.classroom._id);
-    browserHistory.push(`/ownerclassroomsettings/${this.props.classroom._id}`);
+    browserHistory.push(`/classroomsettings/${this.props.classroom._id}`);
   }
 
   openSketch(sketch) {
     browserHistory.push(`/username/sketches/${sketch.id}`);
+  }
+
+  deleteAssignment(assignmentToDelete) {
+    if (!window.confirm(`Are you sure you want to delete "${assignmentToDelete.name}"?`)) {
+      return;
+    }
+
+    let deleteAssignmentIndex = null;
+    this.props.classroom.assignments.forEach((assignment) => {
+      if (assignment._id === assignmentToDelete._id) {
+        deleteAssignmentIndex = this.props.classroom.assignments.indexOf(assignment);
+      }
+    });
+    if (deleteAssignmentIndex !== null) {
+      this.props.classroom.assignments.splice(deleteAssignmentIndex, 1);
+    }
+    this.props.saveClassroom();
   }
 
   render() {
@@ -117,13 +141,25 @@ class ClassroomView extends React.Component {
             <div key={assignment._id} className="assignment-list__assignment-container">
               <h3 className="assignment-list__assignment-name">{assignment.name}</h3>
               <h3 className="assignment-list__assignment-description">{assignment.description}</h3>
-              <hr className="assignment-list__hr" />
               <button
-                className="assignment-list__assignment-submit-link"
+                className="assignment-list__assignment-delete"
+                onClick={() => { this.deleteAssignment(assignment); }}
+              >
+                Delete Assignment
+              </button>
+              <button
+                className="assignment-list__assignment-submit"
                 onClick={() => { this.goToAssignmentSubmissionPage(assignment); }}
               >
                 Submit Sketch
               </button>
+              <button
+                className="assignment-list__assignment-settings"
+                onClick={() => { this.goToAssignmentSettingsPage(assignment); }}
+              >
+                Assignment Settings
+              </button>
+              <hr className="assignment-list__hr" />
               <div key={assignment._id} className="assignment-list__assignment-submissions">
                 {assignment.submissions.map(sketch =>
                   <button onClick={() => { this.openSketch(sketch); }} key={sketch._id} className="assignment-list__assignment-submission">

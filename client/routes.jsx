@@ -42,9 +42,10 @@ const routes = (store) => {
       <Route path="/sketches" component={IDEView} />
       <Route path="/:username/sketches/:project_id" component={IDEView} />
       <Route path="/:username/sketches" component={IDEView} />
-      <Route path="/classroom/:classroom_id" component={IDEView} />
       <Route path="/assignment/:classroom_id/:assignment_id" component={IDEView} />
-      <Route path="/ownerclassroomsettings/:classroom_id" component={IDEView} />
+      <Route path="/classroomsettings/:classroom_id" component={IDEView} />
+      <Route path="/classroom/:classroom_id" component={IDEView} />
+      <Route path="/assignmentsettings" component={IDEView} />
       <Route path="/myclassrooms" component={IDEView} />
       <Route path="/assignment" component={IDEView} />
       <Route path="/createclassroom" component={IDEView} />

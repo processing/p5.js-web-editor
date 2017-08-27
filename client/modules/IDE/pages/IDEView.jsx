@@ -33,6 +33,7 @@ import SketchList from '../components/SketchList';
 import ClassroomList from '../components/ClassroomList';
 import ClassroomView from '../components/ClassroomView';
 import ClassroomSettingsForm from '../components/ClassroomSettings';
+import AssignmentSettingsForm from '../components/AssignmentSettings';
 import SubmitSketch from '../components/SubmitSketch';
 import About from '../components/About';
 
@@ -438,10 +439,23 @@ class IDEView extends React.Component {
           }
         })()}
         {(() => { // eslint-disable-line
-          if (this.props.location.pathname.match('ownerclassroomsettings/')) {
+          if (this.props.location.pathname.match('classroomsettings/')) {
             return (
               <Overlay>
                 <ClassroomSettingsForm
+                  classroom={this.props.classroom}
+                  username={this.props.params.username}
+                  previousPath={this.props.ide.previousPath}
+                />
+              </Overlay>
+            );
+          }
+        })()}
+        {(() => { // eslint-disable-line
+          if (this.props.location.pathname.match('assignmentsettings')) {
+            return (
+              <Overlay>
+                <AssignmentSettingsForm
                   classroom={this.props.classroom}
                   username={this.props.params.username}
                   previousPath={this.props.ide.previousPath}
@@ -475,7 +489,7 @@ class IDEView extends React.Component {
           }
         })()}
         {(() => { // eslint-disable-line
-          if (this.props.location.pathname.match('/classroom')) {
+          if (this.props.location.pathname.match('/classroom/')) {
             return (
               <Overlay>
                 <ClassroomView
