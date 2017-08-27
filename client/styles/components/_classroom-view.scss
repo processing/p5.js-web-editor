@@ -55,12 +55,16 @@
 .assignment-list__assignments-container {
   flex: 1 0 0%;
   overflow-y: scroll;
-  padding: 20px;
+  margin-left: 16px;
   background-color: #DDD;
 }
 
 .assignment-list__assignment-container {
-  padding-bottom: 25px;
+  padding: 20px;
+}
+
+.assignment-list__assignment-container:nth-child(odd) {
+  background-color: #CCC;
 }
 
 .assignment-list__assignment-name {

@@ -3,7 +3,7 @@
   display: flex;
   flex-wrap: wrap;
   flex-flow: column;
-  width: #{825 / $base-font-size}rem;
+  width: #{525 / $base-font-size}rem;
   height: 80%;
   outline: none;
 }
@@ -19,4 +19,12 @@
 
 .classroom-settings__form {
   padding: #{40 / $base-font-size}rem #{16 / $base-font-size}rem #{12 / $base-font-size}rem #{21 / $base-font-size}rem;
+}
+
+.classroom-settings__form-element {
+  margin-bottom: 15px;
+}
+
+.classroom-settings__form-element-textarea {
+  resize: none;
 }
