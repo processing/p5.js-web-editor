@@ -3,7 +3,7 @@
   display: flex;
   flex-wrap: wrap;
   flex-flow: column;
-  width: #{1000 / $base-font-size}rem;
+  width: #{825 / $base-font-size}rem;
   height: 80%;
   outline: none;
 }
@@ -15,11 +15,6 @@
 
 .assignment-list__header-title {  
   padding: #{40 / $base-font-size}rem #{16 / $base-font-size}rem #{12 / $base-font-size}rem #{21 / $base-font-size}rem;
-}
-
-.sketches-table-container {
-  flex: 1 0 0%;
-  overflow-y: scroll;
 }
 
 .assignment-list__exit-button {
@@ -58,6 +53,7 @@
 }
 
 .assignment-list__assignments-container {
+  flex: 1 0 0%;
   overflow-y: scroll;
   padding: 20px;
   background-color: #DDD;
