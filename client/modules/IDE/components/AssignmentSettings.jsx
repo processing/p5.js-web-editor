@@ -22,8 +22,6 @@ class AssignmentSettingsForm extends React.Component {
 
     this.state = {
       currentID: 0,
-      instructorNames: [],
-      studentNames: [],
       suggestions: [],
       newName: '',
       newDescription: ''
@@ -38,26 +36,9 @@ class AssignmentSettingsForm extends React.Component {
   }
 
   componentWillUpdate(nextProps) {
-    if (!nextProps.classroom.owners) return;
-
-    this.state.newName = nextProps.classroom.name;
-    this.state.newDescription = nextProps.classroom.description;
-
-    this.state.instructorNames = [];
-    nextProps.classroom.owners.forEach((owner) => {
-      this.state.instructorNames.push({
-        id: this.state.instructorNames.length + 1,
-        text: owner.name
-      });
-    });
-
-    this.state.studentNames = [];
-    nextProps.classroom.members.forEach((member) => {
-      this.state.studentNames.push({
-        id: this.state.studentNames.length + 1,
-        text: member.name
-      });
-    });
+    console.log(nextProps);
+    this.state.newName = nextProps.assignment.name;
+    this.state.newDescription = nextProps.assignment.description;
   }
 
   closeAssignmentSettingsPage() {
@@ -70,7 +51,12 @@ class AssignmentSettingsForm extends React.Component {
   }
 
   handleUpdateAssignment(e) {
-    // Do the thing here
+    this.props.classroom.assignments.forEach((assignment) => {
+      if (assignment._id === this.props.assignment._id) {
+        assignment.name = this.state.newName;
+        assignment.description = this.state.newDescription;
+      }
+    });
 
     this.props.updateClassroom();
   }
@@ -83,39 +69,11 @@ class AssignmentSettingsForm extends React.Component {
     this.setState({ newDescription: event.target.value });
   }
 
-  handleInstructorDelete(i) {
-    const instructorNames = this.state.instructorNames;
-    instructorNames.splice(i, 1);
-    this.setState({ instructorNames });
-  }
-
-  handleInstructorAddition(tag) {
-    const instructorNames = this.state.instructorNames;
-    instructorNames.push({
-      id: instructorNames.length + 1,
-      text: tag
-    });
-    this.setState({ instructorNames });
-  }
-
-  handleStudentDelete(i) {
-    const studentNames = this.state.studentNames;
-    studentNames.splice(i, 1);
-    this.setState({ studentNames });
-  }
-
-  handleStudentAddition(tag) {
-    const studentNames = this.state.studentNames;
-    studentNames.push({
-      id: studentNames.length + 1,
-      text: tag
-    });
-    this.setState({ studentNames });
-  }
-
   render() {
     const beep = new Audio(beepUrl);
     const { instructorNames, studentNames } = this.state;
+
+    console.log(this.props.assignment);
 
     return (
       <section className="assignment-settings" aria-label="assignment settings" tabIndex="0" role="main" id="assignmentSettings">
@@ -159,6 +117,7 @@ class AssignmentSettingsForm extends React.Component {
             rows="4"
           >
           </textarea>
+          <br />
           <input
             className="assignment-settings__form-element"
             type="button"
@@ -191,12 +150,19 @@ AssignmentSettingsForm.propTypes = {
     })).isRequired
   }).isRequired,
   updateClassroom: PropTypes.func.isRequired,
+  assignment: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+  }).isRequired
 };
 
 AssignmentSettingsForm.defaultProps = {};
 
 function mapStateToProps(state) {
-  return {};
+  return {
+    assignment: state.assignment
+  };
 }
 
 function mapDispatchToProps(dispatch) {

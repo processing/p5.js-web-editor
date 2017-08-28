@@ -17,6 +17,10 @@
   padding: #{40 / $base-font-size}rem #{16 / $base-font-size}rem #{12 / $base-font-size}rem #{21 / $base-font-size}rem;
 }
 
+.assignment-list__nav-buttons {
+  padding: 20px;
+}
+
 .assignment-list__exit-button {
   @include themify() {
     @extend %icon;
@@ -48,7 +52,7 @@
 
 .assignment-list__classroom-info {
   padding-top: 10px;
-  padding-bottom: 20px;
+  padding-bottom: 35px;
   padding-left: 35px;
 }
 
@@ -56,15 +60,15 @@
   flex: 1 0 0%;
   overflow-y: scroll;
   margin-left: 16px;
-  background-color: #DDD;
 }
 
 .assignment-list__assignment-container {
   padding: 20px;
+  background-color: #EEE;
 }
 
 .assignment-list__assignment-container:nth-child(odd) {
-  background-color: #CCC;
+  background-color: #DDD;
 }
 
 .assignment-list__assignment-name {

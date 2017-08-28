@@ -18,6 +18,7 @@ const humanizeList = require('humanize-list');
 class ClassroomView extends React.Component {
   constructor(props) {
     super(props);
+
     this.closeClassroomView = this.closeClassroomView.bind(this);
     this.createNewAssignment = this.createNewAssignment.bind(this);
     this.goToAssignmentSubmissionPage = this.goToAssignmentSubmissionPage.bind(this);
@@ -26,6 +27,7 @@ class ClassroomView extends React.Component {
     this.openSketch = this.openSketch.bind(this);
     this.deleteAssignment = this.deleteAssignment.bind(this);
     this.goToAssignmentSettingsPage = this.goToAssignmentSettingsPage.bind(this);
+    this.isUserAnInstructor = this.isUserAnInstructor.bind(this);
     // this.props.getAssignments(this.props.classroomid);
   }
 
@@ -83,6 +85,7 @@ class ClassroomView extends React.Component {
   }
 
   goToAssignmentSettingsPage(assignment) {
+    this.props.getClassroom(this.props.classroom._id);
     this.props.setAssignment(assignment);
     browserHistory.push('/assignmentsettings');
   }
@@ -98,6 +101,19 @@ class ClassroomView extends React.Component {
 
   openSketch(sketch) {
     browserHistory.push(`/username/sketches/${sketch.id}`);
+  }
+
+  isUserAnInstructor() {
+    let isOwner = false;
+    if (!this.props.classroom.owners) {
+      return false;
+    }
+    this.props.classroom.owners.forEach((owner) => {
+      if (owner.name === this.props.user.username) {
+        isOwner = true;
+      }
+    });
+    return isOwner;
   }
 
   deleteAssignment(assignmentToDelete) {
@@ -118,19 +134,24 @@ class ClassroomView extends React.Component {
   }
 
   render() {
+    const isOwner = this.isUserAnInstructor();
     return (
       <section className="assignment-list" aria-label="classroom list" tabIndex="0" role="main" id="assignmentlist">
         <header className="assignment-list__header">
           <h2 className="assignment-list__header-title">{this.props.classroom.name}</h2>
-          <button className="assignment-list__exit-button" onClick={() => { this.openClassroomSettings(); }}>
-            Classroom Settings
-          </button>
-          <button className="assignment-list__exit-button" onClick={this.goBackToClassroomList}>
-            <InlineSVG src={leftArrow} alt="Go Back To Classroom List" />
-          </button>
-          <button className="assignment-list__exit-button" onClick={this.closeClassroomView}>
-            <InlineSVG src={exitUrl} alt="Close Assignments List Overlay" />
-          </button>
+          {isOwner ?
+            <button className="assignment-list__exit-button" onClick={() => { this.openClassroomSettings(); }}>
+              Classroom Settings
+            </button>
+          : null}
+          <div className="assignment-list__nav-buttons">
+            <button className="assignment-list__exit-button" onClick={this.goBackToClassroomList}>
+              <InlineSVG src={leftArrow} alt="Go Back To Classroom List" />
+            </button>
+            <button className="assignment-list__exit-button" onClick={this.closeClassroomView}>
+              <InlineSVG src={exitUrl} alt="Close Assignments List Overlay" />
+            </button>
+          </div>
         </header>
         <div className="assignment-list__classroom-info">
           <h3 className="assignment-list__instructors">{this.getInstructorUsernames()}</h3>
@@ -141,29 +162,40 @@ class ClassroomView extends React.Component {
             <div key={assignment._id} className="assignment-list__assignment-container">
               <h3 className="assignment-list__assignment-name">{assignment.name}</h3>
               <h3 className="assignment-list__assignment-description">{assignment.description}</h3>
-              <button
-                className="assignment-list__assignment-delete"
-                onClick={() => { this.deleteAssignment(assignment); }}
-              >
+              {isOwner ?
+                <button
+                  className="assignment-list__assignment-delete"
+                  onClick={() => { this.deleteAssignment(assignment); }}
+                >
                 Delete Assignment
               </button>
+              : null}
+              {isOwner ?
+                <button
+                  className="assignment-list__assignment-settings"
+                  onClick={() => { this.goToAssignmentSettingsPage(assignment); }}
+                >
+                  Assignment Settings
+                </button>
+              : null}
               <button
                 className="assignment-list__assignment-submit"
                 onClick={() => { this.goToAssignmentSubmissionPage(assignment); }}
               >
                 Submit Sketch
               </button>
-              <button
-                className="assignment-list__assignment-settings"
-                onClick={() => { this.goToAssignmentSettingsPage(assignment); }}
-              >
-                Assignment Settings
-              </button>
               <hr className="assignment-list__hr" />
               <div key={assignment._id} className="assignment-list__assignment-submissions">
                 {assignment.submissions.map(sketch =>
-                  <button onClick={() => { this.openSketch(sketch); }} key={sketch._id} className="assignment-list__assignment-submission">
-                    <img alt={sketch.name} src="http://www.allneopets.com/images/1.gif" className="assignment-list__assignment-submission-thumbnail" />
+                  <button
+                    onClick={() => {
+                      this.openSketch(sketch);
+                    }}
+                    key={sketch._id}
+                    className="assignment-list__assignment-submission"
+                  >
+                    { /* Placeholder image */ }
+                    <img alt={sketch.name} src="http://i.imgur.com/AjyQF5I.png" className="assignment-list__assignment-submission-thumbnail" />
                     <div className="assignment-list__assignment-submission-name">{sketch.name}</div>
                     <div className="assignment-list__assignment-submission-attribution">By {sketch.user}</div>
                   </button>
@@ -192,6 +224,9 @@ ClassroomView.propTypes = {
     name: PropTypes.string.isRequired,
     createdAt: PropTypes.string.isRequired
   }), */
+  user: PropTypes.shape({
+    username: PropTypes.string
+  }).isRequired,
   setAssignment: PropTypes.func.isRequired,
   saveClassroom: PropTypes.func.isRequired,
   getClassroom: PropTypes.func.isRequired,
@@ -224,7 +259,7 @@ ClassroomView.defaultProps = {
 function mapStateToProps(state) {
   return {
     classroom: state.classroom,
-    // assignments: state.assignments
+    user: state.user,
   };
 }
 
