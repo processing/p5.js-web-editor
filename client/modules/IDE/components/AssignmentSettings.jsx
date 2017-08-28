@@ -73,8 +73,6 @@ class AssignmentSettingsForm extends React.Component {
     const beep = new Audio(beepUrl);
     const { instructorNames, studentNames } = this.state;
 
-    console.log(this.props.assignment);
-
     return (
       <section className="assignment-settings" aria-label="assignment settings" tabIndex="0" role="main" id="assignmentSettings">
         <header className="assignment-settings__header">

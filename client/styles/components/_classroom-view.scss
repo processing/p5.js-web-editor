@@ -14,7 +14,12 @@
 }
 
 .assignment-list__header-title {  
-  padding: #{40 / $base-font-size}rem #{16 / $base-font-size}rem #{12 / $base-font-size}rem #{21 / $base-font-size}rem;
+  padding: #{40 / $base-font-size}rem #{16 / $base-font-size}rem #{0 / $base-font-size}rem #{21 / $base-font-size}rem;
+}
+
+.assignment-list__instructors {
+  padding-bottom: 4px;
+  font-size: #{12 / $base-font-size}rem;
 }
 
 .assignment-list__nav-buttons {
@@ -52,14 +57,20 @@
 
 .assignment-list__classroom-info {
   padding-top: 10px;
-  padding-bottom: 35px;
+  padding-bottom: 22px;
   padding-left: 35px;
+}
+
+.assignment-list__description {
+  font-size: #{16 / $base-font-size}rem;
+  width: 85%;
 }
 
 .assignment-list__assignments-container {
   flex: 1 0 0%;
   overflow-y: scroll;
   margin-left: 16px;
+  font-size: #{14 / $base-font-size}rem;
 }
 
 .assignment-list__assignment-container {
@@ -98,6 +109,7 @@
 
 .assignment-list__assignment-submission-name {
   font-weight: bold;
+  font-size: #{14 / $base-font-size}rem;
 }
 
 .assignment-list__assignment-submission-attribution {

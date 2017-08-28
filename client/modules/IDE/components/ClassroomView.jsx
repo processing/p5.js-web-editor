@@ -138,7 +138,10 @@ class ClassroomView extends React.Component {
     return (
       <section className="assignment-list" aria-label="classroom list" tabIndex="0" role="main" id="assignmentlist">
         <header className="assignment-list__header">
-          <h2 className="assignment-list__header-title">{this.props.classroom.name}</h2>
+          <h2 className="assignment-list__header-title">
+            {this.props.classroom.name}
+            <h3 className="assignment-list__instructors">{this.getInstructorUsernames()}</h3>
+          </h2>
           {isOwner ?
             <button className="assignment-list__exit-button" onClick={() => { this.openClassroomSettings(); }}>
               Classroom Settings
@@ -154,7 +157,6 @@ class ClassroomView extends React.Component {
           </div>
         </header>
         <div className="assignment-list__classroom-info">
-          <h3 className="assignment-list__instructors">{this.getInstructorUsernames()}</h3>
           <h3 className="assignment-list__description">{this.props.classroom.description}</h3>
         </div>
         <div className="assignment-list__assignments-container">
