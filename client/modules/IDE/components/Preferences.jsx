@@ -226,7 +226,7 @@ class Preferences extends React.Component {
             <br></br>
             <div className="preference">
               <h4 className="preference__title">Add a p5.js or an external library</h4>
-              <h4 className="preference__sketch1">Add a script library resource field</h4>
+              <h4 className="preference__add__resource">Add a script library resource field</h4>
               <h4 className="preference__title">Security Protocol</h4>
               <h4>Serve over HTTPS</h4>
             </div>
