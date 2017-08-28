@@ -1,24 +1,69 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import InlineSVG from 'react-inlinesvg';
+import classNames from 'classnames';
 
 const triangleUrl = require('../images/down-filled-triangle.svg');
 const logoUrl = require('../images/p5js-logo-small.svg');
 
 class Nav extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dropdownOpen: 'none'
+    };
+  }
+
   isUserOwner() {
     return this.props.project.owner && this.props.project.owner.id === this.props.user.id;
   }
 
+  toggleDropdown(dropdown) {
+    if (this.state.dropdownOpen === 'none') {
+      this.setState({
+        dropdownOpen: dropdown
+      });
+    } else {
+      this.setState({
+        dropdownOpen: 'none'
+      });
+    }
+  }
+
   render() {
+    const navDropdownState = {
+      file: classNames({
+        'nav__item': true,
+        'nav__item--open': this.state.dropdownOpen === 'file'
+      }),
+      edit: classNames({
+        'nav__item': true,
+        'nav__item--open': this.state.dropdownOpen === 'edit'
+      }),
+      sketch: classNames({
+        'nav__item': true,
+        'nav__item--open': this.state.dropdownOpen === 'sketch'
+      }),
+      help: classNames({
+        'nav__item': true,
+        'nav__item--open': this.state.dropdownOpen === 'help'
+      }),
+      account: classNames({
+        'nav__item': true,
+        'nav__item--open': this.state.dropdownOpen === 'account'
+      })
+    };
     return (
       <nav className="nav" role="navigation" title="main-navigation">
         <ul className="nav__items-left" title="project-menu">
           <li>
             <InlineSVG src={logoUrl} alt="p5.js logo" />
           </li>
-          <li className="nav__item">
-            <button>
+          <li className={navDropdownState.file}>
+            <button
+              onClick={this.toggleDropdown.bind(this, 'file')}
+              onBlur={this.toggleDropdown.bind(this, 'none')}
+            >
               <span className="nav__item-header">File</span>
               <InlineSVG src={triangleUrl} />
             </button>
@@ -87,8 +132,8 @@ class Nav extends React.PureComponent {
               </li>
             </ul>
           </li>
-          <li className="nav__item">
-            <button>
+          <li className={navDropdownState.edit}>
+            <button onClick={this.toggleDropdown.bind(this, 'edit')}>
               <span className="nav__item-header">Edit</span>
               <InlineSVG src={triangleUrl} />
             </button>
@@ -105,8 +150,8 @@ class Nav extends React.PureComponent {
               </li>
             </ul>
           </li>
-          <li className="nav__item">
-            <button>
+          <li className={navDropdownState.sketch}>
+            <button onClick={this.toggleDropdown.bind(this, 'sketch')}>
               <span className="nav__item-header">Sketch</span>
               <InlineSVG src={triangleUrl} />
             </button>
@@ -123,8 +168,8 @@ class Nav extends React.PureComponent {
               </li>
             </ul>
           </li>
-          <li className="nav__item">
-            <button>
+          <li className={navDropdownState.help}>
+            <button onClick={this.toggleDropdown.bind(this, 'help')}>
               <span className="nav__item-header">Help</span>
               <InlineSVG src={triangleUrl} />
             </button>
@@ -167,12 +212,17 @@ class Nav extends React.PureComponent {
               <span>Hello, {this.props.user.username}!</span>
             </li>
             <span className="nav__item-spacer">|</span>
-            <li className="nav__item">
-              <button className="nav__item-header">My Account</button>
+            <li className={navDropdownState.account}>
+              <button
+                className="nav__item-header"
+                onClick={this.toggleDropdown.bind(this, 'account')}
+              >
+                My Account
+              </button>
               <InlineSVG src={triangleUrl} />
               <ul className="nav__dropdown">
                 <li className="nav__dropdown-heading">
-                  <button>My Account</button>
+                  <span>My Account</span>
                   <InlineSVG src={triangleUrl} />
                 </li>
                 <li className="nav__dropdown-item">
