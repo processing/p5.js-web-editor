@@ -12,10 +12,15 @@ class Nav extends React.PureComponent {
     this.state = {
       dropdownOpen: 'none'
     };
+    this.handleFocus = this.handleFocus.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
+    this.clearHideTimeout = this.clearHideTimeout.bind(this);
   }
 
-  isUserOwner() {
-    return this.props.project.owner && this.props.project.owner.id === this.props.user.id;
+  setDropdown(dropdown) {
+    this.setState({
+      dropdownOpen: dropdown
+    });
   }
 
   toggleDropdown(dropdown) {
@@ -28,6 +33,26 @@ class Nav extends React.PureComponent {
         dropdownOpen: 'none'
       });
     }
+  }
+
+  isUserOwner() {
+    return this.props.project.owner && this.props.project.owner.id === this.props.user.id;
+  }
+
+  handleFocus(dropdown) {
+    this.clearHideTimeout();
+    this.setDropdown(dropdown);
+  }
+
+  clearHideTimeout() {
+    if (this.timer) {
+      clearTimeout(this.timer);
+      this.timer = null;
+    }
+  }
+
+  handleBlur() {
+    this.timer = setTimeout(this.setDropdown.bind(this, 'none'), 10);
   }
 
   render() {
@@ -62,7 +87,8 @@ class Nav extends React.PureComponent {
           <li className={navDropdownState.file}>
             <button
               onClick={this.toggleDropdown.bind(this, 'file')}
-              onBlur={this.toggleDropdown.bind(this, 'none')}
+              onBlur={this.handleBlur}
+              onFocus={this.clearHideTimeout}
             >
               <span className="nav__item-header">File</span>
               <InlineSVG src={triangleUrl} />
@@ -81,6 +107,8 @@ class Nav extends React.PureComponent {
                       this.props.newProject();
                     }
                   }}
+                  onFocus={this.handleFocus.bind(this, 'file')}
+                  onBlur={this.handleBlur}
                 >
                   New
                 </button>
@@ -95,37 +123,57 @@ class Nav extends React.PureComponent {
                       this.props.showErrorModal('forceAuthentication');
                     }
                   }}
+                  onFocus={this.handleFocus.bind(this, 'file')}
+                  onBlur={this.handleBlur}
                 >
                   Save
                 </button>
               </li> }
               { this.props.project.id && this.props.user.authenticated &&
               <li className="nav__dropdown-item">
-                <button onClick={this.props.cloneProject}>
+                <button
+                  onClick={this.props.cloneProject}
+                  onFocus={this.handleFocus.bind(this, 'file')}
+                  onBlur={this.handleBlur}
+                >
                   Duplicate
                 </button>
               </li> }
               { this.props.project.id &&
               <li className="nav__dropdown-item">
-                <button onClick={this.props.showShareModal}>
+                <button
+                  onClick={this.props.showShareModal}
+                  onFocus={this.handleFocus.bind(this, 'file')}
+                  onBlur={this.handleBlur}
+                >
                   Share
                 </button>
               </li> }
               { this.props.project.id &&
               <li className="nav__dropdown-item">
-                <button onClick={() => this.props.exportProjectAsZip(this.props.project.id)}>
+                <button
+                  onClick={() => this.props.exportProjectAsZip(this.props.project.id)}
+                  onFocus={this.handleFocus.bind(this, 'file')}
+                  onBlur={this.handleBlur}
+                >
                   Download
                 </button>
               </li> }
               { this.props.user.authenticated &&
               <li className="nav__dropdown-item">
-                <Link to={`/${this.props.user.username}/sketches`}>
+                <Link
+                  to={`/${this.props.user.username}/sketches`}
+                  onFocus={this.handleFocus.bind(this, 'file')}
+                  onBlur={this.handleBlur}
+                >
                   Open
                 </Link>
               </li> }
               <li className="nav__dropdown-item">
                 <Link
                   to="/p5/sketches"
+                  onFocus={this.handleFocus.bind(this, 'file')}
+                  onBlur={this.handleBlur}
                 >
                   Examples
                 </Link>
@@ -133,7 +181,11 @@ class Nav extends React.PureComponent {
             </ul>
           </li>
           <li className={navDropdownState.edit}>
-            <button onClick={this.toggleDropdown.bind(this, 'edit')}>
+            <button
+              onClick={this.toggleDropdown.bind(this, 'edit')}
+              onBlur={this.handleBlur}
+              onFocus={this.clearHideTimeout}
+            >
               <span className="nav__item-header">Edit</span>
               <InlineSVG src={triangleUrl} />
             </button>
@@ -151,7 +203,11 @@ class Nav extends React.PureComponent {
             </ul>
           </li>
           <li className={navDropdownState.sketch}>
-            <button onClick={this.toggleDropdown.bind(this, 'sketch')}>
+            <button
+              onClick={this.toggleDropdown.bind(this, 'sketch')}
+              onBlur={this.handleBlur}
+              onFocus={this.clearHideTimeout}
+            >
               <span className="nav__item-header">Sketch</span>
               <InlineSVG src={triangleUrl} />
             </button>
@@ -169,7 +225,11 @@ class Nav extends React.PureComponent {
             </ul>
           </li>
           <li className={navDropdownState.help}>
-            <button onClick={this.toggleDropdown.bind(this, 'help')}>
+            <button
+              onClick={this.toggleDropdown.bind(this, 'help')}
+              onBlur={this.handleBlur}
+              onFocus={this.clearHideTimeout}
+            >
               <span className="nav__item-header">Help</span>
               <InlineSVG src={triangleUrl} />
             </button>
@@ -186,10 +246,16 @@ class Nav extends React.PureComponent {
                   href="https://p5js.org/reference/"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onFocus={this.handleFocus.bind(this, 'help')}
+                  onBlur={this.handleBlur}
                 >Reference</a>
               </li>
               <li className="nav__dropdown-item">
-                <Link to="/about">
+                <Link
+                  to="/about"
+                  onFocus={this.handleFocus.bind(this, 'help')}
+                  onBlur={this.handleBlur}
+                >
                   About
                 </Link>
               </li>
@@ -216,6 +282,8 @@ class Nav extends React.PureComponent {
               <button
                 className="nav__item-header"
                 onClick={this.toggleDropdown.bind(this, 'account')}
+                onBlur={this.handleBlur}
+                onFocus={this.clearHideTimeout}
               >
                 My Account
               </button>
@@ -226,22 +294,38 @@ class Nav extends React.PureComponent {
                   <InlineSVG src={triangleUrl} />
                 </li>
                 <li className="nav__dropdown-item">
-                  <Link to={`/${this.props.user.username}/sketches`}>
+                  <Link
+                    to={`/${this.props.user.username}/sketches`}
+                    onFocus={this.handleFocus.bind(this, 'account')}
+                    onBlur={this.handleBlur}
+                  >
                     My sketches
                   </Link>
                 </li>
                 <li className="nav__dropdown-item">
-                  <Link to={`/${this.props.user.username}/assets`}>
+                  <Link
+                    to={`/${this.props.user.username}/assets`}
+                    onFocus={this.handleFocus.bind(this, 'account')}
+                    onBlur={this.handleBlur}
+                  >
                     My assets
                   </Link>
                 </li>
                 <li className="nav__dropdown-item">
-                  <Link to={`/${this.props.user.username}/account`}>
+                  <Link
+                    to={`/${this.props.user.username}/account`}
+                    onFocus={this.handleFocus.bind(this, 'account')}
+                    onBlur={this.handleBlur}
+                  >
                     Settings
                   </Link>
                 </li>
                 <li className="nav__dropdown-item">
-                  <button onClick={this.props.logoutUser} >
+                  <button
+                    onClick={this.props.logoutUser}
+                    onFocus={this.handleFocus.bind(this, 'account')}
+                    onBlur={this.handleBlur}
+                  >
                     Log out
                   </button>
                 </li>
