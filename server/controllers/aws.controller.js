@@ -22,6 +22,29 @@ function getExtension(filename) {
   return (i < 0) ? '' : filename.substr(i);
 }
 
+export function uploadFileToS3(file) {
+  var s3_params = {
+    Bucket: bucketName,
+    Key: fileName,
+    Expires: 60, // expire after 60 mins
+    ContentType: file.type,
+    ACL: 'public-read',
+  };
+
+  s3bucket.getSignedUrl('putObject', s3_params, function(err, data){
+    if (err) {
+      console.log(err);
+    }
+    else {
+      var return_data = {
+        requestUrl : data,
+        imageUrl: 'https://'+ bucketName +'.s3.amazonaws.com/'+ fileName
+      };
+      res.json( generalResponse( return_data ) );
+    }
+  });
+}
+
 export function getObjectKey(url) {
   const urlArray = url.split('/');
   let objectKey;
