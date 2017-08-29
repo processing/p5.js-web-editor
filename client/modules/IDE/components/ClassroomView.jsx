@@ -206,9 +206,11 @@ class ClassroomView extends React.Component {
             </div>
           )}
         </div>
-        <button className="assignment-list__exit-button" onClick={() => { this.createNewAssignment(); }}>
-          Create new Assignment
-        </button>
+        {isOwner ?
+          <button className="assignment-list__exit-button" onClick={() => { this.createNewAssignment(); }}>
+            Create new Assignment
+          </button>
+        : null}
       </section>
     );
   }
