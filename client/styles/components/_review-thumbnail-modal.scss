@@ -1,0 +1,30 @@
+.review-thumbnail-modal {
+  @extend %modal;
+  display: flex;
+  flex-wrap: wrap;
+  flex-flow: column;
+  width: #{600 / $base-font-size}rem;
+  height: 60%;
+  outline: none;
+}
+
+.review-thumbnail-modal__header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.review-thumbnail-modal__header-title {
+  padding: #{40 / $base-font-size}rem #{16 / $base-font-size}rem #{12 / $base-font-size}rem #{21 / $base-font-size}rem;
+}
+
+.review-thumbnail-modal__exit-button {
+  @include themify() {
+    @extend %icon;
+  }
+  margin: #{12 / $base-font-size}rem #{16 / $base-font-size}rem;
+}
+
+.review-thumbnail-modal__thumbnail-preview {
+	width: 300px;
+	height: 300px;
+}

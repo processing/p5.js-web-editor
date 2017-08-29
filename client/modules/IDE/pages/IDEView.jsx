@@ -346,14 +346,21 @@ class IDEView extends React.Component {
               <div className="preview-frame-holder">
                 <header className="preview-frame__header">
                   <h2 className="preview-frame__title">Preview</h2>
-                  <button
-                    className="preview-frame__generate-thumb-button"
-                    onClick={() => {
-                      this.props.generateThumbnail();
-                    }}
-                  >
-                    Generate Thumbnail
-                  </button>
+                  {(() => { // eslint-disable-line
+                    if (this.props.ide.isPlaying) {
+                      return (
+                        <button
+                          className="preview-frame__generate-thumb-button"
+                          onClick={() => {
+                            this.props.generateThumbnail();
+                          }}
+                        >
+                          Generate Thumbnail
+                        </button>
+                      );
+                    }
+                    return '';
+                  })()}
                 </header>
                 <div className="preview-frame-overlay" ref={(element) => { this.overlay = element; }}>
                 </div>
@@ -496,6 +503,7 @@ class IDEView extends React.Component {
                 <ReviewThumbnailModal
                   type={this.props.ide.helpType}
                   closeModal={this.props.hideReviewThumbnailModal}
+                  thumbnailImg={this.props.ide.thumbnailImg}
                 />
               </Overlay>
             );
@@ -547,6 +555,7 @@ IDEView.propTypes = {
     errorType: PropTypes.string,
     helpType: PropTypes.string,
     thumbnailIsBeingGenerated: PropTypes.bool.isRequired,
+    thumbnailImg: PropTypes.string.isRequired,
     reviewThumbnailModalOpen: PropTypes.bool.isRequired,
   }).isRequired,
   stopSketch: PropTypes.func.isRequired,

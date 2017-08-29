@@ -234,6 +234,12 @@ export function hideHelpModal() {
   };
 }
 
+export function hideReviewThumbnailModal() {
+  return {
+    type: ActionTypes.HIDE_REVIEW_THUMBNAIL_MODAL
+  };
+}
+
 export function generateThumbnail() {
   return {
     type: ActionTypes.GENERATE_THUMBNAIL
