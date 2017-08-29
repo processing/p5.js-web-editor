@@ -27,7 +27,7 @@ router.route('/:username/sketches/:project_id').get((req, res) => {
 });
 
 router.route('/:username/sketches/:project_id/*').get((req, res) => {
-  getProjectAsset(req,res);
+  getProjectAsset(req, res);
 });
 
 // router.route('/full/:project_id').get((req, res) => {
@@ -65,7 +65,7 @@ router.route('/:username/sketches').get((req, res) => {
 });
 
 router.route('/:username/assets').get((req, res) => {
-    userExists(req.params.username, exists => (
+  userExists(req.params.username, exists => (
     exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
   ));
 });

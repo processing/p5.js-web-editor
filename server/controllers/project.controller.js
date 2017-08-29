@@ -144,28 +144,27 @@ export function getProjectAsset(req, res) {
         return res.status(404).send({ message: 'Project with that id does not exist' });
       }
 
-      var assetURL = null;
-      var seekPath = req.params[0]; // req.params.asset_path;
-      var seekPathSplit = seekPath.split('/');
-      var seekFilename = seekPathSplit[seekPathSplit.length-1];
+      let assetURL = null;
+      const seekPath = req.params[0]; // req.params.asset_path;
+      const seekPathSplit = seekPath.split('/');
+      const seekFilename = seekPathSplit[seekPathSplit.length - 1];
       project.files.forEach((file) => {
-        if(file.name === seekFilename) {
+        if (file.name === seekFilename) {
           assetURL = file.url;
         }
       });
 
-      if(!assetURL) {
+      if (!assetURL) {
         return res.status(404).send({ message: 'Asset does not exist' });
-      } else {
-        request({ method: 'GET', url: assetURL, encoding: null }, (err, response, body) => {
-          res.send(body);
-        });
       }
+      request({ method: 'GET', url: assetURL, encoding: null }, (err, response, body) => {
+        res.send(body);
+      });
     });
 }
 
 export function getProjectsForUserName(username) {
-  
+
 }
 
 export function getProjects(req, res) {
