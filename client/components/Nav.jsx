@@ -91,19 +91,6 @@ class Nav extends React.PureComponent {
               );
             }
           })()}
-          {(() => { // eslint-disable-line
-            if (this.props.user.authenticated) {
-              return (
-                <li className="nav__item">
-                  <p className="nav__open">
-                    <Link to={'/myclassrooms'}>
-                      Classrooms
-                    </Link>
-                  </p>
-                </li>
-              );
-            }
-          })()}
           <li className="nav__item">
             <p className="nav__open">
               <Link
