@@ -118,7 +118,7 @@ export function listObjectsInS3ForUser(req, res) {
       }
     };
     let assets = [];
-    const list = client.listObjects(params)
+    client.listObjects(params)
       .on('data', (data) => {
         assets = assets.concat(data.Contents.map(object => ({ key: object.Key, size: object.Size })));
       })

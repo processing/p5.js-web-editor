@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
@@ -40,8 +39,16 @@ class AssignmentSubmissions extends React.Component {
     return (
       <section className="sketch-list" aria-label="submissions list" tabIndex="0" role="main" id="submissionlist">
         <header className="sketch-list__header">
-          <h2 className="sketch-list__header-title">Submissions for {this.props.assignment.name} in {this.props.classroom.name}</h2>
-          <button className="sketch-list__exit-button" onClick={() => { browserHistory.push('/submitsketch'); /* this.submitAssignment(); */ }}>
+          <h2 className="sketch-list__header-title">
+            Submissions for {this.props.assignment.name} in {this.props.classroom.name}
+          </h2>
+          <button
+            className="sketch-list__exit-button"
+            onClick={() => {
+              browserHistory.push('/submitsketch');
+              /* this.submitAssignment(); */
+            }}
+          >
             Submit Assignment
           </button>
           <button className="sketch-list__exit-button" onClick={this.goBackToAssignmentList}>

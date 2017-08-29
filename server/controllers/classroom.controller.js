@@ -1,22 +1,21 @@
-import archiver from 'archiver';
-import request from 'request';
-import moment from 'moment';
 import Classroom from '../models/classroom';
 import Project from '../models/project';
-import User from '../models/user';
 
-export function classroomExists(classroom_id, callback) {
-  Classroom.findById(classroom_id, (findClassroomErr, classroom) => {
-    classroom ? callback(true) : callback(false);
+export function classroomExists(classroomId, callback) {
+  Classroom.findById(classroomId, (findClassroomErr, classroom) => {
+    if (classroom) {
+      return callback(true);
+    }
+    return callback(false);
   });
 }
 
-export function assignmentExists(classroom_id, assignment_id, callback) {
-  Classroom.findById(classroom_id, (findClassroomErr, classroom) => {
+export function assignmentExists(classroomId, assignmentId, callback) {
+  Classroom.findById(classroomId, (findClassroomErr, classroom) => {
     if (classroom) {
       let foundAssignment = false;
       classroom.assignments.forEach((assignment) => {
-        if (assignment.id === assignment_id) {
+        if (assignment.id === assignmentId) {
           foundAssignment = true;
         }
       });
@@ -91,7 +90,7 @@ export function getClassroom(req, res) {
 }
 
 export function deleteClassroom(req, res) {
-	// Project.findById(req.params.project_id, (findProjectErr, project) => {
+  // Project.findById(req.params.project_id, (findProjectErr, project) => {
   Classroom.findById(req.params.classroom_id, (err, classroom) => {
     if (!req.user/* || !classroom.user.equals(req.user._id) */) {
       res.status(403).json({ success: false, message: 'Session does not match owner of project.' });
@@ -150,10 +149,10 @@ export function downloadClassroomAsZip(req, res) {
   res.send('Workin on this...');
 }
 
-export function getAssignmentProjects(req, res) {
+export function getAssignmentProjects(req, res) { // eslint-disable-line
   Classroom.findById(req.params.classroom_id)
     .populate('user', 'username')
-    .exec((err, classroom) => {
+    .exec((err, classroom) => { // eslint-disable-line
       if (err || !classroom) {
         console.log('no classroom found...');
         return res.status(404).send({ message: 'Classroom with that id does not exist' });
@@ -173,7 +172,7 @@ export function getAssignmentProjects(req, res) {
           _id: {
             $in: projectids
           }
-        }).exec((err, projects) => {
+        }).exec((findErr, projects) => {
           res.json(projects);
         });
       } else {

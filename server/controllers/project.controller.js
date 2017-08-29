@@ -139,7 +139,7 @@ export function getProjectsForUserId(userId) {
 export function getProjectAsset(req, res) {
   Project.findById(req.params.project_id)
     .populate('user', 'username')
-    .exec((err, project) => {
+    .exec((err, project) => { // eslint-disable-line
       if (err) {
         return res.status(404).send({ message: 'Project with that id does not exist' });
       }
@@ -157,7 +157,7 @@ export function getProjectAsset(req, res) {
       if (!assetURL) {
         return res.status(404).send({ message: 'Asset does not exist' });
       }
-      request({ method: 'GET', url: assetURL, encoding: null }, (err, response, body) => {
+      request({ method: 'GET', url: assetURL, encoding: null }, (fetchErr, response, body) => {
         res.send(body);
       });
     });
@@ -198,7 +198,7 @@ export function getProjectsForUser(req, res) {
 }
 
 function bundleExternalLibs(project, zip, callback) {
-  const rootFile = project.files.find(file => file.name === 'root');
+  // const rootFile = project.files.find(file => file.name === 'root');
   const indexHtml = project.files.find(file => file.name === 'index.html');
   let numScriptsResolved = 0;
   let numScriptTags = 0;
