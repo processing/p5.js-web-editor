@@ -12,7 +12,7 @@ body, input {
 	}
 }
 
-body, input, button {
+body, input, button, textarea {
 	font-family: Montserrat, sans-serif;
 }
 
@@ -27,11 +27,11 @@ a {
 	}
 }
 
-input, button {
+input, textarea, button {
 	font-size: 1rem;
 }
 
-input {
+input, textarea {
 	padding: #{5 / $base-font-size}rem;
 	border: 1px solid ;
 	border-radius: 2px;

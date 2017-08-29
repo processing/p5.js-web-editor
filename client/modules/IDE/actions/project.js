@@ -82,7 +82,6 @@ export function saveProject(autosave = false) {
       return axios.put(`${ROOT_URL}/projects/${state.project.id}`, formParams, { withCredentials: true })
         .then((response) => {
           dispatch(setUnsavedChanges(false));
-          console.log(response.data);
           dispatch(setProject(response.data));
           dispatch({
             type: ActionTypes.PROJECT_SAVE_SUCCESS
@@ -241,7 +240,6 @@ export function cloneProject() {
       axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
         .then((response) => {
           browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
-          console.log(response.data);
           dispatch({
             type: ActionTypes.NEW_PROJECT,
             project: response.data,

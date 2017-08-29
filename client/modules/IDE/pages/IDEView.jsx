@@ -21,6 +21,7 @@ import Console from '../components/Console';
 import Toast from '../components/Toast';
 import * as FileActions from '../actions/files';
 import * as IDEActions from '../actions/ide';
+import * as ClassroomActions from '../actions/classroom';
 import * as ProjectActions from '../actions/project';
 import * as EditorAccessibilityActions from '../actions/editorAccessibility';
 import * as PreferencesActions from '../actions/preferences';
@@ -31,6 +32,11 @@ import { getHTMLFile } from '../reducers/files';
 import Overlay from '../../App/components/Overlay';
 import SketchList from '../components/SketchList';
 import AssetList from '../components/AssetList';
+import ClassroomList from '../components/ClassroomList';
+import ClassroomView from '../components/ClassroomView';
+import ClassroomSettingsForm from '../components/ClassroomSettings';
+import AssignmentSettingsForm from '../components/AssignmentSettings';
+import SubmitSketch from '../components/SubmitSketch';
 import About from '../components/About';
 
 class IDEView extends React.Component {
@@ -52,6 +58,12 @@ class IDEView extends React.Component {
       const id = this.props.params.project_id;
       if (id !== this.props.project.id) {
         this.props.getProject(id);
+      }
+    }
+    if (this.props.params.classroom_id) {
+      const id = this.props.params.classroom_id;
+      if (id !== this.props.classroom.id) {
+        this.props.getClassroom(id);
       }
     }
 
@@ -89,6 +101,10 @@ class IDEView extends React.Component {
       if (nextProps.params.project_id !== nextProps.project.id) {
         this.props.getProject(nextProps.params.project_id);
       }
+    }
+
+    if (nextProps.params.classroom_id && !this.props.params.classroom_id) {
+      this.props.getClassroom(nextProps.params.classroom_id);
     }
 
     if (nextProps.preferences.theme !== this.props.preferences.theme) {
@@ -457,6 +473,68 @@ class IDEView extends React.Component {
           }
         })()}
         {(() => { // eslint-disable-line
+          if (this.props.location.pathname.match('classroomsettings/')) {
+            return (
+              <Overlay>
+                <ClassroomSettingsForm
+                  classroom={this.props.classroom}
+                  username={this.props.params.username}
+                  previousPath={this.props.ide.previousPath}
+                />
+              </Overlay>
+            );
+          }
+        })()}
+        {(() => { // eslint-disable-line
+          if (this.props.location.pathname.match('assignmentsettings')) {
+            return (
+              <Overlay>
+                <AssignmentSettingsForm
+                  classroom={this.props.classroom}
+                  username={this.props.params.username}
+                  previousPath={this.props.ide.previousPath}
+                />
+              </Overlay>
+            );
+          }
+        })()}
+        {(() => { // eslint-disable-line
+          if (this.props.location.pathname.match('submitsketch')) {
+            return (
+              <Overlay>
+                <SubmitSketch
+                  username={this.props.params.username}
+                  previousPath={this.props.ide.previousPath}
+                />
+              </Overlay>
+            );
+          }
+        })()}
+        {(() => { // eslint-disable-line
+          if (this.props.location.pathname.match('/myclassrooms')) {
+            return (
+              <Overlay>
+                <ClassroomList
+                  username={this.props.params.username}
+                  previousPath={this.props.ide.previousPath}
+                />
+              </Overlay>
+            );
+          }
+        })()}
+        {(() => { // eslint-disable-line
+          if (this.props.location.pathname.match('/classroom/')) {
+            return (
+              <Overlay>
+                <ClassroomView
+                  username={this.props.params.username}
+                  previousPath={this.props.ide.previousPath}
+                />
+              </Overlay>
+            );
+          }
+        })()}
+        {(() => { // eslint-disable-line
           if (this.props.location.pathname === '/about') {
             return (
               <Overlay
@@ -534,6 +612,7 @@ class IDEView extends React.Component {
 IDEView.propTypes = {
   params: PropTypes.shape({
     project_id: PropTypes.string,
+    classroom_id: PropTypes.string,
     username: PropTypes.string,
     reset_password_token: PropTypes.string,
   }).isRequired,
@@ -541,6 +620,7 @@ IDEView.propTypes = {
     pathname: PropTypes.string
   }).isRequired,
   getProject: PropTypes.func.isRequired,
+  getClassroom: PropTypes.func.isRequired,
   user: PropTypes.shape({
     authenticated: PropTypes.bool.isRequired,
     id: PropTypes.string,
@@ -583,6 +663,10 @@ IDEView.propTypes = {
       id: PropTypes.string
     }),
     updatedAt: PropTypes.string
+  }).isRequired,
+  classroom: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired
   }).isRequired,
   setProjectName: PropTypes.func.isRequired,
   setServeSecure: PropTypes.func.isRequired,
@@ -701,7 +785,8 @@ function mapStateToProps(state) {
     user: state.user,
     project: state.project,
     toast: state.toast,
-    console: state.console
+    console: state.console,
+    classroom: state.classroom
   };
 }
 
@@ -710,6 +795,7 @@ function mapDispatchToProps(dispatch) {
     EditorAccessibilityActions,
     FileActions,
     ProjectActions,
+    ClassroomActions,
     IDEActions,
     PreferencesActions,
     UserActions,

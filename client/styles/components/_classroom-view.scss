@@ -1,0 +1,123 @@
+.assignment-list {
+  @extend %modal;
+  display: flex;
+  flex-wrap: wrap;
+  flex-flow: column;
+  width: #{825 / $base-font-size}rem;
+  height: 80%;
+  outline: none;
+}
+
+.assignment-list__header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.assignment-list__header-title {  
+  padding: #{40 / $base-font-size}rem #{16 / $base-font-size}rem #{0 / $base-font-size}rem #{21 / $base-font-size}rem;
+}
+
+.assignment-list__instructors {
+  padding-bottom: 4px;
+  font-size: #{12 / $base-font-size}rem;
+}
+
+.assignment-list__nav-buttons {
+  padding: 20px;
+}
+
+.assignment-list__exit-button {
+  @include themify() {
+    @extend %icon;
+  }
+  margin: #{12 / $base-font-size}rem #{16 / $base-font-size}rem;
+}
+
+.visibility-toggle .assignment-list__trash-button {
+  @extend %hidden-element;
+  width:#{20 / $base-font-size}rem;
+  height:#{20 / $base-font-size}rem;
+}
+
+.visibility-toggle:hover .assignment-list__trash-button {
+   @include themify() {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    position: initial;
+    left: 0;
+    top: 0;
+      & g {
+        opacity: 1;
+        fill: getThemifyVariable('icon-hover-color');
+      }
+  }
+}
+
+.assignment-list__classroom-info {
+  padding-top: 10px;
+  padding-bottom: 22px;
+  padding-left: 35px;
+}
+
+.assignment-list__description {
+  font-size: #{16 / $base-font-size}rem;
+  width: 85%;
+}
+
+.assignment-list__assignments-container {
+  flex: 1 0 0%;
+  overflow-y: scroll;
+  margin-left: 16px;
+  font-size: #{14 / $base-font-size}rem;
+}
+
+.assignment-list__assignment-container {
+  padding: 20px;
+  background-color: #EEE;
+}
+
+.assignment-list__assignment-container:nth-child(odd) {
+  background-color: #DDD;
+}
+
+.assignment-list__assignment-name {
+  font-weight: bold;
+}
+
+.assignment-list__assignment-description {
+  
+}
+
+.assignment-list__assignment-submit {
+  
+}
+
+.assignment-list__assignment-delete {
+  
+}
+
+.assignment-list__assignment-settings {
+  
+}
+
+.assignment-list__assignment-submission-thumbnail {
+  width: 100px;
+  height: 100px;
+}
+
+.assignment-list__assignment-submission-name {
+  font-weight: bold;
+  font-size: #{14 / $base-font-size}rem;
+}
+
+.assignment-list__assignment-submission-attribution {
+  
+}
+
+.assignment-list__hr {
+  border: 0;
+  height: 1px;
+  background-color: #BBB;
+}

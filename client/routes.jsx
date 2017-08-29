@@ -51,6 +51,15 @@ const routes = (store) => {
       <Route path="/:username/sketches" component={IDEView} />
       <Route path="/:username/assets" component={IDEView} />
       <Route path="/:username/account" component={forceToHttps(AccountView)} />
+      <Route path="/assignment/:classroom_id/:assignment_id" component={IDEView} />
+      <Route path="/classroomsettings/:classroom_id" component={IDEView} />
+      <Route path="/classroom/:classroom_id" component={IDEView} />
+      <Route path="/assignmentsettings" component={IDEView} />
+      <Route path="/myclassrooms" component={IDEView} />
+      <Route path="/assignment" component={IDEView} />
+      <Route path="/createclassroom" component={IDEView} />
+      <Route path="/createassignment" component={IDEView} />
+      <Route path="/submitsketch" component={IDEView} />
       <Route path="/about" component={IDEView} />
     </Route>
   );

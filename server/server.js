@@ -21,6 +21,7 @@ import users from './routes/user.routes';
 import sessions from './routes/session.routes';
 import projects from './routes/project.routes';
 import files from './routes/file.routes';
+import classrooms from './routes/classroom.routes';
 import aws from './routes/aws.routes';
 import serverRoutes from './routes/server.routes';
 import embedRoutes from './routes/embed.routes';
@@ -90,6 +91,7 @@ app.use('/api', requestsOfTypeJSON(), users);
 app.use('/api', requestsOfTypeJSON(), sessions);
 app.use('/api', requestsOfTypeJSON(), projects);
 app.use('/api', requestsOfTypeJSON(), files);
+app.use('/api', requestsOfTypeJSON(), classrooms);
 app.use('/api', requestsOfTypeJSON(), aws);
 // this is supposed to be TEMPORARY -- until i figure out
 // isomorphic rendering
