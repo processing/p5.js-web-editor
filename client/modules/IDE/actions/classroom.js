@@ -4,7 +4,6 @@ import * as ActionTypes from '../../../constants';
 import { resetProject } from './project';
 import { setUnsavedChanges,
   justOpenedProject,
-  resetJustOpenedProject,
   showErrorModal,
   setPreviousPath } from './ide';
 

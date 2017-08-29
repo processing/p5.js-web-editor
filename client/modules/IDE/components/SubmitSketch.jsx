@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
@@ -56,7 +55,10 @@ class SubmitSketch extends React.Component {
           </button>
         </header>
         <div className="sketches-table-container">
-          <table className="sketches-table" summary="table containing all sketches that can be submitted to this assignment">
+          <table
+            className="sketches-table"
+            summary="table containing all sketches that can be submitted to this assignment"
+          >
             <thead>
               <tr>
                 <th className="sketch-list__trash-column" scope="col"></th>

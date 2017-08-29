@@ -107,9 +107,7 @@
 }
 
 .classroom-list__exit-button {
-  @include themify() {
-    @extend %icon;
-  }
+  @include icon();
   margin: #{12 / $base-font-size}rem #{16 / $base-font-size}rem;
 }
 

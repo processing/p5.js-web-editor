@@ -1,9 +1,7 @@
 import React, { PropTypes } from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import moment from 'moment';
-import { Link, browserHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 import InlineSVG from 'react-inlinesvg';
 import * as ClassroomActions from '../actions/classroom';
 import * as ProjectActions from '../actions/project';
@@ -11,7 +9,6 @@ import * as ToastActions from '../actions/toast';
 
 const leftArrow = require('../../../images/left-arrow.svg');
 const exitUrl = require('../../../images/exit.svg');
-const trashCan = require('../../../images/trash-can.svg');
 
 const humanizeList = require('humanize-list');
 
@@ -197,7 +194,11 @@ class ClassroomView extends React.Component {
                     className="assignment-list__assignment-submission"
                   >
                     { /* Placeholder image */ }
-                    <img alt={sketch.name} src="http://i.imgur.com/AjyQF5I.png" className="assignment-list__assignment-submission-thumbnail" />
+                    <img
+                      alt={sketch.name}
+                      src="http://i.imgur.com/AjyQF5I.png"
+                      className="assignment-list__assignment-submission-thumbnail"
+                    />
                     <div className="assignment-list__assignment-submission-name">{sketch.name}</div>
                     <div className="assignment-list__assignment-submission-attribution">By {sketch.user}</div>
                   </button>

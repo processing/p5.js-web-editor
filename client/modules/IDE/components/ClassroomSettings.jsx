@@ -1,20 +1,13 @@
 import React, { PropTypes } from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import ReactDOM from 'react-dom';
 import { WithContext as ReactTags } from 'react-tag-input';
 import InlineSVG from 'react-inlinesvg';
-import classNames from 'classnames';
-import { Link, browserHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 import * as ClassroomActions from '../actions/classroom';
 
 const leftArrow = require('../../../images/left-arrow.svg');
 const exitUrl = require('../../../images/exit.svg');
-const plusUrl = require('../../../images/plus.svg');
-const minusUrl = require('../../../images/minus.svg');
-const beepUrl = require('../../../sounds/audioAlert.mp3');
-// import { debounce } from 'lodash';
 
 class ClassroomSettingsForm extends React.Component {
   constructor(props) {
@@ -133,11 +126,16 @@ class ClassroomSettingsForm extends React.Component {
   }
 
   render() {
-    const beep = new Audio(beepUrl);
     const { instructorNames, studentNames } = this.state;
 
     return (
-      <section className="classroom-settings" aria-label="classroom settings" tabIndex="0" role="main" id="classroomSettings">
+      <section
+        className="classroom-settings"
+        aria-label="classroom settings"
+        tabIndex="0"
+        role="main"
+        id="classroomSettings"
+      >
         <header className="classroom-settings__header">
           <h2 className="classroom-settings__header-title">Classroom Settings</h2>
           <button

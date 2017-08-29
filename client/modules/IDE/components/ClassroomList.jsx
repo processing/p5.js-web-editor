@@ -1,16 +1,13 @@
 import React, { PropTypes } from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import moment from 'moment';
-import { Link, browserHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 import InlineSVG from 'react-inlinesvg';
 import * as ClassroomActions from '../actions/classroom';
 import * as ProjectActions from '../actions/project';
 import * as ToastActions from '../actions/toast';
 
 const exitUrl = require('../../../images/exit.svg');
-const trashCan = require('../../../images/trash-can.svg');
 
 class ClassroomList extends React.Component {
   constructor(props) {
@@ -43,9 +40,14 @@ class ClassroomList extends React.Component {
   }
 
   render() {
-    const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
     return (
-      <section className="classroom-list" aria-label="classroom list" tabIndex="0" role="main" id="classroomlist">
+      <section
+        className="classroom-list"
+        aria-label="classroom list"
+        tabIndex="0"
+        role="main"
+        id="classroomlist"
+      >
         <header className="classroom-list__header">
           <h2 className="classroom-list__header-title">Open a Classroom</h2>
           <button className="classroom-list__exit-button" onClick={this.closeClassroomList}>
@@ -114,7 +116,13 @@ class ClassroomList extends React.Component {
             )}
           </div>
         </div>
-        <button className="classroom-list__exit-button" onClick={() => { this.props.createNewClassroom(); this.props.getClassrooms(this.props.username); }}>
+        <button
+          className="classroom-list__exit-button"
+          onClick={() => {
+            this.props.createNewClassroom();
+            this.props.getClassrooms(this.props.username);
+          }}
+        >
           Create new Classroom
         </button>
       </section>
@@ -123,9 +131,6 @@ class ClassroomList extends React.Component {
 }
 
 ClassroomList.propTypes = {
-  user: PropTypes.shape({
-    username: PropTypes.string
-  }).isRequired,
   getClassrooms: PropTypes.func.isRequired,
   createNewClassroom: PropTypes.func.isRequired,
   classrooms: PropTypes.arrayOf(PropTypes.shape({
