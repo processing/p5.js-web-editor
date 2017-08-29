@@ -15,6 +15,7 @@ import ShareModal from '../components/ShareModal';
 import KeyboardShortcutModal from '../components/KeyboardShortcutModal';
 import ErrorModal from '../components/ErrorModal';
 import HelpModal from '../components/HelpModal';
+import ReviewThumbnailModal from '../components/ReviewThumbnailModal';
 import Nav from '../../../components/Nav';
 import Console from '../components/Console';
 import Toast from '../components/Toast';
@@ -345,15 +346,15 @@ class IDEView extends React.Component {
               <div className="preview-frame-holder">
                 <header className="preview-frame__header">
                   <h2 className="preview-frame__title">Preview</h2>
+                  <button
+                    className="preview-frame__generate-thumb-button"
+                    onClick={() => {
+                      this.props.generateThumbnail();
+                    }}
+                  >
+                    Generate Thumbnail
+                  </button>
                 </header>
-                <button
-                  className="preview-frame__generate-thumb-button"
-                  onClick={() => {
-                    this.props.generateThumbnail();
-                  }}
-                >
-                  Generate Thumbnail
-                </button>
                 <div className="preview-frame-overlay" ref={(element) => { this.overlay = element; }}>
                 </div>
                 <div>
@@ -488,6 +489,18 @@ class IDEView extends React.Component {
             );
           }
         })()}
+        {(() => { // eslint-disable-line
+          if (this.props.ide.reviewThumbnailModalOpen) {
+            return (
+              <Overlay>
+                <ReviewThumbnailModal
+                  type={this.props.ide.helpType}
+                  closeModal={this.props.hideReviewThumbnailModal}
+                />
+              </Overlay>
+            );
+          }
+        })()}
       </div>
 
     );
@@ -533,7 +546,8 @@ IDEView.propTypes = {
     justOpenedProject: PropTypes.bool.isRequired,
     errorType: PropTypes.string,
     helpType: PropTypes.string,
-    thumbnailIsBeingGenerated: PropTypes.bool.isRequired
+    thumbnailIsBeingGenerated: PropTypes.bool.isRequired,
+    reviewThumbnailModalOpen: PropTypes.bool.isRequired,
   }).isRequired,
   stopSketch: PropTypes.func.isRequired,
   startAccessibleOutput: PropTypes.func.isRequired,
@@ -652,7 +666,8 @@ IDEView.propTypes = {
   persistState: PropTypes.func.isRequired,
   showHelpModal: PropTypes.func.isRequired,
   hideHelpModal: PropTypes.func.isRequired,
-  generateThumbnail: PropTypes.func.isRequired
+  generateThumbnail: PropTypes.func.isRequired,
+  hideReviewThumbnailModal: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {

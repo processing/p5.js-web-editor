@@ -19,7 +19,9 @@ const initialState = {
   justOpenedProject: false,
   previousPath: '/',
   errorType: undefined,
-  thumbnailIsBeingGenerated: false
+  thumbnailIsBeingGenerated: false,
+  thumbnailImg: null,
+  reviewThumbnailModalOpen: false,
 };
 
 const ide = (state = initialState, action) => {
@@ -99,7 +101,9 @@ const ide = (state = initialState, action) => {
     case ActionTypes.GENERATE_THUMBNAIL:
       return Object.assign({}, state, { thumbnailIsBeingGenerated: true });
     case ActionTypes.THUMBNAIL_GENERATED:
-      return Object.assign({}, state, { thumbnailIsBeingGenerated: false });
+      return Object.assign({}, state, { thumbnailIsBeingGenerated: false, reviewThumbnailModalOpen: true, thumbnailImg: action.img });
+    case ActionTypes.HIDE_REVIEW_THUMBNAIL_MODAL:
+      return Object.assign({}, state, { reviewThumbnailModalOpen: true, thumbnailImg: null });
     default:
       return state;
   }

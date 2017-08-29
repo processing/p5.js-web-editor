@@ -35,4 +35,17 @@
   padding-left: #{5 / $base-font-size}rem;
   font-size: #{12 / $base-font-size}rem;
   font-weight: normal;
+  width: 50%;
+  float: left;
+}
+
+.preview-frame__generate-thumb-button {
+  height: #{29 / $base-font-size}rem;
+  padding-top: #{5 / $base-font-size}rem;
+  padding-left: #{5 / $base-font-size}rem;
+  font-size: #{12 / $base-font-size}rem;
+  font-weight: normal;
+  width: 50%;
+  float: right;
+  text-align: right;
 }

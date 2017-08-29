@@ -240,8 +240,9 @@ export function generateThumbnail() {
   };
 }
 
-export function dispatchThumbnailRenderedEvent() {
+export function dispatchThumbnailRenderedEvent(imgDataURL) {
   return {
-    type: ActionTypes.THUMBNAIL_GENERATED
+    type: ActionTypes.THUMBNAIL_GENERATED,
+    img: imgDataURL
   };
 }
