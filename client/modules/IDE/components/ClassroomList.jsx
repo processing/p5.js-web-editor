@@ -12,19 +12,9 @@ const exitUrl = require('../../../images/exit.svg');
 class ClassroomList extends React.Component {
   constructor(props) {
     super(props);
-    this.closeClassroomList = this.closeClassroomList.bind(this);
     this.openClassroomActionsPopup = this.openClassroomActionsPopup.bind(this);
     this.closeClassroomActionsPopup = this.closeClassroomActionsPopup.bind(this);
     this.props.getClassrooms(this.props.username);
-  }
-
-  componentDidMount() {
-    document.getElementById('classroomlist').focus();
-  }
-
-  closeClassroomList() {
-    // browserHistory.push(this.props.previousPath);
-    browserHistory.push('/');
   }
 
   openClassroomActionsPopup(id) {
@@ -41,19 +31,7 @@ class ClassroomList extends React.Component {
 
   render() {
     return (
-      <section
-        className="classroom-list"
-        aria-label="classroom list"
-        tabIndex="0"
-        role="main"
-        id="classroomlist"
-      >
-        <header className="classroom-list__header">
-          <h2 className="classroom-list__header-title">Open a Classroom</h2>
-          <button className="classroom-list__exit-button" onClick={this.closeClassroomList}>
-            <InlineSVG src={exitUrl} alt="Close Classroom List Overlay" />
-          </button>
-        </header>
+      <div className="classroom-list">
         <div className="classrooms-grid-container">
           <div className="classrooms-grid" summary="grid containing all classes you own or are a member of">
             {this.props.classrooms.map(classroom =>
@@ -89,7 +67,7 @@ class ClassroomList extends React.Component {
                   <div className="classrooms-grid-tile-thumbnail-buttons">
                     <button
                       className="classrooms-grid-tile-button-open"
-                      onClick={() => browserHistory.push(`/classroom/${classroom._id}`)}
+                      onClick={() => browserHistory.replace(`/classroom/${classroom._id}`)}
                     >
                     </button>
                     <button className="classrooms-grid-tile-button classrooms-grid-tile-button-share">
@@ -117,7 +95,7 @@ class ClassroomList extends React.Component {
           </div>
         </div>
         <button
-          className="classroom-list__exit-button"
+          className="classroom-list__create-button"
           onClick={() => {
             this.props.createNewClassroom();
             this.props.getClassrooms(this.props.username);
@@ -125,7 +103,7 @@ class ClassroomList extends React.Component {
         >
           Create new Classroom
         </button>
-      </section>
+      </div>
     );
   }
 }
@@ -141,7 +119,6 @@ ClassroomList.propTypes = {
   })).isRequired,
   username: PropTypes.string,
   deleteClassroom: PropTypes.func.isRequired,
-  // previousPath: PropTypes.string.isRequired,
 };
 
 ClassroomList.defaultProps = {

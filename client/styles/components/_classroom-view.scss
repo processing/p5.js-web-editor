@@ -1,11 +1,8 @@
 .assignment-list {
-  @extend %modal;
-  display: flex;
-  flex-wrap: wrap;
-  flex-flow: column;
-  width: #{825 / $base-font-size}rem;
-  height: 80%;
-  outline: none;
+  overflow-y: scroll;
+  max-width: 100%;
+  width: #{1000 / $base-font-size}rem;
+  min-height: #{400 / $base-font-size}rem;
 }
 
 .assignment-list__header {
@@ -69,6 +66,7 @@
   overflow-y: scroll;
   margin-left: 16px;
   font-size: #{14 / $base-font-size}rem;
+  margin-bottom: #{30 / $base-font-size}rem;
 }
 
 .assignment-list__assignment-container {

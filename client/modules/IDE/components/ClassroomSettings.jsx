@@ -22,9 +22,6 @@ class ClassroomSettingsForm extends React.Component {
       newDescription: ''
     };
 
-    this.closeClassroomSettingsPage = this.closeClassroomSettingsPage.bind(this);
-    this.goBackToClassroom = this.goBackToClassroom.bind(this);
-
     this.handleUpdateClassroom = this.handleUpdateClassroom.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
@@ -55,15 +52,6 @@ class ClassroomSettingsForm extends React.Component {
         text: member.name
       });
     });
-  }
-
-  closeClassroomSettingsPage() {
-    // browserHistory.push(this.props.previousPath);
-    browserHistory.push('/');
-  }
-
-  goBackToClassroom() {
-    browserHistory.push(`/classroom/${this.props.classroom._id}`);
   }
 
   handleUpdateClassroom(e) {
@@ -129,32 +117,13 @@ class ClassroomSettingsForm extends React.Component {
     const { instructorNames, studentNames } = this.state;
 
     return (
-      <section
+      <div
         className="classroom-settings"
         aria-label="classroom settings"
         tabIndex="0"
         role="main"
         id="classroomSettings"
       >
-        <header className="classroom-settings__header">
-          <h2 className="classroom-settings__header-title">Classroom Settings</h2>
-          <button
-            className="classroom-settings__exit-button"
-            onClick={this.goBackToClassroom}
-            title="back"
-            aria-label="back to classroom"
-          >
-            <InlineSVG src={leftArrow} alt="Back To Classroom" />
-          </button>
-          <button
-            className="classroom-settings__exit-button"
-            onClick={this.closeClassroomSettingsPage}
-            title="exit"
-            aria-label="exit preferences"
-          >
-            <InlineSVG src={exitUrl} alt="Exit Classroom Settings" />
-          </button>
-        </header>
         <form className="classroom-settings__form">
           Name:
           <br />
@@ -203,7 +172,7 @@ class ClassroomSettingsForm extends React.Component {
             onClick={this.handleUpdateClassroom}
           />
         </form>
-      </section>
+      </div>
     );
   }
 }

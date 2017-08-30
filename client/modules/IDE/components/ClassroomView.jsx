@@ -16,7 +16,6 @@ class ClassroomView extends React.Component {
   constructor(props) {
     super(props);
 
-    this.closeClassroomView = this.closeClassroomView.bind(this);
     this.createNewAssignment = this.createNewAssignment.bind(this);
     this.goToAssignmentSubmissionPage = this.goToAssignmentSubmissionPage.bind(this);
     this.goBackToClassroomList = this.goBackToClassroomList.bind(this);
@@ -49,11 +48,6 @@ class ClassroomView extends React.Component {
     return instructorsString;
   }
 
-  closeClassroomView() {
-    // browserHistory.push(this.props.previousPath);
-    browserHistory.push('/');
-  }
-
   createNewAssignment() {
     /* const assignment = {
       name: 'New Assignment',
@@ -77,27 +71,27 @@ class ClassroomView extends React.Component {
   goToAssignmentSubmissionPage(assignment) {
     // this.props.assignment = assignment;
     this.props.setAssignment(assignment);
-    browserHistory.push('/submitsketch');
+    browserHistory.replace('/submitsketch');
     // browserHistory.push(`/assignment/${this.props.classroom._id}/${assignment._id}`);
   }
 
   goToAssignmentSettingsPage(assignment) {
     this.props.getClassroom(this.props.classroom._id);
     this.props.setAssignment(assignment);
-    browserHistory.push('/assignmentsettings');
+    browserHistory.replace('/assignmentsettings');
   }
 
   goBackToClassroomList() {
-    browserHistory.push('/myclassrooms');
+    browserHistory.replace('/myclassrooms');
   }
 
   openClassroomSettings() {
     this.props.getClassroom(this.props.classroom._id);
-    browserHistory.push(`/classroomsettings/${this.props.classroom._id}`);
+    browserHistory.replace(`/classroomsettings/${this.props.classroom._id}`);
   }
 
   openSketch(sketch) {
-    browserHistory.push(`/username/sketches/${sketch.id}`);
+    browserHistory.push(`/${sketch.user}/sketches/${sketch.id}`);
   }
 
   isUserAnInstructor() {
@@ -134,25 +128,12 @@ class ClassroomView extends React.Component {
     const isOwner = this.isUserAnInstructor();
     return (
       <section className="assignment-list" aria-label="classroom list" tabIndex="0" role="main" id="assignmentlist">
-        <header className="assignment-list__header">
-          <h2 className="assignment-list__header-title">
-            {this.props.classroom.name}
-            <h3 className="assignment-list__instructors">{this.getInstructorUsernames()}</h3>
-          </h2>
-          {isOwner ?
-            <button className="assignment-list__exit-button" onClick={() => { this.openClassroomSettings(); }}>
-              Classroom Settings
-            </button>
-          : null}
-          <div className="assignment-list__nav-buttons">
-            <button className="assignment-list__exit-button" onClick={this.goBackToClassroomList}>
-              <InlineSVG src={leftArrow} alt="Go Back To Classroom List" />
-            </button>
-            <button className="assignment-list__exit-button" onClick={this.closeClassroomView}>
-              <InlineSVG src={exitUrl} alt="Close Assignments List Overlay" />
-            </button>
-          </div>
-        </header>
+        <h3 className="assignment-list__instructors">{this.getInstructorUsernames()}</h3>
+        {isOwner ?
+          <button className="assignment-list__exit-button" onClick={() => { this.openClassroomSettings(); }}>
+            Classroom Settings
+          </button>
+        : null}
         <div className="assignment-list__classroom-info">
           <h3 className="assignment-list__description">{this.props.classroom.description}</h3>
         </div>

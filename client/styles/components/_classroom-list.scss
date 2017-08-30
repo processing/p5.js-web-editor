@@ -1,16 +1,8 @@
 .classroom-list {
-  @extend %modal;
-  display: flex;
-  flex-wrap: wrap;
-  flex-flow: column;
-  width: #{825 / $base-font-size}rem;
-  height: 80%;
-  outline: none;
-}
-
-.classroom-list__header {
-  display: flex;
-  justify-content: space-between;
+  overflow-y: scroll;
+  max-width: 100%;
+  width: #{1000 / $base-font-size}rem;
+  min-height: #{400 / $base-font-size}rem;
 }
 
 .classroom-list__header-title {  
@@ -18,14 +10,17 @@
 }
 
 .classrooms-grid-container {
-  flex: 1 0 0%;
-  overflow-y: scroll;
+  width: 100%;
+  padding: #{10 / $base-font-size}rem #{20 / $base-font-size}rem;
+  border-spacing: 0;
+  background-color: #E6E6E6;
+  height: 80%;
+  overflow-y: hidden;
 }
 
 .classrooms-grid {
   width: 100%;
   padding: #{10 / $base-font-size}rem #{20 / $base-font-size}rem;
-  max-height: 100%;
   border-spacing: 0;
   & .sketch-list__trash-column {
     width: #{23 / $base-font-size}rem;
@@ -109,6 +104,11 @@
 .classroom-list__exit-button {
   @include icon();
   margin: #{12 / $base-font-size}rem #{16 / $base-font-size}rem;
+}
+
+.classroom-list__create-button {
+  width: 100%;
+  height: #{50 / $base-font-size}rem;
 }
 
 .classroom-actions-ellipsis {

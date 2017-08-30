@@ -9,9 +9,6 @@ import * as ClassroomActions from '../actions/classroom';
 import * as ProjectActions from '../actions/project';
 import * as ToastActions from '../actions/toast';
 
-const exitUrl = require('../../../images/exit.svg');
-const trashCan = require('../../../images/trash-can.svg');
-
 class SubmitSketch extends React.Component {
   constructor(props) {
     super(props);
@@ -19,10 +16,6 @@ class SubmitSketch extends React.Component {
     this.submitSketch = this.submitSketch.bind(this);
 
     this.props.getProjects(this.props.username);
-  }
-
-  componentDidMount() {
-    document.getElementById('submitsketch').focus();
   }
 
   submitSketch(sketch) {
@@ -33,10 +26,9 @@ class SubmitSketch extends React.Component {
           name: sketch.name,
           user: this.props.user.username
         });
-        console.log(assignment.submissions);
       }
     });
-    browserHistory.push(this.props.previousPath);
+    browserHistory.replace(`/classroom/${this.props.classroom._id}`);
     this.props.saveClassroom();
   }
 
@@ -47,22 +39,15 @@ class SubmitSketch extends React.Component {
   render() {
     const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
     return (
-      <section className="sketch-list" aria-label="submissions list" tabIndex="0" role="main" id="submitsketch">
-        <header className="sketch-list__header">
-          <h2 className="sketch-list__header-title">Submit a sketch to {this.props.assignment.name}</h2>
-          <button className="sketch-list__exit-button" onClick={this.closeSumbitSketchList}>
-            <InlineSVG src={exitUrl} alt="Close Submissions List Overlay" />
-          </button>
-        </header>
-        <div className="sketches-table-container">
-          <table
-            className="sketches-table"
-            summary="table containing all sketches that can be submitted to this assignment"
-          >
+      <div className="sketches-table-container">
+        { this.props.sketches.length === 0 &&
+          <p className="sketches-table__empty">No sketches.</p>
+        }
+        { this.props.sketches.length > 0 &&
+          <table className="sketches-table" summary="table containing all saved projects">
             <thead>
               <tr>
-                <th className="sketch-list__trash-column" scope="col"></th>
-                <th scope="col">Submission Name</th>
+                <th scope="col">Sketch</th>
                 <th scope="col">Date created</th>
                 <th scope="col">Date updated</th>
               </tr>
@@ -73,36 +58,16 @@ class SubmitSketch extends React.Component {
                 <tr 
                   className="sketches-table__row visibility-toggle"
                   key={sketch.id}
-                  onClick={() => { this.submitSketch(sketch); }}
+                  onClick={() => this.submitSketch(sketch)}
                 >
-                  <td className="sketch-list__trash-column">
-                  {(() => { // eslint-disable-line
-                    if (this.props.username === this.props.user.username || this.props.username === undefined) {
-                      return (
-                        <button
-                          className="sketch-list__trash-button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            if (window.confirm(`Are you sure you want to delete "${sketch.name}"?`)) {
-                              // this.props.deleteProject(sketch.id);
-                            }
-                          }}
-                        >
-                          <InlineSVG src={trashCan} alt="Delete Project" />
-                        </button>
-                      );
-                    }
-                  })()}
-                  </td>
-                  <th scope="row"><Link to={`/${username}/sketches/${sketch.id}`}>{sketch.name}</Link></th>
+                  <th scope="row">{sketch.name}</th>
                   <td>{moment(sketch.createdAt).format('MMM D, YYYY h:mm A')}</td>
                   <td>{moment(sketch.updatedAt).format('MMM D, YYYY h:mm A')}</td>
                 </tr>
               )}
             </tbody>
-          </table>
-        </div>
-      </section>
+          </table>}
+      </div>
     );
   }
 }

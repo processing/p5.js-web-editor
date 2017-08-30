@@ -114,7 +114,7 @@ export function saveClassroom() {
     const state = getState();
     /* if (state.user.id && state.class.owner && state.project.owner.id !== state.user.id) {
       return Promise.reject();
-    }*/
+    } */
     const formParams = Object.assign({}, state.classroom);
     console.log(formParams);
     // formParams.files = [...state.files];

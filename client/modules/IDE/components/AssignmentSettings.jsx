@@ -63,32 +63,13 @@ class AssignmentSettingsForm extends React.Component {
 
   render() {
     return (
-      <section
+      <div
         className="assignment-settings"
         aria-label="assignment settings"
         tabIndex="0"
         role="main"
         id="assignmentSettings"
       >
-        <header className="assignment-settings__header">
-          <h2 className="assignment-settings__header-title">Assignment Settings</h2>
-          <button
-            className="assignment-settings__exit-button"
-            onClick={this.goBackToClassroom}
-            title="back"
-            aria-label="back to classroom"
-          >
-            <InlineSVG src={leftArrow} alt="Back To Classroom" />
-          </button>
-          <button
-            className="assignment-settings__exit-button"
-            onClick={this.closeAssignmentSettingsPage}
-            title="exit"
-            aria-label="exit preferences"
-          >
-            <InlineSVG src={exitUrl} alt="Exit Classroom Settings" />
-          </button>
-        </header>
         <form className="assignment-settings__form">
           Name:
           <br />
@@ -118,7 +99,7 @@ class AssignmentSettingsForm extends React.Component {
             onClick={this.handleUpdateAssignment}
           />
         </form>
-      </section>
+      </div>
     );
   }
 }
