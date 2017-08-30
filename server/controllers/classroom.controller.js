@@ -49,15 +49,6 @@ export function createClassroom(req, res) {
 
 export function updateClassroom(req, res) {
   Classroom.findById(req.params.classroom_id, (findClassroomErr, classroom) => {
-    // !!!!!!!! Need to check ownership of classroom here. !!!!!!!!
-    /* if (!req.user || !classroom.user.equals(req.user._id)) {
-      res.status(403).send({ success: false, message: 'Session does not match owner of project.' });
-      return;
-    }*/
-    // if (req.body.updatedAt && moment(req.body.updatedAt) < moment(project.updatedAt)) {
-    //   res.status(409).send({ success: false, message: 'Attempted to save stale version of project.' });
-    //   return;
-    // }
     Classroom.findByIdAndUpdate(req.params.classroom_id,
       {
         $set: req.body

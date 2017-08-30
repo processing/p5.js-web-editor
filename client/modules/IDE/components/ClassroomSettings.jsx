@@ -2,12 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { WithContext as ReactTags } from 'react-tag-input';
-import InlineSVG from 'react-inlinesvg';
-import { browserHistory } from 'react-router';
 import * as ClassroomActions from '../actions/classroom';
-
-const leftArrow = require('../../../images/left-arrow.svg');
-const exitUrl = require('../../../images/exit.svg');
 
 class ClassroomSettingsForm extends React.Component {
   constructor(props) {

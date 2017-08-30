@@ -2,12 +2,9 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
-import InlineSVG from 'react-inlinesvg';
 import * as ClassroomActions from '../actions/classroom';
 import * as ProjectActions from '../actions/project';
 import * as ToastActions from '../actions/toast';
-
-const exitUrl = require('../../../images/exit.svg');
 
 class ClassroomList extends React.Component {
   constructor(props) {

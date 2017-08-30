@@ -2,13 +2,9 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
-import InlineSVG from 'react-inlinesvg';
 import * as ClassroomActions from '../actions/classroom';
 import * as ProjectActions from '../actions/project';
 import * as ToastActions from '../actions/toast';
-
-const leftArrow = require('../../../images/left-arrow.svg');
-const exitUrl = require('../../../images/exit.svg');
 
 const humanizeList = require('humanize-list');
 
@@ -128,14 +124,19 @@ class ClassroomView extends React.Component {
     const isOwner = this.isUserAnInstructor();
     return (
       <section className="assignment-list" aria-label="classroom list" tabIndex="0" role="main" id="assignmentlist">
-        <h3 className="assignment-list__instructors">{this.getInstructorUsernames()}</h3>
-        {isOwner ?
-          <button className="assignment-list__exit-button" onClick={() => { this.openClassroomSettings(); }}>
-            Classroom Settings
-          </button>
-        : null}
         <div className="assignment-list__classroom-info">
+          <h3 className="assignment-list__instructors">{this.getInstructorUsernames()}</h3>
           <h3 className="assignment-list__description">{this.props.classroom.description}</h3>
+          {isOwner ?
+            <button className="assignment-list__exit-button" onClick={() => { this.openClassroomSettings(); }}>
+              Classroom Settings
+            </button>
+          : null}
+          {isOwner ?
+            <button className="assignment-list__exit-button" onClick={() => { this.createNewAssignment(); }}>
+              Create new Assignment
+            </button>
+          : null}
         </div>
         <div className="assignment-list__assignments-container">
           {this.props.classroom.assignments.map(assignment =>
@@ -188,11 +189,6 @@ class ClassroomView extends React.Component {
             </div>
           )}
         </div>
-        {isOwner ?
-          <button className="assignment-list__exit-button" onClick={() => { this.createNewAssignment(); }}>
-            Create new Assignment
-          </button>
-        : null}
       </section>
     );
   }

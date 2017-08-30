@@ -2,8 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
-import { Link, browserHistory } from 'react-router';
-import InlineSVG from 'react-inlinesvg';
+import { browserHistory } from 'react-router';
 import * as SketchActions from '../actions/projects';
 import * as ClassroomActions from '../actions/classroom';
 import * as ProjectActions from '../actions/project';
@@ -37,7 +36,6 @@ class SubmitSketch extends React.Component {
   }
 
   render() {
-    const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
     return (
       <div className="sketches-table-container">
         { this.props.sketches.length === 0 &&
