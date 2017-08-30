@@ -1,11 +1,9 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
 import * as ActionTypes from '../../../constants';
-import { resetProject } from './project';
 import { setUnsavedChanges,
   justOpenedProject,
-  showErrorModal,
-  setPreviousPath } from './ide';
+  showErrorModal } from './ide';
 
 const ROOT_URL = process.env.API_URL;
 
@@ -53,11 +51,6 @@ export function deleteClassroom(id) {
   return (dispatch, getState) => {
     axios.delete(`${ROOT_URL}/classrooms/${id}`, { withCredentials: true })
       .then(() => {
-        const state = getState();
-        if (id === state.project.id) {
-          dispatch(resetProject());
-          dispatch(setPreviousPath('/'));
-        }
         dispatch({
           type: ActionTypes.DELETE_CLASSROOM,
           id
@@ -116,12 +109,10 @@ export function saveClassroom() {
       return Promise.reject();
     } */
     const formParams = Object.assign({}, state.classroom);
-    console.log(formParams);
     // formParams.files = [...state.files];
     // if (state.classroom.id) {
     return axios.put(`${ROOT_URL}/classrooms/${state.classroom._id}`, formParams, { withCredentials: true })
       .then((response) => {
-        console.log(response);
         dispatch(setUnsavedChanges(false));
         dispatch({
           type: ActionTypes.SET_CLASSROOM,
@@ -132,7 +123,6 @@ export function saveClassroom() {
         });
       })
       .catch((response) => {
-        console.log(response);
         if (response.status === 403) {
           dispatch(showErrorModal('staleSession'));
         } else if (response.status === 409) {
@@ -183,12 +173,10 @@ export function saveClassroom() {
 }
 
 export function getSubmissions(classroom, assignment) {
-  console.log('getSubmissions');
   return (dispatch) => {
     const url = `${ROOT_URL}/classroom/${classroom._id}/${assignment._id}/projects`;
     axios.get(url, { withCredentials: true })
       .then((response) => {
-        console.log(response.data);
         dispatch({
           type: ActionTypes.SET_PROJECTS,
           projects: response.data
@@ -214,7 +202,6 @@ export function updateClassroom() {
   return (dispatch, getState) => {
     const state = getState();
     const formParams = Object.assign({}, state.classroom);
-    console.log(formParams);
     return axios.put(`${ROOT_URL}/classrooms/${state.classroom._id}`, formParams, { withCredentials: true })
       .then((response) => {
         dispatch(setUnsavedChanges(false));

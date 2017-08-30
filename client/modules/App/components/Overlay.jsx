@@ -2,12 +2,14 @@ import React, { PropTypes } from 'react';
 import InlineSVG from 'react-inlinesvg';
 import { browserHistory } from 'react-router';
 
+const leftArrow = require('../../../images/left-arrow.svg');
 const exitUrl = require('../../../images/exit.svg');
 
 class Overlay extends React.Component {
   constructor(props) {
     super(props);
     this.close = this.close.bind(this);
+    this.goBack = this.goBack.bind(this);
   }
 
   componentDidMount() {
@@ -20,6 +22,10 @@ class Overlay extends React.Component {
     } else {
       this.props.closeOverlay();
     }
+  }
+
+  goBack() {
+    browserHistory.push(this.props.backButtonPath);
   }
 
   render() {
@@ -40,9 +46,16 @@ class Overlay extends React.Component {
           >
             <header className="overlay__header">
               <h2 className="overlay__title">{title}</h2>
-              <button className="overlay__close-button" onClick={this.close}>
-                <InlineSVG src={exitUrl} alt="close overlay" />
-              </button>
+              <div className="overlay__navigation_buttons_container">
+                {(this.props.backButtonPath !== null) ?
+                  <button className="overlay__back-button" onClick={this.goBack}>
+                    <InlineSVG src={leftArrow} alt="go back to previous page" />
+                  </button>
+                : null}
+                <button className="overlay__close-button" onClick={this.close}>
+                  <InlineSVG src={exitUrl} alt="close overlay" />
+                </button>
+              </div>
             </header>
             {children}
           </section>
@@ -57,14 +70,16 @@ Overlay.propTypes = {
   closeOverlay: PropTypes.func,
   title: PropTypes.string,
   ariaLabel: PropTypes.string,
-  previousPath: PropTypes.string.isRequired
+  previousPath: PropTypes.string.isRequired,
+  backButtonPath: PropTypes.string,
 };
 
 Overlay.defaultProps = {
   children: null,
   title: 'Modal',
   closeOverlay: null,
-  ariaLabel: 'modal'
+  ariaLabel: 'modal',
+  backButtonPath: null,
 };
 
 export default Overlay;

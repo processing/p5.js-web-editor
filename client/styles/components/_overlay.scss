@@ -33,6 +33,15 @@
   flex: 1 0 auto;
 }
 
+.overlay__navigation_buttons_container {
+  
+}
+
+.overlay__back-button {
+  @include icon();
+  padding: #{12 / $base-font-size}rem #{16 / $base-font-size}rem;
+}
+
 .overlay__close-button {
   @include icon();
   padding: #{12 / $base-font-size}rem #{16 / $base-font-size}rem;

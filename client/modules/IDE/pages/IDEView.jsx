@@ -474,11 +474,12 @@ class IDEView extends React.Component {
         })()}
         {(() => { // eslint-disable-line
           if (this.props.location.pathname.match('/myclassrooms')) {
+            const project = this.props.project;
             return (
               <Overlay
                 ariaLabel="classrooms list"
                 title="Open a Classroom"
-                previousPath={this.props.ide.previousPath}
+                previousPath={project.id ? `/${project.owner.username}/sketches/${project.id}` : '/'}
               >
                 <ClassroomList
                   username={this.props.params.username}
@@ -489,11 +490,13 @@ class IDEView extends React.Component {
         })()}
         {(() => { // eslint-disable-line
           if (this.props.location.pathname.match('/classroom/')) {
+            const project = this.props.project;
             return (
               <Overlay
                 ariaLabel="classroom view"
                 title={this.props.classroom.name}
-                previousPath={this.props.ide.previousPath}
+                previousPath={project.id ? `/${project.owner.username}/sketches/${project.id}` : '/'}
+                backButtonPath={'/myclassrooms'}
               >
                 <ClassroomView
                   username={this.props.params.username}
@@ -504,11 +507,13 @@ class IDEView extends React.Component {
         })()}
         {(() => { // eslint-disable-line
           if (this.props.location.pathname.match('classroomsettings/')) {
+            const project = this.props.project;
             return (
               <Overlay
                 ariaLabel="classroom settings form"
                 title="Classroom Settings"
-                previousPath={this.props.ide.previousPath}
+                previousPath={project.id ? `/${project.owner.username}/sketches/${project.id}` : '/'}
+                backButtonPath={`/classroom/${this.props.classroom.id}`}
               >
                 <ClassroomSettingsForm
                   classroom={this.props.classroom}
@@ -520,11 +525,13 @@ class IDEView extends React.Component {
         })()}
         {(() => { // eslint-disable-line
           if (this.props.location.pathname.match('assignmentsettings')) {
+            const project = this.props.project;
             return (
               <Overlay
                 ariaLabel="assignment settings form"
                 title="Assignment Settings"
-                previousPath={this.props.ide.previousPath}
+                previousPath={project.id ? `/${project.owner.username}/sketches/${project.id}` : '/'}
+                backButtonPath={`/classroom/${this.props.classroom.id}`}
               >
                 <AssignmentSettingsForm
                   classroom={this.props.classroom}
@@ -536,11 +543,13 @@ class IDEView extends React.Component {
         })()}
         {(() => { // eslint-disable-line
           if (this.props.location.pathname.match('submitsketch')) {
+            const project = this.props.project;
             return (
               <Overlay
                 ariaLabel="submit sketch form"
                 title="Submit a Sketch"
-                previousPath={this.props.ide.previousPath}
+                previousPath={project.id ? `/${project.owner.username}/sketches/${project.id}` : '/'}
+                backButtonPath={`/classroom/${this.props.classroom.id}`}
               >
                 <SubmitSketch
                   username={this.props.params.username}
