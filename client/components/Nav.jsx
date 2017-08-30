@@ -81,7 +81,7 @@ class Nav extends React.PureComponent {
     return (
       <nav className="nav" role="navigation" title="main-navigation">
         <ul className="nav__items-left" title="project-menu">
-          <li>
+          <li className="nav__item-logo">
             <InlineSVG src={logoUrl} alt="p5.js logo" />
           </li>
           <li className={navDropdownState.file}>
@@ -239,7 +239,9 @@ class Nav extends React.PureComponent {
                 <InlineSVG src={triangleUrl} />
               </li>
               <li className="nav__dropdown-item">
-                Keyboard Shortcuts
+                <button onClick={this.props.showKeyboardShortcutModal}>
+                  Keyboard Shortcuts
+                </button>
               </li>
               <li className="nav__dropdown-item">
                 <a
@@ -366,7 +368,8 @@ Nav.propTypes = {
   showShareModal: PropTypes.func.isRequired,
   showErrorModal: PropTypes.func.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
-  warnIfUnsavedChanges: PropTypes.func.isRequired
+  warnIfUnsavedChanges: PropTypes.func.isRequired,
+  showKeyboardShortcutModal: PropTypes.func.isRequired
 };
 
 Nav.defaultProps = {

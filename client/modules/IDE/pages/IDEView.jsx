@@ -218,6 +218,7 @@ class IDEView extends React.Component {
           showErrorModal={this.props.showErrorModal}
           unsavedChanges={this.props.ide.unsavedChanges}
           warnIfUnsavedChanges={this.warnIfUnsavedChanges}
+          showKeyboardShortcutModal={this.props.showKeyboardShortcutModal}
         />
         <Toolbar
           className="Toolbar"

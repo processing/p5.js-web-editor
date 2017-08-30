@@ -170,3 +170,12 @@
   z-index: 0;
 }
 
+.nav__item-logo {
+  position: relative;
+  height: #{42 / $base-font-size}rem;
+  width: #{56 / $base-font-size}rem;
+  & span {
+    position: absolute;
+  }
+}
+
