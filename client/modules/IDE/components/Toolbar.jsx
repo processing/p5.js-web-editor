@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import InlineSVG from 'react-inlinesvg';
 
 const playUrl = require('../../../images/play.svg');
-const logoUrl = require('../../../images/p5js-logo.svg');
 const stopUrl = require('../../../images/stop.svg');
 const preferencesUrl = require('../../../images/preferences.svg');
 const editProjectNameUrl = require('../../../images/pencil.svg');
@@ -59,7 +58,6 @@ class Toolbar extends React.Component {
 
     return (
       <div className="toolbar">
-        <InlineSVG className="toolbar__logo" src={logoUrl} alt="p5js Logo" />
         <button
           className="toolbar__play-sketch-button"
           onClick={() => {
