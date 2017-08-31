@@ -180,6 +180,7 @@ class Nav extends React.PureComponent {
               </li>
             </ul>
           </li>
+          {/* TODO--add these things to the nav
           <li className={navDropdownState.edit}>
             <button
               onClick={this.toggleDropdown.bind(this, 'edit')}
@@ -224,6 +225,7 @@ class Nav extends React.PureComponent {
               </li>
             </ul>
           </li>
+          */}
           <li className={navDropdownState.help}>
             <button
               onClick={this.toggleDropdown.bind(this, 'help')}
@@ -334,6 +336,7 @@ class Nav extends React.PureComponent {
               </ul>
             </li>
           </ul> }
+        {/*
         <div className="nav__announce">
           This is a preview version of the editor, that has not yet been officially released.
           It is in development, you can report bugs <a
@@ -343,6 +346,7 @@ class Nav extends React.PureComponent {
           >here</a>.
           Please use with caution.
         </div>
+      */}
       </nav>
     );
   }

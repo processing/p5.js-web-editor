@@ -1,5 +1,5 @@
 .nav {
-	width: 100%;
+	width: calc(100% - #{10 / $base-font-size}rem);
   height: #{42 / $base-font-size}rem;
 	display: flex;
 	flex-direction: row;
