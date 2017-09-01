@@ -77,27 +77,16 @@ export function createNewClassroom() {
           type: ActionTypes.SET_CLASSROOM,
           classroom: response.data
         });
-        // console.log(response.data);
-        // browserHistory.push(`/classroom/${response.data._id}`);
-        /* dispatch(setUnsavedChanges(false));
-        dispatch(setProject(response.data));
-        browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
-        dispatch({
-          type: ActionTypes.NEW_PROJECT,
-          project: response.data,
-          owner: response.data.user,
-          files: response.data.files
-        }); */
       })
       .catch((response) => {
-        /* if (response.status === 403) {
+        if (response.status === 403) {
           dispatch(showErrorModal('staleSession'));
         } else {
           dispatch({
-            type: ActionTypes.PROJECT_SAVE_FAIL,
+            type: ActionTypes.CLASSROOM_SAVE_FAIL,
             error: response.data
           });
-        } */
+        }
       });
   };
 }
@@ -105,13 +94,17 @@ export function createNewClassroom() {
 export function saveClassroom() {
   return (dispatch, getState) => {
     const state = getState();
-    /* if (state.user.id && state.class.owner && state.project.owner.id !== state.user.id) {
+    let isOwner = false;
+    state.classroom.instructors.forEach((instructor) => {
+      if (instructor.username === state.user.username) {
+        isOwner = true;
+      }
+    });
+    if (!isOwner) {
       return Promise.reject();
-    } */
+    }
     const formParams = Object.assign({}, state.classroom);
-    // formParams.files = [...state.files];
-    // if (state.classroom.id) {
-    return axios.put(`${ROOT_URL}/classrooms/${state.classroom._id}`, formParams, { withCredentials: true })
+    return axios.put(`${ROOT_URL}/classrooms/${state.classroom.id}`, formParams, { withCredentials: true })
       .then((response) => {
         dispatch(setUnsavedChanges(false));
         dispatch({
@@ -125,8 +118,6 @@ export function saveClassroom() {
       .catch((response) => {
         if (response.status === 403) {
           dispatch(showErrorModal('staleSession'));
-        } else if (response.status === 409) {
-          dispatch(showErrorModal('staleProject'));
         } else {
           dispatch({
             type: ActionTypes.CLASSROOM_SAVE_FAIL,
@@ -134,47 +125,12 @@ export function saveClassroom() {
           });
         }
       });
-    // }
-
-    /* return axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
-      .then((response) => {
-        dispatch(setUnsavedChanges(false));
-        dispatch(setProject(response.data));
-        browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
-        dispatch({
-          type: ActionTypes.NEW_PROJECT,
-          project: response.data,
-          owner: response.data.user,
-          files: response.data.files
-        });
-        if (!autosave) {
-          if (state.preferences.autosave) {
-            dispatch(showToast(5500));
-            dispatch(setToastText('Project saved.'));
-            setTimeout(() => dispatch(setToastText('Autosave enabled.')), 1500);
-            dispatch(resetJustOpenedProject());
-          } else {
-            dispatch(showToast(1500));
-            dispatch(setToastText('Project saved.'));
-          }
-        }
-      })
-      .catch((response) => {
-        if (response.status === 403) {
-          dispatch(showErrorModal('staleSession'));
-        } else {
-          dispatch({
-            type: ActionTypes.PROJECT_SAVE_FAIL,
-            error: response.data
-          });
-        }
-      }); */
   };
 }
 
 export function getSubmissions(classroom, assignment) {
   return (dispatch) => {
-    const url = `${ROOT_URL}/classroom/${classroom._id}/${assignment._id}/projects`;
+    const url = `${ROOT_URL}/classrooms/${classroom.id}/${assignment.id}/projects`;
     axios.get(url, { withCredentials: true })
       .then((response) => {
         dispatch({
@@ -202,7 +158,7 @@ export function updateClassroom() {
   return (dispatch, getState) => {
     const state = getState();
     const formParams = Object.assign({}, state.classroom);
-    return axios.put(`${ROOT_URL}/classrooms/${state.classroom._id}`, formParams, { withCredentials: true })
+    return axios.put(`${ROOT_URL}/classrooms/${state.classroom.id}`, formParams, { withCredentials: true })
       .then((response) => {
         dispatch(setUnsavedChanges(false));
         dispatch({
@@ -212,7 +168,7 @@ export function updateClassroom() {
         dispatch({
           type: ActionTypes.CLASSROOM_SAVE_SUCCESS
         });
-        browserHistory.push(`/classroom/${state.classroom._id}`);
+        browserHistory.push(`/classrooms/${state.classroom.id}`);
       })
       .catch((response) => {
         if (response.status === 403) {

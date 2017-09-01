@@ -20,7 +20,6 @@ class ClassroomView extends React.Component {
     this.deleteAssignment = this.deleteAssignment.bind(this);
     this.goToAssignmentSettingsPage = this.goToAssignmentSettingsPage.bind(this);
     this.isUserAnInstructor = this.isUserAnInstructor.bind(this);
-    // this.props.getAssignments(this.props.classroomid);
   }
 
   componentDidMount() {
@@ -28,12 +27,12 @@ class ClassroomView extends React.Component {
   }
 
   getInstructorUsernames() {
-    const instructors = this.props.classroom.owners;
+    const instructors = this.props.classroom.instructors;
     if (!instructors) return '';
 
     const instructorNames = [];
     instructors.forEach((instructor) => {
-      instructorNames.push(instructor.name);
+      instructorNames.push(instructor.username);
     });
 
     let instructorsString = 'Instructors: ';
@@ -45,15 +44,6 @@ class ClassroomView extends React.Component {
   }
 
   createNewAssignment() {
-    /* const assignment = {
-      name: 'New Assignment',
-      submissions: []
-    };
-    this.props.classroom.assignments.push(assignment);
-    this.props.saveClassroom(); */
-
-    // browserHistory.push('/createassignment');
-
     const assignment = {
       name: 'New Assignment',
       submissions: []
@@ -61,29 +51,26 @@ class ClassroomView extends React.Component {
     this.props.classroom.assignments.push(assignment);
     this.props.saveClassroom();
     this.props.setAssignment(assignment);
-    // browserHistory.push(`/assignment/${this.props.classroom._id}/${assignment._id}`);
   }
 
   goToAssignmentSubmissionPage(assignment) {
-    // this.props.assignment = assignment;
     this.props.setAssignment(assignment);
-    browserHistory.replace('/submitsketch');
-    // browserHistory.push(`/assignment/${this.props.classroom._id}/${assignment._id}`);
+    browserHistory.replace(`/classrooms/${this.props.classroom.id}/assignments/${assignment.id}/submissions/new`);
   }
 
   goToAssignmentSettingsPage(assignment) {
-    this.props.getClassroom(this.props.classroom._id);
+    this.props.getClassroom(this.props.classroom.id);
     this.props.setAssignment(assignment);
-    browserHistory.replace('/assignmentsettings');
+    browserHistory.replace(`/classrooms/${this.props.classroom.id}/assignments/${assignment.id}/edit`);
   }
 
   goBackToClassroomList() {
-    browserHistory.replace('/myclassrooms');
+    browserHistory.replace('/classrooms');
   }
 
   openClassroomSettings() {
-    this.props.getClassroom(this.props.classroom._id);
-    browserHistory.replace(`/classroomsettings/${this.props.classroom._id}`);
+    this.props.getClassroom(this.props.classroom.id);
+    browserHistory.replace(`/classrooms/${this.props.classroom.id}/edit`);
   }
 
   openSketch(sketch) {
@@ -91,16 +78,16 @@ class ClassroomView extends React.Component {
   }
 
   isUserAnInstructor() {
-    let isOwner = false;
-    if (!this.props.classroom.owners) {
+    let isInstructor = false;
+    if (!this.props.classroom.instructors) {
       return false;
     }
-    this.props.classroom.owners.forEach((owner) => {
-      if (owner.name === this.props.user.username) {
-        isOwner = true;
+    this.props.classroom.instructors.forEach((instructor) => {
+      if (instructor.username === this.props.user.username) {
+        isInstructor = true;
       }
     });
-    return isOwner;
+    return isInstructor;
   }
 
   deleteAssignment(assignmentToDelete) {
@@ -110,7 +97,7 @@ class ClassroomView extends React.Component {
 
     let deleteAssignmentIndex = null;
     this.props.classroom.assignments.forEach((assignment) => {
-      if (assignment._id === assignmentToDelete._id) {
+      if (assignment.id === assignmentToDelete.id) {
         deleteAssignmentIndex = this.props.classroom.assignments.indexOf(assignment);
       }
     });
@@ -140,7 +127,7 @@ class ClassroomView extends React.Component {
         </div>
         <div className="assignment-list__assignments-container">
           {this.props.classroom.assignments.map(assignment =>
-            <div key={assignment._id} className="assignment-list__assignment-container">
+            <div key={assignment.id} className="assignment-list__assignment-container">
               <h3 className="assignment-list__assignment-name">{assignment.name}</h3>
               <h3 className="assignment-list__assignment-description">{assignment.description}</h3>
               {isOwner ?
@@ -166,13 +153,13 @@ class ClassroomView extends React.Component {
                 Submit Sketch
               </button>
               <hr className="assignment-list__hr" />
-              <div key={assignment._id} className="assignment-list__assignment-submissions">
+              <div key={assignment.id} className="assignment-list__assignment-submissions">
                 {assignment.submissions.map(sketch =>
                   <button
                     onClick={() => {
                       this.openSketch(sketch);
                     }}
-                    key={sketch._id}
+                    key={sketch.id}
                     className="assignment-list__assignment-submission"
                   >
                     { /* Placeholder image */ }
@@ -195,17 +182,6 @@ class ClassroomView extends React.Component {
 }
 
 ClassroomView.propTypes = {
-  // getAssignments: PropTypes.func.isRequired,
-  /* assignments: PropTypes.arrayOf(PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    createdAt: PropTypes.string.isRequired
-  })).isRequired, */
-  /* assignment: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    createdAt: PropTypes.string.isRequired
-  }), */
   user: PropTypes.shape({
     username: PropTypes.string
   }).isRequired,
@@ -213,15 +189,15 @@ ClassroomView.propTypes = {
   saveClassroom: PropTypes.func.isRequired,
   getClassroom: PropTypes.func.isRequired,
   classroom: PropTypes.shape({
-    _id: PropTypes.string,
+    id: PropTypes.string,
     name: PropTypes.string,
     description: PropTypes.string,
-    owners: PropTypes.arrayOf(PropTypes.shape({
-      _id: PropTypes.string.isRequired,
+    instructors: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired
     })).isRequired,
     assignments: PropTypes.arrayOf(PropTypes.shape({
-      _id: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       createdAt: PropTypes.string.isRequired,
       submissions: PropTypes.arrayOf(PropTypes.shape({

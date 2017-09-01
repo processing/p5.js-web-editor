@@ -33,8 +33,8 @@ export function createClassroom(req, res) {
   }
 
   const classroom = new Classroom({
-    owners: [{ name: req.user.username, id: req.user._id }],
-    members: [],
+    instructors: [{ username: req.user.username, user_id: req.user.id }],
+    students: [],
     isPrivate: true,
   });
   classroom.save((saveErr) => {
@@ -81,14 +81,13 @@ export function getClassroom(req, res) {
 }
 
 export function deleteClassroom(req, res) {
-  // Project.findById(req.params.project_id, (findProjectErr, project) => {
   Classroom.findById(req.params.classroom_id, (err, classroom) => {
-    if (!req.user/* || !classroom.user.equals(req.user._id) */) {
+    if (!req.user/* || !classroom.user.equals(req.user.id) */) {
       res.status(403).json({ success: false, message: 'Session does not match owner of project.' });
       return;
     }
     // deleteFilesFromS3(project.files);
-    Classroom.remove({ _id: req.params.classroom_id }, (removeProjectError) => {
+    Classroom.remove({ id: req.params.classroom_id }, (removeProjectError) => {
       if (err) {
         res.status(404).send({ message: 'Classroom with that id does not exist' });
         return;
@@ -99,31 +98,25 @@ export function deleteClassroom(req, res) {
 }
 
 export function getClassrooms(req, res) {
-  console.log(req.user);
+  console.log(req);
   if (req.user) {
     Classroom.find(
       { $or: [
-        { owners: { $elemMatch: { name: req.user.username } } },
-        { members: { $elemMatch: { name: req.user.username } } }
+        { instructors: { $elemMatch: { username: req.user.username } } },
+        { students: { $elemMatch: { username: req.user.username } } }
       ] }
     )
       .sort('-createdAt')
-      .select('name owners members id createdAt updatedAt')
+      .select('name instructors students id createdAt updatedAt')
       .exec((err, classrooms) => {
         if (err) {
           console.log(err);
           res.json(err);
         } else {
-          console.log(classrooms);
-          classrooms.forEach((classroom) => {
-            console.log(classroom.owners);
-          });
           res.json(classrooms);
         }
       });
   } else {
-    // could just move this to client side
-    console.log('no user!!!');
     res.json([]);
   }
 }
@@ -145,7 +138,6 @@ export function getAssignmentProjects(req, res) { // eslint-disable-line
     .populate('user', 'username')
     .exec((err, classroom) => { // eslint-disable-line
       if (err || !classroom) {
-        console.log('no classroom found...');
         return res.status(404).send({ message: 'Classroom with that id does not exist' });
       }
       let foundAssignment;
@@ -160,7 +152,7 @@ export function getAssignmentProjects(req, res) { // eslint-disable-line
           projectids.push(submission);
         });
         Project.find({
-          _id: {
+          id: {
             $in: projectids
           }
         }).exec((findErr, projects) => {

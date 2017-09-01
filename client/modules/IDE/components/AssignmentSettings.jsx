@@ -24,7 +24,6 @@ class AssignmentSettingsForm extends React.Component {
   }
 
   componentWillUpdate(nextProps) {
-    console.log(nextProps);
     this.state.newName = nextProps.assignment.name;
     this.state.newDescription = nextProps.assignment.description;
   }
@@ -35,12 +34,12 @@ class AssignmentSettingsForm extends React.Component {
   }
 
   goBackToClassroom() {
-    browserHistory.push(`/classroom/${this.props.classroom._id}`);
+    browserHistory.push(`/classrooms/${this.props.classroom.id}`);
   }
 
   handleUpdateAssignment(e) {
     this.props.classroom.assignments.forEach((assignment) => {
-      if (assignment._id === this.props.assignment._id) {
+      if (assignment.id === this.props.assignment.id) {
         assignment.name = this.state.newName;
         assignment.description = this.state.newDescription;
       }
@@ -102,26 +101,26 @@ class AssignmentSettingsForm extends React.Component {
 
 AssignmentSettingsForm.propTypes = {
   classroom: PropTypes.shape({
-    _id: PropTypes.string,
+    id: PropTypes.string,
     name: PropTypes.string,
     description: PropTypes.string.isRequired,
     assignments: PropTypes.arrayOf(PropTypes.shape({
-      _id: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       createdAt: PropTypes.string.isRequired
     })).isRequired,
-    owners: PropTypes.arrayOf(PropTypes.shape({
-      _id: PropTypes.string.isRequired,
+    instructors: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired
     })).isRequired,
-    members: PropTypes.arrayOf(PropTypes.shape({
-      _id: PropTypes.string.isRequired,
+    students: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired
     })).isRequired
   }).isRequired,
   updateClassroom: PropTypes.func.isRequired,
   assignment: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
   }).isRequired

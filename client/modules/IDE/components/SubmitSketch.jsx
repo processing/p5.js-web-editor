@@ -19,7 +19,7 @@ class SubmitSketch extends React.Component {
 
   submitSketch(sketch) {
     this.props.classroom.assignments.forEach((assignment) => {
-      if (assignment._id === this.props.assignment._id) {
+      if (assignment.id === this.props.assignment.id) {
         assignment.submissions.push({
           id: sketch.id,
           name: sketch.name,
@@ -27,7 +27,7 @@ class SubmitSketch extends React.Component {
         });
       }
     });
-    browserHistory.replace(`/classroom/${this.props.classroom._id}`);
+    browserHistory.replace(`/classrooms/${this.props.classroom.id}`);
     this.props.saveClassroom();
   }
 
@@ -71,27 +71,20 @@ class SubmitSketch extends React.Component {
 }
 
 SubmitSketch.propTypes = {
-  // getSubmissions: PropTypes.func.isRequired,
-  // getAssignments: PropTypes.func.isRequired,
-  /* assignment: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    createdAt: PropTypes.string.isRequired
-  }).isRequired, */
   user: PropTypes.shape({
     username: PropTypes.string
   }).isRequired,
   classroom: PropTypes.shape({
-    _id: PropTypes.string,
+    id: PropTypes.string,
     name: PropTypes.string,
     assignments: PropTypes.arrayOf(PropTypes.shape({
-      _id: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       createdAt: PropTypes.string.isRequired
     })).isRequired
   }).isRequired,
   assignment: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     createdAt: PropTypes.string.isRequired
   }).isRequired,
@@ -118,7 +111,6 @@ function mapStateToProps(state) {
     user: state.user,
     sketches: state.sketches,
     assignment: state.assignment
-    // assignments: state.assignments
   };
 }
 

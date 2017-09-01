@@ -96,7 +96,7 @@ class Nav extends React.PureComponent {
               return (
                 <li className="nav__item">
                   <p className="nav__open">
-                    <Link to={'/myclassrooms'}>
+                    <Link to={'/classrooms'}>
                       Classrooms
                     </Link>
                   </p>

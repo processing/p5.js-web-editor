@@ -27,24 +27,24 @@ class ClassroomSettingsForm extends React.Component {
   }
 
   componentWillUpdate(nextProps) {
-    if (!nextProps.classroom.owners) return;
+    if (!nextProps.classroom.instructors) return;
 
     this.state.newName = nextProps.classroom.name;
     this.state.newDescription = nextProps.classroom.description;
 
     this.state.instructorNames = [];
-    nextProps.classroom.owners.forEach((owner) => {
+    nextProps.classroom.instructors.forEach((instructor) => {
       this.state.instructorNames.push({
         id: this.state.instructorNames.length + 1,
-        text: owner.name
+        text: instructor.username
       });
     });
 
     this.state.studentNames = [];
-    nextProps.classroom.members.forEach((member) => {
+    nextProps.classroom.students.forEach((student) => {
       this.state.studentNames.push({
         id: this.state.studentNames.length + 1,
-        text: member.name
+        text: student.username
       });
     });
   }
@@ -53,17 +53,17 @@ class ClassroomSettingsForm extends React.Component {
     this.props.classroom.name = this.state.newName;
     this.props.classroom.description = this.state.newDescription;
 
-    this.props.classroom.owners = [];
+    this.props.classroom.instructors = [];
     this.state.instructorNames.forEach((instructorName) => {
-      this.props.classroom.owners.push({
-        name: instructorName.text
+      this.props.classroom.instructors.push({
+        username: instructorName.text
       });
     });
 
-    this.props.classroom.members = [];
+    this.props.classroom.students = [];
     this.state.studentNames.forEach((studentName) => {
-      this.props.classroom.members.push({
-        name: studentName.text
+      this.props.classroom.students.push({
+        username: studentName.text
       });
     });
 
@@ -174,20 +174,20 @@ class ClassroomSettingsForm extends React.Component {
 
 ClassroomSettingsForm.propTypes = {
   classroom: PropTypes.shape({
-    _id: PropTypes.string,
+    id: PropTypes.string,
     name: PropTypes.string,
     description: PropTypes.string.isRequired,
     assignments: PropTypes.arrayOf(PropTypes.shape({
-      _id: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       createdAt: PropTypes.string.isRequired
     })).isRequired,
-    owners: PropTypes.arrayOf(PropTypes.shape({
-      _id: PropTypes.string.isRequired,
+    instructors: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired
     })).isRequired,
-    members: PropTypes.arrayOf(PropTypes.shape({
-      _id: PropTypes.string.isRequired,
+    students: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired
     })).isRequired
   }).isRequired,

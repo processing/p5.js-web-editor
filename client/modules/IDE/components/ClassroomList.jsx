@@ -34,20 +34,20 @@ class ClassroomList extends React.Component {
             {this.props.classrooms.map(classroom =>
               // eslint-disable-next-line
               <div 
-                key={classroom._id}
-                id={classroom._id}
+                key={classroom.id}
+                id={classroom.id}
                 className="classrooms-grid-tile"
               >
                 <button
                   className="classroom-actions-ellipsis"
-                  onClick={() => this.openClassroomActionsPopup(classroom._id)}
+                  onClick={() => this.openClassroomActionsPopup(classroom.id)}
                 >
                   <i className="material-icons md-22">more_horiz</i>
                 </button>
                 <div className="classroom-actions-popup">
                   <button
                     className="classroom-actions-popup-close"
-                    onClick={() => this.closeClassroomActionsPopup(classroom._id)}
+                    onClick={() => this.closeClassroomActionsPopup(classroom.id)}
                   >
                     <i className="material-icons md-16">close</i>
                   </button>
@@ -64,7 +64,7 @@ class ClassroomList extends React.Component {
                   <div className="classrooms-grid-tile-thumbnail-buttons">
                     <button
                       className="classrooms-grid-tile-button-open"
-                      onClick={() => browserHistory.replace(`/classroom/${classroom._id}`)}
+                      onClick={() => browserHistory.replace(`/classrooms/${classroom.id}`)}
                     >
                     </button>
                     <button className="classrooms-grid-tile-button classrooms-grid-tile-button-share">
@@ -75,7 +75,7 @@ class ClassroomList extends React.Component {
                       onClick={(e) => {
                         e.stopPropagation();
                         if (window.confirm(`Are you sure you want to delete "${classroom.name}"?`)) {
-                          this.props.deleteClassroom(classroom._id);
+                          this.props.deleteClassroom(classroom.id);
                         }
                       }}
                     >
@@ -109,7 +109,7 @@ ClassroomList.propTypes = {
   getClassrooms: PropTypes.func.isRequired,
   createNewClassroom: PropTypes.func.isRequired,
   classrooms: PropTypes.arrayOf(PropTypes.shape({
-    _id: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     createdAt: PropTypes.string.isRequired,
     updatedAt: PropTypes.string.isRequired
@@ -125,7 +125,7 @@ ClassroomList.defaultProps = {
 function mapStateToProps(state) {
   return {
     user: state.user,
-    classrooms: state.classrooms /* [{ id: '', name: 'Test Classroom', createdAt: '', updatedAt: '' }] */ /* state.classrooms */
+    classrooms: state.classrooms
   };
 }
 

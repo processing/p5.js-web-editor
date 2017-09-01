@@ -6,7 +6,7 @@ const classrooms = (state = [], action) => {
       return action.classrooms;
     case ActionTypes.DELETE_CLASSROOM:
       return state.filter(classroom =>
-        classroom._id !== action.id
+        classroom.id !== action.id
       );
     default:
       return state;

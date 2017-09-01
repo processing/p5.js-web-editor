@@ -30,7 +30,7 @@ class AssignmentSubmissions extends React.Component {
   }
 
   goBackToAssignmentList() {
-    browserHistory.push(`/classroom/${this.props.classroom._id}`);
+    browserHistory.push(`/classrooms/${this.props.classroom.id}`);
   }
 
   render() {
@@ -112,7 +112,7 @@ AssignmentSubmissions.propTypes = {
   getSubmissions: PropTypes.func.isRequired,
   // getAssignments: PropTypes.func.isRequired,
   assignment: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     createdAt: PropTypes.string.isRequired
   }).isRequired,
@@ -120,10 +120,10 @@ AssignmentSubmissions.propTypes = {
     username: PropTypes.string
   }).isRequired,
   classroom: PropTypes.shape({
-    _id: PropTypes.string,
+    id: PropTypes.string,
     name: PropTypes.string,
     assignments: PropTypes.arrayOf(PropTypes.shape({
-      _id: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       createdAt: PropTypes.string.isRequired
     })).isRequired
