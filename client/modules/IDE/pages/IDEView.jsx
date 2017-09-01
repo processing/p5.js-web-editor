@@ -219,6 +219,7 @@ class IDEView extends React.Component {
           unsavedChanges={this.props.ide.unsavedChanges}
           warnIfUnsavedChanges={this.warnIfUnsavedChanges}
           showKeyboardShortcutModal={this.props.showKeyboardShortcutModal}
+          cmController={this.cmController}
         />
         <Toolbar
           className="Toolbar"
@@ -342,6 +343,7 @@ class IDEView extends React.Component {
                   collapseSidebar={this.props.collapseSidebar}
                   isUserOwner={this.isUserOwner()}
                   clearConsole={this.props.clearConsole}
+                  provideController={(ctl) => { this.cmController = ctl; }}
                 />
                 <Console
                   consoleEvents={this.props.console}
@@ -527,7 +529,6 @@ class IDEView extends React.Component {
           }
         })()}
       </div>
-
     );
   }
 }

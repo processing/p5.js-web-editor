@@ -180,7 +180,6 @@ class Nav extends React.PureComponent {
               </li>
             </ul>
           </li>
-          {/* TODO--add these things to the nav
           <li className={navDropdownState.edit}>
             <button
               onClick={this.toggleDropdown.bind(this, 'edit')}
@@ -196,13 +195,26 @@ class Nav extends React.PureComponent {
                 <InlineSVG src={triangleUrl} />
               </li>
               <li className="nav__dropdown-item">
-                Tidy Code
+                <button
+                  onClick={() => this.props.cmController.tidyCode()}
+                  onFocus={this.handleFocus.bind(this, 'edit')}
+                  onBlur={this.handleBlur}
+                >
+                  Tidy Code
+                </button>
               </li>
               <li className="nav__dropdown-item">
-                Find
+                <button
+                  onClick={() => this.props.cmController.showFind()}
+                  onFocus={this.handleFocus.bind(this, 'edit')}
+                  onBlur={this.handleBlur}
+                >
+                  Find
+                </button>
               </li>
             </ul>
           </li>
+          {/*
           <li className={navDropdownState.sketch}>
             <button
               onClick={this.toggleDropdown.bind(this, 'sketch')}
@@ -373,14 +385,19 @@ Nav.propTypes = {
   showErrorModal: PropTypes.func.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
   warnIfUnsavedChanges: PropTypes.func.isRequired,
-  showKeyboardShortcutModal: PropTypes.func.isRequired
+  showKeyboardShortcutModal: PropTypes.func.isRequired,
+  cmController: PropTypes.shape({
+    tidyCode: PropTypes.func,
+    showFind: PropTypes.func
+  })
 };
 
 Nav.defaultProps = {
   project: {
     id: undefined,
     owner: undefined
-  }
+  },
+  cmController: {}
 };
 
 export default Nav;
