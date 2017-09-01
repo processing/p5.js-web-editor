@@ -98,7 +98,6 @@ export function deleteClassroom(req, res) {
 }
 
 export function getClassrooms(req, res) {
-  console.log(req);
   if (req.user) {
     Classroom.find(
       { $or: [
