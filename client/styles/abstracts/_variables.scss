@@ -46,7 +46,8 @@ $themes: (
     input-border-color: #b5b5b5,
     about-list-text-color: #4a4a4a,
     search-background-color: #ebebeb,
-    dropdown-color: #414141
+    dropdown-color: #414141,
+    keyboard-shortcut-color: #757575
   ),
   dark: (
     logo-color: $p5js-pink,
@@ -83,7 +84,8 @@ $themes: (
     input-border-color: #b5b5b5,
     about-list-text-color: #f4f4f4,
     search-background-color: #ebebeb,
-    dropdown-color: #414141
+    dropdown-color: #414141,
+    keyboard-shortcut-color: #B5B5B5
   ),
   contrast: (
     logo-color: $yellow,
@@ -119,7 +121,8 @@ $themes: (
     input-border-color: #b5b5b5,
     about-list-text-color: #f4f4f4,
     search-background-color: $white,
-    dropdown-color: #e1e1e1
+    dropdown-color: #e1e1e1,
+    keyboard-shortcut-color: #e1e1e1
   )
 );
 

@@ -3,6 +3,10 @@ import { Link } from 'react-router';
 import InlineSVG from 'react-inlinesvg';
 import classNames from 'classnames';
 
+import {
+  metaKeyName,
+} from '../utils/metaKey';
+
 const triangleUrl = require('../images/down-filled-triangle.svg');
 const logoUrl = require('../images/p5js-logo-small.svg');
 
@@ -127,6 +131,7 @@ class Nav extends React.PureComponent {
                   onBlur={this.handleBlur}
                 >
                   Save
+                  <span className="nav__keyboard-shortcut">{metaKeyName} + s</span>
                 </button>
               </li> }
               { this.props.project.id && this.props.user.authenticated &&
@@ -201,6 +206,7 @@ class Nav extends React.PureComponent {
                   onBlur={this.handleBlur}
                 >
                   Tidy Code
+                  <span className="nav__keyboard-shortcut">{'\u21E7'} + Tab</span>
                 </button>
               </li>
               <li className="nav__dropdown-item">
@@ -210,6 +216,7 @@ class Nav extends React.PureComponent {
                   onBlur={this.handleBlur}
                 >
                   Find
+                  <span className="nav__keyboard-shortcut">{metaKeyName} + F</span>
                 </button>
               </li>
             </ul>
