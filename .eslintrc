@@ -34,14 +34,15 @@
       "html": false
     }],
     "newline-per-chained-call": 0,
-    "react/prefer-stateless-function": [2, 
-      { "ignorePureComponents": true 
+    "react/prefer-stateless-function": [2,
+      { "ignorePureComponents": true
     }],
-    "class-methods-use-this": 0
+    "class-methods-use-this": 0,
+    "no-return-assign": [2, "except-parens"]
   },
   "plugins": [
     "react", "jsx-a11y", "import"
-  ], 
+  ],
   "settings": {
     "import/parser": "babel-eslint",
     "import/resolve": {
