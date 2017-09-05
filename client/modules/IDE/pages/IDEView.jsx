@@ -300,8 +300,8 @@ class IDEView extends React.Component {
             <SplitPane
               split="vertical"
               defaultSize={'50%'}
-              onChange={() => (this.overlay.style.display = 'block')}
-              onDragFinished={() => (this.overlay.style.display = 'none')}
+              onChange={() => { this.overlay.style.display = 'block'; }}
+              onDragFinished={() => { this.overlay.style.display = 'none'; }}
             >
               <SplitPane
                 split="horizontal"
