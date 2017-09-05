@@ -1,10 +1,15 @@
 .preferences {
 	@extend %modal;
 	position: absolute;
-	top: #{51 / $base-font-size}rem;
-	right: #{29 / $base-font-size}rem;
-	width: #{288 / $base-font-size}rem;
+	top: #{113 / $base-font-size}rem;
+	right: #{192 / $base-font-size}rem;
+	width: #{640 / $base-font-size}rem;
+	height: #{540 / $base-font-size}rem;
+	bottom: #{371 / $base-font-size}rem;
+	margin-bottom: #{100 / $base-font-size}rem;
+	margin-right: #{100 / $base-font-size}rem;
 	display: none;
+	z-index: 9999;
 	padding: #{14 / $base-font-size}rem #{20 / $base-font-size}rem #{2 / $base-font-size}rem  #{20 / $base-font-size}rem ;
 	&--selected {
 		display: flex;
@@ -29,6 +34,7 @@
 		width: #{32 / $base-font-size}rem;
 		height: #{32 / $base-font-size}rem;
 		margin-left: #{6 / $base-font-size}rem;
+		margin-right: #{10 / $base-font-size}rem;
 		line-height: #{40 / $base-font-size}rem;
 		& svg {
 			width: #{10 / $base-font-size}rem;
@@ -40,9 +46,26 @@
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	margin-bottom: #{20 / $base-font-size}rem;
 	@include themify() {
 		color: getThemifyVariable('heading-text-color');
+	}
+}
+
+.preferences__title{
+	width: #{90 / $base-font-size}rem;
+  	height: #{25 / $base-font-size}rem;
+    font-family: Montserrat;
+    font-size: #{21 / $base-font-size}rem;
+    font-weight: bold;
+    text-align: left;
+}
+
+.preference__subheadings {
+	display: flex;
+	flex-wrap: wrap;
+	padding-bottom: #{0.1 / $base-font-size}rem;
+	@include themify() {
+	border-bottom: 1px solid getThemifyVariable('button-border-color');
 	}
 }
 
@@ -105,11 +128,45 @@
 	width: #{44 / $base-font-size}rem;
 }
 
+.preference__subheading {
+	@include themify() {
+		color: getThemifyVariable('inactive-text-color');
+		&:hover {
+			color: getThemifyVariable('primary-text-color');
+			border-bottom: #{4 / $base-font-size}rem solid getThemifyVariable('button-background-hover-color');
+		}
+	}
+	font-size: #{12 / $base-font-size}rem;
+	height: #{25 / $base-font-size}rem;
+	margin-top: #{30 / $base-font-size}rem;
+	margin-left: #{5 / $base-font-size}rem;
+	margin-bottom: #{0.1 / $base-font-size}rem;
+	margin-right: #{60 / $base-font-size}rem;
+	font-family: Montserrat;
+	width: #{98 / $base-font-size}rem;
+}
+
 .preference__vertical-list {
 	display: flex;
 	flex-direction: column;
 	width: #{44 / $base-font-size}rem;
 	padding-left: #{25 / $base-font-size}rem;
+}
+
+.preference__add__resource {
+	width: #{601 / $base-font-size}rem;
+    height: #{100 / $base-font-size}rem;
+  	font-family: Montserrat;
+  	font-size: #{14 / $base-font-size}rem;
+  	line-height: 1.43;
+  	text-align: left;
+  	margin-left: #{5 / $base-font-size}rem;
+  	margin-top: #{40 / $base-font-size}rem;
+  	margin-bottom: #{10 / $base-font-size}rem;
+  	@include themify() {
+		color: getThemifyVariable('inactive-text-color');
+		border-bottom: 1px dashed getThemifyVariable('button-border-color');
+	}
 }
 
 .preference__radio-button {
@@ -121,6 +178,12 @@
 		@extend %preference-option;
 		padding-right: #{44 / $base-font-size}rem;
 	}
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	margin-top: #{10 / $base-font-size}rem;
+	width: #{50 / $base-font-size}rem;
+	margin-left: #{5 / $base-font-size}rem;
 }
 
 .preference__option:last-child {
@@ -130,7 +193,12 @@
 .preference__preview-button {
 	@include themify() {
 		@extend %preference-option;
+		&:hover {
+			color: getThemifyVariable('button-background-hover-color');
+		}
 	}
+	margin-top: #{7 / $base-font-size}rem;
+	margin-left: #{30 / $base-font-size}rem;
 }
 
 .preference__options {
@@ -151,3 +219,4 @@
 .preference__option.preference__canvas:not(:last-child) {
 	padding-right: #{14 / $base-font-size}rem;
 }
+

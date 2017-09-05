@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { Helmet } from 'react-helmet';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import SplitPane from 'react-split-pane';
 import Editor from '../components/Editor';
 import Sidebar from '../components/Sidebar';
