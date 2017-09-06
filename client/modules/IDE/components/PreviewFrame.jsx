@@ -34,8 +34,8 @@ function getAllScriptOffsets(htmlFile) {
     } else {
       endFilenameInd = htmlFile.indexOf('.js', ind + startTag.length + 3);
       filename = htmlFile.substring(ind + startTag.length, endFilenameInd);
-      // the length of hijackConsoleErrorsScript is 35 lines, already needed a -1 offset.
-      lineOffset = htmlFile.substring(0, ind).split('\n').length + 34;
+      // the length of hijackConsoleErrorsScript is 31 lines
+      lineOffset = htmlFile.substring(0, ind).split('\n').length + 31;
       offs.push([lineOffset, filename]);
       lastInd = ind + 1;
     }
@@ -280,7 +280,10 @@ class PreviewFrame extends React.Component {
         }
       }
     });
-    newContent = decomment(newContent, { ignore: /noprotect/g });
+    newContent = decomment(newContent, {
+      ignore: /noprotect/g,
+      space: true
+    });
     newContent = loopProtect(newContent);
     return newContent;
   }
