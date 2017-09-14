@@ -52,10 +52,7 @@ class Overlay extends React.Component {
                     <InlineSVG src={leftArrow} alt="go back to previous page" />
                   </button>
                 : null}
-                <button className="overlay__close-button" onCli
-
-
-                ck={this.close}>
+                <button className="overlay__close-button" onClick={this.close}>
                   <InlineSVG src={exitUrl} alt="close overlay" />
                 </button>
               </div>
