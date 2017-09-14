@@ -52,7 +52,10 @@ class Overlay extends React.Component {
                     <InlineSVG src={leftArrow} alt="go back to previous page" />
                   </button>
                 : null}
-                <button className="overlay__close-button" onClick={this.close}>
+                <button className="overlay__close-button" onCli
+
+
+                ck={this.close}>
                   <InlineSVG src={exitUrl} alt="close overlay" />
                 </button>
               </div>
@@ -70,7 +73,7 @@ Overlay.propTypes = {
   closeOverlay: PropTypes.func,
   title: PropTypes.string,
   ariaLabel: PropTypes.string,
-  previousPath: PropTypes.string.isRequired,
+  previousPath: PropTypes.string
   backButtonPath: PropTypes.string,
 };
 
@@ -80,6 +83,7 @@ Overlay.defaultProps = {
   closeOverlay: null,
   ariaLabel: 'modal',
   backButtonPath: null,
+  previousPath: '/'
 };
 
 export default Overlay;

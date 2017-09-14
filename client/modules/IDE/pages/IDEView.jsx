@@ -15,7 +15,7 @@ import NewFolderModal from '../components/NewFolderModal';
 import ShareModal from '../components/ShareModal';
 import KeyboardShortcutModal from '../components/KeyboardShortcutModal';
 import ErrorModal from '../components/ErrorModal';
-import HelpModal from '../components/HelpModal';
+import HTTPSModal from '../components/HTTPSModal';
 import Nav from '../../../components/Nav';
 import Console from '../components/Console';
 import Toast from '../components/Toast';
@@ -618,11 +618,11 @@ class IDEView extends React.Component {
         {(() => { // eslint-disable-line
           if (this.props.ide.helpType) {
             return (
-              <Overlay>
-                <HelpModal
-                  type={this.props.ide.helpType}
-                  closeModal={this.props.hideHelpModal}
-                />
+              <Overlay
+                title="Serve over HTTPS"
+                closeOverlay={this.props.hideHelpModal}
+              >
+                <HTTPSModal />
               </Overlay>
             );
           }
