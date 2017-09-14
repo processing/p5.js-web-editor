@@ -241,7 +241,6 @@ class Nav extends React.PureComponent {
               </li>
             </ul>
           </li>
-          {/*
           <li className={navDropdownState.sketch}>
             <button
               onClick={this.toggleDropdown.bind(this, 'sketch')}
@@ -257,14 +256,27 @@ class Nav extends React.PureComponent {
                 <InlineSVG src={triangleUrl} />
               </li>
               <li className="nav__dropdown-item">
-                Run
+                <button
+                  onClick={this.props.startSketch}
+                  onFocus={this.handleFocus.bind(this, 'sketch')}
+                  onBlur={this.handleBlur}
+                >
+                  Run
+                  <span className="nav__keyboard-shortcut">{metaKeyName}+Enter</span>
+                </button>
               </li>
               <li className="nav__dropdown-item">
-                Stop
+                <button
+                  onClick={this.props.stopSketch}
+                  onFocus={this.handleFocus.bind(this, 'sketch')}
+                  onBlur={this.handleBlur}
+                >
+                  Stop
+                  <span className="nav__keyboard-shortcut">{'\u21E7'}+{metaKeyName}+Enter</span>
+                </button>
               </li>
             </ul>
           </li>
-          */}
           <li className={navDropdownState.help}>
             <button
               onClick={this.toggleDropdown.bind(this, 'help')}
@@ -418,7 +430,9 @@ Nav.propTypes = {
     showFind: PropTypes.func,
     findNext: PropTypes.func,
     findPrev: PropTypes.func
-  })
+  }),
+  startSketch: PropTypes.func.isRequired,
+  stopSketch: PropTypes.func.isRequired
 };
 
 Nav.defaultProps = {

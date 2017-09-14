@@ -165,8 +165,7 @@ class IDEView extends React.Component {
     } else if (e.keyCode === 13 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
       e.preventDefault();
       e.stopPropagation();
-      this.props.clearConsole();
-      this.props.startSketchAndRefresh();
+      this.props.startSketch();
     } else if (e.keyCode === 50 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac)) && e.shiftKey) {
       e.preventDefault();
       this.props.setTextOutput(false);
@@ -213,6 +212,7 @@ class IDEView extends React.Component {
           cloneProject={this.props.cloneProject}
           project={this.props.project}
           logoutUser={this.props.logoutUser}
+          startSketch={this.props.startSketch}
           stopSketch={this.props.stopSketch}
           showShareModal={this.props.showShareModal}
           showErrorModal={this.props.showErrorModal}
@@ -225,8 +225,6 @@ class IDEView extends React.Component {
           className="Toolbar"
           isPlaying={this.props.ide.isPlaying}
           stopSketch={this.props.stopSketch}
-          startAccessibleOutput={this.props.startAccessibleOutput}
-          stopAccessibleOutput={this.props.stopAccessibleOutput}
           projectName={this.props.project.name}
           setProjectName={this.props.setProjectName}
           showEditProjectName={this.props.showEditProjectName}
@@ -243,10 +241,10 @@ class IDEView extends React.Component {
           infiniteLoop={this.props.ide.infiniteLoop}
           autorefresh={this.props.preferences.autorefresh}
           setAutorefresh={this.props.setAutorefresh}
-          startSketchAndRefresh={this.props.startSketchAndRefresh}
+          startSketch={this.props.startSketch}
+          startAccessibleSketch={this.props.startAccessibleSketch}
           saveProject={this.props.saveProject}
           currentUser={this.props.user.username}
-          clearConsole={this.props.clearConsole}
           showHelpModal={this.props.showHelpModal}
         />
         <Preferences
@@ -574,8 +572,6 @@ IDEView.propTypes = {
     helpType: PropTypes.string
   }).isRequired,
   stopSketch: PropTypes.func.isRequired,
-  startAccessibleOutput: PropTypes.func.isRequired,
-  stopAccessibleOutput: PropTypes.func.isRequired,
   project: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string.isRequired,
@@ -674,7 +670,6 @@ IDEView.propTypes = {
   setUnsavedChanges: PropTypes.func.isRequired,
   setTheme: PropTypes.func.isRequired,
   setAutorefresh: PropTypes.func.isRequired,
-  startSketchAndRefresh: PropTypes.func.isRequired,
   endSketchRefresh: PropTypes.func.isRequired,
   startRefreshSketch: PropTypes.func.isRequired,
   setBlobUrl: PropTypes.func.isRequired,
@@ -689,7 +684,9 @@ IDEView.propTypes = {
   clearPersistedState: PropTypes.func.isRequired,
   persistState: PropTypes.func.isRequired,
   showHelpModal: PropTypes.func.isRequired,
-  hideHelpModal: PropTypes.func.isRequired
+  hideHelpModal: PropTypes.func.isRequired,
+  startSketch: PropTypes.func.isRequired,
+  startAccessibleSketch: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

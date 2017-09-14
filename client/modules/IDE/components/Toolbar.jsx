@@ -60,11 +60,7 @@ class Toolbar extends React.Component {
       <div className="toolbar">
         <button
           className="toolbar__play-sketch-button"
-          onClick={() => {
-            this.props.clearConsole();
-            this.props.startAccessibleOutput();
-            this.props.startSketchAndRefresh();
-          }}
+          onClick={this.props.startAccessibleSketch}
           aria-label="play sketch"
           disabled={this.props.infiniteLoop}
         >
@@ -72,10 +68,7 @@ class Toolbar extends React.Component {
         </button>
         <button
           className={playButtonClass}
-          onClick={() => {
-            this.props.clearConsole();
-            this.props.startSketchAndRefresh();
-          }}
+          onClick={this.props.startSketch}
           aria-label="play only visual sketch"
           disabled={this.props.infiniteLoop}
         >
@@ -83,7 +76,7 @@ class Toolbar extends React.Component {
         </button>
         <button
           className={stopButtonClass}
-          onClick={() => { this.props.stopAccessibleOutput(); this.props.stopSketch(); }}
+          onClick={this.props.stopSketch}
           aria-label="stop sketch"
         >
           <InlineSVG src={stopUrl} alt="Stop Sketch" />
@@ -185,8 +178,6 @@ Toolbar.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   preferencesIsVisible: PropTypes.bool.isRequired,
   stopSketch: PropTypes.func.isRequired,
-  startAccessibleOutput: PropTypes.func.isRequired,
-  stopAccessibleOutput: PropTypes.func.isRequired,
   setProjectName: PropTypes.func.isRequired,
   openPreferences: PropTypes.func.isRequired,
   owner: PropTypes.shape({
@@ -205,10 +196,10 @@ Toolbar.propTypes = {
   autorefresh: PropTypes.bool.isRequired,
   setAutorefresh: PropTypes.func.isRequired,
   setServeSecure: PropTypes.func.isRequired,
-  startSketchAndRefresh: PropTypes.func.isRequired,
+  startSketch: PropTypes.func.isRequired,
+  startAccessibleSketch: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
-  currentUser: PropTypes.string,
-  clearConsole: PropTypes.func.isRequired
+  currentUser: PropTypes.string
 };
 
 Toolbar.defaultProps = {
