@@ -49,6 +49,18 @@ class Editor extends React.Component {
   constructor(props) {
     super(props);
     this.tidyCode = this.tidyCode.bind(this);
+
+    this.updateLintingMessageAccessibility = debounce((annotations) => {
+      this.props.clearLintMessage();
+      annotations.forEach((x) => {
+        if (x.from.line > -1) {
+          this.props.updateLintMessage(x.severity, (x.from.line + 1), x.message);
+        }
+      });
+      if (this.props.lintMessages.length > 0 && this.props.lintWarning) {
+        this.beep.play();
+      }
+    }, 2000);
   }
   componentDidMount() {
     this.beep = new Audio(beepUrl);
@@ -64,17 +76,16 @@ class Editor extends React.Component {
       keyMap: 'sublime',
       highlightSelectionMatches: true, // highlight current search match
       lint: {
-        onUpdateLinting: debounce((annotations) => {
-          this.props.clearLintMessage();
-          annotations.forEach((x) => {
-            if (x.from.line > -1) {
-              this.props.updateLintMessage(x.severity, (x.from.line + 1), x.message);
-            }
-          });
-          if (this.props.lintMessages.length > 0 && this.props.lintWarning) {
-            this.beep.play();
+        onUpdateLinting: ((annotations) => {
+          if (annotations.length === 0) {
+            this.props.setProjectHasSyntaxErrors(false);
+          } else if (isNaN(annotations[0].from.line)) {
+            this.props.setProjectHasSyntaxErrors(false);
+          } else {
+            this.props.setProjectHasSyntaxErrors(true);
           }
-        }, 2000),
+          this.updateLintingMessageAccessibility(annotations);
+        }),
         options: {
           'asi': true,
           'eqeqeq': false,
@@ -320,11 +331,13 @@ Editor.propTypes = {
   collapseSidebar: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
   isUserOwner: PropTypes.bool,
-  clearConsole: PropTypes.func.isRequired
+  clearConsole: PropTypes.func.isRequired,
+  setProjectHasSyntaxErrors: PropTypes.func.isRequired,
 };
 
 Editor.defaultProps = {
-  isUserOwner: false
+  isUserOwner: false,
+  consoleEvents: [],
 };
 
 export default Editor;

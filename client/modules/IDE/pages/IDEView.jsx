@@ -246,6 +246,8 @@ class IDEView extends React.Component {
           currentUser={this.props.user.username}
           clearConsole={this.props.clearConsole}
           showHelpModal={this.props.showHelpModal}
+          lintMessages={this.props.editorAccessibility.lintMessages}
+          projectHasSyntaxErrors={this.props.ide.projectHasSyntaxErrors}
         />
         <Preferences
           isVisible={this.props.ide.preferencesIsVisible}
@@ -341,6 +343,7 @@ class IDEView extends React.Component {
                   collapseSidebar={this.props.collapseSidebar}
                   isUserOwner={this.isUserOwner()}
                   clearConsole={this.props.clearConsole}
+                  setProjectHasSyntaxErrors={this.props.setProjectHasSyntaxErrors}
                 />
                 <Console
                   consoleEvents={this.props.console}
@@ -569,7 +572,8 @@ IDEView.propTypes = {
     previousPath: PropTypes.string.isRequired,
     justOpenedProject: PropTypes.bool.isRequired,
     errorType: PropTypes.string,
-    helpType: PropTypes.string
+    helpType: PropTypes.string,
+    projectHasSyntaxErrors: PropTypes.bool.isRequired,
   }).isRequired,
   stopSketch: PropTypes.func.isRequired,
   startAccessibleOutput: PropTypes.func.isRequired,
@@ -687,7 +691,8 @@ IDEView.propTypes = {
   clearPersistedState: PropTypes.func.isRequired,
   persistState: PropTypes.func.isRequired,
   showHelpModal: PropTypes.func.isRequired,
-  hideHelpModal: PropTypes.func.isRequired
+  hideHelpModal: PropTypes.func.isRequired,
+  setProjectHasSyntaxErrors: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {

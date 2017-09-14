@@ -233,3 +233,10 @@ export function hideHelpModal() {
     type: ActionTypes.HIDE_HELP_MODAL
   };
 }
+
+export function setProjectHasSyntaxErrors(hasSyntaxErrors) {
+  return {
+    type: ActionTypes.SET_PROJECT_HAS_SYNTAX_ERRORS,
+    projectHasSyntaxErrors: hasSyntaxErrors
+  };
+}
