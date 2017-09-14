@@ -73,7 +73,7 @@ Overlay.propTypes = {
   closeOverlay: PropTypes.func,
   title: PropTypes.string,
   ariaLabel: PropTypes.string,
-  previousPath: PropTypes.string
+  previousPath: PropTypes.string,
   backButtonPath: PropTypes.string,
 };
 
