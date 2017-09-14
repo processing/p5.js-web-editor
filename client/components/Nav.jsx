@@ -131,7 +131,7 @@ class Nav extends React.PureComponent {
                   onBlur={this.handleBlur}
                 >
                   Save
-                  <span className="nav__keyboard-shortcut">{metaKeyName} + s</span>
+                  <span className="nav__keyboard-shortcut">{metaKeyName}+s</span>
                 </button>
               </li> }
               { this.props.project.id && this.props.user.authenticated &&
@@ -206,7 +206,7 @@ class Nav extends React.PureComponent {
                   onBlur={this.handleBlur}
                 >
                   Tidy Code
-                  <span className="nav__keyboard-shortcut">{'\u21E7'} + Tab</span>
+                  <span className="nav__keyboard-shortcut">{'\u21E7'}+Tab</span>
                 </button>
               </li>
               <li className="nav__dropdown-item">
@@ -216,7 +216,27 @@ class Nav extends React.PureComponent {
                   onBlur={this.handleBlur}
                 >
                   Find
-                  <span className="nav__keyboard-shortcut">{metaKeyName} + F</span>
+                  <span className="nav__keyboard-shortcut">{metaKeyName}+F</span>
+                </button>
+              </li>
+              <li className="nav__dropdown-item">
+                <button
+                  onClick={() => this.props.cmController.findNext()}
+                  onFocus={this.handleFocus.bind(this, 'edit')}
+                  onBlur={this.handleBlur}
+                >
+                  Find Next
+                  <span className="nav__keyboard-shortcut">{metaKeyName}+G</span>
+                </button>
+              </li>
+              <li className="nav__dropdown-item">
+                <button
+                  onClick={() => this.props.cmController.findPrev()}
+                  onFocus={this.handleFocus.bind(this, 'edit')}
+                  onBlur={this.handleBlur}
+                >
+                  Find Previous
+                  <span className="nav__keyboard-shortcut">{'\u21E7'}+{metaKeyName}+G</span>
                 </button>
               </li>
             </ul>
@@ -395,7 +415,9 @@ Nav.propTypes = {
   showKeyboardShortcutModal: PropTypes.func.isRequired,
   cmController: PropTypes.shape({
     tidyCode: PropTypes.func,
-    showFind: PropTypes.func
+    showFind: PropTypes.func,
+    findNext: PropTypes.func,
+    findPrev: PropTypes.func
   })
 };
 

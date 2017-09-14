@@ -49,6 +49,8 @@ class Editor extends React.Component {
     super(props);
     this.tidyCode = this.tidyCode.bind(this);
     this.showFind = this.showFind.bind(this);
+    this.findNext = this.findNext.bind(this);
+    this.findPrev = this.findPrev.bind(this);
   }
   componentDidMount() {
     this.beep = new Audio(beepUrl);
@@ -122,7 +124,9 @@ class Editor extends React.Component {
 
     this.props.provideController({
       tidyCode: this.tidyCode,
-      showFind: this.showFind
+      showFind: this.showFind,
+      findNext: this.findNext,
+      findPrev: this.findPrev
     });
   }
 
@@ -208,7 +212,17 @@ class Editor extends React.Component {
   }
 
   showFind() {
-    this._cm.execCommand('find');
+    this._cm.execCommand('findPersistent');
+  }
+
+  findNext() {
+    this._cm.focus();
+    this._cm.execCommand('findNext');
+  }
+
+  findPrev() {
+    this._cm.focus();
+    this._cm.execCommand('findPrev');
   }
 
   toggleEditorOptions() {
