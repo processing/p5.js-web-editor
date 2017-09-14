@@ -78,7 +78,8 @@ class Editor extends React.Component {
         options: {
           'asi': true,
           'eqeqeq': false,
-          '-W041': false
+          '-W041': false,
+          'esversion': 6
         }
       }
     });
