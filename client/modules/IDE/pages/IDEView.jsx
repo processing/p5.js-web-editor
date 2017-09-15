@@ -166,16 +166,14 @@ class IDEView extends React.Component {
       e.preventDefault();
       e.stopPropagation();
       this.props.startSketch();
+      // 50 === 2
     } else if (e.keyCode === 50 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac)) && e.shiftKey) {
       e.preventDefault();
-      this.props.setTextOutput(false);
-      this.props.setGridOutput(false);
-      this.props.setSoundOutput(false);
+      this.props.setAllAccessibleOutput(false);
+      // 49 === 1
     } else if (e.keyCode === 49 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac)) && e.shiftKey) {
       e.preventDefault();
-      this.props.setTextOutput(true);
-      this.props.setGridOutput(true);
-      this.props.setSoundOutput(true);
+      this.props.setAllAccessibleOutput(true);
     }
   }
 
@@ -220,6 +218,7 @@ class IDEView extends React.Component {
           warnIfUnsavedChanges={this.warnIfUnsavedChanges}
           showKeyboardShortcutModal={this.props.showKeyboardShortcutModal}
           cmController={this.cmController}
+          setAllAccessibleOutput={this.props.setAllAccessibleOutput}
         />
         <Toolbar
           className="Toolbar"
@@ -612,6 +611,7 @@ IDEView.propTypes = {
   setTextOutput: PropTypes.func.isRequired,
   setGridOutput: PropTypes.func.isRequired,
   setSoundOutput: PropTypes.func.isRequired,
+  setAllAccessibleOutput: PropTypes.func.isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,

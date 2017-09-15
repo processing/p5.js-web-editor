@@ -275,6 +275,26 @@ class Nav extends React.PureComponent {
                   <span className="nav__keyboard-shortcut">{'\u21E7'}+{metaKeyName}+Enter</span>
                 </button>
               </li>
+              <li className="nav__dropdown-item">
+                <button
+                  onClick={this.props.setAllAccessibleOutput.bind(this, true)}
+                  onFocus={this.handleFocus.bind(this, 'sketch')}
+                  onBlur={this.handleBlur}
+                >
+                  Start Accessible
+                  <span className="nav__keyboard-shortcut">{'\u21E7'}+{metaKeyName}+2</span>
+                </button>
+              </li>
+              <li className="nav__dropdown-item">
+                <button
+                  onClick={this.props.setAllAccessibleOutput.bind(this, false)}
+                  onFocus={this.handleFocus.bind(this, 'sketch')}
+                  onBlur={this.handleBlur}
+                >
+                  Stop Accessible
+                  <span className="nav__keyboard-shortcut">{'\u21E7'}+{metaKeyName}+1</span>
+                </button>
+              </li>
             </ul>
           </li>
           <li className={navDropdownState.help}>
@@ -432,7 +452,8 @@ Nav.propTypes = {
     findPrev: PropTypes.func
   }),
   startSketch: PropTypes.func.isRequired,
-  stopSketch: PropTypes.func.isRequired
+  stopSketch: PropTypes.func.isRequired,
+  setAllAccessibleOutput: PropTypes.func.isRequired
 };
 
 Nav.defaultProps = {
