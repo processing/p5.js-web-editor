@@ -152,6 +152,14 @@ class PreviewFrame extends React.Component {
     doc.srcDoc = '';
   }
 
+  addLoopProtect(sketchDoc) {
+    const scriptsInHTML = sketchDoc.getElementsByTagName('script');
+    const scriptsInHTMLArray = Array.prototype.slice.call(scriptsInHTML);
+    scriptsInHTMLArray.forEach((script) => {
+      script.innerHTML = loopProtect(script.innerHTML); // eslint-disable-line
+    });
+  }
+
   injectLocalFiles() {
     const htmlFile = this.props.htmlFile.content;
     let scriptOffs = [];
@@ -227,7 +235,7 @@ class PreviewFrame extends React.Component {
     scriptOffs = getAllScriptOffsets(sketchDocString);
     const consoleErrorsScript = sketchDoc.createElement('script');
     consoleErrorsScript.innerHTML = hijackConsoleErrorsScript(JSON.stringify(scriptOffs));
-    // sketchDoc.head.appendChild(consoleErrorsScript);
+    this.addLoopProtect(sketchDoc);
     sketchDoc.head.insertBefore(consoleErrorsScript, sketchDoc.head.firstElement);
 
     return `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;

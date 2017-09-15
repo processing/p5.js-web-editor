@@ -15,7 +15,7 @@ $themes: (
     primary-text-color: #333,
     modal-button-color: #333,
     heading-text-color: #333,
-    secondary-text-color: #6b6b6b,
+    secondary-text-color: #a8a8a8,
     inactive-text-color: #b5b5b5,
     background-color: #fbfbfb,
     preview-placeholder-color: #dcdcdc,
@@ -30,7 +30,8 @@ $themes: (
     button-active-color: $white,
     modal-background-color: #f4f4f4,
     modal-button-background-color: #e6e6e6,
-    modal-border-color: #B9D0E1,
+    modal-border-color: rgba(17, 17, 17, 0.3),
+    modal-boder-selected-color: #B9D0E1,
     icon-color: $icon-color,
     icon-hover-color: $icon-hover-color,
     icon-toast-hover-color: $white,
@@ -44,14 +45,16 @@ $themes: (
     input-text-color: #333,
     input-border-color: #b5b5b5,
     about-list-text-color: #4a4a4a,
-    search-background-color: #ebebeb
+    search-background-color: #ebebeb,
+    dropdown-color: #414141,
+    keyboard-shortcut-color: #757575
   ),
   dark: (
     logo-color: $p5js-pink,
     primary-text-color: $white,
     modal-button-color: $white,
     heading-text-color: $white,
-    secondary-text-color: #c2c2c2,
+    secondary-text-color: #DADADA,
     inactive-text-color: #b5b5b5,
     background-color: #333,
     preview-placeholder-color: #dcdcdc,
@@ -80,7 +83,9 @@ $themes: (
     input-text-color: #333,
     input-border-color: #b5b5b5,
     about-list-text-color: #f4f4f4,
-    search-background-color: #ebebeb
+    search-background-color: #ebebeb,
+    dropdown-color: #414141,
+    keyboard-shortcut-color: #B5B5B5
   ),
   contrast: (
     logo-color: $yellow,
@@ -115,7 +120,9 @@ $themes: (
     input-text-color: #333,
     input-border-color: #b5b5b5,
     about-list-text-color: #f4f4f4,
-    search-background-color: $white
+    search-background-color: $white,
+    dropdown-color: #e1e1e1,
+    keyboard-shortcut-color: #e1e1e1
   )
 );
 
