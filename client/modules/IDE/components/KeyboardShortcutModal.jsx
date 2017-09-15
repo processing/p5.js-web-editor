@@ -69,13 +69,13 @@ function KeyboardShortcutModal() {
         <span className="keyboard-shortcut__command">
           {metaKeyName} + {'\u21E7'} + 1
         </span>
-        <span>Toggle Text-based Canvas</span>
+        <span>Turn on Accessible Output</span>
       </li>
       <li className="keyboard-shortcut-item">
         <span className="keyboard-shortcut__command">
           {metaKeyName} + {'\u21E7'} + 2
         </span>
-        <span>Turn Off Text-based Canvas</span>
+        <span>Turn off Accessible Output</span>
       </li>
     </ul>
   );

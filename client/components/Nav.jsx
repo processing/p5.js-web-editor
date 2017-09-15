@@ -282,7 +282,7 @@ class Nav extends React.PureComponent {
                   onBlur={this.handleBlur}
                 >
                   Start Accessible
-                  <span className="nav__keyboard-shortcut">{'\u21E7'}+{metaKeyName}+2</span>
+                  <span className="nav__keyboard-shortcut">{'\u21E7'}+{metaKeyName}+1</span>
                 </button>
               </li>
               <li className="nav__dropdown-item">
@@ -292,7 +292,7 @@ class Nav extends React.PureComponent {
                   onBlur={this.handleBlur}
                 >
                   Stop Accessible
-                  <span className="nav__keyboard-shortcut">{'\u21E7'}+{metaKeyName}+1</span>
+                  <span className="nav__keyboard-shortcut">{'\u21E7'}+{metaKeyName}+2</span>
                 </button>
               </li>
             </ul>
