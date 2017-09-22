@@ -42,6 +42,16 @@
 	}
 }
 
+.serve__over__https {
+	text-align: center;
+	margin-left: #{9 / $base-font-size}rem;
+	font-width: #{108 / $base-font-size}rem;
+  	font-height: #{15 / $base-font-size}rem;
+  	font-family: Montserrat;
+  	font-size: #{12 / $base-font-size}rem;
+  	margin-top: #{2 / $base-font-size}rem;
+}
+
 .preferences__heading {
 	display: flex;
 	flex-direction: row;
@@ -122,18 +132,43 @@
 		&:hover {
 			color: getThemifyVariable('primary-text-color');
 		}
+
 	}
 	margin: #{-15 / $base-font-size}rem 0 0 #{-5 / $base-font-size}rem;
 	font-size: #{9 / $base-font-size}rem;
 	width: #{44 / $base-font-size}rem;
 }
 
+.react-tabs__tab--selected {
+    @include themify() {
+		/*color: getThemifyVariable('primary-text-color');*/
+		border-bottom: #{4 / $base-font-size}rem solid getThemifyVariable('button-background-hover-color');
+		color: pink;
+	}
+}
+
+.react-tabs__tab--selected .preference__subheading {
+    @include themify() {
+		color: black !important;
+	}
+}
+
+.react-tabs__tab {
+	width: #{110 / $base-font-size}rem;
+	text-align: center;
+	color: black;
+}
+
 .preference__subheading {
 	@include themify() {
 		color: getThemifyVariable('inactive-text-color');
-		&:hover {
+		&:hover, &:focus{
 			color: getThemifyVariable('primary-text-color');
-			border-bottom: #{4 / $base-font-size}rem solid getThemifyVariable('button-background-hover-color');
+			cursor: pointer; 
+		}
+		&:focus  {
+			color: getThemifyVariable('primary-text-color');
+			cursor: pointer; 
 		}
 	}
 	font-size: #{12 / $base-font-size}rem;
@@ -142,8 +177,9 @@
 	margin-left: #{5 / $base-font-size}rem;
 	margin-bottom: #{0.1 / $base-font-size}rem;
 	margin-right: #{60 / $base-font-size}rem;
+	padding-right: #{10 / $base-font-size}rem;
 	font-family: Montserrat;
-	width: #{98 / $base-font-size}rem;
+	width: #{110 / $base-font-size}rem;
 }
 
 .preference__vertical-list {
@@ -219,4 +255,6 @@
 .preference__option.preference__canvas:not(:last-child) {
 	padding-right: #{14 / $base-font-size}rem;
 }
+
+
 
