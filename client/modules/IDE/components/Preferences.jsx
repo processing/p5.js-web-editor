@@ -228,7 +228,21 @@ class Preferences extends React.Component {
               <h4 className="preference__title">Add a p5.js or an external library</h4>
               <h4 className="preference__add__resource">Add a script library resource field</h4>
               <h4 className="preference__title">Security Protocol</h4>
-              <h4>Serve over HTTPS</h4>
+              {
+                this.props.currentUser == null ?
+                  null :
+                  <div className="toolbar__serve-secure">
+                    <input
+                      id="serve-secure"
+                      type="checkbox"
+                      checked={this.props.project.serveSecure || false}
+                      onChange={(event) => {
+                        this.props.setServeSecure(event.target.checked);
+                      }}
+                    />
+                  </div>
+              }
+              <h4 className="serve__over__https">Serve over HTTPS</h4>
             </div>
           </TabPanel>
           <TabPanel>
@@ -327,7 +341,19 @@ Preferences.propTypes = {
   setLintWarning: PropTypes.func.isRequired,
 //  openTab: PropTypes.func.isRequired,
   theme: PropTypes.string.isRequired,
+  setServeSecure: PropTypes.func.isRequired,
+  currentUser: PropTypes.string,
+  project: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    isEditingName: PropTypes.bool,
+    id: PropTypes.string,
+    serveSecure: PropTypes.bool,
+  }).isRequired,
   setTheme: PropTypes.func.isRequired
+};
+
+Preferences.defaultProps = {
+  currentUser: undefined
 };
 
 export default Preferences;
