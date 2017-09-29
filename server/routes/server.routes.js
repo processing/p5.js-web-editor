@@ -14,6 +14,9 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/signup').get((req, res) => {
+  if (req.user) {
+    return res.redirect('/');
+  }
   res.send(renderIndex());
 });
 
@@ -34,6 +37,9 @@ router.route('/:username/sketches/:project_id/*').get((req, res) => {
 // });
 
 router.route('/login').get((req, res) => {
+  if (req.user) {
+    return res.redirect('/');
+  }
   res.send(renderIndex());
 });
 
