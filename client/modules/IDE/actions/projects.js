@@ -3,7 +3,7 @@ import * as ActionTypes from '../../../constants';
 import { showErrorModal, setPreviousPath } from './ide';
 import { resetProject } from './project';
 
-const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
+const ROOT_URL = process.env.API_URL;
 
 export function getProjects(username) {
   return (dispatch) => {

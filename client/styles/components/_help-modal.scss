@@ -1,0 +1,39 @@
+.help-modal {
+  @extend %modal;
+  padding: #{20 / $base-font-size}rem;
+  width: #{500 / $base-font-size}rem;
+}
+
+.help-modal__header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.help-modal__section {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: #{10 / $base-font-size}rem 0;
+
+  // Basic text styles for help body text
+  ul,
+  ol {
+    margin-top: #{5 / $base-font-size}rem;
+  }
+
+  p {
+    margin-top: #{10 / $base-font-size}rem;
+  }
+
+  li {
+    list-style: disc inside;
+  }
+}
+
+.help-modal__label {
+  width: #{86 / $base-font-size}rem;
+}
+
+.help-modal__input {
+  flex: 1;
+}

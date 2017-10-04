@@ -2,7 +2,7 @@ import * as ActionTypes from '../../../constants';
 
 const initialState = {
   isPlaying: false,
-  isTextOutputPlaying: false,
+  isAccessibleOutputPlaying: false,
   modalIsVisible: false,
   sidebarIsExpanded: false,
   consoleIsExpanded: true,
@@ -27,10 +27,10 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { isPlaying: true });
     case ActionTypes.STOP_SKETCH:
       return Object.assign({}, state, { isPlaying: false });
-    case ActionTypes.START_TEXT_OUTPUT:
-      return Object.assign({}, state, { isTextOutputPlaying: true });
-    case ActionTypes.STOP_TEXT_OUTPUT:
-      return Object.assign({}, state, { isTextOutputPlaying: false });
+    case ActionTypes.START_ACCESSIBLE_OUTPUT:
+      return Object.assign({}, state, { isAccessibleOutputPlaying: true });
+    case ActionTypes.STOP_ACCESSIBLE_OUTPUT:
+      return Object.assign({}, state, { isAccessibleOutputPlaying: false });
     case ActionTypes.CONSOLE_EVENT:
       return Object.assign({}, state, { consoleEvent: action.event });
     case ActionTypes.SHOW_MODAL:
@@ -91,6 +91,10 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { errorType: action.modalType });
     case ActionTypes.HIDE_ERROR_MODAL:
       return Object.assign({}, state, { errorType: undefined });
+    case ActionTypes.SHOW_HELP_MODAL:
+      return Object.assign({}, state, { helpType: action.helpType });
+    case ActionTypes.HIDE_HELP_MODAL:
+      return Object.assign({}, state, { helpType: undefined });
     default:
       return state;
   }

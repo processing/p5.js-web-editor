@@ -47,7 +47,11 @@ function SignupForm(props) {
           id="confirm password"
           {...domOnlyProps(confirmPassword)}
         />
-        {confirmPassword.touched && confirmPassword.error && <span className="form-error">{confirmPassword.error}</span>}
+        {
+          confirmPassword.touched &&
+          confirmPassword.error &&
+          <span className="form-error">{confirmPassword.error}</span>
+        }
       </p>
       <input type="submit" disabled={submitting || invalid || pristine} value="Sign Up" aria-label="sign up" />
     </form>

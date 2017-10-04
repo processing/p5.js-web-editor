@@ -34,9 +34,14 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       'process.env': {
+        API_URL: '"' + process.env.API_URL + '"',
         CLIENT: JSON.stringify(true),
+        FORCE_TO_HTTPS: process.env.FORCE_TO_HTTPS === 'true' ?
+          JSON.stringify(true) :
+          JSON.stringify(false),
         'NODE_ENV': JSON.stringify('development'),
-        'S3_BUCKET': '"' + process.env.S3_BUCKET + '"'
+        'S3_BUCKET': '"' + process.env.S3_BUCKET + '"',
+        'AWS_REGION': '"' + process.env.AWS_REGION + '"',
       }
     })
   ],

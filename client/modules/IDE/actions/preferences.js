@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as ActionTypes from '../../../constants';
 
-const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
+const ROOT_URL = process.env.API_URL;
 
 function updatePreferences(formParams, dispatch) {
   axios.put(`${ROOT_URL}/preferences`, formParams, { withCredentials: true })
@@ -137,6 +137,42 @@ export function setTextOutput(value) {
   };
 }
 
+export function setGridOutput(value) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.SET_GRID_OUTPUT,
+      value
+    });
+    const state = getState();
+    if (state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          gridOutput: value
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
+  };
+}
+
+export function setSoundOutput(value) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.SET_SOUND_OUTPUT,
+      value
+    });
+    const state = getState();
+    if (state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          soundOutput: value
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
+  };
+}
+
 export function setTheme(value) {
   // return {
   //   type: ActionTypes.SET_THEME,
@@ -178,6 +214,14 @@ export function setAutorefresh(value) {
       };
       updatePreferences(formParams, dispatch);
     }
+  };
+}
+
+export function setAllAccessibleOutput(value) {
+  return (dispatch) => {
+    dispatch(setTextOutput(value));
+    dispatch(setGridOutput(value));
+    dispatch(setSoundOutput(value));
   };
 }
 

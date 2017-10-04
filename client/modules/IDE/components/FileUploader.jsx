@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as UploaderActions from '../actions/uploader';
 
-const s3Bucket = `https://s3-us-west-2.amazonaws.com/${process.env.S3_BUCKET}/`;
+const s3Bucket = `https://s3-${process.env.AWS_REGION}.amazonaws.com/${process.env.S3_BUCKET}/`;
 
 class FileUploader extends React.Component {
   componentDidMount() {
@@ -13,6 +13,7 @@ class FileUploader extends React.Component {
   }
 
   createDropzone() {
+    const userId = this.props.project.owner ? this.props.project.owner.id : this.props.user.id;
     this.uploader = new Dropzone('div#uploader', {
       url: s3Bucket,
       method: 'post',
@@ -30,9 +31,9 @@ class FileUploader extends React.Component {
       text/plain,text/csv,.obj,video/webm,video/ogg,video/quicktime,video/mp4,
       .otf,.ttf`,
       dictDefaultMessage: 'Drop files here to upload or click to use the file browser',
-      accept: this.props.dropzoneAcceptCallback,
+      accept: this.props.dropzoneAcceptCallback.bind(this, userId),
       sending: this.props.dropzoneSendingCallback,
-      complete: this.props.dropzoneCompleteCallback,
+      complete: this.props.dropzoneCompleteCallback
       // error: (file, errorMessage) => {
       //   console.log(file);
       //   console.log(errorMessage);
@@ -50,13 +51,32 @@ class FileUploader extends React.Component {
 FileUploader.propTypes = {
   dropzoneAcceptCallback: PropTypes.func.isRequired,
   dropzoneSendingCallback: PropTypes.func.isRequired,
-  dropzoneCompleteCallback: PropTypes.func.isRequired
+  dropzoneCompleteCallback: PropTypes.func.isRequired,
+  project: PropTypes.shape({
+    owner: PropTypes.shape({
+      id: PropTypes.string
+    })
+  }),
+  user: PropTypes.shape({
+    id: PropTypes.string
+  })
+};
+
+FileUploader.defaultProps = {
+  project: {
+    id: undefined,
+    owner: undefined
+  },
+  user: {
+    id: undefined
+  }
 };
 
 function mapStateToProps(state) {
   return {
     files: state.files,
-    project: state.project
+    project: state.project,
+    user: state.user
   };
 }
 

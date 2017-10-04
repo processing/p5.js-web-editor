@@ -4,7 +4,7 @@ import * as ActionTypes from '../../constants';
 import { showErrorModal, justOpenedProject } from '../IDE/actions/ide';
 
 
-const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
+const ROOT_URL = process.env.API_URL;
 
 export function authError(error) {
   return {
@@ -130,6 +130,41 @@ export function initiateResetPassword(formValues) {
   };
 }
 
+export function initiateVerification() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.EMAIL_VERIFICATION_INITIATE
+    });
+    axios.post(`${ROOT_URL}/verify/send`, {}, { withCredentials: true })
+      .then(() => {
+        // do nothing
+      })
+      .catch(response => dispatch({
+        type: ActionTypes.ERROR,
+        message: response.data
+      }));
+  };
+}
+
+export function verifyEmailConfirmation(token) {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.EMAIL_VERIFICATION_VERIFY,
+      state: 'checking',
+    });
+    return axios.get(`${ROOT_URL}/verify?t=${token}`, {}, { withCredentials: true })
+      .then(response => dispatch({
+        type: ActionTypes.EMAIL_VERIFICATION_VERIFIED,
+        message: response.data,
+      }))
+      .catch(response => dispatch({
+        type: ActionTypes.EMAIL_VERIFICATION_INVALID,
+        message: response.data
+      }));
+  };
+}
+
+
 export function resetPasswordReset() {
   return {
     type: ActionTypes.RESET_PASSWORD_RESET
@@ -159,4 +194,21 @@ export function updatePassword(token, formValues) {
         type: ActionTypes.INVALID_RESET_PASSWORD_TOKEN
       }));
   };
+}
+
+export function updateSettingsSuccess(user) {
+  return {
+    type: ActionTypes.SETTINGS_UPDATED,
+    user
+  };
+}
+
+export function updateSettings(formValues) {
+  return dispatch =>
+    axios.put(`${ROOT_URL}/account`, formValues, { withCredentials: true })
+      .then((response) => {
+        dispatch(updateSettingsSuccess(response.data));
+        browserHistory.push('/');
+      })
+      .catch(response => Promise.reject({ currentPassword: response.data.error }));
 }

@@ -1,11 +1,8 @@
-#p5.js Web Editor
+# p5.js Web Editor
 
-This project is currently in the early stages of development! It will definitely be announced when it is in alpha/beta/etc.
+This project is currently in development! It will be announced when there is a (public) beta release. 
 
-##Important anouncements
-The p5.js interceptor code has been moved into its own directory! Make sure that you run `$ git submodule init && npm install` to ensure you have the files.
-
-##Development Installation
+## Development Installation
 
 1. Clone this repostory and cd into it
 2. `$ git submodule init`
@@ -16,22 +13,31 @@ The p5.js interceptor code has been moved into its own directory! Make sure that
 5. Create a file called `.env` in the root of this directory that looks like
 
   ```
+  API_URL=/api
   MONGO_URL=mongodb://localhost:27017/p5js-web-editor
   PORT=8000
   SESSION_SECRET=whatever_you_want_this_to_be_it_only_matters_for_production
   AWS_ACCESS_KEY=<your-aws-access-key>
   AWS_SECRET_KEY=<your-aws-secret-key>
+  AWS_REGION=<your-aws-region>
   S3_BUCKET=<your-s3-bucket>
   GITHUB_ID=<your-github-client-id>
   GITHUB_SECRET=<your-github-client-secret>
   ```
    If you don't care about being able to upload media files to S3 or Login with Github, you can drop in the file exactly how it is. Or, if you don't want to do that, just ask me to send you mine. Refer to [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) for creating an S3 bucket for testing, or if you don't want to do that, I can add you to one of my S3 buckets.
-6. `$ npm start`
-7. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
-8. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en).
-9. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
 
-##Production Installation
+6. `$ npm run fetch-examples` - this downloads the example sketches into a user called 'p5'
+7. `$ npm start`
+8. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
+9. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en).
+10. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
+
+### Testing SSL on your local machine
+Please refer to [this gist](https://gist.github.com/andrewn/953ffd5cb17ac2634dc969fc7bdaff3f). This allows you to access the editor using both HTTP and HTTPS. Don't worry about this unless you need to make changes or test HTTPS behavior.
+
+The automatic redirection to HTTPS is turned off by default in development. If you need to test this behavior, put `FORCE_TO_HTTPS=true` in your `.env` file.
+
+## Production Installation
 1. Clone this repostory and `cd` into it
 2. `$ git submodule init`
 3. `$ npm install`
@@ -39,24 +45,32 @@ The p5.js interceptor code has been moved into its own directory! Make sure that
 5. Create a file called `.env` in the root of this directory that looks like
 
   ```
+  API_URL=/api
   MONGO_URL=mongodb://localhost:27017/p5js-web-editor
   PORT=8000
   SESSION_SECRET=make_this_a_long-random_string_like_maybe_126_characters_long
   AWS_ACCESS_KEY=<your-aws-access-key>
   AWS_SECRET_KEY=<your-aws-secret-key>
+  AWS_REGION=<your-aws-region>
   S3_BUCKET=<your-s3-bucket>
   GITHUB_ID=<your-github-client-id>
   GITHUB_SECRET=<your-github-client-secret>
+  EMAIL_SENDER=<email-address-to-send-from>
+  MAILGUN_KEY=<mailgun-api-key>
+  MAILGUN_DOMAIN=<mailgun-domain>
+  EMAIL_VERIFY_SECRET_TOKEN=whatever_you_want_this_to_be_it_only_matters_for_production
   ```
   For production, you will need to have real Github and Amazon credentions. Refer to [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) for creating an S3 bucket for testing.
-6. `$ npm run build`
-7. `$ npm run start:prod`
 
-###For Production Setup with PM2
+6. `$ npm run fetch-examples` - this downloads the example sketches into a user called 'p5'
+7. `$ npm run build`
+8. `$ npm run start:prod`
+
+### For Production Setup with PM2
 1. `$ npm install -g pm2`
 2. `$ pm2 start ecosystem.json`
 
-##Accessibility Guidelines
+## Accessibility Guidelines
 
 Here is guide on [how to use the accessible editor](https://gist.github.com/MathuraMG/e86666b7b41fbc8c078bad9aff3f666d)
 
@@ -77,7 +91,7 @@ The code for the p5.js web editor adheres to web accessibility standards. The fo
 
 For more information on accessibility see the [teach access tutorial](https://teachaccess.github.io/tutorial/)
 
-##Contribution Guide
+## Contribution Guide
 I am currently open to contributors! Email me if you are looking for a task, or look at the open issues and reply that you are working on a task.
 
 The p5.js Web Editor is built on a MERN stack - MongoDB, Express, React/Redux, and Node. For a reference to the file structure format I am using, please look at the [Mern Starter](https://github.com/Hashnode/mern-starter) and [this comment](https://github.com/Hashnode/mern-starter/issues/90#issuecomment-221553573).
@@ -95,7 +109,7 @@ This project is currently hosted on an EC2 instance and uses S3 for media hostin
 
 Backups on the MongoDB are also hosted on an S3 bucket, based on the following [gist](https://gist.github.com/eladnava/96bd9771cd2e01fb4427230563991c8d). The backup script runs nightly via a cronjob at 8AM UTC/3AM EST/12AM PST. Backups are deleted after 30 days.
 
-##Dump of links I'm saving for reference
+## Dump of links I'm saving for reference
 
 * https://github.com/brigade/scss-lint
 * https://github.com/petehunt/react-howto

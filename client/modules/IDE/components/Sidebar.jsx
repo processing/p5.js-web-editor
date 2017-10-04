@@ -27,11 +27,24 @@ class Sidebar extends React.Component {
     }
   }
 
+  userCanEditProject() {
+    let canEdit;
+    if (!this.props.owner) {
+      canEdit = true;
+    } else if (this.props.user.authenticated && this.props.owner.id === this.props.user.id) {
+      canEdit = true;
+    } else {
+      canEdit = false;
+    }
+    return canEdit;
+  }
+
   render() {
     const sidebarClass = classNames({
       'sidebar': true,
       'sidebar--contracted': !this.props.isExpanded,
-      'sidebar--project-options': this.props.projectOptionsVisible
+      'sidebar--project-options': this.props.projectOptionsVisible,
+      'sidebar--cant-edit': !this.userCanEditProject()
     });
 
     return (
@@ -85,7 +98,18 @@ Sidebar.propTypes = {
   newFile: PropTypes.func.isRequired,
   openProjectOptions: PropTypes.func.isRequired,
   closeProjectOptions: PropTypes.func.isRequired,
-  newFolder: PropTypes.func.isRequired
+  newFolder: PropTypes.func.isRequired,
+  owner: PropTypes.shape({
+    id: PropTypes.string
+  }),
+  user: PropTypes.shape({
+    id: PropTypes.string,
+    authenticated: PropTypes.bool.isRequired
+  }).isRequired
+};
+
+Sidebar.defaultProps = {
+  owner: undefined
 };
 
 export default Sidebar;

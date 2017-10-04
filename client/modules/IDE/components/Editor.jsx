@@ -9,7 +9,11 @@ import 'codemirror/addon/lint/css-lint';
 import 'codemirror/addon/lint/html-lint';
 import 'codemirror/addon/comment/comment';
 import 'codemirror/keymap/sublime';
+import 'codemirror/addon/search/searchcursor';
+import 'codemirror/addon/search/matchesonscrollbar';
+import 'codemirror/addon/search/match-highlighter';
 import 'codemirror/addon/search/jump-to-line';
+
 import { JSHINT } from 'jshint';
 import { CSSLint } from 'csslint';
 import { HTMLHint } from 'htmlhint';
@@ -20,6 +24,13 @@ import '../../../utils/htmlmixed';
 import '../../../utils/p5-javascript';
 import Timer from '../components/Timer';
 import EditorAccessibility from '../components/EditorAccessibility';
+import {
+  metaKey,
+} from '../../../utils/metaKey';
+
+import search from '../../../utils/codemirror-search';
+
+search(CodeMirror);
 
 const beautifyCSS = beautifyJS.css;
 const beautifyHTML = beautifyJS.html;
@@ -29,7 +40,6 @@ window.CSSLint = CSSLint;
 window.HTMLHint = HTMLHint;
 
 const beepUrl = require('../../../sounds/audioAlert.mp3');
-const downArrowUrl = require('../../../images/down-arrow.svg');
 const unsavedChangesDotUrl = require('../../../images/unsaved-changes-dot.svg');
 const rightArrowUrl = require('../../../images/right-arrow.svg');
 const leftArrowUrl = require('../../../images/left-arrow.svg');
@@ -38,6 +48,9 @@ class Editor extends React.Component {
   constructor(props) {
     super(props);
     this.tidyCode = this.tidyCode.bind(this);
+    this.showFind = this.showFind.bind(this);
+    this.findNext = this.findNext.bind(this);
+    this.findPrev = this.findPrev.bind(this);
   }
   componentDidMount() {
     this.beep = new Audio(beepUrl);
@@ -51,6 +64,7 @@ class Editor extends React.Component {
       fixedGutter: false,
       gutters: ['CodeMirror-lint-markers'],
       keyMap: 'sublime',
+      highlightSelectionMatches: true, // highlight current search match
       lint: {
         onUpdateLinting: debounce((annotations) => {
           this.props.clearLintMessage();
@@ -66,14 +80,18 @@ class Editor extends React.Component {
         options: {
           'asi': true,
           'eqeqeq': false,
-          '-W041': false
+          '-W041': false,
+          'esversion': 6
         }
       }
     });
 
     this._cm.setOption('extraKeys', {
-      'Cmd-Enter': () => null,
-      'Shift-Cmd-Enter': () => null
+      [`${metaKey}-Enter`]: () => null,
+      [`Shift-${metaKey}-Enter`]: () => null,
+      [`${metaKey}-F`]: 'findPersistent',
+      [`${metaKey}-G`]: 'findNext',
+      [`Shift-${metaKey}-G`]: 'findPrev',
     });
 
     this.initializeDocuments(this.props.files);
@@ -103,6 +121,13 @@ class Editor extends React.Component {
     this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
     this._cm.setOption('indentWithTabs', this.props.isTabIndent);
     this._cm.setOption('tabSize', this.props.indentationAmount);
+
+    this.props.provideController({
+      tidyCode: this.tidyCode,
+      showFind: this.showFind,
+      findNext: this.findNext,
+      findPrev: this.findPrev
+    });
   }
 
   componentWillUpdate(nextProps) {
@@ -142,6 +167,7 @@ class Editor extends React.Component {
 
   componentWillUnmount() {
     this._cm = null;
+    this.props.provideController(null);
   }
 
   getFileMode(fileName) {
@@ -161,7 +187,6 @@ class Editor extends React.Component {
   }
 
   initializeDocuments(files) {
-    console.log('calling initialize documents');
     this._docs = {};
     files.forEach((file) => {
       if (file.name !== 'root') {
@@ -184,6 +209,20 @@ class Editor extends React.Component {
     } else if (mode === 'htmlmixed') {
       this._cm.doc.setValue(beautifyHTML(this._cm.doc.getValue(), beautifyOptions));
     }
+  }
+
+  showFind() {
+    this._cm.execCommand('findPersistent');
+  }
+
+  findNext() {
+    this._cm.focus();
+    this._cm.execCommand('findNext');
+  }
+
+  findPrev() {
+    this._cm.focus();
+    this._cm.execCommand('findPrev');
   }
 
   toggleEditorOptions() {
@@ -235,26 +274,6 @@ class Editor extends React.Component {
               isUserOwner={this.props.isUserOwner}
             />
           </div>
-          <button
-            className="editor__options-button"
-            aria-label="editor options"
-            tabIndex="0"
-            ref={(element) => { this.optionsButton = element; }}
-            onClick={() => {
-              this.toggleEditorOptions();
-            }}
-            onBlur={() => setTimeout(this.props.closeEditorOptions, 200)}
-          >
-            <InlineSVG src={downArrowUrl} />
-          </button>
-          <ul className="editor__options" title="editor options">
-            <li>
-              <button onClick={this.tidyCode}>Tidy</button>
-            </li>
-            <li>
-              <button onClick={this.props.showKeyboardShortcutModal}>Keyboard shortcuts</button>
-            </li>
-          </ul>
         </header>
         <div ref={(element) => { this.codemirrorContainer = element; }} className="editor-holder" tabIndex="0">
         </div>
@@ -288,7 +307,6 @@ Editor.propTypes = {
   editorOptionsVisible: PropTypes.bool.isRequired,
   showEditorOptions: PropTypes.func.isRequired,
   closeEditorOptions: PropTypes.func.isRequired,
-  showKeyboardShortcutModal: PropTypes.func.isRequired,
   setUnsavedChanges: PropTypes.func.isRequired,
   startRefreshSketch: PropTypes.func.isRequired,
   autorefresh: PropTypes.bool.isRequired,
@@ -305,7 +323,8 @@ Editor.propTypes = {
   collapseSidebar: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
   isUserOwner: PropTypes.bool,
-  clearConsole: PropTypes.func.isRequired
+  clearConsole: PropTypes.func.isRequired,
+  provideController: PropTypes.func.isRequired
 };
 
 Editor.defaultProps = {

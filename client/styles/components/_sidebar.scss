@@ -25,9 +25,7 @@
 }
 
 .sidebar__add {
-  @include themify() {
-    @extend %icon;
-  }
+  @include icon();
   .sidebar--contracted & {
     display: none;
   }
@@ -53,7 +51,7 @@
 }
 
 .sidebar__file-item {
-  height: #{20 / $base-font-size}rem;
+  // height: #{20 / $base-font-size}rem;
   font-size: #{12 / $base-font-size}rem;
   cursor: pointer;
   position: relative;
@@ -68,10 +66,15 @@
   }
 }
 
+.sidebar__file-item--folder {
+  z-index: 1;
+}
+
 // to indent each row in the file tree
 // not sure how to do this in a better way
 // it won't work if the file tree is too nested
 .file-item__spacer {
+  flex-shrink: 0;
   .sidebar__file-item & {
     width: #{33 / $base-font-size}rem;
     .sidebar__file-item & {
@@ -119,15 +122,20 @@
 }
 
 .sidebar__file-item-show-options {
+  @include icon();
   @include themify() {
-    @extend %icon;
     padding: #{4 / $base-font-size}rem 0;
+    background-color: map-get($theme-map, 'file-selected-color');
+    padding-right: #{6 / $base-font-size}rem;
   }
   display: none;
   position: absolute;
-  right: #{6 / $base-font-size}rem;
+  right: 0;
   .sidebar__file-item--selected > .file-item__content & {
     display: inline-block;
+    .sidebar--cant-edit & {
+      display: none;
+    }
   }
   & svg {
     width: #{10 / $base-font-size}rem;
@@ -173,9 +181,7 @@
 }
 
 .sidebar__expand {
-  @include themify() {
-    @extend %icon;
-  }
+  @include icon();
   position: absolute;
   top: #{7 / $base-font-size}rem;
   left: #{1 / $base-font-size}rem;
@@ -190,9 +196,7 @@
 }
 
 .sidebar__contract {
-  @include themify() {
-    @extend %icon;
-  }
+  @include icon();
   position: absolute;
   top: #{7 / $base-font-size}rem;
   left: #{34 / $base-font-size}rem;
@@ -209,6 +213,9 @@
   display: flex;
   align-items: center;
   position: relative;
+  .sidebar--cant-edit & {
+    display: none;
+  }
 }
 
 .sidebar__folder-icon {

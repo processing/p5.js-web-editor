@@ -1,12 +1,13 @@
 import * as ActionTypes from '../../../constants';
+import { clearConsole } from './console';
 
-export function startSketch() {
+export function startVisualSketch() {
   return {
     type: ActionTypes.START_SKETCH
   };
 }
 
-export function stopSketch() {
+export function stopVisualSketch() {
   return {
     type: ActionTypes.STOP_SKETCH
   };
@@ -20,7 +21,7 @@ export function startRefreshSketch() {
 
 export function startSketchAndRefresh() {
   return (dispatch) => {
-    dispatch(startSketch());
+    dispatch(startVisualSketch());
     dispatch(startRefreshSketch());
   };
 }
@@ -31,15 +32,15 @@ export function endSketchRefresh() {
   };
 }
 
-export function startTextOutput() {
+export function startAccessibleOutput() {
   return {
-    type: ActionTypes.START_TEXT_OUTPUT
+    type: ActionTypes.START_ACCESSIBLE_OUTPUT
   };
 }
 
-export function stopTextOutput() {
+export function stopAccessibleOutput() {
   return {
-    type: ActionTypes.STOP_TEXT_OUTPUT
+    type: ActionTypes.STOP_ACCESSIBLE_OUTPUT
   };
 }
 
@@ -220,3 +221,39 @@ export function hideErrorModal() {
     type: ActionTypes.HIDE_ERROR_MODAL
   };
 }
+
+export function showHelpModal(helpType) {
+  return {
+    type: ActionTypes.SHOW_HELP_MODAL,
+    helpType
+  };
+}
+
+export function hideHelpModal() {
+  return {
+    type: ActionTypes.HIDE_HELP_MODAL
+  };
+}
+
+export function startSketch() {
+  return (dispatch) => {
+    dispatch(clearConsole());
+    dispatch(startSketchAndRefresh());
+  };
+}
+
+export function startAccessibleSketch() {
+  return (dispatch) => {
+    dispatch(clearConsole());
+    dispatch(startAccessibleOutput());
+    dispatch(startSketchAndRefresh());
+  };
+}
+
+export function stopSketch() {
+  return (dispatch) => {
+    dispatch(stopAccessibleOutput());
+    dispatch(stopVisualSketch());
+  };
+}
+

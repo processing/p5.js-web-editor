@@ -1,5 +1,6 @@
 import User from '../models/user';
 
+const lodash = require('lodash');
 const passport = require('passport');
 const GitHubStrategy = require('passport-github').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
@@ -33,6 +34,28 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, don
   .catch(err => done(null, false, { msg: err }));
 }));
 
+/*
+  Input:
+  [
+    { value: 'email@example.com', primary: false, verified: true },
+    { value: 'unverified@example.com', primary: false, verified: false }
+  ]
+
+  Output:
+    ['email@example.com']
+*/
+const getVerifiedEmails = githubEmails => (
+  (githubEmails || [])
+    .filter(item => item.verified === true)
+    .map(item => item.value)
+);
+
+const getPrimaryEmail = githubEmails => (
+  (
+    lodash.find(githubEmails, { primary: true }) || {}
+  ).value
+);
+
 /**
  * Sign in with GitHub.
  */
@@ -40,28 +63,37 @@ passport.use(new GitHubStrategy({
   clientID: process.env.GITHUB_ID,
   clientSecret: process.env.GITHUB_SECRET,
   callbackURL: '/auth/github/callback',
-  passReqToCallback: true
+  passReqToCallback: true,
+  scope: ['user:email'],
 }, (req, accessToken, refreshToken, profile, done) => {
   User.findOne({ github: profile.id }, (findByGithubErr, existingUser) => {
     if (existingUser) {
       done(null, existingUser);
       return;
     }
-    User.findOne({ email: profile._json.email }, (findByEmailErr, existingEmailUser) => {
+
+    const emails = getVerifiedEmails(profile.emails);
+    const primaryEmail = getPrimaryEmail(profile.emails);
+
+    User.findOne({
+      email: { $in: emails },
+    }, (findByEmailErr, existingEmailUser) => {
       if (existingEmailUser) {
-        existingEmailUser.email = existingEmailUser.email || profile._json.email;
+        existingEmailUser.email = existingEmailUser.email || primaryEmail;
         existingEmailUser.github = profile.id;
         existingEmailUser.username = existingEmailUser.username || profile.username;
         existingEmailUser.tokens.push({ kind: 'github', accessToken });
         existingEmailUser.name = existingEmailUser.name || profile.displayName;
+        existingEmailUser.verified = User.EmailConfirmation.Verified;
         existingEmailUser.save(saveErr => done(null, existingEmailUser));
       } else {
         const user = new User();
-        user.email = profile._json.email;
+        user.email = primaryEmail;
         user.github = profile.id;
         user.username = profile.username;
         user.tokens.push({ kind: 'github', accessToken });
         user.name = profile.displayName;
+        user.verified = User.EmailConfirmation.Verified;
         user.save(saveErr => done(null, user));
       }
     });

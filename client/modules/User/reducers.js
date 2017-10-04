@@ -19,6 +19,16 @@ const user = (state = { authenticated: false }, action) => {
       return Object.assign({}, state, { resetPasswordInitiate: false });
     case ActionTypes.INVALID_RESET_PASSWORD_TOKEN:
       return Object.assign({}, state, { resetPasswordInvalid: true });
+    case ActionTypes.EMAIL_VERIFICATION_INITIATE:
+      return Object.assign({}, state, { emailVerificationInitiate: true });
+    case ActionTypes.EMAIL_VERIFICATION_VERIFY:
+      return Object.assign({}, state, { emailVerificationTokenState: 'checking' });
+    case ActionTypes.EMAIL_VERIFICATION_VERIFIED:
+      return Object.assign({}, state, { emailVerificationTokenState: 'verified' });
+    case ActionTypes.EMAIL_VERIFICATION_INVALID:
+      return Object.assign({}, state, { emailVerificationTokenState: 'invalid' });
+    case ActionTypes.SETTINGS_UPDATED:
+      return { ...state, ...action.user };
     default:
       return state;
   }

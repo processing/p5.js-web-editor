@@ -1,17 +1,41 @@
 import crypto from 'crypto';
 import async from 'async';
-import nodemailer from 'nodemailer';
-import mg from 'nodemailer-mailgun-transport';
+
 import User from '../models/user';
+import mail from '../utils/mail';
+import {
+  renderEmailConfirmation,
+  renderResetPassword,
+} from '../views/mail';
+
+const random = (done) => {
+  crypto.randomBytes(20, (err, buf) => {
+    const token = buf.toString('hex');
+    done(err, token);
+  });
+};
+
+export function findUserByUsername(username, cb) {
+  User.findOne({ username },
+    (err, user) => {
+      cb(user);
+    });
+}
+
+const EMAIL_VERIFY_TOKEN_EXPIRY_TIME = Date.now() + (3600000 * 24); // 24 hours
 
 export function createUser(req, res, next) {
-  const user = new User({
-    username: req.body.username,
-    email: req.body.email,
-    password: req.body.password
-  });
+  random((tokenError, token) => {
+    const user = new User({
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password,
+      verified: User.EmailConfirmation.Sent,
+      verifiedToken: token,
+      verifiedTokenExpires: EMAIL_VERIFY_TOKEN_EXPIRY_TIME,
+    });
 
-  User.findOne({ email: req.body.email },
+    User.findOne({ email: req.body.email },
     (err, existingUser) => {
       if (err) {
         res.status(404).send({ error: err });
@@ -32,15 +56,29 @@ export function createUser(req, res, next) {
             next(loginErr);
             return;
           }
-          res.json({
-            email: req.user.email,
-            username: req.user.username,
-            preferences: req.user.preferences,
-            id: req.user._id
+
+          const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+          const mailOptions = renderEmailConfirmation({
+            body: {
+              domain: `${protocol}://${req.headers.host}`,
+              link: `${protocol}://${req.headers.host}/verify?t=${token}`
+            },
+            to: req.user.email,
+          });
+
+          mail.send(mailOptions, (mailErr, result) => { // eslint-disable-line no-unused-vars
+            res.json({
+              email: req.user.email,
+              username: req.user.username,
+              preferences: req.user.preferences,
+              verified: req.user.verified,
+              id: req.user._id
+            });
           });
         });
       });
     });
+  });
 }
 
 export function duplicateUserCheck(req, res) {
@@ -90,12 +128,7 @@ export function updatePreferences(req, res) {
 
 export function resetPasswordInitiate(req, res) {
   async.waterfall([
-    (done) => {
-      crypto.randomBytes(20, (err, buf) => {
-        const token = buf.toString('hex');
-        done(err, token);
-      });
-    },
+    random,
     (token, done) => {
       User.findOne({ email: req.body.email }, (err, user) => {
         if (!user) {
@@ -111,27 +144,16 @@ export function resetPasswordInitiate(req, res) {
       });
     },
     (token, user, done) => {
-      const auth = {
-        auth: {
-          api_key: process.env.MAILGUN_KEY,
-          domain: process.env.MAILGUN_DOMAIN
-        }
-      };
-
-      const transporter = nodemailer.createTransport(mg(auth));
-      const message = {
+      const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+      const mailOptions = renderResetPassword({
+        body: {
+          domain: `${protocol}://${req.headers.host}`,
+          link: `${protocol}://${req.headers.host}/reset-password/${token}`,
+        },
         to: user.email,
-        from: 'p5.js Web Editor <noreply@p5js.org>',
-        subject: 'p5.js Web Editor Password Reset',
-        text: `You are receiving this email because you (or someone else) have requested the reset of the password for your account.
-        \n\nPlease click on the following link, or paste this into your browser to complete the process:
-        \n\nhttp://${req.headers.host}/reset-password/${token}
-        \n\nIf you did not request this, please ignore this email and your password will remain unchanged.
-        \n\nThanks for using the p5.js Web Editor!\n`
-      };
-      transporter.sendMail(message, (error) => {
-        done(error);
       });
+
+      mail.send(mailOptions, done);
     }
   ], (err) => {
     if (err) {
@@ -150,6 +172,76 @@ export function validateResetPasswordToken(req, res) {
       return;
     }
     res.json({ success: true });
+  });
+}
+
+export function emailVerificationInitiate(req, res) {
+  async.waterfall([
+    random,
+    (token, done) => {
+      User.findById(req.user.id, (err, user) => {
+        if (err) {
+          res.status(500).json({ error: err });
+          return;
+        }
+        if (!user) {
+          res.status(404).json({ error: 'Document not found' });
+          return;
+        }
+
+        if (user.verified === User.EmailConfirmation.Verified) {
+          res.status(409).json({ error: 'Email already verified' });
+          return;
+        }
+
+        const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+        const mailOptions = renderEmailConfirmation({
+          body: {
+            domain: `${protocol}://${req.headers.host}`,
+            link: `${protocol}://${req.headers.host}/verify?t=${token}`
+          },
+          to: user.email,
+        });
+
+        mail.send(mailOptions, (mailErr, result) => { // eslint-disable-line no-unused-vars
+          if (mailErr != null) {
+            res.status(500).send({ error: 'Error sending mail' });
+          } else {
+            user.verified = User.EmailConfirmation.Resent;
+            user.verifiedToken = token;
+            user.verifiedTokenExpires = EMAIL_VERIFY_TOKEN_EXPIRY_TIME; // 24 hours
+            user.save();
+
+            res.json({
+              email: req.user.email,
+              username: req.user.username,
+              preferences: req.user.preferences,
+              verified: user.verified,
+              id: req.user._id
+            });
+          }
+        });
+      });
+    },
+  ]);
+}
+
+export function verifyEmail(req, res) {
+  const token = req.query.t;
+
+  User.findOne({ verifiedToken: token, verifiedTokenExpires: { $gt: Date.now() } }, (err, user) => {
+    if (!user) {
+      res.status(401).json({ success: false, message: 'Token is invalid or has expired.' });
+      return;
+    }
+
+    user.verified = User.EmailConfirmation.Verified;
+    user.verifiedToken = null;
+    user.verifiedTokenExpires = null;
+    user.save()
+      .then((result) => { // eslint-disable-line
+        res.json({ success: true });
+      });
   });
 }
 
@@ -181,4 +273,66 @@ export function userExists(username, callback) {
   User.findOne({ username }, (err, user) => (
     user ? callback(true) : callback(false)
   ));
+}
+
+export function saveUser(res, user) {
+  user.save((saveErr) => {
+    if (saveErr) {
+      res.status(500).json({ error: saveErr });
+      return;
+    }
+
+    res.json(user);
+  });
+}
+
+export function updateSettings(req, res) {
+  User.findById(req.user.id, (err, user) => {
+    if (err) {
+      res.status(500).json({ error: err });
+      return;
+    }
+    if (!user) {
+      res.status(404).json({ error: 'Document not found' });
+      return;
+    }
+
+    user.username = req.body.username;
+
+    if (req.body.currentPassword) {
+      user.comparePassword(req.body.currentPassword, (passwordErr, isMatch) => {
+        if (passwordErr) throw passwordErr;
+        if (!isMatch) {
+          res.status(401).json({ error: 'Current password is invalid.' });
+          return;
+        }
+        user.password = req.body.newPassword;
+        saveUser(res, user);
+      });
+    } else if (user.email !== req.body.email) {
+      user.verified = User.EmailConfirmation.Sent;
+
+      user.email = req.body.email;
+
+      random((error, token) => {
+        user.verifiedToken = token;
+        user.verifiedTokenExpires = EMAIL_VERIFY_TOKEN_EXPIRY_TIME;
+
+        saveUser(res, user);
+
+        const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+        const mailOptions = renderEmailConfirmation({
+          body: {
+            domain: `${protocol}://${req.headers.host}`,
+            link: `${protocol}://${req.headers.host}/verify?t=${token}`
+          },
+          to: user.email,
+        });
+
+        mail.send(mailOptions);
+      });
+    } else {
+      saveUser(res, user);
+    }
+  });
 }

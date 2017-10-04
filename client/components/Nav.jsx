@@ -1,156 +1,423 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
+import InlineSVG from 'react-inlinesvg';
+import classNames from 'classnames';
+
+import {
+  metaKeyName,
+} from '../utils/metaKey';
+
+const triangleUrl = require('../images/down-filled-triangle.svg');
+const logoUrl = require('../images/p5js-logo-small.svg');
 
 class Nav extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dropdownOpen: 'none'
+    };
+    this.handleFocus = this.handleFocus.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
+    this.clearHideTimeout = this.clearHideTimeout.bind(this);
+  }
+
+  setDropdown(dropdown) {
+    this.setState({
+      dropdownOpen: dropdown
+    });
+  }
+
+  toggleDropdown(dropdown) {
+    if (this.state.dropdownOpen === 'none') {
+      this.setState({
+        dropdownOpen: dropdown
+      });
+    } else {
+      this.setState({
+        dropdownOpen: 'none'
+      });
+    }
+  }
+
+  isUserOwner() {
+    return this.props.project.owner && this.props.project.owner.id === this.props.user.id;
+  }
+
+  handleFocus(dropdown) {
+    this.clearHideTimeout();
+    this.setDropdown(dropdown);
+  }
+
+  clearHideTimeout() {
+    if (this.timer) {
+      clearTimeout(this.timer);
+      this.timer = null;
+    }
+  }
+
+  handleBlur() {
+    this.timer = setTimeout(this.setDropdown.bind(this, 'none'), 10);
+  }
+
   render() {
+    const navDropdownState = {
+      file: classNames({
+        'nav__item': true,
+        'nav__item--open': this.state.dropdownOpen === 'file'
+      }),
+      edit: classNames({
+        'nav__item': true,
+        'nav__item--open': this.state.dropdownOpen === 'edit'
+      }),
+      sketch: classNames({
+        'nav__item': true,
+        'nav__item--open': this.state.dropdownOpen === 'sketch'
+      }),
+      help: classNames({
+        'nav__item': true,
+        'nav__item--open': this.state.dropdownOpen === 'help'
+      }),
+      account: classNames({
+        'nav__item': true,
+        'nav__item--open': this.state.dropdownOpen === 'account'
+      })
+    };
     return (
       <nav className="nav" role="navigation" title="main-navigation">
         <ul className="nav__items-left" title="project-menu">
-          <li className="nav__item">
+          <li className="nav__item-logo">
+            <InlineSVG src={logoUrl} alt="p5.js logo" />
+          </li>
+          <li className={navDropdownState.file}>
             <button
-              className="nav__new"
-              onClick={() => {
-                if (!this.props.unsavedChanges) {
-                  this.props.newProject();
-                } else if (this.props.warnIfUnsavedChanges()) {
-                  this.props.newProject();
-                }
-              }}
+              onClick={this.toggleDropdown.bind(this, 'file')}
+              onBlur={this.handleBlur}
+              onFocus={this.clearHideTimeout}
             >
-              New
+              <span className="nav__item-header">File</span>
+              <InlineSVG src={triangleUrl} />
             </button>
-          </li>
-          {(() => { // eslint-disable-line
-            if (!this.props.project.owner || (this.props.project.owner && this.props.project.owner.id === this.props.user.id)) {
-              return (
-                <li className="nav__item">
-                  <button
-                    className="nav__save"
-                    onClick={() => {
-                      if (this.props.user.authenticated) {
-                        this.props.saveProject();
-                      } else {
-                        this.props.showErrorModal('forceAuthentication');
-                      }
-                    }}
-                  >
-                    Save
-                  </button>
-                </li>
-              );
-            }
-          })()}
-          {(() => { // eslint-disable-line
-            if (this.props.project.id && this.props.user.authenticated) {
-              return (
-                <li className="nav__item">
-                  <button className="nav__clone" onClick={this.props.cloneProject}>
-                    Duplicate
-                  </button>
-                </li>
-              );
-            }
-          })()}
-          {(() => { // eslint-disable-line
-            if (this.props.project.id) {
-              return (
-                <li className="nav__item">
-                  <button className="nav__export" onClick={() => this.props.exportProjectAsZip(this.props.project.id)}>
-                    Download
-                  </button>
-                </li>
-              );
-            }
-          })()}
-          {(() => { // eslint-disable-line
-            if (this.props.project.id) {
-              return (
-                <li className="nav__item">
-                  <button onClick={this.props.showShareModal}>
-                    Share
-                  </button>
-                </li>
-              );
-            }
-          })()}
-          {(() => { // eslint-disable-line
-            if (this.props.user.authenticated) {
-              return (
-                <li className="nav__item">
-                  <p className="nav__open">
-                    <Link
-                      to={`/${this.props.user.username}/sketches`}
-                      onClick={this.props.stopSketch}
-                    >
-                      Open
-                    </Link>
-                  </p>
-                </li>
-              );
-            }
-          })()}
-          <li className="nav__item">
-            <p className="nav__open">
-              <Link to="/p5/sketches">
-                Examples
-              </Link>
-            </p>
-          </li>
-          <li className="nav__item">
-            <p className="nav__reference">
-              <a
-                href="https://p5js.org/reference/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >Reference</a>
-            </p>
-          </li>
-          <li className="nav__item">
-            <p className="nav__about">
-              <Link to="/about">
-                About
-              </Link>
-            </p>
-          </li>
-        </ul>
-        <ul className="nav__items-right" title="user-menu">
-          {(() => {
-            if (!this.props.user.authenticated) {
-              return (
-                <li className="nav__item">
-                  <p>
-                    <Link to="/login">Log in</Link> <span className="nav__item-spacer">or</span> <Link to="/signup">Sign up</Link>
-                  </p>
-                </li>
-              );
-            }
-            return (
-              <li className="nav__item">
-                <a>Hello, {this.props.user.username}!</a>
-                <ul className="nav__dropdown">
-                  <li className="nav__dropdown-heading">
-                    <a>Hello, {this.props.user.username}!</a>
-                  </li>
-                  <li>
-                    <Link to={`/${this.props.user.username}/sketches`}>
-                      My sketches
-                    </Link>
-                  </li>
-                  <li>
-                    <button onClick={this.props.logoutUser} >
-                      Log out
-                    </button>
-                  </li>
-                </ul>
+            <ul className="nav__dropdown">
+              <li className="nav__dropdown-heading">
+                <span>File</span>
+                <InlineSVG src={triangleUrl} />
               </li>
-            );
-          })()}
+              <li className="nav__dropdown-item">
+                <button
+                  onClick={() => {
+                    if (!this.props.unsavedChanges) {
+                      this.props.newProject();
+                    } else if (this.props.warnIfUnsavedChanges()) {
+                      this.props.newProject();
+                    }
+                  }}
+                  onFocus={this.handleFocus.bind(this, 'file')}
+                  onBlur={this.handleBlur}
+                >
+                  New
+                </button>
+              </li>
+              { (!this.props.project.owner || this.isUserOwner()) &&
+              <li className="nav__dropdown-item">
+                <button
+                  onClick={() => {
+                    if (this.props.user.authenticated) {
+                      this.props.saveProject();
+                    } else {
+                      this.props.showErrorModal('forceAuthentication');
+                    }
+                  }}
+                  onFocus={this.handleFocus.bind(this, 'file')}
+                  onBlur={this.handleBlur}
+                >
+                  Save
+                  <span className="nav__keyboard-shortcut">{metaKeyName}+s</span>
+                </button>
+              </li> }
+              { this.props.project.id && this.props.user.authenticated &&
+              <li className="nav__dropdown-item">
+                <button
+                  onClick={this.props.cloneProject}
+                  onFocus={this.handleFocus.bind(this, 'file')}
+                  onBlur={this.handleBlur}
+                >
+                  Duplicate
+                </button>
+              </li> }
+              { this.props.project.id &&
+              <li className="nav__dropdown-item">
+                <button
+                  onClick={this.props.showShareModal}
+                  onFocus={this.handleFocus.bind(this, 'file')}
+                  onBlur={this.handleBlur}
+                >
+                  Share
+                </button>
+              </li> }
+              { this.props.project.id &&
+              <li className="nav__dropdown-item">
+                <button
+                  onClick={() => this.props.exportProjectAsZip(this.props.project.id)}
+                  onFocus={this.handleFocus.bind(this, 'file')}
+                  onBlur={this.handleBlur}
+                >
+                  Download
+                </button>
+              </li> }
+              { this.props.user.authenticated &&
+              <li className="nav__dropdown-item">
+                <Link
+                  to={`/${this.props.user.username}/sketches`}
+                  onFocus={this.handleFocus.bind(this, 'file')}
+                  onBlur={this.handleBlur}
+                >
+                  Open
+                </Link>
+              </li> }
+              <li className="nav__dropdown-item">
+                <Link
+                  to="/p5/sketches"
+                  onFocus={this.handleFocus.bind(this, 'file')}
+                  onBlur={this.handleBlur}
+                >
+                  Examples
+                </Link>
+              </li>
+            </ul>
+          </li>
+          <li className={navDropdownState.edit}>
+            <button
+              onClick={this.toggleDropdown.bind(this, 'edit')}
+              onBlur={this.handleBlur}
+              onFocus={this.clearHideTimeout}
+            >
+              <span className="nav__item-header">Edit</span>
+              <InlineSVG src={triangleUrl} />
+            </button>
+            <ul className="nav__dropdown">
+              <li className="nav__dropdown-heading">
+                <span>Edit</span>
+                <InlineSVG src={triangleUrl} />
+              </li>
+              <li className="nav__dropdown-item">
+                <button
+                  onClick={() => this.props.cmController.tidyCode()}
+                  onFocus={this.handleFocus.bind(this, 'edit')}
+                  onBlur={this.handleBlur}
+                >
+                  Tidy Code
+                  <span className="nav__keyboard-shortcut">{'\u21E7'}+Tab</span>
+                </button>
+              </li>
+              <li className="nav__dropdown-item">
+                <button
+                  onClick={() => this.props.cmController.showFind()}
+                  onFocus={this.handleFocus.bind(this, 'edit')}
+                  onBlur={this.handleBlur}
+                >
+                  Find
+                  <span className="nav__keyboard-shortcut">{metaKeyName}+F</span>
+                </button>
+              </li>
+              <li className="nav__dropdown-item">
+                <button
+                  onClick={() => this.props.cmController.findNext()}
+                  onFocus={this.handleFocus.bind(this, 'edit')}
+                  onBlur={this.handleBlur}
+                >
+                  Find Next
+                  <span className="nav__keyboard-shortcut">{metaKeyName}+G</span>
+                </button>
+              </li>
+              <li className="nav__dropdown-item">
+                <button
+                  onClick={() => this.props.cmController.findPrev()}
+                  onFocus={this.handleFocus.bind(this, 'edit')}
+                  onBlur={this.handleBlur}
+                >
+                  Find Previous
+                  <span className="nav__keyboard-shortcut">{'\u21E7'}+{metaKeyName}+G</span>
+                </button>
+              </li>
+            </ul>
+          </li>
+          <li className={navDropdownState.sketch}>
+            <button
+              onClick={this.toggleDropdown.bind(this, 'sketch')}
+              onBlur={this.handleBlur}
+              onFocus={this.clearHideTimeout}
+            >
+              <span className="nav__item-header">Sketch</span>
+              <InlineSVG src={triangleUrl} />
+            </button>
+            <ul className="nav__dropdown">
+              <li className="nav__dropdown-heading">
+                <span>Sketch</span>
+                <InlineSVG src={triangleUrl} />
+              </li>
+              <li className="nav__dropdown-item">
+                <button
+                  onClick={this.props.startSketch}
+                  onFocus={this.handleFocus.bind(this, 'sketch')}
+                  onBlur={this.handleBlur}
+                >
+                  Run
+                  <span className="nav__keyboard-shortcut">{metaKeyName}+Enter</span>
+                </button>
+              </li>
+              <li className="nav__dropdown-item">
+                <button
+                  onClick={this.props.stopSketch}
+                  onFocus={this.handleFocus.bind(this, 'sketch')}
+                  onBlur={this.handleBlur}
+                >
+                  Stop
+                  <span className="nav__keyboard-shortcut">{'\u21E7'}+{metaKeyName}+Enter</span>
+                </button>
+              </li>
+              <li className="nav__dropdown-item">
+                <button
+                  onClick={this.props.setAllAccessibleOutput.bind(this, true)}
+                  onFocus={this.handleFocus.bind(this, 'sketch')}
+                  onBlur={this.handleBlur}
+                >
+                  Start Accessible
+                  <span className="nav__keyboard-shortcut">{'\u21E7'}+{metaKeyName}+1</span>
+                </button>
+              </li>
+              <li className="nav__dropdown-item">
+                <button
+                  onClick={this.props.setAllAccessibleOutput.bind(this, false)}
+                  onFocus={this.handleFocus.bind(this, 'sketch')}
+                  onBlur={this.handleBlur}
+                >
+                  Stop Accessible
+                  <span className="nav__keyboard-shortcut">{'\u21E7'}+{metaKeyName}+2</span>
+                </button>
+              </li>
+            </ul>
+          </li>
+          <li className={navDropdownState.help}>
+            <button
+              onClick={this.toggleDropdown.bind(this, 'help')}
+              onBlur={this.handleBlur}
+              onFocus={this.clearHideTimeout}
+            >
+              <span className="nav__item-header">Help</span>
+              <InlineSVG src={triangleUrl} />
+            </button>
+            <ul className="nav__dropdown">
+              <li className="nav__dropdown-heading">
+                <span>Help</span>
+                <InlineSVG src={triangleUrl} />
+              </li>
+              <li className="nav__dropdown-item">
+                <button onClick={this.props.showKeyboardShortcutModal}>
+                  Keyboard Shortcuts
+                </button>
+              </li>
+              <li className="nav__dropdown-item">
+                <a
+                  href="https://p5js.org/reference/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onFocus={this.handleFocus.bind(this, 'help')}
+                  onBlur={this.handleBlur}
+                >Reference</a>
+              </li>
+              <li className="nav__dropdown-item">
+                <Link
+                  to="/about"
+                  onFocus={this.handleFocus.bind(this, 'help')}
+                  onBlur={this.handleBlur}
+                >
+                  About
+                </Link>
+              </li>
+            </ul>
+          </li>
         </ul>
+        { !this.props.user.authenticated &&
+          <ul className="nav__items-right" title="user-menu">
+            <li className="nav__item">
+              <p>
+                <Link to="/login">Log in</Link>
+                <span className="nav__item-spacer">or</span>
+                <Link to="/signup">Sign up</Link>
+              </p>
+            </li>
+          </ul>}
+        { this.props.user.authenticated &&
+          <ul className="nav__items-right" title="user-menu">
+            <li className="nav__item">
+              <span>Hello, {this.props.user.username}!</span>
+            </li>
+            <span className="nav__item-spacer">|</span>
+            <li className={navDropdownState.account}>
+              <button
+                className="nav__item-header"
+                onClick={this.toggleDropdown.bind(this, 'account')}
+                onBlur={this.handleBlur}
+                onFocus={this.clearHideTimeout}
+              >
+                My Account
+              </button>
+              <InlineSVG src={triangleUrl} />
+              <ul className="nav__dropdown">
+                <li className="nav__dropdown-heading">
+                  <span>My Account</span>
+                  <InlineSVG src={triangleUrl} />
+                </li>
+                <li className="nav__dropdown-item">
+                  <Link
+                    to={`/${this.props.user.username}/sketches`}
+                    onFocus={this.handleFocus.bind(this, 'account')}
+                    onBlur={this.handleBlur}
+                  >
+                    My sketches
+                  </Link>
+                </li>
+                <li className="nav__dropdown-item">
+                  <Link
+                    to={`/${this.props.user.username}/assets`}
+                    onFocus={this.handleFocus.bind(this, 'account')}
+                    onBlur={this.handleBlur}
+                  >
+                    My assets
+                  </Link>
+                </li>
+                <li className="nav__dropdown-item">
+                  <Link
+                    to={`/${this.props.user.username}/account`}
+                    onFocus={this.handleFocus.bind(this, 'account')}
+                    onBlur={this.handleBlur}
+                  >
+                    Settings
+                  </Link>
+                </li>
+                <li className="nav__dropdown-item">
+                  <button
+                    onClick={this.props.logoutUser}
+                    onFocus={this.handleFocus.bind(this, 'account')}
+                    onBlur={this.handleBlur}
+                  >
+                    Log out
+                  </button>
+                </li>
+              </ul>
+            </li>
+          </ul> }
+        {/*
         <div className="nav__announce">
-          This is a preview version of the editor, that has not yet been officially released. It is in development, you can report bugs
-          <a href="https://github.com/processing/p5.js-web-editor/issues" target="_blank" rel="noopener noreferrer">here</a>.
+          This is a preview version of the editor, that has not yet been officially released.
+          It is in development, you can report bugs <a
+            href="https://github.com/processing/p5.js-web-editor/issues"
+            target="_blank"
+            rel="noopener noreferrer"
+          >here</a>.
           Please use with caution.
         </div>
+      */}
       </nav>
     );
   }
@@ -173,18 +440,28 @@ Nav.propTypes = {
     })
   }),
   logoutUser: PropTypes.func.isRequired,
-  stopSketch: PropTypes.func.isRequired,
   showShareModal: PropTypes.func.isRequired,
   showErrorModal: PropTypes.func.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
-  warnIfUnsavedChanges: PropTypes.func.isRequired
+  warnIfUnsavedChanges: PropTypes.func.isRequired,
+  showKeyboardShortcutModal: PropTypes.func.isRequired,
+  cmController: PropTypes.shape({
+    tidyCode: PropTypes.func,
+    showFind: PropTypes.func,
+    findNext: PropTypes.func,
+    findPrev: PropTypes.func
+  }),
+  startSketch: PropTypes.func.isRequired,
+  stopSketch: PropTypes.func.isRequired,
+  setAllAccessibleOutput: PropTypes.func.isRequired
 };
 
 Nav.defaultProps = {
   project: {
     id: undefined,
     owner: undefined
-  }
+  },
+  cmController: {}
 };
 
 export default Nav;

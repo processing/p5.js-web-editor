@@ -7,8 +7,12 @@ import loopProtect from 'loop-protect';
 import { getBlobUrl } from '../actions/files';
 import { resolvePathToFile } from '../../../../server/utils/filePath';
 
+const decomment = require('decomment');
+
 const startTag = '@fs-';
+// eslint-disable-next-line max-len
 const MEDIA_FILE_REGEX = /^('|")(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov|otf|ttf|m4a)('|")$/i;
+// eslint-disable-next-line max-len
 const MEDIA_FILE_REGEX_NO_QUOTES = /^(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov|otf|ttf|m4a)$/i;
 const STRING_REGEX = /(['"])((\\\1|.)*?)\1/gm;
 const TEXT_FILE_REGEX = /(.+\.json$|.+\.txt$|.+\.csv$)/i;
@@ -30,8 +34,8 @@ function getAllScriptOffsets(htmlFile) {
     } else {
       endFilenameInd = htmlFile.indexOf('.js', ind + startTag.length + 3);
       filename = htmlFile.substring(ind + startTag.length, endFilenameInd);
-      // the length of hijackConsoleErrorsScript is 35 lines, already needed a -1 offset.
-      lineOffset = htmlFile.substring(0, ind).split('\n').length + 34;
+      // the length of hijackConsoleErrorsScript is 31 lines
+      lineOffset = htmlFile.substring(0, ind).split('\n').length + 31;
       offs.push([lineOffset, filename]);
       lastInd = ind + 1;
     }
@@ -54,20 +58,17 @@ function hijackConsoleErrorsScript(offs) {
       }
       return [line - l, file];
     }
-
     // catch reference errors, via http://stackoverflow.com/a/12747364/2994108
     window.onerror = function (msg, url, lineNumber, columnNo, error) {
         var string = msg.toLowerCase();
         var substring = "script error";
         var data = {};
-
         if (string.indexOf(substring) !== -1){
           data = 'Script Error: See Browser Console for Detail';
         } else {
           var fileInfo = getScriptOff(lineNumber);
           data = msg + ' (' + fileInfo[1] + ': line ' + fileInfo[0] + ')';
         }
-
         window.parent.postMessage([{
           method: 'error',
           arguments: data,
@@ -114,12 +115,22 @@ class PreviewFrame extends React.Component {
     }
 
     // if user switches textoutput preferences
-    if (this.props.isTextOutputPlaying !== prevProps.isTextOutputPlaying) {
+    if (this.props.isAccessibleOutputPlaying !== prevProps.isAccessibleOutputPlaying) {
       this.renderSketch();
       return;
     }
 
     if (this.props.textOutput !== prevProps.textOutput) {
+      this.renderSketch();
+      return;
+    }
+
+    if (this.props.gridOutput !== prevProps.gridOutput) {
+      this.renderSketch();
+      return;
+    }
+
+    if (this.props.soundOutput !== prevProps.soundOutput) {
       this.renderSketch();
       return;
     }
@@ -139,6 +150,14 @@ class PreviewFrame extends React.Component {
   clearPreview() {
     const doc = this.iframeElement;
     doc.srcDoc = '';
+  }
+
+  addLoopProtect(sketchDoc) {
+    const scriptsInHTML = sketchDoc.getElementsByTagName('script');
+    const scriptsInHTMLArray = Array.prototype.slice.call(scriptsInHTML);
+    scriptsInHTMLArray.forEach((script) => {
+      script.innerHTML = loopProtect(script.innerHTML); // eslint-disable-line
+    });
   }
 
   injectLocalFiles() {
@@ -165,38 +184,43 @@ class PreviewFrame extends React.Component {
       '/loop-protect.min.js',
       '/hijackConsole.js'
     ];
-    if (this.props.isTextOutputPlaying || (this.props.textOutput !== 0 && this.props.isPlaying)) {
+    if (
+      this.props.isAccessibleOutputPlaying ||
+      ((this.props.textOutput || this.props.gridOutput || this.props.soundOutput) && this.props.isPlaying)) {
       let interceptorScripts = [];
-      if (this.props.textOutput === 0) {
-        this.props.setTextOutput(1);
+      interceptorScripts = [
+        '/p5-interceptor/registry.js',
+        '/p5-interceptor/loadData.js',
+        '/p5-interceptor/interceptorHelperFunctions.js',
+        '/p5-interceptor/baseInterceptor.js',
+        '/p5-interceptor/entities/entity.min.js',
+        '/p5-interceptor/ntc.min.js'
+      ];
+      if (!this.props.textOutput && !this.props.gridOutput && !this.props.soundOutput) {
+        this.props.setTextOutput(true);
       }
-      if (this.props.textOutput === 1) {
-        interceptorScripts = [
-          '/p5-interceptor/registry.js',
-          '/p5-interceptor/loadData.js',
-          '/p5-interceptor/interceptorHelperFunctions.js',
-          '/p5-interceptor/baseInterceptor.js',
-          '/p5-interceptor/entities/entity.min.js',
+      if (this.props.textOutput) {
+        let textInterceptorScripts = [];
+        textInterceptorScripts = [
           '/p5-interceptor/textInterceptor/interceptorFunctions.js',
-          '/p5-interceptor/textInterceptor/interceptorP5.js',
-          '/p5-interceptor/ntc.min.js'
+          '/p5-interceptor/textInterceptor/interceptorP5.js'
         ];
-      } else if (this.props.textOutput === 2) {
-        interceptorScripts = [
-          '/p5-interceptor/registry.js',
-          '/p5-interceptor/loadData.js',
-          '/p5-interceptor/interceptorHelperFunctions.js',
-          '/p5-interceptor/baseInterceptor.js',
-          '/p5-interceptor/entities/entity.min.js',
+        interceptorScripts = interceptorScripts.concat(textInterceptorScripts);
+      }
+      if (this.props.gridOutput) {
+        let gridInterceptorScripts = [];
+        gridInterceptorScripts = [
           '/p5-interceptor/gridInterceptor/interceptorFunctions.js',
-          '/p5-interceptor/gridInterceptor/interceptorP5.js',
-          '/p5-interceptor/ntc.min.js'
+          '/p5-interceptor/gridInterceptor/interceptorP5.js'
         ];
-      } else if (this.props.textOutput === 3) {
-        interceptorScripts = [
-          '/p5-interceptor/loadData.js',
+        interceptorScripts = interceptorScripts.concat(gridInterceptorScripts);
+      }
+      if (this.props.soundOutput) {
+        let soundInterceptorScripts = [];
+        soundInterceptorScripts = [
           '/p5-interceptor/soundInterceptor/interceptorP5.js'
         ];
+        interceptorScripts = interceptorScripts.concat(soundInterceptorScripts);
       }
       scriptsToInject = scriptsToInject.concat(interceptorScripts);
     }
@@ -211,7 +235,7 @@ class PreviewFrame extends React.Component {
     scriptOffs = getAllScriptOffsets(sketchDocString);
     const consoleErrorsScript = sketchDoc.createElement('script');
     consoleErrorsScript.innerHTML = hijackConsoleErrorsScript(JSON.stringify(scriptOffs));
-    // sketchDoc.head.appendChild(consoleErrorsScript);
+    this.addLoopProtect(sketchDoc);
     sketchDoc.head.insertBefore(consoleErrorsScript, sketchDoc.head.firstElement);
 
     return `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
@@ -263,6 +287,10 @@ class PreviewFrame extends React.Component {
           }
         }
       }
+    });
+    newContent = decomment(newContent, {
+      ignore: /noprotect/g,
+      space: true
     });
     newContent = loopProtect(newContent);
     return newContent;
@@ -373,8 +401,10 @@ class PreviewFrame extends React.Component {
 
 PreviewFrame.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
-  isTextOutputPlaying: PropTypes.bool.isRequired,
-  textOutput: PropTypes.number.isRequired,
+  isAccessibleOutputPlaying: PropTypes.bool.isRequired,
+  textOutput: PropTypes.bool.isRequired,
+  gridOutput: PropTypes.bool.isRequired,
+  soundOutput: PropTypes.bool.isRequired,
   setTextOutput: PropTypes.func.isRequired,
   htmlFile: PropTypes.shape({
     content: PropTypes.string.isRequired

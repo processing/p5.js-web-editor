@@ -15,7 +15,12 @@ function ResetPasswordForm(props) {
           {...domOnlyProps(email)}
         />
       </p>
-      <input type="submit" disabled={submitting || invalid || pristine || props.user.resetPasswordInitiate} value="Send Password Reset Email" aria-label="Send email to reset password" />
+      <input
+        type="submit"
+        disabled={submitting || invalid || pristine || props.user.resetPasswordInitiate}
+        value="Send Password Reset Email"
+        aria-label="Send email to reset password"
+      />
     </form>
   );
 }

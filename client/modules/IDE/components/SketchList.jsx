@@ -8,35 +8,22 @@ import * as SketchActions from '../actions/projects';
 import * as ProjectActions from '../actions/project';
 import * as ToastActions from '../actions/toast';
 
-const exitUrl = require('../../../images/exit.svg');
 const trashCan = require('../../../images/trash-can.svg');
 
 class SketchList extends React.Component {
   constructor(props) {
     super(props);
-    this.closeSketchList = this.closeSketchList.bind(this);
     this.props.getProjects(this.props.username);
-  }
-
-  componentDidMount() {
-    document.getElementById('sketchlist').focus();
-  }
-
-  closeSketchList() {
-    browserHistory.push(this.props.previousPath);
   }
 
   render() {
     const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
     return (
-      <section className="sketch-list" aria-label="project list" tabIndex="0" role="main" id="sketchlist">
-        <header className="sketch-list__header">
-          <h2 className="sketch-list__header-title">Open a Sketch</h2>
-          <button className="sketch-list__exit-button" onClick={this.closeSketchList}>
-            <InlineSVG src={exitUrl} alt="Close Sketch List Overlay" />
-          </button>
-        </header>
-        <div className="sketches-table-container">
+      <div className="sketches-table-container">
+        { this.props.sketches.length === 0 &&
+          <p className="sketches-table__empty">No sketches.</p>
+        }
+        { this.props.sketches.length > 0 &&
           <table className="sketches-table" summary="table containing all saved projects">
             <thead>
               <tr>
@@ -79,9 +66,8 @@ class SketchList extends React.Component {
                 </tr>
               )}
             </tbody>
-          </table>
-        </div>
-      </section>
+          </table>}
+      </div>
     );
   }
 }
@@ -98,8 +84,7 @@ SketchList.propTypes = {
     updatedAt: PropTypes.string.isRequired
   })).isRequired,
   username: PropTypes.string,
-  deleteProject: PropTypes.func.isRequired,
-  previousPath: PropTypes.string.isRequired,
+  deleteProject: PropTypes.func.isRequired
 };
 
 SketchList.defaultProps = {

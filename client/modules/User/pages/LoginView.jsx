@@ -4,7 +4,9 @@ import { Link, browserHistory } from 'react-router';
 import InlineSVG from 'react-inlinesvg';
 import { validateAndLoginUser } from '../actions';
 import LoginForm from '../components/LoginForm';
-// import GithubButton from '../components/GithubButton';
+import { validateLogin } from '../../../utils/reduxFormUtils';
+import GithubButton from '../components/GithubButton';
+
 const exitUrl = require('../../../images/exit.svg');
 const logoUrl = require('../../../images/p5js-logo.svg');
 
@@ -25,6 +27,10 @@ class LoginView extends React.Component {
   }
 
   render() {
+    if (this.props.user.authenticated) {
+      this.gotoHomePage();
+      return null;
+    }
     return (
       <div className="form-container">
         <div className="form-container__header">
@@ -38,8 +44,8 @@ class LoginView extends React.Component {
         <div className="form-container__content">
           <h2 className="form-container__title">Log In</h2>
           <LoginForm {...this.props} />
-          {/* <h2 className="form-container__divider">Or</h2>
-          <GithubButton buttonText="Login with Github" /> */}
+          <h2 className="form-container__divider">Or</h2>
+          <GithubButton buttonText="Login with Github" />
           <p className="form__navigation-options">
             Don&apos;t have an account?&nbsp;
             <Link className="form__signup-button" to="/signup">Sign Up</Link>
@@ -67,23 +73,21 @@ function mapDispatchToProps() {
   };
 }
 
-function validate(formProps) {
-  const errors = {};
-  if (!formProps.email) {
-    errors.email = 'Please enter an email';
-  }
-  if (!formProps.password) {
-    errors.password = 'Please enter a password';
-  }
-  return errors;
-}
-
 LoginView.propTypes = {
-  previousPath: PropTypes.string.isRequired
+  previousPath: PropTypes.string.isRequired,
+  user: {
+    authenticated: PropTypes.bool
+  }
+};
+
+LoginView.defaultProps = {
+  user: {
+    authenticated: false
+  }
 };
 
 export default reduxForm({
   form: 'login',
   fields: ['email', 'password'],
-  validate
+  validate: validateLogin
 }, mapStateToProps, mapDispatchToProps)(LoginView);

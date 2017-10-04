@@ -1,16 +1,26 @@
 import { browserHistory } from 'react-router';
 import axios from 'axios';
 import objectID from 'bson-objectid';
+import each from 'async/each';
 import * as ActionTypes from '../../../constants';
 import { showToast, setToastText } from './toast';
 import { setUnsavedChanges,
   justOpenedProject,
   resetJustOpenedProject,
   showErrorModal } from './ide';
+import { clearState, saveState } from '../../../persistState';
+import { redirectToProtocol, protocols } from '../../../components/forceProtocol';
 
-const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
+const ROOT_URL = process.env.API_URL;
 
 export function setProject(project) {
+  const targetProtocol = project.serveSecure === true ?
+    protocols.https :
+    protocols.http;
+
+  // This will not reload if on same protocol
+  redirectToProtocol(targetProtocol);
+
   return {
     type: ActionTypes.SET_PROJECT,
     project,
@@ -41,16 +51,35 @@ export function getProject(id) {
   };
 }
 
+export function persistState() {
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.PERSIST_STATE,
+    });
+    const state = getState();
+    saveState(state);
+  };
+}
+
+export function clearPersistedState() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.CLEAR_PERSISTED_STATE,
+    });
+    clearState();
+  };
+}
+
 export function saveProject(autosave = false) {
   return (dispatch, getState) => {
     const state = getState();
     if (state.user.id && state.project.owner && state.project.owner.id !== state.user.id) {
-      return;
+      return Promise.reject();
     }
     const formParams = Object.assign({}, state.project);
     formParams.files = [...state.files];
     if (state.project.id) {
-      axios.put(`${ROOT_URL}/projects/${state.project.id}`, formParams, { withCredentials: true })
+      return axios.put(`${ROOT_URL}/projects/${state.project.id}`, formParams, { withCredentials: true })
         .then((response) => {
           dispatch(setUnsavedChanges(false));
           console.log(response.data);
@@ -82,41 +111,41 @@ export function saveProject(autosave = false) {
             });
           }
         });
-    } else {
-      axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
-        .then((response) => {
-          dispatch(setUnsavedChanges(false));
-          dispatch(setProject(response.data));
-          browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
-          dispatch({
-            type: ActionTypes.NEW_PROJECT,
-            project: response.data,
-            owner: response.data.user,
-            files: response.data.files
-          });
-          if (!autosave) {
-            if (state.preferences.autosave) {
-              dispatch(showToast(5500));
-              dispatch(setToastText('Project saved.'));
-              setTimeout(() => dispatch(setToastText('Autosave enabled.')), 1500);
-              dispatch(resetJustOpenedProject());
-            } else {
-              dispatch(showToast(1500));
-              dispatch(setToastText('Project saved.'));
-            }
-          }
-        })
-        .catch((response) => {
-          if (response.status === 403) {
-            dispatch(showErrorModal('staleSession'));
-          } else {
-            dispatch({
-              type: ActionTypes.PROJECT_SAVE_FAIL,
-              error: response.data
-            });
-          }
-        });
     }
+
+    return axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
+      .then((response) => {
+        dispatch(setUnsavedChanges(false));
+        dispatch(setProject(response.data));
+        browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
+        dispatch({
+          type: ActionTypes.NEW_PROJECT,
+          project: response.data,
+          owner: response.data.user,
+          files: response.data.files
+        });
+        if (!autosave) {
+          if (state.preferences.autosave) {
+            dispatch(showToast(5500));
+            dispatch(setToastText('Project saved.'));
+            setTimeout(() => dispatch(setToastText('Autosave enabled.')), 1500);
+            dispatch(resetJustOpenedProject());
+          } else {
+            dispatch(showToast(1500));
+            dispatch(setToastText('Project saved.'));
+          }
+        }
+      })
+      .catch((response) => {
+        if (response.status === 403) {
+          dispatch(showErrorModal('staleSession'));
+        } else {
+          dispatch({
+            type: ActionTypes.PROJECT_SAVE_FAIL,
+            error: response.data
+          });
+        }
+      });
   };
 }
 
@@ -185,28 +214,64 @@ export function cloneProject() {
       return { ...file };
     });
 
+    // generate new IDS for all files
     const rootFile = newFiles.find(file => file.name === 'root');
     const newRootFileId = objectID().toHexString();
     rootFile.id = newRootFileId;
     rootFile._id = newRootFileId;
     generateNewIdsForChildren(rootFile, newFiles);
-    // const newFiles = state.files;
-    const formParams = Object.assign({}, { name: `${state.project.name} copy` }, { files: newFiles });
-    axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
-      .then((response) => {
-        browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
-        console.log(response.data);
-        dispatch({
-          type: ActionTypes.NEW_PROJECT,
-          project: response.data,
-          owner: response.data.user,
-          files: response.data.files
-        });
-      })
-      .catch(response => dispatch({
-        type: ActionTypes.PROJECT_SAVE_FAIL,
-        error: response.data
-      }));
+
+    // duplicate all files hosted on S3
+    each(newFiles, (file, callback) => {
+      if (file.url && file.url.includes('amazonaws')) {
+        const formParams = {
+          url: file.url
+        };
+        axios.post(`${ROOT_URL}/S3/copy`, formParams, { withCredentials: true })
+          .then((response) => {
+            file.url = response.data.url;
+            callback(null);
+          });
+      } else {
+        callback(null);
+      }
+    }, (err) => {
+      // if not errors in duplicating the files on S3, then duplicate it
+      const formParams = Object.assign({}, { name: `${state.project.name} copy` }, { files: newFiles });
+      axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
+        .then((response) => {
+          browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
+          console.log(response.data);
+          dispatch({
+            type: ActionTypes.NEW_PROJECT,
+            project: response.data,
+            owner: response.data.user,
+            files: response.data.files
+          });
+        })
+        .catch(response => dispatch({
+          type: ActionTypes.PROJECT_SAVE_FAIL,
+          error: response.data
+        }));
+    });
+  };
+}
+
+export function setServeSecure(serveSecure, { redirect = true } = {}) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.SET_SERVE_SECURE,
+      serveSecure
+    });
+
+    if (redirect === true) {
+      dispatch(saveProject(false /* autosave */))
+        .then(
+          () => redirectToProtocol(serveSecure === true ? protocols.https : protocols.http)
+        );
+    }
+
+    return null;
   };
 }
 
