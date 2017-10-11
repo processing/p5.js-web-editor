@@ -95,7 +95,7 @@ class Nav extends React.PureComponent {
               onFocus={this.clearHideTimeout}
             >
               <span className="nav__item-header">File</span>
-              <InlineSVG src={triangleUrl} />
+              <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
             </button>
             <ul className="nav__dropdown">
               <li className="nav__dropdown-heading">
@@ -110,6 +110,7 @@ class Nav extends React.PureComponent {
                     } else if (this.props.warnIfUnsavedChanges()) {
                       this.props.newProject();
                     }
+                    this.setDropdown('none');
                   }}
                   onFocus={this.handleFocus.bind(this, 'file')}
                   onBlur={this.handleBlur}
@@ -126,6 +127,7 @@ class Nav extends React.PureComponent {
                     } else {
                       this.props.showErrorModal('forceAuthentication');
                     }
+                    this.setDropdown('none');
                   }}
                   onFocus={this.handleFocus.bind(this, 'file')}
                   onBlur={this.handleBlur}
@@ -137,7 +139,10 @@ class Nav extends React.PureComponent {
               { this.props.project.id && this.props.user.authenticated &&
               <li className="nav__dropdown-item">
                 <button
-                  onClick={this.props.cloneProject}
+                  onClick={() => {
+                    this.props.cloneProject();
+                    this.setDropdown('none');
+                  }}
                   onFocus={this.handleFocus.bind(this, 'file')}
                   onBlur={this.handleBlur}
                 >
@@ -147,7 +152,10 @@ class Nav extends React.PureComponent {
               { this.props.project.id &&
               <li className="nav__dropdown-item">
                 <button
-                  onClick={this.props.showShareModal}
+                  onClick={() => {
+                    this.props.showShareModal();
+                    this.setDropdown('none');
+                  }}
                   onFocus={this.handleFocus.bind(this, 'file')}
                   onBlur={this.handleBlur}
                 >
@@ -157,7 +165,10 @@ class Nav extends React.PureComponent {
               { this.props.project.id &&
               <li className="nav__dropdown-item">
                 <button
-                  onClick={() => this.props.exportProjectAsZip(this.props.project.id)}
+                  onClick={() => {
+                    this.props.exportProjectAsZip(this.props.project.id);
+                    this.setDropdown('none');
+                  }}
                   onFocus={this.handleFocus.bind(this, 'file')}
                   onBlur={this.handleBlur}
                 >
@@ -170,6 +181,7 @@ class Nav extends React.PureComponent {
                   to={`/${this.props.user.username}/sketches`}
                   onFocus={this.handleFocus.bind(this, 'file')}
                   onBlur={this.handleBlur}
+                  onClick={this.setDropdown.bind(this, 'none')}
                 >
                   Open
                 </Link>
@@ -179,6 +191,7 @@ class Nav extends React.PureComponent {
                   to="/p5/sketches"
                   onFocus={this.handleFocus.bind(this, 'file')}
                   onBlur={this.handleBlur}
+                  onClick={this.setDropdown.bind(this, 'none')}
                 >
                   Examples
                 </Link>
@@ -192,7 +205,7 @@ class Nav extends React.PureComponent {
               onFocus={this.clearHideTimeout}
             >
               <span className="nav__item-header">Edit</span>
-              <InlineSVG src={triangleUrl} />
+              <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
             </button>
             <ul className="nav__dropdown">
               <li className="nav__dropdown-heading">
@@ -201,7 +214,10 @@ class Nav extends React.PureComponent {
               </li>
               <li className="nav__dropdown-item">
                 <button
-                  onClick={() => this.props.cmController.tidyCode()}
+                  onClick={() => {
+                    this.props.cmController.tidyCode();
+                    this.setDropdown('none');
+                  }}
                   onFocus={this.handleFocus.bind(this, 'edit')}
                   onBlur={this.handleBlur}
                 >
@@ -211,7 +227,10 @@ class Nav extends React.PureComponent {
               </li>
               <li className="nav__dropdown-item">
                 <button
-                  onClick={() => this.props.cmController.showFind()}
+                  onClick={() => {
+                    this.props.cmController.showFind();
+                    this.setDropdown('none');
+                  }}
                   onFocus={this.handleFocus.bind(this, 'edit')}
                   onBlur={this.handleBlur}
                 >
@@ -221,7 +240,10 @@ class Nav extends React.PureComponent {
               </li>
               <li className="nav__dropdown-item">
                 <button
-                  onClick={() => this.props.cmController.findNext()}
+                  onClick={() => {
+                    this.props.cmController.findNext();
+                    this.setDropdown('none');
+                  }}
                   onFocus={this.handleFocus.bind(this, 'edit')}
                   onBlur={this.handleBlur}
                 >
@@ -231,7 +253,10 @@ class Nav extends React.PureComponent {
               </li>
               <li className="nav__dropdown-item">
                 <button
-                  onClick={() => this.props.cmController.findPrev()}
+                  onClick={() => {
+                    this.props.cmController.findPrev();
+                    this.setDropdown('none');
+                  }}
                   onFocus={this.handleFocus.bind(this, 'edit')}
                   onBlur={this.handleBlur}
                 >
@@ -248,7 +273,7 @@ class Nav extends React.PureComponent {
               onFocus={this.clearHideTimeout}
             >
               <span className="nav__item-header">Sketch</span>
-              <InlineSVG src={triangleUrl} />
+              <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
             </button>
             <ul className="nav__dropdown">
               <li className="nav__dropdown-heading">
@@ -257,7 +282,10 @@ class Nav extends React.PureComponent {
               </li>
               <li className="nav__dropdown-item">
                 <button
-                  onClick={this.props.startSketch}
+                  onClick={() => {
+                    this.props.startSketch();
+                    this.setDropdown('none');
+                  }}
                   onFocus={this.handleFocus.bind(this, 'sketch')}
                   onBlur={this.handleBlur}
                 >
@@ -267,7 +295,10 @@ class Nav extends React.PureComponent {
               </li>
               <li className="nav__dropdown-item">
                 <button
-                  onClick={this.props.stopSketch}
+                  onClick={() => {
+                    this.props.stopSketch();
+                    this.setDropdown('none');
+                  }}
                   onFocus={this.handleFocus.bind(this, 'sketch')}
                   onBlur={this.handleBlur}
                 >
@@ -277,7 +308,10 @@ class Nav extends React.PureComponent {
               </li>
               <li className="nav__dropdown-item">
                 <button
-                  onClick={this.props.setAllAccessibleOutput.bind(this, true)}
+                  onClick={() => {
+                    this.props.setAllAccessibleOutput(true);
+                    this.setDropdown('none');
+                  }}
                   onFocus={this.handleFocus.bind(this, 'sketch')}
                   onBlur={this.handleBlur}
                 >
@@ -287,7 +321,10 @@ class Nav extends React.PureComponent {
               </li>
               <li className="nav__dropdown-item">
                 <button
-                  onClick={this.props.setAllAccessibleOutput.bind(this, false)}
+                  onClick={() => {
+                    this.props.setAllAccessibleOutput(false);
+                    this.setDropdown('none');
+                  }}
                   onFocus={this.handleFocus.bind(this, 'sketch')}
                   onBlur={this.handleBlur}
                 >
@@ -304,7 +341,7 @@ class Nav extends React.PureComponent {
               onFocus={this.clearHideTimeout}
             >
               <span className="nav__item-header">Help</span>
-              <InlineSVG src={triangleUrl} />
+              <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
             </button>
             <ul className="nav__dropdown">
               <li className="nav__dropdown-heading">
@@ -312,7 +349,12 @@ class Nav extends React.PureComponent {
                 <InlineSVG src={triangleUrl} />
               </li>
               <li className="nav__dropdown-item">
-                <button onClick={this.props.showKeyboardShortcutModal}>
+                <button
+                  onClick={() => {
+                    this.props.showKeyboardShortcutModal();
+                    this.setDropdown('none');
+                  }}
+                >
                   Keyboard Shortcuts
                 </button>
               </li>
@@ -323,6 +365,7 @@ class Nav extends React.PureComponent {
                   rel="noopener noreferrer"
                   onFocus={this.handleFocus.bind(this, 'help')}
                   onBlur={this.handleBlur}
+                  onClick={this.setDropdown.bind(this, 'none')}
                 >Reference</a>
               </li>
               <li className="nav__dropdown-item">
@@ -330,6 +373,7 @@ class Nav extends React.PureComponent {
                   to="/about"
                   onFocus={this.handleFocus.bind(this, 'help')}
                   onBlur={this.handleBlur}
+                  onClick={this.setDropdown.bind(this, 'none')}
                 >
                   About
                 </Link>
@@ -362,7 +406,7 @@ class Nav extends React.PureComponent {
               >
                 My Account
               </button>
-              <InlineSVG src={triangleUrl} />
+              <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
               <ul className="nav__dropdown">
                 <li className="nav__dropdown-heading">
                   <span>My Account</span>
@@ -373,6 +417,7 @@ class Nav extends React.PureComponent {
                     to={`/${this.props.user.username}/sketches`}
                     onFocus={this.handleFocus.bind(this, 'account')}
                     onBlur={this.handleBlur}
+                    onClick={this.setDropdown.bind(this, 'none')}
                   >
                     My sketches
                   </Link>
@@ -382,6 +427,7 @@ class Nav extends React.PureComponent {
                     to={`/${this.props.user.username}/assets`}
                     onFocus={this.handleFocus.bind(this, 'account')}
                     onBlur={this.handleBlur}
+                    onClick={this.setDropdown.bind(this, 'none')}
                   >
                     My assets
                   </Link>
@@ -402,13 +448,17 @@ class Nav extends React.PureComponent {
                     to={`/${this.props.user.username}/account`}
                     onFocus={this.handleFocus.bind(this, 'account')}
                     onBlur={this.handleBlur}
+                    onClick={this.setDropdown.bind(this, 'none')}
                   >
                     Settings
                   </Link>
                 </li>
                 <li className="nav__dropdown-item">
                   <button
-                    onClick={this.props.logoutUser}
+                    onClick={() => {
+                      this.props.logoutUser();
+                      this.setDropdown('none');
+                    }}
                     onFocus={this.handleFocus.bind(this, 'account')}
                     onBlur={this.handleBlur}
                   >
