@@ -50,6 +50,19 @@
   margin-right: #{5 / $base-font-size}rem;
 }
 
+.nav__item:hover {
+  .nav__item-header {
+    @include themify() {
+      color: getThemifyVariable('nav-hover-color');
+    }
+  }
+  .nav__item-header-triangle polygon {
+   @include themify() {
+      fill: getThemifyVariable('nav-hover-color');
+    } 
+  }
+}
+
 .nav__dropdown {
 	@include themify() {
 		background-color: map-get($theme-map, 'modal-background-color');
@@ -60,7 +73,7 @@
   display: none;
 	text-align: left;
 	width: #{180 / $base-font-size}rem;
-	.nav__item:hover &, .nav__item--open & {
+	.nav__item--open & {
 		display: flex;
 		position: absolute;
 		flex-direction: column;
@@ -111,6 +124,19 @@
   align-items: center;
   justify-content: space-between;
   margin: 0 #{16 / $base-font-size}rem;
+  cursor: pointer;
+  &:hover {
+    span {
+      @include themify() {
+        color: getThemifyVariable('nav-hover-color');
+      }
+    }
+    polygon {
+     @include themify() {
+        fill: getThemifyVariable('nav-hover-color');
+      } 
+    }
+  }
 }
 
 .nav__dropdown-heading a, .nav__dropdown-heading a:hover {

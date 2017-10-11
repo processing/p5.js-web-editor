@@ -88,6 +88,7 @@ class PreviewFrame extends React.Component {
     }
 
     window.addEventListener('message', (messageEvent) => {
+      console.log(messageEvent);
       messageEvent.data.forEach((message) => {
         const args = message.arguments;
         Object.keys(args).forEach((key) => {
