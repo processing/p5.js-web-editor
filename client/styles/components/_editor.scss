@@ -13,17 +13,17 @@
 
 .CodeMirror-linenumber {
 	width: #{32 / $base-font-size}rem;
-  left: 0 !important;
+  left: #{-3 / $base-font-size}rem !important;
   @include themify() {
     color: getThemifyVariable('inactive-text-color');
   }
 }
 
 .CodeMirror-lines {
-	padding-top: #{25 / $base-font-size}rem;
+  padding-top: #{25 / $base-font-size}rem;
 }
 
-.CodeMirror-line {
+pre.CodeMirror-line {
 	padding-left: #{5 / $base-font-size}rem;
 }
 
@@ -241,6 +241,36 @@
   @include icon();
 
   background: transparent url(../images/exit.svg) no-repeat;
+}
+
+.CodeMirror-foldgutter-open:after {
+  background-image: url(../images/down-arrow.svg);
+}
+
+.CodeMirror-foldgutter-folded:after {
+  background-image: url(../images/right-arrow.svg);
+}
+
+.CodeMirror-foldgutter-folded:after,
+.CodeMirror-foldgutter-open:after {
+  background-size: 10px 10px;
+  content: "";
+  padding-left: 15px;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.CodeMirror-foldmarker {
+  text-shadow: none;
+  border-radius: 5px;
+  opacity: 1;
+  font-weight: normal;
+  display: inline-block;
+  vertical-align: middle;
+  height: 0.85em;
+  line-height: 0.7;
+  padding: 0 #{5 / $base-font-size}rem;
+  font-family: serif;
 }
 
 .editor-holder {
