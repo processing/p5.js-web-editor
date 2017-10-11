@@ -8,7 +8,7 @@ function KeyboardShortcutModal() {
   return (
     <ul className="keyboard-shortcuts" title="keyboard shortcuts">
       <li className="keyboard-shortcut-item">
-        <span className="keyboard-shortcut__command">Shift + Tab</span>
+        <span className="keyboard-shortcut__command">{'\u21E7'} + Tab</span>
         <span>Tidy</span>
       </li>
       <li className="keyboard-shortcut-item">
@@ -31,7 +31,7 @@ function KeyboardShortcutModal() {
       </li>
       <li className="keyboard-shortcut-item">
         <span className="keyboard-shortcut__command">
-          {metaKeyName} + Shift + G
+          {metaKeyName} + {'\u21E7'} + G
         </span>
         <span>Find Previous Text Match</span>
       </li>
@@ -61,21 +61,21 @@ function KeyboardShortcutModal() {
       </li>
       <li className="keyboard-shortcut-item">
         <span className="keyboard-shortcut__command">
-          {metaKeyName} + Shift + Enter
+          {metaKeyName} + {'\u21E7'} + Enter
         </span>
         <span>Stop Sketch</span>
       </li>
       <li className="keyboard-shortcut-item">
         <span className="keyboard-shortcut__command">
-          {metaKeyName} + Shift + 1
+          {metaKeyName} + {'\u21E7'} + 1
         </span>
-        <span>Toggle Text-based Canvas</span>
+        <span>Turn on Accessible Output</span>
       </li>
       <li className="keyboard-shortcut-item">
         <span className="keyboard-shortcut__command">
-          {metaKeyName} + Shift + 2
+          {metaKeyName} + {'\u21E7'} + 2
         </span>
-        <span>Turn Off Text-based Canvas</span>
+        <span>Turn off Accessible Output</span>
       </li>
     </ul>
   );
