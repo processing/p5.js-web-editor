@@ -69,11 +69,12 @@ class Editor extends React.Component {
       fixedGutter: false,
       foldGutter: true,
       foldOptions: { widget: '\u2026' },
-      gutters: ['CodeMirror-foldgutter'],
+      gutters: ['CodeMirror-foldgutter', 'CodeMirror-lint-markers'],
       keyMap: 'sublime',
       highlightSelectionMatches: true, // highlight current search match
       lint: {
         onUpdateLinting: debounce((annotations) => {
+          console.log(annotations);
           this.props.clearLintMessage();
           annotations.forEach((x) => {
             if (x.from.line > -1) {
