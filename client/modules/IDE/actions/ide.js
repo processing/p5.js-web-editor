@@ -235,6 +235,18 @@ export function hideHelpModal() {
   };
 }
 
+export function hideRuntimeErrorWarning() {
+  return {
+    type: ActionTypes.HIDE_RUNTIME_ERROR_WARNING
+  };
+}
+
+export function showRuntimeErrorWarning() {
+  return {
+    type: ActionTypes.SHOW_RUNTIME_ERROR_WARNING
+  };
+}
+
 export function startSketch() {
   return (dispatch) => {
     dispatch(clearConsole());
@@ -256,4 +268,3 @@ export function stopSketch() {
     dispatch(stopVisualSketch());
   };
 }
-

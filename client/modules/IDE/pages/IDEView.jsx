@@ -340,6 +340,10 @@ class IDEView extends React.Component {
                   collapseSidebar={this.props.collapseSidebar}
                   isUserOwner={this.isUserOwner()}
                   clearConsole={this.props.clearConsole}
+                  consoleEvents={this.props.console}
+                  showRuntimeErrorWarning={this.props.showRuntimeErrorWarning}
+                  hideRuntimeErrorWarning={this.props.hideRuntimeErrorWarning}
+                  runtimeErrorWarningVisible={this.props.ide.runtimeErrorWarningVisible}
                   provideController={(ctl) => { this.cmController = ctl; }}
                 />
                 <Console
@@ -568,7 +572,8 @@ IDEView.propTypes = {
     previousPath: PropTypes.string.isRequired,
     justOpenedProject: PropTypes.bool.isRequired,
     errorType: PropTypes.string,
-    helpType: PropTypes.string
+    helpType: PropTypes.string,
+    runtimeErrorWarningVisible: PropTypes.bool.isRequired,
   }).isRequired,
   stopSketch: PropTypes.func.isRequired,
   project: PropTypes.shape({
@@ -685,6 +690,8 @@ IDEView.propTypes = {
   persistState: PropTypes.func.isRequired,
   showHelpModal: PropTypes.func.isRequired,
   hideHelpModal: PropTypes.func.isRequired,
+  showRuntimeErrorWarning: PropTypes.func.isRequired,
+  hideRuntimeErrorWarning: PropTypes.func.isRequired,
   startSketch: PropTypes.func.isRequired,
   startAccessibleSketch: PropTypes.func.isRequired
 };
