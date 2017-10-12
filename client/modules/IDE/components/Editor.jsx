@@ -69,7 +69,7 @@ class Editor extends React.Component {
     this.findNext = this.findNext.bind(this);
     this.findPrev = this.findPrev.bind(this);
   }
-  
+
   componentDidMount() {
     this.beep = new Audio(beepUrl);
     this.widgets = [];

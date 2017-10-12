@@ -690,13 +690,10 @@ IDEView.propTypes = {
   persistState: PropTypes.func.isRequired,
   showHelpModal: PropTypes.func.isRequired,
   hideHelpModal: PropTypes.func.isRequired,
-<<<<<<< HEAD
   showRuntimeErrorWarning: PropTypes.func.isRequired,
-  hideRuntimeErrorWarning: PropTypes.func.isRequired
-=======
+  hideRuntimeErrorWarning: PropTypes.func.isRequired,
   startSketch: PropTypes.func.isRequired,
   startAccessibleSketch: PropTypes.func.isRequired
->>>>>>> master
 };
 
 function mapStateToProps(state) {
