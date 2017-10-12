@@ -244,11 +244,15 @@ pre.CodeMirror-line {
 }
 
 .CodeMirror-foldgutter-open:after {
-  background-image: url(../images/down-arrow.svg);
+  @include themify() {
+    background-image: getThemifyVariable('codefold-icon-open');
+  }
 }
 
 .CodeMirror-foldgutter-folded:after {
-  background-image: url(../images/right-arrow.svg);
+  @include themify() {
+    background-image: getThemifyVariable('codefold-icon-closed');
+  }
 }
 
 .CodeMirror-foldgutter-folded:after,
