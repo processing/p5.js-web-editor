@@ -38,6 +38,7 @@ pre.CodeMirror-line {
   width: #{48 / $base-font-size}rem;
   position: absolute;
   height: 100%;
+  right: 100%;
 }
 
 .CodeMirror-lint-message-error, .CodeMirror-lint-message-warning {
