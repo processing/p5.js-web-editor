@@ -21,6 +21,8 @@ $p5-dark-white: #FDFDFD;
 $p5-dark-orange: #EE9900;
 $p5-dark-lightgray: #E0D7D1;
 $p5-dark-darkgray: #666666;
+$p5-dark-green: #58a10b;
+$p5-dark-goldbrown: #b58317;
 
 $p5-dark-gutter: #f4f4f4;
 $p5-dark-number: #b5b5b5;
@@ -41,7 +43,7 @@ $p5-dark-activeline: rgb(207, 207, 207);
 }
 
 .cm-s-p5-dark .cm-string {
-  color: $p5-dark-lightblue;
+  color: $p5-dark-green;
 }
 
 .cm-s-p5-dark .cm-string-2 {
@@ -49,11 +51,11 @@ $p5-dark-activeline: rgb(207, 207, 207);
 }
 
 .cm-s-p5-dark .cm-number {
-  color: $p5-dark-pink;
+  color: $p5-dark-white;
 }
 
 .cm-s-p5-dark .cm-keyword {
-  color: $p5-light-green;
+  color: $p5-dark-goldbrown;
 }
 
 .cm-s-p5-dark .cm-variable {
@@ -125,4 +127,9 @@ $p5-dark-activeline: rgb(207, 207, 207);
 .cm-s-p5-dark .cm-p5-variable {
   color: $p5-dark-pink;
   font-weight: bold;
+}
+
+.cm-s-p5-dark .CodeMirror-foldmarker {
+  background-color: white;
+  color: #333;
 }

@@ -7,6 +7,11 @@ import 'codemirror/addon/lint/lint';
 import 'codemirror/addon/lint/javascript-lint';
 import 'codemirror/addon/lint/css-lint';
 import 'codemirror/addon/lint/html-lint';
+import 'codemirror/addon/fold/brace-fold';
+import 'codemirror/addon/fold/comment-fold';
+import 'codemirror/addon/fold/foldcode';
+import 'codemirror/addon/fold/foldgutter';
+import 'codemirror/addon/fold/indent-fold';
 import 'codemirror/addon/comment/comment';
 import 'codemirror/keymap/sublime';
 import 'codemirror/addon/search/searchcursor';
@@ -40,7 +45,6 @@ window.CSSLint = CSSLint;
 window.HTMLHint = HTMLHint;
 
 const beepUrl = require('../../../sounds/audioAlert.mp3');
-const downArrowUrl = require('../../../images/down-arrow.svg');
 const unsavedChangesDotUrl = require('../../../images/unsaved-changes-dot.svg');
 const rightArrowUrl = require('../../../images/right-arrow.svg');
 const leftArrowUrl = require('../../../images/left-arrow.svg');
@@ -61,7 +65,11 @@ class Editor extends React.Component {
         this.beep.play();
       }
     }, 2000);
+    this.showFind = this.showFind.bind(this);
+    this.findNext = this.findNext.bind(this);
+    this.findPrev = this.findPrev.bind(this);
   }
+  
   componentDidMount() {
     this.beep = new Audio(beepUrl);
     this.widgets = [];
@@ -72,7 +80,9 @@ class Editor extends React.Component {
       inputStyle: 'contenteditable',
       lineWrapping: false,
       fixedGutter: false,
-      gutters: ['CodeMirror-lint-markers'],
+      foldGutter: true,
+      foldOptions: { widget: '\u2026' },
+      gutters: ['CodeMirror-foldgutter'],
       keyMap: 'sublime',
       highlightSelectionMatches: true, // highlight current search match
       lint: {
@@ -83,7 +93,8 @@ class Editor extends React.Component {
         options: {
           'asi': true,
           'eqeqeq': false,
-          '-W041': false
+          '-W041': false,
+          'esversion': 6
         }
       }
     });
@@ -123,6 +134,13 @@ class Editor extends React.Component {
     this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
     this._cm.setOption('indentWithTabs', this.props.isTabIndent);
     this._cm.setOption('tabSize', this.props.indentationAmount);
+
+    this.props.provideController({
+      tidyCode: this.tidyCode,
+      showFind: this.showFind,
+      findNext: this.findNext,
+      findPrev: this.findPrev
+    });
   }
 
   componentWillUpdate(nextProps) {
@@ -178,6 +196,7 @@ class Editor extends React.Component {
 
   componentWillUnmount() {
     this._cm = null;
+    this.props.provideController(null);
   }
 
   getFileMode(fileName) {
@@ -219,6 +238,20 @@ class Editor extends React.Component {
     } else if (mode === 'htmlmixed') {
       this._cm.doc.setValue(beautifyHTML(this._cm.doc.getValue(), beautifyOptions));
     }
+  }
+
+  showFind() {
+    this._cm.execCommand('findPersistent');
+  }
+
+  findNext() {
+    this._cm.focus();
+    this._cm.execCommand('findNext');
+  }
+
+  findPrev() {
+    this._cm.focus();
+    this._cm.execCommand('findPrev');
   }
 
   toggleEditorOptions() {
@@ -270,26 +303,6 @@ class Editor extends React.Component {
               isUserOwner={this.props.isUserOwner}
             />
           </div>
-          <button
-            className="editor__options-button"
-            aria-label="editor options"
-            tabIndex="0"
-            ref={(element) => { this.optionsButton = element; }}
-            onClick={() => {
-              this.toggleEditorOptions();
-            }}
-            onBlur={() => setTimeout(this.props.closeEditorOptions, 200)}
-          >
-            <InlineSVG src={downArrowUrl} />
-          </button>
-          <ul className="editor__options" title="editor options">
-            <li>
-              <button onClick={this.tidyCode}>Tidy</button>
-            </li>
-            <li>
-              <button onClick={this.props.showKeyboardShortcutModal}>Keyboard shortcuts</button>
-            </li>
-          </ul>
         </header>
         <div ref={(element) => { this.codemirrorContainer = element; }} className="editor-holder" tabIndex="0">
         </div>
@@ -327,7 +340,6 @@ Editor.propTypes = {
   editorOptionsVisible: PropTypes.bool.isRequired,
   showEditorOptions: PropTypes.func.isRequired,
   closeEditorOptions: PropTypes.func.isRequired,
-  showKeyboardShortcutModal: PropTypes.func.isRequired,
   setUnsavedChanges: PropTypes.func.isRequired,
   startRefreshSketch: PropTypes.func.isRequired,
   autorefresh: PropTypes.bool.isRequired,
@@ -348,6 +360,7 @@ Editor.propTypes = {
   showRuntimeErrorWarning: PropTypes.func.isRequired,
   hideRuntimeErrorWarning: PropTypes.func.isRequired,
   runtimeErrorWarningVisible: PropTypes.bool.isRequired,
+  provideController: PropTypes.func.isRequired
 };
 
 Editor.defaultProps = {

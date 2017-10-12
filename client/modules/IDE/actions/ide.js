@@ -1,12 +1,13 @@
 import * as ActionTypes from '../../../constants';
+import { clearConsole } from './console';
 
-export function startSketch() {
+export function startVisualSketch() {
   return {
     type: ActionTypes.START_SKETCH
   };
 }
 
-export function stopSketch() {
+export function stopVisualSketch() {
   return {
     type: ActionTypes.STOP_SKETCH
   };
@@ -20,7 +21,7 @@ export function startRefreshSketch() {
 
 export function startSketchAndRefresh() {
   return (dispatch) => {
-    dispatch(startSketch());
+    dispatch(startVisualSketch());
     dispatch(startRefreshSketch());
   };
 }
@@ -243,5 +244,27 @@ export function hideRuntimeErrorWarning() {
 export function showRuntimeErrorWarning() {
   return {
     type: ActionTypes.SHOW_RUNTIME_ERROR_WARNING
+  };
+}
+
+export function startSketch() {
+  return (dispatch) => {
+    dispatch(clearConsole());
+    dispatch(startSketchAndRefresh());
+  };
+}
+
+export function startAccessibleSketch() {
+  return (dispatch) => {
+    dispatch(clearConsole());
+    dispatch(startAccessibleOutput());
+    dispatch(startSketchAndRefresh());
+  };
+}
+
+export function stopSketch() {
+  return (dispatch) => {
+    dispatch(stopAccessibleOutput());
+    dispatch(stopVisualSketch());
   };
 }

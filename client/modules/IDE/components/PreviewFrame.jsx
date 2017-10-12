@@ -88,6 +88,7 @@ class PreviewFrame extends React.Component {
     }
 
     window.addEventListener('message', (messageEvent) => {
+      console.log(messageEvent);
       messageEvent.data.forEach((message) => {
         const args = message.arguments;
         Object.keys(args).forEach((key) => {
@@ -150,6 +151,14 @@ class PreviewFrame extends React.Component {
   clearPreview() {
     const doc = this.iframeElement;
     doc.srcDoc = '';
+  }
+
+  addLoopProtect(sketchDoc) {
+    const scriptsInHTML = sketchDoc.getElementsByTagName('script');
+    const scriptsInHTMLArray = Array.prototype.slice.call(scriptsInHTML);
+    scriptsInHTMLArray.forEach((script) => {
+      script.innerHTML = loopProtect(script.innerHTML); // eslint-disable-line
+    });
   }
 
   injectLocalFiles() {
@@ -227,7 +236,7 @@ class PreviewFrame extends React.Component {
     scriptOffs = getAllScriptOffsets(sketchDocString);
     const consoleErrorsScript = sketchDoc.createElement('script');
     consoleErrorsScript.innerHTML = hijackConsoleErrorsScript(JSON.stringify(scriptOffs));
-    // sketchDoc.head.appendChild(consoleErrorsScript);
+    this.addLoopProtect(sketchDoc);
     sketchDoc.head.insertBefore(consoleErrorsScript, sketchDoc.head.firstElement);
 
     return `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
@@ -280,7 +289,10 @@ class PreviewFrame extends React.Component {
         }
       }
     });
-    newContent = decomment(newContent, { ignore: /noprotect/g });
+    newContent = decomment(newContent, {
+      ignore: /noprotect/g,
+      space: true
+    });
     newContent = loopProtect(newContent);
     return newContent;
   }

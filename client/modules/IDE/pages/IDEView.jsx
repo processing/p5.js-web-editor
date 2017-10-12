@@ -15,7 +15,7 @@ import NewFolderModal from '../components/NewFolderModal';
 import ShareModal from '../components/ShareModal';
 import KeyboardShortcutModal from '../components/KeyboardShortcutModal';
 import ErrorModal from '../components/ErrorModal';
-import HelpModal from '../components/HelpModal';
+import HTTPSModal from '../components/HTTPSModal';
 import Nav from '../../../components/Nav';
 import Console from '../components/Console';
 import Toast from '../components/Toast';
@@ -165,18 +165,15 @@ class IDEView extends React.Component {
     } else if (e.keyCode === 13 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
       e.preventDefault();
       e.stopPropagation();
-      this.props.clearConsole();
-      this.props.startSketchAndRefresh();
+      this.props.startSketch();
+      // 50 === 2
     } else if (e.keyCode === 50 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac)) && e.shiftKey) {
       e.preventDefault();
-      this.props.setTextOutput(false);
-      this.props.setGridOutput(false);
-      this.props.setSoundOutput(false);
+      this.props.setAllAccessibleOutput(false);
+      // 49 === 1
     } else if (e.keyCode === 49 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac)) && e.shiftKey) {
       e.preventDefault();
-      this.props.setTextOutput(true);
-      this.props.setGridOutput(true);
-      this.props.setSoundOutput(true);
+      this.props.setAllAccessibleOutput(true);
     }
   }
 
@@ -213,18 +210,20 @@ class IDEView extends React.Component {
           cloneProject={this.props.cloneProject}
           project={this.props.project}
           logoutUser={this.props.logoutUser}
+          startSketch={this.props.startSketch}
           stopSketch={this.props.stopSketch}
           showShareModal={this.props.showShareModal}
           showErrorModal={this.props.showErrorModal}
           unsavedChanges={this.props.ide.unsavedChanges}
           warnIfUnsavedChanges={this.warnIfUnsavedChanges}
+          showKeyboardShortcutModal={this.props.showKeyboardShortcutModal}
+          cmController={this.cmController}
+          setAllAccessibleOutput={this.props.setAllAccessibleOutput}
         />
         <Toolbar
           className="Toolbar"
           isPlaying={this.props.ide.isPlaying}
           stopSketch={this.props.stopSketch}
-          startAccessibleOutput={this.props.startAccessibleOutput}
-          stopAccessibleOutput={this.props.stopAccessibleOutput}
           projectName={this.props.project.name}
           setProjectName={this.props.setProjectName}
           showEditProjectName={this.props.showEditProjectName}
@@ -241,10 +240,10 @@ class IDEView extends React.Component {
           infiniteLoop={this.props.ide.infiniteLoop}
           autorefresh={this.props.preferences.autorefresh}
           setAutorefresh={this.props.setAutorefresh}
-          startSketchAndRefresh={this.props.startSketchAndRefresh}
+          startSketch={this.props.startSketch}
+          startAccessibleSketch={this.props.startAccessibleSketch}
           saveProject={this.props.saveProject}
           currentUser={this.props.user.username}
-          clearConsole={this.props.clearConsole}
           showHelpModal={this.props.showHelpModal}
         />
         <Preferences
@@ -300,8 +299,8 @@ class IDEView extends React.Component {
             <SplitPane
               split="vertical"
               defaultSize={'50%'}
-              onChange={() => (this.overlay.style.display = 'block')}
-              onDragFinished={() => (this.overlay.style.display = 'none')}
+              onChange={() => { this.overlay.style.display = 'block'; }}
+              onDragFinished={() => { this.overlay.style.display = 'none'; }}
             >
               <SplitPane
                 split="horizontal"
@@ -345,6 +344,7 @@ class IDEView extends React.Component {
                   showRuntimeErrorWarning={this.props.showRuntimeErrorWarning}
                   hideRuntimeErrorWarning={this.props.hideRuntimeErrorWarning}
                   runtimeErrorWarningVisible={this.props.ide.runtimeErrorWarningVisible}
+                  provideController={(ctl) => { this.cmController = ctl; }}
                 />
                 <Console
                   consoleEvents={this.props.console}
@@ -520,17 +520,16 @@ class IDEView extends React.Component {
         {(() => { // eslint-disable-line
           if (this.props.ide.helpType) {
             return (
-              <Overlay>
-                <HelpModal
-                  type={this.props.ide.helpType}
-                  closeModal={this.props.hideHelpModal}
-                />
+              <Overlay
+                title="Serve over HTTPS"
+                closeOverlay={this.props.hideHelpModal}
+              >
+                <HTTPSModal />
               </Overlay>
             );
           }
         })()}
       </div>
-
     );
   }
 }
@@ -577,8 +576,6 @@ IDEView.propTypes = {
     runtimeErrorWarningVisible: PropTypes.bool.isRequired,
   }).isRequired,
   stopSketch: PropTypes.func.isRequired,
-  startAccessibleOutput: PropTypes.func.isRequired,
-  stopAccessibleOutput: PropTypes.func.isRequired,
   project: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string.isRequired,
@@ -619,6 +616,7 @@ IDEView.propTypes = {
   setTextOutput: PropTypes.func.isRequired,
   setGridOutput: PropTypes.func.isRequired,
   setSoundOutput: PropTypes.func.isRequired,
+  setAllAccessibleOutput: PropTypes.func.isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -677,7 +675,6 @@ IDEView.propTypes = {
   setUnsavedChanges: PropTypes.func.isRequired,
   setTheme: PropTypes.func.isRequired,
   setAutorefresh: PropTypes.func.isRequired,
-  startSketchAndRefresh: PropTypes.func.isRequired,
   endSketchRefresh: PropTypes.func.isRequired,
   startRefreshSketch: PropTypes.func.isRequired,
   setBlobUrl: PropTypes.func.isRequired,
@@ -693,8 +690,13 @@ IDEView.propTypes = {
   persistState: PropTypes.func.isRequired,
   showHelpModal: PropTypes.func.isRequired,
   hideHelpModal: PropTypes.func.isRequired,
+<<<<<<< HEAD
   showRuntimeErrorWarning: PropTypes.func.isRequired,
   hideRuntimeErrorWarning: PropTypes.func.isRequired
+=======
+  startSketch: PropTypes.func.isRequired,
+  startAccessibleSketch: PropTypes.func.isRequired
+>>>>>>> master
 };
 
 function mapStateToProps(state) {
