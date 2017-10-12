@@ -74,7 +74,6 @@ class Editor extends React.Component {
       highlightSelectionMatches: true, // highlight current search match
       lint: {
         onUpdateLinting: debounce((annotations) => {
-          console.log(annotations);
           this.props.clearLintMessage();
           annotations.forEach((x) => {
             if (x.from.line > -1) {
