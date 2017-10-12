@@ -278,6 +278,17 @@ pre.CodeMirror-line {
   font-family: serif;
 }
 
+
+.line-runtime-error + .CodeMirror-activeline-gutter {
+  background-color: rgb(255, 95, 82);
+  opacity: 0.3;
+}
+
+.line-runtime-error {
+  background-color: rgb(255, 95, 82) !important;
+  opacity: 0.3;
+}
+
 .editor-holder {
   height: calc(100% - #{29 / $base-font-size}rem);
   width: 100%;
