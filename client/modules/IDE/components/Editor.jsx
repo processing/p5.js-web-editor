@@ -53,10 +53,23 @@ class Editor extends React.Component {
   constructor(props) {
     super(props);
     this.tidyCode = this.tidyCode.bind(this);
+
+    this.updateLintingMessageAccessibility = debounce((annotations) => {
+      this.props.clearLintMessage();
+      annotations.forEach((x) => {
+        if (x.from.line > -1) {
+          this.props.updateLintMessage(x.severity, (x.from.line + 1), x.message);
+        }
+      });
+      if (this.props.lintMessages.length > 0 && this.props.lintWarning) {
+        this.beep.play();
+      }
+    }, 2000);
     this.showFind = this.showFind.bind(this);
     this.findNext = this.findNext.bind(this);
     this.findPrev = this.findPrev.bind(this);
   }
+
   componentDidMount() {
     this.beep = new Audio(beepUrl);
     this.widgets = [];
@@ -73,17 +86,10 @@ class Editor extends React.Component {
       keyMap: 'sublime',
       highlightSelectionMatches: true, // highlight current search match
       lint: {
-        onUpdateLinting: debounce((annotations) => {
-          this.props.clearLintMessage();
-          annotations.forEach((x) => {
-            if (x.from.line > -1) {
-              this.props.updateLintMessage(x.severity, (x.from.line + 1), x.message);
-            }
-          });
-          if (this.props.lintMessages.length > 0 && this.props.lintWarning) {
-            this.beep.play();
-          }
-        }, 2000),
+        onUpdateLinting: ((annotations) => {
+          this.props.hideRuntimeErrorWarning();
+          this.updateLintingMessageAccessibility(annotations);
+        }),
         options: {
           'asi': true,
           'eqeqeq': false,
@@ -92,7 +98,6 @@ class Editor extends React.Component {
         }
       }
     });
-
 
     this._cm.setOption('extraKeys', {
       [`${metaKey}-Enter`]: () => null,
@@ -170,6 +175,22 @@ class Editor extends React.Component {
     }
     if (this.props.theme !== prevProps.theme) {
       this._cm.setOption('theme', `p5-${this.props.theme}`);
+    }
+
+    if (prevProps.consoleEvents !== this.props.consoleEvents) {
+      this.props.showRuntimeErrorWarning();
+    }
+    for (let i = 0; i < 1000; i += 1) {
+      this._cm.removeLineClass(i, 'background', 'line-runtime-error');
+    }
+    if (this.props.runtimeErrorWarningVisible) {
+      this.props.consoleEvents.forEach((consoleEvent) => {
+        if (consoleEvent.method === 'error') {
+          const n = consoleEvent.arguments.replace(')', '').split(' ');
+          const lineNumber = parseInt(n[n.length - 1], 10) - 1;
+          this._cm.addLineClass(lineNumber, 'background', 'line-runtime-error');
+        }
+      });
     }
   }
 
@@ -301,6 +322,10 @@ Editor.propTypes = {
     message: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired
   })).isRequired,
+  consoleEvents: PropTypes.arrayOf(PropTypes.shape({
+    method: PropTypes.string.isRequired,
+    args: PropTypes.arrayOf(PropTypes.string)
+  })),
   updateLintMessage: PropTypes.func.isRequired,
   clearLintMessage: PropTypes.func.isRequired,
   indentationAmount: PropTypes.number.isRequired,
@@ -332,11 +357,15 @@ Editor.propTypes = {
   expandSidebar: PropTypes.func.isRequired,
   isUserOwner: PropTypes.bool,
   clearConsole: PropTypes.func.isRequired,
+  showRuntimeErrorWarning: PropTypes.func.isRequired,
+  hideRuntimeErrorWarning: PropTypes.func.isRequired,
+  runtimeErrorWarningVisible: PropTypes.bool.isRequired,
   provideController: PropTypes.func.isRequired
 };
 
 Editor.defaultProps = {
-  isUserOwner: false
+  isUserOwner: false,
+  consoleEvents: [],
 };
 
 export default Editor;
