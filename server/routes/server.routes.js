@@ -18,7 +18,7 @@ router.route('/signup').get((req, res) => {
   if (req.user) {
     return res.redirect('/');
   }
-  res.send(renderIndex());
+  return res.send(renderIndex());
 });
 
 router.route('/projects/:project_id').get((req, res) => {
@@ -41,7 +41,7 @@ router.route('/login').get((req, res) => {
   if (req.user) {
     return res.redirect('/');
   }
-  res.send(renderIndex());
+  return res.send(renderIndex());
 });
 
 router.route('/reset-password').get((req, res) => {
