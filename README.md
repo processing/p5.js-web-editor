@@ -108,12 +108,3 @@ The ESLint configuration is based on a few popular React/Redux boilerplates. Ope
 This project is currently hosted on an EC2 instance and uses S3 for media hosting.
 
 Backups on the MongoDB are also hosted on an S3 bucket, based on the following [gist](https://gist.github.com/eladnava/96bd9771cd2e01fb4427230563991c8d). The backup script runs nightly via a cronjob at 8AM UTC/3AM EST/12AM PST. Backups are deleted after 30 days.
-
-## Dump of links I'm saving for reference
-
-* https://github.com/brigade/scss-lint
-* https://github.com/petehunt/react-howto
-* https://github.com/jsbin/jsbin (especially look at the console)
-* Need to figure out how to solve the XSS issue, https://github.com/jsbin/jsbin/wiki/Best-practices-for-building-your-own-live-paste-bin
-* https://www.npmjs.com/package/express-subdomain
-* https://github.com/jsbin/jsbin/blob/master/public/js/render/console.js - the code is a little messy but it might be useful
