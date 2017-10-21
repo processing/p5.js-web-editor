@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import srcDoc from 'srcdoc-polyfill';
 
 import loopProtect from 'loop-protect';
+import { JSHINT } from 'jshint';
 import { getBlobUrl } from '../actions/files';
 import { resolvePathToFile } from '../../../../server/utils/filePath';
 
@@ -289,11 +290,18 @@ class PreviewFrame extends React.Component {
         }
       }
     });
-    newContent = decomment(newContent, {
-      ignore: /noprotect/g,
-      space: true
-    });
-    newContent = loopProtect(newContent);
+
+    // check the code for js errors before sending it to strip comments
+    // or loops.
+    JSHINT(newContent);
+
+    if (!JSHINT.errors) {
+      newContent = decomment(newContent, {
+        ignore: /noprotect/g,
+        space: true
+      });
+      newContent = loopProtect(newContent);
+    }
     return newContent;
   }
 
