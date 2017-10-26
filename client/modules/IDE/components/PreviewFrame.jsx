@@ -162,6 +162,22 @@ class PreviewFrame extends React.Component {
     });
   }
 
+  jsPreprocess(sketchDoc) {
+    let newContent = sketchDoc;
+    // check the code for js errors before sending it to strip comments
+    // or loops.
+    JSHINT(newContent);
+
+    if (!JSHINT.errors) {
+      newContent = decomment(newContent, {
+        ignore: /noprotect/g,
+        space: true
+      });
+      newContent = loopProtect(newContent);
+    }
+    return newContent;
+  }
+
   injectLocalFiles() {
     const htmlFile = this.props.htmlFile.content;
     let scriptOffs = [];
@@ -291,18 +307,7 @@ class PreviewFrame extends React.Component {
       }
     });
 
-    // check the code for js errors before sending it to strip comments
-    // or loops.
-    JSHINT(newContent);
-
-    if (!JSHINT.errors) {
-      newContent = decomment(newContent, {
-        ignore: /noprotect/g,
-        space: true
-      });
-      newContent = loopProtect(newContent);
-    }
-    return newContent;
+    return this.jsPreprocess(newContent);
   }
 
   resolveCSSLinksInString(content, files) {
