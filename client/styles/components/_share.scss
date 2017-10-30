@@ -5,7 +5,7 @@
 }
 
 .share-modal__project-name {
-  padding-bottom: #{20 / $base-font-size}rem;
+  padding-bottom: #{30 / $base-font-size}rem;
   font-size: #{16 / $base-font-size}rem;
 }
 
@@ -19,18 +19,4 @@
   display: flex;
   flex-wrap: wrap;
   padding: #{10 / $base-font-size}rem 0;
-}
-
-.share-modal__label {
-  width: 100%;
-  font-size: #{12 / $base-font-size}rem;
-  padding-bottom: #{3 / $base-font-size}rem;
-  @include themify() {
-    color: getThemifyVariable('inactive-text-color');
-  }
-}
-
-.share-modal__input {
-  width: 100%;
-  font-size: #{16 / $base-font-size}rem;
 }
