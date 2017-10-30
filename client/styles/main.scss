@@ -9,6 +9,7 @@
 @import 'vendors/codemirror';
 @import 'vendors/lint';
 @import 'vendors/dropzone';
+@import 'node_modules/primer-tooltips/build/build';
 
 @import 'components/p5-light-codemirror-theme';
 @import 'components/p5-dark-codemirror-theme';
@@ -42,6 +43,7 @@
 @import 'components/share';
 @import 'components/asset-list';
 @import 'components/keyboard-shortcuts';
+@import 'components/copyable-input';
 
 @import 'layout/ide';
 @import 'layout/fullscreen';

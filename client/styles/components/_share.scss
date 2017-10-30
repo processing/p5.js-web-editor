@@ -1,6 +1,12 @@
 .share-modal {
   padding: #{20 / $base-font-size}rem;
+  padding-top: 0;
   width: #{500 / $base-font-size}rem;
+}
+
+.share-modal__project-name {
+  padding-bottom: #{30 / $base-font-size}rem;
+  font-size: #{16 / $base-font-size}rem;
 }
 
 .share-modal__header {
@@ -11,14 +17,6 @@
 .share-modal__section {
   width: 100%;
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
   padding: #{10 / $base-font-size}rem 0;
-}
-
-.share-modal__label {
-  width: #{86 / $base-font-size}rem;
-}
-
-.share-modal__input {
-  flex: 1;
 }
