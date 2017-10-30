@@ -157,16 +157,11 @@ export function getProjectAsset(req, res) {
       if (!assetURL) {
         return res.status(404).send({ message: 'Asset does not exist' });
       }
-<<<<<<< HEAD
-      request({ method: 'GET', url: assetURL, encoding: null }, (fetchErr, response, body) => {
-        res.send(body);
-=======
       request({ method: 'GET', url: assetURL, encoding: null }, (innerErr, response, body) => {
         if (innerErr) {
           return res.status(404).send({ message: 'Asset does not exist' });
         }
         return res.send(body);
->>>>>>> master
       });
     });
 }
