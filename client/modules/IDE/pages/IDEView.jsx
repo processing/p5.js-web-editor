@@ -477,12 +477,13 @@ class IDEView extends React.Component {
           if (this.props.ide.shareModalVisible) {
             return (
               <Overlay
-                title="Share Sketch"
+                title="Share This Sketch"
                 ariaLabel="share"
                 closeOverlay={this.props.closeShareModal}
               >
                 <ShareModal
                   projectId={this.props.project.id}
+                  projectName={this.props.project.name}
                   ownerUsername={this.props.project.owner.username}
                 />
               </Overlay>
