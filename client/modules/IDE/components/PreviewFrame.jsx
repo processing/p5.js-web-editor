@@ -158,12 +158,12 @@ class PreviewFrame extends React.Component {
     const scriptsInHTML = sketchDoc.getElementsByTagName('script');
     const scriptsInHTMLArray = Array.prototype.slice.call(scriptsInHTML);
     scriptsInHTMLArray.forEach((script) => {
-      script.innerHTML = loopProtect(script.innerHTML); // eslint-disable-line
+      script.innerHTML = this.jsPreprocess(script.innerHTML); // eslint-disable-line
     });
   }
 
-  jsPreprocess(sketchDoc) {
-    let newContent = sketchDoc;
+  jsPreprocess(jsText) {
+    let newContent = jsText;
     // check the code for js errors before sending it to strip comments
     // or loops.
     JSHINT(newContent);
