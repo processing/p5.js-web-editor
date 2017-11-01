@@ -1,6 +1,6 @@
 # p5.js Web Editor
 
-This project is currently in development! It will be announced when there is a (public) beta release. 
+This project is currently in development! It will be announced when there is a (public) beta release.
 
 ## Development Installation
 
@@ -37,6 +37,33 @@ This project is currently in development! It will be announced when there is a (
 Please refer to [this gist](https://gist.github.com/andrewn/953ffd5cb17ac2634dc969fc7bdaff3f). This allows you to access the editor using both HTTP and HTTPS. Don't worry about this unless you need to make changes or test HTTPS behavior.
 
 The automatic redirection to HTTPS is turned off by default in development. If you need to test this behavior, put `FORCE_TO_HTTPS=true` in your `.env` file.
+
+## Development Installation (using Docker)
+
+Using Docker, you can have a complete, consistent development environment
+without having to manually install dependencies such as Node, Mongo, etc. It
+also helps isolate these dependencies and their data from other projects that
+you may have on the same computer that use different/conflicting versions, etc.
+
+1. Install Docker for your operating system
+   * Mac: https://www.docker.com/docker-mac
+   * Windows: https://www.docker.com/docker-windows
+2. Clone this repostory and cd into it
+3. `$ docker-compose build`
+4. `$ docker-compose run --rm server yarn run fetch-examples`
+
+Now, anytime you wish to start the server with its dependencies, you can run:
+
+5. `$ docker-compose up`
+6. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
+
+To open a terminal/shell in the running Docker server (i.e. after `docker-compose up` has been run):
+
+7. `$ docker-compose exec server bash -l`
+
+If you don't have the full server environment running, you can launch a one-off container instance (and have it automatically deleted after you're done using it):
+
+8. `$ docker-compose run server --rm bash -l`
 
 ## Production Installation
 1. Clone this repostory and `cd` into it
