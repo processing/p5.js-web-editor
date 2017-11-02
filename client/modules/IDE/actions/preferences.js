@@ -216,3 +216,12 @@ export function setAutorefresh(value) {
     }
   };
 }
+
+export function setAllAccessibleOutput(value) {
+  return (dispatch) => {
+    dispatch(setTextOutput(value));
+    dispatch(setGridOutput(value));
+    dispatch(setSoundOutput(value));
+  };
+}
+

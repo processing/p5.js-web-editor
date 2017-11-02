@@ -13,17 +13,17 @@
 
 .CodeMirror-linenumber {
 	width: #{32 / $base-font-size}rem;
-  left: 0 !important;
+  left: #{-3 / $base-font-size}rem !important;
   @include themify() {
     color: getThemifyVariable('inactive-text-color');
   }
 }
 
 .CodeMirror-lines {
-	padding-top: #{25 / $base-font-size}rem;
+  padding-top: #{25 / $base-font-size}rem;
 }
 
-.CodeMirror-line {
+pre.CodeMirror-line {
 	padding-left: #{5 / $base-font-size}rem;
 }
 
@@ -38,6 +38,7 @@
   width: #{48 / $base-font-size}rem;
   position: absolute;
   height: 100%;
+  right: 100%;
 }
 
 .CodeMirror-lint-message-error, .CodeMirror-lint-message-warning {
@@ -85,13 +86,15 @@
 */
 
 .CodeMirror-dialog {
-  position: absolute;
+  position: fixed;
   top: 0;
-  right: 0;
+  left: 50%;
+  margin-left: - #{365/2/$base-font-size}rem;
 
   z-index: 10;
 
-  min-width: 365px;
+  width: 100%;
+  max-width: #{365 / $base-font-size}rem;
 
   font-family: Montserrat, sans-serif;
 
@@ -118,6 +121,13 @@
   display: block;
   width: 100%;
   margin-bottom: #{12 / $base-font-size}rem;
+  @include themify() {
+    background-color: getThemifyVariable('search-background-color');
+    border: solid 0.5px getThemifyVariable('button-border-color');
+  }
+  &:focus {
+    background-color: $white;
+  }
 }
 
 .CodeMirror-search-count {
@@ -232,6 +242,51 @@
   @include icon();
 
   background: transparent url(../images/exit.svg) no-repeat;
+}
+
+.CodeMirror-foldgutter-open:after {
+  @include themify() {
+    background-image: getThemifyVariable('codefold-icon-open');
+  }
+}
+
+.CodeMirror-foldgutter-folded:after {
+  @include themify() {
+    background-image: getThemifyVariable('codefold-icon-closed');
+  }
+}
+
+.CodeMirror-foldgutter-folded:after,
+.CodeMirror-foldgutter-open:after {
+  background-size: 10px 10px;
+  content: "";
+  padding-left: 15px;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.CodeMirror-foldmarker {
+  text-shadow: none;
+  border-radius: 5px;
+  opacity: 1;
+  font-weight: normal;
+  display: inline-block;
+  vertical-align: middle;
+  height: 0.85em;
+  line-height: 0.7;
+  padding: 0 #{5 / $base-font-size}rem;
+  font-family: serif;
+}
+
+
+.line-runtime-error + .CodeMirror-activeline-gutter {
+  background-color: rgb(255, 95, 82);
+  opacity: 0.3;
+}
+
+.line-runtime-error {
+  background-color: rgb(255, 95, 82) !important;
+  opacity: 0.3;
 }
 
 .editor-holder {

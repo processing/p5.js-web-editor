@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { renderIndex } from '../views/index';
 import { get404Sketch } from '../views/404Page';
 import { userExists } from '../controllers/user.controller';
+import { getProjectAsset } from '../controllers/project.controller';
 
 const router = new Router();
 
@@ -13,7 +14,10 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/signup').get((req, res) => {
-  res.send(renderIndex());
+  if (req.user) {
+    return res.redirect('/');
+  }
+  return res.send(renderIndex());
 });
 
 router.route('/projects/:project_id').get((req, res) => {
@@ -24,12 +28,19 @@ router.route('/:username/sketches/:project_id').get((req, res) => {
   res.send(renderIndex());
 });
 
+router.route('/:username/sketches/:project_id/*').get((req, res) => {
+  getProjectAsset(req, res);
+});
+
 // router.route('/full/:project_id').get((req, res) => {
 //   res.send(renderIndex());
 // });
 
 router.route('/login').get((req, res) => {
-  res.send(renderIndex());
+  if (req.user) {
+    return res.redirect('/');
+  }
+  return res.send(renderIndex());
 });
 
 router.route('/reset-password').get((req, res) => {
