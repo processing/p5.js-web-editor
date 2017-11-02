@@ -4,13 +4,14 @@ This project is currently in development! It will be announced when there is a (
 
 ## Development Installation
 
-1. Clone this repostory and cd into it
-2. `$ git submodule init`
-3. `$ npm install`
-4. Install MongoDB and make sure it is running
+1. Fork this repository.
+2. Clone the forked repostory and cd into it
+3. `$ git submodule init`
+4. `$ npm install`
+5. Install MongoDB and make sure it is running
    * For Mac OSX with [homebrew](http://brew.sh/): `brew install mongodb` then `brew services start mongodb`
    * For Windows and Linux: [MongoDB Installation](https://docs.mongodb.com/manual/installation/)
-5. Create a file called `.env` in the root of this directory that looks like
+6. Create a file called `.env` in the root of this directory that looks like
 
   ```
   API_URL=/api
@@ -26,10 +27,10 @@ This project is currently in development! It will be announced when there is a (
   ```
    If you don't care about being able to upload media files to S3 or Login with Github, you can drop in the file exactly how it is. Or, if you don't want to do that, just ask me to send you mine. Refer to [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) for creating an S3 bucket for testing, or if you don't want to do that, I can add you to one of my S3 buckets.
 
-6. `$ npm run fetch-examples` - this downloads the example sketches into a user called 'p5'
-7. `$ npm start`
-8. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
-9. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en).
+7. `$ npm run fetch-examples` - this downloads the example sketches into a user called 'p5'
+8. `$ npm start`
+9. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
+10. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en).
 10. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
 
 ### Testing SSL on your local machine
@@ -91,8 +92,11 @@ The code for the p5.js web editor adheres to web accessibility standards. The fo
 
 For more information on accessibility see the [teach access tutorial](https://teachaccess.github.io/tutorial/)
 
-## Contribution Guide
-I am currently open to contributors! Email me if you are looking for a task, or look at the open issues and reply that you are working on a task.
+## Contributing
+
+See [CONTRIBUTING.md](https://github.com/processing/p5.js-web-editor/blob/master/contributing.md).
+
+## Tooling and Style Overview
 
 The p5.js Web Editor is built on a MERN stack - MongoDB, Express, React/Redux, and Node. For a reference to the file structure format I am using, please look at the [Mern Starter](https://github.com/Hashnode/mern-starter) and [this comment](https://github.com/Hashnode/mern-starter/issues/90#issuecomment-221553573).
 
@@ -108,12 +112,3 @@ The ESLint configuration is based on a few popular React/Redux boilerplates. Ope
 This project is currently hosted on an EC2 instance and uses S3 for media hosting.
 
 Backups on the MongoDB are also hosted on an S3 bucket, based on the following [gist](https://gist.github.com/eladnava/96bd9771cd2e01fb4427230563991c8d). The backup script runs nightly via a cronjob at 8AM UTC/3AM EST/12AM PST. Backups are deleted after 30 days.
-
-## Dump of links I'm saving for reference
-
-* https://github.com/brigade/scss-lint
-* https://github.com/petehunt/react-howto
-* https://github.com/jsbin/jsbin (especially look at the console)
-* Need to figure out how to solve the XSS issue, https://github.com/jsbin/jsbin/wiki/Best-practices-for-building-your-own-live-paste-bin
-* https://www.npmjs.com/package/express-subdomain
-* https://github.com/jsbin/jsbin/blob/master/public/js/render/console.js - the code is a little messy but it might be useful

@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import srcDoc from 'srcdoc-polyfill';
 
 import loopProtect from 'loop-protect';
+import { JSHINT } from 'jshint';
 import { getBlobUrl } from '../actions/files';
 import { resolvePathToFile } from '../../../../server/utils/filePath';
 
@@ -88,6 +89,7 @@ class PreviewFrame extends React.Component {
     }
 
     window.addEventListener('message', (messageEvent) => {
+      console.log(messageEvent);
       messageEvent.data.forEach((message) => {
         const args = message.arguments;
         Object.keys(args).forEach((key) => {
@@ -150,6 +152,30 @@ class PreviewFrame extends React.Component {
   clearPreview() {
     const doc = this.iframeElement;
     doc.srcDoc = '';
+  }
+
+  addLoopProtect(sketchDoc) {
+    const scriptsInHTML = sketchDoc.getElementsByTagName('script');
+    const scriptsInHTMLArray = Array.prototype.slice.call(scriptsInHTML);
+    scriptsInHTMLArray.forEach((script) => {
+      script.innerHTML = this.jsPreprocess(script.innerHTML); // eslint-disable-line
+    });
+  }
+
+  jsPreprocess(jsText) {
+    let newContent = jsText;
+    // check the code for js errors before sending it to strip comments
+    // or loops.
+    JSHINT(newContent);
+
+    if (!JSHINT.errors) {
+      newContent = decomment(newContent, {
+        ignore: /noprotect/g,
+        space: true
+      });
+      newContent = loopProtect(newContent);
+    }
+    return newContent;
   }
 
   injectLocalFiles() {
@@ -227,7 +253,7 @@ class PreviewFrame extends React.Component {
     scriptOffs = getAllScriptOffsets(sketchDocString);
     const consoleErrorsScript = sketchDoc.createElement('script');
     consoleErrorsScript.innerHTML = hijackConsoleErrorsScript(JSON.stringify(scriptOffs));
-    // sketchDoc.head.appendChild(consoleErrorsScript);
+    this.addLoopProtect(sketchDoc);
     sketchDoc.head.insertBefore(consoleErrorsScript, sketchDoc.head.firstElement);
 
     return `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
@@ -280,12 +306,8 @@ class PreviewFrame extends React.Component {
         }
       }
     });
-    newContent = decomment(newContent, {
-      ignore: /noprotect/g,
-      space: true
-    });
-    newContent = loopProtect(newContent);
-    return newContent;
+
+    return this.jsPreprocess(newContent);
   }
 
   resolveCSSLinksInString(content, files) {

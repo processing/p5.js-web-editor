@@ -33,12 +33,12 @@ function About(props) {
         </p>
         <p className="about__content-column-list">
           <a
-            href="https://p5js.org/tutorials/"
+            href="https://p5js.org/learn/"
             target="_blank"
             rel="noopener noreferrer"
           >
             <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
-          Tutorials</a>
+          Learn</a>
         </p>
       </div>
       <div className="about__content-column">
