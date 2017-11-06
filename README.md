@@ -50,7 +50,7 @@ you may have on the same computer that use different/conflicting versions, etc.
    * Windows: https://www.docker.com/docker-windows
 2. Clone this repostory and cd into it
 3. `$ docker-compose build`
-4. `$ docker-compose run --rm server yarn run fetch-examples`
+4. `$ docker-compose run --rm server npm run fetch-examples`
 
 Now, anytime you wish to start the server with its dependencies, you can run:
 

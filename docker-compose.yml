@@ -4,7 +4,7 @@ services:
     image: mongo:3.4.7
   server:
     build: .
-    command: yarn start
+    command: npm start
     environment:
       - API_URL=/api
       - MONGO_URL=mongodb://mongo:27017/p5js-web-editor
