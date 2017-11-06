@@ -38,12 +38,11 @@ Please refer to [this gist](https://gist.github.com/andrewn/953ffd5cb17ac2634dc9
 
 The automatic redirection to HTTPS is turned off by default in development. If you need to test this behavior, put `FORCE_TO_HTTPS=true` in your `.env` file.
 
-## Development Installation (using Docker)
+## Development Installation using Docker
 
-Using Docker, you can have a complete, consistent development environment
-without having to manually install dependencies such as Node, Mongo, etc. It
-also helps isolate these dependencies and their data from other projects that
-you may have on the same computer that use different/conflicting versions, etc.
+Using Docker, you can have a complete, consistent development environment without having to manually install dependencies such as Node, Mongo, etc. It also helps isolate these dependencies and their data from other projects that you may have on the same computer that use different/conflicting versions, etc.
+
+Note that this takes up a significant amount of space on your machine. Make sure you have at least 5GB free. 
 
 1. Install Docker for your operating system
    * Mac: https://www.docker.com/docker-mac

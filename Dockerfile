@@ -11,6 +11,9 @@ WORKDIR $APP_HOME
 RUN git submodule init && \
     npm install
 
+# Rebuild node-sass just to be safe
+RUN npm rebuild node-sass
+
 # For development, mark the directory as a mount override point
 VOLUME $APP_HOME
 
