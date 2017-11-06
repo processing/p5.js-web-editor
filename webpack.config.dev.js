@@ -19,7 +19,7 @@ module.exports = {
 		publicPath: '/dist/'
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['.js', '.jsx'],
     modules: [
       'client',
       'node_modules'
@@ -50,19 +50,19 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: [/node_modules/, /.+\.config.js/],
-        loaders: ['babel', 'eslint-loader']
+        loaders: ['babel-loader', 'eslint-loader']
       },
       {
         test: /\.scss$/,
-        loaders: ['style', 'css', 'sass']
+        loaders: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
         test: /\.(svg|mp3)$/,
-        loader: 'file'
+        loader: 'file-loader'
       },
       {
           test: /fonts\/.*\.(eot|svg|ttf|woff|woff2)$/,
-          loader: 'file'
+          loader: 'file-loader'
       }
     ],
   },

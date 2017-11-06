@@ -43,7 +43,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['.js', '.jsx'],
     modules: [
       'client',
       'node_modules',
@@ -55,20 +55,23 @@ module.exports = {
       {
         test: /\.scss$/,
         exclude: /node_modules/,
-        loader: ExtractTextPlugin.extract('style', 'css!sass!postcss')
+        loader: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: 'css-loader!sass-loader!postcss-loader'
+        })
       },
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: 'babel'
+        loader: 'babel-loader'
       },
       {
         test: /\.(svg|mp3)$/,
-        loader: 'file'
+        loader: 'file-loader'
       },
       {
           test: /fonts\/.*\.(eot|svg|ttf|woff|woff2)$/,
-          loader: 'file'
+          loader: 'file-loader'
       }
     ]
   },
@@ -87,7 +90,7 @@ module.exports = {
       minChunks: Infinity,
       filename: 'vendor.js',
     }),
-    new ExtractTextPlugin('app.[chunkhash].css', { allChunks: true }),
+    new ExtractTextPlugin({ filename: 'app.[chunkhash].css', allChunks: true }),
     new ManifestPlugin({
       basePath: '/',
     }),
@@ -99,19 +102,23 @@ module.exports = {
       compress: {
         warnings: false
       }
+    }),
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        postcss: () => [
+          postcssFocus(),
+          cssnext({
+            browsers: ['last 2 versions', 'IE > 9']
+          }),
+          cssnano({
+            autoprefixer: false
+          }),
+          postcssReporter({
+            clearMessages: true
+          })
+        ]
+      }
     })
   ],
 
-  postcss: () => [
-    postcssFocus(),
-    cssnext({
-      browsers: ['last 2 versions', 'IE > 9']
-    }),
-    cssnano({
-      autoprefixer: false
-    }),
-    postcssReporter({
-      clearMessages: true
-    })
-  ]
 };
