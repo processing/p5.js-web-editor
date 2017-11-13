@@ -3,7 +3,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { Helmet } from 'react-helmet';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import SplitPane from 'react-split-pane';
 import Editor from '../components/Editor';
 import Sidebar from '../components/Sidebar';
@@ -406,131 +405,93 @@ class IDEView extends React.Component {
             </SplitPane>
           </SplitPane>
         </div>
-        {(() => {
-          if (this.props.ide.modalIsVisible) {
-            return (
-              <NewFileModal
-                canUploadMedia={this.props.user.authenticated}
-                closeModal={this.props.closeNewFileModal}
-                createFile={this.props.createFile}
-              />
-            );
-          }
-          return '';
-        })()}
-        {(() => {
-          if (this.props.ide.newFolderModalVisible) {
-            return (
-              <NewFolderModal
-                closeModal={this.props.closeNewFolderModal}
-                createFolder={this.props.createFolder}
-              />
-            );
-          }
-          return '';
-        })()}
-        {(() => { // eslint-disable-line
-          if (this.props.location.pathname.match(/sketches$/)) {
-            return (
-              <Overlay
-                ariaLabel="project list"
-                title="Open a Sketch"
-                previousPath={this.props.ide.previousPath}
-              >
-                <SketchList
-                  username={this.props.params.username}
-                  user={this.props.user}
-                />
-              </Overlay>
-            );
-          }
-        })()}
-        {(() => { // eslint-disable-line
-          if (this.props.location.pathname.match(/assets$/)) {
-            return (
-              <Overlay
-                title="Assets"
-                ariaLabel="asset list"
-                previousPath={this.props.ide.previousPath}
-              >
-                <AssetList
-                  username={this.props.params.username}
-                  user={this.props.user}
-                />
-              </Overlay>
-            );
-          }
-        })()}
-        {(() => { // eslint-disable-line
-          if (this.props.location.pathname === '/about') {
-            return (
-              <Overlay
-                previousPath={this.props.ide.previousPath}
-                title="Welcome"
-                ariaLabel="about"
-              >
-                <About previousPath={this.props.ide.previousPath} />
-              </Overlay>
-            );
-          }
-        })()}
-        {(() => { // eslint-disable-line
-          if (this.props.ide.shareModalVisible) {
-            return (
-              <Overlay
-                title="Share This Sketch"
-                ariaLabel="share"
-                closeOverlay={this.props.closeShareModal}
-              >
-                <ShareModal
-                  projectId={this.props.project.id}
-                  projectName={this.props.project.name}
-                  ownerUsername={this.props.project.owner.username}
-                />
-              </Overlay>
-            );
-          }
-        })()}
-        {(() => { // eslint-disable-line
-          if (this.props.ide.keyboardShortcutVisible) {
-            return (
-              <Overlay
-                title="Keyboard Shortcuts"
-                ariaLabel="keyboard shortcuts"
-                closeOverlay={this.props.closeKeyboardShortcutModal}
-              >
-                <KeyboardShortcutModal />
-              </Overlay>
-            );
-          }
-        })()}
-        {(() => { // eslint-disable-line
-          if (this.props.ide.errorType) {
-            return (
-              <Overlay
-                title="Error"
-                ariaLabel="error"
-                closeOverlay={this.props.hideErrorModal}
-              >
-                <ErrorModal
-                  type={this.props.ide.errorType}
-                />
-              </Overlay>
-            );
-          }
-        })()}
-        {(() => { // eslint-disable-line
-          if (this.props.ide.helpType) {
-            return (
-              <Overlay
-                title="Serve over HTTPS"
-                closeOverlay={this.props.hideHelpModal}
-              >
-                <HTTPSModal />
-              </Overlay>
-            );
-          }
-        })()}
+        { this.props.ide.modalIsVisible &&
+          <NewFileModal
+            canUploadMedia={this.props.user.authenticated}
+            closeModal={this.props.closeNewFileModal}
+            createFile={this.props.createFile}
+          />
+        }
+        { this.props.ide.newFolderModalVisible &&
+          <NewFolderModal
+            closeModal={this.props.closeNewFolderModal}
+            createFolder={this.props.createFolder}
+          />
+        }
+        { this.props.location.pathname.match(/sketches$/) &&
+          <Overlay
+            ariaLabel="project list"
+            title="Open a Sketch"
+            previousPath={this.props.ide.previousPath}
+          >
+            <SketchList
+              username={this.props.params.username}
+              user={this.props.user}
+            />
+          </Overlay>
+        }
+        { this.props.location.pathname.match(/assets$/) &&
+          <Overlay
+            title="Assets"
+            ariaLabel="asset list"
+            previousPath={this.props.ide.previousPath}
+          >
+            <AssetList
+              username={this.props.params.username}
+              user={this.props.user}
+            />
+          </Overlay>
+        }
+        { this.props.location.pathname === '/about' &&
+          <Overlay
+            previousPath={this.props.ide.previousPath}
+            title="Welcome"
+            ariaLabel="about"
+          >
+            <About previousPath={this.props.ide.previousPath} />
+          </Overlay>
+        }
+        { this.props.ide.shareModalVisible &&
+          <Overlay
+            title="Share This Sketch"
+            ariaLabel="share"
+            closeOverlay={this.props.closeShareModal}
+          >
+            <ShareModal
+              projectId={this.props.project.id}
+              projectName={this.props.project.name}
+              ownerUsername={this.props.project.owner.username}
+            />
+          </Overlay>
+        }
+        { this.props.ide.keyboardShortcutVisible &&
+          <Overlay
+            title="Keyboard Shortcuts"
+            ariaLabel="keyboard shortcuts"
+            closeOverlay={this.props.closeKeyboardShortcutModal}
+          >
+            <KeyboardShortcutModal />
+          </Overlay>
+        }
+        { this.props.ide.errorType &&
+          <Overlay
+            title="Error"
+            ariaLabel="error"
+            closeOverlay={this.props.hideErrorModal}
+          >
+            <ErrorModal
+              type={this.props.ide.errorType}
+            />
+          </Overlay>
+        }
+        { this.props.ide.helpType &&
+          <Overlay
+            title="Serve over HTTPS"
+            closeOverlay={this.props.hideHelpModal}
+          >
+            <HTTPSModal />
+          </Overlay>
+        }
       </div>
     );
   }
