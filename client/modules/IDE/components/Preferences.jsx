@@ -175,7 +175,7 @@ class Preferences extends React.Component {
                 value="Spaces"
                 checked={!this.props.isTabIndent}
               />
-              <label htmlFor="indentation-space" className="preference__option">Spaces</label>
+              <label htmlFor="indentation-space" className="preference__option preference__whitespace-button">Spaces</label>
               <input
                 type="radio"
                 onChange={this.props.indentWithTab}
@@ -186,7 +186,7 @@ class Preferences extends React.Component {
                 value="Tabs"
                 checked={this.props.isTabIndent}
               />
-              <label htmlFor="indentation-tab" className="preference__option">Tabs</label>
+              <label htmlFor="indentation-tab" className="preference__option preference__whitespace-button">Tabs</label>
             </div>
             <div className="preference">
               <h4 className="preference__title">Autosave</h4>
@@ -246,45 +246,6 @@ class Preferences extends React.Component {
           </TabPanel>
           <TabPanel>
             <div className="preference">
-              <h4 className="preference__title">Accessible text-based canvas</h4>
-              <h6 className="preference__subtitle">Used with screen reader</h6>
-              <div className="preference__options">
-                <input
-                  type="radio"
-                  onChange={(event) => {
-                    this.props.setTextOutput(event.target.checked);
-                  }}
-                  aria-label="text output on"
-                  name="text output"
-                  id="text-output-on"
-                  className="preference__radio-button"
-                  value="On"
-                  checked={(this.props.textOutput)}
-                />
-                <label htmlFor="text-output-on" className="preference__option preference__canvas">On</label>
-                <input
-                  type="radio"
-                  onChange={(event) => {
-                    this.props.setGridOutput(event.target.checked);
-                  }}
-                  aria-label="table output on"
-                  name="table output"
-                  id="table-output-on"
-                  className="preference__radio-button"
-                  value="On"
-                  checked={(this.props.gridOutput)}
-                />
-                <label htmlFor="table-output-on" className="preference__option preference__canvas">Off</label>
-                <button
-                  className="preference__preview-button"
-                  onClick={() => beep.play()}
-                  aria-label="preview sound"
-                >
-                  Preview sound
-                </button>
-              </div>
-            </div>
-            <div className="preference">
               <h4 className="preference__title">Lint warning sound</h4>
               <div className="preference__options">
                 <input
@@ -309,6 +270,56 @@ class Preferences extends React.Component {
                   checked={!this.props.lintWarning}
                 />
                 <label htmlFor="lint-warning-off" className="preference__option">Off</label>
+                <button
+                  className="preference__preview-button"
+                  onClick={() => beep.play()}
+                  aria-label="preview sound"
+                >
+                  Preview sound
+                </button>
+              </div>
+            </div>
+            <div className="preference">
+              <h4 className="preference__title">Accessible text-based canvas</h4>
+              <h6 className="preference__subtitle">Used with screen reader</h6>
+
+              <div className="preference__options">
+                <input
+                  type="checkbox"
+                  onChange={(event) => {
+                    this.props.setTextOutput(event.target.checked);
+                  }}
+                  aria-label="text output on"
+                  name="text output"
+                  id="text-output-on"
+                  value="On"
+                  checked={(this.props.textOutput)}
+                />
+                <label htmlFor="text-output-on" className="preference__option preference__canvas">Plain-text</label>
+                <input
+                  type="checkbox"
+                  onChange={(event) => {
+                    this.props.setGridOutput(event.target.checked);
+                  }}
+                  aria-label="table output on"
+                  name="table output"
+                  id="table-output-on"
+                  value="On"
+                  checked={(this.props.gridOutput)}
+                />
+                <label htmlFor="table-output-on" className="preference__option preference__canvas">Table-text</label>
+                <input
+                  type="checkbox"
+                  onChange={(event) => {
+                    this.props.setSoundOutput(event.target.checked);
+                  }}
+                  aria-label="sound output on"
+                  name="sound output"
+                  id="sound-output-on"
+                  value="On"
+                  checked={(this.props.soundOutput)}
+                />
+                <label htmlFor="sound-output-on" className="preference__option preference__canvas">Sound</label>
               </div>
             </div>
           </TabPanel>
@@ -330,13 +341,12 @@ Preferences.propTypes = {
   setAutosave: PropTypes.func.isRequired,
   textOutput: PropTypes.bool.isRequired,
   gridOutput: PropTypes.bool.isRequired,
- // soundOutput: PropTypes.bool.isRequired,
+  soundOutput: PropTypes.bool.isRequired,
   setTextOutput: PropTypes.func.isRequired,
   setGridOutput: PropTypes.func.isRequired,
- // setSoundOutput: PropTypes.func.isRequired,
+  setSoundOutput: PropTypes.func.isRequired,
   lintWarning: PropTypes.bool.isRequired,
   setLintWarning: PropTypes.func.isRequired,
-//  openTab: PropTypes.func.isRequired,
   theme: PropTypes.string.isRequired,
   serveSecure: PropTypes.bool.isRequired,
   setServeSecure: PropTypes.func.isRequired,

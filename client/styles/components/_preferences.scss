@@ -1,6 +1,6 @@
 .preferences {
   width: 100%;
-  min-width: #{640 / $base-font-size}rem;
+  width: #{640 / $base-font-size}rem;
   max-width: 100%;
   min-height: #{460 / $base-font-size}rem;
   max-height: 100%;
@@ -166,7 +166,6 @@
   }
   font-size: #{12 / $base-font-size}rem;
   height: #{20 / $base-font-size}rem;
-  font-family: Montserrat;
   width: 100%;
   margin: 0;
   padding: 0 #{5 /$base-font-size}rem;
@@ -180,7 +179,6 @@
 }
 
 .preference__add__resource {
-  font-family: Montserrat;
   font-size: #{14 / $base-font-size}rem;
   line-height: 1.43;
   text-align: left;
@@ -205,8 +203,6 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  margin-top: #{10 / $base-font-size}rem;
-  margin-left: #{5 / $base-font-size}rem;
 }
 
 .preference__option:last-child {
@@ -220,12 +216,16 @@
       color: getThemifyVariable('button-background-hover-color');
     }
   }
-  margin-top: #{7 / $base-font-size}rem;
   margin-left: #{30 / $base-font-size}rem;
+}
+
+.preference__option.preference__whitespace-button {
+  padding-top: #{8 / $base-font-size}rem;
 }
 
 .preference__options {
   display: flex;
+  justify-content: center;
 }
 
 .preference__radio-button:checked + .preference__option {
@@ -260,6 +260,3 @@
   text-align: left;
   font-size: #{12 / $base-font-size}rem;
 }
-
-
-
