@@ -7,7 +7,6 @@ const playUrl = require('../../../images/play.svg');
 const stopUrl = require('../../../images/stop.svg');
 const preferencesUrl = require('../../../images/preferences.svg');
 const editProjectNameUrl = require('../../../images/pencil.svg');
-const helpUrl = require('../../../images/help.svg');
 
 class Toolbar extends React.Component {
   constructor(props) {
@@ -94,30 +93,6 @@ class Toolbar extends React.Component {
             Auto-refresh
           </label>
         </div>
-        {
-          this.props.currentUser == null ?
-            null :
-            <div className="toolbar__serve-secure">
-              <input
-                id="serve-secure"
-                type="checkbox"
-                checked={this.props.project.serveSecure || false}
-                onChange={(event) => {
-                  this.props.setServeSecure(event.target.checked);
-                }}
-              />
-              <label htmlFor="serve-secure" className="toolbar__serve-secure-label">
-                HTTPS
-              </label>
-              <button
-                className="toolbar__serve-secure-help"
-                onClick={() => this.props.showHelpModal('serveSecure')}
-                aria-label="help"
-              >
-                <InlineSVG src={helpUrl} alt="Help" />
-              </button>
-            </div>
-        }
         <div className={nameContainerClass}>
           <a
             className="toolbar__project-name"
@@ -187,15 +162,12 @@ Toolbar.propTypes = {
     name: PropTypes.string.isRequired,
     isEditingName: PropTypes.bool,
     id: PropTypes.string,
-    serveSecure: PropTypes.bool,
   }).isRequired,
   showEditProjectName: PropTypes.func.isRequired,
   hideEditProjectName: PropTypes.func.isRequired,
-  showHelpModal: PropTypes.func.isRequired,
   infiniteLoop: PropTypes.bool.isRequired,
   autorefresh: PropTypes.bool.isRequired,
   setAutorefresh: PropTypes.func.isRequired,
-  setServeSecure: PropTypes.func.isRequired,
   startSketch: PropTypes.func.isRequired,
   startAccessibleSketch: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,

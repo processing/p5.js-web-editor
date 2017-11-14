@@ -230,8 +230,6 @@ class IDEView extends React.Component {
           hideEditProjectName={this.props.hideEditProjectName}
           openPreferences={this.props.openPreferences}
           preferencesIsVisible={this.props.ide.preferencesIsVisible}
-          serveSecure={this.props.project.serveSecure}
-          setServeSecure={this.props.setServeSecure}
           setTextOutput={this.props.setTextOutput}
           setGridOutput={this.props.setGridOutput}
           setSoundOutput={this.props.setSoundOutput}
