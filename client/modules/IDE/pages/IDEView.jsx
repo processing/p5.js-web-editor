@@ -272,6 +272,8 @@ class IDEView extends React.Component {
               setSoundOutput={this.props.setSoundOutput}
               theme={this.props.preferences.theme}
               setTheme={this.props.setTheme}
+              serveSecure={this.props.project.serveSecure}
+              setServeSecure={this.props.setServeSecure}
             />
           </Overlay>
         }

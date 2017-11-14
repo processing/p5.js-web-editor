@@ -8,6 +8,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 const plusUrl = require('../../../images/plus.svg');
 const minusUrl = require('../../../images/minus.svg');
 const beepUrl = require('../../../sounds/audioAlert.mp3');
+const infoUrl = require('../../../images/information.svg');
 
 class Preferences extends React.Component {
   constructor(props) {
@@ -88,6 +89,17 @@ class Preferences extends React.Component {
                   checked={this.props.theme === 'dark'}
                 />
                 <label htmlFor="dark-theme-on" className="preference__option">Dark</label>
+                <input
+                  type="radio"
+                  onChange={() => this.props.setTheme('contrast')}
+                  aria-label="high contrast theme on"
+                  name="high contrast theme"
+                  id="high-contrast-theme-on"
+                  className="preference__radio-button"
+                  value="contrast"
+                  checked={this.props.theme === 'contrast'}
+                />
+                <label htmlFor="high-contrast-theme-on" className="preference__option">High Contrast</label>
               </div>
             </div>
             <div className="preference">
@@ -205,26 +217,31 @@ class Preferences extends React.Component {
             </div>
           </TabPanel>
           <TabPanel>
-            <br></br>
-            <div className="preference">
+            {/* <div className="preference">
               <h4 className="preference__title">Add a p5.js or an external library</h4>
-              <h4 className="preference__add__resource">Add a script library resource field</h4>
+            </div> */}
+            <div className="preference">
               <h4 className="preference__title">Security Protocol</h4>
-              {
-                this.props.currentUser == null ?
-                  null :
-                  <div className="toolbar__serve-secure">
-                    <input
-                      id="serve-secure"
-                      type="checkbox"
-                      checked={this.props.project.serveSecure || false}
-                      onChange={(event) => {
-                        this.props.setServeSecure(event.target.checked);
-                      }}
-                    />
-                  </div>
-              }
-              <h4 className="serve__over__https">Serve over HTTPS</h4>
+              <div className="preference__serve-secure">
+                <input
+                  id="serve-secure"
+                  type="checkbox"
+                  checked={this.props.serveSecure || false}
+                  onChange={(event) => {
+                    this.props.setServeSecure(event.target.checked);
+                  }}
+                />
+                <label htmlFor="serve-secure">Serve over HTTPS</label>
+                <span
+                  className="serve-secture__tooltip tooltipped tooltipped-n tooltipped-no-delay tooltipped-multiline"
+                  aria-label={'Choose HTTPS if you need to \n • access a microphone or webcam \n'
+                      + '• access an API served over HTTPS \n\n'
+                      + 'Choose HTTP if you need to \n'
+                      + '• access an API served over HTTP'}
+                >
+                  <InlineSVG src={infoUrl} className="serve-secure__icon" />
+                </span>
+              </div>
             </div>
           </TabPanel>
           <TabPanel>
@@ -321,14 +338,8 @@ Preferences.propTypes = {
   setLintWarning: PropTypes.func.isRequired,
 //  openTab: PropTypes.func.isRequired,
   theme: PropTypes.string.isRequired,
+  serveSecure: PropTypes.bool.isRequired,
   setServeSecure: PropTypes.func.isRequired,
-  currentUser: PropTypes.string,
-  project: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    isEditingName: PropTypes.bool,
-    id: PropTypes.string,
-    serveSecure: PropTypes.bool,
-  }).isRequired,
   setTheme: PropTypes.func.isRequired
 };
 
