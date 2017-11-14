@@ -1,20 +1,10 @@
 .preferences {
-	@extend %modal;
-	position: absolute;
-	top: #{113 / $base-font-size}rem;
-	right: #{192 / $base-font-size}rem;
-	width: #{640 / $base-font-size}rem;
-	height: #{540 / $base-font-size}rem;
-	bottom: #{371 / $base-font-size}rem;
-	margin-bottom: #{100 / $base-font-size}rem;
-	margin-right: #{100 / $base-font-size}rem;
-	display: none;
+	width: 100%;
+	max-width: #{640 / $base-font-size}rem;
 	z-index: 9999;
 	padding: #{14 / $base-font-size}rem #{20 / $base-font-size}rem #{2 / $base-font-size}rem  #{20 / $base-font-size}rem ;
-	&--selected {
-		display: flex;
-		flex-direction: column;
-	}
+	display: flex;
+	flex-direction: column;
 	@include themify() {
 		background-color: getThemifyVariable('editor-gutter-color');
 	}
@@ -173,13 +163,12 @@
 	}
 	font-size: #{12 / $base-font-size}rem;
 	height: #{25 / $base-font-size}rem;
-	margin-top: #{30 / $base-font-size}rem;
 	margin-left: #{5 / $base-font-size}rem;
 	margin-bottom: #{0.1 / $base-font-size}rem;
 	margin-right: #{60 / $base-font-size}rem;
 	padding-right: #{10 / $base-font-size}rem;
 	font-family: Montserrat;
-	width: #{110 / $base-font-size}rem;
+	width: 100%;
 }
 
 .preference__vertical-list {

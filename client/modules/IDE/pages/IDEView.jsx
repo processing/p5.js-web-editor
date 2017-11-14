@@ -246,29 +246,35 @@ class IDEView extends React.Component {
           currentUser={this.props.user.username}
           showHelpModal={this.props.showHelpModal}
         />
-        <Preferences
-          isVisible={this.props.ide.preferencesIsVisible}
-          closePreferences={this.props.closePreferences}
-          fontSize={this.props.preferences.fontSize}
-          indentationAmount={this.props.preferences.indentationAmount}
-          setIndentation={this.props.setIndentation}
-          indentWithSpace={this.props.indentWithSpace}
-          indentWithTab={this.props.indentWithTab}
-          isTabIndent={this.props.preferences.isTabIndent}
-          setFontSize={this.props.setFontSize}
-          autosave={this.props.preferences.autosave}
-          setAutosave={this.props.setAutosave}
-          lintWarning={this.props.preferences.lintWarning}
-          setLintWarning={this.props.setLintWarning}
-          textOutput={this.props.preferences.textOutput}
-          gridOutput={this.props.preferences.gridOutput}
-          soundOutput={this.props.preferences.soundOutput}
-          setTextOutput={this.props.setTextOutput}
-          setGridOutput={this.props.setGridOutput}
-          setSoundOutput={this.props.setSoundOutput}
-          theme={this.props.preferences.theme}
-          setTheme={this.props.setTheme}
-        />
+        {this.props.ide.preferencesIsVisible &&
+          <Overlay
+            title="Settings"
+            ariaLabel="settings"
+            closeOverlay={this.props.closePreferences}
+          >
+            <Preferences
+              fontSize={this.props.preferences.fontSize}
+              indentationAmount={this.props.preferences.indentationAmount}
+              setIndentation={this.props.setIndentation}
+              indentWithSpace={this.props.indentWithSpace}
+              indentWithTab={this.props.indentWithTab}
+              isTabIndent={this.props.preferences.isTabIndent}
+              setFontSize={this.props.setFontSize}
+              autosave={this.props.preferences.autosave}
+              setAutosave={this.props.setAutosave}
+              lintWarning={this.props.preferences.lintWarning}
+              setLintWarning={this.props.setLintWarning}
+              textOutput={this.props.preferences.textOutput}
+              gridOutput={this.props.preferences.gridOutput}
+              soundOutput={this.props.preferences.soundOutput}
+              setTextOutput={this.props.setTextOutput}
+              setGridOutput={this.props.setGridOutput}
+              setSoundOutput={this.props.setSoundOutput}
+              theme={this.props.preferences.theme}
+              setTheme={this.props.setTheme}
+            />
+          </Overlay>
+        }
         <div className="editor-preview-container">
           <SplitPane
             split="vertical"
@@ -361,25 +367,23 @@ class IDEView extends React.Component {
                 <div className="preview-frame-overlay" ref={(element) => { this.overlay = element; }}>
                 </div>
                 <div>
-                  {(() => {
-                    if (
+                  {(
                       (
                         (this.props.preferences.textOutput ||
-                         this.props.preferences.gridOutput ||
-                         this.props.preferences.soundOutput
-                        ) && this.props.ide.isPlaying
-                      ) || this.props.ide.isAccessibleOutputPlaying) {
-                      return (
-                        <AccessibleOutput
-                          isPlaying={this.props.ide.isPlaying}
-                          previewIsRefreshing={this.props.ide.previewIsRefreshing}
-                          textOutput={this.props.preferences.textOutput}
-                          gridOutput={this.props.preferences.gridOutput}
-                        />
-                      );
-                    }
-                    return '';
-                  })()}
+                          this.props.preferences.gridOutput ||
+                          this.props.preferences.soundOutput
+                        ) &&
+                          this.props.ide.isPlaying
+                      ) ||
+                        this.props.ide.isAccessibleOutputPlaying
+                    ) &&
+                      <AccessibleOutput
+                        isPlaying={this.props.ide.isPlaying}
+                        previewIsRefreshing={this.props.ide.previewIsRefreshing}
+                        textOutput={this.props.preferences.textOutput}
+                        gridOutput={this.props.preferences.gridOutput}
+                      />
+                  }
                 </div>
                 <PreviewFrame
                   htmlFile={this.props.htmlFile}

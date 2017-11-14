@@ -1,16 +1,13 @@
 import React, { PropTypes } from 'react';
 import InlineSVG from 'react-inlinesvg';
-import classNames from 'classnames';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 // import { bindActionCreators } from 'redux';
 // import { connect } from 'react-redux';
 // import * as PreferencesActions from '../actions/preferences';
 
-const exitUrl = require('../../../images/exit.svg');
 const plusUrl = require('../../../images/plus.svg');
 const minusUrl = require('../../../images/minus.svg');
 const beepUrl = require('../../../sounds/audioAlert.mp3');
-// import { debounce } from 'lodash';
 
 class Preferences extends React.Component {
   constructor(props) {
@@ -54,24 +51,9 @@ class Preferences extends React.Component {
 
   render() {
     const beep = new Audio(beepUrl);
-    const preferencesContainerClass = classNames({
-      'preferences': true,
-      'preferences--selected': this.props.isVisible
-    });
 
     return (
-      <section className={preferencesContainerClass} tabIndex="0" title="preference-menu">
-        <div className="preferences__heading">
-          <h2 className="preferences__title">Settings</h2>
-          <button
-            className="preferences__exit-button"
-            onClick={this.props.closePreferences}
-            title="exit"
-            aria-label="exit preferences"
-          >
-            <InlineSVG src={exitUrl} alt="Exit Preferences" />
-          </button>
-        </div>
+      <section className="preferences" tabIndex="0" title="preference-menu">
         <Tabs>
           <TabList>
             <div className="preference__subheadings">
@@ -320,8 +302,6 @@ class Preferences extends React.Component {
 }
 
 Preferences.propTypes = {
-  isVisible: PropTypes.bool.isRequired,
-  closePreferences: PropTypes.func.isRequired,
   fontSize: PropTypes.number.isRequired,
   indentationAmount: PropTypes.number.isRequired,
   setIndentation: PropTypes.func.isRequired,
