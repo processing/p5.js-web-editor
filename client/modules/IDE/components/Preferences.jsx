@@ -175,7 +175,12 @@ class Preferences extends React.Component {
                 value="Spaces"
                 checked={!this.props.isTabIndent}
               />
-              <label htmlFor="indentation-space" className="preference__option preference__whitespace-button">Spaces</label>
+              <label
+                htmlFor="indentation-space"
+                className="preference__option preference__whitespace-button"
+              >
+                Spaces
+              </label>
               <input
                 type="radio"
                 onChange={this.props.indentWithTab}
