@@ -1,153 +1,264 @@
 .preferences {
-	@extend %modal;
-	position: absolute;
-	top: #{51 / $base-font-size}rem;
-	right: #{29 / $base-font-size}rem;
-	width: #{288 / $base-font-size}rem;
-	display: none;
-	padding: #{14 / $base-font-size}rem #{20 / $base-font-size}rem #{2 / $base-font-size}rem  #{20 / $base-font-size}rem ;
-	&--selected {
-		display: flex;
-		flex-direction: column;
-	}
-	@include themify() {
-		background-color: getThemifyVariable('editor-gutter-color');
-	}
-	outline: none;
+  width: 100%;
+  width: #{640 / $base-font-size}rem;
+  max-width: 100%;
+  min-height: #{460 / $base-font-size}rem;
+  max-height: 100%;
+  z-index: 9999;
+  padding: 0 #{20 / $base-font-size}rem #{2 / $base-font-size}rem  #{20 / $base-font-size}rem ;
+  display: flex;
+  flex-direction: column;
+  outline: none;
 }
 
 .preferences__exit-button {
-	@include icon();
-	padding-top: #{5 / $base-font-size}rem;
-	margin-right: #{-6 / $base-font-size}rem;
+  @include icon();
+  padding-top: #{5 / $base-font-size}rem;
+  margin-right: #{-6 / $base-font-size}rem;
 }
 
 .preference__minus-button,
 .preference__plus-button {
-	@include themify() {
-		@extend %preferences-button;
-		width: #{32 / $base-font-size}rem;
-		height: #{32 / $base-font-size}rem;
-		margin-left: #{6 / $base-font-size}rem;
-		line-height: #{40 / $base-font-size}rem;
-		& svg {
-			width: #{10 / $base-font-size}rem;
-		}
-	}
+  @include themify() {
+    @extend %preferences-button;
+    width: #{32 / $base-font-size}rem;
+    height: #{32 / $base-font-size}rem;
+    margin-left: #{6 / $base-font-size}rem;
+    margin-right: #{10 / $base-font-size}rem;
+    line-height: #{40 / $base-font-size}rem;
+    & svg {
+      width: #{10 / $base-font-size}rem;
+    }
+  }
+}
+
+.serve__over__https {
+  text-align: center;
+  margin-left: #{9 / $base-font-size}rem;
+  font-width: #{108 / $base-font-size}rem;
+  font-height: #{15 / $base-font-size}rem;
+  font-family: Montserrat;
+  font-size: #{12 / $base-font-size}rem;
+  margin-top: #{2 / $base-font-size}rem;
 }
 
 .preferences__heading {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	margin-bottom: #{20 / $base-font-size}rem;
-	@include themify() {
-		color: getThemifyVariable('heading-text-color');
-	}
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  @include themify() {
+    color: getThemifyVariable('heading-text-color');
+  }
+}
+
+.preferences__title{
+  width: #{90 / $base-font-size}rem;
+    height: #{25 / $base-font-size}rem;
+    font-family: Montserrat;
+    font-size: #{21 / $base-font-size}rem;
+    font-weight: bold;
+    text-align: left;
+}
+
+.preference__subheadings {
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: #{0.1 / $base-font-size}rem;
+  @include themify() {
+    border-bottom: 1px solid getThemifyVariable('button-border-color');
+  }
 }
 
 .preference {
-	display: flex;
-	flex-wrap: wrap;
-	padding-bottom: #{12 / $base-font-size}rem;
-	& + & {
-		@include themify() {
-	  	border-top: 1px dashed getThemifyVariable('button-border-color');
-	  }
-	}
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: #{12 / $base-font-size}rem;
+  & + & {
+    @include themify() {
+      border-top: 1px dashed getThemifyVariable('button-border-color');
+    }
+  }
 }
 
 .preference__title {
-	width: 100%;
-	font-size: #{16 / $base-font-size}rem;
-	margin-top: #{13 / $base-font-size}rem;
-	margin-bottom: #{7 / $base-font-size}rem;
-	@include themify() {
-		color: getThemifyVariable('heading-text-color');
-	}
+  width: 100%;
+  font-size: #{16 / $base-font-size}rem;
+  margin-top: #{13 / $base-font-size}rem;
+  margin-bottom: #{7 / $base-font-size}rem;
+  @include themify() {
+    color: getThemifyVariable('heading-text-color');
+  }
 }
 
 .preference__subtitle {
-	@include themify() {
-		color: getThemifyVariable('inactive-text-color');
-	}
-	width: 100%;
-	margin-bottom: #{10 / $base-font-size}rem;
-	margin-top: 0;
+  @include themify() {
+    color: getThemifyVariable('inactive-text-color');
+  }
+  width: 100%;
+  margin-bottom: #{10 / $base-font-size}rem;
+  margin-top: 0;
 }
 
 .preference__value {
-	@include themify() {
-		border: #{1 / $base-font-size}rem solid getThemifyVariable('button-border-color');
-		background-color: getThemifyVariable('button-background-color');
-		color: getThemifyVariable('input-text-color');
-	}
-	text-align: center;
-	border-radius: 0%;
-	outline: none;
-	width: #{44 / $base-font-size}rem;
-	height: #{40 / $base-font-size}rem;
-	margin: 0 #{26 / $base-font-size}rem;
-	padding: 0;
-	font-size: #{16 / $base-font-size}rem;
-	font-family: Inconsolata;
+  @include themify() {
+    border: #{1 / $base-font-size}rem solid getThemifyVariable('button-border-color');
+    background-color: getThemifyVariable('button-background-color');
+    color: getThemifyVariable('input-text-color');
+  }
+  text-align: center;
+  border-radius: 0%;
+  outline: none;
+  width: #{44 / $base-font-size}rem;
+  height: #{40 / $base-font-size}rem;
+  margin: 0 #{20 / $base-font-size}rem;
+  padding: 0;
+  font-size: #{16 / $base-font-size}rem;
+  font-family: Inconsolata;
 }
 
 .preference__label {
-	@include themify() {
-		color: getThemifyVariable('inactive-text-color');
-		&:hover {
-			color: getThemifyVariable('primary-text-color');
-		}
-	}
-	margin: #{-15 / $base-font-size}rem 0 0 #{-5 / $base-font-size}rem;
-	font-size: #{9 / $base-font-size}rem;
-	width: #{44 / $base-font-size}rem;
+  @include themify() {
+    color: getThemifyVariable('inactive-text-color');
+    &:hover {
+      color: getThemifyVariable('primary-text-color');
+    }
+
+  }
+  margin: #{-15 / $base-font-size}rem 0 0 #{-5 / $base-font-size}rem;
+  font-size: #{9 / $base-font-size}rem;
+  width: #{44 / $base-font-size}rem;
+}
+
+.react-tabs__tab--selected {
+  @include themify() {
+    border-bottom: #{4 / $base-font-size}rem solid getThemifyVariable('button-background-hover-color');
+  }
+}
+
+.react-tabs__tab--selected .preference__subheading {
+  @include themify() {
+    color: getThemifyVariable('primary-text-color');
+  }
+}
+
+.react-tabs__tab {
+  text-align: center;
+  color: black;
+  display: flex;
+  align-items: center;
+  border-bottom: #{4 / $base-font-size}rem solid transparent;
+  & + & {
+    margin-left: #{45 / $base-font-size}rem;
+  }
+}
+
+.preference__subheading {
+  @include themify() {
+    color: getThemifyVariable('inactive-text-color');
+    &:hover, &:focus{
+      color: getThemifyVariable('primary-text-color');
+      cursor: pointer; 
+    }
+    &:focus  {
+      color: getThemifyVariable('primary-text-color');
+      cursor: pointer; 
+    }
+  }
+  font-size: #{12 / $base-font-size}rem;
+  height: #{20 / $base-font-size}rem;
+  width: 100%;
+  margin: 0;
+  padding: 0 #{5 /$base-font-size}rem;
 }
 
 .preference__vertical-list {
-	display: flex;
-	flex-direction: column;
-	width: #{44 / $base-font-size}rem;
-	padding-left: #{25 / $base-font-size}rem;
+  display: flex;
+  flex-direction: column;
+  width: #{44 / $base-font-size}rem;
+  padding-left: #{25 / $base-font-size}rem;
+}
+
+.preference__add__resource {
+  font-size: #{14 / $base-font-size}rem;
+  line-height: 1.43;
+  text-align: left;
+  margin-left: #{5 / $base-font-size}rem;
+  margin-top: #{40 / $base-font-size}rem;
+  margin-bottom: #{10 / $base-font-size}rem;
+  @include themify() {
+    color: getThemifyVariable('inactive-text-color');
+    border-bottom: 1px dashed getThemifyVariable('button-border-color');
+  }
 }
 
 .preference__radio-button {
-	@extend %hidden-element;
+  @extend %hidden-element;
 }
 
 .preference__option {
-	@include themify() {
-		@extend %preference-option;
-		padding-right: #{44 / $base-font-size}rem;
-	}
+  @include themify() {
+    @extend %preference-option;
+    margin-right: #{25 / $base-font-size}rem;
+  }
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
 }
 
 .preference__option:last-child {
-	padding-right: 0;
+  margin-right: 0;
 }
 
 .preference__preview-button {
-	@include themify() {
-		@extend %preference-option;
-	}
+  @include themify() {
+    @extend %preference-option;
+    &:hover {
+      color: getThemifyVariable('button-background-hover-color');
+    }
+  }
+  margin-left: #{30 / $base-font-size}rem;
+}
+
+.preference__option.preference__whitespace-button {
+  padding-top: #{8 / $base-font-size}rem;
+  margin-right: 0;
+  margin-left: #{25 / $base-font-size}rem;
 }
 
 .preference__options {
-	display: flex;
+  display: flex;
+  justify-content: center;
 }
 
 .preference__radio-button:checked + .preference__option {
-	@include themify() {
-		//for some reason this won't work for getThemifyVariable
-	  color: map-get($theme-map, 'primary-text-color');
-	}
+  @include themify() {
+    //for some reason this won't work for getThemifyVariable
+    color: map-get($theme-map, 'primary-text-color');
+  }
 }
 
 .preference--hidden {
-	@extend %hidden-element;
+  @extend %hidden-element;
 }
 
 .preference__option.preference__canvas:not(:last-child) {
-	padding-right: #{14 / $base-font-size}rem;
+  padding-right: #{14 / $base-font-size}rem;
+}
+
+.preference__serve-secure {
+  display: flex;
+  align-items: center;
+}
+
+.serve-secure__icon {
+  @include icon();
+  & svg {
+    height: #{24 / $base-font-size}rem;
+    width: #{24 / $base-font-size}rem;
+  }
+}
+
+.serve-secture__tooltip:after {
+  text-align: left;
+  font-size: #{12 / $base-font-size}rem;
 }
