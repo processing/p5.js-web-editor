@@ -17,7 +17,6 @@ class Preferences extends React.Component {
     this.handleUpdateFont = this.handleUpdateFont.bind(this);
     this.handleUpdateIndentation = this.handleUpdateIndentation.bind(this);
     this.handleLintWarning = this.handleLintWarning.bind(this);
-//  this.handleTab = this.handleTab.bind(this);
   }
 
   handleUpdateFont(event) {
@@ -45,10 +44,6 @@ class Preferences extends React.Component {
     const value = event.target.value === 'true';
     this.props.setLintWarning(value);
   }
-
-  // handleTab(event, TabName) {
-  //   this.props.openTab(event, TabName);
-  // }
 
   render() {
     const beep = new Audio(beepUrl);
