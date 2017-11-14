@@ -110,7 +110,7 @@
   outline: none;
   width: #{44 / $base-font-size}rem;
   height: #{40 / $base-font-size}rem;
-  margin: 0 #{26 / $base-font-size}rem;
+  margin: 0 #{20 / $base-font-size}rem;
   padding: 0;
   font-size: #{16 / $base-font-size}rem;
   font-family: Inconsolata;
@@ -198,7 +198,7 @@
 .preference__option {
   @include themify() {
     @extend %preference-option;
-    padding-right: #{25 / $base-font-size}rem;
+    margin-right: #{25 / $base-font-size}rem;
   }
   display: flex;
   flex-wrap: wrap;
@@ -206,7 +206,7 @@
 }
 
 .preference__option:last-child {
-  padding-right: 0;
+  margin-right: 0;
 }
 
 .preference__preview-button {
@@ -221,6 +221,8 @@
 
 .preference__option.preference__whitespace-button {
   padding-top: #{8 / $base-font-size}rem;
+  margin-right: 0;
+  margin-left: #{25 / $base-font-size}rem;
 }
 
 .preference__options {
