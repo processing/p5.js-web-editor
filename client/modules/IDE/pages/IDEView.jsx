@@ -211,6 +211,13 @@ class IDEView extends React.Component {
     }
   }
 
+  previousProjectPath() {
+    if (this.props.project.id) {
+      return `/${this.props.project.owner.username}/sketches/${this.props.project.id}`;
+    }
+    return '/';
+  }
+
   render() {
     return (
       <div className="ide">
@@ -468,18 +475,18 @@ class IDEView extends React.Component {
           <Overlay
             ariaLabel="classrooms list"
             title="Open a Classroom"
-            previousPath={this.props.project.id ? `/${this.props.project.owner.username}/sketches/${this.props.project.id}` : '/'}
+            previousPath={this.previousProjectPath}
           >
             <ClassroomList
               username={this.props.params.username}
             />
           </Overlay>
         }
-        { this.props.location.pathname.match('/classrooms/([^/]*)$') && 
+        { this.props.location.pathname.match('/classrooms/([^/]*)$') &&
           <Overlay
             ariaLabel="classroom view"
             title={this.props.classroom.name}
-            previousPath={this.props.project.id ? `/${this.props.project.owner.username}/sketches/${this.props.project.id}` : '/'}
+            previousPath={this.previousProjectPath()}
             backButtonPath={'/classrooms'}
           >
             <ClassroomView
@@ -487,11 +494,11 @@ class IDEView extends React.Component {
             />
           </Overlay>
         }
-        { this.props.location.pathname.match('/classrooms/([^/]*)/edit') && 
+        { this.props.location.pathname.match('/classrooms/([^/]*)/edit') &&
           <Overlay
             ariaLabel="classroom settings form"
             title="Classroom Settings"
-            previousPath={this.props.project.id ? `/${this.props.project.owner.username}/sketches/${this.props.project.id}` : '/'}
+            previousPath={this.previousProjectPath()}
             backButtonPath={`/classrooms/${this.props.classroom.id}`}
           >
             <ClassroomSettingsForm
@@ -504,7 +511,7 @@ class IDEView extends React.Component {
           <Overlay
             ariaLabel="assignment settings form"
             title="Assignment Settings"
-            previousPath={this.props.project.id ? `/${this.props.project.owner.username}/sketches/${this.props.project.id}` : '/'}
+            previousPath={this.previousProjectPath()}
             backButtonPath={`/classrooms/${this.props.classroom.id}`}
           >
             <AssignmentSettingsForm
@@ -513,11 +520,11 @@ class IDEView extends React.Component {
             />
           </Overlay>
         }
-        {this.props.location.pathname.match('/classrooms/(.*)/edit/(.*)/assignments/(.*)/submissions/new') && 
+        {this.props.location.pathname.match('/classrooms/(.*)/edit/(.*)/assignments/(.*)/submissions/new') &&
           <Overlay
             ariaLabel="submit sketch form"
             title="Submit a Sketch"
-            previousPath={this.props.project.id ? `/${this.props.project.owner.username}/sketches/${this.props.project.id}` : '/'}
+            previousPath={this.previousProjectPath()}
             backButtonPath={`/classrooms/${this.props.classroom.id}`}
           >
             <SubmitSketch
