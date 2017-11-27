@@ -144,8 +144,6 @@ export function getProjectAsset(req, res) {
         return res.status(404).send({ message: 'Project with that id does not exist' });
       }
       if (!project) {
-        console.error(req.url);
-        console.error(req.params.project_id);
         return res.status(404).send({ message: 'Project with that id does not exist' });
       }
 
