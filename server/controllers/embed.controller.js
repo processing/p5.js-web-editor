@@ -11,7 +11,8 @@ export function serveProject(req, res) {
   Project.findById(req.params.project_id)
     .exec((err, project) => {
       if (err || !project) {
-        return get404Sketch(html => res.send(html));
+        get404Sketch(html => res.send(html));
+        return;
       }
       // TODO this does not parse html
       const files = project.files;
