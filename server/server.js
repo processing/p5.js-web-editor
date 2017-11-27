@@ -135,7 +135,8 @@ app.get('*', (req, res) => {
 app.use((err, req, res, next)  => {
   if (err.code !== 'EBADCSRFTOKEN') return next(err);
 
-  console.error('Invalid CSRF token for: ' + req.url);
+  console.error('Invalid CSRF Token.');
+  console.error(req.url);
   return next(err);
 });
 
