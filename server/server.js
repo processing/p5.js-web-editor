@@ -131,6 +131,14 @@ app.get('*', (req, res) => {
   res.type('txt').send('Not found.');
 });
 
+// error handler
+app.use((err, req, res, next)  => {
+  if (err.code !== 'EBADCSRFTOKEN') return next(err);
+
+  console.error('Invalid CSRF token for: ' + req.url);
+  return next(err);
+});
+
 // start app
 app.listen(serverConfig.port, (error) => {
   if (!error) {

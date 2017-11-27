@@ -5,10 +5,14 @@ import {
   resolvePathsForElementsWithAttribute,
   resolveScripts,
   resolveStyles } from '../utils/previewGeneration';
+import { get404Sketch } from '../views/404Page';
 
 export function serveProject(req, res) {
   Project.findById(req.params.project_id)
     .exec((err, project) => {
+      if (err || !project) {
+        return get404Sketch(html => res.send(html));
+      }
       // TODO this does not parse html
       const files = project.files;
       const htmlFile = files.find(file => file.name.match(/\.html$/i)).content;
