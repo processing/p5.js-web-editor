@@ -25,6 +25,7 @@ import classrooms from './routes/classroom.routes';
 import aws from './routes/aws.routes';
 import serverRoutes from './routes/server.routes';
 import embedRoutes from './routes/embed.routes';
+import assetRoutes from './routes/asset.routes';
 import { requestsOfTypeJSON } from './utils/requestsOfType';
 
 import { renderIndex } from './views/index';
@@ -93,6 +94,7 @@ app.use('/api', requestsOfTypeJSON(), projects);
 app.use('/api', requestsOfTypeJSON(), files);
 app.use('/api', requestsOfTypeJSON(), classrooms);
 app.use('/api', requestsOfTypeJSON(), aws);
+app.use(assetRoutes);
 // this is supposed to be TEMPORARY -- until i figure out
 // isomorphic rendering
 app.use('/', csrfToken, serverRoutes);
