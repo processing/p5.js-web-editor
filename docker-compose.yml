@@ -16,6 +16,7 @@ services:
       - S3_BUCKET=override_in_dotenv
       - GITHUB_ID=override_in_dotenv
       - GITHUB_SECRET=override_in_dotenv
+      - MAILGUN_KEY=override_in_dotenv
     volumes:
       - .:/opt/node/app
       - /opt/node/app/node_modules
