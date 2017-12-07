@@ -15,8 +15,8 @@ let client = s3.createClient({
   maxAsyncS3: 20,
   s3RetryCount: 3,
   s3RetryDelay: 1000,
-  multipartUploadThreshold: 20971520, // this is the default (20 MB) 
-  multipartUploadSize: 15728640, // this is the default (15 MB) 
+  multipartUploadThreshold: 20971520, // this is the default (20 MB)
+  multipartUploadSize: 15728640, // this is the default (15 MB)
   s3Options: {
     accessKeyId: `${process.env.AWS_ACCESS_KEY}`,
     secretAccessKey: `${process.env.AWS_SECRET_KEY}`,
@@ -43,7 +43,8 @@ Project.find({}, (err, projects) => {
             console.log(err);
           })
           .on('end', () => {
-            file.url = `https://s3-${process.env.AWS_REGION}.amazonaws.com/${process.env.S3_BUCKET}/${userId}/${key}`;
+            file.url = (process.env.S3_BUCKET_URL_BASE ||
+                        `https://s3-${process.env.AWS_REGION}.amazonaws.com/${process.env.S3_BUCKET}`) + `/${userId}/${key}`;
             project.save((err, savedProject) => {
               console.log(`updated file ${key}`);
             });
