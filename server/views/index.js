@@ -7,7 +7,7 @@ export function renderIndex() {
   <html>
     <head>
       <title>p5.js Web Editor</title>
-      ${process.env.NODE_ENV === 'production' ? `<link rel='stylesheet' href='/dist/${assetsManifest['/app.css']}' />` : ''}
+      ${process.env.NODE_ENV === 'production' ? `<link rel='stylesheet' href='/dist${assetsManifest['/app.css']}' />` : ''}
       <link href='https://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
@@ -23,8 +23,8 @@ export function renderIndex() {
           window.webpackManifest = ${JSON.stringify(chunkManifest)};
           //]]>` : ''}
         </script>
-        <script src='${process.env.NODE_ENV === 'production' ? `/dist/${assetsManifest['/vendor.js']}` : '/dist/vendor.js'}'></script>
-        <script src='${process.env.NODE_ENV === 'production' ? `/dist/${assetsManifest['/app.js']}` : '/dist/app.js'}'></script>
+        <script src='${process.env.NODE_ENV === 'production' ? `/dist${assetsManifest['/vendor.js']}` : '/dist/vendor.js'}'></script>
+        <script src='${process.env.NODE_ENV === 'production' ? `/dist${assetsManifest['/app.js']}` : '/dist/app.js'}'></script>
         <script>
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
           (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
