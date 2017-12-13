@@ -99,6 +99,24 @@ If you don't have the full server environment running, you can launch a one-off 
 1. `$ npm install -g pm2`
 2. `$ pm2 start ecosystem.json`
 
+## Optional S3 bucket URL base configuration
+
+If your S3 bucket is in the US East (N Virginia) region (us-east-1), you'll
+need to set a custom URL base for it, because it does not follow the standard
+naming pattern as the rest of the regions. Instead, add the following to your
+environment/.env file:
+
+```S3_BUCKET_URL_BASE=https://s3.amazonaws.com```
+
+If you've configured your S3 bucket and DNS records to use a custom domain
+name, you can also set it using this variable. I.e.:
+
+```S3_BUCKET_URL_BASE=https://files.mydomain.com```
+
+For more information on using a custom domain, see this documentation link:
+
+http://docs.aws.amazon.com/AmazonS3/latest/dev/VirtualHosting.html#VirtualHostingCustomURLs
+
 ## Accessibility Guidelines
 
 Here is guide on [how to use the accessible editor](https://gist.github.com/MathuraMG/e86666b7b41fbc8c078bad9aff3f666d)

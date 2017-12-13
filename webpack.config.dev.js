@@ -41,6 +41,7 @@ module.exports = {
           JSON.stringify(false),
         'NODE_ENV': JSON.stringify('development'),
         'S3_BUCKET': '"' + process.env.S3_BUCKET + '"',
+        'S3_BUCKET_URL_BASE': '"' + process.env.S3_BUCKET_URL_BASE + '"',
         'AWS_REGION': '"' + process.env.AWS_REGION + '"',
       }
     })
