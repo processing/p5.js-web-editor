@@ -13,6 +13,7 @@ const defaultHTML =
 `<!DOCTYPE html>
 <html>
   <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/p5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/addons/p5.dom.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/addons/p5.sound.min.js"></script>
@@ -20,7 +21,11 @@ const defaultHTML =
     <meta charset="utf-8" />
   </head>
   <body>
+    <section id="textOutput-content"></section>
+    <section id="gridOutput-content"></section>
+    <section id="soundOutput-content"></section>
     <script src="sketch.js"></script>
+    <script src="https://cdn.rawgit.com/MathuraMG/p5-accessibility/e856365c/dist/p5-accessibility.js"></script>
   </body>
 </html>
 `;
