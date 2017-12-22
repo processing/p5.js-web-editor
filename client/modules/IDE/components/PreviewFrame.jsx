@@ -205,17 +205,17 @@ class PreviewFrame extends React.Component {
     if (this.props.textOutput) {
       const textSection = sketchDoc.createElement('section');
       textSection.setAttribute('id', 'textOutput-content');
-      sketchDoc.body.appendChild(textSection);
+      sketchDoc.getElementById('outputs').appendChild(textSection);
     }
     if (this.props.gridOutput) {
       const gridSection = sketchDoc.createElement('section');
       gridSection.setAttribute('id', 'gridOutput-content');
-      sketchDoc.body.appendChild(gridSection);
+      sketchDoc.getElementById('outputs').appendChild(gridSection);
     }
     if (this.props.soundOutput) {
       const soundSection = sketchDoc.createElement('section');
       soundSection.setAttribute('id', 'soundOutput-content');
-      sketchDoc.body.appendChild(soundSection);
+      sketchDoc.getElementById('outputs').appendChild(soundSection);
     }
 
     scriptsToInject.forEach((scriptToInject) => {

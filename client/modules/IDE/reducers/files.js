@@ -21,9 +21,7 @@ const defaultHTML =
     <meta charset="utf-8" />
   </head>
   <body>
-    <section id="textOutput-content"></section>
-    <section id="gridOutput-content"></section>
-    <section id="soundOutput-content"></section>
+    <div id='outputs'></div>
     <script src="sketch.js"></script>
     <script src="https://cdn.rawgit.com/MathuraMG/p5-accessibility/e856365c/dist/p5-accessibility.js"></script>
   </body>
