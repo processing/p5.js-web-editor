@@ -21,10 +21,10 @@ const defaultHTML =
     <meta charset="utf-8" />
   </head>
   <body>
-    <div id='outputs'></div>
+    <div id='accessible-outputs'></div>
     <script src="sketch.js"></script>
-    <script src="https://cdn.rawgit.com/MathuraMG/p5-accessibility/e856365c/dist/p5-accessibility.js"></script>
-  </body>
+    <div id='accessibility-library'></div>
+    </body>
 </html>
 `;
 

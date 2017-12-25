@@ -202,20 +202,25 @@ class PreviewFrame extends React.Component {
       '/loop-protect.min.js',
       '/hijackConsole.js'
     ];
+    const accessiblelib = sketchDoc.createElement('script');
+    accessiblelib.setAttribute('src', 'https://cdn.rawgit.com/MathuraMG/p5-accessibility/e856365c/dist/p5-accessibility.js');
     if (this.props.textOutput) {
+      sketchDoc.getElementById('accessibility-library').appendChild(accessiblelib);
       const textSection = sketchDoc.createElement('section');
       textSection.setAttribute('id', 'textOutput-content');
-      sketchDoc.getElementById('outputs').appendChild(textSection);
+      sketchDoc.getElementById('accessible-outputs').appendChild(textSection);
     }
     if (this.props.gridOutput) {
+      sketchDoc.getElementById('accessibility-library').appendChild(accessiblelib);
       const gridSection = sketchDoc.createElement('section');
       gridSection.setAttribute('id', 'gridOutput-content');
-      sketchDoc.getElementById('outputs').appendChild(gridSection);
+      sketchDoc.getElementById('accessible-outputs').appendChild(gridSection);
     }
     if (this.props.soundOutput) {
+      sketchDoc.getElementById('accessibility-library').appendChild(accessiblelib);
       const soundSection = sketchDoc.createElement('section');
       soundSection.setAttribute('id', 'soundOutput-content');
-      sketchDoc.getElementById('outputs').appendChild(soundSection);
+      sketchDoc.getElementById('accessible-outputs').appendChild(soundSection);
     }
 
     scriptsToInject.forEach((scriptToInject) => {
