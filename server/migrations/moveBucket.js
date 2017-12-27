@@ -24,9 +24,11 @@ mongoose.connection.on('error', () => {
 //   },
 // });
 
-const numProjects = Project.count({});
-console.log(numProjects);
-process.exit(0);
+Project.count({})
+.exec().then((err, count) => {
+  console.log(count);
+  process.exit(0);
+});
 
 // Project.find({}, (err, projects) => {
 //   projects.forEach((project, projectIndex) => {
