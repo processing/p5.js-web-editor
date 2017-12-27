@@ -26,13 +26,13 @@ mongoose.connection.on('error', () => {
 
 const CHUNK = 1000;
 Project.count({})
-.exec().then((numProjects) => {
+.exec().then(async (numProjects) => {
   console.log(numProjects);
   for (let i = 0; i < numProjects; i += CHUNK) {
     let projects = await Project.find({}).skip(i).limit(CHUNK).exec();
     projects.forEach((project, projectIndex) => {
       console.log(project.name);
-      project.files.forEach((file, fileIndex) => {
+      project.files.forEach((async file, fileIndex) => {
         if (file.url && file.url.includes('p5.js-webeditor')) {
           file.url = file.url.replace('p5.js-webeditor', process.env.S3_BUCKET);
         }
