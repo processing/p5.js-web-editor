@@ -27,7 +27,7 @@ mongoose.connection.on('error', () => {
 
 const CHUNK = 1000;
 Project.count({})
-.exec().then(async (numProjects) => {
+.exec().then((numProjects) => {
   console.log(numProjects);
   let index = 0;
   async.whilst(
