@@ -37,7 +37,6 @@ Project.count({})
     (whilstCb) => {
       Project.find({}).skip(index).limit(CHUNK).exec((err, projects) => {
         async.eachSeries(projects, (project, cb) => {
-          console.log(project.name);
           async.eachSeries(project.files, (file, fileCb) => {
             if (file.url && file.url.includes('p5.js-webeditor')) {
               file.url = file.url.replace('p5.js-webeditor', process.env.S3_BUCKET);
