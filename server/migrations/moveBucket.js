@@ -30,7 +30,9 @@ Project.find({}, (err, projects) => {
       if (file.url && file.url.includes('p5.js-webeditor')) {
         file.url = file.url.replace('p5.js-webeditor', process.env.S3_BUCKET);
       }
-      // project.save();
+      project.save((err, savedProject) => {
+        console.log(`updated file ${file.url}`);
+      });
     });
   });
 });
