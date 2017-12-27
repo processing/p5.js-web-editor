@@ -43,7 +43,6 @@ Project.count({})
               file.url = file.url.replace('p5.js-webeditor', process.env.S3_BUCKET);
               project.save((err, newProject) => {
                 console.log(`updated file ${file.url}`);
-                process.exit(0);
                 fileCb();
               });
             } else {
