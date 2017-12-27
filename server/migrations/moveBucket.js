@@ -1,5 +1,4 @@
 /* eslint-disable */
-console.log('in move bucket');
 import s3 from 's3';
 import path from 'path';
 import mongoose from 'mongoose';
@@ -25,17 +24,21 @@ mongoose.connection.on('error', () => {
 //   },
 // });
 
-Project.find({}, (err, projects) => {
-  projects.forEach((project, projectIndex) => {
-    console.log(project.name);
-    project.files.forEach((file, fileIndex) => {
-      if (file.url && file.url.includes('p5.js-webeditor')) {
-        file.url = file.url.replace('p5.js-webeditor', process.env.S3_BUCKET);
-      }
-      project.save((err, savedProject) => {
-        console.log(`updated file ${file.url}`);
-        process.exit(0);
-      });
-    });
-  });
-});
+const numProjects = Project.count({});
+console.log(numProjects);
+process.exit(0);
+
+// Project.find({}, (err, projects) => {
+//   projects.forEach((project, projectIndex) => {
+//     console.log(project.name);
+//     project.files.forEach((file, fileIndex) => {
+//       if (file.url && file.url.includes('p5.js-webeditor')) {
+//         file.url = file.url.replace('p5.js-webeditor', process.env.S3_BUCKET);
+//       }
+//       project.save((err, savedProject) => {
+//         console.log(`updated file ${file.url}`);
+//         process.exit(0);
+//       });
+//     });
+//   });
+// });
