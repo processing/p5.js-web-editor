@@ -35,25 +35,26 @@ Project.count({})
       return index < numProjects;
     },
     (whilstCb) => {
-      let projects = await Project.find({}).skip(index).limit(CHUNK).exec();
-      async.eachSeries(projects, (project, cb) => {
-        console.log(project.name);
-        async.eachSeries(project.files, (file, fileCb) => {
-          if (file.url && file.url.includes('p5.js-webeditor')) {
-            file.url = file.url.replace('p5.js-webeditor', process.env.S3_BUCKET);
-            project.save((err, newProject) => {
-              console.log(`updated file ${file.url}`);
-              process.exit(0);
+      Project.find({}).skip(index).limit(CHUNK).exec((err, projects) => {
+        async.eachSeries(projects, (project, cb) => {
+          console.log(project.name);
+          async.eachSeries(project.files, (file, fileCb) => {
+            if (file.url && file.url.includes('p5.js-webeditor')) {
+              file.url = file.url.replace('p5.js-webeditor', process.env.S3_BUCKET);
+              project.save((err, newProject) => {
+                console.log(`updated file ${file.url}`);
+                process.exit(0);
+                fileCb();
+              });
+            } else {
               fileCb();
-            });
-          } else {
-            fileCb();
-          }
-        }, () => {
-          cb();
-        }, () => {
-          index += CHUNK;
-          whilstCb();
+            }
+          }, () => {
+            cb();
+          }, () => {
+            index += CHUNK;
+            whilstCb();
+          });
         });
       });
     },
