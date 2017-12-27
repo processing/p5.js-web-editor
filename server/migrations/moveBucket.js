@@ -32,6 +32,7 @@ Project.find({}, (err, projects) => {
       }
       project.save((err, savedProject) => {
         console.log(`updated file ${file.url}`);
+        process.exit(0);
       });
     });
   });
