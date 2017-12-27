@@ -29,21 +29,18 @@ Project.count({})
 .exec().then((numProjects) => {
   console.log(numProjects);
   for (let i = 0; i < numProjects; i += CHUNK) {
-    await Project.find({}).skip(i).limit(CHUNK).exec()
-      .then((err, projects) => {
-        projects.forEach((project, projectIndex) => {
-          console.log(project.name);
-          project.files.forEach((file, fileIndex) => {
-            if (file.url && file.url.includes('p5.js-webeditor')) {
-              file.url = file.url.replace('p5.js-webeditor', process.env.S3_BUCKET);
-            }
-            project.save((err, savedProject) => {
-              console.log(`updated file ${file.url}`);
-              process.exit(0);
-            });
-          });
-        });
-      });    
+    let projects = await Project.find({}).skip(i).limit(CHUNK).exec();
+    projects.forEach((project, projectIndex) => {
+      console.log(project.name);
+      project.files.forEach((file, fileIndex) => {
+        if (file.url && file.url.includes('p5.js-webeditor')) {
+          file.url = file.url.replace('p5.js-webeditor', process.env.S3_BUCKET);
+        }
+        let savedProject = await project.save();
+        console.log(`updated file ${file.url}`);
+        process.exit(0);
+      });
+    });
   }
 });
 
