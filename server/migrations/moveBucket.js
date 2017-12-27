@@ -26,6 +26,7 @@ mongoose.connection.on('error', () => {
 
 Project.count({})
 .exec().then((err, count) => {
+  console.log(err);
   console.log(count);
   process.exit(0);
 });
