@@ -29,41 +29,37 @@ const CHUNK = 1000;
 Project.count({})
 .exec().then(async (numProjects) => {
   console.log(numProjects);
-  for (let i = 0; i < numProjects; i += CHUNK) {
-    let projects = await Project.find({}).skip(i).limit(CHUNK).exec();
-    async.eachSeries(projects, (project, cb) => {
-      console.log(project.name);
-      async.eachSeries(project.files, (file, fileCb) => {
-        if (file.url && file.url.includes('p5.js-webeditor')) {
-          file.url = file.url.replace('p5.js-webeditor', process.env.S3_BUCKET);
-          project.save((err, newProject) => {
-            console.log(`updated file ${file.url}`);
-            process.exit(0);
+  let index = 0;
+  async.whilst(
+    () => {
+      return index < numProjects;
+    },
+    (whilstCb) => {
+      let projects = await Project.find({}).skip(index).limit(CHUNK).exec();
+      async.eachSeries(projects, (project, cb) => {
+        console.log(project.name);
+        async.eachSeries(project.files, (file, fileCb) => {
+          if (file.url && file.url.includes('p5.js-webeditor')) {
+            file.url = file.url.replace('p5.js-webeditor', process.env.S3_BUCKET);
+            project.save((err, newProject) => {
+              console.log(`updated file ${file.url}`);
+              process.exit(0);
+              fileCb();
+            });
+          } else {
             fileCb();
-          });
-        } else {
-          fileCb();
-        }
-      }, () => {
-        cb();
-      }, () => {
-        console.log('at ' + i);
+          }
+        }, () => {
+          cb();
+        }, () => {
+          index += CHUNK;
+          whilstCb();
+        });
       });
-    });
-  }
+    },
+    () => {
+      console.log('finished processing all documents.')
+      process.exit(0); 
+    }
+  );
 });
-
-// Project.find({}, (err, projects) => {
-//   projects.forEach((project, projectIndex) => {
-//     console.log(project.name);
-//     project.files.forEach((file, fileIndex) => {
-//       if (file.url && file.url.includes('p5.js-webeditor')) {
-//         file.url = file.url.replace('p5.js-webeditor', process.env.S3_BUCKET);
-//       }
-//       project.save((err, savedProject) => {
-//         console.log(`updated file ${file.url}`);
-//         process.exit(0);
-//       });
-//     });
-//   });
-// });
