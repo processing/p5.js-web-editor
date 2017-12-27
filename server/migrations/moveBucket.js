@@ -4,6 +4,7 @@ import path from 'path';
 import mongoose from 'mongoose';
 import User from '../models/user';
 import Project from '../models/project';
+import async from 'async';
 require('dotenv').config({path: path.resolve('.env')});
 mongoose.connect('mongodb://localhost:27017/p5js-web-editor');
 mongoose.connection.on('error', () => {
@@ -30,15 +31,23 @@ Project.count({})
   console.log(numProjects);
   for (let i = 0; i < numProjects; i += CHUNK) {
     let projects = await Project.find({}).skip(i).limit(CHUNK).exec();
-    projects.forEach((project, projectIndex) => {
+    async.eachSeries(projects, (project, cb) => {
       console.log(project.name);
-      project.files.forEach(async (file, fileIndex) => {
+      async.eachSeries(project.files, (file, fileCb) => {
         if (file.url && file.url.includes('p5.js-webeditor')) {
           file.url = file.url.replace('p5.js-webeditor', process.env.S3_BUCKET);
-          let savedProject = await project.save();
-          console.log(`updated file ${file.url}`);
-          process.exit(0);
+          project.save((err, newProject) => {
+            console.log(`updated file ${file.url}`);
+            process.exit(0);
+            fileCb();
+          });
+        } else {
+          fileCb();
         }
+      }, () => {
+        cb();
+      }, () => {
+        console.log('at ' + i);
       });
     });
   }
