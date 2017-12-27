@@ -26,6 +26,7 @@ let client = s3.createClient({
 
 Project.find({}, (err, projects) => {
   projects.forEach((project, projectIndex) => {
+    console.log(project.name);
     project.files.forEach((file, fileIndex) => {
       if (file.url && file.url.includes('p5.js-webeditor')) {
         file.url = file.url.replace('p5.js-webeditor', process.env.S3_BUCKET);
