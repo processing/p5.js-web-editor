@@ -17,7 +17,7 @@ router.route('/signup').get((req, res) => {
   if (req.user) {
     return res.redirect('/');
   }
-  res.send(renderIndex());
+  return res.send(renderIndex());
 });
 
 router.route('/projects/:project_id').get((req, res) => {
@@ -28,9 +28,6 @@ router.route('/:username/sketches/:project_id').get((req, res) => {
   res.send(renderIndex());
 });
 
-router.route('/:username/sketches/:project_id/*').get((req, res) => {
-  getProjectAsset(req,res);
-});
 
 // router.route('/full/:project_id').get((req, res) => {
 //   res.send(renderIndex());
@@ -40,7 +37,7 @@ router.route('/login').get((req, res) => {
   if (req.user) {
     return res.redirect('/');
   }
-  res.send(renderIndex());
+  return res.send(renderIndex());
 });
 
 router.route('/reset-password').get((req, res) => {

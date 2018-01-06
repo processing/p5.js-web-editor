@@ -125,3 +125,8 @@ $p5-contrast-activeline: #999999;
   color: $p5-contrast-pink;
   font-weight: bold;
 }
+
+.cm-s-p5-contrast .CodeMirror-foldmarker {
+  background-color: white;
+  color: #333;
+}

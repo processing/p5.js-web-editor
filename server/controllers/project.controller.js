@@ -139,33 +139,38 @@ export function getProjectsForUserId(userId) {
 export function getProjectAsset(req, res) {
   Project.findById(req.params.project_id)
     .populate('user', 'username')
-    .exec((err, project) => {
+    .exec((err, project) => { // eslint-disable-line
       if (err) {
         return res.status(404).send({ message: 'Project with that id does not exist' });
       }
+      if (!project) {
+        return res.status(404).send({ message: 'Project with that id does not exist' });
+      }
 
-      var assetURL = null;
-      var seekPath = req.params[0]; // req.params.asset_path;
-      var seekPathSplit = seekPath.split('/');
-      var seekFilename = seekPathSplit[seekPathSplit.length-1];
+      let assetURL = null;
+      const seekPath = req.params[0]; // req.params.asset_path;
+      const seekPathSplit = seekPath.split('/');
+      const seekFilename = seekPathSplit[seekPathSplit.length - 1];
       project.files.forEach((file) => {
-        if(file.name === seekFilename) {
+        if (file.name === seekFilename) {
           assetURL = file.url;
         }
       });
 
-      if(!assetURL) {
+      if (!assetURL) {
         return res.status(404).send({ message: 'Asset does not exist' });
-      } else {
-        request({ method: 'GET', url: assetURL, encoding: null }, (err, response, body) => {
-          res.send(body);
-        });
       }
+      request({ method: 'GET', url: assetURL, encoding: null }, (innerErr, response, body) => {
+        if (innerErr) {
+          return res.status(404).send({ message: 'Asset does not exist' });
+        }
+        return res.send(body);
+      });
     });
 }
 
 export function getProjectsForUserName(username) {
-  
+
 }
 
 export function getProjects(req, res) {
@@ -199,7 +204,6 @@ export function getProjectsForUser(req, res) {
 }
 
 function bundleExternalLibs(project, zip, callback) {
-  const rootFile = project.files.find(file => file.name === 'root');
   const indexHtml = project.files.find(file => file.name === 'index.html');
   let numScriptsResolved = 0;
   let numScriptTags = 0;
