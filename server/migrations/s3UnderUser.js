@@ -66,7 +66,7 @@ Project.count({}).exec().then((numProjects) => {
                 });
               } catch(e) {
                 console.log(e);
-                fileCb(e);
+                fileCb();
               }
             } else {
               fileCb();
