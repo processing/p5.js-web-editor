@@ -1,3 +1,3 @@
 require('babel-register');
 require('babel-polyfill');
-require('./moveBucket');
+require('./s3UnderUser');

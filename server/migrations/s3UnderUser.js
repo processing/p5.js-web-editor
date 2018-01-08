@@ -4,6 +4,7 @@ import path from 'path';
 import mongoose from 'mongoose';
 import User from '../models/user';
 import Project from '../models/project';
+import async from 'async';
 require('dotenv').config({path: path.resolve('.env')});
 mongoose.connect('mongodb://localhost:27017/p5js-web-editor');
 mongoose.connection.on('error', () => {
@@ -24,6 +25,11 @@ let client = s3.createClient({
   },
 });
 
+const CHUNK = 100;
+Project.count({}).exec().then((numProjects) => {
+  console.log(numProjects);
+  let index = 0;
+})
 Project.find({}, (err, projects) => {
   projects.forEach((project, projectIndex) => {
     if (!project.user) return;
