@@ -56,6 +56,7 @@ Project.count({}).exec().then((numProjects) => {
               try {
                 client.moveObject(params)
                 .on('err', (err) => {
+                  console.log('in error event function');
                   console.log(err);
                   fileCb();
                 })
@@ -68,6 +69,7 @@ Project.count({}).exec().then((numProjects) => {
                   });
                 });
               } catch(e) {
+                console.log('in catch function');
                 console.log(e);
                 fileCb();
               }
