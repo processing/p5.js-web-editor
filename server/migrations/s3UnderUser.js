@@ -45,6 +45,7 @@ Project.count({}).exec().then((numProjects) => {
           async.eachSeries(project.files, (file, fileCb) => {
             if (file.url && file.url.includes(process.env.S3_BUCKET) && !file.url.includes(userId)) {
               console.log(file.url);
+              console.log(userId);
               const key = file.url.split('/').pop();
               console.log(key);
               const params = {
@@ -56,6 +57,7 @@ Project.count({}).exec().then((numProjects) => {
                 client.moveObject(params)
                 .on('err', (err) => {
                   console.log(err);
+                  fileCb();
                 })
                 .on('end', () => {
                   file.url = (process.env.S3_BUCKET_URL_BASE ||
