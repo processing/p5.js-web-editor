@@ -7,7 +7,6 @@ import session from 'express-session';
 import connectMongo from 'connect-mongo';
 import passport from 'passport';
 import path from 'path';
-import csurf from 'csurf';
 
 // Webpack Requirements
 import webpack from 'webpack';
@@ -79,14 +78,6 @@ app.use(session({
   })
 }));
 
-// Enables CSRF protection and stores secret in session
-app.use(csurf());
-// Middleware to add CSRF token as cookie to some requests
-const csrfToken = (req, res, next) => {
-  res.cookie('XSRF-TOKEN', req.csrfToken());
-  next();
-};
-
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/api', requestsOfTypeJSON(), users);
@@ -97,9 +88,9 @@ app.use('/api', requestsOfTypeJSON(), aws);
 app.use(assetRoutes);
 // this is supposed to be TEMPORARY -- until i figure out
 // isomorphic rendering
-app.use('/', csrfToken, serverRoutes);
+app.use('/', serverRoutes);
 
-app.use('/', csrfToken, embedRoutes);
+app.use('/', embedRoutes);
 app.get('/auth/github', passport.authenticate('github'));
 app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), (req, res) => {
   res.redirect('/');
@@ -133,15 +124,6 @@ app.get('*', (req, res) => {
     return;
   }
   res.type('txt').send('Not found.');
-});
-
-// error handler
-app.use((err, req, res, next) => {
-  if (err.code !== 'EBADCSRFTOKEN') return next(err);
-
-  console.error('Invalid CSRF Token.');
-  console.error(req.url);
-  return next(err);
 });
 
 // start app
