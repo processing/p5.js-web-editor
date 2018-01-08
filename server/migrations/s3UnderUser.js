@@ -29,36 +29,60 @@ const CHUNK = 100;
 Project.count({}).exec().then((numProjects) => {
   console.log(numProjects);
   let index = 0;
-})
-Project.find({}, (err, projects) => {
-  projects.forEach((project, projectIndex) => {
-    if (!project.user) return;
-    const userId = project.user.valueOf();
-    project.files.forEach((file, fileIndex) => {
-      if (file.url && file.url.includes(process.env.S3_BUCKET) && !file.url.includes(userId)) {
-        const key = file.url.split('/').pop();
-        console.log(key);
-        const params = {
-          Bucket: `${process.env.S3_BUCKET}`,
-          CopySource: `${process.env.S3_BUCKET}/${key}`,
-          Key: `${userId}/${key}`
-        };
-        try {
-          client.moveObject(params)
-          .on('err', (err) => {
-            console.log(err);
-          })
-          .on('end', () => {
-            file.url = (process.env.S3_BUCKET_URL_BASE ||
-                        `https://s3-${process.env.AWS_REGION}.amazonaws.com/${process.env.S3_BUCKET}`) + `/${userId}/${key}`;
-            project.save((err, savedProject) => {
-              console.log(`updated file ${key}`);
-            });
-          });
-        } catch(e) {
-          console.log(e);
-        }
-      }
-    });
-  });
+  async.whilst(
+    () => {
+      return index < numProjects;
+    },
+    (whilstCb) => {
+      Project.find({}).skip(index).limit(CHUNK).exec((err, projects) => {
+        async.eachSeries(projects, (project, cb) => {
+          if (!project.user) {
+            cb();
+            return;
+          }
+          const userId = project.user.valueOf();
+          console.log(project.name);
+          async.eachSeries(project.files, (file, fileCb) => {
+            if (file.url && file.url.includes(process.env.S3_BUCKET) && !file.url.includes(userId)) {
+              const key = file.url.split('/').pop();
+              console.log(key);
+              const params = {
+                Bucket: `${process.env.S3_BUCKET}`,
+                CopySource: `${process.env.S3_BUCKET}/${key}`,
+                Key: `${userId}/${key}`
+              };
+              try {
+                client.moveObject(params)
+                .on('err', (err) => {
+                  console.log(err);
+                })
+                .on('end', () => {
+                  file.url = (process.env.S3_BUCKET_URL_BASE ||
+                              `https://s3-${process.env.AWS_REGION}.amazonaws.com/${process.env.S3_BUCKET}`) + `/${userId}/${key}`;
+                  project.save((err, savedProject) => {
+                    console.log(`updated file ${key}`);
+                    fileCb();
+                  });
+                });
+              } catch(e) {
+                console.log(e);
+                fileCb(e);
+              }
+            } else {
+              fileCb();
+            }      
+          }, () => {
+            cb();
+          });      
+        }, () => {
+          index += CHUNK;
+          whilstCb();
+        });
+      });
+    },
+    () => {
+      console.log('finished processing all documents.');
+      process.exit(0);
+    }
+  );
 });
