@@ -4,8 +4,8 @@ import { getFileContent } from '../controllers/file.controller';
 
 const router = new Router();
 
-router.route('/:username/sketches/:project_id/*').get(getProjectAsset);
+router.get('/:username/sketches/:project_id/*', getProjectAsset);
 
-router.route('/sketches/:project_id/assets/*?').get(getFileContent);
+router.get('/sketches/:project_id/assets/*?', getFileContent);
 
 export default router;

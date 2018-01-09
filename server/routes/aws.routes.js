@@ -1,11 +1,12 @@
 import { Router } from 'express';
 import * as AWSController from '../controllers/aws.controller';
+import isAuthenticated from '../utils/isAuthenticated';
 
 const router = new Router();
 
-router.route('/S3/sign').post(AWSController.signS3);
-router.route('/S3/copy').post(AWSController.copyObjectInS3);
-router.route('/S3/:object_key').delete(AWSController.deleteObjectFromS3);
-router.route('/S3/:username/objects').get(AWSController.listObjectsInS3ForUser);
+router.post('/S3/sign', isAuthenticated, AWSController.signS3);
+router.post('/S3/copy', isAuthenticated, AWSController.copyObjectInS3);
+router.delete('/S3/:object_key', isAuthenticated, AWSController.deleteObjectFromS3);
+router.get('/S3/:username/objects', AWSController.listObjectsInS3ForUser);
 
 export default router;

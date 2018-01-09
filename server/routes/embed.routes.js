@@ -3,7 +3,7 @@ import * as EmbedController from '../controllers/embed.controller';
 
 const router = new Router();
 
-router.route('/embed/:project_id').get(EmbedController.serveProject);
-router.route('/full/:project_id').get(EmbedController.serveProject);
+router.get('/embed/:project_id', EmbedController.serveProject);
+router.get('/full/:project_id', EmbedController.serveProject);
 
 export default router;
