@@ -39,8 +39,8 @@ Project.count({})
         async.eachSeries(projects, (project, cb) => {
           console.log(project.name);
           async.eachSeries(project.files, (file, fileCb) => {
-            if (file.url && file.url.includes('p5.js-webeditor')) {
-              file.url = file.url.replace('p5.js-webeditor', process.env.S3_BUCKET);
+            if (file.url && file.url.includes('s3-us-west-2.amazonaws.com/')) {
+              file.url = file.url.replace('s3-us-west-2.amazonaws.com/', '');
               project.save((err, newProject) => {
                 console.log(`updated file ${file.url}`);
                 fileCb();
