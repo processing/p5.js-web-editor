@@ -79,11 +79,11 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        'API_URL': '"' + process.env.API_URL + '"',
+        'API_URL': process.env.API_URL ? '"' + process.env.API_URL + '"' : undefined,
         'NODE_ENV': JSON.stringify('production'),
-        'S3_BUCKET': '"' + process.env.S3_BUCKET + '"',
-        'S3_BUCKET_URL_BASE': '"' + process.env.S3_BUCKET_URL_BASE + '"',
-        'AWS_REGION': '"' + process.env.AWS_REGION + '"'
+        'S3_BUCKET': process.env.S3_BUCKET ? '"' + process.env.S3_BUCKET + '"' : undefined,
+        'S3_BUCKET_URL_BASE': process.env.S3_BUCKET_URL_BASE ? '"' + process.env.S3_BUCKET_URL_BASE + '"' : undefined,
+        'AWS_REGION': process.env.AWS_REGION ? '"' + process.env.AWS_REGION + '"': undefined
       }
     }),
     new webpack.optimize.CommonsChunkPlugin({

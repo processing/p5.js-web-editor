@@ -8,11 +8,6 @@ import User from '../models/user';
 import { deleteObjectsFromS3, getObjectKey } from './aws.controller';
 
 export function createProject(req, res) {
-  if (!req.user) {
-    res.status(403).send({ success: false, message: 'Session does not match owner of project.' });
-    return;
-  }
-
   let projectValues = {
     user: req.user._id
   };
@@ -38,7 +33,7 @@ export function createProject(req, res) {
 
 export function updateProject(req, res) {
   Project.findById(req.params.project_id, (findProjectErr, project) => {
-    if (!req.user || !project.user.equals(req.user._id)) {
+    if (!project.user.equals(req.user._id)) {
       res.status(403).send({ success: false, message: 'Session does not match owner of project.' });
       return;
     }
@@ -107,7 +102,7 @@ function deleteFilesFromS3(files) {
 
 export function deleteProject(req, res) {
   Project.findById(req.params.project_id, (findProjectErr, project) => {
-    if (!req.user || !project.user.equals(req.user._id)) {
+    if (!project.user.equals(req.user._id)) {
       res.status(403).json({ success: false, message: 'Session does not match owner of project.' });
       return;
     }
