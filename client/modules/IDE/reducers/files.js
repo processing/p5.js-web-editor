@@ -19,9 +19,10 @@ const defaultHTML =
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/addons/p5.sound.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="utf-8" />
+
   </head>
   <body>
-    <div id='accessible-outputs'></div>
+    <section aria-label='accessible output' id='accessible-outputs'></section>
     <script src="sketch.js"></script>
     <div id='accessibility-library'></div>
     </body>
@@ -32,6 +33,15 @@ const defaultCSS =
 `html, body {
   margin: 0;
   padding: 0;
+}
+
+#accessible-outputs {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
 `;
 
