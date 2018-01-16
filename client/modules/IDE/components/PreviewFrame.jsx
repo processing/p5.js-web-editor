@@ -209,12 +209,14 @@ class PreviewFrame extends React.Component {
       const textSection = sketchDoc.createElement('section');
       textSection.setAttribute('id', 'textOutput-content');
       sketchDoc.getElementById('accessible-outputs').appendChild(textSection);
+      this.iframeElement.focus();
     }
     if (this.props.gridOutput) {
       sketchDoc.getElementById('accessibility-library').appendChild(accessiblelib);
       const gridSection = sketchDoc.createElement('section');
       gridSection.setAttribute('id', 'gridOutput-content');
       sketchDoc.getElementById('accessible-outputs').appendChild(gridSection);
+      this.iframeElement.focus();
     }
     if (this.props.soundOutput) {
       sketchDoc.getElementById('accessibility-library').appendChild(accessiblelib);

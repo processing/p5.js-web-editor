@@ -1,6 +1,4 @@
 import React, { PropTypes } from 'react';
-import GridOutput from '../components/GridOutput';
-import TextOutput from '../components/TextOutput';
 
 class AccessibleOutput extends React.Component {
   componentDidMount() {
@@ -23,18 +21,8 @@ class AccessibleOutput extends React.Component {
         title="canvas text output"
       >
         {(() => { // eslint-disable-line
-          if (this.props.textOutput) {
-            return (
-              <TextOutput />
-            );
-          }
         })()}
         {(() => { // eslint-disable-line
-          if (this.props.gridOutput) {
-            return (
-              <GridOutput />
-            );
-          }
         })()}
       </section>
     );
@@ -43,9 +31,7 @@ class AccessibleOutput extends React.Component {
 
 AccessibleOutput.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
-  previewIsRefreshing: PropTypes.bool.isRequired,
-  textOutput: PropTypes.bool.isRequired,
-  gridOutput: PropTypes.bool.isRequired
+  previewIsRefreshing: PropTypes.bool.isRequired
 };
 
 export default AccessibleOutput;
