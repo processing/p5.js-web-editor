@@ -2,76 +2,77 @@ import { Router } from 'express';
 import { renderIndex } from '../views/index';
 import { get404Sketch } from '../views/404Page';
 import { userExists } from '../controllers/user.controller';
+import { getProjectAsset } from '../controllers/project.controller';
 
 const router = new Router();
 
 // this is intended to be a temporary file
 // until i figure out isomorphic rendering
 
-router.get('/', (req, res) => {
+router.route('/').get((req, res) => {
   res.send(renderIndex());
 });
 
-router.get('/signup', (req, res) => {
+router.route('/signup').get((req, res) => {
   if (req.user) {
     return res.redirect('/');
   }
   return res.send(renderIndex());
 });
 
-router.get('/projects/:project_id', (req, res) => {
+router.route('/projects/:project_id').get((req, res) => {
   res.send(renderIndex());
 });
 
-router.get('/:username/sketches/:project_id', (req, res) => {
+router.route('/:username/sketches/:project_id').get((req, res) => {
   res.send(renderIndex());
 });
 
 
-// router.get('/full/:project_id', (req, res) => {
+// router.route('/full/:project_id').get((req, res) => {
 //   res.send(renderIndex());
 // });
 
-router.get('/login', (req, res) => {
+router.route('/login').get((req, res) => {
   if (req.user) {
     return res.redirect('/');
   }
   return res.send(renderIndex());
 });
 
-router.get('/reset-password', (req, res) => {
+router.route('/reset-password').get((req, res) => {
   res.send(renderIndex());
 });
 
-router.get('/reset-password/:reset_password_token', (req, res) => {
+router.route('/reset-password/:reset_password_token').get((req, res) => {
   res.send(renderIndex());
 });
 
-router.get('/verify', (req, res) => {
+router.route('/verify').get((req, res) => {
   res.send(renderIndex());
 });
 
-router.get('/sketches', (req, res) => {
+router.route('/sketches').get((req, res) => {
   res.send(renderIndex());
 });
 
-router.get('/about', (req, res) => {
+router.route('/about').get((req, res) => {
   res.send(renderIndex());
 });
 
-router.get('/:username/sketches', (req, res) => {
+router.route('/:username/sketches').get((req, res) => {
   userExists(req.params.username, exists => (
     exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
   ));
 });
 
-router.get('/:username/assets', (req, res) => {
+router.route('/:username/assets').get((req, res) => {
   userExists(req.params.username, exists => (
     exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
   ));
 });
 
-router.get('/:username/account', (req, res) => {
+router.route('/:username/account').get((req, res) => {
   userExists(req.params.username, exists => (
     exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
   ));

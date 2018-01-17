@@ -1,21 +1,20 @@
 import { Router } from 'express';
 import * as ProjectController from '../controllers/project.controller';
-import isAuthenticated from '../utils/isAuthenticated';
 
 const router = new Router();
 
-router.post('/projects', isAuthenticated, ProjectController.createProject);
+router.route('/projects').post(ProjectController.createProject);
 
-router.put('/projects/:project_id', isAuthenticated, ProjectController.updateProject);
+router.route('/projects/:project_id').put(ProjectController.updateProject);
 
-router.get('/projects/:project_id', ProjectController.getProject);
+router.route('/projects/:project_id').get(ProjectController.getProject);
 
-router.delete('/projects/:project_id', isAuthenticated, ProjectController.deleteProject);
+router.route('/projects/:project_id').delete(ProjectController.deleteProject);
 
-router.get('/projects', ProjectController.getProjects);
+router.route('/projects').get(ProjectController.getProjects);
 
-router.get('/:username/projects', ProjectController.getProjectsForUser);
+router.route('/:username/projects').get(ProjectController.getProjectsForUser);
 
-router.get('/projects/:project_id/zip', ProjectController.downloadProjectAsZip);
+router.route('/projects/:project_id/zip').get(ProjectController.downloadProjectAsZip);
 
 export default router;
