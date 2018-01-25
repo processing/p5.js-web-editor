@@ -198,49 +198,31 @@ class PreviewFrame extends React.Component {
     this.resolveScripts(sketchDoc, resolvedFiles);
     this.resolveStyles(sketchDoc, resolvedFiles);
 
-    let scriptsToInject = [
+    const scriptsToInject = [
       '/loop-protect.min.js',
       '/hijackConsole.js'
     ];
-    if (
-      this.props.isAccessibleOutputPlaying ||
-      ((this.props.textOutput || this.props.gridOutput || this.props.soundOutput) && this.props.isPlaying)) {
-      let interceptorScripts = [];
-      interceptorScripts = [
-        '/p5-interceptor/registry.js',
-        '/p5-interceptor/loadData.js',
-        '/p5-interceptor/interceptorHelperFunctions.js',
-        '/p5-interceptor/baseInterceptor.js',
-        '/p5-interceptor/entities/entity.min.js',
-        '/p5-interceptor/ntc.min.js'
-      ];
-      if (!this.props.textOutput && !this.props.gridOutput && !this.props.soundOutput) {
-        this.props.setTextOutput(true);
-      }
-      if (this.props.textOutput) {
-        let textInterceptorScripts = [];
-        textInterceptorScripts = [
-          '/p5-interceptor/textInterceptor/interceptorFunctions.js',
-          '/p5-interceptor/textInterceptor/interceptorP5.js'
-        ];
-        interceptorScripts = interceptorScripts.concat(textInterceptorScripts);
-      }
-      if (this.props.gridOutput) {
-        let gridInterceptorScripts = [];
-        gridInterceptorScripts = [
-          '/p5-interceptor/gridInterceptor/interceptorFunctions.js',
-          '/p5-interceptor/gridInterceptor/interceptorP5.js'
-        ];
-        interceptorScripts = interceptorScripts.concat(gridInterceptorScripts);
-      }
-      if (this.props.soundOutput) {
-        let soundInterceptorScripts = [];
-        soundInterceptorScripts = [
-          '/p5-interceptor/soundInterceptor/interceptorP5.js'
-        ];
-        interceptorScripts = interceptorScripts.concat(soundInterceptorScripts);
-      }
-      scriptsToInject = scriptsToInject.concat(interceptorScripts);
+    const accessiblelib = sketchDoc.createElement('script');
+    accessiblelib.setAttribute('src', 'https://cdn.rawgit.com/MathuraMG/p5-accessibility/e856365c/dist/p5-accessibility.js');
+    if (this.props.textOutput) {
+      sketchDoc.getElementById('accessibility-library').appendChild(accessiblelib);
+      const textSection = sketchDoc.createElement('section');
+      textSection.setAttribute('id', 'textOutput-content');
+      sketchDoc.getElementById('accessible-outputs').appendChild(textSection);
+      this.iframeElement.focus();
+    }
+    if (this.props.gridOutput) {
+      sketchDoc.getElementById('accessibility-library').appendChild(accessiblelib);
+      const gridSection = sketchDoc.createElement('section');
+      gridSection.setAttribute('id', 'gridOutput-content');
+      sketchDoc.getElementById('accessible-outputs').appendChild(gridSection);
+      this.iframeElement.focus();
+    }
+    if (this.props.soundOutput) {
+      sketchDoc.getElementById('accessibility-library').appendChild(accessiblelib);
+      const soundSection = sketchDoc.createElement('section');
+      soundSection.setAttribute('id', 'soundOutput-content');
+      sketchDoc.getElementById('accessible-outputs').appendChild(soundSection);
     }
 
     scriptsToInject.forEach((scriptToInject) => {
@@ -419,7 +401,7 @@ PreviewFrame.propTypes = {
   textOutput: PropTypes.bool.isRequired,
   gridOutput: PropTypes.bool.isRequired,
   soundOutput: PropTypes.bool.isRequired,
-  setTextOutput: PropTypes.func.isRequired,
+  // setTextOutput: PropTypes.func.isRequired,
   htmlFile: PropTypes.shape({
     content: PropTypes.string.isRequired
   }).isRequired,

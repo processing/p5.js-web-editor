@@ -9,8 +9,7 @@
     "lint-fix": "eslint client server --ext .jsx --ext .js --fix",
     "build": "NODE_ENV=production webpack --config webpack.config.prod.js --progress",
     "test": "npm run lint",
-    "fetch-examples": "node fetch-examples.js",
-    "postinstall": "git submodule update --remote --recursive"
+    "fetch-examples": "node fetch-examples.js"
   },
   "main": "index.js",
   "author": "Cassie Tarakajian",
