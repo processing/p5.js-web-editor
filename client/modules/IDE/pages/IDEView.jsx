@@ -8,7 +8,6 @@ import Editor from '../components/Editor';
 import Sidebar from '../components/Sidebar';
 import PreviewFrame from '../components/PreviewFrame';
 import Toolbar from '../components/Toolbar';
-import AccessibleOutput from '../components/AccessibleOutput';
 import Preferences from '../components/Preferences';
 import NewFileModal from '../components/NewFileModal';
 import NewFolderModal from '../components/NewFolderModal';
@@ -375,14 +374,8 @@ class IDEView extends React.Component {
                         ) &&
                           this.props.ide.isPlaying
                       ) ||
-                        this.props.ide.isAccessibleOutputPlaying
-                    ) &&
-                      <AccessibleOutput
-                        isPlaying={this.props.ide.isPlaying}
-                        previewIsRefreshing={this.props.ide.previewIsRefreshing}
-                        textOutput={this.props.preferences.textOutput}
-                        gridOutput={this.props.preferences.gridOutput}
-                      />
+                      this.props.ide.isAccessibleOutputPlaying
+                    )
                   }
                 </div>
                 <PreviewFrame
