@@ -168,7 +168,7 @@ class PreviewFrame extends React.Component {
     // or loops.
     JSHINT(newContent);
 
-    if (!JSHINT.errors) {
+    if (JSHINT.errors.length === 0) {
       newContent = decomment(newContent, {
         ignore: /noprotect/g,
         space: true
