@@ -45,9 +45,10 @@ const defaultHTML =
     <script src="https://cdnjs.cloudflare.com/ajax/libs/rita/1.3.11/rita-small.min.js"></script>
     <!-- Chroma -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/1.3.6/chroma.min.js"></script>
+    <!-- Jquery -->
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script> 
 
     <!-- sketch additions -->
-
 
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
@@ -357,7 +358,8 @@ function formatSketchForStorage(sketch, user) {
         const fileID = objectID().toHexString();
         output.push({
           name: item.name,
-          content: item.download_url,
+          url: item.download_url,
+          content: null,
           id: fileID,
           _id: fileID,
           children: [],
@@ -400,18 +402,21 @@ function getAllSketchContent(newProjectList) {
   return Q.all(newProjectList.map(newProject => Q.all(newProject.files.map((sketchFile, i) => {
 
     /*
-      sketchFile.name.endsWith(".mov") !== true &&
-      sketchFile.name.endsWith(".otf") !== true &&
-      sketchFile.name.endsWith(".ttf") !== true &&
+      sketchFile.name.endsWith(".mp4") !== true &&
+      sketchFile.name.endsWith(".ogg") !== true &&
+      sketchFile.name.endsWith(".otf") !== true && 
+      sketchFile.name.endsWith(".ttf") !== true && 
+      sketchFile.name.endsWith(".vvt") !== true && 
+      sketchFile.name.endsWith(".jpg") !== true && 
+      sketchFile.name.endsWith(".png") !== true &&
+      sketchFile.name.endsWith(".svg") !== true 
     */
 
     if (sketchFile.fileType == 'file' &&
       sketchFile.content != null &&
       sketchFile.name.endsWith(".html") !== true &&
       sketchFile.name.endsWith(".css") !== true &&
-      sketchFile.name.endsWith(".mp4") !== true &&
-      sketchFile.name.endsWith(".ogg") !== true &&
-      sketchFile.name.endsWith(".otf") !== true && sketchFile.name.endsWith(".ttf") !== true
+      sketchFile.name.endsWith(".js") == true
     ) {
 
       const options = {
@@ -432,6 +437,29 @@ function getAllSketchContent(newProjectList) {
         throw err
       })
 
+    } else{
+      if(newProject.files[i].url) {
+
+        return new Promise( (resolve, reject) => {
+          // pass
+          console.log(sketchFile.name);
+          // https://cdn.rawgit.com/opensourcedesign/fonts/2f220059/gnu-freefont_freesans/FreeSans.otf?raw=true
+          // "https://raw.githubusercontent.com/generative-design/Code-Package-p5.js/gg4editor/01_P/P_3_2_1_01/data/FreeSans.otf",
+          const rawGitRef = `https://cdn.rawgit.com/${newProject.files[i].url.split(".com/")[1]}`;
+          sketchFile.content = rawGitRef;
+          sketchFile.url = rawGitRef;
+
+          // replace ref in sketch.js ==> should serve from the file?
+          // if(sketchFile.name.endsWith(".svg") == true){
+          //   newProject.files[1].content = newProject.files[1].content.replace(`'data/${sketchFile.name}'`, `'${rawGitRef}'`);      
+          // }
+          // newProject.files[1].content = newProject.files[1].content.replace(`'data/${sketchFile.name}'`, `'${rawGitRef}'`);      
+          // console.log(newProject.files[1].content)
+          resolve(newProject);
+
+        })
+        
+      }
     }
 
   })).catch((err) => {
@@ -443,25 +471,21 @@ function getAllSketchContent(newProjectList) {
 
 }
 
-function linkToFontFiles(newProjectList){
+function linkToSvgFiles(newProjectList){
   return Q.all(newProjectList.map(newProject => Q.all(newProject.files.map((sketchFile, i) => {
 
-    if( sketchFile.fileType == 'file' &&
-      sketchFile.content != null &&
-      sketchFile.name.endsWith(".otf") == true || sketchFile.name.endsWith(".ttf") == true ){
-      // handle cases for fonts
-      // create a rawgit cdn ==> replace ref in sketch.js with link to cdn
-      console.log(sketchFile.name);
-      // https://cdn.rawgit.com/opensourcedesign/fonts/2f220059/gnu-freefont_freesans/FreeSans.otf?raw=true
-      // "https://raw.githubusercontent.com/generative-design/Code-Package-p5.js/gg4editor/01_P/P_3_2_1_01/data/FreeSans.otf",
-      const rawGitRef = `https://cdn.rawgit.com/${newProject.files[i].content.split(".com/")[1]}`;
-      sketchFile.content = rawGitRef;
+    return new Promise( (resolve, reject) => {
+      if( sketchFile.fileType == 'file' &&
+        sketchFile.name.endsWith(".svg") == true ){
+        // handle cases for svgs
 
-      // replace ref in sketch.js
-      newProject.files[1].content = newProject.files[1].content.replace(`'data/${sketchFile.name}'`, `'${rawGitRef}'`);      
-      // console.log(newProject.files[1].content)
-      return newProject;
-    } 
+        const rawGitRef = `https://cdn.rawgit.com/${newProject.files[i].url.split(".com/")[1]}`;
+        sketchFile.content = rawGitRef;
+        newProject.files[1].content = newProject.files[1].content.replace(`'data/${sketchFile.name}'`, `'${rawGitRef}'`);
+        
+        resolve(newProject)
+      } 
+    })
 
   })).catch((err) => {
     throw err
@@ -541,7 +565,7 @@ function getp5User() {
     return retrieveDataTemp('gg-github-retrieval.json')
       .then(formatAllSketches)
       .then(getAllSketchContent)
-      .then(linkToFontFiles)
+      // .then(linkToSvgFiles)
       // .then(saveToFile)
       .then(createProjectsInP5user)
       // .then(doNext);
