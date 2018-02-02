@@ -13,3 +13,5 @@ cert_chain.crt
 localhost.crt
 localhost.key
 privkey.pem
+server/gg-github-retrieval-full.json
+server/gg-github-retrieval.json
