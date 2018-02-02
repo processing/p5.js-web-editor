@@ -14,13 +14,17 @@ import Project from './models/project';
 // - to save time use local json file for now -
 const fs = require('fs');
 
-function retrieveDataTemp() {
+// gg-github-retrieval.json
+// gg-github-newProjects.json
+function retrieveDataTemp(fName) {
   return new Promise((resolve, reject) => {
-    let ggdata = __dirname + "/gg-github-retrieval.json"
+    let ggdata = __dirname + "/" + fName;
     resolve(JSON.parse(fs.readFileSync(ggdata)));
 
   })
 }
+
+
 
 
 const defaultHTML =
@@ -33,7 +37,7 @@ const defaultHTML =
 
     <!-- Generative Design Dependencies here -->
     <!-- GG Bundled -->
-    <script>https://rawgit.com/generative-design/Code-Package-p5.js/pre-release/libraries/gg-dep-bundle/gg-dep-bundle.js</script>
+    <script src="https://rawgit.com/generative-design/Code-Package-p5.js/pre-release/libraries/gg-dep-bundle/gg-dep-bundle.js"></script>
 
     <!-- Opentype -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/opentype.js/0.7.3/opentype.min.js"></script>
@@ -66,7 +70,8 @@ canvas {
 }
 `;
 
-
+const branchName = 'gg4editor';
+const branchRef = `?ref=${branchName}`;
 const clientId = process.env.GITHUB_ID;
 const clientSecret = process.env.GITHUB_SECRET;
 
@@ -85,7 +90,7 @@ function getCodePackage() {
   const sketchRootList = [];
   const options = {
     // url: 'https://api.github.com/repos/generative-design/Code-Package-p5.js/contents',
-    url: 'https://api.github.com/repos/generative-design/Code-Package-p5.js/contents?ref=gg4editor',
+    url: `https://api.github.com/repos/generative-design/Code-Package-p5.js/contents${branchRef}`,
     // url: 'https://api.github.com/repos/generative-design/Code-Package-p5.js/contents?ref=pre-release',
     qs: {
       client_id: clientId,
@@ -119,7 +124,7 @@ function getSketchDirectories(sketchRootList) {
       // console.log(sketches)
 
       const options = {
-        url: `https://api.github.com/repos/generative-design/Code-Package-p5.js/contents/${sketches.path}?ref=gg4editor`,
+        url: `https://api.github.com/repos/generative-design/Code-Package-p5.js/contents/${sketches.path}${branchRef}`,
         qs: {
           client_id: clientId,
           client_secret: clientSecret
@@ -165,7 +170,7 @@ function appendSketchItemLinks(sketchList) {
   return Q.all(sketchList.map((sketches) => {
     const options = {
       // url: `${sketches.url}?client_id=${clientId}&client_secret=${clientSecret}`,
-      url: `https://api.github.com/repos/generative-design/Code-Package-p5.js/contents/${sketches.path}?ref=gg4editor`,
+      url: `https://api.github.com/repos/generative-design/Code-Package-p5.js/contents/${sketches.path}${branchRef}`,
       qs: {
         client_id: clientId,
         client_secret: clientSecret
@@ -195,7 +200,7 @@ function getSketchItems(sketchList) {
       // console.log(item.path);
 
       const options = {
-        url: `https://api.github.com/repos/generative-design/Code-Package-p5.js/contents/${item.path}?ref=gg4editor`,
+        url: `https://api.github.com/repos/generative-design/Code-Package-p5.js/contents/${item.path}${branchRef}`,
         qs: {
           client_id: clientId,
           client_secret: clientSecret
@@ -401,11 +406,12 @@ function getAllSketchContent(newProjectList) {
     */
 
     if (sketchFile.fileType == 'file' &&
-      newProject.files[i].content != null &&
+      sketchFile.content != null &&
       sketchFile.name.endsWith(".html") !== true &&
       sketchFile.name.endsWith(".css") !== true &&
       sketchFile.name.endsWith(".mp4") !== true &&
-      sketchFile.name.endsWith(".ogg") !== true
+      sketchFile.name.endsWith(".ogg") !== true &&
+      sketchFile.name.endsWith(".otf") !== true && sketchFile.name.endsWith(".ttf") !== true
     ) {
 
       const options = {
@@ -418,6 +424,7 @@ function getAllSketchContent(newProjectList) {
         headers
       };
 
+      // console.log("CONVERT ME!")
       return rp(options).then((res) => {
         newProject.files[i].content = res;
         return newProject
@@ -426,6 +433,7 @@ function getAllSketchContent(newProjectList) {
       })
 
     }
+
   })).catch((err) => {
     throw err
   }))).then(() => {
@@ -433,6 +441,34 @@ function getAllSketchContent(newProjectList) {
     return newProjectList;
   })
 
+}
+
+function linkToFontFiles(newProjectList){
+  return Q.all(newProjectList.map(newProject => Q.all(newProject.files.map((sketchFile, i) => {
+
+    if( sketchFile.fileType == 'file' &&
+      sketchFile.content != null &&
+      sketchFile.name.endsWith(".otf") == true || sketchFile.name.endsWith(".ttf") == true ){
+      // handle cases for fonts
+      // create a rawgit cdn ==> replace ref in sketch.js with link to cdn
+      console.log(sketchFile.name);
+      // https://cdn.rawgit.com/opensourcedesign/fonts/2f220059/gnu-freefont_freesans/FreeSans.otf?raw=true
+      // "https://raw.githubusercontent.com/generative-design/Code-Package-p5.js/gg4editor/01_P/P_3_2_1_01/data/FreeSans.otf",
+      const rawGitRef = `https://cdn.rawgit.com/${newProject.files[i].content.split(".com/")[1]}`;
+      sketchFile.content = rawGitRef;
+
+      // replace ref in sketch.js
+      newProject.files[1].content = newProject.files[1].content.replace(`'data/${sketchFile.name}'`, `'${rawGitRef}'`);      
+      // console.log(newProject.files[1].content)
+      return newProject;
+    } 
+
+  })).catch((err) => {
+    throw err
+  }))).then(() => {
+
+    return newProjectList;
+  })
 }
 
 
@@ -496,10 +532,19 @@ function getp5User() {
     //   .then(createProjectsInP5user)
 
     // Run for Testing
-    return retrieveDataTemp()
+    // return retrieveDataTemp()
+    //   .then(formatAllSketches)
+    //   .then(getAllSketchContent)
+    //   .then(saveToFile)
+    //   .then(createProjectsInP5user)
+
+    return retrieveDataTemp('gg-github-retrieval.json')
       .then(formatAllSketches)
       .then(getAllSketchContent)
+      .then(linkToFontFiles)
+      // .then(saveToFile)
       .then(createProjectsInP5user)
+      // .then(doNext);
 
   })
 
@@ -518,14 +563,16 @@ output etc
 
 // checking function 
 function doNext(output) {
-  console.log(output.toString());
+  console.log( JSON.stringify(output));
   console.log(output.length);
 }
 
 // save output to terminal
 function saveToFile(output) {
-  console.log(JSON.stringify(output))
-  console.log(output.length)
+  // console.log(JSON.stringify(output))
+  // console.log(output.length)
+
+  fs.writeFileSync(`server/gg-github-newProjects.json`, JSON.stringify(output));
 }
 // test make without deleting all projects etc
 function make() {
@@ -538,11 +585,17 @@ function make() {
   //   .then(saveToFile)
   // .then(doNext);
 
-  return retrieveDataTemp()
-    .then(formatAllSketches)
-    .then(getAllSketchContent)
+  // return retrieveDataTemp('gg-github-newProjects.json')
+    // .then(formatAllSketches)
+    // .then(getAllSketchContent)
   // .then(saveToFile)
   // .then(createProjectsInP5user)
   // .then(doNext);
+
+  return retrieveDataTemp('gg-github-retrieval.json')
+    .then(formatAllSketches)
+    .then(getAllSketchContent)
+    .then(linkToFontFiles)
+    .then(saveToFile)
 }
 // make();
