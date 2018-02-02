@@ -16,3 +16,4 @@ privkey.pem
 server/gg-github-retrieval-full.json
 server/gg-github-retrieval.json
 server/gg-github-newProjects.json
+server/gg-github-raw.json

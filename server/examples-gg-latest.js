@@ -7,25 +7,8 @@ import eachSeries from 'async/eachSeries';
 import User from './models/user';
 import Project from './models/project';
 
-// TEMP: serve the gg-dep-bundle.js from rawgit cdn
-// https://cdn.rawgit.com/generative-design/Code-Package-p5.js/pre-release/libraries/gg-dep-bundle/gg-dep-bundle.js
-
-// TEMP: GATHER DATA FROM STATIC FILE
-// - to save time use local json file for now -
-const fs = require('fs');
-
-// gg-github-retrieval.json
-// gg-github-newProjects.json
-function retrieveDataTemp(fName) {
-  return new Promise((resolve, reject) => {
-    let ggdata = __dirname + "/" + fName;
-    resolve(JSON.parse(fs.readFileSync(ggdata)));
-
-  })
-}
-
-
-
+// TODO: change to true when testing!
+const testMake = false;
 
 const defaultHTML =
   `<!DOCTYPE html>
@@ -85,6 +68,37 @@ mongoose.connection.on('error', () => {
 });
 
 
+/* --- Helper functions --- */
+var flatten = function flatten(list) {
+  return list.reduce(function(a, b) {
+    return a.concat(Array.isArray(b) ? flatten(b) : b);
+  }, []);
+};
+
+const insert = function insert(main_string, ins_string, pos) {
+  if (typeof(pos) == "undefined") {
+    pos = 0;
+  }
+  if (typeof(ins_string) == "undefined") {
+    ins_string = '';
+  }
+  return main_string.slice(0, pos) + ins_string + main_string.slice(pos);
+}
+
+// TEMP: GATHER DATA FROM STATIC FILE
+// - to save time use local json file for now -
+const fs = require('fs');
+// gg-github-retrieval.json
+// gg-github-newProjects.json
+function retrieveDataTemp(fName) {
+  return new Promise((resolve, reject) => {
+    let ggdata = __dirname + "/" + fName;
+    resolve(JSON.parse(fs.readFileSync(ggdata)));
+
+  })
+}
+
+/* --- data processing --- */
 // 1. first get the top level directories P and M
 // https://api.github.com/repos/generative-design/Code-Package-p5.js/contents?ref=pre-release
 function getCodePackage() {
@@ -123,7 +137,6 @@ function getSketchDirectories(sketchRootList) {
 
   return Q.all(sketchRootList.map((sketches) => {
       // console.log(sketches)
-
       const options = {
         url: `https://api.github.com/repos/generative-design/Code-Package-p5.js/contents/${sketches.path}${branchRef}`,
         qs: {
@@ -133,7 +146,6 @@ function getSketchDirectories(sketchRootList) {
         method: 'GET',
         headers
       }
-
 
       return rp(options).then((res) => {
         let sketchDirs = flatten(JSON.parse(res));
@@ -159,11 +171,6 @@ function getSketchDirectories(sketchRootList) {
 
 }
 
-var flatten = function flatten(list) {
-  return list.reduce(function(a, b) {
-    return a.concat(Array.isArray(b) ? flatten(b) : b);
-  }, []);
-};
 
 // 3. For each sketch item in the sketchList, append the tree contents to each item
 function appendSketchItemLinks(sketchList) {
@@ -225,16 +232,6 @@ function getSketchItems(sketchList) {
     return sketchList[0]
   })
 
-}
-
-const insert = function insert(main_string, ins_string, pos) {
-  if (typeof(pos) == "undefined") {
-    pos = 0;
-  }
-  if (typeof(ins_string) == "undefined") {
-    ins_string = '';
-  }
-  return main_string.slice(0, pos) + ins_string + main_string.slice(pos);
 }
 
 function formatSketchForStorage(sketch, user) {
@@ -439,9 +436,7 @@ function getAllSketchContent(newProjectList) {
 
     } else{
       if(newProject.files[i].url) {
-
         return new Promise( (resolve, reject) => {
-          // pass
           console.log(sketchFile.name);
           // https://cdn.rawgit.com/opensourcedesign/fonts/2f220059/gnu-freefont_freesans/FreeSans.otf?raw=true
           // "https://raw.githubusercontent.com/generative-design/Code-Package-p5.js/gg4editor/01_P/P_3_2_1_01/data/FreeSans.otf",
@@ -450,11 +445,7 @@ function getAllSketchContent(newProjectList) {
           sketchFile.url = rawGitRef;
 
           // replace ref in sketch.js ==> should serve from the file?
-          // if(sketchFile.name.endsWith(".svg") == true){
-          //   newProject.files[1].content = newProject.files[1].content.replace(`'data/${sketchFile.name}'`, `'${rawGitRef}'`);      
-          // }
           // newProject.files[1].content = newProject.files[1].content.replace(`'data/${sketchFile.name}'`, `'${rawGitRef}'`);      
-          // console.log(newProject.files[1].content)
           resolve(newProject);
 
         })
@@ -514,6 +505,8 @@ function createProjectsInP5user(newProjectList) {
   });
 }
 
+
+/* --- Main --- */
 // remove any of the old files and add the new stuffs to the UI
 function getp5User() {
 
@@ -546,29 +539,33 @@ function getp5User() {
     });
 
 
-    // Run for production
-    // return getCodePackage()
-    //   .then(getSketchDirectories)
-    //   .then(appendSketchItemLinks)
-    //   .then(getSketchItems)
-    //   .then(formatAllSketches)
-    //   .then(getAllSketchContent)
-    //   .then(createProjectsInP5user)
+    if(testMake == true){
+      // Run for Testing
+      // return retrieveDataTemp()
+      //   .then(formatAllSketches)
+      //   .then(getAllSketchContent)
+      //   .then(saveToFile)
+      //   .then(createProjectsInP5user)
 
-    // Run for Testing
-    // return retrieveDataTemp()
-    //   .then(formatAllSketches)
-    //   .then(getAllSketchContent)
-    //   .then(saveToFile)
-    //   .then(createProjectsInP5user)
+      // Run for Testing
+      // return retrieveDataTemp('gg-github-retrieval.json')
+      //   .then(formatAllSketches)
+      //   .then(getAllSketchContent)
+      //   // .then(saveToFile)
+      //   .then(createProjectsInP5user)
 
-    return retrieveDataTemp('gg-github-retrieval.json')
+    } else {
+      // Run for production
+    return getCodePackage()
+      .then(getSketchDirectories)
+      .then(appendSketchItemLinks)
+      .then(getSketchItems)
+      .then(saveRetrievalToFile)
       .then(formatAllSketches)
       .then(getAllSketchContent)
-      // .then(linkToSvgFiles)
-      // .then(saveToFile)
+      .then(saveNewProjectsToFile)
       .then(createProjectsInP5user)
-      // .then(doNext);
+    }
 
   })
 
@@ -577,7 +574,7 @@ function getp5User() {
 getp5User();
 
 
-
+/* --- Tester Functions --- */
 /*** Tester Functions - IGNORE BELOW
 @ below are functions for testing
 output etc
@@ -592,30 +589,22 @@ function doNext(output) {
 }
 
 // save output to terminal
-function saveToFile(output) {
-  // console.log(JSON.stringify(output))
-  // console.log(output.length)
+function saveRetrievalToFile(output) {
+  return new Promise( (resolve, reject) => {
+    fs.writeFileSync(`server/gg-github-raw.json`, JSON.stringify(output));
+    resolve( output )
+  }) 
+}
 
-  fs.writeFileSync(`server/gg-github-newProjects.json`, JSON.stringify(output));
+// save output to terminal
+function saveNewProjectsToFile(output) {
+  return new Promise( (resolve, reject) => {
+    fs.writeFileSync(`server/gg-github-newProjects.json`, JSON.stringify(output));
+    resolve( output )
+  }) 
 }
 // test make without deleting all projects etc
 function make() {
-  console.log("doing the thing!")
-
-  // return getCodePackage()
-  //   .then(getSketchDirectories)
-  //   .then(appendSketchItemLinks)
-  //   .then(getSketchItems)
-  //   .then(saveToFile)
-  // .then(doNext);
-
-  // return retrieveDataTemp('gg-github-newProjects.json')
-    // .then(formatAllSketches)
-    // .then(getAllSketchContent)
-  // .then(saveToFile)
-  // .then(createProjectsInP5user)
-  // .then(doNext);
-
   return retrieveDataTemp('gg-github-retrieval.json')
     .then(formatAllSketches)
     .then(getAllSketchContent)
