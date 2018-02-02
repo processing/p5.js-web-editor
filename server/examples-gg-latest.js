@@ -13,6 +13,7 @@ import Project from './models/project';
 // TEMP: GATHER DATA FROM STATIC FILE
 // - to save time use local json file for now -
 const fs = require('fs');
+
 function retrieveDataTemp() {
   return new Promise((resolve, reject) => {
     let ggdata = __dirname + "/gg-github-retrieval.json"
@@ -334,7 +335,7 @@ function formatSketchForStorage(sketch, user) {
     // create a data folder if there are data in the project
     if (dataInProject.length > 0) {
       const objId = objectID().toHexString();
-      
+
       let dataFolderIndex = output.length
       output.push({
         name: 'data',
@@ -397,15 +398,15 @@ function getAllSketchContent(newProjectList) {
       sketchFile.name.endsWith(".mov") !== true &&
       sketchFile.name.endsWith(".otf") !== true &&
       sketchFile.name.endsWith(".ttf") !== true &&
-    */ 
+    */
 
-    if (sketchFile.fileType == 'file' && 
-      newProject.files[i].content != null && 
-      sketchFile.name.endsWith(".html") !== true && 
+    if (sketchFile.fileType == 'file' &&
+      newProject.files[i].content != null &&
+      sketchFile.name.endsWith(".html") !== true &&
       sketchFile.name.endsWith(".css") !== true &&
       sketchFile.name.endsWith(".mp4") !== true &&
       sketchFile.name.endsWith(".ogg") !== true
-      ) {
+    ) {
 
       const options = {
         url: newProject.files[i].content,
@@ -441,12 +442,12 @@ function createProjectsInP5user(newProjectList) {
     if (err) throw err;
 
     eachSeries(newProjectList, (newProject, sketchCallback) => {
-        
-        newProject.save((saveErr, savedProject) => {
-          if (saveErr) throw saveErr;
-          console.log(`Created a new project in p5 user: ${savedProject.name}`);
-          sketchCallback();
-        });
+
+      newProject.save((saveErr, savedProject) => {
+        if (saveErr) throw saveErr;
+        console.log(`Created a new project in p5 user: ${savedProject.name}`);
+        sketchCallback();
+      });
     })
   }).catch((err) => {
     throw err;
@@ -540,8 +541,8 @@ function make() {
   return retrieveDataTemp()
     .then(formatAllSketches)
     .then(getAllSketchContent)
-    // .then(saveToFile)
-    // .then(createProjectsInP5user)
-    // .then(doNext);
+  // .then(saveToFile)
+  // .then(createProjectsInP5user)
+  // .then(doNext);
 }
 // make();
