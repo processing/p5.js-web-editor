@@ -54,6 +54,7 @@ canvas {
 }
 `;
 
+// TODO: Change branchName if necessary
 const branchName = 'gg4editor';
 const branchRef = `?ref=${branchName}`;
 const clientId = process.env.GITHUB_ID;
