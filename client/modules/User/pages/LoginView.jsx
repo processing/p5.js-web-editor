@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { reduxForm } from 'redux-form';
 import { Link, browserHistory } from 'react-router';
 import InlineSVG from 'react-inlinesvg';
@@ -27,6 +28,10 @@ class LoginView extends React.Component {
   }
 
   render() {
+    if (this.props.user.authenticated) {
+      this.gotoHomePage();
+      return null;
+    }
     return (
       <div className="form-container">
         <div className="form-container__header">
@@ -70,7 +75,16 @@ function mapDispatchToProps() {
 }
 
 LoginView.propTypes = {
-  previousPath: PropTypes.string.isRequired
+  previousPath: PropTypes.string.isRequired,
+  user: {
+    authenticated: PropTypes.bool
+  }
+};
+
+LoginView.defaultProps = {
+  user: {
+    authenticated: false
+  }
 };
 
 export default reduxForm({

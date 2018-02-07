@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { bindActionCreators } from 'redux';
 import axios from 'axios';
 import { Link, browserHistory } from 'react-router';
@@ -27,6 +28,10 @@ class SignupView extends React.Component {
   }
 
   render() {
+    if (this.props.user.authenticated) {
+      this.gotoHomePage();
+      return null;
+    }
     return (
       <div className="form-container">
         <div className="form-container__header">
@@ -84,7 +89,16 @@ function onSubmitFail(errors) {
 }
 
 SignupView.propTypes = {
-  previousPath: PropTypes.string.isRequired
+  previousPath: PropTypes.string.isRequired,
+  user: {
+    authenticated: PropTypes.bool
+  }
+};
+
+SignupView.defaultProps = {
+  user: {
+    authenticated: false
+  }
 };
 
 export default reduxForm({

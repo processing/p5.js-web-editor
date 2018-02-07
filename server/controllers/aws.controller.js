@@ -17,7 +17,8 @@ const client = s3.createClient({
   },
 });
 
-const s3Bucket = `https://s3-${process.env.AWS_REGION}.amazonaws.com/${process.env.S3_BUCKET}/`;
+const s3Bucket = process.env.S3_BUCKET_URL_BASE ||
+                 `https://s3-${process.env.AWS_REGION}.amazonaws.com/${process.env.S3_BUCKET}/`;
 
 function getExtension(filename) {
   const i = filename.lastIndexOf('.');
@@ -118,11 +119,9 @@ export function listObjectsInS3ForUser(req, res) {
       }
     };
     let assets = [];
-    const list = client.listObjects(params)
+    client.listObjects(params)
       .on('data', (data) => {
-        assets = assets.concat(data["Contents"].map((object) => {
-          return { key: object["Key"], size: object["Size"] };
-        }));
+        assets = assets.concat(data.Contents.map(object => ({ key: object.Key, size: object.Size })));
       })
       .on('end', () => {
         const projectAssets = [];
@@ -131,7 +130,7 @@ export function listObjectsInS3ForUser(req, res) {
             project.files.forEach((file) => {
               if (!file.url) return;
 
-              const foundAsset = assets.find((asset) => file.url.includes(asset.key));
+              const foundAsset = assets.find(asset => file.url.includes(asset.key));
               if (!foundAsset) return;
               projectAssets.push({
                 name: file.name,
@@ -143,7 +142,7 @@ export function listObjectsInS3ForUser(req, res) {
               });
             });
           });
-          res.json({assets: projectAssets});
+          res.json({ assets: projectAssets });
         });
       });
   });

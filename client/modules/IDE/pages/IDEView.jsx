@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -15,7 +16,7 @@ import NewFolderModal from '../components/NewFolderModal';
 import ShareModal from '../components/ShareModal';
 import KeyboardShortcutModal from '../components/KeyboardShortcutModal';
 import ErrorModal from '../components/ErrorModal';
-import HelpModal from '../components/HelpModal';
+import HTTPSModal from '../components/HTTPSModal';
 import Nav from '../../../components/Nav';
 import Console from '../components/Console';
 import Toast from '../components/Toast';
@@ -165,18 +166,15 @@ class IDEView extends React.Component {
     } else if (e.keyCode === 13 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
       e.preventDefault();
       e.stopPropagation();
-      this.props.clearConsole();
-      this.props.startSketchAndRefresh();
+      this.props.startSketch();
+      // 50 === 2
     } else if (e.keyCode === 50 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac)) && e.shiftKey) {
       e.preventDefault();
-      this.props.setTextOutput(false);
-      this.props.setGridOutput(false);
-      this.props.setSoundOutput(false);
+      this.props.setAllAccessibleOutput(false);
+      // 49 === 1
     } else if (e.keyCode === 49 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac)) && e.shiftKey) {
       e.preventDefault();
-      this.props.setTextOutput(true);
-      this.props.setGridOutput(true);
-      this.props.setSoundOutput(true);
+      this.props.setAllAccessibleOutput(true);
     }
   }
 
@@ -213,26 +211,26 @@ class IDEView extends React.Component {
           cloneProject={this.props.cloneProject}
           project={this.props.project}
           logoutUser={this.props.logoutUser}
+          startSketch={this.props.startSketch}
           stopSketch={this.props.stopSketch}
           showShareModal={this.props.showShareModal}
           showErrorModal={this.props.showErrorModal}
           unsavedChanges={this.props.ide.unsavedChanges}
           warnIfUnsavedChanges={this.warnIfUnsavedChanges}
+          showKeyboardShortcutModal={this.props.showKeyboardShortcutModal}
+          cmController={this.cmController}
+          setAllAccessibleOutput={this.props.setAllAccessibleOutput}
         />
         <Toolbar
           className="Toolbar"
           isPlaying={this.props.ide.isPlaying}
           stopSketch={this.props.stopSketch}
-          startAccessibleOutput={this.props.startAccessibleOutput}
-          stopAccessibleOutput={this.props.stopAccessibleOutput}
           projectName={this.props.project.name}
           setProjectName={this.props.setProjectName}
           showEditProjectName={this.props.showEditProjectName}
           hideEditProjectName={this.props.hideEditProjectName}
           openPreferences={this.props.openPreferences}
           preferencesIsVisible={this.props.ide.preferencesIsVisible}
-          serveSecure={this.props.project.serveSecure}
-          setServeSecure={this.props.setServeSecure}
           setTextOutput={this.props.setTextOutput}
           setGridOutput={this.props.setGridOutput}
           setSoundOutput={this.props.setSoundOutput}
@@ -241,35 +239,43 @@ class IDEView extends React.Component {
           infiniteLoop={this.props.ide.infiniteLoop}
           autorefresh={this.props.preferences.autorefresh}
           setAutorefresh={this.props.setAutorefresh}
-          startSketchAndRefresh={this.props.startSketchAndRefresh}
+          startSketch={this.props.startSketch}
+          startAccessibleSketch={this.props.startAccessibleSketch}
           saveProject={this.props.saveProject}
           currentUser={this.props.user.username}
-          clearConsole={this.props.clearConsole}
           showHelpModal={this.props.showHelpModal}
         />
-        <Preferences
-          isVisible={this.props.ide.preferencesIsVisible}
-          closePreferences={this.props.closePreferences}
-          fontSize={this.props.preferences.fontSize}
-          indentationAmount={this.props.preferences.indentationAmount}
-          setIndentation={this.props.setIndentation}
-          indentWithSpace={this.props.indentWithSpace}
-          indentWithTab={this.props.indentWithTab}
-          isTabIndent={this.props.preferences.isTabIndent}
-          setFontSize={this.props.setFontSize}
-          autosave={this.props.preferences.autosave}
-          setAutosave={this.props.setAutosave}
-          lintWarning={this.props.preferences.lintWarning}
-          setLintWarning={this.props.setLintWarning}
-          textOutput={this.props.preferences.textOutput}
-          gridOutput={this.props.preferences.gridOutput}
-          soundOutput={this.props.preferences.soundOutput}
-          setTextOutput={this.props.setTextOutput}
-          setGridOutput={this.props.setGridOutput}
-          setSoundOutput={this.props.setSoundOutput}
-          theme={this.props.preferences.theme}
-          setTheme={this.props.setTheme}
-        />
+        {this.props.ide.preferencesIsVisible &&
+          <Overlay
+            title="Settings"
+            ariaLabel="settings"
+            closeOverlay={this.props.closePreferences}
+          >
+            <Preferences
+              fontSize={this.props.preferences.fontSize}
+              indentationAmount={this.props.preferences.indentationAmount}
+              setIndentation={this.props.setIndentation}
+              indentWithSpace={this.props.indentWithSpace}
+              indentWithTab={this.props.indentWithTab}
+              isTabIndent={this.props.preferences.isTabIndent}
+              setFontSize={this.props.setFontSize}
+              autosave={this.props.preferences.autosave}
+              setAutosave={this.props.setAutosave}
+              lintWarning={this.props.preferences.lintWarning}
+              setLintWarning={this.props.setLintWarning}
+              textOutput={this.props.preferences.textOutput}
+              gridOutput={this.props.preferences.gridOutput}
+              soundOutput={this.props.preferences.soundOutput}
+              setTextOutput={this.props.setTextOutput}
+              setGridOutput={this.props.setGridOutput}
+              setSoundOutput={this.props.setSoundOutput}
+              theme={this.props.preferences.theme}
+              setTheme={this.props.setTheme}
+              serveSecure={this.props.project.serveSecure}
+              setServeSecure={this.props.setServeSecure}
+            />
+          </Overlay>
+        }
         <div className="editor-preview-container">
           <SplitPane
             split="vertical"
@@ -341,6 +347,11 @@ class IDEView extends React.Component {
                   collapseSidebar={this.props.collapseSidebar}
                   isUserOwner={this.isUserOwner()}
                   clearConsole={this.props.clearConsole}
+                  consoleEvents={this.props.console}
+                  showRuntimeErrorWarning={this.props.showRuntimeErrorWarning}
+                  hideRuntimeErrorWarning={this.props.hideRuntimeErrorWarning}
+                  runtimeErrorWarningVisible={this.props.ide.runtimeErrorWarningVisible}
+                  provideController={(ctl) => { this.cmController = ctl; }}
                 />
                 <Console
                   consoleEvents={this.props.console}
@@ -357,25 +368,23 @@ class IDEView extends React.Component {
                 <div className="preview-frame-overlay" ref={(element) => { this.overlay = element; }}>
                 </div>
                 <div>
-                  {(() => {
-                    if (
+                  {(
                       (
                         (this.props.preferences.textOutput ||
-                         this.props.preferences.gridOutput ||
-                         this.props.preferences.soundOutput
-                        ) && this.props.ide.isPlaying
-                      ) || this.props.ide.isAccessibleOutputPlaying) {
-                      return (
-                        <AccessibleOutput
-                          isPlaying={this.props.ide.isPlaying}
-                          previewIsRefreshing={this.props.ide.previewIsRefreshing}
-                          textOutput={this.props.preferences.textOutput}
-                          gridOutput={this.props.preferences.gridOutput}
-                        />
-                      );
-                    }
-                    return '';
-                  })()}
+                          this.props.preferences.gridOutput ||
+                          this.props.preferences.soundOutput
+                        ) &&
+                          this.props.ide.isPlaying
+                      ) ||
+                        this.props.ide.isAccessibleOutputPlaying
+                    ) &&
+                      <AccessibleOutput
+                        isPlaying={this.props.ide.isPlaying}
+                        previewIsRefreshing={this.props.ide.previewIsRefreshing}
+                        textOutput={this.props.preferences.textOutput}
+                        gridOutput={this.props.preferences.gridOutput}
+                      />
+                  }
                 </div>
                 <PreviewFrame
                   htmlFile={this.props.htmlFile}
@@ -401,132 +410,94 @@ class IDEView extends React.Component {
             </SplitPane>
           </SplitPane>
         </div>
-        {(() => {
-          if (this.props.ide.modalIsVisible) {
-            return (
-              <NewFileModal
-                canUploadMedia={this.props.user.authenticated}
-                closeModal={this.props.closeNewFileModal}
-                createFile={this.props.createFile}
-              />
-            );
-          }
-          return '';
-        })()}
-        {(() => {
-          if (this.props.ide.newFolderModalVisible) {
-            return (
-              <NewFolderModal
-                closeModal={this.props.closeNewFolderModal}
-                createFolder={this.props.createFolder}
-              />
-            );
-          }
-          return '';
-        })()}
-        {(() => { // eslint-disable-line
-          if (this.props.location.pathname.match(/sketches$/)) {
-            return (
-              <Overlay
-                ariaLabel="project list"
-                title="Open a Sketch"
-                previousPath={this.props.ide.previousPath}
-              >
-                <SketchList
-                  username={this.props.params.username}
-                  user={this.props.user}
-                />
-              </Overlay>
-            );
-          }
-        })()}
-        {(() => { // eslint-disable-line
-          if (this.props.location.pathname.match(/assets$/)) {
-            return (
-              <Overlay
-                title="Assets"
-                ariaLabel="asset list"
-                previousPath={this.props.ide.previousPath}
-              >
-                <AssetList
-                  username={this.props.params.username}
-                  user={this.props.user}
-                />
-              </Overlay>
-            );
-          }
-        })()}
-        {(() => { // eslint-disable-line
-          if (this.props.location.pathname === '/about') {
-            return (
-              <Overlay
-                previousPath={this.props.ide.previousPath}
-                title="Welcome"
-                ariaLabel="about"
-              >
-                <About previousPath={this.props.ide.previousPath} />
-              </Overlay>
-            );
-          }
-        })()}
-        {(() => { // eslint-disable-line
-          if (this.props.ide.shareModalVisible) {
-            return (
-              <Overlay
-                title="Share Sketch"
-                ariaLabel="share"
-                closeOverlay={this.props.closeShareModal}
-              >
-                <ShareModal
-                  projectId={this.props.project.id}
-                  ownerUsername={this.props.project.owner.username}
-                />
-              </Overlay>
-            );
-          }
-        })()}
-        {(() => { // eslint-disable-line
-          if (this.props.ide.keyboardShortcutVisible) {
-            return (
-              <Overlay
-                title="Keyboard Shortcuts"
-                ariaLabel="keyboard shortcuts"
-                closeOverlay={this.props.closeKeyboardShortcutModal}
-              >
-                <KeyboardShortcutModal />
-              </Overlay>
-            );
-          }
-        })()}
-        {(() => { // eslint-disable-line
-          if (this.props.ide.errorType) {
-            return (
-              <Overlay
-                title="Error"
-                ariaLabel="error"
-                closeOverlay={this.props.hideErrorModal}
-              >
-                <ErrorModal
-                  type={this.props.ide.errorType}
-                />
-              </Overlay>
-            );
-          }
-        })()}
-        {(() => { // eslint-disable-line
-          if (this.props.ide.helpType) {
-            return (
-              <Overlay>
-                <HelpModal
-                  type={this.props.ide.helpType}
-                  closeModal={this.props.hideHelpModal}
-                />
-              </Overlay>
-            );
-          }
-        })()}
+        { this.props.ide.modalIsVisible &&
+          <NewFileModal
+            canUploadMedia={this.props.user.authenticated}
+            closeModal={this.props.closeNewFileModal}
+            createFile={this.props.createFile}
+          />
+        }
+        { this.props.ide.newFolderModalVisible &&
+          <NewFolderModal
+            closeModal={this.props.closeNewFolderModal}
+            createFolder={this.props.createFolder}
+          />
+        }
+        { this.props.location.pathname.match(/sketches$/) &&
+          <Overlay
+            ariaLabel="project list"
+            title="Open a Sketch"
+            previousPath={this.props.ide.previousPath}
+          >
+            <SketchList
+              username={this.props.params.username}
+              user={this.props.user}
+            />
+          </Overlay>
+        }
+        { this.props.location.pathname.match(/assets$/) &&
+          <Overlay
+            title="Assets"
+            ariaLabel="asset list"
+            previousPath={this.props.ide.previousPath}
+          >
+            <AssetList
+              username={this.props.params.username}
+              user={this.props.user}
+            />
+          </Overlay>
+        }
+        { this.props.location.pathname === '/about' &&
+          <Overlay
+            previousPath={this.props.ide.previousPath}
+            title="Welcome"
+            ariaLabel="about"
+          >
+            <About previousPath={this.props.ide.previousPath} />
+          </Overlay>
+        }
+        { this.props.ide.shareModalVisible &&
+          <Overlay
+            title="Share This Sketch"
+            ariaLabel="share"
+            closeOverlay={this.props.closeShareModal}
+          >
+            <ShareModal
+              projectId={this.props.project.id}
+              projectName={this.props.project.name}
+              ownerUsername={this.props.project.owner.username}
+            />
+          </Overlay>
+        }
+        { this.props.ide.keyboardShortcutVisible &&
+          <Overlay
+            title="Keyboard Shortcuts"
+            ariaLabel="keyboard shortcuts"
+            closeOverlay={this.props.closeKeyboardShortcutModal}
+          >
+            <KeyboardShortcutModal />
+          </Overlay>
+        }
+        { this.props.ide.errorType &&
+          <Overlay
+            title="Error"
+            ariaLabel="error"
+            closeOverlay={this.props.hideErrorModal}
+          >
+            <ErrorModal
+              type={this.props.ide.errorType}
+            />
+          </Overlay>
+        }
+        { this.props.ide.helpType &&
+          <Overlay
+            title="Serve over HTTPS"
+            closeOverlay={this.props.hideHelpModal}
+          >
+            <HTTPSModal />
+          </Overlay>
+        }
       </div>
-
     );
   }
 }
@@ -569,11 +540,10 @@ IDEView.propTypes = {
     previousPath: PropTypes.string.isRequired,
     justOpenedProject: PropTypes.bool.isRequired,
     errorType: PropTypes.string,
-    helpType: PropTypes.string
+    helpType: PropTypes.string,
+    runtimeErrorWarningVisible: PropTypes.bool.isRequired,
   }).isRequired,
   stopSketch: PropTypes.func.isRequired,
-  startAccessibleOutput: PropTypes.func.isRequired,
-  stopAccessibleOutput: PropTypes.func.isRequired,
   project: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string.isRequired,
@@ -614,6 +584,7 @@ IDEView.propTypes = {
   setTextOutput: PropTypes.func.isRequired,
   setGridOutput: PropTypes.func.isRequired,
   setSoundOutput: PropTypes.func.isRequired,
+  setAllAccessibleOutput: PropTypes.func.isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -672,7 +643,6 @@ IDEView.propTypes = {
   setUnsavedChanges: PropTypes.func.isRequired,
   setTheme: PropTypes.func.isRequired,
   setAutorefresh: PropTypes.func.isRequired,
-  startSketchAndRefresh: PropTypes.func.isRequired,
   endSketchRefresh: PropTypes.func.isRequired,
   startRefreshSketch: PropTypes.func.isRequired,
   setBlobUrl: PropTypes.func.isRequired,
@@ -687,7 +657,11 @@ IDEView.propTypes = {
   clearPersistedState: PropTypes.func.isRequired,
   persistState: PropTypes.func.isRequired,
   showHelpModal: PropTypes.func.isRequired,
-  hideHelpModal: PropTypes.func.isRequired
+  hideHelpModal: PropTypes.func.isRequired,
+  showRuntimeErrorWarning: PropTypes.func.isRequired,
+  hideRuntimeErrorWarning: PropTypes.func.isRequired,
+  startSketch: PropTypes.func.isRequired,
+  startAccessibleSketch: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

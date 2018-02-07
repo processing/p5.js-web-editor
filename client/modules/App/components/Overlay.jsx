@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import InlineSVG from 'react-inlinesvg';
 import { browserHistory } from 'react-router';
 
@@ -57,14 +58,15 @@ Overlay.propTypes = {
   closeOverlay: PropTypes.func,
   title: PropTypes.string,
   ariaLabel: PropTypes.string,
-  previousPath: PropTypes.string.isRequired
+  previousPath: PropTypes.string
 };
 
 Overlay.defaultProps = {
   children: null,
   title: 'Modal',
   closeOverlay: null,
-  ariaLabel: 'modal'
+  ariaLabel: 'modal',
+  previousPath: '/'
 };
 
 export default Overlay;

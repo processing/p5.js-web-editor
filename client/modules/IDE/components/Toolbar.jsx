@@ -1,14 +1,13 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { Link } from 'react-router';
 import classNames from 'classnames';
 import InlineSVG from 'react-inlinesvg';
 
 const playUrl = require('../../../images/play.svg');
-const logoUrl = require('../../../images/p5js-logo.svg');
 const stopUrl = require('../../../images/stop.svg');
 const preferencesUrl = require('../../../images/preferences.svg');
 const editProjectNameUrl = require('../../../images/pencil.svg');
-const helpUrl = require('../../../images/help.svg');
 
 class Toolbar extends React.Component {
   constructor(props) {
@@ -59,14 +58,9 @@ class Toolbar extends React.Component {
 
     return (
       <div className="toolbar">
-        <InlineSVG className="toolbar__logo" src={logoUrl} alt="p5js Logo" />
         <button
           className="toolbar__play-sketch-button"
-          onClick={() => {
-            this.props.clearConsole();
-            this.props.startAccessibleOutput();
-            this.props.startSketchAndRefresh();
-          }}
+          onClick={this.props.startAccessibleSketch}
           aria-label="play sketch"
           disabled={this.props.infiniteLoop}
         >
@@ -74,10 +68,7 @@ class Toolbar extends React.Component {
         </button>
         <button
           className={playButtonClass}
-          onClick={() => {
-            this.props.clearConsole();
-            this.props.startSketchAndRefresh();
-          }}
+          onClick={this.props.startSketch}
           aria-label="play only visual sketch"
           disabled={this.props.infiniteLoop}
         >
@@ -85,7 +76,7 @@ class Toolbar extends React.Component {
         </button>
         <button
           className={stopButtonClass}
-          onClick={() => { this.props.stopAccessibleOutput(); this.props.stopSketch(); }}
+          onClick={this.props.stopSketch}
           aria-label="stop sketch"
         >
           <InlineSVG src={stopUrl} alt="Stop Sketch" />
@@ -103,30 +94,6 @@ class Toolbar extends React.Component {
             Auto-refresh
           </label>
         </div>
-        {
-          this.props.currentUser == null ?
-            null :
-            <div className="toolbar__serve-secure">
-              <input
-                id="serve-secure"
-                type="checkbox"
-                checked={this.props.project.serveSecure || false}
-                onChange={(event) => {
-                  this.props.setServeSecure(event.target.checked);
-                }}
-              />
-              <label htmlFor="serve-secure" className="toolbar__serve-secure-label">
-                HTTPS
-              </label>
-              <button
-                className="toolbar__serve-secure-help"
-                onClick={() => this.props.showHelpModal('serveSecure')}
-                aria-label="help"
-              >
-                <InlineSVG src={helpUrl} alt="Help" />
-              </button>
-            </div>
-        }
         <div className={nameContainerClass}>
           <a
             className="toolbar__project-name"
@@ -187,8 +154,6 @@ Toolbar.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   preferencesIsVisible: PropTypes.bool.isRequired,
   stopSketch: PropTypes.func.isRequired,
-  startAccessibleOutput: PropTypes.func.isRequired,
-  stopAccessibleOutput: PropTypes.func.isRequired,
   setProjectName: PropTypes.func.isRequired,
   openPreferences: PropTypes.func.isRequired,
   owner: PropTypes.shape({
@@ -198,19 +163,16 @@ Toolbar.propTypes = {
     name: PropTypes.string.isRequired,
     isEditingName: PropTypes.bool,
     id: PropTypes.string,
-    serveSecure: PropTypes.bool,
   }).isRequired,
   showEditProjectName: PropTypes.func.isRequired,
   hideEditProjectName: PropTypes.func.isRequired,
-  showHelpModal: PropTypes.func.isRequired,
   infiniteLoop: PropTypes.bool.isRequired,
   autorefresh: PropTypes.bool.isRequired,
   setAutorefresh: PropTypes.func.isRequired,
-  setServeSecure: PropTypes.func.isRequired,
-  startSketchAndRefresh: PropTypes.func.isRequired,
+  startSketch: PropTypes.func.isRequired,
+  startAccessibleSketch: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
-  currentUser: PropTypes.string,
-  clearConsole: PropTypes.func.isRequired
+  currentUser: PropTypes.string
 };
 
 Toolbar.defaultProps = {

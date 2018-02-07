@@ -19,7 +19,7 @@ module.exports = {
 		publicPath: '/dist/'
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['.js', '.jsx'],
     modules: [
       'client',
       'node_modules'
@@ -34,14 +34,15 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       'process.env': {
-        API_URL: '"' + process.env.API_URL + '"',
+        API_URL: process.env.API_URL ? '"' + process.env.API_URL + '"' : undefined,
         CLIENT: JSON.stringify(true),
         FORCE_TO_HTTPS: process.env.FORCE_TO_HTTPS === 'true' ?
           JSON.stringify(true) :
           JSON.stringify(false),
         'NODE_ENV': JSON.stringify('development'),
-        'S3_BUCKET': '"' + process.env.S3_BUCKET + '"',
-        'AWS_REGION': '"' + process.env.AWS_REGION + '"',
+        'S3_BUCKET': process.env.S3_BUCKET ? '"' + process.env.S3_BUCKET + '"' : undefined,
+        'S3_BUCKET_URL_BASE': process.env.S3_BUCKET_URL_BASE ? '"' + process.env.S3_BUCKET_URL_BASE + '"' : undefined,
+        'AWS_REGION': process.env.AWS_REGION ? '"' + process.env.AWS_REGION + '"': undefined
       }
     })
   ],
@@ -50,19 +51,19 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: [/node_modules/, /.+\.config.js/],
-        loaders: ['babel', 'eslint-loader']
+        loaders: ['babel-loader', 'eslint-loader']
       },
       {
         test: /\.scss$/,
-        loaders: ['style', 'css', 'sass']
+        loaders: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
         test: /\.(svg|mp3)$/,
-        loader: 'file'
+        loader: 'file-loader'
       },
       {
           test: /fonts\/.*\.(eot|svg|ttf|woff|woff2)$/,
-          loader: 'file'
+          loader: 'file-loader'
       }
     ],
   },

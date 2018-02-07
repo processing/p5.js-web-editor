@@ -1,23 +1,25 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import ReactDOM from 'react-dom';
 // import escapeStringRegexp from 'escape-string-regexp';
 import srcDoc from 'srcdoc-polyfill';
 
 import loopProtect from 'loop-protect';
+import { JSHINT } from 'jshint';
 import { getBlobUrl } from '../actions/files';
 import { resolvePathToFile } from '../../../../server/utils/filePath';
+import {
+  MEDIA_FILE_REGEX,
+  MEDIA_FILE_QUOTED_REGEX,
+  STRING_REGEX,
+  TEXT_FILE_REGEX,
+  EXTERNAL_LINK_REGEX,
+  NOT_EXTERNAL_LINK_REGEX
+} from '../../../../server/utils/fileUtils';
 
 const decomment = require('decomment');
 
 const startTag = '@fs-';
-// eslint-disable-next-line max-len
-const MEDIA_FILE_REGEX = /^('|")(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov|otf|ttf|m4a)('|")$/i;
-// eslint-disable-next-line max-len
-const MEDIA_FILE_REGEX_NO_QUOTES = /^(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov|otf|ttf|m4a)$/i;
-const STRING_REGEX = /(['"])((\\\1|.)*?)\1/gm;
-const TEXT_FILE_REGEX = /(.+\.json$|.+\.txt$|.+\.csv$)/i;
-const NOT_EXTERNAL_LINK_REGEX = /^(?!(http:\/\/|https:\/\/))/;
-const EXTERNAL_LINK_REGEX = /^(http:\/\/|https:\/\/)/;
 
 function getAllScriptOffsets(htmlFile) {
   const offs = [];
@@ -88,6 +90,7 @@ class PreviewFrame extends React.Component {
     }
 
     window.addEventListener('message', (messageEvent) => {
+      console.log(messageEvent);
       messageEvent.data.forEach((message) => {
         const args = message.arguments;
         Object.keys(args).forEach((key) => {
@@ -150,6 +153,30 @@ class PreviewFrame extends React.Component {
   clearPreview() {
     const doc = this.iframeElement;
     doc.srcDoc = '';
+  }
+
+  addLoopProtect(sketchDoc) {
+    const scriptsInHTML = sketchDoc.getElementsByTagName('script');
+    const scriptsInHTMLArray = Array.prototype.slice.call(scriptsInHTML);
+    scriptsInHTMLArray.forEach((script) => {
+      script.innerHTML = this.jsPreprocess(script.innerHTML); // eslint-disable-line
+    });
+  }
+
+  jsPreprocess(jsText) {
+    let newContent = jsText;
+    // check the code for js errors before sending it to strip comments
+    // or loops.
+    JSHINT(newContent);
+
+    if (JSHINT.errors.length === 0) {
+      newContent = decomment(newContent, {
+        ignore: /noprotect/g,
+        space: true
+      });
+      newContent = loopProtect(newContent);
+    }
+    return newContent;
   }
 
   injectLocalFiles() {
@@ -227,7 +254,7 @@ class PreviewFrame extends React.Component {
     scriptOffs = getAllScriptOffsets(sketchDocString);
     const consoleErrorsScript = sketchDoc.createElement('script');
     consoleErrorsScript.innerHTML = hijackConsoleErrorsScript(JSON.stringify(scriptOffs));
-    // sketchDoc.head.appendChild(consoleErrorsScript);
+    this.addLoopProtect(sketchDoc);
     sketchDoc.head.insertBefore(consoleErrorsScript, sketchDoc.head.firstElement);
 
     return `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
@@ -237,9 +264,9 @@ class PreviewFrame extends React.Component {
     const elements = sketchDoc.querySelectorAll(`[${attr}]`);
     const elementsArray = Array.prototype.slice.call(elements);
     elementsArray.forEach((element) => {
-      if (element.getAttribute(attr).match(MEDIA_FILE_REGEX_NO_QUOTES)) {
+      if (element.getAttribute(attr).match(MEDIA_FILE_REGEX)) {
         const resolvedFile = resolvePathToFile(element.getAttribute(attr), files);
-        if (resolvedFile) {
+        if (resolvedFile && resolvedFile.url) {
           element.setAttribute(attr, resolvedFile.url);
         }
       }
@@ -265,7 +292,7 @@ class PreviewFrame extends React.Component {
     let jsFileStrings = content.match(STRING_REGEX);
     jsFileStrings = jsFileStrings || [];
     jsFileStrings.forEach((jsFileString) => {
-      if (jsFileString.match(MEDIA_FILE_REGEX)) {
+      if (jsFileString.match(MEDIA_FILE_QUOTED_REGEX)) {
         const filePath = jsFileString.substr(1, jsFileString.length - 2);
         const resolvedFile = resolvePathToFile(filePath, files);
         if (resolvedFile) {
@@ -280,12 +307,8 @@ class PreviewFrame extends React.Component {
         }
       }
     });
-    newContent = decomment(newContent, {
-      ignore: /noprotect/g,
-      space: true
-    });
-    newContent = loopProtect(newContent);
-    return newContent;
+
+    return this.jsPreprocess(newContent);
   }
 
   resolveCSSLinksInString(content, files) {
@@ -293,7 +316,7 @@ class PreviewFrame extends React.Component {
     let cssFileStrings = content.match(STRING_REGEX);
     cssFileStrings = cssFileStrings || [];
     cssFileStrings.forEach((cssFileString) => {
-      if (cssFileString.match(MEDIA_FILE_REGEX)) {
+      if (cssFileString.match(MEDIA_FILE_QUOTED_REGEX)) {
         const filePath = cssFileString.substr(1, cssFileString.length - 2);
         const resolvedFile = resolvePathToFile(filePath, files);
         if (resolvedFile) {
@@ -385,7 +408,7 @@ class PreviewFrame extends React.Component {
         frameBorder="0"
         title="sketch output"
         ref={(element) => { this.iframeElement = element; }}
-        sandbox="allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-forms"
+        sandbox="allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-forms allow-modals"
       />
     );
   }

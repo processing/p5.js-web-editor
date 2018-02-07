@@ -1,10 +1,13 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import Dropzone from 'dropzone';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as UploaderActions from '../actions/uploader';
+import { fileExtensionsAndMimeTypes } from '../../../../server/utils/fileUtils';
 
-const s3Bucket = `https://s3-${process.env.AWS_REGION}.amazonaws.com/${process.env.S3_BUCKET}/`;
+const s3Bucket = process.env.S3_BUCKET_URL_BASE ||
+                 `https://s3-${process.env.AWS_REGION}.amazonaws.com/${process.env.S3_BUCKET}/`;
 
 class FileUploader extends React.Component {
   componentDidMount() {
@@ -25,11 +28,7 @@ class FileUploader extends React.Component {
       maxThumbnailFilesize: 8, // 8 mb
       thumbnailWidth: 200,
       thumbnailHeight: 200,
-      // TODO what is a good list of MIME types????
-      acceptedFiles: `image/*,audio/*,text/javascript,text/html,text/css,
-      application/json,application/x-font-ttf,application/x-font-truetype,
-      text/plain,text/csv,.obj,video/webm,video/ogg,video/quicktime,video/mp4,
-      .otf,.ttf`,
+      acceptedFiles: fileExtensionsAndMimeTypes,
       dictDefaultMessage: 'Drop files here to upload or click to use the file browser',
       accept: this.props.dropzoneAcceptCallback.bind(this, userId),
       sending: this.props.dropzoneSendingCallback,

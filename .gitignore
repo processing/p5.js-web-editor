@@ -1,5 +1,6 @@
 .DS_Store
 .env
+.vscode/
 node_modules/
 npm-debug.log
 dump.rdb
@@ -12,8 +13,12 @@ alpha_editor_p5js_org.crt
 cert_chain.crt
 localhost.crt
 localhost.key
+<<<<<<< HEAD
 privkey.pem
 server/gg-github-retrieval-full.json
 server/gg-github-retrieval.json
 server/gg-github-newProjects.json
 server/gg-github-raw.json
+=======
+privkey.pem
+>>>>>>> upstream/master

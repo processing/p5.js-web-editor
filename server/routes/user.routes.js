@@ -1,24 +1,25 @@
 import { Router } from 'express';
 import * as UserController from '../controllers/user.controller';
+import isAuthenticated from '../utils/isAuthenticated';
 
 const router = new Router();
 
-router.route('/signup').post(UserController.createUser);
+router.post('/signup', UserController.createUser);
 
-router.route('/signup/duplicate_check').get(UserController.duplicateUserCheck);
+router.get('/signup/duplicate_check', UserController.duplicateUserCheck);
 
-router.route('/preferences').put(UserController.updatePreferences);
+router.put('/preferences', isAuthenticated, UserController.updatePreferences);
 
-router.route('/reset-password').post(UserController.resetPasswordInitiate);
+router.post('/reset-password', UserController.resetPasswordInitiate);
 
-router.route('/reset-password/:token').get(UserController.validateResetPasswordToken);
+router.get('/reset-password/:token', UserController.validateResetPasswordToken);
 
-router.route('/reset-password/:token').post(UserController.updatePassword);
+router.post('/reset-password/:token', UserController.updatePassword);
 
-router.route('/account').put(UserController.updateSettings);
+router.put('/account', isAuthenticated, UserController.updateSettings);
 
-router.route('/verify/send').post(UserController.emailVerificationInitiate);
+router.post('/verify/send', UserController.emailVerificationInitiate);
 
-router.route('/verify').get(UserController.verifyEmail);
+router.get('/verify', UserController.verifyEmail);
 
 export default router;

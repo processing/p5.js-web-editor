@@ -12,7 +12,8 @@
     "classes": true
   },
   "rules": {
-  	"react/no-multi-comp": 0,
+    "linebreak-style": 0,
+    "react/no-multi-comp": 0,
     "import/default": 0,
     "import/no-duplicates": 0,
     "import/named": 0,
@@ -34,14 +35,16 @@
       "html": false
     }],
     "newline-per-chained-call": 0,
-    "react/prefer-stateless-function": [2, 
-      { "ignorePureComponents": true 
+    "react/prefer-stateless-function": [2,
+      { "ignorePureComponents": true
     }],
-    "class-methods-use-this": 0
+    "class-methods-use-this": 0,
+    "react/jsx-no-bind": [2, {"allowBind": true, "allowArrowFunctions": true}],
+    "no-return-assign": [2, "except-parens"]
   },
   "plugins": [
     "react", "jsx-a11y", "import"
-  ], 
+  ],
   "settings": {
     "import/parser": "babel-eslint",
     "import/resolve": {
