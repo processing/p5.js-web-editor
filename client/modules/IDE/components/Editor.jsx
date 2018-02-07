@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import CodeMirror from 'codemirror';
 import beautifyJS from 'js-beautify';
 import 'codemirror/mode/css/css';
