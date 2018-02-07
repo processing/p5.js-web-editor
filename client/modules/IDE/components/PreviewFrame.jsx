@@ -401,7 +401,6 @@ PreviewFrame.propTypes = {
   textOutput: PropTypes.bool.isRequired,
   gridOutput: PropTypes.bool.isRequired,
   soundOutput: PropTypes.bool.isRequired,
-  // setTextOutput: PropTypes.func.isRequired,
   htmlFile: PropTypes.shape({
     content: PropTypes.string.isRequired
   }).isRequired,
