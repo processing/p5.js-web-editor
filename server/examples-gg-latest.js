@@ -463,31 +463,6 @@ function getAllSketchContent(newProjectList) {
 
 }
 
-// function linkToSvgFiles(newProjectList){
-//   return Q.all(newProjectList.map(newProject => Q.all(newProject.files.map((sketchFile, i) => {
-
-//     return new Promise( (resolve, reject) => {
-//       if( sketchFile.fileType == 'file' &&
-//         sketchFile.name.endsWith(".svg") == true ){
-//         // handle cases for svgs
-
-//         const rawGitRef = `https://cdn.rawgit.com/${newProject.files[i].url.split(".com/")[1]}`;
-//         sketchFile.content = rawGitRef;
-//         newProject.files[1].content = newProject.files[1].content.replace(`'data/${sketchFile.name}'`, `'${rawGitRef}'`);
-        
-//         resolve(newProject)
-//       } 
-//     })
-
-//   })).catch((err) => {
-//     throw err
-//   }))).then(() => {
-
-//     return newProjectList;
-//   })
-// }
-
-
 // Save the project in the db
 function createProjectsInP5user(newProjectList) {
   User.findOne({ username: 'generative-design' }, (err, user) => {
@@ -582,6 +557,30 @@ output etc
 ***/
 // formatSketchForStorage(P_2_1_1_04);
 // formatSketchForStorage(M_1_5_04);
+
+// function linkToSvgFiles(newProjectList){
+//   return Q.all(newProjectList.map(newProject => Q.all(newProject.files.map((sketchFile, i) => {
+
+//     return new Promise( (resolve, reject) => {
+//       if( sketchFile.fileType == 'file' &&
+//         sketchFile.name.endsWith(".svg") == true ){
+//         // handle cases for svgs
+
+//         const rawGitRef = `https://cdn.rawgit.com/${newProject.files[i].url.split(".com/")[1]}`;
+//         sketchFile.content = rawGitRef;
+//         newProject.files[1].content = newProject.files[1].content.replace(`'data/${sketchFile.name}'`, `'${rawGitRef}'`);
+        
+//         resolve(newProject)
+//       } 
+//     })
+
+//   })).catch((err) => {
+//     throw err
+//   }))).then(() => {
+
+//     return newProjectList;
+//   })
+// }
 
 // checking function 
 function doNext(output) {
