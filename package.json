@@ -115,7 +115,7 @@
     "react-tabs": "^2.2.1",
     "redux": "^3.5.2",
     "redux-devtools": "^3.4.1",
-    "redux-devtools-dock-monitor": "^1.1.1",
+    "redux-devtools-dock-monitor": "^1.1.3",
     "redux-devtools-log-monitor": "^1.0.11",
     "redux-form": "^5.3.3",
     "redux-thunk": "^2.1.0",
