@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { reduxForm } from 'redux-form';
 import InlineSVG from 'react-inlinesvg';
 import NewFolderForm from './NewFolderForm';
@@ -35,4 +36,3 @@ export default reduxForm({
   form: 'new-folder',
   fields: ['name']
 })(NewFolderModal);
-
