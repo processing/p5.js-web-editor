@@ -261,7 +261,39 @@ function buildZip(project, req, res) {
     res.status(500).send({ error: err.message });
   });
 
-  res.attachment(`${project.name}.zip`);
+  function currentTime() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1;
+    const day = now.getDate();
+    const hh = now.getHours();
+    const mm = now.getMinutes();
+    const ss = now.getSeconds();
+    let clock = `${year}_`;
+    if (month < 10) {
+      clock = `${clock}0`;
+    }
+    clock = `${clock}${month}_`;
+    if (day < 10) {
+      clock = `${clock}0`;
+    }
+    clock = `${clock}${day}_`;
+    if (hh < 10) {
+      clock = `${clock}0`;
+    }
+    clock = `${clock}${hh}:`;
+    if (mm < 10) {
+      clock = `${clock}0`;
+    }
+    clock = `${clock}${mm}:`;
+    if (ss < 10) {
+      clock = `${clock}0`;
+    }
+    clock = `${clock}${ss}`;
+    return (clock);
+  }
+
+  res.attachment(`${project.name}_${currentTime()}.zip`);
   zip.pipe(res);
 
   function addFileToZip(file, path) {
