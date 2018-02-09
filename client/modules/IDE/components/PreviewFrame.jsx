@@ -171,7 +171,7 @@ class PreviewFrame extends React.Component {
 
     if (JSHINT.errors.length === 0) {
       newContent = decomment(newContent, {
-        ignore: /noprotect/g,
+        ignore: /\/\/\s*noprotect/g,
         space: true
       });
       newContent = loopProtect(newContent);
