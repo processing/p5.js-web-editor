@@ -15,7 +15,7 @@ function Feedback(props) {
         </p>
         <p className="feedback__content-pane-copy">
           <a
-            href="https://github.com/processing/p5.js-web-editor"
+            href="https://github.com/processing/p5.js-web-editor/issues/new"
             target="_blank"
             rel="noopener noreferrer"
             className="feedback__github-link"
