@@ -33,6 +33,7 @@ import Overlay from '../../App/components/Overlay';
 import SketchList from '../components/SketchList';
 import AssetList from '../components/AssetList';
 import About from '../components/About';
+import Feedback from '../components/Feedback';
 
 class IDEView extends React.Component {
   constructor(props) {
@@ -454,6 +455,15 @@ class IDEView extends React.Component {
             ariaLabel="about"
           >
             <About previousPath={this.props.ide.previousPath} />
+          </Overlay>
+        }
+        { this.props.location.pathname === '/feedback' &&
+          <Overlay
+            previousPath={this.props.ide.previousPath}
+            title="Submit Feedback"
+            ariaLabel="submit-feedback"
+          >
+            <Feedback previousPath={this.props.ide.previousPath} />
           </Overlay>
         }
         { this.props.ide.shareModalVisible &&
