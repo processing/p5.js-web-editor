@@ -264,7 +264,6 @@ function buildZip(project, req, res) {
 
   const currentTime = moment().format('YYYY_MM_DD_HH_mm_ss');
   project.slug = slugify(project.name, '_');
-  
   res.attachment(`${project.slug}_${currentTime}.zip`);
   zip.pipe(res);
 
