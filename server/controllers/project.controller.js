@@ -77,6 +77,7 @@ export function updateProject(req, res) {
 }
 
 export function getProject(req, res) {
+  const username = req.params.username;
   const projectId = req.params.project_id;
   Project.findById(projectId)
     .populate('user', 'username')
@@ -93,7 +94,10 @@ export function getProject(req, res) {
           return res.json(projectBySlug);
         });
       } else {
-        return res.json(project);
+        if (project.user.username === username) {
+          return res.json(project);
+        }
+        return res.status(404).send({ message: 'Project with that username does not exist' });
       }
     });
 }
