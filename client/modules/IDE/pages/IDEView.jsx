@@ -52,7 +52,6 @@ class IDEView extends React.Component {
     if (this.props.params.project_id) {
       const id = this.props.params.project_id;
       const username = this.props.params.username;
-      console.log(this.props.params);
       if (id !== this.props.project.id) {
         this.props.getProject(id, username);
       }
@@ -90,8 +89,6 @@ class IDEView extends React.Component {
 
     if (nextProps.params.project_id && !this.props.params.project_id) {
       if (nextProps.params.project_id !== nextProps.project.id) {
-        console.log(nextProps.params.project_id);
-        console.log(nextProps.project.id);
         this.props.getProject(nextProps.params.project_id, nextProps.params.username);
       }
     }
