@@ -203,7 +203,7 @@ class PreviewFrame extends React.Component {
       '/hijackConsole.js'
     ];
     const accessiblelib = sketchDoc.createElement('script');
-    accessiblelib.setAttribute('src', 'https://cdn.rawgit.com/MathuraMG/p5-accessibility/e856365c/dist/p5-accessibility.js');
+    accessiblelib.setAttribute('src', 'https://cdn.rawgit.com/MathuraMG/p5-accessibility/9cb5bd0b/dist/p5-accessibility.js');
     if (this.props.textOutput) {
       sketchDoc.getElementById('accessibility-library').appendChild(accessiblelib);
       const textSection = sketchDoc.createElement('section');
@@ -401,7 +401,6 @@ PreviewFrame.propTypes = {
   textOutput: PropTypes.bool.isRequired,
   gridOutput: PropTypes.bool.isRequired,
   soundOutput: PropTypes.bool.isRequired,
-  // setTextOutput: PropTypes.func.isRequired,
   htmlFile: PropTypes.shape({
     content: PropTypes.string.isRequired
   }).isRequired,
