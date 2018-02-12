@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import classNames from 'classnames';
 import InlineSVG from 'react-inlinesvg';

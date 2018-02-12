@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { reduxForm } from 'redux-form';
 import classNames from 'classnames';
 import { browserHistory } from 'react-router';

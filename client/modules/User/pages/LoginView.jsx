@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { reduxForm } from 'redux-form';
 import { Link, browserHistory } from 'react-router';
 import InlineSVG from 'react-inlinesvg';

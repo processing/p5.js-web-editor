@@ -1,5 +1,6 @@
 .DS_Store
 .env
+.vscode/
 node_modules/
 npm-debug.log
 dump.rdb

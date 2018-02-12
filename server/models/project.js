@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import shortid from 'shortid';
+import slugify from 'slugify';
 
 const Schema = mongoose.Schema;
 
@@ -25,7 +26,8 @@ const projectSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User' },
   serveSecure: { type: Boolean, default: false },
   files: { type: [fileSchema] },
-  _id: { type: String, default: shortid.generate }
+  _id: { type: String, default: shortid.generate },
+  slug: { type: String }
 }, { timestamps: true });
 
 projectSchema.virtual('id').get(function getProjectId() {
@@ -34,6 +36,12 @@ projectSchema.virtual('id').get(function getProjectId() {
 
 projectSchema.set('toJSON', {
   virtuals: true
+});
+
+projectSchema.pre('save', function generateSlug(next) {
+  const project = this;
+  project.slug = slugify(project.name, '_');
+  return next();
 });
 
 export default mongoose.model('Project', projectSchema);
