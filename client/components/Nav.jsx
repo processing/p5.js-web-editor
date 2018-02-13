@@ -167,6 +167,7 @@ class Nav extends React.PureComponent {
               <li className="nav__dropdown-item">
                 <button
                   onClick={() => {
+                    this.props.autosaveProject();
                     this.props.exportProjectAsZip(this.props.project.id);
                     this.setDropdown('none');
                   }}
@@ -487,6 +488,7 @@ class Nav extends React.PureComponent {
 Nav.propTypes = {
   newProject: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
+  autosaveProject: PropTypes.func.isRequired,
   exportProjectAsZip: PropTypes.func.isRequired,
   cloneProject: PropTypes.func.isRequired,
   user: PropTypes.shape({

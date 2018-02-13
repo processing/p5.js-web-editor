@@ -208,6 +208,7 @@ class IDEView extends React.Component {
           user={this.props.user}
           newProject={this.props.newProject}
           saveProject={this.props.saveProject}
+          autosaveProject={this.props.autosaveProject}
           exportProjectAsZip={this.props.exportProjectAsZip}
           cloneProject={this.props.cloneProject}
           project={this.props.project}
