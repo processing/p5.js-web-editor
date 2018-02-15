@@ -6,32 +6,34 @@
   }
 }
 
-.about__play-video {
-  padding-top: #{9 / $base-font-size}rem;
-  padding-left: #{5 / $base-font-size}rem;
-}
+// hello p5 video link button css
 
-.about__play-video-button {
-  @include themify() {
-    @extend %toolbar-button;
-    width: #{32 / $base-font-size}rem;
-    height: #{32 / $base-font-size}rem;
-    line-height: #{34 / $base-font-size}rem;
-    border-radius: #{24 / $base-font-size}rem;
-    background-color: $about-play-background-color;
-    border: solid 0.5px $about-button-border-color;
-    &:hover {
-      border-color: getThemifyVariable('button-background-hover-color');
-    }
-  }
-  padding-left: 2px;
-  margin-right: #{9 / $base-font-size}rem;
-  svg {
-    width: #{11 / $base-font-size}rem;
-    height: #{11 / $base-font-size}rem;
-    margin-left: #{1 / $base-font-size}rem;
-  }
-}
+// .about__play-video {
+//   padding-top: #{9 / $base-font-size}rem;
+//   padding-left: #{5 / $base-font-size}rem;
+// }
+
+// .about__play-video-button {
+//   @include themify() {
+//     @extend %toolbar-button;
+//     width: #{32 / $base-font-size}rem;
+//     height: #{32 / $base-font-size}rem;
+//     line-height: #{34 / $base-font-size}rem;
+//     border-radius: #{24 / $base-font-size}rem;
+//     background-color: $about-play-background-color;
+//     border: solid 0.5px $about-button-border-color;
+//     &:hover {
+//       border-color: getThemifyVariable('button-background-hover-color');
+//     }
+//   }
+//   padding-left: 2px;
+//   margin-right: #{9 / $base-font-size}rem;
+//   svg {
+//     width: #{11 / $base-font-size}rem;
+//     height: #{11 / $base-font-size}rem;
+//     margin-left: #{1 / $base-font-size}rem;
+//   }
+// }
 
 .about__content {
   display: flex;
