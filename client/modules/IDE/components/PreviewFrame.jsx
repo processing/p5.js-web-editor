@@ -204,22 +204,27 @@ class PreviewFrame extends React.Component {
     ];
     const accessiblelib = sketchDoc.createElement('script');
     accessiblelib.setAttribute('src', 'https://cdn.rawgit.com/MathuraMG/p5-accessibility/9cb5bd0b/dist/p5-accessibility.js');
+    const accessibleOutputs = sketchDoc.createElement('section');
+    accessibleOutputs.setAttribute('id', 'accessible-outputs');
     if (this.props.textOutput) {
-      sketchDoc.getElementById('accessibility-library').appendChild(accessiblelib);
+      sketchDoc.body.appendChild(accessibleOutputs);
+      sketchDoc.body.appendChild(accessiblelib);
       const textSection = sketchDoc.createElement('section');
       textSection.setAttribute('id', 'textOutput-content');
       sketchDoc.getElementById('accessible-outputs').appendChild(textSection);
       this.iframeElement.focus();
     }
     if (this.props.gridOutput) {
-      sketchDoc.getElementById('accessibility-library').appendChild(accessiblelib);
+      sketchDoc.body.appendChild(accessibleOutputs);
+      sketchDoc.body.appendChild(accessiblelib);
       const gridSection = sketchDoc.createElement('section');
       gridSection.setAttribute('id', 'gridOutput-content');
       sketchDoc.getElementById('accessible-outputs').appendChild(gridSection);
       this.iframeElement.focus();
     }
     if (this.props.soundOutput) {
-      sketchDoc.getElementById('accessibility-library').appendChild(accessiblelib);
+      sketchDoc.body.appendChild(accessibleOutputs);
+      sketchDoc.body.appendChild(accessiblelib);
       const soundSection = sketchDoc.createElement('section');
       soundSection.setAttribute('id', 'soundOutput-content');
       sketchDoc.getElementById('accessible-outputs').appendChild(soundSection);

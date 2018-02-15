@@ -21,9 +21,7 @@ const defaultHTML =
 
   </head>
   <body>
-    <section aria-label='accessible output' id='accessible-outputs'></section>
     <script src="sketch.js"></script>
-    <div id='accessibility-library'></div>
     </body>
 </html>
 `;
