@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { Link } from 'react-router';
 import InlineSVG from 'react-inlinesvg';
 import classNames from 'classnames';
@@ -166,6 +167,7 @@ class Nav extends React.PureComponent {
               <li className="nav__dropdown-item">
                 <button
                   onClick={() => {
+                    this.props.autosaveProject();
                     this.props.exportProjectAsZip(this.props.project.id);
                     this.setDropdown('none');
                   }}
@@ -340,12 +342,12 @@ class Nav extends React.PureComponent {
               onBlur={this.handleBlur}
               onFocus={this.clearHideTimeout}
             >
-              <span className="nav__item-header">Help</span>
+              <span className="nav__item-header">Help & Feedback</span>
               <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
             </button>
             <ul className="nav__dropdown">
               <li className="nav__dropdown-heading">
-                <span>Help</span>
+                <span>Help & Feedback</span>
                 <InlineSVG src={triangleUrl} />
               </li>
               <li className="nav__dropdown-item">
@@ -376,6 +378,16 @@ class Nav extends React.PureComponent {
                   onClick={this.setDropdown.bind(this, 'none')}
                 >
                   About
+                </Link>
+              </li>
+              <li className="nav__dropdown-item">
+                <Link
+                  to="/feedback"
+                  onFocus={this.handleFocus.bind(this, 'help')}
+                  onBlur={this.handleBlur}
+                  onClick={this.setDropdown.bind(this, 'none')}
+                >
+                  Feedback
                 </Link>
               </li>
             </ul>
@@ -476,6 +488,7 @@ class Nav extends React.PureComponent {
 Nav.propTypes = {
   newProject: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
+  autosaveProject: PropTypes.func.isRequired,
   exportProjectAsZip: PropTypes.func.isRequired,
   cloneProject: PropTypes.func.isRequired,
   user: PropTypes.shape({
