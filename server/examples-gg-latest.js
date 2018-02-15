@@ -450,8 +450,6 @@ function createProjectsInP5user(newProjectList) {
         sketchCallback();
       });
     });
-  }).catch((err) => {
-    throw err;
   });
 }
 
