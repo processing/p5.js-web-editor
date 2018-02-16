@@ -45,9 +45,9 @@ export function getProject(id) {
         dispatch(setUnsavedChanges(false));
       })
       .catch(response => dispatch({
-         type: ActionTypes.ERROR,
-         error: response.data
-       }));
+        type: ActionTypes.ERROR,
+        error: response.data
+      }));
   };
 }
 

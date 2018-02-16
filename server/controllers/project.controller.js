@@ -93,7 +93,7 @@ export function getProject(req, res) {
           return res.json(projectBySlug);
         });
       } else {
-         return res.json(project);
+        return res.json(project);
       }
     });
 }
@@ -207,6 +207,12 @@ export function getProjectsForUser(req, res) {
     // could just move this to client side
     res.json([]);
   }
+}
+
+export function projectExists(projectId, callback) {
+  Project.findById(projectId , (err, project) => {
+    project ? callback(true) : callback(false)
+  });
 }
 
 function bundleExternalLibs(project, zip, callback) {
