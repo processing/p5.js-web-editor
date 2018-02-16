@@ -210,9 +210,9 @@ export function getProjectsForUser(req, res) {
 }
 
 export function projectExists(projectId, callback) {
-  Project.findById(projectId , (err, project) => {
+  Project.findById(projectId, (err, project) => (
     project ? callback(true) : callback(false)
-  });
+  ));
 }
 
 function bundleExternalLibs(project, zip, callback) {
