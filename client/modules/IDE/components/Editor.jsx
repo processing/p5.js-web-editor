@@ -111,14 +111,14 @@ class Editor extends React.Component {
     this.initializeDocuments(this.props.files);
     this._cm.swapDoc(this._docs[this.props.file.id]);
 
-    this._cm.on('change', (() => {
+    this._cm.on('change', debounce(() => {
       this.props.setUnsavedChanges(true);
       this.props.updateFileContent(this.props.file.name, this._cm.getValue());
       if (this.props.autorefresh && this.props.isPlaying) {
         this.props.startRefreshSketch();
         this.props.clearConsole();
       }
-    }));
+    }, 400));
 
     this._cm.on('keyup', () => {
       const temp = `line ${parseInt((this._cm.getCursor().line) + 1, 10)}`;
