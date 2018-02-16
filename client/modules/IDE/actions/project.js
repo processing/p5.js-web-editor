@@ -36,21 +36,18 @@ export function setProjectName(name) {
   };
 }
 
-export function getProject(id, username) {
+export function getProject(id) {
   return (dispatch, getState) => {
     dispatch(justOpenedProject());
-    axios.get(`${ROOT_URL}/${username}/projects/${id}`, { withCredentials: true })
+    axios.get(`${ROOT_URL}/projects/${id}`, { withCredentials: true })
       .then((response) => {
         dispatch(setProject(response.data));
         dispatch(setUnsavedChanges(false));
       })
-      .catch((response) => {
-        dispatch({
-          type: ActionTypes.ERROR,
-          error: response.data
-        });
-        window.location = `${window.location.origin}/404`;
-      });
+      .catch(response => dispatch({
+         type: ActionTypes.ERROR,
+         error: response.data
+       }));
   };
 }
 

@@ -9,7 +9,7 @@ import * as ProjectActions from '../actions/project';
 
 class FullView extends React.Component {
   componentDidMount() {
-    this.props.getProject(this.props.params.project_id, this.props.params.username);
+    this.props.getProject(this.props.params.project_id);
   }
 
   render() {
@@ -38,8 +38,7 @@ class FullView extends React.Component {
 
 FullView.propTypes = {
   params: PropTypes.shape({
-    project_id: PropTypes.string,
-    username: PropTypes.string
+    project_id: PropTypes.string
   }).isRequired,
   project: PropTypes.shape({
     name: PropTypes.string,
