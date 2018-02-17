@@ -2,7 +2,7 @@ import { browserHistory } from 'react-router';
 import axios from 'axios';
 import objectID from 'bson-objectid';
 import each from 'async/each';
-import compare from 'just-compare';
+import { isEqual } from 'lodash';
 import * as ActionTypes from '../../../constants';
 import { showToast, setToastText } from './toast';
 import { setUnsavedChanges,
@@ -73,7 +73,7 @@ export function clearPersistedState() {
 
 export function saveProject(autosave = false) {
   return (dispatch, getState) => {
-    let state = getState();
+    const state = getState();
     if (state.user.id && state.project.owner && state.project.owner.id !== state.user.id) {
       return Promise.reject();
     }
@@ -82,12 +82,13 @@ export function saveProject(autosave = false) {
     if (state.project.id) {
       return axios.put(`${ROOT_URL}/projects/${state.project.id}`, formParams, { withCredentials: true })
         .then((response) => {
-          state = getState();
-          if (!compare(state.files, response.data.files)) {
-            response.data.files = state.files;
+          const currentState = getState();
+          const savedProject = Object.assign({}, response.data);
+          if (!isEqual(currentState.files, response.data.files)) {
+            savedProject.files = currentState.files;
           }
           dispatch(setUnsavedChanges(false));
-          dispatch(setProject(response.data));
+          dispatch(setProject(savedProject));
           dispatch({
             type: ActionTypes.PROJECT_SAVE_SUCCESS
           });
