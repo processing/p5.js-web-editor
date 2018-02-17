@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { renderIndex } from '../views/index';
 import { get404Sketch } from '../views/404Page';
 import { userExists } from '../controllers/user.controller';
-import { projectExists } from '../controllers/project.controller';
+import { projectExists, projectForUserExists } from '../controllers/project.controller';
 
 const router = new Router();
 
@@ -27,10 +27,8 @@ router.get('/projects/:project_id', (req, res) => {
 });
 
 router.get('/:username/sketches/:project_id', (req, res) => {
-  userExists(req.params.username, exists => (
-    exists ? projectExists(req.params.project_id, exists => ( // eslint-disable-line
-      exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
-    )) : get404Sketch(html => res.send(html))
+  projectForUserExists(req.params.username, req.params.project_id, exists => (
+    exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
   ));
 });
 

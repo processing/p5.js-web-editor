@@ -215,6 +215,18 @@ export function projectExists(projectId, callback) {
   ));
 }
 
+export function projectForUserExists(username, projectId, callback) {
+  User.findOne({ username }, (err, user) => {
+    if (!user) {
+      callback(false);
+      return;
+    }
+    Project.findById(projectId, (innerErr, project) => (
+      (project && project.user.equals(user._id)) ? callback(true) : callback(false)
+    ));
+  });
+}
+
 function bundleExternalLibs(project, zip, callback) {
   const indexHtml = project.files.find(file => file.name === 'index.html');
   let numScriptsResolved = 0;
