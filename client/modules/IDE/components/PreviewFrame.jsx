@@ -207,6 +207,12 @@ class PreviewFrame extends React.Component {
     accessiblelib.setAttribute('src', 'https://cdn.rawgit.com/MathuraMG/p5-accessibility/9cb5bd0b/dist/p5-accessibility.js');
     const accessibleOutputs = sketchDoc.createElement('section');
     accessibleOutputs.setAttribute('id', 'accessible-outputs');
+    accessibleOutputs.style.position = 'absolute';
+    accessibleOutputs.style.left = '-1000px';
+    accessibleOutputs.style.top = 'auto';
+    accessibleOutputs.style.width = '1px';
+    accessibleOutputs.style.height = '1px';
+    accessibleOutputs.style.overflow = 'hidden';
     if (this.props.textOutput) {
       sketchDoc.body.appendChild(accessibleOutputs);
       sketchDoc.body.appendChild(accessiblelib);
