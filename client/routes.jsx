@@ -52,6 +52,7 @@ const routes = (store) => {
       <Route path="/:username/assets" component={IDEView} />
       <Route path="/:username/account" component={forceToHttps(AccountView)} />
       <Route path="/about" component={IDEView} />
+      <Route path="/feedback" component={IDEView} />
     </Route>
   );
 };

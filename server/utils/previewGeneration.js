@@ -1,9 +1,12 @@
 import { resolvePathToFile } from '../utils/filePath';
-// eslint-disable-next-line max-len
-const MEDIA_FILE_REGEX_NO_QUOTES = /^(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov|otf|ttf|m4a)$/i;
-const STRING_REGEX = /(['"])((\\\1|.)*?)\1/gm;
-const EXTERNAL_LINK_REGEX = /^(http:\/\/|https:\/\/)/;
-const NOT_EXTERNAL_LINK_REGEX = /^(?!(http:\/\/|https:\/\/))/;
+
+import {
+  MEDIA_FILE_REGEX,
+  STRING_REGEX,
+  TEXT_FILE_REGEX,
+  EXTERNAL_LINK_REGEX,
+  NOT_EXTERNAL_LINK_REGEX
+} from './fileUtils';
 
 function resolveLinksInString(content, files, projectId) {
   let newContent = content;
@@ -18,7 +21,7 @@ function resolveLinksInString(content, files, projectId) {
       if (resolvedFile) {
         if (resolvedFile.url) {
           newContent = newContent.replace(filePath, resolvedFile.url);
-        } else if (resolvedFile.name.match(/(.+\.json$|.+\.txt$|.+\.csv$)/i)) {
+        } else if (resolvedFile.name.match(TEXT_FILE_REGEX)) {
           let resolvedFilePath = filePath;
           if (resolvedFilePath.startsWith('.')) {
             resolvedFilePath = resolvedFilePath.substr(1);
@@ -44,9 +47,9 @@ export function resolvePathsForElementsWithAttribute(attr, sketchDoc, files) {
   const elements = sketchDoc.querySelectorAll(`[${attr}]`);
   const elementsArray = Array.prototype.slice.call(elements);
   elementsArray.forEach((element) => {
-    if (element.getAttribute(attr).match(MEDIA_FILE_REGEX_NO_QUOTES)) {
+    if (element.getAttribute(attr).match(MEDIA_FILE_REGEX)) {
       const resolvedFile = resolvePathToFile(element.getAttribute(attr), files);
-      if (resolvedFile) {
+      if (resolvedFile && resolvedFile.url) {
         element.setAttribute(attr, resolvedFile.url);
       }
     }

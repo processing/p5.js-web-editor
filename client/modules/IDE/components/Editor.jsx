@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import CodeMirror from 'codemirror';
 import beautifyJS from 'js-beautify';
 import 'codemirror/mode/css/css';
@@ -186,9 +187,11 @@ class Editor extends React.Component {
     if (this.props.runtimeErrorWarningVisible) {
       this.props.consoleEvents.forEach((consoleEvent) => {
         if (consoleEvent.method === 'error') {
-          const n = consoleEvent.arguments.replace(')', '').split(' ');
-          const lineNumber = parseInt(n[n.length - 1], 10) - 1;
-          this._cm.addLineClass(lineNumber, 'background', 'line-runtime-error');
+          if (consoleEvent.arguments.indexOf(')') > -1) {
+            const n = consoleEvent.arguments.replace(')', '').split(' ');
+            const lineNumber = parseInt(n[n.length - 1], 10) - 1;
+            this._cm.addLineClass(lineNumber, 'background', 'line-runtime-error');
+          }
         }
       });
     }
