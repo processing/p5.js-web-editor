@@ -137,7 +137,7 @@ function createProjectsInP5user(projectsInAllCategories) {
   rp(options).then((res) => {
     const assets = JSON.parse(res);
 
-    User.findOne({ username: 'p5' }, (err, user) => {
+    User.findOne({ username: process.env.USER_NAME }, (err, user) => {
       if (err) throw err;
 
       eachSeries(projectsInAllCategories, (projectsInOneCategory, categoryCallback) => {
@@ -289,15 +289,15 @@ function createProjectsInP5user(projectsInAllCategories) {
 }
 
 function getp5User() {
-  User.findOne({ username: 'p5' }, (err, user) => {
+  User.findOne({ username: process.env.USER_NAME }, (err, user) => {
     if (err) throw err;
 
     let p5User = user;
     if (!p5User) {
       p5User = new User({
-        username: 'p5',
-        email: 'p5-examples@gmail.com',
-        password: 'test'
+        username: process.env.USER_NAME,
+				email: process.env.USER_EMAIL,
+				password: process.env.USER_PASSWORD
       });
       p5User.save((saveErr) => {
         if (saveErr) throw saveErr;
