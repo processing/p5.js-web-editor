@@ -10,6 +10,12 @@ import Project from './models/project';
 // TODO: change to true when testing!
 const testMake = false;
 
+// TODO: Change branchName if necessary
+const branchName = 'master';
+const branchRef = `?ref=${branchName}`;
+const clientId = process.env.GITHUB_ID;
+const clientSecret = process.env.GITHUB_SECRET;
+
 const defaultHTML =
   `<!DOCTYPE html>
 <html>
@@ -20,7 +26,7 @@ const defaultHTML =
 
     <!-- Generative Design Dependencies here -->
     <!-- GG Bundled -->
-    <script src="https://rawgit.com/generative-design/Code-Package-p5.js/pre-release/libraries/gg-dep-bundle/gg-dep-bundle.js"></script>
+    <script src="https://rawgit.com/generative-design/Code-Package-p5.js/${branchName}/libraries/gg-dep-bundle/gg-dep-bundle.js"></script>
 
     <!-- Opentype -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/opentype.js/0.7.3/opentype.min.js"></script>
@@ -54,11 +60,7 @@ canvas {
 }
 `;
 
-// TODO: Change branchName if necessary
-const branchName = 'gg4editor';
-const branchRef = `?ref=${branchName}`;
-const clientId = process.env.GITHUB_ID;
-const clientSecret = process.env.GITHUB_SECRET;
+
 
 const headers = { 'User-Agent': 'p5js-web-editor/0.0.1' };
 
