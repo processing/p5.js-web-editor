@@ -222,9 +222,19 @@ export function projectForUserExists(username, projectId, callback) {
       callback(false);
       return;
     }
-    Project.findById(projectId, (innerErr, project) => (
-      (project && project.user.equals(user._id)) ? callback(true) : callback(false)
-    ));
+    Project.findOne({_id: projectId, user: user._id}, (innerErr, project) => {
+      if (project) {
+        callback(true);
+        return;
+      }
+      Project.findOne({slug: projectId, user: user._id}, (slugError, projectBySlug) => {
+        if (projectBySlug) {
+          callback(true);
+          return;
+        }
+        callback(false);
+      });
+    });
   });
 }
 
