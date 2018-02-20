@@ -77,13 +77,24 @@ export function updateProject(req, res) {
 }
 
 export function getProject(req, res) {
-  Project.findById(req.params.project_id)
+  const projectId = req.params.project_id;
+  Project.findById(projectId)
     .populate('user', 'username')
-    .exec((err, project) => {
+    .exec((err, project) => { // eslint-disable-line
       if (err) {
         return res.status(404).send({ message: 'Project with that id does not exist' });
+      } else if (!project) {
+        Project.findOne({ slug: projectId })
+        .populate('user', 'username')
+        .exec((innerErr, projectBySlug) => {
+          if (innerErr || !projectBySlug) {
+            return res.status(404).send({ message: 'Project with that id does not exist' });
+          }
+          return res.json(projectBySlug);
+        });
+      } else {
+        return res.json(project);
       }
-      return res.json(project);
     });
 }
 

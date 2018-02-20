@@ -126,6 +126,7 @@
     "s3": "^4.4.0",
     "s3-policy": "^0.2.0",
     "shortid": "^2.2.6",
+    "slugify": "^1.2.9",
     "srcdoc-polyfill": "^0.2.0",
     "url": "^0.11.0",
     "webpack": "^2.6.1",
