@@ -60,8 +60,6 @@ canvas {
 }
 `;
 
-
-
 const headers = { 'User-Agent': 'p5js-web-editor/0.0.1' };
 
 mongoose.connect(process.env.MONGO_URL);
@@ -69,7 +67,6 @@ mongoose.connection.on('error', () => {
   console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
   process.exit(1);
 });
-
 
 /* --- Helper functions --- */
 const flatten = function flatten(list) {
