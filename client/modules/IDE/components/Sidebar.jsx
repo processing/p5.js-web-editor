@@ -4,7 +4,8 @@ import classNames from 'classnames';
 import InlineSVG from 'react-inlinesvg';
 import ConnectedFileNode from './FileNode';
 
-const folderUrl = require('../../../images/folder.svg');
+const plusIcon = require('../../../images/plus-icon.svg');
+// const folderUrl = require('../../../images/folder.svg');
 const downArrowUrl = require('../../../images/down-arrow.svg');
 
 class Sidebar extends React.Component {
@@ -53,9 +54,8 @@ class Sidebar extends React.Component {
         <div className="sidebar__header" onContextMenu={this.toggleProjectOptions}>
           <h3 className="sidebar__title">
             <span className="sidebar__folder-icon">
-              <InlineSVG src={folderUrl} />
             </span>
-            <span>project-folder</span>
+            <span>Project Files</span>
           </h3>
           <div className="sidebar__icons">
             <button
@@ -66,7 +66,7 @@ class Sidebar extends React.Component {
               onClick={this.toggleProjectOptions}
               onBlur={() => setTimeout(this.props.closeProjectOptions, 200)}
             >
-              <InlineSVG src={downArrowUrl} />
+              <InlineSVG src={plusIcon} />
             </button>
             <ul className="sidebar__project-options">
               <li>

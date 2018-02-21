@@ -8,7 +8,6 @@
   padding-right: #{6 / $base-font-size}rem;
   padding-left: #{19 / $base-font-size}rem;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   height: #{29 / $base-font-size}rem;
   min-height: #{29 / $base-font-size}rem;
@@ -17,6 +16,7 @@
 .sidebar__title {
   font-size: #{12 / $base-font-size}rem;
   display: inline-block;
+  color: #a8a8a8;
   .sidebar--contracted & {
     display: none;
   }
@@ -58,7 +58,7 @@
   @include themify() {
     color: map-get($theme-map, 'inactive-text-color');
     &:hover > .file-item__content .sidebar__file-item-name {
-      color: map-get($theme-map, 'primary-text-color');
+      color: $p5js-pink;
     }
     &:hover > .file-item__content .sidebar__file-item-icon g {
       fill: map-get($theme-map, 'primary-text-color');
@@ -95,6 +95,10 @@
 .file-item__content {
   display: flex;
   position: relative;
+  padding-top: #{12 / $base-font-size}rem;
+  padding-bottom: #{12 / $base-font-size}rem;
+  border-top: 1px solid #f4f4f4;
+  border-top: 1px solid #f4f4f4;
   .sidebar__file-item--selected > & {
     @include themify() {
       background-color: map-get($theme-map, 'file-selected-color');
@@ -211,6 +215,8 @@
 
 .sidebar__icons {
   display: flex;
+  padding-top: 5px;
+  padding-left: 10px;
   align-items: center;
   position: relative;
   .sidebar--cant-edit & {
