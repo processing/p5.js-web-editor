@@ -3,8 +3,10 @@
   color: $toast-text-color;
   padding: #{10 / $base-font-size}rem;
   position: absolute;
-  top: 0;
-  right: 40%;
+  bottom: 5vh;
+  left: 5vh;
+  font-size: 20px;
+  line-height: 24px;
   display: flex;
   z-index: 9999;
   box-shadow: 0 6px 6px 0 rgba(0,0,0,0.10);
@@ -14,5 +16,7 @@
   @include themify() {
     @extend %icon-toast;
   }
-  margin-left: #{20 / $base-font-size}rem;
+  line-height: 16px;
+  padding-top: #{10 / $base-font-size}rem;
+  margin-left: #{40 / $base-font-size}rem;
 }
