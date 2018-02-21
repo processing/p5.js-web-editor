@@ -17,7 +17,7 @@ class ErrorModal extends React.Component {
   unauthorizedProject() {
     return (
       <p>
-        You have no access to save the sketch.
+        You have no access to save the project.
       </p>
     );
   }
