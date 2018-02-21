@@ -156,7 +156,6 @@ class IDEView extends React.Component {
     if (e.keyCode === 83 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
       e.preventDefault();
       e.stopPropagation();
-      console.log(this.isUserOwner());
       if (this.isUserOwner()) {
         this.props.saveProject();
       } else if (this.props.user.authenticated) {
