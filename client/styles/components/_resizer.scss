@@ -44,6 +44,7 @@
     // border-right: 5px solid rgba(0, 0, 0, 0.5);
 }
 
-.Resizer.vertical.disabled{
+.Resizer.vertical.disabled,
+.Resizer.horizontal.disabled{
     cursor: default;
 }
