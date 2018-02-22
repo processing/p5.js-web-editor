@@ -14,14 +14,6 @@ class ErrorModal extends React.Component {
     );
   }
 
-  unauthorizedProject() {
-    return (
-      <p>
-        You have no access to save the project.
-      </p>
-    );
-  }
-
   staleSession() {
     return (
       <p>
@@ -49,8 +41,6 @@ class ErrorModal extends React.Component {
             return this.staleSession();
           } else if (this.props.type === 'staleProject') {
             return this.staleProject();
-          } else if (this.props.type === 'unauthorizedProject') {
-            return this.unauthorizedProject();
           }
         })()}
       </div>
