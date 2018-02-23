@@ -157,6 +157,10 @@ class IDEView extends React.Component {
       e.stopPropagation();
       if (this.isUserOwner() || (this.props.user.authenticated && !this.props.project.owner)) {
         this.props.saveProject();
+      } else if (this.props.user.authenticated) {
+        this.props.cloneProject();
+      } else {
+        this.props.showErrorModal('forceAuthentication');
       }
       // 13 === enter
     } else if (e.keyCode === 13 && e.shiftKey && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
@@ -486,10 +490,10 @@ class IDEView extends React.Component {
           <Overlay
             title="Error"
             ariaLabel="error"
-            closeOverlay={this.props.hideErrorModal}
           >
             <ErrorModal
               type={this.props.ide.errorType}
+              closeModal={this.props.hideErrorModal}
             />
           </Overlay>
         }
