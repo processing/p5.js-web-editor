@@ -497,10 +497,10 @@ class IDEView extends React.Component {
           <Overlay
             title="Error"
             ariaLabel="error"
-            closeOverlay={this.props.hideErrorModal}
           >
             <ErrorModal
               type={this.props.ide.errorType}
+              closeModal={this.props.hideErrorModal}
             />
           </Overlay>
         }
