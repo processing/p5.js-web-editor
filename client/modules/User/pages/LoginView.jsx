@@ -3,6 +3,7 @@ import React from 'react';
 import { reduxForm } from 'redux-form';
 import { Link, browserHistory } from 'react-router';
 import InlineSVG from 'react-inlinesvg';
+import { Helmet } from 'react-helmet';
 import { validateAndLoginUser } from '../actions';
 import LoginForm from '../components/LoginForm';
 import { validateLogin } from '../../../utils/reduxFormUtils';
@@ -34,6 +35,9 @@ class LoginView extends React.Component {
     }
     return (
       <div className="form-container">
+        <Helmet>
+          <title>p5.js Web Editor | Login</title>
+        </Helmet>
         <div className="form-container__header">
           <button className="form-container__logo-button" onClick={this.gotoHomePage}>
             <InlineSVG src={logoUrl} alt="p5js Logo" />
