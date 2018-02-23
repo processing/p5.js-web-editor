@@ -1,11 +1,11 @@
-var webpack = require('webpack');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var ManifestPlugin = require('webpack-manifest-plugin');
-var ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
-var cssnext = require('postcss-cssnext');
-var postcssFocus = require('postcss-focus');
-var postcssReporter = require('postcss-reporter');
-var cssnano = require('cssnano');
+const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
+const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
+const cssnext = require('postcss-cssnext');
+const postcssFocus = require('postcss-focus');
+const postcssReporter = require('postcss-reporter');
+const cssnano = require('cssnano');
 require('dotenv').config();
 
 module.exports = {
@@ -37,7 +37,7 @@ module.exports = {
     ]
   },
   output: {
-    path: __dirname + '/static/dist',
+    path: `${__dirname}/static/dist`,
     filename: '[name].[chunkhash].js',
     publicPath: '/dist/'
   },
@@ -70,8 +70,8 @@ module.exports = {
         loader: 'file-loader'
       },
       {
-          test: /fonts\/.*\.(eot|svg|ttf|woff|woff2)$/,
-          loader: 'file-loader'
+        test: /fonts\/.*\.(eot|svg|ttf|woff|woff2)$/,
+        loader: 'file-loader'
       }
     ]
   },
@@ -79,11 +79,11 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        'API_URL': process.env.API_URL ? '"' + process.env.API_URL + '"' : undefined,
-        'NODE_ENV': JSON.stringify('production'),
-        'S3_BUCKET': process.env.S3_BUCKET ? '"' + process.env.S3_BUCKET + '"' : undefined,
-        'S3_BUCKET_URL_BASE': process.env.S3_BUCKET_URL_BASE ? '"' + process.env.S3_BUCKET_URL_BASE + '"' : undefined,
-        'AWS_REGION': process.env.AWS_REGION ? '"' + process.env.AWS_REGION + '"': undefined
+        API_URL: process.env.API_URL ? `"${process.env.API_URL}"` : undefined,
+        NODE_ENV: JSON.stringify('production'),
+        S3_BUCKET: process.env.S3_BUCKET ? `"${process.env.S3_BUCKET}"` : undefined,
+        S3_BUCKET_URL_BASE: process.env.S3_BUCKET_URL_BASE ? `"${process.env.S3_BUCKET_URL_BASE}"` : undefined,
+        AWS_REGION: process.env.AWS_REGION ? `"${process.env.AWS_REGION}"` : undefined
       }
     }),
     new webpack.optimize.CommonsChunkPlugin({
@@ -96,8 +96,8 @@ module.exports = {
       basePath: '/',
     }),
     new ChunkManifestPlugin({
-      filename: "chunk-manifest.json",
-      manifestVariable: "webpackManifest",
+      filename: 'chunk-manifest.json',
+      manifestVariable: 'webpackManifest',
     }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
