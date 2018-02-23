@@ -89,7 +89,7 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks: Infinity,
-      filename: 'vendor.js',
+      filename: '[name].[chunkhash].js',
     }),
     new ExtractTextPlugin({ filename: 'app.[chunkhash].css', allChunks: true }),
     new ManifestPlugin({
