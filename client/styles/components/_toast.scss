@@ -3,12 +3,15 @@
   color: $toast-text-color;
   padding: #{10 / $base-font-size}rem;
   position: absolute;
-  bottom: 5vh;
-  left: 5vh;
+  bottom: 10%;
+  left: 5%;
+  min-width: #{375 / $base-font-size}rem; //500px
   font-size: #{20 / $base-font-size}rem;
   line-height: #{24 / $base-font-size}rem;
   display: flex;
   z-index: 9999;
+  align-items: center;
+  justify-content: space-between;
   box-shadow: 0 6px 6px 0 rgba(0,0,0,0.10);
 }
 
@@ -16,7 +19,6 @@
   @include themify() {
     @extend %icon-toast;
   }
-  line-height: #{16 / $base-font-size}rem;
   padding-top: #{10 / $base-font-size}rem;
   margin-left: #{40 / $base-font-size}rem;
 }
