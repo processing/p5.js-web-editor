@@ -90,7 +90,7 @@
     "jsdom": "^9.8.3",
     "jshint": "^2.9.4",
     "lodash": "^4.16.4",
-    "loop-protect": "git+https://git@github.com/catarak/loop-protect.git",
+    "loop-protect": "github:catarak/loop-protect",
     "mjml": "^3.3.2",
     "moment": "^2.14.1",
     "mongoose": "^4.4.16",
