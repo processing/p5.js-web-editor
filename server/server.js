@@ -98,11 +98,11 @@ app.get('/auth/github/callback', passport.authenticate('github', { failureRedire
 });
 
 app.get('/auth/google', passport.authenticate('google', {
-    scope: ['email', 'profile']
+  scope: ['email', 'profile']
 }));
 
 app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
-    res.redirect('/');
+  res.redirect('/');
 });
 
 // configure passport

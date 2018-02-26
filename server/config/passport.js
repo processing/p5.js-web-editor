@@ -5,7 +5,7 @@ const passport = require('passport');
 const GitHubStrategy = require('passport-github').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
-const obj = require("./id");
+const obj = require('./id');
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
@@ -111,8 +111,8 @@ passport.use(new GoogleStrategy({
   clientSecret: obj.google.secret,
   callbackURL: '/auth/google/callback',
   passReqToCallback: true,
-  scope: ['email','profile']
-  }, (request, accessToken, refreshToken, profile, done) => {
+  scope: ['email', 'profile']
+}, (request, accessToken, refreshToken, profile, done) => {
     // User.findOne({ google: profile.id }, (err, existingUser) => {
     //   const email = profile.emails[0].value;
     //   if (existingUser) {
