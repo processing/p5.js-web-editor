@@ -4,6 +4,8 @@ const lodash = require('lodash');
 const passport = require('passport');
 const GitHubStrategy = require('passport-github').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
+const GoogleStrategy = require('passport-google-oauth2').Strategy;
+const obj = require("./id");
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
@@ -99,3 +101,45 @@ passport.use(new GitHubStrategy({
     });
   });
 }));
+
+/**
+ * Sign in with Google.
+ */
+
+passport.use(new GoogleStrategy({
+  clientID: obj.google.id,
+  clientSecret: obj.google.secret,
+  callbackURL: '/auth/google/callback',
+  passReqToCallback: true,
+  scope: ['email','profile']
+  }, (request, accessToken, refreshToken, profile, done) => {
+    // User.findOne({ google: profile.id }, (err, existingUser) => {
+    //   const email = profile.emails[0].value;
+    //   if (existingUser) {
+    //     return done(null, existingUser);
+    //   }
+    //   User.findOne({ email }, (err, existingEmailUser) => {
+    //     if (existingEmailUser) {
+    //       existingEmailUser.email = existingEmailUser.email || email;
+    //       existingEmailUser.google = profile.id;
+    //       existingEmailUser.username = existingEmailUser.username || email;
+    //       existingEmailUser.tokens.push({ kind: 'google', accessToken });
+    //       existingEmailUser.name = existingEmailUser.name || profile.displayName;
+    //       existingEmailUser.save((err) => {
+    //         return done(null, existingEmailUser);
+    //       });
+    //     } else {
+    //       const user = new User();
+    //       user.email = email;
+    //       user.google = profile.id;
+    //       user.username = email;
+    //       user.tokens.push({ kind: 'google', accessToken });
+    //       user.name = profile.displayName;
+    //       user.save((err) => {
+    //         return done(null, user);
+    //       });
+    //     }
+    //   });
+    // });
+    console.log(profile);
+  }));
