@@ -141,5 +141,4 @@ passport.use(new GoogleStrategy({
     //     }
     //   });
     // });
-    console.log(profile);
-  }));
+}));
