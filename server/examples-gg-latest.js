@@ -3,6 +3,7 @@ import Q from 'q';
 import mongoose from 'mongoose';
 import objectID from 'bson-objectid';
 import shortid from 'shortid';
+
 import eachSeries from 'async/eachSeries';
 import User from './models/user';
 import Project from './models/project';
@@ -89,15 +90,16 @@ const insert = function insert(_mainString, _insString, _pos) {
 
 // TEMP: GATHER DATA FROM STATIC FILE
 // - to save time use local json file for now -
-const fs = require('fs');
+// const fs = require('fs');
 // gg-github-retrieval.json
 // gg-github-newProjects.json
-function retrieveDataTemp(fName) {
-  return new Promise((resolve, reject) => {
-    const ggdata = `${__dirname}/${fName}`;
-    resolve(JSON.parse(fs.readFileSync(ggdata)));
-  });
-}
+
+// function retrieveDataTemp(fName) {
+//   return new Promise((resolve, reject) => {
+//     const ggdata = `${__dirname}/${fName}`;
+//     resolve(JSON.parse(fs.readFileSync(ggdata)));
+//   });
+// }
 
 /* --- data processing --- */
 // 1. first get the top level directories P and M
@@ -194,7 +196,7 @@ function appendSketchItemLinks(sketchList) {
 
 // 4. for each sketch item
 function getSketchItems(sketchList) {
-  const completeSketchPkg = [];
+  // const completeSketchPkg = [];
 
   /* eslint-disable */
   return Q.all(sketchList[0].map(sketch => Q.all(sketch.tree.map((item) => {
@@ -304,7 +306,10 @@ function formatSketchForStorage(sketch, user) {
         // add the ID to the root children id array
         output[0].children.push(projectItem.id);
         //  add the JS reference to the defaultHTML
-        output[2].content = insert(output[2].content, `<script src='${item.name}'></script>`, output[2].content.search('<!-- sketch additions -->'));
+        output[2].content = insert(
+          output[2].content, `<script src='${item.name}'></script>`,
+          output[2].content.search('<!-- sketch additions -->')
+        );
       }
     });
 
@@ -543,26 +548,27 @@ output etc
 // }
 
 // checking function
-function doNext(output) {
-  console.log(JSON.stringify(output));
-  console.log(output.length);
-}
+// function doNext(output) {
+//   console.log(JSON.stringify(output));
+//   console.log(output.length);
+// }
 
 // save output to terminal
-function saveRetrievalToFile(output) {
-  return new Promise((resolve, reject) => {
-    fs.writeFileSync('server/gg-github-raw.json', JSON.stringify(output));
-    resolve(output);
-  });
-}
+// function saveRetrievalToFile(output) {
+//   return new Promise((resolve, reject) => {
+//     fs.writeFileSync('server/gg-github-raw.json', JSON.stringify(output));
+//     resolve(output);
+//   });
+// }
 
 // save output to terminal
-function saveNewProjectsToFile(output) {
-  return new Promise((resolve, reject) => {
-    fs.writeFileSync('server/gg-github-newProjects.json', JSON.stringify(output));
-    resolve(output);
-  });
-}
+// function saveNewProjectsToFile(output) {
+//   return new Promise((resolve, reject) => {
+//     fs.writeFileSync('server/gg-github-newProjects.json', JSON.stringify(output));
+//     resolve(output);
+//   });
+// }
+
 // test make without deleting all projects etc
 // function make() {
 //   return retrieveDataTemp('gg-github-retrieval.json')
@@ -571,4 +577,5 @@ function saveNewProjectsToFile(output) {
 //     .then(linkToFontFiles)
 //     .then(saveToFile);
 // }
+
 // make();
