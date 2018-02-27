@@ -9,7 +9,8 @@
     "lint-fix": "eslint client server --ext .jsx --ext .js --fix",
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js --progress",
     "test": "npm run lint",
-    "fetch-examples": "node fetch-examples.js"
+    "fetch-examples": "node fetch-examples.js",
+    "fetch-examples-gg": "node fetch-examples-gg.js"
   },
   "main": "index.js",
   "author": "Cassie Tarakajian",
