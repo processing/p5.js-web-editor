@@ -124,6 +124,7 @@ class IDEView extends React.Component {
   }
 
   componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleGlobalKeydown, false);
     clearTimeout(this.autosaveInterval);
     this.autosaveInterval = null;
     this.consoleSize = undefined;
@@ -490,6 +491,7 @@ class IDEView extends React.Component {
           <Overlay
             title="Error"
             ariaLabel="error"
+            closeOverlay={this.props.hideErrorModal}
           >
             <ErrorModal
               type={this.props.ide.errorType}
