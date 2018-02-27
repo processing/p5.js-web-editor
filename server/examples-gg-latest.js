@@ -3,12 +3,19 @@ import Q from 'q';
 import mongoose from 'mongoose';
 import objectID from 'bson-objectid';
 import shortid from 'shortid';
+
 import eachSeries from 'async/eachSeries';
 import User from './models/user';
 import Project from './models/project';
 
 // TODO: change to true when testing!
 const testMake = false;
+
+// TODO: Change branchName if necessary
+const branchName = 'master';
+const branchRef = `?ref=${branchName}`;
+const clientId = process.env.GITHUB_ID;
+const clientSecret = process.env.GITHUB_SECRET;
 
 const defaultHTML =
   `<!DOCTYPE html>
@@ -20,7 +27,7 @@ const defaultHTML =
 
     <!-- Generative Design Dependencies here -->
     <!-- GG Bundled -->
-    <script src="https://rawgit.com/generative-design/Code-Package-p5.js/pre-release/libraries/gg-dep-bundle/gg-dep-bundle.js"></script>
+    <script src="https://rawgit.com/generative-design/Code-Package-p5.js/${branchName}/libraries/gg-dep-bundle/gg-dep-bundle.js"></script>
 
     <!-- Opentype -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/opentype.js/0.7.3/opentype.min.js"></script>
@@ -54,12 +61,6 @@ canvas {
 }
 `;
 
-// TODO: Change branchName if necessary
-const branchName = 'gg4editor';
-const branchRef = `?ref=${branchName}`;
-const clientId = process.env.GITHUB_ID;
-const clientSecret = process.env.GITHUB_SECRET;
-
 const headers = { 'User-Agent': 'p5js-web-editor/0.0.1' };
 
 mongoose.connect(process.env.MONGO_URL);
@@ -67,7 +68,6 @@ mongoose.connection.on('error', () => {
   console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
   process.exit(1);
 });
-
 
 /* --- Helper functions --- */
 const flatten = function flatten(list) {
@@ -90,15 +90,16 @@ const insert = function insert(_mainString, _insString, _pos) {
 
 // TEMP: GATHER DATA FROM STATIC FILE
 // - to save time use local json file for now -
-const fs = require('fs');
+// const fs = require('fs');
 // gg-github-retrieval.json
 // gg-github-newProjects.json
-function retrieveDataTemp(fName) {
-  return new Promise((resolve, reject) => {
-    const ggdata = `${__dirname}/${fName}`;
-    resolve(JSON.parse(fs.readFileSync(ggdata)));
-  });
-}
+
+// function retrieveDataTemp(fName) {
+//   return new Promise((resolve, reject) => {
+//     const ggdata = `${__dirname}/${fName}`;
+//     resolve(JSON.parse(fs.readFileSync(ggdata)));
+//   });
+// }
 
 /* --- data processing --- */
 // 1. first get the top level directories P and M
@@ -195,7 +196,7 @@ function appendSketchItemLinks(sketchList) {
 
 // 4. for each sketch item
 function getSketchItems(sketchList) {
-  const completeSketchPkg = [];
+  // const completeSketchPkg = [];
 
   /* eslint-disable */
   return Q.all(sketchList[0].map(sketch => Q.all(sketch.tree.map((item) => {
@@ -305,7 +306,10 @@ function formatSketchForStorage(sketch, user) {
         // add the ID to the root children id array
         output[0].children.push(projectItem.id);
         //  add the JS reference to the defaultHTML
-        output[2].content = insert(output[2].content, `<script src='${item.name}'></script>`, output[2].content.search('<!-- sketch additions -->'));
+        output[2].content = insert(
+          output[2].content, `<script src='${item.name}'></script>`,
+          output[2].content.search('<!-- sketch additions -->')
+        );
       }
     });
 
@@ -450,8 +454,6 @@ function createProjectsInP5user(newProjectList) {
         sketchCallback();
       });
     });
-  }).catch((err) => {
-    throw err;
   });
 }
 
@@ -546,26 +548,27 @@ output etc
 // }
 
 // checking function
-function doNext(output) {
-  console.log(JSON.stringify(output));
-  console.log(output.length);
-}
+// function doNext(output) {
+//   console.log(JSON.stringify(output));
+//   console.log(output.length);
+// }
 
 // save output to terminal
-function saveRetrievalToFile(output) {
-  return new Promise((resolve, reject) => {
-    fs.writeFileSync('server/gg-github-raw.json', JSON.stringify(output));
-    resolve(output);
-  });
-}
+// function saveRetrievalToFile(output) {
+//   return new Promise((resolve, reject) => {
+//     fs.writeFileSync('server/gg-github-raw.json', JSON.stringify(output));
+//     resolve(output);
+//   });
+// }
 
 // save output to terminal
-function saveNewProjectsToFile(output) {
-  return new Promise((resolve, reject) => {
-    fs.writeFileSync('server/gg-github-newProjects.json', JSON.stringify(output));
-    resolve(output);
-  });
-}
+// function saveNewProjectsToFile(output) {
+//   return new Promise((resolve, reject) => {
+//     fs.writeFileSync('server/gg-github-newProjects.json', JSON.stringify(output));
+//     resolve(output);
+//   });
+// }
+
 // test make without deleting all projects etc
 // function make() {
 //   return retrieveDataTemp('gg-github-retrieval.json')
@@ -574,4 +577,5 @@ function saveNewProjectsToFile(output) {
 //     .then(linkToFontFiles)
 //     .then(saveToFile);
 // }
+
 // make();

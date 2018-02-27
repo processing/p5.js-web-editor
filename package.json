@@ -9,13 +9,7 @@
     "lint-fix": "eslint client server --ext .jsx --ext .js --fix",
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js --progress",
     "test": "npm run lint",
-<<<<<<< HEAD
     "fetch-examples": "node fetch-examples.js"
-=======
-    "fetch-examples": "node fetch-examples.js",
-    "fetch-examples-gg": "node fetch-examples-gg.js",
-    "postinstall": "git submodule update --remote --recursive"
->>>>>>> 9f25a9ea6afede08a34b6f11c5f7a6b04f9a6d6c
   },
   "main": "index.js",
   "author": "Cassie Tarakajian",
@@ -95,7 +89,7 @@
     "jsdom": "^9.8.3",
     "jshint": "^2.9.4",
     "lodash": "^4.16.4",
-    "loop-protect": "git+https://git@github.com/catarak/loop-protect.git",
+    "loop-protect": "github:catarak/loop-protect",
     "mjml": "^3.3.2",
     "moment": "^2.14.1",
     "mongoose": "^4.4.16",

@@ -8,8 +8,7 @@ ADD . $APP_HOME
 WORKDIR $APP_HOME
 
 # Install node modules
-RUN git submodule init && \
-    npm install
+RUN npm install
 
 # Rebuild node-sass just to be safe
 RUN npm rebuild node-sass
