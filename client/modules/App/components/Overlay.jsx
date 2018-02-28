@@ -39,6 +39,8 @@ class Overlay extends React.Component {
   }
 
   keyPressHandle(e) {
+    // escape key code = 27.
+    // So here we are checking if the key pressed was Escape key.
     if (e.keyCode === 27) {
       this.close();
     }
@@ -59,7 +61,7 @@ class Overlay extends React.Component {
       children
     } = this.props;
     return (
-      <a tabIndex={-42} onKeyDown={this.keyPressHandle} id="overlay__anchor">
+      <a tabIndex={-1} onKeyDown={this.keyPressHandle} className="overlay__anchor">
         <div className="overlay">
           <div className="overlay__content">
             <section
@@ -80,25 +82,6 @@ class Overlay extends React.Component {
           </div>
         </div>
       </a>
-    // <div className="overlay">
-    // <div className="overlay__content">
-    //   <section
-    //     tabIndex="0"
-    //     role="main"
-    //     aria-label={ariaLabel}
-    //     ref={(node) => { this.node = node; }}
-    //     className="overlay__body"
-    //   >
-    //     <header className="overlay__header">
-    //       <h2 className="overlay__title">{title}</h2>
-    //       <button className="overlay__close-button" onClick={this.close} >
-    //         <InlineSVG src={exitUrl} alt="close overlay" />
-    //       </button>
-    //     </header>
-    //     {children}
-    //   </section>
-    // </div>
-    // </div>
     );
   }
 }
