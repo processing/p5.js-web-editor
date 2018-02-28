@@ -16,6 +16,7 @@ class Overlay extends React.Component {
 
   componentWillMount() {
     document.addEventListener('mousedown', this.handleClick, false);
+    document.addEventListener('keydown', this.keyPressHandle);
   }
 
   componentDidMount() {
@@ -24,6 +25,7 @@ class Overlay extends React.Component {
 
   componentWillUnmount() {
     document.removeEventListener('mousedown', this.handleClick, false);
+    document.removeEventListener('keydown', this.keyPressHandle);
   }
 
   handleClick(e) {
@@ -61,27 +63,25 @@ class Overlay extends React.Component {
       children
     } = this.props;
     return (
-      <a tabIndex={-1} onKeyDown={this.keyPressHandle} className="overlay__anchor">
-        <div className="overlay">
-          <div className="overlay__content">
-            <section
-              tabIndex="0"
-              role="main"
-              aria-label={ariaLabel}
-              ref={(node) => { this.node = node; }}
-              className="overlay__body"
-            >
-              <header className="overlay__header">
-                <h2 className="overlay__title">{title}</h2>
-                <button className="overlay__close-button" onClick={this.close} >
-                  <InlineSVG src={exitUrl} alt="close overlay" />
-                </button>
-              </header>
-              {children}
-            </section>
-          </div>
+      <div className="overlay">
+        <div className="overlay__content">
+          <section
+            tabIndex="0"
+            role="main"
+            aria-label={ariaLabel}
+            ref={(node) => { this.node = node; }}
+            className="overlay__body"
+          >
+            <header className="overlay__header">
+              <h2 className="overlay__title">{title}</h2>
+              <button className="overlay__close-button" onClick={this.close} >
+                <InlineSVG src={exitUrl} alt="close overlay" />
+              </button>
+            </header>
+            {children}
+          </section>
         </div>
-      </a>
+      </div>
     );
   }
 }
