@@ -65,8 +65,8 @@ function hijackConsoleErrorsScript(offs) {
         var string = msg.toLowerCase();
         var substring = "script error";
         var data = {};
-        if (string.indexOf(substring) !== -1){
-          data = 'Script Error: See Browser Console for Detail';
+        if (url.match(${EXTERNAL_LINK_REGEX}) !== null){
+          data = msg + ' (' + substring + ': line ' + lineNumber + ')';
         } else {
           var fileInfo = getScriptOff(lineNumber);
           data = msg + ' (' + fileInfo[1] + ': line ' + fileInfo[0] + ')';
@@ -74,7 +74,7 @@ function hijackConsoleErrorsScript(offs) {
         window.parent.postMessage([{
           method: 'error',
           arguments: data,
-          source: fileInfo[1]
+          source: fileInfo ? fileInfo[1] : "script"
         }], '*');
       return false;
     };
