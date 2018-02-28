@@ -340,6 +340,7 @@ class PreviewFrame extends React.Component {
           }
         }
       } else if (!(script.getAttribute('src') && script.getAttribute('src').match(EXTERNAL_LINK_REGEX)) !== null) {
+        script.setAttribute('crossorigin', '');
         script.innerHTML = this.resolveJSLinksInString(script.innerHTML, files); // eslint-disable-line
       }
     });
