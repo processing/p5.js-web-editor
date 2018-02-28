@@ -4,16 +4,18 @@ import mongoose from 'mongoose';
 import objectID from 'bson-objectid';
 import shortid from 'shortid';
 import eachSeries from 'async/eachSeries';
+
+import config from './config';
 import User from './models/user';
 import Project from './models/project';
 
-const defaultHTML =
+const defaultHTML = version =>
 `<!DOCTYPE html>
 <html>
   <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/addons/p5.dom.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/addons/p5.sound.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/${version}/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/${version}/addons/p5.dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/${version}/addons/p5.sound.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="utf-8" />
   </head>
@@ -189,44 +191,51 @@ function createProjectsInP5user(projectsInAllCategories) {
               _id: shortid.generate()
             });
           } else {
-            newProject = new Project({
-              name: project.projectName,
-              user: user._id,
-              files: [
-                {
-                  name: 'root',
-                  id: r,
-                  _id: r,
-                  children: [a, b, c],
-                  fileType: 'folder'
-                },
-                {
-                  name: 'sketch.js',
-                  content: project.sketchContent,
-                  id: a,
-                  _id: a,
-                  isSelectedFile: true,
-                  fileType: 'file',
-                  children: []
-                },
-                {
-                  name: 'index.html',
-                  content: defaultHTML,
-                  id: b,
-                  _id: b,
-                  fileType: 'file',
-                  children: []
-                },
-                {
-                  name: 'style.css',
-                  content: defaultCSS,
-                  id: c,
-                  _id: c,
-                  fileType: 'file',
-                  children: []
-                }
-              ],
-              _id: shortid.generate()
+            const p5versionOptions = {
+              uri: config.p5versionURL,
+              json: true
+            };
+
+            rp(p5versionOptions).then((response) => {
+              newProject = new Project({
+                name: project.projectName,
+                user: user._id,
+                files: [
+                  {
+                    name: 'root',
+                    id: r,
+                    _id: r,
+                    children: [a, b, c],
+                    fileType: 'folder'
+                  },
+                  {
+                    name: 'sketch.js',
+                    content: project.sketchContent,
+                    id: a,
+                    _id: a,
+                    isSelectedFile: true,
+                    fileType: 'file',
+                    children: []
+                  },
+                  {
+                    name: 'index.html',
+                    content: defaultHTML(response.version),
+                    id: b,
+                    _id: b,
+                    fileType: 'file',
+                    children: []
+                  },
+                  {
+                    name: 'style.css',
+                    content: defaultCSS,
+                    id: c,
+                    _id: c,
+                    fileType: 'file',
+                    children: []
+                  }
+                ],
+                _id: shortid.generate()
+              });
             });
           }
 

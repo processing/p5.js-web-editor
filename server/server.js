@@ -16,6 +16,7 @@ import config from '../webpack.config.dev';
 
 // Import all required modules
 import serverConfig from './config';
+import meta from './routes/meta.routes';
 import users from './routes/user.routes';
 import sessions from './routes/session.routes';
 import projects from './routes/project.routes';
@@ -80,6 +81,7 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use('/api', requestsOfTypeJSON(), meta);
 app.use('/api', requestsOfTypeJSON(), users);
 app.use('/api', requestsOfTypeJSON(), sessions);
 app.use('/api', requestsOfTypeJSON(), projects);

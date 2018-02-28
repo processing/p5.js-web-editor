@@ -1,4 +1,5 @@
 import { Router } from 'express';
+
 import { renderIndex } from '../views/index';
 import { get404Sketch } from '../views/404Page';
 import { userExists } from '../controllers/user.controller';
