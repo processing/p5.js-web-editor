@@ -9,13 +9,12 @@ function draw() {
   background(220);
 }`;
 
-const defaultHTML =
-`<!DOCTYPE html>
+const defaultHTML = (version = '0.5.0') => `<!DOCTYPE html>
 <html>
   <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/addons/p5.dom.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/addons/p5.sound.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/${version}/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/${version}/addons/p5.dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/${version}/addons/p5.sound.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="utf-8" />
 
@@ -58,7 +57,7 @@ const initialState = () => {
     },
     {
       name: 'index.html',
-      content: defaultHTML,
+      content: defaultHTML(),
       id: b,
       _id: b,
       fileType: 'file',
@@ -224,6 +223,16 @@ const files = (state, action) => {
       return state.map((file) => {
         if (file.id === action.id) {
           return Object.assign({}, file, { isFolderClosed: true });
+        }
+        return file;
+      });
+    case ActionTypes.SET_P5_VERSION:
+      return state.map((file) => {
+        if (file.name === 'index.html') {
+          return {
+            ...file,
+            content: defaultHTML(action.data.version)
+          };
         }
         return file;
       });

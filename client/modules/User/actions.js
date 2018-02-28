@@ -68,17 +68,26 @@ export function validateAndLoginUser(previousPath, formProps, dispatch) {
 
 export function getUser() {
   return (dispatch) => {
+    let userResponse;
     axios.get(`${ROOT_URL}/session`, { withCredentials: true })
-      .then((response) => {
-        dispatch({
-          type: ActionTypes.AUTH_USER,
-          user: response.data
-        });
-        dispatch({
-          type: ActionTypes.SET_PREFERENCES,
-          preferences: response.data.preferences
-        });
-      })
+    .then((response) => {
+      userResponse = response;
+      return axios.get(`${ROOT_URL}/p5version`);
+    })
+    .then(({ data }) => {
+      dispatch({
+        type: ActionTypes.AUTH_USER,
+        user: userResponse.data
+      });
+      dispatch({
+        type: ActionTypes.SET_PREFERENCES,
+        preferences: userResponse.data.preferences
+      });
+      dispatch({
+        type: ActionTypes.SET_P5_VERSION,
+        data,
+      });
+    })
       .catch((response) => {
         dispatch(authError(response.data.error));
       });
