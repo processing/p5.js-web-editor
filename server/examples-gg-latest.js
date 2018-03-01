@@ -115,13 +115,12 @@ function getCodePackage() {
       client_secret: clientSecret
     },
     method: 'GET',
-    headers
+    headers,
+    json: true
   };
 
   return rp(options).then((res) => {
-    const json = JSON.parse(res);
-
-    json.forEach((metadata) => {
+    res.forEach((metadata) => {
       if (metadata.name.endsWith('P') === true || metadata.name.endsWith('M') === true) {
         sketchRootList.push(metadata);
       }
@@ -146,11 +145,12 @@ function getSketchDirectories(sketchRootList) {
         client_secret: clientSecret
       },
       method: 'GET',
-      headers
+      headers,
+      json: true
     };
 
     return rp(options).then((res) => {
-      const sketchDirs = flatten(JSON.parse(res));
+      const sketchDirs = flatten(res);
 
       return sketchDirs;
     }).catch((err) => {
@@ -182,12 +182,12 @@ function appendSketchItemLinks(sketchList) {
         client_secret: clientSecret
       },
       method: 'GET',
-      headers
+      headers,
+      json: true
     };
 
     return rp(options).then((res) => {
-      const sketchItems = JSON.parse(res);
-      sketches.tree = sketchItems;
+      sketches.tree = res;
 
       return sketchList;
     });
@@ -208,11 +208,12 @@ function getSketchItems(sketchList) {
           client_secret: clientSecret
         },
         method: 'GET',
-        headers
+        headers,
+        json: true
       };
 
       return rp(options).then((res) => {
-        sketch.data = JSON.parse(res);
+        sketch.data = res;
         return sketch;
       }).catch((err) => {
         throw err;
