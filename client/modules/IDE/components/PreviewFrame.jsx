@@ -36,8 +36,8 @@ function getAllScriptOffsets(htmlFile) {
     } else {
       endFilenameInd = htmlFile.indexOf('.js', ind + startTag.length + 3);
       filename = htmlFile.substring(ind + startTag.length, endFilenameInd);
-      // the length of hijackConsoleErrorsScript is 31 lines
-      lineOffset = htmlFile.substring(0, ind).split('\n').length + 31;
+      // the length of hijackConsoleErrorsScript is 33 lines
+      lineOffset = htmlFile.substring(0, ind).split('\n').length + 33;
       offs.push([lineOffset, filename]);
       lastInd = ind + 1;
     }
@@ -65,8 +65,10 @@ function hijackConsoleErrorsScript(offs) {
         var string = msg.toLowerCase();
         var substring = "script error";
         var data = {};
-        if (url.match(${EXTERNAL_LINK_REGEX}) !== null){
-          data = msg + ' (' + substring + ': line ' + lineNumber + ')';
+        if (url.match(${EXTERNAL_LINK_REGEX}) !== null && error.stack){
+          var errorNum = error.stack.split('about:srcdoc:')[1].split(':')[0];
+          var fileInfo = getScriptOff(errorNum);
+          data = msg + ' (' + fileInfo[1] + ': line ' + fileInfo[0] + ')';
         } else {
           var fileInfo = getScriptOff(lineNumber);
           data = msg + ' (' + fileInfo[1] + ': line ' + fileInfo[0] + ')';
@@ -74,7 +76,7 @@ function hijackConsoleErrorsScript(offs) {
         window.parent.postMessage([{
           method: 'error',
           arguments: data,
-          source: fileInfo ? fileInfo[1] : "script"
+          source: fileInfo[1]
         }], '*');
       return false;
     };
