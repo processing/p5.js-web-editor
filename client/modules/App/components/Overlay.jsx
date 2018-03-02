@@ -10,10 +10,10 @@ class Overlay extends React.Component {
     super(props);
     this.close = this.close.bind(this);
   }
-  
-   componentDidMount() {
+
+  componentDidMount() {
     this.overlay.focus();
-   }
+  }
 
   close() {
     if (!this.props.closeOverlay) {
