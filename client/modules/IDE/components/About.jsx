@@ -1,13 +1,17 @@
 import React from 'react';
 import InlineSVG from 'react-inlinesvg';
+import { Helmet } from 'react-helmet';
 
 const squareLogoUrl = require('../../../images/p5js-square-logo.svg');
-const playUrl = require('../../../images/play.svg');
+// const playUrl = require('../../../images/play.svg');
 const asteriskUrl = require('../../../images/p5-asterisk.svg');
 
 function About(props) {
   return (
     <div className="about__content">
+      <Helmet>
+        <title>p5.js Web Editor | About</title>
+      </Helmet>
       <div className="about__content-column">
         <InlineSVG className="about__logo" src={squareLogoUrl} alt="p5js Square Logo" />
         {/* Video button to hello p5 video page */}

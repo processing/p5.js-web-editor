@@ -60,7 +60,11 @@ class Toolbar extends React.Component {
       <div className="toolbar">
         <button
           className="toolbar__play-sketch-button"
-          onClick={this.props.startAccessibleSketch}
+          onClick={() => {
+            this.props.startAccessibleSketch();
+            this.props.setTextOutput(true);
+            this.props.setGridOutput(true);
+          }}
           aria-label="play sketch"
           disabled={this.props.infiniteLoop}
         >
@@ -169,6 +173,8 @@ Toolbar.propTypes = {
   infiniteLoop: PropTypes.bool.isRequired,
   autorefresh: PropTypes.bool.isRequired,
   setAutorefresh: PropTypes.func.isRequired,
+  setTextOutput: PropTypes.func.isRequired,
+  setGridOutput: PropTypes.func.isRequired,
   startSketch: PropTypes.func.isRequired,
   startAccessibleSketch: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,

@@ -1,11 +1,11 @@
 import objectID from 'bson-objectid';
 import * as ActionTypes from '../../../constants';
 
-const defaultSketch = `function setup() { 
+const defaultSketch = `function setup() {
   createCanvas(400, 400);
-} 
+}
 
-function draw() { 
+function draw() {
   background(220);
 }`;
 
@@ -18,6 +18,7 @@ const defaultHTML =
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/addons/p5.sound.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="utf-8" />
+
   </head>
   <body>
     <script src="sketch.js"></script>

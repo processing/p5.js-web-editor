@@ -2,6 +2,7 @@ import { browserHistory } from 'react-router';
 import axios from 'axios';
 import objectID from 'bson-objectid';
 import each from 'async/each';
+import { isEqual } from 'lodash';
 import * as ActionTypes from '../../../constants';
 import { showToast, setToastText } from './toast';
 import { setUnsavedChanges,
@@ -81,9 +82,15 @@ export function saveProject(autosave = false) {
     if (state.project.id) {
       return axios.put(`${ROOT_URL}/projects/${state.project.id}`, formParams, { withCredentials: true })
         .then((response) => {
-          dispatch(setUnsavedChanges(false));
-          console.log(response.data);
-          dispatch(setProject(response.data));
+          const currentState = getState();
+          const savedProject = Object.assign({}, response.data);
+          if (!isEqual(currentState.files, response.data.files)) {
+            savedProject.files = currentState.files;
+            dispatch(setUnsavedChanges(true));
+          } else {
+            dispatch(setUnsavedChanges(false));
+          }
+          dispatch(setProject(savedProject));
           dispatch({
             type: ActionTypes.PROJECT_SAVE_SUCCESS
           });

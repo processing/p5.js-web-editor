@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { renderIndex } from '../views/index';
 import { get404Sketch } from '../views/404Page';
 import { userExists } from '../controllers/user.controller';
+import { projectExists, projectForUserExists } from '../controllers/project.controller';
 
 const router = new Router();
 
@@ -20,11 +21,15 @@ router.get('/signup', (req, res) => {
 });
 
 router.get('/projects/:project_id', (req, res) => {
-  res.send(renderIndex());
+  projectExists(req.params.project_id, exists => (
+    exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
+  ));
 });
 
 router.get('/:username/sketches/:project_id', (req, res) => {
-  res.send(renderIndex());
+  projectForUserExists(req.params.username, req.params.project_id, exists => (
+    exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
+  ));
 });
 
 

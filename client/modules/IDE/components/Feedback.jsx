@@ -1,11 +1,14 @@
 import React from 'react';
 import InlineSVG from 'react-inlinesvg';
-
+import { Helmet } from 'react-helmet';
 import githubLogoUrl from '../../../images/github.svg';
 
 function Feedback(props) {
   return (
     <div className="feedback__content">
+      <Helmet>
+        <title>p5.js Web Editor | Feedback</title>
+      </Helmet>
       <div className="feedback__content-pane">
         <h2 className="feedback__content-pane-header">
           Via Github Issues
