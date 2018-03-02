@@ -289,15 +289,15 @@ function createProjectsInP5user(projectsInAllCategories) {
 }
 
 function getp5User() {
-  User.findOne({ username: process.env.USER_NAME }, (err, user) => {
+  User.findOne({ username: process.env.EXAMPLE_USERNAME }, (err, user) => {
     if (err) throw err;
 
     let p5User = user;
     if (!p5User) {
       p5User = new User({
-        username: process.env.USER_NAME,
-				email: process.env.USER_EMAIL,
-				password: process.env.USER_PASSWORD
+        username: process.env.EXAMPLE_USERNAME,
+	email: process.env.EXAMPLE_USER_EMAIL,
+	password: process.env.EXAMPLE_USER_PASSWORD
       });
       p5User.save((saveErr) => {
         if (saveErr) throw saveErr;
