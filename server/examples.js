@@ -137,7 +137,7 @@ function createProjectsInP5user(projectsInAllCategories) {
   rp(options).then((res) => {
     const assets = JSON.parse(res);
 
-    User.findOne({ username: process.env.USER_NAME }, (err, user) => {
+    User.findOne({ username: process.env.EXAMPLE_USERNAME }, (err, user) => {
       if (err) throw err;
 
       eachSeries(projectsInAllCategories, (projectsInOneCategory, categoryCallback) => {
