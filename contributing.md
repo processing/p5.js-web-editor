@@ -1,8 +1,8 @@
 # Contributing to the p5.js web editor 
 
-Hi! Thanks for wanting to contribute to P5's web editor! You are awesome! 😊
+Hello! We welcome community contributions to the p5.js web editor. Contributing takes many forms and doesn't have to be **writing code**, it can be **documenting bugs**, **proposing new features**, and **updating documentation**. We would also like to Thank you for choosing to contribute p5.js web editor, any way possible. You are awesome! :blush:
 
-This **web editor** for **p5.js**, a JavaScript library with the goal of making coding accessible to **artists**, **designers**, **educators**, and **beginners**, is used to help develop using p5.js library in web browser and thus makes for a good starting point for working with p5. 
+This **web editor** for **p5.js**, a JavaScript library with the goal of making coding accessible to **artists**, **designers**, **educators**, and **beginners**, is an environment to make p5.js sketches without needing to download any software or do any configuration, which makes it a great place to start learning how to code and start learning p5.js.
 
 Here are links to all the sections in this document:
 
@@ -11,7 +11,6 @@ Here are links to all the sections in this document:
 - [Code of Conduct](#code-of-conduct)
 - [Technologies Used](#technologies-used)
 - [Development Installation](#development-installation)
-- [File Structure](#file-structure)
 - [New Design](#new-design)
 - [How Can I Contribute ?](#how-can-i-contribute?)
   - [First Timers](#first-timers)
@@ -30,9 +29,9 @@ Please follow the guidelines mentioned at [CODE OF CONDUCT.md](https://github.co
  
  - For a reference to the **file structure format** I am using, please look at the [Mern Starter](https://github.com/Hashnode/mern-starter).
 
- - This project **does not use CSS Modules, but uses Sass**. [BEM guidelines](http://getbem.com/) are followed. 
+ - This project **does not use CSS Modules, but uses Sass**. [BEM guidelines and naming conventions](http://getbem.com/) are followed. 
  
- - For CSS naming conventions, write OOSCSS (Object-Oriented SCSS) with placeholders and mixins, and follow the [7-1 Pattern](https://sass-guidelin.es/#the-7-1-pattern) for Sass.
+ - For repeatitive and common styles, write OOSCSS (Object-Oriented SCSS) with placeholders and mixins. For organizing styles, follow the 7-1 Pattern for Sass.
 
  - We're using [ES6](http://es6-features.org/) and transpiling to ES5 using [Babel](https://babeljs.io/). 
 
@@ -44,21 +43,6 @@ Please follow the guidelines mentioned at [CODE OF CONDUCT.md](https://github.co
 
 To get started on a patch, first read the instruction from [README.md](https://github.com/processing/p5.js-web-editor#development-installation).
 
-# File Structure
-
-```
-/client
-|-- /components
-|   |-- accountNav.jsx
-|   |-- forceProtocol.jsx
-|   |-- Nav.jsx
-|-- /images //InlineSVG files present    
-|-- /modules
-    |-- /App
-    |-- /IDE
-    |-- /User
-```
-
 # New Design
 
 Design proposed and theme changes are present at: [Zeplin](https://scene.zeplin.io/project/55f746c54a02e1e50e0632c3).
@@ -66,13 +50,13 @@ Design proposed and theme changes are present at: [Zeplin](https://scene.zeplin.
 # How Can I Contribute?
 
 ### First Timers
-For first-time contributors or those who want to start with a small task: [check out our list of good first bugs](https://github.com/processing/p5.js-web-editor/labels/good%20first%20issue). These issues have an assigned mentor to help you out and are great issues for learning about the web editor, its file structure and our development process.
+For first-time contributors or those who want to start with a small task: [check out our list of good first bugs](https://github.com/processing/p5.js-web-editor/labels/good%20first%20issue). First read the github discussion on that issue and find out if there's currently a person working on that or not. If no one is working on it or if there has was one claimed to but has not been active for a while, ask if it is up for grabs. It's okay to not know how to fix an issue and feel free to ask questions about to approach the problem! We are all just here to learn and make something awesome. Someone from the community would help you out and these are great issues for learning about the web editor, its file structure and its development process.
 
 ### Want something more challenging
 If you're already familiar with the project or would like take on something a little more challenging, please take a look at the [priority: high](https://github.com/processing/p5.js-web-editor/labels/priority%3Ahigh) issues.
 
 ### Feature Enhancement
-If you want to like building new things, please take a look at [type: feature](https://github.com/processing/p5.js-web-editor/labels/type%3Afeature).
+If you want to work on building new things, please take a look at [type: feature](https://github.com/processing/p5.js-web-editor/labels/type%3Afeature).
 
 If you'd like to work on a bug, please comment on it to let the maintainers know.
 If someone else has already commented and taken up that bug, please refrain from working on it and submitting
