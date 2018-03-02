@@ -47,12 +47,11 @@ function getCategories() {
     url: `https://api.github.com/repos/processing/p5.js-website/contents/dist/assets/examples/en?client_id=${
     clientId}&client_secret=${clientSecret}`,
     method: 'GET',
-    headers
+    headers,
+    json: true
   };
   return rp(options).then((res) => {
-    const json = JSON.parse(res);
-
-    json.forEach((metadata) => {
+    res.forEach((metadata) => {
       let category = '';
       for (let j = 1; j < metadata.name.split('_').length; j += 1) {
         category += `${metadata.name.split('_')[j]} `;
@@ -71,13 +70,13 @@ function getSketchesInCategories(categories) {
     const options = {
       url: `${category.url.replace('?ref=master', '')}?client_id=${clientId}&client_secret=${clientSecret}`,
       method: 'GET',
-      headers
+      headers,
+      json: true
     };
 
     return rp(options).then((res) => {
       const projectsInOneCategory = [];
-      const examples = JSON.parse(res);
-      examples.forEach((example) => {
+      res.forEach((example) => {
         let projectName;
         if (example.name === '02_Instance_Container.js') {
           for (let i = 1; i < 5; i += 1) {
@@ -131,7 +130,8 @@ function createProjectsInP5user(projectsInAllCategories) {
     url: `https://api.github.com/repos/processing/p5.js-website/contents/dist/assets/examples/assets?client_id=${
     clientId}&client_secret=${clientSecret}`,
     method: 'GET',
-    headers
+    headers,
+    json: true
   };
 
   rp(options).then((res) => {
@@ -236,7 +236,7 @@ function createProjectsInP5user(projectsInAllCategories) {
           assetsInProject.forEach((assetNamePath, i) => {
             let assetName = assetNamePath.split('assets/')[1];
 
-            assets.forEach((asset) => {
+            res.forEach((asset) => {
               if (asset.name === assetName || asset.name.split('.')[0] === assetName) {
                 assetName = asset.name;
               }

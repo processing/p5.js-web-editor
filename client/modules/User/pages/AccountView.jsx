@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 import InlineSVG from 'react-inlinesvg';
 import axios from 'axios';
+import { Helmet } from 'react-helmet';
 import { updateSettings, initiateVerification } from '../actions';
 import AccountForm from '../components/AccountForm';
 import { validateSettings } from '../../../utils/reduxFormUtils';
@@ -32,6 +33,9 @@ class AccountView extends React.Component {
   render() {
     return (
       <div className="form-container">
+        <Helmet>
+          <title>p5.js Web Editor | Account</title>
+        </Helmet>
         <div className="form-container__header">
           <button className="form-container__logo-button" onClick={this.gotoHomePage}>
             <InlineSVG src={logoUrl} alt="p5js Logo" />

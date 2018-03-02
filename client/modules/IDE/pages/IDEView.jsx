@@ -9,7 +9,6 @@ import Editor from '../components/Editor';
 import Sidebar from '../components/Sidebar';
 import PreviewFrame from '../components/PreviewFrame';
 import Toolbar from '../components/Toolbar';
-import AccessibleOutput from '../components/AccessibleOutput';
 import Preferences from '../components/Preferences';
 import NewFileModal from '../components/NewFileModal';
 import NewFolderModal from '../components/NewFolderModal';
@@ -158,6 +157,10 @@ class IDEView extends React.Component {
       e.stopPropagation();
       if (this.isUserOwner() || (this.props.user.authenticated && !this.props.project.owner)) {
         this.props.saveProject();
+      } else if (this.props.user.authenticated) {
+        this.props.cloneProject();
+      } else {
+        this.props.showErrorModal('forceAuthentication');
       }
       // 13 === enter
     } else if (e.keyCode === 13 && e.shiftKey && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
@@ -201,7 +204,7 @@ class IDEView extends React.Component {
     return (
       <div className="ide">
         <Helmet>
-          <title>{this.props.project.name}</title>
+          <title>p5.js Web Editor | {this.props.project.name}</title>
         </Helmet>
         {this.props.toast.isVisible && <Toast />}
         <Nav
@@ -378,14 +381,8 @@ class IDEView extends React.Component {
                         ) &&
                           this.props.ide.isPlaying
                       ) ||
-                        this.props.ide.isAccessibleOutputPlaying
-                    ) &&
-                      <AccessibleOutput
-                        isPlaying={this.props.ide.isPlaying}
-                        previewIsRefreshing={this.props.ide.previewIsRefreshing}
-                        textOutput={this.props.preferences.textOutput}
-                        gridOutput={this.props.preferences.gridOutput}
-                      />
+                      this.props.ide.isAccessibleOutputPlaying
+                    )
                   }
                 </div>
                 <PreviewFrame
@@ -493,10 +490,10 @@ class IDEView extends React.Component {
           <Overlay
             title="Error"
             ariaLabel="error"
-            closeOverlay={this.props.hideErrorModal}
           >
             <ErrorModal
               type={this.props.ide.errorType}
+              closeModal={this.props.hideErrorModal}
             />
           </Overlay>
         }
