@@ -36,8 +36,8 @@ function getAllScriptOffsets(htmlFile) {
     } else {
       endFilenameInd = htmlFile.indexOf('.js', ind + startTag.length + 3);
       filename = htmlFile.substring(ind + startTag.length, endFilenameInd);
-      // the length of hijackConsoleErrorsScript is 31 lines
-      lineOffset = htmlFile.substring(0, ind).split('\n').length + 31;
+      // the length of hijackConsoleErrorsScript is 33 lines
+      lineOffset = htmlFile.substring(0, ind).split('\n').length + 33;
       offs.push([lineOffset, filename]);
       lastInd = ind + 1;
     }
@@ -65,8 +65,10 @@ function hijackConsoleErrorsScript(offs) {
         var string = msg.toLowerCase();
         var substring = "script error";
         var data = {};
-        if (string.indexOf(substring) !== -1){
-          data = 'Script Error: See Browser Console for Detail';
+        if (url.match(${EXTERNAL_LINK_REGEX}) !== null && error.stack){
+          var errorNum = error.stack.split('about:srcdoc:')[1].split(':')[0];
+          var fileInfo = getScriptOff(errorNum);
+          data = msg + ' (' + fileInfo[1] + ': line ' + fileInfo[0] + ')';
         } else {
           var fileInfo = getScriptOff(lineNumber);
           data = msg + ' (' + fileInfo[1] + ': line ' + fileInfo[0] + ')';
@@ -335,6 +337,7 @@ class PreviewFrame extends React.Component {
           }
         }
       } else if (!(script.getAttribute('src') && script.getAttribute('src').match(EXTERNAL_LINK_REGEX)) !== null) {
+        script.setAttribute('crossorigin', '');
         script.innerHTML = this.resolveJSLinksInString(script.innerHTML, files); // eslint-disable-line
       }
     });
