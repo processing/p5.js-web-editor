@@ -210,6 +210,34 @@ export function getProjectsForUser(req, res) {
   }
 }
 
+export function projectExists(projectId, callback) {
+  Project.findById(projectId, (err, project) => (
+    project ? callback(true) : callback(false)
+  ));
+}
+
+export function projectForUserExists(username, projectId, callback) {
+  User.findOne({ username }, (err, user) => {
+    if (!user) {
+      callback(false);
+      return;
+    }
+    Project.findOne({ _id: projectId, user: user._id }, (innerErr, project) => {
+      if (project) {
+        callback(true);
+        return;
+      }
+      Project.findOne({ slug: projectId, user: user._id }, (slugError, projectBySlug) => {
+        if (projectBySlug) {
+          callback(true);
+          return;
+        }
+        callback(false);
+      });
+    });
+  });
+}
+
 function bundleExternalLibs(project, zip, callback) {
   const indexHtml = project.files.find(file => file.name === 'index.html');
   let numScriptsResolved = 0;

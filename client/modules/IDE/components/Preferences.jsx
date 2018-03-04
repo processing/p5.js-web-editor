@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import InlineSVG from 'react-inlinesvg';
+import { Helmet } from 'react-helmet';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 // import { bindActionCreators } from 'redux';
 // import { connect } from 'react-redux';
@@ -51,6 +52,9 @@ class Preferences extends React.Component {
 
     return (
       <section className="preferences" tabIndex="0" title="preference-menu">
+        <Helmet>
+          <title>p5.js Web Editor | Preferences</title>
+        </Helmet>
         <Tabs>
           <TabList>
             <div className="preference__subheadings">
