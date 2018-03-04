@@ -20,3 +20,20 @@
   flex-wrap: wrap;
   padding: #{10 / $base-font-size}rem 0;
 }
+
+/*============================
+== Media queries
+============================*/
+
+@media only screen and (max-width: 775px) {
+  .share-modal__project-name {
+    text-align: center;
+  }
+}
+
+@media only screen and (max-width: 675px) {
+  .share-modal {
+    // padding: 20%;
+    width: 100%;
+  }
+}
