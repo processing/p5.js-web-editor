@@ -135,7 +135,7 @@ function createProjectsInP5user(projectsInAllCategories) {
   };
 
   rp(options).then((res) => {
-    User.findOne({ username: process.env.EXAMPLES_USERNAME }, (err, user) => {
+    User.findOne({ username:'p5' }, (err, user) => {
       if (err) throw err;
 
       eachSeries(projectsInAllCategories, (projectsInOneCategory, categoryCallback) => {
@@ -287,15 +287,15 @@ function createProjectsInP5user(projectsInAllCategories) {
 }
 
 function getp5User() {
-  User.findOne({ username: process.env.EXAMPLES_USERNAME }, (err, user) => {
+  User.findOne({ username: 'p5' }, (err, user) => {
     if (err) throw err;
 
     let p5User = user;
     if (!p5User) {
       p5User = new User({
-        username: process.env.EXAMPLES_USERNAME,
-        email: process.env.EXAMPLES_EMAIL,
-        password: process.env.EXAMPLES_PASSWORD
+        username: 'p5',
+        email: 'p5-examples@gmail.com',
+        password: 'test'
       });
       p5User.save((saveErr) => {
         if (saveErr) throw saveErr;
