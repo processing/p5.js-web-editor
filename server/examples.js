@@ -135,7 +135,7 @@ function createProjectsInP5user(projectsInAllCategories) {
   };
 
   rp(options).then((res) => {
-    User.findOne({ username:'p5' }, (err, user) => {
+    User.findOne({ username: 'p5' }, (err, user) => {
       if (err) throw err;
 
       eachSeries(projectsInAllCategories, (projectsInOneCategory, categoryCallback) => {
