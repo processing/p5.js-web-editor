@@ -6,6 +6,9 @@ export function renderIndex() {
   <!DOCTYPE html>
   <html>
     <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <meta name="keywords" content="p5.js, p5.js web editor, web editor, processing, code editor" />
+      <meta name="description" content="A web editor for p5.js, a JavaScript library with the goal of making coding accessible to artists, designers, educators, and beginners." />
       <title>p5.js Web Editor</title>
       ${process.env.NODE_ENV === 'production' ? `<link rel='stylesheet' href='/dist${assetsManifest['/app.css']}' />` : ''}
       <link href='https://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
