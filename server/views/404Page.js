@@ -42,6 +42,9 @@ export function get404Sketch(callback) {
         const html = htmlFile.split('</head>');
         html[0] = `
           ${html[0]}
+          <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+          <meta name="keywords" content="p5.js, p5.js web editor, web editor, processing, code editor" />
+          <meta name="description" content="A web editor for p5.js, a JavaScript library with the goal of making coding accessible to artists, designers, educators, and beginners." />
           <title>404 Page Not Found - p5.js Web Editor</title>
           <style>
             .header {

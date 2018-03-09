@@ -20,11 +20,35 @@ class Nav extends React.PureComponent {
     this.handleFocus = this.handleFocus.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
     this.clearHideTimeout = this.clearHideTimeout.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleClickOutside = this.handleClickOutside.bind(this);
+  }
+
+  componentWillMount() {
+    document.addEventListener('mousedown', this.handleClick, false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClick, false);
   }
 
   setDropdown(dropdown) {
     this.setState({
       dropdownOpen: dropdown
+    });
+  }
+
+  handleClick(e) {
+    if (this.node.contains(e.target)) {
+      return;
+    }
+
+    this.handleClickOutside();
+  }
+
+  handleClickOutside() {
+    this.setState({
+      dropdownOpen: 'none'
     });
   }
 
@@ -85,7 +109,7 @@ class Nav extends React.PureComponent {
     };
     return (
       <nav className="nav" role="navigation" title="main-navigation">
-        <ul className="nav__items-left" title="project-menu">
+        <ul className="nav__items-left" title="project-menu" ref={(node) => { this.node = node; }}>
           <li className="nav__item-logo">
             <InlineSVG src={logoUrl} alt="p5.js logo" />
           </li>
