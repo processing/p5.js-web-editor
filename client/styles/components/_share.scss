@@ -1,7 +1,8 @@
 .share-modal {
   padding: #{20 / $base-font-size}rem;
   padding-top: 0;
-  width: #{500 / $base-font-size}rem;
+  // width: #{500 / $base-font-size}rem;
+  width: 100%;
 }
 
 .share-modal__project-name {
@@ -28,12 +29,5 @@
 @media only screen and (max-width: 775px) {
   .share-modal__project-name {
     text-align: center;
-  }
-}
-
-@media only screen and (max-width: 675px) {
-  .share-modal {
-    // padding: 20%;
-    width: 100%;
   }
 }
