@@ -24,6 +24,7 @@
   flex-flow: column;
   max-height: 80%;
   max-width: 65%;
+  min-width:40%;
   overflow:auto;
 }
 
@@ -42,29 +43,3 @@
   @include icon();
   padding: #{3 / $base-font-size}rem 0;
 }
-
-/*============================
-== Media queries
-============================*/
-
-@media only screen and (max-width: 775px) {
-  .overlay__body {
-    max-width: 70%;
-  }
-}
-
-@media only screen and (max-width: 718px) {
-  .overlay__body {
-    max-width: 75%;
-  }
-}
-
-@media only screen and (max-width: 675px) {
-  .overlay__body {
-    min-width: 70%;
-    max-width: 80%;
-    min-height: #{300 / $base-font-size}rem;
-    max-height:100%;
-  }
-}
-
