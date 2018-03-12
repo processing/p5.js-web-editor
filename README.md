@@ -5,7 +5,7 @@ This project is currently in development! It will be announced when there is a (
 ## Development Installation
 
 1. Fork this repository.
-2. Clone the forked repostory and cd into it
+2. Clone the forked repository and cd into it
 3. `$ npm install`
 4. Install MongoDB and make sure it is running
    * For Mac OSX with [homebrew](http://brew.sh/): `brew install mongodb` then `brew services start mongodb`
@@ -48,7 +48,7 @@ Note that this takes up a significant amount of space on your machine. Make sure
 1. Install Docker for your operating system
    * Mac: https://www.docker.com/docker-mac
    * Windows: https://www.docker.com/docker-windows
-2. Clone this repostory and cd into it
+2. Clone this repository and cd into it
 3. `$ docker-compose build`
 4. `$ docker-compose run --rm server npm run fetch-examples`
 
@@ -66,7 +66,7 @@ If you don't have the full server environment running, you can launch a one-off 
 8. `$ docker-compose run server --rm bash -l`
 
 ## Production Installation
-1. Clone this repostory and `cd` into it
+1. Clone this repository and `cd` into it
 2. `$ npm install`
 3. Install MongoDB and make sure it is running
 4. Create a file called `.env` in the root of this directory that looks like
