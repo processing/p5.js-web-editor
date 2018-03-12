@@ -314,6 +314,7 @@ class IDEView extends React.Component {
               defaultSize={'50%'}
               onChange={() => { this.overlay.style.display = 'block'; }}
               onDragFinished={() => { this.overlay.style.display = 'none'; }}
+              resizerStyle={{ marginRight: '5px' }}
             >
               <SplitPane
                 split="horizontal"
