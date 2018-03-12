@@ -5,7 +5,7 @@ This project is currently in development! It will be announced when there is a (
 ## Development Installation
 
 1. Fork this repository.
-2. Clone the forked repostory and cd into it
+2. Clone the forked repository and cd into it
 3. `$ npm install`
 4. Install MongoDB and make sure it is running
    * For Mac OSX with [homebrew](http://brew.sh/): `brew install mongodb` then `brew services start mongodb`
