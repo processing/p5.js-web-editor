@@ -8,8 +8,8 @@ import * as IDEActions from '../actions/ide';
 import * as FileActions from '../actions/files';
 
 const downArrowUrl = require('../../../images/down-arrow.svg');
-const folderRightUrl = require('../../../images/triangle-arrow-right.svg');
-const folderDownUrl = require('../../../images/triangle-arrow-down.svg');
+const folderClosedUrl = require('../../../images/folder.svg');
+const folderOpenUrl = require('../../../images/folderOpen.svg');
 const fileUrl = require('../../../images/file.svg');
 
 export class FileNode extends React.Component {
@@ -103,13 +103,13 @@ export class FileNode extends React.Component {
                         className="sidebar__file-item-closed"
                         onClick={() => this.props.showFolderChildren(this.props.id)}
                       >
-                        <InlineSVG className="folder-right" src={folderRightUrl} />
+                        <InlineSVG className="folder-right" src={folderClosedUrl} />
                       </button>
                       <button
                         className="sidebar__file-item-open"
                         onClick={() => this.props.hideFolderChildren(this.props.id)}
                       >
-                        <InlineSVG className="folder-down" src={folderDownUrl} />
+                        <InlineSVG className="folder-down" src={folderOpenUrl} />
                       </button>
                     </div>
                   );
