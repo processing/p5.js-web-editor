@@ -53,11 +53,11 @@ Design proposed and theme changes are present at: [Zeplin](https://scene.zeplin.
 
 ### Step 1: Set up a working copy on your computer
 
-Firstly you need to set up a local fork of our project, so  press the "fork" button in Github. This will create a copy of our project in your Github account.
+Firstly you need to set up a local fork of our project, so press the "fork" button in Github. This will create a copy of our project in your Github account.
 
 Then you can clone the project to your local machine using this command：
 
-	git clone https://github.com:<your-username>/p5.js-web-editor.git
+	git clone https://github.com/<your-username>/p5.js-web-editor.git
 
 It will also be useful to set up a new remote that points to the original project so that you can update your local repository once any changes have made to remote.
 
