@@ -49,26 +49,79 @@ Design proposed and theme changes are present at: [Zeplin](https://scene.zeplin.
 
 # How Can I Contribute?
 
-### First Timers
+## Contributing Code
+
+### Step 1: Set up a working copy on your computer
+
+Firstly you need to set up a local fork of our project, so  press the "fork" button in Github. This will create a copy of our project in your Github account.
+
+Then you can clone the project to your local machine using this command：
+
+	git clone https://github.com:<your-username>/p5.js-web-editor.git
+
+It will also be useful to set up a new remote that points to the original project so that you can update your local repository once any changes have made to remote.
+
+	git remote add upstream https://github.com/processing/p5.js-web-editor
+
+and periodically fetch the changes using  `git fetch upstream`.
+
+### Step 2: Create bug/feature branch
+
+Change to the repository directory：
+
+	cd p5.js-web-editor
+
+
+Create and switch to a new branch： 
+	
+	git checkout -b <your-branch>
+
+### Step 3: Do some work and commit changes
+
+#### First Timers
 For first-time contributors or those who want to start with a small task: [check out our list of good first bugs](https://github.com/processing/p5.js-web-editor/labels/good%20first%20issue). First read the github discussion on that issue and find out if there's currently a person working on that or not. If no one is working on it or if there has was one claimed to but has not been active for a while, ask if it is up for grabs. It's okay to not know how to fix an issue and feel free to ask questions about to approach the problem! We are all just here to learn and make something awesome. Someone from the community would help you out and these are great issues for learning about the web editor, its file structure and its development process.
 
-### Want something more challenging
+#### Want something more challenging
 If you're already familiar with the project or would like take on something a little more challenging, please take a look at the [priority: high](https://github.com/processing/p5.js-web-editor/labels/priority%3Ahigh) issues.
 
-### Feature Enhancement
+#### Feature Enhancement
 If you want to work on building new things, please take a look at [type: feature](https://github.com/processing/p5.js-web-editor/labels/type%3Afeature).
 
 If you'd like to work on a bug, please comment on it to let the maintainers know.
 If someone else has already commented and taken up that bug, please refrain from working on it and submitting
 a PR without asking the maintainers as it leads to unnecessary duplication of effort.
 
-# Creating a pull request
+***
+
+If you have made some changes, you will see the changes when execuing the command `git status`.
+
+Add them to your branch using `git add`：
+
+	git add [file-name]
+
+Now you can commit the changes using `git commit`：
+
+	git commit -m "<describe-what-you-do>"
+
+### Step 4: Creating a pull request
 
 When you create a [pull request](https://help.github.com/articles/creating-a-pull-request/) for a new fix or feature, be sure to mention the issue number for what you're working on. The best way to do it is to mention the issue like this at the top of your description:
 
     Fixes #333
 
 The issue number in this case is "333." The word *Fixes* is magical; GitHub will automatically close the issue when your pull request is merged.
+
+To create a PR you need to push your branch to the origin remote and then press the buttons on GitHub.
+
+Push your changes：
+
+	git push origin <your-branch-name>
+
+Then go to Github you will see `Compare & pull request`. Follow the instructons and submit the pull request.
+
+### Step 5: Code review by maintainers
+
+After you send your PR, the maintainers will review your work. If your PR is good enough, we will merge it :smile:
 
 # Writing commit messages
 
