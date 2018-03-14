@@ -53,17 +53,17 @@ Design proposed and theme changes are present at: [Zeplin](https://scene.zeplin.
 
 ### Step 1: Set up a working copy on your computer
 
-Firstly you need to set up a local fork of our project, so press the "fork" button in Github. This will create a copy of our project in your Github account.
+First you need to set up a local fork of our project, so press the "fork" button in Github. This will create a copy of our project in your Github account.
 
-Then you can clone the project to your local machine using this command：
+Then you can clone the project to your local machine by entering the following command into a terminal window:
 
-	git clone https://github.com/<your-username>/p5.js-web-editor.git
+	$ git clone https://github.com/<your-username>/p5.js-web-editor.git
 
 It will also be useful to set up a new remote that points to the original project so that you can update your local repository once any changes have made to remote.
 
-	git remote add upstream https://github.com/processing/p5.js-web-editor
+	$ git remote add upstream https://github.com/processing/p5.js-web-editor
 
-and periodically fetch the changes using  `git fetch upstream`.
+and also before you submit a pull request, please remember to fetch the changes using  `git fetch upstream`.
 
 ### Step 2: Create bug/feature branch
 
@@ -111,7 +111,7 @@ When you create a [pull request](https://help.github.com/articles/creating-a-pul
 
 The issue number in this case is "333." The word *Fixes* is magical; GitHub will automatically close the issue when your pull request is merged.
 
-To create a PR you need to push your branch to the origin remote and then press the buttons on GitHub.
+To create a pull request(PR), you first need to push your branch to the origin remote, and then press the button on GitHub in your forked repository.
 
 Push your changes：
 
@@ -121,7 +121,7 @@ Then go to Github you will see `Compare & pull request`. Follow the instructons 
 
 ### Step 5: Code review by maintainers
 
-After you send your PR, the maintainers will review your work. If your PR is good enough, we will merge it :smile:
+After you submit your PR, the maintainer(s) will test and review your work. They will possibly give feedback or ask you to make changes. Once it is approved, it will be merged in :smile:
 
 # Writing commit messages
 
