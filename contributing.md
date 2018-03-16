@@ -73,11 +73,11 @@ Set up a new remote that points to the original project so that you can update y
  
 	$ git remote add upstream https://github.com/processing/p5.js-web-editor
  
- and also before you submit a pull request, please remember to fetch the changes using:
+ and also before you submit a [pull request](https://help.github.com/articles/creating-a-pull-request/), please remember to fetch the changes using:
 
 	$ git fetch upstream
 
-When you create a [pull request](https://help.github.com/articles/creating-a-pull-request/) for a new fix or feature, be sure to mention the issue number for what you're working on. The best way to do it is to mention the issue like this at the top of your description:
+When you create a pull request for a new fix or feature, be sure to mention the issue number for what you're working on. The best way to do it is to mention the issue like this at the top of your description:
 
     Fixes #333
 
