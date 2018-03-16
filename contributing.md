@@ -62,13 +62,20 @@ If you'd like to work on a bug, please comment on it to let the maintainers know
 If someone else has already commented and taken up that bug, please refrain from working on it and submitting
 a PR without asking the maintainers as it leads to unnecessary duplication of effort.
 
-### See more information to get start
-**GitHub Beginners Guide** 
+### Contribution guides
 
 * [https://guides.github.com/activities/hello-world/](https://guides.github.com/activities/hello-world/)
 * [https://guides.github.com/activities/forking/](https://guides.github.com/activities/forking/)
 
 # Creating a pull request
+
+Set up a new remote that points to the original project so that you can update your local repository once any changes have made to remote.
+ 
+	$ git remote add upstream https://github.com/processing/p5.js-web-editor
+ 
+ and also before you submit a pull request, please remember to fetch the changes using:
+
+	$ git fetch upstream
 
 When you create a [pull request](https://help.github.com/articles/creating-a-pull-request/) for a new fix or feature, be sure to mention the issue number for what you're working on. The best way to do it is to mention the issue like this at the top of your description:
 
