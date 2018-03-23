@@ -99,6 +99,7 @@
     "nodemailer-mailgun-transport": "^1.2.2",
     "passport": "^0.3.2",
     "passport-github": "^1.1.0",
+    "passport-google-oauth2": "^0.1.6",
     "passport-local": "^1.0.0",
     "pretty-bytes": "^3.0.1",
     "primer-tooltips": "^1.4.1",

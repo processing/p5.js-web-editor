@@ -8,6 +8,7 @@ import { validateAndLoginUser } from '../actions';
 import LoginForm from '../components/LoginForm';
 import { validateLogin } from '../../../utils/reduxFormUtils';
 import GithubButton from '../components/GithubButton';
+import GoogleButton from '../components/GoogleButton';
 
 const exitUrl = require('../../../images/exit.svg');
 const logoUrl = require('../../../images/p5js-logo.svg');
@@ -51,6 +52,7 @@ class LoginView extends React.Component {
           <LoginForm {...this.props} />
           <h2 className="form-container__divider">Or</h2>
           <GithubButton buttonText="Login with Github" />
+          <GoogleButton buttonText="Login with Google" />
           <p className="form__navigation-options">
             Don&apos;t have an account?&nbsp;
             <Link className="form__signup-button" to="/signup">Sign Up</Link>
