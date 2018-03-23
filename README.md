@@ -23,6 +23,8 @@ This project is currently in development! It will be announced when there is a (
   S3_BUCKET=<your-s3-bucket>
   GITHUB_ID=<your-github-client-id>
   GITHUB_SECRET=<your-github-client-secret>
+  GOOGLE_ID=<your-google-client-id> (use google+ api)
+  GOOGLE_SECRET=<your-google-client-secret> (use google+ api)
   MAILGUN_KEY=<your-mailgun-api-key>
   ```
 
