@@ -207,7 +207,7 @@ class PreviewFrame extends React.Component {
     ];
     const accessiblelib = sketchDoc.createElement('script');
     accessiblelib.setAttribute(
-      'src', 'https://cdn.rawgit.com/processing/p5.accessibility/298ccdf6/dist/p5-accessibility.js'
+      'src', 'https://cdn.rawgit.com/processing/p5.accessibility/v0.1.0/dist/p5-accessibility.js'
     );
     const accessibleOutputs = sketchDoc.createElement('section');
     accessibleOutputs.setAttribute('id', 'accessible-outputs');

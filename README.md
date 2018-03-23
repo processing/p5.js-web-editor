@@ -117,7 +117,7 @@ http://docs.aws.amazon.com/AmazonS3/latest/dev/VirtualHosting.html#VirtualHostin
 
 ## Accessibility Guidelines
 
-Here is guide on [how to use the accessible editor](https://gist.github.com/MathuraMG/e86666b7b41fbc8c078bad9aff3f666d) and here is an overview of the [p5-accessibility.js](https://github.com/MathuraMG/p5-accessibility/blob/master/README.md) library that makes p5.js sketches accessible to screen readers.
+Here is guide on [how to use the accessible editor](https://gist.github.com/MathuraMG/e86666b7b41fbc8c078bad9aff3f666d) and here is an overview of the [p5-accessibility.js](https://github.com/processing/p5.accessibility) library that makes p5.js sketches accessible to screen readers.
 
 The code for the p5.js web editor adheres to web accessibility standards. The following guidelines will help to ensure that accessibility continues to be a priority as development continues.
 
@@ -144,7 +144,7 @@ See [CONTRIBUTING.md](https://github.com/processing/p5.js-web-editor/blob/master
 
 The p5.js Web Editor is built on a MERN stack - MongoDB, Express, React/Redux, and Node. For a reference to the file structure format I am using, please look at the [Mern Starter](https://github.com/Hashnode/mern-starter) and [this comment](https://github.com/Hashnode/mern-starter/issues/90#issuecomment-221553573).
 
-This project uses an in-development [p5-accessibility.js library](https://github.com/MathuraMG/p5-accessibility) for accessibility.
+This project uses an in-development [p5-accessibility.js library](https://github.com/processing/p5.accessibility) for accessibility.
 
 This project does not use CSS Modules, but uses Sass. I like to follow [BEM rules](http://getbem.com/) for CSS naming conventions, write OOSCSS with placeholders and mixins, and follow the [7-1 Pattern](https://sass-guidelin.es/#the-7-1-pattern) for Sass.
 
