@@ -4,6 +4,8 @@ const lodash = require('lodash');
 const passport = require('passport');
 const GitHubStrategy = require('passport-github').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
@@ -93,6 +95,49 @@ passport.use(new GitHubStrategy({
         user.username = profile.username;
         user.tokens.push({ kind: 'github', accessToken });
         user.name = profile.displayName;
+        user.verified = User.EmailConfirmation.Verified;
+        user.save(saveErr => done(null, user));
+      }
+    });
+  });
+}));
+
+/**
+ * Sign in with Google.
+ */
+passport.use(new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL: '/auth/google/callback',
+  passReqToCallback: true,
+  scope: ['email'],
+}, (req, accessToken, refreshToken, profile, done) => {
+  User.findOne({ google: profile._json.emails[0].value }, (findByGoogleErr, existingUser) => {
+    if (existingUser) {
+      done(null, existingUser);
+      return;
+    }
+
+    const primaryEmail = profile._json.emails[0].value;
+
+    User.findOne({
+      email: primaryEmail,
+    }, (findByEmailErr, existingEmailUser) => {
+      if (existingEmailUser) {
+        existingEmailUser.email = existingEmailUser.email || primaryEmail;
+        existingEmailUser.google = profile._json.emails[0].value;
+        existingEmailUser.username = existingEmailUser.username || profile._json.emails[0].value;
+        existingEmailUser.tokens.push({ kind: 'google', accessToken });
+        existingEmailUser.name = existingEmailUser.name || profile._json.displayName;
+        existingEmailUser.verified = User.EmailConfirmation.Verified;
+        existingEmailUser.save(saveErr => done(null, existingEmailUser));
+      } else {
+        const user = new User();
+        user.email = primaryEmail;
+        user.google = profile._json.emails[0].value;
+        user.username = profile._json.emails[0].value;
+        user.tokens.push({ kind: 'google', accessToken });
+        user.name = profile._json.displayName;
         user.verified = User.EmailConfirmation.Verified;
         user.save(saveErr => done(null, user));
       }

@@ -96,6 +96,11 @@ app.get('/auth/github/callback', passport.authenticate('github', { failureRedire
   res.redirect('/');
 });
 
+app.get('/auth/google', passport.authenticate('google'));
+app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
+  res.redirect('/');
+});
+
 // configure passport
 require('./config/passport');
 // const passportConfig = require('./config/passport');
