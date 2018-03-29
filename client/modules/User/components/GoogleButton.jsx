@@ -1,9 +1,9 @@
-// import InlineSVG from 'react-inlinesvg';
+import InlineSVG from 'react-inlinesvg';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 // const googleUrl = require('../../../images/google.svg');
-import googlesvg from '../../../images/google.svg';
+import googleUrl from '../../../images/google.svg';
 
 function GoogleButton(props) {
   return (
@@ -11,7 +11,7 @@ function GoogleButton(props) {
       className="google-button"
       href="/auth/google/"
     >
-      <img alt="google logo" src={googlesvg} className="google-icon" />
+      <InlineSVG src={googleUrl} className="google-icon" />
       <span>{props.buttonText}</span>
     </a>
   );
