@@ -22,14 +22,17 @@ class Nav extends React.PureComponent {
     this.clearHideTimeout = this.clearHideTimeout.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
   componentWillMount() {
     document.addEventListener('mousedown', this.handleClick, false);
+    document.addEventListener('keydown', this.handleKeyPress, false);
   }
 
   componentWillUnmount() {
     document.removeEventListener('mousedown', this.handleClick, false);
+    document.removeEventListener('keydown', this.handleKeyPress, false);
   }
 
   setDropdown(dropdown) {
@@ -50,6 +53,31 @@ class Nav extends React.PureComponent {
     this.setState({
       dropdownOpen: 'none'
     });
+  }
+
+  handleKeyPress(e) {
+    const tabs = ['file', 'edit', 'sketch', 'help'];
+    if (this.state.dropdownOpen !== 'none') {
+      switch (e.keyCode) {
+        case 38: // Key press Up
+          break;
+        case 40: // Key press Down
+          break;
+        case 9: // Kry press Tab
+          for (let i = 0; i < tabs.length; i += 1) {
+            if (this.state.dropdownOpen === tabs[i]) {
+              this.toggleDropdown(tabs[(i) % tabs.length]);
+              if (i + 1 < tabs.length) {
+                this.toggleDropdown(tabs[(i + 1) % tabs.length]);
+              }
+              return;
+            }
+          }
+          break;
+        default:
+          break;
+      }
+    }
   }
 
   toggleDropdown(dropdown) {
