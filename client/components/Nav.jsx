@@ -108,8 +108,8 @@ class Nav extends React.PureComponent {
       })
     };
     return (
-      <nav className="nav" role="navigation" title="main-navigation">
-        <ul className="nav__items-left" title="project-menu" ref={(node) => { this.node = node; }}>
+      <nav className="nav" role="navigation" title="main-navigation" ref={(node) => { this.node = node; }}>
+        <ul className="nav__items-left" title="project-menu">
           <li className="nav__item-logo">
             <InlineSVG src={logoUrl} alt="p5.js logo" />
           </li>
