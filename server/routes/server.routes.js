@@ -74,10 +74,12 @@ router.get('/:username/sketches', (req, res) => {
   ));
 });
 
-router.get('/:username/assets', (req, res) => {
-  userExists(req.params.username, exists => (
-    exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
-  ));
+router.get('/assets', (req, res) => {
+  if (req.user) {
+    res.send(renderIndex());
+  } else {
+    res.redirect('/');
+  }
 });
 
 router.get('/:username/account', (req, res) => {
