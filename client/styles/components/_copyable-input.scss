@@ -22,6 +22,10 @@
   @include themify() {
     color: getThemifyVariable('inactive-text-color');
   }
+  @include md {
+    text-align: center;
+  }
+
 }
 
 .copyable-input {
@@ -51,15 +55,4 @@
     color: getThemifyVariable('button-background-hover-color');
     border-top-color: getThemifyVariable('button-background-hover-color');
   }
-}
-
-/*============================
-== Media queries
-============================*/
-
-@media only screen and (max-width: 775px) {
-  .copyable-input__label{
-    text-align: center;
-  }
-  
 }
