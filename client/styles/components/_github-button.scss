@@ -37,7 +37,7 @@
       border-color: getThemifyVariable('secondary-text-color');
     }
   }
-  margin-top: 4px;
+  margin-top: #{4 / $base-font-size}rem;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -46,7 +46,7 @@
 }
 
 .google-icon {
-  width: 32px;
-  height: 32px;
+  width: #{32 / $base-font-size}rem;
+  height: #{32 / $base-font-size}rem;
   margin-right: #{10 / $base-font-size}rem;
 }

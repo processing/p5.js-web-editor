@@ -2,7 +2,6 @@ import InlineSVG from 'react-inlinesvg';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-// const googleUrl = require('../../../images/google.svg');
 import googleUrl from '../../../images/google.svg';
 
 function GoogleButton(props) {

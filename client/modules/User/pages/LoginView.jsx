@@ -10,10 +10,8 @@ import { validateLogin } from '../../../utils/reduxFormUtils';
 import GithubButton from '../components/GithubButton';
 import GoogleButton from '../components/GoogleButton';
 
-
 const exitUrl = require('../../../images/exit.svg');
 const logoUrl = require('../../../images/p5js-logo.svg');
-
 
 class LoginView extends React.Component {
   constructor(props) {
