@@ -33,6 +33,7 @@ import SketchList from '../components/SketchList';
 import AssetList from '../components/AssetList';
 import About from '../components/About';
 import Feedback from '../components/Feedback';
+import getCookie from '../../../utils/cookie';
 
 class IDEView extends React.Component {
   constructor(props) {
@@ -431,7 +432,7 @@ class IDEView extends React.Component {
             previousPath={this.props.ide.previousPath}
           >
             <SketchList
-              username={this.props.params.username}
+              username={getCookie('username')}
               user={this.props.user}
             />
           </Overlay>
@@ -443,7 +444,7 @@ class IDEView extends React.Component {
             previousPath={this.props.ide.previousPath}
           >
             <AssetList
-              username={this.props.params.username}
+              username={getCookie('username')}
               user={this.props.user}
             />
           </Overlay>

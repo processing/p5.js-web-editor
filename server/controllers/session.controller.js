@@ -9,6 +9,7 @@ export function createSession(req, res, next) {
 
     req.logIn(user, (innerErr) => {
       if (innerErr) { return next(innerErr); }
+      res.cookie('username', req.user.username, { maxAge: 2592000000 });  // Expires in one month
       return res.json({
         email: req.user.email,
         username: req.user.username,
@@ -22,6 +23,7 @@ export function createSession(req, res, next) {
 
 export function getSession(req, res) {
   if (req.user) {
+    res.cookie('username', req.user.username, { maxAge: 2592000000 });  // Expires in one month
     return res.json({
       email: req.user.email,
       username: req.user.username,
@@ -34,6 +36,7 @@ export function getSession(req, res) {
 }
 
 export function destroySession(req, res) {
+  res.clearCookie('username');
   req.logout();
   res.json({ success: true });
 }
