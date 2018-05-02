@@ -135,8 +135,6 @@ function createProjectsInP5user(projectsInAllCategories) {
   };
 
   rp(options).then((res) => {
-    const assets = JSON.parse(res);
-
     User.findOne({ username: process.env.EXAMPLE_USERNAME }, (err, user) => {
       if (err) throw err;
 
@@ -231,7 +229,7 @@ function createProjectsInP5user(projectsInAllCategories) {
           }
 
           const assetsInProject = project.sketchContent.match(/assets\/[\w-]+\.[\w]*/g)
-            || project.sketchContent.match(/assets\/[\w-]*/g) || [];
+            || project.sketchContent.match(/asset\/[\w-]*/g) || [];
 
           assetsInProject.forEach((assetNamePath, i) => {
             let assetName = assetNamePath.split('assets/')[1];
