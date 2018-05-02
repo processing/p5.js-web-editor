@@ -296,8 +296,8 @@ function getp5User() {
     if (!p5User) {
       p5User = new User({
         username: process.env.EXAMPLE_USERNAME,
-	email: process.env.EXAMPLE_USER_EMAIL,
-	password: process.env.EXAMPLE_USER_PASSWORD
+        email: process.env.EXAMPLE_USER_EMAIL,
+        password: process.env.EXAMPLE_USER_PASSWORD
       });
       p5User.save((saveErr) => {
         if (saveErr) throw saveErr;
