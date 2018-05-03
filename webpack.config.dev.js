@@ -4,8 +4,9 @@ require('dotenv').config();
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
   entry: {
-    app: ['babel-polyfill',
+    app: [
       'webpack-hot-middleware/client',
+      'react-hot-loader/patch',
       './client/index.jsx',
     ],
     vendor: [
@@ -47,11 +48,19 @@ module.exports = {
     })
   ],
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx?$/,
         exclude: [/node_modules/, /.+\.config.js/],
-        loaders: ['babel-loader', 'eslint-loader']
+        use: [{
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true,
+            plugins: ['react-hot-loader/babel'],
+          } 
+        }, {
+          loader: 'eslint-loader'
+        }]
       },
       {
         test: /\.scss$/,
