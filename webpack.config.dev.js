@@ -15,9 +15,9 @@ module.exports = {
     ]
   },
   output: {
-    path: `${__dirname}/dist/`,
+    path: `${__dirname}`,
     filename: 'app.js',
-    publicPath: '/dist/'
+    publicPath: '/'
   },
   resolve: {
     extensions: ['.js', '.jsx'],

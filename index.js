@@ -1,7 +1,7 @@
 if (process.env.NODE_ENV === 'production') {
-  process.env.webpackAssets = JSON.stringify(require('./static/dist/manifest.json'));
-  process.env.webpackChunkAssets = JSON.stringify(require('./static/dist/chunk-manifest.json'));
-  require('./static/dist/server.bundle.js');
+  process.env.webpackAssets = JSON.stringify(require('./dist/static/manifest.json'));
+  process.env.webpackChunkAssets = JSON.stringify(require('./dist/static/chunk-manifest.json'));
+  require('./dist/server.bundle.js');
 } else {
   require('babel-register');
   require('babel-polyfill');

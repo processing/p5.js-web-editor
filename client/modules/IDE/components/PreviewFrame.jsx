@@ -5,7 +5,9 @@ import ReactDOM from 'react-dom';
 import srcDoc from 'srcdoc-polyfill';
 
 import loopProtect from 'loop-protect';
+import loopProtectScript from 'loop-protect/dist/loop-protect.min';
 import { JSHINT } from 'jshint';
+import decomment from 'decomment';
 import { getBlobUrl } from '../actions/files';
 import { resolvePathToFile } from '../../../../server/utils/filePath';
 import {
@@ -16,73 +18,9 @@ import {
   EXTERNAL_LINK_REGEX,
   NOT_EXTERNAL_LINK_REGEX
 } from '../../../../server/utils/fileUtils';
+import { hijackConsole, hijackConsoleErrorsScript, startTag, getAllScriptOffsets }
+  from '../../../utils/consoleUtils';
 
-const decomment = require('decomment');
-
-const startTag = '@fs-';
-
-function getAllScriptOffsets(htmlFile) {
-  const offs = [];
-  let found = true;
-  let lastInd = 0;
-  let ind = 0;
-  let endFilenameInd = 0;
-  let filename = '';
-  let lineOffset = 0;
-  while (found) {
-    ind = htmlFile.indexOf(startTag, lastInd);
-    if (ind === -1) {
-      found = false;
-    } else {
-      endFilenameInd = htmlFile.indexOf('.js', ind + startTag.length + 3);
-      filename = htmlFile.substring(ind + startTag.length, endFilenameInd);
-      // the length of hijackConsoleErrorsScript is 33 lines
-      lineOffset = htmlFile.substring(0, ind).split('\n').length + 33;
-      offs.push([lineOffset, filename]);
-      lastInd = ind + 1;
-    }
-  }
-  return offs;
-}
-
-function hijackConsoleErrorsScript(offs) {
-  const s = `
-    function getScriptOff(line) {
-      var offs = ${offs};
-      var l = 0;
-      var file = '';
-      for (var i=0; i<offs.length; i++) {
-        var n = offs[i][0];
-        if (n < line && n > l) {
-          l = n;
-          file = offs[i][1];
-        }
-      }
-      return [line - l, file];
-    }
-    // catch reference errors, via http://stackoverflow.com/a/12747364/2994108
-    window.onerror = function (msg, url, lineNumber, columnNo, error) {
-        var string = msg.toLowerCase();
-        var substring = "script error";
-        var data = {};
-        if (url.match(${EXTERNAL_LINK_REGEX}) !== null && error.stack){
-          var errorNum = error.stack.split('about:srcdoc:')[1].split(':')[0];
-          var fileInfo = getScriptOff(errorNum);
-          data = msg + ' (' + fileInfo[1] + ': line ' + fileInfo[0] + ')';
-        } else {
-          var fileInfo = getScriptOff(lineNumber);
-          data = msg + ' (' + fileInfo[1] + ': line ' + fileInfo[0] + ')';
-        }
-        window.parent.postMessage([{
-          method: 'error',
-          arguments: data,
-          source: fileInfo[1]
-        }], '*');
-      return false;
-    };
-  `;
-  return s;
-}
 
 class PreviewFrame extends React.Component {
 
@@ -202,8 +140,8 @@ class PreviewFrame extends React.Component {
     this.resolveStyles(sketchDoc, resolvedFiles);
 
     const scriptsToInject = [
-      '/loop-protect.min.js',
-      '/hijackConsole.js'
+      loopProtectScript,
+      hijackConsole
     ];
     const accessiblelib = sketchDoc.createElement('script');
     accessiblelib.setAttribute(
@@ -238,7 +176,7 @@ class PreviewFrame extends React.Component {
 
     scriptsToInject.forEach((scriptToInject) => {
       const script = sketchDoc.createElement('script');
-      script.src = scriptToInject;
+      script.text = scriptToInject;
       sketchDoc.head.appendChild(script);
     });
 

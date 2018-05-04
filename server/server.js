@@ -56,7 +56,7 @@ app.options('*', corsMiddleware);
 
 // Body parser, cookie parser, sessions, serve public assets
 
-app.use(Express.static(path.resolve(__dirname, '../static'), {
+app.use(Express.static(path.resolve(__dirname, '../dist/static'), {
   maxAge: process.env.STATIC_MAX_AGE || (process.env.NODE_ENV === 'production' ? '1d' : '0')
 }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
