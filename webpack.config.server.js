@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const ExternalsPlugin = require('webpack-externals-plugin');
+const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
 
@@ -17,9 +17,10 @@ module.exports = {
     __filename: true,
     __dirname: true,
   },
+  externals: [nodeExternals()],
 
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['*', '.js', '.jsx'],
     modules: [
       'client',
       'node_modules',
@@ -53,10 +54,4 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new ExternalsPlugin({
-      type: 'commonjs',
-      include: path.join(__dirname, './node_modules/'),
-    }),
-  ],
 };
