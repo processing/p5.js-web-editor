@@ -404,7 +404,8 @@ class Nav extends React.PureComponent {
                   onFocus={this.handleFocus.bind(this, 'help')}
                   onBlur={this.handleBlur}
                   onClick={this.setDropdown.bind(this, 'none')}
-                >Reference</a>
+                >Reference
+                </a>
               </li>
               <li className="nav__dropdown-item">
                 <Link

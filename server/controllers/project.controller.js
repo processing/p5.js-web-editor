@@ -20,7 +20,8 @@ export function createProject(req, res) {
       res.json({ success: false });
       return;
     }
-    Project.populate(newProject,
+    Project.populate(
+      newProject,
       { path: 'user', select: 'username' },
       (innerErr, newProjectWithUser) => {
         if (innerErr) {
@@ -28,7 +29,8 @@ export function createProject(req, res) {
           return;
         }
         res.json(newProjectWithUser);
-      });
+      }
+    );
   });
 }
 
@@ -42,13 +44,15 @@ export function updateProject(req, res) {
     //   res.status(409).send({ success: false, message: 'Attempted to save stale version of project.' });
     //   return;
     // }
-    Project.findByIdAndUpdate(req.params.project_id,
+    Project.findByIdAndUpdate(
+      req.params.project_id,
       {
         $set: req.body
       },
       {
         new: true
-      })
+      }
+    )
       .populate('user', 'username')
       .exec((updateProjectErr, updatedProject) => {
         if (updateProjectErr) {
@@ -86,13 +90,13 @@ export function getProject(req, res) {
         return res.status(404).send({ message: 'Project with that id does not exist' });
       } else if (!project) {
         Project.findOne({ slug: projectId })
-        .populate('user', 'username')
-        .exec((innerErr, projectBySlug) => {
-          if (innerErr || !projectBySlug) {
-            return res.status(404).send({ message: 'Project with that id does not exist' });
-          }
-          return res.json(projectBySlug);
-        });
+          .populate('user', 'username')
+          .exec((innerErr, projectBySlug) => {
+            if (innerErr || !projectBySlug) {
+              return res.status(404).send({ message: 'Project with that id does not exist' });
+            }
+            return res.json(projectBySlug);
+          });
       } else {
         return res.json(project);
       }
@@ -100,15 +104,14 @@ export function getProject(req, res) {
 }
 
 function deleteFilesFromS3(files) {
-  deleteObjectsFromS3(
-    files.filter((file) => {
-      if (file.url) {
-        if (!process.env.S3_DATE || (process.env.S3_DATE && moment(process.env.S3_DATE) < moment(file.createdAt))) {
-          return true;
-        }
+  deleteObjectsFromS3(files.filter((file) => {
+    if (file.url) {
+      if (!process.env.S3_DATE || (process.env.S3_DATE && moment(process.env.S3_DATE) < moment(file.createdAt))) {
+        return true;
       }
-      return false;
-    })
+    }
+    return false;
+  })
     .map(file => getObjectKey(file.url)));
 }
 

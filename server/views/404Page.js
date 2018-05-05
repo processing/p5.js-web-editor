@@ -100,15 +100,19 @@ export function get404Sketch(callback) {
         htmlFile = html.join('</head>');
 
         // Fix links to assets
-        htmlFile = htmlFile.replace(/'assets/g,
-          "'https://rawgit.com/processing/p5.js-website/master/dist/assets/examples/assets/");
-        htmlFile = htmlFile.replace(/"assets/g,
-          '"https://rawgit.com/processing/p5.js-website/master/dist/assets/examples/assets/');
+        htmlFile = htmlFile.replace(
+          /'assets/g,
+          "'https://rawgit.com/processing/p5.js-website/master/dist/assets/examples/assets/"
+        );
+        htmlFile = htmlFile.replace(
+          /"assets/g,
+          '"https://rawgit.com/processing/p5.js-website/master/dist/assets/examples/assets/'
+        );
 
         // Change canvas size
         htmlFile = htmlFile.replace(/createCanvas\(\d+, ?\d+/g, instanceMode ?
           'createCanvas(p.windowWidth, p.windowHeight'
-        :
+          :
           'createCanvas(windowWidth, windowHeight');
 
         callback(htmlFile);

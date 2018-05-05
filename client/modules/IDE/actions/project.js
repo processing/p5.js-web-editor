@@ -273,9 +273,7 @@ export function setServeSecure(serveSecure, { redirect = true } = {}) {
 
     if (redirect === true) {
       dispatch(saveProject(false /* autosave */))
-        .then(
-          () => redirectToProtocol(serveSecure === true ? protocols.https : protocols.http)
-        );
+        .then(() => redirectToProtocol(serveSecure === true ? protocols.https : protocols.http));
     }
 
     return null;

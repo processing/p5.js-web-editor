@@ -55,28 +55,27 @@ class SketchList extends React.Component {
                 >
                   <td className="sketch-list__trash-column">
                   {(() => { // eslint-disable-line
-                    if (this.props.username === this.props.user.username || this.props.username === undefined) {
-                      return (
-                        <button
-                          className="sketch-list__trash-button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            if (window.confirm(`Are you sure you want to delete "${sketch.name}"?`)) {
-                              this.props.deleteProject(sketch.id);
-                            }
-                          }}
-                        >
-                          <InlineSVG src={trashCan} alt="Delete Project" />
-                        </button>
-                      );
-                    }
-                  })()}
+                      if (this.props.username === this.props.user.username || this.props.username === undefined) {
+                        return (
+                          <button
+                            className="sketch-list__trash-button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (window.confirm(`Are you sure you want to delete "${sketch.name}"?`)) {
+                                this.props.deleteProject(sketch.id);
+                              }
+                            }}
+                          >
+                            <InlineSVG src={trashCan} alt="Delete Project" />
+                          </button>
+                        );
+                      }
+                    })()}
                   </td>
                   <th scope="row"><Link to={`/${username}/sketches/${sketch.id}`}>{sketch.name}</Link></th>
                   <td>{moment(sketch.createdAt).format('MMM D, YYYY h:mm A')}</td>
                   <td>{moment(sketch.updatedAt).format('MMM D, YYYY h:mm A')}</td>
-                </tr>
-              )}
+                </tr>)}
             </tbody>
           </table>}
       </div>

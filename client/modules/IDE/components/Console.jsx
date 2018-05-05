@@ -44,7 +44,7 @@ class Console extends React.Component {
             if (Object.keys(args).length === 0) {
               return (
                 <div key={consoleEvent.id} className="preview-console__undefined">
-                  <span key={`${consoleEvent.id}-0`}>{'undefined'}</span>
+                  <span key={`${consoleEvent.id}-0`}>undefined</span>
                 </div>
               );
             }
@@ -58,7 +58,6 @@ class Console extends React.Component {
       </div>
     );
   }
-
 }
 
 Console.propTypes = {

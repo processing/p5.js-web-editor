@@ -8,7 +8,7 @@ export default ({
   directLinkText,
   noteText,
 }) => (
-`
+  `
 <mjml>
   <mj-body>
     <mj-container>

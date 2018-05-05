@@ -41,36 +41,38 @@ export function dropzoneAcceptCallback(userId, file, done) {
         file.content = result; // eslint-disable-line
         done('Uploading plaintext file locally.');
       })
-      .catch((result) => {
-        done(`Failed to download file ${file.name}: ${result}`);
-        console.warn(file);
-      });
+        .catch((result) => {
+          done(`Failed to download file ${file.name}: ${result}`);
+          console.warn(file);
+        });
     } else {
       file.postData = []; // eslint-disable-line
-      axios.post(`${ROOT_URL}/S3/sign`, {
-        name: file.name,
-        type: file.type,
-        size: file.size,
-        userId
+      axios.post(
+        `${ROOT_URL}/S3/sign`, {
+          name: file.name,
+          type: file.type,
+          size: file.size,
+          userId
         // _csrf: document.getElementById('__createPostToken').value
-      },
+        },
         {
           withCredentials: true
-        })
-      .then((response) => {
+        }
+      )
+        .then((response) => {
         file.custom_status = 'ready'; // eslint-disable-line
         file.postData = response.data; // eslint-disable-line
         file.s3 = response.data.key; // eslint-disable-line
         file.previewTemplate.className += ' uploading'; // eslint-disable-line
-        done();
-      })
-      .catch((response) => {
+          done();
+        })
+        .catch((response) => {
         file.custom_status = 'rejected'; // eslint-disable-line
-        if (response.data.responseText && response.data.responseText.message) {
-          done(response.data.responseText.message);
-        }
-        done('error preparing the upload');
-      });
+          if (response.data.responseText && response.data.responseText.message) {
+            done(response.data.responseText.message);
+          }
+          done('error preparing the upload');
+        });
     }
   };
 }

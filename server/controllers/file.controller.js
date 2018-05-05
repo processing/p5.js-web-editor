@@ -9,7 +9,8 @@ import { deleteObjectsFromS3, getObjectKey } from './aws.controller';
 // be fixed in mongoose soon
 // https://github.com/Automattic/mongoose/issues/4049
 export function createFile(req, res) {
-  Project.findByIdAndUpdate(req.params.project_id,
+  Project.findByIdAndUpdate(
+    req.params.project_id,
     {
       $push: {
         files: req.body
@@ -33,14 +34,15 @@ export function createFile(req, res) {
         }
         res.json(updatedProject.files[updatedProject.files.length - 1]);
       });
-    });
+    }
+  );
 }
 
 function getAllDescendantIds(files, nodeId) {
   return files.find(file => file.id === nodeId).children
-  .reduce((acc, childId) => (
-    [...acc, childId, ...getAllDescendantIds(files, childId)]
-  ), []);
+    .reduce((acc, childId) => (
+      [...acc, childId, ...getAllDescendantIds(files, childId)]
+    ), []);
 }
 
 function deleteMany(files, ids) {

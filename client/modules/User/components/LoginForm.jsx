@@ -3,7 +3,9 @@ import React from 'react';
 import { domOnlyProps } from '../../../utils/reduxFormUtils';
 
 function LoginForm(props) {
-  const { fields: { email, password }, handleSubmit, submitting, pristine } = props;
+  const {
+    fields: { email, password }, handleSubmit, submitting, pristine
+  } = props;
   return (
     <form className="form" onSubmit={handleSubmit(props.validateAndLoginUser.bind(this, props.previousPath))}>
       <p className="form__field">

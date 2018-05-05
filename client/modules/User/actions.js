@@ -17,7 +17,8 @@ export function signUpUser(previousPath, formValues) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/signup`, formValues, { withCredentials: true })
       .then((response) => {
-        dispatch({ type: ActionTypes.AUTH_USER,
+        dispatch({
+          type: ActionTypes.AUTH_USER,
           user: response.data
         });
         dispatch(justOpenedProject());
@@ -49,7 +50,8 @@ export function validateAndLoginUser(previousPath, formProps, dispatch) {
   return new Promise((resolve, reject) => {
     loginUser(formProps)
       .then((response) => {
-        dispatch({ type: ActionTypes.AUTH_USER,
+        dispatch({
+          type: ActionTypes.AUTH_USER,
           user: response.data
         });
         dispatch({

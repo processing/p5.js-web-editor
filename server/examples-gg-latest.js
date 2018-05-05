@@ -137,7 +137,7 @@ function getSketchDirectories(sketchRootList) {
   // console.log(sketchRootList);
 
   return Q.all(sketchRootList.map((sketches) => {
-      // console.log(sketches)
+    // console.log(sketches)
     const options = {
       url: `https://api.github.com/repos/generative-design/Code-Package-p5.js/contents/${sketches.path}${branchRef}`,
       qs: {
@@ -156,9 +156,7 @@ function getSketchDirectories(sketchRootList) {
     }).catch((err) => {
       throw err;
     });
-  })
-
-  ).then((output) => {
+  })).then((output) => {
     const sketchList = [];
     output.forEach((l) => {
       l.forEach((i) => {
@@ -502,14 +500,14 @@ function getp5User() {
         // .then(saveNewProjectsToFile)
         .then(createProjectsInP5user);
     }
-      // Run for production
+    // Run for production
     return getCodePackage()
-        .then(getSketchDirectories)
-        .then(appendSketchItemLinks)
-        .then(getSketchItems)
-        .then(formatAllSketches)
-        .then(getAllSketchContent)
-        .then(createProjectsInP5user);
+      .then(getSketchDirectories)
+      .then(appendSketchItemLinks)
+      .then(getSketchItems)
+      .then(formatAllSketches)
+      .then(getAllSketchContent)
+      .then(createProjectsInP5user);
   });
 }
 // Run the entire process

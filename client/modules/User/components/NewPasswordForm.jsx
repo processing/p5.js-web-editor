@@ -3,7 +3,9 @@ import React from 'react';
 import { domOnlyProps } from '../../../utils/reduxFormUtils';
 
 function NewPasswordForm(props) {
-  const { fields: { password, confirmPassword }, handleSubmit, submitting, invalid, pristine } = props;
+  const {
+    fields: { password, confirmPassword }, handleSubmit, submitting, invalid, pristine
+  } = props;
   return (
     <form className="form" onSubmit={handleSubmit(props.updatePassword.bind(this, props.params.reset_password_token))}>
       <p className="form__field">

@@ -311,7 +311,7 @@ class IDEView extends React.Component {
             />
             <SplitPane
               split="vertical"
-              defaultSize={'50%'}
+              defaultSize="50%"
               onChange={() => { this.overlay.style.display = 'block'; }}
               onDragFinished={() => { this.overlay.style.display = 'none'; }}
               resizerStyle={{ marginRight: '5px' }}
@@ -376,15 +376,15 @@ class IDEView extends React.Component {
                 </div>
                 <div>
                   {(
-                      (
-                        (this.props.preferences.textOutput ||
+                    (
+                      (this.props.preferences.textOutput ||
                           this.props.preferences.gridOutput ||
                           this.props.preferences.soundOutput
-                        ) &&
+                      ) &&
                           this.props.ide.isPlaying
-                      ) ||
+                    ) ||
                       this.props.ide.isAccessibleOutputPlaying
-                    )
+                  )
                   }
                 </div>
                 <PreviewFrame
@@ -691,16 +691,20 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({},
-    EditorAccessibilityActions,
-    FileActions,
-    ProjectActions,
-    IDEActions,
-    PreferencesActions,
-    UserActions,
-    ToastActions,
-    ConsoleActions),
-  dispatch);
+  return bindActionCreators(
+    Object.assign(
+      {},
+      EditorAccessibilityActions,
+      FileActions,
+      ProjectActions,
+      IDEActions,
+      PreferencesActions,
+      UserActions,
+      ToastActions,
+      ConsoleActions
+    ),
+    dispatch
+  );
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(IDEView));

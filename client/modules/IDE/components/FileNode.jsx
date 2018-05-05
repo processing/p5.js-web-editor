@@ -252,7 +252,7 @@ FileNode.defaultProps = {
 };
 
 function mapStateToProps(state, ownProps) {
-                                                            // this is a hack, state is updated before ownProps
+  // this is a hack, state is updated before ownProps
   return state.files.find(file => file.id === ownProps.id) || { ...ownProps, name: 'test', fileType: 'file' };
   // return state.files.find(file => file.id === ownProps.id);
 }

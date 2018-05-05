@@ -40,7 +40,8 @@ function Feedback(props) {
             href="https://docs.google.com/forms/d/e/1FAIpQLSexU8W2EIhXjktl-_XzwjH6vgnelHirH4Yn4liN5BXltPWqBg/viewform"
             target="_blank"
             rel="noopener noreferrer"
-          >Go to Form</a>
+          >Go to Form
+          </a>
         </p>
       </div>
     </div>

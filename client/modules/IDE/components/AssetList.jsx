@@ -44,13 +44,12 @@ class AssetList extends React.Component {
             </thead>
             <tbody>
               {this.props.assets.map(asset =>
-                <tr className="asset-table__row" key={asset.key}>
+                (<tr className="asset-table__row" key={asset.key}>
                   <td>{asset.name}</td>
                   <td>{prettyBytes(asset.size)}</td>
                   <td><Link to={asset.url} target="_blank">View</Link></td>
                   <td><Link to={`/${this.props.username}/sketches/${asset.sketchId}`}>{asset.sketchName}</Link></td>
-                </tr>
-              )}
+                 </tr>))}
             </tbody>
           </table>}
       </div>

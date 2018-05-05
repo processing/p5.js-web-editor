@@ -45,7 +45,7 @@ function getCategories() {
   const categories = [];
   const options = {
     url: `https://api.github.com/repos/processing/p5.js-website/contents/dist/assets/examples/en?client_id=${
-    clientId}&client_secret=${clientSecret}`,
+      clientId}&client_secret=${clientSecret}`,
     method: 'GET',
     headers,
     json: true
@@ -112,8 +112,10 @@ function getSketchContent(projectsInAllCategories) {
       if (noNumberprojectName === 'Instance Mode : Instance Container ') {
         for (let i = 0; i < 4; i += 1) {
           const splitedRes = `${res.split('*/')[1].split('</html>')[i]}</html>\n`;
-          project.sketchContent = splitedRes.replace('p5.js',
-            'https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.4/p5.min.js');
+          project.sketchContent = splitedRes.replace(
+            'p5.js',
+            'https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.4/p5.min.js'
+          );
         }
       } else {
         project.sketchContent = res;
@@ -128,7 +130,7 @@ function getSketchContent(projectsInAllCategories) {
 function createProjectsInP5user(projectsInAllCategories) {
   const options = {
     url: `https://api.github.com/repos/processing/p5.js-website/contents/dist/assets/examples/assets?client_id=${
-    clientId}&client_secret=${clientSecret}`,
+      clientId}&client_secret=${clientSecret}`,
     method: 'GET',
     headers,
     json: true

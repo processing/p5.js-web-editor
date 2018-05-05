@@ -34,7 +34,8 @@ function About(props) {
             rel="noopener noreferrer"
           >
             <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
-          Examples</a>
+          Examples
+          </a>
         </p>
         <p className="about__content-column-list">
           <a
@@ -43,7 +44,8 @@ function About(props) {
             rel="noopener noreferrer"
           >
             <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
-          Learn</a>
+          Learn
+          </a>
         </p>
       </div>
       <div className="about__content-column">
@@ -55,7 +57,8 @@ function About(props) {
             rel="noopener noreferrer"
           >
             <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
-          Libraries</a>
+          Libraries
+          </a>
         </p>
         <p className="about__content-column-list">
           <a
@@ -64,7 +67,8 @@ function About(props) {
             rel="noopener noreferrer"
           >
             <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
-          Reference</a>
+          Reference
+          </a>
         </p>
         <p className="about__content-column-list">
           <a
@@ -73,7 +77,8 @@ function About(props) {
             rel="noopener noreferrer"
           >
             <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
-          Forum</a>
+          Forum
+          </a>
         </p>
       </div>
       <div className="about__footer">
@@ -82,21 +87,24 @@ function About(props) {
             href="https://github.com/processing/p5.js-web-editor"
             target="_blank"
             rel="noopener noreferrer"
-          >Contribute</a>
+          >Contribute
+          </a>
         </p>
         <p className="about__footer-list">
           <a
             href="https://github.com/processing/p5.js-web-editor/issues/new"
             target="_blank"
             rel="noopener noreferrer"
-          >Report a bug</a>
+          >Report a bug
+          </a>
         </p>
         <p className="about__footer-list">
           <a
             href="https://twitter.com/p5xjs?lang=en"
             target="_blank"
             rel="noopener noreferrer"
-          >Twitter</a>
+          >Twitter
+          </a>
         </p>
       </div>
     </div>

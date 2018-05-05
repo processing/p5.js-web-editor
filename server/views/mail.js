@@ -11,7 +11,7 @@ export const renderResetPassword = (data) => {
     link: data.body.link,
     buttonText: 'Reset password',
     directLinkText: 'Or copy and paste the URL into your browser:',
-    noteText: 'If you did not request this, please ignore this email and your password will remain unchanged. Thanks for using the p5.js Web Editor!',  // eslint-disable-line max-len
+    noteText: 'If you did not request this, please ignore this email and your password will remain unchanged. Thanks for using the p5.js Web Editor!', // eslint-disable-line max-len
   };
 
   // Return MJML string
