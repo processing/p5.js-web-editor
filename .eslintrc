@@ -40,7 +40,18 @@
     }],
     "class-methods-use-this": 0,
     "react/jsx-no-bind": [2, {"allowBind": true, "allowArrowFunctions": true}],
-    "no-return-assign": [2, "except-parens"]
+    "no-return-assign": [2, "except-parens"],
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        "components": [
+          "Link"
+        ],
+        "specialLink": [
+          "to"
+        ]
+      }
+    ]
   },
   "plugins": [
     "react", "jsx-a11y", "import"

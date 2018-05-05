@@ -49,7 +49,7 @@ class AssetList extends React.Component {
                   <td>{prettyBytes(asset.size)}</td>
                   <td><Link to={asset.url} target="_blank">View</Link></td>
                   <td><Link to={`/${this.props.username}/sketches/${asset.sketchId}`}>{asset.sketchName}</Link></td>
-                 </tr>))}
+                </tr>))}
             </tbody>
           </table>}
       </div>
