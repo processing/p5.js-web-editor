@@ -1,5 +1,5 @@
 {
-  "presets": ["react", "es2015", "stage-0"],
+  "presets": ["react", "env", "stage-0"],
   "env": {
     "production": {
       "plugins": [
@@ -7,7 +7,7 @@
         "transform-react-constant-elements",
         "transform-react-inline-elements"
       ],
-      "presets": ["es2015", "react", "react-optimize", "es2015-native-modules", "stage-0"]
+      "presets": ["env", "react", "react-optimize", "stage-0"]
     }
   }
 }
