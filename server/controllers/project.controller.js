@@ -249,7 +249,7 @@ function bundleExternalLibs(project, zip, callback) {
   function resolveScriptTagSrc(scriptTag, document) {
     const path = scriptTag.src.split('/');
     const filename = path[path.length - 1];
-    const src = scriptTag.src;
+    const { src } = scriptTag;
 
     if (!isUrl(src)) {
       numScriptsResolved += 1;
@@ -286,7 +286,7 @@ function buildZip(project, req, res) {
   const zip = archiver('zip');
   const rootFile = project.files.find(file => file.name === 'root');
   const numFiles = project.files.filter(file => file.fileType !== 'folder').length;
-  const files = project.files;
+  const { files } = project;
   let numCompletedFiles = 0;
 
   zip.on('error', (err) => {
