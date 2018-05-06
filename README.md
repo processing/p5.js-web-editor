@@ -31,7 +31,7 @@ This project is currently in development! It will be announced when there is a (
   EXAMPLE_USER_PASSWORD=<your-password>
   ```
 
-   If you don't care about being able to upload media files to S3 or Login with Github, you can drop in the file exactly how it is. Or, if you don't want to do that, just ask me to send you mine. Refer to [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) for creating an S3 bucket for testing, or if you don't want to do that, I can add you to one of my S3 buckets.
+   If you don't care about being able to upload media files to S3 or Login with Github/Google, you can drop in the file exactly how it is. Or, if you don't want to do that, just ask me to send you mine. Refer to [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) for creating an S3 bucket for testing, or if you don't want to do that, I can add you to one of my S3 buckets.
 
 6. `$ npm run fetch-examples` - this downloads the example sketches into a user called 'p5'
 7. `$ npm start`
@@ -87,12 +87,17 @@ If you don't have the full server environment running, you can launch a one-off 
   S3_BUCKET=<your-s3-bucket>
   GITHUB_ID=<your-github-client-id>
   GITHUB_SECRET=<your-github-client-secret>
+  GOOGLE_ID=<your-google-client-id> (use google+ api)
+  GOOGLE_SECRET=<your-google-client-secret> (use google+ api)
   EMAIL_SENDER=<email-address-to-send-from>
   MAILGUN_KEY=<mailgun-api-key>
   MAILGUN_DOMAIN=<mailgun-domain>
   EMAIL_VERIFY_SECRET_TOKEN=whatever_you_want_this_to_be_it_only_matters_for_production
+  EXAMPLE_USERNAME=<your-name>
+  EXAMPLE_USER_EMAIL=<your-email-id>
+  EXAMPLE_USER_PASSWORD=<your-password>
   ```
-  For production, you will need to have real Github and Amazon credentions. Refer to [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) for creating an S3 bucket for testing.
+  For production, you will need to have real Github and Amazon credentials. Refer to [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) for creating an S3 bucket for testing.
 
 5. `$ npm run fetch-examples` - this downloads the example sketches into a user called 'p5'
 6. `$ npm run build`
