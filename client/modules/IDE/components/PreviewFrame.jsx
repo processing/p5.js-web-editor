@@ -143,7 +143,10 @@ class PreviewFrame extends React.Component {
       hijackConsole
     ];
     const accessiblelib = sketchDoc.createElement('script');
-    accessiblelib.setAttribute('src', 'https://cdn.rawgit.com/processing/p5.accessibility/v0.1.1/dist/p5-accessibility.js');
+    accessiblelib.setAttribute(
+      'src',
+      'https://cdn.rawgit.com/processing/p5.accessibility/v0.1.1/dist/p5-accessibility.js'
+    );
     const accessibleOutputs = sketchDoc.createElement('section');
     accessibleOutputs.setAttribute('id', 'accessible-outputs');
     accessibleOutputs.setAttribute('aria-label', 'accessible-output');
