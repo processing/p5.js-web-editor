@@ -109,7 +109,7 @@ export function copyObjectInS3(req, res) {
 }
 
 export function listObjectsInS3ForUser(req, res) {
-const { username } = req.params;
+  const { username } = req.params;
   findUserByUsername(username, (user) => {
     const userId = user.id;
     const params = {
