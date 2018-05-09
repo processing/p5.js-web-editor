@@ -66,7 +66,6 @@ class Overlay extends React.Component {
       <div className="overlay">
         <div className="overlay__content">
           <section
-            tabIndex="0"
             role="main"
             aria-label={ariaLabel}
             ref={(node) => { this.node = node; }}

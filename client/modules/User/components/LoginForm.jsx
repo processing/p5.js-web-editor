@@ -44,6 +44,7 @@ LoginForm.propTypes = {
   validateAndLoginUser: PropTypes.func.isRequired,
   submitting: PropTypes.bool,
   pristine: PropTypes.bool,
+  invalid: PropTypes.bool,
   previousPath: PropTypes.string.isRequired
 };
 

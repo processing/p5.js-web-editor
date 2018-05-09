@@ -307,7 +307,7 @@ class Editor extends React.Component {
             />
           </div>
         </header>
-        <div ref={(element) => { this.codemirrorContainer = element; }} className="editor-holder" tabIndex="0">
+        <div ref={(element) => { this.codemirrorContainer = element; }} className="editor-holder" >
         </div>
         <EditorAccessibility
           lintMessages={this.props.lintMessages}

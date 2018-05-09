@@ -23,7 +23,7 @@ class Preferences extends React.Component {
 
   handleUpdateFont(event) {
     let value = parseInt(event.target.value, 10);
-    if (isNaN(value)) {
+    if (Number.isNaN(value)) {
       value = 16;
     }
     this.props.setFontSize(value);
@@ -31,7 +31,7 @@ class Preferences extends React.Component {
 
   handleUpdateIndentation(event) {
     let value = parseInt(event.target.value, 10);
-    if (isNaN(value)) {
+    if (Number.isNaN(value)) {
       value = 2;
     }
     this.props.setIndentation(value);
@@ -51,7 +51,7 @@ class Preferences extends React.Component {
     const beep = new Audio(beepUrl);
 
     return (
-      <section className="preferences" tabIndex="0" title="preference-menu">
+      <section className="preferences" title="preference-menu">
         <Helmet>
           <title>p5.js Web Editor | Preferences</title>
         </Helmet>
@@ -116,15 +116,13 @@ class Preferences extends React.Component {
                 className="preference__value"
                 aria-live="polite"
                 aria-atomic="true"
-                role="status"
                 value={this.props.fontSize}
                 onChange={this.handleUpdateFont}
                 ref={(element) => { this.fontSizeInput = element; }}
                 onClick={() => {
                   this.fontSizeInput.select();
                 }}
-              >
-              </input>
+              />
               <button
                 className="preference__plus-button"
                 onClick={() => this.props.setFontSize(this.props.fontSize + 2)}
@@ -148,15 +146,13 @@ class Preferences extends React.Component {
                 className="preference__value"
                 aria-live="polite"
                 aria-atomic="true"
-                role="status"
                 value={this.props.indentationAmount}
                 onChange={this.handleUpdateIndentation}
                 ref={(element) => { this.indentationInput = element; }}
                 onClick={() => {
                   this.indentationInput.select();
                 }}
-              >
-              </input>
+              />
               <button
                 className="preference__plus-button"
                 onClick={() => this.props.setIndentation(this.props.indentationAmount + 2)}
@@ -355,11 +351,7 @@ Preferences.propTypes = {
   theme: PropTypes.string.isRequired,
   serveSecure: PropTypes.bool.isRequired,
   setServeSecure: PropTypes.func.isRequired,
-  setTheme: PropTypes.func.isRequired
-};
-
-Preferences.defaultProps = {
-  currentUser: undefined
+  setTheme: PropTypes.func.isRequired,
 };
 
 export default Preferences;

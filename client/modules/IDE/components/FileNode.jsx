@@ -240,10 +240,6 @@ FileNode.propTypes = {
 };
 
 FileNode.defaultProps = {
-  id: '1',
-  name: 'test',
-  fileType: 'file',
-  children: [],
   parentId: '0',
   isSelectedFile: false,
   isOptionsOpen: false,

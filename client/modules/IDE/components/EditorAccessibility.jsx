@@ -17,7 +17,7 @@ class EditorAccessibility extends React.Component {
           </li>));
       });
     } else {
-      messages.push(<li tabIndex="0" key={0}> There are no lint messages </li>);
+      messages.push(<li key={0}> There are no lint messages </li>);
     }
     return (
       <div className="editor-accessibility">

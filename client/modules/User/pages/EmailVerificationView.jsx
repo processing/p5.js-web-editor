@@ -21,7 +21,6 @@ class EmailVerificationView extends React.Component {
     super(props);
     this.closeLoginPage = this.closeLoginPage.bind(this);
     this.gotoHomePage = this.gotoHomePage.bind(this);
-
   }
 
   componentWillMount() {

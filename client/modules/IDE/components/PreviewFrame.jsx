@@ -332,7 +332,6 @@ class PreviewFrame extends React.Component {
         className="preview-frame"
         aria-label="sketch output"
         role="main"
-        tabIndex="0"
         frameBorder="0"
         title="sketch output"
         ref={(element) => { this.iframeElement = element; }}

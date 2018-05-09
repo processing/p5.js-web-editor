@@ -49,7 +49,7 @@ class Sidebar extends React.Component {
     });
 
     return (
-      <nav className={sidebarClass} title="file-navigation" role="navigation">
+      <nav className={sidebarClass} title="file-navigation" >
         <div className="sidebar__header" onContextMenu={this.toggleProjectOptions}>
           <h3 className="sidebar__title">
             <span className="sidebar__folder-icon">
