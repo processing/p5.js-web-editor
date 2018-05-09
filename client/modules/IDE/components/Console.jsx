@@ -39,7 +39,7 @@ class Console extends React.Component {
         </div>
         <div ref={(element) => { this.consoleMessages = element; }} className="preview-console__messages">
           {this.props.consoleEvents.map((consoleEvent) => {
-            const { args, method } = consoleEvent;
+            const { arguments: args, method } = consoleEvent;
             if (Object.keys(args).length === 0) {
               return (
                 <div key={consoleEvent.id} className="preview-console__undefined">
