@@ -35,21 +35,23 @@ class CopyableInput extends React.Component {
     } = this.props;
     return (
       <div className="copyable-input">
-        <label className="copyable-input__label" htmlFor="copyable-input__value">{label}</label>
         <div
           className="copyable-input__value-container tooltipped-no-delay"
           aria-label="Copied to Clipboard!"
           ref={(element) => { this.tooltip = element; }}
           onMouseLeave={this.onMouseLeaveHandler}
         >
-          <input
-            type="text"
-            className="copyable-input__value"
-            id="copyable-input__value"
-            value={value}
-            ref={(element) => { this.input = element; }}
-            readOnly
-          />
+          <label className="copyable-input__label" htmlFor="copyable-input__value">
+            {label}
+            <input
+              type="text"
+              className="copyable-input__value"
+              id="copyable-input__value"
+              value={value}
+              ref={(element) => { this.input = element; }}
+              readOnly
+            />
+          </label>
         </div>
       </div>
     );

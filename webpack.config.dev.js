@@ -61,6 +61,13 @@ module.exports = {
         }, {
           loader: 'eslint-loader'
         }]
+        // use: {
+        //   loader: 'babel-loader',
+        //   options: {
+        //     cacheDirectory: true,
+        //     plugins: ['react-hot-loader/babel'],
+        //   }
+        // }
       },
       {
         test: /\.scss$/,

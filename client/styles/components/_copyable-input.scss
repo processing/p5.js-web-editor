@@ -13,12 +13,12 @@
 .copyable-input__value {
   width: 100%;
   font-size: #{16 / $base-font-size}rem;
+  margin-top: #{5 / $base-font-size}rem;
 }
 
 .copyable-input__label {
   width: 100%;
   font-size: #{12 / $base-font-size}rem;
-  padding-bottom: #{5 / $base-font-size}rem;
   @include themify() {
     color: getThemifyVariable('inactive-text-color');
   }
@@ -34,20 +34,24 @@
   width: 100%;
 }
 
-.tooltipped::after {
-  @include themify() {
-    background-color: getThemifyVariable('button-background-hover-color');
-    color: getThemifyVariable('button-hover-color');
+.copyable-input {
+  .tooltipped::after {
+    @include themify() {
+      background-color: getThemifyVariable('button-background-hover-color');
+      color: getThemifyVariable('button-hover-color');
+    }
+    font-family: Montserrat, sans-serif;
+    font-size: #{12 / $base-font-size}rem;
+    bottom: #{41 / $base-font-size}rem;
   }
-  font-family: Montserrat, sans-serif;
-  font-size: #{12 / $base-font-size}rem;
-}
 
-.tooltipped-n::before,
-.tooltipped::before,
- {
-  @include themify() {
-    color: getThemifyVariable('button-background-hover-color');
-    border-top-color: getThemifyVariable('button-background-hover-color');
+  .tooltipped-n::before,
+  .tooltipped::before,
+  {
+    @include themify() {
+      color: getThemifyVariable('button-background-hover-color');
+      border-top-color: getThemifyVariable('button-background-hover-color');
+    }
+    top: #{14 / $base-font-size}rem;
   }
 }
