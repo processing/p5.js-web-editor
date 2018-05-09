@@ -9,11 +9,12 @@ class EditorAccessibility extends React.Component {
     const messages = [];
     if (this.props.lintMessages.length > 0) {
       this.props.lintMessages.forEach((lintMessage, i) => {
-        messages.push(<li key={lintMessage.id}>
-          {lintMessage.severity} in line
-          {lintMessage.line} :
-          {lintMessage.message}
-        </li>);
+        messages.push((
+          <li key={lintMessage.id}>
+            {lintMessage.severity} in line
+            {lintMessage.line} :
+            {lintMessage.message}
+          </li>));
       });
     } else {
       messages.push(<li tabIndex="0" key={0}> There are no lint messages </li>);

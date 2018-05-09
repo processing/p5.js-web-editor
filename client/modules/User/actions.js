@@ -63,7 +63,7 @@ export function validateAndLoginUser(previousPath, formProps, dispatch) {
         resolve();
       })
       .catch((response) => {
-        reject({ password: response.data.message, _error: 'Login failed!' });
+        reject({ password: response.data.message, _error: 'Login failed!' }); // eslint-disable-line
       });
   });
 }
@@ -212,5 +212,5 @@ export function updateSettings(formValues) {
         dispatch(updateSettingsSuccess(response.data));
         browserHistory.push('/');
       })
-      .catch(response => Promise.reject({ currentPassword: response.data.error }));
+      .catch(response => Promise.reject(new Error(response.data.error)));
 }

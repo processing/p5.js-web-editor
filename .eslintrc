@@ -6,11 +6,6 @@
     "node": true,
     "mocha": true
   },
-  "ecmaFeatures": {
-    "jsx": true,
-    "es6": true,
-    "classes": true
-  },
   "rules": {
     "linebreak-style": 0,
     "react/no-multi-comp": 0,
@@ -50,6 +45,20 @@
         "specialLink": [
           "to"
         ]
+      }
+    ],
+    "jsx-a11y/label-has-for": [
+      2,
+      {
+        "components": [
+          "Label"
+        ],
+        "required": {
+          "every": [
+            "id"
+          ]
+        },
+        "allowChildren": false
       }
     ]
   },
