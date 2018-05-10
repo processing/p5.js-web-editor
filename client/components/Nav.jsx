@@ -388,6 +388,8 @@ class Nav extends React.PureComponent {
               </button>
               <li className="nav__dropdown-item">
                 <button
+                  onFocus={this.handleFocus.bind(this, 'help')}
+                  onBlur={this.handleBlur}
                   onClick={() => {
                     this.props.showKeyboardShortcutModal();
                     this.setDropdown('none');
