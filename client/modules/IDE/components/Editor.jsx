@@ -184,7 +184,7 @@ class Editor extends React.Component {
     for (let i = 0; i < this._cm.lineCount(); i += 1) {
       this._cm.removeLineClass(i, 'background', 'line-runtime-error');
     }
-    if (this.props.runtimeErrorWarningVisible) {
+    if (this.props.runtimeErrorWarningVisible && this._cm.getDoc().modeOption === 'javascript') {
       this.props.consoleEvents.forEach((consoleEvent) => {
         if (consoleEvent.method === 'error') {
           if (consoleEvent.arguments.indexOf(')') > -1) {
