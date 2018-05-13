@@ -45,7 +45,7 @@ export const renderEmailConfirmation = (data) => {
     noteText: 'This link is only valid for the next 24 hours. Thanks for using the p5.js Web Editor!',
     meta: {
       keywords: 'p5.js, p5.js web editor, web editor, processing, code editor',
-      description: 'A web editor for p5.js, a JavaScript library with the goal of making coding accessible to artists, designers, educators, and beginners.''
+      description: 'A web editor for p5.js, a JavaScript library with the goal of making coding accessible to artists, designers, educators, and beginners.'
     }
   };
 
