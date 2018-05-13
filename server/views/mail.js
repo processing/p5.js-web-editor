@@ -13,8 +13,8 @@ export const renderResetPassword = (data) => {
     directLinkText: 'Or copy and paste the URL into your browser:',
     noteText: 'If you did not request this, please ignore this email and your password will remain unchanged. Thanks for using the p5.js Web Editor!', // eslint-disable-line max-len
     meta: {
-      keywords: "p5.js, p5.js web editor, web editor, processing, code editor",
-      description: "A web editor for p5.js, a JavaScript library with the goal of making coding accessible to artists, designers, educators, and beginners."
+      keywords: 'p5.js, p5.js web editor, web editor, processing, code editor',
+      description: 'A web editor for p5.js, a JavaScript library with the goal of making coding accessible to artists, designers, educators, and beginners.'
     }
   };
 
