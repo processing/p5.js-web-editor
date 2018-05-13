@@ -7,9 +7,16 @@ export default ({
   buttonText,
   directLinkText,
   noteText,
+  meta
 }) => (
   `
 <mjml>
+  <mj-head>
+    <mj-raw>
+      <meta name="keywords" content="${meta.keywords}" />
+      <meta name="description" content="${meta.description}" />
+    </mj-raw>
+  </mj-head>
   <mj-body>
     <mj-container>
       <mj-section>
