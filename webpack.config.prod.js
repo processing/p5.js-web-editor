@@ -72,6 +72,10 @@ module.exports = {
       {
         test: /fonts\/.*\.(eot|svg|ttf|woff|woff2)$/,
         loader: 'file-loader'
+      },
+      {
+        test: /.*loop-protect.min.js$/,
+        loader: 'raw-loader'
       }
     ]
   },
