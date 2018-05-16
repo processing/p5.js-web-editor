@@ -73,6 +73,7 @@
     "clipboard": "^1.7.1",
     "codemirror": "^5.21.0",
     "connect-mongo": "^1.2.0",
+    "console-feed": "^2.8.1",
     "cookie-parser": "^1.4.1",
     "cors": "^2.8.1",
     "cross-env": "^5.1.3",
