@@ -20,7 +20,7 @@ export const hijackConsole = `var iframeWindow = window;
       var args = Array.from(arguments);
       args = args.map(function(i) {
         // catch objects
-        return (typeof i === 'string') ? i : JSON.stringify(i);
+        return i;
       });
   
       consoleBuffer.push({

@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 // import escapeStringRegexp from 'escape-string-regexp';
 import srcDoc from 'srcdoc-polyfill';
-
+import { pickBy, isEqual, startsWith, isNumber } from 'lodash';
 import loopProtect from 'loop-protect';
 import loopProtectScript from 'loop-protect/dist/loop-protect.min';
 import { JSHINT } from 'jshint';
@@ -29,16 +29,37 @@ class PreviewFrame extends React.Component {
     }
 
     window.addEventListener('message', (messageEvent) => {
-      console.log(messageEvent);
+      console.log(messageEvent.data);
       messageEvent.data.forEach((message) => {
         const args = message.arguments;
         Object.keys(args).forEach((key) => {
-          if (args[key].includes('Exiting potential infinite loop')) {
+          if (typeof args[key] === 'string' && args[key].includes('Exiting potential infinite loop')) {
             this.props.stopSketch();
             this.props.expandConsole();
           }
         });
       });
+      // console.log(pickBy(messageEvent.data[0], (value, key) => startsWith(key, 'arguments') || startsWith(key, 'method')));
+      for (let i = 0; i < messageEvent.data.length;) {
+        if (i === messageEvent.data.length - 1) {
+          break;
+        }
+        const cur = messageEvent.data[i];
+        Object.assign(cur, { 'times': 1 });
+        const index = i + 1;
+        let next = messageEvent.data[index];
+        while (isEqual(cur.arguments, next.arguments) && cur.method === next.method) {
+          cur.times += 1;
+          messageEvent.data.splice(index, 1);
+          if (index < messageEvent.data.length) {
+            next = messageEvent.data[index];
+          } else {
+            break;
+          }
+        }
+        i = index;
+      }
+      console.log(messageEvent.data);
       this.props.dispatchConsoleEvent(messageEvent.data);
     });
   }

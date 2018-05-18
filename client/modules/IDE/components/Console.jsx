@@ -12,6 +12,17 @@ class Console extends React.Component {
     this.consoleMessages.scrollTop = this.consoleMessages.scrollHeight;
   }
 
+  convertArgs(args) {
+    try {
+      if (!Array.isArray(args)) {
+        return Array.of(args);
+      }
+      return args;
+    } catch (error) {
+      return args;
+    }
+  }
+
   render() {
     const consoleClass = classNames({
       'preview-console': true,
@@ -40,16 +51,9 @@ class Console extends React.Component {
         </div>
         <div ref={(element) => { this.consoleMessages = element; }} className="preview-console__messages">
           {this.props.consoleEvents.map((consoleEvent) => {
-            const { arguments: args, method } = consoleEvent;
-            consoleEvent.data = [JSON.parse(consoleEvent.arguments)];
-            // Object.assign(consoleEvent, {
-            //   'method': 'log',
-            //   'data': ['AS'],
-            //   'arguments': ['AS'],
-            //   'id': '20',
-            //   'source': 'sketch'
-            // });
-            // console.log(consoleEvent);
+            const { arguments: args, method, times } = consoleEvent;
+            Object.assign(consoleEvent, { 'data': this.convertArgs(args) });
+
             if (Object.keys(args).length === 0) {
               return (
                 <div key={consoleEvent.id} className="preview-console__undefined">
@@ -59,19 +63,21 @@ class Console extends React.Component {
             }
             return (
               <div key={consoleEvent.id} className={`preview-console__${method}`}>
+                <span>{times > 1 ? times : ''}</span>
                 <ConsoleFeed
                   // logs={[
                   //   {
                   //     'method': 'log',
-                  //     'data': ['AS'],
-                  //     'arguments': ['AS'],
+                  //     'data': [[1, 2, 3]]
+                  //     'data': ["{ 'id': 1 }"],
+                  //     'arguments': ['test'],
                   //     'id': '20',
                   //     'source': 'sketch'
                   //   }
                   // ]}
                   variant="dark"
-                  // styles={{ 'color': 'black' }}
-                  logs={[consoleEvent]}
+                  styles={{ 'BASE_BACKGROUND_COLOR': '#f4f4f4' }}
+                  logs={Array.of(consoleEvent)}
                 />
               </div>
             );
