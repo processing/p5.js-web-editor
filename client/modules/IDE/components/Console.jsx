@@ -110,7 +110,7 @@ Console.propTypes = {
   collapseConsole: PropTypes.func.isRequired,
   expandConsole: PropTypes.func.isRequired,
   clearConsole: PropTypes.func.isRequired,
-  theme: PropTypes.string.isRequired,
+  theme: PropTypes.string.isRequired
 };
 
 Console.defaultProps = {

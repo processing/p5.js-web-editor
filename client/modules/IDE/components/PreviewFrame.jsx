@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 // import escapeStringRegexp from 'escape-string-regexp';
 import srcDoc from 'srcdoc-polyfill';
-import { pickBy, isEqual, startsWith, isNumber } from 'lodash';
+import { isEqual} from 'lodash';
 import loopProtect from 'loop-protect';
 import loopProtectScript from 'loop-protect/dist/loop-protect.min';
 import { JSHINT } from 'jshint';
@@ -29,7 +29,7 @@ class PreviewFrame extends React.Component {
     }
 
     window.addEventListener('message', (messageEvent) => {
-      console.log(messageEvent.data);
+      console.log(messageEvent);
       messageEvent.data.forEach((message) => {
         const args = message.arguments;
         Object.keys(args).forEach((key) => {
@@ -59,7 +59,6 @@ class PreviewFrame extends React.Component {
         }
         i = index;
       }
-      console.log(messageEvent.data);
       this.props.dispatchConsoleEvent(messageEvent.data);
     });
   }
