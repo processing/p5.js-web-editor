@@ -15,7 +15,6 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import config from '../webpack.config.dev';
 
 // Import all required modules
-import serverConfig from './config';
 import users from './routes/user.routes';
 import sessions from './routes/session.routes';
 import projects from './routes/project.routes';
@@ -106,8 +105,7 @@ require('./config/passport');
 // const passportConfig = require('./config/passport');
 
 // Connect to MongoDB
-// mongoose.connect(process.env.MONGODB_URI || process.env.MONGOLAB_URI);
-mongoose.connect(serverConfig.mongoURL);
+mongoose.connect(process.env.MONGO_URL);
 mongoose.connection.on('error', () => {
   console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
   process.exit(1);
@@ -132,9 +130,9 @@ app.get('*', (req, res) => {
 });
 
 // start app
-app.listen(serverConfig.port, (error) => {
+app.listen(process.env.PORT, (error) => {
   if (!error) {
-    console.log(`p5js web editor is running on port: ${serverConfig.port}!`); // eslint-disable-line
+    console.log(`p5js web editor is running on port: ${process.env.PORT}!`); // eslint-disable-line
   }
 });
 
