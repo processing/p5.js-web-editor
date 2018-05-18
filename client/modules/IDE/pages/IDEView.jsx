@@ -324,6 +324,7 @@ class IDEView extends React.Component {
                 ref={(element) => { this.consolePane = element; }}
                 onDragFinished={this._handleConsolePaneOnDragFinished}
                 allowResize={this.props.ide.consoleIsExpanded}
+                theme={this.props.preferences.theme}
                 className="editor-preview-subpanel"
               >
                 <Editor

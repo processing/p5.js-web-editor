@@ -12,6 +12,19 @@ class Console extends React.Component {
     this.consoleMessages.scrollTop = this.consoleMessages.scrollHeight;
   }
 
+  getBgColor(theme) {
+    switch (theme) {
+      case 'light':
+        return '#f4f4f4';
+      case 'dark':
+        return '#363636';
+      case 'contrast':
+        return '#454545';
+      default:
+        return '';
+    }
+  }
+
   convertArgs(args) {
     try {
       if (!Array.isArray(args)) {
@@ -76,7 +89,7 @@ class Console extends React.Component {
                   //   }
                   // ]}
                   variant="dark"
-                  styles={{ 'BASE_BACKGROUND_COLOR': '#f4f4f4' }}
+                  styles={{ 'BASE_BACKGROUND_COLOR': this.getBgColor(this.props.theme) }}
                   logs={Array.of(consoleEvent)}
                 />
               </div>
@@ -96,7 +109,8 @@ Console.propTypes = {
   isExpanded: PropTypes.bool.isRequired,
   collapseConsole: PropTypes.func.isRequired,
   expandConsole: PropTypes.func.isRequired,
-  clearConsole: PropTypes.func.isRequired
+  clearConsole: PropTypes.func.isRequired,
+  theme: PropTypes.string.isRequired,
 };
 
 Console.defaultProps = {
