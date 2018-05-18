@@ -54,21 +54,21 @@ Note that this takes up a significant amount of space on your machine. Make sure
    * Mac: https://www.docker.com/docker-mac
    * Windows: https://www.docker.com/docker-windows
 2. Clone this repository and cd into it
-3. `$ docker-compose build`
-4. `$ docker-compose run --rm server npm run fetch-examples`
+3. `$ docker-compose -f docker-compose-development.yml build`
+4. `$ docker-compose -f docker-compose-development.yml run --rm server npm run fetch-examples`
 
 Now, anytime you wish to start the server with its dependencies, you can run:
 
-5. `$ docker-compose up`
+5. `$ docker-compose -f docker-compose-development.yml up`
 6. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
 
 To open a terminal/shell in the running Docker server (i.e. after `docker-compose up` has been run):
 
-7. `$ docker-compose exec server bash -l`
+7. `$ docker-compose -f docker-compose-development.yml exec server bash -l`
 
 If you don't have the full server environment running, you can launch a one-off container instance (and have it automatically deleted after you're done using it):
 
-8. `$ docker-compose run server --rm bash -l`
+8. `$ docker-compose -f docker-compose-development.yml run server --rm bash -l`
 
 ## Production Installation
 1. Clone this repository and `cd` into it

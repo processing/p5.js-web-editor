@@ -2,8 +2,6 @@ version: '2'
 services:
   mongo:
     image: mongo:3.4.7
-  nginx:
-    build: ./nginx
   server:
     build:
       context: .
