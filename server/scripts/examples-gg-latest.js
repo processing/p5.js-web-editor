@@ -5,8 +5,8 @@ import objectID from 'bson-objectid';
 import shortid from 'shortid';
 
 import eachSeries from 'async/eachSeries';
-import User from './models/user';
-import Project from './models/project';
+import User from '../models/user';
+import Project from '../models/project';
 
 // TODO: change to true when testing!
 const testMake = false;

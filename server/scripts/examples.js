@@ -4,8 +4,8 @@ import mongoose from 'mongoose';
 import objectID from 'bson-objectid';
 import shortid from 'shortid';
 import eachSeries from 'async/eachSeries';
-import User from './models/user';
-import Project from './models/project';
+import User from '../models/user';
+import Project from '../models/project';
 
 const defaultHTML =
 `<!DOCTYPE html>
