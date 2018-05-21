@@ -42,6 +42,7 @@ class PreviewFrame extends React.Component {
       // console.log(pickBy(messageEvent.data[0], (value, key) => startsWith(key, 'arguments') || startsWith(key, 'method')));
       for (let i = 0; i < messageEvent.data.length;) {
         if (i === messageEvent.data.length - 1) {
+          Object.assign(messageEvent.data[i], { 'times': 1 });
           break;
         }
         const cur = messageEvent.data[i];
@@ -57,7 +58,7 @@ class PreviewFrame extends React.Component {
             break;
           }
         }
-        i = index;
+        i += 1;
       }
       this.props.dispatchConsoleEvent(messageEvent.data);
     });
