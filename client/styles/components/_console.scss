@@ -18,28 +18,53 @@
 	}
 
 	// assign styles to different types of console messages
-	.preview-console__log {
-		@include themify(){
-			color: getThemifyVariable('secondary-text-color');
-		}
+	.preview-console__log, .preview-console__info{
 		flex: 1 0 auto;
+		position: relative;
+
+		.preview-console__log__logged-times, .preview-console__info__logged-times{
+			background-color: $lightsteelblue;
+		}
 	}
 
 	.preview-console__undefined {
-		@include themify(){
-			color: getThemifyVariable('inactive-text-color');
-		}
 		flex: 1 0 auto;
+		position: relative;
 	}
 
 	.preview-console__error {
-		color: $console-error-color;
 		flex: 1 0 auto;
+		position: relative;
+
+		.preview-console__error__logged-times {
+			background-color: $red;
+		}
 	}
 
 	.preview-console__warn {
-		color: $console-warn-color;
 		flex: 1 0 auto;
+		position: relative;
+
+		.preview-console__warn__logged-times {
+			background-color: $orange;
+		}
+	}
+
+	.preview-console__debug {
+		flex: 1 0 auto;
+		position: relative;
+
+		.preview-console__debug__logged-times {
+			background-color: $dodgerblue;
+		}
+	}
+
+	.theme-with-dark-background, .theme-with-contrast-background {
+		color: $black;
+	}
+
+	.theme-with-light-background {
+		color: $white;
 	}
 }
 
@@ -102,4 +127,15 @@
 	.preview-console--collapsed & {
 		display: none;
 	}
+}
+
+.preview-console__logged-times {
+	font-size: 10px;
+	font-weight: bold;
+	margin: 2px 0 0 6px;
+	border-radius: 100px;
+	padding: 1px 4px;
+	z-index: 100;
+	float: left;
+	position: absolute;
 }

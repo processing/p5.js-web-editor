@@ -324,7 +324,6 @@ class IDEView extends React.Component {
                 ref={(element) => { this.consolePane = element; }}
                 onDragFinished={this._handleConsolePaneOnDragFinished}
                 allowResize={this.props.ide.consoleIsExpanded}
-                theme={this.props.preferences.theme}
                 className="editor-preview-subpanel"
               >
                 <Editor
@@ -367,6 +366,7 @@ class IDEView extends React.Component {
                   expandConsole={this.props.expandConsole}
                   collapseConsole={this.props.collapseConsole}
                   clearConsole={this.props.clearConsole}
+                  theme={this.props.preferences.theme}
                 />
               </SplitPane>
               <div className="preview-frame-holder">

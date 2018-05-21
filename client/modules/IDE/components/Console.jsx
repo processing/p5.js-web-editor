@@ -3,6 +3,7 @@ import React from 'react';
 import InlineSVG from 'react-inlinesvg';
 import classNames from 'classnames';
 import { Console as ConsoleFeed } from 'console-feed';
+import { getConsoleFeedLightStyle, getConsoleFeedDarkStyle, getConsoleFeedContrastStyle } from '../../../utils/consoleUtils';
 
 const upArrowUrl = require('../../../images/up-arrow.svg');
 const downArrowUrl = require('../../../images/down-arrow.svg');
@@ -10,16 +11,21 @@ const downArrowUrl = require('../../../images/down-arrow.svg');
 class Console extends React.Component {
   componentDidUpdate() {
     this.consoleMessages.scrollTop = this.consoleMessages.scrollHeight;
+    this.getConsoleFeedStyle = this.getConsoleFeedStyle.bind(this);
   }
 
-  getBgColor(theme) {
+  getConsoleFeedStyle(theme, times) {
+    const style = {};
+    if (times > 1) {
+      Object.assign(style, { 'LOG_WARN_ICON': 'none', 'LOG_ERROR_ICON': 'none', 'LOG_DEBUG_ICON': 'none', 'LOG_INFO_ICON': 'none' });
+    }
     switch (theme) {
       case 'light':
-        return '#f4f4f4';
+        return Object.assign(style, getConsoleFeedLightStyle);
       case 'dark':
-        return '#363636';
+        return Object.assign(style, getConsoleFeedDarkStyle);
       case 'contrast':
-        return '#454545';
+        return Object.assign(style, getConsoleFeedContrastStyle);
       default:
         return '';
     }
@@ -65,6 +71,7 @@ class Console extends React.Component {
         <div ref={(element) => { this.consoleMessages = element; }} className="preview-console__messages">
           {this.props.consoleEvents.map((consoleEvent) => {
             const { arguments: args, method, times } = consoleEvent;
+            const { theme } = this.props;
             Object.assign(consoleEvent, { 'data': this.convertArgs(args) });
 
             if (Object.keys(args).length === 0) {
@@ -75,21 +82,21 @@ class Console extends React.Component {
               );
             }
             return (
-              <div key={consoleEvent.id} className={`preview-console__${method}`}>
-                <span>{times > 1 ? times : ''}</span>
+              <div key={consoleEvent.id} className={`preview-console__${method} theme-with-${theme}-background`}>
+                { times > 1 ?
+                  <div className={`preview-console__logged-times preview-console__${method}__logged-times`}>{times}</div> : null
+                }
                 <ConsoleFeed
                   // logs={[
                   //   {
                   //     'method': 'log',
                   //     'data': [[1, 2, 3]]
-                  //     'data': ["{ 'id': 1 }"],
                   //     'arguments': ['test'],
                   //     'id': '20',
                   //     'source': 'sketch'
                   //   }
                   // ]}
-                  variant="dark"
-                  styles={{ 'BASE_BACKGROUND_COLOR': this.getBgColor(this.props.theme) }}
+                  styles={this.getConsoleFeedStyle(theme, times)}
                   logs={Array.of(consoleEvent)}
                 />
               </div>
