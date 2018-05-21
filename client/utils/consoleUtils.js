@@ -104,7 +104,7 @@ export const getAllScriptOffsets = (htmlFile) => {
 };
 
 export const getConsoleFeedLightStyle = {
-  'BASE_BACKGROUND_COLOR': 'f4f4f4',
+  'BASE_BACKGROUND_COLOR': '',
   'LOG_ERROR_BACKGROUND': 'hsl(0, 100%, 97%)',
   'LOG_ERROR_COLOR': 'red',
   'LOG_WARN_BACKGROUND': 'hsl(50, 100%, 95%)',
@@ -115,7 +115,7 @@ export const getConsoleFeedLightStyle = {
 };
 
 export const getConsoleFeedDarkStyle = {
-  'BASE_BACKGROUND_COLOR': '363636',
+  'BASE_BACKGROUND_COLOR': '',
   'BASE_COLOR': 'white',
   'OBJECT_NAME_COLOR': 'white',
   'OBJECT_VALUE_NULL_COLOR': 'hsl(230, 100%, 80%)',
@@ -126,33 +126,10 @@ export const getConsoleFeedDarkStyle = {
   'OBJECT_VALUE_NUMBER_COLOR': 'hsl(230, 100%, 80%)',
   'OBJECT_VALUE_BOOLEAN_COLOR': 'hsl(230, 100%, 80%)',
   'OBJECT_VALUE_FUNCTION_KEYWORD_COLOR': 'hsl(230, 100%, 80%)',
-  'HTML_TAG_COLOR': 'white',
-  'HTML_TAGNAME_COLOR': 'white',
-  'HTML_TAGNAME_TEXT_TRANSFORM': 'white',
-  'HTML_ATTRIBUTE_NAME_COLOR': 'white',
-  'HTML_ATTRIBUTE_VALUE_COLOR': 'white',
-  'HTML_COMMENT_COLOR': 'white',
-  'HTML_DOCTYPE_COLOR': 'white',
   'LOG_ERROR_BACKGROUND': 'hsl(0, 100%, 8%)',
   'LOG_ERROR_COLOR': 'hsl(0, 100%, 75%)',
   'LOG_WARN_BACKGROUND': 'hsl(50, 100%, 10%)',
   'LOG_WARN_COLOR': 'hsl(39, 100%, 80%)'
 };
 
-export const getConsoleFeedContrastStyle = {
-  'BASE_BACKGROUND_COLOR': '454545',
-  'BASE_COLOR': 'white',
-  'OBJECT_NAME_COLOR': 'white',
-  'OBJECT_VALUE_NULL_COLOR': 'hsl(230, 100%, 80%)',
-  'OBJECT_VALUE_UNDEFINED_COLOR': 'hsl(230, 100%, 80%)',
-  'OBJECT_VALUE_REGEXP_COLOR': 'hsl(230, 100%, 80%)',
-  'OBJECT_VALUE_STRING_COLOR': 'hsl(230, 100%, 80%)',
-  'OBJECT_VALUE_SYMBOL_COLOR': 'hsl(230, 100%, 80%)',
-  'OBJECT_VALUE_NUMBER_COLOR': 'hsl(230, 100%, 80%)',
-  'OBJECT_VALUE_BOOLEAN_COLOR': 'hsl(230, 100%, 80%)',
-  'OBJECT_VALUE_FUNCTION_KEYWORD_COLOR': 'hsl(230, 100%, 80%)',
-  'LOG_ERROR_BACKGROUND': 'hsl(0, 100%, 8%)',
-  'LOG_ERROR_COLOR': 'hsl(0, 100%, 75%)',
-  'LOG_WARN_BACKGROUND': 'hsl(50, 100%, 10%)',
-  'LOG_WARN_COLOR': 'hsl(39, 100%, 80%)'
-};
+export const getConsoleFeedContrastStyle = getConsoleFeedDarkStyle;

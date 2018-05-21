@@ -83,8 +83,8 @@ class Console extends React.Component {
             }
             return (
               <div key={consoleEvent.id} className={`preview-console__${method} theme-with-${theme}-background`}>
-                { times > 1 ?
-                  <div className={`preview-console__logged-times preview-console__${method}__logged-times`}>{times}</div> : null
+                { times > 1 &&
+                  <div className={`preview-console__logged-times preview-console__${method}__logged-times`}>{times}</div>
                 }
                 <ConsoleFeed
                   // logs={[
