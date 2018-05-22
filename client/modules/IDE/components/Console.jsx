@@ -11,7 +11,6 @@ const downArrowUrl = require('../../../images/down-arrow.svg');
 class Console extends React.Component {
   componentDidUpdate() {
     this.consoleMessages.scrollTop = this.consoleMessages.scrollHeight;
-    this.getConsoleFeedStyle = this.getConsoleFeedStyle.bind(this);
   }
 
   getConsoleFeedStyle(theme, times) {
@@ -31,7 +30,7 @@ class Console extends React.Component {
     }
   }
 
-  convertArgs(args) {
+  formatData(args) {
     try {
       if (!Array.isArray(args)) {
         return Array.of(args);
@@ -72,7 +71,7 @@ class Console extends React.Component {
           {this.props.consoleEvents.map((consoleEvent) => {
             const { arguments: args, method, times } = consoleEvent;
             const { theme } = this.props;
-            Object.assign(consoleEvent, { 'data': this.convertArgs(args) });
+            Object.assign(consoleEvent, { 'data': this.formatData(args) });
 
             if (Object.keys(args).length === 0) {
               return (
