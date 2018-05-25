@@ -108,13 +108,13 @@ export function copyObjectInS3(req, res) {
   });
 }
 
-export function listObjectsInS3(req, res) {
-  req.params = Object.assign({}, req.user);
-  listObjectsInS3ForUser(req, res);
-}
-
 export function listObjectsInS3ForUser(req, res) {
-  const { username } = req.params;
+  let username;
+  if (req.params) {
+    username = req.params.username;
+  } else {
+    username = req.user.username;
+  }
   findUserByUsername(username, (user) => {
     const userId = user.id;
     const params = {
