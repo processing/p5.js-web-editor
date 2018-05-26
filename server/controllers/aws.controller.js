@@ -109,44 +109,41 @@ export function copyObjectInS3(req, res) {
 }
 
 export function listObjectsInS3ForUser(req, res) {
-  if (req.user) {
-    findUserByUsername(req.user.username, (user) => {
-      const userId = user.id;
-      const params = {
-        s3Params: {
-          Bucket: `${process.env.S3_BUCKET}`,
-          Prefix: `${userId}/`
-        }
-      };
-      let assets = [];
-      client.listObjects(params)
-        .on('data', (data) => {
-          assets = assets.concat(data.Contents.map(object => ({ key: object.Key, size: object.Size })));
-        })
-        .on('end', () => {
-          const projectAssets = [];
-          getProjectsForUserId(userId).then((projects) => {
-            projects.forEach((project) => {
-              project.files.forEach((file) => {
-                if (!file.url) return;
+  const username = req.user.username;
+  findUserByUsername(username, (user) => {
+    const userId = user.id;
+    const params = {
+      s3Params: {
+        Bucket: `${process.env.S3_BUCKET}`,
+        Prefix: `${userId}/`
+      }
+    };
+    let assets = [];
+    client.listObjects(params)
+      .on('data', (data) => {
+        assets = assets.concat(data.Contents.map(object => ({ key: object.Key, size: object.Size })));
+      })
+      .on('end', () => {
+        const projectAssets = [];
+        getProjectsForUserId(userId).then((projects) => {
+          projects.forEach((project) => {
+            project.files.forEach((file) => {
+              if (!file.url) return;
 
-                const foundAsset = assets.find(asset => file.url.includes(asset.key));
-                if (!foundAsset) return;
-                projectAssets.push({
-                  name: file.name,
-                  sketchName: project.name,
-                  sketchId: project.id,
-                  url: file.url,
-                  key: foundAsset.key,
-                  size: foundAsset.size
-                });
+              const foundAsset = assets.find(asset => file.url.includes(asset.key));
+              if (!foundAsset) return;
+              projectAssets.push({
+                name: file.name,
+                sketchName: project.name,
+                sketchId: project.id,
+                url: file.url,
+                key: foundAsset.key,
+                size: foundAsset.size
               });
             });
-            res.json({ assets: projectAssets });
           });
+          res.json({ assets: projectAssets });
         });
-    });
-  } else {
-    res.json([]);
-  }
+      });
+  });
 }
