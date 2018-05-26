@@ -13,7 +13,7 @@ import * as AssetActions from '../actions/assets';
 class AssetList extends React.Component {
   constructor(props) {
     super(props);
-    this.props.getAssets(this.props.username);
+    this.props.getAssets();
   }
 
   getAssetsTitle() {

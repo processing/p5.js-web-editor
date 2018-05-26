@@ -11,15 +11,9 @@ function setAssets(assets) {
   };
 }
 
-export function getAssets(username) {
+export function getAssets() {
   return (dispatch, getState) => {
-    let url;
-    if (username) {
-      url = `${ROOT_URL}/S3/${username}/objects`;
-    } else {
-      url = `${ROOT_URL}/S3/objects`;
-    }
-    axios.get(url, { withCredentials: true })
+    axios.get(`${ROOT_URL}/S3/objects`, { withCredentials: true })
       .then((response) => {
         dispatch(setAssets(response.data.assets));
       })

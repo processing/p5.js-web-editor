@@ -478,7 +478,7 @@ class Nav extends React.PureComponent {
                 </li>
                 <li className="nav__dropdown-item">
                   <Link
-                    to={`/${this.props.user.username}/assets`}
+                    to="/assets"
                     onFocus={this.handleFocus.bind(this, 'account')}
                     onBlur={this.handleBlur}
                     onClick={this.setDropdown.bind(this, 'none')}
@@ -488,7 +488,7 @@ class Nav extends React.PureComponent {
                 </li>
                 <li className="nav__dropdown-item">
                   <Link
-                    to={`/${this.props.user.username}/account`}
+                    to="/account"
                     onFocus={this.handleFocus.bind(this, 'account')}
                     onBlur={this.handleBlur}
                     onClick={this.setDropdown.bind(this, 'none')}
