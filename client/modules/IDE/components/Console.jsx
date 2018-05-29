@@ -9,8 +9,12 @@ const upArrowUrl = require('../../../images/up-arrow.svg');
 const downArrowUrl = require('../../../images/down-arrow.svg');
 
 class Console extends React.Component {
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     this.consoleMessages.scrollTop = this.consoleMessages.scrollHeight;
+    if (this.props.theme !== prevProps.theme) {
+      this.props.clearConsole();
+      this.props.dispatchConsoleEvent(this.props.consoleEvents);
+    }
   }
 
   getConsoleFeedStyle(theme, times) {
@@ -116,6 +120,7 @@ Console.propTypes = {
   collapseConsole: PropTypes.func.isRequired,
   expandConsole: PropTypes.func.isRequired,
   clearConsole: PropTypes.func.isRequired,
+  dispatchConsoleEvent: PropTypes.func.isRequired,
   theme: PropTypes.string.isRequired
 };
 

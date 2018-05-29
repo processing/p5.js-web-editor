@@ -366,6 +366,7 @@ class IDEView extends React.Component {
                   expandConsole={this.props.expandConsole}
                   collapseConsole={this.props.collapseConsole}
                   clearConsole={this.props.clearConsole}
+                  dispatchConsoleEvent={this.props.dispatchConsoleEvent}
                   theme={this.props.preferences.theme}
                 />
               </SplitPane>
