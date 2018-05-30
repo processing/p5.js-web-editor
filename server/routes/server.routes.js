@@ -57,15 +57,27 @@ router.get('/verify', (req, res) => {
 });
 
 router.get('/sketches', (req, res) => {
-  req.user ? res.send(renderIndex()) : res.redirect('/login');
+  if (req.user) {
+    res.send(renderIndex());
+  } else {
+    res.redirect('/login');
+  }
 });
 
 router.get('/assets', (req, res) => {
-  req.user ? res.send(renderIndex()) : res.redirect('/login');
+  if (req.user) {
+    res.send(renderIndex());
+  } else {
+    res.redirect('/login');
+  }
 });
 
 router.get('/account', (req, res) => {
-  req.user ? res.send(renderIndex()) : res.redirect('/login');
+  if (req.user) {
+    res.send(renderIndex());
+  } else {
+    res.redirect('/login');
+  }
 });
 
 router.get('/about', (req, res) => {
