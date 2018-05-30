@@ -71,7 +71,7 @@
     "bson-objectid": "^1.1.4",
     "classnames": "^2.2.5",
     "clipboard": "^1.7.1",
-    "codemirror": "^5.21.0",
+    "codemirror": "^5.38.0",
     "connect-mongo": "^1.2.0",
     "cookie-parser": "^1.4.1",
     "cors": "^2.8.1",

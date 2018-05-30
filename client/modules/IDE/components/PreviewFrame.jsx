@@ -14,7 +14,7 @@ import {
   MEDIA_FILE_REGEX,
   MEDIA_FILE_QUOTED_REGEX,
   STRING_REGEX,
-  TEXT_FILE_REGEX,
+  PLAINTEXT_FILE_REGEX,
   EXTERNAL_LINK_REGEX,
   NOT_EXTERNAL_LINK_REGEX
 } from '../../../../server/utils/fileUtils';
@@ -228,7 +228,7 @@ class PreviewFrame extends React.Component {
         if (resolvedFile) {
           if (resolvedFile.url) {
             newContent = newContent.replace(filePath, resolvedFile.url);
-          } else if (resolvedFile.name.match(TEXT_FILE_REGEX)) {
+          } else if (resolvedFile.name.match(PLAINTEXT_FILE_REGEX)) {
             // could also pull file from API instead of using bloburl
             const blobURL = getBlobUrl(resolvedFile);
             this.props.setBlobUrl(resolvedFile, blobURL);

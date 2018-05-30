@@ -28,6 +28,7 @@ import classNames from 'classnames';
 import { debounce } from 'lodash';
 import '../../../utils/htmlmixed';
 import '../../../utils/p5-javascript';
+import '../../../utils/webGL-clike';
 import Timer from '../components/Timer';
 import EditorAccessibility from '../components/EditorAccessibility';
 import {
@@ -212,6 +213,8 @@ class Editor extends React.Component {
       mode = 'htmlmixed';
     } else if (fileName.match(/.+\.json$/i)) {
       mode = 'application/json';
+    } else if (fileName.match(/.+\.(frag|vert)$/i)) {
+      mode = 'clike';
     } else {
       mode = 'text/plain';
     }
