@@ -57,7 +57,15 @@ router.get('/verify', (req, res) => {
 });
 
 router.get('/sketches', (req, res) => {
-  res.send(renderIndex());
+  req.user ? res.send(renderIndex()) : res.redirect('/login');
+});
+
+router.get('/assets', (req, res) => {
+  req.user ? res.send(renderIndex()) : res.redirect('/login');
+});
+
+router.get('/account', (req, res) => {
+  req.user ? res.send(renderIndex()) : res.redirect('/login');
 });
 
 router.get('/about', (req, res) => {
@@ -69,18 +77,6 @@ router.get('/feedback', (req, res) => {
 });
 
 router.get('/:username/sketches', (req, res) => {
-  userExists(req.params.username, exists => (
-    exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
-  ));
-});
-
-router.get('/:username/assets', (req, res) => {
-  userExists(req.params.username, exists => (
-    exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
-  ));
-});
-
-router.get('/:username/account', (req, res) => {
   userExists(req.params.username, exists => (
     exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
   ));
