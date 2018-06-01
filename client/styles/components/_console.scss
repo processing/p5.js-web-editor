@@ -17,54 +17,12 @@
 		text-align:left;
 	}
 
-	// assign styles to different types of console messages
-	.preview-console__log, .preview-console__info{
-		flex: 1 0 auto;
-		position: relative;
-
-		.preview-console__log__logged-times, .preview-console__info__logged-times{
-			background-color: $lightsteelblue;
+	.preview-console__message {
+		@include themify() {
+			color: getThemifyVariable('console-color');
 		}
-	}
-
-	.preview-console__undefined {
 		flex: 1 0 auto;
 		position: relative;
-	}
-
-	.preview-console__error {
-		flex: 1 0 auto;
-		position: relative;
-
-		.preview-console__error__logged-times {
-			background-color: $red;
-		}
-	}
-
-	.preview-console__warn {
-		flex: 1 0 auto;
-		position: relative;
-
-		.preview-console__warn__logged-times {
-			background-color: $orange;
-		}
-	}
-
-	.preview-console__debug {
-		flex: 1 0 auto;
-		position: relative;
-
-		.preview-console__debug__logged-times {
-			background-color: $dodgerblue;
-		}
-	}
-
-	.theme-with-dark-background, .theme-with-contrast-background {
-		color: $black;
-	}
-
-	.theme-with-light-background {
-		color: $white;
 	}
 }
 
@@ -130,12 +88,25 @@
 }
 
 .preview-console__logged-times {
-	font-size: 10px;
+	font-size: #{10 / $base-font-size}rem;
 	font-weight: bold;
-	margin: 2px 0 0 6px;
-	border-radius: 100px;
-	padding: 1px 4px;
+	margin: #{2 / $base-font-size}rem 0 0 #{8 / $base-font-size}rem;
+	border-radius: 10px;
+	padding: #{1 / $base-font-size}rem #{4 / $base-font-size}rem;
 	z-index: 100;
-	float: left;
+	left: 0;
 	position: absolute;
+
+	.preview-console__message--info &, .preview-console__message--log & {
+		background-color: $lightsteelblue;
+	}
+	.preview-console__message--warn & {
+		background-color: $orange;
+	}
+	.preview-console__message--debug & {
+		background-color: $dodgerblue;
+	}
+	.preview-console__message--error & {
+		background-color: $red;
+	}
 }

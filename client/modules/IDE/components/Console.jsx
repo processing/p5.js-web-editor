@@ -79,26 +79,17 @@ class Console extends React.Component {
 
             if (Object.keys(args).length === 0) {
               return (
-                <div key={consoleEvent.id} className="preview-console__undefined">
+                <div key={consoleEvent.id} className="preview-console__message preview-console__message--undefined">
                   <span key={`${consoleEvent.id}-0`}>undefined</span>
                 </div>
               );
             }
             return (
-              <div key={consoleEvent.id} className={`preview-console__${method} theme-with-${theme}-background`}>
+              <div key={consoleEvent.id} className={`preview-console__message preview-console__message--${method}`}>
                 { times > 1 &&
-                  <div className={`preview-console__logged-times preview-console__${method}__logged-times`}>{times}</div>
+                  <div className="preview-console__logged-times">{times}</div>
                 }
                 <ConsoleFeed
-                  // logs={[
-                  //   {
-                  //     'method': 'log',
-                  //     'data': [[1, 2, 3]]
-                  //     'arguments': ['test'],
-                  //     'id': '20',
-                  //     'source': 'sketch'
-                  //   }
-                  // ]}
                   styles={this.getConsoleFeedStyle(theme, times)}
                   logs={Array.of(consoleEvent)}
                 />
