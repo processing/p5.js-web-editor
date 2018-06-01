@@ -20,7 +20,9 @@ class Console extends React.Component {
   getConsoleFeedStyle(theme, times) {
     const style = {};
     if (times > 1) {
-      Object.assign(style, { 'LOG_WARN_ICON': 'none', 'LOG_ERROR_ICON': 'none', 'LOG_DEBUG_ICON': 'none', 'LOG_INFO_ICON': 'none' });
+      Object.assign(style, {
+        'LOG_WARN_ICON': 'none', 'LOG_ERROR_ICON': 'none', 'LOG_DEBUG_ICON': 'none', 'LOG_INFO_ICON': 'none'
+      });
     }
     switch (theme) {
       case 'light':
