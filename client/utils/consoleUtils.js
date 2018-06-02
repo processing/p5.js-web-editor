@@ -103,7 +103,14 @@ export const getAllScriptOffsets = (htmlFile) => {
   return offs;
 };
 
-export const getConsoleFeedLightStyle = {
+export const CONSOLE_FEED_WITHOUT_ICONS = {
+  'LOG_WARN_ICON': 'none',
+  'LOG_ERROR_ICON': 'none',
+  'LOG_DEBUG_ICON': 'none',
+  'LOG_INFO_ICON': 'none'
+};
+
+export const CONSOLE_FEED_LIGHT_STYLES = {
   'BASE_BACKGROUND_COLOR': '',
   'LOG_ERROR_BACKGROUND': 'hsl(0, 100%, 97%)',
   'LOG_ERROR_COLOR': 'red',
@@ -114,7 +121,7 @@ export const getConsoleFeedLightStyle = {
   'LOG_ERROR_BORDER': 'hsl(0, 100%, 92%)'
 };
 
-export const getConsoleFeedDarkStyle = {
+export const CONSOLE_FEED_DARK_STYLES = {
   'BASE_BACKGROUND_COLOR': '',
   'BASE_COLOR': 'white',
   'OBJECT_NAME_COLOR': 'white',
@@ -132,4 +139,4 @@ export const getConsoleFeedDarkStyle = {
   'LOG_WARN_COLOR': 'hsl(39, 100%, 80%)'
 };
 
-export const getConsoleFeedContrastStyle = getConsoleFeedDarkStyle;
+export const CONSOLE_FEED_CONTRAST_STYLES = CONSOLE_FEED_DARK_STYLES;

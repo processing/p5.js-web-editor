@@ -3,7 +3,7 @@ import React from 'react';
 import InlineSVG from 'react-inlinesvg';
 import classNames from 'classnames';
 import { Console as ConsoleFeed } from 'console-feed';
-import { getConsoleFeedLightStyle, getConsoleFeedDarkStyle, getConsoleFeedContrastStyle } from '../../../utils/consoleUtils';
+import { CONSOLE_FEED_WITHOUT_ICONS, CONSOLE_FEED_LIGHT_STYLES, CONSOLE_FEED_DARK_STYLES, CONSOLE_FEED_CONTRAST_STYLES } from '../../../utils/consoleUtils';
 
 const upArrowUrl = require('../../../images/up-arrow.svg');
 const downArrowUrl = require('../../../images/down-arrow.svg');
@@ -20,17 +20,15 @@ class Console extends React.Component {
   getConsoleFeedStyle(theme, times) {
     const style = {};
     if (times > 1) {
-      Object.assign(style, {
-        'LOG_WARN_ICON': 'none', 'LOG_ERROR_ICON': 'none', 'LOG_DEBUG_ICON': 'none', 'LOG_INFO_ICON': 'none'
-      });
+      Object.assign(style, CONSOLE_FEED_WITHOUT_ICONS);
     }
     switch (theme) {
       case 'light':
-        return Object.assign(style, getConsoleFeedLightStyle);
+        return Object.assign(style, CONSOLE_FEED_LIGHT_STYLES);
       case 'dark':
-        return Object.assign(style, getConsoleFeedDarkStyle);
+        return Object.assign(style, CONSOLE_FEED_DARK_STYLES);
       case 'contrast':
-        return Object.assign(style, getConsoleFeedContrastStyle);
+        return Object.assign(style, CONSOLE_FEED_CONTRAST_STYLES);
       default:
         return '';
     }

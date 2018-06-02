@@ -39,26 +39,24 @@ class PreviewFrame extends React.Component {
           }
         });
       });
-      for (let i = 0; i < messageEvent.data.length;) {
-        if (i === messageEvent.data.length - 1) {
-          Object.assign(messageEvent.data[i], { 'times': 1 });
-          break;
+
+      messageEvent.data.every((item, index, arr) => {
+        if (index === arr.length - 1) {
+          Object.assign(item, { 'times': 1 });
+          return false;
         }
-        const cur = messageEvent.data[i];
-        Object.assign(cur, { 'times': 1 });
-        const index = i + 1;
-        let next = messageEvent.data[index];
-        while (isEqual(cur.arguments, next.arguments) && cur.method === next.method) {
+        const cur = Object.assign(item, { 'times': 1 });
+        const nextIndex = index + 1;
+        while (isEqual(cur.arguments, arr[nextIndex].arguments) && cur.method === arr[nextIndex].method) {
           cur.times += 1;
-          messageEvent.data.splice(index, 1);
-          if (index < messageEvent.data.length) {
-            next = messageEvent.data[index];
-          } else {
-            break;
+          messageEvent.data.splice(nextIndex, 1);
+          if (nextIndex === arr.length) {
+            return false;
           }
         }
-        i += 1;
-      }
+        return true;
+      });
+
       this.props.dispatchConsoleEvent(messageEvent.data);
     });
   }
