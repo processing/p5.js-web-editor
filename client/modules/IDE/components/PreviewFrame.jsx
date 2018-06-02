@@ -29,35 +29,36 @@ class PreviewFrame extends React.Component {
     }
 
     window.addEventListener('message', (messageEvent) => {
-      console.log(messageEvent);
-      messageEvent.data.forEach((message) => {
-        const args = message.arguments;
-        Object.keys(args).forEach((key) => {
-          if (typeof args[key] === 'string' && args[key].includes('Exiting potential infinite loop')) {
-            this.props.stopSketch();
-            this.props.expandConsole();
-          }
+      if (Array.isArray(messageEvent.data)) {
+        messageEvent.data.forEach((message) => {
+          const args = message.arguments;
+          Object.keys(args).forEach((key) => {
+            if (typeof args[key] === 'string' && args[key].includes('Exiting potential infinite loop')) {
+              this.props.stopSketch();
+              this.props.expandConsole();
+            }
+          });
         });
-      });
 
-      messageEvent.data.every((item, index, arr) => {
-        if (index === arr.length - 1) {
-          Object.assign(item, { 'times': 1 });
-          return false;
-        }
-        const cur = Object.assign(item, { 'times': 1 });
-        const nextIndex = index + 1;
-        while (isEqual(cur.arguments, arr[nextIndex].arguments) && cur.method === arr[nextIndex].method) {
-          cur.times += 1;
-          messageEvent.data.splice(nextIndex, 1);
-          if (nextIndex === arr.length) {
+        messageEvent.data.every((item, index, arr) => {
+          if (index === arr.length - 1) {
+            Object.assign(item, { 'times': 1 });
             return false;
           }
-        }
-        return true;
-      });
+          const cur = Object.assign(item, { 'times': 1 });
+          const nextIndex = index + 1;
+          while (isEqual(cur.arguments, arr[nextIndex].arguments) && cur.method === arr[nextIndex].method) {
+            cur.times += 1;
+            arr.splice(nextIndex, 1);
+            if (nextIndex === arr.length) {
+              return false;
+            }
+          }
+          return true;
+        });
 
-      this.props.dispatchConsoleEvent(messageEvent.data);
+        this.props.dispatchConsoleEvent(messageEvent.data);
+      }
     });
   }
 
