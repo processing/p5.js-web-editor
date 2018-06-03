@@ -23,43 +23,16 @@ import { hijackConsole, hijackConsoleErrorsScript, startTag, getAllScriptOffsets
 
 
 class PreviewFrame extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleConsoleEvent = this.handleConsoleEvent.bind(this);
+  }
+
   componentDidMount() {
     if (this.props.isPlaying) {
       this.renderFrameContents();
     }
-
-    window.addEventListener('message', (messageEvent) => {
-      if (Array.isArray(messageEvent.data)) {
-        messageEvent.data.forEach((message) => {
-          const args = message.arguments;
-          Object.keys(args).forEach((key) => {
-            if (typeof args[key] === 'string' && args[key].includes('Exiting potential infinite loop')) {
-              this.props.stopSketch();
-              this.props.expandConsole();
-            }
-          });
-        });
-
-        messageEvent.data.every((item, index, arr) => {
-          if (index === arr.length - 1) {
-            Object.assign(item, { 'times': 1 });
-            return false;
-          }
-          const cur = Object.assign(item, { 'times': 1 });
-          const nextIndex = index + 1;
-          while (isEqual(cur.arguments, arr[nextIndex].arguments) && cur.method === arr[nextIndex].method) {
-            cur.times += 1;
-            arr.splice(nextIndex, 1);
-            if (nextIndex === arr.length) {
-              return false;
-            }
-          }
-          return true;
-        });
-
-        this.props.dispatchConsoleEvent(messageEvent.data);
-      }
-    });
+    window.addEventListener('message', this.handleConsoleEvent);
   }
 
   componentDidUpdate(prevProps) {
@@ -105,7 +78,41 @@ class PreviewFrame extends React.Component {
   }
 
   componentWillUnmount() {
+    window.removeEventListener('message', this.handleConsoleEvent);
     ReactDOM.unmountComponentAtNode(this.iframeElement.contentDocument.body);
+  }
+
+  handleConsoleEvent(messageEvent) {
+    if (Array.isArray(messageEvent.data)) {
+      messageEvent.data.forEach((message) => {
+        const args = message.arguments;
+        Object.keys(args).forEach((key) => {
+          if (typeof args[key] === 'string' && args[key].includes('Exiting potential infinite loop')) {
+            this.props.stopSketch();
+            this.props.expandConsole();
+          }
+        });
+      });
+
+      messageEvent.data.every((item, index, arr) => {
+        if (index === arr.length - 1) {
+          Object.assign(item, { 'times': 1 });
+          return false;
+        }
+        const cur = Object.assign(item, { 'times': 1 });
+        const nextIndex = index + 1;
+        while (isEqual(cur.arguments, arr[nextIndex].arguments) && cur.method === arr[nextIndex].method) {
+          cur.times += 1;
+          arr.splice(nextIndex, 1);
+          if (nextIndex === arr.length) {
+            return false;
+          }
+        }
+        return true;
+      });
+
+      this.props.dispatchConsoleEvent(messageEvent.data);
+    }
   }
 
   clearPreview() {
