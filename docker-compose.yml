@@ -1,7 +1,9 @@
-version: '2'
+version: '3'
 services:
   mongo:
     image: mongo:3.4.7
+    expose:
+      - "27017"
   nginx:
     build: ./nginx
   server:
