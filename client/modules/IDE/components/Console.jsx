@@ -35,14 +35,10 @@ class Console extends React.Component {
   }
 
   formatData(args) {
-    try {
-      if (!Array.isArray(args)) {
-        return Array.of(args);
-      }
-      return args;
-    } catch (error) {
-      return args;
+    if (!Array.isArray(args)) {
+      return Array.of(args);
     }
+    return args;
   }
 
   render() {
