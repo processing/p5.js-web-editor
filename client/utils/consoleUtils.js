@@ -2,6 +2,15 @@ import {
   EXTERNAL_LINK_REGEX
 } from '../../server/utils/fileUtils';
 
+import warnLightUrl from '../images/console-warn-light.svg';
+import warnDarkUrl from '../images/console-warn-dark.svg';
+import errorLightUrl from '../images/console-error-light.svg';
+import errorDarkUrl from '../images/console-error-dark.svg';
+import debugLightUrl from '../images/console-debug-light.svg';
+import debugDarkUrl from '../images/console-debug-dark.svg';
+import infoLightUrl from '../images/console-info-light.svg';
+import infoDarkUrl from '../images/console-info-dark.svg';
+
 export const hijackConsole = `var iframeWindow = window;
   var originalConsole = iframeWindow.console;
   iframeWindow.console = {};
@@ -124,7 +133,11 @@ export const CONSOLE_FEED_LIGHT_STYLES = {
   'LOG_WARN_COLOR': 'hsl(39, 100%, 18%)',
   'LOG_COLOR': 'rgb(128, 128, 128)',
   'LOG_WARN_BORDER': 'hsl(50, 100%, 88%)',
-  'LOG_ERROR_BORDER': 'hsl(0, 100%, 92%)'
+  'LOG_ERROR_BORDER': 'hsl(0, 100%, 92%)',
+  'LOG_WARN_ICON': `url(${warnLightUrl})`,
+  'LOG_ERROR_ICON': `url(${errorLightUrl})`,
+  'LOG_DEBUG_ICON': `url(${debugLightUrl})`,
+  'LOG_INFO_ICON': `url(${infoLightUrl})`
 };
 
 export const CONSOLE_FEED_DARK_STYLES = {
@@ -142,7 +155,11 @@ export const CONSOLE_FEED_DARK_STYLES = {
   'LOG_ERROR_BACKGROUND': 'hsl(0, 100%, 8%)',
   'LOG_ERROR_COLOR': 'hsl(0, 100%, 75%)',
   'LOG_WARN_BACKGROUND': 'hsl(50, 100%, 10%)',
-  'LOG_WARN_COLOR': 'hsl(39, 100%, 80%)'
+  'LOG_WARN_COLOR': 'hsl(39, 100%, 80%)',
+  'LOG_WARN_ICON': `url(${warnDarkUrl})`,
+  'LOG_ERROR_ICON': `url(${errorDarkUrl})`,
+  'LOG_DEBUG_ICON': `url(${debugDarkUrl})`,
+  'LOG_INFO_ICON': `url(${infoDarkUrl})`
 };
 
 export const CONSOLE_FEED_CONTRAST_STYLES = CONSOLE_FEED_DARK_STYLES;
