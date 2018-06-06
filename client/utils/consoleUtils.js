@@ -16,11 +16,17 @@ export const hijackConsole = `var iframeWindow = window;
   methods.forEach( function(method) {
     iframeWindow.console[method] = function() {
       originalConsole[method].apply(originalConsole, arguments);
-  
       var args = Array.from(arguments);
+      var toString = Object.prototype.toString;
       args = args.map(function(i) {
-        // catch objects
-        return i;
+        // deep copying objects
+        if (toString.call(i) == '[object Array]' || toString.call(i) == '[object Object]')
+          return JSON.parse(JSON.stringify(i));
+        // catch functions
+        else if (toString.call(i) == '[object Function]')
+          return i.toString();
+        else
+          return i;
       });
   
       consoleBuffer.push({
