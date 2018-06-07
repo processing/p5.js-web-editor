@@ -1,9 +1,15 @@
-let parsed = require('dotenv').config();
+// let parsed = require('dotenv').config();
 if (process.env.NODE_ENV === 'production') {
+  try {
+    require('dotenv').config();
+  } catch(error) {
+    console.log('.env file does not exist. Assuming environment variables are pre-loaded.');
+  }
   process.env.webpackAssets = JSON.stringify(require('./dist/static/manifest.json'));
   process.env.webpackChunkAssets = JSON.stringify(require('./dist/static/chunk-manifest.json'));
   require('./dist/server.bundle.js');
 } else {
+  let parsed = require('dotenv').config();
   require('babel-register')({
     "plugins": [
       [

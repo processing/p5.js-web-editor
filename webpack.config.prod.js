@@ -6,7 +6,11 @@ const cssnext = require('postcss-cssnext');
 const postcssFocus = require('postcss-focus');
 const postcssReporter = require('postcss-reporter');
 const cssnano = require('cssnano');
-require('dotenv').config();
+try {
+  require('dotenv').config();
+} catch (error) {
+  console.log('.env file does not exist. Assuming environment variables are pre-loaded.');
+}
 
 module.exports = {
   devtool: 'source-map',

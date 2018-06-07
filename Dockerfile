@@ -17,6 +17,7 @@ CMD ["npm", "start"]
 
 FROM development as build
 ENV NODE_ENV production
+COPY .env ./
 RUN npm run build
 
 FROM base as production
@@ -25,7 +26,6 @@ COPY package.json package-lock.json ./
 RUN npm install --production
 RUN npm rebuild node-sass
 RUN npm install pm2 -g
-COPY index.js ./
-COPY ecosystem.json ./
+COPY index.js ecosystem.json .env ./
 COPY --from=build /usr/src/app/dist ./dist
 CMD ["pm2-runtime", "ecosystem.json"]
