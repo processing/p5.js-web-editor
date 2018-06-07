@@ -10,33 +10,12 @@ This project is currently in development! It will be announced when there is a (
 4. Install MongoDB and make sure it is running
    * For Mac OSX with [homebrew](http://brew.sh/): `brew install mongodb` then `brew services start mongodb`
    * For Windows and Linux: [MongoDB Installation](https://docs.mongodb.com/manual/installation/)
-5. Create a file called `.env` in the root of this directory that looks like
-
-  ```
-  API_URL=/api
-  MONGO_URL=mongodb://localhost:27017/p5js-web-editor
-  PORT=8000
-  SESSION_SECRET=whatever_you_want_this_to_be_it_only_matters_for_production
-  AWS_ACCESS_KEY=<your-aws-access-key>
-  AWS_SECRET_KEY=<your-aws-secret-key>
-  AWS_REGION=<your-aws-region>
-  S3_BUCKET=<your-s3-bucket>
-  GITHUB_ID=<your-github-client-id>
-  GITHUB_SECRET=<your-github-client-secret>
-  GOOGLE_ID=<your-google-client-id> (use google+ api)
-  GOOGLE_SECRET=<your-google-client-secret> (use google+ api)
-  MAILGUN_KEY=<your-mailgun-api-key>
-  EXAMPLE_USERNAME=<your-name>
-  EXAMPLE_USER_EMAIL=<your-email-id>
-  EXAMPLE_USER_PASSWORD=<your-password>
-  ```
-
-   If you don't care about being able to upload media files to S3 or Login with Github or Google, you can drop in the file exactly how it is. Or, if you don't want to do that, just ask me to send you mine. Refer to [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) for creating an S3 bucket for testing, or if you don't want to do that, I can add you to one of my S3 buckets.
-
-6. `$ npm run fetch-examples` - this downloads the example sketches into a user called 'p5'
-7. `$ npm start`
-8. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
-9. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en).
+5. `$ cp .env.example .env`
+6. (Optional) Update `.env` with necessary keys to enable certain app behavoirs, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
+7. `$ npm run fetch-examples` - this downloads the example sketches into a user called 'p5'
+8. `$ npm start`
+9. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
+10. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en).
 10. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
 
 ### Testing SSL on your local machine
@@ -74,52 +53,32 @@ If you don't have the full server environment running, you can launch a one-off 
 1. Clone this repository and `cd` into it
 2. `$ npm install`
 3. Install MongoDB and make sure it is running
-4. Create a file called `.env` in the root of this directory that looks like
-
-  ```
-  API_URL=/api
-  MONGO_URL=mongodb://localhost:27017/p5js-web-editor
-  PORT=8000
-  SESSION_SECRET=make_this_a_long-random_string_like_maybe_126_characters_long
-  AWS_ACCESS_KEY=<your-aws-access-key>
-  AWS_SECRET_KEY=<your-aws-secret-key>
-  AWS_REGION=<your-aws-region>
-  S3_BUCKET=<your-s3-bucket>
-  GITHUB_ID=<your-github-client-id>
-  GITHUB_SECRET=<your-github-client-secret>
-  GOOGLE_ID=<your-google-client-id> (use google+ api)
-  GOOGLE_SECRET=<your-google-client-secret> (use google+ api)
-  EMAIL_SENDER=<email-address-to-send-from>
-  MAILGUN_KEY=<mailgun-api-key>
-  MAILGUN_DOMAIN=<mailgun-domain>
-  EMAIL_VERIFY_SECRET_TOKEN=whatever_you_want_this_to_be_it_only_matters_for_production
-  EXAMPLE_USERNAME=<your-name>
-  EXAMPLE_USER_EMAIL=<your-email-id>
-  EXAMPLE_USER_PASSWORD=<your-password>
-  ```
-  For production, you will need to have real Github and Amazon credentials. Refer to [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) for creating an S3 bucket for testing.
-
-5. `$ npm run fetch-examples` - this downloads the example sketches into a user called 'p5'
-6. `$ npm run build`
-7. `$ npm run start:prod`
+4. `$ cp .env.example .env`
+5. (NOT Optional) edit `.env` and fill in all necessart values.
+6. `$ npm run fetch-examples` - this downloads the example sketches into a user called 'p5'
+7. `$ npm run build`
+8. `$ npm run start:prod`
 
 ### For Production Setup with PM2
 1. `$ npm install -g pm2`
 2. `$ pm2 start ecosystem.json`
 
-## Optional S3 bucket URL base configuration
+## S3 Bucket Configuration
+
+Please refer to the folllowing [gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) to set up an S3 bucket to be used with this project.
+
 
 If your S3 bucket is in the US East (N Virginia) region (us-east-1), you'll
 need to set a custom URL base for it, because it does not follow the standard
 naming pattern as the rest of the regions. Instead, add the following to your
 environment/.env file:
 
-```S3_BUCKET_URL_BASE=https://s3.amazonaws.com```
+`S3_BUCKET_URL_BASE=https://s3.amazonaws.com`
 
 If you've configured your S3 bucket and DNS records to use a custom domain
 name, you can also set it using this variable. I.e.:
 
-```S3_BUCKET_URL_BASE=https://files.mydomain.com```
+`S3_BUCKET_URL_BASE=https://files.mydomain.com`
 
 For more information on using a custom domain, see this documentation link:
 
