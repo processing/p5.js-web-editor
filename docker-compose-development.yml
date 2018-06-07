@@ -1,12 +1,14 @@
-version: '3'
+version: '3.4'
 services:
   mongo:
     image: mongo:3.4.7
+    volumes:
+      - dbdata:/data/db
   server:
     build:
-      context: .
-      dockerfile: Dockerfile-development
-    command: npm start
+      context: ./
+      dockerfile: Dockerfile
+      target: development
     environment:
       - API_URL=/api
       - MONGO_URL=mongodb://mongo:27017/p5js-web-editor
@@ -20,9 +22,11 @@ services:
       - GITHUB_SECRET=override_in_dotenv
       - MAILGUN_KEY=override_in_dotenv
     volumes:
-      - .:/opt/node/app
-      - /opt/node/app/node_modules
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
     ports:
       - '8000:8000'
     depends_on:
       - mongo
+volumes:
+  dbdata:

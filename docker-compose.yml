@@ -1,7 +1,9 @@
-version: '3'
+version: '3.4'
 services:
   mongo:
     image: mongo:3.4.7
+    volumes:
+      - dbdata:/data/db
     expose:
       - "27017"
   nginx:
@@ -9,8 +11,8 @@ services:
   server:
     build:
       context: .
-      dockerfile: Dockerfile-development
-    command: npm start
+      dockerfile: Dockerfile
+      target: production
     environment:
       - API_URL=/api
       - MONGO_URL=mongodb://mongo:27017/p5js-web-editor
@@ -30,3 +32,5 @@ services:
       - '8000:8000'
     depends_on:
       - mongo
+volumes:
+  dbdata:
