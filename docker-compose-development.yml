@@ -10,17 +10,7 @@ services:
       dockerfile: Dockerfile
       target: development
     environment:
-      - API_URL=/api
       - MONGO_URL=mongodb://mongo:27017/p5js-web-editor
-      - PORT=8000
-      - SESSION_SECRET=override_in_dotenv
-      - AWS_ACCESS_KEY=override_in_dotenv
-      - AWS_SECRET_KEY=override_in_dotenv
-      - AWS_REGION=override_in_dotenv
-      - S3_BUCKET=override_in_dotenv
-      - GITHUB_ID=override_in_dotenv
-      - GITHUB_SECRET=override_in_dotenv
-      - MAILGUN_KEY=override_in_dotenv
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules

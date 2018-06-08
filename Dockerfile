@@ -13,11 +13,12 @@ RUN npm rebuild node-sass
 COPY .babelrc index.js nodemon.json webpack.config.babel.js webpack.config.dev.js webpack.config.prod.js webpack.config.server.js ./
 COPY client ./client
 COPY server ./server
+COPY scripts ./scripts
 CMD ["npm", "start"]
 
 FROM development as build
 ENV NODE_ENV production
-COPY .env ./
+# COPY .env ./
 RUN npm run build
 
 FROM base as production
@@ -26,6 +27,8 @@ COPY package.json package-lock.json ./
 RUN npm install --production
 RUN npm rebuild node-sass
 RUN npm install pm2 -g
-COPY index.js ecosystem.json .env ./
+COPY index.js ecosystem.json .babelrc ./
+COPY scripts ./scripts
+# COPY .env ./
 COPY --from=build /usr/src/app/dist ./dist
 CMD ["pm2-runtime", "ecosystem.json"]
