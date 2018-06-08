@@ -273,7 +273,7 @@ function createProjectsInP5user(projectsInAllCategories) {
 
           newProject.save((saveErr, savedProject) => {
             if (saveErr) throw saveErr;
-            console.log(`Created a new project in p5 user: ${savedProject.name}`);
+            console.log(`Created a new project in ${process.env.EXAMPLE_USERNAME} user: ${savedProject.name}`);
             projectCallback();
           });
         }, (categoryErr) => {
