@@ -1,4 +1,6 @@
 require('babel-register');
 require('babel-polyfill');
-require('dotenv').config();
+if (process.env.NODE_ENV !== "production") {
+  require('dotenv').config();
+}
 require('./examples.js');
