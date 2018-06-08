@@ -87,7 +87,8 @@ module.exports = {
         NODE_ENV: JSON.stringify('production'),
         S3_BUCKET: process.env.S3_BUCKET ? `"${process.env.S3_BUCKET}"` : undefined,
         S3_BUCKET_URL_BASE: process.env.S3_BUCKET_URL_BASE ? `"${process.env.S3_BUCKET_URL_BASE}"` : undefined,
-        AWS_REGION: process.env.AWS_REGION ? `"${process.env.AWS_REGION}"` : undefined
+        AWS_REGION: process.env.AWS_REGION ? `"${process.env.AWS_REGION}"` : undefined,
+        EXAMPLE_USERNAME: process.env.EXAMPLE_USERNAME ? `"${process.env.EXAMPLE_USERNAME}"` : undefined      
       }
     }),
     new webpack.optimize.CommonsChunkPlugin({

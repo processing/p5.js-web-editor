@@ -217,7 +217,7 @@ class Nav extends React.PureComponent {
               </li> }
               <li className="nav__dropdown-item">
                 <Link
-                  to="/p5/sketches"
+                  to={`/${process.env.EXAMPLE_USERNAME}/sketches`}
                   onFocus={this.handleFocus.bind(this, 'file')}
                   onBlur={this.handleBlur}
                   onClick={this.setDropdown.bind(this, 'none')}
