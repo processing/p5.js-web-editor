@@ -2,7 +2,7 @@ import User from '../models/user';
 import Project from '../models/project';
 
 export function get404Sketch(callback) {
-  User.findOne({ username: process.env.EXAMPLE_USERNAME }, (userErr, user) => { // Find p5 user
+  User.findOne({ username: process.env.EXAMPLE_USERNAME }, (userErr, user) => { // Find example user
     if (userErr) {
       throw userErr;
     } else {
