@@ -96,10 +96,10 @@ class PreviewFrame extends React.Component {
 
       messageEvent.data.every((item, index, arr) => {
         if (index === arr.length - 1) {
-          Object.assign(item, { 'times': 1 });
+          Object.assign(item, { times: 1 });
           return false;
         }
-        const cur = Object.assign(item, { 'times': 1 });
+        const cur = Object.assign(item, { times: 1 });
         const nextIndex = index + 1;
         while (isEqual(cur.arguments, arr[nextIndex].arguments) && cur.method === arr[nextIndex].method) {
           cur.times += 1;

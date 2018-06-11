@@ -71,7 +71,7 @@ class Console extends React.Component {
           {this.props.consoleEvents.map((consoleEvent) => {
             const { arguments: args, method, times } = consoleEvent;
             const { theme } = this.props;
-            Object.assign(consoleEvent, { 'data': this.formatData(args) });
+            Object.assign(consoleEvent, { data: this.formatData(args) });
 
             if (Object.keys(args).length === 0) {
               return (
