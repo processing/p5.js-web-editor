@@ -84,22 +84,19 @@ class PreviewFrame extends React.Component {
 
   handleConsoleEvent(messageEvent) {
     if (Array.isArray(messageEvent.data)) {
-      messageEvent.data.forEach((message) => {
-        const args = message.arguments;
+      messageEvent.data.every((message, index, arr) => {
+        const { arguments: args } = message;
         Object.keys(args).forEach((key) => {
           if (typeof args[key] === 'string' && args[key].includes('Exiting potential infinite loop')) {
             this.props.stopSketch();
             this.props.expandConsole();
           }
         });
-      });
-
-      messageEvent.data.every((item, index, arr) => {
         if (index === arr.length - 1) {
-          Object.assign(item, { times: 1 });
+          Object.assign(message, { times: 1 });
           return false;
         }
-        const cur = Object.assign(item, { times: 1 });
+        const cur = Object.assign(message, { times: 1 });
         const nextIndex = index + 1;
         while (isEqual(cur.arguments, arr[nextIndex].arguments) && cur.method === arr[nextIndex].method) {
           cur.times += 1;
