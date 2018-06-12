@@ -98,15 +98,23 @@
 	position: absolute;
 
 	.preview-console__message--info &, .preview-console__message--log & {
-		background-color: $lightsteelblue;
+		@include themify() {
+			background-color: getThemifyVariable('console-info-background-color');
+		}
 	}
 	.preview-console__message--warn & {
-		background-color: $orange;
+		@include themify() {
+			background-color: getThemifyVariable('console-warn-background-color');
+		}
 	}
 	.preview-console__message--debug & {
-		background-color: $dodgerblue;
+		@include themify() {
+			background-color: getThemifyVariable('console-debug-background-color');
+		}
 	}
 	.preview-console__message--error & {
-		background-color: $red;
+		@include themify() {
+			background-color: getThemifyVariable('console-error-background-color');
+		}
 	}
 }
