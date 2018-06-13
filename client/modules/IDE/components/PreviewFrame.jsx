@@ -86,12 +86,17 @@ class PreviewFrame extends React.Component {
     if (Array.isArray(messageEvent.data)) {
       messageEvent.data.every((message, index, arr) => {
         const { arguments: args } = message;
+        let hasInfiniteLoop = false;
         Object.keys(args).forEach((key) => {
           if (typeof args[key] === 'string' && args[key].includes('Exiting potential infinite loop')) {
             this.props.stopSketch();
             this.props.expandConsole();
+            hasInfiniteLoop = true;
           }
         });
+        if (hasInfiniteLoop) {
+          return false;
+        }
         if (index === arr.length - 1) {
           Object.assign(message, { times: 1 });
           return false;
