@@ -12,8 +12,8 @@
     "build:client": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js --progress",
     "build:server": "cross-env NODE_ENV=production webpack --config webpack.config.server.js --progress",
     "test": "npm run lint",
-    "fetch-examples": "node scripts/fetch-examples.js",
-    "fetch-examples-gg": "node scripts/fetch-examples-gg.js"
+    "fetch-examples": "node ./server/scripts/fetch-examples.js",
+    "fetch-examples-gg": "node ./server/scripts/fetch-examples-gg.js"
   },
   "main": "index.js",
   "author": "Cassie Tarakajian",
