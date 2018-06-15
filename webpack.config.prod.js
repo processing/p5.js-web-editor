@@ -6,7 +6,7 @@ const cssnext = require('postcss-cssnext');
 const postcssFocus = require('postcss-focus');
 const postcssReporter = require('postcss-reporter');
 const cssnano = require('cssnano');
-if (process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV === "development") {
   require('dotenv').config();
 }
 

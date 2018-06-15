@@ -1,5 +1,7 @@
 const webpack = require('webpack');
-require('dotenv').config();
+if (process.env.NODE_ENV === 'development') {
+  require('dotenv').config();
+}
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',

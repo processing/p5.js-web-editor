@@ -4,21 +4,21 @@ ENV APP_HOME=/usr/src/app \
 RUN mkdir -p $APP_HOME
 WORKDIR $APP_HOME
 EXPOSE 8000
+EXPOSE 80
+EXPOSE 443
 
 FROM base as development
 ENV NODE_ENV development
 COPY package.json package-lock.json ./
 RUN npm install
 RUN npm rebuild node-sass
-COPY .babelrc index.js nodemon.json webpack.config.babel.js webpack.config.dev.js webpack.config.prod.js webpack.config.server.js ./
+COPY .babelrc index.js nodemon.json webpack.config.babel.js webpack.config.dev.js webpack.config.prod.js webpack.config.server.js webpack.config.examples.js ./
 COPY client ./client
 COPY server ./server
-COPY scripts ./scripts
 CMD ["npm", "start"]
 
 FROM development as build
 ENV NODE_ENV production
-# COPY .env ./
 RUN npm run build
 
 FROM base as production
@@ -27,8 +27,9 @@ COPY package.json package-lock.json ./
 RUN npm install --production
 RUN npm rebuild node-sass
 RUN npm install pm2 -g
-COPY index.js ecosystem.json .babelrc ./
-COPY scripts ./scripts
-# COPY .env ./
+RUN npm install local-ssl-proxy
+COPY index.js ecosystem.json ./
 COPY --from=build /usr/src/app/dist ./dist
+RUN npm run ssl-proxy
+#RUN npm run fetch-examples:prod
 CMD ["pm2-runtime", "ecosystem.json"]

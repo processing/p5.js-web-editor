@@ -6,8 +6,8 @@ services:
       - dbdata:/data/db
     expose:
       - "27017"
-  nginx:
-    build: ./nginx
+  # nginx:
+  #   build: ./nginx
   server:
     build:
       context: .
@@ -17,11 +17,15 @@ services:
       - .env
     environment:
       - MONGO_URL=mongodb://mongo:27017/p5js-web-editor
+      - API_URL=https://localhost/api
+      - PORT=80
     volumes:
       - .:/opt/node/app
       - /opt/node/app/node_modules
     ports:
       - '8000:8000'
+      - '80:80'
+      - '443:443'
     depends_on:
       - mongo
 volumes:
