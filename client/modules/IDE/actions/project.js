@@ -2,7 +2,7 @@ import { browserHistory } from 'react-router';
 import axios from 'axios';
 import objectID from 'bson-objectid';
 import each from 'async/each';
-import { isEqual } from 'lodash';
+import { isEqual, isPlainObject } from 'lodash';
 import * as ActionTypes from '../../../constants';
 import { showToast, setToastText } from './toast';
 import { setUnsavedChanges,
@@ -71,6 +71,45 @@ export function clearPersistedState() {
   };
 }
 
+function projectIsEqual(base, other) {
+  const filter = ['isEditingName', 'isOptionsOpen'];
+
+  // debugger;
+  if (Array.isArray(base)) {
+    // It must be a collection of children (files or folders).
+    if (!Array.isArray(other) || other.length !== base.length) {
+      // If the other one is not also an array, or if the length is different
+      // then they cannot be the same.
+      return false;
+    }
+
+    // Check each of the items in the array for equality with the corresponding
+    // object in the other.
+    let allEqual = true;
+    for (let i = 0; i < base.length; i += 1) {
+      allEqual = allEqual && projectIsEqual(base[i], other[i]);
+    }
+    return allEqual;
+  } else if (isPlainObject(base)) {
+    if (!isPlainObject(other)) {
+      // If the other one is not also a plain object, then they cannot match.
+      return false;
+    }
+    // It must be either a file or a folder object.
+    // Check the individual object for equality.
+    let allEqual = true;
+    Object.keys(base).forEach((k, i) => {
+      // Only compare keys that are not in the filter.
+      if (filter.indexOf(k) < 0) {
+        allEqual = allEqual && isEqual(base[k], other[k]);
+      }
+    });
+    return allEqual;
+  }
+  // Otherwise, I don't know what kind of object it is. Return false.
+  return false;
+}
+
 export function saveProject(autosave = false) {
   return (dispatch, getState) => {
     const state = getState();
@@ -84,7 +123,7 @@ export function saveProject(autosave = false) {
         .then((response) => {
           const currentState = getState();
           const savedProject = Object.assign({}, response.data);
-          if (!isEqual(currentState.files, response.data.files)) {
+          if (!projectIsEqual(currentState.files, response.data.files)) {
             savedProject.files = currentState.files;
             dispatch(setUnsavedChanges(true));
           } else {
