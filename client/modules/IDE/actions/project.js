@@ -71,10 +71,13 @@ export function clearPersistedState() {
   };
 }
 
+/**
+ * Compare whether two project objects are the same. Used to check that the
+ * response returned from the server still matches the local copy.
+ */
 function projectIsEqual(base, other) {
   const filter = ['isEditingName', 'isOptionsOpen'];
 
-  // debugger;
   if (Array.isArray(base)) {
     // It must be a collection of children (files or folders).
     if (!Array.isArray(other) || other.length !== base.length) {
@@ -99,14 +102,14 @@ function projectIsEqual(base, other) {
     // Check the individual object for equality.
     let allEqual = true;
     Object.keys(base).forEach((k, i) => {
-      // Only compare keys that are not in the filter.
-      if (filter.indexOf(k) < 0) {
+      // Only compare keys that are not in the filter (unless they are set true)
+      if (filter.indexOf(k) < 0 || base[k] === true) {
         allEqual = allEqual && isEqual(base[k], other[k]);
       }
     });
     return allEqual;
   }
-  // Otherwise, I don't know what kind of object it is. Return false.
+  // Otherwise, we don't know what kind of object it is. Return false.
   return false;
 }
 
