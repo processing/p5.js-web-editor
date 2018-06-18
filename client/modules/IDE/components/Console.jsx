@@ -2,13 +2,43 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import InlineSVG from 'react-inlinesvg';
 import classNames from 'classnames';
+import { Console as ConsoleFeed } from 'console-feed';
+import { CONSOLE_FEED_WITHOUT_ICONS, CONSOLE_FEED_LIGHT_STYLES, CONSOLE_FEED_DARK_STYLES, CONSOLE_FEED_CONTRAST_STYLES } from '../../../utils/consoleUtils';
 
 const upArrowUrl = require('../../../images/up-arrow.svg');
 const downArrowUrl = require('../../../images/down-arrow.svg');
 
 class Console extends React.Component {
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     this.consoleMessages.scrollTop = this.consoleMessages.scrollHeight;
+    if (this.props.theme !== prevProps.theme) {
+      this.props.clearConsole();
+      this.props.dispatchConsoleEvent(this.props.consoleEvents);
+    }
+  }
+
+  getConsoleFeedStyle(theme, times) {
+    const style = {};
+    if (times > 1) {
+      Object.assign(style, CONSOLE_FEED_WITHOUT_ICONS);
+    }
+    switch (theme) {
+      case 'light':
+        return Object.assign(style, CONSOLE_FEED_LIGHT_STYLES);
+      case 'dark':
+        return Object.assign(style, CONSOLE_FEED_DARK_STYLES);
+      case 'contrast':
+        return Object.assign(style, CONSOLE_FEED_CONTRAST_STYLES);
+      default:
+        return '';
+    }
+  }
+
+  formatData(args) {
+    if (!Array.isArray(args)) {
+      return Array.of(args);
+    }
+    return args;
   }
 
   render() {
@@ -39,17 +69,26 @@ class Console extends React.Component {
         </div>
         <div ref={(element) => { this.consoleMessages = element; }} className="preview-console__messages">
           {this.props.consoleEvents.map((consoleEvent) => {
-            const { arguments: args, method } = consoleEvent;
+            const { arguments: args, method, times } = consoleEvent;
+            const { theme } = this.props;
+            Object.assign(consoleEvent, { data: this.formatData(args) });
+
             if (Object.keys(args).length === 0) {
               return (
-                <div key={consoleEvent.id} className="preview-console__undefined">
+                <div key={consoleEvent.id} className="preview-console__message preview-console__message--undefined">
                   <span key={`${consoleEvent.id}-0`}>undefined</span>
                 </div>
               );
             }
             return (
-              <div key={consoleEvent.id} className={`preview-console__${method}`}>
-                {Object.keys(args).map(key => <span key={`${consoleEvent.id}-${key}`}>{args[key]}</span>)}
+              <div key={consoleEvent.id} className={`preview-console__message preview-console__message--${method}`}>
+                { times > 1 &&
+                  <div className="preview-console__logged-times">{times}</div>
+                }
+                <ConsoleFeed
+                  styles={this.getConsoleFeedStyle(theme, times)}
+                  logs={Array.of(consoleEvent)}
+                />
               </div>
             );
           })}
@@ -67,7 +106,9 @@ Console.propTypes = {
   isExpanded: PropTypes.bool.isRequired,
   collapseConsole: PropTypes.func.isRequired,
   expandConsole: PropTypes.func.isRequired,
-  clearConsole: PropTypes.func.isRequired
+  clearConsole: PropTypes.func.isRequired,
+  dispatchConsoleEvent: PropTypes.func.isRequired,
+  theme: PropTypes.string.isRequired
 };
 
 Console.defaultProps = {

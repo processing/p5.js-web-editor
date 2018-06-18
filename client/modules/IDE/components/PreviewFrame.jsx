@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 // import escapeStringRegexp from 'escape-string-regexp';
 import srcDoc from 'srcdoc-polyfill';
-
+import { isEqual } from 'lodash';
 import loopProtect from 'loop-protect';
 import loopProtectScript from 'loop-protect/dist/loop-protect.min';
 import { JSHINT } from 'jshint';
@@ -23,24 +23,16 @@ import { hijackConsole, hijackConsoleErrorsScript, startTag, getAllScriptOffsets
 
 
 class PreviewFrame extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleConsoleEvent = this.handleConsoleEvent.bind(this);
+  }
+
   componentDidMount() {
     if (this.props.isPlaying) {
       this.renderFrameContents();
     }
-
-    window.addEventListener('message', (messageEvent) => {
-      console.log(messageEvent);
-      messageEvent.data.forEach((message) => {
-        const args = message.arguments;
-        Object.keys(args).forEach((key) => {
-          if (args[key].includes('Exiting potential infinite loop')) {
-            this.props.stopSketch();
-            this.props.expandConsole();
-          }
-        });
-      });
-      this.props.dispatchConsoleEvent(messageEvent.data);
-    });
+    window.addEventListener('message', this.handleConsoleEvent);
   }
 
   componentDidUpdate(prevProps) {
@@ -86,7 +78,43 @@ class PreviewFrame extends React.Component {
   }
 
   componentWillUnmount() {
+    window.removeEventListener('message', this.handleConsoleEvent);
     ReactDOM.unmountComponentAtNode(this.iframeElement.contentDocument.body);
+  }
+
+  handleConsoleEvent(messageEvent) {
+    if (Array.isArray(messageEvent.data)) {
+      messageEvent.data.every((message, index, arr) => {
+        const { arguments: args } = message;
+        let hasInfiniteLoop = false;
+        Object.keys(args).forEach((key) => {
+          if (typeof args[key] === 'string' && args[key].includes('Exiting potential infinite loop')) {
+            this.props.stopSketch();
+            this.props.expandConsole();
+            hasInfiniteLoop = true;
+          }
+        });
+        if (hasInfiniteLoop) {
+          return false;
+        }
+        if (index === arr.length - 1) {
+          Object.assign(message, { times: 1 });
+          return false;
+        }
+        const cur = Object.assign(message, { times: 1 });
+        const nextIndex = index + 1;
+        while (isEqual(cur.arguments, arr[nextIndex].arguments) && cur.method === arr[nextIndex].method) {
+          cur.times += 1;
+          arr.splice(nextIndex, 1);
+          if (nextIndex === arr.length) {
+            return false;
+          }
+        }
+        return true;
+      });
+
+      this.props.dispatchConsoleEvent(messageEvent.data);
+    }
   }
 
   clearPreview() {
