@@ -26,9 +26,8 @@ This project is currently in development! It will be announced when there is a (
   GOOGLE_ID=<your-google-client-id> (use google+ api)
   GOOGLE_SECRET=<your-google-client-secret> (use google+ api)
   MAILGUN_KEY=<your-mailgun-api-key>
-  EXAMPLE_USERNAME=<your-name>
-  EXAMPLE_USER_EMAIL=<your-email-id>
-  EXAMPLE_USER_PASSWORD=<your-password>
+  EXAMPLE_USER_EMAIL=<email-id-for-p5-example-user>
+  EXAMPLE_USER_PASSWORD=<password-for-p5-example-user>
   ```
 
    If you don't care about being able to upload media files to S3 or Login with Github or Google, you can drop in the file exactly how it is. Or, if you don't want to do that, just ask me to send you mine. Refer to [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) for creating an S3 bucket for testing, or if you don't want to do that, I can add you to one of my S3 buckets.
@@ -93,9 +92,8 @@ If you don't have the full server environment running, you can launch a one-off 
   MAILGUN_KEY=<mailgun-api-key>
   MAILGUN_DOMAIN=<mailgun-domain>
   EMAIL_VERIFY_SECRET_TOKEN=whatever_you_want_this_to_be_it_only_matters_for_production
-  EXAMPLE_USERNAME=<your-name>
-  EXAMPLE_USER_EMAIL=<your-email-id>
-  EXAMPLE_USER_PASSWORD=<your-password>
+  EXAMPLE_USER_EMAIL=<email-id-for-p5-example-user>
+  EXAMPLE_USER_PASSWORD=<password-for-p5-example-user>
   ```
   For production, you will need to have real Github and Amazon credentials. Refer to [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) for creating an S3 bucket for testing.
 
