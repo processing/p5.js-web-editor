@@ -36,7 +36,9 @@ const defaultHTML =
     <!-- Chroma -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/1.3.6/chroma.min.js"></script>
     <!-- Jquery -->
-    <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script> 
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js" 
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" 
+      crossorigin="anonymous"></script> 
 
     <!-- sketch additions -->
 
