@@ -1,3 +1,12 @@
 language: node_js
 node_js:
  - "8.11.1"
+
+services:
+  - docker
+
+before_install:
+  # eventually set up AWS stuff here
+  - docker-compose up -d
+  - docker ps -a
+

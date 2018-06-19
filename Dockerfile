@@ -30,6 +30,7 @@ RUN npm install pm2 -g
 RUN npm install local-ssl-proxy
 COPY index.js ecosystem.json ./
 COPY --from=build /usr/src/app/dist ./dist
-RUN npm run ssl-proxy
-#RUN npm run fetch-examples:prod
+# for reg production
 CMD ["pm2-runtime", "ecosystem.json"]
+# for testing ssl locally
+# CMD npm run ssl-proxy && pm2-runtime ecosystem.json
