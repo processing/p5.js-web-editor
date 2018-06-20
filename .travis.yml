@@ -13,11 +13,11 @@ before_install:
 
 install: true
 
-before_script:
-# Install dependencies in the app container
-- docker-compose exec -T app composer self-update
-- docker-compose exec -T app composer install --no-interaction
-- docker-compose exec -T app composer dump-autoload -o 
+# before_script:
+# # Install dependencies in the app container
+# - docker-compose exec -T app composer self-update
+# - docker-compose exec -T app composer install --no-interaction
+# - docker-compose exec -T app composer dump-autoload -o 
 
 script:
 # Run unit tests in the app container
