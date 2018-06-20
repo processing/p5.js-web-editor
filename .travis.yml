@@ -30,5 +30,5 @@ after_success:
 
 env:
   global:
-    - APP_IMAGE_NAME=p5js-web-editor_app
-    - NGINX_IMAGE_NAME=p5js-web-editor_nginx
+    - APP_IMAGE_NAME=p5jswebeditor_app
+    - NGINX_IMAGE_NAME=p5jswebeditor_nginx
