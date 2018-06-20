@@ -11,6 +11,8 @@ before_install:
   - docker-compose up -d
   - docker ps -a
 
+install: true
+
 before_script:
 # Install dependencies in the app container
 - docker-compose exec -T app composer self-update

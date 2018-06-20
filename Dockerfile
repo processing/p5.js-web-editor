@@ -27,7 +27,7 @@ COPY package.json package-lock.json ./
 RUN npm install --production
 RUN npm rebuild node-sass
 RUN npm install pm2 -g
-RUN npm install local-ssl-proxy
+# RUN npm install local-ssl-proxy
 COPY index.js ecosystem.json ./
 COPY --from=build /usr/src/app/dist ./dist
 # for reg production
