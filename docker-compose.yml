@@ -15,8 +15,8 @@ services:
       context: .
       dockerfile: Dockerfile
       target: production
-    env_file:
-      - .env
+    # env_file:
+    #   - .env
     environment:
       - MONGO_URL=mongodb://mongo:27017/p5js-web-editor
       # - API_URL=https://localhost/api

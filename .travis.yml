@@ -1,3 +1,4 @@
+sudo: required
 language: node_js
 node_js:
  - "8.11.1"
@@ -9,4 +10,14 @@ before_install:
   # eventually set up AWS stuff here
   - docker-compose up -d
   - docker ps -a
+
+before_script:
+# Install dependencies in the app container
+- docker-compose exec -T app composer self-update
+- docker-compose exec -T app composer install --no-interaction
+- docker-compose exec -T app composer dump-autoload -o 
+
+script:
+# Run unit tests in the app container
+- docker-compose exec -T app npm run test --verbose
 
