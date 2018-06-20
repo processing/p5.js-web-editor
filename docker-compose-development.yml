@@ -4,7 +4,7 @@ services:
     image: mongo:3.4.7
     volumes:
       - dbdata:/data/db
-  server:
+  app:
     build:
       context: ./
       dockerfile: Dockerfile

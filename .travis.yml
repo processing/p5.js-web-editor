@@ -8,18 +8,15 @@ services:
 
 before_install:
   # eventually set up AWS stuff here
-  - docker-compose up -d
+  - docker-compose -f docker-compose-development.yml up -d
   - docker ps -a
 
 install: true
-
-# before_script:
-# # Install dependencies in the app container
-# - docker-compose exec -T app composer self-update
-# - docker-compose exec -T app composer install --no-interaction
-# - docker-compose exec -T app composer dump-autoload -o 
 
 script:
 # Run unit tests in the app container
 - docker-compose exec -T app npm run test --verbose
 
+after_success:
+- docker-compose stop
+- docker-compose build --no-cache

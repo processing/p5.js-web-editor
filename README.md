@@ -34,7 +34,7 @@ Note that this takes up a significant amount of space on your machine. Make sure
    * Windows: https://www.docker.com/docker-windows
 2. Clone this repository and cd into it
 3. `$ docker-compose -f docker-compose-development.yml build`
-4. `$ docker-compose -f docker-compose-development.yml run --rm server npm run fetch-examples`
+4. `$ docker-compose -f docker-compose-development.yml run --rm app npm run fetch-examples`
 
 Now, anytime you wish to start the server with its dependencies, you can run:
 
@@ -43,11 +43,11 @@ Now, anytime you wish to start the server with its dependencies, you can run:
 
 To open a terminal/shell in the running Docker server (i.e. after `docker-compose up` has been run):
 
-7. `$ docker-compose -f docker-compose-development.yml exec server bash -l`
+7. `$ docker-compose -f docker-compose-development.yml exec app bash -l`
 
 If you don't have the full server environment running, you can launch a one-off container instance (and have it automatically deleted after you're done using it):
 
-8. `$ docker-compose -f docker-compose-development.yml run server --rm bash -l`
+8. `$ docker-compose -f docker-compose-development.yml run app --rm bash -l`
 
 ## Production Installation
 1. Clone this repository and `cd` into it
