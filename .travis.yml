@@ -18,5 +18,16 @@ script:
 - docker-compose exec -T app npm run test --verbose
 
 after_success:
+# eventually wrap this in a if branch is master
 - docker-compose stop
 - docker-compose build --no-cache
+- docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+- docker tag docker tag $APP_IMAGE_NAME $DOCKER_USERNAME/$DOCKER_REPOSITORY:$APP_IMAGE_NAME\_$TRAVIS_BUILD_ID
+- docker tag docker tag $NGINX_IMAGE_NAME $DOCKER_USERNAME/$DOCKER_REPOSITORY:$NGINX_IMAGE_NAME\_$TRAVIS_BUILD_ID
+- docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY:$APP_IMAGE_NAME\_$TRAVIS_BUILD_ID
+- docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY:$NGINX_IMAGE_NAME\_$TRAVIS_BUILD_ID
+
+env:
+  global:
+    - APP_IMAGE_NAME=p5js-web-editor_app
+    - NGINX_IMAGE_NAME=p5js-web-editor_nginx
