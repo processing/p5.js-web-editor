@@ -3,9 +3,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 // import escapeStringRegexp from 'escape-string-regexp';
 import srcDoc from 'srcdoc-polyfill';
-
+import { isEqual } from 'lodash';
+// import update from 'immutability-helper';
 import loopProtect from 'loop-protect';
 import loopProtectScript from 'loop-protect/dist/loop-protect.min';
+import Frame, { FrameContextConsumer } from 'react-frame-component';
+import { Hook, Decode } from 'console-feed';
 import { JSHINT } from 'jshint';
 import decomment from 'decomment';
 import { getBlobUrl } from '../actions/files';
@@ -21,37 +24,62 @@ import {
 import { hijackConsole, hijackConsoleErrorsScript, startTag, getAllScriptOffsets }
   from '../../../utils/consoleUtils';
 
+export default class PreviewFrame extends React.Component {
+  state = {
+    logs: []
+  }
 
-class PreviewFrame extends React.Component {
   componentDidMount() {
     if (this.props.isPlaying) {
       this.renderFrameContents();
     }
 
     window.addEventListener('message', (messageEvent) => {
-      console.log(messageEvent);
-      messageEvent.data.forEach((message) => {
-        const args = message.arguments;
-        Object.keys(args).forEach((key) => {
-          if (args[key].includes('Exiting potential infinite loop')) {
-            this.props.stopSketch();
-            this.props.expandConsole();
+      if (Array.isArray(messageEvent.data)) {
+        messageEvent.data.every((message, index, arr) => {
+          const { arguments: args } = message;
+          let hasInfiniteLoop = false;
+          Object.keys(args).forEach((key) => {
+            if (args.length === 1 && args[key].includes('Exiting potential infinite loop')) {
+              this.props.stopSketch();
+              this.props.expandConsole();
+              hasInfiniteLoop = true;
+            }
+          });
+          if (hasInfiniteLoop) {
+            return false;
           }
+          if (index === arr.length - 1) {
+            Object.assign(message, { times: 1 });
+            return false;
+          }
+          const cur = Object.assign(message, { times: 1 });
+          const nextIndex = index + 1;
+          while (isEqual(cur.arguments, arr[nextIndex].arguments) && cur.method === arr[nextIndex].method) {
+            cur.times += 1;
+            arr.splice(nextIndex, 1);
+            if (nextIndex === arr.length) {
+              return false;
+            }
+          }
+          return true;
         });
-      });
-      this.props.dispatchConsoleEvent(messageEvent.data);
+
+        this.props.dispatchConsoleEvent(messageEvent.data);
+      }
     });
   }
 
   componentDidUpdate(prevProps) {
     // if sketch starts or stops playing, want to rerender
     if (this.props.isPlaying !== prevProps.isPlaying) {
-      this.renderSketch();
+      // this.renderSketch();
       return;
     }
 
     // if the user explicitly clicks on the play button
     if (this.props.isPlaying && this.props.previewIsRefreshing) {
+      // this.forceUpdate();
       this.renderSketch();
       return;
     }
@@ -139,8 +167,8 @@ class PreviewFrame extends React.Component {
     this.resolveStyles(sketchDoc, resolvedFiles);
 
     const scriptsToInject = [
-      loopProtectScript,
-      hijackConsole
+      loopProtectScript
+      // hijackConsole
     ];
     const accessiblelib = sketchDoc.createElement('script');
     accessiblelib.setAttribute(
@@ -156,7 +184,7 @@ class PreviewFrame extends React.Component {
       const textSection = sketchDoc.createElement('section');
       textSection.setAttribute('id', 'textOutput-content');
       sketchDoc.getElementById('accessible-outputs').appendChild(textSection);
-      this.iframeElement.focus();
+      // this.iframeElement.focus();
     }
     if (this.props.gridOutput) {
       sketchDoc.body.appendChild(accessibleOutputs);
@@ -164,7 +192,7 @@ class PreviewFrame extends React.Component {
       const gridSection = sketchDoc.createElement('section');
       gridSection.setAttribute('id', 'gridOutput-content');
       sketchDoc.getElementById('accessible-outputs').appendChild(gridSection);
-      this.iframeElement.focus();
+      // this.iframeElement.focus();
     }
     if (this.props.soundOutput) {
       sketchDoc.body.appendChild(accessibleOutputs);
@@ -276,6 +304,7 @@ class PreviewFrame extends React.Component {
         }
       } else if (!(script.getAttribute('src') && script.getAttribute('src').match(EXTERNAL_LINK_REGEX)) !== null) {
         script.setAttribute('crossorigin', '');
+        // script.setAttribute('async', '');
         script.innerHTML = this.resolveJSLinksInString(script.innerHTML, files); // eslint-disable-line
       }
     });
@@ -310,13 +339,14 @@ class PreviewFrame extends React.Component {
   renderSketch() {
     const doc = this.iframeElement;
     if (this.props.isPlaying) {
-      srcDoc.set(doc, this.injectLocalFiles());
+      // console.log(this.injectLocalFiles());
+      // srcDoc.set(doc, this.injectLocalFiles());
       if (this.props.endSketchRefresh) {
         this.props.endSketchRefresh();
       }
     } else {
-      doc.srcdoc = '';
-      srcDoc.set(doc, '  ');
+      // doc.srcdoc = '';
+      // srcDoc.set(doc, '  ');
     }
   }
 
@@ -331,15 +361,79 @@ class PreviewFrame extends React.Component {
 
   render() {
     return (
-      <iframe
-        className="preview-frame"
-        aria-label="sketch output"
-        role="main"
-        frameBorder="0"
-        title="sketch output"
-        ref={(element) => { this.iframeElement = element; }}
-        sandbox="allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-forms allow-modals"
-      />
+      <div>
+        { this.props.isPlaying &&
+        // <iframe
+        //   className="preview-frame"
+        //   aria-label="sketch output"
+        //   role="main"
+        //   frameBorder="0"
+        //   title="sketch output"
+        // ref={(element) => { this.iframeElement = element; }}
+        // sandbox="allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-forms allow-modals"
+        // />
+          <Frame
+            className="preview-frame"
+            initialContent={this.injectLocalFiles()}
+            id="iframe"
+          >
+            <FrameContextConsumer>
+              {
+                // Callback is invoked with iframe's window and document instances
+                ({ document, window }) => {
+                  // Render Children
+                  Hook(window.console, (log) => {
+                    // alert(log);
+                    // this.setState(state => update(state, { logs: { $push: [Decode(log)] } }));
+                    window.parent.postMessage([{
+                      method: log[0].method,
+                      arguments: log[0].data,
+                      source: 'sketch'
+                    }], '*');
+                  });
+                  console.log(this.state.logs);
+                  function getScriptOff(line) {
+                    const offs = [[50, 'sketch']];
+                    let l = 0;
+                    let file = '';
+                    for (let i = 0; i < offs.length; i += 1) {
+                      const n = offs[i][0];
+                      if (n < line && n > l) {
+                        l = n;
+                        file = offs[i][1];  // eslint-disable-line
+                      }
+                    }
+                    return [line - l, file];
+                  }
+                  // catch reference errors, via http://stackoverflow.com/a/12747364/2994108
+                  window.onerror = function (msg, url, lineNumber, columnNo, error) {
+                    const string = msg.toLowerCase();
+                    const substring = 'script error';
+                    let data = {};
+                    // alert(error);
+                    if (url.match(/^(http:\/\/|https:\/\/)/) !== null && error.stack) {
+                      const errorNum = error.stack.split('about:srcdoc:')[1].split(':')[0];
+                      const fileInfo = getScriptOff(errorNum);
+                      data = msg + ' (' + fileInfo[1] + ': line ' + fileInfo[0] + ')';  // eslint-disable-line
+                    } else {
+                      const fileInfo = getScriptOff(lineNumber);
+                      data = msg + ' (' + fileInfo[1] + ': line ' + fileInfo[0] + ')';// eslint-disable-line
+                    }
+                    // alert(url);
+                    // alert(data);
+                    window.parent.postMessage([{
+                      method: 'error',
+                      arguments: data,
+                      source: fileInfo[1] // eslint-disable-line
+                    }], '*');
+                    return false;
+                  };
+                }
+              }
+            </FrameContextConsumer>
+          </Frame>
+        }
+      </div>
     );
   }
 }
@@ -372,4 +466,4 @@ PreviewFrame.defaultProps = {
   fullView: false
 };
 
-export default PreviewFrame;
+// export default PreviewFrame;
