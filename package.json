@@ -86,7 +86,6 @@
     "express": "^4.13.4",
     "express-session": "^1.13.0",
     "htmlhint": "^0.9.13",
-    "immutability-helper": "^2.7.1",
     "is-url": "^1.2.2",
     "js-beautify": "^1.6.4",
     "jsdom": "^9.8.3",

@@ -2,13 +2,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
 // import escapeStringRegexp from 'escape-string-regexp';
-import srcDoc from 'srcdoc-polyfill';
 import { isEqual } from 'lodash';
-// import update from 'immutability-helper';
 import loopProtect from 'loop-protect';
 import loopProtectScript from 'loop-protect/dist/loop-protect.min';
 import Frame, { FrameContextConsumer } from 'react-frame-component';
-import { Hook, Decode } from 'console-feed';
+import { Hook } from 'console-feed';
 import { JSHINT } from 'jshint';
 import decomment from 'decomment';
 import { getBlobUrl } from '../actions/files';
@@ -21,7 +19,7 @@ import {
   EXTERNAL_LINK_REGEX,
   NOT_EXTERNAL_LINK_REGEX
 } from '../../../../server/utils/fileUtils';
-import { hijackConsole, hijackConsoleErrorsScript, startTag, getAllScriptOffsets }
+import { startTag }
   from '../../../utils/consoleUtils';
 
 export default class PreviewFrame extends React.Component {
@@ -397,10 +395,11 @@ export default class PreviewFrame extends React.Component {
 
                   // catch reference errors, via http://stackoverflow.com/a/12747364/2994108
                   window.onerror = function (msg, url, lineNumber, columnNo, error) {
-                    const string = msg.toLowerCase();
-                    const substring = 'script error';
+                    // const string = msg.toLowerCase();
+                    // const substring = 'script error';
                     let data = {};
                     data = msg + ' (' + 'sketch' + ': line ' + lineNumber + ')';// eslint-disable-line
+                    console.log(data);
                     window.parent.postMessage([{
                       method: 'error',
                       arguments: data,
