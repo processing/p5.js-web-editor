@@ -25,8 +25,12 @@ import { hijackConsole, hijackConsoleErrorsScript, startTag, getAllScriptOffsets
   from '../../../utils/consoleUtils';
 
 export default class PreviewFrame extends React.Component {
-  state = {
-    logs: []
+  constructor(props) {
+    super(props);
+    this.handleConsoleEvent = this.handleConsoleEvent.bind(this);
+    this.state = {
+      changed: false
+    };
   }
 
   componentDidMount() {
@@ -34,40 +38,7 @@ export default class PreviewFrame extends React.Component {
       this.renderFrameContents();
     }
 
-    window.addEventListener('message', (messageEvent) => {
-      if (Array.isArray(messageEvent.data)) {
-        messageEvent.data.every((message, index, arr) => {
-          const { arguments: args } = message;
-          let hasInfiniteLoop = false;
-          Object.keys(args).forEach((key) => {
-            if (args.length === 1 && args[key].includes('Exiting potential infinite loop')) {
-              this.props.stopSketch();
-              this.props.expandConsole();
-              hasInfiniteLoop = true;
-            }
-          });
-          if (hasInfiniteLoop) {
-            return false;
-          }
-          if (index === arr.length - 1) {
-            Object.assign(message, { times: 1 });
-            return false;
-          }
-          const cur = Object.assign(message, { times: 1 });
-          const nextIndex = index + 1;
-          while (isEqual(cur.arguments, arr[nextIndex].arguments) && cur.method === arr[nextIndex].method) {
-            cur.times += 1;
-            arr.splice(nextIndex, 1);
-            if (nextIndex === arr.length) {
-              return false;
-            }
-          }
-          return true;
-        });
-
-        this.props.dispatchConsoleEvent(messageEvent.data);
-      }
-    });
+    window.addEventListener('message', this.handleConsoleEvent);
   }
 
   componentDidUpdate(prevProps) {
@@ -76,37 +47,52 @@ export default class PreviewFrame extends React.Component {
       // this.renderSketch();
       return;
     }
-
     // if the user explicitly clicks on the play button
     if (this.props.isPlaying && this.props.previewIsRefreshing) {
-      // this.forceUpdate();
-      this.renderSketch();
+      this.state.changed = !this.state.changed;
+      if (this.props.endSketchRefresh) {
+        this.props.endSketchRefresh();
+      }
+      // this.renderSketch();
       return;
     }
-
     // if user switches textoutput preferences
     if (this.props.isAccessibleOutputPlaying !== prevProps.isAccessibleOutputPlaying) {
-      this.renderSketch();
+      this.state.changed = !this.state.changed;
+      if (this.props.endSketchRefresh) {
+        this.props.endSketchRefresh();
+      }
       return;
     }
 
     if (this.props.textOutput !== prevProps.textOutput) {
-      this.renderSketch();
+      if (this.props.endSketchRefresh) {
+        this.props.endSketchRefresh();
+      }
       return;
     }
 
     if (this.props.gridOutput !== prevProps.gridOutput) {
-      this.renderSketch();
+      this.state.changed = !this.state.changed;
+      if (this.props.endSketchRefresh) {
+        this.props.endSketchRefresh();
+      }
       return;
     }
 
     if (this.props.soundOutput !== prevProps.soundOutput) {
-      this.renderSketch();
+      this.state.changed = !this.state.changed;
+      if (this.props.endSketchRefresh) {
+        this.props.endSketchRefresh();
+      }
       return;
     }
 
     if (this.props.fullView && this.props.files[0].id !== prevProps.files[0].id) {
-      this.renderSketch();
+      this.state.changed = !this.state.changed;
+      if (this.props.endSketchRefresh) {
+        this.props.endSketchRefresh();
+      }
     }
 
     // small bug - if autorefresh is on, and the usr changes files
@@ -114,7 +100,43 @@ export default class PreviewFrame extends React.Component {
   }
 
   componentWillUnmount() {
+    window.removeEventListener('message', this.handleConsoleEvent);
     ReactDOM.unmountComponentAtNode(this.iframeElement.contentDocument.body);
+  }
+
+  handleConsoleEvent(messageEvent) {
+    if (Array.isArray(messageEvent.data)) {
+      messageEvent.data.every((message, index, arr) => {
+        const { arguments: args } = message;
+        let hasInfiniteLoop = false;
+        Object.keys(args).forEach((key) => {
+          if (args.length === 1 && args[key].includes('Exiting potential infinite loop')) {
+            this.props.stopSketch();
+            this.props.expandConsole();
+            hasInfiniteLoop = true;
+          }
+        });
+        if (hasInfiniteLoop) {
+          return false;
+        }
+        if (index === arr.length - 1) {
+          Object.assign(message, { times: 1 });
+          return false;
+        }
+        const cur = Object.assign(message, { times: 1 });
+        const nextIndex = index + 1;
+        while (isEqual(cur.arguments, arr[nextIndex].arguments) && cur.method === arr[nextIndex].method) {
+          cur.times += 1;
+          arr.splice(nextIndex, 1);
+          if (nextIndex === arr.length) {
+            return false;
+          }
+        }
+        return true;
+      });
+
+      this.props.dispatchConsoleEvent(messageEvent.data);
+    }
   }
 
   clearPreview() {
@@ -304,7 +326,6 @@ export default class PreviewFrame extends React.Component {
         }
       } else if (!(script.getAttribute('src') && script.getAttribute('src').match(EXTERNAL_LINK_REGEX)) !== null) {
         script.setAttribute('crossorigin', '');
-        // script.setAttribute('async', '');
         script.innerHTML = this.resolveJSLinksInString(script.innerHTML, files); // eslint-disable-line
       }
     });
@@ -336,20 +357,6 @@ export default class PreviewFrame extends React.Component {
     });
   }
 
-  renderSketch() {
-    const doc = this.iframeElement;
-    if (this.props.isPlaying) {
-      // console.log(this.injectLocalFiles());
-      // srcDoc.set(doc, this.injectLocalFiles());
-      if (this.props.endSketchRefresh) {
-        this.props.endSketchRefresh();
-      }
-    } else {
-      // doc.srcdoc = '';
-      // srcDoc.set(doc, '  ');
-    }
-  }
-
   renderFrameContents() {
     const doc = this.iframeElement.contentDocument;
     if (doc.readyState === 'complete') {
@@ -376,6 +383,8 @@ export default class PreviewFrame extends React.Component {
             className="preview-frame"
             initialContent={this.injectLocalFiles()}
             id="iframe"
+            // contentDidUpdate={() => { alert('mount'); }}
+            key={this.state.changed}
           >
             <FrameContextConsumer>
               {
