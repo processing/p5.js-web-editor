@@ -139,11 +139,6 @@ export default class PreviewFrame extends React.Component {
     }
   }
 
-  clearPreview() {
-    const doc = this.iframeElement;
-    doc.srcDoc = '';
-  }
-
   addLoopProtect(sketchDoc) {
     const scriptsInHTML = sketchDoc.getElementsByTagName('script');
     const scriptsInHTMLArray = Array.prototype.slice.call(scriptsInHTML);
@@ -180,6 +175,8 @@ export default class PreviewFrame extends React.Component {
     const base = sketchDoc.createElement('base');
     base.href = `${window.location.href}/`;
     sketchDoc.head.appendChild(base);
+    const div = sketchDoc.createElement('div');
+    sketchDoc.head.prepend(div);
 
     this.resolvePathsForElementsWithAttribute('src', sketchDoc, resolvedFiles);
     this.resolvePathsForElementsWithAttribute('href', sketchDoc, resolvedFiles);
@@ -206,7 +203,6 @@ export default class PreviewFrame extends React.Component {
       const textSection = sketchDoc.createElement('section');
       textSection.setAttribute('id', 'textOutput-content');
       sketchDoc.getElementById('accessible-outputs').appendChild(textSection);
-      // this.iframeElement.focus();
     }
     if (this.props.gridOutput) {
       sketchDoc.body.appendChild(accessibleOutputs);
@@ -214,7 +210,6 @@ export default class PreviewFrame extends React.Component {
       const gridSection = sketchDoc.createElement('section');
       gridSection.setAttribute('id', 'gridOutput-content');
       sketchDoc.getElementById('accessible-outputs').appendChild(gridSection);
-      // this.iframeElement.focus();
     }
     if (this.props.soundOutput) {
       sketchDoc.body.appendChild(accessibleOutputs);
@@ -357,14 +352,14 @@ export default class PreviewFrame extends React.Component {
     });
   }
 
-  renderFrameContents() {
-    const doc = this.iframeElement.contentDocument;
-    if (doc.readyState === 'complete') {
-      this.renderSketch();
-    } else {
-      setTimeout(this.renderFrameContents, 0);
-    }
-  }
+  // renderFrameContents() {
+  //   const doc = this.iframeElement.contentDocument;
+  //   if (doc.readyState === 'complete') {
+  //     this.renderSketch();
+  //   } else {
+  //     setTimeout(this.renderFrameContents, 0);
+  //   }
+  // }
 
   render() {
     return (
@@ -383,7 +378,6 @@ export default class PreviewFrame extends React.Component {
             className="preview-frame"
             initialContent={this.injectLocalFiles()}
             id="iframe"
-            // contentDidUpdate={() => { alert('mount'); }}
             key={this.state.changed}
           >
             <FrameContextConsumer>
@@ -392,7 +386,7 @@ export default class PreviewFrame extends React.Component {
                 ({ document, window }) => {
                   // Render Children
                   Hook(window.console, (log) => {
-                    // alert(log);
+                    // console.log(log);
                     // this.setState(state => update(state, { logs: { $push: [Decode(log)] } }));
                     window.parent.postMessage([{
                       method: log[0].method,
@@ -400,7 +394,6 @@ export default class PreviewFrame extends React.Component {
                       source: 'sketch'
                     }], '*');
                   });
-                  console.log(this.state.logs);
                   function getScriptOff(line) {
                     const offs = [[50, 'sketch']];
                     let l = 0;
@@ -419,7 +412,7 @@ export default class PreviewFrame extends React.Component {
                     const string = msg.toLowerCase();
                     const substring = 'script error';
                     let data = {};
-                    // alert(error);
+                    console.log(error);
                     if (url.match(/^(http:\/\/|https:\/\/)/) !== null && error.stack) {
                       const errorNum = error.stack.split('about:srcdoc:')[1].split(':')[0];
                       const fileInfo = getScriptOff(errorNum);
