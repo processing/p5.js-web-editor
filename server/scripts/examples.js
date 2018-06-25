@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import objectID from 'bson-objectid';
 import shortid from 'shortid';
 import eachSeries from 'async/eachSeries';
+import { URL } from 'url';
 import User from '../models/user';
 import Project from '../models/project';
 
@@ -35,7 +36,18 @@ const clientSecret = process.env.GITHUB_SECRET;
 
 const headers = { 'User-Agent': 'p5js-web-editor/0.0.1' };
 
-mongoose.connect(process.env.MONGO_URL);
+let mongoConnectionString;
+if (process.env.NODE_ENV === 'production') {
+  const { MONGO_RW_USERNAME, MONGO_RW_PASSWORD, MONGO_HOSTNAME, MONGO_PORT, MONGO_NAME } = process.env;
+  const muo = new URL(`mongodb://${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_NAME}`);
+  muo.username = MONGO_RW_USERNAME;
+  muo.password = MONGO_RW_PASSWORD;
+  mongoConnectionString = muo.href + "?authSource=admin";
+} else {
+  mongoConnectionString = process.env.MONGO_URL;
+}
+
+mongoose.connect(mongoConnectionString);
 mongoose.connection.on('error', () => {
   console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
   process.exit(1);

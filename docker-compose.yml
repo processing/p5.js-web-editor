@@ -1,33 +1,38 @@
 version: '3.4'
 services:
   mongo:
-    image: mongo:3.4.7
+    build: ./mongo
     volumes:
       - dbdata:/data/db
     expose:
       - "27017"
-  nginx:
-    build: ./nginx
-    ports:
-      - '80:80'
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: production
-    # env_file:
-    #   - .env
-    environment:
-      - MONGO_URL=mongodb://mongo:27017/p5js-web-editor
-      # - API_URL=https://localhost/api
-      # - PORT=80
-    volumes:
-      - .:/opt/node/app
-      - /opt/node/app/node_modules
-    ports:
-      - '8000:8000'
-      # - '443:443'
-    depends_on:
-      - mongo
+    # restart: always
+    env_file:
+      - .env
+  # nginx:
+  #   build: ./nginx
+  #   ports:
+  #     - '80:80'
+  # app:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #     target: production
+  #   env_file:
+  #     - .env
+  #   environment:
+  #     - MONGO_URL=mongodb://mongo:27017/p5js-web-editor
+  #     - MONGO_HOSTNAME=mongo
+  #     # - API_URL=https://localhost/api
+  #     # - PORT=80
+  #   volumes:
+  #     - .:/opt/node/app
+  #     - /opt/node/app/node_modules
+  #   ports:
+  #     - '8000:8000'
+  #     # - '443:443'
+  #     # - '80:80'
+  #   depends_on:
+  #     - mongo
 volumes:
   dbdata:

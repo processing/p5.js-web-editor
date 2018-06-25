@@ -7,6 +7,7 @@ import session from 'express-session';
 import connectMongo from 'connect-mongo';
 import passport from 'passport';
 import path from 'path';
+import { URL } from 'url';
 
 // Webpack Requirements
 import webpack from 'webpack';
@@ -44,6 +45,17 @@ if (process.env.NODE_ENV === 'development') {
   corsOriginsWhitelist.push(/localhost/);
 }
 
+let mongoConnectionString;
+if (process.env.NODE_ENV === 'production') {
+  const { MONGO_RW_USERNAME, MONGO_RW_PASSWORD, MONGO_HOSTNAME, MONGO_PORT, MONGO_NAME } = process.env;
+  const muo = new URL(`mongodb://${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_NAME}`);
+  muo.username = MONGO_RW_USERNAME;
+  muo.password = MONGO_RW_PASSWORD;
+  mongoConnectionString = muo.href + "?authSource=admin";
+} else {
+  mongoConnectionString = process.env.MONGO_URL;
+}
+
 // Enable Cross-Origin Resource Sharing (CORS) for all origins
 const corsMiddleware = cors({
   credentials: true,
@@ -72,7 +84,7 @@ app.use(session({
     secure: false,
   },
   store: new MongoStore({
-    url: process.env.MONGO_URL,
+    url: mongoConnectionString,
     autoReconnect: true
   })
 }));
@@ -105,7 +117,7 @@ require('./config/passport');
 // const passportConfig = require('./config/passport');
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URL);
+mongoose.connect(mongoConnectionString);
 mongoose.connection.on('error', () => {
   console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
   process.exit(1);
