@@ -32,9 +32,9 @@ export default class PreviewFrame extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.isPlaying) {
-      this.renderFrameContents();
-    }
+    // if (this.props.isPlaying) {
+    //   this.renderFrameContents();
+    // }
 
     window.addEventListener('message', this.handleConsoleEvent);
   }
@@ -45,13 +45,13 @@ export default class PreviewFrame extends React.Component {
       // this.renderSketch();
       return;
     }
+
     // if the user explicitly clicks on the play button
     if (this.props.isPlaying && this.props.previewIsRefreshing) {
       this.state.changed = !this.state.changed;
       if (this.props.endSketchRefresh) {
         this.props.endSketchRefresh();
       }
-      // this.renderSketch();
       return;
     }
     // if user switches textoutput preferences
@@ -184,7 +184,6 @@ export default class PreviewFrame extends React.Component {
 
     const scriptsToInject = [
       loopProtectScript
-      // hijackConsole
     ];
     const accessiblelib = sketchDoc.createElement('script');
     accessiblelib.setAttribute(
@@ -355,15 +354,6 @@ export default class PreviewFrame extends React.Component {
     return (
       <div>
         { this.props.isPlaying &&
-        // <iframe
-        //   className="preview-frame"
-        //   aria-label="sketch output"
-        //   role="main"
-        //   frameBorder="0"
-        //   title="sketch output"
-        // ref={(element) => { this.iframeElement = element; }}
-        // sandbox="allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-forms allow-modals"
-        // />
           <Frame
             className="preview-frame"
             initialContent={this.injectLocalFiles()}
@@ -372,12 +362,11 @@ export default class PreviewFrame extends React.Component {
           >
             <FrameContextConsumer>
               {
-                // Callback is invoked with iframe's window and document instances
                 ({ document, window }) => {
-                  // Render Children
                   const consoleBuffer = [];
                   const LOGWAIT = 500;
                   Hook(window.console, (log) => {
+                    console.log(log);
                     const { method, data: args } = log[0];
                     consoleBuffer.push({
                       method,
@@ -399,7 +388,6 @@ export default class PreviewFrame extends React.Component {
                     // const substring = 'script error';
                     let data = {};
                     data = msg + ' (' + 'sketch' + ': line ' + lineNumber + ')';// eslint-disable-line
-                    console.log(data);
                     window.parent.postMessage([{
                       method: 'error',
                       arguments: data,
