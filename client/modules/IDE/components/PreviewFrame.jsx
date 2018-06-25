@@ -110,7 +110,7 @@ export default class PreviewFrame extends React.Component {
         const { arguments: args } = message;
         let hasInfiniteLoop = false;
         Object.keys(args).forEach((key) => {
-          if (args.length === 1 && args[key].includes('Exiting potential infinite loop')) {
+          if (typeof args[key] === 'string' && args[key].includes('Exiting potential infinite loop')) {
             this.props.stopSketch();
             this.props.expandConsole();
             hasInfiniteLoop = true;
@@ -165,7 +165,6 @@ export default class PreviewFrame extends React.Component {
 
   injectLocalFiles() {
     const htmlFile = this.props.htmlFile.content;
-    let scriptOffs = [];
 
     const resolvedFiles = this.resolveJSAndCSSLinks(this.props.files);
 
@@ -224,13 +223,6 @@ export default class PreviewFrame extends React.Component {
       script.text = scriptToInject;
       sketchDoc.head.appendChild(script);
     });
-
-    const sketchDocString = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
-    scriptOffs = getAllScriptOffsets(sketchDocString);
-    const consoleErrorsScript = sketchDoc.createElement('script');
-    consoleErrorsScript.innerHTML = hijackConsoleErrorsScript(JSON.stringify(scriptOffs));
-    this.addLoopProtect(sketchDoc);
-    sketchDoc.head.insertBefore(consoleErrorsScript, sketchDoc.head.firstElement);
 
     return `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
   }
@@ -385,48 +377,34 @@ export default class PreviewFrame extends React.Component {
                 // Callback is invoked with iframe's window and document instances
                 ({ document, window }) => {
                   // Render Children
+                  const consoleBuffer = [];
+                  const LOGWAIT = 500;
                   Hook(window.console, (log) => {
-                    // console.log(log);
-                    // this.setState(state => update(state, { logs: { $push: [Decode(log)] } }));
-                    window.parent.postMessage([{
-                      method: log[0].method,
-                      arguments: log[0].data,
+                    const { method, data: args } = log[0];
+                    consoleBuffer.push({
+                      method,
+                      arguments: args,
                       source: 'sketch'
-                    }], '*');
+                    });
                   });
-                  function getScriptOff(line) {
-                    const offs = [[50, 'sketch']];
-                    let l = 0;
-                    let file = '';
-                    for (let i = 0; i < offs.length; i += 1) {
-                      const n = offs[i][0];
-                      if (n < line && n > l) {
-                        l = n;
-                        file = offs[i][1];  // eslint-disable-line
-                      }
+
+                  setInterval(() => {
+                    if (consoleBuffer.length > 0) {
+                      window.parent.postMessage(consoleBuffer, '*');
+                      consoleBuffer.length = 0;
                     }
-                    return [line - l, file];
-                  }
+                  }, LOGWAIT);
+
                   // catch reference errors, via http://stackoverflow.com/a/12747364/2994108
                   window.onerror = function (msg, url, lineNumber, columnNo, error) {
                     const string = msg.toLowerCase();
                     const substring = 'script error';
                     let data = {};
-                    console.log(error);
-                    if (url.match(/^(http:\/\/|https:\/\/)/) !== null && error.stack) {
-                      const errorNum = error.stack.split('about:srcdoc:')[1].split(':')[0];
-                      const fileInfo = getScriptOff(errorNum);
-                      data = msg + ' (' + fileInfo[1] + ': line ' + fileInfo[0] + ')';  // eslint-disable-line
-                    } else {
-                      const fileInfo = getScriptOff(lineNumber);
-                      data = msg + ' (' + fileInfo[1] + ': line ' + fileInfo[0] + ')';// eslint-disable-line
-                    }
-                    // alert(url);
-                    // alert(data);
+                    data = msg + ' (' + 'sketch' + ': line ' + lineNumber + ')';// eslint-disable-line
                     window.parent.postMessage([{
                       method: 'error',
                       arguments: data,
-                      source: fileInfo[1] // eslint-disable-line
+                      source: lineNumber // eslint-disable-line
                     }], '*');
                     return false;
                   };
