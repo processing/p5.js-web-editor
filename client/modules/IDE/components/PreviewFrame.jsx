@@ -47,7 +47,6 @@ class PreviewFrame extends React.Component {
 
     if (this.props.textOutput !== prevProps.textOutput) {
       this.renderSketch();
-      return;
     }
 
     if (this.props.gridOutput !== prevProps.gridOutput) {

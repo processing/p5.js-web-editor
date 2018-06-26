@@ -1,7 +1,3 @@
-import {
-  EXTERNAL_LINK_REGEX
-} from '../../server/utils/fileUtils';
-
 import warnLightUrl from '../images/console-warn-light.svg';
 import warnDarkUrl from '../images/console-warn-dark.svg';
 import errorLightUrl from '../images/console-error-light.svg';
