@@ -1,0 +1,1 @@
+mongo $MONGO_INITDB_DATABASE --eval "db.createUser({ user: '$MONGO_RW_USERNAME', pwd: '$MONGO_RW_PASSWORD', roles: [ 'readWrite' ] })"
