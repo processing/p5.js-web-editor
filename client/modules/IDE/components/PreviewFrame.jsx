@@ -22,7 +22,7 @@ import {
 import { startTag }
   from '../../../utils/consoleUtils';
 
-export default class PreviewFrame extends React.Component {
+class PreviewFrame extends React.Component {
   constructor(props) {
     super(props);
     this.handleConsoleEvent = this.handleConsoleEvent.bind(this);
@@ -32,65 +32,34 @@ export default class PreviewFrame extends React.Component {
   }
 
   componentDidMount() {
-    // if (this.props.isPlaying) {
-    //   this.renderFrameContents();
-    // }
-
     window.addEventListener('message', this.handleConsoleEvent);
   }
 
   componentDidUpdate(prevProps) {
-    // if sketch starts or stops playing, want to rerender
-    if (this.props.isPlaying !== prevProps.isPlaying) {
-      // this.renderSketch();
-      return;
-    }
-
     // if the user explicitly clicks on the play button
     if (this.props.isPlaying && this.props.previewIsRefreshing) {
-      this.state.changed = !this.state.changed;
-      if (this.props.endSketchRefresh) {
-        this.props.endSketchRefresh();
-      }
-      return;
+      this.renderSketch();
     }
     // if user switches textoutput preferences
     if (this.props.isAccessibleOutputPlaying !== prevProps.isAccessibleOutputPlaying) {
-      this.state.changed = !this.state.changed;
-      if (this.props.endSketchRefresh) {
-        this.props.endSketchRefresh();
-      }
-      return;
+      this.renderSketch();
     }
 
     if (this.props.textOutput !== prevProps.textOutput) {
-      if (this.props.endSketchRefresh) {
-        this.props.endSketchRefresh();
-      }
+      this.renderSketch();
       return;
     }
 
     if (this.props.gridOutput !== prevProps.gridOutput) {
-      this.state.changed = !this.state.changed;
-      if (this.props.endSketchRefresh) {
-        this.props.endSketchRefresh();
-      }
-      return;
+      this.renderSketch();
     }
 
     if (this.props.soundOutput !== prevProps.soundOutput) {
-      this.state.changed = !this.state.changed;
-      if (this.props.endSketchRefresh) {
-        this.props.endSketchRefresh();
-      }
-      return;
+      this.renderSketch();
     }
 
     if (this.props.fullView && this.props.files[0].id !== prevProps.files[0].id) {
-      this.state.changed = !this.state.changed;
-      if (this.props.endSketchRefresh) {
-        this.props.endSketchRefresh();
-      }
+      this.renderSketch();
     }
 
     // small bug - if autorefresh is on, and the usr changes files
@@ -172,6 +141,7 @@ export default class PreviewFrame extends React.Component {
     const base = sketchDoc.createElement('base');
     base.href = `${window.location.href}/`;
     sketchDoc.head.appendChild(base);
+    // a little confusing here, see https://github.com/ryanseddon/react-frame-component/issues/105
     const div = sketchDoc.createElement('div');
     sketchDoc.head.prepend(div);
 
@@ -341,66 +311,58 @@ export default class PreviewFrame extends React.Component {
     });
   }
 
-  // renderFrameContents() {
-  //   const doc = this.iframeElement.contentDocument;
-  //   if (doc.readyState === 'complete') {
-  //     this.renderSketch();
-  //   } else {
-  //     setTimeout(this.renderFrameContents, 0);
-  //   }
-  // }
+  renderSketch() {
+    this.state.changed = !this.state.changed;
+    if (this.props.endSketchRefresh) {
+      this.props.endSketchRefresh();
+    }
+  }
 
   render() {
     return (
-      <div>
-        { this.props.isPlaying &&
-          <Frame
-            className="preview-frame"
-            initialContent={this.injectLocalFiles()}
-            id="iframe"
-            key={this.state.changed}
-          >
-            <FrameContextConsumer>
-              {
-                ({ document, window }) => {
-                  const consoleBuffer = [];
-                  const LOGWAIT = 500;
-                  Hook(window.console, (log) => {
-                    console.log(log);
-                    const { method, data: args } = log[0];
-                    consoleBuffer.push({
-                      method,
-                      arguments: args,
-                      source: 'sketch'
-                    });
+      this.props.isPlaying &&
+        <Frame
+          className="preview-frame"
+          initialContent={this.injectLocalFiles()}
+          key={this.state.changed}
+        >
+          <FrameContextConsumer>
+            {
+              ({ document, window }) => {
+                const consoleBuffer = [];
+                const LOGWAIT = 500;
+                Hook(window.console, (log) => {
+                  const { method, data: args } = log[0];
+                  consoleBuffer.push({
+                    method,
+                    arguments: args,
+                    source: 'sketch'
                   });
+                });
 
-                  setInterval(() => {
-                    if (consoleBuffer.length > 0) {
-                      window.parent.postMessage(consoleBuffer, '*');
-                      consoleBuffer.length = 0;
-                    }
-                  }, LOGWAIT);
+                setInterval(() => {
+                  if (consoleBuffer.length > 0) {
+                    window.parent.postMessage(consoleBuffer, '*');
+                    consoleBuffer.length = 0;
+                  }
+                }, LOGWAIT);
 
-                  // catch reference errors, via http://stackoverflow.com/a/12747364/2994108
-                  window.onerror = function (msg, url, lineNumber, columnNo, error) {
-                    // const string = msg.toLowerCase();
-                    // const substring = 'script error';
-                    let data = {};
-                    data = msg + ' (' + 'sketch' + ': line ' + lineNumber + ')';// eslint-disable-line
-                    window.parent.postMessage([{
-                      method: 'error',
-                      arguments: data,
-                      source: lineNumber // eslint-disable-line
-                    }], '*');
-                    return false;
-                  };
-                }
+                // catch reference errors, via http://stackoverflow.com/a/12747364/2994108
+                window.onerror = function (msg, url, lineNumber, columnNo, error) {
+                  // const string = msg.toLowerCase();
+                  // const substring = 'script error';
+                  let data = msg + ' (' + 'sketch' + ': line ' + lineNumber + ')';// eslint-disable-line
+                  window.parent.postMessage([{
+                    method: 'error',
+                    arguments: data,
+                    source: lineNumber // eslint-disable-line
+                  }], '*');
+                  return false;
+                };
               }
-            </FrameContextConsumer>
-          </Frame>
-        }
-      </div>
+            }
+          </FrameContextConsumer>
+        </Frame>
     );
   }
 }
@@ -433,4 +395,4 @@ PreviewFrame.defaultProps = {
   fullView: false
 };
 
-// export default PreviewFrame;
+export default PreviewFrame;
