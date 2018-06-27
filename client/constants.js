@@ -65,8 +65,9 @@ export const CLEAR_LINT_MESSAGE = 'CLEAR_LINT_MESSAGE';
 
 export const UPDATE_FILE_NAME = 'UPDATE_FILE_NAME';
 export const DELETE_FILE = 'DELETE_FILE';
-export const SHOW_EDIT_FILE_NAME = 'SHOW_EDIT_FILE_NAME';
-export const HIDE_EDIT_FILE_NAME = 'HIDE_EDIT_FILE_NAME';
+// Constants for show/hide file name editing
+// export const SHOW_EDIT_FILE_NAME = 'SHOW_EDIT_FILE_NAME';
+// export const HIDE_EDIT_FILE_NAME = 'HIDE_EDIT_FILE_NAME';
 
 export const SET_AUTOSAVE = 'SET_AUTOSAVE';
 export const SET_LINT_WARNING = 'SET_LINT_WARNING';
