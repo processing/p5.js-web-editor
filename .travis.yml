@@ -22,33 +22,39 @@ script:
 
 after_success:
 # only run this if on the master branch eventually, not while testing tho
-- sudo apt-get install -y python3.4
-- sudo apt-get install --upgrade -y python-pip
-- sudo apt-get install jq
-- sudo pip install --user virtualenv
-# Create a virtual environment for AWS CLI
-- virtualenv my_py3 --python=/usr/bin/python3.4
-- source my_py3/bin/activate
-- pip install --upgrade awscli
-- pip install --upgrade awsebcli
-# Set AWS information
-- aws configure set aws_access_key_id $AWS_ACCESS_KEY
-- aws configure set aws_secret_access_key $AWS_SECRET_KEY
-- aws configure set default.region $AWS_REGION
-- aws configure set metadata_service_timeout 1200
-- aws configure set metadata_service_num_attempts 3
-- aws configure list
+# - sudo apt-get install -y python3.4
+# - sudo apt-get install --upgrade -y python-pip
+# - sudo apt-get install jq
+# - sudo pip install --user virtualenv
+# # Create a virtual environment for AWS CLI
+# - virtualenv my_py3 --python=/usr/bin/python3.4
+# - source my_py3/bin/activate
+# - pip install --upgrade awscli
+# - pip install --upgrade awsebcli
+# # Set AWS information
+# - aws configure set aws_access_key_id $AWS_ACCESS_KEY
+# - aws configure set aws_secret_access_key $AWS_SECRET_KEY
+# - aws configure set default.region $AWS_REGION
+# - aws configure set metadata_service_timeout 1200
+# - aws configure set metadata_service_num_attempts 3
+# - aws configure list
 # build images
 - docker-compose stop
 - docker-compose build --no-cache
 - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-- docker image ls
-- docker tag $APP_IMAGE_NAME $DOCKER_USERNAME/$DOCKER_REPOSITORY:app_$TRAVIS_BUILD_ID
-- docker tag $NGINX_IMAGE_NAME $DOCKER_USERNAME/$DOCKER_REPOSITORY:nginx_$TRAVIS_BUILD_ID
-- docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY:app_$TRAVIS_BUILD_ID
-- docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY:nginx_$TRAVIS_BUILD_ID
+- docker tag $APP_IMAGE_NAME $DOCKER_USERNAME/$DOCKER_REPOSITORY:$TRAVIS_BUILD_ID
+- docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY:$TRAVIS_BUILD_ID
 
 env:
   global:
     - APP_IMAGE_NAME=p5jswebeditor_app
-    - NGINX_IMAGE_NAME=p5jswebeditor_nginx
+
+deploy:
+  provider: elasticbeanstalk
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY
+  region: $AWS_REGION  
+  app: $AWS_EBS_APP
+  env: $AWS_EBS_ENV
+  bucket_name: "the-target-S3-bucket"

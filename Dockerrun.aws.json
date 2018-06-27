@@ -33,7 +33,7 @@
      "mountPoints": [
         {
           "sourceVolume": "storage",
-          "containerPath": "/var/lib/mysql"
+          "containerPath": "/var/opt/mongo"
         }
       ],
       "environment": [
@@ -64,8 +64,28 @@
       "mountPoints": [
         {
           "sourceVolume": "app",
-          "containerPath": "/var/www/html",
+          "containerPath": "/var/opt/app",
           "readOnly": true
+        }
+      ]
+    },
+    {
+      "name": "nginx",
+      "essential": true,
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 8000
+        }
+      ],
+      "links": [
+        "app"
+      ],
+      "mountPoints": [
+        {
+          "sourceVolume": "awseb-logs-nginx-proxy",
+          "containerPath": "/var/log/nginx"
         }
       ]
     }
