@@ -27,7 +27,7 @@ class PreviewFrame extends React.Component {
     super(props);
     this.handleConsoleEvent = this.handleConsoleEvent.bind(this);
     this.state = {
-      changed: false
+      toggle: false
     };
   }
 
@@ -311,7 +311,9 @@ class PreviewFrame extends React.Component {
   }
 
   renderSketch() {
-    this.state.changed = !this.state.changed;
+    this.setState({
+      toggle: !this.state.toggle
+    });
     if (this.props.endSketchRefresh) {
       this.props.endSketchRefresh();
     }
@@ -323,7 +325,7 @@ class PreviewFrame extends React.Component {
         <Frame
           className="preview-frame"
           initialContent={this.injectLocalFiles()}
-          key={this.state.changed}
+          key={this.state.toggle}
         >
           <FrameContextConsumer>
             {
