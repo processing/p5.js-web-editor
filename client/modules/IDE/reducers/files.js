@@ -196,22 +196,25 @@ const files = (state, action) => {
       // });
       // return newState.filter(file => file.id !== action.id);
     }
-    case ActionTypes.SHOW_EDIT_FILE_NAME:
-      return state.map((file) => {
-        if (file.id !== action.id) {
-          return file;
-        }
+    // This is the redux action for editing the file name
+    // case ActionTypes.SHOW_EDIT_FILE_NAME:
+    //   return state.map((file) => {
+    //     if (file.id !== action.id) {
+    //       return file;
+    //     }
 
-        return Object.assign({}, file, { isEditingName: true });
-      });
-    case ActionTypes.HIDE_EDIT_FILE_NAME:
-      return state.map((file) => {
-        if (file.id !== action.id) {
-          return file;
-        }
+    //     return Object.assign({}, file, { isEditingName: true });
+    //   });
+    // This is the redux action for hiding the editing of the filename
+    // case ActionTypes.HIDE_EDIT_FILE_NAME:
+    //   return state.map((file) => {
+    //     if (file.id !== action.id) {
+    //       return file;
+    //     }
 
-        return Object.assign({}, file, { isEditingName: false });
-      });
+    //     return Object.assign({}, file, { isEditingName: false });
+    //   });
+
     case ActionTypes.SET_SELECTED_FILE:
       return state.map((file) => {
         if (file.id === action.selectedFile) {
