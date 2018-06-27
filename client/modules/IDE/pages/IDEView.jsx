@@ -296,11 +296,7 @@ class IDEView extends React.Component {
               setSelectedFile={this.props.setSelectedFile}
               newFile={this.props.newFile}
               isExpanded={this.props.ide.sidebarIsExpanded}
-              // showFileOptions={this.props.showFileOptions}
-              // hideFileOptions={this.props.hideFileOptions}
               deleteFile={this.props.deleteFile}
-              // showEditFileName={this.props.showEditFileName}
-              // hideEditFileName={this.props.hideEditFileName}
               updateFileName={this.props.updateFileName}
               projectOptionsVisible={this.props.ide.projectOptionsVisible}
               openProjectOptions={this.props.openProjectOptions}
@@ -622,11 +618,7 @@ IDEView.propTypes = {
   cloneProject: PropTypes.func.isRequired,
   expandConsole: PropTypes.func.isRequired,
   collapseConsole: PropTypes.func.isRequired,
-  // showFileOptions: PropTypes.func.isRequired,
-  // hideFileOptions: PropTypes.func.isRequired,
   deleteFile: PropTypes.func.isRequired,
-  // showEditFileName: PropTypes.func.isRequired,
-  // hideEditFileName: PropTypes.func.isRequired,
   updateFileName: PropTypes.func.isRequired,
   showEditProjectName: PropTypes.func.isRequired,
   hideEditProjectName: PropTypes.func.isRequired,

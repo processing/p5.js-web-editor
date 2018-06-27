@@ -155,26 +155,6 @@ const files = (state, action) => {
           fileType: action.fileType || 'file'
         }];
     }
-
-    // This is the redux action for showing file options.
-    // case ActionTypes.SHOW_FILE_OPTIONS:
-    //   return state.map((file) => {
-    //     if (file.id !== action.id) {
-    //       return file;
-    //     }
-    //
-    //     return Object.assign({}, file, { isOptionsOpen: true });
-    //   });
-    // This is the redux action for hiding file options
-    // case ActionTypes.HIDE_FILE_OPTIONS:
-    //   return state.map((file) => {
-    //     if (file.id !== action.id) {
-    //       return file;
-    //     }
-    //
-    //     return Object.assign({}, file, { isOptionsOpen: false });
-    //   });
-
     case ActionTypes.UPDATE_FILE_NAME:
       return state.map((file) => {
         if (file.id !== action.id) {
@@ -196,25 +176,6 @@ const files = (state, action) => {
       // });
       // return newState.filter(file => file.id !== action.id);
     }
-    // This is the redux action for editing the file name
-    // case ActionTypes.SHOW_EDIT_FILE_NAME:
-    //   return state.map((file) => {
-    //     if (file.id !== action.id) {
-    //       return file;
-    //     }
-
-    //     return Object.assign({}, file, { isEditingName: true });
-    //   });
-    // This is the redux action for hiding the editing of the filename
-    // case ActionTypes.HIDE_EDIT_FILE_NAME:
-    //   return state.map((file) => {
-    //     if (file.id !== action.id) {
-    //       return file;
-    //     }
-
-    //     return Object.assign({}, file, { isEditingName: false });
-    //   });
-
     case ActionTypes.SET_SELECTED_FILE:
       return state.map((file) => {
         if (file.id === action.selectedFile) {

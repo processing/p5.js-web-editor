@@ -147,37 +147,6 @@ export function createFolder(formProps) {
   };
 }
 
-// Exports the redux action for showing file options
-// export function showFileOptions(fileId) {
-//   return {
-//     type: ActionTypes.SHOW_FILE_OPTIONS,
-//     id: fileId
-//   };
-// }
-
-// Exports the redux action for hiding file options
-// export function hideFileOptions(fileId) {
-//   return {
-//     type: ActionTypes.HIDE_FILE_OPTIONS,
-//     id: fileId
-//   };
-// }
-// Exports the redux action for showing the edit file name
-// export function showEditFileName(id) {
-//   return {
-//     type: ActionTypes.SHOW_EDIT_FILE_NAME,
-//     id
-//   };
-// }
-
-// Exports the redux action for hiding the edit file name
-// export function hideEditFileName(id) {
-//   return {
-//     type: ActionTypes.HIDE_EDIT_FILE_NAME,
-//     id
-//   };
-// }
-
 export function updateFileName(id, name) {
   return {
     type: ActionTypes.UPDATE_FILE_NAME,

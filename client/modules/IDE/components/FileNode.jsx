@@ -63,25 +63,16 @@ export class FileNode extends React.Component {
   toggleFileOptions(e) {
     e.preventDefault();
     if (this.state.isOptionsOpen) {
-      // this.props.hideFileOptions(this.props.id);
-      this.setState({
-        isOptionsOpen: false
-      });
+      this.setState({ isOptionsOpen: false });
     } else {
       this[`fileOptions-${this.props.id}`].focus();
-      // this.props.showFileOptions(this.props.id);
-      this.setState({
-        isOptionsOpen: true
-      });
+      this.setState({ isOptionsOpen: true });
     }
   }
 
   hideFileOptions(e) {
     // e.preventDefault();
-    this.setState({
-      isOptionsOpen: false
-    });
-    // this.props.hideFileOptions(this.props.id);
+    this.setState({ isOptionsOpen: false });
     return false;
   }
 
@@ -250,15 +241,9 @@ FileNode.propTypes = {
   name: PropTypes.string.isRequired,
   fileType: PropTypes.string.isRequired,
   isSelectedFile: PropTypes.bool,
-  // isOptionsOpen: PropTypes.bool,
-  // isEditingName: PropTypes.bool,
   isFolderClosed: PropTypes.bool,
   setSelectedFile: PropTypes.func.isRequired,
-  // showFileOptions: PropTypes.func.isRequired,
-  // hideFileOptions: PropTypes.func.isRequired,
   deleteFile: PropTypes.func.isRequired,
-  // showEditFileName: PropTypes.func.isRequired,
-  // hideEditFileName: PropTypes.func.isRequired,
   updateFileName: PropTypes.func.isRequired,
   resetSelectedFile: PropTypes.func.isRequired,
   newFile: PropTypes.func.isRequired,
@@ -270,8 +255,6 @@ FileNode.propTypes = {
 FileNode.defaultProps = {
   parentId: '0',
   isSelectedFile: false,
-  // isOptionsOpen: false,
-  // isEditingName: false,
   isFolderClosed: false
 };
 
