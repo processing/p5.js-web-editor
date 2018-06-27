@@ -47,11 +47,17 @@ if (process.env.NODE_ENV === 'development') {
 
 let mongoConnectionString;
 if (process.env.NODE_ENV === 'production') {
-  const { MONGO_RW_USERNAME, MONGO_RW_PASSWORD, MONGO_HOSTNAME, MONGO_PORT, MONGO_NAME } = process.env;
+  const {
+    MONGO_RW_USERNAME,
+    MONGO_RW_PASSWORD,
+    MONGO_HOSTNAME,
+    MONGO_PORT,
+    MONGO_NAME
+  } = process.env;
   const muo = new URL(`mongodb://${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_NAME}`);
   muo.username = MONGO_RW_USERNAME;
   muo.password = MONGO_RW_PASSWORD;
-  mongoConnectionString = muo.href + "?authSource=admin";
+  mongoConnectionString = `${muo.href}?authSource=admin`;
 } else {
   mongoConnectionString = process.env.MONGO_URL;
 }

@@ -49,12 +49,12 @@ env:
   global:
     - APP_IMAGE_NAME=p5jswebeditor_app
 
-deploy:
-  provider: elasticbeanstalk
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key:
-    secure: $AWS_SECRET_KEY
-  region: $AWS_REGION  
-  app: $AWS_EBS_APP
-  env: $AWS_EBS_ENV
-  bucket_name: "the-target-S3-bucket"
+# deploy:
+#   provider: elasticbeanstalk
+#   access_key_id: $AWS_ACCESS_KEY
+#   secret_access_key:
+#     secure: $AWS_SECRET_KEY
+#   region: $AWS_REGION  
+#   app: $AWS_EBS_APP
+#   env: $AWS_EBS_ENV
+#   bucket_name: "the-target-S3-bucket"
