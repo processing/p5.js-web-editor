@@ -162,19 +162,21 @@ export function createFolder(formProps) {
 //     id: fileId
 //   };
 // }
-export function showEditFileName(id) {
-  return {
-    type: ActionTypes.SHOW_EDIT_FILE_NAME,
-    id
-  };
-}
+// Exports the redux action for showing the edit file name
+// export function showEditFileName(id) {
+//   return {
+//     type: ActionTypes.SHOW_EDIT_FILE_NAME,
+//     id
+//   };
+// }
 
-export function hideEditFileName(id) {
-  return {
-    type: ActionTypes.HIDE_EDIT_FILE_NAME,
-    id
-  };
-}
+// Exports the redux action for hiding the edit file name
+// export function hideEditFileName(id) {
+//   return {
+//     type: ActionTypes.HIDE_EDIT_FILE_NAME,
+//     id
+//   };
+// }
 
 export function updateFileName(id, name) {
   return {
