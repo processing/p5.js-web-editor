@@ -155,22 +155,26 @@ const files = (state, action) => {
           fileType: action.fileType || 'file'
         }];
     }
-    case ActionTypes.SHOW_FILE_OPTIONS:
-      return state.map((file) => {
-        if (file.id !== action.id) {
-          return file;
-        }
 
-        return Object.assign({}, file, { isOptionsOpen: true });
-      });
-    case ActionTypes.HIDE_FILE_OPTIONS:
-      return state.map((file) => {
-        if (file.id !== action.id) {
-          return file;
-        }
+    // This is the redux action for showing file options.
+    // case ActionTypes.SHOW_FILE_OPTIONS:
+    //   return state.map((file) => {
+    //     if (file.id !== action.id) {
+    //       return file;
+    //     }
+    //
+    //     return Object.assign({}, file, { isOptionsOpen: true });
+    //   });
+    // This is the redux action for hiding file options
+    // case ActionTypes.HIDE_FILE_OPTIONS:
+    //   return state.map((file) => {
+    //     if (file.id !== action.id) {
+    //       return file;
+    //     }
+    //
+    //     return Object.assign({}, file, { isOptionsOpen: false });
+    //   });
 
-        return Object.assign({}, file, { isOptionsOpen: false });
-      });
     case ActionTypes.UPDATE_FILE_NAME:
       return state.map((file) => {
         if (file.id !== action.id) {
