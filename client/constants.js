@@ -59,8 +59,9 @@ export const COLLAPSE_CONSOLE = 'COLLAPSE_CONSOLE';
 export const UPDATE_LINT_MESSAGE = 'UPDATE_LINT_MESSAGE';
 export const CLEAR_LINT_MESSAGE = 'CLEAR_LINT_MESSAGE';
 
-export const SHOW_FILE_OPTIONS = 'SHOW_FILE_OPTIONS';
-export const HIDE_FILE_OPTIONS = 'HIDE_FILE_OPTIONS';
+// Constants for show/hide file options
+// export const SHOW_FILE_OPTIONS = 'SHOW_FILE_OPTIONS';
+// export const HIDE_FILE_OPTIONS = 'HIDE_FILE_OPTIONS';
 
 export const UPDATE_FILE_NAME = 'UPDATE_FILE_NAME';
 export const DELETE_FILE = 'DELETE_FILE';
