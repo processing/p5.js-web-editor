@@ -21,6 +21,10 @@ export class FileNode extends React.Component {
     this.validateFileName = this.validateFileName.bind(this);
     this.handleFileClick = this.handleFileClick.bind(this);
     this.toggleFileOptions = this.toggleFileOptions.bind(this);
+
+    this.state = {
+      isOptionsOpen: false,
+    };
   }
 
   handleFileClick(e) {
@@ -57,12 +61,27 @@ export class FileNode extends React.Component {
 
   toggleFileOptions(e) {
     e.preventDefault();
-    if (this.props.isOptionsOpen) {
-      this.props.hideFileOptions(this.props.id);
+    if (this.state.isOptionsOpen) {
+      // this.props.hideFileOptions(this.props.id);
+      this.setState({
+        isOptionsOpen: false
+      });
     } else {
       this[`fileOptions-${this.props.id}`].focus();
-      this.props.showFileOptions(this.props.id);
+      // this.props.showFileOptions(this.props.id);
+      this.setState({
+        isOptionsOpen: true
+      });
     }
+  }
+
+  hideFileOptions(e) {
+    // e.preventDefault();
+    this.setState({
+      isOptionsOpen: false
+    });
+    // this.props.hideFileOptions(this.props.id);
+    return false;
   }
 
   renderChild(childId) {
@@ -78,7 +97,7 @@ export class FileNode extends React.Component {
       'sidebar__root-item': this.props.name === 'root',
       'sidebar__file-item': this.props.name !== 'root',
       'sidebar__file-item--selected': this.props.isSelectedFile,
-      'sidebar__file-item--open': this.props.isOptionsOpen,
+      'sidebar__file-item--open': this.state.isOptionsOpen,
       'sidebar__file-item--editing': this.props.isEditingName,
       'sidebar__file-item--closed': this.props.isFolderClosed
     });
@@ -133,7 +152,7 @@ export class FileNode extends React.Component {
                   ref={(element) => { this[`fileOptions-${this.props.id}`] = element; }}
                   tabIndex="0"
                   onClick={this.toggleFileOptions}
-                  onBlur={() => setTimeout(() => this.props.hideFileOptions(this.props.id), 200)}
+                  onBlur={() => setTimeout(() => this.hideFileOptions(this.props.id), 200)}
                 >
                   <InlineSVG src={downArrowUrl} />
                 </button>
@@ -222,12 +241,12 @@ FileNode.propTypes = {
   name: PropTypes.string.isRequired,
   fileType: PropTypes.string.isRequired,
   isSelectedFile: PropTypes.bool,
-  isOptionsOpen: PropTypes.bool,
+  // isOptionsOpen: PropTypes.bool,
   isEditingName: PropTypes.bool,
   isFolderClosed: PropTypes.bool,
   setSelectedFile: PropTypes.func.isRequired,
-  showFileOptions: PropTypes.func.isRequired,
-  hideFileOptions: PropTypes.func.isRequired,
+  // showFileOptions: PropTypes.func.isRequired,
+  // hideFileOptions: PropTypes.func.isRequired,
   deleteFile: PropTypes.func.isRequired,
   showEditFileName: PropTypes.func.isRequired,
   hideEditFileName: PropTypes.func.isRequired,
@@ -242,7 +261,7 @@ FileNode.propTypes = {
 FileNode.defaultProps = {
   parentId: '0',
   isSelectedFile: false,
-  isOptionsOpen: false,
+  // isOptionsOpen: false,
   isEditingName: false,
   isFolderClosed: false
 };
