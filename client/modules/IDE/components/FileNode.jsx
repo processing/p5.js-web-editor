@@ -21,6 +21,9 @@ export class FileNode extends React.Component {
     this.validateFileName = this.validateFileName.bind(this);
     this.handleFileClick = this.handleFileClick.bind(this);
     this.toggleFileOptions = this.toggleFileOptions.bind(this);
+    this.hideFileOptions = this.hideFileOptions.bind(this);
+    this.showEditFileName = this.showEditFileName.bind(this);
+    this.hideEditFileName = this.hideEditFileName.bind(this);
 
     this.state = {
       isOptionsOpen: false,
@@ -41,7 +44,7 @@ export class FileNode extends React.Component {
 
   handleKeyPress(event) {
     if (event.key === 'Enter') {
-      this.hideEditFileName(this.props.id);
+      this.hideEditFileName();
     }
   }
 
@@ -70,17 +73,15 @@ export class FileNode extends React.Component {
     }
   }
 
-  hideFileOptions(e) {
-    // e.preventDefault();
+  hideFileOptions() {
     this.setState({ isOptionsOpen: false });
-    return false;
   }
 
-  showEditFileName(id) {
+  showEditFileName() {
     this.setState({ isEditingName: true });
   }
 
-  hideEditFileName(id) {
+  hideEditFileName() {
     this.setState({ isEditingName: false });
   }
 
@@ -142,7 +143,7 @@ export class FileNode extends React.Component {
                   ref={(element) => { this.fileNameInput = element; }}
                   onBlur={() => {
                     this.validateFileName();
-                    this.hideEditFileName(this.props.id);
+                    this.hideEditFileName();
                   }}
                   onKeyPress={this.handleKeyPress}
                 />
@@ -152,7 +153,7 @@ export class FileNode extends React.Component {
                   ref={(element) => { this[`fileOptions-${this.props.id}`] = element; }}
                   tabIndex="0"
                   onClick={this.toggleFileOptions}
-                  onBlur={() => setTimeout(() => this.hideFileOptions(this.props.id), 200)}
+                  onBlur={() => setTimeout(this.hideFileOptions, 200)}
                 >
                   <InlineSVG src={downArrowUrl} />
                 </button>
@@ -192,7 +193,7 @@ export class FileNode extends React.Component {
                       <button
                         onClick={() => {
                           this.originalFileName = this.props.name;
-                          this.showEditFileName(this.props.id);
+                          this.showEditFileName();
                           setTimeout(() => this.fileNameInput.focus(), 0);
                         }}
                         className="sidebar__file-item-option"
