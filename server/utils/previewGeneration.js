@@ -29,7 +29,8 @@ function resolveLinksInString(content, files, projectId) {
           while (resolvedFilePath.startsWith('/')) {
             resolvedFilePath = resolvedFilePath.substr(1);
           }
-          newContent = newContent.replace(filePath, `/sketches/${projectId}/assets/${resolvedFilePath}`);
+          let replacement = `/sketches/${projectId}/assets/${resolvedFilePath}`;
+          newContent = newContent.replace(filePath, replacement);
         }
       }
     }
