@@ -19,7 +19,7 @@ import {
   EXTERNAL_LINK_REGEX,
   NOT_EXTERNAL_LINK_REGEX
 } from '../../../../server/utils/fileUtils';
-import { startTag }
+import { hijackConsoleErrorsScript, startTag }
   from '../../../utils/consoleUtils';
 
 class PreviewFrame extends React.Component {
@@ -67,7 +67,6 @@ class PreviewFrame extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('message', this.handleConsoleEvent);
-    ReactDOM.unmountComponentAtNode(this.iframeElement.contentDocument.body);
   }
 
   handleConsoleEvent(messageEvent) {
@@ -152,7 +151,8 @@ class PreviewFrame extends React.Component {
     this.resolveStyles(sketchDoc, resolvedFiles);
 
     const scriptsToInject = [
-      loopProtectScript
+      loopProtectScript,
+      hijackConsoleErrorsScript
     ];
     const accessiblelib = sketchDoc.createElement('script');
     accessiblelib.setAttribute(
@@ -347,19 +347,6 @@ class PreviewFrame extends React.Component {
                     consoleBuffer.length = 0;
                   }
                 }, LOGWAIT);
-
-                // catch reference errors, via http://stackoverflow.com/a/12747364/2994108
-                window.onerror = function (msg, url, lineNumber, columnNo, error) {
-                  // const string = msg.toLowerCase();
-                  // const substring = 'script error';
-                  let data = msg + ' (' + 'sketch' + ': line ' + lineNumber + ')';// eslint-disable-line
-                  window.parent.postMessage([{
-                    method: 'error',
-                    arguments: data,
-                    source: lineNumber // eslint-disable-line
-                  }], '*');
-                  return false;
-                };
               }
             }
           </FrameContextConsumer>

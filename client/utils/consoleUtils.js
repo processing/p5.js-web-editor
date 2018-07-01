@@ -7,6 +7,18 @@ import debugDarkUrl from '../images/console-debug-dark.svg';
 import infoLightUrl from '../images/console-info-light.svg';
 import infoDarkUrl from '../images/console-info-dark.svg';
 
+export const hijackConsoleErrorsScript = `
+  // catch reference errors, via http://stackoverflow.com/a/12747364/2994108
+  window.onerror = function (msg, url, lineNumber, columnNo, error) {
+    let data = msg + ' (' + 'sketch' + ': line ' + lineNumber + ')';// eslint-disable-line
+    window.parent.postMessage([{
+      method: 'error',
+      arguments: data,
+      source: lineNumber // eslint-disable-line
+    }], '*');
+    return false;
+  };`;
+
 export const startTag = '@fs-';
 
 export const CONSOLE_FEED_WITHOUT_ICONS = {
