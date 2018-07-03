@@ -20,6 +20,8 @@ services:
       - '80:80'
     depends_on:
       - app
+    links:
+      - app
   app:
     build:
       context: .
