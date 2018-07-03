@@ -45,6 +45,8 @@ if (process.env.NODE_ENV === 'development') {
   corsOriginsWhitelist.push(/localhost/);
 }
 
+app.set('trust proxy', true);
+
 // Enable Cross-Origin Resource Sharing (CORS) for all origins
 const corsMiddleware = cors({
   credentials: true,
