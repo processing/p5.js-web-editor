@@ -42,19 +42,9 @@ after_success:
 - docker-compose stop
 - docker-compose build --no-cache
 - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-- docker tag $APP_IMAGE_NAME $DOCKER_USERNAME/$DOCKER_REPOSITORY:$TRAVIS_BUILD_ID
-- docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY:$TRAVIS_BUILD_ID
+- docker tag $APP_IMAGE_NAME $DOCKER_USERNAME/$DOCKER_REPOSITORY:latest
+- docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY:latest
 
 env:
   global:
     - APP_IMAGE_NAME=p5jswebeditor_app
-
-# deploy:
-#   provider: elasticbeanstalk
-#   access_key_id: $AWS_ACCESS_KEY
-#   secret_access_key:
-#     secure: $AWS_SECRET_KEY
-#   region: $AWS_REGION  
-#   app: $AWS_EBS_APP
-#   env: $AWS_EBS_ENV
-#   bucket_name: "the-target-S3-bucket"
