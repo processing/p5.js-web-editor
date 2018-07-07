@@ -3,12 +3,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 // import escapeStringRegexp from 'escape-string-regexp';
 import { isEqual } from 'lodash';
+import srcDoc from 'srcdoc-polyfill';
 import loopProtect from 'loop-protect';
 import loopProtectScript from 'loop-protect/dist/loop-protect.min';
-import Frame, { FrameContextConsumer } from 'react-frame-component';
-import { Hook } from 'console-feed';
 import { JSHINT } from 'jshint';
 import decomment from 'decomment';
+import hijackConsole from '../../../utils/console-feed';
 import { getBlobUrl } from '../actions/files';
 import { resolvePathToFile } from '../../../../server/utils/filePath';
 import {
@@ -19,16 +19,13 @@ import {
   EXTERNAL_LINK_REGEX,
   NOT_EXTERNAL_LINK_REGEX
 } from '../../../../server/utils/fileUtils';
-import { hijackConsoleErrorsScript, startTag }
+import { hijackConsoleErrorsScript, startTag, getAllScriptOffsets }
   from '../../../utils/consoleUtils';
 
 class PreviewFrame extends React.Component {
   constructor(props) {
     super(props);
     this.handleConsoleEvent = this.handleConsoleEvent.bind(this);
-    this.state = {
-      toggle: false
-    };
   }
 
   componentDidMount() {
@@ -39,22 +36,28 @@ class PreviewFrame extends React.Component {
     // if the user explicitly clicks on the play button
     if (this.props.isPlaying && this.props.previewIsRefreshing) {
       this.renderSketch();
+      return;
     }
+
     // if user switches textoutput preferences
     if (this.props.isAccessibleOutputPlaying !== prevProps.isAccessibleOutputPlaying) {
       this.renderSketch();
+      return;
     }
 
     if (this.props.textOutput !== prevProps.textOutput) {
       this.renderSketch();
+      return;
     }
 
     if (this.props.gridOutput !== prevProps.gridOutput) {
       this.renderSketch();
+      return;
     }
 
     if (this.props.soundOutput !== prevProps.soundOutput) {
       this.renderSketch();
+      return;
     }
 
     if (this.props.fullView && this.props.files[0].id !== prevProps.files[0].id) {
@@ -67,6 +70,7 @@ class PreviewFrame extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('message', this.handleConsoleEvent);
+    ReactDOM.unmountComponentAtNode(this.iframeElement.contentDocument.body);
   }
 
   handleConsoleEvent(messageEvent) {
@@ -130,18 +134,14 @@ class PreviewFrame extends React.Component {
 
   injectLocalFiles() {
     const htmlFile = this.props.htmlFile.content;
-
+    let scriptOffs = [];
     const resolvedFiles = this.resolveJSAndCSSLinks(this.props.files);
-
     const parser = new DOMParser();
     const sketchDoc = parser.parseFromString(htmlFile, 'text/html');
 
     const base = sketchDoc.createElement('base');
     base.href = `${window.location.href}/`;
     sketchDoc.head.appendChild(base);
-    // a little confusing here, see https://github.com/ryanseddon/react-frame-component/issues/105
-    const div = sketchDoc.createElement('div');
-    sketchDoc.head.prepend(div);
 
     this.resolvePathsForElementsWithAttribute('src', sketchDoc, resolvedFiles);
     this.resolvePathsForElementsWithAttribute('href', sketchDoc, resolvedFiles);
@@ -152,7 +152,7 @@ class PreviewFrame extends React.Component {
 
     const scriptsToInject = [
       loopProtectScript,
-      hijackConsoleErrorsScript
+      hijackConsole
     ];
     const accessiblelib = sketchDoc.createElement('script');
     accessiblelib.setAttribute(
@@ -189,6 +189,13 @@ class PreviewFrame extends React.Component {
       script.text = scriptToInject;
       sketchDoc.head.appendChild(script);
     });
+
+    const sketchDocString = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
+    scriptOffs = getAllScriptOffsets(sketchDocString);
+    const consoleErrorsScript = sketchDoc.createElement('script');
+    consoleErrorsScript.innerHTML = hijackConsoleErrorsScript(JSON.stringify(scriptOffs));
+    this.addLoopProtect(sketchDoc);
+    sketchDoc.head.insertBefore(consoleErrorsScript, sketchDoc.head.firstElement);
 
     return `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
   }
@@ -311,46 +318,29 @@ class PreviewFrame extends React.Component {
   }
 
   renderSketch() {
-    this.setState({
-      toggle: !this.state.toggle
-    });
-    if (this.props.endSketchRefresh) {
-      this.props.endSketchRefresh();
+    const doc = this.iframeElement;
+    if (this.props.isPlaying) {
+      srcDoc.set(doc, this.injectLocalFiles());
+      if (this.props.endSketchRefresh) {
+        this.props.endSketchRefresh();
+      }
+    } else {
+      doc.srcdoc = '';
+      srcDoc.set(doc, '  ');
     }
   }
 
   render() {
     return (
-      this.props.isPlaying &&
-        <Frame
-          className="preview-frame"
-          initialContent={this.injectLocalFiles()}
-          key={this.state.toggle}
-        >
-          <FrameContextConsumer>
-            {
-              ({ document, window }) => {
-                const consoleBuffer = [];
-                const LOGWAIT = 500;
-                Hook(window.console, (log) => {
-                  const { method, data: args } = log[0];
-                  consoleBuffer.push({
-                    method,
-                    arguments: args,
-                    source: 'sketch'
-                  });
-                });
-
-                setInterval(() => {
-                  if (consoleBuffer.length > 0) {
-                    window.parent.postMessage(consoleBuffer, '*');
-                    consoleBuffer.length = 0;
-                  }
-                }, LOGWAIT);
-              }
-            }
-          </FrameContextConsumer>
-        </Frame>
+      <iframe
+        className="preview-frame"
+        aria-label="sketch output"
+        role="main"
+        frameBorder="0"
+        title="sketch output"
+        ref={(element) => { this.iframeElement = element; }}
+        sandbox="allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-forms allow-modals"
+      />
     );
   }
 }

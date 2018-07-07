@@ -76,6 +76,10 @@ module.exports = {
       {
         test: /.*loop-protect.min.js$/,
         loader: 'raw-loader'
+      },
+      {
+        test: /.*console-feed.js$/,
+        loader: 'raw-loader'
       }
     ]
   },

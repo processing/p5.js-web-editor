@@ -16,7 +16,7 @@ module.exports = {
   },
   output: {
     path: `${__dirname}`,
-    filename: 'app.js',
+    filename: '[name].js',
     publicPath: '/'
   },
   resolve: {
@@ -83,6 +83,10 @@ module.exports = {
       },
       {
         test: /.*loop-protect.min.js$/,
+        loader: 'raw-loader'
+      },
+      {
+        test: /.*console-feed.js$/,
         loader: 'raw-loader'
       }
     ],
