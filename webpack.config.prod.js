@@ -8,7 +8,7 @@ const postcssReporter = require('postcss-reporter');
 const cssnano = require('cssnano');
 require('dotenv').config();
 
-module.exports = {
+module.exports = [{
   devtool: 'source-map',
 
   entry: {
@@ -72,14 +72,6 @@ module.exports = {
       {
         test: /fonts\/.*\.(eot|svg|ttf|woff|woff2)$/,
         loader: 'file-loader'
-      },
-      {
-        test: /.*loop-protect.min.js$/,
-        loader: 'raw-loader'
-      },
-      {
-        test: /.*console-feed.js$/,
-        loader: 'raw-loader'
       }
     ]
   },
@@ -130,4 +122,40 @@ module.exports = {
     })
   ],
 
-};
+},
+{
+  entry: {
+    app: [
+      './client/utils/previewEntry.js'
+    ]
+  },
+  target: 'web',
+  output: {
+    path: `${__dirname}/dist/static`,
+    filename: 'previewScripts.js',
+    publicPath: '/'
+  },
+  resolve: {
+    extensions: ['*', '.js', '.jsx'],
+    modules: [
+      'client',
+      'node_modules',
+    ],
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader'
+      }
+    ]
+  },
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    })
+  ]
+}];

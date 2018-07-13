@@ -5,10 +5,8 @@ import ReactDOM from 'react-dom';
 import { isEqual } from 'lodash';
 import srcDoc from 'srcdoc-polyfill';
 import loopProtect from 'loop-protect';
-import loopProtectScript from 'loop-protect/dist/loop-protect.min';
 import { JSHINT } from 'jshint';
 import decomment from 'decomment';
-import hijackConsole from '../../../utils/console-feed';
 import { getBlobUrl } from '../actions/files';
 import { resolvePathToFile } from '../../../../server/utils/filePath';
 import {
@@ -150,10 +148,6 @@ class PreviewFrame extends React.Component {
     this.resolveScripts(sketchDoc, resolvedFiles);
     this.resolveStyles(sketchDoc, resolvedFiles);
 
-    const scriptsToInject = [
-      loopProtectScript,
-      hijackConsole
-    ];
     const accessiblelib = sketchDoc.createElement('script');
     accessiblelib.setAttribute(
       'src',
@@ -184,11 +178,9 @@ class PreviewFrame extends React.Component {
       sketchDoc.getElementById('accessible-outputs').appendChild(soundSection);
     }
 
-    scriptsToInject.forEach((scriptToInject) => {
-      const script = sketchDoc.createElement('script');
-      script.text = scriptToInject;
-      sketchDoc.head.appendChild(script);
-    });
+    const previewScripts = sketchDoc.createElement('script');
+    previewScripts.src = 'previewScripts.js';
+    sketchDoc.head.appendChild(previewScripts);
 
     const sketchDocString = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
     scriptOffs = getAllScriptOffsets(sketchDocString);
