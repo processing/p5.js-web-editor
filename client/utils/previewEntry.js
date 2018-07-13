@@ -1,7 +1,7 @@
 import loopProtect from 'loop-protect';
 import Hook from 'console-feed/lib/Hook/index';
 
-window.loopProtext = loopProtect;
+window.loopProtect = loopProtect;
 
 const consoleBuffer = [];
 const LOGWAIT = 500;

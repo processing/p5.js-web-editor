@@ -179,7 +179,7 @@ class PreviewFrame extends React.Component {
     }
 
     const previewScripts = sketchDoc.createElement('script');
-    previewScripts.src = 'previewScripts.js';
+    previewScripts.src = '/previewScripts.js';
     sketchDoc.head.appendChild(previewScripts);
 
     const sketchDocString = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
