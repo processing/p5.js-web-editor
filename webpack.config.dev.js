@@ -72,7 +72,8 @@ module.exports = [{
       },
       {
         test: /\.scss$/,
-        loaders: ['style-loader', 'css-loader', 'sass-loader']
+        loaders: ['style-loader', 'css-loader', 'sass-loader'],
+        exclude: [/_console-feed.scss/],
       },
       {
         test: /\.(svg|mp3)$/,
@@ -81,6 +82,13 @@ module.exports = [{
       {
         test: /fonts\/.*\.(eot|svg|ttf|woff|woff2)$/,
         loader: 'file-loader'
+      },
+      {
+        test: /_console-feed.scss/,
+        loader: 'sass-extract-loader',
+        options: {
+          plugins: [{ plugin: 'sass-extract-js', options: { camelCase: false } }]
+        }
       }
     ],
   },

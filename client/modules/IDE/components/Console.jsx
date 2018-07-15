@@ -3,7 +3,7 @@ import React from 'react';
 import InlineSVG from 'react-inlinesvg';
 import classNames from 'classnames';
 import { Console as ConsoleFeed } from 'console-feed';
-import { CONSOLE_FEED_WITHOUT_ICONS, CONSOLE_FEED_LIGHT_STYLES, CONSOLE_FEED_DARK_STYLES, CONSOLE_FEED_CONTRAST_STYLES } from '../../../utils/consoleUtils';
+import { CONSOLE_FEED_WITHOUT_ICONS, CONSOLE_FEED_LIGHT_STYLES, CONSOLE_FEED_DARK_STYLES, CONSOLE_FEED_CONTRAST_STYLES } from '../../../styles/components/_console-feed.scss';
 
 const upArrowUrl = require('../../../images/up-arrow.svg');
 const downArrowUrl = require('../../../images/down-arrow.svg');
