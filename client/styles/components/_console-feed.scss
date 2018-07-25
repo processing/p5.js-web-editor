@@ -15,11 +15,7 @@ $CONSOLE_FEED_LIGHT_STYLES: (
   LOG_WARN_BORDER: 'hsl(50, 100%, 88%)',
   LOG_INFO_COLOR: '#7D7D7D',
   LOG_DEBUG_COLOR: '#007BBB',
-  LOG_COLOR: 'rgb(128, 128, 128)',
-  LOG_WARN_ICON: url(../../../images/console-warn-light.svg),
-  LOG_ERROR_ICON: url(../../../images/console-error-light.svg),
-  LOG_DEBUG_ICON: url(../../../images/console-debug-light.svg),
-  LOG_INFO_ICON: url(../../../images/console-info-light.svg)
+  LOG_COLOR: 'rgb(128, 128, 128)'
 );
 
 $CONSOLE_FEED_DARK_STYLES: (
@@ -40,10 +36,6 @@ $CONSOLE_FEED_DARK_STYLES: (
   LOG_WARN_COLOR: '#f5bc38',
   LOG_INFO_COLOR: '#a3a3a3',
   LOG_DEBUG_COLOR: '#0c99e2',
-  LOG_WARN_ICON: url(../../../images/console-warn-dark.svg),
-  LOG_ERROR_ICON: url(../../../images/console-error-dark.svg),
-  LOG_DEBUG_ICON: url(../../../images/console-debug-dark.svg),
-  LOG_INFO_ICON: url(../../../images/console-info-dark.svg),
   TABLE_BORDER_COLOR: 'grey',
   TABLE_TH_BACKGROUND_COLOR: 'transparent',
   TABLE_TH_HOVER_COLOR: 'grey',

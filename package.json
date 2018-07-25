@@ -127,7 +127,7 @@
     "s3": "^4.4.0",
     "s3-policy": "^0.2.0",
     "sass-extract": "^2.1.0",
-    "sass-extract-js": "^0.3.0",
+    "sass-extract-js": "^0.4.0",
     "sass-extract-loader": "^1.1.0",
     "shortid": "^2.2.6",
     "slugify": "^1.2.9",

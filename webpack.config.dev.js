@@ -73,7 +73,7 @@ module.exports = [{
       {
         test: /\.scss$/,
         loaders: ['style-loader', 'css-loader', 'sass-loader'],
-        exclude: [/_console-feed.scss/],
+        exclude: [/_console-feed.scss/]
       },
       {
         test: /\.(svg|mp3)$/,
