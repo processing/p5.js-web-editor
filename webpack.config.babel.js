@@ -19,7 +19,7 @@ module.exports = {
     loaders: [
       {
         test: /\.scss$/,
-        exclude: /node_modules/,
+        exclude: [/node_modules/, /_console-feed.scss/],
         loader: ExtractTextPlugin.extract({
             fallback: 'style-loader',
             use: 'css-loader!sass-loader!postcss-loader'

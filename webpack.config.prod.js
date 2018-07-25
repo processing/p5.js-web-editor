@@ -54,7 +54,7 @@ module.exports = [{
     loaders: [
       {
         test: /\.scss$/,
-        exclude: /node_modules/,
+        exclude: [/node_modules/, /_console-feed.scss/],
         loader: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: 'css-loader!sass-loader!postcss-loader'
@@ -72,6 +72,13 @@ module.exports = [{
       {
         test: /fonts\/.*\.(eot|svg|ttf|woff|woff2)$/,
         loader: 'file-loader'
+      },
+      {
+        test: /_console-feed.scss/,
+        loader: 'sass-extract-loader',
+        options: {
+          plugins: [{ plugin: 'sass-extract-js', options: { camelCase: false } }]
+        }
       }
     ]
   },
