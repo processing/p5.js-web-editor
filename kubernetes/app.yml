@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Deployment
+spec:
+  selector:
+    matchLabels:
+      app: web-editor
+  replicas: 1
+  template:
+    metadata:
+      app: web-editor
+    spec:
+      containers:
+        - name: web-editor-app
+          image: 
