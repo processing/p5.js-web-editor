@@ -71,9 +71,8 @@ module.exports = [{
         // }
       },
       {
-        test: /\.scss$/,
-        loaders: ['style-loader', 'css-loader', 'sass-loader'],
-        exclude: [/_console-feed.scss/]
+        test: /main\.scss$/,
+        loaders: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
         test: /\.(svg|mp3)$/,

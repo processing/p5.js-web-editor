@@ -53,8 +53,8 @@ module.exports = [{
   module: {
     loaders: [
       {
-        test: /\.scss$/,
-        exclude: [/node_modules/, /_console-feed.scss/],
+        test: /main\.scss$/,
+        exclude: [/node_modules/],
         loader: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: 'css-loader!sass-loader!postcss-loader'
