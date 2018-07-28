@@ -44,11 +44,11 @@ class Console extends React.Component {
     }
     switch (theme) {
       case 'light':
-        return Object.assign(style, CONSOLE_FEED_LIGHT_STYLES, CONSOLE_FEED_LIGHT_ICONS);
+        return Object.assign(CONSOLE_FEED_LIGHT_STYLES, CONSOLE_FEED_LIGHT_ICONS, style);
       case 'dark':
-        return Object.assign(style, CONSOLE_FEED_DARK_STYLES, CONSOLE_FEED_DARK_ICONS);
+        return Object.assign(CONSOLE_FEED_DARK_STYLES, CONSOLE_FEED_DARK_ICONS, style);
       case 'contrast':
-        return Object.assign(style, CONSOLE_FEED_CONTRAST_STYLES, CONSOLE_FEED_DARK_ICONS);
+        return Object.assign(CONSOLE_FEED_CONTRAST_STYLES, CONSOLE_FEED_DARK_ICONS, style);
       default:
         return '';
     }
