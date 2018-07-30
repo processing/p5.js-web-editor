@@ -2,10 +2,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
 // import escapeStringRegexp from 'escape-string-regexp';
+import { isEqual } from 'lodash';
 import srcDoc from 'srcdoc-polyfill';
-
 import loopProtect from 'loop-protect';
-import loopProtectScript from 'loop-protect/dist/loop-protect.min';
 import { JSHINT } from 'jshint';
 import decomment from 'decomment';
 import { getBlobUrl } from '../actions/files';
@@ -18,38 +17,20 @@ import {
   EXTERNAL_LINK_REGEX,
   NOT_EXTERNAL_LINK_REGEX
 } from '../../../../server/utils/fileUtils';
-import { hijackConsole, hijackConsoleErrorsScript, startTag, getAllScriptOffsets }
+import { hijackConsoleErrorsScript, startTag, getAllScriptOffsets }
   from '../../../utils/consoleUtils';
 
-
 class PreviewFrame extends React.Component {
-  componentDidMount() {
-    if (this.props.isPlaying) {
-      this.renderFrameContents();
-    }
+  constructor(props) {
+    super(props);
+    this.handleConsoleEvent = this.handleConsoleEvent.bind(this);
+  }
 
-    window.addEventListener('message', (messageEvent) => {
-      console.log(messageEvent);
-      messageEvent.data.forEach((message) => {
-        const args = message.arguments;
-        Object.keys(args).forEach((key) => {
-          if (args[key].includes('Exiting potential infinite loop')) {
-            this.props.stopSketch();
-            this.props.expandConsole();
-          }
-        });
-      });
-      this.props.dispatchConsoleEvent(messageEvent.data);
-    });
+  componentDidMount() {
+    window.addEventListener('message', this.handleConsoleEvent);
   }
 
   componentDidUpdate(prevProps) {
-    // if sketch starts or stops playing, want to rerender
-    if (this.props.isPlaying !== prevProps.isPlaying) {
-      this.renderSketch();
-      return;
-    }
-
     // if the user explicitly clicks on the play button
     if (this.props.isPlaying && this.props.previewIsRefreshing) {
       this.renderSketch();
@@ -86,12 +67,43 @@ class PreviewFrame extends React.Component {
   }
 
   componentWillUnmount() {
+    window.removeEventListener('message', this.handleConsoleEvent);
     ReactDOM.unmountComponentAtNode(this.iframeElement.contentDocument.body);
   }
 
-  clearPreview() {
-    const doc = this.iframeElement;
-    doc.srcDoc = '';
+  handleConsoleEvent(messageEvent) {
+    if (Array.isArray(messageEvent.data)) {
+      messageEvent.data.every((message, index, arr) => {
+        const { arguments: args } = message;
+        let hasInfiniteLoop = false;
+        Object.keys(args).forEach((key) => {
+          if (typeof args[key] === 'string' && args[key].includes('Exiting potential infinite loop')) {
+            this.props.stopSketch();
+            this.props.expandConsole();
+            hasInfiniteLoop = true;
+          }
+        });
+        if (hasInfiniteLoop) {
+          return false;
+        }
+        if (index === arr.length - 1) {
+          Object.assign(message, { times: 1 });
+          return false;
+        }
+        const cur = Object.assign(message, { times: 1 });
+        const nextIndex = index + 1;
+        while (isEqual(cur.arguments, arr[nextIndex].arguments) && cur.method === arr[nextIndex].method) {
+          cur.times += 1;
+          arr.splice(nextIndex, 1);
+          if (nextIndex === arr.length) {
+            return false;
+          }
+        }
+        return true;
+      });
+
+      this.props.dispatchConsoleEvent(messageEvent.data);
+    }
   }
 
   addLoopProtect(sketchDoc) {
@@ -121,9 +133,7 @@ class PreviewFrame extends React.Component {
   injectLocalFiles() {
     const htmlFile = this.props.htmlFile.content;
     let scriptOffs = [];
-
     const resolvedFiles = this.resolveJSAndCSSLinks(this.props.files);
-
     const parser = new DOMParser();
     const sketchDoc = parser.parseFromString(htmlFile, 'text/html');
 
@@ -138,10 +148,6 @@ class PreviewFrame extends React.Component {
     this.resolveScripts(sketchDoc, resolvedFiles);
     this.resolveStyles(sketchDoc, resolvedFiles);
 
-    const scriptsToInject = [
-      loopProtectScript,
-      hijackConsole
-    ];
     const accessiblelib = sketchDoc.createElement('script');
     accessiblelib.setAttribute(
       'src',
@@ -156,7 +162,6 @@ class PreviewFrame extends React.Component {
       const textSection = sketchDoc.createElement('section');
       textSection.setAttribute('id', 'textOutput-content');
       sketchDoc.getElementById('accessible-outputs').appendChild(textSection);
-      this.iframeElement.focus();
     }
     if (this.props.gridOutput) {
       sketchDoc.body.appendChild(accessibleOutputs);
@@ -164,7 +169,6 @@ class PreviewFrame extends React.Component {
       const gridSection = sketchDoc.createElement('section');
       gridSection.setAttribute('id', 'gridOutput-content');
       sketchDoc.getElementById('accessible-outputs').appendChild(gridSection);
-      this.iframeElement.focus();
     }
     if (this.props.soundOutput) {
       sketchDoc.body.appendChild(accessibleOutputs);
@@ -174,11 +178,9 @@ class PreviewFrame extends React.Component {
       sketchDoc.getElementById('accessible-outputs').appendChild(soundSection);
     }
 
-    scriptsToInject.forEach((scriptToInject) => {
-      const script = sketchDoc.createElement('script');
-      script.text = scriptToInject;
-      sketchDoc.head.appendChild(script);
-    });
+    const previewScripts = sketchDoc.createElement('script');
+    previewScripts.src = '/previewScripts.js';
+    sketchDoc.head.appendChild(previewScripts);
 
     const sketchDocString = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
     scriptOffs = getAllScriptOffsets(sketchDocString);
@@ -317,15 +319,6 @@ class PreviewFrame extends React.Component {
     } else {
       doc.srcdoc = '';
       srcDoc.set(doc, '  ');
-    }
-  }
-
-  renderFrameContents() {
-    const doc = this.iframeElement.contentDocument;
-    if (doc.readyState === 'complete') {
-      this.renderSketch();
-    } else {
-      setTimeout(this.renderFrameContents, 0);
     }
   }
 

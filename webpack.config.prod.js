@@ -8,7 +8,7 @@ const postcssReporter = require('postcss-reporter');
 const cssnano = require('cssnano');
 require('dotenv').config();
 
-module.exports = {
+module.exports = [{
   devtool: 'source-map',
 
   entry: {
@@ -53,7 +53,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.scss$/,
+        test: /main\.scss$/,
         exclude: /node_modules/,
         loader: ExtractTextPlugin.extract({
           fallback: 'style-loader',
@@ -74,8 +74,11 @@ module.exports = {
         loader: 'file-loader'
       },
       {
-        test: /.*loop-protect.min.js$/,
-        loader: 'raw-loader'
+        test: /_console-feed.scss/,
+        loader: 'sass-extract-loader',
+        options: {
+          plugins: [{ plugin: 'sass-extract-js', options: { camelCase: false } }]
+        }
       }
     ]
   },
@@ -126,4 +129,40 @@ module.exports = {
     })
   ],
 
-};
+},
+{
+  entry: {
+    app: [
+      './client/utils/previewEntry.js'
+    ]
+  },
+  target: 'web',
+  output: {
+    path: `${__dirname}/dist/static`,
+    filename: 'previewScripts.js',
+    publicPath: '/'
+  },
+  resolve: {
+    extensions: ['*', '.js', '.jsx'],
+    modules: [
+      'client',
+      'node_modules',
+    ],
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader'
+      }
+    ]
+  },
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    })
+  ]
+}];
