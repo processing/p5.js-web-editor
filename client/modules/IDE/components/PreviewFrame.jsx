@@ -31,6 +31,12 @@ class PreviewFrame extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    // if sketch starts or stops playing, want to rerender
+    if (this.props.isPlaying !== prevProps.isPlaying) {
+      this.renderSketch();
+      return;
+    }
+
     // if the user explicitly clicks on the play button
     if (this.props.isPlaying && this.props.previewIsRefreshing) {
       this.renderSketch();
