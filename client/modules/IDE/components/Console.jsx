@@ -121,13 +121,13 @@ class Console extends React.Component {
                 <div className="preview-console__output" key={consoleEvent.id}>
                   { expression &&
                     <div className="preview-console__expression">
-                      <InlineSVG src={rightArrowUrl} className="console__chevron" />
+                      <InlineSVG src={rightArrowUrl} className="console__arrow" />
                       <div>{expression}</div>
                     </div>
                   }
                   <div key={consoleEvent.id} className={`preview-console__message preview-console__message--${method}`}>
                     { source === 'console' &&
-                      <InlineSVG src={leftArrowUrl} className="console__chevron" />
+                      <InlineSVG src={leftArrowUrl} className="console__arrow" />
                     }
                     { times > 1 &&
                       <div className="preview-console__logged-times">{times}</div>

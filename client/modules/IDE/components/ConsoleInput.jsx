@@ -64,7 +64,7 @@ class ConsoleInput extends React.Component {
       <div
         className="console__input"
       >
-        <InlineSVG src={rightArrowUrl} className="console-active__chevron" />
+        <InlineSVG src={rightArrowUrl} className="console-active__arrow" />
         <div ref={(element) => { this.codemirrorContainer = element; }} className="console__editor" />
       </div>
     );

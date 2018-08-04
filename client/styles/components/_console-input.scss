@@ -4,7 +4,7 @@
   height: #{22 / $base-font-size}rem;
 }
 
-.console__input .console-active__chevron {
+.console__input .console-active__arrow {
   left: #{10 / $base-font-size}rem;
   position: absolute;
   top: #{2 / $base-font-size}rem;
@@ -14,7 +14,7 @@
   }
   & g {
     @include themify() {
-      fill: getThemifyVariable('console-active-chevron-color');  
+      fill: getThemifyVariable('console-active-arrow-color');  
     }
   }
 }
@@ -33,7 +33,7 @@
 
   .CodeMirror-line {
     @include themify() {
-      color: getThemifyVariable('primary-text-color');
+      color: getThemifyVariable('console-color');
     }
   }
 }

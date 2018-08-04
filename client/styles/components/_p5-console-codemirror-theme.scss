@@ -1,0 +1,11 @@
+.cm-s-p5-console .cm-number{
+    @include themify() {
+        color: getThemifyVariable('console-color');
+    }
+}
+
+.cm-s-p5-console .cm-tag{
+    @include themify() {
+        color: getThemifyVariable('console-color');
+    }
+}

@@ -119,14 +119,14 @@
 		margin-left: #{35 / $base-font-size}rem;
 		line-height: #{22 / $base-font-size}rem;
 		font-size: #{12 / $base-font-size}rem;
-		font-family: Consolas,Lucida Console,Courier New,monospace;
+		font-family: Consolas, Lucida Console, Courier New, monospace;
 		@include themify() {
 			color: getThemifyVariable('console-color');	
 		}
 	}
 
 	.preview-console__message, .preview-console__expression {
-		.console__chevron {
+		.console__arrow {
 			left: #{10 / $base-font-size}rem;
 			position: absolute;
 			top: #{2 / $base-font-size}rem;
@@ -136,7 +136,7 @@
 		  	}
 		  	& g {
 		  		@include themify() {
-					fill: getThemifyVariable('console-chevron-color');	
+					fill: getThemifyVariable('console-arrow-color');	
 				}
 			}
 		}
