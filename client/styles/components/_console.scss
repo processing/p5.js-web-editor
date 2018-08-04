@@ -16,14 +16,6 @@
 		position:relative;
 		text-align:left;
 	}
-
-	.preview-console__message {
-		@include themify() {
-			color: getThemifyVariable('console-color');
-		}
-		flex: 1 0 auto;
-		position: relative;
-	}
 }
 
 .preview-console__header {
@@ -115,5 +107,49 @@
 		@include themify() {
 			background-color: getThemifyVariable('console-error-background-color');
 		}
+	}
+}
+
+.preview-console__body {
+	display: flex;
+	flex-direction: column-reverse;
+
+	.preview-console__output .preview-console__expression div {
+		margin-left: 35px;
+		line-height: 22px;
+		font-size: 12px;
+		font-family: Consolas,Lucida Console,Courier New,monospace;
+		@include themify() {
+			color: getThemifyVariable('console-color');	
+		}
+	}
+
+	.preview-console__message, .preview-console__expression {
+		.console__chevron {
+			left: 10px;
+			position: absolute;
+			top: 2px;
+			& svg {
+		    	width: 6px;
+		    	height: 10px;
+		  	}
+		  	& g {
+		  		@include themify() {
+					fill: getThemifyVariable('console-chevron-color');	
+				}
+			}
+		}
+		flex: 1 0 auto;
+		position: relative;
+	}
+
+	.preview-console__message {
+		@include themify() {
+			color: getThemifyVariable('console-logged-times-color');
+		}
+	}
+
+	.preview-console__expression {
+		height: 22px;
 	}
 }

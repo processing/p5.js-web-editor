@@ -7,6 +7,7 @@ import srcDoc from 'srcdoc-polyfill';
 import loopProtect from 'loop-protect';
 import { JSHINT } from 'jshint';
 import decomment from 'decomment';
+import { Hook, Unhook } from 'console-feed';
 import { getBlobUrl } from '../actions/files';
 import { resolvePathToFile } from '../../../../server/utils/filePath';
 import {
@@ -19,6 +20,7 @@ import {
 } from '../../../../server/utils/fileUtils';
 import { hijackConsoleErrorsScript, startTag, getAllScriptOffsets }
   from '../../../utils/consoleUtils';
+import handleConsoleExpressions from '../../../utils/evaluateConsole';
 
 class PreviewFrame extends React.Component {
   constructor(props) {
@@ -80,7 +82,34 @@ class PreviewFrame extends React.Component {
   handleConsoleEvent(messageEvent) {
     if (Array.isArray(messageEvent.data)) {
       messageEvent.data.every((message, index, arr) => {
-        const { arguments: args } = message;
+        const { arguments: args, source } = message;
+        if (source === 'console') {
+          let consoleInfo = '';
+          const consoleBuffer = [];
+          const LOGWAIT = 100;
+          Hook(window.console, (log) => {
+            const { method, data: arg } = log[0];
+            consoleBuffer.push({
+              method,
+              arguments: arg,
+              source: 'sketch'
+            });
+          });
+          setInterval(() => {
+            if (consoleBuffer.length > 0) {
+              window.postMessage(consoleBuffer, '*');
+              consoleBuffer.length = 0;
+            }
+          }, LOGWAIT);
+
+          consoleInfo = handleConsoleExpressions(args);
+          Unhook(window.console);
+          if (consoleInfo === '') {
+            return false;
+          }
+
+          Object.assign(message, { expression: args, arguments: Array.of(consoleInfo) });
+        }
         let hasInfiniteLoop = false;
         Object.keys(args).forEach((key) => {
           if (typeof args[key] === 'string' && args[key].includes('Exiting potential infinite loop')) {

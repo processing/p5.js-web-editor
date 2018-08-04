@@ -12,9 +12,12 @@ import debugLightUrl from '../../../images/console-debug-light.svg';
 import debugDarkUrl from '../../../images/console-debug-dark.svg';
 import infoLightUrl from '../../../images/console-info-light.svg';
 import infoDarkUrl from '../../../images/console-info-dark.svg';
+import ConsoleInput from './ConsoleInput';
 
 const upArrowUrl = require('../../../images/up-arrow.svg');
 const downArrowUrl = require('../../../images/down-arrow.svg');
+const leftArrowUrl = require('../../../images/left-arrow.svg');
+const rightArrowUrl = require('../../../images/right-arrow.svg');
 
 class Console extends React.Component {
   componentDidUpdate(prevProps) {
@@ -100,30 +103,45 @@ class Console extends React.Component {
             </button>
           </div>
         </div>
-        <div ref={(element) => { this.consoleMessages = element; }} className="preview-console__messages">
-          {this.props.consoleEvents.map((consoleEvent) => {
-            const { arguments: args, method, times } = consoleEvent;
-            const { theme } = this.props;
-            Object.assign(consoleEvent, { data: this.formatData(args) });
-            if (Object.keys(args).length === 0) {
+        <div className="preview-console__body">
+          <ConsoleInput />
+          <div ref={(element) => { this.consoleMessages = element; }} className="preview-console__messages">
+            {this.props.consoleEvents.map((consoleEvent) => {
+              const { arguments: args, method, times } = consoleEvent;
+              const { expression, source } = consoleEvent;
+              const { theme } = this.props;
+              Object.assign(consoleEvent, { data: this.formatData(args) });
+              if (Object.keys(args).length === 0) {
+                return (
+                  <div key={consoleEvent.id} className="preview-console__message preview-console__message--undefined">
+                    <span key={`${consoleEvent.id}-0`}>undefined</span>
+                  </div>
+                );
+              }
               return (
-                <div key={consoleEvent.id} className="preview-console__message preview-console__message--undefined">
-                  <span key={`${consoleEvent.id}-0`}>undefined</span>
+                <div className="preview-console__output" key={consoleEvent.id}>
+                  { expression &&
+                    <div className="preview-console__expression">
+                      <InlineSVG src={rightArrowUrl} className="console__chevron" />
+                      <div>{expression}</div>
+                    </div>
+                  }
+                  <div key={consoleEvent.id} className={`preview-console__message preview-console__message--${method}`}>
+                    { source === 'console' &&
+                      <InlineSVG src={leftArrowUrl} className="console__chevron" />
+                    }
+                    { times > 1 &&
+                      <div className="preview-console__logged-times">{times}</div>
+                    }
+                    <ConsoleFeed
+                      styles={this.getConsoleFeedStyle(theme, times)}
+                      logs={Array.of(consoleEvent)}
+                    />
+                  </div>
                 </div>
               );
-            }
-            return (
-              <div key={consoleEvent.id} className={`preview-console__message preview-console__message--${method}`}>
-                { times > 1 &&
-                  <div className="preview-console__logged-times" style={{ fontSize: this.props.fontSize, borderRadius: this.props.fontSize / 2 }}>{times}</div>
-                }
-                <ConsoleFeed
-                  styles={this.getConsoleFeedStyle(theme, times)}
-                  logs={Array.of(consoleEvent)}
-                />
-              </div>
-            );
-          })}
+            })}
+          </div>
         </div>
       </div>
     );
