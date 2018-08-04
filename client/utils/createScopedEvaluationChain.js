@@ -1,3 +1,4 @@
+// Reference: https://github.com/popcodeorg/popcode/blob/4885baee880a612d5a420427b207699ef790d6c4/src/previewSupport/createScopedEvaluationChain.js
 function createScopedEvaluationChain(__yieldScopedEval) {
   function __makeEvaluateExpression(evalInClosure) {
     return expr => evalInClosure(`
