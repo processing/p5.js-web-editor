@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 function createScopedEvaluationChain(__yieldScopedEval) {
   function __makeEvaluateExpression(evalInClosure) {
     return function (expr) {
@@ -10,8 +9,7 @@ function createScopedEvaluationChain(__yieldScopedEval) {
         `);
     };
   }
-  // eslint-disable-next-line no-eval
-  return __makeEvaluateExpression(expr => eval(expr));
+  return __makeEvaluateExpression(expr => eval(expr));  // eslint-disable-line
 }
 
 export default createScopedEvaluationChain;

@@ -1,8 +1,5 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import bindAll from 'lodash/bindAll';
 import CodeMirror from 'codemirror';
-import beautifyJS from 'js-beautify';
 import InlineSVG from 'react-inlinesvg';
 
 const rightArrowUrl = require('../../../images/right-arrow.svg');
@@ -16,8 +13,8 @@ class ConsoleInput extends React.Component {
     });
 
     this._cm.setOption('extraKeys', {
-      'Up': cm => cm.undo(),
-      'Down': cm => cm.redo()
+      Up: cm => cm.undo(),
+      Down: cm => cm.redo()
     });
 
     this._cm.focus();
