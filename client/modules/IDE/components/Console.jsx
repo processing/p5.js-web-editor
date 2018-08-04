@@ -12,12 +12,11 @@ import debugLightUrl from '../../../images/console-debug-light.svg';
 import debugDarkUrl from '../../../images/console-debug-dark.svg';
 import infoLightUrl from '../../../images/console-info-light.svg';
 import infoDarkUrl from '../../../images/console-info-dark.svg';
+import upArrowUrl from '../../../images/up-arrow.svg';
+import downArrowUrl from '../../../images/down-arrow.svg';
+import leftArrowUrl from '../../../images/left-arrow.svg';
+import rightArrowUrl from '../../../images/right-arrow.svg';
 import ConsoleInput from './ConsoleInput';
-
-const upArrowUrl = require('../../../images/up-arrow.svg');
-const downArrowUrl = require('../../../images/down-arrow.svg');
-const leftArrowUrl = require('../../../images/left-arrow.svg');
-const rightArrowUrl = require('../../../images/right-arrow.svg');
 
 class Console extends React.Component {
   componentDidUpdate(prevProps) {

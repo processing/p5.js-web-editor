@@ -83,6 +83,7 @@
 
 	font-weight: bold;
 	margin: #{2 / $base-font-size}rem 0 0 #{8 / $base-font-size}rem;
+	border-radius: #{10 / $base-font-size}rem;
 	padding: #{1 / $base-font-size}rem #{4 / $base-font-size}rem;
 	z-index: 100;
 	left: 0;
@@ -115,9 +116,9 @@
 	flex-direction: column-reverse;
 
 	.preview-console__output .preview-console__expression div {
-		margin-left: 35px;
-		line-height: 22px;
-		font-size: 12px;
+		margin-left: #{35 / $base-font-size}rem;
+		line-height: #{22 / $base-font-size}rem;
+		font-size: #{12 / $base-font-size}rem;
 		font-family: Consolas,Lucida Console,Courier New,monospace;
 		@include themify() {
 			color: getThemifyVariable('console-color');	
@@ -126,12 +127,12 @@
 
 	.preview-console__message, .preview-console__expression {
 		.console__chevron {
-			left: 10px;
+			left: #{10 / $base-font-size}rem;
 			position: absolute;
-			top: 2px;
+			top: #{2 / $base-font-size}rem;
 			& svg {
-		    	width: 6px;
-		    	height: 10px;
+		    	width: #{6 / $base-font-size}rem;
+		    	height: #{10 / $base-font-size}rem;
 		  	}
 		  	& g {
 		  		@include themify() {
@@ -150,6 +151,6 @@
 	}
 
 	.preview-console__expression {
-		height: 22px;
+		height: #{22 / $base-font-size}rem;
 	}
 }

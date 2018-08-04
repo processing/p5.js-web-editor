@@ -1,16 +1,16 @@
 .console__input {
-  padding-left: 20px;
+  padding-left: #{20 / $base-font-size}rem;
   position: relative;
-  height: 22px;
+  height: #{22 / $base-font-size}rem;
 }
 
 .console__input .console-active__chevron {
-  left: 10px;
+  left: #{10 / $base-font-size}rem;
   position: absolute;
-  top: 2px;
+  top: #{2 / $base-font-size}rem;
   & svg {
-    width: 6px;
-    height: 10px;
+    width: #{6 / $base-font-size}rem;
+    height: #{10 / $base-font-size}rem;
   }
   & g {
     @include themify() {
@@ -20,8 +20,8 @@
 }
 
 .console__editor {
-  margin-left: 8px;
-  height: 20px;
+  margin-left: #{8 / $base-font-size}rem;
+  height: #{20 / $base-font-size}rem;
 }
 
 .console__editor .CodeMirror {
