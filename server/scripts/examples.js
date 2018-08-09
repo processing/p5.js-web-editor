@@ -48,7 +48,7 @@ if (process.env.NODE_ENV === 'production') {
   const muo = new URL(`mongodb://${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_NAME}`);
   muo.username = MONGO_RW_USERNAME;
   muo.password = MONGO_RW_PASSWORD;
-  mongoConnectionString = `${muo.href}?authSource=admin`;
+  mongoConnectionString = `${muo.href}`;
 } else {
   mongoConnectionString = process.env.MONGO_URL;
 }

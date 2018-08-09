@@ -1,5 +1,23 @@
 apiVersion: v1
+kind: Service
+metadata:
+  name: web-editor-node
+  labels:
+    app: web-editor
+spec:
+  # if your cluster supports it, uncomment the following to automatically create
+  # an external load-balanced IP for the frontend service.
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 8000
+  selector:
+    app: web-editor
+---
+apiVersion: apps/v1
 kind: Deployment
+metadata:
+  name: web-editor-node
 spec:
   selector:
     matchLabels:
@@ -7,8 +25,24 @@ spec:
   replicas: 1
   template:
     metadata:
-      app: web-editor
+      labels:
+        app: web-editor
     spec:
       containers:
-        - name: web-editor-app
-          image: 
+      - name: web-editor-app
+        image: index.docker.io/catarak/p5.js-web-editor:latest
+        # temp, just to test kubernetes
+        # envFrom:
+        # - configMapRef:
+        #     name: web-editor-env
+        envFrom:
+        - secretRef:
+            name: web-editor-credentials 
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 8000
+
