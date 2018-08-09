@@ -109,6 +109,7 @@ module.exports = {
       manifestVariable: 'webpackManifest',
     }),
     new webpack.optimize.UglifyJsPlugin({
+      sourceMap: true,
       compress: {
         warnings: false
       }
