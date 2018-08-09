@@ -10,8 +10,8 @@ services:
     ports:
       - '27017:27017'
     # restart: always
-    env_file:
-      - "$PWD/.env"
+    # env_file:
+    #   - "$PWD/.env"
   nginx:
     image: nginx:1.13
     volumes:
@@ -27,8 +27,8 @@ services:
       context: .
       dockerfile: Dockerfile
       target: production
-    env_file:
-      - "$PWD/.env"
+    # env_file:
+    #   - "$PWD/.env"
     environment:
       - MONGO_URL=mongodb://mongo:27017/p5js-web-editor
       - MONGO_HOSTNAME=mongo
