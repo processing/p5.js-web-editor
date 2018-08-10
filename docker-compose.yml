@@ -12,6 +12,12 @@ services:
     # restart: always
     # env_file:
     #   - "$PWD/.env"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD
+      - MONGO_INITDB_DATABASE
+      - MONGO_RW_USERNAME
+      - MONGO_RW_PASSWORD
   nginx:
     image: nginx:1.13
     volumes:
@@ -30,10 +36,37 @@ services:
     # env_file:
     #   - "$PWD/.env"
     environment:
-      - MONGO_URL=mongodb://mongo:27017/p5js-web-editor
-      - MONGO_HOSTNAME=mongo
-      # - API_URL=https://localhost/api
-      # - PORT=80
+      - API_URL
+      - MONGO_URL
+      - MONGO_NAME
+      - PORT
+      - SESSION_SECRET
+      - AWS_ACCESS_KEY
+      - AWS_SECRET_KEY
+      - S3_BUCKET
+      - AWS_REGION
+      - GITHUB_ID
+      - GITHUB_SECRET
+      - MAILGUN_DOMAIN
+      - MAILGUN_KEY
+      - EMAIL_SENDER
+      - EMAIL_VERIFY_SECRET_TOKEN
+      - S3_BUCKET_URL_BASE
+      - GG_EXAMPLES_USERNAME
+      - GG_EXAMPLES_PASS
+      - GG_EXAMPLES_EMAIL
+      - GOOGLE_ID
+      - GOOGLE_SECRET
+      - EXAMPLE_USER_EMAIL
+      - EXAMPLE_USER_PASSWORD
+      - MONGO_INITDB_ROOT_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD
+      - MONGO_INITDB_DATABASE
+      - MONGO_RW_USERNAME
+      - MONGO_RW_PASSWORD
+      - MONGO_HOSTNAME
+      - MONGO_PORT
+      - FORCE_TO_HTTPS
     volumes:
       - .:/opt/node/app
       - /opt/node/app/node_modules
