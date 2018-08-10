@@ -173,7 +173,7 @@ class PreviewFrame extends React.Component {
       sketchDoc.body.appendChild(accessibleOutputs);
       sketchDoc.body.appendChild(accessiblelib);
       const gridSection = sketchDoc.createElement('section');
-      gridSection.setAttribute('id', 'gridOutput-content');
+      gridSection.setAttribute('id', 'tableOutput-content');
       sketchDoc.getElementById('accessible-outputs').appendChild(gridSection);
     }
     if (this.props.soundOutput) {
