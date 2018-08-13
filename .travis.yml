@@ -41,7 +41,7 @@ after_success:
 # build images
 - docker-compose stop
 - docker-compose build --no-cache
-- docker container ls
+- docker image ls
 - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
 - docker tag $APP_IMAGE_NAME $DOCKER_USERNAME/$DOCKER_REPOSITORY:latest
 - docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY:latest
