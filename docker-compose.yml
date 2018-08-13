@@ -33,6 +33,7 @@ services:
       context: .
       dockerfile: Dockerfile
       target: production
+    # image: index.docker.io/catarak/p5.js-web-editor:latest
     # env_file:
     #   - "$PWD/.env"
     environment:
