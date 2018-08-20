@@ -1,5 +1,5 @@
 import loopProtect from 'loop-protect';
-import Hook from 'console-feed/lib/Hook/index';
+import { Hook } from 'console-feed';
 
 window.loopProtect = loopProtect;
 
