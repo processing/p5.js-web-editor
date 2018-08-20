@@ -3,7 +3,7 @@ if (process.env.NODE_ENV === 'development') {
   require('dotenv').config();
 }
 
-module.exports = {
+module.exports = [{
   devtool: 'cheap-module-eval-source-map',
   entry: {
     app: [
@@ -72,7 +72,7 @@ module.exports = {
         // }
       },
       {
-        test: /\.scss$/,
+        test: /main\.scss$/,
         loaders: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
@@ -84,9 +84,52 @@ module.exports = {
         loader: 'file-loader'
       },
       {
-        test: /.*loop-protect.min.js$/,
-        loader: 'raw-loader'
+        test: /_console-feed.scss/,
+        loader: 'sass-extract-loader',
+        options: {
+          plugins: [{ plugin: 'sass-extract-js', options: { camelCase: false } }]
+        }
       }
     ],
   },
-};
+},
+{
+  entry: path.resolve(__dirname, 'client/utils/previewEntry.js'),
+  target: 'web',
+  output: {
+    path: `${__dirname}`,
+    filename: 'previewScripts.js',
+    publicPath: '/'
+  },
+  resolve: {
+    extensions: ['*', '.js', '.jsx'],
+    modules: [
+      'client',
+      'node_modules',
+    ],
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        query: {
+          presets: [
+            'react',
+            'env',
+            'stage-0',
+          ],
+          plugins: [
+            [
+              'babel-plugin-webpack-loaders', {
+                'config': './webpack.config.babel.js',
+                "verbose": false
+              }
+            ]
+          ]
+        },
+      }
+    ],
+  },
+}]

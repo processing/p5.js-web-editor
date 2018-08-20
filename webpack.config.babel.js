@@ -18,7 +18,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.scss$/,
+        test: /main\.scss$/,
         exclude: /node_modules/,
         loader: ExtractTextPlugin.extract({
             fallback: 'style-loader',

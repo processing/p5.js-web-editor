@@ -39,7 +39,7 @@ const corsOriginsWhitelist = [
 // Run Webpack dev server in development mode
 if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(config);
-  app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
+  app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config[0].output.publicPath }));
   app.use(webpackHotMiddleware(compiler));
 
   corsOriginsWhitelist.push(/localhost/);
@@ -61,6 +61,7 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   mongoConnectionString = process.env.MONGO_URL;
 }
+app.set('trust proxy', true);
 
 // Enable Cross-Origin Resource Sharing (CORS) for all origins
 const corsMiddleware = cors({

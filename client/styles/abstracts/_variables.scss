@@ -5,6 +5,10 @@ $p5js-pink: #ed225d;
 $white: #fff;
 $black: #000;
 $yellow: #F5DC23;
+$orange: #ffa500;
+$red: #ff0000;
+$lightsteelblue: #B0C4DE;
+$dodgerblue: #1E90FF;
 $primary-text-color: #333;
 $icon-color: #8b8b8b;
 $icon-hover-color: #333;
@@ -37,8 +41,13 @@ $themes: (
     icon-toast-hover-color: $white,
     shadow-color: rgba(0, 0, 0, 0.16),
     console-background-color: #eee,
+    console-color: $white,
     console-header-background-color: #d6d6d6,
     console-header-color: #b1b1b1,
+    console-info-background-color: $lightsteelblue,
+    console-warn-background-color: $orange,
+    console-debug-background-color: $dodgerblue,
+    console-error-background-color: $red,
     ide-border-color: #f4f4f4,
     editor-gutter-color: #f4f4f4,
     file-selected-color: #f4f4f4,
@@ -78,8 +87,13 @@ $themes: (
     icon-toast-hover-color: $white,
     shadow-color: rgba(0, 0, 0, 0.16),
     console-background-color: #4f4f4f,
+    console-color: $black,
     console-header-background-color: #3f3f3f,
     console-header-color: #b5b5b5,
+    console-info-background-color: $lightsteelblue,
+    console-warn-background-color: $orange,
+    console-debug-background-color: $dodgerblue,
+    console-error-background-color: $red,
     ide-border-color: #949494,
     editor-gutter-color: #363636,
     file-selected-color: #404040,
@@ -118,8 +132,13 @@ $themes: (
     icon-toast-hover-color: $yellow,
     shadow-color: rgba(0, 0, 0, 0.16),
     console-background-color: #4f4f4f,
+    console-color: $black,
     console-header-background-color: #3f3f3f,
     console-header-color: #b5b5b5,
+    console-info-background-color: $lightsteelblue,
+    console-warn-background-color: $orange,
+    console-debug-background-color: $dodgerblue,
+    console-error-background-color: $red,
     ide-border-color: #949494,
     editor-gutter-color: #454545,
     file-selected-color: #404040,
