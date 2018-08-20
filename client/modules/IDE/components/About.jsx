@@ -72,7 +72,7 @@ function About(props) {
         </p>
         <p className="about__content-column-list">
           <a
-            href="https://forum.processing.org/two/"
+            href="https://discourse.processing.org/"
             target="_blank"
             rel="noopener noreferrer"
           >
