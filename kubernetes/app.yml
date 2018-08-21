@@ -5,8 +5,6 @@ metadata:
   annotations:
     kubernetes.io/ingress.global-static-ip-name: "test-web-editor"
 spec:
-  tls:
-  - secretName: sslcerts
   backend:
     serviceName: web-editor-node
     servicePort: 8000

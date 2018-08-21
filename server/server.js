@@ -8,6 +8,7 @@ import connectMongo from 'connect-mongo';
 import passport from 'passport';
 import path from 'path';
 import { URL } from 'url';
+import basicAuth from 'express-basic-auth';
 
 // Webpack Requirements
 import webpack from 'webpack';
@@ -31,6 +32,16 @@ import { get404Sketch } from './views/404Page';
 
 const app = new Express();
 const MongoStore = connectMongo(session);
+
+// For basic auth, in setting up beta editor
+if (process.env.BASIC_USERNAME && process.env.BASIC_PASSWORD) {
+  app.use(basicAuth({
+    users: {
+      [process.env.BASIC_USERNAME]: process.env.BASIC_PASSWORD
+    },
+    challenge: true
+  }));
+}
 
 const corsOriginsWhitelist = [
   /p5js\.org$/,
