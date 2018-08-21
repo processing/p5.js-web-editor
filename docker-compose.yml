@@ -29,20 +29,20 @@ services:
     links:
       - app
   app:
-    # build:
-    #   context: .
-    #   dockerfile: Dockerfile
-    #   target: production
-    #   args:
-    #     - API_URL
-    #     - NODE_ENV
-    #     - S3_BUCKET
-    #     - AWS_REGION
-    #     - S3_BUCKET_URL_BASE
-    #     - FORCE_TO_HTTPS
-    image: index.docker.io/catarak/p5.js-web-editor:latest
-    env_file:
-      - "$PWD/.env"
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+      args:
+        - API_URL
+        - NODE_ENV
+        - S3_BUCKET
+        - AWS_REGION
+        - S3_BUCKET_URL_BASE
+        - FORCE_TO_HTTPS
+    # image: index.docker.io/catarak/p5.js-web-editor:latest
+    # env_file:
+    #   - "$PWD/.env"
     environment:
       - API_URL
       - MONGO_URL
