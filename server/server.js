@@ -33,9 +33,7 @@ import { get404Sketch } from './views/404Page';
 const app = new Express();
 const MongoStore = connectMongo(session);
 
-app.get('/health', (req, res) => {
-  return res.json({success: true});
-});
+app.get('/health', (req, res) => res.json({ success: true }));
 
 // For basic auth, in setting up beta editor
 if (process.env.BASIC_USERNAME && process.env.BASIC_PASSWORD) {
