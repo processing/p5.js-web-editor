@@ -2,15 +2,11 @@ sudo: required
 language: node_js
 node_js:
  - "8.11.1"
-python:
-- "3.4"
-- "pypy-5.3.1"
 
 services:
   - docker
 
 before_install:
-  # eventually set up AWS stuff here
   - docker-compose -f docker-compose-development.yml up -d
   - docker ps -a
 
@@ -21,30 +17,14 @@ script:
 - docker-compose exec -T app npm run test --verbose
 
 after_success:
-# only run this if on the master branch eventually, not while testing tho
-# - sudo apt-get install -y python3.4
-# - sudo apt-get install --upgrade -y python-pip
-# - sudo apt-get install jq
-# - sudo pip install --user virtualenv
-# # Create a virtual environment for AWS CLI
-# - virtualenv my_py3 --python=/usr/bin/python3.4
-# - source my_py3/bin/activate
-# - pip install --upgrade awscli
-# - pip install --upgrade awsebcli
-# # Set AWS information
-# - aws configure set aws_access_key_id $AWS_ACCESS_KEY
-# - aws configure set aws_secret_access_key $AWS_SECRET_KEY
-# - aws configure set default.region $AWS_REGION
-# - aws configure set metadata_service_timeout 1200
-# - aws configure set metadata_service_num_attempts 3
-# - aws configure list
 # build images
-- docker-compose stop
-- docker-compose build --no-cache
-- docker image ls
-- docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-- docker tag $APP_IMAGE_NAME $DOCKER_USERNAME/$DOCKER_REPOSITORY:latest
-- docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY:latest
+  if: branch = master OR branch = production-docker
+  - docker-compose stop
+  - docker-compose build --no-cache
+  - docker image ls
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+  - docker tag $APP_IMAGE_NAME $DOCKER_USERNAME/$DOCKER_REPOSITORY:latest
+  - docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY:latest
 
 env:
   global:
