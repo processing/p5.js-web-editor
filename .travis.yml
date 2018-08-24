@@ -6,26 +6,28 @@ node_js:
 services:
   - docker
 
-before_install:
-  - docker-compose -f docker-compose-development.yml up -d
-  - docker ps -a
+stages:
+  - test
+  - build
 
-install: true
-
-script:
-# Run unit tests in the app container
-- docker-compose exec -T app npm run test --verbose
-
-after_success:
-# build images
-if: branch = master OR branch = production-docker
-- docker-compose stop
-- docker-compose build --no-cache
-- docker image ls
-- docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-- docker tag $APP_IMAGE_NAME $DOCKER_USERNAME/$DOCKER_REPOSITORY:latest
-- docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY:latest
-
-env:
-  global:
-    - APP_IMAGE_NAME=p5jswebeditor_app
+jobs:
+  include:
+    - stage: test
+      before_install:
+        - docker-compose -f docker-compose-development.yml up -d
+        - docker ps -a
+      install: true
+      script:
+      # Run unit tests in the app container
+      - docker-compose exec -T app npm run test --verbose
+    - stage: build
+      if: branch = master OR branch = production-docker
+      env:
+      - APP_IMAGE_NAME=p5jswebeditor_app
+      script:
+      - docker-compose stop
+      - docker-compose build --no-cache
+      - docker image ls
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker tag $APP_IMAGE_NAME $DOCKER_USERNAME/$DOCKER_REPOSITORY:latest
+      - docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY:latest
