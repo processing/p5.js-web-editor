@@ -18,13 +18,13 @@ script:
 
 after_success:
 # build images
-  if: branch = master OR branch = production-docker
-  - docker-compose stop
-  - docker-compose build --no-cache
-  - docker image ls
-  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-  - docker tag $APP_IMAGE_NAME $DOCKER_USERNAME/$DOCKER_REPOSITORY:latest
-  - docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY:latest
+if: branch = master OR branch = production-docker
+- docker-compose stop
+- docker-compose build --no-cache
+- docker image ls
+- docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+- docker tag $APP_IMAGE_NAME $DOCKER_USERNAME/$DOCKER_REPOSITORY:latest
+- docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY:latest
 
 env:
   global:
