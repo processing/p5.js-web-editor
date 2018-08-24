@@ -59,7 +59,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 let mongoConnectionString;
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production' && process.env.MONGO_RW_USERNAME && process.env.MONGO_RW_PASSWORD) {
   const {
     MONGO_RW_USERNAME,
     MONGO_RW_PASSWORD,

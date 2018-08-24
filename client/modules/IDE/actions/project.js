@@ -12,7 +12,8 @@ import { setUnsavedChanges,
 import { clearState, saveState } from '../../../persistState';
 import { redirectToProtocol, protocols } from '../../../components/forceProtocol';
 
-const ROOT_URL = process.env.API_URL;
+const __process = (typeof global !== 'undefined' ? global : window).process;
+const ROOT_URL = __process.env.API_URL;
 
 export function setProject(project) {
   const targetProtocol = project.serveSecure === true ?

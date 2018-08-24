@@ -14,6 +14,8 @@ import AccountView from './modules/User/pages/AccountView';
 import { getUser } from './modules/User/actions';
 import { stopSketch } from './modules/IDE/actions/ide';
 
+const __process = (typeof global !== 'undefined' ? global : window).process;
+
 const checkAuth = (store) => {
   store.dispatch(getUser());
 };
@@ -30,7 +32,7 @@ const routes = (store) => {
     targetProtocol: protocols.https,
     sourceProtocol,
     // prints debugging but does not reload page
-    disable: process.env.FORCE_TO_HTTPS === false,
+    disable: __process.env.FORCE_TO_HTTPS === false,
   });
 
   return (

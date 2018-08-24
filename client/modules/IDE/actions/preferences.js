@@ -1,7 +1,8 @@
 import axios from 'axios';
 import * as ActionTypes from '../../../constants';
 
-const ROOT_URL = process.env.API_URL;
+const __process = (typeof global !== 'undefined' ? global : window).process;
+const ROOT_URL = __process.env.API_URL;
 
 function updatePreferences(formParams, dispatch) {
   axios.put(`${ROOT_URL}/preferences`, formParams, { withCredentials: true })

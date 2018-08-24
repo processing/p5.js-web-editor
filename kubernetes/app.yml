@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: editor-ingress
   annotations:
-    kubernetes.io/ingress.global-static-ip-name: "test-web-editor"
+    kubernetes.io/ingress.global-static-ip-name: "web-editor-ip"
 spec:
   backend:
     serviceName: web-editor-node
