@@ -32,12 +32,12 @@ before_deploy:
 
 deploy:
   - provider: script
-    script: bash deploy.sh
+    script: ./deploy.sh
     skip_cleanup: true
     on:
       branch: production-docker
   - provider: script
-    script: bash deploy.sh
+    script: ./deploy.sh
     skip_cleanup: true
     on:
       branch: master
