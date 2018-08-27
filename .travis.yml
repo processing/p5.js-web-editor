@@ -3,31 +3,40 @@ language: node_js
 node_js:
  - "8.11.1"
 
+cache:
+  directories:
+    - "$HOME/google-cloud-sdk/"
+
 services:
   - docker
 
-stages:
-  - test
-  - build
+before_install:
+  - docker-compose -f docker-compose-development.yml up -d
+  - docker ps -a
 
-jobs:
-  include:
-    - stage: test
-      before_install:
-        - docker-compose -f docker-compose-development.yml up -d
-        - docker ps -a
-      install: true
-      script:
-      # Run unit tests in the app container
-      - docker-compose exec -T app npm run test --verbose
-    - stage: build
-      if: branch = master OR branch = production-docker
-      env:
-      - APP_IMAGE_NAME=p5jswebeditor_app
-      script:
-      - docker-compose stop
-      - docker-compose build --no-cache
-      - docker image ls
-      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-      - docker tag $APP_IMAGE_NAME $DOCKER_USERNAME/$DOCKER_REPOSITORY:latest
-      - docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY:latest
+install: true
+
+script:
+  - docker-compose exec -T app npm run test --verbose
+
+after_success:
+  - docker-compose stop
+
+before_deploy:
+  - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; export CLOUDSDK_CORE_DISABLE_PROMPTS=1; curl https://sdk.cloud.google.com | bash; fi
+  - source /home/travis/google-cloud-sdk/path.bash.inc
+  - gcloud --quiet version
+  - gcloud --quiet components update
+  - gcloud --quiet components beta update
+  - gcloud --quiet components update kubectl
+
+deploy:
+  - provider: script
+    script: bash deploy.sh
+    skip_cleanup: true
+    on:
+      branch: master OR production-docker
+
+env:
+  global:
+    - APP_IMAGE_NAME=p5jswebeditor_app
