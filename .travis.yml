@@ -35,7 +35,12 @@ deploy:
     script: bash deploy.sh
     skip_cleanup: true
     on:
-      branch: master OR production-docker
+      branch: production-docker
+  - provider: script
+    script: bash deploy.sh
+    skip_cleanup: true
+    on:
+      branch: master
 
 env:
   global:
