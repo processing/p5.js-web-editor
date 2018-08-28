@@ -61,4 +61,52 @@ spec:
           httpGet:
             path: /health
             port: 8000
-
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  annotations:
+  name: web-editor-node
+  namespace: default
+spec:
+  maxReplicas: 6
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    name: web-editor-node
+  targetCPUUtilizationPercentage: 80
+---
+# cronjob for p5.js examples
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: fetch-examples-job
+spec:
+  schedule: "0 0 * * 0"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: fetch-examples
+            image: index.docker.io/catarak/p5.js-web-editor:latest
+            command: ["npm", "run", "fetch-examples:prod"]
+          restartPolicy: OnFailure
+---
+# cronjob for generative gestaltung p5.js examples
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: fetch-examples-gg-job
+spec:
+  schedule: "30 0 * * 0"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: fetch-examples-gg
+            image: index.docker.io/catarak/p5.js-web-editor:latest
+            command: ["npm", "run", "fetch-examples-gg:prod"]
+          restartPolicy: OnFailure

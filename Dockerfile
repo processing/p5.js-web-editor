@@ -24,13 +24,5 @@ ENV NODE_ENV=production
 COPY package.json package-lock.json index.js ./
 RUN npm install --production
 RUN npm rebuild node-sass
-# RUN npm install pm2 -g
-# RUN npm install local-ssl-proxy
-# COPY index.js ecosystem.json ./
-COPY --from=build /usr/src/app/dist ./dist
-# for reg production
+COPY --from=build $APP_HOME/dist ./dist
 CMD ["npm", "run", "start:prod"]
-# for production with pm2
-# CMD ["pm2-runtime", "ecosystem.json"]
-# for testing ssl locally
-# CMD npm run ssl-proxy && pm2-runtime ecosystem.json
