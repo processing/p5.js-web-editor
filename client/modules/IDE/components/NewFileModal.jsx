@@ -71,8 +71,8 @@ function validate(formProps) {
 
   if (!formProps.name) {
     errors.name = 'Please enter a name';
-  } else if (!formProps.name.match(/(.+\.js$|.+\.css$|.+\.json$|.+\.txt$|.+\.csv$)/i)) {
-    errors.name = 'File must be of type JavaScript, CSS, JSON, TXT, or CSV.';
+  } else if (!formProps.name.match(/(.+\.js$|.+\.css$|.+\.json$|.+\.txt$|.+\.csv$|.+\.tsv$)/i)) {
+    errors.name = 'File must be of type JavaScript, CSS, JSON, TXT, CSV, or TSV.';
   }
 
   return errors;
