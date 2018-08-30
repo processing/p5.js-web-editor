@@ -1,12 +1,8 @@
-import createScopedEvaluationChain from './createScopedEvaluationChain';
-
-let evalNext = createScopedEvaluationChain((next) => {
-  evalNext = next;
-});
+import evaluateExpression from './evaluateExpression';
 
 export default function handleConsoleExpressions(expression) {
   try {
-    return evalNext(expression);
+    return evaluateExpression()(expression);
   } catch (e) {
     const data = e.toString();
     window.postMessage([{
