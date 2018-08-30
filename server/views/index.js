@@ -25,7 +25,7 @@ export function renderIndex() {
         window.process.env.API_URL = '${process.env.API_URL}';
         window.process.env.NODE_ENV = '${process.env.NODE_ENV}';
         window.process.env.S3_BUCKET = '${process.env.S3_BUCKET}';
-        window.process.env.S3_BUCKET_URL_BASE = '${process.env.S3_BUCKET_URL_BASE}';
+        window.process.env.S3_BUCKET_URL_BASE = ${process.env.S3_BUCKET_URL_BASE ? `'${process.env.S3_BUCKET_URL_BASE}'` : undefined};
         window.process.env.AWS_REGION = '${process.env.AWS_REGION}';
         window.process.env.FORCE_TO_HTTPS = ${process.env.FORCE_TO_HTTPS === 'false' ? false : undefined};
         window.process.env.CLIENT = true;

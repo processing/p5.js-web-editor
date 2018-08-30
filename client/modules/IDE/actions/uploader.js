@@ -59,10 +59,10 @@ export function dropzoneAcceptCallback(userId, file, done) {
         }
       )
         .then((response) => {
-        file.custom_status = 'ready'; // eslint-disable-line
-        file.postData = response.data; // eslint-disable-line
-        file.s3 = response.data.key; // eslint-disable-line
-        file.previewTemplate.className += ' uploading'; // eslint-disable-line
+          file.custom_status = 'ready'; // eslint-disable-line
+          file.postData = response.data; // eslint-disable-line
+          file.s3 = response.data.key; // eslint-disable-line
+          file.previewTemplate.className += ' uploading'; // eslint-disable-line
           done();
         })
         .catch((response) => {
