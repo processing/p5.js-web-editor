@@ -99,7 +99,7 @@
     "loop-protect": "github:catarak/loop-protect",
     "mjml": "^3.3.2",
     "moment": "^2.14.1",
-    "mongoose": "^4.4.16",
+    "mongoose": "^4.6.8",
     "node-uuid": "^1.4.7",
     "nodemailer": "^2.6.4",
     "nodemailer-mailgun-transport": "^1.2.2",
