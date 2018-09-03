@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import CodeMirror from 'codemirror';
 import InlineSVG from 'react-inlinesvg';
@@ -7,9 +8,11 @@ const rightArrowUrl = require('../../../images/right-arrow.svg');
 class ConsoleInput extends React.Component {
   componentDidMount() {
     this._cm = CodeMirror(this.codemirrorContainer, { // eslint-disable-line
-      theme: 'p5-console',
+      // theme: 'p5-console',
+      theme: `p5-${this.props.theme}`,
       scrollbarStyle: null,
-      keyMap: 'sublime'
+      keymap: 'sublime',
+      mode: 'javascript'
     });
 
     this._cm.setOption('extraKeys', {
@@ -17,7 +20,6 @@ class ConsoleInput extends React.Component {
       Down: cm => cm.redo()
     });
 
-    this._cm.focus();
     this._cm.setCursor({ line: 1, ch: 5 });
 
     this._cm.on('keydown', (cm, e) => {
@@ -53,6 +55,10 @@ class ConsoleInput extends React.Component {
     });
   }
 
+  componentDidUpdate(prevProps) {
+    this._cm.setOption('theme', `p5-${this.props.theme}`);
+  }
+
   componentWillUnmount() {
     this._cm = null;
   }
@@ -70,6 +76,10 @@ class ConsoleInput extends React.Component {
     );
   }
 }
+
+ConsoleInput.propTypes = {
+  theme: PropTypes.string.isRequired
+};
 
 
 export default ConsoleInput;
