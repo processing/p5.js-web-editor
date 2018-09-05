@@ -2,8 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import CodeMirror from 'codemirror';
 import InlineSVG from 'react-inlinesvg';
-import 'codemirror/addon/hint/show-hint';
-import 'codemirror/addon/hint/javascript-hint';
 
 const rightArrowUrl = require('../../../images/right-arrow.svg');
 
@@ -38,13 +36,6 @@ class ConsoleInput extends React.Component {
         cm.setValue('');
       }
       return true;
-    });
-
-    this._cm.on('keyup', (cm, event) => {
-      if (!cm.state.completionActive &&
-            event.keyCode !== 9) {
-        CodeMirror.commands.autocomplete(cm, null, { completeSingle: false });
-      }
     });
 
     this._cm.on('beforeChange', (cm, changeObj) => {
