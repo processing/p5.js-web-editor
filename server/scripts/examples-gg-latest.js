@@ -82,7 +82,7 @@ if (process.env.NODE_ENV === 'production' && process.env.MONGO_RW_USERNAME && pr
 } else {
   mongoConnectionString = process.env.MONGO_URL;
 }
-mongoose.connect(mongoConnectionString);
+mongoose.connect(mongoConnectionString, { useMongoClient: true });
 mongoose.connection.on('error', () => {
   console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
   process.exit(1);

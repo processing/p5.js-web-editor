@@ -92,7 +92,11 @@ spec:
           - name: fetch-examples
             image: index.docker.io/catarak/p5.js-web-editor:latest
             command: ["npm", "run", "fetch-examples:prod"]
-          restartPolicy: OnFailure
+            imagePullPolicy: Always
+            envFrom:
+            - secretRef:
+                name: web-editor-credentials
+          restartPolicy: Never
 ---
 # cronjob for generative gestaltung p5.js examples
 apiVersion: batch/v1beta1
@@ -109,4 +113,8 @@ spec:
           - name: fetch-examples-gg
             image: index.docker.io/catarak/p5.js-web-editor:latest
             command: ["npm", "run", "fetch-examples-gg:prod"]
-          restartPolicy: OnFailure
+            imagePullPolicy: Always
+            envFrom:
+            - secretRef:
+                name: web-editor-credentials
+          restartPolicy: Never
