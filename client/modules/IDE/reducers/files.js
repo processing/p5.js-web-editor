@@ -155,22 +155,6 @@ const files = (state, action) => {
           fileType: action.fileType || 'file'
         }];
     }
-    case ActionTypes.SHOW_FILE_OPTIONS:
-      return state.map((file) => {
-        if (file.id !== action.id) {
-          return file;
-        }
-
-        return Object.assign({}, file, { isOptionsOpen: true });
-      });
-    case ActionTypes.HIDE_FILE_OPTIONS:
-      return state.map((file) => {
-        if (file.id !== action.id) {
-          return file;
-        }
-
-        return Object.assign({}, file, { isOptionsOpen: false });
-      });
     case ActionTypes.UPDATE_FILE_NAME:
       return state.map((file) => {
         if (file.id !== action.id) {
@@ -192,22 +176,6 @@ const files = (state, action) => {
       // });
       // return newState.filter(file => file.id !== action.id);
     }
-    case ActionTypes.SHOW_EDIT_FILE_NAME:
-      return state.map((file) => {
-        if (file.id !== action.id) {
-          return file;
-        }
-
-        return Object.assign({}, file, { isEditingName: true });
-      });
-    case ActionTypes.HIDE_EDIT_FILE_NAME:
-      return state.map((file) => {
-        if (file.id !== action.id) {
-          return file;
-        }
-
-        return Object.assign({}, file, { isEditingName: false });
-      });
     case ActionTypes.SET_SELECTED_FILE:
       return state.map((file) => {
         if (file.id === action.selectedFile) {

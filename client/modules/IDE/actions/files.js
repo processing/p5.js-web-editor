@@ -147,34 +147,6 @@ export function createFolder(formProps) {
   };
 }
 
-export function showFileOptions(fileId) {
-  return {
-    type: ActionTypes.SHOW_FILE_OPTIONS,
-    id: fileId
-  };
-}
-
-export function hideFileOptions(fileId) {
-  return {
-    type: ActionTypes.HIDE_FILE_OPTIONS,
-    id: fileId
-  };
-}
-
-export function showEditFileName(id) {
-  return {
-    type: ActionTypes.SHOW_EDIT_FILE_NAME,
-    id
-  };
-}
-
-export function hideEditFileName(id) {
-  return {
-    type: ActionTypes.HIDE_EDIT_FILE_NAME,
-    id
-  };
-}
-
 export function updateFileName(id, name) {
   return {
     type: ActionTypes.UPDATE_FILE_NAME,
