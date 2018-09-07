@@ -21,6 +21,14 @@ export class FileNode extends React.Component {
     this.validateFileName = this.validateFileName.bind(this);
     this.handleFileClick = this.handleFileClick.bind(this);
     this.toggleFileOptions = this.toggleFileOptions.bind(this);
+    this.hideFileOptions = this.hideFileOptions.bind(this);
+    this.showEditFileName = this.showEditFileName.bind(this);
+    this.hideEditFileName = this.hideEditFileName.bind(this);
+
+    this.state = {
+      isOptionsOpen: false,
+      isEditingName: false,
+    };
   }
 
   handleFileClick(e) {
@@ -36,7 +44,7 @@ export class FileNode extends React.Component {
 
   handleKeyPress(event) {
     if (event.key === 'Enter') {
-      this.props.hideEditFileName(this.props.id);
+      this.hideEditFileName();
     }
   }
 
@@ -57,12 +65,24 @@ export class FileNode extends React.Component {
 
   toggleFileOptions(e) {
     e.preventDefault();
-    if (this.props.isOptionsOpen) {
-      this.props.hideFileOptions(this.props.id);
+    if (this.state.isOptionsOpen) {
+      this.setState({ isOptionsOpen: false });
     } else {
       this[`fileOptions-${this.props.id}`].focus();
-      this.props.showFileOptions(this.props.id);
+      this.setState({ isOptionsOpen: true });
     }
+  }
+
+  hideFileOptions() {
+    this.setState({ isOptionsOpen: false });
+  }
+
+  showEditFileName() {
+    this.setState({ isEditingName: true });
+  }
+
+  hideEditFileName() {
+    this.setState({ isEditingName: false });
   }
 
   renderChild(childId) {
@@ -78,8 +98,8 @@ export class FileNode extends React.Component {
       'sidebar__root-item': this.props.name === 'root',
       'sidebar__file-item': this.props.name !== 'root',
       'sidebar__file-item--selected': this.props.isSelectedFile,
-      'sidebar__file-item--open': this.props.isOptionsOpen,
-      'sidebar__file-item--editing': this.props.isEditingName,
+      'sidebar__file-item--open': this.state.isOptionsOpen,
+      'sidebar__file-item--editing': this.state.isEditingName,
       'sidebar__file-item--closed': this.props.isFolderClosed
     });
     return (
@@ -123,7 +143,7 @@ export class FileNode extends React.Component {
                   ref={(element) => { this.fileNameInput = element; }}
                   onBlur={() => {
                     this.validateFileName();
-                    this.props.hideEditFileName(this.props.id);
+                    this.hideEditFileName();
                   }}
                   onKeyPress={this.handleKeyPress}
                 />
@@ -133,7 +153,7 @@ export class FileNode extends React.Component {
                   ref={(element) => { this[`fileOptions-${this.props.id}`] = element; }}
                   tabIndex="0"
                   onClick={this.toggleFileOptions}
-                  onBlur={() => setTimeout(() => this.props.hideFileOptions(this.props.id), 200)}
+                  onBlur={() => setTimeout(this.hideFileOptions, 200)}
                 >
                   <InlineSVG src={downArrowUrl} />
                 </button>
@@ -173,7 +193,7 @@ export class FileNode extends React.Component {
                       <button
                         onClick={() => {
                           this.originalFileName = this.props.name;
-                          this.props.showEditFileName(this.props.id);
+                          this.showEditFileName();
                           setTimeout(() => this.fileNameInput.focus(), 0);
                         }}
                         className="sidebar__file-item-option"
@@ -222,15 +242,9 @@ FileNode.propTypes = {
   name: PropTypes.string.isRequired,
   fileType: PropTypes.string.isRequired,
   isSelectedFile: PropTypes.bool,
-  isOptionsOpen: PropTypes.bool,
-  isEditingName: PropTypes.bool,
   isFolderClosed: PropTypes.bool,
   setSelectedFile: PropTypes.func.isRequired,
-  showFileOptions: PropTypes.func.isRequired,
-  hideFileOptions: PropTypes.func.isRequired,
   deleteFile: PropTypes.func.isRequired,
-  showEditFileName: PropTypes.func.isRequired,
-  hideEditFileName: PropTypes.func.isRequired,
   updateFileName: PropTypes.func.isRequired,
   resetSelectedFile: PropTypes.func.isRequired,
   newFile: PropTypes.func.isRequired,
@@ -242,8 +256,6 @@ FileNode.propTypes = {
 FileNode.defaultProps = {
   parentId: '0',
   isSelectedFile: false,
-  isOptionsOpen: false,
-  isEditingName: false,
   isFolderClosed: false
 };
 
