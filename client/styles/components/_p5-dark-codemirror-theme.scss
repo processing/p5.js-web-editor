@@ -133,3 +133,7 @@ $p5-dark-activeline: rgb(207, 207, 207);
   background-color: white;
   color: #333;
 }
+
+.cm-s-p5-dark .CodeMirror-cursor {
+  border-left: 1px solid $p5-dark-white;
+}
