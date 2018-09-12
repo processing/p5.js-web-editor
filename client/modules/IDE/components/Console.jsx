@@ -45,7 +45,6 @@ class Console extends React.Component {
       LOG_DEBUG_ICON: `url(${debugDarkUrl})`,
       LOG_INFO_ICON: `url(${infoDarkUrl})`,
       BASE_FONT_SIZE: `${this.props.consoleFontSize}`
-
     };
     if (times > 1) {
       Object.assign(style, CONSOLE_FEED_WITHOUT_ICONS);
