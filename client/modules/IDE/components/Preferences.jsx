@@ -333,7 +333,6 @@ class Preferences extends React.Component {
 
 Preferences.propTypes = {
   fontSize: PropTypes.number.isRequired,
-  consoleFontSize: PropTypes.number.isRequired,
   indentationAmount: PropTypes.number.isRequired,
   setIndentation: PropTypes.func.isRequired,
   indentWithSpace: PropTypes.func.isRequired,

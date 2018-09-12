@@ -24,7 +24,7 @@ class Console extends React.Component {
       this.props.dispatchConsoleEvent(this.props.consoleEvents);
     }
 
-    if(this.props.consoleFontSize !== prevProps.consoleFontSize){
+    if (this.props.consoleFontSize !== prevProps.consoleFontSize) {
       this.props.clearConsole();
       this.props.dispatchConsoleEvent(this.props.consoleEvents);
     }
@@ -134,7 +134,8 @@ Console.propTypes = {
   expandConsole: PropTypes.func.isRequired,
   clearConsole: PropTypes.func.isRequired,
   dispatchConsoleEvent: PropTypes.func.isRequired,
-  theme: PropTypes.string.isRequired
+  theme: PropTypes.string.isRequired,
+  consoleFontSize: PropTypes.number.isRequired
 };
 
 Console.defaultProps = {
