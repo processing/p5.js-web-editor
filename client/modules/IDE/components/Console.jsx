@@ -23,6 +23,11 @@ class Console extends React.Component {
       this.props.clearConsole();
       this.props.dispatchConsoleEvent(this.props.consoleEvents);
     }
+
+    if(this.props.consoleFontSize !== prevProps.consoleFontSize){
+      this.props.clearConsole();
+      this.props.dispatchConsoleEvent(this.props.consoleEvents);
+    }
   }
 
   getConsoleFeedStyle(theme, times) {
@@ -31,13 +36,16 @@ class Console extends React.Component {
       LOG_WARN_ICON: `url(${warnLightUrl})`,
       LOG_ERROR_ICON: `url(${errorLightUrl})`,
       LOG_DEBUG_ICON: `url(${debugLightUrl})`,
-      LOG_INFO_ICON: `url(${infoLightUrl})`
+      LOG_INFO_ICON: `url(${infoLightUrl})`,
+      BASE_FONT_SIZE: `${this.props.consoleFontSize}`
     };
     const CONSOLE_FEED_DARK_ICONS = {
       LOG_WARN_ICON: `url(${warnDarkUrl})`,
       LOG_ERROR_ICON: `url(${errorDarkUrl})`,
       LOG_DEBUG_ICON: `url(${debugDarkUrl})`,
-      LOG_INFO_ICON: `url(${infoDarkUrl})`
+      LOG_INFO_ICON: `url(${infoDarkUrl})`,
+      BASE_FONT_SIZE: `${this.props.consoleFontSize}`
+
     };
     if (times > 1) {
       Object.assign(style, CONSOLE_FEED_WITHOUT_ICONS);

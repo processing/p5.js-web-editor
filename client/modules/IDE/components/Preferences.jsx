@@ -131,6 +131,7 @@ class Preferences extends React.Component {
                 <InlineSVG src={plusUrl} alt="Increase Font Size" />
                 <h6 className="preference__label">Increase</h6>
               </button>
+              This will also change console font size
             </div>
             <div className="preference">
               <h4 className="preference__title">Indentation amount</h4>
@@ -332,6 +333,7 @@ class Preferences extends React.Component {
 
 Preferences.propTypes = {
   fontSize: PropTypes.number.isRequired,
+  consoleFontSize: PropTypes.number.isRequired,
   indentationAmount: PropTypes.number.isRequired,
   setIndentation: PropTypes.func.isRequired,
   indentWithSpace: PropTypes.func.isRequired,
