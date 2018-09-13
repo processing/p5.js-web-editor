@@ -135,7 +135,7 @@ Console.propTypes = {
   clearConsole: PropTypes.func.isRequired,
   dispatchConsoleEvent: PropTypes.func.isRequired,
   theme: PropTypes.string.isRequired,
-  consoleFontSize: PropTypes.number.isRequired
+  fontSize: PropTypes.number.isRequired
 };
 
 Console.defaultProps = {
