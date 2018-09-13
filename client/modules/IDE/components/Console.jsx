@@ -36,16 +36,21 @@ class Console extends React.Component {
       LOG_WARN_ICON: `url(${warnLightUrl})`,
       LOG_ERROR_ICON: `url(${errorLightUrl})`,
       LOG_DEBUG_ICON: `url(${debugLightUrl})`,
-      LOG_INFO_ICON: `url(${infoLightUrl})`,
+      LOG_INFO_ICON: `url(${infoLightUrl})`
     };
     const CONSOLE_FEED_DARK_ICONS = {
       LOG_WARN_ICON: `url(${warnDarkUrl})`,
       LOG_ERROR_ICON: `url(${errorDarkUrl})`,
       LOG_DEBUG_ICON: `url(${debugDarkUrl})`,
-      LOG_INFO_ICON: `url(${infoDarkUrl})`,
+      LOG_INFO_ICON: `url(${infoDarkUrl})`
     };
-    const CONSOLE_FEED_FONT = {
-      BASE_FONT_SIZE: `${this.props.fontSize}`
+    const CONSOLE_FEED_SIZES = {
+      BASE_FONT_SIZE: this.props.fontSize,
+      TREENODE_LINE_HEIGHT: 1.5,
+      ARROW_FONT_SIZE: this.props.fontSize,
+      // this line can't change icon size
+      LOG_ICON_WIDTH: this.props.fontSize,
+      LOG_ICON_HEIGHT: this.props.fontSize
     };
 
     if (times > 1) {
@@ -53,11 +58,11 @@ class Console extends React.Component {
     }
     switch (theme) {
       case 'light':
-        return Object.assign(CONSOLE_FEED_LIGHT_STYLES, CONSOLE_FEED_LIGHT_ICONS, CONSOLE_FEED_FONT, style);
+        return Object.assign(CONSOLE_FEED_LIGHT_STYLES, CONSOLE_FEED_LIGHT_ICONS, CONSOLE_FEED_SIZES, style);
       case 'dark':
-        return Object.assign(CONSOLE_FEED_DARK_STYLES, CONSOLE_FEED_DARK_ICONS, CONSOLE_FEED_FONT, style);
+        return Object.assign(CONSOLE_FEED_DARK_STYLES, CONSOLE_FEED_DARK_ICONS, CONSOLE_FEED_SIZES, style);
       case 'contrast':
-        return Object.assign(CONSOLE_FEED_CONTRAST_STYLES, CONSOLE_FEED_DARK_ICONS, CONSOLE_FEED_FONT, style);
+        return Object.assign(CONSOLE_FEED_CONTRAST_STYLES, CONSOLE_FEED_DARK_ICONS, CONSOLE_FEED_SIZES, style);
       default:
         return '';
     }
