@@ -10,7 +10,8 @@ ENV NODE_ENV development
 COPY package.json package-lock.json ./
 RUN npm install
 RUN npm rebuild node-sass
-COPY .babelrc index.js nodemon.json webpack.config.babel.js webpack.config.dev.js webpack.config.prod.js webpack.config.server.js webpack.config.examples.js ./
+COPY .babelrc index.js nodemon.json ./
+COPY ./webpack ./webpack
 COPY client ./client
 COPY server ./server
 CMD ["npm", "start"]

@@ -2,10 +2,10 @@ const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 
 module.exports = [{
-  entry: path.resolve(__dirname, 'server/scripts/fetch-examples.js'),
+  entry: path.resolve(__dirname, '../server/scripts/fetch-examples.js'),
 
   output: {
-    path: __dirname + '/dist/',
+    path: path.resolve(__dirname, '../dist/'),
     filename: 'fetch-examples.bundle.js'
   },
 
@@ -36,7 +36,7 @@ module.exports = [{
           plugins: [
             [
               'babel-plugin-webpack-loaders', {
-                'config': './webpack.config.babel.js',
+                'config': path.resolve(__dirname, './config.babel.js'),
                 "verbose": false
               }
             ]
@@ -47,10 +47,10 @@ module.exports = [{
   },
 },
 {
-  entry: path.resolve(__dirname, 'server/scripts/fetch-examples-gg.js'),
+  entry: path.resolve(__dirname, '../server/scripts/fetch-examples-gg.js'),
 
   output: {
-    path: __dirname + '/dist/',
+    path: path.resolve(__dirname, '../dist/'),
     filename: 'fetch-examples-gg.bundle.js'
   },
 
@@ -81,7 +81,7 @@ module.exports = [{
           plugins: [
             [
               'babel-plugin-webpack-loaders', {
-                'config': './webpack.config.babel.js',
+                'config': path.resolve(__dirname, './config.babel.js'),
                 "verbose": false
               }
             ]

@@ -1,35 +1,23 @@
 version: '3.4'
 services:
   mongo:
-    image: mongo:3.4
+    image: mongo:3.6
     volumes:
       - dbdata:/data/db
-      - "$PWD/mongo/:/docker-entrypoint-initdb.d/"
-    expose:
-      - "27017"
-    ports:
-      - '27017:27017'
-    # restart: always
-    # env_file:
-    #   - "$PWD/.env"
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME
-      - MONGO_INITDB_ROOT_PASSWORD
-      - MONGO_INITDB_DATABASE
-      - MONGO_RW_USERNAME
-      - MONGO_RW_PASSWORD
   app:
     build:
       context: .
       dockerfile: Dockerfile
       target: production
+    # uncomment the following line to pull the image from docker hub
     # image: index.docker.io/catarak/p5.js-web-editor:latest
+    # uncomment the following lines if you don't want export all of the variables
+    # defined in your .env file for testing
     # env_file:
     #   - "$PWD/.env"
     environment:
       - API_URL
       - MONGO_URL
-      - MONGO_NAME
       - PORT
       - SESSION_SECRET
       - AWS_ACCESS_KEY
@@ -50,14 +38,10 @@ services:
       - GOOGLE_SECRET
       - EXAMPLE_USER_EMAIL
       - EXAMPLE_USER_PASSWORD
-      - MONGO_INITDB_ROOT_USERNAME
-      - MONGO_INITDB_ROOT_PASSWORD
-      - MONGO_INITDB_DATABASE
-      - MONGO_RW_USERNAME
-      - MONGO_RW_PASSWORD
-      - MONGO_HOSTNAME
-      - MONGO_PORT
       - FORCE_TO_HTTPS
+      # you can either set this in your .env or as an environment variables
+      # or here YOU CHOOSE
+      # - MONGO_URL=mongodb://mongo:27017/p5js-web-editor
     volumes:
       - .:/opt/node/app
       - /opt/node/app/node_modules

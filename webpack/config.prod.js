@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
@@ -16,7 +17,7 @@ module.exports = [{
   entry: {
     app: [
       'babel-polyfill',
-      './client/index.jsx'
+      path.resolve(__dirname, '../client/index.jsx')
     ],
     vendor: [
       'axios',
@@ -39,7 +40,7 @@ module.exports = [{
     ]
   },
   output: {
-    path: `${__dirname}/dist/static`,
+    path: path.resolve(__dirname, '../dist/static'),
     filename: '[name].[chunkhash].js',
     publicPath: '/'
   },
@@ -132,12 +133,12 @@ module.exports = [{
 {
   entry: {
     app: [
-      './client/utils/previewEntry.js'
+      path.resolve(__dirname, '../client/utils/previewEntry.js')
     ]
   },
   target: 'web',
   output: {
-    path: `${__dirname}/dist/static`,
+    path: path.resolve(__dirname, '../dist/static'),
     filename: 'previewScripts.js',
     publicPath: '/'
   },
