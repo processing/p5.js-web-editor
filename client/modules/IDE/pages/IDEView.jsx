@@ -357,7 +357,7 @@ class IDEView extends React.Component {
                   provideController={(ctl) => { this.cmController = ctl; }}
                 />
                 <Console
-                  consoleFontSize={this.props.preferences.fontSize}
+                  fontSize={this.props.preferences.fontSize}
                   consoleEvents={this.props.console}
                   isExpanded={this.props.ide.consoleIsExpanded}
                   expandConsole={this.props.expandConsole}
