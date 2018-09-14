@@ -48,9 +48,8 @@ class Console extends React.Component {
       BASE_FONT_SIZE: this.props.fontSize,
       TREENODE_LINE_HEIGHT: 1.5,
       ARROW_FONT_SIZE: this.props.fontSize,
-      // this line can't change icon size
-      LOG_ICON_WIDTH: this.props.fontSize,
-      LOG_ICON_HEIGHT: this.props.fontSize
+      LOG_ICON_WIDTH: `${this.props.fontSize}px`,
+      LOG_ICON_HEIGHT: `${this.props.fontSize}px`,
     };
 
     if (times > 1) {
