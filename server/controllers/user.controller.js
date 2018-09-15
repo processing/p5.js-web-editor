@@ -16,10 +16,12 @@ const random = (done) => {
 };
 
 export function findUserByUsername(username, cb) {
-  User.findOne({ username },
+  User.findOne(
+    { username },
     (err, user) => {
       cb(user);
-    });
+    }
+  );
 }
 
 const EMAIL_VERIFY_TOKEN_EXPIRY_TIME = Date.now() + (3600000 * 24); // 24 hours
@@ -35,49 +37,51 @@ export function createUser(req, res, next) {
       verifiedTokenExpires: EMAIL_VERIFY_TOKEN_EXPIRY_TIME,
     });
 
-    User.findOne({ email: req.body.email },
-    (err, existingUser) => {
-      if (err) {
-        res.status(404).send({ error: err });
-        return;
-      }
-
-      if (existingUser) {
-        res.status(422).send({ error: 'Email is in use' });
-        return;
-      }
-      user.save((saveErr) => {
-        if (saveErr) {
-          next(saveErr);
+    User.findOne(
+      { email: req.body.email },
+      (err, existingUser) => {
+        if (err) {
+          res.status(404).send({ error: err });
           return;
         }
-        req.logIn(user, (loginErr) => {
-          if (loginErr) {
-            next(loginErr);
+
+        if (existingUser) {
+          res.status(422).send({ error: 'Email is in use' });
+          return;
+        }
+        user.save((saveErr) => {
+          if (saveErr) {
+            next(saveErr);
             return;
           }
+          req.logIn(user, (loginErr) => {
+            if (loginErr) {
+              next(loginErr);
+              return;
+            }
 
-          const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
-          const mailOptions = renderEmailConfirmation({
-            body: {
-              domain: `${protocol}://${req.headers.host}`,
-              link: `${protocol}://${req.headers.host}/verify?t=${token}`
-            },
-            to: req.user.email,
-          });
+            const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+            const mailOptions = renderEmailConfirmation({
+              body: {
+                domain: `${protocol}://${req.headers.host}`,
+                link: `${protocol}://${req.headers.host}/verify?t=${token}`
+              },
+              to: req.user.email,
+            });
 
-          mail.send(mailOptions, (mailErr, result) => { // eslint-disable-line no-unused-vars
-            res.json({
-              email: req.user.email,
-              username: req.user.username,
-              preferences: req.user.preferences,
-              verified: req.user.verified,
-              id: req.user._id
+            mail.send(mailOptions, (mailErr, result) => { // eslint-disable-line no-unused-vars
+              res.json({
+                email: req.user.email,
+                username: req.user.username,
+                preferences: req.user.preferences,
+                verified: req.user.verified,
+                id: req.user._id
+              });
             });
           });
         });
-      });
-    });
+      }
+    );
   });
 }
 

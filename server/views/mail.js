@@ -11,7 +11,12 @@ export const renderResetPassword = (data) => {
     link: data.body.link,
     buttonText: 'Reset password',
     directLinkText: 'Or copy and paste the URL into your browser:',
-    noteText: 'If you did not request this, please ignore this email and your password will remain unchanged. Thanks for using the p5.js Web Editor!',  // eslint-disable-line max-len
+    noteText: 'If you did not request this, please ignore this email and your password will remain unchanged. Thanks for using the p5.js Web Editor!', // eslint-disable-line max-len
+    meta: {
+      keywords: 'p5.js, p5.js web editor, web editor, processing, code editor',
+      description: 'A web editor for p5.js, a JavaScript library with the goal'
+        + ' of making coding accessible to artists, designers, educators, and beginners.'
+    }
   };
 
   // Return MJML string
@@ -39,6 +44,11 @@ export const renderEmailConfirmation = (data) => {
     buttonText: 'Verify Email',
     directLinkText: 'Or copy and paste the URL into your browser:',
     noteText: 'This link is only valid for the next 24 hours. Thanks for using the p5.js Web Editor!',
+    meta: {
+      keywords: 'p5.js, p5.js web editor, web editor, processing, code editor',
+      description: 'A web editor for p5.js, a JavaScript library with the goal'
+        + ' of making coding accessible to artists, designers, educators, and beginners.'
+    }
   };
 
   // Return MJML string

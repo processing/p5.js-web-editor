@@ -32,7 +32,7 @@ class NewFileModal extends React.Component {
       'modal--reduced': !this.props.canUploadMedia
     });
     return (
-      <section className={modalClass} tabIndex="0" ref={(element) => { this.modal = element; }}>
+      <section className={modalClass} ref={(element) => { this.modal = element; }}>
         <div className="modal-content">
           <div className="modal__header">
             <h2 className="modal__title">Add File</h2>
@@ -71,8 +71,8 @@ function validate(formProps) {
 
   if (!formProps.name) {
     errors.name = 'Please enter a name';
-  } else if (!formProps.name.match(/(.+\.js$|.+\.css$|.+\.json$|.+\.txt$|.+\.csv$)/i)) {
-    errors.name = 'File must be of type JavaScript, CSS, JSON, TXT, or CSV.';
+  } else if (!formProps.name.match(/(.+\.js$|.+\.css$|.+\.json$|.+\.txt$|.+\.csv$|.+\.tsv$)/i)) {
+    errors.name = 'File must be of type JavaScript, CSS, JSON, TXT, CSV, or TSV.';
   }
 
   return errors;

@@ -12,9 +12,7 @@ export function resolvePathToFile(filePath, files) {
     let foundChild = false;
     const childFiles = currentFile.children.map(childFileId =>
       files.find(file =>
-        file._id.valueOf().toString() === childFileId.valueOf()
-      )
-    );
+        file._id.valueOf().toString() === childFileId.valueOf()));
     childFiles.some((childFile) => {
       if (childFile.name === filePathSegment) {
         currentFile = childFile;

@@ -3,6 +3,7 @@ import Q from 'q';
 import mongoose from 'mongoose';
 import objectID from 'bson-objectid';
 import shortid from 'shortid';
+
 import eachSeries from 'async/eachSeries';
 import User from './models/user';
 import Project from './models/project';
@@ -20,9 +21,9 @@ const defaultHTML =
   `<!DOCTYPE html>
 <html>
   <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.14/p5.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.14/addons/p5.dom.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.14/addons/p5.sound.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.sound.min.js"></script>
 
     <!-- Generative Design Dependencies here -->
     <!-- GG Bundled -->
@@ -35,7 +36,9 @@ const defaultHTML =
     <!-- Chroma -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/1.3.6/chroma.min.js"></script>
     <!-- Jquery -->
-    <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script> 
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js" 
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" 
+      crossorigin="anonymous"></script> 
 
     <!-- sketch additions -->
 
@@ -89,15 +92,16 @@ const insert = function insert(_mainString, _insString, _pos) {
 
 // TEMP: GATHER DATA FROM STATIC FILE
 // - to save time use local json file for now -
-const fs = require('fs');
+// const fs = require('fs');
 // gg-github-retrieval.json
 // gg-github-newProjects.json
-function retrieveDataTemp(fName) {
-  return new Promise((resolve, reject) => {
-    const ggdata = `${__dirname}/${fName}`;
-    resolve(JSON.parse(fs.readFileSync(ggdata)));
-  });
-}
+
+// function retrieveDataTemp(fName) {
+//   return new Promise((resolve, reject) => {
+//     const ggdata = `${__dirname}/${fName}`;
+//     resolve(JSON.parse(fs.readFileSync(ggdata)));
+//   });
+// }
 
 /* --- data processing --- */
 // 1. first get the top level directories P and M
@@ -113,13 +117,12 @@ function getCodePackage() {
       client_secret: clientSecret
     },
     method: 'GET',
-    headers
+    headers,
+    json: true
   };
 
   return rp(options).then((res) => {
-    const json = JSON.parse(res);
-
-    json.forEach((metadata) => {
+    res.forEach((metadata) => {
       if (metadata.name.endsWith('P') === true || metadata.name.endsWith('M') === true) {
         sketchRootList.push(metadata);
       }
@@ -136,7 +139,7 @@ function getSketchDirectories(sketchRootList) {
   // console.log(sketchRootList);
 
   return Q.all(sketchRootList.map((sketches) => {
-      // console.log(sketches)
+    // console.log(sketches)
     const options = {
       url: `https://api.github.com/repos/generative-design/Code-Package-p5.js/contents/${sketches.path}${branchRef}`,
       qs: {
@@ -144,19 +147,18 @@ function getSketchDirectories(sketchRootList) {
         client_secret: clientSecret
       },
       method: 'GET',
-      headers
+      headers,
+      json: true
     };
 
     return rp(options).then((res) => {
-      const sketchDirs = flatten(JSON.parse(res));
+      const sketchDirs = flatten(res);
 
       return sketchDirs;
     }).catch((err) => {
       throw err;
     });
-  })
-
-  ).then((output) => {
+  })).then((output) => {
     const sketchList = [];
     output.forEach((l) => {
       l.forEach((i) => {
@@ -180,12 +182,12 @@ function appendSketchItemLinks(sketchList) {
         client_secret: clientSecret
       },
       method: 'GET',
-      headers
+      headers,
+      json: true
     };
 
     return rp(options).then((res) => {
-      const sketchItems = JSON.parse(res);
-      sketches.tree = sketchItems;
+      sketches.tree = res;
 
       return sketchList;
     });
@@ -194,7 +196,7 @@ function appendSketchItemLinks(sketchList) {
 
 // 4. for each sketch item
 function getSketchItems(sketchList) {
-  const completeSketchPkg = [];
+  // const completeSketchPkg = [];
 
   /* eslint-disable */
   return Q.all(sketchList[0].map(sketch => Q.all(sketch.tree.map((item) => {
@@ -206,11 +208,12 @@ function getSketchItems(sketchList) {
           client_secret: clientSecret
         },
         method: 'GET',
-        headers
+        headers,
+        json: true
       };
 
       return rp(options).then((res) => {
-        sketch.data = JSON.parse(res);
+        sketch.data = res;
         return sketch;
       }).catch((err) => {
         throw err;
@@ -304,7 +307,10 @@ function formatSketchForStorage(sketch, user) {
         // add the ID to the root children id array
         output[0].children.push(projectItem.id);
         //  add the JS reference to the defaultHTML
-        output[2].content = insert(output[2].content, `<script src='${item.name}'></script>`, output[2].content.search('<!-- sketch additions -->'));
+        output[2].content = insert(
+          output[2].content, `<script src='${item.name}'></script>`,
+          output[2].content.search('<!-- sketch additions -->')
+        );
       }
     });
 
@@ -449,8 +455,6 @@ function createProjectsInP5user(newProjectList) {
         sketchCallback();
       });
     });
-  }).catch((err) => {
-    throw err;
   });
 }
 
@@ -498,14 +502,14 @@ function getp5User() {
         // .then(saveNewProjectsToFile)
         .then(createProjectsInP5user);
     }
-      // Run for production
+    // Run for production
     return getCodePackage()
-        .then(getSketchDirectories)
-        .then(appendSketchItemLinks)
-        .then(getSketchItems)
-        .then(formatAllSketches)
-        .then(getAllSketchContent)
-        .then(createProjectsInP5user);
+      .then(getSketchDirectories)
+      .then(appendSketchItemLinks)
+      .then(getSketchItems)
+      .then(formatAllSketches)
+      .then(getAllSketchContent)
+      .then(createProjectsInP5user);
   });
 }
 // Run the entire process
@@ -545,26 +549,27 @@ output etc
 // }
 
 // checking function
-function doNext(output) {
-  console.log(JSON.stringify(output));
-  console.log(output.length);
-}
+// function doNext(output) {
+//   console.log(JSON.stringify(output));
+//   console.log(output.length);
+// }
 
 // save output to terminal
-function saveRetrievalToFile(output) {
-  return new Promise((resolve, reject) => {
-    fs.writeFileSync('server/gg-github-raw.json', JSON.stringify(output));
-    resolve(output);
-  });
-}
+// function saveRetrievalToFile(output) {
+//   return new Promise((resolve, reject) => {
+//     fs.writeFileSync('server/gg-github-raw.json', JSON.stringify(output));
+//     resolve(output);
+//   });
+// }
 
 // save output to terminal
-function saveNewProjectsToFile(output) {
-  return new Promise((resolve, reject) => {
-    fs.writeFileSync('server/gg-github-newProjects.json', JSON.stringify(output));
-    resolve(output);
-  });
-}
+// function saveNewProjectsToFile(output) {
+//   return new Promise((resolve, reject) => {
+//     fs.writeFileSync('server/gg-github-newProjects.json', JSON.stringify(output));
+//     resolve(output);
+//   });
+// }
+
 // test make without deleting all projects etc
 // function make() {
 //   return retrieveDataTemp('gg-github-retrieval.json')
@@ -573,4 +578,5 @@ function saveNewProjectsToFile(output) {
 //     .then(linkToFontFiles)
 //     .then(saveToFile);
 // }
+
 // make();

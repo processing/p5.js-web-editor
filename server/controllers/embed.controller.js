@@ -15,7 +15,7 @@ export function serveProject(req, res) {
         return;
       }
       // TODO this does not parse html
-      const files = project.files;
+      const { files } = project;
       const htmlFile = files.find(file => file.name.match(/\.html$/i)).content;
       const filesToInject = files.filter(file => file.name.match(/\.(js|css)$/i));
       injectMediaUrls(filesToInject, files, req.params.project_id);

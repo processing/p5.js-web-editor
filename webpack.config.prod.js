@@ -1,14 +1,14 @@
-var webpack = require('webpack');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var ManifestPlugin = require('webpack-manifest-plugin');
-var ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
-var cssnext = require('postcss-cssnext');
-var postcssFocus = require('postcss-focus');
-var postcssReporter = require('postcss-reporter');
-var cssnano = require('cssnano');
+const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
+const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
+const cssnext = require('postcss-cssnext');
+const postcssFocus = require('postcss-focus');
+const postcssReporter = require('postcss-reporter');
+const cssnano = require('cssnano');
 require('dotenv').config();
 
-module.exports = {
+module.exports = [{
   devtool: 'source-map',
 
   entry: {
@@ -17,29 +17,29 @@ module.exports = {
       './client/index.jsx'
     ],
     vendor: [
-      'react',
-      'react-dom',
-      'redux',
-      'codemirror',
-      'moment',
-      'redux-form',
-      'react-redux',
-      'dropzone',
       'axios',
       'classnames',
-      'react-inlinesvg',
-      'react-router',
-      'redux-thunk',
+      'codemirror',
       'csslint',
-      'jshint',
+      'dropzone',
       'htmlhint',
       'js-beautify',
+      'jshint',
+      'moment',
+      'react-dom',
+      'react-inlinesvg',
+      'react-redux',
+      'react-router',
+      'react',
+      'redux-form',
+      'redux-thunk',
+      'redux',
     ]
   },
   output: {
-    path: __dirname + '/static/dist',
+    path: `${__dirname}/dist/static`,
     filename: '[name].[chunkhash].js',
-    publicPath: '/dist/'
+    publicPath: '/'
   },
 
   resolve: {
@@ -53,7 +53,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.scss$/,
+        test: /main\.scss$/,
         exclude: /node_modules/,
         loader: ExtractTextPlugin.extract({
           fallback: 'style-loader',
@@ -70,8 +70,15 @@ module.exports = {
         loader: 'file-loader'
       },
       {
-          test: /fonts\/.*\.(eot|svg|ttf|woff|woff2)$/,
-          loader: 'file-loader'
+        test: /fonts\/.*\.(eot|svg|ttf|woff|woff2)$/,
+        loader: 'file-loader'
+      },
+      {
+        test: /_console-feed.scss/,
+        loader: 'sass-extract-loader',
+        options: {
+          plugins: [{ plugin: 'sass-extract-js', options: { camelCase: false } }]
+        }
       }
     ]
   },
@@ -79,25 +86,25 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        'API_URL': process.env.API_URL ? '"' + process.env.API_URL + '"' : undefined,
-        'NODE_ENV': JSON.stringify('production'),
-        'S3_BUCKET': process.env.S3_BUCKET ? '"' + process.env.S3_BUCKET + '"' : undefined,
-        'S3_BUCKET_URL_BASE': process.env.S3_BUCKET_URL_BASE ? '"' + process.env.S3_BUCKET_URL_BASE + '"' : undefined,
-        'AWS_REGION': process.env.AWS_REGION ? '"' + process.env.AWS_REGION + '"': undefined
+        API_URL: process.env.API_URL ? `"${process.env.API_URL}"` : undefined,
+        NODE_ENV: JSON.stringify('production'),
+        S3_BUCKET: process.env.S3_BUCKET ? `"${process.env.S3_BUCKET}"` : undefined,
+        S3_BUCKET_URL_BASE: process.env.S3_BUCKET_URL_BASE ? `"${process.env.S3_BUCKET_URL_BASE}"` : undefined,
+        AWS_REGION: process.env.AWS_REGION ? `"${process.env.AWS_REGION}"` : undefined
       }
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks: Infinity,
-      filename: 'vendor.js',
+      filename: '[name].[chunkhash].js',
     }),
     new ExtractTextPlugin({ filename: 'app.[chunkhash].css', allChunks: true }),
     new ManifestPlugin({
       basePath: '/',
     }),
     new ChunkManifestPlugin({
-      filename: "chunk-manifest.json",
-      manifestVariable: "webpackManifest",
+      filename: 'chunk-manifest.json',
+      manifestVariable: 'webpackManifest',
     }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
@@ -122,4 +129,40 @@ module.exports = {
     })
   ],
 
-};
+},
+{
+  entry: {
+    app: [
+      './client/utils/previewEntry.js'
+    ]
+  },
+  target: 'web',
+  output: {
+    path: `${__dirname}/dist/static`,
+    filename: 'previewScripts.js',
+    publicPath: '/'
+  },
+  resolve: {
+    extensions: ['*', '.js', '.jsx'],
+    modules: [
+      'client',
+      'node_modules',
+    ],
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader'
+      }
+    ]
+  },
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    })
+  ]
+}];

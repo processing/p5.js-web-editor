@@ -3,7 +3,7 @@ import { resolvePathToFile } from '../utils/filePath';
 import {
   MEDIA_FILE_REGEX,
   STRING_REGEX,
-  TEXT_FILE_REGEX,
+  PLAINTEXT_FILE_REGEX,
   EXTERNAL_LINK_REGEX,
   NOT_EXTERNAL_LINK_REGEX
 } from './fileUtils';
@@ -21,7 +21,7 @@ function resolveLinksInString(content, files, projectId) {
       if (resolvedFile) {
         if (resolvedFile.url) {
           newContent = newContent.replace(filePath, resolvedFile.url);
-        } else if (resolvedFile.name.match(TEXT_FILE_REGEX)) {
+        } else if (resolvedFile.name.match(PLAINTEXT_FILE_REGEX)) {
           let resolvedFilePath = filePath;
           if (resolvedFilePath.startsWith('.')) {
             resolvedFilePath = resolvedFilePath.substr(1);
@@ -29,7 +29,8 @@ function resolveLinksInString(content, files, projectId) {
           while (resolvedFilePath.startsWith('/')) {
             resolvedFilePath = resolvedFilePath.substr(1);
           }
-          newContent = newContent.replace(filePath, `/sketches/${projectId}/assets/${resolvedFilePath}`);
+          const replacement = `/sketches/${projectId}/assets/${resolvedFilePath}`;
+          newContent = newContent.replace(filePath, replacement);
         }
       }
     }

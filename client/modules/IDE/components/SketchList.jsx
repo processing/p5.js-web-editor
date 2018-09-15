@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import moment from 'moment';
 import { Link, browserHistory } from 'react-router';
 import InlineSVG from 'react-inlinesvg';
+import { Helmet } from 'react-helmet';
 import * as SketchActions from '../actions/projects';
 import * as ProjectActions from '../actions/project';
 import * as ToastActions from '../actions/toast';
@@ -17,10 +18,20 @@ class SketchList extends React.Component {
     this.props.getProjects(this.props.username);
   }
 
+  getSketchesTitle() {
+    if (this.props.username === this.props.user.username) {
+      return 'p5.js Web Editor | My sketches';
+    }
+    return `p5.js Web Editor | ${this.props.username}'s sketches`;
+  }
+
   render() {
     const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
     return (
       <div className="sketches-table-container">
+        <Helmet>
+          <title>{this.getSketchesTitle()}</title>
+        </Helmet>
         { this.props.sketches.length === 0 &&
           <p className="sketches-table__empty">No sketches.</p>
         }
@@ -44,28 +55,27 @@ class SketchList extends React.Component {
                 >
                   <td className="sketch-list__trash-column">
                   {(() => { // eslint-disable-line
-                    if (this.props.username === this.props.user.username || this.props.username === undefined) {
-                      return (
-                        <button
-                          className="sketch-list__trash-button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            if (window.confirm(`Are you sure you want to delete "${sketch.name}"?`)) {
-                              this.props.deleteProject(sketch.id);
-                            }
-                          }}
-                        >
-                          <InlineSVG src={trashCan} alt="Delete Project" />
-                        </button>
-                      );
-                    }
-                  })()}
+                      if (this.props.username === this.props.user.username || this.props.username === undefined) {
+                        return (
+                          <button
+                            className="sketch-list__trash-button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (window.confirm(`Are you sure you want to delete "${sketch.name}"?`)) {
+                                this.props.deleteProject(sketch.id);
+                              }
+                            }}
+                          >
+                            <InlineSVG src={trashCan} alt="Delete Project" />
+                          </button>
+                        );
+                      }
+                    })()}
                   </td>
                   <th scope="row"><Link to={`/${username}/sketches/${sketch.id}`}>{sketch.name}</Link></th>
                   <td>{moment(sketch.createdAt).format('MMM D, YYYY h:mm A')}</td>
                   <td>{moment(sketch.updatedAt).format('MMM D, YYYY h:mm A')}</td>
-                </tr>
-              )}
+                </tr>)}
             </tbody>
           </table>}
       </div>

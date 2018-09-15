@@ -39,11 +39,13 @@ const corsOriginsWhitelist = [
 // Run Webpack dev server in development mode
 if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(config);
-  app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
+  app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config[0].output.publicPath }));
   app.use(webpackHotMiddleware(compiler));
 
   corsOriginsWhitelist.push(/localhost/);
 }
+
+app.set('trust proxy', true);
 
 // Enable Cross-Origin Resource Sharing (CORS) for all origins
 const corsMiddleware = cors({
@@ -56,7 +58,7 @@ app.options('*', corsMiddleware);
 
 // Body parser, cookie parser, sessions, serve public assets
 
-app.use(Express.static(path.resolve(__dirname, '../static'), {
+app.use(Express.static(path.resolve(__dirname, '../dist/static'), {
   maxAge: process.env.STATIC_MAX_AGE || (process.env.NODE_ENV === 'production' ? '1d' : '0')
 }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
@@ -93,6 +95,11 @@ app.use('/', serverRoutes);
 app.use('/', embedRoutes);
 app.get('/auth/github', passport.authenticate('github'));
 app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), (req, res) => {
+  res.redirect('/');
+});
+
+app.get('/auth/google', passport.authenticate('google'));
+app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
   res.redirect('/');
 });
 

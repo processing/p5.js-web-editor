@@ -11,9 +11,9 @@ const defaultHTML =
 `<!DOCTYPE html>
 <html>
   <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/addons/p5.dom.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/addons/p5.sound.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.sound.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="utf-8" />
   </head>
@@ -45,14 +45,13 @@ function getCategories() {
   const categories = [];
   const options = {
     url: `https://api.github.com/repos/processing/p5.js-website/contents/dist/assets/examples/en?client_id=${
-    clientId}&client_secret=${clientSecret}`,
+      clientId}&client_secret=${clientSecret}`,
     method: 'GET',
-    headers
+    headers,
+    json: true
   };
   return rp(options).then((res) => {
-    const json = JSON.parse(res);
-
-    json.forEach((metadata) => {
+    res.forEach((metadata) => {
       let category = '';
       for (let j = 1; j < metadata.name.split('_').length; j += 1) {
         category += `${metadata.name.split('_')[j]} `;
@@ -71,13 +70,13 @@ function getSketchesInCategories(categories) {
     const options = {
       url: `${category.url.replace('?ref=master', '')}?client_id=${clientId}&client_secret=${clientSecret}`,
       method: 'GET',
-      headers
+      headers,
+      json: true
     };
 
     return rp(options).then((res) => {
       const projectsInOneCategory = [];
-      const examples = JSON.parse(res);
-      examples.forEach((example) => {
+      res.forEach((example) => {
         let projectName;
         if (example.name === '02_Instance_Container.js') {
           for (let i = 1; i < 5; i += 1) {
@@ -113,8 +112,10 @@ function getSketchContent(projectsInAllCategories) {
       if (noNumberprojectName === 'Instance Mode : Instance Container ') {
         for (let i = 0; i < 4; i += 1) {
           const splitedRes = `${res.split('*/')[1].split('</html>')[i]}</html>\n`;
-          project.sketchContent = splitedRes.replace('p5.js',
-            'https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.4/p5.min.js');
+          project.sketchContent = splitedRes.replace(
+            'p5.js',
+            'https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.4/p5.min.js'
+          );
         }
       } else {
         project.sketchContent = res;
@@ -129,14 +130,13 @@ function getSketchContent(projectsInAllCategories) {
 function createProjectsInP5user(projectsInAllCategories) {
   const options = {
     url: `https://api.github.com/repos/processing/p5.js-website/contents/dist/assets/examples/assets?client_id=${
-    clientId}&client_secret=${clientSecret}`,
+      clientId}&client_secret=${clientSecret}`,
     method: 'GET',
-    headers
+    headers,
+    json: true
   };
 
   rp(options).then((res) => {
-    const assets = JSON.parse(res);
-
     User.findOne({ username: 'p5' }, (err, user) => {
       if (err) throw err;
 
@@ -231,12 +231,12 @@ function createProjectsInP5user(projectsInAllCategories) {
           }
 
           const assetsInProject = project.sketchContent.match(/assets\/[\w-]+\.[\w]*/g)
-            || project.sketchContent.match(/assets\/[\w-]*/g) || [];
+            || project.sketchContent.match(/asset\/[\w-]*/g) || [];
 
           assetsInProject.forEach((assetNamePath, i) => {
             let assetName = assetNamePath.split('assets/')[1];
 
-            assets.forEach((asset) => {
+            res.forEach((asset) => {
               if (asset.name === assetName || asset.name.split('.')[0] === assetName) {
                 assetName = asset.name;
               }
@@ -296,12 +296,12 @@ function getp5User() {
     if (!p5User) {
       p5User = new User({
         username: 'p5',
-        email: 'p5-examples@gmail.com',
-        password: 'test'
+        email: process.env.EXAMPLE_USER_EMAIL,
+        password: process.env.EXAMPLE_USER_PASSWORD
       });
       p5User.save((saveErr) => {
         if (saveErr) throw saveErr;
-        console.log(`Created a user p5${p5User}`);
+        console.log(`Created a user p5 ${p5User}`);
       });
     }
 

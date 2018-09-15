@@ -9,7 +9,6 @@ import Editor from '../components/Editor';
 import Sidebar from '../components/Sidebar';
 import PreviewFrame from '../components/PreviewFrame';
 import Toolbar from '../components/Toolbar';
-import AccessibleOutput from '../components/AccessibleOutput';
 import Preferences from '../components/Preferences';
 import NewFileModal from '../components/NewFileModal';
 import NewFolderModal from '../components/NewFolderModal';
@@ -33,6 +32,7 @@ import Overlay from '../../App/components/Overlay';
 import SketchList from '../components/SketchList';
 import AssetList from '../components/AssetList';
 import About from '../components/About';
+import Feedback from '../components/Feedback';
 
 class IDEView extends React.Component {
   constructor(props) {
@@ -124,6 +124,7 @@ class IDEView extends React.Component {
   }
 
   componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleGlobalKeydown, false);
     clearTimeout(this.autosaveInterval);
     this.autosaveInterval = null;
     this.consoleSize = undefined;
@@ -157,6 +158,10 @@ class IDEView extends React.Component {
       e.stopPropagation();
       if (this.isUserOwner() || (this.props.user.authenticated && !this.props.project.owner)) {
         this.props.saveProject();
+      } else if (this.props.user.authenticated) {
+        this.props.cloneProject();
+      } else {
+        this.props.showErrorModal('forceAuthentication');
       }
       // 13 === enter
     } else if (e.keyCode === 13 && e.shiftKey && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
@@ -200,13 +205,14 @@ class IDEView extends React.Component {
     return (
       <div className="ide">
         <Helmet>
-          <title>{this.props.project.name}</title>
+          <title>p5.js Web Editor | {this.props.project.name}</title>
         </Helmet>
         {this.props.toast.isVisible && <Toast />}
         <Nav
           user={this.props.user}
           newProject={this.props.newProject}
           saveProject={this.props.saveProject}
+          autosaveProject={this.props.autosaveProject}
           exportProjectAsZip={this.props.exportProjectAsZip}
           cloneProject={this.props.cloneProject}
           project={this.props.project}
@@ -290,11 +296,7 @@ class IDEView extends React.Component {
               setSelectedFile={this.props.setSelectedFile}
               newFile={this.props.newFile}
               isExpanded={this.props.ide.sidebarIsExpanded}
-              showFileOptions={this.props.showFileOptions}
-              hideFileOptions={this.props.hideFileOptions}
               deleteFile={this.props.deleteFile}
-              showEditFileName={this.props.showEditFileName}
-              hideEditFileName={this.props.hideEditFileName}
               updateFileName={this.props.updateFileName}
               projectOptionsVisible={this.props.ide.projectOptionsVisible}
               openProjectOptions={this.props.openProjectOptions}
@@ -305,9 +307,10 @@ class IDEView extends React.Component {
             />
             <SplitPane
               split="vertical"
-              defaultSize={'50%'}
+              defaultSize="50%"
               onChange={() => { this.overlay.style.display = 'block'; }}
               onDragFinished={() => { this.overlay.style.display = 'none'; }}
+              resizerStyle={{ marginRight: '5px' }}
             >
               <SplitPane
                 split="horizontal"
@@ -359,6 +362,8 @@ class IDEView extends React.Component {
                   expandConsole={this.props.expandConsole}
                   collapseConsole={this.props.collapseConsole}
                   clearConsole={this.props.clearConsole}
+                  dispatchConsoleEvent={this.props.dispatchConsoleEvent}
+                  theme={this.props.preferences.theme}
                 />
               </SplitPane>
               <div className="preview-frame-holder">
@@ -369,21 +374,15 @@ class IDEView extends React.Component {
                 </div>
                 <div>
                   {(
-                      (
-                        (this.props.preferences.textOutput ||
+                    (
+                      (this.props.preferences.textOutput ||
                           this.props.preferences.gridOutput ||
                           this.props.preferences.soundOutput
-                        ) &&
+                      ) &&
                           this.props.ide.isPlaying
-                      ) ||
-                        this.props.ide.isAccessibleOutputPlaying
-                    ) &&
-                      <AccessibleOutput
-                        isPlaying={this.props.ide.isPlaying}
-                        previewIsRefreshing={this.props.ide.previewIsRefreshing}
-                        textOutput={this.props.preferences.textOutput}
-                        gridOutput={this.props.preferences.gridOutput}
-                      />
+                    ) ||
+                      this.props.ide.isAccessibleOutputPlaying
+                  )
                   }
                 </div>
                 <PreviewFrame
@@ -456,6 +455,15 @@ class IDEView extends React.Component {
             <About previousPath={this.props.ide.previousPath} />
           </Overlay>
         }
+        { this.props.location.pathname === '/feedback' &&
+          <Overlay
+            previousPath={this.props.ide.previousPath}
+            title="Submit Feedback"
+            ariaLabel="submit-feedback"
+          >
+            <Feedback previousPath={this.props.ide.previousPath} />
+          </Overlay>
+        }
         { this.props.ide.shareModalVisible &&
           <Overlay
             title="Share This Sketch"
@@ -486,6 +494,7 @@ class IDEView extends React.Component {
           >
             <ErrorModal
               type={this.props.ide.errorType}
+              closeModal={this.props.hideErrorModal}
             />
           </Overlay>
         }
@@ -611,11 +620,7 @@ IDEView.propTypes = {
   cloneProject: PropTypes.func.isRequired,
   expandConsole: PropTypes.func.isRequired,
   collapseConsole: PropTypes.func.isRequired,
-  showFileOptions: PropTypes.func.isRequired,
-  hideFileOptions: PropTypes.func.isRequired,
   deleteFile: PropTypes.func.isRequired,
-  showEditFileName: PropTypes.func.isRequired,
-  hideEditFileName: PropTypes.func.isRequired,
   updateFileName: PropTypes.func.isRequired,
   showEditProjectName: PropTypes.func.isRequired,
   hideEditProjectName: PropTypes.func.isRequired,
@@ -680,16 +685,20 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({},
-    EditorAccessibilityActions,
-    FileActions,
-    ProjectActions,
-    IDEActions,
-    PreferencesActions,
-    UserActions,
-    ToastActions,
-    ConsoleActions),
-  dispatch);
+  return bindActionCreators(
+    Object.assign(
+      {},
+      EditorAccessibilityActions,
+      FileActions,
+      ProjectActions,
+      IDEActions,
+      PreferencesActions,
+      UserActions,
+      ToastActions,
+      ConsoleActions
+    ),
+    dispatch
+  );
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(IDEView));

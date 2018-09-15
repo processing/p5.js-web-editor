@@ -13,7 +13,7 @@ class NewFolderModal extends React.Component {
 
   render() {
     return (
-      <section className="modal" ref={(element) => { this.newFolderModal = element; }} tabIndex="0">
+      <section className="modal" ref={(element) => { this.newFolderModal = element; }} >
         <div className="modal-content-folder">
           <div className="modal__header">
             <h2 className="modal__title">Add Folder</h2>
