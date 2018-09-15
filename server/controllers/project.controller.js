@@ -2,6 +2,7 @@ import archiver from 'archiver';
 import request from 'request';
 import moment from 'moment';
 import isUrl from 'is-url';
+import slugify from 'slugify';
 import jsdom, { serializeDocument } from 'jsdom';
 import Project from '../models/project';
 import User from '../models/user';
@@ -19,7 +20,8 @@ export function createProject(req, res) {
       res.json({ success: false });
       return;
     }
-    Project.populate(newProject,
+    Project.populate(
+      newProject,
       { path: 'user', select: 'username' },
       (innerErr, newProjectWithUser) => {
         if (innerErr) {
@@ -27,7 +29,8 @@ export function createProject(req, res) {
           return;
         }
         res.json(newProjectWithUser);
-      });
+      }
+    );
   });
 }
 
@@ -41,13 +44,15 @@ export function updateProject(req, res) {
     //   res.status(409).send({ success: false, message: 'Attempted to save stale version of project.' });
     //   return;
     // }
-    Project.findByIdAndUpdate(req.params.project_id,
+    Project.findByIdAndUpdate(
+      req.params.project_id,
       {
         $set: req.body
       },
       {
         new: true
-      })
+      }
+    )
       .populate('user', 'username')
       .exec((updateProjectErr, updatedProject) => {
         if (updateProjectErr) {
@@ -85,13 +90,13 @@ export function getProject(req, res) {
         return res.status(404).send({ message: 'Project with that id does not exist' });
       } else if (!project) {
         Project.findOne({ slug: projectId })
-        .populate('user', 'username')
-        .exec((innerErr, projectBySlug) => {
-          if (innerErr || !projectBySlug) {
-            return res.status(404).send({ message: 'Project with that id does not exist' });
-          }
-          return res.json(projectBySlug);
-        });
+          .populate('user', 'username')
+          .exec((innerErr, projectBySlug) => {
+            if (innerErr || !projectBySlug) {
+              return res.status(404).send({ message: 'Project with that id does not exist' });
+            }
+            return res.json(projectBySlug);
+          });
       } else {
         return res.json(project);
       }
@@ -99,15 +104,14 @@ export function getProject(req, res) {
 }
 
 function deleteFilesFromS3(files) {
-  deleteObjectsFromS3(
-    files.filter((file) => {
-      if (file.url) {
-        if (!process.env.S3_DATE || (process.env.S3_DATE && moment(process.env.S3_DATE) < moment(file.createdAt))) {
-          return true;
-        }
+  deleteObjectsFromS3(files.filter((file) => {
+    if (file.url) {
+      if (!process.env.S3_DATE || (process.env.S3_DATE && moment(process.env.S3_DATE) < moment(file.createdAt))) {
+        return true;
       }
-      return false;
-    })
+    }
+    return false;
+  })
     .map(file => getObjectKey(file.url)));
 }
 
@@ -209,6 +213,34 @@ export function getProjectsForUser(req, res) {
   }
 }
 
+export function projectExists(projectId, callback) {
+  Project.findById(projectId, (err, project) => (
+    project ? callback(true) : callback(false)
+  ));
+}
+
+export function projectForUserExists(username, projectId, callback) {
+  User.findOne({ username }, (err, user) => {
+    if (!user) {
+      callback(false);
+      return;
+    }
+    Project.findOne({ _id: projectId, user: user._id }, (innerErr, project) => {
+      if (project) {
+        callback(true);
+        return;
+      }
+      Project.findOne({ slug: projectId, user: user._id }, (slugError, projectBySlug) => {
+        if (projectBySlug) {
+          callback(true);
+          return;
+        }
+        callback(false);
+      });
+    });
+  });
+}
+
 function bundleExternalLibs(project, zip, callback) {
   const indexHtml = project.files.find(file => file.name === 'index.html');
   let numScriptsResolved = 0;
@@ -217,7 +249,7 @@ function bundleExternalLibs(project, zip, callback) {
   function resolveScriptTagSrc(scriptTag, document) {
     const path = scriptTag.src.split('/');
     const filename = path[path.length - 1];
-    const src = scriptTag.src;
+    const { src } = scriptTag;
 
     if (!isUrl(src)) {
       numScriptsResolved += 1;
@@ -254,14 +286,16 @@ function buildZip(project, req, res) {
   const zip = archiver('zip');
   const rootFile = project.files.find(file => file.name === 'root');
   const numFiles = project.files.filter(file => file.fileType !== 'folder').length;
-  const files = project.files;
+  const { files } = project;
   let numCompletedFiles = 0;
 
   zip.on('error', (err) => {
     res.status(500).send({ error: err.message });
   });
 
-  res.attachment(`${project.name}.zip`);
+  const currentTime = moment().format('YYYY_MM_DD_HH_mm_ss');
+  project.slug = slugify(project.name, '_');
+  res.attachment(`${project.slug}_${currentTime}.zip`);
   zip.pipe(res);
 
   function addFileToZip(file, path) {

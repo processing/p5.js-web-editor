@@ -88,7 +88,7 @@ export function signS3(req, res) {
 }
 
 export function copyObjectInS3(req, res) {
-  const url = req.body.url;
+  const { url } = req.body;
   const objectKey = getObjectKey(url);
   const fileExtension = getExtension(objectKey);
   const newFilename = uuid.v4() + fileExtension;
@@ -109,7 +109,7 @@ export function copyObjectInS3(req, res) {
 }
 
 export function listObjectsInS3ForUser(req, res) {
-  const username = req.params.username;
+  const { username } = req.user;
   findUserByUsername(username, (user) => {
     const userId = user.id;
     const params = {

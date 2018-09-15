@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { renderIndex } from '../views/index';
 import { get404Sketch } from '../views/404Page';
 import { userExists } from '../controllers/user.controller';
+import { projectExists, projectForUserExists } from '../controllers/project.controller';
 
 const router = new Router();
 
@@ -20,11 +21,15 @@ router.get('/signup', (req, res) => {
 });
 
 router.get('/projects/:project_id', (req, res) => {
-  res.send(renderIndex());
+  projectExists(req.params.project_id, exists => (
+    exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
+  ));
 });
 
 router.get('/:username/sketches/:project_id', (req, res) => {
-  res.send(renderIndex());
+  projectForUserExists(req.params.username, req.params.project_id, exists => (
+    exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
+  ));
 });
 
 
@@ -52,26 +57,38 @@ router.get('/verify', (req, res) => {
 });
 
 router.get('/sketches', (req, res) => {
-  res.send(renderIndex());
+  if (req.user) {
+    res.send(renderIndex());
+  } else {
+    res.redirect('/login');
+  }
+});
+
+router.get('/assets', (req, res) => {
+  if (req.user) {
+    res.send(renderIndex());
+  } else {
+    res.redirect('/login');
+  }
+});
+
+router.get('/account', (req, res) => {
+  if (req.user) {
+    res.send(renderIndex());
+  } else {
+    res.redirect('/login');
+  }
 });
 
 router.get('/about', (req, res) => {
   res.send(renderIndex());
 });
 
+router.get('/feedback', (req, res) => {
+  res.send(renderIndex());
+});
+
 router.get('/:username/sketches', (req, res) => {
-  userExists(req.params.username, exists => (
-    exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
-  ));
-});
-
-router.get('/:username/assets', (req, res) => {
-  userExists(req.params.username, exists => (
-    exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
-  ));
-});
-
-router.get('/:username/account', (req, res) => {
   userExists(req.params.username, exists => (
     exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
   ));

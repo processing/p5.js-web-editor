@@ -28,6 +28,7 @@ import classNames from 'classnames';
 import { debounce } from 'lodash';
 import '../../../utils/htmlmixed';
 import '../../../utils/p5-javascript';
+import '../../../utils/webGL-clike';
 import Timer from '../components/Timer';
 import EditorAccessibility from '../components/EditorAccessibility';
 import {
@@ -115,8 +116,8 @@ class Editor extends React.Component {
       this.props.setUnsavedChanges(true);
       this.props.updateFileContent(this.props.file.name, this._cm.getValue());
       if (this.props.autorefresh && this.props.isPlaying) {
-        this.props.startRefreshSketch();
         this.props.clearConsole();
+        this.props.startRefreshSketch();
       }
     }, 400));
 
@@ -181,10 +182,10 @@ class Editor extends React.Component {
     if (prevProps.consoleEvents !== this.props.consoleEvents) {
       this.props.showRuntimeErrorWarning();
     }
-    for (let i = 0; i < 1000; i += 1) {
+    for (let i = 0; i < this._cm.lineCount(); i += 1) {
       this._cm.removeLineClass(i, 'background', 'line-runtime-error');
     }
-    if (this.props.runtimeErrorWarningVisible) {
+    if (this.props.runtimeErrorWarningVisible && this._cm.getDoc().modeOption === 'javascript') {
       this.props.consoleEvents.forEach((consoleEvent) => {
         if (consoleEvent.method === 'error') {
           if (consoleEvent.arguments.indexOf(')') > -1) {
@@ -212,6 +213,8 @@ class Editor extends React.Component {
       mode = 'htmlmixed';
     } else if (fileName.match(/.+\.json$/i)) {
       mode = 'application/json';
+    } else if (fileName.match(/.+\.(frag|vert)$/i)) {
+      mode = 'clike';
     } else {
       mode = 'text/plain';
     }
@@ -307,7 +310,7 @@ class Editor extends React.Component {
             />
           </div>
         </header>
-        <div ref={(element) => { this.codemirrorContainer = element; }} className="editor-holder" tabIndex="0">
+        <div ref={(element) => { this.codemirrorContainer = element; }} className="editor-holder" >
         </div>
         <EditorAccessibility
           lintMessages={this.props.lintMessages}

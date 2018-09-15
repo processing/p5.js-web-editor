@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import shortid from 'shortid';
 import slugify from 'slugify';
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 const fileSchema = new Schema({
   name: { type: String, default: 'sketch.js' },

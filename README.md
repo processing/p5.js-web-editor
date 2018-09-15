@@ -5,13 +5,12 @@ This project is currently in development! It will be announced when there is a (
 ## Development Installation
 
 1. Fork this repository.
-2. Clone the forked repostory and cd into it
-3. `$ git submodule init`
-4. `$ npm install`
-5. Install MongoDB and make sure it is running
+2. Clone the forked repository and cd into it
+3. `$ npm install`
+4. Install MongoDB and make sure it is running
    * For Mac OSX with [homebrew](http://brew.sh/): `brew install mongodb` then `brew services start mongodb`
    * For Windows and Linux: [MongoDB Installation](https://docs.mongodb.com/manual/installation/)
-6. Create a file called `.env` in the root of this directory that looks like
+5. Create a file called `.env` in the root of this directory that looks like
 
   ```
   API_URL=/api
@@ -24,15 +23,19 @@ This project is currently in development! It will be announced when there is a (
   S3_BUCKET=<your-s3-bucket>
   GITHUB_ID=<your-github-client-id>
   GITHUB_SECRET=<your-github-client-secret>
+  GOOGLE_ID=<your-google-client-id> (use google+ api)
+  GOOGLE_SECRET=<your-google-client-secret> (use google+ api)
   MAILGUN_KEY=<your-mailgun-api-key>
+  EXAMPLE_USER_EMAIL=<email-id-for-p5-example-user>
+  EXAMPLE_USER_PASSWORD=<password-for-p5-example-user>
   ```
 
-   If you don't care about being able to upload media files to S3 or Login with Github, you can drop in the file exactly how it is. Or, if you don't want to do that, just ask me to send you mine. Refer to [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) for creating an S3 bucket for testing, or if you don't want to do that, I can add you to one of my S3 buckets.
+   If you don't care about being able to upload media files to S3 or Login with Github or Google, you can drop in the file exactly how it is. Or, if you don't want to do that, just ask me to send you mine. Refer to [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) for creating an S3 bucket for testing, or if you don't want to do that, I can add you to one of my S3 buckets.
 
-7. `$ npm run fetch-examples` - this downloads the example sketches into a user called 'p5'
-8. `$ npm start`
-9. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
-10. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en).
+6. `$ npm run fetch-examples` - this downloads the example sketches into a user called 'p5'
+7. `$ npm start`
+8. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
+9. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en).
 10. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
 
 ### Testing SSL on your local machine
@@ -49,7 +52,7 @@ Note that this takes up a significant amount of space on your machine. Make sure
 1. Install Docker for your operating system
    * Mac: https://www.docker.com/docker-mac
    * Windows: https://www.docker.com/docker-windows
-2. Clone this repostory and cd into it
+2. Clone this repository and cd into it
 3. `$ docker-compose build`
 4. `$ docker-compose run --rm server npm run fetch-examples`
 
@@ -67,11 +70,10 @@ If you don't have the full server environment running, you can launch a one-off 
 8. `$ docker-compose run server --rm bash -l`
 
 ## Production Installation
-1. Clone this repostory and `cd` into it
-2. `$ git submodule init`
-3. `$ npm install`
-4. Install MongoDB and make sure it is running
-5. Create a file called `.env` in the root of this directory that looks like
+1. Clone this repository and `cd` into it
+2. `$ npm install`
+3. Install MongoDB and make sure it is running
+4. Create a file called `.env` in the root of this directory that looks like
 
   ```
   API_URL=/api
@@ -84,16 +86,20 @@ If you don't have the full server environment running, you can launch a one-off 
   S3_BUCKET=<your-s3-bucket>
   GITHUB_ID=<your-github-client-id>
   GITHUB_SECRET=<your-github-client-secret>
+  GOOGLE_ID=<your-google-client-id> (use google+ api)
+  GOOGLE_SECRET=<your-google-client-secret> (use google+ api)
   EMAIL_SENDER=<email-address-to-send-from>
   MAILGUN_KEY=<mailgun-api-key>
   MAILGUN_DOMAIN=<mailgun-domain>
   EMAIL_VERIFY_SECRET_TOKEN=whatever_you_want_this_to_be_it_only_matters_for_production
+  EXAMPLE_USER_EMAIL=<email-id-for-p5-example-user>
+  EXAMPLE_USER_PASSWORD=<password-for-p5-example-user>
   ```
-  For production, you will need to have real Github and Amazon credentions. Refer to [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) for creating an S3 bucket for testing.
+  For production, you will need to have real Github and Amazon credentials. Refer to [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) for creating an S3 bucket for testing.
 
-6. `$ npm run fetch-examples` - this downloads the example sketches into a user called 'p5'
-7. `$ npm run build`
-8. `$ npm run start:prod`
+5. `$ npm run fetch-examples` - this downloads the example sketches into a user called 'p5'
+6. `$ npm run build`
+7. `$ npm run start:prod`
 
 ### For Production Setup with PM2
 1. `$ npm install -g pm2`
@@ -119,7 +125,7 @@ http://docs.aws.amazon.com/AmazonS3/latest/dev/VirtualHosting.html#VirtualHostin
 
 ## Accessibility Guidelines
 
-Here is guide on [how to use the accessible editor](https://gist.github.com/MathuraMG/e86666b7b41fbc8c078bad9aff3f666d)
+Here is guide on [how to use the accessible editor](https://gist.github.com/MathuraMG/e86666b7b41fbc8c078bad9aff3f666d) and here is an overview of the [p5-accessibility.js](https://github.com/processing/p5.accessibility) library that makes p5.js sketches accessible to screen readers.
 
 The code for the p5.js web editor adheres to web accessibility standards. The following guidelines will help to ensure that accessibility continues to be a priority as development continues.
 
@@ -146,7 +152,7 @@ See [CONTRIBUTING.md](https://github.com/processing/p5.js-web-editor/blob/master
 
 The p5.js Web Editor is built on a MERN stack - MongoDB, Express, React/Redux, and Node. For a reference to the file structure format I am using, please look at the [Mern Starter](https://github.com/Hashnode/mern-starter) and [this comment](https://github.com/Hashnode/mern-starter/issues/90#issuecomment-221553573).
 
-This project uses an in-development [p5.js interceptor library](https://github.com/MathuraMG/p5-interceptor) for accessibility as git submodule. Every time you run `npm install`, it will update the interceptor to HEAD, so it is important to do this often.  
+This project uses an in-development [p5-accessibility.js library](https://github.com/processing/p5.accessibility) for accessibility.
 
 This project does not use CSS Modules, but uses Sass. I like to follow [BEM rules](http://getbem.com/) for CSS naming conventions, write OOSCSS with placeholders and mixins, and follow the [7-1 Pattern](https://sass-guidelin.es/#the-7-1-pattern) for Sass.
 

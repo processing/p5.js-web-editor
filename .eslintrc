@@ -6,11 +6,6 @@
     "node": true,
     "mocha": true
   },
-  "ecmaFeatures": {
-    "jsx": true,
-    "es6": true,
-    "classes": true
-  },
   "rules": {
     "linebreak-style": 0,
     "react/no-multi-comp": 0,
@@ -40,7 +35,32 @@
     }],
     "class-methods-use-this": 0,
     "react/jsx-no-bind": [2, {"allowBind": true, "allowArrowFunctions": true}],
-    "no-return-assign": [2, "except-parens"]
+    "no-return-assign": [2, "except-parens"],
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        "components": [
+          "Link"
+        ],
+        "specialLink": [
+          "to"
+        ]
+      }
+    ],
+    "jsx-a11y/label-has-for": [
+      2,
+      {
+        "components": [
+          "Label"
+        ],
+        "required": {
+          "every": [
+            "id"
+          ]
+        },
+        "allowChildren": false
+      }
+    ]
   },
   "plugins": [
     "react", "jsx-a11y", "import"

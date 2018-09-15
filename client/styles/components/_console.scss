@@ -17,29 +17,12 @@
 		text-align:left;
 	}
 
-	// assign styles to different types of console messages
-	.preview-console__log {
-		@include themify(){
-			color: getThemifyVariable('secondary-text-color');
+	.preview-console__message {
+		@include themify() {
+			color: getThemifyVariable('console-color');
 		}
 		flex: 1 0 auto;
-	}
-
-	.preview-console__undefined {
-		@include themify(){
-			color: getThemifyVariable('inactive-text-color');
-		}
-		flex: 1 0 auto;
-	}
-
-	.preview-console__error {
-		color: $console-error-color;
-		flex: 1 0 auto;
-	}
-
-	.preview-console__warn {
-		color: $console-warn-color;
-		flex: 1 0 auto;
+		position: relative;
 	}
 }
 
@@ -101,5 +84,37 @@
 	padding-right: #{10 / $base-font-size}rem;
 	.preview-console--collapsed & {
 		display: none;
+	}
+}
+
+.preview-console__logged-times {
+	font-size: #{10 / $base-font-size}rem;
+	font-weight: bold;
+	margin: #{2 / $base-font-size}rem 0 0 #{8 / $base-font-size}rem;
+	border-radius: 10px;
+	padding: #{1 / $base-font-size}rem #{4 / $base-font-size}rem;
+	z-index: 100;
+	left: 0;
+	position: absolute;
+
+	.preview-console__message--info &, .preview-console__message--log & {
+		@include themify() {
+			background-color: getThemifyVariable('console-info-background-color');
+		}
+	}
+	.preview-console__message--warn & {
+		@include themify() {
+			background-color: getThemifyVariable('console-warn-background-color');
+		}
+	}
+	.preview-console__message--debug & {
+		@include themify() {
+			background-color: getThemifyVariable('console-debug-background-color');
+		}
+	}
+	.preview-console__message--error & {
+		@include themify() {
+			background-color: getThemifyVariable('console-error-background-color');
+		}
 	}
 }

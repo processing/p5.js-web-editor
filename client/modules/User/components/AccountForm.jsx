@@ -4,7 +4,9 @@ import { domOnlyProps } from '../../../utils/reduxFormUtils';
 
 function AccountForm(props) {
   const {
-    fields: { username, email, currentPassword, newPassword },
+    fields: {
+      username, email, currentPassword, newPassword
+    },
     user,
     handleSubmit,
     initiateVerification,
@@ -45,7 +47,8 @@ function AccountForm(props) {
                     <button
                       className="form__action"
                       onClick={handleInitiateVerification}
-                    >Resend confirmation email</button>
+                    >Resend confirmation email
+                    </button>
                   )
               }
             </p>

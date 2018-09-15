@@ -1,16 +1,21 @@
 import React from 'react';
 import InlineSVG from 'react-inlinesvg';
+import { Helmet } from 'react-helmet';
 
 const squareLogoUrl = require('../../../images/p5js-square-logo.svg');
-const playUrl = require('../../../images/play.svg');
+// const playUrl = require('../../../images/play.svg');
 const asteriskUrl = require('../../../images/p5-asterisk.svg');
 
 function About(props) {
   return (
     <div className="about__content">
+      <Helmet>
+        <title>p5.js Web Editor | About</title>
+      </Helmet>
       <div className="about__content-column">
         <InlineSVG className="about__logo" src={squareLogoUrl} alt="p5js Square Logo" />
-        <p className="about__play-video">
+        {/* Video button to hello p5 video page */}
+        {/* <p className="about__play-video">
           <a
             href="http://hello.p5js.org/"
             target="_blank"
@@ -18,7 +23,7 @@ function About(props) {
           >
             <InlineSVG className="about__play-video-button" src={playUrl} alt="Play Hello Video" />
           Play hello! video</a>
-        </p>
+        </p>  */}
       </div>
       <div className="about__content-column">
         <h3 className="about__content-column-title">New to p5.js?</h3>
@@ -29,7 +34,8 @@ function About(props) {
             rel="noopener noreferrer"
           >
             <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
-          Examples</a>
+          Examples
+          </a>
         </p>
         <p className="about__content-column-list">
           <a
@@ -38,7 +44,8 @@ function About(props) {
             rel="noopener noreferrer"
           >
             <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
-          Learn</a>
+          Learn
+          </a>
         </p>
       </div>
       <div className="about__content-column">
@@ -50,7 +57,8 @@ function About(props) {
             rel="noopener noreferrer"
           >
             <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
-          Libraries</a>
+          Libraries
+          </a>
         </p>
         <p className="about__content-column-list">
           <a
@@ -59,16 +67,18 @@ function About(props) {
             rel="noopener noreferrer"
           >
             <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
-          Reference</a>
+          Reference
+          </a>
         </p>
         <p className="about__content-column-list">
           <a
-            href="https://forum.processing.org/two/"
+            href="https://discourse.processing.org/"
             target="_blank"
             rel="noopener noreferrer"
           >
             <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
-          Forum</a>
+          Forum
+          </a>
         </p>
       </div>
       <div className="about__footer">
@@ -77,21 +87,24 @@ function About(props) {
             href="https://github.com/processing/p5.js-web-editor"
             target="_blank"
             rel="noopener noreferrer"
-          >Contribute</a>
+          >Contribute
+          </a>
         </p>
         <p className="about__footer-list">
           <a
             href="https://github.com/processing/p5.js-web-editor/issues/new"
             target="_blank"
             rel="noopener noreferrer"
-          >Report a bug</a>
+          >Report a bug
+          </a>
         </p>
         <p className="about__footer-list">
           <a
             href="https://twitter.com/p5xjs?lang=en"
             target="_blank"
             rel="noopener noreferrer"
-          >Twitter</a>
+          >Twitter
+          </a>
         </p>
       </div>
     </div>

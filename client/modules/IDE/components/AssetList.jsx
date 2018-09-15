@@ -3,6 +3,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
+import { Helmet } from 'react-helmet';
+
 import prettyBytes from 'pretty-bytes';
 
 import * as AssetActions from '../actions/assets';
@@ -11,12 +13,22 @@ import * as AssetActions from '../actions/assets';
 class AssetList extends React.Component {
   constructor(props) {
     super(props);
-    this.props.getAssets(this.props.username);
+    this.props.getAssets();
+  }
+
+  getAssetsTitle() {
+    if (this.props.username === this.props.user.username) {
+      return 'p5.js Web Editor | My assets';
+    }
+    return `p5.js Web Editor | ${this.props.username}'s assets`;
   }
 
   render() {
     return (
       <div className="asset-table-container">
+        <Helmet>
+          <title>{this.getAssetsTitle()}</title>
+        </Helmet>
         {this.props.assets.length === 0 &&
           <p className="asset-table__empty">No uploaded assets.</p>
         }
@@ -32,13 +44,14 @@ class AssetList extends React.Component {
             </thead>
             <tbody>
               {this.props.assets.map(asset =>
-                <tr className="asset-table__row" key={asset.key}>
-                  <td>{asset.name}</td>
-                  <td>{prettyBytes(asset.size)}</td>
-                  <td><Link to={asset.url} target="_blank">View</Link></td>
-                  <td><Link to={`/${this.props.username}/sketches/${asset.sketchId}`}>{asset.sketchName}</Link></td>
-                </tr>
-              )}
+                (
+                  <tr className="asset-table__row" key={asset.key}>
+                    <td>{asset.name}</td>
+                    <td>{prettyBytes(asset.size)}</td>
+                    <td><Link to={asset.url} target="_blank">View</Link></td>
+                    <td><Link to={`/${this.props.username}/sketches/${asset.sketchId}`}>{asset.sketchName}</Link></td>
+                  </tr>
+                ))}
             </tbody>
           </table>}
       </div>
@@ -47,6 +60,9 @@ class AssetList extends React.Component {
 }
 
 AssetList.propTypes = {
+  user: PropTypes.shape({
+    username: PropTypes.string
+  }).isRequired,
   username: PropTypes.string.isRequired,
   assets: PropTypes.arrayOf(PropTypes.shape({
     key: PropTypes.string.isRequired,

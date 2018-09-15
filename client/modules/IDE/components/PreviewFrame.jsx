@@ -2,106 +2,32 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
 // import escapeStringRegexp from 'escape-string-regexp';
+import { isEqual } from 'lodash';
 import srcDoc from 'srcdoc-polyfill';
-
 import loopProtect from 'loop-protect';
 import { JSHINT } from 'jshint';
+import decomment from 'decomment';
 import { getBlobUrl } from '../actions/files';
 import { resolvePathToFile } from '../../../../server/utils/filePath';
 import {
   MEDIA_FILE_REGEX,
   MEDIA_FILE_QUOTED_REGEX,
   STRING_REGEX,
-  TEXT_FILE_REGEX,
+  PLAINTEXT_FILE_REGEX,
   EXTERNAL_LINK_REGEX,
   NOT_EXTERNAL_LINK_REGEX
 } from '../../../../server/utils/fileUtils';
-
-const decomment = require('decomment');
-
-const startTag = '@fs-';
-
-function getAllScriptOffsets(htmlFile) {
-  const offs = [];
-  let found = true;
-  let lastInd = 0;
-  let ind = 0;
-  let endFilenameInd = 0;
-  let filename = '';
-  let lineOffset = 0;
-  while (found) {
-    ind = htmlFile.indexOf(startTag, lastInd);
-    if (ind === -1) {
-      found = false;
-    } else {
-      endFilenameInd = htmlFile.indexOf('.js', ind + startTag.length + 3);
-      filename = htmlFile.substring(ind + startTag.length, endFilenameInd);
-      // the length of hijackConsoleErrorsScript is 31 lines
-      lineOffset = htmlFile.substring(0, ind).split('\n').length + 31;
-      offs.push([lineOffset, filename]);
-      lastInd = ind + 1;
-    }
-  }
-  return offs;
-}
-
-function hijackConsoleErrorsScript(offs) {
-  const s = `
-    function getScriptOff(line) {
-      var offs = ${offs};
-      var l = 0;
-      var file = '';
-      for (var i=0; i<offs.length; i++) {
-        var n = offs[i][0];
-        if (n < line && n > l) {
-          l = n;
-          file = offs[i][1];
-        }
-      }
-      return [line - l, file];
-    }
-    // catch reference errors, via http://stackoverflow.com/a/12747364/2994108
-    window.onerror = function (msg, url, lineNumber, columnNo, error) {
-        var string = msg.toLowerCase();
-        var substring = "script error";
-        var data = {};
-        if (string.indexOf(substring) !== -1){
-          data = 'Script Error: See Browser Console for Detail';
-        } else {
-          var fileInfo = getScriptOff(lineNumber);
-          data = msg + ' (' + fileInfo[1] + ': line ' + fileInfo[0] + ')';
-        }
-        window.parent.postMessage([{
-          method: 'error',
-          arguments: data,
-          source: fileInfo[1]
-        }], '*');
-      return false;
-    };
-  `;
-  return s;
-}
+import { hijackConsoleErrorsScript, startTag, getAllScriptOffsets }
+  from '../../../utils/consoleUtils';
 
 class PreviewFrame extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleConsoleEvent = this.handleConsoleEvent.bind(this);
+  }
 
   componentDidMount() {
-    if (this.props.isPlaying) {
-      this.renderFrameContents();
-    }
-
-    window.addEventListener('message', (messageEvent) => {
-      console.log(messageEvent);
-      messageEvent.data.forEach((message) => {
-        const args = message.arguments;
-        Object.keys(args).forEach((key) => {
-          if (args[key].includes('Exiting potential infinite loop')) {
-            this.props.stopSketch();
-            this.props.expandConsole();
-          }
-        });
-      });
-      this.props.dispatchConsoleEvent(messageEvent.data);
-    });
+    window.addEventListener('message', this.handleConsoleEvent);
   }
 
   componentDidUpdate(prevProps) {
@@ -147,12 +73,43 @@ class PreviewFrame extends React.Component {
   }
 
   componentWillUnmount() {
+    window.removeEventListener('message', this.handleConsoleEvent);
     ReactDOM.unmountComponentAtNode(this.iframeElement.contentDocument.body);
   }
 
-  clearPreview() {
-    const doc = this.iframeElement;
-    doc.srcDoc = '';
+  handleConsoleEvent(messageEvent) {
+    if (Array.isArray(messageEvent.data)) {
+      messageEvent.data.every((message, index, arr) => {
+        const { arguments: args } = message;
+        let hasInfiniteLoop = false;
+        Object.keys(args).forEach((key) => {
+          if (typeof args[key] === 'string' && args[key].includes('Exiting potential infinite loop')) {
+            this.props.stopSketch();
+            this.props.expandConsole();
+            hasInfiniteLoop = true;
+          }
+        });
+        if (hasInfiniteLoop) {
+          return false;
+        }
+        if (index === arr.length - 1) {
+          Object.assign(message, { times: 1 });
+          return false;
+        }
+        const cur = Object.assign(message, { times: 1 });
+        const nextIndex = index + 1;
+        while (isEqual(cur.arguments, arr[nextIndex].arguments) && cur.method === arr[nextIndex].method) {
+          cur.times += 1;
+          arr.splice(nextIndex, 1);
+          if (nextIndex === arr.length) {
+            return false;
+          }
+        }
+        return true;
+      });
+
+      this.props.dispatchConsoleEvent(messageEvent.data);
+    }
   }
 
   addLoopProtect(sketchDoc) {
@@ -171,7 +128,7 @@ class PreviewFrame extends React.Component {
 
     if (JSHINT.errors.length === 0) {
       newContent = decomment(newContent, {
-        ignore: /noprotect/g,
+        ignore: /\/\/\s*noprotect/g,
         space: true
       });
       newContent = loopProtect(newContent);
@@ -182,9 +139,7 @@ class PreviewFrame extends React.Component {
   injectLocalFiles() {
     const htmlFile = this.props.htmlFile.content;
     let scriptOffs = [];
-
     const resolvedFiles = this.resolveJSAndCSSLinks(this.props.files);
-
     const parser = new DOMParser();
     const sketchDoc = parser.parseFromString(htmlFile, 'text/html');
 
@@ -199,56 +154,39 @@ class PreviewFrame extends React.Component {
     this.resolveScripts(sketchDoc, resolvedFiles);
     this.resolveStyles(sketchDoc, resolvedFiles);
 
-    let scriptsToInject = [
-      '/loop-protect.min.js',
-      '/hijackConsole.js'
-    ];
-    if (
-      this.props.isAccessibleOutputPlaying ||
-      ((this.props.textOutput || this.props.gridOutput || this.props.soundOutput) && this.props.isPlaying)) {
-      let interceptorScripts = [];
-      interceptorScripts = [
-        '/p5-interceptor/registry.js',
-        '/p5-interceptor/loadData.js',
-        '/p5-interceptor/interceptorHelperFunctions.js',
-        '/p5-interceptor/baseInterceptor.js',
-        '/p5-interceptor/entities/entity.min.js',
-        '/p5-interceptor/ntc.min.js'
-      ];
-      if (!this.props.textOutput && !this.props.gridOutput && !this.props.soundOutput) {
-        this.props.setTextOutput(true);
-      }
-      if (this.props.textOutput) {
-        let textInterceptorScripts = [];
-        textInterceptorScripts = [
-          '/p5-interceptor/textInterceptor/interceptorFunctions.js',
-          '/p5-interceptor/textInterceptor/interceptorP5.js'
-        ];
-        interceptorScripts = interceptorScripts.concat(textInterceptorScripts);
-      }
-      if (this.props.gridOutput) {
-        let gridInterceptorScripts = [];
-        gridInterceptorScripts = [
-          '/p5-interceptor/gridInterceptor/interceptorFunctions.js',
-          '/p5-interceptor/gridInterceptor/interceptorP5.js'
-        ];
-        interceptorScripts = interceptorScripts.concat(gridInterceptorScripts);
-      }
-      if (this.props.soundOutput) {
-        let soundInterceptorScripts = [];
-        soundInterceptorScripts = [
-          '/p5-interceptor/soundInterceptor/interceptorP5.js'
-        ];
-        interceptorScripts = interceptorScripts.concat(soundInterceptorScripts);
-      }
-      scriptsToInject = scriptsToInject.concat(interceptorScripts);
+    const accessiblelib = sketchDoc.createElement('script');
+    accessiblelib.setAttribute(
+      'src',
+      'https://cdn.rawgit.com/processing/p5.accessibility/v0.1.1/dist/p5-accessibility.js'
+    );
+    const accessibleOutputs = sketchDoc.createElement('section');
+    accessibleOutputs.setAttribute('id', 'accessible-outputs');
+    accessibleOutputs.setAttribute('aria-label', 'accessible-output');
+    if (this.props.textOutput) {
+      sketchDoc.body.appendChild(accessibleOutputs);
+      sketchDoc.body.appendChild(accessiblelib);
+      const textSection = sketchDoc.createElement('section');
+      textSection.setAttribute('id', 'textOutput-content');
+      sketchDoc.getElementById('accessible-outputs').appendChild(textSection);
+    }
+    if (this.props.gridOutput) {
+      sketchDoc.body.appendChild(accessibleOutputs);
+      sketchDoc.body.appendChild(accessiblelib);
+      const gridSection = sketchDoc.createElement('section');
+      gridSection.setAttribute('id', 'tableOutput-content');
+      sketchDoc.getElementById('accessible-outputs').appendChild(gridSection);
+    }
+    if (this.props.soundOutput) {
+      sketchDoc.body.appendChild(accessibleOutputs);
+      sketchDoc.body.appendChild(accessiblelib);
+      const soundSection = sketchDoc.createElement('section');
+      soundSection.setAttribute('id', 'soundOutput-content');
+      sketchDoc.getElementById('accessible-outputs').appendChild(soundSection);
     }
 
-    scriptsToInject.forEach((scriptToInject) => {
-      const script = sketchDoc.createElement('script');
-      script.src = scriptToInject;
-      sketchDoc.head.appendChild(script);
-    });
+    const previewScripts = sketchDoc.createElement('script');
+    previewScripts.src = '/previewScripts.js';
+    sketchDoc.head.appendChild(previewScripts);
 
     const sketchDocString = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
     scriptOffs = getAllScriptOffsets(sketchDocString);
@@ -298,7 +236,7 @@ class PreviewFrame extends React.Component {
         if (resolvedFile) {
           if (resolvedFile.url) {
             newContent = newContent.replace(filePath, resolvedFile.url);
-          } else if (resolvedFile.name.match(TEXT_FILE_REGEX)) {
+          } else if (resolvedFile.name.match(PLAINTEXT_FILE_REGEX)) {
             // could also pull file from API instead of using bloburl
             const blobURL = getBlobUrl(resolvedFile);
             this.props.setBlobUrl(resolvedFile, blobURL);
@@ -345,6 +283,7 @@ class PreviewFrame extends React.Component {
           }
         }
       } else if (!(script.getAttribute('src') && script.getAttribute('src').match(EXTERNAL_LINK_REGEX)) !== null) {
+        script.setAttribute('crossorigin', '');
         script.innerHTML = this.resolveJSLinksInString(script.innerHTML, files); // eslint-disable-line
       }
     });
@@ -389,22 +328,12 @@ class PreviewFrame extends React.Component {
     }
   }
 
-  renderFrameContents() {
-    const doc = this.iframeElement.contentDocument;
-    if (doc.readyState === 'complete') {
-      this.renderSketch();
-    } else {
-      setTimeout(this.renderFrameContents, 0);
-    }
-  }
-
   render() {
     return (
       <iframe
         className="preview-frame"
         aria-label="sketch output"
         role="main"
-        tabIndex="0"
         frameBorder="0"
         title="sketch output"
         ref={(element) => { this.iframeElement = element; }}
@@ -420,7 +349,6 @@ PreviewFrame.propTypes = {
   textOutput: PropTypes.bool.isRequired,
   gridOutput: PropTypes.bool.isRequired,
   soundOutput: PropTypes.bool.isRequired,
-  setTextOutput: PropTypes.func.isRequired,
   htmlFile: PropTypes.shape({
     content: PropTypes.string.isRequired
   }).isRequired,
