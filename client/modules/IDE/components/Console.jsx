@@ -49,7 +49,7 @@ class Console extends React.Component {
       BASE_FONT_SIZE: this.props.fontSize,
       ARROW_FONT_SIZE: this.props.fontSize,
       LOG_ICON_WIDTH: this.props.fontSize,
-      LOG_ICON_HEIGHT: this.props.fontSize,
+      LOG_ICON_HEIGHT: 1.8*this.props.fontSize,
     };
 
     if (times > 1) {
@@ -115,7 +115,7 @@ class Console extends React.Component {
             return (
               <div key={consoleEvent.id} className={`preview-console__message preview-console__message--${method}`}>
                 { times > 1 &&
-                  <div className="preview-console__logged-times">{times}</div>
+                  <div className="preview-console__logged-times" style={{fontSize:this.props.fontSize}}>{times}</div>
                 }
                 <ConsoleFeed
                   styles={this.getConsoleFeedStyle(theme, times)}
