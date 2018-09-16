@@ -115,7 +115,7 @@ class Console extends React.Component {
             return (
               <div key={consoleEvent.id} className={`preview-console__message preview-console__message--${method}`}>
                 { times > 1 &&
-                  <div className="preview-console__logged-times" style={{ fontSize: this.props.fontSize , borderRadius:this.props.fontSize / 2 }}>{times}</div>
+                  <div className="preview-console__logged-times" style={{ fontSize: this.props.fontSize, borderRadius: this.props.fontSize / 2 }}>{times}</div>
                 }
                 <ConsoleFeed
                   styles={this.getConsoleFeedStyle(theme, times)}
