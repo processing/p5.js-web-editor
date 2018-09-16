@@ -88,11 +88,11 @@
 }
 
 .preview-console__logged-times {
-	font-size: #{10 / $base-font-size}rem;
+
 	font-weight: bold;
 	margin: #{2 / $base-font-size}rem 0 0 #{8 / $base-font-size}rem;
-	border-radius: 10px;
-	padding: #{1 / $base-font-size}rem #{4 / $base-font-size}rem;
+	border-radius: #{$base-font-size*10}px;
+	padding: #{4 / $base-font-size}rem #{4 / $base-font-size}rem;
 	z-index: 100;
 	left: 0;
 	position: absolute;
