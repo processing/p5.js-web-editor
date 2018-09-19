@@ -84,8 +84,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use('/api', requestsOfTypeJSON(), users);
 app.use('/api', requestsOfTypeJSON(), sessions);
-app.use('/api', requestsOfTypeJSON(), projects);
 app.use('/api', requestsOfTypeJSON(), files);
+app.use('/api', requestsOfTypeJSON(), projects);
 app.use('/api', requestsOfTypeJSON(), aws);
 app.use(assetRoutes);
 // this is supposed to be TEMPORARY -- until i figure out
