@@ -107,6 +107,7 @@
 
 .sidebar__file-item-name {
   padding: #{4 / $base-font-size}rem 0;
+  outline: none;
   .sidebar__file-item--editing & {
     display: none;
   }
@@ -119,6 +120,10 @@
     content: '';
     width: 100%;
   }
+}
+
+.sidebar__file-item-name:focus {
+  outline: none;
 }
 
 .sidebar__file-item-show-options {
