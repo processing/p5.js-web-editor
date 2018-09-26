@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   mongo:
-    image: mongo:3.4.7
+    image: mongo:3.6
     volumes:
       - dbdata:/data/db
   app:

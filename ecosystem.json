@@ -1,9 +1,0 @@
-{
-  "name": "p5js-web-editor",
-  "script": "index.js",
-  "env": {
-    "NODE_ENV": "production"
-  },
-  "instances"  : "max",
-  "exec_mode"  : "cluster"
-}

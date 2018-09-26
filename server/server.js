@@ -14,7 +14,7 @@ import basicAuth from 'express-basic-auth';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
-import config from '../webpack.config.dev';
+import config from '../webpack/config.dev';
 
 // Import all required modules
 import users from './routes/user.routes';
@@ -58,22 +58,7 @@ if (process.env.NODE_ENV === 'development') {
   corsOriginsWhitelist.push(/localhost/);
 }
 
-let mongoConnectionString;
-if (process.env.NODE_ENV === 'production' && process.env.MONGO_RW_USERNAME && process.env.MONGO_RW_PASSWORD) {
-  const {
-    MONGO_RW_USERNAME,
-    MONGO_RW_PASSWORD,
-    MONGO_HOSTNAME,
-    MONGO_PORT,
-    MONGO_NAME
-  } = process.env;
-  const muo = new URL(`mongodb://${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_NAME}`);
-  muo.username = MONGO_RW_USERNAME;
-  muo.password = MONGO_RW_PASSWORD;
-  mongoConnectionString = `${muo.href}`;
-} else {
-  mongoConnectionString = process.env.MONGO_URL;
-}
+const mongoConnectionString = process.env.MONGO_URL;
 app.set('trust proxy', true);
 
 // Enable Cross-Origin Resource Sharing (CORS) for all origins

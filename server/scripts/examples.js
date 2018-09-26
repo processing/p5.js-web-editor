@@ -36,22 +36,7 @@ const clientSecret = process.env.GITHUB_SECRET;
 
 const headers = { 'User-Agent': 'p5js-web-editor/0.0.1' };
 
-let mongoConnectionString;
-if (process.env.NODE_ENV === 'production' && process.env.MONGO_RW_USERNAME && process.env.MONGO_RW_PASSWORD) {
-  const {
-    MONGO_RW_USERNAME,
-    MONGO_RW_PASSWORD,
-    MONGO_HOSTNAME,
-    MONGO_PORT,
-    MONGO_NAME
-  } = process.env;
-  const muo = new URL(`mongodb://${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_NAME}`);
-  muo.username = MONGO_RW_USERNAME;
-  muo.password = MONGO_RW_PASSWORD;
-  mongoConnectionString = `${muo.href}`;
-} else {
-  mongoConnectionString = process.env.MONGO_URL;
-}
+const mongoConnectionString = process.env.MONGO_URL;
 
 mongoose.connect(mongoConnectionString, { useMongoClient: true });
 mongoose.connection.on('error', () => {

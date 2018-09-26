@@ -88,7 +88,7 @@ module.exports = [{
   },
 },
 {
-  entry: path.resolve(__dirname, 'client/utils/previewEntry.js'),
+  entry: path.resolve(__dirname, '../client/utils/previewEntry.js'),
   target: 'web',
   output: {
     path: `${__dirname}`,
@@ -117,8 +117,8 @@ module.exports = [{
           plugins: [
             [
               'babel-plugin-webpack-loaders', {
-                'config': './webpack.config.babel.js',
-                "verbose": false
+                'config': path.resolve(__dirname, './config.babel.js'),
+                'verbose': false
               }
             ]
           ]
