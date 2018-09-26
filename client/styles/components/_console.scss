@@ -42,7 +42,8 @@
 .preview-console__messages {
 	display: flex;
 	flex-direction: column;
-	overflow-y: auto;
+	overflow-y: scroll;
+	margin-bottom: #{25 / $base-font-size}rem;
 }
 
 .preview-console__collapse {

@@ -103,7 +103,6 @@ class Console extends React.Component {
           </div>
         </div>
         <div className="preview-console__body">
-          <ConsoleInput theme={this.props.theme} />
           <div ref={(element) => { this.consoleMessages = element; }} className="preview-console__messages">
             {this.props.consoleEvents.map((consoleEvent) => {
               const { arguments: args, method, times } = consoleEvent;
@@ -141,6 +140,7 @@ class Console extends React.Component {
               );
             })}
           </div>
+          <ConsoleInput theme={this.props.theme} isExpanded={this.props.isExpanded} />
         </div>
       </div>
     );

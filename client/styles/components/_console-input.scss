@@ -1,6 +1,7 @@
 .console__input {
   padding-left: #{20 / $base-font-size}rem;
-  position: relative;
+  position: fixed;
+  bottom: 0;
   height: #{22 / $base-font-size}rem;
 }
 

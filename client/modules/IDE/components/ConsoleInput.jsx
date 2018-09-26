@@ -11,7 +11,9 @@ class ConsoleInput extends React.Component {
       theme: `p5-${this.props.theme}`,
       scrollbarStyle: null,
       keymap: 'sublime',
-      mode: 'javascript'
+      mode: 'javascript',
+      styleActiveLine: true,
+      inputStyle: 'contenteditable'
     });
 
     this._cm.setOption('extraKeys', {
@@ -66,18 +68,23 @@ class ConsoleInput extends React.Component {
 
   render() {
     return (
-      <div
-        className="console__input"
-      >
-        <InlineSVG src={rightArrowUrl} className="console-active__arrow" />
-        <div ref={(element) => { this.codemirrorContainer = element; }} className="console__editor" />
+      <div>
+        { this.props.isExpanded &&
+          <div
+            className="console__input"
+          >
+            <InlineSVG src={rightArrowUrl} className="console-active__arrow" />
+            <div ref={(element) => { this.codemirrorContainer = element; }} className="console__editor" />
+          </div>
+        }
       </div>
     );
   }
 }
 
 ConsoleInput.propTypes = {
-  theme: PropTypes.string.isRequired
+  theme: PropTypes.string.isRequired,
+  isExpanded: PropTypes.bool.isRequired
 };
 
 
