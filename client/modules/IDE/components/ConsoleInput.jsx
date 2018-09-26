@@ -12,7 +12,7 @@ class ConsoleInput extends React.Component {
       scrollbarStyle: null,
       keymap: 'sublime',
       mode: 'javascript',
-      styleActiveLine: true,
+      // styleActiveLine: true,
       inputStyle: 'contenteditable'
     });
 
