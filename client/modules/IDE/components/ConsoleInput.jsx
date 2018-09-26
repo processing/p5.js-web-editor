@@ -12,7 +12,6 @@ class ConsoleInput extends React.Component {
       scrollbarStyle: null,
       keymap: 'sublime',
       mode: 'javascript',
-      // styleActiveLine: true,
       inputStyle: 'contenteditable'
     });
 
@@ -68,23 +67,18 @@ class ConsoleInput extends React.Component {
 
   render() {
     return (
-      <div>
-        { this.props.isExpanded &&
-          <div
-            className="console__input"
-          >
-            <InlineSVG src={rightArrowUrl} className="console-active__arrow" />
-            <div ref={(element) => { this.codemirrorContainer = element; }} className="console__editor" />
-          </div>
-        }
+      <div
+        className="console__input"
+      >
+        <InlineSVG src={rightArrowUrl} className="console-active__arrow" />
+        <div ref={(element) => { this.codemirrorContainer = element; }} className="console__editor" />
       </div>
     );
   }
 }
 
 ConsoleInput.propTypes = {
-  theme: PropTypes.string.isRequired,
-  isExpanded: PropTypes.bool.isRequired
+  theme: PropTypes.string.isRequired
 };
 
 

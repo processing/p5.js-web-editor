@@ -161,7 +161,7 @@ class Editor extends React.Component {
         this.props.file.content !== this._cm.getValue()) {
       const oldDoc = this._cm.swapDoc(this._docs[this.props.file.id]);
       this._docs[prevProps.file.id] = oldDoc;
-      this._cm.focus();
+
       if (!prevProps.unsavedChanges) {
         setTimeout(() => this.props.setUnsavedChanges(false), 400);
       }

@@ -140,7 +140,9 @@ class Console extends React.Component {
               );
             })}
           </div>
-          <ConsoleInput theme={this.props.theme} isExpanded={this.props.isExpanded} />
+          { this.props.isExpanded &&
+            <ConsoleInput theme={this.props.theme} />
+          }
         </div>
       </div>
     );
