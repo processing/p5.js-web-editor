@@ -3,6 +3,7 @@
   position: fixed;
   bottom: 0;
   height: #{22 / $base-font-size}rem;
+  width: 100%;
 }
 
 .console__input .console-active__arrow {
