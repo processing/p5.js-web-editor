@@ -12,16 +12,10 @@ import { setUnsavedChanges,
 import { clearState, saveState } from '../../../persistState';
 import { redirectToProtocol, protocols } from '../../../components/forceProtocol';
 
-const ROOT_URL = process.env.API_URL;
+const __process = (typeof global !== 'undefined' ? global : window).process;
+const ROOT_URL = __process.env.API_URL;
 
 export function setProject(project) {
-  const targetProtocol = project.serveSecure === true ?
-    protocols.https :
-    protocols.http;
-
-  // This will not reload if on same protocol
-  redirectToProtocol(targetProtocol);
-
   return {
     type: ActionTypes.SET_PROJECT,
     project,
@@ -261,22 +255,6 @@ export function cloneProject() {
           error: response.data
         }));
     });
-  };
-}
-
-export function setServeSecure(serveSecure, { redirect = true } = {}) {
-  return (dispatch, getState) => {
-    dispatch({
-      type: ActionTypes.SET_SERVE_SECURE,
-      serveSecure
-    });
-
-    if (redirect === true) {
-      dispatch(saveProject(false /* autosave */))
-        .then(() => redirectToProtocol(serveSecure === true ? protocols.https : protocols.http));
-    }
-
-    return null;
   };
 }
 

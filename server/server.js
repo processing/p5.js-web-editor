@@ -7,15 +7,16 @@ import session from 'express-session';
 import connectMongo from 'connect-mongo';
 import passport from 'passport';
 import path from 'path';
+import { URL } from 'url';
+import basicAuth from 'express-basic-auth';
 
 // Webpack Requirements
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
-import config from '../webpack.config.dev';
+import config from '../webpack/config.dev';
 
 // Import all required modules
-import serverConfig from './config';
 import users from './routes/user.routes';
 import sessions from './routes/session.routes';
 import projects from './routes/project.routes';
@@ -32,6 +33,18 @@ import { get404Sketch } from './views/404Page';
 const app = new Express();
 const MongoStore = connectMongo(session);
 
+app.get('/health', (req, res) => res.json({ success: true }));
+
+// For basic auth, in setting up beta editor
+if (process.env.BASIC_USERNAME && process.env.BASIC_PASSWORD) {
+  app.use(basicAuth({
+    users: {
+      [process.env.BASIC_USERNAME]: process.env.BASIC_PASSWORD
+    },
+    challenge: true
+  }));
+}
+
 const corsOriginsWhitelist = [
   /p5js\.org$/,
 ];
@@ -45,6 +58,7 @@ if (process.env.NODE_ENV === 'development') {
   corsOriginsWhitelist.push(/localhost/);
 }
 
+const mongoConnectionString = process.env.MONGO_URL;
 app.set('trust proxy', true);
 
 // Enable Cross-Origin Resource Sharing (CORS) for all origins
@@ -75,7 +89,7 @@ app.use(session({
     secure: false,
   },
   store: new MongoStore({
-    url: process.env.MONGO_URL,
+    url: mongoConnectionString,
     autoReconnect: true
   })
 }));
@@ -108,8 +122,7 @@ require('./config/passport');
 // const passportConfig = require('./config/passport');
 
 // Connect to MongoDB
-// mongoose.connect(process.env.MONGODB_URI || process.env.MONGOLAB_URI);
-mongoose.connect(serverConfig.mongoURL);
+mongoose.connect(mongoConnectionString, { useMongoClient: true });
 mongoose.connection.on('error', () => {
   console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
   process.exit(1);
@@ -134,9 +147,9 @@ app.get('*', (req, res) => {
 });
 
 // start app
-app.listen(serverConfig.port, (error) => {
+app.listen(process.env.PORT, (error) => {
   if (!error) {
-    console.log(`p5js web editor is running on port: ${serverConfig.port}!`); // eslint-disable-line
+    console.log(`p5js web editor is running on port: ${process.env.PORT}!`); // eslint-disable-line
   }
 });
 

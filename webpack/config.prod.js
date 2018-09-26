@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
@@ -6,7 +7,9 @@ const cssnext = require('postcss-cssnext');
 const postcssFocus = require('postcss-focus');
 const postcssReporter = require('postcss-reporter');
 const cssnano = require('cssnano');
-require('dotenv').config();
+if (process.env.NODE_ENV === "development") {
+  require('dotenv').config();
+}
 
 module.exports = [{
   devtool: 'source-map',
@@ -14,7 +17,7 @@ module.exports = [{
   entry: {
     app: [
       'babel-polyfill',
-      './client/index.jsx'
+      path.resolve(__dirname, '../client/index.jsx')
     ],
     vendor: [
       'axios',
@@ -37,7 +40,7 @@ module.exports = [{
     ]
   },
   output: {
-    path: `${__dirname}/dist/static`,
+    path: path.resolve(__dirname, '../dist/static'),
     filename: '[name].[chunkhash].js',
     publicPath: '/'
   },
@@ -86,11 +89,7 @@ module.exports = [{
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        API_URL: process.env.API_URL ? `"${process.env.API_URL}"` : undefined,
-        NODE_ENV: JSON.stringify('production'),
-        S3_BUCKET: process.env.S3_BUCKET ? `"${process.env.S3_BUCKET}"` : undefined,
-        S3_BUCKET_URL_BASE: process.env.S3_BUCKET_URL_BASE ? `"${process.env.S3_BUCKET_URL_BASE}"` : undefined,
-        AWS_REGION: process.env.AWS_REGION ? `"${process.env.AWS_REGION}"` : undefined
+        NODE_ENV: JSON.stringify('production')
       }
     }),
     new webpack.optimize.CommonsChunkPlugin({
@@ -107,6 +106,7 @@ module.exports = [{
       manifestVariable: 'webpackManifest',
     }),
     new webpack.optimize.UglifyJsPlugin({
+      sourceMap: true,
       compress: {
         warnings: false
       }
@@ -133,12 +133,12 @@ module.exports = [{
 {
   entry: {
     app: [
-      './client/utils/previewEntry.js'
+      path.resolve(__dirname, '../client/utils/previewEntry.js')
     ]
   },
   target: 'web',
   output: {
-    path: `${__dirname}/dist/static`,
+    path: path.resolve(__dirname, '../dist/static'),
     filename: 'previewScripts.js',
     publicPath: '/'
   },

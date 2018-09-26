@@ -5,7 +5,8 @@ import { reset } from 'redux-form';
 import * as ActionTypes from '../../../constants';
 import { setUnsavedChanges } from './ide';
 
-const ROOT_URL = process.env.API_URL;
+const __process = (typeof global !== 'undefined' ? global : window).process;
+const ROOT_URL = __process.env.API_URL;
 
 function appendToFilename(filename, string) {
   const dotIndex = filename.lastIndexOf('.');

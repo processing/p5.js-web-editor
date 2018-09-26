@@ -1,6 +1,9 @@
 const webpack = require('webpack');
 const path = require('path');
-require('dotenv').config();
+
+if (process.env.NODE_ENV === 'development') {
+  require('dotenv').config();
+}
 
 module.exports = [{
   devtool: 'cheap-module-eval-source-map',
@@ -36,15 +39,7 @@ module.exports = [{
     }),
     new webpack.DefinePlugin({
       'process.env': {
-        API_URL: process.env.API_URL ? `"${process.env.API_URL}"` : undefined,
-        CLIENT: JSON.stringify(true),
-        FORCE_TO_HTTPS: process.env.FORCE_TO_HTTPS === 'true' ?
-          JSON.stringify(true) :
-          JSON.stringify(false),
-        NODE_ENV: JSON.stringify('development'),
-        S3_BUCKET: process.env.S3_BUCKET ? `"${process.env.S3_BUCKET}"` : undefined,
-        S3_BUCKET_URL_BASE: process.env.S3_BUCKET_URL_BASE ? `"${process.env.S3_BUCKET_URL_BASE}"` : undefined,
-        AWS_REGION: process.env.AWS_REGION ? `"${process.env.AWS_REGION}"` : undefined
+        NODE_ENV: JSON.stringify('development')
       }
     })
   ],
@@ -93,7 +88,7 @@ module.exports = [{
   },
 },
 {
-  entry: path.resolve(__dirname, 'client/utils/previewEntry.js'),
+  entry: path.resolve(__dirname, '../client/utils/previewEntry.js'),
   target: 'web',
   output: {
     path: `${__dirname}`,
@@ -122,8 +117,8 @@ module.exports = [{
           plugins: [
             [
               'babel-plugin-webpack-loaders', {
-                'config': './webpack.config.babel.js',
-                "verbose": false
+                'config': path.resolve(__dirname, './config.babel.js'),
+                'verbose': false
               }
             ]
           ]
