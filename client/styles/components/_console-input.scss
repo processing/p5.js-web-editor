@@ -1,9 +1,12 @@
 .console__input {
   padding-left: #{20 / $base-font-size}rem;
-  position: fixed;
+  position: absolute;
   bottom: 0;
   height: #{22 / $base-font-size}rem;
   width: 100%;
+  @include themify() {
+    background-color: getThemifyVariable('console-input-background-color');
+  }
 }
 
 .console__input .console-active__arrow {
@@ -24,13 +27,14 @@
 .console__editor {
   margin-left: #{8 / $base-font-size}rem;
   height: #{20 / $base-font-size}rem;
+  line-height: #{20 / $base-font-size}rem;
 }
 
 .console__editor .CodeMirror {
   border: none;
   font-family: Consolas,Lucida Console,Courier New,monospace;
   @include themify() {
-    background-color: getThemifyVariable('console-background-color');
+    background-color: getThemifyVariable('console-input-background-color');
   }
 
   .CodeMirror-line {

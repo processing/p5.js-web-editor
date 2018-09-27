@@ -140,7 +140,7 @@ class Console extends React.Component {
               );
             })}
           </div>
-          { this.props.isExpanded &&
+          { this.props.isExpanded && this.props.isPlaying &&
             <ConsoleInput theme={this.props.theme} />
           }
         </div>
@@ -155,6 +155,7 @@ Console.propTypes = {
     args: PropTypes.arrayOf(PropTypes.string)
   })),
   isExpanded: PropTypes.bool.isRequired,
+  isPlaying: PropTypes.bool.isRequired,
   collapseConsole: PropTypes.func.isRequired,
   expandConsole: PropTypes.func.isRequired,
   clearConsole: PropTypes.func.isRequired,

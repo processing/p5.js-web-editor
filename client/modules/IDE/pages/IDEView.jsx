@@ -358,6 +358,7 @@ class IDEView extends React.Component {
                   fontSize={this.props.preferences.fontSize}
                   consoleEvents={this.props.console}
                   isExpanded={this.props.ide.consoleIsExpanded}
+                  isPlaying={this.props.ide.isPlaying}
                   expandConsole={this.props.expandConsole}
                   collapseConsole={this.props.collapseConsole}
                   clearConsole={this.props.clearConsole}
