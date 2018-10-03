@@ -22,12 +22,17 @@
   @include themify() {
     color: getThemifyVariable('inactive-text-color');
   }
+  @include md {
+    text-align: center;
+  }
+
 }
 
 .copyable-input {
   padding-bottom: #{30 / $base-font-size}rem;
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .copyable-input__value-container {

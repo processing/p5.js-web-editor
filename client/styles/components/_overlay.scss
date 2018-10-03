@@ -24,6 +24,8 @@
   flex-flow: column;
   max-height: 80%;
   max-width: 65%;
+  min-width:40%;
+  overflow:auto;
 }
 
 .overlay__header {

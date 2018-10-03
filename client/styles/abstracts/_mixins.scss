@@ -37,3 +37,9 @@
   cursor: pointer;
   padding: 0;
 }
+
+@mixin md {
+  @media (max-width: #{$screen-md-max}) {
+      @content;
+  }
+}
