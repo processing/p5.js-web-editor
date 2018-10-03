@@ -53,7 +53,7 @@ module.exports = [{
           options: {
             cacheDirectory: true,
             plugins: ['react-hot-loader/babel'],
-          } 
+          }
         }, {
           loader: 'eslint-loader'
         }]
@@ -67,21 +67,33 @@ module.exports = [{
       },
       {
         test: /main\.scss$/,
-        loaders: ['style-loader', 'css-loader', 'sass-loader']
+        use: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
         test: /\.(svg|mp3)$/,
-        loader: 'file-loader'
+        use: 'file-loader'
+      },
+      {
+        test: /\.(png)$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'images/'
+          }
+         }
       },
       {
         test: /fonts\/.*\.(eot|svg|ttf|woff|woff2)$/,
-        loader: 'file-loader'
+        use: 'file-loader'
       },
       {
         test: /_console-feed.scss/,
-        loader: 'sass-extract-loader',
-        options: {
-          plugins: [{ plugin: 'sass-extract-js', options: { camelCase: false } }]
+        use: {
+          loader: 'sass-extract-loader',
+          options: {
+            plugins: [{ plugin: 'sass-extract-js', options: { camelCase: false } }]
+          }
         }
       }
     ],
