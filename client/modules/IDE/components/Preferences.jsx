@@ -107,6 +107,7 @@ class Preferences extends React.Component {
                 className="preference__minus-button"
                 onClick={() => this.props.setFontSize(this.props.fontSize - 2)}
                 aria-label="decrease font size"
+                disabled={this.props.fontSize <= 8}
               >
                 <InlineSVG src={minusUrl} alt="Decrease Font Size" />
                 <h6 className="preference__label">Decrease</h6>
@@ -126,6 +127,7 @@ class Preferences extends React.Component {
                 className="preference__plus-button"
                 onClick={() => this.props.setFontSize(this.props.fontSize + 2)}
                 aria-label="increase font size"
+                disabled={this.props.fontSize >= 36}
               >
                 <InlineSVG src={plusUrl} alt="Increase Font Size" />
                 <h6 className="preference__label">Increase</h6>
