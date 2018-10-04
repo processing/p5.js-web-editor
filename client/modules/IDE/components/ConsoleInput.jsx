@@ -29,7 +29,7 @@ class ConsoleInput extends React.Component {
           return false;
         }
         window.postMessage([{
-          method: 'log',
+          method: 'command',
           arguments: value,
           source: 'console'
         }], '*');

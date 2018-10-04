@@ -106,7 +106,6 @@ class Console extends React.Component {
           <div ref={(element) => { this.consoleMessages = element; }} className="preview-console__messages">
             {this.props.consoleEvents.map((consoleEvent) => {
               const { arguments: args, method, times } = consoleEvent;
-              const { expression, source } = consoleEvent;
               const { theme } = this.props;
               Object.assign(consoleEvent, { data: this.formatData(args) });
               if (Object.keys(args).length === 0) {
@@ -118,18 +117,9 @@ class Console extends React.Component {
               }
               return (
                 <div className="preview-console__output" key={consoleEvent.id}>
-                  { expression &&
-                    <div className="preview-console__expression">
-                      <InlineSVG src={rightArrowUrl} className="console__arrow" />
-                      <div>{expression}</div>
-                    </div>
-                  }
                   <div key={consoleEvent.id} className={`preview-console__message preview-console__message--${method}`}>
-                    { source === 'console' &&
-                      <InlineSVG src={leftArrowUrl} className="console__arrow" />
-                    }
                     { times > 1 &&
-                      <div className="preview-console__logged-times">{times}</div>
+                      <div className="preview-console__logged-times" style={{ fontSize: this.props.fontSize, borderRadius: this.props.fontSize / 2 }}>{times}</div>
                     }
                     <ConsoleFeed
                       styles={this.getConsoleFeedStyle(theme, times)}

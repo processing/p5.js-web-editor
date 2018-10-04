@@ -101,14 +101,16 @@ class PreviewFrame extends React.Component {
               consoleBuffer.length = 0;
             }
           }, LOGWAIT);
-
           consoleInfo = handleConsoleExpressions(args);
           Unhook(window.console);
           if (consoleInfo === '') {
             return false;
           }
-
-          Object.assign(message, { expression: args, arguments: Array.of(consoleInfo) });
+          window.postMessage([{
+            method: 'result',
+            arguments: Array.of(consoleInfo),
+            source: 'sketch'
+          }], '*');
         }
         let hasInfiniteLoop = false;
         Object.keys(args).forEach((key) => {
