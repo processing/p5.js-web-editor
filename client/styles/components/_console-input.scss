@@ -12,7 +12,7 @@
 .console__input .console-active__arrow {
   left: #{10 / $base-font-size}rem;
   position: absolute;
-  top: #{2 / $base-font-size}rem;
+  top: #{4 / $base-font-size}rem;
   & svg {
     width: #{6 / $base-font-size}rem;
     height: #{10 / $base-font-size}rem;
