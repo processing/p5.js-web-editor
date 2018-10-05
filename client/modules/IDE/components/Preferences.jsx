@@ -10,7 +10,6 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 const plusUrl = require('../../../images/plus.svg');
 const minusUrl = require('../../../images/minus.svg');
 const beepUrl = require('../../../sounds/audioAlert.mp3');
-const infoUrl = require('../../../images/information.svg');
 
 class Preferences extends React.Component {
   constructor(props) {

@@ -1,6 +1,5 @@
 import generate from 'project-name-generator';
 import * as ActionTypes from '../../../constants';
-import isSecurePage from '../../../utils/isSecurePage';
 
 const initialState = () => {
   const generatedString = generate({ words: 2 }).spaced;

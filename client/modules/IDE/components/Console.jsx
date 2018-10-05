@@ -3,7 +3,10 @@ import React from 'react';
 import InlineSVG from 'react-inlinesvg';
 import classNames from 'classnames';
 import { Console as ConsoleFeed } from 'console-feed';
-import { CONSOLE_FEED_WITHOUT_ICONS, CONSOLE_FEED_LIGHT_STYLES, CONSOLE_FEED_DARK_STYLES, CONSOLE_FEED_CONTRAST_STYLES } from '../../../styles/components/_console-feed.scss';
+import {
+  CONSOLE_FEED_WITHOUT_ICONS, CONSOLE_FEED_LIGHT_STYLES,
+  CONSOLE_FEED_DARK_STYLES, CONSOLE_FEED_CONTRAST_STYLES
+} from '../../../styles/components/_console-feed.scss';
 import warnLightUrl from '../../../images/console-warn-light.svg';
 import warnDarkUrl from '../../../images/console-warn-dark.svg';
 import errorLightUrl from '../../../images/console-error-light.svg';
@@ -115,7 +118,12 @@ class Console extends React.Component {
             return (
               <div key={consoleEvent.id} className={`preview-console__message preview-console__message--${method}`}>
                 { times > 1 &&
-                  <div className="preview-console__logged-times" style={{ fontSize: this.props.fontSize, borderRadius: this.props.fontSize / 2 }}>{times}</div>
+                  <div
+                    className="preview-console__logged-times"
+                    style={{ fontSize: this.props.fontSize, borderRadius: this.props.fontSize / 2 }}
+                  >
+                    {times}
+                  </div>
                 }
                 <ConsoleFeed
                   styles={this.getConsoleFeedStyle(theme, times)}

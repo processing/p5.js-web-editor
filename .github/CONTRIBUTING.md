@@ -16,7 +16,7 @@ Here are links to all the sections in this document:
 
 ## Code of Conduct
 
-Please follow the guidelines mentioned at [CODE OF CONDUCT.md](https://github.com/processing/p5.js-web-editor/blob/master/CODE_OF_CONDUCT.md#p5js-code-of-conduct).
+Please follow the guidelines mentioned at [CODE OF CONDUCT.md](https://github.com/processing/p5.js-web-editor/blob/master/.github/CODE_OF_CONDUCT.md).
 
 ## How Can I Contribute?
 

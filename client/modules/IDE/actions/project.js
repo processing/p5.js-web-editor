@@ -10,7 +10,6 @@ import { setUnsavedChanges,
   resetJustOpenedProject,
   showErrorModal } from './ide';
 import { clearState, saveState } from '../../../persistState';
-import { redirectToProtocol, protocols } from '../../../components/forceProtocol';
 
 const __process = (typeof global !== 'undefined' ? global : window).process;
 const ROOT_URL = __process.env.API_URL;
