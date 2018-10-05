@@ -5,13 +5,33 @@
   flex-flow: column;
 }
 
+.fullscreen-preview__header {
+  text-align: center;
+  font-size: 16px;
+  font-family: Montserrat, sans-serif;
+  margin-bottom: 5px;
+}
+
 .fullscreen-preview__title {
   width: 100%;
+  color: #ed225d;
+}
+
+.fullscreen-preview__message {
+  color: #6b6b6b;
+  font-weight: bold;
+}
+
+.fullscreen-preview__link {
+  text-decoration: none;
+  color: #b5b5b5;
 }
 
 .fullscreen-preview__frame-wrapper {
   width: 100%;
   flex: 1 0 0%;
+  display: flex;
+  justify-content: center;
   position: relative;
 }
 

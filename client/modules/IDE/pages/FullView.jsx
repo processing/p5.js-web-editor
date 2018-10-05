@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import Helmet from 'react-helmet';
+import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PreviewFrame from '../components/PreviewFrame';
+import About from '../components/About';
 import { getHTMLFile, getJSFiles, getCSSFiles } from '../reducers/files';
 import * as ProjectActions from '../actions/project';
-
 
 class FullView extends React.Component {
   componentDidMount() {
@@ -15,9 +17,16 @@ class FullView extends React.Component {
   render() {
     return (
       <div className="fullscreen-preview">
-        <h1 className="fullscreen-preview__title">
-          {this.props.project.name} {this.props.project.owner ? `by ${this.props.project.owner.username}` : ''}
-        </h1>
+        <Helmet>
+          <title>{this.props.project.name}</title>
+        </Helmet>
+        <div className="fullscreen-preview__header">
+          <h1 className="fullscreen-preview__title">
+            {this.props.project.name} <br /> {this.props.project.owner ? `by ${this.props.project.owner.username}` : ''}
+          </h1>
+          {this.props.project.owner ?
+            <h6 className="fullscreen-preview__message">Open in <Link className="fullscreen-preview__link" to={`/${this.props.project.owner.username}/sketches/${this.props.params.project_id}`}>the editor</Link>.</h6> : ''}
+        </div>
         <div className="fullscreen-preview__frame-wrapper">
           <PreviewFrame
             htmlFile={this.props.htmlFile}
