@@ -100,8 +100,8 @@ $p5-dark-activeline: rgb(207, 207, 207);
 }
 
 .cm-s-p5-dark .CodeMirror-matchingbracket {
-  outline: 1px solid $p5-dark-darkgray;
-  color: black !important;
+  outline: 1px solid $p5-dark-gray;
+  color: $p5-dark-white !important;
 }
 
 .cm-s-p5-dark .cm-qualifier {
