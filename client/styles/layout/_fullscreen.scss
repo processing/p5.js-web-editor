@@ -3,6 +3,9 @@
   width: 100%;
   height: 100%;
   flex-flow: column;
+  @include themify() {
+    background-color: getThemifyVariable('background-color');
+  }
 }
 
 .fullscreen-preview__header {
@@ -14,17 +17,15 @@
 
 .fullscreen-preview__title {
   width: 100%;
-  color: #ed225d;
+  @include themify() {
+    color: getThemifyVariable('logo-color');
+  }
 }
 
 .fullscreen-preview__message {
-  color: #6b6b6b;
-  font-weight: bold;
-}
-
-.fullscreen-preview__link {
-  text-decoration: none;
-  color: #b5b5b5;
+  @include themify() {
+    color: getThemifyVariable('primary-text-color');
+  }
 }
 
 .fullscreen-preview__frame-wrapper {

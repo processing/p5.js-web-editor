@@ -43,11 +43,11 @@ class CopyableInput extends React.Component {
           onMouseLeave={this.onMouseLeaveHandler}
         >
           <label className="copyable-input__label" htmlFor={`copyable-input__value-${label}`}>
-            <div style={{ 'display': 'flex', 'justify-content': 'space-between' }}>
-              {label} {hasPreviewLink ? (
-                <a style={{ 'text-align': 'right' }} target="_blank" href={value}>
+            <div className="copyable-input__label-container">
+              {label} {hasPreviewLink &&
+                <a target="_blank" href={value}>
                   Preview in new tab
-                </a>) : ''}
+                </a>}
             </div>
             <input
               type="text"

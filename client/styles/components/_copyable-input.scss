@@ -24,6 +24,11 @@
   }
 }
 
+.copyable-input__label-container {
+    display: flex;
+    justify-content: space-between;
+}
+
 .copyable-input {
   padding-bottom: #{30 / $base-font-size}rem;
   display: flex;

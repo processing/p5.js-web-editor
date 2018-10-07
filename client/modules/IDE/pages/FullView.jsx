@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import Helmet from 'react-helmet';
-import { Link, browserHistory } from 'react-router';
+import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PreviewFrame from '../components/PreviewFrame';
@@ -12,6 +12,7 @@ import * as ProjectActions from '../actions/project';
 class FullView extends React.Component {
   componentDidMount() {
     this.props.getProject(this.props.params.project_id);
+    document.body.className = this.props.theme;
   }
 
   render() {
@@ -46,6 +47,7 @@ class FullView extends React.Component {
 }
 
 FullView.propTypes = {
+  theme: PropTypes.string.isRequired,
   params: PropTypes.shape({
     project_id: PropTypes.string
   }).isRequired,
@@ -81,6 +83,7 @@ FullView.propTypes = {
 function mapStateToProps(state) {
   return {
     user: state.user,
+    theme: state.preferences.theme,
     htmlFile: getHTMLFile(state.files),
     jsFiles: getJSFiles(state.files),
     cssFiles: getCSSFiles(state.files),

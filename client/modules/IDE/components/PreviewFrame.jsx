@@ -337,8 +337,6 @@ class PreviewFrame extends React.Component {
       <iframe
         id="canvas_frame"
         className="preview-frame"
-        width="720px" // TODO
-        height="400px" // TODO
         aria-label="sketch output"
         role="main"
         scrolling="no"
