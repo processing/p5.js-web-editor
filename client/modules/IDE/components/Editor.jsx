@@ -19,6 +19,7 @@ import 'codemirror/addon/search/searchcursor';
 import 'codemirror/addon/search/matchesonscrollbar';
 import 'codemirror/addon/search/match-highlighter';
 import 'codemirror/addon/search/jump-to-line';
+import 'codemirror/addon/edit/matchbrackets';
 
 import { JSHINT } from 'jshint';
 import { CSSLint } from 'csslint';
@@ -87,6 +88,7 @@ class Editor extends React.Component {
       gutters: ['CodeMirror-foldgutter', 'CodeMirror-lint-markers'],
       keyMap: 'sublime',
       highlightSelectionMatches: true, // highlight current search match
+      matchBrackets: true,
       lint: {
         onUpdateLinting: ((annotations) => {
           this.props.hideRuntimeErrorWarning();
