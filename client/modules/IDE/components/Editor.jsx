@@ -103,6 +103,8 @@ class Editor extends React.Component {
       }
     });
 
+    delete this._cm.options.lint.options.errors;
+
     this._cm.setOption('extraKeys', {
       [`${metaKey}-Enter`]: () => null,
       [`Shift-${metaKey}-Enter`]: () => null,

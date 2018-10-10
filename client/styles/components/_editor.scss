@@ -35,7 +35,7 @@ pre.CodeMirror-line {
 
 .CodeMirror-lint-marker-warning, .CodeMirror-lint-marker-error, .CodeMirror-lint-marker-multiple {
   background-image: none;
-  width: #{48 / $base-font-size}rem;
+  width: #{49 / $base-font-size}rem;
   position: absolute;
   height: 100%;
   right: 100%;
@@ -56,8 +56,9 @@ pre.CodeMirror-line {
 
 .CodeMirror-gutter-elt:not(.CodeMirror-linenumber) {
   opacity: 0.3;
-  width: #{48 / $base-font-size}rem !important;
+  width: #{49 / $base-font-size}rem !important;
   height: 100%;
+  left: 49px !important;
   // background-color: rgb(255, 95, 82);
 }
 
