@@ -4,7 +4,6 @@ import mongoose from 'mongoose';
 import objectID from 'bson-objectid';
 import shortid from 'shortid';
 import eachSeries from 'async/eachSeries';
-import { URL } from 'url';
 import User from '../models/user';
 import Project from '../models/project';
 

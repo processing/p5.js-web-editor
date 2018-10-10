@@ -13,8 +13,6 @@ import AccountView from './modules/User/pages/AccountView';
 import { getUser } from './modules/User/actions';
 import { stopSketch } from './modules/IDE/actions/ide';
 
-const __process = (typeof global !== 'undefined' ? global : window).process;
-
 const checkAuth = (store) => {
   store.dispatch(getUser());
 };

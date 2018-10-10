@@ -3,7 +3,6 @@ import Q from 'q';
 import mongoose from 'mongoose';
 import objectID from 'bson-objectid';
 import shortid from 'shortid';
-import { URL } from 'url';
 
 import eachSeries from 'async/eachSeries';
 import User from '../models/user';
@@ -28,7 +27,9 @@ const defaultHTML =
 
     <!-- Generative Design Dependencies here -->
     <!-- GG Bundled -->
-    <script src="https://rawgit.com/generative-design/Code-Package-p5.js/${branchName}/libraries/gg-dep-bundle/gg-dep-bundle.js"></script>
+    <script src=
+        "https://rawgit.com/generative-design/Code-Package-p5.js/${branchName}/libraries/gg-dep-bundle/gg-dep-bundle.js">
+    </script>
 
     <!-- Opentype -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/opentype.js/0.7.3/opentype.min.js"></script>
