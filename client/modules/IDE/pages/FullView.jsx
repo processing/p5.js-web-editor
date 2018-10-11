@@ -15,6 +15,8 @@ class FullView extends React.Component {
     document.body.className = this.props.theme;
   }
 
+  ident = () => {}
+
   render() {
     return (
       <div className="fullscreen-preview">
@@ -39,6 +41,16 @@ class FullView extends React.Component {
             }
             fullView
             isPlaying
+            isAccessibleOutputPlaying={false}
+            textOutput={false}
+            gridOutput={false}
+            soundOutput={false}
+            dispatchConsoleEvent={this.ident}
+            endSketchRefresh={this.ident}
+            previewIsRefreshing={false}
+            setBlobUrl={this.ident}
+            stopSketch={this.ident}
+            expandConsole={this.ident}
           />
         </div>
       </div>
