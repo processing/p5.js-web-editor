@@ -1,0 +1,26 @@
+.preview-nav__editor-svg {
+  & svg {
+    width: 3rem;
+    height: 3rem;
+    @include themify() {
+      fill: getThemifyVariable('icon-color');
+    }
+    &:hover {
+      @include themify() {
+        fill: getThemifyVariable('primary-text-color');
+      }
+    }
+  }
+}
+
+.preview-nav__bold {
+  @include themify() {
+    color: getThemifyVariable('primary-text-color');
+  }
+}
+
+.preview-nav__secondary {
+  @include themify() {
+    color: getThemifyVariable('secondary-text-color');
+  }
+}
