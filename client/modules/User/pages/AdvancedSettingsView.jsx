@@ -2,18 +2,19 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { reduxForm } from 'redux-form';
 import { bindActionCreators } from 'redux';
-import { Link, browserHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 import InlineSVG from 'react-inlinesvg';
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
 import { updateSettings, initiateVerification } from '../actions';
-import AccountForm from '../components/AccountForm';
 import { validateSettings } from '../../../utils/reduxFormUtils';
-import GithubButton from '../components/GithubButton';
+import APIKeyForm from '../components/APIKeyForm';
 
 const exitUrl = require('../../../images/exit.svg');
 const logoUrl = require('../../../images/p5js-logo.svg');
 
+// TODO tmp
+const ident = () => {};
 
 class AccountView extends React.Component {
   constructor(props) {
@@ -38,7 +39,7 @@ class AccountView extends React.Component {
     return (
       <div className="form-container">
         <Helmet>
-          <title>p5.js Web Editor | Account</title>
+          <title>p5.js Web Editor | Advanced Settings</title>
         </Helmet>
         <div className="form-container__header">
           <button className="form-container__logo-button" onClick={this.gotoHomePage}>
@@ -49,11 +50,10 @@ class AccountView extends React.Component {
           </button>
         </div>
         <div className="form-container__content">
-          <h2 className="form-container__title">My Account</h2>
-          <AccountForm {...this.props} />
-          <Link to="/account/advanced">Advanced Settings</Link>
-          <h2 className="form-container__divider">Or</h2>
-          <GithubButton buttonText="Login with Github" />
+          <h2 className="form-container__title">Advanced Settings</h2>
+          <APIKeyForm
+            updateSettings={ident}
+          />
         </div>
       </div>
     );
@@ -64,6 +64,7 @@ function mapStateToProps(state) {
   return {
     initialValues: state.user, // <- initialValues for reduxForm
     user: state.user,
+    previousPath: state.ide.previousPath,
     theme: state.preferences.theme
   };
 }

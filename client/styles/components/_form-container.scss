@@ -37,3 +37,17 @@
 .form-container__exit-button {
   @extend %none-themify-icon-with-hover;
 }
+
+.form__table {
+  display: block;
+  max-width: 900px;
+  border-collapse: collapse;
+  & td {
+    max-width: 300px;
+    border: 1px solid #ddd;
+    padding: 0 10px 0 10px;
+  }
+  & tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+}
