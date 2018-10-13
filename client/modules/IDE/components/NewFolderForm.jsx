@@ -18,8 +18,9 @@ class NewFolderForm extends React.Component {
       <form
         className="new-folder-form"
         onSubmit={(data) => {
-          handleSubmit(this.createFolder)(data);
-          this.props.closeModal();
+          if (handleSubmit(this.createFolder)(data)) {
+            this.props.closeModal();
+          }
         }}
       >
         <label className="new-folder-form__name-label" htmlFor="name">Name:</label>
@@ -32,6 +33,7 @@ class NewFolderForm extends React.Component {
           {...domOnlyProps(name)}
         />
         <input type="submit" value="Add Folder" aria-label="add folder" />
+        {name.touched && name.error && <span className="form-error">{name.error}</span>}
       </form>
     );
   }

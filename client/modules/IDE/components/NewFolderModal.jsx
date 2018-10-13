@@ -32,7 +32,17 @@ NewFolderModal.propTypes = {
   closeModal: PropTypes.func.isRequired
 };
 
+function validate(formProps) {
+  const errors = {};
+
+  if (!formProps.name || !formProps.name.replace(/\s/g, '').length) {
+    errors.name = 'Please enter a name';
+  }
+
+  return errors;
+}
 export default reduxForm({
   form: 'new-folder',
-  fields: ['name']
+  fields: ['name'],
+  validate
 })(NewFolderModal);
