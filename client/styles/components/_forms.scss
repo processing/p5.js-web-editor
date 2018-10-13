@@ -49,3 +49,20 @@
 .form input[type="submit"]:disabled {
   cursor: not-allowed;
 }
+
+.form__button-remove {
+  @extend %forms-button;
+  margin: 1rem 0 1rem 0;
+  @include themify() {
+    color: getThemifyVariable('console-error-background-color');
+    border-color: getThemifyVariable('console-error-background-color');
+    &:enabled:hover {
+        border-color: getThemifyVariable('console-error-background-color');
+        background-color: getThemifyVariable('console-error-background-color');
+    }
+    &:enabled:active {
+        border-color: getThemifyVariable('console-error-background-color');
+        background-color: getThemifyVariable('console-error-background-color');
+    }
+  }
+}
