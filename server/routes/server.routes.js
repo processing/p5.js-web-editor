@@ -87,6 +87,14 @@ router.get('/account', (req, res) => {
   }
 });
 
+router.get('/account/advanced', (req, res) => {
+  if (req.user) {
+    res.send(renderIndex());
+  } else {
+    res.redirect('/login');
+  }
+});
+
 router.get('/about', (req, res) => {
   res.send(renderIndex());
 });
