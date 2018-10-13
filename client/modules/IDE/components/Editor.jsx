@@ -32,9 +32,7 @@ import '../../../utils/p5-javascript';
 import '../../../utils/webGL-clike';
 import Timer from '../components/Timer';
 import EditorAccessibility from '../components/EditorAccessibility';
-import {
-  metaKey,
-} from '../../../utils/metaKey';
+import { metaKey, } from '../../../utils/metaKey';
 
 import search from '../../../utils/codemirror-search';
 

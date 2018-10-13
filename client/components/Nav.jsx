@@ -4,9 +4,7 @@ import { Link } from 'react-router';
 import InlineSVG from 'react-inlinesvg';
 import classNames from 'classnames';
 
-import {
-  metaKeyName,
-} from '../utils/metaKey';
+import { metaKeyName, } from '../utils/metaKey';
 
 const triangleUrl = require('../images/down-filled-triangle.svg');
 const logoUrl = require('../images/p5js-logo-small.svg');

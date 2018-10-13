@@ -1,6 +1,4 @@
-import {
-  EXTERNAL_LINK_REGEX
-} from '../../server/utils/fileUtils';
+import { EXTERNAL_LINK_REGEX } from '../../server/utils/fileUtils';
 
 export const hijackConsoleErrorsScript = (offs) => {
   const s = `
