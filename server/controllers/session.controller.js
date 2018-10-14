@@ -13,6 +13,7 @@ export function createSession(req, res, next) {
         email: req.user.email,
         username: req.user.username,
         preferences: req.user.preferences,
+        apiKeys: req.user.apiKeys,
         verified: req.user.verified,
         id: req.user._id
       });
@@ -26,6 +27,7 @@ export function getSession(req, res) {
       email: req.user.email,
       username: req.user.username,
       preferences: req.user.preferences,
+      apiKeys: req.user.apiKeys,
       verified: req.user.verified,
       id: req.user._id
     });
