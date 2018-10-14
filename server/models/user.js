@@ -10,6 +10,20 @@ const EmailConfirmationStates = {
 
 const { Schema } = mongoose;
 
+const apiKeySchema = new Schema({
+  label: { type: String, default: 'API Key' },
+  lastUsedAt: { type: Date, required: true, default: Date.now },
+  hashedKey: { type: String, required: true },
+}, { timestamps: true, _id: true });
+
+apiKeySchema.virtual('id').get(function getApiKeyId() {
+  return this._id.toHexString();
+});
+
+apiKeySchema.set('toJSON', {
+  virtuals: true
+});
+
 const userSchema = new Schema({
   name: { type: String, default: '' },
   username: { type: String, required: true, unique: true },
@@ -22,6 +36,7 @@ const userSchema = new Schema({
   github: { type: String },
   email: { type: String, unique: true },
   tokens: Array,
+  apiKeys: { type: [apiKeySchema] },
   preferences: {
     fontSize: { type: Number, default: 18 },
     indentationAmount: { type: Number, default: 2 },
@@ -34,7 +49,7 @@ const userSchema = new Schema({
     theme: { type: String, default: 'light' },
     autorefresh: { type: Boolean, default: false }
   }
-}, { timestamps: true });
+}, { timestamps: true, usePushEach: true });
 
 /**
  * Password hash middleware.
