@@ -10,26 +10,25 @@ class APIKeyForm extends React.Component {
   }
 
   addKey(event) {
-    // TODO
-    console.log('addKey');
-    this.props.updateSettings();
     event.preventDefault();
+    document.getElementById('addKeyForm').reset();
+    this.props.addApiKey(this.state.keyLabel);
     return false;
   }
 
-  removeKey(k) {
-    // TODO
-    console.log(k);
+  removeKey(keyId) {
+    this.props.removeApiKey(keyId);
   }
 
   render() {
     return (
       <div>
         <h2 className="form__label">Key label</h2>
-        <form className="form" onSubmit={this.addKey}>
+        <form id="addKeyForm" className="form" onSubmit={this.addKey}>
           <input
             type="text"
             className="form__input"
+            placeholder="A name you will be able to recognize"
             id="keyLabel"
             onChange={(event) => { this.setState({ keyLabel: event.target.value }); }}
           /><br />
@@ -41,21 +40,11 @@ class APIKeyForm extends React.Component {
         </form>
         <table className="form__table">
           <tbody>
-            {[{
-              id: 1,
-              label: 'MyFirstAPI',
-              createdAt: new Date(),
-              lastUsedAt: new Date()
-            }, {
-              id: 2,
-              label: 'MyOtherAPI',
-              createdAt: new Date(),
-              lastUsedAt: new Date()
-            }].map(v => (
+            {this.props.apiKeys && this.props.apiKeys.map(v => (
               <tr key={v.id}>
-                <td><b>{v.label}</b><br />Created on: {v.createdAt.toLocaleDateString()} {v.createdAt.toLocaleTimeString()}</td>
-                <td>Last used on:<br /> {v.lastUsedAt.toLocaleDateString()} {v.lastUsedAt.toLocaleTimeString()}</td>
-                <td><button className="form__button-remove" onClick={() => this.removeKey(v)}>Delete</button></td>
+                <td><b>{v.label}</b><br />Created on: {v.createdAt}</td>
+                <td>Last used on:<br /> {v.lastUsedAt}</td>
+                <td><button className="form__button-remove" onClick={() => this.removeKey(v.id)}>Delete</button></td>
               </tr>))}
           </tbody>
         </table>
@@ -65,7 +54,14 @@ class APIKeyForm extends React.Component {
 }
 
 APIKeyForm.propTypes = {
-  updateSettings: PropTypes.func.isRequired,
+  addApiKey: PropTypes.func.isRequired,
+  removeApiKey: PropTypes.func.isRequired,
+  apiKeys: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.object.isRequired,
+    label: PropTypes.string.isRequired,
+    createdAt: PropTypes.object.isRequired,
+    lastUsedAt: PropTypes.object.isRequired,
+  })).isRequired
 };
 
 export default APIKeyForm;

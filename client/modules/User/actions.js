@@ -1,5 +1,6 @@
 import { browserHistory } from 'react-router';
 import axios from 'axios';
+import crypto from 'crypto';
 import * as ActionTypes from '../../constants';
 import { showErrorModal, justOpenedProject } from '../IDE/actions/ide';
 import { showToast, setToastText } from '../IDE/actions/toast';
@@ -215,6 +216,36 @@ export function updateSettings(formValues) {
         browserHistory.push('/');
         dispatch(showToast(5500));
         dispatch(setToastText('Settings saved.'));
+      })
+      .catch(response => Promise.reject(new Error(response.data.error)));
+}
+
+export function addApiKey(label) {
+  return ((dispatch) => {
+    crypto.randomBytes(20, (err, buf) => {
+      const key = buf.toString('hex');
+      const hashedKey = Buffer.from(key).toString('base64');
+      axios.put(`${ROOT_URL}/account/api-keys`, { label, hashedKey }, { withCredentials: true })
+        .then((response) => {
+          window.alert(`Here is your key :\n${key}\nNote it somewhere, you won't be able to see it later !`);
+          dispatch({
+            type: ActionTypes.ADDED_API_KEY,
+            user: response.data
+          });
+        })
+        .catch(response => Promise.reject(new Error(response.data.error)));
+    });
+  });
+}
+
+export function removeApiKey(keyId) {
+  return dispatch =>
+    axios.delete(`${ROOT_URL}/account/api-keys/${keyId}`, { withCredentials: true })
+      .then((response) => {
+        dispatch({
+          type: ActionTypes.REMOVED_API_KEY,
+          user: response.data
+        });
       })
       .catch(response => Promise.reject(new Error(response.data.error)));
 }
