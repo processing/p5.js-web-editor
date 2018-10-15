@@ -1,22 +1,17 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 import InlineSVG from 'react-inlinesvg';
-import axios from 'axios';
 import { Helmet } from 'react-helmet';
-import { updateSettings, initiateVerification } from '../actions';
-import { validateSettings } from '../../../utils/reduxFormUtils';
+import { addApiKey, removeApiKey } from '../actions';
 import APIKeyForm from '../components/APIKeyForm';
 
 const exitUrl = require('../../../images/exit.svg');
 const logoUrl = require('../../../images/p5js-logo.svg');
 
-// TODO tmp
-const ident = () => {};
-
-class AccountView extends React.Component {
+class AdvancedSettingsView extends React.Component {
   constructor(props) {
     super(props);
     this.closeAccountPage = this.closeAccountPage.bind(this);
@@ -51,9 +46,7 @@ class AccountView extends React.Component {
         </div>
         <div className="form-container__content">
           <h2 className="form-container__title">Advanced Settings</h2>
-          <APIKeyForm
-            updateSettings={ident}
-          />
+          <APIKeyForm {...this.props} />
         </div>
       </div>
     );
@@ -64,41 +57,18 @@ function mapStateToProps(state) {
   return {
     initialValues: state.user, // <- initialValues for reduxForm
     user: state.user,
+    apiKeys: state.user.apiKeys,
     previousPath: state.ide.previousPath,
     theme: state.preferences.theme
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ updateSettings, initiateVerification }, dispatch);
+  return bindActionCreators({ addApiKey, removeApiKey }, dispatch);
 }
 
-function asyncValidate(formProps, dispatch, props) {
-  const fieldToValidate = props.form._active;
-  if (fieldToValidate) {
-    const queryParams = {};
-    queryParams[fieldToValidate] = formProps[fieldToValidate];
-    queryParams.check_type = fieldToValidate;
-    return axios.get('/api/signup/duplicate_check', { params: queryParams })
-      .then((response) => {
-        if (response.data.exists) {
-          const error = {};
-          error[fieldToValidate] = response.data.message;
-          throw error;
-        }
-      });
-  }
-  return Promise.resolve(true).then(() => {});
-}
-
-AccountView.propTypes = {
+AdvancedSettingsView.propTypes = {
   theme: PropTypes.string.isRequired
 };
 
-export default reduxForm({
-  form: 'updateAllSettings',
-  fields: ['username', 'email', 'currentPassword', 'newPassword'],
-  validate: validateSettings,
-  asyncValidate,
-  asyncBlurFields: ['username', 'email', 'currentPassword']
-}, mapStateToProps, mapDispatchToProps)(AccountView);
+export default connect(mapStateToProps, mapDispatchToProps)(AdvancedSettingsView);
