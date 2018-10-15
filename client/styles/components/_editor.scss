@@ -245,6 +245,11 @@ pre.CodeMirror-line {
   background: transparent url(../images/exit.svg) no-repeat;
 }
 
+.CodeMirror-foldgutter-open, .CodeMirror-foldgutter-folded {
+  position: absolute;
+  right: 100%;
+}
+
 .CodeMirror-foldgutter-open:after {
   @include themify() {
     background-image: getThemifyVariable('codefold-icon-open');
