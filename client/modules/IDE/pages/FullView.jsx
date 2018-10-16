@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PreviewFrame from '../components/PreviewFrame';
 import PreviewNav from '../../../components/PreviewNav';
-import About from '../components/About';
 import { getHTMLFile, getJSFiles, getCSSFiles } from '../reducers/files';
 import * as ProjectActions from '../actions/project';
 
@@ -13,6 +12,12 @@ class FullView extends React.Component {
   componentDidMount() {
     this.props.getProject(this.props.params.project_id);
     document.body.className = this.props.theme;
+  }
+
+  componentWillUpdate(nextProps) {
+    if (nextProps.theme !== this.props.theme) {
+      document.body.className = nextProps.theme;
+    }
   }
 
   ident = () => {}

@@ -46,7 +46,7 @@ class CopyableInput extends React.Component {
             <div className="copyable-input__label-container">
               {label} {hasPreviewLink &&
                 <a target="_blank" href={value}>
-                  Preview in new tab
+                  Open
                 </a>}
             </div>
             <input

@@ -12,7 +12,9 @@ const PreviewNav = ({ owner, project }) => (
       <div className="nav__item-logo">
         <InlineSVG src={logoUrl} alt="p5.js logo" />
       </div>
-      <h3 className="nav__item"><b className="preview-nav__bold">{project.name}</b><span className="preview-nav__secondary">&nbsp;by&nbsp;</span><b>{owner.username}</b></h3>
+      <Link className="nav__item" to={`/${owner.username}/sketches/${project.id}`}>{project.name}</Link>
+      <p className="toolbar__project-owner">by</p>
+      <Link className="nav__item" to={`/${owner.username}/sketches/`}>{owner.username}</Link>
     </div>
     <div className="nav__items-right">
       <Link to={`/${owner.username}/sketches/${project.id}`}>

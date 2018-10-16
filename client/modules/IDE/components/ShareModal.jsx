@@ -24,11 +24,6 @@ class ShareModal extends React.PureComponent {
           hasPreviewLink
           value={`${hostname}/${ownerUsername}/full/${projectId}`}
         />
-        <CopyableInput
-          label="Edit"
-          hasPreviewLink
-          value={`${hostname}/${ownerUsername}/sketches/${projectId}`}
-        />
       </div>
     );
   }
