@@ -7,30 +7,3 @@
     background-color: getThemifyVariable('background-color');
   }
 }
-
-.fullscreen-preview__header {
-  text-align: center;
-  font-size: 16px;
-  font-family: Montserrat, sans-serif;
-  margin-bottom: 5px;
-}
-
-.fullscreen-preview__title {
-  width: 100%;
-  @include themify() {
-    color: getThemifyVariable('logo-color');
-  }
-}
-
-.fullscreen-preview__message {
-  @include themify() {
-    color: getThemifyVariable('primary-text-color');
-  }
-}
-
-.fullscreen-preview__frame-wrapper {
-  width: 100%;
-  flex: 1 0 0%;
-  position: relative;
-}
-

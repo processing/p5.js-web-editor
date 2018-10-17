@@ -32,7 +32,7 @@ class FullView extends React.Component {
           owner={{ username: this.props.project.owner ? `${this.props.project.owner.username}` : '' }}
           project={{ name: this.props.project.name, id: this.props.params.project_id }}
         />
-        <div className="fullscreen-preview__frame-wrapper">
+        <div className="preview-frame-holder">
           <PreviewFrame
             htmlFile={this.props.htmlFile}
             jsFiles={this.props.jsFiles}

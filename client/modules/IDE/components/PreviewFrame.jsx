@@ -327,9 +327,6 @@ class PreviewFrame extends React.Component {
       doc.srcdoc = '';
       srcDoc.set(doc, '  ');
     }
-    const matches = localFiles.match(/createCanvas\((\d+), (\d+)\)/);
-    doc.width = `${matches[1]}px`;
-    doc.height = `${matches[2]}px`;
   }
 
   render() {
@@ -339,7 +336,6 @@ class PreviewFrame extends React.Component {
         className="preview-frame"
         aria-label="sketch output"
         role="main"
-        scrolling="no"
         frameBorder="0"
         title="sketch output"
         ref={(element) => { this.iframeElement = element; }}
