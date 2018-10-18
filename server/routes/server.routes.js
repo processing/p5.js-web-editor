@@ -32,10 +32,17 @@ router.get('/:username/sketches/:project_id', (req, res) => {
   ));
 });
 
+router.get('/:username/full/:project_id', (req, res) => {
+  projectForUserExists(req.params.username, req.params.project_id, exists => (
+    exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
+  ));
+});
 
-// router.get('/full/:project_id', (req, res) => {
-//   res.send(renderIndex());
-// });
+router.get('/full/:project_id', (req, res) => {
+  projectExists(req.params.project_id, exists => (
+    exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
+  ));
+});
 
 router.get('/login', (req, res) => {
   if (req.user) {

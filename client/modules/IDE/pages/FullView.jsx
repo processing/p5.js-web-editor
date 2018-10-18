@@ -1,24 +1,38 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import Helmet from 'react-helmet';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PreviewFrame from '../components/PreviewFrame';
+import PreviewNav from '../../../components/PreviewNav';
 import { getHTMLFile, getJSFiles, getCSSFiles } from '../reducers/files';
 import * as ProjectActions from '../actions/project';
-
 
 class FullView extends React.Component {
   componentDidMount() {
     this.props.getProject(this.props.params.project_id);
+    document.body.className = this.props.theme;
   }
+
+  componentWillUpdate(nextProps) {
+    if (nextProps.theme !== this.props.theme) {
+      document.body.className = nextProps.theme;
+    }
+  }
+
+  ident = () => {}
 
   render() {
     return (
       <div className="fullscreen-preview">
-        <h1 className="fullscreen-preview__title">
-          {this.props.project.name} {this.props.project.owner ? `by ${this.props.project.owner.username}` : ''}
-        </h1>
-        <div className="fullscreen-preview__frame-wrapper">
+        <Helmet>
+          <title>{this.props.project.name}</title>
+        </Helmet>
+        <PreviewNav
+          owner={{ username: this.props.project.owner ? `${this.props.project.owner.username}` : '' }}
+          project={{ name: this.props.project.name, id: this.props.params.project_id }}
+        />
+        <div className="preview-frame-holder">
           <PreviewFrame
             htmlFile={this.props.htmlFile}
             jsFiles={this.props.jsFiles}
@@ -29,6 +43,16 @@ class FullView extends React.Component {
             }
             fullView
             isPlaying
+            isAccessibleOutputPlaying={false}
+            textOutput={false}
+            gridOutput={false}
+            soundOutput={false}
+            dispatchConsoleEvent={this.ident}
+            endSketchRefresh={this.ident}
+            previewIsRefreshing={false}
+            setBlobUrl={this.ident}
+            stopSketch={this.ident}
+            expandConsole={this.ident}
           />
         </div>
       </div>
@@ -37,6 +61,7 @@ class FullView extends React.Component {
 }
 
 FullView.propTypes = {
+  theme: PropTypes.string.isRequired,
   params: PropTypes.shape({
     project_id: PropTypes.string
   }).isRequired,
@@ -72,6 +97,7 @@ FullView.propTypes = {
 function mapStateToProps(state) {
   return {
     user: state.user,
+    theme: state.preferences.theme,
     htmlFile: getHTMLFile(state.files),
     jsFiles: getJSFiles(state.files),
     cssFiles: getCSSFiles(state.files),

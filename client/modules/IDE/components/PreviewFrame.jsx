@@ -317,8 +317,9 @@ class PreviewFrame extends React.Component {
 
   renderSketch() {
     const doc = this.iframeElement;
+    const localFiles = this.injectLocalFiles();
     if (this.props.isPlaying) {
-      srcDoc.set(doc, this.injectLocalFiles());
+      srcDoc.set(doc, localFiles);
       if (this.props.endSketchRefresh) {
         this.props.endSketchRefresh();
       }
@@ -331,6 +332,7 @@ class PreviewFrame extends React.Component {
   render() {
     return (
       <iframe
+        id="canvas_frame"
         className="preview-frame"
         aria-label="sketch output"
         role="main"
