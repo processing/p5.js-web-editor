@@ -1,7 +1,7 @@
 .preview-nav__editor-svg {
   & svg {
-    width: #{44 / $base-font-size}rem;
-    height: #{44 / $base-font-size}rem;
+    width: #{22 / $base-font-size}rem;
+    height: #{22 / $base-font-size}rem;
     @include themify() {
         fill: getThemifyVariable('button-nav-inactive-color');
     }
