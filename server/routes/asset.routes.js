@@ -6,6 +6,9 @@ const router = new Router();
 
 router.get('/:username/sketches/:project_id/*', getProjectAsset);
 router.get('/full/:project_id/*', getProjectAsset);
+router.get('/:username/full/:project_id/*', getProjectAsset);
+router.get('/embed/:project_id/*', getProjectAsset);
+router.get('/:username/embed/:project_id/*', getProjectAsset);
 
 router.get('/sketches/:project_id/assets/*?', getFileContent);
 
