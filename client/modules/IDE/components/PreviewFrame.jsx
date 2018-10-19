@@ -333,7 +333,7 @@ class PreviewFrame extends React.Component {
     return (
       <iframe
         id="canvas_frame"
-        className="preview-frame"
+        className={this.props.fullView ? 'fullview-preview-frame' : 'preview-frame'}
         aria-label="sketch output"
         role="main"
         frameBorder="0"
