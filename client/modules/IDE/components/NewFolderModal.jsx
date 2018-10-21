@@ -34,9 +34,10 @@ NewFolderModal.propTypes = {
 
 function validate(formProps) {
   const errors = {};
-
-  if (!formProps.name || !formProps.name.replace(/\s/g, '').length) {
+  if (!formProps.name) {
     errors.name = 'Please enter a name';
+  } else if (formProps.name.trim().length === 0) {
+    errors.name = 'Folder name cannot contain only spaces';
   }
 
   return errors;
