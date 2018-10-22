@@ -7,6 +7,7 @@ import srcDoc from 'srcdoc-polyfill';
 import loopProtect from 'loop-protect';
 import { JSHINT } from 'jshint';
 import decomment from 'decomment';
+import classNames from 'classnames';
 import { getBlobUrl } from '../actions/files';
 import { resolvePathToFile } from '../../../../server/utils/filePath';
 import {
@@ -330,10 +331,14 @@ class PreviewFrame extends React.Component {
   }
 
   render() {
+    const iframeClass = classNames({
+      'preview-frame': true,
+      'preview-frame--full-view': this.props.fullView
+    });
     return (
       <iframe
         id="canvas_frame"
-        className="preview-frame"
+        className={iframeClass}
         aria-label="sketch output"
         role="main"
         frameBorder="0"

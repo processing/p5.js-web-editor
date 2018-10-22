@@ -5,6 +5,10 @@
   border-width: 0;
 }
 
+.preview-frame--full-view {
+  position: relative;
+}
+
 .preview-frame-holder {
   display: flex;
   flex-direction: column;
