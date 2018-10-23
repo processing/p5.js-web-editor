@@ -130,14 +130,14 @@ export function updateFile(req, res) {
       res.status(403).send({ success: false, message: 'Session does not match owner of project.' });
       return;
     }
-    let fileToUpdate = project.files.find(file => file.id === req.params.file_id)
+    let fileToUpdate = project.files.find(file => file.id === req.params.file_id);
     if (!fileToUpdate) {
       res.status(404).send({ success: false, message: 'File does not exist in project.' });
       return;
     }
-    fileToUpdate = Object.assign(fileToUpdate, req.body)
-    project.save( innerErr => {
+    fileToUpdate = Object.assign(fileToUpdate, req.body);
+    project.save((innerErr) => {
       res.json(project.files);
-    })
+    });
   });
 }
