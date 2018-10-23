@@ -241,7 +241,7 @@ class PreviewFrame extends React.Component {
             // could also pull file from API instead of using bloburl
             const blobURL = getBlobUrl(resolvedFile);
             this.props.setBlobUrl(resolvedFile, blobURL);
-            const filePathRegex = new RegExp(filePath, "gi");
+            const filePathRegex = new RegExp(filePath, 'gi');
             newContent = newContent.replace(filePathRegex, blobURL);
           }
         }
