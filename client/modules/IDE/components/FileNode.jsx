@@ -61,6 +61,7 @@ export class FileNode extends React.Component {
     ) {
       this.props.updateFileName(this.props.id, this.originalFileName);
     }
+    this.props.saveFile(this.props.id);
   }
 
   toggleFileOptions(e) {
@@ -250,7 +251,8 @@ FileNode.propTypes = {
   newFile: PropTypes.func.isRequired,
   newFolder: PropTypes.func.isRequired,
   showFolderChildren: PropTypes.func.isRequired,
-  hideFolderChildren: PropTypes.func.isRequired
+  hideFolderChildren: PropTypes.func.isRequired,
+  saveFile: PropTypes.func.isRequired
 };
 
 FileNode.defaultProps = {

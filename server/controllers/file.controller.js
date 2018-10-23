@@ -119,3 +119,25 @@ export function getFileContent(req, res) {
     res.send(resolvedFile.content);
   });
 }
+
+export function updateFile(req, res) {
+  Project.findById(req.params.project_id, (err, project) => {
+    if (err) {
+      res.status(404).send({ success: false, message: 'Project with that id does not exist.' });
+      return;
+    }
+    if (!project.user.equals(req.user._id)) {
+      res.status(403).send({ success: false, message: 'Session does not match owner of project.' });
+      return;
+    }
+    let fileToUpdate = project.files.find(file => file.id === req.params.file_id)
+    if (!fileToUpdate) {
+      res.status(404).send({ success: false, message: 'File does not exist in project.' });
+      return;
+    }
+    fileToUpdate = Object.assign(fileToUpdate, req.body)
+    project.save( innerErr => {
+      res.json(project.files);
+    })
+  });
+}

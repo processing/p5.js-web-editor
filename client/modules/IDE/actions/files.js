@@ -156,6 +156,22 @@ export function updateFileName(id, name) {
   };
 }
 
+export function saveFile(id){
+  return (dispatch, getState) => {
+      const state = getState();
+      const UpdatedFile = state.files.find( file => file.id === id );
+      if (UpdatedFile && state.project.id) {
+        axios.put(`${ROOT_URL}/projects/${state.project.id}/files/${id}`, UpdatedFile ,{ withCredentials: true })
+        .catch((response) => {
+          dispatch({
+            type: ActionTypes.ERROR,
+            error: response.data
+          });
+        });
+      }
+  };
+}
+
 export function deleteFile(id, parentId) {
   return (dispatch, getState) => {
     const state = getState();
