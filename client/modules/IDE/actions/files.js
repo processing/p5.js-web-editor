@@ -162,6 +162,9 @@ export function saveFile(id) {
     const UpdatedFile = state.files.find(file => file.id === id);
     if (UpdatedFile && state.project.id) {
       axios.put(`${ROOT_URL}/projects/${state.project.id}/files/${id}`, UpdatedFile, { withCredentials: true })
+        .then(() => {
+          dispatch(setUnsavedChanges(false));
+        })
         .catch((response) => {
           dispatch({
             type: ActionTypes.ERROR,
