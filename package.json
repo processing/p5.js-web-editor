@@ -12,12 +12,20 @@
     "build:client": "cross-env NODE_ENV=production webpack --config webpack/config.prod.js",
     "build:server": "cross-env NODE_ENV=production webpack --config webpack/config.server.js",
     "build:examples": "cross-env NODE_ENV=production webpack --config webpack/config.examples.js",
-    "test": "npm run lint",
+    "test": "jest",
     "fetch-examples": "cross-env NODE_ENV=development node ./server/scripts/fetch-examples.js",
     "fetch-examples-gg": "cross-env NODE_ENV=development node ./server/scripts/fetch-examples-gg.js",
     "fetch-examples:prod": "cross-env NODE_ENV=production node ./dist/fetch-examples.bundle.js",
     "fetch-examples-gg:prod": "cross-env NODE_ENV=production node ./dist/fetch-examples-gg.bundle.js",
     "heroku-postbuild": "touch .env; npm run build"
+  },
+  "jest": {
+    "setupFiles": [
+      "<rootDir>/jest.setup.js"
+    ],
+    "moduleNameMapper": {
+      "^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/client/__test__/mocks/fileMock.js"
+    }
   },
   "main": "index.js",
   "author": "Cassie Tarakajian",
@@ -41,6 +49,8 @@
     "css-loader": "^0.23.1",
     "cssnano": "^3.10.0",
     "eslint": "^4.19.1",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
@@ -50,6 +60,7 @@
     "node-sass": "^4.11.0",
     "nodemon": "^1.18.9",
     "postcss-cssnext": "^2.11.0",
+    "jest": "^23.6.0",
     "postcss-focus": "^1.0.0",
     "postcss-loader": "^0.9.1",
     "postcss-reporter": "^1.4.1",

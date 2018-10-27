@@ -1,0 +1,47 @@
+
+import React from 'react';
+import { shallow } from 'enzyme';
+
+import Nav from './../Nav';
+
+describe('Nav', () => {
+  const props = {
+    newProject: jest.fn(),
+    saveProject: jest.fn(),
+    autosaveProject: jest.fn(),
+    exportProjectAsZip: jest.fn(),
+    cloneProject: jest.fn(),
+    user: {
+      authenticated: true,
+      username: 'new-user',
+      id: 'new-user'
+    },
+    project: {
+      id: 'new-project',
+      owner: {
+        id: 'new-user'
+      }
+    },
+    logoutUser: jest.fn(),
+    showShareModal: jest.fn(),
+    showErrorModal: jest.fn(),
+    unsavedChanges: false,
+    warnIfUnsavedChanges: jest.fn(),
+    showKeyboardShortcutModal: jest.fn(),
+    cmController: {
+      tidyCode: jest.fn(),
+      showFind: jest.fn(),
+      findNext: jest.fn(),
+      findPrev: jest.fn()
+    },
+    startSketch: jest.fn(),
+    stopSketch: jest.fn(),
+    setAllAccessibleOutput: jest.fn()
+  };
+  const getWrapper = () => shallow(<Nav {...props} />);
+
+  test('it renders main navigation', () => {
+    const nav = getWrapper();
+    expect(nav.exists('.nav')).toEqual(true);
+  });
+});
