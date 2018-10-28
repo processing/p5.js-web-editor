@@ -68,6 +68,7 @@
     "sass-loader": "^6.0.7",
     "style-loader": "^0.13.2",
     "webpack-manifest-plugin": "^2.0.4",
+    "react-test-renderer": "^16.6.0",
     "webpack-node-externals": "^1.7.2"
   },
   "engines": {

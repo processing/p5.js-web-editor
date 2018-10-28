@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { shallow } from 'enzyme';
+import renderer from 'react-test-renderer';
 
 import Nav from './../Nav';
 
@@ -43,5 +44,12 @@ describe('Nav', () => {
   test('it renders main navigation', () => {
     const nav = getWrapper();
     expect(nav.exists('.nav')).toEqual(true);
+  });
+
+  it('renders correctly', () => {
+    const tree = renderer
+      .create(<Nav {...props} />)
+      .toJSON();
+    expect(tree).toMatchSnapshot();
   });
 });
