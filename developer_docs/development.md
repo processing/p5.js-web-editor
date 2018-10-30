@@ -5,6 +5,11 @@ A guide for adding code to this project.
 ## Installation
 Follow the [installation guide](https://github.com/processing/p5.js-web-editor/blob/master/developer_docs/installation.md).
 
+## Tests
+To run the test suite simply run `npm test` (after installing dependencies with `npm install`)
+
+A sample unit test could be found here: [Nav.test.jsx](../client/components/__test__/Nav.test.jsx).
+
 ## Design
 Design proposed and theme changes are present at: [Zeplin](https://scene.zeplin.io/project/55f746c54a02e1e50e0632c3).
 
@@ -23,3 +28,5 @@ Design proposed and theme changes are present at: [Zeplin](https://scene.zeplin.
  - For reference to the JavaScript style guide, see the [Airbnb Style Guide](https://github.com/airbnb/javascript), [React ESLint Plugin](https://github.com/yannickcr/eslint-plugin-react).
 
  - The ESLint configuration is based on a few popular React/Redux boilerplates. Open to suggestions on this. If in development, you're getting annoyed with ESLint, you can temporarily remove the `eslint-loader` it from `webpack/config.dev.js` in the JavaScript loader, or disable any line from eslint by commenting at the end of the line `// eslint-disable-line`.
+
+ - [Jest](https://jestjs.io/) for unit tests and snapshot testing along with [Enzyme](https://airbnb.io/enzyme/) for testing React.

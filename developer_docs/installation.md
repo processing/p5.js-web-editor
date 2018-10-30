@@ -29,9 +29,6 @@ Follow these instructions to set up your development environment, which you need
 11. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
 12. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
 
-## Tests (in progress)
-Run `npm test`
-
 ## Docker Installation
 
 Using Docker, you can have a complete, consistent development environment without having to manually install dependencies such as Node, Mongo, etc. It also helps isolate these dependencies and their data from other projects that you may have on the same computer that use different/conflicting versions, etc.
