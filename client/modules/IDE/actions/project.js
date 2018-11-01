@@ -241,7 +241,6 @@ export function cloneProject() {
       axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
         .then((response) => {
           browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
-          
           dispatch({
             type: ActionTypes.NEW_PROJECT,
             project: response.data,
