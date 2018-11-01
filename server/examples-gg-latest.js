@@ -12,7 +12,7 @@ import Project from './models/project';
 const testMake = false;
 
 // TODO: Change branchName if necessary
-const branchName = 'dev-updates';
+const branchName = 'master';
 const branchRef = `?ref=${branchName}`;
 const clientId = process.env.GITHUB_ID;
 const clientSecret = process.env.GITHUB_SECRET;
