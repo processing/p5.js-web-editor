@@ -4,10 +4,10 @@ const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
 
-  entry: path.resolve(__dirname, 'server/server.js'),
+  entry: path.resolve(__dirname, '../server/server.js'),
 
   output: {
-    path: __dirname + '/dist/',
+    path: path.resolve(__dirname, '../dist/'),
     filename: 'server.bundle.js',
   },
 
@@ -42,7 +42,7 @@ module.exports = {
           plugins: [
             [
               'babel-plugin-webpack-loaders', {
-                'config': './webpack.config.babel.js',
+                'config': path.resolve(__dirname, './config.babel.js'),
                 "verbose": false
               }
             ]

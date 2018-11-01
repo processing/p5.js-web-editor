@@ -5,8 +5,8 @@ import objectID from 'bson-objectid';
 import shortid from 'shortid';
 
 import eachSeries from 'async/eachSeries';
-import User from './models/user';
-import Project from './models/project';
+import User from '../models/user';
+import Project from '../models/project';
 
 // TODO: change to true when testing!
 const testMake = false;
@@ -27,7 +27,9 @@ const defaultHTML =
 
     <!-- Generative Design Dependencies here -->
     <!-- GG Bundled -->
-    <script src="https://rawgit.com/generative-design/Code-Package-p5.js/${branchName}/libraries/gg-dep-bundle/gg-dep-bundle.js"></script>
+    <script src=
+        "https://rawgit.com/generative-design/Code-Package-p5.js/${branchName}/libraries/gg-dep-bundle/gg-dep-bundle.js">
+    </script>
 
     <!-- Opentype -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/opentype.js/0.7.3/opentype.min.js"></script>
@@ -65,7 +67,9 @@ canvas {
 
 const headers = { 'User-Agent': 'p5js-web-editor/0.0.1' };
 
-mongoose.connect(process.env.MONGO_URL);
+const mongoConnectionString = process.env.MONGO_URL;
+
+mongoose.connect(mongoConnectionString, { useMongoClient: true });
 mongoose.connection.on('error', () => {
   console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
   process.exit(1);

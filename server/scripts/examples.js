@@ -4,8 +4,8 @@ import mongoose from 'mongoose';
 import objectID from 'bson-objectid';
 import shortid from 'shortid';
 import eachSeries from 'async/eachSeries';
-import User from './models/user';
-import Project from './models/project';
+import User from '../models/user';
+import Project from '../models/project';
 
 const defaultHTML =
 `<!DOCTYPE html>
@@ -28,6 +28,9 @@ const defaultCSS =
   margin: 0;
   padding: 0;
 }
+canvas {
+  display: block;
+}
 `;
 
 const clientId = process.env.GITHUB_ID;
@@ -35,7 +38,9 @@ const clientSecret = process.env.GITHUB_SECRET;
 
 const headers = { 'User-Agent': 'p5js-web-editor/0.0.1' };
 
-mongoose.connect(process.env.MONGO_URL);
+const mongoConnectionString = process.env.MONGO_URL;
+
+mongoose.connect(mongoConnectionString, { useMongoClient: true });
 mongoose.connection.on('error', () => {
   console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
   process.exit(1);

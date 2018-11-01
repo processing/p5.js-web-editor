@@ -15,6 +15,21 @@ export function renderIndex() {
       <link href='https://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
       <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
       <link rel='shortcut icon' href='https://raw.githubusercontent.com/processing/p5.js-website-OLD/master/favicon.ico' type='image/x-icon'/ >
+      <script>
+        if (!window.process) {
+          window.process = {};
+        }
+        if (!window.process.env) {
+          window.process.env = {};
+        }
+        window.process.env.API_URL = '${process.env.API_URL}';
+        window.process.env.NODE_ENV = '${process.env.NODE_ENV}';
+        window.process.env.S3_BUCKET = '${process.env.S3_BUCKET}';
+        window.process.env.S3_BUCKET_URL_BASE = ${process.env.S3_BUCKET_URL_BASE ? `'${process.env.S3_BUCKET_URL_BASE}'` : undefined};
+        window.process.env.AWS_REGION = '${process.env.AWS_REGION}';
+        window.process.env.FORCE_TO_HTTPS = ${process.env.FORCE_TO_HTTPS === 'false' ? false : undefined};
+        window.process.env.CLIENT = true;
+      </script>
     </head>
     <body>
       <div id="root" class="root-app">
@@ -24,19 +39,19 @@ export function renderIndex() {
           `//<![CDATA[
           window.webpackManifest = ${JSON.stringify(chunkManifest)};
           //]]>` : ''}
-        </script>
-        <script src='${process.env.NODE_ENV === 'production' ? `${assetsManifest['/vendor.js']}` : '/vendor.js'}'></script>
-        <script src='${process.env.NODE_ENV === 'production' ? `${assetsManifest['/app.js']}` : '/app.js'}'></script>
-        <script>
-          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      </script>
+      <script src='${process.env.NODE_ENV === 'production' ? `${assetsManifest['/vendor.js']}` : '/vendor.js'}'></script>
+      <script src='${process.env.NODE_ENV === 'production' ? `${assetsManifest['/app.js']}` : '/app.js'}'></script>
+      <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-          ga('create', 'UA-53383000-1', 'auto');
-          ga('send', 'pageview');
+        ga('create', 'UA-53383000-1', 'auto');
+        ga('send', 'pageview');
 
-        </script>
+      </script>
     </body>
   </html>
   `;

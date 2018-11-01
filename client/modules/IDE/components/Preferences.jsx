@@ -10,7 +10,6 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 const plusUrl = require('../../../images/plus.svg');
 const minusUrl = require('../../../images/minus.svg');
 const beepUrl = require('../../../sounds/audioAlert.mp3');
-const infoUrl = require('../../../images/information.svg');
 
 class Preferences extends React.Component {
   constructor(props) {
@@ -59,7 +58,6 @@ class Preferences extends React.Component {
           <TabList>
             <div className="preference__subheadings">
               <Tab><h4 className="preference__subheading">General Settings</h4></Tab>
-              <Tab><h4 className="preference__subheading">Sketch Settings</h4></Tab>
               <Tab><h4 className="preference__subheading">Accessibility</h4></Tab>
             </div>
           </TabList>
@@ -218,34 +216,6 @@ class Preferences extends React.Component {
             </div>
           </TabPanel>
           <TabPanel>
-            {/* <div className="preference">
-              <h4 className="preference__title">Add a p5.js or an external library</h4>
-            </div> */}
-            <div className="preference">
-              <h4 className="preference__title">Security Protocol</h4>
-              <div className="preference__serve-secure">
-                <input
-                  id="serve-secure"
-                  type="checkbox"
-                  checked={this.props.serveSecure || false}
-                  onChange={(event) => {
-                    this.props.setServeSecure(event.target.checked);
-                  }}
-                />
-                <label htmlFor="serve-secure">Serve over HTTPS</label>
-                <span
-                  className="serve-secture__tooltip tooltipped tooltipped-n tooltipped-no-delay tooltipped-multiline"
-                  aria-label={'Choose HTTPS if you need to \n • access a microphone or webcam \n'
-                      + '• access an API served over HTTPS \n\n'
-                      + 'Choose HTTP if you need to \n'
-                      + '• access an API served over HTTP'}
-                >
-                  <InlineSVG src={infoUrl} className="serve-secure__icon" />
-                </span>
-              </div>
-            </div>
-          </TabPanel>
-          <TabPanel>
             <div className="preference">
               <h4 className="preference__title">Lint warning sound</h4>
               <div className="preference__options">
@@ -349,8 +319,6 @@ Preferences.propTypes = {
   lintWarning: PropTypes.bool.isRequired,
   setLintWarning: PropTypes.func.isRequired,
   theme: PropTypes.string.isRequired,
-  serveSecure: PropTypes.bool.isRequired,
-  setServeSecure: PropTypes.func.isRequired,
   setTheme: PropTypes.func.isRequired,
 };
 

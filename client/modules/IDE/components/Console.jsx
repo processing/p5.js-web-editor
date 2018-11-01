@@ -3,7 +3,10 @@ import React from 'react';
 import InlineSVG from 'react-inlinesvg';
 import classNames from 'classnames';
 import { Console as ConsoleFeed } from 'console-feed';
-import { CONSOLE_FEED_WITHOUT_ICONS, CONSOLE_FEED_LIGHT_STYLES, CONSOLE_FEED_DARK_STYLES, CONSOLE_FEED_CONTRAST_STYLES } from '../../../styles/components/_console-feed.scss';
+import {
+  CONSOLE_FEED_WITHOUT_ICONS, CONSOLE_FEED_LIGHT_STYLES,
+  CONSOLE_FEED_DARK_STYLES, CONSOLE_FEED_CONTRAST_STYLES
+} from '../../../styles/components/_console-feed.scss';
 import warnLightUrl from '../../../images/console-warn-light.svg';
 import warnDarkUrl from '../../../images/console-warn-dark.svg';
 import errorLightUrl from '../../../images/console-error-light.svg';
@@ -23,6 +26,11 @@ class Console extends React.Component {
       this.props.clearConsole();
       this.props.dispatchConsoleEvent(this.props.consoleEvents);
     }
+
+    if (this.props.fontSize !== prevProps.fontSize) {
+      this.props.clearConsole();
+      this.props.dispatchConsoleEvent(this.props.consoleEvents);
+    }
   }
 
   getConsoleFeedStyle(theme, times) {
@@ -39,16 +47,24 @@ class Console extends React.Component {
       LOG_DEBUG_ICON: `url(${debugDarkUrl})`,
       LOG_INFO_ICON: `url(${infoDarkUrl})`
     };
+    const CONSOLE_FEED_SIZES = {
+      TREENODE_LINE_HEIGHT: 1.2,
+      BASE_FONT_SIZE: this.props.fontSize,
+      ARROW_FONT_SIZE: this.props.fontSize,
+      LOG_ICON_WIDTH: this.props.fontSize,
+      LOG_ICON_HEIGHT: 1.45 * this.props.fontSize,
+    };
+
     if (times > 1) {
       Object.assign(style, CONSOLE_FEED_WITHOUT_ICONS);
     }
     switch (theme) {
       case 'light':
-        return Object.assign(CONSOLE_FEED_LIGHT_STYLES, CONSOLE_FEED_LIGHT_ICONS, style);
+        return Object.assign(CONSOLE_FEED_LIGHT_STYLES, CONSOLE_FEED_LIGHT_ICONS, CONSOLE_FEED_SIZES, style);
       case 'dark':
-        return Object.assign(CONSOLE_FEED_DARK_STYLES, CONSOLE_FEED_DARK_ICONS, style);
+        return Object.assign(CONSOLE_FEED_DARK_STYLES, CONSOLE_FEED_DARK_ICONS, CONSOLE_FEED_SIZES, style);
       case 'contrast':
-        return Object.assign(CONSOLE_FEED_CONTRAST_STYLES, CONSOLE_FEED_DARK_ICONS, style);
+        return Object.assign(CONSOLE_FEED_CONTRAST_STYLES, CONSOLE_FEED_DARK_ICONS, CONSOLE_FEED_SIZES, style);
       default:
         return '';
     }
@@ -102,7 +118,12 @@ class Console extends React.Component {
             return (
               <div key={consoleEvent.id} className={`preview-console__message preview-console__message--${method}`}>
                 { times > 1 &&
-                  <div className="preview-console__logged-times">{times}</div>
+                  <div
+                    className="preview-console__logged-times"
+                    style={{ fontSize: this.props.fontSize, borderRadius: this.props.fontSize / 2 }}
+                  >
+                    {times}
+                  </div>
                 }
                 <ConsoleFeed
                   styles={this.getConsoleFeedStyle(theme, times)}
@@ -127,7 +148,8 @@ Console.propTypes = {
   expandConsole: PropTypes.func.isRequired,
   clearConsole: PropTypes.func.isRequired,
   dispatchConsoleEvent: PropTypes.func.isRequired,
-  theme: PropTypes.string.isRequired
+  theme: PropTypes.string.isRequired,
+  fontSize: PropTypes.number.isRequired
 };
 
 Console.defaultProps = {

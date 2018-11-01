@@ -1,6 +1,6 @@
 import * as ActionTypes from '../../../constants';
 
-const consoleMax = 200;
+const consoleMax = 500;
 const initialState = [];
 let messageId = 0;
 
