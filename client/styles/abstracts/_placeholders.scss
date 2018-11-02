@@ -128,12 +128,16 @@
 		& g {
 			fill: getThemifyVariable('modal-button-color');
 		}
-		&:hover {
+		&:enabled:hover {
 			background-color: getThemifyVariable('button-background-hover-color');
 			color: getThemifyVariable('button-hover-color');
 			& g {
 				fill: getThemifyVariable('button-hover-color');
 			}
+		}
+		&:disabled:hover {
+			cursor: not-allowed;
+			background-color: getThemifyVariable('modal-button-background-color');
 		}
 	}
 }
