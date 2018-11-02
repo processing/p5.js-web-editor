@@ -130,7 +130,7 @@ export function updateFileName(req, res) {
       res.status(403).send({ success: false, message: 'Session does not match owner of project.' });
       return;
     }
-    let fileToUpdate = project.files.find(file => file.id === req.params.file_id);
+    let fileToUpdate = project.files.find(file => file.id === req.params.file_id); // eslint-disable-line
     if (!fileToUpdate) {
       res.status(404).send({ success: false, message: 'File does not exist in project.' });
       return;
