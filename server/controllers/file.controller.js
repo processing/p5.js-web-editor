@@ -135,7 +135,7 @@ export function updateFileName(req, res) {
       res.status(404).send({ success: false, message: 'File does not exist in project.' });
       return;
     }
-    fileToUpdate.name = req.body.name ;
+    fileToUpdate.name = req.body.name;
     project.save((innerErr) => {
       res.json(fileToUpdate.name);
     });
