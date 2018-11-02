@@ -156,14 +156,14 @@ export function updateFileName(id, name) {
   };
 }
 
-export function saveFile(id) {
+export function saveFileName(id) {
   return (dispatch, getState) => {
     const state = getState();
-    const UpdatedFile = state.files.find(file => file.id === id);
-    if (UpdatedFile && state.project.id) {
-      axios.put(`${ROOT_URL}/projects/${state.project.id}/files/${id}`, UpdatedFile, { withCredentials: true })
-        .then(() => {
-          dispatch(setUnsavedChanges(false));
+    const file = state.files.find(file => file.id === id);
+    if (file && state.project.id) {
+      axios.put(`${ROOT_URL}/projects/${state.project.id}/files/${id}`, file, { withCredentials: true })
+        .then(()=>{
+          
         })
         .catch((response) => {
           dispatch({
