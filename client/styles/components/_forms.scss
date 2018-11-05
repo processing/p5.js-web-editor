@@ -52,7 +52,7 @@
   cursor: not-allowed;
 }
 
-.form__button-remove {
+.form__table-button-remove {
   @extend %forms-button;
   margin: 1rem 0 1rem 0;
   @include themify() {
@@ -67,4 +67,9 @@
         background-color: getThemifyVariable('console-error-background-color');
     }
   }
+}
+
+.form__table-button-copy{
+    @extend %forms-button;
+    margin: 1rem 0 1rem 0;
 }

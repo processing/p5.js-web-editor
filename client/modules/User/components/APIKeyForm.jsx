@@ -13,6 +13,7 @@ class APIKeyForm extends React.Component {
     event.preventDefault();
     document.getElementById('addKeyForm').reset();
     this.props.addApiKey(this.state.keyLabel);
+    this.state.keyLabel = '';
     return false;
   }
 
@@ -39,12 +40,13 @@ class APIKeyForm extends React.Component {
           />
         </form>
         <table className="form__table">
+          <tbody id="form__table_new_key"></tbody>
           <tbody>
             {this.props.apiKeys && this.props.apiKeys.map(v => (
               <tr key={v.id}>
                 <td><b>{v.label}</b><br />Created on: {v.createdAt}</td>
                 <td>Last used on:<br /> {v.lastUsedAt}</td>
-                <td><button className="form__button-remove" onClick={() => this.removeKey(v.id)}>Delete</button></td>
+                <td><button className="form__table-button-remove" onClick={() => this.removeKey(v.id)}>Delete</button></td>
               </tr>))}
           </tbody>
         </table>
