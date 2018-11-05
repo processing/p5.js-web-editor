@@ -1,4 +1,6 @@
+import React from 'react';
 import { browserHistory } from 'react-router';
+import ReactDom from 'react-dom';
 import axios from 'axios';
 import crypto from 'crypto';
 import * as ActionTypes from '../../constants';
@@ -227,7 +229,31 @@ export function addApiKey(label) {
       const hashedKey = Buffer.from(key).toString('base64');
       axios.put(`${ROOT_URL}/account/api-keys`, { label, hashedKey }, { withCredentials: true })
         .then((response) => {
-          window.alert(`Here is your key :\n${key}\nNote it somewhere, you won't be able to see it later !`);
+          // window.alert(`Here is your key :\n${key}\nNote it somewhere, you won't be able to see it later !`);
+          const elt = React.createElement(
+            'tr', { className: 'new-key' },
+            React.createElement('td', {}, 'Here is your new key ;\ncopy it somewhere, you won\'t be able to see it later !'),
+            React.createElement(
+              'td', {},
+              React.createElement('input', {
+                id: 'key-to-copy', type: 'text', value: key, readOnly: true
+              })
+            ),
+            React.createElement(
+              'td', {},
+              React.createElement('input', {
+                type: 'submit',
+                value: 'Copy to clipboard',
+                className: 'form__table-button-copy',
+                onClick: () => {
+                  const inputKey = document.getElementById('key-to-copy');
+                  inputKey.select();
+                  document.execCommand('copy');
+                }
+              })
+            )
+          );
+          ReactDom.render(elt, document.getElementById('form__table_new_key'));
           dispatch({
             type: ActionTypes.ADDED_API_KEY,
             user: response.data
