@@ -68,6 +68,29 @@ userSchema.pre('save', function checkPassword(next) { // eslint-disable-line con
   });
 });
 
+/**
+ * API keys hash middleware
+ */
+userSchema.pre('save', function checkApiKey(next) {
+  const user = this;
+  if (!user.isModified('apiKeys')) { return next(); }
+  let hasNew = false;
+  user.apiKeys.forEach((k) => {
+    if (k.isNew) {
+      hasNew = true;
+      bcrypt.genSalt(10, (err, salt) => {
+        if (err) { return next(err); }
+        bcrypt.hash(k.hashedKey, salt, null, (innerErr, hash) => {
+          if (innerErr) { return next(innerErr); }
+          k.hashedKey = hash;
+          return next();
+        });
+      });
+    }
+  });
+  if (!hasNew) return next();
+});
+
 userSchema.virtual('id').get(function idToString() {
   return this._id.toHexString();
 });
