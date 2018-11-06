@@ -222,8 +222,8 @@ export function addApiKey(label) {
   return ((dispatch) => {
     crypto.randomBytes(20, (err, buf) => {
       const key = buf.toString('hex');
-      const hashedKey = Buffer.from(key).toString('base64');
-      axios.put(`${ROOT_URL}/account/api-keys`, { label, hashedKey }, { withCredentials: true })
+      const encodedKey = Buffer.from(key).toString('base64');
+      axios.put(`${ROOT_URL}/account/api-keys`, { label, encodedKey }, { withCredentials: true })
         .then((response) => {
           // window.alert(`Here is your key :\n${key}\nNote it somewhere, you won't be able to see it later !`);
           const elt = React.createElement(

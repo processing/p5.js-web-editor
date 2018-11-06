@@ -357,11 +357,11 @@ export function addApiKey(req, res) {
       res.status(404).json({ error: 'User not found' });
       return;
     }
-    if (!req.body.label || !req.body.hashedKey) {
-      res.status(400).json({ error: 'Expected field \'label\' or \'hashedKey\' was not present in request body' });
+    if (!req.body.label || !req.body.encodedKey) {
+      res.status(400).json({ error: 'Expected field \'label\' or \'encodedKey\' was not present in request body' });
       return;
     }
-    user.apiKeys.push(req.body);
+    user.apiKeys.push({ label: req.body.label, hashedKey: req.body.encodedKey });
     saveUser(res, user);
   });
 }
