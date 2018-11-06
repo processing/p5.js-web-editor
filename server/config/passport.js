@@ -1,11 +1,10 @@
+import lodash from 'lodash';
+import passport from 'passport';
+import GitHubStrategy from 'passport-github';
+import LocalStrategy from 'passport-local';
+import GoogleStrategy from 'passport-google-oauth20';
+import { BasicStrategy } from 'passport-http';
 import User from '../models/user';
-
-const lodash = require('lodash');
-const passport = require('passport');
-const GitHubStrategy = require('passport-github').Strategy;
-const LocalStrategy = require('passport-local').Strategy;
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
@@ -34,6 +33,26 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, don
       });
     })
     .catch(err => done(null, false, { msg: err }));
+}));
+
+/**
+ * Authentificate using Basic Auth (Username + Api Key)
+ */
+passport.use(new BasicStrategy((userid, key, done) => {
+  User.findOne({ username: userid }, (err, user) => { // eslint-disable-line consistent-return
+    if (err) { return done(err); }
+    if (!user) { return done(null, false); }
+    user.findMatchingKey(key, (innerErr, isMatch, keyID) => {
+      if (isMatch) {
+        User.update(
+          { 'apiKeys._id': keyID },
+          { '$set': { 'apiKeys.$.lastUsedAt': Date.now() } }
+        );
+        return done(null, user);
+      }
+      return done(null, false, { msg: 'Invalid username or API key' });
+    });
+  });
 }));
 
 /*
