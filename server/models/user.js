@@ -71,14 +71,14 @@ userSchema.pre('save', function checkPassword(next) { // eslint-disable-line con
 /**
  * API keys hash middleware
  */
-userSchema.pre('save', function checkApiKey(next) {
+userSchema.pre('save', function checkApiKey(next) { // eslint-disable-line consistent-return
   const user = this;
   if (!user.isModified('apiKeys')) { return next(); }
   let hasNew = false;
   user.apiKeys.forEach((k) => {
     if (k.isNew) {
       hasNew = true;
-      bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.genSalt(10, (err, salt) => { // eslint-disable-line consistent-return
         if (err) { return next(err); }
         bcrypt.hash(k.hashedKey, salt, null, (innerErr, hash) => {
           if (innerErr) { return next(innerErr); }
@@ -108,6 +108,20 @@ userSchema.methods.comparePassword = function comparePassword(candidatePassword,
   bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
     cb(err, isMatch);
   });
+};
+
+/**
+ * Helper method for validating a user's api key
+ */
+userSchema.methods.findMatchingKey = function findMatchingKey(candidateKey, cb) {
+  let foundOne = false;
+  this.apiKeys.forEach((k) => {
+    if (bcrypt.compareSync(candidateKey, k.hashedKey)) {
+      foundOne = true;
+      cb(null, true, k._id);
+    }
+  });
+  if (!foundOne) cb('Matching API key not found !', false, null);
 };
 
 userSchema.statics.findByMailOrName = function findByMailOrName(email) {
