@@ -3,7 +3,10 @@ import React from 'react';
 import InlineSVG from 'react-inlinesvg';
 import classNames from 'classnames';
 import { Console as ConsoleFeed } from 'console-feed';
-import { CONSOLE_FEED_WITHOUT_ICONS, CONSOLE_FEED_LIGHT_STYLES, CONSOLE_FEED_DARK_STYLES, CONSOLE_FEED_CONTRAST_STYLES } from '../../../styles/components/_console-feed.scss';
+import {
+  CONSOLE_FEED_WITHOUT_ICONS, CONSOLE_FEED_LIGHT_STYLES,
+  CONSOLE_FEED_DARK_STYLES, CONSOLE_FEED_CONTRAST_STYLES
+} from '../../../styles/components/_console-feed.scss';
 import warnLightUrl from '../../../images/console-warn-light.svg';
 import warnDarkUrl from '../../../images/console-warn-dark.svg';
 import errorLightUrl from '../../../images/console-error-light.svg';

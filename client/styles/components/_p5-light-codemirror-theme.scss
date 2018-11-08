@@ -21,7 +21,7 @@ $p5-light-white: #FDFDFD;
 $p5-light-orange: #EE9900;
 $p5-light-lightgray: #E0D7D1;
 $p5-light-darkgray: #666666;
-$p5-light-green: #58a10b; 
+$p5-light-green: #58a10b;
 
 $p5-light-gutter: #f4f4f4;
 $p5-light-number: #b5b5b5;
@@ -98,8 +98,9 @@ $p5-light-activeline: rgb(207, 207, 207);
 }
 
 .cm-s-p5-light .CodeMirror-matchingbracket {
-  outline: 1px solid $p5-light-number;
-  color: black !important;
+  outline: 1px solid $p5-light-gray;
+  outline-offset: 1px;
+  color: $p5-light-black !important;
 }
 
 .cm-s-p5-light .cm-qualifier {

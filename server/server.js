@@ -7,7 +7,6 @@ import session from 'express-session';
 import connectMongo from 'connect-mongo';
 import passport from 'passport';
 import path from 'path';
-import { URL } from 'url';
 import basicAuth from 'express-basic-auth';
 
 // Webpack Requirements

@@ -10,7 +10,6 @@ import { setUnsavedChanges,
   resetJustOpenedProject,
   showErrorModal } from './ide';
 import { clearState, saveState } from '../../../persistState';
-import { redirectToProtocol, protocols } from '../../../components/forceProtocol';
 
 const __process = (typeof global !== 'undefined' ? global : window).process;
 const ROOT_URL = __process.env.API_URL;
@@ -242,7 +241,6 @@ export function cloneProject() {
       axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
         .then((response) => {
           browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
-          console.log(response.data);
           dispatch({
             type: ActionTypes.NEW_PROJECT,
             project: response.data,

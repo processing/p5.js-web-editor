@@ -32,7 +32,18 @@ NewFolderModal.propTypes = {
   closeModal: PropTypes.func.isRequired
 };
 
+function validate(formProps) {
+  const errors = {};
+  if (!formProps.name) {
+    errors.name = 'Please enter a name';
+  } else if (formProps.name.trim().length === 0) {
+    errors.name = 'Folder name cannot contain only spaces';
+  }
+
+  return errors;
+}
 export default reduxForm({
   form: 'new-folder',
-  fields: ['name']
+  fields: ['name'],
+  validate
 })(NewFolderModal);

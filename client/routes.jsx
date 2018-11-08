@@ -13,8 +13,6 @@ import AccountView from './modules/User/pages/AccountView';
 import { getUser } from './modules/User/actions';
 import { stopSketch } from './modules/IDE/actions/ide';
 
-const __process = (typeof global !== 'undefined' ? global : window).process;
-
 const checkAuth = (store) => {
   store.dispatch(getUser());
 };
@@ -35,6 +33,7 @@ const routes = store => (
       component={NewPasswordView}
     />
     <Route path="/projects/:project_id" component={IDEView} />
+    <Route path="/:username/full/:project_id" component={FullView} />
     <Route path="/full/:project_id" component={FullView} />
     <Route path="/sketches" component={IDEView} />
     <Route path="/assets" component={IDEView} />

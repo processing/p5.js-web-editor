@@ -10,7 +10,6 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 const plusUrl = require('../../../images/plus.svg');
 const minusUrl = require('../../../images/minus.svg');
 const beepUrl = require('../../../sounds/audioAlert.mp3');
-const infoUrl = require('../../../images/information.svg');
 
 class Preferences extends React.Component {
   constructor(props) {
@@ -26,6 +25,12 @@ class Preferences extends React.Component {
     if (Number.isNaN(value)) {
       value = 16;
     }
+    if (value > 36) {
+      value = 36;
+    }
+    if (value < 8) {
+      value = 8;
+    }
     this.props.setFontSize(value);
   }
 
@@ -33,6 +38,12 @@ class Preferences extends React.Component {
     let value = parseInt(event.target.value, 10);
     if (Number.isNaN(value)) {
       value = 2;
+    }
+    if (value > 6) {
+      value = 6;
+    }
+    if (value < 0) {
+      value = 0;
     }
     this.props.setIndentation(value);
   }
@@ -107,6 +118,7 @@ class Preferences extends React.Component {
                 className="preference__minus-button"
                 onClick={() => this.props.setFontSize(this.props.fontSize - 2)}
                 aria-label="decrease font size"
+                disabled={this.props.fontSize <= 8}
               >
                 <InlineSVG src={minusUrl} alt="Decrease Font Size" />
                 <h6 className="preference__label">Decrease</h6>
@@ -126,6 +138,7 @@ class Preferences extends React.Component {
                 className="preference__plus-button"
                 onClick={() => this.props.setFontSize(this.props.fontSize + 2)}
                 aria-label="increase font size"
+                disabled={this.props.fontSize >= 36}
               >
                 <InlineSVG src={plusUrl} alt="Increase Font Size" />
                 <h6 className="preference__label">Increase</h6>
@@ -137,6 +150,7 @@ class Preferences extends React.Component {
                 className="preference__minus-button"
                 onClick={() => this.props.setIndentation(this.props.indentationAmount - 2)}
                 aria-label="decrease indentation amount"
+                disabled={this.props.indentationAmount <= 0}
               >
                 <InlineSVG src={minusUrl} alt="DecreaseIndentation Amount" />
                 <h6 className="preference__label">Decrease</h6>
@@ -156,6 +170,7 @@ class Preferences extends React.Component {
                 className="preference__plus-button"
                 onClick={() => this.props.setIndentation(this.props.indentationAmount + 2)}
                 aria-label="increase indentation amount"
+                disabled={this.props.indentationAmount >= 6}
               >
                 <InlineSVG src={plusUrl} alt="IncreaseIndentation Amount" />
                 <h6 className="preference__label">Increase</h6>

@@ -8,6 +8,7 @@ import loopProtect from 'loop-protect';
 import { JSHINT } from 'jshint';
 import decomment from 'decomment';
 import { Hook, Unhook, Encode } from 'console-feed';
+import classNames from 'classnames';
 import { getBlobUrl } from '../actions/files';
 import { resolvePathToFile } from '../../../../server/utils/filePath';
 import {
@@ -271,7 +272,8 @@ class PreviewFrame extends React.Component {
             // could also pull file from API instead of using bloburl
             const blobURL = getBlobUrl(resolvedFile);
             this.props.setBlobUrl(resolvedFile, blobURL);
-            newContent = newContent.replace(filePath, blobURL);
+            const filePathRegex = new RegExp(filePath, 'gi');
+            newContent = newContent.replace(filePathRegex, blobURL);
           }
         }
       }
@@ -348,8 +350,9 @@ class PreviewFrame extends React.Component {
 
   renderSketch() {
     const doc = this.iframeElement;
+    const localFiles = this.injectLocalFiles();
     if (this.props.isPlaying) {
-      srcDoc.set(doc, this.injectLocalFiles());
+      srcDoc.set(doc, localFiles);
       if (this.props.endSketchRefresh) {
         this.props.endSketchRefresh();
       }
@@ -360,9 +363,14 @@ class PreviewFrame extends React.Component {
   }
 
   render() {
+    const iframeClass = classNames({
+      'preview-frame': true,
+      'preview-frame--full-view': this.props.fullView
+    });
     return (
       <iframe
-        className="preview-frame"
+        id="canvas_frame"
+        className={iframeClass}
         aria-label="sketch output"
         role="main"
         frameBorder="0"

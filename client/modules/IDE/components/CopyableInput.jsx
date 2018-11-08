@@ -31,7 +31,8 @@ class CopyableInput extends React.Component {
   render() {
     const {
       label,
-      value
+      value,
+      hasPreviewLink
     } = this.props;
     return (
       <div className="copyable-input">
@@ -42,7 +43,12 @@ class CopyableInput extends React.Component {
           onMouseLeave={this.onMouseLeaveHandler}
         >
           <label className="copyable-input__label" htmlFor={`copyable-input__value-${label}`}>
-            {label}
+            <div className="copyable-input__label-container">
+              {label} {hasPreviewLink &&
+                <a target="_blank" href={value}>
+                  Open
+                </a>}
+            </div>
             <input
               type="text"
               className="copyable-input__value"
@@ -60,7 +66,12 @@ class CopyableInput extends React.Component {
 
 CopyableInput.propTypes = {
   label: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired
+  value: PropTypes.string.isRequired,
+  hasPreviewLink: PropTypes.bool
+};
+
+CopyableInput.defaultProps = {
+  hasPreviewLink: false
 };
 
 export default CopyableInput;

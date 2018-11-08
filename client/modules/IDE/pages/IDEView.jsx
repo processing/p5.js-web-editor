@@ -370,41 +370,43 @@ class IDEView extends React.Component {
                 <header className="preview-frame__header">
                   <h2 className="preview-frame__title">Preview</h2>
                 </header>
-                <div className="preview-frame-overlay" ref={(element) => { this.overlay = element; }}>
+                <div className="preview-frame__content">
+                  <div className="preview-frame-overlay" ref={(element) => { this.overlay = element; }}>
+                  </div>
+                  <div>
+                    {(
+                      (
+                        (this.props.preferences.textOutput ||
+                            this.props.preferences.gridOutput ||
+                            this.props.preferences.soundOutput
+                        ) &&
+                            this.props.ide.isPlaying
+                      ) ||
+                        this.props.ide.isAccessibleOutputPlaying
+                    )
+                    }
+                  </div>
+                  <PreviewFrame
+                    htmlFile={this.props.htmlFile}
+                    files={this.props.files}
+                    content={this.props.selectedFile.content}
+                    isPlaying={this.props.ide.isPlaying}
+                    isAccessibleOutputPlaying={this.props.ide.isAccessibleOutputPlaying}
+                    textOutput={this.props.preferences.textOutput}
+                    gridOutput={this.props.preferences.gridOutput}
+                    soundOutput={this.props.preferences.soundOutput}
+                    setTextOutput={this.props.setTextOutput}
+                    setGridOutput={this.props.setGridOutput}
+                    setSoundOutput={this.props.setSoundOutput}
+                    dispatchConsoleEvent={this.props.dispatchConsoleEvent}
+                    autorefresh={this.props.preferences.autorefresh}
+                    previewIsRefreshing={this.props.ide.previewIsRefreshing}
+                    endSketchRefresh={this.props.endSketchRefresh}
+                    stopSketch={this.props.stopSketch}
+                    setBlobUrl={this.props.setBlobUrl}
+                    expandConsole={this.props.expandConsole}
+                  />
                 </div>
-                <div>
-                  {(
-                    (
-                      (this.props.preferences.textOutput ||
-                          this.props.preferences.gridOutput ||
-                          this.props.preferences.soundOutput
-                      ) &&
-                          this.props.ide.isPlaying
-                    ) ||
-                      this.props.ide.isAccessibleOutputPlaying
-                  )
-                  }
-                </div>
-                <PreviewFrame
-                  htmlFile={this.props.htmlFile}
-                  files={this.props.files}
-                  content={this.props.selectedFile.content}
-                  isPlaying={this.props.ide.isPlaying}
-                  isAccessibleOutputPlaying={this.props.ide.isAccessibleOutputPlaying}
-                  textOutput={this.props.preferences.textOutput}
-                  gridOutput={this.props.preferences.gridOutput}
-                  soundOutput={this.props.preferences.soundOutput}
-                  setTextOutput={this.props.setTextOutput}
-                  setGridOutput={this.props.setGridOutput}
-                  setSoundOutput={this.props.setSoundOutput}
-                  dispatchConsoleEvent={this.props.dispatchConsoleEvent}
-                  autorefresh={this.props.preferences.autorefresh}
-                  previewIsRefreshing={this.props.ide.previewIsRefreshing}
-                  endSketchRefresh={this.props.endSketchRefresh}
-                  stopSketch={this.props.stopSketch}
-                  setBlobUrl={this.props.setBlobUrl}
-                  expandConsole={this.props.expandConsole}
-                />
               </div>
             </SplitPane>
           </SplitPane>

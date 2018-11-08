@@ -59,10 +59,26 @@ class SignupView extends React.Component {
   }
 }
 
+function asyncErrorsSelector(formName, state) {
+  const form = state.form[formName];
+  if (!form) {
+    return {};
+  }
+
+  const fieldNames = Object.keys(form).filter(key => !key.startsWith('_'));
+  return fieldNames.reduce((asyncErrors, fieldName) => {
+    if (form[fieldName].asyncError) {
+      return { ...asyncErrors, [fieldName]: form[fieldName].asyncError };
+    }
+    return asyncErrors;
+  }, {});
+}
+
 function mapStateToProps(state) {
   return {
     user: state.user,
-    previousPath: state.ide.previousPath
+    previousPath: state.ide.previousPath,
+    asyncErrors: asyncErrorsSelector('signup', state)
   };
 }
 
@@ -71,21 +87,29 @@ function mapDispatchToProps(dispatch) {
 }
 
 function asyncValidate(formProps, dispatch, props) {
-  const fieldToValidate = props.form._active;
-  if (fieldToValidate) {
-    const queryParams = {};
-    queryParams[fieldToValidate] = formProps[fieldToValidate];
-    queryParams.check_type = fieldToValidate;
-    return axios.get('/api/signup/duplicate_check', { params: queryParams })
-      .then((response) => {
-        if (response.data.exists) {
-          const error = {};
-          error[fieldToValidate] = response.data.message;
-          throw error;
-        }
-      });
-  }
-  return Promise.resolve(true).then(() => {});
+  const errors = {};
+  return Promise.resolve(true)
+    .then(() => {
+      const fieldToValidate = props.form._active;
+      if (fieldToValidate) {
+        const queryParams = {};
+        queryParams[fieldToValidate] = formProps[fieldToValidate];
+        queryParams.check_type = fieldToValidate;
+        return axios.get('/api/signup/duplicate_check', { params: queryParams })
+          .then((response) => {
+            if (response.data.exists) {
+              errors[fieldToValidate] = response.data.message;
+            }
+          });
+      }
+      return null;
+    })
+    .then(() => {
+      const err = { ...errors, ...props.asyncErrors };
+      if (Object.keys(err).length > 0) {
+        throw err;
+      }
+    });
 }
 
 function onSubmitFail(errors) {
