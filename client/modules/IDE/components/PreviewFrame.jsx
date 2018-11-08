@@ -7,7 +7,7 @@ import srcDoc from 'srcdoc-polyfill';
 import loopProtect from 'loop-protect';
 import { JSHINT } from 'jshint';
 import decomment from 'decomment';
-import { Hook, Unhook } from 'console-feed';
+import { Hook, Unhook, Encode } from 'console-feed';
 import { getBlobUrl } from '../actions/files';
 import { resolvePathToFile } from '../../../../server/utils/filePath';
 import {
@@ -108,7 +108,7 @@ class PreviewFrame extends React.Component {
           }
           window.postMessage([{
             method: 'result',
-            arguments: Array.of(consoleInfo),
+            arguments: Encode(consoleInfo),
             source: 'sketch'
           }], '*');
         }
