@@ -33,7 +33,9 @@ class Console extends React.Component {
   }
 
   getConsoleFeedStyle(theme, times) {
-    const style = {};
+    const style = {
+      BASE_FONT_FAMILY: 'Inconsolata, monospace',
+    };
     const CONSOLE_FEED_LIGHT_ICONS = {
       LOG_WARN_ICON: `url(${warnLightUrl})`,
       LOG_ERROR_ICON: `url(${errorLightUrl})`,

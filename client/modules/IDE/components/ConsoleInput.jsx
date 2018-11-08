@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import CodeMirror from 'codemirror';
 import InlineSVG from 'react-inlinesvg';
+import { Encode } from 'console-feed';
 
 const rightArrowUrl = require('../../../images/right-arrow.svg');
 
@@ -30,7 +31,7 @@ class ConsoleInput extends React.Component {
         }
         window.postMessage([{
           method: 'command',
-          arguments: value,
+          arguments: Encode(value),
           source: 'console'
         }], '*');
 

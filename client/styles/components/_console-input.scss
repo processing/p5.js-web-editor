@@ -32,7 +32,7 @@
 
 .console__editor .CodeMirror {
   border: none;
-  font-family: Consolas,Lucida Console,Courier New,monospace;
+  font-family: Inconsolata,monospace;
   @include themify() {
     background-color: getThemifyVariable('console-input-background-color');
   }
