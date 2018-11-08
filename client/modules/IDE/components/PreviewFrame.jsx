@@ -109,7 +109,7 @@ class PreviewFrame extends React.Component {
           }
           window.postMessage([{
             method: 'result',
-            arguments: Encode(consoleInfo),
+            arguments: consoleInfo ? Encode(consoleInfo) : Array.of(consoleInfo),
             source: 'sketch'
           }], '*');
         }
