@@ -161,7 +161,7 @@ export function saveFileName(id) {
     const state = getState();
     const selectedFile = state.files.find(file => file.id === id);
     if (selectedFile && state.project.id) {
-      axios.put(`${ROOT_URL}/projects/${state.project.id}/files/${id}`, selectedFile, { withCredentials: true })
+      axios.put(`${ROOT_URL}/projects/${state.project.id}/files/${id}`, { name: selectedFile.name }, { withCredentials: true })
         .then(() => {
         })
         .catch((response) => {

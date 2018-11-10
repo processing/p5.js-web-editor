@@ -120,7 +120,7 @@ export function getFileContent(req, res) {
   });
 }
 
-export function updateFileName(req, res) {
+export function updateFile(req, res) {
   Project.findById(req.params.project_id, (err, project) => {
     if (err) {
       res.status(404).send({ success: false, message: 'Project with that id does not exist.' });
