@@ -150,30 +150,6 @@ class Nav extends React.PureComponent {
                   New
                 </button>
               </li>
-              <li className="nav__dropdown-item">
-                <button
-                  onClick={() => {
-                    this.props.newFile();
-                    this.setDropdown('none');
-                  }}
-                  onFocus={this.handleFocus.bind(this, 'file')}
-                  onBlur={this.handleBlur}
-                >
-                  Add File
-                </button>
-              </li>
-              <li className="nav__dropdown-item">
-                <button
-                  onClick={() => {
-                    this.props.newFolder();
-                    this.setDropdown('none');
-                  }}
-                  onFocus={this.handleFocus.bind(this, 'file')}
-                  onBlur={this.handleBlur}
-                >
-                  Add Folder
-                </button>
-              </li>
               { (!this.props.project.owner || this.isUserOwner()) &&
               <li className="nav__dropdown-item">
                 <button
@@ -343,6 +319,30 @@ class Nav extends React.PureComponent {
                 <span>Sketch</span>
                 <InlineSVG src={triangleUrl} />
               </button>
+              <li className="nav__dropdown-item">
+                <button
+                  onClick={() => {
+                    this.props.newFile();
+                    this.setDropdown('none');
+                  }}
+                  onFocus={this.handleFocus.bind(this, 'sketch')}
+                  onBlur={this.handleBlur}
+                >
+                  Add File
+                </button>
+              </li>
+              <li className="nav__dropdown-item">
+                <button
+                  onClick={() => {
+                    this.props.newFolder();
+                    this.setDropdown('none');
+                  }}
+                  onFocus={this.handleFocus.bind(this, 'sketch')}
+                  onBlur={this.handleBlur}
+                >
+                  Add Folder
+                </button>
+              </li>
               <li className="nav__dropdown-item">
                 <button
                   onClick={() => {
