@@ -98,7 +98,7 @@ class Console extends React.Component {
         </div>
         <div ref={(element) => { this.consoleMessages = element; }} className="preview-console__messages">
           {this.props.consoleEvents.map((consoleEvent) => {
-            const { method, times } = consoleEvent;
+            const { data: args, method, times } = consoleEvent;
             const { theme } = this.props;
             return (
               <div key={consoleEvent.id} className={`preview-console__message preview-console__message--${method}`}>
