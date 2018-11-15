@@ -6,8 +6,11 @@ window.loopProtect = loopProtect;
 const consoleBuffer = [];
 const LOGWAIT = 500;
 Hook(window.console, (log) => {
+  const { method, data: args } = log[0];
   consoleBuffer.push({
-    log
+    method,
+    arguments: args,
+    source: 'sketch'
   });
 });
 setInterval(() => {

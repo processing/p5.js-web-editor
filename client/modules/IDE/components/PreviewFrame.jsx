@@ -8,7 +8,6 @@ import loopProtect from 'loop-protect';
 import { JSHINT } from 'jshint';
 import decomment from 'decomment';
 import classNames from 'classnames';
-import { Decode } from 'console-feed';
 import { getBlobUrl } from '../actions/files';
 import { resolvePathToFile } from '../../../../server/utils/filePath';
 import {
@@ -81,10 +80,8 @@ class PreviewFrame extends React.Component {
 
   handleConsoleEvent(messageEvent) {
     if (Array.isArray(messageEvent.data)) {
-      let decodedMessages = messageEvent.data.map(message => Decode(message.log));
-
-      decodedMessages.every((message, index, arr) => {
-        const { data: args } = message;
+      messageEvent.data.every((message, index, arr) => {
+        const { arguments: args } = message;
         let hasInfiniteLoop = false;
         Object.keys(args).forEach((key) => {
           if (typeof args[key] === 'string' && args[key].includes('Exiting potential infinite loop')) {
@@ -102,7 +99,7 @@ class PreviewFrame extends React.Component {
         }
         const cur = Object.assign(message, { times: 1 });
         const nextIndex = index + 1;
-        while (isEqual(cur.data, arr[nextIndex].data) && cur.method === arr[nextIndex].method) {
+        while (isEqual(cur.arguments, arr[nextIndex].arguments) && cur.method === arr[nextIndex].method) {
           cur.times += 1;
           arr.splice(nextIndex, 1);
           if (nextIndex === arr.length) {
@@ -112,7 +109,7 @@ class PreviewFrame extends React.Component {
         return true;
       });
 
-      this.props.dispatchConsoleEvent(decodedMessages);
+      this.props.dispatchConsoleEvent(messageEvent.data);
     }
   }
 
