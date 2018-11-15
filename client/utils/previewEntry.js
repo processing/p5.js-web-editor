@@ -8,7 +8,7 @@ const LOGWAIT = 500;
 Hook(window.console, (log) => {
   consoleBuffer.push({
     log,
-    source: 'sketch' 
+    source: 'sketch'
   });
 });
 setInterval(() => {
