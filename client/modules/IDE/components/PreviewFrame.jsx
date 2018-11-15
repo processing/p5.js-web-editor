@@ -81,7 +81,7 @@ class PreviewFrame extends React.Component {
 
   handleConsoleEvent(messageEvent) {
     if (Array.isArray(messageEvent.data)) {
-      const decodedMessages = messageEvent.data.map(message => Decode(message.log));
+      const decodedMessages = messageEvent.data.map(message => Object.assign(Decode(message.log), { source: message.source }));
 
       decodedMessages.every((message, index, arr) => {
         const { data: args } = message;
