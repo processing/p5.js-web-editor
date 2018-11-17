@@ -15,13 +15,8 @@ function appendToFilename(filename, string) {
 }
 
 function createUniqueName(name, parentId, files) {
-  console.log('cun');
-  console.log(name);
-  console.log(parentId);
-  console.log(files);
   const siblingFiles = files.find(file => file.id === parentId)
     .children.map(childFileId => files.find(file => file.id === childFileId));
-  console.log(siblingFiles);
   let testName = name;
   let index = 1;
   let existingName = siblingFiles.find(file => name === file.name);
@@ -53,8 +48,6 @@ export function createFile(formProps) {
     const relativePathSplit = relativePath.split('/');
     const parentFolders = relativePath.length === 1 ? [] : relativePathSplit.slice(0, -1);
     const fileName = relativePathSplit.slice(-1)[0];
-    console.log(fileName);
-    console.log(parentFolders);
     if (selectedFile.fileType === 'folder') {
       parentId = selectedFile.id;
     } else {
@@ -63,15 +56,15 @@ export function createFile(formProps) {
     parentId = parentFolders.reduce((parentFolderId, currentFolderName) => {
       const { files } = state;
       const parentFolderObject = files.find(file => file.id === parentFolderId);
-      console.log(parentFolderObject);
-      const childFoldersObject = parentFolderObject.children.map(childFileId => files.find(file => file.id === childFileId));
+      const childFoldersObject = parentFolderObject.children
+        .map(childFileId => files.find(file => file.id === childFileId));
       const currentFolderObject = childFoldersObject.find(childFile => childFile.name === currentFolderName);
       const currentFolderId = currentFolderObject ? currentFolderObject.id : undefined;
 
       if (!currentFolderId) {
         if (state.project.id) {
           const postParams = {
-            name: createUniqueName(currentFolderName, parentFolderId, state.files),
+            name: createUniqueName(currentFolderName, parentFolderId, getState().files),
             content: '',
             children: [],
             parentId: parentFolderId,
@@ -84,21 +77,18 @@ export function createFile(formProps) {
                 ...response.data,
                 parentId: parentFolderId
               });
-              dispatch({
-                type: ActionTypes.CLOSE_NEW_FOLDER_MODAL
-              });
             })
             .catch(response => dispatch({
               type: ActionTypes.ERROR,
               error: response.data
             }));
+          /* return __; */
         } else {
           const id = objectID().toHexString();
-          console.log(state.files);
           dispatch({
             type: ActionTypes.CREATE_FILE,
-            /* name: createUniqueName(currentFolderName, parentFolderId, state.files), */
-            name: currentFolderName,
+            name: createUniqueName(currentFolderName, parentFolderId, getState().files),
+            /* name: currentFolderName, */
             id,
             _id: id,
             content: '',
@@ -110,12 +100,6 @@ export function createFile(formProps) {
           return id;
         }
       }
-      /* console.log(parentFolderObject);
-      console.log(childFoldersObject);
-      console.log(currentFolderId);
-        const currentFolderId = files.find(file => file.id === parentFolderId)
-        .children.map(childFileId => files.find(file => file.id === childFileId))
-        .find(childFile => childFile.name === currentFolderName); */
       return currentFolderId;
     }, parentId);
     console.log(parentId);
@@ -171,14 +155,66 @@ export function createFolder(formProps) {
     const selectedFile = state.files.find(file => file.isSelectedFile);
     const rootFile = state.files.find(file => file.name === 'root');
     let parentId;
+    const relativePath = formProps.name;
+    const relativePathSplit = relativePath.split('/');
+    const parentFolders = relativePath.length === 1 ? [] : relativePathSplit.slice(0, -1);
+    const fileName = relativePathSplit.slice(-1)[0];
     if (selectedFile.fileType === 'folder') {
       parentId = selectedFile.id;
     } else {
       parentId = rootFile.id;
     }
+    parentId = parentFolders.reduce((parentFolderId, currentFolderName) => {
+      const { files } = state;
+      const parentFolderObject = files.find(file => file.id === parentFolderId);
+      const childFoldersObject = parentFolderObject.children
+        .map(childFileId => files.find(file => file.id === childFileId));
+      const currentFolderObject = childFoldersObject.find(childFile => childFile.name === currentFolderName);
+      const currentFolderId = currentFolderObject ? currentFolderObject.id : undefined;
+
+      if (!currentFolderId) {
+        if (state.project.id) {
+          const postParams = {
+            name: createUniqueName(currentFolderName, parentFolderId, getState().files),
+            content: '',
+            children: [],
+            parentId: parentFolderId,
+            fileType: 'folder'
+          };
+          axios.post(`${ROOT_URL}/projects/${state.project.id}/files`, postParams, { withCredentials: true })
+            .then((response) => {
+              dispatch({
+                type: ActionTypes.CREATE_FILE,
+                ...response.data,
+                parentId: parentFolderId
+              });
+            })
+            .catch(response => dispatch({
+              type: ActionTypes.ERROR,
+              error: response.data
+            }));
+          /* return __; */
+        } else {
+          const id = objectID().toHexString();
+          dispatch({
+            type: ActionTypes.CREATE_FILE,
+            name: createUniqueName(currentFolderName, parentFolderId, getState().files),
+            id,
+            _id: id,
+            content: '',
+            // TODO pass parent id from File Tree
+            parentId: parentFolderId,
+            fileType: 'folder',
+            children: []
+          });
+          return id;
+        }
+      }
+      return currentFolderId;
+    }, parentId);
     if (state.project.id) {
       const postParams = {
-        name: createUniqueName(formProps.name, parentId, state.files),
+        name: createUniqueName(fileName, parentId, getState().files),
         content: '',
         children: [],
         parentId,
@@ -203,7 +239,7 @@ export function createFolder(formProps) {
       const id = objectID().toHexString();
       dispatch({
         type: ActionTypes.CREATE_FILE,
-        name: createUniqueName(formProps.name, parentId, state.files),
+        name: createUniqueName(fileName, parentId, getState().files),
         id,
         _id: id,
         content: '',
