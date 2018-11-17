@@ -70,13 +70,6 @@ class Console extends React.Component {
     }
   }
 
-  formatData(args) {
-    if (!Array.isArray(args)) {
-      return Array.of(args);
-    }
-    return args;
-  }
-
   render() {
     const consoleClass = classNames({
       'preview-console': true,
@@ -105,16 +98,8 @@ class Console extends React.Component {
         </div>
         <div ref={(element) => { this.consoleMessages = element; }} className="preview-console__messages">
           {this.props.consoleEvents.map((consoleEvent) => {
-            const { arguments: args, method, times } = consoleEvent;
+            const { method, times } = consoleEvent;
             const { theme } = this.props;
-            Object.assign(consoleEvent, { data: this.formatData(args) });
-            if (Object.keys(args).length === 0) {
-              return (
-                <div key={consoleEvent.id} className="preview-console__message preview-console__message--undefined">
-                  <span key={`${consoleEvent.id}-0`}>undefined</span>
-                </div>
-              );
-            }
             return (
               <div key={consoleEvent.id} className={`preview-console__message preview-console__message--${method}`}>
                 { times > 1 &&
@@ -127,7 +112,7 @@ class Console extends React.Component {
                 }
                 <ConsoleFeed
                   styles={this.getConsoleFeedStyle(theme, times)}
-                  logs={Array.of(consoleEvent)}
+                  logs={[consoleEvent]}
                 />
               </div>
             );
