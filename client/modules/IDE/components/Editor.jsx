@@ -194,11 +194,11 @@ class Editor extends React.Component {
     if (this.props.runtimeErrorWarningVisible && this._cm.getDoc().modeOption === 'javascript') {
       this.props.consoleEvents.forEach((consoleEvent) => {
         if (consoleEvent.method === 'error') {
-          if (consoleEvent.arguments.indexOf(')') > -1) {
-            const n = consoleEvent.arguments.replace(')', '').split(' ');
-            const lineNumber = parseInt(n[n.length - 1], 10) - 1;
-            this._cm.addLineClass(lineNumber, 'background', 'line-runtime-error');
-          }
+        //   if (consoleEvent.arguments.indexOf(')') > -1) {
+        //     const n = consoleEvent.arguments.replace(')', '').split(' ');
+        //     const lineNumber = parseInt(n[n.length - 1], 10) - 1;
+        //     this._cm.addLineClass(lineNumber, 'background', 'line-runtime-error');
+        //   }
         }
       });
     }
