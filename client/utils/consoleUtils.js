@@ -31,8 +31,10 @@ export const hijackConsoleErrorsScript = (offs) => {
           data = msg + ' (' + fileInfo[1] + ': line ' + fileInfo[0] + ')';
         }
         window.parent.postMessage([{
-          method: 'error',
-          arguments: data,
+          log: [{
+            method: 'error',
+            data: [data],
+          }],
           source: fileInfo[1]
         }], '*');
       return false;
