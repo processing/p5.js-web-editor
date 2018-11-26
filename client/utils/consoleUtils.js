@@ -61,8 +61,8 @@ export const getAllScriptOffsets = (htmlFile) => {
     } else {
       endFilenameInd = htmlFile.indexOf('.js', ind + startTag.length + 3);
       filename = htmlFile.substring(ind + startTag.length, endFilenameInd);
-      // the length of hijackConsoleErrorsScript is 37 lines
-      lineOffset = htmlFile.substring(0, ind).split('\n').length + 37;
+      // the length of hijackConsoleErrorsScript is 36 lines
+      lineOffset = htmlFile.substring(0, ind).split('\n').length + 36;
       offs.push([lineOffset, filename]);
       lastInd = ind + 1;
     }
