@@ -671,7 +671,8 @@ IDEView.propTypes = {
 function mapStateToProps(state) {
   return {
     files: state.files,
-    selectedFile: state.files.find(file => file.isSelectedFile),
+    selectedFile: state.files.find(file => file.isSelectedFile) ||
+      state.files.find(file => file.name === 'sketch.js'),
     htmlFile: getHTMLFile(state.files),
     ide: state.ide,
     preferences: state.preferences,
