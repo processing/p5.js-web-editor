@@ -277,8 +277,6 @@ class IDEView extends React.Component {
               setSoundOutput={this.props.setSoundOutput}
               theme={this.props.preferences.theme}
               setTheme={this.props.setTheme}
-              serveSecure={this.props.project.serveSecure}
-              setServeSecure={this.props.setServeSecure}
             />
           </Overlay>
         }
@@ -296,11 +294,7 @@ class IDEView extends React.Component {
               setSelectedFile={this.props.setSelectedFile}
               newFile={this.props.newFile}
               isExpanded={this.props.ide.sidebarIsExpanded}
-              showFileOptions={this.props.showFileOptions}
-              hideFileOptions={this.props.hideFileOptions}
               deleteFile={this.props.deleteFile}
-              showEditFileName={this.props.showEditFileName}
-              hideEditFileName={this.props.hideEditFileName}
               updateFileName={this.props.updateFileName}
               projectOptionsVisible={this.props.ide.projectOptionsVisible}
               openProjectOptions={this.props.openProjectOptions}
@@ -361,6 +355,7 @@ class IDEView extends React.Component {
                   provideController={(ctl) => { this.cmController = ctl; }}
                 />
                 <Console
+                  fontSize={this.props.preferences.fontSize}
                   consoleEvents={this.props.console}
                   isExpanded={this.props.ide.consoleIsExpanded}
                   expandConsole={this.props.expandConsole}
@@ -374,41 +369,43 @@ class IDEView extends React.Component {
                 <header className="preview-frame__header">
                   <h2 className="preview-frame__title">Preview</h2>
                 </header>
-                <div className="preview-frame-overlay" ref={(element) => { this.overlay = element; }}>
+                <div className="preview-frame__content">
+                  <div className="preview-frame-overlay" ref={(element) => { this.overlay = element; }}>
+                  </div>
+                  <div>
+                    {(
+                      (
+                        (this.props.preferences.textOutput ||
+                            this.props.preferences.gridOutput ||
+                            this.props.preferences.soundOutput
+                        ) &&
+                            this.props.ide.isPlaying
+                      ) ||
+                        this.props.ide.isAccessibleOutputPlaying
+                    )
+                    }
+                  </div>
+                  <PreviewFrame
+                    htmlFile={this.props.htmlFile}
+                    files={this.props.files}
+                    content={this.props.selectedFile.content}
+                    isPlaying={this.props.ide.isPlaying}
+                    isAccessibleOutputPlaying={this.props.ide.isAccessibleOutputPlaying}
+                    textOutput={this.props.preferences.textOutput}
+                    gridOutput={this.props.preferences.gridOutput}
+                    soundOutput={this.props.preferences.soundOutput}
+                    setTextOutput={this.props.setTextOutput}
+                    setGridOutput={this.props.setGridOutput}
+                    setSoundOutput={this.props.setSoundOutput}
+                    dispatchConsoleEvent={this.props.dispatchConsoleEvent}
+                    autorefresh={this.props.preferences.autorefresh}
+                    previewIsRefreshing={this.props.ide.previewIsRefreshing}
+                    endSketchRefresh={this.props.endSketchRefresh}
+                    stopSketch={this.props.stopSketch}
+                    setBlobUrl={this.props.setBlobUrl}
+                    expandConsole={this.props.expandConsole}
+                  />
                 </div>
-                <div>
-                  {(
-                    (
-                      (this.props.preferences.textOutput ||
-                          this.props.preferences.gridOutput ||
-                          this.props.preferences.soundOutput
-                      ) &&
-                          this.props.ide.isPlaying
-                    ) ||
-                      this.props.ide.isAccessibleOutputPlaying
-                  )
-                  }
-                </div>
-                <PreviewFrame
-                  htmlFile={this.props.htmlFile}
-                  files={this.props.files}
-                  content={this.props.selectedFile.content}
-                  isPlaying={this.props.ide.isPlaying}
-                  isAccessibleOutputPlaying={this.props.ide.isAccessibleOutputPlaying}
-                  textOutput={this.props.preferences.textOutput}
-                  gridOutput={this.props.preferences.gridOutput}
-                  soundOutput={this.props.preferences.soundOutput}
-                  setTextOutput={this.props.setTextOutput}
-                  setGridOutput={this.props.setGridOutput}
-                  setSoundOutput={this.props.setSoundOutput}
-                  dispatchConsoleEvent={this.props.dispatchConsoleEvent}
-                  autorefresh={this.props.preferences.autorefresh}
-                  previewIsRefreshing={this.props.ide.previewIsRefreshing}
-                  endSketchRefresh={this.props.endSketchRefresh}
-                  stopSketch={this.props.stopSketch}
-                  setBlobUrl={this.props.setBlobUrl}
-                  expandConsole={this.props.expandConsole}
-                />
               </div>
             </SplitPane>
           </SplitPane>
@@ -560,7 +557,6 @@ IDEView.propTypes = {
   project: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string.isRequired,
-    serveSecure: PropTypes.bool,
     owner: PropTypes.shape({
       username: PropTypes.string,
       id: PropTypes.string
@@ -568,7 +564,6 @@ IDEView.propTypes = {
     updatedAt: PropTypes.string
   }).isRequired,
   setProjectName: PropTypes.func.isRequired,
-  setServeSecure: PropTypes.func.isRequired,
   openPreferences: PropTypes.func.isRequired,
   editorAccessibility: PropTypes.shape({
     lintMessages: PropTypes.array.isRequired,
@@ -624,11 +619,7 @@ IDEView.propTypes = {
   cloneProject: PropTypes.func.isRequired,
   expandConsole: PropTypes.func.isRequired,
   collapseConsole: PropTypes.func.isRequired,
-  showFileOptions: PropTypes.func.isRequired,
-  hideFileOptions: PropTypes.func.isRequired,
   deleteFile: PropTypes.func.isRequired,
-  showEditFileName: PropTypes.func.isRequired,
-  hideEditFileName: PropTypes.func.isRequired,
   updateFileName: PropTypes.func.isRequired,
   showEditProjectName: PropTypes.func.isRequired,
   hideEditProjectName: PropTypes.func.isRequired,
@@ -680,7 +671,8 @@ IDEView.propTypes = {
 function mapStateToProps(state) {
   return {
     files: state.files,
-    selectedFile: state.files.find(file => file.isSelectedFile),
+    selectedFile: state.files.find(file => file.isSelectedFile) ||
+      state.files.find(file => file.name === 'sketch.js'),
     htmlFile: getHTMLFile(state.files),
     ide: state.ide,
     preferences: state.preferences,

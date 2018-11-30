@@ -1,6 +1,9 @@
 const webpack = require('webpack');
 const path = require('path');
-require('dotenv').config();
+
+if (process.env.NODE_ENV === 'development') {
+  require('dotenv').config();
+}
 
 module.exports = [{
   devtool: 'cheap-module-eval-source-map',
@@ -36,15 +39,7 @@ module.exports = [{
     }),
     new webpack.DefinePlugin({
       'process.env': {
-        API_URL: process.env.API_URL ? `"${process.env.API_URL}"` : undefined,
-        CLIENT: JSON.stringify(true),
-        FORCE_TO_HTTPS: process.env.FORCE_TO_HTTPS === 'true' ?
-          JSON.stringify(true) :
-          JSON.stringify(false),
-        NODE_ENV: JSON.stringify('development'),
-        S3_BUCKET: process.env.S3_BUCKET ? `"${process.env.S3_BUCKET}"` : undefined,
-        S3_BUCKET_URL_BASE: process.env.S3_BUCKET_URL_BASE ? `"${process.env.S3_BUCKET_URL_BASE}"` : undefined,
-        AWS_REGION: process.env.AWS_REGION ? `"${process.env.AWS_REGION}"` : undefined
+        NODE_ENV: JSON.stringify('development')
       }
     })
   ],
@@ -58,7 +53,7 @@ module.exports = [{
           options: {
             cacheDirectory: true,
             plugins: ['react-hot-loader/babel'],
-          } 
+          }
         }, {
           loader: 'eslint-loader'
         }]
@@ -72,28 +67,40 @@ module.exports = [{
       },
       {
         test: /main\.scss$/,
-        loaders: ['style-loader', 'css-loader', 'sass-loader']
+        use: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
         test: /\.(svg|mp3)$/,
-        loader: 'file-loader'
+        use: 'file-loader'
+      },
+      {
+        test: /\.(png)$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'images/'
+          }
+         }
       },
       {
         test: /fonts\/.*\.(eot|svg|ttf|woff|woff2)$/,
-        loader: 'file-loader'
+        use: 'file-loader'
       },
       {
         test: /_console-feed.scss/,
-        loader: 'sass-extract-loader',
-        options: {
-          plugins: [{ plugin: 'sass-extract-js', options: { camelCase: false } }]
+        use: {
+          loader: 'sass-extract-loader',
+          options: {
+            plugins: [{ plugin: 'sass-extract-js', options: { camelCase: false } }]
+          }
         }
       }
     ],
   },
 },
 {
-  entry: path.resolve(__dirname, 'client/utils/previewEntry.js'),
+  entry: path.resolve(__dirname, '../client/utils/previewEntry.js'),
   target: 'web',
   output: {
     path: `${__dirname}`,
@@ -122,8 +129,8 @@ module.exports = [{
           plugins: [
             [
               'babel-plugin-webpack-loaders', {
-                'config': './webpack.config.babel.js',
-                "verbose": false
+                'config': path.resolve(__dirname, './config.babel.js'),
+                'verbose': false
               }
             ]
           ]

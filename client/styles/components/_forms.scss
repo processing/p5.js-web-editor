@@ -45,3 +45,7 @@
 .form input[type="submit"] {
   @extend %forms-button;
 }
+
+.form input[type="submit"]:disabled {
+  cursor: not-allowed;
+}

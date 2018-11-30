@@ -1,17 +1,12 @@
-# Contributing to the p5.js web editor 
+# Contributing to the p5.js Web Editor 
 
-Hello! We welcome community contributions to the p5.js web editor. Contributing takes many forms and doesn't have to be **writing code**, it can be **documenting bugs**, **proposing new features**, and **updating documentation**. We would also like to Thank you for choosing to contribute p5.js web editor, any way possible. You are awesome! :blush:
-
-This **web editor** for **p5.js**, a JavaScript library with the goal of making coding accessible to **artists**, **designers**, **educators**, and **beginners**, is an environment to make p5.js sketches without needing to download any software or do any configuration, which makes it a great place to start learning how to code and start learning p5.js.
+Hello! We welcome community contributions to the p5.js Web Editor. Contributing takes many forms and doesn't have to be **writing code**, it can be **report bugs**, **proposing new features**, **creating UI/UX designs**, and **updating documentation**. 
 
 Here are links to all the sections in this document:
 
 <!-- If you change any of the headings in this document, remember to update the table of contents. -->
 
 - [Code of Conduct](#code-of-conduct)
-- [Technologies Used](#technologies-used)
-- [Development Installation](#development-installation)
-- [New Design](#new-design)
 - [How Can I Contribute ?](#how-can-i-contribute?)
   - [First Timers](#first-timers)
   - [Want something more challenging](#want-something-more-challenging)
@@ -19,35 +14,11 @@ Here are links to all the sections in this document:
 - [Creating a Pull request](#creating-a-pull-request)
   - - [Tips](#tips)
 
-# Code of Conduct
+## Code of Conduct
 
-Please follow the guidelines mentioned at [CODE OF CONDUCT.md](https://github.com/processing/p5.js-web-editor/blob/master/CODE_OF_CONDUCT.md#p5js-code-of-conduct).
+Please follow the guidelines mentioned at [CODE OF CONDUCT.md](https://github.com/processing/p5.js-web-editor/blob/master/.github/CODE_OF_CONDUCT.md).
 
-# Technologies Used
-
- > **MERN stack - MongoDB, Express, React/Redux, and Node**. 
- 
- - For a reference to the **file structure format** I am using, please look at the [Mern Starter](https://github.com/Hashnode/mern-starter).
-
- - This project **does not use CSS Modules, but uses Sass**. [BEM guidelines and naming conventions](http://getbem.com/) are followed. 
- 
- - For repeatitive and common styles, write OOSCSS (Object-Oriented SCSS) with placeholders and mixins. For organizing styles, follow the 7-1 Pattern for Sass.
-
- - We're using [ES6](http://es6-features.org/) and transpiling to ES5 using [Babel](https://babeljs.io/). 
-
- - For reference to the JavaScript style guide, see the [Airbnb Style Guide](https://github.com/airbnb/javascript), [React ESLint Plugin](https://github.com/yannickcr/eslint-plugin-react).
-
- - The ESLint configuration is based on a few popular React/Redux boilerplates. Open to suggestions on this. If in development, **you're getting annoyed with ESLint**, you can **remove** it from `webpack.config.dev.js` in the JavaScript loader, or disable any line from eslint by commenting at the end of the line `// eslint-disable-line`.
-
-# Development Installation
-
-To get started on a patch, first read the instruction from [README.md](https://github.com/processing/p5.js-web-editor#development-installation).
-
-# New Design
-
-Design proposed and theme changes are present at: [Zeplin](https://scene.zeplin.io/project/55f746c54a02e1e50e0632c3).
-
-# How Can I Contribute?
+## How Can I Contribute?
 
 ### First Timers
 For first-time contributors or those who want to start with a small task: [check out our list of good first bugs](https://github.com/processing/p5.js-web-editor/labels/good%20first%20issue). First read the github discussion on that issue and find out if there's currently a person working on that or not. If no one is working on it or if there has was one claimed to but has not been active for a while, ask if it is up for grabs. It's okay to not know how to fix an issue and feel free to ask questions about to approach the problem! We are all just here to learn and make something awesome. Someone from the community would help you out and these are great issues for learning about the web editor, its file structure and its development process.
@@ -59,31 +30,14 @@ If you're already familiar with the project or would like take on something a li
 If you want to work on building new things, please take a look at [type: feature](https://github.com/processing/p5.js-web-editor/labels/type%3Afeature).
 
 If you'd like to work on a bug, please comment on it to let the maintainers know.
-If someone else has already commented and taken up that bug, please refrain from working on it and submitting
-a PR without asking the maintainers as it leads to unnecessary duplication of effort.
+If someone else has already commented and taken up that bug, please refrain from working on it and submitting a PR without asking the maintainers as it leads to unnecessary duplication of effort.
 
 ### Contribution guides
 
 * [https://guides.github.com/activities/hello-world/](https://guides.github.com/activities/hello-world/)
 * [https://guides.github.com/activities/forking/](https://guides.github.com/activities/forking/)
 
-# Creating a pull request
-
-Set up a new remote that points to the original project so that you can update your local repository once any changes have made to remote.
- 
-	$ git remote add upstream https://github.com/processing/p5.js-web-editor
- 
- and also before you submit a [pull request](https://help.github.com/articles/creating-a-pull-request/), please remember to fetch the changes using:
-
-	$ git fetch upstream
-
-When you create a pull request for a new fix or feature, be sure to mention the issue number for what you're working on. The best way to do it is to mention the issue like this at the top of your description:
-
-    Fixes #333
-
-The issue number in this case is "333." The word *Fixes* is magical; GitHub will automatically close the issue when your pull request is merged.
-
-# Writing commit messages
+## Writing commit messages
 
 Good commit messages serve at least three important purposes:
 

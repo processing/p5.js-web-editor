@@ -40,12 +40,13 @@ export function get404Sketch(callback) {
 
         // Add 404 html and position canvas
         const html = htmlFile.split('</head>');
+        const metaDescription = 'A web editor for p5.js, a JavaScript library with the goal of making coding accessible to artists, designers, educators, and beginners.'; // eslint-disable-line
         html[0] = `
           ${html[0]}
           <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <meta name="keywords" content="p5.js, p5.js web editor, web editor, processing, code editor" />
-          <meta name="description" content="A web editor for p5.js, a JavaScript library with the goal of making coding accessible to artists, designers, educators, and beginners." />
+          <meta name="description" content="${metaDescription}" />
           <title>404 Page Not Found - p5.js Web Editor</title>
           <style>
             .header {

@@ -5,7 +5,8 @@ import { reset } from 'redux-form';
 import * as ActionTypes from '../../../constants';
 import { setUnsavedChanges } from './ide';
 
-const ROOT_URL = process.env.API_URL;
+const __process = (typeof global !== 'undefined' ? global : window).process;
+const ROOT_URL = __process.env.API_URL;
 
 function appendToFilename(filename, string) {
   const dotIndex = filename.lastIndexOf('.');
@@ -144,34 +145,6 @@ export function createFolder(formProps) {
         type: ActionTypes.CLOSE_NEW_FOLDER_MODAL
       });
     }
-  };
-}
-
-export function showFileOptions(fileId) {
-  return {
-    type: ActionTypes.SHOW_FILE_OPTIONS,
-    id: fileId
-  };
-}
-
-export function hideFileOptions(fileId) {
-  return {
-    type: ActionTypes.HIDE_FILE_OPTIONS,
-    id: fileId
-  };
-}
-
-export function showEditFileName(id) {
-  return {
-    type: ActionTypes.SHOW_EDIT_FILE_NAME,
-    id
-  };
-}
-
-export function hideEditFileName(id) {
-  return {
-    type: ActionTypes.HIDE_EDIT_FILE_NAME,
-    id
   };
 }
 
