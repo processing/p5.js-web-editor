@@ -1,8 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { Link } from 'react-router';
 import InlineSVG from 'react-inlinesvg';
 import classNames from 'classnames';
+import * as IDEActions from '../modules/IDE/actions/ide';
 
 import {
   metaKeyName,
@@ -318,6 +322,30 @@ class Nav extends React.PureComponent {
               <li className="nav__dropdown-item">
                 <button
                   onClick={() => {
+                    this.props.newFile();
+                    this.setDropdown('none');
+                  }}
+                  onFocus={this.handleFocus.bind(this, 'sketch')}
+                  onBlur={this.handleBlur}
+                >
+                  Add File
+                </button>
+              </li>
+              <li className="nav__dropdown-item">
+                <button
+                  onClick={() => {
+                    this.props.newFolder();
+                    this.setDropdown('none');
+                  }}
+                  onFocus={this.handleFocus.bind(this, 'sketch')}
+                  onBlur={this.handleBlur}
+                >
+                  Add Folder
+                </button>
+              </li>
+              <li className="nav__dropdown-item">
+                <button
+                  onClick={() => {
                     this.props.startSketch();
                     this.setDropdown('none');
                   }}
@@ -558,7 +586,9 @@ Nav.propTypes = {
   }),
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
-  setAllAccessibleOutput: PropTypes.func.isRequired
+  setAllAccessibleOutput: PropTypes.func.isRequired,
+  newFile: PropTypes.func.isRequired,
+  newFolder: PropTypes.func.isRequired
 };
 
 Nav.defaultProps = {
@@ -569,4 +599,14 @@ Nav.defaultProps = {
   cmController: {}
 };
 
-export default Nav;
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    Object.assign(
+      {},
+      IDEActions
+    ),
+    dispatch
+  );
+}
+
+export default withRouter(connect(() => ({}), mapDispatchToProps)(Nav));

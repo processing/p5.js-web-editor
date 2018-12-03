@@ -38,7 +38,12 @@ export function createUser(req, res, next) {
     });
 
     User.findOne(
-      { email: req.body.email },
+      {
+        $or: [
+          { email: req.body.email },
+          { username: req.body.username }
+        ]
+      },
       (err, existingUser) => {
         if (err) {
           res.status(404).send({ error: err });
@@ -46,7 +51,8 @@ export function createUser(req, res, next) {
         }
 
         if (existingUser) {
-          res.status(422).send({ error: 'Email is in use' });
+          const fieldInUse = existingUser.email === req.body.email ? 'Email' : 'Username';
+          res.status(422).send({ error: `${fieldInUse} is in use` });
           return;
         }
         user.save((saveErr) => {

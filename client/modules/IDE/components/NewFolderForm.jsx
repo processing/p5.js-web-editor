@@ -13,13 +13,16 @@ class NewFolderForm extends React.Component {
   }
 
   render() {
-    const { fields: { name }, handleSubmit } = this.props;
+    const {
+      fields: { name }, handleSubmit, submitting, pristine
+    } = this.props;
     return (
       <form
         className="new-folder-form"
         onSubmit={(data) => {
-          handleSubmit(this.createFolder)(data);
-          this.props.closeModal();
+          if (handleSubmit(this.createFolder)(data)) {
+            this.props.closeModal();
+          }
         }}
       >
         <label className="new-folder-form__name-label" htmlFor="name">Name:</label>
@@ -31,7 +34,8 @@ class NewFolderForm extends React.Component {
           ref={(element) => { this.fileName = element; }}
           {...domOnlyProps(name)}
         />
-        <input type="submit" value="Add Folder" aria-label="add folder" />
+        <input type="submit" value="Add Folder" disabled={submitting || pristine} aria-label="add folder" />
+        {name.touched && name.error && <span className="form-error">{name.error}</span>}
       </form>
     );
   }
@@ -43,7 +47,12 @@ NewFolderForm.propTypes = {
   }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   createFolder: PropTypes.func.isRequired,
-  closeModal: PropTypes.func.isRequired
+  closeModal: PropTypes.func.isRequired,
+  submitting: PropTypes.bool,
+  pristine: PropTypes.bool
 };
-
+NewFolderForm.defaultProps = {
+  submitting: false,
+  pristine: true
+};
 export default NewFolderForm;

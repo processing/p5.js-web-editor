@@ -1,5 +1,6 @@
 .DS_Store
 .env
+.env.production
 .vscode/
 node_modules/
 npm-debug.log

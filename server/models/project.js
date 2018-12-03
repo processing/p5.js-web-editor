@@ -11,7 +11,7 @@ const fileSchema = new Schema({
   children: { type: [String], default: [] },
   fileType: { type: String, default: 'file' },
   isSelectedFile: { type: Boolean }
-}, { timestamps: true, _id: true });
+}, { timestamps: true, _id: true, usePushEach: true });
 
 fileSchema.virtual('id').get(function getFileId() {
   return this._id.toHexString();
@@ -28,7 +28,7 @@ const projectSchema = new Schema({
   files: { type: [fileSchema] },
   _id: { type: String, default: shortid.generate },
   slug: { type: String }
-}, { timestamps: true });
+}, { timestamps: true, usePushEach: true });
 
 projectSchema.virtual('id').get(function getProjectId() {
   return this._id;

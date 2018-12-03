@@ -2,9 +2,10 @@ import axios from 'axios';
 import { createFile } from './files';
 import { TEXT_FILE_REGEX } from '../../../../server/utils/fileUtils';
 
-const s3BucketHttps = process.env.S3_BUCKET_URL_BASE ||
-                      `https://s3-${process.env.AWS_REGION}.amazonaws.com/${process.env.S3_BUCKET}/`;
-const ROOT_URL = process.env.API_URL;
+const __process = (typeof global !== 'undefined' ? global : window).process;
+const s3BucketHttps = __process.env.S3_BUCKET_URL_BASE ||
+                      `https://s3-${__process.env.AWS_REGION}.amazonaws.com/${__process.env.S3_BUCKET}/`;
+const ROOT_URL = __process.env.API_URL;
 const MAX_LOCAL_FILE_SIZE = 80000; // bytes, aka 80 KB
 
 function localIntercept(file, options = {}) {
@@ -58,10 +59,10 @@ export function dropzoneAcceptCallback(userId, file, done) {
         }
       )
         .then((response) => {
-        file.custom_status = 'ready'; // eslint-disable-line
-        file.postData = response.data; // eslint-disable-line
-        file.s3 = response.data.key; // eslint-disable-line
-        file.previewTemplate.className += ' uploading'; // eslint-disable-line
+          file.custom_status = 'ready'; // eslint-disable-line
+          file.postData = response.data; // eslint-disable-line
+          file.s3 = response.data.key; // eslint-disable-line
+          file.previewTemplate.className += ' uploading'; // eslint-disable-line
           done();
         })
         .catch((response) => {

@@ -6,8 +6,9 @@ import { connect } from 'react-redux';
 import * as UploaderActions from '../actions/uploader';
 import { fileExtensionsAndMimeTypes } from '../../../../server/utils/fileUtils';
 
-const s3Bucket = process.env.S3_BUCKET_URL_BASE ||
-                 `https://s3-${process.env.AWS_REGION}.amazonaws.com/${process.env.S3_BUCKET}/`;
+const __process = (typeof global !== 'undefined' ? global : window).process;
+const s3Bucket = __process.env.S3_BUCKET_URL_BASE ||
+                 `https://s3-${__process.env.AWS_REGION}.amazonaws.com/${__process.env.S3_BUCKET}/`;
 
 class FileUploader extends React.Component {
   componentDidMount() {

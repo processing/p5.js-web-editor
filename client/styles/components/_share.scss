@@ -2,6 +2,7 @@
   padding: #{20 / $base-font-size}rem;
   padding-top: 0;
   width: #{500 / $base-font-size}rem;
+  max-width: 100%;
 }
 
 .share-modal__project-name {
