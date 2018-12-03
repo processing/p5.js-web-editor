@@ -4,10 +4,9 @@ export default function handleConsoleExpressions(expression) {
   try {
     return evaluateExpression()(expression);
   } catch (e) {
-    const data = e.toString();
+    const data = [e.toString()];
     window.postMessage([{
-      method: 'error',
-      arguments: data,
+      log: Array.of(Object.assign({}, { method: 'error', data })),
       source: 'sketch'
     }], '*');
   }

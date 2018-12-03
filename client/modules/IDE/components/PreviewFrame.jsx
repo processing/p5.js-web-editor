@@ -7,9 +7,8 @@ import srcDoc from 'srcdoc-polyfill';
 import loopProtect from 'loop-protect';
 import { JSHINT } from 'jshint';
 import decomment from 'decomment';
-import { Hook, Unhook, Encode } from 'console-feed';
+import { Hook, Unhook, Encode, Decode } from 'console-feed';
 import classNames from 'classnames';
-import { Decode } from 'console-feed';
 import { getBlobUrl } from '../actions/files';
 import { resolvePathToFile } from '../../../../server/utils/filePath';
 import {
@@ -84,7 +83,6 @@ class PreviewFrame extends React.Component {
   handleConsoleEvent(messageEvent) {
     if (Array.isArray(messageEvent.data)) {
       const decodedMessages = messageEvent.data.map(message => Object.assign(Decode(message.log), { source: message.source }));
-
       decodedMessages.every((message, index, arr) => {
         const { data: args, source } = message;
         if (source === 'console') {
@@ -92,10 +90,8 @@ class PreviewFrame extends React.Component {
           const consoleBuffer = [];
           const LOGWAIT = 100;
           Hook(window.console, (log) => {
-            const { method, data: arg } = log[0];
             consoleBuffer.push({
-              method,
-              arguments: arg,
+              log,
               source: 'sketch'
             });
           });
@@ -107,12 +103,11 @@ class PreviewFrame extends React.Component {
           }, LOGWAIT);
           consoleInfo = handleConsoleExpressions(args);
           Unhook(window.console);
-          if (consoleInfo === '') {
+          if (!consoleInfo) {
             return false;
           }
           window.postMessage([{
-            method: 'result',
-            arguments: consoleInfo ? Encode(consoleInfo) : Array.of(consoleInfo),
+            log: Encode(Object.assign({}, { method: 'result', data: Encode(consoleInfo) })),
             source: 'sketch'
           }], '*');
         }
