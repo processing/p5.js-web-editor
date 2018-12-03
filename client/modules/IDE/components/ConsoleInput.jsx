@@ -30,7 +30,7 @@ class ConsoleInput extends React.Component {
           return false;
         }
         window.postMessage([{
-          log: Encode(Object.assign({}, { method: 'command', data: Encode(value) })),
+          log: Encode({ method: 'command', data: Encode(value) }),
           source: 'console'
         }], '*');
 

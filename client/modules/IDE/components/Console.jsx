@@ -17,8 +17,6 @@ import infoLightUrl from '../../../images/console-info-light.svg';
 import infoDarkUrl from '../../../images/console-info-dark.svg';
 import upArrowUrl from '../../../images/up-arrow.svg';
 import downArrowUrl from '../../../images/down-arrow.svg';
-import leftArrowUrl from '../../../images/left-arrow.svg';
-import rightArrowUrl from '../../../images/right-arrow.svg';
 import ConsoleInput from './ConsoleInput';
 
 class Console extends React.Component {
