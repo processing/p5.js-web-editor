@@ -9,6 +9,7 @@ import { JSHINT } from 'jshint';
 import decomment from 'decomment';
 import { Hook, Unhook, Encode } from 'console-feed';
 import classNames from 'classnames';
+import { Decode } from 'console-feed';
 import { getBlobUrl } from '../actions/files';
 import { resolvePathToFile } from '../../../../server/utils/filePath';
 import {
@@ -82,8 +83,10 @@ class PreviewFrame extends React.Component {
 
   handleConsoleEvent(messageEvent) {
     if (Array.isArray(messageEvent.data)) {
-      messageEvent.data.every((message, index, arr) => {
-        const { arguments: args, source } = message;
+      const decodedMessages = messageEvent.data.map(message => Object.assign(Decode(message.log), { source: message.source }));
+
+      decodedMessages.every((message, index, arr) => {
+        const { data: args, source } = message;
         if (source === 'console') {
           let consoleInfo = '';
           const consoleBuffer = [];
@@ -130,7 +133,7 @@ class PreviewFrame extends React.Component {
         }
         const cur = Object.assign(message, { times: 1 });
         const nextIndex = index + 1;
-        while (isEqual(cur.arguments, arr[nextIndex].arguments) && cur.method === arr[nextIndex].method) {
+        while (isEqual(cur.data, arr[nextIndex].data) && cur.method === arr[nextIndex].method) {
           cur.times += 1;
           arr.splice(nextIndex, 1);
           if (nextIndex === arr.length) {
@@ -140,7 +143,7 @@ class PreviewFrame extends React.Component {
         return true;
       });
 
-      this.props.dispatchConsoleEvent(messageEvent.data);
+      this.props.dispatchConsoleEvent(decodedMessages);
     }
   }
 
