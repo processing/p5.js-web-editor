@@ -1,7 +1,9 @@
 import objectID from 'bson-objectid';
 import * as ActionTypes from '../../../constants';
 
-const defaultSketch = `function setup() {
+const __process = (typeof global !== 'undefined' ? global : window).process;
+
+const defaultSketch = __process.env.STATIC_MODE_ENABLED ? '' : `function setup() {
   createCanvas(400, 400);
 }
 

@@ -29,6 +29,7 @@ export function renderIndex() {
         window.process.env.AWS_REGION = '${process.env.AWS_REGION}';
         window.process.env.FORCE_TO_HTTPS = ${process.env.FORCE_TO_HTTPS === 'false' ? false : undefined};
         window.process.env.CLIENT = true;
+        window.process.env.STATIC_MODE_ENABLED = ${process.env.STATIC_MODE_ENABLED === 'true' ? true : undefined};
       </script>
     </head>
     <body>
