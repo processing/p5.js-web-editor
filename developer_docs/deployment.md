@@ -23,11 +23,11 @@ These are the steps that happen when you deploy the application.
 4. Travis CI runs some tests, which in this case, is just `npm run lint`. This could be updated in the future to include more extensive tests. If the tests fail, the build stops here.
 5. If the tests pass, then Travis CI builds a (production) Docker image of the whole application.
 6. This image is pushed to [Docker Hub](https://hub.docker.com/r/catarak/p5.js-web-editor/) with a unique tag name (the Travis commit) and also to the `latest` tag.
-7. The Kubernetes deployment is updated to image just pushed to Docker Hub on the cluster on Google Kubernetes Engine. 
+7. The Kubernetes deployment is updated to image just pushed to Docker Hub on the cluster on Google Kubernetes Engine.
 
 ## Production Installation
 
-You'll only need to do this if you're testing the production environment locally. 
+You'll only need to do this if you're testing the production environment locally.
 
 1. Clone this repository and `cd` into it
 2. `$ npm install`
@@ -38,3 +38,14 @@ You'll only need to do this if you're testing the production environment locally
 7. `$ npm run build`
 8. Since production assumes your environment variables are in the shell environment, and not in a `.env` file, you will have to run `export $(grep -v '^#' .env | xargs)` or a similar command, see this [Stack Overflow answer](https://stackoverflow.com/a/20909045/4086967).
 9. `$ npm run start:prod`
+
+## Heroku Deployment
+
+You can evaluate hosting a complete p5.js Web Editor instance at no cost on Heroku.
+
+1. Sign up for a free account at: [Heroku](https://www.heroku.com/)
+2. Click here: [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/passion-for-coding/p5.js-web-editor/tree/heroku-deployment)
+3. Enter a unique *App name*, this will become part of the url (i.e. https://app-name.herokuapp.com/)
+4. Update any configuration variables, or accept the defaults for a quick evaluation (they can be changed later to enable full functionality)
+5. Click on the "Deploy app" button
+6. When complete, click on the "View app" button

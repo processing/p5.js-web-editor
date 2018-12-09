@@ -16,7 +16,8 @@
     "fetch-examples": "cross-env NODE_ENV=development node ./server/scripts/fetch-examples.js",
     "fetch-examples-gg": "cross-env NODE_ENV=development node ./server/scripts/fetch-examples-gg.js",
     "fetch-examples:prod": "cross-env NODE_ENV=production node ./dist/fetch-examples.bundle.js",
-    "fetch-examples-gg:prod": "cross-env NODE_ENV=production node ./dist/fetch-examples-gg.bundle.js"
+    "fetch-examples-gg:prod": "cross-env NODE_ENV=production node ./dist/fetch-examples-gg.bundle.js",
+    "heroku-postbuild": "touch .env; npm run build"
   },
   "main": "index.js",
   "author": "Cassie Tarakajian",
@@ -59,7 +60,8 @@
     "webpack-node-externals": "^1.7.2"
   },
   "engines": {
-    "node": ">=8.9.0"
+    "node": "8.11.1",
+    "npm": "5.6.0"
   },
   "dependencies": {
     "archiver": "^1.1.0",
