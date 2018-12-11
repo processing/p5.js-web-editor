@@ -33,6 +33,7 @@ const routes = store => (
       component={NewPasswordView}
     />
     <Route path="/projects/:project_id" component={IDEView} />
+    <Route path="/:username/full/:project_id" component={FullView} />
     <Route path="/full/:project_id" component={FullView} />
     <Route path="/sketches" component={IDEView} />
     <Route path="/assets" component={IDEView} />

@@ -5,6 +5,15 @@
   border-width: 0;
 }
 
+.preview-frame--full-view {
+  position: relative;
+}
+
+.preview-frame-holder {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 
 .preview-frame-overlay {
   height: 100%;
@@ -36,4 +45,9 @@
   padding-left: #{5 / $base-font-size}rem;
   font-size: #{12 / $base-font-size}rem;
   font-weight: normal;
+}
+
+.preview-frame__content {
+  position: relative;
+  flex: 1 1 0;
 }

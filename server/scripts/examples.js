@@ -28,6 +28,9 @@ const defaultCSS =
   margin: 0;
   padding: 0;
 }
+canvas {
+  display: block;
+}
 `;
 
 const clientId = process.env.GITHUB_ID;

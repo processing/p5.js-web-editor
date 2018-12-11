@@ -98,6 +98,7 @@ $p5-contrast-activeline: #999999;
 
 .cm-s-p5-contrast .CodeMirror-matchingbracket {
   outline: 1px solid $p5-contrast-lightgray;
+  outline-offset: 1px;
   color: $p5-contrast-white !important;
 }
 
