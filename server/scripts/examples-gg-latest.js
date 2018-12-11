@@ -27,7 +27,7 @@ const defaultHTML =
 
     <!-- Generative Design Dependencies here -->
     <!-- GG Bundled -->
-    <script src="https://raw.githack.com/generative-design/Code-Package-p5.js/${branchName}/libraries/gg-dep-bundle/gg-dep-bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/generative-design/Code-Package-p5.js@${branchName}/libraries/gg-dep-bundle/gg-dep-bundle.js"></script>
     <!-- Opentype -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/opentype.js/0.7.3/opentype.min.js"></script>
     <!-- Rita -->
@@ -426,14 +426,14 @@ function getAllSketchContent(newProjectList) {
     }
     if (newProject.files[i].url) {
       return new Promise((resolve, reject) => {
-        console.log(sketchFile.name);
-        // https://cdn.rawgit.com/opensourcedesign/fonts/2f220059/gnu-freefont_freesans/FreeSans.otf?raw=true
         // "https://raw.githubusercontent.com/generative-design/Code-Package-p5.js/gg4editor/01_P/P_3_2_1_01/data/FreeSans.otf",
-        const rawGitRef = `https://raw.githack.com/${newProject.files[i].url.split('.com/')[1]}`;
-        sketchFile.content = rawGitRef;
-        sketchFile.url = rawGitRef;
-        // https://raw.githack.com/generative-design/Code-Package-p5.js/master/libraries/gg-dep-bundle/gg-dep-bundle.js
-        // replace ref in sketch.js ==> should serve from the file?
+        // https://cdn.jsdelivr.net/gh/generative-design/Code-Package-p5.js@master/01_P/P_4_3_1_01/data/pic.png
+        // const rawGitRef = `https://raw.githack.com/${newProject.files[i].url.split('.com/')[1]}`;
+        const cdnRef = `https://cdn.jsdelivr.net/gh/generative-design/Code-Package-p5.js@${branchName}${newProject.files[i].url.split(branchName)[1]}`
+        // console.log("🌈🌈🌈🌈🌈", sketchFile.name);
+        // console.log("🌈🌈🌈🌈🌈", cdnRef);
+        sketchFile.content = cdnRef;
+        sketchFile.url = cdnRef;
         // newProject.files[1].content = newProject.files[1].content.replace(`'data/${sketchFile.name}'`, `'${rawGitRef}'`);
         resolve(newProject);
       });
