@@ -319,6 +319,7 @@ class IDEView extends React.Component {
                 onDragFinished={this._handleConsolePaneOnDragFinished}
                 allowResize={this.props.ide.consoleIsExpanded}
                 className="editor-preview-subpanel"
+                resizerStyle={{ opacity: '0.4', height: '15px', margin: '-7px 0', backgroundColor: '#b4b4b4' }}
               >
                 <Editor
                   lintWarning={this.props.preferences.lintWarning}
