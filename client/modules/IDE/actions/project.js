@@ -2,7 +2,7 @@ import { browserHistory } from 'react-router';
 import axios from 'axios';
 import objectID from 'bson-objectid';
 import each from 'async/each';
-import { isEqual } from 'lodash';
+import { isEqual, pick } from 'lodash';
 import * as ActionTypes from '../../../constants';
 import { showToast, setToastText } from './toast';
 import { setUnsavedChanges,
@@ -77,7 +77,10 @@ export function saveProject(autosave = false) {
         .then((response) => {
           const currentState = getState();
           const savedProject = Object.assign({}, response.data);
-          if (!isEqual(currentState.files, response.data.files)) {
+          if (!isEqual(
+            pick(currentState.files, ['name', 'children', 'content']),
+            pick(response.data.files, ['name', 'children', 'content'])
+          )) {
             savedProject.files = currentState.files;
             dispatch(setUnsavedChanges(true));
           } else {
