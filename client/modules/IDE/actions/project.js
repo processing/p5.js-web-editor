@@ -97,6 +97,7 @@ export function saveProject(autosave = false) {
               dispatch(showToast(1500));
               dispatch(setToastText('Project saved.'));
             }
+            dispatch(setUnsavedChanges(false));
           }
         })
         .catch((response) => {
