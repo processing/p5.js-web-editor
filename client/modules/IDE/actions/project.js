@@ -77,8 +77,10 @@ export function saveProject(autosave = false) {
         .then((response) => {
           const currentState = getState();
           const savedProject = Object.assign({}, response.data);
-          if (!isEqual(pick(currentState.files, ['name', 'children', 'content']),
-            pick(response.data.files, ['name', 'children', 'content']))) {
+          if (!isEqual(
+            pick(currentState.files, ['name', 'children', 'content']),
+            pick(response.data.files, ['name', 'children', 'content'])
+          )) {
             savedProject.files = currentState.files;
             dispatch(setUnsavedChanges(true));
           } else {
