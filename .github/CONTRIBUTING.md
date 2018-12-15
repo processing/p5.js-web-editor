@@ -1,6 +1,6 @@
 # Contributing to the p5.js Web Editor 
 
-Hello! We welcome community contributions to the p5.js Web Editor. Contributing takes many forms and doesn't have to be **writing code**, it can be **report bugs**, **proposing new features**, **creating UI/UX designs**, and **updating documentation**. 
+Hello! We welcome community contributions to the p5.js Web Editor. Contributing takes many forms and doesn't have to be **writing code**, it can be **report bugs**, **proposing new features**, **creating UI/UX designs**, and **updating documentation**.
 
 Here are links to all the sections in this document:
 
@@ -73,5 +73,3 @@ Tips
 ----
 
 * If it seems difficult to summarize what your commit does, it may be because it includes several logical changes or bug fixes, and are better split up into several commits using `git add -p`.
-
-
