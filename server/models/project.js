@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import shortid from 'shortid';
-import slugify from 'slugify';
+import generateSlug from '../utils/generateSlug';
 
 const { Schema } = mongoose;
 
@@ -40,7 +40,7 @@ projectSchema.set('toJSON', {
 
 projectSchema.pre('save', function generateSlug(next) {
   const project = this;
-  project.slug = slugify(project.name, '_');
+  project.slug = generateSlug(project.name, '_');
   return next();
 });
 
