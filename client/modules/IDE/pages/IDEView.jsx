@@ -277,6 +277,10 @@ class IDEView extends React.Component {
               setSoundOutput={this.props.setSoundOutput}
               theme={this.props.preferences.theme}
               setTheme={this.props.setTheme}
+              friendlyErrors={this.props.preferences.friendlyErrors}
+              setFriendlyErrors={this.props.setFriendlyErrors}
+              addFriendlyErrorsToSketch={this.props.addFriendlyErrorsToSketch}
+              removeFriendlyErrorsFromSketch={this.props.removeFriendlyErrorsFromSketch}
             />
           </Overlay>
         }
@@ -330,6 +334,7 @@ class IDEView extends React.Component {
                   fontSize={this.props.preferences.fontSize}
                   indentationAmount={this.props.preferences.indentationAmount}
                   isTabIndent={this.props.preferences.isTabIndent}
+                  friendlyErrors={this.props.preferences.friendlyErrors}
                   files={this.props.files}
                   editorOptionsVisible={this.props.ide.editorOptionsVisible}
                   showEditorOptions={this.props.showEditorOptions}
@@ -580,7 +585,8 @@ IDEView.propTypes = {
     gridOutput: PropTypes.bool.isRequired,
     soundOutput: PropTypes.bool.isRequired,
     theme: PropTypes.string.isRequired,
-    autorefresh: PropTypes.bool.isRequired
+    autorefresh: PropTypes.bool.isRequired,
+    friendlyErrors: PropTypes.bool.isRequired
   }).isRequired,
   closePreferences: PropTypes.func.isRequired,
   setFontSize: PropTypes.func.isRequired,
@@ -665,7 +671,10 @@ IDEView.propTypes = {
   showRuntimeErrorWarning: PropTypes.func.isRequired,
   hideRuntimeErrorWarning: PropTypes.func.isRequired,
   startSketch: PropTypes.func.isRequired,
-  startAccessibleSketch: PropTypes.func.isRequired
+  startAccessibleSketch: PropTypes.func.isRequired,
+  setFriendlyErrors: PropTypes.func.isRequired,
+  addFriendlyErrorsToSketch: PropTypes.func.isRequired,
+  removeFriendlyErrorsFromSketch: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

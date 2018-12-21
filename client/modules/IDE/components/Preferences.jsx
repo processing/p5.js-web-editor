@@ -230,6 +230,39 @@ class Preferences extends React.Component {
                 <label htmlFor="autosave-off" className="preference__option">Off</label>
               </div>
             </div>
+            <div className="preference">
+              <h4 className="preference__title">Friendly Errors</h4>
+              <div className="preference__options">
+                <input
+                  type="radio"
+                  onChange={() => {
+                    this.props.addFriendlyErrorsToSketch();
+                    this.props.setFriendlyErrors(true);
+                  }}
+                  aria-label="friendly errors on"
+                  name="friendly-errors"
+                  id="friendly-errors-on"
+                  className="preference__radio-button"
+                  value="On"
+                  checked={this.props.friendlyErrors}
+                />
+                <label htmlFor="friendly-errors-on" className="preference__option">On</label>
+                <input
+                  type="radio"
+                  onChange={() => {
+                    this.props.removeFriendlyErrorsFromSketch();
+                    this.props.setFriendlyErrors(false);
+                  }}
+                  aria-label="friendly errors off"
+                  name="friendly-errors"
+                  id="friendly-errors-off"
+                  className="preference__radio-button"
+                  value="Off"
+                  checked={!this.props.friendlyErrors}
+                />
+                <label htmlFor="friendly-errors-off" className="preference__option">Off</label>
+              </div>
+            </div>
           </TabPanel>
           <TabPanel>
             <div className="preference">

@@ -220,3 +220,45 @@ export function getBlobUrl(file) {
   const blobURL = blobUtil.createObjectURL(fileBlob);
   return blobURL;
 }
+
+export function addFriendlyErrorsToSketch() {
+  return (dispatch, getState) => {
+    const state = getState();
+    const htmlFile = state.files.find(file => file.name === 'index.html');
+    const parser = new DOMParser();
+    const sketchDoc = parser.parseFromString(htmlFile.content, 'text/html');
+    const scriptsInHTML = sketchDoc.getElementsByTagName('script');
+    const scriptsInHTMLArray = Array.prototype.slice.call(scriptsInHTML);
+    scriptsInHTMLArray.some((script) => {
+      if (script.getAttribute('src') && script.getAttribute('src').match(/p5.min.js$/) !== null) {
+        const newSrc = script.getAttribute('src').replace(/p5.min.js$/, 'p5.js');
+        script.setAttribute('src', newSrc);
+        const newHtmlContent = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
+        dispatch(updateFileContent('index.html', newHtmlContent));
+        return true;
+      }
+      return false;
+    });
+  }
+}
+
+export function removeFriendlyErrorsFromSketch() {
+  return (dispatch, getState) => {
+    const state = getState();
+    const htmlFile = state.files.find(file => file.name === 'index.html');
+    const parser = new DOMParser();
+    const sketchDoc = parser.parseFromString(htmlFile.content, 'text/html');
+    const scriptsInHTML = sketchDoc.getElementsByTagName('script');
+    const scriptsInHTMLArray = Array.prototype.slice.call(scriptsInHTML);
+    scriptsInHTMLArray.some((script) => {
+      if (script.getAttribute('src') && script.getAttribute('src').match(/p5.js$/) !== null) {
+        const newSrc = script.getAttribute('src').replace(/p5.js$/, 'p5.min.js');
+        script.setAttribute('src', newSrc);
+        const newHtmlContent = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
+        dispatch(updateFileContent('index.html', newHtmlContent));
+        return true;
+      }
+      return false;
+    });
+  }
+}

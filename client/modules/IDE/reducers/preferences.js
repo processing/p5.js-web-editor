@@ -10,7 +10,8 @@ const initialState = {
   gridOutput: false,
   soundOutput: false,
   theme: 'light',
-  autorefresh: false
+  autorefresh: false,
+  friendlyErrors: true
 };
 
 const preferences = (state = initialState, action) => {
@@ -29,6 +30,8 @@ const preferences = (state = initialState, action) => {
       });
     case ActionTypes.SET_AUTOSAVE:
       return Object.assign({}, state, { autosave: action.value });
+    case ActionTypes.SET_FRIENDLY_ERRORS:
+      return Object.assign({}, state, { friendlyErrors: action.value });
     case ActionTypes.SET_LINT_WARNING:
       return Object.assign({}, state, { lintWarning: action.value });
     case ActionTypes.SET_TEXT_OUTPUT:
