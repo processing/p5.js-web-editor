@@ -239,7 +239,7 @@ export function addFriendlyErrorsToSketch() {
       }
       return false;
     });
-  }
+  };
 }
 
 export function removeFriendlyErrorsFromSketch() {
@@ -260,5 +260,5 @@ export function removeFriendlyErrorsFromSketch() {
       }
       return false;
     });
-  }
+  };
 }

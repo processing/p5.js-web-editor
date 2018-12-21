@@ -369,6 +369,10 @@ Preferences.propTypes = {
   setLintWarning: PropTypes.func.isRequired,
   theme: PropTypes.string.isRequired,
   setTheme: PropTypes.func.isRequired,
+  friendlyErrors: PropTypes.bool.isRequired,
+  setFriendlyErrors: PropTypes.func.isRequired,
+  addFriendlyErrorsToSketch: PropTypes.func.isRequired,
+  removeFriendlyErrorsFromSketch: PropTypes.func.isRequired
 };
 
 export default Preferences;
