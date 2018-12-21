@@ -226,3 +226,20 @@ export function setAllAccessibleOutput(value) {
   };
 }
 
+export function setFriendlyErrors(value) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.SET_FRIENDLY_ERRORS,
+      value
+    });
+    const state = getState();
+    if (state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          friendlyErrors: value
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
+  };
+}
