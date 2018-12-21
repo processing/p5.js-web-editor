@@ -1,7 +1,5 @@
-Before your pull request is reviewed and merged, please ensure that:
+I have verified that this pull request:
 
-* [ ] there are no linting errors -- `npm run lint`
-* [ ] your code is in a uniquely-named feature branch and has been rebased on top of the latest master. If you're asked to make more changes, make sure you rebase onto master then too!
-* [ ] your pull request is descriptively named and links to an issue number, i.e. `Fixes #123`
-
-Thank you!
+* [ ] has no linting errors (`npm run lint`)
+* [ ] is from a uniquely-named feature branch and has been rebased on top of the latest master. (If I was asked to make more changes, I have made sure to rebase onto master then too)
+* [ ] is descriptively named and links to an issue number, i.e. `Fixes #123`
