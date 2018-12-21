@@ -373,7 +373,8 @@ Editor.propTypes = {
   showRuntimeErrorWarning: PropTypes.func.isRequired,
   hideRuntimeErrorWarning: PropTypes.func.isRequired,
   runtimeErrorWarningVisible: PropTypes.bool.isRequired,
-  provideController: PropTypes.func.isRequired
+  provideController: PropTypes.func.isRequired,
+  friendlyErrors: PropTypes.bool.isRequired
 };
 
 Editor.defaultProps = {
