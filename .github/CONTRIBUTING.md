@@ -7,7 +7,7 @@ Here are links to all the sections in this document:
 <!-- If you change any of the headings in this document, remember to update the table of contents. -->
 
 - [Code of Conduct](#code-of-conduct)
-- [How Can I Contribute ?](#how-can-i-contribute?)
+- [How Can I Contribute?](#how-can-i-contribute)
   - [First Timers](#first-timers)
   - [Want something more challenging](#want-something-more-challenging)
   - [Feature Enhancement](#feature-enhancement)
