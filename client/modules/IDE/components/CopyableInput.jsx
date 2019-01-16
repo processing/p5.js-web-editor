@@ -67,6 +67,7 @@ class CopyableInput extends React.Component {
         {hasPreviewLink &&
           <a
             target="_blank"
+            rel="noopener noreferrer"
             href={value}
             className="copyable-input__preview"
             title={`open ${label.toLowerCase()} view in new tab`}
