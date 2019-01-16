@@ -13,6 +13,9 @@
 .copyable-input__value {
   width: 100%;
   font-size: #{16 / $base-font-size}rem;
+  .copyable-input--with-preview & {
+    border-radius: 2px 0 0 2px;
+  }
 }
 
 .copyable-input__label {
@@ -32,7 +35,6 @@
 .copyable-input {
   padding-bottom: #{30 / $base-font-size}rem;
   display: flex;
-  flex-wrap: wrap;
 }
 
 .copyable-input__value-container {
@@ -54,5 +56,18 @@
   @include themify() {
     color: getThemifyVariable('button-background-hover-color');
     border-top-color: getThemifyVariable('button-background-hover-color');
+  }
+}
+
+.copyable-input__preview {
+  @extend %button;
+  @include themify() {
+    align-self: flex-end;
+    border-radius: 0 2px 2px 0;
+    padding: #{2 / $base-font-size}rem 0;
+  }
+  & svg {
+    height: #{30 / $base-font-size}rem;
+    width: #{30 / $base-font-size}rem;
   }
 }
