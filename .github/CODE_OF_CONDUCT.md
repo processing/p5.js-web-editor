@@ -11,13 +11,14 @@
 
   Use your best judgement. If it will possibly make others uncomfortable, do not post it.
 
-* **Be respectful.** Disagreement is not an opportunity to attack someone else's thoughts or opinions. Although views may differ, remember to approach every situation with patience and care. 
-* **Be considerate.** Think about how your contribution will affect others in the community. 
+* **Be respectful.** Disagreement is not an opportunity to attack someone else's thoughts or opinions. Although views may differ, remember to approach every situation with patience and care.
+* **Be considerate.** Think about how your contribution will affect others in the community.
 * **Be open minded.** Embrace new people and new ideas. Our community is continually evolving and we welcome positive change.
 
 If you believe someone is violating the code of conduct, we ask that you report it by emailing [hello@p5js.org](mailto:hello@p5js.org). Please include your name and a description of the incident, and we will get back to you ASAP.
 
-Participants asked to stop any harassing behavior are expected to comply immediately. If a participant engages in harassing behavior, the p5.js Team may take any action they deem appropriate, up to and including expulsion from all p5.js spaces and identification of the participant as a harasser to other p5.js members or the general public. 
+Participants asked to stop any harassing behavior are expected to comply immediately. If a participant engages in harassing behavior, the p5.js Team may take any action they deem appropriate, up to and including expulsion from all p5.js spaces and identification of the participant as a harasser to other p5.js members or the general public.
 
 ## Also
+
 * You can read our [community statement](http://p5js.org/community/) on our website.

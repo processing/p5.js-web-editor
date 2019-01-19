@@ -8,12 +8,12 @@ import InlineSVG from 'react-inlinesvg';
 import classNames from 'classnames';
 import * as IDEActions from '../modules/IDE/actions/ide';
 
-import {
-  metaKeyName,
-} from '../utils/metaKey';
+import { metaKeyName, } from '../utils/metaKey';
 
 const triangleUrl = require('../images/down-filled-triangle.svg');
 const logoUrl = require('../images/p5js-logo-small.svg');
+
+const __process = (typeof global !== 'undefined' ? global : window).process;
 
 class Nav extends React.PureComponent {
   constructor(props) {
@@ -150,7 +150,7 @@ class Nav extends React.PureComponent {
                   New
                 </button>
               </li>
-              { (!this.props.project.owner || this.isUserOwner()) &&
+              { __process.env.LOGIN_ENABLED && (!this.props.project.owner || this.isUserOwner()) &&
               <li className="nav__dropdown-item">
                 <button
                   onClick={() => {
@@ -460,7 +460,7 @@ class Nav extends React.PureComponent {
             </ul>
           </li>
         </ul>
-        { !this.props.user.authenticated &&
+        { __process.env.LOGIN_ENABLED && !this.props.user.authenticated &&
           <ul className="nav__items-right" title="user-menu">
             <li className="nav__item">
               <p>
@@ -470,7 +470,7 @@ class Nav extends React.PureComponent {
               </p>
             </li>
           </ul>}
-        { this.props.user.authenticated &&
+        { __process.env.LOGIN_ENABLED && this.props.user.authenticated &&
           <ul className="nav__items-right" title="user-menu">
             <li className="nav__item">
               <span>Hello, {this.props.user.username}!</span>
