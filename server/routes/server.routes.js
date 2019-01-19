@@ -97,7 +97,7 @@ router.get('/feedback', (req, res) => {
 
 router.get('/:username/sketches', (req, res) => {
   userExists(req.params.username, exists => (
-    (exists || req.params.username === 'p5') ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
+    exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
   ));
 });
 
