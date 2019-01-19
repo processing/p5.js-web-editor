@@ -116,6 +116,7 @@ module.exports = [{
     new ChunkManifestPlugin({
       filename: 'chunk-manifest.json',
       manifestVariable: 'webpackManifest',
+      inlineManifest: false
     }),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,

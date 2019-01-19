@@ -1,13 +1,13 @@
 # Contributing to the p5.js Web Editor 
 
-Hello! We welcome community contributions to the p5.js Web Editor. Contributing takes many forms and doesn't have to be **writing code**, it can be **report bugs**, **proposing new features**, **creating UI/UX designs**, and **updating documentation**. 
+Hello! We welcome community contributions to the p5.js Web Editor. Contributing takes many forms and doesn't have to be **writing code**, it can be **report bugs**, **proposing new features**, **creating UI/UX designs**, and **updating documentation**.
 
 Here are links to all the sections in this document:
 
 <!-- If you change any of the headings in this document, remember to update the table of contents. -->
 
 - [Code of Conduct](#code-of-conduct)
-- [How Can I Contribute ?](#how-can-i-contribute?)
+- [How Can I Contribute?](#how-can-i-contribute)
   - [First Timers](#first-timers)
   - [Want something more challenging](#want-something-more-challenging)
   - [Feature Enhancement](#feature-enhancement)
@@ -73,5 +73,3 @@ Tips
 ----
 
 * If it seems difficult to summarize what your commit does, it may be because it includes several logical changes or bug fixes, and are better split up into several commits using `git add -p`.
-
-
