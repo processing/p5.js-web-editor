@@ -59,7 +59,8 @@ class Sidebar extends React.Component {
           </h3>
           <div className="sidebar__icons">
             <button
-              aria-label="add file or folder"
+              aria-label="add a file or folder to project"
+              title="Add a file or folder to project"
               className="sidebar__add"
               tabIndex="0"
               ref={(element) => { this.sidebarOptions = element; }}
@@ -70,12 +71,12 @@ class Sidebar extends React.Component {
             </button>
             <ul className="sidebar__project-options">
               <li>
-                <button aria-label="add folder" onClick={this.props.newFolder} >
+                <button aria-label="add folder" onClick={this.props.newFolder} title="Add a folder to your project">
                   Add folder
                 </button>
               </li>
               <li>
-                <button aria-label="add file" onClick={this.props.newFile} >
+                <button aria-label="add file" onClick={this.props.newFile} title="Add a file to your project">
                   Add file
                 </button>
               </li>

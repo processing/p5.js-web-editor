@@ -39,11 +39,11 @@ class SignupView extends React.Component {
           <title>p5.js Web Editor | Signup</title>
         </Helmet>
         <div className="form-container__header">
-          <button className="form-container__logo-button" onClick={this.gotoHomePage}>
-            <InlineSVG src={logoUrl} alt="p5js Logo" />
+          <button className="form-container__logo-button" onClick={this.gotoHomePage} title="p5js Logo" >
+            <InlineSVG src={logoUrl} />
           </button>
-          <button className="form-container__exit-button" onClick={this.closeSignupPage}>
-            <InlineSVG src={exitUrl} alt="Close Signup Page" />
+          <button className="form-container__exit-button" onClick={this.closeSignupPage} title="Close Signup Page" >
+            <InlineSVG src={exitUrl} />
           </button>
         </div>
         <div className="form-container__content">

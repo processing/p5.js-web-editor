@@ -17,8 +17,8 @@ class NewFolderModal extends React.Component {
         <div className="modal-content-folder">
           <div className="modal__header">
             <h2 className="modal__title">Add Folder</h2>
-            <button className="modal__exit-button" onClick={this.props.closeModal}>
-              <InlineSVG src={exitUrl} alt="Close New Folder Modal" />
+            <button className="modal__exit-button" onClick={this.props.closeModal} title="exit" >
+              <InlineSVG src={exitUrl} />
             </button>
           </div>
           <NewFolderForm {...this.props} />

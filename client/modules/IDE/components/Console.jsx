@@ -81,17 +81,29 @@ class Console extends React.Component {
         <div className="preview-console__header">
           <h2 className="preview-console__header-title">Console</h2>
           <div className="preview-console__header-buttons">
-            <button className="preview-console__clear" onClick={this.props.clearConsole} aria-label="clear console">
+            <button
+              className="preview-console__clear"
+              onClick={this.props.clearConsole}
+              aria-label="clear console"
+              title="clear console"
+            >
               Clear
             </button>
             <button
               className="preview-console__collapse"
               onClick={this.props.collapseConsole}
               aria-label="collapse console"
+              title="collapse console"
+
             >
               <InlineSVG src={downArrowUrl} />
             </button>
-            <button className="preview-console__expand" onClick={this.props.expandConsole} aria-label="expand console">
+            <button
+              className="preview-console__expand"
+              onClick={this.props.expandConsole}
+              aria-label="expand console"
+              title="expand console"
+            >
               <InlineSVG src={upArrowUrl} />
             </button>
           </div>

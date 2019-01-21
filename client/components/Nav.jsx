@@ -114,14 +114,15 @@ class Nav extends React.PureComponent {
     return (
       <nav className="nav" title="main-navigation" ref={(node) => { this.node = node; }}>
         <ul className="nav__items-left" title="project-menu">
-          <li className="nav__item-logo">
-            <InlineSVG src={logoUrl} alt="p5.js logo" />
+          <li className="nav__item-logo" title="p5.js logo">
+            <InlineSVG src={logoUrl} />
           </li>
           <li className={navDropdownState.file}>
             <button
               onClick={this.toggleDropdown.bind(this, 'file')}
               onBlur={this.handleBlur}
               onFocus={this.clearHideTimeout}
+              title="File Menu"
             >
               <span className="nav__item-header">File</span>
               <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
@@ -130,6 +131,7 @@ class Nav extends React.PureComponent {
               <button
                 onClick={this.toggleDropdown.bind(this, 'file')}
                 className="nav__dropdown-heading"
+                title="Close File Menu"
               >
                 <span>File</span>
                 <InlineSVG src={triangleUrl} />
@@ -236,6 +238,7 @@ class Nav extends React.PureComponent {
               onClick={this.toggleDropdown.bind(this, 'edit')}
               onBlur={this.handleBlur}
               onFocus={this.clearHideTimeout}
+              title="Edit menu"
             >
               <span className="nav__item-header">Edit</span>
               <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
@@ -244,6 +247,7 @@ class Nav extends React.PureComponent {
               <button
                 onClick={this.toggleDropdown.bind(this, 'edit')}
                 className="nav__dropdown-heading"
+                title="Close Edit menu"
               >
                 <span>Edit</span>
                 <InlineSVG src={triangleUrl} />
@@ -307,6 +311,7 @@ class Nav extends React.PureComponent {
               onClick={this.toggleDropdown.bind(this, 'sketch')}
               onBlur={this.handleBlur}
               onFocus={this.clearHideTimeout}
+              title="Sketch menu"
             >
               <span className="nav__item-header">Sketch</span>
               <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
@@ -315,6 +320,7 @@ class Nav extends React.PureComponent {
               <button
                 onClick={this.toggleDropdown.bind(this, 'sketch')}
                 className="nav__dropdown-heading"
+                title="Close Sketch menu"
               >
                 <span>Sketch</span>
                 <InlineSVG src={triangleUrl} />
@@ -402,6 +408,7 @@ class Nav extends React.PureComponent {
               onClick={this.toggleDropdown.bind(this, 'help')}
               onBlur={this.handleBlur}
               onFocus={this.clearHideTimeout}
+              title="Help & Feedback"
             >
               <span className="nav__item-header">Help & Feedback</span>
               <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
@@ -410,6 +417,7 @@ class Nav extends React.PureComponent {
               <button
                 onClick={this.toggleDropdown.bind(this, 'help')}
                 className="nav__dropdown-heading"
+                title="Close Help & Feedback"
               >
                 <span>Help & Feedback</span>
                 <InlineSVG src={triangleUrl} />
@@ -482,6 +490,7 @@ class Nav extends React.PureComponent {
                 onClick={this.toggleDropdown.bind(this, 'account')}
                 onBlur={this.handleBlur}
                 onFocus={this.clearHideTimeout}
+                title="My Account"
               >
                 My Account
               </button>
@@ -490,6 +499,7 @@ class Nav extends React.PureComponent {
                 <button
                   onClick={this.toggleDropdown.bind(this, 'account')}
                   className="nav__dropdown-heading"
+                  title="Exit My Account"
                 >
                   <span>My Account</span>
                   <InlineSVG src={triangleUrl} />

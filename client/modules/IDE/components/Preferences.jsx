@@ -118,15 +118,18 @@ class Preferences extends React.Component {
                 className="preference__minus-button"
                 onClick={() => this.props.setFontSize(this.props.fontSize - 2)}
                 aria-label="decrease font size"
+                title="Decrease font size"
+
                 disabled={this.props.fontSize <= 8}
               >
-                <InlineSVG src={minusUrl} alt="Decrease Font Size" />
+                <InlineSVG src={minusUrl} />
                 <h6 className="preference__label">Decrease</h6>
               </button>
               <input
                 className="preference__value"
                 aria-live="polite"
                 aria-atomic="true"
+                title="current font size"
                 value={this.props.fontSize}
                 onChange={this.handleUpdateFont}
                 ref={(element) => { this.fontSizeInput = element; }}
@@ -138,9 +141,10 @@ class Preferences extends React.Component {
                 className="preference__plus-button"
                 onClick={() => this.props.setFontSize(this.props.fontSize + 2)}
                 aria-label="increase font size"
+                title="Increase font size"
                 disabled={this.props.fontSize >= 36}
               >
-                <InlineSVG src={plusUrl} alt="Increase Font Size" />
+                <InlineSVG src={plusUrl} />
                 <h6 className="preference__label">Increase</h6>
               </button>
             </div>
@@ -150,15 +154,17 @@ class Preferences extends React.Component {
                 className="preference__minus-button"
                 onClick={() => this.props.setIndentation(this.props.indentationAmount - 2)}
                 aria-label="decrease indentation amount"
+                title="Decrease indentation amount"
                 disabled={this.props.indentationAmount <= 0}
               >
-                <InlineSVG src={minusUrl} alt="DecreaseIndentation Amount" />
+                <InlineSVG src={minusUrl} />
                 <h6 className="preference__label">Decrease</h6>
               </button>
               <input
                 className="preference__value"
                 aria-live="polite"
                 aria-atomic="true"
+                title="Current indentation value"
                 value={this.props.indentationAmount}
                 onChange={this.handleUpdateIndentation}
                 ref={(element) => { this.indentationInput = element; }}
@@ -170,9 +176,10 @@ class Preferences extends React.Component {
                 className="preference__plus-button"
                 onClick={() => this.props.setIndentation(this.props.indentationAmount + 2)}
                 aria-label="increase indentation amount"
+                title="Increase indentation amount"
                 disabled={this.props.indentationAmount >= 6}
               >
-                <InlineSVG src={plusUrl} alt="IncreaseIndentation Amount" />
+                <InlineSVG src={plusUrl} />
                 <h6 className="preference__label">Increase</h6>
               </button>
               <input
@@ -188,6 +195,7 @@ class Preferences extends React.Component {
               <label
                 htmlFor="indentation-space"
                 className="preference__option preference__whitespace-button"
+                title="Indentation with space"
               >
                 Spaces
               </label>
@@ -201,7 +209,13 @@ class Preferences extends React.Component {
                 value="Tabs"
                 checked={this.props.isTabIndent}
               />
-              <label htmlFor="indentation-tab" className="preference__option preference__whitespace-button">Tabs</label>
+              <label
+                htmlFor="indentation-tab"
+                className="preference__option preference__whitespace-button"
+                title="Indentation with tab"
+              >
+                Tabs
+              </label>
             </div>
             <div className="preference">
               <h4 className="preference__title">Autosave</h4>

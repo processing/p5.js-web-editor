@@ -24,7 +24,7 @@ function Feedback(props) {
             className="feedback__github-link"
           >
             Go to Github
-            <InlineSVG className="feedback__github-logo" src={githubLogoUrl} />
+            <InlineSVG className="feedback__github-logo" src={githubLogoUrl} alt="github logo" />
           </a>
         </p>
       </div>

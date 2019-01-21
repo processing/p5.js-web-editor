@@ -66,24 +66,27 @@ class Toolbar extends React.Component {
             this.props.setGridOutput(true);
           }}
           aria-label="play sketch"
+          title="Play Sketch"
           disabled={this.props.infiniteLoop}
         >
-          <InlineSVG src={playUrl} alt="Play Sketch" />
+          <InlineSVG src={playUrl} />
         </button>
         <button
           className={playButtonClass}
           onClick={this.props.startSketch}
           aria-label="play only visual sketch"
+          title="Play sketch"
           disabled={this.props.infiniteLoop}
         >
-          <InlineSVG src={playUrl} alt="Play only visual Sketch" />
+          <InlineSVG src={playUrl} />
         </button>
         <button
           className={stopButtonClass}
           onClick={this.props.stopSketch}
           aria-label="stop sketch"
+          title="Stop Sketch"
         >
-          <InlineSVG src={stopUrl} alt="Stop Sketch" />
+          <InlineSVG src={stopUrl} />
         </button>
         <div className="toolbar__autorefresh">
           <input
@@ -110,11 +113,12 @@ class Toolbar extends React.Component {
                 setTimeout(() => this.projectNameInput.focus(), 0);
               }
             }}
+            title="Edit Project Name"
           >
             {this.props.project.name}&nbsp;
             {
               this.canEditProjectName() &&
-              <InlineSVG className="toolbar__edit-name-button" src={editProjectNameUrl} alt="Edit Project Name" />
+              <InlineSVG className="toolbar__edit-name-button" src={editProjectNameUrl} />
             }
           </a>
           <input
@@ -146,8 +150,9 @@ class Toolbar extends React.Component {
           className={preferencesButtonClass}
           onClick={this.props.openPreferences}
           aria-label="preferences"
+          title="Preferences"
         >
-          <InlineSVG src={preferencesUrl} alt="Preferences" />
+          <InlineSVG src={preferencesUrl} />
         </button>
       </div>
     );

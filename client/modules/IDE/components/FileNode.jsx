@@ -150,6 +150,7 @@ export class FileNode extends React.Component {
                 <button
                   className="sidebar__file-item-show-options"
                   aria-label="view file options"
+                  title="view file options"
                   ref={(element) => { this[`fileOptions-${this.props.id}`] = element; }}
                   tabIndex="0"
                   onClick={this.toggleFileOptions}

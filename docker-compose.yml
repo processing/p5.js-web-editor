@@ -10,7 +10,7 @@ services:
       dockerfile: Dockerfile
       target: production
     # uncomment the following line to pull the image from docker hub
-    # image: index.docker.io/catarak/p5.js-web-editor:latest
+     image: index.docker.io/catarak/p5.js-web-editor:latest
     # uncomment the following lines if you don't want export all of the variables
     # defined in your .env file for testing
     # env_file:
@@ -41,7 +41,7 @@ services:
       - FORCE_TO_HTTPS
       # you can either set this in your .env or as an environment variables
       # or here YOU CHOOSE
-      # - MONGO_URL=mongodb://mongo:27017/p5js-web-editor
+       - MONGO_URL=mongodb://mongo:27017/p5js-web-editor
     volumes:
       - .:/opt/node/app
       - /opt/node/app/node_modules

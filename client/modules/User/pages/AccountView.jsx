@@ -37,11 +37,11 @@ class AccountView extends React.Component {
           <title>p5.js Web Editor | Account</title>
         </Helmet>
         <div className="form-container__header">
-          <button className="form-container__logo-button" onClick={this.gotoHomePage}>
-            <InlineSVG src={logoUrl} alt="p5js Logo" />
+          <button className="form-container__logo-button" onClick={this.gotoHomePage} title="p5js Logo" >
+            <InlineSVG src={logoUrl} />
           </button>
-          <button className="form-container__exit-button" onClick={this.closeAccountPage}>
-            <InlineSVG src={exitUrl} alt="Close Account Page" />
+          <button className="form-container__exit-button" onClick={this.closeAccountPage} title="Close Account Page" >
+            <InlineSVG src={exitUrl} />
           </button>
         </div>
         <div className="form-container__content">
