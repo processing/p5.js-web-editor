@@ -10,7 +10,7 @@ services:
       dockerfile: Dockerfile
       target: production
     # uncomment the following line to pull the image from docker hub
-     image: index.docker.io/catarak/p5.js-web-editor:latest
+    # image: index.docker.io/catarak/p5.js-web-editor:latest
     # uncomment the following lines if you don't want export all of the variables
     # defined in your .env file for testing
     # env_file:
