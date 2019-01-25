@@ -28,7 +28,8 @@ export function renderIndex() {
         window.process.env.AWS_REGION = '${process.env.AWS_REGION}';
         window.process.env.FORCE_TO_HTTPS = ${process.env.FORCE_TO_HTTPS === 'false' ? false : undefined};
         window.process.env.CLIENT = true;
-        window.process.env.LOGIN_ENABLED = ${process.env.LOGIN_ENABLED === 'false' ? false : true}
+        window.process.env.LOGIN_ENABLED = ${process.env.LOGIN_ENABLED === 'false' ? false : true};
+        window.process.env.EXAMPLES_ENABLED = ${process.env.EXAMPLES_ENABLED === 'false' ? false : true};
       </script>
     </head>
     <body>

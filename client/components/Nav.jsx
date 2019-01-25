@@ -219,6 +219,7 @@ class Nav extends React.PureComponent {
                   Open
                 </Link>
               </li> }
+              { __process.env.EXAMPLES_ENABLED &&
               <li className="nav__dropdown-item">
                 <Link
                   to="/p5/sketches"
@@ -228,7 +229,7 @@ class Nav extends React.PureComponent {
                 >
                   Examples
                 </Link>
-              </li>
+              </li> }
             </ul>
           </li>
           <li className={navDropdownState.edit}>
