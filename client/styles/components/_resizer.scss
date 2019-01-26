@@ -19,10 +19,11 @@
 // }
 
 .Resizer.horizontal {
-    height: 10px;
-    margin: -5px 0;
-    border-top: 5px solid rgba(255, 255, 255, 0);
-    border-bottom: 5px solid rgba(255, 255, 255, 0);
+    height: 0px;
+    padding: 4px 0;
+    margin: -1px 0 -7px;
+    // border-top: 5px solid rgba(255, 255, 255, 0);
+    // border-bottom: 5px solid rgba(255, 255, 255, 0);
     cursor: row-resize;
     width: 100%;
 }
