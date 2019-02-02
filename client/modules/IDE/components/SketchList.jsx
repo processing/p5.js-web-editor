@@ -14,9 +14,11 @@ import * as SortingActions from '../actions/sorting';
 import getSortedSketches from '../selectors/projects';
 import Loader from '../../App/components/loader';
 
-const trashCan = require('../../../images/trash-can.svg');
+// const trashCan = require('../../../images/trash-can.svg');
 const arrowUp = require('../../../images/sort-arrow-up.svg');
 const arrowDown = require('../../../images/sort-arrow-down.svg');
+const downFilledTriangle = require('../../../images/down-filled-triangle.svg');
+const btnUpTriangleDivot = require('../../../images/btn-up-triangle-divot.svg');
 
 class SketchList extends React.Component {
   constructor(props) {
@@ -24,6 +26,21 @@ class SketchList extends React.Component {
     this.props.getProjects(this.props.username);
     this.props.resetSorting();
     this._renderFieldHeader = this._renderFieldHeader.bind(this);
+    this.state = {
+      actionDialogueDisplayed: new Array(this.props.sketches.length).fill(false),
+      renameBoxDisplayed: new Array(this.props.sketches.length).fill(false),
+      renameBoxContent: this.props.sketches.map(({ name }) => name)
+    };
+
+    this.closeAllDropdowns = this.closeAllDropdowns.bind(this);
+    this.closeAllRenameBoxes = this.closeAllRenameBoxes.bind(this);
+    this.restoreRenameBoxContent = this.restoreRenameBoxContent.bind(this);
+  }
+
+  componentWillReceiveProps(props) {
+    this.setState({
+      renameBoxContent: props.sketches.map(({ name }) => name)
+    });
   }
 
   getSketchesTitle() {
@@ -70,10 +87,35 @@ class SketchList extends React.Component {
     );
   }
 
+  closeAllDropdowns() {
+    this.setState({
+      actionDialogueDisplayed: new Array(this.props.sketches.length).fill(false)
+    });
+  }
+
+  closeAllRenameBoxes() {
+    this.setState({
+      renameBoxDisplayed: new Array(this.props.sketches.length).fill(false)
+    });
+  }
+
+  restoreRenameBoxContent() {
+    this.setState({
+      renameBoxContent: this.props.sketches.map(({ name }) => name)
+    });
+  }
+
   render() {
     const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
     return (
-      <div className="sketches-table-container">
+      <div
+        className="sketches-table-container"
+        role="presentation"
+        onClick={() => {
+          this.closeAllDropdowns();
+          this.closeAllRenameBoxes();
+        }}
+      >
         <Helmet>
           <title>{this.getSketchesTitle()}</title>
         </Helmet>
@@ -83,42 +125,170 @@ class SketchList extends React.Component {
           <table className="sketches-table" summary="table containing all saved projects">
             <thead>
               <tr>
-                <th className="sketch-list__trash-column" scope="col"></th>
                 {this._renderFieldHeader('name', 'Sketch')}
                 {this._renderFieldHeader('createdAt', 'Date Created')}
                 {this._renderFieldHeader('updatedAt', 'Date Updated')}
+                <th scope="col"></th>
               </tr>
             </thead>
             <tbody>
-              {this.props.sketches.map(sketch =>
+              {this.props.sketches.map((sketch, i) =>
                 // eslint-disable-next-line
                 <tr 
-                  className="sketches-table__row visibility-toggle"
+                  className="sketches-table__row"
                   key={sketch.id}
-                  onClick={() => browserHistory.push(`/${username}/sketches/${sketch.id}`)}
+                  onClick={() => {
+                    if (this.state.actionDialogueDisplayed.some(el => el)) {
+                      this.closeAllDropdowns();
+                      return;
+                    }
+                    if (this.state.renameBoxDisplayed.some(el => el)) {
+                      this.closeAllRenameBoxes();
+                      return;
+                    }
+                    browserHistory.push(`/${username}/sketches/${sketch.id}`);
+                  }}
                 >
-                  <td className="sketch-list__trash-column">
-                  {(() => { // eslint-disable-line
-                      if (this.props.username === this.props.user.username || this.props.username === undefined) {
-                        return (
-                          <button
-                            className="sketch-list__trash-button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              if (window.confirm(`Are you sure you want to delete "${sketch.name}"?`)) {
-                                this.props.deleteProject(sketch.id);
-                              }
-                            }}
-                          >
-                            <InlineSVG src={trashCan} alt="Delete Project" />
-                          </button>
-                        );
-                      }
-                    })()}
-                  </td>
-                  <th scope="row"><Link to={`/${username}/sketches/${sketch.id}`}>{sketch.name}</Link></th>
+                  <th scope="row">
+                    <Link to={`/${username}/sketches/${sketch.id}`}>
+                      {this.state.renameBoxDisplayed[i] ? '' : sketch.name}
+                    </Link>
+                    {this.state.renameBoxDisplayed[i]
+                      &&
+                      <input
+                        value={this.state.renameBoxContent[i]}
+                        onChange={(e) => {
+                          const renameBoxContent = [...this.state.renameBoxContent];
+                          renameBoxContent[i] = e.target.value;
+                          this.setState({
+                            renameBoxContent
+                          });
+                        }}
+                        onKeyUp={(e) => {
+                          // Enter pressed
+                          if (e.key === 'Enter') {
+                            this.props.changeProjectName(sketch.id, this.state.renameBoxContent[i]);
+                            this.restoreRenameBoxContent();
+                            this.closeAllRenameBoxes();
+                          }
+                        }}
+                        onBlur={this.restoreRenameBoxContent}
+                        onClick={e => e.stopPropagation()}
+                        autoFocus //eslint-disable-line
+                      />
+                    }
+                  </th>
                   <td>{format(new Date(sketch.createdAt), 'MMM D, YYYY h:mm A')}</td>
                   <td>{format(new Date(sketch.updatedAt), 'MMM D, YYYY h:mm A')}</td>
+                  <td className="sketch-list__dropdown-column">
+                    <button
+                      className="sketch-list__dropdown-button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        this.closeAllRenameBoxes();
+                        this.setState(() => {
+                          const actionDialogueDisplayed = new Array(this.props.sketches.length).fill(false);
+                          actionDialogueDisplayed[i] = true;
+                          return {
+                            actionDialogueDisplayed,
+                          };
+                        });
+                      }}
+                    >
+                      <InlineSVG src={downFilledTriangle} alt="Menu" />
+                    </button>
+                    {this.state.actionDialogueDisplayed[i] &&
+                      <div
+                        className="sketch-list__action-dialogue"
+                        role="presentation"
+                        onClick={e => e.stopPropagation()}
+                      >
+                        <button
+                          className="sketch-list__action-close"
+                          onClick={() => {
+                            const actionDialogueDisplayed = [...this.state.actionDialogueDisplayed];
+                            actionDialogueDisplayed[i] = false;
+                            this.setState({
+                              actionDialogueDisplayed
+                            });
+                          }}
+                        >
+                          <InlineSVG src={btnUpTriangleDivot} alt="Close" />
+                        </button>
+                        <div
+                          className="sketch-list__action-label"
+                          onClick={() => {
+                            const actionDialogueDisplayed = [...this.state.actionDialogueDisplayed];
+                            actionDialogueDisplayed[i] = false;
+                            this.setState({
+                              actionDialogueDisplayed
+                            });
+                          }}
+                          role="presentation"
+                        >
+                            Sketch actions
+                        </div>
+                        <div className="sketch-list__action-dashed-line" />
+                        <div
+                          role="presentation"
+                          className="sketch-list__action-option"
+                          onClick={() => {
+                            this.closeAllRenameBoxes();
+                            this.closeAllDropdowns();
+                            const renameBoxDisplayed = new Array(this.props.sketches.length).fill(false);
+                            renameBoxDisplayed[i] = true;
+                            this.setState({
+                              renameBoxDisplayed
+                            });
+                          }}
+                        >
+                            Rename
+                        </div>
+                        <div
+                          role="presentation"
+                          className="sketch-list__action-option"
+                          onClick={() => {
+                            this.props.exportProjectAsZip(sketch.id);
+                          }}
+                        >
+                            Download
+                        </div>
+                        {this.props.user.authenticated &&
+                        <div
+                          role="presentation"
+                          className="sketch-list__action-option"
+                          onClick={() => {
+                            this.closeAllDropdowns();
+                            this.props.cloneProject(sketch.id);
+                          }}
+                        >
+                            Duplicate
+                        </div> }
+                        <div
+                          role="presentation"
+                          className="sketch-list__action-option"
+                          onClick={() => {
+                            this.closeAllDropdowns();
+                            this.props.showShareModal(sketch.id, sketch.name);
+                          }}
+                        >
+                            Share
+                        </div>
+                        <div
+                          role="presentation"
+                          className="sketch-list__action-option"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            this.closeAllDropdowns();
+                            if (window.confirm(`Are you sure you want to delete "${sketch.name}"?`)) {
+                              this.props.deleteProject(sketch.id);
+                            }
+                          }}
+                        >
+                            Delete
+                        </div>
+                      </div>}
+                  </td>
                 </tr>)}
             </tbody>
           </table>}
@@ -129,7 +299,8 @@ class SketchList extends React.Component {
 
 SketchList.propTypes = {
   user: PropTypes.shape({
-    username: PropTypes.string
+    username: PropTypes.string,
+    authenticated: PropTypes.bool.isRequired
   }).isRequired,
   getProjects: PropTypes.func.isRequired,
   sketches: PropTypes.arrayOf(PropTypes.shape({
@@ -147,9 +318,23 @@ SketchList.propTypes = {
     field: PropTypes.string.isRequired,
     direction: PropTypes.string.isRequired
   }).isRequired,
+  showShareModal: PropTypes.func.isRequired,
+  project: PropTypes.shape({
+    id: PropTypes.string,
+    owner: PropTypes.shape({
+      id: PropTypes.string
+    })
+  }),
+  cloneProject: PropTypes.func.isRequired,
+  exportProjectAsZip: PropTypes.func.isRequired,
+  changeProjectName: PropTypes.func.isRequired
 };
 
 SketchList.defaultProps = {
+  project: {
+    id: undefined,
+    owner: undefined
+  },
   username: undefined
 };
 
@@ -158,7 +343,8 @@ function mapStateToProps(state) {
     user: state.user,
     sketches: getSortedSketches(state),
     sorting: state.sorting,
-    loading: state.loading
+    loading: state.loading,
+    project: state.project
   };
 }
 

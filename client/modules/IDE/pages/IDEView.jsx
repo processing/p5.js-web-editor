@@ -407,6 +407,7 @@ class IDEView extends React.Component {
             <Feedback previousPath={this.props.ide.previousPath} />
           </Overlay>
         }
+        aa
         { this.props.ide.shareModalVisible &&
           <Overlay
             title="Share This Sketch"
@@ -414,9 +415,9 @@ class IDEView extends React.Component {
             closeOverlay={this.props.closeShareModal}
           >
             <ShareModal
-              projectId={this.props.project.id}
-              projectName={this.props.project.name}
-              ownerUsername={this.props.project.owner.username}
+              projectId={this.props.ide.shareModalProjectId}
+              projectName={this.props.ide.shareModalProjectName}
+              ownerUsername={this.props.ide.shareModalProjectUsername}
             />
           </Overlay>
         }
@@ -481,6 +482,9 @@ IDEView.propTypes = {
     projectOptionsVisible: PropTypes.bool.isRequired,
     newFolderModalVisible: PropTypes.bool.isRequired,
     shareModalVisible: PropTypes.bool.isRequired,
+    shareModalProjectId: PropTypes.string.isRequired,
+    shareModalProjectName: PropTypes.string.isRequired,
+    shareModalProjectUsername: PropTypes.string.isRequired,
     editorOptionsVisible: PropTypes.bool.isRequired,
     keyboardShortcutVisible: PropTypes.bool.isRequired,
     unsavedChanges: PropTypes.bool.isRequired,

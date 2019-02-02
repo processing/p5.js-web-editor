@@ -10,6 +10,9 @@ const initialState = {
   projectOptionsVisible: false,
   newFolderModalVisible: false,
   shareModalVisible: false,
+  shareModalProjectId: null,
+  shareModalProjectName: null,
+  shareModalOwnerUsername: null,
   editorOptionsVisible: false,
   keyboardShortcutVisible: false,
   unsavedChanges: false,
@@ -61,7 +64,12 @@ const ide = (state = initialState, action) => {
     case ActionTypes.CLOSE_NEW_FOLDER_MODAL:
       return Object.assign({}, state, { newFolderModalVisible: false });
     case ActionTypes.SHOW_SHARE_MODAL:
-      return Object.assign({}, state, { shareModalVisible: true });
+      return Object.assign({}, state, {
+        shareModalVisible: true,
+        shareModalProjectId: action.payload.shareModalProjectId,
+        shareModalProjectName: action.payload.shareModalProjectName,
+        shareModalOwnerUsername: action.payload.shareModalOwnerUsername,
+      });
     case ActionTypes.CLOSE_SHARE_MODAL:
       return Object.assign({}, state, { shareModalVisible: false });
     case ActionTypes.SHOW_EDITOR_OPTIONS:

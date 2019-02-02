@@ -40,7 +40,7 @@ export function updateProject(req, res) {
           res.json({ success: false });
           return;
         }
-        if (updatedProject.files.length !== req.body.files.length) {
+        if (req.body.files && updatedProject.files.length !== req.body.files.length) {
           const oldFileIds = updatedProject.files.map(file => file.id);
           const newFileIds = req.body.files.map(file => file.id);
           const staleIds = oldFileIds.filter(id => newFileIds.indexOf(id) === -1);

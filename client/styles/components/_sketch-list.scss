@@ -10,8 +10,11 @@
   padding: #{10 / $base-font-size}rem #{20 / $base-font-size}rem;
   max-height: 100%;
   border-spacing: 0;
+  & .sketch-list__dropdown-column {
+    width: #{60 / $base-font-size}rem;
   & .sketch-list__trash-column {
-    width: #{23 / $base-font-size}rem;
+    width: #{36 / $base-font-size}rem;
+    position: relative;
   }
 }
 
@@ -44,6 +47,10 @@
   }
 }
 
+.sketches-table thead th:nth-child(1){
+  padding-left: #{12 / $base-font-size}rem;
+}
+
 .sketches-table__row {
   margin: #{10 / $base-font-size}rem;
   height: #{72 / $base-font-size}rem;
@@ -55,6 +62,10 @@
   @include themify() {
     background: getThemifyVariable('console-header-background-color');
   }
+}
+
+.sketches-table__row > th:nth-child(1) {
+  padding-left: #{12 / $base-font-size}rem;
 }
 
 .sketches-table__row a {
@@ -75,14 +86,11 @@
   font-weight: normal;
 }
 
-.visibility-toggle .sketch-list__trash-button {
-  @extend %hidden-element;
+.sketch-list__dropdown-button {
   width:#{20 / $base-font-size}rem;
   height:#{20 / $base-font-size}rem;
-}
-
-.visibility-toggle:hover .sketch-list__trash-button {
-   @include themify() {
+  transform: translateY(-3px);
+  @include themify() {
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -90,12 +98,154 @@
     position: initial;
     left: 0;
     top: 0;
-      & g {
-        opacity: 1;
-        fill: getThemifyVariable('icon-hover-color');
+
+      & polygon {
+        fill: getThemifyVariable('dropdown-color');
+      }
+
+      & polygon {
+        fill: getThemifyVariable('dropdown-color');
+      }
+
+      & polygon {
+        fill: getThemifyVariable('dropdown-color');
       }
   }
 }
+
+.sketch-list__action-dialogue {
+  position: absolute;
+  width: #{162 / $base-font-size}rem;
+  @include themify(){
+    background-color: getThemifyVariable('modal-background-color');
+		box-shadow: 0 0 18px 0 getThemifyVariable('shadow-color');
+  }
+  border-radius: #{6 / $base-font-size}rem;
+  border: 1px solid #0f9dd7;
+  top: 22%;
+  right: 55%;
+  z-index: 100;
+  button {
+    width: 20px;
+  }
+}
+
+.sketch-list__action-label {
+  @include themify(){
+    color: getThemifyVariable('dropdown-color');
+  }
+  padding-left: #{14 / $base-font-size}rem;
+  width: 100%;
+  height: #{36 / $base-font-size}rem;
+  font-family: Montserrat;
+  font-size: #{12 / $base-font-size}rem;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 3;
+  letter-spacing: normal;
+  text-align: left;
+  margin-top: #{2 / $base-font-size}rem;
+  /*&:hover {
+    @include themify(){
+      color: getThemifyVariable('nav-hover-color');
+      path:nth-child(2) {
+        fill: getThemifyVariable('nav-hover-color');
+      }
+    }
+  }*/
+}
+
+.sketch-list__action-dashed-line {
+  width: #{133 / $base-font-size}rem;
+  @include themify(){
+    border-bottom: 1px dashed map-get($theme-map, 'inactive-text-color');
+  }
+  // color: #ffffff; 
+  margin: 0 auto;
+}
+
+.sketch-list__action-option {
+  @include themify(){
+    color: getThemifyVariable('dropdown-color');
+  }
+  width: #{53 / $base-font-size}rem;
+  height: #{32 / $base-font-size}rem;
+  font-family: Montserrat;
+  font-size: #{12 / $base-font-size}rem;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 2.67;
+  letter-spacing: normal;
+  text-align: left;
+  margin: #{4 / $base-font-size}rem;
+  margin-left: 0;
+  padding-left: #{14 / $base-font-size}rem;
+  width: 100%;
+
+    &:hover {
+      @include themify(){
+        background-color: getThemifyVariable('nav-hover-color');
+        color: getThemifyVariable('button-active-color');
+      }
+    }
+
+    &:nth-last-child(1) {
+      border-bottom-left-radius: #{6 / $base-font-size}rem;
+      border-bottom-right-radius: #{6 / $base-font-size}rem;
+      margin-bottom: 0;
+    }
+}
+
+.sketch-list__action-close {
+  @include themify(){
+    & path:nth-child(2) {
+      fill: getThemifyVariable('dropdown-color');
+    }
+  }
+  position: absolute;
+  top: #{11.604 / $base-font-size}rem;
+  right: #{14 / $base-font-size}rem;
+  width: #{22 / $base-font-size}rem;
+  height: #{18 / $base-font-size}rem;
+}
+
+.sketch-list__action-close {
+  position: absolute;
+  top: #{14 / $base-font-size}rem;
+  right: #{14 / $base-font-size}rem;
+  width: #{18 / $base-font-size}rem;
+  height: #{18 / $base-font-size}rem;
+}
+
+.sketch-list__action-close {
+  @include themify(){
+    & path:nth-child(2) {
+      fill: getThemifyVariable('dropdown-color');
+    }
+  }
+  position: absolute;
+  top: #{11.604 / $base-font-size}rem;
+  right: #{14 / $base-font-size}rem;
+  width: #{22 / $base-font-size}rem;
+  height: #{18 / $base-font-size}rem;
+}
+
+.sketch-list__action-close {
+  @include themify(){
+    & path:nth-child(2) {
+      fill: getThemifyVariable('dropdown-color');
+    }
+  }
+  position: absolute;
+  top: #{11.604 / $base-font-size}rem;
+  right: #{14 / $base-font-size}rem;
+  width: #{22 / $base-font-size}rem;
+  height: #{18 / $base-font-size}rem;
+}
+
+
 
 .sketches-table__empty {
   text-align: center;

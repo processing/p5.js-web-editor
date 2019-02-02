@@ -134,9 +134,17 @@ export function closeNewFolderModal() {
   };
 }
 
-export function showShareModal() {
-  return {
-    type: ActionTypes.SHOW_SHARE_MODAL
+export function showShareModal(projectId, projectName, ownerUsername) {
+  return (dispatch, getState) => {
+    const { project, user } = getState();
+    dispatch({
+      type: ActionTypes.SHOW_SHARE_MODAL,
+      payload: {
+        shareModalProjectId: projectId || project.id,
+        shareModalProjectName: projectName || project.name,
+        shareModalOwnerUsername: ownerUsername || user.username
+      }
+    });
   };
 }
 
