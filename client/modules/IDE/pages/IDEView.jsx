@@ -308,7 +308,7 @@ class IDEView extends React.Component {
               defaultSize="50%"
               onChange={() => { this.overlay.style.display = 'block'; }}
               onDragFinished={() => { this.overlay.style.display = 'none'; }}
-              resizerStyle={{ marginRight: '5px' }}
+              resizerStyle={{ marginRight: '0', marginLeft: '-10px' }}
             >
               <SplitPane
                 split="horizontal"
@@ -671,7 +671,8 @@ IDEView.propTypes = {
 function mapStateToProps(state) {
   return {
     files: state.files,
-    selectedFile: state.files.find(file => file.isSelectedFile),
+    selectedFile: state.files.find(file => file.isSelectedFile) ||
+      state.files.find(file => file.name === 'sketch.js'),
     htmlFile: getHTMLFile(state.files),
     ide: state.ide,
     preferences: state.preferences,

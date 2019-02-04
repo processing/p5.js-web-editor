@@ -1,11 +1,77 @@
 import User from '../models/user';
 import Project from '../models/project';
 
+function insertErrorMessage(htmlFile) {
+  const html = htmlFile.split('</head>');
+  const metaDescription = 'A web editor for p5.js, a JavaScript library with the goal of making coding accessible to artists, designers, educators, and beginners.'; // eslint-disable-line
+  html[0] = `
+    ${html[0]}
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="p5.js, p5.js web editor, web editor, processing, code editor" />
+    <meta name="description" content="${metaDescription}" />
+    <title>404 Page Not Found - p5.js Web Editor</title>
+    <style>
+      .header {
+        position: fixed;
+        height: 200px;
+        width: 100%;
+        z-index: 1;
+        background: white;
+        color: #ed225d;
+        font-family: Montserrat, sans-serif;
+        text-align: center;
+        display: table;
+      }
+      .message-container {
+        display: table-cell;
+        vertical-align: middle;
+      }
+      .message {
+        color: #6b6b6b;
+        margin: 10px;
+      }
+      .home-link {
+        color: #b5b5b5;
+        text-decoration: none;
+      }
+      canvas {
+        position: fixed;
+        width: 100% !important;
+        height: 100% !important;
+      }
+    </style>
+    <link href='https://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link
+      rel='shortcut icon'
+      href='https://raw.githubusercontent.com/processing/p5.js-website-OLD/master/favicon.ico'
+      type='image/x-icon'
+    >
+  `;
+  const body = html[1].split('<body>');
+  html[1] = `
+    ${body[0]}
+    <body>
+      <div class="header">
+        <div class="message-container">
+          <h1>404 Page Not Found</h1>
+          <h6 class="message">The page you are trying to reach does not exist.</h6>
+          <h6 class="message">
+            Please check the URL or return to the <a href="/" class="home-link">home page</a>.
+          </h6>
+        </div>
+      </div>
+    ${body[1]}
+  `;
+  return html.join('</head>');
+}
+
 export function get404Sketch(callback) {
   User.findOne({ username: 'p5' }, (userErr, user) => { // Find p5 user
     if (userErr) {
       throw userErr;
-    } else {
+    } else if (user) {
       Project.find({ user: user._id }, (projErr, projects) => { // Find example projects
         // Choose a random sketch
         const randomIndex = Math.floor(Math.random() * projects.length);
@@ -39,66 +105,7 @@ export function get404Sketch(callback) {
         });
 
         // Add 404 html and position canvas
-        const html = htmlFile.split('</head>');
-        const metaDescription = 'A web editor for p5.js, a JavaScript library with the goal of making coding accessible to artists, designers, educators, and beginners.'; // eslint-disable-line
-        html[0] = `
-          ${html[0]}
-          <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <meta name="keywords" content="p5.js, p5.js web editor, web editor, processing, code editor" />
-          <meta name="description" content="${metaDescription}" />
-          <title>404 Page Not Found - p5.js Web Editor</title>
-          <style>
-            .header {
-              position: fixed;
-              height: 200px;
-              width: 100%;
-              z-index: 1;
-              background: white;
-              color: #ed225d;
-              font-family: Montserrat, sans-serif;
-              text-align: center;
-              display: table;
-            }
-            .message-container {
-              display: table-cell;
-              vertical-align: middle;
-            }
-            .message {
-              color: #6b6b6b;
-              margin: 10px;
-            }
-            .home-link {
-              color: #b5b5b5;
-              text-decoration: none;
-            }
-            canvas {
-              position: fixed;
-              width: 100% !important;
-              height: 100% !important;
-            }
-          </style>
-          <link href='https://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
-          <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
-          <link
-            rel='shortcut icon'
-            href='https://raw.githubusercontent.com/processing/p5.js-website-OLD/master/favicon.ico'
-            type='image/x-icon'
-          >
-        `;
-        html[1] = `
-          <div class="header">
-            <div class="message-container">
-              <h1>404 Page Not Found</h1>
-              <h6 class="message">The page you are trying to reach does not exist.</h6>
-              <h6 class="message">
-                Please check the URL or return to the <a href="/" class="home-link">home page</a>.
-              </h6>
-            </div>
-          </div>
-          ${html[1]}
-        `;
-        htmlFile = html.join('</head>');
+        htmlFile = insertErrorMessage(htmlFile);
 
         // Fix links to assets
         htmlFile = htmlFile.replace(
@@ -118,9 +125,17 @@ export function get404Sketch(callback) {
 
         callback(htmlFile);
       });
+    } else {
+      callback(insertErrorMessage(`<!DOCTYPE html>
+        <html>
+          <head>
+            <meta charset="utf-8" />
+          </head>
+          <body>
+          </body>
+        </html>`));
     }
   });
 }
 
 export default get404Sketch;
-

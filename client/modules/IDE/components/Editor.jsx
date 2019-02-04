@@ -32,9 +32,7 @@ import '../../../utils/p5-javascript';
 import '../../../utils/webGL-clike';
 import Timer from '../components/Timer';
 import EditorAccessibility from '../components/EditorAccessibility';
-import {
-  metaKey,
-} from '../../../utils/metaKey';
+import { metaKey, } from '../../../utils/metaKey';
 
 import search from '../../../utils/codemirror-search';
 
@@ -194,8 +192,8 @@ class Editor extends React.Component {
     if (this.props.runtimeErrorWarningVisible && this._cm.getDoc().modeOption === 'javascript') {
       this.props.consoleEvents.forEach((consoleEvent) => {
         if (consoleEvent.method === 'error') {
-          if (consoleEvent.arguments.indexOf(')') > -1) {
-            const n = consoleEvent.arguments.replace(')', '').split(' ');
+          if (consoleEvent.data[0].indexOf(')') > -1) {
+            const n = consoleEvent.data[0].replace(')', '').split(' ');
             const lineNumber = parseInt(n[n.length - 1], 10) - 1;
             this._cm.addLineClass(lineNumber, 'background', 'line-runtime-error');
           }
