@@ -209,23 +209,8 @@ class IDEView extends React.Component {
         </Helmet>
         {this.props.toast.isVisible && <Toast />}
         <Nav
-          user={this.props.user}
-          newProject={this.props.newProject}
-          saveProject={this.props.saveProject}
-          autosaveProject={this.props.autosaveProject}
-          exportProjectAsZip={this.props.exportProjectAsZip}
-          cloneProject={this.props.cloneProject}
-          project={this.props.project}
-          logoutUser={this.props.logoutUser}
-          startSketch={this.props.startSketch}
-          stopSketch={this.props.stopSketch}
-          showShareModal={this.props.showShareModal}
-          showErrorModal={this.props.showErrorModal}
-          unsavedChanges={this.props.ide.unsavedChanges}
           warnIfUnsavedChanges={this.warnIfUnsavedChanges}
-          showKeyboardShortcutModal={this.props.showKeyboardShortcutModal}
           cmController={this.cmController}
-          setAllAccessibleOutput={this.props.setAllAccessibleOutput}
         />
         <Toolbar
           className="Toolbar"
@@ -527,7 +512,6 @@ IDEView.propTypes = {
     id: PropTypes.string,
     username: PropTypes.string
   }).isRequired,
-  newProject: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
   ide: PropTypes.shape({
     isPlaying: PropTypes.bool.isRequired,
@@ -615,7 +599,6 @@ IDEView.propTypes = {
   closeNewFileModal: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
   collapseSidebar: PropTypes.func.isRequired,
-  exportProjectAsZip: PropTypes.func.isRequired,
   cloneProject: PropTypes.func.isRequired,
   expandConsole: PropTypes.func.isRequired,
   collapseConsole: PropTypes.func.isRequired,
@@ -623,14 +606,12 @@ IDEView.propTypes = {
   updateFileName: PropTypes.func.isRequired,
   showEditProjectName: PropTypes.func.isRequired,
   hideEditProjectName: PropTypes.func.isRequired,
-  logoutUser: PropTypes.func.isRequired,
   openProjectOptions: PropTypes.func.isRequired,
   closeProjectOptions: PropTypes.func.isRequired,
   newFolder: PropTypes.func.isRequired,
   closeNewFolderModal: PropTypes.func.isRequired,
   createFolder: PropTypes.func.isRequired,
   createFile: PropTypes.func.isRequired,
-  showShareModal: PropTypes.func.isRequired,
   closeShareModal: PropTypes.func.isRequired,
   showEditorOptions: PropTypes.func.isRequired,
   closeEditorOptions: PropTypes.func.isRequired,
