@@ -292,7 +292,13 @@ export function saveUser(res, user) {
       return;
     }
 
-    res.json(user);
+    res.json({
+      email: user.email,
+      username: user.username,
+      preferences: user.preferences,
+      verified: user.verified,
+      id: user._id
+    });
   });
 }
 
