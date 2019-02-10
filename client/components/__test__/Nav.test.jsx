@@ -3,7 +3,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
 
-import Nav from './../Nav';
+import { NavComponent } from './../Nav';
 
 describe('Nav', () => {
   const props = {
@@ -24,6 +24,8 @@ describe('Nav', () => {
       }
     },
     logoutUser: jest.fn(),
+    newFile: jest.fn(),
+    newFolder: jest.fn(),
     showShareModal: jest.fn(),
     showErrorModal: jest.fn(),
     unsavedChanges: false,
@@ -39,7 +41,7 @@ describe('Nav', () => {
     stopSketch: jest.fn(),
     setAllAccessibleOutput: jest.fn()
   };
-  const getWrapper = () => shallow(<Nav {...props} />);
+  const getWrapper = () => shallow(<NavComponent {...props} />);
 
   test('it renders main navigation', () => {
     const nav = getWrapper();
@@ -48,7 +50,7 @@ describe('Nav', () => {
 
   it('renders correctly', () => {
     const tree = renderer
-      .create(<Nav {...props} />)
+      .create(<NavComponent {...props} />)
       .toJSON();
     expect(tree).toMatchSnapshot();
   });

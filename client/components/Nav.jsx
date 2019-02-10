@@ -611,3 +611,4 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default withRouter(connect(() => ({}), mapDispatchToProps)(Nav));
+export { Nav as NavComponent };
