@@ -49,7 +49,7 @@ mongoose.connection.on('error', () => {
 function getCategories() {
   const categories = [];
   const options = {
-    url: `https://api.github.com/repos/processing/p5.js-website/contents/dist/assets/examples/en?client_id=${
+    url: `https://api.github.com/repos/processing/p5.js-website/contents/src/data/examples/en?client_id=${
       clientId}&client_secret=${clientSecret}`,
     method: 'GET',
     headers,
@@ -134,7 +134,7 @@ function getSketchContent(projectsInAllCategories) {
 
 function createProjectsInP5user(projectsInAllCategories) {
   const options = {
-    url: `https://api.github.com/repos/processing/p5.js-website/contents/dist/assets/examples/assets?client_id=${
+    url: `https://api.github.com/repos/processing/p5.js-website/contents/src/data/examples/assets?client_id=${
       clientId}&client_secret=${clientSecret}`,
     method: 'GET',
     headers,
@@ -264,7 +264,7 @@ function createProjectsInP5user(projectsInAllCategories) {
               const fileID = objectID().toHexString();
               newProject.files.push({
                 name: assetName,
-                url: `https://rawgit.com/processing/p5.js-website/master/dist/assets/examples/assets/${assetName}`,
+                url: `https://rawgit.com/processing/p5.js-website/master/src/data/examples/assets/${assetName}`,
                 id: fileID,
                 _id: fileID,
                 children: [],

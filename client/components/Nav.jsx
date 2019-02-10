@@ -8,9 +8,7 @@ import InlineSVG from 'react-inlinesvg';
 import classNames from 'classnames';
 import * as IDEActions from '../modules/IDE/actions/ide';
 
-import {
-  metaKeyName,
-} from '../utils/metaKey';
+import { metaKeyName, } from '../utils/metaKey';
 
 const triangleUrl = require('../images/down-filled-triangle.svg');
 const logoUrl = require('../images/p5js-logo-small.svg');
@@ -221,6 +219,7 @@ class Nav extends React.PureComponent {
                   Open
                 </Link>
               </li> }
+              { __process.env.EXAMPLES_ENABLED &&
               <li className="nav__dropdown-item">
                 <Link
                   to="/p5/sketches"
@@ -230,7 +229,7 @@ class Nav extends React.PureComponent {
                 >
                   Examples
                 </Link>
-              </li>
+              </li> }
             </ul>
           </li>
           <li className={navDropdownState.edit}>

@@ -5,10 +5,12 @@ import each from 'async/each';
 import { isEqual, pick } from 'lodash';
 import * as ActionTypes from '../../../constants';
 import { showToast, setToastText } from './toast';
-import { setUnsavedChanges,
+import {
+  setUnsavedChanges,
   justOpenedProject,
   resetJustOpenedProject,
-  showErrorModal } from './ide';
+  showErrorModal
+} from './ide';
 import { clearState, saveState } from '../../../persistState';
 
 const __process = (typeof global !== 'undefined' ? global : window).process;
