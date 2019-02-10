@@ -66,23 +66,6 @@ exports[`Nav renders correctly 1`] = `
             onClick={[Function]}
             onFocus={[Function]}
           >
-            Save
-            <span
-              className="nav__keyboard-shortcut"
-            >
-              Ctrl
-              +s
-            </span>
-          </button>
-        </li>
-        <li
-          className="nav__dropdown-item"
-        >
-          <button
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-          >
             Duplicate
           </button>
         </li>
@@ -118,18 +101,6 @@ exports[`Nav renders correctly 1`] = `
             style={Object {}}
           >
             Open
-          </a>
-        </li>
-        <li
-          className="nav__dropdown-item"
-        >
-          <a
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            style={Object {}}
-          >
-            Examples
           </a>
         </li>
       </ul>
@@ -268,6 +239,28 @@ exports[`Nav renders correctly 1`] = `
             className="isvg loading"
           />
         </button>
+        <li
+          className="nav__dropdown-item"
+        >
+          <button
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+          >
+            Add File
+          </button>
+        </li>
+        <li
+          className="nav__dropdown-item"
+        >
+          <button
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+          >
+            Add Folder
+          </button>
+        </li>
         <li
           className="nav__dropdown-item"
         >
@@ -423,102 +416,6 @@ exports[`Nav renders correctly 1`] = `
           >
             Feedback
           </a>
-        </li>
-      </ul>
-    </li>
-  </ul>
-  <ul
-    className="nav__items-right"
-    title="user-menu"
-  >
-    <li
-      className="nav__item"
-    >
-      <span>
-        Hello, 
-        new-user
-        !
-      </span>
-    </li>
-    <span
-      className="nav__item-spacer"
-    >
-      |
-    </span>
-    <li
-      className="nav__item"
-    >
-      <button
-        className="nav__item-header"
-        onBlur={[Function]}
-        onClick={[Function]}
-        onFocus={[Function]}
-      >
-        My Account
-      </button>
-      <span
-        className="isvg loading nav__item-header-triangle"
-      />
-      <ul
-        className="nav__dropdown"
-      >
-        <button
-          className="nav__dropdown-heading"
-          onClick={[Function]}
-        >
-          <span>
-            My Account
-          </span>
-          <span
-            className="isvg loading"
-          />
-        </button>
-        <li
-          className="nav__dropdown-item"
-        >
-          <a
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            style={Object {}}
-          >
-            My sketches
-          </a>
-        </li>
-        <li
-          className="nav__dropdown-item"
-        >
-          <a
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            style={Object {}}
-          >
-            My assets
-          </a>
-        </li>
-        <li
-          className="nav__dropdown-item"
-        >
-          <a
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            style={Object {}}
-          >
-            Settings
-          </a>
-        </li>
-        <li
-          className="nav__dropdown-item"
-        >
-          <button
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-          >
-            Log out
-          </button>
         </li>
       </ul>
     </li>
