@@ -2,8 +2,9 @@ import archiver from 'archiver';
 import request from 'request';
 import moment from 'moment';
 import isUrl from 'is-url';
+import slugify from 'slugify';
 import jsdom, { serializeDocument } from 'jsdom';
-import generateSlug from '../utils/generateSlug';
+import generateFileSystemSafeName from '../utils/generateFileSystemSafeName';
 import Project from '../models/project';
 import User from '../models/user';
 import { deleteObjectsFromS3, getObjectKey } from './aws.controller';
@@ -294,8 +295,8 @@ function buildZip(project, req, res) {
   });
 
   const currentTime = moment().format('YYYY_MM_DD_HH_mm_ss');
-  project.slug = generateSlug(project.name, '_');
-  res.attachment(`${project.slug}_${currentTime}.zip`);
+  project.slug = slugify(project.name, '_');
+  res.attachment(`${generateFileSystemSafeName(project.slug)}_${currentTime}.zip`);
   zip.pipe(res);
 
   function addFileToZip(file, path) {
