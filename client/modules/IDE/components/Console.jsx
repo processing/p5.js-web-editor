@@ -48,7 +48,7 @@ class Console extends React.Component {
       LOG_INFO_ICON: `url(${infoDarkUrl})`
     };
     const CONSOLE_FEED_SIZES = {
-      PADDING: "4px 22px 2px 0",
+      PADDING: '4px 22px 2px 0',
       TREENODE_LINE_HEIGHT: 1.2,
       BASE_FONT_SIZE: this.props.fontSize,
       ARROW_FONT_SIZE: this.props.fontSize,
