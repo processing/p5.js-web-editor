@@ -76,8 +76,9 @@ export function updateProject(req, res) {
             }
             res.json(savedProject);
           });
+        } else {
+          res.json(updatedProject);
         }
-        res.json(updatedProject);
       });
   });
 }
