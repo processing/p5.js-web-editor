@@ -7,7 +7,7 @@
  */
 function generateFileSystemSafeName(string, replacer) {
   // from here  https://serverfault.com/a/242134
-  const INVALID_CHARS_REGEX = /[*/?:\\<>|"\u0000-\u001F]/g;
+  const INVALID_CHARS_REGEX = /[*/?:\\<>|"\u0000-\u001F]/g; // eslint-disable-line
   const slug = string.replace(INVALID_CHARS_REGEX, replacer || '');
 
   return slug;
