@@ -17,7 +17,7 @@ before_install:
 install: true
 
 script:
-  - docker-compose exec -T app npm run test --verbose
+  - docker-compose exec -T app npm run test:ci --verbose
 
 before_deploy:
   - docker-compose stop
