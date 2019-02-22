@@ -4,6 +4,7 @@ import moment from 'moment';
 import isUrl from 'is-url';
 import slugify from 'slugify';
 import jsdom, { serializeDocument } from 'jsdom';
+import { resolvePathToFile } from '../utils/filePath';
 import generateFileSystemSafeName from '../utils/generateFileSystemSafeName';
 import Project from '../models/project';
 import User from '../models/user';
@@ -159,20 +160,15 @@ export function getProjectAsset(req, res) {
         return res.status(404).send({ message: 'Project with that id does not exist' });
       }
 
-      let assetURL = null;
-      const seekPath = req.params[0]; // req.params.asset_path;
-      const seekPathSplit = seekPath.split('/');
-      const seekFilename = seekPathSplit[seekPathSplit.length - 1];
-      project.files.forEach((file) => {
-        if (file.name === seekFilename) {
-          assetURL = file.url;
-        }
-      });
-
-      if (!assetURL) {
+      const filePath = req.params[0];
+      const resolvedFile = resolvePathToFile(filePath, project.files);
+      if (!resolvedFile) {
         return res.status(404).send({ message: 'Asset does not exist' });
       }
-      request({ method: 'GET', url: assetURL, encoding: null }, (innerErr, response, body) => {
+      if (!resolvedFile.url) {
+        return res.send(resolvedFile.content);
+      }
+      request({ method: 'GET', url: resolvedFile.url, encoding: null }, (innerErr, response, body) => {
         if (innerErr) {
           return res.status(404).send({ message: 'Asset does not exist' });
         }
