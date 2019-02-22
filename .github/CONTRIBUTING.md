@@ -6,13 +6,17 @@ Here are links to all the sections in this document:
 
 <!-- If you change any of the headings in this document, remember to update the table of contents. -->
 
-- [Code of Conduct](#code-of-conduct)
-- [How Can I Contribute?](#how-can-i-contribute)
-  - [First Timers](#first-timers)
-  - [Want something more challenging](#want-something-more-challenging)
-  - [Feature Enhancement](#feature-enhancement)
-- [Creating a Pull request](#creating-a-pull-request)
-  - - [Tips](#tips)
+- [Contributing to the p5.js Web Editor](#contributing-to-the-p5js-web-editor)
+  - [Code of Conduct](#code-of-conduct)
+  - [How Can I Contribute?](#how-can-i-contribute)
+    - [First Timers](#first-timers)
+    - [Milestones](#milestones)
+    - [Project Ideas](#project-ideas)
+    - [Issue Search and Tagging](#issue-search-and-tagging)
+    - [Beginning Work](#beginning-work)
+    - [Contribution Guides](#contribution-guides)
+  - [Writing Commit Messages](#writing-commit-messages)
+  - [Tips](#tips)
 
 ## Code of Conduct
 
@@ -23,21 +27,27 @@ Please follow the guidelines mentioned at [CODE OF CONDUCT.md](https://github.co
 ### First Timers
 For first-time contributors or those who want to start with a small task: [check out our list of good first bugs](https://github.com/processing/p5.js-web-editor/labels/good%20first%20issue). First read the github discussion on that issue and find out if there's currently a person working on that or not. If no one is working on it or if there has was one claimed to but has not been active for a while, ask if it is up for grabs. It's okay to not know how to fix an issue and feel free to ask questions about to approach the problem! We are all just here to learn and make something awesome. Someone from the community would help you out and these are great issues for learning about the web editor, its file structure and its development process.
 
-### Want something more challenging
-If you're already familiar with the project or would like take on something a little more challenging, please take a look at the [priority: high](https://github.com/processing/p5.js-web-editor/labels/priority%3Ahigh) issues.
+### Milestones
+A good place to check for tickets to work on is [milestones](https://github.com/processing/p5.js-web-editor/milestones), as miletones have a due date, and will give you a sense of tickets the tickets that maintainers would like to be completed sooner rather than later.
 
-### Feature Enhancement
-If you want to work on building new things, please take a look at [type: feature](https://github.com/processing/p5.js-web-editor/labels/type%3Afeature).
+### Project Ideas
+If you're looking for inspiration for Google Summer of Code or a bigger project, there's a [project list](https://github.com/processing/processing/wiki/Project-List#p5js-web-editor) maintained on the Processing wiki.
 
-If you'd like to work on a bug, please comment on it to let the maintainers know.
-If someone else has already commented and taken up that bug, please refrain from working on it and submitting a PR without asking the maintainers as it leads to unnecessary duplication of effort.
+### Issue Search and Tagging
+If you're looking for issues to work on, a good place to start is with tickets labeled [high priority](https://github.com/processing/p5.js-web-editor/labels/priority%3Ahigh). You can also look for tickets that are [feature enhancements](https://github.com/processing/p5.js-web-editor/labels/type%3Afeature), [bug fixes](https://github.com/processing/p5.js-web-editor/labels/type%3Abug), and a few other tags. 
 
-### Contribution guides
+If you feel like an issue is tagged incorrectly (e.g. it's low priority and you think it should be high), please update the issue!
+
+### Beginning Work
+
+If you'd like to work on an issue, please comment on it to let the maintainers know. If someone else has already commented and taken up that issue, please refrain from working on it and submitting a PR without asking the maintainers as it leads to unnecessary duplication of effort.
+
+### Contribution Guides
 
 * [https://guides.github.com/activities/hello-world/](https://guides.github.com/activities/hello-world/)
 * [https://guides.github.com/activities/forking/](https://guides.github.com/activities/forking/)
 
-## Writing commit messages
+## Writing Commit Messages
 
 Good commit messages serve at least three important purposes:
 
@@ -69,7 +79,6 @@ Structure your commit message like this:
 * Always leave the second line blank.
 * Be as descriptive as possible in the description. It helps reasoning about the intention of commits and gives more context about why changes happened.
 
-Tips
-----
+## Tips
 
 * If it seems difficult to summarize what your commit does, it may be because it includes several logical changes or bug fixes, and are better split up into several commits using `git add -p`.
