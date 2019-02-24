@@ -116,7 +116,7 @@ class Editor extends React.Component {
 
     this._cm.on('change', debounce(() => {
       this.props.setUnsavedChanges(true);
-      this.props.updateFileContent(this.props.file.name, this._cm.getValue());
+      this.props.updateFileContent(this.props.file.id, this._cm.getValue());
       if (this.props.autorefresh && this.props.isPlaying) {
         this.props.clearConsole();
         this.props.startRefreshSketch();

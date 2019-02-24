@@ -29,10 +29,10 @@ function createUniqueName(name, parentId, files) {
   return testName;
 }
 
-export function updateFileContent(name, content) {
+export function updateFileContent(id, content) {
   return {
     type: ActionTypes.UPDATE_FILE_CONTENT,
-    name,
+    id,
     content
   };
 }
@@ -206,7 +206,7 @@ export function hideFolderChildren(id) {
 export function setBlobUrl(file, blobURL) {
   return {
     type: ActionTypes.SET_BLOB_URL,
-    name: file.name,
+    id: file.id,
     blobURL
   };
 }

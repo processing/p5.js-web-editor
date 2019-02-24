@@ -118,7 +118,7 @@ const files = (state, action) => {
   switch (action.type) {
     case ActionTypes.UPDATE_FILE_CONTENT:
       return state.map((file) => {
-        if (file.name !== action.name) {
+        if (file.id !== action.id) {
           return file;
         }
 
@@ -126,7 +126,7 @@ const files = (state, action) => {
       });
     case ActionTypes.SET_BLOB_URL:
       return state.map((file) => {
-        if (file.name !== action.name) {
+        if (file.id !== action.id) {
           return file;
         }
         return Object.assign({}, file, { blobURL: action.blobURL });
