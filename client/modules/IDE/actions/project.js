@@ -66,7 +66,7 @@ export function clearPersistedState() {
   };
 }
 
-export function saveProject(autosave = false) {
+export function saveProject(selectedFile = null, autosave = false) {
   return (dispatch, getState) => {
     const state = getState();
     if (state.user.id && state.project.owner && state.project.owner.id !== state.user.id) {
@@ -74,6 +74,11 @@ export function saveProject(autosave = false) {
     }
     const formParams = Object.assign({}, state.project);
     formParams.files = [...state.files];
+    if (selectedFile) {
+      console.log('selected file being updated');
+      const fileToUpdate = formParams.files.find(file => file.id === selectedFile.id);
+      fileToUpdate.content = selectedFile.content;
+    }
     if (state.project.id) {
       return axios.put(`${ROOT_URL}/projects/${state.project.id}`, formParams, { withCredentials: true })
         .then((response) => {
@@ -156,7 +161,7 @@ export function saveProject(autosave = false) {
 
 export function autosaveProject() {
   return (dispatch, getState) => {
-    saveProject(true)(dispatch, getState);
+    saveProject(null, true)(dispatch, getState);
   };
 }
 

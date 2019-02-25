@@ -157,7 +157,7 @@ class Nav extends React.PureComponent {
                 <button
                   onClick={() => {
                     if (this.props.user.authenticated) {
-                      this.props.saveProject();
+                      this.props.saveProject(this.props.cmController.getContent());
                     } else {
                       this.props.showErrorModal('forceAuthentication');
                     }
@@ -585,7 +585,8 @@ Nav.propTypes = {
     tidyCode: PropTypes.func,
     showFind: PropTypes.func,
     findNext: PropTypes.func,
-    findPrev: PropTypes.func
+    findPrev: PropTypes.func,
+    getContent: PropTypes.func
   }),
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
