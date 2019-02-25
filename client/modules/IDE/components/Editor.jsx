@@ -96,7 +96,7 @@ class Editor extends React.Component {
           'asi': true,
           'eqeqeq': false,
           '-W041': false,
-          'esversion': 6
+          'esversion': 7
         }
       }
     });
