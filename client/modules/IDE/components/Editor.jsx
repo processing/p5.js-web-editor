@@ -69,6 +69,7 @@ class Editor extends React.Component {
     this.showFind = this.showFind.bind(this);
     this.findNext = this.findNext.bind(this);
     this.findPrev = this.findPrev.bind(this);
+    this.getContent = this.getContent.bind(this);
   }
 
   componentDidMount() {
@@ -144,7 +145,8 @@ class Editor extends React.Component {
       tidyCode: this.tidyCode,
       showFind: this.showFind,
       findNext: this.findNext,
-      findPrev: this.findPrev
+      findPrev: this.findPrev,
+      getContent: this.getContent
     });
   }
 
@@ -230,15 +232,6 @@ class Editor extends React.Component {
     return mode;
   }
 
-  initializeDocuments(files) {
-    this._docs = {};
-    files.forEach((file) => {
-      if (file.name !== 'root') {
-        this._docs[file.id] = CodeMirror.Doc(file.content, this.getFileMode(file.name)); // eslint-disable-line
-      }
-    });
-  }
-
   tidyCode() {
     const beautifyOptions = {
       indent_size: this.props.indentationAmount,
@@ -267,6 +260,21 @@ class Editor extends React.Component {
   findPrev() {
     this._cm.focus();
     this._cm.execCommand('findPrev');
+  }
+
+  getContent() {
+    const content = this._cm.getValue();
+    const updatedFile = Object.assign({}, this.props.file, { content });
+    return updatedFile;
+  }
+
+  initializeDocuments(files) {
+    this._docs = {};
+    files.forEach((file) => {
+      if (file.name !== 'root') {
+        this._docs[file.id] = CodeMirror.Doc(file.content, this.getFileMode(file.name)); // eslint-disable-line
+      }
+    });
   }
 
   toggleEditorOptions() {

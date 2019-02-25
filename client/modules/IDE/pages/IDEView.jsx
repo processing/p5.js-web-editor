@@ -157,7 +157,7 @@ class IDEView extends React.Component {
       e.preventDefault();
       e.stopPropagation();
       if (this.isUserOwner() || (this.props.user.authenticated && !this.props.project.owner)) {
-        this.props.saveProject();
+        this.props.saveProject(this.cmController.getContent());
       } else if (this.props.user.authenticated) {
         this.props.cloneProject();
       } else {
