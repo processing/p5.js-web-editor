@@ -232,6 +232,26 @@ class Editor extends React.Component {
     return mode;
   }
 
+  getContent() {
+    const content = this._cm.getValue();
+    const updatedFile = Object.assign({}, this.props.file, { content });
+    return updatedFile;
+  }
+
+  findPrev() {
+    this._cm.focus();
+    this._cm.execCommand('findPrev');
+  }
+
+  findNext() {
+    this._cm.focus();
+    this._cm.execCommand('findNext');
+  }
+
+  showFind() {
+    this._cm.execCommand('findPersistent');
+  }
+
   tidyCode() {
     const beautifyOptions = {
       indent_size: this.props.indentationAmount,
@@ -246,26 +266,6 @@ class Editor extends React.Component {
     } else if (mode === 'htmlmixed') {
       this._cm.doc.setValue(beautifyHTML(this._cm.doc.getValue(), beautifyOptions));
     }
-  }
-
-  showFind() {
-    this._cm.execCommand('findPersistent');
-  }
-
-  findNext() {
-    this._cm.focus();
-    this._cm.execCommand('findNext');
-  }
-
-  findPrev() {
-    this._cm.focus();
-    this._cm.execCommand('findPrev');
-  }
-
-  getContent() {
-    const content = this._cm.getValue();
-    const updatedFile = Object.assign({}, this.props.file, { content });
-    return updatedFile;
   }
 
   initializeDocuments(files) {

@@ -157,7 +157,7 @@ class Nav extends React.PureComponent {
                 <button
                   onClick={() => {
                     if (this.props.user.authenticated) {
-                      this.props.saveProject(this.props.getContent());
+                      this.props.saveProject(this.props.cmController.getContent());
                     } else {
                       this.props.showErrorModal('forceAuthentication');
                     }
