@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router';
 import InlineSVG from 'react-inlinesvg';
 import classNames from 'classnames';
 import * as IDEActions from '../modules/IDE/actions/ide';
+import * as projectActions from '../modules/IDE/actions/project';
+import { setAllAccessibleOutput } from '../modules/IDE/actions/preferences';
+import { logoutUser } from '../modules/User/actions';
 
 import { metaKeyName, } from '../utils/metaKey';
 
@@ -600,15 +602,20 @@ Nav.defaultProps = {
   cmController: {}
 };
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    Object.assign(
-      {},
-      IDEActions
-    ),
-    dispatch
-  );
+function mapStateToProps(state) {
+  return {
+    project: state.project,
+    user: state.user,
+    unsavedChanges: state.ide.unsavedChanges
+  };
 }
 
-export default withRouter(connect(() => ({}), mapDispatchToProps)(Nav));
+const mapDispatchToProps = {
+  ...IDEActions,
+  ...projectActions,
+  logoutUser,
+  setAllAccessibleOutput
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Nav));
 export { Nav as NavComponent };
