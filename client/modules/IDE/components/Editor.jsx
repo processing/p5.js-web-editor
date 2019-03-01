@@ -14,12 +14,14 @@ import 'codemirror/addon/fold/foldcode';
 import 'codemirror/addon/fold/foldgutter';
 import 'codemirror/addon/fold/indent-fold';
 import 'codemirror/addon/comment/comment';
+import 'codemirror/addon/comment/continuecomment';
 import 'codemirror/keymap/sublime';
 import 'codemirror/addon/search/searchcursor';
 import 'codemirror/addon/search/matchesonscrollbar';
 import 'codemirror/addon/search/match-highlighter';
 import 'codemirror/addon/search/jump-to-line';
 import 'codemirror/addon/edit/matchbrackets';
+
 
 import { JSHINT } from 'jshint';
 import { CSSLint } from 'csslint';
@@ -81,6 +83,7 @@ class Editor extends React.Component {
       styleActiveLine: true,
       inputStyle: 'contenteditable',
       lineWrapping: false,
+      continueComments: true,
       fixedGutter: false,
       foldGutter: true,
       foldOptions: { widget: '\u2026' },
