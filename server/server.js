@@ -121,6 +121,7 @@ require('./config/passport');
 // const passportConfig = require('./config/passport');
 
 // Connect to MongoDB
+mongoose.Promise = global.Promise;
 mongoose.connect(mongoConnectionString, { useMongoClient: true });
 mongoose.connection.on('error', () => {
   console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
