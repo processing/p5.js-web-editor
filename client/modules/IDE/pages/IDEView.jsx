@@ -212,30 +212,7 @@ class IDEView extends React.Component {
           warnIfUnsavedChanges={this.warnIfUnsavedChanges}
           cmController={this.cmController}
         />
-        <Toolbar
-          className="Toolbar"
-          isPlaying={this.props.ide.isPlaying}
-          stopSketch={this.props.stopSketch}
-          projectName={this.props.project.name}
-          setProjectName={this.props.setProjectName}
-          showEditProjectName={this.props.showEditProjectName}
-          hideEditProjectName={this.props.hideEditProjectName}
-          openPreferences={this.props.openPreferences}
-          preferencesIsVisible={this.props.ide.preferencesIsVisible}
-          setTextOutput={this.props.setTextOutput}
-          setGridOutput={this.props.setGridOutput}
-          setSoundOutput={this.props.setSoundOutput}
-          owner={this.props.project.owner}
-          project={this.props.project}
-          infiniteLoop={this.props.ide.infiniteLoop}
-          autorefresh={this.props.preferences.autorefresh}
-          setAutorefresh={this.props.setAutorefresh}
-          startSketch={this.props.startSketch}
-          startAccessibleSketch={this.props.startAccessibleSketch}
-          saveProject={this.props.saveProject}
-          currentUser={this.props.user.username}
-          showHelpModal={this.props.showHelpModal}
-        />
+        <Toolbar />
         {this.props.ide.preferencesIsVisible &&
           <Overlay
             title="Settings"
@@ -547,8 +524,6 @@ IDEView.propTypes = {
     }),
     updatedAt: PropTypes.string
   }).isRequired,
-  setProjectName: PropTypes.func.isRequired,
-  openPreferences: PropTypes.func.isRequired,
   editorAccessibility: PropTypes.shape({
     lintMessages: PropTypes.array.isRequired,
   }).isRequired,
@@ -604,8 +579,6 @@ IDEView.propTypes = {
   collapseConsole: PropTypes.func.isRequired,
   deleteFile: PropTypes.func.isRequired,
   updateFileName: PropTypes.func.isRequired,
-  showEditProjectName: PropTypes.func.isRequired,
-  hideEditProjectName: PropTypes.func.isRequired,
   openProjectOptions: PropTypes.func.isRequired,
   closeProjectOptions: PropTypes.func.isRequired,
   newFolder: PropTypes.func.isRequired,
@@ -627,7 +600,6 @@ IDEView.propTypes = {
   route: PropTypes.oneOfType([PropTypes.object, PropTypes.element]).isRequired,
   setUnsavedChanges: PropTypes.func.isRequired,
   setTheme: PropTypes.func.isRequired,
-  setAutorefresh: PropTypes.func.isRequired,
   endSketchRefresh: PropTypes.func.isRequired,
   startRefreshSketch: PropTypes.func.isRequired,
   setBlobUrl: PropTypes.func.isRequired,
@@ -641,12 +613,10 @@ IDEView.propTypes = {
   hideErrorModal: PropTypes.func.isRequired,
   clearPersistedState: PropTypes.func.isRequired,
   persistState: PropTypes.func.isRequired,
-  showHelpModal: PropTypes.func.isRequired,
   hideHelpModal: PropTypes.func.isRequired,
   showRuntimeErrorWarning: PropTypes.func.isRequired,
   hideRuntimeErrorWarning: PropTypes.func.isRequired,
   startSketch: PropTypes.func.isRequired,
-  startAccessibleSketch: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
