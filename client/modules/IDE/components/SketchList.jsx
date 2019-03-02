@@ -1,13 +1,13 @@
+import format from 'date-fns/format';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import moment from 'moment';
-import { Link, browserHistory } from 'react-router';
-import InlineSVG from 'react-inlinesvg';
 import { Helmet } from 'react-helmet';
-import * as SketchActions from '../actions/projects';
+import InlineSVG from 'react-inlinesvg';
+import { connect } from 'react-redux';
+import { browserHistory, Link } from 'react-router';
+import { bindActionCreators } from 'redux';
 import * as ProjectActions from '../actions/project';
+import * as SketchActions from '../actions/projects';
 import * as ToastActions from '../actions/toast';
 
 const trashCan = require('../../../images/trash-can.svg');
@@ -73,8 +73,8 @@ class SketchList extends React.Component {
                     })()}
                   </td>
                   <th scope="row"><Link to={`/${username}/sketches/${sketch.id}`}>{sketch.name}</Link></th>
-                  <td>{moment(sketch.createdAt).format('MMM D, YYYY h:mm A')}</td>
-                  <td>{moment(sketch.updatedAt).format('MMM D, YYYY h:mm A')}</td>
+                  <td>{format(new Date(sketch.createdAt), 'MMM D, YYYY h:mm A')}</td>
+                  <td>{format(new Date(sketch.updatedAt), 'MMM D, YYYY h:mm A')}</td>
                 </tr>)}
             </tbody>
           </table>}
