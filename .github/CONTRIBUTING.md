@@ -42,6 +42,8 @@ If you feel like an issue is tagged incorrectly (e.g. it's low priority and you 
 
 If you'd like to work on an issue, please comment on it to let the maintainers know. If someone else has already commented and taken up that issue, please refrain from working on it and submitting a PR without asking the maintainers as it leads to unnecessary duplication of effort.
 
+Then, follow the [installation guide](https://github.com/processing/p5.js-web-editor/blob/master/developer_docs/installation.md) to get the project building and working on your computer. 
+
 ### Contribution Guides
 
 * [https://guides.github.com/activities/hello-world/](https://guides.github.com/activities/hello-world/)
