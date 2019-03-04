@@ -1,13 +1,14 @@
 import archiver from 'archiver';
-import request from 'request';
-import moment from 'moment';
+import format from 'date-fns/format';
 import isUrl from 'is-url';
-import slugify from 'slugify';
 import jsdom, { serializeDocument } from 'jsdom';
-import { resolvePathToFile } from '../utils/filePath';
-import generateFileSystemSafeName from '../utils/generateFileSystemSafeName';
+import isBefore from 'date-fns/is_before';
+import request from 'request';
+import slugify from 'slugify';
 import Project from '../models/project';
 import User from '../models/user';
+import { resolvePathToFile } from '../utils/filePath';
+import generateFileSystemSafeName from '../utils/generateFileSystemSafeName';
 import { deleteObjectsFromS3, getObjectKey } from './aws.controller';
 
 export function createProject(req, res) {
@@ -109,7 +110,7 @@ export function getProject(req, res) {
 function deleteFilesFromS3(files) {
   deleteObjectsFromS3(files.filter((file) => {
     if (file.url) {
-      if (!process.env.S3_DATE || (process.env.S3_DATE && moment(process.env.S3_DATE) < moment(file.createdAt))) {
+      if (!process.env.S3_DATE || (process.env.S3_DATE && isBefore(new Date(process.env.S3_DATE), new Date(file.createdAt)))) {
         return true;
       }
     }
@@ -291,7 +292,7 @@ function buildZip(project, req, res) {
     res.status(500).send({ error: err.message });
   });
 
-  const currentTime = moment().format('YYYY_MM_DD_HH_mm_ss');
+  const currentTime = format(new Date(), 'YYYY_MM_DD_HH_mm_ss');
   project.slug = slugify(project.name, '_');
   res.attachment(`${generateFileSystemSafeName(project.slug)}_${currentTime}.zip`);
   zip.pipe(res);

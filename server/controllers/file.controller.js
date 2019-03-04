@@ -1,6 +1,5 @@
 import each from 'async/each';
-import moment from 'moment';
-
+import isBefore from 'date-fns/is_before';
 import Project from '../models/project';
 import { resolvePathToFile } from '../utils/filePath';
 import { deleteObjectsFromS3, getObjectKey } from './aws.controller';
@@ -56,7 +55,7 @@ function deleteMany(files, ids) {
   each(ids, (id, cb) => {
     if (files.id(id).url) {
       if (!process.env.S3_DATE
-        || (process.env.S3_DATE && moment(process.env.S3_DATE) < moment(files.id(id).createdAt))) {
+        || (process.env.S3_DATE && isBefore(new Date(process.env.S3_DATE), new Date(files.id(id).createdAt)))) {
         const objectKey = getObjectKey(files.id(id).url);
         objectKeys.push(objectKey);
       }
