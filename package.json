@@ -113,7 +113,6 @@
     "lodash": "^4.17.11",
     "loop-protect": "github:catarak/loop-protect",
     "mjml": "^3.3.2",
-    "moment": "^2.23.0",
     "mongoose": "^4.6.8",
     "node-uuid": "^1.4.7",
     "nodemailer": "^2.6.4",
