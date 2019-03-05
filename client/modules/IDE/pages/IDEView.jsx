@@ -37,10 +37,13 @@ import Feedback from '../components/Feedback';
 class IDEView extends React.Component {
   constructor(props) {
     super(props);
-    this._handleConsolePaneOnDragFinished = this._handleConsolePaneOnDragFinished.bind(this);
-    this._handleSidebarPaneOnDragFinished = this._handleSidebarPaneOnDragFinished.bind(this);
     this.handleGlobalKeydown = this.handleGlobalKeydown.bind(this);
     this.warnIfUnsavedChanges = this.warnIfUnsavedChanges.bind(this);
+
+    this.state = {
+      consoleSize: props.ide.consoleIsExpanded ? 150 : 29,
+      sidebarSize: props.ide.sidebarIsExpanded ? 160 : 20
+    };
   }
 
   componentDidMount() {
@@ -55,10 +58,6 @@ class IDEView extends React.Component {
         this.props.getProject(id);
       }
     }
-
-    this.consoleSize = this.props.ide.consoleIsExpanded ? 150 : 29;
-    this.sidebarSize = this.props.ide.sidebarIsExpanded ? 160 : 20;
-    this.forceUpdate();
 
     this.isMac = navigator.userAgent.toLowerCase().indexOf('mac') !== -1;
     document.addEventListener('keydown', this.handleGlobalKeydown, false);
@@ -75,17 +74,17 @@ class IDEView extends React.Component {
     if (nextProps.location !== this.props.location) {
       this.props.setPreviousPath(this.props.location.pathname);
     }
-  }
 
-  componentWillUpdate(nextProps) {
     if (this.props.ide.consoleIsExpanded !== nextProps.ide.consoleIsExpanded) {
-      this.consoleSize = nextProps.ide.consoleIsExpanded ? 150 : 29;
+      this.setState({ consoleSize: nextProps.ide.consoleIsExpanded ? 150 : 29 });
     }
 
     if (this.props.ide.sidebarIsExpanded !== nextProps.ide.sidebarIsExpanded) {
-      this.sidebarSize = nextProps.ide.sidebarIsExpanded ? 160 : 20;
+      this.setState({ sidebarSize: nextProps.ide.sidebarIsExpanded ? 160 : 20 });
     }
+  }
 
+  componentWillUpdate(nextProps) {
     if (nextProps.params.project_id && !this.props.params.project_id) {
       if (nextProps.params.project_id !== nextProps.project.id) {
         this.props.getProject(nextProps.params.project_id);
@@ -127,28 +126,10 @@ class IDEView extends React.Component {
     document.removeEventListener('keydown', this.handleGlobalKeydown, false);
     clearTimeout(this.autosaveInterval);
     this.autosaveInterval = null;
-    this.consoleSize = undefined;
-    this.sidebarSize = undefined;
   }
 
   isUserOwner() {
     return this.props.project.owner && this.props.project.owner.id === this.props.user.id;
-  }
-
-  _handleConsolePaneOnDragFinished() {
-    this.consoleSize = this.consolePane.state.draggedSize;
-    this.consolePane.setState({
-      resized: false,
-      draggedSize: undefined,
-    });
-  }
-
-  _handleSidebarPaneOnDragFinished() {
-    this.sidebarSize = this.sidebarPane.state.draggedSize;
-    this.sidebarPane.setState({
-      resized: false,
-      draggedSize: undefined
-    });
   }
 
   handleGlobalKeydown(e) {
@@ -245,8 +226,8 @@ class IDEView extends React.Component {
         <div className="editor-preview-container">
           <SplitPane
             split="vertical"
-            defaultSize={this.sidebarSize}
-            ref={(element) => { this.sidebarPane = element; }}
+            size={this.state.sidebarSize}
+            onChange={size => this.setState({ sidebarSize: size })}
             onDragFinished={this._handleSidebarPaneOnDragFinished}
             allowResize={this.props.ide.sidebarIsExpanded}
             minSize={20}
@@ -275,10 +256,9 @@ class IDEView extends React.Component {
               <SplitPane
                 split="horizontal"
                 primary="second"
-                defaultSize={this.consoleSize}
+                size={this.state.consoleSize}
                 minSize={29}
-                ref={(element) => { this.consolePane = element; }}
-                onDragFinished={this._handleConsolePaneOnDragFinished}
+                onChange={size => this.setState({ consoleSize: size })}
                 allowResize={this.props.ide.consoleIsExpanded}
                 className="editor-preview-subpanel"
               >

@@ -134,7 +134,7 @@
     "react-inlinesvg": "^0.7.5",
     "react-redux": "^5.1.1",
     "react-router": "^3.2.1",
-    "react-split-pane": "^0.1.76",
+    "react-split-pane": "^0.1.85",
     "react-tabs": "^2.3.0",
     "redux": "^3.7.2",
     "redux-devtools": "^3.4.2",
