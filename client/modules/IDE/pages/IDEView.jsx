@@ -138,8 +138,8 @@ class IDEView extends React.Component {
   _handleConsolePaneOnDragFinished() {
     this.consoleSize = this.consolePane.state.draggedSize;
     this.consolePane.setState({
-      resized: false,
-      draggedSize: undefined,
+      resized: true,
+      draggedSize: this.consoleSize
     });
   }
 
