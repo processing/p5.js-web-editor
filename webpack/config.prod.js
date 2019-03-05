@@ -28,7 +28,6 @@ module.exports = [{
       'htmlhint',
       'js-beautify',
       'jshint',
-      'moment',
       'react-dom',
       'react-inlinesvg',
       'react-redux',
