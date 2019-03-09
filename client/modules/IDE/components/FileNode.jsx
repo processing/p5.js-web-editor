@@ -107,7 +107,11 @@ export class FileNode extends React.Component {
         {(() => { // eslint-disable-line
           if (this.props.name !== 'root') {
             return (
-              <div className="file-item__content" onContextMenu={this.toggleFileOptions}>
+              <div
+                className="file-item__content"
+                onContextMenu={this.toggleFileOptions}
+                onBlur={this.hideFileOptions}
+              >
                 <span className="file-item__spacer"></span>
                 {(() => { // eslint-disable-line
                   if (this.props.fileType === 'file') {
