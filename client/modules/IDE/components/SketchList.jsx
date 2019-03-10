@@ -11,11 +11,17 @@ import * as SketchActions from '../actions/projects';
 import * as ToastActions from '../actions/toast';
 
 const trashCan = require('../../../images/trash-can.svg');
+const arrowDown = require('../../../images/arrow5_down.svg');
+const arrowUp = require('../../../images/arrow5_up.svg');
 
 class SketchList extends React.Component {
   constructor(props) {
     super(props);
     this.props.getProjects(this.props.username);
+    this.state = {
+      orderTypeCREATEDAT: 'ASCENDING',
+      orderTypeUPDATEDAT: 'ASCENDING',
+    };
   }
 
   getSketchesTitle() {
@@ -23,6 +29,15 @@ class SketchList extends React.Component {
       return 'p5.js Web Editor | My sketches';
     }
     return `p5.js Web Editor | ${this.props.username}'s sketches`;
+  }
+
+  handleSort = (orderType, orderBy) => {
+    this.props.sort(orderType, orderBy);
+    const newValue = this.state[`orderType${orderBy}`] === 'ASCENDING' ? 'DESCENDING' : 'ASCENDING';
+    this.setState(current => ({
+      ...current,
+      [`orderType${orderBy}`]: newValue
+    }));
   }
 
   render() {
@@ -41,14 +56,14 @@ class SketchList extends React.Component {
               <tr>
                 <th className="sketch-list__trash-column" scope="col"></th>
                 <th scope="col">Sketch</th>
-                <th scope="col">Date created</th>
-                <th scope="col">Date updated</th>
+                <th scope="col">Date created <button onClick={() => this.handleSort(this.state.orderTypeCREATEDAT, 'CREATEDAT')}><InlineSVG src={this.state.orderTypeCREATEDAT === 'ASCENDING' ? arrowUp : arrowDown} /></button></th>
+                <th scope="col">Date updated <button onClick={() => this.handleSort(this.state.orderTypeUPDATEDAT, 'UPDATEDAT')}><InlineSVG src={this.state.orderTypeUPDATEDAT === 'ASCENDING' ? arrowUp : arrowDown} /></button></th>
               </tr>
             </thead>
             <tbody>
               {this.props.sketches.map(sketch =>
                 // eslint-disable-next-line
-                <tr 
+                <tr
                   className="sketches-table__row visibility-toggle"
                   key={sketch.id}
                   onClick={() => browserHistory.push(`/${username}/sketches/${sketch.id}`)}
@@ -88,6 +103,7 @@ SketchList.propTypes = {
     username: PropTypes.string
   }).isRequired,
   getProjects: PropTypes.func.isRequired,
+  sort: PropTypes.func.isRequired,
   sketches: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
