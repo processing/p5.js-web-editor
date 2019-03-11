@@ -8,6 +8,7 @@ const ROOT_URL = __process.env.API_URL;
 
 export function getProjects(username) {
   return (dispatch) => {
+    dispatch({ type: ActionTypes.START_LOADING });
     let url;
     if (username) {
       url = `${ROOT_URL}/${username}/projects`;
@@ -20,11 +21,15 @@ export function getProjects(username) {
           type: ActionTypes.SET_PROJECTS,
           projects: response.data
         });
+        dispatch({ type: ActionTypes.STOP_LOADING });
       })
-      .catch(response => dispatch({
-        type: ActionTypes.ERROR,
-        error: response.data
-      }));
+      .catch((response) => {
+        dispatch({
+          type: ActionTypes.ERROR,
+          error: response.data
+        });
+        dispatch({ type: ActionTypes.STOP_LOADING });
+      });
   };
 }
 

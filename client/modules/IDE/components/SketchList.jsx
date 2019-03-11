@@ -9,6 +9,7 @@ import { bindActionCreators } from 'redux';
 import * as ProjectActions from '../actions/project';
 import * as SketchActions from '../actions/projects';
 import * as ToastActions from '../actions/toast';
+import Loader from '../../../utils/loader';
 
 const trashCan = require('../../../images/trash-can.svg');
 
@@ -32,7 +33,8 @@ class SketchList extends React.Component {
         <Helmet>
           <title>{this.getSketchesTitle()}</title>
         </Helmet>
-        { this.props.sketches.length === 0 &&
+        {this.props.loading && !this.props.sketches.length && <Loader />}
+        { !this.props.loading && this.props.sketches.length === 0 &&
           <p className="sketches-table__empty">No sketches.</p>
         }
         { this.props.sketches.length > 0 &&
@@ -95,6 +97,7 @@ SketchList.propTypes = {
     updatedAt: PropTypes.string.isRequired
   })).isRequired,
   username: PropTypes.string,
+  loading: PropTypes.bool.isRequired,
   deleteProject: PropTypes.func.isRequired
 };
 
@@ -105,7 +108,8 @@ SketchList.defaultProps = {
 function mapStateToProps(state) {
   return {
     user: state.user,
-    sketches: state.sketches
+    sketches: state.sketches,
+    loading: state.loading,
   };
 }
 
