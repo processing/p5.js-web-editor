@@ -154,6 +154,7 @@ export class FileNode extends React.Component {
                   tabIndex="0"
                   onClick={this.toggleFileOptions}
                   onBlur={() => setTimeout(this.hideFileOptions, 200)}
+                  style={{ display: (this.state.isOptionsOpen) ? 'inline-block' : '' }}
                 >
                   <InlineSVG src={downArrowUrl} />
                 </button>
