@@ -6,8 +6,6 @@ import { Router, browserHistory } from 'react-router';
 import configureStore from './store';
 import routes from './routes';
 
-// Load the patched console.log
-require('./utils/logger.js');
 require('./styles/main.scss');
 
 // Load the p5 png logo, so that webpack will use it
