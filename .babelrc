@@ -5,7 +5,8 @@
       "plugins": [
         "transform-react-remove-prop-types",
         "transform-react-constant-elements",
-        "transform-react-inline-elements"
+        "transform-react-inline-elements",
+        "transform-remove-console"
       ],
       "presets": ["env", "react", "react-optimize", "stage-0"]
     }
