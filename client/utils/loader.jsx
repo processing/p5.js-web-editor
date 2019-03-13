@@ -1,6 +1,6 @@
 import React from 'react';
 
 const Loader = () => (
-  <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+  <div className="loader"></div>
 );
 export default Loader;
