@@ -65,6 +65,9 @@ export class FileNode extends React.Component {
 
   toggleFileOptions(e) {
     e.preventDefault();
+    if (!this.props.canEdit) {
+      return;
+    }
     if (this.state.isOptionsOpen) {
       this.setState({ isOptionsOpen: false });
     } else {
@@ -88,7 +91,7 @@ export class FileNode extends React.Component {
   renderChild(childId) {
     return (
       <li key={childId}>
-        <ConnectedFileNode id={childId} parentId={this.props.id} />
+        <ConnectedFileNode id={childId} parentId={this.props.id} canEdit={this.props.canEdit} />
       </li>
     );
   }
@@ -154,7 +157,6 @@ export class FileNode extends React.Component {
                   tabIndex="0"
                   onClick={this.toggleFileOptions}
                   onBlur={() => setTimeout(this.hideFileOptions, 200)}
-                  style={{ display: (this.state.isOptionsOpen) ? 'inline-block' : '' }}
                 >
                   <InlineSVG src={downArrowUrl} />
                 </button>
@@ -251,7 +253,8 @@ FileNode.propTypes = {
   newFile: PropTypes.func.isRequired,
   newFolder: PropTypes.func.isRequired,
   showFolderChildren: PropTypes.func.isRequired,
-  hideFolderChildren: PropTypes.func.isRequired
+  hideFolderChildren: PropTypes.func.isRequired,
+  canEdit: PropTypes.bool.isRequired
 };
 
 FileNode.defaultProps = {
@@ -262,8 +265,7 @@ FileNode.defaultProps = {
 
 function mapStateToProps(state, ownProps) {
   // this is a hack, state is updated before ownProps
-  return state.files.find(file => file.id === ownProps.id) || { ...ownProps, name: 'test', fileType: 'file' };
-  // return state.files.find(file => file.id === ownProps.id);
+  return state.files.find(file => file.id === ownProps.id) || { name: 'test', fileType: 'file' };
 }
 
 function mapDispatchToProps(dispatch) {

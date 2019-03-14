@@ -41,11 +41,12 @@ class Sidebar extends React.Component {
   }
 
   render() {
+    const canEditProject = this.userCanEditProject();
     const sidebarClass = classNames({
       'sidebar': true,
       'sidebar--contracted': !this.props.isExpanded,
       'sidebar--project-options': this.props.projectOptionsVisible,
-      'sidebar--cant-edit': !this.userCanEditProject()
+      'sidebar--cant-edit': !canEditProject
     });
 
     return (
@@ -82,7 +83,10 @@ class Sidebar extends React.Component {
             </ul>
           </div>
         </div>
-        <ConnectedFileNode id={this.props.files.filter(file => file.name === 'root')[0].id} />
+        <ConnectedFileNode
+          id={this.props.files.filter(file => file.name === 'root')[0].id}
+          canEdit={canEditProject}
+        />
       </nav>
     );
   }

@@ -138,9 +138,15 @@
   }
   .sidebar__file-item:hover > .file-item__content & {
     display: inline-block;
+    .sidebar--cant-edit & {
+      display: none;
+    }
   }
   & svg {
     width: #{10 / $base-font-size}rem;
+  }
+  .sidebar__file-item--open > .file-item__content & {
+    display: inline-block;
   }
 }
 
