@@ -41,11 +41,12 @@ class Sidebar extends React.Component {
   }
 
   render() {
+    const canEditProject = this.userCanEditProject();
     const sidebarClass = classNames({
       'sidebar': true,
       'sidebar--contracted': !this.props.isExpanded,
       'sidebar--project-options': this.props.projectOptionsVisible,
-      'sidebar--cant-edit': !this.userCanEditProject()
+      'sidebar--cant-edit': !canEditProject
     });
 
     return (
@@ -64,7 +65,7 @@ class Sidebar extends React.Component {
               tabIndex="0"
               ref={(element) => { this.sidebarOptions = element; }}
               onClick={this.toggleProjectOptions}
-              onBlur={() => setTimeout(this.props.closeProjectOptions, 200)}
+              //onBlur={() => setTimeout(this.props.closeProjectOptions, 200)}
             >
               <InlineSVG src={downArrowUrl} />
             </button>
@@ -75,14 +76,18 @@ class Sidebar extends React.Component {
                 </button>
               </li>
               <li>
-                <button aria-label="add file" onClick={this.props.newFile} >
+                <button aria-label="add file" onClick={this.props.newFile}
+                onBlur={() => setTimeout(this.props.closeProjectOptions,500)} >
                   Add file
                 </button>
               </li>
             </ul>
           </div>
         </div>
-        <ConnectedFileNode id={this.props.files.filter(file => file.name === 'root')[0].id} />
+        <ConnectedFileNode
+          id={this.props.files.filter(file => file.name === 'root')[0].id}
+          canEdit={canEditProject}
+        />
       </nav>
     );
   }
