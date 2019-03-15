@@ -30,10 +30,9 @@ class Nav extends React.PureComponent {
     this.handleClickOutside = this.handleClickOutside.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     document.addEventListener('mousedown', this.handleClick, false);
   }
-
   componentWillUnmount() {
     document.removeEventListener('mousedown', this.handleClick, false);
   }
@@ -45,7 +44,10 @@ class Nav extends React.PureComponent {
   }
 
   handleClick(e) {
-    if (this.node.contains(e.target)) {
+    if (!this.node) {
+      return;
+    }
+    if (this.node && this.node.contains(e.target)) {
       return;
     }
 
@@ -124,6 +126,11 @@ class Nav extends React.PureComponent {
               onClick={this.toggleDropdown.bind(this, 'file')}
               onBlur={this.handleBlur}
               onFocus={this.clearHideTimeout}
+              onMouseOver={() => {
+                if (this.state.dropdownOpen !== 'none') {
+                  this.setDropdown('file');
+                }
+              }}
             >
               <span className="nav__item-header">File</span>
               <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
@@ -239,11 +246,18 @@ class Nav extends React.PureComponent {
               onClick={this.toggleDropdown.bind(this, 'edit')}
               onBlur={this.handleBlur}
               onFocus={this.clearHideTimeout}
+              onMouseOver={() => {
+                if (this.state.dropdownOpen !== 'none') {
+                  this.setDropdown('edit');
+                }
+              }}
             >
               <span className="nav__item-header">Edit</span>
               <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
             </button>
-            <ul className="nav__dropdown">
+            <ul
+              className="nav__dropdown"
+            >
               <button
                 onClick={this.toggleDropdown.bind(this, 'edit')}
                 className="nav__dropdown-heading"
@@ -310,6 +324,11 @@ class Nav extends React.PureComponent {
               onClick={this.toggleDropdown.bind(this, 'sketch')}
               onBlur={this.handleBlur}
               onFocus={this.clearHideTimeout}
+              onMouseOver={() => {
+                if (this.state.dropdownOpen !== 'none') {
+                  this.setDropdown('sketch');
+                }
+              }}
             >
               <span className="nav__item-header">Sketch</span>
               <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
@@ -405,6 +424,11 @@ class Nav extends React.PureComponent {
               onClick={this.toggleDropdown.bind(this, 'help')}
               onBlur={this.handleBlur}
               onFocus={this.clearHideTimeout}
+              onMouseOver={() => {
+                if (this.state.dropdownOpen !== 'none') {
+                  this.setDropdown('help');
+                }
+              }}
             >
               <span className="nav__item-header">Help & Feedback</span>
               <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
