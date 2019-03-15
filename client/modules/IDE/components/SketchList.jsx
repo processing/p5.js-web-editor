@@ -9,6 +9,7 @@ import { bindActionCreators } from 'redux';
 import * as ProjectActions from '../actions/project';
 import * as SketchActions from '../actions/projects';
 import * as ToastActions from '../actions/toast';
+import orderListByDate from '../../../selectors/Sort-Sketches';
 
 const trashCan = require('../../../images/trash-can.svg');
 
@@ -105,7 +106,8 @@ SketchList.defaultProps = {
 function mapStateToProps(state) {
   return {
     user: state.user,
-    sketches: state.sketches
+    sketches: state.sketches,
+    sortedSketches: orderListByDate(state)
   };
 }
 
