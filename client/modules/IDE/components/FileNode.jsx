@@ -156,7 +156,6 @@ export class FileNode extends React.Component {
                   ref={(element) => { this[`fileOptions-${this.props.id}`] = element; }}
                   tabIndex="0"
                   onClick={this.toggleFileOptions}
-                  onBlur={() => setTimeout(this.hideFileOptions, 200)}
                 >
                   <InlineSVG src={downArrowUrl} />
                 </button>
@@ -212,6 +211,9 @@ export class FileNode extends React.Component {
                             this.props.resetSelectedFile(this.props.id);
                             setTimeout(() => this.props.deleteFile(this.props.id, this.props.parentId), 100);
                           }
+                        }}
+                        onBlur={() => {
+                          setTimeout(this.hideFileOptions , 200);
                         }}
                         className="sidebar__file-item-option"
                       >
