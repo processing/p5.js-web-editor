@@ -70,14 +70,23 @@ class Sidebar extends React.Component {
             </button>
             <ul className="sidebar__project-options">
               <li>
-                <button aria-label="add folder" onClick={this.props.newFolder} >
+                <button
+                  aria-label="add folder"
+                  onClick={() => {
+                    this.props.newFolder();
+                    setTimeout(this.props.closeProjectOptions, 0);
+                  }}
+                >
                   Add folder
                 </button>
               </li>
               <li>
                 <button
                   aria-label="add file"
-                  onClick={this.props.newFile}
+                  onClick={() => {
+                    this.props.newFile();
+                    setTimeout(this.props.closeProjectOptions, 0);
+                  }}
                   onBlur={() => { setTimeout(this.props.closeProjectOptions, 200); }}
                 >
                   Add file

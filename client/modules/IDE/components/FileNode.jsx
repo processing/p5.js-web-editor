@@ -167,7 +167,10 @@ export class FileNode extends React.Component {
                           <li>
                             <button
                               aria-label="add file"
-                              onClick={this.props.newFile}
+                              onClick={() => {
+                                this.props.newFile();
+                                setTimeout(() => this.hideFileOptions(), 0);
+                              }}
                               className="sidebar__file-item-option"
                             >
                               Add File
@@ -182,7 +185,10 @@ export class FileNode extends React.Component {
                           <li>
                             <button
                               aria-label="add folder"
-                              onClick={this.props.newFolder}
+                              onClick={() => {
+                                this.props.newFolder();
+                                setTimeout(() => this.hideFileOptions(), 0);
+                              }}
                               className="sidebar__file-item-option"
                             >
                               Add Folder
@@ -197,6 +203,7 @@ export class FileNode extends React.Component {
                           this.originalFileName = this.props.name;
                           this.showEditFileName();
                           setTimeout(() => this.fileNameInput.focus(), 0);
+                          setTimeout(() => this.hideFileOptions(), 0);
                         }}
                         className="sidebar__file-item-option"
                       >
