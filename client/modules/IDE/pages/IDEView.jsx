@@ -201,6 +201,7 @@ class IDEView extends React.Component {
             closeOverlay={this.props.closePreferences}
           >
             <Preferences
+              clearConsole={this.props.clearConsole}
               fontSize={this.props.preferences.fontSize}
               indentationAmount={this.props.preferences.indentationAmount}
               setIndentation={this.props.setIndentation}
