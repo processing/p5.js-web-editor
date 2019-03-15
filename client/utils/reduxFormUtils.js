@@ -65,7 +65,7 @@ export function validateSignup(formProps) {
   }
   if (formProps.password) {
     if (formProps.password.length < 6) {
-      errors.password = 'Password must be of atleast of 6 characters';
+      errors.password = 'Password must be at least 6 characters';
     }
   }
   if (!formProps.confirmPassword) {
