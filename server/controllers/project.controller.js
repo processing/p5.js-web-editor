@@ -110,7 +110,8 @@ export function getProject(req, res) {
 function deleteFilesFromS3(files) {
   deleteObjectsFromS3(files.filter((file) => {
     if (file.url) {
-      if (!process.env.S3_DATE || (process.env.S3_DATE && isBefore(new Date(process.env.S3_DATE), new Date(file.createdAt)))) {
+      if (!process.env.S3_DATE || (process.env.S3_DATE && isBefore(new Date(process.env.S3_DATE), 
+      new Date(file.createdAt)))) {
         return true;
       }
     }
