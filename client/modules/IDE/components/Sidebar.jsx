@@ -65,7 +65,7 @@ class Sidebar extends React.Component {
               tabIndex="0"
               ref={(element) => { this.sidebarOptions = element; }}
               onClick={this.toggleProjectOptions}
-              onBlur={() => setTimeout(this.props.closeProjectOptions, 200)}
+              onBlur={() => setTimeout(this.props.closeProjectOptions, 3000)}
             >
               <InlineSVG src={downArrowUrl} />
             </button>
