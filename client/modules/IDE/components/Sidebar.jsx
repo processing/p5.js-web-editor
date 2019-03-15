@@ -65,6 +65,7 @@ class Sidebar extends React.Component {
               tabIndex="0"
               ref={(element) => { this.sidebarOptions = element; }}
               onClick={this.toggleProjectOptions}
+              onBlur={() => setTimeout(this.props.closeProjectOptions, 200)}
             >
               <InlineSVG src={downArrowUrl} />
             </button>
@@ -75,8 +76,7 @@ class Sidebar extends React.Component {
                 </button>
               </li>
               <li>
-                <button aria-label="add file" onClick={this.props.newFile} 
-                onBlur={() => setTimeout(this.props.closeProjectOptions, 200)}>
+                <button aria-label="add file" onClick={this.props.newFile} >
                   Add file
                 </button>
               </li>
