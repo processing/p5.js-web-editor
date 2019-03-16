@@ -16,9 +16,14 @@ const trashCan = require('../../../images/trash-can.svg');
 class SketchList extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      createdAt: 'Dsc',
+      updatedAt: 'Dsc'
+    };
     this.props.getProjects(this.props.username);
   }
 
+  
   getSketchesTitle() {
     if (this.props.username === this.props.user.username) {
       return 'p5.js Web Editor | My sketches';
@@ -26,7 +31,12 @@ class SketchList extends React.Component {
     return `p5.js Web Editor | ${this.props.username}'s sketches`;
   }
 
+  handleSort(sortState) {
+    const newState = this.state[sortState] === 'Asc' ? 'Dsc' : 'Asc';
+    this.props.sortProjects(newState, sortState);
+  }
   render() {
+    console.log('rendering');
     const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
     return (
       <div className="sketches-table-container">
@@ -42,8 +52,8 @@ class SketchList extends React.Component {
               <tr>
                 <th className="sketch-list__trash-column" scope="col"></th>
                 <th scope="col">Sketch</th>
-                <th scope="col">Date created</th>
-                <th scope="col">Date updated</th>
+                <th scope="col">Date created <button onClick={() => this.handleSort('createdAt')}>Ascending</button></th>
+                <th scope="col">Date updated <button onClick={() => this.handleSort('updatedAt')}>Ascending</button></th>
               </tr>
             </thead>
             <tbody>
@@ -95,6 +105,7 @@ SketchList.propTypes = {
     createdAt: PropTypes.string.isRequired,
     updatedAt: PropTypes.string.isRequired
   })).isRequired,
+  sortProjects: PropTypes.func.isRequired,
   username: PropTypes.string,
   deleteProject: PropTypes.func.isRequired
 };
@@ -106,8 +117,8 @@ SketchList.defaultProps = {
 function mapStateToProps(state) {
   return {
     user: state.user,
-    sketches: state.sketches,
-    sortedSketches: orderListByDate(state)
+    sketches: orderListByDate(state),
+    sorting: state.sorting,
   };
 }
 

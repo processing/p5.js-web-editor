@@ -2,6 +2,7 @@ import axios from 'axios';
 import * as ActionTypes from '../../../constants';
 import { showErrorModal, setPreviousPath } from './ide';
 import { resetProject } from './project';
+import { store } from '../../../index';
 
 const __process = (typeof global !== 'undefined' ? global : window).process;
 const ROOT_URL = __process.env.API_URL;
@@ -53,4 +54,8 @@ export function deleteProject(id) {
         }
       });
   };
+}
+
+export function sortProjects(order, orderBy) {
+  return () => store.dispatch({ type: ActionTypes.SET_SORT_PARAM, payload: { orderBy, order } });
 }
