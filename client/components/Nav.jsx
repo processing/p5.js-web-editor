@@ -136,13 +136,6 @@ class Nav extends React.PureComponent {
               <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
             </button>
             <ul className="nav__dropdown">
-              <button
-                onClick={this.toggleDropdown.bind(this, 'file')}
-                className="nav__dropdown-heading"
-              >
-                <span>File</span>
-                <InlineSVG src={triangleUrl} />
-              </button>
               <li className="nav__dropdown-item">
                 <button
                   onClick={() => {
@@ -258,13 +251,6 @@ class Nav extends React.PureComponent {
             <ul
               className="nav__dropdown"
             >
-              <button
-                onClick={this.toggleDropdown.bind(this, 'edit')}
-                className="nav__dropdown-heading"
-              >
-                <span>Edit</span>
-                <InlineSVG src={triangleUrl} />
-              </button>
               <li className="nav__dropdown-item">
                 <button
                   onClick={() => {
@@ -334,13 +320,6 @@ class Nav extends React.PureComponent {
               <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
             </button>
             <ul className="nav__dropdown">
-              <button
-                onClick={this.toggleDropdown.bind(this, 'sketch')}
-                className="nav__dropdown-heading"
-              >
-                <span>Sketch</span>
-                <InlineSVG src={triangleUrl} />
-              </button>
               <li className="nav__dropdown-item">
                 <button
                   onClick={() => {
@@ -434,13 +413,6 @@ class Nav extends React.PureComponent {
               <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
             </button>
             <ul className="nav__dropdown">
-              <button
-                onClick={this.toggleDropdown.bind(this, 'help')}
-                className="nav__dropdown-heading"
-              >
-                <span>Help & Feedback</span>
-                <InlineSVG src={triangleUrl} />
-              </button>
               <li className="nav__dropdown-item">
                 <button
                   onFocus={this.handleFocus.bind(this, 'help')}
