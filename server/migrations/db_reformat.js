@@ -178,7 +178,7 @@ objectsResponse.on('end', () => {
 //         //   console.log('is selected remains');
 //         // }
 
-//         // if (file.isSelctedFile) {
+//         // if (file.isSelectedFile) {
 //         //   console.log('changed to isSelected file');
 //         // }
 //         project.save((err, savedProject) => {
