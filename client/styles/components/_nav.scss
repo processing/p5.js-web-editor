@@ -49,7 +49,7 @@
   margin-right: #{5 / $base-font-size}rem;
 }
 
-.nav__item:hover {
+.nav__item button:hover {
   .nav__item-header {
     @include themify() {
       color: getThemifyVariable('nav-hover-color');
