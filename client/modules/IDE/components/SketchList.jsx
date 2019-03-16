@@ -12,6 +12,8 @@ import * as ToastActions from '../actions/toast';
 import orderListByDate from '../../../selectors/Sort-Sketches';
 
 const trashCan = require('../../../images/trash-can.svg');
+const arrowUp = require('../../../images/arrow5_up.svg');
+const arrowDown = require('../../../images/arrow5_down.svg');
 
 class SketchList extends React.Component {
   constructor(props) {
@@ -23,7 +25,6 @@ class SketchList extends React.Component {
     this.props.getProjects(this.props.username);
   }
 
-  
   getSketchesTitle() {
     if (this.props.username === this.props.user.username) {
       return 'p5.js Web Editor | My sketches';
@@ -33,7 +34,9 @@ class SketchList extends React.Component {
 
   handleSort(sortState) {
     const newState = this.state[sortState] === 'Asc' ? 'Dsc' : 'Asc';
-    this.props.sortProjects(newState, sortState);
+    this.setState(current => ({ ...current, [sortState]: newState }), () => {
+      this.props.sortProjects(this.state[sortState], sortState);
+    });
   }
   render() {
     console.log('rendering');
@@ -52,8 +55,8 @@ class SketchList extends React.Component {
               <tr>
                 <th className="sketch-list__trash-column" scope="col"></th>
                 <th scope="col">Sketch</th>
-                <th scope="col">Date created <button onClick={() => this.handleSort('createdAt')}>Ascending</button></th>
-                <th scope="col">Date updated <button onClick={() => this.handleSort('updatedAt')}>Ascending</button></th>
+                <th scope="col">Date created <button className="sketch-list__sort-button" onClick={() => this.handleSort('createdAt')}><InlineSVG src={this.state.createdAt === 'Asc' ? arrowDown : arrowUp} /></button></th>
+                <th scope="col">Date updated <button className="sketch-list__sort-button" onClick={() => this.handleSort('updatedAt')}><InlineSVG src={this.state.updatedAt === 'Asc' ? arrowDown : arrowUp} /></button></th>
               </tr>
             </thead>
             <tbody>

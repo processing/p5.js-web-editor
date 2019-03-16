@@ -13,6 +13,9 @@
   & .sketch-list__trash-column {
     width: #{23 / $base-font-size}rem;
   }
+  & .sketch-list__sort-button {
+    vertical-align: middle;
+  }
 }
 
 .sketches-table thead th {

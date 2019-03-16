@@ -10,15 +10,12 @@ const orderListByDate = createSelector(
   orderBySelector,
   (sketchList, order, orderBy) => {
     const sortedList = sketchList.sort((a, b) => {
-      console.log('running');
       const orderResult =
         order === 'Asc'
           ? new Date(a[orderBy]) - new Date(b[orderBy])
           : new Date(b[orderBy]) - new Date(a[orderBy]);
-      console.log(orderResult);
       return orderResult;
     });
-    console.log(sortedList);
     return sortedList;
   }
 );
