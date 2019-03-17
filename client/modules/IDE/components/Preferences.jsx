@@ -32,6 +32,7 @@ class Preferences extends React.Component {
       value = 8;
     }
     this.props.setFontSize(value);
+    event.target.value = value;
   }
 
   handleUpdateIndentation(event) {
@@ -46,6 +47,7 @@ class Preferences extends React.Component {
       value = 0;
     }
     this.props.setIndentation(value);
+    event.target.value = value;
   }
 
   handleUpdateAutosave(event) {
@@ -127,8 +129,8 @@ class Preferences extends React.Component {
                 className="preference__value"
                 aria-live="polite"
                 aria-atomic="true"
-                value={this.props.fontSize}
-                onChange={this.handleUpdateFont}
+                defaultValue={this.props.fontSize}
+                onBlur={this.handleUpdateFont}
                 ref={(element) => { this.fontSizeInput = element; }}
                 onClick={() => {
                   this.fontSizeInput.select();
@@ -159,8 +161,8 @@ class Preferences extends React.Component {
                 className="preference__value"
                 aria-live="polite"
                 aria-atomic="true"
-                value={this.props.indentationAmount}
-                onChange={this.handleUpdateIndentation}
+                defaultValue={this.props.indentationAmount}
+                onBlur={this.handleUpdateIndentation}
                 ref={(element) => { this.indentationInput = element; }}
                 onClick={() => {
                   this.indentationInput.select();
