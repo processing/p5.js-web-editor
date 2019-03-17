@@ -28,6 +28,22 @@ class Nav extends React.PureComponent {
     this.clearHideTimeout = this.clearHideTimeout.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
+    this.handleSave = this.handleSave.bind(this);
+    this.handleNew = this.handleNew.bind(this);
+    this.handleDuplicate = this.handleDuplicate.bind(this);
+    this.handleShare = this.handleShare.bind(this);
+    this.handleDownload = this.handleDownload.bind(this);
+    this.handleFind = this.handleFind.bind(this);
+    this.handleAddFile = this.handleAddFile.bind(this);
+    this.handleAddFolder = this.handleAddFolder.bind(this);
+    this.handleFindNext = this.handleFindNext.bind(this);
+    this.handleRun = this.handleRun.bind(this);
+    this.handleFindPrevious = this.handleFindPrevious.bind(this);
+    this.handleStop = this.handleStop.bind(this);
+    this.handleStartAccessible = this.handleStartAccessible.apply(this);
+    this.handleStopAccessible = this.handleStopAccessible.bind(this);
+    this.handleKeyboardShortcuts = this.handleKeyboardShortcuts.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
   componentWillMount() {
@@ -50,6 +66,95 @@ class Nav extends React.PureComponent {
     }
 
     this.handleClickOutside();
+  }
+
+  handleNew() {
+    if (!this.props.unsavedChanges) {
+      this.props.newProject();
+    } else if (this.props.warnIfUnsavedChanges()) {
+      this.props.newProject();
+    }
+    this.setDropdown('none');
+  }
+
+  handleSave() {
+    if (this.props.user.authenticated) {
+      this.props.saveProject(this.props.cmController.getContent());
+    } else {
+      this.props.showErrorModal('forceAuthentication');
+    }
+    this.setDropdown('none');
+  }
+
+  handleFind() {
+    this.props.cmController.showFind();
+    this.setDropdown('none');
+  }
+
+  handleFindNext() {
+    this.props.cmController.findNext();
+    this.setDropdown('none');
+  }
+
+  handleFindPrevious() {
+    this.props.cmController.findPrev();
+    this.setDropdown('none');
+  }
+
+  handleAddFile() {
+    this.props.newFile();
+    this.setDropdown('none');
+  }
+
+  handleAddFolder() {
+    this.props.newFolder();
+    this.setDropdown('none');
+  }
+
+  handleRun() {
+    this.props.startSketch();
+    this.setDropdown('none');
+  }
+
+  handleStop() {
+    this.props.stopSketch();
+    this.setDropdown('none');
+  }
+
+  handleStartAccessible() {
+    this.props.setAllAccessibleOutput(true);
+    this.setDropdown('none');
+  }
+
+  handleStopAccessible() {
+    this.props.setAllAccessibleOutput(false);
+    this.setDropdown('none');
+  }
+
+  handleKeyboardShortcuts() {
+    this.props.showKeyboardShortcutModal();
+    this.setDropdown('none');
+  }
+
+  handleLogout() {
+    this.props.logoutUser();
+    this.setDropdown('none');
+  }
+
+  handleDownload() {
+    this.props.autosaveProject();
+    this.props.exportProjectAsZip(this.props.project.id);
+    this.setDropdown('none');
+  }
+
+  handleDuplicate() {
+    this.props.cloneProject();
+    this.setDropdown('none');
+  }
+
+  handleShare() {
+    this.props.showShareModal();
+    this.setDropdown('none');
   }
 
   handleClickOutside() {
@@ -138,14 +243,7 @@ class Nav extends React.PureComponent {
               </button>
               <li className="nav__dropdown-item">
                 <button
-                  onClick={() => {
-                    if (!this.props.unsavedChanges) {
-                      this.props.newProject();
-                    } else if (this.props.warnIfUnsavedChanges()) {
-                      this.props.newProject();
-                    }
-                    this.setDropdown('none');
-                  }}
+                  onClick={this.handleNew}
                   onFocus={this.handleFocus.bind(this, 'file')}
                   onBlur={this.handleBlur}
                 >
@@ -155,14 +253,7 @@ class Nav extends React.PureComponent {
               { __process.env.LOGIN_ENABLED && (!this.props.project.owner || this.isUserOwner()) &&
               <li className="nav__dropdown-item">
                 <button
-                  onClick={() => {
-                    if (this.props.user.authenticated) {
-                      this.props.saveProject(this.props.cmController.getContent());
-                    } else {
-                      this.props.showErrorModal('forceAuthentication');
-                    }
-                    this.setDropdown('none');
-                  }}
+                  onClick={this.handleSave}
                   onFocus={this.handleFocus.bind(this, 'file')}
                   onBlur={this.handleBlur}
                 >
@@ -173,10 +264,7 @@ class Nav extends React.PureComponent {
               { this.props.project.id && this.props.user.authenticated &&
               <li className="nav__dropdown-item">
                 <button
-                  onClick={() => {
-                    this.props.cloneProject();
-                    this.setDropdown('none');
-                  }}
+                  onClick={this.handleDuplicate}
                   onFocus={this.handleFocus.bind(this, 'file')}
                   onBlur={this.handleBlur}
                 >
@@ -186,10 +274,7 @@ class Nav extends React.PureComponent {
               { this.props.project.id &&
               <li className="nav__dropdown-item">
                 <button
-                  onClick={() => {
-                    this.props.showShareModal();
-                    this.setDropdown('none');
-                  }}
+                  onClick={this.handleShare}
                   onFocus={this.handleFocus.bind(this, 'file')}
                   onBlur={this.handleBlur}
                 >
@@ -199,11 +284,7 @@ class Nav extends React.PureComponent {
               { this.props.project.id &&
               <li className="nav__dropdown-item">
                 <button
-                  onClick={() => {
-                    this.props.autosaveProject();
-                    this.props.exportProjectAsZip(this.props.project.id);
-                    this.setDropdown('none');
-                  }}
+                  onClick={this.handleDownload}
                   onFocus={this.handleFocus.bind(this, 'file')}
                   onBlur={this.handleBlur}
                 >
@@ -266,10 +347,7 @@ class Nav extends React.PureComponent {
               </li>
               <li className="nav__dropdown-item">
                 <button
-                  onClick={() => {
-                    this.props.cmController.showFind();
-                    this.setDropdown('none');
-                  }}
+                  onClick={this.handleFind}
                   onFocus={this.handleFocus.bind(this, 'edit')}
                   onBlur={this.handleBlur}
                 >
@@ -279,10 +357,7 @@ class Nav extends React.PureComponent {
               </li>
               <li className="nav__dropdown-item">
                 <button
-                  onClick={() => {
-                    this.props.cmController.findNext();
-                    this.setDropdown('none');
-                  }}
+                  onClick={this.handleFindNext}
                   onFocus={this.handleFocus.bind(this, 'edit')}
                   onBlur={this.handleBlur}
                 >
@@ -292,10 +367,7 @@ class Nav extends React.PureComponent {
               </li>
               <li className="nav__dropdown-item">
                 <button
-                  onClick={() => {
-                    this.props.cmController.findPrev();
-                    this.setDropdown('none');
-                  }}
+                  onClick={this.handleFindPrevious}
                   onFocus={this.handleFocus.bind(this, 'edit')}
                   onBlur={this.handleBlur}
                 >
@@ -324,10 +396,7 @@ class Nav extends React.PureComponent {
               </button>
               <li className="nav__dropdown-item">
                 <button
-                  onClick={() => {
-                    this.props.newFile();
-                    this.setDropdown('none');
-                  }}
+                  onClick={this.handleAddFile}
                   onFocus={this.handleFocus.bind(this, 'sketch')}
                   onBlur={this.handleBlur}
                 >
@@ -336,10 +405,7 @@ class Nav extends React.PureComponent {
               </li>
               <li className="nav__dropdown-item">
                 <button
-                  onClick={() => {
-                    this.props.newFolder();
-                    this.setDropdown('none');
-                  }}
+                  onClick={this.handleAddFolder}
                   onFocus={this.handleFocus.bind(this, 'sketch')}
                   onBlur={this.handleBlur}
                 >
@@ -348,10 +414,7 @@ class Nav extends React.PureComponent {
               </li>
               <li className="nav__dropdown-item">
                 <button
-                  onClick={() => {
-                    this.props.startSketch();
-                    this.setDropdown('none');
-                  }}
+                  onClick={this.handleRun}
                   onFocus={this.handleFocus.bind(this, 'sketch')}
                   onBlur={this.handleBlur}
                 >
@@ -361,10 +424,7 @@ class Nav extends React.PureComponent {
               </li>
               <li className="nav__dropdown-item">
                 <button
-                  onClick={() => {
-                    this.props.stopSketch();
-                    this.setDropdown('none');
-                  }}
+                  onClick={this.handleStop}
                   onFocus={this.handleFocus.bind(this, 'sketch')}
                   onBlur={this.handleBlur}
                 >
@@ -374,10 +434,7 @@ class Nav extends React.PureComponent {
               </li>
               <li className="nav__dropdown-item">
                 <button
-                  onClick={() => {
-                    this.props.setAllAccessibleOutput(true);
-                    this.setDropdown('none');
-                  }}
+                  onClick={this.handleStartAccessible}
                   onFocus={this.handleFocus.bind(this, 'sketch')}
                   onBlur={this.handleBlur}
                 >
@@ -387,10 +444,7 @@ class Nav extends React.PureComponent {
               </li>
               <li className="nav__dropdown-item">
                 <button
-                  onClick={() => {
-                    this.props.setAllAccessibleOutput(false);
-                    this.setDropdown('none');
-                  }}
+                  onClick={this.handleStopAccessible}
                   onFocus={this.handleFocus.bind(this, 'sketch')}
                   onBlur={this.handleBlur}
                 >
@@ -421,10 +475,7 @@ class Nav extends React.PureComponent {
                 <button
                   onFocus={this.handleFocus.bind(this, 'help')}
                   onBlur={this.handleBlur}
-                  onClick={() => {
-                    this.props.showKeyboardShortcutModal();
-                    this.setDropdown('none');
-                  }}
+                  onClick={this.handleKeyboardShortcuts}
                 >
                   Keyboard Shortcuts
                 </button>
@@ -529,10 +580,7 @@ class Nav extends React.PureComponent {
                 </li>
                 <li className="nav__dropdown-item">
                   <button
-                    onClick={() => {
-                      this.props.logoutUser();
-                      this.setDropdown('none');
-                    }}
+                    onClick={this.handleLogout}
                     onFocus={this.handleFocus.bind(this, 'account')}
                     onBlur={this.handleBlur}
                   >
