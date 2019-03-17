@@ -30,11 +30,13 @@
 
 .nav__item {
 	position: relative;
-	padding: 0 #{10 / $base-font-size}rem;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
+  & button {
+    padding: #{12 / $base-font-size}rem #{10 / $base-font-size}rem;
+  }
 }
 
 .nav__item:first-child {
