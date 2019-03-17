@@ -44,12 +44,12 @@ function SignupForm(props) {
         {password.touched && password.error && <span className="form-error">{password.error}</span>}
       </p>
       <p className="form__field">
-        <label htmlFor="confirm password" className="form__label">Confirm Password</label>
+        <label htmlFor="confirm_password" className="form__label">Confirm Password</label>
         <input
           className="form__input"
           type="password"
           aria-label="confirm password"
-          id="confirm password"
+          id="confirm_password"
           {...domOnlyProps(confirmPassword)}
         />
         {
