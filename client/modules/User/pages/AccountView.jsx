@@ -9,7 +9,6 @@ import { Helmet } from 'react-helmet';
 import { updateSettings, initiateVerification } from '../actions';
 import AccountForm from '../components/AccountForm';
 import { validateSettings } from '../../../utils/reduxFormUtils';
-import GithubButton from '../components/GithubButton';
 
 const exitUrl = require('../../../images/exit.svg');
 const logoUrl = require('../../../images/p5js-logo.svg');
@@ -48,7 +47,6 @@ class AccountView extends React.Component {
           <h2 className="form-container__title">My Account</h2>
           <AccountForm {...this.props} />
           <h2 className="form-container__divider">Or</h2>
-          <GithubButton buttonText="Login with Github" />
         </div>
       </div>
     );
