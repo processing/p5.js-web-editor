@@ -135,6 +135,38 @@ class Editor extends React.Component {
         this.tidyCode();
       }
     });
+    let clicks = 0;
+    this._cm.on('gutterClick', (instance, n, gutter, e) => {
+      if (clicks >= 2)clicks = 0;
+      clicks += 1;
+      console.log('lol', clicks, n);
+      if (clicks === 1) {
+        setTimeout(() => {
+          clicks -= 1;
+          if (clicks === 1) {
+            // Trigger double click now!
+            console.log(clicks + 1);
+            clicks = 0;
+            console.log(gutter);
+            if (gutter.indexOf('CodeMirror-foldgutter') !== -1) {
+              console.log('gc');
+              this._cm.setSelection({ line: n, ch: 0 }, { line: n + 1, ch: 0 });
+            }
+            clicks = 0;
+            return null;
+          }
+          return null;
+        }, 400);
+      }
+    });
+
+    this._cm.on('gutterContextMenu', (cm, n, gutter, e) => {
+      console.log('gcm');
+      if (gutter.indexOf('CodeMirror-linenumbers') !== -1) {
+        //  return cm.setSelection({line, 0}, {});
+      }
+      return null;
+    });
 
     this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
     this._cm.setOption('indentWithTabs', this.props.isTabIndent);
