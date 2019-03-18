@@ -86,7 +86,11 @@ class PreviewFrame extends React.Component {
           source: message.source
         }));
 
-      decodedMessages.every((message, index, arr) => {
+      console.log(JSON.stringify(decodedMessages));
+
+      for (let index = 0, len = decodedMessages.length; index < len; index += 1) {
+        const message = decodedMessages[index];
+
         const { data: args } = message;
         let hasInfiniteLoop = false;
         Object.keys(args).forEach((key) => {
@@ -97,23 +101,22 @@ class PreviewFrame extends React.Component {
           }
         });
         if (hasInfiniteLoop) {
-          return false;
+          break;
         }
-        if (index === arr.length - 1) {
+        if (index === decodedMessages.length - 1) {
           Object.assign(message, { times: 1 });
-          return false;
+          break;
         }
         const cur = Object.assign(message, { times: 1 });
         const nextIndex = index + 1;
-        while (isEqual(cur.data, arr[nextIndex].data) && cur.method === arr[nextIndex].method) {
+        while (isEqual(cur.data, decodedMessages[nextIndex].data) && cur.method === decodedMessages[nextIndex].method) {
           cur.times += 1;
-          arr.splice(nextIndex, 1);
-          if (nextIndex === arr.length) {
-            return false;
+          decodedMessages.splice(nextIndex, 1);
+          if (nextIndex === decodedMessages.length) {
+            break;
           }
         }
-        return true;
-      });
+      }
 
       this.props.dispatchConsoleEvent(decodedMessages);
     }
