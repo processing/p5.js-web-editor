@@ -75,6 +75,7 @@
 	margin-left: #{10 / $base-font-size}rem;
 	padding-left: #{10 / $base-font-size}rem;
 	height: 70%;
+	margin-top: 3px;
   display: flex;
   align-items: center;
 }
@@ -122,6 +123,11 @@
 
 .toolbar__serve-secure {
 	margin-left: #{20 / $base-font-size}rem;
+}
+.toolbar__autorefresh-options{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between
 }
 
 .toolbar__serve-secure-label {
