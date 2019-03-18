@@ -80,15 +80,15 @@ class PreviewFrame extends React.Component {
   }
 
   handleConsoleEvent(messageEvent) {
-    if (Array.isArray(messageEvent.data)) {
+    if (messageEvent && Array.isArray(messageEvent.data)) {
       const decodedMessages = messageEvent.data.map(message =>
         Object.assign(Decode(message.log), {
           source: message.source
         }));
 
-      console.log(JSON.stringify(decodedMessages));
+      // console.log(JSON.stringify(decodedMessages));
 
-      for (let index = 0, len = decodedMessages.length; index < len; index += 1) {
+      for (let index = 0; index < decodedMessages.length; index += 1) {
         const message = decodedMessages[index];
 
         const { data: args } = message;
@@ -115,6 +115,23 @@ class PreviewFrame extends React.Component {
           if (nextIndex === decodedMessages.length) {
             break;
           }
+        }
+      }
+
+      // now the messages have been decoded among themselves
+      // compare the first such message with the last message
+      // already visible on the console
+      const previousMessages = this.props.consoleEvents;
+      const previousMessagesCount = previousMessages.length;
+
+      if (previousMessagesCount) {
+        const lastMessage = previousMessages[previousMessagesCount - 1];
+        const incomingLatestMessage = decodedMessages[0];
+
+        if (isEqual(lastMessage.data, incomingLatestMessage.data) && lastMessage.method === incomingLatestMessage.method) {
+          decodedMessages.splice(0, 1);
+          // how to update previously set console event
+          // in this.props.consoleEvents?
         }
       }
 
@@ -375,6 +392,8 @@ PreviewFrame.propTypes = {
     url: PropTypes.string,
     id: PropTypes.string.isRequired
   })).isRequired,
+  // eslint-disable-next-line
+  consoleEvents: PropTypes.array,
   dispatchConsoleEvent: PropTypes.func.isRequired,
   endSketchRefresh: PropTypes.func.isRequired,
   previewIsRefreshing: PropTypes.bool.isRequired,
