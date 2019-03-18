@@ -17,6 +17,7 @@ $themes: (
   light: (
     logo-color: $p5js-pink,
     primary-text-color: #333,
+    dropper-text-color: #333,
     modal-button-color: #333,
     heading-text-color: #333,
     secondary-text-color: #a8a8a8,
@@ -65,6 +66,7 @@ $themes: (
   dark: (
     logo-color: $p5js-pink,
     primary-text-color: $white,
+    dropper-text-color: $p5js-pink,
     modal-button-color: $white,
     heading-text-color: $white,
     secondary-text-color: #DADADA,
@@ -112,6 +114,7 @@ $themes: (
   contrast: (
     logo-color: $yellow,
     primary-text-color: $yellow,
+    dropper-text-color: $yellow,
     modal-button-color: #333,
     heading-text-color: #e1e1e1,
     secondary-text-color: #e1e1e1,
