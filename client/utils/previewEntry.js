@@ -1,19 +1,19 @@
-import loopProtect from 'loop-protect';
+import * as Babel from '@babel/standalone';
 import { Hook } from 'console-feed';
 
-window.loopProtect = loopProtect;
+const protect = require('./loopProtect');
 
 const consoleBuffer = [];
 const LOGWAIT = 500;
-Hook(window.console, (log) => {
-  consoleBuffer.push({
-    log,
-    source: 'sketch'
-  });
-});
-setInterval(() => {
-  if (consoleBuffer.length > 0) {
-    window.parent.postMessage(consoleBuffer, '*');
-    consoleBuffer.length = 0;
-  }
-}, LOGWAIT);
+const callback = (line) => {
+  throw new Error(`Bad loop on line ${line}`);
+};
+
+
+Babel.registerPlugin('loopProtection', protect(LOGWAIT, callback));
+
+const loopProtect = source => Babel.transform(source, {
+  plugins: ['loopProtection'],
+}).code;
+
+module.exports = loopProtect;

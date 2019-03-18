@@ -4,12 +4,12 @@ import ReactDOM from 'react-dom';
 // import escapeStringRegexp from 'escape-string-regexp';
 import { isEqual } from 'lodash';
 import srcDoc from 'srcdoc-polyfill';
-import loopProtect from 'loop-protect';
 import { JSHINT } from 'jshint';
 import decomment from 'decomment';
 import classNames from 'classnames';
 import { Decode } from 'console-feed';
 import { getBlobUrl } from '../actions/files';
+import loopProtect from '../../../utils/previewEntry';
 import { resolvePathToFile } from '../../../../server/utils/filePath';
 import {
   MEDIA_FILE_REGEX,
@@ -139,6 +139,7 @@ class PreviewFrame extends React.Component {
         space: true
       });
       newContent = loopProtect(newContent);
+      console.log({ newContent });
     }
     return newContent;
   }
