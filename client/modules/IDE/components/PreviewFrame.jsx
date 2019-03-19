@@ -327,11 +327,14 @@ class PreviewFrame extends React.Component {
     const doc = this.iframeElement;
     const localFiles = this.injectLocalFiles();
     if (this.props.isPlaying) {
+      doc.style.borderWidth = '1px';
+      doc.style.borderStyle = 'solid';
       srcDoc.set(doc, localFiles);
       if (this.props.endSketchRefresh) {
         this.props.endSketchRefresh();
       }
     } else {
+      doc.style.borderStyle = 'none';
       doc.srcdoc = '';
       srcDoc.set(doc, '  ');
     }
