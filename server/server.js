@@ -44,6 +44,35 @@ if (process.env.BASIC_USERNAME && process.env.BASIC_PASSWORD) {
   }));
 }
 
+else if (process.env.BASIC_USERNAME && !process.env.BASIC_PASSWORD) {
+  app.use(basicAuth({
+    users: {
+      [process.env.BASIC_USERNAME]: null
+    },
+    challenge: false
+  }));
+}
+
+else if (!process.env.BASIC_USERNAME && process.env.BASIC_PASSWORD) {
+  app.use(basicAuth({
+    users: {
+      []: process.env.BASIC_PASSWORD
+    },
+    challenge: false
+  }));
+}
+
+else{
+  app.use(basicAuth({
+    users: {
+      []: null
+    },
+    challenge: false
+  }));
+}
+
+
+
 const corsOriginsWhitelist = [
   /p5js\.org$/,
 ];
