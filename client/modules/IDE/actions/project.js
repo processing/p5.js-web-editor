@@ -35,22 +35,24 @@ export function setProjectName(name) {
 export function getProject(id) {
   return (dispatch, getState) => {
     dispatch(justOpenedProject());
-    axios.get(`${ROOT_URL}/projects/${id}`, { withCredentials: true })
+    axios
+      .get(`${ROOT_URL}/projects/${id}`, { withCredentials: true })
       .then((response) => {
         dispatch(setProject(response.data));
         dispatch(setUnsavedChanges(false));
       })
-      .catch(response => dispatch({
-        type: ActionTypes.ERROR,
-        error: response.data
-      }));
+      .catch(response =>
+        dispatch({
+          type: ActionTypes.ERROR,
+          error: response.data
+        }));
   };
 }
 
 export function persistState() {
   return (dispatch, getState) => {
     dispatch({
-      type: ActionTypes.PERSIST_STATE,
+      type: ActionTypes.PERSIST_STATE
     });
     const state = getState();
     saveState(state);
@@ -60,7 +62,7 @@ export function persistState() {
 export function clearPersistedState() {
   return (dispatch) => {
     dispatch({
-      type: ActionTypes.CLEAR_PERSISTED_STATE,
+      type: ActionTypes.CLEAR_PERSISTED_STATE
     });
     clearState();
   };
@@ -80,14 +82,22 @@ export function saveProject(selectedFile = null, autosave = false) {
       fileToUpdate.content = selectedFile.content;
     }
     if (state.project.id) {
-      return axios.put(`${ROOT_URL}/projects/${state.project.id}`, formParams, { withCredentials: true })
+      return axios
+        .put(`${ROOT_URL}/projects/${state.project.id}`, formParams, { withCredentials: true })
         .then((response) => {
+          if (typeof response.data.success !== 'undefined' && !response.data.success) {
+            dispatch(showToast(5500));
+            dispatch(setToastText(`Project could not be saved. Error: ${response.data.error}`));
+            return;
+          }
           const currentState = getState();
           const savedProject = Object.assign({}, response.data);
-          if (!isEqual(
-            pick(currentState.files, ['name', 'children', 'content']),
-            pick(response.data.files, ['name', 'children', 'content'])
-          )) {
+          if (
+            !isEqual(
+              pick(currentState.files, ['name', 'children', 'content']),
+              pick(response.data.files, ['name', 'children', 'content'])
+            )
+          ) {
             savedProject.files = currentState.files;
             dispatch(setUnsavedChanges(true));
           } else {
@@ -123,8 +133,14 @@ export function saveProject(selectedFile = null, autosave = false) {
         });
     }
 
-    return axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
+    return axios
+      .post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
       .then((response) => {
+        if (typeof response.data.success !== 'undefined' && !response.data.success) {
+          dispatch(showToast(5500));
+          dispatch(setToastText(`Project could not be saved. Error: ${response.data.error}`));
+          return;
+        }
         dispatch(setUnsavedChanges(false));
         dispatch(setProject(response.data));
         browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
@@ -167,7 +183,8 @@ export function autosaveProject() {
 
 export function createProject() {
   return (dispatch) => {
-    axios.post(`${ROOT_URL}/projects`, {}, { withCredentials: true })
+    axios
+      .post(`${ROOT_URL}/projects`, {}, { withCredentials: true })
       .then((response) => {
         browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
         dispatch({
@@ -178,10 +195,11 @@ export function createProject() {
         });
         dispatch(setUnsavedChanges(false));
       })
-      .catch(response => dispatch({
-        type: ActionTypes.PROJECT_SAVE_FAIL,
-        error: response.data
-      }));
+      .catch(response =>
+        dispatch({
+          type: ActionTypes.PROJECT_SAVE_FAIL,
+          error: response.data
+        }));
   };
 }
 
@@ -232,37 +250,43 @@ export function cloneProject() {
     generateNewIdsForChildren(rootFile, newFiles);
 
     // duplicate all files hosted on S3
-    each(newFiles, (file, callback) => {
-      if (file.url && file.url.includes('amazonaws')) {
-        const formParams = {
-          url: file.url
-        };
-        axios.post(`${ROOT_URL}/S3/copy`, formParams, { withCredentials: true })
+    each(
+      newFiles,
+      (file, callback) => {
+        if (file.url && file.url.includes('amazonaws')) {
+          const formParams = {
+            url: file.url
+          };
+          axios.post(`${ROOT_URL}/S3/copy`, formParams, { withCredentials: true })
+            .then((response) => {
+              file.url = response.data.url;
+              callback(null);
+            });
+        } else {
+          callback(null);
+        }
+      },
+      (err) => {
+        // if not errors in duplicating the files on S3, then duplicate it
+        const formParams = Object.assign({}, { name: `${state.project.name} copy` }, { files: newFiles });
+        axios
+          .post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
           .then((response) => {
-            file.url = response.data.url;
-            callback(null);
-          });
-      } else {
-        callback(null);
+            browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
+            dispatch({
+              type: ActionTypes.NEW_PROJECT,
+              project: response.data,
+              owner: response.data.user,
+              files: response.data.files
+            });
+          })
+          .catch(response =>
+            dispatch({
+              type: ActionTypes.PROJECT_SAVE_FAIL,
+              error: response.data
+            }));
       }
-    }, (err) => {
-      // if not errors in duplicating the files on S3, then duplicate it
-      const formParams = Object.assign({}, { name: `${state.project.name} copy` }, { files: newFiles });
-      axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
-        .then((response) => {
-          browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
-          dispatch({
-            type: ActionTypes.NEW_PROJECT,
-            project: response.data,
-            owner: response.data.user,
-            files: response.data.files
-          });
-        })
-        .catch(response => dispatch({
-          type: ActionTypes.PROJECT_SAVE_FAIL,
-          error: response.data
-        }));
-    });
+    );
   };
 }
 

@@ -11,6 +11,17 @@ import { resolvePathToFile } from '../utils/filePath';
 import generateFileSystemSafeName from '../utils/generateFileSystemSafeName';
 import { deleteObjectsFromS3, getObjectKey } from './aws.controller';
 
+const MAX_SKETCH_NAME_LENGTH = 256;
+const MIN_SKETCH_NAME_LENGTH = 1;
+
+const validateProject = (valObj) => {
+  // Check if sketch name is between right range of characters
+  if (valObj.name.length > MAX_SKETCH_NAME_LENGTH || valObj.name.length < MIN_SKETCH_NAME_LENGTH) {
+    return false;
+  }
+  return true;
+};
+
 export function createProject(req, res) {
   let projectValues = {
     user: req.user._id
@@ -18,23 +29,23 @@ export function createProject(req, res) {
 
   projectValues = Object.assign(projectValues, req.body);
 
-  Project.create(projectValues, (err, newProject) => {
-    if (err) {
-      res.json({ success: false });
-      return;
-    }
-    Project.populate(
-      newProject,
-      { path: 'user', select: 'username' },
-      (innerErr, newProjectWithUser) => {
+  if (validateProject(projectValues)) {
+    Project.create(projectValues, (err, newProject) => {
+      if (err) {
+        res.json({ success: false });
+        return;
+      }
+      Project.populate(newProject, { path: 'user', select: 'username' }, (innerErr, newProjectWithUser) => {
         if (innerErr) {
           res.json({ success: false });
           return;
         }
         res.json(newProjectWithUser);
-      }
-    );
-  });
+      });
+    });
+  } else {
+    res.json({ success: false, error: 'Invalid Parameters!' });
+  }
 }
 
 export function updateProject(req, res) {
@@ -47,41 +58,51 @@ export function updateProject(req, res) {
     //   res.status(409).send({ success: false, message: 'Attempted to save stale version of project.' });
     //   return;
     // }
-    Project.findByIdAndUpdate(
-      req.params.project_id,
-      {
-        $set: req.body
-      },
-      {
-        new: true
-      }
-    )
-      .populate('user', 'username')
-      .exec((updateProjectErr, updatedProject) => {
-        if (updateProjectErr) {
-          console.log(updateProjectErr);
-          res.json({ success: false });
-          return;
+    let projectValues = {
+      user: req.user._id
+    };
+
+    projectValues = Object.assign(projectValues, req.body);
+
+    if (validateProject(projectValues)) {
+      Project.findByIdAndUpdate(
+        req.params.project_id,
+        {
+          $set: req.body
+        },
+        {
+          new: true
         }
-        if (updatedProject.files.length !== req.body.files.length) {
-          const oldFileIds = updatedProject.files.map(file => file.id);
-          const newFileIds = req.body.files.map(file => file.id);
-          const staleIds = oldFileIds.filter(id => newFileIds.indexOf(id) === -1);
-          staleIds.forEach((staleId) => {
-            updatedProject.files.id(staleId).remove();
-          });
-          updatedProject.save((innerErr, savedProject) => {
-            if (innerErr) {
-              console.log(innerErr);
-              res.json({ success: false });
-              return;
-            }
-            res.json(savedProject);
-          });
-        } else {
-          res.json(updatedProject);
-        }
-      });
+      )
+        .populate('user', 'username')
+        .exec((updateProjectErr, updatedProject) => {
+          if (updateProjectErr) {
+            console.log(updateProjectErr);
+            res.json({ success: false });
+            return;
+          }
+          if (updatedProject.files.length !== req.body.files.length) {
+            const oldFileIds = updatedProject.files.map(file => file.id);
+            const newFileIds = req.body.files.map(file => file.id);
+            const staleIds = oldFileIds.filter(id => newFileIds.indexOf(id) === -1);
+            staleIds.forEach((staleId) => {
+              updatedProject.files.id(staleId).remove();
+            });
+            updatedProject.save((innerErr, savedProject) => {
+              if (innerErr) {
+                console.log(innerErr);
+                res.json({ success: false });
+                return;
+              }
+              res.json(savedProject);
+            });
+          } else {
+            res.json(updatedProject);
+          }
+        });
+    } else {
+      res.json({ success: false, error: 'Invalid Parameters!' });
+    }
   });
 }
 
@@ -89,7 +110,8 @@ export function getProject(req, res) {
   const projectId = req.params.project_id;
   Project.findById(projectId)
     .populate('user', 'username')
-    .exec((err, project) => { // eslint-disable-line
+    .exec((err, project) => {
+      // eslint-disable-line
       if (err) {
         return res.status(404).send({ message: 'Project with that id does not exist' });
       } else if (!project) {
@@ -108,14 +130,18 @@ export function getProject(req, res) {
 }
 
 function deleteFilesFromS3(files) {
-  deleteObjectsFromS3(files.filter((file) => {
-    if (file.url) {
-      if (!process.env.S3_DATE || (process.env.S3_DATE && isBefore(new Date(process.env.S3_DATE), new Date(file.createdAt)))) {
-        return true;
+  deleteObjectsFromS3(files
+    .filter((file) => {
+      if (file.url) {
+        if (
+          !process.env.S3_DATE ||
+            (process.env.S3_DATE && isBefore(new Date(process.env.S3_DATE), new Date(file.createdAt)))
+        ) {
+          return true;
+        }
       }
-    }
-    return false;
-  })
+      return false;
+    })
     .map(file => getObjectKey(file.url)));
 }
 
@@ -153,7 +179,8 @@ export function getProjectsForUserId(userId) {
 export function getProjectAsset(req, res) {
   Project.findById(req.params.project_id)
     .populate('user', 'username')
-    .exec((err, project) => { // eslint-disable-line
+    .exec((err, project) => {
+      // eslint-disable-line
       if (err) {
         return res.status(404).send({ message: 'Project with that id does not exist' });
       }
@@ -178,16 +205,13 @@ export function getProjectAsset(req, res) {
     });
 }
 
-export function getProjectsForUserName(username) {
-
-}
+export function getProjectsForUserName(username) {}
 
 export function getProjects(req, res) {
   if (req.user) {
-    getProjectsForUserId(req.user._id)
-      .then((projects) => {
-        res.json(projects);
-      });
+    getProjectsForUserId(req.user._id).then((projects) => {
+      res.json(projects);
+    });
   } else {
     // could just move this to client side
     res.json([]);
@@ -213,9 +237,7 @@ export function getProjectsForUser(req, res) {
 }
 
 export function projectExists(projectId, callback) {
-  Project.findById(projectId, (err, project) => (
-    project ? callback(true) : callback(false)
-  ));
+  Project.findById(projectId, (err, project) => (project ? callback(true) : callback(false)));
 }
 
 export function projectForUserExists(username, projectId, callback) {
