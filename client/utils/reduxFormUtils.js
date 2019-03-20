@@ -73,7 +73,11 @@ export function validateSignup(formProps) {
     errors.confirmPassword = 'Please enter a password confirmation';
   }
 
-  if (formProps.confirmPassword && formProps.confirmPassword.length > 0 && formProps.password !== formProps.confirmPassword) {
+  if (
+    formProps.confirmPassword &&
+    formProps.confirmPassword.length > 0 &&
+    formProps.password !== formProps.confirmPassword
+  ) {
     errors.password = 'Passwords must match';
   }
 
