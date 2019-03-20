@@ -1,4 +1,4 @@
-// TODO Organize this file by reducer type, ot break this apart into
+// TODO Organize this file by reducer type, to break this apart into
 // multiple files
 export const UPDATE_FILE_CONTENT = 'UPDATE_FILE_CONTENT';
 export const TOGGLE_SKETCH = 'TOGGLE_SKETCH';
