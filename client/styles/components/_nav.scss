@@ -84,6 +84,7 @@
 	}
   z-index: 9999;
   border-radius: #{6 / $base-font-size}rem;
+  border-top-left-radius: 0px;
 }
 
 .nav__items-right {
