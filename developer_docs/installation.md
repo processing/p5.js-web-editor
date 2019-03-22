@@ -59,7 +59,7 @@ If you don't have the full server environment running, you can launch a one-off 
 
 ## S3 Bucket Configuration
 
-Note that this is optional, unless you are working on the part of the application that allows a user to upload images, videos, etc. Please refer to the folllowing [gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) to set up an S3 bucket to be used with this project.
+Note that this is optional, unless you are working on the part of the application that allows a user to upload images, videos, etc. Please refer to the following [gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) to set up an S3 bucket to be used with this project.
 
 If your S3 bucket is in the US East (N Virginia) region (us-east-1), you'll
 need to set a custom URL base for it, because it does not follow the standard
