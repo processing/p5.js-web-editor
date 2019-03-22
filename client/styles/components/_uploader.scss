@@ -1,6 +1,6 @@
 .dropzone {
   @include themify() {
-    color: getThemifyVariable('dropper-text-color');
+    color: getThemifyVariable('dropzone-text-color');
   }
 }
 
