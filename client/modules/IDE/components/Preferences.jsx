@@ -16,7 +16,6 @@ class Preferences extends React.Component {
     super(props);
     this.handleUpdateAutosave = this.handleUpdateAutosave.bind(this);
     this.handleUpdateFont = this.handleUpdateFont.bind(this);
-    this.handleUpdateIndentation = this.handleUpdateIndentation.bind(this);
     this.handleLintWarning = this.handleLintWarning.bind(this);
   }
 
@@ -32,20 +31,6 @@ class Preferences extends React.Component {
       value = 8;
     }
     this.props.setFontSize(value);
-  }
-
-  handleUpdateIndentation(event) {
-    let value = parseInt(event.target.value, 10);
-    if (Number.isNaN(value)) {
-      value = 2;
-    }
-    if (value > 6) {
-      value = 6;
-    }
-    if (value < 0) {
-      value = 0;
-    }
-    this.props.setIndentation(value);
   }
 
   handleUpdateAutosave(event) {
@@ -143,65 +128,6 @@ class Preferences extends React.Component {
                 <InlineSVG src={plusUrl} alt="Increase Font Size" />
                 <h6 className="preference__label">Increase</h6>
               </button>
-            </div>
-            <div className="preference">
-              <h4 className="preference__title">Indentation amount</h4>
-              <button
-                className="preference__minus-button"
-                onClick={() => this.props.setIndentation(this.props.indentationAmount - 2)}
-                aria-label="decrease indentation amount"
-                disabled={this.props.indentationAmount <= 0}
-              >
-                <InlineSVG src={minusUrl} alt="DecreaseIndentation Amount" />
-                <h6 className="preference__label">Decrease</h6>
-              </button>
-              <input
-                className="preference__value"
-                aria-live="polite"
-                aria-atomic="true"
-                value={this.props.indentationAmount}
-                onChange={this.handleUpdateIndentation}
-                ref={(element) => { this.indentationInput = element; }}
-                onClick={() => {
-                  this.indentationInput.select();
-                }}
-              />
-              <button
-                className="preference__plus-button"
-                onClick={() => this.props.setIndentation(this.props.indentationAmount + 2)}
-                aria-label="increase indentation amount"
-                disabled={this.props.indentationAmount >= 6}
-              >
-                <InlineSVG src={plusUrl} alt="IncreaseIndentation Amount" />
-                <h6 className="preference__label">Increase</h6>
-              </button>
-              <input
-                type="radio"
-                onChange={this.props.indentWithSpace}
-                aria-label="indentation with space"
-                name="indentation"
-                id="indentation-space"
-                className="preference__radio-button"
-                value="Spaces"
-                checked={!this.props.isTabIndent}
-              />
-              <label
-                htmlFor="indentation-space"
-                className="preference__option preference__whitespace-button"
-              >
-                Spaces
-              </label>
-              <input
-                type="radio"
-                onChange={this.props.indentWithTab}
-                aria-label="indentation with tab"
-                name="indentation"
-                id="indentation-tab"
-                className="preference__radio-button"
-                value="Tabs"
-                checked={this.props.isTabIndent}
-              />
-              <label htmlFor="indentation-tab" className="preference__option preference__whitespace-button">Tabs</label>
             </div>
             <div className="preference">
               <h4 className="preference__title">Autosave</h4>
@@ -318,11 +244,6 @@ class Preferences extends React.Component {
 
 Preferences.propTypes = {
   fontSize: PropTypes.number.isRequired,
-  indentationAmount: PropTypes.number.isRequired,
-  setIndentation: PropTypes.func.isRequired,
-  indentWithSpace: PropTypes.func.isRequired,
-  indentWithTab: PropTypes.func.isRequired,
-  isTabIndent: PropTypes.bool.isRequired,
   setFontSize: PropTypes.func.isRequired,
   autosave: PropTypes.bool.isRequired,
   setAutosave: PropTypes.func.isRequired,
