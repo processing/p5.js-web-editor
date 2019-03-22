@@ -276,6 +276,7 @@ class Preferences extends React.Component {
                   onChange={(event) => {
                     this.props.setTextOutput(event.target.checked);
                   }}
+                  onClick={this.props.clearConsole}
                   aria-label="text output on"
                   name="text output"
                   id="text-output-on"
@@ -288,6 +289,7 @@ class Preferences extends React.Component {
                   onChange={(event) => {
                     this.props.setGridOutput(event.target.checked);
                   }}
+                  onClick={this.props.clearConsole}
                   aria-label="table output on"
                   name="table output"
                   id="table-output-on"
@@ -300,6 +302,7 @@ class Preferences extends React.Component {
                   onChange={(event) => {
                     this.props.setSoundOutput(event.target.checked);
                   }}
+                  onClick={this.props.clearConsole}
                   aria-label="sound output on"
                   name="sound output"
                   id="sound-output-on"
@@ -317,6 +320,7 @@ class Preferences extends React.Component {
 }
 
 Preferences.propTypes = {
+  clearConsole: PropTypes.func.isRequired,
   fontSize: PropTypes.number.isRequired,
   indentationAmount: PropTypes.number.isRequired,
   setIndentation: PropTypes.func.isRequired,
