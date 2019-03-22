@@ -6,6 +6,7 @@ function LoginForm(props) {
   const {
     fields: { email, password }, handleSubmit, submitting, pristine
   } = props;
+
   return (
     <form className="form" onSubmit={handleSubmit(props.validateAndLoginUser.bind(this, props.previousPath))}>
       <p className="form__field">
@@ -24,11 +25,17 @@ function LoginForm(props) {
         <input
           className="form__input"
           aria-label="password"
-          type="password"
+          type={props.hidden ? "password" : "text"}
           id="password"
           {...domOnlyProps(password)}
         />
         {password.touched && password.error && <span className="form-error">{password.error}</span>}
+      </p>
+      <p>
+        <input
+          type="checkbox"
+          onChange={props.togglePassword}
+        /> Show/Hide Password
       </p>
       <input type="submit" disabled={submitting || pristine} value="Log In" aria-label="login" />
     </form>
@@ -42,6 +49,8 @@ LoginForm.propTypes = {
   }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   validateAndLoginUser: PropTypes.func.isRequired,
+  hidden: PropTypes.bool,
+  togglePassword: PropTypes.func.isRequired,
   submitting: PropTypes.bool,
   pristine: PropTypes.bool,
   invalid: PropTypes.bool,
@@ -51,7 +60,8 @@ LoginForm.propTypes = {
 LoginForm.defaultProps = {
   submitting: false,
   pristine: true,
-  invalid: false
+  invalid: false,
+  hidden: true
 };
 
 export default LoginForm;

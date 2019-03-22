@@ -16,12 +16,20 @@ const logoUrl = require('../../../images/p5js-logo.svg');
 class LoginView extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      hidden: true
+    };
     this.closeLoginPage = this.closeLoginPage.bind(this);
     this.gotoHomePage = this.gotoHomePage.bind(this);
+    this.togglePassword = this.togglePassword.bind(this);
   }
 
   closeLoginPage() {
     browserHistory.push(this.props.previousPath);
+  }
+
+  togglePassword() {
+    this.setState({ hidden: !this.state.hidden });
   }
 
   gotoHomePage() {
@@ -48,7 +56,7 @@ class LoginView extends React.Component {
         </div>
         <div className="form-container__content">
           <h2 className="form-container__title">Log In</h2>
-          <LoginForm {...this.props} />
+          <LoginForm {...this.props} togglePassword={this.togglePassword} hidden={this.state.hidden} />
           <h2 className="form-container__divider">Or</h2>
           <GithubButton buttonText="Login with Github" />
           <GoogleButton buttonText="Login with Google" />
