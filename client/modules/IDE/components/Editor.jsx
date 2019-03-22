@@ -137,9 +137,6 @@ class Editor extends React.Component {
     });
 
     this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
-    this._cm.setOption('indentWithTabs', this.props.isTabIndent);
-    this._cm.setOption('tabSize', this.props.indentationAmount);
-    this._cm.setOption('indentUnit', this.props.indentationAmount);
 
     this.props.provideController({
       tidyCode: this.tidyCode,
@@ -173,13 +170,6 @@ class Editor extends React.Component {
     }
     if (this.props.fontSize !== prevProps.fontSize) {
       this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
-    }
-    if (this.props.indentationAmount !== prevProps.indentationAmount) {
-      this._cm.setOption('tabSize', this.props.indentationAmount);
-      this._cm.setOption('indentUnit', this.props.indentationAmount);
-    }
-    if (this.props.isTabIndent !== prevProps.isTabIndent) {
-      this._cm.setOption('indentWithTabs', this.props.isTabIndent);
     }
     if (this.props.theme !== prevProps.theme) {
       this._cm.setOption('theme', `p5-${this.props.theme}`);
@@ -254,8 +244,8 @@ class Editor extends React.Component {
 
   tidyCode() {
     const beautifyOptions = {
-      indent_size: this.props.indentationAmount,
-      indent_with_tabs: this.props.isTabIndent
+      indent_size: 2,
+      indent_with_tabs: false
     };
 
     const mode = this._cm.getOption('mode');
@@ -351,8 +341,6 @@ Editor.propTypes = {
   })),
   updateLintMessage: PropTypes.func.isRequired,
   clearLintMessage: PropTypes.func.isRequired,
-  indentationAmount: PropTypes.number.isRequired,
-  isTabIndent: PropTypes.bool.isRequired,
   updateFileContent: PropTypes.func.isRequired,
   fontSize: PropTypes.number.isRequired,
   file: PropTypes.shape({
