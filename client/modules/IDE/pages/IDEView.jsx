@@ -209,7 +209,9 @@ class IDEView extends React.Component {
               isTabIndent={this.props.preferences.isTabIndent}
               setFontSize={this.props.setFontSize}
               autosave={this.props.preferences.autosave}
+              linewrap={this.props.preferences.linewrap}
               setAutosave={this.props.setAutosave}
+              setLinewrap={this.props.setLinewrap}
               lintWarning={this.props.preferences.lintWarning}
               setLintWarning={this.props.setLintWarning}
               textOutput={this.props.preferences.textOutput}
@@ -266,6 +268,7 @@ class IDEView extends React.Component {
               >
                 <Editor
                   lintWarning={this.props.preferences.lintWarning}
+                  linewrap={this.props.preferences.linewrap}
                   lintMessages={this.props.editorAccessibility.lintMessages}
                   updateLintMessage={this.props.updateLintMessage}
                   clearLintMessage={this.props.clearLintMessage}
@@ -516,6 +519,7 @@ IDEView.propTypes = {
     indentationAmount: PropTypes.number.isRequired,
     isTabIndent: PropTypes.bool.isRequired,
     autosave: PropTypes.bool.isRequired,
+    linewrap: PropTypes.bool.isRequired,
     lintWarning: PropTypes.bool.isRequired,
     textOutput: PropTypes.bool.isRequired,
     gridOutput: PropTypes.bool.isRequired,
@@ -529,6 +533,7 @@ IDEView.propTypes = {
   indentWithTab: PropTypes.func.isRequired,
   indentWithSpace: PropTypes.func.isRequired,
   setAutosave: PropTypes.func.isRequired,
+  setLinewrap: PropTypes.func.isRequired,
   setLintWarning: PropTypes.func.isRequired,
   setTextOutput: PropTypes.func.isRequired,
   setGridOutput: PropTypes.func.isRequired,

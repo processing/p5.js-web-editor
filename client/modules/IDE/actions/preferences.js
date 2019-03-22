@@ -102,6 +102,24 @@ export function setAutosave(value) {
   };
 }
 
+export function setLinewrap(value) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.SET_LINEWRAP,
+      value
+    });
+    const state = getState();
+    if (state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          linewrap: value
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
+  };
+}
+
 export function setLintWarning(value) {
   return (dispatch, getState) => {
     dispatch({

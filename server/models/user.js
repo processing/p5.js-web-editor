@@ -27,6 +27,7 @@ const userSchema = new Schema({
     indentationAmount: { type: Number, default: 2 },
     isTabIndent: { type: Boolean, default: false },
     autosave: { type: Boolean, default: true },
+    linewrap: { type: Boolean, default: false },
     lintWarning: { type: Boolean, default: false },
     textOutput: { type: Boolean, default: false },
     gridOutput: { type: Boolean, default: false },

@@ -73,6 +73,7 @@ class Editor extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.props.linewrap);
     this.beep = new Audio(beepUrl);
     this.widgets = [];
     this._cm = CodeMirror(this.codemirrorContainer, { // eslint-disable-line
@@ -80,7 +81,7 @@ class Editor extends React.Component {
       lineNumbers: true,
       styleActiveLine: true,
       inputStyle: 'contenteditable',
-      lineWrapping: false,
+      lineWrapping: this.props.linewrap,
       fixedGutter: false,
       foldGutter: true,
       foldOptions: { widget: '\u2026' },
@@ -339,6 +340,7 @@ class Editor extends React.Component {
 
 Editor.propTypes = {
   lintWarning: PropTypes.bool.isRequired,
+  linewrap: PropTypes.bool.isRequired,
   lintMessages: PropTypes.arrayOf(PropTypes.shape({
     severity: PropTypes.string.isRequired,
     line: PropTypes.number.isRequired,
