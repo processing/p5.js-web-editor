@@ -73,7 +73,6 @@ class Editor extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props.linewrap);
     this.beep = new Audio(beepUrl);
     this.widgets = [];
     this._cm = CodeMirror(this.codemirrorContainer, { // eslint-disable-line
@@ -178,6 +177,9 @@ class Editor extends React.Component {
     if (this.props.indentationAmount !== prevProps.indentationAmount) {
       this._cm.setOption('tabSize', this.props.indentationAmount);
       this._cm.setOption('indentUnit', this.props.indentationAmount);
+    }
+    if (this.props.linewrap !== prevProps.linewrap) {
+      this._cm.setOption('lineWrapping', this.props.linewrap);
     }
     if (this.props.isTabIndent !== prevProps.isTabIndent) {
       this._cm.setOption('indentWithTabs', this.props.isTabIndent);
