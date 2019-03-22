@@ -9,7 +9,7 @@ import { bindActionCreators } from 'redux';
 import * as ProjectActions from '../actions/project';
 import * as SketchActions from '../actions/projects';
 import * as ToastActions from '../actions/toast';
-import Loader from '../../../utils/loader';
+import Loader from '../../App/components/loader';
 
 const trashCan = require('../../../images/trash-can.svg');
 
@@ -26,6 +26,10 @@ class SketchList extends React.Component {
     return `p5.js Web Editor | ${this.props.username}'s sketches`;
   }
 
+  startLoader() {
+    return this.props.loading && !this.props.sketches.length && <Loader />
+  }
+
   render() {
     const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
     return (
@@ -33,7 +37,7 @@ class SketchList extends React.Component {
         <Helmet>
           <title>{this.getSketchesTitle()}</title>
         </Helmet>
-        {this.props.loading && !this.props.sketches.length && <Loader />}
+        {this.startLoader()}
         { !this.props.loading && this.props.sketches.length === 0 &&
           <p className="sketches-table__empty">No sketches.</p>
         }
