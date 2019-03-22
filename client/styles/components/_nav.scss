@@ -30,7 +30,12 @@
 
 .nav__item {
 	position: relative;
-	padding: 0 #{10 / $base-font-size}rem;
+	@media (max-width: 576px) {    
+    padding: 0 #{5 / $base-font-size}rem;
+   }
+  @media (min-width: 576px) {
+    padding: 0 #{10 / $base-font-size}rem;
+  }
   display: flex;
   align-items: center;
   justify-content: center;
@@ -38,11 +43,21 @@
 }
 
 .nav__item:first-child {
-	padding-left: #{15 / $base-font-size}rem;
+	@media (max-width: 576px) {    
+    padding: 0 #{5 / $base-font-size}rem;
+   }
+  @media (min-width: 576px) {
+    padding: 0 #{15 / $base-font-size}rem;
+  }
 }
 
 .nav__item:last-child {
-	padding-right: #{15 / $base-font-size}rem;
+	@media (max-width: 576px) {    
+    padding: 0 #{5 / $base-font-size}rem;
+   }
+  @media (min-width: 576px) {
+    padding: 0 #{15 / $base-font-size}rem;
+  }
 }
 
 .nav__item-header {
@@ -85,7 +100,12 @@
 }
 
 .nav__items-right {
-  padding-right: #{20 / $base-font-size}rem;
+  @media (max-width: 576px) {    
+    padding: 0 #{5 / $base-font-size}rem;
+   }
+  @media (min-width: 576px) {
+    padding: 0 #{20 / $base-font-size}rem;
+  }
   & .nav__dropdown {
     width: #{121 / $base-font-size}rem;
   }
@@ -205,8 +225,14 @@
 
 .nav__item-logo {
   position: relative;
+  @media (max-width: 576px) { 
+    height: #{42 / $base-font-size}rem;
+    width: #{75 / $base-font-size}rem;
+   }
+  @media (min-width: 576px) {
   height: #{42 / $base-font-size}rem;
   width: #{56 / $base-font-size}rem;
+  }
   & span {
     position: absolute;
   }
