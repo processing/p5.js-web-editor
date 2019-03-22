@@ -25,7 +25,7 @@ function LoginForm(props) {
         <input
           className="form__input"
           aria-label="password"
-          type={props.hidden ? "password" : "text"}
+          type={props.hidden ? 'password' : 'text'}
           id="password"
           {...domOnlyProps(password)}
         />
