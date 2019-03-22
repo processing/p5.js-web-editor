@@ -202,11 +202,6 @@ class IDEView extends React.Component {
           >
             <Preferences
               fontSize={this.props.preferences.fontSize}
-              indentationAmount={this.props.preferences.indentationAmount}
-              setIndentation={this.props.setIndentation}
-              indentWithSpace={this.props.indentWithSpace}
-              indentWithTab={this.props.indentWithTab}
-              isTabIndent={this.props.preferences.isTabIndent}
               setFontSize={this.props.setFontSize}
               autosave={this.props.preferences.autosave}
               setAutosave={this.props.setAutosave}
@@ -272,8 +267,6 @@ class IDEView extends React.Component {
                   file={this.props.selectedFile}
                   updateFileContent={this.props.updateFileContent}
                   fontSize={this.props.preferences.fontSize}
-                  indentationAmount={this.props.preferences.indentationAmount}
-                  isTabIndent={this.props.preferences.isTabIndent}
                   files={this.props.files}
                   editorOptionsVisible={this.props.ide.editorOptionsVisible}
                   showEditorOptions={this.props.showEditorOptions}
@@ -513,8 +506,6 @@ IDEView.propTypes = {
   clearLintMessage: PropTypes.func.isRequired,
   preferences: PropTypes.shape({
     fontSize: PropTypes.number.isRequired,
-    indentationAmount: PropTypes.number.isRequired,
-    isTabIndent: PropTypes.bool.isRequired,
     autosave: PropTypes.bool.isRequired,
     lintWarning: PropTypes.bool.isRequired,
     textOutput: PropTypes.bool.isRequired,
@@ -525,9 +516,6 @@ IDEView.propTypes = {
   }).isRequired,
   closePreferences: PropTypes.func.isRequired,
   setFontSize: PropTypes.func.isRequired,
-  setIndentation: PropTypes.func.isRequired,
-  indentWithTab: PropTypes.func.isRequired,
-  indentWithSpace: PropTypes.func.isRequired,
   setAutosave: PropTypes.func.isRequired,
   setLintWarning: PropTypes.func.isRequired,
   setTextOutput: PropTypes.func.isRequired,
