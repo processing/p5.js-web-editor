@@ -19,6 +19,7 @@ class Sidebar extends React.Component {
   }
 
   toggleProjectOptions(e) {
+    this.resetSelectedFile();
     e.preventDefault();
     if (this.props.projectOptionsVisible) {
       this.props.closeProjectOptions();
@@ -110,6 +111,7 @@ Sidebar.propTypes = {
     id: PropTypes.string.isRequired
   })).isRequired,
   setSelectedFile: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
   isExpanded: PropTypes.bool.isRequired,
   projectOptionsVisible: PropTypes.bool.isRequired,
   newFile: PropTypes.func.isRequired,

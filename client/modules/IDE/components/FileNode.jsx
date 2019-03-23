@@ -157,7 +157,7 @@ export class FileNode extends React.Component {
                   aria-label="view file options"
                   ref={(element) => { this[`fileOptions-${this.props.id}`] = element; }}
                   tabIndex="0"
-                  onClick={() => this.toggleFileOptions(this.props.id)}
+                  onClick={this.toggleFileOptions}
                 >
                   <InlineSVG src={downArrowUrl} />
                 </button>
