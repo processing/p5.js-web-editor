@@ -63,8 +63,10 @@ export class FileNode extends React.Component {
     }
   }
 
-  toggleFileOptions(e) {
-    e.preventDefault();
+  toggleFileOptions() {
+    if (this.props.fileType === 'folder') {
+      this.props.setSelectedFile(this.props.id);
+    }
     if (!this.props.canEdit) {
       return;
     }
@@ -155,7 +157,7 @@ export class FileNode extends React.Component {
                   aria-label="view file options"
                   ref={(element) => { this[`fileOptions-${this.props.id}`] = element; }}
                   tabIndex="0"
-                  onClick={this.toggleFileOptions}
+                  onClick={() => this.toggleFileOptions(this.props.id)}
                 >
                   <InlineSVG src={downArrowUrl} />
                 </button>
