@@ -13,8 +13,8 @@ require('./images/p5js-square-logo.png');
 
 const history = browserHistory;
 const initialState = window.__INITIAL_STATE__;
-// eslint-disable-next-line
-export const store = configureStore(initialState);
+
+const store = configureStore(initialState);
 
 const App = () => (
   <Provider store={store}>

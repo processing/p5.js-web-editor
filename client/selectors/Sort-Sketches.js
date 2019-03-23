@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import differenceInMilliseconds from 'date-fns/difference_in_milliseconds';
 
 const sketchListSelector = state => state.sketches;
 const orderSelector = state => state.sorting.order;
@@ -12,8 +13,8 @@ const orderListByDate = createSelector(
     const sortedList = sketchList.sort((a, b) => {
       const orderResult =
         order === 'Asc'
-          ? new Date(a[orderBy]) - new Date(b[orderBy])
-          : new Date(b[orderBy]) - new Date(a[orderBy]);
+          ? differenceInMilliseconds(new Date(a[orderBy]), new Date(b[orderBy]))
+          : differenceInMilliseconds(new Date(b[orderBy]), new Date(a[orderBy]));
       return orderResult;
     });
     return sortedList;
