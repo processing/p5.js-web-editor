@@ -9,7 +9,7 @@ import { deleteObjectsFromS3, getObjectKey } from './aws.controller';
 // https://github.com/Automattic/mongoose/issues/4049
 export async function createFile(req, res) {
   try {
-    const updatedProject = await Project.findOneAndUpdate(
+    let updatedProject = await Project.findOneAndUpdate(
       {
         _id: req.params.project_id,
         user: req.user._id
@@ -33,22 +33,18 @@ export async function createFile(req, res) {
     }
     const newFile = updatedProject.files[updatedProject.files.length - 1];
     updatedProject.files.id(req.body.parentId).children.push(newFile.id);
-    updatedProject.save(innerErr => {
-      if (innerErr) {
-        console.log(innerErr);
-        res.json({ success: false });
-        return;
-      }
+    try {
+      updatedProject = await updatedProject.save();
       res.json(updatedProject.files[updatedProject.files.length - 1]);
-    });
-  } catch (err) {
-    if (err) {
-      res.status(403).send({
-        success: false,
-        message: 'Project does not exist, or user does not match owner.'
-      });
-      return;
+    } catch (innerErr) {
+      console.log(innerErr);
+      res.json({ success: false });
     }
+  } catch (err) {
+    res.status(403).send({
+      success: false,
+      message: 'Project does not exist, or user does not match owner.'
+    });
   }
 }
 
@@ -83,14 +79,14 @@ function deleteMany(files, ids) {
       files.id(id).remove();
       cb();
     },
-    err => {
+    (err) => {
       deleteObjectsFromS3(objectKeys);
     }
   );
 }
 
 function deleteChild(files, parentId, id) {
-  return files.map(file => {
+  return files.map((file) => {
     if (file.id === parentId) {
       file.children = file.children.filter(child => child !== id);
       return file;
@@ -115,9 +111,7 @@ export async function deleteFile(req, res) {
       });
       return;
     }
-    const fileToDelete = project.files.find(
-      file => file.id === req.params.file_id
-    );
+    const fileToDelete = project.files.find(file => file.id === req.params.file_id);
     if (!fileToDelete) {
       res
         .status(404)
@@ -136,7 +130,7 @@ export async function deleteFile(req, res) {
     project = await project.save();
     res.json(project.files);
   } catch (err) {
-    // NOT SO GREAT ERROR HANDLING
+    res.status(500);
     console.log(err);
   }
 }
@@ -155,12 +149,9 @@ export async function getFileContent(req, res) {
     }
     res.send(resolvedFile.content);
   } catch (err) {
-    if (err) {
-      res.status(404).send({
-        success: false,
-        message: 'Project with that id does not exist.'
-      });
-      return;
-    }
+    res.status(404).send({
+      success: false,
+      message: 'Project with that id does not exist.'
+    });
   }
 }

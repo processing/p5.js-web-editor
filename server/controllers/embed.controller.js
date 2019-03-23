@@ -38,7 +38,6 @@ export async function serveProject(req, res) {
     });
   } catch (err) {
     get404Sketch(html => res.send(html));
-    return;
   }
 }
 
