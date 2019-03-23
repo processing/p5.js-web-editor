@@ -111,7 +111,6 @@ Sidebar.propTypes = {
     id: PropTypes.string.isRequired
   })).isRequired,
   setSelectedFile: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
   isExpanded: PropTypes.bool.isRequired,
   projectOptionsVisible: PropTypes.bool.isRequired,
   newFile: PropTypes.func.isRequired,
