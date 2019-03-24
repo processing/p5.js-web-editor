@@ -50,4 +50,6 @@
 .preview-frame__content {
   position: relative;
   flex: 1 1 0;
+  -webkit-overflow-scroll: touch;
+  overflow-y: auto;
 }

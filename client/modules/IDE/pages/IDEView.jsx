@@ -42,7 +42,14 @@ class IDEView extends React.Component {
 
     this.state = {
       consoleSize: props.ide.consoleIsExpanded ? 150 : 29,
-      sidebarSize: props.ide.sidebarIsExpanded ? 160 : 20
+      sidebarSize: props.ide.sidebarIsExpanded ? 160 : 20,
+      paneOrientation: 'vertical',
+      editorPaneResizerStyle: {
+        borderLeftWidth: '2px',
+        borderRightWidth: '2px',
+        width: '2px',
+        margin: '0px 0px',
+      },
     };
   }
 
@@ -61,6 +68,9 @@ class IDEView extends React.Component {
 
     this.isMac = navigator.userAgent.toLowerCase().indexOf('mac') !== -1;
     document.addEventListener('keydown', this.handleGlobalKeydown, false);
+
+    this.updatePaneOrientation();
+    window.addEventListener('resize', this.updatePaneOrientation.bind(this));
 
     this.props.router.setRouteLeaveHook(this.props.route, route => this.warnIfUnsavedChanges(route));
 
@@ -124,6 +134,7 @@ class IDEView extends React.Component {
 
   componentWillUnmount() {
     document.removeEventListener('keydown', this.handleGlobalKeydown, false);
+    window.removeEventListener('resize', this.updatePaneOrientation.bind(this));
     clearTimeout(this.autosaveInterval);
     this.autosaveInterval = null;
   }
@@ -180,6 +191,27 @@ class IDEView extends React.Component {
       this.props.setUnsavedChanges(false);
       return true;
     }
+  }
+
+  updatePaneOrientation() {
+    const minHorizontalWidth = 600;
+    const orientation = window.innerWidth >= minHorizontalWidth ?
+      'vertical' : 'horizontal';
+
+    this.setState({
+      paneOrientation: orientation,
+      editorPaneResizerStyle: orientation === 'vertical' ? {
+        borderLeftWidth: '2px',
+        borderRightWidth: '2px',
+        width: '2px',
+        margin: '0px 0px',
+      } : {
+        borderTopWidth: '2px',
+        borderBottomWidth: '2px',
+        height: '2px',
+        margin: '0px 0px',
+      }
+    });
   }
 
   render() {
@@ -247,13 +279,11 @@ class IDEView extends React.Component {
               owner={this.props.project.owner}
             />
             <SplitPane
-              split="vertical"
+              split={this.state.paneOrientation}
               defaultSize="50%"
               onChange={() => { this.overlay.style.display = 'block'; }}
               onDragFinished={() => { this.overlay.style.display = 'none'; }}
-              resizerStyle={{
-                borderLeftWidth: '2px', borderRightWidth: '2px', width: '2px', margin: '0px 0px'
-              }}
+              resizerStyle={this.state.editorPaneResizerStyle}
             >
               <SplitPane
                 split="horizontal"
