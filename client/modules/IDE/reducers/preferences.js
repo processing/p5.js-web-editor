@@ -5,7 +5,7 @@ const initialState = {
   indentationAmount: 2,
   isTabIndent: true,
   autosave: true,
-  linewrap: false,
+  linewrap: true,
   lintWarning: false,
   textOutput: false,
   gridOutput: false,
