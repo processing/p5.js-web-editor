@@ -50,6 +50,9 @@ const unsavedChangesDotUrl = require('../../../images/unsaved-changes-dot.svg');
 const rightArrowUrl = require('../../../images/right-arrow.svg');
 const leftArrowUrl = require('../../../images/left-arrow.svg');
 
+const IS_TAB_INDENT = false;
+const INDENTATION_AMOUNT = 2;
+
 class Editor extends React.Component {
   constructor(props) {
     super(props);
@@ -105,6 +108,7 @@ class Editor extends React.Component {
     delete this._cm.options.lint.options.errors;
 
     this._cm.setOption('extraKeys', {
+      Tab: cm => cm.replaceSelection(Array(INDENTATION_AMOUNT + 1).join(' ')),
       [`${metaKey}-Enter`]: () => null,
       [`Shift-${metaKey}-Enter`]: () => null,
       [`${metaKey}-F`]: 'findPersistent',
@@ -244,8 +248,8 @@ class Editor extends React.Component {
 
   tidyCode() {
     const beautifyOptions = {
-      indent_size: 2,
-      indent_with_tabs: false
+      indent_size: INDENTATION_AMOUNT,
+      indent_with_tabs: IS_TAB_INDENT
     };
 
     const mode = this._cm.getOption('mode');
