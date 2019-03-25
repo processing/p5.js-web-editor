@@ -105,6 +105,9 @@ export class FileNode extends React.Component {
       'sidebar__file-item--editing': this.state.isEditingName,
       'sidebar__file-item--closed': this.props.isFolderClosed
     });
+
+    let isFocused = false;
+
     return (
       <div className={itemClass}>
         {(() => { // eslint-disable-line
@@ -156,6 +159,15 @@ export class FileNode extends React.Component {
                   ref={(element) => { this[`fileOptions-${this.props.id}`] = element; }}
                   tabIndex="0"
                   onClick={this.toggleFileOptions}
+                  onBlur={() => {
+                    isFocused = false;
+                    setTimeout(() => {
+                      if (!isFocused) {
+                        this.hideFileOptions();
+                      }
+                    }, 200);
+                  }}
+                  onFocus={() => { isFocused = true; }}
                 >
                   <InlineSVG src={downArrowUrl} />
                 </button>
@@ -171,6 +183,15 @@ export class FileNode extends React.Component {
                                 this.props.newFile();
                                 setTimeout(() => this.hideFileOptions(), 0);
                               }}
+                              onBlur={() => {
+                                isFocused = false;
+                                setTimeout(() => {
+                                  if (!isFocused) {
+                                    this.hideFileOptions();
+                                  }
+                                }, 200);
+                              }}
+                              onFocus={() => { isFocused = true; }}
                               className="sidebar__file-item-option"
                             >
                               Add File
@@ -189,6 +210,15 @@ export class FileNode extends React.Component {
                                 this.props.newFolder();
                                 setTimeout(() => this.hideFileOptions(), 0);
                               }}
+                              onBlur={() => {
+                                isFocused = false;
+                                setTimeout(() => {
+                                  if (!isFocused) {
+                                    this.hideFileOptions();
+                                  }
+                                }, 200);
+                              }}
+                              onFocus={() => { isFocused = true; }}
                               className="sidebar__file-item-option"
                             >
                               Add Folder
@@ -205,6 +235,15 @@ export class FileNode extends React.Component {
                           setTimeout(() => this.fileNameInput.focus(), 0);
                           setTimeout(() => this.hideFileOptions(), 0);
                         }}
+                        onBlur={() => {
+                          isFocused = false;
+                          setTimeout(() => {
+                            if (!isFocused) {
+                              this.hideFileOptions();
+                            }
+                          }, 200);
+                        }}
+                        onFocus={() => { isFocused = true; }}
                         className="sidebar__file-item-option"
                       >
                         Rename
@@ -220,8 +259,14 @@ export class FileNode extends React.Component {
                           }
                         }}
                         onBlur={() => {
-                          setTimeout(this.hideFileOptions, 200);
+                          isFocused = false;
+                          setTimeout(() => {
+                            if (!isFocused) {
+                              this.hideFileOptions();
+                            }
+                          }, 200);
                         }}
+                        onFocus={() => { isFocused = true; }}
                         className="sidebar__file-item-option"
                       >
                         Delete

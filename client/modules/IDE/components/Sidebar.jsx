@@ -41,6 +41,7 @@ class Sidebar extends React.Component {
   }
 
   render() {
+    let isFocused = false;
     const canEditProject = this.userCanEditProject();
     const sidebarClass = classNames({
       'sidebar': true,
@@ -65,6 +66,15 @@ class Sidebar extends React.Component {
               tabIndex="0"
               ref={(element) => { this.sidebarOptions = element; }}
               onClick={this.toggleProjectOptions}
+              onBlur={() => {
+                isFocused = false;
+                setTimeout(() => {
+                  if (!isFocused) {
+                    this.props.closeProjectOptions();
+                  }
+                }, 200);
+              }}
+              onFocus={() => { isFocused = true; }}
             >
               <InlineSVG src={downArrowUrl} />
             </button>
@@ -76,6 +86,15 @@ class Sidebar extends React.Component {
                     this.props.newFolder();
                     setTimeout(this.props.closeProjectOptions, 0);
                   }}
+                  onBlur={() => {
+                    isFocused = false;
+                    setTimeout(() => {
+                      if (!isFocused) {
+                        this.props.closeProjectOptions();
+                      }
+                    }, 200);
+                  }}
+                  onFocus={() => { isFocused = true; }}
                 >
                   Add folder
                 </button>
@@ -87,7 +106,15 @@ class Sidebar extends React.Component {
                     this.props.newFile();
                     setTimeout(this.props.closeProjectOptions, 0);
                   }}
-                  onBlur={() => { setTimeout(this.props.closeProjectOptions, 200); }}
+                  onBlur={() => {
+                    isFocused = false;
+                    setTimeout(() => {
+                      if (!isFocused) {
+                        this.props.closeProjectOptions();
+                      }
+                    }, 200);
+                  }}
+                  onFocus={() => { isFocused = true; }}
                 >
                   Add file
                 </button>
