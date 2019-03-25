@@ -464,11 +464,12 @@ class Nav extends React.PureComponent {
           </li>
         </ul>
         { __process.env.LOGIN_ENABLED && !this.props.user.authenticated &&
-          <ul className="nav__items-right" title="user-menu">
+          <ul className="nav__items-right nav__items-right--logged-out" title="user-menu">
             <li className="nav__item">
               <p>
                 <Link to="/login">Log in</Link>
                 <span className="nav__item-spacer">or</span>
+                <span className="nav__item-spacer--mobile"></span>
                 <Link to="/signup">Sign up</Link>
               </p>
             </li>

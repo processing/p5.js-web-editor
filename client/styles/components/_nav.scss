@@ -86,8 +86,33 @@
 
 .nav__items-right {
   padding-right: #{20 / $base-font-size}rem;
+
+
   & .nav__dropdown {
     width: #{121 / $base-font-size}rem;
+  }
+}
+
+.nav__items-right--logged-out {
+  @media screen and (max-width: $break-small) {
+    a {
+      display: block;
+      white-space: nowrap;
+    }
+    
+    .nav__item-spacer {
+      display: none;
+    }
+
+    .nav__item-spacer--mobile {
+      @include themify() {
+        display: block;
+        margin: 1px 0;
+        width: 100%;
+        border-top: 1px solid map-get($theme-map, 'inactive-text-color');
+        height: 1px;
+      }
+    }
   }
 }
 
