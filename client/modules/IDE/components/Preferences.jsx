@@ -237,7 +237,7 @@ class Preferences extends React.Component {
               </div>
             </div>
             <div className="preference">
-              <h4 className="preference__title">Line Wrap</h4>
+              <h4 className="preference__title">Word Wrap</h4>
               <div className="preference__options">
                 <input
                   type="radio"
