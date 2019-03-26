@@ -50,6 +50,9 @@ const unsavedChangesDotUrl = require('../../../images/unsaved-changes-dot.svg');
 const rightArrowUrl = require('../../../images/right-arrow.svg');
 const leftArrowUrl = require('../../../images/left-arrow.svg');
 
+const IS_TAB_INDENT = false;
+const INDENTATION_AMOUNT = 2;
+
 class Editor extends React.Component {
   constructor(props) {
     super(props);
@@ -105,6 +108,7 @@ class Editor extends React.Component {
     delete this._cm.options.lint.options.errors;
 
     this._cm.setOption('extraKeys', {
+      Tab: cm => cm.replaceSelection(' '.repeat(INDENTATION_AMOUNT)),
       [`${metaKey}-Enter`]: () => null,
       [`Shift-${metaKey}-Enter`]: () => null,
       [`${metaKey}-F`]: 'findPersistent',
@@ -137,9 +141,6 @@ class Editor extends React.Component {
     });
 
     this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
-    this._cm.setOption('indentWithTabs', this.props.isTabIndent);
-    this._cm.setOption('tabSize', this.props.indentationAmount);
-    this._cm.setOption('indentUnit', this.props.indentationAmount);
 
     this.props.provideController({
       tidyCode: this.tidyCode,
@@ -174,15 +175,8 @@ class Editor extends React.Component {
     if (this.props.fontSize !== prevProps.fontSize) {
       this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
     }
-    if (this.props.indentationAmount !== prevProps.indentationAmount) {
-      this._cm.setOption('tabSize', this.props.indentationAmount);
-      this._cm.setOption('indentUnit', this.props.indentationAmount);
-    }
     if (this.props.linewrap !== prevProps.linewrap) {
       this._cm.setOption('lineWrapping', this.props.linewrap);
-    }
-    if (this.props.isTabIndent !== prevProps.isTabIndent) {
-      this._cm.setOption('indentWithTabs', this.props.isTabIndent);
     }
     if (this.props.theme !== prevProps.theme) {
       this._cm.setOption('theme', `p5-${this.props.theme}`);
@@ -257,8 +251,8 @@ class Editor extends React.Component {
 
   tidyCode() {
     const beautifyOptions = {
-      indent_size: this.props.indentationAmount,
-      indent_with_tabs: this.props.isTabIndent
+      indent_size: INDENTATION_AMOUNT,
+      indent_with_tabs: IS_TAB_INDENT
     };
 
     const mode = this._cm.getOption('mode');
@@ -355,8 +349,6 @@ Editor.propTypes = {
   })),
   updateLintMessage: PropTypes.func.isRequired,
   clearLintMessage: PropTypes.func.isRequired,
-  indentationAmount: PropTypes.number.isRequired,
-  isTabIndent: PropTypes.bool.isRequired,
   updateFileContent: PropTypes.func.isRequired,
   fontSize: PropTypes.number.isRequired,
   file: PropTypes.shape({
