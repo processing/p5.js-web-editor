@@ -80,7 +80,7 @@ class Editor extends React.Component {
       lineNumbers: true,
       styleActiveLine: true,
       inputStyle: 'contenteditable',
-      lineWrapping: false,
+      lineWrapping: this.props.linewrap,
       fixedGutter: false,
       foldGutter: true,
       foldOptions: { widget: '\u2026' },
@@ -177,6 +177,9 @@ class Editor extends React.Component {
     if (this.props.indentationAmount !== prevProps.indentationAmount) {
       this._cm.setOption('tabSize', this.props.indentationAmount);
       this._cm.setOption('indentUnit', this.props.indentationAmount);
+    }
+    if (this.props.linewrap !== prevProps.linewrap) {
+      this._cm.setOption('lineWrapping', this.props.linewrap);
     }
     if (this.props.isTabIndent !== prevProps.isTabIndent) {
       this._cm.setOption('indentWithTabs', this.props.isTabIndent);
@@ -339,6 +342,7 @@ class Editor extends React.Component {
 
 Editor.propTypes = {
   lintWarning: PropTypes.bool.isRequired,
+  linewrap: PropTypes.bool.isRequired,
   lintMessages: PropTypes.arrayOf(PropTypes.shape({
     severity: PropTypes.string.isRequired,
     line: PropTypes.number.isRequired,
