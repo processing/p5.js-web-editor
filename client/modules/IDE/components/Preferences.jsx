@@ -15,6 +15,7 @@ class Preferences extends React.Component {
   constructor(props) {
     super(props);
     this.handleUpdateAutosave = this.handleUpdateAutosave.bind(this);
+    this.handleUpdateLinewrap = this.handleUpdateLinewrap.bind(this);
     this.handleUpdateFont = this.handleUpdateFont.bind(this);
     this.handleLintWarning = this.handleLintWarning.bind(this);
   }
@@ -36,6 +37,11 @@ class Preferences extends React.Component {
   handleUpdateAutosave(event) {
     const value = event.target.value === 'true';
     this.props.setAutosave(value);
+  }
+
+  handleUpdateLinewrap(event) {
+    const value = event.target.value === 'true';
+    this.props.setLinewrap(value);
   }
 
   handleLintWarning(event) {
@@ -156,6 +162,33 @@ class Preferences extends React.Component {
                 <label htmlFor="autosave-off" className="preference__option">Off</label>
               </div>
             </div>
+            <div className="preference">
+              <h4 className="preference__title">Word Wrap</h4>
+              <div className="preference__options">
+                <input
+                  type="radio"
+                  onChange={() => this.props.setLinewrap(true)}
+                  aria-label="linewrap on"
+                  name="linewrap"
+                  id="linewrap-on"
+                  className="preference__radio-button"
+                  value="On"
+                  checked={this.props.linewrap}
+                />
+                <label htmlFor="linewrap-on" className="preference__option">On</label>
+                <input
+                  type="radio"
+                  onChange={() => this.props.setLinewrap(false)}
+                  aria-label="linewrap off"
+                  name="linewrap"
+                  id="linewrap-off"
+                  className="preference__radio-button"
+                  value="Off"
+                  checked={!this.props.linewrap}
+                />
+                <label htmlFor="linewrap-off" className="preference__option">Off</label>
+              </div>
+            </div>
           </TabPanel>
           <TabPanel>
             <div className="preference">
@@ -246,7 +279,9 @@ Preferences.propTypes = {
   fontSize: PropTypes.number.isRequired,
   setFontSize: PropTypes.func.isRequired,
   autosave: PropTypes.bool.isRequired,
+  linewrap: PropTypes.bool.isRequired,
   setAutosave: PropTypes.func.isRequired,
+  setLinewrap: PropTypes.func.isRequired,
   textOutput: PropTypes.bool.isRequired,
   gridOutput: PropTypes.bool.isRequired,
   soundOutput: PropTypes.bool.isRequired,

@@ -487,8 +487,8 @@ class Nav extends React.PureComponent {
                 onFocus={this.clearHideTimeout}
               >
                 My Account
+                <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
               </button>
-              <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
               <ul className="nav__dropdown">
                 <button
                   onClick={this.toggleDropdown.bind(this, 'account')}

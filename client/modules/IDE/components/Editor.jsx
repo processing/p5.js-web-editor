@@ -83,7 +83,7 @@ class Editor extends React.Component {
       lineNumbers: true,
       styleActiveLine: true,
       inputStyle: 'contenteditable',
-      lineWrapping: false,
+      lineWrapping: this.props.linewrap,
       fixedGutter: false,
       foldGutter: true,
       foldOptions: { widget: '\u2026' },
@@ -174,6 +174,9 @@ class Editor extends React.Component {
     }
     if (this.props.fontSize !== prevProps.fontSize) {
       this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
+    }
+    if (this.props.linewrap !== prevProps.linewrap) {
+      this._cm.setOption('lineWrapping', this.props.linewrap);
     }
     if (this.props.theme !== prevProps.theme) {
       this._cm.setOption('theme', `p5-${this.props.theme}`);
@@ -333,6 +336,7 @@ class Editor extends React.Component {
 
 Editor.propTypes = {
   lintWarning: PropTypes.bool.isRequired,
+  linewrap: PropTypes.bool.isRequired,
   lintMessages: PropTypes.arrayOf(PropTypes.shape({
     severity: PropTypes.string.isRequired,
     line: PropTypes.number.isRequired,

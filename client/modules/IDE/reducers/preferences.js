@@ -3,6 +3,7 @@ import * as ActionTypes from '../../../constants';
 const initialState = {
   fontSize: 18,
   autosave: true,
+  linewrap: true,
   lintWarning: false,
   textOutput: false,
   gridOutput: false,
@@ -17,6 +18,8 @@ const preferences = (state = initialState, action) => {
       return Object.assign({}, state, { fontSize: action.value });
     case ActionTypes.SET_AUTOSAVE:
       return Object.assign({}, state, { autosave: action.value });
+    case ActionTypes.SET_LINEWRAP:
+      return Object.assign({}, state, { linewrap: action.value });
     case ActionTypes.SET_LINT_WARNING:
       return Object.assign({}, state, { lintWarning: action.value });
     case ActionTypes.SET_TEXT_OUTPUT:
