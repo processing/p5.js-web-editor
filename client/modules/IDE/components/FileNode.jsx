@@ -24,10 +24,12 @@ export class FileNode extends React.Component {
     this.hideFileOptions = this.hideFileOptions.bind(this);
     this.showEditFileName = this.showEditFileName.bind(this);
     this.hideEditFileName = this.hideEditFileName.bind(this);
+    this.blurComponent = this.blurComponent.bind(this);
 
     this.state = {
       isOptionsOpen: false,
       isEditingName: false,
+      isFocused: false,
     };
   }
 
@@ -80,6 +82,15 @@ export class FileNode extends React.Component {
     this.setState({ isOptionsOpen: false });
   }
 
+  blurComponent() {
+    this.setState({ isFocused: false });
+    setTimeout(() => {
+      if (!this.state.isFocused) {
+        this.hideFileOptions();
+      }
+    }, 200);
+  }
+
   showEditFileName() {
     this.setState({ isEditingName: true });
   }
@@ -105,8 +116,6 @@ export class FileNode extends React.Component {
       'sidebar__file-item--editing': this.state.isEditingName,
       'sidebar__file-item--closed': this.props.isFolderClosed
     });
-
-    let isFocused = false;
 
     return (
       <div className={itemClass}>
@@ -159,15 +168,8 @@ export class FileNode extends React.Component {
                   ref={(element) => { this[`fileOptions-${this.props.id}`] = element; }}
                   tabIndex="0"
                   onClick={this.toggleFileOptions}
-                  onBlur={() => {
-                    isFocused = false;
-                    setTimeout(() => {
-                      if (!isFocused) {
-                        this.hideFileOptions();
-                      }
-                    }, 200);
-                  }}
-                  onFocus={() => { isFocused = true; }}
+                  onBlur={this.blurComponent}
+                  onFocus={() => { this.setState({ isFocused: true }); }}
                 >
                   <InlineSVG src={downArrowUrl} />
                 </button>
@@ -183,15 +185,8 @@ export class FileNode extends React.Component {
                                 this.props.newFile();
                                 setTimeout(() => this.hideFileOptions(), 0);
                               }}
-                              onBlur={() => {
-                                isFocused = false;
-                                setTimeout(() => {
-                                  if (!isFocused) {
-                                    this.hideFileOptions();
-                                  }
-                                }, 200);
-                              }}
-                              onFocus={() => { isFocused = true; }}
+                              onBlur={this.blurComponent}
+                              onFocus={() => { this.setState({ isFocused: true }); }}
                               className="sidebar__file-item-option"
                             >
                               Add File
@@ -210,15 +205,8 @@ export class FileNode extends React.Component {
                                 this.props.newFolder();
                                 setTimeout(() => this.hideFileOptions(), 0);
                               }}
-                              onBlur={() => {
-                                isFocused = false;
-                                setTimeout(() => {
-                                  if (!isFocused) {
-                                    this.hideFileOptions();
-                                  }
-                                }, 200);
-                              }}
-                              onFocus={() => { isFocused = true; }}
+                              onBlur={this.blurComponent}
+                              onFocus={() => { this.setState({ isFocused: true }); }}
                               className="sidebar__file-item-option"
                             >
                               Add Folder
@@ -235,15 +223,8 @@ export class FileNode extends React.Component {
                           setTimeout(() => this.fileNameInput.focus(), 0);
                           setTimeout(() => this.hideFileOptions(), 0);
                         }}
-                        onBlur={() => {
-                          isFocused = false;
-                          setTimeout(() => {
-                            if (!isFocused) {
-                              this.hideFileOptions();
-                            }
-                          }, 200);
-                        }}
-                        onFocus={() => { isFocused = true; }}
+                        onBlur={this.blurComponent}
+                        onFocus={() => { this.setState({ isFocused: true }); }}
                         className="sidebar__file-item-option"
                       >
                         Rename
@@ -258,15 +239,8 @@ export class FileNode extends React.Component {
                             setTimeout(() => this.props.deleteFile(this.props.id, this.props.parentId), 100);
                           }
                         }}
-                        onBlur={() => {
-                          isFocused = false;
-                          setTimeout(() => {
-                            if (!isFocused) {
-                              this.hideFileOptions();
-                            }
-                          }, 200);
-                        }}
-                        onFocus={() => { isFocused = true; }}
+                        onBlur={this.blurComponent}
+                        onFocus={() => { this.setState({ isFocused: true }); }}
                         className="sidebar__file-item-option"
                       >
                         Delete
