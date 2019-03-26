@@ -39,6 +39,8 @@ You'll only need to do this if you're testing the production environment locally
 8. Since production assumes your environment variables are in the shell environment, and not in a `.env` file, you will have to run `export $(grep -v '^#' .env | xargs)` or a similar command, see this [Stack Overflow answer](https://stackoverflow.com/a/20909045/4086967).
 9. `$ npm run start:prod`
 
+NOTE- Windows user should use `copy` in place of `cp` during above installation.
+
 ## Self Hosting - Heroku Deployment
 
 If you are interested in hosting and deploying your own p5.js Web Editor instance, you can! It would be the same as the official editor instance at editor.p5js.org, except with a different domain, and you would be in charge of the maintenance. We recommend using Heroku as you can host it for free.

@@ -6,14 +6,14 @@ Follow these instructions to set up your development environment, which you need
 
 1. Install [node.js](http://nodejs.org/), which also automatically installs the [npm](https://www.npmjs.org) package manager.
 2. [Fork](https://help.github.com/articles/fork-a-repo) the [p5.js Web Editor repository](https://github.com/processing/p5.js-web-editor) into your own GitHub account.
-3. [Clone](https://help.github.com/articles/cloning-a-repository/) your new fork of the repository from GitHub onto your local computer. 
+3. [Clone](https://help.github.com/articles/cloning-a-repository/) your new fork of the repository from GitHub onto your local computer.
 
    ```
    $ git clone https://github.com/YOUR_USERNAME/p5.js-web-editor.git
    ```
 
 4. Navigate into the project folder and install all its necessary dependencies with npm.
-   
+
    ```
    $ cd p5.js-web-editor
    $ npm install
@@ -28,6 +28,8 @@ Follow these instructions to set up your development environment, which you need
 10. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
 11. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
 12. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
+
+NOTE- Windows user should use `copy` in place of `cp` during above installation.
 
 ## Docker Installation
 
@@ -56,6 +58,8 @@ To open a terminal/shell in the running Docker server (i.e. after `docker-compos
 If you don't have the full server environment running, you can launch a one-off container instance (and have it automatically deleted after you're done using it):
 
 10. `$ docker-compose -f docker-compose-development.yml run app --rm bash -l`
+
+NOTE- Windows user should use `copy` in place of `cp` during above installation.
 
 ## S3 Bucket Configuration
 
