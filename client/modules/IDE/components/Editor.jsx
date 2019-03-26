@@ -108,7 +108,7 @@ class Editor extends React.Component {
     delete this._cm.options.lint.options.errors;
 
     this._cm.setOption('extraKeys', {
-      Tab: cm => cm.replaceSelection(Array(INDENTATION_AMOUNT + 1).join(' ')),
+      Tab: cm => cm.replaceSelection(' '.repeat(INDENTATION_AMOUNT)),
       [`${metaKey}-Enter`]: () => null,
       [`Shift-${metaKey}-Enter`]: () => null,
       [`${metaKey}-F`]: 'findPersistent',
