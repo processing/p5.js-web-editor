@@ -212,6 +212,7 @@
 .preference__preview-button {
   @include themify() {
     @extend %preference-option;
+    color: #ed225d;
     &:hover {
       color: getThemifyVariable('button-background-hover-color');
     }
