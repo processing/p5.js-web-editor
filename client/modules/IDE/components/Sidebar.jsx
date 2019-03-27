@@ -12,20 +12,25 @@ class Sidebar extends React.Component {
     super(props);
     this.resetSelectedFile = this.resetSelectedFile.bind(this);
     this.toggleProjectOptions = this.toggleProjectOptions.bind(this);
-    this.blurComponent = this.blurComponent.bind(this);
+    this.onBlurComponent = this.onBlurComponent.bind(this);
+    this.onFocusComponent = this.onFocusComponent.bind(this);
 
     this.state = {
       isFocused: false,
     };
   }
 
-  blurComponent() {
+  onBlurComponent() {
     this.setState({ isFocused: false });
     setTimeout(() => {
       if (!this.state.isFocused) {
         this.props.closeProjectOptions();
       }
     }, 200);
+  }
+
+  onFocusComponent() {
+    this.setState({ isFocused: true });
   }
 
   resetSelectedFile() {
@@ -79,8 +84,8 @@ class Sidebar extends React.Component {
               tabIndex="0"
               ref={(element) => { this.sidebarOptions = element; }}
               onClick={this.toggleProjectOptions}
-              onBlur={this.blurComponent}
-              onFocus={() => { this.setState({ isFocused: true }); }}
+              onBlur={this.onBlurComponent}
+              onFocus={this.onFocusComponent}
             >
               <InlineSVG src={downArrowUrl} />
             </button>
@@ -92,8 +97,8 @@ class Sidebar extends React.Component {
                     this.props.newFolder();
                     setTimeout(this.props.closeProjectOptions, 0);
                   }}
-                  onBlur={this.blurComponent}
-                  onFocus={() => { this.setState({ isFocused: true }); }}
+                  onBlur={this.onBlurComponent}
+                  onFocus={this.onFocusComponent}
                 >
                   Add folder
                 </button>
@@ -105,8 +110,8 @@ class Sidebar extends React.Component {
                     this.props.newFile();
                     setTimeout(this.props.closeProjectOptions, 0);
                   }}
-                  onBlur={this.blurComponent}
-                  onFocus={() => { this.setState({ isFocused: true }); }}
+                  onBlur={this.onBlurComponent}
+                  onFocus={this.onFocusComponent}
                 >
                   Add file
                 </button>
