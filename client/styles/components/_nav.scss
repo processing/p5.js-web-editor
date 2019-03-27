@@ -211,7 +211,13 @@
     position: absolute;
   }
 }
-
+.main__svg{
+  .main__svg-part{
+    @include themify() {
+      fill: getThemifyVariable('logo-color');
+    }
+  }
+}
 .nav__keyboard-shortcut {
   font-size: #{12 / $base-font-size}rem;
   font-family: Inconsololata, monospace;
