@@ -33,11 +33,11 @@ class Nav extends React.PureComponent {
 
   componentDidMount() {
     document.addEventListener('mousedown', this.handleClick, false);
-    document.addEventListener('keyup', this.closeDropDown, false);
+    document.addEventListener('keydown', this.closeDropDown, false);
   }
   componentWillUnmount() {
     document.removeEventListener('mousedown', this.handleClick, false);
-    document.removeEventListener('keyup', this.closeDropDown, false);
+    document.removeEventListener('keydown', this.closeDropDown, false);
   }
 
   setDropdown(dropdown) {
