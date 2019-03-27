@@ -39,7 +39,7 @@ You'll only need to do this if you're testing the production environment locally
 8. Since production assumes your environment variables are in the shell environment, and not in a `.env` file, you will have to run `export $(grep -v '^#' .env | xargs)` or a similar command, see this [Stack Overflow answer](https://stackoverflow.com/a/20909045/4086967).
 9. `$ npm run start:prod`
 
-NOTE- Windows user should use `copy` in place of `cp` during above installation.
+NOTE- Windows users should use `copy` instead of `cp` during installation.
 
 ## Self Hosting - Heroku Deployment
 
