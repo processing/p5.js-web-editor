@@ -117,7 +117,7 @@ class Nav extends React.PureComponent {
       <nav className="nav" title="main-navigation" ref={(node) => { this.node = node; }}>
         <ul className="nav__items-left" title="project-menu">
           <li className="nav__item-logo">
-            <InlineSVG src={logoUrl} alt="p5.js logo" />
+            <InlineSVG src={logoUrl} alt="p5.js logo" className="svg__logo" />
           </li>
           <li className={navDropdownState.file}>
             <button
