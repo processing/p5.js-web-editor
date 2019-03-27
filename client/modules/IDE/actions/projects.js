@@ -56,5 +56,5 @@ export function deleteProject(id) {
 }
 
 export function sortProjects(order, orderBy) {
-  return dispatch => dispatch({ type: ActionTypes.SET_SORT_PARAM, payload: { orderBy, order } });
+  return { type: ActionTypes.SET_SORT_PARAM, payload: { orderBy, order } };
 }
