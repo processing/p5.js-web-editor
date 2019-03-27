@@ -31,9 +31,24 @@
   margin-bottom: #{20 / $base-font-size}rem;
 }
 
-.new-file-form, .new-file-folder {
+.new-file-form-container, .new-file-form-extensions-container, .new-folder-form, .new-file-folder {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.new-file-form-extensions-container {
+  padding-top: #{4 / $base-font-size}rem;
+  
+  & li {
+    padding-top: #{6 / $base-font-size}rem;
+  }
+
+  & .new-file-form-extensions--active {
+    color: $dodgerblue;
+    border: 1px solid $dodgerblue;
+    border-radius: #{6 / $base-font-size}rem;
+  }
 }
 
 .new-file-form__name-label, .new-folder-form__name-label {
@@ -42,6 +57,7 @@
 
 .new-file-form__name-input, .new-folder-form__name-input {
   margin-right: #{10 / $base-font-size}rem;
+  flex: 1;
 }
 
 .modal__divider {
