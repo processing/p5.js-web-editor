@@ -28,19 +28,28 @@ class Nav extends React.PureComponent {
     this.clearHideTimeout = this.clearHideTimeout.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
+    this.closeDropDown = this.closeDropDown.bind(this);
   }
 
   componentDidMount() {
     document.addEventListener('mousedown', this.handleClick, false);
+    document.addEventListener('keyup', this.closeDropDown, false);
   }
   componentWillUnmount() {
     document.removeEventListener('mousedown', this.handleClick, false);
+    document.removeEventListener('keyup', this.closeDropDown, false);
   }
 
   setDropdown(dropdown) {
     this.setState({
       dropdownOpen: dropdown
     });
+  }
+
+  closeDropDown(e) {
+    if (e.keyCode === 27) {
+      this.setDropdown('none');
+    }
   }
 
   handleClick(e) {
@@ -481,18 +490,16 @@ class Nav extends React.PureComponent {
                 onClick={this.toggleDropdown.bind(this, 'account')}
                 onBlur={this.handleBlur}
                 onFocus={this.clearHideTimeout}
+                onMouseOver={() => {
+                  if (this.state.dropdownOpen !== 'none') {
+                    this.setDropdown('account');
+                  }
+                }}
               >
                 My Account
               </button>
               <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
               <ul className="nav__dropdown">
-                <button
-                  onClick={this.toggleDropdown.bind(this, 'account')}
-                  className="nav__dropdown-heading"
-                >
-                  <span>My Account</span>
-                  <InlineSVG src={triangleUrl} />
-                </button>
                 <li className="nav__dropdown-item">
                   <Link
                     to={`/${this.props.user.username}/sketches`}
