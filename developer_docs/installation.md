@@ -29,7 +29,7 @@ Follow these instructions to set up your development environment, which you need
 11. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
 12. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
 
-NOTE- Windows user should use `copy` in place of `cp` during above installation.
+NOTE- Windows users should use `copy` instead of `cp` during installation.
 
 ## Docker Installation
 
@@ -59,7 +59,7 @@ If you don't have the full server environment running, you can launch a one-off 
 
 10. `$ docker-compose -f docker-compose-development.yml run app --rm bash -l`
 
-NOTE- Windows user should use `copy` in place of `cp` during above installation.
+NOTE- Windows users should use `copy` instead of `cp` during installation.
 
 ## S3 Bucket Configuration
 
