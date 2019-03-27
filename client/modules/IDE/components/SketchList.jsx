@@ -26,8 +26,8 @@ class SketchList extends React.Component {
     return `p5.js Web Editor | ${this.props.username}'s sketches`;
   }
 
-  startLoader() {
-    return this.props.loading && !this.props.sketches.length && <Loader />
+  renderLoader() {
+    return this.props.loading && !this.props.sketches.length && <Loader />;
   }
 
   render() {
@@ -37,7 +37,7 @@ class SketchList extends React.Component {
         <Helmet>
           <title>{this.getSketchesTitle()}</title>
         </Helmet>
-        {this.startLoader()}
+        {this.renderLoader()}
         { !this.props.loading && this.props.sketches.length === 0 &&
           <p className="sketches-table__empty">No sketches.</p>
         }
