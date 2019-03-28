@@ -12,6 +12,25 @@ class Sidebar extends React.Component {
     super(props);
     this.resetSelectedFile = this.resetSelectedFile.bind(this);
     this.toggleProjectOptions = this.toggleProjectOptions.bind(this);
+    this.onBlurComponent = this.onBlurComponent.bind(this);
+    this.onFocusComponent = this.onFocusComponent.bind(this);
+
+    this.state = {
+      isFocused: false,
+    };
+  }
+
+  onBlurComponent() {
+    this.setState({ isFocused: false });
+    setTimeout(() => {
+      if (!this.state.isFocused) {
+        this.props.closeProjectOptions();
+      }
+    }, 200);
+  }
+
+  onFocusComponent() {
+    this.setState({ isFocused: true });
   }
 
   resetSelectedFile() {
@@ -65,6 +84,8 @@ class Sidebar extends React.Component {
               tabIndex="0"
               ref={(element) => { this.sidebarOptions = element; }}
               onClick={this.toggleProjectOptions}
+              onBlur={this.onBlurComponent}
+              onFocus={this.onFocusComponent}
             >
               <InlineSVG src={downArrowUrl} />
             </button>
@@ -76,6 +97,8 @@ class Sidebar extends React.Component {
                     this.props.newFolder();
                     setTimeout(this.props.closeProjectOptions, 0);
                   }}
+                  onBlur={this.onBlurComponent}
+                  onFocus={this.onFocusComponent}
                 >
                   Add folder
                 </button>
@@ -87,7 +110,8 @@ class Sidebar extends React.Component {
                     this.props.newFile();
                     setTimeout(this.props.closeProjectOptions, 0);
                   }}
-                  onBlur={() => { setTimeout(this.props.closeProjectOptions, 200); }}
+                  onBlur={this.onBlurComponent}
+                  onFocus={this.onFocusComponent}
                 >
                   Add file
                 </button>
