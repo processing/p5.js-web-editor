@@ -1,6 +1,6 @@
 # Preparing a pull request
 
-Copied from the [p5.js repository](https://github.com/processing/p5.js).
+Copied and updated from the [p5.js repository](https://github.com/processing/p5.js).
 
 Pull-requests are easier when your code is up to date! You can use git rebase to update your code to incorporate changes from other contributors. Here's how.
 
@@ -41,14 +41,7 @@ Then ask git about the latest changes.
     git status       
 
 ## CONFLICTS
-You will probably have some conflicts!
-If it’s just lib/p5.js and lib/p5.min.js, it’s easy to fix. just build the project again with grunt.
-
-    grunt
-    git add -u
-    git rebase --continue
-
-If you have conflicts in other files & you're not sure how to resolve them... ask for help! Lauren, David, Kevin, and Kate are familiar with recent changes and can help you figure out what's new.
+You may have some conflicts! It's okay. Feel free to ask for help. If merging with the latest upstream master causes conflicts, you can always make a pull request with the upstream repository, which makes the merge conflicts public.
 
 ## And finally, for great glory
     git push --set-upstream origin your-branch-name-backup

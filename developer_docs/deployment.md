@@ -29,7 +29,7 @@ These are the steps that happen when you deploy the application.
 
 You'll only need to do this if you're testing the production environment locally.
 
-Note: The installation steps assume you are using a Unix-like shell. If you are using Windows, you will need to use `copy` instead of `cp`.
+_Note_: The installation steps assume you are using a Unix-like shell. If you are using Windows, you will need to use `copy` instead of `cp`.
 
 1. Clone this repository and `cd` into it
 2. `$ npm install`
