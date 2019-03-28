@@ -239,6 +239,14 @@ button {
     position: absolute;
   }
 }
+.svg__logo g > path {
+  @include themify() {
+      fill: getThemifyVariable('logo-color');
+    }
+}
+.svg__logo g g:first-of-type path {
+  fill: none;
+}
 
 .nav__keyboard-shortcut {
   font-size: #{12 / $base-font-size}rem;
