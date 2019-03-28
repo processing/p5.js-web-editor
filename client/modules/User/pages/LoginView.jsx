@@ -21,7 +21,7 @@ class LoginView extends React.Component {
   }
 
   closeLoginPage() {
-    browserHistory.push(this.props.previousPath);
+    browserHistory.goBack();
   }
 
   gotoHomePage() {

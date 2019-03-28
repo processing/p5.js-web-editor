@@ -21,7 +21,7 @@ class SignupView extends React.Component {
   }
 
   closeSignupPage() {
-    browserHistory.push(this.props.previousPath);
+    browserHistory.goBack();
   }
 
   gotoHomePage() {
