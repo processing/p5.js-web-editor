@@ -29,6 +29,8 @@ These are the steps that happen when you deploy the application.
 
 You'll only need to do this if you're testing the production environment locally.
 
+Note: The installation steps assume you are using a Unix-like shell. If you are using Windows, you will need to use `copy` in place of `cp`.
+
 1. Clone this repository and `cd` into it
 2. `$ npm install`
 3. Install MongoDB and make sure it is running
@@ -38,8 +40,6 @@ You'll only need to do this if you're testing the production environment locally
 7. `$ npm run build`
 8. Since production assumes your environment variables are in the shell environment, and not in a `.env` file, you will have to run `export $(grep -v '^#' .env | xargs)` or a similar command, see this [Stack Overflow answer](https://stackoverflow.com/a/20909045/4086967).
 9. `$ npm run start:prod`
-
-NOTE- Windows users should use `copy` instead of `cp` during installation.
 
 ## Self Hosting - Heroku Deployment
 
