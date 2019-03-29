@@ -324,6 +324,7 @@ class PreviewFrame extends React.Component {
   }
 
   renderSketch() {
+    this.props.clearConsole();
     const doc = this.iframeElement;
     const localFiles = this.injectLocalFiles();
     if (this.props.isPlaying) {
@@ -358,6 +359,7 @@ class PreviewFrame extends React.Component {
 }
 
 PreviewFrame.propTypes = {
+  clearConsole: PropTypes.func.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   isAccessibleOutputPlaying: PropTypes.bool.isRequired,
   textOutput: PropTypes.bool.isRequired,
