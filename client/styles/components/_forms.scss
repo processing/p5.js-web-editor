@@ -1,10 +1,12 @@
 .form-error {
   display: block;
   padding-top: #{4 / $base-font-size}rem;
-  color: $p5js-pink;
   width: #{300 / $base-font-size}rem;
   font-size: #{9 / $base-font-size}rem;
   text-align: left;
+  @include themify() {
+    color: getThemifyVariable('logo-color');
+  }
 }
 
 .form__cancel-button {
