@@ -6,7 +6,6 @@ const __process = (typeof global !== 'undefined' ? global : window).process;
 const ROOT_URL = __process.env.API_URL;
 
 function updatePreferences(formParams, dispatch) {
-  dispatch(clearConsole());
   axios.put(`${ROOT_URL}/preferences`, formParams, { withCredentials: true })
     .then(() => {
     })

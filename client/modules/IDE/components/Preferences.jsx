@@ -56,7 +56,6 @@ class Preferences extends React.Component {
   handleLintWarning(event) {
     const value = event.target.value === 'true';
     this.props.setLintWarning(value);
-    // console.log(value);
   }
 
   render() {

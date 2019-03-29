@@ -7,8 +7,7 @@
 }
 
 .CodeMirror-linenumbers {
-  margin-left: -108px;
-  width: 10px;
+  padding-right: #{10 / $base-font-size}rem;
 }
 
 .CodeMirror-linenumber {
