@@ -1,6 +1,5 @@
 import axios from 'axios';
 import * as ActionTypes from '../../../constants';
-import { clearConsole } from './console';
 
 const __process = (typeof global !== 'undefined' ? global : window).process;
 const ROOT_URL = __process.env.API_URL;

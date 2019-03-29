@@ -330,7 +330,6 @@ class IDEView extends React.Component {
                     }
                   </div>
                   <PreviewFrame
-                    clearConsole={this.props.clearConsole}
                     htmlFile={this.props.htmlFile}
                     files={this.props.files}
                     content={this.props.selectedFile.content}
