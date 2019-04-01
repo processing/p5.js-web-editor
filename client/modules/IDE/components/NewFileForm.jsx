@@ -1,18 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { domOnlyProps } from '../../../utils/reduxFormUtils';
-
-const FILE_EXTENSIONS = [
-  'css',
-  'csv',
-  'html',
-  'js',
-  'json',
-  'markdown',
-  'svg',
-  'txt',
-  'tsv',
-];
+import { textFileExtensionsArray, TEXT_FILE_REGEX } from '../../../../server/utils/fileUtils';
 
 class NewFileForm extends React.Component {
   constructor(props) {
@@ -28,7 +17,7 @@ class NewFileForm extends React.Component {
 
   appendFileExtension(fileExtension) {
     const { fields: { name } } = this.props;
-    if (FILE_EXTENSIONS.includes(name)) {
+    if (TEXT_FILE_REGEX.test(name)) {
       // remove current extension from the current fileName
     }
     // append fileExtension to the current fileName
@@ -36,8 +25,8 @@ class NewFileForm extends React.Component {
 
   isCurrentExtension(fileExtension) {
     const { fields: { name } } = this.props;
-    const fileExtensionRegex = /(?:\.([^.]+))?$/;
-    const currentFileExtension = fileExtensionRegex.exec(name.value)[1];
+    const fileExtensionMatch = TEXT_FILE_REGEX.exec(name.value);
+    const currentFileExtension = fileExtensionMatch ? fileExtensionMatch[1] : '';
     return fileExtension === currentFileExtension;
   }
 
@@ -64,7 +53,7 @@ class NewFileForm extends React.Component {
           {name.touched && name.error && <span className="form-error">{name.error}</span>}
         </div>
         <ul className="new-file-form-extensions-container">
-          {FILE_EXTENSIONS.map(fileExtension => (
+          {textFileExtensionsArray.map(fileExtension => (
             <li>
               <button
                 onClick={() => this.appendFileExtension(fileExtension)}
