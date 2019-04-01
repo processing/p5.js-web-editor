@@ -16,16 +16,17 @@ class NewFileForm extends React.Component {
   }
 
   appendFileExtension(fileExtension) {
-    const { fields: { name } } = this.props;
-    if (TEXT_FILE_REGEX.test(name)) {
-      // remove current extension from the current fileName
+    let { fields: { name: { value: fileName } } } = this.props;
+    const { setFieldValue } = this.props;
+    if (TEXT_FILE_REGEX.test(fileName)) {
+      fileName = fileName.substr(0, fileName.lastIndexOf('.'));
     }
-    // append fileExtension to the current fileName
+    setFieldValue('name', `${fileName}.${fileExtension}`);
   }
 
   isCurrentExtension(fileExtension) {
-    const { fields: { name } } = this.props;
-    const fileExtensionMatch = TEXT_FILE_REGEX.exec(name.value);
+    const { fields: { name: { value: fileName } } } = this.props;
+    const fileExtensionMatch = TEXT_FILE_REGEX.exec(fileName);
     const currentFileExtension = fileExtensionMatch ? fileExtensionMatch[1] : '';
     return fileExtension === currentFileExtension;
   }
@@ -34,6 +35,7 @@ class NewFileForm extends React.Component {
     const { fields: { name }, handleSubmit } = this.props;
     return (
       <form
+        className="new-file-form"
         onSubmit={(data) => {
           this.props.focusOnModal();
           handleSubmit(this.createFile)(data);
@@ -75,7 +77,8 @@ NewFileForm.propTypes = {
   }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   createFile: PropTypes.func.isRequired,
-  focusOnModal: PropTypes.func.isRequired
+  focusOnModal: PropTypes.func.isRequired,
+  setFieldValue: PropTypes.func.isRequired
 };
 
 export default NewFileForm;
