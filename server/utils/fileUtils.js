@@ -5,6 +5,8 @@ export const fileExtensionsArray = ['gif', 'jpg', 'jpeg', 'png', 'bmp', 'wav', '
   'mpeg', 'mpe', 'mpv', 'js', 'jsx', 'html', 'htm', 'css', 'json', 'csv', 'obj', 'svg',
   'otf', 'ttf', 'txt', 'mov', 'vert', 'frag'];
 
+export const textFileExtensionsArray = ['json', 'txt', 'csv', 'vert', 'frag', 'js', 'css', 'html', 'htm', 'jsx'];
+
 export const mimeTypes = `image/*,audio/*,text/javascript,text/html,text/css,
 application/json,application/x-font-ttf,application/x-font-truetype,text/plain,
 text/csv,.obj,video/webm,video/ogg,video/quicktime,video/mp4`;
