@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { reduxForm } from 'redux-form';
+import { reduxForm, change } from 'redux-form';
 import classNames from 'classnames';
 import InlineSVG from 'react-inlinesvg';
 import NewFileForm from './NewFileForm';
@@ -42,6 +42,7 @@ class NewFileModal extends React.Component {
           </div>
           <NewFileForm
             focusOnModal={this.focusOnModal}
+            setFieldValue={this.props.setFieldValue}
             {...this.props}
           />
           {(() => {
@@ -63,6 +64,7 @@ class NewFileModal extends React.Component {
 
 NewFileModal.propTypes = {
   closeModal: PropTypes.func.isRequired,
+  setFieldValue: PropTypes.func.isRequired,
   canUploadMedia: PropTypes.bool.isRequired
 };
 
@@ -78,9 +80,16 @@ function validate(formProps) {
   return errors;
 }
 
+function mapDispatchToProps(dispatch) {
+  return {
+    setFieldValue: (fieldName, fieldValue) => {
+      dispatch(change('new-file', fieldName, fieldValue));
+    }
+  };
+}
 
 export default reduxForm({
   form: 'new-file',
   fields: ['name'],
-  validate
-})(NewFileModal);
+  validate,
+}, null, mapDispatchToProps)(NewFileModal);
