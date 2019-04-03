@@ -32,6 +32,22 @@ export function setProjectName(name) {
   };
 }
 
+export function projectSaveFail(error) {
+  return {
+    type: ActionTypes.PROJECT_SAVE_FAIL,
+      error
+  };
+}
+
+export function setNewProject(project) {
+  return {
+    type: ActionTypes.NEW_PROJECT,
+    project: project,
+    owner: project.user,
+    files: project.files
+  };
+}
+
 export function getProject(id) {
   return (dispatch, getState) => {
     dispatch(justOpenedProject());
@@ -66,37 +82,66 @@ export function clearPersistedState() {
   };
 }
 
+export function startSavingProject() {
+  return {
+    type: ActionTypes.START_SAVING_PROJECT
+  };
+}
+
+export function endSavingProject() {
+  return {
+    type: ActionTypes.END_SAVING_PROJECT
+  };
+}
+
+export function projectSaveSuccess() {
+  return {
+    type: ActionTypes.PROJECT_SAVE_SUCCESS
+  };
+}
+
+// want a function that will check for changes on the front end
+function checkForUnsavedChanges(currentState, responseProject) {
+  const syncedProject = Object.assign({}, savedProject);
+  const currentFiles = currentState.files.map(({ name, children, content }) => ({ name, children, content }));
+  const responseFiles = responseProject.files.map(({ name, children, content }) => ({ name, children, content }));
+  if (!isEqual(currentFiles, responseFiles)) {
+    syncedProject.files = currentState.files;
+  }
+};
+
 export function saveProject(selectedFile = null, autosave = false) {
   return (dispatch, getState) => {
     const state = getState();
+    if (state.project.isSaving) {
+      return Promise.resolve();
+    }
+    dispatch(startSavingProject());
     if (state.user.id && state.project.owner && state.project.owner.id !== state.user.id) {
       return Promise.reject();
     }
     const formParams = Object.assign({}, state.project);
     formParams.files = [...state.files];
     if (selectedFile) {
-      console.log('selected file being updated');
       const fileToUpdate = formParams.files.find(file => file.id === selectedFile.id);
       fileToUpdate.content = selectedFile.content;
     }
     if (state.project.id) {
       return axios.put(`${ROOT_URL}/projects/${state.project.id}`, formParams, { withCredentials: true })
         .then((response) => {
+          dispatch(endSavingProject());
           const currentState = getState();
           const savedProject = Object.assign({}, response.data);
-          if (!isEqual(
-            pick(currentState.files, ['name', 'children', 'content']),
-            pick(response.data.files, ['name', 'children', 'content'])
-          )) {
+          const currentFiles = currentState.files.map(({ name, children, content }) => ({ name, children, content }));
+          const responseFiles = response.data.files.map(({ name, children, content }) => ({ name, children, content }));
+          if (!isEqual(currentFiles, responseFiles)) {
             savedProject.files = currentState.files;
             dispatch(setUnsavedChanges(true));
           } else {
             dispatch(setUnsavedChanges(false));
           }
           dispatch(setProject(savedProject));
-          dispatch({
-            type: ActionTypes.PROJECT_SAVE_SUCCESS
-          });
+          dispatch(projectSaveSuccess());
           if (!autosave) {
             if (state.ide.justOpenedProject && state.preferences.autosave) {
               dispatch(showToast(5500));
@@ -110,30 +155,24 @@ export function saveProject(selectedFile = null, autosave = false) {
           }
         })
         .catch((response) => {
+          dispatch(endSavingProject());
           if (response.status === 403) {
             dispatch(showErrorModal('staleSession'));
           } else if (response.status === 409) {
             dispatch(showErrorModal('staleProject'));
           } else {
-            dispatch({
-              type: ActionTypes.PROJECT_SAVE_FAIL,
-              error: response.data
-            });
+            dispatch(projectSaveFail(response.data));
           }
         });
     }
 
     return axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
       .then((response) => {
+        dispatch(endSavingProject());
         dispatch(setUnsavedChanges(false));
         dispatch(setProject(response.data));
         browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
-        dispatch({
-          type: ActionTypes.NEW_PROJECT,
-          project: response.data,
-          owner: response.data.user,
-          files: response.data.files
-        });
+        dispatch(setNewProject(response.data));
         if (!autosave) {
           if (state.preferences.autosave) {
             dispatch(showToast(5500));
@@ -147,13 +186,11 @@ export function saveProject(selectedFile = null, autosave = false) {
         }
       })
       .catch((response) => {
+        dispatch(endSavingProject());
         if (response.status === 403) {
           dispatch(showErrorModal('staleSession'));
         } else {
-          dispatch({
-            type: ActionTypes.PROJECT_SAVE_FAIL,
-            error: response.data
-          });
+          dispatch(projectSaveFail(response.data));
         }
       });
   };
@@ -166,22 +203,24 @@ export function autosaveProject() {
 }
 
 export function createProject() {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const state = getState();
+    if (state.project.isSaving) {
+      Promise.resolve();
+      return;
+    }
+    dispatch(startSavingProject());
     axios.post(`${ROOT_URL}/projects`, {}, { withCredentials: true })
       .then((response) => {
+        dispatch(endSavingProject());
         browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
-        dispatch({
-          type: ActionTypes.NEW_PROJECT,
-          project: response.data,
-          owner: response.data.user,
-          files: response.data.files
-        });
+        dispatch(setNewProject(response.data));
         dispatch(setUnsavedChanges(false));
       })
-      .catch(response => dispatch({
-        type: ActionTypes.PROJECT_SAVE_FAIL,
-        error: response.data
-      }));
+      .catch((response) => {
+        dispatch(endSavingProject());
+        dispatch(projectSaveFail(response.data));
+      });
   };
 }
 
@@ -251,12 +290,7 @@ export function cloneProject() {
       axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
         .then((response) => {
           browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
-          dispatch({
-            type: ActionTypes.NEW_PROJECT,
-            project: response.data,
-            owner: response.data.user,
-            files: response.data.files
-          });
+          dispatch(setNewProject(response.data));
         })
         .catch(response => dispatch({
           type: ActionTypes.PROJECT_SAVE_FAIL,

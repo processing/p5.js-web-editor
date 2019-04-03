@@ -3,6 +3,7 @@ import format from 'date-fns/format';
 import isUrl from 'is-url';
 import jsdom, { serializeDocument } from 'jsdom';
 import isBefore from 'date-fns/is_before';
+import isAfter from 'date-fns/is_after';
 import request from 'request';
 import slugify from 'slugify';
 import Project from '../models/project';
@@ -43,10 +44,12 @@ export function updateProject(req, res) {
       res.status(403).send({ success: false, message: 'Session does not match owner of project.' });
       return;
     }
-    // if (req.body.updatedAt && moment(req.body.updatedAt) < moment(project.updatedAt)) {
-    //   res.status(409).send({ success: false, message: 'Attempted to save stale version of project.' });
-    //   return;
-    // }
+    console.log(req.body.updatedAt);
+    console.log(project.updatedAt);
+    if (req.body.updatedAt && isAfter(new Date(project.updatedAt), req.body.updatedAt)) {
+      res.status(409).send({ success: false, message: 'Attempted to save stale version of project.' });
+      return;
+    }
     Project.findByIdAndUpdate(
       req.params.project_id,
       {
