@@ -14,6 +14,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.setState({ isMounted: true }); // eslint-disable-line react/no-did-mount-set-state
+    document.body.className = 'light';
   }
 
   componentWillReceiveProps(nextProps) {

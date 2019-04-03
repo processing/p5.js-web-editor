@@ -51,7 +51,7 @@
 }
 
 .tooltipped-n::before,
-.tooltipped::before,
+.tooltipped::before
  {
   @include themify() {
     color: getThemifyVariable('button-background-hover-color');

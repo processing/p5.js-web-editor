@@ -55,14 +55,16 @@ class Nav extends React.PureComponent {
     this.handleFocusForHelp = this.handleFocus.bind(this, 'help');
     this.toggleDropdownForAccount = this.toggleDropdown.bind(this, 'account');
     this.handleFocusForAccount = this.handleFocus.bind(this, 'account');
+    this.closeDropDown = this.closeDropDown.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     document.addEventListener('mousedown', this.handleClick, false);
+    document.addEventListener('keydown', this.closeDropDown, false);
   }
-
   componentWillUnmount() {
     document.removeEventListener('mousedown', this.handleClick, false);
+    document.removeEventListener('keydown', this.closeDropDown, false);
   }
 
   setDropdown(dropdown) {
@@ -71,8 +73,17 @@ class Nav extends React.PureComponent {
     });
   }
 
+  closeDropDown(e) {
+    if (e.keyCode === 27) {
+      this.setDropdown('none');
+    }
+  }
+
   handleClick(e) {
-    if (this.node.contains(e.target)) {
+    if (!this.node) {
+      return;
+    }
+    if (this.node && this.node.contains(e.target)) {
       return;
     }
 
@@ -233,25 +244,23 @@ class Nav extends React.PureComponent {
       <nav className="nav" title="main-navigation" ref={(node) => { this.node = node; }}>
         <ul className="nav__items-left" title="project-menu">
           <li className="nav__item-logo">
-            <InlineSVG src={logoUrl} alt="p5.js logo" />
+            <InlineSVG src={logoUrl} alt="p5.js logo" className="svg__logo" />
           </li>
           <li className={navDropdownState.file}>
             <button
               onClick={this.toggleDropdownForFile}
               onBlur={this.handleBlur}
               onFocus={this.clearHideTimeout}
+              onMouseOver={() => {
+                if (this.state.dropdownOpen !== 'none') {
+                  this.setDropdown('file');
+                }
+              }}
             >
               <span className="nav__item-header">File</span>
               <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
             </button>
             <ul className="nav__dropdown">
-              <button
-                onClick={this.toggleDropdownForFile}
-                className="nav__dropdown-heading"
-              >
-                <span>File</span>
-                <InlineSVG src={triangleUrl} />
-              </button>
               <li className="nav__dropdown-item">
                 <button
                   onClick={this.handleNew}
@@ -331,18 +340,16 @@ class Nav extends React.PureComponent {
               onClick={this.toggleDropdownForEdit}
               onBlur={this.handleBlur}
               onFocus={this.clearHideTimeout}
+              onMouseOver={() => {
+                if (this.state.dropdownOpen !== 'none') {
+                  this.setDropdown('edit');
+                }
+              }}
             >
               <span className="nav__item-header">Edit</span>
               <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
             </button>
-            <ul className="nav__dropdown">
-              <button
-                onClick={this.toggleDropdownForEdit}
-                className="nav__dropdown-heading"
-              >
-                <span>Edit</span>
-                <InlineSVG src={triangleUrl} />
-              </button>
+            <ul className="nav__dropdown" >
               <li className="nav__dropdown-item">
                 <button
                   onClick={() => {
@@ -393,18 +400,16 @@ class Nav extends React.PureComponent {
               onClick={this.toggleDropdownForSketch}
               onBlur={this.handleBlur}
               onFocus={this.clearHideTimeout}
+              onMouseOver={() => {
+                if (this.state.dropdownOpen !== 'none') {
+                  this.setDropdown('sketch');
+                }
+              }}
             >
               <span className="nav__item-header">Sketch</span>
               <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
             </button>
             <ul className="nav__dropdown">
-              <button
-                onClick={this.toggleDropdownForSketch}
-                className="nav__dropdown-heading"
-              >
-                <span>Sketch</span>
-                <InlineSVG src={triangleUrl} />
-              </button>
               <li className="nav__dropdown-item">
                 <button
                   onClick={this.handleAddFile}
@@ -470,18 +475,16 @@ class Nav extends React.PureComponent {
               onClick={this.toggleDropdownForHelp}
               onBlur={this.handleBlur}
               onFocus={this.clearHideTimeout}
+              onMouseOver={() => {
+                if (this.state.dropdownOpen !== 'none') {
+                  this.setDropdown('help');
+                }
+              }}
             >
               <span className="nav__item-header">Help & Feedback</span>
               <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
             </button>
             <ul className="nav__dropdown">
-              <button
-                onClick={this.toggleDropdownForHelp}
-                className="nav__dropdown-heading"
-              >
-                <span>Help & Feedback</span>
-                <InlineSVG src={triangleUrl} />
-              </button>
               <li className="nav__dropdown-item">
                 <button
                   onFocus={this.handleFocusForHelp}
@@ -547,18 +550,16 @@ class Nav extends React.PureComponent {
                 onClick={this.toggleDropdownForAccount}
                 onBlur={this.handleBlur}
                 onFocus={this.clearHideTimeout}
+                onMouseOver={() => {
+                  if (this.state.dropdownOpen !== 'none') {
+                    this.setDropdown('account');
+                  }
+                }}
               >
                 My Account
+                <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
               </button>
-              <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
               <ul className="nav__dropdown">
-                <button
-                  onClick={this.toggleDropdown.bind(this, 'account')}
-                  className="nav__dropdown-heading"
-                >
-                  <span>My Account</span>
-                  <InlineSVG src={triangleUrl} />
-                </button>
                 <li className="nav__dropdown-item">
                   <Link
                     to={`/${this.props.user.username}/sketches`}
