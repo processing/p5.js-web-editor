@@ -88,7 +88,15 @@ CodeMirror.defineMode("javascript", function(config, parserConfig) {
       "applyMatrix": p5Function, "resetMatrix": p5Function, "rotate": p5Function, "scale": p5Function,
       "shearX": p5Function, "shearY": p5Function, "translate": p5Function, "textAlign": p5Function,
       "textLeading": p5Function, "textSize": p5Function, "textStyle": p5Function, "textWidth": p5Function,
-      "text": p5Function, "textFont": p5Function
+      "text": p5Function, "textFont": p5Function, "lightness": p5Function, "loadModel": p5Function,
+      "model": p5Function, "plane": p5Function, "box": p5Function, "sphere": p5Function,
+      "cylinder": p5Function, "cone": p5Function, "ellipsoid": p5Function, "torus": p5Function,
+      "pixelDensity": p5Function, "displayDensity": p5Function, "rotateX": p5Function, "rotateY": p5Function,
+      "rotateZ": p5Function, "saveCanvas": p5Function, "saveFrames": p5Function, "loadFont": p5Function,
+      "saveJSON": p5Function, "saveStrings": p5Function, "saveTable": p5Function, "camera": p5Function,
+      "perspective": p5Function, "ortho": p5Function, "ambientLight": p5Function, "directionalLight": p5Function,
+      "pointLight": p5Function, "normalMaterial": p5Function, "texture": p5Function, "square": p5Function,
+      "ambientMaterial": p5Function, "specularMaterial": p5Function, "circle": p5Function
     };
 
     var p5VariableKeywords = {
