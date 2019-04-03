@@ -448,7 +448,7 @@ class Nav extends React.PureComponent {
                   <span className="nav__keyboard-shortcut">{'\u21E7'}+{metaKeyName}+Enter</span>
                 </button>
               </li>
-              <li className="nav__dropdown-item">
+              {/* <li className="nav__dropdown-item">
                 <button
                   onClick={this.handleStartAccessible}
                   onFocus={this.handleFocusForSketch}
@@ -467,7 +467,7 @@ class Nav extends React.PureComponent {
                   Stop Accessible
                   <span className="nav__keyboard-shortcut">{'\u21E7'}+{metaKeyName}+2</span>
                 </button>
-              </li>
+              </li> */}
             </ul>
           </li>
           <li className={navDropdownState.help}>
