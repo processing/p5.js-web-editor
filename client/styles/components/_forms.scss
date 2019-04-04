@@ -4,9 +4,7 @@
   width: #{300 / $base-font-size}rem;
   font-size: #{9 / $base-font-size}rem;
   text-align: left;
-  @include themify() {
-    color: getThemifyVariable('logo-color');
-  }
+  color: red;
 }
 
 .form__cancel-button {
