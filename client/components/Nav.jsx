@@ -40,7 +40,7 @@ class Nav extends React.PureComponent {
     this.handleRun = this.handleRun.bind(this);
     this.handleFindPrevious = this.handleFindPrevious.bind(this);
     this.handleStop = this.handleStop.bind(this);
-    this.handleStartAccessible = this.handleStartAccessible.apply(this);
+    this.handleStartAccessible = this.handleStartAccessible.bind(this);
     this.handleStopAccessible = this.handleStopAccessible.bind(this);
     this.handleKeyboardShortcuts = this.handleKeyboardShortcuts.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
