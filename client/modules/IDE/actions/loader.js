@@ -5,5 +5,5 @@ export function startLoader() {
 }
 
 export function stopLoader() {
-  return { type: ActionTypes.START_LOADING };
+  return { type: ActionTypes.STOP_LOADING };
 }

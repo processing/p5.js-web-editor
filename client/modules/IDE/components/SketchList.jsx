@@ -27,7 +27,9 @@ class SketchList extends React.Component {
   }
 
   renderLoader() {
-    return this.props.loading && !this.props.sketches.length && <Loader />;
+    if (this.props.loading) return <Loader />;
+    if (!this.props.loading && this.props.sketches.length === 0) return (<p className="sketches-table__empty">No sketches.</p>);
+    return null;
   }
 
   render() {
@@ -38,10 +40,7 @@ class SketchList extends React.Component {
           <title>{this.getSketchesTitle()}</title>
         </Helmet>
         {this.renderLoader()}
-        { !this.props.loading && this.props.sketches.length === 0 &&
-          <p className="sketches-table__empty">No sketches.</p>
-        }
-        { this.props.sketches.length > 0 &&
+        {!this.props.loading && this.props.sketches.length > 0 &&
           <table className="sketches-table" summary="table containing all saved projects">
             <thead>
               <tr>
