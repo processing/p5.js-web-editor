@@ -2,7 +2,7 @@ import { browserHistory } from 'react-router';
 import axios from 'axios';
 import objectID from 'bson-objectid';
 import each from 'async/each';
-import { isEqual, pick } from 'lodash';
+import isEqual from 'lodash/isEqual';
 import * as ActionTypes from '../../../constants';
 import { showToast, setToastText } from './toast';
 import {
@@ -35,14 +35,14 @@ export function setProjectName(name) {
 export function projectSaveFail(error) {
   return {
     type: ActionTypes.PROJECT_SAVE_FAIL,
-      error
+    error
   };
 }
 
 export function setNewProject(project) {
   return {
     type: ActionTypes.NEW_PROJECT,
-    project: project,
+    project,
     owner: project.user,
     files: project.files
   };
@@ -101,14 +101,24 @@ export function projectSaveSuccess() {
 }
 
 // want a function that will check for changes on the front end
-function checkForUnsavedChanges(currentState, responseProject) {
-  const syncedProject = Object.assign({}, savedProject);
+function getSynchedProject(currentState, responseProject) {
+  let hasChanges = false;
+  const synchedProject = Object.assign({}, responseProject);
   const currentFiles = currentState.files.map(({ name, children, content }) => ({ name, children, content }));
   const responseFiles = responseProject.files.map(({ name, children, content }) => ({ name, children, content }));
   if (!isEqual(currentFiles, responseFiles)) {
-    syncedProject.files = currentState.files;
+    synchedProject.files = currentState.files;
+    hasChanges = true;
   }
-};
+  if (currentState.project.name !== responseProject.name) {
+    synchedProject.name = currentState.project.name;
+    hasChanges = true;
+  }
+  return {
+    synchedProject,
+    hasChanges
+  };
+}
 
 export function saveProject(selectedFile = null, autosave = false) {
   return (dispatch, getState) => {
@@ -130,17 +140,12 @@ export function saveProject(selectedFile = null, autosave = false) {
       return axios.put(`${ROOT_URL}/projects/${state.project.id}`, formParams, { withCredentials: true })
         .then((response) => {
           dispatch(endSavingProject());
-          const currentState = getState();
-          const savedProject = Object.assign({}, response.data);
-          const currentFiles = currentState.files.map(({ name, children, content }) => ({ name, children, content }));
-          const responseFiles = response.data.files.map(({ name, children, content }) => ({ name, children, content }));
-          if (!isEqual(currentFiles, responseFiles)) {
-            savedProject.files = currentState.files;
+          dispatch(setUnsavedChanges(false));
+          const { hasChanges, synchedProject } = getSynchedProject(getState(), response.data);
+          if (hasChanges) {
             dispatch(setUnsavedChanges(true));
-          } else {
-            dispatch(setUnsavedChanges(false));
           }
-          dispatch(setProject(savedProject));
+          dispatch(setProject(synchedProject));
           dispatch(projectSaveSuccess());
           if (!autosave) {
             if (state.ide.justOpenedProject && state.preferences.autosave) {
@@ -170,9 +175,13 @@ export function saveProject(selectedFile = null, autosave = false) {
       .then((response) => {
         dispatch(endSavingProject());
         dispatch(setUnsavedChanges(false));
-        dispatch(setProject(response.data));
         browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
-        dispatch(setNewProject(response.data));
+        const { hasChanges, synchedProject } = getSynchedProject(getState(), response.data);
+        if (hasChanges) {
+          dispatch(setUnsavedChanges(true));
+        }
+        dispatch(setNewProject(synchedProject));
+        dispatch(projectSaveSuccess());
         if (!autosave) {
           if (state.preferences.autosave) {
             dispatch(showToast(5500));
@@ -213,9 +222,13 @@ export function createProject() {
     axios.post(`${ROOT_URL}/projects`, {}, { withCredentials: true })
       .then((response) => {
         dispatch(endSavingProject());
-        browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
-        dispatch(setNewProject(response.data));
         dispatch(setUnsavedChanges(false));
+        browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
+        const { hasChanges, synchedProject } = getSynchedProject(getState(), response.data);
+        if (hasChanges) {
+          dispatch(setUnsavedChanges(true));
+        }
+        dispatch(setNewProject(synchedProject));
       })
       .catch((response) => {
         dispatch(endSavingProject());

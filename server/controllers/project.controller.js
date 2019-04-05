@@ -44,8 +44,6 @@ export function updateProject(req, res) {
       res.status(403).send({ success: false, message: 'Session does not match owner of project.' });
       return;
     }
-    console.log(req.body.updatedAt);
-    console.log(project.updatedAt);
     if (req.body.updatedAt && isAfter(new Date(project.updatedAt), req.body.updatedAt)) {
       res.status(409).send({ success: false, message: 'Attempted to save stale version of project.' });
       return;
