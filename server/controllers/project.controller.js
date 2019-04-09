@@ -53,7 +53,8 @@ export function updateProject(req, res) {
         $set: req.body
       },
       {
-        new: true
+        new: true,
+        runValidators: true
       }
     )
       .populate('user', 'username')
