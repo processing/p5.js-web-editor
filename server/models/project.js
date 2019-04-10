@@ -75,11 +75,11 @@ function projectPreUpdate(next) {
   project.name = project.name.substring(0, MAX_PROJECT_NAME_LENGTH); // Truncates project name
 
   // Truncate file names
-  project.files.forEach((ele)=>{
+  project.files.forEach((ele) => {
     const fullFileName = ele.name;
     const fileName = fullFileName.replace(/\.[^/.]+$/, '');
     const extension = fullFileName.substring(fileName.length);
-    ele.name = fileName.substring(0, MAX_FILE_NAME_LENGTH)+extension;
+    ele.name = fileName.substring(0, MAX_FILE_NAME_LENGTH) + extension;
   });
 
   return next();
@@ -87,12 +87,12 @@ function projectPreUpdate(next) {
 
 projectSchema.pre('findOneAndUpdate', projectPreUpdate);
 
-fileSchema.pre('save', function (next) {
+fileSchema.pre('save', function truncateFileName(next) {
   const file = this;
   const fullFileName = file.name;
   const fileName = fullFileName.replace(/\.[^/.]+$/, '');
   const extension = fullFileName.substring(fileName.length);
-  file.name = fileName.substring(0, MAX_FILE_NAME_LENGTH)+extension;
+  file.name = fileName.substring(0, MAX_FILE_NAME_LENGTH) + extension;
 
   return next();
 });
