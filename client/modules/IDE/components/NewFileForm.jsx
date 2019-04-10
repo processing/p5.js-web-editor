@@ -8,6 +8,10 @@ class NewFileForm extends React.Component {
     this.createFile = this.props.createFile.bind(this);
   }
 
+  componentDidMount() {
+    this.fileName.focus();
+  }
+
   render() {
     const { fields: { name }, handleSubmit } = this.props;
     return (
@@ -25,6 +29,7 @@ class NewFileForm extends React.Component {
           type="text"
           placeholder="Name"
           {...domOnlyProps(name)}
+          ref={(element) => { this.fileName = element; }}
         />
         <input type="submit" value="Add File" aria-label="add file" />
         {name.touched && name.error && <span className="form-error">{name.error}</span>}

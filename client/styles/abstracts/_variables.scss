@@ -17,6 +17,7 @@ $themes: (
   light: (
     logo-color: $p5js-pink,
     primary-text-color: #333,
+    dropzone-text-color: #333,
     modal-button-color: #333,
     heading-text-color: #333,
     secondary-text-color: #a8a8a8,
@@ -36,7 +37,7 @@ $themes: (
     modal-background-color: #f4f4f4,
     modal-button-background-color: #e6e6e6,
     modal-border-color: rgba(17, 17, 17, 0.3),
-    modal-boder-selected-color: #B9D0E1,
+    modal-border-selected-color: #B9D0E1,
     icon-color: $icon-color,
     icon-hover-color: $icon-hover-color,
     icon-toast-hover-color: $white,
@@ -65,6 +66,7 @@ $themes: (
   dark: (
     logo-color: $p5js-pink,
     primary-text-color: $white,
+    dropzone-text-color: $black,
     modal-button-color: $white,
     heading-text-color: $white,
     secondary-text-color: #DADADA,
@@ -112,6 +114,7 @@ $themes: (
   contrast: (
     logo-color: $yellow,
     primary-text-color: $yellow,
+    dropzone-text-color: $black,
     modal-button-color: #333,
     heading-text-color: #e1e1e1,
     secondary-text-color: #e1e1e1,

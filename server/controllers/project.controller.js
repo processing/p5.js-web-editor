@@ -1,11 +1,14 @@
 import archiver from 'archiver';
-import request from 'request';
-import moment from 'moment';
+import format from 'date-fns/format';
 import isUrl from 'is-url';
-import slugify from 'slugify';
 import jsdom, { serializeDocument } from 'jsdom';
+import isBefore from 'date-fns/is_before';
+import request from 'request';
+import slugify from 'slugify';
 import Project from '../models/project';
 import User from '../models/user';
+import { resolvePathToFile } from '../utils/filePath';
+import generateFileSystemSafeName from '../utils/generateFileSystemSafeName';
 import { deleteObjectsFromS3, getObjectKey } from './aws.controller';
 
 export function createProject(req, res) {
@@ -75,8 +78,9 @@ export function updateProject(req, res) {
             }
             res.json(savedProject);
           });
+        } else {
+          res.json(updatedProject);
         }
-        res.json(updatedProject);
       });
   });
 }
@@ -106,7 +110,9 @@ export function getProject(req, res) {
 function deleteFilesFromS3(files) {
   deleteObjectsFromS3(files.filter((file) => {
     if (file.url) {
-      if (!process.env.S3_DATE || (process.env.S3_DATE && moment(process.env.S3_DATE) < moment(file.createdAt))) {
+      if (!process.env.S3_DATE || (
+        process.env.S3_DATE &&
+        isBefore(new Date(process.env.S3_DATE), new Date(file.createdAt)))) {
         return true;
       }
     }
@@ -157,20 +163,15 @@ export function getProjectAsset(req, res) {
         return res.status(404).send({ message: 'Project with that id does not exist' });
       }
 
-      let assetURL = null;
-      const seekPath = req.params[0]; // req.params.asset_path;
-      const seekPathSplit = seekPath.split('/');
-      const seekFilename = seekPathSplit[seekPathSplit.length - 1];
-      project.files.forEach((file) => {
-        if (file.name === seekFilename) {
-          assetURL = file.url;
-        }
-      });
-
-      if (!assetURL) {
+      const filePath = req.params[0];
+      const resolvedFile = resolvePathToFile(filePath, project.files);
+      if (!resolvedFile) {
         return res.status(404).send({ message: 'Asset does not exist' });
       }
-      request({ method: 'GET', url: assetURL, encoding: null }, (innerErr, response, body) => {
+      if (!resolvedFile.url) {
+        return res.send(resolvedFile.content);
+      }
+      request({ method: 'GET', url: resolvedFile.url, encoding: null }, (innerErr, response, body) => {
         if (innerErr) {
           return res.status(404).send({ message: 'Asset does not exist' });
         }
@@ -293,9 +294,9 @@ function buildZip(project, req, res) {
     res.status(500).send({ error: err.message });
   });
 
-  const currentTime = moment().format('YYYY_MM_DD_HH_mm_ss');
+  const currentTime = format(new Date(), 'YYYY_MM_DD_HH_mm_ss');
   project.slug = slugify(project.name, '_');
-  res.attachment(`${project.slug}_${currentTime}.zip`);
+  res.attachment(`${generateFileSystemSafeName(project.slug)}_${currentTime}.zip`);
   zip.pipe(res);
 
   function addFileToZip(file, path) {

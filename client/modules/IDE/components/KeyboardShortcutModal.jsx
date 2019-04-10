@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  metaKeyName,
-} from '../../../utils/metaKey';
+import { metaKeyName, } from '../../../utils/metaKey';
 
 function KeyboardShortcutModal() {
   return (

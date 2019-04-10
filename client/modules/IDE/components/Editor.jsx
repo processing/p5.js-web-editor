@@ -32,9 +32,7 @@ import '../../../utils/p5-javascript';
 import '../../../utils/webGL-clike';
 import Timer from '../components/Timer';
 import EditorAccessibility from '../components/EditorAccessibility';
-import {
-  metaKey,
-} from '../../../utils/metaKey';
+import { metaKey, } from '../../../utils/metaKey';
 
 import search from '../../../utils/codemirror-search';
 
@@ -51,6 +49,9 @@ const beepUrl = require('../../../sounds/audioAlert.mp3');
 const unsavedChangesDotUrl = require('../../../images/unsaved-changes-dot.svg');
 const rightArrowUrl = require('../../../images/right-arrow.svg');
 const leftArrowUrl = require('../../../images/left-arrow.svg');
+
+const IS_TAB_INDENT = false;
+const INDENTATION_AMOUNT = 2;
 
 class Editor extends React.Component {
   constructor(props) {
@@ -71,6 +72,7 @@ class Editor extends React.Component {
     this.showFind = this.showFind.bind(this);
     this.findNext = this.findNext.bind(this);
     this.findPrev = this.findPrev.bind(this);
+    this.getContent = this.getContent.bind(this);
   }
 
   componentDidMount() {
@@ -81,7 +83,7 @@ class Editor extends React.Component {
       lineNumbers: true,
       styleActiveLine: true,
       inputStyle: 'contenteditable',
-      lineWrapping: false,
+      lineWrapping: this.props.linewrap,
       fixedGutter: false,
       foldGutter: true,
       foldOptions: { widget: '\u2026' },
@@ -98,7 +100,7 @@ class Editor extends React.Component {
           'asi': true,
           'eqeqeq': false,
           '-W041': false,
-          'esversion': 6
+          'esversion': 7
         }
       }
     });
@@ -106,6 +108,7 @@ class Editor extends React.Component {
     delete this._cm.options.lint.options.errors;
 
     this._cm.setOption('extraKeys', {
+      Tab: cm => cm.replaceSelection(' '.repeat(INDENTATION_AMOUNT)),
       [`${metaKey}-Enter`]: () => null,
       [`Shift-${metaKey}-Enter`]: () => null,
       [`${metaKey}-F`]: 'findPersistent',
@@ -118,7 +121,7 @@ class Editor extends React.Component {
 
     this._cm.on('change', debounce(() => {
       this.props.setUnsavedChanges(true);
-      this.props.updateFileContent(this.props.file.name, this._cm.getValue());
+      this.props.updateFileContent(this.props.file.id, this._cm.getValue());
       if (this.props.autorefresh && this.props.isPlaying) {
         this.props.clearConsole();
         this.props.startRefreshSketch();
@@ -138,15 +141,13 @@ class Editor extends React.Component {
     });
 
     this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
-    this._cm.setOption('indentWithTabs', this.props.isTabIndent);
-    this._cm.setOption('tabSize', this.props.indentationAmount);
-    this._cm.setOption('indentUnit', this.props.indentationAmount);
 
     this.props.provideController({
       tidyCode: this.tidyCode,
       showFind: this.showFind,
       findNext: this.findNext,
-      findPrev: this.findPrev
+      findPrev: this.findPrev,
+      getContent: this.getContent
     });
   }
 
@@ -174,12 +175,8 @@ class Editor extends React.Component {
     if (this.props.fontSize !== prevProps.fontSize) {
       this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
     }
-    if (this.props.indentationAmount !== prevProps.indentationAmount) {
-      this._cm.setOption('tabSize', this.props.indentationAmount);
-      this._cm.setOption('indentUnit', this.props.indentationAmount);
-    }
-    if (this.props.isTabIndent !== prevProps.isTabIndent) {
-      this._cm.setOption('indentWithTabs', this.props.isTabIndent);
+    if (this.props.linewrap !== prevProps.linewrap) {
+      this._cm.setOption('lineWrapping', this.props.linewrap);
     }
     if (this.props.theme !== prevProps.theme) {
       this._cm.setOption('theme', `p5-${this.props.theme}`);
@@ -194,10 +191,15 @@ class Editor extends React.Component {
     if (this.props.runtimeErrorWarningVisible && this._cm.getDoc().modeOption === 'javascript') {
       this.props.consoleEvents.forEach((consoleEvent) => {
         if (consoleEvent.method === 'error') {
-          if (consoleEvent.data[0].indexOf(')') > -1) {
+          if (consoleEvent.data &&
+            consoleEvent.data[0] &&
+            consoleEvent.data[0].indexOf &&
+            consoleEvent.data[0].indexOf(')') > -1) {
             const n = consoleEvent.data[0].replace(')', '').split(' ');
             const lineNumber = parseInt(n[n.length - 1], 10) - 1;
-            this._cm.addLineClass(lineNumber, 'background', 'line-runtime-error');
+            if (!Number.isNaN(lineNumber)) {
+              this._cm.addLineClass(lineNumber, 'background', 'line-runtime-error');
+            }
           }
         }
       });
@@ -227,19 +229,30 @@ class Editor extends React.Component {
     return mode;
   }
 
-  initializeDocuments(files) {
-    this._docs = {};
-    files.forEach((file) => {
-      if (file.name !== 'root') {
-        this._docs[file.id] = CodeMirror.Doc(file.content, this.getFileMode(file.name)); // eslint-disable-line
-      }
-    });
+  getContent() {
+    const content = this._cm.getValue();
+    const updatedFile = Object.assign({}, this.props.file, { content });
+    return updatedFile;
+  }
+
+  findPrev() {
+    this._cm.focus();
+    this._cm.execCommand('findPrev');
+  }
+
+  findNext() {
+    this._cm.focus();
+    this._cm.execCommand('findNext');
+  }
+
+  showFind() {
+    this._cm.execCommand('findPersistent');
   }
 
   tidyCode() {
     const beautifyOptions = {
-      indent_size: this.props.indentationAmount,
-      indent_with_tabs: this.props.isTabIndent
+      indent_size: INDENTATION_AMOUNT,
+      indent_with_tabs: IS_TAB_INDENT
     };
 
     const mode = this._cm.getOption('mode');
@@ -252,18 +265,13 @@ class Editor extends React.Component {
     }
   }
 
-  showFind() {
-    this._cm.execCommand('findPersistent');
-  }
-
-  findNext() {
-    this._cm.focus();
-    this._cm.execCommand('findNext');
-  }
-
-  findPrev() {
-    this._cm.focus();
-    this._cm.execCommand('findPrev');
+  initializeDocuments(files) {
+    this._docs = {};
+    files.forEach((file) => {
+      if (file.name !== 'root') {
+        this._docs[file.id] = CodeMirror.Doc(file.content, this.getFileMode(file.name)); // eslint-disable-line
+      }
+    });
   }
 
   toggleEditorOptions() {
@@ -328,6 +336,7 @@ class Editor extends React.Component {
 
 Editor.propTypes = {
   lintWarning: PropTypes.bool.isRequired,
+  linewrap: PropTypes.bool.isRequired,
   lintMessages: PropTypes.arrayOf(PropTypes.shape({
     severity: PropTypes.string.isRequired,
     line: PropTypes.number.isRequired,
@@ -340,8 +349,6 @@ Editor.propTypes = {
   })),
   updateLintMessage: PropTypes.func.isRequired,
   clearLintMessage: PropTypes.func.isRequired,
-  indentationAmount: PropTypes.number.isRequired,
-  isTabIndent: PropTypes.bool.isRequired,
   updateFileContent: PropTypes.func.isRequired,
   fontSize: PropTypes.number.isRequired,
   file: PropTypes.shape({

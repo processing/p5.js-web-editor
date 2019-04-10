@@ -20,12 +20,18 @@ class ShareModal extends React.PureComponent {
           value={`<iframe src="${hostname}/${ownerUsername}/embed/${projectId}"></iframe>`}
         />
         <CopyableInput
+          label="Present"
+          hasPreviewLink
+          value={`${hostname}/${ownerUsername}/present/${projectId}`}
+        />
+        <CopyableInput
           label="Fullscreen"
           hasPreviewLink
           value={`${hostname}/${ownerUsername}/full/${projectId}`}
         />
         <CopyableInput
           label="Edit"
+          hasPreviewLink
           value={`${hostname}/${ownerUsername}/sketches/${projectId}`}
         />
       </div>

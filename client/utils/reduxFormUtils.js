@@ -64,12 +64,17 @@ export function validateSignup(formProps) {
   if (!formProps.password) {
     errors.password = 'Please enter a password';
   }
+  if (formProps.password) {
+    if (formProps.password.length < 6) {
+      errors.password = 'Password must be at least 6 characters';
+    }
+  }
   if (!formProps.confirmPassword) {
     errors.confirmPassword = 'Please enter a password confirmation';
   }
 
-  if (formProps.password !== formProps.confirmPassword) {
-    errors.password = 'Passwords must match';
+  if (formProps.password !== formProps.confirmPassword && formProps.confirmPassword) {
+    errors.confirmPassword = 'Passwords must match';
   }
 
   return errors;
