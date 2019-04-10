@@ -16,10 +16,9 @@
     "test:ci": "npm run lint",
     "fetch-examples": "cross-env NODE_ENV=development node ./server/scripts/fetch-examples.js",
     "fetch-examples-gg": "cross-env NODE_ENV=development node ./server/scripts/fetch-examples-gg.js",
-    "fetch-examples-ml5": "cross-env NODE_ENV=development node ./server/scripts/fetch-examples-ml5.js",
+    "fetch-examples-ml5": "cross-env NODE_ENV=production node ./dist/fetch-examples-ml5.bundle.js",
     "fetch-examples:prod": "cross-env NODE_ENV=production node ./dist/fetch-examples.bundle.js",
     "fetch-examples-gg:prod": "cross-env NODE_ENV=production node ./dist/fetch-examples-gg.bundle.js",
-    "fetch-examples-ml5": "cross-env NODE_ENV=production node ./dist/fetch-examples-ml5.bundle.js",
     "heroku-postbuild": "touch .env; npm run build"
   },
   "jest": {
