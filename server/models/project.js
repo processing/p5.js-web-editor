@@ -4,6 +4,8 @@ import slugify from 'slugify';
 
 const { Schema } = mongoose;
 
+const MAX_PROJECT_NAME_LENGTH = 256;
+const MAX_FILE_NAME_LENGTH = 256;
 
 const fileNameValidator = (file) => {
   const fileName = file.replace(/\.[^/.]+$/, ''); // Removes the extension from the fileName
@@ -19,15 +21,13 @@ const fileSchema = new Schema(
     name: {
       type: String,
       default: 'sketch.js',
-      minlength: 1,
-      maxlength: 256,
       validate: [fileNameValidator, 'File Name Validation Failed!']
     },
     content: { type: String, default: '' },
     url: { type: String },
     children: { type: [String], default: [] },
     fileType: { type: String, default: 'file' },
-    isSelectedFile: { type: Boolean },
+    isSelectedFile: { type: Boolean }
   },
   { timestamps: true, _id: true, usePushEach: true }
 );
@@ -43,7 +43,7 @@ fileSchema.set('toJSON', {
 const projectSchema = new Schema(
   {
     name: {
-      type: String, default: "Hello p5.js, it's the server", minlength: 1, maxlength: 256
+      type: String, default: "Hello p5.js, it's the server"
     },
     user: { type: Schema.Types.ObjectId, ref: 'User' },
     serveSecure: { type: Boolean, default: false },
@@ -64,10 +64,35 @@ projectSchema.set('toJSON', {
 
 projectSchema.pre('save', function generateSlug(next) {
   const project = this;
-  const MAX_PROJECT_LENGTH = 256;
-
   project.slug = slugify(project.name, '_');
-  project.name = project.name.substring(0, MAX_PROJECT_LENGTH);
+  project.name = project.name.substring(0, MAX_PROJECT_NAME_LENGTH); // Truncates project name
+
+  return next();
+});
+
+function projectPreUpdate(next) {
+  const project = this._update.$set;
+  project.name = project.name.substring(0, MAX_PROJECT_NAME_LENGTH); // Truncates project name
+
+  // Truncate file names
+  project.files.forEach((ele)=>{
+    const fullFileName = ele.name;
+    const fileName = fullFileName.replace(/\.[^/.]+$/, '');
+    const extension = fullFileName.substring(fileName.length);
+    ele.name = fileName.substring(0, MAX_FILE_NAME_LENGTH)+extension;
+  });
+
+  return next();
+}
+
+projectSchema.pre('findOneAndUpdate', projectPreUpdate);
+
+fileSchema.pre('save', function (next) {
+  const file = this;
+  const fullFileName = file.name;
+  const fileName = fullFileName.replace(/\.[^/.]+$/, '');
+  const extension = fullFileName.substring(fileName.length);
+  file.name = fileName.substring(0, MAX_FILE_NAME_LENGTH)+extension;
 
   return next();
 });
