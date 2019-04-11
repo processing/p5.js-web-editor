@@ -32,58 +32,6 @@ export function setFontSize(value) {
   };
 }
 
-export function setIndentation(value) {
-  return (dispatch, getState) => {
-    dispatch({
-      type: ActionTypes.SET_INDENTATION,
-      value
-    });
-    const state = getState();
-    if (state.user.authenticated) {
-      const formParams = {
-        preferences: {
-          indentationAmount: value
-        }
-      };
-      updatePreferences(formParams, dispatch);
-    }
-  };
-}
-
-export function indentWithTab() {
-  return (dispatch, getState) => {
-    dispatch({
-      type: ActionTypes.INDENT_WITH_TAB
-    });
-    const state = getState();
-    if (state.user.authenticated) {
-      const formParams = {
-        preferences: {
-          isTabIndent: true
-        }
-      };
-      updatePreferences(formParams, dispatch);
-    }
-  };
-}
-
-export function indentWithSpace() {
-  return (dispatch, getState) => {
-    dispatch({
-      type: ActionTypes.INDENT_WITH_SPACE
-    });
-    const state = getState();
-    if (state.user.authenticated) {
-      const formParams = {
-        preferences: {
-          isTabIndent: false
-        }
-      };
-      updatePreferences(formParams, dispatch);
-    }
-  };
-}
-
 export function setAutosave(value) {
   return (dispatch, getState) => {
     dispatch({
@@ -95,6 +43,24 @@ export function setAutosave(value) {
       const formParams = {
         preferences: {
           autosave: value
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
+  };
+}
+
+export function setLinewrap(value) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.SET_LINEWRAP,
+      value
+    });
+    const state = getState();
+    if (state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          linewrap: value
         }
       };
       updatePreferences(formParams, dispatch);

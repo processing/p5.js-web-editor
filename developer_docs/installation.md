@@ -4,16 +4,18 @@ Follow these instructions to set up your development environment, which you need
 
 ## Manual Installation
 
+_Note_: The installation steps assume you are using a Unix-like shell. If you are using Windows, you will need to use `copy` instead of `cp`.
+
 1. Install [node.js](http://nodejs.org/), which also automatically installs the [npm](https://www.npmjs.org) package manager.
 2. [Fork](https://help.github.com/articles/fork-a-repo) the [p5.js Web Editor repository](https://github.com/processing/p5.js-web-editor) into your own GitHub account.
-3. [Clone](https://help.github.com/articles/cloning-a-repository/) your new fork of the repository from GitHub onto your local computer. 
+3. [Clone](https://help.github.com/articles/cloning-a-repository/) your new fork of the repository from GitHub onto your local computer.
 
    ```
    $ git clone https://github.com/YOUR_USERNAME/p5.js-web-editor.git
    ```
 
 4. Navigate into the project folder and install all its necessary dependencies with npm.
-   
+
    ```
    $ cd p5.js-web-editor
    $ npm install
@@ -30,6 +32,8 @@ Follow these instructions to set up your development environment, which you need
 12. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
 
 ## Docker Installation
+
+_Note_: The installation steps assume you are using a Unix-like shell. If you are using Windows, you will need to use `copy` instead of `cp`.
 
 Using Docker, you can have a complete, consistent development environment without having to manually install dependencies such as Node, Mongo, etc. It also helps isolate these dependencies and their data from other projects that you may have on the same computer that use different/conflicting versions, etc.
 
