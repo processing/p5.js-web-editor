@@ -37,3 +37,15 @@
   cursor: pointer;
   padding: 0;
 }
+
+@mixin media-breakpoint-up($screen) {
+  @media only screen and (min-width: $screen + 'px') {
+    @content;
+  }
+}
+
+@mixin media-breakpoint-down($screen) {
+  @media only screen and (max-width: $screen + 'px') {
+    @content;
+  }
+}

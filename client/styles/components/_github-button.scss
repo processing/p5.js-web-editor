@@ -12,7 +12,11 @@
       border-color: getThemifyVariable('secondary-text-color');
     }
   }
-  width: #{300 / $base-font-size}rem;
+  width:95%;
+  max-width: #{300 / $base-font-size}rem;
+  @include media-breakpoint-up($sm) {
+    width: #{300 / $base-font-size}rem;
+  }
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,6 +24,7 @@
 
 .github-icon {
   margin-right: #{10 / $base-font-size}rem;
+  display: flex;
 }
 
 
@@ -42,7 +47,11 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  width: #{300 / $base-font-size}rem;
+  width:95%;
+  max-width: #{300 / $base-font-size}rem;
+  @include media-breakpoint-up($sm) {
+    width: #{300 / $base-font-size}rem;
+  }
 }
 
 .google-icon {

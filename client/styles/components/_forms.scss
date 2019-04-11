@@ -1,3 +1,10 @@
+.form {
+  width:90%;
+  @include media-breakpoint-up($sm) {
+    width:auto;
+  }
+}
+
 .form-error {
   display: block;
   padding-top: #{4 / $base-font-size}rem;
@@ -27,7 +34,12 @@
 }
 
 .form__input {
-  width: #{360 / $base-font-size}rem;
+  // position: relative;
+  width:100%;
+  max-width: #{360 / $base-font-size}rem;
+  @include media-breakpoint-up($sm) {
+    width: #{360 / $base-font-size}rem;
+  }
   height: #{40 / $base-font-size}rem;
   color: $icon-hover-color;
   border-color: $secondary-form-title-color;
@@ -44,6 +56,9 @@
 
 .form input[type="submit"] {
   @extend %forms-button;
+  @include media-breakpoint-up($sm) {
+    margin: #{39 / $base-font-size}rem 0 #{24 / $base-font-size}rem 0;
+  }
 }
 
 .form input[type="submit"]:disabled {

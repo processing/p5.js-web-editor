@@ -1,6 +1,6 @@
 .form-container {
 	text-align: center;
-	height: 100%;
+	min-height: #{556 / $base-font-size}rem;
 	display: flex;
 	flex-direction: column;
   align-items: center;
@@ -19,6 +19,10 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	width:95%;
+	@include media-breakpoint-up($sm) {
+		width:auto;
+  }
 }
 
 .form-container__title {
