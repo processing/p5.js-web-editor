@@ -33,7 +33,6 @@ const requestOptions = {
 }
 
 const mongoConnectionString = process.env.MONGO_URL;
-
 mongoose.connect(mongoConnectionString, {
   useMongoClient: true
 });
@@ -112,6 +111,8 @@ async function test() {
   const formattedSketchList = formatSketchForStorageAll(examplesWithResourceTree, user)
   const filledProjectList = await fetchSketchContentAll(formattedSketchList)
   await createProjectsInP5User(filledProjectList, user)
+  console.log('done!')
+  return {message:'finished'}
 }
 
 /**
@@ -211,6 +212,7 @@ async function traverseSketchTreeAll(categoryExamples) {
 }
 
 /**
+ * STEP 4
  * Take a parent directory and prepare it for injestion!
  * @param {*} sketch 
  * @param {*} user 
@@ -358,6 +360,7 @@ function traverseAndFlatten(projectFileTree) {
 }
 
 /**
+ * STEP 5
  * Get all the content for the relevant files in project.files[] for all sketches
  * @param {*} formattedSketchList 
  */
@@ -412,6 +415,7 @@ async function fetchSketchContent(projectObject){
 }
 
 /**
+ * STEP 6
  * Remove existing projects, then fill the db
  * @param {*} filledProjectList 
  * @param {*} user 
