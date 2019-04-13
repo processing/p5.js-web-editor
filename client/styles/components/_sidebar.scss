@@ -162,7 +162,6 @@
   right: #{0 / $base-font-size}rem;
   display: none;
   z-index: 100;
-  padding: #{8 / $base-font-size}rem #{16 / $base-font-size}rem;
   .sidebar__file-item--open > .file-item__content & {
     display: block;
   }
@@ -293,9 +292,25 @@
   }
   background-color: transparent;
   border: none;
+  padding: #{8 / $base-font-size}rem #{16 / $base-font-size}rem;
 }
 
 
 .sidebar__file-item--closed .file-item__children {
   display: none;
+}
+.sidebar__project-option{
+  height: auto;
+  padding: 0;
+  &:hover {
+    @include themify() {
+      background-color: getThemifyVariable('button-background-hover-color');
+      color: getThemifyVariable('button-hover-color')
+    }
+    & button, & a {
+      @include themify() {
+        color: getThemifyVariable('button-hover-color');
+      }
+    }
+  }
 }
