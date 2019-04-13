@@ -2,6 +2,8 @@ import { browserHistory } from 'react-router';
 import axios from 'axios';
 import * as ActionTypes from '../../constants';
 import { showErrorModal, justOpenedProject } from '../IDE/actions/ide';
+import { showToast, setToastText } from '../IDE/actions/toast';
+
 
 const __process = (typeof global !== 'undefined' ? global : window).process;
 const ROOT_URL = __process.env.API_URL;
@@ -211,6 +213,8 @@ export function updateSettings(formValues) {
       .then((response) => {
         dispatch(updateSettingsSuccess(response.data));
         browserHistory.push('/');
+        dispatch(showToast(5500));
+        dispatch(setToastText('Settings saved.'));
       })
       .catch(response => Promise.reject(new Error(response.data.error)));
 }
