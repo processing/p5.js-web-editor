@@ -300,8 +300,6 @@
   display: none;
 }
 .sidebar__project-option{
-  height: auto;
-  padding: 0;
   &:hover {
     @include themify() {
       background-color: getThemifyVariable('button-background-hover-color');
