@@ -174,13 +174,17 @@ export function saveProject(selectedFile = null, autosave = false) {
     return axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
       .then((response) => {
         dispatch(endSavingProject());
-        dispatch(setUnsavedChanges(false));
-        browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
         const { hasChanges, synchedProject } = getSynchedProject(getState(), response.data);
         if (hasChanges) {
+          dispatch(setNewProject(synchedProject));
+          dispatch(setUnsavedChanges(false));
+          browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
           dispatch(setUnsavedChanges(true));
+        } else {
+          dispatch(setNewProject(synchedProject));
+          dispatch(setUnsavedChanges(false));
+          browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
         }
-        dispatch(setNewProject(synchedProject));
         dispatch(projectSaveSuccess());
         if (!autosave) {
           if (state.preferences.autosave) {
