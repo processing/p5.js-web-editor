@@ -14,7 +14,7 @@ class NewFolderForm extends React.Component {
 
   render() {
     const {
-      fields: { name }, handleSubmit
+      fields: { name }, handleSubmit, submitting, pristine
     } = this.props;
     return (
       <form
@@ -34,7 +34,7 @@ class NewFolderForm extends React.Component {
           ref={(element) => { this.fileName = element; }}
           {...domOnlyProps(name)}
         />
-        <input type="submit" value="Add Folder" aria-label="add folder" />
+        <input type="submit" value="Add Folder" disabled={submitting || pristine} aria-label="add folder" />
         {name.touched && name.error && <span className="form-error">{name.error}</span>}
       </form>
     );
