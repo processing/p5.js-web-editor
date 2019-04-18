@@ -173,6 +173,14 @@ class IDEView extends React.Component {
       // don't warn
       this.props.persistState();
       window.onbeforeunload = null;
+    } else if (route && (/[\S]*\/sketches\/?$/.test(route.pathname))) {
+      // don't warn
+      this.props.persistState();
+      window.onbeforeunload = null;
+    } else if (route && (route.pathname === this.props.ide.previousPath)) {
+      // don't warn
+      this.props.persistState();
+      window.onbeforeunload = null;
     } else if (this.props.ide.unsavedChanges) {
       if (!window.confirm('Are you sure you want to leave this page? You have unsaved changes.')) {
         return false;
