@@ -8,8 +8,8 @@ const MAX_PROJECT_NAME_LENGTH = 256;
 const MAX_FILE_NAME_LENGTH = 256;
 
 const fileNameValidator = (file) => {
-  const fileName = file.replace(/\.[^/.]+$/, ''); // Removes the extension from the fileName
-  if (fileName.length === 0) {
+  const fileNameWithoutExtension = file.replace(/\.[^/.]+$/, ''); // Removes the extension from the fileName
+  if (fileNameWithoutExtension.length === 0) {
     return false;
   }
 
