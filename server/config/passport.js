@@ -1,6 +1,6 @@
-import User from '../models/user';
 import slugify from 'slugify';
 import friendlyWords from 'friendly-words';
+import User from '../models/user';
 
 const lodash = require('lodash');
 const passport = require('passport');
@@ -125,7 +125,7 @@ passport.use(new GoogleStrategy({
     User.findOne({
       email: primaryEmail,
     }, (findByEmailErr, existingEmailUser) => {
-      let username = profile._json.emails[0].value.split("@")[0];
+      let username = profile._json.emails[0].value.split('@')[0];
       User.findOne({ username }, (findByUsernameErr, existingUsernameUser) => {
         if (existingUsernameUser) {
           const adj = friendlyWords.predicates[Math.floor(Math.random() * friendlyWords.predicates.length)];
@@ -140,7 +140,7 @@ passport.use(new GoogleStrategy({
           existingEmailUser.tokens.push({ kind: 'google', accessToken });
           existingEmailUser.name = existingEmailUser.name || profile._json.displayName;
           existingEmailUser.verified = User.EmailConfirmation.Verified;
-          existingEmailUser.save(saveErr => {
+          existingEmailUser.save((saveErr) => {
             if (saveErr) {
               console.log(saveErr);
             }
@@ -154,11 +154,11 @@ passport.use(new GoogleStrategy({
           user.tokens.push({ kind: 'google', accessToken });
           user.name = profile._json.displayName;
           user.verified = User.EmailConfirmation.Verified;
-          user.save(saveErr => {
+          user.save((saveErr) => {
             if (saveErr) {
               console.log(saveErr);
             }
-            done(null, user)
+            done(null, user);
           });
         }
       });
