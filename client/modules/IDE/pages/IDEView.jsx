@@ -177,6 +177,10 @@ class IDEView extends React.Component {
       // don't warn
       this.props.persistState();
       window.onbeforeunload = null;
+    } else if (route && (/\/assets\/?$/.test(route.pathname))) {
+      // don't warn
+      this.props.persistState();
+      window.onbeforeunload = null;
     } else if (route && (route.pathname === this.props.ide.previousPath)) {
       // don't warn
       this.props.persistState();
