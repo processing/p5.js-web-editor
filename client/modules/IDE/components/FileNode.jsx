@@ -162,6 +162,7 @@ export class FileNode extends React.Component {
                 <button className="sidebar__file-item-name" onClick={this.handleFileClick}>{this.props.name}</button>
                 <input
                   type="text"
+                  maxLength="256"
                   className="sidebar__file-item-input"
                   value={this.props.name}
                   onChange={this.handleFileNameChange}
