@@ -64,8 +64,8 @@ projectSchema.set('toJSON', {
 
 projectSchema.pre('save', function generateSlug(next) {
   const project = this;
-  project.slug = slugify(project.name, '_');
   project.name = project.name.substring(0, MAX_PROJECT_NAME_LENGTH); // Truncates project name
+  project.slug = slugify(project.name, '_');
 
   return next();
 });
