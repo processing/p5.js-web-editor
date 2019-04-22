@@ -343,7 +343,7 @@ async function fetchSketchContentAll(formattedSketchList) {
  */
 async function createProjectsInP5User(filledProjectList, user) {
   const userProjects = await Project.find({ user: user._id });
-  const removeProjects = userProjects.map(async project => await Project.remove({ _id: project._id }));
+  const removeProjects = userProjects.map(async project => Project.remove({ _id: project._id }));
   await Q.all(removeProjects);
   console.log('deleted old projects!');
 
