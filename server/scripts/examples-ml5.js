@@ -90,7 +90,7 @@ async function make() {
   const filledProjectList = await fetchSketchContentAll(formattedSketchList)
   await createProjectsInP5User(filledProjectList, user)
   console.log('done!')
-  return {message:'finished'}
+  process.exit();
 }
 
 /**
@@ -113,7 +113,7 @@ async function test() {
   const filledProjectList = await fetchSketchContentAll(formattedSketchList)
   await createProjectsInP5User(filledProjectList, user)
   console.log('done!')
-  return {message:'finished'}
+  process.exit();
 }
 
 /**
