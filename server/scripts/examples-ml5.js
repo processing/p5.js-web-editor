@@ -17,6 +17,7 @@ const branchRef = `?ref=${branchName}`;
 const baseUrl = `https://api.github.com/repos/ml5js/ml5-examples/contents`
 const clientId = process.env.GITHUB_ID;
 const clientSecret = process.env.GITHUB_SECRET;
+const editorUsername = 'ml5';
 const headers = {
   'User-Agent': 'p5js-web-editor/0.0.1'
 };
@@ -79,7 +80,7 @@ if (process.env.NODE_ENV == 'development') {
 async function make() {
   // Get the user
   const user = await User.find({
-    username: 'ml5'
+    username: editorUsername
   });
   // Get the categories and their examples
   const categories = await getCategories();
@@ -103,7 +104,7 @@ async function make() {
 async function test() {
   // Get the user
   const user = await User.find({
-    username: 'ml5'
+    username: editorUsername
   });
 
   // read from file while testing
@@ -434,5 +435,5 @@ async function createProjectsInP5User(filledProjectList, user){
     return await item.save()
   })
   await Q.all(newProjects);
-  console.log("Projects saved to User!")
+  console.log(`Projects saved to User: ${editorUsername}!`)
 }
