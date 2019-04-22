@@ -1,7 +1,7 @@
 import fs from 'fs';
 import rp from 'request-promise';
 import Q from 'q';
-import mongoose, { Query } from 'mongoose';
+import mongoose from 'mongoose';
 import objectID from 'bson-objectid';
 import shortid from 'shortid';
 import User from '../models/user';
@@ -213,7 +213,7 @@ function traverseAndFlatten(projectFileTree) {
         currentParent = traverseAndFlatten(item.children);
         // the above will return an array of the children files
         // concatenate that with the results
-        result = result.concat(currentParent);
+        result = result.concat(currentParent); // eslint-disable-line no-param-reassign
         // since we want to get the children ids,
         // we can map the child ids to the current item
         // then push that to our result array to get
