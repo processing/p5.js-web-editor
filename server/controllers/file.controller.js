@@ -34,7 +34,7 @@ export function createFile(req, res) {
           res.json({ success: false });
           return;
         }
-        savedProject.populate('user username', (_, populatedProject) => {
+        savedProject.populate({ path: 'user', select: 'username' }, (_, populatedProject) => {
           res.json({
             updatedFile: updatedProject.files[updatedProject.files.length - 1],
             project: populatedProject
