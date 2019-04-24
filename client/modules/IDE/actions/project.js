@@ -328,3 +328,10 @@ export function hideEditProjectName() {
     type: ActionTypes.HIDE_EDIT_PROJECT_NAME
   };
 }
+
+export function setProjectSavedTime(updatedAt) {
+  return {
+    type: ActionTypes.SET_PROJECT_SAVED_TIME,
+    value: updatedAt
+  };
+}

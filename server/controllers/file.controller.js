@@ -28,13 +28,18 @@ export function createFile(req, res) {
       }
       const newFile = updatedProject.files[updatedProject.files.length - 1];
       updatedProject.files.id(req.body.parentId).children.push(newFile.id);
-      updatedProject.save((innerErr) => {
+      updatedProject.save((innerErr, savedProject) => {
         if (innerErr) {
           console.log(innerErr);
           res.json({ success: false });
           return;
         }
-        res.json(updatedProject.files[updatedProject.files.length - 1]);
+        savedProject.populate('user username', (_, populatedProject) => {
+          res.json({
+            updatedFile: updatedProject.files[updatedProject.files.length - 1],
+            project: populatedProject
+          });
+        });
       });
     }
   );
