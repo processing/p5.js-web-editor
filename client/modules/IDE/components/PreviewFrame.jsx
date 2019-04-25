@@ -143,12 +143,17 @@ class PreviewFrame extends React.Component {
     return newContent;
   }
 
-  injectLocalFiles() {
-    const htmlFile = this.props.htmlFile.content;
-    let scriptOffs = [];
+  mergeLocalFilesAndEditorActiveFile() {
     const files = this.props.files.slice();
     const activeFileInEditor = this.props.cmController.getContent();
     files.find(file => file.id === activeFileInEditor.id).content = activeFileInEditor.content;
+    return files;
+  }
+
+  injectLocalFiles() {
+    const htmlFile = this.props.htmlFile.content;
+    let scriptOffs = [];
+    const files = this.mergeLocalFilesAndEditorActiveFile();
     const resolvedFiles = this.resolveJSAndCSSLinks(files);
     const parser = new DOMParser();
     const sketchDoc = parser.parseFromString(htmlFile, 'text/html');
