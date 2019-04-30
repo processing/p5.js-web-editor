@@ -44,6 +44,11 @@ export default function(CodeMirror) {
     return cm.getSearchCursor(query, pos, getSearchState(cm).caseInsensitive);
   }
 
+  function isMouseClick(event) {
+    if(event.detail > 0) return true;
+    else return false;
+  }
+
   function persistentDialog(cm, text, deflt, onEnter, onKeyDown) {
     var searchField = document.getElementsByClassName("CodeMirror-search-field")[0];
     if (!searchField) {
@@ -92,28 +97,31 @@ export default function(CodeMirror) {
       });
 
       var regexpButton = dialog.getElementsByClassName("CodeMirror-regexp-button")[0];
-      CodeMirror.on(regexpButton, "click", function () {
+      CodeMirror.on(regexpButton, "click", function (event) {
         var state = getSearchState(cm);
         state.regexp = toggle(regexpButton);
         startSearch(cm, getSearchState(cm), searchField.value);
+        if(isMouseClick(event)) searchField.focus();
       });
 
       toggle(regexpButton, state.regexp);
 
       var caseSensitiveButton = dialog.getElementsByClassName("CodeMirror-case-button")[0];
-      CodeMirror.on(caseSensitiveButton, "click", function () {
+      CodeMirror.on(caseSensitiveButton, "click", function (event) {
         var state = getSearchState(cm);
         state.caseInsensitive = !toggle(caseSensitiveButton);
         startSearch(cm, getSearchState(cm), searchField.value);
+        if(isMouseClick(event)) searchField.focus();
       });
 
       toggle(caseSensitiveButton, !state.caseInsensitive);
 
       var wholeWordButton = dialog.getElementsByClassName("CodeMirror-word-button")[0];
-      CodeMirror.on(wholeWordButton, "click", function () {
+      CodeMirror.on(wholeWordButton, "click", function (event) {
         var state = getSearchState(cm);
         state.wholeWord = toggle(wholeWordButton);
         startSearch(cm, getSearchState(cm), searchField.value);
+        if(isMouseClick(event)) searchField.focus();
       });
 
       toggle(wholeWordButton, state.wholeWord);
