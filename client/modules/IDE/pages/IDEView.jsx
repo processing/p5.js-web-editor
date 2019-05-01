@@ -202,14 +202,11 @@ class IDEView extends React.Component {
           >
             <Preferences
               fontSize={this.props.preferences.fontSize}
-              indentationAmount={this.props.preferences.indentationAmount}
-              setIndentation={this.props.setIndentation}
-              indentWithSpace={this.props.indentWithSpace}
-              indentWithTab={this.props.indentWithTab}
-              isTabIndent={this.props.preferences.isTabIndent}
               setFontSize={this.props.setFontSize}
               autosave={this.props.preferences.autosave}
+              linewrap={this.props.preferences.linewrap}
               setAutosave={this.props.setAutosave}
+              setLinewrap={this.props.setLinewrap}
               lintWarning={this.props.preferences.lintWarning}
               setLintWarning={this.props.setLintWarning}
               textOutput={this.props.preferences.textOutput}
@@ -251,7 +248,9 @@ class IDEView extends React.Component {
               defaultSize="50%"
               onChange={() => { this.overlay.style.display = 'block'; }}
               onDragFinished={() => { this.overlay.style.display = 'none'; }}
-              resizerStyle={{ marginRight: '0', marginLeft: '-10px' }}
+              resizerStyle={{
+                borderLeftWidth: '2px', borderRightWidth: '2px', width: '2px', margin: '0px 0px'
+              }}
             >
               <SplitPane
                 split="horizontal"
@@ -264,14 +263,13 @@ class IDEView extends React.Component {
               >
                 <Editor
                   lintWarning={this.props.preferences.lintWarning}
+                  linewrap={this.props.preferences.linewrap}
                   lintMessages={this.props.editorAccessibility.lintMessages}
                   updateLintMessage={this.props.updateLintMessage}
                   clearLintMessage={this.props.clearLintMessage}
                   file={this.props.selectedFile}
                   updateFileContent={this.props.updateFileContent}
                   fontSize={this.props.preferences.fontSize}
-                  indentationAmount={this.props.preferences.indentationAmount}
-                  isTabIndent={this.props.preferences.isTabIndent}
                   files={this.props.files}
                   editorOptionsVisible={this.props.ide.editorOptionsVisible}
                   showEditorOptions={this.props.showEditorOptions}
@@ -346,6 +344,7 @@ class IDEView extends React.Component {
                     stopSketch={this.props.stopSketch}
                     setBlobUrl={this.props.setBlobUrl}
                     expandConsole={this.props.expandConsole}
+                    clearConsole={this.props.clearConsole}
                   />
                 </div>
               </div>
@@ -511,9 +510,8 @@ IDEView.propTypes = {
   clearLintMessage: PropTypes.func.isRequired,
   preferences: PropTypes.shape({
     fontSize: PropTypes.number.isRequired,
-    indentationAmount: PropTypes.number.isRequired,
-    isTabIndent: PropTypes.bool.isRequired,
     autosave: PropTypes.bool.isRequired,
+    linewrap: PropTypes.bool.isRequired,
     lintWarning: PropTypes.bool.isRequired,
     textOutput: PropTypes.bool.isRequired,
     gridOutput: PropTypes.bool.isRequired,
@@ -523,10 +521,8 @@ IDEView.propTypes = {
   }).isRequired,
   closePreferences: PropTypes.func.isRequired,
   setFontSize: PropTypes.func.isRequired,
-  setIndentation: PropTypes.func.isRequired,
-  indentWithTab: PropTypes.func.isRequired,
-  indentWithSpace: PropTypes.func.isRequired,
   setAutosave: PropTypes.func.isRequired,
+  setLinewrap: PropTypes.func.isRequired,
   setLintWarning: PropTypes.func.isRequired,
   setTextOutput: PropTypes.func.isRequired,
   setGridOutput: PropTypes.func.isRequired,

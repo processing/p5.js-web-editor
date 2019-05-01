@@ -324,6 +324,7 @@ class PreviewFrame extends React.Component {
   }
 
   renderSketch() {
+    this.props.clearConsole();
     const doc = this.iframeElement;
     const localFiles = this.injectLocalFiles();
     if (this.props.isPlaying) {
@@ -378,7 +379,8 @@ PreviewFrame.propTypes = {
   fullView: PropTypes.bool,
   setBlobUrl: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
-  expandConsole: PropTypes.func.isRequired
+  expandConsole: PropTypes.func.isRequired,
+  clearConsole: PropTypes.func.isRequired,
 };
 
 PreviewFrame.defaultProps = {

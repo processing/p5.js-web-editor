@@ -3,6 +3,7 @@ import format from 'date-fns/format';
 import isUrl from 'is-url';
 import jsdom, { serializeDocument } from 'jsdom';
 import isBefore from 'date-fns/is_before';
+import isAfter from 'date-fns/is_after';
 import request from 'request';
 import slugify from 'slugify';
 import Project from '../models/project';
@@ -43,10 +44,10 @@ export function updateProject(req, res) {
       res.status(403).send({ success: false, message: 'Session does not match owner of project.' });
       return;
     }
-    // if (req.body.updatedAt && moment(req.body.updatedAt) < moment(project.updatedAt)) {
-    //   res.status(409).send({ success: false, message: 'Attempted to save stale version of project.' });
-    //   return;
-    // }
+    if (req.body.updatedAt && isAfter(new Date(project.updatedAt), req.body.updatedAt)) {
+      res.status(409).send({ success: false, message: 'Attempted to save stale version of project.' });
+      return;
+    }
     Project.findByIdAndUpdate(
       req.params.project_id,
       {
@@ -110,7 +111,9 @@ export function getProject(req, res) {
 function deleteFilesFromS3(files) {
   deleteObjectsFromS3(files.filter((file) => {
     if (file.url) {
-      if (!process.env.S3_DATE || (process.env.S3_DATE && isBefore(new Date(process.env.S3_DATE), new Date(file.createdAt)))) {
+      if (!process.env.S3_DATE || (
+        process.env.S3_DATE &&
+        isBefore(new Date(process.env.S3_DATE), new Date(file.createdAt)))) {
         return true;
       }
     }
