@@ -13,7 +13,7 @@ const branchRef = `?ref=${branchName}`;
 const baseUrl = 'https://api.github.com/repos/ml5js/ml5-examples/contents';
 const clientId = process.env.GITHUB_ID;
 const clientSecret = process.env.GITHUB_SECRET;
-const editorUsername = 'ml5';
+const editorUsername = process.env.ML5_EXAMPLES_USERNAME;
 const headers = {
   'User-Agent': 'p5js-web-editor/0.0.1'
 };
@@ -356,6 +356,30 @@ async function createProjectsInP5User(filledProjectList, user) {
   console.log(`Projects saved to User: ${editorUsername}!`);
 }
 
+/** 
+ * STEP 0 
+ * CHECK if user exists, ifnot create one
+ * */
+async function checkP5User(){
+  console.log(editorUsername)
+  const user = await User.findOne({username: editorUsername});
+
+  if (!user){
+    const ml5user = new User({
+      username: editorUsername,
+      email: process.env.ML5_EXAMPLES_EMAIL,
+      password: process.env.ML5_EXAMPLES_PASS
+    });
+
+    await ml5user.save((saveErr) => {
+      if (saveErr) throw saveErr;
+      console.log(`Created a user p5${ml5user}`);
+    });
+  } 
+
+}
+
+
 /**
  * ---------------------------------------------------------
  * --------------------- main ------------------------------
@@ -371,6 +395,7 @@ async function createProjectsInP5User(filledProjectList, user) {
  * Delete existing and save
  */
 async function make() {
+  await checkP5User();
   // Get the user
   const user = await User.findOne({
     username: editorUsername
@@ -395,6 +420,7 @@ async function make() {
  * Delete existing and save
  */
 async function test() {
+  await checkP5User();
   // Get the user
   const user = await User.findOne({
     username: editorUsername
