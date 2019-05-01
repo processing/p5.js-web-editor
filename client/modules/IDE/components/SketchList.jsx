@@ -26,8 +26,16 @@ class SketchList extends React.Component {
     return `p5.js Web Editor | ${this.props.username}'s sketches`;
   }
 
+  hasSketches() {
+    return !this.props.loading && this.props.sketches.length > 0;
+  }
+
   renderLoader() {
     if (this.props.loading) return <Loader />;
+    return null;
+  }
+
+  renderEmptyTable() {
     if (!this.props.loading && this.props.sketches.length === 0) return (<p className="sketches-table__empty">No sketches.</p>);
     return null;
   }
@@ -40,7 +48,8 @@ class SketchList extends React.Component {
           <title>{this.getSketchesTitle()}</title>
         </Helmet>
         {this.renderLoader()}
-        {!this.props.loading && this.props.sketches.length > 0 &&
+        {this.renderEmptyTable()}
+        {this.hasSketches() &&
           <table className="sketches-table" summary="table containing all saved projects">
             <thead>
               <tr>
