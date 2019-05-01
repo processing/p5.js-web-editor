@@ -356,15 +356,15 @@ async function createProjectsInP5User(filledProjectList, user) {
   console.log(`Projects saved to User: ${editorUsername}!`);
 }
 
-/** 
- * STEP 0 
+/**
+ * STEP 0
  * CHECK if user exists, ifnot create one
- * */
-async function checkP5User(){
-  console.log(editorUsername)
-  const user = await User.findOne({username: editorUsername});
+ *
+ */
+async function checkP5User() {
+  const user = await User.findOne({ username: editorUsername });
 
-  if (!user){
+  if (!user) {
     const ml5user = new User({
       username: editorUsername,
       email: process.env.ML5_EXAMPLES_EMAIL,
@@ -375,8 +375,7 @@ async function checkP5User(){
       if (saveErr) throw saveErr;
       console.log(`Created a user p5${ml5user}`);
     });
-  } 
-
+  }
 }
 
 
