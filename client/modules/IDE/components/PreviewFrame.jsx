@@ -389,11 +389,12 @@ PreviewFrame.propTypes = {
   expandConsole: PropTypes.func.isRequired,
   cmController: PropTypes.shape({
     getContent: PropTypes.func
-  }).isRequired
+  })
 };
 
 PreviewFrame.defaultProps = {
-  fullView: false
+  fullView: false,
+  cmController: {}
 };
 
 export default PreviewFrame;
