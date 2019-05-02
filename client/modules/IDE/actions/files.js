@@ -153,15 +153,18 @@ export function createFolder(formProps) {
 }
 
 export function updateFileName(id, name) {
-  if(name.length) {
-    return {
-    type: ActionTypes.UPDATE_FILE_NAME,
-    id,
-    name
+  return (dispatch, getState) => {
+    const state = getState();
+    if (!state.name.length) {
+      dispatch(showToast(5500));
+      dispatch(setToastText('Invalid folder name'));
+    } else {
+      dispatch({
+        type: ActionTypes.UPDATE_FILE_NAME,
+        id,
+        name
+      });
     }
-  } else {
-    dispatch(showToast(5500))
-    dispatch(setToastText('Invalid folder name'))
   };
 }
 
