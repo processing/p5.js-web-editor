@@ -255,6 +255,10 @@ function bundleExternalLibs(project, zip, callback) {
 
     if (!isUrl(src)) {
       numScriptsResolved += 1;
+      if (numScriptsResolved === numScriptTags) {
+        indexHtml.content = serializeDocument(document);
+        callback();
+      }
       return;
     }
 
@@ -280,6 +284,10 @@ function bundleExternalLibs(project, zip, callback) {
     numScriptTags = scriptTags.length;
     for (let i = 0; i < numScriptTags; i += 1) {
       resolveScriptTagSrc(scriptTags[i], indexHtmlDoc);
+    }
+    if (numScriptTags === 0) {
+      indexHtml.content = serializeDocument(document);
+      callback();
     }
   });
 }
