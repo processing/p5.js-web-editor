@@ -332,6 +332,7 @@ class PreviewFrame extends React.Component {
   }
 
   renderSketch() {
+    this.props.clearConsole();
     const doc = this.iframeElement;
     const localFiles = this.injectLocalFiles();
     if (this.props.isPlaying) {
@@ -387,6 +388,7 @@ PreviewFrame.propTypes = {
   setBlobUrl: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
   expandConsole: PropTypes.func.isRequired,
+  clearConsole: PropTypes.func.isRequired,
   cmController: PropTypes.shape({
     getContent: PropTypes.func
   })

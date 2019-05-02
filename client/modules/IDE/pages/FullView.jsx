@@ -53,6 +53,7 @@ class FullView extends React.Component {
             setBlobUrl={this.ident}
             stopSketch={this.ident}
             expandConsole={this.ident}
+            clearConsole={this.ident}
           />
         </div>
       </div>
