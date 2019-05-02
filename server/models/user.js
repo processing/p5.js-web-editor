@@ -35,7 +35,7 @@ const userSchema = new Schema({
     theme: { type: String, default: 'light' },
     autorefresh: { type: Boolean, default: false }
   }
-}, { timestamps: true });
+}, { timestamps: true, usePushEach: true });
 
 /**
  * Password hash middleware.
