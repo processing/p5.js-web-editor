@@ -345,6 +345,7 @@ class IDEView extends React.Component {
                     setBlobUrl={this.props.setBlobUrl}
                     expandConsole={this.props.expandConsole}
                     clearConsole={this.props.clearConsole}
+                    cmController={this.cmController}
                   />
                 </div>
               </div>
