@@ -5,7 +5,6 @@ import { reset } from 'redux-form';
 import * as ActionTypes from '../../../constants';
 import { setUnsavedChanges } from './ide';
 import { setProjectSavedTime } from './project';
-import { showToast, setToastText } from './toast';
 
 const __process = (typeof global !== 'undefined' ? global : window).process;
 const ROOT_URL = __process.env.API_URL;
@@ -153,18 +152,10 @@ export function createFolder(formProps) {
 }
 
 export function updateFileName(id, name) {
-  return (dispatch, getState) => {
-    const state = getState();
-    if (!state.name.length) {
-      dispatch(showToast(5500));
-      dispatch(setToastText('Invalid folder name'));
-    } else {
-      dispatch({
-        type: ActionTypes.UPDATE_FILE_NAME,
-        id,
-        name
-      });
-    }
+  return {
+    type: ActionTypes.UPDATE_FILE_NAME,
+    id,
+    name
   };
 }
 
