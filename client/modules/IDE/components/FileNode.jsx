@@ -55,7 +55,13 @@ export class FileNode extends React.Component {
   }
 
   handleFileNameChange(event) {
+<<<<<<< HEAD
       this.props.updateFileName(this.props.id, event.target.value);
+=======
+    if (event.target.value.length) {
+      this.props.updateFileName(this.props.id, event.target.value);
+    }
+>>>>>>> 79fa216fe66d59933d960e0c4647e1403fbc5c99
   }
 
   handleKeyPress(event) {
