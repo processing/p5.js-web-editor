@@ -55,9 +55,7 @@ export class FileNode extends React.Component {
   }
 
   handleFileNameChange(event) {
-    if (event.target.value.length) {
       this.props.updateFileName(this.props.id, event.target.value);
-    }
   }
 
   handleKeyPress(event) {
@@ -78,6 +76,9 @@ export class FileNode extends React.Component {
       oldFileExtension[0].toLowerCase() !== newFileExtension[0].toLowerCase()
     ) {
       this.props.updateFileName(this.props.id, this.originalFileName);
+    }
+    if(this.props.name.length){
+      this.props.updateFileName(this.props.id, this.originalFileName)
     }
   }
 
