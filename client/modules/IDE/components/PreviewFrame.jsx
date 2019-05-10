@@ -145,8 +145,10 @@ class PreviewFrame extends React.Component {
 
   mergeLocalFilesAndEditorActiveFile() {
     const files = this.props.files.slice();
-    const activeFileInEditor = this.props.cmController.getContent();
-    files.find(file => file.id === activeFileInEditor.id).content = activeFileInEditor.content;
+    if (this.props.cmController.getContent) {
+      const activeFileInEditor = this.props.cmController.getContent();
+      files.find(file => file.id === activeFileInEditor.id).content = activeFileInEditor.content;
+    }
     return files;
   }
 
