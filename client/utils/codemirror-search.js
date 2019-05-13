@@ -16,7 +16,7 @@ export default function(CodeMirror) {
   function searchOverlay(query) {
     return {token: function(stream) {
       query.lastIndex = stream.pos;
-      var match = query.exec(stream.string);
+      const match = query.exec(stream.string);
       if (match && match.index == stream.pos) {
         stream.pos += match[0].length || 1;
         return "searching";
@@ -45,7 +45,7 @@ export default function(CodeMirror) {
   }
 
   function persistentDialog(cm, text, deflt, onEnter, onKeyDown) {
-    var searchField = document.getElementsByClassName("CodeMirror-search-field")[0];
+    const searchField = document.getElementsByClassName("CodeMirror-search-field")[0];
     if (!searchField) {
       cm.openDialog(text, onEnter, {
         value: deflt,
@@ -60,10 +60,10 @@ export default function(CodeMirror) {
 
       searchField = document.getElementsByClassName("CodeMirror-search-field")[0];
 
-      var dialog = document.getElementsByClassName("CodeMirror-dialog")[0];
-      var closeButton = dialog.getElementsByClassName("close")[0];
+      const dialog = document.getElementsByClassName("CodeMirror-dialog")[0];
+      const closeButton = dialog.getElementsByClassName("close")[0];
 
-      var state = getSearchState(cm);
+      const state = getSearchState(cm);
 
       CodeMirror.on(searchField, "keyup", function (e) {
         if (e.keyCode !== 13 && searchField.value.length > 1) { // not enter and more than 1 character to search
@@ -77,41 +77,41 @@ export default function(CodeMirror) {
         cm.focus();
       });
 
-      var upArrow = dialog.getElementsByClassName("up-arrow")[0];
+      const upArrow = dialog.getElementsByClassName("up-arrow")[0];
       CodeMirror.on(upArrow, "click", function () {
         CodeMirror.commands.findPrev(cm);
         searchField.blur();
         cm.focus();
       });
 
-      var downArrow = dialog.getElementsByClassName("down-arrow")[0];
+      const downArrow = dialog.getElementsByClassName("down-arrow")[0];
       CodeMirror.on(downArrow, "click", function () {
         CodeMirror.commands.findNext(cm);
         searchField.blur();
         cm.focus();
       });
 
-      var regexpButton = dialog.getElementsByClassName("CodeMirror-regexp-button")[0];
+      const regexpButton = dialog.getElementsByClassName("CodeMirror-regexp-button")[0];
       CodeMirror.on(regexpButton, "click", function () {
-        var state = getSearchState(cm);
+        const state = getSearchState(cm);
         state.regexp = toggle(regexpButton);
         startSearch(cm, getSearchState(cm), searchField.value);
       });
 
       toggle(regexpButton, state.regexp);
 
-      var caseSensitiveButton = dialog.getElementsByClassName("CodeMirror-case-button")[0];
+      const caseSensitiveButton = dialog.getElementsByClassName("CodeMirror-case-button")[0];
       CodeMirror.on(caseSensitiveButton, "click", function () {
-        var state = getSearchState(cm);
+        const state = getSearchState(cm);
         state.caseInsensitive = !toggle(caseSensitiveButton);
         startSearch(cm, getSearchState(cm), searchField.value);
       });
 
       toggle(caseSensitiveButton, !state.caseInsensitive);
 
-      var wholeWordButton = dialog.getElementsByClassName("CodeMirror-word-button")[0];
+      const wholeWordButton = dialog.getElementsByClassName("CodeMirror-word-button")[0];
       CodeMirror.on(wholeWordButton, "click", function () {
-        var state = getSearchState(cm);
+        const state = getSearchState(cm);
         state.wholeWord = toggle(wholeWordButton);
         startSearch(cm, getSearchState(cm), searchField.value);
       });
@@ -119,7 +119,7 @@ export default function(CodeMirror) {
       toggle(wholeWordButton, state.wholeWord);
 
       function toggle(el, initialState) {
-        var currentState, nextState;
+        let currentState, nextState;
 
         if (initialState == null) {
           currentState = el.getAttribute('aria-checked') === 'true';
@@ -127,7 +127,7 @@ export default function(CodeMirror) {
         } else {
           nextState = initialState;
         }
-        
+
         el.setAttribute('aria-checked', nextState);
         return nextState;
       }
@@ -141,27 +141,27 @@ export default function(CodeMirror) {
     else f(prompt(shortText, deflt));
   }
 
-  var lastSelectedIndex = 0;
+  let lastSelectedIndex = 0;
   function confirmDialog(cm, text, shortText, fs) {
     if (cm.openConfirm) cm.openConfirm(text, fs);
     else if (confirm(shortText)) fs[0]();
 
-    var dialog = document.getElementsByClassName("CodeMirror-dialog")[0];
-    var buttons = dialog.getElementsByTagName("button");
+    const dialog = document.getElementsByClassName("CodeMirror-dialog")[0];
+    const buttons = dialog.getElementsByTagName("button");
     buttons[lastSelectedIndex].focus();
-    for (var i = 0; i < buttons.length; i += 1) {
+    for (let i = 0; i < buttons.length; i += 1) {
       (function (index) {
-        var button = buttons[index];
+        const button = buttons[index];
         button.addEventListener("focus", function (e) {
           lastSelectedIndex = index === buttons.length - 1 ? 0 : index;
         });
         button.addEventListener("keyup", function (e) {
           if (e.keyCode === 37) { // arrow left
-            var prevButton = index === 0 ? buttons.length - 1 : index - 1;
+            const prevButton = index === 0 ? buttons.length - 1 : index - 1;
             buttons[prevButton].focus();
           }
           if (e.keyCode === 39) { // arrow right
-            var nextButton = index === buttons.length - 1 ? 0 : index + 1;
+            const nextButton = index === buttons.length - 1 ? 0 : index + 1;
             buttons[nextButton].focus();
           }
           if (e.keyCode === 27) { // esc
@@ -190,7 +190,7 @@ export default function(CodeMirror) {
     a RegExp ready for searching
   */
   function parseQuery(query, state) {
-    var emptyQuery = 'x^'; // matches nothing
+    const emptyQuery = 'x^'; // matches nothing
 
     if (query === '') { // empty string matches nothing
       query = emptyQuery;
@@ -205,7 +205,7 @@ export default function(CodeMirror) {
       }
     }
 
-    var regexp;
+    let regexp;
 
     try {
       regexp = new RegExp(query, state.caseInsensitive ? "gi" : "g");
@@ -221,7 +221,7 @@ export default function(CodeMirror) {
     return regexp;
   }
 
-  var queryDialog = `
+  const queryDialog = `
     <h3 class="CodeMirror-search-title">Find</h3>
     <input type="text" class="search-input CodeMirror-search-field" placeholder="Find in files" />
     <div class="CodeMirror-search-actions">
@@ -287,12 +287,12 @@ export default function(CodeMirror) {
   }
 
   function doSearch(cm, rev, persistent, immediate, ignoreQuery) {
-    var state = getSearchState(cm);
+    const state = getSearchState(cm);
     if (!ignoreQuery && state.query) return findNext(cm, rev);
-    var q = cm.getSelection() || state.lastQuery;
+    const q = cm.getSelection() || state.lastQuery;
     if (persistent && cm.openDialog) {
-      var hiding = null
-      var searchNext = function(query, event) {
+      const hiding = null
+      const searchNext = function(query, event) {
         CodeMirror.e_stop(event);
         if (!query) return;
         if (query != state.queryText) {
@@ -301,7 +301,7 @@ export default function(CodeMirror) {
         }
         if (hiding) hiding.style.opacity = 1
         findNext(cm, event.shiftKey, function(_, to) {
-          var dialog
+          let dialog
           if (to.line < 3 && document.querySelector &&
             (dialog = cm.display.wrapper.querySelector(".CodeMirror-dialog")) &&
             dialog.getBoundingClientRect().bottom - 4 > cm.cursorCoords(to, "window").top)
@@ -309,8 +309,8 @@ export default function(CodeMirror) {
         })
       };
       persistentDialog(cm, queryDialog, q, searchNext, function(event, query) {
-        var keyName = CodeMirror.keyName(event)
-        var cmd = CodeMirror.keyMap[cm.getOption("keyMap")][keyName]
+        const keyName = CodeMirror.keyName(event)
+        const cmd = CodeMirror.keyMap[cm.getOption("keyMap")][keyName]
         if (!cmd) cmd = cm.getOption('extraKeys')[keyName]
         if (cmd == "findNext" || cmd == "findPrev" ||
           cmd == "findPersistentNext" || cmd == "findPersistentPrev") {
@@ -338,8 +338,8 @@ export default function(CodeMirror) {
   }
 
   function findNext(cm, rev, callback) {cm.operation(function() {
-    var state = getSearchState(cm);
-    var cursor = getSearchCursor(cm, state.query, rev ? state.posFrom : state.posTo);
+    const state = getSearchState(cm);
+    const cursor = getSearchCursor(cm, state.query, rev ? state.posFrom : state.posTo);
     if (!cursor.find(rev)) {
       cursor = getSearchCursor(cm, state.query, rev ? CodeMirror.Pos(cm.lastLine()) : CodeMirror.Pos(cm.firstLine(), 0));
       if (!cursor.find(rev)) return;
@@ -351,7 +351,7 @@ export default function(CodeMirror) {
   });}
 
   function clearSearch(cm) {cm.operation(function() {
-    var state = getSearchState(cm);
+    const state = getSearchState(cm);
     state.lastQuery = state.queryText;
     if (!state.query) return;
     state.query = state.queryText = null;
@@ -359,17 +359,17 @@ export default function(CodeMirror) {
     if (state.annotate) { state.annotate.clear(); state.annotate = null; }
   });}
 
-  var replaceQueryDialog =
+  const replaceQueryDialog =
     '<input type="text" class="search-input CodeMirror-search-field"/><div class="close icon"></div>';
 
-  var replacementQueryDialog = 'With: <input type="text" class="replace-input CodeMirror-search-field"/>';
-  var doReplaceConfirm = "Replace? <button>Yes</button> <button>No</button> <button>All</button> <button>Stop</button>";
+  const replacementQueryDialog = 'With: <input type="text" class="replace-input CodeMirror-search-field"/>';
+  const doReplaceConfirm = "Replace? <button>Yes</button> <button>No</button> <button>All</button> <button>Stop</button>";
 
   function replaceAll(cm, query, text) {
     cm.operation(function() {
-      for (var cursor = getSearchCursor(cm, query); cursor.findNext();) {
+      for (const cursor = getSearchCursor(cm, query); cursor.findNext();) {
         if (typeof query != "string") {
-          var match = cm.getRange(cursor.from(), cursor.to()).match(query);
+          const match = cm.getRange(cursor.from(), cursor.to()).match(query);
           cursor.replace(text.replace(/\$(\d)/g, function(_, i) {return match[i];}));
         } else cursor.replace(text);
       }
@@ -378,15 +378,15 @@ export default function(CodeMirror) {
 
   // TODO: This will need updating if replace is implemented
   function replace(cm, all) {
-    var prevDialog = document.getElementsByClassName("CodeMirror-dialog")[0];
+    const prevDialog = document.getElementsByClassName("CodeMirror-dialog")[0];
     if (prevDialog) {
       clearSearch(cm);
       prevDialog.parentNode.removeChild(prevDialog);
       cm.focus();
     }
     if (cm.getOption("readOnly")) return;
-    var query = cm.getSelection() || getSearchState(cm).lastQuery;
-    var dialogText = all ? "Replace all:" : "Replace:"
+    const query = cm.getSelection() || getSearchState(cm).lastQuery;
+    const dialogText = all ? "Replace all:" : "Replace:"
     dialog(cm, dialogText + replaceQueryDialog, dialogText, query, function(query) {
       if (!query) return;
       query = parseQuery(query);
@@ -396,9 +396,9 @@ export default function(CodeMirror) {
           replaceAll(cm, query, text)
         } else {
           clearSearch(cm);
-          var cursor = getSearchCursor(cm, query, cm.getCursor("from"));
-          var advance = function() {
-            var start = cursor.from(), match;
+          const cursor = getSearchCursor(cm, query, cm.getCursor("from"));
+          const advance = function() {
+            const start = cursor.from(), match;
             if (!(match = cursor.findNext())) {
               cursor = getSearchCursor(cm, query);
               if (!(match = cursor.findNext()) ||
