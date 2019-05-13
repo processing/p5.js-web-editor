@@ -18,7 +18,7 @@ router.post('/reset-password/:token', UserController.updatePassword);
 
 router.put('/account', isAuthenticated, UserController.updateSettings);
 
-router.put('/account/api-keys', isAuthenticated, UserController.addApiKey);
+router.post('/account/api-keys', isAuthenticated, UserController.createApiKey);
 
 router.delete('/account/api-keys/:keyId', isAuthenticated, UserController.removeApiKey);
 

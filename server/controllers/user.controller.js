@@ -8,6 +8,8 @@ import {
   renderResetPassword,
 } from '../views/mail';
 
+export * from './user.controller/apiKey';
+
 const random = (done) => {
   crypto.randomBytes(20, (err, buf) => {
     const token = buf.toString('hex');
@@ -353,41 +355,3 @@ export function updateSettings(req, res) {
   });
 }
 
-export function addApiKey(req, res) {
-  User.findById(req.user.id, (err, user) => {
-    if (err) {
-      res.status(500).json({ error: err });
-      return;
-    }
-    if (!user) {
-      res.status(404).json({ error: 'User not found' });
-      return;
-    }
-    if (!req.body.label || !req.body.encodedKey) {
-      res.status(400).json({ error: 'Expected field \'label\' or \'encodedKey\' was not present in request body' });
-      return;
-    }
-    user.apiKeys.push({ label: req.body.label, hashedKey: req.body.encodedKey });
-    saveUser(res, user);
-  });
-}
-
-export function removeApiKey(req, res) {
-  User.findById(req.user.id, (err, user) => {
-    if (err) {
-      res.status(500).json({ error: err });
-      return;
-    }
-    if (!user) {
-      res.status(404).json({ error: 'User not found' });
-      return;
-    }
-    const keyToDelete = user.apiKeys.find(key => key.id === req.params.keyId);
-    if (!keyToDelete) {
-      res.status(404).json({ error: 'Key does not exist for user' });
-      return;
-    }
-    user.apiKeys.pull({ _id: req.params.keyId });
-    saveUser(res, user);
-  });
-}
