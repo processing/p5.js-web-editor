@@ -35,7 +35,7 @@
     "type": "git",
     "url": "git+https://github.com/catarak/p5.js-web-editor.git"
   },
-"devDependencies": {
+ "devDependencies": {
     "babel-eslint": "^7.1.1",
     "babel-loader": "^7.1.5",
     "babel-plugin-transform-react-constant-elements": "^6.23.0",
@@ -71,10 +71,6 @@
     "webpack-manifest-plugin": "^2.0.4",
     "react-test-renderer": "^16.6.0",
     "webpack-node-externals": "^1.7.2"
-  },
-  "engines": {
-    "node": "10.15.0",
-    "npm": "6.4.1"
   },
   "engines": {
     "node": "10.15.0",
