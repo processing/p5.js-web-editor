@@ -33,7 +33,7 @@ const user = (state = { authenticated: false }, action) => {
       return { ...state, ...action.user };
     case ActionTypes.REMOVED_API_KEY:
       return { ...state, ...action.user };
-    case ActionTypes.ADDED_API_KEY:
+    case ActionTypes.API_KEY_CREATED:
       return { ...state, ...action.user };
     default:
       return state;

@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 import InlineSVG from 'react-inlinesvg';
 import { Helmet } from 'react-helmet';
-import { addApiKey, removeApiKey } from '../actions';
+import { createApiKey, removeApiKey } from '../actions';
 import APIKeyForm from '../components/APIKeyForm';
 
 const exitUrl = require('../../../images/exit.svg');
@@ -64,7 +64,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ addApiKey, removeApiKey }, dispatch);
+  return bindActionCreators({ createApiKey, removeApiKey }, dispatch);
 }
 
 AdvancedSettingsView.propTypes = {

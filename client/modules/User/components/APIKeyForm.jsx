@@ -12,7 +12,8 @@ class APIKeyForm extends React.Component {
   addKey(event) {
     event.preventDefault();
     document.getElementById('addKeyForm').reset();
-    this.props.addApiKey(this.state.keyLabel);
+    this.props.createApiKey(this.state.keyLabel)
+      .then(newToken => this.setState({ newToken }));
     this.state.keyLabel = '';
     return false;
   }
@@ -22,23 +23,35 @@ class APIKeyForm extends React.Component {
   }
 
   render() {
+    const { newToken } = this.state;
+
+    const content = newToken ?
+      (
+        <div>
+          <p>Here is your new key. Copy it somewhere, you won't be able to see it later !</p>
+          <input type="text" readOnly value={newToken} />
+          <button>Copy to clipboard</button>
+        </div>) :
+      (<form id="addKeyForm" className="form" onSubmit={this.addKey}>
+        <h2 className="form__label">Key label</h2>
+        <input
+          type="text"
+          className="form__input"
+          placeholder="A name you will be able to recognize"
+          id="keyLabel"
+          onChange={(event) => { this.setState({ keyLabel: event.target.value }); }}
+        /><br />
+        <input
+          type="submit"
+          value="Create new Key"
+          disabled={this.state.keyLabel === ''}
+        />
+        </form>
+      );
+
     return (
       <div>
-        <h2 className="form__label">Key label</h2>
-        <form id="addKeyForm" className="form" onSubmit={this.addKey}>
-          <input
-            type="text"
-            className="form__input"
-            placeholder="A name you will be able to recognize"
-            id="keyLabel"
-            onChange={(event) => { this.setState({ keyLabel: event.target.value }); }}
-          /><br />
-          <input
-            type="submit"
-            value="Create new Key"
-            disabled={this.state.keyLabel === ''}
-          />
-        </form>
+        {content}
         <table className="form__table">
           <tbody id="form__table_new_key"></tbody>
           <tbody>
@@ -56,7 +69,7 @@ class APIKeyForm extends React.Component {
 }
 
 APIKeyForm.propTypes = {
-  addApiKey: PropTypes.func.isRequired,
+  createApiKey: PropTypes.func.isRequired,
   removeApiKey: PropTypes.func.isRequired,
   apiKeys: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.object.isRequired,

@@ -222,46 +222,22 @@ export function updateSettings(formValues) {
       .catch(response => Promise.reject(new Error(response.data.error)));
 }
 
-export function addApiKey(label) {
-  return ((dispatch) => {
-    crypto.randomBytes(20, (err, buf) => {
-      const key = buf.toString('hex');
-      const encodedKey = Buffer.from(key).toString('base64');
-      axios.put(`${ROOT_URL}/account/api-keys`, { label, encodedKey }, { withCredentials: true })
-        .then((response) => {
-          // window.alert(`Here is your key :\n${key}\nNote it somewhere, you won't be able to see it later !`);
-          const elt = React.createElement(
-            'tr', { className: 'new-key' },
-            React.createElement('td', {}, 'Here is your new key ;\ncopy it somewhere, you won\'t be able to see it later !'),
-            React.createElement(
-              'td', {},
-              React.createElement('input', {
-                id: 'key-to-copy', type: 'text', value: key, readOnly: true
-              })
-            ),
-            React.createElement(
-              'td', {},
-              React.createElement('input', {
-                type: 'submit',
-                value: 'Copy to clipboard',
-                className: 'form__table-button-copy',
-                onClick: () => {
-                  const inputKey = document.getElementById('key-to-copy');
-                  inputKey.select();
-                  document.execCommand('copy');
-                }
-              })
-            )
-          );
-          ReactDom.render(elt, document.getElementById('form__table_new_key'));
-          dispatch({
-            type: ActionTypes.ADDED_API_KEY,
-            user: response.data
-          });
-        })
-        .catch(response => Promise.reject(new Error(response.data.error)));
-    });
-  });
+export function createApiKeySuccess(token) {
+  return {
+    type: ActionTypes.API_KEY_CREATED,
+    token
+  };
+}
+
+export function createApiKey(label) {
+  return dispatch =>
+    axios.post(`${ROOT_URL}/account/api-keys`, { label }, { withCredentials: true })
+      .then((response) => {
+        const { token } = response.data;
+        dispatch(createApiKeySuccess(token));
+        return token;
+      })
+      .catch(response => Promise.reject(new Error(response.data.error)));
 }
 
 export function removeApiKey(keyId) {

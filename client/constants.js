@@ -19,7 +19,7 @@ export const AUTH_ERROR = 'AUTH_ERROR';
 
 export const SETTINGS_UPDATED = 'SETTINGS_UPDATED';
 
-export const ADDED_API_KEY = 'ADDED_API_KEY';
+export const API_KEY_CREATED = 'API_KEY_CREATED';
 export const REMOVED_API_KEY = 'REMOVED_API_KEY';
 
 export const SET_PROJECT_NAME = 'SET_PROJECT_NAME';
