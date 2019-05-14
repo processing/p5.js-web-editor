@@ -17,7 +17,9 @@ const apiKeySchema = new Schema({
 }, { timestamps: true, _id: true });
 
 apiKeySchema.virtual('publicFields').get(function publicFields() {
-  return { id: this.id, label: this.label, lastUsedAt: this.lastUsedAt };
+  return {
+    id: this.id, label: this.label, lastUsedAt: this.lastUsedAt, createdAt: this.createdAt
+  };
 });
 
 apiKeySchema.virtual('id').get(function getApiKeyId() {
