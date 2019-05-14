@@ -7,12 +7,17 @@ import orderBy from 'lodash/orderBy';
 
 const trashCan = require('../../../images/trash-can.svg');
 
+
 function NewTokenDisplay({ token }) {
+  function handleCopyClick() {
+    navigator.clipboard.writeText(token);
+  }
+
   return (
     <React.Fragment>
       <p>Make sure to copy your new personal access token now. You won’t be able to see it again!</p>
       <p><input type="text" readOnly value={token} /></p>
-      <button>Copy</button>
+      <button onClick={handleCopyClick}>Copy</button>
     </React.Fragment>
   );
 }
