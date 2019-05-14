@@ -222,10 +222,10 @@ export function updateSettings(formValues) {
       .catch(response => Promise.reject(new Error(response.data.error)));
 }
 
-export function createApiKeySuccess(token) {
+export function createApiKeySuccess(user) {
   return {
     type: ActionTypes.API_KEY_CREATED,
-    token
+    user
   };
 }
 
@@ -233,9 +233,7 @@ export function createApiKey(label) {
   return dispatch =>
     axios.post(`${ROOT_URL}/account/api-keys`, { label }, { withCredentials: true })
       .then((response) => {
-        const { token } = response.data;
-        dispatch(createApiKeySuccess(token));
-        return token;
+        dispatch(createApiKeySuccess(response.data));
       })
       .catch(response => Promise.reject(new Error(response.data.error)));
 }

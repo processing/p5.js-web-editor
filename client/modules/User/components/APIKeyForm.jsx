@@ -1,5 +1,62 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import InlineSVG from 'react-inlinesvg';
+import format from 'date-fns/format';
+import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
+import orderBy from 'lodash/orderBy';
+
+const trashCan = require('../../../images/trash-can.svg');
+
+function NewTokenDisplay({ token }) {
+  return (
+    <React.Fragment>
+      <p>Make sure to copy your new personal access token now. You won’t be able to see it again!</p>
+      <p><input type="text" readOnly value={token} /></p>
+      <button>Copy</button>
+    </React.Fragment>
+  );
+}
+
+function TokenMetadataList({ tokens, onRemove }) {
+  return (
+    <table className="form__table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Created on</th>
+          <th>Last used</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {orderBy(tokens, ['createdAt'], ['desc']).map((v) => {
+          const keyRow = (
+            <tr key={v.id}>
+              <td>{v.label}</td>
+              <td>{format(new Date(v.createdAt), 'MMM D, YYYY h:mm A')}</td>
+              <td>{distanceInWordsToNow(new Date(v.lastUsedAt), { addSuffix: true })}</td>
+              <td>
+                <button className="account__tokens__delete-button" onClick={() => onRemove(v)}>
+                  <InlineSVG src={trashCan} alt="Delete Key" />
+                </button>
+              </td>
+            </tr>
+          );
+
+          const newKeyValue = v.token && (
+            <tr key={v.id}>
+              <td colSpan="4">
+                <NewTokenDisplay token={v.token} />
+              </td>
+            </tr>
+          );
+
+          return [keyRow, newKeyValue];
+        })}
+      </tbody>
+    </table>
+  );
+}
 
 class APIKeyForm extends React.Component {
   constructor(props) {
@@ -7,62 +64,61 @@ class APIKeyForm extends React.Component {
     this.state = { keyLabel: '' };
 
     this.addKey = this.addKey.bind(this);
+    this.removeKey = this.removeKey.bind(this);
+    this.renderApiKeys = this.renderApiKeys.bind(this);
   }
 
   addKey(event) {
     event.preventDefault();
-    document.getElementById('addKeyForm').reset();
-    this.props.createApiKey(this.state.keyLabel)
-      .then(newToken => this.setState({ newToken }));
-    this.state.keyLabel = '';
+    const { keyLabel } = this.state;
+
+    this.setState({
+      keyLabel: ''
+    });
+
+    this.props.createApiKey(keyLabel);
+
     return false;
   }
 
-  removeKey(keyId) {
-    this.props.removeApiKey(keyId);
+  removeKey(key) {
+    const message = `Are you sure you want to delete "${key.label}"?`;
+
+    if (window.confirm(message)) {
+      this.props.removeApiKey(key.id);
+    }
+  }
+
+  renderApiKeys() {
+    const hasApiKeys = this.props.apiKeys && this.props.apiKeys.length > 0;
+
+    if (hasApiKeys) {
+      return (
+        <TokenMetadataList tokens={this.props.apiKeys} onRemove={this.removeKey} />
+      );
+    }
+    return <p>You have no API keys</p>;
   }
 
   render() {
-    const { newToken } = this.state;
-
-    const content = newToken ?
-      (
-        <div>
-          <p>Here is your new key. Copy it somewhere, you won't be able to see it later !</p>
-          <input type="text" readOnly value={newToken} />
-          <button>Copy to clipboard</button>
-        </div>) :
-      (<form id="addKeyForm" className="form" onSubmit={this.addKey}>
-        <h2 className="form__label">Key label</h2>
-        <input
-          type="text"
-          className="form__input"
-          placeholder="A name you will be able to recognize"
-          id="keyLabel"
-          onChange={(event) => { this.setState({ keyLabel: event.target.value }); }}
-        /><br />
-        <input
-          type="submit"
-          value="Create new Key"
-          disabled={this.state.keyLabel === ''}
-        />
-        </form>
-      );
-
     return (
       <div>
-        {content}
-        <table className="form__table">
-          <tbody id="form__table_new_key"></tbody>
-          <tbody>
-            {this.props.apiKeys && this.props.apiKeys.map(v => (
-              <tr key={v.id}>
-                <td><b>{v.label}</b><br />Created on: {v.createdAt}</td>
-                <td>Last used on:<br /> {v.lastUsedAt}</td>
-                <td><button className="form__table-button-remove" onClick={() => this.removeKey(v.id)}>Delete</button></td>
-              </tr>))}
-          </tbody>
-        </table>
+        <form id="addKeyForm" className="form" onSubmit={this.addKey}>
+          <label htmlFor="keyLabel" className="form__label">Name</label>
+          <input
+            type="text"
+            className="form__input"
+            placeholder="What is this token for?"
+            id="keyLabel"
+            onChange={(event) => { this.setState({ keyLabel: event.target.value }); }}
+          />
+          <input
+            type="submit"
+            value="Create new Key"
+            disabled={this.state.keyLabel === ''}
+          />
+        </form>
+        {this.renderApiKeys()}
       </div>
     );
   }
