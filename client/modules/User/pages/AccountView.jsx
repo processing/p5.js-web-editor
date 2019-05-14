@@ -3,13 +3,15 @@ import React from 'react';
 import { reduxForm } from 'redux-form';
 import { bindActionCreators } from 'redux';
 import { Link, browserHistory } from 'react-router';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import InlineSVG from 'react-inlinesvg';
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
-import { updateSettings, initiateVerification } from '../actions';
+import { updateSettings, initiateVerification, createApiKey, removeApiKey  } from '../actions';
 import AccountForm from '../components/AccountForm';
 import { validateSettings } from '../../../utils/reduxFormUtils';
 import GithubButton from '../components/GithubButton';
+import APIKeyForm from '../components/APIKeyForm';
 
 const exitUrl = require('../../../images/exit.svg');
 const logoUrl = require('../../../images/p5js-logo.svg');
@@ -36,7 +38,7 @@ class AccountView extends React.Component {
 
   render() {
     return (
-      <div className="form-container">
+      <section className="account form-container">
         <Helmet>
           <title>p5.js Web Editor | Account</title>
         </Helmet>
@@ -50,12 +52,24 @@ class AccountView extends React.Component {
         </div>
         <div className="form-container__content">
           <h2 className="form-container__title">My Account</h2>
-          <AccountForm {...this.props} />
-          <Link to="/account/advanced">Advanced Settings</Link>
-          <h2 className="form-container__divider">Or</h2>
-          <GithubButton buttonText="Login with Github" />
+          <Tabs>
+            <TabList>
+              <div className="preference__subheadings">
+                <Tab><h4 className="preference__subheading">Account</h4></Tab>
+                <Tab><h4 className="preference__subheading">Access Tokens</h4></Tab>
+              </div>
+            </TabList>
+            <TabPanel>
+              <AccountForm {...this.props} />
+              <h2 className="form-container__divider">Or</h2>
+              <GithubButton buttonText="Login with Github" />
+            </TabPanel>
+            <TabPanel>
+              <APIKeyForm {...this.props} />
+            </TabPanel>
+          </Tabs>
         </div>
-      </div>
+      </section>
     );
   }
 }
@@ -64,12 +78,15 @@ function mapStateToProps(state) {
   return {
     initialValues: state.user, // <- initialValues for reduxForm
     user: state.user,
+    apiKeys: state.user.apiKeys,
     theme: state.preferences.theme
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ updateSettings, initiateVerification }, dispatch);
+  return bindActionCreators({
+    updateSettings, initiateVerification, createApiKey, removeApiKey
+  }, dispatch);
 }
 
 function asyncValidate(formProps, dispatch, props) {
