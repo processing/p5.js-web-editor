@@ -9,7 +9,6 @@ import ResetPasswordView from './modules/User/pages/ResetPasswordView';
 import EmailVerificationView from './modules/User/pages/EmailVerificationView';
 import NewPasswordView from './modules/User/pages/NewPasswordView';
 import AccountView from './modules/User/pages/AccountView';
-import AdvancedSettingsView from './modules/User/pages/AdvancedSettingsView';
 // import SketchListView from './modules/Sketch/pages/SketchListView';
 import { getUser } from './modules/User/actions';
 import { stopSketch } from './modules/IDE/actions/ide';
@@ -39,7 +38,6 @@ const routes = store => (
     <Route path="/sketches" component={IDEView} />
     <Route path="/assets" component={IDEView} />
     <Route path="/account" component={AccountView} />
-    <Route path="/account/advanced" component={AdvancedSettingsView} />
     <Route path="/:username/sketches/:project_id" component={IDEView} />
     <Route path="/:username/sketches" component={IDEView} />
     <Route path="/about" component={IDEView} />
