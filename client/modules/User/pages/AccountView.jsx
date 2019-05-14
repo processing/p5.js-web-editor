@@ -38,7 +38,7 @@ class AccountView extends React.Component {
 
   render() {
     return (
-      <section className="account form-container">
+      <section className="form-container form-container--align-top">
         <Helmet>
           <title>p5.js Web Editor | Account</title>
         </Helmet>
