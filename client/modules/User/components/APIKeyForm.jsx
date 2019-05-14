@@ -44,7 +44,7 @@ function TokenMetadataList({ tokens, onRemove }) {
           );
 
           const newKeyValue = v.token && (
-            <tr key={v.id}>
+            <tr key={`${v.id}-newKey`}>
               <td colSpan="4">
                 <NewTokenDisplay token={v.token} />
               </td>

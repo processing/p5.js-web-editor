@@ -6,6 +6,10 @@
   align-items: center;
 }
 
+.form-container--align-top {
+  height: unset;
+}
+
 .form-container__header {
 	width: 100%;
 	padding: #{15 / $base-font-size}rem #{34 / $base-font-size}rem;
