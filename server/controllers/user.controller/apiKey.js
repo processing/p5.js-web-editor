@@ -30,9 +30,9 @@ export function createApiKey(req, res) {
       return;
     }
 
-    const hashedKey = await generateApiKey();
+    const keyToBeHashed = await generateApiKey();
 
-    user.apiKeys.push({ label: req.body.label, hashedKey });
+    const addedApiKeyIndex = user.apiKeys.push({ label: req.body.label, hashedKey: keyToBeHashed });
 
     user.save((saveErr) => {
       if (saveErr) {
@@ -40,7 +40,17 @@ export function createApiKey(req, res) {
         return;
       }
 
-      res.json({ token: hashedKey });
+      const apiKeys = user.apiKeys
+        .map((apiKey, index) => {
+          const fields = apiKey.publicFields;
+          const shouldIncludeToken = index === addedApiKeyIndex - 1;
+
+          return shouldIncludeToken ?
+            { ...fields, token: keyToBeHashed } :
+            fields;
+        });
+
+      res.json({ apiKeys });
     });
   });
 }
@@ -60,7 +70,16 @@ export function removeApiKey(req, res) {
       res.status(404).json({ error: 'Key does not exist for user' });
       return;
     }
+
     user.apiKeys.pull({ _id: req.params.keyId });
-    saveUser(res, user);
+
+    user.save((saveErr) => {
+      if (saveErr) {
+        res.status(500).json({ error: saveErr });
+        return;
+      }
+
+      res.status(200).json({ apiKeys: user.publicApiKeys });
+    });
   });
 }
