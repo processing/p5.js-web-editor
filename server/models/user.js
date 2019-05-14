@@ -16,6 +16,10 @@ const apiKeySchema = new Schema({
   hashedKey: { type: String, required: true },
 }, { timestamps: true, _id: true });
 
+apiKeySchema.virtual('publicFields').get(function publicFields() {
+  return { id: this.id, label: this.label, lastUsedAt: this.lastUsedAt };
+});
+
 apiKeySchema.virtual('id').get(function getApiKeyId() {
   return this._id.toHexString();
 });
@@ -94,6 +98,11 @@ userSchema.pre('save', function checkApiKey(next) { // eslint-disable-line consi
 userSchema.virtual('id').get(function idToString() {
   return this._id.toHexString();
 });
+
+userSchema.virtual('publicApiKeys').get(function publicApiKeys() {
+  return this.apiKeys.map(apiKey => apiKey.publicFields);
+});
+
 
 userSchema.set('toJSON', {
   virtuals: true
