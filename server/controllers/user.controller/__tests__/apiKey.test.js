@@ -1,18 +1,58 @@
 /* @jest-environment node */
 
+import last from 'lodash/last';
 import { createApiKey, removeApiKey } from '../../user.controller/apiKey';
 
 jest.mock('../../../models/user');
 
-const createResponseMock = function (done) {
+/*
+  Create a mock object representing an express Response
+*/
+const createResponseMock = function createResponseMock(done) {
   const json = jest.fn(() => {
     if (done) { done(); }
   });
+
   const status = jest.fn(() => ({ json }));
 
   return {
     status,
     json
+  };
+};
+
+/*
+  Create a mock of the mongoose User model
+*/
+const createUserMock = function createUserMock() {
+  const apiKeys = [];
+  let nextId = 0;
+
+  apiKeys.push = ({ label, hashedKey }) => {
+    const id = nextId;
+    nextId += 1;
+    const publicFields = { id, label };
+    const allFields = { ...publicFields, hashedKey };
+
+    Object.defineProperty(allFields, 'publicFields', {
+      value: publicFields,
+      enumerable: false
+    });
+
+    return Array.prototype.push.call(apiKeys, allFields);
+  };
+
+  apiKeys.pull = ({ _id }) => {
+    const index = apiKeys.findIndex(({ id }) => id === _id);
+    return apiKeys.splice(index, 1);
+  };
+
+  return {
+    apiKeys,
+    get publicApiKeys() {
+      return apiKeys.map(k => k.publicFields)
+    },
+    save: jest.fn(callback => callback())
   };
 };
 
@@ -38,9 +78,8 @@ describe('user.controller', () => {
     });
 
     it('returns an error if label not provided', () => {
-      User.__setFindById(undefined, {
-        apiKeys: []
-      });
+      User.__setFindById(undefined, createUserMock());
+
       const request = { user: { id: '1234' }, body: {} };
       const response = createResponseMock();
 
@@ -60,17 +99,18 @@ describe('user.controller', () => {
         body: { label: 'my key' }
       };
 
-      const foundUser = {
-        apiKeys: [],
-        save: jest.fn(callback => callback())
-      };
+      const user = createUserMock();
 
       const checkExpecations = () => {
-        expect(foundUser.apiKeys[0].label).toBe('my key');
-        expect(typeof foundUser.apiKeys[0].hashedKey).toBe('string');
+        const lastKey = last(user.apiKeys);
+
+        expect(lastKey.label).toBe('my key');
+        expect(typeof lastKey.hashedKey).toBe('string');
 
         expect(response.json).toHaveBeenCalledWith({
-          token: foundUser.apiKeys[0].hashedKey
+          apiKeys: [
+            { id: 0, label: 'my key', token: lastKey.hashedKey }
+          ]
         });
 
         done();
@@ -78,7 +118,7 @@ describe('user.controller', () => {
 
       response = createResponseMock(checkExpecations);
 
-      User.__setFindById(undefined, foundUser);
+      User.__setFindById(undefined, user);
 
       createApiKey(request, response);
     });
@@ -105,11 +145,8 @@ describe('user.controller', () => {
       };
       const response = createResponseMock();
 
-      const foundUser = {
-        apiKeys: [],
-        save: jest.fn(callback => callback())
-      };
-      User.__setFindById(undefined, foundUser);
+      const user = createUserMock();
+      User.__setFindById(undefined, user);
 
       removeApiKey(request, response);
 
@@ -119,24 +156,27 @@ describe('user.controller', () => {
       });
     });
 
-    it.skip('removes key if it exists', () => {
+    it('removes key if it exists', () => {
       const request = {
         user: { id: '1234' },
-        params: { keyId: 'the-key' }
+        params: { keyId: 0 }
       };
       const response = createResponseMock();
 
-      const foundUser = {
-        apiKeys: [{ label: 'the-label', id: 'the-key' }],
-        save: jest.fn(callback => callback())
-      };
-      User.__setFindById(undefined, foundUser);
+      const user = createUserMock();
+
+      user.apiKeys.push({ label: 'first key' }); // id 0
+      user.apiKeys.push({ label: 'second key' }); // id 1
+
+      User.__setFindById(undefined, user);
 
       removeApiKey(request, response);
 
-      expect(response.status).toHaveBeenCalledWith(404);
+      expect(response.status).toHaveBeenCalledWith(200);
       expect(response.json).toHaveBeenCalledWith({
-        error: 'Key does not exist for user'
+        apiKeys: [
+          { id: 1, label: 'second key' }
+        ]
       });
     });
   });
