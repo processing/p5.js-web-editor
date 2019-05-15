@@ -28,7 +28,7 @@ class AccountView extends React.Component {
   }
 
   closeAccountPage() {
-    browserHistory.goBack();
+    browserHistory.push(this.props.previousPath);
   }
 
   gotoHomePage() {
@@ -79,6 +79,7 @@ class AccountView extends React.Component {
 function mapStateToProps(state) {
   return {
     initialValues: state.user, // <- initialValues for reduxForm
+    previousPath: state.ide.previousPath,
     user: state.user,
     apiKeys: state.user.apiKeys,
     theme: state.preferences.theme
@@ -110,6 +111,7 @@ function asyncValidate(formProps, dispatch, props) {
 }
 
 AccountView.propTypes = {
+  previousPath: PropTypes.string.isRequired,
   theme: PropTypes.string.isRequired
 };
 
