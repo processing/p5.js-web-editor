@@ -2,12 +2,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { reduxForm } from 'redux-form';
 import { bindActionCreators } from 'redux';
-import { Link, browserHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import InlineSVG from 'react-inlinesvg';
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
-import { updateSettings, initiateVerification, createApiKey, removeApiKey  } from '../actions';
+import { updateSettings, initiateVerification, createApiKey, removeApiKey } from '../actions';
 import AccountForm from '../components/AccountForm';
 import { validateSettings } from '../../../utils/reduxFormUtils';
 import GithubButton from '../components/GithubButton';
@@ -61,7 +61,9 @@ class AccountView extends React.Component {
             <TabPanel>
               <AccountForm {...this.props} />
               <h2 className="form-container__divider">Social Login</h2>
-              <p className="form-container__context">Link this account with your GitHub account to allow login from both.</p>
+              <p className="form-container__context">
+                Link this account with your GitHub account to allow login from both.
+              </p>
               <GithubButton buttonText="Login with GitHub" />
             </TabPanel>
             <TabPanel>
