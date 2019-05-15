@@ -46,12 +46,10 @@ passport.use(new BasicStrategy((userid, key, done) => {
   User.findOne({ username: userid }, (err, user) => { // eslint-disable-line consistent-return
     if (err) { return done(err); }
     if (!user) { return done(null, false); }
-    user.findMatchingKey(key, (innerErr, isMatch, keyID) => {
+    user.findMatchingKey(key, (innerErr, isMatch, keyDocument) => {
       if (isMatch) {
-        User.update(
-          { 'apiKeys._id': keyID },
-          { '$set': { 'apiKeys.$.lastUsedAt': Date.now() } }
-        );
+        keyDocument.lastUsedAt = Date.now();
+        user.save();
         return done(null, user);
       }
       return done(null, false, { msg: 'Invalid username or API key' });

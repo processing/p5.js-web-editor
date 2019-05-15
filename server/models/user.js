@@ -133,7 +133,7 @@ userSchema.methods.findMatchingKey = function findMatchingKey(candidateKey, cb) 
   this.apiKeys.forEach((k) => {
     if (bcrypt.compareSync(candidateKey, k.hashedKey)) {
       foundOne = true;
-      cb(null, true, k._id);
+      cb(null, true, k);
     }
   });
   if (!foundOne) cb('Matching API key not found !', false, null);
