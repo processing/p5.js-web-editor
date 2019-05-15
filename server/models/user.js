@@ -16,18 +16,28 @@ const apiKeySchema = new Schema({
   hashedKey: { type: String, required: true },
 }, { timestamps: true, _id: true });
 
-apiKeySchema.virtual('publicFields').get(function publicFields() {
-  return {
-    id: this.id, label: this.label, lastUsedAt: this.lastUsedAt, createdAt: this.createdAt
-  };
-});
-
 apiKeySchema.virtual('id').get(function getApiKeyId() {
   return this._id.toHexString();
 });
 
+/**
+ * When serialising an APIKey instance, the `hashedKey` field
+ * should never be exposed to the client. So we only return
+ * a safe list of fields when toObject and toJSON are called.
+*/
+function apiKeyMetadata(doc, ret, options) {
+  return {
+    id: doc.id, label: doc.label, lastUsedAt: doc.lastUsedAt, createdAt: doc.createdAt
+  };
+}
+
+apiKeySchema.set('toObject', {
+  transform: apiKeyMetadata
+});
+
 apiKeySchema.set('toJSON', {
-  virtuals: true
+  virtuals: true,
+  transform: apiKeyMetadata
 });
 
 const userSchema = new Schema({
@@ -101,15 +111,9 @@ userSchema.virtual('id').get(function idToString() {
   return this._id.toHexString();
 });
 
-userSchema.virtual('publicApiKeys').get(function publicApiKeys() {
-  return this.apiKeys.map(apiKey => apiKey.publicFields);
-});
-
-
 userSchema.set('toJSON', {
   virtuals: true
 });
-
 
 /**
  * Helper method for validating user's password.

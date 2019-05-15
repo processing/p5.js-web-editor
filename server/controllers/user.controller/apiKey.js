@@ -42,7 +42,7 @@ export function createApiKey(req, res) {
 
       const apiKeys = user.apiKeys
         .map((apiKey, index) => {
-          const fields = apiKey.publicFields;
+          const fields = apiKey.toObject();
           const shouldIncludeToken = index === addedApiKeyIndex - 1;
 
           return shouldIncludeToken ?
@@ -79,7 +79,7 @@ export function removeApiKey(req, res) {
         return;
       }
 
-      res.status(200).json({ apiKeys: user.publicApiKeys });
+      res.status(200).json({ apiKeys: user.apiKeys });
     });
   });
 }
