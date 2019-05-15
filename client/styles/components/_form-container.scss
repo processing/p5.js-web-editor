@@ -6,6 +6,10 @@
   align-items: center;
 }
 
+.form-container--align-left {
+  text-align: left;
+}
+
 .form-container--align-top {
   height: unset;
 }
@@ -25,9 +29,19 @@
 	align-items: center;
 }
 
+.form-container--align-left .form-container__content {
+  align-items: left;
+}
+
 .form-container__title {
 	font-weight: normal;
 	color: $form-title-color;
+}
+
+.form-container__context {
+  @include themify() {
+    color: getThemifyVariable('secondary-text-color')
+  }
 }
 
 .form-container__divider {
@@ -40,21 +54,4 @@
 
 .form-container__exit-button {
   @extend %none-themify-icon-with-hover;
-}
-
-.form__table {
-  display: block;
-  max-width: 900px;
-  border-collapse: collapse;
-  & td {
-    max-width: 300px;
-    border: 1px solid #ddd;
-    padding: 0 10px 0 10px;
-  }
-  & tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  & tr.new-key {
-    background-color: #f2f2f2;
-  }
 }

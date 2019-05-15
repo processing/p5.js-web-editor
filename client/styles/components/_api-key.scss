@@ -1,0 +1,102 @@
+.api-key-form__summary {
+  padding-top: #{25 / $base-font-size}rem;
+  @include themify() {
+    color: getThemifyVariable('heading-text-color');
+  }
+}
+
+.api-key-form__section {
+  padding-bottom: #{15 / $base-font-size}rem;
+}
+
+.api-key-form__title {
+  padding: #{15 / $base-font-size}rem 0;
+  font-size: #{21 / $base-font-size}rem;
+  font-weight: bold;
+  @include themify() {
+    color: getThemifyVariable('heading-text-color');
+  }
+}
+
+.api-key-form__create-button {
+  display: flex;
+  justify-content: center;
+}
+
+.api-key-form__create-button .isvg {
+  padding-right: 10px;
+}
+
+.api-key-list {
+  display: block;
+  max-width: 900px;
+  border-collapse: collapse;
+  table-layout: fixed;
+
+  thead tr th {
+    width: 30%;
+  }
+
+  thead tr th:last-child {
+    width: 10%;
+  }
+
+  th {
+    padding: #{5 / $base-font-size}rem;
+  }
+
+  td {
+    padding: #{15 / $base-font-size}rem #{5 / $base-font-size}rem;
+  }
+
+  tbody tr:nth-child(odd) {
+    background-color: #f2f2f2;
+  }
+}
+
+.api-key-list__action {
+  text-align: center;
+}
+
+.api-key-list__delete-button {
+    width:#{20 / $base-font-size}rem;
+    height:#{20 / $base-font-size}rem;
+
+    text-align: center;
+
+    @include themify() {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      position: initial;
+      left: 0;
+      top: 0;
+        & g {
+          opacity: 1;
+          fill: getThemifyVariable('icon-color');
+        }
+    }
+}
+
+.api-key-list__delete-button:hover {
+  @include themify() {
+      & g {
+        opacity: 1;
+        fill: getThemifyVariable('icon-hover-color');
+      }
+  }
+}
+
+.api-key-form__new-token__title {
+  margin-bottom: #{10 / $base-font-size}rem;
+  font-size: #{18 / $base-font-size}rem;
+  font-weight: bold;
+  @include themify() {
+    color: getThemifyVariable('heading-text-color');
+  }
+}
+
+.api-key-form__new-token__info {
+  padding: #{10 / $base-font-size}rem 0;
+}
