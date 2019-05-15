@@ -100,6 +100,12 @@ app.use('/api', requestsOfTypeJSON(), sessions);
 app.use('/api', requestsOfTypeJSON(), files);
 app.use('/api', requestsOfTypeJSON(), projects);
 app.use('/api', requestsOfTypeJSON(), aws);
+
+// This is a temporary way to test access via Personal Access Tokens
+// Sending a valid username:<personal-access-token> combination will
+// return the user's information.
+app.get('/api/auth/access-check', passport.authenticate('basic', { session: false }), (req, res) => res.json(req.user));
+
 app.use(assetRoutes);
 // this is supposed to be TEMPORARY -- until i figure out
 // isomorphic rendering
