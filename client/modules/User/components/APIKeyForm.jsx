@@ -10,9 +10,10 @@ const plusIcon = require('../../../images/plus-icon.svg');
 
 export const APIKeyPropType = PropTypes.shape({
   id: PropTypes.object.isRequired,
+  token: PropTypes.object,
   label: PropTypes.string.isRequired,
-  createdAt: PropTypes.object.isRequired,
-  lastUsedAt: PropTypes.object.isRequired,
+  createdAt: PropTypes.string.isRequired,
+  lastUsedAt: PropTypes.string,
 });
 
 class APIKeyForm extends React.Component {

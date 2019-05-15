@@ -12,7 +12,7 @@ const { Schema } = mongoose;
 
 const apiKeySchema = new Schema({
   label: { type: String, default: 'API Key' },
-  lastUsedAt: { type: Date, required: true, default: Date.now },
+  lastUsedAt: { type: Date },
   hashedKey: { type: String, required: true },
 }, { timestamps: true, _id: true });
 
