@@ -63,7 +63,11 @@ class APIKeyForm extends React.Component {
 
     return (
       <div className="api-key-form">
-        <p className="api-key-form__summary">Personal Access Tokens act like your password to allow automated scripts to access the Editor API. Create a token for each script that needs access.</p>
+        <p className="api-key-form__summary">
+          Personal Access Tokens act like your password to allow automated
+          scripts to access the Editor API. Create a token for each script
+          that needs access.
+        </p>
 
         <div className="api-key-form__section">
           <h3 className="api-key-form__title">Create new token</h3>
@@ -90,7 +94,10 @@ class APIKeyForm extends React.Component {
             keyWithToken && (
               <div className="api-key-form__new-token">
                 <h4 className="api-key-form__new-token__title">Your new access token</h4>
-                <p className="api-key-form__new-token__info">Make sure to copy your new personal access token now. You won’t be able to see it again!</p>
+                <p className="api-key-form__new-token__info">
+                  Make sure to copy your new personal access token now.
+                  You won’t be able to see it again!
+                </p>
                 <CopyableInput label={keyWithToken.label} value={keyWithToken.token} />
               </div>
             )
