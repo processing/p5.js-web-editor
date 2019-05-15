@@ -22,13 +22,13 @@ function APIKeyList({ apiKeys, onRemove }) {
       </thead>
       <tbody>
         {orderBy(apiKeys, ['createdAt'], ['desc']).map((key) => {
-          const hasNewToken = !!key.token;
+          const lastUsed = key.lastUsedAt ? distanceInWordsToNow(new Date(key.lastUsedAt), { addSuffix: true }) : 'Never';
 
           return (
             <tr key={key.id}>
               <td>{key.label}</td>
               <td>{format(new Date(key.createdAt), 'MMM D, YYYY h:mm A')}</td>
-              <td>{distanceInWordsToNow(new Date(key.lastUsedAt), { addSuffix: true })}</td>
+              <td>{lastUsed}</td>
               <td className="api-key-list__action">
                 <button className="api-key-list__delete-button" onClick={() => onRemove(key)}>
                   <InlineSVG src={trashCan} alt="Delete Key" />
