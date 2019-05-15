@@ -9,6 +9,11 @@
   }
 }
 
+.form--inline {
+  display: flex;
+  align-items: center;
+}
+
 .form__cancel-button {
   margin-top: #{10 / $base-font-size}rem;
   font-size: #{12 / $base-font-size}rem;
@@ -20,12 +25,21 @@
   color: $form-navigation-options-color;
 }
 
+.form__legend{
+  font-size: #{21 / $base-font-size}rem;
+  font-weight: bold;
+}
+
 .form__label {
   color: $secondary-form-title-color;
   font-size: #{12 / $base-font-size}rem;
   margin-top: #{25 / $base-font-size}rem;
   margin-bottom: #{7 / $base-font-size}rem;
   display: block;
+}
+
+.form__label--hidden {
+  @extend %hidden-element;
 }
 
 .form__input {
@@ -50,26 +64,4 @@
 
 .form input[type="submit"]:disabled {
   cursor: not-allowed;
-}
-
-.form__table-button-remove {
-  @extend %forms-button;
-  margin: 1rem 0 1rem 0;
-  @include themify() {
-    color: getThemifyVariable('console-error-background-color');
-    border-color: getThemifyVariable('console-error-background-color');
-    &:enabled:hover {
-        border-color: getThemifyVariable('console-error-background-color');
-        background-color: getThemifyVariable('console-error-background-color');
-    }
-    &:enabled:active {
-        border-color: getThemifyVariable('console-error-background-color');
-        background-color: getThemifyVariable('console-error-background-color');
-    }
-  }
-}
-
-.form__table-button-copy{
-    @extend %forms-button;
-    margin: 1rem 0 1rem 0;
 }

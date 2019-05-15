@@ -16,7 +16,6 @@ import APIKeyForm from '../components/APIKeyForm';
 const exitUrl = require('../../../images/exit.svg');
 const logoUrl = require('../../../images/p5js-logo.svg');
 
-
 class AccountView extends React.Component {
   constructor(props) {
     super(props);
@@ -38,7 +37,7 @@ class AccountView extends React.Component {
 
   render() {
     return (
-      <section className="form-container form-container--align-top">
+      <section className="form-container form-container--align-top form-container--align-left account-container">
         <Helmet>
           <title>p5.js Web Editor | Account</title>
         </Helmet>
@@ -52,7 +51,7 @@ class AccountView extends React.Component {
         </div>
         <div className="form-container__content">
           <h2 className="form-container__title">My Account</h2>
-          <Tabs>
+          <Tabs className="account__tabs">
             <TabList>
               <div className="preference__subheadings">
                 <Tab><h4 className="preference__subheading">Account</h4></Tab>
@@ -61,8 +60,9 @@ class AccountView extends React.Component {
             </TabList>
             <TabPanel>
               <AccountForm {...this.props} />
-              <h2 className="form-container__divider">Or</h2>
-              <GithubButton buttonText="Login with Github" />
+              <h2 className="form-container__divider">Social Login</h2>
+              <p className="form-container__context">Link this account with your GitHub account to allow login from both.</p>
+              <GithubButton buttonText="Login with GitHub" />
             </TabPanel>
             <TabPanel>
               <APIKeyForm {...this.props} />
