@@ -240,7 +240,7 @@ export function removeApiKey(keyId) {
     axios.delete(`${ROOT_URL}/account/api-keys/${keyId}`, { withCredentials: true })
       .then((response) => {
         dispatch({
-          type: ActionTypes.REMOVED_API_KEY,
+          type: ActionTypes.API_KEY_REMOVED,
           user: response.data
         });
       })
