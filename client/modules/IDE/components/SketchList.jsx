@@ -36,7 +36,9 @@ class SketchList extends React.Component {
   }
 
   renderEmptyTable() {
-    if (!this.props.loading && this.props.sketches.length === 0) return (<p className="sketches-table__empty">No sketches.</p>);
+    if (!this.props.loading && this.props.sketches.length === 0) {
+      return (<p className="sketches-table__empty">No sketches.</p>);
+    }
     return null;
   }
 

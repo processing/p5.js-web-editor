@@ -283,8 +283,6 @@ class Editor extends React.Component {
     }
   }
 
-  _cm: CodeMirror.Editor
-
   render() {
     const editorSectionClass = classNames({
       'editor': true,

@@ -16,7 +16,7 @@ module.exports = [{
 
   entry: {
     app: [
-      'babel-polyfill',
+      '@babel/polyfill',
       path.resolve(__dirname, '../client/index.jsx')
     ],
     vendor: [

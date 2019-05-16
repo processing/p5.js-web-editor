@@ -29,17 +29,8 @@ module.exports = [{
         loader: 'babel-loader',
         query: {
           presets: [
-            'react',
-            'env',
-            'stage-0',
-          ],
-          plugins: [
-            [
-              'babel-plugin-webpack-loaders', {
-                'config': path.resolve(__dirname, './config.babel.js'),
-                "verbose": false
-              }
-            ]
+            '@babel/preset-react',
+            '@babel/preset-env'
           ]
         },
       }
@@ -74,17 +65,8 @@ module.exports = [{
         loader: 'babel-loader',
         query: {
           presets: [
-            'react',
-            'env',
-            'stage-0',
-          ],
-          plugins: [
-            [
-              'babel-plugin-webpack-loaders', {
-                'config': path.resolve(__dirname, './config.babel.js'),
-                "verbose": false
-              }
-            ]
+            '@babel/preset-react',
+            '@babel/preset-env'
           ]
         },
       }
@@ -119,17 +101,8 @@ module.exports = [{
         loader: 'babel-loader',
         query: {
           presets: [
-            'react',
-            'env',
-            'stage-0',
-          ],
-          plugins: [
-            [
-              'babel-plugin-webpack-loaders', {
-                'config': path.resolve(__dirname, './config.babel.js'),
-                "verbose": false
-              }
-            ]
+            '@babel/preset-react',
+            '@babel/preset-env'
           ]
         },
       }
