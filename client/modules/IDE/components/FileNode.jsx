@@ -67,17 +67,15 @@ export class FileNode extends React.Component {
   validateFileName() {
     const oldFileExtension = this.originalFileName.match(/\.[0-9a-z]+$/i);
     const newFileExtension = this.props.name.match(/\.[0-9a-z]+$/i);
-    if (oldFileExtension && !newFileExtension) {
+    if (this.props.name.length) {
       this.props.updateFileName(this.props.id, this.originalFileName);
-    }
-    if (
+    } else if (oldFileExtension && !newFileExtension) {
+      this.props.updateFileName(this.props.id, this.originalFileName);
+    } else if (
       oldFileExtension &&
       newFileExtension &&
       oldFileExtension[0].toLowerCase() !== newFileExtension[0].toLowerCase()
     ) {
-      this.props.updateFileName(this.props.id, this.originalFileName);
-    }
-    if (this.props.name.length) {
       this.props.updateFileName(this.props.id, this.originalFileName);
     }
   }
