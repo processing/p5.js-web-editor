@@ -38,7 +38,6 @@
     "url": "git+https://github.com/catarak/p5.js-web-editor.git"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.0.0",
     "@babel/plugin-proposal-decorators": "^7.0.0",
     "@babel/plugin-proposal-do-expressions": "^7.0.0",
