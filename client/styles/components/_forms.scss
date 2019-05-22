@@ -5,7 +5,7 @@
   font-size: #{9 / $base-font-size}rem;
   text-align: left;
   @include themify() {
-    color: getThemifyVariable('error-color')
+    color: getThemifyVariable('error-color');
   }
 }
 
@@ -22,7 +22,9 @@
 .form__navigation-options {
   margin-top: #{16 / $base-font-size}rem;
   font-size: #{12 / $base-font-size}rem;
-  color: $form-navigation-options-color;
+  @include themify() {
+    color: getThemifyVariable('form-navigation-options-color');
+  }
 }
 
 .form__legend{
@@ -31,11 +33,13 @@
 }
 
 .form__label {
-  color: $secondary-form-title-color;
   font-size: #{12 / $base-font-size}rem;
   margin-top: #{25 / $base-font-size}rem;
   margin-bottom: #{7 / $base-font-size}rem;
   display: block;
+  @include themify() {
+    color: getThemifyVariable('form-secondary-title-color');
+  }
 }
 
 .form__label--hidden {
@@ -45,8 +49,10 @@
 .form__input {
   width: #{360 / $base-font-size}rem;
   height: #{40 / $base-font-size}rem;
-  color: $icon-hover-color;
-  border-color: $secondary-form-title-color;
+  @include themify() {
+    color: getThemifyVariable('form-input-text-color');
+    border-color: getThemifyVariable('form-border-color');
+  }
 }
 
 .form__context {
@@ -55,7 +61,9 @@
 }
 
 .form__status {
-  color: $form-navigation-options-color;
+  @include themify() {
+    color: getThemifyVariable('form-navigation-options-color');
+  }
 }
 
 .form input[type="submit"] {
