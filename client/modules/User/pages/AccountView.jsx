@@ -24,7 +24,7 @@ class AccountView extends React.Component {
   }
 
   componentDidMount() {
-    document.body.className = this.props.theme;
+    document.body.className = 'light';
   }
 
   closeAccountPage() {
