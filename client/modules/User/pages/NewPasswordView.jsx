@@ -31,7 +31,8 @@ class NewPasswordView extends React.Component {
     const newPasswordClass = classNames({
       'new-password': true,
       'new-password--invalid': this.props.user.resetPasswordInvalid,
-      'form-container': true
+      'form-container': true,
+      'user': true
     });
     return (
       <div className={newPasswordClass}>

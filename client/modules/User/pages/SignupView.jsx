@@ -34,7 +34,7 @@ class SignupView extends React.Component {
       return null;
     }
     return (
-      <div className="form-container">
+      <div className="form-container user">
         <Helmet>
           <title>p5.js Web Editor | Signup</title>
         </Helmet>

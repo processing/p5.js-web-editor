@@ -1,0 +1,6 @@
+.user {
+  @include themify() {
+    color: getThemifyVariable('primary-text-color');
+    background-color: getThemifyVariable('background-color');
+  }
+}
