@@ -60,11 +60,13 @@ class AccountView extends React.Component {
             </TabList>
             <TabPanel>
               <AccountForm {...this.props} />
-              <h2 className="form-container__divider">Social Login</h2>
-              <p className="form-container__context">
-                Link this account with your GitHub account to allow login from both.
-              </p>
-              <GithubButton buttonText="Login with GitHub" />
+              <div className="account__social">
+                <h2 className="form-container__divider">Social Login</h2>
+                <p className="account__social__context">
+                  Link this account with your GitHub account to allow login from both.
+                </p>
+                <GithubButton buttonText="Login with GitHub" />
+              </div>
             </TabPanel>
             <TabPanel>
               <APIKeyForm {...this.props} />
