@@ -10,6 +10,17 @@ import {
 
 export * from './user.controller/apiKey';
 
+export function userResponse(user) {
+  return {
+    email: user.email,
+    username: user.username,
+    preferences: user.preferences,
+    apiKeys: user.apiKeys,
+    verified: user.verified,
+    id: user._id
+  };
+}
+
 const random = (done) => {
   crypto.randomBytes(20, (err, buf) => {
     const token = buf.toString('hex');
@@ -78,13 +89,7 @@ export function createUser(req, res, next) {
             });
 
             mail.send(mailOptions, (mailErr, result) => { // eslint-disable-line no-unused-vars
-              res.json({
-                email: req.user.email,
-                username: req.user.username,
-                preferences: req.user.preferences,
-                verified: req.user.verified,
-                id: req.user._id
-              });
+              res.json(userResponse(req.user));
             });
           });
         });
@@ -224,13 +229,7 @@ export function emailVerificationInitiate(req, res) {
             user.verifiedTokenExpires = EMAIL_VERIFY_TOKEN_EXPIRY_TIME; // 24 hours
             user.save();
 
-            res.json({
-              email: req.user.email,
-              username: req.user.username,
-              preferences: req.user.preferences,
-              verified: user.verified,
-              id: req.user._id
-            });
+            res.json(userResponse(req.user));
           }
         });
       });
@@ -269,12 +268,7 @@ export function updatePassword(req, res) {
     user.resetPasswordExpires = undefined;
 
     user.save((saveErr) => {
-      req.logIn(user, loginErr => res.json({
-        email: req.user.email,
-        username: req.user.username,
-        preferences: req.user.preferences,
-        id: req.user._id
-      }));
+      req.logIn(user, loginErr => res.json(userResponse(req.user)));
     });
   });
 
@@ -294,13 +288,7 @@ export function saveUser(res, user) {
       return;
     }
 
-    res.json({
-      email: user.email,
-      username: user.username,
-      preferences: user.preferences,
-      verified: user.verified,
-      id: user._id
-    });
+    res.json(userResponse(user));
   });
 }
 
