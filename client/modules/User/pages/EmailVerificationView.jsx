@@ -65,7 +65,7 @@ class EmailVerificationView extends React.Component {
     }
 
     return (
-      <div className="form-container">
+      <div className="form-container user">
         <Helmet>
           <title>p5.js Web Editor | Email Verification</title>
         </Helmet>

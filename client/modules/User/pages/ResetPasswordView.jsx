@@ -30,7 +30,8 @@ class ResetPasswordView extends React.Component {
     const resetPasswordClass = classNames({
       'reset-password': true,
       'reset-password--submitted': this.props.user.resetPasswordInitiate,
-      'form-container': true
+      'form-container': true,
+      'user': true
     });
     return (
       <div className={resetPasswordClass}>
