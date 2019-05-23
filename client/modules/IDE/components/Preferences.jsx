@@ -59,9 +59,9 @@ class Preferences extends React.Component {
         </Helmet>
         <Tabs>
           <TabList>
-            <div className="preference__subheadings">
-              <Tab><h4 className="preference__subheading">General Settings</h4></Tab>
-              <Tab><h4 className="preference__subheading">Accessibility</h4></Tab>
+            <div className="tabs__titles">
+              <Tab><h4 className="tabs__title">General Settings</h4></Tab>
+              <Tab><h4 className="tabs__title">Accessibility</h4></Tab>
             </div>
           </TabList>
           <TabPanel>
