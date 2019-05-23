@@ -53,9 +53,9 @@ class AccountView extends React.Component {
           <h2 className="form-container__title">My Account</h2>
           <Tabs className="account__tabs">
             <TabList>
-              <div className="preference__subheadings">
-                <Tab><h4 className="preference__subheading">Account</h4></Tab>
-                <Tab><h4 className="preference__subheading">Access Tokens</h4></Tab>
+              <div className="tabs__titles">
+                <Tab><h4 className="tabs__title">Account</h4></Tab>
+                <Tab><h4 className="tabs__title">Access Tokens</h4></Tab>
               </div>
             </TabList>
             <TabPanel>
