@@ -10,6 +10,7 @@ import * as ProjectActions from '../actions/project';
 import * as SketchActions from '../actions/projects';
 import * as ToastActions from '../actions/toast';
 import orderListByDate from '../../../selectors/Sort-Sketches';
+import Loader from '../../App/components/loader';
 
 const trashCan = require('../../../images/trash-can.svg');
 const arrowUp = require('../../../images/arrow5_up.svg');
@@ -38,6 +39,21 @@ class SketchList extends React.Component {
       this.props.sortProjects(this.state[sortState], sortState);
     });
   }
+
+  hasSketches() {
+    return !this.props.loading && this.props.sketches.length > 0;
+  }
+
+  renderLoader() {
+    if (this.props.loading) return <Loader />;
+    return null;
+  }
+
+  renderEmptyTable() {
+    if (!this.props.loading && this.props.sketches.length === 0) return (<p className="sketches-table__empty">No sketches.</p>);
+    return null;
+  }
+
   render() {
     console.log('rendering');
     const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
@@ -46,10 +62,9 @@ class SketchList extends React.Component {
         <Helmet>
           <title>{this.getSketchesTitle()}</title>
         </Helmet>
-        { this.props.sketches.length === 0 &&
-          <p className="sketches-table__empty">No sketches.</p>
-        }
-        { this.props.sketches.length > 0 &&
+        {this.renderLoader()}
+        {this.renderEmptyTable()}
+        {this.hasSketches() &&
           <table className="sketches-table" summary="table containing all saved projects">
             <thead>
               <tr>
@@ -110,6 +125,7 @@ SketchList.propTypes = {
   })).isRequired,
   sortProjects: PropTypes.func.isRequired,
   username: PropTypes.string,
+  loading: PropTypes.bool.isRequired,
   deleteProject: PropTypes.func.isRequired
 };
 
@@ -122,6 +138,7 @@ function mapStateToProps(state) {
     user: state.user,
     sketches: orderListByDate(state),
     sorting: state.sorting,
+    loading: state.loading
   };
 }
 
