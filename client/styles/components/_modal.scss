@@ -1,7 +1,8 @@
 .modal {
   position: absolute;
   top: #{60 / $base-font-size}rem;
-  right: #{400 / $base-font-size}rem;
+  right: 50%;
+  transform: translate(50%, 0);
   z-index: 100;
   outline: none;
 }

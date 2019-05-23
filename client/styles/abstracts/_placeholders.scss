@@ -87,11 +87,17 @@
 			border-color: getThemifyVariable('button-background-hover-color');
 			background-color: getThemifyVariable('button-background-hover-color');
 			color: getThemifyVariable('button-hover-color');
+			& g {
+				fill: getThemifyVariable('button-hover-color');
+			}
 		}
 		&:enabled:active {
 			border-color: getThemifyVariable('button-background-active-color');
 			background-color: getThemifyVariable('button-background-active-color');
 			color: getThemifyVariable('button-active-color');
+			& g {
+				fill: getThemifyVariable('button-active-color');
+			}
 		}
 	}
 }

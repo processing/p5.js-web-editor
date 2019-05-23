@@ -24,11 +24,27 @@ export class FileNode extends React.Component {
     this.hideFileOptions = this.hideFileOptions.bind(this);
     this.showEditFileName = this.showEditFileName.bind(this);
     this.hideEditFileName = this.hideEditFileName.bind(this);
+    this.onBlurComponent = this.onBlurComponent.bind(this);
+    this.onFocusComponent = this.onFocusComponent.bind(this);
 
     this.state = {
       isOptionsOpen: false,
       isEditingName: false,
+      isFocused: false,
     };
+  }
+
+  onFocusComponent() {
+    this.setState({ isFocused: true });
+  }
+
+  onBlurComponent() {
+    this.setState({ isFocused: false });
+    setTimeout(() => {
+      if (!this.state.isFocused) {
+        this.hideFileOptions();
+      }
+    }, 200);
   }
 
   handleFileClick(e) {
@@ -66,6 +82,9 @@ export class FileNode extends React.Component {
 
   toggleFileOptions(e) {
     e.preventDefault();
+    if (!this.props.canEdit) {
+      return;
+    }
     if (this.state.isOptionsOpen) {
       this.setState({ isOptionsOpen: false });
     } else {
@@ -89,7 +108,7 @@ export class FileNode extends React.Component {
   renderChild(childId) {
     return (
       <li key={childId}>
-        <ConnectedFileNode id={childId} parentId={this.props.id} />
+        <ConnectedFileNode id={childId} parentId={this.props.id} canEdit={this.props.canEdit} />
       </li>
     );
   }
@@ -103,6 +122,7 @@ export class FileNode extends React.Component {
       'sidebar__file-item--editing': this.state.isEditingName,
       'sidebar__file-item--closed': this.props.isFolderClosed
     });
+
     return (
       <div className={itemClass}>
         {(() => { // eslint-disable-line
@@ -154,7 +174,8 @@ export class FileNode extends React.Component {
                   ref={(element) => { this[`fileOptions-${this.props.id}`] = element; }}
                   tabIndex="0"
                   onClick={this.toggleFileOptions}
-                  onBlur={() => setTimeout(this.hideFileOptions, 200)}
+                  onBlur={this.onBlurComponent}
+                  onFocus={this.onFocusComponent}
                 >
                   <InlineSVG src={downArrowUrl} />
                 </button>
@@ -166,7 +187,12 @@ export class FileNode extends React.Component {
                           <li>
                             <button
                               aria-label="add file"
-                              onClick={this.props.newFile}
+                              onClick={() => {
+                                this.props.newFile();
+                                setTimeout(() => this.hideFileOptions(), 0);
+                              }}
+                              onBlur={this.onBlurComponent}
+                              onFocus={this.onFocusComponent}
                               className="sidebar__file-item-option"
                             >
                               Add File
@@ -181,7 +207,12 @@ export class FileNode extends React.Component {
                           <li>
                             <button
                               aria-label="add folder"
-                              onClick={this.props.newFolder}
+                              onClick={() => {
+                                this.props.newFolder();
+                                setTimeout(() => this.hideFileOptions(), 0);
+                              }}
+                              onBlur={this.onBlurComponent}
+                              onFocus={this.onFocusComponent}
                               className="sidebar__file-item-option"
                             >
                               Add Folder
@@ -196,7 +227,10 @@ export class FileNode extends React.Component {
                           this.originalFileName = this.props.name;
                           this.showEditFileName();
                           setTimeout(() => this.fileNameInput.focus(), 0);
+                          setTimeout(() => this.hideFileOptions(), 0);
                         }}
+                        onBlur={this.onBlurComponent}
+                        onFocus={this.onFocusComponent}
                         className="sidebar__file-item-option"
                       >
                         Rename
@@ -211,6 +245,8 @@ export class FileNode extends React.Component {
                             setTimeout(() => this.props.deleteFile(this.props.id, this.props.parentId), 100);
                           }
                         }}
+                        onBlur={this.onBlurComponent}
+                        onFocus={this.onFocusComponent}
                         className="sidebar__file-item-option"
                       >
                         Delete
@@ -252,7 +288,8 @@ FileNode.propTypes = {
   newFolder: PropTypes.func.isRequired,
   showFolderChildren: PropTypes.func.isRequired,
   hideFolderChildren: PropTypes.func.isRequired,
-  saveFileName: PropTypes.func.isRequired
+  saveFileName: PropTypes.func.isRequired,
+  canEdit: PropTypes.bool.isRequired
 };
 
 FileNode.defaultProps = {
@@ -263,8 +300,7 @@ FileNode.defaultProps = {
 
 function mapStateToProps(state, ownProps) {
   // this is a hack, state is updated before ownProps
-  return state.files.find(file => file.id === ownProps.id) || { ...ownProps, name: 'test', fileType: 'file' };
-  // return state.files.find(file => file.id === ownProps.id);
+  return state.files.find(file => file.id === ownProps.id) || { name: 'test', fileType: 'file' };
 }
 
 function mapDispatchToProps(dispatch) {

@@ -27,6 +27,7 @@ const userSchema = new Schema({
     indentationAmount: { type: Number, default: 2 },
     isTabIndent: { type: Boolean, default: false },
     autosave: { type: Boolean, default: true },
+    linewrap: { type: Boolean, default: true },
     lintWarning: { type: Boolean, default: false },
     textOutput: { type: Boolean, default: false },
     gridOutput: { type: Boolean, default: false },
@@ -34,7 +35,7 @@ const userSchema = new Schema({
     theme: { type: String, default: 'light' },
     autorefresh: { type: Boolean, default: false }
   }
-}, { timestamps: true });
+}, { timestamps: true, usePushEach: true });
 
 /**
  * Password hash middleware.

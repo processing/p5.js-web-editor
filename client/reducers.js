@@ -10,6 +10,7 @@ import sketches from './modules/IDE/reducers/projects';
 import toast from './modules/IDE/reducers/toast';
 import console from './modules/IDE/reducers/console';
 import assets from './modules/IDE/reducers/assets';
+import loading from './modules/IDE/reducers/loading';
 
 const rootReducer = combineReducers({
   form,
@@ -22,7 +23,8 @@ const rootReducer = combineReducers({
   editorAccessibility,
   toast,
   console,
-  assets
+  assets,
+  loading
 });
 
 export default rootReducer;

@@ -12,11 +12,13 @@ $dodgerblue: #1E90FF;
 $primary-text-color: #333;
 $icon-color: #8b8b8b;
 $icon-hover-color: #333;
+$p5-contrast-pink: #FFA9D9;
 
 $themes: (
   light: (
     logo-color: $p5js-pink,
     primary-text-color: #333,
+    dropzone-text-color: #333,
     modal-button-color: #333,
     heading-text-color: #333,
     secondary-text-color: #a8a8a8,
@@ -36,7 +38,7 @@ $themes: (
     modal-background-color: #f4f4f4,
     modal-button-background-color: #e6e6e6,
     modal-border-color: rgba(17, 17, 17, 0.3),
-    modal-boder-selected-color: #B9D0E1,
+    modal-border-selected-color: #B9D0E1,
     icon-color: $icon-color,
     icon-hover-color: $icon-hover-color,
     icon-toast-hover-color: $white,
@@ -59,12 +61,14 @@ $themes: (
     dropdown-color: #414141,
     keyboard-shortcut-color: #757575,
     nav-hover-color: $p5js-pink,
+    error-color: $p5js-pink,
     codefold-icon-open: url(../images/down-arrow.svg),
     codefold-icon-closed: url(../images/right-arrow.svg)
   ),
   dark: (
     logo-color: $p5js-pink,
     primary-text-color: $white,
+    dropzone-text-color: $black,
     modal-button-color: $white,
     heading-text-color: $white,
     secondary-text-color: #DADADA,
@@ -106,12 +110,14 @@ $themes: (
     dropdown-color: #dadada,
     keyboard-shortcut-color: #B5B5B5,
     nav-hover-color: $p5js-pink,
+    error-color: $p5js-pink,
     codefold-icon-open: url(../images/down-arrow-white.svg),
     codefold-icon-closed: url(../images/right-arrow-white.svg)
   ),
   contrast: (
     logo-color: $yellow,
     primary-text-color: $yellow,
+    dropzone-text-color: $black,
     modal-button-color: #333,
     heading-text-color: #e1e1e1,
     secondary-text-color: #e1e1e1,
@@ -152,6 +158,7 @@ $themes: (
     dropdown-color: #e1e1e1,
     keyboard-shortcut-color: #e1e1e1,
     nav-hover-color: $yellow,
+    error-color: $p5-contrast-pink,
     codefold-icon-open: url(../images/down-arrow-white.svg),
     codefold-icon-closed: url(../images/right-arrow-white.svg)
   )

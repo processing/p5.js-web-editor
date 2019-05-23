@@ -1,14 +1,15 @@
+import format from 'date-fns/format';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import moment from 'moment';
-import { Link, browserHistory } from 'react-router';
-import InlineSVG from 'react-inlinesvg';
 import { Helmet } from 'react-helmet';
-import * as SketchActions from '../actions/projects';
+import InlineSVG from 'react-inlinesvg';
+import { connect } from 'react-redux';
+import { browserHistory, Link } from 'react-router';
+import { bindActionCreators } from 'redux';
 import * as ProjectActions from '../actions/project';
+import * as SketchActions from '../actions/projects';
 import * as ToastActions from '../actions/toast';
+import Loader from '../../App/components/loader';
 
 const trashCan = require('../../../images/trash-can.svg');
 
@@ -25,6 +26,20 @@ class SketchList extends React.Component {
     return `p5.js Web Editor | ${this.props.username}'s sketches`;
   }
 
+  hasSketches() {
+    return !this.props.loading && this.props.sketches.length > 0;
+  }
+
+  renderLoader() {
+    if (this.props.loading) return <Loader />;
+    return null;
+  }
+
+  renderEmptyTable() {
+    if (!this.props.loading && this.props.sketches.length === 0) return (<p className="sketches-table__empty">No sketches.</p>);
+    return null;
+  }
+
   render() {
     const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
     return (
@@ -32,10 +47,9 @@ class SketchList extends React.Component {
         <Helmet>
           <title>{this.getSketchesTitle()}</title>
         </Helmet>
-        { this.props.sketches.length === 0 &&
-          <p className="sketches-table__empty">No sketches.</p>
-        }
-        { this.props.sketches.length > 0 &&
+        {this.renderLoader()}
+        {this.renderEmptyTable()}
+        {this.hasSketches() &&
           <table className="sketches-table" summary="table containing all saved projects">
             <thead>
               <tr>
@@ -73,8 +87,8 @@ class SketchList extends React.Component {
                     })()}
                   </td>
                   <th scope="row"><Link to={`/${username}/sketches/${sketch.id}`}>{sketch.name}</Link></th>
-                  <td>{moment(sketch.createdAt).format('MMM D, YYYY h:mm A')}</td>
-                  <td>{moment(sketch.updatedAt).format('MMM D, YYYY h:mm A')}</td>
+                  <td>{format(new Date(sketch.createdAt), 'MMM D, YYYY h:mm A')}</td>
+                  <td>{format(new Date(sketch.updatedAt), 'MMM D, YYYY h:mm A')}</td>
                 </tr>)}
             </tbody>
           </table>}
@@ -95,6 +109,7 @@ SketchList.propTypes = {
     updatedAt: PropTypes.string.isRequired
   })).isRequired,
   username: PropTypes.string,
+  loading: PropTypes.bool.isRequired,
   deleteProject: PropTypes.func.isRequired
 };
 
@@ -105,7 +120,8 @@ SketchList.defaultProps = {
 function mapStateToProps(state) {
   return {
     user: state.user,
-    sketches: state.sketches
+    sketches: state.sketches,
+    loading: state.loading,
   };
 }
 

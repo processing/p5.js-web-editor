@@ -81,7 +81,10 @@ class PreviewFrame extends React.Component {
 
   handleConsoleEvent(messageEvent) {
     if (Array.isArray(messageEvent.data)) {
-      const decodedMessages = messageEvent.data.map(message => Object.assign(Decode(message.log), { source: message.source }));
+      const decodedMessages = messageEvent.data.map(message =>
+        Object.assign(Decode(message.log), {
+          source: message.source
+        }));
 
       decodedMessages.every((message, index, arr) => {
         const { data: args } = message;
@@ -140,10 +143,20 @@ class PreviewFrame extends React.Component {
     return newContent;
   }
 
+  mergeLocalFilesAndEditorActiveFile() {
+    const files = this.props.files.slice();
+    if (this.props.cmController.getContent) {
+      const activeFileInEditor = this.props.cmController.getContent();
+      files.find(file => file.id === activeFileInEditor.id).content = activeFileInEditor.content;
+    }
+    return files;
+  }
+
   injectLocalFiles() {
     const htmlFile = this.props.htmlFile.content;
     let scriptOffs = [];
-    const resolvedFiles = this.resolveJSAndCSSLinks(this.props.files);
+    const files = this.mergeLocalFilesAndEditorActiveFile();
+    const resolvedFiles = this.resolveJSAndCSSLinks(files);
     const parser = new DOMParser();
     const sketchDoc = parser.parseFromString(htmlFile, 'text/html');
 
@@ -321,6 +334,7 @@ class PreviewFrame extends React.Component {
   }
 
   renderSketch() {
+    this.props.clearConsole();
     const doc = this.iframeElement;
     const localFiles = this.injectLocalFiles();
     if (this.props.isPlaying) {
@@ -375,11 +389,16 @@ PreviewFrame.propTypes = {
   fullView: PropTypes.bool,
   setBlobUrl: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
-  expandConsole: PropTypes.func.isRequired
+  expandConsole: PropTypes.func.isRequired,
+  clearConsole: PropTypes.func.isRequired,
+  cmController: PropTypes.shape({
+    getContent: PropTypes.func
+  })
 };
 
 PreviewFrame.defaultProps = {
-  fullView: false
+  fullView: false,
+  cmController: {}
 };
 
 export default PreviewFrame;

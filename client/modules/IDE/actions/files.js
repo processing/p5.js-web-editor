@@ -4,6 +4,7 @@ import blobUtil from 'blob-util';
 import { reset } from 'redux-form';
 import * as ActionTypes from '../../../constants';
 import { setUnsavedChanges } from './ide';
+import { setProjectSavedTime } from './project';
 
 const __process = (typeof global !== 'undefined' ? global : window).process;
 const ROOT_URL = __process.env.API_URL;
@@ -29,10 +30,10 @@ function createUniqueName(name, parentId, files) {
   return testName;
 }
 
-export function updateFileContent(name, content) {
+export function updateFileContent(id, content) {
   return {
     type: ActionTypes.UPDATE_FILE_CONTENT,
-    name,
+    id,
     content
   };
 }
@@ -60,9 +61,10 @@ export function createFile(formProps) {
         .then((response) => {
           dispatch({
             type: ActionTypes.CREATE_FILE,
-            ...response.data,
+            ...response.data.updatedFile,
             parentId
           });
+          dispatch(setProjectSavedTime(response.data.project.updatedAt));
           dispatch(reset('new-file'));
           // dispatch({
           //   type: ActionTypes.HIDE_MODAL
@@ -117,9 +119,10 @@ export function createFolder(formProps) {
         .then((response) => {
           dispatch({
             type: ActionTypes.CREATE_FILE,
-            ...response.data,
+            ...response.data.updatedFile,
             parentId
           });
+          dispatch(setProjectSavedTime(response.data.project.updatedAt));
           dispatch({
             type: ActionTypes.CLOSE_NEW_FOLDER_MODAL
           });
@@ -224,7 +227,7 @@ export function hideFolderChildren(id) {
 export function setBlobUrl(file, blobURL) {
   return {
     type: ActionTypes.SET_BLOB_URL,
-    name: file.name,
+    id: file.id,
     blobURL
   };
 }

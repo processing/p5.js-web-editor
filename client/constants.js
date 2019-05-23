@@ -1,4 +1,4 @@
-// TODO Organize this file by reducer type, ot break this apart into
+// TODO Organize this file by reducer type, to break this apart into
 // multiple files
 export const UPDATE_FILE_CONTENT = 'UPDATE_FILE_CONTENT';
 export const TOGGLE_SKETCH = 'TOGGLE_SKETCH';
@@ -12,14 +12,6 @@ export const STOP_ACCESSIBLE_OUTPUT = 'STOP_ACCESSIBLE_OUTPUT';
 export const OPEN_PREFERENCES = 'OPEN_PREFERENCES';
 export const CLOSE_PREFERENCES = 'CLOSE_PREFERENCES';
 export const SET_FONT_SIZE = 'SET_FONT_SIZE';
-
-export const INCREASE_INDENTATION = 'INCREASE_INDENTATION';
-export const DECREASE_INDENTATION = 'DECREASE_INDENTATION';
-export const UPDATE_INDENTATION = 'UPDATE_INDENTATION';
-export const SET_INDENTATION = 'SET_INDENTATION';
-
-export const INDENT_WITH_SPACE = 'INDENT_WITH_SPACE';
-export const INDENT_WITH_TAB = 'INDENT_WITH_TAB';
 
 export const AUTH_USER = 'AUTH_USER';
 export const UNAUTH_USER = 'UNAUTH_USER';
@@ -62,6 +54,7 @@ export const UPDATE_FILE_NAME = 'UPDATE_FILE_NAME';
 export const DELETE_FILE = 'DELETE_FILE';
 
 export const SET_AUTOSAVE = 'SET_AUTOSAVE';
+export const SET_LINEWRAP = 'SET_LINEWRAP';
 export const SET_LINT_WARNING = 'SET_LINT_WARNING';
 export const SET_PREFERENCES = 'SET_PREFERENCES';
 export const SET_TEXT_OUTPUT = 'SET_TEXT_OUTPUT';
@@ -124,3 +117,9 @@ export const HIDE_HELP_MODAL = 'HIDE_HELP_MODAL';
 export const HIDE_RUNTIME_ERROR_WARNING = 'HIDE_RUNTIME_ERROR_WARNING';
 export const SHOW_RUNTIME_ERROR_WARNING = 'SHOW_RUNTIME_ERROR_WARNING';
 export const SET_ASSETS = 'SET_ASSETS';
+
+export const START_LOADING = 'START_LOADING';
+export const STOP_LOADING = 'STOP_LOADING';
+
+export const START_SAVING_PROJECT = 'START_SAVING_PROJECT';
+export const END_SAVING_PROJECT = 'END_SAVING_PROJECT';

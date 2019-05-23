@@ -28,7 +28,6 @@ module.exports = [{
       'htmlhint',
       'js-beautify',
       'jshint',
-      'moment',
       'react-dom',
       'react-inlinesvg',
       'react-redux',
@@ -116,11 +115,13 @@ module.exports = [{
     new ChunkManifestPlugin({
       filename: 'chunk-manifest.json',
       manifestVariable: 'webpackManifest',
+      inlineManifest: false
     }),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
       compress: {
-        warnings: false
+        warnings: false,
+        drop_console :true
       }
     }),
     new webpack.LoaderOptionsPlugin({

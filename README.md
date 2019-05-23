@@ -19,7 +19,7 @@ Please post bugs and feature requests in the correct repository:
 
 The p5.js Web Editor is a collaborative project created by many individuals, and you are invited to help. All types of involvement are welcome. You can start with the [p5.js community section](https://p5js.org/community), which also applies to this project. 
 
-Developers, check the [developer docs](https://github.com/processing/p5.js-web-editor/blob/master/developer_docs/) details about contributing code, bug fixes, and documentation.
+Developers, check the [developer docs](https://github.com/processing/p5.js-web-editor/blob/master/developer_docs/) details about contributing code, bug fixes, and documentation. To start writing code, a great place to start is the [development guide](https://github.com/processing/p5.js-web-editor/blob/master/developer_docs/development.md).
 
 ## Support
 
