@@ -10,7 +10,7 @@
 .modal-content {
   @extend %modal;
   min-height: #{150 / $base-font-size}rem;
-  width: #{400 / $base-font-size}rem;
+  width: #{700 / $base-font-size}rem;
   padding: #{20 / $base-font-size}rem;
   .modal--reduced & {
     //min-height: #{150 / $base-font-size}rem;
