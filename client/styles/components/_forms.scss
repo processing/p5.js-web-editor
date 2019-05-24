@@ -47,11 +47,18 @@
 }
 
 .form__input {
-  width: #{360 / $base-font-size}rem;
+  width: 100%;
+  min-width: #{360 / $base-font-size}rem;
   height: #{40 / $base-font-size}rem;
+  font-size: #{16 / $base-font-size}rem;
   @include themify() {
     color: getThemifyVariable('form-input-text-color');
-    border-color: getThemifyVariable('form-border-color');
+  }
+}
+
+.form__input::placeholder {
+  @include themify() {
+    color: getThemifyVariable('form-input-placeholder-text-color');
   }
 }
 
@@ -66,10 +73,12 @@
   }
 }
 
-.form input[type="submit"] {
-  @extend %forms-button;
+.form [type="submit"] {
+  @extend %button;
+  padding: #{8 / $base-font-size}rem #{25 / $base-font-size}rem;
+  margin: #{39 / $base-font-size}rem 0 #{24 / $base-font-size}rem 0;
 }
 
-.form input[type="submit"]:disabled {
-  cursor: not-allowed;
+.form--inline [type="submit"] {
+  margin: 0 0 0 #{24 / $base-font-size}rem;
 }
