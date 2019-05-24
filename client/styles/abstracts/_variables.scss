@@ -9,15 +9,22 @@ $orange: #ffa500;
 $red: #ff0000;
 $lightsteelblue: #B0C4DE;
 $dodgerblue: #1E90FF;
-$primary-text-color: #333;
 $icon-color: #8b8b8b;
 $icon-hover-color: #333;
 $p5-contrast-pink: #FFA9D9;
 
+// Grays
+$dark: #333;
+$middleGray: #7d7d7d;
+$middleLight: #a6a6a6;
+
+// Abstracts
+$primary-text-color: $dark;
+
 $themes: (
   light: (
     logo-color: $p5js-pink,
-    primary-text-color: #333,
+    primary-text-color: $primary-text-color,
     dropzone-text-color: #333,
     modal-button-color: #333,
     heading-text-color: #333,
@@ -67,8 +74,9 @@ $themes: (
     codefold-icon-closed: url(../images/right-arrow.svg),
 
     form-title-color: rgba(51, 51, 51, 0.87),
-    form-secondary-title-color: #b5b5b5,
-    form-input-text-color: #b5b5b5,
+    form-secondary-title-color: $middleGray,
+    form-input-text-color: $dark,
+    form-input-placeholder-text-color: $middleLight,
     form-border-color: #b5b5b5,
     form-button-background-color: $white,
     form-button-color: #f10046,
