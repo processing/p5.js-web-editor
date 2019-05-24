@@ -13,7 +13,7 @@ exports[`Nav renders correctly 1`] = `
       className="nav__item-logo"
     >
       <span
-        className="isvg loading"
+        className="isvg loading svg__logo"
       />
     </li>
     <li
@@ -23,6 +23,7 @@ exports[`Nav renders correctly 1`] = `
         onBlur={[Function]}
         onClick={[Function]}
         onFocus={[Function]}
+        onMouseOver={[Function]}
       >
         <span
           className="nav__item-header"
@@ -36,17 +37,6 @@ exports[`Nav renders correctly 1`] = `
       <ul
         className="nav__dropdown"
       >
-        <button
-          className="nav__dropdown-heading"
-          onClick={[Function]}
-        >
-          <span>
-            File
-          </span>
-          <span
-            className="isvg loading"
-          />
-        </button>
         <li
           className="nav__dropdown-item"
         >
@@ -112,6 +102,7 @@ exports[`Nav renders correctly 1`] = `
         onBlur={[Function]}
         onClick={[Function]}
         onFocus={[Function]}
+        onMouseOver={[Function]}
       >
         <span
           className="nav__item-header"
@@ -125,17 +116,6 @@ exports[`Nav renders correctly 1`] = `
       <ul
         className="nav__dropdown"
       >
-        <button
-          className="nav__dropdown-heading"
-          onClick={[Function]}
-        >
-          <span>
-            Edit
-          </span>
-          <span
-            className="isvg loading"
-          />
-        </button>
         <li
           className="nav__dropdown-item"
         >
@@ -215,6 +195,7 @@ exports[`Nav renders correctly 1`] = `
         onBlur={[Function]}
         onClick={[Function]}
         onFocus={[Function]}
+        onMouseOver={[Function]}
       >
         <span
           className="nav__item-header"
@@ -228,17 +209,6 @@ exports[`Nav renders correctly 1`] = `
       <ul
         className="nav__dropdown"
       >
-        <button
-          className="nav__dropdown-heading"
-          onClick={[Function]}
-        >
-          <span>
-            Sketch
-          </span>
-          <span
-            className="isvg loading"
-          />
-        </button>
         <li
           className="nav__dropdown-item"
         >
@@ -297,44 +267,6 @@ exports[`Nav renders correctly 1`] = `
             </span>
           </button>
         </li>
-        <li
-          className="nav__dropdown-item"
-        >
-          <button
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-          >
-            Start Accessible
-            <span
-              className="nav__keyboard-shortcut"
-            >
-              ⇧
-              +
-              Ctrl
-              +1
-            </span>
-          </button>
-        </li>
-        <li
-          className="nav__dropdown-item"
-        >
-          <button
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-          >
-            Stop Accessible
-            <span
-              className="nav__keyboard-shortcut"
-            >
-              ⇧
-              +
-              Ctrl
-              +2
-            </span>
-          </button>
-        </li>
       </ul>
     </li>
     <li
@@ -344,6 +276,7 @@ exports[`Nav renders correctly 1`] = `
         onBlur={[Function]}
         onClick={[Function]}
         onFocus={[Function]}
+        onMouseOver={[Function]}
       >
         <span
           className="nav__item-header"
@@ -357,17 +290,6 @@ exports[`Nav renders correctly 1`] = `
       <ul
         className="nav__dropdown"
       >
-        <button
-          className="nav__dropdown-heading"
-          onClick={[Function]}
-        >
-          <span>
-            Help & Feedback
-          </span>
-          <span
-            className="isvg loading"
-          />
-        </button>
         <li
           className="nav__dropdown-item"
         >
