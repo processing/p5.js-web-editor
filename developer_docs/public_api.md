@@ -36,8 +36,7 @@ The API accepts and returns the following model objects, as JSON.
 
 ### Validations
 
-- `files` must have exactly one top-level file with the `.html` extension
-    - We could create a default `index.html` if not provided?
+- `files` must have exactly one top-level file with the `.html` extension. If none is provided, then a default `index.html` and associated `style.css` will be automatically created.
 
 ## DirectoryContents
 
@@ -107,6 +106,8 @@ No body.
 ## `POST /:user/sketches`
 
 Create a new sketch.
+
+A sketch must contain at least one file with the `.html` extension. If none if provided in the payload, a default `index.html` and linked `style.css` file will be created automatically.
 
 ### Request format
 See `Sketch` in Models above.
