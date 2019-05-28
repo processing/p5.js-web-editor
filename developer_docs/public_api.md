@@ -22,21 +22,25 @@ The API accepts and returns the following model objects, as JSON.
 
 ## Sketch
 
-| Name  | Type              | Description                                                                          |
+| Name  |       Type        |                                     Description                                      |
 | ----- | ----------------- | ------------------------------------------------------------------------------------ |
 | name  | String            | The sketch’s title                                                                   |
 | files | DirectoryContents | The files and directories in this sketch. See `DirectoryContents` for the structure. |
+| slug  | String            | A path that can be used to access the sketch                                         |
 
 
     {
       "id": String, // opaque ID
       "name: String,
-      "files": DirectoryContents
+      "files": DirectoryContents,
+      "slug": String // optional
     }
 
 ### Validations
 
 - `files` must have exactly one top-level file with the `.html` extension. If none is provided, then a default `index.html` and associated `style.css` will be automatically created.
+- `slug` must be an URL-safe string
+- `slug` must be unique across all user's sketches
 
 ## DirectoryContents
 
@@ -151,10 +155,10 @@ See `Sketch` in Models above.
 
 ### Responses
 
-| HTTP code                | Body                                         |
-| ------------------------ | -------------------------------------------- |
-| 201 Created              | id of sketch                                 |
-| 422 Unprocessable Entity | file validation failed, unsupported filetype |
+|        HTTP code         |                               Body                                |
+| ------------------------ | ----------------------------------------------------------------- |
+| 201 Created              | id of sketch                                                      |
+| 422 Unprocessable Entity | file validation failed, unsupported filetype, slug already exists |
 
 
 ### Examples
@@ -182,6 +186,7 @@ Returns `Sketch`.
     
     {
       "name": "Another title",
+      "slug": "example-1",
       "files": {
         "index.html": { "<DOCTYPE html!><body>Hallo!</body></html>" },
         "something.js": { "var uselessness = 12;" }
