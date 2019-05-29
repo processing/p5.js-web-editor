@@ -38,6 +38,11 @@ deploy:
     skip_cleanup: true
     on:
       branch: master
+  - provider: script
+    script: ./deploy-staging.sh
+    skip_cleanup: true
+    on:
+      branch: feature/public-api
 
 env:
   global:
