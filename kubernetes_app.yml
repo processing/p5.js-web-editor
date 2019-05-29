@@ -118,3 +118,65 @@ spec:
 #             - secretRef:
 #                 name: web-editor-credentials
 #           restartPolicy: Never
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: staging
+  labels:
+    name: staging
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-editor-node
+  namespace: staging
+  labels:
+    app: web-editor
+spec:
+  # if your cluster supports it, uncomment the following to automatically create
+  # an external load-balanced IP for the frontend service.
+  type: LoadBalancer
+  # type: NodePort
+  ports:
+  - port: 8001
+    targetPort: 8000
+  selector:
+    app: web-editor
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-editor-node
+  namespace: staging
+spec:
+  selector:
+    matchLabels:
+      app: web-editor
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: web-editor
+    spec:
+      containers:
+      - name: web-editor-app
+        image: index.docker.io/catarak/p5.js-web-editor:latest
+        # temp, just to test kubernetes
+        # envFrom:
+        # - configMapRef:
+        #     name: web-editor-env
+        envFrom:
+        - secretRef:
+            name: web-editor-credentials 
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 8000
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
