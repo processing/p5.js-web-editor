@@ -39,7 +39,7 @@ deploy:
     on:
       branch: master
   - provider: script
-    script: ./deploy-staging.sh
+    script: ./deploy_staging.sh
     skip_cleanup: true
     on:
       branch: feature/public-api
