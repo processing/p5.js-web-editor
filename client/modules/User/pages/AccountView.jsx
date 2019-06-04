@@ -37,14 +37,14 @@ class AccountView extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
+      <div className="user">
         <Helmet>
           <title>p5.js Web Editor | Account</title>
         </Helmet>
 
         <NavBasic />
 
-        <section className="modal user">
+        <section className="modal">
           <div className="modal-content">
             <div className="modal__header">
               <h2 className="modal__title">My Account</h2>
@@ -73,7 +73,7 @@ class AccountView extends React.Component {
             </Tabs>
           </div>
         </section>
-      </React.Fragment>
+      </div>
     );
   }
 }
