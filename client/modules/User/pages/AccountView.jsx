@@ -42,15 +42,12 @@ class AccountView extends React.Component {
           <title>p5.js Web Editor | Account</title>
         </Helmet>
 
-        <NavBasic />
+        <NavBasic onBack={this.closeAccountPage} />
 
         <section className="modal">
           <div className="modal-content">
             <div className="modal__header">
               <h2 className="modal__title">My Account</h2>
-              <button className="modal__exit-button" onClick={this.closeAccountPage}>
-                <InlineSVG src={exitUrl} alt="Close Account Page" />
-              </button>
             </div>
             <Tabs className="account__tabs">
               <TabList>
