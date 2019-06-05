@@ -15,8 +15,8 @@ import getSortedSketches from '../selectors/projects';
 import Loader from '../../App/components/loader';
 
 const trashCan = require('../../../images/trash-can.svg');
-const arrowUp = require('../../../images/arrow5_up.svg');
-const arrowDown = require('../../../images/arrow5_down.svg');
+const arrowUp = require('../../../images/sort-arrow-up.svg');
+const arrowDown = require('../../../images/sort-arrow-down.svg');
 
 class SketchList extends React.Component {
   constructor(props) {
