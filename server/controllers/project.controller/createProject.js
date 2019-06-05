@@ -7,21 +7,21 @@ export default function createProject(req, res) {
 
   projectValues = Object.assign(projectValues, req.body);
 
-  Project.create(projectValues, (err, newProject) => {
-    if (err) {
-      res.json({ success: false });
-      return;
-    }
-    Project.populate(
-      newProject,
-      { path: 'user', select: 'username' },
-      (innerErr, newProjectWithUser) => {
-        if (innerErr) {
-          res.json({ success: false });
-          return;
+  return Project.create(projectValues)
+    .then((newProject) => {
+      Project.populate(
+        newProject,
+        { path: 'user', select: 'username' },
+        (innerErr, newProjectWithUser) => {
+          if (innerErr) {
+            res.json({ success: false });
+            return;
+          }
+          res.json(newProjectWithUser);
         }
-        res.json(newProjectWithUser);
-      }
-    );
-  });
+      );
+    })
+    .catch((err) => {
+      res.json({ success: false });
+    });
 }
