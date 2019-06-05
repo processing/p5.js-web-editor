@@ -26,7 +26,8 @@ class ErrorModal extends React.Component {
   staleProject() {
     return (
       <p>
-        The project you have attempted to save has been saved from another window. Please refresh the page to see the latest version.
+        The project you have attempted to save has been saved from another window.
+        Please refresh the page to see the latest version.
       </p>
     );
   }

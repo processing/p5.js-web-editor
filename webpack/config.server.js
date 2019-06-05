@@ -33,21 +33,9 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
-        query: {
-          presets: [
-            'react',
-            'env',
-            'stage-0',
-          ],
-          plugins: [
-            [
-              'babel-plugin-webpack-loaders', {
-                'config': path.resolve(__dirname, './config.babel.js'),
-                "verbose": false
-              }
-            ]
-          ]
-        },
+        options: {
+          babelrc: true
+        }
       }, {
         test: /\.json$/,
         loader: 'json-loader',

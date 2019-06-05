@@ -50,7 +50,7 @@ const project = (state, action) => {
       return Object.assign({}, state, { updatedAt: action.value });
     case ActionTypes.START_SAVING_PROJECT:
       return Object.assign({}, state, { isSaving: true });
-    case ActionTypes.START_STOP_PROJECT:
+    case ActionTypes.END_SAVING_PROJECT:
       return Object.assign({}, state, { isSaving: false });
     default:
       return state;
