@@ -60,7 +60,3 @@ export function deleteProject(id) {
       });
   };
 }
-
-export function sortProjects(order, orderBy) {
-  return { type: ActionTypes.SET_SORT_PARAM, payload: { orderBy, order } };
-}
