@@ -9,6 +9,8 @@ module.exports = [{
   devtool: 'cheap-module-eval-source-map',
   entry: {
     app: [
+      'core-js/modules/es6.promise',
+      'core-js/modules/es6.array.iterator',
       'webpack-hot-middleware/client',
       'react-hot-loader/patch',
       './client/index.jsx',
@@ -120,21 +122,9 @@ module.exports = [{
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
-        query: {
-          presets: [
-            'react',
-            'env',
-            'stage-0',
-          ],
-          plugins: [
-            [
-              'babel-plugin-webpack-loaders', {
-                'config': path.resolve(__dirname, './config.babel.js'),
-                'verbose': false
-              }
-            ]
-          ]
-        },
+        options: {
+          babelrc: true
+        }
       }
     ],
   },
