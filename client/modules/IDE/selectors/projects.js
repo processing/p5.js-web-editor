@@ -1,7 +1,6 @@
 import { createSelector } from 'reselect';
 import differenceInMilliseconds from 'date-fns/difference_in_milliseconds';
-import sortBy from 'lodash/sortBy';
-import reverse from 'lodash/reverse';
+import orderBy from 'lodash/orderBy';
 import { DIRECTION } from '../actions/sorting';
 
 const getSketches = state => state.sketches;
@@ -14,11 +13,10 @@ const getSortedSketches = createSelector(
   getDirection,
   (sketches, field, direction) => {
     if (field === 'name') {
-      const sortedSketches = sortBy(sketches, 'name');
       if (direction === DIRECTION.DESC) {
-        return reverse(sortedSketches);
+        return orderBy(sketches, 'name', 'desc');
       }
-      return sortedSketches;
+      return orderBy(sketches, 'name', 'asc');
     }
     const sortedSketches = [...sketches].sort((a, b) => {
       const result =
