@@ -13,6 +13,7 @@ require('./images/p5js-square-logo.png');
 
 const history = browserHistory;
 const initialState = window.__INITIAL_STATE__;
+
 const store = configureStore(initialState);
 
 const App = () => (

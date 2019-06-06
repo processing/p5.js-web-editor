@@ -10,6 +10,7 @@ import sketches from './modules/IDE/reducers/projects';
 import toast from './modules/IDE/reducers/toast';
 import console from './modules/IDE/reducers/console';
 import assets from './modules/IDE/reducers/assets';
+import sorting from './modules/IDE/reducers/sorting';
 import loading from './modules/IDE/reducers/loading';
 
 const rootReducer = combineReducers({
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   user,
   project,
   sketches,
+  sorting,
   editorAccessibility,
   toast,
   console,
