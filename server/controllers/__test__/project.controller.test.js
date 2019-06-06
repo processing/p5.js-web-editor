@@ -3,21 +3,29 @@
  */
 import { Response } from 'jest-express';
 
-// import Project from '../../models/project';
+import { createMock } from '../../models/project';
 import createProject from '../project.controller/createProject';
 
 jest.mock('../../models/project');
 
 describe('project.controller', () => {
   describe('createProject()', () => {
-    const { ProjectMock } = require('../../models/project');
+    let ProjectMock;
 
     beforeEach(() => {
-      ProjectMock.reset();
+      ProjectMock = createMock();
+    });
+
+    afterEach(() => {
+      ProjectMock.restore();
     });
 
     it('fails if create fails', (done) => {
-      ProjectMock.toReturn(new Error('An error'), 'save');
+      const error = new Error('An error');
+
+      ProjectMock
+        .expects('create')
+        .rejects(error);
 
       const request = { user: {} };
       const response = new Response();
@@ -26,17 +34,67 @@ describe('project.controller', () => {
 
       function expectations() {
         expect(response.json).toHaveBeenCalledWith({ success: false });
+
         done();
       }
 
       promise.then(expectations, expectations).catch(expectations);
     });
 
-    it('saves referenced user on project creation', (done) => {
-      const request = { user: {} };
+    it('extracts parameters from request body', (done) => {
+      const request = {
+        user: { _id: 'abc123' },
+        body: { name: 'Wriggly worm' }
+      };
       const response = new Response();
 
-      ProjectMock.toReturn({ _id: 'abc123', name: 'Project name' }, 'save');
+
+      ProjectMock
+        .expects('create')
+        .withArgs({ user: 'abc123', name: 'Wriggly worm' })
+        .resolves();
+
+      const promise = createProject(request, response);
+
+      function expectations() {
+        expect(response.json).toHaveBeenCalled();
+
+        done();
+      }
+
+      promise.then(expectations, expectations).catch(expectations);
+    });
+
+    // TODO: This should be extracted to a new model object
+    //       so the controllers just have to call a single
+    //       method for this operation
+    it('populates referenced user on project creation', (done) => {
+      const request = { user: { _id: 'abc123' } };
+      const response = new Response();
+
+      const result = {
+        _id: 'abc123',
+        id: 'abc123',
+        name: 'Project name',
+        serveSecure: false,
+        files: []
+      };
+
+      const resultWithUser = {
+        ...result,
+        user: {}
+      };
+
+      ProjectMock
+        .expects('create')
+        .withArgs({ user: 'abc123' })
+        .resolves(result);
+
+      ProjectMock
+        .expects('populate')
+        .withArgs(result)
+        .yields(null, resultWithUser)
+        .resolves(resultWithUser);
 
       const promise = createProject(request, response);
 
@@ -45,13 +103,41 @@ describe('project.controller', () => {
 
         expect(response.json).toHaveBeenCalled();
 
-        expect(JSON.parse(JSON.stringify(doc))).toMatchObject({
-          _id: 'abc123',
-          id: 'abc123',
-          name: 'Project name',
-          serveSecure: false,
-          files: []
-        });
+        expect(JSON.parse(JSON.stringify(doc))).toMatchObject(resultWithUser);
+
+        done();
+      }
+
+      promise.then(expectations, expectations).catch(expectations);
+    });
+
+    it('fails if referenced user population fails', (done) => {
+      const request = { user: { _id: 'abc123' } };
+      const response = new Response();
+
+      const result = {
+        _id: 'abc123',
+        id: 'abc123',
+        name: 'Project name',
+        serveSecure: false,
+        files: []
+      };
+
+      const error = new Error('An error');
+
+      ProjectMock
+        .expects('create')
+        .resolves(result);
+
+      ProjectMock
+        .expects('populate')
+        .yields(error)
+        .resolves(error);
+
+      const promise = createProject(request, response);
+
+      function expectations() {
+        expect(response.json).toHaveBeenCalledWith({ success: false });
 
         done();
       }
