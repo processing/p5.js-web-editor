@@ -65,6 +65,12 @@
   }
 }
 
+.nav__item-header:hover {
+  @include themify() {
+      color: getThemifyVariable('nav-hover-color');
+    }
+}
+
 .nav__item-header-triangle {
 	margin-left: #{5 / $base-font-size}rem;
 }
@@ -106,6 +112,7 @@
 .nav__item-spacer {
   @include themify() {
     color: map-get($theme-map, 'inactive-text-color');
+    margin: 0 #{8 / $base-font-size}rem;
   }
 }
 
