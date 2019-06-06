@@ -363,10 +363,6 @@ SketchList.propTypes = {
 };
 
 SketchList.defaultProps = {
-  project: {
-    id: undefined,
-    owner: undefined
-  },
   username: undefined
 };
 
@@ -375,8 +371,7 @@ function mapStateToProps(state) {
     user: state.user,
     sketches: getSortedSketches(state),
     sorting: state.sorting,
-    loading: state.loading,
-    project: state.project
+    loading: state.loading
   };
 }
 
