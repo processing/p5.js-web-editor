@@ -44,14 +44,21 @@ describe('project.controller', () => {
     it('extracts parameters from request body', (done) => {
       const request = {
         user: { _id: 'abc123' },
-        body: { name: 'Wriggly worm' }
+        body: {
+          name: 'Wriggly worm',
+          files: [{ name: 'file.js', content: 'var hello = true;' }]
+        }
       };
       const response = new Response();
 
 
       ProjectMock
         .expects('create')
-        .withArgs({ user: 'abc123', name: 'Wriggly worm' })
+        .withArgs({
+          user: 'abc123',
+          name: 'Wriggly worm',
+          files: [{ name: 'file.js', content: 'var hello = true;' }]
+        })
         .resolves();
 
       const promise = createProject(request, response);
