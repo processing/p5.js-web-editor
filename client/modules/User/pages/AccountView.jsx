@@ -47,8 +47,6 @@ class AccountView extends React.Component {
         <div className="form-container__content">
           <h2 className="form-container__title">My Account</h2>
           <AccountForm {...this.props} />
-          <h2 className="form-container__divider">Or</h2>
-          <GithubButton buttonText="Login with Github" />
         </div>
       </div>
     );
