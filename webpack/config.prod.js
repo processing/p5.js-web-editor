@@ -16,7 +16,9 @@ module.exports = [{
 
   entry: {
     app: [
-      'babel-polyfill',
+      '@babel/polyfill',
+      'core-js/modules/es6.promise',
+      'core-js/modules/es6.array.iterator',
       path.resolve(__dirname, '../client/index.jsx')
     ],
     vendor: [
@@ -167,7 +169,10 @@ module.exports = [{
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: 'babel-loader'
+        loader: 'babel-loader',
+        options: {
+          babelrc: true
+        }
       }
     ]
   },

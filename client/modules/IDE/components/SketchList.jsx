@@ -6,17 +6,24 @@ import InlineSVG from 'react-inlinesvg';
 import { connect } from 'react-redux';
 import { browserHistory, Link } from 'react-router';
 import { bindActionCreators } from 'redux';
+import classNames from 'classnames';
 import * as ProjectActions from '../actions/project';
 import * as SketchActions from '../actions/projects';
 import * as ToastActions from '../actions/toast';
+import * as SortingActions from '../actions/sorting';
+import getSortedSketches from '../selectors/projects';
 import Loader from '../../App/components/loader';
 
 const trashCan = require('../../../images/trash-can.svg');
+const arrowUp = require('../../../images/sort-arrow-up.svg');
+const arrowDown = require('../../../images/sort-arrow-down.svg');
 
 class SketchList extends React.Component {
   constructor(props) {
     super(props);
     this.props.getProjects(this.props.username);
+    this.props.resetSorting();
+    this._renderFieldHeader = this._renderFieldHeader.bind(this);
   }
 
   getSketchesTitle() {
@@ -30,14 +37,37 @@ class SketchList extends React.Component {
     return !this.props.loading && this.props.sketches.length > 0;
   }
 
-  renderLoader() {
+  _renderLoader() {
     if (this.props.loading) return <Loader />;
     return null;
   }
 
-  renderEmptyTable() {
-    if (!this.props.loading && this.props.sketches.length === 0) return (<p className="sketches-table__empty">No sketches.</p>);
+  _renderEmptyTable() {
+    if (!this.props.loading && this.props.sketches.length === 0) {
+      return (<p className="sketches-table__empty">No sketches.</p>);
+    }
     return null;
+  }
+
+  _renderFieldHeader(fieldName, displayName) {
+    const { field, direction } = this.props.sorting;
+    const headerClass = classNames({
+      'sketches-table__header': true,
+      'sketches-table__header--selected': field === fieldName
+    });
+    return (
+      <th scope="col">
+        <button className="sketch-list__sort-button" onClick={() => this.props.toggleDirectionForField(fieldName)}>
+          <span className={headerClass}>{displayName}</span>
+          {field === fieldName && direction === SortingActions.DIRECTION.ASC &&
+            <InlineSVG src={arrowUp} />
+          }
+          {field === fieldName && direction === SortingActions.DIRECTION.DESC &&
+            <InlineSVG src={arrowDown} />
+          }
+        </button>
+      </th>
+    );
   }
 
   render() {
@@ -47,16 +77,16 @@ class SketchList extends React.Component {
         <Helmet>
           <title>{this.getSketchesTitle()}</title>
         </Helmet>
-        {this.renderLoader()}
-        {this.renderEmptyTable()}
+        {this._renderLoader()}
+        {this._renderEmptyTable()}
         {this.hasSketches() &&
           <table className="sketches-table" summary="table containing all saved projects">
             <thead>
               <tr>
                 <th className="sketch-list__trash-column" scope="col"></th>
-                <th scope="col">Sketch</th>
-                <th scope="col">Date created</th>
-                <th scope="col">Date updated</th>
+                {this._renderFieldHeader('name', 'Sketch')}
+                {this._renderFieldHeader('createdAt', 'Date Created')}
+                {this._renderFieldHeader('updatedAt', 'Date Updated')}
               </tr>
             </thead>
             <tbody>
@@ -110,7 +140,13 @@ SketchList.propTypes = {
   })).isRequired,
   username: PropTypes.string,
   loading: PropTypes.bool.isRequired,
-  deleteProject: PropTypes.func.isRequired
+  deleteProject: PropTypes.func.isRequired,
+  toggleDirectionForField: PropTypes.func.isRequired,
+  resetSorting: PropTypes.func.isRequired,
+  sorting: PropTypes.shape({
+    field: PropTypes.string.isRequired,
+    direction: PropTypes.string.isRequired
+  }).isRequired,
 };
 
 SketchList.defaultProps = {
@@ -120,13 +156,14 @@ SketchList.defaultProps = {
 function mapStateToProps(state) {
   return {
     user: state.user,
-    sketches: state.sketches,
-    loading: state.loading,
+    sketches: getSortedSketches(state),
+    sorting: state.sorting,
+    loading: state.loading
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}, SketchActions, ProjectActions, ToastActions), dispatch);
+  return bindActionCreators(Object.assign({}, SketchActions, ProjectActions, ToastActions, SortingActions), dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SketchList);
