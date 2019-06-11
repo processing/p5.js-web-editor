@@ -57,7 +57,9 @@ A map of filenames to `File` or `Directory`. The key of each item is used as the
       "index.html" { "content": "..." }
     }
 
-## File
+## DirectFile
+
+This file is editable in the Editor UI and stored in the Editor's database.
 
 | Name    | Type         | Description                                |
 | ------- | ------------ | ------------------------------------------ |
@@ -66,6 +68,23 @@ A map of filenames to `File` or `Directory`. The key of each item is used as the
     {
       "content": String
     }
+
+## ReferencedFile
+
+This file is hosted elsewhere on the Internet. It appears in the Editor's listing and can be referenced using a proxy URL in the Editor.
+
+
+| Name | Type |                   Description                   |
+| ---- | ---- | ----------------------------------------------- |
+| url  | URL  | A valid URL pointing to a file hosted elsewhere |
+
+    {
+      "url": URL
+    }
+
+## File
+
+A `File` is either a `DirectFile` or `ReferencedFile`. The API supports both everywhere.
 
 ## Directory
 
