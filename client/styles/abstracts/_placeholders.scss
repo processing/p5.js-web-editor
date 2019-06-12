@@ -202,8 +202,10 @@
 			@include themify() {
 				color: getThemifyVariable('dropdown-color');
 			}
+			width: 100%;
+			text-align: left;
+			padding: #{8 / $base-font-size}rem #{16 / $base-font-size}rem;
 		}
-		padding: #{8 / $base-font-size}rem #{16 / $base-font-size}rem;
 		height: #{35 / $base-font-size}rem;
 		cursor: pointer;
 		display: flex;
