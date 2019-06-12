@@ -328,6 +328,9 @@ pre.CodeMirror-line {
   height: calc(100% - #{29 / $base-font-size}rem);
   width: 100%;
   position: absolute;
+  &.editor-holder--hidden {
+    display: none;
+  }
 }
 
 .editor__header {
