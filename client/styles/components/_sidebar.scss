@@ -1,7 +1,6 @@
 .sidebar {
   display: flex;
   flex-flow: column;
-
 }
 
 .sidebar__header {
@@ -12,6 +11,7 @@
   align-items: center;
   height: #{29 / $base-font-size}rem;
   min-height: #{29 / $base-font-size}rem;
+  position: relative;
 }
 
 .sidebar__title {
@@ -51,7 +51,6 @@
 }
 
 .sidebar__file-item {
-  // height: #{20 / $base-font-size}rem;
   font-size: #{12 / $base-font-size}rem;
   cursor: pointer;
   position: relative;
@@ -151,30 +150,12 @@
 }
 
 .sidebar__file-item-options {
-  @extend %modal;
-  @include themify() {
-    background-color: getThemifyVariable('modal-background-color');
-    box-shadow: 0 0 18px getThemifyVariable('shadow-color');
-  }
-  position: absolute;
-  top: 95%;
-  left: #{15 / $base-font-size}rem;
-  right: #{0 / $base-font-size}rem;
+  @extend %dropdown-open-right;
   display: none;
-  z-index: 100;
-  padding: #{8 / $base-font-size}rem #{16 / $base-font-size}rem;
+  width: 100%;
+  max-width: #{180 / $base-font-size}rem;
   .sidebar__file-item--open > .file-item__content & {
-    display: block;
-  }
-}
-
-.sidebar__project-options li, .sidebar__file-item-options li {
-  padding: #{4 / $base-font-size}rem 0;
-}
-
-.sidebar__project-options a, .sidebar__file-item-options a {
-  @include themify() {
-    color: getThemifyVariable('secondary-text-color');
+    display: flex;
   }
 }
 
@@ -220,7 +201,7 @@
 .sidebar__icons {
   display: flex;
   align-items: center;
-  position: relative;
+  height: 100%;
   .sidebar--cant-edit & {
     display: none;
   }
@@ -270,32 +251,16 @@
   }
 }
 
-.sidebar__project-options {
-  @extend %modal;
-  @include themify() {
-    background-color: getThemifyVariable('modal-background-color');
-    box-shadow: 0 0 18px getThemifyVariable('shadow-color');
-  }
-  display: none;
-  position: absolute;
-  .sidebar--project-options & {
-    display: block;
-  }
-  top: #{22 / $base-font-size}rem;
-  right: #{-6 / $base-font-size}rem;
-  padding: #{8 / $base-font-size}rem #{16 / $base-font-size}rem;
-  width: #{145 / $base-font-size}rem;
-}
-
-.sidebar__file-item-option {
-  @include themify() {
-    @extend %link;
-  }
-  background-color: transparent;
-  border: none;
-}
-
-
 .sidebar__file-item--closed .file-item__children {
   display: none;
+}
+
+.sidebar__project-options {
+  @extend %dropdown-open-right;
+  display: none;
+  width: 100%;
+  max-width: #{180 / $base-font-size}rem;
+  .sidebar--project-options & {
+    display: flex;
+  }
 }
