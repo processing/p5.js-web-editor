@@ -16,10 +16,12 @@ router.get(
 //   ProjectController.apiCreateProject
 // );
 
-// router.delete(
-//   '/:username/sketches/:id',
-//   passport.authenticate('basic', { session: false }),
-//   ProjectController.deleteProject
-// );
+// NOTE: Currently :username will not be checked for ownership
+//       only the project's owner in the database.
+router.delete(
+  '/:username/sketches/:project_id',
+  passport.authenticate('basic', { session: false }),
+  ProjectController.deleteProject
+);
 
 export default router;
