@@ -290,6 +290,11 @@ class Editor extends React.Component {
       'editor--options': this.props.editorOptionsVisible
     });
 
+    const editorHolderClass = classNames({
+      'editor-holder': true,
+      'editor-holder--hidden': this.props.file.fileType === 'folder' || this.props.file.url
+    });
+
     return (
       <section
         title="code editor"
@@ -322,7 +327,7 @@ class Editor extends React.Component {
             />
           </div>
         </header>
-        <div ref={(element) => { this.codemirrorContainer = element; }} className="editor-holder" >
+        <div ref={(element) => { this.codemirrorContainer = element; }} className={editorHolderClass} >
         </div>
         <EditorAccessibility
           lintMessages={this.props.lintMessages}
@@ -352,7 +357,9 @@ Editor.propTypes = {
   file: PropTypes.shape({
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired
+    id: PropTypes.string.isRequired,
+    fileType: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired
   }).isRequired,
   editorOptionsVisible: PropTypes.bool.isRequired,
   showEditorOptions: PropTypes.func.isRequired,
