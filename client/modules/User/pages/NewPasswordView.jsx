@@ -31,27 +31,30 @@ class NewPasswordView extends React.Component {
     const newPasswordClass = classNames({
       'new-password': true,
       'new-password--invalid': this.props.user.resetPasswordInvalid,
-      'form-container': true
+      'form-container': true,
+      'user': true
     });
     return (
-      <div className={newPasswordClass}>
-        <Helmet>
-          <title>p5.js Web Editor | New Password</title>
-        </Helmet>
-        <div className="form-container__header">
-          <button className="form-container__logo-button" onClick={this.gotoHomePage}>
-            <InlineSVG src={logoUrl} alt="p5js Logo" />
-          </button>
-          <button className="form-container__exit-button" onClick={this.gotoHomePage}>
-            <InlineSVG src={exitUrl} alt="Close NewPassword Page" />
-          </button>
-        </div>
-        <div className="form-container__content">
-          <h2 className="form-container__title">Set a New Password</h2>
-          <NewPasswordForm {...this.props} />
-          <p className="new-password__invalid">
-            The password reset token is invalid or has expired.
-          </p>
+      <div className="user">
+        <div className={newPasswordClass}>
+          <Helmet>
+            <title>p5.js Web Editor | New Password</title>
+          </Helmet>
+          <div className="form-container__header">
+            <button className="form-container__logo-button" onClick={this.gotoHomePage}>
+              <InlineSVG src={logoUrl} alt="p5js Logo" />
+            </button>
+            <button className="form-container__exit-button" onClick={this.gotoHomePage}>
+              <InlineSVG src={exitUrl} alt="Close NewPassword Page" />
+            </button>
+          </div>
+          <div className="form-container__content">
+            <h2 className="form-container__title">Set a New Password</h2>
+            <NewPasswordForm {...this.props} />
+            <p className="new-password__invalid">
+              The password reset token is invalid or has expired.
+            </p>
+          </div>
         </div>
       </div>
     );

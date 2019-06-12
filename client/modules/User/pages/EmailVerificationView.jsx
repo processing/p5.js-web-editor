@@ -65,21 +65,23 @@ class EmailVerificationView extends React.Component {
     }
 
     return (
-      <div className="form-container">
-        <Helmet>
-          <title>p5.js Web Editor | Email Verification</title>
-        </Helmet>
-        <div className="form-container__header">
-          <button className="form-container__logo-button" onClick={this.gotoHomePage}>
-            <InlineSVG src={logoUrl} alt="p5js Logo" />
-          </button>
-          <button className="form-container__exit-button" onClick={this.closeLoginPage}>
-            <InlineSVG src={exitUrl} alt="Close Login Page" />
-          </button>
-        </div>
-        <div className="form-container__content">
-          <h2 className="form-container__title">Verify your email</h2>
-          {status}
+      <div className="user">
+        <div className="form-container">
+          <Helmet>
+            <title>p5.js Web Editor | Email Verification</title>
+          </Helmet>
+          <div className="form-container__header">
+            <button className="form-container__logo-button" onClick={this.gotoHomePage}>
+              <InlineSVG src={logoUrl} alt="p5js Logo" />
+            </button>
+            <button className="form-container__exit-button" onClick={this.closeLoginPage}>
+              <InlineSVG src={exitUrl} alt="Close Login Page" />
+            </button>
+          </div>
+          <div className="form-container__content">
+            <h2 className="form-container__title">Verify your email</h2>
+            {status}
+          </div>
         </div>
       </div>
     );

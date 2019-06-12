@@ -53,7 +53,7 @@
 
 .sketches-table__row:nth-child(odd) {
   @include themify() {
-    background: getThemifyVariable('console-header-background-color');
+    background: getThemifyVariable('table-row-stripe-color');
   }
 }
 

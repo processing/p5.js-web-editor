@@ -51,10 +51,6 @@
   padding-right: #{15 / $base-font-size}rem;
 }
 
-.nav__item-header {
-  margin-right: #{5 / $base-font-size}rem;
-}
-
 .nav__item:hover {
   .nav__item-header {
     @include themify() {
@@ -67,6 +63,16 @@
       fill: getThemifyVariable('nav-hover-color');
     }
   }
+}
+
+.nav__item-header:hover {
+  @include themify() {
+      color: getThemifyVariable('nav-hover-color');
+    }
+}
+
+.nav__item-header-triangle {
+	margin-left: #{5 / $base-font-size}rem;
 }
 
 .nav__dropdown {

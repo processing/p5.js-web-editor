@@ -102,27 +102,6 @@
 	}
 }
 
-%forms-button {
-	background-color: $form-button-background-color;
-	color: $form-button-color;
-	cursor: pointer;
-	border: 2px solid $form-button-color;
-	border-radius: 2px;
-	padding: #{8 / $base-font-size}rem #{25 / $base-font-size}rem;
-	line-height: 1;
-  margin: #{39 / $base-font-size}rem 0 #{24 / $base-font-size}rem 0;
-	&:enabled:hover {
-		border-color: $form-button-background-hover-color;
-		background-color: $form-button-background-hover-color;
-		color: $form-button-hover-color;
-	}
-	&:enabled:active {
-		border-color: $form-button-background-active-color;
-		background-color: $form-button-background-active-color;
-		color: $form-button-active-color;
-	}
-}
-
 %preferences-button {
 	@extend %toolbar-button;
 	@include themify() {

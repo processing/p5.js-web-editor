@@ -215,32 +215,6 @@ export function autosaveProject() {
   };
 }
 
-export function createProject() {
-  return (dispatch, getState) => {
-    const state = getState();
-    if (state.project.isSaving) {
-      Promise.resolve();
-      return;
-    }
-    dispatch(startSavingProject());
-    axios.post(`${ROOT_URL}/projects`, {}, { withCredentials: true })
-      .then((response) => {
-        dispatch(endSavingProject());
-        dispatch(setUnsavedChanges(false));
-        browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
-        const { hasChanges, synchedProject } = getSynchedProject(getState(), response.data);
-        if (hasChanges) {
-          dispatch(setUnsavedChanges(true));
-        }
-        dispatch(setNewProject(synchedProject));
-      })
-      .catch((response) => {
-        dispatch(endSavingProject());
-        dispatch(projectSaveFail(response.data));
-      });
-  };
-}
-
 export function exportProjectAsZip(projectId) {
   const win = window.open(`${ROOT_URL}/projects/${projectId}/zip`, '_blank');
   win.focus();

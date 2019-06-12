@@ -12,9 +12,9 @@ import AccountForm from '../components/AccountForm';
 import { validateSettings } from '../../../utils/reduxFormUtils';
 import GithubButton from '../components/GithubButton';
 import APIKeyForm from '../components/APIKeyForm';
+import NavBasic from '../../../components/NavBasic';
 
 const exitUrl = require('../../../images/exit.svg');
-const logoUrl = require('../../../images/p5js-logo.svg');
 
 class AccountView extends React.Component {
   constructor(props) {
@@ -24,7 +24,7 @@ class AccountView extends React.Component {
   }
 
   componentDidMount() {
-    document.body.className = 'light';
+    document.body.className = this.props.theme;
   }
 
   closeAccountPage() {
@@ -37,43 +37,40 @@ class AccountView extends React.Component {
 
   render() {
     return (
-      <section className="form-container form-container--align-top form-container--align-left account-container">
+      <div className="user">
         <Helmet>
           <title>p5.js Web Editor | Account</title>
         </Helmet>
-        <div className="form-container__header">
-          <button className="form-container__logo-button" onClick={this.gotoHomePage}>
-            <InlineSVG src={logoUrl} alt="p5js Logo" />
-          </button>
-          <button className="form-container__exit-button" onClick={this.closeAccountPage}>
-            <InlineSVG src={exitUrl} alt="Close Account Page" />
-          </button>
-        </div>
-        <div className="form-container__content">
-          <h2 className="form-container__title">My Account</h2>
-          <Tabs className="account__tabs">
-            <TabList>
-              <div className="preference__subheadings">
-                <Tab><h4 className="preference__subheading">Account</h4></Tab>
-                <Tab><h4 className="preference__subheading">Access Tokens</h4></Tab>
-              </div>
-            </TabList>
-            <TabPanel>
-              <AccountForm {...this.props} />
-              <div className="account__social">
+
+        <NavBasic onBack={this.closeAccountPage} />
+
+        <section className="modal">
+          <div className="modal-content">
+            <div className="modal__header">
+              <h2 className="modal__title">My Account</h2>
+            </div>
+            <Tabs className="account__tabs">
+              <TabList>
+                <div className="tabs__titles">
+                  <Tab><h4 className="tabs__title">Account</h4></Tab>
+                  <Tab><h4 className="tabs__title">Access Tokens</h4></Tab>
+                </div>
+              </TabList>
+              <TabPanel>
+                <AccountForm {...this.props} />
                 <h2 className="form-container__divider">Social Login</h2>
-                <p className="account__social__context">
+                <p className="account__social-text">
                   Link this account with your GitHub account to allow login from both.
                 </p>
                 <GithubButton buttonText="Login with GitHub" />
-              </div>
-            </TabPanel>
-            <TabPanel>
-              <APIKeyForm {...this.props} />
-            </TabPanel>
-          </Tabs>
-        </div>
-      </section>
+              </TabPanel>
+              <TabPanel>
+                <APIKeyForm {...this.props} />
+              </TabPanel>
+            </Tabs>
+          </div>
+        </section>
+      </div>
     );
   }
 }

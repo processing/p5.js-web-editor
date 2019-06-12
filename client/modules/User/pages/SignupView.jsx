@@ -34,25 +34,27 @@ class SignupView extends React.Component {
       return null;
     }
     return (
-      <div className="form-container">
-        <Helmet>
-          <title>p5.js Web Editor | Signup</title>
-        </Helmet>
-        <div className="form-container__header">
-          <button className="form-container__logo-button" onClick={this.gotoHomePage}>
-            <InlineSVG src={logoUrl} alt="p5js Logo" />
-          </button>
-          <button className="form-container__exit-button" onClick={this.closeSignupPage}>
-            <InlineSVG src={exitUrl} alt="Close Signup Page" />
-          </button>
-        </div>
-        <div className="form-container__content">
-          <h2 className="form-container__title">Sign Up</h2>
-          <SignupForm {...this.props} />
-          <p className="form__navigation-options">
-            Already have an account?&nbsp;
-            <Link className="form__login-button" to="/login">Log In</Link>
-          </p>
+      <div className="user">
+        <div className="form-container">
+          <Helmet>
+            <title>p5.js Web Editor | Signup</title>
+          </Helmet>
+          <div className="form-container__header">
+            <button className="form-container__logo-button" onClick={this.gotoHomePage}>
+              <InlineSVG src={logoUrl} alt="p5js Logo" />
+            </button>
+            <button className="form-container__exit-button" onClick={this.closeSignupPage}>
+              <InlineSVG src={exitUrl} alt="Close Signup Page" />
+            </button>
+          </div>
+          <div className="form-container__content">
+            <h2 className="form-container__title">Sign Up</h2>
+            <SignupForm {...this.props} />
+            <p className="form__navigation-options">
+              Already have an account?&nbsp;
+              <Link className="form__login-button" to="/login">Log In</Link>
+            </p>
+          </div>
         </div>
       </div>
     );
