@@ -203,7 +203,7 @@ export class FileNode extends React.Component {
                     {(() => { // eslint-disable-line
                       if (this.props.fileType === 'folder') {
                         return (
-                          <li className="sidebar__project-option">
+                          <li>
                             <button
                               aria-label="add folder"
                               onClick={() => {
@@ -220,7 +220,7 @@ export class FileNode extends React.Component {
                         );
                       }
                     })()}
-                    <li className="sidebar__project-option">
+                    <li>
                       <button
                         onClick={() => {
                           this.originalFileName = this.props.name;
@@ -235,7 +235,7 @@ export class FileNode extends React.Component {
                         Rename
                       </button>
                     </li>
-                    <li className="sidebar__project-option">
+                    <li>
                       <button
                         onClick={() => {
                           if (window.confirm(`Are you sure you want to delete ${this.props.name}?`)) {

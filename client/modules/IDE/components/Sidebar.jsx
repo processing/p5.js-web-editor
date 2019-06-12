@@ -90,7 +90,7 @@ class Sidebar extends React.Component {
               <InlineSVG src={downArrowUrl} />
             </button>
             <ul className="sidebar__project-options">
-              <li className="sidebar__project-option">
+              <li>
                 <button
                   aria-label="add folder"
                   onClick={() => {
@@ -103,7 +103,7 @@ class Sidebar extends React.Component {
                   Add folder
                 </button>
               </li>
-              <li className="sidebar__project-option">
+              <li>
                 <button
                   aria-label="add file"
                   onClick={() => {
