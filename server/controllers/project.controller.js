@@ -102,11 +102,11 @@ function deleteFilesFromS3(files) {
 export function deleteProject(req, res) {
   Project.findById(req.params.project_id, (findProjectErr, project) => {
     if (!project.user.equals(req.user._id)) {
-      res.status(403).json({ success: false, message: 'Session does not match owner of project.' });
+      res.status(403).json({ success: false, message: 'Authenticated user does not match owner of project.' });
       return;
     }
     deleteFilesFromS3(project.files);
-    Project.remove({ _id: req.params.project_id }, (removeProjectError) => {
+    project.remove((removeProjectError) => {
       if (removeProjectError) {
         res.status(404).send({ message: 'Project with that id does not exist' });
         return;
