@@ -12,31 +12,7 @@ import { resolvePathToFile } from '../utils/filePath';
 import generateFileSystemSafeName from '../utils/generateFileSystemSafeName';
 import { deleteObjectsFromS3, getObjectKey } from './aws.controller';
 
-export function createProject(req, res) {
-  let projectValues = {
-    user: req.user._id
-  };
-
-  projectValues = Object.assign(projectValues, req.body);
-
-  Project.create(projectValues, (err, newProject) => {
-    if (err) {
-      res.json({ success: false });
-      return;
-    }
-    Project.populate(
-      newProject,
-      { path: 'user', select: 'username' },
-      (innerErr, newProjectWithUser) => {
-        if (innerErr) {
-          res.json({ success: false });
-          return;
-        }
-        res.json(newProjectWithUser);
-      }
-    );
-  });
-}
+export { default as createProject } from './project.controller/createProject';
 
 export function updateProject(req, res) {
   Project.findById(req.params.project_id, (findProjectErr, project) => {
