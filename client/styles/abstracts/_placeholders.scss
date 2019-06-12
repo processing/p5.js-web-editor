@@ -197,3 +197,66 @@
 		}
 	}
 }
+
+%dropdown-open {
+	@include themify() {
+    background-color: map-get($theme-map, 'modal-background-color');
+    border: 1px solid map-get($theme-map, 'modal-border-color');
+    box-shadow: 0 0 18px 0 getThemifyVariable('shadow-color');
+    color: getThemifyVariable('dropdown-color');
+	}
+	text-align: left;
+	width: #{180 / $base-font-size}rem;
+	display: flex;
+	position: absolute;
+	flex-direction: column;
+	top: 100%;
+	height: auto;
+	z-index: 9999;
+	border-radius: #{6 / $base-font-size}rem;
+	& li:last-child {
+		border-radius: 0 0 #{5 / $base-font-size}rem #{5 / $base-font-size}rem;
+	}
+	& li {
+		& button,
+		& a {
+			@include themify() {
+				color: getThemifyVariable('dropdown-color');
+			}
+		}
+		padding: #{8 / $base-font-size}rem #{16 / $base-font-size}rem;
+		height: #{35 / $base-font-size}rem;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+	}
+	& li:hover {
+		@include themify() {
+      background-color: getThemifyVariable('button-background-hover-color');
+      color: getThemifyVariable('button-hover-color')
+		}
+		& button, & a {
+      @include themify() {
+        color: getThemifyVariable('button-hover-color');
+      }
+    }
+	}
+}
+
+%dropdown-open-left {
+	@extend %dropdown-open;
+	left: 0;
+	border-top-left-radius: 0px;
+	& li:first-child {
+		border-radius: 0 #{5 / $base-font-size}rem 0 0;
+	}
+}
+
+%dropdown-open-right {
+	@extend %dropdown-open;
+	right: 0;
+	border-top-right-radius: 0px;
+	& li:first-child {
+		border-radius: #{5 / $base-font-size}rem 0 0 0;
+	}
+}
