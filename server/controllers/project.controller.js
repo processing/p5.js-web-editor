@@ -11,6 +11,7 @@ import User from '../models/user';
 import { resolvePathToFile } from '../utils/filePath';
 import generateFileSystemSafeName from '../utils/generateFileSystemSafeName';
 import { deleteObjectsFromS3, getObjectKey } from './aws.controller';
+import { toApi as toApiProjectObject } from '../domain-objects/Project';
 
 export { default as createProject } from './project.controller/createProject';
 
@@ -157,8 +158,44 @@ export function getProjectAsset(req, res) {
     });
 }
 
-export function getProjectsForUserName(username) {
+class UserNotFoundError extends Error {
+  constructor(message, extra) {
+    super();
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, this.constructor);
+    }
+    this.name = 'UserNotFoundError';
+    this.message = message;
+    if (extra) this.extra = extra;
+  }
+}
 
+function getProjectsForUserName(username) {
+  return new Promise((resolve, reject) => {
+    User.findOne({ username }, (err, user) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      if (!user) {
+        reject(new UserNotFoundError());
+        return;
+      }
+
+      Project.find({ user: user._id })
+        .sort('-createdAt')
+        .select('name files id createdAt updatedAt')
+        .exec((innerErr, projects) => {
+          if (innerErr) {
+            reject(innerErr);
+            return;
+          }
+
+          resolve(projects);
+        });
+    });
+  });
 }
 
 export function getProjects(req, res) {
@@ -175,21 +212,42 @@ export function getProjects(req, res) {
 
 export function getProjectsForUser(req, res) {
   if (req.params.username) {
-    User.findOne({ username: req.params.username }, (err, user) => {
-      if (!user) {
-        res.status(404).json({ message: 'User with that username does not exist.' });
-        return;
-      }
-      Project.find({ user: user._id })
-        .sort('-createdAt')
-        .select('name files id createdAt updatedAt')
-        .exec((innerErr, projects) => res.json(projects));
-    });
+    getProjectsForUserName(req.params.username)
+      .then(projects => res.json(projects))
+      .catch((err) => {
+        if (err instanceof UserNotFoundError) {
+          res.status(404).json({ message: 'User with that username does not exist.' });
+        } else {
+          res.status(500).json({ message: 'Error fetching projects' });
+        }
+      });
   } else {
     // could just move this to client side
     res.json([]);
   }
 }
+
+export function apiGetProjectsForUser(req, res) {
+  if (req.params.username) {
+    getProjectsForUserName(req.params.username)
+      .then((projects) => {
+        const asApiObjects = projects.map(p => toApiProjectObject(p));
+        res.json({ sketches: asApiObjects });
+      })
+      .catch((err) => {
+        if (err instanceof UserNotFoundError) {
+          res.status(404).json({ message: 'User with that username does not exist.' });
+        } else {
+          console.error(err);
+          res.status(500).json({ message: 'Error fetching projects' });
+        }
+      });
+  } else {
+    // could just move this to client side
+    res.json({ sketches: [] });
+  }
+}
+
 
 export function projectExists(projectId, callback) {
   Project.findById(projectId, (err, project) => (

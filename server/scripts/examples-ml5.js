@@ -27,7 +27,7 @@ const githubRequestOptions = {
 };
 
 const editorRequestOptions = {
-  url: process.env.P5_API || 'http://localhost:8000/api',
+  url: `${process.env.P5_API || 'http://localhost:8000/api'}/${editorUsername}`,
   method: 'GET',
   headers: {
     ...headers,
@@ -264,7 +264,8 @@ function formatSketchForStorageAll(sketchWithItems, user) {
  */
 async function getProjectsList() {
   const options = Object.assign({}, editorRequestOptions);
-  options.url = `${options.url}/${editorUsername}/sketches`;
+  options.url = `${options.url}/sketches`;
+
   const results = await rp(options);
 
   return results.sketches;
@@ -277,6 +278,7 @@ async function deleteProject(project) {
   const options = Object.assign({}, editorRequestOptions);
   options.method = 'DELETE';
   options.url = `${options.url}/sketches/${project.id}`;
+
   const results = await rp(options);
 
   return results;
@@ -307,9 +309,11 @@ async function createProject(project) {
  * @param {*} user
  */
 async function createProjectsInP5User(filledProjectList, user) {
+  console.log('Finding existing projects...');
+
   const existingProjects = await getProjectsList();
 
-  console.log('**', existingProjects)
+  console.log(`Will delete ${existingProjects.length} projects`);
 
   try {
     await Q.all(existingProjects.map(deleteProject));
