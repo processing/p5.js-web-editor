@@ -301,7 +301,8 @@ export function cloneProject(id) {
             error: response.data
           }));
       });
-  });
+    });
+  };
 }
 
 export function showEditProjectName() {

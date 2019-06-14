@@ -12,6 +12,7 @@
   border-spacing: 0;
   & .sketch-list__dropdown-column {
     width: #{60 / $base-font-size}rem;
+  }
   & .sketch-list__trash-column {
     width: #{36 / $base-font-size}rem;
     position: relative;
