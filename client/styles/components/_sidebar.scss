@@ -75,15 +75,15 @@
 .file-item__spacer {
   flex-shrink: 0;
   .sidebar__file-item & {
-    width: #{33 / $base-font-size}rem;
+    width: #{19 / $base-font-size}rem;
     .sidebar__file-item & {
-      width: #{53 / $base-font-size}rem;
+      width: #{39 / $base-font-size}rem;
       .sidebar__file-item & {
-        width: #{73 / $base-font-size}rem;
+        width: #{59 / $base-font-size}rem;
         .sidebar__file-item & {
-          width: #{93 / $base-font-size}rem;
+          width: #{79 / $base-font-size}rem;
           .sidebar__file-item & {
-            width: #{113 / $base-font-size}rem;
+            width: #{99 / $base-font-size}rem;
           }
         }
       }

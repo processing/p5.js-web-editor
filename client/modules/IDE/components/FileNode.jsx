@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import * as IDEActions from '../actions/ide';
 import * as FileActions from '../actions/files';
 
-const downArrowUrl = require('../../../images/down-arrow.svg');
+const downArrowUrl = require('../../../images/down-filled-triangle.svg');
 const folderRightUrl = require('../../../images/triangle-arrow-right.svg');
 const folderDownUrl = require('../../../images/triangle-arrow-down.svg');
 const fileUrl = require('../../../images/file.svg');

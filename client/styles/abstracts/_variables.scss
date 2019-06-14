@@ -62,8 +62,8 @@ $themes: (
     keyboard-shortcut-color: #757575,
     nav-hover-color: $p5js-pink,
     error-color: $p5js-pink,
-    codefold-icon-open: url(../images/down-arrow.svg),
-    codefold-icon-closed: url(../images/right-arrow.svg)
+    codefold-icon-open: url(../images/triangle-arrow-down.svg),
+    codefold-icon-closed: url(../images/triangle-arrow-right.svg)
   ),
   dark: (
     logo-color: $p5js-pink,
@@ -111,8 +111,8 @@ $themes: (
     keyboard-shortcut-color: #B5B5B5,
     nav-hover-color: $p5js-pink,
     error-color: $p5js-pink,
-    codefold-icon-open: url(../images/down-arrow-white.svg),
-    codefold-icon-closed: url(../images/right-arrow-white.svg)
+    codefold-icon-open: url(../images/triangle-arrow-down-white.svg),
+    codefold-icon-closed: url(../images/triangle-arrow-right-white.svg)
   ),
   contrast: (
     logo-color: $yellow,
@@ -159,8 +159,8 @@ $themes: (
     keyboard-shortcut-color: #e1e1e1,
     nav-hover-color: $yellow,
     error-color: $p5-contrast-pink,
-    codefold-icon-open: url(../images/down-arrow-white.svg),
-    codefold-icon-closed: url(../images/right-arrow-white.svg)
+    codefold-icon-open: url(../images/triangle-arrow-down-white.svg),
+    codefold-icon-closed: url(../images/triangle-arrow-right-white.svg)
   )
 );
 
