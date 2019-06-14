@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import InlineSVG from 'react-inlinesvg';
 import ConnectedFileNode from './FileNode';
 
-const folderUrl = require('../../../images/folder.svg');
 const downArrowUrl = require('../../../images/down-filled-triangle.svg');
 
 class Sidebar extends React.Component {
