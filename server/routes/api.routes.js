@@ -10,11 +10,11 @@ router.get(
   ProjectController.apiGetProjectsForUser
 );
 
-// router.post(
-//   '/:username/sketches',
-//   passport.authenticate('basic', { session: false }),
-//   ProjectController.apiCreateProject
-// );
+router.post(
+  '/:username/sketches',
+  passport.authenticate('basic', { session: false }),
+  ProjectController.apiCreateProject
+);
 
 // NOTE: Currently :username will not be checked for ownership
 //       only the project's owner in the database.

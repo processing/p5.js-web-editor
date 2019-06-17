@@ -14,7 +14,8 @@ import { deleteObjectsFromS3, getObjectKey } from './aws.controller';
 import { toApi as toApiProjectObject } from '../domain-objects/Project';
 import createApplicationErrorClass from '../utils/createApplicationErrorClass';
 
-export { default as createProject } from './project.controller/createProject';
+export { default as createProject, apiCreateProject } from './project.controller/createProject';
+
 const UserNotFoundError = createApplicationErrorClass('UserNotFoundError');
 
 export function updateProject(req, res) {
