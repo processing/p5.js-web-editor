@@ -12,8 +12,10 @@ import { resolvePathToFile } from '../utils/filePath';
 import generateFileSystemSafeName from '../utils/generateFileSystemSafeName';
 import { deleteObjectsFromS3, getObjectKey } from './aws.controller';
 import { toApi as toApiProjectObject } from '../domain-objects/Project';
+import createApplicationErrorClass from '../utils/createApplicationErrorClass';
 
 export { default as createProject } from './project.controller/createProject';
+const UserNotFoundError = createApplicationErrorClass('UserNotFoundError');
 
 export function updateProject(req, res) {
   Project.findById(req.params.project_id, (findProjectErr, project) => {
@@ -156,18 +158,6 @@ export function getProjectAsset(req, res) {
         return res.send(body);
       });
     });
-}
-
-class UserNotFoundError extends Error {
-  constructor(message, extra) {
-    super();
-    if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, this.constructor);
-    }
-    this.name = 'UserNotFoundError';
-    this.message = message;
-    if (extra) this.extra = extra;
-  }
 }
 
 function getProjectsForUserName(username) {
