@@ -248,17 +248,17 @@
 %dropdown-open-left {
 	@extend %dropdown-open;
 	left: 0;
-	border-top-left-radius: 0px;
-	& li:first-child {
-		border-radius: 0 #{5 / $base-font-size}rem 0 0;
-	}
+	// border-top-left-radius: 0px;
+	// & li:first-child {
+	// 	border-radius: 0 #{5 / $base-font-size}rem 0 0;
+	// }
 }
 
 %dropdown-open-right {
 	@extend %dropdown-open;
 	right: 0;
-	border-top-right-radius: 0px;
-	& li:first-child {
-		border-radius: #{5 / $base-font-size}rem 0 0 0;
-	}
+	// border-top-right-radius: 0px;
+	// & li:first-child {
+	// 	border-radius: #{5 / $base-font-size}rem 0 0 0;
+	// }
 }

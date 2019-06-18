@@ -407,7 +407,6 @@ class IDEView extends React.Component {
             <Feedback previousPath={this.props.ide.previousPath} />
           </Overlay>
         }
-        aa
         { this.props.ide.shareModalVisible &&
           <Overlay
             title="Share This Sketch"

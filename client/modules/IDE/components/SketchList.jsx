@@ -198,96 +198,75 @@ class SketchList extends React.Component {
                       <InlineSVG src={downFilledTriangle} alt="Menu" />
                     </button>
                     {this.state.actionDialogueDisplayed[i] &&
-                      <div
+                      <ul
                         className="sketch-list__action-dialogue"
                         role="presentation"
                         onClick={e => e.stopPropagation()}
                       >
-                        <button
-                          className="sketch-list__action-close"
-                          onClick={() => {
-                            const actionDialogueDisplayed = [...this.state.actionDialogueDisplayed];
-                            actionDialogueDisplayed[i] = false;
-                            this.setState({
-                              actionDialogueDisplayed
-                            });
-                          }}
-                        >
-                          <InlineSVG src={btnUpTriangleDivot} alt="Close" />
-                        </button>
-                        <div
-                          className="sketch-list__action-label"
-                          onClick={() => {
-                            const actionDialogueDisplayed = [...this.state.actionDialogueDisplayed];
-                            actionDialogueDisplayed[i] = false;
-                            this.setState({
-                              actionDialogueDisplayed
-                            });
-                          }}
-                          role="presentation"
-                        >
-                            Sketch actions
-                        </div>
-                        <div className="sketch-list__action-dashed-line" />
-                        <div
-                          role="presentation"
-                          className="sketch-list__action-option"
-                          onClick={() => {
-                            this.closeAllRenameBoxes();
-                            this.closeAllDropdowns();
-                            const renameBoxDisplayed = new Array(this.props.sketches.length).fill(false);
-                            renameBoxDisplayed[i] = true;
-                            this.setState({
-                              renameBoxDisplayed
-                            });
-                          }}
-                        >
-                            Rename
-                        </div>
-                        <div
-                          role="presentation"
-                          className="sketch-list__action-option"
-                          onClick={() => {
-                            this.props.exportProjectAsZip(sketch.id);
-                          }}
-                        >
-                            Download
-                        </div>
+                        <li>
+                          <button
+                            className="sketch-list__action-option"
+                            onClick={() => {
+                              this.closeAllRenameBoxes();
+                              this.closeAllDropdowns();
+                              const renameBoxDisplayed = new Array(this.props.sketches.length).fill(false);
+                              renameBoxDisplayed[i] = true;
+                              this.setState({
+                                renameBoxDisplayed
+                              });
+                            }}
+                          >
+                              Rename
+                          </button>
+                        </li>
+                        <li>
+                          <button
+                            className="sketch-list__action-option"
+                            onClick={() => {
+                              this.props.exportProjectAsZip(sketch.id);
+                            }}
+                          >
+                              Download
+                          </button>
+                        </li>
                         {this.props.user.authenticated &&
-                        <div
-                          role="presentation"
-                          className="sketch-list__action-option"
-                          onClick={() => {
-                            this.closeAllDropdowns();
-                            this.props.cloneProject(sketch.id);
-                          }}
-                        >
-                            Duplicate
-                        </div> }
-                        <div
-                          role="presentation"
-                          className="sketch-list__action-option"
-                          onClick={() => {
-                            this.closeAllDropdowns();
-                            this.props.showShareModal(sketch.id, sketch.name);
-                          }}
-                        >
-                            Share
-                        </div>
-                        <div
-                          role="presentation"
-                          className="sketch-list__action-option"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            this.closeAllDropdowns();
-                            if (window.confirm(`Are you sure you want to delete "${sketch.name}"?`)) {
-                              this.props.deleteProject(sketch.id);
-                            }
-                          }}
-                        >
-                            Delete
-                        </div>
-                      </div>}
+                        <li>
+                          <button
+                            className="sketch-list__action-option"
+                            onClick={() => {
+                              this.closeAllDropdowns();
+                              this.props.cloneProject(sketch.id);
+                            }}
+                          >
+                              Duplicate
+                          </button>
+                        </li> }
+                        <li>
+                          <button
+                            className="sketch-list__action-option"
+                            onClick={() => {
+                              this.closeAllDropdowns();
+                              this.props.showShareModal(sketch.id, sketch.name);
+                            }}
+                          >
+                              Share
+                          </button>
+                        </li>
+                        <li>
+                          <button
+                            className="sketch-list__action-option"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              this.closeAllDropdowns();
+                              if (window.confirm(`Are you sure you want to delete "${sketch.name}"?`)) {
+                                this.props.deleteProject(sketch.id);
+                              }
+                            }}
+                          >
+                              Delete
+                          </button>
+                        </li>
+                      </ul>}
                   </td>
                 </tr>)}
             </tbody>
