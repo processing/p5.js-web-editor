@@ -1,3 +1,4 @@
+import isPlainObject from 'lodash/isPlainObject';
 import pick from 'lodash/pick';
 import Project from '../models/project';
 import createId from '../utils/createId';
@@ -110,8 +111,10 @@ export function transformFiles(tree = {}) {
 export function toModel(object) {
   let files = [];
 
-  if (typeof object.files === 'object') {
+  if (isPlainObject(object.files)) {
     files = transformFiles(object.files);
+  } else if (object.files != null) {
+    throw new FileValidationError('\'files\' must be an object');
   }
 
   const projectValues = pick(object, ['user', 'name', 'slug']);

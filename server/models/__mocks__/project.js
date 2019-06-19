@@ -11,6 +11,19 @@ export function createMock() {
   return sinon.mock(Project);
 }
 
+// Wraps the Project.prototype i.e. the
+// instance methods in a mock so
+// Project.save() can be mocked
+export function createInstanceMock() {
+  // See: https://stackoverflow.com/questions/40962960/sinon-mock-of-mongoose-save-method-for-all-future-instances-of-a-model-with-pro
+  Object.defineProperty(Project.prototype, 'save', {
+    value: Project.prototype.save,
+    configurable: true,
+  });
+
+  return sinon.mock(Project.prototype);
+}
+
 // Re-export the model, it will be
 // altered by mockingoose whenever
 // we call methods on the MockConfig

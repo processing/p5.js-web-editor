@@ -2,9 +2,10 @@
  * @jest-environment node
  */
 import { Response } from 'jest-express';
+import sinon from 'sinon';
 
-import { createMock } from '../../models/project';
-import createProject from '../project.controller/createProject';
+import Project, { createMock, createInstanceMock } from '../../models/project';
+import createProject, { apiCreateProject } from '../project.controller/createProject';
 
 jest.mock('../../models/project');
 
@@ -145,6 +146,121 @@ describe('project.controller', () => {
 
       function expectations() {
         expect(response.json).toHaveBeenCalledWith({ success: false });
+
+        done();
+      }
+
+      promise.then(expectations, expectations).catch(expectations);
+    });
+  });
+
+  describe('apiCreateProject()', () => {
+    let ProjectMock;
+    let ProjectInstanceMock;
+
+    beforeEach(() => {
+      ProjectMock = createMock();
+      ProjectInstanceMock = createInstanceMock();
+    });
+
+    afterEach(() => {
+      ProjectMock.restore();
+      ProjectInstanceMock.restore();
+    });
+
+    it('returns 201 with id of created sketch', (done) => {
+      const request = {
+        user: { _id: 'abc123' },
+        body: {
+          name: 'My sketch',
+          files: {}
+        }
+      };
+      const response = new Response();
+
+      const result = {
+        _id: 'abc123',
+        id: 'abc123',
+        name: 'Project name',
+        serveSecure: false,
+        files: []
+      };
+
+      ProjectInstanceMock.expects('save')
+        .resolves(new Project(result));
+
+      const promise = apiCreateProject(request, response);
+
+      function expectations() {
+        const doc = response.json.mock.calls[0][0];
+
+        expect(response.status).toHaveBeenCalledWith(201);
+        expect(response.json).toHaveBeenCalled();
+
+        expect(JSON.parse(JSON.stringify(doc))).toMatchObject({
+          id: 'abc123'
+        });
+
+        done();
+      }
+
+      promise.then(expectations, expectations).catch(expectations);
+    });
+
+    it('returns validation errors on files input', (done) => {
+      const request = {
+        user: {},
+        body: {
+          name: 'My sketch',
+          files: {
+            'index.html': {
+              // missing content or url
+            }
+          }
+        }
+      };
+      const response = new Response();
+
+      const promise = apiCreateProject(request, response);
+
+      function expectations() {
+        const doc = response.json.mock.calls[0][0];
+
+        const responseBody = JSON.parse(JSON.stringify(doc));
+
+        expect(response.status).toHaveBeenCalledWith(422);
+        expect(responseBody.name).toBe('File Validation Failed');
+        expect(responseBody.errors.length).toBe(1);
+        expect(responseBody.errors).toEqual([
+          { name: 'index.html', message: 'missing \'url\' or \'content\'' }
+        ]);
+
+        done();
+      }
+
+      promise.then(expectations, expectations).catch(expectations);
+    });
+
+    it('rejects file parameters not in object format', (done) => {
+      const request = {
+        user: { _id: 'abc123' },
+        body: {
+          name: 'Wriggly worm',
+          files: [{ name: 'file.js', content: 'var hello = true;' }]
+        }
+      };
+      const response = new Response();
+
+      const promise = apiCreateProject(request, response);
+
+      function expectations() {
+        const doc = response.json.mock.calls[0][0];
+
+        const responseBody = JSON.parse(JSON.stringify(doc));
+
+        expect(response.status).toHaveBeenCalledWith(422);
+        expect(responseBody.name).toBe('File Validation Failed');
+        expect(responseBody.message).toBe('\'files\' must be an object');
 
         done();
       }
