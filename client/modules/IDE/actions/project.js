@@ -9,7 +9,8 @@ import {
   setUnsavedChanges,
   justOpenedProject,
   resetJustOpenedProject,
-  showErrorModal
+  showErrorModal,
+  setPreviousPath
 } from './ide';
 import { clearState, saveState } from '../../../persistState';
 
@@ -246,47 +247,61 @@ function generateNewIdsForChildren(file, files) {
   file.children = newChildren; // eslint-disable-line
 }
 
-export function cloneProject() {
+export function cloneProject(id) {
   return (dispatch, getState) => {
     dispatch(setUnsavedChanges(false));
-    const state = getState();
-    const newFiles = state.files.map((file) => { // eslint-disable-line
-      return { ...file };
-    });
-
-    // generate new IDS for all files
-    const rootFile = newFiles.find(file => file.name === 'root');
-    const newRootFileId = objectID().toHexString();
-    rootFile.id = newRootFileId;
-    rootFile._id = newRootFileId;
-    generateNewIdsForChildren(rootFile, newFiles);
-
-    // duplicate all files hosted on S3
-    each(newFiles, (file, callback) => {
-      if (file.url && file.url.includes('amazonaws')) {
-        const formParams = {
-          url: file.url
-        };
-        axios.post(`${ROOT_URL}/S3/copy`, formParams, { withCredentials: true })
-          .then((response) => {
-            file.url = response.data.url;
-            callback(null);
-          });
+    new Promise((resolve, reject) => {
+      if (!id) {
+        resolve(getState());
       } else {
-        callback(null);
+        fetch(`${ROOT_URL}/projects/${id}`)
+          .then(res => res.json())
+          .then(data => resolve({
+            files: data.files,
+            project: {
+              name: data.name
+            }
+          }));
       }
-    }, (err) => {
-      // if not errors in duplicating the files on S3, then duplicate it
-      const formParams = Object.assign({}, { name: `${state.project.name} copy` }, { files: newFiles });
-      axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
-        .then((response) => {
-          browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
-          dispatch(setNewProject(response.data));
-        })
-        .catch(response => dispatch({
-          type: ActionTypes.PROJECT_SAVE_FAIL,
-          error: response.data
-        }));
+    }).then((state) => {
+      const newFiles = state.files.map((file) => { // eslint-disable-line
+        return { ...file };
+      });
+
+      // generate new IDS for all files
+      const rootFile = newFiles.find(file => file.name === 'root');
+      const newRootFileId = objectID().toHexString();
+      rootFile.id = newRootFileId;
+      rootFile._id = newRootFileId;
+      generateNewIdsForChildren(rootFile, newFiles);
+
+      // duplicate all files hosted on S3
+      each(newFiles, (file, callback) => {
+        if (file.url && file.url.includes('amazonaws')) {
+          const formParams = {
+            url: file.url
+          };
+          axios.post(`${ROOT_URL}/S3/copy`, formParams, { withCredentials: true })
+            .then((response) => {
+              file.url = response.data.url;
+              callback(null);
+            });
+        } else {
+          callback(null);
+        }
+      }, (err) => {
+        // if not errors in duplicating the files on S3, then duplicate it
+        const formParams = Object.assign({}, { name: `${state.project.name} copy` }, { files: newFiles });
+        axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
+          .then((response) => {
+            browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
+            dispatch(setNewProject(response.data));
+          })
+          .catch(response => dispatch({
+            type: ActionTypes.PROJECT_SAVE_FAIL,
+            error: response.data
+          }));
+      });
     });
   };
 }
@@ -307,5 +322,60 @@ export function setProjectSavedTime(updatedAt) {
   return {
     type: ActionTypes.SET_PROJECT_SAVED_TIME,
     value: updatedAt
+  };
+}
+
+export function changeProjectName(id, newName) {
+  return (dispatch, getState) => {
+    const state = getState();
+    axios.put(`${ROOT_URL}/projects/${id}`, { name: newName }, { withCredentials: true })
+      .then((response) => {
+        if (response.status === 200) {
+          dispatch({
+            type: ActionTypes.RENAME_PROJECT,
+            payload: { id: response.data.id, name: response.data.name }
+          });
+          if (state.project.id === response.data.id) {
+            dispatch({
+              type: ActionTypes.SET_PROJECT_NAME,
+              name: response.data.name
+            });
+          }
+        }
+      })
+      .catch((response) => {
+        console.log(response);
+        dispatch({
+          type: ActionTypes.PROJECT_SAVE_FAIL,
+          error: response.data
+        });
+      });
+  };
+}
+
+export function deleteProject(id) {
+  return (dispatch, getState) => {
+    axios.delete(`${ROOT_URL}/projects/${id}`, { withCredentials: true })
+      .then(() => {
+        const state = getState();
+        if (id === state.project.id) {
+          dispatch(resetProject());
+          dispatch(setPreviousPath('/'));
+        }
+        dispatch({
+          type: ActionTypes.DELETE_PROJECT,
+          id
+        });
+      })
+      .catch((response) => {
+        if (response.status === 403) {
+          dispatch(showErrorModal('staleSession'));
+        } else {
+          dispatch({
+            type: ActionTypes.ERROR,
+            error: response.data
+          });
+        }
+      });
   };
 }

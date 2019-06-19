@@ -10,8 +10,9 @@
   padding: #{10 / $base-font-size}rem #{20 / $base-font-size}rem;
   max-height: 100%;
   border-spacing: 0;
-  & .sketch-list__trash-column {
-    width: #{23 / $base-font-size}rem;
+  & .sketch-list__dropdown-column {
+    width: #{60 / $base-font-size}rem;
+    position: relative;
   }
 }
 
@@ -44,17 +45,24 @@
   }
 }
 
+.sketches-table thead th:nth-child(1){
+  padding-left: #{12 / $base-font-size}rem;
+}
+
 .sketches-table__row {
   margin: #{10 / $base-font-size}rem;
   height: #{72 / $base-font-size}rem;
   font-size: #{16 / $base-font-size}rem;
-  cursor: pointer;
 }
 
 .sketches-table__row:nth-child(odd) {
   @include themify() {
     background: getThemifyVariable('table-row-stripe-color');
   }
+}
+
+.sketches-table__row > th:nth-child(1) {
+  padding-left: #{12 / $base-font-size}rem;
 }
 
 .sketches-table__row a {
@@ -75,26 +83,24 @@
   font-weight: normal;
 }
 
-.visibility-toggle .sketch-list__trash-button {
-  @extend %hidden-element;
-  width:#{20 / $base-font-size}rem;
-  height:#{20 / $base-font-size}rem;
-}
-
-.visibility-toggle:hover .sketch-list__trash-button {
-   @include themify() {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    position: initial;
-    left: 0;
-    top: 0;
-      & g {
-        opacity: 1;
-        fill: getThemifyVariable('icon-hover-color');
+.sketch-list__dropdown-button {
+  width:#{25 / $base-font-size}rem;
+  height:#{25 / $base-font-size}rem;
+  @include themify() {
+      & polygon {
+        fill: getThemifyVariable('dropdown-color');
       }
   }
+}
+
+.sketch-list__action-dialogue {
+  @extend %dropdown-open-right;
+  top: 63%;
+  right: calc(100% - 26px);
+}
+
+.sketch-list__action-option {
+
 }
 
 .sketches-table__empty {
