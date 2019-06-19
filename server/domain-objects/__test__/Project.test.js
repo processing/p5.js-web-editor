@@ -1,4 +1,4 @@
-import { transformFiles } from '../Project';
+import { transformFiles, FileValidationError } from '../Project';
 
 jest.mock('../../utils/createId');
 
@@ -239,6 +239,34 @@ describe('domain-objects/Project', () => {
           content: 'different file'
         }
       ]);
+    });
+
+    it('validates files', () => {
+      const tree = {
+        'index.html': {} // missing `content`
+      };
+
+      expect(() => transformFiles(tree)).toThrowError(FileValidationError);
+    });
+
+    it('collects all file validation errors', () => {
+      const tree = {
+        'index.html': {}, // missing `content`
+        'something.js': {} // also missing `content`
+      };
+
+      try {
+        transformFiles(tree);
+
+        // Should not get here
+        throw new Error('should have thrown before this point');
+      } catch (err) {
+        expect(err).toBeInstanceOf(FileValidationError);
+        expect(err.files).toEqual([
+          { name: 'index.html', message: 'missing \'url\' or \'content\'' },
+          { name: 'something.js', message: 'missing \'url\' or \'content\'' }
+        ]);
+      }
     });
   });
 });
