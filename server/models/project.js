@@ -49,7 +49,11 @@ projectSchema.set('toJSON', {
 
 projectSchema.pre('save', function generateSlug(next) {
   const project = this;
-  project.slug = slugify(project.name, '_');
+
+  if (!project.slug) {
+    project.slug = slugify(project.name, '_');
+  }
+
   return next();
 });
 
