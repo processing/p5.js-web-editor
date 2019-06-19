@@ -3,14 +3,13 @@
  * the application.
  */
 export class ApplicationError extends Error {
-  constructor(message, extra) {
+  constructor(message) {
     super();
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, this.constructor);
     }
     this.name = 'ApplicationError';
     this.message = message;
-    if (extra) this.extra = extra;
   }
 }
 
@@ -23,13 +22,11 @@ export class ApplicationError extends Error {
  *
  */
 export default function createApplicationErrorClass(name) {
-  const CustomError = class extends ApplicationError {
+  return class extends ApplicationError {
     constructor(...params) {
       super(...params);
 
       this.name = name;
     }
   };
-
-  return CustomError;
 }
