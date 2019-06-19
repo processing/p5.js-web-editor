@@ -47,7 +47,7 @@ export function apiCreateProject(req, res) {
     model
       .save()
       .then((newProject) => {
-        res.json({ ok: true });
+        res.status(201).json({ id: newProject.id });
       })
       .catch(sendFailure);
   } catch (err) {
