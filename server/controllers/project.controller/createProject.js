@@ -1,5 +1,5 @@
 import Project from '../../models/project';
-import { toModel } from '../../domain-objects/Project';
+import { toModel, FileValidationError } from '../../domain-objects/Project';
 
 export default function createProject(req, res) {
   let projectValues = {
@@ -36,22 +36,35 @@ export default function createProject(req, res) {
 export function apiCreateProject(req, res) {
   const params = Object.assign({ user: req.user._id }, req.body);
 
+  function sendValidationErrors(err) {
+    res.status(422).json({
+      name: 'File Validation Failed',
+      message: err.message,
+      errors: err.files,
+    });
+  }
+
   // TODO: Error handling to match spec
   function sendFailure() {
-    res.json({ success: false });
+    res.status(500).json({ success: false });
   }
 
   try {
     const model = toModel(params);
 
-    model
+    return model
       .save()
       .then((newProject) => {
         res.status(201).json({ id: newProject.id });
       })
       .catch(sendFailure);
   } catch (err) {
-    // TODO: Catch custom err object and return correct status code
-    res.status(422).json({ error: 'Validation error' });
+    if (err instanceof FileValidationError) {
+      sendValidationErrors(err);
+    } else {
+      sendFailure();
+    }
+
+    return Promise.reject();
   }
 }
