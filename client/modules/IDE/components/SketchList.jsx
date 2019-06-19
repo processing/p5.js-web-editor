@@ -136,6 +136,7 @@ class SketchListRowBase extends React.Component {
   render() {
     const { sketch, username } = this.props;
     const { renameOpen, optionsOpen, renameValue } = this.state;
+    const userIsOwner = this.props.user.username === this.props.username;
     return (
       <tr
         className="sketches-table__row"
@@ -171,6 +172,7 @@ class SketchListRowBase extends React.Component {
             <ul
               className="sketch-list__action-dialogue"
             >
+              {userIsOwner &&
               <li>
                 <button
                   className="sketch-list__action-option"
@@ -180,7 +182,7 @@ class SketchListRowBase extends React.Component {
                 >
                   Rename
                 </button>
-              </li>
+              </li>}
               <li>
                 <button
                   className="sketch-list__action-option"
@@ -192,16 +194,16 @@ class SketchListRowBase extends React.Component {
                 </button>
               </li>
               {this.props.user.authenticated &&
-                <li>
-                  <button
-                    className="sketch-list__action-option"
-                    onClick={this.handleSketchDuplicate}
-                    onBlur={this.onBlurComponent}
-                    onFocus={this.onFocusComponent}
-                  >
-                    Duplicate
-                  </button>
-                </li>}
+              <li>
+                <button
+                  className="sketch-list__action-option"
+                  onClick={this.handleSketchDuplicate}
+                  onBlur={this.onBlurComponent}
+                  onFocus={this.onFocusComponent}
+                >
+                  Duplicate
+                </button>
+              </li>}
               { /* <li>
                 <button
                   className="sketch-list__action-option"
@@ -212,6 +214,7 @@ class SketchListRowBase extends React.Component {
                   Share
                 </button>
               </li> */ }
+              {userIsOwner &&
               <li>
                 <button
                   className="sketch-list__action-option"
@@ -221,7 +224,7 @@ class SketchListRowBase extends React.Component {
                 >
                   Delete
                 </button>
-              </li>
+              </li>}
             </ul>}
         </td>
       </tr>);
