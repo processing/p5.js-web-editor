@@ -1,6 +1,10 @@
 import pick from 'lodash/pick';
 import Project from '../models/project';
 import createId from '../utils/createId';
+import createApplicationErrorClass from '../utils/createApplicationErrorClass';
+
+export const FileValidationError = createApplicationErrorClass('FileValidationError');
+
 
 // objectID().toHexString();
 /**
@@ -23,10 +27,11 @@ export function toApi(model) {
  * - each file/folder gets a generated BSON-ID
  * - each folder has a `children` array containing the IDs of it's children
  */
-function transformFilesInner(files = {}, parentNode) {
-  const allFiles = [];
+function transformFilesInner(tree = {}, parentNode) {
+  const files = [];
+  const errors = [];
 
-  Object.entries(files).forEach(([name, params]) => {
+  Object.entries(tree).forEach(([name, params]) => {
     const id = createId();
     const isFolder = params.files != null;
 
@@ -38,11 +43,13 @@ function transformFilesInner(files = {}, parentNode) {
         children: [] // Initialise an empty folder
       };
 
-      allFiles.push(folder);
+      files.push(folder);
 
       // The recursion will return a list of child files/folders
       // It will also push the child's id into `folder.children`
-      allFiles.push(...transformFilesInner(params.files, folder));
+      const subFolder = transformFilesInner(params.files, folder);
+      files.push(...subFolder.files);
+      errors.push(...subFolder.errors);
     } else {
       const file = {
         _id: id,
@@ -55,10 +62,10 @@ function transformFilesInner(files = {}, parentNode) {
       } else if (typeof params.content === 'string') {
         file.content = params.content;
       } else {
-        throw new Error('url or params must be supplied');
+        errors.push({ name, message: 'missing \'url\' or \'content\'' });
       }
 
-      allFiles.push(file);
+      files.push(file);
     }
 
     // Push this child's ID onto it's parent's list
@@ -68,17 +75,31 @@ function transformFilesInner(files = {}, parentNode) {
     }
   });
 
-  return allFiles;
+  return { files, errors };
 }
 
-export function transformFiles(files = {}) {
+export function transformFiles(tree = {}) {
   const withRoot = {
     root: {
-      files
+      files: tree
     }
   };
 
-  return transformFilesInner(withRoot);
+  const { files, errors } = transformFilesInner(withRoot);
+
+  if (errors.length > 0) {
+    const message = `${errors.length} files failed validation. See error.files for individual errors.
+    
+    Errors:
+      ${errors.map(e => `* ${e.name}: ${e.message}`).join('\n')}
+`;
+    const error = new FileValidationError(message);
+    error.files = errors;
+
+    throw error;
+  }
+
+  return files;
 }
 
 /**
