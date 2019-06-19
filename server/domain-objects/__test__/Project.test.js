@@ -1,4 +1,4 @@
-import { transformFiles, FileValidationError } from '../Project';
+import { toModel, transformFiles, FileValidationError } from '../Project';
 
 jest.mock('../../utils/createId');
 
@@ -6,6 +6,38 @@ jest.mock('../../utils/createId');
 // TODO: File extension validation
 //
 describe('domain-objects/Project', () => {
+  describe('toModel', () => {
+    it('filters extra properties', () => {
+      const params = {
+        name: 'My sketch',
+        extraThing: 'oopsie',
+      };
+
+      const model = toModel(params);
+
+      expect(model.name).toBe('My sketch');
+      expect(model.extraThing).toBeUndefined();
+    });
+
+    it('throws FileValidationError', () => {
+      const params = {
+        files: {
+          'index.html': {} // missing content or url
+        }
+      };
+
+      expect(() => toModel(params)).toThrowError(FileValidationError);
+    });
+
+    it('throws if files is not an object', () => {
+      const params = {
+        files: []
+      };
+
+      expect(() => toModel(params)).toThrowError(FileValidationError);
+    });
+  });
+
   describe('transformFiles', () => {
     beforeEach(() => {
       // eslint-disable-next-line global-require
