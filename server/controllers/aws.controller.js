@@ -127,10 +127,10 @@ export function listObjectsInS3ForUser(req, res) {
         const projectAssets = [];
         getProjectsForUserId(userId).then((projects) => {
           assets.forEach((asset) => {
-            let name = asset.key.split('/').pop();
-            let foundAsset = {
+            const name = asset.key.split('/').pop();
+            const foundAsset = {
               key: asset.key,
-              name: name,
+              name,
               size: asset.size,
               url: `${process.env.S3_BUCKET_URL_BASE}${asset.key}`
             };
@@ -144,7 +144,9 @@ export function listObjectsInS3ForUser(req, res) {
                   foundAsset.sketchName = project.name;
                   foundAsset.sketchId = project.id;
                   foundAsset.url = file.url;
+                  return true;
                 }
+                return false;
               });
               return found;
             });
