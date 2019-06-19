@@ -142,7 +142,7 @@ export function showShareModal(projectId, projectName, ownerUsername) {
       payload: {
         shareModalProjectId: projectId || project.id,
         shareModalProjectName: projectName || project.name,
-        shareModalOwnerUsername: ownerUsername || user.username
+        shareModalProjectUsername: ownerUsername || user.username
       }
     });
   };

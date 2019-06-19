@@ -12,7 +12,7 @@ const initialState = {
   shareModalVisible: false,
   shareModalProjectId: null,
   shareModalProjectName: null,
-  shareModalOwnerUsername: null,
+  shareModalProjectUsername: null,
   editorOptionsVisible: false,
   keyboardShortcutVisible: false,
   unsavedChanges: false,
@@ -68,7 +68,7 @@ const ide = (state = initialState, action) => {
         shareModalVisible: true,
         shareModalProjectId: action.payload.shareModalProjectId,
         shareModalProjectName: action.payload.shareModalProjectName,
-        shareModalOwnerUsername: action.payload.shareModalOwnerUsername,
+        shareModalProjectUsername: action.payload.shareModalProjectUsername,
       });
     case ActionTypes.CLOSE_SHARE_MODAL:
       return Object.assign({}, state, { shareModalVisible: false });

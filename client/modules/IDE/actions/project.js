@@ -9,7 +9,8 @@ import {
   setUnsavedChanges,
   justOpenedProject,
   resetJustOpenedProject,
-  showErrorModal
+  showErrorModal,
+  setPreviousPath
 } from './ide';
 import { clearState, saveState } from '../../../persistState';
 
@@ -348,6 +349,33 @@ export function changeProjectName(id, newName) {
           type: ActionTypes.PROJECT_SAVE_FAIL,
           error: response.data
         });
+      });
+  };
+}
+
+export function deleteProject(id) {
+  return (dispatch, getState) => {
+    axios.delete(`${ROOT_URL}/projects/${id}`, { withCredentials: true })
+      .then(() => {
+        const state = getState();
+        if (id === state.project.id) {
+          dispatch(resetProject());
+          dispatch(setPreviousPath('/'));
+        }
+        dispatch({
+          type: ActionTypes.DELETE_PROJECT,
+          id
+        });
+      })
+      .catch((response) => {
+        if (response.status === 403) {
+          dispatch(showErrorModal('staleSession'));
+        } else {
+          dispatch({
+            type: ActionTypes.ERROR,
+            error: response.data
+          });
+        }
       });
   };
 }

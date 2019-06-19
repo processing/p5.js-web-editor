@@ -53,7 +53,6 @@
   margin: #{10 / $base-font-size}rem;
   height: #{72 / $base-font-size}rem;
   font-size: #{16 / $base-font-size}rem;
-  cursor: pointer;
 }
 
 .sketches-table__row:nth-child(odd) {
@@ -85,26 +84,9 @@
 }
 
 .sketch-list__dropdown-button {
-  width:#{20 / $base-font-size}rem;
-  height:#{20 / $base-font-size}rem;
-  transform: translateY(-3px);
+  width:#{25 / $base-font-size}rem;
+  height:#{25 / $base-font-size}rem;
   @include themify() {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    position: initial;
-    left: 0;
-    top: 0;
-
-      & polygon {
-        fill: getThemifyVariable('dropdown-color');
-      }
-
-      & polygon {
-        fill: getThemifyVariable('dropdown-color');
-      }
-
       & polygon {
         fill: getThemifyVariable('dropdown-color');
       }
