@@ -1,5 +1,5 @@
 import Project from '../../models/project';
-import { toModel, FileValidationError } from '../../domain-objects/Project';
+import { toModel, FileValidationError, ProjectValidationError } from '../../domain-objects/Project';
 
 export default function createProject(req, res) {
   let projectValues = {
@@ -36,35 +36,51 @@ export default function createProject(req, res) {
 export function apiCreateProject(req, res) {
   const params = Object.assign({ user: req.user._id }, req.body);
 
-  function sendValidationErrors(err) {
+  function sendValidationErrors(err, type) {
     res.status(422).json({
-      name: 'File Validation Failed',
+      name: `${type} Validation Failed`,
       message: err.message,
       errors: err.files,
     });
   }
 
   // TODO: Error handling to match spec
-  function sendFailure() {
+  function sendFailure(err) {
     res.status(500).json({ success: false });
   }
 
-  try {
-    const model = toModel(params);
-
-    return model
-      .save()
-      .then((newProject) => {
-        res.status(201).json({ id: newProject.id });
-      })
-      .catch(sendFailure);
-  } catch (err) {
+  function handleErrors(err) {
     if (err instanceof FileValidationError) {
-      sendValidationErrors(err);
+      sendValidationErrors(err, 'File');
+    } else if (err instanceof ProjectValidationError) {
+      sendValidationErrors(err, 'Sketch');
     } else {
       sendFailure();
     }
 
     return Promise.reject();
+  }
+
+  try {
+    const model = toModel(params);
+
+    return model.isSlugUnique()
+      .then(({ isUnique, conflictingIds }) => {
+        if (isUnique) {
+          return model.save()
+            .then((newProject) => {
+              res.status(201).json({ id: newProject.id });
+            });
+        }
+
+        const error = new ProjectValidationError(`Slug "${model.slug}" is not unique. Check ${conflictingIds.join(', ')}`);
+
+        throw error;
+      })
+      .catch(handleErrors);
+  } catch (err) {
+    handleErrors(err);
+
+    return Promise.reject(err);
   }
 }
