@@ -3,6 +3,7 @@ import pick from 'lodash/pick';
 import Project from '../models/project';
 import createId from '../utils/createId';
 import createApplicationErrorClass from '../utils/createApplicationErrorClass';
+import createDefaultFiles from './createDefaultFiles';
 
 export const FileValidationError = createApplicationErrorClass('FileValidationError');
 
@@ -103,6 +104,10 @@ export function transformFiles(tree = {}) {
   return files;
 }
 
+export function containsRootHtmlFile(tree) {
+  return Object.keys(tree).find(name => /\.html$/.test(name)) != null;
+}
+
 /**
  * This converts between the public API's Project object
  * properties and a mongoose Project model
@@ -110,10 +115,15 @@ export function transformFiles(tree = {}) {
  */
 export function toModel(object) {
   let files = [];
+  let tree = object.files;
 
-  if (isPlainObject(object.files)) {
-    files = transformFiles(object.files);
-  } else if (object.files != null) {
+  if (isPlainObject(tree)) {
+    if (!containsRootHtmlFile(tree)) {
+      tree = Object.assign(createDefaultFiles(), tree);
+    }
+
+    files = transformFiles(tree);
+  } else if (tree != null) {
     throw new FileValidationError('\'files\' must be an object');
   }
 

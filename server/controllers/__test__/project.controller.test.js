@@ -2,7 +2,6 @@
  * @jest-environment node
  */
 import { Response } from 'jest-express';
-import sinon from 'sinon';
 
 import Project, { createMock, createInstanceMock } from '../../models/project';
 import createProject, { apiCreateProject } from '../project.controller/createProject';
