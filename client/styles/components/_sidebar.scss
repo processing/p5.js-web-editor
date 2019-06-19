@@ -25,6 +25,8 @@
 }
 
 .sidebar__add {
+  width: #{20 / $base-font-size}rem;
+  height: #{20 / $base-font-size}rem;
   @include icon();
   .sidebar--contracted & {
     display: none;
@@ -121,10 +123,11 @@
 }
 
 .sidebar__file-item-show-options {
+  width: #{20 / $base-font-size}rem;
+  height: #{20 / $base-font-size}rem;
   @include icon();
   @include themify() {
-    padding: #{4 / $base-font-size}rem 0;
-    padding-right: #{6 / $base-font-size}rem;
+    margin-right: #{5 / $base-font-size}rem;
   }
   display: none;
   position: absolute;

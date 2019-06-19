@@ -17,13 +17,14 @@ class AssetList extends React.Component {
   }
 
   getAssetsTitle() {
-    if (this.props.username === this.props.user.username) {
+    if (!this.props.username || this.props.username === this.props.user.username) {
       return 'p5.js Web Editor | My assets';
     }
     return `p5.js Web Editor | ${this.props.username}'s assets`;
   }
 
   render() {
+    const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
     return (
       <div className="asset-table-container">
         <Helmet>
@@ -49,7 +50,7 @@ class AssetList extends React.Component {
                     <td>{asset.name}</td>
                     <td>{prettyBytes(asset.size)}</td>
                     <td><Link to={asset.url} target="_blank">View</Link></td>
-                    <td><Link to={`/${this.props.username}/sketches/${asset.sketchId}`}>{asset.sketchName}</Link></td>
+                    <td><Link to={`/${username}/sketches/${asset.sketchId}`}>{asset.sketchName}</Link></td>
                   </tr>
                 ))}
             </tbody>
