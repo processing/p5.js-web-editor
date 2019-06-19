@@ -6,6 +6,7 @@ import createApplicationErrorClass from '../utils/createApplicationErrorClass';
 import createDefaultFiles from './createDefaultFiles';
 
 export const FileValidationError = createApplicationErrorClass('FileValidationError');
+export const ProjectValidationError = createApplicationErrorClass('ProjectValidationError');
 
 
 // objectID().toHexString();
