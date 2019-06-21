@@ -54,3 +54,7 @@
   text-align: center;
   font-size: #{16 / $base-font-size}rem;
 }
+
+.asset-table__total {
+  padding: 0 #{20 / $base-font-size}rem;
+}
