@@ -17,9 +17,9 @@
 			}
 	    }
 	}
-	margin-right: #{15 / $base-font-size}rem;
+	margin-left: auto;
 	& span {
-		padding-left: #{3 / $base-font-size}rem;
+		padding-left: #{1 / $base-font-size}rem;
 	}
 }
 
@@ -30,7 +30,8 @@
 .toolbar__stop-button {
 	@include themify() {
 		@extend %toolbar-button;
-		margin-right: #{15 / $base-font-size}rem;
+		margin-left: #{20 / $base-font-size}rem;
+		margin-right: #{20 / $base-font-size}rem;
 		&--selected {
 			@extend %toolbar-button--selected;
 		}
@@ -47,7 +48,11 @@
 		}
 	}
 	line-height: #{52 / $base-font-size}rem;
-	margin-left: auto;
+	// margin-left: auto;
+	// & span {
+	// 	padding-left: #{1 / $base-font-size}rem;
+	// }
+	margin-right: #{1 / $base-font-size}rem;
 	& span {
 		padding-left: #{1 / $base-font-size}rem;
 	}
@@ -63,16 +68,21 @@
 }
 
 .toolbar {
-	padding: #{20 / $base-font-size}rem #{34 / $base-font-size}rem;
+	margin-left: #{10 / $base-font-size}rem;
+	padding: #{8 / $base-font-size}rem #{10 / $base-font-size}rem;
 	display: flex;
 	align-items: center;
+
+	@include themify() {
+    border-bottom: 1px dashed map-get($theme-map, 'inactive-text-color');
+  }
 }
 
 .toolbar__project-name-container {
 	@include themify() {
 		border-color: getThemifyVariable('inactive-text-color');
 	}
-	margin-left: #{10 / $base-font-size}rem;
+	margin-right: #{90 / $base-font-size}rem;
 	padding-left: #{10 / $base-font-size}rem;
 	height: 70%;
   display: flex;
@@ -81,7 +91,7 @@
 
 .toolbar__project-name {
 	@include themify() {
-		color: getThemifyVariable('inactive-text-color');
+		color: getThemifyVariable('logo-color');
 		&:hover {
 		color: getThemifyVariable('primary-text-color');
 		  & .toolbar__edit-name-button path {
@@ -112,9 +122,14 @@
 	}
 }
 
+.toolbar__autorefresh {
+	// margin-right: #{300 / $base-font-size}rem;
+	margin-right: auto;
+}
+
 .toolbar__autorefresh-label {
 	@include themify() {
-		color: getThemifyVariable('inactive-text-color');
+		color: getThemifyVariable('primary-text-color');
 	}
 	margin-left: #{5 / $base-font-size}rem;
 	font-size: #{12 / $base-font-size}rem;
@@ -153,12 +168,13 @@
 	height: #{18 / $base-font-size}rem;
 	margin-left: #{-4 / $base-font-size}rem;
 	& svg {
+		transform: scaleX(-1);
 		width: #{18 / $base-font-size}rem;
 		height: #{18 / $base-font-size}rem;
 	}
 	@include themify() {
 		& path {
-			fill: getThemifyVariable('inactive-text-color');
+			fill: getThemifyVariable('logo-color');
 		}
 	}
 }

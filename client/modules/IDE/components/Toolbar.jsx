@@ -64,6 +64,58 @@ class Toolbar extends React.Component {
     return (
       <div className="toolbar">
         <button
+          className={preferencesButtonClass}
+          onClick={this.props.openPreferences}
+          aria-label="preferences"
+        >
+          <InlineSVG src={preferencesUrl} alt="Preferences" />
+        </button>
+        <div className={nameContainerClass}>
+          <a
+            className="toolbar__project-name"
+            href={this.props.owner ? `/${this.props.owner.username}/sketches/${this.props.project.id}` : ''}
+            onClick={(e) => {
+              if (this.canEditProjectName()) {
+                e.preventDefault();
+                this.originalProjectName = this.props.project.name;
+                this.props.showEditProjectName();
+                setTimeout(() => this.projectNameInput.focus(), 0);
+              }
+            }}
+          >
+            {
+              this.canEditProjectName() &&
+              <InlineSVG className="toolbar__edit-name-button" src={editProjectNameUrl} alt="Edit Project Name" />
+            }
+            {this.props.project.name}&nbsp;
+          </a>
+          <input
+            type="text"
+            maxLength="256"
+            className="toolbar__project-name-input"
+            value={this.props.project.name}
+            onChange={this.handleProjectNameChange}
+            ref={(element) => { this.projectNameInput = element; }}
+            onBlur={() => {
+              this.validateProjectName();
+              this.props.hideEditProjectName();
+              if (this.props.project.id) {
+                this.props.saveProject();
+              }
+            }}
+            onKeyPress={this.handleKeyPress}
+          />
+          {(() => { // eslint-disable-line
+            if (this.props.owner) {
+              return (
+                <p className="toolbar__project-owner">
+                  by <Link to={`/${this.props.owner.username}/sketches`}>{this.props.owner.username}</Link>
+                </p>
+              );
+            }
+          })()}
+        </div>
+        <button
           className="toolbar__play-sketch-button"
           onClick={() => {
             this.props.startAccessibleSketch();
@@ -103,58 +155,6 @@ class Toolbar extends React.Component {
             Auto-refresh
           </label>
         </div>
-        <div className={nameContainerClass}>
-          <a
-            className="toolbar__project-name"
-            href={this.props.owner ? `/${this.props.owner.username}/sketches/${this.props.project.id}` : ''}
-            onClick={(e) => {
-              if (this.canEditProjectName()) {
-                e.preventDefault();
-                this.originalProjectName = this.props.project.name;
-                this.props.showEditProjectName();
-                setTimeout(() => this.projectNameInput.focus(), 0);
-              }
-            }}
-          >
-            {this.props.project.name}&nbsp;
-            {
-              this.canEditProjectName() &&
-              <InlineSVG className="toolbar__edit-name-button" src={editProjectNameUrl} alt="Edit Project Name" />
-            }
-          </a>
-          <input
-            type="text"
-            maxLength="256"
-            className="toolbar__project-name-input"
-            value={this.props.project.name}
-            onChange={this.handleProjectNameChange}
-            ref={(element) => { this.projectNameInput = element; }}
-            onBlur={() => {
-              this.validateProjectName();
-              this.props.hideEditProjectName();
-              if (this.props.project.id) {
-                this.props.saveProject();
-              }
-            }}
-            onKeyPress={this.handleKeyPress}
-          />
-          {(() => { // eslint-disable-line
-            if (this.props.owner) {
-              return (
-                <p className="toolbar__project-owner">
-                  by <Link to={`/${this.props.owner.username}/sketches`}>{this.props.owner.username}</Link>
-                </p>
-              );
-            }
-          })()}
-        </div>
-        <button
-          className={preferencesButtonClass}
-          onClick={this.props.openPreferences}
-          aria-label="preferences"
-        >
-          <InlineSVG src={preferencesUrl} alt="Preferences" />
-        </button>
       </div>
     );
   }
