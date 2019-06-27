@@ -36,8 +36,8 @@ export default function createProject(req, res) {
 export function apiCreateProject(req, res) {
   const params = Object.assign({ user: req.user._id }, req.body);
 
-  function sendValidationErrors(err, type) {
-    res.status(422).json({
+  function sendValidationErrors(err, type, code = 422) {
+    res.status(code).json({
       name: `${type} Validation Failed`,
       message: err.message,
       errors: err.files,
@@ -51,14 +51,12 @@ export function apiCreateProject(req, res) {
 
   function handleErrors(err) {
     if (err instanceof FileValidationError) {
-      sendValidationErrors(err, 'File');
+      sendValidationErrors(err, 'File', err.code);
     } else if (err instanceof ProjectValidationError) {
-      sendValidationErrors(err, 'Sketch');
+      sendValidationErrors(err, 'Sketch', err.code);
     } else {
       sendFailure();
     }
-
-    return Promise.reject();
   }
 
   try {
@@ -74,13 +72,13 @@ export function apiCreateProject(req, res) {
         }
 
         const error = new ProjectValidationError(`Slug "${model.slug}" is not unique. Check ${conflictingIds.join(', ')}`);
+        error.code = 409;
 
         throw error;
       })
       .catch(handleErrors);
   } catch (err) {
     handleErrors(err);
-
     return Promise.reject(err);
   }
 }
