@@ -3,13 +3,14 @@
  * the application.
  */
 export class ApplicationError extends Error {
-  constructor(message) {
+  constructor(message, extra = {}) {
     super();
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, this.constructor);
     }
     this.name = 'ApplicationError';
     this.message = message;
+    this.code = extra.code;
   }
 }
 
