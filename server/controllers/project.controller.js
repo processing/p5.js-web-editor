@@ -2,7 +2,6 @@ import archiver from 'archiver';
 import format from 'date-fns/format';
 import isUrl from 'is-url';
 import jsdom, { serializeDocument } from 'jsdom';
-import isBefore from 'date-fns/is_before';
 import isAfter from 'date-fns/is_after';
 import request from 'request';
 import slugify from 'slugify';
@@ -10,11 +9,11 @@ import Project from '../models/project';
 import User from '../models/user';
 import { resolvePathToFile } from '../utils/filePath';
 import generateFileSystemSafeName from '../utils/generateFileSystemSafeName';
-import { deleteObjectsFromS3, getObjectKey } from './aws.controller';
 import { toApi as toApiProjectObject } from '../domain-objects/Project';
 import createApplicationErrorClass from '../utils/createApplicationErrorClass';
 
 export { default as createProject, apiCreateProject } from './project.controller/createProject';
+export { default as deleteProject } from './project.controller/deleteProject';
 
 const UserNotFoundError = createApplicationErrorClass('UserNotFoundError');
 
@@ -88,36 +87,7 @@ export function getProject(req, res) {
     });
 }
 
-function deleteFilesFromS3(files) {
-  deleteObjectsFromS3(files.filter((file) => {
-    if (file.url) {
-      if (!process.env.S3_DATE || (
-        process.env.S3_DATE &&
-        isBefore(new Date(process.env.S3_DATE), new Date(file.createdAt)))) {
-        return true;
-      }
-    }
-    return false;
-  })
-    .map(file => getObjectKey(file.url)));
-}
 
-export function deleteProject(req, res) {
-  Project.findById(req.params.project_id, (findProjectErr, project) => {
-    if (!project.user.equals(req.user._id)) {
-      res.status(403).json({ success: false, message: 'Authenticated user does not match owner of project.' });
-      return;
-    }
-    deleteFilesFromS3(project.files);
-    project.remove((removeProjectError) => {
-      if (removeProjectError) {
-        res.status(404).send({ message: 'Project with that id does not exist' });
-        return;
-      }
-      res.json({ success: true });
-    });
-  });
-}
 
 export function getProjectsForUserId(userId) {
   return new Promise((resolve, reject) => {
@@ -238,7 +208,6 @@ export function apiGetProjectsForUser(req, res) {
     res.json({ sketches: [] });
   }
 }
-
 
 export function projectExists(projectId, callback) {
   Project.findById(projectId, (err, project) => (
