@@ -21,6 +21,11 @@ export function createInstanceMock() {
     configurable: true,
   });
 
+  Object.defineProperty(Project.prototype, 'remove', {
+    value: Project.prototype.remove,
+    configurable: true,
+  });
+
   return sinon.mock(Project.prototype);
 }
 
