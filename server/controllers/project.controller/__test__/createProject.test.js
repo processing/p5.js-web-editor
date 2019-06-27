@@ -3,10 +3,10 @@
  */
 import { Response } from 'jest-express';
 
-import Project, { createMock, createInstanceMock } from '../../models/project';
-import createProject, { apiCreateProject } from '../project.controller/createProject';
+import Project, { createMock, createInstanceMock } from '../../../models/project';
+import createProject, { apiCreateProject } from '../createProject';
 
-jest.mock('../../models/project');
+jest.mock('../../../models/project');
 
 describe('project.controller', () => {
   describe('createProject()', () => {
