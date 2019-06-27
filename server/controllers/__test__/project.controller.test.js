@@ -185,6 +185,9 @@ describe('project.controller', () => {
         files: []
       };
 
+      ProjectInstanceMock.expects('isSlugUnique')
+        .resolves({ isUnique: true, conflictingIds: [] });
+
       ProjectInstanceMock.expects('save')
         .resolves(new Project(result));
 
@@ -198,6 +201,50 @@ describe('project.controller', () => {
 
         expect(JSON.parse(JSON.stringify(doc))).toMatchObject({
           id: 'abc123'
+        });
+
+        done();
+      }
+
+      promise.then(expectations, expectations).catch(expectations);
+    });
+
+    it('fails if slug is not unique', (done) => {
+      const request = {
+        user: { _id: 'abc123' },
+        body: {
+          name: 'My sketch',
+          slug: 'a-slug',
+          files: {}
+        }
+      };
+      const response = new Response();
+
+      const result = {
+        _id: 'abc123',
+        id: 'abc123',
+        name: 'Project name',
+        // slug: 'a-slug',
+        serveSecure: false,
+        files: []
+      };
+
+      ProjectInstanceMock.expects('isSlugUnique')
+        .resolves({ isUnique: false, conflictingIds: ['cde123'] });
+
+      ProjectInstanceMock.expects('save')
+        .resolves(new Project(result));
+
+      const promise = apiCreateProject(request, response);
+
+      function expectations() {
+        const doc = response.json.mock.calls[0][0];
+
+        expect(response.status).toHaveBeenCalledWith(409);
+        expect(response.json).toHaveBeenCalled();
+
+        expect(JSON.parse(JSON.stringify(doc))).toMatchObject({
+          message: 'Slug "a-slug" is not unique. Check cde123'
         });
 
         done();
