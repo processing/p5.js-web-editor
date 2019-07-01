@@ -9,13 +9,10 @@ import Project from '../models/project';
 import User from '../models/user';
 import { resolvePathToFile } from '../utils/filePath';
 import generateFileSystemSafeName from '../utils/generateFileSystemSafeName';
-import { toApi as toApiProjectObject } from '../domain-objects/Project';
-import createApplicationErrorClass from '../utils/createApplicationErrorClass';
 
 export { default as createProject, apiCreateProject } from './project.controller/createProject';
 export { default as deleteProject } from './project.controller/deleteProject';
-
-const UserNotFoundError = createApplicationErrorClass('UserNotFoundError');
+export { default as getProjectsForUser, apiGetProjectsForUser } from './project.controller/getProjectsForUser';
 
 export function updateProject(req, res) {
   Project.findById(req.params.project_id, (findProjectErr, project) => {
@@ -87,8 +84,6 @@ export function getProject(req, res) {
     });
 }
 
-
-
 export function getProjectsForUserId(userId) {
   return new Promise((resolve, reject) => {
     Project.find({ user: userId })
@@ -131,34 +126,6 @@ export function getProjectAsset(req, res) {
     });
 }
 
-function getProjectsForUserName(username) {
-  return new Promise((resolve, reject) => {
-    User.findOne({ username }, (err, user) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-
-      if (!user) {
-        reject(new UserNotFoundError());
-        return;
-      }
-
-      Project.find({ user: user._id })
-        .sort('-createdAt')
-        .select('name files id createdAt updatedAt')
-        .exec((innerErr, projects) => {
-          if (innerErr) {
-            reject(innerErr);
-            return;
-          }
-
-          resolve(projects);
-        });
-    });
-  });
-}
-
 export function getProjects(req, res) {
   if (req.user) {
     getProjectsForUserId(req.user._id)
@@ -168,44 +135,6 @@ export function getProjects(req, res) {
   } else {
     // could just move this to client side
     res.json([]);
-  }
-}
-
-export function getProjectsForUser(req, res) {
-  if (req.params.username) {
-    getProjectsForUserName(req.params.username)
-      .then(projects => res.json(projects))
-      .catch((err) => {
-        if (err instanceof UserNotFoundError) {
-          res.status(404).json({ message: 'User with that username does not exist.' });
-        } else {
-          res.status(500).json({ message: 'Error fetching projects' });
-        }
-      });
-  } else {
-    // could just move this to client side
-    res.json([]);
-  }
-}
-
-export function apiGetProjectsForUser(req, res) {
-  if (req.params.username) {
-    getProjectsForUserName(req.params.username)
-      .then((projects) => {
-        const asApiObjects = projects.map(p => toApiProjectObject(p));
-        res.json({ sketches: asApiObjects });
-      })
-      .catch((err) => {
-        if (err instanceof UserNotFoundError) {
-          res.status(404).json({ message: 'User with that username does not exist.' });
-        } else {
-          console.error(err);
-          res.status(500).json({ message: 'Error fetching projects' });
-        }
-      });
-  } else {
-    // could just move this to client side
-    res.json({ sketches: [] });
   }
 }
 
