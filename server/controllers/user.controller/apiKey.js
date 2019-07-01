@@ -19,67 +19,85 @@ function generateApiKey() {
 }
 
 export function createApiKey(req, res) {
-  User.findById(req.user.id, async (err, user) => {
-    if (!user) {
-      res.status(404).json({ error: 'User not found' });
-      return;
+  return new Promise((resolve, reject) => {
+    function sendFailure(code, error) {
+      res.status(code).json({ error });
+      resolve();
     }
 
-    if (!req.body.label) {
-      res.status(400).json({ error: 'Expected field \'label\' was not present in request body' });
-      return;
-    }
-
-    const keyToBeHashed = await generateApiKey();
-
-    const addedApiKeyIndex = user.apiKeys.push({ label: req.body.label, hashedKey: keyToBeHashed });
-
-    user.save((saveErr) => {
-      if (saveErr) {
-        res.status(500).json({ error: saveErr });
+    User.findById(req.user.id, async (err, user) => {
+      if (!user) {
+        sendFailure(404, 'User not found');
         return;
       }
 
-      const apiKeys = user.apiKeys
-        .map((apiKey, index) => {
-          const fields = apiKey.toObject();
-          const shouldIncludeToken = index === addedApiKeyIndex - 1;
+      if (!req.body.label) {
+        sendFailure(400, 'Expected field \'label\' was not present in request body');
+        return;
+      }
 
-          return shouldIncludeToken ?
-            { ...fields, token: keyToBeHashed } :
-            fields;
-        });
+      const keyToBeHashed = await generateApiKey();
 
-      res.json({ apiKeys });
+      const addedApiKeyIndex = user.apiKeys.push({ label: req.body.label, hashedKey: keyToBeHashed });
+
+      user.save((saveErr) => {
+        if (saveErr) {
+          sendFailure(500, saveErr);
+          return;
+        }
+
+        const apiKeys = user.apiKeys
+          .map((apiKey, index) => {
+            const fields = apiKey.toObject();
+            const shouldIncludeToken = index === addedApiKeyIndex - 1;
+
+            return shouldIncludeToken ?
+              { ...fields, token: keyToBeHashed } :
+              fields;
+          });
+
+        res.json({ apiKeys });
+        resolve();
+      });
     });
   });
 }
 
 export function removeApiKey(req, res) {
-  User.findById(req.user.id, (err, user) => {
-    if (err) {
-      res.status(500).json({ error: err });
-      return;
-    }
-    if (!user) {
-      res.status(404).json({ error: 'User not found' });
-      return;
-    }
-    const keyToDelete = user.apiKeys.find(key => key.id === req.params.keyId);
-    if (!keyToDelete) {
-      res.status(404).json({ error: 'Key does not exist for user' });
-      return;
+  return new Promise((resolve, reject) => {
+    function sendFailure(code, error) {
+      res.status(code).json({ error });
+      resolve();
     }
 
-    user.apiKeys.pull({ _id: req.params.keyId });
-
-    user.save((saveErr) => {
-      if (saveErr) {
-        res.status(500).json({ error: saveErr });
+    User.findById(req.user.id, (err, user) => {
+      if (err) {
+        sendFailure(500, err);
         return;
       }
 
-      res.status(200).json({ apiKeys: user.apiKeys });
+      if (!user) {
+        sendFailure(404, 'User not found');
+        return;
+      }
+
+      const keyToDelete = user.apiKeys.find(key => key.id === req.params.keyId);
+      if (!keyToDelete) {
+        sendFailure(404, 'Key does not exist for user');
+        return;
+      }
+
+      user.apiKeys.pull({ _id: req.params.keyId });
+
+      user.save((saveErr) => {
+        if (saveErr) {
+          sendFailure(500, saveErr);
+          return;
+        }
+
+        res.status(200).json({ apiKeys: user.apiKeys });
+        resolve();
+      });
     });
   });
 }
