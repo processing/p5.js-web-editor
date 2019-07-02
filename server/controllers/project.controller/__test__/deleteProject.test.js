@@ -46,7 +46,9 @@ describe('project.controller', () => {
 
       function expectations() {
         expect(response.status).toHaveBeenCalledWith(403);
-        expect(response.json).toHaveBeenCalledWith({ success: false, message: 'Authenticated user does not match owner of project' });
+        expect(response.json).toHaveBeenCalledWith({
+          message: 'Authenticated user does not match owner of project'
+        });
 
         done();
       }
@@ -73,7 +75,9 @@ describe('project.controller', () => {
 
       function expectations() {
         expect(response.status).toHaveBeenCalledWith(404);
-        expect(response.json).toHaveBeenCalledWith({ success: false, message: 'Project with that id does not exist' });
+        expect(response.json).toHaveBeenCalledWith({
+          message: 'Project with that id does not exist'
+        });
 
         done();
       }
@@ -103,7 +107,7 @@ describe('project.controller', () => {
 
       function expectations() {
         expect(response.status).toHaveBeenCalledWith(200);
-        expect(response.json).toHaveBeenCalledWith({ success: true });
+        expect(response.json).not.toHaveBeenCalled();
         expect(deleteObjectsFromS3).toHaveBeenCalled();
 
         done();

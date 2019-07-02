@@ -244,7 +244,8 @@ describe('project.controller', () => {
         expect(response.json).toHaveBeenCalled();
 
         expect(JSON.parse(JSON.stringify(doc))).toMatchObject({
-          message: 'Slug "a-slug" is not unique. Check cde123'
+          message: 'Sketch Validation Failed',
+          detail: 'Slug "a-slug" is not unique. Check cde123'
         });
 
         done();
@@ -275,7 +276,8 @@ describe('project.controller', () => {
         const responseBody = JSON.parse(JSON.stringify(doc));
 
         expect(response.status).toHaveBeenCalledWith(422);
-        expect(responseBody.name).toBe('File Validation Failed');
+        expect(responseBody.message).toBe('File Validation Failed');
+        expect(responseBody.detail).not.toBeNull();
         expect(responseBody.errors.length).toBe(1);
         expect(responseBody.errors).toEqual([
           { name: 'index.html', message: 'missing \'url\' or \'content\'' }
@@ -305,8 +307,8 @@ describe('project.controller', () => {
         const responseBody = JSON.parse(JSON.stringify(doc));
 
         expect(response.status).toHaveBeenCalledWith(422);
-        expect(responseBody.name).toBe('File Validation Failed');
-        expect(responseBody.message).toBe('\'files\' must be an object');
+        expect(responseBody.message).toBe('File Validation Failed');
+        expect(responseBody.detail).toBe('\'files\' must be an object');
 
         done();
       }
