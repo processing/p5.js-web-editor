@@ -38,15 +38,15 @@ export function apiCreateProject(req, res) {
 
   function sendValidationErrors(err, type, code = 422) {
     res.status(code).json({
-      name: `${type} Validation Failed`,
-      message: err.message,
+      message: `${type} Validation Failed`,
+      detail: err.message,
       errors: err.files,
     });
   }
 
   // TODO: Error handling to match spec
   function sendFailure(err) {
-    res.status(500).json({ success: false });
+    res.status(500).end();
   }
 
   function handleErrors(err) {

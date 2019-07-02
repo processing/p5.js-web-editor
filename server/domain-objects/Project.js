@@ -8,8 +8,6 @@ import createDefaultFiles from './createDefaultFiles';
 export const FileValidationError = createApplicationErrorClass('FileValidationError');
 export const ProjectValidationError = createApplicationErrorClass('ProjectValidationError');
 
-
-// objectID().toHexString();
 /**
  * This converts between a mongoose Project model
  * and the public API Project object properties

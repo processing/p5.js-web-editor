@@ -21,7 +21,7 @@ function deleteFilesFromS3(files) {
 
 export default function deleteProject(req, res) {
   function sendFailure(error) {
-    res.status(error.code).json({ success: false, message: error.message });
+    res.status(error.code).json({ message: error.message });
   }
 
   function sendProjectNotFound() {
@@ -47,7 +47,7 @@ export default function deleteProject(req, res) {
         return;
       }
 
-      res.status(200).json({ success: true });
+      res.status(200).end();
     });
   }
 
