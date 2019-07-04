@@ -16,6 +16,16 @@
 - Operations are transactional, e.g. if a file is somehow invalid, the sketch won’t be left partially uploaded
 - All requests send and receive `Content-Type: application/json` unless otherwise stated
 
+# Versioning
+
+The API is versioned and this version is indicated in the root URL path e.g. version 1 of the API can be found at `http://editor.p5js.org/api/v1`.
+
+You must provide the version number when accessing the API.
+
+| Version | Release date |
+| ------- | ------------ |
+| v1      | Unreleased   |
+
 # Models
 
 The API accepts and returns the following model objects, as JSON.
