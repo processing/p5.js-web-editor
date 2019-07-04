@@ -1,6 +1,7 @@
 import fs from 'fs';
 import rp from 'request-promise';
 import Q from 'q';
+import { ok } from 'assert';
 
 // TODO: Change branchName if necessary
 const branchName = 'release';
@@ -10,9 +11,16 @@ const clientId = process.env.GITHUB_ID;
 const clientSecret = process.env.GITHUB_SECRET;
 const editorUsername = process.env.ML5_EXAMPLES_USERNAME;
 const personalAccessToken = process.env.EDITOR_API_ACCESS_TOKEN;
+const editorApiUrl = process.env.EDITOR_API_URL;
 const headers = {
   'User-Agent': 'p5js-web-editor/0.0.1'
 };
+
+ok(clientId, 'GITHUB_ID is required');
+ok(clientSecret, 'GITHUB_SECRET is required');
+ok(editorUsername, 'ML5_EXAMPLES_USERNAME is required');
+ok(personalAccessToken, 'EDITOR_API_ACCESS_TOKEN is required');
+ok(editorApiUrl, 'EDITOR_API_URL is required');
 
 //
 const githubRequestOptions = {
@@ -27,7 +35,7 @@ const githubRequestOptions = {
 };
 
 const editorRequestOptions = {
-  url: `${process.env.P5_API || 'http://localhost:8000/api'}/${editorUsername}`,
+  url: `${editorApiUrl}/${editorUsername}`,
   method: 'GET',
   headers: {
     ...headers,
