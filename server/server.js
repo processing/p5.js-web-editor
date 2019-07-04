@@ -96,7 +96,7 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/api', requestsOfTypeJSON(), api);
+app.use('/api/v1', requestsOfTypeJSON(), api);
 app.use('/api', requestsOfTypeJSON(), users);
 app.use('/api', requestsOfTypeJSON(), sessions);
 app.use('/api', requestsOfTypeJSON(), files);
