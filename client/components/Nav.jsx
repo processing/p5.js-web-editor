@@ -322,6 +322,17 @@ class Nav extends React.PureComponent {
                   Open
                 </Link>
               </li> }
+              { __process.env.COLLECTIONS_ENABLED && this.props.user.authenticated &&
+                <li className="nav__dropdown-item">
+                  <Link
+                    to={`/${this.props.user.username}/collections`}
+                    onFocus={this.handleFocusForFile}
+                    onBlur={this.handleBlur}
+                    onClick={this.setDropdownForNone}
+                  >
+                    Collections
+                  </Link>
+                </li> }
               { __process.env.EXAMPLES_ENABLED &&
               <li className="nav__dropdown-item">
                 <Link
