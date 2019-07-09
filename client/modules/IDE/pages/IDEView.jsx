@@ -399,6 +399,20 @@ class IDEView extends React.Component {
             user={this.props.user}
           />
         }
+        {this.props.location.pathname.match(/add-to-collection$/) &&
+          <Overlay
+            ariaLabel="add to collection"
+            title="Add sketch to collection"
+            previousPath={this.props.ide.previousPath}
+          >
+            <CollectionList
+              addMode
+              projectId={this.props.project_id}
+              username={this.props.params.username}
+              user={this.props.user}
+            />
+          </Overlay>
+        }
         {this.props.location.pathname.match(/assets$/) &&
           <Overlay
             title="Assets"

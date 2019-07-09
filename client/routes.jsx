@@ -39,6 +39,7 @@ const routes = store => (
     <Route path="/assets" component={IDEView} />
     <Route path="/account" component={AccountView} />
     <Route path="/:username/sketches/:project_id" component={IDEView} />
+    <Route path="/:username/sketches/:project_id/add-to-collection" component={IDEView} />
     <Route path="/:username/sketches" component={IDEView} />
     <Route path="/:username/collections" component={IDEView} />
     <Route path="/:username/collections/:collection_id" component={IDEView} />

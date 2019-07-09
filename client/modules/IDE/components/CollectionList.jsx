@@ -134,40 +134,53 @@ class CollectionListRowBase extends React.Component {
     }
   }
 
+  static projectInCollection(project, collection) {
+    return collection.items.find(item => item.project.id === project.id) != null;
+  }
+
   render() {
-    const { collection, username } = this.props;
+    const { collection, username, project, addMode } = this.props;
     const { renameOpen, optionsOpen, renameValue } = this.state;
     const userIsOwner = this.props.user.username === this.props.username;
+    let actions = null;
 
-    const dropdown = (
-      <td className="sketch-list__dropdown-column">
-        <button
-          className="sketch-list__dropdown-button"
-          onClick={this.toggleOptions}
-          onBlur={this.onBlurComponent}
-          onFocus={this.onFocusComponent}
-        >
-          <InlineSVG src={downFilledTriangle} alt="Menu" />
-        </button>
-        {optionsOpen &&
-          <ul
-            className="sketch-list__action-dialogue"
+    if (project != null && addMode === true) {
+      if (CollectionListRowBase.projectInCollection(project, collection)) {
+        actions = <td>Added</td>;
+      } else {
+        actions = <td>Add to project</td>;
+      }
+    } else {
+      actions = (
+        <td className="sketch-list__dropdown-column">
+          <button
+            className="sketch-list__dropdown-button"
+            onClick={this.toggleOptions}
+            onBlur={this.onBlurComponent}
+            onFocus={this.onFocusComponent}
           >
-            {userIsOwner &&
-              <li>
-                <button
-                  className="sketch-list__action-option"
-                  onClick={this.handleSketchDelete}
-                  onBlur={this.onBlurComponent}
-                  onFocus={this.onFocusComponent}
-                >
-                  Delete
-                </button>
-              </li>}
-          </ul>
-        }
-      </td>
-    );
+            <InlineSVG src={downFilledTriangle} alt="Menu" />
+          </button>
+          {optionsOpen &&
+            <ul
+              className="sketch-list__action-dialogue"
+            >
+              {userIsOwner &&
+                <li>
+                  <button
+                    className="sketch-list__action-option"
+                    // onClick={this.handleSketchDelete}
+                    onBlur={this.onBlurComponent}
+                    onFocus={this.onFocusComponent}
+                  >
+                    Delete
+                  </button>
+                </li>}
+            </ul>
+          }
+        </td>
+      );
+    }
 
     return (
       <tr
@@ -192,7 +205,7 @@ class CollectionListRowBase extends React.Component {
         <td>{format(new Date(collection.createdAt), 'MMM D, YYYY h:mm A')}</td>
         <td>{format(new Date(collection.updatedAt), 'MMM D, YYYY h:mm A')}</td>
         <td>{(collection.items || []).length}</td>
-        <td>{dropdown}</td>
+        {actions}
       </tr>);
   }
 }
@@ -224,6 +237,13 @@ class CollectionList extends React.Component {
   constructor(props) {
     super(props);
     this.props.getCollections(this.props.username);
+
+    // If a projectId is provided, and addMode is true then we will provide
+    // the "add sketch to collection" UI
+    if (props.addMode === true && props.projectId != null) {
+      this.props.getProject(props.projectId)
+    }
+
     this.props.resetSorting();
     this._renderFieldHeader = this._renderFieldHeader.bind(this);
   }
@@ -297,6 +317,8 @@ class CollectionList extends React.Component {
                 (<CollectionListRow
                   key={collection.id}
                   collection={collection}
+                  project={this.props.project}
+                  addMode={this.props.addMode}
                   user={this.props.user}
                   username={username}
                 />))}

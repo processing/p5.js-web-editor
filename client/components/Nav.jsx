@@ -270,80 +270,93 @@ class Nav extends React.PureComponent {
                   New
                 </button>
               </li>
-              { __process.env.LOGIN_ENABLED && (!this.props.project.owner || this.isUserOwner()) &&
-              <li className="nav__dropdown-item">
-                <button
-                  onClick={this.handleSave}
-                  onFocus={this.handleFocusForFile}
-                  onBlur={this.handleBlur}
-                >
-                  Save
+              {__process.env.LOGIN_ENABLED && (!this.props.project.owner || this.isUserOwner()) &&
+                <li className="nav__dropdown-item">
+                  <button
+                    onClick={this.handleSave}
+                    onFocus={this.handleFocusForFile}
+                    onBlur={this.handleBlur}
+                  >
+                    Save
                   <span className="nav__keyboard-shortcut">{metaKeyName}+s</span>
+                  </button>
+                </li>}
+              {this.props.project.id && this.props.user.authenticated &&
+                <li className="nav__dropdown-item">
+                  <button
+                    onClick={this.handleDuplicate}
+                    onFocus={this.handleFocusForFile}
+                    onBlur={this.handleBlur}
+                  >
+                    Duplicate
                 </button>
-              </li> }
-              { this.props.project.id && this.props.user.authenticated &&
-              <li className="nav__dropdown-item">
-                <button
-                  onClick={this.handleDuplicate}
-                  onFocus={this.handleFocusForFile}
-                  onBlur={this.handleBlur}
-                >
-                  Duplicate
+                </li>}
+              {this.props.project.id &&
+                <li className="nav__dropdown-item">
+                  <button
+                    onClick={this.handleShare}
+                    onFocus={this.handleFocusForFile}
+                    onBlur={this.handleBlur}
+                  >
+                    Share
                 </button>
-              </li> }
-              { this.props.project.id &&
-              <li className="nav__dropdown-item">
-                <button
-                  onClick={this.handleShare}
-                  onFocus={this.handleFocusForFile}
-                  onBlur={this.handleBlur}
-                >
-                  Share
+                </li>}
+              {this.props.project.id &&
+                <li className="nav__dropdown-item">
+                  <button
+                    onClick={this.handleDownload}
+                    onFocus={this.handleFocusForFile}
+                    onBlur={this.handleBlur}
+                  >
+                    Download
                 </button>
-              </li> }
-              { this.props.project.id &&
-              <li className="nav__dropdown-item">
-                <button
-                  onClick={this.handleDownload}
-                  onFocus={this.handleFocusForFile}
-                  onBlur={this.handleBlur}
-                >
-                  Download
-                </button>
-              </li> }
-              { this.props.user.authenticated &&
-              <li className="nav__dropdown-item">
-                <Link
-                  to={`/${this.props.user.username}/sketches`}
-                  onFocus={this.handleFocusForFile}
-                  onBlur={this.handleBlur}
-                  onClick={this.setDropdownForNone}
-                >
-                  Open
-                </Link>
-              </li> }
-              { __process.env.COLLECTIONS_ENABLED && this.props.user.authenticated &&
+                </li>}
+              {this.props.user.authenticated &&
                 <li className="nav__dropdown-item">
                   <Link
-                    to={`/${this.props.user.username}/collections`}
+                    to={`/${this.props.user.username}/sketches`}
                     onFocus={this.handleFocusForFile}
                     onBlur={this.handleBlur}
                     onClick={this.setDropdownForNone}
                   >
-                    Collections
-                  </Link>
-                </li> }
-              { __process.env.EXAMPLES_ENABLED &&
-              <li className="nav__dropdown-item">
-                <Link
-                  to="/p5/sketches"
-                  onFocus={this.handleFocusForFile}
-                  onBlur={this.handleBlur}
-                  onClick={this.setDropdownForNone}
-                >
-                  Examples
+                    Open
                 </Link>
-              </li> }
+                </li>}
+              {__process.env.COLLECTIONS_ENABLED && this.props.user.authenticated &&
+                <React.Fragment>
+                  <li className="nav__dropdown-item">
+                    <Link
+                      to={`/${this.props.user.username}/collections`}
+                      onFocus={this.handleFocusForFile}
+                      onBlur={this.handleBlur}
+                      onClick={this.setDropdownForNone}
+                    >
+                      Collections
+                    </Link>
+                  </li>
+                  <li className="nav__dropdown-item">
+                    <Link
+                      to={`/${this.props.user.username}/sketches/${this.props.project.id}/add-to-collection`}
+                      onFocus={this.handleFocusForFile}
+                      onBlur={this.handleBlur}
+                      onClick={this.setDropdownForNone}
+                    >
+                      Add to Collection
+                    </Link>
+                  </li>
+                </React.Fragment>
+              }
+              {__process.env.EXAMPLES_ENABLED &&
+                <li className="nav__dropdown-item">
+                  <Link
+                    to="/p5/sketches"
+                    onFocus={this.handleFocusForFile}
+                    onBlur={this.handleBlur}
+                    onClick={this.setDropdownForNone}
+                  >
+                    Examples
+                  </Link>
+                </li>}
             </ul>
           </li>
           <li className={navDropdownState.edit}>
@@ -539,7 +552,7 @@ class Nav extends React.PureComponent {
             </ul>
           </li>
         </ul>
-        { __process.env.LOGIN_ENABLED && !this.props.user.authenticated &&
+        {__process.env.LOGIN_ENABLED && !this.props.user.authenticated &&
           <ul className="nav__items-right" title="user-menu">
             <li>
               <Link to="/login">
@@ -553,7 +566,7 @@ class Nav extends React.PureComponent {
               </Link>
             </li>
           </ul>}
-        { __process.env.LOGIN_ENABLED && this.props.user.authenticated &&
+        {__process.env.LOGIN_ENABLED && this.props.user.authenticated &&
           <ul className="nav__items-right" title="user-menu">
             <li className="nav__item">
               <span>Hello, {this.props.user.username}!</span>
@@ -616,7 +629,7 @@ class Nav extends React.PureComponent {
                 </li>
               </ul>
             </li>
-          </ul> }
+          </ul>}
         {/*
         <div className="nav__announce">
           This is a preview version of the editor, that has not yet been officially released.

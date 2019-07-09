@@ -136,10 +136,11 @@ class CollectionItemRowBase extends React.Component {
   }
 
   render() {
-    const { item, username } = this.props;
+    const { collection, item, username } = this.props;
     const { renameOpen, optionsOpen, renameValue } = this.state;
     const sketchOwnerUsername = item.project.user.username;
-    const userIsOwner = this.props.user.username === sketchOwnerUsername;
+    const userIsSketchOwner = this.props.user.username === sketchOwnerUsername;
+    const userIsCollectionOwner = this.props.user.username === collection.owner.username;
     const sketchUrl = `/${item.project.user.username}/sketches/${item.project.id}`;
 
     const dropdown = (
@@ -156,15 +157,15 @@ class CollectionItemRowBase extends React.Component {
           <ul
             className="sketch-list__action-dialogue"
           >
-            {userIsOwner &&
+            {userIsCollectionOwner &&
               <li>
                 <button
                   className="sketch-list__action-option"
-                  onClick={this.handleSketchDelete}
+                  // onClick={this.handleSketchDelete}
                   onBlur={this.onBlurComponent}
                   onFocus={this.onFocusComponent}
                 >
-                  Delete
+                  Remove from Collection
                 </button>
               </li>}
           </ul>
@@ -197,8 +198,8 @@ class CollectionItemRowBase extends React.Component {
         <td>{format(new Date(item.createdAt), 'MMM D, YYYY h:mm A')}</td>
         <td>{format(new Date(itm.updatedAt), 'MMM D, YYYY h:mm A')}</td>
         <td>{(collection.items || []).length}</td>
-        <td>{dropdown}</td>
         */}
+        {dropdown}
       </tr>);
   }
 }
@@ -325,6 +326,7 @@ class Collection extends React.Component {
                 {this.props.collection.items.map(item =>
                   (<CollectionItemRow
                     key={item.id}
+                    collection={this.props.collection}
                     item={item}
                     user={this.props.user}
                     username={username}
