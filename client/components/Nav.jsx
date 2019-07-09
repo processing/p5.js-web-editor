@@ -321,30 +321,18 @@ class Nav extends React.PureComponent {
                   >
                     Open
                 </Link>
-                </li>}
+              </li>}
               {__process.env.COLLECTIONS_ENABLED && this.props.user.authenticated &&
-                <React.Fragment>
-                  <li className="nav__dropdown-item">
-                    <Link
-                      to={`/${this.props.user.username}/collections`}
-                      onFocus={this.handleFocusForFile}
-                      onBlur={this.handleBlur}
-                      onClick={this.setDropdownForNone}
-                    >
-                      Collections
-                    </Link>
-                  </li>
-                  <li className="nav__dropdown-item">
-                    <Link
-                      to={`/${this.props.user.username}/sketches/${this.props.project.id}/add-to-collection`}
-                      onFocus={this.handleFocusForFile}
-                      onBlur={this.handleBlur}
-                      onClick={this.setDropdownForNone}
-                    >
-                      Add to Collection
-                    </Link>
-                  </li>
-                </React.Fragment>
+                <li className="nav__dropdown-item">
+                  <Link
+                    to={`/${this.props.user.username}/sketches/${this.props.project.id}/add-to-collection`}
+                    onFocus={this.handleFocusForFile}
+                    onBlur={this.handleBlur}
+                    onClick={this.setDropdownForNone}
+                  >
+                    Add to Collection
+                  </Link>
+                </li>
               }
               {__process.env.EXAMPLES_ENABLED &&
                 <li className="nav__dropdown-item">
@@ -598,6 +586,18 @@ class Nav extends React.PureComponent {
                     My sketches
                   </Link>
                 </li>
+                {__process.env.COLLECTIONS_ENABLED &&
+                  <li className="nav__dropdown-item">
+                    <Link
+                      to={`/${this.props.user.username}/collections`}
+                      onFocus={this.handleFocusForAccount}
+                      onBlur={this.handleBlur}
+                      onClick={this.setDropdownForNone}
+                    >
+                      My collections
+                    </Link>
+                  </li>
+                }
                 <li className="nav__dropdown-item">
                   <Link
                     to="/assets"
