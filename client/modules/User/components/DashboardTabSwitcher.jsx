@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 
 const TabKey = {
   assets: 'assets',
+  collections: 'collections',
   sketches: 'sketches',
 };
 
@@ -30,8 +31,9 @@ Tab.propTypes = {
 const DashboardTabSwitcher = ({ currentTab, isOwner, username }) => (
   <ul className="dashboard-header__switcher">
     <div className="dashboard-header__tabs">
-      <Tab to={`/${username}/sketches`} isSelected={currentTab === 'sketches'}>Sketches</Tab>
-      {isOwner && <Tab to={`/${username}/assets`} isSelected={currentTab === 'assets'}>Assets</Tab>}
+      <Tab to={`/${username}/sketches`} isSelected={currentTab === TabKey.sketches}>Sketches</Tab>
+      <Tab to={`/${username}/collections`} isSelected={currentTab === TabKey.collections}>Collections</Tab>
+      {isOwner && <Tab to={`/${username}/assets`} isSelected={currentTab === TabKey.assets}>Assets</Tab>}
     </div>
   </ul>
 );
