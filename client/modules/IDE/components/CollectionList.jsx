@@ -21,6 +21,10 @@ const arrowDown = require('../../../images/sort-arrow-down.svg');
 const downFilledTriangle = require('../../../images/down-filled-triangle.svg');
 
 class CollectionListRowBase extends React.Component {
+  static projectInCollection(project, collection) {
+    return collection.items.find(item => item.project.id === project.id) != null;
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -134,6 +138,14 @@ class CollectionListRowBase extends React.Component {
     }
   }
 
+  handleCollectionAdd = () => {
+    this.props.addToCollection(this.props.collection.id, this.props.project.id);
+  }
+
+  handleCollectionRemove = () => {
+    this.props.removeFromCollection(this.props.collection.id, this.props.project.id);
+  }
+
   render() {
     const { collection, username } = this.props;
     const { renameOpen, optionsOpen, renameValue } = this.state;
@@ -198,6 +210,8 @@ class CollectionListRowBase extends React.Component {
 }
 
 CollectionListRowBase.propTypes = {
+  addToCollection: PropTypes.func.isRequired,
+  removeFromCollection: PropTypes.func.isRequired,
   collection: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired
@@ -215,7 +229,7 @@ CollectionListRowBase.propTypes = {
 };
 
 function mapDispatchToPropsSketchListRow(dispatch) {
-  return bindActionCreators(Object.assign({}, ProjectActions, IdeActions), dispatch);
+  return bindActionCreators(Object.assign({}, CollectionsActions, ProjectActions, IdeActions), dispatch);
 }
 
 const CollectionListRow = connect(null, mapDispatchToPropsSketchListRow)(CollectionListRowBase);
@@ -279,6 +293,9 @@ class CollectionList extends React.Component {
         <Helmet>
           <title>{this.getTitle()}</title>
         </Helmet>
+
+        <Link to={`/${username}/collections/create`}>New collection</Link>
+
         {this._renderLoader()}
         {this._renderEmptyTable()}
         {this.hasCollections() &&
