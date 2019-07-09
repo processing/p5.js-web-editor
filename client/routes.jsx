@@ -9,6 +9,7 @@ import ResetPasswordView from './modules/User/pages/ResetPasswordView';
 import EmailVerificationView from './modules/User/pages/EmailVerificationView';
 import NewPasswordView from './modules/User/pages/NewPasswordView';
 import AccountView from './modules/User/pages/AccountView';
+import CollectionView from './modules/User/pages/CollectionView';
 import DashboardView from './modules/User/pages/DashboardView';
 import createRedirectWithUsername from './components/createRedirectWithUsername';
 import { getUser } from './modules/User/actions';
@@ -44,6 +45,7 @@ const routes = store => (
     <Route path="/:username/sketches/:project_id" component={IDEView} />
     <Route path="/:username/sketches" component={DashboardView} />
     <Route path="/:username/collections" component={DashboardView} />
+    <Route path="/:username/collections/create" component={CollectionView} />
     <Route path="/:username/collections/:collection_id" component={DashboardView} />
     <Route path="/about" component={IDEView} />
     <Route path="/feedback" component={IDEView} />
