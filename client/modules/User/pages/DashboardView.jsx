@@ -8,6 +8,7 @@ import { updateSettings, initiateVerification, createApiKey, removeApiKey } from
 import NavBasic from '../../../components/NavBasic';
 
 import AssetList from '../../IDE/components/AssetList';
+import CollectionList from '../../IDE/components/CollectionList';
 import SketchList from '../../IDE/components/SketchList';
 
 import DashboardTabSwitcher, { TabKey } from '../components/DashboardTabSwitcher';
@@ -35,11 +36,13 @@ class DashboardView extends React.Component {
     browserHistory.push('/');
   }
 
-  selectedTabName() {
+  selectedTabKey() {
     const path = this.props.location.pathname;
 
     if (/assets/.test(path)) {
       return TabKey.assets;
+    } else if (/collections/.test(path)) {
+      return TabKey.collections;
     }
 
     return TabKey.sketches;
@@ -57,12 +60,20 @@ class DashboardView extends React.Component {
     return this.props.user.username === this.props.params.username;
   }
 
-  navigationItem() {
-
+  renderContent(tabKey, username) {
+    switch (tabKey) {
+      case TabKey.assets:
+        return <AssetList username={username} />;
+      case TabKey.collections:
+        return <CollectionList username={username} />;
+      case TabKey.sketches:
+      default:
+        return <SketchList username={username} />;
+    }
   }
 
   render() {
-    const currentTab = this.selectedTabName();
+    const currentTab = this.selectedTabKey();
     const isOwner = this.isOwner();
     const { username } = this.props.params;
 
@@ -82,9 +93,7 @@ class DashboardView extends React.Component {
           </div>
 
           <div className="dashboard-content">
-            {
-              currentTab === TabKey.sketches ? <SketchList username={username} /> : <AssetList username={username} />
-            }
+            {this.renderContent(currentTab, username)}
           </div>
         </section>
       </div>

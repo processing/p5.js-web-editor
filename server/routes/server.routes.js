@@ -3,6 +3,7 @@ import { renderIndex } from '../views/index';
 import { get404Sketch } from '../views/404Page';
 import { userExists } from '../controllers/user.controller';
 import { projectExists, projectForUserExists } from '../controllers/project.controller';
+import { collectionForUserExists } from '../controllers/collection.controller';
 
 const router = new Router();
 
@@ -107,6 +108,18 @@ router.get('/feedback', (req, res) => {
 
 router.get('/:username/sketches', (req, res) => {
   userExists(req.params.username, exists => (
+    exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
+  ));
+});
+
+router.get('/:username/collections', (req, res) => {
+  userExists(req.params.username, exists => (
+    exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
+  ));
+});
+
+router.get('/:username/collections/:id', (req, res) => {
+  collectionForUserExists(req.params.username, req.params.id, exists => (
     exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
   ));
 });

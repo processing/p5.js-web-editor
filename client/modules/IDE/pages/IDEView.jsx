@@ -314,12 +314,12 @@ class IDEView extends React.Component {
                     {(
                       (
                         (this.props.preferences.textOutput ||
-                            this.props.preferences.gridOutput ||
-                            this.props.preferences.soundOutput
+                          this.props.preferences.gridOutput ||
+                          this.props.preferences.soundOutput
                         ) &&
-                            this.props.ide.isPlaying
+                        this.props.ide.isPlaying
                       ) ||
-                        this.props.ide.isAccessibleOutputPlaying
+                      this.props.ide.isAccessibleOutputPlaying
                     )
                     }
                   </div>
@@ -350,14 +350,14 @@ class IDEView extends React.Component {
             </SplitPane>
           </SplitPane>
         </div>
-        { this.props.ide.modalIsVisible &&
+        {this.props.ide.modalIsVisible &&
           <NewFileModal
             canUploadMedia={this.props.user.authenticated}
             closeModal={this.props.closeNewFileModal}
             createFile={this.props.createFile}
           />
         }
-        { this.props.ide.newFolderModalVisible &&
+        {this.props.ide.newFolderModalVisible &&
           <NewFolderModal
             closeModal={this.props.closeNewFolderModal}
             createFolder={this.props.createFolder}
@@ -372,7 +372,7 @@ class IDEView extends React.Component {
             <About previousPath={this.props.ide.previousPath} />
           </Overlay>
         }
-        { this.props.location.pathname === '/feedback' &&
+        {this.props.location.pathname === '/feedback' &&
           <Overlay
             previousPath={this.props.ide.previousPath}
             title="Submit Feedback"
@@ -381,7 +381,7 @@ class IDEView extends React.Component {
             <Feedback previousPath={this.props.ide.previousPath} />
           </Overlay>
         }
-        { this.props.ide.shareModalVisible &&
+        {this.props.ide.shareModalVisible &&
           <Overlay
             title="Share This Sketch"
             ariaLabel="share"
@@ -394,7 +394,7 @@ class IDEView extends React.Component {
             />
           </Overlay>
         }
-        { this.props.ide.keyboardShortcutVisible &&
+        {this.props.ide.keyboardShortcutVisible &&
           <Overlay
             title="Keyboard Shortcuts"
             ariaLabel="keyboard shortcuts"
@@ -403,7 +403,7 @@ class IDEView extends React.Component {
             <KeyboardShortcutModal />
           </Overlay>
         }
-        { this.props.ide.errorType &&
+        {this.props.ide.errorType &&
           <Overlay
             title="Error"
             ariaLabel="error"
@@ -415,7 +415,7 @@ class IDEView extends React.Component {
             />
           </Overlay>
         }
-        { this.props.ide.helpType &&
+        {this.props.ide.helpType &&
           <Overlay
             title="Serve over HTTPS"
             closeOverlay={this.props.hideHelpModal}

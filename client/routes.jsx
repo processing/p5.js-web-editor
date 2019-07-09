@@ -41,8 +41,9 @@ const routes = store => (
     <Route path="/assets" component={createRedirectWithUsername('/:username/assets')} />
     <Route path="/account" component={AccountView} />
     <Route path="/:username/sketches/:project_id" component={IDEView} />
-    <Route path="/:username/sketches" component={DashboardView} />
-    <Route path="/:username/assets" component={DashboardView} />
+    <Route path="/:username/sketches" component={IDEView} />
+    <Route path="/:username/collections" component={DashboardView} />
+    <Route path="/:username/collections/:collection_id" component={DashboardView} />
     <Route path="/about" component={IDEView} />
     <Route path="/feedback" component={IDEView} />
   </Route>
