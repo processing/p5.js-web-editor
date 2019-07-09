@@ -108,6 +108,18 @@ router.get('/:username/collections', (req, res) => {
   ));
 });
 
+router.get('/:username/collections/create', (req, res) => {
+  userExists(req.params.username, exists => (
+    exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
+  ));
+});
+
+router.get('/:username/sketches/:project_id/add-to-collection', (req, res) => {
+  projectForUserExists(req.params.username, req.params.project_id, exists => (
+    exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
+  ));
+});
+
 router.get('/:username/collections/:id', (req, res) => {
   collectionForUserExists(req.params.username, req.params.id, exists => (
     exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))

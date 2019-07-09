@@ -32,6 +32,7 @@ import Overlay from '../../App/components/Overlay';
 import SketchList from '../components/SketchList';
 import Collection from '../components/Collection';
 import CollectionList from '../components/CollectionList';
+import CollectionCreate from '../components/CollectionCreate';
 import AssetList from '../components/AssetList';
 import About from '../components/About';
 import Feedback from '../components/Feedback';
@@ -391,9 +392,16 @@ class IDEView extends React.Component {
             />
           </Overlay>
         }
-        {this.props.location.pathname.match(/collections\//) &&
+        {this.props.location.pathname.match(/collections\/(?!.*create)/) &&
           <Collection
             collectionId={this.props.params.collection_id}
+            previousPath={this.props.ide.previousPath}
+            username={this.props.params.username}
+            user={this.props.user}
+          />
+        }
+        {this.props.location.pathname.match(/collections\/create$/) &&
+          <CollectionCreate
             previousPath={this.props.ide.previousPath}
             username={this.props.params.username}
             user={this.props.user}

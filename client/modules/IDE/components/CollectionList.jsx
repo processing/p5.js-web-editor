@@ -134,6 +134,14 @@ class CollectionListRowBase extends React.Component {
     }
   }
 
+  handleCollectionAdd = () => {
+    this.props.addToCollection(this.props.collection.id, this.props.project.id);
+  }
+
+  handleCollectionRemove = () => {
+    this.props.removeFromCollection(this.props.collection.id, this.props.project.id);
+  }
+
   static projectInCollection(project, collection) {
     return collection.items.find(item => item.project.id === project.id) != null;
   }
@@ -146,9 +154,9 @@ class CollectionListRowBase extends React.Component {
 
     if (project != null && addMode === true) {
       if (CollectionListRowBase.projectInCollection(project, collection)) {
-        actions = <td>Added</td>;
+        actions = <td><button onClick={this.handleCollectionRemove}>Remove</button></td>;
       } else {
-        actions = <td>Add to project</td>;
+        actions = <td><button onClick={this.handleCollectionAdd}>Add</button></td>;
       }
     } else {
       actions = (
@@ -228,7 +236,7 @@ CollectionListRowBase.propTypes = {
 };
 
 function mapDispatchToPropsSketchListRow(dispatch) {
-  return bindActionCreators(Object.assign({}, ProjectActions, IdeActions), dispatch);
+  return bindActionCreators(Object.assign({}, CollectionsActions, ProjectActions, IdeActions), dispatch);
 }
 
 const CollectionListRow = connect(null, mapDispatchToPropsSketchListRow)(CollectionListRowBase);
@@ -299,6 +307,9 @@ class CollectionList extends React.Component {
         <Helmet>
           <title>{this.getTitle()}</title>
         </Helmet>
+
+        <Link to={`/${username}/collections/create`}>New collection</Link>
+
         {this._renderLoader()}
         {this._renderEmptyTable()}
         {this.hasCollections() &&
