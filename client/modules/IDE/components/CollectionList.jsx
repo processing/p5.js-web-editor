@@ -127,10 +127,10 @@ class CollectionListRowBase extends React.Component {
     this.props.showShareModal(this.props.collection.id, this.props.collection.name, this.props.username);
   }
 
-  handleSketchDelete = () => {
+  handleDelete = () => {
     this.closeAll();
     if (window.confirm(`Are you sure you want to delete "${this.props.collection.name}"?`)) {
-      this.props.deleteProject(this.props.collection.id);
+      this.props.deleteCollection(this.props.collection.id);
     }
   }
 
@@ -177,7 +177,7 @@ class CollectionListRowBase extends React.Component {
                 <li>
                   <button
                     className="sketch-list__action-option"
-                    // onClick={this.handleSketchDelete}
+                    onClick={this.handleDelete}
                     onBlur={this.onBlurComponent}
                     onFocus={this.onFocusComponent}
                   >

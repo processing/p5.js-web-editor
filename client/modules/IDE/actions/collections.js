@@ -58,6 +58,32 @@ export function createCollection(collection) {
   };
 }
 
+export function deleteCollection(collectionId) {
+  return (dispatch) => {
+    dispatch(startLoader());
+    const url = `${ROOT_URL}/collections/${collectionId}`;
+    return axios.delete(url, { withCredentials: true })
+      .then((response) => {
+        dispatch({
+          type: ActionTypes.DELETE_COLLECTION,
+          collectionId
+        });
+        dispatch(stopLoader());
+
+        return response.data;
+      })
+      .catch((response) => {
+        dispatch({
+          type: ActionTypes.ERROR,
+          error: response.data
+        });
+        dispatch(stopLoader());
+
+        return response.data;
+      });
+  };
+}
+
 export function addToCollection(collectionId, projectId) {
   return (dispatch) => {
     dispatch(startLoader());
