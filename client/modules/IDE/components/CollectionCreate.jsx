@@ -17,6 +17,8 @@ import { getCollection } from '../selectors/collections';
 import Loader from '../../App/components/loader';
 import Overlay from '../../App/components/Overlay';
 
+import { generateCollectionName } from '../../../utils/generateRandomName';
+
 const arrowUp = require('../../../images/sort-arrow-up.svg');
 const arrowDown = require('../../../images/sort-arrow-down.svg');
 const downFilledTriangle = require('../../../images/down-filled-triangle.svg');
@@ -24,7 +26,7 @@ const downFilledTriangle = require('../../../images/down-filled-triangle.svg');
 class CollectionCreate extends React.Component {
   state = {
     collection: {
-      name: 'My collection name',
+      name: generateCollectionName(),
       description: ''
     }
   }
@@ -45,7 +47,9 @@ class CollectionCreate extends React.Component {
     });
   }
 
-  handleCreateCollection = () => {
+  handleCreateCollection = (event) => {
+    event.preventDefault();
+
     this.props.createCollection(this.state.collection)
       .then(({ id, owner }) => {
         // Redirect to collection URL
@@ -57,29 +61,50 @@ class CollectionCreate extends React.Component {
       });
   }
 
-  _renderCollectionMetadata() {
-    return (
-      <div className="collections-metadata">
-        <p><input type="text" value={this.state.collection.description} placeholder="This is a collection of..." onChange={this.handleTextChange('description')} /></p>
-      </div>
-    );
-  }
-
   render() {
     const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
+
+    const { name, description } = this.state.collection;
+
+    const invalid = name === '' || name == null;
 
     return (
       <Overlay
         ariaLabel="collection"
-        title={<input type="text" value={this.state.collection.name} onChange={this.handleTextChange('name')} />}
+        title="Create a collection"
         previousPath={this.props.previousPath}
       >
         <div className="sketches-table-container">
           <Helmet>
             <title>{this.getTitle()}</title>
           </Helmet>
-          {this._renderCollectionMetadata()}
-          <button onClick={this.handleCreateCollection}>Add collection</button>
+          <form className="form" onSubmit={this.handleCreateCollection}>
+            <p className="form__field">
+              <label htmlFor="name" className="form__label">Name</label>
+              <input
+                className="form__input"
+                aria-label="name"
+                type="text"
+                id="name"
+                value={this.state.collection.name}
+                onChange={this.handleTextChange('description')}
+              />
+            </p>
+            <p className="form__field">
+              <label htmlFor="description" className="form__label">What is this collection about?</label>
+              <textarea
+                className="form__input"
+                aria-label="description"
+                type="text"
+                id="description"
+                value={this.state.collection.description}
+                onChange={this.handleTextChange('description')}
+                placeholder="My fave sketches"
+                rows="4"
+              />
+            </p>
+            <input type="submit" disabled={invalid} value="Create collection" aria-label="create collection" />
+          </form>
         </div>
       </Overlay>
     );
