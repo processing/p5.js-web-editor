@@ -1,0 +1,10 @@
+.collection {
+  overflow-y: scroll;
+  max-width: 100%;
+  width: #{1000 / $base-font-size}rem;
+  min-height: #{400 / $base-font-size}rem;
+}
+
+.collection__metadata {
+  padding: 0 #{20 / $base-font-size}rem #{30 / $base-font-size}rem;
+}

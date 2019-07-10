@@ -58,6 +58,32 @@ export function createCollection(collection) {
   };
 }
 
+export function updateCollection({ id, metadata }) {
+  return (dispatch) => {
+    dispatch(startLoader());
+    const url = `${ROOT_URL}/collections/${id}`;
+    return axios.patch(url, metadata, { withCredentials: true })
+      .then((response) => {
+        dispatch({
+          type: ActionTypes.UPDATE_COLLECTION,
+          payload: response.data
+        });
+        dispatch(stopLoader());
+
+        return response.data;
+      })
+      .catch((response) => {
+        dispatch({
+          type: ActionTypes.ERROR,
+          error: response.data
+        });
+        dispatch(stopLoader());
+
+        return response.data;
+      });
+  };
+}
+
 export function deleteCollection(collectionId) {
   return (dispatch) => {
     dispatch(startLoader());

@@ -16,6 +16,7 @@ import * as IdeActions from '../actions/ide';
 import { getCollection } from '../selectors/collections';
 import Loader from '../../App/components/loader';
 import Overlay from '../../App/components/Overlay';
+import EditableInput from './EditableInput';
 
 const arrowUp = require('../../../images/sort-arrow-up.svg');
 const arrowDown = require('../../../images/sort-arrow-down.svg');
@@ -254,6 +255,23 @@ class Collection extends React.Component {
     return this.hasCollection() && this.props.collection.items.length > 0;
   }
 
+  updateMetadata = field => (value) => {
+    if (this.props.collection[field] === value) {
+      return;
+    }
+
+    if (field === "name" && value === "") {
+      return;
+    }
+
+    this.props.updateCollection({
+      id: this.props.collection.id,
+      metadata: {
+        [field]: value
+      }
+    });
+  }
+
   _renderLoader() {
     if (this.props.loading) return <Loader />;
     return null;
@@ -261,8 +279,16 @@ class Collection extends React.Component {
 
   _renderCollectionMetadata() {
     return (
-      <div className="collections-metadata">
-        <p>{this.props.collection.description}</p>
+      <div className="collection__metadata">
+        <p>
+          <EditableInput
+            emptyPlaceholder="Add a description"
+            InputComponent="textarea"
+            inputPlaceholder="e.g. This is a collection of..."
+            onChange={this.updateMetadata('description')}
+            value={this.props.collection.description}
+          />
+        </p>
       </div>
     );
   }
@@ -297,7 +323,14 @@ class Collection extends React.Component {
 
   render() {
     const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
-    const title = this.hasCollection() ? this.getCollectionName() : null;
+    const title = this.hasCollection() ?
+      (<EditableInput
+        emptyPlaceholder="Add a name"
+        inputPlaceholder="e.g. My faves"
+        onChange={this.updateMetadata('name')}
+        validate={value => value !== ''}
+        value={this.props.collection.name}
+      />) : null;
 
     return (
       <Overlay

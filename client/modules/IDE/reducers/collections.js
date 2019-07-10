@@ -8,8 +8,9 @@ const sketches = (state = [], action) => {
     case ActionTypes.DELETE_COLLECTION:
       return state.filter(({ id }) => id !== action.collectionId);
 
-    // The API returns the complete new collection
-    // with the items added or removed
+    // The API returns the complete updated collection
+    // with the changes made
+    case ActionTypes.UPDATE_COLLECTION:
     case ActionTypes.ADD_TO_COLLECTION:
     case ActionTypes.REMOVE_FROM_COLLECTION:
       return state.map((collection) => {
