@@ -322,7 +322,7 @@ class Nav extends React.PureComponent {
                     Open
                 </Link>
               </li>}
-              {__process.env.COLLECTIONS_ENABLED && this.props.user.authenticated &&
+              {__process.env.COLLECTIONS_ENABLED && this.props.user.authenticated && this.props.project.id &&
                 <li className="nav__dropdown-item">
                   <Link
                     to={`/${this.props.user.username}/sketches/${this.props.project.id}/add-to-collection`}
