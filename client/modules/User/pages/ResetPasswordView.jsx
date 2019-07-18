@@ -1,3 +1,4 @@
+
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link, browserHistory } from 'react-router';
@@ -83,7 +84,11 @@ function mapDispatchToProps(dispatch) {
 function validate(formProps) {
   const errors = {};
   if (!formProps.email) {
-    errors.email = 'Please enter an email';
+    errors.email = 'Please enter an email.';
+  } else if (
+    // eslint-disable-next-line max-len
+    !formProps.email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i)) {
+    errors.email = 'Please enter a valid email address.';
   }
   return errors;
 }
