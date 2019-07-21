@@ -315,5 +315,33 @@ describe('project.controller', () => {
 
       promise.then(expectations, expectations).catch(expectations);
     });
+
+    it('rejects if files object in not provided', (done) => {
+      const request = {
+        user: { _id: 'abc123' },
+        body: {
+          name: 'Wriggly worm',
+          // files: {} is missing
+        }
+      };
+      const response = new Response();
+
+      const promise = apiCreateProject(request, response);
+
+      function expectations() {
+        const doc = response.json.mock.calls[0][0];
+
+        const responseBody = JSON.parse(JSON.stringify(doc));
+
+        expect(response.status).toHaveBeenCalledWith(422);
+        expect(responseBody.message).toBe('File Validation Failed');
+        expect(responseBody.detail).toBe('\'files\' must be an object');
+
+        done();
+      }
+
+      promise.then(expectations, expectations).catch(expectations);
+    });
+
   });
 });

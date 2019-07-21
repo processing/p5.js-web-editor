@@ -36,6 +36,7 @@ describe('domain-objects/Project', () => {
       const params = {
         name: 'My sketch',
         extraThing: 'oopsie',
+        files: {}
       };
 
       const model = toModel(params);
