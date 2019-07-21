@@ -132,6 +132,17 @@ app.get('/', (req, res) => {
   res.sendFile(renderIndex());
 });
 
+// Handle API errors
+app.use('/api', (error, req, res, next) => {
+  if (error && error.code && !res.headersSent) {
+    res.status(error.code).json({ error: error.message });
+    return;
+  }
+
+  next(error);
+});
+
+
 // Handle missing routes.
 app.get('*', (req, res) => {
   res.status(404);
