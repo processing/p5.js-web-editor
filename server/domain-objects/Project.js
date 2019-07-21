@@ -122,7 +122,7 @@ export function toModel(object) {
     }
 
     files = transformFiles(tree);
-  } else if (tree != null) {
+  } else {
     throw new FileValidationError('\'files\' must be an object');
   }
 
