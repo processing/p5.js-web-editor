@@ -342,6 +342,5 @@ describe('project.controller', () => {
 
       promise.then(expectations, expectations).catch(expectations);
     });
-
   });
 });
