@@ -4,11 +4,14 @@
   header does not match `type`
 */
 const requestsOfType = type => (req, res, next) => {
-  if (req.get('content-type') != null && !req.is(type)) {
+  const hasContentType = req.get('content-type') !== null;
+  const isCorrectType = req.is(type) === null || req.is(type) === type;
+
+  if (hasContentType && !isCorrectType) {
     if (process.env.NODE_ENV === 'development') {
-      console.log('in requests of type error');
+      console.error(`Requests with a body must be of Content-Type "${type}". Sending HTTP 406`);
     }
-    return next({ statusCode: 406 }); // 406 UNACCEPTABLE
+    return next({ code: 406, message: `Requests with a body must be of Content-Type "${type}"` }); // 406 UNACCEPTABLE
   }
 
   return next();
