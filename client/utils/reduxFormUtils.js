@@ -16,7 +16,7 @@ export const domOnlyProps = ({
 /* eslint-enable */
 
 // eslint-disable-next-line max-len
-const EmailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i;
+const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i;
 
 function validateNameEmail(formProps, errors) {
   if (!formProps.username) {
@@ -31,7 +31,7 @@ function validateNameEmail(formProps, errors) {
     errors.email = 'Please enter an email.';
   } else if (
     // eslint-disable-next-line max-len
-    !formProps.email.match(EmailRegex)) {
+    !formProps.email.match(EMAIL_REGEX)) {
     errors.email = 'Please enter a valid email address.';
   }
 }
@@ -88,7 +88,7 @@ export function validateResetPassword(formProps) {
     errors.email = 'Please enter an email.';
   } else if (
     // eslint-disable-next-line max-len
-    !formProps.email.match(EmailRegex)) {
+    !formProps.email.match(EMAIL_REGEX)) {
     errors.email = 'Please enter a valid email address.';
   }
   return errors;
