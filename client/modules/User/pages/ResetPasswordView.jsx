@@ -9,6 +9,7 @@ import { reduxForm } from 'redux-form';
 import { Helmet } from 'react-helmet';
 import * as UserActions from '../actions';
 import ResetPasswordForm from '../components/ResetPasswordForm';
+import { validateResetPassword } from '../../../utils/reduxFormUtils';
 
 const exitUrl = require('../../../images/exit.svg');
 const logoUrl = require('../../../images/p5js-logo.svg');
@@ -81,20 +82,8 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(UserActions, dispatch);
 }
 
-function validate(formProps) {
-  const errors = {};
-  if (!formProps.email) {
-    errors.email = 'Please enter an email.';
-  } else if (
-    // eslint-disable-next-line max-len
-    !formProps.email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i)) {
-    errors.email = 'Please enter a valid email address.';
-  }
-  return errors;
-}
-
 export default reduxForm({
   form: 'reset-password',
   fields: ['email'],
-  validate
+  validate: validateResetPassword
 }, mapStateToProps, mapDispatchToProps)(ResetPasswordView);
