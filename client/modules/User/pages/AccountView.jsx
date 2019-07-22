@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { connect } from 'react-redux';
+import { reduxForm } from 'redux-form';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import InlineSVG from 'react-inlinesvg';
+import axios from 'axios';
 import { Helmet } from 'react-helmet';
 import { updateSettings, initiateVerification, createApiKey, removeApiKey } from '../actions';
 import AccountForm from '../components/AccountForm';
@@ -113,4 +114,10 @@ AccountView.propTypes = {
   theme: PropTypes.string.isRequired
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdvancedSettingsView);
+export default reduxForm({
+  form: 'updateAllSettings',
+  fields: ['username', 'email', 'currentPassword', 'newPassword'],
+  validate: validateSettings,
+  asyncValidate,
+  asyncBlurFields: ['username', 'email', 'currentPassword']
+}, mapStateToProps, mapDispatchToProps)(AccountView);
