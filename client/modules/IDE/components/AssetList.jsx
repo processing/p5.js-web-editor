@@ -43,8 +43,9 @@ class AssetList extends React.Component {
     const { assetList, totalSize } = this.props;
     return (
       <div className="asset-table-container">
+        {/* Eventually, this copy should be Total / 250 MB Used */}
         {this.hasAssets() &&
-          <p className="asset-table__total">{`${prettyBytes(totalSize)} / 250 MB Used`}</p>
+          <p className="asset-table__total">{`${prettyBytes(totalSize)} Total`}</p>
         }
         <Helmet>
           <title>{this.getAssetsTitle()}</title>
