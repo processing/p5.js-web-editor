@@ -126,6 +126,7 @@ export function listObjectsInS3ForUser(req, res) {
       .on('end', () => {
         const projectAssets = [];
         getProjectsForUserId(userId).then((projects) => {
+          let totalSize = 0;
           assets.forEach((asset) => {
             const name = asset.key.split('/').pop();
             const foundAsset = {
@@ -134,6 +135,7 @@ export function listObjectsInS3ForUser(req, res) {
               size: asset.size,
               url: `${process.env.S3_BUCKET_URL_BASE}${asset.key}`
             };
+            totalSize += asset.size;
             projects.some((project) => {
               let found = false;
               project.files.some((file) => {
@@ -152,7 +154,7 @@ export function listObjectsInS3ForUser(req, res) {
             });
             projectAssets.push(foundAsset);
           });
-          res.json({ assets: projectAssets });
+          res.json({ assets: projectAssets, totalSize });
         });
       });
   });
