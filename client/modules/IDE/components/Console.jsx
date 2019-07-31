@@ -3,6 +3,7 @@ import React from 'react';
 import InlineSVG from 'react-inlinesvg';
 import classNames from 'classnames';
 import { Console as ConsoleFeed } from 'console-feed';
+import ErrorBoundary from './ErrorBoundary';
 import {
   CONSOLE_FEED_WITHOUT_ICONS, CONSOLE_FEED_LIGHT_STYLES,
   CONSOLE_FEED_DARK_STYLES, CONSOLE_FEED_CONTRAST_STYLES
@@ -110,10 +111,12 @@ class Console extends React.Component {
                     {times}
                   </div>
                 }
-                <ConsoleFeed
-                  styles={this.getConsoleFeedStyle(theme, times)}
-                  logs={[consoleEvent]}
-                />
+                <ErrorBoundary>
+                  <ConsoleFeed
+                    styles={this.getConsoleFeedStyle(theme, times)}
+                    logs={[consoleEvent]}
+                  />
+                </ErrorBoundary>
               </div>
             );
           })}
