@@ -30,7 +30,6 @@ class SketchListRowBase extends React.Component {
       isFocused: false
     };
   }
-
   onFocusComponent = () => {
     this.setState({ isFocused: true });
   }
@@ -262,9 +261,16 @@ const SketchListRow = connect(null, mapDispatchToPropsSketchListRow)(SketchListR
 class SketchList extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      searchValue: this.props.searchTerm
+    };
     this.props.getProjects(this.props.username);
     this.props.resetSorting();
     this._renderFieldHeader = this._renderFieldHeader.bind(this);
+
+    this.handleSearchEnter = this.handleSearchEnter.bind(this);
+    this.handleSearchChange = this.handleSearchChange.bind(this);
+    this.throttledSearchChange = throttle(this.throttledSearchChange.bind(this), 100);
   }
 
   getSketchesTitle() {
@@ -311,10 +317,48 @@ class SketchList extends React.Component {
     );
   }
 
+
+  handleResetSearch = () => {
+    this.setState({ searchValue: '' }, () => {
+      this.props.resetSearching();
+    });
+  }
+
+  handleSearchEnter = (e) => {
+    if (e.key === 'Enter') {
+      this.props.searching(this.state.searchValue);
+    }
+  }
+
+  handleSearchChange = (e) => {
+    this.throttledSearchChange(e.target.value);
+  }
+
+  throttledSearchChange = (value) => {
+    this.setState({ searchValue: value }, () => {
+      this.props.searching(this.state.searchValue);
+    });
+  }
+
+
   render() {
     const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
+    const { searchValue } = this.state;
     return (
       <div className="sketches-table-container">
+        <input
+          type="text"
+          className="searchbar"
+          value={searchValue}
+          placeholder="Search files..."
+          onChange={this.handleSearchChange}
+          onKeyUp={this.handleSearchEnter}
+        />
+        <button
+          className="clearButton"
+          onClick={this.handleResetSearch}
+        >Clear
+        </button>
         <Helmet>
           <title>{this.getSketchesTitle()}</title>
         </Helmet>
@@ -357,10 +401,13 @@ SketchList.propTypes = {
     createdAt: PropTypes.string.isRequired,
     updatedAt: PropTypes.string.isRequired
   })).isRequired,
+  searchTerm: PropTypes.string.isRequired,
   username: PropTypes.string,
   loading: PropTypes.bool.isRequired,
   toggleDirectionForField: PropTypes.func.isRequired,
+  searching: PropTypes.func.isRequired,
   resetSorting: PropTypes.func.isRequired,
+  resetSearching: PropTypes.func.isRequired,
   sorting: PropTypes.shape({
     field: PropTypes.string.isRequired,
     direction: PropTypes.string.isRequired
@@ -386,6 +433,7 @@ function mapStateToProps(state) {
     user: state.user,
     sketches: getSortedSketches(state),
     sorting: state.sorting,
+    searchTerm: state.searching.searchTerm,
     loading: state.loading,
     project: state.project
   };

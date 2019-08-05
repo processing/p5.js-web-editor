@@ -71,6 +71,13 @@
   }
 }
 
+.searchbar {
+  width: 240px;
+  height: 36px;
+  border: solid 0.5px #0f9dd7;
+  background-color: #ffffff;
+}
+
 
 .sketches-table thead {
   font-size: #{12 / $base-font-size}rem;

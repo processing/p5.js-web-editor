@@ -1,0 +1,61 @@
+.searchbar {
+  position: absolute;
+  display: flex;
+  padding-left: #{17 / $base-font-size}rem;
+  right: #{50 / $base-font-size}rem;
+  top: #{14 / $base-font-size}rem;
+}
+
+.searchbar__input {
+  width: #{240 / $base-font-size}rem;
+  height: #{36 / $base-font-size}rem;
+  border: solid 0.5px;
+  padding-left: #{36 / $base-font-size}rem;
+  padding-right: #{38 / $base-font-size}rem;
+  @include themify() {
+    border-color: getThemifyVariable('search-border-color');
+    background-color: getThemifyVariable('search-background-color');
+  }
+}
+
+.searchbar__button {
+  width: #{31 / $base-font-size}rem;
+  height: #{36 / $base-font-size}rem;
+  position: absolute;
+  padding: 0;
+  border-right: solid 1px;
+  @include themify() {
+    border-right-color: getThemifyVariable('button-border-color');
+  }
+}
+
+.searchbar__icon {
+  display: inline-block;
+  & svg {
+    width: #{23 / $base-font-size}rem;
+    height: #{28 / $base-font-size}rem;
+    transform: scaleX(-1);
+    @include themify() {
+      fill: getThemifyVariable('input-text-color');
+    }
+  }
+}
+
+.searchbar__clear-button {
+  font-weight: bold;
+  font-size: #{10 / $base-font-size}rem;
+  text-align: center;
+  border-radius: 2px;
+  align-self: center;
+  position: absolute;
+  padding: #{3 / $base-font-size}rem #{4 / $base-font-size}rem;
+  left: #{216 / $base-font-size}rem;;
+  @include themify() {
+    color: getThemifyVariable('primary-text-color');
+    background-color: getThemifyVariable('search-clear-background-color');
+    &:hover, &:focus {
+      color: getThemifyVariable('search-hover-text-color');
+      background-color: getThemifyVariable('search-hover-background-color');
+    }
+  }
+}

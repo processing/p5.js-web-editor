@@ -121,6 +121,9 @@ export const SET_ASSETS = 'SET_ASSETS';
 
 export const TOGGLE_DIRECTION = 'TOGGLE_DIRECTION';
 export const SET_SORTING = 'SET_SORTING';
+export const SET_SORT_PARAMS = 'SET_SORT_PARAMS';
+export const SORT_SEARCH = 'SORT_SEARCH';
+export const RESET_SEARCH = 'RESET_SEARCH';
 
 export const START_LOADING = 'START_LOADING';
 export const STOP_LOADING = 'STOP_LOADING';

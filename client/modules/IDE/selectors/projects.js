@@ -6,9 +6,27 @@ import { DIRECTION } from '../actions/sorting';
 const getSketches = state => state.sketches;
 const getField = state => state.sorting.field;
 const getDirection = state => state.sorting.direction;
+const getSearch = state => state.searching.searchTerm;
+
+const getSearchedSketches = createSelector(
+  getSketches,
+  getSearch,
+  (sketches, search) => {
+    if (search) {
+      const searchStrings = sketches.map(sketch => {
+        const smallSketch = {
+          name: sketch.name
+        };
+        return { ...sketch, searchString: Object.values(smallSketch).join(' ').toLowerCase() };
+      });
+      return searchStrings.filter(sketch => sketch.searchString.includes(search.toLowerCase()));
+    }
+    return sketches;
+  }
+);
 
 const getSortedSketches = createSelector(
-  getSketches,
+  getSearchedSketches,
   getField,
   getDirection,
   (sketches, field, direction) => {
