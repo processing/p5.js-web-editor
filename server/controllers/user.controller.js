@@ -17,7 +17,8 @@ export function userResponse(user) {
     preferences: user.preferences,
     apiKeys: user.apiKeys,
     verified: user.verified,
-    id: user._id
+    id: user._id,
+    totalSize: req.user.totalSize
   };
 }
 
