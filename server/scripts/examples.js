@@ -61,7 +61,7 @@ function getCategories() {
       for (let j = 1; j < metadata.name.split('_').length; j += 1) {
         category += `${metadata.name.split('_')[j]} `;
       }
-      categories.push({ url: metadata.url, name: category });
+      categories.push({ url: metadata.url, name: category.trim() });
     });
 
     return categories;
@@ -114,7 +114,7 @@ function getSketchContent(projectsInAllCategories) {
 
     return rp(options).then((res) => {
       const noNumberprojectName = project.projectName.replace(/(\d+)/g, '');
-      if (noNumberprojectName === 'Instance Mode : Instance Container ') {
+      if (noNumberprojectName === 'Instance Mode: Instance Container ') {
         for (let i = 0; i < 4; i += 1) {
           const splitedRes = `${res.split('*/')[1].split('</html>')[i]}</html>\n`;
           project.sketchContent = splitedRes.replace(
@@ -153,7 +153,7 @@ function createProjectsInP5user(projectsInAllCategories) {
           const c = objectID().toHexString();
           const r = objectID().toHexString();
           const noNumberprojectName = project.projectName.replace(/(\d+)/g, '');
-          if (noNumberprojectName === 'Instance Mode : Instance Container ') {
+          if (noNumberprojectName === 'Instance Mode: Instance Container ') {
             newProject = new Project({
               name: project.projectName,
               user: user._id,
@@ -167,7 +167,7 @@ function createProjectsInP5user(projectsInAllCategories) {
                 },
                 {
                   name: 'sketch.js',
-                  content: '// Instance Mode : Instance Container, please check its index.html file',
+                  content: '// Instance Mode: Instance Container, please check its index.html file',
                   id: a,
                   _id: a,
                   fileType: 'file',

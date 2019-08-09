@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import classNames from 'classnames';
+import slugify from 'slugify';
 import * as ProjectActions from '../actions/project';
 import * as ProjectsActions from '../actions/projects';
 import * as ToastActions from '../actions/toast';
@@ -137,13 +138,17 @@ class SketchListRowBase extends React.Component {
     const { sketch, username } = this.props;
     const { renameOpen, optionsOpen, renameValue } = this.state;
     const userIsOwner = this.props.user.username === this.props.username;
+    let url = `/${username}/sketches/${sketch.id}`;
+    if (username === 'p5') {
+      url = `/${username}/sketches/${slugify(sketch.name, '_')}`;
+    }
     return (
       <tr
         className="sketches-table__row"
         key={sketch.id}
       >
         <th scope="row">
-          <Link to={`/${username}/sketches/${sketch.id}`}>
+          <Link to={url}>
             {renameOpen ? '' : sketch.name}
           </Link>
           {renameOpen
