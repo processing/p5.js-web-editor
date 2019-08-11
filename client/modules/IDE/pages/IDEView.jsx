@@ -29,8 +29,6 @@ import * as ToastActions from '../actions/toast';
 import * as ConsoleActions from '../actions/console';
 import { getHTMLFile } from '../reducers/files';
 import Overlay from '../../App/components/Overlay';
-import SketchList from '../components/SketchList';
-import AssetList from '../components/AssetList';
 import About from '../components/About';
 import Feedback from '../components/Feedback';
 
@@ -364,30 +362,6 @@ class IDEView extends React.Component {
             closeModal={this.props.closeNewFolderModal}
             createFolder={this.props.createFolder}
           />
-        }
-        { this.props.location.pathname.match(/sketches$/) &&
-          <Overlay
-            ariaLabel="project list"
-            title="Open a Sketch"
-            previousPath={this.props.ide.previousPath}
-          >
-            <SketchList
-              username={this.props.params.username}
-              user={this.props.user}
-            />
-          </Overlay>
-        }
-        { this.props.location.pathname.match(/assets$/) &&
-          <Overlay
-            title="Assets"
-            ariaLabel="asset list"
-            previousPath={this.props.ide.previousPath}
-          >
-            <AssetList
-              username={this.props.params.username}
-              user={this.props.user}
-            />
-          </Overlay>
         }
         { this.props.location.pathname === '/about' &&
           <Overlay

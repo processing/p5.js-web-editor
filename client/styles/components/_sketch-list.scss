@@ -7,7 +7,6 @@
 
 .sketches-table {
   width: 100%;
-  padding: #{10 / $base-font-size}rem #{20 / $base-font-size}rem;
   max-height: 100%;
   border-spacing: 0;
   & .sketch-list__dropdown-column {
@@ -106,4 +105,5 @@
 .sketches-table__empty {
   text-align: center;
   font-size: #{16 / $base-font-size}rem;
+  padding: #{42 / $base-font-size}rem 0;
 }
