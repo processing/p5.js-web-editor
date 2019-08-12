@@ -13,7 +13,7 @@ const getSearchedSketches = createSelector(
   getSearch,
   (sketches, search) => {
     if (search) {
-      const searchStrings = sketches.map(sketch => {
+      const searchStrings = sketches.map((sketch) => {
         const smallSketch = {
           name: sketch.name
         };

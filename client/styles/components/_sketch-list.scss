@@ -2,7 +2,8 @@
   overflow-y: scroll;
   max-width: 100%;
   width: #{1000 / $base-font-size}rem;
-  min-height: #{400 / $base-font-size}rem;
+  height: #{628 / $base-font-size}rem;
+  // min-height: #{400 / $base-font-size}rem;
 }
 
 .sketches-table {
@@ -70,14 +71,6 @@
     color: getThemifyVariable('primary-text-color');
   }
 }
-
-.searchbar {
-  width: 240px;
-  height: 36px;
-  border: solid 0.5px #0f9dd7;
-  background-color: #ffffff;
-}
-
 
 .sketches-table thead {
   font-size: #{12 / $base-font-size}rem;

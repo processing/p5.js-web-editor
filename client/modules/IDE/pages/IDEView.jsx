@@ -30,6 +30,7 @@ import * as ConsoleActions from '../actions/console';
 import { getHTMLFile } from '../reducers/files';
 import Overlay from '../../App/components/Overlay';
 import SketchList from '../components/SketchList';
+import Searchbar from '../components/Searchbar';
 import AssetList from '../components/AssetList';
 import About from '../components/About';
 import Feedback from '../components/Feedback';
@@ -371,6 +372,7 @@ class IDEView extends React.Component {
             title="Open a Sketch"
             previousPath={this.props.ide.previousPath}
           >
+            <Searchbar />
             <SketchList
               username={this.props.params.username}
               user={this.props.user}
