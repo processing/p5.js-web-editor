@@ -13,6 +13,7 @@ const initialState = {
   shareModalProjectId: null,
   shareModalProjectName: null,
   shareModalProjectUsername: null,
+  sketchlistModalVisible: false,
   editorOptionsVisible: false,
   keyboardShortcutVisible: false,
   unsavedChanges: false,

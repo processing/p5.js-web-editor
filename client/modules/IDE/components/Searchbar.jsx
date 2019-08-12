@@ -14,7 +14,11 @@ class Searchbar extends React.Component {
     this.state = {
       searchValue: this.props.searchTerm
     };
-    this.throttledSearchChange = throttle(this.throttledSearchChange.bind(this), 100);
+    this.throttledSearchChange = throttle(this.searchChange, 500);
+  }
+
+  componentWillUnmount() {
+    this.props.resetSearchTerm();
   }
 
   handleResetSearch = () => {
@@ -29,15 +33,16 @@ class Searchbar extends React.Component {
     }
   }
 
-  handleSearchChange = (e) => {
-    this.throttledSearchChange(e.target.value);
-  }
+  searchChange = (value) => {
+    this.props.setSearchTerm(this.state.searchValue);
+  };
 
-  throttledSearchChange = (value) => {
-    this.setState({ searchValue: value }, () => {
-      this.props.setSearchTerm(this.state.searchValue);
+  handleSearchChange = (e) => {
+    this.setState({ searchValue: e.target.value }, () => {
+      this.throttledSearchChange(this.state.searchValue);
     });
   }
+
   render() {
     const { searchValue } = this.state;
     return (
