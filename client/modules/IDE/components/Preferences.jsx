@@ -151,6 +151,7 @@ class Preferences extends React.Component {
                   aria-atomic="true"
                   value={this.state.fontSize}
                   onChange={this.onFontInputChange}
+                  type="number"
                   ref={(element) => { this.fontSizeInput = element; }}
                   onClick={() => {
                     this.fontSizeInput.select();
