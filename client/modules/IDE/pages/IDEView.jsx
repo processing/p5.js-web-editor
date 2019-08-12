@@ -12,6 +12,7 @@ import Toolbar from '../components/Toolbar';
 import Preferences from '../components/Preferences';
 import NewFileModal from '../components/NewFileModal';
 import NewFolderModal from '../components/NewFolderModal';
+import UploadFileModal from '../components/UploadFileModal';
 import ShareModal from '../components/ShareModal';
 import KeyboardShortcutModal from '../components/KeyboardShortcutModal';
 import ErrorModal from '../components/ErrorModal';
@@ -349,17 +350,18 @@ class IDEView extends React.Component {
             </SplitPane>
           </SplitPane>
         </div>
-        {this.props.ide.modalIsVisible &&
-          <NewFileModal
-            canUploadMedia={this.props.user.authenticated}
-            closeModal={this.props.closeNewFileModal}
-            createFile={this.props.createFile}
-          />
+        { this.props.ide.modalIsVisible &&
+          <NewFileModal />
         }
         {this.props.ide.newFolderModalVisible &&
           <NewFolderModal
             closeModal={this.props.closeNewFolderModal}
             createFolder={this.props.createFolder}
+          />
+        }
+        {this.props.ide.uploadFileModalVisible &&
+          <UploadFileModal
+            closeModal={this.props.closeUploadFileModal}
           />
         }
         { this.props.location.pathname === '/about' &&
@@ -475,6 +477,7 @@ IDEView.propTypes = {
     justOpenedProject: PropTypes.bool.isRequired,
     errorType: PropTypes.string,
     runtimeErrorWarningVisible: PropTypes.bool.isRequired,
+    uploadFileModalVisible: PropTypes.bool.isRequired
   }).isRequired,
   stopSketch: PropTypes.func.isRequired,
   project: PropTypes.shape({
@@ -532,7 +535,6 @@ IDEView.propTypes = {
   }).isRequired,
   dispatchConsoleEvent: PropTypes.func.isRequired,
   newFile: PropTypes.func.isRequired,
-  closeNewFileModal: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
   collapseSidebar: PropTypes.func.isRequired,
   cloneProject: PropTypes.func.isRequired,
@@ -545,7 +547,6 @@ IDEView.propTypes = {
   newFolder: PropTypes.func.isRequired,
   closeNewFolderModal: PropTypes.func.isRequired,
   createFolder: PropTypes.func.isRequired,
-  createFile: PropTypes.func.isRequired,
   closeShareModal: PropTypes.func.isRequired,
   showEditorOptions: PropTypes.func.isRequired,
   closeEditorOptions: PropTypes.func.isRequired,
@@ -577,6 +578,7 @@ IDEView.propTypes = {
   showRuntimeErrorWarning: PropTypes.func.isRequired,
   hideRuntimeErrorWarning: PropTypes.func.isRequired,
   startSketch: PropTypes.func.isRequired,
+  closeUploadFileModal: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
