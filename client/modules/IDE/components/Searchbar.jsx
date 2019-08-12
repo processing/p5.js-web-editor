@@ -14,20 +14,18 @@ class Searchbar extends React.Component {
     this.state = {
       searchValue: this.props.searchTerm
     };
-    this.handleSearchEnter = this.handleSearchEnter.bind(this);
-    this.handleSearchChange = this.handleSearchChange.bind(this);
     this.throttledSearchChange = throttle(this.throttledSearchChange.bind(this), 100);
   }
 
   handleResetSearch = () => {
     this.setState({ searchValue: '' }, () => {
-      this.props.resetSearching();
+      this.props.resetSearchTerm();
     });
   }
 
   handleSearchEnter = (e) => {
     if (e.key === 'Enter') {
-      this.props.searching(this.state.searchValue);
+      this.props.setSearchTerm(this.state.searchValue);
     }
   }
 
@@ -37,7 +35,7 @@ class Searchbar extends React.Component {
 
   throttledSearchChange = (value) => {
     this.setState({ searchValue: value }, () => {
-      this.props.searching(this.state.searchValue);
+      this.props.setSearchTerm(this.state.searchValue);
     });
   }
   render() {
@@ -71,13 +69,13 @@ class Searchbar extends React.Component {
 
 Searchbar.propTypes = {
   searchTerm: PropTypes.string.isRequired,
-  searching: PropTypes.func.isRequired,
-  resetSearching: PropTypes.func.isRequired
+  setSearchTerm: PropTypes.func.isRequired,
+  resetSearchTerm: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    searchTerm: state.searching.searchTerm
+    searchTerm: state.search.searchTerm
   };
 }
 

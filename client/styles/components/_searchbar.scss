@@ -13,7 +13,7 @@
   padding-left: #{36 / $base-font-size}rem;
   padding-right: #{38 / $base-font-size}rem;
   @include themify() {
-    border-color: getThemifyVariable('search-border-color');
+    border-color: getThemifyVariable('input-border-color');
     background-color: getThemifyVariable('search-background-color');
   }
 }
@@ -25,15 +25,15 @@
   padding: 0;
   border-right: solid 1px;
   @include themify() {
-    border-right-color: getThemifyVariable('button-border-color');
+    border-right-color: getThemifyVariable('input-border-color');
   }
 }
 
 .searchbar__icon {
   display: inline-block;
   & svg {
-    width: #{23 / $base-font-size}rem;
-    height: #{28 / $base-font-size}rem;
+    width: #{22 / $base-font-size}rem;
+    height: #{27 / $base-font-size}rem;
     transform: scaleX(-1);
     @include themify() {
       fill: getThemifyVariable('input-text-color');
