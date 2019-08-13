@@ -29,9 +29,12 @@ class Preferences extends React.Component {
   }
 
   onFontInputChange(event) {
-    this.setState({
-      fontSize: event.target.value
-    });
+    const INTEGER_REGEX = /^[0-9\b]+$/;
+    if (event.target.value === '' || INTEGER_REGEX.test(event.target.value)) {
+      this.setState({
+        fontSize: event.target.value
+      });
+    }
   }
 
   onFontInputSubmit(event) {
@@ -151,11 +154,9 @@ class Preferences extends React.Component {
                   aria-atomic="true"
                   value={this.state.fontSize}
                   onChange={this.onFontInputChange}
-                  type="number"
+                  type="text"
                   ref={(element) => { this.fontSizeInput = element; }}
-                  onClick={() => {
-                    this.fontSizeInput.select();
-                  }}
+                  onClick={() => { this.fontSizeInput.select(); }}
                 />
               </form>
               <button
