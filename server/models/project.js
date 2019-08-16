@@ -34,7 +34,11 @@ const projectSchema = new Schema(
     serveSecure: { type: Boolean, default: false },
     files: { type: [fileSchema] },
     _id: { type: String, default: shortid.generate },
-    slug: { type: String }
+    slug: { type: String },
+    libraries: [{
+      name: { type: String, required: true },
+      url: { type: String, required: true }
+    }]
   },
   { timestamps: true, usePushEach: true }
 );

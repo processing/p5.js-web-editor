@@ -19,6 +19,7 @@ import config from '../webpack/config.dev';
 import users from './routes/user.routes';
 import sessions from './routes/session.routes';
 import projects from './routes/project.routes';
+import libraries from './routes/library.routes';
 import files from './routes/file.routes';
 import aws from './routes/aws.routes';
 import serverRoutes from './routes/server.routes';
@@ -99,6 +100,7 @@ app.use('/api', requestsOfTypeJSON(), users);
 app.use('/api', requestsOfTypeJSON(), sessions);
 app.use('/api', requestsOfTypeJSON(), files);
 app.use('/api', requestsOfTypeJSON(), projects);
+app.use('/api', requestsOfTypeJSON(), libraries);
 app.use('/api', requestsOfTypeJSON(), aws);
 app.use(assetRoutes);
 // this is supposed to be TEMPORARY -- until i figure out
