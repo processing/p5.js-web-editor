@@ -5,7 +5,6 @@ import classNames from 'classnames';
 import InlineSVG from 'react-inlinesvg';
 import NewFileForm from './NewFileForm';
 import FileUploader from './FileUploader';
-import LibraryManager from './LibraryManager';
 
 const exitUrl = require('../../../images/exit.svg');
 
@@ -56,7 +55,6 @@ class NewFileModal extends React.Component {
             }
             return '';
           })()}
-          <LibraryManager />
         </div>
       </section>
     );

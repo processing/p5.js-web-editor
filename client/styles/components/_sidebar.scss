@@ -1,6 +1,13 @@
 .sidebar {
   display: flex;
   flex-flow: column;
+  width: 100%;
+  height: 100%;
+}
+
+.sidebar-files {
+  height: 50%;
+  width:  100%;
 }
 
 .sidebar__header {

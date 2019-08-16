@@ -3,6 +3,7 @@ import React from 'react';
 import classNames from 'classnames';
 import InlineSVG from 'react-inlinesvg';
 import ConnectedFileNode from './FileNode';
+import LibraryManager from './LibraryManager';
 
 const downArrowUrl = require('../../../images/down-filled-triangle.svg');
 
@@ -68,58 +69,61 @@ class Sidebar extends React.Component {
     });
 
     return (
-      <nav className={sidebarClass} title="file-navigation" >
-        <div className="sidebar__header" onContextMenu={this.toggleProjectOptions}>
-          <h3 className="sidebar__title">
-            <span>Sketch Files</span>
-          </h3>
-          <div className="sidebar__icons">
-            <button
-              aria-label="add file or folder"
-              className="sidebar__add"
-              tabIndex="0"
-              ref={(element) => { this.sidebarOptions = element; }}
-              onClick={this.toggleProjectOptions}
-              onBlur={this.onBlurComponent}
-              onFocus={this.onFocusComponent}
-            >
-              <InlineSVG src={downArrowUrl} />
-            </button>
-            <ul className="sidebar__project-options">
-              <li>
-                <button
-                  aria-label="add folder"
-                  onClick={() => {
-                    this.props.newFolder();
-                    setTimeout(this.props.closeProjectOptions, 0);
-                  }}
-                  onBlur={this.onBlurComponent}
-                  onFocus={this.onFocusComponent}
-                >
-                  Add folder
-                </button>
-              </li>
-              <li>
-                <button
-                  aria-label="add file"
-                  onClick={() => {
-                    this.props.newFile();
-                    setTimeout(this.props.closeProjectOptions, 0);
-                  }}
-                  onBlur={this.onBlurComponent}
-                  onFocus={this.onFocusComponent}
-                >
-                  Add file
-                </button>
-              </li>
-            </ul>
+      <section className={sidebarClass} title="sidebar">
+        <nav className="sidebar-files" title="file-navigation">
+          <div className="sidebar__header" onContextMenu={this.toggleProjectOptions}>
+            <h3 className="sidebar__title">
+              <span>Sketch Files</span>
+            </h3>
+            <div className="sidebar__icons">
+              <button
+                aria-label="add file or folder"
+                className="sidebar__add"
+                tabIndex="0"
+                ref={(element) => { this.sidebarOptions = element; }}
+                onClick={this.toggleProjectOptions}
+                onBlur={this.onBlurComponent}
+                onFocus={this.onFocusComponent}
+              >
+                <InlineSVG src={downArrowUrl} />
+              </button>
+              <ul className="sidebar__project-options">
+                <li>
+                  <button
+                    aria-label="add folder"
+                    onClick={() => {
+                      this.props.newFolder();
+                      setTimeout(this.props.closeProjectOptions, 0);
+                    }}
+                    onBlur={this.onBlurComponent}
+                    onFocus={this.onFocusComponent}
+                  >
+                    Add folder
+                  </button>
+                </li>
+                <li>
+                  <button
+                    aria-label="add file"
+                    onClick={() => {
+                      this.props.newFile();
+                      setTimeout(this.props.closeProjectOptions, 0);
+                    }}
+                    onBlur={this.onBlurComponent}
+                    onFocus={this.onFocusComponent}
+                  >
+                    Add file
+                  </button>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
-        <ConnectedFileNode
-          id={this.props.files.filter(file => file.name === 'root')[0].id}
-          canEdit={canEditProject}
-        />
-      </nav>
+          <ConnectedFileNode
+            id={this.props.files.filter(file => file.name === 'root')[0].id}
+            canEdit={canEditProject}
+          />
+        </nav>
+        <LibraryManager />
+      </section>
     );
   }
 }

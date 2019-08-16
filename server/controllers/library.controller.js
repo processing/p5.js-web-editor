@@ -3,25 +3,17 @@ import Project from '../models/project';
 export function addLibrary(req, res) {
   const { project_id } = req.params;
   // { name, url }
-  const { name, url } = req.body;
-  // we are accessing the database
-  Project.findByIdAndUpdate(
-    project_id,
-    {
-      $push: {
-        libraries: {
-          name,
-          url
-        }
-      }
-    },
-    {
-      new: true
-    }
-  ).then((project) => {
-    const { libraries } = project;
+  const { name, url, indexFile } = req.body;
+  console.log(indexFile);
+  Project.findById(project_id).then((project) => {
+    project.libraries.push({ name, url });
+    project.files.id(indexFile.id).content = indexFile.content;
+    return project.save({ new: true });
+  }).then((project) => {
+    const { libraries, files } = project;
     res.json({
-      libraries
+      libraries,
+      files
     });
   }).catch((err) => {
     console.log(err);

@@ -11,7 +11,11 @@ const LIBRARY = {
 
 class LibraryManager extends React.Component {
   static propTypes = {
-    addLibraryRequest: PropTypes.func.isRequired
+    addLibraryRequest: PropTypes.func.isRequired,
+    libraries: PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired
+    })).isRequired
   }
 
   handleButtonClick = () => {
@@ -20,11 +24,19 @@ class LibraryManager extends React.Component {
   }
 
   render() {
+    const { libraries } = this.props;
     return (
-      <div>
+      <div className="library-manager">
         <button onClick={this.handleButtonClick}>
           {'Click me!'}
         </button>
+        <ul>
+          {libraries.map(library => (
+            <li key={library.name}>
+              {library.name}
+            </li>
+          ))}
+        </ul>
       </div>
     );
   }

@@ -1,5 +1,9 @@
 import objectID from 'bson-objectid';
 import * as ActionTypes from '../../../constants';
+// this would have to import the defaultState of the library reducer, because
+// index.html depends upon the initialState of the library reducer
+// would need to iterate through libs and insert them into HEAD
+import { initialState as defaultLibraries } from './libraries';
 
 const defaultSketch = `function setup() {
   createCanvas(400, 400);
@@ -9,22 +13,25 @@ function draw() {
   background(220);
 }`;
 
-const defaultHTML =
-`<!DOCTYPE html>
-<html>
-  <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.sound.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <meta charset="utf-8" />
+const libraryTags = () => {
+  const tags = defaultLibraries.map(library => `<script src="${library.url}"></script>`);
+  return tags.join('\n      ');
+};
 
-  </head>
-  <body>
-    <script src="sketch.js"></script>
-  </body>
-</html>
-`;
+const defaultHTML = () => (
+  `<!DOCTYPE html>
+  <html>
+    <head>
+      <link rel="stylesheet" type="text/css" href="style.css">
+      <meta charset="utf-8" />
+      ${libraryTags()}
+    </head>
+    <body>
+      <script src="sketch.js"></script>
+    </body>
+  </html>
+  `
+);
 
 const defaultCSS =
 `html, body {
@@ -61,7 +68,7 @@ const initialState = () => {
     },
     {
       name: 'index.html',
-      content: defaultHTML,
+      content: defaultHTML(),
       id: b,
       _id: b,
       fileType: 'file',

@@ -1,0 +1,8 @@
+.library-manager {
+    height: 50%;
+    width: 100%;
+    border-top: 1px solid gray;
+    .sidebar--contracted & {
+        display: none;
+    }
+}
