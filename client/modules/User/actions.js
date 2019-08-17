@@ -84,7 +84,8 @@ export function getUser() {
         });
       })
       .catch((response) => {
-        dispatch(authError(response.data.error));
+        const message = response.message || response.data.error;
+        dispatch(authError(message));
       });
   };
 }

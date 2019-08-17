@@ -23,7 +23,7 @@ module.exports = [{
   output: {
     path: `${__dirname}`,
     filename: 'app.js',
-    publicPath: '/'
+    publicPath: '/static/'
   },
   resolve: {
     extensions: ['.js', '.jsx'],
