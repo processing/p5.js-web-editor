@@ -74,6 +74,19 @@ export function closeNewFileModal() {
   };
 }
 
+export function showAddLibraryModal() {
+  return {
+    type: ActionTypes.SHOW_ADD_LIBRARY_MODAL
+  };
+}
+
+export function hideAddLibraryModal() {
+  return {
+    type: ActionTypes.HIDE_ADD_LIBRARY_MODAL
+  };
+}
+
+
 export function expandSidebar() {
   return {
     type: ActionTypes.EXPAND_SIDEBAR

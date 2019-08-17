@@ -4,12 +4,6 @@ import classNames from 'classnames';
 import InlineSVG from 'react-inlinesvg';
 import ConnectedFileNode from './FileNode';
 import LibraryManager from './LibraryManager';
-import { addLibraryRequest } from '../actions/libraries';
-
-const LIBRARY = {
-  name: 'ml5.js',
-  url: 'https://unpkg.com/ml5@0.2.3/dist/ml5.min.js'
-};
 
 const downArrowUrl = require('../../../images/down-filled-triangle.svg');
 
@@ -124,8 +118,7 @@ class Sidebar extends React.Component {
                   <button
                     aria-label="add library"
                     onClick={() => {
-                      const { name, url } = LIBRARY;
-                      addLibraryRequest(name, url);
+                      this.props.showAddLibraryModal();
                       setTimeout(this.props.closeProjectOptions, 0);
                     }}
                     onBlur={this.onBlurComponent}
@@ -160,6 +153,7 @@ Sidebar.propTypes = {
   openProjectOptions: PropTypes.func.isRequired,
   closeProjectOptions: PropTypes.func.isRequired,
   newFolder: PropTypes.func.isRequired,
+  showAddLibraryModal: PropTypes.func.isRequired,
   owner: PropTypes.shape({
     id: PropTypes.string
   }),

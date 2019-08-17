@@ -34,6 +34,7 @@ import SketchList from '../components/SketchList';
 import AssetList from '../components/AssetList';
 import About from '../components/About';
 import Feedback from '../components/Feedback';
+import AddLibraryModal from '../components/AddLibraryModal';
 
 class IDEView extends React.Component {
   constructor(props) {
@@ -243,7 +244,7 @@ class IDEView extends React.Component {
               newFolder={this.props.newFolder}
               user={this.props.user}
               owner={this.props.project.owner}
-              addLibraryRequest={this.props.addLibraryRequest}
+              showAddLibraryModal={this.props.showAddLibraryModal}
             />
             <SplitPane
               split="vertical"
@@ -359,6 +360,12 @@ class IDEView extends React.Component {
             canUploadMedia={this.props.user.authenticated}
             closeModal={this.props.closeNewFileModal}
             createFile={this.props.createFile}
+          />
+        }
+        { this.props.ide.addLibraryModalIsVisible &&
+          <AddLibraryModal
+            closeModal={this.props.hideAddLibraryModal}
+            addLibrary={this.props.addLibraryRequest}
           />
         }
         { this.props.ide.newFolderModalVisible &&
@@ -477,6 +484,7 @@ IDEView.propTypes = {
     isAccessibleOutputPlaying: PropTypes.bool.isRequired,
     consoleEvent: PropTypes.array,
     modalIsVisible: PropTypes.bool.isRequired,
+    addLibraryModalIsVisible: PropTypes.bool.isRequired,
     sidebarIsExpanded: PropTypes.bool.isRequired,
     consoleIsExpanded: PropTypes.bool.isRequired,
     preferencesIsVisible: PropTypes.bool.isRequired,
@@ -554,6 +562,8 @@ IDEView.propTypes = {
   dispatchConsoleEvent: PropTypes.func.isRequired,
   newFile: PropTypes.func.isRequired,
   closeNewFileModal: PropTypes.func.isRequired,
+  showAddLibraryModal: PropTypes.func.isRequired,
+  hideAddLibraryModal: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
   collapseSidebar: PropTypes.func.isRequired,
   cloneProject: PropTypes.func.isRequired,

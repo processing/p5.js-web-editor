@@ -3,8 +3,6 @@ import React from 'react';
 import { reduxForm } from 'redux-form';
 import classNames from 'classnames';
 import InlineSVG from 'react-inlinesvg';
-import NewFileForm from './NewFileForm';
-import FileUploader from './FileUploader';
 
 const exitUrl = require('../../../images/exit.svg');
 
@@ -27,8 +25,7 @@ class AddLibraryModal extends React.Component {
 
   render() {
     const modalClass = classNames({
-      'modal': true,
-      'modal--reduced': !this.props.canUploadMedia
+      modal: true,
     });
 
     return (
@@ -40,33 +37,18 @@ class AddLibraryModal extends React.Component {
               <InlineSVG src={exitUrl} alt="Close New File Modal" />
             </button>
           </div>
-          <NewFileForm
-            focusOnModal={this.focusOnModal}
-            {...this.props}
-          />
-          {(() => {
-            if (this.props.canUploadMedia) {
-              return (
-                <div>
-                  <p className="modal__divider">OR</p>
-                  <FileUploader />
-                </div>
-              );
-            }
-            return '';
-          })()}
         </div>
       </section>
     );
   }
 }
 
-NewFileModal.propTypes = {
+AddLibraryModal.propTypes = {
   closeModal: PropTypes.func.isRequired,
-  canUploadMedia: PropTypes.bool.isRequired
+  // addLibraryRequest: PropTypes.func.isRequired,
 };
 
 export default reduxForm({
-  form: 'new-file',
+  form: 'add-library',
   fields: ['name'],
-})(NewFileModal);
+})(AddLibraryModal);
