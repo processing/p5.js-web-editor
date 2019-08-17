@@ -13,4 +13,6 @@
   - Tone
 - prevent duplicate addition of libraries
   - should libraries be an object instead of an array????
+- if urls for libraries change, sketches will be broken
+  - maybe this is okay? maybe we don't need to handle every damn edge case?
   
