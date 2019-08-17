@@ -365,7 +365,7 @@ class IDEView extends React.Component {
         { this.props.ide.addLibraryModalIsVisible &&
           <AddLibraryModal
             closeModal={this.props.hideAddLibraryModal}
-            addLibrary={this.props.addLibraryRequest}
+            addLibraryRequest={this.props.addLibraryRequest}
           />
         }
         { this.props.ide.newFolderModalVisible &&

@@ -6,6 +6,17 @@ import InlineSVG from 'react-inlinesvg';
 
 const exitUrl = require('../../../images/exit.svg');
 
+const LIBRARIES = [
+  {
+    name: 'ml5.js',
+    url: 'https://unpkg.com/ml5@0.2.3/dist/ml5.min.js'
+  },
+  {
+    name: 'tone.js',
+    url: 'https://cdnjs.cloudflare.com/ajax/libs/tone/13.0.1/Tone.min.js'
+  }
+];
+
 // At some point this will probably be generalized to a generic modal
 // in which you can insert different content
 // but for now, let's just make this work
@@ -37,6 +48,13 @@ class AddLibraryModal extends React.Component {
               <InlineSVG src={exitUrl} alt="Close New File Modal" />
             </button>
           </div>
+          <div className="modal__body">
+            { LIBRARIES.map((library, i) => (
+              <button key={library.name} onClick={() => this.props.addLibraryRequest(library.name, library.url)}>
+                {library.name}
+              </button>
+            )) }
+          </div>
         </div>
       </section>
     );
@@ -45,7 +63,7 @@ class AddLibraryModal extends React.Component {
 
 AddLibraryModal.propTypes = {
   closeModal: PropTypes.func.isRequired,
-  // addLibraryRequest: PropTypes.func.isRequired,
+  addLibraryRequest: PropTypes.func.isRequired,
 };
 
 export default reduxForm({
