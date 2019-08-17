@@ -27,6 +27,7 @@ import * as PreferencesActions from '../actions/preferences';
 import * as UserActions from '../../User/actions';
 import * as ToastActions from '../actions/toast';
 import * as ConsoleActions from '../actions/console';
+import * as LibraryActions from '../actions/libraries';
 import { getHTMLFile } from '../reducers/files';
 import Overlay from '../../App/components/Overlay';
 import SketchList from '../components/SketchList';
@@ -242,6 +243,7 @@ class IDEView extends React.Component {
               newFolder={this.props.newFolder}
               user={this.props.user}
               owner={this.props.project.owner}
+              addLibraryRequest={this.props.addLibraryRequest}
             />
             <SplitPane
               split="vertical"
@@ -597,6 +599,7 @@ IDEView.propTypes = {
   showRuntimeErrorWarning: PropTypes.func.isRequired,
   hideRuntimeErrorWarning: PropTypes.func.isRequired,
   startSketch: PropTypes.func.isRequired,
+  addLibraryRequest: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -627,7 +630,8 @@ function mapDispatchToProps(dispatch) {
       PreferencesActions,
       UserActions,
       ToastActions,
-      ConsoleActions
+      ConsoleActions,
+      LibraryActions
     ),
     dispatch
   );
