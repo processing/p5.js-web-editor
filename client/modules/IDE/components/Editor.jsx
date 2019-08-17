@@ -163,6 +163,14 @@ class Editor extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    // for index file
+    const indexFile = this.props.files.find(file => file.name === 'index.html');
+    const prevIndexFile = prevProps.files.find(file => file.name === 'index.html');
+    if (indexFile.content !== prevIndexFile.content) {
+      this._docs[indexFile.id].setValue(indexFile.content);
+    }
+
+    // for selected file
     if (this.props.file.content !== prevProps.file.content &&
         this.props.file.content !== this._cm.getValue()) {
       const oldDoc = this._cm.swapDoc(this._docs[this.props.file.id]);

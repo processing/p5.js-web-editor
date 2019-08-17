@@ -25,6 +25,11 @@ export function addLibraryRequest(name, url) {
     if (indexFile) {
       updatedIndexFile = insertLibrary(indexFile.content, url);
     }
+    if (!projectId) {
+      dispatch(addLibrary(name, url));
+      dispatch(updateFileContent(indexFile.id, updatedIndexFile));
+      return;
+    }
     const postBody = { name, url, indexFile: { id: indexFile.id, content: updatedIndexFile } };
     axios.put(`${ROOT_URL}/projects/${projectId}/libraries`, postBody, { withCredentials: true })
       .then((response) => {
