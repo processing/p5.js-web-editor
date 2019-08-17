@@ -114,6 +114,19 @@ class Sidebar extends React.Component {
                     Add file
                   </button>
                 </li>
+                <li>
+                  <button
+                    aria-label="add library"
+                    onClick={() => {
+                      this.props.showAddLibraryModal();
+                      setTimeout(this.props.closeProjectOptions, 0);
+                    }}
+                    onBlur={this.onBlurComponent}
+                    onFocus={this.onFocusComponent}
+                  >
+                    Add library
+                  </button>
+                </li>
               </ul>
             </div>
           </div>
@@ -140,6 +153,7 @@ Sidebar.propTypes = {
   openProjectOptions: PropTypes.func.isRequired,
   closeProjectOptions: PropTypes.func.isRequired,
   newFolder: PropTypes.func.isRequired,
+  showAddLibraryModal: PropTypes.func.isRequired,
   owner: PropTypes.shape({
     id: PropTypes.string
   }),

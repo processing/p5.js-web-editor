@@ -9,6 +9,7 @@ const initialState = {
   preferencesIsVisible: false,
   projectOptionsVisible: false,
   newFolderModalVisible: false,
+  addLibraryModalIsVisible: false,
   shareModalVisible: false,
   shareModalProjectId: null,
   shareModalProjectName: null,
@@ -41,6 +42,10 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { modalIsVisible: true });
     case ActionTypes.HIDE_MODAL:
       return Object.assign({}, state, { modalIsVisible: false });
+    case ActionTypes.SHOW_ADD_LIBRARY_MODAL:
+      return Object.assign({}, state, { addLibraryModalIsVisible: true });
+    case ActionTypes.HIDE_ADD_LIBRARY_MODAL:
+      return Object.assign({}, state, { addLibraryModalIsVisible: false });
     case ActionTypes.COLLAPSE_SIDEBAR:
       return Object.assign({}, state, { sidebarIsExpanded: false });
     case ActionTypes.EXPAND_SIDEBAR:
