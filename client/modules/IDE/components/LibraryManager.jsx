@@ -27,12 +27,10 @@ class LibraryManager extends React.Component {
     const { libraries } = this.props;
     return (
       <div className="library-manager">
-        <button onClick={this.handleButtonClick}>
-          {'Click me!'}
-        </button>
+        <span className="library-title">Libraries</span>
         <ul>
           {libraries.map(library => (
-            <li key={library.name}>
+            <li className="library-item" key={library.name}>
               {library.name}
             </li>
           ))}

@@ -1,0 +1,10 @@
+.add-library-button {
+    @include themify() {
+        @extend %button;
+        margin: 2px; 
+    }
+
+    &.selected {
+        background-color: #1ee29a; 
+    }
+}

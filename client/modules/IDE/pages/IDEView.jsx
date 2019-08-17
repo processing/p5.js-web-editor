@@ -366,6 +366,7 @@ class IDEView extends React.Component {
           <AddLibraryModal
             closeModal={this.props.hideAddLibraryModal}
             addLibraryRequest={this.props.addLibraryRequest}
+            libraries={this.props.libraries}
           />
         }
         { this.props.ide.newFolderModalVisible &&
@@ -609,7 +610,11 @@ IDEView.propTypes = {
   showRuntimeErrorWarning: PropTypes.func.isRequired,
   hideRuntimeErrorWarning: PropTypes.func.isRequired,
   startSketch: PropTypes.func.isRequired,
-  addLibraryRequest: PropTypes.func.isRequired
+  addLibraryRequest: PropTypes.func.isRequired,
+  libraries: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired
+  })).isRequired
 };
 
 function mapStateToProps(state) {
@@ -625,7 +630,8 @@ function mapStateToProps(state) {
     user: state.user,
     project: state.project,
     toast: state.toast,
-    console: state.console
+    console: state.console,
+    libraries: state.libraries
   };
 }
 
