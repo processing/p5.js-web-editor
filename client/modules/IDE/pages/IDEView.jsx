@@ -16,7 +16,6 @@ import ShareModal from '../components/ShareModal';
 import KeyboardShortcutModal from '../components/KeyboardShortcutModal';
 import ErrorModal from '../components/ErrorModal';
 import HTTPSModal from '../components/HTTPSModal';
-import LibraryManager from '../components/LibraryManager';
 import Nav from '../../../components/Nav';
 import Console from '../components/Console';
 import Toast from '../components/Toast';
