@@ -1,5 +1,5 @@
 .sketches-table-container {
-  overflow-y: scroll;
+  overflow-y: auto;
   max-width: 100%;
   width: #{1000 / $base-font-size}rem;
   min-height: #{400 / $base-font-size}rem;
