@@ -30,7 +30,6 @@ class SketchListRowBase extends React.Component {
       isFocused: false
     };
   }
-
   onFocusComponent = () => {
     this.setState({ isFocused: true });
   }
