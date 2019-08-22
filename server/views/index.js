@@ -41,7 +41,7 @@ export function renderIndex() {
           window.webpackManifest = ${JSON.stringify(chunkManifest)};
           //]]>` : ''}
       </script>
-      <script src='${process.env.NODE_ENV === 'production' ? `${assetsManifest['/vendor.js']}` : '/vendor.js'}'></script>
+      ${process.env.NODE_ENV === 'production' ? `<script src="${assetsManifest['/vendor.js']}"></script>` : ''}
       <script src='${process.env.NODE_ENV === 'production' ? `${assetsManifest['/app.js']}` : '/app.js'}'></script>
       <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
