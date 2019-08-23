@@ -197,9 +197,11 @@ class Editor extends React.Component {
             consoleEvent.data[0].indexOf(')') > -1) {
             const n = consoleEvent.data[0].replace(')', '').split(' ');
             const lineNumber = parseInt(n[n.length - 1], 10) - 1;
-            const errorFromJavaScriptFile = (`${consoleEvent.source}.js` === this.props.file.name);
-            const errorFromHTMLFile = (consoleEvent.source === '' && this.props.file.name === 'index.html');
-            if (!Number.isNaN(lineNumber) && (errorFromJavaScriptFile || errorFromHTMLFile)) {
+            const { source } = consoleEvent;
+            const fileName = this.props.file.name;
+            const errorFromJavaScriptFile = (`${source}.js` === fileName);
+            const errorFromIndexHTML = ((source === fileName) && (fileName === 'index.html'));
+            if (!Number.isNaN(lineNumber) && (errorFromJavaScriptFile || errorFromIndexHTML)) {
               this._cm.addLineClass(lineNumber, 'background', 'line-runtime-error');
             }
           }
