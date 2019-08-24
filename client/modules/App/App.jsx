@@ -18,7 +18,10 @@ class App extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.location !== this.props.location) {
+    const locationWillChange = nextProps.location !== this.props.location;
+    const shouldSkipRemembering = nextProps.location.state && nextProps.location.state.skipSavingPath === true;
+
+    if (locationWillChange && !shouldSkipRemembering) {
       this.props.setPreviousPath(this.props.location.pathname);
     }
   }
