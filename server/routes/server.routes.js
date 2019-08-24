@@ -79,6 +79,16 @@ router.get('/assets', (req, res) => {
   }
 });
 
+router.get('/:username/assets', (req, res) => {
+  userExists(req.params.username, (exists) => {
+    const isLoggedInUser = req.user && req.user.username === req.params.username;
+    const canAccess = exists && isLoggedInUser;
+    return canAccess ?
+      res.send(renderIndex()) :
+      get404Sketch(html => res.send(html));
+  });
+});
+
 router.get('/account', (req, res) => {
   if (req.user) {
     res.send(renderIndex());

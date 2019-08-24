@@ -576,7 +576,7 @@ class Nav extends React.PureComponent {
                 </li>
                 <li className="nav__dropdown-item">
                   <Link
-                    to="/assets"
+                    to={`/${this.props.user.username}/assets`}
                     onFocus={this.handleFocusForAccount}
                     onBlur={this.handleBlur}
                     onClick={this.setDropdownForNone}
