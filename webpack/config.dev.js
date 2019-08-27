@@ -7,7 +7,7 @@ if (process.env.NODE_ENV === 'development') {
 
 
 // react hmr being fucked up has to do with the multiple entries!!! cool.
-module.exports = [{
+module.exports = {
   mode: 'development',
   devtool: 'cheap-module-eval-source-map',
   entry: {
@@ -17,11 +17,14 @@ module.exports = [{
       'webpack-hot-middleware/client',
       'react-hot-loader/patch',
       './client/index.jsx',
+    ],
+    previewScripts: [
+       path.resolve(__dirname, '../client/utils/previewEntry.js')
     ]
   },
   output: {
     path: `${__dirname}`,
-    filename: 'app.js',
+    filename: '[name].js',
     publicPath: '/'
   },
   resolve: {
@@ -94,33 +97,4 @@ module.exports = [{
       }
     ],
   },
-},
-{
-  entry: path.resolve(__dirname, '../client/utils/previewEntry.js'),
-  target: 'web',
-  mode: 'development',
-  output: {
-    path: `${__dirname}`,
-    filename: 'previewScripts.js',
-    publicPath: '/'
-  },
-  resolve: {
-    extensions: ['*', '.js', '.jsx'],
-    modules: [
-      'client',
-      'node_modules',
-    ],
-  },
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader',
-        options: {
-          babelrc: true
-        }
-      }
-    ]
-  }
-}]
+};

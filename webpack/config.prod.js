@@ -1,6 +1,8 @@
 const webpack = require('webpack');
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const TerserJSPlugin = require('terser-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
 const cssnext = require('postcss-cssnext');
@@ -13,31 +15,13 @@ if (process.env.NODE_ENV === "development") {
 
 module.exports = [{
   devtool: 'source-map',
-
+  mode: 'production',
   entry: {
     app: [
       '@babel/polyfill',
       'core-js/modules/es6.promise',
       'core-js/modules/es6.array.iterator',
       path.resolve(__dirname, '../client/index.jsx')
-    ],
-    vendor: [
-      'axios',
-      'classnames',
-      'codemirror',
-      'csslint',
-      'dropzone',
-      'htmlhint',
-      'js-beautify',
-      'jshint',
-      'react-dom',
-      'react-inlinesvg',
-      'react-redux',
-      'react-router',
-      'react',
-      'redux-form',
-      'redux-thunk',
-      'redux',
     ]
   },
   output: {
@@ -53,16 +37,44 @@ module.exports = [{
       'node_modules',
     ]
   },
-
   module: {
-    rules: [
-      {
+    rules: [{
         test: /main\.scss$/,
         exclude: /node_modules/,
-        loader: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader!sass-loader!postcss-loader'
-        })
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 2,
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: () => [
+                postcssFocus(),
+                cssnext({
+                  browsers: ['last 2 versions', 'IE > 9']
+                }),
+                cssnano({
+                  autoprefixer: false
+                }),
+                postcssReporter({
+                  clearMessages: true
+                })
+              ],
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true
+            }
+          }
+        ]
       },
       {
         test: /\.jsx?$/,
@@ -76,11 +88,11 @@ module.exports = [{
       {
         test: /\.(png)$/,
         use: {
-            loader: 'file-loader',
-            options: {
-                name: '[name].[ext]',
-                outputPath: 'images/'
-            }
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'images/'
+          }
         }
       },
       {
@@ -92,25 +104,21 @@ module.exports = [{
         use: {
           loader: 'sass-extract-loader',
           options: {
-            plugins: [{ plugin: 'sass-extract-js', options: { camelCase: false } }]
+            plugins: [{
+              plugin: 'sass-extract-js',
+              options: {
+                camelCase: false
+              }
+            }]
           }
         }
       }
     ]
   },
-
+  optimization: {
+    minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
+  },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production')
-      }
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      minChunks: Infinity,
-      filename: '[name].[chunkhash].js',
-    }),
-    new ExtractTextPlugin({ filename: 'app.[chunkhash].css', allChunks: true }),
     new ManifestPlugin({
       basePath: '/',
     }),
@@ -119,31 +127,10 @@ module.exports = [{
       manifestVariable: 'webpackManifest',
       inlineManifest: false
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      compress: {
-        warnings: false,
-        drop_console :true
-      }
-    }),
-    new webpack.LoaderOptionsPlugin({
-      options: {
-        postcss: () => [
-          postcssFocus(),
-          cssnext({
-            browsers: ['last 2 versions', 'IE > 9']
-          }),
-          cssnano({
-            autoprefixer: false
-          }),
-          postcssReporter({
-            clearMessages: true
-          })
-        ]
-      }
+    new MiniCssExtractPlugin({
+      filename: 'app.[hash].css',
     })
-  ],
-
+  ]
 },
 {
   entry: {
@@ -152,6 +139,7 @@ module.exports = [{
     ]
   },
   target: 'web',
+  mode: 'production',
   output: {
     path: path.resolve(__dirname, '../dist/static'),
     filename: 'previewScripts.js',
@@ -165,7 +153,7 @@ module.exports = [{
     ],
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
@@ -175,12 +163,5 @@ module.exports = [{
         }
       }
     ]
-  },
-  plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
-    })
-  ]
+  }
 }];

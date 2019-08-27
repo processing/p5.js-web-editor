@@ -12,6 +12,7 @@ module.exports = {
   },
 
   target: 'node',
+  mode: 'production',
 
   node: {
     __filename: true,
