@@ -188,7 +188,7 @@ class Editor extends React.Component {
     for (let i = 0; i < this._cm.lineCount(); i += 1) {
       this._cm.removeLineClass(i, 'background', 'line-runtime-error');
     }
-    if (this.props.runtimeErrorWarningVisible && this._cm.getDoc().modeOption === 'javascript') {
+    if (this.props.runtimeErrorWarningVisible) {
       this.props.consoleEvents.forEach((consoleEvent) => {
         if (consoleEvent.method === 'error') {
           if (consoleEvent.data &&
@@ -197,7 +197,11 @@ class Editor extends React.Component {
             consoleEvent.data[0].indexOf(')') > -1) {
             const n = consoleEvent.data[0].replace(')', '').split(' ');
             const lineNumber = parseInt(n[n.length - 1], 10) - 1;
-            if (!Number.isNaN(lineNumber)) {
+            const { source } = consoleEvent;
+            const fileName = this.props.file.name;
+            const errorFromJavaScriptFile = (`${source}.js` === fileName);
+            const errorFromIndexHTML = ((source === fileName) && (fileName === 'index.html'));
+            if (!Number.isNaN(lineNumber) && (errorFromJavaScriptFile || errorFromIndexHTML)) {
               this._cm.addLineClass(lineNumber, 'background', 'line-runtime-error');
             }
           }
