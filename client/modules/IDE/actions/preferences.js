@@ -32,6 +32,24 @@ export function setFontSize(value) {
   };
 }
 
+export function setLineNumbers(value) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.SET_LINE_NUMBERS,
+      value
+    });
+    const state = getState();
+    if (state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          lineNumbers: value
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
+  };
+}
+
 export function setAutosave(value) {
   return (dispatch, getState) => {
     dispatch({
