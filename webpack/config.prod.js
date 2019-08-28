@@ -4,7 +4,6 @@ const TerserJSPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
-const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
 const cssnext = require('postcss-cssnext');
 const postcssFocus = require('postcss-focus');
 const postcssReporter = require('postcss-reporter');
@@ -26,7 +25,7 @@ module.exports = [{
   },
   output: {
     path: path.resolve(__dirname, '../dist/static'),
-    filename: '[name].[chunkhash].js',
+    filename: '[name].[hash].js',
     publicPath: '/'
   },
 
@@ -121,11 +120,6 @@ module.exports = [{
   plugins: [
     new ManifestPlugin({
       basePath: '/',
-    }),
-    new ChunkManifestPlugin({
-      filename: 'chunk-manifest.json',
-      manifestVariable: 'webpackManifest',
-      inlineManifest: false
     }),
     new MiniCssExtractPlugin({
       filename: 'app.[hash].css',
