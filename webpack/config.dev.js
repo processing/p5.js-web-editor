@@ -5,7 +5,10 @@ if (process.env.NODE_ENV === 'development') {
   require('dotenv').config();
 }
 
-module.exports = [{
+
+// react hmr being fucked up has to do with the multiple entries!!! cool.
+module.exports = {
+  mode: 'development',
   devtool: 'cheap-module-eval-source-map',
   entry: {
     app: [
@@ -15,14 +18,13 @@ module.exports = [{
       'react-hot-loader/patch',
       './client/index.jsx',
     ],
-    vendor: [
-      'react',
-      'react-dom'
+    previewScripts: [
+       path.resolve(__dirname, '../client/utils/previewEntry.js')
     ]
   },
   output: {
     path: `${__dirname}`,
-    filename: 'app.js',
+    filename: '[name].js',
     publicPath: '/'
   },
   resolve: {
@@ -34,11 +36,6 @@ module.exports = [{
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      minChunks: Infinity,
-      filename: 'vendor.js',
-    }),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('development')
@@ -100,32 +97,4 @@ module.exports = [{
       }
     ],
   },
-},
-{
-  entry: path.resolve(__dirname, '../client/utils/previewEntry.js'),
-  target: 'web',
-  output: {
-    path: `${__dirname}`,
-    filename: 'previewScripts.js',
-    publicPath: '/'
-  },
-  resolve: {
-    extensions: ['*', '.js', '.jsx'],
-    modules: [
-      'client',
-      'node_modules',
-    ],
-  },
-  module: {
-    loaders: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader',
-        options: {
-          babelrc: true
-        }
-      }
-    ],
-  },
-}]
+};

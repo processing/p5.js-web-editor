@@ -3,7 +3,7 @@ const nodeExternals = require('webpack-node-externals');
 
 module.exports = [{
   entry: path.resolve(__dirname, '../server/scripts/fetch-examples.js'),
-
+  mode: 'production',
   output: {
     path: path.resolve(__dirname, '../dist/'),
     filename: 'fetch-examples.bundle.js'
@@ -22,7 +22,7 @@ module.exports = [{
   },
 
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -36,7 +36,7 @@ module.exports = [{
 },
 {
   entry: path.resolve(__dirname, '../server/scripts/fetch-examples-gg.js'),
-
+  mode: 'production',
   output: {
     path: path.resolve(__dirname, '../dist/'),
     filename: 'fetch-examples-gg.bundle.js'
@@ -55,7 +55,7 @@ module.exports = [{
   },
 
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -69,7 +69,7 @@ module.exports = [{
 },
 {
   entry: path.resolve(__dirname, '../server/scripts/fetch-examples-ml5.js'),
-
+  mode: 'production',
   output: {
     path: path.resolve(__dirname, '../dist/'),
     filename: 'fetch-examples-ml5.bundle.js'
@@ -88,7 +88,7 @@ module.exports = [{
   },
 
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,

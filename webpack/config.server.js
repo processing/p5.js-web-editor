@@ -12,6 +12,7 @@ module.exports = {
   },
 
   target: 'node',
+  mode: 'production',
 
   node: {
     __filename: true,
@@ -28,7 +29,7 @@ module.exports = {
   },
 
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,

@@ -363,7 +363,7 @@ Editor.propTypes = {
     content: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     fileType: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired
+    url: PropTypes.string
   }).isRequired,
   editorOptionsVisible: PropTypes.bool.isRequired,
   showEditorOptions: PropTypes.func.isRequired,

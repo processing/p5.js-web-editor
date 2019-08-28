@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { hot } from 'react-hot-loader';
+import { hot } from 'react-hot-loader/root';
 import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 import configureStore from './store';
@@ -22,7 +22,7 @@ const App = () => (
   </Provider>
 );
 
-const HotApp = hot(module)(App);
+const HotApp = hot(App);
 
 render(
   <HotApp />,
