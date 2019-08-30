@@ -169,7 +169,8 @@ describe('project.controller', () => {
 
     it('returns 201 with id of created sketch', (done) => {
       const request = {
-        user: { _id: 'abc123' },
+        user: { _id: 'abc123', username: 'alice' },
+        params: { username: 'alice' },
         body: {
           name: 'My sketch',
           files: {}
@@ -211,7 +212,8 @@ describe('project.controller', () => {
 
     it('fails if slug is not unique', (done) => {
       const request = {
-        user: { _id: 'abc123' },
+        user: { _id: 'abc123', username: 'alice' },
+        params: { username: 'alice' },
         body: {
           name: 'My sketch',
           slug: 'a-slug',
@@ -254,9 +256,50 @@ describe('project.controller', () => {
       promise.then(expectations, expectations).catch(expectations);
     });
 
+    it('fails if user does not have permission', (done) => {
+      const request = {
+        user: { _id: 'abc123', username: 'alice' },
+        params: {
+          username: 'dana',
+        },
+        body: {
+          name: 'My sketch',
+          slug: 'a-slug',
+          files: {}
+        }
+      };
+      const response = new Response();
+
+      const result = {
+        _id: 'abc123',
+        id: 'abc123',
+        name: 'Project name',
+        serveSecure: false,
+        files: []
+      };
+
+      ProjectInstanceMock.expects('isSlugUnique')
+        .resolves({ isUnique: true, conflictingIds: [] });
+
+      ProjectInstanceMock.expects('save')
+        .resolves(new Project(result));
+
+      const promise = apiCreateProject(request, response);
+
+      function expectations() {
+        expect(response.status).toHaveBeenCalledWith(401);
+        expect(response.json).toHaveBeenCalled();
+
+        done();
+      }
+
+      promise.then(expectations, expectations).catch(expectations);
+    });
+
     it('returns validation errors on files input', (done) => {
       const request = {
-        user: {},
+        user: { username: 'alice' },
+        params: { username: 'alice' },
         body: {
           name: 'My sketch',
           files: {
@@ -291,7 +334,8 @@ describe('project.controller', () => {
 
     it('rejects file parameters not in object format', (done) => {
       const request = {
-        user: { _id: 'abc123' },
+        user: { _id: 'abc123', username: 'alice' },
+        params: { username: 'alice' },
         body: {
           name: 'Wriggly worm',
           files: [{ name: 'file.js', content: 'var hello = true;' }]
@@ -318,7 +362,8 @@ describe('project.controller', () => {
 
     it('rejects if files object in not provided', (done) => {
       const request = {
-        user: { _id: 'abc123' },
+        user: { _id: 'abc123', username: 'alice' },
+        params: { username: 'alice' },
         body: {
           name: 'Wriggly worm',
           // files: {} is missing

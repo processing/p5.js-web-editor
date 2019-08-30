@@ -59,7 +59,19 @@ export function apiCreateProject(req, res) {
     }
   }
 
+  function checkUserHasPermission() {
+    if (req.user.username !== req.params.username) {
+      console.log('no permission');
+      const error = new ProjectValidationError(`'${req.user.username}' does not have permission to create for '${req.params.username}'`);
+      error.code = 401;
+
+      throw error;
+    }
+  }
+
   try {
+    checkUserHasPermission();
+
     const model = toModel(params);
 
     return model.isSlugUnique()
@@ -76,6 +88,7 @@ export function apiCreateProject(req, res) {
 
         throw error;
       })
+      .then(checkUserHasPermission)
       .catch(handleErrors);
   } catch (err) {
     handleErrors(err);
