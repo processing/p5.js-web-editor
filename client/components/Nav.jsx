@@ -94,11 +94,11 @@ class Nav extends React.PureComponent {
   handleNew() {
     if (!this.props.unsavedChanges) {
       this.props.showToast(1500);
-      this.props.setToastText('New file created.');
+      this.props.setToastText('New sketch created.');
       this.props.newProject();
     } else if (this.props.warnIfUnsavedChanges()) {
       this.props.showToast(1500);
-      this.props.setToastText('New file created.');
+      this.props.setToastText('New sketch created.');
       this.props.newProject();
     }
     this.setDropdown('none');
