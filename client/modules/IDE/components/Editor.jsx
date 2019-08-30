@@ -80,7 +80,7 @@ class Editor extends React.Component {
     this.widgets = [];
     this._cm = CodeMirror(this.codemirrorContainer, { // eslint-disable-line
       theme: `p5-${this.props.theme}`,
-      lineNumbers: true,
+      lineNumbers: this.props.lineNumbers,
       styleActiveLine: true,
       inputStyle: 'contenteditable',
       lineWrapping: this.props.linewrap,
@@ -180,6 +180,9 @@ class Editor extends React.Component {
     }
     if (this.props.theme !== prevProps.theme) {
       this._cm.setOption('theme', `p5-${this.props.theme}`);
+    }
+    if (this.props.lineNumbers !== prevProps.lineNumbers) {
+      this._cm.setOption('lineNumbers', this.props.lineNumbers);
     }
 
     if (prevProps.consoleEvents !== this.props.consoleEvents) {
@@ -342,6 +345,7 @@ class Editor extends React.Component {
 }
 
 Editor.propTypes = {
+  lineNumbers: PropTypes.bool.isRequired,
   lintWarning: PropTypes.bool.isRequired,
   linewrap: PropTypes.bool.isRequired,
   lintMessages: PropTypes.arrayOf(PropTypes.shape({

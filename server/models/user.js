@@ -24,6 +24,7 @@ const userSchema = new Schema({
   tokens: Array,
   preferences: {
     fontSize: { type: Number, default: 18 },
+    lineNumbers: { type: Boolean, default: true },
     indentationAmount: { type: Number, default: 2 },
     isTabIndent: { type: Boolean, default: false },
     autosave: { type: Boolean, default: true },

@@ -17,6 +17,7 @@ class Preferences extends React.Component {
     this.handleUpdateAutosave = this.handleUpdateAutosave.bind(this);
     this.handleUpdateLinewrap = this.handleUpdateLinewrap.bind(this);
     this.handleLintWarning = this.handleLintWarning.bind(this);
+    this.handleLineNumbers = this.handleLineNumbers.bind(this);
     this.onFontInputChange = this.onFontInputChange.bind(this);
     this.onFontInputSubmit = this.onFontInputSubmit.bind(this);
     this.increaseFontSize = this.increaseFontSize.bind(this);
@@ -80,6 +81,11 @@ class Preferences extends React.Component {
   handleLintWarning(event) {
     const value = event.target.value === 'true';
     this.props.setLintWarning(value);
+  }
+
+  handleLineNumbers(event) {
+    const value = event.target.value === 'true';
+    this.props.setLineNumbers(value);
   }
 
   render() {
@@ -226,6 +232,33 @@ class Preferences extends React.Component {
           </TabPanel>
           <TabPanel>
             <div className="preference">
+              <h4 className="preference__title">Line numbers</h4>
+              <div className="preference__options">
+                <input
+                  type="radio"
+                  onChange={() => this.props.setLineNumbers(true)}
+                  aria-label="line numbers on"
+                  name="line numbers"
+                  id="line-numbers-on"
+                  className="preference__radio-button"
+                  value="On"
+                  checked={this.props.lineNumbers}
+                />
+                <label htmlFor="line-numbers-on" className="preference__option">On</label>
+                <input
+                  type="radio"
+                  onChange={() => this.props.setLineNumbers(false)}
+                  aria-label="line numbers off"
+                  name="line numbers"
+                  id="line-numbers-off"
+                  className="preference__radio-button"
+                  value="Off"
+                  checked={!this.props.lineNumbers}
+                />
+                <label htmlFor="line-numbers-off" className="preference__option">Off</label>
+              </div>
+            </div>
+            <div className="preference">
               <h4 className="preference__title">Lint warning sound</h4>
               <div className="preference__options">
                 <input
@@ -311,9 +344,11 @@ class Preferences extends React.Component {
 
 Preferences.propTypes = {
   fontSize: PropTypes.number.isRequired,
+  lineNumbers: PropTypes.bool.isRequired,
   setFontSize: PropTypes.func.isRequired,
   autosave: PropTypes.bool.isRequired,
   linewrap: PropTypes.bool.isRequired,
+  setLineNumbers: PropTypes.func.isRequired,
   setAutosave: PropTypes.func.isRequired,
   setLinewrap: PropTypes.func.isRequired,
   textOutput: PropTypes.bool.isRequired,
