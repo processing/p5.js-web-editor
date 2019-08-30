@@ -33,6 +33,8 @@ class AccountView extends React.Component {
   }
 
   render() {
+    const accessTokensUIEnabled = window.process.env.UI_ACCESS_TOKEN_ENABLED;
+
     return (
       <div className="user">
         <Helmet>
@@ -50,7 +52,7 @@ class AccountView extends React.Component {
               <TabList>
                 <div className="tabs__titles">
                   <Tab><h4 className="tabs__title">Account</h4></Tab>
-                  <Tab><h4 className="tabs__title">Access Tokens</h4></Tab>
+                  {accessTokensUIEnabled && <Tab><h4 className="tabs__title">Access Tokens</h4></Tab>}
                 </div>
               </TabList>
               <TabPanel>
