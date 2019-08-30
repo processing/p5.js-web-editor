@@ -16,6 +16,7 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import config from '../webpack/config.dev';
 
 // Import all required modules
+import api from './routes/api.routes';
 import users from './routes/user.routes';
 import sessions from './routes/session.routes';
 import projects from './routes/project.routes';
@@ -51,7 +52,7 @@ const corsOriginsWhitelist = [
 // Run Webpack dev server in development mode
 if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(config);
-  app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config[0].output.publicPath }));
+  app.use(webpackDevMiddleware(compiler, { lazy: false, noInfo: true, publicPath: config[0].output.publicPath }));
   app.use(webpackHotMiddleware(compiler));
 
   corsOriginsWhitelist.push(/localhost/);
@@ -95,6 +96,7 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use('/api/v1', requestsOfTypeJSON(), api);
 app.use('/api', requestsOfTypeJSON(), users);
 app.use('/api', requestsOfTypeJSON(), sessions);
 app.use('/api', requestsOfTypeJSON(), files);
