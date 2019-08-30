@@ -7,7 +7,7 @@ export const fileExtensionsArray = ['gif', 'jpg', 'jpeg', 'png', 'bmp', 'wav', '
 
 export const mimeTypes = `image/*,audio/*,text/javascript,text/html,text/css,
 application/json,application/x-font-ttf,application/x-font-truetype,text/plain,
-text/csv,.obj,video/webm,video/ogg,video/quicktime,video/mp4`;
+text/csv,.obj,.bin,video/webm,video/ogg,video/quicktime,video/mp4`;
 
 export const fileExtensions = fileExtensionsArray.map(ext => `.${ext}`).join(',');
 export const fileExtensionsAndMimeTypes = `${fileExtensions},${mimeTypes}`;
