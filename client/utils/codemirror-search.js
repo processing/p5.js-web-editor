@@ -73,6 +73,8 @@ export default function(CodeMirror) {
       CodeMirror.on(searchField, "keyup", function (e) {
         if (e.keyCode !== 13 && searchField.value.length > 1) { // not enter and more than 1 character to search
           startSearch(cm, getSearchState(cm), searchField.value);
+        } else {
+          cm.display.wrapper.querySelector('.CodeMirror-search-results').innerText = '';
         }
       });
 
@@ -260,6 +262,7 @@ export default function(CodeMirror) {
         </button>
       </div>
       <div class="CodeMirror-search-nav">
+        <button class="CodeMirror-search-results"></button>
         <button
           title="Previous"
           aria-label="Previous"
@@ -292,6 +295,10 @@ export default function(CodeMirror) {
       if (state.annotate) { state.annotate.clear(); state.annotate = null; }
       state.annotate = cm.showMatchesOnScrollbar(state.query,  state.caseInsensitive);
     }
+    var num_match = cm.state.search.annotate.matches.length;
+    var text_match = 
+      'Results: ' + num_match;
+    cm.display.wrapper.querySelector('.CodeMirror-search-results').innerText = text_match;
   }
 
   function doSearch(cm, rev, persistent, immediate, ignoreQuery) {
