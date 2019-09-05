@@ -6,6 +6,7 @@ import { Link } from 'react-router';
 import InlineSVG from 'react-inlinesvg';
 import classNames from 'classnames';
 import * as IDEActions from '../modules/IDE/actions/ide';
+import * as toastActions from '../modules/IDE/actions/toast';
 import * as projectActions from '../modules/IDE/actions/project';
 import { setAllAccessibleOutput } from '../modules/IDE/actions/preferences';
 import { logoutUser } from '../modules/User/actions';
@@ -92,8 +93,12 @@ class Nav extends React.PureComponent {
 
   handleNew() {
     if (!this.props.unsavedChanges) {
+      this.props.showToast(1500);
+      this.props.setToastText('Opened new sketch.');
       this.props.newProject();
     } else if (this.props.warnIfUnsavedChanges()) {
+      this.props.showToast(1500);
+      this.props.setToastText('Opened new sketch.');
       this.props.newProject();
     }
     this.setDropdown('none');
@@ -624,6 +629,8 @@ class Nav extends React.PureComponent {
 
 Nav.propTypes = {
   newProject: PropTypes.func.isRequired,
+  showToast: PropTypes.func.isRequired,
+  setToastText: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
   autosaveProject: PropTypes.func.isRequired,
   exportProjectAsZip: PropTypes.func.isRequired,
@@ -678,6 +685,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
   ...IDEActions,
   ...projectActions,
+  ...toastActions,
   logoutUser,
   setAllAccessibleOutput
 };
