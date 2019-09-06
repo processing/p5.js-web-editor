@@ -64,9 +64,8 @@ export function validateAndLoginUser(previousPath, formProps, dispatch) {
         browserHistory.push(previousPath);
         resolve();
       })
-      .catch((response) => {
-        reject({ password: response.data.message, _error: 'Login failed!' }); // eslint-disable-line
-      });
+      .catch(error =>
+        reject({ password: error.response.data.message, _error: 'Login failed!' })); // eslint-disable-line
   });
 }
 
