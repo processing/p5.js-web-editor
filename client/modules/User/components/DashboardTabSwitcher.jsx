@@ -27,16 +27,14 @@ Tab.propTypes = {
   to: PropTypes.string.isRequired,
 };
 
-const DashboardTabSwitcher = ({ currentTab, isOwner, username }) => {
-  return (
-    <ul className="dashboard-header__switcher">
-      <div className="dashboard-header__tabs">
-        <Tab to={`/${username}/sketches`} isSelected={currentTab === 'sketches'}>Sketches</Tab>
-        {isOwner && <Tab to={`/${username}/assets`} isSelected={currentTab === 'assets'}>Assets</Tab>}
-      </div>
-    </ul>
-  );
-};
+const DashboardTabSwitcher = ({ currentTab, isOwner, username }) => (
+  <ul className="dashboard-header__switcher">
+    <div className="dashboard-header__tabs">
+      <Tab to={`/${username}/sketches`} isSelected={currentTab === 'sketches'}>Sketches</Tab>
+      {isOwner && <Tab to={`/${username}/assets`} isSelected={currentTab === 'assets'}>Assets</Tab>}
+    </div>
+  </ul>
+);
 
 DashboardTabSwitcher.propTypes = {
   currentTab: PropTypes.string.isRequired,

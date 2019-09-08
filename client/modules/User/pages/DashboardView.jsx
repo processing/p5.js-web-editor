@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { browserHistory, Link } from 'react-router';
+import { browserHistory } from 'react-router';
 import { Helmet } from 'react-helmet';
 import { updateSettings, initiateVerification, createApiKey, removeApiKey } from '../actions';
 import NavBasic from '../../../components/NavBasic';
@@ -80,7 +80,7 @@ class DashboardView extends React.Component {
 
             <DashboardTabSwitcher currentTab={currentTab} isOwner={isOwner} username={username} />
           </div>
-          
+
           <div className="dashboard-content">
             {
               currentTab === TabKey.sketches ? <SketchList username={username} /> : <AssetList username={username} />

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
@@ -8,7 +7,7 @@ const RedirectToUser = ({ username, url = '/:username/sketches' }) => {
     if (username == null) {
       return;
     }
-  
+
     browserHistory.replace(url.replace(':username', username));
   }, [username]);
 
@@ -23,6 +22,6 @@ function mapStateToProps(state) {
 
 const ConnectedRedirectToUser = connect(mapStateToProps)(RedirectToUser);
 
-const createRedirectWithUsername = (url) => (props) => <ConnectedRedirectToUser {...props} url={url} />;
+const createRedirectWithUsername = url => props => <ConnectedRedirectToUser {...props} url={url} />;
 
 export default createRedirectWithUsername;

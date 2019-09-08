@@ -39,7 +39,10 @@ class App extends React.Component {
 App.propTypes = {
   children: PropTypes.element,
   location: PropTypes.shape({
-    pathname: PropTypes.string
+    pathname: PropTypes.string,
+    state: PropTypes.shape({
+      skipSavingPath: PropTypes.bool,
+    }),
   }).isRequired,
   setPreviousPath: PropTypes.func.isRequired,
 };

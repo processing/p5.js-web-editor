@@ -1,6 +1,5 @@
 import { browserHistory } from 'react-router';
 import axios from 'axios';
-import crypto from 'crypto';
 import * as ActionTypes from '../../constants';
 import { showErrorModal, justOpenedProject } from '../IDE/actions/ide';
 import { showToast, setToastText } from '../IDE/actions/toast';
