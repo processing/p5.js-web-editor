@@ -7,15 +7,14 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import classNames from 'classnames';
-import * as ProjectActions from '../actions/project';
-import * as ProjectsActions from '../actions/projects';
-import * as CollectionsActions from '../actions/collections';
-import * as ToastActions from '../actions/toast';
-import * as SortingActions from '../actions/sorting';
-import * as IdeActions from '../actions/ide';
-import { getCollection } from '../selectors/collections';
+import * as ProjectActions from '../../IDE/actions/project';
+import * as ProjectsActions from '../../IDE/actions/projects';
+import * as CollectionsActions from '../../IDE/actions/collections';
+import * as ToastActions from '../../IDE/actions/toast';
+import * as SortingActions from '../../IDE/actions/sorting';
+import * as IdeActions from '../../IDE/actions/ide';
+import { getCollection } from '../../IDE/selectors/collections';
 import Loader from '../../App/components/loader';
-import Overlay from '../../App/components/Overlay';
 
 const arrowUp = require('../../../images/sort-arrow-up.svg');
 const arrowDown = require('../../../images/sort-arrow-down.svg');
@@ -259,9 +258,13 @@ class Collection extends React.Component {
   }
 
   _renderCollectionMetadata() {
+    const { name, description, items, owner } = this.props.collection;
+
     return (
-      <div className="collections-metadata">
-        <p>{this.props.collection.description}</p>
+      <div className="collection-metadata">
+        <h2 className="collection-metadata__name">{name}</h2>
+        <p className="collection-metadata__user">{items.length} sketches collected by {owner.username}</p>
+        <p className="collection-metadata__description">{description}</p>
       </div>
     );
   }
@@ -299,15 +302,11 @@ class Collection extends React.Component {
     const title = this.hasCollection() ? this.getCollectionName() : null;
 
     return (
-      <Overlay
-        ariaLabel="collection"
-        title={title}
-        previousPath={this.props.previousPath}
-      >
-        <div className="sketches-table-container">
-          <Helmet>
-            <title>{this.getTitle()}</title>
-          </Helmet>
+      <section className="collection-container">
+        <Helmet>
+          <title>{this.getTitle()}</title>
+        </Helmet>
+        <div className="">
           {this._renderLoader()}
           {this.hasCollection() && this._renderCollectionMetadata()}
           {this._renderEmptyTable()}
@@ -332,7 +331,7 @@ class Collection extends React.Component {
               </tbody>
             </table>}
         </div>
-      </Overlay>
+      </section>
     );
   }
 }
@@ -343,7 +342,10 @@ Collection.propTypes = {
     authenticated: PropTypes.bool.isRequired
   }).isRequired,
   getCollections: PropTypes.func.isRequired,
-  collection: PropTypes.shape({}).isRequired, // TODO
+  collection: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string,
+  }).isRequired,
   username: PropTypes.string,
   loading: PropTypes.bool.isRequired,
   toggleDirectionForField: PropTypes.func.isRequired,
