@@ -41,7 +41,10 @@ class CollectionCreate extends React.Component {
 
     this.props.createCollection(this.state.collection)
       .then(({ id, owner }) => {
-        browserHistory.replace(`/${owner.username}/collections/${id}`);
+        const pathname = `/${owner.username}/collections/${id}`;
+        const location = { pathname, state: { skipSavingPath: true } };
+
+        browserHistory.replace(location);
       })
       .catch((error) => {
         console.error('Error creating collection', error);
@@ -58,42 +61,49 @@ class CollectionCreate extends React.Component {
     const invalid = name === '' || name == null;
 
     return (
-      <div className="sketches-table-container">
+      <section className="dashboard-header">
         <Helmet>
           <title>{this.getTitle()}</title>
         </Helmet>
 
-        <form className="form" onSubmit={this.handleCreateCollection}>
-          {creationError && <span className="form-error">Couldn&apos;t create collection</span>}
-          <p className="form__field">
-            <label htmlFor="name" className="form__label">Collection name</label>
-            <input
-              className="form__input"
-              aria-label="name"
-              type="text"
-              id="name"
-              value={name}
-              placeholder={generatedCollectionName}
-              onChange={this.handleTextChange('name')}
-            />
-            {invalid && <span className="form-error">Collection name is required</span>}
-          </p>
-          <p className="form__field">
-            <label htmlFor="description" className="form__label">Description (optional)</label>
-            <textarea
-              className="form__input form__input-flexible-height"
-              aria-label="description"
-              type="text"
-              id="description"
-              value={description}
-              onChange={this.handleTextChange('description')}
-              placeholder="My fave sketches"
-              rows="4"
-            />
-          </p>
-          <input type="submit" disabled={invalid} value="Create collection" aria-label="create collection" />
-        </form>
-      </div>
+        <div className="dashboard-header__header">
+          <h2 className="dashboard-header__header__title">Create collection</h2>
+        </div>
+        <div className="dashboard-content">
+          <div className="sketches-table-container">
+            <form className="form" onSubmit={this.handleCreateCollection}>
+              {creationError && <span className="form-error">Couldn&apos;t create collection</span>}
+              <p className="form__field">
+                <label htmlFor="name" className="form__label">Collection name</label>
+                <input
+                  className="form__input"
+                  aria-label="name"
+                  type="text"
+                  id="name"
+                  value={name}
+                  placeholder={generatedCollectionName}
+                  onChange={this.handleTextChange('name')}
+                />
+                {invalid && <span className="form-error">Collection name is required</span>}
+              </p>
+              <p className="form__field">
+                <label htmlFor="description" className="form__label">Description (optional)</label>
+                <textarea
+                  className="form__input form__input-flexible-height"
+                  aria-label="description"
+                  type="text"
+                  id="description"
+                  value={description}
+                  onChange={this.handleTextChange('description')}
+                  placeholder="My fave sketches"
+                  rows="4"
+                />
+              </p>
+              <input type="submit" disabled={invalid} value="Create collection" aria-label="create collection" />
+            </form>
+          </div>
+        </div>
+      </section>
     );
   }
 }

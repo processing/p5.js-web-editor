@@ -1,0 +1,21 @@
+.collection-container {
+
+}
+
+.collection-metadata {
+  margin: 0px #{56 / $base-font-size}rem;
+  padding: #{24 / $base-font-size}rem #{10 / $base-font-size}rem;
+
+  @include themify() {
+    background-color: getThemifyVariable('modal-background-color');
+    border-bottom: 1px dotted getThemifyVariable('modal-border-color');
+  }
+}
+
+.collection-metadata__user {
+  padding-top: #{12 / $base-font-size}rem;
+}
+
+.collection-metadata__description {
+  padding-top: #{24 / $base-font-size}rem;
+}

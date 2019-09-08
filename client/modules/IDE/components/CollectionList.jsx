@@ -187,7 +187,7 @@ class CollectionListRowBase extends React.Component {
         key={collection.id}
       >
         <th scope="row">
-          <Link to={`/${username}/collections/${collection.id}`}>
+          <Link to={{ pathname: `/${username}/collections/${collection.id}`, state: { skipSavingPath: true } }}>
             {renameOpen ? '' : collection.name}
           </Link>
           {renameOpen

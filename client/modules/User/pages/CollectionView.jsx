@@ -7,6 +7,7 @@ import { updateSettings, initiateVerification, createApiKey, removeApiKey } from
 import NavBasic from '../../../components/NavBasic';
 
 import CollectionCreate from '../components/CollectionCreate';
+import Collection from '../components/Collection';
 
 class CollectionView extends React.Component {
   static defaultProps = {
@@ -61,7 +62,12 @@ class CollectionView extends React.Component {
       return <CollectionCreate />;
     }
 
-    return 'collection page';
+    return (
+      <Collection
+        collectionId={this.props.params.collection_id}
+        username={this.props.params.username}
+      />
+    );
   }
 
   render() {
@@ -69,15 +75,7 @@ class CollectionView extends React.Component {
       <div className="dashboard">
         <NavBasic onBack={this.closeAccountPage} />
 
-        <section className="dashboard-header">
-          <div className="dashboard-header__header">
-            <h2 className="dashboard-header__header__title">{this.pageTitle()}</h2>
-          </div>
-
-          <div className="dashboard-content">
-            {this.renderContent()}
-          </div>
-        </section>
+        {this.renderContent()}
       </div>
     );
   }
@@ -102,6 +100,7 @@ CollectionView.propTypes = {
     pathname: PropTypes.string.isRequired,
   }).isRequired,
   params: PropTypes.shape({
+    collection_id: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,
   }).isRequired,
   previousPath: PropTypes.string.isRequired,

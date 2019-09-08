@@ -7,6 +7,10 @@
   flex-direction:column;
 }
 
+.dashboard-header--no-vertical-padding {
+  padding: 0 66px;
+}
+
 .dashboard-header__tabs {
   display: flex;
   padding-top: #{24 / $base-font-size}rem;
