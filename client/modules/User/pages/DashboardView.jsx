@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
-import { Helmet } from 'react-helmet';
+
 import { updateSettings, initiateVerification, createApiKey, removeApiKey } from '../actions';
 import NavBasic from '../../../components/NavBasic';
 
@@ -68,10 +68,6 @@ class DashboardView extends React.Component {
 
     return (
       <div className="dashboard">
-        <Helmet>
-          <title>p5.js Web Editor | Account</title>
-        </Helmet>
-
         <NavBasic onBack={this.closeAccountPage} />
 
         <section className="dashboard-header">
