@@ -113,10 +113,11 @@ app.get(
   passport.authenticate('basic', { session: false }), (req, res) => res.json(req.user)
 );
 
-app.use(assetRoutes);
 // this is supposed to be TEMPORARY -- until i figure out
 // isomorphic rendering
 app.use('/', serverRoutes);
+
+app.use(assetRoutes);
 
 app.use('/', embedRoutes);
 app.get('/auth/github', passport.authenticate('github'));
