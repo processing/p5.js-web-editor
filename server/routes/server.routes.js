@@ -27,8 +27,20 @@ router.get('/projects/:project_id', (req, res) => {
   ));
 });
 
+router.get('/:username/sketches/:project_id/add-to-collection', (req, res) => {
+  projectForUserExists(req.params.username, req.params.project_id, exists => (
+    exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
+  ));
+});
+
 router.get('/:username/sketches/:project_id', (req, res) => {
   projectForUserExists(req.params.username, req.params.project_id, exists => (
+    exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
+  ));
+});
+
+router.get('/:username/sketches', (req, res) => {
+  userExists(req.params.username, exists => (
     exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
   ));
 });
@@ -106,12 +118,6 @@ router.get('/feedback', (req, res) => {
   res.send(renderIndex());
 });
 
-router.get('/:username/sketches', (req, res) => {
-  userExists(req.params.username, exists => (
-    exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
-  ));
-});
-
 router.get('/:username/collections/create', (req, res) => {
   userExists(req.params.username, (exists) => {
     const isLoggedInUser = req.user && req.user.username === req.params.username;
@@ -124,12 +130,6 @@ router.get('/:username/collections/create', (req, res) => {
 
 router.get('/:username/collections/create', (req, res) => {
   userExists(req.params.username, exists => (
-    exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
-  ));
-});
-
-router.get('/:username/sketches/:project_id/add-to-collection', (req, res) => {
-  projectForUserExists(req.params.username, req.params.project_id, exists => (
     exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
   ));
 });
