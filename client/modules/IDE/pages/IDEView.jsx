@@ -30,6 +30,7 @@ import * as ConsoleActions from '../actions/console';
 import { getHTMLFile } from '../reducers/files';
 import Overlay from '../../App/components/Overlay';
 import About from '../components/About';
+import CollectionList from '../components/CollectionList';
 import Feedback from '../components/Feedback';
 
 class IDEView extends React.Component {
@@ -379,6 +380,20 @@ class IDEView extends React.Component {
             ariaLabel="submit-feedback"
           >
             <Feedback previousPath={this.props.ide.previousPath} />
+          </Overlay>
+        }
+        {this.props.location.pathname.match(/add-to-collection$/) &&
+          <Overlay
+            ariaLabel="add to collection"
+            title="Add sketch to collection"
+            previousPath={this.props.ide.previousPath}
+          >
+            <CollectionList
+              addMode
+              projectId={this.props.params.project_id}
+              username={this.props.params.username}
+              user={this.props.user}
+            />
           </Overlay>
         }
         {this.props.ide.shareModalVisible &&
