@@ -1,9 +1,12 @@
 import axios from 'axios';
 import * as ActionTypes from '../../../constants';
 import { startLoader, stopLoader } from './loader';
+import { setToastText, showToast } from './toast';
 
 const __process = (typeof global !== 'undefined' ? global : window).process;
 const ROOT_URL = __process.env.API_URL;
+
+const TOAST_DISPLAY_TIME_MS = 1500;
 
 // eslint-disable-next-line
 export function getCollections(username) {
@@ -44,6 +47,10 @@ export function createCollection(collection) {
         });
         dispatch(stopLoader());
 
+        const collectionName = response.data.name;
+        dispatch(setToastText(`Created "${collectionName}"`));
+        dispatch(showToast(TOAST_DISPLAY_TIME_MS));
+
         return response.data;
       })
       .catch((response) => {
@@ -70,6 +77,11 @@ export function addToCollection(collectionId, projectId) {
         });
         dispatch(stopLoader());
 
+        const collectionName = response.data.name;
+
+        dispatch(setToastText(`Added to "${collectionName}`));
+        dispatch(showToast(TOAST_DISPLAY_TIME_MS));
+
         return response.data;
       })
       .catch((response) => {
@@ -95,6 +107,11 @@ export function removeFromCollection(collectionId, projectId) {
           payload: response.data
         });
         dispatch(stopLoader());
+
+        const collectionName = response.data.name;
+
+        dispatch(setToastText(`Removed from "${collectionName}`));
+        dispatch(showToast(TOAST_DISPLAY_TIME_MS));
 
         return response.data;
       })
