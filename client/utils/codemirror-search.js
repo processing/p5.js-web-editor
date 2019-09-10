@@ -73,6 +73,8 @@ export default function(CodeMirror) {
       CodeMirror.on(searchField, "keyup", function (e) {
         if (e.keyCode !== 13 && searchField.value.length > 1) { // not enter and more than 1 character to search
           startSearch(cm, getSearchState(cm), searchField.value);
+        } else if (searchField.value.length <= 1) {
+          cm.display.wrapper.querySelector('.CodeMirror-search-results').innerText = '';
         }
       });
 
@@ -260,6 +262,7 @@ export default function(CodeMirror) {
         </button>
       </div>
       <div class="CodeMirror-search-nav">
+        <button class="CodeMirror-search-results"></button>
         <button
           title="Previous"
           aria-label="Previous"
@@ -291,6 +294,9 @@ export default function(CodeMirror) {
     if (cm.showMatchesOnScrollbar) {
       if (state.annotate) { state.annotate.clear(); state.annotate = null; }
       state.annotate = cm.showMatchesOnScrollbar(state.query,  state.caseInsensitive);
+    }
+    if (originalQuery) {
+      return findNext(cm, false);
     }
   }
 
@@ -350,11 +356,19 @@ export default function(CodeMirror) {
     var cursor = getSearchCursor(cm, state.query, rev ? state.posFrom : state.posTo);
     if (!cursor.find(rev)) {
       cursor = getSearchCursor(cm, state.query, rev ? CodeMirror.Pos(cm.lastLine()) : CodeMirror.Pos(cm.firstLine(), 0));
-      if (!cursor.find(rev)) return;
+      if (!cursor.find(rev)) {
+        cm.display.wrapper.querySelector('.CodeMirror-search-results').innerText = '';
+        return;
+      }
     }
     cm.setSelection(cursor.from(), cursor.to());
     cm.scrollIntoView({from: cursor.from(), to: cursor.to()}, 60);
     state.posFrom = cursor.from(); state.posTo = cursor.to();
+    var num_match = cm.state.search.annotate.matches.length;
+    var next = cm.state.search.annotate.matches
+      .findIndex(s => s.from.ch === cursor.from().ch && s.from.line === cursor.from().line) + 1;
+    var text_match = next + '/' + num_match;
+    cm.display.wrapper.querySelector('.CodeMirror-search-results').innerText = text_match;
     if (callback) callback(cursor.from(), cursor.to())
   });}
 
