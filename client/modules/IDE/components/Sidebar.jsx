@@ -110,7 +110,7 @@ class Sidebar extends React.Component {
                   onBlur={this.onBlurComponent}
                   onFocus={this.onFocusComponent}
                 >
-                  Add file
+                  Create file
                 </button>
               </li>
               <li>
@@ -123,7 +123,7 @@ class Sidebar extends React.Component {
                   onBlur={this.onBlurComponent}
                   onFocus={this.onFocusComponent}
                 >
-                  Add file
+                  Upload file
                 </button>
               </li>
             </ul>

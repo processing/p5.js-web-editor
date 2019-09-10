@@ -239,6 +239,8 @@ class IDEView extends React.Component {
               newFolder={this.props.newFolder}
               user={this.props.user}
               owner={this.props.project.owner}
+              openUploadFileModal={this.props.openUploadFileModal}
+              closeUploadFileModal={this.props.closeUploadFileModal}
             />
             <SplitPane
               split="vertical"
@@ -578,6 +580,7 @@ IDEView.propTypes = {
   showRuntimeErrorWarning: PropTypes.func.isRequired,
   hideRuntimeErrorWarning: PropTypes.func.isRequired,
   startSketch: PropTypes.func.isRequired,
+  openUploadFileModal: PropTypes.func.isRequired,
   closeUploadFileModal: PropTypes.func.isRequired
 };
 
