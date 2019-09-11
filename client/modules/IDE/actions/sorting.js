@@ -25,3 +25,14 @@ export function toggleDirectionForField(field) {
     field
   };
 }
+
+export function setSearchTerm(searchTerm) {
+  return {
+    type: ActionTypes.SET_SEARCH_TERM,
+    query: searchTerm
+  };
+}
+
+export function resetSearchTerm() {
+  return setSearchTerm('');
+}

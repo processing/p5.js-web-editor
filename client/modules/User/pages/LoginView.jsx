@@ -83,9 +83,9 @@ function mapDispatchToProps() {
 
 LoginView.propTypes = {
   previousPath: PropTypes.string.isRequired,
-  user: {
+  user: PropTypes.shape({
     authenticated: PropTypes.bool
-  }
+  })
 };
 
 LoginView.defaultProps = {

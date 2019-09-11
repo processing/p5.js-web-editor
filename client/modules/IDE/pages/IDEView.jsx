@@ -29,6 +29,9 @@ import * as ToastActions from '../actions/toast';
 import * as ConsoleActions from '../actions/console';
 import { getHTMLFile } from '../reducers/files';
 import Overlay from '../../App/components/Overlay';
+import SketchList from '../components/SketchList';
+import Searchbar from '../components/Searchbar';
+import AssetList from '../components/AssetList';
 import About from '../components/About';
 import Feedback from '../components/Feedback';
 
@@ -203,6 +206,8 @@ class IDEView extends React.Component {
               setFontSize={this.props.setFontSize}
               autosave={this.props.preferences.autosave}
               linewrap={this.props.preferences.linewrap}
+              lineNumbers={this.props.preferences.lineNumbers}
+              setLineNumbers={this.props.setLineNumbers}
               setAutosave={this.props.setAutosave}
               setLinewrap={this.props.setLinewrap}
               lintWarning={this.props.preferences.lintWarning}
@@ -268,6 +273,7 @@ class IDEView extends React.Component {
                   file={this.props.selectedFile}
                   updateFileContent={this.props.updateFileContent}
                   fontSize={this.props.preferences.fontSize}
+                  lineNumbers={this.props.preferences.lineNumbers}
                   files={this.props.files}
                   editorOptionsVisible={this.props.ide.editorOptionsVisible}
                   showEditorOptions={this.props.showEditorOptions}
@@ -362,6 +368,31 @@ class IDEView extends React.Component {
             closeModal={this.props.closeNewFolderModal}
             createFolder={this.props.createFolder}
           />
+        }
+        { this.props.location.pathname.match(/sketches$/) &&
+          <Overlay
+            ariaLabel="project list"
+            title="Open a Sketch"
+            previousPath={this.props.ide.previousPath}
+          >
+            <Searchbar />
+            <SketchList
+              username={this.props.params.username}
+              user={this.props.user}
+            />
+          </Overlay>
+        }
+        { this.props.location.pathname.match(/assets$/) &&
+          <Overlay
+            title="Assets"
+            ariaLabel="asset list"
+            previousPath={this.props.ide.previousPath}
+          >
+            <AssetList
+              username={this.props.params.username}
+              user={this.props.user}
+            />
+          </Overlay>
         }
         { this.props.location.pathname === '/about' &&
           <Overlay
@@ -490,6 +521,7 @@ IDEView.propTypes = {
     fontSize: PropTypes.number.isRequired,
     autosave: PropTypes.bool.isRequired,
     linewrap: PropTypes.bool.isRequired,
+    lineNumbers: PropTypes.bool.isRequired,
     lintWarning: PropTypes.bool.isRequired,
     textOutput: PropTypes.bool.isRequired,
     gridOutput: PropTypes.bool.isRequired,
@@ -500,6 +532,7 @@ IDEView.propTypes = {
   closePreferences: PropTypes.func.isRequired,
   setFontSize: PropTypes.func.isRequired,
   setAutosave: PropTypes.func.isRequired,
+  setLineNumbers: PropTypes.func.isRequired,
   setLinewrap: PropTypes.func.isRequired,
   setLintWarning: PropTypes.func.isRequired,
   setTextOutput: PropTypes.func.isRequired,

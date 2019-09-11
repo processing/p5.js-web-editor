@@ -80,7 +80,7 @@ class Editor extends React.Component {
     this.widgets = [];
     this._cm = CodeMirror(this.codemirrorContainer, { // eslint-disable-line
       theme: `p5-${this.props.theme}`,
-      lineNumbers: true,
+      lineNumbers: this.props.lineNumbers,
       styleActiveLine: true,
       inputStyle: 'contenteditable',
       lineWrapping: this.props.linewrap,
@@ -181,6 +181,9 @@ class Editor extends React.Component {
     if (this.props.theme !== prevProps.theme) {
       this._cm.setOption('theme', `p5-${this.props.theme}`);
     }
+    if (this.props.lineNumbers !== prevProps.lineNumbers) {
+      this._cm.setOption('lineNumbers', this.props.lineNumbers);
+    }
 
     if (prevProps.consoleEvents !== this.props.consoleEvents) {
       this.props.showRuntimeErrorWarning();
@@ -188,7 +191,7 @@ class Editor extends React.Component {
     for (let i = 0; i < this._cm.lineCount(); i += 1) {
       this._cm.removeLineClass(i, 'background', 'line-runtime-error');
     }
-    if (this.props.runtimeErrorWarningVisible && this._cm.getDoc().modeOption === 'javascript') {
+    if (this.props.runtimeErrorWarningVisible) {
       this.props.consoleEvents.forEach((consoleEvent) => {
         if (consoleEvent.method === 'error') {
           if (consoleEvent.data &&
@@ -197,7 +200,11 @@ class Editor extends React.Component {
             consoleEvent.data[0].indexOf(')') > -1) {
             const n = consoleEvent.data[0].replace(')', '').split(' ');
             const lineNumber = parseInt(n[n.length - 1], 10) - 1;
-            if (!Number.isNaN(lineNumber)) {
+            const { source } = consoleEvent;
+            const fileName = this.props.file.name;
+            const errorFromJavaScriptFile = (`${source}.js` === fileName);
+            const errorFromIndexHTML = ((source === fileName) && (fileName === 'index.html'));
+            if (!Number.isNaN(lineNumber) && (errorFromJavaScriptFile || errorFromIndexHTML)) {
               this._cm.addLineClass(lineNumber, 'background', 'line-runtime-error');
             }
           }
@@ -338,6 +345,7 @@ class Editor extends React.Component {
 }
 
 Editor.propTypes = {
+  lineNumbers: PropTypes.bool.isRequired,
   lintWarning: PropTypes.bool.isRequired,
   linewrap: PropTypes.bool.isRequired,
   lintMessages: PropTypes.arrayOf(PropTypes.shape({
@@ -359,7 +367,7 @@ Editor.propTypes = {
     content: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     fileType: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired
+    url: PropTypes.string
   }).isRequired,
   editorOptionsVisible: PropTypes.bool.isRequired,
   showEditorOptions: PropTypes.func.isRequired,

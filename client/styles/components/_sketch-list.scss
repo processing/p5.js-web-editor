@@ -1,11 +1,12 @@
 .sketches-table-container {
-  overflow-y: scroll;
+  overflow-y: auto;
   max-width: 100%;
   min-height: #{400 / $base-font-size}rem;
 }
 
 .sketches-table {
   width: 100%;
+  
   max-height: 100%;
   border-spacing: 0;
   & .sketch-list__dropdown-column {
@@ -68,7 +69,6 @@
     color: getThemifyVariable('primary-text-color');
   }
 }
-
 
 .sketches-table thead {
   font-size: #{12 / $base-font-size}rem;

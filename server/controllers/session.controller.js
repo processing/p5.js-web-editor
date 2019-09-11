@@ -6,7 +6,7 @@ export function createSession(req, res, next) {
   passport.authenticate('local', (err, user) => { // eslint-disable-line consistent-return
     if (err) { return next(err); }
     if (!user) {
-      return res.status(401).send({ message: 'Invalid username or password.' });
+      return res.status(401).json({ message: 'Invalid username or password.' });
     }
 
     req.logIn(user, (innerErr) => {
