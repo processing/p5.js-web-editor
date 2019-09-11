@@ -28,6 +28,18 @@ class CollectionList extends React.Component {
     this.props.getCollections(this.props.username);
     this.props.resetSorting();
     this._renderFieldHeader = this._renderFieldHeader.bind(this);
+
+    this.state = {
+      hasLoadedData: false,
+    };
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.loading === true && this.props.loading === false) {
+      this.setState({
+        hasLoadedData: true,
+      });
+    }
   }
 
   getTitle() {
@@ -38,11 +50,11 @@ class CollectionList extends React.Component {
   }
 
   hasCollections() {
-    return !this.props.loading && this.props.collections.length > 0;
+    return (!this.props.loading || this.state.hasLoadedData) && this.props.collections.length > 0;
   }
 
   _renderLoader() {
-    if (this.props.loading) return <Loader />;
+    if (this.props.loading && !this.state.hasLoadedData) return <Loader />;
     return null;
   }
 
@@ -78,7 +90,7 @@ class CollectionList extends React.Component {
     const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
 
     return (
-      <div className="sketches-table-container">
+      <div className={`sketches-table-container ${this.props.addMode ? 'sketches-table-container--fixed' : ''}`}>
         <Helmet>
           <title>{this.getTitle()}</title>
         </Helmet>
