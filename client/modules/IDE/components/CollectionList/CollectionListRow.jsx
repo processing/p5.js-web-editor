@@ -216,8 +216,8 @@ class CollectionListRowBase extends React.Component {
         <th scope="row">
           {this.renderCollectionName()}
         </th>
-        <td>{format(new Date(collection.createdAt), 'MMM D, YYYY h:mm A')}</td>
-        <td>{format(new Date(collection.updatedAt), 'MMM D, YYYY h:mm A')}</td>
+        <td>{format(new Date(collection.createdAt), 'MMM D, YYYY')}</td>
+        <td>{format(new Date(collection.updatedAt), 'MMM D, YYYY')}</td>
         <td>{(collection.items || []).length}</td>
         <td className="sketch-list__dropdown-column">
           {this.renderActions()}
