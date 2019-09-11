@@ -2,13 +2,12 @@
   // flex: 1 1 0%;
   overflow-y: scroll;
   max-width: 100%;
-  width: #{1000 / $base-font-size}rem;
   min-height: #{400 / $base-font-size}rem;
 }
 
 .asset-table {
   width: 100%;
-  padding: #{10 / $base-font-size}rem #{20 / $base-font-size}rem;
+  padding: #{10 / $base-font-size}rem 0;
   max-height: 100%;
   border-spacing: 0;
   & .asset-list__delete-column {
@@ -53,4 +52,5 @@
 .asset-table__empty {
   text-align: center;
   font-size: #{16 / $base-font-size}rem;
+  padding: #{42 / $base-font-size}rem 0;
 }

@@ -4,7 +4,6 @@ import { reduxForm } from 'redux-form';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import InlineSVG from 'react-inlinesvg';
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
 import { updateSettings, initiateVerification, createApiKey, removeApiKey } from '../actions';
@@ -13,8 +12,6 @@ import { validateSettings } from '../../../utils/reduxFormUtils';
 import GithubButton from '../components/GithubButton';
 import APIKeyForm from '../components/APIKeyForm';
 import NavBasic from '../../../components/NavBasic';
-
-const exitUrl = require('../../../images/exit.svg');
 
 class AccountView extends React.Component {
   constructor(props) {

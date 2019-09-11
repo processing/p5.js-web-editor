@@ -43,7 +43,8 @@
   }
 }
 
-.nav__item:first-child {
+.nav__item:first-child,
+.nav__item--no-icon {
   padding-left: #{15 / $base-font-size}rem;
 }
 
@@ -57,6 +58,12 @@
       color: getThemifyVariable('nav-hover-color');
     }
   }
+  
+  & g, & path {
+    @include themify() {
+      fill: getThemifyVariable('nav-hover-color');
+    }
+  }
 
   .nav__item-header-triangle polygon {
     @include themify() {
@@ -67,8 +74,13 @@
 
 .nav__item-header:hover {
   @include themify() {
-      color: getThemifyVariable('nav-hover-color');
+    color: getThemifyVariable('nav-hover-color');
+  }
+  & g, & path {
+    @include themify() {
+      fill: getThemifyVariable('nav-hover-color');
     }
+  }
 }
 
 .nav__item-header-triangle {
@@ -179,4 +191,18 @@
       color: getThemifyVariable('button-hover-color');
     }
   }
+}
+
+.nav__back-icon {
+  & g, & path {
+    opacity: 1;
+    @include themify() {
+      fill: getThemifyVariable('inactive-text-color');
+    }
+  }
+  margin-right: #{5 / $base-font-size}rem;
+}
+
+.nav__back-link {
+  display: flex;
 }
