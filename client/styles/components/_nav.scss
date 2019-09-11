@@ -43,7 +43,8 @@
   }
 }
 
-.nav__item:first-child {
+.nav__item:first-child,
+.nav__item--no-icon {
   padding-left: #{15 / $base-font-size}rem;
 }
 

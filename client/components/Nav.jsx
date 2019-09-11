@@ -217,6 +217,21 @@ class Nav extends React.PureComponent {
     this.timer = setTimeout(this.setDropdown.bind(this, 'none'), 10);
   }
 
+  renderDashboardMenu(navDropdownState) {
+    return (
+      <ul className="nav__items-left" title="project-menu">
+        <li className="nav__item-logo">
+          <InlineSVG src={logoUrl} alt="p5.js logo" className="svg__logo" />
+        </li>
+        <li className="nav__item nav__item--no-icon">
+          <Link to="/">
+            <span className="nav__item-header">Editor</span>
+          </Link>
+        </li>
+      </ul>
+    );
+  }
+
   renderProjectMenu(navDropdownState) {
     return (
       <ul className="nav__items-left" title="project-menu">
@@ -607,6 +622,16 @@ class Nav extends React.PureComponent {
     return null;
   }
 
+  renderLeftLayout(navDropdownState) {
+    switch (this.props.layout) {
+      case 'dashboard':
+        return this.renderDashboardMenu(navDropdownState);
+      case 'project':
+      default:
+        return this.renderProjectMenu(navDropdownState);
+    }
+  }
+
   render() {
     const navDropdownState = {
       file: classNames({
@@ -630,10 +655,10 @@ class Nav extends React.PureComponent {
         'nav__item--open': this.state.dropdownOpen === 'account'
       })
     };
-  
+
     return (
       <nav className="nav" title="main-navigation" ref={(node) => { this.node = node; }}>
-        {this.renderProjectMenu(navDropdownState)}
+        {this.renderLeftLayout(navDropdownState)}
         {this.renderUserMenu(navDropdownState)}
         {/*
         <div className="nav__announce">
@@ -685,7 +710,8 @@ Nav.propTypes = {
   stopSketch: PropTypes.func.isRequired,
   setAllAccessibleOutput: PropTypes.func.isRequired,
   newFile: PropTypes.func.isRequired,
-  newFolder: PropTypes.func.isRequired
+  newFolder: PropTypes.func.isRequired,
+  layout: PropTypes.oneOf(['dashboard', 'project'])
 };
 
 Nav.defaultProps = {
@@ -693,7 +719,8 @@ Nav.defaultProps = {
     id: undefined,
     owner: undefined
   },
-  cmController: {}
+  cmController: {},
+  layout: 'project'
 };
 
 function mapStateToProps(state) {

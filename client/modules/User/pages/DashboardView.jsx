@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 
 import { updateSettings, initiateVerification, createApiKey, removeApiKey } from '../actions';
-import NavBasic from '../../../components/NavBasic';
+import Nav from '../../../components/Nav';
 
 import AssetList from '../../IDE/components/AssetList';
 import SketchList from '../../IDE/components/SketchList';
@@ -68,7 +68,7 @@ class DashboardView extends React.Component {
 
     return (
       <div className="dashboard">
-        <NavBasic onBack={this.closeAccountPage} />
+        <Nav layout="dashboard" />
 
         <section className="dashboard-header">
           <div className="dashboard-header__header">
