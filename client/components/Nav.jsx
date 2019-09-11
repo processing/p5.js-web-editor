@@ -11,6 +11,7 @@ import { setAllAccessibleOutput } from '../modules/IDE/actions/preferences';
 import { logoutUser } from '../modules/User/actions';
 
 import { metaKeyName, } from '../utils/metaKey';
+import caretLeft from '../images/left-arrow.svg';
 
 const triangleUrl = require('../images/down-filled-triangle.svg');
 const logoUrl = require('../images/p5js-logo-small.svg');
@@ -224,8 +225,11 @@ class Nav extends React.PureComponent {
           <InlineSVG src={logoUrl} alt="p5.js logo" className="svg__logo" />
         </li>
         <li className="nav__item nav__item--no-icon">
-          <Link to="/">
-            <span className="nav__item-header">Editor</span>
+          <Link to="/" className="nav__back-link">
+            <InlineSVG src={caretLeft} className="nav__back-icon" />
+            <span className="nav__item-header">
+              Back to Editor
+            </span>
           </Link>
         </li>
       </ul>
