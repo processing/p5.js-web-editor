@@ -69,6 +69,10 @@
   padding-left: #{12 / $base-font-size}rem;
 }
 
+.sketches-table__row > td {
+  padding-left: #{8 / $base-font-size}rem;
+}
+
 .sketches-table__row a {
   @include themify() {
     color: getThemifyVariable('primary-text-color');
