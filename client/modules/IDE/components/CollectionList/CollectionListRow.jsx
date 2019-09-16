@@ -11,6 +11,24 @@ import * as IdeActions from '../../actions/ide';
 import * as ToastActions from '../../actions/toast';
 
 const downFilledTriangle = require('../../../../images/down-filled-triangle.svg');
+const addIcon = require('../../../../images/plus.svg');
+const removeIcon = require('../../../../images/minus.svg');
+
+const AddRemoveButton = ({ type, onClick }) => {
+  const alt = type === 'add' ? 'add to collection' : 'remove from collection';
+  const icon = type === 'add' ? addIcon : removeIcon;
+
+  return (
+    <button className="overlay__close-button" onClick={onClick}>
+      <InlineSVG src={icon} alt={alt} />
+    </button>
+  );
+};
+
+AddRemoveButton.propTypes = {
+  type: PropTypes.oneOf(['add', 'remove']).isRequired,
+  onClick: PropTypes.func.isRequired,
+};
 
 class CollectionListRowBase extends React.Component {
   static projectInCollection(project, collection) {
@@ -144,7 +162,9 @@ class CollectionListRowBase extends React.Component {
     const userIsOwner = this.props.user.username === this.props.username;
 
     if (this.props.addMode === true && this.props.project) {
-      return CollectionListRowBase.projectInCollection(this.props.project, this.props.collection) ? <button onClick={this.handleCollectionRemove}>Remove</button> : <button onClick={this.handleCollectionAdd}>Add</button>;
+      return CollectionListRowBase.projectInCollection(this.props.project, this.props.collection) ?
+        <AddRemoveButton type="remove" onClick={this.handleCollectionRemove} /> :
+        <AddRemoveButton type="add" onClick={this.handleCollectionAdd} />;
     }
 
     return (
