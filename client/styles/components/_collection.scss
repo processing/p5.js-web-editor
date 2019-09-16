@@ -12,10 +12,30 @@
   }
 }
 
+.collection-metadata__name {
+  padding: #{12 / $base-font-size}rem 0;
+}
+
+.collection-metadata__name .editable-input__label span {
+  padding: 0.83333rem 0;
+}
+
+.collection-metadata__name,
+.collection-metadata__name .editable-input__input {
+  font-size: 1.75rem;
+  font-weight: bold;
+}
+
 .collection-metadata__user {
   padding-top: #{12 / $base-font-size}rem;
+  padding-left: #{8 / $base-font-size}rem;
 }
 
 .collection-metadata__description {
   padding-top: #{24 / $base-font-size}rem;
+  width: 50%;
+}
+
+.collection-metadata__description .editable-input__input {
+  width: 100%;
 }

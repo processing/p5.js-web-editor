@@ -5,8 +5,9 @@ const sketches = (state = [], action) => {
     case ActionTypes.SET_COLLECTIONS:
       return action.collections;
 
-    // The API returns the complete new collection
-    // with the items added or removed
+    // The API returns the complete new edited collection
+    // with any items added or removed
+    case ActionTypes.EDIT_COLLECTION:
     case ActionTypes.ADD_TO_COLLECTION:
     case ActionTypes.REMOVE_FROM_COLLECTION:
       return state.map((collection) => {
