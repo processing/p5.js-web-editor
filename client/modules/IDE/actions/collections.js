@@ -126,3 +126,25 @@ export function removeFromCollection(collectionId, projectId) {
       });
   };
 }
+
+export function editCollection(collectionId, { name, description }) {
+  return (dispatch) => {
+    const url = `${ROOT_URL}/collections/${collectionId}`;
+    return axios.patch(url, { name, description }, { withCredentials: true })
+      .then((response) => {
+        dispatch({
+          type: ActionTypes.EDIT_COLLECTION,
+          payload: response.data
+        });
+        return response.data;
+      })
+      .catch((response) => {
+        dispatch({
+          type: ActionTypes.ERROR,
+          error: response.data
+        });
+
+        return response.data;
+      });
+  };
+}

@@ -15,6 +15,7 @@ import * as SortingActions from '../../IDE/actions/sorting';
 import * as IdeActions from '../../IDE/actions/ide';
 import { getCollection } from '../../IDE/selectors/collections';
 import Loader from '../../App/components/loader';
+import EditableInput from '../../IDE/components/EditableInput';
 
 const arrowUp = require('../../../images/sort-arrow-up.svg');
 const arrowDown = require('../../../images/sort-arrow-down.svg');
@@ -240,8 +241,22 @@ class Collection extends React.Component {
     return `p5.js Web Editor | ${this.props.username}'s collections`;
   }
 
+  getUsername() {
+    return this.props.username !== undefined ? this.props.username : this.props.user.username;
+  }
+
   getCollectionName() {
     return this.props.collection.name;
+  }
+
+  isOwner() {
+    let isOwner = false;
+
+    if (this.props.user != null && this.props.user.username && this.props.collection.owner.username === this.props.user.username) {
+      isOwner = true;
+    }
+
+    return isOwner;
   }
 
   hasCollection() {
@@ -258,13 +273,47 @@ class Collection extends React.Component {
   }
 
   _renderCollectionMetadata() {
-    const { name, description, items, owner } = this.props.collection;
+    const {
+      id, name, description, items, owner 
+    } = this.props.collection;
+
+    const handleEditCollectionName = (value) => {
+      if (value === name) {
+        return;
+      }
+
+      this.props.editCollection(id, { name: value });
+    };
+
+    const handleEditCollectionDescription = (value) => {
+      if (value === description) {
+        return;
+      }
+
+      this.props.editCollection(id, { description: value });
+    };
 
     return (
       <div className="collection-metadata">
-        <h2 className="collection-metadata__name">{name}</h2>
+        <h2 className="collection-metadata__name">
+          {
+            this.isOwner() ? <EditableInput value={name} onChange={handleEditCollectionName} /> : name
+          }
+        </h2>
+
         <p className="collection-metadata__user">{items.length} sketches collected by {owner.username}</p>
-        <p className="collection-metadata__description">{description}</p>
+
+        <p className="collection-metadata__description">
+          {
+            this.isOwner() ?
+              <EditableInput
+                InputComponent="textarea"
+                value={description}
+                onChange={handleEditCollectionDescription}
+              /> :
+              description
+          }
+        </p>
       </div>
     );
   }
@@ -298,7 +347,6 @@ class Collection extends React.Component {
   }
 
   render() {
-    const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
     const title = this.hasCollection() ? this.getCollectionName() : null;
 
     return (
@@ -326,7 +374,7 @@ class Collection extends React.Component {
                     key={item.id}
                     item={item}
                     user={this.props.user}
-                    username={username}
+                    username={this.getUsername()}
                   />))}
               </tbody>
             </table>}
