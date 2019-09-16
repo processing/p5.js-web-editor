@@ -301,7 +301,7 @@ class Collection extends React.Component {
           }
         </h2>
 
-        <p className="collection-metadata__user">{items.length} sketches collected by {owner.username}</p>
+        <p className="collection-metadata__user">{items.length} sketch{items.length === 1 ? '' : 'es'} collected by {owner.username}</p>
 
         <p className="collection-metadata__description">
           {
@@ -359,25 +359,28 @@ class Collection extends React.Component {
           {this.hasCollection() && this._renderCollectionMetadata()}
           {this._renderEmptyTable()}
           {this.hasCollectionItems() &&
-            <table className="sketches-table" summary="table containing all collections">
-              <thead>
-                <tr>
-                  {this._renderFieldHeader('name', 'Name')}
-                  {this._renderFieldHeader('createdAt', 'Date Added')}
-                  {this._renderFieldHeader('user', 'Owner')}
-                  <th scope="col"></th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.props.collection.items.map(item =>
-                  (<CollectionItemRow
-                    key={item.id}
-                    item={item}
-                    user={this.props.user}
-                    username={this.getUsername()}
-                  />))}
-              </tbody>
-            </table>}
+            <div className="collection-table-wrapper">
+              <table className="sketches-table" summary="table containing all collections">
+                <thead>
+                  <tr>
+                    {this._renderFieldHeader('name', 'Name')}
+                    {this._renderFieldHeader('createdAt', 'Date Added')}
+                    {this._renderFieldHeader('user', 'Owner')}
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.props.collection.items.map(item =>
+                    (<CollectionItemRow
+                      key={item.id}
+                      item={item}
+                      user={this.props.user}
+                      username={this.getUsername()}
+                    />))}
+                </tbody>
+              </table>
+            </div>
+          }
         </div>
       </section>
     );

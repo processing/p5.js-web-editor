@@ -39,3 +39,7 @@
 .collection-metadata__description .editable-input__input {
   width: 100%;
 }
+
+.collection-table-wrapper {
+  margin: #{28 / $base-font-size}rem #{56 / $base-font-size}rem;
+}
