@@ -32,7 +32,6 @@ AddRemoveButton.propTypes = {
 
 class CollectionListRowBase extends React.Component {
   static projectInCollection(project, collection) {
-    console.log('project in collection', project, collection);
     return collection.items.find(item => item.project.id === project.id) != null;
   }
 
