@@ -43,3 +43,8 @@
 .collection-table-wrapper {
   margin: #{28 / $base-font-size}rem #{56 / $base-font-size}rem;
 }
+
+.collection-add-sketch {
+  padding: #{24 / $base-font-size}rem;
+  overflow: scroll;
+}

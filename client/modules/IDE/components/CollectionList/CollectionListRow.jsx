@@ -9,26 +9,9 @@ import * as ProjectActions from '../../actions/project';
 import * as CollectionsActions from '../../actions/collections';
 import * as IdeActions from '../../actions/ide';
 import * as ToastActions from '../../actions/toast';
+import AddRemoveButton from '../../../../components/AddRemoveButton';
 
 const downFilledTriangle = require('../../../../images/down-filled-triangle.svg');
-const addIcon = require('../../../../images/plus.svg');
-const removeIcon = require('../../../../images/minus.svg');
-
-const AddRemoveButton = ({ type, onClick }) => {
-  const alt = type === 'add' ? 'add to collection' : 'remove from collection';
-  const icon = type === 'add' ? addIcon : removeIcon;
-
-  return (
-    <button className="overlay__close-button" onClick={onClick}>
-      <InlineSVG src={icon} alt={alt} />
-    </button>
-  );
-};
-
-AddRemoveButton.propTypes = {
-  type: PropTypes.oneOf(['add', 'remove']).isRequired,
-  onClick: PropTypes.func.isRequired,
-};
 
 class CollectionListRowBase extends React.Component {
   static projectInCollection(project, collection) {
