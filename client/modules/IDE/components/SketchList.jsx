@@ -10,11 +10,13 @@ import classNames from 'classnames';
 import slugify from 'slugify';
 import * as ProjectActions from '../actions/project';
 import * as ProjectsActions from '../actions/projects';
+import * as CollectionsActions from '../actions/collections';
 import * as ToastActions from '../actions/toast';
 import * as SortingActions from '../actions/sorting';
 import * as IdeActions from '../actions/ide';
 import getSortedSketches from '../selectors/projects';
 import Loader from '../../App/components/loader';
+import AddRemoveButton from '../../../components/AddRemoveButton';
 
 const arrowUp = require('../../../images/sort-arrow-up.svg');
 const arrowDown = require('../../../images/sort-arrow-down.svg');
@@ -134,10 +136,100 @@ class SketchListRowBase extends React.Component {
     }
   }
 
+  renderDropdown = () => {
+    const { optionsOpen } = this.state;
+    const userIsOwner = this.props.user.username === this.props.username;
+
+    return (
+      <td className="sketch-list__dropdown-column">
+        <button
+          className="sketch-list__dropdown-button"
+          onClick={this.toggleOptions}
+          onBlur={this.onBlurComponent}
+          onFocus={this.onFocusComponent}
+        >
+          <InlineSVG src={downFilledTriangle} alt="Menu" />
+        </button>
+        {optionsOpen &&
+          <ul
+            className="sketch-list__action-dialogue"
+          >
+            {userIsOwner &&
+            <li>
+              <button
+                className="sketch-list__action-option"
+                onClick={this.handleRenameOpen}
+                onBlur={this.onBlurComponent}
+                onFocus={this.onFocusComponent}
+              >
+                Rename
+              </button>
+            </li>}
+            <li>
+              <button
+                className="sketch-list__action-option"
+                onClick={this.handleSketchDownload}
+                onBlur={this.onBlurComponent}
+                onFocus={this.onFocusComponent}
+              >
+                Download
+              </button>
+            </li>
+            {this.props.user.authenticated &&
+            <li>
+              <button
+                className="sketch-list__action-option"
+                onClick={this.handleSketchDuplicate}
+                onBlur={this.onBlurComponent}
+                onFocus={this.onFocusComponent}
+              >
+                Duplicate
+              </button>
+            </li>}
+            { /* <li>
+              <button
+                className="sketch-list__action-option"
+                onClick={this.handleSketchShare}
+                onBlur={this.onBlurComponent}
+                onFocus={this.onFocusComponent}
+              >
+                Share
+              </button>
+            </li> */ }
+            {userIsOwner &&
+            <li>
+              <button
+                className="sketch-list__action-option"
+                onClick={this.handleSketchDelete}
+                onBlur={this.onBlurComponent}
+                onFocus={this.onFocusComponent}
+              >
+                Delete
+              </button>
+            </li>}
+          </ul>}
+      </td>
+    );
+  }
+
+  renderAddRemoveButtons = () => {
+    return (
+      <td className="sketch-list__dropdown-column">{
+        this.props.inCollection ? 
+          <AddRemoveButton type="remove" onClick={this.props.onCollectionRemove} />  :
+          <AddRemoveButton type="add" onClick={this.props.onCollectionAdd} />
+        }
+      </td>
+    );
+  }
+
+  renderActions = () => {
+    return this.props.addMode === true ? this.renderAddRemoveButtons() : this.renderDropdown();
+  }
+
   render() {
     const { sketch, username } = this.props;
-    const { renameOpen, optionsOpen, renameValue } = this.state;
-    const userIsOwner = this.props.user.username === this.props.username;
+    const { renameOpen, renameValue } = this.state;
     let url = `/${username}/sketches/${sketch.id}`;
     if (username === 'p5') {
       url = `/${username}/sketches/${slugify(sketch.name, '_')}`;
@@ -164,74 +256,7 @@ class SketchListRowBase extends React.Component {
         </th>
         <td>{format(new Date(sketch.createdAt), 'MMM D, YYYY h:mm A')}</td>
         <td>{format(new Date(sketch.updatedAt), 'MMM D, YYYY h:mm A')}</td>
-        <td className="sketch-list__dropdown-column">
-          <button
-            className="sketch-list__dropdown-button"
-            onClick={this.toggleOptions}
-            onBlur={this.onBlurComponent}
-            onFocus={this.onFocusComponent}
-          >
-            <InlineSVG src={downFilledTriangle} alt="Menu" />
-          </button>
-          {optionsOpen &&
-            <ul
-              className="sketch-list__action-dialogue"
-            >
-              {userIsOwner &&
-              <li>
-                <button
-                  className="sketch-list__action-option"
-                  onClick={this.handleRenameOpen}
-                  onBlur={this.onBlurComponent}
-                  onFocus={this.onFocusComponent}
-                >
-                  Rename
-                </button>
-              </li>}
-              <li>
-                <button
-                  className="sketch-list__action-option"
-                  onClick={this.handleSketchDownload}
-                  onBlur={this.onBlurComponent}
-                  onFocus={this.onFocusComponent}
-                >
-                  Download
-                </button>
-              </li>
-              {this.props.user.authenticated &&
-              <li>
-                <button
-                  className="sketch-list__action-option"
-                  onClick={this.handleSketchDuplicate}
-                  onBlur={this.onBlurComponent}
-                  onFocus={this.onFocusComponent}
-                >
-                  Duplicate
-                </button>
-              </li>}
-              { /* <li>
-                <button
-                  className="sketch-list__action-option"
-                  onClick={this.handleSketchShare}
-                  onBlur={this.onBlurComponent}
-                  onFocus={this.onFocusComponent}
-                >
-                  Share
-                </button>
-              </li> */ }
-              {userIsOwner &&
-              <li>
-                <button
-                  className="sketch-list__action-option"
-                  onClick={this.handleSketchDelete}
-                  onBlur={this.onBlurComponent}
-                  onFocus={this.onFocusComponent}
-                >
-                  Delete
-                </button>
-              </li>}
-            </ul>}
-        </td>
+        {this.renderActions()}
       </tr>);
   }
 }
@@ -311,6 +336,14 @@ class SketchList extends React.Component {
     );
   }
 
+  handleCollectionAdd = (sketchId) => {
+    this.props.addToCollection(this.props.collection.id, sketchId);
+  }
+
+  handleCollectionRemove = (sketchId) => {
+    this.props.removeFromCollection(this.props.collection.id, sketchId);
+  }
+
   render() {
     const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
     return (
@@ -337,6 +370,10 @@ class SketchList extends React.Component {
                   sketch={sketch}
                   user={this.props.user}
                   username={username}
+                  addMode={this.props.addMode}
+                  onCollectionAdd={() => this.handleCollectionAdd(sketch.id)}
+                  onCollectionRemove={() => this.handleCollectionRemove(sketch.id)}
+                  inCollection={this.props.collection && this.props.collection.items.find(item => item.project.id === sketch.id) != null}
                 />))}
             </tbody>
           </table>}
@@ -365,12 +402,7 @@ SketchList.propTypes = {
     field: PropTypes.string.isRequired,
     direction: PropTypes.string.isRequired
   }).isRequired,
-  project: PropTypes.shape({
-    id: PropTypes.string,
-    owner: PropTypes.shape({
-      id: PropTypes.string
-    })
-  })
+  addMode: PropTypes.bool,
 };
 
 SketchList.defaultProps = {
@@ -392,7 +424,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}, ProjectsActions, ToastActions, SortingActions), dispatch);
+  return bindActionCreators(Object.assign({}, ProjectsActions, CollectionsActions, ToastActions, SortingActions), dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SketchList);

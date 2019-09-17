@@ -16,6 +16,8 @@ import * as IdeActions from '../../IDE/actions/ide';
 import { getCollection } from '../../IDE/selectors/collections';
 import Loader from '../../App/components/loader';
 import EditableInput from '../../IDE/components/EditableInput';
+import Overlay from '../../App/components/Overlay';
+import SketchList from '../../IDE/components/SketchList';
 
 const arrowUp = require('../../../images/sort-arrow-up.svg');
 const arrowDown = require('../../../images/sort-arrow-down.svg');
@@ -232,6 +234,12 @@ class Collection extends React.Component {
     this.props.getCollections(this.props.username);
     this.props.resetSorting();
     this._renderFieldHeader = this._renderFieldHeader.bind(this);
+    this.showAddSketches = this.showAddSketches.bind(this);
+    this.hideAddSketches = this.hideAddSketches.bind(this);
+
+    this.state = {
+      isAddingSketches: false,
+    };
   }
 
   getTitle() {
@@ -318,9 +326,21 @@ class Collection extends React.Component {
     );
   }
 
+  showAddSketches() {
+    this.setState({
+      isAddingSketches: true,
+    });
+  }
+
+  hideAddSketches() {
+    this.setState({
+      isAddingSketches: false,
+    });
+  }
+
   _renderEmptyTable() {
     if (!this.hasCollectionItems()) {
-      return (<p className="sketches-table__empty">No sketches in collection.</p>);
+      return (<p className="sketches-table__empty">No sketches in collection. <button onClick={this.showAddSketches}>Add some sketches</button></p>);
     }
     return null;
   }
@@ -379,7 +399,18 @@ class Collection extends React.Component {
                     />))}
                 </tbody>
               </table>
+
+              <p><button onClick={this.showAddSketches}>Add more sketches</button></p>
             </div>
+          }
+          {
+            this.state.isAddingSketches && (
+              <Overlay title="Add sketches" closeOverlay={this.hideAddSketches}>
+                <div className="collection-add-sketch">
+                  <SketchList username={this.props.username} addMode collection={this.props.collection} />
+                </div>
+              </Overlay>
+            )
           }
         </div>
       </section>
