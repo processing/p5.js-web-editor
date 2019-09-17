@@ -50,3 +50,14 @@
   font-weight: bold;
   margin: 0;
 }
+
+.dashboard-header__actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard__action-button {
+  flex-grow: 0;
+  @extend %button;
+}
