@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { browserHistory } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 import { Helmet } from 'react-helmet';
 import { updateSettings, initiateVerification, createApiKey, removeApiKey } from '../actions';
 import NavBasic from '../../../components/NavBasic';
@@ -60,6 +60,22 @@ class DashboardView extends React.Component {
     return this.props.user.username === this.props.params.username;
   }
 
+  renderActionButton(tabKey, username) {
+    if (!this.isOwner()) {
+      return null;
+    }
+
+    switch (tabKey) {
+      case TabKey.assets:
+        return null;
+      case TabKey.collections:
+        return <Link className="dashboard__action-button" to={`/${username}/collections/create`}>Create collection</Link>;
+      case TabKey.sketches:
+      default:
+        return <Link className="dashboard__action-button" to="/">New sketch</Link>;
+    }
+  }
+
   renderContent(tabKey, username) {
     switch (tabKey) {
       case TabKey.assets:
@@ -89,7 +105,11 @@ class DashboardView extends React.Component {
           <div className="dashboard-header__header">
             <h2 className="dashboard-header__header__title">{this.ownerName()}</h2>
 
-            <DashboardTabSwitcher currentTab={currentTab} isOwner={isOwner} username={username} />
+            <div className="dashboard-header__actions">
+              <DashboardTabSwitcher currentTab={currentTab} isOwner={isOwner} username={username} />
+              {this.renderActionButton(currentTab, username)}
+            </div>
+
           </div>
 
           <div className="dashboard-content">
