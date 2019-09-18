@@ -18,10 +18,29 @@ import Loader from '../../App/components/loader';
 import EditableInput from '../../IDE/components/EditableInput';
 import Overlay from '../../App/components/Overlay';
 import SketchList from '../../IDE/components/SketchList';
+import CopyableInput from '../../IDE/components/CopyableInput';
 
 const arrowUp = require('../../../images/sort-arrow-up.svg');
 const arrowDown = require('../../../images/sort-arrow-down.svg');
 const downFilledTriangle = require('../../../images/down-filled-triangle.svg');
+
+const ShareURL = ({ value }) => {
+  const [showURL, setShowURL] = React.useState(false);
+
+  return (
+    <div className="collection-share">
+      {
+        showURL ?
+          <React.Fragment>
+            <span className="collection-share__label">Everyone can access the collection via this link:</span>
+            <br />
+            <CopyableInput value={value} />
+          </React.Fragment> :
+          <button onClick={() => setShowURL(true)}>Share collection</button>
+      }
+    </div>
+  );
+};
 
 class CollectionItemRowBase extends React.Component {
   constructor(props) {
@@ -282,8 +301,13 @@ class Collection extends React.Component {
 
   _renderCollectionMetadata() {
     const {
-      id, name, description, items, owner 
+      id, name, description, items, owner, slug
     } = this.props.collection;
+
+    const hostname = window.location.origin;
+    const { username } = this.props;
+
+    const baseURL = `${hostname}/${username}/collections/`;
 
     const handleEditCollectionName = (value) => {
       if (value === name) {
@@ -301,27 +325,45 @@ class Collection extends React.Component {
       this.props.editCollection(id, { description: value });
     };
 
+    const handleEditCollectionSlug = (value) => {
+      if (value === slug) {
+        return;
+      }
+
+      this.props.editCollection(id, { slug: value });
+    };
+
     return (
       <div className="collection-metadata">
-        <h2 className="collection-metadata__name">
-          {
-            this.isOwner() ? <EditableInput value={name} onChange={handleEditCollectionName} /> : name
-          }
-        </h2>
+        <div className="collection-metadata__columns">
+          <div className="collection-metadata__column--left">
+            <h2 className="collection-metadata__name">
+              {
+                this.isOwner() ? <EditableInput value={name} onChange={handleEditCollectionName} /> : name
+              }
+            </h2>
 
-        <p className="collection-metadata__user">{items.length} sketch{items.length === 1 ? '' : 'es'} collected by {owner.username}</p>
+            <p className="collection-metadata__user">{items.length} sketch{items.length === 1 ? '' : 'es'} collected by {owner.username}</p>
 
-        <p className="collection-metadata__description">
-          {
-            this.isOwner() ?
-              <EditableInput
-                InputComponent="textarea"
-                value={description}
-                onChange={handleEditCollectionDescription}
-              /> :
-              description
-          }
-        </p>
+            <p className="collection-metadata__description">
+              {
+                this.isOwner() ?
+                  <EditableInput
+                    InputComponent="textarea"
+                    value={description}
+                    onChange={handleEditCollectionDescription}
+                  /> :
+                  description
+              }
+            </p>
+          </div>
+
+          <div className="collection-metadata__column--right">
+            <p className="collection-metadata__share">
+              <ShareURL value={`${baseURL}${id}`} />
+            </p>
+          </div>
+        </div>
       </div>
     );
   }
@@ -400,7 +442,14 @@ class Collection extends React.Component {
                 </tbody>
               </table>
 
-              <p><button onClick={this.showAddSketches}>Add more sketches</button></p>
+              {
+                this.isOwner() &&
+                <p className="collection-add-button">
+                  <button onClick={this.showAddSketches}>
+                    Add more sketches
+                  </button>
+                </p>
+              }
             </div>
           }
           {
