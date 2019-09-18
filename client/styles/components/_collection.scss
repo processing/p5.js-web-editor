@@ -12,12 +12,29 @@
   }
 }
 
+.collection-metadata__columns {
+  display: flex;
+}
+
+.collection-metadata__column--left,
+.collection-metadata__column--right {
+  flex: 1;
+}
+
+.collection-metadata__column--right {
+  align-self: flex-end;
+}
+
 .collection-metadata__name {
   padding: #{12 / $base-font-size}rem 0;
 }
 
 .collection-metadata__name .editable-input__label span {
   padding: 0.83333rem 0;
+
+  @include themify() {
+    color: getThemifyVariable('primary-text-color');
+  }
 }
 
 .collection-metadata__name,
@@ -29,11 +46,21 @@
 .collection-metadata__user {
   padding-top: #{12 / $base-font-size}rem;
   padding-left: #{8 / $base-font-size}rem;
+  font-size: 14px;
 }
 
 .collection-metadata__description {
   padding-top: #{24 / $base-font-size}rem;
-  width: 50%;
+  text-align: left;
+  font-size: 14px;
+}
+
+.collection-metadata__description .editable-input__label {
+  text-align: left;
+
+  @include themify() {
+    color: getThemifyVariable('primary-text-color');
+  }
 }
 
 .collection-metadata__description .editable-input__input {
@@ -47,4 +74,22 @@
 .collection-add-sketch {
   padding: #{24 / $base-font-size}rem;
   overflow: scroll;
+}
+
+.collection-add-button {
+  padding: #{24 / $base-font-size}rem;
+  text-align: center;
+}
+
+.collection-share {
+  text-align: right;
+}
+
+.collection-share__label {
+  display: block;
+  text-align: left;
+}
+
+.collection-share .copyable-input {
+  padding-bottom: 0;
 }
