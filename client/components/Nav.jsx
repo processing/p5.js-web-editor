@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import InlineSVG from 'react-inlinesvg';
 import classNames from 'classnames';
 import * as IDEActions from '../modules/IDE/actions/ide';
@@ -93,11 +93,12 @@ class Nav extends React.PureComponent {
   }
 
   handleNew() {
-    if (!this.props.unsavedChanges) {
+    const { unsavedChanges, warnIfUnsavedChanges } = this.props;
+    if (!unsavedChanges) {
       this.props.showToast(1500);
       this.props.setToastText('Opened new sketch.');
       this.props.newProject();
-    } else if (this.props.warnIfUnsavedChanges()) {
+    } else if (warnIfUnsavedChanges && warnIfUnsavedChanges()) {
       this.props.showToast(1500);
       this.props.setToastText('Opened new sketch.');
       this.props.newProject();
@@ -166,6 +167,8 @@ class Nav extends React.PureComponent {
 
   handleLogout() {
     this.props.logoutUser();
+    // if you're on the settings page, probably.
+    browserHistory.push('/');
     this.setDropdown('none');
   }
 
@@ -535,13 +538,13 @@ class Nav extends React.PureComponent {
   renderUnauthenticatedUserMenu(navDropdownState) {
     return (
       <ul className="nav__items-right" title="user-menu">
-        <li>
+        <li className="nav__item">
           <Link to="/login">
             <span className="nav__item-header">Log in</span>
           </Link>
         </li>
         <span className="nav__item-spacer">or</span>
-        <li>
+        <li className="nav__item">
           <Link to="/signup">
             <span className="nav__item-header">Sign up</span>
           </Link>
@@ -708,7 +711,7 @@ Nav.propTypes = {
   showShareModal: PropTypes.func.isRequired,
   showErrorModal: PropTypes.func.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
-  warnIfUnsavedChanges: PropTypes.func.isRequired,
+  warnIfUnsavedChanges: PropTypes.func,
   showKeyboardShortcutModal: PropTypes.func.isRequired,
   cmController: PropTypes.shape({
     tidyCode: PropTypes.func,
@@ -731,7 +734,8 @@ Nav.defaultProps = {
     owner: undefined
   },
   cmController: {},
-  layout: 'project'
+  layout: 'project',
+  warnIfUnsavedChanges: undefined
 };
 
 function mapStateToProps(state) {

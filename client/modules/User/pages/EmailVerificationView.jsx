@@ -3,24 +3,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
-import InlineSVG from 'react-inlinesvg';
 import get from 'lodash/get';
 import { Helmet } from 'react-helmet';
 import { verifyEmailConfirmation } from '../actions';
-
-const exitUrl = require('../../../images/exit.svg');
-const logoUrl = require('../../../images/p5js-logo.svg');
+import Nav from '../../../components/Nav';
 
 
 class EmailVerificationView extends React.Component {
   static defaultProps = {
     emailVerificationTokenState: null,
-  }
-
-  constructor(props) {
-    super(props);
-    this.closeLoginPage = this.closeLoginPage.bind(this);
-    this.gotoHomePage = this.gotoHomePage.bind(this);
   }
 
   componentWillMount() {
@@ -32,14 +23,6 @@ class EmailVerificationView extends React.Component {
 
   verificationToken = () => get(this.props, 'location.query.t', null);
 
-  closeLoginPage() {
-    browserHistory.push(this.props.previousPath);
-  }
-
-  gotoHomePage() {
-    browserHistory.push('/');
-  }
-
   render() {
     let status = null;
     const {
@@ -48,7 +31,7 @@ class EmailVerificationView extends React.Component {
 
     if (this.verificationToken() == null) {
       status = (
-        <p>That link is invalid</p>
+        <p>That link is invalid.</p>
       );
     } else if (emailVerificationTokenState === 'checking') {
       status = (
@@ -58,6 +41,7 @@ class EmailVerificationView extends React.Component {
       status = (
         <p>All done, your email address has been verified.</p>
       );
+      setTimeout(() => browserHistory.push('/'), 1000);
     } else if (emailVerificationTokenState === 'invalid') {
       status = (
         <p>Something went wrong.</p>
@@ -65,19 +49,12 @@ class EmailVerificationView extends React.Component {
     }
 
     return (
-      <div className="user">
+      <div className="email-verification">
+        <Nav layout="dashboard" />
         <div className="form-container">
           <Helmet>
             <title>p5.js Web Editor | Email Verification</title>
           </Helmet>
-          <div className="form-container__header">
-            <button className="form-container__logo-button" onClick={this.gotoHomePage}>
-              <InlineSVG src={logoUrl} alt="p5js Logo" />
-            </button>
-            <button className="form-container__exit-button" onClick={this.closeLoginPage}>
-              <InlineSVG src={exitUrl} alt="Close Login Page" />
-            </button>
-          </div>
           <div className="form-container__content">
             <h2 className="form-container__title">Verify your email</h2>
             {status}
@@ -91,7 +68,6 @@ class EmailVerificationView extends React.Component {
 function mapStateToProps(state) {
   return {
     emailVerificationTokenState: state.user.emailVerificationTokenState,
-    previousPath: state.ide.previousPath
   };
 }
 
@@ -103,7 +79,6 @@ function mapDispatchToProps(dispatch) {
 
 
 EmailVerificationView.propTypes = {
-  previousPath: PropTypes.string.isRequired,
   emailVerificationTokenState: PropTypes.oneOf([
     'checking', 'verified', 'invalid'
   ]),

@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { reduxForm } from 'redux-form';
 import { bindActionCreators } from 'redux';
-import { browserHistory } from 'react-router';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
@@ -11,48 +10,37 @@ import AccountForm from '../components/AccountForm';
 import { validateSettings } from '../../../utils/reduxFormUtils';
 import GithubButton from '../components/GithubButton';
 import APIKeyForm from '../components/APIKeyForm';
-import NavBasic from '../../../components/NavBasic';
+import Nav from '../../../components/Nav';
+
+const __process = (typeof global !== 'undefined' ? global : window).process;
+const ROOT_URL = __process.env.API_URL;
 
 class AccountView extends React.Component {
-  constructor(props) {
-    super(props);
-    this.closeAccountPage = this.closeAccountPage.bind(this);
-    this.gotoHomePage = this.gotoHomePage.bind(this);
-  }
-
   componentDidMount() {
     document.body.className = this.props.theme;
-  }
-
-  closeAccountPage() {
-    browserHistory.push(this.props.previousPath);
-  }
-
-  gotoHomePage() {
-    browserHistory.push('/');
   }
 
   render() {
     const accessTokensUIEnabled = window.process.env.UI_ACCESS_TOKEN_ENABLED;
 
     return (
-      <div className="user">
+      <div className="account-settings__container">
         <Helmet>
-          <title>p5.js Web Editor | Account</title>
+          <title>p5.js Web Editor | Account Settings</title>
         </Helmet>
 
-        <NavBasic onBack={this.closeAccountPage} />
+        <Nav layout="dashboard" />
 
-        <section className="modal">
-          <div className="modal-content">
-            <div className="modal__header">
-              <h2 className="modal__title">My Account</h2>
-            </div>
+        <section className="account-settings">
+          <header className="account-settings__header">
+            <h1 className="account-settings__title">Account Settings</h1>
+          </header>
+          {accessTokensUIEnabled &&
             <Tabs className="account__tabs">
               <TabList>
                 <div className="tabs__titles">
                   <Tab><h4 className="tabs__title">Account</h4></Tab>
-                  {accessTokensUIEnabled && <Tab><h4 className="tabs__title">Access Tokens</h4></Tab>}
+                  <Tab><h4 className="tabs__title">Access Tokens</h4></Tab>
                 </div>
               </TabList>
               <TabPanel>
@@ -67,7 +55,17 @@ class AccountView extends React.Component {
                 <APIKeyForm {...this.props} />
               </TabPanel>
             </Tabs>
-          </div>
+          }
+          {!accessTokensUIEnabled &&
+            <div>
+              <AccountForm {...this.props} />
+              <h2 className="form-container__divider">Social Login</h2>
+              <p className="account__social-text">
+                Link this account with your GitHub account to allow login from both.
+              </p>
+              <GithubButton buttonText="Login with GitHub" />
+            </div>
+          }
         </section>
       </div>
     );
@@ -96,7 +94,7 @@ function asyncValidate(formProps, dispatch, props) {
     const queryParams = {};
     queryParams[fieldToValidate] = formProps[fieldToValidate];
     queryParams.check_type = fieldToValidate;
-    return axios.get('/api/signup/duplicate_check', { params: queryParams })
+    return axios.get(`${ROOT_URL}/signup/duplicate_check`, { params: queryParams })
       .then((response) => {
         if (response.data.exists) {
           const error = {};

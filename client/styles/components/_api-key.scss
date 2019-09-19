@@ -21,6 +21,11 @@
 .api-key-form__create-button {
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+.api-key-form__create-icon {
+  display: flex;
 }
 
 .api-key-form__create-button .isvg {

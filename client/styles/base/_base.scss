@@ -62,6 +62,10 @@ button {
 	border: none;
 }
 
+h1 {
+	font-size: #{21 / $base-font-size}em;
+}
+
 h2 {
 	font-size: #{21 / $base-font-size}em;
 }

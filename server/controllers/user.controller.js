@@ -37,9 +37,8 @@ export function findUserByUsername(username, cb) {
   );
 }
 
-const EMAIL_VERIFY_TOKEN_EXPIRY_TIME = Date.now() + (3600000 * 24); // 24 hours
-
 export function createUser(req, res, next) {
+  const EMAIL_VERIFY_TOKEN_EXPIRY_TIME = Date.now() + (3600000 * 24); // 24 hours
   random((tokenError, token) => {
     const user = new User({
       username: req.body.username,
@@ -224,6 +223,7 @@ export function emailVerificationInitiate(req, res) {
           if (mailErr != null) {
             res.status(500).send({ error: 'Error sending mail' });
           } else {
+            const EMAIL_VERIFY_TOKEN_EXPIRY_TIME = Date.now() + (3600000 * 24); // 24 hours
             user.verified = User.EmailConfirmation.Resent;
             user.verifiedToken = token;
             user.verifiedTokenExpires = EMAIL_VERIFY_TOKEN_EXPIRY_TIME; // 24 hours
@@ -240,7 +240,7 @@ export function emailVerificationInitiate(req, res) {
 export function verifyEmail(req, res) {
   const token = req.query.t;
 
-  User.findOne({ verifiedToken: token, verifiedTokenExpires: { $gt: Date.now() } }, (err, user) => {
+  User.findOne({ verifiedToken: token, verifiedTokenExpires: { $gt: new Date() } }, (err, user) => {
     if (!user) {
       res.status(401).json({ success: false, message: 'Token is invalid or has expired.' });
       return;
@@ -316,6 +316,7 @@ export function updateSettings(req, res) {
         saveUser(res, user);
       });
     } else if (user.email !== req.body.email) {
+      const EMAIL_VERIFY_TOKEN_EXPIRY_TIME = Date.now() + (3600000 * 24); // 24 hours
       user.verified = User.EmailConfirmation.Sent;
 
       user.email = req.body.email;

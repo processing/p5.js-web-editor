@@ -8,3 +8,15 @@
     background-color: getThemifyVariable('background-color');
   }
 }
+
+.login,
+.signup,
+.reset-password-container,
+.new-password-container,
+.email-verification {
+  height: 100%;
+  @include themify() {
+    color: getThemifyVariable('primary-text-color');
+    background-color: getThemifyVariable('background-color');
+  }
+}

@@ -86,7 +86,8 @@ class APIKeyForm extends React.Component {
               disabled={this.state.keyLabel === ''}
               type="submit"
             >
-              <InlineSVG src={plusIcon} alt="" /> Create
+              <InlineSVG src={plusIcon} className="api-key-form__create-icon" />
+              Create
             </button>
           </form>
 

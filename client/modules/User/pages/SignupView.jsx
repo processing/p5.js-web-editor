@@ -4,27 +4,17 @@ import { bindActionCreators } from 'redux';
 import axios from 'axios';
 import { Link, browserHistory } from 'react-router';
 import { Helmet } from 'react-helmet';
-import InlineSVG from 'react-inlinesvg';
 import { reduxForm } from 'redux-form';
 import * as UserActions from '../actions';
 import SignupForm from '../components/SignupForm';
 import { validateSignup } from '../../../utils/reduxFormUtils';
+import Nav from '../../../components/Nav';
 
-const exitUrl = require('../../../images/exit.svg');
-const logoUrl = require('../../../images/p5js-logo.svg');
+const __process = (typeof global !== 'undefined' ? global : window).process;
+const ROOT_URL = __process.env.API_URL;
 
 class SignupView extends React.Component {
-  constructor(props) {
-    super(props);
-    this.closeSignupPage = this.closeSignupPage.bind(this);
-    this.gotoHomePage = this.gotoHomePage.bind(this);
-  }
-
-  closeSignupPage() {
-    browserHistory.push(this.props.previousPath);
-  }
-
-  gotoHomePage() {
+  gotoHomePage = () => {
     browserHistory.push('/');
   }
 
@@ -34,19 +24,12 @@ class SignupView extends React.Component {
       return null;
     }
     return (
-      <div className="user">
+      <div className="signup">
+        <Nav layout="dashboard" />
         <div className="form-container">
           <Helmet>
             <title>p5.js Web Editor | Signup</title>
           </Helmet>
-          <div className="form-container__header">
-            <button className="form-container__logo-button" onClick={this.gotoHomePage}>
-              <InlineSVG src={logoUrl} alt="p5js Logo" />
-            </button>
-            <button className="form-container__exit-button" onClick={this.closeSignupPage}>
-              <InlineSVG src={exitUrl} alt="Close Signup Page" />
-            </button>
-          </div>
           <div className="form-container__content">
             <h2 className="form-container__title">Sign Up</h2>
             <SignupForm {...this.props} />
@@ -97,7 +80,7 @@ function asyncValidate(formProps, dispatch, props) {
         const queryParams = {};
         queryParams[fieldToValidate] = formProps[fieldToValidate];
         queryParams.check_type = fieldToValidate;
-        return axios.get('/api/signup/duplicate_check', { params: queryParams })
+        return axios.get(`${ROOT_URL}/signup/duplicate_check`, { params: queryParams })
           .then((response) => {
             if (response.data.exists) {
               errors[fieldToValidate] = response.data.message;
@@ -120,9 +103,9 @@ function onSubmitFail(errors) {
 
 SignupView.propTypes = {
   previousPath: PropTypes.string.isRequired,
-  user: {
+  user: PropTypes.shape({
     authenticated: PropTypes.bool
-  }
+  })
 };
 
 SignupView.defaultProps = {
