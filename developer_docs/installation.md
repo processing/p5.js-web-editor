@@ -21,7 +21,7 @@ _Note_: The installation steps assume you are using a Unix-like shell. If you ar
    $ npm install
    ```
 5. Install MongoDB and make sure it is running
-   * For Mac OSX with [homebrew](http://brew.sh/): `brew install mongodb` then `brew services start mongodb`
+   * For Mac OSX with [homebrew](http://brew.sh/): [MongoDB Installation](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/#using-mongodb-from-homebrew-and-macports)
    * For Windows and Linux: [MongoDB Installation](https://docs.mongodb.com/manual/installation/)
 6. `$ cp .env.example .env`
 7. (Optional) Update `.env` with necessary keys to enable certain app behavoirs, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
