@@ -17,6 +17,11 @@
 
 .sketches-table thead th {
   height: #{32 / $base-font-size}rem;
+  position: sticky;
+  top: 0;
+  @include themify() {
+    background-color: getThemifyVariable('background-color');
+  }
 }
 
 .sketch-list__sort-button {

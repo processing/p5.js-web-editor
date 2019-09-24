@@ -6,4 +6,12 @@
     color: getThemifyVariable('primary-text-color');
     background-color: getThemifyVariable('background-color');
   }
+  height: 100%;
+}
+
+.dashboard-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
 }

@@ -58,7 +58,7 @@ class Searchbar extends React.Component {
           className="searchbar__input"
           type="text"
           value={searchValue}
-          placeholder="Search files..."
+          placeholder="Search sketches..."
           onChange={this.handleSearchChange}
           onKeyUp={this.handleSearchEnter}
         />

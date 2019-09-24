@@ -7,7 +7,7 @@
 
 .asset-table {
   width: 100%;
-  padding: #{10 / $base-font-size}rem 0;
+  padding-bottom: #{10 / $base-font-size}rem;
   max-height: 100%;
   border-spacing: 0;
   & .asset-list__delete-column {
@@ -22,8 +22,15 @@
   }
 
   & th {
+    padding-top: #{10 / $base-font-size}rem;
+    padding-bottom: #{15 / $base-font-size}rem;
     height: #{32 / $base-font-size}rem;
     font-weight: normal;
+    position: sticky;
+    top: #{15 / $base-font-size}rem;
+    @include themify() {
+      background-color: getThemifyVariable('background-color');
+    }
   }
 }
 
@@ -57,4 +64,9 @@
 
 .asset-table__total {
   padding: 0 #{20 / $base-font-size}rem;
+  position: sticky;
+  top: 0; 
+  @include themify() {
+    background-color: getThemifyVariable('background-color');
+  }
 }

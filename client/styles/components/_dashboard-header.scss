@@ -1,5 +1,10 @@
 .dashboard-header {
   padding: #{24 / $base-font-size}rem #{66 / $base-font-size}rem;
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction:column;
 }
 
 .dashboard-header__tabs {

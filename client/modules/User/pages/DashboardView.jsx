@@ -9,6 +9,7 @@ import Nav from '../../../components/Nav';
 
 import AssetList from '../../IDE/components/AssetList';
 import SketchList from '../../IDE/components/SketchList';
+import Searchbar from '../../IDE/components/Searchbar';
 
 import DashboardTabSwitcher, { TabKey } from '../components/DashboardTabSwitcher';
 
@@ -75,6 +76,7 @@ class DashboardView extends React.Component {
             <h2 className="dashboard-header__header__title">{this.ownerName()}</h2>
 
             <DashboardTabSwitcher currentTab={currentTab} isOwner={isOwner} username={username} />
+            { currentTab === TabKey.sketches && <Searchbar /> }
           </div>
 
           <div className="dashboard-content">

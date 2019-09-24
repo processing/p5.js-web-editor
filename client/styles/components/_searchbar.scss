@@ -2,8 +2,8 @@
   position: absolute;
   display: flex;
   padding-left: #{17 / $base-font-size}rem;
-  right: #{50 / $base-font-size}rem;
-  top: #{14 / $base-font-size}rem;
+  right: #{66 / $base-font-size}rem;
+  top: #{65 / $base-font-size}rem;
 }
 
 .searchbar__input {
@@ -18,14 +18,25 @@
   }
 }
 
-.searchbar__button {
+button[type="submit"].searchbar__button {
+  background-color: unset;
   width: #{31 / $base-font-size}rem;
   height: #{36 / $base-font-size}rem;
   position: absolute;
   padding: 0;
+  border: 0;
   border-right: solid 1px;
   @include themify() {
     border-right-color: getThemifyVariable('input-border-color');
+  }
+  &:enabled:hover {
+    background-color: unset;
+    @include themify() {
+      border-right-color: getThemifyVariable('input-border-color');
+    }
+    & g {
+      fill: unset;
+    }
   }
 }
 
