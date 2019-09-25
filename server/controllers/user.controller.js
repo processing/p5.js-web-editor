@@ -18,7 +18,7 @@ export function userResponse(user) {
     apiKeys: user.apiKeys,
     verified: user.verified,
     id: user._id,
-    totalSize: req.user.totalSize
+    totalSize: user.totalSize
   };
 }
 

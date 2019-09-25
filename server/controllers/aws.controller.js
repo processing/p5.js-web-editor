@@ -60,7 +60,13 @@ export function deleteObjectsFromS3(keyList, callback) {
 }
 
 export function deleteObjectFromS3(req, res) {
-  const objectKey = req.params.object_key;
+  const { object_key, user_id } = req.params;
+  let objectKey;
+  if (user_id) {
+    objectKey = `${user_id}/${object_key}`
+  } else {
+    objectKey = object_key;
+  }
   deleteObjectsFromS3([objectKey], () => {
     res.json({ success: true });
   });
