@@ -18,8 +18,8 @@ export const getCanUploadMedia = createSelector(
 export const getreachedTotalSizeLimit = createSelector(
   getTotalSize,
   (totalSize) => {
-    // if (totalSize > 250000000) return true;
-    if (totalSize > 1000) return true;
+    if (totalSize > 250000000) return true;
+    //if (totalSize > 1000) return true;
     return false;
   }
 );
