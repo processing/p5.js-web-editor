@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 import { updateSettings, initiateVerification, createApiKey, removeApiKey } from '../actions';
-import NavBasic from '../../../components/NavBasic';
+import Nav from '../../../components/Nav';
 
 import CollectionCreate from '../components/CollectionCreate';
 import Collection from '../components/Collection';
@@ -14,22 +14,8 @@ class CollectionView extends React.Component {
     user: null,
   };
 
-  constructor(props) {
-    super(props);
-    this.closeAccountPage = this.closeAccountPage.bind(this);
-    this.gotoHomePage = this.gotoHomePage.bind(this);
-  }
-
   componentDidMount() {
     document.body.className = this.props.theme;
-  }
-
-  closeAccountPage() {
-    browserHistory.push(this.props.previousPath);
-  }
-
-  gotoHomePage() {
-    browserHistory.push('/');
   }
 
   ownerName() {
@@ -73,7 +59,7 @@ class CollectionView extends React.Component {
   render() {
     return (
       <div className="dashboard">
-        <NavBasic onBack={this.closeAccountPage} />
+        <Nav layout="dashboard" />
 
         {this.renderContent()}
       </div>
