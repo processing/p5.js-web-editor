@@ -108,7 +108,16 @@ class Editor extends React.Component {
     delete this._cm.options.lint.options.errors;
 
     this._cm.setOption('extraKeys', {
-      Tab: cm => cm.replaceSelection(' '.repeat(INDENTATION_AMOUNT)),
+      Tab: (cm) => {
+        // might need to specify and indent more?
+        const selection = cm.doc.getSelection();
+        if (selection.length > 0) {
+          cm.execCommand('indentMore');
+        } else {
+          cm.replaceSelection(' '.repeat(INDENTATION_AMOUNT));
+        }
+      },
+      // Tab: 'indentMore',
       [`${metaKey}-Enter`]: () => null,
       [`Shift-${metaKey}-Enter`]: () => null,
       [`${metaKey}-F`]: 'findPersistent',
