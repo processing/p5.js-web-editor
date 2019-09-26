@@ -73,6 +73,11 @@ export function deleteObjectFromS3(req, res) {
 }
 
 export function signS3(req, res) {
+  const limit = process.env.UPLOAD_LIMIT || 250000000;
+  if (req.user.totalSize > limit) {
+    res.status(403).send({message: 'user has uploaded the maximum size of assets.'});
+    return;
+  }
   const fileExtension = getExtension(req.body.name);
   const filename = uuid.v4() + fileExtension;
   const acl = 'public-read';

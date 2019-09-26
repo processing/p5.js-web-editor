@@ -36,9 +36,9 @@ class UploadFileModal extends React.Component {
           { this.props.reachedTotalSizeLimit &&
             <p>
               {
-                `You have reached the size limit for the number of files you can upload to your account.
+                `Error: You cannot upload any more files. You have reached the total size limit of 250MB.
                 If you would like to upload more, please remove the ones you aren't using anymore by
-                looking through your `
+                in your `
               }
               <Link to="/assets">assets</Link>
               {'.'}

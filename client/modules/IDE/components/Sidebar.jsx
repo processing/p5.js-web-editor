@@ -97,7 +97,7 @@ class Sidebar extends React.Component {
                   onBlur={this.onBlurComponent}
                   onFocus={this.onFocusComponent}
                 >
-                  Add folder
+                  Create folder
                 </button>
               </li>
               <li>
