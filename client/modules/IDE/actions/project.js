@@ -219,6 +219,9 @@ export function autosaveProject() {
 export function exportProjectAsZip(projectId) {
   const win = window.open(`${ROOT_URL}/projects/${projectId}/zip`, '_blank');
   win.focus();
+  return {
+    type: ActionTypes.NULL,
+  };
 }
 
 export function resetProject() {

@@ -131,3 +131,5 @@ export const STOP_LOADING = 'STOP_LOADING';
 
 export const START_SAVING_PROJECT = 'START_SAVING_PROJECT';
 export const END_SAVING_PROJECT = 'END_SAVING_PROJECT';
+
+export const NULL = 'NULL';
