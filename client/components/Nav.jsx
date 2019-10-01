@@ -170,7 +170,7 @@ class Nav extends React.PureComponent {
 
   handleDownload() {
     this.props.autosaveProject();
-    this.props.exportProjectAsZip(this.props.project.id);
+    projectActions.exportProjectAsZip(this.props.project.id);
     this.setDropdown('none');
   }
 
@@ -633,7 +633,6 @@ Nav.propTypes = {
   setToastText: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
   autosaveProject: PropTypes.func.isRequired,
-  exportProjectAsZip: PropTypes.func.isRequired,
   cloneProject: PropTypes.func.isRequired,
   user: PropTypes.shape({
     authenticated: PropTypes.bool.isRequired,
