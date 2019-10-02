@@ -5,12 +5,14 @@ import { bindActionCreators } from 'redux';
 import { browserHistory, Link } from 'react-router';
 import { updateSettings, initiateVerification, createApiKey, removeApiKey } from '../actions';
 import Nav from '../../../components/Nav';
+import Overlay from '../../App/components/Overlay';
 
 import AssetList from '../../IDE/components/AssetList';
 import CollectionList from '../../IDE/components/CollectionList';
 import SketchList from '../../IDE/components/SketchList';
 import Searchbar from '../../IDE/components/Searchbar';
 
+import CollectionCreate from '../components/CollectionCreate';
 import DashboardTabSwitcher, { TabKey } from '../components/DashboardTabSwitcher';
 
 class DashboardView extends React.Component {
@@ -58,6 +60,15 @@ class DashboardView extends React.Component {
 
   isOwner() {
     return this.props.user.username === this.props.params.username;
+  }
+
+  isCollectionCreate() {
+    const path = this.props.location.pathname;
+    return /collections\/create$/.test(path);
+  }
+
+  returnToDashboard = () => {
+    browserHistory.push(`/${this.ownerName()}/collections`);
   }
 
   renderActionButton(tabKey, username) {
@@ -111,6 +122,14 @@ class DashboardView extends React.Component {
             {this.renderContent(currentTab, username)}
           </div>
         </section>
+        {this.isCollectionCreate() &&
+          <Overlay
+            title="Create collection"
+            closeOverlay={this.returnToDashboard}
+          >
+            <CollectionCreate />
+          </Overlay>
+        }
       </div>
     );
   }
