@@ -117,7 +117,6 @@ class Editor extends React.Component {
           cm.replaceSelection(' '.repeat(INDENTATION_AMOUNT));
         }
       },
-      // Tab: 'indentMore',
       [`${metaKey}-Enter`]: () => null,
       [`Shift-${metaKey}-Enter`]: () => null,
       [`${metaKey}-F`]: 'findPersistent',
