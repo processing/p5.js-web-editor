@@ -355,12 +355,8 @@ export function changeProjectName(id, newName) {
 
 export function deleteProject(id) {
   return (dispatch, getState) => {
-    axios({
-      method: 'delete',
-      url: `${ROOT_URL}/projects/${id}`,
-      data: null,
-      withCredentials: true,
-      headers: { 'Content-Type': 'application/json' }
+    axios.delete(`${ROOT_URL}/projects/${id}`, {
+      withCredentials: true
     })
       .then(() => {
         const state = getState();
