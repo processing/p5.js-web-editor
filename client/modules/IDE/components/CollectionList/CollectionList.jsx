@@ -36,6 +36,7 @@ class CollectionList extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.loading === true && this.props.loading === false) {
+      // eslint-disable-next-line react/no-did-update-set-state
       this.setState({
         hasLoadedData: true,
       });
@@ -142,11 +143,14 @@ const ItemsShape = PropTypes.shape({
 });
 
 CollectionList.propTypes = {
+  addMode: PropTypes.bool,
   user: PropTypes.shape({
     username: PropTypes.string,
     authenticated: PropTypes.bool.isRequired
   }).isRequired,
+  projectId: PropTypes.string.isRequired,
   getCollections: PropTypes.func.isRequired,
+  getProject: PropTypes.func.isRequired,
   collections: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -172,6 +176,7 @@ CollectionList.propTypes = {
 };
 
 CollectionList.defaultProps = {
+  addMode: false,
   project: {
     id: undefined,
     owner: undefined

@@ -42,6 +42,10 @@ const ShareURL = ({ value }) => {
   );
 };
 
+ShareURL.propTypes = {
+  value: PropTypes.string.isRequired,
+};
+
 class CollectionItemRowBase extends React.Component {
   constructor(props) {
     super(props);
@@ -228,6 +232,11 @@ CollectionItemRowBase.propTypes = {
   collection: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired
+  }).isRequired,
+  item: PropTypes.shape({
+    project: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired,
   }).isRequired,
   username: PropTypes.string.isRequired,
   user: PropTypes.shape({
@@ -474,12 +483,19 @@ Collection.propTypes = {
   }).isRequired,
   getCollections: PropTypes.func.isRequired,
   collection: PropTypes.shape({
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
+    slug: PropTypes.string,
     description: PropTypes.string,
+    owner: PropTypes.shape({
+      username: PropTypes.string.isRequired,
+    }).isRequired,
+    items: PropTypes.arrayOf(PropTypes.shape({})),
   }).isRequired,
   username: PropTypes.string,
   loading: PropTypes.bool.isRequired,
   toggleDirectionForField: PropTypes.func.isRequired,
+  editCollection: PropTypes.func.isRequired,
   resetSorting: PropTypes.func.isRequired,
   sorting: PropTypes.shape({
     field: PropTypes.string.isRequired,

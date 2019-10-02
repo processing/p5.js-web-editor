@@ -212,20 +212,16 @@ class SketchListRowBase extends React.Component {
     );
   }
 
-  renderAddRemoveButtons = () => {
-    return (
-      <td className="sketch-list__dropdown-column">{
-        this.props.inCollection ? 
-          <AddRemoveButton type="remove" onClick={this.props.onCollectionRemove} />  :
-          <AddRemoveButton type="add" onClick={this.props.onCollectionAdd} />
-        }
-      </td>
-    );
-  }
+  renderAddRemoveButtons = () => (
+    <td className="sketch-list__dropdown-column">{
+      this.props.inCollection ?
+        <AddRemoveButton type="remove" onClick={this.props.onCollectionRemove} /> :
+        <AddRemoveButton type="add" onClick={this.props.onCollectionAdd} />
+    }
+    </td>
+  )
 
-  renderActions = () => {
-    return this.props.addMode === true ? this.renderAddRemoveButtons() : this.renderDropdown();
-  }
+  renderActions = () => (this.props.addMode === true ? this.renderAddRemoveButtons() : this.renderDropdown())
 
   render() {
     const { sketch, username } = this.props;
@@ -262,6 +258,8 @@ class SketchListRowBase extends React.Component {
 }
 
 SketchListRowBase.propTypes = {
+  addMode: PropTypes.bool.isRequired,
+  inCollection: PropTypes.bool.isRequired,
   sketch: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired
@@ -275,7 +273,9 @@ SketchListRowBase.propTypes = {
   showShareModal: PropTypes.func.isRequired,
   cloneProject: PropTypes.func.isRequired,
   exportProjectAsZip: PropTypes.func.isRequired,
-  changeProjectName: PropTypes.func.isRequired
+  changeProjectName: PropTypes.func.isRequired,
+  onCollectionAdd: PropTypes.func.isRequired,
+  onCollectionRemove: PropTypes.func.isRequired,
 };
 
 function mapDispatchToPropsSketchListRow(dispatch) {
@@ -394,6 +394,15 @@ SketchList.propTypes = {
     createdAt: PropTypes.string.isRequired,
     updatedAt: PropTypes.string.isRequired
   })).isRequired,
+  collection: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    items: PropTypes.arrayOf(PropTypes.shape({
+      project: PropTypes.shape({
+        id: PropTypes.string.isRequired,
+      }),
+    })),
+  }).isRequired,
   username: PropTypes.string,
   loading: PropTypes.bool.isRequired,
   toggleDirectionForField: PropTypes.func.isRequired,
@@ -402,14 +411,13 @@ SketchList.propTypes = {
     field: PropTypes.string.isRequired,
     direction: PropTypes.string.isRequired
   }).isRequired,
+  addToCollection: PropTypes.func.isRequired,
+  removeFromCollection: PropTypes.func.isRequired,
   addMode: PropTypes.bool,
 };
 
 SketchList.defaultProps = {
-  project: {
-    id: undefined,
-    owner: undefined
-  },
+  addMode: false,
   username: undefined
 };
 

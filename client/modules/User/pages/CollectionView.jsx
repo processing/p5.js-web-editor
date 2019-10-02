@@ -89,7 +89,7 @@ CollectionView.propTypes = {
     collection_id: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,
   }).isRequired,
-  previousPath: PropTypes.string.isRequired,
+  // previousPath: PropTypes.string.isRequired,
   theme: PropTypes.string.isRequired,
   user: PropTypes.shape({
     username: PropTypes.string.isRequired,

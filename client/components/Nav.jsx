@@ -338,7 +338,7 @@ class Nav extends React.PureComponent {
                 >
                   Add to Collection
                 </Link>
-            </li>}
+              </li>}
             { __process.env.EXAMPLES_ENABLED &&
             <li className="nav__dropdown-item">
               <Link
@@ -608,7 +608,7 @@ class Nav extends React.PureComponent {
                   onClick={this.setDropdownForNone}
                 >
                   My collections
-                    </Link>
+                </Link>
               </li>
             }
             <li className="nav__dropdown-item">

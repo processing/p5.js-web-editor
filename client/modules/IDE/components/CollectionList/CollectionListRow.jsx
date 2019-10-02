@@ -183,7 +183,7 @@ class CollectionListRowBase extends React.Component {
   renderCollectionName = () => {
     const { addMode, collection, username } = this.props;
     const { renameOpen, renameValue } = this.state;
-  
+
     if (addMode) {
       return collection.name;
     }
@@ -204,7 +204,7 @@ class CollectionListRowBase extends React.Component {
           />
         }
       </React.Fragment>
-    )
+    );
   }
 
   render() {
@@ -235,6 +235,10 @@ CollectionListRowBase.propTypes = {
   collection: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired
+  }).isRequired,
+  addMode: PropTypes.bool.isRequired,
+  project: PropTypes.shape({
+    id: PropTypes.string.isRequired,
   }).isRequired,
   username: PropTypes.string.isRequired,
   user: PropTypes.shape({
