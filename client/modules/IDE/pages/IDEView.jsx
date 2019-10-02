@@ -370,31 +370,6 @@ class IDEView extends React.Component {
             createFolder={this.props.createFolder}
           />
         }
-        { this.props.location.pathname.match(/sketches$/) &&
-          <Overlay
-            ariaLabel="project list"
-            title="Open a Sketch"
-            previousPath={this.props.ide.previousPath}
-          >
-            <Searchbar />
-            <SketchList
-              username={this.props.params.username}
-              user={this.props.user}
-            />
-          </Overlay>
-        }
-        { this.props.location.pathname.match(/assets$/) &&
-          <Overlay
-            title="Assets"
-            ariaLabel="asset list"
-            previousPath={this.props.ide.previousPath}
-          >
-            <AssetList
-              username={this.props.params.username}
-              user={this.props.user}
-            />
-          </Overlay>
-        }
         { this.props.location.pathname === '/about' &&
           <Overlay
             previousPath={this.props.ide.previousPath}
