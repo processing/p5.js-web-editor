@@ -83,7 +83,12 @@ class DashboardView extends React.Component {
         return <Link className="dashboard__action-button" to={`/${username}/collections/create`}>Create collection</Link>;
       case TabKey.sketches:
       default:
-        return <Link className="dashboard__action-button" to="/">New sketch</Link>;
+        return (
+          <React.Fragment>
+            <Searchbar />
+            <Link className="dashboard__action-button" to="/">New sketch</Link>
+          </React.Fragment>
+        );
     }
   }
 
@@ -111,10 +116,11 @@ class DashboardView extends React.Component {
         <section className="dashboard-header">
           <div className="dashboard-header__header">
             <h2 className="dashboard-header__header__title">{this.ownerName()}</h2>
-            <div className="dashboard-header__actions">
+            <div className="dashboard-header__nav">
               <DashboardTabSwitcher currentTab={currentTab} isOwner={isOwner} username={username} />
-              {currentTab === TabKey.sketches && <Searchbar />}
-              {this.renderActionButton(currentTab, username)}
+              <div className="dashboard-header__actions">
+                {this.renderActionButton(currentTab, username)}
+              </div>
             </div>
           </div>
 

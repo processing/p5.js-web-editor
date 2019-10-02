@@ -1,9 +1,7 @@
 .searchbar {
-  position: absolute;
+  position: relative;
   display: flex;
   padding-left: #{17 / $base-font-size}rem;
-  right: #{66 / $base-font-size}rem;
-  top: #{65 / $base-font-size}rem;
 }
 
 .searchbar__input {

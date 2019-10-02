@@ -55,10 +55,19 @@
   margin: 0;
 }
 
-.dashboard-header__actions {
+.dashboard-header__nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.dashboard-header__actions {
+  display: flex;
+  align-items: center;
+}
+
+.dashboard-header__actions > * {
+  margin-left: #{15 / $base-font-size}rem;
 }
 
 .dashboard__action-button {
