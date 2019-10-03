@@ -36,7 +36,7 @@ const ShareURL = ({ value }) => {
             <br />
             <CopyableInput value={value} />
           </React.Fragment> :
-          <button onClick={() => setShowURL(true)}>Share collection</button>
+          <button className="collection-share__button" onClick={() => setShowURL(true)}>Share collection</button>
       }
     </div>
   );
@@ -352,7 +352,7 @@ class Collection extends React.Component {
               }
             </h2>
 
-            <p className="collection-metadata__user">{items.length} sketch{items.length === 1 ? '' : 'es'} collected by {owner.username}</p>
+            <p className="collection-metadata__user">By {owner.username}</p>
 
             <p className="collection-metadata__description">
               {
@@ -365,12 +365,20 @@ class Collection extends React.Component {
                   description
               }
             </p>
+
+            <p className="collection-metadata__user">{items.length} sketch{items.length === 1 ? '' : 'es'}</p>
           </div>
 
           <div className="collection-metadata__column--right">
             <p className="collection-metadata__share">
               <ShareURL value={`${baseURL}${id}`} />
             </p>
+            {
+              this.isOwner() &&
+              <button className="collection-metadata__add-button" onClick={this.showAddSketches}>
+                Add more sketches
+              </button>
+            }
           </div>
         </div>
       </div>
@@ -450,15 +458,6 @@ class Collection extends React.Component {
                     />))}
                 </tbody>
               </table>
-
-              {
-                this.isOwner() &&
-                <p className="collection-add-button">
-                  <button onClick={this.showAddSketches}>
-                    Add more sketches
-                  </button>
-                </p>
-              }
             </div>
           }
           {

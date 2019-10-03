@@ -23,6 +23,14 @@
 
 .collection-metadata__column--right {
   align-self: flex-end;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.collection-metadata__column--right > * {
+  margin-top: #{10 / $base-font-size}rem;
 }
 
 .collection-metadata__name {
@@ -44,13 +52,13 @@
 }
 
 .collection-metadata__user {
-  padding-top: #{12 / $base-font-size}rem;
+  padding-top: #{8 / $base-font-size}rem;
   padding-left: #{8 / $base-font-size}rem;
   font-size: 14px;
 }
 
 .collection-metadata__description {
-  padding-top: #{24 / $base-font-size}rem;
+  padding-top: #{8 / $base-font-size}rem;
   text-align: left;
   font-size: 14px;
 }
@@ -76,13 +84,13 @@
   overflow: scroll;
 }
 
-.collection-add-button {
-  padding: #{24 / $base-font-size}rem;
-  text-align: center;
-}
-
 .collection-share {
   text-align: right;
+  // padding: #{10 / $base-font-size}rem #{30 / $base-font-size}rem;
+}
+
+.collection-share__button {
+  @extend %button;
 }
 
 .collection-share__label {
@@ -92,4 +100,9 @@
 
 .collection-share .copyable-input {
   padding-bottom: 0;
+}
+
+.collection-metadata__add-button {
+  @extend %primary-button;
+  flex-grow: 0;
 }
