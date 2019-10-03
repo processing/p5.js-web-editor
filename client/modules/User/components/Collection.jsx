@@ -32,11 +32,11 @@ const ShareURL = ({ value }) => {
       {
         showURL ?
           <React.Fragment>
-            <span className="collection-share__label">Everyone can access the collection via this link:</span>
+            <span className="collection-share__label">Everyone can access the collection with this link</span>
             <br />
             <CopyableInput value={value} />
           </React.Fragment> :
-          <button className="collection-share__button" onClick={() => setShowURL(true)}>Share collection</button>
+          <button className="collection-share__button" onClick={() => setShowURL(true)}>Share</button>
       }
     </div>
   );
@@ -376,7 +376,7 @@ class Collection extends React.Component {
             {
               this.isOwner() &&
               <button className="collection-metadata__add-button" onClick={this.showAddSketches}>
-                Add more sketches
+                Add Sketch
               </button>
             }
           </div>
