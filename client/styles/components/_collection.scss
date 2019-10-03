@@ -25,16 +25,16 @@
   align-self: flex-end;
 
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  flex-direction: row;
+  justify-content: flex-end;
 }
 
 .collection-metadata__column--right > * {
-  margin-top: #{10 / $base-font-size}rem;
+  margin-left: #{10 / $base-font-size}rem;
 }
 
 .collection-metadata__name {
-  padding: #{12 / $base-font-size}rem 0;
+  padding: #{8 / $base-font-size}rem 0;
 }
 
 .collection-metadata__name .editable-input__label span {
@@ -53,8 +53,11 @@
 
 .collection-metadata__user {
   padding-top: #{8 / $base-font-size}rem;
-  padding-left: #{8 / $base-font-size}rem;
   font-size: 14px;
+}
+
+.collection-metadata--is-owner .collection-metadata__user {
+  padding-left: #{8 / $base-font-size}rem;
 }
 
 .collection-metadata__description {

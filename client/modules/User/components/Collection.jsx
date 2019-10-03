@@ -343,7 +343,7 @@ class Collection extends React.Component {
     };
 
     return (
-      <div className="collection-metadata">
+      <div className={`collection-metadata ${this.isOwner() ? 'collection-metadata--is-owner' : ''}`}>
         <div className="collection-metadata__columns">
           <div className="collection-metadata__column--left">
             <h2 className="collection-metadata__name">
