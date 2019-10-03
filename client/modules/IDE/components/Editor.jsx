@@ -134,7 +134,7 @@ class Editor extends React.Component {
         this.props.clearConsole();
         this.props.startRefreshSketch();
       }
-    }, 400));
+    }, 1000));
 
     this._cm.on('keyup', () => {
       const temp = `line ${parseInt((this._cm.getCursor().line) + 1, 10)}`;
