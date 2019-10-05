@@ -16,8 +16,12 @@ const logoUrl = require('../../../images/p5js-logo.svg');
 class LoginView extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      hidden: true
+    };
     this.closeLoginPage = this.closeLoginPage.bind(this);
     this.gotoHomePage = this.gotoHomePage.bind(this);
+    this.togglePassword = this.togglePassword.bind(this);
   }
 
   closeLoginPage() {
@@ -28,6 +32,9 @@ class LoginView extends React.Component {
     browserHistory.push('/');
   }
 
+  togglePassword() {
+    this.setState({ hidden: !this.state.hidden });
+  }
   render() {
     if (this.props.user.authenticated) {
       this.gotoHomePage();
@@ -48,17 +55,21 @@ class LoginView extends React.Component {
         </div>
         <div className="form-container__content">
           <h2 className="form-container__title">Log In</h2>
-          <LoginForm {...this.props} />
+          <LoginForm {...this.props} togglePassword={this.togglePassword} hidden={this.state.hidden} />
           <h2 className="form-container__divider">Or</h2>
           <GithubButton buttonText="Login with Github" />
           <GoogleButton buttonText="Login with Google" />
           <p className="form__navigation-options">
             Don&apos;t have an account?&nbsp;
-            <Link className="form__signup-button" to="/signup">Sign Up</Link>
+            <Link className="form__signup-button" to="/signup">
+              Sign Up
+            </Link>
           </p>
           <p className="form__navigation-options">
             Forgot your password?&nbsp;
-            <Link className="form__reset-password-button" to="/reset-password">Reset your password</Link>
+            <Link className="form__reset-password-button" to="/reset-password">
+              Reset your password
+            </Link>
           </p>
         </div>
       </div>
@@ -92,8 +103,12 @@ LoginView.defaultProps = {
   }
 };
 
-export default reduxForm({
-  form: 'login',
-  fields: ['email', 'password'],
-  validate: validateLogin
-}, mapStateToProps, mapDispatchToProps)(LoginView);
+export default reduxForm(
+  {
+    form: 'login',
+    fields: ['email', 'password'],
+    validate: validateLogin
+  },
+  mapStateToProps,
+  mapDispatchToProps
+)(LoginView);

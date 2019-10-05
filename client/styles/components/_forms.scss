@@ -5,7 +5,7 @@
   font-size: #{9 / $base-font-size}rem;
   text-align: left;
   @include themify() {
-    color: getThemifyVariable('error-color')
+    color: getThemifyVariable("error-color");
   }
 }
 
@@ -43,7 +43,22 @@
 .form__status {
   color: $form-navigation-options-color;
 }
-
+.form__password__toggler {
+  float: right;
+  border: 1px solid;
+  border-radius: #{3 / $base-font-size}rem;
+  padding-top: #{5.5 / $base-font-size}rem;
+  padding-bottom: #{5.5 / $base-font-size}rem;
+  padding-left: #{12 / $base-font-size}rem;
+  padding-right: #{12 / $base-font-size}rem;
+  margin-left: #{-80 / $base-font-size}rem;
+  margin-top: #{6 / $base-font-size}rem;;
+  margin-right: #{6 / $base-font-size}rem;;
+  position: relative;
+}
+.form__checkbox__hidden {
+  display: none;
+}
 .form input[type="submit"] {
   @extend %forms-button;
 }
