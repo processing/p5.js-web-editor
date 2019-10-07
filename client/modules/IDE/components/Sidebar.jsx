@@ -66,7 +66,6 @@ class Sidebar extends React.Component {
       'sidebar--project-options': this.props.projectOptionsVisible,
       'sidebar--cant-edit': !canEditProject
     });
-    const rootFile = this.props.files.filter(file => file.name === 'root')[0];
 
     return (
       <nav className={sidebarClass} title="file-navigation" >
@@ -91,7 +90,7 @@ class Sidebar extends React.Component {
                 <button
                   aria-label="add folder"
                   onClick={() => {
-                    this.props.newFolder(rootFile.id);
+                    this.props.newFolder();
                     setTimeout(this.props.closeProjectOptions, 0);
                   }}
                   onBlur={this.onBlurComponent}
@@ -104,7 +103,7 @@ class Sidebar extends React.Component {
                 <button
                   aria-label="add file"
                   onClick={() => {
-                    this.props.newFile(rootFile.id);
+                    this.props.newFile();
                     setTimeout(this.props.closeProjectOptions, 0);
                   }}
                   onBlur={this.onBlurComponent}
@@ -117,7 +116,7 @@ class Sidebar extends React.Component {
           </div>
         </div>
         <ConnectedFileNode
-          id={rootFile.id}
+          id={this.props.files.filter(file => file.name === 'root')[0].id}
           canEdit={canEditProject}
         />
       </nav>

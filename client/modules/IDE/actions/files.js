@@ -41,7 +41,14 @@ export function updateFileContent(id, content) {
 export function createFile(formProps) {
   return (dispatch, getState) => {
     const state = getState();
-    const { parentId } = state.ide;
+    const selectedFile = state.files.find(file => file.isSelectedFile);
+    const rootFile = state.files.find(file => file.name === 'root');
+    let parentId;
+    if (selectedFile.fileType === 'folder') {
+      parentId = selectedFile.id;
+    } else {
+      parentId = rootFile.id;
+    }
     if (state.project.id) {
       const postParams = {
         name: createUniqueName(formProps.name, parentId, state.files),
@@ -92,7 +99,14 @@ export function createFile(formProps) {
 export function createFolder(formProps) {
   return (dispatch, getState) => {
     const state = getState();
-    const { parentId } = state.ide;
+    const selectedFile = state.files.find(file => file.isSelectedFile);
+    const rootFile = state.files.find(file => file.name === 'root');
+    let parentId;
+    if (selectedFile.fileType === 'folder') {
+      parentId = selectedFile.id;
+    } else {
+      parentId = rootFile.id;
+    }
     if (state.project.id) {
       const postParams = {
         name: createUniqueName(formProps.name, parentId, state.files),
