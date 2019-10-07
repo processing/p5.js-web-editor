@@ -188,7 +188,7 @@ export class FileNode extends React.Component {
                             <button
                               aria-label="add file"
                               onClick={() => {
-                                this.props.newFile(this.props.id);
+                                this.props.newFile();
                                 setTimeout(() => this.hideFileOptions(), 0);
                               }}
                               onBlur={this.onBlurComponent}
@@ -208,7 +208,7 @@ export class FileNode extends React.Component {
                             <button
                               aria-label="add folder"
                               onClick={() => {
-                                this.props.newFolder(this.props.id);
+                                this.props.newFolder();
                                 setTimeout(() => this.hideFileOptions(), 0);
                               }}
                               onBlur={this.onBlurComponent}
