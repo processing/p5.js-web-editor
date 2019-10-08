@@ -46,4 +46,4 @@ deploy:
 
 env:
   global:
-    - APP_IMAGE_NAME=p5jswebeditor_app
+    - APP_IMAGE_NAME=p5js-web-editor_app
