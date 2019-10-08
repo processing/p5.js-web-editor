@@ -51,10 +51,6 @@
   padding-right: #{15 / $base-font-size}rem;
 }
 
-.nav__item-header {
-  margin-right: #{5 / $base-font-size}rem;
-}
-
 .nav__item:hover {
   .nav__item-header {
     @include themify() {
@@ -69,30 +65,22 @@
   }
 }
 
-.nav__dropdown {
+.nav__item-header:hover {
   @include themify() {
-    background-color: map-get($theme-map, 'modal-background-color');
-    border: 1px solid map-get($theme-map, 'modal-border-color');
-    box-shadow: 0 0 18px 0 getThemifyVariable('shadow-color');
-    color: getThemifyVariable('dropdown-color');
-  }
+      color: getThemifyVariable('nav-hover-color');
+    }
+}
 
+.nav__item-header-triangle {
+	margin-left: #{5 / $base-font-size}rem;
+}
+
+.nav__dropdown {
+  @extend %dropdown-open-left;
   display: none;
-  text-align: left;
-  width: #{180 / $base-font-size}rem;
-
   .nav__item--open & {
     display: flex;
-    position: absolute;
-    flex-direction: column;
-    top: #{40 / $base-font-size}rem;
-    left: 0;
-    height: auto;
   }
-
-  z-index: 9999;
-  border-radius: #{6 / $base-font-size}rem;
-  border-top-left-radius: 0px;
 }
 
 .nav__items-right {
@@ -110,94 +98,11 @@
   }
 }
 
-.nav__dropdown a,
-button {
-  @include themify() {
-    color: getThemifyVariable('secondary-text-color');
-  }
-}
-
-.nav__dropdown button {
-  padding: 0;
-}
-
-.nav__dropdown a:hover {
-  @include themify() {
-    color: getThemifyVariable('primary-text-color');
-  }
-}
-
-.nav__dropdown-heading {
-  @include themify() {
-    border-bottom: 1px dashed map-get($theme-map, 'inactive-text-color');
-  }
-
-  height: #{(42 - 5) / $base-font-size}rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 0 #{16 / $base-font-size}rem;
-  cursor: pointer;
-
-  &:hover {
-    span {
-      @include themify() {
-        color: getThemifyVariable('nav-hover-color');
-      }
-    }
-
-    polygon {
-      @include themify() {
-        fill: getThemifyVariable('nav-hover-color');
-      }
-    }
-  }
-}
-
-.nav__dropdown-heading a,
-.nav__dropdown-heading a:hover {
-  @include themify() {
-    color: getThemifyVariable('inactive-text-color');
-  }
-
-  cursor: default;
-  width: 100%;
-}
-
-.nav__dropdown-heading svg {
-  transform-origin: 50% 50%;
-  transform: rotate(180deg);
-}
+// .nav__dropdown button {
+//   padding: 0;
+// }
 
 .nav__dropdown-item {
-  height: #{32 / $base-font-size}rem;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  padding: 0 #{16 / $base-font-size}rem;
-  cursor: pointer;
-
-  & button,
-  & a {
-    @include themify() {
-      color: getThemifyVariable('dropdown-color');
-    }
-  }
-
-  &:hover {
-    @include themify() {
-      background-color: getThemifyVariable('button-background-hover-color');
-      color: getThemifyVariable('button-hover-color')
-    }
-
-    & button,
-    & a {
-      @include themify() {
-        color: getThemifyVariable('button-hover-color');
-      }
-    }
-  }
-
   & button,
   & a {
     width: 100%;
@@ -206,13 +111,6 @@ button {
     justify-content: space-between;
     align-items: center;
   }
-}
-
-.nav__dropdown-item:last-child {
-  border-radius: 0 0 #{5 / $base-font-size}rem #{5 / $base-font-size}rem;
-}
-.nav__dropdown-item:first-child {
-  border-radius: 0 #{5 / $base-font-size}rem 0 0;
 }
 
 .nav__announce {

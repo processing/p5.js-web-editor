@@ -11,9 +11,9 @@ const defaultHTML =
 `<!DOCTYPE html>
 <html>
   <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.dom.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.sound.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.sound.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="utf-8" />
   </head>
@@ -61,7 +61,7 @@ function getCategories() {
       for (let j = 1; j < metadata.name.split('_').length; j += 1) {
         category += `${metadata.name.split('_')[j]} `;
       }
-      categories.push({ url: metadata.url, name: category });
+      categories.push({ url: metadata.url, name: category.trim() });
     });
 
     return categories;
@@ -114,12 +114,12 @@ function getSketchContent(projectsInAllCategories) {
 
     return rp(options).then((res) => {
       const noNumberprojectName = project.projectName.replace(/(\d+)/g, '');
-      if (noNumberprojectName === 'Instance Mode : Instance Container ') {
+      if (noNumberprojectName === 'Instance Mode: Instance Container ') {
         for (let i = 0; i < 4; i += 1) {
           const splitedRes = `${res.split('*/')[1].split('</html>')[i]}</html>\n`;
           project.sketchContent = splitedRes.replace(
             'p5.js',
-            'https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.4/p5.min.js'
+            'https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js'
           );
         }
       } else {
@@ -153,7 +153,7 @@ function createProjectsInP5user(projectsInAllCategories) {
           const c = objectID().toHexString();
           const r = objectID().toHexString();
           const noNumberprojectName = project.projectName.replace(/(\d+)/g, '');
-          if (noNumberprojectName === 'Instance Mode : Instance Container ') {
+          if (noNumberprojectName === 'Instance Mode: Instance Container ') {
             newProject = new Project({
               name: project.projectName,
               user: user._id,
@@ -167,7 +167,7 @@ function createProjectsInP5user(projectsInAllCategories) {
                 },
                 {
                   name: 'sketch.js',
-                  content: '// Instance Mode : Instance Container, please check its index.html file',
+                  content: '// Instance Mode: Instance Container, please check its index.html file',
                   id: a,
                   _id: a,
                   fileType: 'file',

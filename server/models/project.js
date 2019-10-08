@@ -2,6 +2,9 @@ import mongoose from 'mongoose';
 import shortid from 'shortid';
 import slugify from 'slugify';
 
+// Register User model as it's referenced by Project
+import './user';
+
 const { Schema } = mongoose;
 
 const fileSchema = new Schema(

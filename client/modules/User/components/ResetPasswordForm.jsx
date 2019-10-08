@@ -17,6 +17,7 @@ function ResetPasswordForm(props) {
           id="email"
           {...domOnlyProps(email)}
         />
+        {email.touched && email.error && <span className="form-error">{email.error}</span>}
       </p>
       <input
         type="submit"

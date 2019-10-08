@@ -30,6 +30,7 @@ import * as ConsoleActions from '../actions/console';
 import { getHTMLFile } from '../reducers/files';
 import Overlay from '../../App/components/Overlay';
 import SketchList from '../components/SketchList';
+import Searchbar from '../components/Searchbar';
 import AssetList from '../components/AssetList';
 import About from '../components/About';
 import Feedback from '../components/Feedback';
@@ -205,6 +206,8 @@ class IDEView extends React.Component {
               setFontSize={this.props.setFontSize}
               autosave={this.props.preferences.autosave}
               linewrap={this.props.preferences.linewrap}
+              lineNumbers={this.props.preferences.lineNumbers}
+              setLineNumbers={this.props.setLineNumbers}
               setAutosave={this.props.setAutosave}
               setLinewrap={this.props.setLinewrap}
               lintWarning={this.props.preferences.lintWarning}
@@ -270,6 +273,7 @@ class IDEView extends React.Component {
                   file={this.props.selectedFile}
                   updateFileContent={this.props.updateFileContent}
                   fontSize={this.props.preferences.fontSize}
+                  lineNumbers={this.props.preferences.lineNumbers}
                   files={this.props.files}
                   editorOptionsVisible={this.props.ide.editorOptionsVisible}
                   showEditorOptions={this.props.showEditorOptions}
@@ -344,6 +348,8 @@ class IDEView extends React.Component {
                     stopSketch={this.props.stopSketch}
                     setBlobUrl={this.props.setBlobUrl}
                     expandConsole={this.props.expandConsole}
+                    clearConsole={this.props.clearConsole}
+                    cmController={this.cmController}
                   />
                 </div>
               </div>
@@ -369,6 +375,7 @@ class IDEView extends React.Component {
             title="Open a Sketch"
             previousPath={this.props.ide.previousPath}
           >
+            <Searchbar />
             <SketchList
               username={this.props.params.username}
               user={this.props.user}
@@ -412,9 +419,9 @@ class IDEView extends React.Component {
             closeOverlay={this.props.closeShareModal}
           >
             <ShareModal
-              projectId={this.props.project.id}
-              projectName={this.props.project.name}
-              ownerUsername={this.props.project.owner.username}
+              projectId={this.props.ide.shareModalProjectId}
+              projectName={this.props.ide.shareModalProjectName}
+              ownerUsername={this.props.ide.shareModalProjectUsername}
             />
           </Overlay>
         }
@@ -479,6 +486,9 @@ IDEView.propTypes = {
     projectOptionsVisible: PropTypes.bool.isRequired,
     newFolderModalVisible: PropTypes.bool.isRequired,
     shareModalVisible: PropTypes.bool.isRequired,
+    shareModalProjectId: PropTypes.string.isRequired,
+    shareModalProjectName: PropTypes.string.isRequired,
+    shareModalProjectUsername: PropTypes.string.isRequired,
     editorOptionsVisible: PropTypes.bool.isRequired,
     keyboardShortcutVisible: PropTypes.bool.isRequired,
     unsavedChanges: PropTypes.bool.isRequired,
@@ -511,6 +521,7 @@ IDEView.propTypes = {
     fontSize: PropTypes.number.isRequired,
     autosave: PropTypes.bool.isRequired,
     linewrap: PropTypes.bool.isRequired,
+    lineNumbers: PropTypes.bool.isRequired,
     lintWarning: PropTypes.bool.isRequired,
     textOutput: PropTypes.bool.isRequired,
     gridOutput: PropTypes.bool.isRequired,
@@ -521,6 +532,7 @@ IDEView.propTypes = {
   closePreferences: PropTypes.func.isRequired,
   setFontSize: PropTypes.func.isRequired,
   setAutosave: PropTypes.func.isRequired,
+  setLineNumbers: PropTypes.func.isRequired,
   setLinewrap: PropTypes.func.isRequired,
   setLintWarning: PropTypes.func.isRequired,
   setTextOutput: PropTypes.func.isRequired,
@@ -598,7 +610,8 @@ function mapStateToProps(state) {
   return {
     files: state.files,
     selectedFile: state.files.find(file => file.isSelectedFile) ||
-      state.files.find(file => file.name === 'sketch.js'),
+      state.files.find(file => file.name === 'sketch.js') ||
+      state.files.find(file => file.name !== 'root'),
     htmlFile: getHTMLFile(state.files),
     ide: state.ide,
     preferences: state.preferences,

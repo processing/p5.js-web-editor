@@ -1,6 +1,8 @@
 # [p5.js Web Editor](https://editor.p5js.org)
 
-Hello! The p5.js Web Editor is an in-browser editor for creative coding, specifically for writing [p5.js](https://p5js.org/) sketches. p5.js, a separate [open source project](https://github.com/processing/p5.js), is a JavaScript library with the goal of making coding accessible for artists, designers, educators, and beginners. The web editor shares the same spirit as p5.js–it is designed with the beginner in mind. When using the web editor, you don't need to download or configure anything, you can simply open the website, and start writing code. You can also host your work online and share it with others. 
+The p5.js Web Editor is a platform for creative coding, with a focus on making coding accessible for as many people as possible, including artists, designers, educators, beginners, and anyone who wants to learn. Simply by opening the website you can get started writing p5.js sketches without downloading or configuring anything. The editor is designed with simplicity in mind by limiting features and frills. We strive to listen to the community to drive the editor’s development, and to be intentional with every change. The editor is free and open-source.
+
+We also strive to give the community as much ownership and control as possible. You can download your sketches so that you can edit them locally or host them elsewhere. You can also host your own version of the editor, giving you control over its data.
 
 The p5.js Web Editor is currently in active development, and looking for contributions of any type! Please check out the [contribution guide](https://github.com/processing/p5.js-web-editor/blob/master/.github/CONTRIBUTING.md) for more details.
 

@@ -62,9 +62,10 @@ export function resetSelectedFile(previousId) {
   };
 }
 
-export function newFile() {
+export function newFile(parentId) {
   return {
-    type: ActionTypes.SHOW_MODAL
+    type: ActionTypes.SHOW_MODAL,
+    parentId
   };
 }
 
@@ -122,9 +123,10 @@ export function closeProjectOptions() {
   };
 }
 
-export function newFolder() {
+export function newFolder(parentId) {
   return {
-    type: ActionTypes.SHOW_NEW_FOLDER_MODAL
+    type: ActionTypes.SHOW_NEW_FOLDER_MODAL,
+    parentId
   };
 }
 
@@ -134,9 +136,17 @@ export function closeNewFolderModal() {
   };
 }
 
-export function showShareModal() {
-  return {
-    type: ActionTypes.SHOW_SHARE_MODAL
+export function showShareModal(projectId, projectName, ownerUsername) {
+  return (dispatch, getState) => {
+    const { project, user } = getState();
+    dispatch({
+      type: ActionTypes.SHOW_SHARE_MODAL,
+      payload: {
+        shareModalProjectId: projectId || project.id,
+        shareModalProjectName: projectName || project.name,
+        shareModalProjectUsername: ownerUsername || user.username
+      }
+    });
   };
 }
 

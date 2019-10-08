@@ -3,6 +3,7 @@ import format from 'date-fns/format';
 import isUrl from 'is-url';
 import jsdom, { serializeDocument } from 'jsdom';
 import isBefore from 'date-fns/is_before';
+import isAfter from 'date-fns/is_after';
 import request from 'request';
 import slugify from 'slugify';
 import Project from '../models/project';
@@ -11,31 +12,7 @@ import { resolvePathToFile } from '../utils/filePath';
 import generateFileSystemSafeName from '../utils/generateFileSystemSafeName';
 import { deleteObjectsFromS3, getObjectKey } from './aws.controller';
 
-export function createProject(req, res) {
-  let projectValues = {
-    user: req.user._id
-  };
-
-  projectValues = Object.assign(projectValues, req.body);
-
-  Project.create(projectValues, (err, newProject) => {
-    if (err) {
-      res.json({ success: false });
-      return;
-    }
-    Project.populate(
-      newProject,
-      { path: 'user', select: 'username' },
-      (innerErr, newProjectWithUser) => {
-        if (innerErr) {
-          res.json({ success: false });
-          return;
-        }
-        res.json(newProjectWithUser);
-      }
-    );
-  });
-}
+export { default as createProject } from './project.controller/createProject';
 
 export function updateProject(req, res) {
   Project.findById(req.params.project_id, (findProjectErr, project) => {
@@ -43,10 +20,10 @@ export function updateProject(req, res) {
       res.status(403).send({ success: false, message: 'Session does not match owner of project.' });
       return;
     }
-    // if (req.body.updatedAt && moment(req.body.updatedAt) < moment(project.updatedAt)) {
-    //   res.status(409).send({ success: false, message: 'Attempted to save stale version of project.' });
-    //   return;
-    // }
+    if (req.body.updatedAt && isAfter(new Date(project.updatedAt), req.body.updatedAt)) {
+      res.status(409).send({ success: false, message: 'Attempted to save stale version of project.' });
+      return;
+    }
     Project.findByIdAndUpdate(
       req.params.project_id,
       {
@@ -63,7 +40,7 @@ export function updateProject(req, res) {
           res.json({ success: false });
           return;
         }
-        if (updatedProject.files.length !== req.body.files.length) {
+        if (req.body.files && updatedProject.files.length !== req.body.files.length) {
           const oldFileIds = updatedProject.files.map(file => file.id);
           const newFileIds = req.body.files.map(file => file.id);
           const staleIds = oldFileIds.filter(id => newFileIds.indexOf(id) === -1);
@@ -254,6 +231,10 @@ function bundleExternalLibs(project, zip, callback) {
 
     if (!isUrl(src)) {
       numScriptsResolved += 1;
+      if (numScriptsResolved === numScriptTags) {
+        indexHtml.content = serializeDocument(document);
+        callback();
+      }
       return;
     }
 
@@ -279,6 +260,10 @@ function bundleExternalLibs(project, zip, callback) {
     numScriptTags = scriptTags.length;
     for (let i = 0; i < numScriptTags; i += 1) {
       resolveScriptTagSrc(scriptTags[i], indexHtmlDoc);
+    }
+    if (numScriptTags === 0) {
+      indexHtml.content = serializeDocument(document);
+      callback();
     }
   });
 }

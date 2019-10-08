@@ -21,6 +21,7 @@
 @import 'components/preferences';
 @import 'components/reset-password';
 @import 'components/new-password';
+@import 'components/searchbar';
 @import 'components/sketch-list';
 @import 'components/sidebar';
 @import 'components/modal';
@@ -41,6 +42,8 @@
 @import 'components/keyboard-shortcuts';
 @import 'components/copyable-input';
 @import 'components/feedback';
+@import 'components/loader';
+@import 'components/uploader';
 
 @import 'layout/ide';
 @import 'layout/fullscreen';

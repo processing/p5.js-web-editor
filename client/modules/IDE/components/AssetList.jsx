@@ -4,11 +4,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import { Helmet } from 'react-helmet';
-
 import prettyBytes from 'pretty-bytes';
 
+import Loader from '../../App/components/loader';
 import * as AssetActions from '../actions/assets';
-
 
 class AssetList extends React.Component {
   constructor(props) {
@@ -17,22 +16,43 @@ class AssetList extends React.Component {
   }
 
   getAssetsTitle() {
-    if (this.props.username === this.props.user.username) {
+    if (!this.props.username || this.props.username === this.props.user.username) {
       return 'p5.js Web Editor | My assets';
     }
     return `p5.js Web Editor | ${this.props.username}'s assets`;
   }
 
+  hasAssets() {
+    return !this.props.loading && this.props.assetList.length > 0;
+  }
+
+  renderLoader() {
+    if (this.props.loading) return <Loader />;
+    return null;
+  }
+
+  renderEmptyTable() {
+    if (!this.props.loading && this.props.assetList.length === 0) {
+      return (<p className="asset-table__empty">No uploaded assets.</p>);
+    }
+    return null;
+  }
+
   render() {
+    const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
+    const { assetList, totalSize } = this.props;
     return (
       <div className="asset-table-container">
+        {/* Eventually, this copy should be Total / 250 MB Used */}
+        {this.hasAssets() &&
+          <p className="asset-table__total">{`${prettyBytes(totalSize)} Total`}</p>
+        }
         <Helmet>
           <title>{this.getAssetsTitle()}</title>
         </Helmet>
-        {this.props.assets.length === 0 &&
-          <p className="asset-table__empty">No uploaded assets.</p>
-        }
-        {this.props.assets.length > 0 &&
+        {this.renderLoader()}
+        {this.renderEmptyTable()}
+        {this.hasAssets() &&
           <table className="asset-table">
             <thead>
               <tr>
@@ -43,13 +63,13 @@ class AssetList extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {this.props.assets.map(asset =>
+              {assetList.map(asset =>
                 (
                   <tr className="asset-table__row" key={asset.key}>
                     <td>{asset.name}</td>
                     <td>{prettyBytes(asset.size)}</td>
                     <td><Link to={asset.url} target="_blank">View</Link></td>
-                    <td><Link to={`/${this.props.username}/sketches/${asset.sketchId}`}>{asset.sketchName}</Link></td>
+                    <td><Link to={`/${username}/sketches/${asset.sketchId}`}>{asset.sketchName}</Link></td>
                   </tr>
                 ))}
             </tbody>
@@ -64,20 +84,24 @@ AssetList.propTypes = {
     username: PropTypes.string
   }).isRequired,
   username: PropTypes.string.isRequired,
-  assets: PropTypes.arrayOf(PropTypes.shape({
+  assetList: PropTypes.arrayOf(PropTypes.shape({
     key: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
     sketchName: PropTypes.string.isRequired,
     sketchId: PropTypes.string.isRequired
   })).isRequired,
+  totalSize: PropTypes.number.isRequired,
   getAssets: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired
 };
 
 function mapStateToProps(state) {
   return {
     user: state.user,
-    assets: state.assets
+    assetList: state.assets.list,
+    totalSize: state.assets.totalSize,
+    loading: state.loading
   };
 }
 
