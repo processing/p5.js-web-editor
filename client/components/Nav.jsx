@@ -663,7 +663,9 @@ Nav.propTypes = {
   setAllAccessibleOutput: PropTypes.func.isRequired,
   newFile: PropTypes.func.isRequired,
   newFolder: PropTypes.func.isRequired,
-  rootFile: PropTypes.func.isRequired
+  rootFile: PropTypes.shape({
+    id: PropTypes.string.isRequired
+  }).isRequired
 };
 
 Nav.defaultProps = {

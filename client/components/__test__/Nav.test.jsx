@@ -39,7 +39,12 @@ describe('Nav', () => {
     },
     startSketch: jest.fn(),
     stopSketch: jest.fn(),
-    setAllAccessibleOutput: jest.fn()
+    setAllAccessibleOutput: jest.fn(),
+    showToast: jest.fn(),
+    setToastText: jest.fn(),
+    rootFile: {
+      id: 'root-file'
+    }
   };
   const getWrapper = () => shallow(<NavComponent {...props} />);
 
