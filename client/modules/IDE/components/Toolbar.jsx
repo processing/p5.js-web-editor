@@ -124,7 +124,7 @@ class Toolbar extends React.Component {
           </a>
           <input
             type="text"
-            maxLength="127"
+            maxLength="128"
             className="toolbar__project-name-input"
             value={this.props.project.name}
             onChange={this.handleProjectNameChange}
