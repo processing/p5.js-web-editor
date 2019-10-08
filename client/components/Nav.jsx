@@ -129,12 +129,12 @@ class Nav extends React.PureComponent {
   }
 
   handleAddFile() {
-    this.props.newFile();
+    this.props.newFile(this.props.rootFile.id);
     this.setDropdown('none');
   }
 
   handleAddFolder() {
-    this.props.newFolder();
+    this.props.newFolder(this.props.rootFile.id);
     this.setDropdown('none');
   }
 
@@ -662,7 +662,8 @@ Nav.propTypes = {
   stopSketch: PropTypes.func.isRequired,
   setAllAccessibleOutput: PropTypes.func.isRequired,
   newFile: PropTypes.func.isRequired,
-  newFolder: PropTypes.func.isRequired
+  newFolder: PropTypes.func.isRequired,
+  rootFile: PropTypes.func.isRequired
 };
 
 Nav.defaultProps = {
@@ -677,7 +678,8 @@ function mapStateToProps(state) {
   return {
     project: state.project,
     user: state.user,
-    unsavedChanges: state.ide.unsavedChanges
+    unsavedChanges: state.ide.unsavedChanges,
+    rootFile: state.files.filter(file => file.name === 'root')[0]
   };
 }
 
