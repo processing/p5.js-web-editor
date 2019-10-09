@@ -1,6 +1,6 @@
 .asset-table-container {
   // flex: 1 1 0%;
-  overflow-y: scroll;
+  overflow-y: auto;
   max-width: 100%;
   width: #{1000 / $base-font-size}rem;
   min-height: #{400 / $base-font-size}rem;
@@ -53,4 +53,8 @@
 .asset-table__empty {
   text-align: center;
   font-size: #{16 / $base-font-size}rem;
+}
+
+.asset-table__total {
+  padding: 0 #{20 / $base-font-size}rem;
 }

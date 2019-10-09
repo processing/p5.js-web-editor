@@ -30,6 +30,7 @@ import * as ConsoleActions from '../actions/console';
 import { getHTMLFile } from '../reducers/files';
 import Overlay from '../../App/components/Overlay';
 import SketchList from '../components/SketchList';
+import Searchbar from '../components/Searchbar';
 import AssetList from '../components/AssetList';
 import About from '../components/About';
 import Feedback from '../components/Feedback';
@@ -37,10 +38,13 @@ import Feedback from '../components/Feedback';
 class IDEView extends React.Component {
   constructor(props) {
     super(props);
-    this._handleConsolePaneOnDragFinished = this._handleConsolePaneOnDragFinished.bind(this);
-    this._handleSidebarPaneOnDragFinished = this._handleSidebarPaneOnDragFinished.bind(this);
     this.handleGlobalKeydown = this.handleGlobalKeydown.bind(this);
     this.warnIfUnsavedChanges = this.warnIfUnsavedChanges.bind(this);
+
+    this.state = {
+      consoleSize: props.ide.consoleIsExpanded ? 150 : 29,
+      sidebarSize: props.ide.sidebarIsExpanded ? 160 : 20
+    };
   }
 
   componentDidMount() {
@@ -55,10 +59,6 @@ class IDEView extends React.Component {
         this.props.getProject(id);
       }
     }
-
-    this.consoleSize = this.props.ide.consoleIsExpanded ? 150 : 29;
-    this.sidebarSize = this.props.ide.sidebarIsExpanded ? 160 : 20;
-    this.forceUpdate();
 
     this.isMac = navigator.userAgent.toLowerCase().indexOf('mac') !== -1;
     document.addEventListener('keydown', this.handleGlobalKeydown, false);
@@ -75,17 +75,17 @@ class IDEView extends React.Component {
     if (nextProps.location !== this.props.location) {
       this.props.setPreviousPath(this.props.location.pathname);
     }
-  }
 
-  componentWillUpdate(nextProps) {
     if (this.props.ide.consoleIsExpanded !== nextProps.ide.consoleIsExpanded) {
-      this.consoleSize = nextProps.ide.consoleIsExpanded ? 150 : 29;
+      this.setState({ consoleSize: nextProps.ide.consoleIsExpanded ? 150 : 29 });
     }
 
     if (this.props.ide.sidebarIsExpanded !== nextProps.ide.sidebarIsExpanded) {
-      this.sidebarSize = nextProps.ide.sidebarIsExpanded ? 160 : 20;
+      this.setState({ sidebarSize: nextProps.ide.sidebarIsExpanded ? 160 : 20 });
     }
+  }
 
+  componentWillUpdate(nextProps) {
     if (nextProps.params.project_id && !this.props.params.project_id) {
       if (nextProps.params.project_id !== nextProps.project.id) {
         this.props.getProject(nextProps.params.project_id);
@@ -127,28 +127,10 @@ class IDEView extends React.Component {
     document.removeEventListener('keydown', this.handleGlobalKeydown, false);
     clearTimeout(this.autosaveInterval);
     this.autosaveInterval = null;
-    this.consoleSize = undefined;
-    this.sidebarSize = undefined;
   }
 
   isUserOwner() {
     return this.props.project.owner && this.props.project.owner.id === this.props.user.id;
-  }
-
-  _handleConsolePaneOnDragFinished() {
-    this.consoleSize = this.consolePane.state.draggedSize;
-    this.consolePane.setState({
-      resized: false,
-      draggedSize: undefined,
-    });
-  }
-
-  _handleSidebarPaneOnDragFinished() {
-    this.sidebarSize = this.sidebarPane.state.draggedSize;
-    this.sidebarPane.setState({
-      resized: false,
-      draggedSize: undefined
-    });
   }
 
   handleGlobalKeydown(e) {
@@ -157,7 +139,7 @@ class IDEView extends React.Component {
       e.preventDefault();
       e.stopPropagation();
       if (this.isUserOwner() || (this.props.user.authenticated && !this.props.project.owner)) {
-        this.props.saveProject();
+        this.props.saveProject(this.cmController.getContent());
       } else if (this.props.user.authenticated) {
         this.props.cloneProject();
       } else {
@@ -209,48 +191,10 @@ class IDEView extends React.Component {
         </Helmet>
         {this.props.toast.isVisible && <Toast />}
         <Nav
-          user={this.props.user}
-          newProject={this.props.newProject}
-          saveProject={this.props.saveProject}
-          autosaveProject={this.props.autosaveProject}
-          exportProjectAsZip={this.props.exportProjectAsZip}
-          cloneProject={this.props.cloneProject}
-          project={this.props.project}
-          logoutUser={this.props.logoutUser}
-          startSketch={this.props.startSketch}
-          stopSketch={this.props.stopSketch}
-          showShareModal={this.props.showShareModal}
-          showErrorModal={this.props.showErrorModal}
-          unsavedChanges={this.props.ide.unsavedChanges}
           warnIfUnsavedChanges={this.warnIfUnsavedChanges}
-          showKeyboardShortcutModal={this.props.showKeyboardShortcutModal}
           cmController={this.cmController}
-          setAllAccessibleOutput={this.props.setAllAccessibleOutput}
         />
-        <Toolbar
-          className="Toolbar"
-          isPlaying={this.props.ide.isPlaying}
-          stopSketch={this.props.stopSketch}
-          projectName={this.props.project.name}
-          setProjectName={this.props.setProjectName}
-          showEditProjectName={this.props.showEditProjectName}
-          hideEditProjectName={this.props.hideEditProjectName}
-          openPreferences={this.props.openPreferences}
-          preferencesIsVisible={this.props.ide.preferencesIsVisible}
-          setTextOutput={this.props.setTextOutput}
-          setGridOutput={this.props.setGridOutput}
-          setSoundOutput={this.props.setSoundOutput}
-          owner={this.props.project.owner}
-          project={this.props.project}
-          infiniteLoop={this.props.ide.infiniteLoop}
-          autorefresh={this.props.preferences.autorefresh}
-          setAutorefresh={this.props.setAutorefresh}
-          startSketch={this.props.startSketch}
-          startAccessibleSketch={this.props.startAccessibleSketch}
-          saveProject={this.props.saveProject}
-          currentUser={this.props.user.username}
-          showHelpModal={this.props.showHelpModal}
-        />
+        <Toolbar />
         {this.props.ide.preferencesIsVisible &&
           <Overlay
             title="Settings"
@@ -259,14 +203,13 @@ class IDEView extends React.Component {
           >
             <Preferences
               fontSize={this.props.preferences.fontSize}
-              indentationAmount={this.props.preferences.indentationAmount}
-              setIndentation={this.props.setIndentation}
-              indentWithSpace={this.props.indentWithSpace}
-              indentWithTab={this.props.indentWithTab}
-              isTabIndent={this.props.preferences.isTabIndent}
               setFontSize={this.props.setFontSize}
               autosave={this.props.preferences.autosave}
+              linewrap={this.props.preferences.linewrap}
+              lineNumbers={this.props.preferences.lineNumbers}
+              setLineNumbers={this.props.setLineNumbers}
               setAutosave={this.props.setAutosave}
+              setLinewrap={this.props.setLinewrap}
               lintWarning={this.props.preferences.lintWarning}
               setLintWarning={this.props.setLintWarning}
               textOutput={this.props.preferences.textOutput}
@@ -283,8 +226,8 @@ class IDEView extends React.Component {
         <div className="editor-preview-container">
           <SplitPane
             split="vertical"
-            defaultSize={this.sidebarSize}
-            ref={(element) => { this.sidebarPane = element; }}
+            size={this.state.sidebarSize}
+            onChange={size => this.setState({ sidebarSize: size })}
             onDragFinished={this._handleSidebarPaneOnDragFinished}
             allowResize={this.props.ide.sidebarIsExpanded}
             minSize={20}
@@ -308,28 +251,29 @@ class IDEView extends React.Component {
               defaultSize="50%"
               onChange={() => { this.overlay.style.display = 'block'; }}
               onDragFinished={() => { this.overlay.style.display = 'none'; }}
-              resizerStyle={{ marginRight: '5px' }}
+              resizerStyle={{
+                borderLeftWidth: '2px', borderRightWidth: '2px', width: '2px', margin: '0px 0px'
+              }}
             >
               <SplitPane
                 split="horizontal"
                 primary="second"
-                defaultSize={this.consoleSize}
+                size={this.state.consoleSize}
                 minSize={29}
-                ref={(element) => { this.consolePane = element; }}
-                onDragFinished={this._handleConsolePaneOnDragFinished}
+                onChange={size => this.setState({ consoleSize: size })}
                 allowResize={this.props.ide.consoleIsExpanded}
                 className="editor-preview-subpanel"
               >
                 <Editor
                   lintWarning={this.props.preferences.lintWarning}
+                  linewrap={this.props.preferences.linewrap}
                   lintMessages={this.props.editorAccessibility.lintMessages}
                   updateLintMessage={this.props.updateLintMessage}
                   clearLintMessage={this.props.clearLintMessage}
                   file={this.props.selectedFile}
                   updateFileContent={this.props.updateFileContent}
                   fontSize={this.props.preferences.fontSize}
-                  indentationAmount={this.props.preferences.indentationAmount}
-                  isTabIndent={this.props.preferences.isTabIndent}
+                  lineNumbers={this.props.preferences.lineNumbers}
                   files={this.props.files}
                   editorOptionsVisible={this.props.ide.editorOptionsVisible}
                   showEditorOptions={this.props.showEditorOptions}
@@ -405,6 +349,8 @@ class IDEView extends React.Component {
                     stopSketch={this.props.stopSketch}
                     setBlobUrl={this.props.setBlobUrl}
                     expandConsole={this.props.expandConsole}
+                    clearConsole={this.props.clearConsole}
+                    cmController={this.cmController}
                   />
                 </div>
               </div>
@@ -430,6 +376,7 @@ class IDEView extends React.Component {
             title="Open a Sketch"
             previousPath={this.props.ide.previousPath}
           >
+            <Searchbar />
             <SketchList
               username={this.props.params.username}
               user={this.props.user}
@@ -473,9 +420,9 @@ class IDEView extends React.Component {
             closeOverlay={this.props.closeShareModal}
           >
             <ShareModal
-              projectId={this.props.project.id}
-              projectName={this.props.project.name}
-              ownerUsername={this.props.project.owner.username}
+              projectId={this.props.ide.shareModalProjectId}
+              projectName={this.props.ide.shareModalProjectName}
+              ownerUsername={this.props.ide.shareModalProjectUsername}
             />
           </Overlay>
         }
@@ -528,7 +475,6 @@ IDEView.propTypes = {
     id: PropTypes.string,
     username: PropTypes.string
   }).isRequired,
-  newProject: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
   ide: PropTypes.shape({
     isPlaying: PropTypes.bool.isRequired,
@@ -541,6 +487,9 @@ IDEView.propTypes = {
     projectOptionsVisible: PropTypes.bool.isRequired,
     newFolderModalVisible: PropTypes.bool.isRequired,
     shareModalVisible: PropTypes.bool.isRequired,
+    shareModalProjectId: PropTypes.string.isRequired,
+    shareModalProjectName: PropTypes.string.isRequired,
+    shareModalProjectUsername: PropTypes.string.isRequired,
     editorOptionsVisible: PropTypes.bool.isRequired,
     keyboardShortcutVisible: PropTypes.bool.isRequired,
     unsavedChanges: PropTypes.bool.isRequired,
@@ -564,8 +513,6 @@ IDEView.propTypes = {
     }),
     updatedAt: PropTypes.string
   }).isRequired,
-  setProjectName: PropTypes.func.isRequired,
-  openPreferences: PropTypes.func.isRequired,
   editorAccessibility: PropTypes.shape({
     lintMessages: PropTypes.array.isRequired,
   }).isRequired,
@@ -573,9 +520,9 @@ IDEView.propTypes = {
   clearLintMessage: PropTypes.func.isRequired,
   preferences: PropTypes.shape({
     fontSize: PropTypes.number.isRequired,
-    indentationAmount: PropTypes.number.isRequired,
-    isTabIndent: PropTypes.bool.isRequired,
     autosave: PropTypes.bool.isRequired,
+    linewrap: PropTypes.bool.isRequired,
+    lineNumbers: PropTypes.bool.isRequired,
     lintWarning: PropTypes.bool.isRequired,
     textOutput: PropTypes.bool.isRequired,
     gridOutput: PropTypes.bool.isRequired,
@@ -585,10 +532,9 @@ IDEView.propTypes = {
   }).isRequired,
   closePreferences: PropTypes.func.isRequired,
   setFontSize: PropTypes.func.isRequired,
-  setIndentation: PropTypes.func.isRequired,
-  indentWithTab: PropTypes.func.isRequired,
-  indentWithSpace: PropTypes.func.isRequired,
   setAutosave: PropTypes.func.isRequired,
+  setLineNumbers: PropTypes.func.isRequired,
+  setLinewrap: PropTypes.func.isRequired,
   setLintWarning: PropTypes.func.isRequired,
   setTextOutput: PropTypes.func.isRequired,
   setGridOutput: PropTypes.func.isRequired,
@@ -616,22 +562,17 @@ IDEView.propTypes = {
   closeNewFileModal: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
   collapseSidebar: PropTypes.func.isRequired,
-  exportProjectAsZip: PropTypes.func.isRequired,
   cloneProject: PropTypes.func.isRequired,
   expandConsole: PropTypes.func.isRequired,
   collapseConsole: PropTypes.func.isRequired,
   deleteFile: PropTypes.func.isRequired,
   updateFileName: PropTypes.func.isRequired,
-  showEditProjectName: PropTypes.func.isRequired,
-  hideEditProjectName: PropTypes.func.isRequired,
-  logoutUser: PropTypes.func.isRequired,
   openProjectOptions: PropTypes.func.isRequired,
   closeProjectOptions: PropTypes.func.isRequired,
   newFolder: PropTypes.func.isRequired,
   closeNewFolderModal: PropTypes.func.isRequired,
   createFolder: PropTypes.func.isRequired,
   createFile: PropTypes.func.isRequired,
-  showShareModal: PropTypes.func.isRequired,
   closeShareModal: PropTypes.func.isRequired,
   showEditorOptions: PropTypes.func.isRequired,
   closeEditorOptions: PropTypes.func.isRequired,
@@ -647,7 +588,6 @@ IDEView.propTypes = {
   route: PropTypes.oneOfType([PropTypes.object, PropTypes.element]).isRequired,
   setUnsavedChanges: PropTypes.func.isRequired,
   setTheme: PropTypes.func.isRequired,
-  setAutorefresh: PropTypes.func.isRequired,
   endSketchRefresh: PropTypes.func.isRequired,
   startRefreshSketch: PropTypes.func.isRequired,
   setBlobUrl: PropTypes.func.isRequired,
@@ -661,19 +601,18 @@ IDEView.propTypes = {
   hideErrorModal: PropTypes.func.isRequired,
   clearPersistedState: PropTypes.func.isRequired,
   persistState: PropTypes.func.isRequired,
-  showHelpModal: PropTypes.func.isRequired,
   hideHelpModal: PropTypes.func.isRequired,
   showRuntimeErrorWarning: PropTypes.func.isRequired,
   hideRuntimeErrorWarning: PropTypes.func.isRequired,
   startSketch: PropTypes.func.isRequired,
-  startAccessibleSketch: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
   return {
     files: state.files,
     selectedFile: state.files.find(file => file.isSelectedFile) ||
-      state.files.find(file => file.name === 'sketch.js'),
+      state.files.find(file => file.name === 'sketch.js') ||
+      state.files.find(file => file.name !== 'root'),
     htmlFile: getHTMLFile(state.files),
     ide: state.ide,
     preferences: state.preferences,

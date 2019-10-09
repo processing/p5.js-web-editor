@@ -1,6 +1,4 @@
-import {
-  EXTERNAL_LINK_REGEX
-} from '../../server/utils/fileUtils';
+import { EXTERNAL_LINK_REGEX } from '../../server/utils/fileUtils';
 
 export const hijackConsoleErrorsScript = (offs) => {
   const s = `
@@ -48,21 +46,36 @@ export const startTag = '@fs-';
 
 export const getAllScriptOffsets = (htmlFile) => {
   const offs = [];
-  let found = true;
+  const hijackConsoleErrorsScriptLength = 36;
+  const embeddedJSStart = 'script crossorigin=""';
+  let foundJSScript = true;
+  let foundEmbeddedJS = true;
   let lastInd = 0;
   let ind = 0;
   let endFilenameInd = 0;
   let filename = '';
   let lineOffset = 0;
-  while (found) {
+  while (foundJSScript) {
     ind = htmlFile.indexOf(startTag, lastInd);
     if (ind === -1) {
-      found = false;
+      foundJSScript = false;
     } else {
       endFilenameInd = htmlFile.indexOf('.js', ind + startTag.length + 3);
       filename = htmlFile.substring(ind + startTag.length, endFilenameInd);
-      // the length of hijackConsoleErrorsScript is 36 lines
-      lineOffset = htmlFile.substring(0, ind).split('\n').length + 36;
+      lineOffset = htmlFile.substring(0, ind).split('\n').length + hijackConsoleErrorsScriptLength;
+      offs.push([lineOffset, filename]);
+      lastInd = ind + 1;
+    }
+  }
+  lastInd = 0;
+  while (foundEmbeddedJS) {
+    ind = htmlFile.indexOf(embeddedJSStart, lastInd);
+    if (ind === -1) {
+      foundEmbeddedJS = false;
+    } else {
+      filename = 'index.html';
+      // not sure where the offset of 25 comes from
+      lineOffset = htmlFile.substring(0, ind).split('\n').length + 25;
       offs.push([lineOffset, filename]);
       lastInd = ind + 1;
     }

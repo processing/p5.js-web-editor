@@ -6,9 +6,9 @@
 @import 'base/reset';
 @import 'base/base';
 
-@import 'vendors/codemirror';
-@import 'vendors/lint';
-@import 'vendors/dropzone';
+@import 'node_modules/codemirror/lib/codemirror';
+@import 'node_modules/codemirror/addon/lint/lint';
+@import 'node_modules/dropzone/dist/dropzone';
 @import 'node_modules/primer-tooltips/build/build';
 
 @import 'components/p5-light-codemirror-theme';
@@ -21,6 +21,7 @@
 @import 'components/preferences';
 @import 'components/reset-password';
 @import 'components/new-password';
+@import 'components/searchbar';
 @import 'components/sketch-list';
 @import 'components/sidebar';
 @import 'components/modal';
@@ -42,6 +43,8 @@
 @import 'components/copyable-input';
 @import 'components/feedback';
 @import 'components/console-input';
+@import 'components/loader';
+@import 'components/uploader';
 
 @import 'layout/ide';
 @import 'layout/fullscreen';

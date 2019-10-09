@@ -1,7 +1,5 @@
 export function renderIndex() {
   const assetsManifest = process.env.webpackAssets && JSON.parse(process.env.webpackAssets);
-  const chunkManifest = process.env.webpackChunkAssets && JSON.parse(process.env.webpackChunkAssets);
-
   return `
   <!DOCTYPE html>
   <html>
@@ -29,18 +27,13 @@ export function renderIndex() {
         window.process.env.AWS_REGION = '${process.env.AWS_REGION}';
         window.process.env.FORCE_TO_HTTPS = ${process.env.FORCE_TO_HTTPS === 'false' ? false : undefined};
         window.process.env.CLIENT = true;
+        window.process.env.LOGIN_ENABLED = ${process.env.LOGIN_ENABLED === 'false' ? false : true};
+        window.process.env.EXAMPLES_ENABLED = ${process.env.EXAMPLES_ENABLED === 'false' ? false : true};
       </script>
     </head>
     <body>
       <div id="root" class="root-app">
       </div>
-      <script>
-          ${process.env.NODE_ENV === 'production' ?
-          `//<![CDATA[
-          window.webpackManifest = ${JSON.stringify(chunkManifest)};
-          //]]>` : ''}
-      </script>
-      <script src='${process.env.NODE_ENV === 'production' ? `${assetsManifest['/vendor.js']}` : '/vendor.js'}'></script>
       <script src='${process.env.NODE_ENV === 'production' ? `${assetsManifest['/app.js']}` : '/app.js'}'></script>
       <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

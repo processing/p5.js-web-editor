@@ -4,14 +4,32 @@ import classNames from 'classnames';
 import InlineSVG from 'react-inlinesvg';
 import ConnectedFileNode from './FileNode';
 
-const folderUrl = require('../../../images/folder.svg');
-const downArrowUrl = require('../../../images/down-arrow.svg');
+const downArrowUrl = require('../../../images/down-filled-triangle.svg');
 
 class Sidebar extends React.Component {
   constructor(props) {
     super(props);
     this.resetSelectedFile = this.resetSelectedFile.bind(this);
     this.toggleProjectOptions = this.toggleProjectOptions.bind(this);
+    this.onBlurComponent = this.onBlurComponent.bind(this);
+    this.onFocusComponent = this.onFocusComponent.bind(this);
+
+    this.state = {
+      isFocused: false,
+    };
+  }
+
+  onBlurComponent() {
+    this.setState({ isFocused: false });
+    setTimeout(() => {
+      if (!this.state.isFocused) {
+        this.props.closeProjectOptions();
+      }
+    }, 200);
+  }
+
+  onFocusComponent() {
+    this.setState({ isFocused: true });
   }
 
   resetSelectedFile() {
@@ -41,21 +59,20 @@ class Sidebar extends React.Component {
   }
 
   render() {
+    const canEditProject = this.userCanEditProject();
     const sidebarClass = classNames({
       'sidebar': true,
       'sidebar--contracted': !this.props.isExpanded,
       'sidebar--project-options': this.props.projectOptionsVisible,
-      'sidebar--cant-edit': !this.userCanEditProject()
+      'sidebar--cant-edit': !canEditProject
     });
+    const rootFile = this.props.files.filter(file => file.name === 'root')[0];
 
     return (
       <nav className={sidebarClass} title="file-navigation" >
         <div className="sidebar__header" onContextMenu={this.toggleProjectOptions}>
           <h3 className="sidebar__title">
-            <span className="sidebar__folder-icon">
-              <InlineSVG src={folderUrl} />
-            </span>
-            <span>project-folder</span>
+            <span>Sketch Files</span>
           </h3>
           <div className="sidebar__icons">
             <button
@@ -64,25 +81,45 @@ class Sidebar extends React.Component {
               tabIndex="0"
               ref={(element) => { this.sidebarOptions = element; }}
               onClick={this.toggleProjectOptions}
-              onBlur={() => setTimeout(this.props.closeProjectOptions, 200)}
+              onBlur={this.onBlurComponent}
+              onFocus={this.onFocusComponent}
             >
               <InlineSVG src={downArrowUrl} />
             </button>
             <ul className="sidebar__project-options">
               <li>
-                <button aria-label="add folder" onClick={this.props.newFolder} >
+                <button
+                  aria-label="add folder"
+                  onClick={() => {
+                    this.props.newFolder(rootFile.id);
+                    setTimeout(this.props.closeProjectOptions, 0);
+                  }}
+                  onBlur={this.onBlurComponent}
+                  onFocus={this.onFocusComponent}
+                >
                   Add folder
                 </button>
               </li>
               <li>
-                <button aria-label="add file" onClick={this.props.newFile} >
+                <button
+                  aria-label="add file"
+                  onClick={() => {
+                    this.props.newFile(rootFile.id);
+                    setTimeout(this.props.closeProjectOptions, 0);
+                  }}
+                  onBlur={this.onBlurComponent}
+                  onFocus={this.onFocusComponent}
+                >
                   Add file
                 </button>
               </li>
             </ul>
           </div>
         </div>
-        <ConnectedFileNode id={this.props.files.filter(file => file.name === 'root')[0].id} />
+        <ConnectedFileNode
+          id={rootFile.id}
+          canEdit={canEditProject}
+        />
       </nav>
     );
   }

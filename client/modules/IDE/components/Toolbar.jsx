@@ -1,8 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import classNames from 'classnames';
 import InlineSVG from 'react-inlinesvg';
+
+import * as IDEActions from '../actions/ide';
+import * as preferenceActions from '../actions/preferences';
+import * as projectActions from '../actions/project';
 
 const playUrl = require('../../../images/play.svg');
 const stopUrl = require('../../../images/stop.svg');
@@ -119,6 +124,7 @@ class Toolbar extends React.Component {
           </a>
           <input
             type="text"
+            maxLength="128"
             className="toolbar__project-name-input"
             value={this.props.project.name}
             onChange={this.handleProjectNameChange}
@@ -186,4 +192,22 @@ Toolbar.defaultProps = {
   currentUser: undefined
 };
 
-export default Toolbar;
+function mapStateToProps(state) {
+  return {
+    autorefresh: state.preferences.autorefresh,
+    currentUser: state.user.username,
+    infiniteLoop: state.ide.infiniteLoop,
+    isPlaying: state.ide.isPlaying,
+    owner: state.project.owner,
+    preferencesIsVisible: state.ide.preferencesIsVisible,
+    project: state.project,
+  };
+}
+
+const mapDispatchToProps = {
+  ...IDEActions,
+  ...preferenceActions,
+  ...projectActions,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);

@@ -1,6 +1,5 @@
 import each from 'async/each';
-import moment from 'moment';
-
+import isBefore from 'date-fns/is_before';
 import Project from '../models/project';
 import { resolvePathToFile } from '../utils/filePath';
 import { deleteObjectsFromS3, getObjectKey } from './aws.controller';
@@ -29,13 +28,18 @@ export function createFile(req, res) {
       }
       const newFile = updatedProject.files[updatedProject.files.length - 1];
       updatedProject.files.id(req.body.parentId).children.push(newFile.id);
-      updatedProject.save((innerErr) => {
+      updatedProject.save((innerErr, savedProject) => {
         if (innerErr) {
           console.log(innerErr);
           res.json({ success: false });
           return;
         }
-        res.json(updatedProject.files[updatedProject.files.length - 1]);
+        savedProject.populate({ path: 'user', select: 'username' }, (_, populatedProject) => {
+          res.json({
+            updatedFile: updatedProject.files[updatedProject.files.length - 1],
+            project: populatedProject
+          });
+        });
       });
     }
   );
@@ -56,7 +60,7 @@ function deleteMany(files, ids) {
   each(ids, (id, cb) => {
     if (files.id(id).url) {
       if (!process.env.S3_DATE
-        || (process.env.S3_DATE && moment(process.env.S3_DATE) < moment(files.id(id).createdAt))) {
+        || (process.env.S3_DATE && isBefore(new Date(process.env.S3_DATE), new Date(files.id(id).createdAt)))) {
         const objectKey = getObjectKey(files.id(id).url);
         objectKeys.push(objectKey);
       }

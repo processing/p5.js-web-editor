@@ -51,7 +51,7 @@ const corsOriginsWhitelist = [
 // Run Webpack dev server in development mode
 if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(config);
-  app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config[0].output.publicPath }));
+  app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
   app.use(webpackHotMiddleware(compiler));
 
   corsOriginsWhitelist.push(/localhost/);
@@ -121,6 +121,7 @@ require('./config/passport');
 // const passportConfig = require('./config/passport');
 
 // Connect to MongoDB
+mongoose.Promise = global.Promise;
 mongoose.connect(mongoConnectionString, { useMongoClient: true });
 mongoose.connection.on('error', () => {
   console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
@@ -130,6 +131,17 @@ mongoose.connection.on('error', () => {
 app.get('/', (req, res) => {
   res.sendFile(renderIndex());
 });
+
+// Handle API errors
+app.use('/api', (error, req, res, next) => {
+  if (error && error.code && !res.headersSent) {
+    res.status(error.code).json({ error: error.message });
+    return;
+  }
+
+  next(error);
+});
+
 
 // Handle missing routes.
 app.get('*', (req, res) => {

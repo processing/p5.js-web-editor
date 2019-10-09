@@ -13,9 +13,9 @@ const defaultHTML =
 `<!DOCTYPE html>
 <html>
   <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/addons/p5.dom.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/addons/p5.sound.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.sound.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="utf-8" />
 
@@ -118,7 +118,7 @@ const files = (state, action) => {
   switch (action.type) {
     case ActionTypes.UPDATE_FILE_CONTENT:
       return state.map((file) => {
-        if (file.name !== action.name) {
+        if (file.id !== action.id) {
           return file;
         }
 
@@ -126,7 +126,7 @@ const files = (state, action) => {
       });
     case ActionTypes.SET_BLOB_URL:
       return state.map((file) => {
-        if (file.name !== action.name) {
+        if (file.id !== action.id) {
           return file;
         }
         return Object.assign({}, file, { blobURL: action.blobURL });

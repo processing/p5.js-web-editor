@@ -1,3 +1,4 @@
+
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link, browserHistory } from 'react-router';
@@ -8,6 +9,7 @@ import { reduxForm } from 'redux-form';
 import { Helmet } from 'react-helmet';
 import * as UserActions from '../actions';
 import ResetPasswordForm from '../components/ResetPasswordForm';
+import { validateResetPassword } from '../../../utils/reduxFormUtils';
 
 const exitUrl = require('../../../images/exit.svg');
 const logoUrl = require('../../../images/p5js-logo.svg');
@@ -80,16 +82,8 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(UserActions, dispatch);
 }
 
-function validate(formProps) {
-  const errors = {};
-  if (!formProps.email) {
-    errors.email = 'Please enter an email';
-  }
-  return errors;
-}
-
 export default reduxForm({
   form: 'reset-password',
   fields: ['email'],
-  validate
+  validate: validateResetPassword
 }, mapStateToProps, mapDispatchToProps)(ResetPasswordView);

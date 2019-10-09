@@ -3,7 +3,7 @@ const nodeExternals = require('webpack-node-externals');
 
 module.exports = [{
   entry: path.resolve(__dirname, '../server/scripts/fetch-examples.js'),
-
+  mode: 'production',
   output: {
     path: path.resolve(__dirname, '../dist/'),
     filename: 'fetch-examples.bundle.js'
@@ -22,33 +22,21 @@ module.exports = [{
   },
 
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
-        query: {
-          presets: [
-            'react',
-            'env',
-            'stage-0',
-          ],
-          plugins: [
-            [
-              'babel-plugin-webpack-loaders', {
-                'config': path.resolve(__dirname, './config.babel.js'),
-                "verbose": false
-              }
-            ]
-          ]
-        },
+        options: {
+          babelrc: true
+        }
       }
     ],
   },
 },
 {
   entry: path.resolve(__dirname, '../server/scripts/fetch-examples-gg.js'),
-
+  mode: 'production',
   output: {
     path: path.resolve(__dirname, '../dist/'),
     filename: 'fetch-examples-gg.bundle.js'
@@ -67,26 +55,47 @@ module.exports = [{
   },
 
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
-        query: {
-          presets: [
-            'react',
-            'env',
-            'stage-0',
-          ],
-          plugins: [
-            [
-              'babel-plugin-webpack-loaders', {
-                'config': path.resolve(__dirname, './config.babel.js'),
-                "verbose": false
-              }
-            ]
-          ]
-        },
+        options: {
+          babelrc: true
+        }
+      }
+    ],
+  },
+},
+{
+  entry: path.resolve(__dirname, '../server/scripts/fetch-examples-ml5.js'),
+  mode: 'production',
+  output: {
+    path: path.resolve(__dirname, '../dist/'),
+    filename: 'fetch-examples-ml5.bundle.js'
+  },
+
+  target: 'node',
+
+  externals: [nodeExternals()],
+
+  resolve: {
+    extensions: ['*', '.js', '.jsx'],
+    modules: [
+      'client',
+      'node_modules',
+    ],
+  },
+
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        options: {
+          babelrc: true
+        }
       }
     ],
   },

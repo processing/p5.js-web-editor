@@ -24,9 +24,11 @@ const userSchema = new Schema({
   tokens: Array,
   preferences: {
     fontSize: { type: Number, default: 18 },
+    lineNumbers: { type: Boolean, default: true },
     indentationAmount: { type: Number, default: 2 },
     isTabIndent: { type: Boolean, default: false },
     autosave: { type: Boolean, default: true },
+    linewrap: { type: Boolean, default: true },
     lintWarning: { type: Boolean, default: false },
     textOutput: { type: Boolean, default: false },
     gridOutput: { type: Boolean, default: false },
@@ -34,7 +36,7 @@ const userSchema = new Schema({
     theme: { type: String, default: 'light' },
     autorefresh: { type: Boolean, default: false }
   }
-}, { timestamps: true });
+}, { timestamps: true, usePushEach: true });
 
 /**
  * Password hash middleware.

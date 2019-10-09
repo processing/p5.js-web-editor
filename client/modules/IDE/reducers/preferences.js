@@ -2,9 +2,9 @@ import * as ActionTypes from '../../../constants';
 
 const initialState = {
   fontSize: 18,
-  indentationAmount: 2,
-  isTabIndent: true,
   autosave: true,
+  linewrap: true,
+  lineNumbers: true,
   lintWarning: false,
   textOutput: false,
   gridOutput: false,
@@ -17,18 +17,10 @@ const preferences = (state = initialState, action) => {
   switch (action.type) {
     case ActionTypes.SET_FONT_SIZE:
       return Object.assign({}, state, { fontSize: action.value });
-    case ActionTypes.SET_INDENTATION:
-      return Object.assign({}, state, { indentationAmount: action.value });
-    case ActionTypes.INDENT_WITH_TAB:
-      return Object.assign({}, state, {
-        isTabIndent: true
-      });
-    case ActionTypes.INDENT_WITH_SPACE:
-      return Object.assign({}, state, {
-        isTabIndent: false
-      });
     case ActionTypes.SET_AUTOSAVE:
       return Object.assign({}, state, { autosave: action.value });
+    case ActionTypes.SET_LINEWRAP:
+      return Object.assign({}, state, { linewrap: action.value });
     case ActionTypes.SET_LINT_WARNING:
       return Object.assign({}, state, { lintWarning: action.value });
     case ActionTypes.SET_TEXT_OUTPUT:
@@ -43,6 +35,8 @@ const preferences = (state = initialState, action) => {
       return Object.assign({}, state, { theme: action.value });
     case ActionTypes.SET_AUTOREFRESH:
       return Object.assign({}, state, { autorefresh: action.value });
+    case ActionTypes.SET_LINE_NUMBERS:
+      return Object.assign({}, state, { lineNumbers: action.value });
     default:
       return state;
   }

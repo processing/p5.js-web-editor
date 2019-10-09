@@ -2,9 +2,10 @@
   background-color: $toast-background-color;
   color: $toast-text-color;
   padding: #{10 / $base-font-size}rem;
-  position: absolute;
-  bottom: 10%;
-  left: 5%;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
   min-width: #{375 / $base-font-size}rem; //500px
   font-size: #{20 / $base-font-size}rem;
   display: flex;
