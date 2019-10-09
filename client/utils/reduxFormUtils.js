@@ -41,7 +41,11 @@ export function validateSettings(formProps) {
   if (formProps.currentPassword && !formProps.newPassword) {
     errors.newPassword = 'Please enter a new password or leave the current password empty.';
   }
-
+  if (formProps.newPassword) {
+    if (formProps.newPassword < 6) {
+      errors.newPassword = 'Password must be at least 6 characters';
+    }
+  }
   return errors;
 }
 
