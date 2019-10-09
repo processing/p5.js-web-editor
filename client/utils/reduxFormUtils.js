@@ -44,10 +44,8 @@ export function validateSettings(formProps) {
   if (formProps.currentPassword && !formProps.newPassword) {
     errors.newPassword = 'Please enter a new password or leave the current password empty.';
   }
-  if (formProps.newPassword) {
-    if (formProps.newPassword < 6) {
-      errors.newPassword = 'Password must be at least 6 characters';
-    }
+  if (formProps.newPassword && formProps.newPassword.length < 6) {
+    errors.newPassword = 'Password must be at least 6 characters';
   }
   return errors;
 }
@@ -71,10 +69,8 @@ export function validateSignup(formProps) {
   if (!formProps.password) {
     errors.password = 'Please enter a password';
   }
-  if (formProps.password) {
-    if (formProps.password.length < 6) {
-      errors.password = 'Password must be at least 6 characters';
-    }
+  if (formProps.password && formProps.password.length < 6) {
+    errors.password = 'Password must be at least 6 characters';
   }
   if (!formProps.confirmPassword) {
     errors.confirmPassword = 'Please enter a password confirmation';
