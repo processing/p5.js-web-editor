@@ -94,5 +94,5 @@ export default reduxForm({
   fields: ['username', 'email', 'currentPassword', 'newPassword'],
   validate: validateSettings,
   asyncValidate,
-  asyncBlurFields: ['username', 'email', 'currentPassword', 'newPassword'],
+  asyncBlurFields: ['username', 'email', 'currentPassword'],
 }, mapStateToProps, mapDispatchToProps)(AccountView);
