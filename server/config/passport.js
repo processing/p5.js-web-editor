@@ -1,3 +1,5 @@
+import slugify from 'slugify';
+import friendlyWords from 'friendly-words';
 import User from '../models/user';
 
 const lodash = require('lodash');
@@ -110,7 +112,7 @@ passport.use(new GoogleStrategy({
   clientSecret: process.env.GOOGLE_SECRET,
   callbackURL: '/auth/google/callback',
   passReqToCallback: true,
-  scope: ['email'],
+  scope: ['openid email'],
 }, (req, accessToken, refreshToken, profile, done) => {
   User.findOne({ google: profile._json.emails[0].value }, (findByGoogleErr, existingUser) => {
     if (existingUser) {
@@ -123,24 +125,43 @@ passport.use(new GoogleStrategy({
     User.findOne({
       email: primaryEmail,
     }, (findByEmailErr, existingEmailUser) => {
-      if (existingEmailUser) {
-        existingEmailUser.email = existingEmailUser.email || primaryEmail;
-        existingEmailUser.google = profile._json.emails[0].value;
-        existingEmailUser.username = existingEmailUser.username || profile._json.emails[0].value;
-        existingEmailUser.tokens.push({ kind: 'google', accessToken });
-        existingEmailUser.name = existingEmailUser.name || profile._json.displayName;
-        existingEmailUser.verified = User.EmailConfirmation.Verified;
-        existingEmailUser.save(saveErr => done(null, existingEmailUser));
-      } else {
-        const user = new User();
-        user.email = primaryEmail;
-        user.google = profile._json.emails[0].value;
-        user.username = profile._json.emails[0].value;
-        user.tokens.push({ kind: 'google', accessToken });
-        user.name = profile._json.displayName;
-        user.verified = User.EmailConfirmation.Verified;
-        user.save(saveErr => done(null, user));
-      }
+      let username = profile._json.emails[0].value.split('@')[0];
+      User.findOne({ username }, (findByUsernameErr, existingUsernameUser) => {
+        if (existingUsernameUser) {
+          const adj = friendlyWords.predicates[Math.floor(Math.random() * friendlyWords.predicates.length)];
+          username = slugify(`${username} ${adj}`);
+        }
+        // what if a username is already taken from the display name too?
+        // then, append a random friendly word?
+        if (existingEmailUser) {
+          existingEmailUser.email = existingEmailUser.email || primaryEmail;
+          existingEmailUser.google = profile._json.emails[0].value;
+          existingEmailUser.username = existingEmailUser.username || username;
+          existingEmailUser.tokens.push({ kind: 'google', accessToken });
+          existingEmailUser.name = existingEmailUser.name || profile._json.displayName;
+          existingEmailUser.verified = User.EmailConfirmation.Verified;
+          existingEmailUser.save((saveErr) => {
+            if (saveErr) {
+              console.log(saveErr);
+            }
+            done(null, existingEmailUser);
+          });
+        } else {
+          const user = new User();
+          user.email = primaryEmail;
+          user.google = profile._json.emails[0].value;
+          user.username = username;
+          user.tokens.push({ kind: 'google', accessToken });
+          user.name = profile._json.displayName;
+          user.verified = User.EmailConfirmation.Verified;
+          user.save((saveErr) => {
+            if (saveErr) {
+              console.log(saveErr);
+            }
+            done(null, user);
+          });
+        }
+      });
     });
   });
 }));

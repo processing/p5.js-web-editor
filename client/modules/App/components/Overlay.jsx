@@ -33,7 +33,7 @@ class Overlay extends React.Component {
       return;
     }
 
-    this.handleClickOutside();
+    this.handleClickOutside(e);
   }
 
   handleClickOutside() {
@@ -49,6 +49,10 @@ class Overlay extends React.Component {
   }
 
   close() {
+    // Only close if it is the last (and therefore the topmost overlay)
+    const overlays = document.getElementsByClassName('overlay');
+    if (this.node.parentElement.parentElement !== overlays[overlays.length - 1]) return;
+
     if (!this.props.closeOverlay) {
       browserHistory.push(this.props.previousPath);
     } else {

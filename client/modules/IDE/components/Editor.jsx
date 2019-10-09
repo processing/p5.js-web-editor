@@ -80,7 +80,7 @@ class Editor extends React.Component {
     this.widgets = [];
     this._cm = CodeMirror(this.codemirrorContainer, { // eslint-disable-line
       theme: `p5-${this.props.theme}`,
-      lineNumbers: true,
+      lineNumbers: this.props.lineNumbers,
       styleActiveLine: true,
       inputStyle: 'contenteditable',
       lineWrapping: this.props.linewrap,
@@ -108,7 +108,15 @@ class Editor extends React.Component {
     delete this._cm.options.lint.options.errors;
 
     this._cm.setOption('extraKeys', {
-      Tab: cm => cm.replaceSelection(' '.repeat(INDENTATION_AMOUNT)),
+      Tab: (cm) => {
+        // might need to specify and indent more?
+        const selection = cm.doc.getSelection();
+        if (selection.length > 0) {
+          cm.execCommand('indentMore');
+        } else {
+          cm.replaceSelection(' '.repeat(INDENTATION_AMOUNT));
+        }
+      },
       [`${metaKey}-Enter`]: () => null,
       [`Shift-${metaKey}-Enter`]: () => null,
       [`${metaKey}-F`]: 'findPersistent',
@@ -126,7 +134,7 @@ class Editor extends React.Component {
         this.props.clearConsole();
         this.props.startRefreshSketch();
       }
-    }, 400));
+    }, 1000));
 
     this._cm.on('keyup', () => {
       const temp = `line ${parseInt((this._cm.getCursor().line) + 1, 10)}`;
@@ -181,6 +189,9 @@ class Editor extends React.Component {
     if (this.props.theme !== prevProps.theme) {
       this._cm.setOption('theme', `p5-${this.props.theme}`);
     }
+    if (this.props.lineNumbers !== prevProps.lineNumbers) {
+      this._cm.setOption('lineNumbers', this.props.lineNumbers);
+    }
 
     if (prevProps.consoleEvents !== this.props.consoleEvents) {
       this.props.showRuntimeErrorWarning();
@@ -188,7 +199,7 @@ class Editor extends React.Component {
     for (let i = 0; i < this._cm.lineCount(); i += 1) {
       this._cm.removeLineClass(i, 'background', 'line-runtime-error');
     }
-    if (this.props.runtimeErrorWarningVisible && this._cm.getDoc().modeOption === 'javascript') {
+    if (this.props.runtimeErrorWarningVisible) {
       this.props.consoleEvents.forEach((consoleEvent) => {
         if (consoleEvent.method === 'error') {
           if (consoleEvent.data &&
@@ -197,7 +208,11 @@ class Editor extends React.Component {
             consoleEvent.data[0].indexOf(')') > -1) {
             const n = consoleEvent.data[0].replace(')', '').split(' ');
             const lineNumber = parseInt(n[n.length - 1], 10) - 1;
-            if (!Number.isNaN(lineNumber)) {
+            const { source } = consoleEvent;
+            const fileName = this.props.file.name;
+            const errorFromJavaScriptFile = (`${source}.js` === fileName);
+            const errorFromIndexHTML = ((source === fileName) && (fileName === 'index.html'));
+            if (!Number.isNaN(lineNumber) && (errorFromJavaScriptFile || errorFromIndexHTML)) {
               this._cm.addLineClass(lineNumber, 'background', 'line-runtime-error');
             }
           }
@@ -283,13 +298,16 @@ class Editor extends React.Component {
     }
   }
 
-  _cm: CodeMirror.Editor
-
   render() {
     const editorSectionClass = classNames({
       'editor': true,
       'sidebar--contracted': !this.props.isExpanded,
       'editor--options': this.props.editorOptionsVisible
+    });
+
+    const editorHolderClass = classNames({
+      'editor-holder': true,
+      'editor-holder--hidden': this.props.file.fileType === 'folder' || this.props.file.url
     });
 
     return (
@@ -324,7 +342,7 @@ class Editor extends React.Component {
             />
           </div>
         </header>
-        <div ref={(element) => { this.codemirrorContainer = element; }} className="editor-holder" >
+        <div ref={(element) => { this.codemirrorContainer = element; }} className={editorHolderClass} >
         </div>
         <EditorAccessibility
           lintMessages={this.props.lintMessages}
@@ -335,6 +353,7 @@ class Editor extends React.Component {
 }
 
 Editor.propTypes = {
+  lineNumbers: PropTypes.bool.isRequired,
   lintWarning: PropTypes.bool.isRequired,
   linewrap: PropTypes.bool.isRequired,
   lintMessages: PropTypes.arrayOf(PropTypes.shape({
@@ -354,7 +373,9 @@ Editor.propTypes = {
   file: PropTypes.shape({
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired
+    id: PropTypes.string.isRequired,
+    fileType: PropTypes.string.isRequired,
+    url: PropTypes.string
   }).isRequired,
   editorOptionsVisible: PropTypes.bool.isRequired,
   showEditorOptions: PropTypes.func.isRequired,

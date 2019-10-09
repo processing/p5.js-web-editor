@@ -16,12 +16,31 @@ class Preferences extends React.Component {
     super(props);
     this.handleUpdateAutosave = this.handleUpdateAutosave.bind(this);
     this.handleUpdateLinewrap = this.handleUpdateLinewrap.bind(this);
-    this.handleUpdateFont = this.handleUpdateFont.bind(this);
     this.handleLintWarning = this.handleLintWarning.bind(this);
+    this.handleLineNumbers = this.handleLineNumbers.bind(this);
+    this.onFontInputChange = this.onFontInputChange.bind(this);
+    this.onFontInputSubmit = this.onFontInputSubmit.bind(this);
+    this.increaseFontSize = this.increaseFontSize.bind(this);
+    this.decreaseFontSize = this.decreaseFontSize.bind(this);
+    this.setFontSize = this.setFontSize.bind(this);
+
+    this.state = {
+      fontSize: props.fontSize
+    };
   }
 
-  handleUpdateFont(event) {
-    let value = parseInt(event.target.value, 10);
+  onFontInputChange(event) {
+    const INTEGER_REGEX = /^[0-9\b]+$/;
+    if (event.target.value === '' || INTEGER_REGEX.test(event.target.value)) {
+      this.setState({
+        fontSize: event.target.value
+      });
+    }
+  }
+
+  onFontInputSubmit(event) {
+    event.preventDefault();
+    let value = parseInt(this.state.fontSize, 10);
     if (Number.isNaN(value)) {
       value = 16;
     }
@@ -31,7 +50,22 @@ class Preferences extends React.Component {
     if (value < 8) {
       value = 8;
     }
+    this.setFontSize(value);
+  }
+
+  setFontSize(value) {
+    this.setState({ fontSize: value });
     this.props.setFontSize(value);
+  }
+
+  decreaseFontSize() {
+    const newValue = this.state.fontSize - 2;
+    this.setFontSize(newValue);
+  }
+
+  increaseFontSize() {
+    const newValue = this.state.fontSize + 2;
+    this.setFontSize(newValue);
   }
 
   handleUpdateAutosave(event) {
@@ -47,6 +81,11 @@ class Preferences extends React.Component {
   handleLintWarning(event) {
     const value = event.target.value === 'true';
     this.props.setLintWarning(value);
+  }
+
+  handleLineNumbers(event) {
+    const value = event.target.value === 'true';
+    this.props.setLineNumbers(value);
   }
 
   render() {
@@ -107,29 +146,30 @@ class Preferences extends React.Component {
               <h4 className="preference__title">Text size</h4>
               <button
                 className="preference__minus-button"
-                onClick={() => this.props.setFontSize(this.props.fontSize - 2)}
+                onClick={this.decreaseFontSize}
                 aria-label="decrease font size"
-                disabled={this.props.fontSize <= 8}
+                disabled={this.state.fontSize <= 8}
               >
                 <InlineSVG src={minusUrl} alt="Decrease Font Size" />
                 <h6 className="preference__label">Decrease</h6>
               </button>
-              <input
-                className="preference__value"
-                aria-live="polite"
-                aria-atomic="true"
-                value={this.props.fontSize}
-                onChange={this.handleUpdateFont}
-                ref={(element) => { this.fontSizeInput = element; }}
-                onClick={() => {
-                  this.fontSizeInput.select();
-                }}
-              />
+              <form onSubmit={this.onFontInputSubmit}>
+                <input
+                  className="preference__value"
+                  aria-live="polite"
+                  aria-atomic="true"
+                  value={this.state.fontSize}
+                  onChange={this.onFontInputChange}
+                  type="text"
+                  ref={(element) => { this.fontSizeInput = element; }}
+                  onClick={() => { this.fontSizeInput.select(); }}
+                />
+              </form>
               <button
                 className="preference__plus-button"
-                onClick={() => this.props.setFontSize(this.props.fontSize + 2)}
+                onClick={this.increaseFontSize}
                 aria-label="increase font size"
-                disabled={this.props.fontSize >= 36}
+                disabled={this.state.fontSize >= 36}
               >
                 <InlineSVG src={plusUrl} alt="Increase Font Size" />
                 <h6 className="preference__label">Increase</h6>
@@ -191,6 +231,33 @@ class Preferences extends React.Component {
             </div>
           </TabPanel>
           <TabPanel>
+            <div className="preference">
+              <h4 className="preference__title">Line numbers</h4>
+              <div className="preference__options">
+                <input
+                  type="radio"
+                  onChange={() => this.props.setLineNumbers(true)}
+                  aria-label="line numbers on"
+                  name="line numbers"
+                  id="line-numbers-on"
+                  className="preference__radio-button"
+                  value="On"
+                  checked={this.props.lineNumbers}
+                />
+                <label htmlFor="line-numbers-on" className="preference__option">On</label>
+                <input
+                  type="radio"
+                  onChange={() => this.props.setLineNumbers(false)}
+                  aria-label="line numbers off"
+                  name="line numbers"
+                  id="line-numbers-off"
+                  className="preference__radio-button"
+                  value="Off"
+                  checked={!this.props.lineNumbers}
+                />
+                <label htmlFor="line-numbers-off" className="preference__option">Off</label>
+              </div>
+            </div>
             <div className="preference">
               <h4 className="preference__title">Lint warning sound</h4>
               <div className="preference__options">
@@ -277,9 +344,11 @@ class Preferences extends React.Component {
 
 Preferences.propTypes = {
   fontSize: PropTypes.number.isRequired,
+  lineNumbers: PropTypes.bool.isRequired,
   setFontSize: PropTypes.func.isRequired,
   autosave: PropTypes.bool.isRequired,
   linewrap: PropTypes.bool.isRequired,
+  setLineNumbers: PropTypes.func.isRequired,
   setAutosave: PropTypes.func.isRequired,
   setLinewrap: PropTypes.func.isRequired,
   textOutput: PropTypes.bool.isRequired,

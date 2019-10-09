@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import * as IDEActions from '../actions/ide';
 import * as FileActions from '../actions/files';
 
-const downArrowUrl = require('../../../images/down-arrow.svg');
+const downArrowUrl = require('../../../images/down-filled-triangle.svg');
 const folderRightUrl = require('../../../images/triangle-arrow-right.svg');
 const folderDownUrl = require('../../../images/triangle-arrow-down.svg');
 const fileUrl = require('../../../images/file.svg');
@@ -67,14 +67,15 @@ export class FileNode extends React.Component {
   validateFileName() {
     const oldFileExtension = this.originalFileName.match(/\.[0-9a-z]+$/i);
     const newFileExtension = this.props.name.match(/\.[0-9a-z]+$/i);
-    if (oldFileExtension && !newFileExtension) {
-      this.props.updateFileName(this.props.id, this.originalFileName);
-    }
-    if (
-      oldFileExtension &&
-      newFileExtension &&
-      oldFileExtension[0].toLowerCase() !== newFileExtension[0].toLowerCase()
-    ) {
+    const hasPeriod = this.props.name.match(/\.+/);
+    const newFileName = this.props.name;
+    const hasNoExtension = oldFileExtension && !newFileExtension;
+    const hasExtensionIfFolder = this.props.fileType === 'folder' && hasPeriod;
+    const notSameExtension = oldFileExtension && newFileExtension
+      && oldFileExtension[0].toLowerCase() !== newFileExtension[0].toLowerCase();
+    const hasEmptyFilename = newFileName === '';
+    const hasOnlyExtension = newFileExtension && newFileName === newFileExtension[0];
+    if (hasEmptyFilename || hasNoExtension || notSameExtension || hasOnlyExtension || hasExtensionIfFolder) {
       this.props.updateFileName(this.props.id, this.originalFileName);
     }
   }
@@ -187,7 +188,7 @@ export class FileNode extends React.Component {
                             <button
                               aria-label="add file"
                               onClick={() => {
-                                this.props.newFile();
+                                this.props.newFile(this.props.id);
                                 setTimeout(() => this.hideFileOptions(), 0);
                               }}
                               onBlur={this.onBlurComponent}
@@ -207,7 +208,7 @@ export class FileNode extends React.Component {
                             <button
                               aria-label="add folder"
                               onClick={() => {
-                                this.props.newFolder();
+                                this.props.newFolder(this.props.id);
                                 setTimeout(() => this.hideFileOptions(), 0);
                               }}
                               onBlur={this.onBlurComponent}

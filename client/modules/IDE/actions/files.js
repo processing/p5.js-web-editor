@@ -4,6 +4,7 @@ import blobUtil from 'blob-util';
 import { reset } from 'redux-form';
 import * as ActionTypes from '../../../constants';
 import { setUnsavedChanges } from './ide';
+import { setProjectSavedTime } from './project';
 
 const __process = (typeof global !== 'undefined' ? global : window).process;
 const ROOT_URL = __process.env.API_URL;
@@ -40,14 +41,7 @@ export function updateFileContent(id, content) {
 export function createFile(formProps) {
   return (dispatch, getState) => {
     const state = getState();
-    const selectedFile = state.files.find(file => file.isSelectedFile);
-    const rootFile = state.files.find(file => file.name === 'root');
-    let parentId;
-    if (selectedFile.fileType === 'folder') {
-      parentId = selectedFile.id;
-    } else {
-      parentId = rootFile.id;
-    }
+    const { parentId } = state.ide;
     if (state.project.id) {
       const postParams = {
         name: createUniqueName(formProps.name, parentId, state.files),
@@ -60,9 +54,10 @@ export function createFile(formProps) {
         .then((response) => {
           dispatch({
             type: ActionTypes.CREATE_FILE,
-            ...response.data,
+            ...response.data.updatedFile,
             parentId
           });
+          dispatch(setProjectSavedTime(response.data.project.updatedAt));
           dispatch(reset('new-file'));
           // dispatch({
           //   type: ActionTypes.HIDE_MODAL
@@ -97,14 +92,7 @@ export function createFile(formProps) {
 export function createFolder(formProps) {
   return (dispatch, getState) => {
     const state = getState();
-    const selectedFile = state.files.find(file => file.isSelectedFile);
-    const rootFile = state.files.find(file => file.name === 'root');
-    let parentId;
-    if (selectedFile.fileType === 'folder') {
-      parentId = selectedFile.id;
-    } else {
-      parentId = rootFile.id;
-    }
+    const { parentId } = state.ide;
     if (state.project.id) {
       const postParams = {
         name: createUniqueName(formProps.name, parentId, state.files),
@@ -117,9 +105,10 @@ export function createFolder(formProps) {
         .then((response) => {
           dispatch({
             type: ActionTypes.CREATE_FILE,
-            ...response.data,
+            ...response.data.updatedFile,
             parentId
           });
+          dispatch(setProjectSavedTime(response.data.project.updatedAt));
           dispatch({
             type: ActionTypes.CLOSE_NEW_FOLDER_MODAL
           });

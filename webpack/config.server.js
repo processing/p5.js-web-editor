@@ -12,6 +12,7 @@ module.exports = {
   },
 
   target: 'node',
+  mode: 'production',
 
   node: {
     __filename: true,
@@ -28,26 +29,14 @@ module.exports = {
   },
 
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
-        query: {
-          presets: [
-            'react',
-            'env',
-            'stage-0',
-          ],
-          plugins: [
-            [
-              'babel-plugin-webpack-loaders', {
-                'config': path.resolve(__dirname, './config.babel.js'),
-                "verbose": false
-              }
-            ]
-          ]
-        },
+        options: {
+          babelrc: true
+        }
       }, {
         test: /\.json$/,
         loader: 'json-loader',

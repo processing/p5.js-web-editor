@@ -4,6 +4,7 @@ const initialState = {
   fontSize: 18,
   autosave: true,
   linewrap: true,
+  lineNumbers: true,
   lintWarning: false,
   textOutput: false,
   gridOutput: false,
@@ -34,6 +35,8 @@ const preferences = (state = initialState, action) => {
       return Object.assign({}, state, { theme: action.value });
     case ActionTypes.SET_AUTOREFRESH:
       return Object.assign({}, state, { autorefresh: action.value });
+    case ActionTypes.SET_LINE_NUMBERS:
+      return Object.assign({}, state, { lineNumbers: action.value });
     default:
       return state;
   }

@@ -38,6 +38,8 @@ function validate(formProps) {
     errors.name = 'Please enter a name';
   } else if (formProps.name.trim().length === 0) {
     errors.name = 'Folder name cannot contain only spaces';
+  } else if (formProps.name.match(/\.+/i)) {
+    errors.name = 'Folder name cannot contain an extension';
   }
 
   return errors;

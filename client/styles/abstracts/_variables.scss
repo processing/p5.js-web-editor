@@ -12,11 +12,13 @@ $dodgerblue: #1E90FF;
 $primary-text-color: #333;
 $icon-color: #8b8b8b;
 $icon-hover-color: #333;
+$p5-contrast-pink: #FFA9D9;
 
 $themes: (
   light: (
     logo-color: $p5js-pink,
     primary-text-color: #333,
+    dropzone-text-color: #333,
     modal-button-color: #333,
     heading-text-color: #333,
     secondary-text-color: #a8a8a8,
@@ -55,16 +57,21 @@ $themes: (
     input-text-color: #333,
     input-border-color: #b5b5b5,
     about-list-text-color: #4a4a4a,
-    search-background-color: #ebebeb,
+    search-background-color: #ffffff,
+    search-clear-background-color: #e9e9e9,
+    search-hover-text-color: #ffffff,
+    search-hover-background-color: #4d4d4d,
     dropdown-color: #414141,
     keyboard-shortcut-color: #757575,
     nav-hover-color: $p5js-pink,
-    codefold-icon-open: url(../images/down-arrow.svg),
-    codefold-icon-closed: url(../images/right-arrow.svg)
+    error-color: $p5js-pink,
+    codefold-icon-open: url(../images/triangle-arrow-down.svg),
+    codefold-icon-closed: url(../images/triangle-arrow-right.svg)
   ),
   dark: (
     logo-color: $p5js-pink,
     primary-text-color: $white,
+    dropzone-text-color: $black,
     modal-button-color: $white,
     heading-text-color: $white,
     secondary-text-color: #DADADA,
@@ -102,16 +109,21 @@ $themes: (
     input-text-color: #333,
     input-border-color: #b5b5b5,
     about-list-text-color: #f4f4f4,
-    search-background-color: #ebebeb,
+    search-background-color: #ffffff,
+    search-clear-background-color: #4f4f4f,
+    search-hover-text-color: #ffffff,
+    search-hover-background-color: $p5js-pink,
     dropdown-color: #dadada,
     keyboard-shortcut-color: #B5B5B5,
     nav-hover-color: $p5js-pink,
-    codefold-icon-open: url(../images/down-arrow-white.svg),
-    codefold-icon-closed: url(../images/right-arrow-white.svg)
+    error-color: $p5js-pink,
+    codefold-icon-open: url(../images/triangle-arrow-down-white.svg),
+    codefold-icon-closed: url(../images/triangle-arrow-right-white.svg)
   ),
   contrast: (
     logo-color: $yellow,
     primary-text-color: $yellow,
+    dropzone-text-color: $black,
     modal-button-color: #333,
     heading-text-color: #e1e1e1,
     secondary-text-color: #e1e1e1,
@@ -149,11 +161,15 @@ $themes: (
     input-border-color: #b5b5b5,
     about-list-text-color: #f4f4f4,
     search-background-color: $white,
+    search-clear-background-color: #444,
+    search-hover-text-color: $black,
+    search-hover-background-color: $yellow,
     dropdown-color: #e1e1e1,
     keyboard-shortcut-color: #e1e1e1,
     nav-hover-color: $yellow,
-    codefold-icon-open: url(../images/down-arrow-white.svg),
-    codefold-icon-closed: url(../images/right-arrow-white.svg)
+    error-color: $p5-contrast-pink,
+    codefold-icon-open: url(../images/triangle-arrow-down-white.svg),
+    codefold-icon-closed: url(../images/triangle-arrow-right-white.svg)
   )
 );
 

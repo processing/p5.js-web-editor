@@ -51,7 +51,7 @@ const corsOriginsWhitelist = [
 // Run Webpack dev server in development mode
 if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(config);
-  app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config[0].output.publicPath }));
+  app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
   app.use(webpackHotMiddleware(compiler));
 
   corsOriginsWhitelist.push(/localhost/);
@@ -131,6 +131,17 @@ mongoose.connection.on('error', () => {
 app.get('/', (req, res) => {
   res.sendFile(renderIndex());
 });
+
+// Handle API errors
+app.use('/api', (error, req, res, next) => {
+  if (error && error.code && !res.headersSent) {
+    res.status(error.code).json({ error: error.message });
+    return;
+  }
+
+  next(error);
+});
+
 
 // Handle missing routes.
 app.get('*', (req, res) => {

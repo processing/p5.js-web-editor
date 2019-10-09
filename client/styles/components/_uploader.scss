@@ -1,5 +1,7 @@
 .dropzone {
-  color: $primary-text-color;
+  @include themify() {
+    color: getThemifyVariable('dropzone-text-color');
+  }
 }
 
 .uploader {
