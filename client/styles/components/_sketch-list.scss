@@ -95,6 +95,10 @@
   font-weight: normal;
 }
 
+.sketches-table__row--is-add-mode {
+  cursor: pointer;
+}
+
 .sketch-list__dropdown-button {
   width:#{25 / $base-font-size}rem;
   height:#{25 / $base-font-size}rem;
@@ -102,6 +106,29 @@
       & polygon {
         fill: getThemifyVariable('dropdown-color');
       }
+  }
+}
+
+.sketches-table__name {
+  display: flex;
+  align-items: center;
+}
+
+.sketch-list__check-icon {
+  display: inline-block;
+  margin-right:#{10 / $base-font-size}rem;
+  width:#{25 / $base-font-size}rem;
+  height:#{25 / $base-font-size}rem;
+  @include icon();
+  @include themify() {
+    & path {
+      fill: getThemifyVariable('dropdown-color');
+    }
+
+    & svg {
+      width:#{25 / $base-font-size}rem;
+      height:#{25 / $base-font-size}rem;
+    }
   }
 }
 

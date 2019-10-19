@@ -9,9 +9,13 @@ import * as ProjectActions from '../../actions/project';
 import * as CollectionsActions from '../../actions/collections';
 import * as IdeActions from '../../actions/ide';
 import * as ToastActions from '../../actions/toast';
-import AddRemoveButton from '../../../../components/AddRemoveButton';
 
 const downFilledTriangle = require('../../../../images/down-filled-triangle.svg');
+const check = require('../../../../images/check.svg');
+
+const checkIcon = (
+  <InlineSVG className="sketch-list__check-icon" src={check} alt="In collection" />
+);
 
 class CollectionListRowBase extends React.Component {
   static projectInCollection(project, collection) {
@@ -139,15 +143,29 @@ class CollectionListRowBase extends React.Component {
     this.props.removeFromCollection(this.props.collection.id, this.props.project.id);
   }
 
+  handleAddRemove = (evt) => {
+    // Clicking on View action should not perform add/remove
+    const didOriginateInLink = evt.target.nodeName === 'A';
+
+    if (didOriginateInLink) {
+      return;
+    }
+
+    if (CollectionListRowBase.projectInCollection(this.props.project, this.props.collection)) {
+      this.handleCollectionRemove();
+    } else {
+      this.handleCollectionAdd();
+    }
+  }
+
   renderActions = () => {
     const { optionsOpen } = this.state;
     const userIsOwner = this.props.user.username === this.props.username;
 
     if (this.props.addMode === true && this.props.project) {
-      return CollectionListRowBase.projectInCollection(this.props.project, this.props.collection) ?
-        <AddRemoveButton type="remove" onClick={this.handleCollectionRemove} /> :
-        <AddRemoveButton type="add" onClick={this.handleCollectionAdd} />;
+      return <Link to={`/${this.props.collection.owner.username}/collections/${this.props.collection.id}`}>View</Link>;
     }
+
 
     return (
       <React.Fragment>
@@ -180,6 +198,14 @@ class CollectionListRowBase extends React.Component {
     );
   }
 
+  renderIsInCollectionStatus = () => {
+    if (CollectionListRowBase.projectInCollection(this.props.project, this.props.collection)) {
+      return checkIcon;
+    }
+
+    return null;
+  }
+
   renderCollectionName = () => {
     const { addMode, collection, username } = this.props;
     const { renameOpen, renameValue } = this.state;
@@ -208,15 +234,19 @@ class CollectionListRowBase extends React.Component {
   }
 
   render() {
-    const { collection } = this.props;
+    const { addMode, collection } = this.props;
 
     return (
       <tr
-        className="sketches-table__row"
+        className={`sketches-table__row ${addMode ? 'sketches-table__row--is-add-mode' : ''}`}
         key={collection.id}
+        onClick={addMode ? this.handleAddRemove : null}
       >
         <th scope="row">
-          {this.renderCollectionName()}
+          <span className="sketches-table__name">
+            {addMode && this.renderIsInCollectionStatus()}
+            {this.renderCollectionName()}
+          </span>
         </th>
         <td>{format(new Date(collection.createdAt), 'MMM D, YYYY')}</td>
         <td>{format(new Date(collection.updatedAt), 'MMM D, YYYY')}</td>
@@ -234,7 +264,10 @@ CollectionListRowBase.propTypes = {
   removeFromCollection: PropTypes.func.isRequired,
   collection: PropTypes.shape({
     id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    owner: PropTypes.shape({
+      username: PropTypes.string.isRequired,
+    }).isRequired,
   }).isRequired,
   addMode: PropTypes.bool.isRequired,
   project: PropTypes.shape({
