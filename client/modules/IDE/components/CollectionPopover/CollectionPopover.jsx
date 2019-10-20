@@ -39,6 +39,9 @@ const CollectionPopover = ({
   onClose, project, collections, addToCollection, getCollections, user
 }) => {
   const [searchTerm, setSearchTerm] = React.useState('');
+  const filteredCollections = searchTerm === '' ?
+    collections :
+    collections.filter(({ name }) => name.toUpperCase().includes(searchTerm.toUpperCase()));
 
   React.useEffect(() => {
     getCollections(user.username);
@@ -58,13 +61,13 @@ const CollectionPopover = ({
       </div>
 
       <div className="collection-popover__filter">
-        <Searchbar searchLabel="Search collections..." searchTerm={searchTerm} setSearchTerm={setSearchTerm} resetSearchTerm={setSearchTerm} />
+        <Searchbar searchLabel="Search collections..." searchTerm={searchTerm} setSearchTerm={setSearchTerm} resetSearchTerm={() => setSearchTerm('')} />
       </div>
 
       <div className="collection-popover__items">
         <ul>
           {
-            collections.map(collection => <Item key={collection.id} collection={collection} onSelect={() => handleAddToCollection(collection.id)} />)
+            filteredCollections.map(collection => <Item key={collection.id} collection={collection} onSelect={() => handleAddToCollection(collection.id)} />)
           }
         </ul>
       </div>
