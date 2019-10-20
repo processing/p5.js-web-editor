@@ -399,7 +399,7 @@ class Collection extends React.Component {
 
   _renderEmptyTable() {
     if (!this.hasCollectionItems()) {
-      return (<p className="sketches-table__empty">No sketches in collection. <button onClick={this.showAddSketches}>Add some sketches</button></p>);
+      return (<p className="sketches-table__empty">No sketches in collection</p>);
     }
     return null;
   }
