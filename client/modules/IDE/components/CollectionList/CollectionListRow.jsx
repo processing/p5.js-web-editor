@@ -128,10 +128,10 @@ class CollectionListRowBase extends React.Component {
     this.props.showShareModal(this.props.collection.id, this.props.collection.name, this.props.username);
   }
 
-  handleSketchDelete = () => {
+  handleCollectionDelete = () => {
     this.closeAll();
     if (window.confirm(`Are you sure you want to delete "${this.props.collection.name}"?`)) {
-      this.props.deleteProject(this.props.collection.id);
+      this.props.deleteCollection(this.props.collection.id);
     }
   }
 
@@ -185,7 +185,7 @@ class CollectionListRowBase extends React.Component {
               <li>
                 <button
                   className="sketch-list__action-option"
-                  onClick={this.handleSketchDelete}
+                  onClick={this.handleCollectionDelete}
                   onBlur={this.onBlurComponent}
                   onFocus={this.onFocusComponent}
                 >
@@ -278,7 +278,7 @@ CollectionListRowBase.propTypes = {
     username: PropTypes.string,
     authenticated: PropTypes.bool.isRequired
   }).isRequired,
-  deleteProject: PropTypes.func.isRequired,
+  deleteCollection: PropTypes.func.isRequired,
   showShareModal: PropTypes.func.isRequired,
   cloneProject: PropTypes.func.isRequired,
   exportProjectAsZip: PropTypes.func.isRequired,

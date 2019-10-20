@@ -148,3 +148,26 @@ export function editCollection(collectionId, { name, description }) {
       });
   };
 }
+
+export function deleteCollection(collectionId) {
+  return (dispatch) => {
+    const url = `${ROOT_URL}/collections/${collectionId}`;
+    return axios.delete(url, { withCredentials: true })
+      .then((response) => {
+        dispatch({
+          type: ActionTypes.DELETE_COLLECTION,
+          payload: response.data,
+          collectionId,
+        });
+        return response.data;
+      })
+      .catch((response) => {
+        dispatch({
+          type: ActionTypes.ERROR,
+          error: response.data
+        });
+
+        return response.data;
+      });
+  };
+}

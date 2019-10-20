@@ -5,6 +5,9 @@ const sketches = (state = [], action) => {
     case ActionTypes.SET_COLLECTIONS:
       return action.collections;
 
+    case ActionTypes.DELETE_COLLECTION:
+      return state.filter(({ id }) => action.collectionId !== id);
+
     // The API returns the complete new edited collection
     // with any items added or removed
     case ActionTypes.EDIT_COLLECTION:
