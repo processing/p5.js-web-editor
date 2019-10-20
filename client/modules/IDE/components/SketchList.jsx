@@ -16,12 +16,16 @@ import * as SortingActions from '../actions/sorting';
 import * as IdeActions from '../actions/ide';
 import getSortedSketches from '../selectors/projects';
 import Loader from '../../App/components/loader';
-import AddRemoveButton from '../../../components/AddRemoveButton';
 import CollectionPopover from './CollectionPopover';
 
 const arrowUp = require('../../../images/sort-arrow-up.svg');
 const arrowDown = require('../../../images/sort-arrow-down.svg');
 const downFilledTriangle = require('../../../images/down-filled-triangle.svg');
+const check = require('../../../images/check.svg');
+
+const checkIcon = (
+  <InlineSVG className="sketch-list__check-icon" src={check} alt="In collection" />
+);
 
 class SketchListRowBase extends React.Component {
   constructor(props) {
@@ -150,6 +154,25 @@ class SketchListRowBase extends React.Component {
     }
   }
 
+  handleRowClick = () => {
+    if (!this.props.addMode) {
+      return;
+    }
+
+    if (this.props.inCollection) {
+      this.props.onCollectionRemove();
+    } else {
+      this.props.onCollectionAdd();
+    }
+  }
+
+  renderViewButton = sketchURL => (
+    <td className="sketch-list__dropdown-column">{
+      <Link to={sketchURL}>View</Link>
+    }
+    </td>
+  )
+
   renderDropdown = () => {
     const { optionsOpen } = this.state;
     const userIsOwner = this.props.user.username === this.props.username;
@@ -238,48 +261,54 @@ class SketchListRowBase extends React.Component {
     );
   }
 
-  renderAddRemoveButtons = () => (
-    <td className="sketch-list__dropdown-column">{
-      this.props.inCollection ?
-        <AddRemoveButton type="remove" onClick={this.props.onCollectionRemove} /> :
-        <AddRemoveButton type="add" onClick={this.props.onCollectionAdd} />
-    }
-    </td>
-  )
-
-  renderActions = () => (this.props.addMode === true ? this.renderAddRemoveButtons() : this.renderDropdown())
+  renderActions = sketchURL => (this.props.addMode === true ? this.renderViewButton(sketchURL) : this.renderDropdown())
 
   render() {
-    const { sketch, username } = this.props;
+    const {
+      sketch,
+      username,
+      addMode,
+      inCollection,
+    } = this.props;
     const { renameOpen, renameValue } = this.state;
     let url = `/${username}/sketches/${sketch.id}`;
     if (username === 'p5') {
       url = `/${username}/sketches/${slugify(sketch.name, '_')}`;
     }
+
+    const name = addMode ?
+      <span className="sketches-table__name">{inCollection ? checkIcon : null} {sketch.name}</span>
+      : (
+        <React.Fragment>
+          <Link to={url}>
+            {renameOpen ? '' : sketch.name}
+          </Link>
+          {renameOpen
+          &&
+          <input
+            value={renameValue}
+            onChange={this.handleRenameChange}
+            onKeyUp={this.handleRenameEnter}
+            onBlur={this.resetSketchName}
+            onClick={e => e.stopPropagation()}
+          />
+          }
+        </React.Fragment>
+      );
+
     return (
       <React.Fragment>
         <tr
-          className="sketches-table__row"
+          className={`sketches-table__row ${addMode ? 'sketches-table__row--is-add-mode' : ''}`}
           key={sketch.id}
+          onClick={this.handleRowClick}
         >
           <th scope="row">
-            <Link to={url}>
-              {renameOpen ? '' : sketch.name}
-            </Link>
-            {renameOpen
-            &&
-            <input
-              value={renameValue}
-              onChange={this.handleRenameChange}
-              onKeyUp={this.handleRenameEnter}
-              onBlur={this.resetSketchName}
-              onClick={e => e.stopPropagation()}
-            />
-            }
+            {name}
           </th>
           <td>{format(new Date(sketch.createdAt), 'MMM D, YYYY h:mm A')}</td>
           <td>{format(new Date(sketch.updatedAt), 'MMM D, YYYY h:mm A')}</td>
-          {this.renderActions()}
+          {this.renderActions(url)}
         </tr>
       </React.Fragment>);
   }
