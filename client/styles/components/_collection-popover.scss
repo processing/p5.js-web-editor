@@ -1,0 +1,89 @@
+.collection-popover {
+  position: absolute;
+	height: auto;
+  width: #{400 / $base-font-size}rem;
+  top: 63%;
+  right: calc(100% - 26px);
+
+  z-index: 9999;
+  
+  display: flex;
+  flex-direction: column;
+  
+	border-radius: #{6 / $base-font-size}rem;
+
+  @include themify() {
+    background-color: map-get($theme-map, 'modal-background-color');
+    border: 1px solid map-get($theme-map, 'modal-border-color');
+    box-shadow: 0 0 18px 0 getThemifyVariable('shadow-color');
+    color: getThemifyVariable('dropdown-color');
+  }
+  
+	text-align: left;
+}
+
+.collection-popover__header {
+  display: flex;
+  margin-left: #{17 / $base-font-size}rem;
+  margin-right: #{17 / $base-font-size}rem;
+}
+
+.collection-popover__filter {
+  display: flex;
+  margin-bottom: #{8 / $base-font-size}rem;
+}
+
+.collection-popover__exit-button {
+  @include icon();
+  margin-left: auto;
+}
+
+.collection-popover__items {
+  height: #{70 * 4 / $base-font-size}rem;
+  overflow: auto;
+}
+
+
+.collection-popover__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  height: #{60 / $base-font-size}rem;
+  margin: 5px;
+  padding: 5px;
+}
+
+.collection-popover__item:nth-child(odd) {
+  @include themify() {
+    background: getThemifyVariable('table-row-stripe-color');
+  }
+}
+
+.collection-popover__item__info {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: stretch;
+  align-items: stretch;
+}
+
+.collection-popover__item__info button,
+.collection-popover__item__info button:hover {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+
+  text-align: left;
+  color: black;
+}
+
+.collection-popover__item__view {
+}
+
+
+.collection-popover__item__view-button {
+  @extend %button;
+}

@@ -17,6 +17,7 @@ import * as IdeActions from '../actions/ide';
 import getSortedSketches from '../selectors/projects';
 import Loader from '../../App/components/loader';
 import AddRemoveButton from '../../../components/AddRemoveButton';
+import CollectionPopover from './CollectionPopover';
 
 const arrowUp = require('../../../images/sort-arrow-up.svg');
 const arrowDown = require('../../../images/sort-arrow-down.svg');
@@ -29,7 +30,8 @@ class SketchListRowBase extends React.Component {
       optionsOpen: false,
       renameOpen: false,
       renameValue: props.sketch.name,
-      isFocused: false
+      isFocused: false,
+      showPopover: false,
     };
   }
 
@@ -119,6 +121,18 @@ class SketchListRowBase extends React.Component {
     this.props.exportProjectAsZip(this.props.sketch.id);
   }
 
+  handleShowCollectionPopover = () => {
+    this.setState({
+      showPopover: true
+    });
+  }
+
+  handleCloseCollectionPopover = () => {
+    this.setState({
+      showPopover: false
+    });
+  }
+
   handleSketchDuplicate = () => {
     this.closeAll();
     this.props.cloneProject(this.props.sketch.id);
@@ -186,6 +200,17 @@ class SketchListRowBase extends React.Component {
                 Duplicate
               </button>
             </li>}
+            {this.props.user.authenticated &&
+              <li>
+                <button
+                  className="sketch-list__action-option"
+                  onClick={this.handleShowCollectionPopover}
+                  onBlur={this.onBlurComponent}
+                  onFocus={this.onFocusComponent}
+                >
+                  Add to collection
+                </button>
+              </li>}
             { /* <li>
               <button
                 className="sketch-list__action-option"
@@ -208,6 +233,7 @@ class SketchListRowBase extends React.Component {
               </button>
             </li>}
           </ul>}
+        {this.state.showPopover && <CollectionPopover onClose={this.handleCloseCollectionPopover} project={this.props.sketch} />}
       </td>
     );
   }
@@ -231,15 +257,16 @@ class SketchListRowBase extends React.Component {
       url = `/${username}/sketches/${slugify(sketch.name, '_')}`;
     }
     return (
-      <tr
-        className="sketches-table__row"
-        key={sketch.id}
-      >
-        <th scope="row">
-          <Link to={url}>
-            {renameOpen ? '' : sketch.name}
-          </Link>
-          {renameOpen
+      <React.Fragment>
+        <tr
+          className="sketches-table__row"
+          key={sketch.id}
+        >
+          <th scope="row">
+            <Link to={url}>
+              {renameOpen ? '' : sketch.name}
+            </Link>
+            {renameOpen
             &&
             <input
               value={renameValue}
@@ -248,12 +275,13 @@ class SketchListRowBase extends React.Component {
               onBlur={this.resetSketchName}
               onClick={e => e.stopPropagation()}
             />
-          }
-        </th>
-        <td>{format(new Date(sketch.createdAt), 'MMM D, YYYY h:mm A')}</td>
-        <td>{format(new Date(sketch.updatedAt), 'MMM D, YYYY h:mm A')}</td>
-        {this.renderActions()}
-      </tr>);
+            }
+          </th>
+          <td>{format(new Date(sketch.createdAt), 'MMM D, YYYY h:mm A')}</td>
+          <td>{format(new Date(sketch.updatedAt), 'MMM D, YYYY h:mm A')}</td>
+          {this.renderActions()}
+        </tr>
+      </React.Fragment>);
   }
 }
 
@@ -290,6 +318,18 @@ class SketchList extends React.Component {
     this.props.getProjects(this.props.username);
     this.props.resetSorting();
     this._renderFieldHeader = this._renderFieldHeader.bind(this);
+
+    this.state = {
+      isInitialDataLoad: true,
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.sketches !== nextProps.sketches && Array.isArray(nextProps.sketches)) {
+      this.setState({
+        isInitialDataLoad: false,
+      });
+    }
   }
 
   getSketchesTitle() {
@@ -300,16 +340,20 @@ class SketchList extends React.Component {
   }
 
   hasSketches() {
-    return !this.props.loading && this.props.sketches.length > 0;
+    return !this.isLoading() && this.props.sketches.length > 0;
+  }
+
+  isLoading() {
+    return this.props.loading && this.state.isInitialDataLoad;
   }
 
   _renderLoader() {
-    if (this.props.loading) return <Loader />;
+    if (this.isLoading()) return <Loader />;
     return null;
   }
 
   _renderEmptyTable() {
-    if (!this.props.loading && this.props.sketches.length === 0) {
+    if (!this.isLoading() && this.props.sketches.length === 0) {
       return (<p className="sketches-table__empty">No sketches.</p>);
     }
     return null;
