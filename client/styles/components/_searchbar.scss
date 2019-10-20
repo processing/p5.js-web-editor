@@ -68,3 +68,7 @@ button[type="submit"].searchbar__button {
     }
   }
 }
+
+.searchbar--is-empty .searchbar__clear-button {
+  display: none;
+}
