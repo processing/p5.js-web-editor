@@ -153,10 +153,10 @@ class CollectionItemRowBase extends React.Component {
     this.props.showShareModal(this.props.collection.id, this.props.collection.name, this.props.username);
   }
 
-  handleSketchDelete = () => {
+  handleSketchRemove = () => {
     this.closeAll();
-    if (window.confirm(`Are you sure you want to delete "${this.props.collection.name}"?`)) {
-      this.props.deleteProject(this.props.collection.id);
+    if (window.confirm(`Are you sure you want to remove "${this.props.item.project.name}" from this collection?`)) {
+      this.props.removeFromCollection(this.props.collection.id, this.props.item.project.id);
     }
   }
 
@@ -185,11 +185,11 @@ class CollectionItemRowBase extends React.Component {
               <li>
                 <button
                   className="sketch-list__action-option"
-                  onClick={this.handleSketchDelete}
+                  onClick={this.handleSketchRemove}
                   onBlur={this.onBlurComponent}
                   onFocus={this.onFocusComponent}
                 >
-                  Delete
+                  Remove from Collection
                 </button>
               </li>}
           </ul>
@@ -218,12 +218,7 @@ class CollectionItemRowBase extends React.Component {
         </th>
         <td>{format(new Date(item.createdAt), 'MMM D, YYYY h:mm A')}</td>
         <td>{sketchOwnerUsername}</td>
-        {/*
-        <td>{format(new Date(item.createdAt), 'MMM D, YYYY h:mm A')}</td>
-        <td>{format(new Date(itm.updatedAt), 'MMM D, YYYY h:mm A')}</td>
-        <td>{(collection.items || []).length}</td>
         <td>{dropdown}</td>
-        */}
       </tr>);
   }
 }
@@ -235,6 +230,7 @@ CollectionItemRowBase.propTypes = {
   }).isRequired,
   item: PropTypes.shape({
     project: PropTypes.shape({
+      id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
@@ -243,7 +239,7 @@ CollectionItemRowBase.propTypes = {
     username: PropTypes.string,
     authenticated: PropTypes.bool.isRequired
   }).isRequired,
-  deleteProject: PropTypes.func.isRequired,
+  removeFromCollection: PropTypes.func.isRequired,
   showShareModal: PropTypes.func.isRequired,
   cloneProject: PropTypes.func.isRequired,
   exportProjectAsZip: PropTypes.func.isRequired,
@@ -251,7 +247,7 @@ CollectionItemRowBase.propTypes = {
 };
 
 function mapDispatchToPropsSketchListRow(dispatch) {
-  return bindActionCreators(Object.assign({}, ProjectActions, IdeActions), dispatch);
+  return bindActionCreators(Object.assign({}, CollectionsActions, ProjectActions, IdeActions), dispatch);
 }
 
 const CollectionItemRow = connect(null, mapDispatchToPropsSketchListRow)(CollectionItemRowBase);
@@ -455,6 +451,7 @@ class Collection extends React.Component {
                       item={item}
                       user={this.props.user}
                       username={this.getUsername()}
+                      collection={this.props.collection}
                     />))}
                 </tbody>
               </table>
