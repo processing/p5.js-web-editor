@@ -86,3 +86,10 @@
 .collection-popover__item__view-button {
   @extend %button;
 }
+
+.collection-popover__empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}

@@ -9,27 +9,13 @@ import getSortedCollections from '../../selectors/collections';
 
 import exitUrl from '../../../../images/exit.svg';
 
+import Loader from '../../../App/components/loader';
 import { Searchbar } from '../Searchbar';
 import Item from './Item';
 
-// const reducer = () => {
-//   switch ()
-//   case 'noItems':
-//     return 'NoCollections';
-//   case
-// }
-
 const NoCollections = () => (
-  <div>
+  <div className="collection-popover__empty">
     <p>No collections</p>
-    {/* <p>
-      <Link
-        to="/andrewn/collections/create"
-        className="searchbar__clear-button"
-        onClick={() => {}}
-      >Create
-      </Link>
-    </p> */}
   </div>);
 
 const projectInCollection = (project, collection) => (
@@ -38,8 +24,9 @@ const projectInCollection = (project, collection) => (
 
 
 const CollectionPopover = ({
-  onClose, project, collections, addToCollection, removeFromCollection, getCollections, user
+  loading, onClose, project, collections, addToCollection, removeFromCollection, getCollections, user
 }) => {
+  const [didLoadData, setDidLoadData] = React.useState(null);
   const [searchTerm, setSearchTerm] = React.useState('');
   const filteredCollections = searchTerm === '' ?
     collections :
@@ -49,6 +36,18 @@ const CollectionPopover = ({
     getCollections(user.username);
   }, [user]);
 
+  React.useEffect(() => {
+    if (didLoadData === true) {
+      return;
+    }
+
+    if (loading && didLoadData === null) {
+      setDidLoadData(false);
+    } else if (!loading && didLoadData === false) {
+      setDidLoadData(true);
+    }
+  }, [loading]);
+
   const handleAddToCollection = (collectionId) => {
     addToCollection(collectionId, project.id);
   };
@@ -56,6 +55,29 @@ const CollectionPopover = ({
   const handleRemoveFromCollection = (collectionId) => {
     removeFromCollection(collectionId, project.id);
   };
+
+  let content = null;
+
+  if (didLoadData && collections.length === 0) {
+    content = <NoCollections />;
+  } else if (didLoadData) {
+    content = (
+      <ul>
+        {
+          filteredCollections.map((collection) => {
+            const inCollection = projectInCollection(project, collection);
+            const handleSelect = inCollection ? handleRemoveFromCollection : handleAddToCollection;
+
+            return (
+              <Item inCollection={inCollection} key={collection.id} collection={collection} onSelect={() => handleSelect(collection.id)} />
+            );
+          })
+        }
+      </ul>
+    );
+  } else {
+    content = <Loader />;
+  }
 
   return (
     <div className="collection-popover">
@@ -71,24 +93,14 @@ const CollectionPopover = ({
       </div>
 
       <div className="collection-popover__items">
-        <ul>
-          {
-            filteredCollections.map((collection) => {
-              const inCollection = projectInCollection(project, collection);
-              const handleSelect = inCollection ? handleRemoveFromCollection : handleAddToCollection;
-
-              return (
-                <Item inCollection={inCollection} key={collection.id} collection={collection} onSelect={() => handleSelect(collection.id)} />
-              );
-            })
-          }
-        </ul>
+        {content}
       </div>
     </div>
   );
 };
 
 CollectionPopover.propTypes = {
+  loading: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   getCollections: PropTypes.func.isRequired,
   addToCollection: PropTypes.func.isRequired,
