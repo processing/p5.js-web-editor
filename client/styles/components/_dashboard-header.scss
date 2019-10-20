@@ -33,7 +33,7 @@
     color: getThemifyVariable('inactive-text-color');
     border-bottom: #{4 / $base-font-size}rem solid transparent;
 
-    padding: 0 0 #{8 / $base-font-size}rem 0;
+    padding: 0;
     margin-right: #{26 / $base-font-size}rem;
 
     &:hover, &:focus, &.dashboard-header__tab--selected {
@@ -56,7 +56,12 @@
 
 .dashboard-header__tab__title {
   margin: 0;
-  padding: 0 #{5 /$base-font-size}rem;
+  padding: 0;
+}
+
+.dashboard-header__tab__title > * {
+  display: inline-block;
+  padding: 0 #{5 /$base-font-size}rem #{5 /$base-font-size}rem;
 }
 
 .dashboard-header__nav {

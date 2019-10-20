@@ -12,7 +12,7 @@ const Tab = ({ children, isSelected, to }) => {
   const selectedClassName = 'dashboard-header__tab--selected';
 
   const location = { pathname: to, state: { skipSavingPath: true } };
-  const content = isSelected ? children : <Link to={location}>{children}</Link>;
+  const content = isSelected ? <span>{children}</span> : <Link to={location}>{children}</Link>;
   return (
     <li className={`dashboard-header__tab ${isSelected && selectedClassName}`}>
       <h4 className="dashboard-header__tab__title">
