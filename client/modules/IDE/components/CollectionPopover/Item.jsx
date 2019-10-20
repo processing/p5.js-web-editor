@@ -1,10 +1,20 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router';
+import InlineSVG from 'react-inlinesvg';
 
-const CollectionItem = ({ collection, onSelect }) => (
+import check from '../../../../images/check.svg';
+
+const checkIcon = (
+  <InlineSVG className="sketch-list__check-icon" src={check} alt="In collection" />
+);
+
+
+const CollectionItem = ({ inCollection, collection, onSelect }) => (
   <li className="collection-popover__item">
     <div className="collection-popover__item__info">
+      {inCollection && checkIcon}
+
       <button onClick={onSelect}>
         {collection.name}
       </button>
@@ -17,6 +27,7 @@ const CollectionItem = ({ collection, onSelect }) => (
 );
 
 CollectionItem.propTypes = {
+  inCollection: PropTypes.bool.isRequired,
   onSelect: PropTypes.func.isRequired,
   collection: PropTypes.shape({
     name: PropTypes.string,

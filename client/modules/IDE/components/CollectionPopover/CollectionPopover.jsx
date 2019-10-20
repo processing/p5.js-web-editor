@@ -7,8 +7,6 @@ import { bindActionCreators } from 'redux';
 import * as CollectionsActions from '../../actions/collections';
 import getSortedCollections from '../../selectors/collections';
 
-// import { Link } from 'react-router';
-
 import exitUrl from '../../../../images/exit.svg';
 
 import { Searchbar } from '../Searchbar';
@@ -34,9 +32,13 @@ const NoCollections = () => (
     </p> */}
   </div>);
 
+const projectInCollection = (project, collection) => (
+  collection.items.find(item => item.project.id === project.id) != null
+);
+
 
 const CollectionPopover = ({
-  onClose, project, collections, addToCollection, getCollections, user
+  onClose, project, collections, addToCollection, removeFromCollection, getCollections, user
 }) => {
   const [searchTerm, setSearchTerm] = React.useState('');
   const filteredCollections = searchTerm === '' ?
@@ -49,6 +51,10 @@ const CollectionPopover = ({
 
   const handleAddToCollection = (collectionId) => {
     addToCollection(collectionId, project.id);
+  };
+
+  const handleRemoveFromCollection = (collectionId) => {
+    removeFromCollection(collectionId, project.id);
   };
 
   return (
@@ -67,7 +73,14 @@ const CollectionPopover = ({
       <div className="collection-popover__items">
         <ul>
           {
-            filteredCollections.map(collection => <Item key={collection.id} collection={collection} onSelect={() => handleAddToCollection(collection.id)} />)
+            filteredCollections.map((collection) => {
+              const inCollection = projectInCollection(project, collection);
+              const handleSelect = inCollection ? handleRemoveFromCollection : handleAddToCollection;
+
+              return (
+                <Item inCollection={inCollection} key={collection.id} collection={collection} onSelect={() => handleSelect(collection.id)} />
+              );
+            })
           }
         </ul>
       </div>
@@ -79,6 +92,7 @@ CollectionPopover.propTypes = {
   onClose: PropTypes.func.isRequired,
   getCollections: PropTypes.func.isRequired,
   addToCollection: PropTypes.func.isRequired,
+  removeFromCollection: PropTypes.func.isRequired,
   user: PropTypes.shape({
     username: PropTypes.string.isRequired,
   }).isRequired,
