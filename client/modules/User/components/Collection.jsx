@@ -394,7 +394,10 @@ class Collection extends React.Component {
   }
 
   _renderEmptyTable() {
-    if (!this.hasCollectionItems()) {
+    const isLoading = this.props.loading;
+    const hasCollectionItems = this.props.collection != null && this.props.collection.items.length > 0;
+
+    if (!isLoading && !hasCollectionItems) {
       return (<p className="sketches-table__empty">No sketches in collection</p>);
     }
     return null;
