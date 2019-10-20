@@ -15,6 +15,10 @@
   padding: 0 66px;
 }
 
+.dashboard-header__switcher {
+  flex: 1;
+}
+
 .dashboard-header__tabs {
   display: flex;
   padding-top: #{24 / $base-font-size}rem;
@@ -39,7 +43,7 @@
     }
   }
 
-  font-size: #{21 / $base-font-size}rem;
+  font-size: #{12 / $base-font-size}rem;
 }
 
 .dashboard-header__tab--selected {
@@ -51,8 +55,8 @@
 }
 
 .dashboard-header__tab__title {
-  font-weight: bold;
   margin: 0;
+  padding: 0 #{5 /$base-font-size}rem;
 }
 
 .dashboard-header__nav {
