@@ -8,7 +8,7 @@ import * as SortingActions from '../actions/sorting';
 
 const searchIcon = require('../../../images/magnifyingglass.svg');
 
-class Searchbar extends React.Component {
+export class Searchbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -58,7 +58,7 @@ class Searchbar extends React.Component {
           className="searchbar__input"
           type="text"
           value={searchValue}
-          placeholder="Search sketches..."
+          placeholder={this.props.searchLabel}
           onChange={this.handleSearchChange}
           onKeyUp={this.handleSearchEnter}
         />
@@ -75,8 +75,14 @@ class Searchbar extends React.Component {
 Searchbar.propTypes = {
   searchTerm: PropTypes.string.isRequired,
   setSearchTerm: PropTypes.func.isRequired,
-  resetSearchTerm: PropTypes.func.isRequired
+  resetSearchTerm: PropTypes.func.isRequired,
+  searchLabel: PropTypes.string,
 };
+
+Searchbar.defaultProps = {
+  searchLabel: 'Search sketches...',
+};
+
 
 function mapStateToProps(state) {
   return {
