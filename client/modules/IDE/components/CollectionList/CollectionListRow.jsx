@@ -26,8 +26,6 @@ class CollectionListRowBase extends React.Component {
     super(props);
     this.state = {
       optionsOpen: false,
-      renameOpen: false,
-      renameValue: props.collection.name,
       isFocused: false
     };
   }
@@ -65,67 +63,15 @@ class CollectionListRowBase extends React.Component {
     }
   }
 
-  openRename = () => {
-    this.setState({
-      renameOpen: true
-    });
-  }
-
-  closeRename = () => {
-    this.setState({
-      renameOpen: false
-    });
-  }
-
   closeAll = () => {
     this.setState({
-      renameOpen: false,
       optionsOpen: false
-    });
-  }
-
-  handleRenameChange = (e) => {
-    this.setState({
-      renameValue: e.target.value
-    });
-  }
-
-  handleRenameEnter = (e) => {
-    if (e.key === 'Enter') {
-      // TODO pass this func
-      this.props.changeProjectName(this.props.collection.id, this.state.renameValue);
-      this.closeAll();
-    }
-  }
-
-  resetSketchName = () => {
-    this.setState({
-      renameValue: this.props.collection.name
     });
   }
 
   handleDropdownOpen = () => {
     this.closeAll();
     this.openOptions();
-  }
-
-  handleRenameOpen = () => {
-    this.closeAll();
-    this.openRename();
-  }
-
-  handleSketchDownload = () => {
-    this.props.exportProjectAsZip(this.props.collection.id);
-  }
-
-  handleSketchDuplicate = () => {
-    this.closeAll();
-    this.props.cloneProject(this.props.collection.id);
-  }
-
-  handleSketchShare = () => {
-    this.closeAll();
-    this.props.showShareModal(this.props.collection.id, this.props.collection.name, this.props.username);
   }
 
   handleCollectionDelete = () => {
@@ -278,11 +224,7 @@ CollectionListRowBase.propTypes = {
     username: PropTypes.string,
     authenticated: PropTypes.bool.isRequired
   }).isRequired,
-  deleteCollection: PropTypes.func.isRequired,
-  showShareModal: PropTypes.func.isRequired,
-  cloneProject: PropTypes.func.isRequired,
-  exportProjectAsZip: PropTypes.func.isRequired,
-  changeProjectName: PropTypes.func.isRequired
+  deleteCollection: PropTypes.func.isRequired
 };
 
 function mapDispatchToPropsSketchListRow(dispatch) {

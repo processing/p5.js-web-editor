@@ -154,7 +154,7 @@ class SketchListRowBase extends React.Component {
     }
   }
 
-  handleRowClick = () => {
+  handleRowClick = (evt) => {
     if (!this.props.addMode) {
       return;
     }

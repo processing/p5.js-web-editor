@@ -1,9 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { browserHistory } from 'react-router';
-import { updateSettings, initiateVerification, createApiKey, removeApiKey } from '../actions';
 import Nav from '../../../components/Nav';
 
 import CollectionCreate from '../components/CollectionCreate';
@@ -69,16 +66,12 @@ class CollectionView extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    previousPath: state.ide.previousPath,
     user: state.user,
     theme: state.preferences.theme
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    updateSettings, initiateVerification, createApiKey, removeApiKey
-  }, dispatch);
 }
 
 CollectionView.propTypes = {
@@ -89,7 +82,6 @@ CollectionView.propTypes = {
     collection_id: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,
   }).isRequired,
-  // previousPath: PropTypes.string.isRequired,
   theme: PropTypes.string.isRequired,
   user: PropTypes.shape({
     username: PropTypes.string.isRequired,
