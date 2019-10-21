@@ -64,7 +64,8 @@ class Overlay extends React.Component {
     const {
       ariaLabel,
       title,
-      children
+      children,
+      actions,
     } = this.props;
     return (
       <div className="overlay">
@@ -77,9 +78,12 @@ class Overlay extends React.Component {
           >
             <header className="overlay__header">
               <h2 className="overlay__title">{title}</h2>
-              <button className="overlay__close-button" onClick={this.close} >
-                <InlineSVG src={exitUrl} alt="close overlay" />
-              </button>
+              <div className="overlay__actions">
+                {actions}
+                <button className="overlay__close-button" onClick={this.close} >
+                  <InlineSVG src={exitUrl} alt="close overlay" />
+                </button>
+              </div>
             </header>
             {children}
           </section>
@@ -91,6 +95,7 @@ class Overlay extends React.Component {
 
 Overlay.propTypes = {
   children: PropTypes.element,
+  actions: PropTypes.element,
   closeOverlay: PropTypes.func,
   title: PropTypes.string,
   ariaLabel: PropTypes.string,
@@ -99,6 +104,7 @@ Overlay.propTypes = {
 
 Overlay.defaultProps = {
   children: null,
+  actions: null,
   title: 'Modal',
   closeOverlay: null,
   ariaLabel: 'modal',
