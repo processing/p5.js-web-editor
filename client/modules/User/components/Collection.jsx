@@ -19,6 +19,7 @@ import EditableInput from '../../IDE/components/EditableInput';
 import Overlay from '../../App/components/Overlay';
 import SketchList from '../../IDE/components/SketchList';
 import CopyableInput from '../../IDE/components/CopyableInput';
+import SketchSearchbar from '../../IDE/components/Searchbar';
 
 const arrowUp = require('../../../images/sort-arrow-up.svg');
 const arrowDown = require('../../../images/sort-arrow-down.svg');
@@ -462,7 +463,7 @@ class Collection extends React.Component {
           }
           {
             this.state.isAddingSketches && (
-              <Overlay title="Add sketches" closeOverlay={this.hideAddSketches}>
+              <Overlay title="Add sketches" actions={<SketchSearchbar />} closeOverlay={this.hideAddSketches}>
                 <div className="collection-add-sketch">
                   <SketchList username={this.props.username} addMode collection={this.props.collection} />
                 </div>
