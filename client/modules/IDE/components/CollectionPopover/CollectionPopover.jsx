@@ -69,7 +69,12 @@ const CollectionPopover = ({
             const handleSelect = inCollection ? handleRemoveFromCollection : handleAddToCollection;
 
             return (
-              <Item inCollection={inCollection} key={collection.id} collection={collection} onSelect={() => handleSelect(collection.id)} />
+              <Item
+                inCollection={inCollection}
+                key={collection.id}
+                collection={collection}
+                onSelect={() => handleSelect(collection.id)}
+              />
             );
           })
         }
@@ -89,7 +94,12 @@ const CollectionPopover = ({
       </div>
 
       <div className="collection-popover__filter">
-        <Searchbar searchLabel="Search collections..." searchTerm={searchTerm} setSearchTerm={setSearchTerm} resetSearchTerm={() => setSearchTerm('')} />
+        <Searchbar
+          searchLabel="Search collections..."
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          resetSearchTerm={() => setSearchTerm('')}
+        />
       </div>
 
       <div className="collection-popover__items">

@@ -256,7 +256,12 @@ class SketchListRowBase extends React.Component {
               </button>
             </li>}
           </ul>}
-        {this.state.showPopover && <CollectionPopover onClose={this.handleCloseCollectionPopover} project={this.props.sketch} />}
+        {this.state.showPopover &&
+          <CollectionPopover
+            onClose={this.handleCloseCollectionPopover}
+            project={this.props.sketch}
+          />
+        }
       </td>
     );
   }
@@ -446,7 +451,8 @@ class SketchList extends React.Component {
                   addMode={this.props.addMode}
                   onCollectionAdd={() => this.handleCollectionAdd(sketch.id)}
                   onCollectionRemove={() => this.handleCollectionRemove(sketch.id)}
-                  inCollection={this.props.collection && this.props.collection.items.find(item => item.project.id === sketch.id) != null}
+                  inCollection={this.props.collection &&
+                    this.props.collection.items.find(item => item.project.id === sketch.id) != null}
                 />))}
             </tbody>
           </table>}
@@ -505,7 +511,10 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}, ProjectsActions, CollectionsActions, ToastActions, SortingActions), dispatch);
+  return bindActionCreators(
+    Object.assign({}, ProjectsActions, CollectionsActions, ToastActions, SortingActions),
+    dispatch
+  );
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SketchList);

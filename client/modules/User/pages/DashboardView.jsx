@@ -10,7 +10,7 @@ import Overlay from '../../App/components/Overlay';
 import AssetList from '../../IDE/components/AssetList';
 import CollectionList from '../../IDE/components/CollectionList';
 import SketchList from '../../IDE/components/SketchList';
-import Searchbar from '../../IDE/components/Searchbar';
+import SketchSearchbar from '../../IDE/components/Searchbar';
 
 import CollectionCreate from '../components/CollectionCreate';
 import DashboardTabSwitcher, { TabKey } from '../components/DashboardTabSwitcher';
@@ -85,7 +85,7 @@ class DashboardView extends React.Component {
       default:
         return (
           <React.Fragment>
-            <Searchbar />
+            <SketchSearchbar />
             <Link className="dashboard__action-button" to="/">New sketch</Link>
           </React.Fragment>
         );

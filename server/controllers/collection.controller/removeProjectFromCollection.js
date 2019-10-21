@@ -1,5 +1,4 @@
 import Collection from '../../models/collection';
-import Project from '../../models/project';
 
 export default function addProjectToCollection(req, res) {
   const owner = req.user._id;

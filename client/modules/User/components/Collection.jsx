@@ -162,7 +162,7 @@ class CollectionItemRowBase extends React.Component {
   }
 
   render() {
-    const { item, username } = this.props;
+    const { item } = this.props;
     const { renameOpen, optionsOpen, renameValue } = this.state;
     const sketchOwnerUsername = item.project.user.username;
     const userIsOwner = this.props.user.username === sketchOwnerUsername;
@@ -285,7 +285,9 @@ class Collection extends React.Component {
   isOwner() {
     let isOwner = false;
 
-    if (this.props.user != null && this.props.user.username && this.props.collection.owner.username === this.props.user.username) {
+    if (this.props.user != null &&
+      this.props.user.username &&
+      this.props.collection.owner.username === this.props.user.username) {
       isOwner = true;
     }
 
@@ -307,7 +309,7 @@ class Collection extends React.Component {
 
   _renderCollectionMetadata() {
     const {
-      id, name, description, items, owner, slug
+      id, name, description, items, owner
     } = this.props.collection;
 
     const hostname = window.location.origin;
@@ -331,13 +333,16 @@ class Collection extends React.Component {
       this.props.editCollection(id, { description: value });
     };
 
-    const handleEditCollectionSlug = (value) => {
-      if (value === slug) {
-        return;
-      }
-
-      this.props.editCollection(id, { slug: value });
-    };
+    //
+    // TODO: Implement UI for editing slug
+    //
+    // const handleEditCollectionSlug = (value) => {
+    //   if (value === slug) {
+    //     return;
+    //   }
+    //
+    //   this.props.editCollection(id, { slug: value });
+    // };
 
     return (
       <div className={`collection-metadata ${this.isOwner() ? 'collection-metadata--is-owner' : ''}`}>
@@ -518,7 +523,10 @@ function mapStateToProps(state, ownProps) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}, CollectionsActions, ProjectsActions, ToastActions, SortingActions), dispatch);
+  return bindActionCreators(
+    Object.assign({}, CollectionsActions, ProjectsActions, ToastActions, SortingActions),
+    dispatch
+  );
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Collection);
