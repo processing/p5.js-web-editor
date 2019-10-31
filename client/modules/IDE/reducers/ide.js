@@ -23,6 +23,7 @@ const initialState = {
   previousPath: '/',
   errorType: undefined,
   runtimeErrorWarningVisible: true,
+  parentId: undefined
 };
 
 const ide = (state = initialState, action) => {
@@ -38,7 +39,7 @@ const ide = (state = initialState, action) => {
     case ActionTypes.CONSOLE_EVENT:
       return Object.assign({}, state, { consoleEvent: action.event });
     case ActionTypes.SHOW_MODAL:
-      return Object.assign({}, state, { modalIsVisible: true });
+      return Object.assign({}, state, { modalIsVisible: true, parentId: action.parentId });
     case ActionTypes.HIDE_MODAL:
       return Object.assign({}, state, { modalIsVisible: false });
     case ActionTypes.COLLAPSE_SIDEBAR:
@@ -60,7 +61,7 @@ const ide = (state = initialState, action) => {
     case ActionTypes.CLOSE_PROJECT_OPTIONS:
       return Object.assign({}, state, { projectOptionsVisible: false });
     case ActionTypes.SHOW_NEW_FOLDER_MODAL:
-      return Object.assign({}, state, { newFolderModalVisible: true });
+      return Object.assign({}, state, { newFolderModalVisible: true, parentId: action.parentId });
     case ActionTypes.CLOSE_NEW_FOLDER_MODAL:
       return Object.assign({}, state, { newFolderModalVisible: false });
     case ActionTypes.SHOW_SHARE_MODAL:

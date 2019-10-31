@@ -21,7 +21,11 @@
     }
   }
 
-  & th {
+  .asset-table__row>th:nth-child(1) {
+    padding-left: #{12 / $base-font-size}rem;
+  }
+
+  & thead th {
     padding-top: #{10 / $base-font-size}rem;
     padding-bottom: #{15 / $base-font-size}rem;
     height: #{32 / $base-font-size}rem;
@@ -31,6 +35,10 @@
     @include themify() {
       background-color: getThemifyVariable('background-color');
     }
+  }
+  
+  & th {
+    font-weight: normal;
   }
 }
 

@@ -130,7 +130,7 @@
     "jest-express": "^1.10.1",
     "js-beautify": "^1.8.9",
     "jsdom": "^9.8.3",
-    "jshint": "^2.10.1",
+    "jshint": "^2.10.2",
     "lodash": "^4.17.15",
     "loop-protect": "github:catarak/loop-protect",
     "mjml": "^3.3.2",

@@ -131,12 +131,12 @@ class Nav extends React.PureComponent {
   }
 
   handleAddFile() {
-    this.props.newFile();
+    this.props.newFile(this.props.rootFile.id);
     this.setDropdown('none');
   }
 
   handleAddFolder() {
-    this.props.newFolder();
+    this.props.newFolder(this.props.rootFile.id);
     this.setDropdown('none');
   }
 
@@ -174,7 +174,7 @@ class Nav extends React.PureComponent {
 
   handleDownload() {
     this.props.autosaveProject();
-    this.props.exportProjectAsZip(this.props.project.id);
+    projectActions.exportProjectAsZip(this.props.project.id);
     this.setDropdown('none');
   }
 
@@ -719,7 +719,6 @@ Nav.propTypes = {
   setToastText: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
   autosaveProject: PropTypes.func.isRequired,
-  exportProjectAsZip: PropTypes.func.isRequired,
   cloneProject: PropTypes.func.isRequired,
   user: PropTypes.shape({
     authenticated: PropTypes.bool.isRequired,
@@ -750,7 +749,10 @@ Nav.propTypes = {
   setAllAccessibleOutput: PropTypes.func.isRequired,
   newFile: PropTypes.func.isRequired,
   newFolder: PropTypes.func.isRequired,
-  layout: PropTypes.oneOf(['dashboard', 'project'])
+  layout: PropTypes.oneOf(['dashboard', 'project']),
+  rootFile: PropTypes.shape({
+    id: PropTypes.string.isRequired
+  }).isRequired
 };
 
 Nav.defaultProps = {
@@ -767,7 +769,8 @@ function mapStateToProps(state) {
   return {
     project: state.project,
     user: state.user,
-    unsavedChanges: state.ide.unsavedChanges
+    unsavedChanges: state.ide.unsavedChanges,
+    rootFile: state.files.filter(file => file.name === 'root')[0]
   };
 }
 

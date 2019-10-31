@@ -62,9 +62,10 @@ export function resetSelectedFile(previousId) {
   };
 }
 
-export function newFile() {
+export function newFile(parentId) {
   return {
-    type: ActionTypes.SHOW_MODAL
+    type: ActionTypes.SHOW_MODAL,
+    parentId
   };
 }
 
@@ -122,9 +123,10 @@ export function closeProjectOptions() {
   };
 }
 
-export function newFolder() {
+export function newFolder(parentId) {
   return {
-    type: ActionTypes.SHOW_NEW_FOLDER_MODAL
+    type: ActionTypes.SHOW_NEW_FOLDER_MODAL,
+    parentId
   };
 }
 
