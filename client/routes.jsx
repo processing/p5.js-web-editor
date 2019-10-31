@@ -41,7 +41,6 @@ const routes = store => (
     <Route path="/:username/sketches/:project_id" component={IDEView} />
     <Route path="/:username/sketches" component={IDEView} />
     <Route path="/about" component={IDEView} />
-    <Route path="/feedback" component={IDEView} />
   </Route>
 );
 
