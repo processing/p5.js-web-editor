@@ -77,7 +77,7 @@ class Console extends React.Component {
     });
 
     return (
-      <div className={consoleClass} role="main" title="console">
+      <div className={consoleClass} role="main">
         <div className="preview-console__header">
           <h2 className="preview-console__header-title">Console</h2>
           <div className="preview-console__header-buttons">
