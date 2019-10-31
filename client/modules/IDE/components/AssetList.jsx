@@ -56,19 +56,21 @@ class AssetList extends React.Component {
           <table className="asset-table">
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Size</th>
-                <th>View</th>
-                <th>Sketch</th>
+                <th scope="col">Name</th>
+                <th scope="col">Size</th>
+                <th scope="col">Sketch</th>
               </tr>
             </thead>
             <tbody>
               {assetList.map(asset =>
                 (
                   <tr className="asset-table__row" key={asset.key}>
-                    <td>{asset.name}</td>
+                    <th scope="row">
+                      <Link to={asset.url} target="_blank">
+                        {asset.name}
+                      </Link>
+                    </th>
                     <td>{prettyBytes(asset.size)}</td>
-                    <td><Link to={asset.url} target="_blank">View</Link></td>
                     <td><Link to={`/${username}/sketches/${asset.sketchId}`}>{asset.sketchName}</Link></td>
                   </tr>
                 ))}
