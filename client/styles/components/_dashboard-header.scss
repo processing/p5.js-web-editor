@@ -22,7 +22,7 @@
 .dashboard-header__tabs {
   display: flex;
   padding-top: #{24 / $base-font-size}rem;
-  margin-bottom: #{24 / $base-font-size}rem;
+  
   @include themify() {
     border-bottom: 1px solid getThemifyVariable('inactive-text-color');
   }
@@ -65,17 +65,21 @@
 }
 
 .dashboard-header__nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .dashboard-header__actions {
   display: flex;
   align-items: center;
+  margin-bottom: #{24 / $base-font-size}rem;
+  padding: #{24 / $base-font-size}rem #{10 / $base-font-size}rem;
+
+  @include themify() {
+    background-color: getThemifyVariable('modal-background-color');
+    border-bottom: 1px dotted getThemifyVariable('modal-border-color');
+  }
 }
 
-.dashboard-header__actions > * {
+.dashboard-header__actions > *:not(:first-child) {
   margin-left: #{15 / $base-font-size}rem;
 }
 

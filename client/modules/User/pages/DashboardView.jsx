@@ -8,6 +8,7 @@ import Nav from '../../../components/Nav';
 import Overlay from '../../App/components/Overlay';
 
 import AssetList from '../../IDE/components/AssetList';
+import AssetSize from '../../IDE/components/AssetSize';
 import CollectionList from '../../IDE/components/CollectionList';
 import SketchList from '../../IDE/components/SketchList';
 import SketchSearchbar from '../../IDE/components/Searchbar';
@@ -72,21 +73,17 @@ class DashboardView extends React.Component {
   }
 
   renderActionButton(tabKey, username) {
-    if (!this.isOwner()) {
-      return null;
-    }
-
     switch (tabKey) {
       case TabKey.assets:
-        return null;
+        return this.isOwner() && <AssetSize />;
       case TabKey.collections:
-        return <Link className="dashboard__action-button" to={`/${username}/collections/create`}>Create collection</Link>;
+        return this.isOwner() && <Link className="dashboard__action-button" to={`/${username}/collections/create`}>Create collection</Link>;
       case TabKey.sketches:
       default:
         return (
           <React.Fragment>
             <SketchSearchbar />
-            <Link className="dashboard__action-button" to="/">New sketch</Link>
+            {this.isOwner() && <Link className="dashboard__action-button" to="/">New sketch</Link>}
           </React.Fragment>
         );
     }
@@ -108,6 +105,7 @@ class DashboardView extends React.Component {
     const currentTab = this.selectedTabKey();
     const isOwner = this.isOwner();
     const { username } = this.props.params;
+    const actions = this.renderActionButton(currentTab, username);
 
     return (
       <div className="dashboard">
@@ -118,9 +116,11 @@ class DashboardView extends React.Component {
             <h2 className="dashboard-header__header__title">{this.ownerName()}</h2>
             <div className="dashboard-header__nav">
               <DashboardTabSwitcher currentTab={currentTab} isOwner={isOwner} username={username} />
-              <div className="dashboard-header__actions">
-                {this.renderActionButton(currentTab, username)}
-              </div>
+              {actions &&
+                <div className="dashboard-header__actions">
+                  {actions}
+                </div>
+              }
             </div>
           </div>
 
@@ -145,7 +145,7 @@ function mapStateToProps(state) {
   return {
     previousPath: state.ide.previousPath,
     user: state.user,
-    theme: state.preferences.theme
+    theme: state.preferences.theme,
   };
 }
 

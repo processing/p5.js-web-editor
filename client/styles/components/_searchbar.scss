@@ -1,7 +1,6 @@
 .searchbar {
   position: relative;
   display: flex;
-  padding-left: #{17 / $base-font-size}rem;
 }
 
 .searchbar__input {
@@ -58,7 +57,7 @@ button[type="submit"].searchbar__button {
   align-self: center;
   position: absolute;
   padding: #{3 / $base-font-size}rem #{4 / $base-font-size}rem;
-  left: #{216 / $base-font-size}rem;;
+  right: #{7 / $base-font-size}rem;
   @include themify() {
     color: getThemifyVariable('primary-text-color');
     background-color: getThemifyVariable('search-clear-background-color');
