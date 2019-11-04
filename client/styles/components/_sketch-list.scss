@@ -114,11 +114,15 @@
   align-items: center;
 }
 
-.sketch-list__check-icon {
+.sketches-table__icon-cell {
+  width: #{35 / $base-font-size}rem;
+}
+
+.sketch-list__icon {
   display: inline-block;
-  margin-right:#{10 / $base-font-size}rem;
-  width:#{25 / $base-font-size}rem;
-  height:#{25 / $base-font-size}rem;
+  margin-right:#{15 / $base-font-size}rem;
+  width:#{35 / $base-font-size}rem;
+  height:#{35 / $base-font-size}rem;
   @include icon();
   @include themify() {
     & path {
@@ -126,8 +130,54 @@
     }
 
     & svg {
-      width:#{25 / $base-font-size}rem;
-      height:#{25 / $base-font-size}rem;
+      width:#{35 / $base-font-size}rem;
+      height:#{35 / $base-font-size}rem;
+    }
+  }
+}
+
+.sketch-list__icon > * {
+  display: none;
+}
+
+.sketch-list__in-icon {
+  display: inline-block;
+
+  & svg {
+    opacity: 0.3;
+  }
+}
+
+.sketch-list__icon--in-collection .sketch-list__in-icon svg {
+  opacity: 1;
+}
+
+.sketch-list__add-icon {
+  transform: rotate(45deg);
+}
+
+.sketches-table__row:hover {
+  .sketch-list__in-icon {
+    display: none;
+  }
+
+  .sketch-list__icon--in-collection {
+    .sketch-list__remove-icon {
+      display: inline-block;
+    }
+
+    .sketch-list__add-icon {
+      display: none;
+    }
+  }
+
+  .sketch-list__icon--not-in-collection {
+    .sketch-list__add-icon {
+      display: inline-block;
+    }
+
+    .sketch-list__remove-icon {
+      display: none;
     }
   }
 }

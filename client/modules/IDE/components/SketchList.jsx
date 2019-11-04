@@ -21,11 +21,27 @@ import CollectionPopover from './CollectionPopover';
 const arrowUp = require('../../../images/sort-arrow-up.svg');
 const arrowDown = require('../../../images/sort-arrow-down.svg');
 const downFilledTriangle = require('../../../images/down-filled-triangle.svg');
-const check = require('../../../images/check.svg');
+const check = require('../../../images/check_encircled.svg');
+const close = require('../../../images/close.svg');
 
-const checkIcon = (
-  <InlineSVG className="sketch-list__check-icon" src={check} alt="In collection" />
-);
+const Icons = ({ inCollection }) => {
+  const classes = [
+    'sketch-list__icon',
+    inCollection ? 'sketch-list__icon--in-collection' : 'sketch-list__icon--not-in-collection'
+  ].join(' ');
+
+  return (
+    <div className={classes}>
+      <InlineSVG className="sketch-list__remove-icon" src={close} alt="Remove from collection" />
+      <InlineSVG className="sketch-list__in-icon" src={check} alt="In collection" />
+      <InlineSVG className="sketch-list__add-icon" src={close} alt="Add to collection" />
+    </div>
+  );
+};
+
+Icons.propTypes = {
+  inCollection: PropTypes.bool.isRequired,
+};
 
 class SketchListRowBase extends React.Component {
   constructor(props) {
@@ -167,9 +183,8 @@ class SketchListRowBase extends React.Component {
   }
 
   renderViewButton = sketchURL => (
-    <td className="sketch-list__dropdown-column">{
+    <td className="sketch-list__dropdown-column">
       <Link to={sketchURL}>View</Link>
-    }
     </td>
   )
 
@@ -282,7 +297,7 @@ class SketchListRowBase extends React.Component {
     }
 
     const name = addMode ?
-      <span className="sketches-table__name">{inCollection ? checkIcon : null} {sketch.name}</span>
+      <span className="sketches-table__name">{sketch.name}</span>
       : (
         <React.Fragment>
           <Link to={url}>
@@ -308,11 +323,17 @@ class SketchListRowBase extends React.Component {
           key={sketch.id}
           onClick={this.handleRowClick}
         >
+          {
+            this.props.addMode &&
+            <td className="sketches-table__icon-cell">
+              <Icons inCollection={inCollection} />
+            </td>
+          }
           <th scope="row">
             {name}
           </th>
-          <td>{format(new Date(sketch.createdAt), 'MMM D, YYYY h:mm A')}</td>
-          <td>{format(new Date(sketch.updatedAt), 'MMM D, YYYY h:mm A')}</td>
+          {!this.props.addMode && <td>{format(new Date(sketch.createdAt), 'MMM D, YYYY h:mm A')}</td>}
+          {!this.props.addMode && <td>{format(new Date(sketch.updatedAt), 'MMM D, YYYY h:mm A')}</td>}
           {this.renderActions(url)}
         </tr>
       </React.Fragment>);
@@ -433,14 +454,16 @@ class SketchList extends React.Component {
         {this._renderEmptyTable()}
         {this.hasSketches() &&
           <table className="sketches-table" summary="table containing all saved projects">
-            <thead>
-              <tr>
-                {this._renderFieldHeader('name', 'Sketch')}
-                {this._renderFieldHeader('createdAt', 'Date Created')}
-                {this._renderFieldHeader('updatedAt', 'Date Updated')}
-                <th scope="col"></th>
-              </tr>
-            </thead>
+            {!this.props.addMode &&
+              <thead>
+                <tr>
+                  {this._renderFieldHeader('name', 'Sketch')}
+                  {this._renderFieldHeader('createdAt', 'Date Created')}
+                  {this._renderFieldHeader('updatedAt', 'Date Updated')}
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+            }
             <tbody>
               {this.props.sketches.map(sketch =>
                 (<SketchListRow
