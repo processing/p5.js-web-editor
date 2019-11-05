@@ -30,7 +30,7 @@ import * as ConsoleActions from '../actions/console';
 import { getHTMLFile } from '../reducers/files';
 import Overlay from '../../App/components/Overlay';
 import About from '../components/About';
-import CollectionList from '../components/CollectionList';
+import CollectionList from '../components/AddToCollectionList';
 import Feedback from '../components/Feedback';
 
 class IDEView extends React.Component {
@@ -392,7 +392,6 @@ class IDEView extends React.Component {
             previousPath={this.props.ide.previousPath}
           >
             <CollectionList
-              addMode
               projectId={this.props.params.project_id}
               username={this.props.params.username}
               user={this.props.user}
