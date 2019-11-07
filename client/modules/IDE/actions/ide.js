@@ -232,19 +232,6 @@ export function hideErrorModal() {
   };
 }
 
-export function showHelpModal(helpType) {
-  return {
-    type: ActionTypes.SHOW_HELP_MODAL,
-    helpType
-  };
-}
-
-export function hideHelpModal() {
-  return {
-    type: ActionTypes.HIDE_HELP_MODAL
-  };
-}
-
 export function hideRuntimeErrorWarning() {
   return {
     type: ActionTypes.HIDE_RUNTIME_ERROR_WARNING

@@ -312,7 +312,6 @@ class Editor extends React.Component {
 
     return (
       <section
-        title="code editor"
         role="main"
         className={editorSectionClass}
       >
