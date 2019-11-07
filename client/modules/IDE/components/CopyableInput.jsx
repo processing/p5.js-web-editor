@@ -70,7 +70,6 @@ class CopyableInput extends React.Component {
             rel="noopener noreferrer"
             href={value}
             className="copyable-input__preview"
-            title={`open ${label.toLowerCase()} view in new tab`}
           >
             <InlineSVG src={shareUrl} alt={`open ${label} view in new tab`} />
           </a>

@@ -92,7 +92,7 @@ class Preferences extends React.Component {
     const beep = new Audio(beepUrl);
 
     return (
-      <section className="preferences" title="preference-menu">
+      <section className="preferences">
         <Helmet>
           <title>p5.js Web Editor | Preferences</title>
         </Helmet>

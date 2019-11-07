@@ -360,7 +360,7 @@ class PreviewFrame extends React.Component {
         aria-label="sketch output"
         role="main"
         frameBorder="0"
-        title="sketch output"
+        title="sketch preview"
         ref={(element) => { this.iframeElement = element; }}
         sandbox="allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-forms allow-modals"
       />
