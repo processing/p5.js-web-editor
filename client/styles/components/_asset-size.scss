@@ -1,0 +1,43 @@
+.asset-size {
+  font-size: #{14 / $base-font-size}rem;
+}
+
+.asset-size-bar {
+  position: relative;
+  content: ' ';
+  display: block;
+  width: 200px;
+  height: 20px;
+
+  @include themify() {
+    background-color: getThemifyVariable('progress-bar-background-color');
+  }
+}
+
+.asset-size-bar::before {
+  content: ' ';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: var(--percent);
+
+  @include themify() {
+    background-color: getThemifyVariable('progress-bar-active-color');
+  }
+}
+
+.asset-current {
+  position: absolute;
+  top: 28px;
+  left: var(--percent);
+  margin-left: -8px;
+}
+
+.asset-max {
+  position: absolute;
+  right: 0;
+  transform: translate(100%);
+  padding-left: #{8 / $base-font-size}rem;
+}

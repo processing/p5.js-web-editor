@@ -26,8 +26,11 @@ const AssetSize = ({ totalSize }) => {
   const percent = formatPercent(totalSize / MAX_SIZE_B);
 
   return (
-    <div>
-      <p className="">{`${currentSize} used / ${sizeLimit} max (${percent})`}</p>
+    <div className="asset-size" style={{ '--percent': percent }}>
+      <div className="asset-size-bar">
+        <p className="asset-current">{currentSize} ({percent})</p>
+        <p className="asset-max">Max: {sizeLimit}</p>
+      </div>
     </div>
   );
 };
