@@ -95,9 +95,6 @@
   font-weight: normal;
 }
 
-.sketches-table__row--is-add-mode {
-  cursor: pointer;
-}
 
 .sketch-list__dropdown-button {
   width:#{25 / $base-font-size}rem;
@@ -122,10 +119,6 @@
   @extend %dropdown-open-right;
   top: 63%;
   right: calc(100% - 26px);
-}
-
-.sketch-list__action-option {
-
 }
 
 .sketches-table__empty {

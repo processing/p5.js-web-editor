@@ -1,15 +1,11 @@
 .collection-container {
-
+  width: 1012px;
+  margin: 0 auto;
 }
 
 .collection-metadata {
   margin: 0px #{56 / $base-font-size}rem;
   padding: #{24 / $base-font-size}rem #{10 / $base-font-size}rem;
-
-  @include themify() {
-    background-color: getThemifyVariable('modal-background-color');
-    border-bottom: 1px dotted getThemifyVariable('modal-border-color');
-  }
 }
 
 .collection-metadata__columns {
@@ -108,4 +104,23 @@
 .collection-metadata__add-button {
   @extend %primary-button;
   flex-grow: 0;
+}
+
+.collection-table-wrapper {
+  min-height: 100%;
+
+  @include themify() {
+    border: 1px solid getThemifyVariable('modal-border-color');
+  }
+}
+
+[data-has-items=false] .collection-table-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.collection-empty-message {
+  text-align: center;
+  font-size: #{16 / $base-font-size}rem;
 }

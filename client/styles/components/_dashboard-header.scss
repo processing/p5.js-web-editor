@@ -72,11 +72,6 @@
   align-items: center;
   margin-bottom: #{24 / $base-font-size}rem;
   padding: #{24 / $base-font-size}rem #{10 / $base-font-size}rem;
-
-  @include themify() {
-    background-color: getThemifyVariable('modal-background-color');
-    border-bottom: 1px dotted getThemifyVariable('modal-border-color');
-  }
 }
 
 .dashboard-header__actions > *:not(:first-child) {

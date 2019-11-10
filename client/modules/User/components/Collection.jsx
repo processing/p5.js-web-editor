@@ -354,8 +354,6 @@ class Collection extends React.Component {
               }
             </h2>
 
-            <p className="collection-metadata__user">By {owner.username}</p>
-
             <p className="collection-metadata__description">
               {
                 this.isOwner() ?
@@ -367,6 +365,8 @@ class Collection extends React.Component {
                   description
               }
             </p>
+
+            <p className="collection-metadata__user">Collection by {owner.username}</p>
 
             <p className="collection-metadata__user">{items.length} sketch{items.length === 1 ? '' : 'es'}</p>
           </div>
@@ -404,7 +404,7 @@ class Collection extends React.Component {
     const hasCollectionItems = this.props.collection != null && this.props.collection.items.length > 0;
 
     if (!isLoading && !hasCollectionItems) {
-      return (<p className="sketches-table__empty">No sketches in collection</p>);
+      return (<p className="collection-empty-message">No sketches in collection</p>);
     }
     return null;
   }
@@ -434,37 +434,35 @@ class Collection extends React.Component {
     const title = this.hasCollection() ? this.getCollectionName() : null;
 
     return (
-      <section className="collection-container">
+      <section className="collection-container" data-has-items={this.hasCollectionItems() ? 'true' : 'false'}>
         <Helmet>
           <title>{this.getTitle()}</title>
         </Helmet>
-        <div className="">
-          {this._renderLoader()}
-          {this.hasCollection() && this._renderCollectionMetadata()}
+        {this._renderLoader()}
+        {this.hasCollection() && this._renderCollectionMetadata()}
+        <div className="collection-table-wrapper">
           {this._renderEmptyTable()}
           {this.hasCollectionItems() &&
-            <div className="collection-table-wrapper">
-              <table className="sketches-table" summary="table containing all collections">
-                <thead>
-                  <tr>
-                    {this._renderFieldHeader('name', 'Name')}
-                    {this._renderFieldHeader('createdAt', 'Date Added')}
-                    {this._renderFieldHeader('user', 'Owner')}
-                    <th scope="col"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.props.collection.items.map(item =>
-                    (<CollectionItemRow
-                      key={item.id}
-                      item={item}
-                      user={this.props.user}
-                      username={this.getUsername()}
-                      collection={this.props.collection}
-                    />))}
-                </tbody>
-              </table>
-            </div>
+            <table className="sketches-table" summary="table containing all collections">
+              <thead>
+                <tr>
+                  {this._renderFieldHeader('name', 'Name')}
+                  {this._renderFieldHeader('createdAt', 'Date Added')}
+                  {this._renderFieldHeader('user', 'Owner')}
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.props.collection.items.map(item =>
+                  (<CollectionItemRow
+                    key={item.id}
+                    item={item}
+                    user={this.props.user}
+                    username={this.getUsername()}
+                    collection={this.props.collection}
+                  />))}
+              </tbody>
+            </table>
           }
           {
             this.state.isAddingSketches && (

@@ -14,4 +14,8 @@
   flex-direction: column;
   flex: 1;
   overflow: hidden;
+
+  @include themify() {
+    border: 1px solid getThemifyVariable('modal-border-color');
+  }
 }
