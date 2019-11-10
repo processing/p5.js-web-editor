@@ -19,7 +19,7 @@ import EditableInput from '../../IDE/components/EditableInput';
 import Overlay from '../../App/components/Overlay';
 import SketchList from '../../IDE/components/AddToCollectionSketchList';
 import CopyableInput from '../../IDE/components/CopyableInput';
-import SketchSearchbar from '../../IDE/components/Searchbar';
+import { SketchSearchbar } from '../../IDE/components/Searchbar';
 
 const arrowUp = require('../../../images/sort-arrow-up.svg');
 const arrowDown = require('../../../images/sort-arrow-down.svg');

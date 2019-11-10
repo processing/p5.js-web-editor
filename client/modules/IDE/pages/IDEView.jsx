@@ -32,6 +32,7 @@ import Overlay from '../../App/components/Overlay';
 import About from '../components/About';
 import CollectionList from '../components/AddToCollectionList';
 import Feedback from '../components/Feedback';
+import { CollectionSearchbar } from '../components/Searchbar';
 
 class IDEView extends React.Component {
   constructor(props) {
@@ -390,6 +391,7 @@ class IDEView extends React.Component {
             ariaLabel="add to collection"
             title="Add sketch to collection"
             previousPath={this.props.ide.previousPath}
+            actions={<CollectionSearchbar />}
           >
             <CollectionList
               projectId={this.props.params.project_id}

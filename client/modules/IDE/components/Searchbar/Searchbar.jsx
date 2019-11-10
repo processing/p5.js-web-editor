@@ -1,14 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import InlineSVG from 'react-inlinesvg';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import { throttle } from 'lodash';
-import * as SortingActions from '../actions/sorting';
 
-const searchIcon = require('../../../images/magnifyingglass.svg');
+const searchIcon = require('../../../../images/magnifyingglass.svg');
 
-export class Searchbar extends React.Component {
+class Searchbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -83,15 +80,4 @@ Searchbar.defaultProps = {
   searchLabel: 'Search sketches...',
 };
 
-
-function mapStateToProps(state) {
-  return {
-    searchTerm: state.search.searchTerm
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}, SortingActions), dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Searchbar);
+export default Searchbar;

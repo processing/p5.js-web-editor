@@ -7,9 +7,28 @@ import { DIRECTION } from '../actions/sorting';
 const getCollections = state => state.collections;
 const getField = state => state.sorting.field;
 const getDirection = state => state.sorting.direction;
+const getSearchTerm = state => state.search.collectionSearchTerm;
+
+const getFilteredCollections = createSelector(
+  getCollections,
+  getSearchTerm,
+  (collections, search) => {
+    if (search) {
+      const searchStrings = collections.map((collection) => {
+        const smallCollection = {
+          name: collection.name
+        };
+        return { ...collection, searchString: Object.values(smallCollection).join(' ').toLowerCase() };
+      });
+      return searchStrings.filter(collection => collection.searchString.includes(search.toLowerCase()));
+    }
+    return collections;
+  }
+);
+
 
 const getSortedCollections = createSelector(
-  getCollections,
+  getFilteredCollections,
   getField,
   getDirection,
   (collections, field, direction) => {

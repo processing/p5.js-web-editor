@@ -11,7 +11,7 @@ import AssetList from '../../IDE/components/AssetList';
 import AssetSize from '../../IDE/components/AssetSize';
 import CollectionList from '../../IDE/components/CollectionList';
 import SketchList from '../../IDE/components/SketchList';
-import SketchSearchbar from '../../IDE/components/Searchbar';
+import { CollectionSearchbar, SketchSearchbar } from '../../IDE/components/Searchbar';
 
 import CollectionCreate from '../components/CollectionCreate';
 import DashboardTabSwitcher, { TabKey } from '../components/DashboardTabSwitcher';
@@ -77,7 +77,13 @@ class DashboardView extends React.Component {
       case TabKey.assets:
         return this.isOwner() && <AssetSize />;
       case TabKey.collections:
-        return this.isOwner() && <Link className="dashboard__action-button" to={`/${username}/collections/create`}>Create collection</Link>;
+        return this.isOwner() && (
+          <React.Fragment>
+            <CollectionSearchbar />
+            <Link className="dashboard__action-button" to={`/${username}/collections/create`}>
+              Create collection
+            </Link>
+          </React.Fragment>);
       case TabKey.sketches:
       default:
         return (
