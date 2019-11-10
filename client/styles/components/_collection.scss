@@ -5,7 +5,7 @@
 
 .collection-metadata {
   margin: 0px #{56 / $base-font-size}rem;
-  padding: #{24 / $base-font-size}rem #{10 / $base-font-size}rem;
+  padding: #{24 / $base-font-size}rem 0;
 }
 
 .collection-metadata__columns {
@@ -85,7 +85,6 @@
 
 .collection-share {
   text-align: right;
-  // padding: #{10 / $base-font-size}rem #{30 / $base-font-size}rem;
 }
 
 .collection-share__button {
