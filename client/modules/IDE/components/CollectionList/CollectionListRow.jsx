@@ -11,11 +11,6 @@ import * as IdeActions from '../../actions/ide';
 import * as ToastActions from '../../actions/toast';
 
 const downFilledTriangle = require('../../../../images/down-filled-triangle.svg');
-const check = require('../../../../images/check.svg');
-
-const checkIcon = (
-  <InlineSVG className="sketch-list__check-icon" src={check} alt="In collection" />
-);
 
 class CollectionListRowBase extends React.Component {
   static projectInCollection(project, collection) {
@@ -26,7 +21,9 @@ class CollectionListRowBase extends React.Component {
     super(props);
     this.state = {
       optionsOpen: false,
-      isFocused: false
+      isFocused: false,
+      renameOpen: false,
+      renameValue: props.collection.name,
     };
   }
 
@@ -65,7 +62,8 @@ class CollectionListRowBase extends React.Component {
 
   closeAll = () => {
     this.setState({
-      optionsOpen: false
+      optionsOpen: false,
+      renameOpen: false,
     });
   }
 
@@ -80,6 +78,33 @@ class CollectionListRowBase extends React.Component {
       this.props.deleteCollection(this.props.collection.id);
     }
   }
+
+  handleRenameOpen = () => {
+    this.closeAll();
+    this.setState({
+      renameOpen: true,
+    });
+  }
+
+  handleRenameChange = (e) => {
+    this.setState({
+      renameValue: e.target.value
+    });
+  }
+
+  handleRenameEnter = (e) => {
+    if (e.key === 'Enter') {
+      this.props.editCollection(this.props.collection.id, { name: this.state.renameValue });
+      this.closeAll();
+    }
+  }
+
+  resetSketchName = () => {
+    this.setState({
+      renameValue: this.props.collection.name
+    });
+  }
+
 
   renderActions = () => {
     const { optionsOpen } = this.state;
@@ -108,6 +133,17 @@ class CollectionListRowBase extends React.Component {
                   onFocus={this.onFocusComponent}
                 >
                   Delete
+                </button>
+              </li>}
+            {userIsOwner &&
+              <li>
+                <button
+                  className="sketch-list__action-option"
+                  onClick={this.handleRenameOpen}
+                  onBlur={this.onBlurComponent}
+                  onFocus={this.onFocusComponent}
+                >
+                  Rename
                 </button>
               </li>}
           </ul>
@@ -179,7 +215,8 @@ CollectionListRowBase.propTypes = {
     username: PropTypes.string,
     authenticated: PropTypes.bool.isRequired
   }).isRequired,
-  deleteCollection: PropTypes.func.isRequired
+  deleteCollection: PropTypes.func.isRequired,
+  editCollection: PropTypes.func.isRequired,
 };
 
 function mapDispatchToPropsSketchListRow(dispatch) {
