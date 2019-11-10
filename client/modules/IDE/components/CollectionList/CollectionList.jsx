@@ -91,7 +91,7 @@ class CollectionList extends React.Component {
     const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
 
     return (
-      <div className={`sketches-table-container ${this.props.addMode ? 'sketches-table-container--fixed' : ''}`}>
+      <div className="sketches-table-container">
         <Helmet>
           <title>{this.getTitle()}</title>
         </Helmet>
@@ -116,7 +116,6 @@ class CollectionList extends React.Component {
                   collection={collection}
                   user={this.props.user}
                   username={username}
-                  addMode={this.props.addMode}
                   project={this.props.project}
                 />))}
             </tbody>
@@ -143,7 +142,6 @@ const ItemsShape = PropTypes.shape({
 });
 
 CollectionList.propTypes = {
-  addMode: PropTypes.bool,
   user: PropTypes.shape({
     username: PropTypes.string,
     authenticated: PropTypes.bool.isRequired
@@ -176,7 +174,6 @@ CollectionList.propTypes = {
 };
 
 CollectionList.defaultProps = {
-  addMode: false,
   project: {
     id: undefined,
     owner: undefined

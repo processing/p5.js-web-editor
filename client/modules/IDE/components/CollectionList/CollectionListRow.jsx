@@ -81,37 +81,9 @@ class CollectionListRowBase extends React.Component {
     }
   }
 
-  handleCollectionAdd = () => {
-    this.props.addToCollection(this.props.collection.id, this.props.project.id);
-  }
-
-  handleCollectionRemove = () => {
-    this.props.removeFromCollection(this.props.collection.id, this.props.project.id);
-  }
-
-  handleAddRemove = (evt) => {
-    // Clicking on View action should not perform add/remove
-    const didOriginateInLink = evt.target.nodeName === 'A';
-
-    if (didOriginateInLink) {
-      return;
-    }
-
-    if (CollectionListRowBase.projectInCollection(this.props.project, this.props.collection)) {
-      this.handleCollectionRemove();
-    } else {
-      this.handleCollectionAdd();
-    }
-  }
-
   renderActions = () => {
     const { optionsOpen } = this.state;
     const userIsOwner = this.props.user.username === this.props.username;
-
-    if (this.props.addMode === true && this.props.project) {
-      return <Link to={`/${this.props.collection.owner.username}/collections/${this.props.collection.id}`}>View</Link>;
-    }
-
 
     return (
       <React.Fragment>
@@ -144,21 +116,9 @@ class CollectionListRowBase extends React.Component {
     );
   }
 
-  renderIsInCollectionStatus = () => {
-    if (CollectionListRowBase.projectInCollection(this.props.project, this.props.collection)) {
-      return checkIcon;
-    }
-
-    return null;
-  }
-
   renderCollectionName = () => {
-    const { addMode, collection, username } = this.props;
+    const { collection, username } = this.props;
     const { renameOpen, renameValue } = this.state;
-
-    if (addMode) {
-      return collection.name;
-    }
 
     return (
       <React.Fragment>
@@ -180,17 +140,15 @@ class CollectionListRowBase extends React.Component {
   }
 
   render() {
-    const { addMode, collection } = this.props;
+    const { collection } = this.props;
 
     return (
       <tr
-        className={`sketches-table__row ${addMode ? 'sketches-table__row--is-add-mode' : ''}`}
+        className="sketches-table__row"
         key={collection.id}
-        onClick={addMode ? this.handleAddRemove : null}
       >
         <th scope="row">
           <span className="sketches-table__name">
-            {addMode && this.renderIsInCollectionStatus()}
             {this.renderCollectionName()}
           </span>
         </th>
@@ -206,8 +164,6 @@ class CollectionListRowBase extends React.Component {
 }
 
 CollectionListRowBase.propTypes = {
-  addToCollection: PropTypes.func.isRequired,
-  removeFromCollection: PropTypes.func.isRequired,
   collection: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -215,7 +171,6 @@ CollectionListRowBase.propTypes = {
       username: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
-  addMode: PropTypes.bool.isRequired,
   project: PropTypes.shape({
     id: PropTypes.string.isRequired,
   }).isRequired,
