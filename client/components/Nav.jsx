@@ -498,7 +498,7 @@ class Nav extends React.PureComponent {
               }
             }}
           >
-            <span className="nav__item-header">Help & Feedback</span>
+            <span className="nav__item-header">Help</span>
             <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
           </button>
           <ul className="nav__dropdown">
@@ -530,16 +530,6 @@ class Nav extends React.PureComponent {
                 onClick={this.setDropdownForNone}
               >
                 About
-              </Link>
-            </li>
-            <li className="nav__dropdown-item">
-              <Link
-                to="/feedback"
-                onFocus={this.handleFocusForHelp}
-                onBlur={this.handleBlur}
-                onClick={this.setDropdownForNone}
-              >
-                Feedback
               </Link>
             </li>
           </ul>

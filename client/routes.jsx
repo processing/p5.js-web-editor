@@ -49,7 +49,6 @@ const routes = store => (
     <Route path="/:username/collections/create" component={DashboardView} />
     <Route path="/:username/collections/:collection_id" component={CollectionView} />
     <Route path="/about" component={IDEView} />
-    <Route path="/feedback" component={IDEView} />
   </Route>
 );
 

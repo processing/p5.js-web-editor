@@ -281,7 +281,7 @@ exports[`Nav renders correctly 1`] = `
         <span
           className="nav__item-header"
         >
-          Help & Feedback
+          Help
         </span>
         <span
           className="isvg loading nav__item-header-triangle"
@@ -325,18 +325,6 @@ exports[`Nav renders correctly 1`] = `
             style={Object {}}
           >
             About
-          </a>
-        </li>
-        <li
-          className="nav__dropdown-item"
-        >
-          <a
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            style={Object {}}
-          >
-            Feedback
           </a>
         </li>
       </ul>

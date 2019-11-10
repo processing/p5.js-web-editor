@@ -15,7 +15,6 @@ import NewFolderModal from '../components/NewFolderModal';
 import ShareModal from '../components/ShareModal';
 import KeyboardShortcutModal from '../components/KeyboardShortcutModal';
 import ErrorModal from '../components/ErrorModal';
-import HTTPSModal from '../components/HTTPSModal';
 import Nav from '../../../components/Nav';
 import Console from '../components/Console';
 import Toast from '../components/Toast';
@@ -196,7 +195,6 @@ class IDEView extends React.Component {
         <Toolbar />
         {this.props.ide.preferencesIsVisible &&
           <Overlay
-            title="Settings"
             ariaLabel="settings"
             closeOverlay={this.props.closePreferences}
           >
@@ -371,7 +369,6 @@ class IDEView extends React.Component {
         { this.props.location.pathname === '/about' &&
           <Overlay
             previousPath={this.props.ide.previousPath}
-            title="Welcome"
             ariaLabel="about"
           >
             <About previousPath={this.props.ide.previousPath} />
@@ -380,7 +377,6 @@ class IDEView extends React.Component {
         {this.props.location.pathname === '/feedback' &&
           <Overlay
             previousPath={this.props.ide.previousPath}
-            title="Submit Feedback"
             ariaLabel="submit-feedback"
           >
             <Feedback previousPath={this.props.ide.previousPath} />
@@ -402,7 +398,6 @@ class IDEView extends React.Component {
         }
         {this.props.ide.shareModalVisible &&
           <Overlay
-            title="Share This Sketch"
             ariaLabel="share"
             closeOverlay={this.props.closeShareModal}
           >
@@ -415,7 +410,6 @@ class IDEView extends React.Component {
         }
         {this.props.ide.keyboardShortcutVisible &&
           <Overlay
-            title="Keyboard Shortcuts"
             ariaLabel="keyboard shortcuts"
             closeOverlay={this.props.closeKeyboardShortcutModal}
           >
@@ -424,7 +418,6 @@ class IDEView extends React.Component {
         }
         {this.props.ide.errorType &&
           <Overlay
-            title="Error"
             ariaLabel="error"
             closeOverlay={this.props.hideErrorModal}
           >
@@ -432,14 +425,6 @@ class IDEView extends React.Component {
               type={this.props.ide.errorType}
               closeModal={this.props.hideErrorModal}
             />
-          </Overlay>
-        }
-        {this.props.ide.helpType &&
-          <Overlay
-            title="Serve over HTTPS"
-            closeOverlay={this.props.hideHelpModal}
-          >
-            <HTTPSModal />
           </Overlay>
         }
       </div>
@@ -487,7 +472,6 @@ IDEView.propTypes = {
     previousPath: PropTypes.string.isRequired,
     justOpenedProject: PropTypes.bool.isRequired,
     errorType: PropTypes.string,
-    helpType: PropTypes.string,
     runtimeErrorWarningVisible: PropTypes.bool.isRequired,
   }).isRequired,
   stopSketch: PropTypes.func.isRequired,
@@ -588,7 +572,6 @@ IDEView.propTypes = {
   hideErrorModal: PropTypes.func.isRequired,
   clearPersistedState: PropTypes.func.isRequired,
   persistState: PropTypes.func.isRequired,
-  hideHelpModal: PropTypes.func.isRequired,
   showRuntimeErrorWarning: PropTypes.func.isRequired,
   hideRuntimeErrorWarning: PropTypes.func.isRequired,
   startSketch: PropTypes.func.isRequired,
