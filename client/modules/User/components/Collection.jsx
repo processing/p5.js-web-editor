@@ -17,7 +17,7 @@ import { getCollection } from '../../IDE/selectors/collections';
 import Loader from '../../App/components/loader';
 import EditableInput from '../../IDE/components/EditableInput';
 import Overlay from '../../App/components/Overlay';
-import SketchList from '../../IDE/components/SketchList';
+import SketchList from '../../IDE/components/AddToCollectionSketchList';
 import CopyableInput from '../../IDE/components/CopyableInput';
 import SketchSearchbar from '../../IDE/components/Searchbar';
 
@@ -470,7 +470,7 @@ class Collection extends React.Component {
             this.state.isAddingSketches && (
               <Overlay title="Add sketches" actions={<SketchSearchbar />} closeOverlay={this.hideAddSketches}>
                 <div className="collection-add-sketch">
-                  <SketchList username={this.props.username} addMode collection={this.props.collection} />
+                  <SketchList username={this.props.username} collection={this.props.collection} />
                 </div>
               </Overlay>
             )

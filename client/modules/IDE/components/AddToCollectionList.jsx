@@ -1,10 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import InlineSVG from 'react-inlinesvg';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import classNames from 'classnames';
 
 import * as ProjectActions from '../actions/project';
 import * as ProjectsActions from '../actions/projects';
@@ -13,7 +11,7 @@ import * as ToastActions from '../actions/toast';
 import * as SortingActions from '../actions/sorting';
 import getSortedCollections from '../selectors/collections';
 import Loader from '../../App/components/loader';
-import QuickAddList from './QuickAddList/QuickAddList';
+import QuickAddList from './QuickAddList';
 
 const projectInCollection = (project, collection) => collection.items.find(item => item.project.id === project.id) != null;
 
@@ -56,14 +54,6 @@ class CollectionList extends React.Component {
     this.props.removeFromCollection(collection.id, this.props.project.id);
   }
 
-  handleAddRemove = (collection) => {
-    if (projectInCollection(this.props.project, collection)) {
-      this.handleCollectionRemove(collection);
-    } else {
-      this.handleCollectionAdd(collection);
-    }
-  }
-
   render() {
     const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
     const { collections, project } = this.props;
@@ -79,13 +69,13 @@ class CollectionList extends React.Component {
     if (this.props.loading && !this.state.hasLoadedData) {
       content = <Loader />;
     } else if (hasCollections) {
-      content = <QuickAddList items={collectionWithSketchStatus} onSelect={this.handleAddRemove} />;
+      content = <QuickAddList items={collectionWithSketchStatus} onAdd={this.handleCollectionAdd} onRemove={this.handleCollectionRemove} />;
     } else {
       content = 'No collections';
     }
 
     return (
-      <div className="sketches-table-container">
+      <div className="quick-add--has-padding">
         <Helmet>
           <title>{this.getTitle()}</title>
         </Helmet>
@@ -154,7 +144,7 @@ function mapStateToProps(state, ownProps) {
     collections: getSortedCollections(state),
     sorting: state.sorting,
     loading: state.loading,
-    project: state.project,
+    project: ownProps.project || state.project,
     projectId: ownProps && ownProps.params ? ownProps.prams.project_id : null,
   };
 }

@@ -27,20 +27,33 @@ Item.propTypes = {
   onSelect: PropTypes.func.isRequired,
 };
 
-const QuickAddList = ({ items, onSelect }) => (
-  <ul className="quick-add">{items.map(item => (<Item
-    key={item.id}
-    {...item}
-    onSelect={
-      () => onSelect(item)
+const QuickAddList = ({
+  items, onAdd, onRemove
+}) => {
+  const handleAction = (item) => {
+    if (item.isAdded) {
+      onRemove(item);
+    } else {
+      onAdd(item);
     }
-  />))}
-  </ul>
-);
+  };
+
+  return (
+    <ul className="quick-add">{items.map(item => (<Item
+      key={item.id}
+      {...item}
+      onSelect={
+        () => handleAction(item)
+      }
+    />))}
+    </ul>
+  );
+};
 
 QuickAddList.propTypes = {
   items: PropTypes.arrayOf(ItemType).isRequired,
-  onSelect: PropTypes.func.isRequired,
+  onAdd: PropTypes.func.isRequired,
+  onRemove: PropTypes.func.isRequired,
 };
 
 export default QuickAddList;
