@@ -16,32 +16,12 @@ import * as SortingActions from '../actions/sorting';
 import * as IdeActions from '../actions/ide';
 import getSortedSketches from '../selectors/projects';
 import Loader from '../../App/components/loader';
-import CollectionPopover from './CollectionPopover';
+import Overlay from '../../App/components/Overlay';
+import AddToCollectionList from './AddToCollectionList';
 
 const arrowUp = require('../../../images/sort-arrow-up.svg');
 const arrowDown = require('../../../images/sort-arrow-down.svg');
 const downFilledTriangle = require('../../../images/down-filled-triangle.svg');
-const check = require('../../../images/check_encircled.svg');
-const close = require('../../../images/close.svg');
-
-const Icons = ({ inCollection }) => {
-  const classes = [
-    'sketch-list__icon',
-    inCollection ? 'sketch-list__icon--in-collection' : 'sketch-list__icon--not-in-collection'
-  ].join(' ');
-
-  return (
-    <div className={classes}>
-      <InlineSVG className="sketch-list__remove-icon" src={close} alt="Remove from collection" />
-      <InlineSVG className="sketch-list__in-icon" src={check} alt="In collection" />
-      <InlineSVG className="sketch-list__add-icon" src={close} alt="Add to collection" />
-    </div>
-  );
-};
-
-Icons.propTypes = {
-  inCollection: PropTypes.bool.isRequired,
-};
 
 class SketchListRowBase extends React.Component {
   constructor(props) {
@@ -51,7 +31,6 @@ class SketchListRowBase extends React.Component {
       renameOpen: false,
       renameValue: props.sketch.name,
       isFocused: false,
-      showPopover: false,
     };
   }
 
@@ -141,18 +120,6 @@ class SketchListRowBase extends React.Component {
     this.props.exportProjectAsZip(this.props.sketch.id);
   }
 
-  handleShowCollectionPopover = () => {
-    this.setState({
-      showPopover: true
-    });
-  }
-
-  handleCloseCollectionPopover = () => {
-    this.setState({
-      showPopover: false
-    });
-  }
-
   handleSketchDuplicate = () => {
     this.closeAll();
     this.props.cloneProject(this.props.sketch.id);
@@ -167,18 +134,6 @@ class SketchListRowBase extends React.Component {
     this.closeAll();
     if (window.confirm(`Are you sure you want to delete "${this.props.sketch.name}"?`)) {
       this.props.deleteProject(this.props.sketch.id);
-    }
-  }
-
-  handleRowClick = (evt) => {
-    if (!this.props.addMode) {
-      return;
-    }
-
-    if (this.props.inCollection) {
-      this.props.onCollectionRemove();
-    } else {
-      this.props.onCollectionAdd();
     }
   }
 
@@ -242,7 +197,10 @@ class SketchListRowBase extends React.Component {
               <li>
                 <button
                   className="sketch-list__action-option"
-                  onClick={this.handleShowCollectionPopover}
+                  onClick={() => {
+                    this.props.onAddToCollection();
+                    this.closeAll();
+                  }}
                   onBlur={this.onBlurComponent}
                   onFocus={this.onFocusComponent}
                 >
@@ -271,24 +229,14 @@ class SketchListRowBase extends React.Component {
               </button>
             </li>}
           </ul>}
-        {this.state.showPopover &&
-          <CollectionPopover
-            onClose={this.handleCloseCollectionPopover}
-            project={this.props.sketch}
-          />
-        }
       </td>
     );
   }
-
-  renderActions = sketchURL => (this.props.addMode === true ? this.renderViewButton(sketchURL) : this.renderDropdown())
 
   render() {
     const {
       sketch,
       username,
-      addMode,
-      inCollection,
     } = this.props;
     const { renameOpen, renameValue } = this.state;
     let url = `/${username}/sketches/${sketch.id}`;
@@ -296,53 +244,43 @@ class SketchListRowBase extends React.Component {
       url = `/${username}/sketches/${slugify(sketch.name, '_')}`;
     }
 
-    const name = addMode ?
-      <span className="sketches-table__name">{sketch.name}</span>
-      : (
-        <React.Fragment>
-          <Link to={url}>
-            {renameOpen ? '' : sketch.name}
-          </Link>
-          {renameOpen
-          &&
-          <input
-            value={renameValue}
-            onChange={this.handleRenameChange}
-            onKeyUp={this.handleRenameEnter}
-            onBlur={this.resetSketchName}
-            onClick={e => e.stopPropagation()}
-          />
-          }
-        </React.Fragment>
-      );
+    const name = (
+      <React.Fragment>
+        <Link to={url}>
+          {renameOpen ? '' : sketch.name}
+        </Link>
+        {renameOpen
+        &&
+        <input
+          value={renameValue}
+          onChange={this.handleRenameChange}
+          onKeyUp={this.handleRenameEnter}
+          onBlur={this.resetSketchName}
+          onClick={e => e.stopPropagation()}
+        />
+        }
+      </React.Fragment>
+    );
 
     return (
       <React.Fragment>
         <tr
-          className={`sketches-table__row ${addMode ? 'sketches-table__row--is-add-mode' : ''}`}
+          className="sketches-table__row"
           key={sketch.id}
           onClick={this.handleRowClick}
         >
-          {
-            this.props.addMode &&
-            <td className="sketches-table__icon-cell">
-              <Icons inCollection={inCollection} />
-            </td>
-          }
           <th scope="row">
             {name}
           </th>
-          {!this.props.addMode && <td>{format(new Date(sketch.createdAt), 'MMM D, YYYY h:mm A')}</td>}
-          {!this.props.addMode && <td>{format(new Date(sketch.updatedAt), 'MMM D, YYYY h:mm A')}</td>}
-          {this.renderActions(url)}
+          <td>{format(new Date(sketch.createdAt), 'MMM D, YYYY h:mm A')}</td>
+          <td>{format(new Date(sketch.updatedAt), 'MMM D, YYYY h:mm A')}</td>
+          {this.renderDropdown()}
         </tr>
       </React.Fragment>);
   }
 }
 
 SketchListRowBase.propTypes = {
-  addMode: PropTypes.bool.isRequired,
-  inCollection: PropTypes.bool.isRequired,
   sketch: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired
@@ -357,8 +295,7 @@ SketchListRowBase.propTypes = {
   cloneProject: PropTypes.func.isRequired,
   exportProjectAsZip: PropTypes.func.isRequired,
   changeProjectName: PropTypes.func.isRequired,
-  onCollectionAdd: PropTypes.func.isRequired,
-  onCollectionRemove: PropTypes.func.isRequired,
+  onAddToCollection: PropTypes.func.isRequired,
 };
 
 function mapDispatchToPropsSketchListRow(dispatch) {
@@ -435,14 +372,6 @@ class SketchList extends React.Component {
     );
   }
 
-  handleCollectionAdd = (sketchId) => {
-    this.props.addToCollection(this.props.collection.id, sketchId);
-  }
-
-  handleCollectionRemove = (sketchId) => {
-    this.props.removeFromCollection(this.props.collection.id, sketchId);
-  }
-
   render() {
     const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
     return (
@@ -454,16 +383,14 @@ class SketchList extends React.Component {
         {this._renderEmptyTable()}
         {this.hasSketches() &&
           <table className="sketches-table" summary="table containing all saved projects">
-            {!this.props.addMode &&
-              <thead>
-                <tr>
-                  {this._renderFieldHeader('name', 'Sketch')}
-                  {this._renderFieldHeader('createdAt', 'Date Created')}
-                  {this._renderFieldHeader('updatedAt', 'Date Updated')}
-                  <th scope="col"></th>
-                </tr>
-              </thead>
-            }
+            <thead>
+              <tr>
+                {this._renderFieldHeader('name', 'Sketch')}
+                {this._renderFieldHeader('createdAt', 'Date Created')}
+                {this._renderFieldHeader('updatedAt', 'Date Updated')}
+                <th scope="col"></th>
+              </tr>
+            </thead>
             <tbody>
               {this.props.sketches.map(sketch =>
                 (<SketchListRow
@@ -471,14 +398,25 @@ class SketchList extends React.Component {
                   sketch={sketch}
                   user={this.props.user}
                   username={username}
-                  addMode={this.props.addMode}
-                  onCollectionAdd={() => this.handleCollectionAdd(sketch.id)}
-                  onCollectionRemove={() => this.handleCollectionRemove(sketch.id)}
-                  inCollection={this.props.collection &&
-                    this.props.collection.items.find(item => item.project.id === sketch.id) != null}
+                  onAddToCollection={() => {
+                    this.setState({ sketchToAddToCollection: sketch });
+                  }}
                 />))}
             </tbody>
           </table>}
+        {
+          this.state.sketchToAddToCollection &&
+            <Overlay
+              title="Add to collection"
+              closeOverlay={() => this.setState({ sketchToAddToCollection: null })}
+            >
+              <AddToCollectionList
+                project={this.state.sketchToAddToCollection}
+                username={this.props.username}
+                user={this.props.user}
+              />
+            </Overlay>
+        }
       </div>
     );
   }
@@ -513,13 +451,9 @@ SketchList.propTypes = {
     field: PropTypes.string.isRequired,
     direction: PropTypes.string.isRequired
   }).isRequired,
-  addToCollection: PropTypes.func.isRequired,
-  removeFromCollection: PropTypes.func.isRequired,
-  addMode: PropTypes.bool,
 };
 
 SketchList.defaultProps = {
-  addMode: false,
   username: undefined
 };
 
