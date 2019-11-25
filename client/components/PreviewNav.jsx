@@ -7,7 +7,7 @@ const logoUrl = require('../images/p5js-logo-small.svg');
 const editorUrl = require('../images/code.svg');
 
 const PreviewNav = ({ owner, project }) => (
-  <nav className="nav">
+  <nav className="nav preview-nav">
     <div className="nav__items-left">
       <div className="nav__item-logo">
         <InlineSVG src={logoUrl} alt="p5.js logo" />

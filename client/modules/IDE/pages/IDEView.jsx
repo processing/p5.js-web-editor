@@ -65,7 +65,6 @@ class IDEView extends React.Component {
 
     window.onbeforeunload = () => this.warnIfUnsavedChanges();
 
-    document.body.className = this.props.preferences.theme;
     this.autosaveInterval = null;
   }
 
@@ -88,10 +87,6 @@ class IDEView extends React.Component {
       if (nextProps.params.project_id !== nextProps.project.id) {
         this.props.getProject(nextProps.params.project_id);
       }
-    }
-
-    if (nextProps.preferences.theme !== this.props.preferences.theme) {
-      document.body.className = nextProps.preferences.theme;
     }
   }
 
