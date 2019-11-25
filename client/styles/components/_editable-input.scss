@@ -24,6 +24,20 @@
 .editable-input__icon svg {
   width: 1.5rem;
   height: 1.5rem;
+
+  @include themify() {
+    path {
+      fill: getThemifyVariable('inactive-text-color');
+    }
+  }
+}
+
+.editable-input:hover {
+  @include themify() {
+    .editable-input__icon path {
+      fill: getThemifyVariable('primary-text-color');
+    }
+  }
 }
 
 .editable-input--is-not-editing .editable-input__input,
