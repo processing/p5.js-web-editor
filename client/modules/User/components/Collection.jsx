@@ -361,6 +361,7 @@ class Collection extends React.Component {
                     InputComponent="textarea"
                     value={description}
                     onChange={handleEditCollectionDescription}
+                    emptyPlaceholder="Add description"
                   /> :
                   description
               }
