@@ -37,8 +37,14 @@
   height:#{35 / $base-font-size}rem;
   @include icon();
   @include themify() {
-    & path {
-      fill: getThemifyVariable('dropdown-color');
+    // icon graphic
+    polygon {
+      fill: getThemifyVariable('table-button-color');
+    }
+
+    // icon background circle
+    path {
+      fill: getThemifyVariable('table-button-background-color');
     }
 
     & svg {
@@ -69,6 +75,18 @@
 }
 
 .quick-add__item-toggle:hover {
+  @include themify() {
+    .quick-add__icon {
+      polygon {
+        fill: getThemifyVariable('table-button-hover-color');
+      }
+
+      path {
+        fill: getThemifyVariable('table-button-background-hover-color');
+      }
+    }
+  }
+
   .quick-add__in-icon {
     display: none;
   }
