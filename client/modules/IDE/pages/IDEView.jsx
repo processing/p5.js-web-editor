@@ -29,7 +29,7 @@ import * as ConsoleActions from '../actions/console';
 import { getHTMLFile } from '../reducers/files';
 import Overlay from '../../App/components/Overlay';
 import About from '../components/About';
-import CollectionList from '../components/AddToCollectionList';
+import AddToCollectionList from '../components/AddToCollectionList';
 import Feedback from '../components/Feedback';
 import { CollectionSearchbar } from '../components/Searchbar';
 
@@ -389,7 +389,7 @@ class IDEView extends React.Component {
             previousPath={this.props.ide.previousPath}
             actions={<CollectionSearchbar />}
           >
-            <CollectionList
+            <AddToCollectionList
               projectId={this.props.params.project_id}
               username={this.props.params.username}
               user={this.props.user}
