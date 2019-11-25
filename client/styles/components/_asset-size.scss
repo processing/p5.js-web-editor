@@ -1,6 +1,8 @@
 .asset-size {
-  font-size: #{14 / $base-font-size}rem;
+  position: relative;
+  flex: 1;
   margin-bottom: #{18 / $base-font-size}rem;
+  font-size: #{14 / $base-font-size}rem;
 }
 
 .asset-size-bar {
@@ -9,6 +11,10 @@
   display: block;
   width: 200px;
   height: 20px;
+
+  border-radius: #{3 / $base-font-size}rem;
+  border: 1px solid transparent;
+  overflow: hidden;
 
   @include themify() {
     background-color: getThemifyVariable('progress-bar-background-color');
@@ -22,7 +28,7 @@
   top: 0;
   left: 0;
   bottom: 0;
-  width: var(--percent);
+  width: calc(var(--percent) * 100%);
 
   @include themify() {
     background-color: getThemifyVariable('progress-bar-active-color');
@@ -32,13 +38,14 @@
 .asset-current {
   position: absolute;
   top: 28px;
-  left: var(--percent);
+  left: calc(200px * var(--percent));
   margin-left: -8px;
 }
 
 .asset-max {
   position: absolute;
-  right: 0;
-  transform: translate(100%);
+  top: 0;
+  left: 0;
+  transform: translate(210%); // align max label to right of asset-size-bar
   padding-left: #{8 / $base-font-size}rem;
 }

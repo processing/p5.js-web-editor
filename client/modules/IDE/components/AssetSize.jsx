@@ -23,14 +23,14 @@ const AssetSize = ({ totalSize }) => {
 
   const currentSize = prettyBytes(totalSize);
   const sizeLimit = prettyBytes(MAX_SIZE_B);
-  const percent = formatPercent(totalSize / MAX_SIZE_B);
+  const percentValue = totalSize / MAX_SIZE_B;
+  const percent = formatPercent(percentValue);
 
   return (
-    <div className="asset-size" style={{ '--percent': percent }}>
-      <div className="asset-size-bar">
-        <p className="asset-current">{currentSize} ({percent})</p>
-        <p className="asset-max">Max: {sizeLimit}</p>
-      </div>
+    <div className="asset-size" style={{ '--percent': percentValue }}>
+      <div className="asset-size-bar" />
+      <p className="asset-current">{currentSize} ({percent})</p>
+      <p className="asset-max">Max: {sizeLimit}</p>
     </div>
   );
 };
