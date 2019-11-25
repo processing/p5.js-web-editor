@@ -102,33 +102,6 @@
 	}
 }
 
-%primary-button {
-	@include themify() {
-		background-color: getThemifyVariable('primary-button-background-color');
-		color: getThemifyVariable('primary-button-color');
-		cursor: pointer;
-		border: 2px solid getThemifyVariable('primary-button-border-color');
-		border-radius: 2px;
-		padding: #{10 / $base-font-size}rem #{30 / $base-font-size}rem;
-		&:enabled:hover {
-			border-color: getThemifyVariable('primary-button-background-hover-color');
-			background-color: getThemifyVariable('primary-button-background-hover-color');
-			color: getThemifyVariable('primary-button-hover-color');
-			& g {
-				fill: getThemifyVariable('primary-button-hover-color');
-			}
-		}
-		&:enabled:active {
-			border-color: getThemifyVariable('primary-button-background-active-color');
-			background-color: getThemifyVariable('primary-button-background-active-color');
-			color: getThemifyVariable('primary-button-active-color');
-			& g {
-				fill: getThemifyVariable('primary-button-active-color');
-			}
-		}
-	}
-}
-
 %preferences-button {
 	@extend %toolbar-button;
 	@include themify() {

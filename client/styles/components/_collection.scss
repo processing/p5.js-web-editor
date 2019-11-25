@@ -100,7 +100,7 @@
 }
 
 .collection-metadata__add-button {
-  @extend %primary-button;
+  @extend %button;
   flex-grow: 0;
 }
 
