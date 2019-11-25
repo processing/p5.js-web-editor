@@ -12,3 +12,9 @@
     }
   }
 }
+
+.preview-nav {
+  .nav__item {
+    margin-left: #{5 / $base-font-size}rem;
+  }
+}
