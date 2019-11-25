@@ -52,6 +52,7 @@ class SketchList extends React.Component {
     const sketchesWithAddedStatus = this.props.sketches.map(sketch => ({
       ...sketch,
       isAdded: this.inCollection(sketch),
+      url: `/${this.props.username}/sketches/${sketch.id}`,
     }));
 
     let content = null;
