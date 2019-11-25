@@ -130,13 +130,35 @@
 }
 
 .collection-row__remove-button {
+  display: inline-block;
+  width:#{35 / $base-font-size}rem;
+  height:#{35 / $base-font-size}rem;
+  @include icon();
   @include themify() {
-    svg path {
+    // icon graphic
+    polygon {
+      fill: getThemifyVariable('table-button-color');
+    }
+
+    // icon background circle
+    path {
       fill: getThemifyVariable('table-button-background-color');
     }
 
-    &:hover svg path {
-      fill: getThemifyVariable('table-button-background-hover-color');
+    & svg {
+      width:#{35 / $base-font-size}rem;
+      height:#{35 / $base-font-size}rem;
+    }
+
+    &:hover,
+    &:focus {
+      polygon {
+        fill: getThemifyVariable('table-button-hover-color');
+      }
+
+      path {
+        fill: getThemifyVariable('table-button-background-hover-color');
+      }
     }
   }
 }

@@ -23,7 +23,7 @@ import { SketchSearchbar } from '../../IDE/components/Searchbar';
 
 const arrowUp = require('../../../images/sort-arrow-up.svg');
 const arrowDown = require('../../../images/sort-arrow-down.svg');
-const trashCan = require('../../../images/trash-can.svg');
+const removeIcon = require('../../../images/close.svg');
 
 const ShareURL = ({ value }) => {
   const [showURL, setShowURL] = React.useState(false);
@@ -75,7 +75,7 @@ class CollectionItemRowBase extends React.Component {
             className="collection-row__remove-button"
             onClick={this.handleSketchRemove}
           >
-            <InlineSVG src={trashCan} alt="Remove" />
+            <InlineSVG src={removeIcon} alt="Remove" />
           </button>
         </td>
       </tr>);
