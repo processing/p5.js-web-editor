@@ -7,6 +7,12 @@
   flex-direction:column;
 }
 
+.dashboard-header__header {
+  max-width: #{1012 / $base-font-size}rem;
+  margin: 0 auto;
+  width: 100%;
+}
+
 .dashboard-header--no-vertical-padding {
   padding: 0 66px;
 }
@@ -70,8 +76,8 @@
 .dashboard-header__actions {
   display: flex;
   align-items: center;
-  margin-bottom: #{24 / $base-font-size}rem;
-  padding: #{24 / $base-font-size}rem #{10 / $base-font-size}rem;
+  padding: #{24 / $base-font-size}rem 0;
+  justify-content: space-between;
 }
 
 .dashboard-header__actions > *:not(:first-child) {

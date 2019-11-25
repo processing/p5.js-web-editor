@@ -1,11 +1,14 @@
 .collection-container {
-  width: 1012px;
-  margin: 0 auto;
+  padding: #{24 / $base-font-size}rem #{66 / $base-font-size}rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .collection-metadata {
-  margin: 0px #{56 / $base-font-size}rem;
-  padding: #{24 / $base-font-size}rem 0;
+  width: #{1012 / $base-font-size}rem;
+  margin: 0 auto;
+  margin-bottom: #{24 / $base-font-size}rem;
 }
 
 .collection-metadata__columns {
@@ -30,7 +33,7 @@
 }
 
 .collection-metadata__name {
-  padding: #{8 / $base-font-size}rem 0;
+  // padding: #{8 / $base-font-size}rem 0;
 }
 
 .collection-metadata__name .editable-input__label span {
@@ -57,7 +60,7 @@
 }
 
 .collection-metadata__description {
-  padding-top: #{8 / $base-font-size}rem;
+  margin-top: #{8 / $base-font-size}rem;
   text-align: left;
   font-size: 14px;
 }
@@ -72,10 +75,6 @@
 
 .collection-metadata__description .editable-input__input {
   width: 100%;
-}
-
-.collection-table-wrapper {
-  margin: #{28 / $base-font-size}rem #{56 / $base-font-size}rem;
 }
 
 .collection-add-sketch {
@@ -106,8 +105,9 @@
 }
 
 .collection-table-wrapper {
-  min-height: 100%;
-
+  width: #{1012 / $base-font-size}rem;
+  margin: 0 auto;
+  flex: 1;
   @include themify() {
     border: 1px solid getThemifyVariable('modal-border-color');
   }

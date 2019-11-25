@@ -79,17 +79,17 @@ class DashboardView extends React.Component {
       case TabKey.collections:
         return this.isOwner() && (
           <React.Fragment>
-            <CollectionSearchbar />
             <Link className="dashboard__action-button" to={`/${username}/collections/create`}>
               Create collection
             </Link>
+            <CollectionSearchbar />
           </React.Fragment>);
       case TabKey.sketches:
       default:
         return (
           <React.Fragment>
-            <SketchSearchbar />
             {this.isOwner() && <Link className="dashboard__action-button" to="/">New sketch</Link>}
+            <SketchSearchbar />
           </React.Fragment>
         );
     }
