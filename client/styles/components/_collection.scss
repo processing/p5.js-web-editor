@@ -123,3 +123,20 @@
   text-align: center;
   font-size: #{16 / $base-font-size}rem;
 }
+
+.collection-row__action-column {
+  width: #{60 / $base-font-size}rem;
+  position: relative;
+}
+
+.collection-row__remove-button {
+  @include themify() {
+    svg path {
+      fill: getThemifyVariable('table-button-background-color');
+    }
+
+    &:hover svg path {
+      fill: getThemifyVariable('table-button-background-hover-color');
+    }
+  }
+}

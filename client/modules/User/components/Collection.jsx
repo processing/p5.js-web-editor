@@ -23,7 +23,7 @@ import { SketchSearchbar } from '../../IDE/components/Searchbar';
 
 const arrowUp = require('../../../images/sort-arrow-up.svg');
 const arrowDown = require('../../../images/sort-arrow-down.svg');
-const downFilledTriangle = require('../../../images/down-filled-triangle.svg');
+const trashCan = require('../../../images/trash-can.svg');
 
 const ShareURL = ({ value }) => {
   const [showURL, setShowURL] = React.useState(false);
@@ -48,114 +48,7 @@ ShareURL.propTypes = {
 };
 
 class CollectionItemRowBase extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      optionsOpen: false,
-      renameOpen: false,
-      renameValue: props.item.project.name,
-      isFocused: false
-    };
-  }
-
-  onFocusComponent = () => {
-    this.setState({ isFocused: true });
-  }
-
-  onBlurComponent = () => {
-    this.setState({ isFocused: false });
-    setTimeout(() => {
-      if (!this.state.isFocused) {
-        this.closeAll();
-      }
-    }, 200);
-  }
-
-  openOptions = () => {
-    this.setState({
-      optionsOpen: true
-    });
-  }
-
-  closeOptions = () => {
-    this.setState({
-      optionsOpen: false
-    });
-  }
-
-  toggleOptions = () => {
-    if (this.state.optionsOpen) {
-      this.closeOptions();
-    } else {
-      this.openOptions();
-    }
-  }
-
-  openRename = () => {
-    this.setState({
-      renameOpen: true
-    });
-  }
-
-  closeRename = () => {
-    this.setState({
-      renameOpen: false
-    });
-  }
-
-  closeAll = () => {
-    this.setState({
-      renameOpen: false,
-      optionsOpen: false
-    });
-  }
-
-  handleRenameChange = (e) => {
-    this.setState({
-      renameValue: e.target.value
-    });
-  }
-
-  handleRenameEnter = (e) => {
-    if (e.key === 'Enter') {
-      // TODO pass this func
-      this.props.changeProjectName(this.props.collection.id, this.state.renameValue);
-      this.closeAll();
-    }
-  }
-
-  resetSketchName = () => {
-    this.setState({
-      renameValue: this.props.collection.name
-    });
-  }
-
-  handleDropdownOpen = () => {
-    this.closeAll();
-    this.openOptions();
-  }
-
-  handleRenameOpen = () => {
-    this.closeAll();
-    this.openRename();
-  }
-
-  handleSketchDownload = () => {
-    this.props.exportProjectAsZip(this.props.collection.id);
-  }
-
-  handleSketchDuplicate = () => {
-    this.closeAll();
-    this.props.cloneProject(this.props.collection.id);
-  }
-
-  handleSketchShare = () => {
-    this.closeAll();
-    this.props.showShareModal(this.props.collection.id, this.props.collection.name, this.props.username);
-  }
-
   handleSketchRemove = () => {
-    this.closeAll();
     if (window.confirm(`Are you sure you want to remove "${this.props.item.project.name}" from this collection?`)) {
       this.props.removeFromCollection(this.props.collection.id, this.props.item.project.id);
     }
@@ -163,40 +56,8 @@ class CollectionItemRowBase extends React.Component {
 
   render() {
     const { item } = this.props;
-    const { renameOpen, optionsOpen, renameValue } = this.state;
     const sketchOwnerUsername = item.project.user.username;
-    const userIsOwner = this.props.user.username === sketchOwnerUsername;
     const sketchUrl = `/${item.project.user.username}/sketches/${item.project.id}`;
-
-    const dropdown = (
-      <td className="sketch-list__dropdown-column">
-        <button
-          className="sketch-list__dropdown-button"
-          onClick={this.toggleOptions}
-          onBlur={this.onBlurComponent}
-          onFocus={this.onFocusComponent}
-        >
-          <InlineSVG src={downFilledTriangle} alt="Menu" />
-        </button>
-        {optionsOpen &&
-          <ul
-            className="sketch-list__action-dialogue"
-          >
-            {userIsOwner &&
-              <li>
-                <button
-                  className="sketch-list__action-option"
-                  onClick={this.handleSketchRemove}
-                  onBlur={this.onBlurComponent}
-                  onFocus={this.onFocusComponent}
-                >
-                  Remove from Collection
-                </button>
-              </li>}
-          </ul>
-        }
-      </td>
-    );
 
     return (
       <tr
@@ -204,22 +65,19 @@ class CollectionItemRowBase extends React.Component {
       >
         <th scope="row">
           <Link to={sketchUrl}>
-            {renameOpen ? '' : item.project.name}
+            {item.project.name}
           </Link>
-          {renameOpen
-            &&
-            <input
-              value={renameValue}
-              onChange={this.handleRenameChange}
-              onKeyUp={this.handleRenameEnter}
-              onBlur={this.resetSketchName}
-              onClick={e => e.stopPropagation()}
-            />
-          }
         </th>
         <td>{format(new Date(item.createdAt), 'MMM D, YYYY h:mm A')}</td>
         <td>{sketchOwnerUsername}</td>
-        <td>{dropdown}</td>
+        <td className="collection-row__action-column ">
+          <button
+            className="collection-row__remove-button"
+            onClick={this.handleSketchRemove}
+          >
+            <InlineSVG src={trashCan} alt="Remove" />
+          </button>
+        </td>
       </tr>);
   }
 }
@@ -235,16 +93,11 @@ CollectionItemRowBase.propTypes = {
       name: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
-  username: PropTypes.string.isRequired,
   user: PropTypes.shape({
     username: PropTypes.string,
     authenticated: PropTypes.bool.isRequired
   }).isRequired,
-  removeFromCollection: PropTypes.func.isRequired,
-  showShareModal: PropTypes.func.isRequired,
-  cloneProject: PropTypes.func.isRequired,
-  exportProjectAsZip: PropTypes.func.isRequired,
-  changeProjectName: PropTypes.func.isRequired
+  removeFromCollection: PropTypes.func.isRequired
 };
 
 function mapDispatchToPropsSketchListRow(dispatch) {
