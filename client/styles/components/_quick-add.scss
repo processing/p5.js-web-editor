@@ -74,7 +74,8 @@
   transform: rotate(45deg);
 }
 
-.quick-add__item-toggle:hover {
+.quick-add__item-toggle:hover,
+.quick-add__item-toggle:focus {
   @include themify() {
     .quick-add__icon {
       polygon {
