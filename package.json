@@ -153,6 +153,7 @@
     "react-hot-loader": "^4.6.3",
     "react-inlinesvg": "^0.7.5",
     "react-redux": "^5.1.1",
+    "react-responsive": "^8.0.1",
     "react-router": "^3.2.1",
     "react-split-pane": "^0.1.85",
     "react-tabs": "^2.3.0",

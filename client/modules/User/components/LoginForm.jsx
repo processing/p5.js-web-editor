@@ -1,11 +1,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { useMediaQuery } from 'react-responsive';
 import { domOnlyProps } from '../../../utils/reduxFormUtils';
 
 function LoginForm(props) {
   const {
     fields: { email, password }, handleSubmit, submitting, pristine
   } = props;
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' });
+  const mobileDisabledStyle = isTabletOrMobile && (submitting || pristine) ? ({ color: '#c1c1c1', border: '2px solid #c1c1c1' }) : ({ });
+
   return (
     <form className="form" onSubmit={handleSubmit(props.validateAndLoginUser.bind(this, props.previousPath))}>
       <p className="form__field">
@@ -30,7 +34,7 @@ function LoginForm(props) {
         />
         {password.touched && password.error && <span className="form-error">{password.error}</span>}
       </p>
-      <input type="submit" disabled={submitting || pristine} value="Log In" aria-label="login" />
+      <input type="submit" disabled={submitting || pristine} value="Log In" aria-label="login" style={mobileDisabledStyle} />
     </form>
   );
 }
