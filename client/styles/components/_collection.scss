@@ -84,19 +84,27 @@
 
 .collection-share {
   text-align: right;
+  position: relative;
 }
 
 .collection-share__button {
   @extend %button;
+  display: flex;
+  align-items: center;
 }
 
-.collection-share__label {
-  display: block;
-  text-align: left;
+.collection-share__arrow {
+  margin-left: #{5 / $base-font-size}rem;
 }
 
 .collection-share .copyable-input {
   padding-bottom: 0;
+}
+
+.collection__share-dropdown {
+  @extend %dropdown-open-right;
+  padding: #{20 / $base-font-size}rem;
+  width: #{350 / $base-font-size}rem;
 }
 
 .collection-metadata__add-button {
