@@ -383,6 +383,7 @@ class IDEView extends React.Component {
             title="Add sketch to collection"
             previousPath={this.props.ide.previousPath}
             actions={<CollectionSearchbar />}
+            isFixedHeight
           >
             <AddToCollectionList
               projectId={this.props.params.project_id}

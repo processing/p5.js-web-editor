@@ -407,6 +407,7 @@ class SketchList extends React.Component {
         {
           this.state.sketchToAddToCollection &&
             <Overlay
+              isFixedHeight
               title="Add to collection"
               closeOverlay={() => this.setState({ sketchToAddToCollection: null })}
             >

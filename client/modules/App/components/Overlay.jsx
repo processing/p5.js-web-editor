@@ -66,9 +66,10 @@ class Overlay extends React.Component {
       title,
       children,
       actions,
+      isFixedHeight,
     } = this.props;
     return (
-      <div className="overlay">
+      <div className={`overlay ${isFixedHeight ? 'overlay--is-fixed-height' : ''}`}>
         <div className="overlay__content">
           <section
             role="main"
@@ -99,7 +100,8 @@ Overlay.propTypes = {
   closeOverlay: PropTypes.func,
   title: PropTypes.string,
   ariaLabel: PropTypes.string,
-  previousPath: PropTypes.string
+  previousPath: PropTypes.string,
+  isFixedHeight: PropTypes.bool,
 };
 
 Overlay.defaultProps = {
@@ -108,7 +110,8 @@ Overlay.defaultProps = {
   title: 'Modal',
   closeOverlay: null,
   ariaLabel: 'modal',
-  previousPath: '/'
+  previousPath: '/',
+  isFixedHeight: false,
 };
 
 export default Overlay;
