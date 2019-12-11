@@ -75,7 +75,7 @@ class CollectionList extends React.Component {
     }
 
     return (
-      <div className="quick-add--has-padding">
+      <div className="quick-add-wrapper">
         <Helmet>
           <title>{this.getTitle()}</title>
         </Helmet>

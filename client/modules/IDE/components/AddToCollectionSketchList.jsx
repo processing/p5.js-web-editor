@@ -66,7 +66,7 @@ class SketchList extends React.Component {
     }
 
     return (
-      <div>
+      <div className="quick-add-wrapper">
         <Helmet>
           <title>{this.getSketchesTitle()}</title>
         </Helmet>

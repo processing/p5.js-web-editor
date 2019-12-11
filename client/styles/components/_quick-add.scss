@@ -1,6 +1,9 @@
+.quick-add-wrapper {
+  min-width: #{600 / $base-font-size}rem;
+}
+
 .quick-add {
   width: auto;
-  min-width: #{600 / $base-font-size}rem;
   padding: #{24 / $base-font-size}rem;
 }
 
