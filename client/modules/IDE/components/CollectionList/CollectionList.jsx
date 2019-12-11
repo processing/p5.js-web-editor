@@ -5,6 +5,7 @@ import InlineSVG from 'react-inlinesvg';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import classNames from 'classnames';
+import find from 'lodash/find';
 import * as ProjectActions from '../../actions/project';
 import * as ProjectsActions from '../../actions/projects';
 import * as CollectionsActions from '../../actions/collections';
@@ -12,6 +13,10 @@ import * as ToastActions from '../../actions/toast';
 import * as SortingActions from '../../actions/sorting';
 import getSortedCollections from '../../selectors/collections';
 import Loader from '../../../App/components/loader';
+import Overlay from '../../../App/components/Overlay';
+import AddToCollectionSketchList from '../AddToCollectionSketchList';
+import { SketchSearchbar } from '../Searchbar';
+
 import CollectionListRow from './CollectionListRow';
 
 const arrowUp = require('../../../../images/sort-arrow-up.svg');
@@ -27,14 +32,14 @@ class CollectionList extends React.Component {
 
     this.props.getCollections(this.props.username);
     this.props.resetSorting();
-    this._renderFieldHeader = this._renderFieldHeader.bind(this);
 
     this.state = {
       hasLoadedData: false,
+      addingSketchesToCollectionId: null,
     };
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (prevProps.loading === true && this.props.loading === false) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({
@@ -48,6 +53,19 @@ class CollectionList extends React.Component {
       return 'p5.js Web Editor | My collections';
     }
     return `p5.js Web Editor | ${this.props.username}'s collections`;
+  }
+
+  showAddSketches = (collectionId) => {
+    this.setState({
+      addingSketchesToCollectionId: collectionId,
+    });
+  }
+
+  hideAddSketches = () => {
+    console.log('hideAddSketches');
+    this.setState({
+      addingSketchesToCollectionId: null,
+    });
   }
 
   hasCollections() {
@@ -66,7 +84,7 @@ class CollectionList extends React.Component {
     return null;
   }
 
-  _renderFieldHeader(fieldName, displayName) {
+  _renderFieldHeader = (fieldName, displayName) => {
     const { field, direction } = this.props.sorting;
     const headerClass = classNames({
       'sketches-table__header': true,
@@ -117,9 +135,19 @@ class CollectionList extends React.Component {
                   user={this.props.user}
                   username={username}
                   project={this.props.project}
+                  onAddSketches={() => this.showAddSketches(collection.id)}
                 />))}
             </tbody>
           </table>}
+        {
+          this.state.addingSketchesToCollectionId && (
+            <Overlay title="Add sketches" actions={<SketchSearchbar />} closeOverlay={this.hideAddSketches} isFixedHeight>
+              <div className="collection-add-sketch">
+                <AddToCollectionSketchList username={this.props.username} collection={find(this.props.collections, { id: this.state.addingSketchesToCollectionId })} />
+              </div>
+            </Overlay>
+          )
+        }
       </div>
     );
   }

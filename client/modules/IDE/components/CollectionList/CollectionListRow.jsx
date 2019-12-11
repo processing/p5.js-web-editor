@@ -67,6 +67,11 @@ class CollectionListRowBase extends React.Component {
     });
   }
 
+  handleAddSketches = () => {
+    this.closeAll();
+    this.props.onAddSketches();
+  }
+
   handleDropdownOpen = () => {
     this.closeAll();
     this.openOptions();
@@ -105,7 +110,6 @@ class CollectionListRowBase extends React.Component {
     });
   }
 
-
   renderActions = () => {
     const { optionsOpen } = this.state;
     const userIsOwner = this.props.user.username === this.props.username;
@@ -124,6 +128,16 @@ class CollectionListRowBase extends React.Component {
           <ul
             className="sketch-list__action-dialogue"
           >
+            <li>
+              <button
+                className="sketch-list__action-option"
+                onClick={this.handleAddSketches}
+                onBlur={this.onBlurComponent}
+                onFocus={this.onFocusComponent}
+              >
+                Add sketches
+              </button>
+            </li>
             {userIsOwner &&
               <li>
                 <button
@@ -217,6 +231,7 @@ CollectionListRowBase.propTypes = {
   }).isRequired,
   deleteCollection: PropTypes.func.isRequired,
   editCollection: PropTypes.func.isRequired,
+  onAddSketches: PropTypes.func.isRequired,
 };
 
 function mapDispatchToPropsSketchListRow(dispatch) {
