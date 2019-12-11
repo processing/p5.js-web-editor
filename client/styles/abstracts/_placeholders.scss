@@ -83,6 +83,10 @@
 		border: 2px solid getThemifyVariable('button-border-color');
 		border-radius: 2px;
 		padding: #{10 / $base-font-size}rem #{30 / $base-font-size}rem;
+		& g {
+			fill: getThemifyVariable('button-color');
+			opacity: 1;
+		}
 		&:enabled:hover {
 			border-color: getThemifyVariable('button-background-hover-color');
 			background-color: getThemifyVariable('button-background-hover-color');

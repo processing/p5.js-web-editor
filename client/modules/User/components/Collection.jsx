@@ -20,6 +20,7 @@ import Overlay from '../../App/components/Overlay';
 import SketchList from '../../IDE/components/AddToCollectionSketchList';
 import CopyableInput from '../../IDE/components/CopyableInput';
 import { SketchSearchbar } from '../../IDE/components/Searchbar';
+import dropdownArrow from '../../../images/down-arrow.svg';
 
 const arrowUp = require('../../../images/sort-arrow-up.svg');
 const arrowDown = require('../../../images/sort-arrow-down.svg');
@@ -30,14 +31,14 @@ const ShareURL = ({ value }) => {
 
   return (
     <div className="collection-share">
-      {
-        showURL ?
-          <React.Fragment>
-            <span className="collection-share__label">Everyone can access the collection with this link</span>
-            <br />
-            <CopyableInput value={value} />
-          </React.Fragment> :
-          <button className="collection-share__button" onClick={() => setShowURL(true)}>Share</button>
+      <button className="collection-share__button" onClick={() => setShowURL(!showURL)}>
+        <span>Share</span>
+        <InlineSVG className="collection-share__arrow" src={dropdownArrow} />
+      </button>
+      { showURL &&
+        <div className="collection__share-dropdown">
+          <CopyableInput value={value} label="Link to Collection" />
+        </div>
       }
     </div>
   );
