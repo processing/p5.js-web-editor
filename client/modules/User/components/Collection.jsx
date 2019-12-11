@@ -256,7 +256,8 @@ class Collection extends React.Component {
 
   _renderEmptyTable() {
     const isLoading = this.props.loading;
-    const hasCollectionItems = this.props.collection != null && this.props.collection.items.length > 0;
+    const hasCollectionItems = this.props.collection != null &&
+      this.props.collection.items.length > 0;
 
     if (!isLoading && !hasCollectionItems) {
       return (<p className="collection-empty-message">No sketches in collection</p>);
@@ -321,7 +322,12 @@ class Collection extends React.Component {
           }
           {
             this.state.isAddingSketches && (
-              <Overlay title="Add sketches" actions={<SketchSearchbar />} closeOverlay={this.hideAddSketches} isFixedHeight>
+              <Overlay
+                title="Add sketches"
+                actions={<SketchSearchbar />}
+                closeOverlay={this.hideAddSketches}
+                isFixedHeight
+              >
                 <div className="collection-add-sketch">
                   <AddToCollectionSketchList username={this.props.username} collection={this.props.collection} />
                 </div>

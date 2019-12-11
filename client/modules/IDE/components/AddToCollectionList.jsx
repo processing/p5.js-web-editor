@@ -13,7 +13,8 @@ import getSortedCollections from '../selectors/collections';
 import Loader from '../../App/components/loader';
 import QuickAddList from './QuickAddList';
 
-const projectInCollection = (project, collection) => collection.items.find(item => item.project.id === project.id) != null;
+const projectInCollection = (project, collection) =>
+  collection.items.find(item => item.project.id === project.id) != null;
 
 class CollectionList extends React.Component {
   constructor(props) {
@@ -55,7 +56,6 @@ class CollectionList extends React.Component {
   }
 
   render() {
-    const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
     const { collections, project } = this.props;
     const hasCollections = collections.length > 0;
     const collectionWithSketchStatus = collections.map(collection => ({
@@ -69,7 +69,13 @@ class CollectionList extends React.Component {
     if (this.props.loading && !this.state.hasLoadedData) {
       content = <Loader />;
     } else if (hasCollections) {
-      content = <QuickAddList items={collectionWithSketchStatus} onAdd={this.handleCollectionAdd} onRemove={this.handleCollectionRemove} />;
+      content = (
+        <QuickAddList
+          items={collectionWithSketchStatus}
+          onAdd={this.handleCollectionAdd}
+          onRemove={this.handleCollectionRemove}
+        />
+      );
     } else {
       content = 'No collections';
     }

@@ -60,7 +60,13 @@ class SketchList extends React.Component {
     if (this.props.loading && this.state.isInitialDataLoad) {
       content = <Loader />;
     } else if (hasSketches) {
-      content = <QuickAddList items={sketchesWithAddedStatus} onAdd={this.handleCollectionAdd} onRemove={this.handleCollectionRemove} />;
+      content = (
+        <QuickAddList
+          items={sketchesWithAddedStatus}
+          onAdd={this.handleCollectionAdd}
+          onRemove={this.handleCollectionRemove}
+        />
+      );
     } else {
       content = 'No collections';
     }
