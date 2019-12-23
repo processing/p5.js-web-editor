@@ -68,6 +68,11 @@
 	align-items: center;
 }
 
+.toolbar__autorefresh{
+	display: flex;
+	align-items: center;
+}
+
 .toolbar__project-name-container {
 	@include themify() {
 		border-color: getThemifyVariable('inactive-text-color');
