@@ -190,6 +190,7 @@ class IDEView extends React.Component {
         <Toolbar />
         {this.props.ide.preferencesIsVisible &&
           <Overlay
+            title="Settings"
             ariaLabel="settings"
             closeOverlay={this.props.closePreferences}
           >
@@ -363,6 +364,7 @@ class IDEView extends React.Component {
         }
         { this.props.location.pathname === '/about' &&
           <Overlay
+            title="About"
             previousPath={this.props.ide.previousPath}
             ariaLabel="about"
           >
@@ -371,6 +373,7 @@ class IDEView extends React.Component {
         }
         {this.props.location.pathname === '/feedback' &&
           <Overlay
+            title="Submit Feedback"
             previousPath={this.props.ide.previousPath}
             ariaLabel="submit-feedback"
           >
@@ -394,6 +397,7 @@ class IDEView extends React.Component {
         }
         {this.props.ide.shareModalVisible &&
           <Overlay
+            title="Share"
             ariaLabel="share"
             closeOverlay={this.props.closeShareModal}
           >
@@ -406,6 +410,7 @@ class IDEView extends React.Component {
         }
         {this.props.ide.keyboardShortcutVisible &&
           <Overlay
+            title="Keyboard Shortcuts"
             ariaLabel="keyboard shortcuts"
             closeOverlay={this.props.closeKeyboardShortcutModal}
           >
@@ -414,6 +419,7 @@ class IDEView extends React.Component {
         }
         {this.props.ide.errorType &&
           <Overlay
+            title="Error"
             ariaLabel="error"
             closeOverlay={this.props.hideErrorModal}
           >
