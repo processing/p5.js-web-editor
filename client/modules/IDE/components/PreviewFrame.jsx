@@ -334,10 +334,10 @@ class PreviewFrame extends React.Component {
   }
 
   renderSketch() {
-    this.props.clearConsole();
     const doc = this.iframeElement;
     const localFiles = this.injectLocalFiles();
     if (this.props.isPlaying) {
+      this.props.clearConsole();
       srcDoc.set(doc, localFiles);
       if (this.props.endSketchRefresh) {
         this.props.endSketchRefresh();
