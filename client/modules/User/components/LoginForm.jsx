@@ -30,7 +30,13 @@ function LoginForm(props) {
         />
         {password.touched && password.error && <span className="form-error">{password.error}</span>}
       </p>
-      <input type="submit" disabled={submitting || pristine} value="Log In" aria-label="login" />
+      <input
+        type="submit"
+        disabled={submitting || pristine}
+        value="Log In"
+        aria-label="login"
+        className={submitting || pristine ? 'login' : ''}
+      />
     </form>
   );
 }

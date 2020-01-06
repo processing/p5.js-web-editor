@@ -1,0 +1,12 @@
+@mixin responsiveView($screen) {
+  @media (max-width: $screen + 'px') {
+      @content;
+  }
+}
+
+.login {
+  @include responsiveView(1224) {
+    color: #c1c1c1 !important;
+    border: 1px solid #c1c1c1 !important;
+  }
+}
