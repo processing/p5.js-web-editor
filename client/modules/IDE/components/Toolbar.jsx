@@ -116,7 +116,7 @@ class Toolbar extends React.Component {
               }
             }}
           >
-            {this.props.project.name}&nbsp;
+            <span>{this.props.project.name}</span>
             {
               this.canEditProjectName() &&
               <InlineSVG className="toolbar__edit-name-button" src={editProjectNameUrl} alt="Edit Project Name" />
