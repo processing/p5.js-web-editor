@@ -68,18 +68,12 @@
 	align-items: center;
 }
 
-.toolbar__autorefresh{
-	display: flex;
-	align-items: center;
-}
-
 .toolbar__project-name-container {
 	@include themify() {
 		border-color: getThemifyVariable('inactive-text-color');
 	}
 	margin-left: #{10 / $base-font-size}rem;
 	padding-left: #{10 / $base-font-size}rem;
-	height: 70%;
   display: flex;
   align-items: center;
 }
@@ -95,7 +89,8 @@
 		}
 	}
 	cursor: pointer;
-	line-height: #{18 / $base-font-size}rem;
+	display: flex;
+	align-items: center;
 
 	.toolbar__project-name-container--editing & {
 		display: none;
@@ -156,7 +151,6 @@
 	display: inline-block;
 	vertical-align: top;
 	height: #{18 / $base-font-size}rem;
-	margin-left: #{-4 / $base-font-size}rem;
 	& svg {
 		width: #{18 / $base-font-size}rem;
 		height: #{18 / $base-font-size}rem;
