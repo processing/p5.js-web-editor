@@ -1,11 +1,11 @@
 This folder contains documents intended for developers of the p5.js Web Editor. 
 
 ## List of Documents
-* [Installation](https://github.com/processing/p5.js-web-editor/blob/master/developer_docs/installation.md) - A guide for setting up your development environment
-* [Development](https://github.com/processing/p5.js-web-editor/blob/master/developer_docs/development.md) - A guide for adding code to the web editor
-* [Preparing a pull-request](https://github.com/processing/p5.js/blob/master/developer_docs/preparing_a_pull_request.md) - Instructions for how to make a pull-request
-* [Accessibility Guidelines](https://github.com/processing/p5.js-web-editor/blob/master/developer_docs/accessibility.md) - Guidelines for writing code to create an accessible application
-* [Deployment](https://github.com/processing/p5.js-web-editor/blob/master/developer_docs/deployment.md) - A guide to production deployment, and all platforms that are being used.
+* [Installation](installation.md) - A guide for setting up your development environment
+* [Development](development.md) - A guide for adding code to the web editor
+* [Preparing a pull-request](preparing_a_pull_request.md) - Instructions for how to make a pull-request
+* [Accessibility Guidelines](accessibility.md) - Guidelines for writing code to create an accessible application
+* [Deployment](deployment.md) - A guide to production deployment, and all platforms that are being used.
 
 ## Documents to Create
 * Design Principles - reference [p5.js design principles](https://github.com/processing/p5.js/edit/master/developer_docs/design_principles.md)
