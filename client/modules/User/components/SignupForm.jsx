@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { useMediaQuery } from 'react-responsive';
 import { domOnlyProps } from '../../../utils/reduxFormUtils';
 
 function SignupForm(props) {
@@ -9,7 +8,9 @@ function SignupForm(props) {
       username, email, password, confirmPassword
     }, handleSubmit, submitting, invalid, pristine
   } = props;
-  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' });
+
+  const width = window.innerWidth;
+  const isTabletOrMobile = width <= 768;
   const mobileDisabledStyle = isTabletOrMobile && (submitting || pristine) ? ({ color: '#c1c1c1', border: '2px solid #c1c1c1' }) : ({ });
 
   return (
