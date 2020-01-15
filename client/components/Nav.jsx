@@ -230,22 +230,16 @@ class Nav extends React.PureComponent {
     return (
       <ul className="nav__items-left" title="project-menu">
         <li className="nav__item-logo">
+          <InlineSVG src={logoUrl} alt="p5.js logo" className="svg__logo" />
+        </li>
+        <li className="nav__item nav__item--no-icon">
           <Link to="/" className="nav__back-link">
-            <InlineSVG src={logoUrl} alt="p5.js logo" className="svg__logo" />
+            <InlineSVG src={caretLeft} className="nav__back-icon" />
+            <span className="nav__item-header">
+              Back to Editor
+            </span>
           </Link>
         </li>
-        {
-          this.props.ownerName && (
-            <li className="nav__item nav__item--no-icon">
-              <Link to={`/${this.props.ownerName}/collections`} className="nav__back-link">
-                <InlineSVG src={caretLeft} className="nav__back-icon" />
-                <span className="nav__item-header">
-                Collections
-                </span>
-              </Link>
-            </li>
-          )
-        }
       </ul>
     );
   }
@@ -721,7 +715,6 @@ Nav.propTypes = {
     username: PropTypes.string,
     id: PropTypes.string
   }).isRequired,
-  ownerName: PropTypes.string,
   project: PropTypes.shape({
     id: PropTypes.string,
     owner: PropTypes.shape({
@@ -759,8 +752,7 @@ Nav.defaultProps = {
   },
   cmController: {},
   layout: 'project',
-  warnIfUnsavedChanges: undefined,
-  ownerName: null,
+  warnIfUnsavedChanges: undefined
 };
 
 function mapStateToProps(state) {

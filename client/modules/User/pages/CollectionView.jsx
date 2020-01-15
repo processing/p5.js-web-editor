@@ -56,7 +56,7 @@ class CollectionView extends React.Component {
   render() {
     return (
       <div className="dashboard">
-        <Nav layout="dashboard" ownerName={this.ownerName()} />
+        <Nav layout="dashboard" />
 
         {this.renderContent()}
       </div>
