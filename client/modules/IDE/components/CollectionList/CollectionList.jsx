@@ -142,7 +142,7 @@ class CollectionList extends React.Component {
         {
           this.state.addingSketchesToCollectionId && (
             <Overlay
-              title="Add sketches"
+              title="Add sketch"
               actions={<SketchSearchbar />}
               closeOverlay={this.hideAddSketches}
               isFixedHeight

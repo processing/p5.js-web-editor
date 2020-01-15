@@ -380,7 +380,7 @@ class IDEView extends React.Component {
         {this.props.location.pathname.match(/add-to-collection$/) &&
           <Overlay
             ariaLabel="add to collection"
-            title="Add sketch to collection"
+            title="Add to collection"
             previousPath={this.props.ide.previousPath}
             actions={<CollectionSearchbar />}
             isFixedHeight

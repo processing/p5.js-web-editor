@@ -135,7 +135,7 @@ class CollectionListRowBase extends React.Component {
                 onBlur={this.onBlurComponent}
                 onFocus={this.onFocusComponent}
               >
-                Add sketches
+                Add sketch
               </button>
             </li>
             {userIsOwner &&

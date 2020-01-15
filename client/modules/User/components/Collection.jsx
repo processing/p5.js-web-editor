@@ -325,7 +325,7 @@ class Collection extends React.Component {
           {
             this.state.isAddingSketches && (
               <Overlay
-                title="Add sketches"
+                title="Add sketch"
                 actions={<SketchSearchbar />}
                 closeOverlay={this.hideAddSketches}
                 isFixedHeight
