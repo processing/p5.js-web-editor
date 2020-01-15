@@ -67,7 +67,9 @@
 
 .collection-metadata__description .editable-input__label {
   text-align: left;
+}
 
+.collection-metadata__description .editable-input--has-value .editable-input__label  {
   @include themify() {
     color: getThemifyVariable('primary-text-color');
   }

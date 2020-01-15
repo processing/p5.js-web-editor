@@ -14,7 +14,8 @@ function EditableInput({
   const [isEditing, setIsEditing] = React.useState(false);
   const [currentValue, setCurrentValue] = React.useState(value || '');
   const displayValue = currentValue || emptyPlaceholder;
-  const classes = `editable-input editable-input--${isEditing ? 'is-editing' : 'is-not-editing'}`;
+  const hasValue = currentValue !== '';
+  const classes = `editable-input editable-input--${isEditing ? 'is-editing' : 'is-not-editing'} editable-input--${hasValue ? 'has-value' : 'has-placeholder'}`;
   const inputRef = React.createRef();
 
   React.useEffect(() => {
