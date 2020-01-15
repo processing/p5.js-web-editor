@@ -204,7 +204,7 @@ class Collection extends React.Component {
           <div className="collection-metadata__column--left">
             <h2 className="collection-metadata__name">
               {
-                this.isOwner() ? <EditableInput value={name} onChange={handleEditCollectionName} /> : name
+                this.isOwner() ? <EditableInput value={name} onChange={handleEditCollectionName} validate={value => value !== ''} /> : name
               }
             </h2>
 

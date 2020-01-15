@@ -23,7 +23,7 @@ class CollectionListRowBase extends React.Component {
       optionsOpen: false,
       isFocused: false,
       renameOpen: false,
-      renameValue: props.collection.name,
+      renameValue: '',
     };
   }
 
@@ -88,6 +88,7 @@ class CollectionListRowBase extends React.Component {
     this.closeAll();
     this.setState({
       renameOpen: true,
+      renameValue: this.props.collection.name,
     });
   }
 
@@ -98,17 +99,23 @@ class CollectionListRowBase extends React.Component {
   }
 
   handleRenameEnter = (e) => {
+    const isValid = this.state.renameValue !== '';
+
     if (e.key === 'Enter') {
-      this.props.editCollection(this.props.collection.id, { name: this.state.renameValue });
+      if (isValid) {
+        this.props.editCollection(this.props.collection.id, { name: this.state.renameValue });
+      }
+
+      // this.resetName();
       this.closeAll();
     }
   }
 
-  resetSketchName = () => {
-    this.setState({
-      renameValue: this.props.collection.name
-    });
-  }
+  // resetName = () => {
+  //   this.setState({
+  //     renameValue: this.props.collection.name
+  //   });
+  // }
 
   renderActions = () => {
     const { optionsOpen } = this.state;
@@ -181,7 +188,7 @@ class CollectionListRowBase extends React.Component {
             value={renameValue}
             onChange={this.handleRenameChange}
             onKeyUp={this.handleRenameEnter}
-            onBlur={this.resetSketchName}
+            // onBlur={this.resetName}
             onClick={e => e.stopPropagation()}
           />
         }
