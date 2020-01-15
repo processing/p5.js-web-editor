@@ -63,14 +63,20 @@
 
 .quick-add__in-icon {
   display: inline-block;
-
-  & svg {
-    opacity: 0.3;
-  }
 }
 
 .quick-add__icon--in-collection .quick-add__in-icon svg {
-  opacity: 1;
+  @include themify() {
+    // icon graphic
+    polygon {
+      fill: getThemifyVariable('table-button-active-color');
+    }
+
+    // icon background circle
+    path {
+      fill: getThemifyVariable('table-button-background-active-color');
+    }
+  }
 }
 
 .quick-add__add-icon {
