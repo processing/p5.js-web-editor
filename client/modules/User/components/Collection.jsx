@@ -221,7 +221,9 @@ class Collection extends React.Component {
               }
             </p>
 
-            <p className="collection-metadata__user">Collection by {owner.username}</p>
+            <p className="collection-metadata__user">Collection by{' '}
+              <Link to={`${hostname}/${username}/sketches`}>{owner.username}</Link>
+            </p>
 
             <p className="collection-metadata__user">{items.length} sketch{items.length === 1 ? '' : 'es'}</p>
           </div>
