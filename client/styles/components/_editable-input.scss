@@ -5,6 +5,8 @@
 }
 
 .editable-input__label {
+  display: flex;
+
   @include themify() {
     color: getThemifyVariable('inactive-text-color');
     &:hover {
