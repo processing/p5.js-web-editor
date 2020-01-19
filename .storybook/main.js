@@ -1,5 +1,5 @@
 module.exports = {
-  stories: ['../client/**/*.stories.(jsx|js|mdx)'],
+  stories: ['../client/**/*.stories.(jsx|mdx)'],
   addons: ['@storybook/addon-actions', '@storybook/addon-docs', '@storybook/addon-knobs', '@storybook/addon-links'],
   webpackFinal: async config => {
     // do mutation to the config
