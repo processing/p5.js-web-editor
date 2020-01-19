@@ -1,12 +1,28 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from 'styled-components';
+import { remSize, prop } from '../../theme';
 
 const StyledButton = styled.button`
+  background-color: ${prop('buttonColorBackground')};
+  color: ${prop('buttonColor')};
+  cursor: pointer;
+  border: 2px solid ${prop('buttonBorderColor')};
+  border-radius: 2px;
+  padding: ${remSize(8)} ${remSize(25)};
+  line-height: 1;
   margin: 0;
-  padding: 0;
-  border: none;
-  background: none;
+
+  &:hover:not(:disabled) {
+    color: ${prop('buttonHoverColor')};
+    background-color: ${prop('buttonHoverColorBackground')};
+  }
+
+  &:disabled {
+    color: ${prop('buttonDisabledColor')};
+    background-color: ${prop('buttonDisabledColorBackground')};
+    cursor: not-allowed;
+  }
 `;
 
 /**
@@ -24,7 +40,7 @@ Button.propTypes = {
   /**
     If the button can be clicked or not
   */
-  disabled: PropTypes.boolean,
+  disabled: PropTypes.bool,
   /*
    * An ARIA Label used for accessibility
    */
