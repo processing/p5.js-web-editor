@@ -20,7 +20,9 @@
     "fetch-examples:prod": "cross-env NODE_ENV=production node ./dist/fetch-examples.bundle.js",
     "fetch-examples-gg:prod": "cross-env NODE_ENV=production node ./dist/fetch-examples-gg.bundle.js",
     "fetch-examples-ml5:prod": "cross-env NODE_ENV=production node ./dist/fetch-examples-ml5.bundle.js",
-    "heroku-postbuild": "touch .env; npm run build"
+    "heroku-postbuild": "touch .env; npm run build",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "jest": {
     "setupFiles": [
@@ -58,6 +60,10 @@
     "@babel/plugin-transform-react-inline-elements": "^7.2.0",
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
+    "@storybook/addon-actions": "^5.3.6",
+    "@storybook/addon-links": "^5.3.6",
+    "@storybook/addons": "^5.3.6",
+    "@storybook/react": "^5.3.6",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^9.0.0",
     "babel-jest": "^24.8.0",
