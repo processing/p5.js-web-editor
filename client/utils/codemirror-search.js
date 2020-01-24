@@ -143,6 +143,7 @@ export default function(CodeMirror) {
       }
     } else {
       searchField.focus();
+      searchField.select();
     }
   }
 
