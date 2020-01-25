@@ -269,17 +269,21 @@ class Editor extends React.Component {
       indent_size: INDENTATION_AMOUNT,
       indent_with_tabs: IS_TAB_INDENT
     };
-
+    console.log('inside');
     const mode = this._cm.getOption('mode');
     const currentPosition = this._cm.doc.getCursor();
     if (mode === 'javascript') {
       this._cm.doc.setValue(beautifyJS(this._cm.doc.getValue(), beautifyOptions));
+      console.log('beautifying');
     } else if (mode === 'css') {
       this._cm.doc.setValue(beautifyCSS(this._cm.doc.getValue(), beautifyOptions));
     } else if (mode === 'htmlmixed') {
       this._cm.doc.setValue(beautifyHTML(this._cm.doc.getValue(), beautifyOptions));
     }
-    this._cm.doc.setCursor({ line: currentPosition.line, ch: currentPosition.ch });
+    setImmediate(() => {
+      this._cm.focus();
+      this._cm.doc.setCursor({ line: currentPosition.line, ch: currentPosition.ch + INDENTATION_AMOUNT });
+    });
   }
 
   initializeDocuments(files) {
