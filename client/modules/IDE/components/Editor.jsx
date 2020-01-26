@@ -269,7 +269,6 @@ class Editor extends React.Component {
       indent_size: INDENTATION_AMOUNT,
       indent_with_tabs: IS_TAB_INDENT
     };
-    console.log('inside');
     const mode = this._cm.getOption('mode');
     const currentPosition = this._cm.doc.getCursor();
     if (mode === 'javascript') {
