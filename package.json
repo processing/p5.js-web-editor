@@ -92,8 +92,8 @@
     "webpack-node-externals": "^1.7.2"
   },
   "engines": {
-    "node": "12.14.1",
-    "npm": "6.13.4"
+    "node": "11.15.0",
+    "npm": "6.7.0"
   },
   "dependencies": {
     "@babel/core": "^7.4.5",
