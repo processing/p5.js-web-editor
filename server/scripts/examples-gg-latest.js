@@ -19,7 +19,7 @@ const clientSecret = process.env.GITHUB_SECRET;
 
 const defaultHTML =
   `<!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.dom.min.js"></script>
