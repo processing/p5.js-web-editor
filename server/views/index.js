@@ -2,7 +2,7 @@ export function renderIndex() {
   const assetsManifest = process.env.webpackAssets && JSON.parse(process.env.webpackAssets);
   return `
   <!DOCTYPE html>
-  <html>
+  <html lang="en">
     <head>
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
