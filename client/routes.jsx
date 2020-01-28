@@ -9,6 +9,7 @@ import ResetPasswordView from './modules/User/pages/ResetPasswordView';
 import EmailVerificationView from './modules/User/pages/EmailVerificationView';
 import NewPasswordView from './modules/User/pages/NewPasswordView';
 import AccountView from './modules/User/pages/AccountView';
+import CollectionView from './modules/User/pages/CollectionView';
 import DashboardView from './modules/User/pages/DashboardView';
 import createRedirectWithUsername from './components/createRedirectWithUsername';
 import { getUser } from './modules/User/actions';
@@ -42,7 +43,11 @@ const routes = store => (
     <Route path="/assets" component={createRedirectWithUsername('/:username/assets')} />
     <Route path="/account" component={userIsAuthenticated(AccountView)} />
     <Route path="/:username/sketches/:project_id" component={IDEView} />
+    <Route path="/:username/sketches/:project_id/add-to-collection" component={IDEView} />
     <Route path="/:username/sketches" component={DashboardView} />
+    <Route path="/:username/collections" component={DashboardView} />
+    <Route path="/:username/collections/create" component={DashboardView} />
+    <Route path="/:username/collections/:collection_id" component={CollectionView} />
     <Route path="/about" component={IDEView} />
   </Route>
 );

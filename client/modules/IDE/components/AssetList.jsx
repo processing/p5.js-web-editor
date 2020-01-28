@@ -40,13 +40,9 @@ class AssetList extends React.Component {
 
   render() {
     const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
-    const { assetList, totalSize } = this.props;
+    const { assetList } = this.props;
     return (
       <div className="asset-table-container">
-        {/* Eventually, this copy should be Total / 250 MB Used */}
-        {this.hasAssets() &&
-          <p className="asset-table__total">{`${prettyBytes(totalSize)} Total`}</p>
-        }
         <Helmet>
           <title>{this.getAssetsTitle()}</title>
         </Helmet>
@@ -93,7 +89,6 @@ AssetList.propTypes = {
     sketchName: PropTypes.string.isRequired,
     sketchId: PropTypes.string.isRequired
   })).isRequired,
-  totalSize: PropTypes.number.isRequired,
   getAssets: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired
 };

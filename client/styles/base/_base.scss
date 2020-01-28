@@ -6,13 +6,13 @@ html, body {
 	font-size: #{$base-font-size}px;
 }
 
-body, input {
+body, input, textarea {
 	@include themify() {
 		color: getThemifyVariable('primary-text-color');
 	}
 }
 
-body, input, button {
+body, input, textarea, button {
 	font-family: Montserrat, sans-serif;
 }
 
@@ -31,7 +31,8 @@ input, button {
 	font-size: 1rem;
 }
 
-input {
+input,
+textarea {
 	padding: #{5 / $base-font-size}rem;
 	border: 1px solid ;
 	border-radius: 2px;

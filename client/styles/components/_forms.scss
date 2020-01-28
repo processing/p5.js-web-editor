@@ -56,6 +56,10 @@
   }
 }
 
+.form__input-flexible-height {
+  height: auto;
+}
+
 .form__input::placeholder {
   @include themify() {
     color: getThemifyVariable('form-input-placeholder-text-color');
@@ -79,6 +83,15 @@
   margin: #{39 / $base-font-size}rem 0 #{24 / $base-font-size}rem 0;
 }
 
+.form [type="submit"][disabled] {
+  cursor: not-allowed;
+}
+
 .form--inline [type="submit"] {
   margin: 0 0 0 #{24 / $base-font-size}rem;
+}
+
+.form [type="submit"][disabled],
+.form--inline [type="submit"][disabled] {
+  cursor: not-allowed;
 }

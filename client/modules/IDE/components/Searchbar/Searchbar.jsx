@@ -1,12 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import InlineSVG from 'react-inlinesvg';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import { throttle } from 'lodash';
-import * as SortingActions from '../actions/sorting';
 
-const searchIcon = require('../../../images/magnifyingglass.svg');
+const searchIcon = require('../../../../images/magnifyingglass.svg');
 
 class Searchbar extends React.Component {
   constructor(props) {
@@ -46,7 +43,7 @@ class Searchbar extends React.Component {
   render() {
     const { searchValue } = this.state;
     return (
-      <div className="searchbar">
+      <div className={`searchbar ${searchValue === '' ? 'searchbar--is-empty' : ''}`}>
         <button
           type="submit"
           className="searchbar__button"
@@ -58,7 +55,7 @@ class Searchbar extends React.Component {
           className="searchbar__input"
           type="text"
           value={searchValue}
-          placeholder="Search sketches..."
+          placeholder={this.props.searchLabel}
           onChange={this.handleSearchChange}
           onKeyUp={this.handleSearchEnter}
         />
@@ -75,17 +72,12 @@ class Searchbar extends React.Component {
 Searchbar.propTypes = {
   searchTerm: PropTypes.string.isRequired,
   setSearchTerm: PropTypes.func.isRequired,
-  resetSearchTerm: PropTypes.func.isRequired
+  resetSearchTerm: PropTypes.func.isRequired,
+  searchLabel: PropTypes.string,
 };
 
-function mapStateToProps(state) {
-  return {
-    searchTerm: state.search.searchTerm
-  };
-}
+Searchbar.defaultProps = {
+  searchLabel: 'Search sketches...',
+};
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}, SortingActions), dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Searchbar);
+export default Searchbar;

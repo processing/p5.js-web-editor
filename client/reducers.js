@@ -13,6 +13,7 @@ import assets from './modules/IDE/reducers/assets';
 import search from './modules/IDE/reducers/search';
 import sorting from './modules/IDE/reducers/sorting';
 import loading from './modules/IDE/reducers/loading';
+import collections from './modules/IDE/reducers/collections';
 
 const rootReducer = combineReducers({
   form,
@@ -28,7 +29,8 @@ const rootReducer = combineReducers({
   toast,
   console,
   assets,
-  loading
+  loading,
+  collections
 });
 
 export default rootReducer;

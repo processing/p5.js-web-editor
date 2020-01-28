@@ -1,13 +1,14 @@
 import * as ActionTypes from '../../../constants';
 
 const initialState = {
-  searchTerm: ''
+  collectionSearchTerm: '',
+  sketchSearchTerm: ''
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case ActionTypes.SET_SEARCH_TERM:
-      return { ...state, searchTerm: action.query };
+      return { ...state, [`${action.scope}SearchTerm`]: action.query };
     default:
       return state;
   }

@@ -1,0 +1,123 @@
+.quick-add-wrapper {
+  min-width: #{600 / $base-font-size}rem;
+}
+
+.quick-add {
+  width: auto;
+  padding: #{24 / $base-font-size}rem;
+}
+
+.quick-add__item {
+  display: flex;
+  align-items: center;
+  height: #{64 / $base-font-size}rem;
+  padding-right: #{24 / $base-font-size}rem;
+
+  button, a {
+    @include themify() {
+      color: getThemifyVariable('primary-text-color');
+    }
+  }
+}
+
+.quick-add__item:nth-child(odd) {
+  @include themify() {
+    background: getThemifyVariable('table-row-stripe-color');
+  }
+}
+
+.quick-add__item-toggle {
+  display: flex;
+  align-items: center;
+
+  flex: 1;
+}
+
+.quick-add__icon {
+  display: inline-block;
+  margin-right:#{15 / $base-font-size}rem;
+  width:#{35 / $base-font-size}rem;
+  height:#{35 / $base-font-size}rem;
+  @include icon();
+  @include themify() {
+    // icon graphic
+    polygon {
+      fill: getThemifyVariable('table-button-color');
+    }
+
+    // icon background circle
+    path {
+      fill: getThemifyVariable('table-button-background-color');
+    }
+
+    & svg {
+      width:#{35 / $base-font-size}rem;
+      height:#{35 / $base-font-size}rem;
+    }
+  }
+}
+
+.quick-add__icon > * {
+  display: none;
+}
+
+.quick-add__in-icon {
+  display: inline-block;
+}
+
+.quick-add__icon--in-collection .quick-add__in-icon svg {
+  @include themify() {
+    // icon graphic
+    polygon {
+      fill: getThemifyVariable('table-button-active-color');
+    }
+
+    // icon background circle
+    path {
+      fill: getThemifyVariable('table-button-background-active-color');
+    }
+  }
+}
+
+.quick-add__add-icon {
+  transform: rotate(45deg);
+}
+
+.quick-add__item-toggle:hover,
+.quick-add__item-toggle:focus {
+  @include themify() {
+    .quick-add__icon {
+      polygon {
+        fill: getThemifyVariable('table-button-hover-color');
+      }
+
+      path {
+        fill: getThemifyVariable('table-button-background-hover-color');
+      }
+    }
+  }
+
+  .quick-add__in-icon {
+    display: none;
+  }
+
+  .quick-add__icon--in-collection {
+    .quick-add__remove-icon {
+      display: inline-block;
+    }
+
+    .quick-add__add-icon {
+      display: none;
+    }
+  }
+
+  .quick-add__icon--not-in-collection {
+    .quick-add__add-icon {
+      display: inline-block;
+    }
+
+    .quick-add__remove-icon {
+      display: none;
+    }
+  }
+}

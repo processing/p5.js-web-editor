@@ -11,13 +11,6 @@ import * as ProjectActions from '../actions/project';
 class FullView extends React.Component {
   componentDidMount() {
     this.props.getProject(this.props.params.project_id);
-    document.body.className = this.props.theme;
-  }
-
-  componentWillUpdate(nextProps) {
-    if (nextProps.theme !== this.props.theme) {
-      document.body.className = nextProps.theme;
-    }
   }
 
   ident = () => {}
@@ -62,7 +55,6 @@ class FullView extends React.Component {
 }
 
 FullView.propTypes = {
-  theme: PropTypes.string.isRequired,
   params: PropTypes.shape({
     project_id: PropTypes.string
   }).isRequired,
@@ -98,7 +90,6 @@ FullView.propTypes = {
 function mapStateToProps(state) {
   return {
     user: state.user,
-    theme: state.preferences.theme,
     htmlFile: getHTMLFile(state.files),
     jsFiles: getJSFiles(state.files),
     cssFiles: getCSSFiles(state.files),

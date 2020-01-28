@@ -1,5 +1,4 @@
 .asset-table-container {
-  // flex: 1 1 0%;
   overflow-y: auto;
   max-width: 100%;
   min-height: #{400 / $base-font-size}rem;
@@ -7,74 +6,63 @@
 
 .asset-table {
   width: 100%;
-  padding-bottom: #{10 / $base-font-size}rem;
+  
   max-height: 100%;
   border-spacing: 0;
-  & .asset-list__delete-column {
-    width: #{23 / $base-font-size}rem;
+  & .sketch-list__dropdown-column {
+    width: #{60 / $base-font-size}rem;
+    position: relative;
   }
+}
 
-  & thead {
-    font-size: #{12 / $base-font-size}rem;
-    @include themify() {
-      color: getThemifyVariable('inactive-text-color')
-    }
+.asset-table thead th {
+  height: #{32 / $base-font-size}rem;
+  position: sticky;
+  top: 0;
+  @include themify() {
+    background-color: getThemifyVariable('background-color');
   }
+}
 
-  .asset-table__row>th:nth-child(1) {
-    padding-left: #{12 / $base-font-size}rem;
-  }
-
-  & thead th {
-    padding-top: #{10 / $base-font-size}rem;
-    padding-bottom: #{15 / $base-font-size}rem;
-    height: #{32 / $base-font-size}rem;
-    font-weight: normal;
-    position: sticky;
-    top: #{15 / $base-font-size}rem;
-    @include themify() {
-      background-color: getThemifyVariable('background-color');
-    }
-  }
-  
-  & th {
-    font-weight: normal;
-  }
+.asset-table thead th:nth-child(1){
+  padding-left: #{12 / $base-font-size}rem;
 }
 
 .asset-table__row {
   margin: #{10 / $base-font-size}rem;
   height: #{72 / $base-font-size}rem;
   font-size: #{16 / $base-font-size}rem;
+}
 
-  &:nth-child(odd) {
-    @include themify() {
-      background: getThemifyVariable('table-row-stripe-color');
-    }
+.asset-table__row:nth-child(odd) {
+  @include themify() {
+    background: getThemifyVariable('table-row-stripe-color');
   }
+}
 
-  & a {
-    @include themify() {
-      color: getThemifyVariable('primary-text-color');
-    }
-  }
+.asset-table__row > th:nth-child(1) {
+  padding-left: #{12 / $base-font-size}rem;
+}
 
-  & td:first-child {
-    padding-left: #{10 / $base-font-size}rem;
+.asset-table__row a {
+  @include themify() {
+    color: getThemifyVariable('primary-text-color');
   }
+}
+
+.asset-table thead {
+  font-size: #{12 / $base-font-size}rem;
+  @include themify() {
+    color: getThemifyVariable('inactive-text-color')
+  }
+}
+
+.asset-table th {
+  font-weight: normal;
 }
 
 .asset-table__empty {
   text-align: center;
   font-size: #{16 / $base-font-size}rem;
   padding: #{42 / $base-font-size}rem 0;
-}
-
-.asset-table__total {
-  padding: 0 #{20 / $base-font-size}rem;
-  position: sticky;
-  top: 0; 
-  @include themify() {
-    background-color: getThemifyVariable('background-color');
-  }
 }
