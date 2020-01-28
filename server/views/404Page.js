@@ -127,7 +127,7 @@ export function get404Sketch(callback) {
       });
     } else {
       callback(insertErrorMessage(`<!DOCTYPE html>
-        <html>
+        <html lang="en">
           <head>
             <meta charset="utf-8" />
           </head>
