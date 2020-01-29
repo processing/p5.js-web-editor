@@ -273,7 +273,6 @@ class Editor extends React.Component {
     const currentPosition = this._cm.doc.getCursor();
     if (mode === 'javascript') {
       this._cm.doc.setValue(beautifyJS(this._cm.doc.getValue(), beautifyOptions));
-      console.log('beautifying');
     } else if (mode === 'css') {
       this._cm.doc.setValue(beautifyCSS(this._cm.doc.getValue(), beautifyOptions));
     } else if (mode === 'htmlmixed') {
