@@ -437,15 +437,6 @@ SketchList.propTypes = {
     createdAt: PropTypes.string.isRequired,
     updatedAt: PropTypes.string.isRequired
   })).isRequired,
-  collection: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    items: PropTypes.arrayOf(PropTypes.shape({
-      project: PropTypes.shape({
-        id: PropTypes.string.isRequired,
-      }),
-    })),
-  }).isRequired,
   username: PropTypes.string,
   loading: PropTypes.bool.isRequired,
   toggleDirectionForField: PropTypes.func.isRequired,

@@ -89,9 +89,13 @@ CollectionItemRowBase.propTypes = {
     name: PropTypes.string.isRequired
   }).isRequired,
   item: PropTypes.shape({
+    createdAt: PropTypes.string.isRequired,
     project: PropTypes.shape({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
+      user: PropTypes.shape({
+        username: PropTypes.string.isRequired
+      })
     }).isRequired,
   }).isRequired,
   user: PropTypes.shape({
@@ -204,7 +208,9 @@ class Collection extends React.Component {
           <div className="collection-metadata__column--left">
             <h2 className="collection-metadata__name">
               {
-                this.isOwner() ? <EditableInput value={name} onChange={handleEditCollectionName} validate={value => value !== ''} /> : name
+                this.isOwner() ?
+                  <EditableInput value={name} onChange={handleEditCollectionName} validate={value => value !== ''} /> :
+                  name
               }
             </h2>
 

@@ -23,7 +23,7 @@ const Tab = ({ children, isSelected, to }) => {
 };
 
 Tab.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.string.isRequired,
   isSelected: PropTypes.bool.isRequired,
   to: PropTypes.string.isRequired,
 };
