@@ -6,7 +6,7 @@ Follow these instructions to set up your development environment, which you need
 
 _Note_: The installation steps assume you are using a Unix-like shell. If you are using Windows, you will need to use `copy` instead of `cp`.
 
-1. Install [node.js](https://nodejs.org/download/release/v10.15.0/) version 10.15.0 which also automatically installs the [npm](https://www.npmjs.org) package manager.
+1. Install [node.js](https://nodejs.org/download/release/v11.15.0/) version 11.15.0 which also automatically installs the [npm](https://www.npmjs.org) package manager.
 2. [Fork](https://help.github.com/articles/fork-a-repo) the [p5.js Web Editor repository](https://github.com/processing/p5.js-web-editor) into your own GitHub account.
 3. [Clone](https://help.github.com/articles/cloning-a-repository/) your new fork of the repository from GitHub onto your local computer.
 
