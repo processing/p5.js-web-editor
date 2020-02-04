@@ -4,26 +4,32 @@ The p5.js Web Editor is a platform for creative coding, with a focus on making c
 
 We also strive to give the community as much ownership and control as possible. You can download your sketches so that you can edit them locally or host them elsewhere. You can also host your own version of the editor, giving you control over its data.
 
-The p5.js Web Editor is currently in active development, and looking for contributions of any type! Please check out the [contribution guide](https://github.com/processing/p5.js-web-editor/blob/master/.github/CONTRIBUTING.md) for more details.
+## Community
 
-If you have found a bug in the p5.js Web Editor, you can file it under the ["issues" tab](https://github.com/processing/p5.js-web-editor/issues).
+New to the p5.js community? Read our [community statement](https://p5js.org/community/).
+
+## Code of Conduct
+
+All contributors to the p5.js Web Editor are expected to follow the [Code of Conduct](./.github/CODE_OF_CONDUCT.md). We strive to create a friendly and safe community!
+
+## Get Involved
+
+The p5.js Web Editor is a collaborative project created by many individuals, and you are invited to help. All types of involvement are welcome! Please check out the [contribution guide](./.github/CONTRIBUTING.md) for more details.
+
+Developers, check the [developer docs](https://github.com/processing/p5.js-web-editor/blob/master/developer_docs/) details about contributing code, bug fixes, and documentation. To start writing code, a great place to start is the [development guide](https://github.com/processing/p5.js-web-editor/blob/master/developer_docs/development.md).
 
 ## Issues
 
+If you have found a bug in the p5.js Web Editor, you can file it under the ["issues" tab](https://github.com/processing/p5.js-web-editor/issues).
+
 Please post bugs and feature requests in the correct repository:
 
-* p5.js general and p5.dom: [https://github.com/processing/p5.js/issues](https://github.com/processing/p5.js/issues)
+* p5.js library and p5.dom: [https://github.com/processing/p5.js/issues](https://github.com/processing/p5.js/issues)
 * p5.accessibility: [https://github.com/processing/p5.accessibility/issues](https://github.com/processing/p5.accessibility/issues)
 * p5.sound: [https://github.com/processing/p5.js-sound/issues](https://github.com/processing/p5.js-sound/issues)
 * p5.js website: [https://github.com/processing/p5.js-website/issues](https://github.com/processing/p5.js-website/issues)
 
-## Get Involved
-
-The p5.js Web Editor is a collaborative project created by many individuals, and you are invited to help. All types of involvement are welcome. You can start with the [p5.js community section](https://p5js.org/community), which also applies to this project. 
-
-Developers, check the [developer docs](https://github.com/processing/p5.js-web-editor/blob/master/developer_docs/) details about contributing code, bug fixes, and documentation. To start writing code, a great place to start is the [development guide](https://github.com/processing/p5.js-web-editor/blob/master/developer_docs/development.md).
-
-## Support
+## Acknowledgements
 
 Support for this project has come from [Processing Foundation](https://processingfoundation.org/), [NYU ITP](https://tisch.nyu.edu/itp), and [CS4All, NYC DOE](http://cs4all.nyc/). 
 
