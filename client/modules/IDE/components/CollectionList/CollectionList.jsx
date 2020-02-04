@@ -62,7 +62,6 @@ class CollectionList extends React.Component {
   }
 
   hideAddSketches = () => {
-    console.log('hideAddSketches');
     this.setState({
       addingSketchesToCollectionId: null,
     });
@@ -161,28 +160,12 @@ class CollectionList extends React.Component {
   }
 }
 
-const ProjectShape = PropTypes.shape({
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  createdAt: PropTypes.string.isRequired,
-  updatedAt: PropTypes.string.isRequired,
-  user: PropTypes.shape({
-    username: PropTypes.string.isRequired
-  }).isRequired,
-});
-
-const ItemsShape = PropTypes.shape({
-  createdAt: PropTypes.string.isRequired,
-  updatedAt: PropTypes.string.isRequired,
-  project: ProjectShape
-});
-
 CollectionList.propTypes = {
   user: PropTypes.shape({
     username: PropTypes.string,
     authenticated: PropTypes.bool.isRequired
   }).isRequired,
-  projectId: PropTypes.string.isRequired,
+  projectId: PropTypes.string,
   getCollections: PropTypes.func.isRequired,
   getProject: PropTypes.func.isRequired,
   collections: PropTypes.arrayOf(PropTypes.shape({
@@ -191,7 +174,6 @@ CollectionList.propTypes = {
     description: PropTypes.string,
     createdAt: PropTypes.string.isRequired,
     updatedAt: PropTypes.string.isRequired,
-    items: PropTypes.arrayOf(ItemsShape),
   })).isRequired,
   username: PropTypes.string,
   loading: PropTypes.bool.isRequired,
@@ -210,6 +192,7 @@ CollectionList.propTypes = {
 };
 
 CollectionList.defaultProps = {
+  projectId: undefined,
   project: {
     id: undefined,
     owner: undefined
@@ -224,7 +207,7 @@ function mapStateToProps(state, ownProps) {
     sorting: state.sorting,
     loading: state.loading,
     project: state.project,
-    projectId: ownProps && ownProps.params ? ownProps.prams.project_id : null,
+    projectId: ownProps && ownProps.params ? ownProps.params.project_id : null,
   };
 }
 

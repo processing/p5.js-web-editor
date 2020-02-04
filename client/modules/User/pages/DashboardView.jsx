@@ -171,7 +171,7 @@ DashboardView.propTypes = {
   previousPath: PropTypes.string.isRequired,
   theme: PropTypes.string.isRequired,
   user: PropTypes.shape({
-    username: PropTypes.string.isRequired,
+    username: PropTypes.string,
   }),
 };
 

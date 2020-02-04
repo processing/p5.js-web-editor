@@ -23,7 +23,9 @@ const ItemType = PropTypes.shape({
 });
 
 Item.propTypes = {
-  ...ItemType,
+  name: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+  isAdded: PropTypes.bool.isRequired,
   onSelect: PropTypes.func.isRequired,
 };
 

@@ -235,9 +235,6 @@ CollectionListRowBase.propTypes = {
       })
     }))
   }).isRequired,
-  project: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-  }).isRequired,
   username: PropTypes.string.isRequired,
   user: PropTypes.shape({
     username: PropTypes.string,

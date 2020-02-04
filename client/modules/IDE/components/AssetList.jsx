@@ -86,8 +86,8 @@ AssetList.propTypes = {
     key: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
-    sketchName: PropTypes.string.isRequired,
-    sketchId: PropTypes.string.isRequired
+    sketchName: PropTypes.string,
+    sketchId: PropTypes.string
   })).isRequired,
   getAssets: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired
