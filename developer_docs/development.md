@@ -3,7 +3,7 @@
 A guide for adding code to this project.
 
 ## Installation
-Follow the [installation guide](https://github.com/processing/p5.js-web-editor/blob/master/developer_docs/installation.md).
+⚠️ Before you do anything follow the [installation guide](https://github.com/processing/p5.js-web-editor/blob/master/developer_docs/installation.md). ⚠️
 
 ## Tests
 To run the test suite simply run `npm test` (after installing dependencies with `npm install`)
