@@ -1,6 +1,6 @@
 import format from 'date-fns/format';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import InlineSVG from 'react-inlinesvg';
 import { connect } from 'react-redux';
@@ -27,11 +27,34 @@ const arrowDown = require('../../../images/sort-arrow-down.svg');
 const removeIcon = require('../../../images/close.svg');
 
 const ShareURL = ({ value }) => {
-  const [showURL, setShowURL] = React.useState(false);
+  const [showURL, setShowURL] = useState(false);
+  const node = useRef();
+
+  const handleClickOutside = (e) => {
+    if (node.current.contains(e.target)) {
+      return;
+    }
+    setShowURL(false);
+  };
+
+  useEffect(() => {
+    if (showURL) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showURL]);
 
   return (
-    <div className="collection-share">
-      <button className="collection-share__button" onClick={() => setShowURL(!showURL)}>
+    <div className="collection-share" ref={node}>
+      <button
+        className="collection-share__button"
+        onClick={() => setShowURL(!showURL)}
+      >
         <span>Share</span>
         <InlineSVG className="collection-share__arrow" src={dropdownArrow} />
       </button>
