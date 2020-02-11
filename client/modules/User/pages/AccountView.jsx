@@ -9,11 +9,26 @@ import { updateSettings, initiateVerification, createApiKey, removeApiKey } from
 import AccountForm from '../components/AccountForm';
 import { validateSettings } from '../../../utils/reduxFormUtils';
 import GithubButton from '../components/GithubButton';
+import GoogleButton from '../components/GoogleButton';
 import APIKeyForm from '../components/APIKeyForm';
 import Nav from '../../../components/Nav';
 
 const __process = (typeof global !== 'undefined' ? global : window).process;
 const ROOT_URL = __process.env.API_URL;
+
+function SocialLoginPanel(props) {
+  return (
+    <React.Fragment>
+      <AccountForm {...props} />
+      <h2 className="form-container__divider">Social Login</h2>
+      <p className="account__social-text">
+        Use your GitHub or Google account to log into the p5.js Web Editor.
+      </p>
+      <GithubButton buttonText="Login with GitHub" />
+      <GoogleButton buttonText="Login with Google" />
+    </React.Fragment>
+  );
+}
 
 class AccountView extends React.Component {
   componentDidMount() {
@@ -44,28 +59,14 @@ class AccountView extends React.Component {
                 </div>
               </TabList>
               <TabPanel>
-                <AccountForm {...this.props} />
-                <h2 className="form-container__divider">Social Login</h2>
-                <p className="account__social-text">
-                  Link this account with your GitHub account to allow login from both.
-                </p>
-                <GithubButton buttonText="Login with GitHub" />
+                <SocialLoginPanel {...this.props} />
               </TabPanel>
               <TabPanel>
                 <APIKeyForm {...this.props} />
               </TabPanel>
             </Tabs>
           }
-          {!accessTokensUIEnabled &&
-            <div>
-              <AccountForm {...this.props} />
-              <h2 className="form-container__divider">Social Login</h2>
-              <p className="account__social-text">
-                Link this account with your GitHub account to allow login from both.
-              </p>
-              <GithubButton buttonText="Login with GitHub" />
-            </div>
-          }
+          { !accessTokensUIEnabled && <SocialLoginPanel {...this.props} /> }
         </section>
       </div>
     );
