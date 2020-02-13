@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { hot } from 'react-hot-loader/root';
+import { hot } from 'react-hot-loader';
+
 import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 import configureStore from './store';
@@ -22,7 +23,8 @@ const App = () => (
   </Provider>
 );
 
-const HotApp = hot(App);
+// https://github.com/gaearon/react-hot-loader/pull/1223
+const HotApp = hot(module)(App);
 
 render(
   <HotApp />,

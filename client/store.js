@@ -4,7 +4,7 @@ import DevTools from './modules/App/components/DevTools';
 import rootReducer from './reducers';
 import { clearState, loadState } from './persistState';
 
-const __process = (typeof global !== 'undefined' ? global : window).process;
+const __process = process;
 
 export default function configureStore(initialState) {
   const enhancers = [
@@ -35,4 +35,3 @@ export default function configureStore(initialState) {
 
   return store;
 }
-

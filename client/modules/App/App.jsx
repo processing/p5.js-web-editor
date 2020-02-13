@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import DevTools from './components/DevTools';
 import { setPreviousPath } from '../IDE/actions/ide';
 
-const __process = (typeof global !== 'undefined' ? global : window).process;
+const __process = process;
 
 class App extends React.Component {
   constructor(props, context) {

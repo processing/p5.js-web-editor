@@ -14,7 +14,7 @@ import {
 } from './ide';
 import { clearState, saveState } from '../../../persistState';
 
-const __process = (typeof global !== 'undefined' ? global : window).process;
+const __process = process;
 const ROOT_URL = __process.env.API_URL;
 
 export function setProject(project) {

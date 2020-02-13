@@ -16,7 +16,7 @@ import { metaKeyName, } from '../utils/metaKey';
 const triangleUrl = require('../images/down-filled-triangle.svg');
 const logoUrl = require('../images/p5js-logo-small.svg');
 
-const __process = (typeof global !== 'undefined' ? global : window).process;
+const __process = process;
 
 class Nav extends React.PureComponent {
   constructor(props) {

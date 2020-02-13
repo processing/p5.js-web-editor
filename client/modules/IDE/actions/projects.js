@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as ActionTypes from '../../../constants';
 import { startLoader, stopLoader } from './loader';
 
-const __process = (typeof global !== 'undefined' ? global : window).process;
+const __process = process;
 const ROOT_URL = __process.env.API_URL;
 
 // eslint-disable-next-line

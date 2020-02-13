@@ -5,7 +5,7 @@ import { showErrorModal, justOpenedProject } from '../IDE/actions/ide';
 import { showToast, setToastText } from '../IDE/actions/toast';
 
 
-const __process = (typeof global !== 'undefined' ? global : window).process;
+const __process = process;
 const ROOT_URL = __process.env.API_URL;
 
 export function authError(error) {

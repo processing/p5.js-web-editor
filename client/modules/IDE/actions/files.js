@@ -6,7 +6,7 @@ import * as ActionTypes from '../../../constants';
 import { setUnsavedChanges } from './ide';
 import { setProjectSavedTime } from './project';
 
-const __process = (typeof global !== 'undefined' ? global : window).process;
+const __process = process;
 const ROOT_URL = __process.env.API_URL;
 
 function appendToFilename(filename, string) {
