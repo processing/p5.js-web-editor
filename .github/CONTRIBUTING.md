@@ -1,16 +1,15 @@
 # Contributing to the p5.js Web Editor 
 
-Hello! We welcome community contributions to the p5.js Web Editor. Contributing takes many forms and doesn't have to be **writing code**, it can be **report bugs**, **proposing new features**, **creating UI/UX designs**, and **updating documentation**.
+Hello! We welcome community contributions to the p5.js Web Editor. Contributing takes many forms and doesn't have to be **writing code**, it can be **reporting bugs**, **proposing new features**, **creating UI/UX designs**, and **updating documentation**.
 
-Here are links to all the sections in this document:
-
-<!-- If you change any of the headings in this document, remember to update the table of contents. -->
-
+## Table of Contents
 - [Contributing to the p5.js Web Editor](#contributing-to-the-p5js-web-editor)
+  - [Table of Contents](#table-of-contents)
   - [Code of Conduct](#code-of-conduct)
   - [How Can I Contribute?](#how-can-i-contribute)
-    - [First Timers](#first-timers)
-    - [Milestones](#milestones)
+    - [First Steps](#first-steps)
+    - [Good First Issues](#good-first-issues)
+    - [Project Board](#project-board)
     - [Project Ideas](#project-ideas)
     - [Issue Search and Tagging](#issue-search-and-tagging)
     - [Beginning Work](#beginning-work)
@@ -20,15 +19,30 @@ Here are links to all the sections in this document:
 
 ## Code of Conduct
 
-Please follow the guidelines mentioned at [CODE OF CONDUCT.md](https://github.com/processing/p5.js-web-editor/blob/master/.github/CODE_OF_CONDUCT.md).
+Please follow the guidelines in the [Code of Conduct](https://github.com/processing/p5.js-web-editor/blob/master/.github/CODE_OF_CONDUCT.md).
 
 ## How Can I Contribute?
+If you're new to open source, [read about how to contribute to open source](https://opensource.guide/how-to-contribute/).
 
-### First Timers
-For first-time contributors or those who want to start with a small task: [check out our list of good first bugs](https://github.com/processing/p5.js-web-editor/labels/good%20first%20issue). First read the github discussion on that issue and find out if there's currently a person working on that or not. If no one is working on it or if there has was one claimed to but has not been active for a while, ask if it is up for grabs. It's okay to not know how to fix an issue and feel free to ask questions about to approach the problem! We are all just here to learn and make something awesome. Someone from the community would help you out and these are great issues for learning about the web editor, its file structure and its development process.
+### First Steps
+Don't know where to begin? Here are some suggestions to get started:
+* Think about what you're hoping to learn by working on open source. The web editor is a full-stack web application, therefore there's tons of different areas to focus on:
+  - UI/UX design
+  - Project management: Organizing tickets, pull requests, tasks
+  - Front end: React/Redux, CSS/Sass, CodeMirror
+  - Back end: Node, Express, MongoDB, Jest, AWS
+  - DevOps: Travis CI, Jest, Docker, Kubernetes, AWS
+* Use the [p5.js Web Editor](https://editor.p5js.org)! Find a bug? Think of something you think would add to the project? Open an issue.
+* Expand an existing issue. Sometimes issues are missing steps to reproduce, or need suggestions for potential solutions. Sometimes they need another voice saying, "this is really important!"
+* Try getting the project running locally on your computer by following the [installation steps](./../developer_docs/installation.md).
+* Look through the documentation in the [developer docs](../developer_docs/). Is there anything that could be expanded? Is there anything missing?
+* Look at the [development guide](./../developer_docs/development.md).
 
-### Milestones
-A good place to check for tickets to work on is [milestones](https://github.com/processing/p5.js-web-editor/milestones), as miletones have a due date, and will give you a sense of tickets the tickets that maintainers would like to be completed sooner rather than later.
+### Good First Issues
+For first-time contributors or those who want to start with a small task, [check out the list of good first issues](https://github.com/processing/p5.js-web-editor/labels/good%20first%20issue). If the issue has not been assigned to anyone, then you can work on it! It's okay to not know how to fix an issue, and feel free to ask questions about to approach the problem! We are all here to learn and make something awesome. Someone from the community would help you out and these are great issues for learning about the web editor, its file structure and its development process.
+
+### Project Board
+Many issues are related to each other and fall under bigger projects. To get a bigger picture, look at the [All Projects](https://github.com/processing/p5.js-web-editor/projects/4) board.
 
 ### Project Ideas
 If you're looking for inspiration for Google Summer of Code or a bigger project, there's a [project list](https://github.com/processing/processing/wiki/Project-List#p5js-web-editor) maintained on the Processing wiki.
@@ -40,7 +54,7 @@ If you feel like an issue is tagged incorrectly (e.g. it's low priority and you 
 
 ### Beginning Work
 
-If you'd like to work on an issue, please comment on it to let the maintainers know. If someone else has already commented and taken up that issue, please refrain from working on it and submitting a PR without asking the maintainers as it leads to unnecessary duplication of effort.
+If you'd like to work on an issue, please comment on it to let the maintainers know, so that they can assign it to you. If someone else has already commented and taken up that issue, please refrain from working on it and submitting a PR without asking the maintainers as it leads to unnecessary duplication of effort.
 
 Then, follow the [installation guide](https://github.com/processing/p5.js-web-editor/blob/master/developer_docs/installation.md) to get the project building and working on your computer. 
 

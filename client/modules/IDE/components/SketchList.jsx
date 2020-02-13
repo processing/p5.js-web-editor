@@ -238,7 +238,9 @@ class SketchListRowBase extends React.Component {
 SketchListRowBase.propTypes = {
   sketch: PropTypes.shape({
     id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired,
+    updatedAt: PropTypes.string.isRequired
   }).isRequired,
   username: PropTypes.string.isRequired,
   user: PropTypes.shape({
