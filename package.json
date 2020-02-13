@@ -20,7 +20,9 @@
     "fetch-examples:prod": "cross-env NODE_ENV=production node ./dist/fetch-examples.bundle.js",
     "fetch-examples-gg:prod": "cross-env NODE_ENV=production node ./dist/fetch-examples-gg.bundle.js",
     "fetch-examples-ml5:prod": "cross-env NODE_ENV=production node ./dist/fetch-examples-ml5.bundle.js",
-    "heroku-postbuild": "touch .env; npm run build"
+    "heroku-postbuild": "touch .env; npm run build",
+    "parcel": "parcel client/index.html",
+    "parcel:build": "parcel build client/index.html"
   },
   "jest": {
     "setupFiles": [
