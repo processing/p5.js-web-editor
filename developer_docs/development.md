@@ -5,6 +5,13 @@ A guide for adding code to this project.
 ## Installation
 Follow the [installation guide](https://github.com/processing/p5.js-web-editor/blob/master/developer_docs/installation.md).
 
+## Quickstart
+
+```bash
+npm install
+npm run parcel
+```
+
 ## Tests
 To run the test suite simply run `npm test` (after installing dependencies with `npm install`)
 
@@ -17,15 +24,15 @@ A sample unit test could be found here: [Nav.test.jsx](../client/components/__te
 
 # Technologies Used
 
-**MERN stack** - MongoDB, Express, React/Redux, and Node. 
- 
+**MERN stack** - MongoDB, Express, React/Redux, and Node.
+
  - For a reference to the **file structure format** this project is using, please look at the [Mern Starter](https://github.com/Hashnode/mern-starter).
 
- - This project does not use CSS Modules, styled-components, or other CSS-in-JS libraries, but uses Sass. [BEM guidelines and naming conventions](http://getbem.com/) are followed. 
- 
+ - This project does not use CSS Modules, styled-components, or other CSS-in-JS libraries, but uses Sass. [BEM guidelines and naming conventions](http://getbem.com/) are followed.
+
  - For common and reusable styles, write OOSCSS (Object-Oriented SCSS) with placeholders and mixins. For organizing styles, follow the [7-1 Pattern](https://sass-guidelin.es/#the-7-1-pattern) for Sass.
 
- - We're using [ES6](http://es6-features.org/) and transpiling to ES5 using [Babel](https://babeljs.io/). 
+ - We're using [ES6](http://es6-features.org/) and transpiling to ES5 using [Babel](https://babeljs.io/).
 
  - For reference to the JavaScript style guide, see the [Airbnb Style Guide](https://github.com/airbnb/javascript), [React ESLint Plugin](https://github.com/yannickcr/eslint-plugin-react).
 
