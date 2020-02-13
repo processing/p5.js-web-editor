@@ -249,7 +249,7 @@ class Nav extends React.PureComponent {
       <nav className="nav" title="main-navigation" ref={(node) => { this.node = node; }}>
         <ul className="nav__items-left" title="project-menu">
           <li className="nav__item-logo">
-            <InlineSVG src={logoUrl} alt="p5.js logo" className="svg__logo" />
+            <InlineSVG src={logoUrl} alt="p5.js logo" title="p5.js logo" className="svg__logo" />
           </li>
           <li className={navDropdownState.file}>
             <button
@@ -263,7 +263,7 @@ class Nav extends React.PureComponent {
               }}
             >
               <span className="nav__item-header">File</span>
-              <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
+              <InlineSVG className="nav__item-header-triangle" src={triangleUrl} title="File" />
             </button>
             <ul className="nav__dropdown">
               <li className="nav__dropdown-item">
@@ -352,7 +352,7 @@ class Nav extends React.PureComponent {
               }}
             >
               <span className="nav__item-header">Edit</span>
-              <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
+              <InlineSVG className="nav__item-header-triangle" src={triangleUrl} title="Edit" />
             </button>
             <ul className="nav__dropdown" >
               <li className="nav__dropdown-item">
@@ -412,7 +412,7 @@ class Nav extends React.PureComponent {
               }}
             >
               <span className="nav__item-header">Sketch</span>
-              <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
+              <InlineSVG className="nav__item-header-triangle" src={triangleUrl} title="Sketch" />
             </button>
             <ul className="nav__dropdown">
               <li className="nav__dropdown-item">
@@ -487,7 +487,7 @@ class Nav extends React.PureComponent {
               }}
             >
               <span className="nav__item-header">Help</span>
-              <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
+              <InlineSVG className="nav__item-header-triangle" src={triangleUrl} title="Help" />
             </button>
             <ul className="nav__dropdown">
               <li className="nav__dropdown-item">
@@ -556,7 +556,7 @@ class Nav extends React.PureComponent {
                 }}
               >
                 My Account
-                <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
+                <InlineSVG className="nav__item-header-triangle" src={triangleUrl} title="My Account" />
               </button>
               <ul className="nav__dropdown">
                 <li className="nav__dropdown-item">

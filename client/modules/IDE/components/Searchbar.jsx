@@ -52,7 +52,7 @@ class Searchbar extends React.Component {
           className="searchbar__button"
           onClick={this.handleSearchEnter}
         >
-          <InlineSVG className="searchbar__icon" src={searchIcon} />
+          <InlineSVG className="searchbar__icon" src={searchIcon} title="search icon" />
         </button>
         <input
           className="searchbar__input"

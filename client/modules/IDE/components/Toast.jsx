@@ -14,7 +14,7 @@ function Toast(props) {
         {props.text}
       </p>
       <button className="toast__close" onClick={props.hideToast}>
-        <InlineSVG src={exitUrl} alt="Close Keyboard Shortcuts Overlay" />
+        <InlineSVG src={exitUrl} alt="Close Keyboard Shortcuts Overlay" title="Close Keyboard Shortcuts Overlay" />
       </button>
     </section>
   );

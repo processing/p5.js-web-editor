@@ -38,10 +38,10 @@ class AccountView extends React.Component {
         </Helmet>
         <div className="form-container__header">
           <button className="form-container__logo-button" onClick={this.gotoHomePage}>
-            <InlineSVG src={logoUrl} alt="p5js Logo" />
+            <InlineSVG src={logoUrl} alt="p5js Logo" title="p5js logo" />
           </button>
           <button className="form-container__exit-button" onClick={this.closeAccountPage}>
-            <InlineSVG src={exitUrl} alt="Close Account Page" />
+            <InlineSVG src={exitUrl} alt="Close Account Page" title="close account page" />
           </button>
         </div>
         <div className="form-container__content">

@@ -10,7 +10,7 @@ function GithubButton(props) {
       className="github-button"
       href="/auth/github"
     >
-      <InlineSVG src={githubUrl} className="github-icon" />
+      <InlineSVG src={githubUrl} className="github-icon" title="github icon" />
       <span>{props.buttonText}</span>
     </a>
   );

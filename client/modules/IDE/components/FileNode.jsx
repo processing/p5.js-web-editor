@@ -134,7 +134,7 @@ export class FileNode extends React.Component {
                   if (this.props.fileType === 'file') {
                     return (
                       <span className="sidebar__file-item-icon">
-                        <InlineSVG src={fileUrl} />
+                        <InlineSVG src={fileUrl} title="file item icon" />
                       </span>
                     );
                   }
@@ -144,13 +144,13 @@ export class FileNode extends React.Component {
                         className="sidebar__file-item-closed"
                         onClick={() => this.props.showFolderChildren(this.props.id)}
                       >
-                        <InlineSVG className="folder-right" src={folderRightUrl} />
+                        <InlineSVG className="folder-right" src={folderRightUrl} title="file item closed" />
                       </button>
                       <button
                         className="sidebar__file-item-open"
                         onClick={() => this.props.hideFolderChildren(this.props.id)}
                       >
-                        <InlineSVG className="folder-down" src={folderDownUrl} />
+                        <InlineSVG className="folder-down" src={folderDownUrl} title="file item open" />
                       </button>
                     </div>
                   );
@@ -177,7 +177,7 @@ export class FileNode extends React.Component {
                   onBlur={this.onBlurComponent}
                   onFocus={this.onFocusComponent}
                 >
-                  <InlineSVG src={downArrowUrl} />
+                  <InlineSVG src={downArrowUrl} title="view file options" />
                 </button>
                 <div className="sidebar__file-item-options">
                   <ul title="file options">

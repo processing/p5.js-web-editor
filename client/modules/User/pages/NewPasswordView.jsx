@@ -40,10 +40,10 @@ class NewPasswordView extends React.Component {
         </Helmet>
         <div className="form-container__header">
           <button className="form-container__logo-button" onClick={this.gotoHomePage}>
-            <InlineSVG src={logoUrl} alt="p5js Logo" />
+            <InlineSVG src={logoUrl} alt="p5js Logo" title="p5js logo" />
           </button>
           <button className="form-container__exit-button" onClick={this.gotoHomePage}>
-            <InlineSVG src={exitUrl} alt="Close NewPassword Page" />
+            <InlineSVG src={exitUrl} alt="Close NewPassword Page" title="close new password page" />
           </button>
         </div>
         <div className="form-container__content">

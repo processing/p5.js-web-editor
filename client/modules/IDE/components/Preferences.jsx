@@ -150,7 +150,7 @@ class Preferences extends React.Component {
                 aria-label="decrease font size"
                 disabled={this.state.fontSize <= 8}
               >
-                <InlineSVG src={minusUrl} alt="Decrease Font Size" />
+                <InlineSVG src={minusUrl} alt="Decrease Font Size" title="Decrease Font Size" />
                 <h6 className="preference__label">Decrease</h6>
               </button>
               <form onSubmit={this.onFontInputSubmit}>
@@ -171,7 +171,7 @@ class Preferences extends React.Component {
                 aria-label="increase font size"
                 disabled={this.state.fontSize >= 36}
               >
-                <InlineSVG src={plusUrl} alt="Increase Font Size" />
+                <InlineSVG src={plusUrl} alt="Increase Font Size" title="Increase Font Size" />
                 <h6 className="preference__label">Increase</h6>
               </button>
             </div>

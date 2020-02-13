@@ -170,7 +170,7 @@ class SketchListRowBase extends React.Component {
             onBlur={this.onBlurComponent}
             onFocus={this.onFocusComponent}
           >
-            <InlineSVG src={downFilledTriangle} alt="Menu" />
+            <InlineSVG src={downFilledTriangle} alt="Menu" title="Menu" />
           </button>
           {optionsOpen &&
             <ul
