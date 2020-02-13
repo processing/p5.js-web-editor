@@ -13,7 +13,12 @@ function About(props) {
         <title>p5.js Web Editor | About</title>
       </Helmet>
       <div className="about__content-column">
-        <InlineSVG className="about__logo" src={squareLogoUrl} alt="p5js Square Logo" />
+        <InlineSVG
+          className="about__logo"
+          src={squareLogoUrl}
+          alt="p5js Square Logo"
+          title="p5js Square Logo"
+        />
         {/* Video button to hello p5 video page */}
         {/* <p className="about__play-video">
           <a
@@ -33,7 +38,12 @@ function About(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
+            <InlineSVG
+              className="about__content-column-asterisk"
+              src={asteriskUrl}
+              alt="p5 asterisk"
+              title="p5 asterisk"
+            />
           Examples
           </a>
         </p>
@@ -43,7 +53,12 @@ function About(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
+            <InlineSVG
+              className="about__content-column-asterisk"
+              src={asteriskUrl}
+              alt="p5 asterisk"
+              title="p5 asterisk"
+            />
           Learn
           </a>
         </p>
@@ -56,7 +71,12 @@ function About(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
+            <InlineSVG
+              className="about__content-column-asterisk"
+              src={asteriskUrl}
+              alt="p5 asterisk"
+              title="p5 asterisk"
+            />
           Libraries
           </a>
         </p>
@@ -66,7 +86,12 @@ function About(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
+            <InlineSVG
+              className="about__content-column-asterisk"
+              src={asteriskUrl}
+              alt="p5 asterisk"
+              title="p5 asterisk"
+            />
           Reference
           </a>
         </p>
@@ -76,7 +101,12 @@ function About(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
+            <InlineSVG
+              className="about__content-column-asterisk"
+              src={asteriskUrl}
+              alt="p5 asterisk"
+              title="p5 asterisk"
+            />
           Forum
           </a>
         </p>

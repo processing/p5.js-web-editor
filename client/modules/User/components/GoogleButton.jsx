@@ -10,7 +10,7 @@ function GoogleButton(props) {
       className="google-button"
       href="/auth/google/"
     >
-      <InlineSVG src={googleUrl} className="google-icon" />
+      <InlineSVG src={googleUrl} className="google-icon" title="google icon" />
       <span>{props.buttonText}</span>
     </a>
   );

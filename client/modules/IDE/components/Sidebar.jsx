@@ -84,7 +84,7 @@ class Sidebar extends React.Component {
               onBlur={this.onBlurComponent}
               onFocus={this.onFocusComponent}
             >
-              <InlineSVG src={downArrowUrl} />
+              <InlineSVG src={downArrowUrl} title="add file or folder" />
             </button>
             <ul className="sidebar__project-options">
               <li>

@@ -73,7 +73,7 @@ class Toolbar extends React.Component {
           aria-label="play sketch"
           disabled={this.props.infiniteLoop}
         >
-          <InlineSVG src={playUrl} alt="Play Sketch" />
+          <InlineSVG src={playUrl} alt="Play Sketch" title="Play Sketch" />
         </button>
         <button
           className={playButtonClass}
@@ -81,14 +81,14 @@ class Toolbar extends React.Component {
           aria-label="play only visual sketch"
           disabled={this.props.infiniteLoop}
         >
-          <InlineSVG src={playUrl} alt="Play only visual Sketch" />
+          <InlineSVG src={playUrl} alt="Play only visual Sketch" title="Play only visual Sketch" />
         </button>
         <button
           className={stopButtonClass}
           onClick={this.props.stopSketch}
           aria-label="stop sketch"
         >
-          <InlineSVG src={stopUrl} alt="Stop Sketch" />
+          <InlineSVG src={stopUrl} alt="Stop Sketch" title="Stop Sketch" />
         </button>
         <div className="toolbar__autorefresh">
           <input
@@ -119,7 +119,12 @@ class Toolbar extends React.Component {
             <span>{this.props.project.name}</span>
             {
               this.canEditProjectName() &&
-              <InlineSVG className="toolbar__edit-name-button" src={editProjectNameUrl} alt="Edit Project Name" />
+              <InlineSVG
+                className="toolbar__edit-name-button"
+                src={editProjectNameUrl}
+                alt="Edit Project Name"
+                title="toolbar edit name button"
+              />
             }
           </a>
           <input
@@ -153,7 +158,7 @@ class Toolbar extends React.Component {
           onClick={this.props.openPreferences}
           aria-label="preferences"
         >
-          <InlineSVG src={preferencesUrl} alt="Preferences" />
+          <InlineSVG src={preferencesUrl} alt="Preferences" title="preferences" />
         </button>
       </div>
     );

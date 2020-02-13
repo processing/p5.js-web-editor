@@ -89,10 +89,10 @@ class Console extends React.Component {
               onClick={this.props.collapseConsole}
               aria-label="collapse console"
             >
-              <InlineSVG src={downArrowUrl} />
+              <InlineSVG src={downArrowUrl} title="collapse console" />
             </button>
             <button className="preview-console__expand" onClick={this.props.expandConsole} aria-label="expand console">
-              <InlineSVG src={upArrowUrl} />
+              <InlineSVG src={upArrowUrl} title="expand console" />
             </button>
           </div>
         </div>

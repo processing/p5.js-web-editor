@@ -323,14 +323,14 @@ class Editor extends React.Component {
             className="sidebar__contract"
             onClick={this.props.collapseSidebar}
           >
-            <InlineSVG src={leftArrowUrl} />
+            <InlineSVG src={leftArrowUrl} title="collapse file navigation" />
           </button>
           <button
             aria-label="expand file navigation"
             className="sidebar__expand"
             onClick={this.props.expandSidebar}
           >
-            <InlineSVG src={rightArrowUrl} />
+            <InlineSVG src={rightArrowUrl} title="expand file navigation" />
           </button>
           <div className="editor__file-name">
             <span>
