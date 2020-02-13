@@ -174,7 +174,7 @@ pre.CodeMirror-line {
 
 [aria-checked="true"] {
   @include themify() {
-    color: getThemifyVariable('primary-text-color');
+    color: #3391C6;
   }
 }
 
