@@ -1,4 +1,8 @@
 export function resolvePathToFile(filePath, files) {
+  if (typeof filePath === 'undefined') {
+    return false;
+  }
+
   const filePathArray = filePath.split('/');
   let resolvedFile;
   let currentFile = files.find(file => file.name === 'root');
