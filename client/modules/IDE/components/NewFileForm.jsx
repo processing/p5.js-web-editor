@@ -18,8 +18,8 @@ class NewFileForm extends React.Component {
       <form
         className="new-file-form"
         onSubmit={(data) => {
-          this.props.focusOnModal();
           handleSubmit(this.createFile)(data);
+          this.props.closeModal();
         }}
       >
         <label className="new-file-form__name-label" htmlFor="name">Name:</label>
@@ -44,7 +44,8 @@ NewFileForm.propTypes = {
   }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   createFile: PropTypes.func.isRequired,
-  focusOnModal: PropTypes.func.isRequired
+  focusOnModal: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired
 };
 
 export default NewFileForm;
