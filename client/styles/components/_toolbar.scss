@@ -120,6 +120,12 @@
 	font-size: #{12 / $base-font-size}rem;
 }
 
+.toolbar__autorefresh {
+	display: flex;
+	align-items: center;
+	vertical-align: middle;
+}
+
 .toolbar__serve-secure {
 	margin-left: #{20 / $base-font-size}rem;
 }
