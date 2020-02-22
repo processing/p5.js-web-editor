@@ -115,9 +115,13 @@
 .toolbar__autorefresh-label {
 	@include themify() {
 		color: getThemifyVariable('inactive-text-color');
+		&:hover {
+			color: getThemifyVariable('primary-text-color');
+		}
 	}
 	margin-left: #{5 / $base-font-size}rem;
 	font-size: #{12 / $base-font-size}rem;
+	cursor: pointer;
 }
 
 .toolbar__serve-secure {
