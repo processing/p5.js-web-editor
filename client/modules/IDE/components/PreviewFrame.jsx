@@ -252,13 +252,24 @@ class PreviewFrame extends React.Component {
         const resolvedFile = resolvePathToFile(filePath, files);
         if (resolvedFile) {
           if (resolvedFile.url) {
-            newContent = newContent.replace(filePath, resolvedFile.url);
+            const filePathRegex = new RegExp(`(\\w+${filePath})|(\\/${filePath})|(${filePath})`, 'gi');
+            newContent = newContent.replace(filePathRegex, (match, p1, p2, p3) => {
+              if (!p1 && !p2 && p3) {
+                return resolvedFile.url;
+              }
+              return match;
+            });
           } else if (resolvedFile.name.match(PLAINTEXT_FILE_REGEX)) {
             // could also pull file from API instead of using bloburl
             const blobURL = getBlobUrl(resolvedFile);
             this.props.setBlobUrl(resolvedFile, blobURL);
-            const filePathRegex = new RegExp(filePath, 'gi');
-            newContent = newContent.replace(filePathRegex, blobURL);
+            const filePathRegex = new RegExp(`(\\w+${filePath})|(\\/${filePath})|(${filePath})`, 'gi');
+            newContent = newContent.replace(filePathRegex, (match, p1, p2, p3) => {
+              if (!p1 && !p2 && p3) {
+                return blobURL;
+              }
+              return match;
+            });
           }
         }
       }
