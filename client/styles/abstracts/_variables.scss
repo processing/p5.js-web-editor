@@ -2,6 +2,7 @@ $base-font-size: 12;
 
 //colors
 $p5js-pink: #ed225d;
+$dark-pink: #d4114a;
 $white: #fff;
 $black: #000;
 $yellow: #F5DC23;
@@ -17,12 +18,12 @@ $p5-contrast-pink: #FFA9D9;
 $themes: (
   light: (
     logo-color: $p5js-pink,
-    primary-text-color: #333,
-    dropzone-text-color: #333,
-    modal-button-color: #333,
-    heading-text-color: #333,
-    secondary-text-color: #a8a8a8,
-    inactive-text-color: #b5b5b5,
+    primary-text-color: $black,
+    dropzone-text-color: $black,
+    modal-button-color: $black,
+    heading-text-color: $black,
+    secondary-text-color: #747474,
+    inactive-text-color: #5d5d5d,
     background-color: #fbfbfb,
     preview-placeholder-color: #dcdcdc,
     button-background-color: #f4f4f4,
@@ -46,8 +47,8 @@ $themes: (
     console-background-color: #eee,
     console-color: $white,
     console-header-background-color: #d6d6d6,
-    console-header-color: #b1b1b1,
-    console-info-background-color: $lightsteelblue,
+    console-header-color: #5c5c5c,
+    console-info-background-color: #2d7bb6,
     console-warn-background-color: $orange,
     console-debug-background-color: $dodgerblue,
     console-error-background-color: $red,
@@ -63,8 +64,8 @@ $themes: (
     search-hover-background-color: #4d4d4d,
     dropdown-color: #414141,
     keyboard-shortcut-color: #757575,
-    nav-hover-color: $p5js-pink,
-    error-color: $p5js-pink,
+    nav-hover-color: $dark-pink,
+    error-color: $dark-pink,
     codefold-icon-open: url(../images/triangle-arrow-down.svg),
     codefold-icon-closed: url(../images/triangle-arrow-right.svg)
   ),
@@ -187,7 +188,7 @@ $form-button-background-hover-color: $p5js-pink;
 $form-button-background-active-color: #f10046;
 $form-button-hover-color: $white;
 $form-button-active-color: $white;
-$form-navigation-options-color: #999999;
+$form-navigation-options-color: #5d5d5d;
 
 $about-play-background-color: rgba(255, 255, 255, 0.7);
 $about-button-border-color: rgba(151, 151, 151, 0.7);
