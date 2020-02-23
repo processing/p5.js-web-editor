@@ -32,6 +32,24 @@ export function setFontSize(value) {
   };
 }
 
+export function setFontFamily(value) {
+  return (dispatch, getState) => { // eslint-disable-line
+    dispatch({
+      type: ActionTypes.SET_FONT_FAMILY,
+      value
+    });
+    const state = getState();
+    if (state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          fontFamily: value
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
+  };
+}
+
 export function setLineNumbers(value) {
   return (dispatch, getState) => {
     dispatch({

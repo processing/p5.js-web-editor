@@ -23,9 +23,12 @@ class Preferences extends React.Component {
     this.increaseFontSize = this.increaseFontSize.bind(this);
     this.decreaseFontSize = this.decreaseFontSize.bind(this);
     this.setFontSize = this.setFontSize.bind(this);
+    this.setFontFamily = this.setFontFamily.bind(this);
+
 
     this.state = {
-      fontSize: props.fontSize
+      fontSize: props.fontSize,
+      fontFamily: props.fontFamily
     };
   }
 
@@ -56,6 +59,12 @@ class Preferences extends React.Component {
   setFontSize(value) {
     this.setState({ fontSize: value });
     this.props.setFontSize(value);
+  }
+
+  setFontFamily(value) {
+    console.log('setfontfamily');
+    this.setState({ fontFamily: value });
+    this.props.setFontFamily(value);
   }
 
   decreaseFontSize() {
@@ -334,6 +343,30 @@ class Preferences extends React.Component {
                 />
                 <label htmlFor="sound-output-on" className="preference__option preference__canvas">Sound</label>
               </div>
+              <h4 className="preference__title">Fonts</h4>
+              <div className="preference__options">
+                {/* <input
+                  type="radio"
+                  onChange={() => this.setFontFamily('Montserrat, sans-serifc')}
+                  aria-label="font on"
+                  name="font Family"
+                  className="preference__radio-button"
+                  value="On"
+                  checked={this.state.fontFamily === 'Montserrat, sans-serifc'}
+                /> */}
+                <button onClick={() => { this.setFontFamily('Montserrat, sans-serifc'); }}className="preference__option" style={{ border: 'none', color: this.state.fontFamily === 'Montserrat, sans-serifc' ? '#333' : '#b5b5b5' }}>Normal</button>
+                {/* <input
+                  type="radio"
+                  // onChange={() => { console.log('onchange')}}
+                  aria-label="font off"
+                  name="font family"
+                  className="preference__radio-button"
+                  value="Off"
+                  checked={this.state.fontFamily === 'Istok Web'}
+                /> */}
+                <button onClick={() => { this.setFontFamily('Istok Web'); }} className="preference__option" style={{ border: 'none', color: this.state.fontFamily === 'Istok Web' ? '#333' : '#b5b5b5' }}>dylexic friendly</button>
+              </div>
+
             </div>
           </TabPanel>
         </Tabs>
@@ -344,8 +377,10 @@ class Preferences extends React.Component {
 
 Preferences.propTypes = {
   fontSize: PropTypes.number.isRequired,
+  fontFamily: PropTypes.string.isRequired,
   lineNumbers: PropTypes.bool.isRequired,
   setFontSize: PropTypes.func.isRequired,
+  setFontFamily: PropTypes.func.isRequired,
   autosave: PropTypes.bool.isRequired,
   linewrap: PropTypes.bool.isRequired,
   setLineNumbers: PropTypes.func.isRequired,

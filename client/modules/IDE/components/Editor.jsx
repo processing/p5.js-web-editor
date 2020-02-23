@@ -180,8 +180,14 @@ class Editor extends React.Component {
         setTimeout(() => this.props.setUnsavedChanges(false), 400);
       }
     }
+    console.log(this.props.fontSize);
     if (this.props.fontSize !== prevProps.fontSize) {
       this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
+    }
+    console.log(this.props.fontFamily, prevProps.fontFamily);
+    if (this.props.fontFamily !== prevProps.fontFamily) {
+      console.log('helo');
+      this._cm.getWrapperElement().style['font-family'] = `${this.props.fontFamily}`;
     }
     if (this.props.linewrap !== prevProps.linewrap) {
       this._cm.setOption('lineWrapping', this.props.linewrap);
@@ -373,6 +379,7 @@ Editor.propTypes = {
   clearLintMessage: PropTypes.func.isRequired,
   updateFileContent: PropTypes.func.isRequired,
   fontSize: PropTypes.number.isRequired,
+  fontFamily: PropTypes.string.isRequired,
   file: PropTypes.shape({
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,

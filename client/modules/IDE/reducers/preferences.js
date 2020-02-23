@@ -2,6 +2,7 @@ import * as ActionTypes from '../../../constants';
 
 const initialState = {
   fontSize: 18,
+  fontFamily: 'Montserrat, sans-serif',
   autosave: true,
   linewrap: true,
   lineNumbers: true,
@@ -17,6 +18,8 @@ const preferences = (state = initialState, action) => {
   switch (action.type) {
     case ActionTypes.SET_FONT_SIZE:
       return Object.assign({}, state, { fontSize: action.value });
+    case ActionTypes.SET_FONT_FAMILY:
+      return Object.assign({}, state, { fontFamily: action.value });
     case ActionTypes.SET_AUTOSAVE:
       return Object.assign({}, state, { autosave: action.value });
     case ActionTypes.SET_LINEWRAP:
