@@ -25,6 +25,7 @@
   max-height: 80%;
   max-width: 65%;
   position: relative;
+  overflow-y: auto;
 }
 
 .overlay__header {
@@ -41,4 +42,16 @@
 .overlay__close-button {
   @include icon();
   padding: #{3 / $base-font-size}rem 0;
+}
+
+@media only screen and (max-width: 430px){
+  .overlay__body {
+    max-width: 88%;
+  }
+}
+
+@media only screen and (max-width: 400px){
+  .overlay__body {
+    max-width: 88%;
+  }
 }
