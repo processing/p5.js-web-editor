@@ -1554,7 +1554,7 @@ span.CodeMirror-selectedtext {
   background-color: #ffbe05; }
 
 .CodeMirror-lint-marker-error {
-  background-color: #ff5f52; }
+  background-color: #660A00; }
 
 .CodeMirror-gutter-elt:not(.CodeMirror-linenumber) {
   opacity: 0.3;
@@ -2531,7 +2531,7 @@ span.CodeMirror-selectedtext {
     .contrast .preview-console .preview-console__undefined {
       color: #c1c1c1; }
   .preview-console .preview-console__error {
-    color: #ff5f52;
+    color: #660A00;
     flex: 1 0 auto; }
   .preview-console .preview-console__warn {
     color: #ffbe05;

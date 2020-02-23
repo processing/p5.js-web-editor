@@ -51,7 +51,7 @@ pre.CodeMirror-line {
 }
 
 .CodeMirror-lint-marker-error {
-  background-color: rgb(255, 95, 82);
+  background-color: #660A00;
 }
 
 .CodeMirror-gutter-elt:not(.CodeMirror-linenumber) {
@@ -315,12 +315,12 @@ pre.CodeMirror-line {
 
 
 .line-runtime-error + .CodeMirror-activeline-gutter {
-  background-color: rgb(255, 95, 82);
+  background-color: #FFACA3;
   opacity: 0.3;
 }
 
 .line-runtime-error {
-  background-color: rgb(255, 95, 82) !important;
+  background-color: #FFACA3 !important;
   opacity: 0.3;
 }
 
