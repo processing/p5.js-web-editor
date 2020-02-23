@@ -179,6 +179,7 @@
   left: #{1 / $base-font-size}rem;
   height: #{14 / $base-font-size}rem;
   & svg {
+    fill:$p5js-pink;
     height: #{26 / $base-font-size}rem;
   }
   display: none;

@@ -198,6 +198,8 @@ class IDEView extends React.Component {
             <Preferences
               fontSize={this.props.preferences.fontSize}
               setFontSize={this.props.setFontSize}
+              fontFamily={this.props.preferences.fontFamily}
+              setFontFamily={this.props.setFontFamily}
               autosave={this.props.preferences.autosave}
               linewrap={this.props.preferences.linewrap}
               lineNumbers={this.props.preferences.lineNumbers}
@@ -267,6 +269,7 @@ class IDEView extends React.Component {
                   file={this.props.selectedFile}
                   updateFileContent={this.props.updateFileContent}
                   fontSize={this.props.preferences.fontSize}
+                  fontFamily={this.props.preferences.fontFamily}
                   lineNumbers={this.props.preferences.lineNumbers}
                   files={this.props.files}
                   editorOptionsVisible={this.props.ide.editorOptionsVisible}
@@ -504,6 +507,7 @@ IDEView.propTypes = {
   clearLintMessage: PropTypes.func.isRequired,
   preferences: PropTypes.shape({
     fontSize: PropTypes.number.isRequired,
+    fontFamily: PropTypes.number.isRequired,
     autosave: PropTypes.bool.isRequired,
     linewrap: PropTypes.bool.isRequired,
     lineNumbers: PropTypes.bool.isRequired,
@@ -516,6 +520,7 @@ IDEView.propTypes = {
   }).isRequired,
   closePreferences: PropTypes.func.isRequired,
   setFontSize: PropTypes.func.isRequired,
+  setFontFamily: PropTypes.func.isRequired,
   setAutosave: PropTypes.func.isRequired,
   setLineNumbers: PropTypes.func.isRequired,
   setLinewrap: PropTypes.func.isRequired,
