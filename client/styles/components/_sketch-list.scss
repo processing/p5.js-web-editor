@@ -3,6 +3,9 @@
   max-width: 100%;
   width: #{1000 / $base-font-size}rem;
   height: #{628 / $base-font-size}rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   // min-height: #{400 / $base-font-size}rem;
 }
 
