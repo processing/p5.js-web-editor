@@ -74,6 +74,12 @@ function KeyboardShortcutModal() {
         </span>
         <span>Turn off Accessible Output</span>
       </li>
+      <li className="keyboard-shortcut-item">
+        <span className="keyboard-shortcut__command">
+          {metaKeyName} + {'\u21E7'} + 3
+        </span>
+        <span>Add new file</span>
+      </li>
     </ul>
   );
 }

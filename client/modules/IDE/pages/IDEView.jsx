@@ -50,6 +50,7 @@ class IDEView extends React.Component {
     // If page doesn't reload after Sign In then we need
     // to force cleared state to be cleared
     this.props.clearPersistedState();
+    console.log(this.props.ide);
 
     this.props.stopSketch();
     if (this.props.params.project_id) {
@@ -156,6 +157,10 @@ class IDEView extends React.Component {
     } else if (e.keyCode === 49 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac)) && e.shiftKey) {
       e.preventDefault();
       this.props.setAllAccessibleOutput(true);
+      // 51 === 3
+    } else if (e.keyCode === 51 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac)) && e.shiftKey) {
+      e.preventDefault();
+      this.props.newFile(this.props.files.filter(file => file.name === 'root')[0]);
     }
   }
 
