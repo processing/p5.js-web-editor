@@ -1,32 +1,31 @@
-import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
-import { action } from '@storybook/addon-actions';
-import { boolean, text } from '@storybook/addon-knobs';
+---
+name: Button
+---
 
+import { Playground, Props } from 'docz';
 import Button from './';
-
-<Meta title="Common/Button (MDX)" component={Button} />
 
 # Button
 
 A button is used to perform an action.
 
-<Preview>
-  <Story name="All features">
-    <Button
-      disabled={boolean('disabled', false)}
-      type="submit"
-      label={text('label', 'submit')}
-    >
-      {text('children', 'this is the button')}
-    </Button>
-  </Story>
-  <Story name="Submit button">
-    <Button type="submit" label="submit" onClick={action('onClick')}>This is a submit button</Button>
-  </Story>
-  <Story name="Primary button">
-    <Button label="Log In" onClick={action('onClick')}>Log In</Button>
-  </Story>
-  <Story name="Disabled">
-    <Button disabled label="Log In" onClick={action('onClick')}>Log In</Button>
-  </Story>
-</Preview>
+<Props of={Button} />
+
+## Submit button
+
+<Playground>
+    <Button type="submit" label="submit" onClick={() => console.log("onClick")}>This is a submit button</Button>
+</Playground>
+
+
+## Primary button
+
+<Playground>
+  <Button label="Log In" onClick={() => console.log("onClick")}>Log In</Button>
+</Playground>
+
+## Disabled
+
+<Playground>
+  <Button disabled label="Log In" onClick={() => console.log("onClick")}>Log In</Button>
+</Playground>

@@ -17,3 +17,4 @@ cert_chain.crt
 localhost.crt
 localhost.key
 privkey.pem
+.docz
