@@ -22,7 +22,9 @@
   width: #{31 / $base-font-size}rem;
   height: #{36 / $base-font-size}rem;
   position: absolute;
-  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-right: solid 1px;
   @include themify() {
     border-right-color: getThemifyVariable('input-border-color');
