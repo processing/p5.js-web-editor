@@ -177,6 +177,7 @@
     "slugify": "^1.3.4",
     "srcdoc-polyfill": "^0.2.0",
     "styled-components": "^5.0.0",
+    "styled-theming": "^2.2.0",
     "url": "^0.11.0",
     "webpack": "^4.39.2",
     "webpack-dev-middleware": "^2.0.6",
