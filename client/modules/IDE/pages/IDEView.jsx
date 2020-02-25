@@ -156,6 +156,9 @@ class IDEView extends React.Component {
     } else if (e.keyCode === 49 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac)) && e.shiftKey) {
       e.preventDefault();
       this.props.setAllAccessibleOutput(true);
+    } else if (e.keyCode === 69 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
+      e.preventDefault();
+      this.props.router.push('/p5/sketches');
     }
   }
 
@@ -567,7 +570,8 @@ IDEView.propTypes = {
   }).isRequired,
   autosaveProject: PropTypes.func.isRequired,
   router: PropTypes.shape({
-    setRouteLeaveHook: PropTypes.func
+    setRouteLeaveHook: PropTypes.func,
+    push: PropTypes.func.isRequired
   }).isRequired,
   route: PropTypes.oneOfType([PropTypes.object, PropTypes.element]).isRequired,
   setUnsavedChanges: PropTypes.func.isRequired,

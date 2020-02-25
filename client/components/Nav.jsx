@@ -335,7 +335,7 @@ class Nav extends React.PureComponent {
                   onBlur={this.handleBlur}
                   onClick={this.setDropdownForNone}
                 >
-                  Examples
+                  Examples <span className="nav__keyboard-shortcut">{metaKeyName}+e</span>
                 </Link>
               </li> }
             </ul>
