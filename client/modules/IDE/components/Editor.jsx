@@ -149,6 +149,8 @@ class Editor extends React.Component {
     });
 
     this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
+    this._cm.getWrapperElement().style['font-family'] = `${this.props.fontFamily}`;
+
 
     this.props.provideController({
       tidyCode: this.tidyCode,

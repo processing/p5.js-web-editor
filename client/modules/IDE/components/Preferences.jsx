@@ -364,7 +364,7 @@ class Preferences extends React.Component {
                   value="Off"
                   checked={this.state.fontFamily === 'Istok Web'}
                 /> */}
-                <button onClick={() => { this.setFontFamily('Istok Web'); }} className="preference__option" style={{ border: 'none', color: this.state.fontFamily === 'Istok Web' ? '#333' : '#b5b5b5' }}>dylexic friendly</button>
+                <button onClick={() => { this.setFontFamily('Arial'); }} className="preference__option" style={{ border: 'none', color: this.state.fontFamily === 'Arial' ? '#333' : '#b5b5b5' }}>dylexic friendly</button>
               </div>
 
             </div>

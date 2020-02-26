@@ -507,7 +507,7 @@ IDEView.propTypes = {
   clearLintMessage: PropTypes.func.isRequired,
   preferences: PropTypes.shape({
     fontSize: PropTypes.number.isRequired,
-    fontFamily: PropTypes.number.isRequired,
+    fontFamily: PropTypes.string.isRequired,
     autosave: PropTypes.bool.isRequired,
     linewrap: PropTypes.bool.isRequired,
     lineNumbers: PropTypes.bool.isRequired,
