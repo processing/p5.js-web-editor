@@ -29,6 +29,7 @@ class SketchListRowBase extends React.Component {
       renameValue: props.sketch.name,
       isFocused: false
     };
+    this.renameInput = React.createRef();
   }
   onFocusComponent = () => {
     this.setState({ isFocused: true });
@@ -66,7 +67,7 @@ class SketchListRowBase extends React.Component {
   openRename = () => {
     this.setState({
       renameOpen: true
-    });
+    }, () => this.renameInput.current.focus());
   }
 
   closeRename = () => {
@@ -158,6 +159,7 @@ class SketchListRowBase extends React.Component {
               onKeyUp={this.handleRenameEnter}
               onBlur={this.resetSketchName}
               onClick={e => e.stopPropagation()}
+              ref={this.renameInput}
             />
           }
         </th>
