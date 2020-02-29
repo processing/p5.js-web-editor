@@ -422,6 +422,7 @@ class Nav extends React.PureComponent {
                   onBlur={this.handleBlur}
                 >
                   Add File
+                  <span className="nav__keyboard-shortcut">{metaKeyName}+Shift+3</span>
                 </button>
               </li>
               <li className="nav__dropdown-item">
