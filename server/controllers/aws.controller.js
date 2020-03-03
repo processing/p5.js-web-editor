@@ -60,14 +60,14 @@ export function deleteObjectsFromS3(keyList, callback) {
 }
 
 export function deleteObjectFromS3(req, res) {
-  const { object_key, user_id } = req.params;
-  let objectKey;
-  if (user_id) {
-    objectKey = `${user_id}/${object_key}`
+  const { objectKey, userId } = req.params;
+  let fullObjectKey;
+  if (userId) {
+    fullObjectKey = `${userId}/${objectKey}`;
   } else {
-    objectKey = object_key;
+    fullObjectKey = objectKey;
   }
-  deleteObjectsFromS3([objectKey], () => {
+  deleteObjectsFromS3([fullObjectKey], () => {
     res.json({ success: true });
   });
 }
@@ -75,7 +75,7 @@ export function deleteObjectFromS3(req, res) {
 export function signS3(req, res) {
   const limit = process.env.UPLOAD_LIMIT || 250000000;
   if (req.user.totalSize > limit) {
-    res.status(403).send({message: 'user has uploaded the maximum size of assets.'});
+    res.status(403).send({ message: 'user has uploaded the maximum size of assets.' });
     return;
   }
   const fileExtension = getExtension(req.body.name);
@@ -95,7 +95,7 @@ export function signS3(req, res) {
     policy: p.policy,
     signature: p.signature
   };
-  return res.json(result);
+  res.json(result);
 }
 
 export function copyObjectInS3(req, res) {
@@ -135,43 +135,41 @@ export function listObjectsInS3ForUser(userId) {
       .on('end', () => {
         resolve();
       });
-    }).then(() => {
-      return getProjectsForUserId(userId);
-    }).then((projects) => {
-      const projectAssets = [];
-      let totalSize = 0;
-      assets.forEach((asset) => {
-        const name = asset.key.split('/').pop();
-        const foundAsset = {
-          key: asset.key,
-          name,
-          size: asset.size,
-          url: `${process.env.S3_BUCKET_URL_BASE}${asset.key}`
-        };
-        totalSize += asset.size;
-        projects.some((project) => {
-          let found = false;
-          project.files.some((file) => {
-            if (!file.url) return false;
-            if (file.url.includes(asset.key)) {
-              found = true;
-              foundAsset.name = file.name;
-              foundAsset.sketchName = project.name;
-              foundAsset.sketchId = project.id;
-              foundAsset.url = file.url;
-              return true;
-            }
-            return false;
-          });
-          return found;
+  }).then(() => getProjectsForUserId(userId)).then((projects) => {
+    const projectAssets = [];
+    let totalSize = 0;
+    assets.forEach((asset) => {
+      const name = asset.key.split('/').pop();
+      const foundAsset = {
+        key: asset.key,
+        name,
+        size: asset.size,
+        url: `${process.env.S3_BUCKET_URL_BASE}${asset.key}`
+      };
+      totalSize += asset.size;
+      projects.some((project) => {
+        let found = false;
+        project.files.some((file) => {
+          if (!file.url) return false;
+          if (file.url.includes(asset.key)) {
+            found = true;
+            foundAsset.name = file.name;
+            foundAsset.sketchName = project.name;
+            foundAsset.sketchId = project.id;
+            foundAsset.url = file.url;
+            return true;
+          }
+          return false;
         });
-        projectAssets.push(foundAsset);
+        return found;
       });
-      return Promise.resolve({ assets: projectAssets, totalSize});
-    }).catch((err) => {
-      console.log('got an error');
-      console.log(err);
+      projectAssets.push(foundAsset);
     });
+    return Promise.resolve({ assets: projectAssets, totalSize });
+  }).catch((err) => {
+    console.log('got an error');
+    console.log(err);
+  });
 }
 
 export function listObjectsInS3ForUserRequestHandler(req, res) {
