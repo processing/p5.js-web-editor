@@ -1,6 +1,6 @@
 import uuid from 'node-uuid';
 import policy from 's3-policy';
-import s3 from 's3';
+import s3 from '@auth0/s3';
 import { getProjectsForUserId } from './project.controller';
 import { findUserByUsername } from './user.controller';
 
