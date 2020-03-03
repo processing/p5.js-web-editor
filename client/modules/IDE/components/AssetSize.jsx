@@ -3,8 +3,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import prettyBytes from 'pretty-bytes';
 
-const MB_TO_B = 1000 * 1000;
-const MAX_SIZE_B = 250 * MB_TO_B;
+const __process = (typeof global !== 'undefined' ? global : window).process;
+const limit = __process.env.UPLOAD_LIMIT || 250000000;
+const MAX_SIZE_B = limit;
 
 const formatPercent = (percent) => {
   const percentUsed = percent * 100;
@@ -17,7 +18,7 @@ const formatPercent = (percent) => {
 
 /* Eventually, this copy should be Total / 250 MB Used */
 const AssetSize = ({ totalSize }) => {
-  if (!totalSize) {
+  if (totalSize === undefined) {
     return null;
   }
 
@@ -25,9 +26,10 @@ const AssetSize = ({ totalSize }) => {
   const sizeLimit = prettyBytes(MAX_SIZE_B);
   const percentValue = totalSize / MAX_SIZE_B;
   const percent = formatPercent(percentValue);
+  const percentSize = percentValue < 1 ? percentValue : 1;
 
   return (
-    <div className="asset-size" style={{ '--percent': percentValue }}>
+    <div className="asset-size" style={{ '--percent': percentSize }}>
       <div className="asset-size-bar" />
       <p className="asset-current">{currentSize} ({percent})</p>
       <p className="asset-max">Max: {sizeLimit}</p>
@@ -42,7 +44,7 @@ AssetSize.propTypes = {
 function mapStateToProps(state) {
   return {
     user: state.user,
-    totalSize: state.assets.totalSize,
+    totalSize: state.user.totalSize || state.assets.totalSize,
   };
 }
 

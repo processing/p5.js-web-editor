@@ -117,7 +117,7 @@ class Sidebar extends React.Component {
                 <button
                   aria-label="upload file"
                   onClick={() => {
-                    this.props.openUploadFileModal();
+                    this.props.openUploadFileModal(rootFile.id);
                     setTimeout(this.props.closeProjectOptions, 0);
                   }}
                   onBlur={this.onBlurComponent}

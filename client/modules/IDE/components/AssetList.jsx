@@ -127,7 +127,8 @@ AssetListRowBase.propTypes = {
     url: PropTypes.string.isRequired,
     sketchId: PropTypes.string,
     sketchName: PropTypes.string,
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    size: PropTypes.number.isRequired
   }).isRequired,
   deleteAssetRequest: PropTypes.func.isRequired,
   username: PropTypes.string.isRequired
@@ -172,13 +173,9 @@ class AssetList extends React.Component {
   }
 
   render() {
-    const { assetList, totalSize } = this.props;
+    const { assetList } = this.props;
     return (
       <div className="asset-table-container">
-        {/* Eventually, this copy should be Total / 250 MB Used */}
-        {this.hasAssets() && totalSize &&
-          <p className="asset-table__total">{`${prettyBytes(totalSize)} Total`}</p>
-        }
         <Helmet>
           <title>{this.getAssetsTitle()}</title>
         </Helmet>
@@ -188,7 +185,7 @@ class AssetList extends React.Component {
           <table className="asset-table">
             <thead>
               <tr>
-                <th>Name</th>                      
+                <th>Name</th>
                 <th>Size</th>
                 <th>Sketch</th>
                 <th scope="col"></th>
@@ -214,20 +211,14 @@ AssetList.propTypes = {
     sketchName: PropTypes.string,
     sketchId: PropTypes.string
   })).isRequired,
-  totalSize: PropTypes.number,
   getAssets: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired
-};
-
-AssetList.defaultProps = {
-  totalSize: undefined
 };
 
 function mapStateToProps(state) {
   return {
     user: state.user,
     assetList: state.assets.list,
-    totalSize: state.user.totalSize,
     loading: state.loading
   };
 }

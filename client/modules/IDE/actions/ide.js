@@ -75,9 +75,10 @@ export function closeNewFileModal() {
   };
 }
 
-export function openUploadFileModal() {
+export function openUploadFileModal(parentId) {
   return {
-    type: ActionTypes.OPEN_UPLOAD_FILE_MODAL
+    type: ActionTypes.OPEN_UPLOAD_FILE_MODAL,
+    parentId
   };
 }
 

@@ -3,10 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import InlineSVG from 'react-inlinesvg';
+import prettyBytes from 'pretty-bytes';
 import FileUploader from './FileUploader';
 import { getreachedTotalSizeLimit } from '../selectors/users';
-
 import exitUrl from '../../../images/exit.svg';
+
+const __process = (typeof global !== 'undefined' ? global : window).process;
+const limit = __process.env.UPLOAD_LIMIT || 250000000;
+const limitText = prettyBytes(limit);
 
 class UploadFileModal extends React.Component {
   propTypes = {
@@ -36,12 +40,12 @@ class UploadFileModal extends React.Component {
           { this.props.reachedTotalSizeLimit &&
             <p>
               {
-                `Error: You cannot upload any more files. You have reached the total size limit of 250MB.
+                `Error: You cannot upload any more files. You have reached the total size limit of ${limitText}.
                 If you would like to upload more, please remove the ones you aren't using anymore by
                 in your `
               }
-              <Link to="/assets">assets</Link>
-              {'.'}
+              <Link to="/assets" onClick={this.props.closeModal}>assets</Link>
+              .
             </p>
           }
           { !this.props.reachedTotalSizeLimit &&
