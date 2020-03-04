@@ -22,16 +22,18 @@ class NewFileForm extends React.Component {
           handleSubmit(this.createFile)(data);
         }}
       >
-        <label className="new-file-form__name-label" htmlFor="name">Name:</label>
-        <input
-          className="new-file-form__name-input"
-          id="name"
-          type="text"
-          placeholder="Name"
-          {...domOnlyProps(name)}
-          ref={(element) => { this.fileName = element; }}
-        />
-        <input type="submit" value="Add File" aria-label="add file" />
+        <div className="new-file-form__input-wrapper">
+          <label className="new-file-form__name-label" htmlFor="name">Name:</label>
+          <input
+            className="new-file-form__name-input"
+            id="name"
+            type="text"
+            placeholder="Name"
+            {...domOnlyProps(name)}
+            ref={(element) => { this.fileName = element; }}
+          />
+          <input type="submit" value="Add File" aria-label="add file" />
+        </div>
         {name.touched && name.error && <span className="form-error">{name.error}</span>}
       </form>
     );

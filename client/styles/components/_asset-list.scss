@@ -9,7 +9,8 @@
   
   max-height: 100%;
   border-spacing: 0;
-  & .sketch-list__dropdown-column {
+  position: relative;
+  & .asset-table__dropdown-column {
     width: #{60 / $base-font-size}rem;
     position: relative;
   }
@@ -65,4 +66,34 @@
   text-align: center;
   font-size: #{16 / $base-font-size}rem;
   padding: #{42 / $base-font-size}rem 0;
+}
+
+.asset-table__total {
+  padding: 0 #{20 / $base-font-size}rem;
+  position: sticky;
+  top: 0; 
+  @include themify() {
+    background-color: getThemifyVariable('background-color');
+  }
+}
+
+.asset-table__dropdown-button {
+  width:#{25 / $base-font-size}rem;
+  height:#{25 / $base-font-size}rem;
+
+  @include themify() {
+    & polygon {
+      fill: getThemifyVariable('dropdown-color');
+    }
+  }
+}
+
+.asset-table__action-dialogue {
+  @extend %dropdown-open-right;
+  top: 63%;
+  right: calc(100% - 26px);
+}
+
+.asset-table__action-option {
+  font-size: #{12 / $base-font-size}rem;
 }

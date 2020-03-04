@@ -66,7 +66,8 @@ const userSchema = new Schema({
     soundOutput: { type: Boolean, default: false },
     theme: { type: String, default: 'light' },
     autorefresh: { type: Boolean, default: false }
-  }
+  },
+  totalSize: { type: Number, default: 0 }
 }, { timestamps: true, usePushEach: true });
 
 /**

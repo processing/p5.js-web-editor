@@ -10,7 +10,7 @@
 .modal-content {
   @extend %modal;
   min-height: #{150 / $base-font-size}rem;
-  width: #{700 / $base-font-size}rem;
+  width: #{500 / $base-font-size}rem;
   padding: #{20 / $base-font-size}rem;
   .modal--reduced & {
     //min-height: #{150 / $base-font-size}rem;
@@ -32,9 +32,8 @@
   margin-bottom: #{20 / $base-font-size}rem;
 }
 
-.new-file-form, .new-file-folder {
+.new-folder-form__input-wrapper, .new-file-form__input-wrapper {
   display: flex;
-  flex-wrap: wrap;
 }
 
 .new-file-form__name-label, .new-folder-form__name-label {
@@ -43,6 +42,7 @@
 
 .new-file-form__name-input, .new-folder-form__name-input {
   margin-right: #{10 / $base-font-size}rem;
+  flex: 1;
 }
 
 .modal__divider {
