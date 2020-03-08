@@ -26,6 +26,7 @@ class NewFileForm extends React.Component {
         <input
           className="new-file-form__name-input"
           id="name"
+          maxLength="128"
           type="text"
           placeholder="Name"
           {...domOnlyProps(name)}
