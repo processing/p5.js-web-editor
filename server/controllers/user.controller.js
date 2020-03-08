@@ -27,11 +27,15 @@ export function findUserByUsername(username, cb) {
 const EMAIL_VERIFY_TOKEN_EXPIRY_TIME = Date.now() + (3600000 * 24); // 24 hours
 
 export function createUser(req, res, next) {
+  let { username, email } = req.body;
+  const { password } = req.body;
+  username = username.toLowerCase();
+  email = email.toLowerCase();
   random((tokenError, token) => {
     const user = new User({
-      username: req.body.username,
-      email: req.body.email,
-      password: req.body.password,
+      username,
+      email,
+      password,
       verified: User.EmailConfirmation.Sent,
       verifiedToken: token,
       verifiedTokenExpires: EMAIL_VERIFY_TOKEN_EXPIRY_TIME,
@@ -40,8 +44,8 @@ export function createUser(req, res, next) {
     User.findOne(
       {
         $or: [
-          { email: req.body.email },
-          { username: req.body.username }
+          { email },
+          { username }
         ]
       },
       (err, existingUser) => {
@@ -51,7 +55,7 @@ export function createUser(req, res, next) {
         }
 
         if (existingUser) {
-          const fieldInUse = existingUser.email === req.body.email ? 'Email' : 'Username';
+          const fieldInUse = existingUser.email === email ? 'Email' : 'Username';
           res.status(422).send({ error: `${fieldInUse} is in use` });
           return;
         }
@@ -77,8 +81,8 @@ export function createUser(req, res, next) {
 
             mail.send(mailOptions, (mailErr, result) => { // eslint-disable-line no-unused-vars
               res.json({
-                email: req.user.email,
-                username: req.user.username,
+                email,
+                username,
                 preferences: req.user.preferences,
                 verified: req.user.verified,
                 id: req.user._id
