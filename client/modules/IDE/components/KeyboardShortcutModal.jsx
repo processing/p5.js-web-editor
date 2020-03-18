@@ -34,6 +34,12 @@ function KeyboardShortcutModal() {
       </li>
       <li className="keyboard-shortcut-item">
         <span className="keyboard-shortcut__command">
+          {metaKeyName} + D
+        </span>
+        <span>Add Cursor at Next Text Match</span>
+      </li>
+      <li className="keyboard-shortcut-item">
+        <span className="keyboard-shortcut__command">
           {metaKeyName} + [
         </span>
         <span>Indent Code Left</span>
