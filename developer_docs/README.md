@@ -1,6 +1,7 @@
 This folder contains documents intended for developers of the p5.js Web Editor. 
 
 ## List of Documents
+* [Contribution Guide](https://github.com/processing/p5.js-web-editor/blob/master/.github/CONTRIBUTING.md) - A place to get started!
 * [Installation](installation.md) - A guide for setting up your development environment
 * [Development](development.md) - A guide for adding code to the web editor
 * [Preparing a pull-request](preparing_a_pull_request.md) - Instructions for how to make a pull-request
