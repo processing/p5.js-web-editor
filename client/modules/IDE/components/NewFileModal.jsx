@@ -5,7 +5,6 @@ import { bindActionCreators, compose } from 'redux';
 import { reduxForm } from 'redux-form';
 import InlineSVG from 'react-inlinesvg';
 import NewFileForm from './NewFileForm';
-import { getCanUploadMedia, getreachedTotalSizeLimit } from '../selectors/users';
 import { closeNewFileModal } from '../actions/ide';
 import { createFile } from '../actions/files';
 import { CREATE_FILE_REGEX } from '../../../../server/utils/fileUtils';
@@ -67,11 +66,8 @@ function validate(formProps) {
   return errors;
 }
 
-function mapStateToProps(state) {
-  return {
-    canUploadMedia: getCanUploadMedia(state),
-    reachedTotalSizeLimit: getreachedTotalSizeLimit(state)
-  };
+function mapStateToProps() {
+  return {};
 }
 
 function mapDispatchToProps(dispatch) {

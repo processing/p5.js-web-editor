@@ -3,7 +3,7 @@ import objectID from 'bson-objectid';
 import blobUtil from 'blob-util';
 import { reset } from 'redux-form';
 import * as ActionTypes from '../../../constants';
-import { setUnsavedChanges } from './ide';
+import { setUnsavedChanges, closeNewFolderModal, closeNewFileModal } from './ide';
 import { setProjectSavedTime } from './project';
 
 const __process = (typeof global !== 'undefined' ? global : window).process;
@@ -58,6 +58,7 @@ export function createFile(formProps) {
             parentId
           });
           dispatch(setProjectSavedTime(response.data.project.updatedAt));
+          dispatch(closeNewFileModal());
           dispatch(reset('new-file'));
           // dispatch({
           //   type: ActionTypes.HIDE_MODAL
@@ -85,6 +86,7 @@ export function createFile(formProps) {
       //   type: ActionTypes.HIDE_MODAL
       // });
       dispatch(setUnsavedChanges(true));
+      dispatch(closeNewFileModal());
     }
   };
 }
@@ -109,9 +111,7 @@ export function createFolder(formProps) {
             parentId
           });
           dispatch(setProjectSavedTime(response.data.project.updatedAt));
-          dispatch({
-            type: ActionTypes.CLOSE_NEW_FOLDER_MODAL
-          });
+          dispatch(closeNewFolderModal());
         })
         .catch(response => dispatch({
           type: ActionTypes.ERROR,
@@ -130,9 +130,7 @@ export function createFolder(formProps) {
         fileType: 'folder',
         children: []
       });
-      dispatch({
-        type: ActionTypes.CLOSE_NEW_FOLDER_MODAL
-      });
+      dispatch(closeNewFolderModal());
     }
   };
 }

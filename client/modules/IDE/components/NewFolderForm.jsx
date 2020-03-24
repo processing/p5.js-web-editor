@@ -20,9 +20,7 @@ class NewFolderForm extends React.Component {
       <form
         className="new-folder-form"
         onSubmit={(data) => {
-          if (handleSubmit(this.createFolder)(data)) {
-            this.props.closeModal();
-          }
+          handleSubmit(this.createFolder)(data);
         }}
       >
         <div className="new-folder-form__input-wrapper">
