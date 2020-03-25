@@ -14,15 +14,15 @@ $p5-dark-lightbrown: #A67F59;
 $p5-light-green: #42F48F;
 $p5-dark-black: #333;
 $p5-dark-pink: #D9328F;
-$p5-dark-gray: #A0A0A0;
-$p5-dark-lightblue: #00A1D3;
-$p5-dark-darkblue: #2D7BB6;
+$p5-dark-gray: #999999;
+$p5-dark-lightblue: #0F9DD7;
+$p5-dark-darkblue: #318094;
 $p5-dark-white: #FDFDFD;
 $p5-dark-orange: #EE9900;
 $p5-dark-lightgray: #E0D7D1;
 $p5-dark-darkgray: #666666;
 $p5-dark-green: #58a10b;
-$p5-dark-goldbrown: #b58317;
+$p5-dark-goldbrown: #b58318;
 
 $p5-dark-gutter: #f4f4f4;
 $p5-dark-number: #b5b5b5;
@@ -39,7 +39,7 @@ $p5-dark-activeline: rgb(207, 207, 207);
 }
 
 .cm-s-p5-dark .cm-def {
-  color: $p5-dark-darkblue;
+  color: $p5-dark-lightblue;
 }
 
 .cm-s-p5-dark .cm-string {
@@ -75,7 +75,7 @@ $p5-dark-activeline: rgb(207, 207, 207);
 }
 
 .cm-s-p5-dark .cm-operator {
-  color: $p5-dark-lightbrown;
+  color: $p5-dark-white;
 }
 
 .cm-s-p5-dark .cm-linenumber {
@@ -96,7 +96,7 @@ $p5-dark-activeline: rgb(207, 207, 207);
 }
 
 .cm-s-p5-dark .cm-error {
-  color: #f00;
+  color: #df3a3d;
 }
 
 .cm-s-p5-dark .CodeMirror-matchingbracket {
@@ -115,6 +115,7 @@ $p5-dark-activeline: rgb(207, 207, 207);
 
 .cm-s-p5-dark .cm-builtin {
   color: $p5-dark-lightblue;
+  font-weight: bold;
 }
 
 .cm-s-p5-dark .cm-attribute {
@@ -122,7 +123,8 @@ $p5-dark-activeline: rgb(207, 207, 207);
 }
 
 .cm-s-p5-dark .cm-p5-function {
-  color: $p5-dark-darkblue;
+  color: $p5-dark-lightblue;
+  font-weight: bold !important;
 }
 
 .cm-s-p5-dark .cm-p5-variable {
