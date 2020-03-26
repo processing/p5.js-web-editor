@@ -1,4 +1,4 @@
-# Development Installation
+# Installation
 
 Follow these instructions to set up your development environment, which you need to do before you start contributing code to this project.
 
