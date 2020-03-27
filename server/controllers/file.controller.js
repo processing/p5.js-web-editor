@@ -121,7 +121,7 @@ export function getFileContent(req, res) {
       res.status(404).send({ success: false, message: 'File with that name and path does not exist.' });
       return;
     }
-    const contentType = mime.lookup(resolvedFile);
+    const contentType = mime.lookup(resolvedFile.name) || 'application/octet-stream';
     res.set('Content-Type', contentType);
     res.send(resolvedFile.content);
   });
