@@ -1,4 +1,5 @@
 import each from 'async/each';
+import mime from 'mime-types';
 import isBefore from 'date-fns/is_before';
 import Project from '../models/project';
 import { resolvePathToFile } from '../utils/filePath';
@@ -120,6 +121,8 @@ export function getFileContent(req, res) {
       res.status(404).send({ success: false, message: 'File with that name and path does not exist.' });
       return;
     }
+    const contentType = mime.lookup(resolvedFile.name) || 'application/octet-stream';
+    res.set('Content-Type', contentType);
     res.send(resolvedFile.content);
   });
 }

@@ -134,6 +134,7 @@
     "jshint": "^2.11.0",
     "lodash": "^4.17.15",
     "loop-protect": "github:catarak/loop-protect",
+    "mime-types": "^2.1.26",
     "mjml": "^3.3.2",
     "mockingoose": "^2.13.2",
     "mongoose": "^5.9.2",
