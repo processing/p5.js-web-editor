@@ -1,5 +1,5 @@
 export function resolvePathToFile(filePath, files) {
-  if (typeof filePath === 'undefined') {
+  if (filePath === undefined) {
     return false;
   }
 
