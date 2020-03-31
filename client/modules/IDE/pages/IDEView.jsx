@@ -12,6 +12,7 @@ import Toolbar from '../components/Toolbar';
 import Preferences from '../components/Preferences';
 import NewFileModal from '../components/NewFileModal';
 import NewFolderModal from '../components/NewFolderModal';
+import UploadFileModal from '../components/UploadFileModal';
 import ShareModal from '../components/ShareModal';
 import KeyboardShortcutModal from '../components/KeyboardShortcutModal';
 import ErrorModal from '../components/ErrorModal';
@@ -28,11 +29,10 @@ import * as ToastActions from '../actions/toast';
 import * as ConsoleActions from '../actions/console';
 import { getHTMLFile } from '../reducers/files';
 import Overlay from '../../App/components/Overlay';
-import SketchList from '../components/SketchList';
-import Searchbar from '../components/Searchbar';
-import AssetList from '../components/AssetList';
 import About from '../components/About';
+import AddToCollectionList from '../components/AddToCollectionList';
 import Feedback from '../components/Feedback';
+import { CollectionSearchbar } from '../components/Searchbar';
 
 class IDEView extends React.Component {
   constructor(props) {
@@ -239,6 +239,8 @@ class IDEView extends React.Component {
               newFolder={this.props.newFolder}
               user={this.props.user}
               owner={this.props.project.owner}
+              openUploadFileModal={this.props.openUploadFileModal}
+              closeUploadFileModal={this.props.closeUploadFileModal}
             />
             <SplitPane
               split="vertical"
@@ -314,12 +316,12 @@ class IDEView extends React.Component {
                     {(
                       (
                         (this.props.preferences.textOutput ||
-                            this.props.preferences.gridOutput ||
-                            this.props.preferences.soundOutput
+                          this.props.preferences.gridOutput ||
+                          this.props.preferences.soundOutput
                         ) &&
-                            this.props.ide.isPlaying
+                        this.props.ide.isPlaying
                       ) ||
-                        this.props.ide.isAccessibleOutputPlaying
+                      this.props.ide.isAccessibleOutputPlaying
                     )
                     }
                   </div>
@@ -351,42 +353,18 @@ class IDEView extends React.Component {
           </SplitPane>
         </div>
         { this.props.ide.modalIsVisible &&
-          <NewFileModal
-            canUploadMedia={this.props.user.authenticated}
-            closeModal={this.props.closeNewFileModal}
-            createFile={this.props.createFile}
-          />
+          <NewFileModal />
         }
-        { this.props.ide.newFolderModalVisible &&
+        {this.props.ide.newFolderModalVisible &&
           <NewFolderModal
             closeModal={this.props.closeNewFolderModal}
             createFolder={this.props.createFolder}
           />
         }
-        { this.props.location.pathname.match(/sketches$/) &&
-          <Overlay
-            ariaLabel="project list"
-            title="Open a Sketch"
-            previousPath={this.props.ide.previousPath}
-          >
-            <Searchbar />
-            <SketchList
-              username={this.props.params.username}
-              user={this.props.user}
-            />
-          </Overlay>
-        }
-        { this.props.location.pathname.match(/assets$/) &&
-          <Overlay
-            title="Assets"
-            ariaLabel="asset list"
-            previousPath={this.props.ide.previousPath}
-          >
-            <AssetList
-              username={this.props.params.username}
-              user={this.props.user}
-            />
-          </Overlay>
+        {this.props.ide.uploadFileModalVisible &&
+          <UploadFileModal
+            closeModal={this.props.closeUploadFileModal}
+          />
         }
         { this.props.location.pathname === '/about' &&
           <Overlay
@@ -397,7 +375,7 @@ class IDEView extends React.Component {
             <About previousPath={this.props.ide.previousPath} />
           </Overlay>
         }
-        { this.props.location.pathname === '/feedback' &&
+        {this.props.location.pathname === '/feedback' &&
           <Overlay
             title="Submit Feedback"
             previousPath={this.props.ide.previousPath}
@@ -406,7 +384,22 @@ class IDEView extends React.Component {
             <Feedback previousPath={this.props.ide.previousPath} />
           </Overlay>
         }
-        { this.props.ide.shareModalVisible &&
+        {this.props.location.pathname.match(/add-to-collection$/) &&
+          <Overlay
+            ariaLabel="add to collection"
+            title="Add to collection"
+            previousPath={this.props.ide.previousPath}
+            actions={<CollectionSearchbar />}
+            isFixedHeight
+          >
+            <AddToCollectionList
+              projectId={this.props.params.project_id}
+              username={this.props.params.username}
+              user={this.props.user}
+            />
+          </Overlay>
+        }
+        {this.props.ide.shareModalVisible &&
           <Overlay
             title="Share"
             ariaLabel="share"
@@ -419,7 +412,7 @@ class IDEView extends React.Component {
             />
           </Overlay>
         }
-        { this.props.ide.keyboardShortcutVisible &&
+        {this.props.ide.keyboardShortcutVisible &&
           <Overlay
             title="Keyboard Shortcuts"
             ariaLabel="keyboard shortcuts"
@@ -428,7 +421,7 @@ class IDEView extends React.Component {
             <KeyboardShortcutModal />
           </Overlay>
         }
-        { this.props.ide.errorType &&
+        {this.props.ide.errorType &&
           <Overlay
             title="Error"
             ariaLabel="error"
@@ -486,6 +479,7 @@ IDEView.propTypes = {
     justOpenedProject: PropTypes.bool.isRequired,
     errorType: PropTypes.string,
     runtimeErrorWarningVisible: PropTypes.bool.isRequired,
+    uploadFileModalVisible: PropTypes.bool.isRequired
   }).isRequired,
   stopSketch: PropTypes.func.isRequired,
   project: PropTypes.shape({
@@ -543,7 +537,6 @@ IDEView.propTypes = {
   }).isRequired,
   dispatchConsoleEvent: PropTypes.func.isRequired,
   newFile: PropTypes.func.isRequired,
-  closeNewFileModal: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
   collapseSidebar: PropTypes.func.isRequired,
   cloneProject: PropTypes.func.isRequired,
@@ -556,7 +549,6 @@ IDEView.propTypes = {
   newFolder: PropTypes.func.isRequired,
   closeNewFolderModal: PropTypes.func.isRequired,
   createFolder: PropTypes.func.isRequired,
-  createFile: PropTypes.func.isRequired,
   closeShareModal: PropTypes.func.isRequired,
   showEditorOptions: PropTypes.func.isRequired,
   closeEditorOptions: PropTypes.func.isRequired,
@@ -588,6 +580,8 @@ IDEView.propTypes = {
   showRuntimeErrorWarning: PropTypes.func.isRequired,
   hideRuntimeErrorWarning: PropTypes.func.isRequired,
   startSketch: PropTypes.func.isRequired,
+  openUploadFileModal: PropTypes.func.isRequired,
+  closeUploadFileModal: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

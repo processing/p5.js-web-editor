@@ -11,7 +11,9 @@ To run the test suite simply run `npm test` (after installing dependencies with 
 A sample unit test could be found here: [Nav.test.jsx](../client/components/__test__/Nav.test.jsx).
 
 ## Design
-Design proposed and theme changes are present at: [Zeplin](https://scene.zeplin.io/project/55f746c54a02e1e50e0632c3).
+- [Style Guide/Design System on Figma](https://github.com/processing/p5.js-web-editor/labels/good%20medium%20issues)
+- [Latest Design on Figma](https://www.figma.com/file/5KychMUfHlq97H0uDsen1U/p5-web-editor-2017.p.copy?node-id=0%3A1). Note that the current design on the website has diverged, are parts of this design will not be implemented, but it is still helpful to have around for reference.
+- [Mobile Designs](https://www.figma.com/file/5KychMUfHlq97H0uDsen1U/p5-web-editor-2017.p.copy?node-id=0%3A2529), [Responsive Designs](https://www.figma.com/file/5KychMUfHlq97H0uDsen1U/p5-web-editor-2017.p.copy?node-id=0%3A3292)
 
 # Technologies Used
 

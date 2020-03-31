@@ -1,5 +1,5 @@
 .overlay {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -34,11 +34,25 @@
   flex: 1 0 auto;
 }
 
+.overlay__actions {
+  display: flex;
+}
+
 .overlay__title {
   font-size: #{21 / $base-font-size}rem;
 }
 
 .overlay__close-button {
   @include icon();
-  padding: #{3 / $base-font-size}rem 0;
+  padding: #{3 / $base-font-size}rem 0 #{3 / $base-font-size}rem #{10 / $base-font-size}rem;
 }
+
+/* Fixed height overlay */
+.overlay--is-fixed-height .overlay__body {
+  height: 80vh;
+}
+
+.overlay--is-fixed-height .overlay__header {
+  flex: 0;
+}
+

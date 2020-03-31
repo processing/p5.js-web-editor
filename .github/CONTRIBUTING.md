@@ -9,6 +9,7 @@ Hello! We welcome community contributions to the p5.js Web Editor. Contributing 
   - [How Can I Contribute?](#how-can-i-contribute)
     - [First Steps](#first-steps)
     - [Good First Issues](#good-first-issues)
+    - [Good Medium Issues](#good-medium-issues)
     - [Project Board](#project-board)
     - [Project Ideas](#project-ideas)
     - [Issue Search and Tagging](#issue-search-and-tagging)
@@ -39,7 +40,10 @@ Don't know where to begin? Here are some suggestions to get started:
 * Look at the [development guide](./../developer_docs/development.md).
 
 ### Good First Issues
-For first-time contributors or those who want to start with a small task, [check out the list of good first issues](https://github.com/processing/p5.js-web-editor/labels/good%20first%20issue). If the issue has not been assigned to anyone, then you can work on it! It's okay to not know how to fix an issue, and feel free to ask questions about to approach the problem! We are all here to learn and make something awesome. Someone from the community would help you out and these are great issues for learning about the web editor, its file structure and its development process.
+For first-time contributors or those who want to start with a small task, [check out the list of good first issues](https://github.com/processing/p5.js-web-editor/labels/good%20first%20issue), or [issues that need documentation of steps to reproduce](https://github.com/processing/p5.js-web-editor/issues?q=is%3Aissue+is%3Aopen+label%3A%22needs+steps+to+reproduce%22). If the issue has not been assigned to anyone, then you can work on it! It's okay to not know how to fix an issue, and feel free to ask questions about to approach the problem! We are all here to learn and make something awesome. Someone from the community would help you out and these are great issues for learning about the web editor, its file structure and its development process.
+
+### Good Medium Issues
+If you're looking for a bigger project to take on, look through the issues tagged [good medium issue](https://github.com/processing/p5.js-web-editor/labels/good%20medium%20issue). These issues are self-contained projects that may take longer to work on, but are great if you're looking to get more deeply involved in contributing!
 
 ### Project Board
 Many issues are related to each other and fall under bigger projects. To get a bigger picture, look at the [All Projects](https://github.com/processing/p5.js-web-editor/projects/4) board.
