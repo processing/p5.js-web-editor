@@ -29,52 +29,54 @@ $p5-dark-number: #b5b5b5;
 $p5-dark-selected: rgba(45, 123, 182, 25);
 $p5-dark-activeline: rgb(207, 207, 207);
 
+$p5-dark-error: #df3a3d;
+
 .cm-s-p5-dark {
   background-color: $p5-dark-black;
   color: $p5-dark-white;
 }
 
-.cm-s-p5-dark .cm-comment {
+.cm-s-p5-dark span.cm-comment {
   color: $p5-dark-gray;
 }
 
-.cm-s-p5-dark .cm-def {
+.cm-s-p5-dark span.cm-def {
   color: $p5-dark-lightblue;
 }
 
-.cm-s-p5-dark .cm-string {
+.cm-s-p5-dark span.cm-string {
   color: $p5-dark-green;
 }
 
-.cm-s-p5-dark .cm-string-2 {
+.cm-s-p5-dark span.cm-string-2 {
   color: $p5-dark-orange;
 }
 
-.cm-s-p5-dark .cm-number {
+.cm-s-p5-dark span.cm-number {
   color: $p5-dark-white;
 }
 
-.cm-s-p5-dark .cm-keyword {
+.cm-s-p5-dark span.cm-keyword {
   color: $p5-dark-goldbrown;
 }
 
-.cm-s-p5-dark .cm-variable {
+.cm-s-p5-dark span.cm-variable {
   color: $p5-dark-lightblue;
 }
 
-.cm-s-p5-dark .cm-variable-2 {
+.cm-s-p5-dark span.cm-variable-2 {
   color: $p5-dark-white;
 }
 
-.cm-s-p5-dark .cm-property {
+.cm-s-p5-dark span.cm-property {
   color: $p5-dark-white;
 }
 
-.cm-s-p5-dark .cm-atom {
+.cm-s-p5-dark span.cm-atom {
   color: $p5-dark-pink;
 }
 
-.cm-s-p5-dark .cm-operator {
+.cm-s-p5-dark span.cm-operator {
   color: $p5-dark-white;
 }
 
@@ -82,7 +84,7 @@ $p5-dark-activeline: rgb(207, 207, 207);
   color: $p5-dark-number;
 }
 
-.cm-s-p5-dark .CodeMirror-selected {
+.cm-s-p5-dark div.CodeMirror-selected {
   background-color: $p5-dark-selected;
 }
 
@@ -95,30 +97,30 @@ $p5-dark-activeline: rgb(207, 207, 207);
   border-right: 1px solid #949494;
 }
 
-.cm-s-p5-dark .cm-error {
-  color: #df3a3d;
-}
-
-.cm-s-p5-dark .CodeMirror-matchingbracket {
+.cm-s-p5-dark span.CodeMirror-matchingbracket {
   outline: 1px solid $p5-dark-gray;
   outline-offset: 1px;
   color: $p5-dark-white !important;
 }
 
-.cm-s-p5-dark .cm-qualifier {
+.cm-s-p5-dark span.cm-qualifier {
   color: $p5-dark-lightblue;
 }
 
-.cm-s-p5-dark .cm-tag {
+.cm-s-p5-dark span.cm-tag {
   color: $p5-dark-pink;
 }
 
-.cm-s-p5-dark .cm-builtin {
+.cm-s-p5-dark span.cm-error {
+  color: $p5-dark-error;
+}
+
+.cm-s-p5-dark span.cm-builtin {
   color: $p5-dark-lightblue;
   font-weight: bold;
 }
 
-.cm-s-p5-dark .cm-attribute {
+.cm-s-p5-dark span.cm-attribute {
   color: $p5-dark-lightblue;
 }
 
