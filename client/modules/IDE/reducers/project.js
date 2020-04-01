@@ -1,14 +1,8 @@
-import friendlyWords from 'friendly-words';
 import * as ActionTypes from '../../../constants';
-
-const generateRandomName = () => {
-  const adj = friendlyWords.predicates[Math.floor(Math.random() * friendlyWords.predicates.length)];
-  const obj = friendlyWords.objects[Math.floor(Math.random() * friendlyWords.objects.length)];
-  return `${adj} ${obj}`;
-};
+import { generateProjectName } from '../../../utils/generateRandomName';
 
 const initialState = () => {
-  const generatedString = generateRandomName();
+  const generatedString = generateProjectName();
   const generatedName = generatedString.charAt(0).toUpperCase() + generatedString.slice(1);
   return {
     name: generatedName,

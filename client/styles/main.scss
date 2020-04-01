@@ -14,6 +14,8 @@
 @import 'components/p5-light-codemirror-theme';
 @import 'components/p5-dark-codemirror-theme';
 @import 'components/p5-contrast-codemirror-theme';
+@import 'components/account';
+@import 'components/api-key';
 @import 'components/editor';
 @import 'components/nav';
 @import 'components/preview-nav';
@@ -39,11 +41,21 @@
 @import 'components/help-modal';
 @import 'components/share';
 @import 'components/asset-list';
+@import 'components/asset-size';
 @import 'components/keyboard-shortcuts';
 @import 'components/copyable-input';
 @import 'components/feedback';
 @import 'components/loader';
 @import 'components/uploader';
+@import 'components/tabs';
+@import 'components/dashboard-header';
+@import 'components/editable-input';
+@import 'components/collection';
+@import 'components/collection-create';
+@import 'components/collection-popover';
+@import 'components/quick-add';
 
+@import 'layout/dashboard';
 @import 'layout/ide';
 @import 'layout/fullscreen';
+@import 'layout/user';

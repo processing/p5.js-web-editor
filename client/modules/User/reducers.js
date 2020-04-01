@@ -31,6 +31,10 @@ const user = (state = { authenticated: false }, action) => {
       return Object.assign({}, state, { emailVerificationTokenState: 'invalid' });
     case ActionTypes.SETTINGS_UPDATED:
       return { ...state, ...action.user };
+    case ActionTypes.API_KEY_REMOVED:
+      return { ...state, ...action.user };
+    case ActionTypes.API_KEY_CREATED:
+      return { ...state, ...action.user };
     default:
       return state;
   }

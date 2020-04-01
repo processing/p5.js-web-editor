@@ -66,11 +66,11 @@ export function dropzoneAcceptCallback(userId, file, done) {
           done();
         })
         .catch((response) => {
-        file.custom_status = 'rejected'; // eslint-disable-line
-          if (response.data.responseText && response.data.responseText.message) {
+          file.custom_status = 'rejected'; // eslint-disable-line
+          if (response.data && response.data.responseText && response.data.responseText.message) {
             done(response.data.responseText.message);
           }
-          done('error preparing the upload');
+          done('Error: Reached upload limit.');
         });
     }
   };

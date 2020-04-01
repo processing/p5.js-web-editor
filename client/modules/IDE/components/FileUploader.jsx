@@ -30,7 +30,7 @@ class FileUploader extends React.Component {
       thumbnailWidth: 200,
       thumbnailHeight: 200,
       acceptedFiles: fileExtensionsAndMimeTypes,
-      dictDefaultMessage: 'Drop files here to upload or click to use the file browser',
+      dictDefaultMessage: 'Drop files here or click to use the file browser',
       accept: this.props.dropzoneAcceptCallback.bind(this, userId),
       sending: this.props.dropzoneSendingCallback,
       complete: this.props.dropzoneCompleteCallback

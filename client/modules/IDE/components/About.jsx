@@ -34,7 +34,7 @@ function About(props) {
             rel="noopener noreferrer"
           >
             <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
-          Examples
+            Examples
           </a>
         </p>
         <p className="about__content-column-list">
@@ -44,7 +44,7 @@ function About(props) {
             rel="noopener noreferrer"
           >
             <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
-          Learn
+            Learn
           </a>
         </p>
       </div>
@@ -57,7 +57,7 @@ function About(props) {
             rel="noopener noreferrer"
           >
             <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
-          Libraries
+            Libraries
           </a>
         </p>
         <p className="about__content-column-list">
@@ -67,7 +67,7 @@ function About(props) {
             rel="noopener noreferrer"
           >
             <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
-          Reference
+            Reference
           </a>
         </p>
         <p className="about__content-column-list">
@@ -77,7 +77,7 @@ function About(props) {
             rel="noopener noreferrer"
           >
             <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
-          Forum
+            Forum
           </a>
         </p>
       </div>

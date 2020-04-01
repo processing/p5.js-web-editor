@@ -16,10 +16,12 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import config from '../webpack/config.dev';
 
 // Import all required modules
+import api from './routes/api.routes';
 import users from './routes/user.routes';
 import sessions from './routes/session.routes';
 import projects from './routes/project.routes';
 import files from './routes/file.routes';
+import collections from './routes/collection.routes';
 import aws from './routes/aws.routes';
 import serverRoutes from './routes/server.routes';
 import embedRoutes from './routes/embed.routes';
@@ -95,15 +97,27 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/api', requestsOfTypeJSON(), users);
-app.use('/api', requestsOfTypeJSON(), sessions);
-app.use('/api', requestsOfTypeJSON(), files);
-app.use('/api', requestsOfTypeJSON(), projects);
-app.use('/api', requestsOfTypeJSON(), aws);
-app.use(assetRoutes);
+app.use('/api/v1', requestsOfTypeJSON(), api);
+app.use('/editor', requestsOfTypeJSON(), users);
+app.use('/editor', requestsOfTypeJSON(), sessions);
+app.use('/editor', requestsOfTypeJSON(), files);
+app.use('/editor', requestsOfTypeJSON(), projects);
+app.use('/editor', requestsOfTypeJSON(), aws);
+app.use('/editor', requestsOfTypeJSON(), collections);
+
+// This is a temporary way to test access via Personal Access Tokens
+// Sending a valid username:<personal-access-token> combination will
+// return the user's information.
+app.get(
+  '/api/v1/auth/access-check',
+  passport.authenticate('basic', { session: false }), (req, res) => res.json(req.user)
+);
+
 // this is supposed to be TEMPORARY -- until i figure out
 // isomorphic rendering
 app.use('/', serverRoutes);
+
+app.use(assetRoutes);
 
 app.use('/', embedRoutes);
 app.get('/auth/github', passport.authenticate('github'));
