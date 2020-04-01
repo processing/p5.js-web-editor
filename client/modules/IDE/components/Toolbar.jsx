@@ -32,7 +32,7 @@ class Toolbar extends React.Component {
   }
 
   validateProjectName() {
-    if (!(this.props.project.name.trim()).length) {
+    if ((this.props.project.name.trim()).length === 0) {
       this.props.setProjectName(this.originalProjectName);
     }
   }
