@@ -15,25 +15,19 @@
   }
 }
 
-button[type="submit"].searchbar__button {
+div.searchbar__button {
   background-color: unset;
   width: #{31 / $base-font-size}rem;
   height: #{36 / $base-font-size}rem;
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 0;
   border: 0;
   border-right: solid 1px;
   @include themify() {
     border-right-color: getThemifyVariable('input-border-color');
-  }
-  &:enabled:hover {
-    background-color: unset;
-    @include themify() {
-      border-right-color: getThemifyVariable('input-border-color');
-    }
-    & g {
-      fill: unset;
-    }
   }
 }
 
@@ -43,6 +37,7 @@ button[type="submit"].searchbar__button {
     width: #{22 / $base-font-size}rem;
     height: #{27 / $base-font-size}rem;
     transform: scaleX(-1);
+    padding-top: #{3 / $base-font-size}rem;
     @include themify() {
       fill: getThemifyVariable('input-text-color');
     }
