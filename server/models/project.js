@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 import shortid from 'shortid';
 import slugify from 'slugify';
-
 // Register User model as it's referenced by Project
 import './user';
+
 
 const { Schema } = mongoose;
 
@@ -31,6 +31,7 @@ const projectSchema = new Schema(
   {
     name: { type: String, default: "Hello p5.js, it's the server" },
     user: { type: Schema.Types.ObjectId, ref: 'User' },
+    isPrivate: { type: Boolean },
     serveSecure: { type: Boolean, default: false },
     files: { type: [fileSchema] },
     _id: { type: String, default: shortid.generate },
