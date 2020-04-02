@@ -258,6 +258,7 @@ class SketchListRowBase extends React.Component {
           onKeyUp={this.handleRenameEnter}
           onBlur={this.resetSketchName}
           onClick={e => e.stopPropagation()}
+          ref={this.renameInput}
         />
         }
       </React.Fragment>
