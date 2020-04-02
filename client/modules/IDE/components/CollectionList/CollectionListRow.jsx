@@ -25,6 +25,7 @@ class CollectionListRowBase extends React.Component {
       renameOpen: false,
       renameValue: '',
     };
+    this.renameInput = React.createRef();
   }
 
   onFocusComponent = () => {
@@ -89,7 +90,7 @@ class CollectionListRowBase extends React.Component {
     this.setState({
       renameOpen: true,
       renameValue: this.props.collection.name,
-    });
+    }, () => this.renameInput.current.focus());
   }
 
   handleRenameChange = (e) => {
@@ -99,23 +100,23 @@ class CollectionListRowBase extends React.Component {
   }
 
   handleRenameEnter = (e) => {
-    const isValid = this.state.renameValue !== '';
-
     if (e.key === 'Enter') {
-      if (isValid) {
-        this.props.editCollection(this.props.collection.id, { name: this.state.renameValue });
-      }
-
-      // this.resetName();
+      this.updateName();
       this.closeAll();
     }
   }
 
-  // resetName = () => {
-  //   this.setState({
-  //     renameValue: this.props.collection.name
-  //   });
-  // }
+  handleRenameBlur = () => {
+    this.updateName();
+    this.closeAll();
+  }
+
+  updateName = () => {
+    const isValid = this.state.renameValue.trim().length !== 0;
+    if (isValid) {
+      this.props.editCollection(this.props.collection.id, { name: this.state.renameValue.trim() });
+    }
+  }
 
   renderActions = () => {
     const { optionsOpen } = this.state;
@@ -188,8 +189,9 @@ class CollectionListRowBase extends React.Component {
             value={renameValue}
             onChange={this.handleRenameChange}
             onKeyUp={this.handleRenameEnter}
-            // onBlur={this.resetName}
+            onBlur={this.handleRenameBlur}
             onClick={e => e.stopPropagation()}
+            ref={this.renameInput}
           />
         }
       </React.Fragment>

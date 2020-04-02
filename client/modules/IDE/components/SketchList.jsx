@@ -70,7 +70,8 @@ class SketchListRowBase extends React.Component {
 
   openRename = () => {
     this.setState({
-      renameOpen: true
+      renameOpen: true,
+      renameValue: this.props.sketch.name
     }, () => this.renameInput.current.focus());
   }
 
@@ -95,15 +96,27 @@ class SketchListRowBase extends React.Component {
 
   handleRenameEnter = (e) => {
     if (e.key === 'Enter') {
-      // TODO pass this func
-      this.props.changeProjectName(this.props.sketch.id, this.state.renameValue);
+      this.updateName();
       this.closeAll();
+    }
+  }
+
+  handleRenameBlur = () => {
+    this.updateName();
+    this.closeAll();
+  }
+
+  updateName = () => {
+    const isValid = this.state.renameValue.trim().length !== 0;
+    if (isValid) {
+      this.props.changeProjectName(this.props.sketch.id, this.state.renameValue.trim());
     }
   }
 
   resetSketchName = () => {
     this.setState({
-      renameValue: this.props.sketch.name
+      renameValue: this.props.sketch.name,
+      renameOpen: false
     });
   }
 
@@ -256,7 +269,7 @@ class SketchListRowBase extends React.Component {
           value={renameValue}
           onChange={this.handleRenameChange}
           onKeyUp={this.handleRenameEnter}
-          onBlur={this.resetSketchName}
+          onBlur={this.handleRenameBlur}
           onClick={e => e.stopPropagation()}
           ref={this.renameInput}
         />
