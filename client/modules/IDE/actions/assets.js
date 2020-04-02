@@ -30,8 +30,23 @@ export function getAssets() {
   };
 }
 
-export function deleteAsset(assetKey, userId) {
+export function deleteAsset(assetKey) {
   return {
-    type: 'PLACEHOLDER'
+    type: ActionTypes.DELETE_ASSET,
+    key: assetKey
+  };
+}
+
+export function deleteAssetRequest(assetKey) {
+  return (dispatch) => {
+    axios.delete(`${ROOT_URL}/S3/${assetKey}`, { withCredentials: true })
+      .then((response) => {
+        dispatch(deleteAsset(assetKey));
+      })
+      .catch(() => {
+        dispatch({
+          type: ActionTypes.ERROR
+        });
+      });
   };
 }

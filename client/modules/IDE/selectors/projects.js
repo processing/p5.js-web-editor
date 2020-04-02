@@ -6,7 +6,7 @@ import { DIRECTION } from '../actions/sorting';
 const getSketches = state => state.sketches;
 const getField = state => state.sorting.field;
 const getDirection = state => state.sorting.direction;
-const getSearchTerm = state => state.search.searchTerm;
+const getSearchTerm = state => state.search.sketchSearchTerm;
 
 const getFilteredSketches = createSelector(
   getSketches,

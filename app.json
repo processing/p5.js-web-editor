@@ -16,7 +16,7 @@
   ],
   "env": {
     "API_URL": {
-      "value": "/api"
+      "value": "/editor"
     },
     "AWS_ACCESS_KEY": {
       "description": "AWS Access Key",

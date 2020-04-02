@@ -75,6 +75,19 @@ export function closeNewFileModal() {
   };
 }
 
+export function openUploadFileModal(parentId) {
+  return {
+    type: ActionTypes.OPEN_UPLOAD_FILE_MODAL,
+    parentId
+  };
+}
+
+export function closeUploadFileModal() {
+  return {
+    type: ActionTypes.CLOSE_UPLOAD_FILE_MODAL
+  };
+}
+
 export function expandSidebar() {
   return {
     type: ActionTypes.EXPAND_SIDEBAR
