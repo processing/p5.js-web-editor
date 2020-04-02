@@ -11,7 +11,7 @@
 
 .sketches-table {
   width: 100%;
-  padding: #{10 / $base-font-size}rem #{20 / $base-font-size}rem;
+  
   max-height: 100%;
   border-spacing: 0;
   & .sketch-list__dropdown-column {
@@ -22,6 +22,11 @@
 
 .sketches-table thead th {
   height: #{32 / $base-font-size}rem;
+  position: sticky;
+  top: 0;
+  @include themify() {
+    background-color: getThemifyVariable('background-color');
+  }
 }
 
 .sketch-list__sort-button {
@@ -61,12 +66,16 @@
 
 .sketches-table__row:nth-child(odd) {
   @include themify() {
-    background: getThemifyVariable('console-header-background-color');
+    background: getThemifyVariable('table-row-stripe-color');
   }
 }
 
 .sketches-table__row > th:nth-child(1) {
   padding-left: #{12 / $base-font-size}rem;
+}
+
+.sketches-table__row > td {
+  padding-left: #{8 / $base-font-size}rem;
 }
 
 .sketches-table__row a {
@@ -86,6 +95,7 @@
   font-weight: normal;
 }
 
+
 .sketch-list__dropdown-button {
   width:#{25 / $base-font-size}rem;
   height:#{25 / $base-font-size}rem;
@@ -96,17 +106,23 @@
   }
 }
 
+.sketches-table__name {
+  display: flex;
+  align-items: center;
+}
+
+.sketches-table__icon-cell {
+  width: #{35 / $base-font-size}rem;
+}
+
 .sketch-list__action-dialogue {
   @extend %dropdown-open-right;
   top: 63%;
   right: calc(100% - 26px);
 }
 
-.sketch-list__action-option {
-
-}
-
 .sketches-table__empty {
   text-align: center;
   font-size: #{16 / $base-font-size}rem;
+  padding: #{42 / $base-font-size}rem 0;
 }

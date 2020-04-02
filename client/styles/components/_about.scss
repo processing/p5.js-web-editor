@@ -46,7 +46,9 @@
   padding-left: #{20 / $base-font-size}rem;
   width: #{720 / $base-font-size}rem;
   & a {
-    color: $form-navigation-options-color;
+    @include themify() {
+      color: getThemifyVariable('form-navigation-options-color');
+    }
   }
 }
 
