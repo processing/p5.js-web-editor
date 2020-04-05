@@ -163,7 +163,7 @@ class IDEView extends React.Component {
       } else {
         this.props.collapseSidebar();
       }
-    } else if (e.keyCode === 192 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
+    } else if (e.keyCode === 192 && e.ctrlKey) {
       e.preventDefault();
       if (this.props.ide.consoleIsExpanded) {
         this.props.collapseConsole();
