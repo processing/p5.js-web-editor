@@ -147,7 +147,7 @@ userSchema.statics.findByMailOrName = function findByMailOrName(email) {
     $or: [{
       email: new RegExp(`^${escapeStringRegexp(email)}$`, 'i'),
     }, {
-        username: new RegExp(`^${escapeStringRegexp(email)}$`, 'i'),
+      username: new RegExp(`^${escapeStringRegexp(email)}$`, 'i'),
     }],
   };
   return this.findOne(query).exec();
