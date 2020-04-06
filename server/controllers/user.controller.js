@@ -39,15 +39,15 @@ export function findUserByUsername(username, cb) {
 }
 
 export function createUser(req, res, next) {
-  let { username, email } = req.body;
+  const { username, email } = req.body;
   const { password } = req.body;
-  username = username.toLowerCase();
-  email = email.toLowerCase();
+  const usernameLowerCase = username.toLowerCase();
+  const emailLowerCase = email.toLowerCase();
   const EMAIL_VERIFY_TOKEN_EXPIRY_TIME = Date.now() + (3600000 * 24); // 24 hours
   random((tokenError, token) => {
     const user = new User({
-      username,
-      email,
+      username: usernameLowerCase,
+      email: emailLowerCase,
       password,
       verified: User.EmailConfirmation.Sent,
       verifiedToken: token,
@@ -57,8 +57,8 @@ export function createUser(req, res, next) {
     User.findOne(
       {
         $or: [
-          { email },
-          { username }
+          { email: { $in: [ email, emailLowerCase ]} },
+          { username: { $in: [ username, usernameLowerCase ]} }
         ]
       },
       (err, existingUser) => {
@@ -68,7 +68,7 @@ export function createUser(req, res, next) {
         }
 
         if (existingUser) {
-          const fieldInUse = existingUser.email === email ? 'Email' : 'Username';
+          const fieldInUse = existingUser.email.toLowerCase() === emailLowerCase ? 'Email' : 'Username';
           res.status(422).send({ error: `${fieldInUse} is in use` });
           return;
         }
