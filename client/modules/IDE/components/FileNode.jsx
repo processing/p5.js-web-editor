@@ -160,6 +160,7 @@ export class FileNode extends React.Component {
                   type="text"
                   className="sidebar__file-item-input"
                   value={this.props.name}
+                  maxLength="128"
                   onChange={this.handleFileNameChange}
                   ref={(element) => { this.fileNameInput = element; }}
                   onBlur={() => {
