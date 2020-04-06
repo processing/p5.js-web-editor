@@ -1,28 +1,4 @@
-.github-button {
-  @include themify() {
-    @extend %button;
-    & path {
-      color: getThemifyVariable('primary-text-color');
-    }
-    &:hover path, &:active path {
-      fill: $white;
-    }
-    &:hover, &:active {
-      background-color: getThemifyVariable('secondary-text-color');
-      border-color: getThemifyVariable('secondary-text-color');
-    }
-  }
-  width: #{300 / $base-font-size}rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.github-icon {
-  margin-right: #{10 / $base-font-size}rem;
-}
-
-
+.github-button,
 .google-button {
   @include themify() {
     @extend %button;
@@ -33,16 +9,23 @@
       fill: $white;
     }
     &:hover, &:active {
-      background-color: getThemifyVariable('secondary-text-color');
-      border-color: getThemifyVariable('secondary-text-color');
+      color: getThemifyVariable('button-hover-color');
+      background-color: getThemifyVariable('button-background-hover-color');
+      border-color: getThemifyVariable('button-background-hover-color');
     }
   }
-  margin-top: #{4 / $base-font-size}rem;
+  width: #{300 / $base-font-size}rem;
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
-  width: #{300 / $base-font-size}rem;
+
+  & + & {
+    margin-top: #{10 / $base-font-size}rem;
+  }
+}
+
+.github-icon {
+  margin-right: #{10 / $base-font-size}rem;
 }
 
 .google-icon {
