@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import escapeStringRegexp from 'escape-string-regexp';
 
 const bcrypt = require('bcrypt-nodejs');
 
@@ -144,9 +145,9 @@ userSchema.methods.findMatchingKey = function findMatchingKey(candidateKey, cb) 
 userSchema.statics.findByMailOrName = function findByMailOrName(email) {
   const query = {
     $or: [{
-      email,
+      email: new RegExp(`^${escapeStringRegexp(email)}$`, 'i'),
     }, {
-      username: email,
+        username: new RegExp(`^${escapeStringRegexp(email)}$`, 'i'),
     }],
   };
   return this.findOne(query).exec();

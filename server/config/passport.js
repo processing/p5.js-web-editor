@@ -24,7 +24,7 @@ passport.deserializeUser((id, done) => {
  * Sign in using Email/Username and Password.
  */
 passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
-  User.findByMailOrName(email.toLowerCase())
+  User.findByMailOrName(email)
     .then((user) => { // eslint-disable-line consistent-return
       if (!user) {
         return done(null, false, { msg: `Email ${email} not found.` });

@@ -1,5 +1,6 @@
 import crypto from 'crypto';
 import async from 'async';
+import escapeStringRegexp from 'escape-string-regexp';
 
 import User from '../models/user';
 import mail from '../utils/mail';
@@ -41,12 +42,11 @@ export function findUserByUsername(username, cb) {
 export function createUser(req, res, next) {
   const { username, email } = req.body;
   const { password } = req.body;
-  const usernameLowerCase = username.toLowerCase();
   const emailLowerCase = email.toLowerCase();
   const EMAIL_VERIFY_TOKEN_EXPIRY_TIME = Date.now() + (3600000 * 24); // 24 hours
   random((tokenError, token) => {
     const user = new User({
-      username: usernameLowerCase,
+      username: username,
       email: emailLowerCase,
       password,
       verified: User.EmailConfirmation.Sent,
@@ -57,8 +57,8 @@ export function createUser(req, res, next) {
     User.findOne(
       {
         $or: [
-          { email: { $in: [ email, emailLowerCase ]} },
-          { username: { $in: [ username, usernameLowerCase ]} }
+          { email: new RegExp(`^${escapeStringRegexp(email)}$`, 'i') },
+          { username: new RegExp(`^${escapeStringRegexp(username)}$`, 'i') }
         ]
       },
       (err, existingUser) => {
@@ -106,7 +106,7 @@ export function duplicateUserCheck(req, res) {
   const checkType = req.query.check_type;
   const value = req.query[checkType];
   const query = {};
-  query[checkType] = value;
+  query[checkType] = new RegExp(`^${escapeStringRegexp(value)}$`, 'i');
   User.findOne(query, (err, user) => {
     if (user) {
       return res.json({
@@ -151,7 +151,7 @@ export function resetPasswordInitiate(req, res) {
   async.waterfall([
     random,
     (token, done) => {
-      User.findOne({ email: req.body.email }, (err, user) => {
+      User.findOne({ email: req.body.email.toLowerCase() }, (err, user) => {
         if (!user) {
           res.json({ success: true, message: 'If the email is registered with the editor, an email has been sent.' });
           return;
@@ -281,7 +281,7 @@ export function updatePassword(req, res) {
 }
 
 export function userExists(username, callback) {
-  User.findOne({ username }, (err, user) => (
+  User.findOne({ username: new RegExp(`^${escapeStringRegexp(username)}$`, 'i') }, (err, user) => (
     user ? callback(true) : callback(false)
   ));
 }
