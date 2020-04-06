@@ -1,41 +1,41 @@
-# Public API
+# API Pública
 
-This API provides a way to programmatically import data into the p5.js Web Editor.
+Essa API provê uma forma de importar informações para o p5.js Web Editor de forma programática.
 
-# Authentication
+# Authenticação 
 
-Access to the API is available via a Personal Access Token, linked to an existing editor user account. Tokens can be created and deleted via logged-in user’s Settings page.
+Acesso à API está disponível via um Token de Acesso Pessoal, relacionado à uma conta de editor existente. Tokens podem ser criados e deletados na tela de Configurações de um usuário loggado.
 
-When contacting the API, the username and token must be sent with every request using basic auth.
+Quando entrar em contato com a API, o nome de usuário e token devem ser enviados em todas requisições usando autenticação básica.
 
-This involved sending the base64 encoded `${username}:${personalAccessToken}` in the `Authorization` header. For example:
+Isso envolve enviar o base64 codificado `${username}:${personalAccessToken}` no header `Authorization`, Por exemplo:
   `Authorization: Basic cDU6YWJjMTIzYWJj`
 
-# API Access
+# Acesso à API
 
-- All requests send and receive `Content-Type: application/json` unless otherwise stated
+- Toda requisição envia e recebe `Content-Type: application/json` a não ser que seja declarado o contrário
 
-# Versioning
+# Versionamento
 
-The API is versioned and this version is indicated in the root URL path e.g. version 1 of the API can be found at `http://editor.p5js.org/api/v1`.
+A API é versionada e essa versão está indicada no caminho raíz da URL e.g. a versão 1 da API pode ser encontrada em `http://editor.p5js.org/api/v1`.
 
-You must provide the version number when accessing the API.
+Você deve fornecer o número da versão quando acessar a API.
 
-| Version | Release date |
-| ------- | ------------ |
-| v1      | Unreleased   |
+| Versão | Data de lançamento |
+| ------ | ------------------ |
+| v1     | Não lançado        |
 
 # Models
 
-The API accepts and returns the following model objects, as JSON.
+A API aceita e retorna as seguintes Models como JSON.
 
 ## Sketch
 
-| Name  |       Type        |                                     Description                                      |
-| ----- | ----------------- | ------------------------------------------------------------------------------------ |
-| name  | String            | The sketch’s title                                                                   |
-| files | DirectoryContents | The files and directories in this sketch. See `DirectoryContents` for the structure. |
-| slug  | String            | A path that can be used to access the sketch                                         |
+| Nome  | Tipo              | Descrição                                                                      |
+| ----- | ----------------- | ------------------------------------------------------------------------------ |
+| name  | String            | O título do esboço                                                             |
+| files | DirectoryContents | Os arquivos e diretórios no esboço. Veja `DirectoryContents` para a estrutura. |
+| slug  | String            | Um caminho que pode ser usado para acessar o esboço                            |
 
 
     {
@@ -45,16 +45,15 @@ The API accepts and returns the following model objects, as JSON.
       "slug": String // optional
     }
 
-### Validations
+### Validações
 
-- `files` must have exactly one top-level file with the `.html` extension. If none is provided, then a default `index.html` and associated `style.css` will be automatically created.
-- `slug` must be an URL-safe string
-- `slug` must be unique across all user's sketches
+- `files` devem ter exatamente exatamente um arquivo no nível mais alto com a extenção `.html`. Se nenhum for fornecido um `index.html` padrão e um `style.css` associado serão automaticamente criados.
+- `slug` deve ser uma string segura pra URL
+- `slug` deve ser única entre todos os esboços do usuário
 
 ## DirectoryContents
 
-A map of filenames to `File` or `Directory`. The key of each item is used as the filename. Using a map ensures that filenames are unique in the directory.
-
+Um map de nomes de arquivo para `File` ou `Directory`. A chave para cada item é usada como nome do arquivo. Usar um map assegura que nomes de arquivo sejam únicos no diretório.
 
     {
       [String]:  File | Directory
@@ -68,11 +67,11 @@ A map of filenames to `File` or `Directory`. The key of each item is used as the
 
 ## DirectFile
 
-This file is editable in the Editor UI and stored in the Editor's database.
+Isso é editável na interfáce do editor e guardada no bando de dados do Editor.
 
-| Name    | Type         | Description                                |
-| ------- | ------------ | ------------------------------------------ |
-| content | UTF-8 String | The contents of the file as a UTF-8 string |
+| Nome    | Tipo         | Descrição                                   |
+| ------- | ------------ | ------------------------------------------- |
+| content | UTF-8 String | O conteúdo do arquivo como uma UTF-8 string |
 
     {
       "content": String
@@ -80,12 +79,12 @@ This file is editable in the Editor UI and stored in the Editor's database.
 
 ## ReferencedFile
 
-This file is hosted elsewhere on the Internet. It appears in the Editor's listing and can be referenced using a proxy URL in the Editor.
+Esse arquivo é hospedado em outro lugar na Internet. Ele aparece na listagem do Editor e pode ser referenciado usando um proxy URL no Editor.
 
 
-| Name | Type |                   Description                   |
-| ---- | ---- | ----------------------------------------------- |
-| url  | URL  | A valid URL pointing to a file hosted elsewhere |
+| Nome | Tipo | Descrição                                                         |
+| ---- | ---- | ----------------------------------------------------------------- |
+| url  | URL  | Uma URL váçida apontando para um arquivo hospedado em outro lugar |
 
     {
       "url": URL
@@ -93,37 +92,37 @@ This file is hosted elsewhere on the Internet. It appears in the Editor's listin
 
 ## File
 
-A `File` is either a `DirectFile` or `ReferencedFile`. The API supports both everywhere.
+Um `File` é ou um `DirectFile` ou um `ReferencedFile`. A API suporta os dois em todo lugar.
 
 ## Directory
 
-| Name  | Type              | Description                     |
-| ----- | ----------------- | ------------------------------- |
-| files | DirectoryContents | A map of the directory contents |
+| Nome  | Tipo              | Description                        |
+| ----- | ----------------- | ---------------------------------- |
+| files | DirectoryContents | Um map dos conteúdos ddo diretório |
 
     {
       "files": DirectoryContents
     }
 
-# API endpoints
+# Endpoints da API
 
 ## Sketches
 
 ## `GET /:user/sketches`
 
-List a user’s sketches.
+Liste os esboços de um usuário.
 
-This will not return the files within the sketch, just the sketch metadata.
+Isso não irá retornar os arquivos dentro de um esboço, apenas a metadata do esboço.
 
-### Request format
-No body.
+### Formato da requisição
+Sem corpo.
 
-### Response format
+### Formato da resposta
     {
       "sketches": Array<Sketch>
     }
 
-### Example
+### Exemplo
 
     GET /p5/sketches
     
@@ -137,19 +136,19 @@ No body.
 
 ## `POST /:user/sketches`
 
-Create a new sketch.
+Criar um novo esboço.
 
-A sketch must contain at least one file with the `.html` extension. If none if provided in the payload, a default `index.html` and linked `style.css` file will be created automatically.
+Um esboço deve conter pelo menos um arquivo com a extenção `.html`. Se nenhum for fornecido no payload, um `index.html` padrão e um arquivo `style.css` associado serão criados automaticamente.
 
-### Request format
-See `Sketch` in Models above.
+### Formato da requisição
+Veja `Sketch` nas Models abaixo.
 
-### Response format
+### Formato da resposta
     {
       "id": String
     }
 
-### Example
+### Exemplo
 
     POST /p5/sketches
     
@@ -161,7 +160,7 @@ See `Sketch` in Models above.
       }
     }
 
-`files` can be nested to represent a folder structure. For example, this will create an empty “data” directory in the sketch:
+`files` podem possuir uma hierarquia para representar uma estrutura de pastas. Por exemplo, isso irá criar um diretório "data" vazio no esboço:
 
 
     POST /p5/sketches
@@ -181,15 +180,15 @@ See `Sketch` in Models above.
        }
     }
 
-### Responses
+### Respostas
 
-|        HTTP code         |                               Body                                |
-| ------------------------ | ----------------------------------------------------------------- |
-| 201 Created              | id of sketch                                                      |
-| 422 Unprocessable Entity | file validation failed, unsupported filetype, slug already exists |
+| Código HTTP              | Descrição                                                                       |
+| ------------------------ | ------------------------------------------------------------------------------- |
+| 201 Created              | id do esboço                                                                    |
+| 422 Unprocessable Entity | falha na validação de um arquivo, tipo de arquivo não suportado, slug já existe |
 
 
-### Examples
+### Exemplos
 
     201 CREATED
     
@@ -199,21 +198,21 @@ See `Sketch` in Models above.
 
 ## `DELETE /:user/sketches/:id`
 
-Delete a sketch and all it’s associated files.
+Delete um esboço e todos os seus arquivos associados.
 
-### Request format
-No body
+### Formato da requisição
+Sem corpo
 
-### Response format
-No body
+### Formato da resposta
+Sem corpo
 
-### Example
+### Exemplo
 
     DELETE /p5/sketches/Ckhf0APpg
 
-### Responses
+### Respostas
 
-| HTTP code     | Description             |
-| ------------- | ----------------------- |
-| 200 OK        | Sketch has been deleted |
-| 404 Not Found | Sketch does not exist   |
+| Código HTTP   | Description         |
+| ------------- | ------------------- |
+| 200 OK        | Esboço foi deletado |
+| 404 Not Found | Esboço não existe   |
