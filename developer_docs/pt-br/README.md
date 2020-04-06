@@ -1,6 +1,7 @@
 Essa pasta contém documentos destinados à desenvolvedores do Editor Web de p5.js.
 
 ## Lista de Documentos
+* [Guia de contribuição](https://github.com/processing/p5.js-web-editor/blob/master/.github/CONTRIBUTING.md) - Um lugar para começar!
 * [Instalação](installation.md) - Um guia para configurar seu ambiente de desenvolvimento
 * [Desenvolvimento](development.md) - Um guia para adicionar código para o editor web
 * [Preparando um pull-request](preparing_a_pull_request.md) - Instruções para como fazer um pull-request
