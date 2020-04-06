@@ -29,6 +29,7 @@ class NewFolderForm extends React.Component {
             className="new-folder-form__name-input"
             id="name"
             type="text"
+            maxLength="128"
             placeholder="Name"
             ref={(element) => { this.fileName = element; }}
             {...domOnlyProps(name)}
