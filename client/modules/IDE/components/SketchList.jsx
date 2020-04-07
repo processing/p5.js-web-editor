@@ -312,7 +312,7 @@ SketchListRowBase.propTypes = {
   cloneProject: PropTypes.func.isRequired,
   exportProjectAsZip: PropTypes.func.isRequired,
   changeProjectName: PropTypes.func.isRequired,
-  onAddToCollection: PropTypes.func.isRequired,
+  onAddToCollection: PropTypes.func.isRequired
 };
 
 function mapDispatchToPropsSketchListRow(dispatch) {
