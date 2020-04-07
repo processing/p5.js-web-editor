@@ -61,7 +61,7 @@ export class FileNode extends React.Component {
 
 
   handleFileNameChange(event) {
-    this.props.updateFileName(this.props.id, event.target.value);
+    this.props.updateFileName(this.props.id, event.target.value, this.getName());
   }
 
   handleKeyPress(event) {
@@ -82,7 +82,7 @@ export class FileNode extends React.Component {
     const hasEmptyFilename = newFileName === '';
     const hasOnlyExtension = newFileExtension && newFileName === newFileExtension[0];
     if (hasEmptyFilename || hasNoExtension || notSameExtension || hasOnlyExtension || hasExtensionIfFolder) {
-      this.props.updateFileName(this.props.id, this.originalFileName);
+      this.props.updateFileName(this.props.id, this.originalFileName, this.getName());
     }
   }
 

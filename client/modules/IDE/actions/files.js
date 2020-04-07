@@ -135,11 +135,15 @@ export function createFolder(formProps) {
   };
 }
 
-export function updateFileName(id, name) {
-  return {
-    type: ActionTypes.UPDATE_FILE_NAME,
-    id,
-    name
+export function updateFileName(id, name, updatedName = '') {
+  return (dispatch) => {
+    // Notify Changes if necessary
+    // Update the Filename
+    dispatch({
+      type: ActionTypes.UPDATE_FILE_NAME,
+      id,
+      name
+    });
   };
 }
 
