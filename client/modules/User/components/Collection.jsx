@@ -327,44 +327,46 @@ class Collection extends React.Component {
         </Helmet>
         {this._renderLoader()}
         {this.hasCollection() && this._renderCollectionMetadata()}
-        <div className="collection-table-wrapper">
-          {this._renderEmptyTable()}
-          {this.hasCollectionItems() &&
-            <table className="sketches-table" summary="table containing all collections">
-              <thead>
-                <tr>
-                  {this._renderFieldHeader('name', 'Name')}
-                  {this._renderFieldHeader('createdAt', 'Date Added')}
-                  {this._renderFieldHeader('user', 'Owner')}
-                  <th scope="col"></th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.props.collection.items.map(item =>
-                  (<CollectionItemRow
-                    key={item.id}
-                    item={item}
-                    user={this.props.user}
-                    username={this.getUsername()}
-                    collection={this.props.collection}
-                  />))}
-              </tbody>
-            </table>
-          }
-          {
-            this.state.isAddingSketches && (
-              <Overlay
-                title="Add sketch"
-                actions={<SketchSearchbar />}
-                closeOverlay={this.hideAddSketches}
-                isFixedHeight
-              >
-                <div className="collection-add-sketch">
-                  <AddToCollectionSketchList username={this.props.username} collection={this.props.collection} />
-                </div>
-              </Overlay>
-            )
-          }
+        <div className="collection-content">
+          <div className="collection-table-wrapper">
+            {this._renderEmptyTable()}
+            {this.hasCollectionItems() &&
+              <table className="sketches-table" summary="table containing all collections">
+                <thead>
+                  <tr>
+                    {this._renderFieldHeader('name', 'Name')}
+                    {this._renderFieldHeader('createdAt', 'Date Added')}
+                    {this._renderFieldHeader('user', 'Owner')}
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.props.collection.items.map(item =>
+                    (<CollectionItemRow
+                      key={item.id}
+                      item={item}
+                      user={this.props.user}
+                      username={this.getUsername()}
+                      collection={this.props.collection}
+                    />))}
+                </tbody>
+              </table>
+            }
+            {
+              this.state.isAddingSketches && (
+                <Overlay
+                  title="Add sketch"
+                  actions={<SketchSearchbar />}
+                  closeOverlay={this.hideAddSketches}
+                  isFixedHeight
+                >
+                  <div className="collection-add-sketch">
+                    <AddToCollectionSketchList username={this.props.username} collection={this.props.collection} />
+                  </div>
+                </Overlay>
+              )
+            }
+          </div>
         </div>
       </section>
     );
