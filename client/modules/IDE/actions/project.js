@@ -132,7 +132,9 @@ export function saveProject(selectedFile = null, autosave = false) {
       return Promise.reject();
     }
     const formParams = Object.assign({}, state.project);
-    formParams.files = [...state.files];
+    formParams.files = [...state.files.map(file => ({ ...file, name: file.updatedName || file.name }))];
+    formParams.files.forEach((file) => { delete file.updatedName; });
+
     if (selectedFile) {
       const fileToUpdate = formParams.files.find(file => file.id === selectedFile.id);
       fileToUpdate.content = selectedFile.content;
