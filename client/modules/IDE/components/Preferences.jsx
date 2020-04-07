@@ -100,7 +100,10 @@ class Preferences extends React.Component {
           <TabList>
             <div className="tabs__titles">
               <Tab><h4 className="tabs__title">General Settings</h4></Tab>
+              {/* add sketch tab to the preference modal */}
+              <Tab><h4 className="tabs__title">Sketch Settings</h4></Tab>
               <Tab><h4 className="tabs__title">Accessibility</h4></Tab>
+
             </div>
           </TabList>
           <TabPanel>
@@ -227,6 +230,15 @@ class Preferences extends React.Component {
                   checked={!this.props.linewrap}
                 />
                 <label htmlFor="linewrap-off" className="preference__option">Off</label>
+              </div>
+            </div>
+          </TabPanel>
+          <TabPanel>
+            <div className="preference">
+              <h4 className="preference__title">Privacy Settings</h4>
+              <div className="preference__options">
+                <input type="checkbox" />
+                <label htmlFor="private-output-on" className="preference__option preference__canvas">Make Sketch Private</label>
               </div>
             </div>
           </TabPanel>
