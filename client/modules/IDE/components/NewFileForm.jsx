@@ -29,6 +29,7 @@ class NewFileForm extends React.Component {
             id="name"
             type="text"
             placeholder="Name"
+            maxLength="128"
             {...domOnlyProps(name)}
             ref={(element) => { this.fileName = element; }}
           />
