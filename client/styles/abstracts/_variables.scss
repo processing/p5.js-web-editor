@@ -12,6 +12,7 @@ $dodgerblue: #1E90FF;
 $icon-color: #8b8b8b;
 $icon-hover-color: #333;
 $p5-contrast-pink: #FFA9D9;
+$p5-contrast-lightgray: #f0f0f0;
 
 // Grays
 $dark: #333;
@@ -186,29 +187,29 @@ $themes: (
     modal-button-color: #333,
     heading-text-color: #e1e1e1,
     secondary-text-color: #e1e1e1,
-    inactive-text-color: #c1c1c1,
+    inactive-text-color: $p5-contrast-lightgray,
     background-color: #333,
     button-background-color: $white,
     button-color: $black,
     button-border-color: #979797,
     toolbar-button-color: #333333,
-    toolbar-button-background-color: #C1C1C1,
+    toolbar-button-background-color: $p5-contrast-lightgray,
     button-background-hover-color: $yellow,
     button-background-active-color: $yellow,
     button-nav-inactive-color: #a0a0a0,
     button-hover-color: #333333,
     button-active-color: #333333,
     modal-background-color: #444,
-    modal-button-background-color: #C1C1C1,
+    modal-button-background-color: $p5-contrast-lightgray,
     modal-border-color: #949494,
-    icon-color: #a9a9a9,
+    icon-color: #d9d9d9,
     icon-hover-color: $yellow,
     icon-toast-hover-color: $yellow,
     shadow-color: rgba(0, 0, 0, 0.16),
     console-background-color: #4f4f4f,
     console-color: $black,
     console-header-background-color: #3f3f3f,
-    console-header-color: #b5b5b5,
+    console-header-color: #d9d9d9,
     console-info-background-color: $lightsteelblue,
     console-warn-background-color: $orange,
     console-debug-background-color: $dodgerblue,
@@ -235,7 +236,7 @@ $themes: (
     primary-button-background-color: $p5js-pink,
 
     table-button-color: #333,
-    table-button-background-color: #C1C1C1,
+    table-button-background-color: $p5-contrast-lightgray,
     table-button-active-color: #333,
     table-button-background-active-color: #00FFFF,
     table-button-hover-color: #333,
