@@ -9,6 +9,7 @@ router.get('/full/:project_id/*', getProjectAsset);
 router.get('/:username/full/:project_id/*', getProjectAsset);
 router.get('/embed/:project_id/*', getProjectAsset);
 router.get('/:username/embed/:project_id/*', getProjectAsset);
+router.get('/:username/present/:project_id/*', getProjectAsset);
 
 router.get('/sketches/:project_id/assets/*?', getFileContent);
 
