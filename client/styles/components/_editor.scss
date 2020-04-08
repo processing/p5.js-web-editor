@@ -1,7 +1,4 @@
 .CodeMirror {
-  @include themify() {
-  	border: 1px solid getThemifyVariable('ide-border-color');
-  }
   font-family: Inconsolata, monospace;
   height: 100%;
 }
@@ -328,7 +325,10 @@ pre.CodeMirror-line {
   height: calc(100% - #{29 / $base-font-size}rem);
   width: 100%;
   position: absolute;
-  &.editor-holder--hidden {
+  @include themify() {
+    border: 1px solid getThemifyVariable('ide-border-color');
+  }
+  &.editor-holder--hidden .CodeMirror {
     display: none;
   }
 }
