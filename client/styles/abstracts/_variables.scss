@@ -12,7 +12,7 @@ $dodgerblue: #1E90FF;
 $icon-color: #8b8b8b;
 $icon-hover-color: #333;
 $p5-contrast-pink: #FFA9D9;
-$p5-contrast-lightgray: #f2f2f2;
+$p5-contrast-lightgray: #f0f0f0;
 
 // Grays
 $dark: #333;
@@ -202,14 +202,14 @@ $themes: (
     modal-background-color: #444,
     modal-button-background-color: $p5-contrast-lightgray,
     modal-border-color: #949494,
-    icon-color: #ddd,
+    icon-color: #d9d9d9,
     icon-hover-color: $yellow,
     icon-toast-hover-color: $yellow,
     shadow-color: rgba(0, 0, 0, 0.16),
     console-background-color: #4f4f4f,
     console-color: $black,
     console-header-background-color: #3f3f3f,
-    console-header-color: #ddd,
+    console-header-color: #d9d9d9,
     console-info-background-color: $lightsteelblue,
     console-warn-background-color: $orange,
     console-debug-background-color: $dodgerblue,
