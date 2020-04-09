@@ -26,8 +26,8 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: 20px;
-		height: 20px;
+		width: #{20 / $base-font-size}rem;
+		height: #{20 / $base-font-size}rem;
 	}
 }
 
@@ -50,8 +50,8 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: 20px;
-		height: 20px;
+		width: #{20 / $base-font-size}rem;
+		height: #{20 / $base-font-size}rem;
 	}
 }
 
@@ -74,8 +74,8 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: 20px;
-		height: 20px;
+		width: #{20 / $base-font-size}rem;
+		height: #{20 / $base-font-size}rem;
 	}
 }
 
