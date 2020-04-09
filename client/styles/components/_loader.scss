@@ -1,9 +1,17 @@
+.loader-container {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+
 .loader {
 	width: #{80 / $base-font-size }rem;
 	height: #{80 /  $base-font-size}rem;
 
 	position: relative;
-	margin: #{100 /  $base-font-size}rem auto;
 }
 
 .loader__circle1,

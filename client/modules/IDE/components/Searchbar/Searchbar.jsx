@@ -44,13 +44,9 @@ class Searchbar extends React.Component {
     const { searchValue } = this.state;
     return (
       <div className={`searchbar ${searchValue === '' ? 'searchbar--is-empty' : ''}`}>
-        <button
-          type="submit"
-          className="searchbar__button"
-          onClick={this.handleSearchEnter}
-        >
+        <div className="searchbar__button">
           <InlineSVG className="searchbar__icon" src={searchIcon} />
-        </button>
+        </div>
         <input
           className="searchbar__input"
           type="text"
