@@ -1,12 +1,15 @@
 .collection-container {
   padding: #{24 / $base-font-size}rem #{66 / $base-font-size}rem;
+  position: relative;
   flex: 1;
+  overflow: hidden;
   display: flex;
-  flex-direction: column;
+  flex-direction:column;
 }
 
 .collection-metadata {
-  width: #{1012 / $base-font-size}rem;
+  max-width: #{1012 / $base-font-size}rem;
+  width: 100%;
   margin: 0 auto;
   margin-bottom: #{24 / $base-font-size}rem;
 }
@@ -114,15 +117,28 @@
   flex-grow: 0;
 }
 
-.collection-table-wrapper {
-  width: #{1012 / $base-font-size}rem;
-  margin: 0 auto;
+.collection-content {
+  display: flex;
+  flex-direction: column;
   flex: 1;
+  overflow: hidden;
+  max-width: #{1012 / $base-font-size}rem;
+  margin: 0 auto;
+  width: 100%;
+
   @include themify() {
     border: 1px solid getThemifyVariable('modal-border-color');
   }
 }
 
+.collection-table-wrapper {
+  overflow-y: auto;
+  max-width: 100%;
+  min-height: 100%;
+}
+
+
+// maybe don't need this?
 [data-has-items=false] .collection-table-wrapper {
   display: flex;
   justify-content: center;
