@@ -380,15 +380,15 @@ Collection.propTypes = {
   }).isRequired,
   getCollections: PropTypes.func.isRequired,
   collection: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
+    id: PropTypes.string,
+    name: PropTypes.string,
     slug: PropTypes.string,
     description: PropTypes.string,
     owner: PropTypes.shape({
-      username: PropTypes.string.isRequired,
+      username: PropTypes.string,
     }).isRequired,
     items: PropTypes.arrayOf(PropTypes.shape({})),
-  }).isRequired,
+  }),
   username: PropTypes.string,
   loading: PropTypes.bool.isRequired,
   toggleDirectionForField: PropTypes.func.isRequired,
@@ -401,7 +401,14 @@ Collection.propTypes = {
 };
 
 Collection.defaultProps = {
-  username: undefined
+  username: undefined,
+  collection: {
+    id: undefined,
+    items: [],
+    owner: {
+      username: undefined
+    }
+  }
 };
 
 function mapStateToProps(state, ownProps) {

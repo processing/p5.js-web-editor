@@ -72,6 +72,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
+  return {};
 }
 
 CollectionView.propTypes = {
@@ -84,7 +85,7 @@ CollectionView.propTypes = {
   }).isRequired,
   theme: PropTypes.string.isRequired,
   user: PropTypes.shape({
-    username: PropTypes.string.isRequired,
+    username: PropTypes.string,
   }),
 };
 
