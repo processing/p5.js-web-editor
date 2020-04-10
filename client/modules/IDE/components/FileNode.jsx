@@ -31,6 +31,7 @@ export class FileNode extends React.Component {
       isOptionsOpen: false,
       isEditingName: false,
       isFocused: false,
+      updatedName: this.props.name
     };
   }
 
@@ -48,8 +49,16 @@ export class FileNode extends React.Component {
   }
 
   getName() {
-    const { updatedName, name } = this.props;
-    return updatedName || name;
+    return this.state.updatedName;
+  }
+
+  commitFileNameChange() {
+    const { updatedName } = this.state;
+    const { name, updateFileName, id } = this.props;
+
+    if (updatedName !== name) {
+      updateFileName(id, updatedName);
+    }
   }
 
   handleFileClick(e) {
@@ -59,9 +68,9 @@ export class FileNode extends React.Component {
     }
   }
 
-
   handleFileNameChange(event) {
-    this.props.updateFileName(this.props.id, event.target.value, this.getName());
+    const newname = event.target.value;
+    this.setState({ updatedName: newname });
   }
 
   handleKeyPress(event) {
@@ -82,7 +91,7 @@ export class FileNode extends React.Component {
     const hasEmptyFilename = newFileName === '';
     const hasOnlyExtension = newFileExtension && newFileName === newFileExtension[0];
     if (hasEmptyFilename || hasNoExtension || notSameExtension || hasOnlyExtension || hasExtensionIfFolder) {
-      this.props.updateFileName(this.props.id, this.originalFileName, this.getName());
+      this.props.updateFileName(this.props.id, this.originalFileName);
     }
   }
 
@@ -109,6 +118,7 @@ export class FileNode extends React.Component {
 
   hideEditFileName() {
     this.setState({ isEditingName: false });
+    this.commitFileNameChange();
   }
 
   renderChild(childId) {
@@ -284,7 +294,6 @@ FileNode.propTypes = {
   parentId: PropTypes.string,
   children: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   name: PropTypes.string.isRequired,
-  updatedName: PropTypes.string,
   fileType: PropTypes.string.isRequired,
   isSelectedFile: PropTypes.bool,
   isFolderClosed: PropTypes.bool,
@@ -303,7 +312,6 @@ FileNode.defaultProps = {
   parentId: '0',
   isSelectedFile: false,
   isFolderClosed: false,
-  updatedName: '',
 };
 
 function mapStateToProps(state, ownProps) {
