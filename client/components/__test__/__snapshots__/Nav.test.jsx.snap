@@ -7,7 +7,6 @@ exports[`Nav renders correctly 1`] = `
 >
   <ul
     className="nav__items-left"
-    title="project-menu"
   >
     <li
       className="nav__item-logo"

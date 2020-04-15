@@ -227,7 +227,7 @@ class Nav extends React.PureComponent {
 
   renderDashboardMenu(navDropdownState) {
     return (
-      <ul className="nav__items-left" title="project-menu">
+      <ul className="nav__items-left">
         <li className="nav__item-logo">
           <InlineSVG src={logoUrl} alt="p5.js logo" className="svg__logo" />
         </li>
@@ -245,7 +245,7 @@ class Nav extends React.PureComponent {
 
   renderProjectMenu(navDropdownState) {
     return (
-      <ul className="nav__items-left" title="project-menu">
+      <ul className="nav__items-left">
         <li className="nav__item-logo">
           <InlineSVG src={logoUrl} alt="p5.js logo" className="svg__logo" />
         </li>
