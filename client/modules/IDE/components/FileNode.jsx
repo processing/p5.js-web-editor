@@ -185,40 +185,50 @@ export class FileNode extends React.Component {
                     {(() => { // eslint-disable-line
                       if (this.props.fileType === 'folder') {
                         return (
-                          <li>
-                            <button
-                              aria-label="add file"
-                              onClick={() => {
-                                this.props.newFile(this.props.id);
-                                setTimeout(() => this.hideFileOptions(), 0);
-                              }}
-                              onBlur={this.onBlurComponent}
-                              onFocus={this.onFocusComponent}
-                              className="sidebar__file-item-option"
-                            >
-                              Add File
-                            </button>
-                          </li>
-                        );
-                      }
-                    })()}
-                    {(() => { // eslint-disable-line
-                      if (this.props.fileType === 'folder') {
-                        return (
-                          <li>
-                            <button
-                              aria-label="add folder"
-                              onClick={() => {
-                                this.props.newFolder(this.props.id);
-                                setTimeout(() => this.hideFileOptions(), 0);
-                              }}
-                              onBlur={this.onBlurComponent}
-                              onFocus={this.onFocusComponent}
-                              className="sidebar__file-item-option"
-                            >
-                              Add Folder
-                            </button>
-                          </li>
+                          <React.Fragment>
+                            <li>
+                              <button
+                                aria-label="add folder"
+                                onClick={() => {
+                                  this.props.newFolder(this.props.id);
+                                  setTimeout(this.hideFileOptions, 0);
+                                }}
+                                onBlur={this.onBlurComponent}
+                                onFocus={this.onFocusComponent}
+                                className="sidebar__file-item-option"
+                              >
+                                Create folder
+                              </button>
+                            </li>
+                            <li>
+                              <button
+                                aria-label="add file"
+                                onClick={() => {
+                                  this.props.newFile(this.props.id);
+                                  setTimeout(this.hideFileOptions, 0);
+                                }}
+                                onBlur={this.onBlurComponent}
+                                onFocus={this.onFocusComponent}
+                                className="sidebar__file-item-option"
+                              >
+                                Create file
+                              </button>
+                            </li>
+                            <li>
+                              <button
+                                aria-label="upload file"
+                                onClick={() => {
+                                  this.props.openUploadFileModal(this.props.id);
+                                  setTimeout(this.hideFileOptions, 0);
+                                }}
+                                onBlur={this.onBlurComponent}
+                                onFocus={this.onFocusComponent}
+                              >
+                                Upload file
+                              </button>
+                            </li>
+
+                          </React.Fragment>
                         );
                       }
                     })()}
@@ -289,7 +299,8 @@ FileNode.propTypes = {
   newFolder: PropTypes.func.isRequired,
   showFolderChildren: PropTypes.func.isRequired,
   hideFolderChildren: PropTypes.func.isRequired,
-  canEdit: PropTypes.bool.isRequired
+  canEdit: PropTypes.bool.isRequired,
+  openUploadFileModal: PropTypes.func.isRequired
 };
 
 FileNode.defaultProps = {

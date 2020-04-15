@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import * as CollectionsActions from '../../IDE/actions/collections';
 
@@ -39,19 +38,7 @@ class CollectionCreate extends React.Component {
   handleCreateCollection = (event) => {
     event.preventDefault();
 
-    this.props.createCollection(this.state.collection)
-      .then(({ id, owner }) => {
-        const pathname = `/${owner.username}/collections/${id}`;
-        const location = { pathname, state: { skipSavingPath: true } };
-
-        browserHistory.replace(location);
-      })
-      .catch((error) => {
-        console.error('Error creating collection', error);
-        this.setState({
-          creationError: error,
-        });
-      });
+    this.props.createCollection(this.state.collection);
   }
 
   render() {
@@ -107,12 +94,7 @@ CollectionCreate.propTypes = {
     username: PropTypes.string,
     authenticated: PropTypes.bool.isRequired
   }).isRequired,
-  createCollection: PropTypes.func.isRequired,
-  collection: PropTypes.shape({}).isRequired, // TODO
-  sorting: PropTypes.shape({
-    field: PropTypes.string.isRequired,
-    direction: PropTypes.string.isRequired
-  }).isRequired
+  createCollection: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state, ownProps) {

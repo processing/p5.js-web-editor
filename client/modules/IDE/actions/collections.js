@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { browserHistory } from 'react-router';
 import * as ActionTypes from '../../../constants';
 import { startLoader, stopLoader } from './loader';
 import { setToastText, showToast } from './toast';
@@ -47,20 +48,22 @@ export function createCollection(collection) {
         });
         dispatch(stopLoader());
 
-        const collectionName = response.data.name;
-        dispatch(setToastText(`Created "${collectionName}"`));
+        const newCollection = response.data;
+        dispatch(setToastText(`Created "${newCollection.name}"`));
         dispatch(showToast(TOAST_DISPLAY_TIME_MS));
 
-        return response.data;
+        const pathname = `/${newCollection.owner.username}/collections/${newCollection.id}`;
+        const location = { pathname, state: { skipSavingPath: true } };
+
+        browserHistory.push(location);
       })
       .catch((response) => {
+        console.error('Error creating collection', response.data);
         dispatch({
           type: ActionTypes.ERROR,
           error: response.data
         });
         dispatch(stopLoader());
-
-        return response.data;
       });
   };
 }
