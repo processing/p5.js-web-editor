@@ -2,7 +2,7 @@
   display: block;
   padding-top: #{4 / $base-font-size}rem;
   width: #{300 / $base-font-size}rem;
-  font-size: #{9 / $base-font-size}rem;
+  font-size: #{12 / $base-font-size}rem;
   text-align: left;
   @include themify() {
     color: getThemifyVariable('error-color');
