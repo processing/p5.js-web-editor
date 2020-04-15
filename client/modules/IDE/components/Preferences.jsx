@@ -237,8 +237,18 @@ class Preferences extends React.Component {
             <div className="preference">
               <h4 className="preference__title">Privacy Settings</h4>
               <div className="preference__options">
-                <input type="checkbox" />
-                <label htmlFor="private-output-on" className="preference__option preference__canvas">Make Sketch Private</label>
+                <input
+                  type="checkbox"
+                  onChange={(event) => {
+                    this.props.setIsPrivate(event.target.checked);
+                  }}
+                  aria-label="privacy output on"
+                  name="privacy output"
+                  id="privacy-output-on"
+                  value="On"
+                  checked={(this.props.isPrivate)}
+                />
+                <label htmlFor="privacy-output-on" className="preference__option preference__canvas">Make Sketch Private</label>
               </div>
             </div>
           </TabPanel>
@@ -360,12 +370,14 @@ Preferences.propTypes = {
   setFontSize: PropTypes.func.isRequired,
   autosave: PropTypes.bool.isRequired,
   linewrap: PropTypes.bool.isRequired,
+  isPrivate: PropTypes.bool.isRequired, // exporting privacy state value
   setLineNumbers: PropTypes.func.isRequired,
   setAutosave: PropTypes.func.isRequired,
   setLinewrap: PropTypes.func.isRequired,
   textOutput: PropTypes.bool.isRequired,
   gridOutput: PropTypes.bool.isRequired,
   soundOutput: PropTypes.bool.isRequired,
+  setIsPrivate: PropTypes.func.isRequired, // exporting privacy value handler func
   setTextOutput: PropTypes.func.isRequired,
   setGridOutput: PropTypes.func.isRequired,
   setSoundOutput: PropTypes.func.isRequired,

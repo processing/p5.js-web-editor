@@ -73,6 +73,10 @@ export const SET_PREFERENCES = 'SET_PREFERENCES';
 export const SET_TEXT_OUTPUT = 'SET_TEXT_OUTPUT';
 export const SET_GRID_OUTPUT = 'SET_GRID_OUTPUT';
 export const SET_SOUND_OUTPUT = 'SET_SOUND_OUTPUT';
+export const SET_IS_PRIVATE_OUTPUT = 'SET_IS_PRIVACY_OUTPUT'; // action for  updating sketch privacy
+// export const SET_SKETCH_PRIVACY_ON = 'SET_SKETCH_PRIVACY_ON'; // actions for sketch privacy ON
+// export const SET_SKETCH_PRIVACY_OFF = 'SET_SKETCH_PRIVACY_OFF'; // actions for sketch privacy OFF
+
 
 export const OPEN_PROJECT_OPTIONS = 'OPEN_PROJECT_OPTIONS';
 export const CLOSE_PROJECT_OPTIONS = 'CLOSE_PROJECT_OPTIONS';

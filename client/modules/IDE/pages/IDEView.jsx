@@ -201,9 +201,11 @@ class IDEView extends React.Component {
               autosave={this.props.preferences.autosave}
               linewrap={this.props.preferences.linewrap}
               lineNumbers={this.props.preferences.lineNumbers}
+              isPrivate={this.props.preferences.isPrivate} // current state privacy value
               setLineNumbers={this.props.setLineNumbers}
               setAutosave={this.props.setAutosave}
               setLinewrap={this.props.setLinewrap}
+              setIsPrivate={this.props.setIsPrivate} // set state privacy value
               lintWarning={this.props.preferences.lintWarning}
               setLintWarning={this.props.setLintWarning}
               textOutput={this.props.preferences.textOutput}
@@ -500,6 +502,7 @@ IDEView.propTypes = {
     fontSize: PropTypes.number.isRequired,
     autosave: PropTypes.bool.isRequired,
     linewrap: PropTypes.bool.isRequired,
+    isPrivate: PropTypes.bool.isRequired, // map sketch privacy value to preference component prop
     lineNumbers: PropTypes.bool.isRequired,
     lintWarning: PropTypes.bool.isRequired,
     textOutput: PropTypes.bool.isRequired,
@@ -513,6 +516,7 @@ IDEView.propTypes = {
   setAutosave: PropTypes.func.isRequired,
   setLineNumbers: PropTypes.func.isRequired,
   setLinewrap: PropTypes.func.isRequired,
+  setIsPrivate: PropTypes.func.isRequired, // map sketch privacy handler func to preference component prop
   setLintWarning: PropTypes.func.isRequired,
   setTextOutput: PropTypes.func.isRequired,
   setGridOutput: PropTypes.func.isRequired,

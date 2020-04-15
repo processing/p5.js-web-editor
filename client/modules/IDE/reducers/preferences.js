@@ -10,7 +10,8 @@ const initialState = {
   gridOutput: false,
   soundOutput: false,
   theme: 'light',
-  autorefresh: false
+  autorefresh: false,
+  isPrivate: false, // initialize sketch privacy state to false
 };
 
 const preferences = (state = initialState, action) => {
@@ -37,6 +38,9 @@ const preferences = (state = initialState, action) => {
       return Object.assign({}, state, { autorefresh: action.value });
     case ActionTypes.SET_LINE_NUMBERS:
       return Object.assign({}, state, { lineNumbers: action.value });
+    // create case for Privacy action creator
+    case ActionTypes.SET_IS_PRIVATE_OUTPUT:
+      return Object.assign({}, state, { isPrivate: action.value }); // returns object and updates privacy value
     default:
       return state;
   }

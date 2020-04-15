@@ -13,6 +13,20 @@ function updatePreferences(formParams, dispatch) {
       error: response.data
     }));
 }
+// HERE is where I am stuck :.(
+export function setIsPrivate(value) {
+  // axios.put(`${ROOT_URL}/projects/:project_id`, formParams, { withCredentials: true })
+  //   .then(() => {
+  //   })
+  //   .catch(response => dispatch({
+  //     type: ActionTypes.ERROR,
+  //     error: response.data
+  //   }));
+  return {
+    type: ActionTypes.SET_IS_PRIVATE_OUTPUT,
+    value
+  };
+}
 
 export function setFontSize(value) {
   return (dispatch, getState) => { // eslint-disable-line
