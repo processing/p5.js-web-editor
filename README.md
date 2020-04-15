@@ -1,5 +1,16 @@
 # [p5.js Web Editor](https://editor.p5js.org)
 
+<table>
+    <caption>Documentation of p5.js Web Editor is also available in following languages</caption>
+    <tbody>
+        <tr>
+            <td><a href="https://github.com/processing/p5.js-web-editor/blob/master/translations/ko">한국어</a></td>
+        </tr>
+    </tbody>
+</table>
+
+> We're looking for translators to help translate p5.js Web Editor. Please read [developer_docs](https://github.com/processing/p5.js-web-editor/tree/master/developer_docs) to contribute. 
+
 The p5.js Web Editor is a platform for creative coding, with a focus on making coding accessible for as many people as possible, including artists, designers, educators, beginners, and anyone who wants to learn. Simply by opening the website you can get started writing p5.js sketches without downloading or configuring anything. The editor is designed with simplicity in mind by limiting features and frills. We strive to listen to the community to drive the editor’s development, and to be intentional with every change. The editor is free and open-source.
 
 We also strive to give the community as much ownership and control as possible. You can download your sketches so that you can edit them locally or host them elsewhere. You can also host your own version of the editor, giving you control over its data.
