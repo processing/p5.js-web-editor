@@ -49,7 +49,7 @@ export class FileNode extends React.Component {
   }
 
   get updatedName() {
-    return this.state.updatedName;
+    return this.state.updatedName || this.props.name;
   }
 
   commitFileNameChange() {
@@ -91,10 +91,9 @@ export class FileNode extends React.Component {
     const hasEmptyFilename = newFileName === '';
     const hasOnlyExtension = newFileExtension && newFileName === newFileExtension[0];
     if (hasEmptyFilename || hasNoExtension || notSameExtension || hasOnlyExtension || hasExtensionIfFolder) {
+      this.setState({ updatedName: this.originalFileName });
       this.props.updateFileName(this.props.id, this.originalFileName);
-      return;
-    }
-    this.commitFileNameChange();
+    } else this.commitFileNameChange();
   }
 
   toggleFileOptions(e) {
@@ -242,7 +241,7 @@ export class FileNode extends React.Component {
                     <li>
                       <button
                         onClick={() => {
-                          this.originalFileName = this.updatedName;
+                          this.originalFileName = this.props.name;
                           this.showEditFileName();
                           setTimeout(() => this.fileNameInput.focus(), 0);
                           setTimeout(() => this.hideFileOptions(), 0);

@@ -135,7 +135,10 @@ export function createFolder(formProps) {
   };
 }
 
+let callcount = 0;
 export function updateFileName(id, name) {
+  callcount += 1;
+  console.log(`called ${callcount} times`);
   return (dispatch) => {
     dispatch(setUnsavedChanges(true));
     dispatch({
