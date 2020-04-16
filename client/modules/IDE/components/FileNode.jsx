@@ -232,24 +232,37 @@ export class FileNode extends React.Component {
                   <React.Fragment>
                     <li>
                       <button
-                        aria-label="add file"
-                        onClick={this.handleClickAddFile}
-                        onBlur={this.onBlurComponent}
-                        onFocus={this.onFocusComponent}
-                        className="sidebar__file-item-option"
-                      >
-                        Add File
-                      </button>
-                    </li>
-                    <li>
-                      <button
                         aria-label="add folder"
                         onClick={this.handleClickAddFolder}
                         onBlur={this.onBlurComponent}
                         onFocus={this.onFocusComponent}
                         className="sidebar__file-item-option"
                       >
-                        Add Folder
+                        Create folder
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        aria-label="add file"
+                        onClick={this.handleClickAddFile}
+                        onBlur={this.onBlurComponent}
+                        onFocus={this.onFocusComponent}
+                        className="sidebar__file-item-option"
+                      >
+                        Create file
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        aria-label="upload file"
+                        onClick={() => {
+                          this.props.openUploadFileModal(this.props.id);
+                          setTimeout(this.hideFileOptions, 0);
+                        }}
+                        onBlur={this.onBlurComponent}
+                        onFocus={this.onFocusComponent}
+                      >
+                        Upload file
                       </button>
                     </li>
                   </React.Fragment>
@@ -304,7 +317,8 @@ FileNode.propTypes = {
   newFolder: PropTypes.func.isRequired,
   showFolderChildren: PropTypes.func.isRequired,
   hideFolderChildren: PropTypes.func.isRequired,
-  canEdit: PropTypes.bool.isRequired
+  canEdit: PropTypes.bool.isRequired,
+  openUploadFileModal: PropTypes.func.isRequired
 };
 
 FileNode.defaultProps = {
