@@ -87,6 +87,11 @@ export class FileNode extends React.Component {
     setTimeout(() => this.hideFileOptions(), 0);
   }
 
+  handleClickUploadFile = () => {
+    this.props.openUploadFileModal(this.props.id);
+    setTimeout(this.hideFileOptions, 0);
+  }
+
   handleClickDelete = () => {
     if (window.confirm(`Are you sure you want to delete ${this.props.name}?`)) {
       this.setState({ isDeleting: true });
@@ -252,19 +257,18 @@ export class FileNode extends React.Component {
                         Create file
                       </button>
                     </li>
-                    <li>
-                      <button
-                        aria-label="upload file"
-                        onClick={() => {
-                          this.props.openUploadFileModal(this.props.id);
-                          setTimeout(this.hideFileOptions, 0);
-                        }}
-                        onBlur={this.onBlurComponent}
-                        onFocus={this.onFocusComponent}
-                      >
-                        Upload file
-                      </button>
-                    </li>
+                    { this.props.authenticated &&
+                      <li>
+                        <button
+                          aria-label="upload file"
+                          onClick={this.handleClickUploadFile}
+                          onBlur={this.onBlurComponent}
+                          onFocus={this.onFocusComponent}
+                        >
+                          Upload file
+                        </button>
+                      </li>
+                    }
                   </React.Fragment>
                 }
                 <li>
@@ -318,7 +322,8 @@ FileNode.propTypes = {
   showFolderChildren: PropTypes.func.isRequired,
   hideFolderChildren: PropTypes.func.isRequired,
   canEdit: PropTypes.bool.isRequired,
-  openUploadFileModal: PropTypes.func.isRequired
+  openUploadFileModal: PropTypes.func.isRequired,
+  authenticated: PropTypes.bool.isRequired
 };
 
 FileNode.defaultProps = {
@@ -329,7 +334,8 @@ FileNode.defaultProps = {
 
 function mapStateToProps(state, ownProps) {
   // this is a hack, state is updated before ownProps
-  return state.files.find(file => file.id === ownProps.id) || { name: 'test', fileType: 'file' };
+  const fileNode = state.files.find(file => file.id === ownProps.id) || { name: 'test', fileType: 'file' };
+  return Object.assign({}, fileNode, { authenticated: state.user.authenticated });
 }
 
 function mapDispatchToProps(dispatch) {
