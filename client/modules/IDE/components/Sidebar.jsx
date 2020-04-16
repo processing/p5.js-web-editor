@@ -141,7 +141,6 @@ class Sidebar extends React.Component {
 Sidebar.propTypes = {
   files: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
-    updatedName: PropTypes.string,
     id: PropTypes.string.isRequired
   })).isRequired,
   setSelectedFile: PropTypes.func.isRequired,

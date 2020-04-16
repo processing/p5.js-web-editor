@@ -163,7 +163,7 @@ const files = (state, action) => {
           return file;
         }
 
-        return Object.assign({}, file, { updatedName: action.name });
+        return Object.assign({}, file, { name: action.name });
       });
     case ActionTypes.DELETE_FILE:
     {

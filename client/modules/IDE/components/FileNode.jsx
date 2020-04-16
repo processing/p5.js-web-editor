@@ -48,7 +48,7 @@ export class FileNode extends React.Component {
     }, 200);
   }
 
-  getName() {
+  get updatedName() {
     return this.state.updatedName;
   }
 
@@ -63,7 +63,7 @@ export class FileNode extends React.Component {
 
   handleFileClick(e) {
     e.stopPropagation();
-    if (this.getName() !== 'root' && !this.isDeleting) {
+    if (this.updatedName !== 'root' && !this.isDeleting) {
       this.props.setSelectedFile(this.props.id);
     }
   }
@@ -81,9 +81,9 @@ export class FileNode extends React.Component {
 
   validateFileName() {
     const oldFileExtension = this.originalFileName.match(/\.[0-9a-z]+$/i);
-    const newFileExtension = this.getName().match(/\.[0-9a-z]+$/i);
-    const hasPeriod = this.getName().match(/\.+/);
-    const newFileName = this.getName();
+    const newFileExtension = this.updatedName.match(/\.[0-9a-z]+$/i);
+    const hasPeriod = this.updatedName.match(/\.+/);
+    const newFileName = this.updatedName;
     const hasNoExtension = oldFileExtension && !newFileExtension;
     const hasExtensionIfFolder = this.props.fileType === 'folder' && hasPeriod;
     const notSameExtension = oldFileExtension && newFileExtension
@@ -92,7 +92,9 @@ export class FileNode extends React.Component {
     const hasOnlyExtension = newFileExtension && newFileName === newFileExtension[0];
     if (hasEmptyFilename || hasNoExtension || notSameExtension || hasOnlyExtension || hasExtensionIfFolder) {
       this.props.updateFileName(this.props.id, this.originalFileName);
+      return;
     }
+    this.commitFileNameChange();
   }
 
   toggleFileOptions(e) {
@@ -118,7 +120,6 @@ export class FileNode extends React.Component {
 
   hideEditFileName() {
     this.setState({ isEditingName: false });
-    this.commitFileNameChange();
   }
 
   renderChild(childId) {
@@ -131,8 +132,8 @@ export class FileNode extends React.Component {
 
   render() {
     const itemClass = classNames({
-      'sidebar__root-item': this.getName() === 'root',
-      'sidebar__file-item': this.getName() !== 'root',
+      'sidebar__root-item': this.updatedName === 'root',
+      'sidebar__file-item': this.updatedName !== 'root',
       'sidebar__file-item--selected': this.props.isSelectedFile,
       'sidebar__file-item--open': this.state.isOptionsOpen,
       'sidebar__file-item--editing': this.state.isEditingName,
@@ -142,7 +143,7 @@ export class FileNode extends React.Component {
     return (
       <div className={itemClass}>
         {(() => { // eslint-disable-line
-          if (this.getName() !== 'root') {
+          if (this.updatedName !== 'root') {
             return (
               <div className="file-item__content" onContextMenu={this.toggleFileOptions}>
                 <span className="file-item__spacer"></span>
@@ -171,11 +172,11 @@ export class FileNode extends React.Component {
                     </div>
                   );
                 })()}
-                <button className="sidebar__file-item-name" onClick={this.handleFileClick}>{this.getName()}</button>
+                <button className="sidebar__file-item-name" onClick={this.handleFileClick}>{this.updatedName}</button>
                 <input
                   type="text"
                   className="sidebar__file-item-input"
-                  value={this.getName()}
+                  value={this.updatedName}
                   maxLength="128"
                   onChange={this.handleFileNameChange}
                   ref={(element) => { this.fileNameInput = element; }}
@@ -241,7 +242,7 @@ export class FileNode extends React.Component {
                     <li>
                       <button
                         onClick={() => {
-                          this.originalFileName = this.getName();
+                          this.originalFileName = this.updatedName;
                           this.showEditFileName();
                           setTimeout(() => this.fileNameInput.focus(), 0);
                           setTimeout(() => this.hideFileOptions(), 0);
@@ -256,7 +257,7 @@ export class FileNode extends React.Component {
                     <li>
                       <button
                         onClick={() => {
-                          if (window.confirm(`Are you sure you want to delete ${this.getName()}?`)) {
+                          if (window.confirm(`Are you sure you want to delete ${this.updatedName}?`)) {
                             this.isDeleting = true;
                             this.props.resetSelectedFile(this.props.id);
                             setTimeout(() => this.props.deleteFile(this.props.id, this.props.parentId), 100);
