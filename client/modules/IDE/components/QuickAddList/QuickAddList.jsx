@@ -53,7 +53,8 @@ const QuickAddList = ({
       {...item}
       onSelect={
         (event) => {
-          event.target.blur();
+          event.stopPropagation();
+          event.currentTarget.blur();
           handleAction(item);
         }
       }

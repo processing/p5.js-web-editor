@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { Link, browserHistory } from 'react-router';
+import { Link } from 'react-router';
 import InlineSVG from 'react-inlinesvg';
 import classNames from 'classnames';
 import * as IDEActions from '../modules/IDE/actions/ide';
@@ -167,8 +167,6 @@ class Nav extends React.PureComponent {
 
   handleLogout() {
     this.props.logoutUser();
-    // if you're on the settings page, probably.
-    browserHistory.push('/');
     this.setDropdown('none');
   }
 
@@ -184,7 +182,8 @@ class Nav extends React.PureComponent {
   }
 
   handleShare() {
-    this.props.showShareModal();
+    const { username } = this.props.params;
+    this.props.showShareModal(this.props.project.id, this.props.project.name, username);
     this.setDropdown('none');
   }
 
@@ -228,7 +227,7 @@ class Nav extends React.PureComponent {
 
   renderDashboardMenu(navDropdownState) {
     return (
-      <ul className="nav__items-left" title="project-menu">
+      <ul className="nav__items-left">
         <li className="nav__item-logo">
           <InlineSVG src={logoUrl} alt="p5.js logo" className="svg__logo" />
         </li>
@@ -246,7 +245,7 @@ class Nav extends React.PureComponent {
 
   renderProjectMenu(navDropdownState) {
     return (
-      <ul className="nav__items-left" title="project-menu">
+      <ul className="nav__items-left">
         <li className="nav__item-logo">
           <InlineSVG src={logoUrl} alt="p5.js logo" className="svg__logo" />
         </li>
@@ -717,6 +716,7 @@ Nav.propTypes = {
   }).isRequired,
   project: PropTypes.shape({
     id: PropTypes.string,
+    name: PropTypes.string,
     owner: PropTypes.shape({
       id: PropTypes.string
     })
@@ -742,7 +742,10 @@ Nav.propTypes = {
   layout: PropTypes.oneOf(['dashboard', 'project']),
   rootFile: PropTypes.shape({
     id: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  params: PropTypes.shape({
+    username: PropTypes.string
+  })
 };
 
 Nav.defaultProps = {
@@ -752,7 +755,10 @@ Nav.defaultProps = {
   },
   cmController: {},
   layout: 'project',
-  warnIfUnsavedChanges: undefined
+  warnIfUnsavedChanges: undefined,
+  params: {
+    username: undefined
+  }
 };
 
 function mapStateToProps(state) {

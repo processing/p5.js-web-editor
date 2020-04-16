@@ -87,7 +87,7 @@
 			fill: getThemifyVariable('button-color');
 			opacity: 1;
 		}
-		&:enabled:hover {
+		&:not(disabled):hover {
 			border-color: getThemifyVariable('button-background-hover-color');
 			background-color: getThemifyVariable('button-background-hover-color');
 			color: getThemifyVariable('button-hover-color');
@@ -95,7 +95,7 @@
 				fill: getThemifyVariable('button-hover-color');
 			}
 		}
-		&:enabled:active {
+		&:not(disabled):active {
 			border-color: getThemifyVariable('button-background-active-color');
 			background-color: getThemifyVariable('button-background-active-color');
 			color: getThemifyVariable('button-active-color');
