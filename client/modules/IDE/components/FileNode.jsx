@@ -49,7 +49,7 @@ export class FileNode extends React.Component {
   }
 
   get updatedName() {
-    return this.state.updatedName || this.props.name;
+    return this.state.updatedName;
   }
 
   commitFileNameChange() {
@@ -92,7 +92,6 @@ export class FileNode extends React.Component {
     const hasOnlyExtension = newFileExtension && newFileName === newFileExtension[0];
     if (hasEmptyFilename || hasNoExtension || notSameExtension || hasOnlyExtension || hasExtensionIfFolder) {
       this.setState({ updatedName: this.originalFileName });
-      this.props.updateFileName(this.props.id, this.originalFileName);
     } else this.commitFileNameChange();
   }
 
