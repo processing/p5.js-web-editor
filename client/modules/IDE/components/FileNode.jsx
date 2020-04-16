@@ -116,8 +116,8 @@ export class FileNode extends React.Component {
     const hasExtensionIfFolder = this.props.fileType === 'folder' && hasPeriod;
     const notSameExtension = oldFileExtension && newFileExtension
       && oldFileExtension[0].toLowerCase() !== newFileExtension[0].toLowerCase();
-    const hasEmptyFilename = updatedName === '';
-    const hasOnlyExtension = newFileExtension && updatedName === newFileExtension[0];
+    const hasEmptyFilename = updatedName.trim() === '';
+    const hasOnlyExtension = newFileExtension && updatedName.trim() === newFileExtension[0];
     if (hasEmptyFilename || hasNoExtension || notSameExtension || hasOnlyExtension || hasExtensionIfFolder) {
       this.setUpdatedName(currentName);
     } else {
