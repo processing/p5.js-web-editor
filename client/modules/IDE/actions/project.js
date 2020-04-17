@@ -19,7 +19,6 @@ export function setProject(project) {
     owner: project.user
   };
 }
-
 export function setProjectName(name) {
   return {
     type: ActionTypes.SET_PROJECT_NAME,
