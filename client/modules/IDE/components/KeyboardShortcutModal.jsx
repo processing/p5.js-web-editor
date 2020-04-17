@@ -80,6 +80,12 @@ function KeyboardShortcutModal() {
         </span>
         <span>Toggle Sidebar</span>
       </li>
+      <li className="keyboard-shortcut-item">
+        <span className="keyboard-shortcut__command">
+          Ctrl + `
+        </span>
+        <span>Toggle Console</span>
+      </li>
     </ul>
   );
 }

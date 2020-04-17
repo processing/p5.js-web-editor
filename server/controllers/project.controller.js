@@ -168,7 +168,7 @@ export function projectForUserExists(username, projectId, callback) {
 }
 
 function bundleExternalLibs(project, zip, callback) {
-  const indexHtml = project.files.find(file => file.name === 'index.html');
+  const indexHtml = project.files.find(file => file.name.match(/\.html$/));
   let numScriptsResolved = 0;
   let numScriptTags = 0;
 

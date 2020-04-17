@@ -33,6 +33,8 @@ Don't know where to begin? Here are some suggestions to get started:
   - Front end: React/Redux, CSS/Sass, CodeMirror
   - Back end: Node, Express, MongoDB, Jest, AWS
   - DevOps: Travis CI, Jest, Docker, Kubernetes, AWS
+  - Documentation
+  - Translations: Application and documentation
 * Use the [p5.js Web Editor](https://editor.p5js.org)! Find a bug? Think of something you think would add to the project? Open an issue.
 * Expand an existing issue. Sometimes issues are missing steps to reproduce, or need suggestions for potential solutions. Sometimes they need another voice saying, "this is really important!"
 * Try getting the project running locally on your computer by following the [installation steps](./../developer_docs/installation.md).

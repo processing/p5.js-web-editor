@@ -136,10 +136,13 @@ export function createFolder(formProps) {
 }
 
 export function updateFileName(id, name) {
-  return {
-    type: ActionTypes.UPDATE_FILE_NAME,
-    id,
-    name
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.UPDATE_FILE_NAME,
+      id,
+      name
+    });
   };
 }
 

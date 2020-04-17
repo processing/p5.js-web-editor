@@ -22,6 +22,16 @@
     "fetch-examples-ml5:prod": "cross-env NODE_ENV=production node ./dist/fetch-examples-ml5.bundle.js",
     "heroku-postbuild": "touch .env; npm run build"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "npm run lint-fix"
+    ]
+  },
   "jest": {
     "setupFiles": [
       "<rootDir>/jest.setup.js"
@@ -73,7 +83,9 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.18.3",
     "file-loader": "^2.0.0",
+    "husky": "^4.2.5",
     "jest": "^24.9.0",
+    "lint-staged": "^10.1.3",
     "mini-css-extract-plugin": "^0.8.2",
     "node-sass": "^4.13.1",
     "nodemon": "^1.19.4",
