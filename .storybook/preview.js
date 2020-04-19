@@ -19,4 +19,13 @@ addDecorator(withThemePlayground({
   provider: ThemeProvider
 }));
 
+addParameters({
+  options: {
+    /**
+     * display the top-level grouping as a "root" in the sidebar
+     */
+    showRoots: true,
+  },
+})
+
 // addDecorator(storyFn => <ThemeProvider theme={theme}>{storyFn()}</ThemeProvider>);
