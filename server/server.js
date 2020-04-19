@@ -28,7 +28,6 @@ import embedRoutes from './routes/embed.routes';
 import assetRoutes from './routes/asset.routes';
 import { requestsOfTypeJSON } from './utils/requestsOfType';
 
-import { renderIndex } from './views/index';
 import { get404Sketch } from './views/404Page';
 
 const app = new Express();
@@ -141,10 +140,6 @@ mongoose.set('useCreateIndex', true);
 mongoose.connection.on('error', () => {
   console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
   process.exit(1);
-});
-
-app.get('/', (req, res) => {
-  res.sendFile(renderIndex());
 });
 
 // Handle API errors
