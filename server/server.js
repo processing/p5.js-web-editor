@@ -9,12 +9,6 @@ import passport from 'passport';
 import path from 'path';
 import basicAuth from 'express-basic-auth';
 
-// Webpack Requirements
-import webpack from 'webpack';
-import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
-import config from '../webpack/config.dev';
-
 // Import all required modules
 import api from './routes/api.routes';
 import users from './routes/user.routes';
@@ -49,12 +43,7 @@ const corsOriginsWhitelist = [
   /p5js\.org$/,
 ];
 
-// Run Webpack dev server in development mode
 if (process.env.NODE_ENV === 'development') {
-  const compiler = webpack(config);
-  app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
-  app.use(webpackHotMiddleware(compiler));
-
   corsOriginsWhitelist.push(/localhost/);
 }
 
@@ -170,7 +159,7 @@ app.get('*', (req, res) => {
 // start app
 app.listen(process.env.PORT, (error) => {
   if (!error) {
-    console.log(`p5js web editor is running on port: ${process.env.PORT}!`); // eslint-disable-line
+    console.log(`p5js API server is running on port: ${process.env.PORT}!`); // eslint-disable-line
   }
 });
 

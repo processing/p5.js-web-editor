@@ -27,6 +27,9 @@ module.exports = {
     filename: '[name].js',
     publicPath: '/'
   },
+  devServer: {
+    contentBase: './dist',
+  },
   resolve: {
     extensions: ['.js', '.jsx'],
     modules: [

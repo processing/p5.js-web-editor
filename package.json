@@ -4,7 +4,9 @@
   "description": "The web editor for p5.js.",
   "scripts": {
     "clean": "rimraf dist",
-    "start": "cross-env BABEL_DISABLE_CACHE=1 NODE_ENV=development nodemon index.js",
+    "start": "concurrently npm:start:server npm:start:client",
+    "start:server": "cross-env BABEL_DISABLE_CACHE=1 NODE_ENV=development nodemon index.js",
+    "start:client": "cross-env BABEL_DISABLE_CACHE=1 NODE_ENV=development USE_CLIENT_APP_SERVER=true node index.js",
     "start:prod": "cross-env NODE_ENV=production node index.js",
     "lint": "eslint client server --ext .jsx --ext .js",
     "lint-fix": "eslint client server --ext .jsx --ext .js --fix",
@@ -73,6 +75,7 @@
     "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.2.12",
+    "concurrently": "^5.1.0",
     "css-loader": "^3.4.2",
     "cssnano": "^4.1.10",
     "enzyme": "^3.11.0",
@@ -192,7 +195,7 @@
     "srcdoc-polyfill": "^0.2.0",
     "url": "^0.11.0",
     "webpack": "^4.41.6",
-    "webpack-dev-middleware": "^2.0.6",
+    "webpack-dev-middleware": "^3.7.2",
     "webpack-hot-middleware": "^2.24.3",
     "xhr": "^2.5.0"
   }
