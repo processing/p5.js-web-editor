@@ -22,7 +22,7 @@ const store = configureStore(initialState);
 const currentTheme = Theme.light;
 
 const App = () => (
-  <ThemeProvider theme={{ ...theme, current: theme[currentTheme] }}>
+  <ThemeProvider theme={{ ...theme[currentTheme] }}>
     <Provider store={store}>
       <Router history={history} routes={routes(store)} />
     </Provider>
