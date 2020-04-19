@@ -1,9 +1,6 @@
 .searchbar {
-  position: absolute;
+  position: relative;
   display: flex;
-  padding-left: #{17 / $base-font-size}rem;
-  right: #{50 / $base-font-size}rem;
-  top: #{14 / $base-font-size}rem;
 }
 
 .searchbar__input {
@@ -18,11 +15,16 @@
   }
 }
 
-.searchbar__button {
+div.searchbar__button {
+  background-color: unset;
   width: #{31 / $base-font-size}rem;
   height: #{36 / $base-font-size}rem;
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 0;
+  border: 0;
   border-right: solid 1px;
   @include themify() {
     border-right-color: getThemifyVariable('input-border-color');
@@ -35,6 +37,7 @@
     width: #{22 / $base-font-size}rem;
     height: #{27 / $base-font-size}rem;
     transform: scaleX(-1);
+    padding-top: #{3 / $base-font-size}rem;
     @include themify() {
       fill: getThemifyVariable('input-text-color');
     }
@@ -49,7 +52,7 @@
   align-self: center;
   position: absolute;
   padding: #{3 / $base-font-size}rem #{4 / $base-font-size}rem;
-  left: #{216 / $base-font-size}rem;;
+  right: #{7 / $base-font-size}rem;
   @include themify() {
     color: getThemifyVariable('primary-text-color');
     background-color: getThemifyVariable('search-clear-background-color');
@@ -58,4 +61,8 @@
       background-color: getThemifyVariable('search-hover-background-color');
     }
   }
+}
+
+.searchbar--is-empty .searchbar__clear-button {
+  display: none;
 }

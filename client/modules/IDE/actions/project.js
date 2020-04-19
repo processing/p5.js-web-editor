@@ -133,6 +133,7 @@ export function saveProject(selectedFile = null, autosave = false) {
     }
     const formParams = Object.assign({}, state.project);
     formParams.files = [...state.files];
+
     if (selectedFile) {
       const fileToUpdate = formParams.files.find(file => file.id === selectedFile.id);
       fileToUpdate.content = selectedFile.content;

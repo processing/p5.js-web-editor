@@ -269,8 +269,8 @@ class Editor extends React.Component {
       indent_size: INDENTATION_AMOUNT,
       indent_with_tabs: IS_TAB_INDENT
     };
-
     const mode = this._cm.getOption('mode');
+    const currentPosition = this._cm.doc.getCursor();
     if (mode === 'javascript') {
       this._cm.doc.setValue(beautifyJS(this._cm.doc.getValue(), beautifyOptions));
     } else if (mode === 'css') {
@@ -278,6 +278,10 @@ class Editor extends React.Component {
     } else if (mode === 'htmlmixed') {
       this._cm.doc.setValue(beautifyHTML(this._cm.doc.getValue(), beautifyOptions));
     }
+    setTimeout(() => {
+      this._cm.focus();
+      this._cm.doc.setCursor({ line: currentPosition.line, ch: currentPosition.ch + INDENTATION_AMOUNT });
+    }, 0);
   }
 
   initializeDocuments(files) {

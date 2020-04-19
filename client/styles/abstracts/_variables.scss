@@ -9,15 +9,22 @@ $orange: #ffa500;
 $red: #ff0000;
 $lightsteelblue: #B0C4DE;
 $dodgerblue: #1E90FF;
-$primary-text-color: #333;
 $icon-color: #8b8b8b;
 $icon-hover-color: #333;
 $p5-contrast-pink: #FFA9D9;
 
+// Grays
+$dark: #333;
+$middleGray: #7d7d7d;
+$middleLight: #a6a6a6;
+
+// Abstracts
+$primary-text-color: $dark;
+
 $themes: (
   light: (
     logo-color: $p5js-pink,
-    primary-text-color: #333,
+    primary-text-color: $primary-text-color,
     dropzone-text-color: #333,
     modal-button-color: #333,
     heading-text-color: #333,
@@ -65,8 +72,35 @@ $themes: (
     keyboard-shortcut-color: #757575,
     nav-hover-color: $p5js-pink,
     error-color: $p5js-pink,
+    table-row-stripe-color: #d6d6d6,
     codefold-icon-open: url(../images/triangle-arrow-down.svg),
-    codefold-icon-closed: url(../images/triangle-arrow-right.svg)
+    codefold-icon-closed: url(../images/triangle-arrow-right.svg),
+
+    primary-button-color: #fff,
+    primary-button-background-color: $p5js-pink,
+
+    table-button-color: $white,
+    table-button-background-color: #979797,
+    table-button-active-color: $white,
+    table-button-background-active-color: #00A1D3,
+    table-button-hover-color: $white,
+    table-button-background-hover-color: $p5js-pink,
+
+    progress-bar-background-color: #979797,
+    progress-bar-active-color: #f10046,
+
+    form-title-color: rgba(51, 51, 51, 0.87),
+    form-secondary-title-color: $middleGray,
+    form-input-text-color: $dark,
+    form-input-placeholder-text-color: $middleLight,
+    form-border-color: #b5b5b5,
+    form-button-background-color: $white,
+    form-button-color: #f10046,
+    form-button-background-hover-color: $p5js-pink,
+    form-button-background-active-color: #f10046,
+    form-button-hover-color: $white,
+    form-button-active-color: $white,
+    form-navigation-options-color: #999999
   ),
   dark: (
     logo-color: $p5js-pink,
@@ -117,8 +151,33 @@ $themes: (
     keyboard-shortcut-color: #B5B5B5,
     nav-hover-color: $p5js-pink,
     error-color: $p5js-pink,
+    table-row-stripe-color: #3f3f3f,
     codefold-icon-open: url(../images/triangle-arrow-down-white.svg),
-    codefold-icon-closed: url(../images/triangle-arrow-right-white.svg)
+    codefold-icon-closed: url(../images/triangle-arrow-right-white.svg),
+
+    primary-button-color: #fff,
+    primary-button-background-color: $p5js-pink,
+
+    table-button-color: $white,
+    table-button-background-color: #979797,
+    table-button-active-color: $white,
+    table-button-background-active-color: #00A1D3,
+    table-button-hover-color: $white,
+    table-button-background-hover-color: $p5js-pink,
+
+    progress-bar-background-color: #979797,
+    progress-bar-active-color: #f10046,
+
+    form-title-color: $white,
+    form-secondary-title-color: #b5b5b5,
+    form-border-color: #b5b5b5,
+    form-button-background-color: $black,
+    form-button-color: #f10046,
+    form-button-background-hover-color: $p5js-pink,
+    form-button-background-active-color: #f10046,
+    form-button-hover-color: $white,
+    form-button-active-color: $white,
+    form-navigation-options-color: #999999
   ),
   contrast: (
     logo-color: $yellow,
@@ -127,7 +186,7 @@ $themes: (
     modal-button-color: #333,
     heading-text-color: #e1e1e1,
     secondary-text-color: #e1e1e1,
-    inactive-text-color: #c1c1c1,
+    inactive-text-color: #f2f2f2,
     background-color: #333,
     button-background-color: $white,
     button-color: $black,
@@ -135,21 +194,21 @@ $themes: (
     toolbar-button-color: #333333,
     toolbar-button-background-color: #C1C1C1,
     button-background-hover-color: $yellow,
-    button-background-active-color: #f10046,
+    button-background-active-color: $yellow,
     button-nav-inactive-color: #a0a0a0,
     button-hover-color: #333333,
     button-active-color: #333333,
     modal-background-color: #444,
     modal-button-background-color: #C1C1C1,
     modal-border-color: #949494,
-    icon-color: #a9a9a9,
+    icon-color: #d9d9d9,
     icon-hover-color: $yellow,
     icon-toast-hover-color: $yellow,
     shadow-color: rgba(0, 0, 0, 0.16),
     console-background-color: #4f4f4f,
     console-color: $black,
     console-header-background-color: #3f3f3f,
-    console-header-color: #b5b5b5,
+    console-header-color: #d9d9d9,
     console-info-background-color: $lightsteelblue,
     console-warn-background-color: $orange,
     console-debug-background-color: $dodgerblue,
@@ -168,8 +227,33 @@ $themes: (
     keyboard-shortcut-color: #e1e1e1,
     nav-hover-color: $yellow,
     error-color: $p5-contrast-pink,
+    table-row-stripe-color: #3f3f3f,
     codefold-icon-open: url(../images/triangle-arrow-down-white.svg),
-    codefold-icon-closed: url(../images/triangle-arrow-right-white.svg)
+    codefold-icon-closed: url(../images/triangle-arrow-right-white.svg),
+
+    primary-button-color: #fff,
+    primary-button-background-color: $p5js-pink,
+
+    table-button-color: #333,
+    table-button-background-color: #C1C1C1,
+    table-button-active-color: #333,
+    table-button-background-active-color: #00FFFF,
+    table-button-hover-color: #333,
+    table-button-background-hover-color: $yellow,
+
+    progress-bar-background-color: #979797,
+    progress-bar-active-color: #f10046,
+
+    form-title-color: $white,
+    form-secondary-title-color: #b5b5b5,
+    form-border-color: #b5b5b5,
+    form-button-background-color: $black,
+    form-button-color: #f10046,
+    form-button-background-hover-color: $p5-contrast-pink,
+    form-button-background-active-color: #f10046,
+    form-button-hover-color: $white,
+    form-button-active-color: $white,
+    form-navigation-options-color: #999999
   )
 );
 
@@ -178,16 +262,6 @@ $console-error-color: #ff5f52;
 
 $toast-background-color: #4A4A4A;
 $toast-text-color: $white;
-
-$form-title-color: rgba(51, 51, 51, 0.87);
-$secondary-form-title-color: #b5b5b5;
-$form-button-background-color: $white;
-$form-button-color: #f10046;
-$form-button-background-hover-color: $p5js-pink;
-$form-button-background-active-color: #f10046;
-$form-button-hover-color: $white;
-$form-button-active-color: $white;
-$form-navigation-options-color: #999999;
 
 $about-play-background-color: rgba(255, 255, 255, 0.7);
 $about-button-border-color: rgba(151, 151, 151, 0.7);

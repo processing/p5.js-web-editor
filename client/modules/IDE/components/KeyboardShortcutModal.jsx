@@ -74,6 +74,18 @@ function KeyboardShortcutModal() {
         </span>
         <span>Turn off Accessible Output</span>
       </li>
+      <li className="keyboard-shortcut-item">
+        <span className="keyboard-shortcut__command">
+          {metaKeyName} + B
+        </span>
+        <span>Toggle Sidebar</span>
+      </li>
+      <li className="keyboard-shortcut-item">
+        <span className="keyboard-shortcut__command">
+          Ctrl + `
+        </span>
+        <span>Toggle Console</span>
+      </li>
     </ul>
   );
 }
