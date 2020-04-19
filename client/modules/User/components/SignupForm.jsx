@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+
 import { domOnlyProps } from '../../../utils/reduxFormUtils';
+import Button from '../../../common/Button';
 
 function SignupForm(props) {
   const {
@@ -58,7 +60,12 @@ function SignupForm(props) {
           <span className="form-error">{confirmPassword.error}</span>
         }
       </p>
-      <input type="submit" disabled={submitting || invalid || pristine} value="Sign Up" aria-label="sign up" />
+      <Button
+        type="submit"
+        disabled={submitting || invalid || pristine}
+        label="sign up"
+      >Sign Up
+      </Button>
     </form>
   );
 }

@@ -8,8 +8,7 @@ import { Helmet } from 'react-helmet';
 import { updateSettings, initiateVerification, createApiKey, removeApiKey } from '../actions';
 import AccountForm from '../components/AccountForm';
 import { validateSettings } from '../../../utils/reduxFormUtils';
-import GithubButton from '../components/GithubButton';
-import GoogleButton from '../components/GoogleButton';
+import SocialAuthButton from '../components/SocialAuthButton';
 import APIKeyForm from '../components/APIKeyForm';
 import Nav from '../../../components/Nav';
 
@@ -24,8 +23,8 @@ function SocialLoginPanel(props) {
       <p className="account__social-text">
         Use your GitHub or Google account to log into the p5.js Web Editor.
       </p>
-      <GithubButton buttonText="Login with GitHub" />
-      <GoogleButton buttonText="Login with Google" />
+      <SocialAuthButton service={SocialAuthButton.services.github} />
+      <SocialAuthButton service={SocialAuthButton.services.google} />
     </React.Fragment>
   );
 }
