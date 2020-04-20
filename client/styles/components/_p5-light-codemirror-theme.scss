@@ -10,18 +10,18 @@
 //light gray: #f4f4f4
 //dark gray: #b5b5b5
 
-$p5-light-lightbrown: #A67F59;
+$p5-light-lightbrown: #7a5a3a;
 $p5-light-brown: #704F21;
 $p5-light-black: #333333;
-$p5-light-pink: #D9328F;
-$p5-light-gray: #A0A0A0;
-$p5-light-lightblue: #00A1D3;
-$p5-light-darkblue: #2D7BB6;
+$p5-light-pink: #be3652;
+$p5-light-gray: #666;
+$p5-light-lightblue: #007bbb;
+$p5-light-darkblue: #306bb4;
 $p5-light-white: #FDFDFD;
 $p5-light-orange: #EE9900;
 $p5-light-lightgray: #E0D7D1;
 $p5-light-darkgray: #666666;
-$p5-light-green: #58a10b;
+$p5-light-green: #008007;
 
 $p5-light-gutter: #f4f4f4;
 $p5-light-number: #b5b5b5;
@@ -33,23 +33,23 @@ $p5-light-activeline: rgb(207, 207, 207);
   color: $p5-light-black;
 }
 
-.cm-s-p5-light .cm-comment {
+.cm-s-p5-light span .cm-comment {
   color: $p5-light-gray;
 }
 
-.cm-s-p5-light .cm-def {
+.cm-s-p5-light span .cm-def {
   color: $p5-light-lightblue;
 }
 
-.cm-s-p5-light .cm-string {
+.cm-s-p5-light span .cm-string {
   color: $p5-light-green;
 }
 
-.cm-s-p5-light .cm-string-2 {
+.cm-s-p5-light span .cm-string-2 {
   color: $p5-light-orange;
 }
 
-.cm-s-p5-light .cm-number {
+.cm-s-p5-light span .cm-number {
   color: $p5-light-black;
 }
 
@@ -57,23 +57,23 @@ $p5-light-activeline: rgb(207, 207, 207);
   color: $p5-light-brown;
 }
 
-.cm-s-p5-light .cm-variable {
+.cm-s-p5-light span .cm-variable {
   color: $p5-light-lightblue;
 }
 
-.cm-s-p5-light .cm-variable2 {
+.cm-s-p5-light span .cm-variable2 {
   color: $p5-light-black;
 }
 
-.cm-s-p5-light .cm-property {
+.cm-s-p5-light span .cm-property {
   color: $p5-light-black;
 }
 
-.cm-s-p5-light .cm-atom {
+.cm-s-p5-light span .cm-atom {
   color: $p5-light-pink;
 }
 
-.cm-s-p5-light .cm-operator {
+.cm-s-p5-light span .cm-operator {
   color: $p5-light-lightbrown;
 }
 
@@ -81,7 +81,7 @@ $p5-light-activeline: rgb(207, 207, 207);
   color: $p5-light-number;
 }
 
-.cm-s-p5-light .CodeMirror-selected {
+.cm-s-p5-light div .CodeMirror-selected {
   background-color: $p5-light-selected;
 }
 
@@ -97,25 +97,25 @@ $p5-light-activeline: rgb(207, 207, 207);
   color: #f00;
 }
 
-.cm-s-p5-light .CodeMirror-matchingbracket {
+.cm-s-p5-light span .CodeMirror-matchingbracket {
   outline: 1px solid $p5-light-gray;
   outline-offset: 1px;
   color: $p5-light-black !important;
 }
 
-.cm-s-p5-light .cm-qualifier {
+.cm-s-p5-light span .cm-qualifier {
   color: $p5-light-lightblue;
 }
 
-.cm-s-p5-light .cm-tag {
+.cm-s-p5-light span .cm-tag {
   color: $p5-light-pink;
 }
 
-.cm-s-p5-light .cm-builtin {
+.cm-s-p5-light span .cm-builtin {
   color: $p5-light-lightblue;
 }
 
-.cm-s-p5-light .cm-attribute {
+.cm-s-p5-light span .cm-attribute {
   color: $p5-light-black;
 }
 

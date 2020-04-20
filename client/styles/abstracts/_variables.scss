@@ -9,7 +9,7 @@ $orange: #ffa500;
 $red: #ff0000;
 $lightsteelblue: #B0C4DE;
 $dodgerblue: #1E90FF;
-$icon-color: #8b8b8b;
+$icon-color: #666;
 $icon-hover-color: #333;
 $p5-contrast-pink: #FFA9D9;
 
@@ -28,8 +28,8 @@ $themes: (
     dropzone-text-color: #333,
     modal-button-color: #333,
     heading-text-color: #333,
-    secondary-text-color: #a8a8a8,
-    inactive-text-color: #b5b5b5,
+    secondary-text-color: #666,
+    inactive-text-color: #666,
     background-color: #fbfbfb,
     preview-placeholder-color: #dcdcdc,
     button-background-color: #f4f4f4,
@@ -53,7 +53,7 @@ $themes: (
     console-background-color: #eee,
     console-color: $white,
     console-header-background-color: #d6d6d6,
-    console-header-color: #b1b1b1,
+    console-header-color: #1c1c1c,
     console-info-background-color: $lightsteelblue,
     console-warn-background-color: $orange,
     console-debug-background-color: $dodgerblue,
