@@ -5,7 +5,7 @@
   justify-content: space-between;
 
   @include themify() {
-    border-bottom: 1px dashed map-get($theme-map, 'inactive-text-color');
+    border-bottom: 1px dashed map-get($theme-map, 'nav-border-color');
   }
 
   & button {
@@ -23,10 +23,11 @@
   align-items: center;
 }
 
-.nav__items-left {
-  & button {
+.nav__items-left,
+.nav__items-right {
+  & button, & a {
     @include themify() {
-      color: getThemifyVariable('secondary-text-color');
+      color: getThemifyVariable('primary-text-color');
     }
   }
 }
@@ -50,6 +51,12 @@
 
 .nav__item:last-child {
   padding-right: #{15 / $base-font-size}rem;
+}
+
+.nav__item-header-triangle polygon {
+  @include themify() {
+    fill: getThemifyVariable('icon-color');
+  }
 }
 
 .nav__item:hover {

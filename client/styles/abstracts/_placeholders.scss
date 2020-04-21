@@ -58,15 +58,15 @@
 }
 
 %none-themify-icon-with-hover {
-	color: $icon-color;
+	color: $medium-dark;
 	& g {
-		fill: $icon-color;
+		fill: $medium-dark;
 	}
 	&:hover {
-		color: $icon-hover-color;
+		color: $p5js-pink;
 		& g {
 			opacity: 1;
-			fill: $icon-hover-color;
+			fill: $p5js-pink;
 		}
 	}
 	background-color: transparent;
@@ -136,7 +136,7 @@
 		background-color: transparent;
 		color: getThemifyVariable('inactive-text-color');
 		&:hover {
-			color: getThemifyVariable('primary-text-color');
+			color: getThemifyVariable('heavy-text-color');
 		}
 	}
 	font-size: #{12 / $base-font-size}rem;
@@ -172,11 +172,11 @@
 %link {
 	@include themify() {
 		text-decoration: none;
-		color: getThemifyVariable('inactive-text-color');
+		color: getThemifyVariable('secondary-text-color');
 		cursor: pointer;
 		&:hover {
 			text-decoration: none;
-			color: getThemifyVariable('primary-text-color');
+			color: getThemifyVariable('logo-color');
 		}
 	}
 }

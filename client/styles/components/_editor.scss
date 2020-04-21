@@ -374,7 +374,7 @@ pre.CodeMirror-line {
 
 .editor__file-name {
   @include themify() {
-    color: getThemifyVariable('secondary-text-color');
+    color: getThemifyVariable('primary-text-color');
   }
   height: #{29 / $base-font-size}rem;
   padding-top: #{7 / $base-font-size}rem;

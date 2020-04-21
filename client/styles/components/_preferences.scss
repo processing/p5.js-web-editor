@@ -242,7 +242,7 @@ input[type="number"]::-webkit-outer-spin-button {
 .preference__radio-button:checked + .preference__option {
   @include themify() {
     //for some reason this won't work for getThemifyVariable
-    color: map-get($theme-map, "primary-text-color");
+    color: map-get($theme-map, "heavy-text-color");
   }
 }
 

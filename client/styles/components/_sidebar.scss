@@ -50,6 +50,12 @@
   position: relative;
   overflow-y: auto;
   flex: 1 1 auto;
+  @include themify() {
+    border-top: 1px solid map-get($theme-map, 'ide-border-color');
+  }
+  .sidebar--contracted & {
+    border: none;
+  }
 }
 
 .sidebar__file-item {
@@ -57,12 +63,10 @@
   cursor: pointer;
   position: relative;
   @include themify() {
-    color: map-get($theme-map, 'inactive-text-color');
-    &:hover > .file-item__content .sidebar__file-item-name {
-      color: map-get($theme-map, 'primary-text-color');
-    }
-    &:hover > .file-item__content .sidebar__file-item-icon g {
-      fill: map-get($theme-map, 'primary-text-color');
+    color: map-get($theme-map, 'primary-text-color');
+    // TODO get this to not affect parent, need to move it into JS
+    &:hover:not(.sidebar__file-item--selected) > .file-item__content {
+      background-color: map-get($theme-map, 'file-hover-color');
     }
   }
 }
@@ -119,6 +123,9 @@
     left: 0;
     content: '';
     width: 100%;
+  }
+  @include themify() {
+    color: map-get($theme-map, 'primary-text-color');
   }
 }
 
@@ -191,7 +198,7 @@
   @include icon();
   position: absolute;
   top: #{7 / $base-font-size}rem;
-  left: #{34 / $base-font-size}rem;
+  left: #{1 / $base-font-size}rem;
   height: #{14 / $base-font-size}rem;
   & svg {
     height: #{14 / $base-font-size}rem;

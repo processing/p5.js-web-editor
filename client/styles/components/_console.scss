@@ -78,6 +78,10 @@
 .preview-console__clear {
 	@include themify() {
 		@extend %link;
+		color: getThemifyVariable('primary-text-color');
+		// &:hover {
+		// 	color: getThemifyVariable('console-header-color');
+		// }
 	}
 	background: transparent;
 	border: none;

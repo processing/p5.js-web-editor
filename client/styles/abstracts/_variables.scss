@@ -2,6 +2,7 @@ $base-font-size: 12;
 
 //colors
 $p5js-pink: #ed225d;
+$processing-blue: #007BBB;
 $white: #fff;
 $black: #000;
 $yellow: #F5DC23;
@@ -9,34 +10,42 @@ $orange: #ffa500;
 $red: #ff0000;
 $lightsteelblue: #B0C4DE;
 $dodgerblue: #1E90FF;
-$icon-color: #666;
-$icon-hover-color: #333;
+// $icon-hover-color: #333;
 $p5-contrast-pink: #FFA9D9;
 
-// Grays
-$dark: #333;
-$middleGray: #7d7d7d;
-$middleLight: #a6a6a6;
+// Grayscale values
+$lightest: #FFF; // primary
+$lighter: #FBFBFB;
 
-// Abstracts
-$primary-text-color: $dark;
+$light: #F0F0F0; // primary
+$medium-light: #D9D9D9;
+$middle-light: #A6A6A6;
+
+$middle-gray: #7D7D7D; // primary
+$middle-dark: #666;
+$medium-dark: #4D4D4D;
+
+$dark: #333; // primary
+$darker: #1C1C1C;
+$darkest: #000;
 
 $themes: (
   light: (
     logo-color: $p5js-pink,
-    primary-text-color: $primary-text-color,
-    dropzone-text-color: #333,
-    modal-button-color: #333,
-    heading-text-color: #333,
-    secondary-text-color: #666,
-    inactive-text-color: #666,
-    background-color: #fbfbfb,
+    heavy-text-color: $darker,
+    primary-text-color: $dark,
+    secondary-text-color: $medium-dark,
+    inactive-text-color: $middle-dark,
+    dropzone-text-color: $dark,
+    modal-button-color: $dark,
+    heading-text-color: $dark,
+    background-color: $lighter,
     preview-placeholder-color: #dcdcdc,
-    button-background-color: #f4f4f4,
+    button-background-color: $light,
     button-color: $black,
-    button-border-color: #979797,
+    button-border-color: $middle-light,
     toolbar-button-color: $p5js-pink,
-    toolbar-button-background-color: #f4f4f4,
+    toolbar-button-background-color: $light,
     button-background-hover-color: $p5js-pink,
     button-background-active-color: #f10046,
     button-nav-inactive-color: #a0a0a0,
@@ -46,21 +55,22 @@ $themes: (
     modal-button-background-color: #e6e6e6,
     modal-border-color: rgba(17, 17, 17, 0.3),
     modal-border-selected-color: #B9D0E1,
-    icon-color: $icon-color,
-    icon-hover-color: $icon-hover-color,
+    icon-color: $medium-dark,
+    icon-hover-color: $p5js-pink,
     icon-toast-hover-color: $white,
     shadow-color: rgba(0, 0, 0, 0.16),
     console-background-color: #eee,
     console-color: $white,
-    console-header-background-color: #d6d6d6,
-    console-header-color: #1c1c1c,
+    console-header-background-color: $medium-light,
+    console-header-color: $darker,
     console-info-background-color: $lightsteelblue,
     console-warn-background-color: $orange,
     console-debug-background-color: $dodgerblue,
     console-error-background-color: $red,
-    ide-border-color: #f4f4f4,
-    editor-gutter-color: #f4f4f4,
-    file-selected-color: #f4f4f4,
+    ide-border-color: $light,
+    editor-gutter-color: $lighter,
+    file-hover-color: $light,
+    file-selected-color: $medium-light,
     input-text-color: #333,
     input-border-color: #b5b5b5,
     about-list-text-color: #4a4a4a,
@@ -71,10 +81,12 @@ $themes: (
     dropdown-color: #414141,
     keyboard-shortcut-color: #757575,
     nav-hover-color: $p5js-pink,
+    nav-border-color: $middle-light,
     error-color: $p5js-pink,
     table-row-stripe-color: #d6d6d6,
     codefold-icon-open: url(../images/triangle-arrow-down.svg),
     codefold-icon-closed: url(../images/triangle-arrow-right.svg),
+    sidebar-background-color: $light,
 
     primary-button-color: #fff,
     primary-button-background-color: $p5js-pink,
@@ -90,9 +102,9 @@ $themes: (
     progress-bar-active-color: #f10046,
 
     form-title-color: rgba(51, 51, 51, 0.87),
-    form-secondary-title-color: $middleGray,
+    form-secondary-title-color: $middle-dark,
     form-input-text-color: $dark,
-    form-input-placeholder-text-color: $middleLight,
+    form-input-placeholder-text-color: $middle-light,
     form-border-color: #b5b5b5,
     form-button-background-color: $white,
     form-button-color: #f10046,
@@ -100,10 +112,11 @@ $themes: (
     form-button-background-active-color: #f10046,
     form-button-hover-color: $white,
     form-button-active-color: $white,
-    form-navigation-options-color: #999999
+    form-navigation-options-color: $middle-dark
   ),
   dark: (
     logo-color: $p5js-pink,
+    heavy-text-color: $lightest,
     primary-text-color: $white,
     dropzone-text-color: $black,
     modal-button-color: $white,
@@ -139,6 +152,7 @@ $themes: (
     console-error-background-color: $red,
     ide-border-color: #949494,
     editor-gutter-color: #363636,
+    file-hover-color: #404040,
     file-selected-color: #404040,
     input-text-color: #333,
     input-border-color: #b5b5b5,
@@ -150,6 +164,7 @@ $themes: (
     dropdown-color: #dadada,
     keyboard-shortcut-color: #B5B5B5,
     nav-hover-color: $p5js-pink,
+    nav-border-color: $middle-dark,
     error-color: $p5js-pink,
     table-row-stripe-color: #3f3f3f,
     codefold-icon-open: url(../images/triangle-arrow-down-white.svg),
@@ -181,6 +196,7 @@ $themes: (
   ),
   contrast: (
     logo-color: $yellow,
+    heavy-text-color: $yellow,
     primary-text-color: $yellow,
     dropzone-text-color: $black,
     modal-button-color: #333,
@@ -215,6 +231,7 @@ $themes: (
     console-error-background-color: $red,
     ide-border-color: #949494,
     editor-gutter-color: #454545,
+    file-hover-color: #404040,
     file-selected-color: #404040,
     input-text-color: #333,
     input-border-color: #b5b5b5,
@@ -226,6 +243,7 @@ $themes: (
     dropdown-color: #e1e1e1,
     keyboard-shortcut-color: #e1e1e1,
     nav-hover-color: $yellow,
+    nav-border-color: $middle-dark,
     error-color: $p5-contrast-pink,
     table-row-stripe-color: #3f3f3f,
     codefold-icon-open: url(../images/triangle-arrow-down-white.svg),
