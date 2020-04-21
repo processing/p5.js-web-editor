@@ -62,36 +62,33 @@ export function getProject(id) {
 // action creator that updates project privacy
 // takes the id of current project and value of Make sketch private check box
 export function setIsPrivate(value) {
-  // parameters: id
-  // return (dispatch) => {
-  //   dispatch({
-  //     type: ActionTypes.SET_IS_PRIVATE_OUTPUT,
-  //     value
-  //   });
-  //   console.log(value);
-  //   axios.put(`${ROOT_URL}/projects/${id}`, { isPrivate: value }, { withCredentials: true })
-  //     .then((response) => {
-  //       if (response.status === 200) {
-  //         console.log(response.isPrivate);
-  //         // if the http request is sucessful, dispatch action
-  //         // dispatch({
-  //         //   type: ActionTypes.SET_IS_PRIVATE_OUTPUT,
-  //         //   value
-  //         // });
-  //       }
-  //     })
-  //     .catch((response) => {
-  //       // otherwise, print response and send error action (not sure if I am suppose to do this)?
-  //       console.log(response);
-  //       dispatch({
-  //         type: ActionTypes.ERROR,
-  //         error: response.data
-  //       });
-  //     });
-  // };
-  return {
-    type: ActionTypes.SET_IS_PRIVATE_OUTPUT,
-    value
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.SET_IS_PRIVATE_OUTPUT,
+      value
+    });
+    const state = getState();
+    const { id } = state.project;
+    console.log(value);
+    axios.put(`${ROOT_URL}/projects/${id}`, { isPrivate: value }, { withCredentials: true })
+      .then((response) => {
+        if (response.status === 200) {
+          console.log('success');
+          // if the http request is sucessful, dispatch action
+          // dispatch({
+          //   type: ActionTypes.SET_IS_PRIVATE_OUTPUT,
+          //   value
+          // });
+        }
+      })
+      .catch((response) => {
+        // otherwise, print response and send error action (not sure if I am suppose to do this)?
+        console.log(response);
+        dispatch({
+          type: ActionTypes.ERROR,
+          error: response.data
+        });
+      });
   };
 }
 
