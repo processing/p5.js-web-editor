@@ -1,18 +1,12 @@
-import { browserHistory } from 'react-router';
+import each from 'async/each';
 import axios from 'axios';
 import objectID from 'bson-objectid';
-import each from 'async/each';
 import isEqual from 'lodash/isEqual';
+import { browserHistory } from 'react-router';
 import * as ActionTypes from '../../../constants';
-import { showToast, setToastText } from './toast';
-import {
-  setUnsavedChanges,
-  justOpenedProject,
-  resetJustOpenedProject,
-  showErrorModal,
-  setPreviousPath
-} from './ide';
 import { clearState, saveState } from '../../../persistState';
+import { justOpenedProject, resetJustOpenedProject, setPreviousPath, setUnsavedChanges, showErrorModal } from './ide';
+import { setToastText, showToast } from './toast';
 
 const __process = (typeof global !== 'undefined' ? global : window).process;
 const ROOT_URL = __process.env.API_URL;
@@ -61,6 +55,41 @@ export function getProject(id) {
         type: ActionTypes.ERROR,
         error: response.data
       }));
+  };
+}
+// action creator that updates project privacy
+// takes the id of current project and value of Make sketch private check box
+export function setIsPrivate(value) {
+  // parameters: id
+  // return (dispatch) => {
+  //   dispatch({
+  //     type: ActionTypes.SET_IS_PRIVATE_OUTPUT,
+  //     value
+  //   });
+  //   console.log(value);
+  //   axios.put(`${ROOT_URL}/projects/${id}`, { isPrivate: value }, { withCredentials: true })
+  //     .then((response) => {
+  //       if (response.status === 200) {
+  //         console.log(response.isPrivate);
+  //         // if the http request is sucessful, dispatch action
+  //         // dispatch({
+  //         //   type: ActionTypes.SET_IS_PRIVATE_OUTPUT,
+  //         //   value
+  //         // });
+  //       }
+  //     })
+  //     .catch((response) => {
+  //       // otherwise, print response and send error action (not sure if I am suppose to do this)?
+  //       console.log(response);
+  //       dispatch({
+  //         type: ActionTypes.ERROR,
+  //         error: response.data
+  //       });
+  //     });
+  // };
+  return {
+    type: ActionTypes.SET_IS_PRIVATE_OUTPUT,
+    value
   };
 }
 

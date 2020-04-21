@@ -163,13 +163,6 @@ class IDEView extends React.Component {
       } else {
         this.props.collapseSidebar();
       }
-    } else if (e.keyCode === 192 && e.ctrlKey) {
-      e.preventDefault();
-      if (this.props.ide.consoleIsExpanded) {
-        this.props.collapseConsole();
-      } else {
-        this.props.expandConsole();
-      }
     }
   }
 
@@ -215,7 +208,7 @@ class IDEView extends React.Component {
               autosave={this.props.preferences.autosave}
               linewrap={this.props.preferences.linewrap}
               lineNumbers={this.props.preferences.lineNumbers}
-              isPrivate={this.props.preferences.isPrivate} // current state privacy value
+              isPrivate={this.props.project.isPrivate} // current state privacy value
               setLineNumbers={this.props.setLineNumbers}
               setAutosave={this.props.setAutosave}
               setLinewrap={this.props.setLinewrap}
@@ -505,7 +498,8 @@ IDEView.propTypes = {
       username: PropTypes.string,
       id: PropTypes.string
     }),
-    updatedAt: PropTypes.string
+    updatedAt: PropTypes.string,
+    isPrivate: PropTypes.bool.isRequired // map sketch privacy value to preference component prop
   }).isRequired,
   editorAccessibility: PropTypes.shape({
     lintMessages: PropTypes.array.isRequired,
@@ -516,7 +510,6 @@ IDEView.propTypes = {
     fontSize: PropTypes.number.isRequired,
     autosave: PropTypes.bool.isRequired,
     linewrap: PropTypes.bool.isRequired,
-    isPrivate: PropTypes.bool.isRequired, // map sketch privacy value to preference component prop
     lineNumbers: PropTypes.bool.isRequired,
     lintWarning: PropTypes.bool.isRequired,
     textOutput: PropTypes.bool.isRequired,
