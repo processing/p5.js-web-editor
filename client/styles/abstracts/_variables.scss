@@ -3,6 +3,7 @@ $base-font-size: 12;
 //colors
 $p5js-pink: #ed225d;
 $processing-blue: #007BBB;
+$p5js-active-pink: #f10046;
 $white: #fff;
 $black: #000;
 $yellow: #F5DC23;
@@ -50,7 +51,7 @@ $themes: (
     toolbar-button-color: $p5js-pink,
     toolbar-button-background-color: $medium-light,
     button-background-hover-color: $p5js-pink,
-    button-background-active-color: #f10046,
+    button-background-active-color: $p5js-active-pink,
     button-nav-inactive-color: $middle-gray,
     button-hover-color: $white,
     button-active-color: $white,
@@ -79,12 +80,12 @@ $themes: (
     search-clear-background-color: $light,
     search-hover-text-color: $lightest,
     search-hover-background-color: $medium-dark,
-    dropdown-color: #414141,
+    dropdown-color: $dark,
     keyboard-shortcut-color: $middle-gray,
     nav-hover-color: $p5js-pink,
     nav-border-color: $middle-light,
     error-color: $p5js-pink,
-    table-row-stripe-color: #d6d6d6,
+    table-row-stripe-color: $medium-light,
     codefold-icon-open: url(../images/triangle-arrow-down.svg),
     codefold-icon-closed: url(../images/triangle-arrow-right.svg),
 
@@ -92,24 +93,24 @@ $themes: (
     primary-button-background-color: $p5js-pink,
 
     table-button-color: $white,
-    table-button-background-color: #979797,
+    table-button-background-color: $middle-gray,
     table-button-active-color: $white,
     table-button-background-active-color: #00A1D3,
     table-button-hover-color: $white,
     table-button-background-hover-color: $p5js-pink,
 
-    progress-bar-background-color: #979797,
-    progress-bar-active-color: #f10046,
+    progress-bar-background-color: $middle-gray,
+    progress-bar-active-color: $p5js-active-pink,
 
     form-title-color: rgba(51, 51, 51, 0.87),
     form-secondary-title-color: $middle-dark,
     form-input-text-color: $dark,
     form-input-placeholder-text-color: $middle-light,
-    form-border-color: #b5b5b5,
+    form-border-color: $middle-light,
     form-button-background-color: $white,
-    form-button-color: #f10046,
+    form-button-color: $p5js-active-pink,
     form-button-background-hover-color: $p5js-pink,
-    form-button-background-active-color: #f10046,
+    form-button-background-active-color: $p5js-active-pink,
     form-button-hover-color: $white,
     form-button-active-color: $white,
     form-navigation-options-color: $middle-dark

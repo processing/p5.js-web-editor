@@ -186,7 +186,7 @@
     background-color: map-get($theme-map, 'modal-background-color');
     border: 1px solid map-get($theme-map, 'modal-border-color');
     box-shadow: 0 0 18px 0 getThemifyVariable('shadow-color');
-    color: getThemifyVariable('dropdown-color');
+    color: getThemifyVariable('primary-text-color');
 	}
 	text-align: left;
 	width: #{180 / $base-font-size}rem;
@@ -207,7 +207,7 @@
 		& button,
 		& a {
 			@include themify() {
-				color: getThemifyVariable('dropdown-color');
+				color: getThemifyVariable('primary-text-color');
 			}
 			width: 100%;
 			text-align: left;
