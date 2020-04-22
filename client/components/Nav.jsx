@@ -281,7 +281,7 @@ class Nav extends React.PureComponent {
                 onBlur={this.handleBlur}
               >
                 Save
-                <span className="nav__keyboard-shortcut">{metaKeyName}+s</span>
+                <span className="nav__keyboard-shortcut">{metaKeyName}+S</span>
               </button>
             </li> }
             { this.props.project.id && this.props.user.authenticated &&

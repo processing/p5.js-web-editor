@@ -110,7 +110,7 @@
 	@extend %toolbar-button;
 	@include themify() {
 		color: getThemifyVariable('primary-text-color');
-		background-color: getThemifyVariable('modal-button-background-color');
+		background-color: getThemifyVariable('preferences-button-background-color');
 		padding: 0;
 		margin-bottom: #{28 / $base-font-size}rem;
 		line-height: #{50 / $base-font-size}rem;
@@ -126,7 +126,7 @@
 		}
 		&:disabled:hover {
 			cursor: not-allowed;
-			background-color: getThemifyVariable('modal-button-background-color');
+			background-color: getThemifyVariable('preferences-button-background-color');
 		}
 	}
 }
@@ -176,7 +176,7 @@
 		cursor: pointer;
 		&:hover {
 			text-decoration: none;
-			color: getThemifyVariable('logo-color');
+			color: getThemifyVariable('heavy-text-color');
 		}
 	}
 }
