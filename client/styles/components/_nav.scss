@@ -44,13 +44,8 @@
   }
 }
 
-.nav__item:first-child,
 .nav__item--no-icon {
   padding-left: #{15 / $base-font-size}rem;
-}
-
-.nav__item:last-child {
-  padding-right: #{15 / $base-font-size}rem;
 }
 
 .nav__item-header-triangle polygon {
@@ -123,8 +118,18 @@
 .nav__item-spacer {
   @include themify() {
     color: map-get($theme-map, 'inactive-text-color');
-    margin: 0 #{8 / $base-font-size}rem;
+    margin-left: #{8 / $base-font-size}rem;
   }
+}
+
+.nav__item-or {
+  @include themify() {
+    color: map-get($theme-map, 'inactive-text-color');
+  }
+}
+
+.nav__auth-button {
+  padding: #{10 / $base-font-size}rem;
 }
 
 // .nav__dropdown button {
