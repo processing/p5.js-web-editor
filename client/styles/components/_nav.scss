@@ -23,14 +23,14 @@
   align-items: center;
 }
 
-.nav__items-left,
-.nav__items-right {
-  & button, & a {
-    @include themify() {
-      color: getThemifyVariable('primary-text-color');
-    }
-  }
-}
+// .nav__items-left,
+// .nav__items-right {
+//   & button, & a {
+//     @include themify() {
+//       color: getThemifyVariable('primary-text-color');
+//     }
+//   }
+// }
 
 .nav__item {
   position: relative;

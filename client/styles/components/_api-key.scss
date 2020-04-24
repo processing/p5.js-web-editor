@@ -1,8 +1,5 @@
 .api-key-form__summary {
   padding-top: #{25 / $base-font-size}rem;
-  @include themify() {
-    color: getThemifyVariable('heading-text-color');
-  }
 }
 
 .api-key-form__section {
@@ -13,9 +10,6 @@
   padding: #{15 / $base-font-size}rem 0;
   font-size: #{21 / $base-font-size}rem;
   font-weight: bold;
-  @include themify() {
-    color: getThemifyVariable('heading-text-color');
-  }
 }
 
 .api-key-form__create-button {
@@ -99,9 +93,6 @@
   margin-bottom: #{10 / $base-font-size}rem;
   font-size: #{18 / $base-font-size}rem;
   font-weight: bold;
-  @include themify() {
-    color: getThemifyVariable('heading-text-color');
-  }
 }
 
 .api-key-form__new-token__info {

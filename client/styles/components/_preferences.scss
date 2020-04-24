@@ -33,25 +33,6 @@
   }
 }
 
-.serve__over__https {
-  text-align: center;
-  margin-left: #{9 / $base-font-size}rem;
-  font-width: #{108 / $base-font-size}rem;
-  font-height: #{15 / $base-font-size}rem;
-  font-family: Montserrat;
-  font-size: #{12 / $base-font-size}rem;
-  margin-top: #{2 / $base-font-size}rem;
-}
-
-.preferences__heading {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  @include themify() {
-    color: getThemifyVariable("heading-text-color");
-  }
-}
-
 .preferences__title {
   width: #{90 / $base-font-size}rem;
   height: #{25 / $base-font-size}rem;
@@ -86,9 +67,6 @@
   font-size: #{16 / $base-font-size}rem;
   margin-top: #{13 / $base-font-size}rem;
   margin-bottom: #{7 / $base-font-size}rem;
-  @include themify() {
-    color: getThemifyVariable("heading-text-color");
-  }
 }
 
 .preference__subtitle {
