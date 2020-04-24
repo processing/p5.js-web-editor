@@ -39,6 +39,7 @@ textarea {
 	padding: #{10 / $base-font-size}rem;
 	@include themify() {
 		color: getThemifyVariable('input-text-color');
+		background-color: getThemifyVariable('input-background-color');
 		border-color: getThemifyVariable('input-border-color');
 	}
 }

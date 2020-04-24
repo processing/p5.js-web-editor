@@ -104,8 +104,9 @@
   @include themify() {
     border: #{1 / $base-font-size}rem solid
       getThemifyVariable("button-border-color");
-    background-color: getThemifyVariable("button-background-color");
+    // background-color: getThemifyVariable("button-background-color");
     color: getThemifyVariable("input-text-color");
+    background-color: getThemifyVariable('input-background-color');
   }
   text-align: center;
   border-radius: 0%;
