@@ -173,7 +173,7 @@
   display: none;
   padding: 0;
   border: 0;
-  width: calc(100% - #{100 / $base-font-size}rem);
+  width: calc(100% - #{63 / $base-font-size}rem);
   .sidebar__file-item--editing & {
     display: inline-block;
   }
