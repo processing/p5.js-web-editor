@@ -5,9 +5,12 @@ import React from 'react';
 import lodash from 'lodash';
 
 const icons = {
+  sortArrowUp: require('../images/sort-arrow-up.svg'),
+  sortArrowDown: require('../images/sort-arrow-down.svg'),
   github: require('../images/github.svg'),
   google: require('../images/google.svg'),
-  plusIcon: require('../images/plus-icon.svg'),
+  plus: require('../images/plus-icon.svg'),
+  close: require('../images/close.svg'),
 };
 
 /*

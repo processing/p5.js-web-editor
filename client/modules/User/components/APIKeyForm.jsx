@@ -87,7 +87,7 @@ class APIKeyForm extends React.Component {
               type="submit"
               label="Create new key"
             >
-              <Icon name={Icon.names.plusIcon} />
+              <Icon name={Icon.names.plus} />
               <span>Create</span>
             </Button>
           </form>

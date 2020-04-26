@@ -7,6 +7,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import classNames from 'classnames';
+
+import Button from '../../../common/Button';
+import Icon from '../../../common/Icon';
 import * as ProjectActions from '../../IDE/actions/project';
 import * as ProjectsActions from '../../IDE/actions/projects';
 import * as CollectionsActions from '../../IDE/actions/collections';
@@ -20,7 +23,6 @@ import Overlay from '../../App/components/Overlay';
 import AddToCollectionSketchList from '../../IDE/components/AddToCollectionSketchList';
 import CopyableInput from '../../IDE/components/CopyableInput';
 import { SketchSearchbar } from '../../IDE/components/Searchbar';
-import dropdownArrow from '../../../images/down-arrow.svg';
 
 const arrowUp = require('../../../images/sort-arrow-up.svg');
 const arrowDown = require('../../../images/sort-arrow-down.svg');
@@ -51,13 +53,11 @@ const ShareURL = ({ value }) => {
 
   return (
     <div className="collection-share" ref={node}>
-      <button
-        className="collection-share__button"
+      <Button
         onClick={() => setShowURL(!showURL)}
-      >
-        <span>Share</span>
-        <InlineSVG className="collection-share__arrow" src={dropdownArrow} />
-      </button>
+      ><span>Share</span>
+        <Icon name={Icon.names.sortArrowDown} />
+      </Button>
       { showURL &&
         <div className="collection__share-dropdown">
           <CopyableInput value={value} label="Link to Collection" />
@@ -263,9 +263,9 @@ class Collection extends React.Component {
             </p>
             {
               this.isOwner() &&
-              <button className="collection-metadata__add-button" onClick={this.showAddSketches}>
+              <Button onClick={this.showAddSketches}>
                 Add Sketch
-              </button>
+              </Button>
             }
           </div>
         </div>
@@ -299,7 +299,7 @@ class Collection extends React.Component {
   _renderFieldHeader(fieldName, displayName) {
     const { field, direction } = this.props.sorting;
     const headerClass = classNames({
-      'sketches-table__header': true,
+      'arrowDown': true,
       'sketches-table__header--selected': field === fieldName
     });
     return (
