@@ -35,12 +35,10 @@ export const ReactRouterLink = () => (
   <Button to="./somewhere" label="submit">Actually a Link</Button>
 );
 
-export const InternalElementMargin = () => (
-  <Button>
-    <span>Internal</span>
-    <span>elements</span>
-    <span>have</span>
-    <span>right</span>
-    <span>margins</span>
-  </Button>
+export const ButtonWithIconBefore = () => (
+  <Button iconBeforeName={Button.iconNames.github}>Create</Button>
+);
+
+export const ButtonWithIconAfter = () => (
+  <Button iconAfterName={Button.iconNames.github}>Create</Button>
 );

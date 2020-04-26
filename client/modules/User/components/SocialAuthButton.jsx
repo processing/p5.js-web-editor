@@ -2,10 +2,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
 
-import { remSize, prop } from '../../../theme';
+import { remSize } from '../../../theme';
 
 import Button from '../../../common/Button';
-import Icon from '../../../common/Icon';
 
 const authUrls = {
   github: '/auth-github',
@@ -24,24 +23,15 @@ const services = {
 
 const StyledButton = styled(Button)`
   width: ${remSize(300)};
-
-  > * + * {
-    margin-left: ${remSize(10)};
-  }
-`;
-
-const StyledIcon = styled(Icon)`
-  width: ${remSize(32)};
-  height: ${remSize(32)};
 `;
 
 function SocialAuthButton({ service }) {
   return (
     <StyledButton
+      iconBeforeName={Button.iconNames[service]}
       href={authUrls[service]}
     >
-      <StyledIcon name={Icon.names[service]} />
-      <span>{labels[service]}</span>
+      {labels[service]}
     </StyledButton>
   );
 }

@@ -1,9 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import InlineSVG from 'react-inlinesvg';
 
 import Button from '../../../common/Button';
-import Icon from '../../../common/Icon';
 import CopyableInput from '../../IDE/components/CopyableInput';
 
 import APIKeyList from './APIKeyList';
@@ -82,13 +80,12 @@ class APIKeyForm extends React.Component {
               value={this.state.keyLabel}
             />
             <Button
-
+              iconBeforeName={Button.iconNames.plus}
               disabled={this.state.keyLabel === ''}
               type="submit"
               label="Create new key"
             >
-              <Icon name={Icon.names.plus} />
-              <span>Create</span>
+              Create
             </Button>
           </form>
 

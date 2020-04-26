@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router';
 
 import { remSize, prop } from '../theme';
+import Icon, { ValidIconNameType } from './Icon';
 
 // The '&&&' will increase the specificity of the
 // component's CSS so that it overrides the more
@@ -28,6 +29,10 @@ const StyledButton = styled.button`
     &:hover:not(:disabled) {
       color: ${prop('buttonHoverColor')};
       background-color: ${prop('buttonHoverColorBackground')};
+
+      svg * {
+        fill: ${prop('buttonHoverColor')};
+      }
     }
 
     &:disabled {
@@ -46,26 +51,35 @@ const StyledButton = styled.button`
  * A Button performs an primary action
  */
 const Button = ({
-  children, href, label, to, type, ...props
+  children, href, iconAfterName, iconBeforeName, label, to, type, ...props
 }) => {
+  const iconAfter = iconAfterName && <Icon name={iconAfterName} />;
+  const iconBefore = iconBeforeName && <Icon name={iconBeforeName} />;
+
+  const content = <>{iconBefore}<span>{children}</span>{iconAfter}</>;
+
   if (href) {
-    return <StyledButton as="a" aria-label={label} href={href} {...props}>{children}</StyledButton>;
+    return <StyledButton as="a" aria-label={label} href={href} {...props}>{content}</StyledButton>;
   }
 
   if (to) {
-    return <StyledButton as={Link} aria-label={label} to={to} {...props}>{children}</StyledButton>;
+    return <StyledButton as={Link} aria-label={label} to={to} {...props}>{content}</StyledButton>;
   }
 
-  return <StyledButton aria-label={label} type={type} {...props}>{children}</StyledButton>;
+  return <StyledButton aria-label={label} type={type} {...props}>{content}</StyledButton>;
 };
 
 Button.defaultProps = {
   disabled: false,
+  iconAfterName: null,
+  iconBeforeName: null,
   href: null,
   label: null,
   to: null,
   type: 'button',
 };
+
+Button.iconNames = Icon.names;
 
 Button.propTypes = {
   /**
@@ -77,6 +91,15 @@ Button.propTypes = {
     If the button can be activated or not
   */
   disabled: PropTypes.bool,
+  /**
+   * Name of icon to place before child content
+   */
+  iconAfterName: ValidIconNameType,
+
+  /**
+   * Name of icon to place after child content
+   */
+  iconBeforeName: ValidIconNameType,
   /**
    * Specifying an href will use an <a> to link to the URL
    */

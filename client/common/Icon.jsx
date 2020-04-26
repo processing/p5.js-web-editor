@@ -22,6 +22,8 @@ const icons = {
 */
 const names = lodash.mapValues(icons, (value, key) => key);
 
+export const ValidIconNameType = PropTypes.oneOf(Object.keys(names));
+
 
 function Icon({ name, ...props }) {
   return (
@@ -29,10 +31,11 @@ function Icon({ name, ...props }) {
   );
 }
 
+
 Icon.names = names;
 
 Icon.propTypes = {
-  name: PropTypes.oneOf(Object.keys(names)).isRequired
+  name: ValidIconNameType.isRequired
 };
 
 export default Icon;
