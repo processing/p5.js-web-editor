@@ -23,8 +23,10 @@ function SocialLoginPanel(props) {
       <p className="account__social-text">
         Use your GitHub or Google account to log into the p5.js Web Editor.
       </p>
-      <SocialAuthButton service={SocialAuthButton.services.github} />
-      <SocialAuthButton service={SocialAuthButton.services.google} />
+      <div className="account__social-stack">
+        <SocialAuthButton service={SocialAuthButton.services.github} />
+        <SocialAuthButton service={SocialAuthButton.services.google} />
+      </div>
     </React.Fragment>
   );
 }

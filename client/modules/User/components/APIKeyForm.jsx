@@ -2,11 +2,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import InlineSVG from 'react-inlinesvg';
 
+import Button from '../../../common/Button';
+import Icon from '../../../common/Icon';
 import CopyableInput from '../../IDE/components/CopyableInput';
 
 import APIKeyList from './APIKeyList';
-
-const plusIcon = require('../../../images/plus-icon.svg');
 
 export const APIKeyPropType = PropTypes.shape({
   id: PropTypes.object.isRequired,
@@ -81,14 +81,15 @@ class APIKeyForm extends React.Component {
               type="text"
               value={this.state.keyLabel}
             />
-            <button
-              className="api-key-form__create-button"
+            <Button
+
               disabled={this.state.keyLabel === ''}
               type="submit"
+              label="Create new key"
             >
-              <InlineSVG src={plusIcon} className="api-key-form__create-icon" />
-              Create
-            </button>
+              <Icon name={Icon.names.plusIcon} />
+              <span>Create</span>
+            </Button>
           </form>
 
           {

@@ -7,6 +7,7 @@ import lodash from 'lodash';
 const icons = {
   github: require('../images/github.svg'),
   google: require('../images/google.svg'),
+  plusIcon: require('../images/plus-icon.svg'),
 };
 
 /*
