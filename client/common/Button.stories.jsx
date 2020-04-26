@@ -34,3 +34,13 @@ export const AnchorButton = () => (
 export const ReactRouterLink = () => (
   <Button to="./somewhere" label="submit">Actually a Link</Button>
 );
+
+export const InternalElementMargin = () => (
+  <Button>
+    <span>Internal</span>
+    <span>elements</span>
+    <span>have</span>
+    <span>right</span>
+    <span>margins</span>
+  </Button>
+);

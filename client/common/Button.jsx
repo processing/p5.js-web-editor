@@ -35,6 +35,10 @@ const StyledButton = styled.button`
       background-color: ${prop('buttonDisabledColorBackground')};
       cursor: not-allowed;
     }
+
+    > *:not(:last-child) {
+      margin-right: ${remSize(8)};
+    }
   }
 `;
 
@@ -58,6 +62,7 @@ const Button = ({
 Button.defaultProps = {
   disabled: false,
   href: null,
+  label: null,
   to: null,
   type: 'button',
 };
@@ -79,7 +84,7 @@ Button.propTypes = {
   /*
    * An ARIA Label used for accessibility
    */
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   /**
    * Specifying a to URL will use a react-router Link
    */
