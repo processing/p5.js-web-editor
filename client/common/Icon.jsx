@@ -3,6 +3,7 @@ import InlineSVG from 'react-inlinesvg';
 import PropTypes from 'prop-types';
 import React from 'react';
 import lodash from 'lodash';
+import styled from 'styled-components';
 
 const icons = {
   sortArrowUp: require('../images/sort-arrow-up.svg'),
@@ -24,10 +25,16 @@ const names = lodash.mapValues(icons, (value, key) => key);
 
 export const ValidIconNameType = PropTypes.oneOf(Object.keys(names));
 
+const StyledInlineSVG = styled(InlineSVG)`
+  > svg {
+    width: 100%;
+    height: 100%;
+  }
+`;
 
 function Icon({ name, ...props }) {
   return (
-    <InlineSVG src={icons[name]} {...props} />
+    <StyledInlineSVG src={icons[name]} {...props} />
   );
 }
 
