@@ -13,12 +13,12 @@
 $p5-light-lightbrown: #7a5a3a;
 $p5-light-brown: #704F21;
 $p5-light-black: #333333;
-$p5-light-pink: #be3652;
+$p5-light-pink: #CA445F;
 $p5-light-gray: #666;
 $p5-light-lightblue: #007bbb;
 $p5-light-darkblue: #306bb4;
 $p5-light-white: #FDFDFD;
-$p5-light-orange: #EE9900;
+$p5-light-orange: #9E6700;
 $p5-light-lightgray: #E0D7D1;
 $p5-light-darkgray: #666666;
 $p5-light-green: #008007;
@@ -86,11 +86,12 @@ $p5-light-activeline: rgb(207, 207, 207);
 }
 
 .cm-s-p5-light .CodeMirror-activeline-background {
-  background-color: #F3F3F3;
+  background-color: $light;
 }
 
 .cm-s-p5-light .CodeMirror-activeline-gutter {
-  background-color: #ECECEC;
+  background-color: $light;
+  border-right: 1px solid $medium-light;
 }
 
 .cm-s-p5-light .cm-error {

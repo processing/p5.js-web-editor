@@ -89,12 +89,12 @@ $p5-dark-error: #df3a3d;
 }
 
 .cm-s-p5-dark .CodeMirror-activeline-background {
-  background-color: #404040;
+  background-color: $dark;
 }
 
 .cm-s-p5-dark .CodeMirror-activeline-gutter {
-  background-color: #454545;
-  border-right: 1px solid #949494;
+  background-color: $dark;
+  border-right: 1px solid $middle-dark;
 }
 
 .cm-s-p5-dark span.CodeMirror-matchingbracket {

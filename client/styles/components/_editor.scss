@@ -52,7 +52,7 @@ pre.CodeMirror-line {
 }
 
 .CodeMirror-gutter-elt:not(.CodeMirror-linenumber) {
-  opacity: 0.3;
+  opacity: 0.2;
   width: #{49 / $base-font-size}rem !important;
   height: 100%;
   left: 49px !important;
