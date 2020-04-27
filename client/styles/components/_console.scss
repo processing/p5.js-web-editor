@@ -90,10 +90,10 @@
 .preview-console__clear {
 	@include themify() {
 		@extend %link;
-		// color: getThemifyVariable('inactive-text-color');
-		// &:hover {
-		// 	color: getThemifyVariable('console-header-color');
-		// }
+		color: getThemifyVariable('secondary-text-color');
+		&:hover {
+			color: getThemifyVariable('heavy-text-color');
+		}
 	}
 	background: transparent;
 	border: none;

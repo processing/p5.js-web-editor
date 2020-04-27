@@ -66,10 +66,10 @@ $themes: (
     console-color: $lightest,
     console-header-background-color: $medium-light,
     console-header-color: $darker,
-    console-info-background-color: $lightsteelblue,
-    console-warn-background-color: $orange,
-    console-debug-background-color: $dodgerblue,
-    console-error-background-color: $red,
+    console-info-background-color: #5276B7,
+    console-warn-background-color: #996B00,
+    console-debug-background-color: #0071AD,
+    console-error-background-color: #D11518,
     ide-border-color: $medium-light,
     editor-gutter-color: $lighter,
     file-hover-color: $light,
@@ -140,10 +140,10 @@ $themes: (
     console-color: $lightest,
     console-header-background-color: $medium-dark,
     console-header-color: $lightest,
-    console-info-background-color: $lightsteelblue,
-    console-warn-background-color: $orange,
-    console-debug-background-color: $dodgerblue,
-    console-error-background-color: $red,
+    console-info-background-color: #5276B7,
+    console-warn-background-color: #966C08,
+    console-error-background-color: #DD3134,
+    console-debug-background-color: #097BB3,
     ide-border-color: $middle-dark,
     editor-gutter-color: $darker,
     file-hover-color: $dark,
@@ -260,7 +260,7 @@ $toast-text-color: $lightest;
 
 $light-console-error-color: #D11518;
 $light-console-warn-color: #FAAF00;
-$light-console-debug-color: #007BBB;
+$light-console-debug-color: #0071AD;
 
 $dark-console-error-color: #DF3A3D;
 $dark-console-warn-color: #F5BC38;
