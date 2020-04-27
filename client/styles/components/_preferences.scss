@@ -99,9 +99,9 @@
 
 .preference__label {
   @include themify() {
-    color: getThemifyVariable("inactive-text-color");
+    color: getThemifyVariable("secondary-text-color");
     &:hover {
-      color: getThemifyVariable("primary-text-color");
+      color: getThemifyVariable("heavy-text-color");
     }
   }
   margin: #{-15 / $base-font-size}rem 0 0 #{-5 / $base-font-size}rem;

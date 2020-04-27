@@ -173,11 +173,17 @@
 }
 .svg__logo g > path {
   @include themify() {
-      fill: getThemifyVariable('logo-color');
-    }
+    fill: getThemifyVariable('logo-color');
+  }
 }
 .svg__logo g g:first-of-type path {
   fill: none;
+}
+
+.svg__logo g g:first-of-type use {
+  @include themify() {
+    fill: getThemifyVariable('logo-background-color');
+  }
 }
 
 .nav__keyboard-shortcut {

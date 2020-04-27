@@ -109,11 +109,11 @@
 
 .toolbar__project-name {
 	@include themify() {
-		color: getThemifyVariable('logo-color');
+		color: getThemifyVariable('secondary-text-color');
 		&:hover {
-		color: getThemifyVariable('primary-text-color');
+		color: getThemifyVariable('logo-color');
 		  & .toolbar__edit-name-button path {
-		  	fill: getThemifyVariable('primary-text-color');
+		  	fill: getThemifyVariable('logo-color');
 		  }
 		}
 	}
@@ -159,7 +159,7 @@
 	}
 	@include themify() {
 		& path {
-			fill: getThemifyVariable('logo-color');
+			fill: getThemifyVariable('secondary-text-color');
 		}
 	}
 }

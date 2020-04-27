@@ -172,7 +172,7 @@
 %link {
 	@include themify() {
 		text-decoration: none;
-		color: getThemifyVariable('secondary-text-color');
+		color: getThemifyVariable('inactive-text-color');
 		cursor: pointer;
 		&:hover {
 			text-decoration: none;

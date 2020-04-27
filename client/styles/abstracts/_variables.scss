@@ -37,6 +37,7 @@ $darkest: #000;
 $themes: (
   light: (
     logo-color: $p5js-pink,
+    logo-background-color: $lightest,
     heavy-text-color: $darker,
     primary-text-color: $dark,
     secondary-text-color: $medium-dark,
@@ -75,6 +76,7 @@ $themes: (
     file-selected-color: $medium-light,
     input-text-color: $dark,
     input-background-color: $lightest,
+    input-secondary-background-color: $lightest,
     input-border-color: $middle-light,
     search-background-color: $lightest,
     search-clear-background-color: $light,
@@ -109,6 +111,7 @@ $themes: (
   ),
   dark: (
     logo-color: $p5js-pink,
+    logo-background-color: $lightest,
     heavy-text-color: $lightest,
     primary-text-color: $lightest,
     dropzone-text-color: $black,
@@ -147,6 +150,7 @@ $themes: (
     file-selected-color: $medium-dark,
     input-text-color: $lightest,
     input-background-color: $dark,
+    input-secondary-background-color: $medium-dark,
     input-border-color: $middle-dark,
     search-background-color: $lightest,
     search-clear-background-color: $medium-dark,
@@ -179,6 +183,7 @@ $themes: (
   ),
   contrast: (
     logo-color: $yellow,
+    logo-background-color: $darker,
     heavy-text-color: $yellow,
     primary-text-color: $lightest,
     dropzone-text-color: $black,
@@ -217,6 +222,7 @@ $themes: (
     file-selected-color: $medium-dark,
     input-text-color: $lightest,
     input-background-color: $dark,
+    input-secondary-background-color: $medium-dark,
     input-border-color: $middle-dark,
     search-background-color: $white,
     search-clear-background-color: $medium-dark,
@@ -226,7 +232,7 @@ $themes: (
     nav-hover-color: $yellow,
     nav-border-color: $middle-dark,
     error-color: $p5-contrast-pink,
-    table-row-stripe-color: dark,
+    table-row-stripe-color: $dark,
     codefold-icon-open: url(../images/triangle-arrow-down-white.svg),
     codefold-icon-closed: url(../images/triangle-arrow-right-white.svg),
 
@@ -249,11 +255,16 @@ $themes: (
   )
 );
 
-$console-warn-color: #ffbe05;
-$console-error-color: #ff5f52;
-
-$toast-background-color: #4A4A4A;
+$toast-background-color: $medium-dark;
 $toast-text-color: $lightest;
+
+$light-console-error-color: #D11518;
+$light-console-warn-color: #FAAF00;
+$light-console-debug-color: #007BBB;
+
+$dark-console-error-color: #DF3A3D;
+$dark-console-warn-color: #F5BC38;
+$dark-console-debug-color: #0C99E2;
 
 $about-play-background-color: rgba(255, 255, 255, 0.7);
 $about-button-border-color: rgba(151, 151, 151, 0.7);

@@ -235,7 +235,7 @@
   margin-right: #{5 / $base-font-size}rem;
   & g {
     @include themify() {
-      fill: getThemifyVariable('icon-color');
+      fill: getThemifyVariable('secondary-text-color');
     }
   }
   & svg {
