@@ -10,18 +10,16 @@
 //light gray: #f4f4f4
 //dark gray: #b5b5b5
 
-$p5-light-lightbrown: #7a5a3a;
-$p5-light-brown: #704F21;
+$p5-light-brown: #7A5A3A;
 $p5-light-black: #333333;
-$p5-light-pink: #CA445F;
+$p5-light-pink: #D52889;
 $p5-light-gray: #666;
-$p5-light-lightblue: #007bbb;
-$p5-light-darkblue: #306bb4;
-$p5-light-white: #FDFDFD;
-$p5-light-orange: #9E6700;
-$p5-light-lightgray: #E0D7D1;
-$p5-light-darkgray: #666666;
-$p5-light-green: #008007;
+$p5-light-blue: #0B7CA9;
+$p5-light-white: $lighter;
+$p5-light-orange: #A06801;
+$p5-light-lightgray: $middle-gray;
+$p5-light-green: #47820A;
+
 
 $p5-light-gutter: #f4f4f4;
 $p5-light-number: #b5b5b5;
@@ -34,11 +32,11 @@ $p5-light-activeline: rgb(207, 207, 207);
 }
 
 .cm-s-p5-light span .cm-comment {
-  color: $p5-light-gray;
+  color: $p5-light-lightgray;
 }
 
 .cm-s-p5-light span .cm-def {
-  color: $p5-light-lightblue;
+  color: $p5-light-blue;
 }
 
 .cm-s-p5-light span .cm-string {
@@ -58,7 +56,7 @@ $p5-light-activeline: rgb(207, 207, 207);
 }
 
 .cm-s-p5-light span .cm-variable {
-  color: $p5-light-lightblue;
+  color: $p5-light-blue;
 }
 
 .cm-s-p5-light span .cm-variable2 {
@@ -74,7 +72,7 @@ $p5-light-activeline: rgb(207, 207, 207);
 }
 
 .cm-s-p5-light span .cm-operator {
-  color: $p5-light-lightbrown;
+  color: $p5-light-brown;
 }
 
 .cm-s-p5-light .cm-linenumber {
@@ -105,7 +103,7 @@ $p5-light-activeline: rgb(207, 207, 207);
 }
 
 .cm-s-p5-light span .cm-qualifier {
-  color: $p5-light-lightblue;
+  color: $p5-light-blue;
 }
 
 .cm-s-p5-light span .cm-tag {
@@ -113,7 +111,7 @@ $p5-light-activeline: rgb(207, 207, 207);
 }
 
 .cm-s-p5-light span .cm-builtin {
-  color: $p5-light-lightblue;
+  color: $p5-light-blue;
 }
 
 .cm-s-p5-light span .cm-attribute {
@@ -121,7 +119,7 @@ $p5-light-activeline: rgb(207, 207, 207);
 }
 
 .cm-s-p5-light .cm-p5-function {
-  color: $p5-light-darkblue;
+  color: $p5-light-blue;
   font-weight: bold;
 }
 
