@@ -42,3 +42,11 @@ export const ButtonWithIconBefore = () => (
 export const ButtonWithIconAfter = () => (
   <Button iconAfterName={Button.iconNames.github}>Create</Button>
 );
+
+export const InlineButtonWithIconAfter = () => (
+  <Button kind={Button.kinds.inline} iconAfterName={Button.iconNames.sortArrowDown}>File name</Button>
+);
+
+export const InlineIconOnlyButton = () => (
+  <Button kind={Button.kinds.inline} iconAfterName={Button.iconNames.plus} label="Add to collection" />
+);
