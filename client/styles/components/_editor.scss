@@ -120,11 +120,9 @@ pre.CodeMirror-line {
   width: 100%;
   margin-bottom: #{12 / $base-font-size}rem;
   @include themify() {
-    background-color: getThemifyVariable('search-background-color');
+    color: getThemifyVariable('input-text-color');
+    background-color: getThemifyVariable('input-secondary-background-color');
     border: solid 0.5px getThemifyVariable('button-border-color');
-  }
-  &:focus {
-    background-color: $white;
   }
 }
 
