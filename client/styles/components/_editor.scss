@@ -143,22 +143,30 @@ pre.CodeMirror-line {
 .CodeMirror-search-modifiers {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 }
 
 .CodeMirror-regexp-button,
 .CodeMirror-case-button,
 .CodeMirror-word-button {
-  width: 20px;
-  height: 20px;
+  @include themify() {
+    // @extend %button;
+    padding: #{2 / $base-font-size}rem #{7 / $base-font-size}rem;
+    border: 2px solid transparent;
+    &:hover {
+      border-color: getThemifyVariable("button-border-color");
+    }
 
-  margin-left: #{10 / $base-font-size}rem;
+  }
+  width: #{35 / $base-font-size}rem;
+  height: #{35 / $base-font-size}rem;
+
+  & + & {
+    margin-left: #{10 / $base-font-size}rem;
+  }
 
   word-break: keep-all;
   white-space: nowrap;
-
-  @include themify() {
-    color: getThemifyVariable('inactive-text-color');
-  }
 }
 
 .CodeMirror-regexp-button .label,
@@ -169,7 +177,9 @@ pre.CodeMirror-line {
 
 [aria-checked="true"] {
   @include themify() {
-    color: getThemifyVariable('primary-text-color');
+    color: getThemifyVariable("heavy-text-color");
+    background-color: getThemifyVariable("button-secondary-background-color");
+    border-color: getThemifyVariable("button-border-color");
   }
 }
 

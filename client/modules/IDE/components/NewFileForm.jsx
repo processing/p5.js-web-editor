@@ -33,7 +33,12 @@ class NewFileForm extends React.Component {
             {...domOnlyProps(name)}
             ref={(element) => { this.fileName = element; }}
           />
-          <input type="submit" value="Add File" aria-label="add file" />
+          <input
+            type="submit"
+            value="Add File"
+            aria-label="add file"
+            className="new-file-form__submit"
+          />
         </div>
         {name.touched && name.error && <span className="form-error">{name.error}</span>}
       </form>
