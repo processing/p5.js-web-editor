@@ -144,7 +144,7 @@ exports[`Nav renders correctly 1`] = `
             <span
               className="nav__keyboard-shortcut"
             >
-              Ctrl
+              ⌃
               +F
             </span>
           </button>
@@ -161,7 +161,7 @@ exports[`Nav renders correctly 1`] = `
             <span
               className="nav__keyboard-shortcut"
             >
-              Ctrl
+              ⌃
               +G
             </span>
           </button>
@@ -180,7 +180,7 @@ exports[`Nav renders correctly 1`] = `
             >
               ⇧
               +
-              Ctrl
+              ⌃
               +G
             </span>
           </button>
@@ -242,7 +242,7 @@ exports[`Nav renders correctly 1`] = `
             <span
               className="nav__keyboard-shortcut"
             >
-              Ctrl
+              ⌃
               +Enter
             </span>
           </button>
@@ -261,7 +261,7 @@ exports[`Nav renders correctly 1`] = `
             >
               ⇧
               +
-              Ctrl
+              ⌃
               +Enter
             </span>
           </button>

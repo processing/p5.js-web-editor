@@ -24,7 +24,8 @@ describe('<FileNode />', () => {
         showFolderChildren: jest.fn(),
         hideFolderChildren: jest.fn(),
         canEdit: true,
-        authenticated: false
+        authenticated: false,
+        openUploadFileModal: jest.fn()
       };
       component = shallow(<FileNode {...props} />);
     });
