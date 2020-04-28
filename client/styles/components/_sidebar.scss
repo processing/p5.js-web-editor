@@ -179,29 +179,45 @@
   }
 }
 
-.sidebar__expand {
+.sidebar__expand,
+.sidebar__contract {
   @include icon();
   position: absolute;
-  top: #{7 / $base-font-size}rem;
-  left: #{1 / $base-font-size}rem;
-  height: #{14 / $base-font-size}rem;
+  top: #{2 / $base-font-size}rem;
+  left: #{0 / $base-font-size}rem;
+  height: #{25 / $base-font-size}rem;
+  width: #{49 / $base-font-size}rem;
+  border-radius: 2px;
   & svg {
-    height: #{14 / $base-font-size}rem;
+    height: #{25 / $base-font-size}rem;
   }
+  @include themify() {
+    background-color: getThemifyVariable("toolbar-button-background-color");
+    & polygon {
+      fill: getThemifyVariable("toolbar-button-color");
+    }
+    &:hover {
+      background-color: getThemifyVariable("button-background-hover-color");
+      & polygon {
+        fill: getThemifyVariable("button-hover-color");
+      }
+    }
+  }
+}
+
+.sidebar__expand {
   display: none;
+  &:hover {
+    cursor: e-resize;
+  }
   .sidebar--contracted & {
     display: inline-block;
   }
 }
 
 .sidebar__contract {
-  @include icon();
-  position: absolute;
-  top: #{7 / $base-font-size}rem;
-  left: #{1 / $base-font-size}rem;
-  height: #{14 / $base-font-size}rem;
-  & svg {
-    height: #{14 / $base-font-size}rem;
+  &:hover {
+    cursor: w-resize;
   }
   .sidebar--contracted & {
     display: none;
