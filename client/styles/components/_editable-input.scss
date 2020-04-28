@@ -4,15 +4,18 @@
   align-items: center;
 }
 
-.editable-input__label {
+button.editable-input__label {
   display: flex;
 
   @include themify() {
     color: getThemifyVariable('inactive-text-color');
+    & path {
+      fill: getThemifyVariable('inactive-text-color');
+    }
     &:hover {
-    color: getThemifyVariable('primary-text-color');
-      & .editable-input__icon path {
-        fill: getThemifyVariable('primary-text-color');
+    color: getThemifyVariable('logo-color');
+      & path {
+        fill: getThemifyVariable('logo-color');
       }
     }
   }
@@ -23,23 +26,13 @@
   font-weight: unset;
 }
 
+.editable-input__input {
+  width: 100%;
+}
+
 .editable-input__icon svg {
   width: 1.5rem;
   height: 1.5rem;
-
-  @include themify() {
-    path {
-      fill: getThemifyVariable('inactive-text-color');
-    }
-  }
-}
-
-.editable-input:hover {
-  @include themify() {
-    .editable-input__icon path {
-      fill: getThemifyVariable('primary-text-color');
-    }
-  }
 }
 
 .editable-input--is-not-editing .editable-input__input,
@@ -49,5 +42,5 @@
 
 .editable-input--is-editing .editable-input__input,
 .editable-input--is-not-editing .editable-input__label {
-  display: block;
+  display: flex;
 }

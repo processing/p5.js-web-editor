@@ -281,7 +281,7 @@ class Nav extends React.PureComponent {
                 onBlur={this.handleBlur}
               >
                 Save
-                <span className="nav__keyboard-shortcut">{metaKeyName}+s</span>
+                <span className="nav__keyboard-shortcut">{metaKeyName}+S</span>
               </button>
             </li> }
             { this.props.project.id && this.props.user.authenticated &&
@@ -541,13 +541,13 @@ class Nav extends React.PureComponent {
     return (
       <ul className="nav__items-right" title="user-menu">
         <li className="nav__item">
-          <Link to="/login">
+          <Link to="/login" className="nav__auth-button">
             <span className="nav__item-header">Log in</span>
           </Link>
         </li>
-        <span className="nav__item-spacer">or</span>
+        <span className="nav__item-or">or</span>
         <li className="nav__item">
-          <Link to="/signup">
+          <Link to="/signup" className="nav__auth-button">
             <span className="nav__item-header">Sign up</span>
           </Link>
         </li>

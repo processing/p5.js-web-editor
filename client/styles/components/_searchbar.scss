@@ -11,7 +11,7 @@
   padding-right: #{38 / $base-font-size}rem;
   @include themify() {
     border-color: getThemifyVariable('input-border-color');
-    background-color: getThemifyVariable('search-background-color');
+    background-color: getThemifyVariable('input-background-color');
   }
 }
 

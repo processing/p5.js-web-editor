@@ -12,9 +12,9 @@
 
 $p5-dark-lightbrown: #A67F59;
 $p5-light-green: #42F48F;
-$p5-dark-black: #333;
-$p5-dark-pink: #D9328F;
-$p5-dark-gray: #999999;
+$p5-dark-black: #1C1C1C;
+$p5-dark-pink: #DE4A9B;
+$p5-dark-gray: #9B9B9B;
 $p5-dark-lightblue: #0F9DD7;
 $p5-dark-darkblue: #318094;
 $p5-dark-white: #FDFDFD;
@@ -89,12 +89,12 @@ $p5-dark-error: #df3a3d;
 }
 
 .cm-s-p5-dark .CodeMirror-activeline-background {
-  background-color: #404040;
+  background-color: $dark;
 }
 
 .cm-s-p5-dark .CodeMirror-activeline-gutter {
-  background-color: #454545;
-  border-right: 1px solid #949494;
+  background-color: $dark;
+  border-right: 1px solid $middle-dark;
 }
 
 .cm-s-p5-dark span.CodeMirror-matchingbracket {
