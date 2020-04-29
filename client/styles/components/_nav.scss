@@ -48,7 +48,8 @@
   padding-left: #{15 / $base-font-size}rem;
 }
 
-.nav__item-header-triangle polygon {
+.nav__item-header-triangle polygon,
+.nav__item-header-triangle path {
   @include themify() {
     fill: getThemifyVariable('icon-color');
   }
@@ -67,7 +68,8 @@
     }
   }
 
-  .nav__item-header-triangle polygon {
+  .nav__item-header-triangle polygon,
+  .nav__item-header-triangle path {
     @include themify() {
       fill: getThemifyVariable('nav-hover-color');
     }

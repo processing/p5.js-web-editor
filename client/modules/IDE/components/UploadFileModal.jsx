@@ -2,11 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import InlineSVG from 'react-inlinesvg';
 import prettyBytes from 'pretty-bytes';
 import FileUploader from './FileUploader';
 import { getreachedTotalSizeLimit } from '../selectors/users';
-import exitUrl from '../../../images/exit.svg';
+import ExitIcon from '../../../images/exit.svg';
 
 const __process = (typeof global !== 'undefined' ? global : window).process;
 const limit = __process.env.UPLOAD_LIMIT || 250000000;
@@ -34,7 +33,7 @@ class UploadFileModal extends React.Component {
           <div className="modal__header">
             <h2 className="modal__title">Upload File</h2>
             <button className="modal__exit-button" onClick={this.props.closeModal}>
-              <InlineSVG src={exitUrl} alt="Close New File Modal" />
+              <ExitIcon title="Close New File Modal" />
             </button>
           </div>
           { this.props.reachedTotalSizeLimit &&

@@ -5,11 +5,10 @@ import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import { Helmet } from 'react-helmet';
 import prettyBytes from 'pretty-bytes';
-import InlineSVG from 'react-inlinesvg';
 
 import Loader from '../../App/components/loader';
 import * as AssetActions from '../actions/assets';
-import downFilledTriangle from '../../../images/down-filled-triangle.svg';
+import DownFilledTriangleIcon from '../../../images/down-filled-triangle.svg';
 
 class AssetListRowBase extends React.Component {
   constructor(props) {
@@ -87,7 +86,7 @@ class AssetListRowBase extends React.Component {
             onBlur={this.onBlurComponent}
             onFocus={this.onFocusComponent}
           >
-            <InlineSVG src={downFilledTriangle} alt="Menu" />
+            <DownFilledTriangleIcon title="Menu" />
           </button>
           {optionsOpen &&
             <ul

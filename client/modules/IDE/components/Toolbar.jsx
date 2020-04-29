@@ -3,16 +3,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import classNames from 'classnames';
-import InlineSVG from 'react-inlinesvg';
-
 import * as IDEActions from '../actions/ide';
 import * as preferenceActions from '../actions/preferences';
 import * as projectActions from '../actions/project';
 
-const playUrl = require('../../../images/play.svg');
-const stopUrl = require('../../../images/stop.svg');
-const preferencesUrl = require('../../../images/preferences.svg');
-const editProjectNameUrl = require('../../../images/pencil.svg');
+import PlayIcon from '../../../images/play.svg';
+import StopIcon from '../../../images/stop.svg';
+import PreferencesIcon from '../../../images/preferences.svg';
+import EditProjectNameIcon from '../../../images/pencil.svg';
 
 class Toolbar extends React.Component {
   constructor(props) {
@@ -73,7 +71,7 @@ class Toolbar extends React.Component {
           aria-label="play sketch"
           disabled={this.props.infiniteLoop}
         >
-          <InlineSVG src={playUrl} alt="Play Sketch" />
+          <PlayIcon title="Play Sketch" />
         </button>
         <button
           className={playButtonClass}
@@ -81,14 +79,14 @@ class Toolbar extends React.Component {
           aria-label="play only visual sketch"
           disabled={this.props.infiniteLoop}
         >
-          <InlineSVG src={playUrl} alt="Play only visual Sketch" />
+          <PlayIcon title="Play only visual Sketch" />
         </button>
         <button
           className={stopButtonClass}
           onClick={this.props.stopSketch}
           aria-label="stop sketch"
         >
-          <InlineSVG src={stopUrl} alt="Stop Sketch" />
+          <StopIcon alt="Stop Sketch" />
         </button>
         <div className="toolbar__autorefresh">
           <input
@@ -119,7 +117,7 @@ class Toolbar extends React.Component {
             <span>{this.props.project.name}</span>
             {
               this.canEditProjectName() &&
-              <InlineSVG className="toolbar__edit-name-button" src={editProjectNameUrl} alt="Edit Project Name" />
+              <EditProjectNameIcon className="toolbar__edit-name-button" title="Edit Project Name" />
             }
           </a>
           <input
@@ -153,7 +151,7 @@ class Toolbar extends React.Component {
           onClick={this.props.openPreferences}
           aria-label="preferences"
         >
-          <InlineSVG src={preferencesUrl} alt="Preferences" />
+          <PreferencesIcon role="img" />
         </button>
       </div>
     );

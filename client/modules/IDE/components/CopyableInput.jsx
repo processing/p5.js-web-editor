@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import Clipboard from 'clipboard';
-import InlineSVG from 'react-inlinesvg';
 import classNames from 'classnames';
 
-import shareUrl from '../../../images/share.svg';
+import ShareIcon from '../../../images/share.svg';
 
 class CopyableInput extends React.Component {
   constructor(props) {
@@ -71,7 +70,7 @@ class CopyableInput extends React.Component {
             href={value}
             className="copyable-input__preview"
           >
-            <InlineSVG src={shareUrl} alt={`open ${label} view in new tab`} />
+            <ShareIcon title={`open ${label} view in new tab`} />
           </a>
         }
       </div>

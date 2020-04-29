@@ -24,7 +24,6 @@ import 'codemirror/addon/edit/matchbrackets';
 import { JSHINT } from 'jshint';
 import { CSSLint } from 'csslint';
 import { HTMLHint } from 'htmlhint';
-import InlineSVG from 'react-inlinesvg';
 import classNames from 'classnames';
 import { debounce } from 'lodash';
 import '../../../utils/htmlmixed';
@@ -36,6 +35,11 @@ import { metaKey, } from '../../../utils/metaKey';
 
 import search from '../../../utils/codemirror-search';
 
+import beepUrl from '../../../sounds/audioAlert.mp3';
+import UnsavedChangesDotIcon from '../../../images/unsaved-changes-dot.svg';
+import RightArrowIcon from '../../../images/right-arrow.svg';
+import LeftArrowIcon from '../../../images/left-arrow.svg';
+
 search(CodeMirror);
 
 const beautifyCSS = beautifyJS.css;
@@ -44,11 +48,6 @@ const beautifyHTML = beautifyJS.html;
 window.JSHINT = JSHINT;
 window.CSSLint = CSSLint;
 window.HTMLHint = HTMLHint;
-
-const beepUrl = require('../../../sounds/audioAlert.mp3');
-const unsavedChangesDotUrl = require('../../../images/unsaved-changes-dot.svg');
-const rightArrowUrl = require('../../../images/right-arrow.svg');
-const leftArrowUrl = require('../../../images/left-arrow.svg');
 
 const IS_TAB_INDENT = false;
 const INDENTATION_AMOUNT = 2;
@@ -325,19 +324,21 @@ class Editor extends React.Component {
             className="sidebar__contract"
             onClick={this.props.collapseSidebar}
           >
-            <InlineSVG src={leftArrowUrl} />
+            <LeftArrowIcon />
           </button>
           <button
             aria-label="expand file navigation"
             className="sidebar__expand"
             onClick={this.props.expandSidebar}
           >
-            <InlineSVG src={rightArrowUrl} />
+            <RightArrowIcon />
           </button>
           <div className="editor__file-name">
             <span>
               {this.props.file.name}
-              {this.props.unsavedChanges ? <InlineSVG src={unsavedChangesDotUrl} /> : null}
+              <span className="editor__unsaved-changes">
+                {this.props.unsavedChanges ? <UnsavedChangesDotIcon /> : null}
+              </span>
             </span>
             <Timer
               projectSavedTime={this.props.projectSavedTime}

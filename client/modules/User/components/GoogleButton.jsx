@@ -1,8 +1,7 @@
-import InlineSVG from 'react-inlinesvg';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import googleUrl from '../../../images/google.svg';
+import GoogleIcon from '../../../images/google.svg';
 
 function GoogleButton(props) {
   return (
@@ -10,7 +9,7 @@ function GoogleButton(props) {
       className="google-button"
       href="/auth/google/"
     >
-      <InlineSVG src={googleUrl} className="google-icon" />
+      <GoogleIcon className="google-icon" />
       <span>{props.buttonText}</span>
     </a>
   );

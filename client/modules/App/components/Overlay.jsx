@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import InlineSVG from 'react-inlinesvg';
 import { browserHistory } from 'react-router';
 
-const exitUrl = require('../../../images/exit.svg');
+import ExitIcon from '../../../images/exit.svg';
 
 class Overlay extends React.Component {
   constructor(props) {
@@ -82,7 +81,7 @@ class Overlay extends React.Component {
               <div className="overlay__actions">
                 {actions}
                 <button className="overlay__close-button" onClick={this.close} >
-                  <InlineSVG src={exitUrl} alt="close overlay" />
+                  <ExitIcon title="close overlay" />
                 </button>
               </div>
             </header>

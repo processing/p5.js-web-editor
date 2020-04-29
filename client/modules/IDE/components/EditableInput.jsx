@@ -1,12 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import InlineSVG from 'react-inlinesvg';
 
-const editIconUrl = require('../../../images/pencil.svg');
-
-function EditIcon() {
-  return <InlineSVG className="editable-input__icon" src={editIconUrl} alt="Edit" />;
-}
+import EditIcon from '../../../images/pencil.svg';
 
 function EditableInput({
   validate, value, emptyPlaceholder, InputComponent, inputProps, onChange
@@ -54,7 +49,7 @@ function EditableInput({
     <span className={classes}>
       <button className="editable-input__label" onClick={beginEditing}>
         <span>{displayValue}</span>
-        <EditIcon />
+        <EditIcon className="editable-input__icon" />
       </button>
 
       <InputComponent

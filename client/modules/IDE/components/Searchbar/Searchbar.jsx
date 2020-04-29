@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import InlineSVG from 'react-inlinesvg';
 import { throttle } from 'lodash';
 
-const searchIcon = require('../../../../images/magnifyingglass.svg');
+import SearchIcon from '../../../../images/magnifyingglass.svg';
 
 class Searchbar extends React.Component {
   constructor(props) {
@@ -46,7 +45,7 @@ class Searchbar extends React.Component {
     return (
       <div className={`searchbar ${searchValue === '' ? 'searchbar--is-empty' : ''}`}>
         <div className="searchbar__button">
-          <InlineSVG className="searchbar__icon" src={searchIcon} />
+          <SearchIcon className="searchbar__icon" />
         </div>
         <input
           className="searchbar__input"

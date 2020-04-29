@@ -20,6 +20,8 @@
 
 .api-key-form__create-icon {
   display: flex;
+  height: #{12 / $base-font-size}rem;
+  margin-right: #{3 / $base-font-size}rem;
 }
 
 .api-key-form__create-button .isvg {
@@ -73,7 +75,7 @@
       position: initial;
       left: 0;
       top: 0;
-        & g {
+        & g, & path {
           opacity: 1;
           fill: getThemifyVariable('icon-color');
         }
@@ -82,7 +84,7 @@
 
 .api-key-list__delete-button:hover {
   @include themify() {
-      & g {
+      & g, & path {
         opacity: 1;
         fill: getThemifyVariable('icon-hover-color');
       }

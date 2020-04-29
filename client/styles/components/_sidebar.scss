@@ -188,17 +188,17 @@
   height: #{25 / $base-font-size}rem;
   width: #{49 / $base-font-size}rem;
   border-radius: 2px;
-  & svg {
-    height: #{25 / $base-font-size}rem;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
   @include themify() {
     background-color: getThemifyVariable("toolbar-button-background-color");
-    & polygon {
+    & polygon, & path {
       fill: getThemifyVariable("toolbar-button-color");
     }
     &:hover {
       background-color: getThemifyVariable("button-background-hover-color");
-      & polygon {
+      & polygon, & path {
         fill: getThemifyVariable("button-hover-color");
       }
     }
@@ -211,7 +211,7 @@
     cursor: e-resize;
   }
   .sidebar--contracted & {
-    display: inline-block;
+    display: flex;
   }
 }
 
@@ -236,7 +236,7 @@
 .sidebar__folder-icon {
   padding: #{4 / $base-font-size}rem 0;
   margin-right: #{5 / $base-font-size}rem;
-  & g {
+  & path {
     @include themify() {
       fill: map-get($theme-map, 'primary-text-color');
     }
@@ -249,7 +249,7 @@
 .sidebar__file-item-icon {
   padding: #{4 / $base-font-size}rem 0;
   margin-right: #{5 / $base-font-size}rem;
-  & g {
+  & path {
     @include themify() {
       fill: getThemifyVariable('secondary-text-color');
     }

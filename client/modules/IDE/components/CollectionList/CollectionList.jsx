@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import InlineSVG from 'react-inlinesvg';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import classNames from 'classnames';
@@ -19,8 +18,8 @@ import { SketchSearchbar } from '../Searchbar';
 
 import CollectionListRow from './CollectionListRow';
 
-const arrowUp = require('../../../../images/sort-arrow-up.svg');
-const arrowDown = require('../../../../images/sort-arrow-down.svg');
+import ArrowUpIcon from '../../../../images/sort-arrow-up.svg';
+import ArrowDownIcon from '../../../../images/sort-arrow-down.svg';
 
 class CollectionList extends React.Component {
   constructor(props) {
@@ -94,10 +93,10 @@ class CollectionList extends React.Component {
         <button className="sketch-list__sort-button" onClick={() => this.props.toggleDirectionForField(fieldName)}>
           <span className={headerClass}>{displayName}</span>
           {field === fieldName && direction === SortingActions.DIRECTION.ASC &&
-            <InlineSVG src={arrowUp} />
+            <ArrowUpIcon />
           }
           {field === fieldName && direction === SortingActions.DIRECTION.DESC &&
-            <InlineSVG src={arrowDown} />
+            <ArrowDownIcon />
           }
         </button>
       </th>

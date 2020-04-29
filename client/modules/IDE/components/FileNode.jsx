@@ -2,14 +2,13 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import InlineSVG from 'react-inlinesvg';
 import classNames from 'classnames';
 import * as IDEActions from '../actions/ide';
 import * as FileActions from '../actions/files';
-import downArrowUrl from '../../../images/down-filled-triangle.svg';
-import folderRightUrl from '../../../images/triangle-arrow-right.svg';
-import folderDownUrl from '../../../images/triangle-arrow-down.svg';
-import fileUrl from '../../../images/file.svg';
+import DownArrowIcon from '../../../images/down-filled-triangle.svg';
+import FolderRightIcon from '../../../images/triangle-arrow-right.svg';
+import FolderDownIcon from '../../../images/triangle-arrow-down.svg';
+import FileIcon from '../../../images/file.svg';
 
 export class FileNode extends React.Component {
   constructor(props) {
@@ -185,7 +184,7 @@ export class FileNode extends React.Component {
             <span className="file-item__spacer"></span>
             { isFile &&
               <span className="sidebar__file-item-icon">
-                <InlineSVG src={fileUrl} />
+                <FileIcon />
               </span>
             }
             { isFolder &&
@@ -194,13 +193,13 @@ export class FileNode extends React.Component {
                   className="sidebar__file-item-closed"
                   onClick={this.showFolderChildren}
                 >
-                  <InlineSVG className="folder-right" src={folderRightUrl} />
+                  <FolderRightIcon className="folder-right" />
                 </button>
                 <button
                   className="sidebar__file-item-open"
                   onClick={this.hideFolderChildren}
                 >
-                  <InlineSVG className="folder-down" src={folderDownUrl} />
+                  <FolderDownIcon className="folder-down" />
                 </button>
               </div>
             }
@@ -229,7 +228,7 @@ export class FileNode extends React.Component {
               onBlur={this.onBlurComponent}
               onFocus={this.onFocusComponent}
             >
-              <InlineSVG src={downArrowUrl} />
+              <DownArrowIcon />
             </button>
             <div className="sidebar__file-item-options">
               <ul title="file options">

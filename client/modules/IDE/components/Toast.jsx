@@ -2,10 +2,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import InlineSVG from 'react-inlinesvg';
 import * as ToastActions from '../actions/toast';
 
-const exitUrl = require('../../../images/exit.svg');
+import ExitIcon from '../../../images/exit.svg';
 
 function Toast(props) {
   return (
@@ -14,7 +13,7 @@ function Toast(props) {
         {props.text}
       </p>
       <button className="toast__close" onClick={props.hideToast}>
-        <InlineSVG src={exitUrl} alt="Close Keyboard Shortcuts Overlay" />
+        <ExitIcon title="Close Keyboard Shortcuts Overlay" />
       </button>
     </section>
   );

@@ -1,7 +1,6 @@
 import format from 'date-fns/format';
 import PropTypes from 'prop-types';
 import React from 'react';
-import InlineSVG from 'react-inlinesvg';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
@@ -10,7 +9,7 @@ import * as CollectionsActions from '../../actions/collections';
 import * as IdeActions from '../../actions/ide';
 import * as ToastActions from '../../actions/toast';
 
-const downFilledTriangle = require('../../../../images/down-filled-triangle.svg');
+import DownFilledTriangleIcon from '../../../../images/down-filled-triangle.svg';
 
 class CollectionListRowBase extends React.Component {
   static projectInCollection(project, collection) {
@@ -130,7 +129,7 @@ class CollectionListRowBase extends React.Component {
           onBlur={this.onBlurComponent}
           onFocus={this.onFocusComponent}
         >
-          <InlineSVG src={downFilledTriangle} alt="Menu" />
+          <DownFilledTriangleIcon title="Menu" />
         </button>
         {optionsOpen &&
           <ul

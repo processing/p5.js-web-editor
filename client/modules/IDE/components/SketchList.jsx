@@ -2,7 +2,6 @@ import format from 'date-fns/format';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import InlineSVG from 'react-inlinesvg';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
@@ -19,9 +18,9 @@ import Loader from '../../App/components/loader';
 import Overlay from '../../App/components/Overlay';
 import AddToCollectionList from './AddToCollectionList';
 
-const arrowUp = require('../../../images/sort-arrow-up.svg');
-const arrowDown = require('../../../images/sort-arrow-down.svg');
-const downFilledTriangle = require('../../../images/down-filled-triangle.svg');
+import ArrowUpIcon from '../../../images/sort-arrow-up.svg';
+import ArrowDownIcon from '../../../images/sort-arrow-down.svg';
+import DownFilledTriangleIcon from '../../../images/down-filled-triangle.svg';
 
 class SketchListRowBase extends React.Component {
   constructor(props) {
@@ -169,7 +168,7 @@ class SketchListRowBase extends React.Component {
           onBlur={this.onBlurComponent}
           onFocus={this.onFocusComponent}
         >
-          <InlineSVG src={downFilledTriangle} alt="Menu" />
+          <DownFilledTriangleIcon title="Menu" />
         </button>
         {optionsOpen &&
           <ul
@@ -380,10 +379,10 @@ class SketchList extends React.Component {
         <button className="sketch-list__sort-button" onClick={() => this.props.toggleDirectionForField(fieldName)}>
           <span className={headerClass}>{displayName}</span>
           {field === fieldName && direction === SortingActions.DIRECTION.ASC &&
-            <InlineSVG src={arrowUp} />
+            <ArrowUpIcon />
           }
           {field === fieldName && direction === SortingActions.DIRECTION.DESC &&
-            <InlineSVG src={arrowDown} />
+            <ArrowDownIcon />
           }
         </button>
       </th>

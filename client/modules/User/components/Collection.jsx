@@ -2,7 +2,6 @@ import format from 'date-fns/format';
 import PropTypes from 'prop-types';
 import React, { useState, useRef, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import InlineSVG from 'react-inlinesvg';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
@@ -20,11 +19,11 @@ import Overlay from '../../App/components/Overlay';
 import AddToCollectionSketchList from '../../IDE/components/AddToCollectionSketchList';
 import CopyableInput from '../../IDE/components/CopyableInput';
 import { SketchSearchbar } from '../../IDE/components/Searchbar';
-import dropdownArrow from '../../../images/down-arrow.svg';
 
-const arrowUp = require('../../../images/sort-arrow-up.svg');
-const arrowDown = require('../../../images/sort-arrow-down.svg');
-const removeIcon = require('../../../images/close.svg');
+import DropdownArrowIcon from '../../../images/down-arrow.svg';
+import ArrowUpIcon from '../../../images/sort-arrow-up.svg';
+import ArrowDownIcon from '../../../images/sort-arrow-down.svg';
+import RemoveIcon from '../../../images/close.svg';
 
 const ShareURL = ({ value }) => {
   const [showURL, setShowURL] = useState(false);
@@ -56,7 +55,7 @@ const ShareURL = ({ value }) => {
         onClick={() => setShowURL(!showURL)}
       >
         <span>Share</span>
-        <InlineSVG className="collection-share__arrow" src={dropdownArrow} />
+        <DropdownArrowIcon className="collection-share__arrow" />
       </button>
       { showURL &&
         <div className="collection__share-dropdown">
@@ -99,7 +98,7 @@ class CollectionItemRowBase extends React.Component {
             className="collection-row__remove-button"
             onClick={this.handleSketchRemove}
           >
-            <InlineSVG src={removeIcon} alt="Remove" />
+            <RemoveIcon title="Remove" />
           </button>
         </td>
       </tr>);
@@ -307,10 +306,10 @@ class Collection extends React.Component {
         <button className="sketch-list__sort-button" onClick={() => this.props.toggleDirectionForField(fieldName)}>
           <span className={headerClass}>{displayName}</span>
           {field === fieldName && direction === SortingActions.DIRECTION.ASC &&
-            <InlineSVG src={arrowUp} />
+            <ArrowUpIcon />
           }
           {field === fieldName && direction === SortingActions.DIRECTION.DESC &&
-            <InlineSVG src={arrowDown} />
+            <ArrowDownIcon />
           }
         </button>
       </th>

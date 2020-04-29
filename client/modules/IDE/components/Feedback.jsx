@@ -1,7 +1,6 @@
 import React from 'react';
-import InlineSVG from 'react-inlinesvg';
 import { Helmet } from 'react-helmet';
-import githubLogoUrl from '../../../images/github.svg';
+import GitHubLogo from '../../../images/github.svg';
 
 function Feedback(props) {
   return (
@@ -24,7 +23,7 @@ function Feedback(props) {
             className="feedback__github-link"
           >
             Go to Github
-            <InlineSVG className="feedback__github-logo" src={githubLogoUrl} />
+            <GitHubLogo className="feedback__github-logo" />
           </a>
         </p>
       </div>
