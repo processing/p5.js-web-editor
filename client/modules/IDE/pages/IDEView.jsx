@@ -170,6 +170,14 @@ class IDEView extends React.Component {
       } else {
         this.props.expandConsole();
       }
+    } else if (e.keyCode === 27) {
+      if (this.props.ide.newFolderModalVisible) {
+        this.props.closeNewFolderModal();
+      } else if (this.props.ide.uploadFileModalVisible) {
+        this.props.closeUploadFileModal();
+      } else if (this.props.ide.modalIsVisible) {
+        this.props.closeNewFileModal();
+      }
     }
   }
 
@@ -562,6 +570,7 @@ IDEView.propTypes = {
   closeProjectOptions: PropTypes.func.isRequired,
   newFolder: PropTypes.func.isRequired,
   closeNewFolderModal: PropTypes.func.isRequired,
+  closeNewFileModal: PropTypes.func.isRequired,
   createFolder: PropTypes.func.isRequired,
   closeShareModal: PropTypes.func.isRequired,
   showEditorOptions: PropTypes.func.isRequired,
