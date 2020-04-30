@@ -82,8 +82,6 @@ describe('<FileNode />', () => {
         beforeEach(() => changeName(newName));
 
         it('should save the name', () => {
-          console.log('component.state');
-          console.log(component.state());
           expect(props.updateFileName).toBeCalledWith(props.id, newName);
         });
       });
@@ -156,6 +154,14 @@ describe('<FileNode />', () => {
           .find('.sidebar__file-item-option')
           .first();
         component.setState({ isEditing: true });
+      });
+
+      describe('to a foldername', () => {
+        const newName = 'newfoldername';
+        beforeEach(() => changeName(newName));
+
+        it('should save', () => expect(props.updateFileName).toBeCalledWith(props.id, newName));
+        it('should update name', () => expect(getUpdatedName()).toEqual(newName));
       });
 
       describe('to a filename', () => {
