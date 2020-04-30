@@ -14,7 +14,7 @@ const stopUrl = require('../../../images/stop.svg');
 const preferencesUrl = require('../../../images/preferences.svg');
 const editProjectNameUrl = require('../../../images/pencil.svg');
 
-class Toolbar extends React.Component {
+export class Toolbar extends React.Component {
   constructor(props) {
     super(props);
     this.handleKeyPress = this.handleKeyPress.bind(this);
