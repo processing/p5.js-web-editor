@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { FileNode } from '../../modules/IDE/components/FileNode';
 
-beforeAll(() => {});
 describe('<FileNode />', () => {
   let component;
   let props = {};
@@ -17,7 +16,7 @@ describe('<FileNode />', () => {
   const getUpdatedName = () => getState().updatedName;
 
   describe('with valid props, regardless of filetype', () => {
-    [''].forEach((fileType) => {
+    ['folder', 'file'].forEach((fileType) => {
       beforeEach(() => {
         props = {
           ...props,
@@ -38,6 +37,24 @@ describe('<FileNode />', () => {
           openUploadFileModal: jest.fn()
         };
         component = shallow(<FileNode {...props} />);
+      });
+
+      describe('when changing name', () => {
+        beforeEach(() => {
+          input = component.find('.sidebar__file-item-input');
+          renameTriggerButton = component
+            .find('.sidebar__file-item-option')
+            .first();
+          component.setState({ isEditing: true });
+        });
+
+        describe('to an empty name', () => {
+          const newName = '';
+          beforeEach(() => changeName(newName));
+
+          it('should not save', () => expect(props.updateFileName).not.toHaveBeenCalled());
+          it('should reset name', () => expect(getUpdatedName()).toEqual(props.name));
+        });
       });
     });
   });
@@ -87,15 +104,6 @@ describe('<FileNode />', () => {
       });
 
       // Failure Scenarios
-
-      describe('to an empty filename', () => {
-        const newName = '';
-        beforeEach(() => changeName(newName));
-
-
-        it('should not save', () => expect(props.updateFileName).not.toHaveBeenCalled());
-        it('should reset name', () => expect(getUpdatedName()).toEqual(props.name));
-      });
 
       describe('to an extensionless filename', () => {
         const newName = 'extensionless';
