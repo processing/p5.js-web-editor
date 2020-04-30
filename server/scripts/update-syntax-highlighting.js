@@ -1,4 +1,5 @@
 const fs = require('fs');
+const process = require('process');
 const request = require('request');
 
 request('https://p5js.org/reference/data.json', (err, res) => {
@@ -33,7 +34,7 @@ request('https://p5js.org/reference/data.json', (err, res) => {
     generatedCode += `let p5FunctionKeywords = ${p5FunctionPart}; \n`;
     generatedCode += 'exports.p5FunctionKeywords = p5FunctionKeywords;\n';
     generatedCode += 'exports.p5VariableKeywords = p5VariableKeywords;\n';
-    fs.writeFile('../../client/utils/p5-javascript-template.js', generatedCode, (error) => {
+    fs.writeFile(`${process.cwd()}/client/utils/p5-javascript-template.js`, generatedCode, (error) => {
       if (error) {
         console.log("Error!! Couldn't write to the file", error);
       } else {
