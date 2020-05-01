@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Toolbar } from '../../modules/IDE/components/Toolbar';
+import { ToolbarComponent } from '../../modules/IDE/components/Toolbar';
 
 
 const initialProps = {
@@ -33,7 +33,7 @@ const initialProps = {
 };
 
 
-describe('<Toolbar />', () => {
+describe('<ToolbarComponent />', () => {
   let component;
   let props = initialProps;
   let input;
@@ -63,7 +63,7 @@ describe('<Toolbar />', () => {
   describe('with valid props', () => {
     beforeEach(() => {
       setProps();
-      component = shallow(<Toolbar {...props} />);
+      component = shallow(<ToolbarComponent {...props} />);
     });
     it('renders', () => expect(component).toBeDefined());
 
@@ -76,7 +76,7 @@ describe('<Toolbar />', () => {
             project: { isEditingName: true, name: 'testname' },
             setProjectName: jest.fn(name => component.setProps({ project: { name } })),
           });
-          component = shallow(<Toolbar {...props} />);
+          component = shallow(<ToolbarComponent {...props} />);
         });
 
         describe('to a valid name', () => {

@@ -14,7 +14,7 @@ const stopUrl = require('../../../images/stop.svg');
 const preferencesUrl = require('../../../images/preferences.svg');
 const editProjectNameUrl = require('../../../images/pencil.svg');
 
-export class Toolbar extends React.Component {
+class Toolbar extends React.Component {
   constructor(props) {
     super(props);
     this.handleKeyPress = this.handleKeyPress.bind(this);
@@ -210,4 +210,5 @@ const mapDispatchToProps = {
   ...projectActions,
 };
 
+export const ToolbarComponent = Toolbar;
 export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);
