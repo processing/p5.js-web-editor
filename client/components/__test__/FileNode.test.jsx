@@ -34,7 +34,8 @@ describe('<FileNode />', () => {
           newFolder: jest.fn(),
           showFolderChildren: jest.fn(),
           hideFolderChildren: jest.fn(),
-          openUploadFileModal: jest.fn()
+          openUploadFileModal: jest.fn(),
+          setProjectName: jest.fn(),
         };
         component = shallow(<FileNode {...props} />);
       });
@@ -108,16 +109,14 @@ describe('<FileNode />', () => {
       describe('to an extensionless filename', () => {
         const newName = 'extensionless';
         beforeEach(() => changeName(newName));
-
-        it('should not save', () => expect(props.updateFileName).not.toHaveBeenCalled());
-        it('should reset name', () => expect(getUpdatedName()).toEqual(props.name));
       });
-
+      it('should not save', () => expect(props.setProjectName).not.toHaveBeenCalled());
+      it('should reset name', () => expect(getUpdatedName()).toEqual(props.name));
       describe('to different extension', () => {
         const newName = 'name.gif';
         beforeEach(() => changeName(newName));
 
-        it('should not save', () => expect(props.updateFileName).not.toHaveBeenCalled());
+        it('should not save', () => expect(props.setProjectName).not.toHaveBeenCalled());
         it('should reset name', () => expect(getUpdatedName()).toEqual(props.name));
       });
 
