@@ -79,8 +79,6 @@ describe('<Toolbar />', () => {
           component = shallow(<Toolbar {...props} />);
         });
 
-        // it('should debug', () => console.log(component.debug()));
-
         describe('to a valid name', () => {
           beforeEach(() => changeName('hello'));
           it('should save', () => expect(props.setProjectName).toBeCalledWith('hello'));
