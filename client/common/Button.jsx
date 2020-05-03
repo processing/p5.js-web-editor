@@ -24,27 +24,46 @@ const StyledButton = styled.button`
     width: max-content;
     text-decoration: none;
 
-    background-color: ${prop('buttonColorBackground')};
-    color: ${prop('buttonColor')};
+    color: ${prop('Button.default.foreground')};
+    background-color: ${prop('Button.default.background')};
     cursor: pointer;
-    border: 2px solid ${prop('buttonBorderColor')};
+    border: 2px solid ${prop('Button.default.border')};
     border-radius: 2px;
     padding: ${remSize(8)} ${remSize(25)};
     line-height: 1;
+
+    svg * {
+      fill: ${prop('Button.default.foreground')};
+    }
     
     &:hover:not(:disabled) {
-      color: ${prop('buttonHoverColor')};
-      background-color: ${prop('buttonHoverColorBackground')};
+      color: ${prop('Button.hover.foreground')};
+      background-color: ${prop('Button.hover.background')};
+      border-color: ${prop('Button.hover.border')};
 
       svg * {
-        fill: ${prop('buttonHoverColor')};
+        fill: ${prop('Button.hover.foreground')};
+      }
+    }
+
+    &:active:not(:disabled) {
+      color: ${prop('Button.active.foreground')};
+      background-color: ${prop('Button.active.background')};
+
+      svg * {
+        fill: ${prop('Button.active.foreground')};
       }
     }
 
     &:disabled {
-      color: ${prop('buttonDisabledColor')};
-      background-color: ${prop('buttonDisabledColorBackground')};
+      color: ${prop('Button.disabled.foreground')};
+      background-color: ${prop('Button.disabled.background')};
+      border-color: ${prop('Button.disabled.border')};
       cursor: not-allowed;
+
+      svg * {
+        fill: ${prop('Button.disabled.foreground')};
+      }
     }
 
     > * + * {
@@ -90,26 +109,35 @@ const StyledIconButton = styled.button`
     height: ${remSize(32)}px;
     text-decoration: none;
 
-    background-color: ${prop('buttonColorBackground')};
-    color: ${prop('buttonColor')};
+    color: ${prop('Button.default.foreground')};
+    background-color: ${prop('Button.hover.background')};
     cursor: pointer;
-    border: 1px solid transparen;
+    border: 1px solid transparent;
     border-radius: 50%;
     padding: ${remSize(8)} ${remSize(25)};
     line-height: 1;
     
     &:hover:not(:disabled) {
-      color: ${prop('buttonHoverColor')};
-      background-color: ${prop('buttonHoverColorBackground')};
+      color: ${prop('Button.hover.foreground')};
+      background-color: ${prop('Button.hover.background')};
 
       svg * {
-        fill: ${prop('buttonHoverColor')};
+        fill: ${prop('Button.hover.foreground')};
+      }
+    }
+
+    &:active:not(:disabled) {
+      color: ${prop('Button.active.foreground')};
+      background-color: ${prop('Button.active.background')};
+
+      svg * {
+        fill: ${prop('Button.active.foreground')};
       }
     }
 
     &:disabled {
-      color: ${prop('buttonDisabledColor')};
-      background-color: ${prop('buttonDisabledColorBackground')};
+      color: ${prop('Button.disabled.foreground')};
+      background-color: ${prop('Button.disabled.background')};
       cursor: not-allowed;
     }
 
