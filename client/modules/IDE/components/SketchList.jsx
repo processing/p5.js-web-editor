@@ -333,8 +333,9 @@ class SketchList extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.sketches !== nextProps.sketches && Array.isArray(nextProps.sketches)) {
+  componentDidUpdate(prevProps) {
+    if (this.props.sketches !== prevProps.sketches && Array.isArray(this.props.sketches)) {
+      // eslint-disable-next-line react/no-did-update-set-state
       this.setState({
         isInitialDataLoad: false,
       });
