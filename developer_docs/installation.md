@@ -4,6 +4,41 @@ Follow these instructions to set up your development environment, which you need
 
 ## Manual Installation
 
+There are two types of manual installation. 
+
+The simplest is to run the front-end web app only (A). This connects to a staging API and allows you to make changes to the web app without having to worry about installing the backend API and database.
+
+If you need to change the API, then you'll need to run the full-stack (B).
+
+### A. Front-end web app only
+
+_Note_: The installation steps assume you are using a Unix-like shell. If you are using Windows, you will need to use `copy` instead of `cp`.
+
+1. Install Node.js. The recommended way is to Node through [nvm](https://github.com/nvm-sh/nvm). You can also install [node.js](https://nodejs.org/download/release/v12.16.1/) version 12.16.1 directly from the Node.js website.
+2. [Fork](https://help.github.com/articles/fork-a-repo) the [p5.js Web Editor repository](https://github.com/processing/p5.js-web-editor) into your own GitHub account.
+3. [Clone](https://help.github.com/articles/cloning-a-repository/) your new fork of the repository from GitHub onto your local computer.
+
+   ```
+   $ git clone https://github.com/YOUR_USERNAME/p5.js-web-editor.git
+   ```
+
+4. If you are using nvm, run `$ nvm use` to set your Node version to 12.16.1
+5. Navigate into the project folder and install all its necessary dependencies with npm.
+
+   ```
+   $ cd p5.js-web-editor
+   $ npm install
+   ```
+
+7. `$ cp .env.example .env`
+8. Edit `.env` to point to the staging API server `API_URL=https://editor-staging.p5js.org/editor`
+9. `$ npm run start:client`
+10. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
+11. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
+12. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
+
+### B. Full-stack: web app, API & database
+
 _Note_: The installation steps assume you are using a Unix-like shell. If you are using Windows, you will need to use `copy` instead of `cp`.
 
 1. Install Node.js. The recommended way is to Node through [nvm](https://github.com/nvm-sh/nvm). You can also install [node.js](https://nodejs.org/download/release/v12.16.1/) version 12.16.1 directly from the Node.js website.
