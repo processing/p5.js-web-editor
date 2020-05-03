@@ -48,8 +48,12 @@ if (process.env.BASIC_USERNAME && process.env.BASIC_PASSWORD) {
 
 const allowedCorsOrigins = [
   /p5js\.org$/,
-  /localhost/ // to allow client-only development
 ];
+
+// to allow client-only development
+if (process.env.CORS_ALLOW_LOCALHOST === 'true') {
+  allowedCorsOrigins.push(/localhost/);
+}
 
 // Run Webpack dev server in development mode
 if (process.env.NODE_ENV === 'development') {
