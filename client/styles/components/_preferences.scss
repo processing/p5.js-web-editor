@@ -33,25 +33,6 @@
   }
 }
 
-.serve__over__https {
-  text-align: center;
-  margin-left: #{9 / $base-font-size}rem;
-  font-width: #{108 / $base-font-size}rem;
-  font-height: #{15 / $base-font-size}rem;
-  font-family: Montserrat;
-  font-size: #{12 / $base-font-size}rem;
-  margin-top: #{2 / $base-font-size}rem;
-}
-
-.preferences__heading {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  @include themify() {
-    color: getThemifyVariable("heading-text-color");
-  }
-}
-
 .preferences__title {
   width: #{90 / $base-font-size}rem;
   height: #{25 / $base-font-size}rem;
@@ -86,9 +67,6 @@
   font-size: #{16 / $base-font-size}rem;
   margin-top: #{13 / $base-font-size}rem;
   margin-bottom: #{7 / $base-font-size}rem;
-  @include themify() {
-    color: getThemifyVariable("heading-text-color");
-  }
 }
 
 .preference__subtitle {
@@ -104,8 +82,9 @@
   @include themify() {
     border: #{1 / $base-font-size}rem solid
       getThemifyVariable("button-border-color");
-    background-color: getThemifyVariable("button-background-color");
+    // background-color: getThemifyVariable("button-background-color");
     color: getThemifyVariable("input-text-color");
+    background-color: getThemifyVariable('input-background-color');
   }
   text-align: center;
   border-radius: 0%;
@@ -120,9 +99,9 @@
 
 .preference__label {
   @include themify() {
-    color: getThemifyVariable("inactive-text-color");
+    color: getThemifyVariable("secondary-text-color");
     &:hover {
-      color: getThemifyVariable("primary-text-color");
+      color: getThemifyVariable("heavy-text-color");
     }
   }
   margin: #{-15 / $base-font-size}rem 0 0 #{-5 / $base-font-size}rem;
@@ -242,7 +221,7 @@ input[type="number"]::-webkit-outer-spin-button {
 .preference__radio-button:checked + .preference__option {
   @include themify() {
     //for some reason this won't work for getThemifyVariable
-    color: map-get($theme-map, "primary-text-color");
+    color: map-get($theme-map, "heavy-text-color");
   }
 }
 

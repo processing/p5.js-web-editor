@@ -10,7 +10,7 @@
 //light gray: #f4f4f4
 //dark gray: #b5b5b5
 
-$p5-contrast-black: #333;
+$p5-contrast-black: #1C1C1C;
 $p5-contrast-gray: #A0A0A0;
 $p5-contrast-white: #FDFDFD;
 $p5-contrast-darkgray: #333333;
@@ -84,12 +84,12 @@ $p5-contrast-activeline: #999999;
 }
 
 .cm-s-p5-contrast .CodeMirror-activeline-background {
-  background-color: #404040;
+  background-color: $dark;
 }
 
 .cm-s-p5-contrast .CodeMirror-activeline-gutter {
-  background-color: #454545;
-  border-right: 1px solid #949494;
+  background-color: $dark;
+  border-right: 1px solid $middle-dark;
 }
 
 .cm-s-p5-contrast .cm-error {

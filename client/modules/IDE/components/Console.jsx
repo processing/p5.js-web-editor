@@ -9,12 +9,16 @@ import {
 } from '../../../styles/components/_console-feed.scss';
 import warnLightUrl from '../../../images/console-warn-light.svg';
 import warnDarkUrl from '../../../images/console-warn-dark.svg';
+import warnContrastUrl from '../../../images/console-warn-contrast.svg';
 import errorLightUrl from '../../../images/console-error-light.svg';
 import errorDarkUrl from '../../../images/console-error-dark.svg';
+import errorContrastUrl from '../../../images/console-error-contrast.svg';
 import debugLightUrl from '../../../images/console-debug-light.svg';
 import debugDarkUrl from '../../../images/console-debug-dark.svg';
+import debugContrastUrl from '../../../images/console-debug-contrast.svg';
 import infoLightUrl from '../../../images/console-info-light.svg';
 import infoDarkUrl from '../../../images/console-info-dark.svg';
+import infoContrastUrl from '../../../images/console-info-contrast.svg';
 
 const upArrowUrl = require('../../../images/up-arrow.svg');
 const downArrowUrl = require('../../../images/down-arrow.svg');
@@ -47,6 +51,12 @@ class Console extends React.Component {
       LOG_DEBUG_ICON: `url(${debugDarkUrl})`,
       LOG_INFO_ICON: `url(${infoDarkUrl})`
     };
+    const CONSOLE_FEED_CONTRAST_ICONS = {
+      LOG_WARN_ICON: `url(${warnContrastUrl})`,
+      LOG_ERROR_ICON: `url(${errorContrastUrl})`,
+      LOG_DEBUG_ICON: `url(${debugContrastUrl})`,
+      LOG_INFO_ICON: `url(${infoContrastUrl})`
+    };
     const CONSOLE_FEED_SIZES = {
       TREENODE_LINE_HEIGHT: 1.2,
       BASE_FONT_SIZE: this.props.fontSize,
@@ -64,7 +74,7 @@ class Console extends React.Component {
       case 'dark':
         return Object.assign(CONSOLE_FEED_DARK_STYLES, CONSOLE_FEED_DARK_ICONS, CONSOLE_FEED_SIZES, style);
       case 'contrast':
-        return Object.assign(CONSOLE_FEED_CONTRAST_STYLES, CONSOLE_FEED_DARK_ICONS, CONSOLE_FEED_SIZES, style);
+        return Object.assign(CONSOLE_FEED_CONTRAST_STYLES, CONSOLE_FEED_CONTRAST_ICONS, CONSOLE_FEED_SIZES, style);
       default:
         return '';
     }

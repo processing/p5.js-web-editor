@@ -58,15 +58,15 @@
 }
 
 %none-themify-icon-with-hover {
-	color: $icon-color;
+	color: $medium-dark;
 	& g {
-		fill: $icon-color;
+		fill: $medium-dark;
 	}
 	&:hover {
-		color: $icon-hover-color;
+		color: $p5js-pink;
 		& g {
 			opacity: 1;
-			fill: $icon-hover-color;
+			fill: $p5js-pink;
 		}
 	}
 	background-color: transparent;
@@ -110,7 +110,7 @@
 	@extend %toolbar-button;
 	@include themify() {
 		color: getThemifyVariable('primary-text-color');
-		background-color: getThemifyVariable('modal-button-background-color');
+		background-color: getThemifyVariable('preferences-button-background-color');
 		padding: 0;
 		margin-bottom: #{28 / $base-font-size}rem;
 		line-height: #{50 / $base-font-size}rem;
@@ -126,7 +126,7 @@
 		}
 		&:disabled:hover {
 			cursor: not-allowed;
-			background-color: getThemifyVariable('modal-button-background-color');
+			background-color: getThemifyVariable('preferences-button-background-color');
 		}
 	}
 }
@@ -136,7 +136,7 @@
 		background-color: transparent;
 		color: getThemifyVariable('inactive-text-color');
 		&:hover {
-			color: getThemifyVariable('primary-text-color');
+			color: getThemifyVariable('heavy-text-color');
 		}
 	}
 	font-size: #{12 / $base-font-size}rem;
@@ -176,7 +176,7 @@
 		cursor: pointer;
 		&:hover {
 			text-decoration: none;
-			color: getThemifyVariable('primary-text-color');
+			color: getThemifyVariable('heavy-text-color');
 		}
 	}
 }
@@ -186,7 +186,7 @@
     background-color: map-get($theme-map, 'modal-background-color');
     border: 1px solid map-get($theme-map, 'modal-border-color');
     box-shadow: 0 0 18px 0 getThemifyVariable('shadow-color');
-    color: getThemifyVariable('dropdown-color');
+    color: getThemifyVariable('primary-text-color');
 	}
 	text-align: left;
 	width: #{180 / $base-font-size}rem;
@@ -207,7 +207,7 @@
 		& button,
 		& a {
 			@include themify() {
-				color: getThemifyVariable('dropdown-color');
+				color: getThemifyVariable('primary-text-color');
 			}
 			width: 100%;
 			text-align: left;

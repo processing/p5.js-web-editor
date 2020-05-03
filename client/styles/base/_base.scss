@@ -39,6 +39,7 @@ textarea {
 	padding: #{10 / $base-font-size}rem;
 	@include themify() {
 		color: getThemifyVariable('input-text-color');
+		background-color: getThemifyVariable('input-background-color');
 		border-color: getThemifyVariable('input-border-color');
 	}
 }
@@ -86,4 +87,12 @@ thead {
 }
 th {
 	text-align: left;
+}
+
+a:focus,
+button:focus,
+input:focus,
+textarea:focus {
+	outline: none;
+	box-shadow: 0 0 0 1px $outline-color;
 }

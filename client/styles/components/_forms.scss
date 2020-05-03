@@ -57,6 +57,7 @@
   font-size: #{16 / $base-font-size}rem;
   @include themify() {
     color: getThemifyVariable('form-input-text-color');
+    background-color: getThemifyVariable('input-background-color');
   }
 }
 

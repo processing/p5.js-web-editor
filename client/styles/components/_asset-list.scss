@@ -83,7 +83,7 @@
 
   @include themify() {
     & polygon {
-      fill: getThemifyVariable('dropdown-color');
+      fill: getThemifyVariable('inactive-text-color');
     }
   }
 }
