@@ -1,5 +1,6 @@
 .quick-add-wrapper {
   min-width: #{600 / $base-font-size}rem;
+  overflow-y: scroll;
 }
 
 .quick-add {
