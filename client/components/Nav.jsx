@@ -228,11 +228,11 @@ class Nav extends React.PureComponent {
     return (
       <ul className="nav__items-left">
         <li className="nav__item-logo">
-          <LogoIcon title="p5.js Logo" className="svg__logo" />
+          <LogoIcon role="img" aria-label="p5.js Logo" focusable="false" className="svg__logo" />
         </li>
         <li className="nav__item nav__item--no-icon">
           <Link to="/" className="nav__back-link">
-            <CaretLeftIcon className="nav__back-icon" />
+            <CaretLeftIcon className="nav__back-icon" focusable="false" aria-hidden="true" />
             <span className="nav__item-header">
               Back to Editor
             </span>
@@ -246,7 +246,7 @@ class Nav extends React.PureComponent {
     return (
       <ul className="nav__items-left">
         <li className="nav__item-logo">
-          <LogoIcon title="p5.js Logo" className="svg__logo" />
+          <LogoIcon role="img" aria-label="p5.js Logo" focusable="false" className="svg__logo" />
         </li>
         <li className={navDropdownState.file}>
           <button
@@ -260,7 +260,7 @@ class Nav extends React.PureComponent {
             }}
           >
             <span className="nav__item-header">File</span>
-            <TriangleIcon className="nav__item-header-triangle" />
+            <TriangleIcon className="nav__item-header-triangle" focusable="false" aria-hidden="true" />
           </button>
           <ul className="nav__dropdown">
             <li className="nav__dropdown-item">
@@ -362,7 +362,7 @@ class Nav extends React.PureComponent {
             }}
           >
             <span className="nav__item-header">Edit</span>
-            <TriangleIcon className="nav__item-header-triangle" />
+            <TriangleIcon className="nav__item-header-triangle" focusable="false" aria-hidden="true" />
           </button>
           <ul className="nav__dropdown" >
             <li className="nav__dropdown-item">
@@ -422,7 +422,7 @@ class Nav extends React.PureComponent {
             }}
           >
             <span className="nav__item-header">Sketch</span>
-            <TriangleIcon className="nav__item-header-triangle" />
+            <TriangleIcon className="nav__item-header-triangle" focusable="false" aria-hidden="true" />
           </button>
           <ul className="nav__dropdown">
             <li className="nav__dropdown-item">
@@ -497,7 +497,7 @@ class Nav extends React.PureComponent {
             }}
           >
             <span className="nav__item-header">Help</span>
-            <TriangleIcon className="nav__item-header-triangle" />
+            <TriangleIcon className="nav__item-header-triangle" focusable="false" aria-hidden="true" />
           </button>
           <ul className="nav__dropdown">
             <li className="nav__dropdown-item">
@@ -574,7 +574,7 @@ class Nav extends React.PureComponent {
             }}
           >
             My Account
-            <TriangleIcon className="nav__item-header-triangle" />
+            <TriangleIcon className="nav__item-header-triangle" focusable="false" aria-hidden="true" />
           </button>
           <ul className="nav__dropdown">
             <li className="nav__dropdown-item">

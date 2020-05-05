@@ -9,15 +9,15 @@ const PreviewNav = ({ owner, project }) => (
   <nav className="nav preview-nav">
     <div className="nav__items-left">
       <div className="nav__item-logo">
-        <LogoIcon title="p5.js Logo" className="svg__logo" />
+        <LogoIcon role="img" aria-label="p5.js Logo" focusable="false" className="svg__logo" />
       </div>
       <Link className="nav__item" to={`/${owner.username}/sketches/${project.id}`}>{project.name}</Link>
       <p className="toolbar__project-owner">by</p>
       <Link className="nav__item" to={`/${owner.username}/sketches/`}>{owner.username}</Link>
     </div>
     <div className="nav__items-right">
-      <Link to={`/${owner.username}/sketches/${project.id}`}>
-        <CodeIcon className="preview-nav__editor-svg" />
+      <Link to={`/${owner.username}/sketches/${project.id}`} aria-label="Edit Sketch" >
+        <CodeIcon className="preview-nav__editor-svg" focusable="false" aria-hidden="true" />
       </Link>
     </div>
   </nav>

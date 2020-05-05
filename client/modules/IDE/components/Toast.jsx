@@ -12,8 +12,8 @@ function Toast(props) {
       <p>
         {props.text}
       </p>
-      <button className="toast__close" onClick={props.hideToast}>
-        <ExitIcon title="Close Keyboard Shortcuts Overlay" />
+      <button className="toast__close" onClick={props.hideToast} aria-label="Close Alert" >
+        <ExitIcon focusable="false" aria-hidden="true" />
       </button>
     </section>
   );

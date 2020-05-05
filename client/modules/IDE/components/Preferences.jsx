@@ -149,7 +149,7 @@ class Preferences extends React.Component {
                 aria-label="decrease font size"
                 disabled={this.state.fontSize <= 8}
               >
-                <MinusIcon title="Decrease Font Size" />
+                <MinusIcon focusable="false" aria-hidden="true" />
                 <h6 className="preference__label">Decrease</h6>
               </button>
               <form onSubmit={this.onFontInputSubmit}>
@@ -170,7 +170,7 @@ class Preferences extends React.Component {
                 aria-label="increase font size"
                 disabled={this.state.fontSize >= 36}
               >
-                <PlusIcon title="Increase Font Size" />
+                <PlusIcon focusable="false" aria-hidden="true" />
                 <h6 className="preference__label">Increase</h6>
               </button>
             </div>

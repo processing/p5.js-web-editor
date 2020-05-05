@@ -3,6 +3,7 @@ import React from 'react';
 
 import EditIcon from '../../../images/pencil.svg';
 
+// TODO I think this needs a description prop so that it's accessible
 function EditableInput({
   validate, value, emptyPlaceholder, InputComponent, inputProps, onChange
 }) {
@@ -47,9 +48,13 @@ function EditableInput({
 
   return (
     <span className={classes}>
-      <button className="editable-input__label" onClick={beginEditing}>
+      <button
+        className="editable-input__label"
+        onClick={beginEditing}
+        aria-label={`Edit ${displayValue} value`}
+      >
         <span>{displayValue}</span>
-        <EditIcon className="editable-input__icon" />
+        <EditIcon className="editable-input__icon" focusable="false" aria-hidden="true" />
       </button>
 
       <InputComponent

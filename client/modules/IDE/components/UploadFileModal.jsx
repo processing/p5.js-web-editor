@@ -32,8 +32,12 @@ class UploadFileModal extends React.Component {
         <div className="modal-content">
           <div className="modal__header">
             <h2 className="modal__title">Upload File</h2>
-            <button className="modal__exit-button" onClick={this.props.closeModal}>
-              <ExitIcon title="Close New File Modal" />
+            <button
+              className="modal__exit-button"
+              onClick={this.props.closeModal}
+              aria-label="Close upload file modal"
+            >
+              <ExitIcon focusable="false" aria-hidden="true" />
             </button>
           </div>
           { this.props.reachedTotalSizeLimit &&

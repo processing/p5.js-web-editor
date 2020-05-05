@@ -69,8 +69,9 @@ class CopyableInput extends React.Component {
             rel="noopener noreferrer"
             href={value}
             className="copyable-input__preview"
+            aria-label={`Open ${label} view in new tab`}
           >
-            <ShareIcon title={`open ${label} view in new tab`} />
+            <ShareIcon focusable="false" aria-hidden="true" />
           </a>
         }
       </div>

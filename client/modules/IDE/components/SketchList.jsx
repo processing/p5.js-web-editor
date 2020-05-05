@@ -167,8 +167,9 @@ class SketchListRowBase extends React.Component {
           onClick={this.toggleOptions}
           onBlur={this.onBlurComponent}
           onFocus={this.onFocusComponent}
+          aria-label="Toggle Open/Close Sketch Options"
         >
-          <DownFilledTriangleIcon title="Menu" />
+          <DownFilledTriangleIcon focusable="false" aria-hidden="true" />
         </button>
         {optionsOpen &&
           <ul
@@ -325,7 +326,6 @@ class SketchList extends React.Component {
     super(props);
     this.props.getProjects(this.props.username);
     this.props.resetSorting();
-    this._renderFieldHeader = this._renderFieldHeader.bind(this);
 
     this.state = {
       isInitialDataLoad: true,
@@ -368,21 +368,43 @@ class SketchList extends React.Component {
     return null;
   }
 
-  _renderFieldHeader(fieldName, displayName) {
+  _getButtonLabel = (fieldName, displayName) => {
+    const { field, direction } = this.props.sorting;
+    let buttonLabel;
+    if (field !== fieldName) {
+      if (field === 'name') {
+        buttonLabel = `Sort by ${displayName} ascending.`;
+      } else {
+        buttonLabel = `Sort by ${displayName} descending.`;
+      }
+    } else if (direction === SortingActions.DIRECTION.ASC) {
+      buttonLabel = `Sort by ${displayName} descending.`;
+    } else {
+      buttonLabel = `Sort by ${displayName} ascending.`;
+    }
+    return buttonLabel;
+  }
+
+  _renderFieldHeader = (fieldName, displayName) => {
     const { field, direction } = this.props.sorting;
     const headerClass = classNames({
       'sketches-table__header': true,
       'sketches-table__header--selected': field === fieldName
     });
+    const buttonLabel = this._getButtonLabel(fieldName, displayName);
     return (
       <th scope="col">
-        <button className="sketch-list__sort-button" onClick={() => this.props.toggleDirectionForField(fieldName)}>
+        <button
+          className="sketch-list__sort-button"
+          onClick={() => this.props.toggleDirectionForField(fieldName)}
+          aria-label={buttonLabel}
+        >
           <span className={headerClass}>{displayName}</span>
           {field === fieldName && direction === SortingActions.DIRECTION.ASC &&
-            <ArrowUpIcon />
+            <ArrowUpIcon role="img" aria-label="Ascending" focusable="false" />
           }
           {field === fieldName && direction === SortingActions.DIRECTION.DESC &&
-            <ArrowDownIcon />
+            <ArrowDownIcon role="img" aria-label="Descending" focusable="false" />
           }
         </button>
       </th>

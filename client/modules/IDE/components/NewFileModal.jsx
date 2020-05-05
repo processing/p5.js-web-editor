@@ -34,8 +34,12 @@ class NewFileModal extends React.Component {
         <div className="modal-content">
           <div className="modal__header">
             <h2 className="modal__title">Create File</h2>
-            <button className="modal__exit-button" onClick={this.props.closeNewFileModal}>
-              <ExitIcon title="Close New File Modal" />
+            <button
+              className="modal__exit-button"
+              onClick={this.props.closeNewFileModal}
+              aria-label="Close New File Modal"
+            >
+              <ExitIcon focusable="false" aria-hidden="true" />
             </button>
           </div>
           <NewFileForm

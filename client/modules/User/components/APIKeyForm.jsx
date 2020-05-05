@@ -85,7 +85,7 @@ class APIKeyForm extends React.Component {
               disabled={this.state.keyLabel === ''}
               type="submit"
             >
-              <PlusIcon className="api-key-form__create-icon" />
+              <PlusIcon className="api-key-form__create-icon" focusable="false" aria-hidden="true" />
               Create
             </button>
           </form>

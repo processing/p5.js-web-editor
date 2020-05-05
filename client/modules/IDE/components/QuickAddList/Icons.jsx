@@ -12,9 +12,9 @@ const Icons = ({ isAdded }) => {
 
   return (
     <div className={classes}>
-      <CloseIcon className="quick-add__remove-icon" title="Remove from collection" />
-      <CheckIcon className="quick-add__in-icon" title="In collection" />
-      <CloseIcon className="quick-add__add-icon" title="Add to collection" />
+      <CloseIcon className="quick-add__remove-icon" role="img" aria-label="Descending" focusable="false" />
+      <CheckIcon className="quick-add__in-icon" role="img" aria-label="Descending" focusable="false" />
+      <CloseIcon className="quick-add__add-icon" role="img" aria-label="Descending" focusable="false" />
     </div>
   );
 };

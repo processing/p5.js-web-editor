@@ -320,24 +320,26 @@ class Editor extends React.Component {
       >
         <header className="editor__header">
           <button
-            aria-label="collapse file navigation"
+            aria-label="Open Sketch files navigation"
             className="sidebar__contract"
             onClick={this.props.collapseSidebar}
           >
-            <LeftArrowIcon />
+            <LeftArrowIcon focusable="false" aria-hidden="true" />
           </button>
           <button
-            aria-label="expand file navigation"
+            aria-label="Close sketch files navigation"
             className="sidebar__expand"
             onClick={this.props.expandSidebar}
           >
-            <RightArrowIcon />
+            <RightArrowIcon focusable="false" aria-hidden="true" />
           </button>
           <div className="editor__file-name">
             <span>
               {this.props.file.name}
               <span className="editor__unsaved-changes">
-                {this.props.unsavedChanges ? <UnsavedChangesDotIcon /> : null}
+                {this.props.unsavedChanges ?
+                  <UnsavedChangesDotIcon role="img" aria-label="Sketch has unsaved changes" focusable="false" /> :
+                  null}
               </span>
             </span>
             <Timer

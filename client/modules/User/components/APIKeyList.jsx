@@ -31,8 +31,12 @@ function APIKeyList({ apiKeys, onRemove }) {
               <td>{format(new Date(key.createdAt), 'MMM D, YYYY h:mm A')}</td>
               <td>{lastUsed}</td>
               <td className="api-key-list__action">
-                <button className="api-key-list__delete-button" onClick={() => onRemove(key)}>
-                  <TrashCanIcon title="Delete Key" />
+                <button
+                  className="api-key-list__delete-button"
+                  onClick={() => onRemove(key)}
+                  aria-label="Delete API Key"
+                >
+                  <TrashCanIcon focusable="false" aria-hidden="true" />
                 </button>
               </td>
             </tr>

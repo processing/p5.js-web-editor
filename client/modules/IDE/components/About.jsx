@@ -12,7 +12,7 @@ function About(props) {
         <title>p5.js Web Editor | About</title>
       </Helmet>
       <div className="about__content-column">
-        <SquareLogoIcon className="about__logo" title="p5.js Square Logo" />
+        <SquareLogoIcon className="about__logo" role="img" aria-label="p5.js Logo" focusable="false" />
         {/* Video button to hello p5 video page */}
         {/* <p className="about__play-video">
           <a
@@ -32,7 +32,7 @@ function About(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <AsteriskIcon className="about__content-column-asterisk" title="p5 asterisk" />
+            <AsteriskIcon className="about__content-column-asterisk" aria-hidden="true" focusable="false" />
             Examples
           </a>
         </p>
@@ -42,7 +42,7 @@ function About(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <AsteriskIcon className="about__content-column-asterisk" title="p5 asterisk" />
+            <AsteriskIcon className="about__content-column-asterisk" aria-hidden="true" focusable="false" />
             Learn
           </a>
         </p>
@@ -55,7 +55,7 @@ function About(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <AsteriskIcon className="about__content-column-asterisk" title="p5 asterisk" />
+            <AsteriskIcon className="about__content-column-asterisk" aria-hidden="true" focusable="false" />
             Libraries
           </a>
         </p>
@@ -65,7 +65,7 @@ function About(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <AsteriskIcon className="about__content-column-asterisk" title="p5 asterisk" />
+            <AsteriskIcon className="about__content-column-asterisk" aria-hidden="true" focusable="false" />
             Reference
           </a>
         </p>
@@ -75,7 +75,7 @@ function About(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <AsteriskIcon className="about__content-column-asterisk" title="p5 asterisk" />
+            <AsteriskIcon className="about__content-column-asterisk" aria-hidden="true" focusable="false" />
             Forum
           </a>
         </p>

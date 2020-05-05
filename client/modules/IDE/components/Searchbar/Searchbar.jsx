@@ -45,7 +45,7 @@ class Searchbar extends React.Component {
     return (
       <div className={`searchbar ${searchValue === '' ? 'searchbar--is-empty' : ''}`}>
         <div className="searchbar__button">
-          <SearchIcon className="searchbar__icon" />
+          <SearchIcon className="searchbar__icon" focusable="false" aria-hidden="true" />
         </div>
         <input
           className="searchbar__input"

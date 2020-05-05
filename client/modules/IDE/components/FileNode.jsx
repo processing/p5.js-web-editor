@@ -184,7 +184,7 @@ export class FileNode extends React.Component {
             <span className="file-item__spacer"></span>
             { isFile &&
               <span className="sidebar__file-item-icon">
-                <FileIcon />
+                <FileIcon focusable="false" aria-hidden="true" />
               </span>
             }
             { isFolder &&
@@ -192,14 +192,16 @@ export class FileNode extends React.Component {
                 <button
                   className="sidebar__file-item-closed"
                   onClick={this.showFolderChildren}
+                  aria-label="Open folder contents"
                 >
-                  <FolderRightIcon className="folder-right" />
+                  <FolderRightIcon className="folder-right" focusable="false" aria-hidden="true" />
                 </button>
                 <button
                   className="sidebar__file-item-open"
                   onClick={this.hideFolderChildren}
+                  aria-label="Close file contents"
                 >
-                  <FolderDownIcon className="folder-down" />
+                  <FolderDownIcon className="folder-down" focusable="false" aria-hidden="true" />
                 </button>
               </div>
             }
@@ -221,14 +223,14 @@ export class FileNode extends React.Component {
             />
             <button
               className="sidebar__file-item-show-options"
-              aria-label="view file options"
+              aria-label="Toggle open/close file options"
               ref={(element) => { this[`fileOptions-${this.props.id}`] = element; }}
               tabIndex="0"
               onClick={this.toggleFileOptions}
               onBlur={this.onBlurComponent}
               onFocus={this.onFocusComponent}
             >
-              <DownArrowIcon />
+              <DownArrowIcon focusable="false" aria-hidden="true" />
             </button>
             <div className="sidebar__file-item-options">
               <ul title="file options">

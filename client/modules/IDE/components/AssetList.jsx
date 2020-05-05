@@ -85,8 +85,9 @@ class AssetListRowBase extends React.Component {
             onClick={this.toggleOptions}
             onBlur={this.onBlurComponent}
             onFocus={this.onFocusComponent}
+            aria-label="Toggle Open/Close Asset Options"
           >
-            <DownFilledTriangleIcon title="Menu" />
+            <DownFilledTriangleIcon focusable="false" aria-hidden="true" />
           </button>
           {optionsOpen &&
             <ul

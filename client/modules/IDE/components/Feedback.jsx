@@ -23,7 +23,7 @@ function Feedback(props) {
             className="feedback__github-link"
           >
             Go to Github
-            <GitHubLogo className="feedback__github-logo" />
+            <GitHubLogo className="feedback__github-logo" focusable="false" aria-hidden="true" />
           </a>
         </p>
       </div>

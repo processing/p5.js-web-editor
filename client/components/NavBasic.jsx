@@ -14,13 +14,13 @@ class NavBasic extends React.PureComponent {
       <nav className="nav" title="main-navigation" ref={(node) => { this.node = node; }}>
         <ul className="nav__items-left">
           <li className="nav__item-logo">
-            <LogoIcon title="p5.js Logo" className="svg__logo" />
+            <LogoIcon role="img" aria-label="p5.js Logo" focusable="false" className="svg__logo" />
           </li>
           { this.props.onBack && (
             <li className="nav__item">
               <button onClick={this.props.onBack}>
                 <span className="nav__item-header">
-                  <ArrowIcon title="Left arrow" />
+                  <ArrowIcon focusable="false" aria-hidden="true" />
                 </span>
                 Back to the editor
               </button>

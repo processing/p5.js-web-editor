@@ -128,6 +128,7 @@ class CollectionListRowBase extends React.Component {
           onClick={this.toggleOptions}
           onBlur={this.onBlurComponent}
           onFocus={this.onFocusComponent}
+          aria-label="Toggle Open/Close collection options"
         >
           <DownFilledTriangleIcon title="Menu" />
         </button>

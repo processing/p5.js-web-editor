@@ -75,7 +75,7 @@ class Sidebar extends React.Component {
           </h3>
           <div className="sidebar__icons">
             <button
-              aria-label="add file or folder"
+              aria-label="Toggle open/close sketch file options"
               className="sidebar__add"
               tabIndex="0"
               ref={(element) => { this.sidebarOptions = element; }}
@@ -83,7 +83,7 @@ class Sidebar extends React.Component {
               onBlur={this.onBlurComponent}
               onFocus={this.onFocusComponent}
             >
-              <DownArrowIcon />
+              <DownArrowIcon focusable="false" aria-hidden="true" />
             </button>
             <ul className="sidebar__project-options">
               <li>
