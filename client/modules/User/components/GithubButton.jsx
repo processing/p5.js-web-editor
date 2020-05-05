@@ -9,7 +9,7 @@ function GithubButton(props) {
       className="github-button"
       href="/auth/github"
     >
-      <GithubIcon className="github-icon" />
+      <GithubIcon className="github-icon" role="img" aria-label="GitHub Logo" focusable="false" />
       <span>{props.buttonText}</span>
     </a>
   );

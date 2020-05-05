@@ -53,9 +53,10 @@ const ShareURL = ({ value }) => {
       <button
         className="collection-share__button"
         onClick={() => setShowURL(!showURL)}
+        aria-label="Show collection share URL"
       >
         <span>Share</span>
-        <DropdownArrowIcon className="collection-share__arrow" />
+        <DropdownArrowIcon className="collection-share__arrow" focusable="false" aria-hidden="true" />
       </button>
       { showURL &&
         <div className="collection__share-dropdown">
@@ -97,8 +98,9 @@ class CollectionItemRowBase extends React.Component {
           <button
             className="collection-row__remove-button"
             onClick={this.handleSketchRemove}
+            aria-label="Remove sketch from collection"
           >
-            <RemoveIcon title="Remove" />
+            <RemoveIcon focusable="false" aria-hidden="true" />
           </button>
         </td>
       </tr>);
@@ -295,21 +297,43 @@ class Collection extends React.Component {
     return null;
   }
 
+  _getButtonLabel = (fieldName, displayName) => {
+    const { field, direction } = this.props.sorting;
+    let buttonLabel;
+    if (field !== fieldName) {
+      if (field === 'name') {
+        buttonLabel = `Sort by ${displayName} ascending.`;
+      } else {
+        buttonLabel = `Sort by ${displayName} descending.`;
+      }
+    } else if (direction === SortingActions.DIRECTION.ASC) {
+      buttonLabel = `Sort by ${displayName} descending.`;
+    } else {
+      buttonLabel = `Sort by ${displayName} ascending.`;
+    }
+    return buttonLabel;
+  }
+
   _renderFieldHeader(fieldName, displayName) {
     const { field, direction } = this.props.sorting;
     const headerClass = classNames({
       'sketches-table__header': true,
       'sketches-table__header--selected': field === fieldName
     });
+    const buttonLabel = this._getButtonLabel(fieldName, displayName);
     return (
       <th scope="col">
-        <button className="sketch-list__sort-button" onClick={() => this.props.toggleDirectionForField(fieldName)}>
+        <button
+          className="sketch-list__sort-button"
+          onClick={() => this.props.toggleDirectionForField(fieldName)}
+          aria-label={buttonLabel}
+        >
           <span className={headerClass}>{displayName}</span>
           {field === fieldName && direction === SortingActions.DIRECTION.ASC &&
-            <ArrowUpIcon />
+            <ArrowUpIcon role="img" aria-label="Ascending" focusable="false" />
           }
           {field === fieldName && direction === SortingActions.DIRECTION.DESC &&
-            <ArrowDownIcon />
+            <ArrowDownIcon role="img" aria-label="Descending" focusable="false" />
           }
         </button>
       </th>

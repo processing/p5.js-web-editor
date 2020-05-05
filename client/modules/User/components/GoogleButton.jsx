@@ -9,7 +9,7 @@ function GoogleButton(props) {
       className="google-button"
       href="/auth/google/"
     >
-      <GoogleIcon className="google-icon" />
+      <GoogleIcon className="google-icon" role="img" aria-label="Google Logo" focusable="false" />
       <span>{props.buttonText}</span>
     </a>
   );
