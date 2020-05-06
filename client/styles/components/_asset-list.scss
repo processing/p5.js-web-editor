@@ -82,7 +82,7 @@
   height:#{25 / $base-font-size}rem;
 
   @include themify() {
-    & polygon {
+    & polygon, & path {
       fill: getThemifyVariable('inactive-text-color');
     }
   }

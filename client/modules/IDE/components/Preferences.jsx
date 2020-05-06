@@ -1,15 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import InlineSVG from 'react-inlinesvg';
 import { Helmet } from 'react-helmet';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 // import { bindActionCreators } from 'redux';
 // import { connect } from 'react-redux';
 // import * as PreferencesActions from '../actions/preferences';
 
-const plusUrl = require('../../../images/plus.svg');
-const minusUrl = require('../../../images/minus.svg');
-const beepUrl = require('../../../sounds/audioAlert.mp3');
+import PlusIcon from '../../../images/plus.svg';
+import MinusIcon from '../../../images/minus.svg';
+import beepUrl from '../../../sounds/audioAlert.mp3';
 
 class Preferences extends React.Component {
   constructor(props) {
@@ -150,7 +149,7 @@ class Preferences extends React.Component {
                 aria-label="decrease font size"
                 disabled={this.state.fontSize <= 8}
               >
-                <InlineSVG src={minusUrl} alt="Decrease Font Size" />
+                <MinusIcon focusable="false" aria-hidden="true" />
                 <h6 className="preference__label">Decrease</h6>
               </button>
               <form onSubmit={this.onFontInputSubmit}>
@@ -171,7 +170,7 @@ class Preferences extends React.Component {
                 aria-label="increase font size"
                 disabled={this.state.fontSize >= 36}
               >
-                <InlineSVG src={plusUrl} alt="Increase Font Size" />
+                <PlusIcon focusable="false" aria-hidden="true" />
                 <h6 className="preference__label">Increase</h6>
               </button>
             </div>

@@ -88,8 +88,8 @@ $themes: (
     nav-border-color: $middle-light,
     error-color: $p5js-pink,
     table-row-stripe-color: $medium-light,
-    codefold-icon-open: url(../images/triangle-arrow-down.svg),
-    codefold-icon-closed: url(../images/triangle-arrow-right.svg),
+    codefold-icon-open: url(../images/triangle-arrow-down.svg?byUrl),
+    codefold-icon-closed: url(../images/triangle-arrow-right.svg?byUrl),
 
     primary-button-color: $lightest,
     primary-button-background-color: $p5js-pink,
@@ -163,8 +163,8 @@ $themes: (
     nav-border-color: $middle-dark,
     error-color: $p5js-pink,
     table-row-stripe-color: $dark,
-    codefold-icon-open: url(../images/triangle-arrow-down-white.svg),
-    codefold-icon-closed: url(../images/triangle-arrow-right-white.svg),
+    codefold-icon-open: url(../images/triangle-arrow-down-white.svg?byUrl),
+    codefold-icon-closed: url(../images/triangle-arrow-right-white.svg?byUrl),
 
     primary-button-color: $lightest,
     primary-button-background-color: $p5js-pink,
@@ -236,8 +236,8 @@ $themes: (
     nav-border-color: $middle-dark,
     error-color: $p5-contrast-pink,
     table-row-stripe-color: $dark,
-    codefold-icon-open: url(../images/triangle-arrow-down-white.svg),
-    codefold-icon-closed: url(../images/triangle-arrow-right-white.svg),
+    codefold-icon-open: url(../images/triangle-arrow-down-white.svg?byUrl),
+    codefold-icon-closed: url(../images/triangle-arrow-right-white.svg?byUrl),
 
     primary-button-color: $lightest,
     primary-button-background-color: $p5js-pink,

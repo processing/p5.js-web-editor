@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import InlineSVG from 'react-inlinesvg';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import classNames from 'classnames';
@@ -19,8 +18,8 @@ import { SketchSearchbar } from '../Searchbar';
 
 import CollectionListRow from './CollectionListRow';
 
-const arrowUp = require('../../../../images/sort-arrow-up.svg');
-const arrowDown = require('../../../../images/sort-arrow-down.svg');
+import ArrowUpIcon from '../../../../images/sort-arrow-up.svg';
+import ArrowDownIcon from '../../../../images/sort-arrow-down.svg';
 
 class CollectionList extends React.Component {
   constructor(props) {
@@ -83,21 +82,43 @@ class CollectionList extends React.Component {
     return null;
   }
 
+  _getButtonLabel = (fieldName, displayName) => {
+    const { field, direction } = this.props.sorting;
+    let buttonLabel;
+    if (field !== fieldName) {
+      if (field === 'name') {
+        buttonLabel = `Sort by ${displayName} ascending.`;
+      } else {
+        buttonLabel = `Sort by ${displayName} descending.`;
+      }
+    } else if (direction === SortingActions.DIRECTION.ASC) {
+      buttonLabel = `Sort by ${displayName} descending.`;
+    } else {
+      buttonLabel = `Sort by ${displayName} ascending.`;
+    }
+    return buttonLabel;
+  }
+
   _renderFieldHeader = (fieldName, displayName) => {
     const { field, direction } = this.props.sorting;
     const headerClass = classNames({
       'sketches-table__header': true,
       'sketches-table__header--selected': field === fieldName
     });
+    const buttonLabel = this._getButtonLabel(fieldName, displayName);
     return (
       <th scope="col">
-        <button className="sketch-list__sort-button" onClick={() => this.props.toggleDirectionForField(fieldName)}>
+        <button
+          className="sketch-list__sort-button"
+          onClick={() => this.props.toggleDirectionForField(fieldName)}
+          aria-label={buttonLabel}
+        >
           <span className={headerClass}>{displayName}</span>
           {field === fieldName && direction === SortingActions.DIRECTION.ASC &&
-            <InlineSVG src={arrowUp} />
+            <ArrowUpIcon role="img" aria-label="Ascending" focusable="false" />
           }
           {field === fieldName && direction === SortingActions.DIRECTION.DESC &&
-            <InlineSVG src={arrowDown} />
+            <ArrowDownIcon role="img" aria-label="Descending" focusable="false" />
           }
         </button>
       </th>

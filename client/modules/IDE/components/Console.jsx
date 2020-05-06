@@ -1,27 +1,26 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import InlineSVG from 'react-inlinesvg';
 import classNames from 'classnames';
 import { Console as ConsoleFeed } from 'console-feed';
 import {
   CONSOLE_FEED_WITHOUT_ICONS, CONSOLE_FEED_LIGHT_STYLES,
   CONSOLE_FEED_DARK_STYLES, CONSOLE_FEED_CONTRAST_STYLES
 } from '../../../styles/components/_console-feed.scss';
-import warnLightUrl from '../../../images/console-warn-light.svg';
-import warnDarkUrl from '../../../images/console-warn-dark.svg';
-import warnContrastUrl from '../../../images/console-warn-contrast.svg';
-import errorLightUrl from '../../../images/console-error-light.svg';
-import errorDarkUrl from '../../../images/console-error-dark.svg';
-import errorContrastUrl from '../../../images/console-error-contrast.svg';
-import debugLightUrl from '../../../images/console-debug-light.svg';
-import debugDarkUrl from '../../../images/console-debug-dark.svg';
-import debugContrastUrl from '../../../images/console-debug-contrast.svg';
-import infoLightUrl from '../../../images/console-info-light.svg';
-import infoDarkUrl from '../../../images/console-info-dark.svg';
-import infoContrastUrl from '../../../images/console-info-contrast.svg';
+import warnLightUrl from '../../../images/console-warn-light.svg?byUrl';
+import warnDarkUrl from '../../../images/console-warn-dark.svg?byUrl';
+import warnContrastUrl from '../../../images/console-warn-contrast.svg?byUrl';
+import errorLightUrl from '../../../images/console-error-light.svg?byUrl';
+import errorDarkUrl from '../../../images/console-error-dark.svg?byUrl';
+import errorContrastUrl from '../../../images/console-error-contrast.svg?byUrl';
+import debugLightUrl from '../../../images/console-debug-light.svg?byUrl';
+import debugDarkUrl from '../../../images/console-debug-dark.svg?byUrl';
+import debugContrastUrl from '../../../images/console-debug-contrast.svg?byUrl';
+import infoLightUrl from '../../../images/console-info-light.svg?byUrl';
+import infoDarkUrl from '../../../images/console-info-dark.svg?byUrl';
+import infoContrastUrl from '../../../images/console-info-contrast.svg?byUrl';
 
-const upArrowUrl = require('../../../images/up-arrow.svg');
-const downArrowUrl = require('../../../images/down-arrow.svg');
+import UpArrowIcon from '../../../images/up-arrow.svg';
+import DownArrowIcon from '../../../images/down-arrow.svg';
 
 class Console extends React.Component {
   componentDidUpdate(prevProps) {
@@ -91,18 +90,18 @@ class Console extends React.Component {
         <div className="preview-console__header">
           <h2 className="preview-console__header-title">Console</h2>
           <div className="preview-console__header-buttons">
-            <button className="preview-console__clear" onClick={this.props.clearConsole} aria-label="clear console">
+            <button className="preview-console__clear" onClick={this.props.clearConsole} aria-label="Clear console">
               Clear
             </button>
             <button
               className="preview-console__collapse"
               onClick={this.props.collapseConsole}
-              aria-label="collapse console"
+              aria-label="Close console"
             >
-              <InlineSVG src={downArrowUrl} />
+              <DownArrowIcon focusable="false" aria-hidden="true" />
             </button>
-            <button className="preview-console__expand" onClick={this.props.expandConsole} aria-label="expand console">
-              <InlineSVG src={upArrowUrl} />
+            <button className="preview-console__expand" onClick={this.props.expandConsole} aria-label="Open console" >
+              <UpArrowIcon focusable="false" aria-hidden="true" />
             </button>
           </div>
         </div>

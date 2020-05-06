@@ -21,13 +21,13 @@
 @mixin icon() {
   @include themify() {
     color: getThemifyVariable('icon-color');
-    & g, & polygon {
+    & g, & polygon, & path {
       opacity: 1;
       fill: getThemifyVariable('icon-color');
     }
     &:hover {
       color: getThemifyVariable('icon-hover-color');
-      & g, & polygon {
+      & g, & polygon, & path {
         opacity: 1;
         fill: getThemifyVariable('icon-hover-color');
       }

@@ -3,13 +3,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux';
 import { reduxForm } from 'redux-form';
-import InlineSVG from 'react-inlinesvg';
 import NewFileForm from './NewFileForm';
 import { closeNewFileModal } from '../actions/ide';
 import { createFile } from '../actions/files';
 import { CREATE_FILE_REGEX } from '../../../../server/utils/fileUtils';
 
-const exitUrl = require('../../../images/exit.svg');
+import ExitIcon from '../../../images/exit.svg';
 
 
 // At some point this will probably be generalized to a generic modal
@@ -35,8 +34,12 @@ class NewFileModal extends React.Component {
         <div className="modal-content">
           <div className="modal__header">
             <h2 className="modal__title">Create File</h2>
-            <button className="modal__exit-button" onClick={this.props.closeNewFileModal}>
-              <InlineSVG src={exitUrl} alt="Close New File Modal" />
+            <button
+              className="modal__exit-button"
+              onClick={this.props.closeNewFileModal}
+              aria-label="Close New File Modal"
+            >
+              <ExitIcon focusable="false" aria-hidden="true" />
             </button>
           </div>
           <NewFileForm

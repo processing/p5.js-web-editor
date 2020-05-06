@@ -158,12 +158,12 @@
   @include icon();
   @include themify() {
     // icon graphic
-    polygon {
+    path {
       fill: getThemifyVariable('table-button-color');
     }
 
     // icon background circle
-    path {
+    path:first-child {
       fill: getThemifyVariable('table-button-background-color');
     }
 
@@ -174,11 +174,11 @@
 
     &:hover,
     &:focus {
-      polygon {
+      path {
         fill: getThemifyVariable('table-button-hover-color');
       }
 
-      path {
+      path:first-child {
         fill: getThemifyVariable('table-button-background-hover-color');
       }
     }

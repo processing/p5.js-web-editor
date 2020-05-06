@@ -44,12 +44,12 @@
   @include icon();
   @include themify() {
     // icon graphic
-    polygon {
+    path {
       fill: getThemifyVariable('table-button-color');
     }
 
     // icon background circle
-    path {
+    path:first-child {
       fill: getThemifyVariable('table-button-background-color');
     }
 
@@ -68,15 +68,15 @@
   display: inline-block;
 }
 
-.quick-add__icon--in-collection .quick-add__in-icon svg {
+.quick-add__icon--in-collection .quick-add__in-icon {
   @include themify() {
     // icon graphic
-    polygon {
+    & path {
       fill: getThemifyVariable('table-button-active-color');
     }
 
     // icon background circle
-    path {
+    & path:first-child {
       fill: getThemifyVariable('table-button-background-active-color');
     }
   }
@@ -91,14 +91,12 @@
 .quick-add__item-toggle:focus {
   cursor: pointer;
   @include themify() {
-    .quick-add__icon {
-      polygon {
-        fill: getThemifyVariable('table-button-hover-color');
-      }
+    & .quick-add__icon path {
+      fill: getThemifyVariable('table-button-hover-color');
+    }
 
-      path {
-        fill: getThemifyVariable('table-button-background-hover-color');
-      }
+    & .quick-add__icon path:first-child {
+      fill: getThemifyVariable('table-button-background-hover-color');
     }
   }
 

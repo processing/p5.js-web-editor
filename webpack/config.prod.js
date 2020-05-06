@@ -81,10 +81,6 @@ module.exports = [{
         use: 'babel-loader'
       },
       {
-        test: /\.(svg|mp3)$/,
-        use: 'file-loader'
-      },
-      {
         test: /\.(png)$/,
         use: {
           loader: 'file-loader',
@@ -95,8 +91,29 @@ module.exports = [{
         }
       },
       {
-        test: /fonts\/.*\.(eot|svg|ttf|woff|woff2)$/,
+        test: /fonts\/.*\.(mp3|eot|ttf|woff|woff2)$/,
         use: 'file-loader'
+      },
+      {
+        test: /\.svg$/,
+        oneOf: [
+          {
+            resourceQuery: /byUrl/,
+            use: 'file-loader'
+          },
+          {
+            use: {
+              loader: '@svgr/webpack',
+              options: {
+                svgoConfig: {
+                  plugins: {
+                    removeViewBox: false
+                  }
+                }
+              }
+            }
+          }
+        ]
       },
       {
         test: /_console-feed.scss/,
