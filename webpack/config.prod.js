@@ -91,7 +91,11 @@ module.exports = [{
         }
       },
       {
-        test: /fonts\/.*\.(mp3|eot|ttf|woff|woff2)$/,
+        test: /\.mp3$/,
+        use: 'file-loader'
+      },
+      {
+        test: /fonts\/.*\.(eot|ttf|woff|woff2)$/,
         use: 'file-loader'
       },
       {
