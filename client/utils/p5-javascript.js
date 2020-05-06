@@ -2,7 +2,7 @@
 // Distributed under an MIT license: https://codemirror.net/LICENSE
 
 /*eslint-disable*/
-var p5_javascript_template = require("./p5-javascript-template");
+var p5_javascript_template = require("./p5-keywords");
 var p5FunctionKeywords = p5_javascript_template.p5FunctionKeywords;
 var p5VariableKeywords = p5_javascript_template.p5VariableKeywords;
 
