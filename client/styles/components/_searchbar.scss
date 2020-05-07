@@ -38,6 +38,8 @@ div.searchbar__button {
     height: #{27 / $base-font-size}rem;
     transform: scaleX(-1);
     padding-top: #{3 / $base-font-size}rem;
+  }
+  & path {
     @include themify() {
       fill: getThemifyVariable('input-text-color');
     }

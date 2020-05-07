@@ -3,16 +3,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import classNames from 'classnames';
-import InlineSVG from 'react-inlinesvg';
-
 import * as IDEActions from '../actions/ide';
 import * as preferenceActions from '../actions/preferences';
 import * as projectActions from '../actions/project';
 
-const playUrl = require('../../../images/play.svg');
-const stopUrl = require('../../../images/stop.svg');
-const preferencesUrl = require('../../../images/preferences.svg');
-const editProjectNameUrl = require('../../../images/pencil.svg');
+import PlayIcon from '../../../images/play.svg';
+import StopIcon from '../../../images/stop.svg';
+import PreferencesIcon from '../../../images/preferences.svg';
+import EditProjectNameIcon from '../../../images/pencil.svg';
 
 class Toolbar extends React.Component {
   constructor(props) {
@@ -61,6 +59,8 @@ class Toolbar extends React.Component {
       'toolbar__project-name-container--editing': this.props.project.isEditingName
     });
 
+    const canEditProjectName = this.canEditProjectName();
+
     return (
       <div className="toolbar">
         <button
@@ -70,25 +70,25 @@ class Toolbar extends React.Component {
             this.props.setTextOutput(true);
             this.props.setGridOutput(true);
           }}
-          aria-label="play sketch"
+          aria-label="Play sketch"
           disabled={this.props.infiniteLoop}
         >
-          <InlineSVG src={playUrl} alt="Play Sketch" />
+          <PlayIcon focusable="false" aria-hidden="true" />
         </button>
         <button
           className={playButtonClass}
           onClick={this.props.startSketch}
-          aria-label="play only visual sketch"
+          aria-label="Play only visual sketch"
           disabled={this.props.infiniteLoop}
         >
-          <InlineSVG src={playUrl} alt="Play only visual Sketch" />
+          <PlayIcon focusable="false" aria-hidden="true" />
         </button>
         <button
           className={stopButtonClass}
           onClick={this.props.stopSketch}
-          aria-label="stop sketch"
+          aria-label="Stop sketch"
         >
-          <InlineSVG src={stopUrl} alt="Stop Sketch" />
+          <StopIcon focusable="false" aria-hidden="true" />
         </button>
         <div className="toolbar__autorefresh">
           <input
@@ -104,24 +104,28 @@ class Toolbar extends React.Component {
           </label>
         </div>
         <div className={nameContainerClass}>
-          <a
+          <button
             className="toolbar__project-name"
-            href={this.props.owner ? `/${this.props.owner.username}/sketches/${this.props.project.id}` : ''}
-            onClick={(e) => {
-              if (this.canEditProjectName()) {
-                e.preventDefault();
+            onClick={() => {
+              if (canEditProjectName) {
                 this.originalProjectName = this.props.project.name;
                 this.props.showEditProjectName();
                 setTimeout(() => this.projectNameInput.focus(), 0);
               }
             }}
+            disabled={!canEditProjectName}
+            aria-label="Edit sketch name"
           >
             <span>{this.props.project.name}</span>
             {
-              this.canEditProjectName() &&
-              <InlineSVG className="toolbar__edit-name-button" src={editProjectNameUrl} alt="Edit Project Name" />
+              canEditProjectName &&
+              <EditProjectNameIcon
+                className="toolbar__edit-name-button"
+                focusable="false"
+                aria-hidden="true"
+              />
             }
-          </a>
+          </button>
           <input
             type="text"
             maxLength="128"
@@ -151,9 +155,9 @@ class Toolbar extends React.Component {
         <button
           className={preferencesButtonClass}
           onClick={this.props.openPreferences}
-          aria-label="preferences"
+          aria-label="Open Preferences"
         >
-          <InlineSVG src={preferencesUrl} alt="Preferences" />
+          <PreferencesIcon focusable="false" aria-hidden="true" />
         </button>
       </div>
     );

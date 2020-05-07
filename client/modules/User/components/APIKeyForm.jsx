@@ -85,6 +85,8 @@ class APIKeyForm extends React.Component {
               type="submit"
               label="Create new key"
             >
+              {/* TODO make sure this aria label is right for the button */}
+              {/* <PlusIcon className="api-key-form__create-icon" focusable="false" aria-hidden="true" /> */}
               Create
             </Button>
           </form>

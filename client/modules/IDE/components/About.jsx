@@ -1,10 +1,9 @@
 import React from 'react';
-import InlineSVG from 'react-inlinesvg';
 import { Helmet } from 'react-helmet';
 
-const squareLogoUrl = require('../../../images/p5js-square-logo.svg');
-// const playUrl = require('../../../images/play.svg');
-const asteriskUrl = require('../../../images/p5-asterisk.svg');
+import SquareLogoIcon from '../../../images/p5js-square-logo.svg';
+// import PlayIcon from '../../../images/play.svg';
+import AsteriskIcon from '../../../images/p5-asterisk.svg';
 
 function About(props) {
   return (
@@ -13,7 +12,7 @@ function About(props) {
         <title>p5.js Web Editor | About</title>
       </Helmet>
       <div className="about__content-column">
-        <InlineSVG className="about__logo" src={squareLogoUrl} alt="p5js Square Logo" />
+        <SquareLogoIcon className="about__logo" role="img" aria-label="p5.js Logo" focusable="false" />
         {/* Video button to hello p5 video page */}
         {/* <p className="about__play-video">
           <a
@@ -21,7 +20,7 @@ function About(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <InlineSVG className="about__play-video-button" src={playUrl} alt="Play Hello Video" />
+            <PlayIcon className="about__play-video-button" title="Play Hello Video" />
           Play hello! video</a>
         </p>  */}
       </div>
@@ -33,7 +32,7 @@ function About(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
+            <AsteriskIcon className="about__content-column-asterisk" aria-hidden="true" focusable="false" />
             Examples
           </a>
         </p>
@@ -43,7 +42,7 @@ function About(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
+            <AsteriskIcon className="about__content-column-asterisk" aria-hidden="true" focusable="false" />
             Learn
           </a>
         </p>
@@ -56,7 +55,7 @@ function About(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
+            <AsteriskIcon className="about__content-column-asterisk" aria-hidden="true" focusable="false" />
             Libraries
           </a>
         </p>
@@ -66,7 +65,7 @@ function About(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
+            <AsteriskIcon className="about__content-column-asterisk" aria-hidden="true" focusable="false" />
             Reference
           </a>
         </p>
@@ -76,7 +75,7 @@ function About(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
+            <AsteriskIcon className="about__content-column-asterisk" aria-hidden="true" focusable="false" />
             Forum
           </a>
         </p>

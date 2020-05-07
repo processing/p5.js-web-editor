@@ -4,17 +4,18 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		padding: 0 0 0 #{3 / $base-font-size}rem;
 		&--selected {
 			@extend %toolbar-button--selected;
 		}
 		&:disabled {
 			cursor: auto;
-			& g {
+			& g, & path {
 				fill: getThemifyVariable('button-border-color');
 			}
 			&:hover {
 				background-color: getThemifyVariable('toolbar-button-background-color');
-				& g {
+				& g, & path {
 					fill: getThemifyVariable('button-border-color');
 				}
 			}
@@ -42,6 +43,7 @@
 		justify-content: center;
 		align-items: center;
 		margin-right: #{15 / $base-font-size}rem;
+		padding: 0;
 		&--selected {
 			@extend %toolbar-button--selected;
 		}
@@ -61,13 +63,11 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		line-height: #{52 / $base-font-size}rem;
+		padding: 0;
 		&--selected {
 			@extend %toolbar-button--selected;
-			line-height: #{52 / $base-font-size}rem;
 		}
 	}
-	line-height: #{52 / $base-font-size}rem;
 	margin-left: auto;
 	& span {
 		padding-left: #{1 / $base-font-size}rem;
@@ -82,7 +82,7 @@
 .toolbar__logo {
 	margin-right: #{30 / $base-font-size}rem;
 	@include themify() {
-		& g {
+		& g, & path {
 			fill: getThemifyVariable('logo-color');
 		}
 	}
@@ -152,11 +152,8 @@
 .toolbar__edit-name-button {
 	display: inline-block;
 	vertical-align: top;
+	width: #{18 / $base-font-size}rem;
 	height: #{18 / $base-font-size}rem;
-	& svg {
-		width: #{18 / $base-font-size}rem;
-		height: #{18 / $base-font-size}rem;
-	}
 	@include themify() {
 		& path {
 			fill: getThemifyVariable('secondary-text-color');

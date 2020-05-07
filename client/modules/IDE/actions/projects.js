@@ -23,7 +23,8 @@ export function getProjects(username) {
         });
         dispatch(stopLoader());
       })
-      .catch((response) => {
+      .catch((error) => {
+        const { response } = error;
         dispatch({
           type: ActionTypes.ERROR,
           error: response.data

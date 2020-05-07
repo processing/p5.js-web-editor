@@ -65,10 +65,13 @@ export function createFile(formProps) {
           // });
           dispatch(setUnsavedChanges(true));
         })
-        .catch(response => dispatch({
-          type: ActionTypes.ERROR,
-          error: response.data
-        }));
+        .catch((error) => {
+          const { response } = error;
+          dispatch({
+            type: ActionTypes.ERROR,
+            error: response.data
+          });
+        });
     } else {
       const id = objectID().toHexString();
       dispatch({
@@ -113,10 +116,13 @@ export function createFolder(formProps) {
           dispatch(setProjectSavedTime(response.data.project.updatedAt));
           dispatch(closeNewFolderModal());
         })
-        .catch(response => dispatch({
-          type: ActionTypes.ERROR,
-          error: response.data
-        }));
+        .catch((error) => {
+          const { response } = error;
+          dispatch({
+            type: ActionTypes.ERROR,
+            error: response.data
+          });
+        });
     } else {
       const id = objectID().toHexString();
       dispatch({
@@ -163,7 +169,8 @@ export function deleteFile(id, parentId) {
             parentId
           });
         })
-        .catch((response) => {
+        .catch((error) => {
+          const { response } = error;
           dispatch({
             type: ActionTypes.ERROR,
             error: response.data
