@@ -153,11 +153,11 @@ const StyledIconButton = styled.button`
 const Button = ({
   children, href, iconAfterName, iconBeforeName, kind, label, to, type, ...props
 }) => {
-  const iconAfter = iconAfterName && <Icon name={iconAfterName} />;
-  const iconBefore = iconBeforeName && <Icon name={iconBeforeName} />;
+  const IconAfter = Icon[iconAfterName];
+  const IconBefore = Icon[iconBeforeName];
   const hasChildren = React.Children.count(children) > 0;
 
-  const content = <>{iconBefore}{hasChildren && <span>{children}</span>}{iconAfter}</>;
+  const content = <>{IconBefore}{hasChildren && <span>{children}</span>}{IconAfter}</>;
 
   let StyledComponent = StyledButton;
 
@@ -190,7 +190,7 @@ Button.defaultProps = {
   type: 'button',
 };
 
-Button.iconNames = Icon.names;
+Button.iconNames = Object.keys(Icon);
 Button.kinds = kinds;
 
 Button.propTypes = {

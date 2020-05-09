@@ -36,17 +36,17 @@ export const ReactRouterLink = () => (
 );
 
 export const ButtonWithIconBefore = () => (
-  <Button iconBeforeName={Button.iconNames.github}>Create</Button>
+  <Button iconBeforeName={Button.iconNames.Github}>Create</Button>
 );
 
 export const ButtonWithIconAfter = () => (
-  <Button iconAfterName={Button.iconNames.github}>Create</Button>
+  <Button iconAfterName={Button.iconNames.Github}>Create</Button>
 );
 
 export const InlineButtonWithIconAfter = () => (
-  <Button kind={Button.kinds.inline} iconAfterName={Button.iconNames.sortArrowDown}>File name</Button>
+  <Button kind={Button.kinds.inline} iconAfterName={Button.iconNames.SortArrowDown}>File name</Button>
 );
 
 export const InlineIconOnlyButton = () => (
-  <Button kind={Button.kinds.inline} iconAfterName={Button.iconNames.plus} label="Add to collection" />
+  <Button kind={Button.kinds.inline} iconAfterName={Button.iconNames.Plus} label="Add to collection" />
 );

@@ -1,48 +1,25 @@
-/* eslint-disable global-require */
-import InlineSVG from 'react-inlinesvg';
 import PropTypes from 'prop-types';
-import React from 'react';
-import lodash from 'lodash';
-import styled from 'styled-components';
 
-const icons = {
-  sortArrowUp: require('../images/sort-arrow-up.svg'),
-  sortArrowDown: require('../images/sort-arrow-down.svg'),
-  github: require('../images/github.svg'),
-  google: require('../images/google.svg'),
-  plus: require('../images/plus-icon.svg'),
-  close: require('../images/close.svg'),
+import SortArrowUp from '../images/sort-arrow-up.svg';
+import SortArrowDown from '../images/sort-arrow-down.svg';
+import Github from '../images/github.svg';
+import Google from '../images/google.svg';
+import Plus from '../images/plus-icon.svg';
+import Close from '../images/close.svg';
+
+// https://www.scottohara.me/blog/2019/05/22/contextual-images-svgs-and-a11y.html
+// could do something like, if there's an aria-label prop, give it role="img" focusable="false"
+// otherwise, give it aria-hidden="true" focusable="false"
+
+const Icons = {
+  SortArrowUp,
+  SortArrowDown,
+  Github,
+  Google,
+  Plus,
+  Close
 };
 
-/*
-  names will be an mirror-object of icon names:
-    {
-      github: 'github',
-      ...
-    }
-*/
-const names = lodash.mapValues(icons, (value, key) => key);
+export default Icons;
 
-export const ValidIconNameType = PropTypes.oneOf(Object.keys(names));
-
-const StyledInlineSVG = styled(InlineSVG)`
-  > svg {
-    width: 100%;
-    height: 100%;
-  }
-`;
-
-function Icon({ name, ...props }) {
-  return (
-    <StyledInlineSVG src={icons[name]} {...props} />
-  );
-}
-
-
-Icon.names = names;
-
-Icon.propTypes = {
-  name: ValidIconNameType.isRequired
-};
-
-export default Icon;
+export const ValidIconNameType = PropTypes.oneOf(Object.keys(Icons));

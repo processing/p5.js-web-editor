@@ -7,18 +7,18 @@ import { remSize } from '../../../theme';
 import Button from '../../../common/Button';
 
 const authUrls = {
-  github: '/auth-github',
-  google: '/auth/google/'
+  Github: '/auth-github',
+  Google: '/auth/google/'
 };
 
 const labels = {
-  github: 'Login with GitHub',
-  google: 'Login with Google'
+  Github: 'Login with GitHub',
+  Google: 'Login with Google'
 };
 
 const services = {
-  github: 'github',
-  google: 'google'
+  Github: 'github',
+  Google: 'google'
 };
 
 const StyledButton = styled(Button)`
@@ -39,7 +39,7 @@ function SocialAuthButton({ service }) {
 SocialAuthButton.services = services;
 
 SocialAuthButton.propTypes = {
-  service: PropTypes.oneOf(['github', 'google']).isRequired
+  service: PropTypes.oneOf(['Github', 'Google']).isRequired
 };
 
 export default SocialAuthButton;

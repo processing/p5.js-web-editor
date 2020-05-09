@@ -53,7 +53,7 @@ const ShareURL = ({ value }) => {
   return (
     <div className="collection-share" ref={node}>
       <Button
-        iconAfterName={Button.iconNames.sortArrowDown}
+        iconAfterName={Button.iconNames.SortArrowDown}
         onClick={() => setShowURL(!showURL)}
       >Share
       </Button>

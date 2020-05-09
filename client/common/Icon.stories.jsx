@@ -9,9 +9,10 @@ export default {
 };
 
 export const AllIcons = () => {
-  const firstIconName = Object.keys(Icon.names)[0];
+  const names = Object.keys(Icon);
 
+  const SelectedIcon = Icon[select('name', names, names[0])];
   return (
-    <Icon name={select('name', Icon.names, firstIconName)} />
+    <SelectedIcon />
   );
 };

@@ -80,7 +80,7 @@ class APIKeyForm extends React.Component {
               value={this.state.keyLabel}
             />
             <Button
-              iconBeforeName={Button.iconNames.plus}
+              iconBeforeName={Button.iconNames.Plus}
               disabled={this.state.keyLabel === ''}
               type="submit"
               label="Create new key"
