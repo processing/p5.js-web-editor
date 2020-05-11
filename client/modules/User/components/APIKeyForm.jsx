@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import Button from '../../../common/Button';
+import Icons from '../../../common/Icons';
 import CopyableInput from '../../IDE/components/CopyableInput';
 
 import APIKeyList from './APIKeyList';
@@ -80,14 +81,12 @@ class APIKeyForm extends React.Component {
               value={this.state.keyLabel}
             />
             <Button
-              iconBeforeName={Button.iconNames.Plus}
               disabled={this.state.keyLabel === ''}
               type="submit"
               label="Create new key"
             >
-              {/* TODO make sure this aria label is right for the button */}
-              {/* <PlusIcon className="api-key-form__create-icon" focusable="false" aria-hidden="true" /> */}
-              Create
+              <Icons.Plus />
+              <span>Create</span>
             </Button>
           </form>
 

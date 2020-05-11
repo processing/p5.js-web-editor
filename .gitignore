@@ -17,3 +17,5 @@ cert_chain.crt
 localhost.crt
 localhost.key
 privkey.pem
+
+storybook-static

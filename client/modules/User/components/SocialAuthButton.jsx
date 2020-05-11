@@ -4,21 +4,27 @@ import styled from 'styled-components';
 
 import { remSize } from '../../../theme';
 
+import Icons from '../../../common/Icons';
 import Button from '../../../common/Button';
 
 const authUrls = {
-  Github: '/auth-github',
-  Google: '/auth/google/'
+  github: '/auth/github',
+  google: '/auth/google'
 };
 
 const labels = {
-  Github: 'Login with GitHub',
-  Google: 'Login with Google'
+  github: 'Login with GitHub',
+  google: 'Login with Google'
+};
+
+const icons = {
+  github: Icons.Github,
+  google: Icons.Google
 };
 
 const services = {
-  Github: 'github',
-  Google: 'google'
+  github: 'github',
+  google: 'google'
 };
 
 const StyledButton = styled(Button)`
@@ -26,12 +32,13 @@ const StyledButton = styled(Button)`
 `;
 
 function SocialAuthButton({ service }) {
+  const ServiceIcon = icons[service];
   return (
     <StyledButton
-      iconBeforeName={Button.iconNames[service]}
       href={authUrls[service]}
     >
-      {labels[service]}
+      <ServiceIcon aria-label={`${service} logo`} />
+      <span>{labels[service]}</span>
     </StyledButton>
   );
 }
@@ -39,7 +46,7 @@ function SocialAuthButton({ service }) {
 SocialAuthButton.services = services;
 
 SocialAuthButton.propTypes = {
-  service: PropTypes.oneOf(['Github', 'Google']).isRequired
+  service: PropTypes.oneOf(['github', 'google']).isRequired
 };
 
 export default SocialAuthButton;

@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { Link } from 'react-router';
 
 import { remSize, prop } from '../theme';
-import Icon, { ValidIconNameType } from './Icon';
 
 const kinds = {
   block: 'block',
@@ -151,14 +150,8 @@ const StyledIconButton = styled.button`
  * A Button performs an primary action
  */
 const Button = ({
-  children, href, iconAfterName, iconBeforeName, kind, label, to, type, ...props
+  children, href, kind, 'aria-label': ariaLabel, to, type, ...props
 }) => {
-  const IconAfter = Icon[iconAfterName];
-  const IconBefore = Icon[iconBeforeName];
-  const hasChildren = React.Children.count(children) > 0;
-
-  const content = <>{IconBefore}{hasChildren && <span>{children}</span>}{IconAfter}</>;
-
   let StyledComponent = StyledButton;
 
   if (kind === kinds.inline) {
@@ -168,29 +161,26 @@ const Button = ({
   }
 
   if (href) {
-    return <StyledComponent kind={kind} as="a" aria-label={label} href={href} {...props}>{content}</StyledComponent>;
+    return <StyledComponent kind={kind} as="a" aria-label={ariaLabel} href={href} {...props}>{children}</StyledComponent>;
   }
 
   if (to) {
-    return <StyledComponent kind={kind} as={Link} aria-label={label} to={to} {...props}>{content}</StyledComponent>;
+    return <StyledComponent kind={kind} as={Link} aria-label={ariaLabel} to={to} {...props}>{children}</StyledComponent>;
   }
 
-  return <StyledComponent kind={kind} aria-label={label} type={type} {...props}>{content}</StyledComponent>;
+  return <StyledComponent kind={kind} aria-label={ariaLabel} type={type} {...props}>{children}</StyledComponent>;
 };
 
 Button.defaultProps = {
-  children: null,
-  disabled: false,
-  iconAfterName: null,
-  iconBeforeName: null,
-  kind: kinds.block,
-  href: null,
-  label: null,
-  to: null,
-  type: 'button',
+  'children': null,
+  'disabled': false,
+  'kind': kinds.block,
+  'href': null,
+  'aria-label': null,
+  'to': null,
+  'type': 'button',
 };
 
-Button.iconNames = Object.keys(Icon);
 Button.kinds = kinds;
 
 Button.propTypes = {
@@ -198,39 +188,31 @@ Button.propTypes = {
    * The visible part of the button, telling the user what
    * the action is
    */
-  children: PropTypes.element,
+  'children': PropTypes.element,
   /**
     If the button can be activated or not
   */
-  disabled: PropTypes.bool,
-  /**
-   * Name of icon to place before child content
-   */
-  iconAfterName: ValidIconNameType,
-  /**
-   * Name of icon to place after child content
-   */
-  iconBeforeName: ValidIconNameType,
+  'disabled': PropTypes.bool,
   /**
    * The kind of button - determines how it appears visually
    */
-  kind: PropTypes.oneOf(Object.values(kinds)),
+  'kind': PropTypes.oneOf(Object.values(kinds)),
   /**
    * Specifying an href will use an <a> to link to the URL
    */
-  href: PropTypes.string,
+  'href': PropTypes.string,
   /*
    * An ARIA Label used for accessibility
    */
-  label: PropTypes.string,
+  'aria-label': PropTypes.string,
   /**
    * Specifying a to URL will use a react-router Link
    */
-  to: PropTypes.string,
+  'to': PropTypes.string,
   /**
    * If using a button, then type is defines the type of button
    */
-  type: PropTypes.oneOf(['button', 'submit']),
+  'type': PropTypes.oneOf(['button', 'submit']),
 };
 
 export default Button;

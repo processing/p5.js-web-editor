@@ -3,6 +3,9 @@ import { action } from '@storybook/addon-actions';
 import { boolean, text } from '@storybook/addon-knobs';
 
 import Button from './Button';
+import Icons from './Icons';
+
+const { Github, DropdownArrow, Plus } = Icons;
 
 export default {
   title: 'Common/Button',
@@ -36,17 +39,28 @@ export const ReactRouterLink = () => (
 );
 
 export const ButtonWithIconBefore = () => (
-  <Button iconBeforeName={Button.iconNames.Github}>Create</Button>
+  <Button>
+    <Github aria-label="Github logo" />
+    <span>Create</span>
+  </Button>
 );
 
 export const ButtonWithIconAfter = () => (
-  <Button iconAfterName={Button.iconNames.Github}>Create</Button>
+  <Button>
+    <span>Create</span>
+    <Github aria-label="Github logo" />
+  </Button>
 );
 
 export const InlineButtonWithIconAfter = () => (
-  <Button kind={Button.kinds.inline} iconAfterName={Button.iconNames.SortArrowDown}>File name</Button>
+  <Button kind={Button.kinds.inline}>
+    <span>File name</span>
+    <DropdownArrow />
+  </Button>
 );
 
 export const InlineIconOnlyButton = () => (
-  <Button kind={Button.kinds.inline} iconAfterName={Button.iconNames.Plus} label="Add to collection" />
+  <Button kind={Button.kinds.inline} aria-label="Add to collection">
+    <Plus />
+  </Button>
 );

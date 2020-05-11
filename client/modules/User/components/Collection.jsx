@@ -8,6 +8,7 @@ import { bindActionCreators } from 'redux';
 import classNames from 'classnames';
 
 import Button from '../../../common/Button';
+import Icons from '../../../common/Icons';
 import * as ProjectActions from '../../IDE/actions/project';
 import * as ProjectsActions from '../../IDE/actions/projects';
 import * as CollectionsActions from '../../IDE/actions/collections';
@@ -22,7 +23,6 @@ import AddToCollectionSketchList from '../../IDE/components/AddToCollectionSketc
 import CopyableInput from '../../IDE/components/CopyableInput';
 import { SketchSearchbar } from '../../IDE/components/Searchbar';
 
-import DropdownArrowIcon from '../../../images/down-arrow.svg';
 import ArrowUpIcon from '../../../images/sort-arrow-up.svg';
 import ArrowDownIcon from '../../../images/sort-arrow-down.svg';
 import RemoveIcon from '../../../images/close.svg';
@@ -53,17 +53,11 @@ const ShareURL = ({ value }) => {
   return (
     <div className="collection-share" ref={node}>
       <Button
-        iconAfterName={Button.iconNames.SortArrowDown}
         onClick={() => setShowURL(!showURL)}
-      >Share
-      </Button>
-      {/* TODO make sure this has the right aria-label and SVG attributes */}
-      {/* <button>
-        aria-label="Show collection share URL"
       >
-        <span>Share</span>
-        <DropdownArrowIcon className="collection-share__arrow" focusable="false" aria-hidden="true" />
-      </button> */}
+        Share
+        <Icons.DropdownArrow />
+      </Button>
       { showURL &&
         <div className="collection__share-dropdown">
           <CopyableInput value={value} label="Link to Collection" />
