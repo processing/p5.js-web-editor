@@ -5,9 +5,11 @@ import { reset } from 'redux-form';
 import * as ActionTypes from '../../../constants';
 import { setUnsavedChanges, closeNewFolderModal, closeNewFileModal } from './ide';
 import { setProjectSavedTime } from './project';
+import { setToastText, showToast } from './toast';
 
 const __process = (typeof global !== 'undefined' ? global : window).process;
 const ROOT_URL = __process.env.API_URL;
+const TOAST_DISPLAY_TIME_MS = 1500;
 
 function appendToFilename(filename, string) {
   const dotIndex = filename.lastIndexOf('.');
@@ -71,6 +73,8 @@ export function createFile(formProps) {
             type: ActionTypes.ERROR,
             error: response.data
           });
+          dispatch(setToastText(`Failed to create "${formProps.name}"`));
+          dispatch(showToast(TOAST_DISPLAY_TIME_MS));
         });
     } else {
       const id = objectID().toHexString();
@@ -84,6 +88,8 @@ export function createFile(formProps) {
         parentId,
         children: []
       });
+      dispatch(setToastText(`Created "${formProps.name}" successfully`));
+      dispatch(showToast(TOAST_DISPLAY_TIME_MS));
       dispatch(reset('new-file'));
       // dispatch({
       //   type: ActionTypes.HIDE_MODAL
