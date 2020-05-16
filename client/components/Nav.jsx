@@ -3,7 +3,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router';
-import InlineSVG from 'react-inlinesvg';
 import classNames from 'classnames';
 import * as IDEActions from '../modules/IDE/actions/ide';
 import * as toastActions from '../modules/IDE/actions/toast';
@@ -12,10 +11,10 @@ import { setAllAccessibleOutput } from '../modules/IDE/actions/preferences';
 import { logoutUser } from '../modules/User/actions';
 
 import { metaKeyName, } from '../utils/metaKey';
-import caretLeft from '../images/left-arrow.svg';
 
-const triangleUrl = require('../images/down-filled-triangle.svg');
-const logoUrl = require('../images/p5js-logo-small.svg');
+import CaretLeftIcon from '../images/left-arrow.svg';
+import TriangleIcon from '../images/down-filled-triangle.svg';
+import LogoIcon from '../images/p5js-logo-small.svg';
 
 const __process = (typeof global !== 'undefined' ? global : window).process;
 
@@ -229,11 +228,11 @@ class Nav extends React.PureComponent {
     return (
       <ul className="nav__items-left">
         <li className="nav__item-logo">
-          <InlineSVG src={logoUrl} alt="p5.js logo" className="svg__logo" />
+          <LogoIcon role="img" aria-label="p5.js Logo" focusable="false" className="svg__logo" />
         </li>
         <li className="nav__item nav__item--no-icon">
           <Link to="/" className="nav__back-link">
-            <InlineSVG src={caretLeft} className="nav__back-icon" />
+            <CaretLeftIcon className="nav__back-icon" focusable="false" aria-hidden="true" />
             <span className="nav__item-header">
               Back to Editor
             </span>
@@ -247,7 +246,7 @@ class Nav extends React.PureComponent {
     return (
       <ul className="nav__items-left">
         <li className="nav__item-logo">
-          <InlineSVG src={logoUrl} alt="p5.js logo" className="svg__logo" />
+          <LogoIcon role="img" aria-label="p5.js Logo" focusable="false" className="svg__logo" />
         </li>
         <li className={navDropdownState.file}>
           <button
@@ -261,7 +260,7 @@ class Nav extends React.PureComponent {
             }}
           >
             <span className="nav__item-header">File</span>
-            <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
+            <TriangleIcon className="nav__item-header-triangle" focusable="false" aria-hidden="true" />
           </button>
           <ul className="nav__dropdown">
             <li className="nav__dropdown-item">
@@ -281,7 +280,7 @@ class Nav extends React.PureComponent {
                 onBlur={this.handleBlur}
               >
                 Save
-                <span className="nav__keyboard-shortcut">{metaKeyName}+s</span>
+                <span className="nav__keyboard-shortcut">{metaKeyName}+S</span>
               </button>
             </li> }
             { this.props.project.id && this.props.user.authenticated &&
@@ -363,7 +362,7 @@ class Nav extends React.PureComponent {
             }}
           >
             <span className="nav__item-header">Edit</span>
-            <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
+            <TriangleIcon className="nav__item-header-triangle" focusable="false" aria-hidden="true" />
           </button>
           <ul className="nav__dropdown" >
             <li className="nav__dropdown-item">
@@ -423,7 +422,7 @@ class Nav extends React.PureComponent {
             }}
           >
             <span className="nav__item-header">Sketch</span>
-            <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
+            <TriangleIcon className="nav__item-header-triangle" focusable="false" aria-hidden="true" />
           </button>
           <ul className="nav__dropdown">
             <li className="nav__dropdown-item">
@@ -498,7 +497,7 @@ class Nav extends React.PureComponent {
             }}
           >
             <span className="nav__item-header">Help</span>
-            <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
+            <TriangleIcon className="nav__item-header-triangle" focusable="false" aria-hidden="true" />
           </button>
           <ul className="nav__dropdown">
             <li className="nav__dropdown-item">
@@ -541,13 +540,13 @@ class Nav extends React.PureComponent {
     return (
       <ul className="nav__items-right" title="user-menu">
         <li className="nav__item">
-          <Link to="/login">
+          <Link to="/login" className="nav__auth-button">
             <span className="nav__item-header">Log in</span>
           </Link>
         </li>
-        <span className="nav__item-spacer">or</span>
+        <span className="nav__item-or">or</span>
         <li className="nav__item">
-          <Link to="/signup">
+          <Link to="/signup" className="nav__auth-button">
             <span className="nav__item-header">Sign up</span>
           </Link>
         </li>
@@ -575,7 +574,7 @@ class Nav extends React.PureComponent {
             }}
           >
             My Account
-            <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
+            <TriangleIcon className="nav__item-header-triangle" focusable="false" aria-hidden="true" />
           </button>
           <ul className="nav__dropdown">
             <li className="nav__dropdown-item">

@@ -27,7 +27,8 @@ export function getCollections(username) {
         });
         dispatch(stopLoader());
       })
-      .catch((response) => {
+      .catch((error) => {
+        const { response } = error;
         dispatch({
           type: ActionTypes.ERROR,
           error: response.data
@@ -57,7 +58,8 @@ export function createCollection(collection) {
 
         browserHistory.push(location);
       })
-      .catch((response) => {
+      .catch((error) => {
+        const { response } = error;
         console.error('Error creating collection', response.data);
         dispatch({
           type: ActionTypes.ERROR,
@@ -87,7 +89,8 @@ export function addToCollection(collectionId, projectId) {
 
         return response.data;
       })
-      .catch((response) => {
+      .catch((error) => {
+        const { response } = error;
         dispatch({
           type: ActionTypes.ERROR,
           error: response.data
@@ -118,7 +121,8 @@ export function removeFromCollection(collectionId, projectId) {
 
         return response.data;
       })
-      .catch((response) => {
+      .catch((error) => {
+        const { response } = error;
         dispatch({
           type: ActionTypes.ERROR,
           error: response.data
@@ -141,7 +145,8 @@ export function editCollection(collectionId, { name, description }) {
         });
         return response.data;
       })
-      .catch((response) => {
+      .catch((error) => {
+        const { response } = error;
         dispatch({
           type: ActionTypes.ERROR,
           error: response.data
@@ -164,7 +169,8 @@ export function deleteCollection(collectionId) {
         });
         return response.data;
       })
-      .catch((response) => {
+      .catch((error) => {
+        const { response } = error;
         dispatch({
           type: ActionTypes.ERROR,
           error: response.data

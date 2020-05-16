@@ -11,8 +11,11 @@ exports[`Nav renders correctly 1`] = `
     <li
       className="nav__item-logo"
     >
-      <span
-        className="isvg loading svg__logo"
+      <test-file-stub
+        aria-label="p5.js Logo"
+        className="svg__logo"
+        focusable="false"
+        role="img"
       />
     </li>
     <li
@@ -29,8 +32,10 @@ exports[`Nav renders correctly 1`] = `
         >
           File
         </span>
-        <span
-          className="isvg loading nav__item-header-triangle"
+        <test-file-stub
+          aria-hidden="true"
+          className="nav__item-header-triangle"
+          focusable="false"
         />
       </button>
       <ul
@@ -108,8 +113,10 @@ exports[`Nav renders correctly 1`] = `
         >
           Edit
         </span>
-        <span
-          className="isvg loading nav__item-header-triangle"
+        <test-file-stub
+          aria-hidden="true"
+          className="nav__item-header-triangle"
+          focusable="false"
         />
       </button>
       <ul
@@ -144,7 +151,7 @@ exports[`Nav renders correctly 1`] = `
             <span
               className="nav__keyboard-shortcut"
             >
-              Ctrl
+              ⌃
               +F
             </span>
           </button>
@@ -161,7 +168,7 @@ exports[`Nav renders correctly 1`] = `
             <span
               className="nav__keyboard-shortcut"
             >
-              Ctrl
+              ⌃
               +G
             </span>
           </button>
@@ -180,7 +187,7 @@ exports[`Nav renders correctly 1`] = `
             >
               ⇧
               +
-              Ctrl
+              ⌃
               +G
             </span>
           </button>
@@ -201,8 +208,10 @@ exports[`Nav renders correctly 1`] = `
         >
           Sketch
         </span>
-        <span
-          className="isvg loading nav__item-header-triangle"
+        <test-file-stub
+          aria-hidden="true"
+          className="nav__item-header-triangle"
+          focusable="false"
         />
       </button>
       <ul
@@ -242,7 +251,7 @@ exports[`Nav renders correctly 1`] = `
             <span
               className="nav__keyboard-shortcut"
             >
-              Ctrl
+              ⌃
               +Enter
             </span>
           </button>
@@ -261,7 +270,7 @@ exports[`Nav renders correctly 1`] = `
             >
               ⇧
               +
-              Ctrl
+              ⌃
               +Enter
             </span>
           </button>
@@ -282,8 +291,10 @@ exports[`Nav renders correctly 1`] = `
         >
           Help
         </span>
-        <span
-          className="isvg loading nav__item-header-triangle"
+        <test-file-stub
+          aria-hidden="true"
+          className="nav__item-header-triangle"
+          focusable="false"
         />
       </button>
       <ul

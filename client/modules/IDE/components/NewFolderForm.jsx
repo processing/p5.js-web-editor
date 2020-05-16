@@ -34,7 +34,12 @@ class NewFolderForm extends React.Component {
             ref={(element) => { this.fileName = element; }}
             {...domOnlyProps(name)}
           />
-          <input type="submit" value="Add Folder" aria-label="add folder" />
+          <input
+            type="submit"
+            value="Add Folder"
+            aria-label="add folder"
+            className="new-folder-form__submit"
+          />
         </div>
         {name.touched && name.error && <span className="form-error">{name.error}</span>}
       </form>

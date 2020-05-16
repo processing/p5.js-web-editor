@@ -39,12 +39,8 @@
   // padding: #{8 / $base-font-size}rem 0;
 }
 
-.collection-metadata__name .editable-input__label span {
-  padding: 0.83333rem 0;
-
-  @include themify() {
-    color: getThemifyVariable('primary-text-color');
-  }
+.collection-metadata__name .editable-input__label {
+  padding: 0.83333rem #{7 / $base-font-size}rem;
 }
 
 .collection-metadata__name,
@@ -63,9 +59,9 @@
 }
 
 .collection-metadata__description {
-  margin-top: #{8 / $base-font-size}rem;
+  padding-top: #{8 / $base-font-size}rem;
   text-align: left;
-  font-size: 14px;
+  font-size: #{14 / $base-font-size}rem;
 }
 
 .collection-metadata__description .editable-input__label {
@@ -162,12 +158,12 @@
   @include icon();
   @include themify() {
     // icon graphic
-    polygon {
+    path {
       fill: getThemifyVariable('table-button-color');
     }
 
     // icon background circle
-    path {
+    path:first-child {
       fill: getThemifyVariable('table-button-background-color');
     }
 
@@ -178,11 +174,11 @@
 
     &:hover,
     &:focus {
-      polygon {
+      path {
         fill: getThemifyVariable('table-button-hover-color');
       }
 
-      path {
+      path:first-child {
         fill: getThemifyVariable('table-button-background-hover-color');
       }
     }

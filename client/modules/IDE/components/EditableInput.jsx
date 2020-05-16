@@ -1,13 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import InlineSVG from 'react-inlinesvg';
 
-const editIconUrl = require('../../../images/pencil.svg');
+import EditIcon from '../../../images/pencil.svg';
 
-function EditIcon() {
-  return <InlineSVG className="editable-input__icon" src={editIconUrl} alt="Edit" />;
-}
-
+// TODO I think this needs a description prop so that it's accessible
 function EditableInput({
   validate, value, emptyPlaceholder, InputComponent, inputProps, onChange
 }) {
@@ -52,9 +48,13 @@ function EditableInput({
 
   return (
     <span className={classes}>
-      <button className="editable-input__label" onClick={beginEditing}>
+      <button
+        className="editable-input__label"
+        onClick={beginEditing}
+        aria-label={`Edit ${displayValue} value`}
+      >
         <span>{displayValue}</span>
-        <EditIcon />
+        <EditIcon className="editable-input__icon" focusable="false" aria-hidden="true" />
       </button>
 
       <InputComponent

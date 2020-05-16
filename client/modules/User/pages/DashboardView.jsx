@@ -98,12 +98,12 @@ class DashboardView extends React.Component {
   renderContent(tabKey, username) {
     switch (tabKey) {
       case TabKey.assets:
-        return <AssetList username={username} />;
+        return <AssetList key={username} username={username} />;
       case TabKey.collections:
-        return <CollectionList username={username} />;
+        return <CollectionList key={username} username={username} />;
       case TabKey.sketches:
       default:
-        return <SketchList username={username} />;
+        return <SketchList key={username} username={username} />;
     }
   }
 

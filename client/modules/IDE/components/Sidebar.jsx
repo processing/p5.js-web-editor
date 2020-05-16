@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
-import InlineSVG from 'react-inlinesvg';
 import ConnectedFileNode from './FileNode';
 
-const downArrowUrl = require('../../../images/down-filled-triangle.svg');
+import DownArrowIcon from '../../../images/down-filled-triangle.svg';
 
 class Sidebar extends React.Component {
   constructor(props) {
@@ -76,7 +75,7 @@ class Sidebar extends React.Component {
           </h3>
           <div className="sidebar__icons">
             <button
-              aria-label="add file or folder"
+              aria-label="Toggle open/close sketch file options"
               className="sidebar__add"
               tabIndex="0"
               ref={(element) => { this.sidebarOptions = element; }}
@@ -84,7 +83,7 @@ class Sidebar extends React.Component {
               onBlur={this.onBlurComponent}
               onFocus={this.onFocusComponent}
             >
-              <InlineSVG src={downArrowUrl} />
+              <DownArrowIcon focusable="false" aria-hidden="true" />
             </button>
             <ul className="sidebar__project-options">
               <li>

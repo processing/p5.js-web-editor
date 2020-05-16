@@ -51,10 +51,13 @@ export function getProject(id) {
         dispatch(setProject(response.data));
         dispatch(setUnsavedChanges(false));
       })
-      .catch(response => dispatch({
-        type: ActionTypes.ERROR,
-        error: response.data
-      }));
+      .catch((error) => {
+        const { response } = error;
+        dispatch({
+          type: ActionTypes.ERROR,
+          error: response.data
+        });
+      });
   };
 }
 // action creator that updates project privacy
@@ -190,7 +193,8 @@ export function saveProject(selectedFile = null, autosave = false) {
             }
           }
         })
-        .catch((response) => {
+        .catch((error) => {
+          const { response } = error;
           dispatch(endSavingProject());
           if (response.status === 403) {
             dispatch(showErrorModal('staleSession'));
@@ -229,7 +233,8 @@ export function saveProject(selectedFile = null, autosave = false) {
           }
         }
       })
-      .catch((response) => {
+      .catch((error) => {
+        const { response } = error;
         dispatch(endSavingProject());
         if (response.status === 403) {
           dispatch(showErrorModal('staleSession'));
@@ -327,10 +332,13 @@ export function cloneProject(id) {
             browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
             dispatch(setNewProject(response.data));
           })
-          .catch(response => dispatch({
-            type: ActionTypes.PROJECT_SAVE_FAIL,
-            error: response.data
-          }));
+          .catch((error) => {
+            const { response } = error;
+            dispatch({
+              type: ActionTypes.PROJECT_SAVE_FAIL,
+              error: response.data
+            });
+          });
       });
     });
   };
@@ -373,8 +381,8 @@ export function changeProjectName(id, newName) {
           }
         }
       })
-      .catch((response) => {
-        console.log(response);
+      .catch((error) => {
+        const { response } = error;
         dispatch({
           type: ActionTypes.PROJECT_SAVE_FAIL,
           error: response.data
@@ -397,7 +405,8 @@ export function deleteProject(id) {
           id
         });
       })
-      .catch((response) => {
+      .catch((error) => {
+        const { response } = error;
         if (response.status === 403) {
           dispatch(showErrorModal('staleSession'));
         } else {

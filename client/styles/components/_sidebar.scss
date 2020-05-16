@@ -50,6 +50,12 @@
   position: relative;
   overflow-y: auto;
   flex: 1 1 auto;
+  @include themify() {
+    border-top: 1px solid map-get($theme-map, 'ide-border-color');
+  }
+  .sidebar--contracted & {
+    border: none;
+  }
 }
 
 .sidebar__file-item {
@@ -57,12 +63,10 @@
   cursor: pointer;
   position: relative;
   @include themify() {
-    color: map-get($theme-map, 'inactive-text-color');
-    &:hover > .file-item__content .sidebar__file-item-name {
-      color: map-get($theme-map, 'primary-text-color');
-    }
-    &:hover > .file-item__content .sidebar__file-item-icon g {
-      fill: map-get($theme-map, 'primary-text-color');
+    color: map-get($theme-map, 'primary-text-color');
+    // TODO get this to not affect parent, need to move it into JS
+    &:hover:not(.sidebar__file-item--selected) > .file-item__content {
+      background-color: map-get($theme-map, 'file-hover-color');
     }
   }
 }
@@ -120,6 +124,9 @@
     content: '';
     width: 100%;
   }
+  @include themify() {
+    color: map-get($theme-map, 'primary-text-color');
+  }
 }
 
 .sidebar__file-item-show-options {
@@ -166,35 +173,51 @@
   display: none;
   padding: 0;
   border: 0;
-  width: calc(100% - #{100 / $base-font-size}rem);
+  width: calc(100% - #{63 / $base-font-size}rem);
   .sidebar__file-item--editing & {
     display: inline-block;
   }
 }
 
-.sidebar__expand {
+.sidebar__expand,
+.sidebar__contract {
   @include icon();
   position: absolute;
-  top: #{7 / $base-font-size}rem;
-  left: #{1 / $base-font-size}rem;
-  height: #{14 / $base-font-size}rem;
-  & svg {
-    height: #{14 / $base-font-size}rem;
+  top: #{2 / $base-font-size}rem;
+  left: #{0 / $base-font-size}rem;
+  height: #{25 / $base-font-size}rem;
+  width: #{49 / $base-font-size}rem;
+  border-radius: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @include themify() {
+    background-color: getThemifyVariable("toolbar-button-background-color");
+    & polygon, & path {
+      fill: getThemifyVariable("toolbar-button-color");
+    }
+    &:hover {
+      background-color: getThemifyVariable("button-background-hover-color");
+      & polygon, & path {
+        fill: getThemifyVariable("button-hover-color");
+      }
+    }
   }
+}
+
+.sidebar__expand {
   display: none;
+  &:hover {
+    cursor: e-resize;
+  }
   .sidebar--contracted & {
-    display: inline-block;
+    display: flex;
   }
 }
 
 .sidebar__contract {
-  @include icon();
-  position: absolute;
-  top: #{7 / $base-font-size}rem;
-  left: #{34 / $base-font-size}rem;
-  height: #{14 / $base-font-size}rem;
-  & svg {
-    height: #{14 / $base-font-size}rem;
+  &:hover {
+    cursor: w-resize;
   }
   .sidebar--contracted & {
     display: none;
@@ -213,7 +236,7 @@
 .sidebar__folder-icon {
   padding: #{4 / $base-font-size}rem 0;
   margin-right: #{5 / $base-font-size}rem;
-  & g {
+  & path {
     @include themify() {
       fill: map-get($theme-map, 'primary-text-color');
     }
@@ -226,9 +249,9 @@
 .sidebar__file-item-icon {
   padding: #{4 / $base-font-size}rem 0;
   margin-right: #{5 / $base-font-size}rem;
-  & g {
+  & path {
     @include themify() {
-      fill: getThemifyVariable('inactive-text-color');
+      fill: getThemifyVariable('secondary-text-color');
     }
   }
   & svg {

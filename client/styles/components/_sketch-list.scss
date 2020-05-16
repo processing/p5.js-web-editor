@@ -19,6 +19,7 @@
   height: #{32 / $base-font-size}rem;
   position: sticky;
   top: 0;
+  z-index: 1;
   @include themify() {
     background-color: getThemifyVariable('background-color');
   }
@@ -95,8 +96,8 @@
   width:#{25 / $base-font-size}rem;
   height:#{25 / $base-font-size}rem;
   @include themify() {
-      & polygon {
-        fill: getThemifyVariable('dropdown-color');
+      & polygon, & path {
+        fill: getThemifyVariable('inactive-text-color');
       }
   }
 }
