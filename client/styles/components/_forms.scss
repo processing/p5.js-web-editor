@@ -81,7 +81,7 @@
 .form [type="submit"] {
   @extend %button;
   padding: #{8 / $base-font-size}rem #{25 / $base-font-size}rem;
-  margin: #{39 / $base-font-size}rem 0 #{24 / $base-font-size}rem 0;
+  margin: #{10 / $base-font-size}rem 0 #{12 / $base-font-size}rem 0;
 }
 
 .form [type="submit"][disabled] {
