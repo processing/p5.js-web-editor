@@ -117,7 +117,7 @@ class DashboardView extends React.Component {
       <div className="dashboard">
         <Nav layout="dashboard" />
 
-        <section className="dashboard-header">
+        <main className="dashboard-header">
           <div className="dashboard-header__header">
             <h2 className="dashboard-header__header__title">{this.ownerName()}</h2>
             <div className="dashboard-header__nav">
@@ -133,7 +133,7 @@ class DashboardView extends React.Component {
           <div className="dashboard-content">
             {this.renderContent(currentTab, username)}
           </div>
-        </section>
+        </main>
         {this.isCollectionCreate() &&
           <Overlay
             title="Create collection"

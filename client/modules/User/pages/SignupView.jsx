@@ -26,7 +26,7 @@ class SignupView extends React.Component {
     return (
       <div className="signup">
         <Nav layout="dashboard" />
-        <div className="form-container">
+        <main className="form-container">
           <Helmet>
             <title>p5.js Web Editor | Signup</title>
           </Helmet>
@@ -38,7 +38,7 @@ class SignupView extends React.Component {
               <Link className="form__login-button" to="/login">Log In</Link>
             </p>
           </div>
-        </div>
+        </main>
       </div>
     );
   }

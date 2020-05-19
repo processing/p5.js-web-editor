@@ -46,7 +46,7 @@ class AccountView extends React.Component {
 
         <Nav layout="dashboard" />
 
-        <section className="account-settings">
+        <main className="account-settings">
           <header className="account-settings__header">
             <h1 className="account-settings__title">Account Settings</h1>
           </header>
@@ -67,7 +67,7 @@ class AccountView extends React.Component {
             </Tabs>
           }
           { !accessTokensUIEnabled && <SocialLoginPanel {...this.props} /> }
-        </section>
+        </main>
       </div>
     );
   }

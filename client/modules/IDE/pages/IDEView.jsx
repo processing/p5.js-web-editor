@@ -239,7 +239,7 @@ class IDEView extends React.Component {
             />
           </Overlay>
         }
-        <div className="editor-preview-container">
+        <main className="editor-preview-container">
           <SplitPane
             split="vertical"
             size={this.state.sidebarSize}
@@ -327,7 +327,7 @@ class IDEView extends React.Component {
                   theme={this.props.preferences.theme}
                 />
               </SplitPane>
-              <div className="preview-frame-holder">
+              <section className="preview-frame-holder">
                 <header className="preview-frame__header">
                   <h2 className="preview-frame__title">Preview</h2>
                 </header>
@@ -370,10 +370,10 @@ class IDEView extends React.Component {
                     cmController={this.cmController}
                   />
                 </div>
-              </div>
+              </section>
             </SplitPane>
           </SplitPane>
-        </div>
+        </main>
         { this.props.ide.modalIsVisible &&
           <NewFileModal />
         }
