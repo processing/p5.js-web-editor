@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { remSize } from '../../../theme';
 
-import Icons from '../../../common/Icons';
+import { GithubIcon, GoogleIcon } from '../../../common/Icons';
 import Button from '../../../common/Button';
 
 const authUrls = {
@@ -18,8 +18,8 @@ const labels = {
 };
 
 const icons = {
-  github: Icons.Github,
-  google: Icons.Google
+  github: GithubIcon,
+  google: GoogleIcon
 };
 
 const services = {
@@ -35,10 +35,10 @@ function SocialAuthButton({ service }) {
   const ServiceIcon = icons[service];
   return (
     <StyledButton
+      iconBefore={<ServiceIcon aria-label={`${service} logo`} />}
       href={authUrls[service]}
     >
-      <ServiceIcon aria-label={`${service} logo`} />
-      <span>{labels[service]}</span>
+      {labels[service]}
     </StyledButton>
   );
 }

@@ -13,43 +13,39 @@ import DropdownArrow from '../images/down-filled-triangle.svg';
 
 // could also give these a default size, color, etc. based on the theme
 // Need to add size to these - like small icon, medium icon, large icon. etc.
-function withLabel(Icon) {
-  const render = (props) => {
+function withLabel(SvgComponent) {
+  const Icon = (props) => {
     const { 'aria-label': ariaLabel } = props;
     if (ariaLabel) {
-      return (<Icon
+      return (<SvgComponent
         {...props}
         aria-label={ariaLabel}
         role="img"
         focusable="false"
       />);
     }
-    return (<Icon
+    return (<SvgComponent
       {...props}
       aria-hidden
       focusable="false"
     />);
   };
 
-  render.propTypes = {
+  Icon.propTypes = {
     'aria-label': PropTypes.string
   };
 
-  render.defaultProps = {
+  Icon.defaultProps = {
     'aria-label': null
   };
 
-  return render;
+  return Icon;
 }
 
-const Icons = {
-  SortArrowUp: withLabel(SortArrowUp),
-  SortArrowDown: withLabel(SortArrowDown),
-  Github: withLabel(Github),
-  Google: withLabel(Google),
-  Plus: withLabel(Plus),
-  Close: withLabel(Close),
-  DropdownArrow: withLabel(DropdownArrow)
-};
-
-export default Icons;
+export const SortArrowUpIcon = withLabel(SortArrowUp);
+export const SortArrowDownIcon = withLabel(SortArrowDown);
+export const GithubIcon = withLabel(Github);
+export const GoogleIcon = withLabel(Google);
+export const PlusIcon = withLabel(Plus);
+export const CloseIcon = withLabel(Close);
+export const DropdownArrowIcon = withLabel(DropdownArrow);

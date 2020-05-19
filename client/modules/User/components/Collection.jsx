@@ -8,7 +8,7 @@ import { bindActionCreators } from 'redux';
 import classNames from 'classnames';
 
 import Button from '../../../common/Button';
-import Icons from '../../../common/Icons';
+import { DropdownArrowIcon } from '../../../common/Icons';
 import * as ProjectActions from '../../IDE/actions/project';
 import * as ProjectsActions from '../../IDE/actions/projects';
 import * as CollectionsActions from '../../IDE/actions/collections';
@@ -54,9 +54,9 @@ const ShareURL = ({ value }) => {
     <div className="collection-share" ref={node}>
       <Button
         onClick={() => setShowURL(!showURL)}
+        iconAfter={<DropdownArrowIcon />}
       >
         Share
-        <Icons.DropdownArrow />
       </Button>
       { showURL &&
         <div className="collection__share-dropdown">

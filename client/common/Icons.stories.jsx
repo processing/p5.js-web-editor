@@ -1,7 +1,7 @@
 import React from 'react';
 import { select } from '@storybook/addon-knobs';
 
-import Icons from './Icons';
+import * as Icons from './Icons';
 
 export default {
   title: 'Common/Icons',

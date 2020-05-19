@@ -150,8 +150,10 @@ const StyledIconButton = styled.button`
  * A Button performs an primary action
  */
 const Button = ({
-  children, href, kind, 'aria-label': ariaLabel, to, type, ...props
+  children, href, kind, iconBefore, iconAfter, 'aria-label': ariaLabel, to, type, ...props
 }) => {
+  const hasChildren = React.Children.count(children) > 0;
+  const content = <>{iconBefore}{hasChildren && <span>{children}</span>}{iconAfter}</>;
   let StyledComponent = StyledButton;
 
   if (kind === kinds.inline) {
@@ -161,19 +163,31 @@ const Button = ({
   }
 
   if (href) {
-    return <StyledComponent kind={kind} as="a" aria-label={ariaLabel} href={href} {...props}>{children}</StyledComponent>;
+    return (
+      <StyledComponent
+        kind={kind}
+        as="a"
+        aria-label={ariaLabel}
+        href={href}
+        {...props}
+      >
+        {content}
+      </StyledComponent>
+    );
   }
 
   if (to) {
-    return <StyledComponent kind={kind} as={Link} aria-label={ariaLabel} to={to} {...props}>{children}</StyledComponent>;
+    return <StyledComponent kind={kind} as={Link} aria-label={ariaLabel} to={to} {...props}>{content}</StyledComponent>;
   }
 
-  return <StyledComponent kind={kind} aria-label={ariaLabel} type={type} {...props}>{children}</StyledComponent>;
+  return <StyledComponent kind={kind} aria-label={ariaLabel} type={type} {...props}>{content}</StyledComponent>;
 };
 
 Button.defaultProps = {
   'children': null,
   'disabled': false,
+  'iconAfter': null,
+  'iconBefore': null,
   'kind': kinds.block,
   'href': null,
   'aria-label': null,
@@ -193,6 +207,14 @@ Button.propTypes = {
     If the button can be activated or not
   */
   'disabled': PropTypes.bool,
+  /**
+   * SVG icon to place after child content
+   */
+  'iconAfter': PropTypes.element,
+  /**
+   * SVG icon to place before child content
+   */
+  'iconBefore': PropTypes.element,
   /**
    * The kind of button - determines how it appears visually
    */
