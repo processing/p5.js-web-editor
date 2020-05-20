@@ -227,7 +227,7 @@ class Collection extends React.Component {
     // };
 
     return (
-      <div className={`collection-metadata ${this.isOwner() ? 'collection-metadata--is-owner' : ''}`}>
+      <header className={`collection-metadata ${this.isOwner() ? 'collection-metadata--is-owner' : ''}`}>
         <div className="collection-metadata__columns">
           <div className="collection-metadata__column--left">
             <h2 className="collection-metadata__name">
@@ -270,7 +270,7 @@ class Collection extends React.Component {
             }
           </div>
         </div>
-      </div>
+      </header>
     );
   }
 
@@ -344,54 +344,56 @@ class Collection extends React.Component {
     const title = this.hasCollection() ? this.getCollectionName() : null;
 
     return (
-      <section className="collection-container" data-has-items={this.hasCollectionItems() ? 'true' : 'false'}>
-        <Helmet>
-          <title>{this.getTitle()}</title>
-        </Helmet>
-        {this._renderLoader()}
-        {this.hasCollection() && this._renderCollectionMetadata()}
-        <div className="collection-content">
-          <div className="collection-table-wrapper">
-            {this._renderEmptyTable()}
-            {this.hasCollectionItems() &&
-              <table className="sketches-table" summary="table containing all collections">
-                <thead>
-                  <tr>
-                    {this._renderFieldHeader('name', 'Name')}
-                    {this._renderFieldHeader('createdAt', 'Date Added')}
-                    {this._renderFieldHeader('user', 'Owner')}
-                    <th scope="col"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.props.collection.items.map(item =>
-                    (<CollectionItemRow
-                      key={item.id}
-                      item={item}
-                      user={this.props.user}
-                      username={this.getUsername()}
-                      collection={this.props.collection}
-                    />))}
-                </tbody>
-              </table>
-            }
-            {
-              this.state.isAddingSketches && (
-                <Overlay
-                  title="Add sketch"
-                  actions={<SketchSearchbar />}
-                  closeOverlay={this.hideAddSketches}
-                  isFixedHeight
-                >
-                  <div className="collection-add-sketch">
-                    <AddToCollectionSketchList username={this.props.username} collection={this.props.collection} />
-                  </div>
-                </Overlay>
-              )
-            }
-          </div>
-        </div>
-      </section>
+      <main className="collection-container" data-has-items={this.hasCollectionItems() ? 'true' : 'false'}>
+        <article className="collection">
+          <Helmet>
+            <title>{this.getTitle()}</title>
+          </Helmet>
+          {this._renderLoader()}
+          {this.hasCollection() && this._renderCollectionMetadata()}
+          <article className="collection-content">
+            <div className="collection-table-wrapper">
+              {this._renderEmptyTable()}
+              {this.hasCollectionItems() &&
+                <table className="sketches-table" summary="table containing all collections">
+                  <thead>
+                    <tr>
+                      {this._renderFieldHeader('name', 'Name')}
+                      {this._renderFieldHeader('createdAt', 'Date Added')}
+                      {this._renderFieldHeader('user', 'Owner')}
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {this.props.collection.items.map(item =>
+                      (<CollectionItemRow
+                        key={item.id}
+                        item={item}
+                        user={this.props.user}
+                        username={this.getUsername()}
+                        collection={this.props.collection}
+                      />))}
+                  </tbody>
+                </table>
+              }
+              {
+                this.state.isAddingSketches && (
+                  <Overlay
+                    title="Add sketch"
+                    actions={<SketchSearchbar />}
+                    closeOverlay={this.hideAddSketches}
+                    isFixedHeight
+                  >
+                    <div className="collection-add-sketch">
+                      <AddToCollectionSketchList username={this.props.username} collection={this.props.collection} />
+                    </div>
+                  </Overlay>
+                )
+              }
+            </div>
+          </article>
+        </article>
+      </main>
     );
   }
 }

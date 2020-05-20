@@ -33,7 +33,7 @@ class LoginView extends React.Component {
     return (
       <div className="login">
         <Nav layout="dashboard" />
-        <div className="form-container">
+        <main className="form-container">
           <Helmet>
             <title>p5.js Web Editor | Login</title>
           </Helmet>
@@ -52,7 +52,7 @@ class LoginView extends React.Component {
               <Link className="form__reset-password-button" to="/reset-password">Reset your password</Link>
             </p>
           </div>
-        </div>
+        </main>
       </div>
     );
   }
