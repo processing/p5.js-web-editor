@@ -74,11 +74,6 @@ export function setIsPrivate(value) {
       .then((response) => {
         if (response.status === 200) {
           console.log('success');
-          // if the http request is sucessful, dispatch action
-          // dispatch({
-          //   type: ActionTypes.SET_IS_PRIVATE_OUTPUT,
-          //   value
-          // });
         }
       })
       .catch((response) => {

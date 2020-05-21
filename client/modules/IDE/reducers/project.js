@@ -35,7 +35,7 @@ const project = (state, action) => {
         updatedAt: action.project.updatedAt,
         owner: action.owner,
         isSaving: false,
-        isPrivate: false // initialize privacy for when user sets a new project
+        isPrivate: action.project.isPrivate // privacy is set to its last state value
       };
     case ActionTypes.RESET_PROJECT:
       return initialState();

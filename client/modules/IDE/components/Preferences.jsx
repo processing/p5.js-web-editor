@@ -102,7 +102,6 @@ class Preferences extends React.Component {
               {/* add sketch tab to the preference modal */}
               <Tab><h4 className="tabs__title">Sketch Settings</h4></Tab>
               <Tab><h4 className="tabs__title">Accessibility</h4></Tab>
-
             </div>
           </TabList>
           <TabPanel>

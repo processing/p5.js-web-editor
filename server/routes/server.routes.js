@@ -34,7 +34,7 @@ router.get('/:username/sketches/:project_id/add-to-collection', (req, res) => {
 });
 
 router.get('/:username/sketches/:project_id', (req, res) => {
-  projectForUserExists(req.params.username, req.params.project_id, exists => (
+  projectForUserExists(req.params.username, req.user, req.params.project_id, exists => (
     exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
   ));
 });
