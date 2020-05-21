@@ -38,6 +38,7 @@ deploy:
     skip_cleanup: true
     on:
       branch: release
+      tags: true
   - provider: script
     script: ./deploy_staging.sh
     skip_cleanup: true

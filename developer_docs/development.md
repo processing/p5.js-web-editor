@@ -15,7 +15,10 @@ A guide for adding code to this project.
 Follow the [installation guide](./installation.md).
 
 ## Development Workflow
-This project uses git-flow. For an in-depth overview of git-flow, read ["A successful Git branching model"](https://nvie.com/posts/a-successful-git-branching-model/). As a person contributing code but not creating production releases (this is most people!), here's what you need to know:
+* This project uses git-flow. For an in-depth overview of git-flow, read ["A successful Git branching model"](https://nvie.com/posts/a-successful-git-branching-model/).
+* [Let's stop saying Master/Slave](https://medium.com/@mikebroberts/let-s-stop-saying-master-slave-10f1d1bf34df)
+
+As a person contributing code but not creating production releases (this is most people!), here's what you need to know:
 * The default branch is `develop`. All pull requests should be made to this branch. It should be stable, and all commits are visible at a staging sever.
 * When working on a bug or feature, you should branch from the `develop` branch. When you're done, you should open a pull request from your feature branch to `develop`.
 * The `release` branch is the live production branch, and is the code deployed to editor.p5js.org. Changes to this branch should be made carefully, and will be done using git tags. 
