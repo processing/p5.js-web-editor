@@ -26,7 +26,7 @@ const project = (state, action) => {
         updatedAt: action.project.updatedAt,
         owner: action.owner,
         isSaving: false,
-        isPrivate: false // initialize privacy for when user create a new project
+        isPrivate: false
       };
     case ActionTypes.SET_PROJECT:
       return {
@@ -35,7 +35,7 @@ const project = (state, action) => {
         updatedAt: action.project.updatedAt,
         owner: action.owner,
         isSaving: false,
-        isPrivate: action.project.isPrivate // privacy is set to its last state value
+        isPrivate: action.project.isPrivate
       };
     case ActionTypes.RESET_PROJECT:
       return initialState();
@@ -49,9 +49,8 @@ const project = (state, action) => {
       return Object.assign({}, state, { isSaving: true });
     case ActionTypes.END_SAVING_PROJECT:
       return Object.assign({}, state, { isSaving: false });
-    // create case for Privacy action creator
     case ActionTypes.SET_IS_PRIVATE_OUTPUT:
-      return Object.assign({}, state, { isPrivate: action.value }); // returns object and updates privacy value
+      return Object.assign({}, state, { isPrivate: action.value });
     default:
       return state;
   }

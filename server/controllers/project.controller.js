@@ -63,23 +63,10 @@ export function updateProject(req, res) {
 }
 
 export function getProject(req, res) {
-  // my attempt to redirect an unauthorized user to 404 page if they access a private sketch
-  // const authenicatedUser = req.user;
-  // console.log('request parameters:', req.params);
-  // console.log('authenicated user:', authenicatedUser);
-  // console.log('byebye');
   const projectId = req.params.project_id;
   Project.findById(projectId)
     .populate('user', 'username')
     .exec((err, project) => { // eslint-disable-line
-      // retrieve username based on project ID
-      // const userId = project.user._id;
-      // console.log(userId);
-      // console.log(authenicatedUser._id);
-      // console.log(!authenicatedUser);
-      // make sure username == authenticated user
-      // const isUserAuthorized = authenicatedUser && userId === authenicatedUser._id;
-      // console.log(isUserAuthorized);
       if (err) {
         return res.status(404).send({ message: 'Project with that id does not exist' });
       } else if (!project) {
@@ -91,10 +78,6 @@ export function getProject(req, res) {
             }
             return res.json(projectBySlug);
           });
-        // } else if (!isUserAuthorized) { // return 404 page if user isn not authorized to view sketch
-        //   // console.log('Nope im in here!');
-        //   // return res.status(404).send({ success: false, message: 'User does not have acess to private sketch.' });
-        //   get404Sketch(html => res.send(html));
       } else {
         return res.json(project);
       }
@@ -169,19 +152,8 @@ export function projectForUserExists(username, authenicatedUser, projectId, call
       return;
     }
     Project.findOne({ _id: projectId, user: user._id }, (innerErr, project) => {
-      console.log('hi there!');
-      // my 2nd attempt to redirect an unauthorized user to 404 page if they access a private sketch
-      console.log(authenicatedUser);
-      // retrieve username based on project ID
-      // console.log(project);
       const userId = project.user._id;
-      console.log(userId);
-      // if (!isUserAuthorized) {
-      //   callback(false);
-      //   return;
-      // }
       if (project) {
-        // if sketch is public -> user is automatically authorized
         const isUserAuthorized = authenicatedUser && userId === authenicatedUser._id;
         if (project.isPrivate && !isUserAuthorized) {
           callback(false);

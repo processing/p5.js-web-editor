@@ -59,8 +59,6 @@ export function getProject(id) {
       });
   };
 }
-// action creator that updates project privacy
-// takes the id of current project and value of Make sketch private check box
 export function setIsPrivate(value) {
   return (dispatch, getState) => {
     dispatch({
@@ -77,7 +75,6 @@ export function setIsPrivate(value) {
         }
       })
       .catch((response) => {
-        // otherwise, print response and send error action (not sure if I am suppose to do this)?
         console.log(response);
         dispatch({
           type: ActionTypes.ERROR,

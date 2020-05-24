@@ -223,11 +223,11 @@ class IDEView extends React.Component {
               autosave={this.props.preferences.autosave}
               linewrap={this.props.preferences.linewrap}
               lineNumbers={this.props.preferences.lineNumbers}
-              isPrivate={this.props.project.isPrivate} // current state privacy value
+              isPrivate={this.props.project.isPrivate}
               setLineNumbers={this.props.setLineNumbers}
               setAutosave={this.props.setAutosave}
               setLinewrap={this.props.setLinewrap}
-              setIsPrivate={this.props.setIsPrivate} // set state privacy value
+              setIsPrivate={this.props.setIsPrivate}
               lintWarning={this.props.preferences.lintWarning}
               setLintWarning={this.props.setLintWarning}
               textOutput={this.props.preferences.textOutput}
@@ -514,7 +514,7 @@ IDEView.propTypes = {
       id: PropTypes.string
     }),
     updatedAt: PropTypes.string,
-    isPrivate: PropTypes.bool.isRequired // map sketch privacy value to preference component prop
+    isPrivate: PropTypes.bool.isRequired
   }).isRequired,
   editorAccessibility: PropTypes.shape({
     lintMessages: PropTypes.array.isRequired,
@@ -538,7 +538,7 @@ IDEView.propTypes = {
   setAutosave: PropTypes.func.isRequired,
   setLineNumbers: PropTypes.func.isRequired,
   setLinewrap: PropTypes.func.isRequired,
-  setIsPrivate: PropTypes.func.isRequired, // map sketch privacy handler func to preference component prop
+  setIsPrivate: PropTypes.func.isRequired,
   setLintWarning: PropTypes.func.isRequired,
   setTextOutput: PropTypes.func.isRequired,
   setGridOutput: PropTypes.func.isRequired,

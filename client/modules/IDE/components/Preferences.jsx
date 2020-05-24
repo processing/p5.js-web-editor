@@ -99,7 +99,6 @@ class Preferences extends React.Component {
           <TabList>
             <div className="tabs__titles">
               <Tab><h4 className="tabs__title">General Settings</h4></Tab>
-              {/* add sketch tab to the preference modal */}
               <Tab><h4 className="tabs__title">Sketch Settings</h4></Tab>
               <Tab><h4 className="tabs__title">Accessibility</h4></Tab>
             </div>
@@ -368,14 +367,14 @@ Preferences.propTypes = {
   setFontSize: PropTypes.func.isRequired,
   autosave: PropTypes.bool.isRequired,
   linewrap: PropTypes.bool.isRequired,
-  isPrivate: PropTypes.bool.isRequired, // exporting privacy state value
+  isPrivate: PropTypes.bool.isRequired,
   setLineNumbers: PropTypes.func.isRequired,
   setAutosave: PropTypes.func.isRequired,
   setLinewrap: PropTypes.func.isRequired,
   textOutput: PropTypes.bool.isRequired,
   gridOutput: PropTypes.bool.isRequired,
   soundOutput: PropTypes.bool.isRequired,
-  setIsPrivate: PropTypes.func.isRequired, // exporting privacy value handler func
+  setIsPrivate: PropTypes.func.isRequired,
   setTextOutput: PropTypes.func.isRequired,
   setGridOutput: PropTypes.func.isRequired,
   setSoundOutput: PropTypes.func.isRequired,

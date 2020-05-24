@@ -17,9 +17,7 @@ function getProjectsForUserName(username, authenicatedUser) {
         reject(new UserNotFoundError());
         return;
       }
-      // 2. Determine if user is authorized
       const isUserAuthorized = authenicatedUser && username === authenicatedUser.username;
-      // 3. Set query object
       let query;
       if (!isUserAuthorized) {
         query = {
@@ -31,7 +29,6 @@ function getProjectsForUserName(username, authenicatedUser) {
           user: user._id
         };
       }
-      // 4. Finally find sketches based on query
       Project.find(query)
         .sort('-createdAt')
         .select('name files id createdAt updatedAt')
@@ -48,7 +45,7 @@ function getProjectsForUserName(username, authenicatedUser) {
 
 export default function getProjectsForUser(req, res) {
   if (req.params.username) {
-    return getProjectsForUserName(req.params.username, req.user) // 1. call function with possible authen user & req.params.user
+    return getProjectsForUserName(req.params.username, req.user)
       .then(projects => res.json(projects))
       .catch((err) => {
         if (err instanceof UserNotFoundError) {
