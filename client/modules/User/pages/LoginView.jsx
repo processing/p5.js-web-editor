@@ -6,8 +6,7 @@ import { Helmet } from 'react-helmet';
 import { validateAndLoginUser } from '../actions';
 import LoginForm from '../components/LoginForm';
 import { validateLogin } from '../../../utils/reduxFormUtils';
-import GithubButton from '../components/GithubButton';
-import GoogleButton from '../components/GoogleButton';
+import SocialAuthButton from '../components/SocialAuthButton';
 import Nav from '../../../components/Nav';
 
 class LoginView extends React.Component {
@@ -41,8 +40,10 @@ class LoginView extends React.Component {
             <h2 className="form-container__title">Log In</h2>
             <LoginForm {...this.props} />
             <h2 className="form-container__divider">Or</h2>
-            <GithubButton buttonText="Login with Github" />
-            <GoogleButton buttonText="Login with Google" />
+            <div className="form-container__stack">
+              <SocialAuthButton service={SocialAuthButton.services.github} />
+              <SocialAuthButton service={SocialAuthButton.services.google} />
+            </div>
             <p className="form__navigation-options">
               Don&apos;t have an account?&nbsp;
               <Link className="form__signup-button" to="/signup">Sign Up</Link>
