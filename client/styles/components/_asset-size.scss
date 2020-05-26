@@ -1,0 +1,48 @@
+.asset-size {
+  position: relative;
+  flex: 1;
+  margin-bottom: #{18 / $base-font-size}rem;
+  font-size: #{14 / $base-font-size}rem;
+}
+
+.asset-size-bar {
+  position: relative;
+  content: ' ';
+  display: block;
+  width: 200px;
+  height: 20px;
+
+  border-radius: #{3 / $base-font-size}rem;
+  border: 1px solid transparent;
+  overflow: hidden;
+
+  @include themify() {
+    background-color: getThemifyVariable('progress-bar-background-color');
+  }
+}
+
+.asset-size-bar::before {
+  content: ' ';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: calc(var(--percent) * 100%);
+
+  @include themify() {
+    background-color: getThemifyVariable('progress-bar-active-color');
+  }
+}
+
+.asset-current {
+  position: absolute;
+  top: #{28 / $base-font-size}rem;
+  left: 0;
+}
+
+.asset-max {
+  position: absolute;
+  top: 0;
+  left: #{210 / $base-font-size}rem;
+}

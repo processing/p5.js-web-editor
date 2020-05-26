@@ -8,6 +8,20 @@ import {
   renderResetPassword,
 } from '../views/mail';
 
+export * from './user.controller/apiKey';
+
+export function userResponse(user) {
+  return {
+    email: user.email,
+    username: user.username,
+    preferences: user.preferences,
+    apiKeys: user.apiKeys,
+    verified: user.verified,
+    id: user._id,
+    totalSize: user.totalSize
+  };
+}
+
 const random = (done) => {
   crypto.randomBytes(20, (err, buf) => {
     const token = buf.toString('hex');
@@ -24,9 +38,8 @@ export function findUserByUsername(username, cb) {
   );
 }
 
-const EMAIL_VERIFY_TOKEN_EXPIRY_TIME = Date.now() + (3600000 * 24); // 24 hours
-
 export function createUser(req, res, next) {
+  const EMAIL_VERIFY_TOKEN_EXPIRY_TIME = Date.now() + (3600000 * 24); // 24 hours
   random((tokenError, token) => {
     const user = new User({
       username: req.body.username,
@@ -76,13 +89,7 @@ export function createUser(req, res, next) {
             });
 
             mail.send(mailOptions, (mailErr, result) => { // eslint-disable-line no-unused-vars
-              res.json({
-                email: req.user.email,
-                username: req.user.username,
-                preferences: req.user.preferences,
-                verified: req.user.verified,
-                id: req.user._id
-              });
+              res.json(userResponse(req.user));
             });
           });
         });
@@ -217,18 +224,13 @@ export function emailVerificationInitiate(req, res) {
           if (mailErr != null) {
             res.status(500).send({ error: 'Error sending mail' });
           } else {
+            const EMAIL_VERIFY_TOKEN_EXPIRY_TIME = Date.now() + (3600000 * 24); // 24 hours
             user.verified = User.EmailConfirmation.Resent;
             user.verifiedToken = token;
             user.verifiedTokenExpires = EMAIL_VERIFY_TOKEN_EXPIRY_TIME; // 24 hours
             user.save();
 
-            res.json({
-              email: req.user.email,
-              username: req.user.username,
-              preferences: req.user.preferences,
-              verified: user.verified,
-              id: req.user._id
-            });
+            res.json(userResponse(req.user));
           }
         });
       });
@@ -239,7 +241,7 @@ export function emailVerificationInitiate(req, res) {
 export function verifyEmail(req, res) {
   const token = req.query.t;
 
-  User.findOne({ verifiedToken: token, verifiedTokenExpires: { $gt: Date.now() } }, (err, user) => {
+  User.findOne({ verifiedToken: token, verifiedTokenExpires: { $gt: new Date() } }, (err, user) => {
     if (!user) {
       res.status(401).json({ success: false, message: 'Token is invalid or has expired.' });
       return;
@@ -267,12 +269,7 @@ export function updatePassword(req, res) {
     user.resetPasswordExpires = undefined;
 
     user.save((saveErr) => {
-      req.logIn(user, loginErr => res.json({
-        email: req.user.email,
-        username: req.user.username,
-        preferences: req.user.preferences,
-        id: req.user._id
-      }));
+      req.logIn(user, loginErr => res.json(userResponse(req.user)));
     });
   });
 
@@ -292,13 +289,7 @@ export function saveUser(res, user) {
       return;
     }
 
-    res.json({
-      email: user.email,
-      username: user.username,
-      preferences: user.preferences,
-      verified: user.verified,
-      id: user._id
-    });
+    res.json(userResponse(user));
   });
 }
 
@@ -326,6 +317,7 @@ export function updateSettings(req, res) {
         saveUser(res, user);
       });
     } else if (user.email !== req.body.email) {
+      const EMAIL_VERIFY_TOKEN_EXPIRY_TIME = Date.now() + (3600000 * 24); // 24 hours
       user.verified = User.EmailConfirmation.Sent;
 
       user.email = req.body.email;
@@ -352,3 +344,4 @@ export function updateSettings(req, res) {
     }
   });
 }
+

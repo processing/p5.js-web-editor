@@ -26,7 +26,10 @@ export function signUpUser(previousPath, formValues) {
         dispatch(justOpenedProject());
         browserHistory.push(previousPath);
       })
-      .catch(response => dispatch(authError(response.data.error)));
+      .catch((error) => {
+        const { response } = error;
+        dispatch(authError(response.data.error));
+      });
   };
 }
 
@@ -82,7 +85,8 @@ export function getUser() {
           preferences: response.data.preferences
         });
       })
-      .catch((response) => {
+      .catch((error) => {
+        const { response } = error;
         const message = response.message || response.data.error;
         dispatch(authError(message));
       });
@@ -98,7 +102,8 @@ export function validateSession() {
           dispatch(showErrorModal('staleSession'));
         }
       })
-      .catch((response) => {
+      .catch((error) => {
+        const { response } = error;
         if (response.status === 404) {
           dispatch(showErrorModal('staleSession'));
         }
@@ -114,7 +119,10 @@ export function logoutUser() {
           type: ActionTypes.UNAUTH_USER
         });
       })
-      .catch(response => dispatch(authError(response.data.error)));
+      .catch((error) => {
+        const { response } = error;
+        dispatch(authError(response.data.error));
+      });
   };
 }
 
@@ -127,10 +135,13 @@ export function initiateResetPassword(formValues) {
       .then(() => {
         // do nothing
       })
-      .catch(response => dispatch({
-        type: ActionTypes.ERROR,
-        message: response.data
-      }));
+      .catch((error) => {
+        const { response } = error;
+        dispatch({
+          type: ActionTypes.ERROR,
+          message: response.data
+        });
+      });
   };
 }
 
@@ -143,10 +154,13 @@ export function initiateVerification() {
       .then(() => {
         // do nothing
       })
-      .catch(response => dispatch({
-        type: ActionTypes.ERROR,
-        message: response.data
-      }));
+      .catch((error) => {
+        const { response } = error;
+        dispatch({
+          type: ActionTypes.ERROR,
+          message: response.data
+        });
+      });
   };
 }
 
@@ -161,10 +175,13 @@ export function verifyEmailConfirmation(token) {
         type: ActionTypes.EMAIL_VERIFICATION_VERIFIED,
         message: response.data,
       }))
-      .catch(response => dispatch({
-        type: ActionTypes.EMAIL_VERIFICATION_INVALID,
-        message: response.data
-      }));
+      .catch((error) => {
+        const { response } = error;
+        dispatch({
+          type: ActionTypes.EMAIL_VERIFICATION_INVALID,
+          message: response.data
+        });
+      });
   };
 }
 
@@ -216,5 +233,42 @@ export function updateSettings(formValues) {
         dispatch(showToast(5500));
         dispatch(setToastText('Settings saved.'));
       })
-      .catch(response => Promise.reject(new Error(response.data.error)));
+      .catch((error) => {
+        const { response } = error;
+        Promise.reject(new Error(response.data.error));
+      });
+}
+
+export function createApiKeySuccess(user) {
+  return {
+    type: ActionTypes.API_KEY_CREATED,
+    user
+  };
+}
+
+export function createApiKey(label) {
+  return dispatch =>
+    axios.post(`${ROOT_URL}/account/api-keys`, { label }, { withCredentials: true })
+      .then((response) => {
+        dispatch(createApiKeySuccess(response.data));
+      })
+      .catch((error) => {
+        const { response } = error;
+        Promise.reject(new Error(response.data.error));
+      });
+}
+
+export function removeApiKey(keyId) {
+  return dispatch =>
+    axios.delete(`${ROOT_URL}/account/api-keys/${keyId}`, { withCredentials: true })
+      .then((response) => {
+        dispatch({
+          type: ActionTypes.API_KEY_REMOVED,
+          user: response.data
+        });
+      })
+      .catch((error) => {
+        const { response } = error;
+        Promise.reject(new Error(response.data.error));
+      });
 }

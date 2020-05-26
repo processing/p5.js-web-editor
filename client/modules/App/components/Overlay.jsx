@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import InlineSVG from 'react-inlinesvg';
 import { browserHistory } from 'react-router';
 
-const exitUrl = require('../../../images/exit.svg');
+import ExitIcon from '../../../images/exit.svg';
 
 class Overlay extends React.Component {
   constructor(props) {
@@ -64,10 +63,12 @@ class Overlay extends React.Component {
     const {
       ariaLabel,
       title,
-      children
+      children,
+      actions,
+      isFixedHeight,
     } = this.props;
     return (
-      <div className="overlay">
+      <div className={`overlay ${isFixedHeight ? 'overlay--is-fixed-height' : ''}`}>
         <div className="overlay__content">
           <section
             role="main"
@@ -77,9 +78,12 @@ class Overlay extends React.Component {
           >
             <header className="overlay__header">
               <h2 className="overlay__title">{title}</h2>
-              <button className="overlay__close-button" onClick={this.close} >
-                <InlineSVG src={exitUrl} alt="close overlay" />
-              </button>
+              <div className="overlay__actions">
+                {actions}
+                <button className="overlay__close-button" onClick={this.close} aria-label={`Close ${title} overlay`} >
+                  <ExitIcon focusable="false" aria-hidden="true" />
+                </button>
+              </div>
             </header>
             {children}
           </section>
@@ -91,18 +95,22 @@ class Overlay extends React.Component {
 
 Overlay.propTypes = {
   children: PropTypes.element,
+  actions: PropTypes.element,
   closeOverlay: PropTypes.func,
   title: PropTypes.string,
   ariaLabel: PropTypes.string,
-  previousPath: PropTypes.string
+  previousPath: PropTypes.string,
+  isFixedHeight: PropTypes.bool,
 };
 
 Overlay.defaultProps = {
   children: null,
+  actions: null,
   title: 'Modal',
   closeOverlay: null,
   ariaLabel: 'modal',
-  previousPath: '/'
+  previousPath: '/',
+  isFixedHeight: false,
 };
 
 export default Overlay;

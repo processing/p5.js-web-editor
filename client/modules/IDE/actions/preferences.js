@@ -8,10 +8,13 @@ function updatePreferences(formParams, dispatch) {
   axios.put(`${ROOT_URL}/preferences`, formParams, { withCredentials: true })
     .then(() => {
     })
-    .catch(response => dispatch({
-      type: ActionTypes.ERROR,
-      error: response.data
-    }));
+    .catch((error) => {
+      const { response } = error;
+      dispatch({
+        type: ActionTypes.ERROR,
+        error: response.data
+      });
+    });
 }
 
 export function setFontSize(value) {
