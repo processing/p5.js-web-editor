@@ -4,6 +4,12 @@
   width: #{450 / $base-font-size}rem;
 }
 
+.keyboard-shortcuts-note {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+
 .keyboard-shortcut-item {
   display: flex;
   & + & {
