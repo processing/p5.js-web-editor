@@ -123,6 +123,11 @@ class IDEView extends React.Component {
     this.autosaveInterval = null;
   }
 
+  getTitle = () => {
+    const { id } = this.props.project;
+    return id ? `p5.js Web Editor | ${this.props.project.name}` : 'p5.js Web Editor';
+  }
+
   isUserOwner() {
     return this.props.project.owner && this.props.project.owner.id === this.props.user.id;
   }
@@ -203,7 +208,7 @@ class IDEView extends React.Component {
     return (
       <div className="ide">
         <Helmet>
-          <title>p5.js Web Editor | {this.props.project.name}</title>
+          <title>{this.getTitle()}</title>
         </Helmet>
         {this.props.toast.isVisible && <Toast />}
         <Nav
