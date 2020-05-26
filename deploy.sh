@@ -20,4 +20,4 @@ gcloud --quiet container clusters get-credentials $CLUSTER_NAME_PRD
 kubectl config view
 kubectl config current-context
 
-kubectl set image deployment/${KUBE_DEPLOYMENT_NAME} ${KUBE_DEPLOYMENT_CONTAINER_NAME}=index.docker.io/$DOCKER_USERNAME/$DOCKER_REPOSITORY:$TRAVIS_COMMIT
+kubectl set image deployment/${KUBE_DEPLOYMENT_NAME} ${KUBE_DEPLOYMENT_CONTAINER_NAME}=index.docker.io/$DOCKER_USERNAME/$DOCKER_REPOSITORY:$TRAVIS_TAG
