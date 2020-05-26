@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import Button from '../../../common/Button';
-import { PlusIcon } from '../../../common/Icons';
+import { PlusIcon } from '../../../common/icons';
 import CopyableInput from '../../IDE/components/CopyableInput';
 
 import APIKeyList from './APIKeyList';

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { remSize } from '../../../theme';
 
-import { GithubIcon, GoogleIcon } from '../../../common/Icons';
+import { GithubIcon, GoogleIcon } from '../../../common/icons';
 import Button from '../../../common/Button';
 
 const authUrls = {

@@ -8,7 +8,7 @@ import { bindActionCreators } from 'redux';
 import classNames from 'classnames';
 
 import Button from '../../../common/Button';
-import { DropdownArrowIcon } from '../../../common/Icons';
+import { DropdownArrowIcon } from '../../../common/icons';
 import * as ProjectActions from '../../IDE/actions/project';
 import * as ProjectsActions from '../../IDE/actions/projects';
 import * as CollectionsActions from '../../IDE/actions/collections';

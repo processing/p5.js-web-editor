@@ -3,7 +3,7 @@ import { action } from '@storybook/addon-actions';
 import { boolean, text } from '@storybook/addon-knobs';
 
 import Button from './Button';
-import { GithubIcon, DropdownArrowIcon, PlusIcon } from './Icons';
+import { GithubIcon, DropdownArrowIcon, PlusIcon } from './icons';
 
 export default {
   title: 'Common/Button',
