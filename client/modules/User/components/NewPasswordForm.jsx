@@ -36,7 +36,7 @@ function NewPasswordForm(props) {
           <span className="form-error">{confirmPassword.error}</span>
         }
       </p>
-      <Button type="submit" disabled={submitting || invalid || pristine} label="sign up">Set New Password</Button>
+      <Button type="submit" disabled={submitting || invalid || pristine}>Set New Password</Button>
     </form>
   );
 }

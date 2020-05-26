@@ -63,7 +63,6 @@ function SignupForm(props) {
       <Button
         type="submit"
         disabled={submitting || invalid || pristine}
-        label="sign up"
       >Sign Up
       </Button>
     </form>

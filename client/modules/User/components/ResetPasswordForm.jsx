@@ -24,7 +24,6 @@ function ResetPasswordForm(props) {
       <Button
         type="submit"
         disabled={submitting || invalid || pristine || props.user.resetPasswordInitiate}
-        label="Send email to reset password"
       >Send Password Reset Email
       </Button>
     </form>

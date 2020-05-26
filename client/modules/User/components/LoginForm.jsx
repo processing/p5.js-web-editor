@@ -34,7 +34,6 @@ function LoginForm(props) {
         {password.touched && password.error && <span className="form-error">{password.error}</span>}
       </p>
       <Button
-        aria-label="login"
         type="submit"
         disabled={submitting || pristine}
       >Log In
