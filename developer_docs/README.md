@@ -7,6 +7,7 @@ This folder contains documents intended for developers of the p5.js Web Editor.
 * [Preparing a pull-request](preparing_a_pull_request.md) - Instructions for how to make a pull-request
 * [Accessibility Guidelines](accessibility.md) - Guidelines for writing code to create an accessible application
 * [Deployment](deployment.md) - A guide to production deployment, and all platforms that are being used.
+* [Release](./release.md) - A guide to creating a production release.
 
 ## Documents to Create
 * Design Principles - reference [p5.js design principles](https://github.com/processing/p5.js/edit/master/contributor_docs/design_principles.md)
