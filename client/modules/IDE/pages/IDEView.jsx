@@ -53,9 +53,9 @@ class IDEView extends React.Component {
 
     this.props.stopSketch();
     if (this.props.params.project_id) {
-      const id = this.props.params.project_id;
+      const { project_id: id, username } = this.props.params;
       if (id !== this.props.project.id) {
-        this.props.getProject(id);
+        this.props.getProject(id, username);
       }
     }
 
@@ -121,6 +121,11 @@ class IDEView extends React.Component {
     document.removeEventListener('keydown', this.handleGlobalKeydown, false);
     clearTimeout(this.autosaveInterval);
     this.autosaveInterval = null;
+  }
+
+  getTitle = () => {
+    const { id } = this.props.project;
+    return id ? `p5.js Web Editor | ${this.props.project.name}` : 'p5.js Web Editor';
   }
 
   isUserOwner() {
@@ -203,7 +208,7 @@ class IDEView extends React.Component {
     return (
       <div className="ide">
         <Helmet>
-          <title>p5.js Web Editor | {this.props.project.name}</title>
+          <title>{this.getTitle()}</title>
         </Helmet>
         {this.props.toast.isVisible && <Toast />}
         <Nav
@@ -241,7 +246,7 @@ class IDEView extends React.Component {
             />
           </Overlay>
         }
-        <div className="editor-preview-container">
+        <main className="editor-preview-container">
           <SplitPane
             split="vertical"
             size={this.state.sidebarSize}
@@ -329,7 +334,7 @@ class IDEView extends React.Component {
                   theme={this.props.preferences.theme}
                 />
               </SplitPane>
-              <div className="preview-frame-holder">
+              <section className="preview-frame-holder">
                 <header className="preview-frame__header">
                   <h2 className="preview-frame__title">Preview</h2>
                 </header>
@@ -372,10 +377,10 @@ class IDEView extends React.Component {
                     cmController={this.cmController}
                   />
                 </div>
-              </div>
+              </section>
             </SplitPane>
           </SplitPane>
-        </div>
+        </main>
         { this.props.ide.modalIsVisible &&
           <NewFileModal />
         }

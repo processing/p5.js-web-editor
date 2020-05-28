@@ -29,6 +29,11 @@
   display: flex;
   align-items: center;
   height: #{35 / $base-font-size}rem;
+
+  & .isvg {
+    margin-left: #{8 / $base-font-size}rem;
+  }
+
   & svg {
     @include themify() {
       fill: getThemifyVariable('inactive-text-color')

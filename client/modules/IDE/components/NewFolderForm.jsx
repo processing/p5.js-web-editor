@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { domOnlyProps } from '../../../utils/reduxFormUtils';
 
+import Button from '../../../common/Button';
+
 class NewFolderForm extends React.Component {
   constructor(props) {
     super(props);
@@ -34,12 +36,10 @@ class NewFolderForm extends React.Component {
             ref={(element) => { this.fileName = element; }}
             {...domOnlyProps(name)}
           />
-          <input
+          <Button
             type="submit"
-            value="Add Folder"
-            aria-label="add folder"
-            className="new-folder-form__submit"
-          />
+          >Add Folder
+          </Button>
         </div>
         {name.touched && name.error && <span className="form-error">{name.error}</span>}
       </form>

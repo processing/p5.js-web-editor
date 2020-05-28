@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { domOnlyProps } from '../../../utils/reduxFormUtils';
+import Button from '../../../common/Button';
 
 function AccountForm(props) {
   const {
@@ -44,11 +45,10 @@ function AccountForm(props) {
                     <span className="form__status"> Confirmation sent, check your email.</span>
                   ) :
                   (
-                    <button
-                      className="form__action"
+                    <Button
                       onClick={handleInitiateVerification}
                     >Resend confirmation email
-                    </button>
+                    </Button>
                   )
               }
             </p>
@@ -92,12 +92,11 @@ function AccountForm(props) {
         />
         {newPassword.touched && newPassword.error && <span className="form-error">{newPassword.error}</span>}
       </p>
-      <input
+      <Button
         type="submit"
         disabled={submitting || invalid || pristine}
-        value="Save All Settings"
-        aria-label="updateSettings"
-      />
+      >Save All Settings
+      </Button>
     </form>
   );
 }

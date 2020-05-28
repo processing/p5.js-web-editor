@@ -414,7 +414,7 @@ class SketchList extends React.Component {
   render() {
     const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
     return (
-      <div className="sketches-table-container">
+      <article className="sketches-table-container">
         <Helmet>
           <title>{this.getSketchesTitle()}</title>
         </Helmet>
@@ -457,7 +457,7 @@ class SketchList extends React.Component {
               />
             </Overlay>
         }
-      </div>
+      </article>
     );
   }
 }

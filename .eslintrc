@@ -77,5 +77,13 @@
     "__SERVER__": true,
     "__DISABLE_SSR__": true,
     "__DEVTOOLS__": true
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.stories.jsx"],
+      "rules": {
+        "import/no-extraneous-dependencies": "off"
+      }
+    }
+  ]
 }

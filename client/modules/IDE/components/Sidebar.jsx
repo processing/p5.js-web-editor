@@ -68,8 +68,8 @@ class Sidebar extends React.Component {
     const rootFile = this.props.files.filter(file => file.name === 'root')[0];
 
     return (
-      <nav className={sidebarClass} title="file-navigation" >
-        <div className="sidebar__header" onContextMenu={this.toggleProjectOptions}>
+      <section className={sidebarClass}>
+        <header className="sidebar__header" onContextMenu={this.toggleProjectOptions}>
           <h3 className="sidebar__title">
             <span>Sketch Files</span>
           </h3>
@@ -130,12 +130,12 @@ class Sidebar extends React.Component {
               }
             </ul>
           </div>
-        </div>
+        </header>
         <ConnectedFileNode
           id={rootFile.id}
           canEdit={canEditProject}
         />
-      </nav>
+      </section>
     );
   }
 }

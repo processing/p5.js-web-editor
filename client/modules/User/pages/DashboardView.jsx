@@ -2,8 +2,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { browserHistory, Link } from 'react-router';
+import { browserHistory } from 'react-router';
 import { updateSettings, initiateVerification, createApiKey, removeApiKey } from '../actions';
+
+import Button from '../../../common/Button';
+
 import Nav from '../../../components/Nav';
 import Overlay from '../../App/components/Overlay';
 
@@ -79,16 +82,16 @@ class DashboardView extends React.Component {
       case TabKey.collections:
         return this.isOwner() && (
           <React.Fragment>
-            <Link className="dashboard__action-button" to={`/${username}/collections/create`}>
+            <Button to={`/${username}/collections/create`}>
               Create collection
-            </Link>
+            </Button>
             <CollectionSearchbar />
           </React.Fragment>);
       case TabKey.sketches:
       default:
         return (
           <React.Fragment>
-            {this.isOwner() && <Link className="dashboard__action-button" to="/">New sketch</Link>}
+            {this.isOwner() && <Button to="/">New sketch</Button>}
             <SketchSearchbar />
           </React.Fragment>
         );
@@ -117,7 +120,7 @@ class DashboardView extends React.Component {
       <div className="dashboard">
         <Nav layout="dashboard" />
 
-        <section className="dashboard-header">
+        <main className="dashboard-header">
           <div className="dashboard-header__header">
             <h2 className="dashboard-header__header__title">{this.ownerName()}</h2>
             <div className="dashboard-header__nav">
@@ -133,7 +136,7 @@ class DashboardView extends React.Component {
           <div className="dashboard-content">
             {this.renderContent(currentTab, username)}
           </div>
-        </section>
+        </main>
         {this.isCollectionCreate() &&
           <Overlay
             title="Create collection"

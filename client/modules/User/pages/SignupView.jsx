@@ -8,6 +8,7 @@ import { reduxForm } from 'redux-form';
 import * as UserActions from '../actions';
 import SignupForm from '../components/SignupForm';
 import { validateSignup } from '../../../utils/reduxFormUtils';
+import SocialAuthButton from '../components/SocialAuthButton';
 import Nav from '../../../components/Nav';
 
 const __process = (typeof global !== 'undefined' ? global : window).process;
@@ -26,19 +27,24 @@ class SignupView extends React.Component {
     return (
       <div className="signup">
         <Nav layout="dashboard" />
-        <div className="form-container">
+        <main className="form-container">
           <Helmet>
             <title>p5.js Web Editor | Signup</title>
           </Helmet>
           <div className="form-container__content">
             <h2 className="form-container__title">Sign Up</h2>
             <SignupForm {...this.props} />
+            <h2 className="form-container__divider">Or</h2>
+            <div className="form-container__stack">
+              <SocialAuthButton service={SocialAuthButton.services.github} />
+              <SocialAuthButton service={SocialAuthButton.services.google} />
+            </div>
             <p className="form__navigation-options">
               Already have an account?&nbsp;
               <Link className="form__login-button" to="/login">Log In</Link>
             </p>
           </div>
-        </div>
+        </main>
       </div>
     );
   }
