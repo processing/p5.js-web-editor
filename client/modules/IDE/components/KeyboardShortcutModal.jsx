@@ -4,19 +4,14 @@ import { metaKeyName, } from '../../../utils/metaKey';
 function KeyboardShortcutModal() {
   return (
     <div className="keyboard-shortcuts">
-      <div className="keyboard-shortcuts-note">
-        <strong>Note:</strong> our keyboard shortcuts follow <a href="https://shortcuts.design/toolspage-sublimetext.html" target="_blank" rel="noopener noreferrer">Sublime Text shortcuts</a>
-      </div>
-      <ul title="keyboard shortcuts">
+      <h3 className="keyboard-shortcuts__title">Code Editing</h3>
+      <p className="keyboard-shortcuts__description">
+        Code editing keyboard shortcuts follow <a href="https://shortcuts.design/toolspage-sublimetext.html" target="_blank" rel="noopener noreferrer">Sublime Text shortcuts</a>.
+      </p>
+      <ul className="keyboard-shortcuts__list">
         <li className="keyboard-shortcut-item">
           <span className="keyboard-shortcut__command">{'\u21E7'} + Tab</span>
           <span>Tidy</span>
-        </li>
-        <li className="keyboard-shortcut-item">
-          <span className="keyboard-shortcut__command">
-            {metaKeyName} + S
-          </span>
-          <span>Save</span>
         </li>
         <li className="keyboard-shortcut-item">
           <span className="keyboard-shortcut__command">
@@ -53,6 +48,15 @@ function KeyboardShortcutModal() {
             {metaKeyName} + /
           </span>
           <span>Comment Line</span>
+        </li>
+      </ul>
+      <h3 className="keyboard-shortcuts__title">General</h3>
+      <ul className="keyboard-shortcuts__list">
+        <li className="keyboard-shortcut-item">
+          <span className="keyboard-shortcut__command">
+            {metaKeyName} + S
+          </span>
+          <span>Save</span>
         </li>
         <li className="keyboard-shortcut-item">
           <span className="keyboard-shortcut__command">
