@@ -49,10 +49,10 @@ export function setNewProject(project) {
   };
 }
 
-export function getProject(id) {
+export function getProject(id, username) {
   return (dispatch, getState) => {
     dispatch(justOpenedProject());
-    axios.get(`${ROOT_URL}/projects/${id}`, { withCredentials: true })
+    axios.get(`${ROOT_URL}/${username}/projects/${id}`, { withCredentials: true })
       .then((response) => {
         dispatch(setProject(response.data));
         dispatch(setUnsavedChanges(false));
