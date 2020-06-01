@@ -6,8 +6,9 @@ A guide for adding code to this project.
   - [Installation](#installation)
   - [Development Workflow](#development-workflow)
   - [Tests](#tests)
-  - [Writing Git Commit Messages](#writing-git-commit-messages)
-    - [Tips](#tips)
+  - [Committing Code](#committing-code)
+    - [General Rules](#general-rules)
+    - [Commit Messages](#commit-messages)
   - [Design](#design)
   - [Technologies Used](#technologies-used)
 
@@ -31,7 +32,8 @@ To run the test suite simply run `npm test` (after installing dependencies with 
 
 A sample unit test could be found here: [Nav.test.jsx](../client/components/__test__/Nav.test.jsx).
 
-## Writing Git Commit Messages
+## Committing Code
+Inspired by [Git/GitHub commit standards & conventions](https://gist.github.com/digitaljhelms/3761873).
 
 Good commit messages serve at least three important purposes:
 
@@ -39,33 +41,36 @@ Good commit messages serve at least three important purposes:
 * They help us write good release notes.
 * They help future maintainers understand your change and the reasons behind it.
 
+
+### General Rules
+* Make [atomic commits](http://en.wikipedia.org/wiki/Atomic_commit) of changes, even across multiple files, in logical units. That is, as much as possible, each commit should be focused on one specific purpose.
+* As much as possible, make sure a commit does not contain unnecessary whitespace changes. This can be checked as follows:
+
+```
+$ git diff --check
+```
+
+### Commit Messages
+
 Structure your commit message like this:
 
  ```
- Short (50 chars or less) summary of changes ( involving Fixes #Issue-number keyword )
+ [#issueid] Short (50 chars or less) summary of changes
 
- More detailed explanatory text, if necessary. Wrap it to about 72
- characters or so. In some contexts, the first line is treated as the
- subject of an email and the rest of the text as the body. The blank
- line separating the summary from the body is critical (unless you omit
- the body entirely); tools like rebase can get confused if you run the
- two together.
+ More detailed explanatory text, if necessary. Wrap it to about 72 characters or so. In some contexts, the first line is treated as the subject of an email and the rest of the text as the body. The blank line separating the summary from the body is critical (unless you omit the body entirely); tools like rebase can get confused if you run the two together.
 
  Further paragraphs come after blank lines.
 
    - Bullet points are okay, too
 
-   - Typically a hyphen or asterisk is used for the bullet, preceded by a
-     single space, with blank lines in between, but conventions vary here
+   - Typically a hyphen or asterisk is used for the bullet, preceded by a single space, with blank lines in between, but conventions vary here
  ```
-
 * Write the summary line and description of what you have done in the imperative mode, that is as if you were commanding someone. Start the line with "Fix", "Add", "Change" instead of "Fixed", "Added", "Changed".
+* Link the GitHub issue you are working on in the summary line in brackets, e.g. [#123]
 * Always leave the second line blank.
 * Be as descriptive as possible in the description. It helps reasoning about the intention of commits and gives more context about why changes happened.
-
-### Tips
-
 * If it seems difficult to summarize what your commit does, it may be because it includes several logical changes or bug fixes, and are better split up into several commits using `git add -p`.
+* Note that you can connect multiple issues to a commit, if necessary: `[#123][#456] Add Button component`
 
 ## Design
 - [Style Guide/Design System on Figma](https://github.com/processing/p5.js-web-editor/labels/good%20medium%20issues)
