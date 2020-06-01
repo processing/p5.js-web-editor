@@ -12,22 +12,6 @@
   font-weight: bold;
 }
 
-.api-key-form__create-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.api-key-form__create-icon {
-  display: flex;
-  height: #{12 / $base-font-size}rem;
-  margin-right: #{3 / $base-font-size}rem;
-}
-
-.api-key-form__create-button .isvg {
-  padding-right: 10px;
-}
-
 .api-key-list {
   display: block;
   max-width: 900px;

@@ -46,17 +46,20 @@ if (process.env.BASIC_USERNAME && process.env.BASIC_PASSWORD) {
   }));
 }
 
-const corsOriginsWhitelist = [
+const allowedCorsOrigins = [
   /p5js\.org$/,
 ];
+
+// to allow client-only development
+if (process.env.CORS_ALLOW_LOCALHOST === 'true') {
+  allowedCorsOrigins.push(/localhost/);
+}
 
 // Run Webpack dev server in development mode
 if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(config);
   app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
   app.use(webpackHotMiddleware(compiler));
-
-  corsOriginsWhitelist.push(/localhost/);
 }
 
 const mongoConnectionString = process.env.MONGO_URL;
@@ -65,7 +68,7 @@ app.set('trust proxy', true);
 // Enable Cross-Origin Resource Sharing (CORS) for all origins
 const corsMiddleware = cors({
   credentials: true,
-  origin: corsOriginsWhitelist,
+  origin: allowedCorsOrigins,
 });
 app.use(corsMiddleware);
 // Enable pre-flight OPTIONS route for all end-points

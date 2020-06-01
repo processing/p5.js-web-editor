@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import * as CollectionsActions from '../../IDE/actions/collections';
 
 import { generateCollectionName } from '../../../utils/generateRandomName';
+import Button from '../../../common/Button';
 
 class CollectionCreate extends React.Component {
   constructor() {
@@ -81,7 +82,7 @@ class CollectionCreate extends React.Component {
                 rows="4"
               />
             </p>
-            <input type="submit" disabled={invalid} value="Create collection" aria-label="create collection" />
+            <Button type="submit" disabled={invalid}>Create collection</Button>
           </form>
         </div>
       </div>

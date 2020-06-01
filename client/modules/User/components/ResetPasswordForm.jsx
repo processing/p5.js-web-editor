@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+
 import { domOnlyProps } from '../../../utils/reduxFormUtils';
+import Button from '../../../common/Button';
 
 function ResetPasswordForm(props) {
   const {
@@ -19,12 +21,11 @@ function ResetPasswordForm(props) {
         />
         {email.touched && email.error && <span className="form-error">{email.error}</span>}
       </p>
-      <input
+      <Button
         type="submit"
         disabled={submitting || invalid || pristine || props.user.resetPasswordInitiate}
-        value="Send Password Reset Email"
-        aria-label="Send email to reset password"
-      />
+      >Send Password Reset Email
+      </Button>
     </form>
   );
 }
