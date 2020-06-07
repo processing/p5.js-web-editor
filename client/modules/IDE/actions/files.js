@@ -88,8 +88,6 @@ export function createFile(formProps) {
         parentId,
         children: []
       });
-      dispatch(setToastText(`Created "${formProps.name}" successfully`));
-      dispatch(showToast(TOAST_DISPLAY_TIME_MS));
       dispatch(reset('new-file'));
       // dispatch({
       //   type: ActionTypes.HIDE_MODAL
