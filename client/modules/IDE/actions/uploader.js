@@ -1,10 +1,11 @@
 import axios from 'axios';
+import getConfig from '../../../utils/getConfig';
 import { createFile } from './files';
 import { TEXT_FILE_REGEX } from '../../../../server/utils/fileUtils';
 
 const __process = (typeof global !== 'undefined' ? global : window).process;
-const s3BucketHttps = __process.env.S3_BUCKET_URL_BASE ||
-                      `https://s3-${__process.env.AWS_REGION}.amazonaws.com/${__process.env.S3_BUCKET}/`;
+const s3BucketHttps = getConfig('S3_BUCKET_URL_BASE') ||
+                      `https://s3-${getConfig('AWS_REGION')}.amazonaws.com/${getConfig('S3_BUCKET')}/`;
 const ROOT_URL = __process.env.API_URL;
 const MAX_LOCAL_FILE_SIZE = 80000; // bytes, aka 80 KB
 
