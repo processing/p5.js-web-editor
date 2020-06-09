@@ -111,8 +111,11 @@ export default {
         foreground: grays.light,
         background: grays.dark,
         border: grays.middleDark,
+
       },
     },
+
+
   },
   [Theme.contrast]: {
     colors,

@@ -1,19 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { prop, remSize } from '../../../theme';
+
+const background = prop('Button.default.background');
+const textColor = prop('primaryTextColor');
 
 const Header = styled.div`
   width: 100%;
-  color: orange;
-  background: red;
+  background-color: ${background} !important;
+  color: ${textColor};
+  padding-left: ${remSize(32)};
 `;
 
 const Footer = styled.div`
   width: 100%;
-  color: orange;
-  background: blue;
   position: absolute;
   bottom: 0;
+  background: ${background};
+  color: ${textColor};
+  padding-left: ${remSize(32)};
 `;
 
 const Screen = ({ children }) => (
@@ -27,7 +33,11 @@ Screen.propTypes = {
 
 export default () => (
   <Screen>
-    <Header><h1>Test</h1></Header>
-    <Footer><h1>Actionbar</h1></Footer>
+    <Header><h1>Mobile View</h1></Header>
+    <h3>
+      <br />This page is under construction.
+      <br /><a href="/?ignoremobile" >Click here</a> to return to the regular editor
+    </h3>
+    <Footer><h1>Bottom Bar</h1></Footer>
   </Screen>
 );
