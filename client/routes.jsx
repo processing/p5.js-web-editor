@@ -25,8 +25,10 @@ const onRouteChange = (store) => {
   store.dispatch(stopSketch());
 };
 
+const ignoreMobile = () => window.location.search.substring(1).includes('ignoremobile');
+
 const isMobile = () => window.innerWidth <= 760;
-const IDEView = isMobile() ? IDEViewMobileScreen : IDEViewScreen;
+const IDEView = isMobile() && !ignoreMobile() ? IDEViewMobileScreen : IDEViewScreen;
 
 const routes = store => (
   <Route path="/" component={App} onChange={() => { onRouteChange(store); }}>
