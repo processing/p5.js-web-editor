@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router';
 
-import Editor from '../components/Editor';
 import { prop, remSize } from '../../../theme';
 
 const background = prop('Button.default.background');
@@ -41,7 +40,7 @@ export default () => (
 
     <h3>
       <br />This page is under construction.
-      <br /><a href="/">Click here</a> to return to the regular editor
+      <br /><Link to="/">Click here</Link> to return to the regular editor
     </h3>
 
     <Footer><h1>Bottom Bar</h1></Footer>
