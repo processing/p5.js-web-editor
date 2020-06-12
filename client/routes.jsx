@@ -1,8 +1,8 @@
 import { Route, IndexRoute } from 'react-router';
 import React from 'react';
 import App from './modules/App/App';
-import IDEViewScreen from './modules/IDE/pages/IDEView';
-import IDEViewMobileScreen from './modules/IDE/pages/IDEViewMobile';
+import IDEView from './modules/IDE/pages/IDEView';
+import IDEViewMobile from './modules/IDE/pages/IDEViewMobile';
 import FullView from './modules/IDE/pages/FullView';
 import LoginView from './modules/User/pages/LoginView';
 import SignupView from './modules/User/pages/SignupView';
@@ -25,11 +25,12 @@ const onRouteChange = (store) => {
   store.dispatch(stopSketch());
 };
 
-const ignoreMobile = () => window.location.search.substring(1).includes('ignoremobile');
+// TODO: Investigate using react-router for this switch
+// const ignoreMobile = () => window.location.search.substring(1).includes('ignoremobile');
+// const isMobile = () => window.innerWidth <= 760;
+// const IDEView = isMobile() && !ignoreMobile() ? IDEViewMobileScreen : IDEViewScreen;
 
-const isMobile = () => window.innerWidth <= 760;
-const IDEView = isMobile() && !ignoreMobile() ? IDEViewMobileScreen : IDEViewScreen;
-
+// How to use URL as a prop?
 const routes = store => (
   <Route path="/" component={App} onChange={() => { onRouteChange(store); }}>
     <IndexRoute component={IDEView} onEnter={checkAuth(store)} />
@@ -55,6 +56,7 @@ const routes = store => (
     <Route path="/:username/collections/create" component={DashboardView} />
     <Route path="/:username/collections/:collection_id" component={CollectionView} />
     <Route path="/about" component={IDEView} />
+    <Route path="/mobile" component={IDEViewMobile} />
 
   </Route>
 );
