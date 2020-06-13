@@ -13,6 +13,9 @@
     "build:server": "cross-env NODE_ENV=production webpack --config webpack/config.server.js",
     "build:examples": "cross-env NODE_ENV=production webpack --config webpack/config.examples.js",
     "test": "jest",
+    "xxtest": "npm run test:server && npm run test:client",
+    "test:server": "jest server --config=./jest.server.config.js",
+    "test:client": "jest --config=./client/jest.config.js",
     "test:ci": "npm run lint && npm run test",
     "fetch-examples": "cross-env NODE_ENV=development node ./server/scripts/fetch-examples.js",
     "fetch-examples-gg": "cross-env NODE_ENV=development node ./server/scripts/fetch-examples-gg.js",
@@ -36,12 +39,30 @@
     ]
   },
   "jest": {
-    "setupFiles": [
-      "<rootDir>/jest.setup.js"
-    ],
-    "moduleNameMapper": {
-      "^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/client/__test__/mocks/fileMock.js"
-    }
+    "projects": [
+      {
+        "displayName": "server",
+        "testEnvironment": "node",
+        "setupFilesAfterEnv": [
+          "<rootDir>/server/jest.setup.js"
+        ],
+        "testMatch": [
+          "<rootDir>/server/**/*.test.(js|jsx)"
+        ]
+      },
+      {
+        "displayName": "client",
+        "setupFilesAfterEnv": [
+          "<rootDir>/client/jest.setup.js"
+        ],
+        "moduleNameMapper": {
+          "^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/client/__test__/mocks/fileMock.js"
+        },
+        "testMatch": [
+          "<rootDir>/client/**/*.test.(js|jsx)"
+        ]
+      }
+    ]
   },
   "main": "index.js",
   "author": "Cassie Tarakajian",
@@ -80,7 +101,6 @@
     "@svgr/webpack": "^5.4.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^9.0.0",
-    "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.2.12",
     "css-loader": "^3.4.2",
@@ -94,7 +114,7 @@
     "eslint-plugin-react": "^7.18.3",
     "file-loader": "^2.0.0",
     "husky": "^4.2.5",
-    "jest": "^24.9.0",
+    "jest": "^26.0.1",
     "lint-staged": "^10.1.3",
     "mini-css-extract-plugin": "^0.8.2",
     "node-sass": "^4.13.1",
