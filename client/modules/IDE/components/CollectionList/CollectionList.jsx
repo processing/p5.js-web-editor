@@ -129,7 +129,7 @@ class CollectionList extends React.Component {
     const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
 
     return (
-      <div className="sketches-table-container">
+      <article className="sketches-table-container">
         <Helmet>
           <title>{this.getTitle()}</title>
         </Helmet>
@@ -176,7 +176,7 @@ class CollectionList extends React.Component {
             </Overlay>
           )
         }
-      </div>
+      </article>
     );
   }
 }

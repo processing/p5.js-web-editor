@@ -10,7 +10,7 @@ import * as ProjectActions from '../actions/project';
 
 class FullView extends React.Component {
   componentDidMount() {
-    this.props.getProject(this.props.params.project_id);
+    this.props.getProject(this.props.params.project_id, this.props.params.username);
   }
 
   ident = () => {}
@@ -25,7 +25,7 @@ class FullView extends React.Component {
           owner={{ username: this.props.project.owner ? `${this.props.project.owner.username}` : '' }}
           project={{ name: this.props.project.name, id: this.props.params.project_id }}
         />
-        <div className="preview-frame-holder">
+        <main className="preview-frame-holder">
           <PreviewFrame
             htmlFile={this.props.htmlFile}
             jsFiles={this.props.jsFiles}
@@ -48,7 +48,7 @@ class FullView extends React.Component {
             expandConsole={this.ident}
             clearConsole={this.ident}
           />
-        </div>
+        </main>
       </div>
     );
   }
@@ -56,7 +56,8 @@ class FullView extends React.Component {
 
 FullView.propTypes = {
   params: PropTypes.shape({
-    project_id: PropTypes.string
+    project_id: PropTypes.string,
+    username: PropTypes.string
   }).isRequired,
   project: PropTypes.shape({
     name: PropTypes.string,

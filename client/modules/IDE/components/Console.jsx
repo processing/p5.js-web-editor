@@ -86,8 +86,8 @@ class Console extends React.Component {
     });
 
     return (
-      <div className={consoleClass} role="main">
-        <div className="preview-console__header">
+      <section className={consoleClass} >
+        <header className="preview-console__header">
           <h2 className="preview-console__header-title">Console</h2>
           <div className="preview-console__header-buttons">
             <button className="preview-console__clear" onClick={this.props.clearConsole} aria-label="Clear console">
@@ -104,7 +104,7 @@ class Console extends React.Component {
               <UpArrowIcon focusable="false" aria-hidden="true" />
             </button>
           </div>
-        </div>
+        </header>
         <div ref={(element) => { this.consoleMessages = element; }} className="preview-console__messages">
           {this.props.consoleEvents.map((consoleEvent) => {
             const { method, times } = consoleEvent;
@@ -127,7 +127,7 @@ class Console extends React.Component {
             );
           })}
         </div>
-      </div>
+      </section>
     );
   }
 }

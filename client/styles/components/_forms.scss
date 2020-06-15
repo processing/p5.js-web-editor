@@ -9,6 +9,10 @@
   }
 }
 
+.form > * + * {
+  margin-top: #{12 / $base-font-size}rem;
+}
+
 .form--inline {
   display: flex;
   align-items: center;
@@ -79,20 +83,25 @@
 }
 
 .form [type="submit"] {
-  @extend %button;
-  padding: #{8 / $base-font-size}rem #{25 / $base-font-size}rem;
-  margin: #{39 / $base-font-size}rem 0 #{24 / $base-font-size}rem 0;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.form [type="submit"][disabled] {
-  cursor: not-allowed;
-}
+// .form [type="submit"] {
+//   @extend %button;
+//   padding: #{8 / $base-font-size}rem #{25 / $base-font-size}rem;
+//   margin: #{39 / $base-font-size}rem 0 #{24 / $base-font-size}rem 0;
+// }
 
-.form--inline [type="submit"] {
-  margin: 0 0 0 #{24 / $base-font-size}rem;
-}
+// .form [type="submit"][disabled] {
+//   cursor: not-allowed;
+// }
 
-.form [type="submit"][disabled],
-.form--inline [type="submit"][disabled] {
-  cursor: not-allowed;
-}
+// .form--inline [type="submit"] {
+//   margin: 0 0 0 #{24 / $base-font-size}rem;
+// }
+
+// .form [type="submit"][disabled],
+// .form--inline [type="submit"][disabled] {
+//   cursor: not-allowed;
+// }

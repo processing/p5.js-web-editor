@@ -1,14 +1,12 @@
-import axios from 'axios';
 import objectID from 'bson-objectid';
 import blobUtil from 'blob-util';
 import { reset } from 'redux-form';
+import apiClient from '../../../utils/apiClient';
 import * as ActionTypes from '../../../constants';
 import { setUnsavedChanges, closeNewFolderModal, closeNewFileModal } from './ide';
 import { setProjectSavedTime } from './project';
 import { setToastText, showToast } from './toast';
 
-const __process = (typeof global !== 'undefined' ? global : window).process;
-const ROOT_URL = __process.env.API_URL;
 const TOAST_DISPLAY_TIME_MS = 1500;
 
 function appendToFilename(filename, string) {
@@ -52,7 +50,7 @@ export function createFile(formProps) {
         parentId,
         children: []
       };
-      axios.post(`${ROOT_URL}/projects/${state.project.id}/files`, postParams, { withCredentials: true })
+      apiClient.post(`/projects/${state.project.id}/files`, postParams)
         .then((response) => {
           dispatch({
             type: ActionTypes.CREATE_FILE,
@@ -110,7 +108,7 @@ export function createFolder(formProps) {
         parentId,
         fileType: 'folder'
       };
-      axios.post(`${ROOT_URL}/projects/${state.project.id}/files`, postParams, { withCredentials: true })
+      apiClient.post(`/projects/${state.project.id}/files`, postParams)
         .then((response) => {
           dispatch({
             type: ActionTypes.CREATE_FILE,
@@ -165,7 +163,7 @@ export function deleteFile(id, parentId) {
           parentId
         }
       };
-      axios.delete(`${ROOT_URL}/projects/${state.project.id}/files/${id}`, deleteConfig, { withCredentials: true })
+      apiClient.delete(`/projects/${state.project.id}/files/${id}`, deleteConfig)
         .then(() => {
           dispatch({
             type: ActionTypes.DELETE_FILE,

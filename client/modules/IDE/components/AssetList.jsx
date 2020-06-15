@@ -175,7 +175,7 @@ class AssetList extends React.Component {
   render() {
     const { assetList } = this.props;
     return (
-      <div className="asset-table-container">
+      <article className="asset-table-container">
         <Helmet>
           <title>{this.getAssetsTitle()}</title>
         </Helmet>
@@ -195,7 +195,7 @@ class AssetList extends React.Component {
               {assetList.map(asset => <AssetListRow asset={asset} key={asset.key} />)}
             </tbody>
           </table>}
-      </div>
+      </article>
     );
   }
 }

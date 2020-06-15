@@ -314,10 +314,7 @@ class Editor extends React.Component {
     });
 
     return (
-      <section
-        role="main"
-        className={editorSectionClass}
-      >
+      <section className={editorSectionClass} >
         <header className="editor__header">
           <button
             aria-label="Open Sketch files navigation"
@@ -348,8 +345,8 @@ class Editor extends React.Component {
             />
           </div>
         </header>
-        <div ref={(element) => { this.codemirrorContainer = element; }} className={editorHolderClass} >
-        </div>
+        <article ref={(element) => { this.codemirrorContainer = element; }} className={editorHolderClass} >
+        </article>
         <EditorAccessibility
           lintMessages={this.props.lintMessages}
         />
