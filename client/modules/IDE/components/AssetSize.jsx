@@ -3,8 +3,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import prettyBytes from 'pretty-bytes';
 
-const __process = (typeof global !== 'undefined' ? global : window).process;
-const limit = __process.env.UPLOAD_LIMIT || 250000000;
+import getConfig from '../../../utils/getConfig';
+
+const limit = getConfig('UPLOAD_LIMIT') || 250000000;
 const MAX_SIZE_B = limit;
 
 const formatPercent = (percent) => {

@@ -4,11 +4,11 @@ import Dropzone from 'dropzone';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as UploaderActions from '../actions/uploader';
+import getConfig from '../../../utils/getConfig';
 import { fileExtensionsAndMimeTypes } from '../../../../server/utils/fileUtils';
 
-const __process = (typeof global !== 'undefined' ? global : window).process;
-const s3Bucket = __process.env.S3_BUCKET_URL_BASE ||
-                 `https://s3-${__process.env.AWS_REGION}.amazonaws.com/${__process.env.S3_BUCKET}/`;
+const s3Bucket = getConfig('S3_BUCKET_URL_BASE') ||
+                 `https://s3-${getConfig('AWS_REGION')}.amazonaws.com/${getConfig('S3_BUCKET')}/`;
 
 class FileUploader extends React.Component {
   componentDidMount() {

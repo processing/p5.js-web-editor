@@ -10,13 +10,12 @@ import * as projectActions from '../modules/IDE/actions/project';
 import { setAllAccessibleOutput } from '../modules/IDE/actions/preferences';
 import { logoutUser } from '../modules/User/actions';
 
+import getConfig from '../utils/getConfig';
 import { metaKeyName, } from '../utils/metaKey';
 
 import CaretLeftIcon from '../images/left-arrow.svg';
 import TriangleIcon from '../images/down-filled-triangle.svg';
 import LogoIcon from '../images/p5js-logo-small.svg';
-
-const __process = (typeof global !== 'undefined' ? global : window).process;
 
 class Nav extends React.PureComponent {
   constructor(props) {
@@ -272,7 +271,7 @@ class Nav extends React.PureComponent {
                 New
               </button>
             </li>
-            { __process.env.LOGIN_ENABLED && (!this.props.project.owner || this.isUserOwner()) &&
+            { getConfig('LOGIN_ENABLED') && (!this.props.project.owner || this.isUserOwner()) &&
             <li className="nav__dropdown-item">
               <button
                 onClick={this.handleSave}
@@ -324,7 +323,7 @@ class Nav extends React.PureComponent {
                 Open
               </Link>
             </li> }
-            {__process.env.UI_COLLECTIONS_ENABLED &&
+            {getConfig('UI_COLLECTIONS_ENABLED') &&
               this.props.user.authenticated &&
               this.props.project.id &&
               <li className="nav__dropdown-item">
@@ -337,7 +336,7 @@ class Nav extends React.PureComponent {
                   Add to Collection
                 </Link>
               </li>}
-            { __process.env.EXAMPLES_ENABLED &&
+            { getConfig('EXAMPLES_ENABLED') &&
             <li className="nav__dropdown-item">
               <Link
                 to="/p5/sketches"
@@ -587,7 +586,7 @@ class Nav extends React.PureComponent {
                 My sketches
               </Link>
             </li>
-            {__process.env.UI_COLLECTIONS_ENABLED &&
+            {getConfig('UI_COLLECTIONS_ENABLED') &&
               <li className="nav__dropdown-item">
                 <Link
                   to={`/${this.props.user.username}/collections`}
@@ -635,7 +634,7 @@ class Nav extends React.PureComponent {
   }
 
   renderUserMenu(navDropdownState) {
-    const isLoginEnabled = __process.env.LOGIN_ENABLED;
+    const isLoginEnabled = getConfig('LOGIN_ENABLED');
     const isAuthenticated = this.props.user.authenticated;
 
     if (isLoginEnabled && isAuthenticated) {
