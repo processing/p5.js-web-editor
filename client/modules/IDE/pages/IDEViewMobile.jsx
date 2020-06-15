@@ -65,7 +65,7 @@ const Icon = styled.a`
   > svg {
     fill: ${textColor};
     color: ${textColor};
-    margin: 8px
+    margin-left: ${remSize(16)};
   }
 `;
 
