@@ -25,12 +25,6 @@ const onRouteChange = (store) => {
   store.dispatch(stopSketch());
 };
 
-// TODO: Investigate using react-router for this switch
-// const ignoreMobile = () => window.location.search.substring(1).includes('ignoremobile');
-// const isMobile = () => window.innerWidth <= 760;
-// const IDEView = isMobile() && !ignoreMobile() ? IDEViewMobileScreen : IDEViewScreen;
-
-// How to use URL as a prop?
 const routes = store => (
   <Route path="/" component={App} onChange={() => { onRouteChange(store); }}>
     <IndexRoute component={IDEView} onEnter={checkAuth(store)} />

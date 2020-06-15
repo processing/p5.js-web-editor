@@ -10,7 +10,7 @@ const textColor = prop('primaryTextColor');
 
 const Header = styled.div`
   width: 100%;
-  background-color: ${background} !important;
+  background-color: ${background};
   color: ${textColor};
   padding-left: ${remSize(32)};
 `;
