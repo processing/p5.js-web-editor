@@ -79,6 +79,8 @@ Screen.propTypes = {
   children: PropTypes.node.isRequired
 };
 
+const isUserOwner = ({ project, user }) => (project.owner && project.owner.id === user.id);
+
 const IDEViewMobile = (props) => {
   // const
   const {
@@ -130,7 +132,7 @@ const IDEViewMobile = (props) => {
           isExpanded={ide.sidebarIsExpanded}
           expandSidebar={expandSidebar}
           collapseSidebar={collapseSidebar}
-          isUserOwner={setTmController}
+          isUserOwner={isUserOwner(props)}
           clearConsole={clearConsole}
           consoleEvents={console}
           showRuntimeErrorWarning={showRuntimeErrorWarning}
@@ -247,6 +249,11 @@ IDEViewMobile.propTypes = {
 
   hideRuntimeErrorWarning: PropTypes.func.isRequired,
 
+  user: PropTypes.shape({
+    authenticated: PropTypes.bool.isRequired,
+    id: PropTypes.string,
+    username: PropTypes.string
+  }).isRequired,
 };
 
 
