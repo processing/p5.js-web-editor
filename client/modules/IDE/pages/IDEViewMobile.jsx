@@ -31,7 +31,9 @@ const Header = styled.div`
   width: 100%;
   background-color: ${background};
   color: ${textColor};
+  padding: ${remSize(12)};
   padding-left: ${remSize(32)};
+  z-index: 1;
 `;
 
 const Footer = styled.div`
@@ -44,9 +46,10 @@ const Footer = styled.div`
 `;
 
 const Content = styled.div`
+  z-index: 0;
+  margin-top: ${remSize(16)};
 `;
 
-const f = x => x;
 
 const Screen = ({ children }) => (
   <div className="fullscreen-preview">
@@ -59,55 +62,60 @@ Screen.propTypes = {
 
 const IDEViewMobile = (props) => {
   // const
-  // const {
-  //   preferences, ide, editorAccessibility, project, updateLintMessage, clearLintMessage, selectedFile, updateFileContent, files, closeEditorOptions, showEditorOptions, showKeyboardShortcutModal, setUnsavedChanges, startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console, showRuntimeErrorWarning, hideRuntimeErrorWarning
-  // } = props;
+  const {
+    preferences, ide, editorAccessibility, project, updateLintMessage, clearLintMessage, selectedFile, updateFileContent, files, closeEditorOptions, showEditorOptions, showKeyboardShortcutModal, setUnsavedChanges, startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console, showRuntimeErrorWarning, hideRuntimeErrorWarning
+  } = props;
 
   const [tmController, setTmController] = useState(null);
 
   return (
     <Screen>
-      <Header><h1>Mobile View</h1></Header>
+      <Header>
+        {/* <h1>Mobile View</h1> */}
+        <h2>{project.name}</h2>
+        <h3>{selectedFile.name}</h3>
+      </Header>
       {/* <div>
         { [preferences, ide, editorAccessibility, project, updateLintMessage, clearLintMessage, selectedFile, updateFileContent, files, closeEditorOptions, showEditorOptions, showKeyboardShortcutModal, setUnsavedChanges, startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console, showRuntimeErrorWarning, hideRuntimeErrorWarning]
           .map(pr => <h5>{pr.toString()}</h5>) }
       </div> */}
 
-      <Editor
-        lintWarning={props.preferences.lintWarning}
-        linewrap={props.preferences.linewrap}
-        lintMessages={props.editorAccessibility.lintMessages}
-        updateLintMessage={props.updateLintMessage}
-        clearLintMessage={props.clearLintMessage}
-        file={props.selectedFile}
-        updateFileContent={props.updateFileContent}
-        fontSize={props.preferences.fontSize}
-        lineNumbers={props.preferences.lineNumbers}
-        files={props.files}
-        editorOptionsVisible={props.ide.editorOptionsVisible}
-        showEditorOptions={props.showEditorOptions}
-        closeEditorOptions={props.closeEditorOptions}
-        showKeyboardShortcutModal={props.showKeyboardShortcutModal}
-        setUnsavedChanges={props.setUnsavedChanges}
-        isPlaying={props.ide.isPlaying}
-        theme={props.preferences.theme}
-        startRefreshSketch={props.startRefreshSketch}
-        stopSketch={props.stopSketch}
-        autorefresh={props.preferences.autorefresh}
-        unsavedChanges={props.ide.unsavedChanges}
-        projectSavedTime={props.project.updatedAt}
-        isExpanded={props.ide.sidebarIsExpanded}
-        expandSidebar={props.expandSidebar}
-        collapseSidebar={props.collapseSidebar}
-        isUserOwner={setTmController}
-        clearConsole={props.clearConsole}
-        consoleEvents={props.console}
-        showRuntimeErrorWarning={props.showRuntimeErrorWarning}
-        hideRuntimeErrorWarning={props.hideRuntimeErrorWarning}
-        runtimeErrorWarningVisible={props.ide.runtimeErrorWarningVisible}
-        provideController={setTmController}
-      />
-
+      <Content>
+        <Editor
+          lintWarning={props.preferences.lintWarning}
+          linewrap={props.preferences.linewrap}
+          lintMessages={props.editorAccessibility.lintMessages}
+          updateLintMessage={props.updateLintMessage}
+          clearLintMessage={props.clearLintMessage}
+          file={props.selectedFile}
+          updateFileContent={props.updateFileContent}
+          fontSize={props.preferences.fontSize}
+          lineNumbers={props.preferences.lineNumbers}
+          files={props.files}
+          editorOptionsVisible={props.ide.editorOptionsVisible}
+          showEditorOptions={props.showEditorOptions}
+          closeEditorOptions={props.closeEditorOptions}
+          showKeyboardShortcutModal={props.showKeyboardShortcutModal}
+          setUnsavedChanges={props.setUnsavedChanges}
+          isPlaying={props.ide.isPlaying}
+          theme={props.preferences.theme}
+          startRefreshSketch={props.startRefreshSketch}
+          stopSketch={props.stopSketch}
+          autorefresh={props.preferences.autorefresh}
+          unsavedChanges={props.ide.unsavedChanges}
+          projectSavedTime={props.project.updatedAt}
+          isExpanded={props.ide.sidebarIsExpanded}
+          expandSidebar={props.expandSidebar}
+          collapseSidebar={props.collapseSidebar}
+          isUserOwner={setTmController}
+          clearConsole={props.clearConsole}
+          consoleEvents={props.console}
+          showRuntimeErrorWarning={props.showRuntimeErrorWarning}
+          hideRuntimeErrorWarning={props.hideRuntimeErrorWarning}
+          runtimeErrorWarningVisible={props.ide.runtimeErrorWarningVisible}
+          provideController={setTmController}
+        />
+      </Content>
       <Footer><h1>Bottom Bar</h1></Footer>
     </Screen>
   );
