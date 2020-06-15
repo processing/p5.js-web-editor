@@ -105,37 +105,37 @@ const IDEViewMobile = (props) => {
 
       <Content>
         <Editor
-          lintWarning={props.preferences.lintWarning}
-          linewrap={props.preferences.linewrap}
-          lintMessages={props.editorAccessibility.lintMessages}
-          updateLintMessage={props.updateLintMessage}
-          clearLintMessage={props.clearLintMessage}
-          file={props.selectedFile}
-          updateFileContent={props.updateFileContent}
-          fontSize={props.preferences.fontSize}
-          lineNumbers={props.preferences.lineNumbers}
-          files={props.files}
-          editorOptionsVisible={props.ide.editorOptionsVisible}
-          showEditorOptions={props.showEditorOptions}
-          closeEditorOptions={props.closeEditorOptions}
-          showKeyboardShortcutModal={props.showKeyboardShortcutModal}
-          setUnsavedChanges={props.setUnsavedChanges}
-          isPlaying={props.ide.isPlaying}
-          theme={props.preferences.theme}
-          startRefreshSketch={props.startRefreshSketch}
-          stopSketch={props.stopSketch}
-          autorefresh={props.preferences.autorefresh}
-          unsavedChanges={props.ide.unsavedChanges}
-          projectSavedTime={props.project.updatedAt}
-          isExpanded={props.ide.sidebarIsExpanded}
-          expandSidebar={props.expandSidebar}
-          collapseSidebar={props.collapseSidebar}
+          lintWarning={preferences.lintWarning}
+          linewrap={preferences.linewrap}
+          lintMessages={editorAccessibility.lintMessages}
+          updateLintMessage={updateLintMessage}
+          clearLintMessage={clearLintMessage}
+          file={selectedFile}
+          updateFileContent={updateFileContent}
+          fontSize={preferences.fontSize}
+          lineNumbers={preferences.lineNumbers}
+          files={files}
+          editorOptionsVisible={ide.editorOptionsVisible}
+          showEditorOptions={showEditorOptions}
+          closeEditorOptions={closeEditorOptions}
+          showKeyboardShortcutModal={showKeyboardShortcutModal}
+          setUnsavedChanges={setUnsavedChanges}
+          isPlaying={ide.isPlaying}
+          theme={preferences.theme}
+          startRefreshSketch={startRefreshSketch}
+          stopSketch={stopSketch}
+          autorefresh={preferences.autorefresh}
+          unsavedChanges={ide.unsavedChanges}
+          projectSavedTime={project.updatedAt}
+          isExpanded={ide.sidebarIsExpanded}
+          expandSidebar={expandSidebar}
+          collapseSidebar={collapseSidebar}
           isUserOwner={setTmController}
-          clearConsole={props.clearConsole}
-          consoleEvents={props.console}
-          showRuntimeErrorWarning={props.showRuntimeErrorWarning}
-          hideRuntimeErrorWarning={props.hideRuntimeErrorWarning}
-          runtimeErrorWarningVisible={props.ide.runtimeErrorWarningVisible}
+          clearConsole={clearConsole}
+          consoleEvents={console}
+          showRuntimeErrorWarning={showRuntimeErrorWarning}
+          hideRuntimeErrorWarning={hideRuntimeErrorWarning}
+          runtimeErrorWarningVisible={ide.runtimeErrorWarningVisible}
           provideController={setTmController}
         />
       </Content>
