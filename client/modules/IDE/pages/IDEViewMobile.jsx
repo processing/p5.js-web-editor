@@ -21,33 +21,52 @@ import { getHTMLFile } from '../reducers/files';
 // Local Imports
 import Editor from '../components/Editor';
 import { prop, remSize } from '../../../theme';
-
+import CloseIcon from '../../../images/exit.svg';
 
 const background = prop('Button.default.background');
 const textColor = prop('primaryTextColor');
 
+
 const Header = styled.div`
   position: fixed;
   width: 100%;
-  background-color: ${background};
+  background: ${background};
+  color: ${textColor};
+  padding: ${remSize(12)};
+  padding-left: ${remSize(32)};
+  padding-right: ${remSize(32)};
+  z-index: 1;
+  
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  // justify-content: space-between;
+  align-items: center;
+`;
+
+const Footer = styled.div`
+  position: fixed;
+  width: 100%;
+  background: ${background};
   color: ${textColor};
   padding: ${remSize(12)};
   padding-left: ${remSize(32)};
   z-index: 1;
-`;
 
-const Footer = styled.div`
-  width: 100%;
-  position: fixed;
   bottom: 0;
-  background: ${background};
-  color: ${textColor};
-  padding-left: ${remSize(32)};
 `;
 
 const Content = styled.div`
   z-index: 0;
   margin-top: ${remSize(16)};
+`;
+
+const Icon = styled.a`
+  > svg {
+    fill: ${textColor};
+    color: ${textColor};
+    margin: 8px
+  }
 `;
 
 
@@ -71,9 +90,13 @@ const IDEViewMobile = (props) => {
   return (
     <Screen>
       <Header>
-        {/* <h1>Mobile View</h1> */}
-        <h2>{project.name}</h2>
-        <h3>{selectedFile.name}</h3>
+        <div>
+          <h2>{project.name}</h2>
+          <h3>{selectedFile.name}</h3>
+        </div>
+        <Icon href="/">
+          <CloseIcon focusable="false" aria-hidden="true" />
+        </Icon>
       </Header>
       {/* <div>
         { [preferences, ide, editorAccessibility, project, updateLintMessage, clearLintMessage, selectedFile, updateFileContent, files, closeEditorOptions, showEditorOptions, showKeyboardShortcutModal, setUnsavedChanges, startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console, showRuntimeErrorWarning, hideRuntimeErrorWarning]
@@ -116,7 +139,7 @@ const IDEViewMobile = (props) => {
           provideController={setTmController}
         />
       </Content>
-      <Footer><h1>Bottom Bar</h1></Footer>
+      <Footer><h2>Bottom Bar</h2></Footer>
     </Screen>
   );
 };
