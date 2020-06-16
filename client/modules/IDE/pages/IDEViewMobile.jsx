@@ -22,6 +22,8 @@ import { getHTMLFile } from '../reducers/files';
 import Editor from '../components/Editor';
 import { prop, remSize } from '../../../theme';
 import CloseIcon from '../../../images/exit.svg';
+import PreferencesIcon from '../../../images/preferences.svg';
+import PlayIcon from '../../../images/triangle-arrow-right.svg';
 
 const background = prop('Button.default.background');
 const textColor = prop('primaryTextColor');
@@ -66,9 +68,9 @@ const Icon = styled.a`
     fill: ${textColor};
     color: ${textColor};
     margin-left: ${remSize(16)};
+    align-items: center;
   }
 `;
-
 
 const Screen = ({ children }) => (
   <div className="fullscreen-preview">
@@ -82,12 +84,13 @@ Screen.propTypes = {
 const isUserOwner = ({ project, user }) => (project.owner && project.owner.id === user.id);
 
 const IDEViewMobile = (props) => {
-  // const
   const {
     preferences, ide, editorAccessibility, project, updateLintMessage, clearLintMessage, selectedFile, updateFileContent, files, closeEditorOptions, showEditorOptions, showKeyboardShortcutModal, setUnsavedChanges, startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console, showRuntimeErrorWarning, hideRuntimeErrorWarning
   } = props;
 
   const [tmController, setTmController] = useState(null);
+
+  const [overlay, setOverlay] = useState(null);
 
   return (
     <Screen>
@@ -96,9 +99,17 @@ const IDEViewMobile = (props) => {
           <h2>{project.name}</h2>
           <h3>{selectedFile.name}</h3>
         </div>
-        <Icon href="/">
-          <CloseIcon focusable="false" aria-hidden="true" />
-        </Icon>
+        <div>
+          <Icon href="/">
+            <CloseIcon focusable="false" aria-hidden="true" />
+          </Icon>
+          <Icon onClick={() => setOverlay('preferences')}>
+            <PreferencesIcon focusable="false" aria-hidden="true" />
+          </Icon>
+          <Icon onClick={() => setOverlay('runSketch')}>
+            <PlayIcon focusable="false" aria-hidden="true" />
+          </Icon>
+        </div>
       </Header>
       {/* <div>
         { [preferences, ide, editorAccessibility, project, updateLintMessage, clearLintMessage, selectedFile, updateFileContent, files, closeEditorOptions, showEditorOptions, showKeyboardShortcutModal, setUnsavedChanges, startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console, showRuntimeErrorWarning, hideRuntimeErrorWarning]
