@@ -7,6 +7,9 @@ import Google from '../images/google.svg';
 import Plus from '../images/plus-icon.svg';
 import Close from '../images/close.svg';
 import DropdownArrow from '../images/down-filled-triangle.svg';
+import Play from '../images/triangle-arrow-right.svg';
+import Preferences from '../images/preferences.svg';
+
 
 // HOC that adds the right web accessibility props
 // https://www.scottohara.me/blog/2019/05/22/contextual-images-svgs-and-a11y.html
@@ -49,3 +52,5 @@ export const GoogleIcon = withLabel(Google);
 export const PlusIcon = withLabel(Plus);
 export const CloseIcon = withLabel(Close);
 export const DropdownArrowIcon = withLabel(DropdownArrow);
+export const PlayIcon = withLabel(Play);
+export const PreferencesIcon = withLabel(Preferences);

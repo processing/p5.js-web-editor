@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-// import { Link } from 'react-router';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { useState } from 'react';
@@ -21,9 +21,11 @@ import { getHTMLFile } from '../reducers/files';
 // Local Imports
 import Editor from '../components/Editor';
 import { prop, remSize } from '../../../theme';
-import CloseIcon from '../../../images/exit.svg';
+import { CloseIcon } from '../../../common/Icons';
+
 import PreferencesIcon from '../../../images/preferences.svg';
 import PlayIcon from '../../../images/triangle-arrow-right.svg';
+
 
 const background = prop('Button.default.background');
 const textColor = prop('primaryTextColor');
@@ -42,7 +44,7 @@ const Header = styled.div`
   display: flex;
   flex: 1;
   flex-direction: row;
-  // justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
 `;
 
@@ -63,12 +65,11 @@ const Content = styled.div`
   margin-top: ${remSize(16)};
 `;
 
-const Icon = styled.a`
+const IconButton = styled.button`
+  width: 3rem;
   > svg {
-    fill: ${textColor};
-    color: ${textColor};
-    margin-left: ${remSize(16)};
-    align-items: center;
+    width: 100%;
+    height: auto;
   }
 `;
 
@@ -95,26 +96,23 @@ const IDEViewMobile = (props) => {
   return (
     <Screen>
       <Header>
+        <Link to="/" style={{ width: '3rem', marginRight: '1.25rem' }}>
+          <CloseIcon viewBox="20 21 60 60" aria-hidden="true" aria-label="close header" />
+        </Link>
         <div>
           <h2>{project.name}</h2>
           <h3>{selectedFile.name}</h3>
         </div>
-        <div>
-          <Icon href="/">
-            <CloseIcon focusable="false" aria-hidden="true" />
-          </Icon>
-          <Icon onClick={() => setOverlay('preferences')}>
+
+        <div style={{ marginLeft: '2rem' }}>
+          <IconButton onClick={() => setOverlay('preferences')}>
             <PreferencesIcon focusable="false" aria-hidden="true" />
-          </Icon>
-          <Icon onClick={() => setOverlay('runSketch')}>
-            <PlayIcon focusable="false" aria-hidden="true" />
-          </Icon>
+          </IconButton>
+          <IconButton onClick={() => setOverlay('runSketch')}>
+            <PlayIcon viewBox="-1 -1 7 7" focusable="false" aria-hidden="true" />
+          </IconButton>
         </div>
       </Header>
-      {/* <div>
-        { [preferences, ide, editorAccessibility, project, updateLintMessage, clearLintMessage, selectedFile, updateFileContent, files, closeEditorOptions, showEditorOptions, showKeyboardShortcutModal, setUnsavedChanges, startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console, showRuntimeErrorWarning, hideRuntimeErrorWarning]
-          .map(pr => <h5>{pr.toString()}</h5>) }
-      </div> */}
 
       <Content>
         <Editor
