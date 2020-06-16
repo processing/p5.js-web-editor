@@ -26,61 +26,19 @@ import { CloseIcon } from '../../../common/Icons';
 import PreferencesIcon from '../../../images/preferences.svg';
 import PlayIcon from '../../../images/triangle-arrow-right.svg';
 
+import IconButton from '../../../components/mobile/IconButton';
+import Header from '../../../components/mobile/Header';
+import Screen from '../../../components/mobile/MobileScreen';
+import Footer from '../../../components/mobile/Footer';
 
 const background = prop('Button.default.background');
 const textColor = prop('primaryTextColor');
-
-
-const Header = styled.div`
-  position: fixed;
-  width: 100%;
-  background: ${background};
-  color: ${textColor};
-  padding: ${remSize(12)};
-  padding-left: ${remSize(32)};
-  padding-right: ${remSize(32)};
-  z-index: 1;
-  
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-`;
-
-const Footer = styled.div`
-  position: fixed;
-  width: 100%;
-  background: ${background};
-  color: ${textColor};
-  padding: ${remSize(12)};
-  padding-left: ${remSize(32)};
-  z-index: 1;
-
-  bottom: 0;
-`;
 
 const Content = styled.div`
   z-index: 0;
   margin-top: ${remSize(16)};
 `;
 
-const IconButton = styled.button`
-  width: 3rem;
-  > svg {
-    width: 100%;
-    height: auto;
-  }
-`;
-
-const Screen = ({ children }) => (
-  <div className="fullscreen-preview">
-    {children}
-  </div>
-);
-Screen.propTypes = {
-  children: PropTypes.node.isRequired
-};
 
 const isUserOwner = ({ project, user }) => (project.owner && project.owner.id === user.id);
 
