@@ -9,6 +9,7 @@ import Close from '../images/close.svg';
 import DropdownArrow from '../images/down-filled-triangle.svg';
 import Play from '../images/triangle-arrow-right.svg';
 import Preferences from '../images/preferences.svg';
+import Exit from '../images/exit.svg';
 
 
 // HOC that adds the right web accessibility props
@@ -54,3 +55,4 @@ export const CloseIcon = withLabel(Close);
 export const DropdownArrowIcon = withLabel(DropdownArrow);
 export const PlayIcon = withLabel(Play);
 export const PreferencesIcon = withLabel(Preferences);
+export const ExitIcon = withLabel(Exit);

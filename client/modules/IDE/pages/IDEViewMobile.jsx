@@ -31,7 +31,6 @@ import Header from '../../../components/mobile/Header';
 import Screen from '../../../components/mobile/MobileScreen';
 import Footer from '../../../components/mobile/Footer';
 
-const background = prop('Button.default.background');
 const textColor = prop('primaryTextColor');
 
 const Content = styled.div`
@@ -79,9 +78,11 @@ const IDEViewMobile = (props) => {
           <IconButton onClick={() => setOverlay('preferences')}>
             <PreferencesIcon focusable="false" aria-hidden="true" />
           </IconButton>
-          <IconButton onClick={() => setOverlay('runSketch')}>
-            <PlayIcon viewBox="-1 -1 7 7" focusable="false" aria-hidden="true" />
-          </IconButton>
+          <Link to="/mobile/preview">
+            <IconButton>
+              <PlayIcon viewBox="-1 -1 7 7" focusable="false" aria-hidden="true" />
+            </IconButton>
+          </Link>
         </div>
       </Header>
 

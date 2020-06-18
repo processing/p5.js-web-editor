@@ -1,16 +1,24 @@
 import React, { useState } from 'react';
-
+import { Link } from 'react-router';
+import styled from 'styled-components';
 import Header from '../../components/mobile/Header';
 import Screen from '../../components/mobile/MobileScreen';
+import { ExitIcon } from '../../common/Icons';
+
+const IconLinkWrapper = styled(Link)`
+  width: 2rem;
+  margin-right: 1.25rem;
+  margin-left: none;
+`;
 
 const MobileSketchView = (props) => {
   const [overlay, setOverlay] = useState(null);
   return (
     <Screen>
       <Header>
-        {/* <IconLinkWrapper to="/mobile" aria-label="Return to original editor">
-        <CloseIcon viewBox="20 21 60 60" />
-      </IconLinkWrapper> */}
+        <IconLinkWrapper to="/mobile" aria-label="Return to original editor">
+          <ExitIcon viewBox="0 0 16 16" />
+        </IconLinkWrapper>
         <div>
           <h2>Hello</h2>
           {/* <h3>{selectedFile.name}</h3> */}
