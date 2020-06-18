@@ -39,6 +39,19 @@ const Content = styled.div`
   margin-top: ${remSize(16)};
 `;
 
+const Icon = styled.a`
+  > svg {
+    fill: ${textColor};
+    color: ${textColor};
+    margin-left: ${remSize(16)};
+  }
+`;
+
+const IconLinkWrapper = styled(Link)`
+  width: 3rem;
+  margin-right: 1.25rem;
+  margin-left: none;
+`;
 
 const isUserOwner = ({ project, user }) => (project.owner && project.owner.id === user.id);
 
@@ -54,9 +67,9 @@ const IDEViewMobile = (props) => {
   return (
     <Screen>
       <Header>
-        <Link to="/" style={{ width: '3rem', marginRight: '1.25rem' }}>
-          <CloseIcon viewBox="20 21 60 60" aria-hidden="true" aria-label="close header" />
-        </Link>
+        <IconLinkWrapper to="/" aria-label="Return to original editor">
+          <CloseIcon viewBox="20 21 60 60" />
+        </IconLinkWrapper>
         <div>
           <h2>{project.name}</h2>
           <h3>{selectedFile.name}</h3>
