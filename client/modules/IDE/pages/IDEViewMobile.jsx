@@ -21,7 +21,7 @@ import { getHTMLFile } from '../reducers/files';
 // Local Imports
 import Editor from '../components/Editor';
 import { prop, remSize } from '../../../theme';
-import { CloseIcon } from '../../../common/Icons';
+import { ExitIcon } from '../../../common/icons';
 
 const background = prop('Button.default.background');
 const textColor = prop('primaryTextColor');
@@ -98,7 +98,7 @@ const IDEViewMobile = (props) => {
     <Screen>
       <Header>
         <IconLinkWrapper to="/" aria-label="Return to original editor">
-          <CloseIcon viewBox="20 21 60 60" />
+          <ExitIcon />
         </IconLinkWrapper>
         <div>
           <h2>{project.name}</h2>

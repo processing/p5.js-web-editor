@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { remSize, prop } from '../theme';
 import SortArrowUp from '../images/sort-arrow-up.svg';
 import SortArrowDown from '../images/sort-arrow-down.svg';
 import Github from '../images/github.svg';
 import Google from '../images/google.svg';
 import Plus from '../images/plus-icon.svg';
 import Close from '../images/close.svg';
+import Exit from '../images/exit.svg';
 import DropdownArrow from '../images/down-filled-triangle.svg';
 
 // HOC that adds the right web accessibility props
@@ -15,16 +18,33 @@ import DropdownArrow from '../images/down-filled-triangle.svg';
 // Need to add size to these - like small icon, medium icon, large icon. etc.
 function withLabel(SvgComponent) {
   const Icon = (props) => {
+    const StyledIcon = styled(SvgComponent)`
+      &&& {
+        color: ${prop('Icon.default')};
+        & g, & path, & polygon {
+          opacity: 1;
+          fill: ${prop('Icon.default')};
+        }
+        &:hover {
+          color: ${prop('Icon.hover')};
+          & g, & path, & polygon {
+            opacity: 1;
+            fill: ${prop('Icon.hover')};
+          }
+        }
+      }
+    `;
+
     const { 'aria-label': ariaLabel } = props;
     if (ariaLabel) {
-      return (<SvgComponent
+      return (<StyledIcon
         {...props}
         aria-label={ariaLabel}
         role="img"
         focusable="false"
       />);
     }
-    return (<SvgComponent
+    return (<StyledIcon
       {...props}
       aria-hidden
       focusable="false"
@@ -48,4 +68,5 @@ export const GithubIcon = withLabel(Github);
 export const GoogleIcon = withLabel(Google);
 export const PlusIcon = withLabel(Plus);
 export const CloseIcon = withLabel(Close);
+export const ExitIcon = withLabel(Exit);
 export const DropdownArrowIcon = withLabel(DropdownArrow);
