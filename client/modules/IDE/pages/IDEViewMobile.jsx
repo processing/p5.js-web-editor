@@ -30,13 +30,9 @@ import IconButton from '../../../components/mobile/IconButton';
 import Header from '../../../components/mobile/Header';
 import Screen from '../../../components/mobile/MobileScreen';
 import Footer from '../../../components/mobile/Footer';
+import IDEWrapper from '../../../components/mobile/IDEWrapper';
 
 const textColor = prop('primaryTextColor');
-
-const Content = styled.div`
-  z-index: 0;
-  margin-top: ${remSize(16)};
-`;
 
 const Icon = styled.a`
   > svg {
@@ -86,7 +82,7 @@ const IDEViewMobile = (props) => {
         </div>
       </Header>
 
-      <Content>
+      <IDEWrapper>
         <Editor
           lintWarning={preferences.lintWarning}
           linewrap={preferences.linewrap}
@@ -121,7 +117,7 @@ const IDEViewMobile = (props) => {
           runtimeErrorWarningVisible={ide.runtimeErrorWarningVisible}
           provideController={setTmController}
         />
-      </Content>
+      </IDEWrapper>
       <Footer><h2>Bottom Bar</h2></Footer>
     </Screen>
   );
