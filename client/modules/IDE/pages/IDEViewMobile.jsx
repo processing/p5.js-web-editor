@@ -69,6 +69,12 @@ const Icon = styled.a`
   }
 `;
 
+const StyledLink = styled(Link)`
+  width: 3rem;
+  margin-right: 1.25rem;
+  margin-left: none;
+`;
+
 
 const Screen = ({ children }) => (
   <div className="fullscreen-preview">
@@ -91,9 +97,9 @@ const IDEViewMobile = (props) => {
   return (
     <Screen>
       <Header>
-        <Link to="/" style={{ width: '3rem', marginRight: '1.25rem' }}>
+        <StyledLink to="/">
           <CloseIcon viewBox="20 21 60 60" aria-hidden="true" aria-label="close header" />
-        </Link>
+        </StyledLink>
         <div>
           <h2>{project.name}</h2>
           <h3>{selectedFile.name}</h3>
