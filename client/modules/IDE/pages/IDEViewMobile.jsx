@@ -52,7 +52,7 @@ const isUserOwner = ({ project, user }) => (project.owner && project.owner.id ==
 
 const IDEViewMobile = (props) => {
   const {
-    preferences, ide, editorAccessibility, project, updateLintMessage, clearLintMessage, selectedFile, updateFileContent, files, closeEditorOptions, showEditorOptions, showKeyboardShortcutModal, setUnsavedChanges, startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console, showRuntimeErrorWarning, hideRuntimeErrorWarning
+    preferences, ide, editorAccessibility, project, updateLintMessage, clearLintMessage, selectedFile, updateFileContent, files, closeEditorOptions, showEditorOptions, showKeyboardShortcutModal, setUnsavedChanges, startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console, showRuntimeErrorWarning, hideRuntimeErrorWarning, startSketch
   } = props;
 
   const [tmController, setTmController] = useState(null);
@@ -74,7 +74,13 @@ const IDEViewMobile = (props) => {
           <IconButton onClick={() => setOverlay('preferences')}>
             <PreferencesIcon focusable="false" aria-hidden="true" />
           </IconButton>
-          <Link to="/mobile/preview">
+          <Link
+            to="/mobile/preview"
+            onClick={() => {
+              alert('starting sketch');
+              startSketch();
+            }}
+          >
             <IconButton>
               <PlayIcon viewBox="-1 -1 7 7" focusable="false" aria-hidden="true" />
             </IconButton>
@@ -180,6 +186,8 @@ IDEViewMobile.propTypes = {
     }),
     updatedAt: PropTypes.string
   }).isRequired,
+
+  startSketch: PropTypes.func.isRequired,
 
   updateLintMessage: PropTypes.func.isRequired,
 

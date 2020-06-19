@@ -8,6 +8,8 @@ import Header from '../../components/mobile/Header';
 import PreviewFrame from '../IDE/components/PreviewFrame';
 import Screen from '../../components/mobile/MobileScreen';
 import * as ProjectActions from '../IDE/actions/project';
+import * as IDEActions from '../IDE/actions/ide';
+
 import { getHTMLFile, getJSFiles, getCSSFiles } from '../IDE/reducers/files';
 
 
@@ -39,13 +41,16 @@ const MobileSketchView = (props) => {
   // const files = useSelector(state => state.files);
 
   const {
-    htmlFile, jsFiles, cssFiles, files, params, getProject
+    htmlFile, jsFiles, cssFiles, files, params
   } = props;
 
-  useEffect(() => {
-    console.log(params);
-    getProject(params.project_id, params.username);
-  }, []);
+  // Actions
+  const { getProject, startSketch } = props;
+
+  // useEffect(() => {
+  //   console.log(params);
+  //   getProject(params.project_id, params.username);
+  // }, []);
 
   return (
     <Screen>
@@ -55,42 +60,35 @@ const MobileSketchView = (props) => {
         </IconLinkWrapper>
         <div>
           <h2>Hello</h2>
-          {/* <h3>{selectedFile.name}</h3> */}
+          <h3><br /></h3>
         </div>
-
-        {/* <div style={{ marginLeft: '2rem' }}>
-          <IconButton onClick={() => setOverlay('preferences')}>
-            <PreferencesIcon focusable="false" aria-hidden="true" />
-          </IconButton>
-          <IconButton onClick={() => setOverlay('runSketch')}>
-            <PlayIcon viewBox="-1 -1 7 7" focusable="false" aria-hidden="true" />
-          </IconButton>
-        </div> */}
       </Header>
       <Content>
         <h1>Hello</h1>
-        <PreviewFrame
-          htmlFile={htmlFile}
-          jsFiles={jsFiles}
-          cssFiles={cssFiles}
-          files={files}
-          head={
-            <link type="text/css" rel="stylesheet" href="/preview-styles.css" />
-          }
-          fullView
-          isPlaying
-          isAccessibleOutputPlaying={false}
-          textOutput={false}
-          gridOutput={false}
-          soundOutput={false}
-          dispatchConsoleEvent={noop}
-          endSketchRefresh={noop}
-          previewIsRefreshing={false}
-          setBlobUrl={noop}
-          stopSketch={noop}
-          expandConsole={noop}
-          clearConsole={noop}
-        />
+        <main className="preview-frame-holder">
+
+          <PreviewFrame
+            fullView
+            isPlaying
+            htmlFile={htmlFile}
+            jsFiles={jsFiles}
+            cssFiles={cssFiles}
+            files={files}
+            head={<link type="text/css" rel="stylesheet" href="/preview-styles.css" />}
+            isAccessibleOutputPlaying={false}
+            textOutput={false}
+            gridOutput={false}
+            soundOutput={false}
+            previewIsRefreshing={false}
+
+            dispatchConsoleEvent={noop}
+            endSketchRefresh={noop}
+            setBlobUrl={noop}
+            stopSketch={noop}
+            expandConsole={noop}
+            clearConsole={noop}
+          />
+        </main>
       </Content>
     </Screen>);
 };
@@ -121,6 +119,7 @@ MobileSketchView.propTypes = {
     name: PropTypes.string.isRequired
   })).isRequired,
   getProject: PropTypes.func.isRequired,
+  startSketch: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -134,7 +133,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(ProjectActions, dispatch);
+  return bindActionCreators({ ...ProjectActions, ...IDEActions }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MobileSketchView);
