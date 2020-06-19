@@ -20,7 +20,6 @@ import { getHTMLFile } from '../reducers/files';
 
 // Local Imports
 import Editor from '../components/Editor';
-import { prop, remSize } from '../../../theme';
 import { ExitIcon } from '../../../common/icons';
 
 import PreferencesIcon from '../../../images/preferences.svg';
@@ -31,16 +30,6 @@ import Header from '../../../components/mobile/Header';
 import Screen from '../../../components/mobile/MobileScreen';
 import Footer from '../../../components/mobile/Footer';
 import IDEWrapper from '../../../components/mobile/IDEWrapper';
-
-const textColor = prop('primaryTextColor');
-
-const Icon = styled.a`
-  > svg {
-    fill: ${textColor};
-    color: ${textColor};
-    margin-left: ${remSize(16)};
-  }
-`;
 
 const IconLinkWrapper = styled(Link)`
   width: 3rem;

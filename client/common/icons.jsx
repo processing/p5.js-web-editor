@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { remSize, prop } from '../theme';
+import { prop } from '../theme';
 import SortArrowUp from '../images/sort-arrow-up.svg';
 import SortArrowDown from '../images/sort-arrow-down.svg';
 import Github from '../images/github.svg';

@@ -1,4 +1,4 @@
-import { Route, IndexRoute, Router, Switch, useRouteMatch } from 'react-router';
+import { Route, IndexRoute } from 'react-router';
 import React from 'react';
 import App from './modules/App/App';
 import IDEView from './modules/IDE/pages/IDEView';
@@ -23,6 +23,9 @@ const checkAuth = (store) => {
 };
 
 const onRouteChange = (store) => {
+  // FIXME: This seems unnecessary - using the mobile <Switch /> navigator should prevent this from being called
+  const path = window.location.pathname;
+  if (path.includes('/mobile')) return;
   store.dispatch(stopSketch());
 };
 
