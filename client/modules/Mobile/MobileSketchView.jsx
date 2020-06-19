@@ -164,7 +164,7 @@ MobileSketchView.propTypes = {
     uploadFileModalVisible: PropTypes.bool.isRequired
   }).isRequired,
 
-  projectName: PropTypes.func.isRequired,
+  projectName: PropTypes.string.isRequired,
 
   setTextOutput: PropTypes.func.isRequired,
   setGridOutput: PropTypes.func.isRequired,
