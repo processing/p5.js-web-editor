@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Header from '../../components/mobile/Header';
 import PreviewFrame from '../IDE/components/PreviewFrame';
 import Screen from '../../components/mobile/MobileScreen';
+import * as ProjectActions from '../IDE/actions/project';
 import { getHTMLFile, getJSFiles, getCSSFiles } from '../IDE/reducers/files';
+
 
 import { ExitIcon } from '../../common/Icons';
 import { remSize } from '../../theme';
@@ -28,6 +31,7 @@ const noop = () => {};
 const MobileSketchView = (props) => {
   const [overlay, setOverlay] = useState(null);
 
+
   // TODO: useSelector requires react-redux ^7.1.0
   // const htmlFile = useSelector(state => getHTMLFile(state.files));
   // const jsFiles = useSelector(state => getJSFiles(state.files));
@@ -35,8 +39,13 @@ const MobileSketchView = (props) => {
   // const files = useSelector(state => state.files);
 
   const {
-    htmlFile, jsFiles, cssFiles, files
+    htmlFile, jsFiles, cssFiles, files, params, getProject
   } = props;
+
+  useEffect(() => {
+    console.log(params);
+    getProject(params.project_id, params.username);
+  }, []);
 
   return (
     <Screen>
@@ -87,6 +96,10 @@ const MobileSketchView = (props) => {
 };
 
 MobileSketchView.propTypes = {
+  params: PropTypes.shape({
+    project_id: PropTypes.string,
+    username: PropTypes.string
+  }).isRequired,
   htmlFile: PropTypes.shape({
     id: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
@@ -107,6 +120,7 @@ MobileSketchView.propTypes = {
     content: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired
   })).isRequired,
+  getProject: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -114,9 +128,13 @@ function mapStateToProps(state) {
     htmlFile: getHTMLFile(state.files),
     jsFiles: getJSFiles(state.files),
     cssFiles: getCSSFiles(state.files),
+    project: state.project,
     files: state.files
   };
 }
 
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ProjectActions, dispatch);
+}
 
-export default connect(mapStateToProps)(MobileSketchView);
+export default connect(mapStateToProps, mapDispatchToProps)(MobileSketchView);
