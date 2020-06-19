@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
@@ -13,8 +14,6 @@ import * as PreferencesActions from '../IDE/actions/preferences';
 import * as ConsoleActions from '../IDE/actions/console';
 import * as FilesActions from '../IDE/actions/files';
 
-import FullView from '../IDE/pages/FullView';
-
 import { getHTMLFile } from '../IDE/reducers/files';
 
 
@@ -24,7 +23,7 @@ import { remSize } from '../../theme';
 
 const Content = styled.div`
   z-index: 0;
-  margin-top: ${remSize(48)};
+  margin-top: ${remSize(68)};
 `;
 
 const IconLinkWrapper = styled(Link)`
@@ -41,7 +40,7 @@ const MobileSketchView = (props) => {
   // const files = useSelector(state => state.files);
 
   const {
-    htmlFile, files, selectedFile
+    htmlFile, files, selectedFile, projectName
   } = props;
 
   // Actions
@@ -66,43 +65,37 @@ const MobileSketchView = (props) => {
           <ExitIcon viewBox="0 0 16 16" />
         </IconLinkWrapper>
         <div>
-          <h2>Hello</h2>
+          <h2>{projectName}</h2>
           <h3><br /></h3>
         </div>
       </Header>
       <Content>
-        <h1>Hello</h1>
-        <section className="preview-frame-holder">
-          <PreviewFrame
-            htmlFile={htmlFile}
-            files={files}
-            head={
-              <link type="text/css" rel="stylesheet" href="/preview-styles.css" />
-            }
+        <PreviewFrame
+          htmlFile={htmlFile}
+          files={files}
+          head={<link type="text/css" rel="stylesheet" href="/preview-styles.css" />}
 
-            content={selectedFile.content}
+          content={selectedFile.content}
 
-            fullView
-            isPlaying
-            isAccessibleOutputPlaying={ide.isAccessibleOutputPlaying}
-            previewIsRefreshing={ide.previewIsRefreshing}
+          isPlaying
+          isAccessibleOutputPlaying={ide.isAccessibleOutputPlaying}
+          previewIsRefreshing={ide.previewIsRefreshing}
 
-            textOutput={preferences.textOutput}
-            gridOutput={preferences.gridOutput}
-            soundOutput={preferences.soundOutput}
-            autorefresh={preferences.autorefresh}
+          textOutput={preferences.textOutput}
+          gridOutput={preferences.gridOutput}
+          soundOutput={preferences.soundOutput}
+          autorefresh={preferences.autorefresh}
 
-            setTextOutput={setTextOutput}
-            setGridOutput={setGridOutput}
-            setSoundOutput={setSoundOutput}
-            dispatchConsoleEvent={dispatchConsoleEvent}
-            endSketchRefresh={endSketchRefresh}
-            stopSketch={stopSketch}
-            setBlobUrl={setBlobUrl}
-            expandConsole={expandConsole}
-            clearConsole={clearConsole}
-          />
-        </section>
+          setTextOutput={setTextOutput}
+          setGridOutput={setGridOutput}
+          setSoundOutput={setSoundOutput}
+          dispatchConsoleEvent={dispatchConsoleEvent}
+          endSketchRefresh={endSketchRefresh}
+          stopSketch={stopSketch}
+          setBlobUrl={setBlobUrl}
+          expandConsole={expandConsole}
+          clearConsole={clearConsole}
+        />
       </Content>
     </Screen>);
 };
@@ -171,6 +164,8 @@ MobileSketchView.propTypes = {
     uploadFileModalVisible: PropTypes.bool.isRequired
   }).isRequired,
 
+  projectName: PropTypes.func.isRequired,
+
   setTextOutput: PropTypes.func.isRequired,
   setGridOutput: PropTypes.func.isRequired,
   setSoundOutput: PropTypes.func.isRequired,
@@ -185,7 +180,7 @@ MobileSketchView.propTypes = {
 function mapStateToProps(state) {
   return {
     htmlFile: getHTMLFile(state.files),
-    project: state.project,
+    projectName: state.project.name,
     files: state.files,
     ide: state.ide,
     preferences: state.preferences,

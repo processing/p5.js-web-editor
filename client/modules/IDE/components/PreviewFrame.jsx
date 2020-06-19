@@ -22,6 +22,24 @@ import {
 import { hijackConsoleErrorsScript, startTag, getAllScriptOffsets }
   from '../../../utils/consoleUtils';
 
+
+// Kept inside class just for linter's
+const shouldRenderSketch = (props, prevProps = undefined) => {
+  const { isPlaying, previewIsRefreshing, fullView } = props;
+
+  // if the user explicitly clicks on the play button
+  if (isPlaying && previewIsRefreshing) return true;
+
+  if (!prevProps) return false;
+
+  return (props.isPlaying !== prevProps.isPlaying // if sketch starts or stops playing, want to rerender
+    || props.isAccessibleOutputPlaying !== prevProps.isAccessibleOutputPlaying // if user switches textoutput preferences
+    || props.textOutput !== prevProps.textOutput
+    || props.gridOutput !== prevProps.gridOutput
+    || props.soundOutput !== prevProps.soundOutput
+    || (fullView && props.files[0].id !== prevProps.files[0].id));
+};
+
 class PreviewFrame extends React.Component {
   constructor(props) {
     super(props);
@@ -29,54 +47,18 @@ class PreviewFrame extends React.Component {
   }
 
   componentDidMount() {
-    console.log(`componentDidMount: ${this.props.isPlaying}`);
     window.addEventListener('message', this.handleConsoleEvent);
 
-    // TODO: maybe encapsulate this into a function (together with code from componentDidUpdate)
-    if (this.props.isPlaying && this.props.previewIsRefreshing) {
-      this.renderSketch();
-    }
+    const props = {
+      ...this.props,
+      previewIsRefreshing: this.props.previewIsRefreshing,
+      isAccessibleOutputPlaying: this.props.isAccessibleOutputPlaying
+    };
+    if (shouldRenderSketch(props)) this.renderSketch();
   }
 
   componentDidUpdate(prevProps) {
-    console.log(`componentDidUpdate: ${this.props.isPlaying}`);
-    // if sketch starts or stops playing, want to rerender
-    if (this.props.isPlaying !== prevProps.isPlaying) {
-      this.renderSketch();
-      return;
-    }
-
-    // if the user explicitly clicks on the play button
-    if (this.props.isPlaying && this.props.previewIsRefreshing) {
-      this.renderSketch();
-      return;
-    }
-
-    // if user switches textoutput preferences
-    if (this.props.isAccessibleOutputPlaying !== prevProps.isAccessibleOutputPlaying) {
-      this.renderSketch();
-      return;
-    }
-
-    if (this.props.textOutput !== prevProps.textOutput) {
-      this.renderSketch();
-      return;
-    }
-
-    if (this.props.gridOutput !== prevProps.gridOutput) {
-      this.renderSketch();
-      return;
-    }
-
-    if (this.props.soundOutput !== prevProps.soundOutput) {
-      this.renderSketch();
-      return;
-    }
-
-    if (this.props.fullView && this.props.files[0].id !== prevProps.files[0].id) {
-      this.renderSketch();
-    }
-
+    if (shouldRenderSketch(this.props, prevProps)) this.renderSketch();
     // small bug - if autorefresh is on, and the usr changes files
     // in the sketch, preview will reload
   }
