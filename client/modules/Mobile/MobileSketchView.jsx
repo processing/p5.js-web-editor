@@ -13,6 +13,8 @@ import * as PreferencesActions from '../IDE/actions/preferences';
 import * as ConsoleActions from '../IDE/actions/console';
 import * as FilesActions from '../IDE/actions/files';
 
+import FullView from '../IDE/pages/FullView';
+
 import { getHTMLFile } from '../IDE/reducers/files';
 
 
@@ -71,15 +73,17 @@ const MobileSketchView = (props) => {
       <Content>
         <h1>Hello</h1>
         <section className="preview-frame-holder">
-
           <PreviewFrame
             htmlFile={htmlFile}
             files={files}
-            fullView
+            head={
+              <link type="text/css" rel="stylesheet" href="/preview-styles.css" />
+            }
 
             content={selectedFile.content}
 
-            isPlaying={ide.isPlaying}
+            fullView
+            isPlaying
             isAccessibleOutputPlaying={ide.isAccessibleOutputPlaying}
             previewIsRefreshing={ide.previewIsRefreshing}
 

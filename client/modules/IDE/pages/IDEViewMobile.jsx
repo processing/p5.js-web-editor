@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -66,7 +67,7 @@ const IDEViewMobile = (props) => {
           <Link
             to="/mobile/preview"
             onClick={() => {
-              alert('starting sketch');
+              // alert('starting sketch');
               startSketch();
             }}
           >

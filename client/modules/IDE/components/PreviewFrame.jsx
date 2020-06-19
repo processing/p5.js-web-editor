@@ -29,10 +29,17 @@ class PreviewFrame extends React.Component {
   }
 
   componentDidMount() {
+    console.log(`componentDidMount: ${this.props.isPlaying}`);
     window.addEventListener('message', this.handleConsoleEvent);
+
+    // TODO: maybe encapsulate this into a function (together with code from componentDidUpdate)
+    if (this.props.isPlaying && this.props.previewIsRefreshing) {
+      this.renderSketch();
+    }
   }
 
   componentDidUpdate(prevProps) {
+    console.log(`componentDidUpdate: ${this.props.isPlaying}`);
     // if sketch starts or stops playing, want to rerender
     if (this.props.isPlaying !== prevProps.isPlaying) {
       this.renderSketch();
