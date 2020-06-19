@@ -85,6 +85,10 @@ export default {
         border: grays.middleLight,
       },
     },
+    Icon: {
+      default: grays.middleGray,
+      hover: grays.darker
+    }
   },
   [Theme.dark]: {
     colors,
@@ -113,6 +117,10 @@ export default {
         border: grays.middleDark,
       },
     },
+    Icon: {
+      default: grays.middleLight,
+      hover: grays.lightest
+    }
   },
   [Theme.contrast]: {
     colors,
@@ -141,5 +149,9 @@ export default {
         border: grays.middleDark,
       },
     },
+    Icon: {
+      default: grays.mediumLight,
+      hover: colors.yellow
+    }
   },
 };
