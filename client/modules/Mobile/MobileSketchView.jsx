@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
@@ -53,10 +53,10 @@ const MobileSketchView = (props) => {
 
   const { preferences, ide } = props;
 
-  // useEffect(() => {
+  useEffect(() => {
   //   console.log(params);
   //   getProject(params.project_id, params.username);
-  // }, []);
+  });
 
   return (
     <Screen>
@@ -78,6 +78,7 @@ const MobileSketchView = (props) => {
           content={selectedFile.content}
 
           isPlaying
+          forceFullWidth
           isAccessibleOutputPlaying={ide.isAccessibleOutputPlaying}
           previewIsRefreshing={ide.previewIsRefreshing}
 

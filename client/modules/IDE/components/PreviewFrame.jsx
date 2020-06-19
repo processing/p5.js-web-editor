@@ -201,6 +201,12 @@ class PreviewFrame extends React.Component {
     this.addLoopProtect(sketchDoc);
     sketchDoc.head.insertBefore(consoleErrorsScript, sketchDoc.head.firstElement);
 
+    if (this.props.forceFullWidth) {
+      const resizeScript = sketchDoc.createElement('style');
+      resizeScript.innerHTML = '.p5Canvas { width: 100% !important; height: auto !important }';
+      sketchDoc.head.appendChild(resizeScript);
+    }
+
     return `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
   }
 
@@ -331,6 +337,7 @@ class PreviewFrame extends React.Component {
       if (this.props.endSketchRefresh) {
         this.props.endSketchRefresh();
       }
+      // debugger; // eslint-disable-line
     } else {
       doc.srcdoc = '';
       srcDoc.set(doc, '  ');
@@ -384,11 +391,13 @@ PreviewFrame.propTypes = {
   clearConsole: PropTypes.func.isRequired,
   cmController: PropTypes.shape({
     getContent: PropTypes.func
-  })
+  }),
+  forceFullWidth: PropTypes.bool
 };
 
 PreviewFrame.defaultProps = {
   fullView: false,
+  forceFullWidth: false,
   cmController: {}
 };
 
