@@ -37,6 +37,11 @@ const getSortedCollections = createSelector(
         return orderBy(collections, 'name', 'desc');
       }
       return orderBy(collections, 'name', 'asc');
+    } else if (field === 'numItems') {
+      if (direction === DIRECTION.DESC) {
+        return orderBy(collections, 'items.length', 'desc');
+      }
+      return orderBy(collections, 'items.length', 'asc');
     }
     const sortedCollections = [...collections].sort((a, b) => {
       const result =
