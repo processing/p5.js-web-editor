@@ -40,7 +40,7 @@ const IconLinkWrapper = styled(Link)`
 
 const isUserOwner = ({ project, user }) => (project.owner && project.owner.id === user.id);
 
-const IDEViewMobile = (props) => {
+const MobileIDEView = (props) => {
   const {
     preferences, ide, editorAccessibility, project, updateLintMessage, clearLintMessage, selectedFile, updateFileContent, files, closeEditorOptions, showEditorOptions, showKeyboardShortcutModal, setUnsavedChanges, startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console, showRuntimeErrorWarning, hideRuntimeErrorWarning, startSketch
   } = props;
@@ -120,7 +120,7 @@ const IDEViewMobile = (props) => {
 };
 
 
-IDEViewMobile.propTypes = {
+MobileIDEView.propTypes = {
 
   preferences: PropTypes.shape({
     fontSize: PropTypes.number.isRequired,
@@ -267,4 +267,4 @@ function mapDispatchToProps(dispatch) {
 }
 
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(IDEViewMobile));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MobileIDEView));
