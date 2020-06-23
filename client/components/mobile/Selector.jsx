@@ -8,27 +8,34 @@ const PreferenceTitle = styled.h4.attrs(props => ({ ...props, className: 'prefer
   color: ${prop('primaryTextColor')} !important;
 `;
 
+const Preference = styled.div.attrs(props => ({ ...props, className: 'preference' }))`
+  flex-wrap: nowrap !important;
+  align-items: baseline !important;
+  justify-items: space-between
+`;
+
+
 const Selector = ({
   title, value, onSelect, options,
 }) => (
-  <div className="preference">
-    {/* <h4 className="preference__title">{title}</h4> */}
+  <Preference>
     <PreferenceTitle>{title}</PreferenceTitle>
-    {options.map(option => (
-      <div className="preference__options" key={option.id}>
-        <input
+    <div className="preference__options">
+      {options.map(option => (
+        <React.Fragment><input
           type="radio"
           onChange={() => onSelect(option.value)}
           aria-label={option.ariaLabel}
           name={option.name}
+          key={option.id}
           id={option.id}
           className="preference__radio-button"
           value={option.value}
           checked={value === option.value}
-        />
-        <label htmlFor={option.id} className="preference__option">{option.label}</label>
-      </div>))}
-  </div>
+        /><label htmlFor={option.id} className="preference__option">{option.label}</label>
+        </React.Fragment>))}
+    </div>
+  </Preference>
 );
 
 Selector.defaultProps = {
