@@ -38,10 +38,10 @@ const SectionHeader = styled.h2`
 
 const MobilePreferences = (props) => {
   const {
-    setTheme, setAutosave, setLinewrap, setTextOutput, setGridOutput, setSoundOutput
+    setTheme, setAutosave, setLinewrap, setTextOutput, setGridOutput, setSoundOutput, lineNumbers, lintWarning
   } = props;
   const {
-    theme, autosave, linewrap, textOutput, gridOutput, soundOutput
+    theme, autosave, linewrap, textOutput, gridOutput, soundOutput, setLineNumbers, setLintWarning
   } = props;
 
   const generalSettings = [
@@ -91,7 +91,7 @@ const MobilePreferences = (props) => {
     }
   ];
 
-  const accessibilitySettings = [
+  const outputSettings = [
     {
       title: 'Plain-text',
       value: textOutput,
@@ -133,6 +133,35 @@ const MobilePreferences = (props) => {
     },
   ];
 
+  const accessibilitySettings = [
+    {
+      title: 'Line Numbers',
+      value: lineNumbers,
+      options: [
+        {
+          value: true, label: 'On', ariaLabel: 'line numbers on', name: 'line numbers', id: 'line-numbers-on'
+        },
+        {
+          value: false, label: 'Off', ariaLabel: 'line numbers off', name: 'line numbers', id: 'line-numbers-off'
+        },
+      ],
+      onSelect: x => setLineNumbers(x)
+    },
+    {
+      title: 'Lint Warning Sound',
+      value: lintWarning,
+      options: [
+        {
+          value: true, label: 'On', ariaLabel: 'lint warning on', name: 'lint warning', id: 'lint-warning-on'
+        },
+        {
+          value: false, label: 'Off', ariaLabel: 'lint warning off', name: 'lint warning', id: 'lint-warning-off'
+        },
+      ],
+      onSelect: x => setLintWarning(x)
+    },
+  ];
+
   // useEffect(() => { });
 
   return (
@@ -156,11 +185,16 @@ const MobilePreferences = (props) => {
             <SectionHeader>Accessibility</SectionHeader>
             { accessibilitySettings.map(option => <Selector key={`${option.title}wrapper`} {...option} />) }
 
+            <SectionHeader>Accessible Output</SectionHeader>
+            <h3>Used with screen reader</h3>
+            { outputSettings.map(option => <Selector key={`${option.title}wrapper`} {...option} />) }
+
           </Content>
         </section>
       </section>
     </Screen>);
 };
+
 
 MobilePreferences.propTypes = {
   fontSize: PropTypes.number.isRequired,
