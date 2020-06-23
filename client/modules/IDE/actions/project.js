@@ -167,6 +167,8 @@ export function saveProject(selectedFile = null, autosave = false) {
         .catch((error) => {
           const { response } = error;
           dispatch(endSavingProject());
+          dispatch(setToastText('Failed to save project.'));
+          dispatch(showToast(1500));
           if (response.status === 403) {
             dispatch(showErrorModal('staleSession'));
           } else if (response.status === 409) {
@@ -207,6 +209,8 @@ export function saveProject(selectedFile = null, autosave = false) {
       .catch((error) => {
         const { response } = error;
         dispatch(endSavingProject());
+        dispatch(setToastText('Failed to save project.'));
+        dispatch(showToast(1500));
         if (response.status === 403) {
           dispatch(showErrorModal('staleSession'));
         } else {
