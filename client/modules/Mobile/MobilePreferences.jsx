@@ -10,6 +10,7 @@ import * as IdeActions from '../IDE/actions/ide';
 
 import Screen from '../../components/mobile/MobileScreen';
 import Header from '../../components/mobile/Header';
+import Selector from '../../components/mobile/Selector';
 import { ExitIcon } from '../../common/icons';
 import { remSize } from '../../theme';
 
@@ -24,43 +25,6 @@ const Content = styled.div`
   margin-top: ${remSize(68)};
 `;
 
-const Selector = ({
-  title, value, onSelect, options,
-}) => (
-  <div className="preference">
-    <h4 className="preference__title">{title}</h4>
-    {options.map(option => (
-      <div className="preference__options" key={option.id}>
-        <input
-          type="radio"
-          onChange={() => onSelect(option.value)}
-          aria-label={option.ariaLabel}
-          name={option.name}
-          id={option.id}
-          className="preference__radio-button"
-          value={option.value}
-          checked={value === option.value}
-        />
-        <label htmlFor={option.id} className="preference__option">{option.label}</label>
-      </div>))}
-  </div>
-);
-
-Selector.defaultProps = {
-  options: []
-};
-
-Selector.propTypes = {
-  title: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
-  options: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string,
-    name: PropTypes.string,
-    label: PropTypes.string,
-    ariaLabel: PropTypes.string,
-  })),
-  onSelect: PropTypes.func.isRequired,
-};
 
 const SettingsHeader = styled(Header)`
   background: transparent
@@ -121,21 +85,24 @@ const MobilePreferences = (props) => {
   // useEffect(() => { });
 
   return (
-    <Screen>
-      <SettingsHeader>
-        <h1>Settings</h1>
+    <Screen fullscreen>
+      <section>
 
-        <div style={{ marginLeft: '2rem' }}>
-          <IconLinkWrapper to="/mobile" aria-label="Return to ide view">
-            <ExitIcon />
-          </IconLinkWrapper>
+        <SettingsHeader>
+          <h1>Settings</h1>
 
-        </div>
-      </SettingsHeader>
-      <section className="preferences">
-        <Content>
-          { preferences.map(option => <Selector key={`${option.title}wrapper`} {...option} />) }
-        </Content>
+          <div style={{ marginLeft: '2rem' }}>
+            <IconLinkWrapper to="/mobile" aria-label="Return to ide view">
+              <ExitIcon />
+            </IconLinkWrapper>
+
+          </div>
+        </SettingsHeader>
+        <section className="preferences">
+          <Content>
+            { preferences.map(option => <Selector key={`${option.title}wrapper`} {...option} />) }
+          </Content>
+        </section>
       </section>
     </Screen>);
 };
