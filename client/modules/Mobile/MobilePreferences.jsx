@@ -37,8 +37,12 @@ const SectionHeader = styled.h2`
 
 
 const MobilePreferences = (props) => {
-  const { setTheme, setAutosave, setLinewrap } = props;
-  const { theme, autosave, linewrap } = props;
+  const {
+    setTheme, setAutosave, setLinewrap, setTextOutput, setGridOutput, setSoundOutput
+  } = props;
+  const {
+    theme, autosave, linewrap, textOutput, gridOutput, soundOutput
+  } = props;
 
   const generalSettings = [
     {
@@ -87,6 +91,48 @@ const MobilePreferences = (props) => {
     }
   ];
 
+  const accessibilitySettings = [
+    {
+      title: 'Plain-text',
+      value: textOutput,
+      options: [
+        {
+          value: true, label: 'On', ariaLabel: 'text output on', name: 'text output', id: 'text-output-on'
+        },
+        {
+          value: false, label: 'Off', ariaLabel: 'text output off', name: 'text output', id: 'text-output-off'
+        },
+      ],
+      onSelect: x => setTextOutput(x)
+    },
+    {
+      title: 'Table-text',
+      value: gridOutput,
+      options: [
+        {
+          value: true, label: 'On', ariaLabel: 'table output on', name: 'table output', id: 'table-output-on'
+        },
+        {
+          value: false, label: 'Off', ariaLabel: 'table output off', name: 'table output', id: 'table-output-off'
+        },
+      ],
+      onSelect: x => setGridOutput(x)
+    },
+    {
+      title: 'Sound',
+      value: soundOutput,
+      options: [
+        {
+          value: true, label: 'On', ariaLabel: 'sound output on', name: 'sound output', id: 'sound-output-on'
+        },
+        {
+          value: false, label: 'Off', ariaLabel: 'sound output off', name: 'sound output', id: 'sound-output-off'
+        },
+      ],
+      onSelect: x => setSoundOutput(x)
+    },
+  ];
+
   // useEffect(() => { });
 
   return (
@@ -108,12 +154,13 @@ const MobilePreferences = (props) => {
             { generalSettings.map(option => <Selector key={`${option.title}wrapper`} {...option} />) }
 
             <SectionHeader>Accessibility</SectionHeader>
+            { accessibilitySettings.map(option => <Selector key={`${option.title}wrapper`} {...option} />) }
+
           </Content>
         </section>
       </section>
     </Screen>);
 };
-
 
 MobilePreferences.propTypes = {
   fontSize: PropTypes.number.isRequired,
