@@ -61,16 +61,13 @@ const MobileIDEView = (props) => {
         </div>
 
         <div style={{ marginLeft: '2rem' }}>
-          <IconButton onClick={() => setOverlay('preferences')}>
-            <PreferencesIcon focusable="false" aria-hidden="true" />
-          </IconButton>
-          <Link
-            to="/mobile/preview"
-            onClick={() => {
-              // alert('starting sketch');
-              startSketch();
-            }}
-          >
+          <Link to="/mobile/preferences">
+            <IconButton onClick={() => setOverlay('preferences')}>
+              <PreferencesIcon focusable="false" aria-hidden="true" />
+            </IconButton>
+          </Link>
+
+          <Link to="/mobile/preview" onClick={() => startSketch()}>
             <IconButton>
               <PlayIcon viewBox="-1 -1 7 7" focusable="false" aria-hidden="true" />
             </IconButton>
