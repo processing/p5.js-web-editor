@@ -5,7 +5,7 @@ import { prop } from '../../theme';
 
 
 const PreferenceTitle = styled.h4.attrs(props => ({ ...props, className: 'preference__title' }))`
-  color: ${prop('primaryTextColor')} !important;
+  color: ${prop('primaryTextColor')};
 `;
 
 const Preference = styled.div.attrs(props => ({ ...props, className: 'preference' }))`

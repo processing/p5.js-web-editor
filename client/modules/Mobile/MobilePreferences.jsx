@@ -12,7 +12,7 @@ import Screen from '../../components/mobile/MobileScreen';
 import Header from '../../components/mobile/Header';
 import Selector from '../../components/mobile/Selector';
 import { ExitIcon } from '../../common/icons';
-import { remSize } from '../../theme';
+import { remSize, prop } from '../../theme';
 
 const IconLinkWrapper = styled(Link)`
   width: 3rem;
@@ -30,12 +30,17 @@ const SettingsHeader = styled(Header)`
   background: transparent
 `;
 
+const SectionHeader = styled.h2`
+  color: ${prop('primaryTextColor')};
+  padding-top: 2rem
+`;
+
 
 const MobilePreferences = (props) => {
   const { setTheme, setAutosave, setLinewrap } = props;
   const { theme, autosave, linewrap } = props;
 
-  const preferences = [
+  const generalSettings = [
     {
       title: 'Theme',
       value: theme,
@@ -95,12 +100,14 @@ const MobilePreferences = (props) => {
             <IconLinkWrapper to="/mobile" aria-label="Return to ide view">
               <ExitIcon />
             </IconLinkWrapper>
-
           </div>
         </SettingsHeader>
         <section className="preferences">
           <Content>
-            { preferences.map(option => <Selector key={`${option.title}wrapper`} {...option} />) }
+            <SectionHeader>General Settings</SectionHeader>
+            { generalSettings.map(option => <Selector key={`${option.title}wrapper`} {...option} />) }
+
+            <SectionHeader>Accessibility</SectionHeader>
           </Content>
         </section>
       </section>
