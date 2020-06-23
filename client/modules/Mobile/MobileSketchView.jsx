@@ -59,7 +59,7 @@ const MobileSketchView = (props) => {
   });
 
   return (
-    <Screen>
+    <Screen fullscreen>
       <Header>
         <IconLinkWrapper to="/mobile" aria-label="Return to original editor">
           <ExitIcon viewBox="0 0 16 16" />

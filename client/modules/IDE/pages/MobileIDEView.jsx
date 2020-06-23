@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -50,7 +49,7 @@ const MobileIDEView = (props) => {
   const [overlay, setOverlay] = useState(null);
 
   return (
-    <Screen>
+    <Screen fullscreen>
       <Header>
         <IconLinkWrapper to="/" aria-label="Return to original editor">
           <ExitIcon />

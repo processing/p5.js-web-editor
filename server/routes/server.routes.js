@@ -123,7 +123,7 @@ if (process.env.MOBILE_ENABLED) {
     res.send(renderIndex());
   });
 
-  router.get('/mobile/*', (req, res) => {
+  router.get('/mobile/preferences', (req, res) => {
     res.send(renderIndex());
   });
 }
