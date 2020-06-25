@@ -1,7 +1,4 @@
 .CodeMirror {
-  @include themify() {
-  	border: 1px solid getThemifyVariable('ide-border-color');
-  }
   font-family: Inconsolata, monospace;
   height: 100%;
 }
@@ -55,7 +52,7 @@ pre.CodeMirror-line {
 }
 
 .CodeMirror-gutter-elt:not(.CodeMirror-linenumber) {
-  opacity: 0.3;
+  opacity: 0.2;
   width: #{49 / $base-font-size}rem !important;
   height: 100%;
   left: 49px !important;
@@ -123,11 +120,9 @@ pre.CodeMirror-line {
   width: 100%;
   margin-bottom: #{12 / $base-font-size}rem;
   @include themify() {
-    background-color: getThemifyVariable('search-background-color');
+    color: getThemifyVariable('input-text-color');
+    background-color: getThemifyVariable('input-secondary-background-color');
     border: solid 0.5px getThemifyVariable('button-border-color');
-  }
-  &:focus {
-    background-color: $white;
   }
 }
 
@@ -148,22 +143,30 @@ pre.CodeMirror-line {
 .CodeMirror-search-modifiers {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 }
 
 .CodeMirror-regexp-button,
 .CodeMirror-case-button,
 .CodeMirror-word-button {
-  width: 20px;
-  height: 20px;
+  @include themify() {
+    // @extend %button;
+    padding: #{2 / $base-font-size}rem #{7 / $base-font-size}rem;
+    border: 2px solid transparent;
+    &:hover {
+      border-color: getThemifyVariable("button-border-color");
+    }
 
-  margin-left: #{10 / $base-font-size}rem;
+  }
+  width: #{35 / $base-font-size}rem;
+  height: #{35 / $base-font-size}rem;
+
+  & + & {
+    margin-left: #{10 / $base-font-size}rem;
+  }
 
   word-break: keep-all;
   white-space: nowrap;
-
-  @include themify() {
-    color: getThemifyVariable('inactive-text-color');
-  }
 }
 
 .CodeMirror-regexp-button .label,
@@ -174,7 +177,9 @@ pre.CodeMirror-line {
 
 [aria-checked="true"] {
   @include themify() {
-    color: getThemifyVariable('primary-text-color');
+    color: getThemifyVariable("heavy-text-color");
+    background-color: getThemifyVariable("button-secondary-background-color");
+    border-color: getThemifyVariable("button-border-color");
   }
 }
 
@@ -206,12 +211,12 @@ pre.CodeMirror-line {
 
 // Previous button
 .CodeMirror-search-button.prev::after {
-  background-image: url(../images/up-arrow.svg)
+  background-image: url(../images/up-arrow.svg?byUrl)
 }
 
 // Next button
 .CodeMirror-search-button.next::after {
-  background-image: url(../images/down-arrow.svg)
+  background-image: url(../images/down-arrow.svg?byUrl)
 }
 
 /*
@@ -242,7 +247,36 @@ pre.CodeMirror-line {
 
   @include icon();
 
-  background: transparent url(../images/exit.svg) no-repeat;
+  background: transparent url(../images/exit.svg?byUrl) no-repeat;
+}
+
+// foldgutter
+.CodeMirror-foldmarker {
+  text-shadow: -1px 0 #ed225d, 0 1px #ed225d, 1px 0 #ed225d, 0 -1px #ed225d;
+  color: #FFF;
+  /* background-color: rgba(237, 34, 93, 0.42); */
+  /* border-radius: 3px; */
+  font-weight: bold;
+  font-family: arial;
+  line-height: .3;
+  cursor: pointer;
+  opacity: 0.75;
+}
+.CodeMirror-foldgutter {
+  width: 2.7em;
+}
+.CodeMirror-foldgutter-open,
+.CodeMirror-foldgutter-folded {
+  cursor: pointer;
+  padding-bottom: 0.4em;
+  text-align: right;
+  line-height: 1.0;
+}
+.CodeMirror-foldgutter-open:after {
+  content: "\25BE";
+}
+.CodeMirror-foldgutter-folded:after {
+  content: "\25B8";
 }
 
 .CodeMirror-foldgutter-open, .CodeMirror-foldgutter-folded {
@@ -299,6 +333,12 @@ pre.CodeMirror-line {
   height: calc(100% - #{29 / $base-font-size}rem);
   width: 100%;
   position: absolute;
+  @include themify() {
+    border: 1px solid getThemifyVariable('ide-border-color');
+  }
+  &.editor-holder--hidden .CodeMirror {
+    display: none;
+  }
 }
 
 .editor__header {
@@ -342,7 +382,7 @@ pre.CodeMirror-line {
 
 .editor__file-name {
   @include themify() {
-    color: getThemifyVariable('secondary-text-color');
+    color: getThemifyVariable('primary-text-color');
   }
   height: #{29 / $base-font-size}rem;
   padding-top: #{7 / $base-font-size}rem;
@@ -350,4 +390,8 @@ pre.CodeMirror-line {
   font-size: #{12 / $base-font-size}rem;
   display: flex;
   justify-content: space-between;
+}
+
+.editor__unsaved-changes {
+  margin-left: #{2 / $base-font-size}rem;
 }

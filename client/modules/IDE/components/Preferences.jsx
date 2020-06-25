@@ -1,27 +1,45 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import InlineSVG from 'react-inlinesvg';
 import { Helmet } from 'react-helmet';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 // import { bindActionCreators } from 'redux';
 // import { connect } from 'react-redux';
 // import * as PreferencesActions from '../actions/preferences';
 
-const plusUrl = require('../../../images/plus.svg');
-const minusUrl = require('../../../images/minus.svg');
-const beepUrl = require('../../../sounds/audioAlert.mp3');
+import PlusIcon from '../../../images/plus.svg';
+import MinusIcon from '../../../images/minus.svg';
+import beepUrl from '../../../sounds/audioAlert.mp3';
 
 class Preferences extends React.Component {
   constructor(props) {
     super(props);
     this.handleUpdateAutosave = this.handleUpdateAutosave.bind(this);
-    this.handleUpdateFont = this.handleUpdateFont.bind(this);
-    this.handleUpdateIndentation = this.handleUpdateIndentation.bind(this);
+    this.handleUpdateLinewrap = this.handleUpdateLinewrap.bind(this);
     this.handleLintWarning = this.handleLintWarning.bind(this);
+    this.handleLineNumbers = this.handleLineNumbers.bind(this);
+    this.onFontInputChange = this.onFontInputChange.bind(this);
+    this.onFontInputSubmit = this.onFontInputSubmit.bind(this);
+    this.increaseFontSize = this.increaseFontSize.bind(this);
+    this.decreaseFontSize = this.decreaseFontSize.bind(this);
+    this.setFontSize = this.setFontSize.bind(this);
+
+    this.state = {
+      fontSize: props.fontSize
+    };
   }
 
-  handleUpdateFont(event) {
-    let value = parseInt(event.target.value, 10);
+  onFontInputChange(event) {
+    const INTEGER_REGEX = /^[0-9\b]+$/;
+    if (event.target.value === '' || INTEGER_REGEX.test(event.target.value)) {
+      this.setState({
+        fontSize: event.target.value
+      });
+    }
+  }
+
+  onFontInputSubmit(event) {
+    event.preventDefault();
+    let value = parseInt(this.state.fontSize, 10);
     if (Number.isNaN(value)) {
       value = 16;
     }
@@ -31,21 +49,22 @@ class Preferences extends React.Component {
     if (value < 8) {
       value = 8;
     }
+    this.setFontSize(value);
+  }
+
+  setFontSize(value) {
+    this.setState({ fontSize: value });
     this.props.setFontSize(value);
   }
 
-  handleUpdateIndentation(event) {
-    let value = parseInt(event.target.value, 10);
-    if (Number.isNaN(value)) {
-      value = 2;
-    }
-    if (value > 6) {
-      value = 6;
-    }
-    if (value < 0) {
-      value = 0;
-    }
-    this.props.setIndentation(value);
+  decreaseFontSize() {
+    const newValue = this.state.fontSize - 2;
+    this.setFontSize(newValue);
+  }
+
+  increaseFontSize() {
+    const newValue = this.state.fontSize + 2;
+    this.setFontSize(newValue);
   }
 
   handleUpdateAutosave(event) {
@@ -53,24 +72,34 @@ class Preferences extends React.Component {
     this.props.setAutosave(value);
   }
 
+  handleUpdateLinewrap(event) {
+    const value = event.target.value === 'true';
+    this.props.setLinewrap(value);
+  }
+
   handleLintWarning(event) {
     const value = event.target.value === 'true';
     this.props.setLintWarning(value);
+  }
+
+  handleLineNumbers(event) {
+    const value = event.target.value === 'true';
+    this.props.setLineNumbers(value);
   }
 
   render() {
     const beep = new Audio(beepUrl);
 
     return (
-      <section className="preferences" title="preference-menu">
+      <section className="preferences">
         <Helmet>
           <title>p5.js Web Editor | Preferences</title>
         </Helmet>
         <Tabs>
           <TabList>
-            <div className="preference__subheadings">
-              <Tab><h4 className="preference__subheading">General Settings</h4></Tab>
-              <Tab><h4 className="preference__subheading">Accessibility</h4></Tab>
+            <div className="tabs__titles">
+              <Tab><h4 className="tabs__title">General Settings</h4></Tab>
+              <Tab><h4 className="tabs__title">Accessibility</h4></Tab>
             </div>
           </TabList>
           <TabPanel>
@@ -116,92 +145,34 @@ class Preferences extends React.Component {
               <h4 className="preference__title">Text size</h4>
               <button
                 className="preference__minus-button"
-                onClick={() => this.props.setFontSize(this.props.fontSize - 2)}
+                onClick={this.decreaseFontSize}
                 aria-label="decrease font size"
-                disabled={this.props.fontSize <= 8}
+                disabled={this.state.fontSize <= 8}
               >
-                <InlineSVG src={minusUrl} alt="Decrease Font Size" />
+                <MinusIcon focusable="false" aria-hidden="true" />
                 <h6 className="preference__label">Decrease</h6>
               </button>
-              <input
-                className="preference__value"
-                aria-live="polite"
-                aria-atomic="true"
-                value={this.props.fontSize}
-                onChange={this.handleUpdateFont}
-                ref={(element) => { this.fontSizeInput = element; }}
-                onClick={() => {
-                  this.fontSizeInput.select();
-                }}
-              />
+              <form onSubmit={this.onFontInputSubmit}>
+                <input
+                  className="preference__value"
+                  aria-live="polite"
+                  aria-atomic="true"
+                  value={this.state.fontSize}
+                  onChange={this.onFontInputChange}
+                  type="text"
+                  ref={(element) => { this.fontSizeInput = element; }}
+                  onClick={() => { this.fontSizeInput.select(); }}
+                />
+              </form>
               <button
                 className="preference__plus-button"
-                onClick={() => this.props.setFontSize(this.props.fontSize + 2)}
+                onClick={this.increaseFontSize}
                 aria-label="increase font size"
-                disabled={this.props.fontSize >= 36}
+                disabled={this.state.fontSize >= 36}
               >
-                <InlineSVG src={plusUrl} alt="Increase Font Size" />
+                <PlusIcon focusable="false" aria-hidden="true" />
                 <h6 className="preference__label">Increase</h6>
               </button>
-            </div>
-            <div className="preference">
-              <h4 className="preference__title">Indentation amount</h4>
-              <button
-                className="preference__minus-button"
-                onClick={() => this.props.setIndentation(this.props.indentationAmount - 2)}
-                aria-label="decrease indentation amount"
-                disabled={this.props.indentationAmount <= 0}
-              >
-                <InlineSVG src={minusUrl} alt="DecreaseIndentation Amount" />
-                <h6 className="preference__label">Decrease</h6>
-              </button>
-              <input
-                className="preference__value"
-                aria-live="polite"
-                aria-atomic="true"
-                value={this.props.indentationAmount}
-                onChange={this.handleUpdateIndentation}
-                ref={(element) => { this.indentationInput = element; }}
-                onClick={() => {
-                  this.indentationInput.select();
-                }}
-              />
-              <button
-                className="preference__plus-button"
-                onClick={() => this.props.setIndentation(this.props.indentationAmount + 2)}
-                aria-label="increase indentation amount"
-                disabled={this.props.indentationAmount >= 6}
-              >
-                <InlineSVG src={plusUrl} alt="IncreaseIndentation Amount" />
-                <h6 className="preference__label">Increase</h6>
-              </button>
-              <input
-                type="radio"
-                onChange={this.props.indentWithSpace}
-                aria-label="indentation with space"
-                name="indentation"
-                id="indentation-space"
-                className="preference__radio-button"
-                value="Spaces"
-                checked={!this.props.isTabIndent}
-              />
-              <label
-                htmlFor="indentation-space"
-                className="preference__option preference__whitespace-button"
-              >
-                Spaces
-              </label>
-              <input
-                type="radio"
-                onChange={this.props.indentWithTab}
-                aria-label="indentation with tab"
-                name="indentation"
-                id="indentation-tab"
-                className="preference__radio-button"
-                value="Tabs"
-                checked={this.props.isTabIndent}
-              />
-              <label htmlFor="indentation-tab" className="preference__option preference__whitespace-button">Tabs</label>
             </div>
             <div className="preference">
               <h4 className="preference__title">Autosave</h4>
@@ -230,8 +201,62 @@ class Preferences extends React.Component {
                 <label htmlFor="autosave-off" className="preference__option">Off</label>
               </div>
             </div>
+            <div className="preference">
+              <h4 className="preference__title">Word Wrap</h4>
+              <div className="preference__options">
+                <input
+                  type="radio"
+                  onChange={() => this.props.setLinewrap(true)}
+                  aria-label="linewrap on"
+                  name="linewrap"
+                  id="linewrap-on"
+                  className="preference__radio-button"
+                  value="On"
+                  checked={this.props.linewrap}
+                />
+                <label htmlFor="linewrap-on" className="preference__option">On</label>
+                <input
+                  type="radio"
+                  onChange={() => this.props.setLinewrap(false)}
+                  aria-label="linewrap off"
+                  name="linewrap"
+                  id="linewrap-off"
+                  className="preference__radio-button"
+                  value="Off"
+                  checked={!this.props.linewrap}
+                />
+                <label htmlFor="linewrap-off" className="preference__option">Off</label>
+              </div>
+            </div>
           </TabPanel>
           <TabPanel>
+            <div className="preference">
+              <h4 className="preference__title">Line numbers</h4>
+              <div className="preference__options">
+                <input
+                  type="radio"
+                  onChange={() => this.props.setLineNumbers(true)}
+                  aria-label="line numbers on"
+                  name="line numbers"
+                  id="line-numbers-on"
+                  className="preference__radio-button"
+                  value="On"
+                  checked={this.props.lineNumbers}
+                />
+                <label htmlFor="line-numbers-on" className="preference__option">On</label>
+                <input
+                  type="radio"
+                  onChange={() => this.props.setLineNumbers(false)}
+                  aria-label="line numbers off"
+                  name="line numbers"
+                  id="line-numbers-off"
+                  className="preference__radio-button"
+                  value="Off"
+                  checked={!this.props.lineNumbers}
+                />
+                <label htmlFor="line-numbers-off" className="preference__option">Off</label>
+              </div>
+            </div>
             <div className="preference">
               <h4 className="preference__title">Lint warning sound</h4>
               <div className="preference__options">
@@ -318,14 +343,13 @@ class Preferences extends React.Component {
 
 Preferences.propTypes = {
   fontSize: PropTypes.number.isRequired,
-  indentationAmount: PropTypes.number.isRequired,
-  setIndentation: PropTypes.func.isRequired,
-  indentWithSpace: PropTypes.func.isRequired,
-  indentWithTab: PropTypes.func.isRequired,
-  isTabIndent: PropTypes.bool.isRequired,
+  lineNumbers: PropTypes.bool.isRequired,
   setFontSize: PropTypes.func.isRequired,
   autosave: PropTypes.bool.isRequired,
+  linewrap: PropTypes.bool.isRequired,
+  setLineNumbers: PropTypes.func.isRequired,
   setAutosave: PropTypes.func.isRequired,
+  setLinewrap: PropTypes.func.isRequired,
   textOutput: PropTypes.bool.isRequired,
   gridOutput: PropTypes.bool.isRequired,
   soundOutput: PropTypes.bool.isRequired,

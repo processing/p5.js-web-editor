@@ -1,0 +1,192 @@
+.collection-container {
+  padding: #{24 / $base-font-size}rem #{66 / $base-font-size}rem;
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction:column;
+}
+
+.collection {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.collection-metadata {
+  max-width: #{1012 / $base-font-size}rem;
+  width: 100%;
+  margin: 0 auto;
+  margin-bottom: #{24 / $base-font-size}rem;
+}
+
+.collection-metadata__columns {
+  display: flex;
+}
+
+.collection-metadata__column--left,
+.collection-metadata__column--right {
+  flex: 1;
+}
+
+.collection-metadata__column--right {
+  align-self: flex-end;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.collection-metadata__column--right > * {
+  margin-left: #{10 / $base-font-size}rem;
+}
+
+.collection-metadata__name {
+  // padding: #{8 / $base-font-size}rem 0;
+}
+
+.collection-metadata__name .editable-input__label {
+  padding: 0.83333rem #{7 / $base-font-size}rem;
+}
+
+.collection-metadata__name,
+.collection-metadata__name .editable-input__input {
+  font-size: 1.75rem;
+  font-weight: bold;
+}
+
+.collection-metadata__user {
+  padding-top: #{8 / $base-font-size}rem;
+  font-size: 14px;
+}
+
+.collection-metadata--is-owner .collection-metadata__user {
+  padding-left: #{8 / $base-font-size}rem;
+}
+
+.collection-metadata__description {
+  padding-top: #{8 / $base-font-size}rem;
+  text-align: left;
+  font-size: #{14 / $base-font-size}rem;
+}
+
+.collection-metadata__description .editable-input__label {
+  text-align: left;
+}
+
+.collection-metadata__description .editable-input--has-value .editable-input__label  {
+  @include themify() {
+    color: getThemifyVariable('primary-text-color');
+  }
+}
+
+.collection-metadata__description .editable-input__input {
+  width: 100%;
+}
+
+.collection-add-sketch {
+  min-width: #{600 / $base-font-size}rem;
+  overflow: scroll;
+}
+
+.collection-share {
+  text-align: right;
+  position: relative;
+}
+
+.collection-share__button {
+  @extend %button;
+  display: flex;
+  align-items: center;
+}
+
+.collection-share__arrow {
+  margin-left: #{5 / $base-font-size}rem;
+}
+
+.collection-share .copyable-input {
+  padding-bottom: 0;
+}
+
+.collection__share-dropdown {
+  @extend %dropdown-open-right;
+  padding: #{20 / $base-font-size}rem;
+  width: #{350 / $base-font-size}rem;
+}
+
+.collection-metadata__add-button {
+  @extend %button;
+  flex-grow: 0;
+}
+
+.collection-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  max-width: #{1012 / $base-font-size}rem;
+  margin: 0 auto;
+  width: 100%;
+
+  @include themify() {
+    border: 1px solid getThemifyVariable('modal-border-color');
+  }
+}
+
+.collection-table-wrapper {
+  overflow-y: auto;
+  max-width: 100%;
+  min-height: 100%;
+}
+
+
+// maybe don't need this?
+[data-has-items=false] .collection-table-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.collection-empty-message {
+  text-align: center;
+  font-size: #{16 / $base-font-size}rem;
+}
+
+.collection-row__action-column {
+  width: #{60 / $base-font-size}rem;
+  position: relative;
+}
+
+.collection-row__remove-button {
+  display: inline-block;
+  width:#{35 / $base-font-size}rem;
+  height:#{35 / $base-font-size}rem;
+  @include icon();
+  @include themify() {
+    // icon graphic
+    path {
+      fill: getThemifyVariable('table-button-color');
+    }
+
+    // icon background circle
+    path:first-child {
+      fill: getThemifyVariable('table-button-background-color');
+    }
+
+    & svg {
+      width:#{35 / $base-font-size}rem;
+      height:#{35 / $base-font-size}rem;
+    }
+
+    &:hover,
+    &:focus {
+      path {
+        fill: getThemifyVariable('table-button-hover-color');
+      }
+
+      path:first-child {
+        fill: getThemifyVariable('table-button-background-hover-color');
+      }
+    }
+  }
+}

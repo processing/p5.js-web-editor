@@ -65,12 +65,13 @@ export function dropzoneAcceptCallback(userId, file, done) {
           file.previewTemplate.className += ' uploading'; // eslint-disable-line
           done();
         })
-        .catch((response) => {
-        file.custom_status = 'rejected'; // eslint-disable-line
-          if (response.data.responseText && response.data.responseText.message) {
+        .catch((error) => {
+          const { response } = error;
+          file.custom_status = 'rejected'; // eslint-disable-line
+          if (response.data && response.data.responseText && response.data.responseText.message) {
             done(response.data.responseText.message);
           }
-          done('error preparing the upload');
+          done('Error: Reached upload limit.');
         });
     }
   };
@@ -82,7 +83,7 @@ export function dropzoneSendingCallback(file, xhr, formData) {
       Object.keys(file.postData).forEach((key) => {
         formData.append(key, file.postData[key]);
       });
-      formData.append('Content-type', '');
+      formData.append('Content-type', file.type);
       formData.append('Content-length', '');
       formData.append('acl', 'public-read');
     }

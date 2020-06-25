@@ -1,10 +1,17 @@
 .form-error {
   display: block;
   padding-top: #{4 / $base-font-size}rem;
-  color: $p5js-pink;
   width: #{300 / $base-font-size}rem;
-  font-size: #{9 / $base-font-size}rem;
+  font-size: #{12 / $base-font-size}rem;
   text-align: left;
+  @include themify() {
+    color: getThemifyVariable('error-color');
+  }
+}
+
+.form--inline {
+  display: flex;
+  align-items: center;
 }
 
 .form__cancel-button {
@@ -15,22 +22,49 @@
 .form__navigation-options {
   margin-top: #{16 / $base-font-size}rem;
   font-size: #{12 / $base-font-size}rem;
-  color: $form-navigation-options-color;
+  @include themify() {
+    color: getThemifyVariable('form-navigation-options-color');
+  }
+}
+
+.form__legend{
+  font-size: #{21 / $base-font-size}rem;
+  font-weight: bold;
 }
 
 .form__label {
-  color: $secondary-form-title-color;
   font-size: #{12 / $base-font-size}rem;
   margin-top: #{25 / $base-font-size}rem;
   margin-bottom: #{7 / $base-font-size}rem;
   display: block;
+  @include themify() {
+    color: getThemifyVariable('form-secondary-title-color');
+  }
+}
+
+.form__label--hidden {
+  @extend %hidden-element;
 }
 
 .form__input {
-  width: #{360 / $base-font-size}rem;
+  width: 100%;
+  min-width: #{360 / $base-font-size}rem;
   height: #{40 / $base-font-size}rem;
-  color: $icon-hover-color;
-  border-color: $secondary-form-title-color;
+  font-size: #{16 / $base-font-size}rem;
+  @include themify() {
+    color: getThemifyVariable('form-input-text-color');
+    background-color: getThemifyVariable('input-background-color');
+  }
+}
+
+.form__input-flexible-height {
+  height: auto;
+}
+
+.form__input::placeholder {
+  @include themify() {
+    color: getThemifyVariable('form-input-placeholder-text-color');
+  }
 }
 
 .form__context {
@@ -39,13 +73,26 @@
 }
 
 .form__status {
-  color: $form-navigation-options-color;
+  @include themify() {
+    color: getThemifyVariable('form-navigation-options-color');
+  }
 }
 
-.form input[type="submit"] {
-  @extend %forms-button;
+.form [type="submit"] {
+  @extend %button;
+  padding: #{8 / $base-font-size}rem #{25 / $base-font-size}rem;
+  margin: #{39 / $base-font-size}rem 0 #{24 / $base-font-size}rem 0;
 }
 
-.form input[type="submit"]:disabled {
+.form [type="submit"][disabled] {
+  cursor: not-allowed;
+}
+
+.form--inline [type="submit"] {
+  margin: 0 0 0 #{24 / $base-font-size}rem;
+}
+
+.form [type="submit"][disabled],
+.form--inline [type="submit"][disabled] {
   cursor: not-allowed;
 }

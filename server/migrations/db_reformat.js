@@ -13,7 +13,7 @@ mongoose.connection.on('error', () => {
 import Project from '../models/project';
 import User from '../models/user';
 
-import s3 from 's3';
+import s3 from '@auth0/s3';
 
 let client = s3.createClient({
   maxAsyncS3: 20,
@@ -178,7 +178,7 @@ objectsResponse.on('end', () => {
 //         //   console.log('is selected remains');
 //         // }
 
-//         // if (file.isSelctedFile) {
+//         // if (file.isSelectedFile) {
 //         //   console.log('changed to isSelected file');
 //         // }
 //         project.save((err, savedProject) => {

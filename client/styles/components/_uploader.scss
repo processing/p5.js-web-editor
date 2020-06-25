@@ -1,5 +1,12 @@
 .dropzone {
-  color: $primary-text-color;
+  @include themify() {
+    background-color: getThemifyVariable('input-secondary-background-color');
+    color: getThemifyVariable('input-text-color');
+  }
+}
+
+.dropzone .dz-preview.dz-image-preview {
+  background-color: transparent;
 }
 
 .uploader {

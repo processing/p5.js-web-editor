@@ -1,17 +1,34 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
-import InlineSVG from 'react-inlinesvg';
 import ConnectedFileNode from './FileNode';
 
-const folderUrl = require('../../../images/folder.svg');
-const downArrowUrl = require('../../../images/down-arrow.svg');
+import DownArrowIcon from '../../../images/down-filled-triangle.svg';
 
 class Sidebar extends React.Component {
   constructor(props) {
     super(props);
     this.resetSelectedFile = this.resetSelectedFile.bind(this);
     this.toggleProjectOptions = this.toggleProjectOptions.bind(this);
+    this.onBlurComponent = this.onBlurComponent.bind(this);
+    this.onFocusComponent = this.onFocusComponent.bind(this);
+
+    this.state = {
+      isFocused: false,
+    };
+  }
+
+  onBlurComponent() {
+    this.setState({ isFocused: false });
+    setTimeout(() => {
+      if (!this.state.isFocused) {
+        this.props.closeProjectOptions();
+      }
+    }, 200);
+  }
+
+  onFocusComponent() {
+    this.setState({ isFocused: true });
   }
 
   resetSelectedFile() {
@@ -41,49 +58,84 @@ class Sidebar extends React.Component {
   }
 
   render() {
+    const canEditProject = this.userCanEditProject();
     const sidebarClass = classNames({
       'sidebar': true,
       'sidebar--contracted': !this.props.isExpanded,
       'sidebar--project-options': this.props.projectOptionsVisible,
-      'sidebar--cant-edit': !this.userCanEditProject()
+      'sidebar--cant-edit': !canEditProject
     });
+    const rootFile = this.props.files.filter(file => file.name === 'root')[0];
 
     return (
-      <nav className={sidebarClass} title="file-navigation" >
-        <div className="sidebar__header" onContextMenu={this.toggleProjectOptions}>
+      <section className={sidebarClass}>
+        <header className="sidebar__header" onContextMenu={this.toggleProjectOptions}>
           <h3 className="sidebar__title">
-            <span className="sidebar__folder-icon">
-              <InlineSVG src={folderUrl} />
-            </span>
-            <span>project-folder</span>
+            <span>Sketch Files</span>
           </h3>
           <div className="sidebar__icons">
             <button
-              aria-label="add file or folder"
+              aria-label="Toggle open/close sketch file options"
               className="sidebar__add"
               tabIndex="0"
               ref={(element) => { this.sidebarOptions = element; }}
               onClick={this.toggleProjectOptions}
-              onBlur={() => setTimeout(this.props.closeProjectOptions, 200)}
+              onBlur={this.onBlurComponent}
+              onFocus={this.onFocusComponent}
             >
-              <InlineSVG src={downArrowUrl} />
+              <DownArrowIcon focusable="false" aria-hidden="true" />
             </button>
             <ul className="sidebar__project-options">
               <li>
-                <button aria-label="add folder" onClick={this.props.newFolder} >
-                  Add folder
+                <button
+                  aria-label="add folder"
+                  onClick={() => {
+                    this.props.newFolder(rootFile.id);
+                    setTimeout(this.props.closeProjectOptions, 0);
+                  }}
+                  onBlur={this.onBlurComponent}
+                  onFocus={this.onFocusComponent}
+                >
+                  Create folder
                 </button>
               </li>
               <li>
-                <button aria-label="add file" onClick={this.props.newFile} >
-                  Add file
+                <button
+                  aria-label="add file"
+                  onClick={() => {
+                    this.props.newFile(rootFile.id);
+                    setTimeout(this.props.closeProjectOptions, 0);
+                  }}
+                  onBlur={this.onBlurComponent}
+                  onFocus={this.onFocusComponent}
+                >
+                  Create file
                 </button>
               </li>
+              {
+                this.props.user.authenticated &&
+                <li>
+                  <button
+                    aria-label="upload file"
+                    onClick={() => {
+                      this.props.openUploadFileModal(rootFile.id);
+                      setTimeout(this.props.closeProjectOptions, 0);
+                    }}
+                    onBlur={this.onBlurComponent}
+                    onFocus={this.onFocusComponent}
+                  >
+                    Upload file
+                  </button>
+                </li>
+              }
             </ul>
           </div>
-        </div>
-        <ConnectedFileNode id={this.props.files.filter(file => file.name === 'root')[0].id} />
-      </nav>
+        </header>
+        <ConnectedFileNode
+          id={rootFile.id}
+          canEdit={canEditProject}
+        />
+      </section>
     );
   }
 }
@@ -100,6 +152,7 @@ Sidebar.propTypes = {
   openProjectOptions: PropTypes.func.isRequired,
   closeProjectOptions: PropTypes.func.isRequired,
   newFolder: PropTypes.func.isRequired,
+  openUploadFileModal: PropTypes.func.isRequired,
   owner: PropTypes.shape({
     id: PropTypes.string
   }),

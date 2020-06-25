@@ -5,22 +5,26 @@ if (process.env.NODE_ENV === 'development') {
   require('dotenv').config();
 }
 
-module.exports = [{
+
+// react hmr being fucked up has to do with the multiple entries!!! cool.
+module.exports = {
+  mode: 'development',
   devtool: 'cheap-module-eval-source-map',
   entry: {
     app: [
+      'core-js/modules/es6.promise',
+      'core-js/modules/es6.array.iterator',
       'webpack-hot-middleware/client',
       'react-hot-loader/patch',
       './client/index.jsx',
     ],
-    vendor: [
-      'react',
-      'react-dom'
+    previewScripts: [
+       path.resolve(__dirname, '../client/utils/previewEntry.js')
     ]
   },
   output: {
     path: `${__dirname}`,
-    filename: 'app.js',
+    filename: '[name].js',
     publicPath: '/'
   },
   resolve: {
@@ -32,11 +36,6 @@ module.exports = [{
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      minChunks: Infinity,
-      filename: 'vendor.js',
-    }),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('development')
@@ -70,7 +69,7 @@ module.exports = [{
         use: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
-        test: /\.(svg|mp3)$/,
+        test: /\.(mp3)$/,
         use: 'file-loader'
       },
       {
@@ -84,8 +83,29 @@ module.exports = [{
          }
       },
       {
-        test: /fonts\/.*\.(eot|svg|ttf|woff|woff2)$/,
+        test: /fonts\/.*\.(eot|ttf|woff|woff2)$/,
         use: 'file-loader'
+      },
+      {
+        test: /\.svg$/,
+        oneOf: [
+          {
+            resourceQuery: /byUrl/,
+            use: 'file-loader'
+          },
+          {
+            use: {
+              loader: '@svgr/webpack',
+              options: {
+                svgoConfig: {
+                  plugins: {
+                    removeViewBox: false
+                  }
+                }
+              }
+            }
+          }
+        ]
       },
       {
         test: /_console-feed.scss/,
@@ -98,44 +118,4 @@ module.exports = [{
       }
     ],
   },
-},
-{
-  entry: path.resolve(__dirname, '../client/utils/previewEntry.js'),
-  target: 'web',
-  output: {
-    path: `${__dirname}`,
-    filename: 'previewScripts.js',
-    publicPath: '/'
-  },
-  resolve: {
-    extensions: ['*', '.js', '.jsx'],
-    modules: [
-      'client',
-      'node_modules',
-    ],
-  },
-  module: {
-    loaders: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader',
-        query: {
-          presets: [
-            'react',
-            'env',
-            'stage-0',
-          ],
-          plugins: [
-            [
-              'babel-plugin-webpack-loaders', {
-                'config': path.resolve(__dirname, './config.babel.js'),
-                'verbose': false
-              }
-            ]
-          ]
-        },
-      }
-    ],
-  },
-}]
+};

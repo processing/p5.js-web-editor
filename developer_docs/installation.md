@@ -4,32 +4,37 @@ Follow these instructions to set up your development environment, which you need
 
 ## Manual Installation
 
-1. Install [node.js](http://nodejs.org/), which also automatically installs the [npm](https://www.npmjs.org) package manager.
+_Note_: The installation steps assume you are using a Unix-like shell. If you are using Windows, you will need to use `copy` instead of `cp`.
+
+1. Install Node.js. The recommended way is to Node through [nvm](https://github.com/nvm-sh/nvm). You can also install [node.js](https://nodejs.org/download/release/v12.16.1/) version 12.16.1 directly from the Node.js website.
 2. [Fork](https://help.github.com/articles/fork-a-repo) the [p5.js Web Editor repository](https://github.com/processing/p5.js-web-editor) into your own GitHub account.
-3. [Clone](https://help.github.com/articles/cloning-a-repository/) your new fork of the repository from GitHub onto your local computer. 
+3. [Clone](https://help.github.com/articles/cloning-a-repository/) your new fork of the repository from GitHub onto your local computer.
 
    ```
    $ git clone https://github.com/YOUR_USERNAME/p5.js-web-editor.git
    ```
 
-4. Navigate into the project folder and install all its necessary dependencies with npm.
-   
+4. If you are using nvm, run `$ nvm use` to set your Node version to 12.16.1
+5. Navigate into the project folder and install all its necessary dependencies with npm.
+
    ```
    $ cd p5.js-web-editor
    $ npm install
    ```
-5. Install MongoDB and make sure it is running
-   * For Mac OSX with [homebrew](http://brew.sh/): `brew install mongodb` then `brew services start mongodb`
+6. Install MongoDB and make sure it is running
+   * For Mac OSX with [homebrew](http://brew.sh/): `brew tap mongodb/brew` then `brew install mongodb-community` and finally start the server with `brew services start mongodb-community` or you can visit the installation guide here [Installation Guide For MacOS](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/)
    * For Windows and Linux: [MongoDB Installation](https://docs.mongodb.com/manual/installation/)
-6. `$ cp .env.example .env`
-7. (Optional) Update `.env` with necessary keys to enable certain app behavoirs, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
-8. `$ npm run fetch-examples` - this downloads the example sketches into a user called 'p5'
-9. `$ npm start`
-10. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
-11. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
-12. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
+7. `$ cp .env.example .env`
+8. (Optional) Update `.env` with necessary keys to enable certain app behavoirs, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
+9. `$ npm run fetch-examples` - this downloads the example sketches into a user called 'p5'
+10. `$ npm start`
+11. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
+12. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
+13. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
 
 ## Docker Installation
+
+_Note_: The installation steps assume you are using a Unix-like shell. If you are using Windows, you will need to use `copy` instead of `cp`.
 
 Using Docker, you can have a complete, consistent development environment without having to manually install dependencies such as Node, Mongo, etc. It also helps isolate these dependencies and their data from other projects that you may have on the same computer that use different/conflicting versions, etc.
 
@@ -59,7 +64,7 @@ If you don't have the full server environment running, you can launch a one-off 
 
 ## S3 Bucket Configuration
 
-Note that this is optional, unless you are working on the part of the application that allows a user to upload images, videos, etc. Please refer to the folllowing [gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) to set up an S3 bucket to be used with this project.
+Note that this is optional, unless you are working on the part of the application that allows a user to upload images, videos, etc. Please refer to the following [gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) to set up an S3 bucket to be used with this project.
 
 If your S3 bucket is in the US East (N Virginia) region (us-east-1), you'll
 need to set a custom URL base for it, because it does not follow the standard

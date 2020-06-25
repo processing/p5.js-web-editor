@@ -11,13 +11,6 @@ import * as ProjectActions from '../actions/project';
 class FullView extends React.Component {
   componentDidMount() {
     this.props.getProject(this.props.params.project_id);
-    document.body.className = this.props.theme;
-  }
-
-  componentWillUpdate(nextProps) {
-    if (nextProps.theme !== this.props.theme) {
-      document.body.className = nextProps.theme;
-    }
   }
 
   ident = () => {}
@@ -32,7 +25,7 @@ class FullView extends React.Component {
           owner={{ username: this.props.project.owner ? `${this.props.project.owner.username}` : '' }}
           project={{ name: this.props.project.name, id: this.props.params.project_id }}
         />
-        <div className="preview-frame-holder">
+        <main className="preview-frame-holder">
           <PreviewFrame
             htmlFile={this.props.htmlFile}
             jsFiles={this.props.jsFiles}
@@ -53,15 +46,15 @@ class FullView extends React.Component {
             setBlobUrl={this.ident}
             stopSketch={this.ident}
             expandConsole={this.ident}
+            clearConsole={this.ident}
           />
-        </div>
+        </main>
       </div>
     );
   }
 }
 
 FullView.propTypes = {
-  theme: PropTypes.string.isRequired,
   params: PropTypes.shape({
     project_id: PropTypes.string
   }).isRequired,
@@ -97,7 +90,6 @@ FullView.propTypes = {
 function mapStateToProps(state) {
   return {
     user: state.user,
-    theme: state.preferences.theme,
     htmlFile: getHTMLFile(state.files),
     jsFiles: getJSFiles(state.files),
     cssFiles: getCSSFiles(state.files),

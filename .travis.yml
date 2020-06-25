@@ -1,7 +1,7 @@
 sudo: required
 language: node_js
 node_js:
- - "8.11.1"
+ - "12.16.1"
 
 cache:
   directories:
@@ -16,8 +16,14 @@ before_install:
 
 install: true
 
-script:
-  - docker-compose exec -T app npm run test --verbose
+jobs:
+  include:
+    - stage: test
+      name: "Linting"
+      script: docker-compose exec -T app npm run lint
+    - # stage name not required, will continue to use `test`
+      name: "Tests"
+      script: docker-compose exec -T app npm run test
 
 before_deploy:
   - docker-compose stop
@@ -26,14 +32,19 @@ before_deploy:
   - gcloud --quiet version
   - gcloud --quiet components update
   - gcloud --quiet components update kubectl
-
 deploy:
   - provider: script
     script: ./deploy.sh
     skip_cleanup: true
     on:
-      branch: master
+      branch: release
+      tags: true
+  - provider: script
+    script: ./deploy_staging.sh
+    skip_cleanup: true
+    on:
+      branch: develop
 
 env:
   global:
-    - APP_IMAGE_NAME=p5jswebeditor_app
+    - APP_IMAGE_NAME=p5js-web-editor_app

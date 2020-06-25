@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="check-encircled" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+	 y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#FFFFFF;}
+</style>
+<path id="circle" d="M50,26.5c-14.4,0-26,11.5-25.9,25.9c0,14.5,11.6,26,26,26c14.5,0,25.9-11.5,25.9-26C76,38,64.5,26.5,50,26.5z
+	 M47.6,66.6L34,53.4l5.6-5.5l7.1,6.8l14-15.4l6.1,5.5L47.6,66.6z"/>
+<polygon id="check" class="st0 counter-form" points="46.7,54.7 39.6,47.9 34,53.4 47.6,66.6 66.8,44.8 60.7,39.3 "/>
+</svg>

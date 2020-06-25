@@ -1,6 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import Clipboard from 'clipboard';
+import classNames from 'classnames';
+
+import ShareIcon from '../../../images/share.svg';
 
 class CopyableInput extends React.Component {
   constructor(props) {
@@ -34,8 +37,12 @@ class CopyableInput extends React.Component {
       value,
       hasPreviewLink
     } = this.props;
+    const copyableInputClass = classNames({
+      'copyable-input': true,
+      'copyable-input--with-preview': hasPreviewLink
+    });
     return (
-      <div className="copyable-input">
+      <div className={copyableInputClass}>
         <div
           className="copyable-input__value-container tooltipped-no-delay"
           aria-label="Copied to Clipboard!"
@@ -44,10 +51,7 @@ class CopyableInput extends React.Component {
         >
           <label className="copyable-input__label" htmlFor={`copyable-input__value-${label}`}>
             <div className="copyable-input__label-container">
-              {label} {hasPreviewLink &&
-                <a target="_blank" href={value}>
-                  Open
-                </a>}
+              {label}
             </div>
             <input
               type="text"
@@ -59,6 +63,17 @@ class CopyableInput extends React.Component {
             />
           </label>
         </div>
+        {hasPreviewLink &&
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href={value}
+            className="copyable-input__preview"
+            aria-label={`Open ${label} view in new tab`}
+          >
+            <ShareIcon focusable="false" aria-hidden="true" />
+          </a>
+        }
       </div>
     );
   }

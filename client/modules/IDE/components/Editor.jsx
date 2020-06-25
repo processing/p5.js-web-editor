@@ -24,7 +24,6 @@ import 'codemirror/addon/edit/matchbrackets';
 import { JSHINT } from 'jshint';
 import { CSSLint } from 'csslint';
 import { HTMLHint } from 'htmlhint';
-import InlineSVG from 'react-inlinesvg';
 import classNames from 'classnames';
 import { debounce } from 'lodash';
 import '../../../utils/htmlmixed';
@@ -32,11 +31,14 @@ import '../../../utils/p5-javascript';
 import '../../../utils/webGL-clike';
 import Timer from '../components/Timer';
 import EditorAccessibility from '../components/EditorAccessibility';
-import {
-  metaKey,
-} from '../../../utils/metaKey';
+import { metaKey, } from '../../../utils/metaKey';
 
 import search from '../../../utils/codemirror-search';
+
+import beepUrl from '../../../sounds/audioAlert.mp3';
+import UnsavedChangesDotIcon from '../../../images/unsaved-changes-dot.svg';
+import RightArrowIcon from '../../../images/right-arrow.svg';
+import LeftArrowIcon from '../../../images/left-arrow.svg';
 
 search(CodeMirror);
 
@@ -47,10 +49,8 @@ window.JSHINT = JSHINT;
 window.CSSLint = CSSLint;
 window.HTMLHint = HTMLHint;
 
-const beepUrl = require('../../../sounds/audioAlert.mp3');
-const unsavedChangesDotUrl = require('../../../images/unsaved-changes-dot.svg');
-const rightArrowUrl = require('../../../images/right-arrow.svg');
-const leftArrowUrl = require('../../../images/left-arrow.svg');
+const IS_TAB_INDENT = false;
+const INDENTATION_AMOUNT = 2;
 
 class Editor extends React.Component {
   constructor(props) {
@@ -71,6 +71,7 @@ class Editor extends React.Component {
     this.showFind = this.showFind.bind(this);
     this.findNext = this.findNext.bind(this);
     this.findPrev = this.findPrev.bind(this);
+    this.getContent = this.getContent.bind(this);
   }
 
   componentDidMount() {
@@ -78,10 +79,10 @@ class Editor extends React.Component {
     this.widgets = [];
     this._cm = CodeMirror(this.codemirrorContainer, { // eslint-disable-line
       theme: `p5-${this.props.theme}`,
-      lineNumbers: true,
+      lineNumbers: this.props.lineNumbers,
       styleActiveLine: true,
       inputStyle: 'contenteditable',
-      lineWrapping: false,
+      lineWrapping: this.props.linewrap,
       fixedGutter: false,
       foldGutter: true,
       foldOptions: { widget: '\u2026' },
@@ -98,7 +99,7 @@ class Editor extends React.Component {
           'asi': true,
           'eqeqeq': false,
           '-W041': false,
-          'esversion': 6
+          'esversion': 7
         }
       }
     });
@@ -106,6 +107,15 @@ class Editor extends React.Component {
     delete this._cm.options.lint.options.errors;
 
     this._cm.setOption('extraKeys', {
+      Tab: (cm) => {
+        // might need to specify and indent more?
+        const selection = cm.doc.getSelection();
+        if (selection.length > 0) {
+          cm.execCommand('indentMore');
+        } else {
+          cm.replaceSelection(' '.repeat(INDENTATION_AMOUNT));
+        }
+      },
       [`${metaKey}-Enter`]: () => null,
       [`Shift-${metaKey}-Enter`]: () => null,
       [`${metaKey}-F`]: 'findPersistent',
@@ -118,12 +128,12 @@ class Editor extends React.Component {
 
     this._cm.on('change', debounce(() => {
       this.props.setUnsavedChanges(true);
-      this.props.updateFileContent(this.props.file.name, this._cm.getValue());
+      this.props.updateFileContent(this.props.file.id, this._cm.getValue());
       if (this.props.autorefresh && this.props.isPlaying) {
         this.props.clearConsole();
         this.props.startRefreshSketch();
       }
-    }, 400));
+    }, 1000));
 
     this._cm.on('keyup', () => {
       const temp = `line ${parseInt((this._cm.getCursor().line) + 1, 10)}`;
@@ -138,15 +148,13 @@ class Editor extends React.Component {
     });
 
     this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
-    this._cm.setOption('indentWithTabs', this.props.isTabIndent);
-    this._cm.setOption('tabSize', this.props.indentationAmount);
-    this._cm.setOption('indentUnit', this.props.indentationAmount);
 
     this.props.provideController({
       tidyCode: this.tidyCode,
       showFind: this.showFind,
       findNext: this.findNext,
-      findPrev: this.findPrev
+      findPrev: this.findPrev,
+      getContent: this.getContent
     });
   }
 
@@ -174,15 +182,14 @@ class Editor extends React.Component {
     if (this.props.fontSize !== prevProps.fontSize) {
       this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
     }
-    if (this.props.indentationAmount !== prevProps.indentationAmount) {
-      this._cm.setOption('tabSize', this.props.indentationAmount);
-      this._cm.setOption('indentUnit', this.props.indentationAmount);
-    }
-    if (this.props.isTabIndent !== prevProps.isTabIndent) {
-      this._cm.setOption('indentWithTabs', this.props.isTabIndent);
+    if (this.props.linewrap !== prevProps.linewrap) {
+      this._cm.setOption('lineWrapping', this.props.linewrap);
     }
     if (this.props.theme !== prevProps.theme) {
       this._cm.setOption('theme', `p5-${this.props.theme}`);
+    }
+    if (this.props.lineNumbers !== prevProps.lineNumbers) {
+      this._cm.setOption('lineNumbers', this.props.lineNumbers);
     }
 
     if (prevProps.consoleEvents !== this.props.consoleEvents) {
@@ -191,13 +198,22 @@ class Editor extends React.Component {
     for (let i = 0; i < this._cm.lineCount(); i += 1) {
       this._cm.removeLineClass(i, 'background', 'line-runtime-error');
     }
-    if (this.props.runtimeErrorWarningVisible && this._cm.getDoc().modeOption === 'javascript') {
+    if (this.props.runtimeErrorWarningVisible) {
       this.props.consoleEvents.forEach((consoleEvent) => {
         if (consoleEvent.method === 'error') {
-          if (consoleEvent.data[0].indexOf(')') > -1) {
+          if (consoleEvent.data &&
+            consoleEvent.data[0] &&
+            consoleEvent.data[0].indexOf &&
+            consoleEvent.data[0].indexOf(')') > -1) {
             const n = consoleEvent.data[0].replace(')', '').split(' ');
             const lineNumber = parseInt(n[n.length - 1], 10) - 1;
-            this._cm.addLineClass(lineNumber, 'background', 'line-runtime-error');
+            const { source } = consoleEvent;
+            const fileName = this.props.file.name;
+            const errorFromJavaScriptFile = (`${source}.js` === fileName);
+            const errorFromIndexHTML = ((source === fileName) && (fileName === 'index.html'));
+            if (!Number.isNaN(lineNumber) && (errorFromJavaScriptFile || errorFromIndexHTML)) {
+              this._cm.addLineClass(lineNumber, 'background', 'line-runtime-error');
+            }
           }
         }
       });
@@ -227,33 +243,15 @@ class Editor extends React.Component {
     return mode;
   }
 
-  initializeDocuments(files) {
-    this._docs = {};
-    files.forEach((file) => {
-      if (file.name !== 'root') {
-        this._docs[file.id] = CodeMirror.Doc(file.content, this.getFileMode(file.name)); // eslint-disable-line
-      }
-    });
+  getContent() {
+    const content = this._cm.getValue();
+    const updatedFile = Object.assign({}, this.props.file, { content });
+    return updatedFile;
   }
 
-  tidyCode() {
-    const beautifyOptions = {
-      indent_size: this.props.indentationAmount,
-      indent_with_tabs: this.props.isTabIndent
-    };
-
-    const mode = this._cm.getOption('mode');
-    if (mode === 'javascript') {
-      this._cm.doc.setValue(beautifyJS(this._cm.doc.getValue(), beautifyOptions));
-    } else if (mode === 'css') {
-      this._cm.doc.setValue(beautifyCSS(this._cm.doc.getValue(), beautifyOptions));
-    } else if (mode === 'htmlmixed') {
-      this._cm.doc.setValue(beautifyHTML(this._cm.doc.getValue(), beautifyOptions));
-    }
-  }
-
-  showFind() {
-    this._cm.execCommand('findPersistent');
+  findPrev() {
+    this._cm.focus();
+    this._cm.execCommand('findPrev');
   }
 
   findNext() {
@@ -261,9 +259,37 @@ class Editor extends React.Component {
     this._cm.execCommand('findNext');
   }
 
-  findPrev() {
-    this._cm.focus();
-    this._cm.execCommand('findPrev');
+  showFind() {
+    this._cm.execCommand('findPersistent');
+  }
+
+  tidyCode() {
+    const beautifyOptions = {
+      indent_size: INDENTATION_AMOUNT,
+      indent_with_tabs: IS_TAB_INDENT
+    };
+    const mode = this._cm.getOption('mode');
+    const currentPosition = this._cm.doc.getCursor();
+    if (mode === 'javascript') {
+      this._cm.doc.setValue(beautifyJS(this._cm.doc.getValue(), beautifyOptions));
+    } else if (mode === 'css') {
+      this._cm.doc.setValue(beautifyCSS(this._cm.doc.getValue(), beautifyOptions));
+    } else if (mode === 'htmlmixed') {
+      this._cm.doc.setValue(beautifyHTML(this._cm.doc.getValue(), beautifyOptions));
+    }
+    setTimeout(() => {
+      this._cm.focus();
+      this._cm.doc.setCursor({ line: currentPosition.line, ch: currentPosition.ch + INDENTATION_AMOUNT });
+    }, 0);
+  }
+
+  initializeDocuments(files) {
+    this._docs = {};
+    files.forEach((file) => {
+      if (file.name !== 'root') {
+        this._docs[file.id] = CodeMirror.Doc(file.content, this.getFileMode(file.name)); // eslint-disable-line
+      }
+    });
   }
 
   toggleEditorOptions() {
@@ -275,8 +301,6 @@ class Editor extends React.Component {
     }
   }
 
-  _cm: CodeMirror.Editor
-
   render() {
     const editorSectionClass = classNames({
       'editor': true,
@@ -284,31 +308,36 @@ class Editor extends React.Component {
       'editor--options': this.props.editorOptionsVisible
     });
 
+    const editorHolderClass = classNames({
+      'editor-holder': true,
+      'editor-holder--hidden': this.props.file.fileType === 'folder' || this.props.file.url
+    });
+
     return (
-      <section
-        title="code editor"
-        role="main"
-        className={editorSectionClass}
-      >
+      <section className={editorSectionClass} >
         <header className="editor__header">
           <button
-            aria-label="collapse file navigation"
+            aria-label="Open Sketch files navigation"
             className="sidebar__contract"
             onClick={this.props.collapseSidebar}
           >
-            <InlineSVG src={leftArrowUrl} />
+            <LeftArrowIcon focusable="false" aria-hidden="true" />
           </button>
           <button
-            aria-label="expand file navigation"
+            aria-label="Close sketch files navigation"
             className="sidebar__expand"
             onClick={this.props.expandSidebar}
           >
-            <InlineSVG src={rightArrowUrl} />
+            <RightArrowIcon focusable="false" aria-hidden="true" />
           </button>
           <div className="editor__file-name">
             <span>
               {this.props.file.name}
-              {this.props.unsavedChanges ? <InlineSVG src={unsavedChangesDotUrl} /> : null}
+              <span className="editor__unsaved-changes">
+                {this.props.unsavedChanges ?
+                  <UnsavedChangesDotIcon role="img" aria-label="Sketch has unsaved changes" focusable="false" /> :
+                  null}
+              </span>
             </span>
             <Timer
               projectSavedTime={this.props.projectSavedTime}
@@ -316,8 +345,8 @@ class Editor extends React.Component {
             />
           </div>
         </header>
-        <div ref={(element) => { this.codemirrorContainer = element; }} className="editor-holder" >
-        </div>
+        <article ref={(element) => { this.codemirrorContainer = element; }} className={editorHolderClass} >
+        </article>
         <EditorAccessibility
           lintMessages={this.props.lintMessages}
         />
@@ -327,7 +356,9 @@ class Editor extends React.Component {
 }
 
 Editor.propTypes = {
+  lineNumbers: PropTypes.bool.isRequired,
   lintWarning: PropTypes.bool.isRequired,
+  linewrap: PropTypes.bool.isRequired,
   lintMessages: PropTypes.arrayOf(PropTypes.shape({
     severity: PropTypes.string.isRequired,
     line: PropTypes.number.isRequired,
@@ -340,14 +371,14 @@ Editor.propTypes = {
   })),
   updateLintMessage: PropTypes.func.isRequired,
   clearLintMessage: PropTypes.func.isRequired,
-  indentationAmount: PropTypes.number.isRequired,
-  isTabIndent: PropTypes.bool.isRequired,
   updateFileContent: PropTypes.func.isRequired,
   fontSize: PropTypes.number.isRequired,
   file: PropTypes.shape({
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired
+    id: PropTypes.string.isRequired,
+    fileType: PropTypes.string.isRequired,
+    url: PropTypes.string
   }).isRequired,
   editorOptionsVisible: PropTypes.bool.isRequired,
   showEditorOptions: PropTypes.func.isRequired,

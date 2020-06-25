@@ -1,5 +1,5 @@
 /* eslint-disable */
-import s3 from 's3';
+import s3 from '@auth0/s3';
 import path from 'path';
 import mongoose from 'mongoose';
 import User from '../models/user';

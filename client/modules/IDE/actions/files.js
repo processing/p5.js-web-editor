@@ -3,7 +3,8 @@ import objectID from 'bson-objectid';
 import blobUtil from 'blob-util';
 import { reset } from 'redux-form';
 import * as ActionTypes from '../../../constants';
-import { setUnsavedChanges } from './ide';
+import { setUnsavedChanges, closeNewFolderModal, closeNewFileModal } from './ide';
+import { setProjectSavedTime } from './project';
 
 const __process = (typeof global !== 'undefined' ? global : window).process;
 const ROOT_URL = __process.env.API_URL;
@@ -29,10 +30,10 @@ function createUniqueName(name, parentId, files) {
   return testName;
 }
 
-export function updateFileContent(name, content) {
+export function updateFileContent(id, content) {
   return {
     type: ActionTypes.UPDATE_FILE_CONTENT,
-    name,
+    id,
     content
   };
 }
@@ -40,14 +41,7 @@ export function updateFileContent(name, content) {
 export function createFile(formProps) {
   return (dispatch, getState) => {
     const state = getState();
-    const selectedFile = state.files.find(file => file.isSelectedFile);
-    const rootFile = state.files.find(file => file.name === 'root');
-    let parentId;
-    if (selectedFile.fileType === 'folder') {
-      parentId = selectedFile.id;
-    } else {
-      parentId = rootFile.id;
-    }
+    const { parentId } = state.ide;
     if (state.project.id) {
       const postParams = {
         name: createUniqueName(formProps.name, parentId, state.files),
@@ -60,19 +54,24 @@ export function createFile(formProps) {
         .then((response) => {
           dispatch({
             type: ActionTypes.CREATE_FILE,
-            ...response.data,
+            ...response.data.updatedFile,
             parentId
           });
+          dispatch(setProjectSavedTime(response.data.project.updatedAt));
+          dispatch(closeNewFileModal());
           dispatch(reset('new-file'));
           // dispatch({
           //   type: ActionTypes.HIDE_MODAL
           // });
           dispatch(setUnsavedChanges(true));
         })
-        .catch(response => dispatch({
-          type: ActionTypes.ERROR,
-          error: response.data
-        }));
+        .catch((error) => {
+          const { response } = error;
+          dispatch({
+            type: ActionTypes.ERROR,
+            error: response.data
+          });
+        });
     } else {
       const id = objectID().toHexString();
       dispatch({
@@ -90,6 +89,7 @@ export function createFile(formProps) {
       //   type: ActionTypes.HIDE_MODAL
       // });
       dispatch(setUnsavedChanges(true));
+      dispatch(closeNewFileModal());
     }
   };
 }
@@ -97,14 +97,7 @@ export function createFile(formProps) {
 export function createFolder(formProps) {
   return (dispatch, getState) => {
     const state = getState();
-    const selectedFile = state.files.find(file => file.isSelectedFile);
-    const rootFile = state.files.find(file => file.name === 'root');
-    let parentId;
-    if (selectedFile.fileType === 'folder') {
-      parentId = selectedFile.id;
-    } else {
-      parentId = rootFile.id;
-    }
+    const { parentId } = state.ide;
     if (state.project.id) {
       const postParams = {
         name: createUniqueName(formProps.name, parentId, state.files),
@@ -117,17 +110,19 @@ export function createFolder(formProps) {
         .then((response) => {
           dispatch({
             type: ActionTypes.CREATE_FILE,
-            ...response.data,
+            ...response.data.updatedFile,
             parentId
           });
-          dispatch({
-            type: ActionTypes.CLOSE_NEW_FOLDER_MODAL
-          });
+          dispatch(setProjectSavedTime(response.data.project.updatedAt));
+          dispatch(closeNewFolderModal());
         })
-        .catch(response => dispatch({
-          type: ActionTypes.ERROR,
-          error: response.data
-        }));
+        .catch((error) => {
+          const { response } = error;
+          dispatch({
+            type: ActionTypes.ERROR,
+            error: response.data
+          });
+        });
     } else {
       const id = objectID().toHexString();
       dispatch({
@@ -141,18 +136,19 @@ export function createFolder(formProps) {
         fileType: 'folder',
         children: []
       });
-      dispatch({
-        type: ActionTypes.CLOSE_NEW_FOLDER_MODAL
-      });
+      dispatch(closeNewFolderModal());
     }
   };
 }
 
 export function updateFileName(id, name) {
-  return {
-    type: ActionTypes.UPDATE_FILE_NAME,
-    id,
-    name
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.UPDATE_FILE_NAME,
+      id,
+      name
+    });
   };
 }
 
@@ -173,7 +169,8 @@ export function deleteFile(id, parentId) {
             parentId
           });
         })
-        .catch((response) => {
+        .catch((error) => {
+          const { response } = error;
           dispatch({
             type: ActionTypes.ERROR,
             error: response.data
@@ -206,7 +203,7 @@ export function hideFolderChildren(id) {
 export function setBlobUrl(file, blobURL) {
   return {
     type: ActionTypes.SET_BLOB_URL,
-    name: file.name,
+    id: file.id,
     blobURL
   };
 }

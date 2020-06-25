@@ -1,10 +1,8 @@
 export function renderIndex() {
   const assetsManifest = process.env.webpackAssets && JSON.parse(process.env.webpackAssets);
-  const chunkManifest = process.env.webpackChunkAssets && JSON.parse(process.env.webpackChunkAssets);
-
   return `
   <!DOCTYPE html>
-  <html>
+  <html lang="en">
     <head>
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +12,7 @@ export function renderIndex() {
       ${process.env.NODE_ENV === 'production' ? `<link rel='stylesheet' href='${assetsManifest['/app.css']}' />` : ''}
       <link href='https://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
       <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
-      <link rel='shortcut icon' href='https://raw.githubusercontent.com/processing/p5.js-website-OLD/master/favicon.ico' type='image/x-icon'/ >
+      <link rel='shortcut icon' href='https://raw.githubusercontent.com/processing/p5.js-website-OLD/master/favicon.ico' type='image/x-icon' / >
       <script>
         if (!window.process) {
           window.process = {};
@@ -29,18 +27,16 @@ export function renderIndex() {
         window.process.env.AWS_REGION = '${process.env.AWS_REGION}';
         window.process.env.FORCE_TO_HTTPS = ${process.env.FORCE_TO_HTTPS === 'false' ? false : undefined};
         window.process.env.CLIENT = true;
+        window.process.env.LOGIN_ENABLED = ${process.env.LOGIN_ENABLED === 'false' ? false : true};
+        window.process.env.EXAMPLES_ENABLED = ${process.env.EXAMPLES_ENABLED === 'false' ? false : true};
+        window.process.env.UI_ACCESS_TOKEN_ENABLED = ${process.env.UI_ACCESS_TOKEN_ENABLED === 'false' ? false : true};
+        window.process.env.UI_COLLECTIONS_ENABLED = ${process.env.UI_COLLECTIONS_ENABLED === 'false' ? false : true};
+        window.process.env.UPLOAD_LIMIT = ${process.env.UPLOAD_LIMIT ? `${process.env.UPLOAD_LIMIT}` : undefined};
       </script>
     </head>
     <body>
       <div id="root" class="root-app">
       </div>
-      <script>
-          ${process.env.NODE_ENV === 'production' ?
-          `//<![CDATA[
-          window.webpackManifest = ${JSON.stringify(chunkManifest)};
-          //]]>` : ''}
-      </script>
-      <script src='${process.env.NODE_ENV === 'production' ? `${assetsManifest['/vendor.js']}` : '/vendor.js'}'></script>
       <script src='${process.env.NODE_ENV === 'production' ? `${assetsManifest['/app.js']}` : '/app.js'}'></script>
       <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

@@ -9,7 +9,11 @@ const initialState = {
   preferencesIsVisible: false,
   projectOptionsVisible: false,
   newFolderModalVisible: false,
+  uploadFileModalVisible: false,
   shareModalVisible: false,
+  shareModalProjectId: 'abcd',
+  shareModalProjectName: 'My Cute Sketch',
+  shareModalProjectUsername: 'p5_user',
   editorOptionsVisible: false,
   keyboardShortcutVisible: false,
   unsavedChanges: false,
@@ -20,6 +24,7 @@ const initialState = {
   previousPath: '/',
   errorType: undefined,
   runtimeErrorWarningVisible: true,
+  parentId: undefined
 };
 
 const ide = (state = initialState, action) => {
@@ -35,7 +40,7 @@ const ide = (state = initialState, action) => {
     case ActionTypes.CONSOLE_EVENT:
       return Object.assign({}, state, { consoleEvent: action.event });
     case ActionTypes.SHOW_MODAL:
-      return Object.assign({}, state, { modalIsVisible: true });
+      return Object.assign({}, state, { modalIsVisible: true, parentId: action.parentId });
     case ActionTypes.HIDE_MODAL:
       return Object.assign({}, state, { modalIsVisible: false });
     case ActionTypes.COLLAPSE_SIDEBAR:
@@ -57,11 +62,16 @@ const ide = (state = initialState, action) => {
     case ActionTypes.CLOSE_PROJECT_OPTIONS:
       return Object.assign({}, state, { projectOptionsVisible: false });
     case ActionTypes.SHOW_NEW_FOLDER_MODAL:
-      return Object.assign({}, state, { newFolderModalVisible: true });
+      return Object.assign({}, state, { newFolderModalVisible: true, parentId: action.parentId });
     case ActionTypes.CLOSE_NEW_FOLDER_MODAL:
       return Object.assign({}, state, { newFolderModalVisible: false });
     case ActionTypes.SHOW_SHARE_MODAL:
-      return Object.assign({}, state, { shareModalVisible: true });
+      return Object.assign({}, state, {
+        shareModalVisible: true,
+        shareModalProjectId: action.payload.shareModalProjectId,
+        shareModalProjectName: action.payload.shareModalProjectName,
+        shareModalProjectUsername: action.payload.shareModalProjectUsername,
+      });
     case ActionTypes.CLOSE_SHARE_MODAL:
       return Object.assign({}, state, { shareModalVisible: false });
     case ActionTypes.SHOW_EDITOR_OPTIONS:
@@ -92,14 +102,14 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { errorType: action.modalType });
     case ActionTypes.HIDE_ERROR_MODAL:
       return Object.assign({}, state, { errorType: undefined });
-    case ActionTypes.SHOW_HELP_MODAL:
-      return Object.assign({}, state, { helpType: action.helpType });
-    case ActionTypes.HIDE_HELP_MODAL:
-      return Object.assign({}, state, { helpType: undefined });
     case ActionTypes.HIDE_RUNTIME_ERROR_WARNING:
       return Object.assign({}, state, { runtimeErrorWarningVisible: false });
     case ActionTypes.SHOW_RUNTIME_ERROR_WARNING:
       return Object.assign({}, state, { runtimeErrorWarningVisible: true });
+    case ActionTypes.OPEN_UPLOAD_FILE_MODAL:
+      return Object.assign({}, state, { uploadFileModalVisible: true, parentId: action.parentId });
+    case ActionTypes.CLOSE_UPLOAD_FILE_MODAL:
+      return Object.assign({}, state, { uploadFileModalVisible: false });
     default:
       return state;
   }

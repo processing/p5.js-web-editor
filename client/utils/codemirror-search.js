@@ -44,6 +44,11 @@ export default function(CodeMirror) {
     return cm.getSearchCursor(query, pos, getSearchState(cm).caseInsensitive);
   }
 
+  function isMouseClick(event) {
+    if(event.detail > 0) return true;
+    else return false;
+  }
+
   function persistentDialog(cm, text, deflt, onEnter, onKeyDown) {
     var searchField = document.getElementsByClassName("CodeMirror-search-field")[0];
     if (!searchField) {
@@ -68,6 +73,8 @@ export default function(CodeMirror) {
       CodeMirror.on(searchField, "keyup", function (e) {
         if (e.keyCode !== 13 && searchField.value.length > 1) { // not enter and more than 1 character to search
           startSearch(cm, getSearchState(cm), searchField.value);
+        } else if (searchField.value.length <= 1) {
+          cm.display.wrapper.querySelector('.CodeMirror-search-results').innerText = '';
         }
       });
 
@@ -92,28 +99,31 @@ export default function(CodeMirror) {
       });
 
       var regexpButton = dialog.getElementsByClassName("CodeMirror-regexp-button")[0];
-      CodeMirror.on(regexpButton, "click", function () {
+      CodeMirror.on(regexpButton, "click", function (event) {
         var state = getSearchState(cm);
         state.regexp = toggle(regexpButton);
         startSearch(cm, getSearchState(cm), searchField.value);
+        if(isMouseClick(event)) searchField.focus();
       });
 
       toggle(regexpButton, state.regexp);
 
       var caseSensitiveButton = dialog.getElementsByClassName("CodeMirror-case-button")[0];
-      CodeMirror.on(caseSensitiveButton, "click", function () {
+      CodeMirror.on(caseSensitiveButton, "click", function (event) {
         var state = getSearchState(cm);
         state.caseInsensitive = !toggle(caseSensitiveButton);
         startSearch(cm, getSearchState(cm), searchField.value);
+        if(isMouseClick(event)) searchField.focus();
       });
 
       toggle(caseSensitiveButton, !state.caseInsensitive);
 
       var wholeWordButton = dialog.getElementsByClassName("CodeMirror-word-button")[0];
-      CodeMirror.on(wholeWordButton, "click", function () {
+      CodeMirror.on(wholeWordButton, "click", function (event) {
         var state = getSearchState(cm);
         state.wholeWord = toggle(wholeWordButton);
         startSearch(cm, getSearchState(cm), searchField.value);
+        if(isMouseClick(event)) searchField.focus();
       });
 
       toggle(wholeWordButton, state.wholeWord);
@@ -133,6 +143,7 @@ export default function(CodeMirror) {
       }
     } else {
       searchField.focus();
+      searchField.select();
     }
   }
 
@@ -252,6 +263,7 @@ export default function(CodeMirror) {
         </button>
       </div>
       <div class="CodeMirror-search-nav">
+        <button class="CodeMirror-search-results"></button>
         <button
           title="Previous"
           aria-label="Previous"
@@ -283,6 +295,9 @@ export default function(CodeMirror) {
     if (cm.showMatchesOnScrollbar) {
       if (state.annotate) { state.annotate.clear(); state.annotate = null; }
       state.annotate = cm.showMatchesOnScrollbar(state.query,  state.caseInsensitive);
+    }
+    if (originalQuery) {
+      return findNext(cm, false);
     }
   }
 
@@ -342,11 +357,19 @@ export default function(CodeMirror) {
     var cursor = getSearchCursor(cm, state.query, rev ? state.posFrom : state.posTo);
     if (!cursor.find(rev)) {
       cursor = getSearchCursor(cm, state.query, rev ? CodeMirror.Pos(cm.lastLine()) : CodeMirror.Pos(cm.firstLine(), 0));
-      if (!cursor.find(rev)) return;
+      if (!cursor.find(rev)) {
+        cm.display.wrapper.querySelector('.CodeMirror-search-results').innerText = '';
+        return;
+      }
     }
     cm.setSelection(cursor.from(), cursor.to());
     cm.scrollIntoView({from: cursor.from(), to: cursor.to()}, 60);
     state.posFrom = cursor.from(); state.posTo = cursor.to();
+    var num_match = cm.state.search.annotate.matches.length;
+    var next = cm.state.search.annotate.matches
+      .findIndex(s => s.from.ch === cursor.from().ch && s.from.line === cursor.from().line) + 1;
+    var text_match = next + '/' + num_match;
+    cm.display.wrapper.querySelector('.CodeMirror-search-results').innerText = text_match;
     if (callback) callback(cursor.from(), cursor.to())
   });}
 

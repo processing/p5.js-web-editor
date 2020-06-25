@@ -4,7 +4,8 @@ import {
   injectMediaUrls,
   resolvePathsForElementsWithAttribute,
   resolveScripts,
-  resolveStyles } from '../utils/previewGeneration';
+  resolveStyles
+} from '../utils/previewGeneration';
 import { get404Sketch } from '../views/404Page';
 
 export function serveProject(req, res) {
@@ -24,7 +25,7 @@ export function serveProject(req, res) {
         const sketchDoc = window.document;
 
         const base = sketchDoc.createElement('base');
-        const fullUrl = `https://${req.get('host')}${req.originalUrl}`;
+        const fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
         base.href = `${fullUrl}/`;
         sketchDoc.head.appendChild(base);
 

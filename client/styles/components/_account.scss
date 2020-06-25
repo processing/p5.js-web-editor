@@ -1,0 +1,22 @@
+.account-settings__container {
+  @include themify() {
+    color: getThemifyVariable('primary-text-color');
+    background-color: getThemifyVariable('background-color');
+  }
+  height: 100%;
+}
+
+.account-settings {
+  max-width: #{700 / $base-font-size}rem;
+  align-self: center;
+  padding: 0 #{10 / $base-font-size}rem;
+  margin: 0 auto;
+}
+
+.account__tabs {
+  padding-top: #{20 / $base-font-size}rem;
+}
+
+.account__social-text {
+  padding-bottom: #{15 / $base-font-size}rem;
+}

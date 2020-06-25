@@ -62,15 +62,29 @@ export function resetSelectedFile(previousId) {
   };
 }
 
-export function newFile() {
+export function newFile(parentId) {
   return {
-    type: ActionTypes.SHOW_MODAL
+    type: ActionTypes.SHOW_MODAL,
+    parentId
   };
 }
 
 export function closeNewFileModal() {
   return {
     type: ActionTypes.HIDE_MODAL
+  };
+}
+
+export function openUploadFileModal(parentId) {
+  return {
+    type: ActionTypes.OPEN_UPLOAD_FILE_MODAL,
+    parentId
+  };
+}
+
+export function closeUploadFileModal() {
+  return {
+    type: ActionTypes.CLOSE_UPLOAD_FILE_MODAL
   };
 }
 
@@ -122,9 +136,10 @@ export function closeProjectOptions() {
   };
 }
 
-export function newFolder() {
+export function newFolder(parentId) {
   return {
-    type: ActionTypes.SHOW_NEW_FOLDER_MODAL
+    type: ActionTypes.SHOW_NEW_FOLDER_MODAL,
+    parentId
   };
 }
 
@@ -134,9 +149,17 @@ export function closeNewFolderModal() {
   };
 }
 
-export function showShareModal() {
-  return {
-    type: ActionTypes.SHOW_SHARE_MODAL
+export function showShareModal(projectId, projectName, ownerUsername) {
+  return (dispatch, getState) => {
+    const { project, user } = getState();
+    dispatch({
+      type: ActionTypes.SHOW_SHARE_MODAL,
+      payload: {
+        shareModalProjectId: projectId || project.id,
+        shareModalProjectName: projectName || project.name,
+        shareModalProjectUsername: ownerUsername || user.username
+      }
+    });
   };
 }
 
@@ -219,19 +242,6 @@ export function showErrorModal(modalType) {
 export function hideErrorModal() {
   return {
     type: ActionTypes.HIDE_ERROR_MODAL
-  };
-}
-
-export function showHelpModal(helpType) {
-  return {
-    type: ActionTypes.SHOW_HELP_MODAL,
-    helpType
-  };
-}
-
-export function hideHelpModal() {
-  return {
-    type: ActionTypes.HIDE_HELP_MODAL
   };
 }
 

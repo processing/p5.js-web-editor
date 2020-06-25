@@ -9,11 +9,10 @@ import Project from '../models/project';
 
 const defaultHTML =
 `<!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.dom.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.sound.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/addons/p5.sound.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="utf-8" />
   </head>
@@ -40,7 +39,8 @@ const headers = { 'User-Agent': 'p5js-web-editor/0.0.1' };
 
 const mongoConnectionString = process.env.MONGO_URL;
 
-mongoose.connect(mongoConnectionString, { useMongoClient: true });
+mongoose.connect(mongoConnectionString, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.set('useCreateIndex', true);
 mongoose.connection.on('error', () => {
   console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
   process.exit(1);
@@ -49,7 +49,7 @@ mongoose.connection.on('error', () => {
 function getCategories() {
   const categories = [];
   const options = {
-    url: `https://api.github.com/repos/processing/p5.js-website/contents/dist/assets/examples/en?client_id=${
+    url: `https://api.github.com/repos/processing/p5.js-website/contents/src/data/examples/en?client_id=${
       clientId}&client_secret=${clientSecret}`,
     method: 'GET',
     headers,
@@ -61,7 +61,7 @@ function getCategories() {
       for (let j = 1; j < metadata.name.split('_').length; j += 1) {
         category += `${metadata.name.split('_')[j]} `;
       }
-      categories.push({ url: metadata.url, name: category });
+      categories.push({ url: metadata.url, name: category.trim() });
     });
 
     return categories;
@@ -114,12 +114,12 @@ function getSketchContent(projectsInAllCategories) {
 
     return rp(options).then((res) => {
       const noNumberprojectName = project.projectName.replace(/(\d+)/g, '');
-      if (noNumberprojectName === 'Instance Mode : Instance Container ') {
+      if (noNumberprojectName === 'Instance Mode: Instance Container ') {
         for (let i = 0; i < 4; i += 1) {
           const splitedRes = `${res.split('*/')[1].split('</html>')[i]}</html>\n`;
           project.sketchContent = splitedRes.replace(
             'p5.js',
-            'https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.4/p5.min.js'
+            'https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js'
           );
         }
       } else {
@@ -134,7 +134,7 @@ function getSketchContent(projectsInAllCategories) {
 
 function createProjectsInP5user(projectsInAllCategories) {
   const options = {
-    url: `https://api.github.com/repos/processing/p5.js-website/contents/dist/assets/examples/assets?client_id=${
+    url: `https://api.github.com/repos/processing/p5.js-website/contents/src/data/examples/assets?client_id=${
       clientId}&client_secret=${clientSecret}`,
     method: 'GET',
     headers,
@@ -153,7 +153,7 @@ function createProjectsInP5user(projectsInAllCategories) {
           const c = objectID().toHexString();
           const r = objectID().toHexString();
           const noNumberprojectName = project.projectName.replace(/(\d+)/g, '');
-          if (noNumberprojectName === 'Instance Mode : Instance Container ') {
+          if (noNumberprojectName === 'Instance Mode: Instance Container ') {
             newProject = new Project({
               name: project.projectName,
               user: user._id,
@@ -167,7 +167,7 @@ function createProjectsInP5user(projectsInAllCategories) {
                 },
                 {
                   name: 'sketch.js',
-                  content: '// Instance Mode : Instance Container, please check its index.html file',
+                  content: '// Instance Mode: Instance Container, please check its index.html file',
                   id: a,
                   _id: a,
                   fileType: 'file',
@@ -264,7 +264,7 @@ function createProjectsInP5user(projectsInAllCategories) {
               const fileID = objectID().toHexString();
               newProject.files.push({
                 name: assetName,
-                url: `https://rawgit.com/processing/p5.js-website/master/dist/assets/examples/assets/${assetName}`,
+                url: `https://cdn.jsdelivr.net/gh/processing/p5.js-website@master/src/data/examples/assets/${assetName}`,
                 id: fileID,
                 _id: fileID,
                 children: [],

@@ -1,38 +1,18 @@
 import archiver from 'archiver';
-import request from 'request';
-import moment from 'moment';
+import format from 'date-fns/format';
 import isUrl from 'is-url';
-import slugify from 'slugify';
 import jsdom, { serializeDocument } from 'jsdom';
+import isAfter from 'date-fns/is_after';
+import request from 'request';
+import slugify from 'slugify';
 import Project from '../models/project';
 import User from '../models/user';
-import { deleteObjectsFromS3, getObjectKey } from './aws.controller';
+import { resolvePathToFile } from '../utils/filePath';
+import generateFileSystemSafeName from '../utils/generateFileSystemSafeName';
 
-export function createProject(req, res) {
-  let projectValues = {
-    user: req.user._id
-  };
-
-  projectValues = Object.assign(projectValues, req.body);
-
-  Project.create(projectValues, (err, newProject) => {
-    if (err) {
-      res.json({ success: false });
-      return;
-    }
-    Project.populate(
-      newProject,
-      { path: 'user', select: 'username' },
-      (innerErr, newProjectWithUser) => {
-        if (innerErr) {
-          res.json({ success: false });
-          return;
-        }
-        res.json(newProjectWithUser);
-      }
-    );
-  });
-}
+export { default as createProject, apiCreateProject } from './project.controller/createProject';
+export { default as deleteProject } from './project.controller/deleteProject';
+export { default as getProjectsForUser, apiGetProjectsForUser } from './project.controller/getProjectsForUser';
 
 export function updateProject(req, res) {
   Project.findById(req.params.project_id, (findProjectErr, project) => {
@@ -40,10 +20,10 @@ export function updateProject(req, res) {
       res.status(403).send({ success: false, message: 'Session does not match owner of project.' });
       return;
     }
-    // if (req.body.updatedAt && moment(req.body.updatedAt) < moment(project.updatedAt)) {
-    //   res.status(409).send({ success: false, message: 'Attempted to save stale version of project.' });
-    //   return;
-    // }
+    if (req.body.updatedAt && isAfter(new Date(project.updatedAt), req.body.updatedAt)) {
+      res.status(409).send({ success: false, message: 'Attempted to save stale version of project.' });
+      return;
+    }
     Project.findByIdAndUpdate(
       req.params.project_id,
       {
@@ -60,7 +40,7 @@ export function updateProject(req, res) {
           res.json({ success: false });
           return;
         }
-        if (updatedProject.files.length !== req.body.files.length) {
+        if (req.body.files && updatedProject.files.length !== req.body.files.length) {
           const oldFileIds = updatedProject.files.map(file => file.id);
           const newFileIds = req.body.files.map(file => file.id);
           const staleIds = oldFileIds.filter(id => newFileIds.indexOf(id) === -1);
@@ -75,8 +55,9 @@ export function updateProject(req, res) {
             }
             res.json(savedProject);
           });
+        } else {
+          res.json(updatedProject);
         }
-        res.json(updatedProject);
       });
   });
 }
@@ -101,35 +82,6 @@ export function getProject(req, res) {
         return res.json(project);
       }
     });
-}
-
-function deleteFilesFromS3(files) {
-  deleteObjectsFromS3(files.filter((file) => {
-    if (file.url) {
-      if (!process.env.S3_DATE || (process.env.S3_DATE && moment(process.env.S3_DATE) < moment(file.createdAt))) {
-        return true;
-      }
-    }
-    return false;
-  })
-    .map(file => getObjectKey(file.url)));
-}
-
-export function deleteProject(req, res) {
-  Project.findById(req.params.project_id, (findProjectErr, project) => {
-    if (!project.user.equals(req.user._id)) {
-      res.status(403).json({ success: false, message: 'Session does not match owner of project.' });
-      return;
-    }
-    deleteFilesFromS3(project.files);
-    Project.remove({ _id: req.params.project_id }, (removeProjectError) => {
-      if (removeProjectError) {
-        res.status(404).send({ message: 'Project with that id does not exist' });
-        return;
-      }
-      res.json({ success: true });
-    });
-  });
 }
 
 export function getProjectsForUserId(userId) {
@@ -157,20 +109,15 @@ export function getProjectAsset(req, res) {
         return res.status(404).send({ message: 'Project with that id does not exist' });
       }
 
-      let assetURL = null;
-      const seekPath = req.params[0]; // req.params.asset_path;
-      const seekPathSplit = seekPath.split('/');
-      const seekFilename = seekPathSplit[seekPathSplit.length - 1];
-      project.files.forEach((file) => {
-        if (file.name === seekFilename) {
-          assetURL = file.url;
-        }
-      });
-
-      if (!assetURL) {
+      const filePath = req.params[0];
+      const resolvedFile = resolvePathToFile(filePath, project.files);
+      if (!resolvedFile) {
         return res.status(404).send({ message: 'Asset does not exist' });
       }
-      request({ method: 'GET', url: assetURL, encoding: null }, (innerErr, response, body) => {
+      if (!resolvedFile.url) {
+        return res.send(resolvedFile.content);
+      }
+      request({ method: 'GET', url: resolvedFile.url, encoding: null }, (innerErr, response, body) => {
         if (innerErr) {
           return res.status(404).send({ message: 'Asset does not exist' });
         }
@@ -179,34 +126,12 @@ export function getProjectAsset(req, res) {
     });
 }
 
-export function getProjectsForUserName(username) {
-
-}
-
 export function getProjects(req, res) {
   if (req.user) {
     getProjectsForUserId(req.user._id)
       .then((projects) => {
         res.json(projects);
       });
-  } else {
-    // could just move this to client side
-    res.json([]);
-  }
-}
-
-export function getProjectsForUser(req, res) {
-  if (req.params.username) {
-    User.findOne({ username: req.params.username }, (err, user) => {
-      if (!user) {
-        res.status(404).json({ message: 'User with that username does not exist.' });
-        return;
-      }
-      Project.find({ user: user._id })
-        .sort('-createdAt')
-        .select('name files id createdAt updatedAt')
-        .exec((innerErr, projects) => res.json(projects));
-    });
   } else {
     // could just move this to client side
     res.json([]);
@@ -242,7 +167,7 @@ export function projectForUserExists(username, projectId, callback) {
 }
 
 function bundleExternalLibs(project, zip, callback) {
-  const indexHtml = project.files.find(file => file.name === 'index.html');
+  const indexHtml = project.files.find(file => file.name.match(/\.html$/));
   let numScriptsResolved = 0;
   let numScriptTags = 0;
 
@@ -253,6 +178,10 @@ function bundleExternalLibs(project, zip, callback) {
 
     if (!isUrl(src)) {
       numScriptsResolved += 1;
+      if (numScriptsResolved === numScriptTags) {
+        indexHtml.content = serializeDocument(document);
+        callback();
+      }
       return;
     }
 
@@ -279,6 +208,10 @@ function bundleExternalLibs(project, zip, callback) {
     for (let i = 0; i < numScriptTags; i += 1) {
       resolveScriptTagSrc(scriptTags[i], indexHtmlDoc);
     }
+    if (numScriptTags === 0) {
+      indexHtml.content = serializeDocument(document);
+      callback();
+    }
   });
 }
 
@@ -293,9 +226,9 @@ function buildZip(project, req, res) {
     res.status(500).send({ error: err.message });
   });
 
-  const currentTime = moment().format('YYYY_MM_DD_HH_mm_ss');
+  const currentTime = format(new Date(), 'YYYY_MM_DD_HH_mm_ss');
   project.slug = slugify(project.name, '_');
-  res.attachment(`${project.slug}_${currentTime}.zip`);
+  res.attachment(`${generateFileSystemSafeName(project.slug)}_${currentTime}.zip`);
   zip.pipe(res);
 
   function addFileToZip(file, path) {
