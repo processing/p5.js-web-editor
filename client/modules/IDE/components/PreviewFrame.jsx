@@ -353,6 +353,8 @@ class PreviewFrame extends React.Component {
       'preview-frame': true,
       'preview-frame--full-view': this.props.fullView
     });
+    const sandboxAttributes =
+      'allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-forms allow-modals allow-downloads';
     return (
       <iframe
         id="canvas_frame"
@@ -362,7 +364,7 @@ class PreviewFrame extends React.Component {
         frameBorder="0"
         title="sketch preview"
         ref={(element) => { this.iframeElement = element; }}
-        sandbox="allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-forms allow-modals"
+        sandbox={sandboxAttributes}
       />
     );
   }

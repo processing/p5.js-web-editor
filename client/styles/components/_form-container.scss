@@ -57,3 +57,7 @@
 .form-container__exit-button {
 	@include icon();
 }
+
+.form-container__stack > * + * {
+	margin-top: #{10 / $base-font-size}rem;
+}

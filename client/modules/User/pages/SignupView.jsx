@@ -1,17 +1,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { bindActionCreators } from 'redux';
-import axios from 'axios';
 import { Link, browserHistory } from 'react-router';
 import { Helmet } from 'react-helmet';
 import { reduxForm } from 'redux-form';
 import * as UserActions from '../actions';
 import SignupForm from '../components/SignupForm';
+import apiClient from '../../../utils/apiClient';
 import { validateSignup } from '../../../utils/reduxFormUtils';
+import SocialAuthButton from '../components/SocialAuthButton';
 import Nav from '../../../components/Nav';
-
-const __process = (typeof global !== 'undefined' ? global : window).process;
-const ROOT_URL = __process.env.API_URL;
 
 class SignupView extends React.Component {
   gotoHomePage = () => {
@@ -33,6 +31,11 @@ class SignupView extends React.Component {
           <div className="form-container__content">
             <h2 className="form-container__title">Sign Up</h2>
             <SignupForm {...this.props} />
+            <h2 className="form-container__divider">Or</h2>
+            <div className="form-container__stack">
+              <SocialAuthButton service={SocialAuthButton.services.github} />
+              <SocialAuthButton service={SocialAuthButton.services.google} />
+            </div>
             <p className="form__navigation-options">
               Already have an account?&nbsp;
               <Link className="form__login-button" to="/login">Log In</Link>
@@ -80,7 +83,7 @@ function asyncValidate(formProps, dispatch, props) {
         const queryParams = {};
         queryParams[fieldToValidate] = formProps[fieldToValidate];
         queryParams.check_type = fieldToValidate;
-        return axios.get(`${ROOT_URL}/signup/duplicate_check`, { params: queryParams })
+        return apiClient.get('/signup/duplicate_check', { params: queryParams })
           .then((response) => {
             if (response.data.exists) {
               errors[fieldToValidate] = response.data.message;
