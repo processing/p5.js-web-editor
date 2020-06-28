@@ -2,15 +2,17 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import * as ToastActions from '../actions/toast';
 
 import ExitIcon from '../../../images/exit.svg';
 
 function Toast(props) {
+  const { t } = useTranslation('common');
   return (
     <section className="toast">
       <p>
-        {props.text}
+        {t(props.text)}
       </p>
       <button className="toast__close" onClick={props.hideToast} aria-label="Close Alert" >
         <ExitIcon focusable="false" aria-hidden="true" />

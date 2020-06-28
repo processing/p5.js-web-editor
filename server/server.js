@@ -79,6 +79,13 @@ app.options('*', corsMiddleware);
 app.use(Express.static(path.resolve(__dirname, '../dist/static'), {
   maxAge: process.env.STATIC_MAX_AGE || (process.env.NODE_ENV === 'production' ? '1d' : '0')
 }));
+
+// setting middleware
+app.use(Express.static('translations'));
+/* app.get('/public', (req, res) => {
+  res.send('An alligator approaches!');
+}); */
+
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(cookieParser());

@@ -13,10 +13,13 @@
     "File": "Archivo",
     "New": "Nuevo",
     "Save": "Guardar",
+    "Share": "Compartir",
+    "Duplicate": "Duplicar",
     "Examples": "Ejemplos",
     "Edit": "Editar",
     "TidyCode": "Ordenar código",
     "Find": "Buscar",
+     "AddToCollection": "Agregar a colección",
     "FindNext": "Buscar anterior",
     "FindPrevious": "Buscar anterior",
     "Sketch": "Bosquejo",
@@ -28,7 +31,9 @@
     "KeyboardShortcuts": "Atajos",
     "Reference": "Referencia",
     "About": "Acerca de",
-    "Tidy": "Ordenar"},
+    "Tidy": "Ordenar",
+  "Lang": "Lenguaje"},
+
   "Settings": {
     "FindNextMatch": "Encontrar siguiente ocurrencia",
     "FindPrevMatch": "Encontrar ocurrencia previa",
@@ -90,6 +95,7 @@
     "ConfirmPassword": "Confirma la contrasena"
   },
   "Toast": {
-    "LangChange": "Felicidades, lenguaje modificado!!!"
+    "LangChange": "Felicidades, lenguaje modificado!!!",
+    "OpenedNewSketch": "Creaste nuevo bosquejo."
   }
 }

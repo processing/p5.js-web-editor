@@ -1,30 +1,57 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+// import detector from 'i18next-browser-languagedetector';//
+// import Fetch from 'i18next-fetch-backend';
+// import Fetch from 'i18next-fetch-backend';
 import Backend from 'i18next-http-backend';
-import LanguageDetector from 'i18next-browser-languagedetector';
-// not like to use this?
-// have a look at the Quick start guide
-// for passing in lng and translations on init
+// import axios from 'axios';
+// import commonEn from './locales/en/translations.json';
+// import commonEs from './locales/es/translations.json';
+
+const fallbackLng = ['en'];
+const availableLanguages = ['en', 'es'];
+/* const fileTmp = '/locales/en/translations.json';
+axios.get(fileTmp)
+  .then((response) => {
+    console.log('Datos que traere');
+    console.log(response.data);
+    console.log(response.status);
+    console.log(response.statusText);
+    console.log(response.headers);
+    console.log(response.config);
+  }).catch((error) => {
+  // handle error
+    console.log('ERROR AXIOS ASA AXIOS');
+    console.log(error);
+  }); */
+
+
+const options = {
+  // loadPath: '/locales/{{lng}}/translations.json',
+  loadPath: '/locales/{{lng}}/translations.json',
+  // loadPath: fileTmp,
+  requestOptions: { // used for fetch, can also be a function (payload) => ({ method: 'GET' })
+    mode: 'no-cors'
+  },
+  allowMultiLoading: false, // set loadPath: '/locales/resources.json?lng={{lng}}&ns={{ns}}' to adapt to multiLoading
+};
 
 i18n
-  // load translation using http -> see /public/locales (i.e. https://github.com/i18next/react-i18next/tree/master/example/react/public/locales)
-  // learn more: https://github.com/i18next/i18next-http-backend
-  .use(Backend)
-  // detect user language
-  // learn more: https://github.com/i18next/i18next-browser-languageDetector
-  .use(LanguageDetector)
-  // pass the i18n instance to react-i18next.
-  .use(initReactI18next)
-  // init i18next
-  // for all options read: https://www.i18next.com/overview/configuration-options
-  .init({
-    fallbackLng: 'en',
+  .use(initReactI18next) // pass the i18n instance to react-i18next.
+  .use(Backend).init({
+    lng: 'en',
+    defaultNS: 'menu',
+    fallbackLng, // if user computer language is not on the list of available languages, than we will be using the fallback language specified earlier
     debug: true,
-
+    backend: options,
+    getAsync: false,
+    initImmediate: false,
+    useSuspense: true,
+    whitelist: availableLanguages,
     interpolation: {
-      escapeValue: false, // not needed for react as it escapes by default
-    }
+      escapeValue: false
+    },
+    saveMissing: true,
   });
-
 
 export default i18n;

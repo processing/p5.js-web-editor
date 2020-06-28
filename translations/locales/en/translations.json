@@ -17,6 +17,7 @@
     "Edit": "Edit",
     "TidyCode": "Tidy Code",
     "Find": "Find",
+    "AddToCollection": "Add to Collection",
     "FindNext": "Find Next",
     "FindPrevious": "Find Previous",
     "Sketch": "Sketch",
@@ -28,7 +29,8 @@
     "KeyboardShortcuts": "Keyboard Shortcuts",
     "Reference": "Reference",
     "About": "About",
-    "Tidy": "Tidy"},
+    "Tidy": "Tidy",
+    "Lang": "Language"},
   "Settings": {
     "FindNextMatch": "Find Next Match",
     "FindPrevMatch": "Find Previous Match",
@@ -90,6 +92,7 @@
     "ConfirmPassword": "Confirm Password"
   },
   "Toast": {
-    "LangChange": "Language changed!!!"
+    "LangChange": "Language changed!!!",
+    "OpenedNewSketch": "Opened new sketch."
   }
 }
