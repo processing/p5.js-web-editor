@@ -1,9 +1,9 @@
 
 import React from 'react';
-import { shallow } from 'enzyme';
-import renderer from 'react-test-renderer';
+import { render } from '@testing-library/react';
 
-import { NavComponent } from './../Nav';
+
+import { NavComponent } from '../Nav';
 
 describe('Nav', () => {
   const props = {
@@ -46,17 +46,9 @@ describe('Nav', () => {
       id: 'root-file'
     }
   };
-  const getWrapper = () => shallow(<NavComponent {...props} />);
-
-  test('it renders main navigation', () => {
-    const nav = getWrapper();
-    expect(nav.exists('.nav')).toEqual(true);
-  });
 
   it('renders correctly', () => {
-    const tree = renderer
-      .create(<NavComponent {...props} />)
-      .toJSON();
-    expect(tree).toMatchSnapshot();
+    const { asFragment } = render(<NavComponent {...props} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 });
