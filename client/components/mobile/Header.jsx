@@ -11,8 +11,8 @@ const Header = styled.div`
   background: ${background};
   color: ${textColor};
   padding: ${remSize(12)};
-  padding-left: ${remSize(32)};
-  padding-right: ${remSize(32)};
+  padding-left: ${remSize(16)};
+  padding-right: ${remSize(16)};
   z-index: 1;
 
   display: flex;
@@ -20,6 +20,11 @@ const Header = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+
+  // TODO: 
+  svg {
+    height: 2rem;
+  }
 `;
 
 export default Header;

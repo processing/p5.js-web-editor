@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Header from '../../components/mobile/Header';
+import IconButton from '../../components/mobile/IconButton';
 import PreviewFrame from '../IDE/components/PreviewFrame';
 import Screen from '../../components/mobile/MobileScreen';
 import * as ProjectActions from '../IDE/actions/project';
@@ -23,12 +24,6 @@ import { remSize } from '../../theme';
 const Content = styled.div`
   z-index: 0;
   margin-top: ${remSize(68)};
-`;
-
-const IconLinkWrapper = styled(Link)`
-  width: 2rem;
-  margin-right: 1.25rem;
-  margin-left: none;
 `;
 
 const MobileSketchView = (props) => {
@@ -55,9 +50,9 @@ const MobileSketchView = (props) => {
   return (
     <Screen>
       <Header>
-        <IconLinkWrapper to="/mobile" aria-label="Return to original editor">
+        <IconButton to="/mobile" aria-label="Return to original editor">
           <ExitIcon viewBox="0 0 16 16" />
-        </IconLinkWrapper>
+        </IconButton>
         <div>
           <h2>{projectName}</h2>
           <h3><br /></h3>

@@ -7,14 +7,14 @@ const ButtonWrapper = styled(Button)`
 width: 3rem;
 > svg {
   width: 100%;
-  height: auto;
+  height: 100%;
 }
 `;
 
-const IconButton = ({ children }) => (<ButtonWrapper
-  aria-label="Add to collection"
-  iconBefore={children}
+const IconButton = props => (<ButtonWrapper
+  iconBefore={props.children}
   kind={Button.kinds.inline}
+  {...{ ...props, children: null }}
 />);
 
 IconButton.propTypes = {

@@ -30,10 +30,13 @@ import Screen from '../../../components/mobile/MobileScreen';
 import Footer from '../../../components/mobile/Footer';
 import IDEWrapper from '../../../components/mobile/IDEWrapper';
 
-const IconLinkWrapper = styled(Link)`
-  width: 3rem;
-  margin-right: 1.25rem;
-  margin-left: none;
+const IconContainer = styled.div`
+  marginLeft: 2rem;
+  display: flex;
+`;
+
+const TitleContainer = styled.div`
+
 `;
 
 const isUserOwner = ({ project, user }) => (project.owner && project.owner.id === user.id);
@@ -53,30 +56,22 @@ const IDEViewMobile = (props) => {
   return (
     <Screen>
       <Header>
-        <IconLinkWrapper to="/" aria-label="Return to original editor">
-          <ExitIcon />
-        </IconLinkWrapper>
-        <div>
+        <IconButton to="/mobile" aria-label="Return to original editor">
+          <ExitIcon viewBox="0 0 16 16" />
+        </IconButton>
+        <div style={{ marginLeft: '1rem' }}>
           <h2>{project.name}</h2>
           <h3>{selectedFile.name}</h3>
         </div>
 
-        <div style={{ marginLeft: '2rem', display: 'flex' }}>
+        <IconContainer>
           <IconButton onClick={() => setOverlay('preferences')}>
             <PreferencesIcon focusable="false" aria-hidden="true" />
           </IconButton>
-          <Link
-            to="/mobile/preview"
-            onClick={() => {
-              // alert('starting sketch');
-              startSketch();
-            }}
-          >
-            <IconButton>
-              <PlayIcon viewBox="-1 -1 7 7" focusable="false" aria-hidden="true" />
-            </IconButton>
-          </Link>
-        </div>
+          <IconButton to="/mobile/preview" onClick={() => { startSketch(); }}>
+            <PlayIcon viewBox="-1 -1 7 7" focusable="false" aria-hidden="true" />
+          </IconButton>
+        </IconContainer>
       </Header>
 
       <IDEWrapper>
