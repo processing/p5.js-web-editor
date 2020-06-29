@@ -1,8 +1,5 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-// import detector from 'i18next-browser-languagedetector';//
-// import Fetch from 'i18next-fetch-backend';
-// import Fetch from 'i18next-fetch-backend';
 import Backend from 'i18next-http-backend';
 
 const fallbackLng = ['en'];
@@ -22,7 +19,7 @@ i18n
     lng: 'en',
     defaultNS: 'menu',
     fallbackLng, // if user computer language is not on the list of available languages, than we will be using the fallback language specified earlier
-    debug: true,
+    debug: false,
     backend: options,
     getAsync: false,
     initImmediate: false,
