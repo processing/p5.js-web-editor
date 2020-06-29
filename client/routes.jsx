@@ -22,7 +22,7 @@ const checkAuth = (store) => {
   store.dispatch(getUser());
 };
 
-// This short-circuit seems unnecessary - using the mobile <Switch /> navigator (future) should prevent this from being called
+// TODO: This short-circuit seems unnecessary - using the mobile <Switch /> navigator (future) should prevent this from being called
 const onRouteChange = (store) => {
   const path = window.location.pathname;
   if (path.includes('/mobile')) return;
