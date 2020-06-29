@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -41,12 +40,15 @@ const isUserOwner = ({ project, user }) => (project.owner && project.owner.id ==
 
 const IDEViewMobile = (props) => {
   const {
-    preferences, ide, editorAccessibility, project, updateLintMessage, clearLintMessage, selectedFile, updateFileContent, files, closeEditorOptions, showEditorOptions, showKeyboardShortcutModal, setUnsavedChanges, startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console, showRuntimeErrorWarning, hideRuntimeErrorWarning, startSketch
+    preferences, ide, editorAccessibility, project, updateLintMessage, clearLintMessage,
+    selectedFile, updateFileContent, files,
+    closeEditorOptions, showEditorOptions, showKeyboardShortcutModal, setUnsavedChanges,
+    startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console,
+    showRuntimeErrorWarning, hideRuntimeErrorWarning, startSketch
   } = props;
 
-  const [tmController, setTmController] = useState(null);
-
-  const [overlay, setOverlay] = useState(null);
+  const [tmController, setTmController] = useState(null); // eslint-disable-line
+  const [overlay, setOverlay] = useState(null); // eslint-disable-line
 
   return (
     <Screen>
