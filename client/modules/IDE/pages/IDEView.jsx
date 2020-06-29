@@ -34,12 +34,14 @@ import AddToCollectionList from '../components/AddToCollectionList';
 import Feedback from '../components/Feedback';
 import { CollectionSearchbar } from '../components/Searchbar';
 
-const getTitle = (props) => {
+function getTitle(props) {
   const { id } = props.project;
   return id ? `p5.js Web Editor | ${props.project.name}` : 'p5.js Web Editor';
-};
+}
 
-const isUserOwner = props => props.project.owner && props.project.owner.id === props.user.id;
+function isUserOwner(props) {
+  return props.project.owner && props.project.owner.id === props.user.id;
+}
 
 class IDEView extends React.Component {
   constructor(props) {
