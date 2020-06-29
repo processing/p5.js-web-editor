@@ -53,7 +53,7 @@ const MobileSketchView = (props) => {
         <IconButton to="/mobile" aria-label="Return to original editor">
           <ExitIcon viewBox="0 0 16 16" />
         </IconButton>
-        <div>
+        <div style={{ marginLeft: '1rem' }}>
           <h2>{projectName}</h2>
           <h3><br /></h3>
         </div>
