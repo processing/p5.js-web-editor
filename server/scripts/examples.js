@@ -264,7 +264,7 @@ function createProjectsInP5user(projectsInAllCategories) {
               const fileID = objectID().toHexString();
               newProject.files.push({
                 name: assetName,
-                url: `https://cdn.jsdelivr.net/gh/processing/p5.js-website@master/src/data/examples/assets/${assetName}`,
+                url: `https://cdn.jsdelivr.net/gh/processing/p5.js-website@main/src/data/examples/assets/${assetName}`,
                 id: fileID,
                 _id: fileID,
                 children: [],
