@@ -53,11 +53,6 @@ const MobileSketchView = (props) => {
 
   const { preferences, ide } = props;
 
-  useEffect(() => {
-  //   console.log(params);
-  //   getProject(params.project_id, params.username);
-  });
-
   return (
     <Screen>
       <Header>
