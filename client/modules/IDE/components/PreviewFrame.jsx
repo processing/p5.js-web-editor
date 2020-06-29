@@ -23,7 +23,6 @@ import { hijackConsoleErrorsScript, startTag, getAllScriptOffsets }
   from '../../../utils/consoleUtils';
 
 
-// Kept inside class just for linter's
 const shouldRenderSketch = (props, prevProps = undefined) => {
   const { isPlaying, previewIsRefreshing, fullView } = props;
 
