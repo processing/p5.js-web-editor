@@ -61,7 +61,7 @@ const IDEViewMobile = (props) => {
           <h3>{selectedFile.name}</h3>
         </div>
 
-        <div style={{ marginLeft: '2rem' }}>
+        <div style={{ marginLeft: '2rem', display: 'flex' }}>
           <IconButton onClick={() => setOverlay('preferences')}>
             <PreferencesIcon focusable="false" aria-hidden="true" />
           </IconButton>
