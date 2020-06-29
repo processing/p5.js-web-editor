@@ -26,7 +26,7 @@ i18n
     useSuspense: true,
     whitelist: availableLanguages,
     interpolation: {
-      escapeValue: false
+      escapeValue: false, // react already safes from xss
     },
     saveMissing: true,
   });

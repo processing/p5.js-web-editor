@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 import configureStore from './store';
 import routes from './routes';
+import Loader from './modules/App/components/loader';
 import i18n from './i18n';
 
 require('./styles/main.scss');
@@ -26,7 +27,7 @@ const App = () => (
 const HotApp = hot(App);
 
 render(
-  <Suspense fallback={(<div>Loading translations</div>)}>
+  <Suspense fallback={(<Loader />)}>
     <HotApp />
   </Suspense>,
   document.getElementById('root')
