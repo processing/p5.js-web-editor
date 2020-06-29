@@ -23,8 +23,7 @@ import { getHTMLFile } from '../reducers/files';
 import Editor from '../components/Editor';
 import { ExitIcon } from '../../../common/icons';
 
-import PreferencesIcon from '../../../images/preferences.svg';
-import PlayIcon from '../../../images/triangle-arrow-right.svg';
+import { PreferencesIcon, PlayIcon } from '../../../common/icons';
 
 import IconButton from '../../../components/mobile/IconButton';
 import Header from '../../../components/mobile/Header';
