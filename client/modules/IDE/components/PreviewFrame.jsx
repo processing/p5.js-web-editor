@@ -337,7 +337,6 @@ class PreviewFrame extends React.Component {
       if (this.props.endSketchRefresh) {
         this.props.endSketchRefresh();
       }
-      // debugger; // eslint-disable-line
     } else {
       doc.srcdoc = '';
       srcDoc.set(doc, '  ');
