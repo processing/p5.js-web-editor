@@ -155,19 +155,19 @@ export function saveProject(selectedFile = null, autosave = false) {
           if (!autosave) {
             if (state.ide.justOpenedProject && state.preferences.autosave) {
               dispatch(showToast(5500));
-              dispatch(setToastText('Project saved.'));
+              dispatch(setToastText('Sketch saved.'));
               setTimeout(() => dispatch(setToastText('Autosave enabled.')), 1500);
               dispatch(resetJustOpenedProject());
             } else {
               dispatch(showToast(1500));
-              dispatch(setToastText('Project saved.'));
+              dispatch(setToastText('Sketch saved.'));
             }
           }
         })
         .catch((error) => {
           const { response } = error;
           dispatch(endSavingProject());
-          dispatch(setToastText('Failed to save project.'));
+          dispatch(setToastText('Failed to save sketch.'));
           dispatch(showToast(1500));
           if (response.status === 403) {
             dispatch(showErrorModal('staleSession'));
@@ -197,19 +197,19 @@ export function saveProject(selectedFile = null, autosave = false) {
         if (!autosave) {
           if (state.preferences.autosave) {
             dispatch(showToast(5500));
-            dispatch(setToastText('Project saved.'));
+            dispatch(setToastText('Sketch saved.'));
             setTimeout(() => dispatch(setToastText('Autosave enabled.')), 1500);
             dispatch(resetJustOpenedProject());
           } else {
             dispatch(showToast(1500));
-            dispatch(setToastText('Project saved.'));
+            dispatch(setToastText('Sketch saved.'));
           }
         }
       })
       .catch((error) => {
         const { response } = error;
         dispatch(endSavingProject());
-        dispatch(setToastText('Failed to save project.'));
+        dispatch(setToastText('Failed to save sketch.'));
         dispatch(showToast(1500));
         if (response.status === 403) {
           dispatch(showErrorModal('staleSession'));
