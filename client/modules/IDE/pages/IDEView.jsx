@@ -3,6 +3,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { withTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 import SplitPane from 'react-split-pane';
 import Editor from '../components/Editor';
@@ -36,7 +37,7 @@ import { CollectionSearchbar } from '../components/Searchbar';
 
 class IDEView extends React.Component {
   constructor(props) {
-    super(props);
+    super(withTranslation && props);
     this.handleGlobalKeydown = this.handleGlobalKeydown.bind(this);
     this.warnIfUnsavedChanges = this.warnIfUnsavedChanges.bind(this);
 
@@ -218,7 +219,7 @@ class IDEView extends React.Component {
         <Toolbar />
         {this.props.ide.preferencesIsVisible &&
           <Overlay
-            title="Settings"
+            title={this.props.t('Settings')}
             ariaLabel="settings"
             closeOverlay={this.props.closePreferences}
           >
@@ -334,7 +335,7 @@ class IDEView extends React.Component {
               </SplitPane>
               <section className="preview-frame-holder">
                 <header className="preview-frame__header">
-                  <h2 className="preview-frame__title">Preview</h2>
+                  <h2 className="preview-frame__title">{this.props.t('Preview')}</h2>
                 </header>
                 <div className="preview-frame__content">
                   <div className="preview-frame-overlay" ref={(element) => { this.overlay = element; }}>
@@ -441,7 +442,7 @@ class IDEView extends React.Component {
         }
         {this.props.ide.keyboardShortcutVisible &&
           <Overlay
-            title="Keyboard Shortcuts"
+            title={this.props.t('KeyboardShortcuts')}
             ariaLabel="keyboard shortcuts"
             closeOverlay={this.props.closeKeyboardShortcutModal}
           >
@@ -609,7 +610,8 @@ IDEView.propTypes = {
   hideRuntimeErrorWarning: PropTypes.func.isRequired,
   startSketch: PropTypes.func.isRequired,
   openUploadFileModal: PropTypes.func.isRequired,
-  closeUploadFileModal: PropTypes.func.isRequired
+  closeUploadFileModal: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -646,4 +648,6 @@ function mapDispatchToProps(dispatch) {
   );
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(IDEView));
+
+export default withTranslation('WebEditor')(withRouter(connect(mapStateToProps, mapDispatchToProps)(IDEView)));
+
