@@ -67,7 +67,6 @@ const MobileSketchView = (props) => {
           content={selectedFile.content}
 
           isPlaying
-          forceFullWidth
           isAccessibleOutputPlaying={ide.isAccessibleOutputPlaying}
           previewIsRefreshing={ide.previewIsRefreshing}
 
