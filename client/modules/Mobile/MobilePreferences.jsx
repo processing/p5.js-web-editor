@@ -166,7 +166,7 @@ const MobilePreferences = (props) => {
   return (
     <Screen fullscreen>
       <section>
-        <SettingsHeader transparent title="Settings">
+        <SettingsHeader transparent title="Preferences">
 
           <IconButton to="/mobile" aria-label="Return to ide view">
             <ExitIcon />
