@@ -1,24 +1,19 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router';
+import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import * as PreferencesActions from '../IDE/actions/preferences';
 import * as IdeActions from '../IDE/actions/ide';
 
+import IconButton from '../../components/mobile/IconButton';
 import Screen from '../../components/mobile/MobileScreen';
 import Header from '../../components/mobile/Header';
 import PreferencePicker from '../../components/mobile/PreferencePicker';
 import { ExitIcon } from '../../common/icons';
 import { remSize, prop } from '../../theme';
-
-const IconLinkWrapper = styled(Link)`
-  width: 3rem;
-  margin-right: 1.25rem;
-  margin-left: none;
-`;
 
 const Content = styled.div`
   z-index: 0;
@@ -32,7 +27,11 @@ const SettingsHeader = styled(Header)`
 
 const SectionHeader = styled.h2`
   color: ${prop('primaryTextColor')};
-  padding-top: 2rem
+  padding-top: ${remSize(32)}
+`;
+
+const SectionSubeader = styled.h3`
+  color: ${prop('primaryTextColor')};
 `;
 
 
@@ -167,15 +166,11 @@ const MobilePreferences = (props) => {
   return (
     <Screen fullscreen>
       <section>
+        <SettingsHeader transparent title="Settings">
 
-        <SettingsHeader>
-          <h1>Settings</h1>
-
-          <div style={{ marginLeft: '2rem' }}>
-            <IconLinkWrapper to="/mobile" aria-label="Return to ide view">
-              <ExitIcon />
-            </IconLinkWrapper>
-          </div>
+          <IconButton to="/mobile" aria-label="Return to ide view">
+            <ExitIcon />
+          </IconButton>
         </SettingsHeader>
         <section className="preferences">
           <Content>
@@ -186,7 +181,7 @@ const MobilePreferences = (props) => {
             { accessibilitySettings.map(option => <PreferencePicker key={`${option.title}wrapper`} {...option} />) }
 
             <SectionHeader>Accessible Output</SectionHeader>
-            <h3>Used with screen reader</h3>
+            <SectionSubeader>Used with screen reader</SectionSubeader>
             { outputSettings.map(option => <PreferencePicker key={`${option.title}wrapper`} {...option} />) }
 
           </Content>

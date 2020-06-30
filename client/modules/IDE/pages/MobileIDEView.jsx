@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { useState } from 'react';
@@ -30,15 +28,6 @@ import Screen from '../../../components/mobile/MobileScreen';
 import Footer from '../../../components/mobile/Footer';
 import IDEWrapper from '../../../components/mobile/IDEWrapper';
 
-const IconContainer = styled.div`
-  marginLeft: 2rem;
-  display: flex;
-`;
-
-const TitleContainer = styled.div`
-
-`;
-
 const isUserOwner = ({ project, user }) => (project.owner && project.owner.id === user.id);
 
 const MobileIDEView = (props) => {
@@ -55,23 +44,21 @@ const MobileIDEView = (props) => {
 
   return (
     <Screen fullscreen>
-      <Header>
-        <IconButton to="/mobile" aria-label="Return to original editor">
-          <ExitIcon viewBox="0 0 16 16" />
+      <Header
+        title={project.name}
+        subtitle={selectedFile.name}
+        leftButton={
+          <IconButton to="/mobile" aria-label="Return to original editor">
+            <ExitIcon viewBox="0 0 16 16" />
+          </IconButton>
+        }
+      >
+        <IconButton to="/mobile/preferences" onClick={() => setOverlay('preferences')}>
+          <PreferencesIcon focusable="false" aria-hidden="true" />
         </IconButton>
-        <div style={{ marginLeft: '1rem' }}>
-          <h2>{project.name}</h2>
-          <h3>{selectedFile.name}</h3>
-        </div>
-
-        <IconContainer>
-          <IconButton to="/mobile/preferences" onClick={() => setOverlay('preferences')}>
-            <PreferencesIcon focusable="false" aria-hidden="true" />
-          </IconButton>
-          <IconButton to="/mobile/preview" onClick={() => { startSketch(); }}>
-            <PlayIcon viewBox="-1 -1 7 7" focusable="false" aria-hidden="true" />
-          </IconButton>
-        </IconContainer>
+        <IconButton to="/mobile/preview" onClick={() => { startSketch(); }}>
+          <PlayIcon viewBox="-1 -1 7 7" focusable="false" aria-hidden="true" />
+        </IconButton>
       </Header>
 
       <IDEWrapper>

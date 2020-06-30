@@ -1,14 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { prop, remSize } from '../../theme';
 
 const background = prop('Panel.default.background');
 const textColor = prop('primaryTextColor');
 
-const Header = styled.div`
+
+const HeaderDiv = styled.div`
   position: fixed;
   width: 100%;
-  background: ${background};
+  background: ${props => (props.transparent ? 'transparent' : background)};
   color: ${textColor};
   padding: ${remSize(12)};
   padding-left: ${remSize(16)};
@@ -23,8 +25,56 @@ const Header = styled.div`
 
   // TODO: 
   svg {
-    height: 2rem;
+    max-height: ${remSize(32)};
+    padding: ${remSize(4)}
   }
 `;
+
+const IconContainer = styled.div`
+  margin-left: ${props => (props.leftButton ? remSize(32) : remSize(4))};
+  display: flex;
+`;
+
+
+const TitleContainer = styled.div`
+  margin-left: ${remSize(4)};
+  margin-right: auto;
+
+  ${props => props.padded && `h2{
+    padding-top: ${remSize(10)};
+    padding-bottom: ${remSize(10)};
+  }`}
+`;
+
+const Header = ({
+  title, subtitle, leftButton, children, transparent
+}) => (
+  <HeaderDiv transparent={transparent}>
+    {leftButton}
+    <TitleContainer padded={subtitle === null}>
+      {title && <h2>{title}</h2>}
+      {subtitle && <h3>{subtitle}</h3>}
+    </TitleContainer>
+    <IconContainer>
+      {children}
+    </IconContainer>
+  </HeaderDiv>
+);
+
+Header.propTypes = {
+  title: PropTypes.string,
+  subtitle: PropTypes.string,
+  leftButton: PropTypes.element,
+  children: PropTypes.arrayOf(PropTypes.element),
+  transparent: PropTypes.bool
+};
+
+Header.defaultProps = {
+  title: null,
+  subtitle: null,
+  leftButton: null,
+  children: [],
+  transparent: false
+};
 
 export default Header;
