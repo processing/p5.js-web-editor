@@ -1,17 +1,19 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { metaKeyName, } from '../../../utils/metaKey';
 
 function KeyboardShortcutModal() {
+  const { t } = useTranslation();
   return (
     <div className="keyboard-shortcuts">
-      <h3 className="keyboard-shortcuts__title">Code Editing</h3>
+      <h3 className="keyboard-shortcuts__title">{t('CodeEditing')}</h3>
       <p className="keyboard-shortcuts__description">
         Code editing keyboard shortcuts follow <a href="https://shortcuts.design/toolspage-sublimetext.html" target="_blank" rel="noopener noreferrer">Sublime Text shortcuts</a>.
       </p>
       <ul className="keyboard-shortcuts__list">
         <li className="keyboard-shortcut-item">
           <span className="keyboard-shortcut__command">{'\u21E7'} + Tab</span>
-          <span>Tidy</span>
+          <span>{t('Tidy')}</span>
         </li>
         <li className="keyboard-shortcut-item">
           <span className="keyboard-shortcut__command">
@@ -35,19 +37,19 @@ function KeyboardShortcutModal() {
           <span className="keyboard-shortcut__command">
             {metaKeyName} + [
           </span>
-          <span>Indent Code Left</span>
+          <span>{t('IndentCodeLeft')}</span>
         </li>
         <li className="keyboard-shortcut-item">
           <span className="keyboard-shortcut__command">
             {metaKeyName} + ]
           </span>
-          <span>Indent Code Right</span>
+          <span>{t('IndentCodeRight')}</span>
         </li>
         <li className="keyboard-shortcut-item">
           <span className="keyboard-shortcut__command">
             {metaKeyName} + /
           </span>
-          <span>Comment Line</span>
+          <span>{t('CommentLine')}</span>
         </li>
       </ul>
       <h3 className="keyboard-shortcuts__title">General</h3>
