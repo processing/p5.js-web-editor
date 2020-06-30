@@ -23,7 +23,6 @@ import { hijackConsoleErrorsScript, startTag, getAllScriptOffsets }
   from '../../../utils/consoleUtils';
 
 
-// Kept inside class just for linter's
 const shouldRenderSketch = (props, prevProps = undefined) => {
   const { isPlaying, previewIsRefreshing, fullView } = props;
 
@@ -337,7 +336,6 @@ class PreviewFrame extends React.Component {
       if (this.props.endSketchRefresh) {
         this.props.endSketchRefresh();
       }
-      // debugger; // eslint-disable-line
     } else {
       doc.srcdoc = '';
       srcDoc.set(doc, '  ');

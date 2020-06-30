@@ -22,8 +22,7 @@ import { getHTMLFile } from '../reducers/files';
 import Editor from '../components/Editor';
 import { ExitIcon } from '../../../common/icons';
 
-import PreferencesIcon from '../../../images/preferences.svg';
-import PlayIcon from '../../../images/triangle-arrow-right.svg';
+import { PreferencesIcon, PlayIcon } from '../../../common/icons';
 
 import IconButton from '../../../components/mobile/IconButton';
 import Header from '../../../components/mobile/Header';
@@ -31,47 +30,48 @@ import Screen from '../../../components/mobile/MobileScreen';
 import Footer from '../../../components/mobile/Footer';
 import IDEWrapper from '../../../components/mobile/IDEWrapper';
 
-const IconLinkWrapper = styled(Link)`
-  width: 3rem;
-  margin-right: 1.25rem;
-  margin-left: none;
+const IconContainer = styled.div`
+  marginLeft: 2rem;
+  display: flex;
+`;
+
+const TitleContainer = styled.div`
+
 `;
 
 const isUserOwner = ({ project, user }) => (project.owner && project.owner.id === user.id);
 
 const MobileIDEView = (props) => {
   const {
-    preferences, ide, editorAccessibility, project, updateLintMessage, clearLintMessage, selectedFile, updateFileContent, files, closeEditorOptions, showEditorOptions, showKeyboardShortcutModal, setUnsavedChanges, startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console, showRuntimeErrorWarning, hideRuntimeErrorWarning, startSketch
+    preferences, ide, editorAccessibility, project, updateLintMessage, clearLintMessage,
+    selectedFile, updateFileContent, files,
+    closeEditorOptions, showEditorOptions, showKeyboardShortcutModal, setUnsavedChanges,
+    startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console,
+    showRuntimeErrorWarning, hideRuntimeErrorWarning, startSketch
   } = props;
 
-  const [tmController, setTmController] = useState(null);
-
-  const [overlay, setOverlay] = useState(null);
+  const [tmController, setTmController] = useState(null); // eslint-disable-line
+  const [overlay, setOverlay] = useState(null); // eslint-disable-line
 
   return (
     <Screen fullscreen>
       <Header>
-        <IconLinkWrapper to="/" aria-label="Return to original editor">
-          <ExitIcon />
-        </IconLinkWrapper>
-        <div>
+        <IconButton to="/mobile" aria-label="Return to original editor">
+          <ExitIcon viewBox="0 0 16 16" />
+        </IconButton>
+        <div style={{ marginLeft: '1rem' }}>
           <h2>{project.name}</h2>
           <h3>{selectedFile.name}</h3>
         </div>
 
-        <div style={{ marginLeft: '2rem' }}>
-          <Link to="/mobile/preferences">
-            <IconButton onClick={() => setOverlay('preferences')}>
-              <PreferencesIcon focusable="false" aria-hidden="true" />
-            </IconButton>
-          </Link>
-
-          <Link to="/mobile/preview" onClick={() => startSketch()}>
-            <IconButton>
-              <PlayIcon viewBox="-1 -1 7 7" focusable="false" aria-hidden="true" />
-            </IconButton>
-          </Link>
-        </div>
+        <IconContainer>
+          <IconButton to="/mobile/preferences" onClick={() => setOverlay('preferences')}>
+            <PreferencesIcon focusable="false" aria-hidden="true" />
+          </IconButton>
+          <IconButton to="/mobile/preview" onClick={() => { startSketch(); }}>
+            <PlayIcon viewBox="-1 -1 7 7" focusable="false" aria-hidden="true" />
+          </IconButton>
+        </IconContainer>
       </Header>
 
       <IDEWrapper>
