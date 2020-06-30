@@ -10,7 +10,7 @@ import * as IdeActions from '../IDE/actions/ide';
 
 import Screen from '../../components/mobile/MobileScreen';
 import Header from '../../components/mobile/Header';
-import Selector from '../../components/mobile/Selector';
+import PreferencePicker from '../../components/mobile/PreferencePicker';
 import { ExitIcon } from '../../common/icons';
 import { remSize, prop } from '../../theme';
 
@@ -180,14 +180,14 @@ const MobilePreferences = (props) => {
         <section className="preferences">
           <Content>
             <SectionHeader>General Settings</SectionHeader>
-            { generalSettings.map(option => <Selector key={`${option.title}wrapper`} {...option} />) }
+            { generalSettings.map(option => <PreferencePicker key={`${option.title}wrapper`} {...option} />) }
 
             <SectionHeader>Accessibility</SectionHeader>
-            { accessibilitySettings.map(option => <Selector key={`${option.title}wrapper`} {...option} />) }
+            { accessibilitySettings.map(option => <PreferencePicker key={`${option.title}wrapper`} {...option} />) }
 
             <SectionHeader>Accessible Output</SectionHeader>
             <h3>Used with screen reader</h3>
-            { outputSettings.map(option => <Selector key={`${option.title}wrapper`} {...option} />) }
+            { outputSettings.map(option => <PreferencePicker key={`${option.title}wrapper`} {...option} />) }
 
           </Content>
         </section>
