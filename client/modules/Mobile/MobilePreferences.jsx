@@ -55,7 +55,11 @@ const MobilePreferences = (props) => {
           value: 'dark', label: 'dark', ariaLabel: 'dark theme on', name: 'dark theme', id: 'dark-theme-on'
         },
         {
-          value: 'contrast', label: 'contrast', ariaLabel: 'contrast theme on', name: 'contrast theme', id: 'contrast-theme-on'
+          value: 'contrast',
+          label: 'contrast',
+          ariaLabel: 'contrast theme on',
+          name: 'contrast theme',
+          id: 'contrast-theme-on'
         }
       ],
       onSelect: x => setTheme(x) // setTheme
