@@ -65,7 +65,7 @@ Header.propTypes = {
   title: PropTypes.string,
   subtitle: PropTypes.string,
   leftButton: PropTypes.element,
-  children: PropTypes.arrayOf(PropTypes.element),
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.arrayOf(PropTypes.element)]),
   transparent: PropTypes.bool
 };
 
