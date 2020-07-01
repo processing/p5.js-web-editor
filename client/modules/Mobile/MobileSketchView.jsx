@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
@@ -48,14 +47,13 @@ const MobileSketchView = (props) => {
   const { preferences, ide } = props;
 
   return (
-    <Screen>
-      <Header>
-        <IconButton to="/mobile" icon={ExitIcon} aria-label="Return to original editor" />
-        <div style={{ marginLeft: '1rem' }}>
-          <h2>{projectName}</h2>
-          <h3><br /></h3>
-        </div>
-      </Header>
+    <Screen fullscreen>
+      <Header
+        leftButton={
+          <IconButton to="/mobile" icon={ExitIcon} aria-label="Return to original editor" />
+        }
+        title={projectName}
+      />
       <Content>
         <PreviewFrame
           htmlFile={htmlFile}

@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { useState } from 'react';
@@ -27,16 +25,10 @@ import Header from '../../../components/mobile/Header';
 import Screen from '../../../components/mobile/MobileScreen';
 import Footer from '../../../components/mobile/Footer';
 import IDEWrapper from '../../../components/mobile/IDEWrapper';
-import { remSize } from '../../../theme';
-
-const IconContainer = styled.div`
-  margin-left: ${remSize(32)};
-  display: flex;
-`;
 
 const isUserOwner = ({ project, user }) => (project.owner && project.owner.id === user.id);
 
-const IDEViewMobile = (props) => {
+const MobileIDEView = (props) => {
   const {
     preferences, ide, editorAccessibility, project, updateLintMessage, clearLintMessage,
     selectedFile, updateFileContent, files,
@@ -49,22 +41,21 @@ const IDEViewMobile = (props) => {
   const [overlay, setOverlay] = useState(null); // eslint-disable-line
 
   return (
-    <Screen>
-      <Header>
-        <IconButton to="/mobile" icon={ExitIcon} aria-label="Return to original editor" />
-        <div style={{ marginLeft: '1rem' }}>
-          <h2>{project.name}</h2>
-          <h3>{selectedFile.name}</h3>
-        </div>
-
-        <IconContainer>
-          <IconButton
-            onClick={() => setOverlay('preferences')}
-            icon={PreferencesIcon}
-            aria-label="Open preferences menu"
-          />
-          <IconButton to="/mobile/preview" onClick={() => { startSketch(); }} icon={PlayIcon} aria-label="Run sketch" />
-        </IconContainer>
+    <Screen fullscreen>
+      <Header
+        title={project.name}
+        subtitle={selectedFile.name}
+        leftButton={
+          <IconButton to="/mobile" icon={ExitIcon} aria-label="Return to original editor" />
+        }
+      >
+        <IconButton
+          to="/mobile/preferences"
+          onClick={() => setOverlay('preferences')}
+          icon={PreferencesIcon}
+          aria-label="Open preferences menu"
+        />
+        <IconButton to="/mobile/preview" onClick={() => { startSketch(); }} icon={PlayIcon} aria-label="Run sketch" />
       </Header>
 
       <IDEWrapper>
@@ -109,7 +100,7 @@ const IDEViewMobile = (props) => {
 };
 
 
-IDEViewMobile.propTypes = {
+MobileIDEView.propTypes = {
 
   preferences: PropTypes.shape({
     fontSize: PropTypes.number.isRequired,
@@ -256,4 +247,4 @@ function mapDispatchToProps(dispatch) {
 }
 
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(IDEViewMobile));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MobileIDEView));

@@ -2,8 +2,9 @@ import { Route, IndexRoute } from 'react-router';
 import React from 'react';
 import App from './modules/App/App';
 import IDEView from './modules/IDE/pages/IDEView';
-import IDEViewMobile from './modules/IDE/pages/IDEViewMobile';
+import MobileIDEView from './modules/IDE/pages/MobileIDEView';
 import MobileSketchView from './modules/Mobile/MobileSketchView';
+import MobilePreferences from './modules/Mobile/MobilePreferences';
 import FullView from './modules/IDE/pages/FullView';
 import LoginView from './modules/User/pages/LoginView';
 import SignupView from './modules/User/pages/SignupView';
@@ -56,8 +57,9 @@ const routes = store => (
     <Route path="/:username/collections/:collection_id" component={CollectionView} />
     <Route path="/about" component={IDEView} />
 
-    <Route path="/mobile" component={IDEViewMobile} />
+    <Route path="/mobile" component={MobileIDEView} />
     <Route path="/mobile/preview" component={MobileSketchView} />
+    <Route path="/mobile/preferences" component={MobilePreferences} />
   </Route>
 );
 
