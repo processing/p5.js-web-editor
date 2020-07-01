@@ -200,7 +200,6 @@ class PreviewFrame extends React.Component {
     this.addLoopProtect(sketchDoc);
     sketchDoc.head.insertBefore(consoleErrorsScript, sketchDoc.head.firstElement);
 
-
     return `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
   }
 
@@ -384,7 +383,7 @@ PreviewFrame.propTypes = {
   clearConsole: PropTypes.func.isRequired,
   cmController: PropTypes.shape({
     getContent: PropTypes.func
-  })
+  }),
 };
 
 PreviewFrame.defaultProps = {

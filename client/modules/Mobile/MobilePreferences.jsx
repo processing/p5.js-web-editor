@@ -22,12 +22,12 @@ const Content = styled.div`
 
 
 const SettingsHeader = styled(Header)`
-  background: transparent
+  background: transparent;
 `;
 
 const SectionHeader = styled.h2`
   color: ${prop('primaryTextColor')};
-  padding-top: ${remSize(32)}
+  padding-top: ${remSize(32)};
 `;
 
 const SectionSubeader = styled.h3`
@@ -161,16 +161,12 @@ const MobilePreferences = (props) => {
     },
   ];
 
-  // useEffect(() => { });
-
   return (
     <Screen fullscreen>
       <section>
         <SettingsHeader transparent title="Preferences">
 
-          <IconButton to="/mobile" aria-label="Return to ide view">
-            <ExitIcon />
-          </IconButton>
+          <IconButton to="/mobile" icon={ExitIcon} aria-label="Return to ide view" />
         </SettingsHeader>
         <section className="preferences">
           <Content>

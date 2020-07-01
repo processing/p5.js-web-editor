@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { prop, remSize } from '../../theme';
 
-const background = prop('Panel.default.background');
+const background = prop('MobilePanel.default.background');
 const textColor = prop('primaryTextColor');
 
 

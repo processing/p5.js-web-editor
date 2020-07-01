@@ -12,14 +12,20 @@ width: ${remSize(48)};
 }
 `;
 
-const IconButton = props => (<ButtonWrapper
-  iconBefore={props.children}
-  kind={Button.kinds.inline}
-  {...{ ...props, children: null }}
-/>);
+const IconButton = (props) => {
+  const { icon, ...otherProps } = props;
+  const Icon = icon;
+
+  return (<ButtonWrapper
+    iconBefore={<Icon />}
+    kind={Button.kinds.inline}
+    focusable="false"
+    {...otherProps}
+  />);
+};
 
 IconButton.propTypes = {
-  children: PropTypes.element.isRequired
+  icon: PropTypes.func.isRequired
 };
 
 export default IconButton;
