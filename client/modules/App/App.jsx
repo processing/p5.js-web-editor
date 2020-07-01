@@ -2,10 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import getConfig from '../../utils/getConfig';
-// import DevTools from './components/DevTools';
+import DevTools from './components/DevTools';
 import { setPreviousPath } from '../IDE/actions/ide';
-
-const DevTools = () => <></>;
 
 class App extends React.Component {
   constructor(props, context) {
