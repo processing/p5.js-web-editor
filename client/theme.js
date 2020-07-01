@@ -89,7 +89,7 @@ export default {
       default: grays.middleGray,
       hover: grays.darker
     },
-    Panel: {
+    MobilePanel: {
       default: {
         foreground: colors.black,
         background: grays.light,
@@ -128,7 +128,7 @@ export default {
       default: grays.middleLight,
       hover: grays.lightest
     },
-    Panel: {
+    MobilePanel: {
       default: {
         foreground: grays.light,
         background: grays.dark,
@@ -167,7 +167,7 @@ export default {
       default: grays.mediumLight,
       hover: colors.yellow
     },
-    Panel: {
+    MobilePanel: {
       default: {
         foreground: grays.light,
         background: grays.dark,
