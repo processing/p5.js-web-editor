@@ -237,16 +237,18 @@ class PreviewFrame extends React.Component {
     jsFileStrings.forEach((jsFileString) => {
       if (jsFileString.match(MEDIA_FILE_QUOTED_REGEX)) {
         const filePath = jsFileString.substr(1, jsFileString.length - 2);
+        const quoteCharacter = jsFileString.substr(0, 1);
         const resolvedFile = resolvePathToFile(filePath, files);
+
         if (resolvedFile) {
           if (resolvedFile.url) {
-            newContent = newContent.replace(filePath, resolvedFile.url);
+            newContent = newContent.replace(jsFileString, quoteCharacter + resolvedFile.url + quoteCharacter);
           } else if (resolvedFile.name.match(PLAINTEXT_FILE_REGEX)) {
             // could also pull file from API instead of using bloburl
             const blobURL = getBlobUrl(resolvedFile);
             this.props.setBlobUrl(resolvedFile, blobURL);
-            const filePathRegex = new RegExp(filePath, 'gi');
-            newContent = newContent.replace(filePathRegex, blobURL);
+
+            newContent = newContent.replace(jsFileString, quoteCharacter + blobURL + quoteCharacter);
           }
         }
       }
@@ -262,10 +264,11 @@ class PreviewFrame extends React.Component {
     cssFileStrings.forEach((cssFileString) => {
       if (cssFileString.match(MEDIA_FILE_QUOTED_REGEX)) {
         const filePath = cssFileString.substr(1, cssFileString.length - 2);
+        const quoteCharacter = cssFileString.substr(0, 1);
         const resolvedFile = resolvePathToFile(filePath, files);
         if (resolvedFile) {
           if (resolvedFile.url) {
-            newContent = newContent.replace(filePath, resolvedFile.url);
+            newContent = newContent.replace(cssFileString, quoteCharacter + resolvedFile.url + quoteCharacter);
           }
         }
       }
