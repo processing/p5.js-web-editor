@@ -50,7 +50,7 @@ const MobileIDEView = (props) => {
         }
       >
         <IconButton
-          to="/mobile/settings"
+          to="/mobile/preferences"
           onClick={() => setOverlay('preferences')}
           icon={PreferencesIcon}
           aria-label="Open preferences menu"

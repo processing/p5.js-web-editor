@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { prop } from '../../theme';
+import { prop, remSize } from '../../theme';
 
 
 const PreferenceTitle = styled.h4.attrs(props => ({ ...props, className: 'preference__title' }))`
@@ -11,9 +11,12 @@ const PreferenceTitle = styled.h4.attrs(props => ({ ...props, className: 'prefer
 const Preference = styled.div.attrs(props => ({ ...props, className: 'preference' }))`
   flex-wrap: nowrap !important;
   align-items: baseline !important;
-  justify-items: space-between
+  justify-items: space-between;
 `;
 
+const OptionLabel = styled.label.attrs({ className: 'preference__option' })`
+  font-size: ${remSize(14)} !important;
+`;
 
 const Selector = ({
   title, value, onSelect, options,
@@ -32,7 +35,7 @@ const Selector = ({
           className="preference__radio-button"
           value={option.value}
           checked={value === option.value}
-        /><label htmlFor={option.id} className="preference__option">{option.label}</label>
+        /><OptionLabel htmlFor={option.id} >{option.label}</OptionLabel>
         </React.Fragment>))}
     </div>
   </Preference>
