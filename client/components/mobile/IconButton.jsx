@@ -12,13 +12,13 @@ width: 3rem;
 `;
 
 const IconButton = props => (<ButtonWrapper
-  iconBefore={props.children}
+  iconBefore={props.element}
   kind={Button.kinds.inline}
-  {...{ ...props, children: null }}
+  {...props}
 />);
 
 IconButton.propTypes = {
-  children: PropTypes.element.isRequired
+  element: PropTypes.element.isRequired
 };
 
 export default IconButton;

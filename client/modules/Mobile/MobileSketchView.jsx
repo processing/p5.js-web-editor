@@ -50,9 +50,7 @@ const MobileSketchView = (props) => {
   return (
     <Screen>
       <Header>
-        <IconButton to="/mobile" aria-label="Return to original editor">
-          <ExitIcon viewBox="0 0 16 16" />
-        </IconButton>
+        <IconButton to="/mobile" element={<ExitIcon />} width={12} height={12} aria-label="Return to original editor" />
         <div style={{ marginLeft: '1rem' }}>
           <h2>{projectName}</h2>
           <h3><br /></h3>
@@ -67,7 +65,6 @@ const MobileSketchView = (props) => {
           content={selectedFile.content}
 
           isPlaying
-          forceFullWidth
           isAccessibleOutputPlaying={ide.isAccessibleOutputPlaying}
           previewIsRefreshing={ide.previewIsRefreshing}
 

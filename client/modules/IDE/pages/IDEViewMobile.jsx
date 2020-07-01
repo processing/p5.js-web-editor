@@ -29,14 +29,11 @@ import Header from '../../../components/mobile/Header';
 import Screen from '../../../components/mobile/MobileScreen';
 import Footer from '../../../components/mobile/Footer';
 import IDEWrapper from '../../../components/mobile/IDEWrapper';
+import { remSize } from '../../../theme';
 
 const IconContainer = styled.div`
-  marginLeft: 2rem;
+  margin-left: ${remSize(32)};
   display: flex;
-`;
-
-const TitleContainer = styled.div`
-
 `;
 
 const isUserOwner = ({ project, user }) => (project.owner && project.owner.id === user.id);
@@ -65,12 +62,8 @@ const IDEViewMobile = (props) => {
         </div>
 
         <IconContainer>
-          <IconButton onClick={() => setOverlay('preferences')}>
-            <PreferencesIcon focusable="false" aria-hidden="true" />
-          </IconButton>
-          <IconButton to="/mobile/preview" onClick={() => { startSketch(); }}>
-            <PlayIcon viewBox="-1 -1 7 7" focusable="false" aria-hidden="true" />
-          </IconButton>
+          <IconButton onClick={() => setOverlay('preferences')} element={<PreferencesIcon focusable="false" aria-hidden="true" />} />
+          <IconButton to="/mobile/preview" onClick={() => { startSketch(); }} element={<PlayIcon viewBox="-1 -1 7 7" focusable="false" aria-hidden="true" />} />
         </IconContainer>
       </Header>
 
