@@ -20,9 +20,7 @@ import { getHTMLFile } from '../reducers/files';
 
 // Local Imports
 import Editor from '../components/Editor';
-import { ExitIcon } from '../../../common/icons';
-
-import { PreferencesIcon, PlayIcon } from '../../../common/icons';
+import { PreferencesIcon, PlayIcon, ExitIcon } from '../../../common/icons';
 
 import IconButton from '../../../components/mobile/IconButton';
 import Header from '../../../components/mobile/Header';
@@ -53,17 +51,19 @@ const IDEViewMobile = (props) => {
   return (
     <Screen>
       <Header>
-        <IconButton to="/mobile" aria-label="Return to original editor">
-          <ExitIcon viewBox="0 0 16 16" />
-        </IconButton>
+        <IconButton to="/mobile" icon={ExitIcon} aria-label="Return to original editor" />
         <div style={{ marginLeft: '1rem' }}>
           <h2>{project.name}</h2>
           <h3>{selectedFile.name}</h3>
         </div>
 
         <IconContainer>
-          <IconButton onClick={() => setOverlay('preferences')} element={<PreferencesIcon focusable="false" aria-hidden="true" />} />
-          <IconButton to="/mobile/preview" onClick={() => { startSketch(); }} element={<PlayIcon viewBox="-1 -1 7 7" focusable="false" aria-hidden="true" />} />
+          <IconButton
+            onClick={() => setOverlay('preferences')}
+            icon={PreferencesIcon}
+            aria-label="Open preferences menu"
+          />
+          <IconButton to="/mobile/preview" onClick={() => { startSketch(); }} icon={PlayIcon} aria-label="Run sketch" />
         </IconContainer>
       </Header>
 

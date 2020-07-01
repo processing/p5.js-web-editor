@@ -50,7 +50,7 @@ const MobileSketchView = (props) => {
   return (
     <Screen>
       <Header>
-        <IconButton to="/mobile" element={<ExitIcon />} width={12} height={12} aria-label="Return to original editor" />
+        <IconButton to="/mobile" icon={ExitIcon} aria-label="Return to original editor" />
         <div style={{ marginLeft: '1rem' }}>
           <h2>{projectName}</h2>
           <h3><br /></h3>
