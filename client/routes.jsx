@@ -3,6 +3,7 @@ import React from 'react';
 import App from './modules/App/App';
 import IDEView from './modules/IDE/pages/IDEView';
 import IDEViewMobile from './modules/IDE/pages/IDEViewMobile';
+import MobileSketchView from './modules/Mobile/MobileSketchView';
 import FullView from './modules/IDE/pages/FullView';
 import LoginView from './modules/User/pages/LoginView';
 import SignupView from './modules/User/pages/SignupView';
@@ -21,7 +22,11 @@ const checkAuth = (store) => {
   store.dispatch(getUser());
 };
 
+// TODO: This short-circuit seems unnecessary - using the mobile <Switch /> navigator (future) should prevent this from being called
 const onRouteChange = (store) => {
+  const path = window.location.pathname;
+  if (path.includes('/mobile')) return;
+
   store.dispatch(stopSketch());
 };
 
@@ -50,8 +55,9 @@ const routes = store => (
     <Route path="/:username/collections/create" component={DashboardView} />
     <Route path="/:username/collections/:collection_id" component={CollectionView} />
     <Route path="/about" component={IDEView} />
-    <Route path="/mobile" component={IDEViewMobile} />
 
+    <Route path="/mobile" component={IDEViewMobile} />
+    <Route path="/mobile/preview" component={MobileSketchView} />
   </Route>
 );
 

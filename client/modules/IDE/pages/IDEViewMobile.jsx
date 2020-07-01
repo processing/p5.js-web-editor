@@ -20,93 +20,54 @@ import { getHTMLFile } from '../reducers/files';
 
 // Local Imports
 import Editor from '../components/Editor';
-import { prop, remSize } from '../../../theme';
-import { ExitIcon } from '../../../common/icons';
+import { PreferencesIcon, PlayIcon, ExitIcon } from '../../../common/icons';
 
-const background = prop('Button.default.background');
-const textColor = prop('primaryTextColor');
+import IconButton from '../../../components/mobile/IconButton';
+import Header from '../../../components/mobile/Header';
+import Screen from '../../../components/mobile/MobileScreen';
+import Footer from '../../../components/mobile/Footer';
+import IDEWrapper from '../../../components/mobile/IDEWrapper';
+import { remSize } from '../../../theme';
 
-
-const Header = styled.div`
-  position: fixed;
-  width: 100%;
-  background: ${background};
-  color: ${textColor};
-  padding: ${remSize(12)};
-  padding-left: ${remSize(32)};
-  padding-right: ${remSize(32)};
-  z-index: 1;
-  
+const IconContainer = styled.div`
+  margin-left: ${remSize(32)};
   display: flex;
-  flex: 1;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
 `;
-
-const Footer = styled.div`
-  position: fixed;
-  width: 100%;
-  background: ${background};
-  color: ${textColor};
-  padding: ${remSize(12)};
-  padding-left: ${remSize(32)};
-  z-index: 1;
-
-  bottom: 0;
-`;
-
-const Content = styled.div`
-  z-index: 0;
-  margin-top: ${remSize(16)};
-`;
-
-const Icon = styled.a`
-  > svg {
-    fill: ${textColor};
-    color: ${textColor};
-    margin-left: ${remSize(16)};
-  }
-`;
-
-const IconLinkWrapper = styled(Link)`
-  width: 3rem;
-  margin-right: 1.25rem;
-  margin-left: none;
-`;
-
-
-const Screen = ({ children }) => (
-  <div className="fullscreen-preview">
-    {children}
-  </div>
-);
-Screen.propTypes = {
-  children: PropTypes.node.isRequired
-};
 
 const isUserOwner = ({ project, user }) => (project.owner && project.owner.id === user.id);
 
 const IDEViewMobile = (props) => {
   const {
-    preferences, ide, editorAccessibility, project, updateLintMessage, clearLintMessage, selectedFile, updateFileContent, files, closeEditorOptions, showEditorOptions, showKeyboardShortcutModal, setUnsavedChanges, startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console, showRuntimeErrorWarning, hideRuntimeErrorWarning
+    preferences, ide, editorAccessibility, project, updateLintMessage, clearLintMessage,
+    selectedFile, updateFileContent, files,
+    closeEditorOptions, showEditorOptions, showKeyboardShortcutModal, setUnsavedChanges,
+    startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console,
+    showRuntimeErrorWarning, hideRuntimeErrorWarning, startSketch
   } = props;
 
-  const [tmController, setTmController] = useState(null);
+  const [tmController, setTmController] = useState(null); // eslint-disable-line
+  const [overlay, setOverlay] = useState(null); // eslint-disable-line
 
   return (
     <Screen>
       <Header>
-        <IconLinkWrapper to="/" aria-label="Return to original editor">
-          <ExitIcon />
-        </IconLinkWrapper>
-        <div>
+        <IconButton to="/mobile" icon={ExitIcon} aria-label="Return to original editor" />
+        <div style={{ marginLeft: '1rem' }}>
           <h2>{project.name}</h2>
           <h3>{selectedFile.name}</h3>
         </div>
+
+        <IconContainer>
+          <IconButton
+            onClick={() => setOverlay('preferences')}
+            icon={PreferencesIcon}
+            aria-label="Open preferences menu"
+          />
+          <IconButton to="/mobile/preview" onClick={() => { startSketch(); }} icon={PlayIcon} aria-label="Run sketch" />
+        </IconContainer>
       </Header>
 
-      <Content>
+      <IDEWrapper>
         <Editor
           lintWarning={preferences.lintWarning}
           linewrap={preferences.linewrap}
@@ -141,7 +102,7 @@ const IDEViewMobile = (props) => {
           runtimeErrorWarningVisible={ide.runtimeErrorWarningVisible}
           provideController={setTmController}
         />
-      </Content>
+      </IDEWrapper>
       <Footer><h2>Bottom Bar</h2></Footer>
     </Screen>
   );
@@ -204,6 +165,8 @@ IDEViewMobile.propTypes = {
     }),
     updatedAt: PropTypes.string
   }).isRequired,
+
+  startSketch: PropTypes.func.isRequired,
 
   updateLintMessage: PropTypes.func.isRequired,
 
