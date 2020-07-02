@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { remSize, prop } from '../theme';
+import { prop } from '../theme';
 import SortArrowUp from '../images/sort-arrow-up.svg';
 import SortArrowDown from '../images/sort-arrow-down.svg';
 import Github from '../images/github.svg';
@@ -10,6 +10,8 @@ import Plus from '../images/plus-icon.svg';
 import Close from '../images/close.svg';
 import Exit from '../images/exit.svg';
 import DropdownArrow from '../images/down-filled-triangle.svg';
+import Preferences from '../images/preferences.svg';
+import Play from '../images/triangle-arrow-right.svg';
 
 // HOC that adds the right web accessibility props
 // https://www.scottohara.me/blog/2019/05/22/contextual-images-svgs-and-a11y.html
@@ -70,3 +72,5 @@ export const PlusIcon = withLabel(Plus);
 export const CloseIcon = withLabel(Close);
 export const ExitIcon = withLabel(Exit);
 export const DropdownArrowIcon = withLabel(DropdownArrow);
+export const PreferencesIcon = withLabel(Preferences);
+export const PlayIcon = withLabel(Play);

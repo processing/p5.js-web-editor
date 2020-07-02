@@ -35,6 +35,15 @@ import AddToCollectionList from '../components/AddToCollectionList';
 import Feedback from '../components/Feedback';
 import { CollectionSearchbar } from '../components/Searchbar';
 
+function getTitle(props) {
+  const { id } = props.project;
+  return id ? `p5.js Web Editor | ${props.project.name}` : 'p5.js Web Editor';
+}
+
+function isUserOwner(props) {
+  return props.project.owner && props.project.owner.id === props.user.id;
+}
+
 class IDEView extends React.Component {
   constructor(props) {
     super(withTranslation && props);
@@ -93,7 +102,7 @@ class IDEView extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.isUserOwner() && this.props.project.id) {
+    if (isUserOwner(this.props) && this.props.project.id) {
       if (this.props.preferences.autosave && this.props.ide.unsavedChanges && !this.props.ide.justOpenedProject) {
         if (
           this.props.selectedFile.name === prevProps.selectedFile.name &&
@@ -124,21 +133,12 @@ class IDEView extends React.Component {
     this.autosaveInterval = null;
   }
 
-  getTitle = () => {
-    const { id } = this.props.project;
-    return id ? `p5.js Web Editor | ${this.props.project.name}` : 'p5.js Web Editor';
-  }
-
-  isUserOwner() {
-    return this.props.project.owner && this.props.project.owner.id === this.props.user.id;
-  }
-
   handleGlobalKeydown(e) {
     // 83 === s
     if (e.keyCode === 83 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
       e.preventDefault();
       e.stopPropagation();
-      if (this.isUserOwner() || (this.props.user.authenticated && !this.props.project.owner)) {
+      if (isUserOwner(this.props) || (this.props.user.authenticated && !this.props.project.owner)) {
         this.props.saveProject(this.cmController.getContent());
       } else if (this.props.user.authenticated) {
         this.props.cloneProject();
@@ -209,7 +209,7 @@ class IDEView extends React.Component {
     return (
       <div className="ide">
         <Helmet>
-          <title>{this.getTitle()}</title>
+          <title>{getTitle(this.props)}</title>
         </Helmet>
         {this.props.toast.isVisible && <Toast />}
         <Nav
@@ -314,7 +314,7 @@ class IDEView extends React.Component {
                   isExpanded={this.props.ide.sidebarIsExpanded}
                   expandSidebar={this.props.expandSidebar}
                   collapseSidebar={this.props.collapseSidebar}
-                  isUserOwner={this.isUserOwner()}
+                  isUserOwner={isUserOwner(this.props)}
                   clearConsole={this.props.clearConsole}
                   consoleEvents={this.props.console}
                   showRuntimeErrorWarning={this.props.showRuntimeErrorWarning}

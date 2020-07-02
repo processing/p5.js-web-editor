@@ -22,6 +22,23 @@ import {
 import { hijackConsoleErrorsScript, startTag, getAllScriptOffsets }
   from '../../../utils/consoleUtils';
 
+
+const shouldRenderSketch = (props, prevProps = undefined) => {
+  const { isPlaying, previewIsRefreshing, fullView } = props;
+
+  // if the user explicitly clicks on the play button
+  if (isPlaying && previewIsRefreshing) return true;
+
+  if (!prevProps) return false;
+
+  return (props.isPlaying !== prevProps.isPlaying // if sketch starts or stops playing, want to rerender
+    || props.isAccessibleOutputPlaying !== prevProps.isAccessibleOutputPlaying // if user switches textoutput preferences
+    || props.textOutput !== prevProps.textOutput
+    || props.gridOutput !== prevProps.gridOutput
+    || props.soundOutput !== prevProps.soundOutput
+    || (fullView && props.files[0].id !== prevProps.files[0].id));
+};
+
 class PreviewFrame extends React.Component {
   constructor(props) {
     super(props);
@@ -30,46 +47,17 @@ class PreviewFrame extends React.Component {
 
   componentDidMount() {
     window.addEventListener('message', this.handleConsoleEvent);
+
+    const props = {
+      ...this.props,
+      previewIsRefreshing: this.props.previewIsRefreshing,
+      isAccessibleOutputPlaying: this.props.isAccessibleOutputPlaying
+    };
+    if (shouldRenderSketch(props)) this.renderSketch();
   }
 
   componentDidUpdate(prevProps) {
-    // if sketch starts or stops playing, want to rerender
-    if (this.props.isPlaying !== prevProps.isPlaying) {
-      this.renderSketch();
-      return;
-    }
-
-    // if the user explicitly clicks on the play button
-    if (this.props.isPlaying && this.props.previewIsRefreshing) {
-      this.renderSketch();
-      return;
-    }
-
-    // if user switches textoutput preferences
-    if (this.props.isAccessibleOutputPlaying !== prevProps.isAccessibleOutputPlaying) {
-      this.renderSketch();
-      return;
-    }
-
-    if (this.props.textOutput !== prevProps.textOutput) {
-      this.renderSketch();
-      return;
-    }
-
-    if (this.props.gridOutput !== prevProps.gridOutput) {
-      this.renderSketch();
-      return;
-    }
-
-    if (this.props.soundOutput !== prevProps.soundOutput) {
-      this.renderSketch();
-      return;
-    }
-
-    if (this.props.fullView && this.props.files[0].id !== prevProps.files[0].id) {
-      this.renderSketch();
-    }
-
+    if (shouldRenderSketch(this.props, prevProps)) this.renderSketch();
     // small bug - if autorefresh is on, and the usr changes files
     // in the sketch, preview will reload
   }
@@ -398,7 +386,7 @@ PreviewFrame.propTypes = {
   clearConsole: PropTypes.func.isRequired,
   cmController: PropTypes.shape({
     getContent: PropTypes.func
-  })
+  }),
 };
 
 PreviewFrame.defaultProps = {
