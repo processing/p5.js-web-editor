@@ -6,6 +6,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import classNames from 'classnames';
+
+import Button from '../../../common/Button';
+import { DropdownArrowIcon } from '../../../common/icons';
 import * as ProjectActions from '../../IDE/actions/project';
 import * as ProjectsActions from '../../IDE/actions/projects';
 import * as CollectionsActions from '../../IDE/actions/collections';
@@ -20,7 +23,6 @@ import AddToCollectionSketchList from '../../IDE/components/AddToCollectionSketc
 import CopyableInput from '../../IDE/components/CopyableInput';
 import { SketchSearchbar } from '../../IDE/components/Searchbar';
 
-import DropdownArrowIcon from '../../../images/down-arrow.svg';
 import ArrowUpIcon from '../../../images/sort-arrow-up.svg';
 import ArrowDownIcon from '../../../images/sort-arrow-down.svg';
 import RemoveIcon from '../../../images/close.svg';
@@ -50,14 +52,12 @@ const ShareURL = ({ value }) => {
 
   return (
     <div className="collection-share" ref={node}>
-      <button
-        className="collection-share__button"
+      <Button
         onClick={() => setShowURL(!showURL)}
-        aria-label="Show collection share URL"
+        iconAfter={<DropdownArrowIcon />}
       >
-        <span>Share</span>
-        <DropdownArrowIcon className="collection-share__arrow" focusable="false" aria-hidden="true" />
-      </button>
+        Share
+      </Button>
       { showURL &&
         <div className="collection__share-dropdown">
           <CopyableInput value={value} label="Link to Collection" />
@@ -264,9 +264,9 @@ class Collection extends React.Component {
             </p>
             {
               this.isOwner() &&
-              <button className="collection-metadata__add-button" onClick={this.showAddSketches}>
+              <Button onClick={this.showAddSketches}>
                 Add Sketch
-              </button>
+              </Button>
             }
           </div>
         </div>
@@ -317,7 +317,7 @@ class Collection extends React.Component {
   _renderFieldHeader(fieldName, displayName) {
     const { field, direction } = this.props.sorting;
     const headerClass = classNames({
-      'sketches-table__header': true,
+      'arrowDown': true,
       'sketches-table__header--selected': field === fieldName
     });
     const buttonLabel = this._getButtonLabel(fieldName, displayName);

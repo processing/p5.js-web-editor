@@ -3,8 +3,10 @@ import { render } from 'react-dom';
 import { hot } from 'react-hot-loader/root';
 import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
+
 import configureStore from './store';
 import routes from './routes';
+import ThemeProvider from './modules/App/components/ThemeProvider';
 import Loader from './modules/App/components/loader';
 import i18n from './i18n';
 
@@ -20,7 +22,9 @@ const store = configureStore(initialState);
 
 const App = () => (
   <Provider store={store}>
-    <Router history={history} routes={routes(store)} />
+    <ThemeProvider>
+      <Router history={history} routes={routes(store)} />
+    </ThemeProvider>
   </Provider>
 );
 

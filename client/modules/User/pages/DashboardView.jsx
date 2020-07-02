@@ -2,8 +2,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { browserHistory, Link } from 'react-router';
+import { browserHistory } from 'react-router';
 import { updateSettings, initiateVerification, createApiKey, removeApiKey } from '../actions';
+
+import Button from '../../../common/Button';
+
 import Nav from '../../../components/Nav';
 import Overlay from '../../App/components/Overlay';
 
@@ -79,16 +82,16 @@ class DashboardView extends React.Component {
       case TabKey.collections:
         return this.isOwner() && (
           <React.Fragment>
-            <Link className="dashboard__action-button" to={`/${username}/collections/create`}>
+            <Button to={`/${username}/collections/create`}>
               Create collection
-            </Link>
+            </Button>
             <CollectionSearchbar />
           </React.Fragment>);
       case TabKey.sketches:
       default:
         return (
           <React.Fragment>
-            {this.isOwner() && <Link className="dashboard__action-button" to="/">New sketch</Link>}
+            {this.isOwner() && <Button to="/">New sketch</Button>}
             <SketchSearchbar />
           </React.Fragment>
         );

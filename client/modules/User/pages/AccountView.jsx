@@ -3,18 +3,14 @@ import React from 'react';
 import { reduxForm } from 'redux-form';
 import { bindActionCreators } from 'redux';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import axios from 'axios';
 import { Helmet } from 'react-helmet';
 import { updateSettings, initiateVerification, createApiKey, removeApiKey } from '../actions';
 import AccountForm from '../components/AccountForm';
+import apiClient from '../../../utils/apiClient';
 import { validateSettings } from '../../../utils/reduxFormUtils';
-import GithubButton from '../components/GithubButton';
-import GoogleButton from '../components/GoogleButton';
+import SocialAuthButton from '../components/SocialAuthButton';
 import APIKeyForm from '../components/APIKeyForm';
 import Nav from '../../../components/Nav';
-
-const __process = (typeof global !== 'undefined' ? global : window).process;
-const ROOT_URL = __process.env.API_URL;
 
 function SocialLoginPanel(props) {
   return (
@@ -24,8 +20,10 @@ function SocialLoginPanel(props) {
       <p className="account__social-text">
         Use your GitHub or Google account to log into the p5.js Web Editor.
       </p>
-      <GithubButton buttonText="Login with GitHub" />
-      <GoogleButton buttonText="Login with Google" />
+      <div className="account__social-stack">
+        <SocialAuthButton service={SocialAuthButton.services.github} />
+        <SocialAuthButton service={SocialAuthButton.services.google} />
+      </div>
     </React.Fragment>
   );
 }
@@ -95,7 +93,7 @@ function asyncValidate(formProps, dispatch, props) {
     const queryParams = {};
     queryParams[fieldToValidate] = formProps[fieldToValidate];
     queryParams.check_type = fieldToValidate;
-    return axios.get(`${ROOT_URL}/signup/duplicate_check`, { params: queryParams })
+    return apiClient.get('/signup/duplicate_check', { params: queryParams })
       .then((response) => {
         if (response.data.exists) {
           const error = {};

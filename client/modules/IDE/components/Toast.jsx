@@ -8,7 +8,7 @@ import * as ToastActions from '../actions/toast';
 import ExitIcon from '../../../images/exit.svg';
 
 function Toast(props) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('WebEditor');
   return (
     <section className="toast">
       <p>

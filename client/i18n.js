@@ -1,12 +1,13 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import LanguageDetector from 'i18next-browser-languagedetector';
 import Backend from 'i18next-http-backend';
 
-const fallbackLng = ['en'];
-const availableLanguages = ['en', 'es'];
+const fallbackLng = ['en-US'];
+const availableLanguages = ['en-US', 'es-419'];
 
 const options = {
-  loadPath: '/locales/{{lng}}/translations.json',
+  loadPath: '/translations/{{lng}}/translations.json',
   requestOptions: { // used for fetch, can also be a function (payload) => ({ method: 'GET' })
     mode: 'no-cors'
   },
@@ -15,11 +16,13 @@ const options = {
 
 i18n
   .use(initReactI18next) // pass the i18n instance to react-i18next.
-  .use(Backend).init({
-    lng: 'en',
-    defaultNS: 'menu',
+  .use(LanguageDetector)// to detect the language from currentBrowser
+  .use(Backend) // to fetch the data from server
+  .init({
+    lng: 'en-US',
+    defaultNS: 'WebEditor',
     fallbackLng, // if user computer language is not on the list of available languages, than we will be using the fallback language specified earlier
-    debug: false,
+    debug: true,
     backend: options,
     getAsync: false,
     initImmediate: false,
@@ -28,7 +31,8 @@ i18n
     interpolation: {
       escapeValue: false, // react already safes from xss
     },
-    saveMissing: true,
+    saveMissing: false, // if a key is not found AND this flag is set to true, i18next will call the handler missingKeyHandler
+    missingKeyHandler: false // function(lng, ns, key, fallbackValue) { }  custom logic about how to handle the missing keys
   });
 
 export default i18n;

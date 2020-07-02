@@ -114,9 +114,19 @@ router.get('/about', (req, res) => {
   res.send(renderIndex());
 });
 
-router.get('/feedback', (req, res) => {
-  res.send(renderIndex());
-});
+if (process.env.MOBILE_ENABLED) {
+  router.get('/mobile', (req, res) => {
+    res.send(renderIndex());
+  });
+
+  router.get('/mobile/preview', (req, res) => {
+    res.send(renderIndex());
+  });
+
+  router.get('/mobile/preferences', (req, res) => {
+    res.send(renderIndex());
+  });
+}
 
 router.get('/:username/collections/create', (req, res) => {
   userExists(req.params.username, (exists) => {
