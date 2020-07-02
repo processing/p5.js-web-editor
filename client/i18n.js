@@ -22,7 +22,7 @@ i18n
     lng: 'en-US',
     defaultNS: 'WebEditor',
     fallbackLng, // if user computer language is not on the list of available languages, than we will be using the fallback language specified earlier
-    debug: true,
+    debug: false,
     backend: options,
     getAsync: false,
     initImmediate: false,
