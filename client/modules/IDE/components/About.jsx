@@ -10,7 +10,7 @@ function About(props) {
   return (
     <div className="about__content">
       <Helmet>
-        <title>p5.js Web Editor | {t('About')} </title>
+        <title>p5.js Web Editor | About </title>
       </Helmet>
       <div className="about__content-column">
         <SquareLogoIcon className="about__logo" role="img" aria-label="p5.js Logo" focusable="false" />

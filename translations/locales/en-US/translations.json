@@ -108,7 +108,8 @@
     "FindNextTextMatch": "Find Next Text Match",
     "FindPreviousTextMatch": "Find Previous Text Match",
     "Code editing keyboard shortcuts follow": "Code editing keyboard shortcuts follow",
-    "Sublime Text shortcuts": "Sublime Text shortcuts"
+    "Sublime Text shortcuts": "Sublime Text shortcuts",
+  "WarningUnsavedChanges": "Are you sure you want to leave this page? You have unsaved changes."
 
 }
 

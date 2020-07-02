@@ -108,5 +108,6 @@
     "FindNextTextMatch": "Encontrar la siguiente ocurrencia de texto",
     "FindPreviousTextMatch": "Encontrar la ocurrencia previa de texto",
     "Code editing keyboard shortcuts follow": "Los atajos para edición son como",
-    "Sublime Text shortcuts": "los atajos de Sublime Text "
+    "Sublime Text shortcuts": "los atajos de Sublime Text ",
+    "WarningUnsavedChanges": "¿Estás seguro de que quieres salir de la página? Tienes cambios sin guardar."
   }

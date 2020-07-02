@@ -197,7 +197,7 @@ class IDEView extends React.Component {
       this.props.persistState();
       window.onbeforeunload = null;
     } else if (this.props.ide.unsavedChanges) {
-      if (!window.confirm('Are you sure you want to leave this page? You have unsaved changes.')) {
+      if (!window.confirm(this.props.t('WarningUnsavedChanges'))) {
         return false;
       }
       this.props.setUnsavedChanges(false);
@@ -396,7 +396,7 @@ class IDEView extends React.Component {
         }
         { this.props.location.pathname === '/about' &&
           <Overlay
-            title="About"
+            title={this.props.t('About')}
             previousPath={this.props.ide.previousPath}
             ariaLabel="about"
           >
