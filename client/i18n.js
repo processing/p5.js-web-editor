@@ -19,7 +19,7 @@ i18n
     lng: 'en',
     defaultNS: 'WebEditor',
     fallbackLng, // if user computer language is not on the list of available languages, than we will be using the fallback language specified earlier
-    debug: true,
+    debug: false,
     backend: options,
     getAsync: false,
     initImmediate: false,
@@ -28,7 +28,8 @@ i18n
     interpolation: {
       escapeValue: false, // react already safes from xss
     },
-    saveMissing: true,
+    saveMissing: false, // if a key is not found AND this flag is set to true, i18next will call the handler missingKeyHandler
+    missingKeyHandler: false // function(lng, ns, key, fallbackValue) { }  custom logic about how to handle the missing keys
   });
 
 export default i18n;

@@ -94,6 +94,21 @@
     "Asset": "Asset",
     "MyAssets": "My assets",
     "TitleAbout": "p5.js Web Editor | About",
-    "CodeEditing": "Code Editing"
-  }
+    "CodeEditing": "Code Editing",
+    "Error": "Error",
+    "In order to save": "In order to save",
+    "you must be logged in": "you must be logged in",
+    "Please": "please",
+    "Find in files": "Find in files",
+    "Create": "Create",
+    "enter a name": "enter a name",
+    "Add": "Add",
+    "Folder": "Folder",
+    "FindText": "Find Text",
+    "FindNextTextMatch": "Find Next Text Match",
+    "FindPreviousTextMatch": "Find Previous Text Match",
+    "Code editing keyboard shortcuts follow": "Code editing keyboard shortcuts follow",
+    "Sublime Text shortcuts": "Sublime Text shortcuts"
+
+}
 
