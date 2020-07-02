@@ -172,7 +172,7 @@ class Nav extends React.PureComponent {
   handleLangSelection(event) {
     i18next.changeLanguage(event.target.value);
     this.props.showToast(1500);
-    this.props.setToastText('Toast.LangChange');
+    this.props.setToastText('LangChange');
     this.setDropdown('none');
   }
 
@@ -581,19 +581,19 @@ class Nav extends React.PureComponent {
               <button
                 onFocus={this.handleFocusForLang}
                 onBlur={this.handleBlur}
-                value="en"
+                value="en-US"
                 onClick={e => this.handleLangSelection(e)}
-              >EN
+              >EN (US)
               </button>
             </li>
             <li className="nav__dropdown-item">
               <button
                 onFocus={this.handleFocusForLang}
                 onBlur={this.handleBlur}
-                value="es"
+                value="es-419"
                 onClick={e => this.handleLangSelection(e)}
               >
-                ES
+                ES (LA)
               </button>
             </li>
           </ul>
