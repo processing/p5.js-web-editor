@@ -21,7 +21,7 @@ import LogoIcon from '../images/p5js-logo-small.svg';
 
 class Nav extends React.PureComponent {
   constructor(props) {
-    super(withTranslation && props);
+    super(props);
     this.state = {
       dropdownOpen: 'none'
     };
@@ -574,7 +574,7 @@ class Nav extends React.PureComponent {
                 value="it"
                 onClick={e => this.handleLangSelection(e)}
               >
-                IT
+                Italian (Test Fallback)
               </button>
             </li>
             <li className="nav__dropdown-item">
@@ -583,7 +583,7 @@ class Nav extends React.PureComponent {
                 onBlur={this.handleBlur}
                 value="en-US"
                 onClick={e => this.handleLangSelection(e)}
-              >EN (US)
+              >English
               </button>
             </li>
             <li className="nav__dropdown-item">
@@ -593,7 +593,7 @@ class Nav extends React.PureComponent {
                 value="es-419"
                 onClick={e => this.handleLangSelection(e)}
               >
-                ES (LA)
+                Español
               </button>
             </li>
           </ul>

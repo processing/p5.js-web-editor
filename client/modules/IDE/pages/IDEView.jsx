@@ -46,7 +46,7 @@ function isUserOwner(props) {
 
 class IDEView extends React.Component {
   constructor(props) {
-    super(withTranslation && props);
+    super(props);
     this.handleGlobalKeydown = this.handleGlobalKeydown.bind(this);
     this.warnIfUnsavedChanges = this.warnIfUnsavedChanges.bind(this);
 

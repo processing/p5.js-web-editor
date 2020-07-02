@@ -13,7 +13,7 @@ import beepUrl from '../../../sounds/audioAlert.mp3';
 
 class Preferences extends React.Component {
   constructor(props) {
-    super(withTranslation && props);
+    super(props);
     this.handleUpdateAutosave = this.handleUpdateAutosave.bind(this);
     this.handleUpdateLinewrap = this.handleUpdateLinewrap.bind(this);
     this.handleLintWarning = this.handleLintWarning.bind(this);
