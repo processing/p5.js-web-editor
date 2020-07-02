@@ -30,9 +30,7 @@ exports[`Nav renders correctly 1`] = `
         >
           <span
             className="nav__item-header"
-          >
-            File
-          </span>
+          />
           <test-file-stub
             aria-hidden="true"
             className="nav__item-header-triangle"
@@ -49,9 +47,7 @@ exports[`Nav renders correctly 1`] = `
               onBlur={[Function]}
               onClick={[Function]}
               onFocus={[Function]}
-            >
-              New
-            </button>
+            />
           </li>
           <li
             className="nav__dropdown-item"
@@ -60,9 +56,7 @@ exports[`Nav renders correctly 1`] = `
               onBlur={[Function]}
               onClick={[Function]}
               onFocus={[Function]}
-            >
-              Duplicate
-            </button>
+            />
           </li>
           <li
             className="nav__dropdown-item"
@@ -71,9 +65,7 @@ exports[`Nav renders correctly 1`] = `
               onBlur={[Function]}
               onClick={[Function]}
               onFocus={[Function]}
-            >
-              Share
-            </button>
+            />
           </li>
           <li
             className="nav__dropdown-item"
@@ -82,9 +74,7 @@ exports[`Nav renders correctly 1`] = `
               onBlur={[Function]}
               onClick={[Function]}
               onFocus={[Function]}
-            >
-              Download
-            </button>
+            />
           </li>
           <li
             className="nav__dropdown-item"
@@ -94,9 +84,7 @@ exports[`Nav renders correctly 1`] = `
               onClick={[Function]}
               onFocus={[Function]}
               style={Object {}}
-            >
-              Open
-            </a>
+            />
           </li>
         </ul>
       </li>
@@ -111,9 +99,7 @@ exports[`Nav renders correctly 1`] = `
         >
           <span
             className="nav__item-header"
-          >
-            Edit
-          </span>
+          />
           <test-file-stub
             aria-hidden="true"
             className="nav__item-header-triangle"
@@ -131,7 +117,6 @@ exports[`Nav renders correctly 1`] = `
               onClick={[Function]}
               onFocus={[Function]}
             >
-              Tidy Code
               <span
                 className="nav__keyboard-shortcut"
               >
@@ -148,7 +133,6 @@ exports[`Nav renders correctly 1`] = `
               onClick={[Function]}
               onFocus={[Function]}
             >
-              Find
               <span
                 className="nav__keyboard-shortcut"
               >
@@ -165,7 +149,6 @@ exports[`Nav renders correctly 1`] = `
               onClick={[Function]}
               onFocus={[Function]}
             >
-              Find Next
               <span
                 className="nav__keyboard-shortcut"
               >
@@ -182,7 +165,6 @@ exports[`Nav renders correctly 1`] = `
               onClick={[Function]}
               onFocus={[Function]}
             >
-              Find Previous
               <span
                 className="nav__keyboard-shortcut"
               >
@@ -206,9 +188,7 @@ exports[`Nav renders correctly 1`] = `
         >
           <span
             className="nav__item-header"
-          >
-            Sketch
-          </span>
+          />
           <test-file-stub
             aria-hidden="true"
             className="nav__item-header-triangle"
@@ -225,9 +205,16 @@ exports[`Nav renders correctly 1`] = `
               onBlur={[Function]}
               onClick={[Function]}
               onFocus={[Function]}
-            >
-              Add File
-            </button>
+            />
+          </li>
+          <li
+            className="nav__dropdown-item"
+          >
+            <button
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+            />
           </li>
           <li
             className="nav__dropdown-item"
@@ -237,18 +224,6 @@ exports[`Nav renders correctly 1`] = `
               onClick={[Function]}
               onFocus={[Function]}
             >
-              Add Folder
-            </button>
-          </li>
-          <li
-            className="nav__dropdown-item"
-          >
-            <button
-              onBlur={[Function]}
-              onClick={[Function]}
-              onFocus={[Function]}
-            >
-              Run
               <span
                 className="nav__keyboard-shortcut"
               >
@@ -265,7 +240,6 @@ exports[`Nav renders correctly 1`] = `
               onClick={[Function]}
               onFocus={[Function]}
             >
-              Stop
               <span
                 className="nav__keyboard-shortcut"
               >
@@ -289,9 +263,7 @@ exports[`Nav renders correctly 1`] = `
         >
           <span
             className="nav__item-header"
-          >
-            Help
-          </span>
+          />
           <test-file-stub
             aria-hidden="true"
             className="nav__item-header-triangle"
@@ -308,9 +280,7 @@ exports[`Nav renders correctly 1`] = `
               onBlur={[Function]}
               onClick={[Function]}
               onFocus={[Function]}
-            >
-              Keyboard Shortcuts
-            </button>
+            />
           </li>
           <li
             className="nav__dropdown-item"
@@ -322,9 +292,7 @@ exports[`Nav renders correctly 1`] = `
               onFocus={[Function]}
               rel="noopener noreferrer"
               target="_blank"
-            >
-              Reference
-            </a>
+            />
           </li>
           <li
             className="nav__dropdown-item"
@@ -334,9 +302,7 @@ exports[`Nav renders correctly 1`] = `
               onClick={[Function]}
               onFocus={[Function]}
               style={Object {}}
-            >
-              About
-            </a>
+            />
           </li>
         </ul>
       </li>
