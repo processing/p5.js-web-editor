@@ -204,6 +204,10 @@ class IDEView extends React.Component {
     }
   }
 
+  warnIfUnsavedChangesCaller(props) {
+    return warnIfUnsavedChanges(props);
+  }
+
   render() {
     return (
       <div className="ide">
@@ -212,7 +216,7 @@ class IDEView extends React.Component {
         </Helmet>
         {this.props.toast.isVisible && <Toast />}
         <Nav
-          warnIfUnsavedChanges={() => warnIfUnsavedChanges(this.props)}
+          warnIfUnsavedChanges={this.warnIfUnsavedChangesCaller.bind(this, this.props)}
           cmController={this.cmController}
         />
         <Toolbar />
