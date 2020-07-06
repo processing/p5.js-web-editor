@@ -44,7 +44,8 @@ describe('Nav', () => {
     setToastText: jest.fn(),
     rootFile: {
       id: 'root-file'
-    }
+    },
+    t: jest.fn()
   };
   const getWrapper = () => shallow(<NavComponent {...props} />);
 
