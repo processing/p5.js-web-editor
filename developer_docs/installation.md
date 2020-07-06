@@ -69,9 +69,8 @@ Note that this is optional, unless you are working on the part of the applicatio
 If your S3 bucket is in the US East (N Virginia) region (us-east-1), you'll
 need to set a custom URL base for it, because it does not follow the standard
 naming pattern as the rest of the regions. Instead, add the following to your
-environment/.env file:
-
-`S3_BUCKET_URL_BASE=https://s3.amazonaws.com`
+environment/.env file, changing `BUCKET_NAME` to your bucket name. This is necessary because this override is currently treated as the full path to the bucket rather than as a proper base url:
+`S3_BUCKET_URL_BASE=https://s3.amazonaws.com/{BUCKET_NAME}/`
 
 If you've configured your S3 bucket and DNS records to use a custom domain
 name, you can also set it using this variable. I.e.:

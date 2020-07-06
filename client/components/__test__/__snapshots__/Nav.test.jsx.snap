@@ -26,9 +26,7 @@ exports[`Nav renders correctly 1`] = `
           <button>
             <span
               class="nav__item-header"
-            >
-              File
-            </span>
+            />
             <test-file-stub
               aria-hidden="true"
               classname="nav__item-header-triangle"
@@ -41,37 +39,27 @@ exports[`Nav renders correctly 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <button>
-                New
-              </button>
+              <button />
             </li>
             <li
               class="nav__dropdown-item"
             >
-              <button>
-                Duplicate
-              </button>
+              <button />
             </li>
             <li
               class="nav__dropdown-item"
             >
-              <button>
-                Share
-              </button>
+              <button />
             </li>
             <li
               class="nav__dropdown-item"
             >
-              <button>
-                Download
-              </button>
+              <button />
             </li>
             <li
               class="nav__dropdown-item"
             >
-              <a>
-                Open
-              </a>
+              <a />
             </li>
           </ul>
         </li>
@@ -81,9 +69,7 @@ exports[`Nav renders correctly 1`] = `
           <button>
             <span
               class="nav__item-header"
-            >
-              Edit
-            </span>
+            />
             <test-file-stub
               aria-hidden="true"
               classname="nav__item-header-triangle"
@@ -97,7 +83,6 @@ exports[`Nav renders correctly 1`] = `
               class="nav__dropdown-item"
             >
               <button>
-                Tidy Code
                 <span
                   class="nav__keyboard-shortcut"
                 >
@@ -109,7 +94,6 @@ exports[`Nav renders correctly 1`] = `
               class="nav__dropdown-item"
             >
               <button>
-                Find
                 <span
                   class="nav__keyboard-shortcut"
                 >
@@ -121,7 +105,6 @@ exports[`Nav renders correctly 1`] = `
               class="nav__dropdown-item"
             >
               <button>
-                Find Next
                 <span
                   class="nav__keyboard-shortcut"
                 >
@@ -133,7 +116,6 @@ exports[`Nav renders correctly 1`] = `
               class="nav__dropdown-item"
             >
               <button>
-                Find Previous
                 <span
                   class="nav__keyboard-shortcut"
                 >
@@ -149,9 +131,7 @@ exports[`Nav renders correctly 1`] = `
           <button>
             <span
               class="nav__item-header"
-            >
-              Sketch
-            </span>
+            />
             <test-file-stub
               aria-hidden="true"
               classname="nav__item-header-triangle"
@@ -164,22 +144,17 @@ exports[`Nav renders correctly 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <button>
-                Add File
-              </button>
+              <button />
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button />
             </li>
             <li
               class="nav__dropdown-item"
             >
               <button>
-                Add Folder
-              </button>
-            </li>
-            <li
-              class="nav__dropdown-item"
-            >
-              <button>
-                Run
                 <span
                   class="nav__keyboard-shortcut"
                 >
@@ -191,7 +166,6 @@ exports[`Nav renders correctly 1`] = `
               class="nav__dropdown-item"
             >
               <button>
-                Stop
                 <span
                   class="nav__keyboard-shortcut"
                 >
@@ -207,9 +181,7 @@ exports[`Nav renders correctly 1`] = `
           <button>
             <span
               class="nav__item-header"
-            >
-              Help
-            </span>
+            />
             <test-file-stub
               aria-hidden="true"
               classname="nav__item-header-triangle"
@@ -222,9 +194,7 @@ exports[`Nav renders correctly 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <button>
-                Keyboard Shortcuts
-              </button>
+              <button />
             </li>
             <li
               class="nav__dropdown-item"
@@ -233,16 +203,12 @@ exports[`Nav renders correctly 1`] = `
                 href="https://p5js.org/reference/"
                 rel="noopener noreferrer"
                 target="_blank"
-              >
-                Reference
-              </a>
+              />
             </li>
             <li
               class="nav__dropdown-item"
             >
-              <a>
-                About
-              </a>
+              <a />
             </li>
           </ul>
         </li>

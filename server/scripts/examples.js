@@ -73,7 +73,7 @@ function getCategories() {
 function getSketchesInCategories(categories) {
   return Q.all(categories.map((category) => {
     const options = {
-      url: `${category.url.replace('?ref=master', '')}?client_id=${clientId}&client_secret=${clientSecret}`,
+      url: `${category.url.replace('?ref=main', '')}?client_id=${clientId}&client_secret=${clientSecret}`,
       method: 'GET',
       headers,
       json: true
@@ -107,7 +107,7 @@ function getSketchesInCategories(categories) {
 function getSketchContent(projectsInAllCategories) {
   return Q.all(projectsInAllCategories.map(projectsInOneCategory => Q.all(projectsInOneCategory.map((project) => {
     const options = {
-      url: `${project.sketchUrl.replace('?ref=master', '')}?client_id=${clientId}&client_secret=${clientSecret}`,
+      url: `${project.sketchUrl.replace('?ref=main', '')}?client_id=${clientId}&client_secret=${clientSecret}`,
       method: 'GET',
       headers
     };
@@ -264,7 +264,7 @@ function createProjectsInP5user(projectsInAllCategories) {
               const fileID = objectID().toHexString();
               newProject.files.push({
                 name: assetName,
-                url: `https://cdn.jsdelivr.net/gh/processing/p5.js-website@master/src/data/examples/assets/${assetName}`,
+                url: `https://cdn.jsdelivr.net/gh/processing/p5.js-website@main/src/data/examples/assets/${assetName}`,
                 id: fileID,
                 _id: fileID,
                 children: [],

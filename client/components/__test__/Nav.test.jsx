@@ -44,7 +44,8 @@ describe('Nav', () => {
     setToastText: jest.fn(),
     rootFile: {
       id: 'root-file'
-    }
+    },
+    t: jest.fn()
   };
 
   it('renders correctly', () => {

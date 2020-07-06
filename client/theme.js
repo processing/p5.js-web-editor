@@ -88,6 +88,13 @@ export default {
     Icon: {
       default: grays.middleGray,
       hover: grays.darker
+    },
+    MobilePanel: {
+      default: {
+        foreground: colors.black,
+        background: grays.light,
+        border: grays.middleLight,
+      },
     }
   },
   [Theme.dark]: {
@@ -120,6 +127,13 @@ export default {
     Icon: {
       default: grays.middleLight,
       hover: grays.lightest
+    },
+    MobilePanel: {
+      default: {
+        foreground: grays.light,
+        background: grays.dark,
+        border: grays.middleDark,
+      },
     }
   },
   [Theme.contrast]: {
@@ -152,6 +166,13 @@ export default {
     Icon: {
       default: grays.mediumLight,
       hover: colors.yellow
+    },
+    MobilePanel: {
+      default: {
+        foreground: grays.light,
+        background: grays.dark,
+        border: grays.middleDark,
+      },
     }
   },
 };
