@@ -64,7 +64,8 @@ class PreviewFrame extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('message', this.handleConsoleEvent);
-    ReactDOM.unmountComponentAtNode(this.iframeElement.contentDocument.body);
+    const iframeBody = this.iframeElement.contentDocument.body;
+    if (iframeBody) { ReactDOM.unmountComponentAtNode(iframeBody); }
   }
 
   handleConsoleEvent(messageEvent) {
