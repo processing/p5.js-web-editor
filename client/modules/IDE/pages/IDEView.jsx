@@ -44,11 +44,29 @@ function isUserOwner(props) {
   return props.project.owner && props.project.owner.id === props.user.id;
 }
 
+function warnIfUnsavedChanges(props) { // eslint-disable-line
+  const { route } = props.route;
+  if (route && (route.action === 'PUSH' && (route.pathname === '/login' || route.pathname === '/signup'))) {
+    // don't warn
+    props.persistState();
+    window.onbeforeunload = null;
+  } else if (route && (props.location.pathname === '/login' || props.location.pathname === '/signup')) {
+    // don't warn
+    props.persistState();
+    window.onbeforeunload = null;
+  } else if (props.ide.unsavedChanges) {
+    if (!window.confirm(props.t('WarningUnsavedChanges'))) {
+      return false;
+    }
+    props.setUnsavedChanges(false);
+    return true;
+  }
+}
+
 class IDEView extends React.Component {
   constructor(props) {
     super(props);
     this.handleGlobalKeydown = this.handleGlobalKeydown.bind(this);
-    this.warnIfUnsavedChanges = this.warnIfUnsavedChanges.bind(this);
 
     this.state = {
       consoleSize: props.ide.consoleIsExpanded ? 150 : 29,
@@ -72,9 +90,9 @@ class IDEView extends React.Component {
     this.isMac = navigator.userAgent.toLowerCase().indexOf('mac') !== -1;
     document.addEventListener('keydown', this.handleGlobalKeydown, false);
 
-    this.props.router.setRouteLeaveHook(this.props.route, route => this.warnIfUnsavedChanges(route));
+    this.props.router.setRouteLeaveHook(this.props.route, this.handleUnsavedChanges);
 
-    window.onbeforeunload = () => this.warnIfUnsavedChanges();
+    window.onbeforeunload = this.handleUnsavedChanges;
 
     this.autosaveInterval = null;
   }
@@ -123,7 +141,7 @@ class IDEView extends React.Component {
     }
 
     if (this.props.route.path !== prevProps.route.path) {
-      this.props.router.setRouteLeaveHook(this.props.route, route => this.warnIfUnsavedChanges(route));
+      this.props.router.setRouteLeaveHook(this.props.route, () => warnIfUnsavedChanges(this.props));
     }
   }
 
@@ -187,23 +205,7 @@ class IDEView extends React.Component {
     }
   }
 
-  warnIfUnsavedChanges(route) { // eslint-disable-line
-    if (route && (route.action === 'PUSH' && (route.pathname === '/login' || route.pathname === '/signup'))) {
-      // don't warn
-      this.props.persistState();
-      window.onbeforeunload = null;
-    } else if (route && (this.props.location.pathname === '/login' || this.props.location.pathname === '/signup')) {
-      // don't warn
-      this.props.persistState();
-      window.onbeforeunload = null;
-    } else if (this.props.ide.unsavedChanges) {
-      if (!window.confirm(this.props.t('WarningUnsavedChanges'))) {
-        return false;
-      }
-      this.props.setUnsavedChanges(false);
-      return true;
-    }
-  }
+  handleUnsavedChanges = () => warnIfUnsavedChanges(this.props);
 
   render() {
     return (
@@ -213,7 +215,7 @@ class IDEView extends React.Component {
         </Helmet>
         {this.props.toast.isVisible && <Toast />}
         <Nav
-          warnIfUnsavedChanges={this.warnIfUnsavedChanges}
+          warnIfUnsavedChanges={this.handleUnsavedChanges}
           cmController={this.cmController}
         />
         <Toolbar key={this.props.project.id} />
@@ -605,7 +607,6 @@ IDEView.propTypes = {
   showErrorModal: PropTypes.func.isRequired,
   hideErrorModal: PropTypes.func.isRequired,
   clearPersistedState: PropTypes.func.isRequired,
-  persistState: PropTypes.func.isRequired,
   showRuntimeErrorWarning: PropTypes.func.isRequired,
   hideRuntimeErrorWarning: PropTypes.func.isRequired,
   startSketch: PropTypes.func.isRequired,
