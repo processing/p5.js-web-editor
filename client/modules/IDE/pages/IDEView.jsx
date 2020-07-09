@@ -55,7 +55,7 @@ function warnIfUnsavedChanges(props) { // eslint-disable-line
     props.persistState();
     window.onbeforeunload = null;
   } else if (props.ide.unsavedChanges) {
-    if (!window.confirm(this.props.t('WarningUnsavedChanges'))) {
+    if (!window.confirm(props.t('WarningUnsavedChanges'))) {
       return false;
     }
     props.setUnsavedChanges(false);
@@ -90,9 +90,9 @@ class IDEView extends React.Component {
     this.isMac = navigator.userAgent.toLowerCase().indexOf('mac') !== -1;
     document.addEventListener('keydown', this.handleGlobalKeydown, false);
 
-    this.props.router.setRouteLeaveHook(this.props.route, () => warnIfUnsavedChanges(this.props));
+    this.props.router.setRouteLeaveHook(this.props.route, this.handleUnsavedChanges);
 
-    window.onbeforeunload = () => warnIfUnsavedChanges();
+    window.onbeforeunload = this.handleUnsavedChanges;
 
     this.autosaveInterval = null;
   }
@@ -205,9 +205,7 @@ class IDEView extends React.Component {
     }
   }
 
-  warnIfUnsavedChangesCaller(props) {
-    return warnIfUnsavedChanges(props);
-  }
+  handleUnsavedChanges = () => warnIfUnsavedChanges(this.props);
 
   render() {
     return (
@@ -217,7 +215,7 @@ class IDEView extends React.Component {
         </Helmet>
         {this.props.toast.isVisible && <Toast />}
         <Nav
-          warnIfUnsavedChanges={this.warnIfUnsavedChangesCaller.bind(this, this.props)}
+          warnIfUnsavedChanges={this.handleUnsavedChanges}
           cmController={this.cmController}
         />
         <Toolbar key={this.props.project.id} />
