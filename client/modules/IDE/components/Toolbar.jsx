@@ -17,21 +17,36 @@ class Toolbar extends React.Component {
     super(props);
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleProjectNameChange = this.handleProjectNameChange.bind(this);
+    this.handleProjectNameSave = this.handleProjectNameSave.bind(this);
+
+    this.state = {
+      projectNameInputValue: props.project.name,
+    };
   }
 
   handleKeyPress(event) {
     if (event.key === 'Enter') {
       this.props.hideEditProjectName();
+      this.projectNameInput.blur();
     }
   }
 
   handleProjectNameChange(event) {
-    this.props.setProjectName(event.target.value);
+    this.setState({ projectNameInputValue: event.target.value });
   }
 
-  validateProjectName() {
-    if ((this.props.project.name.trim()).length === 0) {
-      this.props.setProjectName(this.originalProjectName);
+  handleProjectNameSave() {
+    const newProjectName = this.state.projectNameInputValue.trim();
+    if (newProjectName.length === 0) {
+      this.setState({
+        projectNameInputValue: this.props.project.name,
+      });
+    } else {
+      this.props.setProjectName(newProjectName);
+      this.props.hideEditProjectName();
+      if (this.props.project.id) {
+        this.props.saveProject();
+      }
     }
   }
 
@@ -108,7 +123,6 @@ class Toolbar extends React.Component {
             className="toolbar__project-name"
             onClick={() => {
               if (canEditProjectName) {
-                this.originalProjectName = this.props.project.name;
                 this.props.showEditProjectName();
                 setTimeout(() => this.projectNameInput.focus(), 0);
               }
@@ -130,16 +144,11 @@ class Toolbar extends React.Component {
             type="text"
             maxLength="128"
             className="toolbar__project-name-input"
-            value={this.props.project.name}
+            aria-label="New sketch name"
+            value={this.state.projectNameInputValue}
             onChange={this.handleProjectNameChange}
             ref={(element) => { this.projectNameInput = element; }}
-            onBlur={() => {
-              this.validateProjectName();
-              this.props.hideEditProjectName();
-              if (this.props.project.id) {
-                this.props.saveProject();
-              }
-            }}
+            onBlur={this.handleProjectNameSave}
             onKeyPress={this.handleKeyPress}
           />
           {(() => { // eslint-disable-line

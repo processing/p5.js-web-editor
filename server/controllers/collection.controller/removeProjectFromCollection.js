@@ -23,7 +23,7 @@ export default function addProjectToCollection(req, res) {
       return null;
     }
 
-    const project = collection.items.find(p => p.project._id === projectId);
+    const project = collection.items.find(p => p.projectId === projectId);
 
     if (project != null) {
       project.remove();

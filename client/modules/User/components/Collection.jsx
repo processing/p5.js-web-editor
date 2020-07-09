@@ -71,41 +71,50 @@ ShareURL.propTypes = {
   value: PropTypes.string.isRequired,
 };
 
-class CollectionItemRowBase extends React.Component {
-  handleSketchRemove = () => {
-    if (window.confirm(`Are you sure you want to remove "${this.props.item.project.name}" from this collection?`)) {
-      this.props.removeFromCollection(this.props.collection.id, this.props.item.project.id);
+const CollectionItemRowBase = ({
+  collection, item, isOwner, removeFromCollection
+}) => {
+  const projectIsDeleted = item.isDeleted;
+
+  const handleSketchRemove = () => {
+    const name = projectIsDeleted ? 'deleted sketch' : item.project.name;
+
+    if (window.confirm(`Are you sure you want to remove "${name}" from this collection?`)) {
+      removeFromCollection(collection.id, item.projectId);
     }
-  }
+  };
 
-  render() {
-    const { item } = this.props;
-    const sketchOwnerUsername = item.project.user.username;
-    const sketchUrl = `/${item.project.user.username}/sketches/${item.project.id}`;
+  const name = projectIsDeleted ? <span>Sketch was deleted</span> : (
+    <Link to={`/${item.project.user.username}/sketches/${item.projectId}`}>
+      {item.project.name}
+    </Link>
+  );
 
-    return (
-      <tr
-        className="sketches-table__row"
-      >
-        <th scope="row">
-          <Link to={sketchUrl}>
-            {item.project.name}
-          </Link>
-        </th>
-        <td>{format(new Date(item.createdAt), 'MMM D, YYYY h:mm A')}</td>
-        <td>{sketchOwnerUsername}</td>
-        <td className="collection-row__action-column ">
+  const sketchOwnerUsername = projectIsDeleted ? null : item.project.user.username;
+
+  return (
+    <tr
+      className={`sketches-table__row ${projectIsDeleted ? 'is-deleted' : ''}`}
+    >
+      <th scope="row">
+        {name}
+      </th>
+      <td>{format(new Date(item.createdAt), 'MMM D, YYYY h:mm A')}</td>
+      <td>{sketchOwnerUsername}</td>
+      <td className="collection-row__action-column ">
+        {isOwner &&
           <button
             className="collection-row__remove-button"
-            onClick={this.handleSketchRemove}
+            onClick={handleSketchRemove}
             aria-label="Remove sketch from collection"
           >
             <RemoveIcon focusable="false" aria-hidden="true" />
           </button>
-        </td>
-      </tr>);
-  }
-}
+        }
+      </td>
+    </tr>);
+};
+
 
 CollectionItemRowBase.propTypes = {
   collection: PropTypes.shape({
@@ -114,14 +123,17 @@ CollectionItemRowBase.propTypes = {
   }).isRequired,
   item: PropTypes.shape({
     createdAt: PropTypes.string.isRequired,
+    projectId: PropTypes.string.isRequired,
+    isDeleted: PropTypes.bool.isRequired,
     project: PropTypes.shape({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       user: PropTypes.shape({
         username: PropTypes.string.isRequired
-      })
+      }),
     }).isRequired,
   }).isRequired,
+  isOwner: PropTypes.bool.isRequired,
   user: PropTypes.shape({
     username: PropTypes.string,
     authenticated: PropTypes.bool.isRequired
@@ -342,6 +354,7 @@ class Collection extends React.Component {
 
   render() {
     const title = this.hasCollection() ? this.getCollectionName() : null;
+    const isOwner = this.isOwner();
 
     return (
       <main className="collection-container" data-has-items={this.hasCollectionItems() ? 'true' : 'false'}>
@@ -372,6 +385,7 @@ class Collection extends React.Component {
                         user={this.props.user}
                         username={this.getUsername()}
                         collection={this.props.collection}
+                        isOwner={isOwner}
                       />))}
                   </tbody>
                 </table>

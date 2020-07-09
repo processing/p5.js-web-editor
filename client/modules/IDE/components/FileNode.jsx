@@ -206,12 +206,14 @@ export class FileNode extends React.Component {
               </div>
             }
             <button
+              aria-label="Name"
               className="sidebar__file-item-name"
               onClick={this.handleFileClick}
             >
               {this.state.updatedName}
             </button>
             <input
+              data-testid="input"
               type="text"
               className="sidebar__file-item-input"
               value={this.state.updatedName}
