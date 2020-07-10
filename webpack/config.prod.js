@@ -8,6 +8,7 @@ const cssnext = require('postcss-cssnext');
 const postcssFocus = require('postcss-focus');
 const postcssReporter = require('postcss-reporter');
 const cssnano = require('cssnano');
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 if (process.env.NODE_ENV === "development") {
   require('dotenv').config();
 }
@@ -144,7 +145,13 @@ module.exports = [{
     }),
     new MiniCssExtractPlugin({
       filename: 'app.[hash].css',
-    })
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {from: path.resolve(__dirname, '../translations/locales') , to: path.resolve(__dirname, '../dist/static/locales')}
+      ]
+      }
+    )
   ]
 },
 {
