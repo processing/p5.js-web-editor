@@ -32,7 +32,7 @@ export default function addProjectToCollection(req, res) {
       return null;
     }
 
-    const projectInCollection = collection.items.find(p => p.project._id === project._id);
+    const projectInCollection = collection.items.find(p => p.projectId === project._id);
 
     if (projectInCollection) {
       sendFailure(404, 'Project already in collection');

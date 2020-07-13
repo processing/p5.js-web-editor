@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import prettyBytes from 'pretty-bytes';
+import getConfig from '../../../utils/getConfig';
 import FileUploader from './FileUploader';
 import { getreachedTotalSizeLimit } from '../selectors/users';
 import ExitIcon from '../../../images/exit.svg';
 
-const __process = (typeof global !== 'undefined' ? global : window).process;
-const limit = __process.env.UPLOAD_LIMIT || 250000000;
+const limit = getConfig('UPLOAD_LIMIT') || 250000000;
 const limitText = prettyBytes(limit);
 
 class UploadFileModal extends React.Component {

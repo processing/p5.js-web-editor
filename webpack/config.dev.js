@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 if (process.env.NODE_ENV === 'development') {
   require('dotenv').config();
@@ -40,7 +41,13 @@ module.exports = {
       'process.env': {
         NODE_ENV: JSON.stringify('development')
       }
-    })
+    }),
+    new CopyWebpackPlugin({
+        patterns: [
+          {from: path.resolve(__dirname, '../translations/locales') , to: path.resolve(__dirname, 'locales')}
+        ]
+      }
+    )
   ],
   module: {
     rules: [

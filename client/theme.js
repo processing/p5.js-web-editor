@@ -85,6 +85,17 @@ export default {
         border: grays.middleLight,
       },
     },
+    Icon: {
+      default: grays.middleGray,
+      hover: grays.darker
+    },
+    MobilePanel: {
+      default: {
+        foreground: colors.black,
+        background: grays.light,
+        border: grays.middleLight,
+      },
+    }
   },
   [Theme.dark]: {
     colors,
@@ -113,6 +124,17 @@ export default {
         border: grays.middleDark,
       },
     },
+    Icon: {
+      default: grays.middleLight,
+      hover: grays.lightest
+    },
+    MobilePanel: {
+      default: {
+        foreground: grays.light,
+        background: grays.dark,
+        border: grays.middleDark,
+      },
+    }
   },
   [Theme.contrast]: {
     colors,
@@ -141,5 +163,16 @@ export default {
         border: grays.middleDark,
       },
     },
+    Icon: {
+      default: grays.mediumLight,
+      hover: colors.yellow
+    },
+    MobilePanel: {
+      default: {
+        foreground: grays.light,
+        background: grays.dark,
+        border: grays.middleDark,
+      },
+    }
   },
 };
