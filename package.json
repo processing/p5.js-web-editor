@@ -177,7 +177,7 @@
     "js-beautify": "^1.10.3",
     "jsdom": "^9.8.3",
     "jshint": "^2.11.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "loop-protect": "github:catarak/loop-protect",
     "mime-types": "^2.1.26",
     "mjml": "^3.3.2",
