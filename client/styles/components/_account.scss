@@ -20,3 +20,12 @@
 .account__social-text {
   padding-bottom: #{15 / $base-font-size}rem;
 }
+
+
+.account__social-stack {
+  display: flex;
+}
+
+.account__social-stack > * {
+  margin-right: #{15 / $base-font-size}rem;
+}

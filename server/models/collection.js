@@ -15,6 +15,14 @@ collectedProjectSchema.virtual('id').get(function getId() {
   return this._id.toHexString();
 });
 
+collectedProjectSchema.virtual('projectId').get(function projectId() {
+  return this.populated('project');
+});
+
+collectedProjectSchema.virtual('isDeleted').get(function isDeleted() {
+  return this.project == null;
+});
+
 collectedProjectSchema.set('toJSON', {
   virtuals: true
 });

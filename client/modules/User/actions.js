@@ -1,12 +1,8 @@
 import { browserHistory } from 'react-router';
-import axios from 'axios';
 import * as ActionTypes from '../../constants';
+import apiClient from '../../utils/apiClient';
 import { showErrorModal, justOpenedProject } from '../IDE/actions/ide';
 import { showToast, setToastText } from '../IDE/actions/toast';
-
-
-const __process = (typeof global !== 'undefined' ? global : window).process;
-const ROOT_URL = __process.env.API_URL;
 
 export function authError(error) {
   return {
@@ -17,7 +13,7 @@ export function authError(error) {
 
 export function signUpUser(previousPath, formValues) {
   return (dispatch) => {
-    axios.post(`${ROOT_URL}/signup`, formValues, { withCredentials: true })
+    apiClient.post('/signup', formValues)
       .then((response) => {
         dispatch({
           type: ActionTypes.AUTH_USER,
@@ -26,12 +22,15 @@ export function signUpUser(previousPath, formValues) {
         dispatch(justOpenedProject());
         browserHistory.push(previousPath);
       })
-      .catch(response => dispatch(authError(response.data.error)));
+      .catch((error) => {
+        const { response } = error;
+        dispatch(authError(response.data.error));
+      });
   };
 }
 
 export function loginUser(formValues) {
-  return axios.post(`${ROOT_URL}/login`, formValues, { withCredentials: true });
+  return apiClient.post('/login', formValues);
 }
 
 export function loginUserSuccess(user) {
@@ -71,7 +70,7 @@ export function validateAndLoginUser(previousPath, formProps, dispatch) {
 
 export function getUser() {
   return (dispatch) => {
-    axios.get(`${ROOT_URL}/session`, { withCredentials: true })
+    apiClient.get('/session')
       .then((response) => {
         dispatch({
           type: ActionTypes.AUTH_USER,
@@ -82,7 +81,8 @@ export function getUser() {
           preferences: response.data.preferences
         });
       })
-      .catch((response) => {
+      .catch((error) => {
+        const { response } = error;
         const message = response.message || response.data.error;
         dispatch(authError(message));
       });
@@ -91,14 +91,15 @@ export function getUser() {
 
 export function validateSession() {
   return (dispatch, getState) => {
-    axios.get(`${ROOT_URL}/session`, { withCredentials: true })
+    apiClient.get('/session')
       .then((response) => {
         const state = getState();
         if (state.user.username !== response.data.username) {
           dispatch(showErrorModal('staleSession'));
         }
       })
-      .catch((response) => {
+      .catch((error) => {
+        const { response } = error;
         if (response.status === 404) {
           dispatch(showErrorModal('staleSession'));
         }
@@ -108,13 +109,16 @@ export function validateSession() {
 
 export function logoutUser() {
   return (dispatch) => {
-    axios.get(`${ROOT_URL}/logout`, { withCredentials: true })
+    apiClient.get('/logout')
       .then(() => {
         dispatch({
           type: ActionTypes.UNAUTH_USER
         });
       })
-      .catch(response => dispatch(authError(response.data.error)));
+      .catch((error) => {
+        const { response } = error;
+        dispatch(authError(response.data.error));
+      });
   };
 }
 
@@ -123,14 +127,17 @@ export function initiateResetPassword(formValues) {
     dispatch({
       type: ActionTypes.RESET_PASSWORD_INITIATE
     });
-    axios.post(`${ROOT_URL}/reset-password`, formValues, { withCredentials: true })
+    apiClient.post('/reset-password', formValues)
       .then(() => {
         // do nothing
       })
-      .catch(response => dispatch({
-        type: ActionTypes.ERROR,
-        message: response.data
-      }));
+      .catch((error) => {
+        const { response } = error;
+        dispatch({
+          type: ActionTypes.ERROR,
+          message: response.data
+        });
+      });
   };
 }
 
@@ -139,14 +146,17 @@ export function initiateVerification() {
     dispatch({
       type: ActionTypes.EMAIL_VERIFICATION_INITIATE
     });
-    axios.post(`${ROOT_URL}/verify/send`, {}, { withCredentials: true })
+    apiClient.post('/verify/send', {})
       .then(() => {
         // do nothing
       })
-      .catch(response => dispatch({
-        type: ActionTypes.ERROR,
-        message: response.data
-      }));
+      .catch((error) => {
+        const { response } = error;
+        dispatch({
+          type: ActionTypes.ERROR,
+          message: response.data
+        });
+      });
   };
 }
 
@@ -156,15 +166,18 @@ export function verifyEmailConfirmation(token) {
       type: ActionTypes.EMAIL_VERIFICATION_VERIFY,
       state: 'checking',
     });
-    return axios.get(`${ROOT_URL}/verify?t=${token}`, {}, { withCredentials: true })
+    return apiClient.get(`/verify?t=${token}`, {})
       .then(response => dispatch({
         type: ActionTypes.EMAIL_VERIFICATION_VERIFIED,
         message: response.data,
       }))
-      .catch(response => dispatch({
-        type: ActionTypes.EMAIL_VERIFICATION_INVALID,
-        message: response.data
-      }));
+      .catch((error) => {
+        const { response } = error;
+        dispatch({
+          type: ActionTypes.EMAIL_VERIFICATION_INVALID,
+          message: response.data
+        });
+      });
   };
 }
 
@@ -177,7 +190,7 @@ export function resetPasswordReset() {
 
 export function validateResetPasswordToken(token) {
   return (dispatch) => {
-    axios.get(`${ROOT_URL}/reset-password/${token}`)
+    apiClient.get(`/reset-password/${token}`)
       .then(() => {
         // do nothing if the token is valid
       })
@@ -189,7 +202,7 @@ export function validateResetPasswordToken(token) {
 
 export function updatePassword(token, formValues) {
   return (dispatch) => {
-    axios.post(`${ROOT_URL}/reset-password/${token}`, formValues)
+    apiClient.post(`/reset-password/${token}`, formValues)
       .then((response) => {
         dispatch(loginUserSuccess(response.data));
         browserHistory.push('/');
@@ -209,14 +222,17 @@ export function updateSettingsSuccess(user) {
 
 export function updateSettings(formValues) {
   return dispatch =>
-    axios.put(`${ROOT_URL}/account`, formValues, { withCredentials: true })
+    apiClient.put('/account', formValues)
       .then((response) => {
         dispatch(updateSettingsSuccess(response.data));
         browserHistory.push('/');
         dispatch(showToast(5500));
         dispatch(setToastText('Settings saved.'));
       })
-      .catch(response => Promise.reject(new Error(response.data.error)));
+      .catch((error) => {
+        const { response } = error;
+        Promise.reject(new Error(response.data.error));
+      });
 }
 
 export function createApiKeySuccess(user) {
@@ -228,21 +244,27 @@ export function createApiKeySuccess(user) {
 
 export function createApiKey(label) {
   return dispatch =>
-    axios.post(`${ROOT_URL}/account/api-keys`, { label }, { withCredentials: true })
+    apiClient.post('/account/api-keys', { label })
       .then((response) => {
         dispatch(createApiKeySuccess(response.data));
       })
-      .catch(response => Promise.reject(new Error(response.data.error)));
+      .catch((error) => {
+        const { response } = error;
+        Promise.reject(new Error(response.data.error));
+      });
 }
 
 export function removeApiKey(keyId) {
   return dispatch =>
-    axios.delete(`${ROOT_URL}/account/api-keys/${keyId}`, { withCredentials: true })
+    apiClient.delete(`/account/api-keys/${keyId}`)
       .then((response) => {
         dispatch({
           type: ActionTypes.API_KEY_REMOVED,
           user: response.data
         });
       })
-      .catch(response => Promise.reject(new Error(response.data.error)));
+      .catch((error) => {
+        const { response } = error;
+        Promise.reject(new Error(response.data.error));
+      });
 }

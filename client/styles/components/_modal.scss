@@ -45,6 +45,13 @@
   flex: 1;
 }
 
+input.new-file-form__submit,
+input.new-folder-form__submit {
+  @include themify() {
+    background-color: getThemifyVariable("button-secondary-background-color");
+  }
+}
+
 .modal__divider {
   text-align: center;
   margin: #{20 / $base-font-size}rem 0;

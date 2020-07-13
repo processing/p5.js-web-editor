@@ -3,15 +3,14 @@ import thunk from 'redux-thunk';
 import DevTools from './modules/App/components/DevTools';
 import rootReducer from './reducers';
 import { clearState, loadState } from './persistState';
-
-const __process = (typeof global !== 'undefined' ? global : window).process;
+import getConfig from './utils/getConfig';
 
 export default function configureStore(initialState) {
   const enhancers = [
     applyMiddleware(thunk),
   ];
 
-  if (__process.env.CLIENT && __process.env.NODE_ENV === 'development') {
+  if (getConfig('CLIENT') && getConfig('NODE_ENV') === 'development') {
     // Enable DevTools only when rendering on client and during development.
     enhancers.push(window.devToolsExtension ? window.devToolsExtension() : DevTools.instrument());
   }

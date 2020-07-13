@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { domOnlyProps } from '../../../utils/reduxFormUtils';
 
+import Button from '../../../common/Button';
+
 class NewFileForm extends React.Component {
   constructor(props) {
     super(props);
@@ -33,7 +35,10 @@ class NewFileForm extends React.Component {
             {...domOnlyProps(name)}
             ref={(element) => { this.fileName = element; }}
           />
-          <input type="submit" value="Add File" aria-label="add file" />
+          <Button
+            type="submit"
+          >Add File
+          </Button>
         </div>
         {name.touched && name.error && <span className="form-error">{name.error}</span>}
       </form>

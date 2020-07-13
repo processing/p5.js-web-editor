@@ -3,21 +3,21 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router';
-import InlineSVG from 'react-inlinesvg';
 import classNames from 'classnames';
+import { withTranslation } from 'react-i18next';
+import i18next from 'i18next';
 import * as IDEActions from '../modules/IDE/actions/ide';
 import * as toastActions from '../modules/IDE/actions/toast';
 import * as projectActions from '../modules/IDE/actions/project';
 import { setAllAccessibleOutput } from '../modules/IDE/actions/preferences';
 import { logoutUser } from '../modules/User/actions';
 
+import getConfig from '../utils/getConfig';
 import { metaKeyName, } from '../utils/metaKey';
-import caretLeft from '../images/left-arrow.svg';
 
-const triangleUrl = require('../images/down-filled-triangle.svg');
-const logoUrl = require('../images/p5js-logo-small.svg');
-
-const __process = (typeof global !== 'undefined' ? global : window).process;
+import CaretLeftIcon from '../images/left-arrow.svg';
+import TriangleIcon from '../images/down-filled-triangle.svg';
+import LogoIcon from '../images/p5js-logo-small.svg';
 
 class Nav extends React.PureComponent {
   constructor(props) {
@@ -57,6 +57,10 @@ class Nav extends React.PureComponent {
     this.handleFocusForHelp = this.handleFocus.bind(this, 'help');
     this.toggleDropdownForAccount = this.toggleDropdown.bind(this, 'account');
     this.handleFocusForAccount = this.handleFocus.bind(this, 'account');
+    this.toggleDropdownForLang = this.toggleDropdown.bind(this, 'lang');
+    this.handleFocusForLang = this.handleFocus.bind(this, 'lang');
+    this.handleLangSelection = this.handleLangSelection.bind(this);
+
     this.closeDropDown = this.closeDropDown.bind(this);
   }
 
@@ -165,6 +169,13 @@ class Nav extends React.PureComponent {
     this.setDropdown('none');
   }
 
+  handleLangSelection(event) {
+    i18next.changeLanguage(event.target.value);
+    this.props.showToast(1500);
+    this.props.setToastText('LangChange');
+    this.setDropdown('none');
+  }
+
   handleLogout() {
     this.props.logoutUser();
     this.setDropdown('none');
@@ -229,13 +240,13 @@ class Nav extends React.PureComponent {
     return (
       <ul className="nav__items-left">
         <li className="nav__item-logo">
-          <InlineSVG src={logoUrl} alt="p5.js logo" className="svg__logo" />
+          <LogoIcon role="img" aria-label="p5.js Logo" focusable="false" className="svg__logo" />
         </li>
         <li className="nav__item nav__item--no-icon">
           <Link to="/" className="nav__back-link">
-            <InlineSVG src={caretLeft} className="nav__back-icon" />
+            <CaretLeftIcon className="nav__back-icon" focusable="false" aria-hidden="true" />
             <span className="nav__item-header">
-              Back to Editor
+              {this.props.t('BackEditor')}
             </span>
           </Link>
         </li>
@@ -247,7 +258,7 @@ class Nav extends React.PureComponent {
     return (
       <ul className="nav__items-left">
         <li className="nav__item-logo">
-          <InlineSVG src={logoUrl} alt="p5.js logo" className="svg__logo" />
+          <LogoIcon role="img" aria-label="p5.js Logo" focusable="false" className="svg__logo" />
         </li>
         <li className={navDropdownState.file}>
           <button
@@ -260,8 +271,8 @@ class Nav extends React.PureComponent {
               }
             }}
           >
-            <span className="nav__item-header">File</span>
-            <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
+            <span className="nav__item-header">{this.props.t('File')}</span>
+            <TriangleIcon className="nav__item-header-triangle" focusable="false" aria-hidden="true" />
           </button>
           <ul className="nav__dropdown">
             <li className="nav__dropdown-item">
@@ -270,18 +281,18 @@ class Nav extends React.PureComponent {
                 onFocus={this.handleFocusForFile}
                 onBlur={this.handleBlur}
               >
-                New
+                {this.props.t('New')}
               </button>
             </li>
-            { __process.env.LOGIN_ENABLED && (!this.props.project.owner || this.isUserOwner()) &&
+            { getConfig('LOGIN_ENABLED') && (!this.props.project.owner || this.isUserOwner()) &&
             <li className="nav__dropdown-item">
               <button
                 onClick={this.handleSave}
                 onFocus={this.handleFocusForFile}
                 onBlur={this.handleBlur}
               >
-                Save
-                <span className="nav__keyboard-shortcut">{metaKeyName}+s</span>
+                {this.props.t('Save')}
+                <span className="nav__keyboard-shortcut">{metaKeyName}+S</span>
               </button>
             </li> }
             { this.props.project.id && this.props.user.authenticated &&
@@ -291,7 +302,7 @@ class Nav extends React.PureComponent {
                 onFocus={this.handleFocusForFile}
                 onBlur={this.handleBlur}
               >
-                Duplicate
+                {this.props.t('Duplicate')}
               </button>
             </li> }
             { this.props.project.id &&
@@ -301,7 +312,7 @@ class Nav extends React.PureComponent {
                 onFocus={this.handleFocusForFile}
                 onBlur={this.handleBlur}
               >
-                Share
+                {this.props.t('Share')}
               </button>
             </li> }
             { this.props.project.id &&
@@ -311,7 +322,7 @@ class Nav extends React.PureComponent {
                 onFocus={this.handleFocusForFile}
                 onBlur={this.handleBlur}
               >
-                Download
+                {this.props.t('Download')}
               </button>
             </li> }
             { this.props.user.authenticated &&
@@ -322,10 +333,10 @@ class Nav extends React.PureComponent {
                 onBlur={this.handleBlur}
                 onClick={this.setDropdownForNone}
               >
-                Open
+                {this.props.t('Open')}
               </Link>
             </li> }
-            {__process.env.UI_COLLECTIONS_ENABLED &&
+            {getConfig('UI_COLLECTIONS_ENABLED') &&
               this.props.user.authenticated &&
               this.props.project.id &&
               <li className="nav__dropdown-item">
@@ -335,10 +346,10 @@ class Nav extends React.PureComponent {
                   onBlur={this.handleBlur}
                   onClick={this.setDropdownForNone}
                 >
-                  Add to Collection
+                  {this.props.t('AddToCollection')}
                 </Link>
               </li>}
-            { __process.env.EXAMPLES_ENABLED &&
+            { getConfig('EXAMPLES_ENABLED') &&
             <li className="nav__dropdown-item">
               <Link
                 to="/p5/sketches"
@@ -346,7 +357,7 @@ class Nav extends React.PureComponent {
                 onBlur={this.handleBlur}
                 onClick={this.setDropdownForNone}
               >
-                Examples
+                {this.props.t('Examples')}
               </Link>
             </li> }
           </ul>
@@ -362,8 +373,8 @@ class Nav extends React.PureComponent {
               }
             }}
           >
-            <span className="nav__item-header">Edit</span>
-            <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
+            <span className="nav__item-header">{this.props.t('Edit')}</span>
+            <TriangleIcon className="nav__item-header-triangle" focusable="false" aria-hidden="true" />
           </button>
           <ul className="nav__dropdown" >
             <li className="nav__dropdown-item">
@@ -375,7 +386,7 @@ class Nav extends React.PureComponent {
                 onFocus={this.handleFocusForEdit}
                 onBlur={this.handleBlur}
               >
-                Tidy Code
+                {this.props.t('TidyCode')}
                 <span className="nav__keyboard-shortcut">{'\u21E7'}+Tab</span>
               </button>
             </li>
@@ -385,7 +396,7 @@ class Nav extends React.PureComponent {
                 onFocus={this.handleFocusForEdit}
                 onBlur={this.handleBlur}
               >
-                Find
+                {this.props.t('Find')}
                 <span className="nav__keyboard-shortcut">{metaKeyName}+F</span>
               </button>
             </li>
@@ -395,7 +406,7 @@ class Nav extends React.PureComponent {
                 onFocus={this.handleFocusForEdit}
                 onBlur={this.handleBlur}
               >
-                Find Next
+                {this.props.t('FindNext')}
                 <span className="nav__keyboard-shortcut">{metaKeyName}+G</span>
               </button>
             </li>
@@ -405,7 +416,7 @@ class Nav extends React.PureComponent {
                 onFocus={this.handleFocusForEdit}
                 onBlur={this.handleBlur}
               >
-                Find Previous
+                {this.props.t('FindPrevious')}
                 <span className="nav__keyboard-shortcut">{'\u21E7'}+{metaKeyName}+G</span>
               </button>
             </li>
@@ -422,8 +433,8 @@ class Nav extends React.PureComponent {
               }
             }}
           >
-            <span className="nav__item-header">Sketch</span>
-            <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
+            <span className="nav__item-header">{this.props.t('Sketch')}</span>
+            <TriangleIcon className="nav__item-header-triangle" focusable="false" aria-hidden="true" />
           </button>
           <ul className="nav__dropdown">
             <li className="nav__dropdown-item">
@@ -432,7 +443,7 @@ class Nav extends React.PureComponent {
                 onFocus={this.handleFocusForSketch}
                 onBlur={this.handleBlur}
               >
-                Add File
+                {this.props.t('AddFile')}
               </button>
             </li>
             <li className="nav__dropdown-item">
@@ -441,7 +452,7 @@ class Nav extends React.PureComponent {
                 onFocus={this.handleFocusForSketch}
                 onBlur={this.handleBlur}
               >
-                Add Folder
+                {this.props.t('AddFolder')}
               </button>
             </li>
             <li className="nav__dropdown-item">
@@ -450,7 +461,7 @@ class Nav extends React.PureComponent {
                 onFocus={this.handleFocusForSketch}
                 onBlur={this.handleBlur}
               >
-                Run
+                {this.props.t('Run')}
                 <span className="nav__keyboard-shortcut">{metaKeyName}+Enter</span>
               </button>
             </li>
@@ -460,7 +471,7 @@ class Nav extends React.PureComponent {
                 onFocus={this.handleFocusForSketch}
                 onBlur={this.handleBlur}
               >
-                Stop
+                {this.props.t('Stop')}
                 <span className="nav__keyboard-shortcut">{'\u21E7'}+{metaKeyName}+Enter</span>
               </button>
             </li>
@@ -497,8 +508,8 @@ class Nav extends React.PureComponent {
               }
             }}
           >
-            <span className="nav__item-header">Help</span>
-            <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
+            <span className="nav__item-header">{this.props.t('Help')}</span>
+            <TriangleIcon className="nav__item-header-triangle" focusable="false" aria-hidden="true" />
           </button>
           <ul className="nav__dropdown">
             <li className="nav__dropdown-item">
@@ -507,7 +518,7 @@ class Nav extends React.PureComponent {
                 onBlur={this.handleBlur}
                 onClick={this.handleKeyboardShortcuts}
               >
-                Keyboard Shortcuts
+                {this.props.t('KeyboardShortcuts')}
               </button>
             </li>
             <li className="nav__dropdown-item">
@@ -518,7 +529,7 @@ class Nav extends React.PureComponent {
                 onFocus={this.handleFocusForHelp}
                 onBlur={this.handleBlur}
                 onClick={this.setDropdownForNone}
-              >Reference
+              >{this.props.t('Reference')}
               </a>
             </li>
             <li className="nav__dropdown-item">
@@ -528,7 +539,7 @@ class Nav extends React.PureComponent {
                 onBlur={this.handleBlur}
                 onClick={this.setDropdownForNone}
               >
-                About
+                {this.props.t('About')}
               </Link>
             </li>
           </ul>
@@ -537,18 +548,73 @@ class Nav extends React.PureComponent {
     );
   }
 
+  renderLanguageMenu(navDropdownState) {
+    return (
+      <ul className="nav__items-right" title="user-menu">
+        <li className={navDropdownState.lang}>
+          <button
+            onClick={this.toggleDropdownForLang}
+            onBlur={this.handleBlur}
+            onFocus={this.clearHideTimeout}
+            onMouseOver={() => {
+              if (this.state.dropdownOpen !== 'none') {
+                this.setDropdown('lang');
+              }
+            }}
+          >
+            <span className="nav__item-header"> {this.props.t('Lang')}</span>
+            <TriangleIcon className="nav__item-header-triangle" focusable="false" aria-hidden="true" />
+          </button>
+          <ul className="nav__dropdown">
+
+            <li className="nav__dropdown-item">
+              <button
+                onFocus={this.handleFocusForLang}
+                onBlur={this.handleBlur}
+                value="it"
+                onClick={e => this.handleLangSelection(e)}
+              >
+                Italian (Test Fallback)
+              </button>
+            </li>
+            <li className="nav__dropdown-item">
+              <button
+                onFocus={this.handleFocusForLang}
+                onBlur={this.handleBlur}
+                value="en-US"
+                onClick={e => this.handleLangSelection(e)}
+              >English
+              </button>
+            </li>
+            <li className="nav__dropdown-item">
+              <button
+                onFocus={this.handleFocusForLang}
+                onBlur={this.handleBlur}
+                value="es-419"
+                onClick={e => this.handleLangSelection(e)}
+              >
+                Español
+              </button>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    );
+  }
+
+
   renderUnauthenticatedUserMenu(navDropdownState) {
     return (
       <ul className="nav__items-right" title="user-menu">
         <li className="nav__item">
-          <Link to="/login">
-            <span className="nav__item-header">Log in</span>
+          <Link to="/login" className="nav__auth-button">
+            <span className="nav__item-header">{this.props.t('Login')}</span>
           </Link>
         </li>
-        <span className="nav__item-spacer">or</span>
+        <span className="nav__item-or">{this.props.t('LoginOr')}</span>
         <li className="nav__item">
-          <Link to="/signup">
-            <span className="nav__item-header">Sign up</span>
+          <Link to="/signup" className="nav__auth-button">
+            <span className="nav__item-header">{this.props.t('SignUp')}</span>
           </Link>
         </li>
       </ul>
@@ -559,7 +625,7 @@ class Nav extends React.PureComponent {
     return (
       <ul className="nav__items-right" title="user-menu">
         <li className="nav__item">
-          <span>Hello, {this.props.user.username}!</span>
+          <span>{this.props.t('Hello')}, {this.props.user.username}!</span>
         </li>
         <span className="nav__item-spacer">|</span>
         <li className={navDropdownState.account}>
@@ -574,8 +640,8 @@ class Nav extends React.PureComponent {
               }
             }}
           >
-            My Account
-            <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
+            {this.props.t('MyAccount')}
+            <TriangleIcon className="nav__item-header-triangle" focusable="false" aria-hidden="true" />
           </button>
           <ul className="nav__dropdown">
             <li className="nav__dropdown-item">
@@ -585,10 +651,10 @@ class Nav extends React.PureComponent {
                 onBlur={this.handleBlur}
                 onClick={this.setDropdownForNone}
               >
-                My sketches
+                {this.props.t('MySketches')}
               </Link>
             </li>
-            {__process.env.UI_COLLECTIONS_ENABLED &&
+            {getConfig('UI_COLLECTIONS_ENABLED') &&
               <li className="nav__dropdown-item">
                 <Link
                   to={`/${this.props.user.username}/collections`}
@@ -596,7 +662,7 @@ class Nav extends React.PureComponent {
                   onBlur={this.handleBlur}
                   onClick={this.setDropdownForNone}
                 >
-                  My collections
+                  {this.props.t('MyCollections')}
                 </Link>
               </li>
             }
@@ -607,7 +673,7 @@ class Nav extends React.PureComponent {
                 onBlur={this.handleBlur}
                 onClick={this.setDropdownForNone}
               >
-                My assets
+                {this.props.t('MyAssets')}
               </Link>
             </li>
             <li className="nav__dropdown-item">
@@ -617,7 +683,7 @@ class Nav extends React.PureComponent {
                 onBlur={this.handleBlur}
                 onClick={this.setDropdownForNone}
               >
-                Settings
+                {this.props.t('Settings')}
               </Link>
             </li>
             <li className="nav__dropdown-item">
@@ -626,7 +692,7 @@ class Nav extends React.PureComponent {
                 onFocus={this.handleFocusForAccount}
                 onBlur={this.handleBlur}
               >
-                Log out
+                {this.props.t('LogOut')}
               </button>
             </li>
           </ul>
@@ -636,7 +702,7 @@ class Nav extends React.PureComponent {
   }
 
   renderUserMenu(navDropdownState) {
-    const isLoginEnabled = __process.env.LOGIN_ENABLED;
+    const isLoginEnabled = getConfig('LOGIN_ENABLED');
     const isAuthenticated = this.props.user.authenticated;
 
     if (isLoginEnabled && isAuthenticated) {
@@ -679,25 +745,21 @@ class Nav extends React.PureComponent {
       account: classNames({
         'nav__item': true,
         'nav__item--open': this.state.dropdownOpen === 'account'
+      }),
+      lang: classNames({
+        'nav__item': true,
+        'nav__item--open': this.state.dropdownOpen === 'lang'
       })
     };
 
     return (
-      <nav className="nav" title="main-navigation" ref={(node) => { this.node = node; }}>
-        {this.renderLeftLayout(navDropdownState)}
-        {this.renderUserMenu(navDropdownState)}
-        {/*
-        <div className="nav__announce">
-          This is a preview version of the editor, that has not yet been officially released.
-          It is in development, you can report bugs <a
-            href="https://github.com/processing/p5.js-web-editor/issues"
-            target="_blank"
-            rel="noopener noreferrer"
-          >here</a>.
-          Please use with caution.
-        </div>
-      */}
-      </nav>
+      <header>
+        <nav className="nav" title="main-navigation" ref={(node) => { this.node = node; }}>
+          {this.renderLeftLayout(navDropdownState)}
+          {getConfig('TRANSLATIONS_ENABLED') && this.renderLanguageMenu(navDropdownState)}
+          {this.renderUserMenu(navDropdownState)}
+        </nav>
+      </header>
     );
   }
 }
@@ -745,7 +807,9 @@ Nav.propTypes = {
   }).isRequired,
   params: PropTypes.shape({
     username: PropTypes.string
-  })
+  }),
+  t: PropTypes.func.isRequired
+
 };
 
 Nav.defaultProps = {
@@ -778,5 +842,5 @@ const mapDispatchToProps = {
   setAllAccessibleOutput
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Nav));
+export default withTranslation('WebEditor')(withRouter(connect(mapStateToProps, mapDispatchToProps)(Nav)));
 export { Nav as NavComponent };

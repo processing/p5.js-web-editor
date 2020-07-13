@@ -60,7 +60,7 @@ export const getAllScriptOffsets = (htmlFile) => {
     if (ind === -1) {
       foundJSScript = false;
     } else {
-      endFilenameInd = htmlFile.indexOf('.js', ind + startTag.length + 3);
+      endFilenameInd = htmlFile.indexOf('.js', ind + startTag.length + 1);
       filename = htmlFile.substring(ind + startTag.length, endFilenameInd);
       lineOffset = htmlFile.substring(0, ind).split('\n').length + hijackConsoleErrorsScriptLength;
       offs.push([lineOffset, filename]);

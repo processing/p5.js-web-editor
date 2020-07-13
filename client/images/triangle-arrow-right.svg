@@ -3,7 +3,7 @@
     <desc>Created with Sketch.</desc>
     <defs></defs>
     <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="environment" transform="translate(-26.000000, -42.000000)" fill="#B5B5B5">
+        <g id="environment" transform="translate(-26.000000, -42.000000)" fill="#000000">
             <g id="libraries" transform="translate(21.000000, 32.000000)">
                 <polygon id="Triangle-3" transform="translate(7.500000, 12.500000) rotate(90.000000) translate(-7.500000, -12.500000) " points="7.5 10 10 15 5 15"></polygon>
             </g>

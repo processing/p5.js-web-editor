@@ -1,8 +1,9 @@
 import { browserHistory } from 'react-router';
-import axios from 'axios';
 import objectID from 'bson-objectid';
 import each from 'async/each';
 import isEqual from 'lodash/isEqual';
+import apiClient from '../../../utils/apiClient';
+import getConfig from '../../../utils/getConfig';
 import * as ActionTypes from '../../../constants';
 import { showToast, setToastText } from './toast';
 import {
@@ -14,8 +15,7 @@ import {
 } from './ide';
 import { clearState, saveState } from '../../../persistState';
 
-const __process = (typeof global !== 'undefined' ? global : window).process;
-const ROOT_URL = __process.env.API_URL;
+const ROOT_URL = getConfig('API_URL');
 
 export function setProject(project) {
   return {
@@ -49,18 +49,21 @@ export function setNewProject(project) {
   };
 }
 
-export function getProject(id) {
+export function getProject(id, username) {
   return (dispatch, getState) => {
     dispatch(justOpenedProject());
-    axios.get(`${ROOT_URL}/projects/${id}`, { withCredentials: true })
+    apiClient.get(`/${username}/projects/${id}`)
       .then((response) => {
         dispatch(setProject(response.data));
         dispatch(setUnsavedChanges(false));
       })
-      .catch(response => dispatch({
-        type: ActionTypes.ERROR,
-        error: response.data
-      }));
+      .catch((error) => {
+        const { response } = error;
+        dispatch({
+          type: ActionTypes.ERROR,
+          error: response.data
+        });
+      });
   };
 }
 
@@ -139,7 +142,7 @@ export function saveProject(selectedFile = null, autosave = false) {
       fileToUpdate.content = selectedFile.content;
     }
     if (state.project.id) {
-      return axios.put(`${ROOT_URL}/projects/${state.project.id}`, formParams, { withCredentials: true })
+      return apiClient.put(`/projects/${state.project.id}`, formParams)
         .then((response) => {
           dispatch(endSavingProject());
           dispatch(setUnsavedChanges(false));
@@ -152,17 +155,20 @@ export function saveProject(selectedFile = null, autosave = false) {
           if (!autosave) {
             if (state.ide.justOpenedProject && state.preferences.autosave) {
               dispatch(showToast(5500));
-              dispatch(setToastText('Project saved.'));
+              dispatch(setToastText('Sketch saved.'));
               setTimeout(() => dispatch(setToastText('Autosave enabled.')), 1500);
               dispatch(resetJustOpenedProject());
             } else {
               dispatch(showToast(1500));
-              dispatch(setToastText('Project saved.'));
+              dispatch(setToastText('Sketch saved.'));
             }
           }
         })
-        .catch((response) => {
+        .catch((error) => {
+          const { response } = error;
           dispatch(endSavingProject());
+          dispatch(setToastText('Failed to save sketch.'));
+          dispatch(showToast(1500));
           if (response.status === 403) {
             dispatch(showErrorModal('staleSession'));
           } else if (response.status === 409) {
@@ -173,7 +179,7 @@ export function saveProject(selectedFile = null, autosave = false) {
         });
     }
 
-    return axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
+    return apiClient.post('/projects', formParams)
       .then((response) => {
         dispatch(endSavingProject());
         const { hasChanges, synchedProject } = getSynchedProject(getState(), response.data);
@@ -191,17 +197,20 @@ export function saveProject(selectedFile = null, autosave = false) {
         if (!autosave) {
           if (state.preferences.autosave) {
             dispatch(showToast(5500));
-            dispatch(setToastText('Project saved.'));
+            dispatch(setToastText('Sketch saved.'));
             setTimeout(() => dispatch(setToastText('Autosave enabled.')), 1500);
             dispatch(resetJustOpenedProject());
           } else {
             dispatch(showToast(1500));
-            dispatch(setToastText('Project saved.'));
+            dispatch(setToastText('Sketch saved.'));
           }
         }
       })
-      .catch((response) => {
+      .catch((error) => {
+        const { response } = error;
         dispatch(endSavingProject());
+        dispatch(setToastText('Failed to save sketch.'));
+        dispatch(showToast(1500));
         if (response.status === 403) {
           dispatch(showErrorModal('staleSession'));
         } else {
@@ -255,7 +264,7 @@ export function cloneProject(id) {
       if (!id) {
         resolve(getState());
       } else {
-        fetch(`${ROOT_URL}/projects/${id}`)
+        apiClient.get(`/projects/${id}`)
           .then(res => res.json())
           .then(data => resolve({
             files: data.files,
@@ -282,7 +291,7 @@ export function cloneProject(id) {
           const formParams = {
             url: file.url
           };
-          axios.post(`${ROOT_URL}/S3/copy`, formParams, { withCredentials: true })
+          apiClient.post('/S3/copy', formParams)
             .then((response) => {
               file.url = response.data.url;
               callback(null);
@@ -293,15 +302,18 @@ export function cloneProject(id) {
       }, (err) => {
         // if not errors in duplicating the files on S3, then duplicate it
         const formParams = Object.assign({}, { name: `${state.project.name} copy` }, { files: newFiles });
-        axios.post(`${ROOT_URL}/projects`, formParams, { withCredentials: true })
+        apiClient.post('/projects', formParams)
           .then((response) => {
             browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
             dispatch(setNewProject(response.data));
           })
-          .catch(response => dispatch({
-            type: ActionTypes.PROJECT_SAVE_FAIL,
-            error: response.data
-          }));
+          .catch((error) => {
+            const { response } = error;
+            dispatch({
+              type: ActionTypes.PROJECT_SAVE_FAIL,
+              error: response.data
+            });
+          });
       });
     });
   };
@@ -329,7 +341,7 @@ export function setProjectSavedTime(updatedAt) {
 export function changeProjectName(id, newName) {
   return (dispatch, getState) => {
     const state = getState();
-    axios.put(`${ROOT_URL}/projects/${id}`, { name: newName }, { withCredentials: true })
+    apiClient.put(`/projects/${id}`, { name: newName })
       .then((response) => {
         if (response.status === 200) {
           dispatch({
@@ -344,8 +356,8 @@ export function changeProjectName(id, newName) {
           }
         }
       })
-      .catch((response) => {
-        console.log(response);
+      .catch((error) => {
+        const { response } = error;
         dispatch({
           type: ActionTypes.PROJECT_SAVE_FAIL,
           error: response.data
@@ -356,7 +368,7 @@ export function changeProjectName(id, newName) {
 
 export function deleteProject(id) {
   return (dispatch, getState) => {
-    axios.delete(`${ROOT_URL}/projects/${id}`, { withCredentials: true })
+    apiClient.delete(`/projects/${id}`)
       .then(() => {
         const state = getState();
         if (id === state.project.id) {
@@ -368,7 +380,8 @@ export function deleteProject(id) {
           id
         });
       })
-      .catch((response) => {
+      .catch((error) => {
+        const { response } = error;
         if (response.status === 403) {
           dispatch(showErrorModal('staleSession'));
         } else {
