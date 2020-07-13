@@ -86,13 +86,13 @@
     "Password": "Password",
     "ConfirmPassword": "Confirm Password",
     "OpenedNewSketch": "Opened new sketch.",
-    "Hello": "Hello",
+  "Hello": "Hello",
     "MyAccount": "My Account",
     "My":"My",
-    "MySketches": "My Sketches",
-    "MyCollections": "My Collections",
+    "Sketches": "My sketches",
+    "Collections": "My collections",
     "Asset": "Asset",
-    "MyAssets": "My Assets",
+    "MyAssets": "My assets",
     "TitleAbout": "p5.js Web Editor | About",
     "CodeEditing": "Code Editing",
     "Error": "Error",
@@ -109,8 +109,7 @@
     "FindPreviousTextMatch": "Find Previous Text Match",
     "Code editing keyboard shortcuts follow": "Code editing keyboard shortcuts follow",
     "Sublime Text shortcuts": "Sublime Text shortcuts",
-    "WarningUnsavedChanges": "Are you sure you want to leave this page? You have unsaved changes.",
-    "LogOut": "Log Out"
+  "WarningUnsavedChanges": "Are you sure you want to leave this page? You have unsaved changes."
 
 }
 
