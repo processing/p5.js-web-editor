@@ -1,6 +1,5 @@
 import crypto from 'crypto';
 import async from 'async';
-import escapeStringRegexp from 'escape-string-regexp';
 
 import User from '../models/user';
 import mail from '../utils/mail';
@@ -31,12 +30,9 @@ const random = (done) => {
 };
 
 export function findUserByUsername(username, cb) {
-  User.findOne(
-    { username },
-    (err, user) => {
-      cb(user);
-    }
-  );
+  User.findOne({ username }).collation({ locale: 'en', strength: 2 }).exec((err, user) => {
+    cb(user);
+  });
 }
 
 export function createUser(req, res, next) {
@@ -54,51 +50,48 @@ export function createUser(req, res, next) {
       verifiedTokenExpires: EMAIL_VERIFY_TOKEN_EXPIRY_TIME,
     });
 
-    User.findOne(
-      {
-        $or: [
-          { email: new RegExp(`^${escapeStringRegexp(email)}$`, 'i') },
-          { username: new RegExp(`^${escapeStringRegexp(username)}$`, 'i') }
-        ]
-      },
-      (err, existingUser) => {
-        if (err) {
-          res.status(404).send({ error: err });
-          return;
-        }
+    User.findOne({
+      $or: [
+        { email },
+        { username }
+      ]
+    }).collation({ locale: 'en', strength: 2 }).exec((err, existingUser) => {
+      if (err) {
+        res.status(404).send({ error: err });
+        return;
+      }
 
-        if (existingUser) {
-          const fieldInUse = existingUser.email.toLowerCase() === emailLowerCase ? 'Email' : 'Username';
-          res.status(422).send({ error: `${fieldInUse} is in use` });
+      if (existingUser) {
+        const fieldInUse = existingUser.email.toLowerCase() === emailLowerCase ? 'Email' : 'Username';
+        res.status(422).send({ error: `${fieldInUse} is in use` });
+        return;
+      }
+      user.save((saveErr) => {
+        if (saveErr) {
+          next(saveErr);
           return;
         }
-        user.save((saveErr) => {
-          if (saveErr) {
-            next(saveErr);
+        req.logIn(user, (loginErr) => {
+          if (loginErr) {
+            next(loginErr);
             return;
           }
-          req.logIn(user, (loginErr) => {
-            if (loginErr) {
-              next(loginErr);
-              return;
-            }
 
-            const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
-            const mailOptions = renderEmailConfirmation({
-              body: {
-                domain: `${protocol}://${req.headers.host}`,
-                link: `${protocol}://${req.headers.host}/verify?t=${token}`
-              },
-              to: req.user.email,
-            });
+          const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+          const mailOptions = renderEmailConfirmation({
+            body: {
+              domain: `${protocol}://${req.headers.host}`,
+              link: `${protocol}://${req.headers.host}/verify?t=${token}`
+            },
+            to: req.user.email,
+          });
 
-            mail.send(mailOptions, (mailErr, result) => { // eslint-disable-line no-unused-vars
-              res.json(userResponse(req.user));
-            });
+          mail.send(mailOptions, (mailErr, result) => { // eslint-disable-line no-unused-vars
+            res.json(userResponse(req.user));
           });
         });
-      }
-    );
+      });
+    });
   });
 }
 
@@ -106,8 +99,8 @@ export function duplicateUserCheck(req, res) {
   const checkType = req.query.check_type;
   const value = req.query[checkType];
   const query = {};
-  query[checkType] = new RegExp(`^${escapeStringRegexp(value)}$`, 'i');
-  User.findOne(query, (err, user) => {
+  query[checkType] = value;
+  User.findOne(query).collation({ locale: 'en', strength: 2 }).exec((err, user) => {
     if (user) {
       return res.json({
         exists: true,
@@ -151,18 +144,19 @@ export function resetPasswordInitiate(req, res) {
   async.waterfall([
     random,
     (token, done) => {
-      User.findOne({ email: req.body.email.toLowerCase() }, (err, user) => {
-        if (!user) {
-          res.json({ success: true, message: 'If the email is registered with the editor, an email has been sent.' });
-          return;
-        }
-        user.resetPasswordToken = token;
-        user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+      User.findOne({ email: req.body.email.toLowerCase() })
+        .collation({ locale: 'en', strength: 2 }).exec((err, user) => {
+          if (!user) {
+            res.json({ success: true, message: 'If the email is registered with the editor, an email has been sent.' });
+            return;
+          }
+          user.resetPasswordToken = token;
+          user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
 
-        user.save((saveErr) => {
-          done(saveErr, token, user);
+          user.save((saveErr) => {
+            done(saveErr, token, user);
+          });
         });
-      });
     },
     (token, user, done) => {
       const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
@@ -281,7 +275,7 @@ export function updatePassword(req, res) {
 }
 
 export function userExists(username, callback) {
-  User.findOne({ username: new RegExp(`^${escapeStringRegexp(username)}$`, 'i') }, (err, user) => (
+  User.findOne(username).collation({ locale: 'en', strength: 2 }).exec((err, user) => (
     user ? callback(true) : callback(false)
   ));
 }

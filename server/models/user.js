@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import escapeStringRegexp from 'escape-string-regexp';
 
 const bcrypt = require('bcrypt-nodejs');
 
@@ -143,16 +142,24 @@ userSchema.methods.findMatchingKey = function findMatchingKey(candidateKey, cb) 
 };
 
 userSchema.statics.findByMailOrName = function findByMailOrName(email) {
+  const isEmail = email.indexOf('@') > -1;
+  if (isEmail) {
+    const query = {
+      email: email.toLowerCase()
+    };
+    // once emails are all lowercase, won't need to do collation
+    // but maybe it's not even necessary to make all emails lowercase??
+    return this.findOne(query).collation({ locale: 'en', strength: 2 }).exec();
+  }
   const query = {
-    $or: [{
-      email: new RegExp(`^${escapeStringRegexp(email)}$`, 'i'),
-    }, {
-      username: new RegExp(`^${escapeStringRegexp(email)}$`, 'i'),
-    }],
+    username: email
   };
-  return this.findOne(query).exec();
+  return this.findOne(query).collation({ locale: 'en', strength: 2 }).exec();
 };
 
 userSchema.statics.EmailConfirmation = EmailConfirmationStates;
+
+userSchema.index({ username: 1 }, { collation: { locale: 'en', strength: 2 } });
+userSchema.index({ email: 1 }, { collation: { locale: 'en', strength: 2 } });
 
 export default mongoose.model('User', userSchema);
