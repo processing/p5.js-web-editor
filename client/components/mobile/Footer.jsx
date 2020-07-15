@@ -1,20 +1,43 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { prop, remSize } from '../../theme';
+
 
 const background = prop('MobilePanel.default.background');
 const textColor = prop('primaryTextColor');
 
-const Footer = styled.div`
+const FooterWrapper = styled.div`
   position: fixed;
   width: 100%;
+  bottom: 0;
+`;
+
+const FooterContent = styled.div`
   background: ${background};
   color: ${textColor};
   padding: ${remSize(12)};
   padding-left: ${remSize(32)};
-  z-index: 1;
-
-  bottom: 0;
 `;
+
+
+const Footer = ({ before, children }) => (
+  <FooterWrapper>
+    {before}
+    <FooterContent>
+      {children}
+    </FooterContent>
+  </FooterWrapper>
+);
+
+Footer.propTypes = {
+  before: PropTypes.element,
+  children: PropTypes.element
+};
+
+Footer.defaultProps = {
+  before: <></>,
+  children: <></>
+};
 
 export default Footer;

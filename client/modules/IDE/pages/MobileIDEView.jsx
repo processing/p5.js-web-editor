@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { useState } from 'react';
+import styled from 'styled-components';
 
 // Imports to be Refactored
 import { bindActionCreators } from 'redux';
@@ -25,6 +26,8 @@ import Header from '../../../components/mobile/Header';
 import Screen from '../../../components/mobile/MobileScreen';
 import Footer from '../../../components/mobile/Footer';
 import IDEWrapper from '../../../components/mobile/IDEWrapper';
+import Console from '../components/Console';
+import { remSize } from '../../../theme';
 
 const isUserOwner = ({ project, user }) => (project.owner && project.owner.id === user.id);
 
@@ -39,6 +42,11 @@ const MobileIDEView = (props) => {
 
   const [tmController, setTmController] = useState(null); // eslint-disable-line
   const [overlay, setOverlay] = useState(null); // eslint-disable-line
+
+  // FIXME:
+  const dispatchConsoleEvent = () => {};
+  const expandConsole = () => {};
+  const collapseConsole = () => {};
 
   return (
     <Screen fullscreen>
@@ -94,7 +102,19 @@ const MobileIDEView = (props) => {
           provideController={setTmController}
         />
       </IDEWrapper>
-      <Footer><h2>Bottom Bar</h2></Footer>
+      <Footer before={<Console
+        fontSize={preferences.fontSize}
+        consoleEvents={console}
+        isExpanded={ide.consoleIsExpanded}
+        clearConsole={clearConsole}
+        theme={preferences.theme}
+        dispatchConsoleEvent={dispatchConsoleEvent}
+        expandConsole={expandConsole}
+        collapseConsole={collapseConsole}
+      />}
+      >
+        <h2>Bottom Bar</h2>
+      </Footer>
     </Screen>
   );
 };
