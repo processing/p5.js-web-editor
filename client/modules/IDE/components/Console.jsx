@@ -154,27 +154,29 @@ ConsoleComponent.defaultProps = {
   consoleEvents: []
 };
 
-// const Console = () => {
-//   const consoleEvents = useSelector(state => state.console);
-//   const { consoleIsExpanded } = useSelector(state => state.ide);
-//   const { theme, fontSize } = useSelector(state => state.preferences);
+// TODO: Use Hooks implementation. Requires react-redux 7.1.0
+/*
+const Console = () => {
+  const consoleEvents = useSelector(state => state.console);
+  const { consoleIsExpanded } = useSelector(state => state.ide);
+  const { theme, fontSize } = useSelector(state => state.preferences);
 
-//   const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-//   return (
-//     <ConsoleComponent
-//       consoleEvents={consoleEvents}
-//       isExpanded={consoleIsExpanded}
-//       theme={theme}
-//       fontSize={fontSize}
-//       collapseConsole={() => dispatch({})}
-//       expandConsole={() => dispatch({})}
-//       clearConsole={() => dispatch({})}
-//       dispatchConsoleEvent={() => dispatch({})}
-//     />
-//   );
-// };
-
+  return (
+    <ConsoleComponent
+      consoleEvents={consoleEvents}
+      isExpanded={consoleIsExpanded}
+      theme={theme}
+      fontSize={fontSize}
+      collapseConsole={() => dispatch({})}
+      expandConsole={() => dispatch({})}
+      clearConsole={() => dispatch({})}
+      dispatchConsoleEvent={() => dispatch({})}
+    />
+  );
+};
+ */
 
 const Console = connect(
   state => ({

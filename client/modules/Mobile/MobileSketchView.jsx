@@ -41,15 +41,12 @@ const MobileSketchView = (props) => {
   // Actions
   const {
     setTextOutput, setGridOutput, setSoundOutput,
-    endSketchRefresh, stopSketch, console,
+    endSketchRefresh, stopSketch,
     dispatchConsoleEvent, expandConsole, clearConsole,
     setBlobUrl,
   } = props;
 
   const { preferences, ide } = props;
-
-  // FIXME:
-  const collapseConsole = () => {};
 
   return (
     <Screen fullscreen>
@@ -165,11 +162,6 @@ MobileSketchView.propTypes = {
   setBlobUrl: PropTypes.func.isRequired,
   expandConsole: PropTypes.func.isRequired,
   clearConsole: PropTypes.func.isRequired,
-
-  console: PropTypes.arrayOf(PropTypes.shape({
-    method: PropTypes.string.isRequired,
-    args: PropTypes.arrayOf(PropTypes.string)
-  })).isRequired,
 };
 
 function mapStateToProps(state) {
@@ -179,7 +171,6 @@ function mapStateToProps(state) {
     files: state.files,
     ide: state.ide,
     preferences: state.preferences,
-    console: state.console,
     selectedFile: state.files.find(file => file.isSelectedFile) ||
       state.files.find(file => file.name === 'sketch.js') ||
       state.files.find(file => file.name !== 'root'),
