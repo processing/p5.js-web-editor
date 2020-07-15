@@ -20,7 +20,6 @@ const FooterContent = styled.div`
   padding-left: ${remSize(32)};
 `;
 
-
 const Footer = ({ before, children }) => (
   <FooterWrapper>
     {before}
@@ -32,7 +31,7 @@ const Footer = ({ before, children }) => (
 
 Footer.propTypes = {
   before: PropTypes.element,
-  children: PropTypes.element
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.arrayOf(PropTypes.element)]),
 };
 
 Footer.defaultProps = {
