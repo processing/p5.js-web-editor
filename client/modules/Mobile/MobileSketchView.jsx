@@ -87,17 +87,7 @@ const MobileSketchView = (props) => {
           clearConsole={clearConsole}
         />
       </Content>
-      <Footer before={<Console
-        fontSize={preferences.fontSize}
-        consoleEvents={console}
-        isExpanded={ide.consoleIsExpanded}
-        clearConsole={clearConsole}
-        theme={preferences.theme}
-        dispatchConsoleEvent={dispatchConsoleEvent}
-        expandConsole={expandConsole}
-        collapseConsole={collapseConsole}
-      />}
-      />
+      <Footer before={<Console />} />
     </Screen>);
 };
 

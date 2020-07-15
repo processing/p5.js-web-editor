@@ -102,17 +102,7 @@ const MobileIDEView = (props) => {
           provideController={setTmController}
         />
       </IDEWrapper>
-      <Footer before={<Console
-        fontSize={preferences.fontSize}
-        consoleEvents={console}
-        isExpanded={ide.consoleIsExpanded}
-        clearConsole={clearConsole}
-        theme={preferences.theme}
-        dispatchConsoleEvent={dispatchConsoleEvent}
-        expandConsole={expandConsole}
-        collapseConsole={collapseConsole}
-      />}
-      >
+      <Footer before={<Console />} >
         <h2>Bottom Bar</h2>
       </Footer>
     </Screen>
