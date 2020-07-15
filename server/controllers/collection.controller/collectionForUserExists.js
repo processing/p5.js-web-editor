@@ -11,7 +11,7 @@ export default function collectionForUserExists(username, collectionId, callback
   }
 
   function findUser() {
-    return User.findOne({ username }).collation({ locale: 'en', strength: 2 }).exec();
+    return User.findByUsername(username);
   }
 
   function findCollection(owner) {

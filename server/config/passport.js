@@ -24,7 +24,7 @@ passport.deserializeUser((id, done) => {
  * Sign in using Email/Username and Password.
  */
 passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
-  User.findByMailOrName(email)
+  User.findByEmailOrUsername(email)
     .then((user) => { // eslint-disable-line consistent-return
       if (!user) {
         return done(null, false, { msg: `Email ${email} not found.` });
@@ -43,7 +43,7 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, don
  * Authentificate using Basic Auth (Username + Api Key)
  */
 passport.use(new BasicStrategy((userid, key, done) => {
-  User.findOne({ username: userid }).collation({ locale: 'en', strength: 2 }).exec((err, user) => { // eslint-disable-line consistent-return
+  User.findByUsername(userid, (err, user) => { // eslint-disable-line consistent-return
     if (err) { return done(err); }
     if (!user) { return done(null, false); }
     user.findMatchingKey(key, (innerErr, isMatch, keyDocument) => {
@@ -98,9 +98,7 @@ passport.use(new GitHubStrategy({
     const emails = getVerifiedEmails(profile.emails);
     const primaryEmail = getPrimaryEmail(profile.emails);
 
-    User.findOne({
-      email: { $in: emails },
-    }).collation({ locale: 'en', strength: 2 }).exec((findByEmailErr, existingEmailUser) => {
+    User.findByEmail(emails, (findByEmailErr, existingEmailUser) => {
       if (existingEmailUser) {
         existingEmailUser.email = existingEmailUser.email || primaryEmail;
         existingEmailUser.github = profile.id;
@@ -141,47 +139,44 @@ passport.use(new GoogleStrategy({
 
     const primaryEmail = profile._json.emails[0].value;
 
-    User.findOne({
-      email: primaryEmail,
-    }).collation({ locale: 'en', strength: 2 }).exec((findByEmailErr, existingEmailUser) => {
+    User.findByEmail(primaryEmail, (findByEmailErr, existingEmailUser) => {
       let username = profile._json.emails[0].value.split('@')[0];
-      User.findOne({ username }).collation({ locale: 'en', strength: 2 })
-        .exec((findByUsernameErr, existingUsernameUser) => {
-          if (existingUsernameUser) {
-            const adj = friendlyWords.predicates[Math.floor(Math.random() * friendlyWords.predicates.length)];
-            username = slugify(`${username} ${adj}`);
-          }
-          // what if a username is already taken from the display name too?
-          // then, append a random friendly word?
-          if (existingEmailUser) {
-            existingEmailUser.email = existingEmailUser.email || primaryEmail;
-            existingEmailUser.google = profile._json.emails[0].value;
-            existingEmailUser.username = existingEmailUser.username || username;
-            existingEmailUser.tokens.push({ kind: 'google', accessToken });
-            existingEmailUser.name = existingEmailUser.name || profile._json.displayName;
-            existingEmailUser.verified = User.EmailConfirmation.Verified;
-            existingEmailUser.save((saveErr) => {
-              if (saveErr) {
-                console.log(saveErr);
-              }
-              done(null, existingEmailUser);
-            });
-          } else {
-            const user = new User();
-            user.email = primaryEmail;
-            user.google = profile._json.emails[0].value;
-            user.username = username;
-            user.tokens.push({ kind: 'google', accessToken });
-            user.name = profile._json.displayName;
-            user.verified = User.EmailConfirmation.Verified;
-            user.save((saveErr) => {
-              if (saveErr) {
-                console.log(saveErr);
-              }
-              done(null, user);
-            });
-          }
-        });
+      User.findByUsername(username, (findByUsernameErr, existingUsernameUser) => {
+        if (existingUsernameUser) {
+          const adj = friendlyWords.predicates[Math.floor(Math.random() * friendlyWords.predicates.length)];
+          username = slugify(`${username} ${adj}`);
+        }
+        // what if a username is already taken from the display name too?
+        // then, append a random friendly word?
+        if (existingEmailUser) {
+          existingEmailUser.email = existingEmailUser.email || primaryEmail;
+          existingEmailUser.google = profile._json.emails[0].value;
+          existingEmailUser.username = existingEmailUser.username || username;
+          existingEmailUser.tokens.push({ kind: 'google', accessToken });
+          existingEmailUser.name = existingEmailUser.name || profile._json.displayName;
+          existingEmailUser.verified = User.EmailConfirmation.Verified;
+          existingEmailUser.save((saveErr) => {
+            if (saveErr) {
+              console.log(saveErr);
+            }
+            done(null, existingEmailUser);
+          });
+        } else {
+          const user = new User();
+          user.email = primaryEmail;
+          user.google = profile._json.emails[0].value;
+          user.username = username;
+          user.tokens.push({ kind: 'google', accessToken });
+          user.name = profile._json.displayName;
+          user.verified = User.EmailConfirmation.Verified;
+          user.save((saveErr) => {
+            if (saveErr) {
+              console.log(saveErr);
+            }
+            done(null, user);
+          });
+        }
+      });
     });
   });
 }));

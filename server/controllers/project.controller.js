@@ -64,7 +64,7 @@ export function updateProject(req, res) {
 
 export function getProject(req, res) {
   const { project_id: projectId, username } = req.params;
-  User.findOne({ username }).collation({ locale: "en", strength: 2 }).exec((err, user) => { // eslint-disable-line
+  User.findByUsername(username, (err, user) => { // eslint-disable-line
     if (!user) {
       return res.status(404).send({ message: 'Project with that username does not exist' });
     }
@@ -141,7 +141,7 @@ export function projectExists(projectId, callback) {
 }
 
 export function projectForUserExists(username, projectId, callback) {
-  User.findOne({ username }).collation({ locale: 'en', strength: 2 }).exec((err, user) => {
+  User.findByUsername(username, (err, user) => {
     if (!user) {
       callback(false);
       return;

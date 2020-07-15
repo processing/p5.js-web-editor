@@ -4,7 +4,7 @@ import User from '../../models/user';
 async function getOwnerUserId(req) {
   if (req.params.username) {
     const user =
-      await User.findOne({ username: req.params.username }).collation({ locale: 'en', strength: 2 }).exec();
+      await User.findByUsername(req.params.username);
     if (user && user._id) {
       return user._id;
     }

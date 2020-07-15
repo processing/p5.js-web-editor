@@ -141,20 +141,81 @@ userSchema.methods.findMatchingKey = function findMatchingKey(candidateKey, cb) 
   if (!foundOne) cb('Matching API key not found !', false, null);
 };
 
-userSchema.statics.findByMailOrName = function findByMailOrName(email) {
-  const isEmail = email.indexOf('@') > -1;
-  if (isEmail) {
-    const query = {
-      email: email.toLowerCase()
+/**
+ *
+ * Queries User collection by email and returns one User document.
+ *
+ * @param {string|string[]} email - Email string or array of email strings
+ * @callback [cb] - Optional error-first callback that passes User document
+ * @return {Promise<Object>} - Returns Promise fulfilled by User document
+ */
+userSchema.statics.findByEmail = function findByEmail(email, cb) {
+  let query;
+  if (Array.isArray(email)) {
+    query = {
+      email: { $in: email }
     };
-    // once emails are all lowercase, won't need to do collation
-    // but maybe it's not even necessary to make all emails lowercase??
-    return this.findOne(query).collation({ locale: 'en', strength: 2 }).exec();
+  } else {
+    query = {
+      email
+    };
   }
+  // Email addresses should be case-insensitive unique
+  // In MongoDB, you must use collation in order to do a case-insensitive query
+  return this.findOne(query).collation({ locale: 'en', strength: 2 }).exec(cb);
+};
+
+/**
+ *
+ * Queries User collection by username and returns one User document.
+ *
+ * @param {string} username - Username string
+ * @callback [cb] - Optional error-first callback that passes User document
+ * @return {Promise<Object>} - Returns Promise fulfilled by User document
+ */
+userSchema.statics.findByUsername = function findByUsername(username, cb) {
   const query = {
-    username: email
+    username
   };
-  return this.findOne(query).collation({ locale: 'en', strength: 2 }).exec();
+  return this.findOne(query, cb);
+};
+
+/**
+ *
+ * Queries User collection using email or username with optional callback.
+ * This function will determine automatically whether the data passed is
+ * a username or email.
+ *
+ * @param {string} value - Email or username
+ * @callback [cb] - Optional error-first callback that passes User document
+ * @return {Promise<Object>} - Returns Promise fulfilled by User document
+ */
+userSchema.statics.findByEmailOrUsername = function findByEmailOrUsername(value, cb) {
+  const isEmail = value.indexOf('@') > -1;
+  if (isEmail) {
+    return this.findByEmail(value, cb);
+  }
+  return this.findByUsername(value, cb);
+};
+
+/**
+ *
+ * Queries User collection, performing a MongoDB logical or with the email
+ * and username (i.e. if either one matches, will return the first document).
+ *
+ * @param {string} email
+ * @param {string} username
+ * @callback [cb] - Optional error-first callback that passes User document
+ * @return {Promise<Object>} - Returns Promise fulfilled by User document
+ */
+userSchema.statics.findByEmailAndUsername = function findByEmailAndUsername(email, username, cb) {
+  const query = {
+    $or: [
+      { email },
+      { username }
+    ]
+  };
+  return this.findOne(query).collation({ locale: 'en', strength: 2 }).exec(cb);
 };
 
 userSchema.statics.EmailConfirmation = EmailConfirmationStates;

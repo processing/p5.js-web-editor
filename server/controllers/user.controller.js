@@ -30,7 +30,7 @@ const random = (done) => {
 };
 
 export function findUserByUsername(username, cb) {
-  User.findOne({ username }).collation({ locale: 'en', strength: 2 }).exec((err, user) => {
+  User.findByUsername(username, (err, user) => {
     cb(user);
   });
 }
@@ -50,12 +50,7 @@ export function createUser(req, res, next) {
       verifiedTokenExpires: EMAIL_VERIFY_TOKEN_EXPIRY_TIME,
     });
 
-    User.findOne({
-      $or: [
-        { email },
-        { username }
-      ]
-    }).collation({ locale: 'en', strength: 2 }).exec((err, existingUser) => {
+    User.findByEmailAndUsername(email, username, (err, existingUser) => {
       if (err) {
         res.status(404).send({ error: err });
         return;
@@ -100,6 +95,9 @@ export function duplicateUserCheck(req, res) {
   const value = req.query[checkType];
   const query = {};
   query[checkType] = value;
+  // Don't want to use findByEmailOrUsername here, because in this case we do
+  // want to use case-insensitive search for usernames to prevent username
+  // duplicates, which overrides the default behavior.
   User.findOne(query).collation({ locale: 'en', strength: 2 }).exec((err, user) => {
     if (user) {
       return res.json({
@@ -144,19 +142,18 @@ export function resetPasswordInitiate(req, res) {
   async.waterfall([
     random,
     (token, done) => {
-      User.findOne({ email: req.body.email.toLowerCase() })
-        .collation({ locale: 'en', strength: 2 }).exec((err, user) => {
-          if (!user) {
-            res.json({ success: true, message: 'If the email is registered with the editor, an email has been sent.' });
-            return;
-          }
-          user.resetPasswordToken = token;
-          user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+      User.findByEmail(req.body.email, (err, user) => {
+        if (!user) {
+          res.json({ success: true, message: 'If the email is registered with the editor, an email has been sent.' });
+          return;
+        }
+        user.resetPasswordToken = token;
+        user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
 
-          user.save((saveErr) => {
-            done(saveErr, token, user);
-          });
+        user.save((saveErr) => {
+          done(saveErr, token, user);
         });
+      });
     },
     (token, user, done) => {
       const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
@@ -275,7 +272,7 @@ export function updatePassword(req, res) {
 }
 
 export function userExists(username, callback) {
-  User.findOne(username).collation({ locale: 'en', strength: 2 }).exec((err, user) => (
+  User.findByUsername(username, (err, user) => (
     user ? callback(true) : callback(false)
   ));
 }
