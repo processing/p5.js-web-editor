@@ -7,6 +7,7 @@ import Header from '../../components/mobile/Header';
 import IconButton from '../../components/mobile/IconButton';
 import PreviewFrame from '../IDE/components/PreviewFrame';
 import Screen from '../../components/mobile/MobileScreen';
+import Console from '../IDE/components/Console';
 import * as ProjectActions from '../IDE/actions/project';
 import * as IDEActions from '../IDE/actions/ide';
 import * as PreferencesActions from '../IDE/actions/preferences';
@@ -18,6 +19,7 @@ import { getHTMLFile } from '../IDE/reducers/files';
 
 import { ExitIcon } from '../../common/icons';
 import { remSize } from '../../theme';
+import Footer from '../../components/mobile/Footer';
 
 
 const Content = styled.div`
@@ -39,12 +41,15 @@ const MobileSketchView = (props) => {
   // Actions
   const {
     setTextOutput, setGridOutput, setSoundOutput,
-    endSketchRefresh, stopSketch,
+    endSketchRefresh, stopSketch, console,
     dispatchConsoleEvent, expandConsole, clearConsole,
     setBlobUrl,
   } = props;
 
   const { preferences, ide } = props;
+
+  // FIXME:
+  const collapseConsole = () => {};
 
   return (
     <Screen fullscreen>
@@ -82,6 +87,17 @@ const MobileSketchView = (props) => {
           clearConsole={clearConsole}
         />
       </Content>
+      <Footer before={<Console
+        fontSize={preferences.fontSize}
+        consoleEvents={console}
+        isExpanded={ide.consoleIsExpanded}
+        clearConsole={clearConsole}
+        theme={preferences.theme}
+        dispatchConsoleEvent={dispatchConsoleEvent}
+        expandConsole={expandConsole}
+        collapseConsole={collapseConsole}
+      />}
+      />
     </Screen>);
 };
 
@@ -146,7 +162,6 @@ MobileSketchView.propTypes = {
     justOpenedProject: PropTypes.bool.isRequired,
     errorType: PropTypes.string,
     runtimeErrorWarningVisible: PropTypes.bool.isRequired,
-    uploadFileModalVisible: PropTypes.bool.isRequired
   }).isRequired,
 
   projectName: PropTypes.string.isRequired,
@@ -160,6 +175,11 @@ MobileSketchView.propTypes = {
   setBlobUrl: PropTypes.func.isRequired,
   expandConsole: PropTypes.func.isRequired,
   clearConsole: PropTypes.func.isRequired,
+
+  console: PropTypes.arrayOf(PropTypes.shape({
+    method: PropTypes.string.isRequired,
+    args: PropTypes.arrayOf(PropTypes.string)
+  })).isRequired,
 };
 
 function mapStateToProps(state) {
@@ -169,6 +189,7 @@ function mapStateToProps(state) {
     files: state.files,
     ide: state.ide,
     preferences: state.preferences,
+    console: state.console,
     selectedFile: state.files.find(file => file.isSelectedFile) ||
       state.files.find(file => file.name === 'sketch.js') ||
       state.files.find(file => file.name !== 'root'),
