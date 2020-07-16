@@ -28,7 +28,7 @@ function getExtension(filename) {
 export function getObjectKey(url) {
   const urlArray = url.split('/');
   let objectKey;
-  if (urlArray.length === 6) {
+  if (urlArray.length === 5) {
     const key = urlArray.pop();
     const userId = urlArray.pop();
     objectKey = `${userId}/${key}`;
