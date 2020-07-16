@@ -3,6 +3,8 @@ import User from '../models/user';
 import Project from '../models/project';
 import Collection from '../models/collection';
 import { moveObjectToUserInS3 } from '../controllers/aws.controller';
+import mail from '../utils/mail';
+import { renderAccountConsolidation } from '../views/mail';
 
 
 const mongoConnectionString = process.env.MONGO_URL;
@@ -50,16 +52,31 @@ const agg = [
   }
 ];
 
+
+// steps to make this work
+// iterate through the results
+// check if any files are on AWS
+// if so, move them to the right user bucket
+// then, update the user to currentUser
+// then, after updating all of the projects
+// also update the collections
+// delete other users
+// update user email so it is all lowercase
+// then, send the email
+// then, figure out how to iterate through all of the users.
+
 let currentUser = null;
 let duplicates = null;
 User.aggregate(agg).then((result) => {
+  console.log(result);
   const email = result[0]._id;
   return User.find({ email }).collation({ locale: 'en', strength: 2 })
     .sort({ createdAt: 1 }).exec();
 }).then((result) => {
   [currentUser, ...duplicates] = result;
+  console.log('Current User: ', currentUser._id, ' ', currentUser.email);
   duplicates = duplicates.map(dup => dup._id);
-  console.log(duplicates);
+  console.log('Duplicates: ', duplicates);
   return Project.find({
     user: { $in: duplicates }
   }).exec();
@@ -68,7 +85,7 @@ User.aggregate(agg).then((result) => {
   sketches.forEach((sketch) => {
     const moveSketchFilesPromises = [];
     sketch.files.forEach((file) => {
-      if (file.url.includes('assets.editor.p5js.org')) {
+      if (file.url && file.url.includes(process.env.S3_BUCKET_URL_BASE)) {
         const fileSavePromise = moveObjectToUserInS3(file.url, currentUser._id)
           .then((newUrl) => {
             file.url = newUrl;
@@ -83,19 +100,38 @@ User.aggregate(agg).then((result) => {
     saveSketchPromises.push(sketchSavePromise);
   });
   return Promise.all(saveSketchPromises);
-  // iterate through the results
-  // check if any files are on AWS
-  // if so, move them to the right user bucket
-  // then, update the user to currentUser
-  // then, after updating all of the projects
-  // also update the collections
-  // delete other users
-  // update user email so it is all lowercase
-  // then, send the email
-}).then(() => Collection.updateMany(
-  { owner: { $in: duplicates } },
-  { $set: { owner: ObjectId(currentUser.id) } }
-)).then(() => User.deleteMany({ _id: { $in: duplicates } })).catch((err) => {
-  console.log(err);
+}).then(() => {
+  console.log('Moved and updated all sketches.');
+  return Collection.updateMany(
+    { owner: { $in: duplicates } },
+    { $set: { owner: ObjectId(currentUser.id) } }
+  );
+}).then(() => {
+  console.log('Moved and updated all collections.');
+  return User.deleteMany({ _id: { $in: duplicates } });
+}).then(() => {
+  console.log('Deleted other user accounts.');
+  currentUser.email = currentUser.email.toLowerCase();
+  return currentUser.save();
+}).then(() => {
+  console.log('Migrated email to lowercase.');
+  // const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+  const mailOptions = renderAccountConsolidation({
+    body: {
+      domain: 'https://editor.p5js.org',
+      username: currentUser.username,
+      email: currentUser.email
+    },
+    to: currentUser.email,
+  });
+
+  mail.send(mailOptions, (mailErr, result) => {
+    console.log('Sent email.');
+    process.exit(0);
+  });
 });
+
+// ).then((result) => {
+//   console.log(result);
+// });
 

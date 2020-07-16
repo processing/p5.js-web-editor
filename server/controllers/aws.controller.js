@@ -124,6 +124,7 @@ export function moveObjectToUserInS3(url, userId) {
     const objectKey = getObjectKey(url);
     const fileExtension = getExtension(objectKey);
     const newFilename = uuid.v4() + fileExtension;
+    console.log(`${process.env.S3_BUCKET}/${objectKey}`);
     const params = {
       Bucket: `${process.env.S3_BUCKET}`,
       CopySource: `${process.env.S3_BUCKET}/${objectKey}`,
