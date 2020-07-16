@@ -119,6 +119,27 @@ export function copyObjectInS3(req, res) {
   });
 }
 
+export function moveObjectToUserInS3(url, userId) {
+  return new Promise((resolve, reject) => {
+    const objectKey = getObjectKey(url);
+    const fileExtension = getExtension(objectKey);
+    const newFilename = uuid.v4() + fileExtension;
+    const params = {
+      Bucket: `${process.env.S3_BUCKET}`,
+      CopySource: `${process.env.S3_BUCKET}/${objectKey}`,
+      Key: `${userId}/${newFilename}`,
+      ACL: 'public-read'
+    };
+    const move = client.moveObject(params);
+    move.on('err', (err) => {
+      reject(err);
+    });
+    move.on('end', (data) => {
+      resolve(`${s3Bucket}${userId}/${newFilename}`);
+    });
+  });
+}
+
 export function listObjectsInS3ForUser(userId) {
   let assets = [];
   return new Promise((resolve) => {
