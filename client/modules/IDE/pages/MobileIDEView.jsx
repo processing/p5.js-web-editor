@@ -43,11 +43,6 @@ const MobileIDEView = (props) => {
   const [tmController, setTmController] = useState(null); // eslint-disable-line
   const [overlay, setOverlay] = useState(null); // eslint-disable-line
 
-  // FIXME:
-  const dispatchConsoleEvent = () => {};
-  const expandConsole = () => {};
-  const collapseConsole = () => {};
-
   return (
     <Screen fullscreen>
       <Header
