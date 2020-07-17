@@ -62,6 +62,7 @@ export default {
     colors,
     ...common,
     primaryTextColor: grays.dark,
+    backgroundColor: grays.lighter,
 
     Button: {
       default: {
@@ -101,6 +102,7 @@ export default {
     colors,
     ...common,
     primaryTextColor: grays.lightest,
+    backgroundColor: grays.darker,
 
     Button: {
       default: {
@@ -140,6 +142,7 @@ export default {
     colors,
     ...common,
     primaryTextColor: grays.lightest,
+    backgroundColor: grays.darker,
 
     Button: {
       default: {

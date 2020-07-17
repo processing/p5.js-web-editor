@@ -20,11 +20,6 @@ const Content = styled.div`
   margin-top: ${remSize(68)};
 `;
 
-
-const SettingsHeader = styled(Header)`
-  background: transparent;
-`;
-
 const SectionHeader = styled.h2`
   color: ${prop('primaryTextColor')};
   padding-top: ${remSize(32)};
@@ -33,6 +28,23 @@ const SectionHeader = styled.h2`
 const SectionSubeader = styled.h3`
   color: ${prop('primaryTextColor')};
 `;
+
+const optionsOnOff = (name, onLabel = 'On', offLabel = 'Off') => [
+  {
+    value: true, label: onLabel, ariaLabel: `${name} on`, name: `${name}`, id: `${name}-on`.replace(' ', '-')
+  },
+  {
+    value: false, label: offLabel, ariaLabel: `${name} off`, name: `${name}`, id: `${name}-off`.replace(' ', '-')
+  },
+];
+
+const optionsPickOne = (name, ...options) => options.map(option => ({
+  value: option,
+  label: option,
+  ariaLabel: `${option} ${name} on`,
+  name: `${option} ${name}`,
+  id: `${option}-${name}-on`.replace(' ', '-')
+}));
 
 
 const MobilePreferences = (props) => {
@@ -47,49 +59,21 @@ const MobilePreferences = (props) => {
     {
       title: 'Theme',
       value: theme,
-      options: [
-        {
-          value: 'light', label: 'light', ariaLabel: 'light theme on', name: 'light theme', id: 'light-theme-on'
-        },
-        {
-          value: 'dark', label: 'dark', ariaLabel: 'dark theme on', name: 'dark theme', id: 'dark-theme-on'
-        },
-        {
-          value: 'contrast',
-          label: 'contrast',
-          ariaLabel: 'contrast theme on',
-          name: 'contrast theme',
-          id: 'contrast-theme-on'
-        }
-      ],
+      options: optionsPickOne('theme', 'light', 'dark', 'contrast'),
       onSelect: x => setTheme(x) // setTheme
     },
 
     {
       title: 'Autosave',
       value: autosave,
-      options: [
-        {
-          value: true, label: 'On', ariaLabel: 'autosave on', name: 'autosave', id: 'autosave-on'
-        },
-        {
-          value: false, label: 'Off', ariaLabel: 'autosave off', name: 'autosave', id: 'autosave-off'
-        },
-      ],
+      options: optionsOnOff('autosave'),
       onSelect: x => setAutosave(x) // setAutosave
     },
 
     {
       title: 'Word Wrap',
       value: linewrap,
-      options: [
-        {
-          value: true, label: 'On', ariaLabel: 'linewrap on', name: 'linewrap', id: 'linewrap-on'
-        },
-        {
-          value: false, label: 'Off', ariaLabel: 'linewrap off', name: 'linewrap', id: 'linewrap-off'
-        },
-      ],
+      options: optionsOnOff('linewrap'),
       onSelect: x => setLinewrap(x)
     }
   ];
@@ -98,40 +82,19 @@ const MobilePreferences = (props) => {
     {
       title: 'Plain-text',
       value: textOutput,
-      options: [
-        {
-          value: true, label: 'On', ariaLabel: 'text output on', name: 'text output', id: 'text-output-on'
-        },
-        {
-          value: false, label: 'Off', ariaLabel: 'text output off', name: 'text output', id: 'text-output-off'
-        },
-      ],
+      options: optionsOnOff('text output'),
       onSelect: x => setTextOutput(x)
     },
     {
       title: 'Table-text',
       value: gridOutput,
-      options: [
-        {
-          value: true, label: 'On', ariaLabel: 'table output on', name: 'table output', id: 'table-output-on'
-        },
-        {
-          value: false, label: 'Off', ariaLabel: 'table output off', name: 'table output', id: 'table-output-off'
-        },
-      ],
+      options: optionsOnOff('table output'),
       onSelect: x => setGridOutput(x)
     },
     {
       title: 'Sound',
       value: soundOutput,
-      options: [
-        {
-          value: true, label: 'On', ariaLabel: 'sound output on', name: 'sound output', id: 'sound-output-on'
-        },
-        {
-          value: false, label: 'Off', ariaLabel: 'sound output off', name: 'sound output', id: 'sound-output-off'
-        },
-      ],
+      options: optionsOnOff('sound output'),
       onSelect: x => setSoundOutput(x)
     },
   ];
@@ -140,27 +103,13 @@ const MobilePreferences = (props) => {
     {
       title: 'Line Numbers',
       value: lineNumbers,
-      options: [
-        {
-          value: true, label: 'On', ariaLabel: 'line numbers on', name: 'line numbers', id: 'line-numbers-on'
-        },
-        {
-          value: false, label: 'Off', ariaLabel: 'line numbers off', name: 'line numbers', id: 'line-numbers-off'
-        },
-      ],
+      options: optionsOnOff('line numbers'),
       onSelect: x => setLineNumbers(x)
     },
     {
       title: 'Lint Warning Sound',
       value: lintWarning,
-      options: [
-        {
-          value: true, label: 'On', ariaLabel: 'lint warning on', name: 'lint warning', id: 'lint-warning-on'
-        },
-        {
-          value: false, label: 'Off', ariaLabel: 'lint warning off', name: 'lint warning', id: 'lint-warning-off'
-        },
-      ],
+      options: optionsOnOff('lint warning'),
       onSelect: x => setLintWarning(x)
     },
   ];
@@ -168,10 +117,9 @@ const MobilePreferences = (props) => {
   return (
     <Screen fullscreen>
       <section>
-        <SettingsHeader transparent title="Preferences">
-
+        <Header transparent title="Preferences">
           <IconButton to="/mobile" icon={ExitIcon} aria-label="Return to ide view" />
-        </SettingsHeader>
+        </Header>
         <section className="preferences">
           <Content>
             <SectionHeader>General Settings</SectionHeader>
