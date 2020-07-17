@@ -16,6 +16,8 @@ import {
 import { clearState, saveState } from '../../../persistState';
 
 const ROOT_URL = getConfig('API_URL');
+const S3_BUCKET_URL_BASE = getConfig('S3_BUCKET_URL_BASE');
+const S3_BUCKET = getConfig('S3_BUCKET');
 
 export function setProject(project) {
   return {
@@ -287,7 +289,7 @@ export function cloneProject(id) {
 
       // duplicate all files hosted on S3
       each(newFiles, (file, callback) => {
-        if (file.url && file.url.includes('amazonaws')) {
+        if (file.url && (file.url.includes(S3_BUCKET_URL_BASE) || file.url.includes(S3_BUCKET))) {
           const formParams = {
             url: file.url
           };
