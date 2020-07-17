@@ -1,6 +1,6 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { connect, useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -31,13 +31,17 @@ const SectionSubeader = styled.h3`
 `;
 
 
-const MobilePreferences = (props) => {
+const MobilePreferences = () => {
+  // Props
   const {
-    setTheme, setAutosave, setLinewrap, setTextOutput, setGridOutput, setSoundOutput, lineNumbers, lintWarning
-  } = props;
+    theme, autosave, linewrap, textOutput, gridOutput, soundOutput, lineNumbers, lintWarning
+  } = useSelector(state => state.preferences);
+
+  // Actions
   const {
-    theme, autosave, linewrap, textOutput, gridOutput, soundOutput, setLineNumbers, setLintWarning
-  } = props;
+    setTheme, setAutosave, setLinewrap, setTextOutput, setGridOutput, setSoundOutput, setLineNumbers, setLintWarning,
+  } = bindActionCreators({ ...PreferencesActions, ...IdeActions }, useDispatch());
+
 
   const generalSettings = [
     {
@@ -108,14 +112,4 @@ MobilePreferences.propTypes = {
   setSoundOutput: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-  ...state.preferences,
-});
-
-const mapDispatchToProps = dispatch => bindActionCreators({
-  ...PreferencesActions,
-  ...IdeActions
-}, dispatch);
-
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MobilePreferences));
+export default withRouter(MobilePreferences);
