@@ -14,6 +14,7 @@ import Header from '../../components/mobile/Header';
 import PreferencePicker from '../../components/mobile/PreferencePicker';
 import { ExitIcon } from '../../common/icons';
 import { remSize, prop } from '../../theme';
+import { optionsOnOff, optionsPickOne, preferenceOnOff } from '../../common/helpers/PreferenceCreators';
 
 const Content = styled.div`
   z-index: 0;
@@ -28,23 +29,6 @@ const SectionHeader = styled.h2`
 const SectionSubeader = styled.h3`
   color: ${prop('primaryTextColor')};
 `;
-
-const optionsOnOff = (name, onLabel = 'On', offLabel = 'Off') => [
-  {
-    value: true, label: onLabel, ariaLabel: `${name} on`, name: `${name}`, id: `${name}-on`.replace(' ', '-')
-  },
-  {
-    value: false, label: offLabel, ariaLabel: `${name} off`, name: `${name}`, id: `${name}-off`.replace(' ', '-')
-  },
-];
-
-const optionsPickOne = (name, ...options) => options.map(option => ({
-  value: option,
-  label: option,
-  ariaLabel: `${option} ${name} on`,
-  name: `${option} ${name}`,
-  id: `${option}-${name}-on`.replace(' ', '-')
-}));
 
 
 const MobilePreferences = (props) => {
@@ -62,56 +46,19 @@ const MobilePreferences = (props) => {
       options: optionsPickOne('theme', 'light', 'dark', 'contrast'),
       onSelect: x => setTheme(x) // setTheme
     },
-
-    {
-      title: 'Autosave',
-      value: autosave,
-      options: optionsOnOff('autosave'),
-      onSelect: x => setAutosave(x) // setAutosave
-    },
-
-    {
-      title: 'Word Wrap',
-      value: linewrap,
-      options: optionsOnOff('linewrap'),
-      onSelect: x => setLinewrap(x)
-    }
+    preferenceOnOff('Autosave', autosave, setAutosave, 'autosave'),
+    preferenceOnOff('Word Wrap', linewrap, setLinewrap, 'linewrap')
   ];
 
   const outputSettings = [
-    {
-      title: 'Plain-text',
-      value: textOutput,
-      options: optionsOnOff('text output'),
-      onSelect: x => setTextOutput(x)
-    },
-    {
-      title: 'Table-text',
-      value: gridOutput,
-      options: optionsOnOff('table output'),
-      onSelect: x => setGridOutput(x)
-    },
-    {
-      title: 'Sound',
-      value: soundOutput,
-      options: optionsOnOff('sound output'),
-      onSelect: x => setSoundOutput(x)
-    },
+    preferenceOnOff('Plain-text', textOutput, setTextOutput, 'text output'),
+    preferenceOnOff('Table-text', gridOutput, setGridOutput, 'table output'),
+    preferenceOnOff('Lint Warning Sound', soundOutput, setSoundOutput, 'sound output')
   ];
 
   const accessibilitySettings = [
-    {
-      title: 'Line Numbers',
-      value: lineNumbers,
-      options: optionsOnOff('line numbers'),
-      onSelect: x => setLineNumbers(x)
-    },
-    {
-      title: 'Lint Warning Sound',
-      value: lintWarning,
-      options: optionsOnOff('lint warning'),
-      onSelect: x => setLintWarning(x)
-    },
+    preferenceOnOff('Line Numbers', lineNumbers, setLineNumbers),
+    preferenceOnOff('Lint Warning Sound', lintWarning, setLintWarning)
   ];
 
   return (
