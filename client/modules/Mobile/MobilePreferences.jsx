@@ -89,27 +89,4 @@ const MobilePreferences = () => {
     </Screen>);
 };
 
-
-MobilePreferences.propTypes = {
-  fontSize: PropTypes.number.isRequired,
-  lineNumbers: PropTypes.bool.isRequired,
-  autosave: PropTypes.bool.isRequired,
-  linewrap: PropTypes.bool.isRequired,
-  textOutput: PropTypes.bool.isRequired,
-  gridOutput: PropTypes.bool.isRequired,
-  soundOutput: PropTypes.bool.isRequired,
-  lintWarning: PropTypes.bool.isRequired,
-  theme: PropTypes.string.isRequired,
-
-  setLinewrap: PropTypes.func.isRequired,
-  setLintWarning: PropTypes.func.isRequired,
-  setTheme: PropTypes.func.isRequired,
-  setFontSize: PropTypes.func.isRequired,
-  setLineNumbers: PropTypes.func.isRequired,
-  setAutosave: PropTypes.func.isRequired,
-  setTextOutput: PropTypes.func.isRequired,
-  setGridOutput: PropTypes.func.isRequired,
-  setSoundOutput: PropTypes.func.isRequired,
-};
-
 export default withRouter(MobilePreferences);

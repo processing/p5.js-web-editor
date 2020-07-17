@@ -324,16 +324,7 @@ class IDEView extends React.Component {
                   runtimeErrorWarningVisible={this.props.ide.runtimeErrorWarningVisible}
                   provideController={(ctl) => { this.cmController = ctl; }}
                 />
-                <Console
-                  fontSize={this.props.preferences.fontSize}
-                  consoleEvents={this.props.console}
-                  isExpanded={this.props.ide.consoleIsExpanded}
-                  expandConsole={this.props.expandConsole}
-                  collapseConsole={this.props.collapseConsole}
-                  clearConsole={this.props.clearConsole}
-                  dispatchConsoleEvent={this.props.dispatchConsoleEvent}
-                  theme={this.props.preferences.theme}
-                />
+                <Console />
               </SplitPane>
               <section className="preview-frame-holder">
                 <header className="preview-frame__header">
@@ -649,6 +640,4 @@ function mapDispatchToProps(dispatch) {
   );
 }
 
-
 export default withTranslation('WebEditor')(withRouter(connect(mapStateToProps, mapDispatchToProps)(IDEView)));
-

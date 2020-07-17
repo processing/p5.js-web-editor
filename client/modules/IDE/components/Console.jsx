@@ -1,5 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { bindActionCreators } from 'redux';
+
+import { useSelector, useDispatch } from 'react-redux';
 import classNames from 'classnames';
 import { Console as ConsoleFeed } from 'console-feed';
 import {
@@ -22,7 +25,10 @@ import infoContrastUrl from '../../../images/console-info-contrast.svg?byUrl';
 import UpArrowIcon from '../../../images/up-arrow.svg';
 import DownArrowIcon from '../../../images/down-arrow.svg';
 
-class Console extends React.Component {
+import * as IDEActions from '../../IDE/actions/ide';
+import * as ConsoleActions from '../../IDE/actions/console';
+
+class ConsoleComponent extends React.Component {
   componentDidUpdate(prevProps) {
     this.consoleMessages.scrollTop = this.consoleMessages.scrollHeight;
     if (this.props.theme !== prevProps.theme) {
@@ -132,7 +138,7 @@ class Console extends React.Component {
   }
 }
 
-Console.propTypes = {
+ConsoleComponent.propTypes = {
   consoleEvents: PropTypes.arrayOf(PropTypes.shape({
     method: PropTypes.string.isRequired,
     args: PropTypes.arrayOf(PropTypes.string)
@@ -146,8 +152,46 @@ Console.propTypes = {
   fontSize: PropTypes.number.isRequired
 };
 
-Console.defaultProps = {
+ConsoleComponent.defaultProps = {
   consoleEvents: []
 };
+
+const Console = () => {
+  const consoleEvents = useSelector(state => state.console);
+  const { consoleIsExpanded } = useSelector(state => state.ide);
+  const { theme, fontSize } = useSelector(state => state.preferences);
+
+  const {
+    collapseConsole, expandConsole, clearConsole, dispatchConsoleEvent
+  } = bindActionCreators({ ...IDEActions, ...ConsoleActions }, useDispatch());
+
+  return (
+    <ConsoleComponent
+      consoleEvents={consoleEvents}
+      isExpanded={consoleIsExpanded}
+      theme={theme}
+      fontSize={fontSize}
+      collapseConsole={collapseConsole}
+      expandConsole={expandConsole}
+      clearConsole={clearConsole}
+      dispatchConsoleEvent={dispatchConsoleEvent}
+    />
+  );
+};
+
+// const Console = connect(
+//   state => ({
+//     consoleEvents: state.console,
+//     isExpanded: state.ide.consoleIsExpanded,
+//     theme: state.preferences.theme,
+//     fontSize: state.preferences.fontSize
+//   }),
+//   dispatch => ({
+//     collapseConsole: () => dispatch(IDEActions.collapseConsole()),
+//     expandConsole: () => dispatch(IDEActions.expandConsole()),
+//     clearConsole: () => dispatch(ConsoleActions.clearConsole()),
+//     dispatchConsoleEvent: msgs => dispatch(ConsoleActions.dispatchConsoleEvent(msgs)),
+//   })
+// )(ConsoleComponent);
 
 export default Console;
