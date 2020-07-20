@@ -23,7 +23,6 @@ const HeaderDiv = styled.div`
   justify-content: flex-start;
   align-items: center;
 
-  // TODO: 
   svg {
     max-height: ${remSize(32)};
     padding: ${remSize(4)}

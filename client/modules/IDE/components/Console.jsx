@@ -88,7 +88,6 @@ const Console = () => {
 
   const cm = useRef({});
 
-  // // 2. FIXME: Console is not opening/closing, and I suspect it has to do with this
   useDidUpdate(() => { cm.current.scrollTop = cm.current.scrollHeight; });
 
   const consoleClass = classNames({
