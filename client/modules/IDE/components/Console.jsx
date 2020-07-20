@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 
 import { bindActionCreators } from 'redux';
 
-import { useSelector, useDispatch, useState } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import classNames from 'classnames';
 import { Console as ConsoleFeed } from 'console-feed';
 import {
@@ -27,18 +27,7 @@ import DownArrowIcon from '../../../images/down-arrow.svg';
 
 import * as IDEActions from '../../IDE/actions/ide';
 import * as ConsoleActions from '../../IDE/actions/console';
-
-const useDidUpdate = (callback, deps) => {
-  const hasMount = useRef(false);
-
-  useEffect(() => {
-    if (hasMount.current) {
-      callback();
-    } else {
-      hasMount.current = true;
-    }
-  }, deps);
-};
+import { useDidUpdate } from '../../../utils/custom-hooks';
 
 const getConsoleFeedStyle = (theme, times, fontSize) => {
   const style = {};
