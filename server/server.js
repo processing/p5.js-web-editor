@@ -75,7 +75,18 @@ app.use(corsMiddleware);
 app.options('*', corsMiddleware);
 
 // Body parser, cookie parser, sessions, serve public assets
-app.use('/locales', Express.static(path.resolve(__dirname, '../dist/static/locales'), { cacheControl: false }));
+app.use(
+  '/locales',
+  Express.static(
+    path.resolve(__dirname, '../dist/static/locales'),
+    {
+      // Browsers must revalidate for changes to the locale files
+      // It doesn't actually mean "don't cache this file"
+      // See: https://jakearchibald.com/2016/caching-best-practices/
+      setHeaders: res => res.setHeader('Cache-Control', 'no-cache')
+    }
+  )
+);
 app.use(Express.static(path.resolve(__dirname, '../dist/static'), {
   maxAge: process.env.STATIC_MAX_AGE || (process.env.NODE_ENV === 'production' ? '1d' : '0')
 }));

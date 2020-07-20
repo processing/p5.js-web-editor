@@ -7,7 +7,7 @@ const fallbackLng = ['en-US'];
 const availableLanguages = ['en-US', 'es-419'];
 
 const options = {
-  loadPath: 'locales/{{lng}}/translations.json',
+  loadPath: '/locales/{{lng}}/translations.json',
   requestOptions: { // used for fetch, can also be a function (payload) => ({ method: 'GET' })
     mode: 'no-cors'
   },
