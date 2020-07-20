@@ -1,9 +1,8 @@
-import PropTypes from 'prop-types';
 import React, { useEffect, useRef } from 'react';
 
 import { bindActionCreators } from 'redux';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, useState } from 'react-redux';
 import classNames from 'classnames';
 import { Console as ConsoleFeed } from 'console-feed';
 import {
@@ -84,87 +83,16 @@ const getConsoleFeedStyle = (theme, times, fontSize) => {
   }
 };
 
-class ConsoleComponent extends React.Component {
-  componentDidUpdate(prevProps) {
-    this.consoleMessages.scrollTop = this.consoleMessages.scrollHeight;
-  }
-
-  render() {
-    const consoleClass = classNames({
-      'preview-console': true,
-      'preview-console--collapsed': !this.props.isExpanded
-    });
-
-    console.log(this.props.isExpanded);
-
-    return (
-      <section className={consoleClass} >
-        <header className="preview-console__header">
-          <h2 className="preview-console__header-title">Console</h2>
-          <div className="preview-console__header-buttons">
-            <button className="preview-console__clear" onClick={this.props.clearConsole} aria-label="Clear console">
-              Clear
-            </button>
-            <button
-              className="preview-console__collapse"
-              onClick={this.props.collapseConsole}
-              aria-label="Close console"
-            >
-              <DownArrowIcon focusable="false" aria-hidden="true" />
-            </button>
-            <button className="preview-console__expand" onClick={this.props.expandConsole} aria-label="Open console" >
-              <UpArrowIcon focusable="false" aria-hidden="true" />
-            </button>
-          </div>
-        </header>
-        <div ref={(element) => { this.consoleMessages = element; }} className="preview-console__messages">
-          {this.props.consoleEvents.map((consoleEvent) => {
-            const { method, times } = consoleEvent;
-            const { theme } = this.props;
-            return (
-              <div key={consoleEvent.id} className={`preview-console__message preview-console__message--${method}`}>
-                { times > 1 &&
-                  <div
-                    className="preview-console__logged-times"
-                    style={{ fontSize: this.props.fontSize, borderRadius: this.props.fontSize / 2 }}
-                  >
-                    {times}
-                  </div>
-                }
-                <ConsoleFeed
-                  styles={getConsoleFeedStyle(theme, times, this.props.fontSize)}
-                  logs={[consoleEvent]}
-                />
-              </div>
-            );
-          })}
-        </div>
-      </section>
-    );
-  }
-}
-
-ConsoleComponent.propTypes = {
-  consoleEvents: PropTypes.arrayOf(PropTypes.shape({
-    method: PropTypes.string.isRequired,
-    args: PropTypes.arrayOf(PropTypes.string)
-  })),
-  isExpanded: PropTypes.bool.isRequired,
-  collapseConsole: PropTypes.func.isRequired,
-  expandConsole: PropTypes.func.isRequired,
-  clearConsole: PropTypes.func.isRequired,
-  theme: PropTypes.string.isRequired,
-  fontSize: PropTypes.number.isRequired
-};
-
-ConsoleComponent.defaultProps = {
-  consoleEvents: []
-};
-
+// 1 . FIXME: Object is not a function 🤷🏻
 const Console = () => {
   const consoleEvents = useSelector(state => state.console);
-  const { consoleIsExpanded } = useSelector(state => state.ide);
+  const isExpanded = useSelector(state => state.ide.consoleIsExpanded);
   const { theme, fontSize } = useSelector(state => state.preferences);
+
+  const [cm, setCm] = useState({});
+
+  // 2. FIXME: Console is not opening/closing, and I suspect it has to do with this
+  useDidUpdate(() => { if (cm) cm.scrollTop = cm.scrollHeight; });
 
   const {
     collapseConsole, expandConsole, clearConsole, dispatchConsoleEvent
@@ -175,18 +103,59 @@ const Console = () => {
     dispatchConsoleEvent(consoleEvents);
   }, [theme, fontSize]);
 
+  // const [consoleMessages, setConsoleMessages] = useState({});
+  // this.consoleMessages.scrollTop = this.consoleMessages.scrollHeight;
+
+
+  const consoleClass = classNames({
+    'preview-console': true,
+    'preview-console--collapsed': isExpanded
+  });
+
   return (
-    <ConsoleComponent
-      consoleEvents={consoleEvents}
-      isExpanded={consoleIsExpanded}
-      theme={theme}
-      fontSize={fontSize}
-      collapseConsole={collapseConsole}
-      expandConsole={expandConsole}
-      clearConsole={clearConsole}
-      dispatchConsoleEvent={dispatchConsoleEvent}
-    />
+    <section className={consoleClass} >
+      <header className="preview-console__header">
+        <h2 className="preview-console__header-title">Console</h2>
+        <div className="preview-console__header-buttons">
+          <button className="preview-console__clear" onClick={clearConsole} aria-label="Clear console">
+            Clear
+          </button>
+          <button
+            className="preview-console__collapse"
+            onClick={collapseConsole}
+            aria-label="Close console"
+          >
+            <DownArrowIcon focusable="false" aria-hidden="true" />
+          </button>
+          <button className="preview-console__expand" onClick={expandConsole} aria-label="Open console" >
+            <UpArrowIcon focusable="false" aria-hidden="true" />
+          </button>
+        </div>
+      </header>
+      <div ref={element => setCm(element)} className="preview-console__messages">
+        {consoleEvents.map((consoleEvent) => {
+          const { method, times } = consoleEvent;
+          return (
+            <div key={consoleEvent.id} className={`preview-console__message preview-console__message--${method}`}>
+              { times > 1 &&
+              <div
+                className="preview-console__logged-times"
+                style={{ fontSize, borderRadius: fontSize / 2 }}
+              >
+                {times}
+              </div>
+              }
+              <ConsoleFeed
+                styles={getConsoleFeedStyle(theme, times, fontSize)}
+                logs={[consoleEvent]}
+              />
+            </div>
+          );
+        })}
+      </div>
+    </section>
   );
 };
+
 
 export default Console;
