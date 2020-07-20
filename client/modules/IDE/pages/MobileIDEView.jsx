@@ -31,6 +31,11 @@ import { remSize } from '../../../theme';
 
 const isUserOwner = ({ project, user }) => (project.owner && project.owner.id === user.id);
 
+const BottomBarContent = styled.h2`
+  padding: ${remSize(12)};
+  padding-left: ${remSize(32)};
+`;
+
 const MobileIDEView = (props) => {
   const {
     preferences, ide, editorAccessibility, project, updateLintMessage, clearLintMessage,
@@ -97,8 +102,9 @@ const MobileIDEView = (props) => {
           provideController={setTmController}
         />
       </IDEWrapper>
-      <Footer before={<Console />} >
-        <h2>Bottom Bar</h2>
+      <Footer>
+        <Console />
+        <BottomBarContent>Bottom Bar</BottomBarContent>
       </Footer>
     </Screen>
   );
