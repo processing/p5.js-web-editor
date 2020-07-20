@@ -24,7 +24,7 @@ passport.deserializeUser((id, done) => {
  * Sign in using Email/Username and Password.
  */
 passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
-  User.findByMailOrName(email.toLowerCase())
+  User.findByEmailOrUsername(email)
     .then((user) => { // eslint-disable-line consistent-return
       if (!user) {
         return done(null, false, { msg: `Email ${email} not found.` });
@@ -43,7 +43,7 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, don
  * Authentificate using Basic Auth (Username + Api Key)
  */
 passport.use(new BasicStrategy((userid, key, done) => {
-  User.findOne({ username: userid }, (err, user) => { // eslint-disable-line consistent-return
+  User.findByUsername(userid, (err, user) => { // eslint-disable-line consistent-return
     if (err) { return done(err); }
     if (!user) { return done(null, false); }
     user.findMatchingKey(key, (innerErr, isMatch, keyDocument) => {
@@ -98,9 +98,7 @@ passport.use(new GitHubStrategy({
     const emails = getVerifiedEmails(profile.emails);
     const primaryEmail = getPrimaryEmail(profile.emails);
 
-    User.findOne({
-      email: { $in: emails },
-    }, (findByEmailErr, existingEmailUser) => {
+    User.findByEmail(emails, (findByEmailErr, existingEmailUser) => {
       if (existingEmailUser) {
         existingEmailUser.email = existingEmailUser.email || primaryEmail;
         existingEmailUser.github = profile.id;
@@ -141,11 +139,9 @@ passport.use(new GoogleStrategy({
 
     const primaryEmail = profile._json.emails[0].value;
 
-    User.findOne({
-      email: primaryEmail,
-    }, (findByEmailErr, existingEmailUser) => {
+    User.findByEmail(primaryEmail, (findByEmailErr, existingEmailUser) => {
       let username = profile._json.emails[0].value.split('@')[0];
-      User.findOne({ username }, (findByUsernameErr, existingUsernameUser) => {
+      User.findByUsername(username, (findByUsernameErr, existingUsernameUser) => {
         if (existingUsernameUser) {
           const adj = friendlyWords.predicates[Math.floor(Math.random() * friendlyWords.predicates.length)];
           username = slugify(`${username} ${adj}`);

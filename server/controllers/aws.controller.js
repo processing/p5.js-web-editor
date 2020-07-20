@@ -98,24 +98,72 @@ export function signS3(req, res) {
   res.json(result);
 }
 
-export function copyObjectInS3(req, res) {
-  const { url } = req.body;
-  const objectKey = getObjectKey(url);
-  const fileExtension = getExtension(objectKey);
-  const newFilename = uuid.v4() + fileExtension;
-  const userId = req.user.id;
-  const params = {
-    Bucket: `${process.env.S3_BUCKET}`,
-    CopySource: `${process.env.S3_BUCKET}/${objectKey}`,
-    Key: `${userId}/${newFilename}`,
-    ACL: 'public-read'
-  };
-  const copy = client.copyObject(params);
-  copy.on('err', (err) => {
-    console.log(err);
+export function copyObjectInS3(url, userId) {
+  return new Promise((resolve, reject) => {
+    const objectKey = getObjectKey(url);
+    const fileExtension = getExtension(objectKey);
+    const newFilename = uuid.v4() + fileExtension;
+    const headParams = {
+      Bucket: `${process.env.S3_BUCKET}`,
+      Key: `${objectKey}`
+    };
+    client.s3.headObject(headParams, (headErr) => {
+      if (headErr) {
+        reject(new Error(`Object with key ${process.env.S3_BUCKET}/${objectKey} does not exist.`));
+        return;
+      }
+      const params = {
+        Bucket: `${process.env.S3_BUCKET}`,
+        CopySource: `${process.env.S3_BUCKET}/${objectKey}`,
+        Key: `${userId}/${newFilename}`,
+        ACL: 'public-read'
+      };
+      const copy = client.copyObject(params);
+      copy.on('err', (err) => {
+        reject(err);
+      });
+      copy.on('end', (data) => {
+        resolve(`${s3Bucket}${userId}/${newFilename}`);
+      });
+    });
   });
-  copy.on('end', (data) => {
-    res.json({ url: `${s3Bucket}${userId}/${newFilename}` });
+}
+
+export function copyObjectInS3RequestHandler(req, res) {
+  const { url } = req.body;
+  copyObjectInS3(url, req.user.id).then((newUrl) => {
+    res.json({ url: newUrl });
+  });
+}
+
+export function moveObjectToUserInS3(url, userId) {
+  return new Promise((resolve, reject) => {
+    const objectKey = getObjectKey(url);
+    const fileExtension = getExtension(objectKey);
+    const newFilename = uuid.v4() + fileExtension;
+    const headParams = {
+      Bucket: `${process.env.S3_BUCKET}`,
+      Key: `${objectKey}`
+    };
+    client.s3.headObject(headParams, (headErr) => {
+      if (headErr) {
+        reject(new Error(`Object with key ${process.env.S3_BUCKET}/${objectKey} does not exist.`));
+        return;
+      }
+      const params = {
+        Bucket: `${process.env.S3_BUCKET}`,
+        CopySource: `${process.env.S3_BUCKET}/${objectKey}`,
+        Key: `${userId}/${newFilename}`,
+        ACL: 'public-read'
+      };
+      const move = client.moveObject(params);
+      move.on('err', (err) => {
+        reject(err);
+      });
+      move.on('end', (data) => {
+        resolve(`${s3Bucket}${userId}/${newFilename}`);
+      });
+    });
   });
 }
 
