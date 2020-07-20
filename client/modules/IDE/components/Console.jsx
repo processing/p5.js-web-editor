@@ -83,16 +83,10 @@ const getConsoleFeedStyle = (theme, times, fontSize) => {
   }
 };
 
-// 1 . FIXME: Object is not a function 🤷🏻
 const Console = () => {
   const consoleEvents = useSelector(state => state.console);
   const isExpanded = useSelector(state => state.ide.consoleIsExpanded);
   const { theme, fontSize } = useSelector(state => state.preferences);
-
-  const [cm, setCm] = useState({});
-
-  // 2. FIXME: Console is not opening/closing, and I suspect it has to do with this
-  useDidUpdate(() => { if (cm) cm.scrollTop = cm.scrollHeight; });
 
   const {
     collapseConsole, expandConsole, clearConsole, dispatchConsoleEvent
@@ -101,10 +95,22 @@ const Console = () => {
   useDidUpdate(() => {
     clearConsole();
     dispatchConsoleEvent(consoleEvents);
-  }, [theme, fontSize]);
+  }, [theme, fontSize]); //
 
   // const [consoleMessages, setConsoleMessages] = useState({});
   // this.consoleMessages.scrollTop = this.consoleMessages.scrollHeight;
+
+  // const clearConsole = () => {};
+  // const collapseConsole = () => {};
+  // const expandConsole = () => {};
+
+  // const isExpanded = true;
+  // const fontSize = 16;
+  // const theme = {};
+
+  // // 2. FIXME: Console is not opening/closing, and I suspect it has to do with this
+  const cm = useRef({});
+  useDidUpdate(() => { if (cm.current) cm.current.scrollTop = cm.current.scrollHeight; });
 
 
   const consoleClass = classNames({
@@ -132,7 +138,7 @@ const Console = () => {
           </button>
         </div>
       </header>
-      <div ref={element => setCm(element)} className="preview-console__messages">
+      <div ref={cm} className="preview-console__messages">
         {consoleEvents.map((consoleEvent) => {
           const { method, times } = consoleEvent;
           return (
