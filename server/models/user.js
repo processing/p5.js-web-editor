@@ -170,14 +170,19 @@ userSchema.statics.findByEmail = function findByEmail(email, cb) {
  * Queries User collection by username and returns one User document.
  *
  * @param {string} username - Username string
+ * @param {boolean} [caseInsensitive]  - Does a caseInsensitive query, defaults to false
  * @callback [cb] - Optional error-first callback that passes User document
  * @return {Promise<Object>} - Returns Promise fulfilled by User document
  */
-userSchema.statics.findByUsername = function findByUsername(username, cb) {
+userSchema.statics.findByUsername = function findByUsername(username, caseInsensitive, cb) {
   const query = {
     username
   };
-  return this.findOne(query, cb);
+  if (arguments.length === 3
+    || (arguments.length === 2 && typeof caseInsensitive === 'boolean' && caseInsensitive)) {
+    return this.findOne(query).collation({ locale: 'en', strength: 2 }).exec(cb);
+  }
+  return this.findOne(query, cb || caseInsensitive);
 };
 
 /**
@@ -187,15 +192,23 @@ userSchema.statics.findByUsername = function findByUsername(username, cb) {
  * a username or email.
  *
  * @param {string} value - Email or username
+ * @param {boolean} caseInsensitive - Does a caseInsensitive query rather than
+ *                                    default query for username or email, defaults
+ *                                    to false
  * @callback [cb] - Optional error-first callback that passes User document
  * @return {Promise<Object>} - Returns Promise fulfilled by User document
  */
-userSchema.statics.findByEmailOrUsername = function findByEmailOrUsername(value, cb) {
+userSchema.statics.findByEmailOrUsername = function findByEmailOrUsername(value, caseInsensitive, cb) {
   const isEmail = value.indexOf('@') > -1;
-  if (isEmail) {
-    return this.findByEmail(value, cb);
+  if (arguments.length === 3
+    || (arguments.length === 2 && typeof caseInsensitive === 'boolean' && caseInsensitive)) {
+    const query = isEmail ? { email: value } : { username: value };
+    return this.findOne(query).collation({ locale: 'en', strength: 2 }).exec(cb);
   }
-  return this.findByUsername(value, cb);
+  if (isEmail) {
+    return this.findByEmail(value, cb || caseInsensitive);
+  }
+  return this.findByUsername(value, cb || caseInsensitive);
 };
 
 /**

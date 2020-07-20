@@ -93,12 +93,7 @@ export function createUser(req, res, next) {
 export function duplicateUserCheck(req, res) {
   const checkType = req.query.check_type;
   const value = req.query[checkType];
-  const query = {};
-  query[checkType] = value;
-  // Don't want to use findByEmailOrUsername here, because in this case we do
-  // want to use case-insensitive search for usernames to prevent username
-  // duplicates, which overrides the default behavior.
-  User.findOne(query).collation({ locale: 'en', strength: 2 }).exec((err, user) => {
+  User.findByEmailOrUsername(value, true, (err, user) => {
     if (user) {
       return res.json({
         exists: true,

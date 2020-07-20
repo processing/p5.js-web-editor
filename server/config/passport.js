@@ -10,6 +10,11 @@ import { BasicStrategy } from 'passport-http';
 
 import User from '../models/user';
 
+function generateUniqueUsername(username) {
+  const adj = friendlyWords.predicates[Math.floor(Math.random() * friendlyWords.predicates.length)];
+  return slugify(`${username} ${adj}`);
+}
+
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
@@ -108,14 +113,20 @@ passport.use(new GitHubStrategy({
         existingEmailUser.verified = User.EmailConfirmation.Verified;
         existingEmailUser.save(saveErr => done(null, existingEmailUser));
       } else {
-        const user = new User();
-        user.email = primaryEmail;
-        user.github = profile.id;
-        user.username = profile.username;
-        user.tokens.push({ kind: 'github', accessToken });
-        user.name = profile.displayName;
-        user.verified = User.EmailConfirmation.Verified;
-        user.save(saveErr => done(null, user));
+        let { username } = profile;
+        User.findByUsername(username, true, (findByUsernameErr, existingUsernameUser) => {
+          if (existingUsernameUser) {
+            username = generateUniqueUsername(username);
+          }
+          const user = new User();
+          user.email = primaryEmail;
+          user.github = profile.id;
+          user.username = profile.username;
+          user.tokens.push({ kind: 'github', accessToken });
+          user.name = profile.displayName;
+          user.verified = User.EmailConfirmation.Verified;
+          user.save(saveErr => done(null, user));
+        });
       }
     });
   });
@@ -141,10 +152,9 @@ passport.use(new GoogleStrategy({
 
     User.findByEmail(primaryEmail, (findByEmailErr, existingEmailUser) => {
       let username = profile._json.emails[0].value.split('@')[0];
-      User.findByUsername(username, (findByUsernameErr, existingUsernameUser) => {
+      User.findByUsername(username, true, (findByUsernameErr, existingUsernameUser) => {
         if (existingUsernameUser) {
-          const adj = friendlyWords.predicates[Math.floor(Math.random() * friendlyWords.predicates.length)];
-          username = slugify(`${username} ${adj}`);
+          username = generateUniqueUsername(username);
         }
         // what if a username is already taken from the display name too?
         // then, append a random friendly word?
