@@ -95,27 +95,16 @@ const Console = () => {
   useDidUpdate(() => {
     clearConsole();
     dispatchConsoleEvent(consoleEvents);
-  }, [theme, fontSize]); //
+  }, [theme, fontSize]);
 
-  // const [consoleMessages, setConsoleMessages] = useState({});
-  // this.consoleMessages.scrollTop = this.consoleMessages.scrollHeight;
-
-  // const clearConsole = () => {};
-  // const collapseConsole = () => {};
-  // const expandConsole = () => {};
-
-  // const isExpanded = true;
-  // const fontSize = 16;
-  // const theme = {};
+  const cm = useRef({});
 
   // // 2. FIXME: Console is not opening/closing, and I suspect it has to do with this
-  const cm = useRef({});
-  useDidUpdate(() => { if (cm.current) cm.current.scrollTop = cm.current.scrollHeight; });
-
+  useDidUpdate(() => { cm.current.scrollTop = cm.current.scrollHeight; });
 
   const consoleClass = classNames({
     'preview-console': true,
-    'preview-console--collapsed': isExpanded
+    'preview-console--collapsed': !isExpanded
   });
 
   return (
