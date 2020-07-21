@@ -75,7 +75,9 @@ const MobileSketchView = (props) => {
           clearConsole={clearConsole}
         />
       </Content>
-      <Footer before={<Console />} />
+      <Footer>
+        <Console />
+      </Footer>
     </Screen>);
 };
 
