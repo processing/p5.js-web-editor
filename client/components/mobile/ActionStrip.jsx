@@ -4,25 +4,25 @@ import { bindActionCreators } from 'redux';
 import { useDispatch } from 'react-redux';
 import { prop, remSize } from '../../theme';
 import IconButton from './IconButton';
-import { ExitIcon } from '../../common/icons';
+import { CodeIcon } from '../../common/icons';
 import * as IDEActions from '../../modules/IDE/actions/ide';
 
 const background = prop('MobilePanel.default.background');
 const textColor = prop('primaryTextColor');
 
 const BottomBarContent = styled.h2`
-  padding: ${remSize(12)};
+  padding: ${remSize(8)};
   
   svg {
     max-height: ${remSize(32)};
-    padding: ${remSize(4)}
+    /* padding: ${remSize(4)} */
   }
 `;
 
 export default () => {
   const { expandConsole } = bindActionCreators(IDEActions, useDispatch());
 
-  const actions = [{ icon: ExitIcon, aria: 'Say Something', action: expandConsole }];
+  const actions = [{ icon: CodeIcon, aria: 'Say Something', action: expandConsole }];
 
   return (
     <BottomBarContent>
