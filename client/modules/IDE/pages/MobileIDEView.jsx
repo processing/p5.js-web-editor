@@ -28,6 +28,7 @@ import Footer from '../../../components/mobile/Footer';
 import IDEWrapper from '../../../components/mobile/IDEWrapper';
 import Console from '../components/Console';
 import { remSize } from '../../../theme';
+import Dropdown from '../../../components/Dropdown';
 
 const isUserOwner = ({ project, user }) => (project.owner && project.owner.id === user.id);
 
@@ -35,6 +36,16 @@ const BottomBarContent = styled.h2`
   padding: ${remSize(12)};
   padding-left: ${remSize(32)};
 `;
+
+
+// TODO: Move to new file?
+// const overlays = {};
+// const OverlayManager = name => overlays[name] || null;
+
+const headerNavOptions = [
+  { icon: PreferencesIcon, title: 'Preferences', route: '/mobile/preferences' }
+];
+
 
 const MobileIDEView = (props) => {
   const {
@@ -48,6 +59,8 @@ const MobileIDEView = (props) => {
   const [tmController, setTmController] = useState(null); // eslint-disable-line
   const [overlay, setOverlay] = useState(null); // eslint-disable-line
 
+  // const overlayActive = name => (overlay === name);
+
   return (
     <Screen fullscreen>
       <Header
@@ -58,10 +71,10 @@ const MobileIDEView = (props) => {
         }
       >
         <IconButton
-          to="/mobile/preferences"
-          onClick={() => setOverlay('preferences')}
+          // to="/mobile/preferences"
+          onClick={() => setOverlay('dropdown')}
           icon={MoreIcon}
-          aria-label="Open preferences menu"
+          aria-label="Options"
         />
         <IconButton to="/mobile/preview" onClick={() => { startSketch(); }} icon={PlayIcon} aria-label="Run sketch" />
       </Header>
@@ -106,6 +119,9 @@ const MobileIDEView = (props) => {
         <Console />
         <BottomBarContent>Bottom Bar</BottomBarContent>
       </Footer>
+
+      {/* Overlays */}
+      <Dropdown hidden={overlay !== 'dropdown'} items={headerNavOptions} />
     </Screen>
   );
 };

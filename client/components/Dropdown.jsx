@@ -39,6 +39,8 @@ import { Link } from 'react-router';
 // </li>
 // </ul>
 
+// 'nav__item--open'
+
 const Dropdown = ({ items }) => (
   <ul className="nav__dropdown">
     {items && items.map(item => (
