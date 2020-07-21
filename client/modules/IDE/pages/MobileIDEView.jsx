@@ -19,7 +19,7 @@ import { getHTMLFile } from '../reducers/files';
 
 // Local Imports
 import Editor from '../components/Editor';
-import { PreferencesIcon, PlayIcon, ExitIcon } from '../../../common/icons';
+import { PreferencesIcon, PlayIcon, ExitIcon, MoreIcon } from '../../../common/icons';
 
 import IconButton from '../../../components/mobile/IconButton';
 import Header from '../../../components/mobile/Header';
@@ -60,7 +60,7 @@ const MobileIDEView = (props) => {
         <IconButton
           to="/mobile/preferences"
           onClick={() => setOverlay('preferences')}
-          icon={PreferencesIcon}
+          icon={MoreIcon}
           aria-label="Open preferences menu"
         />
         <IconButton to="/mobile/preview" onClick={() => { startSketch(); }} icon={PlayIcon} aria-label="Run sketch" />
