@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { bindActionCreators } from 'redux';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { remSize } from '../../theme';
 import IconButton from './IconButton';
 import { TerminalIcon } from '../../common/icons';
@@ -16,9 +16,10 @@ const BottomBarContent = styled.h2`
 `;
 
 export default () => {
-  const { expandConsole } = bindActionCreators(IDEActions, useDispatch());
+  const { expandConsole, collapseConsole } = bindActionCreators(IDEActions, useDispatch());
+  const { consoleIsExpanded } = useSelector(state => state.ide);
 
-  const actions = [{ icon: TerminalIcon, aria: 'Say Something', action: expandConsole }];
+  const actions = [{ icon: TerminalIcon, aria: 'Say Something', action: consoleIsExpanded ? collapseConsole : expandConsole }];
 
   return (
     <BottomBarContent>
