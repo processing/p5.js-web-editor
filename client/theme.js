@@ -96,7 +96,8 @@ export default {
         background: grays.light,
         border: grays.middleLight,
       },
-    }
+    },
+    Separator: grays.middleLight,
   },
   [Theme.dark]: {
     colors,
@@ -136,7 +137,8 @@ export default {
         background: grays.dark,
         border: grays.middleDark,
       },
-    }
+    },
+    Separator: grays.middleDark,
   },
   [Theme.contrast]: {
     colors,
@@ -176,6 +178,7 @@ export default {
         background: grays.dark,
         border: grays.middleDark,
       },
-    }
+    },
+    Separator: grays.middleDark,
   },
 };

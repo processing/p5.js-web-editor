@@ -28,12 +28,13 @@ import Footer from '../../../components/mobile/Footer';
 import IDEWrapper from '../../../components/mobile/IDEWrapper';
 import Console from '../components/Console';
 import { remSize } from '../../../theme';
+import ActionStrip from '../../../components/mobile/ActionStrip';
 
 const isUserOwner = ({ project, user }) => (project.owner && project.owner.id === user.id);
 
-const BottomBarContent = styled.h2`
-  padding: ${remSize(12)};
-  padding-left: ${remSize(32)};
+
+const Expander = styled.div`
+  height: ${props => (props.expanded ? remSize(160) : remSize(27))};
 `;
 
 const MobileIDEView = (props) => {
@@ -103,8 +104,8 @@ const MobileIDEView = (props) => {
         />
       </IDEWrapper>
       <Footer>
-        <Console />
-        <BottomBarContent>Bottom Bar</BottomBarContent>
+        {ide.consoleIsExpanded && <Expander expanded><Console /></Expander>}
+        <ActionStrip />
       </Footer>
     </Screen>
   );
