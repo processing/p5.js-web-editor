@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { useDispatch } from 'react-redux';
 import { remSize } from '../../theme';
 import IconButton from './IconButton';
-import { CodeIcon } from '../../common/icons';
+import { TerminalIcon } from '../../common/icons';
 import * as IDEActions from '../../modules/IDE/actions/ide';
 
 const BottomBarContent = styled.h2`
@@ -18,7 +18,7 @@ const BottomBarContent = styled.h2`
 export default () => {
   const { expandConsole } = bindActionCreators(IDEActions, useDispatch());
 
-  const actions = [{ icon: CodeIcon, aria: 'Say Something', action: expandConsole }];
+  const actions = [{ icon: TerminalIcon, aria: 'Say Something', action: expandConsole }];
 
   return (
     <BottomBarContent>
