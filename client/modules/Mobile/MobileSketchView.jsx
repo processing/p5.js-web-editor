@@ -7,6 +7,7 @@ import Header from '../../components/mobile/Header';
 import IconButton from '../../components/mobile/IconButton';
 import PreviewFrame from '../IDE/components/PreviewFrame';
 import Screen from '../../components/mobile/MobileScreen';
+import Console from '../IDE/components/Console';
 import * as ProjectActions from '../IDE/actions/project';
 import * as IDEActions from '../IDE/actions/ide';
 import * as PreferencesActions from '../IDE/actions/preferences';
@@ -18,6 +19,7 @@ import { getHTMLFile } from '../IDE/reducers/files';
 
 import { ExitIcon } from '../../common/icons';
 import { remSize } from '../../theme';
+import Footer from '../../components/mobile/Footer';
 
 
 const Content = styled.div`
@@ -82,6 +84,9 @@ const MobileSketchView = (props) => {
           clearConsole={clearConsole}
         />
       </Content>
+      <Footer>
+        <Console />
+      </Footer>
     </Screen>);
 };
 
@@ -146,7 +151,6 @@ MobileSketchView.propTypes = {
     justOpenedProject: PropTypes.bool.isRequired,
     errorType: PropTypes.string,
     runtimeErrorWarningVisible: PropTypes.bool.isRequired,
-    uploadFileModalVisible: PropTypes.bool.isRequired
   }).isRequired,
 
   projectName: PropTypes.string.isRequired,
