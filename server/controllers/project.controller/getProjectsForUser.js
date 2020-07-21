@@ -7,7 +7,7 @@ const UserNotFoundError = createApplicationErrorClass('UserNotFoundError');
 
 function getProjectsForUserName(username) {
   return new Promise((resolve, reject) => {
-    User.findOne({ username }, (err, user) => {
+    User.findByUsername(username, (err, user) => {
       if (err) {
         reject(err);
         return;
