@@ -1,6 +1,8 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import { useSelector, useDispatch, connect } from 'react-redux';
+import React, { useRef } from 'react';
+
+import { bindActionCreators } from 'redux';
+
+import { useSelector, useDispatch } from 'react-redux';
 import classNames from 'classnames';
 import { Console as ConsoleFeed } from 'console-feed';
 import {
@@ -25,172 +27,118 @@ import DownArrowIcon from '../../../images/down-arrow.svg';
 
 import * as IDEActions from '../../IDE/actions/ide';
 import * as ConsoleActions from '../../IDE/actions/console';
+import { useDidUpdate } from '../../../utils/custom-hooks';
 
-class ConsoleComponent extends React.Component {
-  componentDidUpdate(prevProps) {
-    this.consoleMessages.scrollTop = this.consoleMessages.scrollHeight;
-    if (this.props.theme !== prevProps.theme) {
-      this.props.clearConsole();
-      this.props.dispatchConsoleEvent(this.props.consoleEvents);
-    }
+const getConsoleFeedStyle = (theme, times, fontSize) => {
+  const style = {};
+  const CONSOLE_FEED_LIGHT_ICONS = {
+    LOG_WARN_ICON: `url(${warnLightUrl})`,
+    LOG_ERROR_ICON: `url(${errorLightUrl})`,
+    LOG_DEBUG_ICON: `url(${debugLightUrl})`,
+    LOG_INFO_ICON: `url(${infoLightUrl})`
+  };
+  const CONSOLE_FEED_DARK_ICONS = {
+    LOG_WARN_ICON: `url(${warnDarkUrl})`,
+    LOG_ERROR_ICON: `url(${errorDarkUrl})`,
+    LOG_DEBUG_ICON: `url(${debugDarkUrl})`,
+    LOG_INFO_ICON: `url(${infoDarkUrl})`
+  };
+  const CONSOLE_FEED_CONTRAST_ICONS = {
+    LOG_WARN_ICON: `url(${warnContrastUrl})`,
+    LOG_ERROR_ICON: `url(${errorContrastUrl})`,
+    LOG_DEBUG_ICON: `url(${debugContrastUrl})`,
+    LOG_INFO_ICON: `url(${infoContrastUrl})`
+  };
+  const CONSOLE_FEED_SIZES = {
+    TREENODE_LINE_HEIGHT: 1.2,
+    BASE_FONT_SIZE: fontSize,
+    ARROW_FONT_SIZE: fontSize,
+    LOG_ICON_WIDTH: fontSize,
+    LOG_ICON_HEIGHT: 1.45 * fontSize,
+  };
 
-    if (this.props.fontSize !== prevProps.fontSize) {
-      this.props.clearConsole();
-      this.props.dispatchConsoleEvent(this.props.consoleEvents);
-    }
+  if (times > 1) {
+    Object.assign(style, CONSOLE_FEED_WITHOUT_ICONS);
   }
-
-  getConsoleFeedStyle(theme, times) {
-    const style = {};
-    const CONSOLE_FEED_LIGHT_ICONS = {
-      LOG_WARN_ICON: `url(${warnLightUrl})`,
-      LOG_ERROR_ICON: `url(${errorLightUrl})`,
-      LOG_DEBUG_ICON: `url(${debugLightUrl})`,
-      LOG_INFO_ICON: `url(${infoLightUrl})`
-    };
-    const CONSOLE_FEED_DARK_ICONS = {
-      LOG_WARN_ICON: `url(${warnDarkUrl})`,
-      LOG_ERROR_ICON: `url(${errorDarkUrl})`,
-      LOG_DEBUG_ICON: `url(${debugDarkUrl})`,
-      LOG_INFO_ICON: `url(${infoDarkUrl})`
-    };
-    const CONSOLE_FEED_CONTRAST_ICONS = {
-      LOG_WARN_ICON: `url(${warnContrastUrl})`,
-      LOG_ERROR_ICON: `url(${errorContrastUrl})`,
-      LOG_DEBUG_ICON: `url(${debugContrastUrl})`,
-      LOG_INFO_ICON: `url(${infoContrastUrl})`
-    };
-    const CONSOLE_FEED_SIZES = {
-      TREENODE_LINE_HEIGHT: 1.2,
-      BASE_FONT_SIZE: this.props.fontSize,
-      ARROW_FONT_SIZE: this.props.fontSize,
-      LOG_ICON_WIDTH: this.props.fontSize,
-      LOG_ICON_HEIGHT: 1.45 * this.props.fontSize,
-    };
-
-    if (times > 1) {
-      Object.assign(style, CONSOLE_FEED_WITHOUT_ICONS);
-    }
-    switch (theme) {
-      case 'light':
-        return Object.assign(CONSOLE_FEED_LIGHT_STYLES, CONSOLE_FEED_LIGHT_ICONS, CONSOLE_FEED_SIZES, style);
-      case 'dark':
-        return Object.assign(CONSOLE_FEED_DARK_STYLES, CONSOLE_FEED_DARK_ICONS, CONSOLE_FEED_SIZES, style);
-      case 'contrast':
-        return Object.assign(CONSOLE_FEED_CONTRAST_STYLES, CONSOLE_FEED_CONTRAST_ICONS, CONSOLE_FEED_SIZES, style);
-      default:
-        return '';
-    }
+  switch (theme) {
+    case 'light':
+      return Object.assign(CONSOLE_FEED_LIGHT_STYLES, CONSOLE_FEED_LIGHT_ICONS, CONSOLE_FEED_SIZES, style);
+    case 'dark':
+      return Object.assign(CONSOLE_FEED_DARK_STYLES, CONSOLE_FEED_DARK_ICONS, CONSOLE_FEED_SIZES, style);
+    case 'contrast':
+      return Object.assign(CONSOLE_FEED_CONTRAST_STYLES, CONSOLE_FEED_CONTRAST_ICONS, CONSOLE_FEED_SIZES, style);
+    default:
+      return '';
   }
-
-  render() {
-    const consoleClass = classNames({
-      'preview-console': true,
-      'preview-console--collapsed': !this.props.isExpanded
-    });
-
-    return (
-      <section className={consoleClass} >
-        <header className="preview-console__header">
-          <h2 className="preview-console__header-title">Console</h2>
-          <div className="preview-console__header-buttons">
-            <button className="preview-console__clear" onClick={this.props.clearConsole} aria-label="Clear console">
-              Clear
-            </button>
-            <button
-              className="preview-console__collapse"
-              onClick={this.props.collapseConsole}
-              aria-label="Close console"
-            >
-              <DownArrowIcon focusable="false" aria-hidden="true" />
-            </button>
-            <button className="preview-console__expand" onClick={this.props.expandConsole} aria-label="Open console" >
-              <UpArrowIcon focusable="false" aria-hidden="true" />
-            </button>
-          </div>
-        </header>
-        <div ref={(element) => { this.consoleMessages = element; }} className="preview-console__messages">
-          {this.props.consoleEvents.map((consoleEvent) => {
-            const { method, times } = consoleEvent;
-            const { theme } = this.props;
-            return (
-              <div key={consoleEvent.id} className={`preview-console__message preview-console__message--${method}`}>
-                { times > 1 &&
-                  <div
-                    className="preview-console__logged-times"
-                    style={{ fontSize: this.props.fontSize, borderRadius: this.props.fontSize / 2 }}
-                  >
-                    {times}
-                  </div>
-                }
-                <ConsoleFeed
-                  styles={this.getConsoleFeedStyle(theme, times)}
-                  logs={[consoleEvent]}
-                />
-              </div>
-            );
-          })}
-        </div>
-      </section>
-    );
-  }
-}
-
-ConsoleComponent.propTypes = {
-  consoleEvents: PropTypes.arrayOf(PropTypes.shape({
-    method: PropTypes.string.isRequired,
-    args: PropTypes.arrayOf(PropTypes.string)
-  })),
-  isExpanded: PropTypes.bool.isRequired,
-  collapseConsole: PropTypes.func.isRequired,
-  expandConsole: PropTypes.func.isRequired,
-  clearConsole: PropTypes.func.isRequired,
-  dispatchConsoleEvent: PropTypes.func.isRequired,
-  theme: PropTypes.string.isRequired,
-  fontSize: PropTypes.number.isRequired
 };
 
-ConsoleComponent.defaultProps = {
-  consoleEvents: []
-};
-
-// TODO: Use Hooks implementation. Requires react-redux 7.1.0
-/*
 const Console = () => {
   const consoleEvents = useSelector(state => state.console);
-  const { consoleIsExpanded } = useSelector(state => state.ide);
+  const isExpanded = useSelector(state => state.ide.consoleIsExpanded);
   const { theme, fontSize } = useSelector(state => state.preferences);
 
-  const dispatch = useDispatch();
+  const {
+    collapseConsole, expandConsole, clearConsole, dispatchConsoleEvent
+  } = bindActionCreators({ ...IDEActions, ...ConsoleActions }, useDispatch());
+
+  useDidUpdate(() => {
+    clearConsole();
+    dispatchConsoleEvent(consoleEvents);
+  }, [theme, fontSize]);
+
+  const cm = useRef({});
+
+  useDidUpdate(() => { cm.current.scrollTop = cm.current.scrollHeight; });
+
+  const consoleClass = classNames({
+    'preview-console': true,
+    'preview-console--collapsed': !isExpanded
+  });
 
   return (
-    <ConsoleComponent
-      consoleEvents={consoleEvents}
-      isExpanded={consoleIsExpanded}
-      theme={theme}
-      fontSize={fontSize}
-      collapseConsole={() => dispatch({})}
-      expandConsole={() => dispatch({})}
-      clearConsole={() => dispatch({})}
-      dispatchConsoleEvent={() => dispatch({})}
-    />
+    <section className={consoleClass} >
+      <header className="preview-console__header">
+        <h2 className="preview-console__header-title">Console</h2>
+        <div className="preview-console__header-buttons">
+          <button className="preview-console__clear" onClick={clearConsole} aria-label="Clear console">
+            Clear
+          </button>
+          <button
+            className="preview-console__collapse"
+            onClick={collapseConsole}
+            aria-label="Close console"
+          >
+            <DownArrowIcon focusable="false" aria-hidden="true" />
+          </button>
+          <button className="preview-console__expand" onClick={expandConsole} aria-label="Open console" >
+            <UpArrowIcon focusable="false" aria-hidden="true" />
+          </button>
+        </div>
+      </header>
+      <div ref={cm} className="preview-console__messages">
+        {consoleEvents.map((consoleEvent) => {
+          const { method, times } = consoleEvent;
+          return (
+            <div key={consoleEvent.id} className={`preview-console__message preview-console__message--${method}`}>
+              { times > 1 &&
+              <div
+                className="preview-console__logged-times"
+                style={{ fontSize, borderRadius: fontSize / 2 }}
+              >
+                {times}
+              </div>
+              }
+              <ConsoleFeed
+                styles={getConsoleFeedStyle(theme, times, fontSize)}
+                logs={[consoleEvent]}
+              />
+            </div>
+          );
+        })}
+      </div>
+    </section>
   );
 };
- */
 
-const Console = connect(
-  state => ({
-    consoleEvents: state.console,
-    isExpanded: state.ide.consoleIsExpanded,
-    theme: state.preferences.theme,
-    fontSize: state.preferences.fontSize
-  }),
-  dispatch => ({
-    collapseConsole: () => dispatch(IDEActions.collapseConsole()),
-    expandConsole: () => dispatch(IDEActions.expandConsole()),
-    clearConsole: () => dispatch(ConsoleActions.clearConsole()),
-    dispatchConsoleEvent: msgs => dispatch(ConsoleActions.dispatchConsoleEvent(msgs)),
-  })
-)(ConsoleComponent);
 
 export default Console;

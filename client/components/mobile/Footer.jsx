@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { prop } from '../../theme';
+import { prop, grays } from '../../theme';
 
 
 const background = prop('MobilePanel.default.background');
@@ -12,4 +12,6 @@ export default styled.div`
   bottom: 0;
   background: ${background};
   color: ${textColor};
+
+  & > * + * { border-top: dashed 1px ${prop('Separator')} }
 `;
