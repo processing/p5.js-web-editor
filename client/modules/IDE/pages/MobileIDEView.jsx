@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -42,6 +42,42 @@ const BottomBarContent = styled.h2`
 // const overlays = {};
 // const OverlayManager = name => overlays[name] || null;
 
+const OverlayManager = ({ ref, overlay, hideOverlay }) => {
+  useEffect(() => {
+    const handleClickOutside = ({ target }) => {
+      if (ref && ref.current && !ref.current.contains(target)) { hideOverlay(); console.log('click'); }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => { document.removeEventListener('mousedown', handleClickOutside); };
+  }, [ref]);
+
+  const headerNavOptions = [
+    { icon: PreferencesIcon, title: 'Preferences', href: '/mobile/preferences' },
+    { icon: PreferencesIcon, title: 'Examples', href: '/mobile/examples' },
+    { icon: PreferencesIcon, title: 'Original View', href: '/mobile/preferences' }
+  ];
+
+  return (
+    <div ref={(r) => { if (ref) { ref.current = r; } }}>
+      {(overlay === 'dropdown') && <Dropdown items={headerNavOptions} />}
+    </div>
+  );
+};
+
+const refPropType = PropTypes.oneOfType([
+  PropTypes.func,
+  PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+]);
+
+OverlayManager.propTypes = {
+  ref: refPropType.isRequired,
+  overlay: PropTypes.string,
+  hideOverlay: PropTypes.func.isRequired
+};
+
+OverlayManager.defaultProps = { overlay: null };
+
 
 const MobileIDEView = (props) => {
   const {
@@ -53,18 +89,15 @@ const MobileIDEView = (props) => {
   } = props;
 
   const [tmController, setTmController] = useState(null); // eslint-disable-line
-  const [overlay, setOverlay] = useState(null); // eslint-disable-line
+  const [overlayName, setOverlay] = useState(null); // eslint-disable-line
 
-  // const overlayActive = name => (overlay === name);
+  // TODO: Move this to OverlayController (?)
+  const hideOverlay = () => setOverlay(null);
+  const overlayRef = useRef();
 
-  const headerNavOptions = [
-    { icon: PreferencesIcon, title: 'Preferences', href: '/mobile/preferences' },
-    { icon: PreferencesIcon, title: 'Examples', href: '/mobile/examples' },
-    { icon: PreferencesIcon, title: 'Original View', href: '/mobile/preferences' }
-  ];
 
   return (
-    <Screen fullscreen>
+    <Screen fullscreen >
       <Header
         title={project.name}
         subtitle={selectedFile.name}
@@ -80,10 +113,6 @@ const MobileIDEView = (props) => {
         />
         <IconButton to="/mobile/preview" onClick={() => { startSketch(); }} icon={PlayIcon} aria-label="Run sketch" />
       </Header>
-
-
-      {/* TODO: Overlays */}
-      <Dropdown items={headerNavOptions} />
 
       <IDEWrapper>
         <Editor
@@ -122,11 +151,12 @@ const MobileIDEView = (props) => {
         />
       </IDEWrapper>
 
-      {/*
-      <Footer>
-        <Console />
-        <BottomBarContent>Bottom Bar</BottomBarContent>
-      </Footer> */}
+      {/* TODO: Create Overlay Manager */}
+      {<OverlayManager
+        ref={overlayRef}
+        overlay={overlayName}
+        hideOverlay={hideOverlay}
+      />}
     </Screen>
   );
 };
