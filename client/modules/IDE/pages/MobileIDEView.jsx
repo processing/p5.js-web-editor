@@ -42,10 +42,6 @@ const BottomBarContent = styled.h2`
 // const overlays = {};
 // const OverlayManager = name => overlays[name] || null;
 
-const headerNavOptions = [
-  { icon: PreferencesIcon, title: 'Preferences', route: '/mobile/preferences' }
-];
-
 
 const MobileIDEView = (props) => {
   const {
@@ -60,6 +56,10 @@ const MobileIDEView = (props) => {
   const [overlay, setOverlay] = useState(null); // eslint-disable-line
 
   // const overlayActive = name => (overlay === name);
+
+  const headerNavOptions = [
+    { icon: PreferencesIcon, title: 'Preferences', route: '/mobile/preferences' }
+  ];
 
   return (
     <Screen fullscreen>
@@ -78,6 +78,10 @@ const MobileIDEView = (props) => {
         />
         <IconButton to="/mobile/preview" onClick={() => { startSketch(); }} icon={PlayIcon} aria-label="Run sketch" />
       </Header>
+
+
+      {/* TODO: Overlays */}
+      <Dropdown items={headerNavOptions} />
 
       <IDEWrapper>
         <Editor
@@ -115,13 +119,12 @@ const MobileIDEView = (props) => {
           provideController={setTmController}
         />
       </IDEWrapper>
+
+      {/*
       <Footer>
         <Console />
         <BottomBarContent>Bottom Bar</BottomBarContent>
-      </Footer>
-
-      {/* Overlays */}
-      <Dropdown hidden={overlay !== 'dropdown'} items={headerNavOptions} />
+      </Footer> */}
     </Screen>
   );
 };
