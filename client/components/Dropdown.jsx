@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import styled from 'styled-components';
 import { remSize, prop, common } from '../theme';
+import IconButton from './mobile/IconButton';
+import Button from '../common/Button';
 
 
 // <ul className="nav__dropdown">
@@ -51,21 +53,21 @@ import { remSize, prop, common } from '../theme';
 //     color: getThemifyVariable('primary-text-color');
 //   }
 //   text-align: left;
-//   width: #{180 / $base-font-size}rem;
+//   width: ${remSize(180)};
 //   display: flex;
 //   position: absolute;
 //   flex-direction: column;
 //   top: 95%;
 //   height: auto;
 //   z-index: 9999;
-//   border-radius: #{6 / $base-font-size}rem;
-// -------------
+//   border-radius: ${remSize(6)};
 //   & li:first-child {
-//     border-radius: #{5 / $base-font-size}rem #{5 / $base-font-size}rem 0 0;
+//     border-radius: ${remSize(5)} ${remSize(5)} 0 0;
 //   }
 //   & li:last-child {
-//     border-radius: 0 0 #{5 / $base-font-size}rem #{5 / $base-font-size}rem;
+//     border-radius: 0 0 ${remSize(5)} ${remSize(5)};
 //   }
+// -------------
 //   & li {
 //     & button,
 //     & a {
@@ -74,9 +76,9 @@ import { remSize, prop, common } from '../theme';
 //       }
 //       width: 100%;
 //       text-align: left;
-//       padding: #{8 / $base-font-size}rem #{16 / $base-font-size}rem;
+//       padding: ${remSize(8)} ${remSize(16)};
 //     }
-//     height: #{35 / $base-font-size}rem;
+//     height: ${remSize(35)};
 //     cursor: pointer;
 //     display: flex;
 //     align-items: center;
@@ -105,10 +107,10 @@ import { remSize, prop, common } from '../theme';
 // }
 
 
-const DropdownWrapper = styled.div`
+const DropdownWrapper = styled.ul`
   background-color: ${prop('Modal.background')};
   border: 1px solid ${prop('Modal.border')};
-  box-shadow: 0 0 18px 0 ${common.shadowColor};
+  box-shadow: 0 0 18px 0 ${prop('shadowColor')};
   color: ${prop('primaryTextColor')};
 
   text-align: left;
@@ -120,45 +122,68 @@ const DropdownWrapper = styled.div`
   height: auto;
   z-index: 9999;
   border-radius: ${remSize(6)};
+
+  & li:first-child { border-radius: ${remSize(5)} ${remSize(5)} 0 0; }
+  & li:last-child  { border-radius: 0 0 ${remSize(5)} ${remSize(5)}; }
+
+  & li:hover {
+    
+    background-color: ${prop('Button.hover.background')};
+    color: ${prop('Button.hover.foreground')};
+
+    & button, & a {
+      color: ${prop('Button.hover.foreground')};
+    }
+  }
+
+  li {
+    height: ${remSize(36)};
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+
+    & button,
+    & a {
+      color: ${prop('primaryTextColor')};
+      width: 100%;
+      text-align: left;
+      padding: ${remSize(8)} ${remSize(16)};
+    }
+  }
+
 `;
 
+// { onPress
+//   ? <IconButton
+//   : <Link to={to}>{title}</Link>}
 
-// @include themify() {
-//   background-color: map-get($theme-map, 'modal-background-color');
-//   border: 1px solid map-get($theme-map, 'modal-border-color');
-//   box-shadow: 0 0 18px 0 getThemifyVariable('shadow-color');
-//   color: getThemifyVariable('primary-text-color');
-// }
-
+const MaybeIcon = (Element, label) => Element && <Element aria-label={label} />;
 
 const Dropdown = ({ items }) => (
   <DropdownWrapper>
-    <h1>space</h1>
-    <h1>space</h1>
-    <h1>space</h1>
-    <h1>space</h1>
     {/* className="nav__items-left" */}
-    <ul className="nav__items-left nav__dropdown nav__item nav__item--open">
-      <h1 className="nav__dropdown-item">hello</h1>
-      <h1 className="nav__dropdown-item">hello</h1>
-      {items && items.map(({ title }) => (
-        <li className="nav__dropdown-item" key={`nav-${title && title.toLowerCase()}`}>
-          <h1>space</h1>
-        </li>
-      ))
-      }
-    </ul>
+    {items && items.map(({ title, icon, href }) => (
+      <li key={`nav-${title && title.toLowerCase()}`}>
+        <Link to={href}>
+          {MaybeIcon(icon, `Navigate to ${title}`)}
+          {title}
+        </Link>
+      </li>
+    ))
+    }
   </DropdownWrapper>
 );
 
 Dropdown.propTypes = {
   items: PropTypes.arrayOf(PropTypes.shape({
-    action: PropTypes.func
-  }))
+    action: PropTypes.func,
+    icon: PropTypes.func,
+    href: PropTypes.string
+  })),
 };
 
 Dropdown.defaultProps = {
-  items: []
+  items: [],
 };
 
 export default Dropdown;

@@ -58,7 +58,9 @@ const MobileIDEView = (props) => {
   // const overlayActive = name => (overlay === name);
 
   const headerNavOptions = [
-    { icon: PreferencesIcon, title: 'Preferences', route: '/mobile/preferences' }
+    { icon: PreferencesIcon, title: 'Preferences', href: '/mobile/preferences' },
+    { icon: PreferencesIcon, title: 'Examples', href: '/mobile/examples' },
+    { icon: PreferencesIcon, title: 'Original View', href: '/mobile/preferences' }
   ];
 
   return (
