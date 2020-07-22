@@ -1,20 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
-import { prop, remSize } from '../../theme';
+import { prop, grays } from '../../theme';
+
 
 const background = prop('MobilePanel.default.background');
 const textColor = prop('primaryTextColor');
 
-const Footer = styled.div`
+export default styled.div`
   position: fixed;
   width: 100%;
+  bottom: 0;
   background: ${background};
   color: ${textColor};
-  padding: ${remSize(12)};
-  padding-left: ${remSize(32)};
-  z-index: 1;
 
-  bottom: 0;
+  & > * + * { border-top: dashed 1px ${prop('Separator')} }
 `;
-
-export default Footer;

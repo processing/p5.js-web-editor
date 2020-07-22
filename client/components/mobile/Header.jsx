@@ -3,14 +3,14 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { prop, remSize } from '../../theme';
 
-const background = prop('MobilePanel.default.background');
+const background = transparent => prop(transparent ? 'backgroundColor' : 'MobilePanel.default.background');
 const textColor = prop('primaryTextColor');
 
 
 const HeaderDiv = styled.div`
   position: fixed;
   width: 100%;
-  background: ${props => (props.transparent ? 'transparent' : background)};
+  background: ${props => background(props.transparent === true)};
   color: ${textColor};
   padding: ${remSize(12)};
   padding-left: ${remSize(16)};
@@ -23,7 +23,6 @@ const HeaderDiv = styled.div`
   justify-content: flex-start;
   align-items: center;
 
-  // TODO: 
   svg {
     max-height: ${remSize(32)};
     padding: ${remSize(4)}

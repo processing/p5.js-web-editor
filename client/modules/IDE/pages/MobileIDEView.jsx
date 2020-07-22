@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { useState } from 'react';
+import styled from 'styled-components';
 
 // Imports to be Refactored
 import { bindActionCreators } from 'redux';
@@ -25,8 +26,16 @@ import Header from '../../../components/mobile/Header';
 import Screen from '../../../components/mobile/MobileScreen';
 import Footer from '../../../components/mobile/Footer';
 import IDEWrapper from '../../../components/mobile/IDEWrapper';
+import Console from '../components/Console';
+import { remSize } from '../../../theme';
+import ActionStrip from '../../../components/mobile/ActionStrip';
 
 const isUserOwner = ({ project, user }) => (project.owner && project.owner.id === user.id);
+
+
+const Expander = styled.div`
+  height: ${props => (props.expanded ? remSize(160) : remSize(27))};
+`;
 
 const MobileIDEView = (props) => {
   const {
@@ -94,7 +103,10 @@ const MobileIDEView = (props) => {
           provideController={setTmController}
         />
       </IDEWrapper>
-      <Footer><h2>Bottom Bar</h2></Footer>
+      <Footer>
+        {ide.consoleIsExpanded && <Expander expanded><Console /></Expander>}
+        <ActionStrip />
+      </Footer>
     </Screen>
   );
 };
