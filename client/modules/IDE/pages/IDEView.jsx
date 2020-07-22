@@ -389,7 +389,7 @@ class IDEView extends React.Component {
         }
         { this.props.location.pathname === '/about' &&
           <Overlay
-            title={this.props.t('About')}
+            title={this.props.t('About.Title')}
             previousPath={this.props.ide.previousPath}
             ariaLabel="about"
           >
@@ -435,7 +435,7 @@ class IDEView extends React.Component {
         }
         {this.props.ide.keyboardShortcutVisible &&
           <Overlay
-            title={this.props.t('KeyboardShortcuts')}
+            title={this.props.t('KeyboardShortcuts.Title')}
             ariaLabel="keyboard shortcuts"
             closeOverlay={this.props.closeKeyboardShortcutModal}
           >
@@ -640,4 +640,5 @@ function mapDispatchToProps(dispatch) {
   );
 }
 
-export default withTranslation('WebEditor')(withRouter(connect(mapStateToProps, mapDispatchToProps)(IDEView)));
+
+export default withTranslation()(withRouter(connect(mapStateToProps, mapDispatchToProps)(IDEView)));
