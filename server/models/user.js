@@ -50,6 +50,7 @@ const userSchema = new Schema({
   verifiedToken: String,
   verifiedTokenExpires: Date,
   github: { type: String },
+  google: { type: String },
   email: { type: String, unique: true },
   tokens: Array,
   apiKeys: { type: [apiKeySchema] },

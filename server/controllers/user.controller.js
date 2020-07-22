@@ -18,7 +18,9 @@ export function userResponse(user) {
     apiKeys: user.apiKeys,
     verified: user.verified,
     id: user._id,
-    totalSize: user.totalSize
+    totalSize: user.totalSize,
+    github: user.github,
+    google: user.google
   };
 }
 

@@ -17,6 +17,17 @@ const labels = {
   google: 'Login with Google'
 };
 
+const linkLabels = {
+  github: {
+    connect: 'Connect GitHub Account',
+    connected: 'Re-link GitHub Account'
+  },
+  google: {
+    connect: 'Connect Google Account',
+    connected: 'Re-link Google Account'
+  }
+};
+
 const icons = {
   github: GithubIcon,
   google: GoogleIcon
@@ -31,14 +42,20 @@ const StyledButton = styled(Button)`
   width: ${remSize(300)};
 `;
 
-function SocialAuthButton({ service }) {
+function SocialAuthButton({ service, link, connected }) {
   const ServiceIcon = icons[service];
+  let label;
+  if (link) {
+    label = connected ? linkLabels[service].connected : linkLabels[service].connect;
+  } else {
+    label = labels[service];
+  }
   return (
     <StyledButton
       iconBefore={<ServiceIcon aria-label={`${service} logo`} />}
       href={authUrls[service]}
     >
-      {labels[service]}
+      {label}
     </StyledButton>
   );
 }
@@ -46,7 +63,14 @@ function SocialAuthButton({ service }) {
 SocialAuthButton.services = services;
 
 SocialAuthButton.propTypes = {
-  service: PropTypes.oneOf(['github', 'google']).isRequired
+  service: PropTypes.oneOf(['github', 'google']).isRequired,
+  link: PropTypes.bool,
+  connected: PropTypes.bool
+};
+
+SocialAuthButton.defaultProps = {
+  link: false,
+  connected: false
 };
 
 export default SocialAuthButton;

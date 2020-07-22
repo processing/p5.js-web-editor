@@ -13,20 +13,36 @@ import APIKeyForm from '../components/APIKeyForm';
 import Nav from '../../../components/Nav';
 
 function SocialLoginPanel(props) {
+  const { user } = props;
   return (
     <React.Fragment>
       <AccountForm {...props} />
       <h2 className="form-container__divider">Social Login</h2>
       <p className="account__social-text">
-        Use your GitHub or Google account to log into the p5.js Web Editor.
+        Use your GitHub or Google account to login to the p5.js Web Editor.
       </p>
       <div className="account__social-stack">
-        <SocialAuthButton service={SocialAuthButton.services.github} />
-        <SocialAuthButton service={SocialAuthButton.services.google} />
+        <SocialAuthButton
+          service={SocialAuthButton.services.github}
+          link
+          connected={!!user.github}
+        />
+        <SocialAuthButton
+          service={SocialAuthButton.services.google}
+          link
+          connected={!!user.google}
+        />
       </div>
     </React.Fragment>
   );
 }
+
+SocialLoginPanel.propTypes = {
+  user: PropTypes.shape({
+    github: PropTypes.string,
+    google: PropTypes.string
+  }).isRequired
+};
 
 class AccountView extends React.Component {
   componentDidMount() {
