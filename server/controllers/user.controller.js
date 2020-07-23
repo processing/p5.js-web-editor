@@ -95,7 +95,7 @@ export function createUser(req, res, next) {
 export function duplicateUserCheck(req, res) {
   const checkType = req.query.check_type;
   const value = req.query[checkType];
-  User.findByEmailOrUsername(value, true, (err, user) => {
+  User.findByEmailOrUsername(value, { caseInsensitive: true }, (err, user) => {
     if (user) {
       return res.json({
         exists: true,

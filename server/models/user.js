@@ -171,19 +171,21 @@ userSchema.statics.findByEmail = function findByEmail(email, cb) {
  * Queries User collection by username and returns one User document.
  *
  * @param {string} username - Username string
- * @param {boolean} [caseInsensitive]  - Does a caseInsensitive query, defaults to false
+ * @param {Object} [options] - Optional options
+ * @param {boolean} options.caseInsensitive - Does a caseInsensitive query, defaults to false
  * @callback [cb] - Optional error-first callback that passes User document
  * @return {Promise<Object>} - Returns Promise fulfilled by User document
  */
-userSchema.statics.findByUsername = function findByUsername(username, caseInsensitive, cb) {
+userSchema.statics.findByUsername = function findByUsername(username, options, cb) {
   const query = {
     username
   };
-  if (arguments.length === 3
-    || (arguments.length === 2 && typeof caseInsensitive === 'boolean' && caseInsensitive)) {
+  if ((arguments.length === 3 && options.caseInsensitive)
+    || (arguments.length === 2 && typeof options === 'object' && options.caseInsensitive)) {
     return this.findOne(query).collation({ locale: 'en', strength: 2 }).exec(cb);
   }
-  return this.findOne(query, cb || caseInsensitive);
+  const callback = typeof options === 'function' ? options : cb;
+  return this.findOne(query, callback);
 };
 
 /**
@@ -193,23 +195,26 @@ userSchema.statics.findByUsername = function findByUsername(username, caseInsens
  * a username or email.
  *
  * @param {string} value - Email or username
- * @param {boolean} caseInsensitive - Does a caseInsensitive query rather than
- *                                    default query for username or email, defaults
- *                                    to false
+ * @param {Object} [options] - Optional options
+ * @param {boolean} options.caseInsensitive - Does a caseInsensitive query rather than
+ *                                          default query for username or email, defaults
+ *                                          to false
  * @callback [cb] - Optional error-first callback that passes User document
  * @return {Promise<Object>} - Returns Promise fulfilled by User document
  */
-userSchema.statics.findByEmailOrUsername = function findByEmailOrUsername(value, caseInsensitive, cb) {
+userSchema.statics.findByEmailOrUsername = function findByEmailOrUsername(value, options, cb) {
+  // do the case insensitive stuff
   const isEmail = value.indexOf('@') > -1;
-  if (arguments.length === 3
-    || (arguments.length === 2 && typeof caseInsensitive === 'boolean' && caseInsensitive)) {
+  if ((arguments.length === 3 && options.caseInsensitive)
+    || (arguments.length === 2 && typeof options === 'object' && options.caseInsensitive)) {
     const query = isEmail ? { email: value } : { username: value };
     return this.findOne(query).collation({ locale: 'en', strength: 2 }).exec(cb);
   }
+  const callback = typeof options === 'function' ? options : cb;
   if (isEmail) {
-    return this.findByEmail(value, cb || caseInsensitive);
+    return this.findByEmail(value, callback);
   }
-  return this.findByUsername(value, cb || caseInsensitive);
+  return this.findByUsername(value, callback);
 };
 
 /**

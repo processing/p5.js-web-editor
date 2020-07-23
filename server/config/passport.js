@@ -114,7 +114,7 @@ passport.use(new GitHubStrategy({
         existingEmailUser.save(saveErr => done(null, existingEmailUser));
       } else {
         let { username } = profile;
-        User.findByUsername(username, true, (findByUsernameErr, existingUsernameUser) => {
+        User.findByUsername(username, { caseInsensitive: true }, (findByUsernameErr, existingUsernameUser) => {
           if (existingUsernameUser) {
             username = generateUniqueUsername(username);
           }
@@ -152,7 +152,7 @@ passport.use(new GoogleStrategy({
 
     User.findByEmail(primaryEmail, (findByEmailErr, existingEmailUser) => {
       let username = profile._json.emails[0].value.split('@')[0];
-      User.findByUsername(username, true, (findByUsernameErr, existingUsernameUser) => {
+      User.findByUsername(username, { caseInsensitive: true }, (findByUsernameErr, existingUsernameUser) => {
         if (existingUsernameUser) {
           username = generateUniqueUsername(username);
         }
