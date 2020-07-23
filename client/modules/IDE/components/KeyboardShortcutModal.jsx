@@ -58,7 +58,7 @@ function KeyboardShortcutModal() {
           <span className="keyboard-shortcut__command">
             {metaKeyName} + S
           </span>
-          <span>{t('Nav.File.Save')}</span>
+          <span>{t('Common.Save')}</span>
         </li>
         <li className="keyboard-shortcut-item">
           <span className="keyboard-shortcut__command">

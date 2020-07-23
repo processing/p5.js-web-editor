@@ -1,9 +1,8 @@
 {
   "Nav": {
-    "File": "Archivo",
-    "File_DropDown": {
+    "File": {
+      "Title": "Archivo",
       "New": "Nuevo",
-      "Save": "Guardar",
       "Share": "Compartir",
       "Duplicate": "Duplicar",
       "Open": "Abrir",
@@ -11,22 +10,22 @@
       "AddToCollection": "Agregar a colección",
       "Examples": "Ejemplos"
     },
-    "Edit": "Editar",
-    "Edit_DropDown": {
+    "Edit": {
+      "Title": "Editar",
       "TidyCode": "Ordenar código",
       "Find": "Buscar",
       "FindNext": "Buscar siguiente",
       "FindPrevious": "Buscar anterior"
     },
-    "Sketch": "Bosquejo",
-    "Sketch_DropDown": {
+    "Sketch": {
+      "Title": "Bosquejo",
       "AddFile": "Agregar archivo",
       "AddFolder": "Agregar directorio",
       "Run": "Ejecutar",
       "Stop": "Detener"
     },
-    "Help": "Ayuda",
-    "Help_DropDown": {
+    "Help": {
+      "Title": "Ayuda",
       "KeyboardShortcuts": "Atajos",
       "Reference": "Referencia",
       "About": "Acerca de"
@@ -58,16 +57,14 @@
   },
   "About": {
     "Title": "Acerca de",
-    "About_Modal": {
-      "Contribute": "Contribuir",
-      "NewP5": "¿Empezando con p5.js?",
-      "Report": "Reporta un error",
-      "Learn": "Aprender",
-      "Resources": "Recursos",
-      "Libraries": "Bibliotecas",
-      "Forum": "Foro",
-      "Examples": "Ejemplos"
-    }
+    "Contribute": "Contribuir",
+    "NewP5": "¿Empezando con p5.js?",
+     "Report": "Reporta un error",
+     "Learn": "Aprender",
+     "Resources": "Recursos",
+     "Libraries": "Bibliotecas",
+     "Forum": "Foro",
+     "Examples": "Ejemplos"
   },
   "Toast": {
     "OpenedNewSketch": "Abriste un nuevo bosquejo.",
@@ -140,6 +137,7 @@
     "Folder": "Directorio"
   },
   "Common": {
+    "Save": "Guardar",
     "BackEditor": "Regresa al editor",
     "ToogleSidebar": "Alternar barra de deslizamiento",
     "ToogleConsole": "Alternar consola",

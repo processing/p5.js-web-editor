@@ -1,9 +1,8 @@
 {
   "Nav": {
-    "File": "File",
-    "File_DropDown": {
+    "File": {
+      "Title": "File",
       "New": "New",
-      "Save": "Save",
       "Share": "Share",
       "Duplicate": "Duplicate",
       "Open": "Open",
@@ -11,22 +10,22 @@
       "AddToCollection": "Add to Collection",
       "Examples": "Examples"
     },
-    "Edit": "Edit",
-    "Edit_DropDown": {
+    "Edit": {
+      "Title": "Edit",
       "TidyCode": "Tidy Code",
       "Find": "Find",
       "FindNext": "Find Next",
       "FindPrevious": "Find Previous"
     },
-    "Sketch": "Sketch",
-    "Sketch_DropDown": {
+    "Sketch": {
+      "Title": "Sketch",
       "AddFile": "Add File",
       "AddFolder": "Add Folder",
       "Run": "Run",
       "Stop": "Stop"
     },
-    "Help": "Help",
-    "Help_DropDown": {
+    "Help": {
+      "Title": "Help",
       "KeyboardShortcuts": "Keyboard Shortcuts",
       "Reference": "Reference",
       "About": "About"
@@ -58,16 +57,14 @@
   },
   "About": {
     "Title": "About",
-    "About_Modal": {
-      "Contribute": "Contribute",
-      "NewP5": "New to p5.js?",
-      "Report": "Report a bug",
+    "Contribute": "Contribute",
+    "NewP5": "New to p5.js?",
+     "Report": "Report a bug",
       "Learn": "Learn",
       "Resources": "Resources",
       "Libraries": "Libraries",
       "Forum": "Forum",
       "Examples": "Examples"
-    }
   },
   "Toast": {
     "OpenedNewSketch": "Opened new sketch.",
@@ -140,6 +137,7 @@
     "Folder": "Folder"
   },
   "Common": {
+    "Save": "Save",
     "BackEditor": "Back to Editor",
     "ToogleSidebar": "Toogle Sidebar",
     "ToogleConsole": "Toogle Console",

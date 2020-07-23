@@ -271,7 +271,7 @@ class Nav extends React.PureComponent {
               }
             }}
           >
-            <span className="nav__item-header">{this.props.t('Nav.File')}</span>
+            <span className="nav__item-header">{this.props.t('Nav.File.Title')}</span>
             <TriangleIcon className="nav__item-header-triangle" focusable="false" aria-hidden="true" />
           </button>
           <ul className="nav__dropdown">
@@ -281,7 +281,7 @@ class Nav extends React.PureComponent {
                 onFocus={this.handleFocusForFile}
                 onBlur={this.handleBlur}
               >
-                {this.props.t('Nav.File_DropDown.New')}
+                {this.props.t('Nav.File.New')}
               </button>
             </li>
             { getConfig('LOGIN_ENABLED') && (!this.props.project.owner || this.isUserOwner()) &&
@@ -291,7 +291,7 @@ class Nav extends React.PureComponent {
                 onFocus={this.handleFocusForFile}
                 onBlur={this.handleBlur}
               >
-                {this.props.t('Nav.File_DropDown.Save')}
+                {this.props.t('Common.Save')}
                 <span className="nav__keyboard-shortcut">{metaKeyName}+S</span>
               </button>
             </li> }
@@ -302,7 +302,7 @@ class Nav extends React.PureComponent {
                 onFocus={this.handleFocusForFile}
                 onBlur={this.handleBlur}
               >
-                {this.props.t('Nav.File_DropDown.Duplicate')}
+                {this.props.t('Nav.File.Duplicate')}
               </button>
             </li> }
             { this.props.project.id &&
@@ -312,7 +312,7 @@ class Nav extends React.PureComponent {
                 onFocus={this.handleFocusForFile}
                 onBlur={this.handleBlur}
               >
-                {this.props.t('Nav.File_DropDown.Share')}
+                {this.props.t('Nav.File.Share')}
               </button>
             </li> }
             { this.props.project.id &&
@@ -322,7 +322,7 @@ class Nav extends React.PureComponent {
                 onFocus={this.handleFocusForFile}
                 onBlur={this.handleBlur}
               >
-                {this.props.t('Nav.File_DropDown.Download')}
+                {this.props.t('Nav.File.Download')}
               </button>
             </li> }
             { this.props.user.authenticated &&
@@ -333,7 +333,7 @@ class Nav extends React.PureComponent {
                 onBlur={this.handleBlur}
                 onClick={this.setDropdownForNone}
               >
-                {this.props.t('Nav.File_DropDown.Open')}
+                {this.props.t('Nav.File.Open')}
               </Link>
             </li> }
             {getConfig('UI_COLLECTIONS_ENABLED') &&
@@ -346,7 +346,7 @@ class Nav extends React.PureComponent {
                   onBlur={this.handleBlur}
                   onClick={this.setDropdownForNone}
                 >
-                  {this.props.t('Nav.File_DropDown.AddToCollection')}
+                  {this.props.t('Nav.File.AddToCollection')}
                 </Link>
               </li>}
             { getConfig('EXAMPLES_ENABLED') &&
@@ -357,7 +357,7 @@ class Nav extends React.PureComponent {
                 onBlur={this.handleBlur}
                 onClick={this.setDropdownForNone}
               >
-                {this.props.t('Nav.File_DropDown.Examples')}
+                {this.props.t('Nav.File.Examples')}
               </Link>
             </li> }
           </ul>
@@ -373,7 +373,7 @@ class Nav extends React.PureComponent {
               }
             }}
           >
-            <span className="nav__item-header">{this.props.t('Nav.Edit')}</span>
+            <span className="nav__item-header">{this.props.t('Nav.Edit.Title')}</span>
             <TriangleIcon className="nav__item-header-triangle" focusable="false" aria-hidden="true" />
           </button>
           <ul className="nav__dropdown" >
@@ -386,7 +386,7 @@ class Nav extends React.PureComponent {
                 onFocus={this.handleFocusForEdit}
                 onBlur={this.handleBlur}
               >
-                {this.props.t('Nav.Edit_DropDown.TidyCode')}
+                {this.props.t('Nav.Edit.TidyCode')}
                 <span className="nav__keyboard-shortcut">{'\u21E7'}+Tab</span>
               </button>
             </li>
@@ -396,7 +396,7 @@ class Nav extends React.PureComponent {
                 onFocus={this.handleFocusForEdit}
                 onBlur={this.handleBlur}
               >
-                {this.props.t('Nav.Edit_DropDown.Find')}
+                {this.props.t('Nav.Edit.Find')}
                 <span className="nav__keyboard-shortcut">{metaKeyName}+F</span>
               </button>
             </li>
@@ -406,7 +406,7 @@ class Nav extends React.PureComponent {
                 onFocus={this.handleFocusForEdit}
                 onBlur={this.handleBlur}
               >
-                {this.props.t('Nav.Edit_DropDown.FindNext')}
+                {this.props.t('Nav.Edit.FindNext')}
                 <span className="nav__keyboard-shortcut">{metaKeyName}+G</span>
               </button>
             </li>
@@ -416,7 +416,7 @@ class Nav extends React.PureComponent {
                 onFocus={this.handleFocusForEdit}
                 onBlur={this.handleBlur}
               >
-                {this.props.t('Nav.Edit_DropDown.FindPrevious')}
+                {this.props.t('Nav.Edit.FindPrevious')}
                 <span className="nav__keyboard-shortcut">{'\u21E7'}+{metaKeyName}+G</span>
               </button>
             </li>
@@ -433,7 +433,7 @@ class Nav extends React.PureComponent {
               }
             }}
           >
-            <span className="nav__item-header">{this.props.t('Nav.Sketch')}</span>
+            <span className="nav__item-header">{this.props.t('Nav.Sketch.Title')}</span>
             <TriangleIcon className="nav__item-header-triangle" focusable="false" aria-hidden="true" />
           </button>
           <ul className="nav__dropdown">
@@ -443,7 +443,7 @@ class Nav extends React.PureComponent {
                 onFocus={this.handleFocusForSketch}
                 onBlur={this.handleBlur}
               >
-                {this.props.t('Nav.Sketch_DropDown.AddFile')}
+                {this.props.t('Nav.Sketch.AddFile')}
               </button>
             </li>
             <li className="nav__dropdown-item">
@@ -452,7 +452,7 @@ class Nav extends React.PureComponent {
                 onFocus={this.handleFocusForSketch}
                 onBlur={this.handleBlur}
               >
-                {this.props.t('Nav.Sketch_DropDown.AddFolder')}
+                {this.props.t('Nav.Sketch.AddFolder')}
               </button>
             </li>
             <li className="nav__dropdown-item">
@@ -461,7 +461,7 @@ class Nav extends React.PureComponent {
                 onFocus={this.handleFocusForSketch}
                 onBlur={this.handleBlur}
               >
-                {this.props.t('Nav.Sketch_DropDown.Run')}
+                {this.props.t('Nav.Sketch.Run')}
                 <span className="nav__keyboard-shortcut">{metaKeyName}+Enter</span>
               </button>
             </li>
@@ -471,7 +471,7 @@ class Nav extends React.PureComponent {
                 onFocus={this.handleFocusForSketch}
                 onBlur={this.handleBlur}
               >
-                {this.props.t('Nav.Sketch_DropDown.Stop')}
+                {this.props.t('Nav.Sketch.Stop')}
                 <span className="nav__keyboard-shortcut">{'\u21E7'}+{metaKeyName}+Enter</span>
               </button>
             </li>
@@ -508,7 +508,7 @@ class Nav extends React.PureComponent {
               }
             }}
           >
-            <span className="nav__item-header">{this.props.t('Nav.Help')}</span>
+            <span className="nav__item-header">{this.props.t('Nav.Help.Title')}</span>
             <TriangleIcon className="nav__item-header-triangle" focusable="false" aria-hidden="true" />
           </button>
           <ul className="nav__dropdown">
@@ -518,7 +518,7 @@ class Nav extends React.PureComponent {
                 onBlur={this.handleBlur}
                 onClick={this.handleKeyboardShortcuts}
               >
-                {this.props.t('Nav.Help_DropDown.KeyboardShortcuts')}
+                {this.props.t('Nav.Help.KeyboardShortcuts')}
               </button>
             </li>
             <li className="nav__dropdown-item">
@@ -529,7 +529,7 @@ class Nav extends React.PureComponent {
                 onFocus={this.handleFocusForHelp}
                 onBlur={this.handleBlur}
                 onClick={this.setDropdownForNone}
-              >{this.props.t('Nav.Help_DropDown.Reference')}
+              >{this.props.t('Nav.Help.Reference')}
               </a>
             </li>
             <li className="nav__dropdown-item">
@@ -539,7 +539,7 @@ class Nav extends React.PureComponent {
                 onBlur={this.handleBlur}
                 onClick={this.setDropdownForNone}
               >
-                {this.props.t('Nav.Help_DropDown.About')}
+                {this.props.t('Nav.Help.About')}
               </Link>
             </li>
           </ul>
