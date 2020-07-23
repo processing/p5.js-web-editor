@@ -82,7 +82,6 @@
   },
   "Preferences": {
     "Settings": "Settings",
-    "Option": {
       "GeneralSettings": "General settings",
       "Accessibility": "Accessibility",
       "Theme": "Theme",
@@ -104,7 +103,17 @@
       "PlainText": "Plain-text",
       "TableText": "Table-text",
       "Sound": "Sound",
-      "LineNumbers": "Line numbers"
+      "LineNumbers": "Line numbers",
+    "ARIA": {
+      "LightThemeOn": "light theme on",
+      "DarkThemeOn": "dark theme on",
+      "HighContrastThemeOn": "high contrast theme on",
+      "DecreaseFontSize": "decrease font size",
+      "IncreaseFontSize": "increase font size",
+      "AutosaveOn": "autosave on",
+      "AutosaveOff": "autosave off",
+      "LineWrapOn": "linewrap on",
+      "LineWrapOff": "linewrap off"
     }
   },
   "KeyboardShortcuts": {

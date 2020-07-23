@@ -82,7 +82,6 @@
   },
   "Preferences": {
     "Settings": "Configuración",
-    "Option": {
       "GeneralSettings": "Configuración general",
       "Accessibility": "Accesibilidad",
       "Theme": "Modo de visualización",
@@ -104,7 +103,17 @@
       "PlainText": "Texto sin formato",
       "TableText":  "Tablero de texto",
       "Sound": "Sonido",
-      "LineNumbers": "Número de línea"
+      "LineNumbers": "Número de línea",
+    "ARIA": {
+      "LightThemeOn": "Modo de visualización claro activado",
+      "DarkThemeOn": "Modo de visualización oscuro activado",
+      "HighContrastThemeOn": "Modo de visualización de alto contraste activado",
+      "DecreaseFontSize": "Disminuir tamaño del texto",
+      "IncreaseFontSize": "Aumentar tamaño del texto",
+      "AutosaveOn": "Grabado automático activado",
+      "AutosaveOff": "Grabado automático desactivado",
+      "LineWrapOn": "Ajuste automático de línea activado",
+      "LineWrapOff": "Ajuste automático de línea desactivado"
     }
   },
   "KeyboardShortcuts": {
