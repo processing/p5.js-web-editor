@@ -7,6 +7,7 @@ import styled from 'styled-components';
 
 // Imports to be Refactored
 import { bindActionCreators } from 'redux';
+
 import * as FileActions from '../actions/files';
 import * as IDEActions from '../actions/ide';
 import * as ProjectActions from '../actions/project';
@@ -19,7 +20,7 @@ import { getHTMLFile } from '../reducers/files';
 
 // Local Imports
 import Editor from '../components/Editor';
-import { PreferencesIcon, PlayIcon, ExitIcon, MoreIcon } from '../../../common/icons';
+import { PlayIcon, ExitIcon, MoreIcon } from '../../../common/icons';
 
 import IconButton from '../../../components/mobile/IconButton';
 import Header from '../../../components/mobile/Header';
@@ -28,7 +29,7 @@ import Footer from '../../../components/mobile/Footer';
 import IDEWrapper from '../../../components/mobile/IDEWrapper';
 import Console from '../components/Console';
 import { remSize } from '../../../theme';
-import Dropdown from '../../../components/Dropdown';
+import OverlayManager from '../../../components/OverlayManager';
 
 const isUserOwner = ({ project, user }) => (project.owner && project.owner.id === user.id);
 
@@ -36,47 +37,6 @@ const BottomBarContent = styled.h2`
   padding: ${remSize(12)};
   padding-left: ${remSize(32)};
 `;
-
-
-// TODO: Move to new file?
-// const overlays = {};
-// const OverlayManager = name => overlays[name] || null;
-
-const OverlayManager = ({ ref, overlay, hideOverlay }) => {
-  useEffect(() => {
-    const handleClickOutside = ({ target }) => {
-      if (ref && ref.current && !ref.current.contains(target)) { hideOverlay(); console.log('click'); }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => { document.removeEventListener('mousedown', handleClickOutside); };
-  }, [ref]);
-
-  const headerNavOptions = [
-    { icon: PreferencesIcon, title: 'Preferences', href: '/mobile/preferences' },
-    { icon: PreferencesIcon, title: 'Examples', href: '/mobile/examples' },
-    { icon: PreferencesIcon, title: 'Original View', href: '/mobile/preferences' }
-  ];
-
-  return (
-    <div ref={(r) => { if (ref) { ref.current = r; } }}>
-      {(overlay === 'dropdown') && <Dropdown items={headerNavOptions} />}
-    </div>
-  );
-};
-
-const refPropType = PropTypes.oneOfType([
-  PropTypes.func,
-  PropTypes.shape({ current: PropTypes.instanceOf(Element) })
-]);
-
-OverlayManager.propTypes = {
-  ref: refPropType.isRequired,
-  overlay: PropTypes.string,
-  hideOverlay: PropTypes.func.isRequired
-};
-
-OverlayManager.defaultProps = { overlay: null };
 
 
 const MobileIDEView = (props) => {
@@ -93,11 +53,10 @@ const MobileIDEView = (props) => {
 
   // TODO: Move this to OverlayController (?)
   const hideOverlay = () => setOverlay(null);
-  const overlayRef = useRef();
-
+  // const overlayRef = useRef({});
 
   return (
-    <Screen fullscreen >
+    <Screen fullscreen>
       <Header
         title={project.name}
         subtitle={selectedFile.name}
@@ -151,12 +110,15 @@ const MobileIDEView = (props) => {
         />
       </IDEWrapper>
 
-      {/* TODO: Create Overlay Manager */}
-      {<OverlayManager
-        ref={overlayRef}
+      <Footer>
+        <Console />
+      </Footer>
+
+      <OverlayManager
+        // ref={overlayRef}
         overlay={overlayName}
         hideOverlay={hideOverlay}
-      />}
+      />
     </Screen>
   );
 };
