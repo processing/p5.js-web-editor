@@ -30,7 +30,7 @@ const OverlayManager = ({ overlay, hideOverlay }) => {
     { icon: PreferencesIcon, title: 'Examples', href: '/mobile/examples' },
     {
       icon: PreferencesIcon,
-      title: 'Original View',
+      title: 'Original Editor',
       href: '/mobile/preferences',
     },
   ];
