@@ -30,8 +30,8 @@ import Console from '../components/Console';
 import { remSize } from '../../../theme';
 import ActionStrip from '../../../components/mobile/ActionStrip';
 
-const isUserOwner = ({ project, user }) => (project.owner && project.owner.id === user.id);
-
+const isUserOwner = ({ project, user }) =>
+  project.owner && project.owner.id === user.id;
 
 const Expander = styled.div`
   height: ${props => (props.expanded ? remSize(160) : remSize(27))};
@@ -39,11 +39,28 @@ const Expander = styled.div`
 
 const MobileIDEView = (props) => {
   const {
-    preferences, ide, editorAccessibility, project, updateLintMessage, clearLintMessage,
-    selectedFile, updateFileContent, files,
-    closeEditorOptions, showEditorOptions, showKeyboardShortcutModal, setUnsavedChanges,
-    startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console,
-    showRuntimeErrorWarning, hideRuntimeErrorWarning, startSketch
+    preferences,
+    ide,
+    editorAccessibility,
+    project,
+    updateLintMessage,
+    clearLintMessage,
+    selectedFile,
+    updateFileContent,
+    files,
+    closeEditorOptions,
+    showEditorOptions,
+    showKeyboardShortcutModal,
+    setUnsavedChanges,
+    startRefreshSketch,
+    stopSketch,
+    expandSidebar,
+    collapseSidebar,
+    clearConsole,
+    console,
+    showRuntimeErrorWarning,
+    hideRuntimeErrorWarning,
+    startSketch,
   } = props;
 
   const [tmController, setTmController] = useState(null); // eslint-disable-line
@@ -55,7 +72,11 @@ const MobileIDEView = (props) => {
         title={project.name}
         subtitle={selectedFile.name}
         leftButton={
-          <IconButton to="/mobile" icon={ExitIcon} aria-label="Return to original editor" />
+          <IconButton
+            to="/mobile"
+            icon={ExitIcon}
+            aria-label="Return to original editor"
+          />
         }
       >
         <IconButton
@@ -64,7 +85,14 @@ const MobileIDEView = (props) => {
           icon={PreferencesIcon}
           aria-label="Open preferences menu"
         />
-        <IconButton to="/mobile/preview" onClick={() => { startSketch(); }} icon={PlayIcon} aria-label="Run sketch" />
+        <IconButton
+          to="/mobile/preview"
+          onClick={() => {
+            startSketch();
+          }}
+          icon={PlayIcon}
+          aria-label="Run sketch"
+        />
       </Header>
 
       <IDEWrapper>
@@ -104,16 +132,18 @@ const MobileIDEView = (props) => {
         />
       </IDEWrapper>
       <Footer>
-        {ide.consoleIsExpanded && <Expander expanded><Console /></Expander>}
+        {ide.consoleIsExpanded && (
+          <Expander expanded>
+            <Console />
+          </Expander>
+        )}
         <ActionStrip />
       </Footer>
     </Screen>
   );
 };
 
-
 MobileIDEView.propTypes = {
-
   preferences: PropTypes.shape({
     fontSize: PropTypes.number.isRequired,
     autosave: PropTypes.bool.isRequired,
@@ -124,13 +154,13 @@ MobileIDEView.propTypes = {
     gridOutput: PropTypes.bool.isRequired,
     soundOutput: PropTypes.bool.isRequired,
     theme: PropTypes.string.isRequired,
-    autorefresh: PropTypes.bool.isRequired
+    autorefresh: PropTypes.bool.isRequired,
   }).isRequired,
 
   ide: PropTypes.shape({
     isPlaying: PropTypes.bool.isRequired,
     isAccessibleOutputPlaying: PropTypes.bool.isRequired,
-    consoleEvent: PropTypes.array,
+    consoleEvent: PropTypes.array, // eslint-disable-line
     modalIsVisible: PropTypes.bool.isRequired,
     sidebarIsExpanded: PropTypes.bool.isRequired,
     consoleIsExpanded: PropTypes.bool.isRequired,
@@ -152,11 +182,11 @@ MobileIDEView.propTypes = {
     justOpenedProject: PropTypes.bool.isRequired,
     errorType: PropTypes.string,
     runtimeErrorWarningVisible: PropTypes.bool.isRequired,
-    uploadFileModalVisible: PropTypes.bool.isRequired
+    uploadFileModalVisible: PropTypes.bool.isRequired,
   }).isRequired,
 
   editorAccessibility: PropTypes.shape({
-    lintMessages: PropTypes.array.isRequired,
+    lintMessages: PropTypes.array.isRequired, // eslint-disable-line
   }).isRequired,
 
   project: PropTypes.shape({
@@ -164,9 +194,9 @@ MobileIDEView.propTypes = {
     name: PropTypes.string.isRequired,
     owner: PropTypes.shape({
       username: PropTypes.string,
-      id: PropTypes.string
+      id: PropTypes.string,
     }),
-    updatedAt: PropTypes.string
+    updatedAt: PropTypes.string,
   }).isRequired,
 
   startSketch: PropTypes.func.isRequired,
@@ -178,7 +208,7 @@ MobileIDEView.propTypes = {
   selectedFile: PropTypes.shape({
     id: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
   }).isRequired,
 
   updateFileContent: PropTypes.func.isRequired,
@@ -186,7 +216,7 @@ MobileIDEView.propTypes = {
   files: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired
+    content: PropTypes.string.isRequired,
   })).isRequired,
 
   closeEditorOptions: PropTypes.func.isRequired,
@@ -209,7 +239,7 @@ MobileIDEView.propTypes = {
 
   console: PropTypes.arrayOf(PropTypes.shape({
     method: PropTypes.string.isRequired,
-    args: PropTypes.arrayOf(PropTypes.string)
+    args: PropTypes.arrayOf(PropTypes.string),
   })).isRequired,
 
   showRuntimeErrorWarning: PropTypes.func.isRequired,
@@ -219,15 +249,15 @@ MobileIDEView.propTypes = {
   user: PropTypes.shape({
     authenticated: PropTypes.bool.isRequired,
     id: PropTypes.string,
-    username: PropTypes.string
+    username: PropTypes.string,
   }).isRequired,
 };
-
 
 function mapStateToProps(state) {
   return {
     files: state.files,
-    selectedFile: state.files.find(file => file.isSelectedFile) ||
+    selectedFile:
+      state.files.find(file => file.isSelectedFile) ||
       state.files.find(file => file.name === 'sketch.js') ||
       state.files.find(file => file.name !== 'root'),
     htmlFile: getHTMLFile(state.files),
@@ -237,7 +267,7 @@ function mapStateToProps(state) {
     user: state.user,
     project: state.project,
     toast: state.toast,
-    console: state.console
+    console: state.console,
   };
 }
 
@@ -257,6 +287,5 @@ function mapDispatchToProps(dispatch) {
     dispatch
   );
 }
-
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MobileIDEView));

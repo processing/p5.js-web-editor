@@ -6,12 +6,21 @@ import Button from '../../../common/Button';
 
 function ResetPasswordForm(props) {
   const {
-    fields: { email }, handleSubmit, submitting, invalid, pristine
+    fields: { email },
+    handleSubmit,
+    submitting,
+    invalid,
+    pristine,
   } = props;
   return (
-    <form className="form" onSubmit={handleSubmit(props.initiateResetPassword.bind(this))}>
+    <form
+      className="form"
+      onSubmit={handleSubmit(props.initiateResetPassword.bind(this))}
+    >
       <p className="form__field">
-        <label htmlFor="email" className="form__label">Email used for registration</label>
+        <label htmlFor="email" className="form__label">
+          Email used for registration
+        </label>
         <input
           className="form__input"
           aria-label="email"
@@ -19,12 +28,17 @@ function ResetPasswordForm(props) {
           id="email"
           {...domOnlyProps(email)}
         />
-        {email.touched && email.error && <span className="form-error">{email.error}</span>}
+        {email.touched && email.error && (
+          <span className="form-error">{email.error}</span>
+        )}
       </p>
       <Button
         type="submit"
-        disabled={submitting || invalid || pristine || props.user.resetPasswordInitiate}
-      >Send Password Reset Email
+        disabled={
+          submitting || invalid || pristine || props.user.resetPasswordInitiate
+        }
+      >
+        Send Password Reset Email
       </Button>
     </form>
   );
@@ -32,7 +46,7 @@ function ResetPasswordForm(props) {
 
 ResetPasswordForm.propTypes = {
   fields: PropTypes.shape({
-    email: PropTypes.object.isRequired
+    email: PropTypes.object.isRequired, // eslint-disable-line
   }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   initiateResetPassword: PropTypes.func.isRequired,
@@ -40,14 +54,14 @@ ResetPasswordForm.propTypes = {
   invalid: PropTypes.bool,
   pristine: PropTypes.bool,
   user: PropTypes.shape({
-    resetPasswordInitiate: PropTypes.bool
-  }).isRequired
+    resetPasswordInitiate: PropTypes.bool,
+  }).isRequired,
 };
 
 ResetPasswordForm.defaultProps = {
   submitting: false,
   pristine: true,
-  invalid: false
+  invalid: false,
 };
 
 export default ResetPasswordForm;

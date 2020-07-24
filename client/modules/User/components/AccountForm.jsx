@@ -13,7 +13,7 @@ function AccountForm(props) {
     initiateVerification,
     submitting,
     invalid,
-    pristine
+    pristine,
   } = props;
 
   const handleInitiateVerification = (evt) => {
@@ -24,7 +24,9 @@ function AccountForm(props) {
   return (
     <form className="form" onSubmit={handleSubmit(props.updateSettings)}>
       <p className="form__field">
-        <label htmlFor="email" className="form__label">Email</label>
+        <label htmlFor="email" className="form__label">
+          Email
+        </label>
         <input
           className="form__input"
           aria-label="email"
@@ -32,30 +34,29 @@ function AccountForm(props) {
           id="email"
           {...domOnlyProps(email)}
         />
-        {email.touched && email.error && <span className="form-error">{email.error}</span>}
+        {email.touched && email.error && (
+          <span className="form-error">{email.error}</span>
+        )}
       </p>
-      {
-        user.verified !== 'verified' &&
-          (
-            <p className="form__context">
-              <span className="form__status">Unconfirmed.</span>
-              {
-                user.emailVerificationInitiate === true ?
-                  (
-                    <span className="form__status"> Confirmation sent, check your email.</span>
-                  ) :
-                  (
-                    <Button
-                      onClick={handleInitiateVerification}
-                    >Resend confirmation email
-                    </Button>
-                  )
-              }
-            </p>
-          )
-      }
+      {user.verified !== 'verified' && (
+        <p className="form__context">
+          <span className="form__status">Unconfirmed.</span>
+          {user.emailVerificationInitiate === true ? (
+            <span className="form__status">
+              {' '}
+              Confirmation sent, check your email.
+            </span>
+          ) : (
+            <Button onClick={handleInitiateVerification}>
+              Resend confirmation email
+            </Button>
+          )}
+        </p>
+      )}
       <p className="form__field">
-        <label htmlFor="username" className="form__label">User Name</label>
+        <label htmlFor="username" className="form__label">
+          User Name
+        </label>
         <input
           className="form__input"
           aria-label="username"
@@ -64,10 +65,14 @@ function AccountForm(props) {
           defaultValue={username}
           {...domOnlyProps(username)}
         />
-        {username.touched && username.error && <span className="form-error">{username.error}</span>}
+        {username.touched && username.error && (
+          <span className="form-error">{username.error}</span>
+        )}
       </p>
       <p className="form__field">
-        <label htmlFor="current password" className="form__label">Current Password</label>
+        <label htmlFor="current password" className="form__label">
+          Current Password
+        </label>
         <input
           className="form__input"
           aria-label="currentPassword"
@@ -75,14 +80,14 @@ function AccountForm(props) {
           id="currentPassword"
           {...domOnlyProps(currentPassword)}
         />
-        {
-          currentPassword.touched &&
-          currentPassword.error &&
+        {currentPassword.touched && currentPassword.error && (
           <span className="form-error">{currentPassword.error}</span>
-        }
+        )}
       </p>
       <p className="form__field">
-        <label htmlFor="new password" className="form__label">New Password</label>
+        <label htmlFor="new password" className="form__label">
+          New Password
+        </label>
         <input
           className="form__input"
           aria-label="newPassword"
@@ -90,12 +95,12 @@ function AccountForm(props) {
           id="newPassword"
           {...domOnlyProps(newPassword)}
         />
-        {newPassword.touched && newPassword.error && <span className="form-error">{newPassword.error}</span>}
+        {newPassword.touched && newPassword.error && (
+          <span className="form-error">{newPassword.error}</span>
+        )}
       </p>
-      <Button
-        type="submit"
-        disabled={submitting || invalid || pristine}
-      >Save All Settings
+      <Button type="submit" disabled={submitting || invalid || pristine}>
+        Save All Settings
       </Button>
     </form>
   );
@@ -103,10 +108,10 @@ function AccountForm(props) {
 
 AccountForm.propTypes = {
   fields: PropTypes.shape({
-    username: PropTypes.object.isRequired,
-    email: PropTypes.object.isRequired,
-    currentPassword: PropTypes.object.isRequired,
-    newPassword: PropTypes.object.isRequired,
+    username: PropTypes.object.isRequired, // eslint-disable-line
+    email: PropTypes.object.isRequired, // eslint-disable-line
+    currentPassword: PropTypes.object.isRequired, // eslint-disable-line
+    newPassword: PropTypes.object.isRequired, // eslint-disable-line
   }).isRequired,
   user: PropTypes.shape({
     verified: PropTypes.number.isRequired,
@@ -123,7 +128,7 @@ AccountForm.propTypes = {
 AccountForm.defaultProps = {
   submitting: false,
   pristine: true,
-  invalid: false
+  invalid: false,
 };
 
 export default AccountForm;

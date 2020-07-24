@@ -7,12 +7,20 @@ import { domOnlyProps } from '../../../utils/reduxFormUtils';
 
 function LoginForm(props) {
   const {
-    fields: { email, password }, handleSubmit, submitting, pristine
+    fields: { email, password },
+    handleSubmit,
+    submitting,
+    pristine,
   } = props;
   return (
-    <form className="form" onSubmit={handleSubmit(props.validateAndLoginUser.bind(this, props.previousPath))}>
+    <form
+      className="form"
+      onSubmit={handleSubmit(props.validateAndLoginUser.bind(this, props.previousPath))}
+    >
       <p className="form__field">
-        <label htmlFor="email" className="form__label">Email or Username</label>
+        <label htmlFor="email" className="form__label">
+          Email or Username
+        </label>
         <input
           className="form__input"
           aria-label="email or username"
@@ -20,10 +28,14 @@ function LoginForm(props) {
           id="email"
           {...domOnlyProps(email)}
         />
-        {email.touched && email.error && <span className="form-error">{email.error}</span>}
+        {email.touched && email.error && (
+          <span className="form-error">{email.error}</span>
+        )}
       </p>
       <p className="form__field">
-        <label htmlFor="password" className="form__label">Password</label>
+        <label htmlFor="password" className="form__label">
+          Password
+        </label>
         <input
           className="form__input"
           aria-label="password"
@@ -31,12 +43,12 @@ function LoginForm(props) {
           id="password"
           {...domOnlyProps(password)}
         />
-        {password.touched && password.error && <span className="form-error">{password.error}</span>}
+        {password.touched && password.error && (
+          <span className="form-error">{password.error}</span>
+        )}
       </p>
-      <Button
-        type="submit"
-        disabled={submitting || pristine}
-      >Log In
+      <Button type="submit" disabled={submitting || pristine}>
+        Log In
       </Button>
     </form>
   );
@@ -44,21 +56,21 @@ function LoginForm(props) {
 
 LoginForm.propTypes = {
   fields: PropTypes.shape({
-    email: PropTypes.object.isRequired,
-    password: PropTypes.object.isRequired
+    email: PropTypes.object.isRequired, // eslint-disable-line
+    password: PropTypes.object.isRequired, // eslint-disable-line
   }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   validateAndLoginUser: PropTypes.func.isRequired,
   submitting: PropTypes.bool,
   pristine: PropTypes.bool,
   invalid: PropTypes.bool,
-  previousPath: PropTypes.string.isRequired
+  previousPath: PropTypes.string.isRequired,
 };
 
 LoginForm.defaultProps = {
   submitting: false,
   pristine: true,
-  invalid: false
+  invalid: false,
 };
 
 export default LoginForm;

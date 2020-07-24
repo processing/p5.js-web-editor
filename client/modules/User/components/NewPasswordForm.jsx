@@ -6,12 +6,21 @@ import Button from '../../../common/Button';
 
 function NewPasswordForm(props) {
   const {
-    fields: { password, confirmPassword }, handleSubmit, submitting, invalid, pristine
+    fields: { password, confirmPassword },
+    handleSubmit,
+    submitting,
+    invalid,
+    pristine,
   } = props;
   return (
-    <form className="form" onSubmit={handleSubmit(props.updatePassword.bind(this, props.params.reset_password_token))}>
+    <form
+      className="form"
+      onSubmit={handleSubmit(props.updatePassword.bind(this, props.params.reset_password_token))}
+    >
       <p className="form__field">
-        <label htmlFor="password" className="form__label">Password</label>
+        <label htmlFor="password" className="form__label">
+          Password
+        </label>
         <input
           className="form__input"
           aria-label="password"
@@ -19,10 +28,14 @@ function NewPasswordForm(props) {
           id="Password"
           {...domOnlyProps(password)}
         />
-        {password.touched && password.error && <span className="form-error">{password.error}</span>}
+        {password.touched && password.error && (
+          <span className="form-error">{password.error}</span>
+        )}
       </p>
       <p className="form__field">
-        <label htmlFor="confirm password" className="form__label">Confirm Password</label>
+        <label htmlFor="confirm password" className="form__label">
+          Confirm Password
+        </label>
         <input
           className="form__input"
           type="password"
@@ -30,21 +43,21 @@ function NewPasswordForm(props) {
           id="confirm password"
           {...domOnlyProps(confirmPassword)}
         />
-        {
-          confirmPassword.touched &&
-          confirmPassword.error &&
+        {confirmPassword.touched && confirmPassword.error && (
           <span className="form-error">{confirmPassword.error}</span>
-        }
+        )}
       </p>
-      <Button type="submit" disabled={submitting || invalid || pristine}>Set New Password</Button>
+      <Button type="submit" disabled={submitting || invalid || pristine}>
+        Set New Password
+      </Button>
     </form>
   );
 }
 
 NewPasswordForm.propTypes = {
   fields: PropTypes.shape({
-    password: PropTypes.object.isRequired,
-    confirmPassword: PropTypes.object.isRequired
+    password: PropTypes.object.isRequired, // eslint-disable-line
+    confirmPassword: PropTypes.object.isRequired, // eslint-disable-line
   }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   updatePassword: PropTypes.func.isRequired,
@@ -59,7 +72,7 @@ NewPasswordForm.propTypes = {
 NewPasswordForm.defaultProps = {
   invalid: false,
   pristine: true,
-  submitting: false
+  submitting: false,
 };
 
 export default NewPasswordForm;

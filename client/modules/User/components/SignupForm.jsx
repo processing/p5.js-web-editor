@@ -8,12 +8,21 @@ function SignupForm(props) {
   const {
     fields: {
       username, email, password, confirmPassword
-    }, handleSubmit, submitting, invalid, pristine
+    },
+    handleSubmit,
+    submitting,
+    invalid,
+    pristine,
   } = props;
   return (
-    <form className="form" onSubmit={handleSubmit(props.signUpUser.bind(this, props.previousPath))}>
+    <form
+      className="form"
+      onSubmit={handleSubmit(props.signUpUser.bind(this, props.previousPath))}
+    >
       <p className="form__field">
-        <label htmlFor="username" className="form__label">User Name</label>
+        <label htmlFor="username" className="form__label">
+          User Name
+        </label>
         <input
           className="form__input"
           aria-label="username"
@@ -21,10 +30,14 @@ function SignupForm(props) {
           id="username"
           {...domOnlyProps(username)}
         />
-        {username.touched && username.error && <span className="form-error">{username.error}</span>}
+        {username.touched && username.error && (
+          <span className="form-error">{username.error}</span>
+        )}
       </p>
       <p className="form__field">
-        <label htmlFor="email" className="form__label">Email</label>
+        <label htmlFor="email" className="form__label">
+          Email
+        </label>
         <input
           className="form__input"
           aria-label="email"
@@ -32,10 +45,14 @@ function SignupForm(props) {
           id="email"
           {...domOnlyProps(email)}
         />
-        {email.touched && email.error && <span className="form-error">{email.error}</span>}
+        {email.touched && email.error && (
+          <span className="form-error">{email.error}</span>
+        )}
       </p>
       <p className="form__field">
-        <label htmlFor="password" className="form__label">Password</label>
+        <label htmlFor="password" className="form__label">
+          Password
+        </label>
         <input
           className="form__input"
           aria-label="password"
@@ -43,10 +60,14 @@ function SignupForm(props) {
           id="password"
           {...domOnlyProps(password)}
         />
-        {password.touched && password.error && <span className="form-error">{password.error}</span>}
+        {password.touched && password.error && (
+          <span className="form-error">{password.error}</span>
+        )}
       </p>
       <p className="form__field">
-        <label htmlFor="confirm password" className="form__label">Confirm Password</label>
+        <label htmlFor="confirm password" className="form__label">
+          Confirm Password
+        </label>
         <input
           className="form__input"
           type="password"
@@ -54,16 +75,12 @@ function SignupForm(props) {
           id="confirm password"
           {...domOnlyProps(confirmPassword)}
         />
-        {
-          confirmPassword.touched &&
-          confirmPassword.error &&
+        {confirmPassword.touched && confirmPassword.error && (
           <span className="form-error">{confirmPassword.error}</span>
-        }
+        )}
       </p>
-      <Button
-        type="submit"
-        disabled={submitting || invalid || pristine}
-      >Sign Up
+      <Button type="submit" disabled={submitting || invalid || pristine}>
+        Sign Up
       </Button>
     </form>
   );
@@ -71,23 +88,23 @@ function SignupForm(props) {
 
 SignupForm.propTypes = {
   fields: PropTypes.shape({
-    username: PropTypes.object.isRequired,
-    email: PropTypes.object.isRequired,
-    password: PropTypes.object.isRequired,
-    confirmPassword: PropTypes.object.isRequired
+    username: PropTypes.object.isRequired, // eslint-disable-line
+    email: PropTypes.object.isRequired, // eslint-disable-line
+    password: PropTypes.object.isRequired, // eslint-disable-line
+    confirmPassword: PropTypes.object.isRequired, // eslint-disable-line
   }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   signUpUser: PropTypes.func.isRequired,
   submitting: PropTypes.bool,
   invalid: PropTypes.bool,
   pristine: PropTypes.bool,
-  previousPath: PropTypes.string.isRequired
+  previousPath: PropTypes.string.isRequired,
 };
 
 SignupForm.defaultProps = {
   submitting: false,
   pristine: true,
-  invalid: false
+  invalid: false,
 };
 
 export default SignupForm;
