@@ -3,14 +3,20 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { prop, remSize } from '../../theme';
 
-const background = transparent => prop(transparent ? 'backgroundColor' : 'MobilePanel.default.background');
-const textColor = prop('primaryTextColor');
+
+const background = ({ transparent, inverted }) => prop(transparent === true
+  ? 'backgroundColor'
+  : `MobilePanel.default.${inverted === true ? 'foreground' : 'background'}`);
+
+const textColor = ({ transparent, inverted }) => prop((transparent === false && inverted === true)
+  ? 'MobilePanel.default.background'
+  : 'primaryTextColor');
 
 
 const HeaderDiv = styled.div`
   position: fixed;
   width: 100%;
-  background: ${props => background(props.transparent === true)};
+  background: ${props => background(props)};
   color: ${textColor};
   padding: ${remSize(12)};
   padding-left: ${remSize(16)};
@@ -46,9 +52,9 @@ const TitleContainer = styled.div`
 `;
 
 const Header = ({
-  title, subtitle, leftButton, children, transparent
+  title, subtitle, leftButton, children, transparent, inverted
 }) => (
-  <HeaderDiv transparent={transparent}>
+  <HeaderDiv transparent={transparent} inverted={inverted}>
     {leftButton}
     <TitleContainer padded={subtitle === null}>
       {title && <h2>{title}</h2>}
@@ -65,7 +71,8 @@ Header.propTypes = {
   subtitle: PropTypes.string,
   leftButton: PropTypes.element,
   children: PropTypes.oneOfType([PropTypes.element, PropTypes.arrayOf(PropTypes.element)]),
-  transparent: PropTypes.bool
+  transparent: PropTypes.bool,
+  inverted: PropTypes.bool
 };
 
 Header.defaultProps = {
@@ -73,7 +80,8 @@ Header.defaultProps = {
   subtitle: null,
   leftButton: null,
   children: [],
-  transparent: false
+  transparent: false,
+  inverted: false
 };
 
 export default Header;
