@@ -143,7 +143,7 @@ MobileIDEView.propTypes = {
   ide: PropTypes.shape({
     isPlaying: PropTypes.bool.isRequired,
     isAccessibleOutputPlaying: PropTypes.bool.isRequired,
-    consoleEvent: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    consoleEvent: PropTypes.arrayOf(PropTypes.shape({})),
     modalIsVisible: PropTypes.bool.isRequired,
     sidebarIsExpanded: PropTypes.bool.isRequired,
     consoleIsExpanded: PropTypes.bool.isRequired,
