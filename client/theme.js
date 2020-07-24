@@ -63,6 +63,7 @@ export default {
     colors,
     ...common,
     primaryTextColor: grays.dark,
+    backgroundColor: grays.lighter,
 
     Button: {
       default: {
@@ -100,12 +101,14 @@ export default {
     Modal: {
       background: grays.light,
       border: grays.middleLight
-    }
+    },
+    Separator: grays.middleLight,
   },
   [Theme.dark]: {
     colors,
     ...common,
     primaryTextColor: grays.lightest,
+    backgroundColor: grays.darker,
 
     Button: {
       default: {
@@ -143,12 +146,14 @@ export default {
     Modal: {
       background: grays.dark,
       border: grays.middleDark
-    }
+    },
+    Separator: grays.middleDark,
   },
   [Theme.contrast]: {
     colors,
     ...common,
     primaryTextColor: grays.lightest,
+    backgroundColor: grays.darker,
 
     Button: {
       default: {
@@ -186,6 +191,7 @@ export default {
     Modal: {
       background: grays.dark,
       border: grays.middleDark
-    }
+    },
+    Separator: grays.middleDark,
   },
 };

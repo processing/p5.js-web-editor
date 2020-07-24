@@ -4,7 +4,6 @@ import { createPortal } from 'react-dom';
 
 import Dropdown from './Dropdown';
 
-
 import { PreferencesIcon } from '../common/icons';
 
 const OverlayManager = ({ overlay, hideOverlay }) => {
@@ -47,13 +46,8 @@ const OverlayManager = ({ overlay, hideOverlay }) => {
   return jsx && createPortal(jsx, document.body);
 };
 
-// const refPropType = PropTypes.oneOfType([
-//   PropTypes.func,
-//   PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
-// ]);
 
 OverlayManager.propTypes = {
-  // ref: refPropType.isRequired,
   overlay: PropTypes.string,
   hideOverlay: PropTypes.func.isRequired,
 };

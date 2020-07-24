@@ -103,10 +103,10 @@ function AccountForm(props) {
 
 AccountForm.propTypes = {
   fields: PropTypes.shape({
-    username: PropTypes.object.isRequired,
-    email: PropTypes.object.isRequired,
-    currentPassword: PropTypes.object.isRequired,
-    newPassword: PropTypes.object.isRequired,
+    username: PropTypes.object.isRequired, // eslint-disable-line
+    email: PropTypes.object.isRequired, // eslint-disable-line
+    currentPassword: PropTypes.object.isRequired, // eslint-disable-line
+    newPassword: PropTypes.object.isRequired, // eslint-disable-line
   }).isRequired,
   user: PropTypes.shape({
     verified: PropTypes.number.isRequired,

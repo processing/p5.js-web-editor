@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -30,12 +30,13 @@ import IDEWrapper from '../../../components/mobile/IDEWrapper';
 import Console from '../components/Console';
 import { remSize } from '../../../theme';
 import OverlayManager from '../../../components/OverlayManager';
+import ActionStrip from '../../../components/mobile/ActionStrip';
 
 const isUserOwner = ({ project, user }) => (project.owner && project.owner.id === user.id);
 
-const BottomBarContent = styled.h2`
-  padding: ${remSize(12)};
-  padding-left: ${remSize(32)};
+
+const Expander = styled.div`
+  height: ${props => (props.expanded ? remSize(160) : remSize(27))};
 `;
 
 
@@ -111,7 +112,8 @@ const MobileIDEView = (props) => {
       </IDEWrapper>
 
       <Footer>
-        <Console />
+        {ide.consoleIsExpanded && <Expander expanded><Console /></Expander>}
+        <ActionStrip />
       </Footer>
 
       <OverlayManager
@@ -122,7 +124,6 @@ const MobileIDEView = (props) => {
     </Screen>
   );
 };
-
 
 MobileIDEView.propTypes = {
 
@@ -142,7 +143,7 @@ MobileIDEView.propTypes = {
   ide: PropTypes.shape({
     isPlaying: PropTypes.bool.isRequired,
     isAccessibleOutputPlaying: PropTypes.bool.isRequired,
-    consoleEvent: PropTypes.array,
+    consoleEvent: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
     modalIsVisible: PropTypes.bool.isRequired,
     sidebarIsExpanded: PropTypes.bool.isRequired,
     consoleIsExpanded: PropTypes.bool.isRequired,
@@ -168,7 +169,7 @@ MobileIDEView.propTypes = {
   }).isRequired,
 
   editorAccessibility: PropTypes.shape({
-    lintMessages: PropTypes.array.isRequired,
+    lintMessages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   }).isRequired,
 
   project: PropTypes.shape({

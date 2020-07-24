@@ -10,7 +10,7 @@ import Editor from '../components/Editor';
 import Sidebar from '../components/Sidebar';
 import PreviewFrame from '../components/PreviewFrame';
 import Toolbar from '../components/Toolbar';
-import Preferences from '../components/Preferences';
+import Preferences from '../components/Preferences/index';
 import NewFileModal from '../components/NewFileModal';
 import NewFolderModal from '../components/NewFolderModal';
 import UploadFileModal from '../components/UploadFileModal';
@@ -478,7 +478,7 @@ IDEView.propTypes = {
   ide: PropTypes.shape({
     isPlaying: PropTypes.bool.isRequired,
     isAccessibleOutputPlaying: PropTypes.bool.isRequired,
-    consoleEvent: PropTypes.array,
+    consoleEvent: PropTypes.array, // eslint-disable-line
     modalIsVisible: PropTypes.bool.isRequired,
     sidebarIsExpanded: PropTypes.bool.isRequired,
     consoleIsExpanded: PropTypes.bool.isRequired,
@@ -513,7 +513,7 @@ IDEView.propTypes = {
     updatedAt: PropTypes.string
   }).isRequired,
   editorAccessibility: PropTypes.shape({
-    lintMessages: PropTypes.array.isRequired,
+    lintMessages: PropTypes.array.isRequired, // eslint-disable-line
   }).isRequired,
   updateLintMessage: PropTypes.func.isRequired,
   clearLintMessage: PropTypes.func.isRequired,

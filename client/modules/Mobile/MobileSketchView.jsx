@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { connect, useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import Header from '../../components/mobile/Header';
 import IconButton from '../../components/mobile/IconButton';
@@ -16,11 +16,9 @@ import * as FilesActions from '../IDE/actions/files';
 
 import { getHTMLFile } from '../IDE/reducers/files';
 
-
 import { ExitIcon } from '../../common/icons';
 import { remSize } from '../../theme';
 import Footer from '../../components/mobile/Footer';
-
 
 const Content = styled.div`
   z-index: 0;
@@ -28,32 +26,25 @@ const Content = styled.div`
 `;
 
 const MobileSketchView = (props) => {
-  // TODO: useSelector requires react-redux ^7.1.0
-  // const htmlFile = useSelector(state => getHTMLFile(state.files));
-  // const jsFiles = useSelector(state => getJSFiles(state.files));
-  // const cssFiles = useSelector(state => getCSSFiles(state.files));
-  // const files = useSelector(state => state.files);
+  const { files, ide, preferences } = useSelector(state => state);
+
+  const htmlFile = useSelector(state => getHTMLFile(state.files));
+  const projectName = useSelector(state => state.project.name);
+  const selectedFile = useSelector(state => state.files.find(file => file.isSelectedFile) ||
+    state.files.find(file => file.name === 'sketch.js') ||
+    state.files.find(file => file.name !== 'root'));
 
   const {
-    htmlFile, files, selectedFile, projectName
-  } = props;
-
-  // Actions
-  const {
-    setTextOutput, setGridOutput, setSoundOutput,
-    endSketchRefresh, stopSketch,
-    dispatchConsoleEvent, expandConsole, clearConsole,
-    setBlobUrl,
-  } = props;
-
-  const { preferences, ide } = props;
+    setTextOutput, setGridOutput, setSoundOutput, dispatchConsoleEvent,
+    endSketchRefresh, stopSketch, setBlobUrl, expandConsole, clearConsole
+  } = bindActionCreators({
+    ...ProjectActions, ...IDEActions, ...PreferencesActions, ...ConsoleActions, ...FilesActions
+  }, useDispatch());
 
   return (
     <Screen fullscreen>
       <Header
-        leftButton={
-          <IconButton to="/mobile" icon={ExitIcon} aria-label="Return to original editor" />
-        }
+        leftButton={<IconButton to="/mobile" icon={ExitIcon} aria-label="Return to original editor" />}
         title={projectName}
       />
       <Content>
@@ -90,99 +81,4 @@ const MobileSketchView = (props) => {
     </Screen>);
 };
 
-MobileSketchView.propTypes = {
-  params: PropTypes.shape({
-    project_id: PropTypes.string,
-    username: PropTypes.string
-  }).isRequired,
-
-  htmlFile: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
-  }).isRequired,
-  files: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
-  })).isRequired,
-
-  selectedFile: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
-  }).isRequired,
-
-  preferences: PropTypes.shape({
-    fontSize: PropTypes.number.isRequired,
-    autosave: PropTypes.bool.isRequired,
-    linewrap: PropTypes.bool.isRequired,
-    lineNumbers: PropTypes.bool.isRequired,
-    lintWarning: PropTypes.bool.isRequired,
-    textOutput: PropTypes.bool.isRequired,
-    gridOutput: PropTypes.bool.isRequired,
-    soundOutput: PropTypes.bool.isRequired,
-    theme: PropTypes.string.isRequired,
-    autorefresh: PropTypes.bool.isRequired
-  }).isRequired,
-
-  ide: PropTypes.shape({
-    isPlaying: PropTypes.bool.isRequired,
-    isAccessibleOutputPlaying: PropTypes.bool.isRequired,
-    consoleEvent: PropTypes.array,
-    modalIsVisible: PropTypes.bool.isRequired,
-    sidebarIsExpanded: PropTypes.bool.isRequired,
-    consoleIsExpanded: PropTypes.bool.isRequired,
-    preferencesIsVisible: PropTypes.bool.isRequired,
-    projectOptionsVisible: PropTypes.bool.isRequired,
-    newFolderModalVisible: PropTypes.bool.isRequired,
-    shareModalVisible: PropTypes.bool.isRequired,
-    shareModalProjectId: PropTypes.string.isRequired,
-    shareModalProjectName: PropTypes.string.isRequired,
-    shareModalProjectUsername: PropTypes.string.isRequired,
-    editorOptionsVisible: PropTypes.bool.isRequired,
-    keyboardShortcutVisible: PropTypes.bool.isRequired,
-    unsavedChanges: PropTypes.bool.isRequired,
-    infiniteLoop: PropTypes.bool.isRequired,
-    previewIsRefreshing: PropTypes.bool.isRequired,
-    infiniteLoopMessage: PropTypes.string.isRequired,
-    projectSavedTime: PropTypes.string,
-    previousPath: PropTypes.string.isRequired,
-    justOpenedProject: PropTypes.bool.isRequired,
-    errorType: PropTypes.string,
-    runtimeErrorWarningVisible: PropTypes.bool.isRequired,
-  }).isRequired,
-
-  projectName: PropTypes.string.isRequired,
-
-  setTextOutput: PropTypes.func.isRequired,
-  setGridOutput: PropTypes.func.isRequired,
-  setSoundOutput: PropTypes.func.isRequired,
-  dispatchConsoleEvent: PropTypes.func.isRequired,
-  endSketchRefresh: PropTypes.func.isRequired,
-  stopSketch: PropTypes.func.isRequired,
-  setBlobUrl: PropTypes.func.isRequired,
-  expandConsole: PropTypes.func.isRequired,
-  clearConsole: PropTypes.func.isRequired,
-};
-
-function mapStateToProps(state) {
-  return {
-    htmlFile: getHTMLFile(state.files),
-    projectName: state.project.name,
-    files: state.files,
-    ide: state.ide,
-    preferences: state.preferences,
-    selectedFile: state.files.find(file => file.isSelectedFile) ||
-      state.files.find(file => file.name === 'sketch.js') ||
-      state.files.find(file => file.name !== 'root'),
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    ...ProjectActions, ...IDEActions, ...PreferencesActions, ...ConsoleActions, ...FilesActions
-  }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(MobileSketchView);
+export default MobileSketchView;
