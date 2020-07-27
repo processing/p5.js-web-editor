@@ -113,7 +113,15 @@
       "AutosaveOn": "Grabado automático activado",
       "AutosaveOff": "Grabado automático desactivado",
       "LineWrapOn": "Ajuste automático de línea activado",
-      "LineWrapOff": "Ajuste automático de línea desactivado"
+      "LineWrapOff": "Ajuste automático de línea desactivado",
+      "LineNumbersOn": "Número de línea activado",
+      "LineNumbersOff": "Número de línea desactivado",
+      "LintWarningOn": "Sonido de alarma Lint activado",
+      "LintWarningOff": "Sonido de alarma Lint desactivado",
+      "PreviewSound": "Probar sonido",
+      "TextOutputOn": "Salida de texto activado",
+      "TableOutputOn": "Salida de tablero activado",
+      "SoundOutputOn": "Salida de sonido activado"
     }
   },
   "KeyboardShortcuts": {

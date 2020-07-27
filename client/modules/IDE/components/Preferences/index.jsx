@@ -237,7 +237,7 @@ class Preferences extends React.Component {
                 <input
                   type="radio"
                   onChange={() => this.props.setLineNumbers(true)}
-                  aria-label="line numbers on"
+                  aria-label={this.props.t('Preferences.ARIA.LineNumbersOn')}
                   name="line numbers"
                   id="line-numbers-on"
                   className="preference__radio-button"
@@ -248,7 +248,7 @@ class Preferences extends React.Component {
                 <input
                   type="radio"
                   onChange={() => this.props.setLineNumbers(false)}
-                  aria-label="line numbers off"
+                  aria-label={this.props.t('Preferences.ARIA.LineNumbersOff')}
                   name="line numbers"
                   id="line-numbers-off"
                   className="preference__radio-button"
@@ -264,7 +264,7 @@ class Preferences extends React.Component {
                 <input
                   type="radio"
                   onChange={() => this.props.setLintWarning(true)}
-                  aria-label="lint warning on"
+                  aria-label={this.props.t('Preferences.ARIA.LintWarningOn')}
                   name="lint warning"
                   id="lint-warning-on"
                   className="preference__radio-button"
@@ -275,7 +275,7 @@ class Preferences extends React.Component {
                 <input
                   type="radio"
                   onChange={() => this.props.setLintWarning(false)}
-                  aria-label="lint warning off"
+                  aria-label={this.props.t('Preferences.ARIA.LintWarningOff')}
                   name="lint warning"
                   id="lint-warning-off"
                   className="preference__radio-button"
@@ -286,7 +286,7 @@ class Preferences extends React.Component {
                 <button
                   className="preference__preview-button"
                   onClick={() => beep.play()}
-                  aria-label="preview sound"
+                  aria-label={this.props.t('Preferences.ARIA.PreviewSound')}
                 >
                   {this.props.t('Preferences.PreviewSound')}
                 </button>
@@ -302,7 +302,7 @@ class Preferences extends React.Component {
                   onChange={(event) => {
                     this.props.setTextOutput(event.target.checked);
                   }}
-                  aria-label="text output on"
+                  aria-label={this.props.t('Preferences.ARIA.TextOutputOn')}
                   name="text output"
                   id="text-output-on"
                   value="On"
@@ -314,7 +314,7 @@ class Preferences extends React.Component {
                   onChange={(event) => {
                     this.props.setGridOutput(event.target.checked);
                   }}
-                  aria-label="table output on"
+                  aria-label={this.props.t('Preferences.ARIA.TableOutputOn')}
                   name="table output"
                   id="table-output-on"
                   value="On"
@@ -326,7 +326,7 @@ class Preferences extends React.Component {
                   onChange={(event) => {
                     this.props.setSoundOutput(event.target.checked);
                   }}
-                  aria-label="sound output on"
+                  aria-label={this.props.t('Preferences.ARIA.SoundOutputOn')}
                   name="sound output"
                   id="sound-output-on"
                   value="On"

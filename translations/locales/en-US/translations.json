@@ -113,7 +113,15 @@
       "AutosaveOn": "autosave on",
       "AutosaveOff": "autosave off",
       "LineWrapOn": "linewrap on",
-      "LineWrapOff": "linewrap off"
+      "LineWrapOff": "linewrap off",
+      "LineNumbersOn": "line numbers on",
+      "LineNumbersOff": "line numbers off",
+      "LintWarningOn": "lint warning on",
+      "LintWarningOff": "lint warning off",
+      "PreviewSound": "preview sound",
+      "TextOutputOn": "text output on",
+      "TableOutputOn": "table output on",
+      "SoundOutputOn": "sound output on"
     }
   },
   "KeyboardShortcuts": {
