@@ -69,6 +69,7 @@
   "Toast": {
     "OpenedNewSketch": "Opened new sketch.",
     "SketchSaved": "Sketch saved.",
+    "SketchFailedSave": "Failed to save sketch.",
     "AutosaveEnabled": "Autosave enabled.",
     "LangChange": "Language changed"
   },
@@ -177,6 +178,5 @@
   },
   "IDEVIEW": {
     "SubmitFeedback": "Submit Feedback"
-
   }
 }
