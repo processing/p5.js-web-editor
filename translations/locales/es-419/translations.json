@@ -69,6 +69,7 @@
   "Toast": {
     "OpenedNewSketch": "Abriste un nuevo bosquejo.",
     "SketchSaved": "Bosquejo guardado.",
+    "SketchFailedSave": "Failed to save sketch.",
     "AutosaveEnabled": "Grabado automático activado.",
     "LangChange": "Lenguaje cambiado"
   },
@@ -154,6 +155,7 @@
     "Folder": "Directorio"
   },
   "Common": {
+    "Error": "Error",
     "Save": "Guardar",
     "BackEditor": "Regresa al editor",
     "ToogleSidebar": "Alternar barra de deslizamiento",
@@ -162,7 +164,6 @@
     "Password": "Contraseña",
     "ConfirmPassword": "Confirma la contraseña",
     "TitleAbout": "p5.js Web Editor | Acerca de",
-    "Error": "Error",
     "In order to save": "Para guardar",
     "you must be logged in": "debes ingresar a tu cuenta",
     "Please": "Por favor",
@@ -170,8 +171,15 @@
     "WarningUnsavedChanges": "¿Estás seguro de que quieres salir de la página? Tienes cambios sin guardar.",
     "SketchSettings": "Configuración del Bosquejo ",
     "SecurityProtocol": "Protocolo de Seguridad",
-    "ServeOverHTTPS": "Utilizar HTTPS"
-   }
+    "ServeOverHTTPS": "Utilizar HTTPS",
+    "ARIA": {
+      "p5logo": "Logo p5.js "
+    }
+   },
+  "IDEVIEW": {
+    "SubmitFeedback": "Submit Feedback"
+
+  }
 }
 
 

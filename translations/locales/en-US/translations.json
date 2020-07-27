@@ -154,6 +154,7 @@
     "Folder": "Folder"
   },
   "Common": {
+    "Error": "Error",
     "Save": "Save",
     "BackEditor": "Back to Editor",
     "ToogleSidebar": "Toogle Sidebar",
@@ -162,7 +163,6 @@
     "Password": "Password",
     "ConfirmPassword": "Confirm Password",
     "TitleAbout": "p5.js Web Editor | About",
-    "Error": "Error",
     "In order to save": "In order to save",
     "you must be logged in": "you must be logged in",
     "Please": "please",
@@ -170,6 +170,13 @@
     "WarningUnsavedChanges": "Are you sure you want to leave this page? You have unsaved changes.",
     "SketchSettings": "Sketch Settings",
     "SecurityProtocol": "Security Protocol",
-    "ServeOverHTTPS": "Serve over HTTPS"
+    "ServeOverHTTPS": "Serve over HTTPS",
+    "ARIA": {
+      "p5logo": "p5.js Logo"
+    }
+  },
+  "IDEVIEW": {
+    "SubmitFeedback": "Submit Feedback"
+
   }
 }

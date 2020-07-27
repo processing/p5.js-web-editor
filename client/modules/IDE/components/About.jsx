@@ -13,7 +13,7 @@ function About(props) {
         <title>p5.js Web Editor | {t('About.Title')} </title>
       </Helmet>
       <div className="about__content-column">
-        <SquareLogoIcon className="about__logo" role="img" aria-label="p5.js Logo" focusable="false" />
+        <SquareLogoIcon className="about__logo" role="img" aria-label={t('Common.ARIA.p5logo')} focusable="false" />
       </div>
       <div className="about__content-column">
         <h3 className="about__content-column-title">{t('About.NewP5')}</h3>
