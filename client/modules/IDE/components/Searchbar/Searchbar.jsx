@@ -35,6 +35,11 @@ class Searchbar extends React.Component {
   };
 
   handleSearchChange = (e) => {
+    if (e.target.value === '') {
+      // Manually reset the searchValue if the search field becomes empty.
+      this.handleResetSearch();
+      return;
+    }
     this.setState({ searchValue: e.target.value }, () => {
       this.throttledSearchChange(this.state.searchValue);
     });
