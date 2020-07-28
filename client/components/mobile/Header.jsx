@@ -18,7 +18,7 @@ const HeaderDiv = styled.div`
   width: 100%;
   background: ${props => background(props)};
   color: ${textColor};
-  padding: ${remSize(12)};
+  padding: ${props => remSize(props.slim === true ? 2 : 12)};
   padding-left: ${remSize(16)};
   padding-right: ${remSize(16)};
   z-index: 1;
@@ -31,8 +31,10 @@ const HeaderDiv = styled.div`
 
   svg {
     max-height: ${remSize(32)};
-    padding: ${remSize(4)}
+    padding: ${remSize(4)};
   }
+
+  & svg path { fill: ${textColor} !important; }
 `;
 
 const IconContainer = styled.div`
@@ -52,9 +54,10 @@ const TitleContainer = styled.div`
 `;
 
 const Header = ({
-  title, subtitle, leftButton, children, transparent, inverted
+  title, subtitle, leftButton, children,
+  transparent, inverted, slim
 }) => (
-  <HeaderDiv transparent={transparent} inverted={inverted}>
+  <HeaderDiv transparent={transparent} slim={slim} inverted={inverted}>
     {leftButton}
     <TitleContainer padded={subtitle === null}>
       {title && <h2>{title}</h2>}
@@ -72,7 +75,8 @@ Header.propTypes = {
   leftButton: PropTypes.element,
   children: PropTypes.oneOfType([PropTypes.element, PropTypes.arrayOf(PropTypes.element)]),
   transparent: PropTypes.bool,
-  inverted: PropTypes.bool
+  inverted: PropTypes.bool,
+  slim: PropTypes.bool,
 };
 
 Header.defaultProps = {
@@ -81,7 +85,8 @@ Header.defaultProps = {
   leftButton: null,
   children: [],
   transparent: false,
-  inverted: false
+  inverted: false,
+  slim: false
 };
 
 export default Header;

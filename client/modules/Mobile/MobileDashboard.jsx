@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Screen from '../../components/mobile/MobileScreen';
 import Header from '../../components/mobile/Header';
@@ -37,41 +37,50 @@ const FooterTabContainer = styled.div`
 // }
 
 const Panels = {
-  Sketches: () => <SketchList />,
+  Sketches: props => <SketchList {...props} />,
   Collections: () => <CollectionList />,
   Assets: () => <AssetList />
 };
 
-const MobileExamples = () => {
+const MobileDashboard = ({ username }) => {
   // const tabs = ['Sketches', 'Collections', 'Assets'];
   const Tabs = Object.keys(Panels);
   const [selected, selectTab] = useState(Tabs[0]);
+
+  const isExamples = username === 'p5';
+
   return (
     <Screen fullscreen>
-      <Header inverted title="My Stuff">
+      <Header slim inverted title={isExamples ? 'Examples' : 'My Stuff'}>
         <IconButton to="/mobile" icon={ExitIcon} aria-label="Return to ide view" />
       </Header>
 
 
       <Content>
-        {Panels[selected] && Panels[selected]()}
+        {Panels[selected] && Panels[selected]({ username })}
       </Content>
 
 
       <Footer>
-        <FooterTabContainer>
-          {Tabs.map(tab => (
-            <FooterTab
-              key={`tab-${tab}`}
-              selected={tab === selected}
-              onClick={() => selectTab(tab)}
-            >
-              <h3>{tab}</h3>
-            </FooterTab>))
-          }
-        </FooterTabContainer>
+        {!isExamples &&
+          <FooterTabContainer>
+            {Tabs.map(tab => (
+              <FooterTab
+                key={`tab-${tab}`}
+                selected={tab === selected}
+                onClick={() => selectTab(tab)}
+              >
+                <h3>{(tab === 'Sketches' && username === 'p5') ? 'Examples' : tab}</h3>
+              </FooterTab>))
+            }
+          </FooterTabContainer>
+        }
       </Footer>
     </Screen>);
 };
 
-export default MobileExamples;
+MobileDashboard.propTypes = { username: PropTypes.string };
+MobileDashboard.defaultProps = { username: '' };
+
+
+export default MobileDashboard;
