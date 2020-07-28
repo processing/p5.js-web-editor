@@ -31,6 +31,8 @@
       "About": "About"
     },
     "Lang": "Language",
+    "BackEditor": "Back to Editor",
+    "WarningUnsavedChanges": "Are you sure you want to leave this page? You have unsaved changes.",
     "Login": {
       "Login": "Log in",
       "LoginOr": "or",
@@ -57,14 +59,15 @@
   },
   "About": {
     "Title": "About",
+    "TitleHelmet": "p5.js Web Editor | About",
     "Contribute": "Contribute",
     "NewP5": "New to p5.js?",
-     "Report": "Report a bug",
-      "Learn": "Learn",
-      "Resources": "Resources",
-      "Libraries": "Libraries",
-      "Forum": "Forum",
-      "Examples": "Examples"
+    "Report": "Report a bug",
+    "Learn": "Learn",
+    "Resources": "Resources",
+    "Libraries": "Libraries",
+    "Forum": "Forum",
+    "Examples": "Examples"
   },
   "Toast": {
     "OpenedNewSketch": "Opened new sketch.",
@@ -75,55 +78,63 @@
   },
   "Toolbar": {
     "Preview": "Preview",
-    "Auto-refresh": "Auto-refresh"
+    "Auto-refresh": "Auto-refresh",
+    "OpenPreferencesARIA": "Open Preferences",
+    "PlaySketchARIA": "Play sketch",
+    "PlayOnlyVisualSketchARIA": "Play only visual sketch",
+    "StopSketchARIA": "Stop sketch",
+    "EditSketchARIA": "Edit sketch name",
+    "NewSketchNameARIA": "New sketch name"
   },
   "Console": {
+    "Title": "Console",
     "Clear": "Clear",
-    "Console": "Console"
+    "ClearARIA": "Clear console",
+    "Close": "Close",
+    "CloseARIA": "Close console",
+    "Open": "Open",
+    "OpenARIA": "Open console"
   },
   "Preferences": {
     "Settings": "Settings",
-      "GeneralSettings": "General settings",
-      "Accessibility": "Accessibility",
-      "Theme": "Theme",
-      "Light": "Light",
-      "Dark": "Dark",
-      "HighContrast": "High Contrast",
-      "TextSize": "Text Size",
-      "Decrease": "Decrease",
-      "Increase": "Increase",
-      "IndentationAmount": "Indentation amount",
-      "Autosave": "Autosave",
-      "On": "On",
-      "Off": "Off",
-      "WordWrap": "Word Wrap",
-      "LintWarningSound": "Lint warning sound",
-      "PreviewSound": "Preview sound",
-      "AccessibleTextBasedCanvas": "Accessible text-based canvas",
-      "UsedScreenReader": "Used with screen reader",
-      "PlainText": "Plain-text",
-      "TableText": "Table-text",
-      "Sound": "Sound",
-      "LineNumbers": "Line numbers",
-    "ARIA": {
-      "LightThemeOn": "light theme on",
-      "DarkThemeOn": "dark theme on",
-      "HighContrastThemeOn": "high contrast theme on",
-      "DecreaseFontSize": "decrease font size",
-      "IncreaseFontSize": "increase font size",
-      "AutosaveOn": "autosave on",
-      "AutosaveOff": "autosave off",
-      "LineWrapOn": "linewrap on",
-      "LineWrapOff": "linewrap off",
-      "LineNumbersOn": "line numbers on",
-      "LineNumbersOff": "line numbers off",
-      "LintWarningOn": "lint warning on",
-      "LintWarningOff": "lint warning off",
-      "PreviewSound": "preview sound",
-      "TextOutputOn": "text output on",
-      "TableOutputOn": "table output on",
-      "SoundOutputOn": "sound output on"
-    }
+    "GeneralSettings": "General settings",
+    "Accessibility": "Accessibility",
+    "Theme": "Theme",
+    "LightTheme": "Light",
+    "LightThemeARIA": "light theme on",
+    "DarkTheme": "Dark",
+    "DarkThemeARIA": "dark theme on",
+    "HighContrastTheme": "High Contrast",
+    "HighContrastThemeARIA": "high contrast theme on",
+    "TextSize": "Text Size",
+    "DecreaseFont": "Decrease",
+    "DecreaseFontARIA": "decrease font size",
+    "IncreaseFont": "Increase",
+    "IncreaseFontARIA": "increase font size",
+    "Autosave": "Autosave",
+    "On": "On",
+    "AutosaveOnARIA": "autosave on",
+    "Off": "Off",
+    "AutosaveOffARIA": "autosave off",
+    "WordWrap": "Word Wrap",
+    "LineWrapOnARIA": "linewrap on",
+    "LineWrapOffARIA": "linewrap off",
+    "LineNumbers": "Line numbers",
+    "LineNumbersOnARIA": "line numbers on",
+    "LineNumbersOffARIA": "line numbers off",
+    "LintWarningSound": "Lint warning sound",
+    "LintWarningOnARIA": "lint warning on",
+    "LintWarningOffARIA": "lint warning off",
+    "PreviewSound": "Preview sound",
+    "PreviewSoundARIA": "preview sound",
+    "AccessibleTextBasedCanvas": "Accessible text-based canvas",
+    "UsedScreenReader": "Used with screen reader",
+    "PlainText": "Plain-text",
+    "TextOutputARIA": "text output on",
+    "TableText": "Table-text",
+    "TableOutputARIA": "table output on",
+    "Sound": "Sound",
+    "SoundOutputARIA": "sound output on"
   },
   "KeyboardShortcuts": {
     "Title": " Keyboard Shortcuts",
@@ -157,26 +168,10 @@
   "Common": {
     "Error": "Error",
     "Save": "Save",
-    "BackEditor": "Back to Editor",
-    "ToogleSidebar": "Toogle Sidebar",
-    "ToogleConsole": "Toogle Console",
-    "UsernameSplit": "User Name",
-    "Password": "Password",
-    "ConfirmPassword": "Confirm Password",
-    "TitleAbout": "p5.js Web Editor | About",
-    "In order to save": "In order to save",
-    "you must be logged in": "you must be logged in",
-    "Please": "please",
-    "FindInFiles": "Find in files",
-    "WarningUnsavedChanges": "Are you sure you want to leave this page? You have unsaved changes.",
-    "SketchSettings": "Sketch Settings",
-    "SecurityProtocol": "Security Protocol",
-    "ServeOverHTTPS": "Serve over HTTPS",
-    "ARIA": {
-      "p5logo": "p5.js Logo"
-    }
+    "p5logoARIA": "p5.js Logo"
+
   },
-  "IDEVIEW": {
+  "IDEView": {
     "SubmitFeedback": "Submit Feedback"
   }
 }

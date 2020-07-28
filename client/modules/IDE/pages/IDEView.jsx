@@ -398,7 +398,7 @@ class IDEView extends React.Component {
         }
         {this.props.location.pathname === '/feedback' &&
           <Overlay
-            title="Submit Feedback"
+            title={this.props.t('IDEView.SubmitFeedback')}
             previousPath={this.props.ide.previousPath}
             ariaLabel="submit-feedback"
           >

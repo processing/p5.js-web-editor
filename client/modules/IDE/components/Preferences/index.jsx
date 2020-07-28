@@ -110,36 +110,36 @@ class Preferences extends React.Component {
                 <input
                   type="radio"
                   onChange={() => this.props.setTheme('light')}
-                  aria-label={this.props.t('Preferences.ARIA.LightThemeOn')}
+                  aria-label={this.props.t('Preferences.LightThemeARIA')}
                   name="light theme"
                   id="light-theme-on"
                   className="preference__radio-button"
                   value="light"
                   checked={this.props.theme === 'light'}
                 />
-                <label htmlFor="light-theme-on" className="preference__option">{this.props.t('Preferences.Light')}</label>
+                <label htmlFor="light-theme-on" className="preference__option">{this.props.t('Preferences.LightTheme')}</label>
                 <input
                   type="radio"
                   onChange={() => this.props.setTheme('dark')}
-                  aria-label={this.props.t('Preferences.ARIA.DarkThemeOn')}
+                  aria-label={this.props.t('Preferences.DarkThemeARIA')}
                   name="dark theme"
                   id="dark-theme-on"
                   className="preference__radio-button"
                   value="dark"
                   checked={this.props.theme === 'dark'}
                 />
-                <label htmlFor="dark-theme-on" className="preference__option">{this.props.t('Preferences.Dark')}</label>
+                <label htmlFor="dark-theme-on" className="preference__option">{this.props.t('Preferences.DarkTheme')}</label>
                 <input
                   type="radio"
                   onChange={() => this.props.setTheme('contrast')}
-                  aria-label={this.props.t('Preferences.ARIA.HighContrastThemeOn')}
+                  aria-label={this.props.t('Preferences.HighContrastThemeARIA')}
                   name="high contrast theme"
                   id="high-contrast-theme-on"
                   className="preference__radio-button"
                   value="contrast"
                   checked={this.props.theme === 'contrast'}
                 />
-                <label htmlFor="high-contrast-theme-on" className="preference__option">{this.props.t('Preferences.HighContrast')}</label>
+                <label htmlFor="high-contrast-theme-on" className="preference__option">{this.props.t('Preferences.HighContrastTheme')}</label>
               </div>
             </div>
             <div className="preference">
@@ -147,11 +147,11 @@ class Preferences extends React.Component {
               <button
                 className="preference__minus-button"
                 onClick={this.decreaseFontSize}
-                aria-label={this.props.t('Preferences.ARIA.DecreaseFontSize')}
+                aria-label={this.props.t('Preferences.DecreaseFontARIA')}
                 disabled={this.state.fontSize <= 8}
               >
                 <MinusIcon focusable="false" aria-hidden="true" />
-                <h6 className="preference__label">{this.props.t('Preferences.Decrease')}</h6>
+                <h6 className="preference__label">{this.props.t('Preferences.DecreaseFont')}</h6>
               </button>
               <form onSubmit={this.onFontInputSubmit}>
                 <input
@@ -168,11 +168,11 @@ class Preferences extends React.Component {
               <button
                 className="preference__plus-button"
                 onClick={this.increaseFontSize}
-                aria-label={this.props.t('Preferences.ARIA.IncreaseFontSize')}
+                aria-label={this.props.t('Preferences.IncreaseFontARIA')}
                 disabled={this.state.fontSize >= 36}
               >
                 <PlusIcon focusable="false" aria-hidden="true" />
-                <h6 className="preference__label">{this.props.t('Preferences.Increase')}</h6>
+                <h6 className="preference__label">{this.props.t('Preferences.IncreaseFont')}</h6>
               </button>
             </div>
             <div className="preference">
@@ -181,7 +181,7 @@ class Preferences extends React.Component {
                 <input
                   type="radio"
                   onChange={() => this.props.setAutosave(true)}
-                  aria-label={this.props.t('Preferences.ARIA.AutosaveOn')}
+                  aria-label={this.props.t('Preferences.AutosaveOnARIA')}
                   name="autosave"
                   id="autosave-on"
                   className="preference__radio-button"
@@ -192,7 +192,7 @@ class Preferences extends React.Component {
                 <input
                   type="radio"
                   onChange={() => this.props.setAutosave(false)}
-                  aria-label={this.props.t('Preferences.ARIA.AutosaveOff')}
+                  aria-label={this.props.t('Preferences.AutosaveOffARIA')}
                   name="autosave"
                   id="autosave-off"
                   className="preference__radio-button"
@@ -208,7 +208,7 @@ class Preferences extends React.Component {
                 <input
                   type="radio"
                   onChange={() => this.props.setLinewrap(true)}
-                  aria-label={this.props.t('Preferences.ARIA.LineWrapOn')}
+                  aria-label={this.props.t('Preferences.LineWrapOnARIA')}
                   name="linewrap"
                   id="linewrap-on"
                   className="preference__radio-button"
@@ -219,7 +219,7 @@ class Preferences extends React.Component {
                 <input
                   type="radio"
                   onChange={() => this.props.setLinewrap(false)}
-                  aria-label={this.props.t('Preferences.ARIA.LineWrapOff')}
+                  aria-label={this.props.t('Preferences.LineWrapOffARIA')}
                   name="linewrap"
                   id="linewrap-off"
                   className="preference__radio-button"
@@ -237,7 +237,7 @@ class Preferences extends React.Component {
                 <input
                   type="radio"
                   onChange={() => this.props.setLineNumbers(true)}
-                  aria-label={this.props.t('Preferences.ARIA.LineNumbersOn')}
+                  aria-label={this.props.t('Preferences.LineNumbersOnARIA')}
                   name="line numbers"
                   id="line-numbers-on"
                   className="preference__radio-button"
@@ -248,7 +248,7 @@ class Preferences extends React.Component {
                 <input
                   type="radio"
                   onChange={() => this.props.setLineNumbers(false)}
-                  aria-label={this.props.t('Preferences.ARIA.LineNumbersOff')}
+                  aria-label={this.props.t('Preferences.LineNumbersOffARIA')}
                   name="line numbers"
                   id="line-numbers-off"
                   className="preference__radio-button"
@@ -264,7 +264,7 @@ class Preferences extends React.Component {
                 <input
                   type="radio"
                   onChange={() => this.props.setLintWarning(true)}
-                  aria-label={this.props.t('Preferences.ARIA.LintWarningOn')}
+                  aria-label={this.props.t('Preferences.LintWarningOnARIA')}
                   name="lint warning"
                   id="lint-warning-on"
                   className="preference__radio-button"
@@ -275,7 +275,7 @@ class Preferences extends React.Component {
                 <input
                   type="radio"
                   onChange={() => this.props.setLintWarning(false)}
-                  aria-label={this.props.t('Preferences.ARIA.LintWarningOff')}
+                  aria-label={this.props.t('Preferences.LintWarningOffARIA')}
                   name="lint warning"
                   id="lint-warning-off"
                   className="preference__radio-button"
@@ -286,7 +286,7 @@ class Preferences extends React.Component {
                 <button
                   className="preference__preview-button"
                   onClick={() => beep.play()}
-                  aria-label={this.props.t('Preferences.ARIA.PreviewSound')}
+                  aria-label={this.props.t('Preferences.PreviewSoundARIA')}
                 >
                   {this.props.t('Preferences.PreviewSound')}
                 </button>
@@ -302,7 +302,7 @@ class Preferences extends React.Component {
                   onChange={(event) => {
                     this.props.setTextOutput(event.target.checked);
                   }}
-                  aria-label={this.props.t('Preferences.ARIA.TextOutputOn')}
+                  aria-label={this.props.t('Preferences.TextOutputARIA')}
                   name="text output"
                   id="text-output-on"
                   value="On"
@@ -314,7 +314,7 @@ class Preferences extends React.Component {
                   onChange={(event) => {
                     this.props.setGridOutput(event.target.checked);
                   }}
-                  aria-label={this.props.t('Preferences.ARIA.TableOutputOn')}
+                  aria-label={this.props.t('Preferences.TableOutputARIA')}
                   name="table output"
                   id="table-output-on"
                   value="On"
@@ -326,7 +326,7 @@ class Preferences extends React.Component {
                   onChange={(event) => {
                     this.props.setSoundOutput(event.target.checked);
                   }}
-                  aria-label={this.props.t('Preferences.ARIA.SoundOutputOn')}
+                  aria-label={this.props.t('Preferences.SoundOutputARIA')}
                   name="sound output"
                   id="sound-output-on"
                   value="On"

@@ -240,13 +240,13 @@ class Nav extends React.PureComponent {
     return (
       <ul className="nav__items-left">
         <li className="nav__item-logo">
-          <LogoIcon role="img" aria-label={this.props.t('Common.ARIA.p5logo')} focusable="false" className="svg__logo" />
+          <LogoIcon role="img" aria-label={this.props.t('Common.p5logoARIA')} focusable="false" className="svg__logo" />
         </li>
         <li className="nav__item nav__item--no-icon">
           <Link to="/" className="nav__back-link">
             <CaretLeftIcon className="nav__back-icon" focusable="false" aria-hidden="true" />
             <span className="nav__item-header">
-              {this.props.t('Common.BackEditor')}
+              {this.props.t('Nav.BackEditor')}
             </span>
           </Link>
         </li>
