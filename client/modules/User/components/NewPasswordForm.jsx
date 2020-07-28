@@ -43,8 +43,8 @@ function NewPasswordForm(props) {
 
 NewPasswordForm.propTypes = {
   fields: PropTypes.shape({
-    password: PropTypes.object.isRequired, // eslint-disable-line
-    confirmPassword: PropTypes.object.isRequired // eslint-disable-line
+    password: PropTypes.object.isRequired,
+    confirmPassword: PropTypes.object.isRequired
   }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   updatePassword: PropTypes.func.isRequired,
