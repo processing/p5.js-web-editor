@@ -1,64 +1,86 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
+import styled from 'styled-components';
+import { remSize, prop, common } from '../theme';
+import IconButton from './mobile/IconButton';
+import Button from '../common/Button';
 
+const DropdownWrapper = styled.ul`
+  background-color: ${prop('Modal.background')};
+  border: 1px solid ${prop('Modal.border')};
+  box-shadow: 0 0 18px 0 ${prop('shadowColor')};
+  color: ${prop('primaryTextColor')};
 
-// <ul className="nav__dropdown">
+  position: absolute;
+  top: ${remSize(64)};
+  right: ${remSize(16)};
 
+  text-align: left;
+  width: ${remSize(180)};
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  z-index: 9999;
+  border-radius: ${remSize(6)};
 
-// <ul className="nav__dropdown">
+  & li:first-child { border-radius: ${remSize(5)} ${remSize(5)} 0 0; }
+  & li:last-child  { border-radius: 0 0 ${remSize(5)} ${remSize(5)}; }
 
-// <li className="nav__dropdown-item">
-//   <button
-//     onFocus={this.handleFocusForLang}
-//     onBlur={this.handleBlur}
-//     value="it"
-//     onClick={e => this.handleLangSelection(e)}
-//   >
-//     Italian (Test Fallback)
-//   </button>
-// </li>
-// <li className="nav__dropdown-item">
-//   <button
-//     onFocus={this.handleFocusForLang}
-//     onBlur={this.handleBlur}
-//     value="en-US"
-//     onClick={e => this.handleLangSelection(e)}
-//   >English
-//   </button>
-// </li>
-// <li className="nav__dropdown-item">
-//   <button
-//     onFocus={this.handleFocusForLang}
-//     onBlur={this.handleBlur}
-//     value="es-419"
-//     onClick={e => this.handleLangSelection(e)}
-//   >
-//     Español
-//   </button>
-// </li>
-// </ul>
+  & li:hover {
+    
+    background-color: ${prop('Button.hover.background')};
+    color: ${prop('Button.hover.foreground')};
 
-// 'nav__item--open'
+    & button, & a {
+      color: ${prop('Button.hover.foreground')};
+    }
+  }
+
+  li {
+    height: ${remSize(36)};
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+
+    & button,
+    & a {
+      color: ${prop('primaryTextColor')};
+      width: 100%;
+      text-align: left;
+      padding: ${remSize(8)} ${remSize(16)};
+    }
+  }
+`;
+
+// TODO: Add Icon to the left of the items in the menu
+// const MaybeIcon = (Element, label) => Element && <Element aria-label={label} />;
 
 const Dropdown = ({ items }) => (
-  <ul className="nav__dropdown">
-    {items && items.map(item => (
-      <li className="nav__dropdown-item">
+  <DropdownWrapper>
+    {/* className="nav__items-left" */}
+    {items && items.map(({ title, icon, href }) => (
+      <li key={`nav-${title && title.toLowerCase()}`}>
+        <Link to={href}>
+          {/* {MaybeIcon(icon, `Navigate to ${title}`)} */}
+          {title}
+        </Link>
       </li>
     ))
     }
-  </ul>
+  </DropdownWrapper>
 );
 
 Dropdown.propTypes = {
   items: PropTypes.arrayOf(PropTypes.shape({
-    action: PropTypes.func
-  }))
+    action: PropTypes.func,
+    icon: PropTypes.func,
+    href: PropTypes.string
+  })),
 };
 
 Dropdown.defaultProps = {
-  items: []
+  items: [],
 };
 
 export default Dropdown;

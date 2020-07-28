@@ -8,8 +8,8 @@ import CopyableInput from '../../IDE/components/CopyableInput';
 import APIKeyList from './APIKeyList';
 
 export const APIKeyPropType = PropTypes.shape({
-  id: PropTypes.object.isRequired,
-  token: PropTypes.object,
+  id: PropTypes.object.isRequired, // eslint-disable-line
+  token: PropTypes.object, // eslint-disable-line
   label: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
   lastUsedAt: PropTypes.string,

@@ -7,6 +7,7 @@ import styled from 'styled-components';
 
 // Imports to be Refactored
 import { bindActionCreators } from 'redux';
+
 import * as FileActions from '../actions/files';
 import * as IDEActions from '../actions/ide';
 import * as ProjectActions from '../actions/project';
@@ -19,7 +20,7 @@ import { getHTMLFile } from '../reducers/files';
 
 // Local Imports
 import Editor from '../components/Editor';
-import { PreferencesIcon, PlayIcon, ExitIcon, MoreIcon } from '../../../common/icons';
+import { PlayIcon, ExitIcon, MoreIcon } from '../../../common/icons';
 
 import IconButton from '../../../components/mobile/IconButton';
 import Header from '../../../components/mobile/Header';
@@ -28,7 +29,7 @@ import Footer from '../../../components/mobile/Footer';
 import IDEWrapper from '../../../components/mobile/IDEWrapper';
 import Console from '../components/Console';
 import { remSize } from '../../../theme';
-import Dropdown from '../../../components/Dropdown';
+import OverlayManager from '../../../components/OverlayManager';
 import ActionStrip from '../../../components/mobile/ActionStrip';
 
 const isUserOwner = ({ project, user }) => (project.owner && project.owner.id === user.id);
@@ -37,15 +38,6 @@ const isUserOwner = ({ project, user }) => (project.owner && project.owner.id ==
 const Expander = styled.div`
   height: ${props => (props.expanded ? remSize(160) : remSize(27))};
 `;
-
-
-// TODO: Move to new file?
-// const overlays = {};
-// const OverlayManager = name => overlays[name] || null;
-
-const headerNavOptions = [
-  { icon: PreferencesIcon, title: 'Preferences', route: '/mobile/preferences' }
-];
 
 
 const MobileIDEView = (props) => {
@@ -58,9 +50,11 @@ const MobileIDEView = (props) => {
   } = props;
 
   const [tmController, setTmController] = useState(null); // eslint-disable-line
-  const [overlay, setOverlay] = useState(null); // eslint-disable-line
+  const [overlayName, setOverlay] = useState(null); // eslint-disable-line
 
-  // const overlayActive = name => (overlay === name);
+  // TODO: Move this to OverlayController (?)
+  const hideOverlay = () => setOverlay(null);
+  // const overlayRef = useRef({});
 
   return (
     <Screen fullscreen>
@@ -72,7 +66,6 @@ const MobileIDEView = (props) => {
         }
       >
         <IconButton
-          // to="/mobile/preferences"
           onClick={() => setOverlay('dropdown')}
           icon={MoreIcon}
           aria-label="Options"
@@ -116,17 +109,20 @@ const MobileIDEView = (props) => {
           provideController={setTmController}
         />
       </IDEWrapper>
+
       <Footer>
         {ide.consoleIsExpanded && <Expander expanded><Console /></Expander>}
         <ActionStrip />
       </Footer>
 
-      {/* Overlays */}
-      <Dropdown hidden={overlay !== 'dropdown'} items={headerNavOptions} />
+      <OverlayManager
+        // ref={overlayRef}
+        overlay={overlayName}
+        hideOverlay={hideOverlay}
+      />
     </Screen>
   );
 };
-
 
 MobileIDEView.propTypes = {
 
@@ -146,7 +142,7 @@ MobileIDEView.propTypes = {
   ide: PropTypes.shape({
     isPlaying: PropTypes.bool.isRequired,
     isAccessibleOutputPlaying: PropTypes.bool.isRequired,
-    consoleEvent: PropTypes.array,
+    consoleEvent: PropTypes.arrayOf(PropTypes.shape({})),
     modalIsVisible: PropTypes.bool.isRequired,
     sidebarIsExpanded: PropTypes.bool.isRequired,
     consoleIsExpanded: PropTypes.bool.isRequired,
@@ -172,7 +168,7 @@ MobileIDEView.propTypes = {
   }).isRequired,
 
   editorAccessibility: PropTypes.shape({
-    lintMessages: PropTypes.array.isRequired,
+    lintMessages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   }).isRequired,
 
   project: PropTypes.shape({
