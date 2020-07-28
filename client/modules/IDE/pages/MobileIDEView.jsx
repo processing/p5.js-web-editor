@@ -7,6 +7,7 @@ import styled from 'styled-components';
 
 // Imports to be Refactored
 import { bindActionCreators } from 'redux';
+
 import * as FileActions from '../actions/files';
 import * as IDEActions from '../actions/ide';
 import * as ProjectActions from '../actions/project';
@@ -19,7 +20,7 @@ import { getHTMLFile } from '../reducers/files';
 
 // Local Imports
 import Editor from '../components/Editor';
-import { PreferencesIcon, PlayIcon, ExitIcon } from '../../../common/icons';
+import { PlayIcon, ExitIcon, MoreIcon } from '../../../common/icons';
 
 import IconButton from '../../../components/mobile/IconButton';
 import Header from '../../../components/mobile/Header';
@@ -28,6 +29,7 @@ import Footer from '../../../components/mobile/Footer';
 import IDEWrapper from '../../../components/mobile/IDEWrapper';
 import Console from '../components/Console';
 import { remSize } from '../../../theme';
+import OverlayManager from '../../../components/OverlayManager';
 import ActionStrip from '../../../components/mobile/ActionStrip';
 
 const isUserOwner = ({ project, user }) =>
@@ -36,6 +38,7 @@ const isUserOwner = ({ project, user }) =>
 const Expander = styled.div`
   height: ${props => (props.expanded ? remSize(160) : remSize(27))};
 `;
+
 
 const MobileIDEView = (props) => {
   const {
@@ -64,7 +67,11 @@ const MobileIDEView = (props) => {
   } = props;
 
   const [tmController, setTmController] = useState(null); // eslint-disable-line
-  const [overlay, setOverlay] = useState(null); // eslint-disable-line
+  const [overlayName, setOverlay] = useState(null); // eslint-disable-line
+
+  // TODO: Move this to OverlayController (?)
+  const hideOverlay = () => setOverlay(null);
+  // const overlayRef = useRef({});
 
   return (
     <Screen fullscreen>
@@ -80,10 +87,9 @@ const MobileIDEView = (props) => {
         }
       >
         <IconButton
-          to="/mobile/preferences"
-          onClick={() => setOverlay('preferences')}
-          icon={PreferencesIcon}
-          aria-label="Open preferences menu"
+          onClick={() => setOverlay('dropdown')}
+          icon={MoreIcon}
+          aria-label="Options"
         />
         <IconButton
           to="/mobile/preview"
@@ -131,6 +137,7 @@ const MobileIDEView = (props) => {
           provideController={setTmController}
         />
       </IDEWrapper>
+
       <Footer>
         {ide.consoleIsExpanded && (
           <Expander expanded>
@@ -139,6 +146,12 @@ const MobileIDEView = (props) => {
         )}
         <ActionStrip />
       </Footer>
+
+      <OverlayManager
+        // ref={overlayRef}
+        overlay={overlayName}
+        hideOverlay={hideOverlay}
+      />
     </Screen>
   );
 };
@@ -160,7 +173,7 @@ MobileIDEView.propTypes = {
   ide: PropTypes.shape({
     isPlaying: PropTypes.bool.isRequired,
     isAccessibleOutputPlaying: PropTypes.bool.isRequired,
-    consoleEvent: PropTypes.array, // eslint-disable-line
+    consoleEvent: PropTypes.array,
     modalIsVisible: PropTypes.bool.isRequired,
     sidebarIsExpanded: PropTypes.bool.isRequired,
     consoleIsExpanded: PropTypes.bool.isRequired,
@@ -186,7 +199,7 @@ MobileIDEView.propTypes = {
   }).isRequired,
 
   editorAccessibility: PropTypes.shape({
-    lintMessages: PropTypes.array.isRequired, // eslint-disable-line
+    lintMessages: PropTypes.array.isRequired,
   }).isRequired,
 
   project: PropTypes.shape({

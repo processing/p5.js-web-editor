@@ -46,7 +46,7 @@ function ResetPasswordForm(props) {
 
 ResetPasswordForm.propTypes = {
   fields: PropTypes.shape({
-    email: PropTypes.object.isRequired, // eslint-disable-line
+    email: PropTypes.object.isRequired
   }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   initiateResetPassword: PropTypes.func.isRequired,
