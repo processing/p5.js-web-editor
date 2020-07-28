@@ -5,5 +5,5 @@ import { remSize } from '../../theme';
 
 export default styled.div`
   z-index: 0;
-  margin-top: ${remSize(68)};
+  margin-top: ${props => remSize(props.slimheader ? 50 : 68)};
 `;

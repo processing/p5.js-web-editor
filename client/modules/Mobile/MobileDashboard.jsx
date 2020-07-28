@@ -11,6 +11,9 @@ import SketchList from '../IDE/components/SketchList';
 import CollectionList from '../IDE/components/CollectionList';
 import AssetList from '../IDE/components/AssetList';
 import Content from './MobileViewContent';
+import { SketchSearchbar } from '../IDE/components/Searchbar';
+
+const EXAMPLE_USERNAME = 'p5';
 
 const FooterTab = styled.div`
   background: ${props => prop(props.selected ? 'backgroundColor' : 'MobilePanel.default.foreground')};
@@ -20,34 +23,35 @@ const FooterTab = styled.div`
   display: flex;
 `;
 
-const FooterTabContainer = styled.div`
+const Subheader = styled.div`
+
+  .searchbar {
+    display: flex;
+    * {
+      border-radius: 0px;
+    }
+  }
+  .searchbar__input { width: 100%;    }
+`;
+
+
+const FooterTabSwitcher = styled.div`
   display: flex;
   
   h3 { text-align: center; width: 100%; }
 `;
 
-// switch (tabKey) {
-//   case TabKey.assets:
-//     return <AssetList key={username} username={username} />;
-//   case TabKey.collections:
-//     return <CollectionList key={username} username={username} />;
-//   case TabKey.sketches:
-//   default:
-//     return <SketchList key={username} username={username} />;
-// }
-
 const Panels = {
   Sketches: props => <SketchList {...props} />,
-  Collections: () => <CollectionList />,
-  Assets: () => <AssetList />
+  Collections: props => <CollectionList {...props} />,
+  Assets: props => <AssetList {...props} />
 };
 
 const MobileDashboard = ({ username }) => {
-  // const tabs = ['Sketches', 'Collections', 'Assets'];
   const Tabs = Object.keys(Panels);
   const [selected, selectTab] = useState(Tabs[0]);
 
-  const isExamples = username === 'p5';
+  const isExamples = username === EXAMPLE_USERNAME;
 
   return (
     <Screen fullscreen>
@@ -56,14 +60,17 @@ const MobileDashboard = ({ username }) => {
       </Header>
 
 
-      <Content>
+      <Content slimheader>
+        <Subheader>
+          <SketchSearchbar />
+        </Subheader>
         {Panels[selected] && Panels[selected]({ username })}
       </Content>
 
 
       <Footer>
         {!isExamples &&
-          <FooterTabContainer>
+          <FooterTabSwitcher>
             {Tabs.map(tab => (
               <FooterTab
                 key={`tab-${tab}`}
@@ -73,7 +80,7 @@ const MobileDashboard = ({ username }) => {
                 <h3>{(tab === 'Sketches' && username === 'p5') ? 'Examples' : tab}</h3>
               </FooterTab>))
             }
-          </FooterTabContainer>
+          </FooterTabSwitcher>
         }
       </Footer>
     </Screen>);
