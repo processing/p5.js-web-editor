@@ -7,9 +7,9 @@ import { withTranslation } from 'react-i18next';
 // import { connect } from 'react-redux';
 // import * as PreferencesActions from '../actions/preferences';
 
-import PlusIcon from '../../../images/plus.svg';
-import MinusIcon from '../../../images/minus.svg';
-import beepUrl from '../../../sounds/audioAlert.mp3';
+import PlusIcon from '../../../../images/plus.svg';
+import MinusIcon from '../../../../images/minus.svg';
+import beepUrl from '../../../../sounds/audioAlert.mp3';
 
 class Preferences extends React.Component {
   constructor(props) {

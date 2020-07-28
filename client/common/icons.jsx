@@ -13,6 +13,9 @@ import DropdownArrow from '../images/down-filled-triangle.svg';
 import Preferences from '../images/preferences.svg';
 import Play from '../images/triangle-arrow-right.svg';
 import More from '../images/more.svg';
+import Code from '../images/code.svg';
+import Terminal from '../images/terminal.svg';
+
 
 // HOC that adds the right web accessibility props
 // https://www.scottohara.me/blog/2019/05/22/contextual-images-svgs-and-a11y.html
@@ -76,3 +79,4 @@ export const DropdownArrowIcon = withLabel(DropdownArrow);
 export const PreferencesIcon = withLabel(Preferences);
 export const PlayIcon = withLabel(Play);
 export const MoreIcon = withLabel(More);
+export const TerminalIcon = withLabel(Terminal);
