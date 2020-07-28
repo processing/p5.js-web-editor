@@ -31,7 +31,7 @@ const Subheader = styled.div`
       border-radius: 0px;
     }
   }
-  .searchbar__input { width: 100%;    }
+  .searchbar__input { width: 100%; }
 `;
 
 
@@ -66,7 +66,6 @@ const MobileDashboard = ({ username }) => {
         </Subheader>
         {Panels[selected] && Panels[selected]({ username })}
       </Content>
-
 
       <Footer>
         {!isExamples &&
