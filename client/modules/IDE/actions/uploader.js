@@ -1,11 +1,10 @@
-import axios from 'axios';
+import apiClient from '../../../utils/apiClient';
+import getConfig from '../../../utils/getConfig';
 import { createFile } from './files';
 import { TEXT_FILE_REGEX } from '../../../../server/utils/fileUtils';
 
-const __process = (typeof global !== 'undefined' ? global : window).process;
-const s3BucketHttps = __process.env.S3_BUCKET_URL_BASE ||
-                      `https://s3-${__process.env.AWS_REGION}.amazonaws.com/${__process.env.S3_BUCKET}/`;
-const ROOT_URL = __process.env.API_URL;
+const s3BucketHttps = getConfig('S3_BUCKET_URL_BASE') ||
+                      `https://s3-${getConfig('AWS_REGION')}.amazonaws.com/${getConfig('S3_BUCKET')}/`;
 const MAX_LOCAL_FILE_SIZE = 80000; // bytes, aka 80 KB
 
 function localIntercept(file, options = {}) {
@@ -46,18 +45,13 @@ export function dropzoneAcceptCallback(userId, file, done) {
         });
     } else {
       file.postData = []; // eslint-disable-line
-      axios.post(
-        `${ROOT_URL}/S3/sign`, {
-          name: file.name,
-          type: file.type,
-          size: file.size,
-          userId
+      apiClient.post('/S3/sign', {
+        name: file.name,
+        type: file.type,
+        size: file.size,
+        userId
         // _csrf: document.getElementById('__createPostToken').value
-        },
-        {
-          withCredentials: true
-        }
-      )
+      })
         .then((response) => {
           file.custom_status = 'ready'; // eslint-disable-line
           file.postData = response.data; // eslint-disable-line
@@ -65,12 +59,13 @@ export function dropzoneAcceptCallback(userId, file, done) {
           file.previewTemplate.className += ' uploading'; // eslint-disable-line
           done();
         })
-        .catch((response) => {
-        file.custom_status = 'rejected'; // eslint-disable-line
-          if (response.data.responseText && response.data.responseText.message) {
+        .catch((error) => {
+          const { response } = error;
+          file.custom_status = 'rejected'; // eslint-disable-line
+          if (response.data && response.data.responseText && response.data.responseText.message) {
             done(response.data.responseText.message);
           }
-          done('error preparing the upload');
+          done('Error: Reached upload limit.');
         });
     }
   };
@@ -82,7 +77,7 @@ export function dropzoneSendingCallback(file, xhr, formData) {
       Object.keys(file.postData).forEach((key) => {
         formData.append(key, file.postData[key]);
       });
-      formData.append('Content-type', '');
+      formData.append('Content-type', file.type);
       formData.append('Content-length', '');
       formData.append('acl', 'public-read');
     }

@@ -3,20 +3,21 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router';
-import InlineSVG from 'react-inlinesvg';
 import classNames from 'classnames';
+import { withTranslation } from 'react-i18next';
+import i18next from 'i18next';
 import * as IDEActions from '../modules/IDE/actions/ide';
 import * as toastActions from '../modules/IDE/actions/toast';
 import * as projectActions from '../modules/IDE/actions/project';
 import { setAllAccessibleOutput } from '../modules/IDE/actions/preferences';
 import { logoutUser } from '../modules/User/actions';
 
+import getConfig from '../utils/getConfig';
 import { metaKeyName, } from '../utils/metaKey';
 
-const triangleUrl = require('../images/down-filled-triangle.svg');
-const logoUrl = require('../images/p5js-logo-small.svg');
-
-const __process = (typeof global !== 'undefined' ? global : window).process;
+import CaretLeftIcon from '../images/left-arrow.svg';
+import TriangleIcon from '../images/down-filled-triangle.svg';
+import LogoIcon from '../images/p5js-logo-small.svg';
 
 class Nav extends React.PureComponent {
   constructor(props) {
@@ -56,6 +57,10 @@ class Nav extends React.PureComponent {
     this.handleFocusForHelp = this.handleFocus.bind(this, 'help');
     this.toggleDropdownForAccount = this.toggleDropdown.bind(this, 'account');
     this.handleFocusForAccount = this.handleFocus.bind(this, 'account');
+    this.toggleDropdownForLang = this.toggleDropdown.bind(this, 'lang');
+    this.handleFocusForLang = this.handleFocus.bind(this, 'lang');
+    this.handleLangSelection = this.handleLangSelection.bind(this);
+
     this.closeDropDown = this.closeDropDown.bind(this);
   }
 
@@ -92,11 +97,12 @@ class Nav extends React.PureComponent {
   }
 
   handleNew() {
-    if (!this.props.unsavedChanges) {
+    const { unsavedChanges, warnIfUnsavedChanges } = this.props;
+    if (!unsavedChanges) {
       this.props.showToast(1500);
       this.props.setToastText('Opened new sketch.');
       this.props.newProject();
-    } else if (this.props.warnIfUnsavedChanges()) {
+    } else if (warnIfUnsavedChanges && warnIfUnsavedChanges()) {
       this.props.showToast(1500);
       this.props.setToastText('Opened new sketch.');
       this.props.newProject();
@@ -163,6 +169,13 @@ class Nav extends React.PureComponent {
     this.setDropdown('none');
   }
 
+  handleLangSelection(event) {
+    i18next.changeLanguage(event.target.value);
+    this.props.showToast(1500);
+    this.props.setToastText('LangChange');
+    this.setDropdown('none');
+  }
+
   handleLogout() {
     this.props.logoutUser();
     this.setDropdown('none');
@@ -180,7 +193,8 @@ class Nav extends React.PureComponent {
   }
 
   handleShare() {
-    this.props.showShareModal();
+    const { username } = this.props.params;
+    this.props.showShareModal(this.props.project.id, this.props.project.name, username);
     this.setDropdown('none');
   }
 
@@ -222,6 +236,494 @@ class Nav extends React.PureComponent {
     this.timer = setTimeout(this.setDropdown.bind(this, 'none'), 10);
   }
 
+  renderDashboardMenu(navDropdownState) {
+    return (
+      <ul className="nav__items-left">
+        <li className="nav__item-logo">
+          <LogoIcon role="img" aria-label="p5.js Logo" focusable="false" className="svg__logo" />
+        </li>
+        <li className="nav__item nav__item--no-icon">
+          <Link to="/" className="nav__back-link">
+            <CaretLeftIcon className="nav__back-icon" focusable="false" aria-hidden="true" />
+            <span className="nav__item-header">
+              {this.props.t('BackEditor')}
+            </span>
+          </Link>
+        </li>
+      </ul>
+    );
+  }
+
+  renderProjectMenu(navDropdownState) {
+    return (
+      <ul className="nav__items-left">
+        <li className="nav__item-logo">
+          <LogoIcon role="img" aria-label="p5.js Logo" focusable="false" className="svg__logo" />
+        </li>
+        <li className={navDropdownState.file}>
+          <button
+            onClick={this.toggleDropdownForFile}
+            onBlur={this.handleBlur}
+            onFocus={this.clearHideTimeout}
+            onMouseOver={() => {
+              if (this.state.dropdownOpen !== 'none') {
+                this.setDropdown('file');
+              }
+            }}
+          >
+            <span className="nav__item-header">{this.props.t('File')}</span>
+            <TriangleIcon className="nav__item-header-triangle" focusable="false" aria-hidden="true" />
+          </button>
+          <ul className="nav__dropdown">
+            <li className="nav__dropdown-item">
+              <button
+                onClick={this.handleNew}
+                onFocus={this.handleFocusForFile}
+                onBlur={this.handleBlur}
+              >
+                {this.props.t('New')}
+              </button>
+            </li>
+            { getConfig('LOGIN_ENABLED') && (!this.props.project.owner || this.isUserOwner()) &&
+            <li className="nav__dropdown-item">
+              <button
+                onClick={this.handleSave}
+                onFocus={this.handleFocusForFile}
+                onBlur={this.handleBlur}
+              >
+                {this.props.t('Save')}
+                <span className="nav__keyboard-shortcut">{metaKeyName}+S</span>
+              </button>
+            </li> }
+            { this.props.project.id && this.props.user.authenticated &&
+            <li className="nav__dropdown-item">
+              <button
+                onClick={this.handleDuplicate}
+                onFocus={this.handleFocusForFile}
+                onBlur={this.handleBlur}
+              >
+                {this.props.t('Duplicate')}
+              </button>
+            </li> }
+            { this.props.project.id &&
+            <li className="nav__dropdown-item">
+              <button
+                onClick={this.handleShare}
+                onFocus={this.handleFocusForFile}
+                onBlur={this.handleBlur}
+              >
+                {this.props.t('Share')}
+              </button>
+            </li> }
+            { this.props.project.id &&
+            <li className="nav__dropdown-item">
+              <button
+                onClick={this.handleDownload}
+                onFocus={this.handleFocusForFile}
+                onBlur={this.handleBlur}
+              >
+                {this.props.t('Download')}
+              </button>
+            </li> }
+            { this.props.user.authenticated &&
+            <li className="nav__dropdown-item">
+              <Link
+                to={`/${this.props.user.username}/sketches`}
+                onFocus={this.handleFocusForFile}
+                onBlur={this.handleBlur}
+                onClick={this.setDropdownForNone}
+              >
+                {this.props.t('Open')}
+              </Link>
+            </li> }
+            {getConfig('UI_COLLECTIONS_ENABLED') &&
+              this.props.user.authenticated &&
+              this.props.project.id &&
+              <li className="nav__dropdown-item">
+                <Link
+                  to={`/${this.props.user.username}/sketches/${this.props.project.id}/add-to-collection`}
+                  onFocus={this.handleFocusForFile}
+                  onBlur={this.handleBlur}
+                  onClick={this.setDropdownForNone}
+                >
+                  {this.props.t('AddToCollection')}
+                </Link>
+              </li>}
+            { getConfig('EXAMPLES_ENABLED') &&
+            <li className="nav__dropdown-item">
+              <Link
+                to="/p5/sketches"
+                onFocus={this.handleFocusForFile}
+                onBlur={this.handleBlur}
+                onClick={this.setDropdownForNone}
+              >
+                {this.props.t('Examples')}
+              </Link>
+            </li> }
+          </ul>
+        </li>
+        <li className={navDropdownState.edit}>
+          <button
+            onClick={this.toggleDropdownForEdit}
+            onBlur={this.handleBlur}
+            onFocus={this.clearHideTimeout}
+            onMouseOver={() => {
+              if (this.state.dropdownOpen !== 'none') {
+                this.setDropdown('edit');
+              }
+            }}
+          >
+            <span className="nav__item-header">{this.props.t('Edit')}</span>
+            <TriangleIcon className="nav__item-header-triangle" focusable="false" aria-hidden="true" />
+          </button>
+          <ul className="nav__dropdown" >
+            <li className="nav__dropdown-item">
+              <button
+                onClick={() => {
+                  this.props.cmController.tidyCode();
+                  this.setDropdown('none');
+                }}
+                onFocus={this.handleFocusForEdit}
+                onBlur={this.handleBlur}
+              >
+                {this.props.t('TidyCode')}
+                <span className="nav__keyboard-shortcut">{'\u21E7'}+Tab</span>
+              </button>
+            </li>
+            <li className="nav__dropdown-item">
+              <button
+                onClick={this.handleFind}
+                onFocus={this.handleFocusForEdit}
+                onBlur={this.handleBlur}
+              >
+                {this.props.t('Find')}
+                <span className="nav__keyboard-shortcut">{metaKeyName}+F</span>
+              </button>
+            </li>
+            <li className="nav__dropdown-item">
+              <button
+                onClick={this.handleFindNext}
+                onFocus={this.handleFocusForEdit}
+                onBlur={this.handleBlur}
+              >
+                {this.props.t('FindNext')}
+                <span className="nav__keyboard-shortcut">{metaKeyName}+G</span>
+              </button>
+            </li>
+            <li className="nav__dropdown-item">
+              <button
+                onClick={this.handleFindPrevious}
+                onFocus={this.handleFocusForEdit}
+                onBlur={this.handleBlur}
+              >
+                {this.props.t('FindPrevious')}
+                <span className="nav__keyboard-shortcut">{'\u21E7'}+{metaKeyName}+G</span>
+              </button>
+            </li>
+          </ul>
+        </li>
+        <li className={navDropdownState.sketch}>
+          <button
+            onClick={this.toggleDropdownForSketch}
+            onBlur={this.handleBlur}
+            onFocus={this.clearHideTimeout}
+            onMouseOver={() => {
+              if (this.state.dropdownOpen !== 'none') {
+                this.setDropdown('sketch');
+              }
+            }}
+          >
+            <span className="nav__item-header">{this.props.t('Sketch')}</span>
+            <TriangleIcon className="nav__item-header-triangle" focusable="false" aria-hidden="true" />
+          </button>
+          <ul className="nav__dropdown">
+            <li className="nav__dropdown-item">
+              <button
+                onClick={this.handleAddFile}
+                onFocus={this.handleFocusForSketch}
+                onBlur={this.handleBlur}
+              >
+                {this.props.t('AddFile')}
+              </button>
+            </li>
+            <li className="nav__dropdown-item">
+              <button
+                onClick={this.handleAddFolder}
+                onFocus={this.handleFocusForSketch}
+                onBlur={this.handleBlur}
+              >
+                {this.props.t('AddFolder')}
+              </button>
+            </li>
+            <li className="nav__dropdown-item">
+              <button
+                onClick={this.handleRun}
+                onFocus={this.handleFocusForSketch}
+                onBlur={this.handleBlur}
+              >
+                {this.props.t('Run')}
+                <span className="nav__keyboard-shortcut">{metaKeyName}+Enter</span>
+              </button>
+            </li>
+            <li className="nav__dropdown-item">
+              <button
+                onClick={this.handleStop}
+                onFocus={this.handleFocusForSketch}
+                onBlur={this.handleBlur}
+              >
+                {this.props.t('Stop')}
+                <span className="nav__keyboard-shortcut">{'\u21E7'}+{metaKeyName}+Enter</span>
+              </button>
+            </li>
+            {/* <li className="nav__dropdown-item">
+              <button
+                onClick={this.handleStartAccessible}
+                onFocus={this.handleFocusForSketch}
+                onBlur={this.handleBlur}
+              >
+                Start Accessible
+                <span className="nav__keyboard-shortcut">{'\u21E7'}+{metaKeyName}+1</span>
+              </button>
+            </li>
+            <li className="nav__dropdown-item">
+              <button
+                onClick={this.handleStopAccessible}
+                onFocus={this.handleFocusForSketch}
+                onBlur={this.handleBlur}
+              >
+                Stop Accessible
+                <span className="nav__keyboard-shortcut">{'\u21E7'}+{metaKeyName}+2</span>
+              </button>
+            </li> */}
+          </ul>
+        </li>
+        <li className={navDropdownState.help}>
+          <button
+            onClick={this.toggleDropdownForHelp}
+            onBlur={this.handleBlur}
+            onFocus={this.clearHideTimeout}
+            onMouseOver={() => {
+              if (this.state.dropdownOpen !== 'none') {
+                this.setDropdown('help');
+              }
+            }}
+          >
+            <span className="nav__item-header">{this.props.t('Help')}</span>
+            <TriangleIcon className="nav__item-header-triangle" focusable="false" aria-hidden="true" />
+          </button>
+          <ul className="nav__dropdown">
+            <li className="nav__dropdown-item">
+              <button
+                onFocus={this.handleFocusForHelp}
+                onBlur={this.handleBlur}
+                onClick={this.handleKeyboardShortcuts}
+              >
+                {this.props.t('KeyboardShortcuts')}
+              </button>
+            </li>
+            <li className="nav__dropdown-item">
+              <a
+                href="https://p5js.org/reference/"
+                target="_blank"
+                rel="noopener noreferrer"
+                onFocus={this.handleFocusForHelp}
+                onBlur={this.handleBlur}
+                onClick={this.setDropdownForNone}
+              >{this.props.t('Reference')}
+              </a>
+            </li>
+            <li className="nav__dropdown-item">
+              <Link
+                to="/about"
+                onFocus={this.handleFocusForHelp}
+                onBlur={this.handleBlur}
+                onClick={this.setDropdownForNone}
+              >
+                {this.props.t('About')}
+              </Link>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    );
+  }
+
+  renderLanguageMenu(navDropdownState) {
+    return (
+      <ul className="nav__items-right" title="user-menu">
+        <li className={navDropdownState.lang}>
+          <button
+            onClick={this.toggleDropdownForLang}
+            onBlur={this.handleBlur}
+            onFocus={this.clearHideTimeout}
+            onMouseOver={() => {
+              if (this.state.dropdownOpen !== 'none') {
+                this.setDropdown('lang');
+              }
+            }}
+          >
+            <span className="nav__item-header"> {this.props.t('Lang')}</span>
+            <TriangleIcon className="nav__item-header-triangle" focusable="false" aria-hidden="true" />
+          </button>
+          <ul className="nav__dropdown">
+
+            <li className="nav__dropdown-item">
+              <button
+                onFocus={this.handleFocusForLang}
+                onBlur={this.handleBlur}
+                value="it"
+                onClick={e => this.handleLangSelection(e)}
+              >
+                Italian (Test Fallback)
+              </button>
+            </li>
+            <li className="nav__dropdown-item">
+              <button
+                onFocus={this.handleFocusForLang}
+                onBlur={this.handleBlur}
+                value="en-US"
+                onClick={e => this.handleLangSelection(e)}
+              >English
+              </button>
+            </li>
+            <li className="nav__dropdown-item">
+              <button
+                onFocus={this.handleFocusForLang}
+                onBlur={this.handleBlur}
+                value="es-419"
+                onClick={e => this.handleLangSelection(e)}
+              >
+                Español
+              </button>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    );
+  }
+
+
+  renderUnauthenticatedUserMenu(navDropdownState) {
+    return (
+      <ul className="nav__items-right" title="user-menu">
+        <li className="nav__item">
+          <Link to="/login" className="nav__auth-button">
+            <span className="nav__item-header">{this.props.t('Login')}</span>
+          </Link>
+        </li>
+        <span className="nav__item-or">{this.props.t('LoginOr')}</span>
+        <li className="nav__item">
+          <Link to="/signup" className="nav__auth-button">
+            <span className="nav__item-header">{this.props.t('SignUp')}</span>
+          </Link>
+        </li>
+      </ul>
+    );
+  }
+
+  renderAuthenticatedUserMenu(navDropdownState) {
+    return (
+      <ul className="nav__items-right" title="user-menu">
+        <li className="nav__item">
+          <span>{this.props.t('Hello')}, {this.props.user.username}!</span>
+        </li>
+        <span className="nav__item-spacer">|</span>
+        <li className={navDropdownState.account}>
+          <button
+            className="nav__item-header"
+            onClick={this.toggleDropdownForAccount}
+            onBlur={this.handleBlur}
+            onFocus={this.clearHideTimeout}
+            onMouseOver={() => {
+              if (this.state.dropdownOpen !== 'none') {
+                this.setDropdown('account');
+              }
+            }}
+          >
+            {this.props.t('MyAccount')}
+            <TriangleIcon className="nav__item-header-triangle" focusable="false" aria-hidden="true" />
+          </button>
+          <ul className="nav__dropdown">
+            <li className="nav__dropdown-item">
+              <Link
+                to={`/${this.props.user.username}/sketches`}
+                onFocus={this.handleFocusForAccount}
+                onBlur={this.handleBlur}
+                onClick={this.setDropdownForNone}
+              >
+                {this.props.t('MySketches')}
+              </Link>
+            </li>
+            {getConfig('UI_COLLECTIONS_ENABLED') &&
+              <li className="nav__dropdown-item">
+                <Link
+                  to={`/${this.props.user.username}/collections`}
+                  onFocus={this.handleFocusForAccount}
+                  onBlur={this.handleBlur}
+                  onClick={this.setDropdownForNone}
+                >
+                  {this.props.t('MyCollections')}
+                </Link>
+              </li>
+            }
+            <li className="nav__dropdown-item">
+              <Link
+                to={`/${this.props.user.username}/assets`}
+                onFocus={this.handleFocusForAccount}
+                onBlur={this.handleBlur}
+                onClick={this.setDropdownForNone}
+              >
+                {this.props.t('MyAssets')}
+              </Link>
+            </li>
+            <li className="nav__dropdown-item">
+              <Link
+                to="/account"
+                onFocus={this.handleFocusForAccount}
+                onBlur={this.handleBlur}
+                onClick={this.setDropdownForNone}
+              >
+                {this.props.t('Settings')}
+              </Link>
+            </li>
+            <li className="nav__dropdown-item">
+              <button
+                onClick={this.handleLogout}
+                onFocus={this.handleFocusForAccount}
+                onBlur={this.handleBlur}
+              >
+                {this.props.t('LogOut')}
+              </button>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    );
+  }
+
+  renderUserMenu(navDropdownState) {
+    const isLoginEnabled = getConfig('LOGIN_ENABLED');
+    const isAuthenticated = this.props.user.authenticated;
+
+    if (isLoginEnabled && isAuthenticated) {
+      return this.renderAuthenticatedUserMenu(navDropdownState);
+    } else if (isLoginEnabled && !isAuthenticated) {
+      return this.renderUnauthenticatedUserMenu(navDropdownState);
+    }
+
+    return null;
+  }
+
+  renderLeftLayout(navDropdownState) {
+    switch (this.props.layout) {
+      case 'dashboard':
+        return this.renderDashboardMenu(navDropdownState);
+      case 'project':
+      default:
+        return this.renderProjectMenu(navDropdownState);
+    }
+  }
+
   render() {
     const navDropdownState = {
       file: classNames({
@@ -243,386 +745,21 @@ class Nav extends React.PureComponent {
       account: classNames({
         'nav__item': true,
         'nav__item--open': this.state.dropdownOpen === 'account'
+      }),
+      lang: classNames({
+        'nav__item': true,
+        'nav__item--open': this.state.dropdownOpen === 'lang'
       })
     };
+
     return (
-      <nav className="nav" title="main-navigation" ref={(node) => { this.node = node; }}>
-        <ul className="nav__items-left" title="project-menu">
-          <li className="nav__item-logo">
-            <InlineSVG src={logoUrl} alt="p5.js logo" className="svg__logo" />
-          </li>
-          <li className={navDropdownState.file}>
-            <button
-              onClick={this.toggleDropdownForFile}
-              onBlur={this.handleBlur}
-              onFocus={this.clearHideTimeout}
-              onMouseOver={() => {
-                if (this.state.dropdownOpen !== 'none') {
-                  this.setDropdown('file');
-                }
-              }}
-            >
-              <span className="nav__item-header">File</span>
-              <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
-            </button>
-            <ul className="nav__dropdown">
-              <li className="nav__dropdown-item">
-                <button
-                  onClick={this.handleNew}
-                  onFocus={this.handleFocusForFile}
-                  onBlur={this.handleBlur}
-                >
-                  New
-                </button>
-              </li>
-              { __process.env.LOGIN_ENABLED && (!this.props.project.owner || this.isUserOwner()) &&
-              <li className="nav__dropdown-item">
-                <button
-                  onClick={this.handleSave}
-                  onFocus={this.handleFocusForFile}
-                  onBlur={this.handleBlur}
-                >
-                  Save
-                  <span className="nav__keyboard-shortcut">{metaKeyName}+s</span>
-                </button>
-              </li> }
-              { this.props.project.id && this.props.user.authenticated &&
-              <li className="nav__dropdown-item">
-                <button
-                  onClick={this.handleDuplicate}
-                  onFocus={this.handleFocusForFile}
-                  onBlur={this.handleBlur}
-                >
-                  Duplicate
-                </button>
-              </li> }
-              { this.props.project.id &&
-              <li className="nav__dropdown-item">
-                <button
-                  onClick={this.handleShare}
-                  onFocus={this.handleFocusForFile}
-                  onBlur={this.handleBlur}
-                >
-                  Share
-                </button>
-              </li> }
-              { this.props.project.id &&
-              <li className="nav__dropdown-item">
-                <button
-                  onClick={this.handleDownload}
-                  onFocus={this.handleFocusForFile}
-                  onBlur={this.handleBlur}
-                >
-                  Download
-                </button>
-              </li> }
-              { this.props.user.authenticated &&
-              <li className="nav__dropdown-item">
-                <Link
-                  to={`/${this.props.user.username}/sketches`}
-                  onFocus={this.handleFocusForFile}
-                  onBlur={this.handleBlur}
-                  onClick={this.setDropdownForNone}
-                >
-                  Open
-                </Link>
-              </li> }
-              { __process.env.EXAMPLES_ENABLED &&
-              <li className="nav__dropdown-item">
-                <Link
-                  to="/p5/sketches"
-                  onFocus={this.handleFocusForFile}
-                  onBlur={this.handleBlur}
-                  onClick={this.setDropdownForNone}
-                >
-                  Examples
-                </Link>
-              </li> }
-            </ul>
-          </li>
-          <li className={navDropdownState.edit}>
-            <button
-              onClick={this.toggleDropdownForEdit}
-              onBlur={this.handleBlur}
-              onFocus={this.clearHideTimeout}
-              onMouseOver={() => {
-                if (this.state.dropdownOpen !== 'none') {
-                  this.setDropdown('edit');
-                }
-              }}
-            >
-              <span className="nav__item-header">Edit</span>
-              <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
-            </button>
-            <ul className="nav__dropdown" >
-              <li className="nav__dropdown-item">
-                <button
-                  onClick={() => {
-                    this.props.cmController.tidyCode();
-                    this.setDropdown('none');
-                  }}
-                  onFocus={this.handleFocusForEdit}
-                  onBlur={this.handleBlur}
-                >
-                  Tidy Code
-                  <span className="nav__keyboard-shortcut">{'\u21E7'}+Tab</span>
-                </button>
-              </li>
-              <li className="nav__dropdown-item">
-                <button
-                  onClick={this.handleFind}
-                  onFocus={this.handleFocusForEdit}
-                  onBlur={this.handleBlur}
-                >
-                  Find
-                  <span className="nav__keyboard-shortcut">{metaKeyName}+F</span>
-                </button>
-              </li>
-              <li className="nav__dropdown-item">
-                <button
-                  onClick={this.handleFindNext}
-                  onFocus={this.handleFocusForEdit}
-                  onBlur={this.handleBlur}
-                >
-                  Find Next
-                  <span className="nav__keyboard-shortcut">{metaKeyName}+G</span>
-                </button>
-              </li>
-              <li className="nav__dropdown-item">
-                <button
-                  onClick={this.handleFindPrevious}
-                  onFocus={this.handleFocusForEdit}
-                  onBlur={this.handleBlur}
-                >
-                  Find Previous
-                  <span className="nav__keyboard-shortcut">{'\u21E7'}+{metaKeyName}+G</span>
-                </button>
-              </li>
-            </ul>
-          </li>
-          <li className={navDropdownState.sketch}>
-            <button
-              onClick={this.toggleDropdownForSketch}
-              onBlur={this.handleBlur}
-              onFocus={this.clearHideTimeout}
-              onMouseOver={() => {
-                if (this.state.dropdownOpen !== 'none') {
-                  this.setDropdown('sketch');
-                }
-              }}
-            >
-              <span className="nav__item-header">Sketch</span>
-              <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
-            </button>
-            <ul className="nav__dropdown">
-              <li className="nav__dropdown-item">
-                <button
-                  onClick={this.handleAddFile}
-                  onFocus={this.handleFocusForSketch}
-                  onBlur={this.handleBlur}
-                >
-                  Add File
-                </button>
-              </li>
-              <li className="nav__dropdown-item">
-                <button
-                  onClick={this.handleAddFolder}
-                  onFocus={this.handleFocusForSketch}
-                  onBlur={this.handleBlur}
-                >
-                  Add Folder
-                </button>
-              </li>
-              <li className="nav__dropdown-item">
-                <button
-                  onClick={this.handleRun}
-                  onFocus={this.handleFocusForSketch}
-                  onBlur={this.handleBlur}
-                >
-                  Run
-                  <span className="nav__keyboard-shortcut">{metaKeyName}+Enter</span>
-                </button>
-              </li>
-              <li className="nav__dropdown-item">
-                <button
-                  onClick={this.handleStop}
-                  onFocus={this.handleFocusForSketch}
-                  onBlur={this.handleBlur}
-                >
-                  Stop
-                  <span className="nav__keyboard-shortcut">{'\u21E7'}+{metaKeyName}+Enter</span>
-                </button>
-              </li>
-              {/* <li className="nav__dropdown-item">
-                <button
-                  onClick={this.handleStartAccessible}
-                  onFocus={this.handleFocusForSketch}
-                  onBlur={this.handleBlur}
-                >
-                  Start Accessible
-                  <span className="nav__keyboard-shortcut">{'\u21E7'}+{metaKeyName}+1</span>
-                </button>
-              </li>
-              <li className="nav__dropdown-item">
-                <button
-                  onClick={this.handleStopAccessible}
-                  onFocus={this.handleFocusForSketch}
-                  onBlur={this.handleBlur}
-                >
-                  Stop Accessible
-                  <span className="nav__keyboard-shortcut">{'\u21E7'}+{metaKeyName}+2</span>
-                </button>
-              </li> */}
-            </ul>
-          </li>
-          <li className={navDropdownState.help}>
-            <button
-              onClick={this.toggleDropdownForHelp}
-              onBlur={this.handleBlur}
-              onFocus={this.clearHideTimeout}
-              onMouseOver={() => {
-                if (this.state.dropdownOpen !== 'none') {
-                  this.setDropdown('help');
-                }
-              }}
-            >
-              <span className="nav__item-header">Help & Feedback</span>
-              <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
-            </button>
-            <ul className="nav__dropdown">
-              <li className="nav__dropdown-item">
-                <button
-                  onFocus={this.handleFocusForHelp}
-                  onBlur={this.handleBlur}
-                  onClick={this.handleKeyboardShortcuts}
-                >
-                  Keyboard Shortcuts
-                </button>
-              </li>
-              <li className="nav__dropdown-item">
-                <a
-                  href="https://p5js.org/reference/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onFocus={this.handleFocusForHelp}
-                  onBlur={this.handleBlur}
-                  onClick={this.setDropdownForNone}
-                >Reference
-                </a>
-              </li>
-              <li className="nav__dropdown-item">
-                <Link
-                  to="/about"
-                  onFocus={this.handleFocusForHelp}
-                  onBlur={this.handleBlur}
-                  onClick={this.setDropdownForNone}
-                >
-                  About
-                </Link>
-              </li>
-              <li className="nav__dropdown-item">
-                <Link
-                  to="/feedback"
-                  onFocus={this.handleFocusForHelp}
-                  onBlur={this.handleBlur}
-                  onClick={this.setDropdownForNone}
-                >
-                  Feedback
-                </Link>
-              </li>
-            </ul>
-          </li>
-        </ul>
-        { __process.env.LOGIN_ENABLED && !this.props.user.authenticated &&
-          <ul className="nav__items-right" title="user-menu">
-            <li>
-              <Link to="/login">
-                <span className="nav__item-header">Log in</span>
-              </Link>
-            </li>
-            <span className="nav__item-spacer">or</span>
-            <li>
-              <Link to="/signup">
-                <span className="nav__item-header">Sign up</span>
-              </Link>
-            </li>
-          </ul>}
-        { __process.env.LOGIN_ENABLED && this.props.user.authenticated &&
-          <ul className="nav__items-right" title="user-menu">
-            <li className="nav__item">
-              <span>Hello, {this.props.user.username}!</span>
-            </li>
-            <span className="nav__item-spacer">|</span>
-            <li className={navDropdownState.account}>
-              <button
-                className="nav__item-header"
-                onClick={this.toggleDropdownForAccount}
-                onBlur={this.handleBlur}
-                onFocus={this.clearHideTimeout}
-                onMouseOver={() => {
-                  if (this.state.dropdownOpen !== 'none') {
-                    this.setDropdown('account');
-                  }
-                }}
-              >
-                My Account
-                <InlineSVG className="nav__item-header-triangle" src={triangleUrl} />
-              </button>
-              <ul className="nav__dropdown">
-                <li className="nav__dropdown-item">
-                  <Link
-                    to={`/${this.props.user.username}/sketches`}
-                    onFocus={this.handleFocusForAccount}
-                    onBlur={this.handleBlur}
-                    onClick={this.setDropdownForNone}
-                  >
-                    My sketches
-                  </Link>
-                </li>
-                <li className="nav__dropdown-item">
-                  <Link
-                    to="/assets"
-                    onFocus={this.handleFocusForAccount}
-                    onBlur={this.handleBlur}
-                    onClick={this.setDropdownForNone}
-                  >
-                    My assets
-                  </Link>
-                </li>
-                <li className="nav__dropdown-item">
-                  <Link
-                    to="/account"
-                    onFocus={this.handleFocusForAccount}
-                    onBlur={this.handleBlur}
-                    onClick={this.setDropdownForNone}
-                  >
-                    Settings
-                  </Link>
-                </li>
-                <li className="nav__dropdown-item">
-                  <button
-                    onClick={this.handleLogout}
-                    onFocus={this.handleFocusForAccount}
-                    onBlur={this.handleBlur}
-                  >
-                    Log out
-                  </button>
-                </li>
-              </ul>
-            </li>
-          </ul> }
-        {/*
-        <div className="nav__announce">
-          This is a preview version of the editor, that has not yet been officially released.
-          It is in development, you can report bugs <a
-            href="https://github.com/processing/p5.js-web-editor/issues"
-            target="_blank"
-            rel="noopener noreferrer"
-          >here</a>.
-          Please use with caution.
-        </div>
-      */}
-      </nav>
+      <header>
+        <nav className="nav" title="main-navigation" ref={(node) => { this.node = node; }}>
+          {this.renderLeftLayout(navDropdownState)}
+          {getConfig('TRANSLATIONS_ENABLED') && this.renderLanguageMenu(navDropdownState)}
+          {this.renderUserMenu(navDropdownState)}
+        </nav>
+      </header>
     );
   }
 }
@@ -641,6 +778,7 @@ Nav.propTypes = {
   }).isRequired,
   project: PropTypes.shape({
     id: PropTypes.string,
+    name: PropTypes.string,
     owner: PropTypes.shape({
       id: PropTypes.string
     })
@@ -649,7 +787,7 @@ Nav.propTypes = {
   showShareModal: PropTypes.func.isRequired,
   showErrorModal: PropTypes.func.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
-  warnIfUnsavedChanges: PropTypes.func.isRequired,
+  warnIfUnsavedChanges: PropTypes.func,
   showKeyboardShortcutModal: PropTypes.func.isRequired,
   cmController: PropTypes.shape({
     tidyCode: PropTypes.func,
@@ -663,9 +801,15 @@ Nav.propTypes = {
   setAllAccessibleOutput: PropTypes.func.isRequired,
   newFile: PropTypes.func.isRequired,
   newFolder: PropTypes.func.isRequired,
+  layout: PropTypes.oneOf(['dashboard', 'project']),
   rootFile: PropTypes.shape({
     id: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  params: PropTypes.shape({
+    username: PropTypes.string
+  }),
+  t: PropTypes.func.isRequired
+
 };
 
 Nav.defaultProps = {
@@ -673,7 +817,12 @@ Nav.defaultProps = {
     id: undefined,
     owner: undefined
   },
-  cmController: {}
+  cmController: {},
+  layout: 'project',
+  warnIfUnsavedChanges: undefined,
+  params: {
+    username: undefined
+  }
 };
 
 function mapStateToProps(state) {
@@ -693,5 +842,5 @@ const mapDispatchToProps = {
   setAllAccessibleOutput
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Nav));
+export default withTranslation('WebEditor')(withRouter(connect(mapStateToProps, mapDispatchToProps)(Nav)));
 export { Nav as NavComponent };

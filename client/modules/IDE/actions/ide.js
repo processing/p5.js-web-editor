@@ -75,6 +75,19 @@ export function closeNewFileModal() {
   };
 }
 
+export function openUploadFileModal(parentId) {
+  return {
+    type: ActionTypes.OPEN_UPLOAD_FILE_MODAL,
+    parentId
+  };
+}
+
+export function closeUploadFileModal() {
+  return {
+    type: ActionTypes.CLOSE_UPLOAD_FILE_MODAL
+  };
+}
+
 export function expandSidebar() {
   return {
     type: ActionTypes.EXPAND_SIDEBAR
@@ -229,19 +242,6 @@ export function showErrorModal(modalType) {
 export function hideErrorModal() {
   return {
     type: ActionTypes.HIDE_ERROR_MODAL
-  };
-}
-
-export function showHelpModal(helpType) {
-  return {
-    type: ActionTypes.SHOW_HELP_MODAL,
-    helpType
-  };
-}
-
-export function hideHelpModal() {
-  return {
-    type: ActionTypes.HIDE_HELP_MODAL
   };
 }
 

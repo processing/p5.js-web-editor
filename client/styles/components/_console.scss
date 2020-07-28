@@ -49,6 +49,13 @@
 .preview-console__collapse {
 	padding-top: #{3 / $base-font-size}rem;
 	@include icon();
+	@include themify() {
+		& g,
+		& polygon,
+		& path {
+			fill: getThemifyVariable('secondary-text-color');
+		}
+	}
 	.preview-console--collapsed & {
 		display: none;
 	}
@@ -57,6 +64,13 @@
 .preview-console__expand {
 	padding-top: #{3 / $base-font-size}rem;
 	@include icon();
+	@include themify() {
+		& g,
+		& polygon,
+		& path {
+			fill: getThemifyVariable('secondary-text-color');
+		}
+	}
 	display: none;
 	.preview-console--collapsed & {
 		display: inline-block;
@@ -71,6 +85,10 @@
 .preview-console__clear {
 	@include themify() {
 		@extend %link;
+		color: getThemifyVariable('secondary-text-color');
+		&:hover {
+			color: getThemifyVariable('heavy-text-color');
+		}
 	}
 	background: transparent;
 	border: none;

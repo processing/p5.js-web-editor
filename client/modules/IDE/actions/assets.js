@@ -1,9 +1,6 @@
-import axios from 'axios';
+import apiClient from '../../../utils/apiClient';
 import * as ActionTypes from '../../../constants';
 import { startLoader, stopLoader } from './loader';
-
-const __process = (typeof global !== 'undefined' ? global : window).process;
-const ROOT_URL = __process.env.API_URL;
 
 function setAssets(assets, totalSize) {
   return {
@@ -16,7 +13,7 @@ function setAssets(assets, totalSize) {
 export function getAssets() {
   return (dispatch) => {
     dispatch(startLoader());
-    axios.get(`${ROOT_URL}/S3/objects`, { withCredentials: true })
+    apiClient.get('/S3/objects')
       .then((response) => {
         dispatch(setAssets(response.data.assets, response.data.totalSize));
         dispatch(stopLoader());
@@ -30,8 +27,23 @@ export function getAssets() {
   };
 }
 
-export function deleteAsset(assetKey, userId) {
+export function deleteAsset(assetKey) {
   return {
-    type: 'PLACEHOLDER'
+    type: ActionTypes.DELETE_ASSET,
+    key: assetKey
+  };
+}
+
+export function deleteAssetRequest(assetKey) {
+  return (dispatch) => {
+    apiClient.delete(`/S3/${assetKey}`)
+      .then((response) => {
+        dispatch(deleteAsset(assetKey));
+      })
+      .catch(() => {
+        dispatch({
+          type: ActionTypes.ERROR
+        });
+      });
   };
 }

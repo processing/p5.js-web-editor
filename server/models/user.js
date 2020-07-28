@@ -10,6 +10,36 @@ const EmailConfirmationStates = {
 
 const { Schema } = mongoose;
 
+const apiKeySchema = new Schema({
+  label: { type: String, default: 'API Key' },
+  lastUsedAt: { type: Date },
+  hashedKey: { type: String, required: true },
+}, { timestamps: true, _id: true });
+
+apiKeySchema.virtual('id').get(function getApiKeyId() {
+  return this._id.toHexString();
+});
+
+/**
+ * When serialising an APIKey instance, the `hashedKey` field
+ * should never be exposed to the client. So we only return
+ * a safe list of fields when toObject and toJSON are called.
+*/
+function apiKeyMetadata(doc, ret, options) {
+  return {
+    id: doc.id, label: doc.label, lastUsedAt: doc.lastUsedAt, createdAt: doc.createdAt
+  };
+}
+
+apiKeySchema.set('toObject', {
+  transform: apiKeyMetadata
+});
+
+apiKeySchema.set('toJSON', {
+  virtuals: true,
+  transform: apiKeyMetadata
+});
+
 const userSchema = new Schema({
   name: { type: String, default: '' },
   username: { type: String, required: true, unique: true },
@@ -22,6 +52,7 @@ const userSchema = new Schema({
   github: { type: String },
   email: { type: String, unique: true },
   tokens: Array,
+  apiKeys: { type: [apiKeySchema] },
   preferences: {
     fontSize: { type: Number, default: 18 },
     lineNumbers: { type: Boolean, default: true },
@@ -35,7 +66,8 @@ const userSchema = new Schema({
     soundOutput: { type: Boolean, default: false },
     theme: { type: String, default: 'light' },
     autorefresh: { type: Boolean, default: false }
-  }
+  },
+  totalSize: { type: Number, default: 0 }
 }, { timestamps: true, usePushEach: true });
 
 /**
@@ -54,6 +86,29 @@ userSchema.pre('save', function checkPassword(next) { // eslint-disable-line con
   });
 });
 
+/**
+ * API keys hash middleware
+ */
+userSchema.pre('save', function checkApiKey(next) { // eslint-disable-line consistent-return
+  const user = this;
+  if (!user.isModified('apiKeys')) { return next(); }
+  let hasNew = false;
+  user.apiKeys.forEach((k) => {
+    if (k.isNew) {
+      hasNew = true;
+      bcrypt.genSalt(10, (err, salt) => { // eslint-disable-line consistent-return
+        if (err) { return next(err); }
+        bcrypt.hash(k.hashedKey, salt, null, (innerErr, hash) => {
+          if (innerErr) { return next(innerErr); }
+          k.hashedKey = hash;
+          return next();
+        });
+      });
+    }
+  });
+  if (!hasNew) return next();
+});
+
 userSchema.virtual('id').get(function idToString() {
   return this._id.toHexString();
 });
@@ -61,7 +116,6 @@ userSchema.virtual('id').get(function idToString() {
 userSchema.set('toJSON', {
   virtuals: true
 });
-
 
 /**
  * Helper method for validating user's password.
@@ -73,17 +127,100 @@ userSchema.methods.comparePassword = function comparePassword(candidatePassword,
   });
 };
 
-userSchema.statics.findByMailOrName = function findByMailOrName(email) {
+/**
+ * Helper method for validating a user's api key
+ */
+userSchema.methods.findMatchingKey = function findMatchingKey(candidateKey, cb) {
+  let foundOne = false;
+  this.apiKeys.forEach((k) => {
+    if (bcrypt.compareSync(candidateKey, k.hashedKey)) {
+      foundOne = true;
+      cb(null, true, k);
+    }
+  });
+  if (!foundOne) cb('Matching API key not found !', false, null);
+};
+
+/**
+ *
+ * Queries User collection by email and returns one User document.
+ *
+ * @param {string|string[]} email - Email string or array of email strings
+ * @callback [cb] - Optional error-first callback that passes User document
+ * @return {Promise<Object>} - Returns Promise fulfilled by User document
+ */
+userSchema.statics.findByEmail = function findByEmail(email, cb) {
+  let query;
+  if (Array.isArray(email)) {
+    query = {
+      email: { $in: email }
+    };
+  } else {
+    query = {
+      email
+    };
+  }
+  // Email addresses should be case-insensitive unique
+  // In MongoDB, you must use collation in order to do a case-insensitive query
+  return this.findOne(query).collation({ locale: 'en', strength: 2 }).exec(cb);
+};
+
+/**
+ *
+ * Queries User collection by username and returns one User document.
+ *
+ * @param {string} username - Username string
+ * @callback [cb] - Optional error-first callback that passes User document
+ * @return {Promise<Object>} - Returns Promise fulfilled by User document
+ */
+userSchema.statics.findByUsername = function findByUsername(username, cb) {
   const query = {
-    $or: [{
-      email,
-    }, {
-      username: email,
-    }],
+    username
   };
-  return this.findOne(query).exec();
+  return this.findOne(query, cb);
+};
+
+/**
+ *
+ * Queries User collection using email or username with optional callback.
+ * This function will determine automatically whether the data passed is
+ * a username or email.
+ *
+ * @param {string} value - Email or username
+ * @callback [cb] - Optional error-first callback that passes User document
+ * @return {Promise<Object>} - Returns Promise fulfilled by User document
+ */
+userSchema.statics.findByEmailOrUsername = function findByEmailOrUsername(value, cb) {
+  const isEmail = value.indexOf('@') > -1;
+  if (isEmail) {
+    return this.findByEmail(value, cb);
+  }
+  return this.findByUsername(value, cb);
+};
+
+/**
+ *
+ * Queries User collection, performing a MongoDB logical or with the email
+ * and username (i.e. if either one matches, will return the first document).
+ *
+ * @param {string} email
+ * @param {string} username
+ * @callback [cb] - Optional error-first callback that passes User document
+ * @return {Promise<Object>} - Returns Promise fulfilled by User document
+ */
+userSchema.statics.findByEmailAndUsername = function findByEmailAndUsername(email, username, cb) {
+  const query = {
+    $or: [
+      { email },
+      { username }
+    ]
+  };
+  return this.findOne(query).collation({ locale: 'en', strength: 2 }).exec(cb);
 };
 
 userSchema.statics.EmailConfirmation = EmailConfirmationStates;
+
+userSchema.index({ username: 1 }, { collation: { locale: 'en', strength: 2 } });
+userSchema.index({ email: 1 }, { collation: { locale: 'en', strength: 2 } });
 
 export default mongoose.model('User', userSchema);

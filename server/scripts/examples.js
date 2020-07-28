@@ -9,11 +9,10 @@ import Project from '../models/project';
 
 const defaultHTML =
 `<!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.sound.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/addons/p5.sound.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="utf-8" />
   </head>
@@ -40,7 +39,8 @@ const headers = { 'User-Agent': 'p5js-web-editor/0.0.1' };
 
 const mongoConnectionString = process.env.MONGO_URL;
 
-mongoose.connect(mongoConnectionString, { useMongoClient: true });
+mongoose.connect(mongoConnectionString, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.set('useCreateIndex', true);
 mongoose.connection.on('error', () => {
   console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
   process.exit(1);
@@ -73,7 +73,7 @@ function getCategories() {
 function getSketchesInCategories(categories) {
   return Q.all(categories.map((category) => {
     const options = {
-      url: `${category.url.replace('?ref=master', '')}?client_id=${clientId}&client_secret=${clientSecret}`,
+      url: `${category.url.replace('?ref=main', '')}?client_id=${clientId}&client_secret=${clientSecret}`,
       method: 'GET',
       headers,
       json: true
@@ -107,7 +107,7 @@ function getSketchesInCategories(categories) {
 function getSketchContent(projectsInAllCategories) {
   return Q.all(projectsInAllCategories.map(projectsInOneCategory => Q.all(projectsInOneCategory.map((project) => {
     const options = {
-      url: `${project.sketchUrl.replace('?ref=master', '')}?client_id=${clientId}&client_secret=${clientSecret}`,
+      url: `${project.sketchUrl.replace('?ref=main', '')}?client_id=${clientId}&client_secret=${clientSecret}`,
       method: 'GET',
       headers
     };
@@ -264,7 +264,7 @@ function createProjectsInP5user(projectsInAllCategories) {
               const fileID = objectID().toHexString();
               newProject.files.push({
                 name: assetName,
-                url: `https://cdn.jsdelivr.net/gh/processing/p5.js-website@master/src/data/examples/assets/${assetName}`,
+                url: `https://cdn.jsdelivr.net/gh/processing/p5.js-website@main/src/data/examples/assets/${assetName}`,
                 id: fileID,
                 _id: fileID,
                 children: [],

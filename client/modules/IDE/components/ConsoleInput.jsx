@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import CodeMirror from 'codemirror';
-import InlineSVG from 'react-inlinesvg';
 import { Encode } from 'console-feed';
 
-const rightArrowUrl = require('../../../images/right-arrow.svg');
+import RightArrowIcon from '../../../images/right-arrow.svg';
 
 class ConsoleInput extends React.Component {
   componentDidMount() {
@@ -63,14 +62,14 @@ class ConsoleInput extends React.Component {
     this._cm = null;
   }
 
-  _cm: CodeMirror.Editor
+  // _cm: CodeMirror.Editor
 
   render() {
     return (
       <div
         className="console__input"
       >
-        <InlineSVG src={rightArrowUrl} className="console-active__arrow" />
+        <RightArrowIcon className="console-active__arrow" focusable="false" aria-hidden="true" />
         <div ref={(element) => { this.codemirrorContainer = element; }} className="console__editor" />
       </div>
     );

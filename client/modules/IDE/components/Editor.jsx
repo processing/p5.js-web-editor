@@ -24,7 +24,6 @@ import 'codemirror/addon/edit/matchbrackets';
 import { JSHINT } from 'jshint';
 import { CSSLint } from 'csslint';
 import { HTMLHint } from 'htmlhint';
-import InlineSVG from 'react-inlinesvg';
 import classNames from 'classnames';
 import { debounce } from 'lodash';
 import '../../../utils/htmlmixed';
@@ -36,6 +35,11 @@ import { metaKey, } from '../../../utils/metaKey';
 
 import search from '../../../utils/codemirror-search';
 
+import beepUrl from '../../../sounds/audioAlert.mp3';
+import UnsavedChangesDotIcon from '../../../images/unsaved-changes-dot.svg';
+import RightArrowIcon from '../../../images/right-arrow.svg';
+import LeftArrowIcon from '../../../images/left-arrow.svg';
+
 search(CodeMirror);
 
 const beautifyCSS = beautifyJS.css;
@@ -44,11 +48,6 @@ const beautifyHTML = beautifyJS.html;
 window.JSHINT = JSHINT;
 window.CSSLint = CSSLint;
 window.HTMLHint = HTMLHint;
-
-const beepUrl = require('../../../sounds/audioAlert.mp3');
-const unsavedChangesDotUrl = require('../../../images/unsaved-changes-dot.svg');
-const rightArrowUrl = require('../../../images/right-arrow.svg');
-const leftArrowUrl = require('../../../images/left-arrow.svg');
 
 const IS_TAB_INDENT = false;
 const INDENTATION_AMOUNT = 2;
@@ -270,8 +269,8 @@ class Editor extends React.Component {
       indent_size: INDENTATION_AMOUNT,
       indent_with_tabs: IS_TAB_INDENT
     };
-
     const mode = this._cm.getOption('mode');
+    const currentPosition = this._cm.doc.getCursor();
     if (mode === 'javascript') {
       this._cm.doc.setValue(beautifyJS(this._cm.doc.getValue(), beautifyOptions));
     } else if (mode === 'css') {
@@ -279,6 +278,10 @@ class Editor extends React.Component {
     } else if (mode === 'htmlmixed') {
       this._cm.doc.setValue(beautifyHTML(this._cm.doc.getValue(), beautifyOptions));
     }
+    setTimeout(() => {
+      this._cm.focus();
+      this._cm.doc.setCursor({ line: currentPosition.line, ch: currentPosition.ch + INDENTATION_AMOUNT });
+    }, 0);
   }
 
   initializeDocuments(files) {
@@ -312,30 +315,30 @@ class Editor extends React.Component {
     });
 
     return (
-      <section
-        title="code editor"
-        role="main"
-        className={editorSectionClass}
-      >
+      <section className={editorSectionClass} >
         <header className="editor__header">
           <button
-            aria-label="collapse file navigation"
+            aria-label="Open Sketch files navigation"
             className="sidebar__contract"
             onClick={this.props.collapseSidebar}
           >
-            <InlineSVG src={leftArrowUrl} />
+            <LeftArrowIcon focusable="false" aria-hidden="true" />
           </button>
           <button
-            aria-label="expand file navigation"
+            aria-label="Close sketch files navigation"
             className="sidebar__expand"
             onClick={this.props.expandSidebar}
           >
-            <InlineSVG src={rightArrowUrl} />
+            <RightArrowIcon focusable="false" aria-hidden="true" />
           </button>
           <div className="editor__file-name">
             <span>
               {this.props.file.name}
-              {this.props.unsavedChanges ? <InlineSVG src={unsavedChangesDotUrl} /> : null}
+              <span className="editor__unsaved-changes">
+                {this.props.unsavedChanges ?
+                  <UnsavedChangesDotIcon role="img" aria-label="Sketch has unsaved changes" focusable="false" /> :
+                  null}
+              </span>
             </span>
             <Timer
               projectSavedTime={this.props.projectSavedTime}
@@ -343,8 +346,8 @@ class Editor extends React.Component {
             />
           </div>
         </header>
-        <div ref={(element) => { this.codemirrorContainer = element; }} className={editorHolderClass} >
-        </div>
+        <article ref={(element) => { this.codemirrorContainer = element; }} className={editorHolderClass} >
+        </article>
         <EditorAccessibility
           lintMessages={this.props.lintMessages}
         />

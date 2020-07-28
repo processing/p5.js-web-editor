@@ -2,7 +2,7 @@
 
 export const fileExtensionsArray = ['gif', 'jpg', 'jpeg', 'png', 'bmp', 'wav', 'flac', 'ogg',
   'oga', 'mp4', 'm4p', 'mp3', 'm4a', 'aiff', 'aif', 'm4v', 'aac', 'webm', 'mpg', 'mp2',
-  'mpeg', 'mpe', 'mpv', 'js', 'jsx', 'html', 'htm', 'css', 'json', 'csv', 'obj', 'svg',
+  'mpeg', 'mpe', 'mpv', 'js', 'jsx', 'html', 'htm', 'css', 'json', 'csv', 'tsv', 'obj', 'svg',
   'otf', 'ttf', 'txt', 'mov', 'vert', 'frag', 'bin'];
 
 export const mimeTypes = `image/*,audio/*,text/javascript,text/html,text/css,

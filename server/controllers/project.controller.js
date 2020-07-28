@@ -2,7 +2,6 @@ import archiver from 'archiver';
 import format from 'date-fns/format';
 import isUrl from 'is-url';
 import jsdom, { serializeDocument } from 'jsdom';
-import isBefore from 'date-fns/is_before';
 import isAfter from 'date-fns/is_after';
 import request from 'request';
 import slugify from 'slugify';
@@ -10,9 +9,10 @@ import Project from '../models/project';
 import User from '../models/user';
 import { resolvePathToFile } from '../utils/filePath';
 import generateFileSystemSafeName from '../utils/generateFileSystemSafeName';
-import { deleteObjectsFromS3, getObjectKey } from './aws.controller';
 
-export { default as createProject } from './project.controller/createProject';
+export { default as createProject, apiCreateProject } from './project.controller/createProject';
+export { default as deleteProject } from './project.controller/deleteProject';
+export { default as getProjectsForUser, apiGetProjectsForUser } from './project.controller/getProjectsForUser';
 
 export function updateProject(req, res) {
   Project.findById(req.params.project_id, (findProjectErr, project) => {
@@ -63,55 +63,20 @@ export function updateProject(req, res) {
 }
 
 export function getProject(req, res) {
-  const projectId = req.params.project_id;
-  Project.findById(projectId)
-    .populate('user', 'username')
-    .exec((err, project) => { // eslint-disable-line
-      if (err) {
-        return res.status(404).send({ message: 'Project with that id does not exist' });
-      } else if (!project) {
-        Project.findOne({ slug: projectId })
-          .populate('user', 'username')
-          .exec((innerErr, projectBySlug) => {
-            if (innerErr || !projectBySlug) {
-              return res.status(404).send({ message: 'Project with that id does not exist' });
-            }
-            return res.json(projectBySlug);
-          });
-      } else {
+  const { project_id: projectId, username } = req.params;
+  User.findByUsername(username, (err, user) => { // eslint-disable-line
+    if (!user) {
+      return res.status(404).send({ message: 'Project with that username does not exist' });
+    }
+    Project.findOne({ user: user._id, $or: [{ _id: projectId }, { slug: projectId }] })
+      .populate('user', 'username')
+      .exec((err, project) => { // eslint-disable-line
+        if (err) {
+          console.log(err);
+          return res.status(404).send({ message: 'Project with that id does not exist' });
+        }
         return res.json(project);
-      }
-    });
-}
-
-function deleteFilesFromS3(files) {
-  deleteObjectsFromS3(files.filter((file) => {
-    if (file.url) {
-      if (!process.env.S3_DATE || (
-        process.env.S3_DATE &&
-        isBefore(new Date(process.env.S3_DATE), new Date(file.createdAt)))) {
-        return true;
-      }
-    }
-    return false;
-  })
-    .map(file => getObjectKey(file.url)));
-}
-
-export function deleteProject(req, res) {
-  Project.findById(req.params.project_id, (findProjectErr, project) => {
-    if (!project.user.equals(req.user._id)) {
-      res.status(403).json({ success: false, message: 'Session does not match owner of project.' });
-      return;
-    }
-    deleteFilesFromS3(project.files);
-    Project.remove({ _id: req.params.project_id }, (removeProjectError) => {
-      if (removeProjectError) {
-        res.status(404).send({ message: 'Project with that id does not exist' });
-        return;
-      }
-      res.json({ success: true });
-    });
+      });
   });
 }
 
@@ -157,34 +122,12 @@ export function getProjectAsset(req, res) {
     });
 }
 
-export function getProjectsForUserName(username) {
-
-}
-
 export function getProjects(req, res) {
   if (req.user) {
     getProjectsForUserId(req.user._id)
       .then((projects) => {
         res.json(projects);
       });
-  } else {
-    // could just move this to client side
-    res.json([]);
-  }
-}
-
-export function getProjectsForUser(req, res) {
-  if (req.params.username) {
-    User.findOne({ username: req.params.username }, (err, user) => {
-      if (!user) {
-        res.status(404).json({ message: 'User with that username does not exist.' });
-        return;
-      }
-      Project.find({ user: user._id })
-        .sort('-createdAt')
-        .select('name files id createdAt updatedAt')
-        .exec((innerErr, projects) => res.json(projects));
-    });
   } else {
     // could just move this to client side
     res.json([]);
@@ -198,29 +141,21 @@ export function projectExists(projectId, callback) {
 }
 
 export function projectForUserExists(username, projectId, callback) {
-  User.findOne({ username }, (err, user) => {
+  User.findByUsername(username, (err, user) => {
     if (!user) {
       callback(false);
       return;
     }
-    Project.findOne({ _id: projectId, user: user._id }, (innerErr, project) => {
+    Project.findOne({ user: user._id, $or: [{ _id: projectId }, { slug: projectId }] }, (innerErr, project) => {
       if (project) {
         callback(true);
-        return;
       }
-      Project.findOne({ slug: projectId, user: user._id }, (slugError, projectBySlug) => {
-        if (projectBySlug) {
-          callback(true);
-          return;
-        }
-        callback(false);
-      });
     });
   });
 }
 
 function bundleExternalLibs(project, zip, callback) {
-  const indexHtml = project.files.find(file => file.name === 'index.html');
+  const indexHtml = project.files.find(file => file.name.match(/\.html$/));
   let numScriptsResolved = 0;
   let numScriptTags = 0;
 

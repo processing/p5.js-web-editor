@@ -23,6 +23,23 @@ import { hijackConsoleErrorsScript, startTag, getAllScriptOffsets }
   from '../../../utils/consoleUtils';
 import handleConsoleExpressions from '../../../utils/evaluateConsole';
 
+
+const shouldRenderSketch = (props, prevProps = undefined) => {
+  const { isPlaying, previewIsRefreshing, fullView } = props;
+
+  // if the user explicitly clicks on the play button
+  if (isPlaying && previewIsRefreshing) return true;
+
+  if (!prevProps) return false;
+
+  return (props.isPlaying !== prevProps.isPlaying // if sketch starts or stops playing, want to rerender
+    || props.isAccessibleOutputPlaying !== prevProps.isAccessibleOutputPlaying // if user switches textoutput preferences
+    || props.textOutput !== prevProps.textOutput
+    || props.gridOutput !== prevProps.gridOutput
+    || props.soundOutput !== prevProps.soundOutput
+    || (fullView && props.files[0].id !== prevProps.files[0].id));
+};
+
 class PreviewFrame extends React.Component {
   constructor(props) {
     super(props);
@@ -31,53 +48,25 @@ class PreviewFrame extends React.Component {
 
   componentDidMount() {
     window.addEventListener('message', this.handleConsoleEvent);
+
+    const props = {
+      ...this.props,
+      previewIsRefreshing: this.props.previewIsRefreshing,
+      isAccessibleOutputPlaying: this.props.isAccessibleOutputPlaying
+    };
+    if (shouldRenderSketch(props)) this.renderSketch();
   }
 
   componentDidUpdate(prevProps) {
-    // if sketch starts or stops playing, want to rerender
-    if (this.props.isPlaying !== prevProps.isPlaying) {
-      this.renderSketch();
-      return;
-    }
-
-    // if the user explicitly clicks on the play button
-    if (this.props.isPlaying && this.props.previewIsRefreshing) {
-      this.renderSketch();
-      return;
-    }
-
-    // if user switches textoutput preferences
-    if (this.props.isAccessibleOutputPlaying !== prevProps.isAccessibleOutputPlaying) {
-      this.renderSketch();
-      return;
-    }
-
-    if (this.props.textOutput !== prevProps.textOutput) {
-      this.renderSketch();
-      return;
-    }
-
-    if (this.props.gridOutput !== prevProps.gridOutput) {
-      this.renderSketch();
-      return;
-    }
-
-    if (this.props.soundOutput !== prevProps.soundOutput) {
-      this.renderSketch();
-      return;
-    }
-
-    if (this.props.fullView && this.props.files[0].id !== prevProps.files[0].id) {
-      this.renderSketch();
-    }
-
+    if (shouldRenderSketch(this.props, prevProps)) this.renderSketch();
     // small bug - if autorefresh is on, and the usr changes files
     // in the sketch, preview will reload
   }
 
   componentWillUnmount() {
     window.removeEventListener('message', this.handleConsoleEvent);
-    ReactDOM.unmountComponentAtNode(this.iframeElement.contentDocument.body);
+    const iframeBody = this.iframeElement.contentDocument.body;
+    if (iframeBody) { ReactDOM.unmountComponentAtNode(iframeBody); }
   }
 
   handleConsoleEvent(messageEvent) {
@@ -275,16 +264,18 @@ class PreviewFrame extends React.Component {
     jsFileStrings.forEach((jsFileString) => {
       if (jsFileString.match(MEDIA_FILE_QUOTED_REGEX)) {
         const filePath = jsFileString.substr(1, jsFileString.length - 2);
+        const quoteCharacter = jsFileString.substr(0, 1);
         const resolvedFile = resolvePathToFile(filePath, files);
+
         if (resolvedFile) {
           if (resolvedFile.url) {
-            newContent = newContent.replace(filePath, resolvedFile.url);
+            newContent = newContent.replace(jsFileString, quoteCharacter + resolvedFile.url + quoteCharacter);
           } else if (resolvedFile.name.match(PLAINTEXT_FILE_REGEX)) {
             // could also pull file from API instead of using bloburl
             const blobURL = getBlobUrl(resolvedFile);
             this.props.setBlobUrl(resolvedFile, blobURL);
-            const filePathRegex = new RegExp(filePath, 'gi');
-            newContent = newContent.replace(filePathRegex, blobURL);
+
+            newContent = newContent.replace(jsFileString, quoteCharacter + blobURL + quoteCharacter);
           }
         }
       }
@@ -300,10 +291,11 @@ class PreviewFrame extends React.Component {
     cssFileStrings.forEach((cssFileString) => {
       if (cssFileString.match(MEDIA_FILE_QUOTED_REGEX)) {
         const filePath = cssFileString.substr(1, cssFileString.length - 2);
+        const quoteCharacter = cssFileString.substr(0, 1);
         const resolvedFile = resolvePathToFile(filePath, files);
         if (resolvedFile) {
           if (resolvedFile.url) {
-            newContent = newContent.replace(filePath, resolvedFile.url);
+            newContent = newContent.replace(cssFileString, quoteCharacter + resolvedFile.url + quoteCharacter);
           }
         }
       }
@@ -360,10 +352,10 @@ class PreviewFrame extends React.Component {
   }
 
   renderSketch() {
-    this.props.clearConsole();
     const doc = this.iframeElement;
     const localFiles = this.injectLocalFiles();
     if (this.props.isPlaying) {
+      this.props.clearConsole();
       srcDoc.set(doc, localFiles);
       if (this.props.endSketchRefresh) {
         this.props.endSketchRefresh();
@@ -379,6 +371,8 @@ class PreviewFrame extends React.Component {
       'preview-frame': true,
       'preview-frame--full-view': this.props.fullView
     });
+    const sandboxAttributes =
+      'allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-forms allow-modals allow-downloads';
     return (
       <iframe
         id="canvas_frame"
@@ -386,9 +380,9 @@ class PreviewFrame extends React.Component {
         aria-label="sketch output"
         role="main"
         frameBorder="0"
-        title="sketch output"
+        title="sketch preview"
         ref={(element) => { this.iframeElement = element; }}
-        sandbox="allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-forms allow-modals"
+        sandbox={sandboxAttributes}
       />
     );
   }
@@ -419,7 +413,7 @@ PreviewFrame.propTypes = {
   clearConsole: PropTypes.func.isRequired,
   cmController: PropTypes.shape({
     getContent: PropTypes.func
-  })
+  }),
 };
 
 PreviewFrame.defaultProps = {

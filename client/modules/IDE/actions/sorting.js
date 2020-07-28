@@ -26,13 +26,14 @@ export function toggleDirectionForField(field) {
   };
 }
 
-export function setSearchTerm(searchTerm) {
+export function setSearchTerm(scope, searchTerm) {
   return {
     type: ActionTypes.SET_SEARCH_TERM,
-    query: searchTerm
+    query: searchTerm,
+    scope,
   };
 }
 
-export function resetSearchTerm() {
-  return setSearchTerm('');
+export function resetSearchTerm(scope) {
+  return setSearchTerm(scope, '');
 }

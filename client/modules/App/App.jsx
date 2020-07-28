@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import getConfig from '../../utils/getConfig';
 import DevTools from './components/DevTools';
 import { setPreviousPath } from '../IDE/actions/ide';
-
-const __process = (typeof global !== 'undefined' ? global : window).process;
 
 class App extends React.Component {
   constructor(props, context) {
@@ -14,19 +13,28 @@ class App extends React.Component {
 
   componentDidMount() {
     this.setState({ isMounted: true }); // eslint-disable-line react/no-did-mount-set-state
-    document.body.className = 'light';
+    document.body.className = this.props.theme;
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.location !== this.props.location) {
+    const locationWillChange = nextProps.location !== this.props.location;
+    const shouldSkipRemembering = nextProps.location.state && nextProps.location.state.skipSavingPath === true;
+
+    if (locationWillChange && !shouldSkipRemembering) {
       this.props.setPreviousPath(this.props.location.pathname);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.theme !== prevProps.theme) {
+      document.body.className = this.props.theme;
     }
   }
 
   render() {
     return (
       <div className="app">
-        {this.state.isMounted && !window.devToolsExtension && __process.env.NODE_ENV === 'development' && <DevTools />}
+        {this.state.isMounted && !window.devToolsExtension && getConfig('NODE_ENV') === 'development' && <DevTools />}
         {this.props.children}
       </div>
     );
@@ -36,13 +44,24 @@ class App extends React.Component {
 App.propTypes = {
   children: PropTypes.element,
   location: PropTypes.shape({
-    pathname: PropTypes.string
+    pathname: PropTypes.string,
+    state: PropTypes.shape({
+      skipSavingPath: PropTypes.bool,
+    }),
   }).isRequired,
   setPreviousPath: PropTypes.func.isRequired,
+  theme: PropTypes.string,
 };
 
 App.defaultProps = {
-  children: null
+  children: null,
+  theme: 'light'
 };
 
-export default connect(() => ({}), { setPreviousPath })(App);
+const mapStateToProps = state => ({
+  theme: state.preferences.theme,
+});
+
+const mapDispatchToProps = { setPreviousPath };
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -6,13 +6,13 @@ html, body {
 	font-size: #{$base-font-size}px;
 }
 
-body, input {
+body, input, textarea {
 	@include themify() {
 		color: getThemifyVariable('primary-text-color');
 	}
 }
 
-body, input, button {
+body, input, textarea, button {
 	font-family: Montserrat, sans-serif;
 }
 
@@ -31,21 +31,29 @@ input, button {
 	font-size: 1rem;
 }
 
-input {
+input,
+textarea {
 	padding: #{5 / $base-font-size}rem;
 	border: 1px solid ;
 	border-radius: 2px;
 	padding: #{10 / $base-font-size}rem;
 	@include themify() {
 		color: getThemifyVariable('input-text-color');
+		background-color: getThemifyVariable('input-background-color');
 		border-color: getThemifyVariable('input-border-color');
 	}
 }
 
+button[type="submit"],
 input[type="submit"] {
 	@include themify() {
 		@extend %button;
 	}
+}
+
+button[type="submit"]:disabled,
+input[type="submit"]:disabled {
+  cursor: not-allowed;
 }
 
 button {
@@ -56,22 +64,48 @@ button {
 	border: none;
 }
 
+h1 {
+	font-size: #{21 / $base-font-size}em;
+}
+
 h2 {
 	font-size: #{21 / $base-font-size}em;
 }
 
 h3 {
 	font-weight: normal;
+	font-size: #{16 / $base-font-size}rem;
 }
 h4 {
 	font-weight: normal;
 }
 h6 {
 	font-weight: normal;
+	font-size: #{12 / $base-font-size}rem;
 }
 thead {
 	text-align: left;
 }
 th {
 	text-align: left;
+}
+
+a:focus,
+button:focus,
+input:focus,
+textarea:focus {
+	outline: none;
+	box-shadow: 0 0 0 1px $outline-color;
+}
+
+// screen reader only class
+// from https://www.scottohara.me/blog/2017/04/14/inclusively-hidden.html#hiding-content-visually
+.sr-only:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
 }

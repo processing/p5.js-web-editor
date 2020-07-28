@@ -5,7 +5,7 @@
   justify-content: space-between;
 
   @include themify() {
-    border-bottom: 1px dashed map-get($theme-map, 'inactive-text-color');
+    border-bottom: 1px dashed map-get($theme-map, 'nav-border-color');
   }
 
   & button {
@@ -23,13 +23,14 @@
   align-items: center;
 }
 
-.nav__items-left {
-  & button {
-    @include themify() {
-      color: getThemifyVariable('secondary-text-color');
-    }
-  }
-}
+// .nav__items-left,
+// .nav__items-right {
+//   & button, & a {
+//     @include themify() {
+//       color: getThemifyVariable('primary-text-color');
+//     }
+//   }
+// }
 
 .nav__item {
   position: relative;
@@ -43,12 +44,15 @@
   }
 }
 
-.nav__item:first-child {
+.nav__item--no-icon {
   padding-left: #{15 / $base-font-size}rem;
 }
 
-.nav__item:last-child {
-  padding-right: #{15 / $base-font-size}rem;
+.nav__item-header-triangle polygon,
+.nav__item-header-triangle path {
+  @include themify() {
+    fill: getThemifyVariable('icon-color');
+  }
 }
 
 .nav__item:hover {
@@ -57,8 +61,15 @@
       color: getThemifyVariable('nav-hover-color');
     }
   }
+  
+  & g, & path {
+    @include themify() {
+      fill: getThemifyVariable('nav-hover-color');
+    }
+  }
 
-  .nav__item-header-triangle polygon {
+  .nav__item-header-triangle polygon,
+  .nav__item-header-triangle path {
     @include themify() {
       fill: getThemifyVariable('nav-hover-color');
     }
@@ -66,6 +77,21 @@
 }
 
 .nav__item-header:hover {
+  @include themify() {
+    color: getThemifyVariable('nav-hover-color');
+  }
+  & g, & path {
+    @include themify() {
+      fill: getThemifyVariable('nav-hover-color');
+    }
+  }
+}
+
+.nav__item-header-triangle {
+	margin-left: #{5 / $base-font-size}rem;
+}
+
+.nav__dropdown {
   @include themify() {
       color: getThemifyVariable('nav-hover-color');
     }
@@ -87,15 +113,25 @@
   padding-right: #{20 / $base-font-size}rem;
 
   & .nav__dropdown {
-    width: #{121 / $base-font-size}rem;
+    width: #{125 / $base-font-size}rem;
   }
 }
 
 .nav__item-spacer {
   @include themify() {
     color: map-get($theme-map, 'inactive-text-color');
-    margin: 0 #{8 / $base-font-size}rem;
+    margin-left: #{8 / $base-font-size}rem;
   }
+}
+
+.nav__item-or {
+  @include themify() {
+    color: map-get($theme-map, 'inactive-text-color');
+  }
+}
+
+.nav__auth-button {
+  padding: #{10 / $base-font-size}rem;
 }
 
 // .nav__dropdown button {
@@ -139,11 +175,17 @@
 }
 .svg__logo g > path {
   @include themify() {
-      fill: getThemifyVariable('logo-color');
-    }
+    fill: getThemifyVariable('logo-color');
+  }
 }
 .svg__logo g g:first-of-type path {
   fill: none;
+}
+
+.svg__logo g g:first-of-type use {
+  @include themify() {
+    fill: getThemifyVariable('logo-background-color');
+  }
 }
 
 .nav__keyboard-shortcut {
@@ -159,4 +201,18 @@
       color: getThemifyVariable('button-hover-color');
     }
   }
+}
+
+.nav__back-icon {
+  & g, & path {
+    opacity: 1;
+    @include themify() {
+      fill: getThemifyVariable('inactive-text-color');
+    }
+  }
+  margin-right: #{5 / $base-font-size}rem;
+}
+
+.nav__back-link {
+  display: flex;
 }
