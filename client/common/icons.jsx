@@ -80,3 +80,4 @@ export const PreferencesIcon = withLabel(Preferences);
 export const PlayIcon = withLabel(Play);
 export const MoreIcon = withLabel(More);
 export const TerminalIcon = withLabel(Terminal);
+export const CodeIcon = withLabel(Code);
