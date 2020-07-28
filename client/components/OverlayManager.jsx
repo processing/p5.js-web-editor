@@ -28,11 +28,7 @@ const OverlayManager = ({ overlay, hideOverlay }) => {
       href: '/mobile/preferences',
     },
     { icon: PreferencesIcon, title: 'Examples', href: '/mobile/examples' },
-    {
-      icon: PreferencesIcon,
-      title: 'Original Editor',
-      href: '/mobile/preferences',
-    },
+    { icon: PreferencesIcon, title: 'Original Editor', href: '/' },
   ];
 
   const jsx = (
