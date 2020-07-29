@@ -5,22 +5,10 @@ import { createPortal } from 'react-dom';
 import Dropdown from './Dropdown';
 
 import { PreferencesIcon } from '../common/icons';
+import { useHideOnBlur } from '../utils/custom-hooks';
+
 
 const OverlayManager = ({ overlay, hideOverlay }) => {
-  const ref = useRef({});
-
-  const handleClickOutside = ({ target }) => {
-    if (ref && ref.current && !ref.current.contains(target)) {
-      hideOverlay();
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [ref]);
-
   const headerNavOptions = [
     {
       icon: PreferencesIcon,
@@ -35,9 +23,11 @@ const OverlayManager = ({ overlay, hideOverlay }) => {
     },
   ];
 
+  const setRef = useHideOnBlur(hideOverlay);
+
   const jsx = (
     <React.Fragment>
-      <div ref={(r) => { ref.current = r; }} >
+      <div ref={setRef} >
         {overlay === 'dropdown' && <Dropdown items={headerNavOptions} />}
       </div>
     </React.Fragment>
