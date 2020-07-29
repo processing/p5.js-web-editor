@@ -29,8 +29,11 @@ import Footer from '../../../components/mobile/Footer';
 import IDEWrapper from '../../../components/mobile/IDEWrapper';
 import Console from '../components/Console';
 import { remSize } from '../../../theme';
-import OverlayManager from '../../../components/OverlayManager';
+// import OverlayManager from '../../../components/OverlayManager';
 import ActionStrip from '../../../components/mobile/ActionStrip';
+import { useAsModal } from '../../../utils/custom-hooks';
+import { PreferencesIcon } from '../../../common/icons';
+import Dropdown from '../../../components/Dropdown';
 
 const isUserOwner = ({ project, user }) => (project.owner && project.owner.id === user.id);
 
@@ -38,6 +41,20 @@ const isUserOwner = ({ project, user }) => (project.owner && project.owner.id ==
 const Expander = styled.div`
   height: ${props => (props.expanded ? remSize(160) : remSize(27))};
 `;
+
+const headerNavOptions = [
+  {
+    icon: PreferencesIcon,
+    title: 'Preferences',
+    href: '/mobile/preferences',
+  },
+  { icon: PreferencesIcon, title: 'Examples', href: '/mobile/examples' },
+  {
+    icon: PreferencesIcon,
+    title: 'Original Editor',
+    href: '/mobile/preferences',
+  },
+];
 
 
 const MobileIDEView = (props) => {
@@ -56,6 +73,8 @@ const MobileIDEView = (props) => {
   const hideOverlay = () => setOverlay(null);
   // const overlayRef = useRef({});
 
+  const [triggerNavDropdown, NavDropDown] = useAsModal(<Dropdown items={headerNavOptions} />);
+
   return (
     <Screen fullscreen>
       <Header
@@ -66,7 +85,7 @@ const MobileIDEView = (props) => {
         }
       >
         <IconButton
-          onClick={() => setOverlay('dropdown')}
+          onClick={triggerNavDropdown}
           icon={MoreIcon}
           aria-label="Options"
         />
@@ -114,12 +133,12 @@ const MobileIDEView = (props) => {
         {ide.consoleIsExpanded && <Expander expanded><Console /></Expander>}
         <ActionStrip />
       </Footer>
-
-      <OverlayManager
+      <NavDropDown />
+      {/* <OverlayManager
         // ref={overlayRef}
         overlay={overlayName}
         hideOverlay={hideOverlay}
-      />
+      /> */}
     </Screen>
   );
 };

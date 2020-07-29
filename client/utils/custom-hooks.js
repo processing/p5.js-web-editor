@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useMemo, useState } from 'react';
 
 export const noop = () => {};
 
@@ -14,13 +14,22 @@ export const useDidUpdate = (callback, deps) => {
   }, deps);
 };
 
-export const useHideOnBlur = (hideOverlay) => {
+// Usage: const ref = useModalBehavior(() => setSomeState(false))
+// place this ref on a component
+export const useModalBehavior = (hideOverlay) => {
   const ref = useRef({});
+
+  // Return values
   const setRef = (r) => { ref.current = r; };
+  const [visible, setVisible] = useState(true);
+  const trigger = () => setVisible(true);
+
+  const hide = () => setVisible(false);
+
 
   const handleClickOutside = ({ target }) => {
     if (ref && ref.current && !ref.current.contains(target)) {
-      hideOverlay();
+      hide();
     }
   };
 
@@ -29,5 +38,14 @@ export const useHideOnBlur = (hideOverlay) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [ref]);
 
-  return setRef;
+  return [visible, trigger, setRef];
+};
+
+// TODO: This is HOC, not a hook. Where do we put it?
+export const useAsModal = (component) => {
+  const [visible, trigger, setRef] = useModalBehavior();
+
+  const wrapper = () => (<div ref={setRef}> {visible && component} </div>); // eslint-disable-line
+
+  return [trigger, wrapper];
 };

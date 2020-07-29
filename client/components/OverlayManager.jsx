@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom';
 import Dropdown from './Dropdown';
 
 import { PreferencesIcon } from '../common/icons';
-import { useHideOnBlur } from '../utils/custom-hooks';
+import { useModalBehavior } from '../utils/custom-hooks';
 
 
 const OverlayManager = ({ overlay, hideOverlay }) => {
@@ -23,13 +23,14 @@ const OverlayManager = ({ overlay, hideOverlay }) => {
     },
   ];
 
-  const setRef = useHideOnBlur(hideOverlay);
+  // const setRef = useModalBehavior(hideOverlay);
+  // const [visible, trigger, setRef] = useModalBehavior();
 
   const jsx = (
     <React.Fragment>
-      <div ref={setRef} >
-        {overlay === 'dropdown' && <Dropdown items={headerNavOptions} />}
-      </div>
+      {/* <div ref={setRef} >
+        {visible && <Dropdown items={headerNavOptions} />}
+      </div> */}
     </React.Fragment>
   );
 
