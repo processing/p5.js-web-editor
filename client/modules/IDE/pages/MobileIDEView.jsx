@@ -67,13 +67,9 @@ const MobileIDEView = (props) => {
   } = props;
 
   const [tmController, setTmController] = useState(null); // eslint-disable-line
-  const [overlayName, setOverlay] = useState(null); // eslint-disable-line
 
-  // TODO: Move this to OverlayController (?)
-  const hideOverlay = () => setOverlay(null);
-  // const overlayRef = useRef({});
 
-  const [triggerNavDropdown, NavDropDown] = useAsModal(<Dropdown items={headerNavOptions} />);
+  const [triggerNavDropdown, NavDropDown] = useAsModal(<Dropdown right items={headerNavOptions} />);
 
   return (
     <Screen fullscreen>
@@ -84,12 +80,17 @@ const MobileIDEView = (props) => {
           <IconButton to="/mobile" icon={ExitIcon} aria-label="Return to original editor" />
         }
       >
-        <IconButton
-          onClick={triggerNavDropdown}
-          icon={MoreIcon}
-          aria-label="Options"
-        />
-        <IconButton to="/mobile/preview" onClick={() => { startSketch(); }} icon={PlayIcon} aria-label="Run sketch" />
+        <li style={{ position: 'relative' }}>
+          <IconButton
+            onClick={triggerNavDropdown}
+            icon={MoreIcon}
+            aria-label="Options"
+          />
+          <NavDropDown />
+        </li>
+        <li>
+          <IconButton to="/mobile/preview" onClick={() => { startSketch(); }} icon={PlayIcon} aria-label="Run sketch" />
+        </li>
       </Header>
 
       <IDEWrapper>
@@ -107,9 +108,7 @@ const MobileIDEView = (props) => {
           editorOptionsVisible={ide.editorOptionsVisible}
           showEditorOptions={showEditorOptions}
           closeEditorOptions={closeEditorOptions}
-          showKeyboardShortcutModal={showKeyboardShortcutModal}
-          setUnsavedChanges={setUnsavedChanges}
-          isPlaying={ide.isPlaying}
+          showKeyboard={ide.isPlaying}
           theme={preferences.theme}
           startRefreshSketch={startRefreshSketch}
           stopSketch={stopSketch}
@@ -133,12 +132,6 @@ const MobileIDEView = (props) => {
         {ide.consoleIsExpanded && <Expander expanded><Console /></Expander>}
         <ActionStrip />
       </Footer>
-      <NavDropDown />
-      {/* <OverlayManager
-        // ref={overlayRef}
-        overlay={overlayName}
-        hideOverlay={hideOverlay}
-      /> */}
     </Screen>
   );
 };

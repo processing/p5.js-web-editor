@@ -1,29 +1,8 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
 
-import Dropdown from './Dropdown';
-
-import { PreferencesIcon } from '../common/icons';
-import { useModalBehavior } from '../utils/custom-hooks';
-
-
 const OverlayManager = ({ overlay, hideOverlay }) => {
-  const headerNavOptions = [
-    {
-      icon: PreferencesIcon,
-      title: 'Preferences',
-      href: '/mobile/preferences',
-    },
-    { icon: PreferencesIcon, title: 'Examples', href: '/mobile/examples' },
-    {
-      icon: PreferencesIcon,
-      title: 'Original Editor',
-      href: '/mobile/preferences',
-    },
-  ];
-
-  // const setRef = useModalBehavior(hideOverlay);
   // const [visible, trigger, setRef] = useModalBehavior();
 
   const jsx = (

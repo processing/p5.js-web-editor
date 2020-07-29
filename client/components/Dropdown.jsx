@@ -13,8 +13,9 @@ const DropdownWrapper = styled.ul`
   color: ${prop('primaryTextColor')};
 
   position: absolute;
-  top: ${remSize(64)};
-  right: ${remSize(16)};
+  right: ${props => (props.right ? 0 : 'initial')};
+  left: ${props => (props.left ? 0 : 'initial')};
+
 
   text-align: left;
   width: ${remSize(180)};
@@ -56,8 +57,8 @@ const DropdownWrapper = styled.ul`
 // TODO: Add Icon to the left of the items in the menu
 // const MaybeIcon = (Element, label) => Element && <Element aria-label={label} />;
 
-const Dropdown = ({ items }) => (
-  <DropdownWrapper>
+const Dropdown = ({ items, right, left }) => (
+  <DropdownWrapper right={right} left={left}>
     {/* className="nav__items-left" */}
     {items && items.map(({ title, icon, href }) => (
       <li key={`nav-${title && title.toLowerCase()}`}>
@@ -72,6 +73,8 @@ const Dropdown = ({ items }) => (
 );
 
 Dropdown.propTypes = {
+  right: PropTypes.bool,
+  left: PropTypes.bool,
   items: PropTypes.arrayOf(PropTypes.shape({
     action: PropTypes.func,
     icon: PropTypes.func,
@@ -81,6 +84,8 @@ Dropdown.propTypes = {
 
 Dropdown.defaultProps = {
   items: [],
+  right: false,
+  left: false,
 };
 
 export default Dropdown;
