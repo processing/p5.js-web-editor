@@ -29,8 +29,11 @@ import Footer from '../../../components/mobile/Footer';
 import IDEWrapper from '../../../components/mobile/IDEWrapper';
 import Console from '../components/Console';
 import { remSize } from '../../../theme';
-import OverlayManager from '../../../components/OverlayManager';
+// import OverlayManager from '../../../components/OverlayManager';
 import ActionStrip from '../../../components/mobile/ActionStrip';
+import { useAsModal } from '../../../utils/custom-hooks';
+import { PreferencesIcon } from '../../../common/icons';
+import Dropdown from '../../../components/Dropdown';
 
 const isUserOwner = ({ project, user }) =>
   project.owner && project.owner.id === user.id;
@@ -38,6 +41,16 @@ const isUserOwner = ({ project, user }) =>
 const Expander = styled.div`
   height: ${props => (props.expanded ? remSize(160) : remSize(27))};
 `;
+
+const NavItem = styled.li`
+  position: relative;
+`;
+
+const headerNavOptions = [
+  { icon: PreferencesIcon, title: 'Preferences', href: '/mobile/preferences', },
+  { icon: PreferencesIcon, title: 'Examples', href: '/mobile/examples' },
+  { icon: PreferencesIcon, title: 'Original Editor', href: '/', },
+];
 
 
 const MobileIDEView = (props) => {
@@ -67,11 +80,9 @@ const MobileIDEView = (props) => {
   } = props;
 
   const [tmController, setTmController] = useState(null); // eslint-disable-line
-  const [overlayName, setOverlay] = useState(null); // eslint-disable-line
 
-  // TODO: Move this to OverlayController (?)
-  const hideOverlay = () => setOverlay(null);
-  // const overlayRef = useRef({});
+
+  const [triggerNavDropdown, NavDropDown] = useAsModal(<Dropdown right items={headerNavOptions} />);
 
   return (
     <Screen fullscreen>
@@ -86,19 +97,17 @@ const MobileIDEView = (props) => {
           />
         }
       >
-        <IconButton
-          onClick={() => setOverlay('dropdown')}
-          icon={MoreIcon}
-          aria-label="Options"
-        />
-        <IconButton
-          to="/mobile/preview"
-          onClick={() => {
-            startSketch();
-          }}
-          icon={PlayIcon}
-          aria-label="Run sketch"
-        />
+        <NavItem>
+          <IconButton
+            onClick={triggerNavDropdown}
+            icon={MoreIcon}
+            aria-label="Options"
+          />
+          <NavDropDown />
+        </NavItem>
+        <li>
+          <IconButton to="/mobile/preview" onClick={() => { startSketch(); }} icon={PlayIcon} aria-label="Run sketch" />
+        </li>
       </Header>
 
       <IDEWrapper>
@@ -116,9 +125,7 @@ const MobileIDEView = (props) => {
           editorOptionsVisible={ide.editorOptionsVisible}
           showEditorOptions={showEditorOptions}
           closeEditorOptions={closeEditorOptions}
-          showKeyboardShortcutModal={showKeyboardShortcutModal}
-          setUnsavedChanges={setUnsavedChanges}
-          isPlaying={ide.isPlaying}
+          showKeyboard={ide.isPlaying}
           theme={preferences.theme}
           startRefreshSketch={startRefreshSketch}
           stopSketch={stopSketch}
@@ -146,12 +153,6 @@ const MobileIDEView = (props) => {
         )}
         <ActionStrip />
       </Footer>
-
-      <OverlayManager
-        // ref={overlayRef}
-        overlay={overlayName}
-        hideOverlay={hideOverlay}
-      />
     </Screen>
   );
 };

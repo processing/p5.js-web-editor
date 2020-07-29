@@ -37,7 +37,9 @@ const HeaderDiv = styled.div`
 
 const IconContainer = styled.div`
   margin-left: ${props => (props.leftButton ? remSize(32) : remSize(4))};
+  list-style: none;
   display: flex;
+  flex-direction: horizontal;
 `;
 
 
