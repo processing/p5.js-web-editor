@@ -43,17 +43,9 @@ const Expander = styled.div`
 `;
 
 const headerNavOptions = [
-  {
-    icon: PreferencesIcon,
-    title: 'Preferences',
-    href: '/mobile/preferences',
-  },
+  { icon: PreferencesIcon, title: 'Preferences', href: '/mobile/preferences', },
   { icon: PreferencesIcon, title: 'Examples', href: '/mobile/examples' },
-  {
-    icon: PreferencesIcon,
-    title: 'Original Editor',
-    href: '/mobile/preferences',
-  },
+  { icon: PreferencesIcon, title: 'Original Editor', href: '/', },
 ];
 
 
