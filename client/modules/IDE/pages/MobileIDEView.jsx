@@ -42,6 +42,10 @@ const Expander = styled.div`
   height: ${props => (props.expanded ? remSize(160) : remSize(27))};
 `;
 
+const NavItem = styled.li`
+  position: relative;
+`;
+
 const headerNavOptions = [
   { icon: PreferencesIcon, title: 'Preferences', href: '/mobile/preferences', },
   { icon: PreferencesIcon, title: 'Examples', href: '/mobile/examples' },
@@ -72,14 +76,14 @@ const MobileIDEView = (props) => {
           <IconButton to="/mobile" icon={ExitIcon} aria-label="Return to original editor" />
         }
       >
-        <li style={{ position: 'relative' }}>
+        <NavItem>
           <IconButton
             onClick={triggerNavDropdown}
             icon={MoreIcon}
             aria-label="Options"
           />
           <NavDropDown />
-        </li>
+        </NavItem>
         <li>
           <IconButton to="/mobile/preview" onClick={() => { startSketch(); }} icon={PlayIcon} aria-label="Run sketch" />
         </li>
