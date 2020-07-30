@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useMemo, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 export const noop = () => {};
 
@@ -39,13 +39,4 @@ export const useModalBehavior = (hideOverlay) => {
   }, [ref]);
 
   return [visible, trigger, setRef];
-};
-
-// TODO: This is HOC, not a hook. Where do we put it?
-export const useAsModal = (component) => {
-  const [visible, trigger, setRef] = useModalBehavior();
-
-  const wrapper = () => (<div ref={setRef}> {visible && component} </div>); // eslint-disable-line
-
-  return [trigger, wrapper];
 };

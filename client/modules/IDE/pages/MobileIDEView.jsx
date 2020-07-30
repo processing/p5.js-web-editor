@@ -31,7 +31,7 @@ import Console from '../components/Console';
 import { remSize } from '../../../theme';
 // import OverlayManager from '../../../components/OverlayManager';
 import ActionStrip from '../../../components/mobile/ActionStrip';
-import { useAsModal } from '../../../utils/custom-hooks';
+import useAsModal from '../../../components/useAsModal';
 import { PreferencesIcon } from '../../../common/icons';
 import Dropdown from '../../../components/Dropdown';
 
