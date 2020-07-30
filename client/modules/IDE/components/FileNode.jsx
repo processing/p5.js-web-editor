@@ -10,6 +10,47 @@ import FolderRightIcon from '../../../images/triangle-arrow-right.svg';
 import FolderDownIcon from '../../../images/triangle-arrow-down.svg';
 import FileIcon from '../../../images/file.svg';
 
+function FileName({ name }) {
+  const nameArray = name.split('.');
+  if (nameArray.length > 1) {
+    const extension = `.${nameArray[nameArray.length - 1]}`;
+    const fileName = nameArray.slice(0, -1).join('');
+    const firstLetter = fileName[0];
+    const lastLetter = fileName[fileName.length - 1];
+    const middleText = fileName.slice(1, -1);
+    return (
+      <span className="sidebar__file-item-name-text">
+        <span>{firstLetter}</span>
+        {fileName.length > 2 &&
+          <span className="sidebar__file-item-name--ellipsis">{middleText}</span>
+        }
+        {fileName.length > 1 &&
+          <span>{lastLetter}</span>
+        }
+        <span>{extension}</span>
+      </span>
+    );
+  }
+  const firstLetter = name[0];
+  const lastLetter = name[name.length - 1];
+  const middleText = name.slice(1, -1);
+  return (
+    <span className="sidebar__file-item-name-text">
+      <span>{firstLetter}</span>
+      {name.length > 2 &&
+        <span className="sidebar__file-item-name--ellipsis">{middleText}</span>
+      }
+      {name.length > 1 &&
+        <span>{lastLetter}</span>
+      }
+    </span>
+  );
+}
+
+FileName.propTypes = {
+  name: PropTypes.string.isRequired
+};
+
 export class FileNode extends React.Component {
   constructor(props) {
     super(props);
@@ -210,7 +251,7 @@ export class FileNode extends React.Component {
               className="sidebar__file-item-name"
               onClick={this.handleFileClick}
             >
-              {this.state.updatedName}
+              <FileName name={this.state.updatedName} />
             </button>
             <input
               data-testid="input"
