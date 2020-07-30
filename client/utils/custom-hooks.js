@@ -22,7 +22,7 @@ export const useModalBehavior = (hideOverlay) => {
   // Return values
   const setRef = (r) => { ref.current = r; };
   const [visible, setVisible] = useState(true);
-  const trigger = () => setVisible(true);
+  const trigger = () => setVisible(!visible);
 
   const hide = () => setVisible(false);
 
