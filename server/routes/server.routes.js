@@ -114,16 +114,6 @@ router.get('/about', (req, res) => {
   res.send(renderIndex());
 });
 
-if (process.env.MOBILE_ENABLED) {
-  router.get('/mobile', (req, res) => res.send(renderIndex()));
-
-  router.get('/mobile/preview', (req, res) => res.send(renderIndex()));
-
-  router.get('/mobile/preferences', (req, res) => res.send(renderIndex()));
-
-  router.get('/mobile/examples', (req, res) => res.send(renderIndex()));
-}
-
 router.get('/:username/collections/create', (req, res) => {
   userExists(req.params.username, (exists) => {
     const isLoggedInUser = req.user && req.user.username === req.params.username;
@@ -151,5 +141,27 @@ router.get('/:username/collections', (req, res) => {
     exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
   ));
 });
+
+
+// Mobile Routes
+if (process.env.MOBILE_ENABLED) {
+  router.get('/mobile', (req, res) => res.send(renderIndex()));
+
+  router.get('/mobile/preview', (req, res) => res.send(renderIndex()));
+
+  router.get('/mobile/preferences', (req, res) => res.send(renderIndex()));
+
+  router.get('/mobile/:username/sketches', (req, res) => {
+    userExists(req.params.username, exists => (
+      exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
+    ));
+  });
+
+  router.get('/mobile/:username/sketches/:project_id', (req, res) => {
+    projectForUserExists(req.params.username, req.params.project_id, exists => (
+      exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
+    ));
+  });
+}
 
 export default router;

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { withRouter } from 'react-router';
+
 import Screen from '../../components/mobile/MobileScreen';
 import Header from '../../components/mobile/Header';
 import IconButton from '../../components/mobile/IconButton';
@@ -42,15 +44,20 @@ const FooterTabSwitcher = styled.div`
 `;
 
 const Panels = {
-  Sketches: props => <SketchList {...props} />,
-  Collections: props => <CollectionList {...props} />,
-  Assets: props => <AssetList {...props} />
+  Sketches: SketchList,
+  Collections: CollectionList,
+  Assets: AssetList
 };
 
-const MobileDashboard = ({ username }) => {
+const renderPanel = (name, props) => (Component => (Component && <Component {...props} />))(Panels[name]);
+
+
+const MobileDashboard = ({ params }) => {
   const Tabs = Object.keys(Panels);
   const [selected, selectTab] = useState(Tabs[0]);
 
+  // const username = 'p5';
+  const { username } = params;
   const isExamples = username === EXAMPLE_USERNAME;
 
   return (
@@ -64,7 +71,7 @@ const MobileDashboard = ({ username }) => {
         <Subheader>
           <SketchSearchbar />
         </Subheader>
-        {Panels[selected] && Panels[selected]({ username })}
+        {renderPanel(selected, { username })}
       </Content>
 
       <Footer>
@@ -85,8 +92,12 @@ const MobileDashboard = ({ username }) => {
     </Screen>);
 };
 
-MobileDashboard.propTypes = { username: PropTypes.string };
-MobileDashboard.defaultProps = { username: '' };
+MobileDashboard.propTypes = {
+  params: PropTypes.shape({
+    username: PropTypes.string.isRequired
+  })
+};
+MobileDashboard.defaultProps = { params: {} };
 
 
-export default MobileDashboard;
+export default withRouter(MobileDashboard);

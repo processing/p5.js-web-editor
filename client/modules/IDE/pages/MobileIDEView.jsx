@@ -48,7 +48,7 @@ const NavItem = styled.li`
 
 const headerNavOptions = [
   { icon: PreferencesIcon, title: 'Preferences', href: '/mobile/preferences', },
-  { icon: PreferencesIcon, title: 'Examples', href: '/mobile/examples' },
+  { icon: PreferencesIcon, title: 'Examples', href: '/p5/sketches' },
   { icon: PreferencesIcon, title: 'Original Editor', href: '/', },
 ];
 
