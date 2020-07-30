@@ -2,6 +2,7 @@ import apiClient from '../../../utils/apiClient';
 import * as ActionTypes from '../../../constants';
 
 function updatePreferences(formParams, dispatch) {
+  console.log('updating preferences');
   apiClient.put('/preferences', formParams)
     .then(() => {
     })
@@ -207,6 +208,25 @@ export function setAllAccessibleOutput(value) {
     dispatch(setTextOutput(value));
     dispatch(setGridOutput(value));
     dispatch(setSoundOutput(value));
+  };
+}
+
+export function setLanguage(value) {
+  console.log(' set language to db');
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.SET_LANGUAGE,
+      value
+    });
+    const state = getState();
+    if (state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          language: value
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
   };
 }
 

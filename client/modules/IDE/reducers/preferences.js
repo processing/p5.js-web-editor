@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import * as ActionTypes from '../../../constants';
 
 const initialState = {
@@ -10,12 +11,14 @@ const initialState = {
   gridOutput: false,
   soundOutput: false,
   theme: 'light',
-  autorefresh: false
+  autorefresh: false,
+  language: 'en-US'
 };
 
 const preferences = (state = initialState, action) => {
   switch (action.type) {
     case ActionTypes.SET_FONT_SIZE:
+      console.log(`loading font size ${action.value}`);
       return Object.assign({}, state, { fontSize: action.value });
     case ActionTypes.SET_AUTOSAVE:
       return Object.assign({}, state, { autosave: action.value });
@@ -37,6 +40,10 @@ const preferences = (state = initialState, action) => {
       return Object.assign({}, state, { autorefresh: action.value });
     case ActionTypes.SET_LINE_NUMBERS:
       return Object.assign({}, state, { lineNumbers: action.value });
+    case ActionTypes.SET_LANGUAGE:
+      console.log(`loading language${action.value}`);
+      i18next.changeLanguage(action.value);
+      return Object.assign({}, state, { language: action.value });
     default:
       return state;
   }

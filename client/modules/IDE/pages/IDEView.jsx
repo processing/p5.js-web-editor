@@ -244,6 +244,7 @@ class IDEView extends React.Component {
               setSoundOutput={this.props.setSoundOutput}
               theme={this.props.preferences.theme}
               setTheme={this.props.setTheme}
+              setLanguage={this.props.setLanguage}
             />
           </Overlay>
         }
@@ -603,7 +604,8 @@ IDEView.propTypes = {
   startSketch: PropTypes.func.isRequired,
   openUploadFileModal: PropTypes.func.isRequired,
   closeUploadFileModal: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
+  setLanguage: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
