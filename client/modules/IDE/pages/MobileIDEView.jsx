@@ -20,7 +20,7 @@ import { getHTMLFile } from '../reducers/files';
 
 // Local Imports
 import Editor from '../components/Editor';
-import { PlayIcon, ExitIcon, MoreIcon } from '../../../common/icons';
+import { PlayIcon, MoreIcon } from '../../../common/icons';
 
 import IconButton from '../../../components/mobile/IconButton';
 import Header from '../../../components/mobile/Header';
@@ -48,7 +48,7 @@ const NavItem = styled.li`
 
 const headerNavOptions = [
   { icon: PreferencesIcon, title: 'Preferences', href: '/mobile/preferences', },
-  { icon: PreferencesIcon, title: 'Examples', href: '/p5/sketches' },
+  { icon: PreferencesIcon, title: 'Examples', href: '/mobile/p5/sketches' },
   { icon: PreferencesIcon, title: 'Original Editor', href: '/', },
 ];
 
@@ -66,8 +66,6 @@ const MobileIDEView = (props) => {
     files,
     closeEditorOptions,
     showEditorOptions,
-    showKeyboardShortcutModal,
-    setUnsavedChanges,
     startRefreshSketch,
     stopSketch,
     expandSidebar,
@@ -89,13 +87,6 @@ const MobileIDEView = (props) => {
       <Header
         title={project.name}
         subtitle={selectedFile.name}
-        leftButton={
-          <IconButton
-            to="/mobile"
-            icon={ExitIcon}
-            aria-label="Return to original editor"
-          />
-        }
       >
         <NavItem>
           <IconButton
@@ -236,10 +227,6 @@ MobileIDEView.propTypes = {
   closeEditorOptions: PropTypes.func.isRequired,
 
   showEditorOptions: PropTypes.func.isRequired,
-
-  showKeyboardShortcutModal: PropTypes.func.isRequired,
-
-  setUnsavedChanges: PropTypes.func.isRequired,
 
   startRefreshSketch: PropTypes.func.isRequired,
 
