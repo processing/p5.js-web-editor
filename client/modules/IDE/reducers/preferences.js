@@ -42,7 +42,7 @@ const preferences = (state = initialState, action) => {
       return Object.assign({}, state, { lineNumbers: action.value });
     case ActionTypes.SET_LANGUAGE:
       console.log(`loading language${action.value}`);
-      i18next.changeLanguage(action.value);
+      // i18next.changeLanguage(action.value);
       return Object.assign({}, state, { language: action.value });
     default:
       return state;
