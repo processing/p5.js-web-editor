@@ -55,7 +55,7 @@ function warnIfUnsavedChanges(props) { // eslint-disable-line
     props.persistState();
     window.onbeforeunload = null;
   } else if (props.ide.unsavedChanges) {
-    if (!window.confirm(props.t('Common.WarningUnsavedChanges'))) {
+    if (!window.confirm(props.t('Nav.WarningUnsavedChanges'))) {
       return false;
     }
     props.setUnsavedChanges(false);

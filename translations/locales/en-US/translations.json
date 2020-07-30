@@ -154,7 +154,7 @@
     },
     "General": {
       "StartSketch": "Start Sketch",
-      "StopSketch": "StopSketch",
+      "StopSketch": "Stop Sketch",
       "TurnOnAccessibleOutput": "Turn On Accessible Output",
       "TurnOffAccessibleOutput": "Turn Off Accessible Output"
     }
