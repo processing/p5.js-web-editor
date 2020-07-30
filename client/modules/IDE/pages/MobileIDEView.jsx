@@ -57,7 +57,7 @@ const MobileIDEView = (props) => {
   const {
     preferences, ide, editorAccessibility, project, updateLintMessage, clearLintMessage,
     selectedFile, updateFileContent, files,
-    closeEditorOptions, showEditorOptions, showKeyboardShortcutModal, setUnsavedChanges,
+    closeEditorOptions, showEditorOptions,
     startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console,
     showRuntimeErrorWarning, hideRuntimeErrorWarning, startSketch
   } = props;
@@ -65,7 +65,7 @@ const MobileIDEView = (props) => {
   const [tmController, setTmController] = useState(null); // eslint-disable-line
 
 
-  const [triggerNavDropdown, NavDropDown] = useAsModal(<Dropdown right items={headerNavOptions} />);
+  const [triggerNavDropdown, NavDropDown] = useAsModal(<Dropdown align="right" items={headerNavOptions} />);
 
   return (
     <Screen fullscreen>
@@ -212,10 +212,6 @@ MobileIDEView.propTypes = {
   closeEditorOptions: PropTypes.func.isRequired,
 
   showEditorOptions: PropTypes.func.isRequired,
-
-  showKeyboardShortcutModal: PropTypes.func.isRequired,
-
-  setUnsavedChanges: PropTypes.func.isRequired,
 
   startRefreshSketch: PropTypes.func.isRequired,
 
