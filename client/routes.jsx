@@ -15,10 +15,10 @@ import AccountView from './modules/User/pages/AccountView';
 import CollectionView from './modules/User/pages/CollectionView';
 import DashboardView from './modules/User/pages/DashboardView';
 import createRedirectWithUsername from './components/createRedirectWithUsername';
+import MobileDashboard from './modules/Mobile/MobileDashboard';
 import { getUser } from './modules/User/actions';
 import { stopSketch } from './modules/IDE/actions/ide';
 import { userIsAuthenticated, userIsNotAuthenticated, userIsAuthorized } from './utils/auth';
-import MobileExamples from './modules/Mobile/MobileExamples';
 
 const checkAuth = (store) => {
   store.dispatch(getUser());
@@ -61,7 +61,7 @@ const routes = store => (
     <Route path="/mobile" component={MobileIDEView} />
     <Route path="/mobile/preview" component={MobileSketchView} />
     <Route path="/mobile/preferences" component={MobilePreferences} />
-    <Route path="/mobile/examples" component={MobileExamples} />
+    <Route path="/mobile/examples" component={() => <MobileDashboard username="p5" />} />
   </Route>
 );
 
