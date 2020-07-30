@@ -6,22 +6,25 @@ import Icons from './Icons';
 
 const Item = ({
   isAdded, onSelect, name, url
-}) => (
-  <li className="quick-add__item" onClick={onSelect}> { /* eslint-disable-line */ }
-    <button className="quick-add__item-toggle" onClick={onSelect}>
-      <Icons isAdded={isAdded} />
-    </button>
-    <span className="quick-add__item-name">{name}</span>
-    <Link
-      className="quick-add__item-view"
-      to={url}
-      target="_blank"
-      onClick={e => e.stopPropogation()}
-    >
-      View
-    </Link>
-  </li>
-);
+}) => {
+  const buttonLabel = isAdded ? 'Remove from collection' : 'Add to collection';
+  return (
+    <li className="quick-add__item" onClick={onSelect}> { /* eslint-disable-line */ }
+      <button className="quick-add__item-toggle" onClick={onSelect} aria-label={buttonLabel}>
+        <Icons isAdded={isAdded} />
+      </button>
+      <span className="quick-add__item-name">{name}</span>
+      <Link
+        className="quick-add__item-view"
+        to={url}
+        target="_blank"
+        onClick={e => e.stopPropogation()}
+      >
+        View
+      </Link>
+    </li>
+  );
+};
 
 const ItemType = PropTypes.shape({
   name: PropTypes.string.isRequired,

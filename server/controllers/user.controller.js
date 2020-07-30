@@ -30,71 +30,63 @@ const random = (done) => {
 };
 
 export function findUserByUsername(username, cb) {
-  User.findOne(
-    { username },
-    (err, user) => {
-      cb(user);
-    }
-  );
+  User.findByUsername(username, (err, user) => {
+    cb(user);
+  });
 }
 
 export function createUser(req, res, next) {
+  const { username, email } = req.body;
+  const { password } = req.body;
+  const emailLowerCase = email.toLowerCase();
   const EMAIL_VERIFY_TOKEN_EXPIRY_TIME = Date.now() + (3600000 * 24); // 24 hours
   random((tokenError, token) => {
     const user = new User({
-      username: req.body.username,
-      email: req.body.email,
-      password: req.body.password,
+      username,
+      email: emailLowerCase,
+      password,
       verified: User.EmailConfirmation.Sent,
       verifiedToken: token,
       verifiedTokenExpires: EMAIL_VERIFY_TOKEN_EXPIRY_TIME,
     });
 
-    User.findOne(
-      {
-        $or: [
-          { email: req.body.email },
-          { username: req.body.username }
-        ]
-      },
-      (err, existingUser) => {
-        if (err) {
-          res.status(404).send({ error: err });
-          return;
-        }
+    User.findByEmailAndUsername(email, username, (err, existingUser) => {
+      if (err) {
+        res.status(404).send({ error: err });
+        return;
+      }
 
-        if (existingUser) {
-          const fieldInUse = existingUser.email === req.body.email ? 'Email' : 'Username';
-          res.status(422).send({ error: `${fieldInUse} is in use` });
+      if (existingUser) {
+        const fieldInUse = existingUser.email.toLowerCase() === emailLowerCase ? 'Email' : 'Username';
+        res.status(422).send({ error: `${fieldInUse} is in use` });
+        return;
+      }
+      user.save((saveErr) => {
+        if (saveErr) {
+          next(saveErr);
           return;
         }
-        user.save((saveErr) => {
-          if (saveErr) {
-            next(saveErr);
+        req.logIn(user, (loginErr) => {
+          if (loginErr) {
+            next(loginErr);
             return;
           }
-          req.logIn(user, (loginErr) => {
-            if (loginErr) {
-              next(loginErr);
-              return;
-            }
 
-            const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
-            const mailOptions = renderEmailConfirmation({
-              body: {
-                domain: `${protocol}://${req.headers.host}`,
-                link: `${protocol}://${req.headers.host}/verify?t=${token}`
-              },
-              to: req.user.email,
-            });
+          const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+          const mailOptions = renderEmailConfirmation({
+            body: {
+              domain: `${protocol}://${req.headers.host}`,
+              link: `${protocol}://${req.headers.host}/verify?t=${token}`
+            },
+            to: req.user.email,
+          });
 
-            mail.send(mailOptions, (mailErr, result) => { // eslint-disable-line no-unused-vars
-              res.json(userResponse(req.user));
-            });
+          mail.send(mailOptions, (mailErr, result) => { // eslint-disable-line no-unused-vars
+            res.json(userResponse(req.user));
           });
         });
-      }
-    );
+      });
+    });
   });
 }
 
@@ -103,7 +95,10 @@ export function duplicateUserCheck(req, res) {
   const value = req.query[checkType];
   const query = {};
   query[checkType] = value;
-  User.findOne(query, (err, user) => {
+  // Don't want to use findByEmailOrUsername here, because in this case we do
+  // want to use case-insensitive search for usernames to prevent username
+  // duplicates, which overrides the default behavior.
+  User.findOne(query).collation({ locale: 'en', strength: 2 }).exec((err, user) => {
     if (user) {
       return res.json({
         exists: true,
@@ -147,7 +142,7 @@ export function resetPasswordInitiate(req, res) {
   async.waterfall([
     random,
     (token, done) => {
-      User.findOne({ email: req.body.email }, (err, user) => {
+      User.findByEmail(req.body.email, (err, user) => {
         if (!user) {
           res.json({ success: true, message: 'If the email is registered with the editor, an email has been sent.' });
           return;
@@ -277,7 +272,7 @@ export function updatePassword(req, res) {
 }
 
 export function userExists(username, callback) {
-  User.findOne({ username }, (err, user) => (
+  User.findByUsername(username, (err, user) => (
     user ? callback(true) : callback(false)
   ));
 }

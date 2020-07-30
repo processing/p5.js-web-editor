@@ -1,13 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import InlineSVG from 'react-inlinesvg';
 import format from 'date-fns/format';
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
 import orderBy from 'lodash/orderBy';
 
 import { APIKeyPropType } from './APIKeyForm';
 
-const trashCan = require('../../../images/trash-can.svg');
+import TrashCanIcon from '../../../images/trash-can.svg';
 
 function APIKeyList({ apiKeys, onRemove }) {
   return (
@@ -32,8 +31,12 @@ function APIKeyList({ apiKeys, onRemove }) {
               <td>{format(new Date(key.createdAt), 'MMM D, YYYY h:mm A')}</td>
               <td>{lastUsed}</td>
               <td className="api-key-list__action">
-                <button className="api-key-list__delete-button" onClick={() => onRemove(key)}>
-                  <InlineSVG src={trashCan} alt="Delete Key" />
+                <button
+                  className="api-key-list__delete-button"
+                  onClick={() => onRemove(key)}
+                  aria-label="Delete API Key"
+                >
+                  <TrashCanIcon focusable="false" aria-hidden="true" />
                 </button>
               </td>
             </tr>

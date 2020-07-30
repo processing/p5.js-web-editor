@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { reduxForm } from 'redux-form';
-import InlineSVG from 'react-inlinesvg';
 import NewFolderForm from './NewFolderForm';
 
-const exitUrl = require('../../../images/exit.svg');
+import ExitIcon from '../../../images/exit.svg';
 
 class NewFolderModal extends React.Component {
   componentDidMount() {
@@ -17,8 +16,12 @@ class NewFolderModal extends React.Component {
         <div className="modal-content-folder">
           <div className="modal__header">
             <h2 className="modal__title">Create Folder</h2>
-            <button className="modal__exit-button" onClick={this.props.closeModal}>
-              <InlineSVG src={exitUrl} alt="Close New Folder Modal" />
+            <button
+              className="modal__exit-button"
+              onClick={this.props.closeModal}
+              aria-label="Close New Folder Modal"
+            >
+              <ExitIcon focusable="false" aria-hidden="true" />
             </button>
           </div>
           <NewFolderForm {...this.props} />

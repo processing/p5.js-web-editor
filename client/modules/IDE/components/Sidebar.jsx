@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
-import InlineSVG from 'react-inlinesvg';
 import ConnectedFileNode from './FileNode';
 
-const downArrowUrl = require('../../../images/down-filled-triangle.svg');
+import DownArrowIcon from '../../../images/down-filled-triangle.svg';
 
 class Sidebar extends React.Component {
   constructor(props) {
@@ -69,14 +68,14 @@ class Sidebar extends React.Component {
     const rootFile = this.props.files.filter(file => file.name === 'root')[0];
 
     return (
-      <nav className={sidebarClass} title="file-navigation" >
-        <div className="sidebar__header" onContextMenu={this.toggleProjectOptions}>
+      <section className={sidebarClass}>
+        <header className="sidebar__header" onContextMenu={this.toggleProjectOptions}>
           <h3 className="sidebar__title">
             <span>Sketch Files</span>
           </h3>
           <div className="sidebar__icons">
             <button
-              aria-label="add file or folder"
+              aria-label="Toggle open/close sketch file options"
               className="sidebar__add"
               tabIndex="0"
               ref={(element) => { this.sidebarOptions = element; }}
@@ -84,7 +83,7 @@ class Sidebar extends React.Component {
               onBlur={this.onBlurComponent}
               onFocus={this.onFocusComponent}
             >
-              <InlineSVG src={downArrowUrl} />
+              <DownArrowIcon focusable="false" aria-hidden="true" />
             </button>
             <ul className="sidebar__project-options">
               <li>
@@ -131,12 +130,12 @@ class Sidebar extends React.Component {
               }
             </ul>
           </div>
-        </div>
+        </header>
         <ConnectedFileNode
           id={rootFile.id}
           canEdit={canEditProject}
         />
-      </nav>
+      </section>
     );
   }
 }

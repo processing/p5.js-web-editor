@@ -3,13 +3,14 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { withTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 import SplitPane from 'react-split-pane';
 import Editor from '../components/Editor';
 import Sidebar from '../components/Sidebar';
 import PreviewFrame from '../components/PreviewFrame';
 import Toolbar from '../components/Toolbar';
-import Preferences from '../components/Preferences';
+import Preferences from '../components/Preferences/index';
 import NewFileModal from '../components/NewFileModal';
 import NewFolderModal from '../components/NewFolderModal';
 import UploadFileModal from '../components/UploadFileModal';
@@ -34,11 +35,38 @@ import AddToCollectionList from '../components/AddToCollectionList';
 import Feedback from '../components/Feedback';
 import { CollectionSearchbar } from '../components/Searchbar';
 
+function getTitle(props) {
+  const { id } = props.project;
+  return id ? `p5.js Web Editor | ${props.project.name}` : 'p5.js Web Editor';
+}
+
+function isUserOwner(props) {
+  return props.project.owner && props.project.owner.id === props.user.id;
+}
+
+function warnIfUnsavedChanges(props) { // eslint-disable-line
+  const { route } = props.route;
+  if (route && (route.action === 'PUSH' && (route.pathname === '/login' || route.pathname === '/signup'))) {
+    // don't warn
+    props.persistState();
+    window.onbeforeunload = null;
+  } else if (route && (props.location.pathname === '/login' || props.location.pathname === '/signup')) {
+    // don't warn
+    props.persistState();
+    window.onbeforeunload = null;
+  } else if (props.ide.unsavedChanges) {
+    if (!window.confirm(props.t('WarningUnsavedChanges'))) {
+      return false;
+    }
+    props.setUnsavedChanges(false);
+    return true;
+  }
+}
+
 class IDEView extends React.Component {
   constructor(props) {
     super(props);
     this.handleGlobalKeydown = this.handleGlobalKeydown.bind(this);
-    this.warnIfUnsavedChanges = this.warnIfUnsavedChanges.bind(this);
 
     this.state = {
       consoleSize: props.ide.consoleIsExpanded ? 150 : 29,
@@ -53,18 +81,18 @@ class IDEView extends React.Component {
 
     this.props.stopSketch();
     if (this.props.params.project_id) {
-      const id = this.props.params.project_id;
+      const { project_id: id, username } = this.props.params;
       if (id !== this.props.project.id) {
-        this.props.getProject(id);
+        this.props.getProject(id, username);
       }
     }
 
     this.isMac = navigator.userAgent.toLowerCase().indexOf('mac') !== -1;
     document.addEventListener('keydown', this.handleGlobalKeydown, false);
 
-    this.props.router.setRouteLeaveHook(this.props.route, route => this.warnIfUnsavedChanges(route));
+    this.props.router.setRouteLeaveHook(this.props.route, this.handleUnsavedChanges);
 
-    window.onbeforeunload = () => this.warnIfUnsavedChanges();
+    window.onbeforeunload = this.handleUnsavedChanges;
 
     this.autosaveInterval = null;
   }
@@ -92,7 +120,7 @@ class IDEView extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.isUserOwner() && this.props.project.id) {
+    if (isUserOwner(this.props) && this.props.project.id) {
       if (this.props.preferences.autosave && this.props.ide.unsavedChanges && !this.props.ide.justOpenedProject) {
         if (
           this.props.selectedFile.name === prevProps.selectedFile.name &&
@@ -113,7 +141,7 @@ class IDEView extends React.Component {
     }
 
     if (this.props.route.path !== prevProps.route.path) {
-      this.props.router.setRouteLeaveHook(this.props.route, route => this.warnIfUnsavedChanges(route));
+      this.props.router.setRouteLeaveHook(this.props.route, () => warnIfUnsavedChanges(this.props));
     }
   }
 
@@ -123,16 +151,12 @@ class IDEView extends React.Component {
     this.autosaveInterval = null;
   }
 
-  isUserOwner() {
-    return this.props.project.owner && this.props.project.owner.id === this.props.user.id;
-  }
-
   handleGlobalKeydown(e) {
     // 83 === s
     if (e.keyCode === 83 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
       e.preventDefault();
       e.stopPropagation();
-      if (this.isUserOwner() || (this.props.user.authenticated && !this.props.project.owner)) {
+      if (isUserOwner(this.props) || (this.props.user.authenticated && !this.props.project.owner)) {
         this.props.saveProject(this.cmController.getContent());
       } else if (this.props.user.authenticated) {
         this.props.cloneProject();
@@ -170,42 +194,34 @@ class IDEView extends React.Component {
       } else {
         this.props.expandConsole();
       }
+    } else if (e.keyCode === 27) {
+      if (this.props.ide.newFolderModalVisible) {
+        this.props.closeNewFolderModal();
+      } else if (this.props.ide.uploadFileModalVisible) {
+        this.props.closeUploadFileModal();
+      } else if (this.props.ide.modalIsVisible) {
+        this.props.closeNewFileModal();
+      }
     }
   }
 
-  warnIfUnsavedChanges(route) { // eslint-disable-line
-    if (route && (route.action === 'PUSH' && (route.pathname === '/login' || route.pathname === '/signup'))) {
-      // don't warn
-      this.props.persistState();
-      window.onbeforeunload = null;
-    } else if (route && (this.props.location.pathname === '/login' || this.props.location.pathname === '/signup')) {
-      // don't warn
-      this.props.persistState();
-      window.onbeforeunload = null;
-    } else if (this.props.ide.unsavedChanges) {
-      if (!window.confirm('Are you sure you want to leave this page? You have unsaved changes.')) {
-        return false;
-      }
-      this.props.setUnsavedChanges(false);
-      return true;
-    }
-  }
+  handleUnsavedChanges = () => warnIfUnsavedChanges(this.props);
 
   render() {
     return (
       <div className="ide">
         <Helmet>
-          <title>p5.js Web Editor | {this.props.project.name}</title>
+          <title>{getTitle(this.props)}</title>
         </Helmet>
         {this.props.toast.isVisible && <Toast />}
         <Nav
-          warnIfUnsavedChanges={this.warnIfUnsavedChanges}
+          warnIfUnsavedChanges={this.handleUnsavedChanges}
           cmController={this.cmController}
         />
-        <Toolbar />
+        <Toolbar key={this.props.project.id} />
         {this.props.ide.preferencesIsVisible &&
           <Overlay
-            title="Settings"
+            title={this.props.t('Settings')}
             ariaLabel="settings"
             closeOverlay={this.props.closePreferences}
           >
@@ -231,7 +247,7 @@ class IDEView extends React.Component {
             />
           </Overlay>
         }
-        <div className="editor-preview-container">
+        <main className="editor-preview-container">
           <SplitPane
             split="vertical"
             size={this.state.sidebarSize}
@@ -300,7 +316,7 @@ class IDEView extends React.Component {
                   isExpanded={this.props.ide.sidebarIsExpanded}
                   expandSidebar={this.props.expandSidebar}
                   collapseSidebar={this.props.collapseSidebar}
-                  isUserOwner={this.isUserOwner()}
+                  isUserOwner={isUserOwner(this.props)}
                   clearConsole={this.props.clearConsole}
                   consoleEvents={this.props.console}
                   showRuntimeErrorWarning={this.props.showRuntimeErrorWarning}
@@ -308,20 +324,11 @@ class IDEView extends React.Component {
                   runtimeErrorWarningVisible={this.props.ide.runtimeErrorWarningVisible}
                   provideController={(ctl) => { this.cmController = ctl; }}
                 />
-                <Console
-                  fontSize={this.props.preferences.fontSize}
-                  consoleEvents={this.props.console}
-                  isExpanded={this.props.ide.consoleIsExpanded}
-                  expandConsole={this.props.expandConsole}
-                  collapseConsole={this.props.collapseConsole}
-                  clearConsole={this.props.clearConsole}
-                  dispatchConsoleEvent={this.props.dispatchConsoleEvent}
-                  theme={this.props.preferences.theme}
-                />
+                <Console />
               </SplitPane>
-              <div className="preview-frame-holder">
+              <section className="preview-frame-holder">
                 <header className="preview-frame__header">
-                  <h2 className="preview-frame__title">Preview</h2>
+                  <h2 className="preview-frame__title">{this.props.t('Preview')}</h2>
                 </header>
                 <div className="preview-frame__content">
                   <div className="preview-frame-overlay" ref={(element) => { this.overlay = element; }}>
@@ -362,10 +369,10 @@ class IDEView extends React.Component {
                     cmController={this.cmController}
                   />
                 </div>
-              </div>
+              </section>
             </SplitPane>
           </SplitPane>
-        </div>
+        </main>
         { this.props.ide.modalIsVisible &&
           <NewFileModal />
         }
@@ -382,7 +389,7 @@ class IDEView extends React.Component {
         }
         { this.props.location.pathname === '/about' &&
           <Overlay
-            title="About"
+            title={this.props.t('About')}
             previousPath={this.props.ide.previousPath}
             ariaLabel="about"
           >
@@ -428,7 +435,7 @@ class IDEView extends React.Component {
         }
         {this.props.ide.keyboardShortcutVisible &&
           <Overlay
-            title="Keyboard Shortcuts"
+            title={this.props.t('KeyboardShortcuts')}
             ariaLabel="keyboard shortcuts"
             closeOverlay={this.props.closeKeyboardShortcutModal}
           >
@@ -562,6 +569,7 @@ IDEView.propTypes = {
   closeProjectOptions: PropTypes.func.isRequired,
   newFolder: PropTypes.func.isRequired,
   closeNewFolderModal: PropTypes.func.isRequired,
+  closeNewFileModal: PropTypes.func.isRequired,
   createFolder: PropTypes.func.isRequired,
   closeShareModal: PropTypes.func.isRequired,
   showEditorOptions: PropTypes.func.isRequired,
@@ -590,12 +598,12 @@ IDEView.propTypes = {
   showErrorModal: PropTypes.func.isRequired,
   hideErrorModal: PropTypes.func.isRequired,
   clearPersistedState: PropTypes.func.isRequired,
-  persistState: PropTypes.func.isRequired,
   showRuntimeErrorWarning: PropTypes.func.isRequired,
   hideRuntimeErrorWarning: PropTypes.func.isRequired,
   startSketch: PropTypes.func.isRequired,
   openUploadFileModal: PropTypes.func.isRequired,
-  closeUploadFileModal: PropTypes.func.isRequired
+  closeUploadFileModal: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -632,4 +640,4 @@ function mapDispatchToProps(dispatch) {
   );
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(IDEView));
+export default withTranslation('WebEditor')(withRouter(connect(mapStateToProps, mapDispatchToProps)(IDEView)));

@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import InlineSVG from 'react-inlinesvg';
 import { throttle } from 'lodash';
 
-const searchIcon = require('../../../../images/magnifyingglass.svg');
+import SearchIcon from '../../../../images/magnifyingglass.svg';
 
 class Searchbar extends React.Component {
   constructor(props) {
@@ -24,20 +23,13 @@ class Searchbar extends React.Component {
     });
   }
 
-  handleSearchEnter = (e) => {
-    if (e.key === 'Enter') {
-      this.searchChange();
-    }
-  }
-
   searchChange = () => {
-    if (this.state.searchValue.trim().length === 0) return;
     this.props.setSearchTerm(this.state.searchValue.trim());
   };
 
   handleSearchChange = (e) => {
     this.setState({ searchValue: e.target.value }, () => {
-      this.throttledSearchChange(this.state.searchValue);
+      this.throttledSearchChange(this.state.searchValue.trim());
     });
   }
 
@@ -46,7 +38,7 @@ class Searchbar extends React.Component {
     return (
       <div className={`searchbar ${searchValue === '' ? 'searchbar--is-empty' : ''}`}>
         <div className="searchbar__button">
-          <InlineSVG className="searchbar__icon" src={searchIcon} />
+          <SearchIcon className="searchbar__icon" focusable="false" aria-hidden="true" />
         </div>
         <input
           className="searchbar__input"
@@ -54,7 +46,6 @@ class Searchbar extends React.Component {
           value={searchValue}
           placeholder={this.props.searchLabel}
           onChange={this.handleSearchChange}
-          onKeyUp={this.handleSearchEnter}
         />
         <button
           className="searchbar__clear-button"

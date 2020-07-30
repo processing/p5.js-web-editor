@@ -83,8 +83,3 @@
 .dashboard-header__actions > *:not(:first-child) {
   margin-left: #{15 / $base-font-size}rem;
 }
-
-.dashboard__action-button {
-  flex-grow: 0;
-  @extend %button;
-}

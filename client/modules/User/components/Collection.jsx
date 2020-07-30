@@ -2,11 +2,13 @@ import format from 'date-fns/format';
 import PropTypes from 'prop-types';
 import React, { useState, useRef, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import InlineSVG from 'react-inlinesvg';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import classNames from 'classnames';
+
+import Button from '../../../common/Button';
+import { DropdownArrowIcon } from '../../../common/icons';
 import * as ProjectActions from '../../IDE/actions/project';
 import * as ProjectsActions from '../../IDE/actions/projects';
 import * as CollectionsActions from '../../IDE/actions/collections';
@@ -20,11 +22,10 @@ import Overlay from '../../App/components/Overlay';
 import AddToCollectionSketchList from '../../IDE/components/AddToCollectionSketchList';
 import CopyableInput from '../../IDE/components/CopyableInput';
 import { SketchSearchbar } from '../../IDE/components/Searchbar';
-import dropdownArrow from '../../../images/down-arrow.svg';
 
-const arrowUp = require('../../../images/sort-arrow-up.svg');
-const arrowDown = require('../../../images/sort-arrow-down.svg');
-const removeIcon = require('../../../images/close.svg');
+import ArrowUpIcon from '../../../images/sort-arrow-up.svg';
+import ArrowDownIcon from '../../../images/sort-arrow-down.svg';
+import RemoveIcon from '../../../images/close.svg';
 
 const ShareURL = ({ value }) => {
   const [showURL, setShowURL] = useState(false);
@@ -51,13 +52,12 @@ const ShareURL = ({ value }) => {
 
   return (
     <div className="collection-share" ref={node}>
-      <button
-        className="collection-share__button"
+      <Button
         onClick={() => setShowURL(!showURL)}
+        iconAfter={<DropdownArrowIcon />}
       >
-        <span>Share</span>
-        <InlineSVG className="collection-share__arrow" src={dropdownArrow} />
-      </button>
+        Share
+      </Button>
       { showURL &&
         <div className="collection__share-dropdown">
           <CopyableInput value={value} label="Link to Collection" />
@@ -71,40 +71,50 @@ ShareURL.propTypes = {
   value: PropTypes.string.isRequired,
 };
 
-class CollectionItemRowBase extends React.Component {
-  handleSketchRemove = () => {
-    if (window.confirm(`Are you sure you want to remove "${this.props.item.project.name}" from this collection?`)) {
-      this.props.removeFromCollection(this.props.collection.id, this.props.item.project.id);
+const CollectionItemRowBase = ({
+  collection, item, isOwner, removeFromCollection
+}) => {
+  const projectIsDeleted = item.isDeleted;
+
+  const handleSketchRemove = () => {
+    const name = projectIsDeleted ? 'deleted sketch' : item.project.name;
+
+    if (window.confirm(`Are you sure you want to remove "${name}" from this collection?`)) {
+      removeFromCollection(collection.id, item.projectId);
     }
-  }
+  };
 
-  render() {
-    const { item } = this.props;
-    const sketchOwnerUsername = item.project.user.username;
-    const sketchUrl = `/${item.project.user.username}/sketches/${item.project.id}`;
+  const name = projectIsDeleted ? <span>Sketch was deleted</span> : (
+    <Link to={`/${item.project.user.username}/sketches/${item.projectId}`}>
+      {item.project.name}
+    </Link>
+  );
 
-    return (
-      <tr
-        className="sketches-table__row"
-      >
-        <th scope="row">
-          <Link to={sketchUrl}>
-            {item.project.name}
-          </Link>
-        </th>
-        <td>{format(new Date(item.createdAt), 'MMM D, YYYY h:mm A')}</td>
-        <td>{sketchOwnerUsername}</td>
-        <td className="collection-row__action-column ">
+  const sketchOwnerUsername = projectIsDeleted ? null : item.project.user.username;
+
+  return (
+    <tr
+      className={`sketches-table__row ${projectIsDeleted ? 'is-deleted' : ''}`}
+    >
+      <th scope="row">
+        {name}
+      </th>
+      <td>{format(new Date(item.createdAt), 'MMM D, YYYY h:mm A')}</td>
+      <td>{sketchOwnerUsername}</td>
+      <td className="collection-row__action-column ">
+        {isOwner &&
           <button
             className="collection-row__remove-button"
-            onClick={this.handleSketchRemove}
+            onClick={handleSketchRemove}
+            aria-label="Remove sketch from collection"
           >
-            <InlineSVG src={removeIcon} alt="Remove" />
+            <RemoveIcon focusable="false" aria-hidden="true" />
           </button>
-        </td>
-      </tr>);
-  }
-}
+        }
+      </td>
+    </tr>);
+};
+
 
 CollectionItemRowBase.propTypes = {
   collection: PropTypes.shape({
@@ -113,14 +123,17 @@ CollectionItemRowBase.propTypes = {
   }).isRequired,
   item: PropTypes.shape({
     createdAt: PropTypes.string.isRequired,
+    projectId: PropTypes.string.isRequired,
+    isDeleted: PropTypes.bool.isRequired,
     project: PropTypes.shape({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       user: PropTypes.shape({
         username: PropTypes.string.isRequired
-      })
+      }),
     }).isRequired,
   }).isRequired,
+  isOwner: PropTypes.bool.isRequired,
   user: PropTypes.shape({
     username: PropTypes.string,
     authenticated: PropTypes.bool.isRequired
@@ -226,7 +239,7 @@ class Collection extends React.Component {
     // };
 
     return (
-      <div className={`collection-metadata ${this.isOwner() ? 'collection-metadata--is-owner' : ''}`}>
+      <header className={`collection-metadata ${this.isOwner() ? 'collection-metadata--is-owner' : ''}`}>
         <div className="collection-metadata__columns">
           <div className="collection-metadata__column--left">
             <h2 className="collection-metadata__name">
@@ -263,13 +276,13 @@ class Collection extends React.Component {
             </p>
             {
               this.isOwner() &&
-              <button className="collection-metadata__add-button" onClick={this.showAddSketches}>
+              <Button onClick={this.showAddSketches}>
                 Add Sketch
-              </button>
+              </Button>
             }
           </div>
         </div>
-      </div>
+      </header>
     );
   }
 
@@ -296,21 +309,43 @@ class Collection extends React.Component {
     return null;
   }
 
+  _getButtonLabel = (fieldName, displayName) => {
+    const { field, direction } = this.props.sorting;
+    let buttonLabel;
+    if (field !== fieldName) {
+      if (field === 'name') {
+        buttonLabel = `Sort by ${displayName} ascending.`;
+      } else {
+        buttonLabel = `Sort by ${displayName} descending.`;
+      }
+    } else if (direction === SortingActions.DIRECTION.ASC) {
+      buttonLabel = `Sort by ${displayName} descending.`;
+    } else {
+      buttonLabel = `Sort by ${displayName} ascending.`;
+    }
+    return buttonLabel;
+  }
+
   _renderFieldHeader(fieldName, displayName) {
     const { field, direction } = this.props.sorting;
     const headerClass = classNames({
-      'sketches-table__header': true,
+      'arrowDown': true,
       'sketches-table__header--selected': field === fieldName
     });
+    const buttonLabel = this._getButtonLabel(fieldName, displayName);
     return (
       <th scope="col">
-        <button className="sketch-list__sort-button" onClick={() => this.props.toggleDirectionForField(fieldName)}>
+        <button
+          className="sketch-list__sort-button"
+          onClick={() => this.props.toggleDirectionForField(fieldName)}
+          aria-label={buttonLabel}
+        >
           <span className={headerClass}>{displayName}</span>
           {field === fieldName && direction === SortingActions.DIRECTION.ASC &&
-            <InlineSVG src={arrowUp} />
+            <ArrowUpIcon role="img" aria-label="Ascending" focusable="false" />
           }
           {field === fieldName && direction === SortingActions.DIRECTION.DESC &&
-            <InlineSVG src={arrowDown} />
+            <ArrowDownIcon role="img" aria-label="Descending" focusable="false" />
           }
         </button>
       </th>
@@ -319,56 +354,60 @@ class Collection extends React.Component {
 
   render() {
     const title = this.hasCollection() ? this.getCollectionName() : null;
+    const isOwner = this.isOwner();
 
     return (
-      <section className="collection-container" data-has-items={this.hasCollectionItems() ? 'true' : 'false'}>
-        <Helmet>
-          <title>{this.getTitle()}</title>
-        </Helmet>
-        {this._renderLoader()}
-        {this.hasCollection() && this._renderCollectionMetadata()}
-        <div className="collection-content">
-          <div className="collection-table-wrapper">
-            {this._renderEmptyTable()}
-            {this.hasCollectionItems() &&
-              <table className="sketches-table" summary="table containing all collections">
-                <thead>
-                  <tr>
-                    {this._renderFieldHeader('name', 'Name')}
-                    {this._renderFieldHeader('createdAt', 'Date Added')}
-                    {this._renderFieldHeader('user', 'Owner')}
-                    <th scope="col"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.props.collection.items.map(item =>
-                    (<CollectionItemRow
-                      key={item.id}
-                      item={item}
-                      user={this.props.user}
-                      username={this.getUsername()}
-                      collection={this.props.collection}
-                    />))}
-                </tbody>
-              </table>
-            }
-            {
-              this.state.isAddingSketches && (
-                <Overlay
-                  title="Add sketch"
-                  actions={<SketchSearchbar />}
-                  closeOverlay={this.hideAddSketches}
-                  isFixedHeight
-                >
-                  <div className="collection-add-sketch">
-                    <AddToCollectionSketchList username={this.props.username} collection={this.props.collection} />
-                  </div>
-                </Overlay>
-              )
-            }
-          </div>
-        </div>
-      </section>
+      <main className="collection-container" data-has-items={this.hasCollectionItems() ? 'true' : 'false'}>
+        <article className="collection">
+          <Helmet>
+            <title>{this.getTitle()}</title>
+          </Helmet>
+          {this._renderLoader()}
+          {this.hasCollection() && this._renderCollectionMetadata()}
+          <article className="collection-content">
+            <div className="collection-table-wrapper">
+              {this._renderEmptyTable()}
+              {this.hasCollectionItems() &&
+                <table className="sketches-table" summary="table containing all collections">
+                  <thead>
+                    <tr>
+                      {this._renderFieldHeader('name', 'Name')}
+                      {this._renderFieldHeader('createdAt', 'Date Added')}
+                      {this._renderFieldHeader('user', 'Owner')}
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {this.props.collection.items.map(item =>
+                      (<CollectionItemRow
+                        key={item.id}
+                        item={item}
+                        user={this.props.user}
+                        username={this.getUsername()}
+                        collection={this.props.collection}
+                        isOwner={isOwner}
+                      />))}
+                  </tbody>
+                </table>
+              }
+              {
+                this.state.isAddingSketches && (
+                  <Overlay
+                    title="Add sketch"
+                    actions={<SketchSearchbar />}
+                    closeOverlay={this.hideAddSketches}
+                    isFixedHeight
+                  >
+                    <div className="collection-add-sketch">
+                      <AddToCollectionSketchList username={this.props.username} collection={this.props.collection} />
+                    </div>
+                  </Overlay>
+                )
+              }
+            </div>
+          </article>
+        </article>
+      </main>
     );
   }
 }

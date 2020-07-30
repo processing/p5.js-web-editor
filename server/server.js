@@ -46,17 +46,20 @@ if (process.env.BASIC_USERNAME && process.env.BASIC_PASSWORD) {
   }));
 }
 
-const corsOriginsWhitelist = [
+const allowedCorsOrigins = [
   /p5js\.org$/,
 ];
+
+// to allow client-only development
+if (process.env.CORS_ALLOW_LOCALHOST === 'true') {
+  allowedCorsOrigins.push(/localhost/);
+}
 
 // Run Webpack dev server in development mode
 if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(config);
   app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
   app.use(webpackHotMiddleware(compiler));
-
-  corsOriginsWhitelist.push(/localhost/);
 }
 
 const mongoConnectionString = process.env.MONGO_URL;
@@ -65,17 +68,29 @@ app.set('trust proxy', true);
 // Enable Cross-Origin Resource Sharing (CORS) for all origins
 const corsMiddleware = cors({
   credentials: true,
-  origin: corsOriginsWhitelist,
+  origin: allowedCorsOrigins,
 });
 app.use(corsMiddleware);
 // Enable pre-flight OPTIONS route for all end-points
 app.options('*', corsMiddleware);
 
 // Body parser, cookie parser, sessions, serve public assets
-
+app.use(
+  '/locales',
+  Express.static(
+    path.resolve(__dirname, '../dist/static/locales'),
+    {
+      // Browsers must revalidate for changes to the locale files
+      // It doesn't actually mean "don't cache this file"
+      // See: https://jakearchibald.com/2016/caching-best-practices/
+      setHeaders: res => res.setHeader('Cache-Control', 'no-cache')
+    }
+  )
+);
 app.use(Express.static(path.resolve(__dirname, '../dist/static'), {
   maxAge: process.env.STATIC_MAX_AGE || (process.env.NODE_ENV === 'production' ? '1d' : '0')
 }));
+
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(cookieParser());

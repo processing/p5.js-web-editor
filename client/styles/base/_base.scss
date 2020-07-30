@@ -39,6 +39,7 @@ textarea {
 	padding: #{10 / $base-font-size}rem;
 	@include themify() {
 		color: getThemifyVariable('input-text-color');
+		background-color: getThemifyVariable('input-background-color');
 		border-color: getThemifyVariable('input-border-color');
 	}
 }
@@ -73,6 +74,7 @@ h2 {
 
 h3 {
 	font-weight: normal;
+	font-size: #{16 / $base-font-size}rem;
 }
 h4 {
 	font-weight: normal;
@@ -86,4 +88,24 @@ thead {
 }
 th {
 	text-align: left;
+}
+
+a:focus,
+button:focus,
+input:focus,
+textarea:focus {
+	outline: none;
+	box-shadow: 0 0 0 1px $outline-color;
+}
+
+// screen reader only class
+// from https://www.scottohara.me/blog/2017/04/14/inclusively-hidden.html#hiding-content-visually
+.sr-only:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
 }

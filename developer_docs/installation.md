@@ -25,7 +25,7 @@ _Note_: The installation steps assume you are using a Unix-like shell. If you ar
    * For Mac OSX with [homebrew](http://brew.sh/): `brew tap mongodb/brew` then `brew install mongodb-community` and finally start the server with `brew services start mongodb-community` or you can visit the installation guide here [Installation Guide For MacOS](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/)
    * For Windows and Linux: [MongoDB Installation](https://docs.mongodb.com/manual/installation/)
 7. `$ cp .env.example .env`
-8. (Optional) Update `.env` with necessary keys to enable certain app behavoirs, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
+8. (Optional) Update `.env` with necessary keys to enable certain app behaviors, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
 9. `$ npm run fetch-examples` - this downloads the example sketches into a user called 'p5'
 10. `$ npm start`
 11. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
@@ -69,9 +69,8 @@ Note that this is optional, unless you are working on the part of the applicatio
 If your S3 bucket is in the US East (N Virginia) region (us-east-1), you'll
 need to set a custom URL base for it, because it does not follow the standard
 naming pattern as the rest of the regions. Instead, add the following to your
-environment/.env file:
-
-`S3_BUCKET_URL_BASE=https://s3.amazonaws.com`
+environment/.env file, changing `BUCKET_NAME` to your bucket name. This is necessary because this override is currently treated as the full path to the bucket rather than as a proper base url:
+`S3_BUCKET_URL_BASE=https://s3.amazonaws.com/{BUCKET_NAME}/`
 
 If you've configured your S3 bucket and DNS records to use a custom domain
 name, you can also set it using this variable. I.e.:

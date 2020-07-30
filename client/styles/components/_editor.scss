@@ -52,7 +52,7 @@ pre.CodeMirror-line {
 }
 
 .CodeMirror-gutter-elt:not(.CodeMirror-linenumber) {
-  opacity: 0.3;
+  opacity: 0.2;
   width: #{49 / $base-font-size}rem !important;
   height: 100%;
   left: 49px !important;
@@ -120,11 +120,9 @@ pre.CodeMirror-line {
   width: 100%;
   margin-bottom: #{12 / $base-font-size}rem;
   @include themify() {
-    background-color: getThemifyVariable('search-background-color');
+    color: getThemifyVariable('input-text-color');
+    background-color: getThemifyVariable('input-secondary-background-color');
     border: solid 0.5px getThemifyVariable('button-border-color');
-  }
-  &:focus {
-    background-color: $white;
   }
 }
 
@@ -145,22 +143,30 @@ pre.CodeMirror-line {
 .CodeMirror-search-modifiers {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 }
 
 .CodeMirror-regexp-button,
 .CodeMirror-case-button,
 .CodeMirror-word-button {
-  width: 20px;
-  height: 20px;
+  @include themify() {
+    // @extend %button;
+    padding: #{2 / $base-font-size}rem #{7 / $base-font-size}rem;
+    border: 2px solid transparent;
+    &:hover {
+      border-color: getThemifyVariable("button-border-color");
+    }
 
-  margin-left: #{10 / $base-font-size}rem;
+  }
+  width: #{35 / $base-font-size}rem;
+  height: #{35 / $base-font-size}rem;
+
+  & + & {
+    margin-left: #{10 / $base-font-size}rem;
+  }
 
   word-break: keep-all;
   white-space: nowrap;
-
-  @include themify() {
-    color: getThemifyVariable('inactive-text-color');
-  }
 }
 
 .CodeMirror-regexp-button .label,
@@ -171,7 +177,9 @@ pre.CodeMirror-line {
 
 [aria-checked="true"] {
   @include themify() {
-    color: getThemifyVariable('primary-text-color');
+    color: getThemifyVariable("heavy-text-color");
+    background-color: getThemifyVariable("button-secondary-background-color");
+    border-color: getThemifyVariable("button-border-color");
   }
 }
 
@@ -203,12 +211,12 @@ pre.CodeMirror-line {
 
 // Previous button
 .CodeMirror-search-button.prev::after {
-  background-image: url(../images/up-arrow.svg)
+  background-image: url(../images/up-arrow.svg?byUrl)
 }
 
 // Next button
 .CodeMirror-search-button.next::after {
-  background-image: url(../images/down-arrow.svg)
+  background-image: url(../images/down-arrow.svg?byUrl)
 }
 
 /*
@@ -239,7 +247,7 @@ pre.CodeMirror-line {
 
   @include icon();
 
-  background: transparent url(../images/exit.svg) no-repeat;
+  background: transparent url(../images/exit.svg?byUrl) no-repeat;
 }
 
 // foldgutter
@@ -374,7 +382,7 @@ pre.CodeMirror-line {
 
 .editor__file-name {
   @include themify() {
-    color: getThemifyVariable('secondary-text-color');
+    color: getThemifyVariable('primary-text-color');
   }
   height: #{29 / $base-font-size}rem;
   padding-top: #{7 / $base-font-size}rem;
@@ -382,4 +390,8 @@ pre.CodeMirror-line {
   font-size: #{12 / $base-font-size}rem;
   display: flex;
   justify-content: space-between;
+}
+
+.editor__unsaved-changes {
+  margin-left: #{2 / $base-font-size}rem;
 }

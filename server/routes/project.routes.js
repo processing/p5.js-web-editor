@@ -8,7 +8,7 @@ router.post('/projects', isAuthenticated, ProjectController.createProject);
 
 router.put('/projects/:project_id', isAuthenticated, ProjectController.updateProject);
 
-router.get('/projects/:project_id', ProjectController.getProject);
+router.get('/:username/projects/:project_id', ProjectController.getProject);
 
 router.delete('/projects/:project_id', isAuthenticated, ProjectController.deleteProject);
 

@@ -34,6 +34,7 @@ export function serveProject(req, res) {
         resolveScripts(sketchDoc, files);
         resolveStyles(sketchDoc, files);
 
+        res.setHeader('Cache-Control', 'public, max-age=0');
         res.send(serializeDocument(sketchDoc));
       });
     });

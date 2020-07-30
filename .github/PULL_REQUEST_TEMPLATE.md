@@ -1,3 +1,5 @@
+Fixes #issue-number
+
 I have verified that this pull request:
 
 * [ ] has no linting errors (`npm run lint`)
