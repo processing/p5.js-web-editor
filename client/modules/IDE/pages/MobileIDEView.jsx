@@ -46,13 +46,6 @@ const NavItem = styled.li`
   position: relative;
 `;
 
-const headerNavOptions = [
-  { icon: PreferencesIcon, title: 'Preferences', href: '/mobile/preferences', },
-  { icon: PreferencesIcon, title: 'Examples', href: '/mobile/p5/sketches' },
-  { icon: PreferencesIcon, title: 'Original Editor', href: '/', },
-];
-
-
 const MobileIDEView = (props) => {
   const {
     preferences,
@@ -75,12 +68,27 @@ const MobileIDEView = (props) => {
     showRuntimeErrorWarning,
     hideRuntimeErrorWarning,
     startSketch,
+    user
   } = props;
 
   const [tmController, setTmController] = useState(null); // eslint-disable-line
 
+  const { username } = user;
+  const navOptionsLoggedIn = [
+    { icon: PreferencesIcon, title: 'Preferences', href: '/mobile/preferences', },
+    { icon: PreferencesIcon, title: 'My Stuff', href: `/mobile/${username}/sketches` },
+    { icon: PreferencesIcon, title: 'Examples', href: '/mobile/p5/sketches' },
+    { icon: PreferencesIcon, title: 'Original Editor', href: '/', },
+  ];
 
-  const [triggerNavDropdown, NavDropDown] = useAsModal(<Dropdown right items={headerNavOptions} />);
+  const navOptionsLoggedOut = [
+    { icon: PreferencesIcon, title: 'Preferences', href: '/mobile/preferences', },
+    { icon: PreferencesIcon, title: 'Examples', href: '/mobile/p5/sketches' },
+    { icon: PreferencesIcon, title: 'Original Editor', href: '/', },
+  ];
+
+
+  const [triggerNavDropdown, NavDropDown] = useAsModal(<Dropdown right items={username ? navOptionsLoggedIn : navOptionsLoggedOut} />);
 
   return (
     <Screen fullscreen>

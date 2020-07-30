@@ -58,12 +58,17 @@ const routes = store => (
     <Route path="/:username/collections/:collection_id" component={CollectionView} />
     <Route path="/about" component={IDEView} />
 
-    <Route path="/mobile/:username/sketches/:project_id" component={MobileIDEView} />
 
-    <Route path="/mobile/:username/sketches" component={MobileDashboard} />
     <Route path="/mobile/preview" component={MobileSketchView} />
     <Route path="/mobile/preferences" component={MobilePreferences} />
     <Route path="/mobile" component={MobileIDEView} />
+
+    <Route path="/mobile/:username/sketches" component={MobileDashboard} />
+    <Route path="/mobile/:username/sketches/:project_id" component={MobileIDEView} />
+    <Route path="/mobile/:username/assets" component={userIsAuthenticated(userIsAuthorized(MobileDashboard))} />
+    <Route path="/mobile/:username/collections" component={MobileDashboard} />
+    <Route path="/mobile/:username/collections/create" component={MobileDashboard} />
+    <Route path="/mobile/:username/collections/:collection_id" component={CollectionView} />
 
   </Route>
 );
