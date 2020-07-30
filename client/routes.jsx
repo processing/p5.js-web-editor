@@ -15,7 +15,7 @@ import AccountView from './modules/User/pages/AccountView';
 import CollectionView from './modules/User/pages/CollectionView';
 import DashboardView from './modules/User/pages/DashboardView';
 import createRedirectWithUsername from './components/createRedirectWithUsername';
-import MobileDashboard from './modules/Mobile/MobileDashboard';
+import MobileDashboardView from './modules/Mobile/MobileDashboardView';
 import { getUser } from './modules/User/actions';
 import { stopSketch } from './modules/IDE/actions/ide';
 import { userIsAuthenticated, userIsNotAuthenticated, userIsAuthorized } from './utils/auth';
@@ -63,11 +63,11 @@ const routes = store => (
     <Route path="/mobile/preferences" component={MobilePreferences} />
     <Route path="/mobile" component={MobileIDEView} />
 
-    <Route path="/mobile/:username/sketches" component={MobileDashboard} />
+    <Route path="/mobile/:username/sketches" component={MobileDashboardView} />
     <Route path="/mobile/:username/sketches/:project_id" component={MobileIDEView} />
-    <Route path="/mobile/:username/assets" component={userIsAuthenticated(userIsAuthorized(MobileDashboard))} />
-    <Route path="/mobile/:username/collections" component={MobileDashboard} />
-    <Route path="/mobile/:username/collections/create" component={MobileDashboard} />
+    <Route path="/mobile/:username/assets" component={userIsAuthenticated(userIsAuthorized(MobileDashboardView))} />
+    <Route path="/mobile/:username/collections" component={MobileDashboardView} />
+    <Route path="/mobile/:username/collections/create" component={MobileDashboardView} />
     <Route path="/mobile/:username/collections/:collection_id" component={CollectionView} />
 
   </Route>
