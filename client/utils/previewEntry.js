@@ -13,7 +13,7 @@ Hook(window.console, (log) => {
 });
 setInterval(() => {
   if (consoleBuffer.length > 0) {
-    window.parent.postMessage(consoleBuffer, '*');
+    window.parent.postMessage(consoleBuffer, window.origin);
     consoleBuffer.length = 0;
   }
 }, LOGWAIT);

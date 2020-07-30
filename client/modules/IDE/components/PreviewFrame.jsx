@@ -70,6 +70,7 @@ class PreviewFrame extends React.Component {
   }
 
   handleConsoleEvent(messageEvent) {
+    if (messageEvent.origin !== window.origin) return;
     if (Array.isArray(messageEvent.data)) {
       const decodedMessages = messageEvent.data.map(message => Object.assign(
         Decode(message.log),
