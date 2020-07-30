@@ -258,7 +258,7 @@ class Nav extends React.PureComponent {
     return (
       <ul className="nav__items-left">
         <li className="nav__item-logo">
-          <LogoIcon role="img" aria-label={this.props.t('Common.ARIA.p5logo')} focusable="false" className="svg__logo" />
+          <LogoIcon role="img" aria-label={this.props.t('Common.p5logoARIA')} focusable="false" className="svg__logo" />
         </li>
         <li className={navDropdownState.file}>
           <button

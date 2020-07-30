@@ -75,7 +75,6 @@ describe('<ToolbarComponent />', () => {
   it('sketch owner can\'t change to empty name', async () => {
     const props = renderComponent({ project: { isEditingName: true } });
 
-    // const sketchNameInput = screen.getByLabelText('New sketch name');
     const sketchNameInput = screen.getByLabelText('New sketch name');
     fireEvent.change(sketchNameInput, { target: { value: '' } });
     fireEvent.blur(sketchNameInput);
