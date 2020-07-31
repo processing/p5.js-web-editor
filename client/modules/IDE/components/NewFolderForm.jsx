@@ -49,7 +49,7 @@ class NewFolderForm extends React.Component {
 
 NewFolderForm.propTypes = {
   fields: PropTypes.shape({
-    name: PropTypes.object.isRequired // eslint-disable-line
+    name: PropTypes.object.isRequired
   }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   createFolder: PropTypes.func.isRequired,

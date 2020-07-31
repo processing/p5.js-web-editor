@@ -48,7 +48,7 @@ class NewFileForm extends React.Component {
 
 NewFileForm.propTypes = {
   fields: PropTypes.shape({
-    name: PropTypes.object.isRequired // eslint-disable-line
+    name: PropTypes.object.isRequired
   }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   createFile: PropTypes.func.isRequired,
