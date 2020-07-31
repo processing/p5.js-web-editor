@@ -55,7 +55,7 @@ function warnIfUnsavedChanges(props) { // eslint-disable-line
     props.persistState();
     window.onbeforeunload = null;
   } else if (props.ide.unsavedChanges) {
-    if (!window.confirm(props.t('WarningUnsavedChanges'))) {
+    if (!window.confirm(props.t('Nav.WarningUnsavedChanges'))) {
       return false;
     }
     props.setUnsavedChanges(false);
@@ -221,8 +221,8 @@ class IDEView extends React.Component {
         <Toolbar key={this.props.project.id} />
         {this.props.ide.preferencesIsVisible &&
           <Overlay
-            title={this.props.t('Settings')}
-            ariaLabel="settings"
+            title={this.props.t('Preferences.Settings')}
+            ariaLabel={this.props.t('Preferences.Settings')}
             closeOverlay={this.props.closePreferences}
           >
             <Preferences
@@ -328,7 +328,7 @@ class IDEView extends React.Component {
               </SplitPane>
               <section className="preview-frame-holder">
                 <header className="preview-frame__header">
-                  <h2 className="preview-frame__title">{this.props.t('Preview')}</h2>
+                  <h2 className="preview-frame__title">{this.props.t('Toolbar.Preview')}</h2>
                 </header>
                 <div className="preview-frame__content">
                   <div className="preview-frame-overlay" ref={(element) => { this.overlay = element; }}>
@@ -389,16 +389,16 @@ class IDEView extends React.Component {
         }
         { this.props.location.pathname === '/about' &&
           <Overlay
-            title={this.props.t('About')}
+            title={this.props.t('About.Title')}
             previousPath={this.props.ide.previousPath}
-            ariaLabel="about"
+            ariaLabel={this.props.t('About.Title')}
           >
             <About previousPath={this.props.ide.previousPath} />
           </Overlay>
         }
         {this.props.location.pathname === '/feedback' &&
           <Overlay
-            title="Submit Feedback"
+            title={this.props.t('IDEView.SubmitFeedback')}
             previousPath={this.props.ide.previousPath}
             ariaLabel="submit-feedback"
           >
@@ -435,8 +435,8 @@ class IDEView extends React.Component {
         }
         {this.props.ide.keyboardShortcutVisible &&
           <Overlay
-            title={this.props.t('KeyboardShortcuts')}
-            ariaLabel="keyboard shortcuts"
+            title={this.props.t('KeyboardShortcuts.Title')}
+            ariaLabel={this.props.t('KeyboardShortcuts.Title')}
             closeOverlay={this.props.closeKeyboardShortcutModal}
           >
             <KeyboardShortcutModal />
@@ -445,7 +445,7 @@ class IDEView extends React.Component {
         {this.props.ide.errorType &&
           <Overlay
             title="Error"
-            ariaLabel="error"
+            ariaLabel={this.props.t('Common.Error')}
             closeOverlay={this.props.hideErrorModal}
           >
             <ErrorModal
@@ -640,4 +640,5 @@ function mapDispatchToProps(dispatch) {
   );
 }
 
-export default withTranslation('WebEditor')(withRouter(connect(mapStateToProps, mapDispatchToProps)(IDEView)));
+
+export default withTranslation()(withRouter(connect(mapStateToProps, mapDispatchToProps)(IDEView)));
