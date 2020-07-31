@@ -31,7 +31,7 @@ import Console from '../components/Console';
 import { remSize } from '../../../theme';
 // import OverlayManager from '../../../components/OverlayManager';
 import ActionStrip from '../../../components/mobile/ActionStrip';
-import { useAsModal } from '../../../utils/custom-hooks';
+import useAsModal from '../../../components/useAsModal';
 import { PreferencesIcon } from '../../../common/icons';
 import Dropdown from '../../../components/Dropdown';
 
@@ -48,27 +48,11 @@ const NavItem = styled.li`
 
 const MobileIDEView = (props) => {
   const {
-    preferences,
-    ide,
-    editorAccessibility,
-    project,
-    updateLintMessage,
-    clearLintMessage,
-    selectedFile,
-    updateFileContent,
-    files,
-    closeEditorOptions,
-    showEditorOptions,
-    startRefreshSketch,
-    stopSketch,
-    expandSidebar,
-    collapseSidebar,
-    clearConsole,
-    console,
-    showRuntimeErrorWarning,
-    hideRuntimeErrorWarning,
-    startSketch,
-    user
+    preferences, ide, editorAccessibility, project, updateLintMessage, clearLintMessage,
+    selectedFile, updateFileContent, files, user,
+    closeEditorOptions, showEditorOptions,
+    startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console,
+    showRuntimeErrorWarning, hideRuntimeErrorWarning, startSketch
   } = props;
 
   const [tmController, setTmController] = useState(null); // eslint-disable-line
@@ -90,7 +74,7 @@ const MobileIDEView = (props) => {
 
   const [triggerNavDropdown, NavDropDown] = useAsModal(<Dropdown
     items={username ? navOptionsLoggedIn : navOptionsLoggedOut}
-    right
+    align="right"
   />);
 
   return (
