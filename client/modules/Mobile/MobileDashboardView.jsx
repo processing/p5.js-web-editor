@@ -13,7 +13,7 @@ import SketchList from '../IDE/components/SketchList';
 import CollectionList from '../IDE/components/CollectionList';
 import AssetList from '../IDE/components/AssetList';
 import Content from './MobileViewContent';
-import { SketchSearchbar } from '../IDE/components/Searchbar';
+import { SketchSearchbar, CollectionSearchbar } from '../IDE/components/Searchbar';
 
 const EXAMPLE_USERNAME = 'p5';
 
@@ -77,7 +77,8 @@ const MobileDashboard = ({ params, location }) => {
 
       <Content slimheader>
         <Subheader>
-          <SketchSearchbar />
+          {panel === Tabs[0] && <SketchSearchbar />}
+          {panel === Tabs[1] && <CollectionSearchbar />}
         </Subheader>
         {renderPanel(panel, { username, key: pathname })}
       </Content>
