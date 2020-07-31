@@ -27,7 +27,7 @@ const checkAuth = (store) => {
 // TODO: This short-circuit seems unnecessary - using the mobile <Switch /> navigator (future) should prevent this from being called
 const onRouteChange = (store) => {
   const path = window.location.pathname;
-  if (path.includes('/mobile')) return;
+  if (path.includes('/mobile/preview')) return;
 
   store.dispatch(stopSketch());
 };
