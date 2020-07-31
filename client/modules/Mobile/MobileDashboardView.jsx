@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import PropTypes, { string } from 'prop-types';
+import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 import { withRouter, Link } from 'react-router';
 
 import Screen from '../../components/mobile/MobileScreen';
@@ -14,6 +15,7 @@ import CollectionList from '../IDE/components/CollectionList';
 import AssetList from '../IDE/components/AssetList';
 import Content from './MobileViewContent';
 import { SketchSearchbar, CollectionSearchbar } from '../IDE/components/Searchbar';
+import Button from '../../common/Button';
 
 const EXAMPLE_USERNAME = 'p5';
 
@@ -26,14 +28,19 @@ const FooterTab = styled(Link)`
 `;
 
 const Subheader = styled.div`
+  display: flex;
+  flex-direction: row;
+  * { border-radius: 0px; }
 
   .searchbar {
     display: flex;
-    * {
-      border-radius: 0px;
-    }
+    width: 100%;
   }
   .searchbar__input { width: 100%; }
+`;
+
+const SubheaderButton = styled(Button)`
+  border-radius: 0px !important;
 `;
 
 
@@ -49,7 +56,11 @@ const Panels = {
   assets: AssetList
 };
 
-const renderPanel = (name, props) => (Component => (Component && <Component {...props} />))(Panels[name]);
+const CreatePathname = {
+  sketches: '/mobile',
+  collections: '/mobile/:username/collections/create',
+};
+
 
 const getPanel = (pathname) => {
   const pathparts = pathname ? pathname.split('/') : [];
@@ -57,15 +68,19 @@ const getPanel = (pathname) => {
   return matches && matches.length > 0 && matches[0];
 };
 
+const getCreatePathname = (panel, username) => (CreatePathname[panel] || '#').replace(':username', username);
+
+const isOwner = (user, params) => user && params && user.username === params.username;
+
+const renderPanel = (name, props) => (Component => (Component && <Component {...props} />))(Panels[name]);
 
 const MobileDashboard = ({ params, location }) => {
-  const Tabs = Object.keys(Panels);
-
+  const user = useSelector(state => state.user);
   const { username } = params;
   const { pathname } = location;
 
+  const Tabs = Object.keys(Panels);
   const isExamples = username === EXAMPLE_USERNAME;
-
   const panel = getPanel(pathname);
 
   return (
@@ -77,6 +92,7 @@ const MobileDashboard = ({ params, location }) => {
 
       <Content slimheader>
         <Subheader>
+          {isOwner(user, params) && <SubheaderButton to={getCreatePathname(panel, username)}>new</SubheaderButton>}
           {panel === Tabs[0] && <SketchSearchbar />}
           {panel === Tabs[1] && <CollectionSearchbar />}
         </Subheader>
@@ -99,6 +115,7 @@ const MobileDashboard = ({ params, location }) => {
       </Footer>
     </Screen>);
 };
+
 
 MobileDashboard.propTypes = {
   location: PropTypes.shape({

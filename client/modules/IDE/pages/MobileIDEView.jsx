@@ -88,7 +88,10 @@ const MobileIDEView = (props) => {
   ];
 
 
-  const [triggerNavDropdown, NavDropDown] = useAsModal(<Dropdown right items={username ? navOptionsLoggedIn : navOptionsLoggedOut} />);
+  const [triggerNavDropdown, NavDropDown] = useAsModal(<Dropdown
+    items={username ? navOptionsLoggedIn : navOptionsLoggedOut}
+    right
+  />);
 
   return (
     <Screen fullscreen>
