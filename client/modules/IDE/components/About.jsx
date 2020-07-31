@@ -10,23 +10,13 @@ function About(props) {
   return (
     <div className="about__content">
       <Helmet>
-        <title>p5.js Web Editor | About </title>
+        <title> {t('About.TitleHelmet')} </title>
       </Helmet>
       <div className="about__content-column">
-        <SquareLogoIcon className="about__logo" role="img" aria-label="p5.js Logo" focusable="false" />
-        {/* Video button to hello p5 video page */}
-        {/* <p className="about__play-video">
-          <a
-            href="http://hello.p5js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <PlayIcon className="about__play-video-button" title="Play Hello Video" />
-          Play hello! video</a>
-        </p>  */}
+        <SquareLogoIcon className="about__logo" role="img" aria-label={t('Common.p5logoARIA')} focusable="false" />
       </div>
       <div className="about__content-column">
-        <h3 className="about__content-column-title">{t('NewP5')}</h3>
+        <h3 className="about__content-column-title">{t('About.NewP5')}</h3>
         <p className="about__content-column-list">
           <a
             href="https://p5js.org/examples/"
@@ -34,7 +24,7 @@ function About(props) {
             rel="noopener noreferrer"
           >
             <AsteriskIcon className="about__content-column-asterisk" aria-hidden="true" focusable="false" />
-            {t('Examples')}
+            {t('About.Examples')}
           </a>
         </p>
         <p className="about__content-column-list">
@@ -44,12 +34,12 @@ function About(props) {
             rel="noopener noreferrer"
           >
             <AsteriskIcon className="about__content-column-asterisk" aria-hidden="true" focusable="false" />
-            {t('Learn')}
+            {t('About.Learn')}
           </a>
         </p>
       </div>
       <div className="about__content-column">
-        <h3 className="about__content-column-title">{t('Resources')}</h3>
+        <h3 className="about__content-column-title">{t('About.Resources')}</h3>
         <p className="about__content-column-list">
           <a
             href="https://p5js.org/libraries/"
@@ -57,7 +47,7 @@ function About(props) {
             rel="noopener noreferrer"
           >
             <AsteriskIcon className="about__content-column-asterisk" aria-hidden="true" focusable="false" />
-            {t('Libraries')}
+            {t('About.Libraries')}
           </a>
         </p>
         <p className="about__content-column-list">
@@ -67,7 +57,7 @@ function About(props) {
             rel="noopener noreferrer"
           >
             <AsteriskIcon className="about__content-column-asterisk" aria-hidden="true" focusable="false" />
-            {t('Reference')}
+            {t('Nav.Help.Reference')}
           </a>
         </p>
         <p className="about__content-column-list">
@@ -77,7 +67,7 @@ function About(props) {
             rel="noopener noreferrer"
           >
             <AsteriskIcon className="about__content-column-asterisk" aria-hidden="true" focusable="false" />
-            {t('Forum')}
+            {t('About.Forum')}
           </a>
         </p>
       </div>
@@ -87,7 +77,7 @@ function About(props) {
             href="https://github.com/processing/p5.js-web-editor"
             target="_blank"
             rel="noopener noreferrer"
-          >{t('Contribute')}
+          >{t('About.Contribute')}
           </a>
         </p>
         <p className="about__footer-list">
@@ -95,7 +85,7 @@ function About(props) {
             href="https://github.com/processing/p5.js-web-editor/issues/new"
             target="_blank"
             rel="noopener noreferrer"
-          >{t('Report')}
+          >{t('About.Report')}
           </a>
         </p>
         <p className="about__footer-list">

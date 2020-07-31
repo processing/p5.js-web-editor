@@ -14,7 +14,6 @@ exports[`Nav renders correctly 1`] = `
           class="nav__item-logo"
         >
           <test-file-stub
-            aria-label="p5.js Logo"
             classname="svg__logo"
             focusable="false"
             role="img"
