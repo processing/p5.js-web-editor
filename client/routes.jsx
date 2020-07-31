@@ -63,12 +63,11 @@ const routes = store => (
     <Route path="/mobile/preferences" component={MobilePreferences} />
     <Route path="/mobile" component={MobileIDEView} />
 
-    <Route path="/mobile/:username/sketches" component={MobileDashboardView} />
     <Route path="/mobile/:username/sketches/:project_id" component={MobileIDEView} />
     <Route path="/mobile/:username/assets" component={userIsAuthenticated(userIsAuthorized(MobileDashboardView))} />
+    <Route path="/mobile/:username/sketches" component={MobileDashboardView} />
     <Route path="/mobile/:username/collections" component={MobileDashboardView} />
     <Route path="/mobile/:username/collections/create" component={MobileDashboardView} />
-    <Route path="/mobile/:username/collections/:collection_id" component={CollectionView} />
 
   </Route>
 );

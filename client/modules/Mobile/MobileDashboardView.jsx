@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { string } from 'prop-types';
 import styled from 'styled-components';
-import { withRouter } from 'react-router';
+import { withRouter, Link } from 'react-router';
 
 import Screen from '../../components/mobile/MobileScreen';
 import Header from '../../components/mobile/Header';
@@ -17,7 +17,7 @@ import { SketchSearchbar } from '../IDE/components/Searchbar';
 
 const EXAMPLE_USERNAME = 'p5';
 
-const FooterTab = styled.div`
+const FooterTab = styled(Link)`
   background: ${props => prop(props.selected ? 'backgroundColor' : 'MobilePanel.default.foreground')};
   color: ${props => prop(`MobilePanel.default.${props.selected ? 'foreground' : 'background'}`)};
   padding: ${remSize(16)};
@@ -44,24 +44,32 @@ const FooterTabSwitcher = styled.div`
 `;
 
 const Panels = {
-  Sketches: SketchList,
-  Collections: CollectionList,
-  Assets: AssetList
+  sketches: SketchList,
+  collections: CollectionList,
+  assets: AssetList
 };
 
 const renderPanel = (name, props) => (Component => (Component && <Component {...props} />))(Panels[name]);
 
+const getPanel = (pathname) => {
+  const pathparts = pathname ? pathname.split('/') : [];
+  const matches = Object.keys(Panels).map(part => part.toLowerCase()).filter(part => pathparts.includes(part));
+  return matches && matches.length > 0 && matches[0];
+};
 
-const MobileDashboard = ({ params }) => {
+
+const MobileDashboard = ({ params, location }) => {
   const Tabs = Object.keys(Panels);
-  const [selected, selectTab] = useState(Tabs[0]);
 
-  // const username = 'p5';
   const { username } = params;
+  const { pathname } = location;
+
   const isExamples = username === EXAMPLE_USERNAME;
 
+  const panel = getPanel(pathname);
+
   return (
-    <Screen fullscreen>
+    <Screen fullscreen key={pathname}>
       <Header slim inverted title={isExamples ? 'Examples' : 'My Stuff'}>
         <IconButton to="/mobile" icon={ExitIcon} aria-label="Return to ide view" />
       </Header>
@@ -71,19 +79,18 @@ const MobileDashboard = ({ params }) => {
         <Subheader>
           <SketchSearchbar />
         </Subheader>
-        {renderPanel(selected, { username })}
+        {renderPanel(panel, { username, key: pathname })}
       </Content>
-
       <Footer>
         {!isExamples &&
           <FooterTabSwitcher>
             {Tabs.map(tab => (
               <FooterTab
                 key={`tab-${tab}`}
-                selected={tab === selected}
-                onClick={() => selectTab(tab)}
+                selected={tab === panel}
+                to={pathname.replace(panel, tab)}
               >
-                <h3>{(tab === 'Sketches' && username === 'p5') ? 'Examples' : tab}</h3>
+                <h3>{(isExamples && tab === 'Sketches') ? 'Examples' : tab}</h3>
               </FooterTab>))
             }
           </FooterTabSwitcher>
@@ -93,6 +100,9 @@ const MobileDashboard = ({ params }) => {
 };
 
 MobileDashboard.propTypes = {
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired
+  }).isRequired,
   params: PropTypes.shape({
     username: PropTypes.string.isRequired
   })

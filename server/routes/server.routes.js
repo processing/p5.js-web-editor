@@ -7,6 +7,8 @@ import { collectionForUserExists } from '../controllers/collection.controller';
 
 const router = new Router();
 
+const fallback404 = res => (exists => (exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))));
+
 // this is intended to be a temporary file
 // until i figure out isomorphic rendering
 
@@ -152,15 +154,11 @@ if (process.env.MOBILE_ENABLED) {
   router.get('/mobile/preferences', (req, res) => res.send(renderIndex()));
 
   router.get('/mobile/:username/sketches', (req, res) => {
-    userExists(req.params.username, exists => (
-      exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
-    ));
+    userExists(req.params.username, fallback404(res));
   });
 
   router.get('/mobile/:username/sketches/:project_id', (req, res) => {
-    projectForUserExists(req.params.username, req.params.project_id, exists => (
-      exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
-    ));
+    projectForUserExists(req.params.username, req.params.project_id, fallback404(res));
   });
 
   router.get('/mobile/:username/assets', (req, res) => {
@@ -173,7 +171,7 @@ if (process.env.MOBILE_ENABLED) {
     });
   });
 
-  router.get('/:username/collections/create', (req, res) => {
+  router.get('/mobile/:username/collections/create', (req, res) => {
     userExists(req.params.username, (exists) => {
       const isLoggedInUser = req.user && req.user.username === req.params.username;
       const canAccess = exists && isLoggedInUser;
@@ -183,22 +181,17 @@ if (process.env.MOBILE_ENABLED) {
     });
   });
 
-  router.get('/:username/collections/create', (req, res) => {
-    userExists(req.params.username, exists => (
-      exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
-    ));
+
+  router.get('/mobile/:username/collections', (req, res) => {
+    userExists(req.params.username, fallback404(res));
   });
 
-  router.get('/:username/collections/:id', (req, res) => {
-    collectionForUserExists(req.params.username, req.params.id, exists => (
-      exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
-    ));
+  router.get('/mobile/:username/collections/create', (req, res) => {
+    userExists(req.params.username, fallback404(res));
   });
 
-  router.get('/:username/collections', (req, res) => {
-    userExists(req.params.username, exists => (
-      exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
-    ));
+  router.get('/mobile/:username/collections/:id', (req, res) => {
+    collectionForUserExists(req.params.username, req.params.id, fallback404(res));
   });
 }
 
