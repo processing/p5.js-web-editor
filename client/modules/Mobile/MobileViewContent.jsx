@@ -9,10 +9,17 @@ export default styled.div`
 
   .sketch-list__sort-button { padding: 0 }
 
-  td { font-size: ${remSize(10)} };
-  th {
+  td {
+    font-size: ${remSize(10)};
+    min-width: ${remSize(72)};
+  };
+  tbody th {
+    flex-direction: row;
     font-size: ${remSize(14)};
     /* font-weight: bold; */
-    max-width: ${remSize(140)}
+    /* width: 100%; */
+    max-width: ${remSize(140)};
+    
   };
+  td.sketch-list__dropdown-column { min-width: unset; }
 `;
