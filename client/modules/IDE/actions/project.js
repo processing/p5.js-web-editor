@@ -157,19 +157,19 @@ export function saveProject(selectedFile = null, autosave = false) {
           if (!autosave) {
             if (state.ide.justOpenedProject && state.preferences.autosave) {
               dispatch(showToast(5500));
-              dispatch(setToastText('Sketch saved.'));
-              setTimeout(() => dispatch(setToastText('Autosave enabled.')), 1500);
+              dispatch(setToastText('Toast.SketchSaved'));
+              setTimeout(() => dispatch(setToastText('Toast.AutosaveEnabled')), 1500);
               dispatch(resetJustOpenedProject());
             } else {
               dispatch(showToast(1500));
-              dispatch(setToastText('Sketch saved.'));
+              dispatch(setToastText('Toast.SketchSaved'));
             }
           }
         })
         .catch((error) => {
           const { response } = error;
           dispatch(endSavingProject());
-          dispatch(setToastText('Failed to save sketch.'));
+          dispatch(setToastText('Toast.SketchFailedSave'));
           dispatch(showToast(1500));
           if (response.status === 403) {
             dispatch(showErrorModal('staleSession'));
@@ -199,19 +199,19 @@ export function saveProject(selectedFile = null, autosave = false) {
         if (!autosave) {
           if (state.preferences.autosave) {
             dispatch(showToast(5500));
-            dispatch(setToastText('Sketch saved.'));
-            setTimeout(() => dispatch(setToastText('Autosave enabled.')), 1500);
+            dispatch(setToastText('Toast.SketchSaved'));
+            setTimeout(() => dispatch(setToastText('Toast.AutosaveEnabled')), 1500);
             dispatch(resetJustOpenedProject());
           } else {
             dispatch(showToast(1500));
-            dispatch(setToastText('Sketch saved.'));
+            dispatch(setToastText('Toast.SketchSaved'));
           }
         }
       })
       .catch((error) => {
         const { response } = error;
         dispatch(endSavingProject());
-        dispatch(setToastText('Failed to save sketch.'));
+        dispatch(setToastText('Toast.SketchFailedSave'));
         dispatch(showToast(1500));
         if (response.status === 403) {
           dispatch(showErrorModal('staleSession'));
