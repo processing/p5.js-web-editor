@@ -16,11 +16,10 @@ const options = {
 
 i18n
   .use(initReactI18next) // pass the i18n instance to react-i18next.
-  .use(LanguageDetector)// to detect the language from currentBrowser
+  // .use(LanguageDetector)// to detect the language from currentBrowser
   .use(Backend) // to fetch the data from server
   .init({
     lng: 'en-US',
-    defaultNS: 'WebEditor',
     fallbackLng, // if user computer language is not on the list of available languages, than we will be using the fallback language specified earlier
     debug: false,
     backend: options,
