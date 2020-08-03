@@ -29,7 +29,7 @@ fileSchema.set('toJSON', {
 
 const projectSchema = new Schema(
   {
-    name: { type: String, default: "Hello p5.js, it's the server", maxlength: 256 },
+    name: { type: String, default: "Hello p5.js, it's the server", maxlength: 128 },
     user: { type: Schema.Types.ObjectId, ref: 'User' },
     serveSecure: { type: Boolean, default: false },
     files: { type: [fileSchema] },
