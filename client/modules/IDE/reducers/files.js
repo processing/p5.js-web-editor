@@ -45,7 +45,7 @@ const initialState = () => {
       name: 'root',
       id: r,
       _id: r,
-      children: [a, b, c],
+      children: [b, a, c],
       fileType: 'folder',
       content: ''
     },
@@ -110,6 +110,12 @@ function deleteMany(state, ids) {
   return newState;
 }
 
+function sortedChildrenId(state, children) {
+  const childrenArray = state.filter(file => children.includes(file.id));
+  childrenArray.sort((a, b) => (a.name > b.name ? 1 : -1));
+  return childrenArray.map(child => child.id);
+}
+
 const files = (state, action) => {
   if (state === undefined) {
     state = initialState(); // eslint-disable-line
@@ -138,7 +144,7 @@ const files = (state, action) => {
       return initialState();
     case ActionTypes.CREATE_FILE: // eslint-disable-line
     {
-      const newState = state.map((file) => {
+      let newState = state.map((file) => {
         if (file.id === action.parentId) {
           const newFile = Object.assign({}, file);
           newFile.children = [...newFile.children, action.id];
@@ -146,7 +152,8 @@ const files = (state, action) => {
         }
         return file;
       });
-      return [...newState,
+      newState = [
+        ...newState,
         {
           name: action.name,
           id: action.id,
@@ -154,17 +161,31 @@ const files = (state, action) => {
           content: action.content,
           url: action.url,
           children: action.children,
-          fileType: action.fileType || 'file'
-        }];
+          fileType: action.fileType || 'file',
+        },
+      ];
+      return newState.map((file) => {
+        if (file.id === action.parentId) {
+          file.children = sortedChildrenId(newState, file.children);
+        }
+        return file;
+      });
     }
     case ActionTypes.UPDATE_FILE_NAME:
-      return state.map((file) => {
+    {
+      const newState = state.map((file) => {
         if (file.id !== action.id) {
           return file;
         }
-
         return Object.assign({}, file, { name: action.name });
       });
+      return newState.map((file) => {
+        if (file.children.includes(action.id)) {
+          file.children = sortedChildrenId(newState, file.children);
+        }
+        return file;
+      });
+    }
     case ActionTypes.DELETE_FILE:
     {
       const newState = deleteMany(state, [action.id, ...getAllDescendantIds(state, action.id)]);
