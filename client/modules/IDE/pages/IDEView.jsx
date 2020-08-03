@@ -70,7 +70,7 @@ function warnIfUnsavedChanges(props) {
     props.setUnsavedChanges(false);
     return true;
   }
-  return false;
+  return true;
 }
 
 class IDEView extends React.Component {
