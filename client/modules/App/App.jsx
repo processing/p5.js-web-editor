@@ -34,8 +34,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="app">
-        {/* FIXME: Remove false */}
-        {false && this.state.isMounted && !window.devToolsExtension && getConfig('NODE_ENV') === 'development' && <DevTools />}
+        {this.state.isMounted && !window.devToolsExtension && getConfig('NODE_ENV') === 'development' && <DevTools />}
         {this.props.children}
       </div>
     );
