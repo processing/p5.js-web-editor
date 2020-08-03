@@ -8,8 +8,9 @@ export default function createProject(req, res) {
 
   projectValues = Object.assign(projectValues, req.body);
 
+  // TODO: Error handling to match spec
   function sendFailure() {
-    res.json({ success: false });
+    res.status(422).json({ success: false });
   }
 
   function populateUserData(newProject) {
