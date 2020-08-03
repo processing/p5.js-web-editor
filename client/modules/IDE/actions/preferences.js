@@ -1,5 +1,7 @@
+import i18next from 'i18next';
 import apiClient from '../../../utils/apiClient';
 import * as ActionTypes from '../../../constants';
+
 
 function updatePreferences(formParams, dispatch) {
   console.log('updating preferences');
@@ -212,11 +214,11 @@ export function setAllAccessibleOutput(value) {
 }
 
 export function setLanguage(value) {
-  console.log(' set language to db');
+  console.log(`ACTION_PREFERENCE: set language to db ${value}`);
   return (dispatch, getState) => {
     dispatch({
       type: ActionTypes.SET_LANGUAGE,
-      value
+      language: value
     });
     const state = getState();
     if (state.user.authenticated) {

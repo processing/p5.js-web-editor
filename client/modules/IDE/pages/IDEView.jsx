@@ -55,7 +55,7 @@ function warnIfUnsavedChanges(props) { // eslint-disable-line
     props.persistState();
     window.onbeforeunload = null;
   } else if (props.ide.unsavedChanges) {
-    if (!window.confirm(props.t('Common.WarningUnsavedChanges'))) {
+    if (!window.confirm(props.t('Nav.WarningUnsavedChanges'))) {
       return false;
     }
     props.setUnsavedChanges(false);
@@ -144,13 +144,11 @@ class IDEView extends React.Component {
       this.props.router.setRouteLeaveHook(this.props.route, () => warnIfUnsavedChanges(this.props));
     }
   }
-
   componentWillUnmount() {
     document.removeEventListener('keydown', this.handleGlobalKeydown, false);
     clearTimeout(this.autosaveInterval);
     this.autosaveInterval = null;
   }
-
   handleGlobalKeydown(e) {
     // 83 === s
     if (e.keyCode === 83 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
@@ -244,7 +242,8 @@ class IDEView extends React.Component {
               setSoundOutput={this.props.setSoundOutput}
               theme={this.props.preferences.theme}
               setTheme={this.props.setTheme}
-              setLanguage={this.props.setLanguage}
+              // language={this.props.preferences.language}
+              // setLanguage={this.props.setLanguage}
             />
           </Overlay>
         }
@@ -368,6 +367,7 @@ class IDEView extends React.Component {
                     expandConsole={this.props.expandConsole}
                     clearConsole={this.props.clearConsole}
                     cmController={this.cmController}
+                    language={this.props.preferences.language}
                   />
                 </div>
               </section>
@@ -528,7 +528,8 @@ IDEView.propTypes = {
     gridOutput: PropTypes.bool.isRequired,
     soundOutput: PropTypes.bool.isRequired,
     theme: PropTypes.string.isRequired,
-    autorefresh: PropTypes.bool.isRequired
+    autorefresh: PropTypes.bool.isRequired,
+    language: PropTypes.string.isRequired
   }).isRequired,
   closePreferences: PropTypes.func.isRequired,
   setFontSize: PropTypes.func.isRequired,
@@ -604,8 +605,8 @@ IDEView.propTypes = {
   startSketch: PropTypes.func.isRequired,
   openUploadFileModal: PropTypes.func.isRequired,
   closeUploadFileModal: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired,
-  setLanguage: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired
+  // setLanguage: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

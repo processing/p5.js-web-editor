@@ -59,6 +59,12 @@ export function validateAndLoginUser(previousPath, formProps, dispatch) {
           type: ActionTypes.SET_PREFERENCES,
           preferences: response.data.preferences
         });
+        const valorLanguage = response.data.preferences.language;
+        console.log(`validate loginUser ${valorLanguage}`);
+        dispatch({
+          type: ActionTypes.SET_LANGUAGE,
+          language: valorLanguage
+        });
         dispatch(justOpenedProject());
         browserHistory.push(previousPath);
         resolve();
@@ -80,8 +86,13 @@ export function getUser() {
           type: ActionTypes.SET_PREFERENCES,
           preferences: response.data.preferences
         });
-      })
-      .catch((error) => {
+        const valorLanguage = response.data.preferences.language;
+        console.log(` getUser  ${valorLanguage}`);
+        dispatch({
+          type: ActionTypes.SET_LANGUAGE,
+          language: valorLanguage
+        });
+      }).catch((error) => {
         const { response } = error;
         const message = response.message || response.data.error;
         dispatch(authError(message));
