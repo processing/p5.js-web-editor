@@ -32,7 +32,6 @@ const renderComponent = (extraProps = {}) => {
       isEditingName: false,
       id: 'id',
     },
-    t: jest.fn()
   }, extraProps);
 
   render(<ToolbarComponent {...props} />);
@@ -40,7 +39,7 @@ const renderComponent = (extraProps = {}) => {
   return props;
 };
 
-describe('<ToolbarComponent  />', () => {
+describe('<ToolbarComponent />', () => {
   it('sketch owner can switch to sketch name editing mode', async () => {
     const props = renderComponent();
     const sketchName = screen.getByLabelText('Edit sketch name');

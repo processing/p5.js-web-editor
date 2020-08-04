@@ -167,7 +167,7 @@ class Toolbar extends React.Component {
         <button
           className={preferencesButtonClass}
           onClick={this.props.openPreferences}
-          aria-label="Open Preferences"
+          aria-label={i18n.t('Toolbar.OpenPreferencesARIA')}
         >
           <PreferencesIcon focusable="false" aria-hidden="true" />
         </button>
@@ -227,5 +227,4 @@ const mapDispatchToProps = {
 };
 
 export const ToolbarComponent = Toolbar;
-// export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);
 export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(Toolbar));
