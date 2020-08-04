@@ -23,9 +23,7 @@ import ArrowDownIcon from '../../../images/sort-arrow-down.svg';
 import DownFilledTriangleIcon from '../../../images/down-filled-triangle.svg';
 
 
-const formatDateCell = (date, mobile = false) =>
-  format(new Date(date), mobile ? 'MMM D, YYYY' : 'MMM D, YYYY h:mm A')
-    .replace(', ', mobile ? '\n' : ', ');
+const formatDateCell = (date, mobile = false) => format(new Date(date), mobile ? 'MMM D, YYYY' : 'MMM D, YYYY h:mm A');
 
 class SketchListRowBase extends React.Component {
   constructor(props) {

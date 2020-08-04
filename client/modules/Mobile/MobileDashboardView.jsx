@@ -20,7 +20,12 @@ import Button from '../../common/Button';
 const EXAMPLE_USERNAME = 'p5';
 
 const ContentWrapper = styled(Content)`
-  td,thead button {
+  table {
+    table-layout: fixed;
+    /* white-space: nowrap; */
+  }
+  
+  td ,thead button {
     font-size: ${remSize(10)};
     padding-left: 0;
     text-align: left;
@@ -28,12 +33,20 @@ const ContentWrapper = styled(Content)`
 
   thead th { padding-left: 0; }
 
-  tbody th {
+  thead th:not(:first-child) {
+    width: 48px !important;
+}
+
+  .sketches-table__row th {
     font-size: ${remSize(12)};
-    /* font-weight: bold; */
     width: 100%;
-    max-width: 70%;
+    padding-right: ${remSize(12)}
   };
+
+  .sketches-table__row td {
+    text-align: center;
+    width: ${remSize(24)} !important;
+  }
 
   .sketch-list__sort-button { padding: 0 }
   .sketches-table__row {
@@ -41,8 +54,6 @@ const ContentWrapper = styled(Content)`
   }
 
   .sketches-table-container { padding-bottom: ${remSize(160)} }
-
-  /* td.sketch-list__dropdown-column { min-width: unset; } */
 `;
 
 const FooterTab = styled(Link)`
