@@ -72,7 +72,7 @@ const getCreatePathname = (panel, username) => (CreatePathname[panel] || '#').re
 
 const isOwner = (user, params) => user && params && user.username === params.username;
 
-const renderPanel = (name, props) => (Component => (Component && <Component {...props} />))(Panels[name]);
+const renderPanel = (name, props) => (Component => (Component && <Component {...props} mobile />))(Panels[name]);
 
 const MobileDashboard = ({ params, location }) => {
   const user = useSelector(state => state.user);

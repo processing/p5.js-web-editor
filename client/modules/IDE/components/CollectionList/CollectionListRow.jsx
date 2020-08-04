@@ -199,7 +199,7 @@ class CollectionListRowBase extends React.Component {
   }
 
   render() {
-    const { collection } = this.props;
+    const { collection, mobile } = this.props;
 
     return (
       <tr
@@ -211,8 +211,8 @@ class CollectionListRowBase extends React.Component {
             {this.renderCollectionName()}
           </span>
         </th>
-        <td>{format(new Date(collection.createdAt), 'MMM D, YYYY')}</td>
-        <td>{format(new Date(collection.updatedAt), 'MMM D, YYYY')}</td>
+        {(!mobile) && <td>{format(new Date(collection.createdAt), 'MMM D, YYYY')}</td>}
+        {(!mobile) && <td>{format(new Date(collection.updatedAt), 'MMM D, YYYY')}</td>}
         <td>{(collection.items || []).length}</td>
         <td className="sketch-list__dropdown-column">
           {this.renderActions()}
@@ -245,6 +245,11 @@ CollectionListRowBase.propTypes = {
   deleteCollection: PropTypes.func.isRequired,
   editCollection: PropTypes.func.isRequired,
   onAddSketches: PropTypes.func.isRequired,
+  mobile: PropTypes.bool,
+};
+
+CollectionListRowBase.defaultProps = {
+  mobile: false,
 };
 
 function mapDispatchToPropsSketchListRow(dispatch) {

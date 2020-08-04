@@ -127,6 +127,7 @@ class CollectionList extends React.Component {
 
   render() {
     const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
+    const { mobile } = this.props;
 
     return (
       <article className="sketches-table-container">
@@ -141,8 +142,8 @@ class CollectionList extends React.Component {
             <thead>
               <tr>
                 {this._renderFieldHeader('name', 'Name')}
-                {this._renderFieldHeader('createdAt', 'Date Created')}
-                {this._renderFieldHeader('updatedAt', 'Date Updated')}
+                {(!mobile) && this._renderFieldHeader('createdAt', 'Date Created')}
+                {(!mobile) && this._renderFieldHeader('updatedAt', 'Date Updated')}
                 {this._renderFieldHeader('numItems', '# sketches')}
                 <th scope="col"></th>
               </tr>
@@ -150,6 +151,7 @@ class CollectionList extends React.Component {
             <tbody>
               {this.props.collections.map(collection =>
                 (<CollectionListRow
+                  mobile={mobile}
                   key={collection.id}
                   collection={collection}
                   user={this.props.user}
@@ -209,7 +211,8 @@ CollectionList.propTypes = {
     owner: PropTypes.shape({
       id: PropTypes.string
     })
-  })
+  }),
+  mobile: PropTypes.bool,
 };
 
 CollectionList.defaultProps = {
@@ -218,7 +221,8 @@ CollectionList.defaultProps = {
     id: undefined,
     owner: undefined
   },
-  username: undefined
+  username: undefined,
+  mobile: false
 };
 
 function mapStateToProps(state, ownProps) {
