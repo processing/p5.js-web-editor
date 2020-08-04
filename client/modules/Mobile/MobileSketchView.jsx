@@ -1,7 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
-import { connect, useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import Header from '../../components/mobile/Header';
 import IconButton from '../../components/mobile/IconButton';
@@ -25,7 +24,7 @@ const Content = styled.div`
   margin-top: ${remSize(68)};
 `;
 
-const MobileSketchView = (props) => {
+const MobileSketchView = () => {
   const { files, ide, preferences } = useSelector(state => state);
 
   const htmlFile = useSelector(state => getHTMLFile(state.files));
