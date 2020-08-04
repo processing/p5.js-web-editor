@@ -33,9 +33,11 @@ const ContentWrapper = styled(Content)`
 
   thead th { padding-left: 0; }
 
-  thead th:not(:first-child) {
-    width: 48px !important;
-}
+  thead th:not(:first-child), .sketches-table__row td  {
+    width: ${remSize(54)};
+  }
+
+  tbody th { font-weight: bold; };
 
   .sketches-table__row th {
     font-size: ${remSize(12)};
@@ -45,7 +47,6 @@ const ContentWrapper = styled(Content)`
 
   .sketches-table__row td {
     text-align: center;
-    width: ${remSize(24)} !important;
   }
 
   .sketch-list__sort-button { padding: 0 }
