@@ -33,24 +33,24 @@ const ContentWrapper = styled(Content)`
 
   thead th { padding-left: 0; }
 
-  thead th:not(:first-child), .sketches-table__row td  {
+  thead th:not(:first-child), tbody td  {
     width: ${remSize(54)};
   }
 
   tbody th { font-weight: bold; };
 
-  .sketches-table__row th {
+  tbody th {
     font-size: ${remSize(12)};
     width: 100%;
     padding-right: ${remSize(12)}
   };
 
-  .sketches-table__row td {
+  tbody td {
     text-align: center;
   }
 
   .sketch-list__sort-button { padding: 0 }
-  .sketches-table__row {
+  tbody {
     height: ${remSize(48)};
   }
 
@@ -130,7 +130,7 @@ const MobileDashboard = ({ params, location }) => {
 
       <ContentWrapper slimheader>
         <Subheader>
-          {isOwner(user, params) && <SubheaderButton to={getCreatePathname(panel, username)}>new</SubheaderButton>}
+          {isOwner(user, params) && (panel !== Tabs[2]) && <SubheaderButton to={getCreatePathname(panel, username)}>new</SubheaderButton>}
           {panel === Tabs[0] && <SketchSearchbar />}
           {panel === Tabs[1] && <CollectionSearchbar />}
         </Subheader>
