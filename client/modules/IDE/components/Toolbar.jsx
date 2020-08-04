@@ -118,7 +118,7 @@ class Toolbar extends React.Component {
             }}
           />
           <label htmlFor="autorefresh" className="toolbar__autorefresh-label">
-            {this.props.t('Toolbar.Auto-refresh')}
+            {i18n.t('Toolbar.Auto-refresh')}
           </label>
         </div>
         <div className={nameContainerClass}>
@@ -200,8 +200,7 @@ Toolbar.propTypes = {
   startSketch: PropTypes.func.isRequired,
   startAccessibleSketch: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
-  currentUser: PropTypes.string,
-  t: PropTypes.func.isRequired
+  currentUser: PropTypes.string
 };
 
 Toolbar.defaultProps = {
