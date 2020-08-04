@@ -116,7 +116,7 @@ function sortedChildrenId(state, children) {
   return childrenArray.map(child => child.id);
 }
 
-function udpateParent(state, action) {
+function updateParent(state, action) {
   return state.map((file) => {
     if (file.id === action.parentId) {
       const newFile = Object.assign({}, file);
@@ -165,7 +165,7 @@ const files = (state, action) => {
     case ActionTypes.CREATE_FILE: // eslint-disable-line
     {
       const newState = [
-        ...udpateParent(state, action),
+        ...updateParent(state, action),
         {
           name: action.name,
           id: action.id,
