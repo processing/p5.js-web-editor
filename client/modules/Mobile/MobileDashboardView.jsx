@@ -22,7 +22,7 @@ const EXAMPLE_USERNAME = 'p5';
 const FooterTab = styled(Link)`
   background: ${props => prop(props.selected ? 'backgroundColor' : 'MobilePanel.default.foreground')};
   color: ${props => prop(`MobilePanel.default.${props.selected ? 'foreground' : 'background'}`)};
-  padding: ${remSize(16)};
+  padding: ${remSize(8)} ${remSize(16)};
   width: 100%;
   display: flex;
 `;
