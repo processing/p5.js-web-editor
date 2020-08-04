@@ -228,9 +228,7 @@ const files = (state, action) => {
       });
     default:
       return state.map((file) => {
-        if (file.name === 'root') {
-          file.children = sortedChildrenId(state, file.children);
-        }
+        file.children = sortedChildrenId(state, file.children);
         return file;
       });
   }
