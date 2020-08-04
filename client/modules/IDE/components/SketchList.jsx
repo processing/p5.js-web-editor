@@ -22,6 +22,11 @@ import ArrowUpIcon from '../../../images/sort-arrow-up.svg';
 import ArrowDownIcon from '../../../images/sort-arrow-down.svg';
 import DownFilledTriangleIcon from '../../../images/down-filled-triangle.svg';
 
+
+const formatDateCell = (date, mobile = false) =>
+  format(new Date(date), mobile ? 'MMM D, YYYY' : 'MMM D, YYYY h:mm A')
+    .replace(', ', mobile ? '\n' : ', ');
+
 class SketchListRowBase extends React.Component {
   constructor(props) {
     super(props);
@@ -288,8 +293,8 @@ class SketchListRowBase extends React.Component {
           <th scope="row">
             {name}
           </th>
-          {(!mobile) && <td>{format(new Date(sketch.createdAt), 'MMM D, YYYY h:mm A')}</td>}
-          <td>{format(new Date(sketch.updatedAt), 'MMM D, YYYY h:mm A')}</td>
+          <td>{formatDateCell(sketch.createdAt, mobile)}</td>
+          <td>{formatDateCell(sketch.updatedAt, mobile)}</td>
           {this.renderDropdown()}
         </tr>
       </React.Fragment>);
@@ -432,7 +437,7 @@ class SketchList extends React.Component {
             <thead>
               <tr>
                 {this._renderFieldHeader('name', 'Sketch')}
-                {(!mobile) && this._renderFieldHeader('createdAt', 'Date Created')}
+                {this._renderFieldHeader('createdAt', 'Date Created')}
                 {this._renderFieldHeader('updatedAt', 'Date Updated')}
                 <th scope="col"></th>
               </tr>

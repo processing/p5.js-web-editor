@@ -11,6 +11,8 @@ import * as ToastActions from '../../actions/toast';
 
 import DownFilledTriangleIcon from '../../../../images/down-filled-triangle.svg';
 
+const formatDateCell = (date, mobile = false) => format(new Date(date), 'MMM D, YYYY');
+
 class CollectionListRowBase extends React.Component {
   static projectInCollection(project, collection) {
     return collection.items.find(item => item.project.id === project.id) != null;
@@ -212,7 +214,7 @@ class CollectionListRowBase extends React.Component {
           </span>
         </th>
         {(!mobile) && <td>{format(new Date(collection.createdAt), 'MMM D, YYYY')}</td>}
-        {(!mobile) && <td>{format(new Date(collection.updatedAt), 'MMM D, YYYY')}</td>}
+        <td>{formatDateCell(collection.updatedAt)}</td>
         <td>{(collection.items || []).length}</td>
         <td className="sketch-list__dropdown-column">
           {this.renderActions()}

@@ -21,6 +21,7 @@ import CollectionListRow from './CollectionListRow';
 import ArrowUpIcon from '../../../../images/sort-arrow-up.svg';
 import ArrowDownIcon from '../../../../images/sort-arrow-down.svg';
 
+
 class CollectionList extends React.Component {
   constructor(props) {
     super(props);
@@ -143,7 +144,7 @@ class CollectionList extends React.Component {
               <tr>
                 {this._renderFieldHeader('name', 'Name')}
                 {(!mobile) && this._renderFieldHeader('createdAt', 'Date Created')}
-                {(!mobile) && this._renderFieldHeader('updatedAt', 'Date Updated')}
+                {this._renderFieldHeader('updatedAt', 'Date Updated')}
                 {this._renderFieldHeader('numItems', '# sketches')}
                 <th scope="col"></th>
               </tr>

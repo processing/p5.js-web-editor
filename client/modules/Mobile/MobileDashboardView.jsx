@@ -19,6 +19,32 @@ import Button from '../../common/Button';
 
 const EXAMPLE_USERNAME = 'p5';
 
+const ContentWrapper = styled(Content)`
+  td,thead button {
+    font-size: ${remSize(10)};
+    padding-left: 0;
+    text-align: left;
+  };
+
+  thead th { padding-left: 0; }
+
+  tbody th {
+    font-size: ${remSize(12)};
+    /* font-weight: bold; */
+    width: 100%;
+    max-width: 70%;
+  };
+
+  .sketch-list__sort-button { padding: 0 }
+  .sketches-table__row {
+    height: ${remSize(48)};
+  }
+
+  .sketches-table-container { padding-bottom: ${remSize(160)} }
+
+  /* td.sketch-list__dropdown-column { min-width: unset; } */
+`;
+
 const FooterTab = styled(Link)`
   background: ${props => prop(props.selected ? 'backgroundColor' : 'MobilePanel.default.foreground')};
   color: ${props => prop(`MobilePanel.default.${props.selected ? 'foreground' : 'background'}`)};
@@ -90,14 +116,14 @@ const MobileDashboard = ({ params, location }) => {
       </Header>
 
 
-      <Content slimheader>
+      <ContentWrapper slimheader>
         <Subheader>
           {isOwner(user, params) && <SubheaderButton to={getCreatePathname(panel, username)}>new</SubheaderButton>}
           {panel === Tabs[0] && <SketchSearchbar />}
           {panel === Tabs[1] && <CollectionSearchbar />}
         </Subheader>
         {renderPanel(panel, { username, key: pathname })}
-      </Content>
+      </ContentWrapper>
       <Footer>
         {!isExamples &&
           <FooterTabSwitcher>
