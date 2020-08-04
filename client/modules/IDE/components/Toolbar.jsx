@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import classNames from 'classnames';
 import { withTranslation } from 'react-i18next';
+import i18n from 'i18next';
 import * as IDEActions from '../actions/ide';
 import * as preferenceActions from '../actions/preferences';
 import * as projectActions from '../actions/project';
@@ -12,6 +13,7 @@ import PlayIcon from '../../../images/play.svg';
 import StopIcon from '../../../images/stop.svg';
 import PreferencesIcon from '../../../images/preferences.svg';
 import EditProjectNameIcon from '../../../images/pencil.svg';
+
 
 class Toolbar extends React.Component {
   constructor(props) {
@@ -86,7 +88,7 @@ class Toolbar extends React.Component {
             this.props.setTextOutput(true);
             this.props.setGridOutput(true);
           }}
-          aria-label="Play sketch"
+          aria-label={i18n.t('Toolbar.PlaySketchARIA')}
           disabled={this.props.infiniteLoop}
         >
           <PlayIcon focusable="false" aria-hidden="true" />
@@ -94,7 +96,7 @@ class Toolbar extends React.Component {
         <button
           className={playButtonClass}
           onClick={this.props.startSketch}
-          aria-label="Play only visual sketch"
+          aria-label={i18n.t('Toolbar.PlayOnlyVisualSketchARIA')}
           disabled={this.props.infiniteLoop}
         >
           <PlayIcon focusable="false" aria-hidden="true" />
@@ -102,7 +104,7 @@ class Toolbar extends React.Component {
         <button
           className={stopButtonClass}
           onClick={this.props.stopSketch}
-          aria-label="Stop sketch"
+          aria-label={i18n.t('Toolbar.StopSketchARIA')}
         >
           <StopIcon focusable="false" aria-hidden="true" />
         </button>
@@ -129,7 +131,7 @@ class Toolbar extends React.Component {
               }
             }}
             disabled={!canEditProjectName}
-            aria-label="Edit sketch name"
+            aria-label={i18n.t('Toolbar.EditSketchARIA')}
           >
             <span>{this.props.project.name}</span>
             {
@@ -145,7 +147,7 @@ class Toolbar extends React.Component {
             type="text"
             maxLength="128"
             className="toolbar__project-name-input"
-            aria-label="New sketch name"
+            aria-label={i18n.t('Toolbar.NewSketchNameARIA')}
             value={this.state.projectNameInputValue}
             onChange={this.handleProjectNameChange}
             ref={(element) => { this.projectNameInput = element; }}

@@ -1,9 +1,9 @@
 import React from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import lodash from 'lodash';
-
-
+import i18n from 'i18next';
 import { ToolbarComponent } from './Toolbar';
+import { i18ntest } from '../../../i18n-test';
 
 const renderComponent = (extraProps = {}) => {
   const props = lodash.merge({
@@ -40,8 +40,11 @@ const renderComponent = (extraProps = {}) => {
 
   return props;
 };
+const i18next = jest.genMockFromModule('react-i18next');
+i18next.t = i => i;
+i18next.translate = c => k => k;
 
-describe('<ToolbarComponent />', () => {
+describe('<ToolbarComponent  />', () => {
   it('sketch owner can switch to sketch name editing mode', async () => {
     const props = renderComponent();
     const sketchName = screen.getByLabelText('Edit sketch name');
@@ -62,9 +65,9 @@ describe('<ToolbarComponent />', () => {
   });
 
   it('sketch owner can change name', async () => {
-    const props = renderComponent({ project: { isEditingName: true } });
+    const props = renderComponent({ project: { isEditingName: true }, t: i => i });
 
-    const sketchNameInput = screen.getByLabelText('New sketch name');
+    const sketchNameInput = screen.getByLabelText(i18n.t('Toolbar.NewSketchNameARIA'));
     fireEvent.change(sketchNameInput, { target: { value: 'my new sketch name' } });
     fireEvent.blur(sketchNameInput);
 
@@ -75,7 +78,7 @@ describe('<ToolbarComponent />', () => {
   it('sketch owner can\'t change to empty name', async () => {
     const props = renderComponent({ project: { isEditingName: true } });
 
-    const sketchNameInput = screen.getByLabelText('New sketch name');
+    const sketchNameInput = screen.getByLabelText(i18n.t('Toolbar.NewSketchNameARIA'));
     fireEvent.change(sketchNameInput, { target: { value: '' } });
     fireEvent.blur(sketchNameInput);
 
