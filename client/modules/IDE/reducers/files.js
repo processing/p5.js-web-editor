@@ -116,6 +116,26 @@ function sortedChildrenId(state, children) {
   return childrenArray.map(child => child.id);
 }
 
+function udpateParent(state, action) {
+  return state.map((file) => {
+    if (file.id === action.parentId) {
+      const newFile = Object.assign({}, file);
+      newFile.children = [...newFile.children, action.id];
+      return newFile;
+    }
+    return file;
+  });
+}
+
+function renameFile(state, action) {
+  return state.map((file) => {
+    if (file.id !== action.id) {
+      return file;
+    }
+    return Object.assign({}, file, { name: action.name });
+  });
+}
+
 const files = (state, action) => {
   if (state === undefined) {
     state = initialState(); // eslint-disable-line
@@ -144,16 +164,8 @@ const files = (state, action) => {
       return initialState();
     case ActionTypes.CREATE_FILE: // eslint-disable-line
     {
-      let newState = state.map((file) => {
-        if (file.id === action.parentId) {
-          const newFile = Object.assign({}, file);
-          newFile.children = [...newFile.children, action.id];
-          return newFile;
-        }
-        return file;
-      });
-      newState = [
-        ...newState,
+      const newState = [
+        ...udpateParent(state, action),
         {
           name: action.name,
           id: action.id,
@@ -161,9 +173,8 @@ const files = (state, action) => {
           content: action.content,
           url: action.url,
           children: action.children,
-          fileType: action.fileType || 'file',
-        },
-      ];
+          fileType: action.fileType || 'file'
+        }];
       return newState.map((file) => {
         if (file.id === action.parentId) {
           file.children = sortedChildrenId(newState, file.children);
@@ -173,12 +184,7 @@ const files = (state, action) => {
     }
     case ActionTypes.UPDATE_FILE_NAME:
     {
-      const newState = state.map((file) => {
-        if (file.id !== action.id) {
-          return file;
-        }
-        return Object.assign({}, file, { name: action.name });
-      });
+      const newState = renameFile(state, action);
       return newState.map((file) => {
         if (file.children.includes(action.id)) {
           file.children = sortedChildrenId(newState, file.children);
