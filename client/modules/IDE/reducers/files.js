@@ -227,7 +227,12 @@ const files = (state, action) => {
         return file;
       });
     default:
-      return state;
+      return state.map((file) => {
+        if (file.name === 'root') {
+          file.children = sortedChildrenId(state, file.children);
+        }
+        return file;
+      });
   }
 };
 
