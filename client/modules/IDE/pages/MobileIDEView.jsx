@@ -64,10 +64,10 @@ const getNatOptions = (username = undefined) =>
 const MobileIDEView = (props) => {
   const {
     preferences, ide, editorAccessibility, project, updateLintMessage, clearLintMessage,
-    selectedFile, updateFileContent, files, user,
+    selectedFile, updateFileContent, files, user, params,
     closeEditorOptions, showEditorOptions,
     startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console,
-    showRuntimeErrorWarning, hideRuntimeErrorWarning, startSketch
+    showRuntimeErrorWarning, hideRuntimeErrorWarning, startSketch, getProject, clearPersistedState
   } = props;
 
   const [tmController, setTmController] = useState(null); // eslint-disable-line
@@ -79,16 +79,22 @@ const MobileIDEView = (props) => {
     align="right"
   />);
 
+  // Force state reset
+  useEffect(clearPersistedState, []);
+  useEffect(stopSketch, []);
+  useEffect(() => getProject(params.project_id), []);
+
   // Load Project
+  const [currentProjectID, setCurrentProjectID] = useState(null);
   useEffect(() => {
-    // const { project_id } = params;
-    // const oldproject_id = '';
+    if (params.project_id && !currentProjectID) {
+      if (params.project_id !== project.id) {
+        getProject(params.project_id);
+      }
+    }
+    setCurrentProjectID(params.project_id);
+  }, [params, project]);
 
-    // if (nextProps.params.project_id && !oldproject_id)
-    //   if (nextProps.params.project_id !== nextProps.project.id)
-
-    // getProject(nextProps.params.project_id);
-  }, []);
 
   return (
     <Screen fullscreen>
@@ -260,6 +266,10 @@ MobileIDEView.propTypes = {
     id: PropTypes.string,
     username: PropTypes.string,
   }).isRequired,
+
+  getProject: PropTypes.func.isRequired,
+  clearPersistedState: PropTypes.func.isRequired,
+  params: PropTypes.shape({ project_id: PropTypes.string }).isRequired,
 };
 
 function mapStateToProps(state) {
