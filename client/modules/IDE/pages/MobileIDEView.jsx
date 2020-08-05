@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -46,6 +46,21 @@ const NavItem = styled.li`
   position: relative;
 `;
 
+const getNatOptions = (username = undefined) =>
+  (username
+    ? [
+      { icon: PreferencesIcon, title: 'Preferences', href: '/mobile/preferences', },
+      { icon: PreferencesIcon, title: 'My Stuff', href: `/mobile/${username}/sketches` },
+      { icon: PreferencesIcon, title: 'Examples', href: '/mobile/p5/sketches' },
+      { icon: PreferencesIcon, title: 'Original Editor', href: '/', },
+    ]
+    : [
+      { icon: PreferencesIcon, title: 'Preferences', href: '/mobile/preferences', },
+      { icon: PreferencesIcon, title: 'Examples', href: '/mobile/p5/sketches' },
+      { icon: PreferencesIcon, title: 'Original Editor', href: '/', },
+    ]
+  );
+
 const MobileIDEView = (props) => {
   const {
     preferences, ide, editorAccessibility, project, updateLintMessage, clearLintMessage,
@@ -58,24 +73,22 @@ const MobileIDEView = (props) => {
   const [tmController, setTmController] = useState(null); // eslint-disable-line
 
   const { username } = user;
-  const navOptionsLoggedIn = [
-    { icon: PreferencesIcon, title: 'Preferences', href: '/mobile/preferences', },
-    { icon: PreferencesIcon, title: 'My Stuff', href: `/mobile/${username}/sketches` },
-    { icon: PreferencesIcon, title: 'Examples', href: '/mobile/p5/sketches' },
-    { icon: PreferencesIcon, title: 'Original Editor', href: '/', },
-  ];
-
-  const navOptionsLoggedOut = [
-    { icon: PreferencesIcon, title: 'Preferences', href: '/mobile/preferences', },
-    { icon: PreferencesIcon, title: 'Examples', href: '/mobile/p5/sketches' },
-    { icon: PreferencesIcon, title: 'Original Editor', href: '/', },
-  ];
-
 
   const [triggerNavDropdown, NavDropDown] = useAsModal(<Dropdown
-    items={username ? navOptionsLoggedIn : navOptionsLoggedOut}
+    items={getNatOptions(username)}
     align="right"
   />);
+
+  // Load Project
+  useEffect(() => {
+    // const { project_id } = params;
+    // const oldproject_id = '';
+
+    // if (nextProps.params.project_id && !oldproject_id)
+    //   if (nextProps.params.project_id !== nextProps.project.id)
+
+    // getProject(nextProps.params.project_id);
+  }, []);
 
   return (
     <Screen fullscreen>
