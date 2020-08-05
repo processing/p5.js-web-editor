@@ -45,7 +45,7 @@ const initialState = () => {
       name: 'root',
       id: r,
       _id: r,
-      children: [a, b, c],
+      children: [b, a, c],
       fileType: 'folder',
       content: ''
     },
@@ -110,6 +110,32 @@ function deleteMany(state, ids) {
   return newState;
 }
 
+function sortedChildrenId(state, children) {
+  const childrenArray = state.filter(file => children.includes(file.id));
+  childrenArray.sort((a, b) => (a.name > b.name ? 1 : -1));
+  return childrenArray.map(child => child.id);
+}
+
+function updateParent(state, action) {
+  return state.map((file) => {
+    if (file.id === action.parentId) {
+      const newFile = Object.assign({}, file);
+      newFile.children = [...newFile.children, action.id];
+      return newFile;
+    }
+    return file;
+  });
+}
+
+function renameFile(state, action) {
+  return state.map((file) => {
+    if (file.id !== action.id) {
+      return file;
+    }
+    return Object.assign({}, file, { name: action.name });
+  });
+}
+
 const files = (state, action) => {
   if (state === undefined) {
     state = initialState(); // eslint-disable-line
@@ -138,15 +164,8 @@ const files = (state, action) => {
       return initialState();
     case ActionTypes.CREATE_FILE: // eslint-disable-line
     {
-      const newState = state.map((file) => {
-        if (file.id === action.parentId) {
-          const newFile = Object.assign({}, file);
-          newFile.children = [...newFile.children, action.id];
-          return newFile;
-        }
-        return file;
-      });
-      return [...newState,
+      const newState = [
+        ...updateParent(state, action),
         {
           name: action.name,
           id: action.id,
@@ -156,15 +175,23 @@ const files = (state, action) => {
           children: action.children,
           fileType: action.fileType || 'file'
         }];
+      return newState.map((file) => {
+        if (file.id === action.parentId) {
+          file.children = sortedChildrenId(newState, file.children);
+        }
+        return file;
+      });
     }
     case ActionTypes.UPDATE_FILE_NAME:
-      return state.map((file) => {
-        if (file.id !== action.id) {
-          return file;
+    {
+      const newState = renameFile(state, action);
+      return newState.map((file) => {
+        if (file.children.includes(action.id)) {
+          file.children = sortedChildrenId(newState, file.children);
         }
-
-        return Object.assign({}, file, { name: action.name });
+        return file;
       });
+    }
     case ActionTypes.DELETE_FILE:
     {
       const newState = deleteMany(state, [action.id, ...getAllDescendantIds(state, action.id)]);
@@ -200,7 +227,10 @@ const files = (state, action) => {
         return file;
       });
     default:
-      return state;
+      return state.map((file) => {
+        file.children = sortedChildrenId(state, file.children);
+        return file;
+      });
   }
 };
 
