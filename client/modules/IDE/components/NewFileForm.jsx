@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import i18n from 'i18next';
 import { domOnlyProps } from '../../../utils/reduxFormUtils';
 
 import Button from '../../../common/Button';
@@ -37,7 +38,7 @@ class NewFileForm extends React.Component {
           />
           <Button
             type="submit"
-          >Add File
+          >{i18n.t('NewFileForm.AddFileSubmit')}
           </Button>
         </div>
         {name.touched && name.error && <span className="form-error">{name.error}</span>}

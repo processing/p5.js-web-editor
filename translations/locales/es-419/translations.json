@@ -172,6 +172,15 @@
   },
   "IDEView": {
     "SubmitFeedback": "Enviar retroalimentación"
+  },
+  "NewFileModal": {
+  "Title": "Crear Archivo",
+  "CloseButtonARIA": "Cerrar diálogo de crear archivo",
+    "EnterName": "Por favor introduce un nombre",
+    "InvalidType": "Tipo de archivo inválido. Las extensiones válidas son .js, .css, .json, .txt, .csv, .tsv, .frag y .vert."
+  },
+  "NewFileForm": {
+    "AddFileSubmit": "Agregar Archivo"
   }
 }
 
