@@ -43,8 +43,8 @@ const preferences = (state = initialState, action) => {
     case ActionTypes.SET_LINE_NUMBERS:
       return Object.assign({}, state, { lineNumbers: action.value });
     case ActionTypes.SET_LANGUAGE:
-      console.log(`reducer preference set language lenguage ${action.language}`);
-      i18next.changeLanguage(action.language);
+      // console.log(`reducer preference set language lenguage ${action.language}`);
+      // i18next.changeLanguage(action.language);
       return Object.assign({}, state, { language: action.language });
     default:
       return state;
