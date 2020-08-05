@@ -160,7 +160,8 @@ export function deleteFile(id, parentId) {
         }
       };
       apiClient.delete(`/projects/${state.project.id}/files/${id}`, deleteConfig)
-        .then(() => {
+        .then((response) => {
+          dispatch(setProjectSavedTime(response.data.project.updatedAt));
           dispatch({
             type: ActionTypes.DELETE_FILE,
             id,
