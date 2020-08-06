@@ -99,7 +99,7 @@ const MobileIDEView = (props) => {
   const [toggleExplorer, Explorer] = useAsModal(<Sidebar
     title="hahaha"
     onPressClose={() => {}}
-  />);
+  />, true);
 
   // toggle sidebar starting opened
   useEffect(toggleExplorer, []);
