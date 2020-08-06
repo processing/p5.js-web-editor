@@ -137,6 +137,7 @@ class Editor extends React.Component {
       [`${metaKey}-F`]: 'findPersistent',
       [`${metaKey}-G`]: 'findNext',
       [`Shift-${metaKey}-G`]: 'findPrev',
+      [`${metaKey}-R`]: 'replace',
     });
 
     this.initializeDocuments(this.props.files);

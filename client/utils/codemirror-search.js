@@ -86,16 +86,16 @@ export default function(CodeMirror) {
 
       var upArrow = dialog.getElementsByClassName("up-arrow")[0];
       CodeMirror.on(upArrow, "click", function () {
+        cm.focus();
         CodeMirror.commands.findPrev(cm);
         searchField.blur();
-        cm.focus();
       });
 
       var downArrow = dialog.getElementsByClassName("down-arrow")[0];
       CodeMirror.on(downArrow, "click", function () {
+        cm.focus();
         CodeMirror.commands.findNext(cm);
         searchField.blur();
-        cm.focus();
       });
 
       var regexpButton = dialog.getElementsByClassName("CodeMirror-regexp-button")[0];
@@ -401,6 +401,7 @@ export default function(CodeMirror) {
 
   // TODO: This will need updating if replace is implemented
   function replace(cm, all) {
+    const state = getSearchState(cm);
     var prevDialog = document.getElementsByClassName("CodeMirror-dialog")[0];
     if (prevDialog) {
       clearSearch(cm);
@@ -408,11 +409,12 @@ export default function(CodeMirror) {
       cm.focus();
     }
     if (cm.getOption("readOnly")) return;
-    var query = cm.getSelection() || getSearchState(cm).lastQuery;
+    var query = cm.getSelection() || state.lastQuery;
     var dialogText = all ? "Replace all:" : "Replace:"
     dialog(cm, dialogText + replaceQueryDialog, dialogText, query, function(query) {
       if (!query) return;
-      query = parseQuery(query);
+      query = parseQuery(query, state);
+
       dialog(cm, replacementQueryDialog, "Replace with:", "", function(text) {
         text = parseString(text)
         if (all) {
@@ -451,6 +453,6 @@ export default function(CodeMirror) {
   CodeMirror.commands.findNext = doSearch;
   CodeMirror.commands.findPrev = function(cm) {doSearch(cm, true);};
   CodeMirror.commands.clearSearch = clearSearch;
-  // CodeMirror.commands.replace = replace;
-  // CodeMirror.commands.replaceAll = function(cm) {replace(cm, true);};
+  CodeMirror.commands.replace = replace;
+  CodeMirror.commands.replaceAll = function(cm) {replace(cm, true);};
 };
