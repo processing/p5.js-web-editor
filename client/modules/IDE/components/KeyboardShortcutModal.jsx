@@ -35,6 +35,18 @@ function KeyboardShortcutModal() {
         </li>
         <li className="keyboard-shortcut-item">
           <span className="keyboard-shortcut__command">
+            {metaKeyName} + R
+          </span>
+          <span>{t('KeyboardShortcuts.CodeEditing.ReplaceTextMatch')}</span>
+        </li>
+        <li className="keyboard-shortcut-item">
+          <span className="keyboard-shortcut__command">
+            {metaKeyName} + {'\u21E7'} + R
+          </span>
+          <span>{t('KeyboardShortcuts.CodeEditing.ReplaceAllTextMatches')}</span>
+        </li>
+        <li className="keyboard-shortcut-item">
+          <span className="keyboard-shortcut__command">
             {metaKeyName} + [
           </span>
           <span>{t('KeyboardShortcuts.CodeEditing.IndentCodeLeft')}</span>

@@ -15,7 +15,9 @@
       "TidyCode": "Ordenar código",
       "Find": "Buscar",
       "FindNext": "Buscar siguiente",
-      "FindPrevious": "Buscar anterior"
+      "FindPrevious": "Buscar anterior",
+      "Replace": "Reemplazar",
+      "ReplaceAll": "Reemplaza todo"
     },
     "Sketch": {
       "Title": "Bosquejo",
@@ -165,6 +167,8 @@
       "FindText": "Encontrar texto",
       "FindNextMatch": "Encontrar siguiente ocurrencia",
       "FindPrevMatch": "Encontrar ocurrencia previa",
+      "ReplaceTextMatch": "Reemplazar coincidencia de texto",
+      "ReplaceAllTextMatches": "Reemplazar todas las coincidencias de texto",
       "IndentCodeLeft": "Indentar código a la izquierda",
       "IndentCodeRight": "Indentar código a la derecha",
       "CommentLine": "Comentar línea de código",

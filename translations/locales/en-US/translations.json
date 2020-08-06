@@ -15,7 +15,9 @@
       "TidyCode": "Tidy Code",
       "Find": "Find",
       "FindNext": "Find Next",
-      "FindPrevious": "Find Previous"
+      "FindPrevious": "Find Previous",
+      "Replace": "Replace",
+      "ReplaceAll": "Replace All"
     },
     "Sketch": {
       "Title": "Sketch",
@@ -165,6 +167,8 @@
       "FindText": "Find Text",
       "FindNextMatch": "Find Next Match",
       "FindPrevMatch": "Find Previous Match",
+      "ReplaceTextMatch": "Replace Text Match",
+      "ReplaceAllTextMatches": "Replace All Text Matches",
       "IndentCodeLeft": "Indent Code Left",
       "IndentCodeRight": "Indent Code Right",
       "CommentLine": "Comment Line",
