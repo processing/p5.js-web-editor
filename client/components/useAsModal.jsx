@@ -1,6 +1,7 @@
 import React from 'react';
 import { useModalBehavior } from '../utils/custom-hooks';
 
+
 export default (component) => {
   const [visible, trigger, setRef] = useModalBehavior();
 

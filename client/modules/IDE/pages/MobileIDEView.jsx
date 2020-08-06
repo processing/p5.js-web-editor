@@ -34,6 +34,7 @@ import ActionStrip from '../../../components/mobile/ActionStrip';
 import useAsModal from '../../../components/useAsModal';
 import { PreferencesIcon } from '../../../common/icons';
 import Dropdown from '../../../components/Dropdown';
+import Sidebar from '../../../components/Sidebar';
 
 const isUserOwner = ({ project, user }) =>
   project.owner && project.owner.id === user.id;
@@ -67,17 +68,12 @@ const MobileIDEView = (props) => {
     selectedFile, updateFileContent, files, user, params,
     closeEditorOptions, showEditorOptions,
     startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console,
-    showRuntimeErrorWarning, hideRuntimeErrorWarning, startSketch, getProject, clearPersistedState
+    showRuntimeErrorWarning, hideRuntimeErrorWarning, startSketch, getProject, clearPersistedState, setUnsavedChanges
   } = props;
 
   const [tmController, setTmController] = useState(null); // eslint-disable-line
 
   const { username } = user;
-
-  const [triggerNavDropdown, NavDropDown] = useAsModal(<Dropdown
-    items={getNatOptions(username)}
-    align="right"
-  />);
 
   // Force state reset
   useEffect(clearPersistedState, []);
@@ -95,16 +91,34 @@ const MobileIDEView = (props) => {
     setCurrentProjectID(params.project_id);
   }, [params, project, username]);
 
+  const [toggleNavDropdown, NavDropDown] = useAsModal(<Dropdown
+    items={getNatOptions(username)}
+    align="right"
+  />);
+
+  const [toggleExplorer, Explorer] = useAsModal(<Sidebar
+    title="hahaha"
+    onPressClose={() => {}}
+  />);
+
+  // toggle sidebar starting opened
+  useEffect(toggleExplorer, []);
 
   return (
     <Screen fullscreen>
+      <Explorer />
       <Header
         title={project.name}
         subtitle={selectedFile.name}
       >
         <NavItem>
           <IconButton
-            onClick={triggerNavDropdown}
+            onClick={toggleExplorer}
+            icon={MoreIcon}
+            aria-label="Options"
+          />
+          <IconButton
+            onClick={toggleNavDropdown}
             icon={MoreIcon}
             aria-label="Options"
           />
@@ -147,6 +161,7 @@ const MobileIDEView = (props) => {
           hideRuntimeErrorWarning={hideRuntimeErrorWarning}
           runtimeErrorWarningVisible={ide.runtimeErrorWarningVisible}
           provideController={setTmController}
+          setUnsavedChanges={setUnsavedChanges}
         />
       </IDEWrapper>
 
@@ -267,6 +282,7 @@ MobileIDEView.propTypes = {
     username: PropTypes.string,
   }).isRequired,
 
+  setUnsavedChanges: PropTypes.func.isRequired,
   getProject: PropTypes.func.isRequired,
   clearPersistedState: PropTypes.func.isRequired,
   params: PropTypes.shape({
