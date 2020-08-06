@@ -24,13 +24,13 @@ function SocialLoginPanel(props) {
       <div className="account__social-stack">
         <SocialAuthButton
           service={SocialAuthButton.services.github}
-          link
-          connected={!!user.github}
+          linkStyle
+          isConnected={!!user.github}
         />
         <SocialAuthButton
           service={SocialAuthButton.services.google}
-          link
-          connected={!!user.google}
+          linkStyle
+          isConnected={!!user.google}
         />
       </div>
     </React.Fragment>

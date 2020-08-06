@@ -42,11 +42,11 @@ const StyledButton = styled(Button)`
   width: ${remSize(300)};
 `;
 
-function SocialAuthButton({ service, link, connected }) {
+function SocialAuthButton({ service, linkStyle, isConnected }) {
   const ServiceIcon = icons[service];
   let label;
-  if (link) {
-    label = connected ? linkLabels[service].connected : linkLabels[service].connect;
+  if (linkStyle) {
+    label = isConnected ? linkLabels[service].connected : linkLabels[service].connect;
   } else {
     label = labels[service];
   }
@@ -64,13 +64,13 @@ SocialAuthButton.services = services;
 
 SocialAuthButton.propTypes = {
   service: PropTypes.oneOf(['github', 'google']).isRequired,
-  link: PropTypes.bool,
-  connected: PropTypes.bool
+  linkStyle: PropTypes.bool,
+  isConnected: PropTypes.bool
 };
 
 SocialAuthButton.defaultProps = {
-  link: false,
-  connected: false
+  linkStyle: false,
+  isConnected: false
 };
 
 export default SocialAuthButton;
