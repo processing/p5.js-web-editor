@@ -7,6 +7,7 @@ import styled from 'styled-components';
 
 // Imports to be Refactored
 import { bindActionCreators } from 'redux';
+
 import * as FileActions from '../actions/files';
 import * as IDEActions from '../actions/ide';
 import * as ProjectActions from '../actions/project';
@@ -19,7 +20,7 @@ import { getHTMLFile } from '../reducers/files';
 
 // Local Imports
 import Editor from '../components/Editor';
-import { PreferencesIcon, PlayIcon, ExitIcon } from '../../../common/icons';
+import { PlayIcon, ExitIcon, MoreIcon } from '../../../common/icons';
 
 import IconButton from '../../../components/mobile/IconButton';
 import Header from '../../../components/mobile/Header';
@@ -28,7 +29,11 @@ import Footer from '../../../components/mobile/Footer';
 import IDEWrapper from '../../../components/mobile/IDEWrapper';
 import Console from '../components/Console';
 import { remSize } from '../../../theme';
+// import OverlayManager from '../../../components/OverlayManager';
 import ActionStrip from '../../../components/mobile/ActionStrip';
+import useAsModal from '../../../components/useAsModal';
+import { PreferencesIcon } from '../../../common/icons';
+import Dropdown from '../../../components/Dropdown';
 
 const isUserOwner = ({ project, user }) => (project.owner && project.owner.id === user.id);
 
@@ -37,17 +42,30 @@ const Expander = styled.div`
   height: ${props => (props.expanded ? remSize(160) : remSize(27))};
 `;
 
+const NavItem = styled.li`
+  position: relative;
+`;
+
+const headerNavOptions = [
+  { icon: PreferencesIcon, title: 'Preferences', href: '/mobile/preferences', },
+  { icon: PreferencesIcon, title: 'Examples', href: '/mobile/examples' },
+  { icon: PreferencesIcon, title: 'Original Editor', href: '/', },
+];
+
+
 const MobileIDEView = (props) => {
   const {
     preferences, ide, editorAccessibility, project, updateLintMessage, clearLintMessage,
     selectedFile, updateFileContent, files,
-    closeEditorOptions, showEditorOptions, showKeyboardShortcutModal, setUnsavedChanges,
+    closeEditorOptions, showEditorOptions,
     startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console,
     showRuntimeErrorWarning, hideRuntimeErrorWarning, startSketch
   } = props;
 
   const [tmController, setTmController] = useState(null); // eslint-disable-line
-  const [overlay, setOverlay] = useState(null); // eslint-disable-line
+
+
+  const [triggerNavDropdown, NavDropDown] = useAsModal(<Dropdown align="right" items={headerNavOptions} />);
 
   return (
     <Screen fullscreen>
@@ -58,13 +76,17 @@ const MobileIDEView = (props) => {
           <IconButton to="/mobile" icon={ExitIcon} aria-label="Return to original editor" />
         }
       >
-        <IconButton
-          to="/mobile/preferences"
-          onClick={() => setOverlay('preferences')}
-          icon={PreferencesIcon}
-          aria-label="Open preferences menu"
-        />
-        <IconButton to="/mobile/preview" onClick={() => { startSketch(); }} icon={PlayIcon} aria-label="Run sketch" />
+        <NavItem>
+          <IconButton
+            onClick={triggerNavDropdown}
+            icon={MoreIcon}
+            aria-label="Options"
+          />
+          <NavDropDown />
+        </NavItem>
+        <li>
+          <IconButton to="/mobile/preview" onClick={() => { startSketch(); }} icon={PlayIcon} aria-label="Run sketch" />
+        </li>
       </Header>
 
       <IDEWrapper>
@@ -82,9 +104,7 @@ const MobileIDEView = (props) => {
           editorOptionsVisible={ide.editorOptionsVisible}
           showEditorOptions={showEditorOptions}
           closeEditorOptions={closeEditorOptions}
-          showKeyboardShortcutModal={showKeyboardShortcutModal}
-          setUnsavedChanges={setUnsavedChanges}
-          isPlaying={ide.isPlaying}
+          showKeyboard={ide.isPlaying}
           theme={preferences.theme}
           startRefreshSketch={startRefreshSketch}
           stopSketch={stopSketch}
@@ -103,6 +123,7 @@ const MobileIDEView = (props) => {
           provideController={setTmController}
         />
       </IDEWrapper>
+
       <Footer>
         {ide.consoleIsExpanded && <Expander expanded><Console /></Expander>}
         <ActionStrip />
@@ -110,7 +131,6 @@ const MobileIDEView = (props) => {
     </Screen>
   );
 };
-
 
 MobileIDEView.propTypes = {
 
@@ -130,7 +150,7 @@ MobileIDEView.propTypes = {
   ide: PropTypes.shape({
     isPlaying: PropTypes.bool.isRequired,
     isAccessibleOutputPlaying: PropTypes.bool.isRequired,
-    consoleEvent: PropTypes.array,
+    consoleEvent: PropTypes.arrayOf(PropTypes.shape({})),
     modalIsVisible: PropTypes.bool.isRequired,
     sidebarIsExpanded: PropTypes.bool.isRequired,
     consoleIsExpanded: PropTypes.bool.isRequired,
@@ -156,7 +176,7 @@ MobileIDEView.propTypes = {
   }).isRequired,
 
   editorAccessibility: PropTypes.shape({
-    lintMessages: PropTypes.array.isRequired,
+    lintMessages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   }).isRequired,
 
   project: PropTypes.shape({
@@ -192,10 +212,6 @@ MobileIDEView.propTypes = {
   closeEditorOptions: PropTypes.func.isRequired,
 
   showEditorOptions: PropTypes.func.isRequired,
-
-  showKeyboardShortcutModal: PropTypes.func.isRequired,
-
-  setUnsavedChanges: PropTypes.func.isRequired,
 
   startRefreshSketch: PropTypes.func.isRequired,
 
