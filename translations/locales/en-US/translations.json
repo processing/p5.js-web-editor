@@ -181,6 +181,18 @@
     "InvalidType": "Invalid file type. Valid extensions are .js, .css, .json, .txt, .csv, .tsv, .frag, and .vert."
   },
   "NewFileForm": {
-  "AddFileSubmit": "Add File"
-}
+  "AddFileSubmit": "Add File",
+    "Placeholder": "Name"
+},
+  "NewFolderModal": {
+    "Title": "Create Folder",
+    "CloseButtonARIA": "Close New Folder Modal",
+    "EnterName": "Please enter a name",
+    "EmptyName": "Folder name cannot contain only spaces",
+    "InvalidExtension": "Folder name cannot contain an extension"
+  },
+  "NewFolderForm": {
+    "AddFolderSubmit": "Add Folder",
+    "Placeholder": "Name"
+  }
 }

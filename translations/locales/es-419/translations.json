@@ -180,7 +180,19 @@
     "InvalidType": "Tipo de archivo inválido. Las extensiones válidas son .js, .css, .json, .txt, .csv, .tsv, .frag y .vert."
   },
   "NewFileForm": {
-    "AddFileSubmit": "Agregar Archivo"
+    "AddFileSubmit": "Agregar Archivo",
+    "Placeholder": "Nombre"
+  },
+  "NewFolderModal": {
+  "Title": "Crear Directorio",
+  "CloseButtonARIA": "Cerrar Diálogo de Nuevo Directorio",
+  "EnterName": "Por favor introduce un nombre",
+  "EmptyName": " El nombre del directorio no debe contener solo espacios vacíos",
+  "InvalidExtension": "El nombre del directorio no debe contener una extensión"
+},
+  "NewFolderForm": {
+    "AddFolderSubmit": "Agregar Directorio",
+    "Placeholder": "Nombre"
   }
 }
 
