@@ -103,8 +103,8 @@ export function deleteFile(req, res) {
     const idsToDelete = getAllDescendantIds(project.files, req.params.file_id);
     deleteMany(project.files, [req.params.file_id, ...idsToDelete]);
     project.files = deleteChild(project.files, req.query.parentId, req.params.file_id);
-    project.save((innerErr) => {
-      res.json(project.files);
+    project.save((innerErr, savedProject) => {
+      res.json({ project: savedProject });
     });
   });
 }

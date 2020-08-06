@@ -301,7 +301,7 @@ class IDEView extends React.Component {
             onChange={size => this.setState({ sidebarSize: size })}
             onDragFinished={this._handleSidebarPaneOnDragFinished}
             allowResize={this.props.ide.sidebarIsExpanded}
-            minSize={20}
+            minSize={125}
           >
             <Sidebar
               files={this.props.files}
