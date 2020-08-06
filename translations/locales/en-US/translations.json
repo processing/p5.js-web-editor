@@ -34,16 +34,22 @@
     "BackEditor": "Back to Editor",
     "WarningUnsavedChanges": "Are you sure you want to leave this page? You have unsaved changes.",
     "Login": {
-      "Login": "Log in",
+      "Title": "p5.js Web Editor | Login",
+      "Login": "Log In",
       "LoginOr": "or",
-      "SignUp": "Sign up",
+      "SignUp": "Sign Up",
       "Email": "email",
       "Username": "username",
       "LoginGithub": "Login with Github",
       "LoginGoogle": "Login with Google",
-      "DontHaveAccount": "Don't have an account?",
-      "ForgotPassword": "Forgot your password?",
-      "ResetPassword": "Reset your password"
+      "DontHaveAccount": "Don't have an account? ",
+      "ForgotPassword": "Forgot your password? ",
+      "ResetPassword": "Reset your password",
+      "UsernameOrEmail": "Email or Username",
+      "UsernameOrEmailARIA": "Email or Username",
+      "Password": "Password",
+      "PasswordARIA": "Password",
+      "Submit": "Log In"
     },
     "Auth": {
       "Welcome": "Welcome",
