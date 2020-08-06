@@ -10,6 +10,61 @@ import FolderRightIcon from '../../../images/triangle-arrow-right.svg';
 import FolderDownIcon from '../../../images/triangle-arrow-down.svg';
 import FileIcon from '../../../images/file.svg';
 
+function parseFileName(name) {
+  const nameArray = name.split('.');
+  if (nameArray.length > 1) {
+    const extension = `.${nameArray[nameArray.length - 1]}`;
+    const baseName = nameArray.slice(0, -1).join('');
+    const firstLetter = baseName[0];
+    const lastLetter = baseName[baseName.length - 1];
+    const middleText = baseName.slice(1, -1);
+    return {
+      baseName,
+      firstLetter,
+      lastLetter,
+      middleText,
+      extension
+    };
+  }
+  const firstLetter = name[0];
+  const lastLetter = name[name.length - 1];
+  const middleText = name.slice(1, -1);
+  return {
+    baseName: name,
+    firstLetter,
+    lastLetter,
+    middleText
+  };
+}
+
+function FileName({ name }) {
+  const {
+    baseName,
+    firstLetter,
+    lastLetter,
+    middleText,
+    extension
+  } = parseFileName(name);
+  return (
+    <span className="sidebar__file-item-name-text">
+      <span>{firstLetter}</span>
+      {baseName.length > 2 &&
+        <span className="sidebar__file-item-name--ellipsis">{middleText}</span>
+      }
+      {baseName.length > 1 &&
+        <span>{lastLetter}</span>
+      }
+      {extension &&
+        <span>{extension}</span>
+      }
+    </span>
+  );
+}
+
+FileName.propTypes = {
+  name: PropTypes.string.isRequired
+};
+
 export class FileNode extends React.Component {
   constructor(props) {
     super(props);
@@ -206,11 +261,12 @@ export class FileNode extends React.Component {
               </div>
             }
             <button
-              aria-label="Name"
+              aria-label={this.state.updatedName}
               className="sidebar__file-item-name"
               onClick={this.handleFileClick}
+              data-testid="file-name"
             >
-              {this.state.updatedName}
+              <FileName name={this.state.updatedName} />
             </button>
             <input
               data-testid="input"

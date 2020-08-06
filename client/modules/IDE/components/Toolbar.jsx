@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import classNames from 'classnames';
+import { withTranslation } from 'react-i18next';
 import * as IDEActions from '../actions/ide';
 import * as preferenceActions from '../actions/preferences';
 import * as projectActions from '../actions/project';
@@ -115,7 +116,7 @@ class Toolbar extends React.Component {
             }}
           />
           <label htmlFor="autorefresh" className="toolbar__autorefresh-label">
-            Auto-refresh
+            {this.props.t('Toolbar.Auto-refresh')}
           </label>
         </div>
         <div className={nameContainerClass}>
@@ -197,7 +198,8 @@ Toolbar.propTypes = {
   startSketch: PropTypes.func.isRequired,
   startAccessibleSketch: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
-  currentUser: PropTypes.string
+  currentUser: PropTypes.string,
+  t: PropTypes.func.isRequired
 };
 
 Toolbar.defaultProps = {
@@ -224,4 +226,5 @@ const mapDispatchToProps = {
 };
 
 export const ToolbarComponent = Toolbar;
-export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);
+// export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);
+export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(Toolbar));
