@@ -97,8 +97,7 @@ const MobileIDEView = (props) => {
   />);
 
   const [toggleExplorer, Explorer] = useAsModal(<Sidebar
-    title="hahaha"
-    onPressClose={() => {}}
+    title="Files"
   />, true);
 
   // toggle sidebar starting opened

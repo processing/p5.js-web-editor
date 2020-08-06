@@ -12,13 +12,16 @@ const BackgroundOverlay = styled.div`
   opacity: 0.3;
 `;
 
-export default (component, hasOverlay = false) => {
+export default (Element, hasOverlay = false) => {
   const [visible, toggle, setRef] = useModalBehavior();
 
-  const wrapper = () => (<div>
-    {hasOverlay && visible && <BackgroundOverlay />}
-    <div ref={setRef}> {visible && component} </div>
-  </div>); // eslint-disable-line
+  // const Comp = styled(() => Element).attrs({ onPressClose: toggle });
+
+  const wrapper = () => (visible &&
+    <div>
+      {hasOverlay && <BackgroundOverlay />}
+      <div ref={setRef}> {Element} </div>
+    </div>); // eslint-disable-line}
 
   return [toggle, wrapper];
 };

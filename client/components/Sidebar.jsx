@@ -23,7 +23,7 @@ const SidebarWrapper = styled.div`
 const Sidebar = ({ title, onPressClose }) => (
   <SidebarWrapper>
     {title &&
-    <Header slim title={title}>
+    <Header slim title={title} fixed={false}>
       <IconButton onPress={onPressClose} icon={ExitIcon} aria-label="Return to ide view" />
     </Header>}
   </SidebarWrapper>
