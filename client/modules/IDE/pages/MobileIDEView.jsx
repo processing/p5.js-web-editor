@@ -82,18 +82,18 @@ const MobileIDEView = (props) => {
   // Force state reset
   useEffect(clearPersistedState, []);
   useEffect(stopSketch, []);
-  useEffect(() => getProject(params.project_id), []);
 
   // Load Project
   const [currentProjectID, setCurrentProjectID] = useState(null);
   useEffect(() => {
+    if (!username) return;
     if (params.project_id && !currentProjectID) {
       if (params.project_id !== project.id) {
-        getProject(params.project_id);
+        getProject(params.project_id, params.username);
       }
     }
     setCurrentProjectID(params.project_id);
-  }, [params, project]);
+  }, [params, project, username]);
 
 
   return (
@@ -269,7 +269,10 @@ MobileIDEView.propTypes = {
 
   getProject: PropTypes.func.isRequired,
   clearPersistedState: PropTypes.func.isRequired,
-  params: PropTypes.shape({ project_id: PropTypes.string }).isRequired,
+  params: PropTypes.shape({
+    project_id: PropTypes.string,
+    username: PropTypes.string
+  }).isRequired,
 };
 
 function mapStateToProps(state) {
