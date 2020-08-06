@@ -42,7 +42,6 @@
       "Username": "Identificación",
       "LoginGithub": "Ingresa con Github",
       "GithubLogoARIA": " Logo de {{serviceauth}}",
-
       "LoginGoogle": "Ingresa con Google",
       "DontHaveAccount": "¿No tienes cuenta? ",
       "ForgotPassword": "¿Olvidaste tu contraseña? ",
