@@ -41,6 +41,7 @@
       "Email": "email",
       "Username": "username",
       "LoginGithub": "Login with Github",
+      "GithubLogoARIA": "{{serviceauth}} logo",
       "LoginGoogle": "Login with Google",
       "DontHaveAccount": "Don't have an account? ",
       "ForgotPassword": "Forgot your password? ",
