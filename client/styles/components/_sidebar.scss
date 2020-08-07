@@ -110,8 +110,28 @@
   }
 }
 
+.sidebar__file-item-name--ellipsis {
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  min-width: #{15 / $base-font-size}rem;
+}
+
+.sidebar__file-item-name-text {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  min-width: #{50 / $base-font-size}rem;
+  white-space: nowrap;
+  text-align: left;
+}
+
 .sidebar__file-item-name {
   padding: #{4 / $base-font-size}rem 0;
+  padding-right: #{25 / $base-font-size}rem;
+  font-family: Inconsolata, monospace;
+  font-size: #{14 / $base-font-size}rem;
+  overflow: hidden;
   .sidebar__file-item--editing & {
     display: none;
   }
@@ -174,6 +194,8 @@
   padding: 0;
   border: 0;
   width: calc(100% - #{63 / $base-font-size}rem);
+  font-family: Inconsolata, monospace;
+  font-size: #{14 / $base-font-size}rem;
   .sidebar__file-item--editing & {
     display: inline-block;
   }
@@ -253,9 +275,6 @@
     @include themify() {
       fill: getThemifyVariable('secondary-text-color');
     }
-  }
-  & svg {
-    height: #{10 / $base-font-size}rem;
   }
   background-color: transparent;
   border: none;
