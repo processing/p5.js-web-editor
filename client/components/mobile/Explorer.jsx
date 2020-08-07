@@ -7,7 +7,7 @@ import ConnectedFileNode from '../../modules/IDE/components/FileNode';
 
 const Explorer = ({ id, canEdit, onPressClose }) => (
   <Sidebar title="Files" onPressClose={onPressClose}>
-    <ConnectedFileNode id={id} canEdit={canEdit} onClickFile={onPressClose} />
+    <ConnectedFileNode id={id} canEdit={canEdit} onClickFile={() => onPressClose()} />
   </Sidebar>
 );
 

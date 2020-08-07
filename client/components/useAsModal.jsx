@@ -15,8 +15,6 @@ const BackgroundOverlay = styled.div`
 export default (Element, hasOverlay = false) => {
   const [visible, toggle, setRef] = useModalBehavior();
 
-  // const Comp = styled(() => Element).attrs({ onPressClose: toggle });
-
   const wrapper = () => (visible &&
     <div>
       {hasOverlay && <BackgroundOverlay />}
