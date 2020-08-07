@@ -60,7 +60,6 @@ export function validateAndLoginUser(previousPath, formProps, dispatch) {
           preferences: response.data.preferences
         });
         const valorLanguage = response.data.preferences.language;
-        console.log(`validate loginUser ${valorLanguage}`);
         dispatch({
           type: ActionTypes.SET_LANGUAGE,
           language: valorLanguage
@@ -86,11 +85,9 @@ export function getUser() {
           type: ActionTypes.SET_PREFERENCES,
           preferences: response.data.preferences
         });
-        const valorLanguage = response.data.preferences.language;
-        console.log(` getUser  ${valorLanguage}`);
         dispatch({
           type: ActionTypes.SET_LANGUAGE,
-          language: valorLanguage
+          language: response.data.preferences.language
         });
       }).catch((error) => {
         const { response } = error;

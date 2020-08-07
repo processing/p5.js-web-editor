@@ -19,7 +19,6 @@ const initialState = {
 const preferences = (state = initialState, action) => {
   switch (action.type) {
     case ActionTypes.SET_FONT_SIZE:
-      console.log(`loading font size ${action.value}`);
       return Object.assign({}, state, { fontSize: action.value });
     case ActionTypes.SET_AUTOSAVE:
       return Object.assign({}, state, { autosave: action.value });
@@ -36,15 +35,12 @@ const preferences = (state = initialState, action) => {
     case ActionTypes.SET_PREFERENCES:
       return action.preferences;
     case ActionTypes.SET_THEME:
-      console.log(`reducer preference loading theme  ${action.value}`);
       return Object.assign({}, state, { theme: action.value });
     case ActionTypes.SET_AUTOREFRESH:
       return Object.assign({}, state, { autorefresh: action.value });
     case ActionTypes.SET_LINE_NUMBERS:
       return Object.assign({}, state, { lineNumbers: action.value });
     case ActionTypes.SET_LANGUAGE:
-      // console.log(`reducer preference set language lenguage ${action.language}`);
-      // i18next.changeLanguage(action.language);
       return Object.assign({}, state, { language: action.language });
     default:
       return state;

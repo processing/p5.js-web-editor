@@ -45,7 +45,8 @@ describe('Nav', () => {
     rootFile: {
       id: 'root-file'
     },
-    t: jest.fn()
+    t: jest.fn(),
+    setLanguage: jest.fn()
   };
 
   it('renders correctly', () => {

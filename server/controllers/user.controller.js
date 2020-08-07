@@ -124,7 +124,6 @@ export function updatePreferences(req, res) {
       return;
     }
 
-    console.log('update preferences user.controller');
     const preferences = Object.assign({}, user.preferences, req.body.preferences);
     user.preferences = preferences;
 

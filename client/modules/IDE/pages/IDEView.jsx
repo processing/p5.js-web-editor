@@ -146,7 +146,6 @@ class IDEView extends React.Component {
       this.props.router.setRouteLeaveHook(this.props.route, () => warnIfUnsavedChanges(this.props));
     }
     if (this.props.preferences.language !== prevProps.preferences.language) {
-      console.log(`didUpdate IDEView ${this.props.preferences.language}`);
       i18next.changeLanguage(this.props.preferences.language);
     }
   }
@@ -248,8 +247,6 @@ class IDEView extends React.Component {
               setSoundOutput={this.props.setSoundOutput}
               theme={this.props.preferences.theme}
               setTheme={this.props.setTheme}
-              // language={this.props.preferences.language}
-              // setLanguage={this.props.setLanguage}
             />
           </Overlay>
         }
@@ -612,7 +609,6 @@ IDEView.propTypes = {
   openUploadFileModal: PropTypes.func.isRequired,
   closeUploadFileModal: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired
-  // setLanguage: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

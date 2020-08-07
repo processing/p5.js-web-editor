@@ -170,7 +170,6 @@ class Nav extends React.PureComponent {
 
   handleLangSelection(event) {
     i18next.changeLanguage(event.target.value);
-    console.log(`value ${event.target.value}`);
     this.props.setLanguage(event.target.value);
     this.props.showToast(1500);
     this.props.setToastText('Toast.LangChange');
