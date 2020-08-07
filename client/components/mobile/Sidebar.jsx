@@ -20,11 +20,13 @@ const SidebarWrapper = styled.div`
   box-shadow: 0 6px 6px 0 rgba(0,0,0,0.10);
 `;
 
+// onClick={() => alert('haha')}
+
 const Sidebar = ({ title, onPressClose, children }) => (
   <SidebarWrapper>
     {title &&
     <Header slim title={title} fixed={false}>
-      <IconButton onPress={onPressClose} icon={ExitIcon} aria-label="Return to ide view" />
+      <IconButton onClick={onPressClose} icon={ExitIcon} aria-label="Return to ide view" />
     </Header>}
     {children}
   </SidebarWrapper>

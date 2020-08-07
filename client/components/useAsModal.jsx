@@ -20,7 +20,11 @@ export default (Element, hasOverlay = false) => {
   const wrapper = () => (visible &&
     <div>
       {hasOverlay && <BackgroundOverlay />}
-      <div ref={setRef}> {Element} </div>
+      <div ref={setRef}>
+        { (typeof (Element) === 'function')
+          ? Element(toggle)
+          : Element}
+      </div>
     </div>);
 
   return [toggle, wrapper];

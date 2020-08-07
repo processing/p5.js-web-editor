@@ -116,8 +116,12 @@ const MobileIDEView = (props) => {
     align="right"
   />);
 
-
-  const [toggleExplorer, Explorer] = useAsModal(<MobileExplorer id={getRootFileID(files)} canEdit={false} />, true);
+  const [toggleExplorer, Explorer] = useAsModal(toggle =>
+    (<MobileExplorer
+      id={getRootFileID(files)}
+      canEdit={false}
+      onPressClose={toggle}
+    />), true);
 
   // toggle sidebar starting opened
   // useEffect(toggleExplorer, []);
