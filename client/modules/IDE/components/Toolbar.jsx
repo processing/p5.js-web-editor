@@ -14,7 +14,6 @@ import StopIcon from '../../../images/stop.svg';
 import PreferencesIcon from '../../../images/preferences.svg';
 import EditProjectNameIcon from '../../../images/pencil.svg';
 
-
 class Toolbar extends React.Component {
   constructor(props) {
     super(props);
