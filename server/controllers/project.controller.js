@@ -30,14 +30,15 @@ export function updateProject(req, res) {
         $set: req.body
       },
       {
-        new: true
+        new: true,
+        runValidators: true
       }
     )
       .populate('user', 'username')
       .exec((updateProjectErr, updatedProject) => {
         if (updateProjectErr) {
           console.log(updateProjectErr);
-          res.json({ success: false });
+          res.status(400).json({ success: false });
           return;
         }
         if (req.body.files && updatedProject.files.length !== req.body.files.length) {
@@ -50,7 +51,7 @@ export function updateProject(req, res) {
           updatedProject.save((innerErr, savedProject) => {
             if (innerErr) {
               console.log(innerErr);
-              res.json({ success: false });
+              res.status(400).json({ success: false });
               return;
             }
             res.json(savedProject);
