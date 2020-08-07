@@ -20,7 +20,7 @@ import { getHTMLFile } from '../reducers/files';
 
 // Local Imports
 import Editor from '../components/Editor';
-import { PlayIcon, MoreIcon } from '../../../common/icons';
+import { PlayIcon, MoreIcon, CircleFolderIcon } from '../../../common/icons';
 
 import IconButton from '../../../components/mobile/IconButton';
 import Header from '../../../components/mobile/Header';
@@ -30,12 +30,12 @@ import IDEWrapper from '../../../components/mobile/IDEWrapper';
 import MobileExplorer from '../../../components/mobile/Explorer';
 import Console from '../components/Console';
 import { remSize } from '../../../theme';
-// import OverlayManager from '../../../components/OverlayManager';
+
 import ActionStrip from '../../../components/mobile/ActionStrip';
 import useAsModal from '../../../components/useAsModal';
 import { PreferencesIcon } from '../../../common/icons';
 import Dropdown from '../../../components/Dropdown';
-import Sidebar from '../../../components/mobile/Sidebar';
+import FloatingNav from '../../../components/mobile/FloatingNav';
 
 
 const getRootFile = files => files && files.filter(file => file.name === 'root')[0];
@@ -65,7 +65,7 @@ const NavItem = styled.li`
   position: relative;
 `;
 
-const getNatOptions = (username = undefined) =>
+const getNavOptions = (username = undefined) =>
   (username
     ? [
       { icon: PreferencesIcon, title: 'Preferences', href: '/mobile/preferences', },
@@ -112,14 +112,18 @@ const MobileIDEView = (props) => {
 
   // Screen Modals
   const [toggleNavDropdown, NavDropDown] = useAsModal(<Dropdown
-    items={getNatOptions(username)}
+    items={getNavOptions(username)}
     align="right"
   />);
+
 
   const [toggleExplorer, Explorer] = useAsModal(<MobileExplorer id={getRootFileID(files)} canEdit={false} />, true);
 
   // toggle sidebar starting opened
-  useEffect(toggleExplorer, []);
+  // useEffect(toggleExplorer, []);
+
+  const floatingNavOptions =
+    [{ icon: CircleFolderIcon, onPress: toggleExplorer }];
 
   return (
     <Screen fullscreen>
@@ -129,11 +133,6 @@ const MobileIDEView = (props) => {
         subtitle={selectedFile.name}
       >
         <NavItem>
-          <IconButton
-            onClick={toggleExplorer}
-            icon={MoreIcon}
-            aria-label="Options"
-          />
           <IconButton
             onClick={toggleNavDropdown}
             icon={MoreIcon}
@@ -180,6 +179,7 @@ const MobileIDEView = (props) => {
           provideController={setTmController}
           setUnsavedChanges={setUnsavedChanges}
         />
+        <FloatingNav items={floatingNavOptions} />
       </IDEWrapper>
 
       <Footer>
