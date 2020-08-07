@@ -13,7 +13,7 @@ describe('<FileNode />', () => {
   };
 
   const expectFileNameToBe = async (expectedName) => {
-    const name = screen.getByLabelText(/Name/i);
+    const name = screen.getByTestId('file-name');
     await waitFor(() => within(name).queryByText(expectedName));
   };
 
