@@ -21,7 +21,7 @@ export default (Element, hasOverlay = false) => {
     <div>
       {hasOverlay && <BackgroundOverlay />}
       <div ref={setRef}> {Element} </div>
-    </div>); // eslint-disable-line}
+    </div>);
 
   return [toggle, wrapper];
 };
