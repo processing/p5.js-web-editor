@@ -7,7 +7,7 @@ import { withRouter, Link } from 'react-router';
 import Screen from '../../components/mobile/MobileScreen';
 import Header from '../../components/mobile/Header';
 import IconButton from '../../components/mobile/IconButton';
-import { ExitIcon } from '../../common/icons';
+import { ExitIcon, MoreIcon } from '../../common/icons';
 import Footer from '../../components/mobile/Footer';
 import { prop, remSize } from '../../theme';
 import SketchList from '../IDE/components/SketchList';
@@ -16,6 +16,8 @@ import AssetList from '../IDE/components/AssetList';
 import Content from './MobileViewContent';
 import { SketchSearchbar, CollectionSearchbar } from '../IDE/components/Searchbar';
 import Button from '../../common/Button';
+import useAsModal from '../../components/useAsModal';
+import Dropdown from '../../components/Dropdown';
 
 const EXAMPLE_USERNAME = 'p5';
 
@@ -94,10 +96,11 @@ const Panels = {
   assets: AssetList
 };
 
-const CreatePathname = {
-  sketches: '/mobile',
-  collections: '/mobile/:username/collections/create',
-};
+
+const navOptions = username => [
+  { title: 'Create Sketch', href: '/mobile' },
+  { title: 'Create Collection', href: `/mobile/${username}/collections/create` }
+];
 
 
 const getPanel = (pathname) => {
@@ -106,7 +109,10 @@ const getPanel = (pathname) => {
   return matches && matches.length > 0 && matches[0];
 };
 
-const getCreatePathname = (panel, username) => (CreatePathname[panel] || '#').replace(':username', username);
+const NavItem = styled.li`
+  position: relative;
+`;
+
 
 const isOwner = (user, params) => user && params && user.username === params.username;
 
@@ -114,27 +120,41 @@ const renderPanel = (name, props) => (Component => (Component && <Component {...
 
 const MobileDashboard = ({ params, location }) => {
   const user = useSelector(state => state.user);
-  const { username } = params;
+  const { username: paramsUsername } = params;
   const { pathname } = location;
 
   const Tabs = Object.keys(Panels);
-  const isExamples = username === EXAMPLE_USERNAME;
+  const isExamples = paramsUsername === EXAMPLE_USERNAME;
   const panel = getPanel(pathname);
+
+
+  const [toggleNavDropdown, NavDropdown] = useAsModal(<Dropdown
+    items={navOptions(user.username)}
+    align="right"
+  />);
 
   return (
     <Screen fullscreen key={pathname}>
       <Header slim inverted title={isExamples ? 'Examples' : 'My Stuff'}>
+        <NavItem>
+          <IconButton
+            onClick={toggleNavDropdown}
+            icon={MoreIcon}
+            aria-label="Options"
+          />
+          <NavDropdown />
+
+        </NavItem>
         <IconButton to="/mobile" icon={ExitIcon} aria-label="Return to ide view" />
       </Header>
 
 
       <ContentWrapper slimheader>
         <Subheader>
-          {isOwner(user, params) && (panel !== Tabs[2]) && <SubheaderButton to={getCreatePathname(panel, username)}>new</SubheaderButton>}
           {panel === Tabs[0] && <SketchSearchbar />}
           {panel === Tabs[1] && <CollectionSearchbar />}
         </Subheader>
-        {renderPanel(panel, { username, key: pathname })}
+        {renderPanel(panel, { paramsUsername, key: pathname })}
       </ContentWrapper>
       <Footer>
         {!isExamples &&
