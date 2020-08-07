@@ -27,6 +27,7 @@ import Header from '../../../components/mobile/Header';
 import Screen from '../../../components/mobile/MobileScreen';
 import Footer from '../../../components/mobile/Footer';
 import IDEWrapper from '../../../components/mobile/IDEWrapper';
+import MobileExplorer from '../../../components/mobile/Explorer';
 import Console from '../components/Console';
 import { remSize } from '../../../theme';
 // import OverlayManager from '../../../components/OverlayManager';
@@ -34,10 +35,27 @@ import ActionStrip from '../../../components/mobile/ActionStrip';
 import useAsModal from '../../../components/useAsModal';
 import { PreferencesIcon } from '../../../common/icons';
 import Dropdown from '../../../components/Dropdown';
-import Sidebar from '../../../components/Sidebar';
+import Sidebar from '../../../components/mobile/Sidebar';
+
+
+const getRootFile = files => files && files.filter(file => file.name === 'root')[0];
+const getRootFileID = files => (root => root && root.id)(getRootFile(files));
 
 const isUserOwner = ({ project, user }) =>
   project.owner && project.owner.id === user.id;
+
+
+// const userCanEditProject = (props) => {
+//   let canEdit;
+//   if (!props.owner) {
+//     canEdit = true;
+//   } else if (props.user.authenticated && props.owner.id === props.user.id) {
+//     canEdit = true;
+//   } else {
+//     canEdit = false;
+//   }
+//   return canEdit;
+// };
 
 const Expander = styled.div`
   height: ${props => (props.expanded ? remSize(160) : remSize(27))};
@@ -75,6 +93,7 @@ const MobileIDEView = (props) => {
 
   const { username } = user;
 
+
   // Force state reset
   useEffect(clearPersistedState, []);
   useEffect(stopSketch, []);
@@ -91,14 +110,13 @@ const MobileIDEView = (props) => {
     setCurrentProjectID(params.project_id);
   }, [params, project, username]);
 
+  // Screen Modals
   const [toggleNavDropdown, NavDropDown] = useAsModal(<Dropdown
     items={getNatOptions(username)}
     align="right"
   />);
 
-  const [toggleExplorer, Explorer] = useAsModal(<Sidebar
-    title="Files"
-  />, true);
+  const [toggleExplorer, Explorer] = useAsModal(<MobileExplorer id={getRootFileID(files)} canEdit={false} />, true);
 
   // toggle sidebar starting opened
   useEffect(toggleExplorer, []);
