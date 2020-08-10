@@ -9,7 +9,7 @@ import Header from '../../components/mobile/Header';
 import IconButton from '../../components/mobile/IconButton';
 import { ExitIcon, MoreIcon } from '../../common/icons';
 import Footer from '../../components/mobile/Footer';
-import { remSize } from '../../theme';
+import { remSize, prop } from '../../theme';
 import SketchList from '../IDE/components/SketchList';
 import CollectionList from '../IDE/components/CollectionList';
 import AssetList from '../IDE/components/AssetList';
@@ -26,7 +26,6 @@ const EXAMPLE_USERNAME = 'p5';
 const ContentWrapper = styled(Content)`
   table {
     table-layout: fixed;
-    /* white-space: nowrap; */
   }
   
   td ,thead button {
@@ -35,30 +34,41 @@ const ContentWrapper = styled(Content)`
     text-align: left;
   };
 
-  thead th { padding-left: 0; }
-
-  thead th:not(:first-child), tbody td  {
-    width: ${remSize(54)};
-  }
-
-  tbody th { font-weight: bold; };
 
   tbody th {
-    font-size: ${remSize(12)};
+    font-size: ${remSize(16)};
     width: 100%;
-    padding-right: ${remSize(12)}
+    padding-right: ${remSize(12)};
+    font-weight: bold;
+    display: flex;
+    grid-area: name;
   };
 
-  tbody td {
-    text-align: center;
+  tbody td, thead th {
+    justify-self: stretch;
+    align-self: flex-end;
   }
 
-  .sketch-list__sort-button { padding: 0 }
+  tbody td:nth-child(2) { grid-column-start: 2 }
+  tbody td:last-child { justify-self: end }
+
+  /* .sketch-list__sort-button { padding: 0 } */
   tbody {
     height: ${remSize(48)};
   }
 
   .sketches-table-container { padding-bottom: ${remSize(160)} }
+  .sketches-table__row { background: white !important; height: auto }
+
+  tr {
+    align-self: start;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-template-areas: "name name name name" "none content content content";
+
+    border-radius: ${remSize(4)}; padding: ${remSize(8)};
+    box-shadow: 0 0 18px 0 ${prop('shadowColor')};
+  };
 `;
 
 const Subheader = styled.div`
