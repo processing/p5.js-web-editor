@@ -58,6 +58,7 @@ export const prop = key => (props) => {
   return value;
 };
 
+
 export default {
   [Theme.light]: {
     colors,
