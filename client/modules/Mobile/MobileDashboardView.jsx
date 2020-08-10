@@ -51,7 +51,7 @@ const ContentWrapper = styled(Content)`
   }
 
   tbody td:nth-child(2) { grid-column-start: 2 }
-  tbody td:last-child { justify-self: end }
+  tbody td:last-child { justify-self: end; text-align: end; }
 
   /* .sketch-list__sort-button { padding: 0 } */
   tbody {
@@ -60,10 +60,10 @@ const ContentWrapper = styled(Content)`
 
   .sketches-table-container {
     padding-bottom: ${remSize(160)};
-    background: ${prop('backgroundColor')};
+    background: ${prop('SketchList.background')};
     }
   .sketches-table__row {
-    background: ${prop('backgroundColor')} !important; height: auto
+    background: ${prop('SketchList.card.background')} !important; height: auto
   }
 
   tr {

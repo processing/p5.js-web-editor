@@ -106,6 +106,12 @@ export default {
     Separator: grays.middleLight,
 
     TabHighlight: colors.p5jsPink,
+    SketchList: {
+      background: grays.lighter,
+      card: {
+        background: grays.lighter
+      }
+    }
   },
   [Theme.dark]: {
     colors,
@@ -153,6 +159,12 @@ export default {
     Separator: grays.middleDark,
 
     TabHighlight: colors.p5jsPink,
+    SketchList: {
+      background: grays.darker,
+      card: {
+        background: grays.dark
+      }
+    }
   },
   [Theme.contrast]: {
     colors,
@@ -199,6 +211,12 @@ export default {
     },
     Separator: grays.middleDark,
 
-    TabHighlight: colors.yellow,
+    TabHighlight: grays.darker,
+    SketchList: {
+      background: colors.yellow,
+      card: {
+        background: grays.dark
+      }
+    }
   },
 };
