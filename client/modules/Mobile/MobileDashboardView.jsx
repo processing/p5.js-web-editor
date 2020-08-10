@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
-import { withRouter, Link } from 'react-router';
+import { withRouter } from 'react-router';
 
 import Screen from '../../components/mobile/MobileScreen';
 import Header from '../../components/mobile/Header';
 import IconButton from '../../components/mobile/IconButton';
 import { ExitIcon, MoreIcon } from '../../common/icons';
 import Footer from '../../components/mobile/Footer';
-import { prop, remSize } from '../../theme';
+import { remSize } from '../../theme';
 import SketchList from '../IDE/components/SketchList';
 import CollectionList from '../IDE/components/CollectionList';
 import AssetList from '../IDE/components/AssetList';
@@ -18,6 +18,8 @@ import { SketchSearchbar, CollectionSearchbar } from '../IDE/components/Searchba
 import Button from '../../common/Button';
 import useAsModal from '../../components/useAsModal';
 import Dropdown from '../../components/Dropdown';
+import FooterTabSwitcher from '../../components/mobile/TabSwitcher';
+import FooterTab from '../../components/mobile/Tab';
 
 const EXAMPLE_USERNAME = 'p5';
 
@@ -57,30 +59,6 @@ const ContentWrapper = styled(Content)`
   }
 
   .sketches-table-container { padding-bottom: ${remSize(160)} }
-`;
-
-const FooterTabSwitcher = styled.div`
-  display: flex;
-  justify-content: space-between;
-  
-  h3 { text-align: center; width: 100%; }
-  border-top: 1px solid ${prop('Separator')};
-
-  background: ${props => prop('backgroundColor')};
-`;
-
-const FooterTab = styled(Link)`
-  box-sizing: border-box;
-
-
-  background: transparent;
-  /* border-top: ${remSize(4)} solid ${props => prop(props.selected ? 'colors.p5jsPink' : 'MobilePanel.default.background')}; */
-  border-top: ${remSize(4)} solid ${props => (props.selected ? prop('colors.p5jsPink') : 'transparent')};
-
-  color: ${prop('primaryTextColor')};
-
-  padding: ${remSize(8)} ${remSize(16)};
-  width: 30%;
 `;
 
 const Subheader = styled.div`
