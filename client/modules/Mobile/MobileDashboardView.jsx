@@ -141,7 +141,7 @@ const MobileDashboard = ({ params, location }) => {
           {panel === Tabs[0] && <SketchSearchbar />}
           {panel === Tabs[1] && <CollectionSearchbar />}
         </Subheader>
-        {renderPanel(panel, { paramsUsername, key: pathname })}
+        {renderPanel(panel, { username: paramsUsername, key: pathname })}
       </ContentWrapper>
       <Footer>
         {!isExamples &&
