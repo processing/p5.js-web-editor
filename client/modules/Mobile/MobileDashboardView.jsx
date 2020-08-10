@@ -47,6 +47,7 @@ const ContentWrapper = styled(Content)`
   tbody td, thead th {
     justify-self: stretch;
     align-self: flex-end;
+    color: ${prop('primaryTextColor')}
   }
 
   tbody td:nth-child(2) { grid-column-start: 2 }
@@ -57,8 +58,13 @@ const ContentWrapper = styled(Content)`
     height: ${remSize(48)};
   }
 
-  .sketches-table-container { padding-bottom: ${remSize(160)} }
-  .sketches-table__row { background: white !important; height: auto }
+  .sketches-table-container {
+    padding-bottom: ${remSize(160)};
+    background: ${prop('backgroundColor')};
+    }
+  .sketches-table__row {
+    background: ${prop('backgroundColor')} !important; height: auto
+  }
 
   tr {
     align-self: start;

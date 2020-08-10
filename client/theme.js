@@ -104,6 +104,8 @@ export default {
       border: grays.middleLight
     },
     Separator: grays.middleLight,
+
+    TabHighlight: colors.p5jsPink,
   },
   [Theme.dark]: {
     colors,
@@ -149,6 +151,8 @@ export default {
       border: grays.middleDark
     },
     Separator: grays.middleDark,
+
+    TabHighlight: colors.p5jsPink,
   },
   [Theme.contrast]: {
     colors,
@@ -194,5 +198,7 @@ export default {
       border: grays.middleDark
     },
     Separator: grays.middleDark,
+
+    TabHighlight: colors.yellow,
   },
 };
