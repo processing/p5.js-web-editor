@@ -31,10 +31,8 @@ const ContentWrapper = styled(Content)`
   
   td ,thead button {
     font-size: ${remSize(10)};
-    padding-left: 0;
     text-align: left;
   };
-
 
   tbody th {
     font-size: ${remSize(16)};
@@ -46,16 +44,17 @@ const ContentWrapper = styled(Content)`
   };
 
   tbody td, thead th {
-    justify-self: stretch;
+    justify-self: center;
     align-self: flex-end;
     color: ${prop('primaryTextColor')}
   }
 
-  tbody td { justify-self: center; padding-left: ${remSize(12)}}
-
   thead th svg { margin-left: ${remSize(8)} }
   
+  tbody td:first-child { justify-self: start; text-align: start; };
+  tbody td { justify-self: center; }
   tbody td:last-child { justify-self: end; text-align: end; };
+
   .sketches-table .sketch-list__dropdown-column { min-width: unset };
 
   tbody { height: ${remSize(48)}; }
@@ -75,7 +74,7 @@ const ContentWrapper = styled(Content)`
   };
 
   thead tr {
-    grid-template-columns: auto ${remSize(100)} ${remSize(100)} 0fr;
+    grid-template-columns: 1fr 1fr 1fr 0fr;
   }
 
   tbody tr {
@@ -86,6 +85,7 @@ const ContentWrapper = styled(Content)`
   }
 
   .loader-container { position: fixed ; padding-bottom: 32% }
+
 `;
 
 const Subheader = styled.div`
