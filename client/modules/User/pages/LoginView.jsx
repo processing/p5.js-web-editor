@@ -36,23 +36,23 @@ class LoginView extends React.Component {
         <Nav layout="dashboard" />
         <main className="form-container">
           <Helmet>
-            <title>{this.props.t('Nav.Login.Title')}</title>
+            <title>{this.props.t('Login.Title')}</title>
           </Helmet>
           <div className="form-container__content">
-            <h2 className="form-container__title">{this.props.t('Nav.Login.Login')}</h2>
+            <h2 className="form-container__title">{this.props.t('Login.Login')}</h2>
             <LoginForm {...this.props} />
-            <h2 className="form-container__divider">{this.props.t('Nav.Login.LoginOr')}</h2>
+            <h2 className="form-container__divider">{this.props.t('Login.LoginOr')}</h2>
             <div className="form-container__stack">
               <SocialAuthButton service={SocialAuthButton.services.github} />
               <SocialAuthButton service={SocialAuthButton.services.google} />
             </div>
             <p className="form__navigation-options">
-              {this.props.t('Nav.Login.DontHaveAccount')}
-              <Link className="form__signup-button" to="/signup">{this.props.t('Nav.Login.SignUp')}</Link>
+              {this.props.t('Login.DontHaveAccount')}
+              <Link className="form__signup-button" to="/signup">{this.props.t('Login.SignUp')}</Link>
             </p>
             <p className="form__navigation-options">
-              {this.props.t('Nav.Login.ForgotPassword')}
-              <Link className="form__reset-password-button" to="/reset-password"> {this.props.t('Nav.Login.ResetPassword')}</Link>
+              {this.props.t('Login.ForgotPassword')}
+              <Link className="form__reset-password-button" to="/reset-password"> {this.props.t('Login.ResetPassword')}</Link>
             </p>
           </div>
         </main>
