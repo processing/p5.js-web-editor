@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import classNames from 'classnames';
 import { withTranslation } from 'react-i18next';
-import i18n from 'i18next';
 import * as IDEActions from '../actions/ide';
 import * as preferenceActions from '../actions/preferences';
 import * as projectActions from '../actions/project';
@@ -87,7 +86,7 @@ class Toolbar extends React.Component {
             this.props.setTextOutput(true);
             this.props.setGridOutput(true);
           }}
-          aria-label={i18n.t('Toolbar.PlaySketchARIA')}
+          aria-label={this.props.t('Toolbar.PlaySketchARIA')}
           disabled={this.props.infiniteLoop}
         >
           <PlayIcon focusable="false" aria-hidden="true" />
@@ -95,7 +94,7 @@ class Toolbar extends React.Component {
         <button
           className={playButtonClass}
           onClick={this.props.startSketch}
-          aria-label={i18n.t('Toolbar.PlayOnlyVisualSketchARIA')}
+          aria-label={this.props.t('Toolbar.PlayOnlyVisualSketchARIA')}
           disabled={this.props.infiniteLoop}
         >
           <PlayIcon focusable="false" aria-hidden="true" />
@@ -103,7 +102,7 @@ class Toolbar extends React.Component {
         <button
           className={stopButtonClass}
           onClick={this.props.stopSketch}
-          aria-label={i18n.t('Toolbar.StopSketchARIA')}
+          aria-label={this.props.t('Toolbar.StopSketchARIA')}
         >
           <StopIcon focusable="false" aria-hidden="true" />
         </button>
@@ -117,7 +116,7 @@ class Toolbar extends React.Component {
             }}
           />
           <label htmlFor="autorefresh" className="toolbar__autorefresh-label">
-            {i18n.t('Toolbar.Auto-refresh')}
+            {this.props.t('Toolbar.Auto-refresh')}
           </label>
         </div>
         <div className={nameContainerClass}>
@@ -130,7 +129,7 @@ class Toolbar extends React.Component {
               }
             }}
             disabled={!canEditProjectName}
-            aria-label={i18n.t('Toolbar.EditSketchARIA')}
+            aria-label={this.props.t('Toolbar.EditSketchARIA')}
           >
             <span>{this.props.project.name}</span>
             {
@@ -146,7 +145,7 @@ class Toolbar extends React.Component {
             type="text"
             maxLength="128"
             className="toolbar__project-name-input"
-            aria-label={i18n.t('Toolbar.NewSketchNameARIA')}
+            aria-label={this.props.t('Toolbar.NewSketchNameARIA')}
             value={this.state.projectNameInputValue}
             onChange={this.handleProjectNameChange}
             ref={(element) => { this.projectNameInput = element; }}
@@ -166,7 +165,7 @@ class Toolbar extends React.Component {
         <button
           className={preferencesButtonClass}
           onClick={this.props.openPreferences}
-          aria-label={i18n.t('Toolbar.OpenPreferencesARIA')}
+          aria-label={this.props.t('Toolbar.OpenPreferencesARIA')}
         >
           <PreferencesIcon focusable="false" aria-hidden="true" />
         </button>
@@ -199,7 +198,9 @@ Toolbar.propTypes = {
   startSketch: PropTypes.func.isRequired,
   startAccessibleSketch: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
-  currentUser: PropTypes.string
+  currentUser: PropTypes.string,
+  t: PropTypes.func.isRequired
+
 };
 
 Toolbar.defaultProps = {
