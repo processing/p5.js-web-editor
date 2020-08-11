@@ -60,8 +60,7 @@ export function validateAndLoginUser(previousPath, formProps, dispatch) {
           type: ActionTypes.SET_PREFERENCES,
           preferences: response.data.preferences
         });
-        const valorLanguage = response.data.preferences.language;
-        setLanguage(valorLanguage, { persistPreference: false });
+        setLanguage(response.data.preferences.language, { persistPreference: false });
         dispatch(justOpenedProject());
         browserHistory.push(previousPath);
         resolve();
