@@ -12,7 +12,7 @@ const SidebarWrapper = styled.div`
   height: 100%;
   width: ${remSize(180)};
 
-  position: absolute;
+  position: fixed;
   z-index: 2;
   left: 0;
 

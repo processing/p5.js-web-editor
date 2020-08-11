@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useModalBehavior } from '../utils/custom-hooks';
 
 const BackgroundOverlay = styled.div`
-  position: absolute;
+  position: fixed;
   z-index: 2;
   width: 100% !important;
   height: 100% !important;
