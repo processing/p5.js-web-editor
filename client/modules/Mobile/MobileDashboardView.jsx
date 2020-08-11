@@ -74,9 +74,12 @@ const ContentWrapper = styled(Content)`
     grid-template-columns: 5fr 5fr 2fr;
     grid-template-areas: "name name name" "content content content";
 
-    border-radius: ${remSize(4)}; padding: ${remSize(8)};
     box-shadow: 0 0 18px 0 ${prop('shadowColor')};
   };
+
+  thead tr { grid-template-columns: auto ${remSize(100)} ${remSize(100)} 0fr; }
+
+  tbody tr { padding: ${remSize(8)}; border-radius: ${remSize(4)}; }
 `;
 
 const Subheader = styled.div`
