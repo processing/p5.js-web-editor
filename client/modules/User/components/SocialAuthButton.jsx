@@ -31,13 +31,12 @@ const StyledButton = styled(Button)`
 function SocialAuthButton({ service, t }) {
   const ServiceIcon = icons[service];
   const labels = {
-    github: t('Login.LoginGithub'),
-    google: t('Login.LoginGoogle')
+    github: t('SocialAuthButton.Github'),
+    google: t('SocialAuthButton.Google')
   };
   return (
     <StyledButton
-      // iconBefore={<ServiceIcon aria-label={`${service} logo`} />}
-      iconBefore={<ServiceIcon aria-label={t('Login.GithubLogoARIA', { serviceauth: service })} />}
+      iconBefore={<ServiceIcon aria-label={t('SocialAuthButton.LogoARIA', { serviceauth: service })} />}
       href={authUrls[service]}
     >
       {labels[service]}

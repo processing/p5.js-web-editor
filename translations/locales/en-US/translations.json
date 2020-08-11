@@ -48,24 +48,28 @@
       "LogOut": "Log Out"
     }
   },
-  "Login": {
+  "LoginForm": {
+    "UsernameOrEmail": "Email or Username",
+    "UsernameOrEmailARIA": "Email or Username",
+    "Password": "Password",
+    "PasswordARIA": "Password",
+    "Submit": "Log In"
+  },
+  "LoginView": {
     "Title": "p5.js Web Editor | Login",
     "Login": "Log In",
     "LoginOr": "or",
     "SignUp": "Sign Up",
     "Email": "email",
     "Username": "username",
-    "LoginGithub": "Login with Github",
-    "GithubLogoARIA": "{{serviceauth}} logo",
-    "LoginGoogle": "Login with Google",
     "DontHaveAccount": "Don't have an account? ",
     "ForgotPassword": "Forgot your password? ",
-    "ResetPassword": "Reset your password",
-    "UsernameOrEmail": "Email or Username",
-    "UsernameOrEmailARIA": "Email or Username",
-    "Password": "Password",
-    "PasswordARIA": "Password",
-    "Submit": "Log In"
+    "ResetPassword": "Reset your password"
+  },
+  "SocialAuthButton": {
+    "Github": "Login with Github",
+    "LogoARIA": "{{serviceauth}} logo",
+    "Google": "Login with Google"
   },
   "About": {
     "Title": "About",

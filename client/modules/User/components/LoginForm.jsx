@@ -13,10 +13,10 @@ function LoginForm(props) {
   return (
     <form className="form" onSubmit={handleSubmit(props.validateAndLoginUser.bind(this, props.previousPath))}>
       <p className="form__field">
-        <label htmlFor="email" className="form__label">{props.t('Login.UsernameOrEmail')}</label>
+        <label htmlFor="email" className="form__label">{props.t('LoginForm.UsernameOrEmail')}</label>
         <input
           className="form__input"
-          aria-label={props.t('Login.UsernameOrEmailARIA')}
+          aria-label={props.t('LoginForm.UsernameOrEmailARIA')}
           type="text"
           id="email"
           {...domOnlyProps(email)}
@@ -24,10 +24,10 @@ function LoginForm(props) {
         {email.touched && email.error && <span className="form-error">{email.error}</span>}
       </p>
       <p className="form__field">
-        <label htmlFor="password" className="form__label">{props.t('Login.Password')}</label>
+        <label htmlFor="password" className="form__label">{props.t('LoginForm.Password')}</label>
         <input
           className="form__input"
-          aria-label={props.t('Login.PasswordARIA')}
+          aria-label={props.t('LoginForm.PasswordARIA')}
           type="password"
           id="password"
           {...domOnlyProps(password)}
@@ -37,7 +37,7 @@ function LoginForm(props) {
       <Button
         type="submit"
         disabled={submitting || pristine}
-      >{props.t('Login.Submit')}
+      >{props.t('LoginForm.Submit')}
       </Button>
     </form>
   );

@@ -48,25 +48,29 @@
       "LogOut": "Cerrar sesión"
     }
   },
-  "Login": {
-  "Title": " Editor Web p5.js  | Ingreso",
-  "Login": "Ingresa",
-  "LoginOr": "o",
-  "SignUp": "Registráte",
-  "Email": "correo electrónico",
-  "Username": "Identificación",
-  "LoginGithub": "Ingresa con Github",
-  "GithubLogoARIA": " Logo de {{serviceauth}}",
-  "LoginGoogle": "Ingresa con Google",
-  "DontHaveAccount": "¿No tienes cuenta? ",
-  "ForgotPassword": "¿Olvidaste tu contraseña? ",
-  "ResetPassword": "Regenera tu contraseña",
-  "UsernameOrEmail": "Correo o Identificación",
-  "UsernameOrEmailARIA": "Introduce Correo o Identificación",
-  "Password": "Contraseña",
-  "PasswordARIA": "Contraseña",
-  "Submit": "Ingresa"
-},
+  "LoginForm": {
+    "UsernameOrEmail": "Correo o Identificación",
+    "UsernameOrEmailARIA": "Introduce Correo o Identificación",
+    "Password": "Contraseña",
+    "PasswordARIA": "Contraseña",
+    "Submit": "Ingresa"
+  },
+  "LoginView": {
+    "Title": " Editor Web p5.js  | Ingreso",
+    "Login": "Ingresa",
+    "LoginOr": "o",
+    "SignUp": "Registráte",
+    "Email": "correo electrónico",
+    "Username": "Identificación",
+    "DontHaveAccount": "¿No tienes cuenta? ",
+    "ForgotPassword": "¿Olvidaste tu contraseña? ",
+    "ResetPassword": "Regenera tu contraseña"
+  },
+  "SocialAuthButton": {
+    "Github": "Ingresa con Github",
+    "LogoARIA": "Logo de {{serviceauth}}",
+    "Google": "Ingresa con Google"
+  },
   "About": {
     "Title": "Acerca de",
     "TitleHelmet": "Editor Web p5.js | Acerca de",
