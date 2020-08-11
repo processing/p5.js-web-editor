@@ -2,27 +2,30 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
-import { withRouter, Link } from 'react-router';
+import { withRouter } from 'react-router';
 
 import Screen from '../../components/mobile/MobileScreen';
 import Header from '../../components/mobile/Header';
 import IconButton from '../../components/mobile/IconButton';
-import { ExitIcon } from '../../common/icons';
+import { ExitIcon, MoreIcon } from '../../common/icons';
 import Footer from '../../components/mobile/Footer';
-import { prop, remSize } from '../../theme';
+import { remSize, prop } from '../../theme';
 import SketchList from '../IDE/components/SketchList';
 import CollectionList from '../IDE/components/CollectionList';
 import AssetList from '../IDE/components/AssetList';
 import Content from './MobileViewContent';
 import { SketchSearchbar, CollectionSearchbar } from '../IDE/components/Searchbar';
 import Button from '../../common/Button';
+import useAsModal from '../../components/useAsModal';
+import Dropdown from '../../components/Dropdown';
+import FooterTabSwitcher from '../../components/mobile/TabSwitcher';
+import FooterTab from '../../components/mobile/Tab';
 
 const EXAMPLE_USERNAME = 'p5';
 
 const ContentWrapper = styled(Content)`
   table {
     table-layout: fixed;
-    /* white-space: nowrap; */
   }
   
   td ,thead button {
@@ -31,38 +34,47 @@ const ContentWrapper = styled(Content)`
     text-align: left;
   };
 
-  thead th { padding-left: 0; }
-
-  thead th:not(:first-child), tbody td  {
-    width: ${remSize(54)};
-  }
-
-  tbody th { font-weight: bold; };
 
   tbody th {
-    font-size: ${remSize(12)};
+    font-size: ${remSize(16)};
     width: 100%;
-    padding-right: ${remSize(12)}
+    padding-right: ${remSize(12)};
+    font-weight: bold;
+    display: flex;
+    grid-area: name;
   };
 
-  tbody td {
-    text-align: center;
+  tbody td, thead th {
+    justify-self: stretch;
+    align-self: flex-end;
+    color: ${prop('primaryTextColor')}
   }
 
-  .sketch-list__sort-button { padding: 0 }
+  tbody td:nth-child(2) { grid-column-start: 2 }
+  tbody td:last-child { justify-self: end; text-align: end; }
+
+  /* .sketch-list__sort-button { padding: 0 } */
   tbody {
     height: ${remSize(48)};
   }
 
-  .sketches-table-container { padding-bottom: ${remSize(160)} }
-`;
+  .sketches-table-container {
+    padding-bottom: ${remSize(160)};
+    background: ${prop('SketchList.background')};
+    }
+  .sketches-table__row {
+    background: ${prop('SketchList.card.background')} !important; height: auto
+  }
 
-const FooterTab = styled(Link)`
-  background: ${props => prop(props.selected ? 'backgroundColor' : 'MobilePanel.default.foreground')};
-  color: ${props => prop(`MobilePanel.default.${props.selected ? 'foreground' : 'background'}`)};
-  padding: ${remSize(8)} ${remSize(16)};
-  width: 100%;
-  display: flex;
+  tr {
+    align-self: start;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-template-areas: "name name name name" "none content content content";
+
+    border-radius: ${remSize(4)}; padding: ${remSize(8)};
+    box-shadow: 0 0 18px 0 ${prop('shadowColor')};
+  };
 `;
 
 const Subheader = styled.div`
@@ -81,23 +93,17 @@ const SubheaderButton = styled(Button)`
   border-radius: 0px !important;
 `;
 
-
-const FooterTabSwitcher = styled.div`
-  display: flex;
-  
-  h3 { text-align: center; width: 100%; }
-`;
-
 const Panels = {
   sketches: SketchList,
   collections: CollectionList,
   assets: AssetList
 };
 
-const CreatePathname = {
-  sketches: '/mobile',
-  collections: '/mobile/:username/collections/create',
-};
+
+const navOptions = username => [
+  { title: 'Create Sketch', href: '/mobile' },
+  { title: 'Create Collection', href: `/mobile/${username}/collections/create` }
+];
 
 
 const getPanel = (pathname) => {
@@ -106,7 +112,10 @@ const getPanel = (pathname) => {
   return matches && matches.length > 0 && matches[0];
 };
 
-const getCreatePathname = (panel, username) => (CreatePathname[panel] || '#').replace(':username', username);
+const NavItem = styled.li`
+  position: relative;
+`;
+
 
 const isOwner = (user, params) => user && params && user.username === params.username;
 
@@ -114,27 +123,41 @@ const renderPanel = (name, props) => (Component => (Component && <Component {...
 
 const MobileDashboard = ({ params, location }) => {
   const user = useSelector(state => state.user);
-  const { username } = params;
+  const { username: paramsUsername } = params;
   const { pathname } = location;
 
   const Tabs = Object.keys(Panels);
-  const isExamples = username === EXAMPLE_USERNAME;
+  const isExamples = paramsUsername === EXAMPLE_USERNAME;
   const panel = getPanel(pathname);
+
+
+  const [toggleNavDropdown, NavDropdown] = useAsModal(<Dropdown
+    items={navOptions(user.username)}
+    align="right"
+  />);
 
   return (
     <Screen fullscreen key={pathname}>
       <Header slim inverted title={isExamples ? 'Examples' : 'My Stuff'}>
+        <NavItem>
+          <IconButton
+            onClick={toggleNavDropdown}
+            icon={MoreIcon}
+            aria-label="Options"
+          />
+          <NavDropdown />
+
+        </NavItem>
         <IconButton to="/mobile" icon={ExitIcon} aria-label="Return to ide view" />
       </Header>
 
 
       <ContentWrapper slimheader>
         <Subheader>
-          {isOwner(user, params) && (panel !== Tabs[2]) && <SubheaderButton to={getCreatePathname(panel, username)}>new</SubheaderButton>}
           {panel === Tabs[0] && <SketchSearchbar />}
           {panel === Tabs[1] && <CollectionSearchbar />}
         </Subheader>
-        {renderPanel(panel, { username, key: pathname })}
+        {renderPanel(panel, { username: paramsUsername, key: pathname })}
       </ContentWrapper>
       <Footer>
         {!isExamples &&
