@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { withTranslation } from 'react-i18next';
 import { domOnlyProps } from '../../../utils/reduxFormUtils';
 
 import Button from '../../../common/Button';
@@ -35,14 +36,17 @@ class NewFileForm extends React.Component {
             className="new-file-form__name-input"
             id="name"
             type="text"
-            placeholder="Name"
+            placeholder={this.props.t('NewFileForm.Placeholder')}
             maxLength="128"
             {...domOnlyProps(name)}
             ref={(element) => {
               this.fileName = element;
             }}
           />
-          <Button type="submit">Add File</Button>
+          <Button
+            type="submit"
+          >{this.props.t('NewFileForm.AddFileSubmit')}
+          </Button>
         </div>
         {name.touched && name.error && (
           <span className="form-error">{name.error}</span>
@@ -59,6 +63,7 @@ NewFileForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   createFile: PropTypes.func.isRequired,
   focusOnModal: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired
 };
 
-export default NewFileForm;
+export default withTranslation()(NewFileForm);
