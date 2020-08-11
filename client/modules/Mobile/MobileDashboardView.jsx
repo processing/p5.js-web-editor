@@ -50,10 +50,13 @@ const ContentWrapper = styled(Content)`
     color: ${prop('primaryTextColor')}
   }
 
-  thead th svg { margin-left: ${remSize(8)}}
+  tbody td { justify-self: center; padding-left: ${remSize(12)}}
 
-  tbody td:nth-child(2) { grid-column-start: 2 }
-  tbody td:last-child { justify-self: end; text-align: end; }
+  thead th svg { margin-left: ${remSize(8)} }
+
+  
+  tbody td:last-child { justify-self: end; text-align: end; };
+  .sketches-table .sketch-list__dropdown-column { min-width: unset };
 
   tbody { height: ${remSize(48)}; }
 
@@ -68,8 +71,8 @@ const ContentWrapper = styled(Content)`
   tr {
     align-self: start;
     display: grid;
-    grid-template-columns: repeat(3,5fr) 1fr;
-    grid-template-areas: "name name name name" "none content content content";
+    grid-template-columns: 5fr 5fr 2fr;
+    grid-template-areas: "name name name" "content content content";
 
     border-radius: ${remSize(4)}; padding: ${remSize(8)};
     box-shadow: 0 0 18px 0 ${prop('shadowColor')};

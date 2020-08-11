@@ -293,8 +293,8 @@ class SketchListRowBase extends React.Component {
           <th scope="row">
             {name}
           </th>
-          <td>{formatDateCell(sketch.createdAt, mobile)}</td>
-          <td>{formatDateCell(sketch.updatedAt, mobile)}</td>
+          <td>{mobile && 'Created: '}{formatDateCell(sketch.createdAt, mobile)}</td>
+          <td>{mobile && 'Updated: '}{formatDateCell(sketch.updatedAt, mobile)}</td>
           {this.renderDropdown()}
         </tr>
       </React.Fragment>);
