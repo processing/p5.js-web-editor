@@ -49,13 +49,15 @@ const ContentWrapper = styled(Content)`
     color: ${prop('primaryTextColor')}
   }
 
+
   thead th svg { margin-left: ${remSize(8)} }
   
-  tbody td:first-child { justify-self: start; text-align: start; };
-  tbody td { justify-self: center; }
-  tbody td:last-child { justify-self: end; text-align: end; };
+  
+  tbody td              { justify-self: start; text-align: start; padding: 0 }
+  tbody td:nth-child(2) { justify-self: start;  text-align: start; padding-left: ${remSize(12)}};
+  tbody td:last-child   { justify-self: end;    text-align: end; };
 
-  .sketches-table .sketch-list__dropdown-column { min-width: unset };
+  .sketch-list__dropdown-column { width: auto; };
 
   tbody { height: ${remSize(48)}; }
 
@@ -64,8 +66,11 @@ const ContentWrapper = styled(Content)`
     background: ${prop('SketchList.background')};
     }
   .sketches-table__row {
-    background: ${prop('SketchList.card.background')} !important; height: auto
+    background: ${prop('SketchList.card.background')} !important;
+    height: auto
   }
+  
+
 
   tr {
     align-self: start;
@@ -80,7 +85,7 @@ const ContentWrapper = styled(Content)`
   tbody tr {
     padding: ${remSize(8)};
     border-radius: ${remSize(4)};
-    grid-template-columns: 5fr 5fr 2fr;
+    grid-template-columns: 5fr 5fr 1fr;
     grid-template-areas: "name name name" "content content content";
   }
 
