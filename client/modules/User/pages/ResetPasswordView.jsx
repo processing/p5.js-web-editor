@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import { bindActionCreators } from 'redux';
 import { reduxForm } from 'redux-form';
 import { Helmet } from 'react-helmet';
+import { withTranslation } from 'react-i18next';
 import * as UserActions from '../actions';
 import ResetPasswordForm from '../components/ResetPasswordForm';
 import { validateResetPassword } from '../../../utils/reduxFormUtils';
@@ -23,19 +24,18 @@ function ResetPasswordView(props) {
       <Nav layout="dashboard" />
       <div className={resetPasswordClass}>
         <Helmet>
-          <title>p5.js Web Editor | Reset Password</title>
+          <title>{props.t('ResetPasswordView.Title')}</title>
         </Helmet>
         <div className="form-container__content">
-          <h2 className="form-container__title">Reset Your Password</h2>
+          <h2 className="form-container__title">{props.t('ResetPasswordView.Reset')}</h2>
           <ResetPasswordForm {...props} />
           <p className="reset-password__submitted">
-            Your password reset email should arrive shortly. If you don&apos;t see it, check
-            in your spam folder as sometimes it can end up there.
+            {props.t('ResetPasswordView.Submitted')}
           </p>
           <p className="form__navigation-options">
-            <Link className="form__login-button" to="/login">Log In</Link>
-            &nbsp;or&nbsp;
-            <Link className="form__signup-button" to="/signup">Sign Up</Link>
+            <Link className="form__login-button" to="/login">{props.t('ResetPasswordView.LogIn')}</Link>
+            &nbsp;{props.t('ResetPasswordView.LoginOr')}&nbsp;
+            <Link className="form__signup-button" to="/signup">{props.t('ResetPasswordView.SignUp')}</Link>
           </p>
         </div>
       </div>
@@ -48,6 +48,7 @@ ResetPasswordView.propTypes = {
   user: PropTypes.shape({
     resetPasswordInitiate: PropTypes.bool
   }).isRequired,
+  t: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -60,8 +61,8 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(UserActions, dispatch);
 }
 
-export default reduxForm({
+export default withTranslation()(reduxForm({
   form: 'reset-password',
   fields: ['email'],
   validate: validateResetPassword
-}, mapStateToProps, mapDispatchToProps)(ResetPasswordView);
+}, mapStateToProps, mapDispatchToProps)(ResetPasswordView));

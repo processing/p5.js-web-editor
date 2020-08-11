@@ -194,5 +194,18 @@
   "NewFolderForm": {
     "AddFolderSubmit": "Add Folder",
     "Placeholder": "Name"
+  },
+  "ResetPasswordForm": {
+    "Email": "Email used for registration",
+    "EmailARIA": "email",
+    "Submit": "Send Password Reset Email"
+  },
+  "ResetPasswordView": {
+    "Title": "p5.js Web Editor | Reset Password",
+    "Reset": "Reset Your Password",
+    "Submitted": "Your password reset email should arrive shortly. If you don't see it, check\n            in your spam folder as sometimes it can end up there.",
+    "LogIn": "Log In",
+    "LoginOr": "or",
+    "SignUp": "Sign Up"
   }
 }

@@ -174,8 +174,8 @@
     "SubmitFeedback": "Enviar retroalimentación"
   },
   "NewFileModal": {
-  "Title": "Crear Archivo",
-  "CloseButtonARIA": "Cerrar diálogo de crear archivo",
+    "Title": "Crear Archivo",
+    "CloseButtonARIA": "Cerrar diálogo de crear archivo",
     "EnterName": "Por favor introduce un nombre",
     "InvalidType": "Tipo de archivo inválido. Las extensiones válidas son .js, .css, .json, .txt, .csv, .tsv, .frag y .vert."
   },
@@ -184,18 +184,29 @@
     "Placeholder": "Nombre"
   },
   "NewFolderModal": {
-  "Title": "Crear Directorio",
-  "CloseButtonARIA": "Cerrar Diálogo de Nuevo Directorio",
-  "EnterName": "Por favor introduce un nombre",
-  "EmptyName": " El nombre del directorio no debe contener solo espacios vacíos",
-  "InvalidExtension": "El nombre del directorio no debe contener una extensión"
-},
+    "Title": "Crear Directorio",
+    "CloseButtonARIA": "Cerrar Diálogo de Nuevo Directorio",
+    "EnterName": "Por favor introduce un nombre",
+    "EmptyName": " El nombre del directorio no debe contener solo espacios vacíos",
+    "InvalidExtension": "El nombre del directorio no debe contener una extensión"
+  },
   "NewFolderForm": {
     "AddFolderSubmit": "Agregar Directorio",
     "Placeholder": "Nombre"
+  },
+  "ResetPasswordForm": {
+    "Email": "Correo electrónico usado al registrarse",
+    "EmailARIA": "correo electrónico",
+    "Submit": "Enviar correo para regenerar contraseña"
+  },
+  "ResetPasswordView": {
+    "Title": "Editor Web p5.js | Regenerar Contraseña",
+    "Reset": "Regenerar Contraseña",
+    "Submitted": "Your password reset email should arrive shortly. If you don't see it, check\n            in your spam folder as sometimes it can end up there.",
+    "LogIn": "Ingresa",
+    "LoginOr": "o",
+    "SignUp": "Registráte"
   }
 }
-
-
 
 

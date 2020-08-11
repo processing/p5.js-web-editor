@@ -1,20 +1,20 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-
+import { withTranslation } from 'react-i18next';
 import { domOnlyProps } from '../../../utils/reduxFormUtils';
 import Button from '../../../common/Button';
 
 function ResetPasswordForm(props) {
   const {
-    fields: { email }, handleSubmit, submitting, invalid, pristine
+    fields: { email }, handleSubmit, submitting, invalid, pristine, t
   } = props;
   return (
     <form className="form" onSubmit={handleSubmit(props.initiateResetPassword.bind(this))}>
       <p className="form__field">
-        <label htmlFor="email" className="form__label">Email used for registration</label>
+        <label htmlFor="email" className="form__label">{t('ResetPasswordForm.Email')}</label>
         <input
           className="form__input"
-          aria-label="email"
+          aria-label={t('ResetPasswordForm.EmailARIA')}
           type="text"
           id="email"
           {...domOnlyProps(email)}
@@ -24,7 +24,7 @@ function ResetPasswordForm(props) {
       <Button
         type="submit"
         disabled={submitting || invalid || pristine || props.user.resetPasswordInitiate}
-      >Send Password Reset Email
+      >{props.t('ResetPasswordForm.Submit')}
       </Button>
     </form>
   );
@@ -41,7 +41,8 @@ ResetPasswordForm.propTypes = {
   pristine: PropTypes.bool,
   user: PropTypes.shape({
     resetPasswordInitiate: PropTypes.bool
-  }).isRequired
+  }).isRequired,
+  t: PropTypes.func.isRequired
 };
 
 ResetPasswordForm.defaultProps = {
@@ -50,4 +51,4 @@ ResetPasswordForm.defaultProps = {
   invalid: false
 };
 
-export default ResetPasswordForm;
+export default withTranslation()(ResetPasswordForm);
