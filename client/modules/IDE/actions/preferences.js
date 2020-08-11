@@ -211,14 +211,15 @@ export function setAllAccessibleOutput(value) {
   };
 }
 
-export function setLanguage(value) {
+export function setLanguage(value, { persistPreference = true } = {}) {
   return (dispatch, getState) => {
+    i18next.changeLanguage(value);
     dispatch({
       type: ActionTypes.SET_LANGUAGE,
       language: value
     });
     const state = getState();
-    if (state.user.authenticated) {
+    if (persistPreference && state.user.authenticated) {
       const formParams = {
         preferences: {
           language: value
