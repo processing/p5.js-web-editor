@@ -3,6 +3,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux';
 import { reduxForm } from 'redux-form';
+import { withTranslation } from 'react-i18next';
+import i18n from 'i18next';
 import NewFileForm from './NewFileForm';
 import { closeNewFileModal } from '../actions/ide';
 import { createFile } from '../actions/files';
@@ -33,11 +35,11 @@ class NewFileModal extends React.Component {
       <section className="modal" ref={(element) => { this.modal = element; }}>
         <div className="modal-content">
           <div className="modal__header">
-            <h2 className="modal__title">Create File</h2>
+            <h2 className="modal__title">{this.props.t('NewFileModal.Title')}</h2>
             <button
               className="modal__exit-button"
               onClick={this.props.closeNewFileModal}
-              aria-label="Close New File Modal"
+              aria-label={this.props.t('NewFileModal.CloseButtonARIA')}
             >
               <ExitIcon focusable="false" aria-hidden="true" />
             </button>
@@ -54,16 +56,17 @@ class NewFileModal extends React.Component {
 
 NewFileModal.propTypes = {
   createFile: PropTypes.func.isRequired,
-  closeNewFileModal: PropTypes.func.isRequired
+  closeNewFileModal: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired
 };
 
 function validate(formProps) {
   const errors = {};
 
   if (!formProps.name) {
-    errors.name = 'Please enter a name';
+    errors.name = i18n.t('NewFileModal.EnterName');
   } else if (!formProps.name.match(CREATE_FILE_REGEX)) {
-    errors.name = 'Invalid file type. Valid extensions are .js, .css, .json, .txt, .csv, .tsv, .frag, and .vert.';
+    errors.name = i18n.t('NewFileModal.InvalidType');
   }
 
   return errors;
@@ -77,11 +80,11 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({ createFile, closeNewFileModal }, dispatch);
 }
 
-export default compose(
+export default withTranslation()(compose(
   connect(mapStateToProps, mapDispatchToProps),
   reduxForm({
     form: 'new-file',
     fields: ['name'],
     validate
   })
-)(NewFileModal);
+)(NewFileModal));
