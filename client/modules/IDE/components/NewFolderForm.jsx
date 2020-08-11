@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { withTranslation } from 'react-i18next';
 import { domOnlyProps } from '../../../utils/reduxFormUtils';
 
 import Button from '../../../common/Button';
+
 
 class NewFolderForm extends React.Component {
   constructor(props) {
@@ -32,13 +34,13 @@ class NewFolderForm extends React.Component {
             id="name"
             type="text"
             maxLength="128"
-            placeholder="Name"
+            placeholder={this.props.t('NewFolderForm.Placeholder')}
             ref={(element) => { this.fileName = element; }}
             {...domOnlyProps(name)}
           />
           <Button
             type="submit"
-          >Add Folder
+          >{this.props.t('NewFolderForm.AddFolderSubmit')}
           </Button>
         </div>
         {name.touched && name.error && <span className="form-error">{name.error}</span>}
@@ -55,10 +57,11 @@ NewFolderForm.propTypes = {
   createFolder: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   submitting: PropTypes.bool,
-  pristine: PropTypes.bool
+  pristine: PropTypes.bool,
+  t: PropTypes.func.isRequired
 };
 NewFolderForm.defaultProps = {
   submitting: false,
   pristine: true
 };
-export default NewFolderForm;
+export default withTranslation()(NewFolderForm);
