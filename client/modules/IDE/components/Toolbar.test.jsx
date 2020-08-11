@@ -40,13 +40,7 @@ const renderComponent = (extraProps = {}) => {
   return props;
 };
 
-const i18next = jest.genMockFromModule('react-i18next');
-i18next.t = i => i;
-i18next.translate = c => k => k;
 describe('<ToolbarComponent />', () => {
-  const msg = i18next.t('Toolbar.OpenPreferencesARIA');
-  console.log(msg);
-
   it('sketch owner can switch to sketch name editing mode', async () => {
     const props = renderComponent();
     const sketchName = screen.getByLabelText('Edit sketch name');
