@@ -20,6 +20,7 @@ import useAsModal from '../../components/useAsModal';
 import Dropdown from '../../components/Dropdown';
 import FooterTabSwitcher from '../../components/mobile/TabSwitcher';
 import FooterTab from '../../components/mobile/Tab';
+import Loader from '../App/components/loader';
 
 const EXAMPLE_USERNAME = 'p5';
 
@@ -53,7 +54,6 @@ const ContentWrapper = styled(Content)`
   tbody td { justify-self: center; padding-left: ${remSize(12)}}
 
   thead th svg { margin-left: ${remSize(8)} }
-
   
   tbody td:last-child { justify-self: end; text-align: end; };
   .sketches-table .sketch-list__dropdown-column { min-width: unset };
@@ -71,15 +71,21 @@ const ContentWrapper = styled(Content)`
   tr {
     align-self: start;
     display: grid;
-    grid-template-columns: 5fr 5fr 2fr;
-    grid-template-areas: "name name name" "content content content";
-
     box-shadow: 0 0 18px 0 ${prop('shadowColor')};
   };
 
-  thead tr { grid-template-columns: auto ${remSize(100)} ${remSize(100)} 0fr; }
+  thead tr {
+    grid-template-columns: auto ${remSize(100)} ${remSize(100)} 0fr;
+  }
 
-  tbody tr { padding: ${remSize(8)}; border-radius: ${remSize(4)}; }
+  tbody tr {
+    padding: ${remSize(8)};
+    border-radius: ${remSize(4)};
+    grid-template-columns: 5fr 5fr 2fr;
+    grid-template-areas: "name name name" "content content content";
+  }
+
+  .loader-container { position: fixed ; padding-bottom: 32% }
 `;
 
 const Subheader = styled.div`
