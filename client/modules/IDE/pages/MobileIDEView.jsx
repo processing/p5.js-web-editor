@@ -35,8 +35,6 @@ import ActionStrip from '../../../components/mobile/ActionStrip';
 import useAsModal from '../../../components/useAsModal';
 import { PreferencesIcon } from '../../../common/icons';
 import Dropdown from '../../../components/Dropdown';
-import FloatingNav from '../../../components/mobile/FloatingNav';
-
 
 const getRootFile = files => files && files.filter(file => file.name === 'root')[0];
 const getRootFileID = files => (root => root && root.id)(getRootFile(files));
@@ -123,12 +121,6 @@ const MobileIDEView = (props) => {
       onPressClose={toggle}
     />), true);
 
-  // toggle sidebar starting opened
-  // useEffect(toggleExplorer, []);
-
-  const floatingNavOptions =
-    [{ icon: CircleFolderIcon, onPress: toggleExplorer }];
-
   return (
     <Screen fullscreen>
       <Explorer />
@@ -183,7 +175,6 @@ const MobileIDEView = (props) => {
           provideController={setTmController}
           setUnsavedChanges={setUnsavedChanges}
         />
-        <FloatingNav items={floatingNavOptions} />
       </IDEWrapper>
 
       <Footer>
@@ -192,7 +183,7 @@ const MobileIDEView = (props) => {
             <Console />
           </Expander>
         )}
-        <ActionStrip />
+        <ActionStrip toggleExplorer={toggleExplorer} />
       </Footer>
     </Screen>
   );
