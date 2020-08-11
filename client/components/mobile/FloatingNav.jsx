@@ -6,7 +6,7 @@ import Button from '../../common/Button';
 import IconButton from './IconButton';
 
 const FloatingContainer = styled.div`
-  position: absolute;
+  position: fixed;
   right: ${remSize(16)};
   top: ${remSize(80)};
 
