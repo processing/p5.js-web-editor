@@ -33,7 +33,7 @@ function ResetPasswordView(props) {
             {props.t('ResetPasswordView.Submitted')}
           </p>
           <p className="form__navigation-options">
-            <Link className="form__login-button" to="/login">{props.t('LoginView.LogIn')}</Link>
+            <Link className="form__login-button" to="/login">{props.t('LoginView.Login')}</Link>
             &nbsp;{props.t('LoginView.LoginOr')}&nbsp;
             <Link className="form__signup-button" to="/signup">{props.t('LoginView.SignUp')}</Link>
           </p>

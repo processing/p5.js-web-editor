@@ -217,6 +217,19 @@
     "Title": "Editor Web p5.js | Regenerar Contraseña",
     "Reset": "Regenerar Contraseña",
     "Submitted": "Your password reset email should arrive shortly. If you don't see it, check\n            in your spam folder as sometimes it can end up there."
+  },
+  "ReduxFormUtils": {
+    "errorInvalidEmail": "Por favor introduce un correo electrónico válido",
+    "errorEmptyEmail": "Por favor introduce un correo electrónico",
+    "errorPasswordMismatch": "Las contraseñas deben coincidir",
+    "errorEmptyPassword": "Por favor introduce una contraseña",
+    "errorShortPassword": "La contraseña debe tener al menos 6 caracteres",
+    "errorConfirmPassword": "Por favor confirma una contraseña",
+    "errorNewPassword": "Por favor introduce una nueva contraseña o deja la actual contraseña vacía",
+    "errorEmptyUsername": "Por favor introduce tu identificación",
+    "errorLongUsername": "La identificación debe ser menor a 20 caracteres.",
+    "errorValidUsername": "La identificación debe consistir solamente de números, letras, puntos, guiones y guiones bajos."
+
   }
 }
 

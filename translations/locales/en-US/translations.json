@@ -217,5 +217,17 @@
     "Title": "p5.js Web Editor | Reset Password",
     "Reset": "Reset Your Password",
     "Submitted": "Your password reset email should arrive shortly. If you don't see it, check\n            in your spam folder as sometimes it can end up there."
+  },
+  "ReduxFormUtils": {
+    "errorInvalidEmail": "Please enter a valid email address",
+    "errorEmptyEmail": "Please enter an email",
+    "errorPasswordMismatch": "Passwords must match",
+    "errorEmptyPassword": "Please enter a password",
+    "errorShortPassword": "Password must be at least 6 characters",
+    "errorConfirmPassword": "Please enter a password confirmation",
+    "errorNewPassword": "Please enter a new password or leave the current password empty.",
+    "errorEmptyUsername": "Please enter a username.",
+    "errorLongUsername": "Username must be less than 20 characters.",
+    "errorValidUsername": "Username must only consist of numbers, letters, periods, dashes, and underscores."
   }
 }
