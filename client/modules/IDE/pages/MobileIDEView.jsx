@@ -39,7 +39,7 @@ import Dropdown from '../../../components/Dropdown';
 const isUserOwner = ({ project, user }) =>
   project.owner && project.owner.id === user.id;
 
-const getTitle = (title, unsavedChanges = false) => (
+const withChangeDot = (title, unsavedChanges = false) => (
   <span>
     {title}
     <span className="editor__unsaved-changes">
@@ -110,7 +110,7 @@ const MobileIDEView = (props) => {
   return (
     <Screen fullscreen>
       <Header
-        title={getTitle(project.name, unsavedChanges)}
+        title={withChangeDot(project.name, unsavedChanges)}
         subtitle={selectedFile.name}
       >
         <NavItem>
