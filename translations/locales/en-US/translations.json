@@ -183,21 +183,20 @@
     "Error": "Error",
     "Save": "Save",
     "p5logoARIA": "p5.js Logo"
-
   },
   "IDEView": {
     "SubmitFeedback": "Submit Feedback"
   },
   "NewFileModal": {
     "Title": "Create File",
-     "CloseButtonARIA": "Close New File Modal",
+    "CloseButtonARIA": "Close New File Modal",
     "EnterName": "Please enter a name",
     "InvalidType": "Invalid file type. Valid extensions are .js, .css, .json, .txt, .csv, .tsv, .frag, and .vert."
   },
   "NewFileForm": {
-  "AddFileSubmit": "Add File",
+    "AddFileSubmit": "Add File",
     "Placeholder": "Name"
-},
+  },
   "NewFolderModal": {
     "Title": "Create Folder",
     "CloseButtonARIA": "Close New Folder Modal",
@@ -208,5 +207,23 @@
   "NewFolderForm": {
     "AddFolderSubmit": "Add Folder",
     "Placeholder": "Name"
+  },
+  "SignupForm": {
+    "Title": "User Name",
+    "TitleARIA": "username",
+    "Email": "Email",
+    "EmailARIA": "email",
+    "Password": "Password",
+    "PasswordARIA": "password",
+    "ConfirmPassword": "Confirm Password",
+    "ConfirmPasswordARIA": "Confirm password",
+    "SubmitSignup": "Sign Up"
+  },
+  "SignupView": {
+    "Title": "p5.js Web Editor | Signup",
+    "Description": "Sign Up",
+    "Or": "Or",
+    "AlreadyHave": "Already have an account?",
+    "Login": "Log In"
   }
 }
