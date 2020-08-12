@@ -11,7 +11,6 @@ import { bindActionCreators } from 'redux';
 import * as FileActions from '../actions/files';
 import * as IDEActions from '../actions/ide';
 import * as ProjectActions from '../actions/project';
-import * as EditorAccessibilityActions from '../actions/editorAccessibility';
 import * as PreferencesActions from '../actions/preferences';
 import * as UserActions from '../../User/actions';
 import * as ToastActions from '../actions/toast';
@@ -74,14 +73,15 @@ const getNatOptions = (username = undefined) =>
 
 const MobileIDEView = (props) => {
   const {
-    ide, project, selectedFile, user, params,
+    ide, project, selectedFile, user, params, unsavedChanges,
     stopSketch, startSketch, getProject, clearPersistedState
   } = props;
 
   const [tmController, setTmController] = useState(null); // eslint-disable-line
 
   const { username } = user;
-  const { unsavedChanges } = ide;
+  const { consoleIsExpanded } = ide;
+  const { name: filename } = selectedFile;
 
   const [triggerNavDropdown, NavDropDown] = useAsModal(<Dropdown
     items={getNatOptions(username)}
@@ -109,7 +109,7 @@ const MobileIDEView = (props) => {
     <Screen fullscreen>
       <Header
         title={withChangeDot(project.name, unsavedChanges)}
-        subtitle={selectedFile.name}
+        subtitle={filename}
       >
         <NavItem>
           <IconButton
@@ -129,7 +129,7 @@ const MobileIDEView = (props) => {
       </IDEWrapper>
 
       <Footer>
-        {ide.consoleIsExpanded && (
+        {consoleIsExpanded && (
           <Expander expanded>
             <Console />
           </Expander>
@@ -141,50 +141,8 @@ const MobileIDEView = (props) => {
 };
 
 MobileIDEView.propTypes = {
-  preferences: PropTypes.shape({
-    fontSize: PropTypes.number.isRequired,
-    autosave: PropTypes.bool.isRequired,
-    linewrap: PropTypes.bool.isRequired,
-    lineNumbers: PropTypes.bool.isRequired,
-    lintWarning: PropTypes.bool.isRequired,
-    textOutput: PropTypes.bool.isRequired,
-    gridOutput: PropTypes.bool.isRequired,
-    soundOutput: PropTypes.bool.isRequired,
-    theme: PropTypes.string.isRequired,
-    autorefresh: PropTypes.bool.isRequired,
-  }).isRequired,
-
   ide: PropTypes.shape({
-    isPlaying: PropTypes.bool.isRequired,
-    isAccessibleOutputPlaying: PropTypes.bool.isRequired,
-    consoleEvent: PropTypes.array,
-    modalIsVisible: PropTypes.bool.isRequired,
-    sidebarIsExpanded: PropTypes.bool.isRequired,
     consoleIsExpanded: PropTypes.bool.isRequired,
-    preferencesIsVisible: PropTypes.bool.isRequired,
-    projectOptionsVisible: PropTypes.bool.isRequired,
-    newFolderModalVisible: PropTypes.bool.isRequired,
-    shareModalVisible: PropTypes.bool.isRequired,
-    shareModalProjectId: PropTypes.string.isRequired,
-    shareModalProjectName: PropTypes.string.isRequired,
-    shareModalProjectUsername: PropTypes.string.isRequired,
-    editorOptionsVisible: PropTypes.bool.isRequired,
-    keyboardShortcutVisible: PropTypes.bool.isRequired,
-    infiniteLoop: PropTypes.bool.isRequired,
-    previewIsRefreshing: PropTypes.bool.isRequired,
-    infiniteLoopMessage: PropTypes.string.isRequired,
-    projectSavedTime: PropTypes.string,
-    previousPath: PropTypes.string.isRequired,
-    justOpenedProject: PropTypes.bool.isRequired,
-    errorType: PropTypes.string,
-    runtimeErrorWarningVisible: PropTypes.bool.isRequired,
-    uploadFileModalVisible: PropTypes.bool.isRequired,
-
-    unsavedChanges: PropTypes.bool.isRequired,
-  }).isRequired,
-
-  editorAccessibility: PropTypes.shape({
-    lintMessages: PropTypes.array.isRequired,
   }).isRequired,
 
   project: PropTypes.shape({
@@ -194,11 +152,7 @@ MobileIDEView.propTypes = {
       username: PropTypes.string,
       id: PropTypes.string,
     }),
-    updatedAt: PropTypes.string,
   }).isRequired,
-
-  startSketch: PropTypes.func.isRequired,
-  stopSketch: PropTypes.func.isRequired,
 
 
   selectedFile: PropTypes.shape({
@@ -213,12 +167,17 @@ MobileIDEView.propTypes = {
     username: PropTypes.string,
   }).isRequired,
 
-  getProject: PropTypes.func.isRequired,
-  clearPersistedState: PropTypes.func.isRequired,
   params: PropTypes.shape({
     project_id: PropTypes.string,
     username: PropTypes.string
   }).isRequired,
+
+  unsavedChanges: PropTypes.bool.isRequired,
+
+  startSketch: PropTypes.func.isRequired,
+  stopSketch: PropTypes.func.isRequired,
+  getProject: PropTypes.func.isRequired,
+  clearPersistedState: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -230,9 +189,8 @@ function mapStateToProps(state) {
       state.files.find(file => file.name !== 'root'),
     htmlFile: getHTMLFile(state.files),
     ide: state.ide,
-    unsavedChanges: state.ide.unsavedChanged,
+    unsavedChanges: state.ide.unsavedChanges,
     preferences: state.preferences,
-    editorAccessibility: state.editorAccessibility,
     user: state.user,
     project: state.project,
     toast: state.toast,
@@ -244,14 +202,8 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     Object.assign(
       {},
-      EditorAccessibilityActions,
-      FileActions,
       ProjectActions,
       IDEActions,
-      PreferencesActions,
-      UserActions,
-      ToastActions,
-      ConsoleActions
     ),
     dispatch
   );
