@@ -74,16 +74,14 @@ const getNatOptions = (username = undefined) =>
 
 const MobileIDEView = (props) => {
   const {
-    preferences, ide, editorAccessibility, project, updateLintMessage, clearLintMessage,
-    selectedFile, updateFileContent, files, user, params,
-    closeEditorOptions, showEditorOptions, unsavedChanges,
-    startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console,
-    showRuntimeErrorWarning, hideRuntimeErrorWarning, startSketch, getProject, clearPersistedState
+    ide, project, selectedFile, user, params,
+    stopSketch, startSketch, getProject, clearPersistedState
   } = props;
 
   const [tmController, setTmController] = useState(null); // eslint-disable-line
 
   const { username } = user;
+  const { unsavedChanges } = ide;
 
   const [triggerNavDropdown, NavDropDown] = useAsModal(<Dropdown
     items={getNatOptions(username)}
@@ -127,38 +125,7 @@ const MobileIDEView = (props) => {
       </Header>
 
       <IDEWrapper>
-        <Editor
-          lintWarning={preferences.lintWarning}
-          linewrap={preferences.linewrap}
-          lintMessages={editorAccessibility.lintMessages}
-          updateLintMessage={updateLintMessage}
-          clearLintMessage={clearLintMessage}
-          file={selectedFile}
-          updateFileContent={updateFileContent}
-          fontSize={preferences.fontSize}
-          lineNumbers={preferences.lineNumbers}
-          files={files}
-          editorOptionsVisible={ide.editorOptionsVisible}
-          showEditorOptions={showEditorOptions}
-          closeEditorOptions={closeEditorOptions}
-          showKeyboard={ide.isPlaying}
-          theme={preferences.theme}
-          startRefreshSketch={startRefreshSketch}
-          stopSketch={stopSketch}
-          autorefresh={preferences.autorefresh}
-          unsavedChanges={ide.unsavedChanges}
-          projectSavedTime={project.updatedAt}
-          isExpanded={ide.sidebarIsExpanded}
-          expandSidebar={expandSidebar}
-          collapseSidebar={collapseSidebar}
-          isUserOwner={isUserOwner(props)}
-          clearConsole={clearConsole}
-          consoleEvents={console}
-          showRuntimeErrorWarning={showRuntimeErrorWarning}
-          hideRuntimeErrorWarning={hideRuntimeErrorWarning}
-          runtimeErrorWarningVisible={ide.runtimeErrorWarningVisible}
-          provideController={setTmController}
-        />
+        <Editor provideController={setTmController} />
       </IDEWrapper>
 
       <Footer>
@@ -203,7 +170,6 @@ MobileIDEView.propTypes = {
     shareModalProjectUsername: PropTypes.string.isRequired,
     editorOptionsVisible: PropTypes.bool.isRequired,
     keyboardShortcutVisible: PropTypes.bool.isRequired,
-    unsavedChanges: PropTypes.bool.isRequired,
     infiniteLoop: PropTypes.bool.isRequired,
     previewIsRefreshing: PropTypes.bool.isRequired,
     infiniteLoopMessage: PropTypes.string.isRequired,
@@ -213,6 +179,8 @@ MobileIDEView.propTypes = {
     errorType: PropTypes.string,
     runtimeErrorWarningVisible: PropTypes.bool.isRequired,
     uploadFileModalVisible: PropTypes.bool.isRequired,
+
+    unsavedChanges: PropTypes.bool.isRequired,
   }).isRequired,
 
   editorAccessibility: PropTypes.shape({
@@ -230,47 +198,14 @@ MobileIDEView.propTypes = {
   }).isRequired,
 
   startSketch: PropTypes.func.isRequired,
+  stopSketch: PropTypes.func.isRequired,
 
-  updateLintMessage: PropTypes.func.isRequired,
-
-  clearLintMessage: PropTypes.func.isRequired,
 
   selectedFile: PropTypes.shape({
     id: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
   }).isRequired,
-
-  updateFileContent: PropTypes.func.isRequired,
-
-  files: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-  })).isRequired,
-
-  closeEditorOptions: PropTypes.func.isRequired,
-
-  showEditorOptions: PropTypes.func.isRequired,
-
-  startRefreshSketch: PropTypes.func.isRequired,
-
-  stopSketch: PropTypes.func.isRequired,
-
-  expandSidebar: PropTypes.func.isRequired,
-
-  collapseSidebar: PropTypes.func.isRequired,
-
-  clearConsole: PropTypes.func.isRequired,
-
-  console: PropTypes.arrayOf(PropTypes.shape({
-    method: PropTypes.string.isRequired,
-    args: PropTypes.arrayOf(PropTypes.string),
-  })).isRequired,
-
-  showRuntimeErrorWarning: PropTypes.func.isRequired,
-
-  hideRuntimeErrorWarning: PropTypes.func.isRequired,
 
   user: PropTypes.shape({
     authenticated: PropTypes.bool.isRequired,
@@ -284,8 +219,6 @@ MobileIDEView.propTypes = {
     project_id: PropTypes.string,
     username: PropTypes.string
   }).isRequired,
-
-  unsavedChanges: PropTypes.bool.isRequired
 };
 
 function mapStateToProps(state) {
@@ -297,6 +230,7 @@ function mapStateToProps(state) {
       state.files.find(file => file.name !== 'root'),
     htmlFile: getHTMLFile(state.files),
     ide: state.ide,
+    unsavedChanges: state.ide.unsavedChanged,
     preferences: state.preferences,
     editorAccessibility: state.editorAccessibility,
     user: state.user,
