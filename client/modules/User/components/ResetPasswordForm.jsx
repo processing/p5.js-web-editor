@@ -24,7 +24,7 @@ function ResetPasswordForm(props) {
       <Button
         type="submit"
         disabled={submitting || invalid || pristine || props.user.resetPasswordInitiate}
-      >{props.t('ResetPasswordForm.Submit')}
+      >{t('ResetPasswordForm.Submit')}
       </Button>
     </form>
   );

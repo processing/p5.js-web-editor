@@ -216,7 +216,10 @@
   "ResetPasswordView": {
     "Title": "Editor Web p5.js | Regenerar Contraseña",
     "Reset": "Regenerar Contraseña",
-    "Submitted": "Your password reset email should arrive shortly. If you don't see it, check\n            in your spam folder as sometimes it can end up there."
+    "Submitted": "Your password reset email should arrive shortly. If you don't see it, check\n            in your spam folder as sometimes it can end up there.",
+    "Login": "Ingresa",
+    "LoginOr": "o",
+    "SignUp": "Registráte"
   },
   "ReduxFormUtils": {
     "errorInvalidEmail": "Por favor introduce un correo electrónico válido",
