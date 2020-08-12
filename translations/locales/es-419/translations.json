@@ -33,18 +33,9 @@
     "Lang": "Lenguaje",
     "BackEditor": "Regresa al editor",
     "WarningUnsavedChanges": "¿Realmente quieres salir de la página? Tienes cambios sin guardar.",
-    "Login": {
-      "Login": "Ingresa",
-      "LoginOr": "o",
-      "SignUp": "registráte",
-      "Email": "correo electrónico",
-      "Username": "Identificación",
-      "LoginGithub": "Ingresa con Github",
-      "LoginGoogle": "Ingresa con Google",
-      "DontHaveAccount": "¿No tienes cuenta?",
-      "ForgotPassword": "¿Olvidaste tu contraseña?",
-      "ResetPassword": "Regenera tu contraseña"
-    },
+    "Login": "Ingresa",
+    "LoginOr": "o",
+    "SignUp": "Registráte",
     "Auth": {
       "Welcome": "Hola",
       "Hello": "Hola",
@@ -56,6 +47,29 @@
       "MyAssets": "Mis assets",
       "LogOut": "Cerrar sesión"
     }
+  },
+  "LoginForm": {
+    "UsernameOrEmail": "Correo o Identificación",
+    "UsernameOrEmailARIA": "Introduce Correo o Identificación",
+    "Password": "Contraseña",
+    "PasswordARIA": "Contraseña",
+    "Submit": "Ingresa"
+  },
+  "LoginView": {
+    "Title": " Editor Web p5.js  | Ingreso",
+    "Login": "Ingresa",
+    "LoginOr": "o",
+    "SignUp": "Registráte",
+    "Email": "correo electrónico",
+    "Username": "Identificación",
+    "DontHaveAccount": "¿No tienes cuenta? ",
+    "ForgotPassword": "¿Olvidaste tu contraseña? ",
+    "ResetPassword": "Regenera tu contraseña"
+  },
+  "SocialAuthButton": {
+    "Github": "Ingresa con Github",
+    "LogoARIA": "Logo de {{serviceauth}}",
+    "Google": "Ingresa con Google"
   },
   "About": {
     "Title": "Acerca de",
@@ -174,8 +188,8 @@
     "SubmitFeedback": "Enviar retroalimentación"
   },
   "NewFileModal": {
-  "Title": "Crear Archivo",
-  "CloseButtonARIA": "Cerrar diálogo de crear archivo",
+    "Title": "Crear Archivo",
+    "CloseButtonARIA": "Cerrar diálogo de crear archivo",
     "EnterName": "Por favor introduce un nombre",
     "InvalidType": "Tipo de archivo inválido. Las extensiones válidas son .js, .css, .json, .txt, .csv, .tsv, .frag y .vert."
   },
@@ -184,18 +198,39 @@
     "Placeholder": "Nombre"
   },
   "NewFolderModal": {
-  "Title": "Crear Directorio",
-  "CloseButtonARIA": "Cerrar Diálogo de Nuevo Directorio",
-  "EnterName": "Por favor introduce un nombre",
-  "EmptyName": " El nombre del directorio no debe contener solo espacios vacíos",
-  "InvalidExtension": "El nombre del directorio no debe contener una extensión"
-},
+    "Title": "Crear Directorio",
+    "CloseButtonARIA": "Cerrar Diálogo de Nuevo Directorio",
+    "EnterName": "Por favor introduce un nombre",
+    "EmptyName": " El nombre del directorio no debe contener solo espacios vacíos",
+    "InvalidExtension": "El nombre del directorio no debe contener una extensión"
+  },
   "NewFolderForm": {
     "AddFolderSubmit": "Agregar Directorio",
     "Placeholder": "Nombre"
+  },
+  "ResetPasswordForm": {
+    "Email": "Correo electrónico usado al registrarse",
+    "EmailARIA": "correo electrónico",
+    "Submit": "Enviar correo para regenerar contraseña"
+  },
+  "ResetPasswordView": {
+    "Title": "Editor Web p5.js | Regenerar Contraseña",
+    "Reset": "Regenerar Contraseña",
+    "Submitted": "Your password reset email should arrive shortly. If you don't see it, check\n            in your spam folder as sometimes it can end up there."
+  },
+  "ReduxFormUtils": {
+    "errorInvalidEmail": "Por favor introduce un correo electrónico válido",
+    "errorEmptyEmail": "Por favor introduce un correo electrónico",
+    "errorPasswordMismatch": "Las contraseñas deben coincidir",
+    "errorEmptyPassword": "Por favor introduce una contraseña",
+    "errorShortPassword": "La contraseña debe tener al menos 6 caracteres",
+    "errorConfirmPassword": "Por favor confirma una contraseña",
+    "errorNewPassword": "Por favor introduce una nueva contraseña o deja la actual contraseña vacía",
+    "errorEmptyUsername": "Por favor introduce tu identificación",
+    "errorLongUsername": "La identificación debe ser menor a 20 caracteres.",
+    "errorValidUsername": "La identificación debe consistir solamente de números, letras, puntos, guiones y guiones bajos."
+
   }
 }
-
-
 
 
