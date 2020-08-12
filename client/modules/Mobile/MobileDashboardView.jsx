@@ -27,6 +27,7 @@ const EXAMPLE_USERNAME = 'p5';
 const ContentWrapper = styled(Content)`
   table {
     table-layout: fixed;
+    margin-bottom: ${remSize(120)}
   }
   
   td ,thead button {
@@ -91,6 +92,7 @@ const ContentWrapper = styled(Content)`
     border-radius: ${remSize(4)};
     grid-template-columns: repeat(${props => props.fieldcount - 1}) 1fr;
     grid-template-areas: "name name name" "content content content";
+    grid-row-gap: ${remSize(12)}
   }
 
   .loader-container { position: fixed ; padding-bottom: 32% }
