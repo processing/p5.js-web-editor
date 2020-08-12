@@ -35,6 +35,12 @@ const HeaderDiv = styled.div`
   }
 
   & svg path { fill: ${textColor} !important; }
+
+  .editor__unsaved-changes svg {
+    width: ${remSize(16)};
+    padding: 0px;
+    vertical-align: top
+  }
 `;
 
 const IconContainer = styled.div`

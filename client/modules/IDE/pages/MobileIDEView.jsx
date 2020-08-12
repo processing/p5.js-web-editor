@@ -21,6 +21,7 @@ import { getHTMLFile } from '../reducers/files';
 // Local Imports
 import Editor from '../components/Editor';
 import { PlayIcon, MoreIcon } from '../../../common/icons';
+import UnsavedChangesDotIcon from '../../../images/unsaved-changes-dot.svg';
 
 import IconButton from '../../../components/mobile/IconButton';
 import Header from '../../../components/mobile/Header';
@@ -37,6 +38,16 @@ import Dropdown from '../../../components/Dropdown';
 
 const isUserOwner = ({ project, user }) =>
   project.owner && project.owner.id === user.id;
+
+const getTitle = (title, unsavedChanges = false) => (
+  <span>
+    {title}
+    <span className="editor__unsaved-changes">
+      {unsavedChanges &&
+      <UnsavedChangesDotIcon role="img" aria-label="Sketch has unsaved changes" focusable="false" />}
+    </span>
+  </span>
+);
 
 const Expander = styled.div`
   height: ${props => (props.expanded ? remSize(160) : remSize(27))};
@@ -65,7 +76,7 @@ const MobileIDEView = (props) => {
   const {
     preferences, ide, editorAccessibility, project, updateLintMessage, clearLintMessage,
     selectedFile, updateFileContent, files, user, params,
-    closeEditorOptions, showEditorOptions,
+    closeEditorOptions, showEditorOptions, unsavedChanges,
     startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console,
     showRuntimeErrorWarning, hideRuntimeErrorWarning, startSketch, getProject, clearPersistedState
   } = props;
@@ -99,7 +110,7 @@ const MobileIDEView = (props) => {
   return (
     <Screen fullscreen>
       <Header
-        title={project.name}
+        title={getTitle(project.name, unsavedChanges)}
         subtitle={selectedFile.name}
       >
         <NavItem>
@@ -273,6 +284,8 @@ MobileIDEView.propTypes = {
     project_id: PropTypes.string,
     username: PropTypes.string
   }).isRequired,
+
+  unsavedChanges: PropTypes.bool.isRequired
 };
 
 function mapStateToProps(state) {
