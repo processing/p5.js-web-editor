@@ -232,7 +232,11 @@
   },
   "NewPasswordView": {
     "Title": "p5.js Web Editor | New Password",
-    "Description": "Set a New Password"
+    "Description": "Set a New Password",
+    "TokenInvalidOrExpired": "The password reset token is invalid or has expired.",
+    "EmptyPassword": "Please enter a password",
+    "PasswordConfirmation": "Please enter a password confirmation",
+    "PasswordMismatch": "Passwords must match"
   },
   "AccountForm": {
     "Email": "Email",
@@ -275,5 +279,12 @@
     "Actions": "Actions",
     "Never": "Never",
      "DeleteARIA": "Delete API Key"
+  },
+  "NewPasswordForm": {
+    "Title": "Password",
+    "TitleARIA": "Password",
+    "ConfirmPassword": "Confirm Password",
+    "ConfirmPasswordARIA": "Confirm Password",
+    "SubmitSetNewPassword": "Set New Password"
   }
 }

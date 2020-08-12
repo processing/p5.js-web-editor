@@ -232,7 +232,11 @@
   },
   "NewPasswordView": {
     "Title": "Editor Web p5.js | Nueva Contraseña",
-    "Description": "Define una nueva contraseña"
+    "Description": "Define una nueva contraseña",
+    "TokenInvalidOrExpired": "El token para regenerar la contraseña es inválido o ha expirado.",
+    "EmptyPassword": "Por favor introduce una contraseña",
+    "PasswordConfirmation": "Por favor confirma la contraseña",
+    "PasswordMismatch": "Las contraseña deben coincidir"
   },
   "AccountForm": {
     "Email": "Correo Electrónico",
@@ -275,7 +279,13 @@
     "Actions": "Acciones",
     "Never": "Nunca",
     "DeleteARIA": "Borrar clave de API"
-
+  },
+  "NewPasswordForm": {
+    "Title": "Contraseña",
+    "TitleARIA": "Contraseña",
+    "ConfirmPassword": "Confirmar Contraseña",
+    "ConfirmPasswordARIA": "Confirmar contraseña",
+    "SubmitSetNewPassword": "Crear Nueva Contraseña"
   }
 }
 
