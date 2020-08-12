@@ -8,14 +8,8 @@ import styled from 'styled-components';
 // Imports to be Refactored
 import { bindActionCreators } from 'redux';
 
-import * as FileActions from '../actions/files';
 import * as IDEActions from '../actions/ide';
 import * as ProjectActions from '../actions/project';
-import * as PreferencesActions from '../actions/preferences';
-import * as UserActions from '../../User/actions';
-import * as ToastActions from '../actions/toast';
-import * as ConsoleActions from '../actions/console';
-import { getHTMLFile } from '../reducers/files';
 
 // Local Imports
 import Editor from '../components/Editor';
@@ -182,12 +176,10 @@ MobileIDEView.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    files: state.files,
     selectedFile:
       state.files.find(file => file.isSelectedFile) ||
       state.files.find(file => file.name === 'sketch.js') ||
       state.files.find(file => file.name !== 'root'),
-    htmlFile: getHTMLFile(state.files),
     ide: state.ide,
     unsavedChanges: state.ide.unsavedChanges,
     preferences: state.preferences,
@@ -198,15 +190,9 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    Object.assign(
-      {},
-      ProjectActions,
-      IDEActions,
-    ),
-    dispatch
-  );
-}
+const mapDispatchToProps = dispatch => bindActionCreators({
+  ...ProjectActions,
+  ...IDEActions
+}, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MobileIDEView));
