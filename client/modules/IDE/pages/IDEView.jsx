@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
-import i18next from 'i18next';
 import { Helmet } from 'react-helmet';
 import SplitPane from 'react-split-pane';
 import Editor from '../components/Editor';
@@ -144,9 +143,6 @@ class IDEView extends React.Component {
 
     if (this.props.route.path !== prevProps.route.path) {
       this.props.router.setRouteLeaveHook(this.props.route, () => warnIfUnsavedChanges(this.props));
-    }
-    if (this.props.preferences.language !== prevProps.preferences.language) {
-      i18next.changeLanguage(this.props.preferences.language);
     }
   }
   componentWillUnmount() {
