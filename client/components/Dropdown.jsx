@@ -36,9 +36,7 @@ const DropdownWrapper = styled.ul`
     background-color: ${prop('Button.hover.background')};
     color: ${prop('Button.hover.foreground')};
 
-    & button, & a {
-      color: ${prop('Button.hover.foreground')};
-    }
+    * { color: ${prop('Button.hover.foreground')}; }
   }
 
   li {
@@ -48,17 +46,21 @@ const DropdownWrapper = styled.ul`
     align-items: center;
 
     & button,
+    & button span,
     & a {
       color: ${prop('primaryTextColor')};
       width: 100%;
       text-align: left;
+      justify-content: left;
       padding: ${remSize(8)} ${remSize(16)};
     }
+
+    & button span { padding: 0px }
   }
 `;
 
 // TODO: Add Icon to the left of the items in the menu
-const MaybeIcon = (Element, label) => Element && <Element aria-label={label} />;
+// const MaybeIcon = (Element, label) => Element && <Element aria-label={label} />;
 
 const Dropdown = ({ items, align }) => (
   <DropdownWrapper align={align} >
@@ -67,7 +69,7 @@ const Dropdown = ({ items, align }) => (
       title, icon, href, action
     }) => (
       <li key={`nav-${title && title.toLowerCase()}`}>
-        {MaybeIcon(icon, `Navigate to ${title}`)}
+        {/* {MaybeIcon(icon, `Navigate to ${title}`)} */}
         {href
           ? <IconButton to={href}>{title}</IconButton>
           : <IconButton onClick={() => action()}>{title}</IconButton>}
