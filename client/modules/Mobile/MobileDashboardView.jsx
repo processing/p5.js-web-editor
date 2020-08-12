@@ -62,7 +62,6 @@ const ContentWrapper = styled(Content)`
   tbody { height: ${remSize(48)}; }
 
   .sketches-table-container {
-    padding-bottom: ${remSize(160)};
     background: ${prop('SketchList.background')};
     }
   .sketches-table__row {
@@ -90,6 +89,19 @@ const ContentWrapper = styled(Content)`
   }
 
   .loader-container { position: fixed ; padding-bottom: 32% }
+
+  .sketches-table thead th {
+    background-color: transparent;
+  }
+
+  .asset-table thead th {
+    height: initial;
+    align-self: center;
+  }
+
+  .asset-table thead tr {
+    height: ${remSize(32)}
+  }
 
 `;
 
