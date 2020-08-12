@@ -33,18 +33,9 @@
     "Lang": "Language",
     "BackEditor": "Back to Editor",
     "WarningUnsavedChanges": "Are you sure you want to leave this page? You have unsaved changes.",
-    "Login": {
-      "Login": "Log in",
-      "LoginOr": "or",
-      "SignUp": "Sign up",
-      "Email": "email",
-      "Username": "username",
-      "LoginGithub": "Login with Github",
-      "LoginGoogle": "Login with Google",
-      "DontHaveAccount": "Don't have an account?",
-      "ForgotPassword": "Forgot your password?",
-      "ResetPassword": "Reset your password"
-    },
+    "Login": "Log in",
+    "LoginOr": "or",
+    "SignUp": "Sign up",
     "Auth": {
       "Welcome": "Welcome",
       "Hello": "Hello",
@@ -56,6 +47,29 @@
       "MyAssets": "My Assets",
       "LogOut": "Log Out"
     }
+  },
+  "LoginForm": {
+    "UsernameOrEmail": "Email or Username",
+    "UsernameOrEmailARIA": "Email or Username",
+    "Password": "Password",
+    "PasswordARIA": "Password",
+    "Submit": "Log In"
+  },
+  "LoginView": {
+    "Title": "p5.js Web Editor | Login",
+    "Login": "Log In",
+    "LoginOr": "or",
+    "SignUp": "Sign Up",
+    "Email": "email",
+    "Username": "username",
+    "DontHaveAccount": "Don't have an account? ",
+    "ForgotPassword": "Forgot your password? ",
+    "ResetPassword": "Reset your password"
+  },
+  "SocialAuthButton": {
+    "Github": "Login with Github",
+    "LogoARIA": "{{serviceauth}} logo",
+    "Google": "Login with Google"
   },
   "About": {
     "Title": "About",
