@@ -58,22 +58,26 @@ const DropdownWrapper = styled.ul`
 `;
 
 // TODO: Add Icon to the left of the items in the menu
-// const MaybeIcon = (Element, label) => Element && <Element aria-label={label} />;
+const MaybeIcon = (Element, label) => Element && <Element aria-label={label} />;
 
 const Dropdown = ({ items, align }) => (
   <DropdownWrapper align={align} >
     {/* className="nav__items-left" */}
-    {items && items.map(({ title, icon, href }) => (
+    {items && items.map(({
+      title, icon, href, action
+    }) => (
       <li key={`nav-${title && title.toLowerCase()}`}>
-        <Link to={href}>
-          {/* {MaybeIcon(icon, `Navigate to ${title}`)} */}
-          {title}
-        </Link>
+        {MaybeIcon(icon, `Navigate to ${title}`)}
+        {href
+          ? <IconButton to={href}>{title}</IconButton>
+          : <IconButton onClick={() => action()}>{title}</IconButton>}
+
       </li>
     ))
     }
   </DropdownWrapper>
 );
+
 
 Dropdown.propTypes = {
   align: PropTypes.oneOf(['left', 'right']),

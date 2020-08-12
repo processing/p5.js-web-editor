@@ -46,18 +46,20 @@ const NavItem = styled.li`
   position: relative;
 `;
 
-const getNatOptions = (username = undefined) =>
+const getNavOptions = (username = undefined, logoutUser = () => {}) =>
   (username
     ? [
       { icon: PreferencesIcon, title: 'Preferences', href: '/mobile/preferences', },
       { icon: PreferencesIcon, title: 'My Stuff', href: `/mobile/${username}/sketches` },
       { icon: PreferencesIcon, title: 'Examples', href: '/mobile/p5/sketches' },
       { icon: PreferencesIcon, title: 'Original Editor', href: '/', },
+      { icon: PreferencesIcon, title: 'Logout', action: logoutUser, },
     ]
     : [
       { icon: PreferencesIcon, title: 'Preferences', href: '/mobile/preferences', },
       { icon: PreferencesIcon, title: 'Examples', href: '/mobile/p5/sketches' },
       { icon: PreferencesIcon, title: 'Original Editor', href: '/', },
+      { icon: PreferencesIcon, title: 'Login', href: '/login', },
     ]
   );
 
@@ -65,7 +67,7 @@ const MobileIDEView = (props) => {
   const {
     preferences, ide, editorAccessibility, project, updateLintMessage, clearLintMessage,
     selectedFile, updateFileContent, files, user, params,
-    closeEditorOptions, showEditorOptions,
+    closeEditorOptions, showEditorOptions, logoutUser,
     startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console,
     showRuntimeErrorWarning, hideRuntimeErrorWarning, startSketch, getProject, clearPersistedState
   } = props;
@@ -75,7 +77,7 @@ const MobileIDEView = (props) => {
   const { username } = user;
 
   const [triggerNavDropdown, NavDropDown] = useAsModal(<Dropdown
-    items={getNatOptions(username)}
+    items={getNavOptions(username, logoutUser)}
     align="right"
   />);
 
@@ -266,6 +268,8 @@ MobileIDEView.propTypes = {
     id: PropTypes.string,
     username: PropTypes.string,
   }).isRequired,
+
+  logoutUser: PropTypes.func.isRequired,
 
   getProject: PropTypes.func.isRequired,
   clearPersistedState: PropTypes.func.isRequired,
