@@ -608,13 +608,13 @@ class Nav extends React.PureComponent {
       <ul className="nav__items-right" title="user-menu">
         <li className="nav__item">
           <Link to="/login" className="nav__auth-button">
-            <span className="nav__item-header">{this.props.t('Nav.Login.Login')}</span>
+            <span className="nav__item-header">{this.props.t('Nav.Login')}</span>
           </Link>
         </li>
-        <span className="nav__item-or">{this.props.t('Nav.Login.LoginOr')}</span>
+        <span className="nav__item-or">{this.props.t('Nav.LoginOr')}</span>
         <li className="nav__item">
           <Link to="/signup" className="nav__auth-button">
-            <span className="nav__item-header">{this.props.t('Nav.Login.SignUp')}</span>
+            <span className="nav__item-header">{this.props.t('Nav.SignUp')}</span>
           </Link>
         </li>
       </ul>

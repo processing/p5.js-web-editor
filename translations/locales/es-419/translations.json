@@ -33,18 +33,9 @@
     "Lang": "Lenguaje",
     "BackEditor": "Regresa al editor",
     "WarningUnsavedChanges": "¿Realmente quieres salir de la página? Tienes cambios sin guardar.",
-    "Login": {
-      "Login": "Ingresa",
-      "LoginOr": "o",
-      "SignUp": "registráte",
-      "Email": "correo electrónico",
-      "Username": "Identificación",
-      "LoginGithub": "Ingresa con Github",
-      "LoginGoogle": "Ingresa con Google",
-      "DontHaveAccount": "¿No tienes cuenta?",
-      "ForgotPassword": "¿Olvidaste tu contraseña?",
-      "ResetPassword": "Regenera tu contraseña"
-    },
+    "Login": "Ingresa",
+    "LoginOr": "o",
+    "SignUp": "Registráte",
     "Auth": {
       "Welcome": "Hola",
       "Hello": "Hola",
@@ -56,6 +47,29 @@
       "MyAssets": "Mis assets",
       "LogOut": "Cerrar sesión"
     }
+  },
+  "LoginForm": {
+    "UsernameOrEmail": "Correo o Identificación",
+    "UsernameOrEmailARIA": "Introduce Correo o Identificación",
+    "Password": "Contraseña",
+    "PasswordARIA": "Contraseña",
+    "Submit": "Ingresa"
+  },
+  "LoginView": {
+    "Title": " Editor Web p5.js  | Ingreso",
+    "Login": "Ingresa",
+    "LoginOr": "o",
+    "SignUp": "Registráte",
+    "Email": "correo electrónico",
+    "Username": "Identificación",
+    "DontHaveAccount": "¿No tienes cuenta? ",
+    "ForgotPassword": "¿Olvidaste tu contraseña? ",
+    "ResetPassword": "Regenera tu contraseña"
+  },
+  "SocialAuthButton": {
+    "Github": "Ingresa con Github",
+    "LogoARIA": "Logo de {{serviceauth}}",
+    "Google": "Ingresa con Google"
   },
   "About": {
     "Title": "Acerca de",
