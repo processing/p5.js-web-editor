@@ -208,5 +208,9 @@
   "NewFolderForm": {
     "AddFolderSubmit": "Add Folder",
     "Placeholder": "Name"
+  },
+  "EmailVerificationView": {
+    "Title": "p5.js Web Editor | Email Verification",
+    "Verify": "Verify your email"
   }
 }
