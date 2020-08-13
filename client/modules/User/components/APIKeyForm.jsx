@@ -39,8 +39,7 @@ class APIKeyForm extends React.Component {
   }
 
   removeKey(key) {
-    // const message = `Are you sure you want to delete "${}"?`;
-    const message = i18next.t('APIKeyForm.ConfirmDelete', { key_label: key.label });
+    const message = this.props.t('APIKeyForm.ConfirmDelete', { key_label: key.label });
 
     if (window.confirm(message)) {
       this.props.removeApiKey(key.id);
