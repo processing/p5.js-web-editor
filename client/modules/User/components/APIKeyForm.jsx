@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-
 import Button from '../../../common/Button';
 import { PlusIcon } from '../../../common/icons';
 import CopyableInput from '../../IDE/components/CopyableInput';
@@ -12,7 +11,7 @@ export const APIKeyPropType = PropTypes.shape({
   token: PropTypes.object, // eslint-disable-line
   label: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
-  lastUsedAt: PropTypes.string,
+  lastUsedAt: PropTypes.string
 });
 
 class APIKeyForm extends React.Component {
@@ -39,7 +38,7 @@ class APIKeyForm extends React.Component {
   }
 
   removeKey(key) {
-    const message = `Are you sure you want to delete "${key.label}"?`;
+    const message = this.props.t('APIKeyForm.ConfirmDelete', { key_label: key.label });
 
     if (window.confirm(message)) {
       this.props.removeApiKey(key.id);
@@ -51,10 +50,10 @@ class APIKeyForm extends React.Component {
 
     if (hasApiKeys) {
       return (
-        <APIKeyList apiKeys={this.props.apiKeys} onRemove={this.removeKey} />
+        <APIKeyList apiKeys={this.props.apiKeys} onRemove={this.removeKey} t={this.props.t} />
       );
     }
-    return <p>You have no exsiting tokens.</p>;
+    return <p>{this.props.t('APIKeyForm.NoTokens')}</p>;
   }
 
   render() {
@@ -63,27 +62,18 @@ class APIKeyForm extends React.Component {
     return (
       <div className="api-key-form">
         <p className="api-key-form__summary">
-          Personal Access Tokens act like your password to allow automated
-          scripts to access the Editor API. Create a token for each script that
-          needs access.
+          {this.props.t('APIKeyForm.Summary')}
         </p>
 
         <div className="api-key-form__section">
-          <h3 className="api-key-form__title">Create new token</h3>
+          <h3 className="api-key-form__title">{this.props.t('APIKeyForm.CreateToken')}</h3>
           <form className="form form--inline" onSubmit={this.addKey}>
-            <label
-              htmlFor="keyLabel"
-              className="form__label form__label--hidden "
-            >
-              What is this token for?
-            </label>
+            <label htmlFor="keyLabel" className="form__label form__label--hidden ">{this.props.t('APIKeyForm.TokenLabel')}</label>
             <input
               className="form__input"
               id="keyLabel"
-              onChange={(event) => {
-                this.setState({ keyLabel: event.target.value });
-              }}
-              placeholder="What is this token for? e.g. Example import script"
+              onChange={(event) => { this.setState({ keyLabel: event.target.value }); }}
+              placeholder={this.props.t('APIKeyForm.TokenPlaceholder')}
               type="text"
               value={this.state.keyLabel}
             />
@@ -93,29 +83,25 @@ class APIKeyForm extends React.Component {
               label="Create new key"
               type="submit"
             >
-              Create
+              {this.props.t('APIKeyForm.CreateTokenSubmit')}
             </Button>
           </form>
 
-          {keyWithToken && (
-            <div className="api-key-form__new-token">
-              <h4 className="api-key-form__new-token__title">
-                Your new access token
-              </h4>
-              <p className="api-key-form__new-token__info">
-                Make sure to copy your new personal access token now. You won’t
-                be able to see it again!
-              </p>
-              <CopyableInput
-                label={keyWithToken.label}
-                value={keyWithToken.token}
-              />
-            </div>
-          )}
+          {
+            keyWithToken && (
+              <div className="api-key-form__new-token">
+                <h4 className="api-key-form__new-token__title">{this.props.t('APIKeyForm.NewTokenTitle')}</h4>
+                <p className="api-key-form__new-token__info">
+                  {this.props.t('APIKeyForm.NewTokenInfo')}
+                </p>
+                <CopyableInput label={keyWithToken.label} value={keyWithToken.token} />
+              </div>
+            )
+          }
         </div>
 
         <div className="api-key-form__section">
-          <h3 className="api-key-form__title">Existing tokens</h3>
+          <h3 className="api-key-form__title">{this.props.t('APIKeyForm.ExistingTokensTitle')}</h3>
           {this.renderApiKeys()}
         </div>
       </div>
@@ -127,6 +113,7 @@ APIKeyForm.propTypes = {
   apiKeys: PropTypes.arrayOf(PropTypes.shape(APIKeyPropType)).isRequired,
   createApiKey: PropTypes.func.isRequired,
   removeApiKey: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired
 };
 
 export default APIKeyForm;

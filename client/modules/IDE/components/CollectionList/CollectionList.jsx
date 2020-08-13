@@ -143,9 +143,9 @@ class CollectionList extends React.Component {
             <thead>
               <tr>
                 {this._renderFieldHeader('name', 'Name')}
-                {(!mobile) && this._renderFieldHeader('createdAt', 'Date Created')}
-                {this._renderFieldHeader('updatedAt', 'Date Updated')}
-                {this._renderFieldHeader('numItems', '# sketches')}
+                {this._renderFieldHeader('createdAt', `${mobile ? '' : 'Date '}Created`)}
+                {this._renderFieldHeader('updatedAt', `${mobile ? '' : 'Date '}Updated`)}
+                {this._renderFieldHeader('numItems', mobile ? 'Sketches' : '# sketches')}
                 <th scope="col"></th>
               </tr>
             </thead>

@@ -24,9 +24,11 @@ import Loader from '../App/components/loader';
 
 const EXAMPLE_USERNAME = 'p5';
 
+// @ghalestrilo 08/13/2020: I'm sorry
 const ContentWrapper = styled(Content)`
   table {
     table-layout: fixed;
+    margin-bottom: ${remSize(120)}
   }
   
   td ,thead button {
@@ -55,14 +57,18 @@ const ContentWrapper = styled(Content)`
   
   tbody td              { justify-self: start; text-align: start; padding: 0 }
   tbody td:nth-child(2) { justify-self: start;  text-align: start; padding-left: ${remSize(12)}};
-  tbody td:last-child   { justify-self: end;    text-align: end; };
+  tbody td:last-child   {
+    justify-self: end;
+    text-align: end;
+    grid-row-start: 1;
+    grid-column-start: 3;
+  };
 
   .sketch-list__dropdown-column { width: auto; };
 
   tbody { height: ${remSize(48)}; }
 
   .sketches-table-container {
-    padding-bottom: ${remSize(160)};
     background: ${prop('SketchList.background')};
     }
   .sketches-table__row {
@@ -79,17 +85,32 @@ const ContentWrapper = styled(Content)`
   };
 
   thead tr {
-    grid-template-columns: 1fr 1fr 1fr 0fr;
+    grid-template-columns: repeat(${props => props.fieldcount}, 1fr) 0fr;
+    ${props => props.noheader && 'display: none;'}
   }
 
   tbody tr {
     padding: ${remSize(8)};
     border-radius: ${remSize(4)};
-    grid-template-columns: 5fr 5fr 1fr;
+    grid-template-columns: repeat(${props => props.fieldcount - 1}) 1fr;
     grid-template-areas: "name name name" "content content content";
+    grid-row-gap: ${remSize(12)}
   }
 
   .loader-container { position: fixed ; padding-bottom: 32% }
+
+  .sketches-table thead th {
+    background-color: transparent;
+  }
+
+  .asset-table thead th {
+    height: initial;
+    align-self: center;
+  }
+
+  .asset-table thead tr {
+    height: ${remSize(32)}
+  }
 
 `;
 
@@ -168,7 +189,7 @@ const MobileDashboard = ({ params, location }) => {
       </Header>
 
 
-      <ContentWrapper slimheader>
+      <ContentWrapper slimheader fieldcount={panel === Tabs[1] ? 4 : 3} noheader={panel === Tabs[2]}>
         <Subheader>
           {panel === Tabs[0] && <SketchSearchbar />}
           {panel === Tabs[1] && <CollectionSearchbar />}
