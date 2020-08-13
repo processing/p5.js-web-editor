@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-
+import { withTranslation } from 'react-i18next';
+import i18n from 'i18next';
 import Button from '../../../common/Button';
 
 import { domOnlyProps } from '../../../utils/reduxFormUtils';
@@ -12,10 +13,10 @@ function LoginForm(props) {
   return (
     <form className="form" onSubmit={handleSubmit(props.validateAndLoginUser.bind(this, props.previousPath))}>
       <p className="form__field">
-        <label htmlFor="email" className="form__label">Email or Username</label>
+        <label htmlFor="email" className="form__label">{props.t('LoginForm.UsernameOrEmail')}</label>
         <input
           className="form__input"
-          aria-label="email or username"
+          aria-label={props.t('LoginForm.UsernameOrEmailARIA')}
           type="text"
           id="email"
           {...domOnlyProps(email)}
@@ -23,10 +24,10 @@ function LoginForm(props) {
         {email.touched && email.error && <span className="form-error">{email.error}</span>}
       </p>
       <p className="form__field">
-        <label htmlFor="password" className="form__label">Password</label>
+        <label htmlFor="password" className="form__label">{props.t('LoginForm.Password')}</label>
         <input
           className="form__input"
-          aria-label="password"
+          aria-label={props.t('LoginForm.PasswordARIA')}
           type="password"
           id="password"
           {...domOnlyProps(password)}
@@ -36,7 +37,7 @@ function LoginForm(props) {
       <Button
         type="submit"
         disabled={submitting || pristine}
-      >Log In
+      >{props.t('LoginForm.Submit')}
       </Button>
     </form>
   );
@@ -52,7 +53,8 @@ LoginForm.propTypes = {
   submitting: PropTypes.bool,
   pristine: PropTypes.bool,
   invalid: PropTypes.bool,
-  previousPath: PropTypes.string.isRequired
+  previousPath: PropTypes.string.isRequired,
+  t: PropTypes.func.isRequired
 };
 
 LoginForm.defaultProps = {
@@ -61,4 +63,4 @@ LoginForm.defaultProps = {
   invalid: false
 };
 
-export default LoginForm;
+export default withTranslation()(LoginForm);
