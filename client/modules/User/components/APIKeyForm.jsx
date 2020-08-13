@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import i18next from 'i18next';
 import Button from '../../../common/Button';
 import { PlusIcon } from '../../../common/icons';
 import CopyableInput from '../../IDE/components/CopyableInput';
