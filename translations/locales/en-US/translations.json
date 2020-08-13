@@ -183,21 +183,20 @@
     "Error": "Error",
     "Save": "Save",
     "p5logoARIA": "p5.js Logo"
-
   },
   "IDEView": {
     "SubmitFeedback": "Submit Feedback"
   },
   "NewFileModal": {
     "Title": "Create File",
-     "CloseButtonARIA": "Close New File Modal",
+    "CloseButtonARIA": "Close New File Modal",
     "EnterName": "Please enter a name",
     "InvalidType": "Invalid file type. Valid extensions are .js, .css, .json, .txt, .csv, .tsv, .frag, and .vert."
   },
   "NewFileForm": {
-  "AddFileSubmit": "Add File",
+    "AddFileSubmit": "Add File",
     "Placeholder": "Name"
-},
+  },
   "NewFolderModal": {
     "Title": "Create Folder",
     "CloseButtonARIA": "Close New Folder Modal",
@@ -208,5 +207,30 @@
   "NewFolderForm": {
     "AddFolderSubmit": "Add Folder",
     "Placeholder": "Name"
+  },
+  "ResetPasswordForm": {
+    "Email": "Email used for registration",
+    "EmailARIA": "email",
+    "Submit": "Send Password Reset Email"
+  },
+  "ResetPasswordView": {
+    "Title": "p5.js Web Editor | Reset Password",
+    "Reset": "Reset Your Password",
+    "Submitted": "Your password reset email should arrive shortly. If you don't see it, check\n            in your spam folder as sometimes it can end up there.",
+    "Login": "Log In",
+    "LoginOr": "or",
+    "SignUp": "Sign Up"
+  },
+  "ReduxFormUtils": {
+    "errorInvalidEmail": "Please enter a valid email address",
+    "errorEmptyEmail": "Please enter an email",
+    "errorPasswordMismatch": "Passwords must match",
+    "errorEmptyPassword": "Please enter a password",
+    "errorShortPassword": "Password must be at least 6 characters",
+    "errorConfirmPassword": "Please enter a password confirmation",
+    "errorNewPassword": "Please enter a new password or leave the current password empty.",
+    "errorEmptyUsername": "Please enter a username.",
+    "errorLongUsername": "Username must be less than 20 characters.",
+    "errorValidUsername": "Username must only consist of numbers, letters, periods, dashes, and underscores."
   }
 }
