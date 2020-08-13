@@ -10,6 +10,7 @@ import { bindActionCreators } from 'redux';
 
 import * as IDEActions from '../actions/ide';
 import * as ProjectActions from '../actions/project';
+import * as ConsoleActions from '../actions/console';
 
 // Local Imports
 import Editor from '../components/Editor';
@@ -67,8 +68,8 @@ const getNatOptions = (username = undefined) =>
 
 const MobileIDEView = (props) => {
   const {
-    ide, project, selectedFile, user, params, unsavedChanges,
-    stopSketch, startSketch, getProject, clearPersistedState
+    ide, project, selectedFile, user, params, unsavedChanges, collapseConsole,
+    stopSketch, startSketch, getProject, clearPersistedState,
   } = props;
 
   const [tmController, setTmController] = useState(null); // eslint-disable-line
@@ -84,7 +85,10 @@ const MobileIDEView = (props) => {
 
   // Force state reset
   useEffect(clearPersistedState, []);
-  useEffect(stopSketch, []);
+  useEffect(() => {
+    stopSketch();
+    collapseConsole();
+  }, []);
 
   // Load Project
   const [currentProjectID, setCurrentProjectID] = useState(null);
@@ -172,6 +176,7 @@ MobileIDEView.propTypes = {
   stopSketch: PropTypes.func.isRequired,
   getProject: PropTypes.func.isRequired,
   clearPersistedState: PropTypes.func.isRequired,
+  collapseConsole: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -192,7 +197,8 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   ...ProjectActions,
-  ...IDEActions
+  ...IDEActions,
+  ...ConsoleActions
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MobileIDEView));
