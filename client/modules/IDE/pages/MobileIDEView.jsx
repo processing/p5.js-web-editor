@@ -66,6 +66,44 @@ const getNatOptions = (username = undefined) =>
     ]
   );
 
+
+const asd = (props, prevProps) => {
+  if (isUserOwner(this.props) && this.props.project.id) {
+    if (
+      props.preferences.autosave &&
+      props.ide.unsavedChanges &&
+      !props.ide.justOpenedProject
+    ) {
+      if (
+        props.selectedFile.name === prevProps.selectedFile.name &&
+        props.selectedFile.content !== prevProps.selectedFile.content
+      ) {
+        if (this.autosaveInterval) {
+          clearTimeout(this.autosaveInterval);
+        }
+        console.log('will save project in 20 seconds');
+        this.autosaveInterval = setTimeout(props.autosaveProject, 20000);
+      }
+    } else if (this.autosaveInterval && !props.preferences.autosave) {
+      clearTimeout(this.autosaveInterval);
+      this.autosaveInterval = null;
+    }
+  } else if (this.autosaveInterval) {
+    clearTimeout(this.autosaveInterval);
+    this.autosaveInterval = null;
+  }
+};
+
+const useEffectWithComparison = (fn, props) => {
+  const [prevProps, update] = useState({});
+
+  return useEffect(() => {
+    fn(props, prevProps);
+    update(props);
+  }, Object.values(props));
+};
+
+
 const MobileIDEView = (props) => {
   const {
     ide, project, selectedFile, user, params, unsavedChanges, collapseConsole,
@@ -101,6 +139,9 @@ const MobileIDEView = (props) => {
     }
     setCurrentProjectID(params.project_id);
   }, [params, project, username]);
+
+
+  // useEffectWithComparison(() => alert('haha'), { consoleIsExpanded });
 
 
   return (
