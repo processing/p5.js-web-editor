@@ -216,7 +216,10 @@
   "ResetPasswordView": {
     "Title": "Editor Web p5.js | Regenerar Contraseña",
     "Reset": "Regenerar Contraseña",
-    "Submitted": "Your password reset email should arrive shortly. If you don't see it, check\n            in your spam folder as sometimes it can end up there."
+    "Submitted": "Your password reset email should arrive shortly. If you don't see it, check\n            in your spam folder as sometimes it can end up there.",
+    "Login": "Ingresa",
+    "LoginOr": "o",
+    "SignUp": "Registráte"
   },
   "ReduxFormUtils": {
     "errorInvalidEmail": "Por favor introduce un correo electrónico válido",
@@ -261,17 +264,17 @@
     "AccessTokensTab": "Tokens de acceso"
   },
   "APIKeyForm": {
-  "ConfirmDelete": "¿Estas seguro que quieres borrar {{key_label}}?",
-    "Summary":" Los Tokens de acceso personal actuan como tu contraseña para permitir\n  a scripts automáticos acceder al  API del Editor. Crea un token por cada script \n que necesite acceso.",
+    "ConfirmDelete": "¿Estas seguro que quieres borrar {{key_label}}?",
+    "Summary": " Los Tokens de acceso personal actuan como tu contraseña para permitir\n  a scripts automáticos acceder al  API del Editor. Crea un token por cada script \n que necesite acceso.",
     "CreateToken": "Crear nuevo token",
     "TokenLabel": "¿Para que es este token?",
     "TokenPlaceholder": "¿Para que es este token? p.e. Ejemplo para Importar un Archivo",
     "CreateTokenSubmit": "Crear",
     "NoTokens": "No tienes tokens.",
     "NewTokenTitle": "Tu nuevo token de acceso",
-    "NewTokenInfo":"Asegurate de copiar tu token ahora mismo.\n ¡No podras verlo de nuevo!",
-    "ExistingTokensTitle":"Tokens existentes"
-},
+    "NewTokenInfo": "Asegurate de copiar tu token ahora mismo.\n ¡No podras verlo de nuevo!",
+    "ExistingTokensTitle": "Tokens existentes"
+  },
   "APIKeyList": {
     "Name": "Nombre",
     "Created": "Creado en",
@@ -288,5 +291,3 @@
     "SubmitSetNewPassword": "Crear Nueva Contraseña"
   }
 }
-
-

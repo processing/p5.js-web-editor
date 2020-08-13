@@ -216,7 +216,10 @@
   "ResetPasswordView": {
     "Title": "p5.js Web Editor | Reset Password",
     "Reset": "Reset Your Password",
-    "Submitted": "Your password reset email should arrive shortly. If you don't see it, check\n            in your spam folder as sometimes it can end up there."
+    "Submitted": "Your password reset email should arrive shortly. If you don't see it, check\n            in your spam folder as sometimes it can end up there.",
+    "Login": "Log In",
+    "LoginOr": "or",
+    "SignUp": "Sign Up"
   },
   "ReduxFormUtils": {
     "errorInvalidEmail": "Please enter a valid email address",
@@ -262,23 +265,23 @@
   },
   "APIKeyForm": {
     "ConfirmDelete": "Are you sure you want to delete {{key_label}}?",
-    "Summary":"Personal Access Tokens act like your password to allow automated\n          scripts to access the Editor API. Create a token for each script\n          that needs access.",
+    "Summary": "Personal Access Tokens act like your password to allow automated\n          scripts to access the Editor API. Create a token for each script\n          that needs access.",
     "CreateToken": "Create new token",
     "TokenLabel": "What is this token for?",
     "TokenPlaceholder": "What is this token for? e.g. Example import script",
     "CreateTokenSubmit": "Create",
     "NoTokens": "You have no existing tokens.",
     "NewTokenTitle": "Your new access token",
-    "NewTokenInfo":"Make sure to copy your new personal access token now.\n                  You won’t be able to see it again!",
-    "ExistingTokensTitle":"Existing tokens"
+    "NewTokenInfo": "Make sure to copy your new personal access token now.\n                  You won’t be able to see it again!",
+    "ExistingTokensTitle": "Existing tokens"
   },
   "APIKeyList": {
-  "Name": "Name",
+    "Name": "Name",
     "Created": "Created on",
     "LastUsed": "Last used",
     "Actions": "Actions",
     "Never": "Never",
-     "DeleteARIA": "Delete API Key"
+    "DeleteARIA": "Delete API Key"
   },
   "NewPasswordForm": {
     "Title": "Password",
