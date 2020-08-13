@@ -30,8 +30,7 @@ import useAsModal from '../../../components/useAsModal';
 import { PreferencesIcon } from '../../../common/icons';
 import Dropdown from '../../../components/Dropdown';
 
-const isUserOwner = ({ project, user }) =>
-  project.owner && project.owner.id === user.id;
+import { useEffectWithComparison } from '../../../utils/custom-hooks';
 
 const withChangeDot = (title, unsavedChanges = false) => (
   <span>
@@ -67,47 +66,40 @@ const getNatOptions = (username = undefined) =>
   );
 
 
-const asd = (props, prevProps) => {
-  if (isUserOwner(this.props) && this.props.project.id) {
-    if (
-      props.preferences.autosave &&
-      props.ide.unsavedChanges &&
-      !props.ide.justOpenedProject
-    ) {
-      if (
-        props.selectedFile.name === prevProps.selectedFile.name &&
-        props.selectedFile.content !== prevProps.selectedFile.content
-      ) {
-        if (this.autosaveInterval) {
-          clearTimeout(this.autosaveInterval);
+const isUserOwner = ({ project, user }) =>
+  project && project.owner && project.owner.id === user.id;
+
+const autosave = (autosaveInterval, setAutosaveInterval) => (props, prevProps) => {
+  const {
+    autosaveProject, preferences, ide, selectedFile: file, project
+  } = props;
+
+  const { selectedFile: oldFile } = prevProps;
+
+  if (isUserOwner(props) && project.id) {
+    if (preferences.autosave && ide.unsavedChanges && !ide.justOpenedProject) {
+      if (file.name === oldFile.name && file.content !== oldFile.content) {
+        if (autosaveInterval) {
+          clearTimeout(autosaveInterval);
         }
         console.log('will save project in 20 seconds');
-        this.autosaveInterval = setTimeout(props.autosaveProject, 20000);
+        setAutosaveInterval(setTimeout(autosaveProject, 20000));
       }
-    } else if (this.autosaveInterval && !props.preferences.autosave) {
-      clearTimeout(this.autosaveInterval);
-      this.autosaveInterval = null;
+    } else if (autosaveInterval && !preferences.autosave) {
+      clearTimeout(autosaveInterval);
+      setAutosaveInterval(null);
     }
-  } else if (this.autosaveInterval) {
-    clearTimeout(this.autosaveInterval);
-    this.autosaveInterval = null;
+  } else if (autosaveInterval) {
+    clearTimeout(autosaveInterval);
+    setAutosaveInterval(null);
   }
-};
-
-const useEffectWithComparison = (fn, props) => {
-  const [prevProps, update] = useState({});
-
-  return useEffect(() => {
-    fn(props, prevProps);
-    update(props);
-  }, Object.values(props));
 };
 
 
 const MobileIDEView = (props) => {
   const {
-    ide, project, selectedFile, user, params, unsavedChanges, collapseConsole,
-    stopSketch, startSketch, getProject, clearPersistedState,
+    ide, preferences, project, selectedFile, user, params, unsavedChanges, collapseConsole,
+    stopSketch, startSketch, getProject, clearPersistedState, autosaveProject
   } = props;
 
   const [tmController, setTmController] = useState(null); // eslint-disable-line
@@ -141,8 +133,11 @@ const MobileIDEView = (props) => {
   }, [params, project, username]);
 
 
-  // useEffectWithComparison(() => alert('haha'), { consoleIsExpanded });
-
+  // TODO: This behavior could move to <Editor />
+  const [autosaveInterval, setAutosaveInterval] = useState(null);
+  useEffectWithComparison(autosave(autosaveInterval, setAutosaveInterval), {
+    autosaveProject, preferences, ide, selectedFile
+  });
 
   return (
     <Screen fullscreen>
@@ -184,6 +179,9 @@ MobileIDEView.propTypes = {
     consoleIsExpanded: PropTypes.bool.isRequired,
   }).isRequired,
 
+  preferences: PropTypes.shape({
+  }).isRequired,
+
   project: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string.isRequired,
@@ -218,6 +216,7 @@ MobileIDEView.propTypes = {
   getProject: PropTypes.func.isRequired,
   clearPersistedState: PropTypes.func.isRequired,
   collapseConsole: PropTypes.func.isRequired,
+  autosaveProject: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {

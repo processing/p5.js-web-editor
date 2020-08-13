@@ -44,7 +44,7 @@ export const useModalBehavior = (hideOverlay) => {
 // Usage: useEffectWithComparison((props, prevProps) => { ... }, { prop1, prop2 })
 // This hook basically applies useEffect but keeping track of the last value of relevant props
 // So you can passa a 2-param function to capture new and old values and do whatever with them.
-const useEffectWithComparison = (fn, props) => {
+export const useEffectWithComparison = (fn, props) => {
   const [prevProps, update] = useState({});
 
   return useEffect(() => {
