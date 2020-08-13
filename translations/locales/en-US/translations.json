@@ -174,30 +174,47 @@
     }
   },
   "Sidebar": {
-    "Create": "Create",
-    "EnterName": "enter a name",
-    "Add": "Add",
-    "Folder": "Folder"
+    "Title": "Sketch Files",
+    "ToggleARIA": "Toggle open/close sketch file options",
+    "AddFolder": "Create folder",
+    "AddFolderARIA": "add folder",
+    "AddFile": "Create file",
+    "AddFileARIA": "add file",
+    "UploadFile": "Upload file",
+    "UploadFileARIA": "upload file"
+  },
+  "FileNode": {
+    "OpenFolderARIA": "Open folder contents",
+    "CloseFolderARIA": "Close folder contents",
+    "ToggleFileOptionsARIA": "Toggle open/close file options",
+    "AddFolder": "Create folder",
+    "AddFolderARIA": "add folder",
+    "AddFile": "Create file",
+    "AddFileARIA": "add file",
+    "UploadFile": "Upload file",
+    "UploadFileARIA": "upload file",
+    "Rename": "Rename",
+    "Delete": "Delete"
   },
   "Common": {
     "Error": "Error",
     "Save": "Save",
-    "p5logoARIA": "p5.js Logo"
-
+    "p5logoARIA": "p5.js Logo",
+    "DeleteConfirmation": "Are you sure you want to delete {{name}}?"
   },
   "IDEView": {
     "SubmitFeedback": "Submit Feedback"
   },
   "NewFileModal": {
     "Title": "Create File",
-     "CloseButtonARIA": "Close New File Modal",
+    "CloseButtonARIA": "Close New File Modal",
     "EnterName": "Please enter a name",
     "InvalidType": "Invalid file type. Valid extensions are .js, .css, .json, .txt, .csv, .tsv, .frag, and .vert."
   },
   "NewFileForm": {
-  "AddFileSubmit": "Add File",
+    "AddFileSubmit": "Add File",
     "Placeholder": "Name"
-},
+  },
   "NewFolderModal": {
     "Title": "Create Folder",
     "CloseButtonARIA": "Close New Folder Modal",
