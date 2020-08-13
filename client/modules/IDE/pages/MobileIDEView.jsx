@@ -73,6 +73,9 @@ const getNatOptions = (username = undefined) =>
 const isUserOwner = ({ project, user }) =>
   project && project.owner && project.owner.id === user.id;
 
+const canSaveProject = (project, user) =>
+  isUserOwner({ project, user }) || (user.authenticated && !project.owner);
+
 // TODO: This could go into <Editor />
 const handleGlobalKeydown = (props, cmController) => (e) => {
   const {
@@ -113,7 +116,7 @@ const handleGlobalKeydown = (props, cmController) => (e) => {
       // 83 === s
       e.preventDefault();
       e.stopPropagation();
-      if (isUserOwner(props) || (user.authenticated && !project.owner)) saveProject(cmController.getContent());
+      if (canSaveProject(props)) saveProject(cmController.getContent());
       else if (user.authenticated) cloneProject();
       else showErrorModal('forceAuthentication');
 
@@ -205,8 +208,7 @@ const MobileIDEView = (props) => {
     autosaveProject, preferences, ide, selectedFile
   });
 
-  // useEventListener('keydown', () => alert('haha'));
-  useEventListener('keydown', handleGlobalKeydown(props, cmController));
+  useEventListener('keydown', handleGlobalKeydown(props, cmController), false, [props]);
 
 
   return (

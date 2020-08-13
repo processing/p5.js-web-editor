@@ -53,7 +53,7 @@ export const useEffectWithComparison = (fn, props) => {
   }, Object.values(props));
 };
 
-export const useEventListener = (event, callback, useCapture = false) => useEffect(() => {
+export const useEventListener = (event, callback, useCapture = false, list = []) => useEffect(() => {
   document.addEventListener(event, callback, useCapture);
   return () => document.removeEventListener(event, callback, useCapture);
-}, []);
+}, list);
