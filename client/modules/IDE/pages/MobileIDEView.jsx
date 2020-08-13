@@ -75,7 +75,6 @@ const isUserOwner = ({ project, user }) =>
 
 // TODO: This could go into <Editor />
 const handleGlobalKeydown = (props, cmController) => (e) => {
-  alert('haha');
   const {
     user, project, ide,
     setAllAccessibleOutput,
