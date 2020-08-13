@@ -8,22 +8,22 @@ import { APIKeyPropType } from './APIKeyForm';
 
 import TrashCanIcon from '../../../images/trash-can.svg';
 
-function APIKeyList({ apiKeys, onRemove }) {
+function APIKeyList({ apiKeys, onRemove, t }) {
   return (
     <table className="api-key-list">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Created on</th>
-          <th>Last used</th>
-          <th>Actions</th>
+          <th>{t('APIKeyList.Name')}</th>
+          <th>{t('APIKeyList.Created')}</th>
+          <th>{t('APIKeyList.LastUsed')}</th>
+          <th>{t('APIKeyList.Actions')}</th>
         </tr>
       </thead>
       <tbody>
         {orderBy(apiKeys, ['createdAt'], ['desc']).map((key) => {
           const lastUsed = key.lastUsedAt ?
             distanceInWordsToNow(new Date(key.lastUsedAt), { addSuffix: true }) :
-            'Never';
+            t('APIKeyList.Never');
 
           return (
             <tr key={key.id}>
@@ -34,7 +34,7 @@ function APIKeyList({ apiKeys, onRemove }) {
                 <button
                   className="api-key-list__delete-button"
                   onClick={() => onRemove(key)}
-                  aria-label="Delete API Key"
+                  aria-label={t('APIKeyList.DeleteARIA')}
                 >
                   <TrashCanIcon focusable="false" aria-hidden="true" />
                 </button>
@@ -50,6 +50,7 @@ function APIKeyList({ apiKeys, onRemove }) {
 APIKeyList.propTypes = {
   apiKeys: PropTypes.arrayOf(PropTypes.shape(APIKeyPropType)).isRequired,
   onRemove: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired
 };
 
 export default APIKeyList;

@@ -188,8 +188,8 @@
     "SubmitFeedback": "Enviar retroalimentación"
   },
   "NewFileModal": {
-  "Title": "Crear Archivo",
-  "CloseButtonARIA": "Cerrar diálogo de crear archivo",
+    "Title": "Crear Archivo",
+    "CloseButtonARIA": "Cerrar diálogo de crear archivo",
     "EnterName": "Por favor introduce un nombre",
     "InvalidType": "Tipo de archivo inválido. Las extensiones válidas son .js, .css, .json, .txt, .csv, .tsv, .frag y .vert."
   },
@@ -198,18 +198,96 @@
     "Placeholder": "Nombre"
   },
   "NewFolderModal": {
-  "Title": "Crear Directorio",
-  "CloseButtonARIA": "Cerrar Diálogo de Nuevo Directorio",
-  "EnterName": "Por favor introduce un nombre",
-  "EmptyName": " El nombre del directorio no debe contener solo espacios vacíos",
-  "InvalidExtension": "El nombre del directorio no debe contener una extensión"
-},
+    "Title": "Crear Directorio",
+    "CloseButtonARIA": "Cerrar Diálogo de Nuevo Directorio",
+    "EnterName": "Por favor introduce un nombre",
+    "EmptyName": " El nombre del directorio no debe contener solo espacios vacíos",
+    "InvalidExtension": "El nombre del directorio no debe contener una extensión"
+  },
   "NewFolderForm": {
     "AddFolderSubmit": "Agregar Directorio",
     "Placeholder": "Nombre"
+  },
+  "ResetPasswordForm": {
+    "Email": "Correo electrónico usado al registrarse",
+    "EmailARIA": "correo electrónico",
+    "Submit": "Enviar correo para regenerar contraseña"
+  },
+  "ResetPasswordView": {
+    "Title": "Editor Web p5.js | Regenerar Contraseña",
+    "Reset": "Regenerar Contraseña",
+    "Submitted": "Your password reset email should arrive shortly. If you don't see it, check\n            in your spam folder as sometimes it can end up there.",
+    "Login": "Ingresa",
+    "LoginOr": "o",
+    "SignUp": "Registráte"
+  },
+  "ReduxFormUtils": {
+    "errorInvalidEmail": "Por favor introduce un correo electrónico válido",
+    "errorEmptyEmail": "Por favor introduce un correo electrónico",
+    "errorPasswordMismatch": "Las contraseñas deben coincidir",
+    "errorEmptyPassword": "Por favor introduce una contraseña",
+    "errorShortPassword": "La contraseña debe tener al menos 6 caracteres",
+    "errorConfirmPassword": "Por favor confirma una contraseña",
+    "errorNewPassword": "Por favor introduce una nueva contraseña o deja la actual contraseña vacía",
+    "errorEmptyUsername": "Por favor introduce tu identificación",
+    "errorLongUsername": "La identificación debe ser menor a 20 caracteres.",
+    "errorValidUsername": "La identificación debe consistir solamente de números, letras, puntos, guiones y guiones bajos."
+  },
+  "NewPasswordView": {
+    "Title": "Editor Web p5.js | Nueva Contraseña",
+    "Description": "Define una nueva contraseña",
+    "TokenInvalidOrExpired": "El token para regenerar la contraseña es inválido o ha expirado.",
+    "EmptyPassword": "Por favor introduce una contraseña",
+    "PasswordConfirmation": "Por favor confirma la contraseña",
+    "PasswordMismatch": "Las contraseña deben coincidir"
+  },
+  "AccountForm": {
+    "Email": "Correo Electrónico",
+    "EmailARIA": "correo electrónico",
+    "Unconfirmed": "Sin confirmar.",
+    "EmailSent": "Confirmación enviada, revisa tu correo electrónico.",
+    "Resend": "Reenviar correo de confirmación",
+    "UserName": "Nombre de Identificación",
+    "UserNameARIA": "Nombre de identificación",
+    "CurrentPassword": "Contraseña Actual",
+    "CurrentPasswordARIA": "Contraseña Actual",
+    "NewPassword": "Nueva Contraseña",
+    "NewPasswordARIA": "Nueva Contraseña",
+    "SubmitSaveAllSettings": "Guardar Todas Las Configuraciones"
+  },
+  "AccountView": {
+    "SocialLogin": "Identificacion usando redes sociales",
+    "SocialLoginDescription": "Usa tu cuenta de GitHub o Google para acceder al Editor Web de p5.js .",
+    "Title": "Editor Web p5.js | Configuración Cuenta",
+    "Settings": "Configuración de la Cuenta",
+    "AccountTab": "Cuenta",
+    "AccessTokensTab": "Tokens de acceso"
+  },
+  "APIKeyForm": {
+    "ConfirmDelete": "¿Estas seguro que quieres borrar {{key_label}}?",
+    "Summary": " Los Tokens de acceso personal actuan como tu contraseña para permitir\n  a scripts automáticos acceder al  API del Editor. Crea un token por cada script \n que necesite acceso.",
+    "CreateToken": "Crear nuevo token",
+    "TokenLabel": "¿Para que es este token?",
+    "TokenPlaceholder": "¿Para que es este token? p.e. Ejemplo para Importar un Archivo",
+    "CreateTokenSubmit": "Crear",
+    "NoTokens": "No tienes tokens.",
+    "NewTokenTitle": "Tu nuevo token de acceso",
+    "NewTokenInfo": "Asegurate de copiar tu token ahora mismo.\n ¡No podras verlo de nuevo!",
+    "ExistingTokensTitle": "Tokens existentes"
+  },
+  "APIKeyList": {
+    "Name": "Nombre",
+    "Created": "Creado en",
+    "LastUsed": "Usado por última vez",
+    "Actions": "Acciones",
+    "Never": "Nunca",
+    "DeleteARIA": "Borrar clave de API"
+  },
+  "NewPasswordForm": {
+    "Title": "Contraseña",
+    "TitleARIA": "Contraseña",
+    "ConfirmPassword": "Confirmar Contraseña",
+    "ConfirmPasswordARIA": "Confirmar contraseña",
+    "SubmitSetNewPassword": "Crear Nueva Contraseña"
   }
 }
-
-
-
-
