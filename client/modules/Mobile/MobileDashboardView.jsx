@@ -24,6 +24,7 @@ import Loader from '../App/components/loader';
 
 const EXAMPLE_USERNAME = 'p5';
 
+// @ghalestrilo 08/13/2020: I'm sorry
 const ContentWrapper = styled(Content)`
   table {
     table-layout: fixed;
@@ -85,6 +86,7 @@ const ContentWrapper = styled(Content)`
 
   thead tr {
     grid-template-columns: repeat(${props => props.fieldcount}, 1fr) 0fr;
+    ${props => props.noheader && 'display: none;'}
   }
 
   tbody tr {
@@ -187,7 +189,7 @@ const MobileDashboard = ({ params, location }) => {
       </Header>
 
 
-      <ContentWrapper slimheader fieldcount={panel === Tabs[1] ? 4 : 3}>
+      <ContentWrapper slimheader fieldcount={panel === Tabs[1] ? 4 : 3} noheader={panel === Tabs[2]}>
         <Subheader>
           {panel === Tabs[0] && <SketchSearchbar />}
           {panel === Tabs[1] && <CollectionSearchbar />}
