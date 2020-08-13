@@ -48,11 +48,16 @@ const DropdownWrapper = styled.ul`
     & button,
     & button span,
     & a {
-      color: ${prop('primaryTextColor')};
-      width: 100%;
+      padding: ${remSize(8)} ${remSize(16)};
+    }
+
+    * {
       text-align: left;
       justify-content: left;
-      padding: ${remSize(8)} ${remSize(16)};
+
+      color: ${prop('primaryTextColor')};
+      width: 100%;
+      justify-content: flex-start;
     }
 
     & button span { padding: 0px }
