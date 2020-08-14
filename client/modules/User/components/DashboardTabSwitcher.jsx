@@ -28,12 +28,14 @@ Tab.propTypes = {
   to: PropTypes.string.isRequired,
 };
 
-const DashboardTabSwitcher = ({ currentTab, isOwner, username }) => (
+const DashboardTabSwitcher = ({
+  currentTab, isOwner, username, translate
+}) => (
   <ul className="dashboard-header__switcher">
     <div className="dashboard-header__tabs">
-      <Tab to={`/${username}/sketches`} isSelected={currentTab === TabKey.sketches}>Sketches</Tab>
-      <Tab to={`/${username}/collections`} isSelected={currentTab === TabKey.collections}>Collections</Tab>
-      {isOwner && <Tab to={`/${username}/assets`} isSelected={currentTab === TabKey.assets}>Assets</Tab>}
+      <Tab to={`/${username}/sketches`} isSelected={currentTab === TabKey.sketches}>{translate('DashboardTabSwitcher.Sketches')}</Tab>
+      <Tab to={`/${username}/collections`} isSelected={currentTab === TabKey.collections}>{translate('DashboardTabSwitcher.Collections')}</Tab>
+      {isOwner && <Tab to={`/${username}/assets`} isSelected={currentTab === TabKey.assets}>{translate('DashboardTabSwitcher.Assets')}</Tab>}
     </div>
   </ul>
 );
@@ -42,6 +44,7 @@ DashboardTabSwitcher.propTypes = {
   currentTab: PropTypes.string.isRequired,
   isOwner: PropTypes.bool.isRequired,
   username: PropTypes.string.isRequired,
+  translate: PropTypes.func.isRequired
 };
 
 export { DashboardTabSwitcher as default, TabKey };

@@ -289,5 +289,83 @@
     "ConfirmPassword": "Confirmar Contraseña",
     "ConfirmPasswordARIA": "Confirmar contraseña",
     "SubmitSetNewPassword": "Crear Nueva Contraseña"
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  "CollectionView": {
+    "TitleCreate": "Crear colección",
+    "TitleDefault": "colección"
+  },
+  "Collection": {
+    "Title": "p5.js Web Editor | Mis colecciones",
+    "AnothersTitle": "Editor Web p5.js | Colecciones de {{anotheruser}}",
+    "Share": "Compartir"
+  },
+  "AddToCollectionList": {
+    "Title": "p5.js Web Editor | Mis colecciones",
+    "AnothersTitle": "Editor Web p5.js | Colecciones de {{anotheruser}}",
+    "Empty": "No hay colecciones"
+  },
+  "CollectionCreate": {
+    "Title": "Editor Web p5.js | Crear colección",
+    "FormError": "No se pudo crear colección",
+    "FormLabel": "Nombre colección ",
+    "FormLabelARIA": "nombre de la colección",
+    "NameRequired": "Se requiere nombre de colección",
+    "Description": "Descripción (opcional)",
+    "DescriptionARIA": "descripción",
+    "DescriptionPlaceholder": "Mis bosquejos favoritos",
+    "SubmitCollectionCreate": "Crear colección"
+  },
+  "DashboardView": {
+    "CreateCollection": "Crear colección",
+    "NewSketch": "Nuevo bosquejo",
+    "CreateCollectionOverlay": "Crear colección"
+  },
+  "DashboardTabSwitcher": {
+    "Sketches": "Bosquejos",
+    "Collections": "Colecciones ",
+    "Assets": "Assets"
+  },
+  "CollectionList": {
+    "Title": "p5.js Web Editor | Mis colecciones",
+    "AnothersTitle": "Editor Web p5.js | Colecciones de {{anotheruser}}",
+    "NoCollections": "No hay colecciones.",
+    "HeaderName": "Nombre",
+    "HeaderCreatedAt": "Fecha Creación",
+    "HeaderUpdatedAt": "Fecha Actualización",
+    "HeaderNumItems": "# bosquejos"
+  },
+  "CollectionListRow": {
+    "ConfirmDelete": "¿Estas seguro que quieres borrar {{key_label}}?",
+    "ToggleCollectionOptionsARIA": "Alternar Abrir/Cerrar opciones de colección",
+    "AddSketch": "Agregar bosquejo",
+    "Delete": "Borrar",
+    "Rename": "Renombrar"
   }
 }

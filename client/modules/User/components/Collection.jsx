@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
+import { withTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
 import Button from '../../../common/Button';
@@ -163,9 +164,11 @@ class Collection extends React.Component {
 
   getTitle() {
     if (this.props.username === this.props.user.username) {
-      return 'p5.js Web Editor | My collections';
+      // return 'p5.js Web Editor | My collections';
+      this.props.t('Collection.Title');
     }
-    return `p5.js Web Editor | ${this.props.username}'s collections`;
+    return this.props.t('Collection.AnothersTitle', { anotheruser: this.props.username });
+    // return `p5.js Web Editor | ${this.props.username}'s collections`;
   }
 
   getUsername() {
@@ -436,7 +439,8 @@ Collection.propTypes = {
   sorting: PropTypes.shape({
     field: PropTypes.string.isRequired,
     direction: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  t: PropTypes.func.isRequired
 };
 
 Collection.defaultProps = {
@@ -467,4 +471,4 @@ function mapDispatchToProps(dispatch) {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Collection);
+export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(Collection));

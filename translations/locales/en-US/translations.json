@@ -289,5 +289,83 @@
     "ConfirmPassword": "Confirm Password",
     "ConfirmPasswordARIA": "Confirm Password",
     "SubmitSetNewPassword": "Set New Password"
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  "CollectionView": {
+    "TitleCreate": "Create collection",
+    "TitleDefault": "collection"
+  },
+  "Collection": {
+    "Title": "p5.js Web Editor | My collections",
+    "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'s collections",
+    "Share": "Share"
+  },
+  "AddToCollectionList": {
+    "Title": "p5.js Web Editor | My collections",
+    "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'s collections",
+    "Empty": "No collections"
+  },
+  "CollectionCreate": {
+    "Title": "p5.js Web Editor | Create collection",
+    "FormError": "Couldn't create collection",
+    "FormLabel": "Collection name",
+    "FormLabelARIA": "name",
+    "NameRequired": "Collection name is required",
+    "Description": "Description (optional)",
+    "DescriptionARIA": "description",
+    "DescriptionPlaceholder": "My fave sketches",
+    "SubmitCollectionCreate": "Create collection"
+  },
+  "DashboardView": {
+    "CreateCollection": "Create collection",
+    "NewSketch": "New sketch",
+    "CreateCollectionOverlay": "Create collection"
+  },
+  "DashboardTabSwitcher": {
+    "Sketches": "Sketches",
+    "Collections": "Collections",
+    "Assets": "Assets"
+  },
+  "CollectionList": {
+    "Title": "p5.js Web Editor | My collections",
+    "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'s collections",
+    "NoCollections": "No collections.",
+    "HeaderName": "Name",
+    "HeaderCreatedAt": "Date Created",
+    "HeaderUpdatedAt": "Date Updated",
+    "HeaderNumItems": "# sketches"
+  },
+  "CollectionListRow": {
+    "ConfirmDelete": "Are you sure you want to delete {{key_label}}?",
+    "ToggleCollectionOptionsARIA": "Toggle Open/Close collection options",
+    "AddSketch": "Add sketch",
+    "Delete": "Delete",
+    "Rename": "Rename"
   }
 }

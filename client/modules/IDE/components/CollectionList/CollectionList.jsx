@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import classNames from 'classnames';
@@ -49,9 +50,9 @@ class CollectionList extends React.Component {
 
   getTitle() {
     if (this.props.username === this.props.user.username) {
-      return 'p5.js Web Editor | My collections';
+      this.props.t('CollectionList.Title');
     }
-    return `p5.js Web Editor | ${this.props.username}'s collections`;
+    return this.props.t('CollectionList.AnothersTitle', { anotheruser: this.props.username });
   }
 
   showAddSketches = (collectionId) => {
@@ -77,7 +78,7 @@ class CollectionList extends React.Component {
 
   _renderEmptyTable() {
     if (!this.props.loading && this.props.collections.length === 0) {
-      return (<p className="sketches-table__empty">No collections.</p>);
+      return (<p className="sketches-table__empty">{this.props.t('CollectionList.NoCollections')}</p>);
     }
     return null;
   }
@@ -140,10 +141,10 @@ class CollectionList extends React.Component {
           <table className="sketches-table" summary="table containing all collections">
             <thead>
               <tr>
-                {this._renderFieldHeader('name', 'Name')}
-                {this._renderFieldHeader('createdAt', 'Date Created')}
-                {this._renderFieldHeader('updatedAt', 'Date Updated')}
-                {this._renderFieldHeader('numItems', '# sketches')}
+                {this._renderFieldHeader('name', this.props.t('CollectionList.HeaderName'))}
+                {this._renderFieldHeader('createdAt', this.props.t('CollectionList.HeaderCreatedAt'))}
+                {this._renderFieldHeader('updatedAt', this.props.t('CollectionList.HeaderUpdatedAt'))}
+                {this._renderFieldHeader('numItems', this.props.t('CollectionList.HeaderNumItems'))}
                 <th scope="col"></th>
               </tr>
             </thead>
@@ -209,7 +210,8 @@ CollectionList.propTypes = {
     owner: PropTypes.shape({
       id: PropTypes.string
     })
-  })
+  }),
+  t: PropTypes.func.isRequired
 };
 
 CollectionList.defaultProps = {
@@ -239,4 +241,4 @@ function mapDispatchToProps(dispatch) {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CollectionList);
+export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(CollectionList));
