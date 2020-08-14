@@ -23,7 +23,7 @@
 
 .quick-add__item:nth-child(odd) {
   @include themify() {
-    background: getThemifyVariable('table-row-stripe-color');
+    background: getThemifyVariable('quick-add-row-stripe-color');
   }
 }
 
