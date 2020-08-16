@@ -324,7 +324,25 @@
   "Collection": {
     "Title": "p5.js Web Editor | My collections",
     "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'s collections",
-    "Share": "Share"
+    "ShareURL_Share": "Share",
+    "ShareURL_Link": "Link to Collection",
+    "AddSketch": "Add Sketch",
+    "DeleteFromCollection": "Are you sure you want to remove {{name_sketch}} from this collection?",
+    "SketchDeletedSpan": "Sketch deleted",
+    "SketchRemoveARIA": "Remove sketch from collection",
+    "DescriptionPlaceholder": "Add description",
+    "Description": "description",
+    "NumSketches": "{{count}} sketch",
+    "NumSketches_plural": "{{count}} sketches",
+    "By":"Collection by ",
+    "NoSketches": "No sketches in collection",
+    "HeaderName": "Name",
+    "HeaderCreatedAt": "Date Added",
+    "HeaderUser": "Owner",
+    "DirectionAscending": "Ascending",
+    "DirectionDescending": "Descending",
+    "ButtonLabelAscending": "Sort by {{displayName}} ascending.",
+    "ButtonLabelDescending": "Sort by {{displayName}} descending."
   },
   "AddToCollectionList": {
     "Title": "p5.js Web Editor | My collections",
@@ -359,7 +377,12 @@
     "HeaderName": "Name",
     "HeaderCreatedAt": "Date Created",
     "HeaderUpdatedAt": "Date Updated",
-    "HeaderNumItems": "# sketches"
+    "HeaderNumItems": "# sketches",
+    "DirectionAscendingARIA": "Ascending",
+    "DirectionDescendingARIA": "Descending",
+    "ButtonLabelAscendingARIA": "Sort by {{displayName}} ascending.",
+    "ButtonLabelDescendingARIA": "Sort by {{displayName}} descending.",
+    "AddSketch": "Add Sketch"
   },
   "CollectionListRow": {
     "ConfirmDelete": "Are you sure you want to delete {{key_label}}?",
@@ -367,5 +390,38 @@
     "AddSketch": "Add sketch",
     "Delete": "Delete",
     "Rename": "Rename"
+  },
+  "Overlay": {
+    "AriaLabel": "Close {{title}} overlay"
+  },
+  "QuickAddList":{
+    "ButtonLabelRemove": "Remove from collection",
+    "ButtonLabelAddToCollection": "Add to collection",
+    "View": "View"
+  },
+  "SketchList": {
+    "View": "View",
+    "Title": "p5.js Web Editor | My sketches",
+    "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'s sketches",
+    "ConfirmDelete": "Are you sure you want to delete {{name_sketch}}?",
+    "ToggleLabelARIA": "Toggle Open/Close Sketch Options",
+    "DropdownRename": "Rename",
+    "DropdownDownload": "Download",
+    "DropdownDuplicate": "Duplicate",
+    "DropdownAddToCollection": "Add to collection",
+    "DropdownDelete": "Delete",
+    "DirectionAscendingARIA": "Ascending",
+    "DirectionDescendingARIA": "Descending",
+    "ButtonLabelAscendingARIA": "Sort by {{displayName}} ascending.",
+    "ButtonLabelDescendingARIA": "Sort by {{displayName}} descending.",
+    "AddToCollectionOverlayTitle": "Add to collection",
+    "HeaderName": "Sketch",
+    "HeaderCreatedAt": "Date Created",
+    "HeaderUpdatedAt": "Date Updated"
+  },
+  "AddToCollectionSketchList": {
+    "Title": "p5.js Web Editor | My sketches",
+    "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'s sketches",
+    "NoCollections": "No collections."
   }
 }

@@ -43,7 +43,7 @@ class CollectionList extends React.Component {
 
   getTitle() {
     if (this.props.username === this.props.user.username) {
-      this.props.t('AddToCollectionList.Title');
+      return this.props.t('AddToCollectionList.Title');
     }
     return this.props.t('AddToCollectionList.AnothersTitle', { anotheruser: this.props.username });
   }
@@ -75,6 +75,7 @@ class CollectionList extends React.Component {
           items={collectionWithSketchStatus}
           onAdd={this.handleCollectionAdd}
           onRemove={this.handleCollectionRemove}
+          t={this.props.t}
         />
       );
     } else {

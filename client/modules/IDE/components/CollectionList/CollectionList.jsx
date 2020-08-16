@@ -50,7 +50,7 @@ class CollectionList extends React.Component {
 
   getTitle() {
     if (this.props.username === this.props.user.username) {
-      this.props.t('CollectionList.Title');
+      return this.props.t('CollectionList.Title');
     }
     return this.props.t('CollectionList.AnothersTitle', { anotheruser: this.props.username });
   }
@@ -88,14 +88,14 @@ class CollectionList extends React.Component {
     let buttonLabel;
     if (field !== fieldName) {
       if (field === 'name') {
-        buttonLabel = `Sort by ${displayName} ascending.`;
+        buttonLabel = this.props.t('CollectionList.ButtonLabelAscendingARIA', { displayName });
       } else {
-        buttonLabel = `Sort by ${displayName} descending.`;
+        buttonLabel = this.props.t('CollectionList.ButtonLabelDescendingARIA', { displayName });
       }
     } else if (direction === SortingActions.DIRECTION.ASC) {
-      buttonLabel = `Sort by ${displayName} descending.`;
+      buttonLabel = this.props.t('CollectionList.ButtonLabelDescendingARIA', { displayName });
     } else {
-      buttonLabel = `Sort by ${displayName} ascending.`;
+      buttonLabel = this.props.t('CollectionList.ButtonLabelAscendingARIA', { displayName });
     }
     return buttonLabel;
   }
@@ -116,10 +116,10 @@ class CollectionList extends React.Component {
         >
           <span className={headerClass}>{displayName}</span>
           {field === fieldName && direction === SortingActions.DIRECTION.ASC &&
-            <ArrowUpIcon role="img" aria-label="Ascending" focusable="false" />
+            <ArrowUpIcon role="img" aria-label={this.props.t('CollectionList.DirectionAscendingARIA')} focusable="false" />
           }
           {field === fieldName && direction === SortingActions.DIRECTION.DESC &&
-            <ArrowDownIcon role="img" aria-label="Descending" focusable="false" />
+            <ArrowDownIcon role="img" aria-label={this.props.t('CollectionList.DirectionDescendingARIA')}focusable="false" />
           }
         </button>
       </th>
@@ -163,7 +163,7 @@ class CollectionList extends React.Component {
         {
           this.state.addingSketchesToCollectionId && (
             <Overlay
-              title="Add sketch"
+              title={this.props.t('CollectionList.AddSketch')}
               actions={<SketchSearchbar />}
               closeOverlay={this.hideAddSketches}
               isFixedHeight

@@ -324,7 +324,25 @@
   "Collection": {
     "Title": "p5.js Web Editor | Mis colecciones",
     "AnothersTitle": "Editor Web p5.js | Colecciones de {{anotheruser}}",
-    "Share": "Compartir"
+    "ShareURL_Share": "Compartir",
+    "ShareURL_Link": "Liga a la Colección",
+    "AddSketch": "Agregar Bosquejo",
+    "DeleteFromCollection": "¿Estas seguro que quieres remover {{name_sketch}} de esta colección?",
+    "SketchDeletedSpan": "El bosquejo fue eliminado",
+    "SketchRemoveARIA": "Remover bosquejo de la colección",
+    "DescriptionPlaceholder": "Agregar descripción",
+    "Description": "descripción",
+    "NumSketches": "{{count}} bosquejo",
+    "NumSketches_plural": "{{count}} bosquejos",
+    "By":"Colección por ",
+    "NoSketches": "No hay bosquejos en la colección",
+    "HeaderName": "Nombre",
+    "HeaderCreatedAt": "Fecha de agregación",
+    "HeaderUser": "Propietario",
+    "DirectionAscending": "Ascendente",
+    "DirectionDescending": "Descendente",
+    "ButtonLabelAscending": "Ordenar por {{displayName}} ascendente.",
+    "ButtonLabelDescending": "Ordenar por {{displayName}} descendente."
   },
   "AddToCollectionList": {
     "Title": "p5.js Web Editor | Mis colecciones",
@@ -359,7 +377,12 @@
     "HeaderName": "Nombre",
     "HeaderCreatedAt": "Fecha Creación",
     "HeaderUpdatedAt": "Fecha Actualización",
-    "HeaderNumItems": "# bosquejos"
+    "HeaderNumItems": "# bosquejos",
+    "DirectionAscending": "Ascendente",
+    "DirectionDescending": "Descendente",
+    "ButtonLabelAscending": "Ordenar por {{displayName}} ascendente.",
+    "ButtonLabelDescending": "Ordenar por {{displayName}} descendente.",
+    "AddSketch": "Agregar Bosquejo"
   },
   "CollectionListRow": {
     "ConfirmDelete": "¿Estas seguro que quieres borrar {{key_label}}?",
@@ -367,5 +390,39 @@
     "AddSketch": "Agregar bosquejo",
     "Delete": "Borrar",
     "Rename": "Renombrar"
+  },
+  "Overlay": {
+    "AriaLabel": "Cerrar la capa {{title}}"
+  },
+  "QuickAddList":{
+    "ButtonLabelRemove": "Remove from collection",
+    "ButtonLabelAddToCollection": "Add to collection",
+    "View": "Ver"
+  },
+  "SketchList": {
+    "View": "Ver",
+    "Title": "p5.js Web Editor | Mis bosquejos",
+    "AnothersTitle": "Editor Web p5.js | Bosquejos de {{anotheruser}}",
+    "ConfirmDelete": "¿Estas seguro que quieres borrar {{name_sketch}}?",
+    "ToggleLabelARIA": "Alternar Abrir/Cerrar Opciones de Bosquejo",
+    "DropdownRename": "Renombrar",
+    "DropdownDownload": "Descargar",
+    "DropdownDuplicate": "Duplicar",
+    "DropdownAddToCollection": "Agregar a Colección",
+    "DropdownDelete": "Borrar",
+    "DirectionAscendingARIA": "Ascendente",
+    "DirectionDescendingARIA": "Descendente",
+    "ButtonLabelAscendingARIA": "Ordenar por {{displayName}} ascendente.",
+    "ButtonLabelDescendingARIA": "Ordenar por {{displayName}} descendente.",
+    "AddToCollectionOverlayTitle": "Agregar a colección",
+    "HeaderName": "Bosquejo",
+    "HeaderCreatedAt": "Fecha Creación",
+    "HeaderUpdatedAt": "Fecha Actualización"
+  },
+  "AddToCollectionSketchList": {
+    "Title": "p5.js Web Editor | Mis bosquejos",
+    "AnothersTitle": "Editor Web p5.js | Bosquejos de {{anotheruser}}",
+    "NoCollections": "No hay colecciones."
   }
+
 }
