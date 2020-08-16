@@ -87,6 +87,8 @@ const Console = () => {
   }, [theme, fontSize]);
 
   const cm = useRef({});
+  const scrollConsoleDown = () => { cm.current.scrollTop = cm.current.scrollHeight; console.log('scroll'); };
+  scrollConsoleDown();
 
   const consoleClass = classNames({
     'preview-console': true,
