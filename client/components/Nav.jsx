@@ -9,7 +9,7 @@ import i18next from 'i18next';
 import * as IDEActions from '../modules/IDE/actions/ide';
 import * as toastActions from '../modules/IDE/actions/toast';
 import * as projectActions from '../modules/IDE/actions/project';
-import { setAllAccessibleOutput } from '../modules/IDE/actions/preferences';
+import { setAllAccessibleOutput, setLanguage } from '../modules/IDE/actions/preferences';
 import { logoutUser } from '../modules/User/actions';
 
 import getConfig from '../utils/getConfig';
@@ -72,7 +72,6 @@ class Nav extends React.PureComponent {
     document.removeEventListener('mousedown', this.handleClick, false);
     document.removeEventListener('keydown', this.closeDropDown, false);
   }
-
   setDropdown(dropdown) {
     this.setState({
       dropdownOpen: dropdown
@@ -170,7 +169,7 @@ class Nav extends React.PureComponent {
   }
 
   handleLangSelection(event) {
-    i18next.changeLanguage(event.target.value);
+    this.props.setLanguage(event.target.value);
     this.props.showToast(1500);
     this.props.setToastText('Toast.LangChange');
     this.setDropdown('none');
@@ -808,8 +807,8 @@ Nav.propTypes = {
   params: PropTypes.shape({
     username: PropTypes.string
   }),
-  t: PropTypes.func.isRequired
-
+  t: PropTypes.func.isRequired,
+  setLanguage: PropTypes.func.isRequired,
 };
 
 Nav.defaultProps = {
@@ -839,7 +838,8 @@ const mapDispatchToProps = {
   ...projectActions,
   ...toastActions,
   logoutUser,
-  setAllAccessibleOutput
+  setAllAccessibleOutput,
+  setLanguage
 };
 
 export default withTranslation()(withRouter(connect(mapStateToProps, mapDispatchToProps)(Nav)));

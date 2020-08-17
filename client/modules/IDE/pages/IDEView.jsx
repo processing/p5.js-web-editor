@@ -35,6 +35,7 @@ import AddToCollectionList from '../components/AddToCollectionList';
 import Feedback from '../components/Feedback';
 import { CollectionSearchbar } from '../components/Searchbar';
 
+
 function getTitle(props) {
   const { id } = props.project;
   return id ? `p5.js Web Editor | ${props.project.name}` : 'p5.js Web Editor';
@@ -144,13 +145,11 @@ class IDEView extends React.Component {
       this.props.router.setRouteLeaveHook(this.props.route, () => warnIfUnsavedChanges(this.props));
     }
   }
-
   componentWillUnmount() {
     document.removeEventListener('keydown', this.handleGlobalKeydown, false);
     clearTimeout(this.autosaveInterval);
     this.autosaveInterval = null;
   }
-
   handleGlobalKeydown(e) {
     // 83 === s
     if (e.keyCode === 83 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
@@ -367,6 +366,7 @@ class IDEView extends React.Component {
                     expandConsole={this.props.expandConsole}
                     clearConsole={this.props.clearConsole}
                     cmController={this.cmController}
+                    language={this.props.preferences.language}
                   />
                 </div>
               </section>
@@ -527,7 +527,8 @@ IDEView.propTypes = {
     gridOutput: PropTypes.bool.isRequired,
     soundOutput: PropTypes.bool.isRequired,
     theme: PropTypes.string.isRequired,
-    autorefresh: PropTypes.bool.isRequired
+    autorefresh: PropTypes.bool.isRequired,
+    language: PropTypes.string.isRequired
   }).isRequired,
   closePreferences: PropTypes.func.isRequired,
   setFontSize: PropTypes.func.isRequired,
