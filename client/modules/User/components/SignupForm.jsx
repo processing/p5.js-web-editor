@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { withTranslation } from 'react-i18next';
 
 import { domOnlyProps } from '../../../utils/reduxFormUtils';
 import Button from '../../../common/Button';
@@ -13,10 +14,10 @@ function SignupForm(props) {
   return (
     <form className="form" onSubmit={handleSubmit(props.signUpUser.bind(this, props.previousPath))}>
       <p className="form__field">
-        <label htmlFor="username" className="form__label">User Name</label>
+        <label htmlFor="username" className="form__label">{props.t('SignupForm.Title')}</label>
         <input
           className="form__input"
-          aria-label="username"
+          aria-label={props.t('SignupForm.TitleARIA')}
           type="text"
           id="username"
           {...domOnlyProps(username)}
@@ -24,10 +25,10 @@ function SignupForm(props) {
         {username.touched && username.error && <span className="form-error">{username.error}</span>}
       </p>
       <p className="form__field">
-        <label htmlFor="email" className="form__label">Email</label>
+        <label htmlFor="email" className="form__label">{props.t('SignupForm.Email')}</label>
         <input
           className="form__input"
-          aria-label="email"
+          aria-label={props.t('SignupForm.EmailARIA')}
           type="text"
           id="email"
           {...domOnlyProps(email)}
@@ -35,10 +36,10 @@ function SignupForm(props) {
         {email.touched && email.error && <span className="form-error">{email.error}</span>}
       </p>
       <p className="form__field">
-        <label htmlFor="password" className="form__label">Password</label>
+        <label htmlFor="password" className="form__label">{props.t('SignupForm.Password')}</label>
         <input
           className="form__input"
-          aria-label="password"
+          aria-label={props.t('SignupForm.PasswordARIA')}
           type="password"
           id="password"
           {...domOnlyProps(password)}
@@ -46,11 +47,11 @@ function SignupForm(props) {
         {password.touched && password.error && <span className="form-error">{password.error}</span>}
       </p>
       <p className="form__field">
-        <label htmlFor="confirm password" className="form__label">Confirm Password</label>
+        <label htmlFor="confirm password" className="form__label">{props.t('SignupForm.ConfirmPassword')}</label>
         <input
           className="form__input"
           type="password"
-          aria-label="confirm password"
+          aria-label={props.t('SignupForm.ConfirmPasswordARIA')}
           id="confirm password"
           {...domOnlyProps(confirmPassword)}
         />
@@ -63,7 +64,7 @@ function SignupForm(props) {
       <Button
         type="submit"
         disabled={submitting || invalid || pristine}
-      >Sign Up
+      >{props.t('SignupForm.SubmitSignup')}
       </Button>
     </form>
   );
@@ -81,7 +82,8 @@ SignupForm.propTypes = {
   submitting: PropTypes.bool,
   invalid: PropTypes.bool,
   pristine: PropTypes.bool,
-  previousPath: PropTypes.string.isRequired
+  previousPath: PropTypes.string.isRequired,
+  t: PropTypes.func.isRequired
 };
 
 SignupForm.defaultProps = {
@@ -90,4 +92,4 @@ SignupForm.defaultProps = {
   invalid: false
 };
 
-export default SignupForm;
+export default withTranslation()(SignupForm);
