@@ -339,10 +339,10 @@
     "HeaderName": "Nombre",
     "HeaderCreatedAt": "Fecha de agregación",
     "HeaderUser": "Propietario",
-    "DirectionAscending": "Ascendente",
-    "DirectionDescending": "Descendente",
-    "ButtonLabelAscending": "Ordenar por {{displayName}} ascendente.",
-    "ButtonLabelDescending": "Ordenar por {{displayName}} descendente."
+    "DirectionAscendingARIA": "Ascendente",
+    "DirectionDescendingARIA": "Descendente",
+    "ButtonLabelAscendingARIA": "Ordenar por {{displayName}} ascendente.",
+    "ButtonLabelDescendingARIA": "Ordenar por {{displayName}} descendente."
   },
   "AddToCollectionList": {
     "Title": "p5.js Web Editor | Mis colecciones",
@@ -378,10 +378,10 @@
     "HeaderCreatedAt": "Fecha Creación",
     "HeaderUpdatedAt": "Fecha Actualización",
     "HeaderNumItems": "# bosquejos",
-    "DirectionAscending": "Ascendente",
-    "DirectionDescending": "Descendente",
-    "ButtonLabelAscending": "Ordenar por {{displayName}} ascendente.",
-    "ButtonLabelDescending": "Ordenar por {{displayName}} descendente.",
+    "DirectionAscendingARIA": "Ascendente",
+    "DirectionDescendingARIA": "Descendente",
+    "ButtonLabelAscendingARIA": "Ordenar por {{displayName}} ascendente.",
+    "ButtonLabelDescendingARIA": "Ordenar por {{displayName}} descendente.",
     "AddSketch": "Agregar Bosquejo"
   },
   "CollectionListRow": {

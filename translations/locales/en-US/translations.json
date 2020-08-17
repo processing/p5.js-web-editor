@@ -339,10 +339,10 @@
     "HeaderName": "Name",
     "HeaderCreatedAt": "Date Added",
     "HeaderUser": "Owner",
-    "DirectionAscending": "Ascending",
-    "DirectionDescending": "Descending",
-    "ButtonLabelAscending": "Sort by {{displayName}} ascending.",
-    "ButtonLabelDescending": "Sort by {{displayName}} descending."
+    "DirectionAscendingARIA": "Ascending",
+    "DirectionDescendingARIA": "Descending",
+    "ButtonLabelAscendingARIA": "Sort by {{displayName}} ascending.",
+    "ButtonLabelDescendingARIA": "Sort by {{displayName}} descending."
   },
   "AddToCollectionList": {
     "Title": "p5.js Web Editor | My collections",

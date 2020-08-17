@@ -317,14 +317,14 @@ class Collection extends React.Component {
     let buttonLabel;
     if (field !== fieldName) {
       if (field === 'name') {
-        buttonLabel = this.props.t('Collection.ButtonLabelAscending', { displayName });
+        buttonLabel = this.props.t('Collection.ButtonLabelAscendingARIA', { displayName });
       } else {
-        buttonLabel = this.props.t('Collection.ButtonLabelDescending', { displayName });
+        buttonLabel = this.props.t('Collection.ButtonLabelDescendingARIA', { displayName });
       }
     } else if (direction === SortingActions.DIRECTION.ASC) {
-      buttonLabel = this.props.t('Collection.ButtonLabelDescending', { displayName });
+      buttonLabel = this.props.t('Collection.ButtonLabelDescendingARIA', { displayName });
     } else {
-      buttonLabel = this.props.t('Collection.ButtonLabelAscending', { displayName });
+      buttonLabel = this.props.t('Collection.ButtonLabelAscendingARIA', { displayName });
     }
     return buttonLabel;
   }
@@ -345,10 +345,10 @@ class Collection extends React.Component {
         >
           <span className={headerClass}>{displayName}</span>
           {field === fieldName && direction === SortingActions.DIRECTION.ASC &&
-            <ArrowUpIcon role="img" aria-label={this.props.t('Collection.DirectionAscending')} focusable="false" />
+            <ArrowUpIcon role="img" aria-label={this.props.t('Collection.DirectionAscendingARIA')} focusable="false" />
           }
           {field === fieldName && direction === SortingActions.DIRECTION.DESC &&
-            <ArrowDownIcon role="img" aria-label={this.props.t('Collection.DirectionDescending')} focusable="false" />
+            <ArrowDownIcon role="img" aria-label={this.props.t('Collection.DirectionDescendingARIA')} focusable="false" />
           }
         </button>
       </th>
