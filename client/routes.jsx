@@ -15,6 +15,7 @@ import AccountView from './modules/User/pages/AccountView';
 import CollectionView from './modules/User/pages/CollectionView';
 import DashboardView from './modules/User/pages/DashboardView';
 import createRedirectWithUsername from './components/createRedirectWithUsername';
+import MobileDashboardView from './modules/Mobile/MobileDashboardView';
 import { getUser } from './modules/User/actions';
 import { stopSketch } from './modules/IDE/actions/ide';
 import { userIsAuthenticated, userIsNotAuthenticated, userIsAuthorized } from './utils/auth';
@@ -26,7 +27,7 @@ const checkAuth = (store) => {
 // TODO: This short-circuit seems unnecessary - using the mobile <Switch /> navigator (future) should prevent this from being called
 const onRouteChange = (store) => {
   const path = window.location.pathname;
-  if (path.includes('/mobile')) return;
+  if (path.includes('/mobile/preview')) return;
 
   store.dispatch(stopSketch());
 };
@@ -57,9 +58,17 @@ const routes = store => (
     <Route path="/:username/collections/:collection_id" component={CollectionView} />
     <Route path="/about" component={IDEView} />
 
-    <Route path="/mobile" component={MobileIDEView} />
+
     <Route path="/mobile/preview" component={MobileSketchView} />
     <Route path="/mobile/preferences" component={MobilePreferences} />
+    <Route path="/mobile" component={MobileIDEView} />
+
+    <Route path="/mobile/:username/sketches/:project_id" component={MobileIDEView} />
+    <Route path="/mobile/:username/assets" component={userIsAuthenticated(userIsAuthorized(MobileDashboardView))} />
+    <Route path="/mobile/:username/sketches" component={MobileDashboardView} />
+    <Route path="/mobile/:username/collections" component={MobileDashboardView} />
+    <Route path="/mobile/:username/collections/create" component={MobileDashboardView} />
+
   </Route>
 );
 

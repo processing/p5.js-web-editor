@@ -7,6 +7,8 @@ import { collectionForUserExists } from '../controllers/collection.controller';
 
 const router = new Router();
 
+const fallback404 = res => (exists => (exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))));
+
 // this is intended to be a temporary file
 // until i figure out isomorphic rendering
 
@@ -114,20 +116,6 @@ router.get('/about', (req, res) => {
   res.send(renderIndex());
 });
 
-if (process.env.MOBILE_ENABLED) {
-  router.get('/mobile', (req, res) => {
-    res.send(renderIndex());
-  });
-
-  router.get('/mobile/preview', (req, res) => {
-    res.send(renderIndex());
-  });
-
-  router.get('/mobile/preferences', (req, res) => {
-    res.send(renderIndex());
-  });
-}
-
 router.get('/:username/collections/create', (req, res) => {
   userExists(req.params.username, (exists) => {
     const isLoggedInUser = req.user && req.user.username === req.params.username;
@@ -155,5 +143,6 @@ router.get('/:username/collections', (req, res) => {
     exists ? res.send(renderIndex()) : get404Sketch(html => res.send(html))
   ));
 });
+
 
 export default router;
