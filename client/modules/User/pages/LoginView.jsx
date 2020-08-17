@@ -4,6 +4,7 @@ import { reduxForm } from 'redux-form';
 import { Link, browserHistory } from 'react-router';
 import { Helmet } from 'react-helmet';
 import { withTranslation } from 'react-i18next';
+import i18n from 'i18next';
 import { validateAndLoginUser } from '../actions';
 import LoginForm from '../components/LoginForm';
 import { validateLogin } from '../../../utils/reduxFormUtils';

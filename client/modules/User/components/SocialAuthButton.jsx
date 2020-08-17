@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
+import i18n from 'i18next';
 import { withTranslation } from 'react-i18next';
 
 import { remSize } from '../../../theme';
