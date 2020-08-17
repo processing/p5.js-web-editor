@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import getConfig from '../../utils/getConfig';
 import DevTools from './components/DevTools';
 import { setPreviousPath } from '../IDE/actions/ide';
+import { setLanguage } from '../IDE/actions/preferences';
 
 class App extends React.Component {
   constructor(props, context) {
@@ -24,6 +25,10 @@ class App extends React.Component {
 
     if (locationWillChange && !shouldSkipRemembering) {
       this.props.setPreviousPath(this.props.location.pathname);
+    }
+
+    if (this.props.language !== nextProps.language) {
+      this.props.setLanguage(nextProps.language, { persistPreference: false });
     }
   }
 
@@ -52,18 +57,22 @@ App.propTypes = {
     }),
   }).isRequired,
   setPreviousPath: PropTypes.func.isRequired,
+  setLanguage: PropTypes.func.isRequired,
+  language: PropTypes.string,
   theme: PropTypes.string,
 };
 
 App.defaultProps = {
   children: null,
-  theme: 'light',
+  language: null,
+  theme: 'light'
 };
 
 const mapStateToProps = state => ({
   theme: state.preferences.theme,
+  language: state.preferences.language,
 });
 
-const mapDispatchToProps = { setPreviousPath };
+const mapDispatchToProps = { setPreviousPath, setLanguage };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
