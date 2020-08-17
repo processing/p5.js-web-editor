@@ -290,7 +290,24 @@
     "ConfirmPasswordARIA": "Confirmar contraseña",
     "SubmitSetNewPassword": "Crear Nueva Contraseña"
   },
-
+  "SignupForm": {
+    "Title": "Identificación",
+    "TitleARIA": "Identificación",
+    "Email": "Correo electrónico",
+    "EmailARIA": "correo electrónico",
+    "Password": "Contraseña",
+    "PasswordARIA": "contraseña",
+    "ConfirmPassword": "Confirma tu contraseña",
+    "ConfirmPasswordARIA": "Confirma tu contraseña",
+    "SubmitSignup": "Registráte"
+  },
+  "SignupView": {
+    "Title": " Editor Web p5.js | Registráte",
+    "Description": "Registráte",
+    "Or": "o",
+    "AlreadyHave": "¿Ya tienes cuenta? ",
+    "Login": "Ingresa"
+  },
 
 
 

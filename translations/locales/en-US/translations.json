@@ -290,8 +290,24 @@
     "ConfirmPasswordARIA": "Confirm Password",
     "SubmitSetNewPassword": "Set New Password"
   },
-
-
+  "SignupForm": {
+    "Title": "User Name",
+    "TitleARIA": "username",
+    "Email": "Email",
+    "EmailARIA": "email",
+    "Password": "Password",
+    "PasswordARIA": "password",
+    "ConfirmPassword": "Confirm Password",
+    "ConfirmPasswordARIA": "Confirm password",
+    "SubmitSignup": "Sign Up"
+  },
+  "SignupView": {
+    "Title": "p5.js Web Editor | Signup",
+    "Description": "Sign Up",
+    "Or": "Or",
+    "AlreadyHave": "Already have an account?",
+    "Login": "Log In"
+  },
 
 
 
