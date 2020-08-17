@@ -16,7 +16,8 @@ import * as PreferencesActions from '../actions/preferences';
 
 // Local Imports
 import Editor from '../components/Editor';
-import { PlayIcon, MoreIcon } from '../../../common/icons';
+
+import { PlayIcon, MoreIcon, FolderIcon, PreferencesIcon, TerminalIcon, SaveIcon } from '../../../common/icons';
 import UnsavedChangesDotIcon from '../../../images/unsaved-changes-dot.svg';
 
 import IconButton from '../../../components/mobile/IconButton';
@@ -24,12 +25,12 @@ import Header from '../../../components/mobile/Header';
 import Screen from '../../../components/mobile/MobileScreen';
 import Footer from '../../../components/mobile/Footer';
 import IDEWrapper from '../../../components/mobile/IDEWrapper';
+import MobileExplorer from '../../../components/mobile/Explorer';
 import Console from '../components/Console';
 import { remSize } from '../../../theme';
-// import OverlayManager from '../../../components/OverlayManager';
+
 import ActionStrip from '../../../components/mobile/ActionStrip';
 import useAsModal from '../../../components/useAsModal';
-import { PreferencesIcon, TerminalIcon, SaveIcon } from '../../../common/icons';
 import Dropdown from '../../../components/Dropdown';
 
 
@@ -46,6 +47,8 @@ const withChangeDot = (title, unsavedChanges = false) => (
     </span>
   </span>
 );
+const getRootFile = files => files && files.filter(file => file.name === 'root')[0];
+const getRootFileID = files => (root => root && root.id)(getRootFile(files));
 
 const Expander = styled.div`
   height: ${props => (props.expanded ? remSize(160) : remSize(27))};
@@ -55,7 +58,7 @@ const NavItem = styled.li`
   position: relative;
 `;
 
-const getNatOptions = (username = undefined) =>
+const getNavOptions = (username = undefined) =>
   (username
     ? [
       { icon: PreferencesIcon, title: 'Preferences', href: '/mobile/preferences', },
@@ -170,7 +173,7 @@ const autosave = (autosaveInterval, setAutosaveInterval) => (props, prevProps) =
 const MobileIDEView = (props) => {
   const {
     ide, preferences, project, selectedFile, user, params, unsavedChanges, expandConsole, collapseConsole,
-    stopSketch, startSketch, getProject, clearPersistedState, autosaveProject, saveProject
+    stopSketch, startSketch, getProject, clearPersistedState, autosaveProject, saveProject, files
   } = props;
 
 
@@ -180,10 +183,6 @@ const MobileIDEView = (props) => {
   const { consoleIsExpanded } = ide;
   const { name: filename } = selectedFile;
 
-  const [triggerNavDropdown, NavDropDown] = useAsModal(<Dropdown
-    items={getNatOptions(username)}
-    align="right"
-  />);
 
   // Force state reset
   useEffect(clearPersistedState, []);
@@ -204,6 +203,18 @@ const MobileIDEView = (props) => {
     setCurrentProjectID(params.project_id);
   }, [params, project, username]);
 
+  // Screen Modals
+  const [toggleNavDropdown, NavDropDown] = useAsModal(<Dropdown
+    items={getNavOptions(username)}
+    align="right"
+  />);
+
+  const [toggleExplorer, Explorer] = useAsModal(toggle =>
+    (<MobileExplorer
+      id={getRootFileID(files)}
+      canEdit={false}
+      onPressClose={toggle}
+    />), true);
 
   // TODO: This behavior could move to <Editor />
   const [autosaveInterval, setAutosaveInterval] = useState(null);
@@ -214,19 +225,23 @@ const MobileIDEView = (props) => {
   useEventListener('keydown', handleGlobalKeydown(props, cmController), false, [props]);
 
   const projectActions =
-    [{ icon: TerminalIcon, aria: 'Toggle console open/closed', action: consoleIsExpanded ? collapseConsole : expandConsole },
-      { icon: SaveIcon, aria: 'Save project', action: () => saveProject(cmController.getContent(), false, true) }
+    [{
+      icon: TerminalIcon, aria: 'Toggle console open/closed', action: consoleIsExpanded ? collapseConsole : expandConsole, inverted: true
+    },
+    { icon: SaveIcon, aria: 'Save project', action: () => saveProject(cmController.getContent(), false, true) },
+    { icon: FolderIcon, aria: 'Open files explorer', action: toggleExplorer }
     ];
 
   return (
     <Screen fullscreen>
+      <Explorer />
       <Header
         title={withChangeDot(project.name, unsavedChanges)}
         subtitle={filename}
       >
         <NavItem>
           <IconButton
-            onClick={triggerNavDropdown}
+            onClick={toggleNavDropdown}
             icon={MoreIcon}
             aria-label="Options"
           />
@@ -299,6 +314,8 @@ MobileIDEView.propTypes = {
     username: PropTypes.string,
   }).isRequired,
 
+  getProject: PropTypes.func.isRequired,
+  clearPersistedState: PropTypes.func.isRequired,
   params: PropTypes.shape({
     project_id: PropTypes.string,
     username: PropTypes.string
@@ -308,8 +325,6 @@ MobileIDEView.propTypes = {
 
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
-  getProject: PropTypes.func.isRequired,
-  clearPersistedState: PropTypes.func.isRequired,
   autosaveProject: PropTypes.func.isRequired,
 
 

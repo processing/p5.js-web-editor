@@ -28,7 +28,7 @@ export const useModalBehavior = (hideOverlay) => {
 
 
   const handleClickOutside = ({ target }) => {
-    if (ref && ref.current && !ref.current.contains(target)) {
+    if (ref && ref.current && !(ref.current.contains && ref.current.contains(target))) {
       hide();
     }
   };
