@@ -213,7 +213,7 @@ class CollectionListRowBase extends React.Component {
             {this.renderCollectionName()}
           </span>
         </th>
-        {(!mobile) && <td>{format(new Date(collection.createdAt), 'MMM D, YYYY')}</td>}
+        <td>{mobile && 'Created: '}{format(new Date(collection.createdAt), 'MMM D, YYYY')}</td>
         <td>{mobile && 'Updated: '}{formatDateCell(collection.updatedAt)}</td>
         <td>{mobile && '# sketches: '}{(collection.items || []).length}</td>
         <td className="sketch-list__dropdown-column">

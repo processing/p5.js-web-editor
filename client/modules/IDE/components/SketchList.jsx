@@ -437,8 +437,8 @@ class SketchList extends React.Component {
             <thead>
               <tr>
                 {this._renderFieldHeader('name', 'Sketch')}
-                {this._renderFieldHeader('createdAt', 'Date Created')}
-                {this._renderFieldHeader('updatedAt', 'Date Updated')}
+                {this._renderFieldHeader('createdAt', `${mobile ? '' : 'Date '}Created`)}
+                {this._renderFieldHeader('updatedAt', `${mobile ? '' : 'Date '}Updated`)}
                 <th scope="col"></th>
               </tr>
             </thead>
