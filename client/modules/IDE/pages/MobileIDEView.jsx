@@ -140,12 +140,14 @@ const handleGlobalKeydown = (props, cmController) => (e) => {
 
 const autosave = (autosaveInterval, setAutosaveInterval) => (props, prevProps) => {
   const {
-    autosaveProject, preferences, ide, selectedFile: file, project
+    autosaveProject, preferences, ide, selectedFile: file, project, user
   } = props;
 
   const { selectedFile: oldFile } = prevProps;
 
   const doAutosave = () => autosaveProject(true);
+
+  console.log(user);
 
   console.log(isUserOwner(props), project);
 
@@ -209,7 +211,7 @@ const MobileIDEView = (props) => {
   // TODO: This behavior could move to <Editor />
   const [autosaveInterval, setAutosaveInterval] = useState(null);
   useEffectWithComparison(autosave(autosaveInterval, setAutosaveInterval), {
-    autosaveProject, preferences, ide, selectedFile
+    autosaveProject, preferences, ide, selectedFile, project, user
   });
 
   useEventListener('keydown', handleGlobalKeydown(props, cmController), false, [props]);
