@@ -25,7 +25,7 @@ const DropdownWrapper = styled.ul`
   display: flex;
   flex-direction: column;
   height: auto;
-  z-index: 9999;
+  z-index: 2;
   border-radius: ${remSize(6)};
 
   & li:first-child { border-radius: ${remSize(5)} ${remSize(5)} 0 0; }

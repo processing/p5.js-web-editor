@@ -14,7 +14,7 @@ const textColor = ({ transparent, inverted }) => prop((transparent === false && 
 
 
 const HeaderDiv = styled.div`
-  position: fixed;
+  ${props => props.fixed && 'position: fixed;'}
   width: 100%;
   background: ${props => background(props)};
   color: ${textColor};
@@ -57,9 +57,9 @@ const TitleContainer = styled.div`
 
 const Header = ({
   title, subtitle, leftButton, children,
-  transparent, inverted, slim
+  transparent, inverted, slim, fixed
 }) => (
-  <HeaderDiv transparent={transparent} slim={slim} inverted={inverted}>
+  <HeaderDiv transparent={transparent} slim={slim} inverted={inverted} fixed={fixed}>
     {leftButton}
     <TitleContainer padded={subtitle === null}>
       {title && <h2>{title}</h2>}
@@ -79,6 +79,7 @@ Header.propTypes = {
   transparent: PropTypes.bool,
   inverted: PropTypes.bool,
   slim: PropTypes.bool,
+  fixed: PropTypes.bool,
 };
 
 Header.defaultProps = {
@@ -88,7 +89,8 @@ Header.defaultProps = {
   children: [],
   transparent: false,
   inverted: false,
-  slim: false
+  slim: false,
+  fixed: true
 };
 
 export default Header;
