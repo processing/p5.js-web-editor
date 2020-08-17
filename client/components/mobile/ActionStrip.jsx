@@ -1,13 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { bindActionCreators } from 'redux';
-import { useDispatch, useSelector } from 'react-redux';
 import { remSize } from '../../theme';
 import IconButton from './IconButton';
-import { TerminalIcon } from '../../common/icons';
-import * as IDEActions from '../../modules/IDE/actions/ide';
 
-const BottomBarContent = styled.h2`
+const BottomBarContent = styled.div`
+  display: grid;
+  grid-template-columns: repeat(8,1fr);
   padding: ${remSize(8)};
   
   svg {
@@ -15,21 +14,23 @@ const BottomBarContent = styled.h2`
   }
 `;
 
-export default () => {
-  const { expandConsole, collapseConsole } = bindActionCreators(IDEActions, useDispatch());
-  const { consoleIsExpanded } = useSelector(state => state.ide);
+const ActionStrip = ({ actions }) => (
+  <BottomBarContent>
+    {actions.map(({ icon, aria, action }) =>
+      (<IconButton
+        icon={icon}
+        aria-label={aria}
+        key={`bottom-bar-${aria}`}
+        onClick={() => action()}
+      />))}
+  </BottomBarContent>);
 
-  const actions = [{ icon: TerminalIcon, aria: 'Say Something', action: consoleIsExpanded ? collapseConsole : expandConsole }];
-
-  return (
-    <BottomBarContent>
-      {actions.map(({ icon, aria, action }) =>
-        (<IconButton
-          icon={icon}
-          aria-label={aria}
-          key={`bottom-bar-${aria}`}
-          onClick={() => action()}
-        />))}
-    </BottomBarContent>
-  );
+ActionStrip.propTypes = {
+  actions: PropTypes.arrayOf(PropTypes.shape({
+    icon: PropTypes.element.isRequired,
+    aria: PropTypes.string.isRequired,
+    action: PropTypes.func.isRequired
+  })).isRequired
 };
+
+export default ActionStrip;

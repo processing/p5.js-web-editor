@@ -29,8 +29,9 @@ import { remSize } from '../../../theme';
 // import OverlayManager from '../../../components/OverlayManager';
 import ActionStrip from '../../../components/mobile/ActionStrip';
 import useAsModal from '../../../components/useAsModal';
-import { PreferencesIcon } from '../../../common/icons';
+import { PreferencesIcon, TerminalIcon, SaveIcon } from '../../../common/icons';
 import Dropdown from '../../../components/Dropdown';
+
 
 import { useEffectWithComparison, useEventListener } from '../../../utils/custom-hooks';
 
@@ -147,10 +148,6 @@ const autosave = (autosaveInterval, setAutosaveInterval) => (props, prevProps) =
 
   const doAutosave = () => autosaveProject(true);
 
-  console.log(user);
-
-  console.log(isUserOwner(props), project);
-
   if (isUserOwner(props) && project.id) {
     if (preferences.autosave && ide.unsavedChanges && !ide.justOpenedProject) {
       if (file.name === oldFile.name && file.content !== oldFile.content) {
@@ -172,8 +169,8 @@ const autosave = (autosaveInterval, setAutosaveInterval) => (props, prevProps) =
 
 const MobileIDEView = (props) => {
   const {
-    ide, preferences, project, selectedFile, user, params, unsavedChanges, collapseConsole,
-    stopSketch, startSketch, getProject, clearPersistedState, autosaveProject
+    ide, preferences, project, selectedFile, user, params, unsavedChanges, expandConsole, collapseConsole,
+    stopSketch, startSketch, getProject, clearPersistedState, autosaveProject, saveProject
   } = props;
 
 
@@ -216,6 +213,10 @@ const MobileIDEView = (props) => {
 
   useEventListener('keydown', handleGlobalKeydown(props, cmController), false, [props]);
 
+  const projectActions =
+    [{ icon: TerminalIcon, aria: 'Toggle console open/closed', action: consoleIsExpanded ? collapseConsole : expandConsole },
+      { icon: SaveIcon, aria: 'Save project', action: () => saveProject(cmController.getContent(), false, true) }
+    ];
 
   return (
     <Screen fullscreen>
@@ -246,7 +247,7 @@ const MobileIDEView = (props) => {
             <Console />
           </Expander>
         )}
-        <ActionStrip />
+        <ActionStrip actions={projectActions} />
       </Footer>
     </Screen>
   );
