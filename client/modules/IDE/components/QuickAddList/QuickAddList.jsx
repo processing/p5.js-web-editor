@@ -9,7 +9,6 @@ const Item = ({
   isAdded, onSelect, name, url, t
 }) => {
   const buttonLabel = isAdded ? 'Remove from collection' : 'Add to collection';
-  // console.log(t('QuickAddList.View'));
   return (
     <li className="quick-add__item" onClick={onSelect}> { /* eslint-disable-line */ }
       <button className="quick-add__item-toggle" onClick={onSelect} aria-label={buttonLabel}>

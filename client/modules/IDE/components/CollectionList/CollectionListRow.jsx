@@ -80,7 +80,6 @@ class CollectionListRowBase extends React.Component {
 
   handleCollectionDelete = () => {
     this.closeAll();
-    // if (window.confirm(`Are you sure you want to delete "${this.props.collection.name}"?`)) {
     if (window.confirm(this.props.t('CollectionListRow.ConfirmDelete', { key_label: this.props.collection.name }))) {
       this.props.deleteCollection(this.props.collection.id);
     }
