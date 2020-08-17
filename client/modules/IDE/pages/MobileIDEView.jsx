@@ -116,7 +116,7 @@ const handleGlobalKeydown = (props, cmController) => (e) => {
       // 83 === s
       e.preventDefault();
       e.stopPropagation();
-      if (canSaveProject(props)) saveProject(cmController.getContent());
+      if (canSaveProject(project, user)) saveProject(cmController.getContent(), false, true);
       else if (user.authenticated) cloneProject();
       else showErrorModal('forceAuthentication');
 
@@ -145,6 +145,10 @@ const autosave = (autosaveInterval, setAutosaveInterval) => (props, prevProps) =
 
   const { selectedFile: oldFile } = prevProps;
 
+  const doAutosave = () => autosaveProject(true);
+
+  console.log(isUserOwner(props), project);
+
   if (isUserOwner(props) && project.id) {
     if (preferences.autosave && ide.unsavedChanges && !ide.justOpenedProject) {
       if (file.name === oldFile.name && file.content !== oldFile.content) {
@@ -152,7 +156,7 @@ const autosave = (autosaveInterval, setAutosaveInterval) => (props, prevProps) =
           clearTimeout(autosaveInterval);
         }
         console.log('will save project in 20 seconds');
-        setAutosaveInterval(setTimeout(autosaveProject, 20000));
+        setAutosaveInterval(setTimeout(doAutosave, 20000));
       }
     } else if (autosaveInterval && !preferences.autosave) {
       clearTimeout(autosaveInterval);
