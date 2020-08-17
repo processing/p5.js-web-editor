@@ -126,7 +126,7 @@ function getSynchedProject(currentState, responseProject) {
   };
 }
 
-export function saveProject(selectedFile = null, autosave = false) {
+export function saveProject(selectedFile = null, autosave = false, mobile = false) {
   return (dispatch, getState) => {
     const state = getState();
     if (state.project.isSaving) {
@@ -185,16 +185,15 @@ export function saveProject(selectedFile = null, autosave = false) {
       .then((response) => {
         dispatch(endSavingProject());
         const { hasChanges, synchedProject } = getSynchedProject(getState(), response.data);
+
+        dispatch(setNewProject(synchedProject));
+        dispatch(setUnsavedChanges(false));
+        browserHistory.push(`${mobile ? '/mobile' : ''}/${response.data.user.username}/sketches/${response.data.id}`);
+
         if (hasChanges) {
-          dispatch(setNewProject(synchedProject));
-          dispatch(setUnsavedChanges(false));
-          browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
           dispatch(setUnsavedChanges(true));
-        } else {
-          dispatch(setNewProject(synchedProject));
-          dispatch(setUnsavedChanges(false));
-          browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
         }
+
         dispatch(projectSaveSuccess());
         if (!autosave) {
           if (state.preferences.autosave) {
@@ -222,9 +221,9 @@ export function saveProject(selectedFile = null, autosave = false) {
   };
 }
 
-export function autosaveProject() {
+export function autosaveProject(mobile = false) {
   return (dispatch, getState) => {
-    saveProject(null, true)(dispatch, getState);
+    saveProject(null, true, mobile)(dispatch, getState);
   };
 }
 

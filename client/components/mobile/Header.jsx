@@ -77,8 +77,9 @@ const Header = ({
   </HeaderDiv>
 );
 
+
 Header.propTypes = {
-  title: PropTypes.string,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   subtitle: PropTypes.string,
   leftButton: PropTypes.element,
   children: PropTypes.oneOfType([PropTypes.element, PropTypes.arrayOf(PropTypes.element)]),

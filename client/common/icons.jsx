@@ -14,6 +14,7 @@ import Preferences from '../images/preferences.svg';
 import Play from '../images/triangle-arrow-right.svg';
 import More from '../images/more.svg';
 import Code from '../images/code.svg';
+import Save from '../images/save.svg';
 import Terminal from '../images/terminal.svg';
 
 
@@ -81,3 +82,4 @@ export const PlayIcon = withLabel(Play);
 export const MoreIcon = withLabel(More);
 export const TerminalIcon = withLabel(Terminal);
 export const CodeIcon = withLabel(Code);
+export const SaveIcon = withLabel(Save);

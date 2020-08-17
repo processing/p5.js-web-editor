@@ -10,6 +10,9 @@ import { bindActionCreators } from 'redux';
 
 import * as IDEActions from '../actions/ide';
 import * as ProjectActions from '../actions/project';
+import * as ConsoleActions from '../actions/console';
+import * as PreferencesActions from '../actions/preferences';
+
 
 // Local Imports
 import Editor from '../components/Editor';
@@ -26,11 +29,13 @@ import { remSize } from '../../../theme';
 // import OverlayManager from '../../../components/OverlayManager';
 import ActionStrip from '../../../components/mobile/ActionStrip';
 import useAsModal from '../../../components/useAsModal';
-import { PreferencesIcon } from '../../../common/icons';
+import { PreferencesIcon, TerminalIcon, SaveIcon } from '../../../common/icons';
 import Dropdown from '../../../components/Dropdown';
 
-const isUserOwner = ({ project, user }) =>
-  project.owner && project.owner.id === user.id;
+
+import { useEffectWithComparison, useEventListener } from '../../../utils/custom-hooks';
+
+import * as device from '../../../utils/device';
 
 const withChangeDot = (title, unsavedChanges = false) => (
   <span>
@@ -65,13 +70,111 @@ const getNatOptions = (username = undefined) =>
     ]
   );
 
-const MobileIDEView = (props) => {
+
+const isUserOwner = ({ project, user }) =>
+  project && project.owner && project.owner.id === user.id;
+
+const canSaveProject = (project, user) =>
+  isUserOwner({ project, user }) || (user.authenticated && !project.owner);
+
+// TODO: This could go into <Editor />
+const handleGlobalKeydown = (props, cmController) => (e) => {
   const {
-    ide, project, selectedFile, user, params, unsavedChanges,
-    stopSketch, startSketch, getProject, clearPersistedState
+    user, project, ide,
+    setAllAccessibleOutput,
+    saveProject, cloneProject, showErrorModal, startSketch, stopSketch,
+    expandSidebar, collapseSidebar, expandConsole, collapseConsole,
+    closeNewFolderModal, closeUploadFileModal, closeNewFileModal
   } = props;
 
-  const [tmController, setTmController] = useState(null); // eslint-disable-line
+
+  const isMac = device.isMac();
+
+  // const ctrlDown = (e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac);
+  const ctrlDown = (isMac ? e.metaKey : e.ctrlKey);
+
+  if (ctrlDown) {
+    if (e.shiftKey) {
+      if (e.keyCode === 13) {
+        e.preventDefault();
+        e.stopPropagation();
+        stopSketch();
+      } else if (e.keyCode === 13) {
+        e.preventDefault();
+        e.stopPropagation();
+        startSketch();
+      // 50 === 2
+      } else if (e.keyCode === 50
+      ) {
+        e.preventDefault();
+        setAllAccessibleOutput(false);
+      // 49 === 1
+      } else if (e.keyCode === 49) {
+        e.preventDefault();
+        setAllAccessibleOutput(true);
+      }
+    } else if (e.keyCode === 83) {
+      // 83 === s
+      e.preventDefault();
+      e.stopPropagation();
+      if (canSaveProject(project, user)) saveProject(cmController.getContent(), false, true);
+      else if (user.authenticated) cloneProject();
+      else showErrorModal('forceAuthentication');
+
+    // 13 === enter
+    } else if (e.keyCode === 66) {
+      e.preventDefault();
+      if (!ide.sidebarIsExpanded) expandSidebar();
+      else collapseSidebar();
+    }
+  } else if (e.keyCode === 192 && e.ctrlKey) {
+    e.preventDefault();
+    if (ide.consoleIsExpanded) collapseConsole();
+    else expandConsole();
+  } else if (e.keyCode === 27) {
+    if (ide.newFolderModalVisible) closeNewFolderModal();
+    else if (ide.uploadFileModalVisible) closeUploadFileModal();
+    else if (ide.modalIsVisible) closeNewFileModal();
+  }
+};
+
+
+const autosave = (autosaveInterval, setAutosaveInterval) => (props, prevProps) => {
+  const {
+    autosaveProject, preferences, ide, selectedFile: file, project, user
+  } = props;
+
+  const { selectedFile: oldFile } = prevProps;
+
+  const doAutosave = () => autosaveProject(true);
+
+  if (isUserOwner(props) && project.id) {
+    if (preferences.autosave && ide.unsavedChanges && !ide.justOpenedProject) {
+      if (file.name === oldFile.name && file.content !== oldFile.content) {
+        if (autosaveInterval) {
+          clearTimeout(autosaveInterval);
+        }
+        console.log('will save project in 20 seconds');
+        setAutosaveInterval(setTimeout(doAutosave, 20000));
+      }
+    } else if (autosaveInterval && !preferences.autosave) {
+      clearTimeout(autosaveInterval);
+      setAutosaveInterval(null);
+    }
+  } else if (autosaveInterval) {
+    clearTimeout(autosaveInterval);
+    setAutosaveInterval(null);
+  }
+};
+
+const MobileIDEView = (props) => {
+  const {
+    ide, preferences, project, selectedFile, user, params, unsavedChanges, expandConsole, collapseConsole,
+    stopSketch, startSketch, getProject, clearPersistedState, autosaveProject, saveProject
+  } = props;
+
+
+  const [cmController, setCmController] = useState(null); // eslint-disable-line
 
   const { username } = user;
   const { consoleIsExpanded } = ide;
@@ -84,7 +187,10 @@ const MobileIDEView = (props) => {
 
   // Force state reset
   useEffect(clearPersistedState, []);
-  useEffect(stopSketch, []);
+  useEffect(() => {
+    stopSketch();
+    collapseConsole();
+  }, []);
 
   // Load Project
   const [currentProjectID, setCurrentProjectID] = useState(null);
@@ -98,6 +204,19 @@ const MobileIDEView = (props) => {
     setCurrentProjectID(params.project_id);
   }, [params, project, username]);
 
+
+  // TODO: This behavior could move to <Editor />
+  const [autosaveInterval, setAutosaveInterval] = useState(null);
+  useEffectWithComparison(autosave(autosaveInterval, setAutosaveInterval), {
+    autosaveProject, preferences, ide, selectedFile, project, user
+  });
+
+  useEventListener('keydown', handleGlobalKeydown(props, cmController), false, [props]);
+
+  const projectActions =
+    [{ icon: TerminalIcon, aria: 'Toggle console open/closed', action: consoleIsExpanded ? collapseConsole : expandConsole },
+      { icon: SaveIcon, aria: 'Save project', action: () => saveProject(cmController.getContent(), false, true) }
+    ];
 
   return (
     <Screen fullscreen>
@@ -119,7 +238,7 @@ const MobileIDEView = (props) => {
       </Header>
 
       <IDEWrapper>
-        <Editor provideController={setTmController} />
+        <Editor provideController={setCmController} />
       </IDEWrapper>
 
       <Footer>
@@ -128,15 +247,34 @@ const MobileIDEView = (props) => {
             <Console />
           </Expander>
         )}
-        <ActionStrip />
+        <ActionStrip actions={projectActions} />
       </Footer>
     </Screen>
   );
 };
 
+const handleGlobalKeydownProps = {
+  expandConsole: PropTypes.func.isRequired,
+  collapseConsole: PropTypes.func.isRequired,
+  expandSidebar: PropTypes.func.isRequired,
+  collapseSidebar: PropTypes.func.isRequired,
+
+  setAllAccessibleOutput: PropTypes.func.isRequired,
+  saveProject: PropTypes.func.isRequired,
+  cloneProject: PropTypes.func.isRequired,
+  showErrorModal: PropTypes.func.isRequired,
+
+  closeNewFolderModal: PropTypes.func.isRequired,
+  closeUploadFileModal: PropTypes.func.isRequired,
+  closeNewFileModal: PropTypes.func.isRequired,
+};
+
 MobileIDEView.propTypes = {
   ide: PropTypes.shape({
     consoleIsExpanded: PropTypes.bool.isRequired,
+  }).isRequired,
+
+  preferences: PropTypes.shape({
   }).isRequired,
 
   project: PropTypes.shape({
@@ -172,6 +310,10 @@ MobileIDEView.propTypes = {
   stopSketch: PropTypes.func.isRequired,
   getProject: PropTypes.func.isRequired,
   clearPersistedState: PropTypes.func.isRequired,
+  autosaveProject: PropTypes.func.isRequired,
+
+
+  ...handleGlobalKeydownProps
 };
 
 function mapStateToProps(state) {
@@ -192,7 +334,9 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   ...ProjectActions,
-  ...IDEActions
+  ...IDEActions,
+  ...ConsoleActions,
+  ...PreferencesActions
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MobileIDEView));
