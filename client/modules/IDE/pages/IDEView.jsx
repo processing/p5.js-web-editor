@@ -185,7 +185,7 @@ class IDEView extends React.Component {
       this.props.newProject();
     }
   }
-        
+
   handleGlobalKeydown(e) {
     // 83 === s
     if (
