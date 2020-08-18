@@ -183,7 +183,6 @@ const MobileIDEView = (props) => {
   const { consoleIsExpanded } = ide;
   const { name: filename } = selectedFile;
 
-
   // Force state reset
   useEffect(clearPersistedState, []);
   useEffect(() => {
@@ -338,6 +337,7 @@ function mapStateToProps(state) {
       state.files.find(file => file.name === 'sketch.js') ||
       state.files.find(file => file.name !== 'root'),
     ide: state.ide,
+    files: state.files,
     unsavedChanges: state.ide.unsavedChanges,
     preferences: state.preferences,
     user: state.user,
