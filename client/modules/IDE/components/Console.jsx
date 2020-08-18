@@ -88,6 +88,8 @@ const Console = () => {
 
   const cm = useRef({});
 
+  useDidUpdate(() => { cm.current.scrollTop = cm.current.scrollHeight; });
+
   const consoleClass = classNames({
     'preview-console': true,
     'preview-console--collapsed': !isExpanded

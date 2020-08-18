@@ -45,13 +45,22 @@ function isUserOwner(props) {
   return props.project.owner && props.project.owner.id === props.user.id;
 }
 
-function warnIfUnsavedChanges(props) { // eslint-disable-line
+function warnIfUnsavedChanges(props) {
+  // eslint-disable-line
   const { route } = props.route;
-  if (route && (route.action === 'PUSH' && (route.pathname === '/login' || route.pathname === '/signup'))) {
+  if (
+    route &&
+    route.action === 'PUSH' &&
+      (route.pathname === '/login' || route.pathname === '/signup')
+  ) {
     // don't warn
     props.persistState();
     window.onbeforeunload = null;
-  } else if (route && (props.location.pathname === '/login' || props.location.pathname === '/signup')) {
+  } else if (
+    route &&
+    (props.location.pathname === '/login' ||
+      props.location.pathname === '/signup')
+  ) {
     // don't warn
     props.persistState();
     window.onbeforeunload = null;
@@ -62,6 +71,7 @@ function warnIfUnsavedChanges(props) { // eslint-disable-line
     props.setUnsavedChanges(false);
     return true;
   }
+  return true;
 }
 
 class IDEView extends React.Component {
@@ -71,7 +81,7 @@ class IDEView extends React.Component {
 
     this.state = {
       consoleSize: props.ide.consoleIsExpanded ? 150 : 29,
-      sidebarSize: props.ide.sidebarIsExpanded ? 160 : 20
+      sidebarSize: props.ide.sidebarIsExpanded ? 160 : 20,
     };
   }
 
@@ -91,7 +101,10 @@ class IDEView extends React.Component {
     this.isMac = navigator.userAgent.toLowerCase().indexOf('mac') !== -1;
     document.addEventListener('keydown', this.handleGlobalKeydown, false);
 
-    this.props.router.setRouteLeaveHook(this.props.route, this.handleUnsavedChanges);
+    this.props.router.setRouteLeaveHook(
+      this.props.route,
+      this.handleUnsavedChanges
+    );
 
     window.onbeforeunload = this.handleUnsavedChanges;
 
@@ -104,11 +117,15 @@ class IDEView extends React.Component {
     }
 
     if (this.props.ide.consoleIsExpanded !== nextProps.ide.consoleIsExpanded) {
-      this.setState({ consoleSize: nextProps.ide.consoleIsExpanded ? 150 : 29 });
+      this.setState({
+        consoleSize: nextProps.ide.consoleIsExpanded ? 150 : 29,
+      });
     }
 
     if (this.props.ide.sidebarIsExpanded !== nextProps.ide.sidebarIsExpanded) {
-      this.setState({ sidebarSize: nextProps.ide.sidebarIsExpanded ? 160 : 20 });
+      this.setState({
+        sidebarSize: nextProps.ide.sidebarIsExpanded ? 160 : 20,
+      });
     }
   }
 
@@ -122,10 +139,15 @@ class IDEView extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (isUserOwner(this.props) && this.props.project.id) {
-      if (this.props.preferences.autosave && this.props.ide.unsavedChanges && !this.props.ide.justOpenedProject) {
+      if (
+        this.props.preferences.autosave &&
+        this.props.ide.unsavedChanges &&
+        !this.props.ide.justOpenedProject
+      ) {
         if (
           this.props.selectedFile.name === prevProps.selectedFile.name &&
-          this.props.selectedFile.content !== prevProps.selectedFile.content) {
+          this.props.selectedFile.content !== prevProps.selectedFile.content
+        ) {
           if (this.autosaveInterval) {
             clearTimeout(this.autosaveInterval);
           }
@@ -142,7 +164,8 @@ class IDEView extends React.Component {
     }
 
     if (this.props.route.path !== prevProps.route.path) {
-      this.props.router.setRouteLeaveHook(this.props.route, () => warnIfUnsavedChanges(this.props));
+      this.props.router.setRouteLeaveHook(this.props.route, () =>
+        warnIfUnsavedChanges(this.props));
     }
   }
   componentWillUnmount() {
@@ -152,10 +175,16 @@ class IDEView extends React.Component {
   }
   handleGlobalKeydown(e) {
     // 83 === s
-    if (e.keyCode === 83 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
+    if (
+      e.keyCode === 83 &&
+      ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))
+    ) {
       e.preventDefault();
       e.stopPropagation();
-      if (isUserOwner(this.props) || (this.props.user.authenticated && !this.props.project.owner)) {
+      if (
+        isUserOwner(this.props) ||
+        (this.props.user.authenticated && !this.props.project.owner)
+      ) {
         this.props.saveProject(this.cmController.getContent());
       } else if (this.props.user.authenticated) {
         this.props.cloneProject();
@@ -163,23 +192,41 @@ class IDEView extends React.Component {
         this.props.showErrorModal('forceAuthentication');
       }
       // 13 === enter
-    } else if (e.keyCode === 13 && e.shiftKey && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
+    } else if (
+      e.keyCode === 13 &&
+      e.shiftKey &&
+      ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))
+    ) {
       e.preventDefault();
       e.stopPropagation();
       this.props.stopSketch();
-    } else if (e.keyCode === 13 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
+    } else if (
+      e.keyCode === 13 &&
+      ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))
+    ) {
       e.preventDefault();
       e.stopPropagation();
       this.props.startSketch();
       // 50 === 2
-    } else if (e.keyCode === 50 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac)) && e.shiftKey) {
+    } else if (
+      e.keyCode === 50 &&
+      ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac)) &&
+      e.shiftKey
+    ) {
       e.preventDefault();
       this.props.setAllAccessibleOutput(false);
       // 49 === 1
-    } else if (e.keyCode === 49 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac)) && e.shiftKey) {
+    } else if (
+      e.keyCode === 49 &&
+      ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac)) &&
+      e.shiftKey
+    ) {
       e.preventDefault();
       this.props.setAllAccessibleOutput(true);
-    } else if (e.keyCode === 66 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))) {
+    } else if (
+      e.keyCode === 66 &&
+      ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))
+    ) {
       e.preventDefault();
       if (!this.props.ide.sidebarIsExpanded) {
         this.props.expandSidebar();
@@ -218,7 +265,7 @@ class IDEView extends React.Component {
           cmController={this.cmController}
         />
         <Toolbar key={this.props.project.id} />
-        {this.props.ide.preferencesIsVisible &&
+        {this.props.ide.preferencesIsVisible && (
           <Overlay
             title={this.props.t('Preferences.Settings')}
             ariaLabel={this.props.t('Preferences.Settings')}
@@ -245,7 +292,7 @@ class IDEView extends React.Component {
               setTheme={this.props.setTheme}
             />
           </Overlay>
-        }
+        )}
         <main className="editor-preview-container">
           <SplitPane
             split="vertical"
@@ -274,10 +321,17 @@ class IDEView extends React.Component {
             <SplitPane
               split="vertical"
               defaultSize="50%"
-              onChange={() => { this.overlay.style.display = 'block'; }}
-              onDragFinished={() => { this.overlay.style.display = 'none'; }}
+              onChange={() => {
+                this.overlay.style.display = 'block';
+              }}
+              onDragFinished={() => {
+                this.overlay.style.display = 'none';
+              }}
               resizerStyle={{
-                borderLeftWidth: '2px', borderRightWidth: '2px', width: '2px', margin: '0px 0px'
+                borderLeftWidth: '2px',
+                borderRightWidth: '2px',
+                width: '2px',
+                margin: '0px 0px',
               }}
             >
               <SplitPane
@@ -303,7 +357,9 @@ class IDEView extends React.Component {
                   editorOptionsVisible={this.props.ide.editorOptionsVisible}
                   showEditorOptions={this.props.showEditorOptions}
                   closeEditorOptions={this.props.closeEditorOptions}
-                  showKeyboardShortcutModal={this.props.showKeyboardShortcutModal}
+                  showKeyboardShortcutModal={
+                    this.props.showKeyboardShortcutModal
+                  }
                   setUnsavedChanges={this.props.setUnsavedChanges}
                   isPlaying={this.props.ide.isPlaying}
                   theme={this.props.preferences.theme}
@@ -320,8 +376,12 @@ class IDEView extends React.Component {
                   consoleEvents={this.props.console}
                   showRuntimeErrorWarning={this.props.showRuntimeErrorWarning}
                   hideRuntimeErrorWarning={this.props.hideRuntimeErrorWarning}
-                  runtimeErrorWarningVisible={this.props.ide.runtimeErrorWarningVisible}
-                  provideController={(ctl) => { this.cmController = ctl; }}
+                  runtimeErrorWarningVisible={
+                    this.props.ide.runtimeErrorWarningVisible
+                  }
+                  provideController={(ctl) => {
+                    this.cmController = ctl;
+                  }}
                 />
                 <Console />
               </SplitPane>
@@ -330,27 +390,28 @@ class IDEView extends React.Component {
                   <h2 className="preview-frame__title">{this.props.t('Toolbar.Preview')}</h2>
                 </header>
                 <div className="preview-frame__content">
-                  <div className="preview-frame-overlay" ref={(element) => { this.overlay = element; }}>
+                  <div
+                    className="preview-frame-overlay"
+                    ref={(element) => {
+                      this.overlay = element;
+                    }}
+                  >
                   </div>
                   <div>
-                    {(
-                      (
-                        (this.props.preferences.textOutput ||
-                          this.props.preferences.gridOutput ||
-                          this.props.preferences.soundOutput
-                        ) &&
-                        this.props.ide.isPlaying
-                      ) ||
-                      this.props.ide.isAccessibleOutputPlaying
-                    )
-                    }
+                    {((this.props.preferences.textOutput ||
+                      this.props.preferences.gridOutput ||
+                      this.props.preferences.soundOutput) &&
+                      this.props.ide.isPlaying) ||
+                      this.props.ide.isAccessibleOutputPlaying}
                   </div>
                   <PreviewFrame
                     htmlFile={this.props.htmlFile}
                     files={this.props.files}
                     content={this.props.selectedFile.content}
                     isPlaying={this.props.ide.isPlaying}
-                    isAccessibleOutputPlaying={this.props.ide.isAccessibleOutputPlaying}
+                    isAccessibleOutputPlaying={
+                      this.props.ide.isAccessibleOutputPlaying
+                    }
                     textOutput={this.props.preferences.textOutput}
                     gridOutput={this.props.preferences.gridOutput}
                     soundOutput={this.props.preferences.soundOutput}
@@ -373,21 +434,17 @@ class IDEView extends React.Component {
             </SplitPane>
           </SplitPane>
         </main>
-        { this.props.ide.modalIsVisible &&
-          <NewFileModal />
-        }
-        {this.props.ide.newFolderModalVisible &&
+        {this.props.ide.modalIsVisible && <NewFileModal />}
+        {this.props.ide.newFolderModalVisible && (
           <NewFolderModal
             closeModal={this.props.closeNewFolderModal}
             createFolder={this.props.createFolder}
           />
-        }
-        {this.props.ide.uploadFileModalVisible &&
-          <UploadFileModal
-            closeModal={this.props.closeUploadFileModal}
-          />
-        }
-        { this.props.location.pathname === '/about' &&
+        )}
+        {this.props.ide.uploadFileModalVisible && (
+          <UploadFileModal closeModal={this.props.closeUploadFileModal} />
+        )}
+        {this.props.location.pathname === '/about' && (
           <Overlay
             title={this.props.t('About.Title')}
             previousPath={this.props.ide.previousPath}
@@ -395,8 +452,8 @@ class IDEView extends React.Component {
           >
             <About previousPath={this.props.ide.previousPath} />
           </Overlay>
-        }
-        {this.props.location.pathname === '/feedback' &&
+        )}
+        {this.props.location.pathname === '/feedback' && (
           <Overlay
             title={this.props.t('IDEView.SubmitFeedback')}
             previousPath={this.props.ide.previousPath}
@@ -404,8 +461,8 @@ class IDEView extends React.Component {
           >
             <Feedback previousPath={this.props.ide.previousPath} />
           </Overlay>
-        }
-        {this.props.location.pathname.match(/add-to-collection$/) &&
+        )}
+        {this.props.location.pathname.match(/add-to-collection$/) && (
           <Overlay
             ariaLabel="add to collection"
             title="Add to collection"
@@ -419,8 +476,8 @@ class IDEView extends React.Component {
               user={this.props.user}
             />
           </Overlay>
-        }
-        {this.props.ide.shareModalVisible &&
+        )}
+        {this.props.ide.shareModalVisible && (
           <Overlay
             title="Share"
             ariaLabel="share"
@@ -432,8 +489,8 @@ class IDEView extends React.Component {
               ownerUsername={this.props.ide.shareModalProjectUsername}
             />
           </Overlay>
-        }
-        {this.props.ide.keyboardShortcutVisible &&
+        )}
+        {this.props.ide.keyboardShortcutVisible && (
           <Overlay
             title={this.props.t('KeyboardShortcuts.Title')}
             ariaLabel={this.props.t('KeyboardShortcuts.Title')}
@@ -441,8 +498,8 @@ class IDEView extends React.Component {
           >
             <KeyboardShortcutModal />
           </Overlay>
-        }
-        {this.props.ide.errorType &&
+        )}
+        {this.props.ide.errorType && (
           <Overlay
             title="Error"
             ariaLabel={this.props.t('Common.Error')}
@@ -453,7 +510,7 @@ class IDEView extends React.Component {
               closeModal={this.props.hideErrorModal}
             />
           </Overlay>
-        }
+        )}
       </div>
     );
   }
@@ -466,19 +523,19 @@ IDEView.propTypes = {
     reset_password_token: PropTypes.string,
   }).isRequired,
   location: PropTypes.shape({
-    pathname: PropTypes.string
+    pathname: PropTypes.string,
   }).isRequired,
   getProject: PropTypes.func.isRequired,
   user: PropTypes.shape({
     authenticated: PropTypes.bool.isRequired,
     id: PropTypes.string,
-    username: PropTypes.string
+    username: PropTypes.string,
   }).isRequired,
   saveProject: PropTypes.func.isRequired,
   ide: PropTypes.shape({
     isPlaying: PropTypes.bool.isRequired,
     isAccessibleOutputPlaying: PropTypes.bool.isRequired,
-    consoleEvent: PropTypes.array,
+    consoleEvent: PropTypes.array, // eslint-disable-line
     modalIsVisible: PropTypes.bool.isRequired,
     sidebarIsExpanded: PropTypes.bool.isRequired,
     consoleIsExpanded: PropTypes.bool.isRequired,
@@ -500,7 +557,7 @@ IDEView.propTypes = {
     justOpenedProject: PropTypes.bool.isRequired,
     errorType: PropTypes.string,
     runtimeErrorWarningVisible: PropTypes.bool.isRequired,
-    uploadFileModalVisible: PropTypes.bool.isRequired
+    uploadFileModalVisible: PropTypes.bool.isRequired,
   }).isRequired,
   stopSketch: PropTypes.func.isRequired,
   project: PropTypes.shape({
@@ -508,12 +565,12 @@ IDEView.propTypes = {
     name: PropTypes.string.isRequired,
     owner: PropTypes.shape({
       username: PropTypes.string,
-      id: PropTypes.string
+      id: PropTypes.string,
     }),
-    updatedAt: PropTypes.string
+    updatedAt: PropTypes.string,
   }).isRequired,
   editorAccessibility: PropTypes.shape({
-    lintMessages: PropTypes.array.isRequired,
+    lintMessages: PropTypes.array.isRequired, // eslint-disable-line
   }).isRequired,
   updateLintMessage: PropTypes.func.isRequired,
   clearLintMessage: PropTypes.func.isRequired,
@@ -543,19 +600,19 @@ IDEView.propTypes = {
   files: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired
+    content: PropTypes.string.isRequired,
   })).isRequired,
   updateFileContent: PropTypes.func.isRequired,
   selectedFile: PropTypes.shape({
     id: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
   }).isRequired,
   setSelectedFile: PropTypes.func.isRequired,
   htmlFile: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired
+    content: PropTypes.string.isRequired,
   }).isRequired,
   dispatchConsoleEvent: PropTypes.func.isRequired,
   newFile: PropTypes.func.isRequired,
@@ -578,11 +635,11 @@ IDEView.propTypes = {
   showKeyboardShortcutModal: PropTypes.func.isRequired,
   closeKeyboardShortcutModal: PropTypes.func.isRequired,
   toast: PropTypes.shape({
-    isVisible: PropTypes.bool.isRequired
+    isVisible: PropTypes.bool.isRequired,
   }).isRequired,
   autosaveProject: PropTypes.func.isRequired,
   router: PropTypes.shape({
-    setRouteLeaveHook: PropTypes.func
+    setRouteLeaveHook: PropTypes.func,
   }).isRequired,
   route: PropTypes.oneOfType([PropTypes.object, PropTypes.element]).isRequired,
   setUnsavedChanges: PropTypes.func.isRequired,
@@ -593,7 +650,7 @@ IDEView.propTypes = {
   setPreviousPath: PropTypes.func.isRequired,
   console: PropTypes.arrayOf(PropTypes.shape({
     method: PropTypes.string.isRequired,
-    args: PropTypes.arrayOf(PropTypes.string)
+    args: PropTypes.arrayOf(PropTypes.string),
   })).isRequired,
   clearConsole: PropTypes.func.isRequired,
   showErrorModal: PropTypes.func.isRequired,
@@ -604,13 +661,14 @@ IDEView.propTypes = {
   startSketch: PropTypes.func.isRequired,
   openUploadFileModal: PropTypes.func.isRequired,
   closeUploadFileModal: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
   return {
     files: state.files,
-    selectedFile: state.files.find(file => file.isSelectedFile) ||
+    selectedFile:
+      state.files.find(file => file.isSelectedFile) ||
       state.files.find(file => file.name === 'sketch.js') ||
       state.files.find(file => file.name !== 'root'),
     htmlFile: getHTMLFile(state.files),
@@ -620,7 +678,7 @@ function mapStateToProps(state) {
     user: state.user,
     project: state.project,
     toast: state.toast,
-    console: state.console
+    console: state.console,
   };
 }
 
