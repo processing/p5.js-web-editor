@@ -150,7 +150,8 @@
       "CommentLine": "Comment Line",
       "FindNextTextMatch": "Find Next Text Match",
       "FindPreviousTextMatch": "Find Previous Text Match",
-      "CodeEditing": "Code Editing"
+      "CodeEditing": "Code Editing",
+      "NewSketch": "New Sketch"
     },
     "General": {
       "StartSketch": "Start Sketch",

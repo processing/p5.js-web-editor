@@ -51,6 +51,12 @@ function KeyboardShortcutModal() {
           </span>
           <span>{t('KeyboardShortcuts.CodeEditing.CommentLine')}</span>
         </li>
+        <li className="keyboard-shortcut-item">
+          <span className="keyboard-shortcut__command">
+            {metaKeyName} + P
+          </span>
+          <span>{t('KeyboardShortcuts.CodeEditing.NewSketch')}</span>
+        </li>
       </ul>
       <h3 className="keyboard-shortcuts__title">General</h3>
       <ul className="keyboard-shortcuts__list">
