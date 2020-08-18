@@ -307,5 +307,13 @@
     "Or": "o",
     "AlreadyHave": "¿Ya tienes cuenta? ",
     "Login": "Ingresa"
+  },
+  "EmailVerificationView": {
+    "Title": "Editor Web p5.js | Correo de Verificación",
+    "Verify": "Verica tu correo",
+    "InvalidTokenNull": "La liga es inválida.",
+    "Checking": "Validando token, por favor espera...",
+    "Verified": "Concluido, tu correo electrónico ha sido verificado.",
+    "InvalidState": "Algo salió mal."
   }
 }
