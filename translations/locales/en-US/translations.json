@@ -307,5 +307,13 @@
     "Or": "Or",
     "AlreadyHave": "Already have an account?",
     "Login": "Log In"
+  },
+  "UploadFileModal": {
+    "Title": "Upload File",
+    "CloseButtonARIA": "Close upload file modal",
+    "SizeLimitError": "Error: You cannot upload any more files. You have reached the total size limit of ${limitText}.\n                If you would like to upload more, please remove the ones you aren't using anymore by\n                in your "
+  },
+  "FileUploader": {
+    "DictDefaultMessage": "Drop files here or click to use the file browser"
   }
 }
