@@ -18,7 +18,8 @@ class NewFolderForm extends React.Component {
 
   render() {
     const {
-      fields: { name }, handleSubmit
+      fields: { name },
+      handleSubmit,
     } = this.props;
     return (
       <form
@@ -28,7 +29,9 @@ class NewFolderForm extends React.Component {
         }}
       >
         <div className="new-folder-form__input-wrapper">
-          <label className="new-folder-form__name-label" htmlFor="name">Name:</label>
+          <label className="new-folder-form__name-label" htmlFor="name">
+            Name:
+          </label>
           <input
             className="new-folder-form__name-input"
             id="name"
@@ -43,7 +46,9 @@ class NewFolderForm extends React.Component {
           >{this.props.t('NewFolderForm.AddFolderSubmit')}
           </Button>
         </div>
-        {name.touched && name.error && <span className="form-error">{name.error}</span>}
+        {name.touched && name.error && (
+          <span className="form-error">{name.error}</span>
+        )}
       </form>
     );
   }
@@ -62,6 +67,6 @@ NewFolderForm.propTypes = {
 };
 NewFolderForm.defaultProps = {
   submitting: false,
-  pristine: true
+  pristine: true,
 };
 export default withTranslation()(NewFolderForm);

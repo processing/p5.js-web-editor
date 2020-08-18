@@ -58,6 +58,7 @@ export const prop = key => (props) => {
   return value;
 };
 
+
 export default {
   [Theme.light]: {
     colors,
@@ -103,6 +104,14 @@ export default {
       border: grays.middleLight
     },
     Separator: grays.middleLight,
+
+    TabHighlight: colors.p5jsPink,
+    SketchList: {
+      background: grays.lighter,
+      card: {
+        background: grays.lighter
+      }
+    }
   },
   [Theme.dark]: {
     colors,
@@ -148,6 +157,14 @@ export default {
       border: grays.middleDark
     },
     Separator: grays.middleDark,
+
+    TabHighlight: colors.p5jsPink,
+    SketchList: {
+      background: grays.darker,
+      card: {
+        background: grays.dark
+      }
+    }
   },
   [Theme.contrast]: {
     colors,
@@ -193,5 +210,13 @@ export default {
       border: grays.middleDark
     },
     Separator: grays.middleDark,
+
+    TabHighlight: grays.darker,
+    SketchList: {
+      background: colors.yellow,
+      card: {
+        background: grays.dark
+      }
+    }
   },
 };

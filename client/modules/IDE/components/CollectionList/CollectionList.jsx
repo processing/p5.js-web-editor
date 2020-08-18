@@ -21,6 +21,7 @@ import CollectionListRow from './CollectionListRow';
 import ArrowUpIcon from '../../../../images/sort-arrow-up.svg';
 import ArrowDownIcon from '../../../../images/sort-arrow-down.svg';
 
+
 class CollectionList extends React.Component {
   constructor(props) {
     super(props);
@@ -127,6 +128,7 @@ class CollectionList extends React.Component {
 
   render() {
     const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
+    const { mobile } = this.props;
 
     return (
       <article className="sketches-table-container">
@@ -141,15 +143,16 @@ class CollectionList extends React.Component {
             <thead>
               <tr>
                 {this._renderFieldHeader('name', 'Name')}
-                {this._renderFieldHeader('createdAt', 'Date Created')}
-                {this._renderFieldHeader('updatedAt', 'Date Updated')}
-                {this._renderFieldHeader('numItems', '# sketches')}
+                {this._renderFieldHeader('createdAt', `${mobile ? '' : 'Date '}Created`)}
+                {this._renderFieldHeader('updatedAt', `${mobile ? '' : 'Date '}Updated`)}
+                {this._renderFieldHeader('numItems', mobile ? 'Sketches' : '# sketches')}
                 <th scope="col"></th>
               </tr>
             </thead>
             <tbody>
               {this.props.collections.map(collection =>
                 (<CollectionListRow
+                  mobile={mobile}
                   key={collection.id}
                   collection={collection}
                   user={this.props.user}
@@ -209,7 +212,8 @@ CollectionList.propTypes = {
     owner: PropTypes.shape({
       id: PropTypes.string
     })
-  })
+  }),
+  mobile: PropTypes.bool,
 };
 
 CollectionList.defaultProps = {
@@ -218,7 +222,8 @@ CollectionList.defaultProps = {
     id: undefined,
     owner: undefined
   },
-  username: undefined
+  username: undefined,
+  mobile: false
 };
 
 function mapStateToProps(state, ownProps) {
