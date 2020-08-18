@@ -183,21 +183,20 @@
     "Error": "Error",
     "Save": "Save",
     "p5logoARIA": "p5.js Logo"
-
   },
   "IDEView": {
     "SubmitFeedback": "Submit Feedback"
   },
   "NewFileModal": {
     "Title": "Create File",
-     "CloseButtonARIA": "Close New File Modal",
+    "CloseButtonARIA": "Close New File Modal",
     "EnterName": "Please enter a name",
     "InvalidType": "Invalid file type. Valid extensions are .js, .css, .json, .txt, .csv, .tsv, .frag, and .vert."
   },
   "NewFileForm": {
-  "AddFileSubmit": "Add File",
+    "AddFileSubmit": "Add File",
     "Placeholder": "Name"
-},
+  },
   "NewFolderModal": {
     "Title": "Create Folder",
     "CloseButtonARIA": "Close New Folder Modal",
@@ -208,5 +207,114 @@
   "NewFolderForm": {
     "AddFolderSubmit": "Add Folder",
     "Placeholder": "Name"
+  },
+  "ResetPasswordForm": {
+    "Email": "Email used for registration",
+    "EmailARIA": "email",
+    "Submit": "Send Password Reset Email"
+  },
+  "ResetPasswordView": {
+    "Title": "p5.js Web Editor | Reset Password",
+    "Reset": "Reset Your Password",
+    "Submitted": "Your password reset email should arrive shortly. If you don't see it, check\n            in your spam folder as sometimes it can end up there.",
+    "Login": "Log In",
+    "LoginOr": "or",
+    "SignUp": "Sign Up"
+  },
+  "ReduxFormUtils": {
+    "errorInvalidEmail": "Please enter a valid email address",
+    "errorEmptyEmail": "Please enter an email",
+    "errorPasswordMismatch": "Passwords must match",
+    "errorEmptyPassword": "Please enter a password",
+    "errorShortPassword": "Password must be at least 6 characters",
+    "errorConfirmPassword": "Please enter a password confirmation",
+    "errorNewPassword": "Please enter a new password or leave the current password empty.",
+    "errorEmptyUsername": "Please enter a username.",
+    "errorLongUsername": "Username must be less than 20 characters.",
+    "errorValidUsername": "Username must only consist of numbers, letters, periods, dashes, and underscores."
+  },
+  "NewPasswordView": {
+    "Title": "p5.js Web Editor | New Password",
+    "Description": "Set a New Password",
+    "TokenInvalidOrExpired": "The password reset token is invalid or has expired.",
+    "EmptyPassword": "Please enter a password",
+    "PasswordConfirmation": "Please enter a password confirmation",
+    "PasswordMismatch": "Passwords must match"
+  },
+  "AccountForm": {
+    "Email": "Email",
+    "EmailARIA": "email",
+    "Unconfirmed": "Unconfirmed.",
+    "EmailSent": "Confirmation sent, check your email.",
+    "Resend": "Resend confirmation email",
+    "UserName": "User Name",
+    "UserNameARIA": "Username",
+    "CurrentPassword": "Current Password",
+    "CurrentPasswordARIA": "Current Password",
+    "NewPassword": "New Password",
+    "NewPasswordARIA": "New Password",
+    "SubmitSaveAllSettings": "Save All Settings"
+  },
+  "AccountView": {
+    "SocialLogin": "Social Login",
+    "SocialLoginDescription": "Use your GitHub or Google account to log into the p5.js Web Editor.",
+    "Title": "p5.js Web Editor | Account Settings",
+    "Settings": "Account Settings",
+    "AccountTab": "Account",
+    "AccessTokensTab": "Access Tokens"
+  },
+  "APIKeyForm": {
+    "ConfirmDelete": "Are you sure you want to delete {{key_label}}?",
+    "Summary": "Personal Access Tokens act like your password to allow automated\n          scripts to access the Editor API. Create a token for each script\n          that needs access.",
+    "CreateToken": "Create new token",
+    "TokenLabel": "What is this token for?",
+    "TokenPlaceholder": "What is this token for? e.g. Example import script",
+    "CreateTokenSubmit": "Create",
+    "NoTokens": "You have no existing tokens.",
+    "NewTokenTitle": "Your new access token",
+    "NewTokenInfo": "Make sure to copy your new personal access token now.\n                  You won’t be able to see it again!",
+    "ExistingTokensTitle": "Existing tokens"
+  },
+  "APIKeyList": {
+    "Name": "Name",
+    "Created": "Created on",
+    "LastUsed": "Last used",
+    "Actions": "Actions",
+    "Never": "Never",
+    "DeleteARIA": "Delete API Key"
+  },
+  "NewPasswordForm": {
+    "Title": "Password",
+    "TitleARIA": "Password",
+    "ConfirmPassword": "Confirm Password",
+    "ConfirmPasswordARIA": "Confirm Password",
+    "SubmitSetNewPassword": "Set New Password"
+  },
+  "SignupForm": {
+    "Title": "User Name",
+    "TitleARIA": "username",
+    "Email": "Email",
+    "EmailARIA": "email",
+    "Password": "Password",
+    "PasswordARIA": "password",
+    "ConfirmPassword": "Confirm Password",
+    "ConfirmPasswordARIA": "Confirm password",
+    "SubmitSignup": "Sign Up"
+  },
+  "SignupView": {
+    "Title": "p5.js Web Editor | Signup",
+    "Description": "Sign Up",
+    "Or": "Or",
+    "AlreadyHave": "Already have an account?",
+    "Login": "Log In"
+  },
+
+  "EmailVerificationView": {
+    "Title": "p5.js Web Editor | Email Verification",
+    "Verify": "Verify your email",
+    "InvalidTokenNull": "That link is invalid.",
+    "Checking": "Validating token, please wait...",
+    "Verified": "All done, your email address has been verified.",
+    "InvalidState": "Something went wrong."
   }
 }

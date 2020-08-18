@@ -27,16 +27,33 @@ import Header from '../../../components/mobile/Header';
 import Screen from '../../../components/mobile/MobileScreen';
 import Footer from '../../../components/mobile/Footer';
 import IDEWrapper from '../../../components/mobile/IDEWrapper';
+import MobileExplorer from '../../../components/mobile/Explorer';
 import Console from '../components/Console';
 import { remSize } from '../../../theme';
-// import OverlayManager from '../../../components/OverlayManager';
+
 import ActionStrip from '../../../components/mobile/ActionStrip';
 import useAsModal from '../../../components/useAsModal';
 import { PreferencesIcon } from '../../../common/icons';
 import Dropdown from '../../../components/Dropdown';
 
+const getRootFile = files => files && files.filter(file => file.name === 'root')[0];
+const getRootFileID = files => (root => root && root.id)(getRootFile(files));
+
 const isUserOwner = ({ project, user }) =>
   project.owner && project.owner.id === user.id;
+
+
+// const userCanEditProject = (props) => {
+//   let canEdit;
+//   if (!props.owner) {
+//     canEdit = true;
+//   } else if (props.user.authenticated && props.owner.id === props.user.id) {
+//     canEdit = true;
+//   } else {
+//     canEdit = false;
+//   }
+//   return canEdit;
+// };
 
 const Expander = styled.div`
   height: ${props => (props.expanded ? remSize(160) : remSize(27))};
@@ -69,17 +86,13 @@ const MobileIDEView = (props) => {
     selectedFile, updateFileContent, files, user, params,
     closeEditorOptions, showEditorOptions, logoutUser,
     startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console,
-    showRuntimeErrorWarning, hideRuntimeErrorWarning, startSketch, getProject, clearPersistedState
+    showRuntimeErrorWarning, hideRuntimeErrorWarning, startSketch, getProject, clearPersistedState, setUnsavedChanges
   } = props;
 
   const [tmController, setTmController] = useState(null); // eslint-disable-line
 
   const { username } = user;
 
-  const [triggerNavDropdown, NavDropDown] = useAsModal(<Dropdown
-    items={getNavOptions(username, logoutUser)}
-    align="right"
-  />);
 
   // Force state reset
   useEffect(clearPersistedState, []);
@@ -97,16 +110,29 @@ const MobileIDEView = (props) => {
     setCurrentProjectID(params.project_id);
   }, [params, project, username]);
 
+  // Screen Modals
+  const [toggleNavDropdown, NavDropDown] = useAsModal(<Dropdown
+    items={getNavOptions(username, logoutUser)}
+    align="right"
+  />);
+
+  const [toggleExplorer, Explorer] = useAsModal(toggle =>
+    (<MobileExplorer
+      id={getRootFileID(files)}
+      canEdit={false}
+      onPressClose={toggle}
+    />), true);
 
   return (
     <Screen fullscreen>
+      <Explorer />
       <Header
         title={project.name}
         subtitle={selectedFile.name}
       >
         <NavItem>
           <IconButton
-            onClick={triggerNavDropdown}
+            onClick={toggleNavDropdown}
             icon={MoreIcon}
             aria-label="Options"
           />
@@ -149,6 +175,7 @@ const MobileIDEView = (props) => {
           hideRuntimeErrorWarning={hideRuntimeErrorWarning}
           runtimeErrorWarningVisible={ide.runtimeErrorWarningVisible}
           provideController={setTmController}
+          setUnsavedChanges={setUnsavedChanges}
         />
       </IDEWrapper>
 
@@ -158,7 +185,7 @@ const MobileIDEView = (props) => {
             <Console />
           </Expander>
         )}
-        <ActionStrip />
+        <ActionStrip toggleExplorer={toggleExplorer} />
       </Footer>
     </Screen>
   );
@@ -271,6 +298,7 @@ MobileIDEView.propTypes = {
 
   logoutUser: PropTypes.func.isRequired,
 
+  setUnsavedChanges: PropTypes.func.isRequired,
   getProject: PropTypes.func.isRequired,
   clearPersistedState: PropTypes.func.isRequired,
   params: PropTypes.shape({

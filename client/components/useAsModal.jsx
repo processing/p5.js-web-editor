@@ -1,10 +1,29 @@
 import React from 'react';
+import styled from 'styled-components';
 import { useModalBehavior } from '../utils/custom-hooks';
 
-export default (component) => {
-  const [visible, trigger, setRef] = useModalBehavior();
+const BackgroundOverlay = styled.div`
+  position: fixed;
+  z-index: 2;
+  width: 100% !important;
+  height: 100% !important;
+  
+  background: black;
+  opacity: 0.3;
+`;
 
-  const wrapper = () => <div ref={setRef}> {visible && component} </div>; // eslint-disable-line
+export default (Element, hasOverlay = false) => {
+  const [visible, toggle, setRef] = useModalBehavior();
 
-  return [trigger, wrapper];
+  const wrapper = () => (visible &&
+    <div>
+      {hasOverlay && <BackgroundOverlay />}
+      <div ref={setRef}>
+        { (typeof (Element) === 'function')
+          ? Element(toggle)
+          : Element}
+      </div>
+    </div>);
+
+  return [toggle, wrapper];
 };
