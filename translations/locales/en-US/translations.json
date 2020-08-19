@@ -309,30 +309,14 @@
     "Login": "Log In"
   },
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  "EmailVerificationView": {
+    "Title": "p5.js Web Editor | Email Verification",
+    "Verify": "Verify your email",
+    "InvalidTokenNull": "That link is invalid.",
+    "Checking": "Validating token, please wait...",
+    "Verified": "All done, your email address has been verified.",
+    "InvalidState": "Something went wrong."
+  },
   "CollectionView": {
     "TitleCreate": "Create collection",
     "TitleDefault": "collection"

@@ -34,7 +34,9 @@ function AccountForm(props) {
           id="email"
           {...domOnlyProps(email)}
         />
-        {email.touched && email.error && <span className="form-error">{email.error}</span>}
+        {email.touched && email.error && (
+          <span className="form-error">{email.error}</span>
+        )}
       </p>
       {
         user.verified !== 'verified' &&
@@ -66,7 +68,9 @@ function AccountForm(props) {
           defaultValue={username}
           {...domOnlyProps(username)}
         />
-        {username.touched && username.error && <span className="form-error">{username.error}</span>}
+        {username.touched && username.error && (
+          <span className="form-error">{username.error}</span>
+        )}
       </p>
       <p className="form__field">
         <label htmlFor="current password" className="form__label">{t('AccountForm.CurrentPassword')}</label>
@@ -77,11 +81,9 @@ function AccountForm(props) {
           id="currentPassword"
           {...domOnlyProps(currentPassword)}
         />
-        {
-          currentPassword.touched &&
-          currentPassword.error &&
+        {currentPassword.touched && currentPassword.error && (
           <span className="form-error">{currentPassword.error}</span>
-        }
+        )}
       </p>
       <p className="form__field">
         <label htmlFor="new password" className="form__label">{t('AccountForm.NewPassword')}</label>
@@ -92,7 +94,9 @@ function AccountForm(props) {
           id="newPassword"
           {...domOnlyProps(newPassword)}
         />
-        {newPassword.touched && newPassword.error && <span className="form-error">{newPassword.error}</span>}
+        {newPassword.touched && newPassword.error && (
+          <span className="form-error">{newPassword.error}</span>
+        )}
       </p>
       <Button
         type="submit"
@@ -105,10 +109,10 @@ function AccountForm(props) {
 
 AccountForm.propTypes = {
   fields: PropTypes.shape({
-    username: PropTypes.object.isRequired,
-    email: PropTypes.object.isRequired,
-    currentPassword: PropTypes.object.isRequired,
-    newPassword: PropTypes.object.isRequired,
+    username: PropTypes.object.isRequired, // eslint-disable-line
+    email: PropTypes.object.isRequired, // eslint-disable-line
+    currentPassword: PropTypes.object.isRequired, // eslint-disable-line
+    newPassword: PropTypes.object.isRequired, // eslint-disable-line
   }).isRequired,
   user: PropTypes.shape({
     verified: PropTypes.number.isRequired,
@@ -126,7 +130,7 @@ AccountForm.propTypes = {
 AccountForm.defaultProps = {
   submitting: false,
   pristine: true,
-  invalid: false
+  invalid: false,
 };
 
 export default withTranslation()(AccountForm);

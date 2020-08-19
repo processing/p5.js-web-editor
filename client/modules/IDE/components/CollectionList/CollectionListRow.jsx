@@ -12,6 +12,8 @@ import * as ToastActions from '../../actions/toast';
 
 import DownFilledTriangleIcon from '../../../../images/down-filled-triangle.svg';
 
+const formatDateCell = (date, mobile = false) => format(new Date(date), 'MMM D, YYYY');
+
 class CollectionListRowBase extends React.Component {
   static projectInCollection(project, collection) {
     return collection.items.find(item => item.project.id === project.id) != null;
@@ -200,7 +202,7 @@ class CollectionListRowBase extends React.Component {
   }
 
   render() {
-    const { collection } = this.props;
+    const { collection, mobile } = this.props;
 
     return (
       <tr
@@ -212,9 +214,9 @@ class CollectionListRowBase extends React.Component {
             {this.renderCollectionName()}
           </span>
         </th>
-        <td>{format(new Date(collection.createdAt), 'MMM D, YYYY')}</td>
-        <td>{format(new Date(collection.updatedAt), 'MMM D, YYYY')}</td>
-        <td>{(collection.items || []).length}</td>
+        <td>{mobile && 'Created: '}{format(new Date(collection.createdAt), 'MMM D, YYYY')}</td>
+        <td>{mobile && 'Updated: '}{formatDateCell(collection.updatedAt)}</td>
+        <td>{mobile && '# sketches: '}{(collection.items || []).length}</td>
         <td className="sketch-list__dropdown-column">
           {this.renderActions()}
         </td>
@@ -246,7 +248,12 @@ CollectionListRowBase.propTypes = {
   deleteCollection: PropTypes.func.isRequired,
   editCollection: PropTypes.func.isRequired,
   onAddSketches: PropTypes.func.isRequired,
+  mobile: PropTypes.bool,
   t: PropTypes.func.isRequired
+};
+
+CollectionListRowBase.defaultProps = {
+  mobile: false,
 };
 
 function mapDispatchToPropsSketchListRow(dispatch) {

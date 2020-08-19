@@ -23,6 +23,9 @@ import ArrowUpIcon from '../../../images/sort-arrow-up.svg';
 import ArrowDownIcon from '../../../images/sort-arrow-down.svg';
 import DownFilledTriangleIcon from '../../../images/down-filled-triangle.svg';
 
+
+const formatDateCell = (date, mobile = false) => format(new Date(date), mobile ? 'MMM D, YYYY' : 'MMM D, YYYY h:mm A');
+
 class SketchListRowBase extends React.Component {
   constructor(props) {
     super(props);
@@ -252,12 +255,15 @@ class SketchListRowBase extends React.Component {
     const {
       sketch,
       username,
+      mobile
     } = this.props;
     const { renameOpen, renameValue } = this.state;
     let url = `/${username}/sketches/${sketch.id}`;
     if (username === 'p5') {
       url = `/${username}/sketches/${slugify(sketch.name, '_')}`;
     }
+
+    if (this.props.mobile) url = `/mobile${url}`;
 
     const name = (
       <React.Fragment>
@@ -288,8 +294,8 @@ class SketchListRowBase extends React.Component {
           <th scope="row">
             {name}
           </th>
-          <td>{format(new Date(sketch.createdAt), 'MMM D, YYYY h:mm A')}</td>
-          <td>{format(new Date(sketch.updatedAt), 'MMM D, YYYY h:mm A')}</td>
+          <td>{mobile && 'Created: '}{formatDateCell(sketch.createdAt, mobile)}</td>
+          <td>{mobile && 'Updated: '}{formatDateCell(sketch.updatedAt, mobile)}</td>
           {this.renderDropdown()}
         </tr>
       </React.Fragment>);
@@ -314,7 +320,12 @@ SketchListRowBase.propTypes = {
   exportProjectAsZip: PropTypes.func.isRequired,
   changeProjectName: PropTypes.func.isRequired,
   onAddToCollection: PropTypes.func.isRequired,
+  mobile: PropTypes.bool,
   t: PropTypes.func.isRequired
+};
+
+SketchListRowBase.defaultProps = {
+  mobile: false
 };
 
 function mapDispatchToPropsSketchListRow(dispatch) {
@@ -415,6 +426,7 @@ class SketchList extends React.Component {
 
   render() {
     const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
+    const { mobile } = this.props;
     return (
       <article className="sketches-table-container">
         <Helmet>
@@ -428,13 +440,16 @@ class SketchList extends React.Component {
               <tr>
                 {this._renderFieldHeader('name', this.props.t('SketchList.HeaderName'))}
                 {this._renderFieldHeader('createdAt', this.props.t('SketchList.HeaderCreatedAt'))}
+                {this._renderFieldHeader('createdAt', `${mobile ? '' : 'Date '}Created`)}
                 {this._renderFieldHeader('updatedAt', this.props.t('SketchList.HeaderUpdatedAt'))}
+                {this._renderFieldHeader('updatedAt', `${mobile ? '' : 'Date '}Updated`)}
                 <th scope="col"></th>
               </tr>
             </thead>
             <tbody>
               {this.props.sketches.map(sketch =>
                 (<SketchListRow
+                  mobile={mobile}
                   key={sketch.id}
                   sketch={sketch}
                   user={this.props.user}
@@ -485,11 +500,13 @@ SketchList.propTypes = {
     field: PropTypes.string.isRequired,
     direction: PropTypes.string.isRequired
   }).isRequired,
+  mobile: PropTypes.bool,
   t: PropTypes.func.isRequired
 };
 
 SketchList.defaultProps = {
-  username: undefined
+  username: undefined,
+  mobile: false,
 };
 
 function mapStateToProps(state) {

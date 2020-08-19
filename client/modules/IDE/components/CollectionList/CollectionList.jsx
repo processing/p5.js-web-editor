@@ -22,6 +22,7 @@ import CollectionListRow from './CollectionListRow';
 import ArrowUpIcon from '../../../../images/sort-arrow-up.svg';
 import ArrowDownIcon from '../../../../images/sort-arrow-down.svg';
 
+
 class CollectionList extends React.Component {
   constructor(props) {
     super(props);
@@ -119,7 +120,7 @@ class CollectionList extends React.Component {
             <ArrowUpIcon role="img" aria-label={this.props.t('CollectionList.DirectionAscendingARIA')} focusable="false" />
           }
           {field === fieldName && direction === SortingActions.DIRECTION.DESC &&
-            <ArrowDownIcon role="img" aria-label={this.props.t('CollectionList.DirectionDescendingARIA')}focusable="false" />
+            <ArrowDownIcon role="img" aria-label={this.props.t('CollectionList.DirectionDescendingARIA')} focusable="false" />
           }
         </button>
       </th>
@@ -128,6 +129,7 @@ class CollectionList extends React.Component {
 
   render() {
     const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
+    const { mobile } = this.props;
 
     return (
       <article className="sketches-table-container">
@@ -141,16 +143,17 @@ class CollectionList extends React.Component {
           <table className="sketches-table" summary="table containing all collections">
             <thead>
               <tr>
-                {this._renderFieldHeader('name', this.props.t('CollectionList.HeaderName'))}
-                {this._renderFieldHeader('createdAt', this.props.t('CollectionList.HeaderCreatedAt'))}
-                {this._renderFieldHeader('updatedAt', this.props.t('CollectionList.HeaderUpdatedAt'))}
-                {this._renderFieldHeader('numItems', this.props.t('CollectionList.HeaderNumItems'))}
+                {this._renderFieldHeader('name', 'Name')}
+                {this._renderFieldHeader('createdAt', `${mobile ? '' : 'Date '}Created`)}
+                {this._renderFieldHeader('updatedAt', `${mobile ? '' : 'Date '}Updated`)}
+                {this._renderFieldHeader('numItems', mobile ? 'Sketches' : '# sketches')}
                 <th scope="col"></th>
               </tr>
             </thead>
             <tbody>
               {this.props.collections.map(collection =>
                 (<CollectionListRow
+                  mobile={mobile}
                   key={collection.id}
                   collection={collection}
                   user={this.props.user}
@@ -211,7 +214,8 @@ CollectionList.propTypes = {
       id: PropTypes.string
     })
   }),
-  t: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
+  mobile: PropTypes.bool,
 };
 
 CollectionList.defaultProps = {
@@ -220,7 +224,8 @@ CollectionList.defaultProps = {
     id: undefined,
     owner: undefined
   },
-  username: undefined
+  username: undefined,
+  mobile: false
 };
 
 function mapStateToProps(state, ownProps) {
