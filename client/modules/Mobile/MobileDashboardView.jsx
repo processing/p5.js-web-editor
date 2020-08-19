@@ -138,8 +138,8 @@ const Panels = {
 
 
 const navOptions = username => [
-  { title: 'Create Sketch', href: '/mobile' },
-  { title: 'Create Collection', href: `/mobile/${username}/collections/create` }
+  { title: 'Create Sketch', href: '/' },
+  { title: 'Create Collection', href: `/${username}/collections/create` }
 ];
 
 

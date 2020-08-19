@@ -66,14 +66,14 @@ const NavItem = styled.li`
 const getNavOptions = (username = undefined) =>
   (username
     ? [
-      { icon: PreferencesIcon, title: 'Preferences', href: '/mobile/preferences', },
-      { icon: PreferencesIcon, title: 'My Stuff', href: `/mobile/${username}/sketches` },
-      { icon: PreferencesIcon, title: 'Examples', href: '/mobile/p5/sketches' },
+      { icon: PreferencesIcon, title: 'Preferences', href: '/preferences', },
+      { icon: PreferencesIcon, title: 'My Stuff', href: `/${username}/sketches` },
+      { icon: PreferencesIcon, title: 'Examples', href: '/p5/sketches' },
       { icon: PreferencesIcon, title: 'Original Editor', href: '/', },
     ]
     : [
-      { icon: PreferencesIcon, title: 'Preferences', href: '/mobile/preferences', },
-      { icon: PreferencesIcon, title: 'Examples', href: '/mobile/p5/sketches' },
+      { icon: PreferencesIcon, title: 'Preferences', href: '/preferences', },
+      { icon: PreferencesIcon, title: 'Examples', href: '/p5/sketches' },
       { icon: PreferencesIcon, title: 'Original Editor', href: '/', },
     ]
   );
@@ -137,7 +137,7 @@ const MobileIDEView = (props) => {
           <NavDropDown />
         </NavItem>
         <li>
-          <IconButton to="/mobile/preview" onClick={() => { startSketch(); }} icon={PlayIcon} aria-label="Run sketch" />
+          <IconButton to="/preview" onClick={() => { startSketch(); }} icon={PlayIcon} aria-label="Run sketch" />
         </li>
       </Header>
 
