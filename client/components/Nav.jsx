@@ -626,10 +626,6 @@ class Nav extends React.PureComponent {
     return (
       <ul className="nav__items-right" title="user-menu">
         {getConfig('TRANSLATIONS_ENABLED') && this.renderLanguageMenu(navDropdownState)}
-        <li className="nav__item">
-          <span>{this.props.t('Nav.Auth.Hello')}, {this.props.user.username}!</span>
-        </li>
-        <span className="nav__item-spacer">|</span>
         <li className={navDropdownState.account}>
           <button
             className="nav__item-header"
@@ -642,7 +638,7 @@ class Nav extends React.PureComponent {
               }
             }}
           >
-            {this.props.t('Nav.Auth.MyAccount')}
+            <span>{this.props.t('Nav.Auth.Hello')}, {this.props.user.username}!</span>
             <TriangleIcon className="nav__item-header-triangle" focusable="false" aria-hidden="true" />
           </button>
           <ul className="nav__dropdown">
