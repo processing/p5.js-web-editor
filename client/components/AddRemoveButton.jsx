@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withTranslation } from 'react-i18next';
+
 
 import AddIcon from '../images/plus.svg';
 import RemoveIcon from '../images/minus.svg';
 
-const AddRemoveButton = ({ type, onClick }) => {
-  const alt = type === 'add' ? 'Add to collection' : 'Remove from collection';
+const AddRemoveButton = ({ type, onClick, t }) => {
+  const alt = type === 'add' ? t('AddRemoveButton.altAdd') : t('AddRemoveButton.altRemove');
   const Icon = type === 'add' ? AddIcon : RemoveIcon;
 
   return (
@@ -22,6 +24,7 @@ const AddRemoveButton = ({ type, onClick }) => {
 AddRemoveButton.propTypes = {
   type: PropTypes.oneOf(['add', 'remove']).isRequired,
   onClick: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired
 };
 
-export default AddRemoveButton;
+export default withTranslation()(AddRemoveButton);
