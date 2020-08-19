@@ -27,20 +27,12 @@ const checkAuth = (store) => {
   store.dispatch(getUser());
 };
 
-// const MobileFirstRoute = props => (
-//   <Route path={props.path} {...props}>
-//     <MediaQuery minDeviceWidth={1224}>
-//       {matches => (matches
-//         ? props.component(props)
-//         : props.fallback(props))}
-//     </MediaQuery>
-//   </Route>);
-
-// MobileFirstRoute.propTypes = {
-//   path: PropTypes.string.isRequired,
-//   component: PropTypes.any.isRequired, // eslint-disable-line
-//   fallback: PropTypes.any.isRequired // eslint-disable-line
-// };
+const mobileFirst = (MobileComponent, Fallback) => props => (
+  <MediaQuery minDeviceWidth={800}>
+    {matches => (matches
+      ? <Fallback {...props} />
+      : <MobileComponent {...props} />)}
+  </MediaQuery>);
 
 // TODO: This short-circuit seems unnecessary - using the mobile <Switch /> navigator (future) should prevent this from being called
 const onRouteChange = (store) => {
@@ -52,15 +44,7 @@ const onRouteChange = (store) => {
 
 const routes = store => (
   <Route path="/" component={App} onChange={() => { onRouteChange(store); }}>
-    <IndexRoute
-      onEnter={checkAuth(store)}
-      component={props => (
-        <MediaQuery minDeviceWidth={1224}>
-          {matches => (matches
-            ? <IDEView {...props} />
-            : <MobileIDEView {...props} />)}
-        </MediaQuery>)}
-    />
+    <IndexRoute onEnter={checkAuth(store)} component={mobileFirst(MobileIDEView, IDEView)} />
 
     <Route path="/login" component={userIsNotAuthenticated(LoginView)} />
     <Route path="/signup" component={userIsNotAuthenticated(SignupView)} />
