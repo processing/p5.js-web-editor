@@ -307,5 +307,32 @@
     "ConfirmPassword": "Confirm Password",
     "ConfirmPasswordARIA": "Confirm Password",
     "SubmitSetNewPassword": "Set New Password"
+  },
+  "SignupForm": {
+    "Title": "User Name",
+    "TitleARIA": "username",
+    "Email": "Email",
+    "EmailARIA": "email",
+    "Password": "Password",
+    "PasswordARIA": "password",
+    "ConfirmPassword": "Confirm Password",
+    "ConfirmPasswordARIA": "Confirm password",
+    "SubmitSignup": "Sign Up"
+  },
+  "SignupView": {
+    "Title": "p5.js Web Editor | Signup",
+    "Description": "Sign Up",
+    "Or": "Or",
+    "AlreadyHave": "Already have an account?",
+    "Login": "Log In"
+  },
+
+  "EmailVerificationView": {
+    "Title": "p5.js Web Editor | Email Verification",
+    "Verify": "Verify your email",
+    "InvalidTokenNull": "That link is invalid.",
+    "Checking": "Validating token, please wait...",
+    "Verified": "All done, your email address has been verified.",
+    "InvalidState": "Something went wrong."
   }
 }

@@ -132,6 +132,10 @@ app.get(
 // isomorphic rendering
 app.use('/', serverRoutes);
 
+if (process.env.MOBILE_ENABLED) {
+  app.use('/mobile', serverRoutes);
+}
+
 app.use(assetRoutes);
 
 app.use('/', embedRoutes);

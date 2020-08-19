@@ -110,10 +110,15 @@ export class FileNode extends React.Component {
   handleFileClick = (event) => {
     event.stopPropagation();
     const { isDeleting } = this.state;
-    const { id, setSelectedFile, name } = this.props;
+    const {
+      id, setSelectedFile, name, onClickFile
+    } = this.props;
     if (name !== 'root' && !isDeleting) {
       setSelectedFile(id);
     }
+
+    // debugger; // eslint-disable-line
+    if (onClickFile) { onClickFile(); }
   }
 
   handleFileNameChange = (event) => {
@@ -218,7 +223,7 @@ export class FileNode extends React.Component {
 
   renderChild = childId => (
     <li key={childId}>
-      <ConnectedFileNode id={childId} parentId={this.props.id} canEdit={this.props.canEdit} />
+      <ConnectedFileNode id={childId} parentId={this.props.id} canEdit={this.props.canEdit} onClickFile={this.props.onClickFile} />
     </li>
   )
 
@@ -239,7 +244,7 @@ export class FileNode extends React.Component {
     const { t } = this.props;
 
     return (
-      <div className={itemClass}>
+      <div className={itemClass} >
         { !isRoot &&
           <div className="file-item__content" onContextMenu={this.toggleFileOptions}>
             <span className="file-item__spacer"></span>
@@ -390,9 +395,11 @@ FileNode.propTypes = {
   openUploadFileModal: PropTypes.func.isRequired,
   authenticated: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired,
+  onClickFile: PropTypes.func
 };
 
 FileNode.defaultProps = {
+  onClickFile: null,
   parentId: '0',
   isSelectedFile: false,
   isFolderClosed: false,
