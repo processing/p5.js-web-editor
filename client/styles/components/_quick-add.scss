@@ -1,11 +1,16 @@
 .quick-add-wrapper {
   min-width: #{600 / $base-font-size}rem;
-  overflow-y: scroll;
+  padding: #{24 / $base-font-size}rem;
+  height: 100%;
 }
 
 .quick-add {
   width: auto;
-  padding: #{24 / $base-font-size}rem;
+  overflow-y: scroll;
+  height: 100%;
+  @include themify() {
+    border: 1px solid getThemifyVariable('modal-border-color');
+  }
 }
 
 .quick-add__item {
