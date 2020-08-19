@@ -143,10 +143,10 @@ class CollectionList extends React.Component {
           <table className="sketches-table" summary="table containing all collections">
             <thead>
               <tr>
-                {this._renderFieldHeader('name', 'Name')}
+                {this._renderFieldHeader('name', this.props.t('CollectionList.HeaderName'))}
                 {this._renderFieldHeader('createdAt', this.props.t('CollectionList.HeaderCreatedAt', { context: mobile ? 'mobile' : '' }))}
-                {this._renderFieldHeader('createdAt', this.props.t('CollectionList.HeaderUpdatedAt', { context: mobile ? 'mobile' : '' }))}
-                {this._renderFieldHeader('createdAt', this.props.t('CollectionList.HeaderNumItems', { context: mobile ? 'mobile' : '' }))}
+                {this._renderFieldHeader('updatedAt', this.props.t('CollectionList.HeaderUpdatedAt', { context: mobile ? 'mobile' : '' }))}
+                {this._renderFieldHeader('numItems', this.props.t('CollectionList.HeaderNumItems', { context: mobile ? 'mobile' : '' }))}
                 <th scope="col"></th>
               </tr>
             </thead>
