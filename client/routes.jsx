@@ -28,7 +28,7 @@ const checkAuth = (store) => {
 };
 
 const mobileFirst = (MobileComponent, Fallback) => props => (
-  <MediaQuery minDeviceWidth={800}>
+  <MediaQuery minDeviceWidth={770}>
     {matches => (matches
       ? <Fallback {...props} />
       : <MobileComponent {...props} />)}
