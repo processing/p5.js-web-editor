@@ -18,7 +18,7 @@ import SketchList from '../../IDE/components/SketchList';
 import { CollectionSearchbar, SketchSearchbar } from '../../IDE/components/Searchbar';
 
 import CollectionCreate from '../components/CollectionCreate';
-import DashboardTabSwitcher, { TabKey } from '../components/DashboardTabSwitcher';
+import DashboardTabSwitcherPublic, { TabKey } from '../components/DashboardTabSwitcher';
 
 class DashboardView extends React.Component {
   static defaultProps = {
@@ -76,7 +76,7 @@ class DashboardView extends React.Component {
     browserHistory.push(`/${this.ownerName()}/collections`);
   }
 
-  renderActionButton(tabKey, username, translate) {
+  renderActionButton(tabKey, username, t) {
     switch (tabKey) {
       case TabKey.assets:
         return this.isOwner() && <AssetSize />;
@@ -84,7 +84,7 @@ class DashboardView extends React.Component {
         return this.isOwner() && (
           <React.Fragment>
             <Button to={`/${username}/collections/create`}>
-              {translate('DashboardView.CreateCollection')}
+              {t('DashboardView.CreateCollection')}
             </Button>
             <CollectionSearchbar />
           </React.Fragment>);
@@ -92,7 +92,7 @@ class DashboardView extends React.Component {
       default:
         return (
           <React.Fragment>
-            {this.isOwner() && <Button to="/">{translate('DashboardView.NewSketch')}</Button>}
+            {this.isOwner() && <Button to="/">{t('DashboardView.NewSketch')}</Button>}
             <SketchSearchbar />
           </React.Fragment>
         );
@@ -125,7 +125,7 @@ class DashboardView extends React.Component {
           <div className="dashboard-header__header">
             <h2 className="dashboard-header__header__title">{this.ownerName()}</h2>
             <div className="dashboard-header__nav">
-              <DashboardTabSwitcher currentTab={currentTab} isOwner={isOwner} username={username} translate={this.props.t} />
+              <DashboardTabSwitcherPublic currentTab={currentTab} isOwner={isOwner} username={username} />
               {actions &&
                 <div className="dashboard-header__actions">
                   {actions}

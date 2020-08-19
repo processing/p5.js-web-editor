@@ -174,15 +174,33 @@
     }
   },
   "Sidebar": {
-    "Create": "Crear",
-    "EnterName": "Introduce un nombre",
-    "Add": "Agregar",
-    "Folder": "Directorio"
+    "Title": "Archivos de Bosquejo",
+    "ToggleARIA": "Alternar abrir/cerrar opciones de archivo de bosquejo",
+    "AddFolder": "Crear directorio",
+    "AddFolderARIA": "Agregar directorio",
+    "AddFile": "Crear archivo",
+    "AddFileARIA": "agregar archivo",
+    "UploadFile": "Subir archivo",
+    "UploadFileARIA": "Subir archivo"
+  },
+  "FileNode": {
+    "OpenFolderARIA": "Abrir contenidos del directorio",
+    "CloseFolderARIA": "Cerrar contenidos del directorio",
+    "ToggleFileOptionsARIA": "Alternar abrir/cerrar opciones de archivo",
+    "AddFolder": "Crear directorio",
+    "AddFolderARIA": "Agregar directorio",
+    "AddFile": "Crear archivo",
+    "AddFileARIA": "agregar archivo",
+    "UploadFile": "Subir archivo",
+    "UploadFileARIA": "Subir archivo",
+    "Rename": "Renombrar",
+    "Delete": "Borrar"
   },
   "Common": {
     "Error": "Error",
     "Save": "Guardar",
-    "p5logoARIA": "Logo p5.js "
+    "p5logoARIA": "Logo p5.js ",
+    "DeleteConfirmation": "¿Estás seguro que quieres borrar {{name}}?"
   },
   "IDEView": {
     "SubmitFeedback": "Enviar retroalimentación"
@@ -216,7 +234,7 @@
   "ResetPasswordView": {
     "Title": "Editor Web p5.js | Regenerar Contraseña",
     "Reset": "Regenerar Contraseña",
-    "Submitted": "Your password reset email should arrive shortly. If you don't see it, check\n            in your spam folder as sometimes it can end up there.",
+    "Submitted": "Tu cooreo Your password reset email should arrive shortly. If you don't see it, check\n            in your spam folder as sometimes it can end up there.",
     "Login": "Ingresa",
     "LoginOr": "o",
     "SignUp": "Registráte"
@@ -264,7 +282,7 @@
     "AccessTokensTab": "Tokens de acceso"
   },
   "APIKeyForm": {
-    "ConfirmDelete": "¿Estas seguro que quieres borrar {{key_label}}?",
+    "ConfirmDelete": "¿Estás seguro que quieres borrar {{key_label}}?",
     "Summary": " Los Tokens de acceso personal actuan como tu contraseña para permitir\n  a scripts automáticos acceder al  API del Editor. Crea un token por cada script \n que necesite acceso.",
     "CreateToken": "Crear nuevo token",
     "TokenLabel": "¿Para que es este token?",
@@ -326,8 +344,8 @@
     "ShareURL_Share": "Compartir",
     "ShareURL_Link": "Liga a la Colección",
     "AddSketch": "Agregar Bosquejo",
-    "DeleteFromCollection": "¿Estas seguro que quieres remover {{name_sketch}} de esta colección?",
-    "SketchDeletedSpan": "El bosquejo fue eliminado",
+    "DeleteFromCollection": "¿Estás seguro que quieres remover {{name_sketch}} de esta colección?",
+    "SketchDeleted": "El bosquejo fue eliminado",
     "SketchRemoveARIA": "Remover bosquejo de la colección",
     "DescriptionPlaceholder": "Agregar descripción",
     "Description": "descripción",
@@ -375,8 +393,11 @@
     "NoCollections": "No hay colecciones.",
     "HeaderName": "Nombre",
     "HeaderCreatedAt": "Fecha Creación",
+    "HeaderCreatedAt_mobile": "Creación",
     "HeaderUpdatedAt": "Fecha Actualización",
+    "HeaderUpdatedAt_mobile": "Actualización",
     "HeaderNumItems": "# bosquejos",
+    "HeaderNumItems_mobile": "Bosquejos",
     "DirectionAscendingARIA": "Ascendente",
     "DirectionDescendingARIA": "Descendente",
     "ButtonLabelAscendingARIA": "Ordenar por {{displayName}} ascendente.",
@@ -384,7 +405,6 @@
     "AddSketch": "Agregar Bosquejo"
   },
   "CollectionListRow": {
-    "ConfirmDelete": "¿Estas seguro que quieres borrar {{key_label}}?",
     "ToggleCollectionOptionsARIA": "Alternar Abrir/Cerrar opciones de colección",
     "AddSketch": "Agregar bosquejo",
     "Delete": "Borrar",
@@ -402,7 +422,6 @@
     "View": "Ver",
     "Title": "p5.js Web Editor | Mis bosquejos",
     "AnothersTitle": "Editor Web p5.js | Bosquejos de {{anotheruser}}",
-    "ConfirmDelete": "¿Estas seguro que quieres borrar {{name_sketch}}?",
     "ToggleLabelARIA": "Alternar Abrir/Cerrar Opciones de Bosquejo",
     "DropdownRename": "Renombrar",
     "DropdownDownload": "Descargar",
@@ -416,7 +435,10 @@
     "AddToCollectionOverlayTitle": "Agregar a colección",
     "HeaderName": "Bosquejo",
     "HeaderCreatedAt": "Fecha Creación",
-    "HeaderUpdatedAt": "Fecha Actualización"
+    "HeaderCreatedAt_mobile": "Creación",
+    "HeaderUpdatedAt": "Fecha Actualización",
+    "HeaderUpdatedAt_mobile": "Actualización",
+    "NoSketches": "No hay bosquejos."
   },
   "AddToCollectionSketchList": {
     "Title": "p5.js Web Editor | Mis bosquejos",

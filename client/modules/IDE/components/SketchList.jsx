@@ -149,7 +149,7 @@ class SketchListRowBase extends React.Component {
 
   handleSketchDelete = () => {
     this.closeAll();
-    if (window.confirm(this.props.t('SketchList.ConfirmDelete', { name_sketch: this.props.sketch.name }))) {
+    if (window.confirm(this.props.t('Common.DeleteConfirmation', { name: this.props.sketch.name }))) {
       this.props.deleteProject(this.props.sketch.id);
     }
   }
@@ -376,7 +376,7 @@ class SketchList extends React.Component {
 
   _renderEmptyTable() {
     if (!this.isLoading() && this.props.sketches.length === 0) {
-      return (<p className="sketches-table__empty">No sketches.</p>);
+      return (<p className="sketches-table__empty">{this.props.t('SketchList.NoSketches')}</p>);
     }
     return null;
   }
@@ -439,10 +439,8 @@ class SketchList extends React.Component {
             <thead>
               <tr>
                 {this._renderFieldHeader('name', this.props.t('SketchList.HeaderName'))}
-                {this._renderFieldHeader('createdAt', this.props.t('SketchList.HeaderCreatedAt'))}
-                {this._renderFieldHeader('createdAt', `${mobile ? '' : 'Date '}Created`)}
-                {this._renderFieldHeader('updatedAt', this.props.t('SketchList.HeaderUpdatedAt'))}
-                {this._renderFieldHeader('updatedAt', `${mobile ? '' : 'Date '}Updated`)}
+                {this._renderFieldHeader('createdAt', this.props.t('SketchList.HeaderCreatedAt', { context: mobile ? 'mobile' : '' }))}
+                {this._renderFieldHeader('updatedAt', this.props.t('SketchList.HeaderUpdatedAt', { context: mobile ? 'mobile' : '' }))}
                 <th scope="col"></th>
               </tr>
             </thead>

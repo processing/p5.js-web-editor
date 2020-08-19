@@ -86,7 +86,7 @@ const CollectionItemRowBase = ({
     }
   };
 
-  const name = projectIsDeleted ? <span>{t('Collection.SketchDeletedSpan')}</span> : (
+  const name = projectIsDeleted ? <span>{t('Collection.SketchDeleted')}</span> : (
     <Link to={`/${item.project.user.username}/sketches/${item.projectId}`}>
       {item.project.name}
     </Link>
@@ -108,7 +108,7 @@ const CollectionItemRowBase = ({
           <button
             className="collection-row__remove-button"
             onClick={handleSketchRemove}
-            aria-label={t('Collection.SketchDeletedSpan')}
+            aria-label={t('Collection.SketchRemoveARIA')}
           >
             <RemoveIcon focusable="false" aria-hidden="true" />
           </button>

@@ -326,7 +326,6 @@
     "AlreadyHave": "Already have an account?",
     "Login": "Log In"
   },
-
   "EmailVerificationView": {
     "Title": "p5.js Web Editor | Email Verification",
     "Verify": "Verify your email",
@@ -346,7 +345,7 @@
     "ShareURL_Link": "Link to Collection",
     "AddSketch": "Add Sketch",
     "DeleteFromCollection": "Are you sure you want to remove {{name_sketch}} from this collection?",
-    "SketchDeletedSpan": "Sketch deleted",
+    "SketchDeleted": "Sketch deleted",
     "SketchRemoveARIA": "Remove sketch from collection",
     "DescriptionPlaceholder": "Add description",
     "Description": "description",
@@ -394,8 +393,11 @@
     "NoCollections": "No collections.",
     "HeaderName": "Name",
     "HeaderCreatedAt": "Date Created",
+    "HeaderCreatedAt_mobile": "Created",
     "HeaderUpdatedAt": "Date Updated",
+    "HeaderUpdatedAt_mobile": "Updated",
     "HeaderNumItems": "# sketches",
+    "HeaderNumItems_mobile": "# sketches",
     "DirectionAscendingARIA": "Ascending",
     "DirectionDescendingARIA": "Descending",
     "ButtonLabelAscendingARIA": "Sort by {{displayName}} ascending.",
@@ -403,7 +405,6 @@
     "AddSketch": "Add Sketch"
   },
   "CollectionListRow": {
-    "ConfirmDelete": "Are you sure you want to delete {{key_label}}?",
     "ToggleCollectionOptionsARIA": "Toggle Open/Close collection options",
     "AddSketch": "Add sketch",
     "Delete": "Delete",
@@ -421,7 +422,6 @@
     "View": "View",
     "Title": "p5.js Web Editor | My sketches",
     "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'s sketches",
-    "ConfirmDelete": "Are you sure you want to delete {{name_sketch}}?",
     "ToggleLabelARIA": "Toggle Open/Close Sketch Options",
     "DropdownRename": "Rename",
     "DropdownDownload": "Download",
@@ -435,7 +435,10 @@
     "AddToCollectionOverlayTitle": "Add to collection",
     "HeaderName": "Sketch",
     "HeaderCreatedAt": "Date Created",
-    "HeaderUpdatedAt": "Date Updated"
+    "HeaderCreatedAt_mobile": "Created",
+    "HeaderUpdatedAt": "Date Updated",
+    "HeaderUpdatedAt_mobile": "Updated",
+    "NoSketches": "No sketches."
   },
   "AddToCollectionSketchList": {
     "Title": "p5.js Web Editor | My sketches",
