@@ -341,5 +341,14 @@
   },
   "FileUploader": {
     "DictDefaultMessage": "Drop files here or click to use the file browser"
+  },
+  "ErrorModal": {
+    "MessageLogin": "In order to save sketches, you must be logged in. Please ",
+    "Login": "Login",
+    "LoginOr": " or ",
+    "SignUp": "Sign Up",
+    "MessageLoggedOut": "It looks like you've been logged out. Please ",
+    "LogIn": "log in",
+    "SavedDifferentWindow": "The project you have attempted to save has been saved from another window.\n        Please refresh the page to see the latest version."
   }
 }
