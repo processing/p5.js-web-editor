@@ -37,7 +37,7 @@ const mobileFirst = (MobileComponent, Fallback) => props => (
 // TODO: This short-circuit seems unnecessary - using the mobile <Switch /> navigator (future) should prevent this from being called
 const onRouteChange = (store) => {
   const path = window.location.pathname;
-  if (path.includes('/mobile/preview')) return;
+  if (path.includes('preview')) return;
 
   store.dispatch(stopSketch());
 };
@@ -57,28 +57,24 @@ const routes = store => (
     <Route path="/projects/:project_id" component={IDEView} />
     <Route path="/:username/full/:project_id" component={FullView} />
     <Route path="/full/:project_id" component={FullView} />
-    <Route path="/sketches" component={createRedirectWithUsername('/:username/sketches')} />
-    <Route path="/:username/assets" component={userIsAuthenticated(userIsAuthorized(DashboardView))} />
-    <Route path="/assets" component={createRedirectWithUsername('/:username/assets')} />
-    <Route path="/account" component={userIsAuthenticated(AccountView)} />
-    <Route path="/:username/sketches/:project_id" component={IDEView} />
-    <Route path="/:username/sketches/:project_id/add-to-collection" component={IDEView} />
-    <Route path="/:username/sketches" component={DashboardView} />
-    <Route path="/:username/collections" component={DashboardView} />
+
+    <Route path="/:username/assets" component={userIsAuthenticated(userIsAuthorized(mobileFirst(MobileDashboardView, DashboardView)))} />
+    <Route path="/:username/sketches" component={mobileFirst(MobileDashboardView, DashboardView)} />
+    <Route path="/:username/sketches/:project_id" component={mobileFirst(MobileIDEView, IDEView)} />
+    <Route path="/:username/sketches/:project_id/add-to-collection" component={mobileFirst(MobileIDEView, IDEView)} />
+    <Route path="/:username/collections" component={mobileFirst(MobileDashboardView, DashboardView)} />
+
     <Route path="/:username/collections/create" component={DashboardView} />
     <Route path="/:username/collections/:collection_id" component={CollectionView} />
+
+    <Route path="/sketches" component={createRedirectWithUsername('/:username/sketches')} />
+    <Route path="/assets" component={createRedirectWithUsername('/:username/assets')} />
+    <Route path="/account" component={userIsAuthenticated(AccountView)} />
     <Route path="/about" component={IDEView} />
 
-    <Route path="/mobile" component={MobileIDEView} />
-
-    <Route path="/mobile/preview" component={MobileSketchView} />
-    <Route path="/mobile/preferences" component={MobilePreferences} />
-
-    <Route path="/mobile/:username/sketches/:project_id" component={MobileIDEView} />
-    <Route path="/mobile/:username/assets" component={userIsAuthenticated(userIsAuthorized(MobileDashboardView))} />
-    <Route path="/mobile/:username/sketches" component={MobileDashboardView} />
-    <Route path="/mobile/:username/collections" component={MobileDashboardView} />
-    <Route path="/mobile/:username/collections/create" component={MobileDashboardView} />
+    {/* Mobile-only Routes */}
+    <Route path="/preview" component={MobileSketchView} />
+    <Route path="/preferences" component={MobilePreferences} />
 
   </Route>
 );
