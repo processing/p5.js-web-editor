@@ -350,5 +350,11 @@
     "MessageLoggedOut": "Parece que has salido de tu cuenta. Por favor ",
     "LogIn": "ingresa",
     "SavedDifferentWindow": " El proyecto que has intentado guardar ha sido guardado desde otra ventana.\n  Por favor refresca la página para ver la versión más actual."
+  },
+  "ShareModal": {
+    "Embed": "Incrustar",
+    "Present": "Presentar",
+    "Fullscreen": "Pantalla Completa",
+    "Edit": "Editar"
   }
 }

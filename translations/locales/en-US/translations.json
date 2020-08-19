@@ -350,5 +350,11 @@
     "MessageLoggedOut": "It looks like you've been logged out. Please ",
     "LogIn": "log in",
     "SavedDifferentWindow": "The project you have attempted to save has been saved from another window.\n        Please refresh the page to see the latest version."
+  },
+  "ShareModal": {
+    "Embed": "Embed",
+    "Present": "Present",
+    "Fullscreen": "Fullscreen",
+    "Edit": "Edit"
   }
 }
