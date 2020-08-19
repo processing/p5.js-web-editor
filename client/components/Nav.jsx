@@ -6,6 +6,7 @@ import { Link } from 'react-router';
 import classNames from 'classnames';
 import { withTranslation } from 'react-i18next';
 import i18next from 'i18next';
+import { languageKeyToLabel } from '../i18n';
 import * as IDEActions from '../modules/IDE/actions/ide';
 import * as toastActions from '../modules/IDE/actions/toast';
 import * as projectActions from '../modules/IDE/actions/project';
@@ -549,7 +550,7 @@ class Nav extends React.PureComponent {
 
   renderLanguageMenu(navDropdownState) {
     return (
-      <ul className="nav__items-right" title="user-menu">
+      <React.Fragment>
         <li className={navDropdownState.lang}>
           <button
             onClick={this.toggleDropdownForLang}
@@ -561,7 +562,7 @@ class Nav extends React.PureComponent {
               }
             }}
           >
-            <span className="nav__item-header"> {this.props.t('Nav.Lang')}</span>
+            <span className="nav__item-header"> {languageKeyToLabel(this.props.language)}</span>
             <TriangleIcon className="nav__item-header-triangle" focusable="false" aria-hidden="true" />
           </button>
           <ul className="nav__dropdown">
@@ -597,7 +598,7 @@ class Nav extends React.PureComponent {
             </li>
           </ul>
         </li>
-      </ul>
+      </React.Fragment>
     );
   }
 
@@ -605,6 +606,7 @@ class Nav extends React.PureComponent {
   renderUnauthenticatedUserMenu(navDropdownState) {
     return (
       <ul className="nav__items-right" title="user-menu">
+        {getConfig('TRANSLATIONS_ENABLED') && this.renderLanguageMenu(navDropdownState)}
         <li className="nav__item">
           <Link to="/login" className="nav__auth-button">
             <span className="nav__item-header">{this.props.t('Nav.Login')}</span>
@@ -623,6 +625,7 @@ class Nav extends React.PureComponent {
   renderAuthenticatedUserMenu(navDropdownState) {
     return (
       <ul className="nav__items-right" title="user-menu">
+        {getConfig('TRANSLATIONS_ENABLED') && this.renderLanguageMenu(navDropdownState)}
         <li className="nav__item">
           <span>{this.props.t('Nav.Auth.Hello')}, {this.props.user.username}!</span>
         </li>
@@ -755,7 +758,6 @@ class Nav extends React.PureComponent {
       <header>
         <nav className="nav" title="main-navigation" ref={(node) => { this.node = node; }}>
           {this.renderLeftLayout(navDropdownState)}
-          {getConfig('TRANSLATIONS_ENABLED') && this.renderLanguageMenu(navDropdownState)}
           {this.renderUserMenu(navDropdownState)}
         </nav>
       </header>
@@ -809,6 +811,7 @@ Nav.propTypes = {
   }),
   t: PropTypes.func.isRequired,
   setLanguage: PropTypes.func.isRequired,
+  language: PropTypes.string.isRequired,
 };
 
 Nav.defaultProps = {
@@ -829,7 +832,8 @@ function mapStateToProps(state) {
     project: state.project,
     user: state.user,
     unsavedChanges: state.ide.unsavedChanges,
-    rootFile: state.files.filter(file => file.name === 'root')[0]
+    rootFile: state.files.filter(file => file.name === 'root')[0],
+    language: state.preferences.language
   };
 }
 
