@@ -1,5 +1,8 @@
 import { Route, IndexRoute } from 'react-router';
 import React from 'react';
+import PropTypes from 'prop-types';
+import MediaQuery from 'react-responsive';
+
 import App from './modules/App/App';
 import IDEView from './modules/IDE/pages/IDEView';
 import MobileIDEView from './modules/IDE/pages/MobileIDEView';
@@ -24,6 +27,21 @@ const checkAuth = (store) => {
   store.dispatch(getUser());
 };
 
+// const MobileFirstRoute = props => (
+//   <Route path={props.path} {...props}>
+//     <MediaQuery minDeviceWidth={1224}>
+//       {matches => (matches
+//         ? props.component(props)
+//         : props.fallback(props))}
+//     </MediaQuery>
+//   </Route>);
+
+// MobileFirstRoute.propTypes = {
+//   path: PropTypes.string.isRequired,
+//   component: PropTypes.any.isRequired, // eslint-disable-line
+//   fallback: PropTypes.any.isRequired // eslint-disable-line
+// };
+
 // TODO: This short-circuit seems unnecessary - using the mobile <Switch /> navigator (future) should prevent this from being called
 const onRouteChange = (store) => {
   const path = window.location.pathname;
@@ -34,7 +52,16 @@ const onRouteChange = (store) => {
 
 const routes = store => (
   <Route path="/" component={App} onChange={() => { onRouteChange(store); }}>
-    <IndexRoute component={IDEView} onEnter={checkAuth(store)} />
+    <IndexRoute
+      onEnter={checkAuth(store)}
+      component={props => (
+        <MediaQuery minDeviceWidth={1224}>
+          {matches => (matches
+            ? <IDEView {...props} />
+            : <MobileIDEView {...props} />)}
+        </MediaQuery>)}
+    />
+
     <Route path="/login" component={userIsNotAuthenticated(LoginView)} />
     <Route path="/signup" component={userIsNotAuthenticated(SignupView)} />
     <Route path="/reset-password" component={userIsNotAuthenticated(ResetPasswordView)} />
@@ -58,10 +85,10 @@ const routes = store => (
     <Route path="/:username/collections/:collection_id" component={CollectionView} />
     <Route path="/about" component={IDEView} />
 
+    <Route path="/mobile" component={MobileIDEView} />
 
     <Route path="/mobile/preview" component={MobileSketchView} />
     <Route path="/mobile/preferences" component={MobilePreferences} />
-    <Route path="/mobile" component={MobileIDEView} />
 
     <Route path="/mobile/:username/sketches/:project_id" component={MobileIDEView} />
     <Route path="/mobile/:username/assets" component={userIsAuthenticated(userIsAuthorized(MobileDashboardView))} />
