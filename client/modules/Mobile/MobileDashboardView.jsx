@@ -185,7 +185,7 @@ const MobileDashboard = ({ params, location }) => {
           <NavDropdown />
 
         </NavItem>
-        <IconButton to="/mobile" icon={ExitIcon} aria-label="Return to ide view" />
+        <IconButton to="/" icon={ExitIcon} aria-label="Return to ide view" />
       </Header>
 
 
