@@ -174,15 +174,33 @@
     }
   },
   "Sidebar": {
-    "Create": "Create",
-    "EnterName": "enter a name",
-    "Add": "Add",
-    "Folder": "Folder"
+    "Title": "Sketch Files",
+    "ToggleARIA": "Toggle open/close sketch file options",
+    "AddFolder": "Create folder",
+    "AddFolderARIA": "add folder",
+    "AddFile": "Create file",
+    "AddFileARIA": "add file",
+    "UploadFile": "Upload file",
+    "UploadFileARIA": "upload file"
+  },
+  "FileNode": {
+    "OpenFolderARIA": "Open folder contents",
+    "CloseFolderARIA": "Close folder contents",
+    "ToggleFileOptionsARIA": "Toggle open/close file options",
+    "AddFolder": "Create folder",
+    "AddFolderARIA": "add folder",
+    "AddFile": "Create file",
+    "AddFileARIA": "add file",
+    "UploadFile": "Upload file",
+    "UploadFileARIA": "upload file",
+    "Rename": "Rename",
+    "Delete": "Delete"
   },
   "Common": {
     "Error": "Error",
     "Save": "Save",
-    "p5logoARIA": "p5.js Logo"
+    "p5logoARIA": "p5.js Logo",
+    "DeleteConfirmation": "Are you sure you want to delete {{name}}?"
   },
   "IDEView": {
     "SubmitFeedback": "Submit Feedback"
@@ -307,6 +325,14 @@
     "Or": "Or",
     "AlreadyHave": "Already have an account?",
     "Login": "Log In"
+  },
+  "EmailVerificationView": {
+    "Title": "p5.js Web Editor | Email Verification",
+    "Verify": "Verify your email",
+    "InvalidTokenNull": "That link is invalid.",
+    "Checking": "Validating token, please wait...",
+    "Verified": "All done, your email address has been verified.",
+    "InvalidState": "Something went wrong."
   },
   "UploadFileModal": {
     "Title": "Upload File",

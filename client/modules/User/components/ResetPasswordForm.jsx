@@ -9,7 +9,10 @@ function ResetPasswordForm(props) {
     fields: { email }, handleSubmit, submitting, invalid, pristine, t
   } = props;
   return (
-    <form className="form" onSubmit={handleSubmit(props.initiateResetPassword.bind(this))}>
+    <form
+      className="form"
+      onSubmit={handleSubmit(props.initiateResetPassword.bind(this))}
+    >
       <p className="form__field">
         <label htmlFor="email" className="form__label">{t('ResetPasswordForm.Email')}</label>
         <input
@@ -19,7 +22,9 @@ function ResetPasswordForm(props) {
           id="email"
           {...domOnlyProps(email)}
         />
-        {email.touched && email.error && <span className="form-error">{email.error}</span>}
+        {email.touched && email.error && (
+          <span className="form-error">{email.error}</span>
+        )}
       </p>
       <Button
         type="submit"
@@ -48,7 +53,7 @@ ResetPasswordForm.propTypes = {
 ResetPasswordForm.defaultProps = {
   submitting: false,
   pristine: true,
-  invalid: false
+  invalid: false,
 };
 
 export default withTranslation()(ResetPasswordForm);
