@@ -44,7 +44,7 @@ class UploadFileModal extends React.Component {
           </div>
           { this.props.reachedTotalSizeLimit &&
             <p>
-              {this.props.t('UploadFileModal.SizeLimitError')}
+              {this.props.t('UploadFileModal.SizeLimitError', { sizeLimit: limitText })}
               <Link to="/assets" onClick={this.props.closeModal}>assets</Link>
               .
             </p>

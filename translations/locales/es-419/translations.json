@@ -337,7 +337,7 @@
   "UploadFileModal": {
     "Title": "Subir Archivo",
     "CloseButtonARIA": "Cerrar diálogo para subir archivo",
-    "SizeLimitError": "Error: No puedes subir archivos. Has alcanzado el limite de tamaño total de {{limitText}}.\n         Si quieres agregar más,por favor remueve alugnos que no estes usando en tus "
+    "SizeLimitError": "Error: No puedes subir archivos. Has alcanzado el limite de tamaño total de {{sizeLimit}}.\n         Si quieres agregar más,por favor remueve alugnos que no estes usando en tus "
   },
   "FileUploader": {
     "DictDefaultMessage": "Deposita los archivos aquí o haz click para usar el navegador de archivos"
