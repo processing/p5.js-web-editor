@@ -7,7 +7,6 @@ const initialState = {
 let messageId = 0;
 
 const editorAccessibility = (state = initialState, action) => {
-  console.log('accessbility');
   switch (action.type) {
     case ActionTypes.UPDATE_LINT_MESSAGE:
       messageId += 1;
