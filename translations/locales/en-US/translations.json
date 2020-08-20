@@ -88,7 +88,8 @@
     "SketchSaved": "Sketch saved.",
     "SketchFailedSave": "Failed to save sketch.",
     "AutosaveEnabled": "Autosave enabled.",
-    "LangChange": "Language changed"
+    "LangChange": "Language changed",
+    "SettingsSaved": "Settings saved."
   },
   "Toolbar": {
     "Preview": "Preview",
