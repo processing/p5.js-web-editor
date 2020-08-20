@@ -334,5 +334,12 @@
     "Checking": "Validating token, please wait...",
     "Verified": "All done, your email address has been verified.",
     "InvalidState": "Something went wrong."
+  },
+  "CopyableInput": {
+    "CopiedARIA": "Copied to Clipboard!",
+    "OpenViewTabARIA": "Open {{label}} view in new tab"
+  },
+  "EditableInput": {
+    "EditValue":"Edit {{displayValue}} value"
   }
 }

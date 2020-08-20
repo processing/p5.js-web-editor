@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Clipboard from 'clipboard';
 import classNames from 'classnames';
+import { withTranslation } from 'react-i18next';
 
 import ShareIcon from '../../../images/share.svg';
 
@@ -45,7 +46,7 @@ class CopyableInput extends React.Component {
       <div className={copyableInputClass}>
         <div
           className="copyable-input__value-container tooltipped-no-delay"
-          aria-label="Copied to Clipboard!"
+          aria-label={this.props.t('CopyableInput.CopiedARIA')}
           ref={(element) => { this.tooltip = element; }}
           onMouseLeave={this.onMouseLeaveHandler}
         >
@@ -69,7 +70,7 @@ class CopyableInput extends React.Component {
             rel="noopener noreferrer"
             href={value}
             className="copyable-input__preview"
-            aria-label={`Open ${label} view in new tab`}
+            aria-label={this.props.t('CopyableInput.CopiedARIA', { label })}
           >
             <ShareIcon focusable="false" aria-hidden="true" />
           </a>
@@ -82,11 +83,12 @@ class CopyableInput extends React.Component {
 CopyableInput.propTypes = {
   label: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
-  hasPreviewLink: PropTypes.bool
+  hasPreviewLink: PropTypes.bool,
+  t: PropTypes.func.isRequired
 };
 
 CopyableInput.defaultProps = {
   hasPreviewLink: false
 };
 
-export default CopyableInput;
+export default withTranslation()(CopyableInput);

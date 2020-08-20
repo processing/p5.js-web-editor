@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { withTranslation } from 'react-i18next';
 
 import EditIcon from '../../../images/pencil.svg';
 
@@ -58,7 +59,7 @@ function EditableInput({
       <button
         className="editable-input__label"
         onClick={beginEditing}
-        aria-label={`Edit ${displayValue} value`}
+        aria-label={this.props.t('EditableInput.EditValue', { display: displayValue })}
       >
         <span>{displayValue}</span>
         <EditIcon
@@ -99,6 +100,7 @@ EditableInput.propTypes = {
   onChange: PropTypes.func.isRequired,
   validate: PropTypes.func,
   value: PropTypes.string,
+  t: PropTypes.func.isRequired
 };
 
-export default EditableInput;
+export default withTranslation()(EditableInput);
