@@ -315,5 +315,15 @@
     "Checking": "Validando token, por favor espera...",
     "Verified": "Concluido, tu correo electrónico ha sido verificado.",
     "InvalidState": "Algo salió mal."
-  }
+  },
+  "AssetList": {
+  "Title": "Editor Web p5.js | Mis assets",
+  "ToggleOpenCloseARIA": "Alternar Abrir/Cerrar Opciones de Asset",
+  "Delete": "Borrar",
+  "OpenNewTab": "Abrir en Nueva Pestaña",
+  "NoUploadedAssets": "No has subido archivos.",
+  "HeaderName": "Nombre",
+  "HeaderSize": "Tamaño",
+  "HeaderSketch": "Bosquejo"
+}
 }

@@ -334,5 +334,15 @@
     "Checking": "Validating token, please wait...",
     "Verified": "All done, your email address has been verified.",
     "InvalidState": "Something went wrong."
+  },
+  "AssetList": {
+    "Title": "p5.js Web Editor | My assets",
+    "ToggleOpenCloseARIA": "Toggle Open/Close Asset Options",
+    "Delete": "Delete",
+    "OpenNewTab": "Open in New Tab",
+    "NoUploadedAssets": "No uploaded assets.",
+    "HeaderName": "Name",
+    "HeaderSize": "Size",
+    "HeaderSketch": "Sketch"
   }
 }
