@@ -334,5 +334,25 @@
     "Checking": "Validating token, please wait...",
     "Verified": "All done, your email address has been verified.",
     "InvalidState": "Something went wrong."
+  },
+
+  "AssetList": {
+    "Title": "p5.js Web Editor | My assets",
+    "ToggleOpenCloseARIA": "Toggle Open/Close Asset Options",
+    "Delete": "Delete",
+    "OpenNewTab": "Open in New Tab",
+    "NoUploadedAssets": "No uploaded assets.",
+    "HeaderName": "Name",
+    "HeaderSize": "Size",
+    "HeaderSketch": "Sketch"
+  },
+  "Feedback": {
+    "Title": "p5.js Web Editor | Feedback",
+    "ViaGithubHeader": "Via Github Issues",
+    "ViaGithubDescription": "If you're familiar with Github, this is our preferred method for receiving bug reports and feedback.",
+    "GoToGithub": "Go to Github",
+    "ViaGoogleHeader": "Via Google Form",
+    "ViaGoogleDescription": "You can also submit this quick form.",
+    "GoToForm": "Go to Form"
   }
 }
