@@ -1,4 +1,6 @@
 import React, { useRef } from 'react';
+import PropTypes from 'prop-types';
+import { withTranslation } from 'react-i18next';
 
 import { bindActionCreators } from 'redux';
 
@@ -72,7 +74,7 @@ const getConsoleFeedStyle = (theme, times, fontSize) => {
   }
 };
 
-const Console = () => {
+const Console = ({ t }) => {
   const consoleEvents = useSelector(state => state.console);
   const isExpanded = useSelector(state => state.ide.consoleIsExpanded);
   const { theme, fontSize } = useSelector(state => state.preferences);
@@ -98,19 +100,19 @@ const Console = () => {
   return (
     <section className={consoleClass} >
       <header className="preview-console__header">
-        <h2 className="preview-console__header-title">Console</h2>
+        <h2 className="preview-console__header-title">{t('Console.Title')}</h2>
         <div className="preview-console__header-buttons">
-          <button className="preview-console__clear" onClick={clearConsole} aria-label="Clear console">
-            Clear
+          <button className="preview-console__clear" onClick={clearConsole} aria-label={t('Console.ClearARIA')}>
+            {t('Console.Clear')}
           </button>
           <button
             className="preview-console__collapse"
             onClick={collapseConsole}
-            aria-label="Close console"
+            aria-label={t('Console.CloseARIA')}
           >
             <DownArrowIcon focusable="false" aria-hidden="true" />
           </button>
-          <button className="preview-console__expand" onClick={expandConsole} aria-label="Open console" >
+          <button className="preview-console__expand" onClick={expandConsole} aria-label={t('Console.OpenARIA')} >
             <UpArrowIcon focusable="false" aria-hidden="true" />
           </button>
         </div>
@@ -140,5 +142,9 @@ const Console = () => {
   );
 };
 
+Console.propTypes = {
+  t: PropTypes.func.isRequired,
+};
 
-export default Console;
+
+export default withTranslation()(Console);
