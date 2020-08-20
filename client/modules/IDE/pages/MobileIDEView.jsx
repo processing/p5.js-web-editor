@@ -63,13 +63,13 @@ const NavItem = styled.li`
   position: relative;
 `;
 
-const getNavOptions = (username = undefined) =>
+const getNavOptions = (username = undefined, toggleForceDesktop = () => {}) =>
   (username
     ? [
       { icon: PreferencesIcon, title: 'Preferences', href: '/preferences', },
       { icon: PreferencesIcon, title: 'My Stuff', href: `/${username}/sketches` },
       { icon: PreferencesIcon, title: 'Examples', href: '/p5/sketches' },
-      { icon: PreferencesIcon, title: 'Original Editor', href: '/', },
+      { icon: PreferencesIcon, title: 'Original Editor', action: toggleForceDesktop, },
     ]
     : [
       { icon: PreferencesIcon, title: 'Preferences', href: '/preferences', },
@@ -84,7 +84,8 @@ const MobileIDEView = (props) => {
     selectedFile, updateFileContent, files, user, params,
     closeEditorOptions, showEditorOptions,
     startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console,
-    showRuntimeErrorWarning, hideRuntimeErrorWarning, startSketch, getProject, clearPersistedState, setUnsavedChanges
+    showRuntimeErrorWarning, hideRuntimeErrorWarning, startSketch, getProject, clearPersistedState, setUnsavedChanges,
+    toggleForceDesktop
   } = props;
 
   const [tmController, setTmController] = useState(null); // eslint-disable-line
@@ -110,7 +111,7 @@ const MobileIDEView = (props) => {
 
   // Screen Modals
   const [toggleNavDropdown, NavDropDown] = useAsModal(<Dropdown
-    items={getNavOptions(username)}
+    items={getNavOptions(username, toggleForceDesktop)}
     align="right"
   />);
 
@@ -287,6 +288,7 @@ MobileIDEView.propTypes = {
   showRuntimeErrorWarning: PropTypes.func.isRequired,
 
   hideRuntimeErrorWarning: PropTypes.func.isRequired,
+  toggleForceDesktop: PropTypes.func.isRequired,
 
   user: PropTypes.shape({
     authenticated: PropTypes.bool.isRequired,

@@ -27,9 +27,9 @@ const checkAuth = (store) => {
   store.dispatch(getUser());
 };
 
-const mobileFirst = (MobileComponent, Fallback) => props => (
+const mobileFirst = (MobileComponent, Fallback, store) => props => (
   <MediaQuery minDeviceWidth={770}>
-    {matches => (matches
+    {matches => ((matches && (!store || store.getState().editorAccessibility.forceDesktop))
       ? <Fallback {...props} />
       : <MobileComponent {...props} />)}
   </MediaQuery>);
