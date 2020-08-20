@@ -334,5 +334,9 @@
     "Checking": "Validating token, please wait...",
     "Verified": "All done, your email address has been verified.",
     "InvalidState": "Something went wrong."
-  }
+  },
+    "PreviewNav": {
+      "EditSketch": "Edit Sketch",
+      "ByUser": "by"
+}
 }

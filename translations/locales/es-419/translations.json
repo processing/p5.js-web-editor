@@ -315,5 +315,9 @@
     "Checking": "Validando token, por favor espera...",
     "Verified": "Concluido, tu correo electrónico ha sido verificado.",
     "InvalidState": "Algo salió mal."
+  },
+  "PreviewNav": {
+    "EditSketch": "Editar Bosquejo",
+    "ByUser": "por"
   }
 }
