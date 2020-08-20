@@ -3,6 +3,8 @@ import differenceInMilliseconds from 'date-fns/difference_in_milliseconds';
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { withTranslation } from 'react-i18next';
+import i18next from 'i18next';
 
 class Timer extends React.Component {
   constructor(props) {
@@ -23,17 +25,19 @@ class Timer extends React.Component {
   showSavedTime() {
     const now = new Date();
     if (Math.abs(differenceInMilliseconds(now, this.props.projectSavedTime) < 10000)) {
-      return 'Saved: just now';
+      return this.props.t('Timer.SavedJustNow');
     } else if (differenceInMilliseconds(now, this.props.projectSavedTime) < 20000) {
-      return 'Saved: 15 seconds ago';
+      return this.props.t('Timer.Saved15Seconds');
     } else if (differenceInMilliseconds(now, this.props.projectSavedTime) < 30000) {
-      return 'Saved: 25 seconds ago';
+      return this.props.t('Timer.Saved25Seconds');
     } else if (differenceInMilliseconds(now, this.props.projectSavedTime) < 46000) {
-      return 'Saved: 35 seconds ago';
+      return this.props.t('Timer.Saved35Seconds');
     }
-    return `Saved: ${distanceInWordsToNow(this.props.projectSavedTime, {
+
+    const timeAgo = distanceInWordsToNow(this.props.projectSavedTime, {
       includeSeconds: true
-    })} ago`;
+    });
+    return this.props.t('Timer.SavedAgo', { timeAgo });
   }
 
   render() {
@@ -51,11 +55,12 @@ class Timer extends React.Component {
 
 Timer.propTypes = {
   projectSavedTime: PropTypes.string.isRequired,
-  isUserOwner: PropTypes.bool
+  isUserOwner: PropTypes.bool,
+  t: PropTypes.func.isRequired
 };
 
 Timer.defaultProps = {
   isUserOwner: false
 };
 
-export default Timer;
+export default withTranslation()(Timer);

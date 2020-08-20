@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { withTranslation } from 'react-i18next';
 
 class EditorAccessibility extends React.Component {
   componentDidMount() {
@@ -17,14 +18,14 @@ class EditorAccessibility extends React.Component {
           </li>));
       });
     } else {
-      messages.push(<li key={0}> There are no lint messages </li>);
+      messages.push(<li key={0}>{this.props.t('EditorAccessibility.NoLintMessages')}</li>);
     }
     return (
       <div className="editor-accessibility">
         <ul className="editor-lintmessages" title="lint messages">
           {messages}
         </ul>
-        <p> Current line
+        <p> {this.props.t('EditorAccessibility.CurrentLine')}
           <span className="editor-linenumber" aria-live="polite" aria-atomic="true" id="current-line"> </span>
         </p>
       </div>
@@ -39,6 +40,7 @@ EditorAccessibility.propTypes = {
     message: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired
   })).isRequired,
+  t: PropTypes.func.isRequired
 };
 
-export default EditorAccessibility;
+export default withTranslation()(EditorAccessibility);
