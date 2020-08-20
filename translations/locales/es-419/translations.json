@@ -181,11 +181,17 @@
   },
   "Common": {
     "Error": "Error",
+    "ErrorARIA": "Error",
     "Save": "Guardar",
     "p5logoARIA": "Logo p5.js "
   },
   "IDEView": {
-    "SubmitFeedback": "Enviar retroalimentación"
+    "SubmitFeedback": "Enviar retroalimentación",
+    "SubmitFeedbackARIA": "Enviar retroalimentación",
+    "AddCollectionTitle": "Agregar a colección",
+    "AddCollectionARIA":"Agregar a colección",
+    "ShareTitle": "Compartir",
+    "ShareARIA":"compartir"
   },
   "NewFileModal": {
     "Title": "Crear Archivo",
