@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import CodeMirror from 'codemirror';
 import beautifyJS from 'js-beautify';
+import { withTranslation } from 'react-i18next';
 import 'codemirror/mode/css/css';
 import 'codemirror/addon/selection/active-line';
 import 'codemirror/addon/lint/lint';
@@ -317,14 +318,14 @@ class Editor extends React.Component {
       <section className={editorSectionClass} >
         <header className="editor__header">
           <button
-            aria-label="Open Sketch files navigation"
+            aria-label={this.props.t('Editor.OpenSketchARIA')}
             className="sidebar__contract"
             onClick={this.props.collapseSidebar}
           >
             <LeftArrowIcon focusable="false" aria-hidden="true" />
           </button>
           <button
-            aria-label="Close sketch files navigation"
+            aria-label={this.props.t('Editor.CloseSketchARIA')}
             className="sidebar__expand"
             onClick={this.props.expandSidebar}
           >
@@ -335,7 +336,7 @@ class Editor extends React.Component {
               {this.props.file.name}
               <span className="editor__unsaved-changes">
                 {this.props.unsavedChanges ?
-                  <UnsavedChangesDotIcon role="img" aria-label="Sketch has unsaved changes" focusable="false" /> :
+                  <UnsavedChangesDotIcon role="img" aria-label={this.props.t('Editor.UnsavedChangesARIA')} focusable="false" /> :
                   null}
               </span>
             </span>
@@ -403,7 +404,8 @@ Editor.propTypes = {
   showRuntimeErrorWarning: PropTypes.func.isRequired,
   hideRuntimeErrorWarning: PropTypes.func.isRequired,
   runtimeErrorWarningVisible: PropTypes.bool.isRequired,
-  provideController: PropTypes.func.isRequired
+  provideController: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired
 };
 
 Editor.defaultProps = {
@@ -411,4 +413,4 @@ Editor.defaultProps = {
   consoleEvents: [],
 };
 
-export default Editor;
+export default withTranslation()(Editor);

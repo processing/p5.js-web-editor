@@ -334,5 +334,10 @@
     "Checking": "Validating token, please wait...",
     "Verified": "All done, your email address has been verified.",
     "InvalidState": "Something went wrong."
+  },
+  "Editor": {
+    "OpenSketchARIA": "Open Sketch files navigation",
+    "CloseSketchARIA": "Close Sketch files navigation",
+    "UnsavedChangesARIA": "Sketch has unsaved changes"
   }
 }

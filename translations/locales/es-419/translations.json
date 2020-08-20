@@ -315,5 +315,10 @@
     "Checking": "Validando token, por favor espera...",
     "Verified": "Concluido, tu correo electrónico ha sido verificado.",
     "InvalidState": "Algo salió mal."
+  },
+  "Editor": {
+    "OpenSketchARIA": "Abrir navegación de archivos de bosquejo",
+    "CloseSketchARIA": "Cerrar navegación de archivos de bosquejo",
+    "UnsavedChangesARIA": "El bosquejo tiene cambios sin guardar"
   }
 }
