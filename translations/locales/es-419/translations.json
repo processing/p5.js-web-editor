@@ -334,5 +334,10 @@
     "ViaGoogleHeader": "Vía Google Form",
     "ViaGoogleDescription": "También puedes enviar tu retroalimetnación usando esta vía rapida.",
     "GoToForm": "Ir a Forma"
+  },
+  "Searchbar": {
+    "SearchSketch": "Buscar en bosquejos...",
+    "SearchCollection": "Buscar en colecciones...",
+    "ClearTerm": "limpiar"
   }
 }

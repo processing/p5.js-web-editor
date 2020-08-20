@@ -354,5 +354,10 @@
     "ViaGoogleHeader": "Via Google Form",
     "ViaGoogleDescription": "You can also submit this quick form.",
     "GoToForm": "Go to Form"
+  },
+  "Searchbar": {
+    "SearchSketch": "Search sketches...",
+    "SearchCollection": "Search collections...",
+    "ClearTerm": "clear"
   }
 }
