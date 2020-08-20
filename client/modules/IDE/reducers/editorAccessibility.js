@@ -7,6 +7,7 @@ const initialState = {
 let messageId = 0;
 
 const editorAccessibility = (state = initialState, action) => {
+  console.log('accessbility');
   switch (action.type) {
     case ActionTypes.UPDATE_LINT_MESSAGE:
       messageId += 1;
@@ -18,7 +19,7 @@ const editorAccessibility = (state = initialState, action) => {
     case ActionTypes.CLEAR_LINT_MESSAGE:
       return Object.assign({}, state, { lintMessages: [] });
     case ActionTypes.TOGGLE_FORCE_DESKTOP:
-      return { ...state, forceDesktop: !state.forceDesktop };
+      return Object.assign({}, state, { forceDesktop: !(state.forceDesktop) });
     default:
       return state;
   }

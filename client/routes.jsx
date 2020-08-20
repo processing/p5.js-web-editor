@@ -44,7 +44,7 @@ const onRouteChange = (store) => {
 
 const routes = store => (
   <Route path="/" component={App} onChange={() => { onRouteChange(store); }}>
-    <IndexRoute onEnter={checkAuth(store)} component={mobileFirst(MobileIDEView, IDEView)} />
+    <IndexRoute onEnter={checkAuth(store)} component={mobileFirst(MobileIDEView, IDEView, store)} />
 
     <Route path="/login" component={userIsNotAuthenticated(LoginView)} />
     <Route path="/signup" component={userIsNotAuthenticated(SignupView)} />
