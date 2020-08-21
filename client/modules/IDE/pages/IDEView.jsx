@@ -34,6 +34,7 @@ import About from '../components/About';
 import AddToCollectionList from '../components/AddToCollectionList';
 import Feedback from '../components/Feedback';
 import { CollectionSearchbar } from '../components/Searchbar';
+import MessageHandler from '../components/MessageHandler';
 
 
 function getTitle(props) {
@@ -83,6 +84,8 @@ class IDEView extends React.Component {
       consoleSize: props.ide.consoleIsExpanded ? 150 : 29,
       sidebarSize: props.ide.sidebarIsExpanded ? 160 : 20,
     };
+
+    this.previewFrame = React.createRef();
   }
 
   componentDidMount() {
@@ -259,6 +262,7 @@ class IDEView extends React.Component {
         <Helmet>
           <title>{getTitle(this.props)}</title>
         </Helmet>
+        <MessageHandler />
         {this.props.toast.isVisible && <Toast />}
         <Nav
           warnIfUnsavedChanges={this.handleUnsavedChanges}
@@ -383,7 +387,9 @@ class IDEView extends React.Component {
                     this.cmController = ctl;
                   }}
                 />
-                <Console />
+                <Console
+                  previewFrame={this.previewFrame.current}
+                />
               </SplitPane>
               <section className="preview-frame-holder">
                 <header className="preview-frame__header">
@@ -428,6 +434,7 @@ class IDEView extends React.Component {
                     clearConsole={this.props.clearConsole}
                     cmController={this.cmController}
                     language={this.props.preferences.language}
+                    ref={this.previewFrame}
                   />
                 </div>
               </section>
