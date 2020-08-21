@@ -349,9 +349,9 @@
     "ViaGithubHeader": "Vía Github Issues",
     "ViaGithubDescription": " Si estas familiarizado con Github, este es nuestro método favorito para recibir reporte de errores y retroalimentación.",
     "GoToGithub": "Ir a Github",
-    "ViaGoogleHeader": "Vía Google Form",
+    "ViaGoogleHeader": "Vía Formulario de Google",
     "ViaGoogleDescription": "También puedes enviar tu retroalimetnación usando esta vía rapida.",
-    "GoToForm": "Ir a Forma"
+    "GoToForm": "Ir a Formulario"
   },
   "Searchbar": {
     "SearchSketch": "Buscar en bosquejos...",
