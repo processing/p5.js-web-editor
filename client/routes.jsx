@@ -22,17 +22,30 @@ import MobileDashboardView from './modules/Mobile/MobileDashboardView';
 import { getUser } from './modules/User/actions';
 import { stopSketch } from './modules/IDE/actions/ide';
 import { userIsAuthenticated, userIsNotAuthenticated, userIsAuthorized } from './utils/auth';
+import ResponsiveForm from './modules/User/components/ResponsiveForm';
 
 const checkAuth = (store) => {
   store.dispatch(getUser());
 };
 
-const mobileFirst = (MobileComponent, Fallback, store) => props => (
+const mobileEnabled = () => (window.process.env.MOBILE_ENABLED === true);
+
+/** createMobileFirst: Receives the store, and creates a function that chooses between two components,
+ * aimed at mobile and desktop resolutions, respectively.
+ * The created function returns a Component (props => jsx)
+ */
+const createMobileFirst = store => (MobileComponent, Fallback) => props => (
   <MediaQuery minDeviceWidth={770}>
-    {matches => ((matches && (!store || store.getState().editorAccessibility.forceDesktop))
+    {matches => ((matches || (store && store.getState().editorAccessibility.forceDesktop) || (!mobileEnabled()))
       ? <Fallback {...props} />
       : <MobileComponent {...props} />)}
   </MediaQuery>);
+
+const responsiveForm = DesktopComponent => props => (
+  <ResponsiveForm>
+    <DesktopComponent {...props} />
+  </ResponsiveForm>
+);
 
 // TODO: This short-circuit seems unnecessary - using the mobile <Switch /> navigator (future) should prevent this from being called
 const onRouteChange = (store) => {
@@ -42,41 +55,45 @@ const onRouteChange = (store) => {
   store.dispatch(stopSketch());
 };
 
-const routes = store => (
-  <Route path="/" component={App} onChange={() => { onRouteChange(store); }}>
-    <IndexRoute onEnter={checkAuth(store)} component={mobileFirst(MobileIDEView, IDEView, store)} />
+const routes = (store) => {
+  const mobileFirst = createMobileFirst(store);
 
-    <Route path="/login" component={userIsNotAuthenticated(LoginView)} />
-    <Route path="/signup" component={userIsNotAuthenticated(SignupView)} />
-    <Route path="/reset-password" component={userIsNotAuthenticated(ResetPasswordView)} />
-    <Route path="/verify" component={EmailVerificationView} />
-    <Route
-      path="/reset-password/:reset_password_token"
-      component={NewPasswordView}
-    />
-    <Route path="/projects/:project_id" component={IDEView} />
-    <Route path="/:username/full/:project_id" component={FullView} />
-    <Route path="/full/:project_id" component={FullView} />
+  return (
+    <Route path="/" component={App} onChange={() => { onRouteChange(store); }}>
+      <IndexRoute onEnter={checkAuth(store)} component={mobileFirst(MobileIDEView, IDEView)} />
 
-    <Route path="/:username/assets" component={userIsAuthenticated(userIsAuthorized(mobileFirst(MobileDashboardView, DashboardView)))} />
-    <Route path="/:username/sketches" component={mobileFirst(MobileDashboardView, DashboardView)} />
-    <Route path="/:username/sketches/:project_id" component={mobileFirst(MobileIDEView, IDEView)} />
-    <Route path="/:username/sketches/:project_id/add-to-collection" component={mobileFirst(MobileIDEView, IDEView)} />
-    <Route path="/:username/collections" component={mobileFirst(MobileDashboardView, DashboardView)} />
+      <Route path="/login" component={userIsNotAuthenticated(mobileFirst(responsiveForm(LoginView), LoginView))} />
+      <Route path="/signup" component={userIsNotAuthenticated(mobileFirst(responsiveForm(SignupView), SignupView))} />
+      <Route path="/reset-password" component={userIsNotAuthenticated(ResetPasswordView)} />
+      <Route path="/verify" component={EmailVerificationView} />
+      <Route
+        path="/reset-password/:reset_password_token"
+        component={NewPasswordView}
+      />
+      <Route path="/projects/:project_id" component={IDEView} />
+      <Route path="/:username/full/:project_id" component={FullView} />
+      <Route path="/full/:project_id" component={FullView} />
 
-    <Route path="/:username/collections/create" component={DashboardView} />
-    <Route path="/:username/collections/:collection_id" component={CollectionView} />
+      <Route path="/:username/assets" component={userIsAuthenticated(userIsAuthorized(mobileFirst(MobileDashboardView, DashboardView)))} />
+      <Route path="/:username/sketches" component={mobileFirst(MobileDashboardView, DashboardView)} />
+      <Route path="/:username/sketches/:project_id" component={mobileFirst(MobileIDEView, IDEView)} />
+      <Route path="/:username/sketches/:project_id/add-to-collection" component={mobileFirst(MobileIDEView, IDEView)} />
+      <Route path="/:username/collections" component={mobileFirst(MobileDashboardView, DashboardView)} />
 
-    <Route path="/sketches" component={createRedirectWithUsername('/:username/sketches')} />
-    <Route path="/assets" component={createRedirectWithUsername('/:username/assets')} />
-    <Route path="/account" component={userIsAuthenticated(AccountView)} />
-    <Route path="/about" component={IDEView} />
+      <Route path="/:username/collections/create" component={DashboardView} />
+      <Route path="/:username/collections/:collection_id" component={CollectionView} />
 
-    {/* Mobile-only Routes */}
-    <Route path="/preview" component={MobileSketchView} />
-    <Route path="/preferences" component={MobilePreferences} />
+      <Route path="/sketches" component={createRedirectWithUsername('/:username/sketches')} />
+      <Route path="/assets" component={createRedirectWithUsername('/:username/assets')} />
+      <Route path="/account" component={userIsAuthenticated(AccountView)} />
+      <Route path="/about" component={IDEView} />
 
-  </Route>
-);
+      {/* Mobile-only Routes */}
+      <Route path="/preview" component={MobileSketchView} />
+      <Route path="/preferences" component={MobilePreferences} />
+
+    </Route>
+  );
+};
 
 export default routes;

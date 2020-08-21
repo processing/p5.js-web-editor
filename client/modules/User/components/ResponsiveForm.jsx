@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { remSize } from '../../../theme';
 
 
-const ResponsiveFormWrapper = styled.div`
+const ResponsiveForm = styled.div`
   .form-container__content {
     width: unset !important;
     padding-top: ${remSize(16)};
@@ -41,24 +41,5 @@ const ResponsiveFormWrapper = styled.div`
     a { padding: 0px }
   }
 `;
-
-const ResponsiveForm = props =>
-  (props.mobile === true
-    ? (
-      <ResponsiveFormWrapper>
-        {props.children}
-      </ResponsiveFormWrapper>
-
-    )
-    : props.children);
-
-ResponsiveForm.propTypes = {
-  mobile: PropTypes.bool,
-  children: PropTypes.oneOfType([PropTypes.node, PropTypes.array]),
-};
-ResponsiveForm.defaultProps = {
-  mobile: false,
-  children: []
-};
 
 export default ResponsiveForm;
