@@ -174,15 +174,33 @@
     }
   },
   "Sidebar": {
-    "Create": "Crear",
-    "EnterName": "Introduce un nombre",
-    "Add": "Agregar",
-    "Folder": "Directorio"
+    "Title": "Archivos de Bosquejo",
+    "ToggleARIA": "Alternar abrir/cerrar opciones de archivo de bosquejo",
+    "AddFolder": "Crear directorio",
+    "AddFolderARIA": "Agregar directorio",
+    "AddFile": "Crear archivo",
+    "AddFileARIA": "agregar archivo",
+    "UploadFile": "Subir archivo",
+    "UploadFileARIA": "Subir archivo"
+  },
+  "FileNode": {
+    "OpenFolderARIA": "Abrir contenidos del directorio",
+    "CloseFolderARIA": "Cerrar contenidos del directorio",
+    "ToggleFileOptionsARIA": "Alternar abrir/cerrar opciones de archivo",
+    "AddFolder": "Crear directorio",
+    "AddFolderARIA": "Agregar directorio",
+    "AddFile": "Crear archivo",
+    "AddFileARIA": "agregar archivo",
+    "UploadFile": "Subir archivo",
+    "UploadFileARIA": "Subir archivo",
+    "Rename": "Renombrar",
+    "Delete": "Borrar"
   },
   "Common": {
     "Error": "Error",
     "Save": "Guardar",
-    "p5logoARIA": "Logo p5.js "
+    "p5logoARIA": "Logo p5.js ",
+    "DeleteConfirmation": "¿Estás que quieres borrar {{name}}?"
   },
   "IDEView": {
     "SubmitFeedback": "Enviar retroalimentación"
@@ -315,5 +333,28 @@
     "Checking": "Validando token, por favor espera...",
     "Verified": "Concluido, tu correo electrónico ha sido verificado.",
     "InvalidState": "Algo salió mal."
+  },
+  "UploadFileModal": {
+    "Title": "Subir Archivo",
+    "CloseButtonARIA": "Cerrar diálogo para subir archivo",
+    "SizeLimitError": "Error: No puedes subir archivos. Has alcanzado el limite de tamaño total de {{sizeLimit}}.\n         Si quieres agregar más,por favor remueve alugnos que no estes usando en tus "
+  },
+  "FileUploader": {
+    "DictDefaultMessage": "Deposita los archivos aquí o haz click para usar el navegador de archivos"
+  },
+  "ErrorModal": {
+    "MessageLogin": "Para poder guardar bosquejos, debes ingresar a tu cuenta. Por favor ",
+    "Login": "Ingresa",
+    "LoginOr": " o ",
+    "SignUp": "Registráte",
+    "MessageLoggedOut": "Parece que has salido de tu cuenta. Por favor ",
+    "LogIn": "ingresa",
+    "SavedDifferentWindow": " El proyecto que has intentado guardar ha sido guardado desde otra ventana.\n  Por favor refresca la página para ver la versión más actual."
+  },
+  "ShareModal": {
+    "Embed": "Incrustar",
+    "Present": "Presentar",
+    "Fullscreen": "Pantalla Completa",
+    "Edit": "Editar"
   }
 }
