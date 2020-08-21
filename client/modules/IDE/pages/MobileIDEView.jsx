@@ -132,6 +132,7 @@ const MobileIDEView = (props) => {
         subtitle={selectedFile.name}
       >
         <NavItem>
+
           <IconButton
             onClick={toggleNavDropdown}
             icon={MoreIcon}
