@@ -234,7 +234,7 @@
   "ResetPasswordView": {
     "Title": "Editor Web p5.js | Regenerar Contraseña",
     "Reset": "Regenerar Contraseña",
-    "Submitted": "Tu cooreo Your password reset email should arrive shortly. If you don't see it, check\n            in your spam folder as sometimes it can end up there.",
+    "Submitted": "Tu correo para regenerar la contraseña debe llegar pronto. Si no lo ves, revisa\n tu carpeta de spam puesto que algunas veces puede terminar ahí.",
     "Login": "Ingresa",
     "LoginOr": "o",
     "SignUp": "Registráte"
@@ -333,6 +333,29 @@
     "Checking": "Validando token, por favor espera...",
     "Verified": "Concluido, tu correo electrónico ha sido verificado.",
     "InvalidState": "Algo salió mal."
+  },
+  "UploadFileModal": {
+    "Title": "Subir Archivo",
+    "CloseButtonARIA": "Cerrar diálogo para subir archivo",
+    "SizeLimitError": "Error: No puedes subir archivos. Has alcanzado el limite de tamaño total de {{sizeLimit}}.\n         Si quieres agregar más,por favor remueve alugnos que no estes usando en tus "
+  },
+  "FileUploader": {
+    "DictDefaultMessage": "Deposita los archivos aquí o haz click para usar el navegador de archivos"
+  },
+  "ErrorModal": {
+    "MessageLogin": "Para poder guardar bosquejos, debes ingresar a tu cuenta. Por favor ",
+    "Login": "Ingresa",
+    "LoginOr": " o ",
+    "SignUp": "Registráte",
+    "MessageLoggedOut": "Parece que has salido de tu cuenta. Por favor ",
+    "LogIn": "ingresa",
+    "SavedDifferentWindow": " El proyecto que has intentado guardar ha sido guardado desde otra ventana.\n  Por favor refresca la página para ver la versión más actual."
+  },
+  "ShareModal": {
+    "Embed": "Incrustar",
+    "Present": "Presentar",
+    "Fullscreen": "Pantalla Completa",
+    "Edit": "Editar"
   },
   "CollectionView": {
     "TitleCreate": "Crear colección",
