@@ -391,5 +391,9 @@
   },
   "EditableInput": {
     "EditValue":"Editar valor de {{display}}"
+  },
+  "PreviewNav": {
+    "EditSketch": "Editar Bosquejo",
+    "ByUser": "por"
   }
 }
