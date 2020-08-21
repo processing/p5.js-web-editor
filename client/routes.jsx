@@ -1,7 +1,5 @@
 import { Route, IndexRoute } from 'react-router';
 import React from 'react';
-import PropTypes from 'prop-types';
-import MediaQuery from 'react-responsive';
 
 import App from './modules/App/App';
 import IDEView from './modules/IDE/pages/IDEView';
@@ -22,30 +20,11 @@ import MobileDashboardView from './modules/Mobile/MobileDashboardView';
 import { getUser } from './modules/User/actions';
 import { stopSketch } from './modules/IDE/actions/ide';
 import { userIsAuthenticated, userIsNotAuthenticated, userIsAuthorized } from './utils/auth';
-import ResponsiveForm from './modules/User/components/ResponsiveForm';
+import { createMobileFirst, responsiveForm } from './utils/responsive';
 
 const checkAuth = (store) => {
   store.dispatch(getUser());
 };
-
-const mobileEnabled = () => (window.process.env.MOBILE_ENABLED === true);
-
-/** createMobileFirst: Receives the store, and creates a function that chooses between two components,
- * aimed at mobile and desktop resolutions, respectively.
- * The created function returns a Component (props => jsx)
- */
-const createMobileFirst = store => (MobileComponent, Fallback) => props => (
-  <MediaQuery minDeviceWidth={770}>
-    {matches => ((matches || (store && store.getState().editorAccessibility.forceDesktop) || (!mobileEnabled()))
-      ? <Fallback {...props} />
-      : <MobileComponent {...props} />)}
-  </MediaQuery>);
-
-const responsiveForm = DesktopComponent => props => (
-  <ResponsiveForm>
-    <DesktopComponent {...props} />
-  </ResponsiveForm>
-);
 
 // TODO: This short-circuit seems unnecessary - using the mobile <Switch /> navigator (future) should prevent this from being called
 const onRouteChange = (store) => {
