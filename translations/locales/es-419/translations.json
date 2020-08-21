@@ -380,5 +380,16 @@
     "Present": "Presentar",
     "Fullscreen": "Pantalla Completa",
     "Edit": "Editar"
+  },
+  "AddRemoveButton": {
+    "altAdd" : "Add to collection",
+    "altRemove": "Remove from collection"
+  },
+  "CopyableInput": {
+    "CopiedARIA": "¡Copiado en el portapapeles!",
+    "OpenViewTabARIA": "Abrir la vista {{label}} en nueva pestaña"
+  },
+  "EditableInput": {
+    "EditValue":"Editar valor de {{display}}"
   }
 }

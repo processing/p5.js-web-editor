@@ -380,5 +380,12 @@
     "Present": "Present",
     "Fullscreen": "Fullscreen",
     "Edit": "Edit"
+  },
+  "CopyableInput": {
+    "CopiedARIA": "Copied to Clipboard!",
+    "OpenViewTabARIA": "Open {{label}} view in new tab"
+  },
+  "EditableInput": {
+    "EditValue":"Edit {{displayValue}} value"
   }
 }
