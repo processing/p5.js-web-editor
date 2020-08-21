@@ -381,16 +381,19 @@
     "Fullscreen": "Fullscreen",
     "Edit": "Edit"
   },
+  "AddRemoveButton": {
+    "altAdd": "Add to collection",
+    "altRemove": "Remove from collection"
+  },
   "CopyableInput": {
     "CopiedARIA": "Copied to Clipboard!",
     "OpenViewTabARIA": "Open {{label}} view in new tab"
   },
   "EditableInput": {
-    "EditValue":"Edit {{displayValue}} value"
-  }
-  ,
+    "EditValue": "Edit {{displayValue}} value"
+  },
   "PreviewNav": {
-      "EditSketch": "Edit Sketch",
-      "ByUser": "by"
-}
+    "EditSketch": "Edit Sketch",
+    "ByUser": "by"
+  }
 }

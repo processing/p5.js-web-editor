@@ -382,15 +382,15 @@
     "Edit": "Editar"
   },
   "AddRemoveButton": {
-    "altAdd" : "Add to collection",
-    "altRemove": "Remove from collection"
+    "altAdd": "Agregar a colección",
+    "altRemove": "Remover de colección"
   },
   "CopyableInput": {
     "CopiedARIA": "¡Copiado en el portapapeles!",
     "OpenViewTabARIA": "Abrir la vista {{label}} en nueva pestaña"
   },
   "EditableInput": {
-    "EditValue":"Editar valor de {{display}}"
+    "EditValue": "Editar valor de {{display}}"
   },
   "PreviewNav": {
     "EditSketch": "Editar Bosquejo",
