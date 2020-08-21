@@ -4,7 +4,6 @@ import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import i18next from 'i18next';
 
 class Timer extends React.Component {
   constructor(props) {
