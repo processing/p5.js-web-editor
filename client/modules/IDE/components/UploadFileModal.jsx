@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { withTranslation } from 'react-i18next';
 import prettyBytes from 'pretty-bytes';
 import getConfig from '../../../utils/getConfig';
 import FileUploader from './FileUploader';
@@ -14,7 +15,8 @@ const limitText = prettyBytes(limit);
 class UploadFileModal extends React.Component {
   propTypes = {
     reachedTotalSizeLimit: PropTypes.bool.isRequired,
-    closeModal: PropTypes.func.isRequired
+    closeModal: PropTypes.func.isRequired,
+    t: PropTypes.func.isRequired
   }
 
   componentDidMount() {
@@ -31,22 +33,18 @@ class UploadFileModal extends React.Component {
       <section className="modal" ref={(element) => { this.modal = element; }}>
         <div className="modal-content">
           <div className="modal__header">
-            <h2 className="modal__title">Upload File</h2>
+            <h2 className="modal__title">{this.props.t('UploadFileModal.Title')}</h2>
             <button
               className="modal__exit-button"
               onClick={this.props.closeModal}
-              aria-label="Close upload file modal"
+              aria-label={this.props.t('UploadFileModal.CloseButtonARIA')}
             >
               <ExitIcon focusable="false" aria-hidden="true" />
             </button>
           </div>
           { this.props.reachedTotalSizeLimit &&
             <p>
-              {
-                `Error: You cannot upload any more files. You have reached the total size limit of ${limitText}.
-                If you would like to upload more, please remove the ones you aren't using anymore by
-                in your `
-              }
+              {this.props.t('UploadFileModal.SizeLimitError', { sizeLimit: limitText })}
               <Link to="/assets" onClick={this.props.closeModal}>assets</Link>
               .
             </p>
@@ -68,4 +66,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(UploadFileModal);
+export default withTranslation()(connect(mapStateToProps)(UploadFileModal));

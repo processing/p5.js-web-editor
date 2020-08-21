@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -20,23 +20,40 @@ import { getHTMLFile } from '../reducers/files';
 
 // Local Imports
 import Editor from '../components/Editor';
-import { PlayIcon, ExitIcon, MoreIcon } from '../../../common/icons';
+import { PlayIcon, MoreIcon, CircleFolderIcon } from '../../../common/icons';
 
 import IconButton from '../../../components/mobile/IconButton';
 import Header from '../../../components/mobile/Header';
 import Screen from '../../../components/mobile/MobileScreen';
 import Footer from '../../../components/mobile/Footer';
 import IDEWrapper from '../../../components/mobile/IDEWrapper';
+import MobileExplorer from '../../../components/mobile/Explorer';
 import Console from '../components/Console';
 import { remSize } from '../../../theme';
-// import OverlayManager from '../../../components/OverlayManager';
+
 import ActionStrip from '../../../components/mobile/ActionStrip';
 import useAsModal from '../../../components/useAsModal';
 import { PreferencesIcon } from '../../../common/icons';
 import Dropdown from '../../../components/Dropdown';
 
-const isUserOwner = ({ project, user }) => (project.owner && project.owner.id === user.id);
+const getRootFile = files => files && files.filter(file => file.name === 'root')[0];
+const getRootFileID = files => (root => root && root.id)(getRootFile(files));
 
+const isUserOwner = ({ project, user }) =>
+  project.owner && project.owner.id === user.id;
+
+
+// const userCanEditProject = (props) => {
+//   let canEdit;
+//   if (!props.owner) {
+//     canEdit = true;
+//   } else if (props.user.authenticated && props.owner.id === props.user.id) {
+//     canEdit = true;
+//   } else {
+//     canEdit = false;
+//   }
+//   return canEdit;
+// };
 
 const Expander = styled.div`
   height: ${props => (props.expanded ? remSize(160) : remSize(27))};
@@ -46,39 +63,74 @@ const NavItem = styled.li`
   position: relative;
 `;
 
-const headerNavOptions = [
-  { icon: PreferencesIcon, title: 'Preferences', href: '/mobile/preferences', },
-  { icon: PreferencesIcon, title: 'Examples', href: '/mobile/examples' },
-  { icon: PreferencesIcon, title: 'Original Editor', href: '/', },
-];
-
+const getNavOptions = (username = undefined) =>
+  (username
+    ? [
+      { icon: PreferencesIcon, title: 'Preferences', href: '/mobile/preferences', },
+      { icon: PreferencesIcon, title: 'My Stuff', href: `/mobile/${username}/sketches` },
+      { icon: PreferencesIcon, title: 'Examples', href: '/mobile/p5/sketches' },
+      { icon: PreferencesIcon, title: 'Original Editor', href: '/', },
+    ]
+    : [
+      { icon: PreferencesIcon, title: 'Preferences', href: '/mobile/preferences', },
+      { icon: PreferencesIcon, title: 'Examples', href: '/mobile/p5/sketches' },
+      { icon: PreferencesIcon, title: 'Original Editor', href: '/', },
+    ]
+  );
 
 const MobileIDEView = (props) => {
   const {
     preferences, ide, editorAccessibility, project, updateLintMessage, clearLintMessage,
-    selectedFile, updateFileContent, files,
+    selectedFile, updateFileContent, files, user, params,
     closeEditorOptions, showEditorOptions,
     startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console,
-    showRuntimeErrorWarning, hideRuntimeErrorWarning, startSketch
+    showRuntimeErrorWarning, hideRuntimeErrorWarning, startSketch, getProject, clearPersistedState, setUnsavedChanges
   } = props;
 
   const [tmController, setTmController] = useState(null); // eslint-disable-line
 
+  const { username } = user;
 
-  const [triggerNavDropdown, NavDropDown] = useAsModal(<Dropdown align="right" items={headerNavOptions} />);
+
+  // Force state reset
+  useEffect(clearPersistedState, []);
+  useEffect(stopSketch, []);
+
+  // Load Project
+  const [currentProjectID, setCurrentProjectID] = useState(null);
+  useEffect(() => {
+    if (!username) return;
+    if (params.project_id && !currentProjectID) {
+      if (params.project_id !== project.id) {
+        getProject(params.project_id, params.username);
+      }
+    }
+    setCurrentProjectID(params.project_id);
+  }, [params, project, username]);
+
+  // Screen Modals
+  const [toggleNavDropdown, NavDropDown] = useAsModal(<Dropdown
+    items={getNavOptions(username)}
+    align="right"
+  />);
+
+  const [toggleExplorer, Explorer] = useAsModal(toggle =>
+    (<MobileExplorer
+      id={getRootFileID(files)}
+      canEdit={false}
+      onPressClose={toggle}
+    />), true);
 
   return (
     <Screen fullscreen>
+      <Explorer />
       <Header
         title={project.name}
         subtitle={selectedFile.name}
-        leftButton={
-          <IconButton to="/mobile" icon={ExitIcon} aria-label="Return to original editor" />
-        }
       >
         <NavItem>
           <IconButton
-            onClick={triggerNavDropdown}
+            onClick={toggleNavDropdown}
             icon={MoreIcon}
             aria-label="Options"
           />
@@ -121,19 +173,23 @@ const MobileIDEView = (props) => {
           hideRuntimeErrorWarning={hideRuntimeErrorWarning}
           runtimeErrorWarningVisible={ide.runtimeErrorWarningVisible}
           provideController={setTmController}
+          setUnsavedChanges={setUnsavedChanges}
         />
       </IDEWrapper>
 
       <Footer>
-        {ide.consoleIsExpanded && <Expander expanded><Console /></Expander>}
-        <ActionStrip />
+        {ide.consoleIsExpanded && (
+          <Expander expanded>
+            <Console />
+          </Expander>
+        )}
+        <ActionStrip toggleExplorer={toggleExplorer} />
       </Footer>
     </Screen>
   );
 };
 
 MobileIDEView.propTypes = {
-
   preferences: PropTypes.shape({
     fontSize: PropTypes.number.isRequired,
     autosave: PropTypes.bool.isRequired,
@@ -144,13 +200,13 @@ MobileIDEView.propTypes = {
     gridOutput: PropTypes.bool.isRequired,
     soundOutput: PropTypes.bool.isRequired,
     theme: PropTypes.string.isRequired,
-    autorefresh: PropTypes.bool.isRequired
+    autorefresh: PropTypes.bool.isRequired,
   }).isRequired,
 
   ide: PropTypes.shape({
     isPlaying: PropTypes.bool.isRequired,
     isAccessibleOutputPlaying: PropTypes.bool.isRequired,
-    consoleEvent: PropTypes.arrayOf(PropTypes.shape({})),
+    consoleEvent: PropTypes.array,
     modalIsVisible: PropTypes.bool.isRequired,
     sidebarIsExpanded: PropTypes.bool.isRequired,
     consoleIsExpanded: PropTypes.bool.isRequired,
@@ -172,11 +228,11 @@ MobileIDEView.propTypes = {
     justOpenedProject: PropTypes.bool.isRequired,
     errorType: PropTypes.string,
     runtimeErrorWarningVisible: PropTypes.bool.isRequired,
-    uploadFileModalVisible: PropTypes.bool.isRequired
+    uploadFileModalVisible: PropTypes.bool.isRequired,
   }).isRequired,
 
   editorAccessibility: PropTypes.shape({
-    lintMessages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    lintMessages: PropTypes.array.isRequired,
   }).isRequired,
 
   project: PropTypes.shape({
@@ -184,9 +240,9 @@ MobileIDEView.propTypes = {
     name: PropTypes.string.isRequired,
     owner: PropTypes.shape({
       username: PropTypes.string,
-      id: PropTypes.string
+      id: PropTypes.string,
     }),
-    updatedAt: PropTypes.string
+    updatedAt: PropTypes.string,
   }).isRequired,
 
   startSketch: PropTypes.func.isRequired,
@@ -198,7 +254,7 @@ MobileIDEView.propTypes = {
   selectedFile: PropTypes.shape({
     id: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
   }).isRequired,
 
   updateFileContent: PropTypes.func.isRequired,
@@ -206,7 +262,7 @@ MobileIDEView.propTypes = {
   files: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired
+    content: PropTypes.string.isRequired,
   })).isRequired,
 
   closeEditorOptions: PropTypes.func.isRequired,
@@ -225,7 +281,7 @@ MobileIDEView.propTypes = {
 
   console: PropTypes.arrayOf(PropTypes.shape({
     method: PropTypes.string.isRequired,
-    args: PropTypes.arrayOf(PropTypes.string)
+    args: PropTypes.arrayOf(PropTypes.string),
   })).isRequired,
 
   showRuntimeErrorWarning: PropTypes.func.isRequired,
@@ -235,15 +291,23 @@ MobileIDEView.propTypes = {
   user: PropTypes.shape({
     authenticated: PropTypes.bool.isRequired,
     id: PropTypes.string,
+    username: PropTypes.string,
+  }).isRequired,
+
+  setUnsavedChanges: PropTypes.func.isRequired,
+  getProject: PropTypes.func.isRequired,
+  clearPersistedState: PropTypes.func.isRequired,
+  params: PropTypes.shape({
+    project_id: PropTypes.string,
     username: PropTypes.string
   }).isRequired,
 };
 
-
 function mapStateToProps(state) {
   return {
     files: state.files,
-    selectedFile: state.files.find(file => file.isSelectedFile) ||
+    selectedFile:
+      state.files.find(file => file.isSelectedFile) ||
       state.files.find(file => file.name === 'sketch.js') ||
       state.files.find(file => file.name !== 'root'),
     htmlFile: getHTMLFile(state.files),
@@ -253,7 +317,7 @@ function mapStateToProps(state) {
     user: state.user,
     project: state.project,
     toast: state.toast,
-    console: state.console
+    console: state.console,
   };
 }
 
@@ -273,6 +337,5 @@ function mapDispatchToProps(dispatch) {
     dispatch
   );
 }
-
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MobileIDEView));
