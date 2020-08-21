@@ -28,6 +28,11 @@ const ResponsiveFormWrapper = styled.div`
     height: 100%
   }
 
+  .nav__dropdown {
+    right: 0 !important;
+    left: unset !important;
+  }
+
   .form-container__stack {
     svg {
       width: ${remSize(12)};
