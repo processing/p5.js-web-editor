@@ -33,6 +33,7 @@ const renderComponent = (extraProps = {}) => {
       isEditingName: false,
       id: 'id',
     },
+    t: jest.fn()
   }, extraProps);
 
   render(<ToolbarComponent {...props} />);

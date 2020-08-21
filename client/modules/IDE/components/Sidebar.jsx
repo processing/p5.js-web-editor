@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
+import { withTranslation } from 'react-i18next';
+
 import ConnectedFileNode from './FileNode';
 
 import DownArrowIcon from '../../../images/down-filled-triangle.svg';
@@ -71,11 +73,11 @@ class Sidebar extends React.Component {
       <section className={sidebarClass}>
         <header className="sidebar__header" onContextMenu={this.toggleProjectOptions}>
           <h3 className="sidebar__title">
-            <span>Sketch Files</span>
+            <span>{this.props.t('Sidebar.Title')}</span>
           </h3>
           <div className="sidebar__icons">
             <button
-              aria-label="Toggle open/close sketch file options"
+              aria-label={this.props.t('Sidebar.ToggleARIA')}
               className="sidebar__add"
               tabIndex="0"
               ref={(element) => { this.sidebarOptions = element; }}
@@ -88,7 +90,7 @@ class Sidebar extends React.Component {
             <ul className="sidebar__project-options">
               <li>
                 <button
-                  aria-label="add folder"
+                  aria-label={this.props.t('Sidebar.AddFolderARIA')}
                   onClick={() => {
                     this.props.newFolder(rootFile.id);
                     setTimeout(this.props.closeProjectOptions, 0);
@@ -96,12 +98,12 @@ class Sidebar extends React.Component {
                   onBlur={this.onBlurComponent}
                   onFocus={this.onFocusComponent}
                 >
-                  Create folder
+                  {this.props.t('Sidebar.AddFolder')}
                 </button>
               </li>
               <li>
                 <button
-                  aria-label="add file"
+                  aria-label={this.props.t('Sidebar.AddFileARIA')}
                   onClick={() => {
                     this.props.newFile(rootFile.id);
                     setTimeout(this.props.closeProjectOptions, 0);
@@ -109,14 +111,14 @@ class Sidebar extends React.Component {
                   onBlur={this.onBlurComponent}
                   onFocus={this.onFocusComponent}
                 >
-                  Create file
+                  {this.props.t('Sidebar.AddFile')}
                 </button>
               </li>
               {
                 this.props.user.authenticated &&
                 <li>
                   <button
-                    aria-label="upload file"
+                    aria-label={this.props.t('Sidebar.UploadFileARIA')}
                     onClick={() => {
                       this.props.openUploadFileModal(rootFile.id);
                       setTimeout(this.props.closeProjectOptions, 0);
@@ -124,7 +126,7 @@ class Sidebar extends React.Component {
                     onBlur={this.onBlurComponent}
                     onFocus={this.onFocusComponent}
                   >
-                    Upload file
+                    {this.props.t('Sidebar.UploadFile')}
                   </button>
                 </li>
               }
@@ -159,11 +161,12 @@ Sidebar.propTypes = {
   user: PropTypes.shape({
     id: PropTypes.string,
     authenticated: PropTypes.bool.isRequired
-  }).isRequired
+  }).isRequired,
+  t: PropTypes.func.isRequired,
 };
 
 Sidebar.defaultProps = {
   owner: undefined
 };
 
-export default Sidebar;
+export default withTranslation()(Sidebar);

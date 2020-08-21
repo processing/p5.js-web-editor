@@ -9,7 +9,7 @@ export default function createProject(req, res) {
   projectValues = Object.assign(projectValues, req.body);
 
   function sendFailure() {
-    res.json({ success: false });
+    res.status(400).json({ success: false });
   }
 
   function populateUserData(newProject) {

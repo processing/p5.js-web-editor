@@ -41,7 +41,8 @@ export const grays = {
 };
 
 export const common = {
-  baseFontSize: 12
+  baseFontSize: 12,
+  shadowColor: 'rgba(0, 0, 0, 0.16)'
 };
 
 export const remSize = size => `${size / common.baseFontSize}rem`;
@@ -56,6 +57,7 @@ export const prop = key => (props) => {
 
   return value;
 };
+
 
 export default {
   [Theme.light]: {
@@ -97,7 +99,19 @@ export default {
         border: grays.middleLight,
       },
     },
+    Modal: {
+      background: grays.light,
+      border: grays.middleLight
+    },
     Separator: grays.middleLight,
+
+    TabHighlight: colors.p5jsPink,
+    SketchList: {
+      background: grays.lighter,
+      card: {
+        background: grays.lighter
+      }
+    }
   },
   [Theme.dark]: {
     colors,
@@ -138,7 +152,19 @@ export default {
         border: grays.middleDark,
       },
     },
+    Modal: {
+      background: grays.dark,
+      border: grays.middleDark
+    },
     Separator: grays.middleDark,
+
+    TabHighlight: colors.p5jsPink,
+    SketchList: {
+      background: grays.darker,
+      card: {
+        background: grays.dark
+      }
+    }
   },
   [Theme.contrast]: {
     colors,
@@ -179,6 +205,18 @@ export default {
         border: grays.middleDark,
       },
     },
+    Modal: {
+      background: grays.dark,
+      border: grays.middleDark
+    },
     Separator: grays.middleDark,
+
+    TabHighlight: grays.darker,
+    SketchList: {
+      background: colors.yellow,
+      card: {
+        background: grays.dark
+      }
+    }
   },
 };
