@@ -15,7 +15,7 @@ import Loader from '../../App/components/loader';
 import QuickAddList from './QuickAddList';
 
 const projectInCollection = (project, collection) =>
-  collection.items.find(item => item.project.id === project.id) != null;
+  collection.items.find(item => item.projectId === project.id) != null;
 
 class CollectionList extends React.Component {
   constructor(props) {
@@ -83,12 +83,14 @@ class CollectionList extends React.Component {
     }
 
     return (
-      <div className="quick-add-wrapper">
-        <Helmet>
-          <title>{this.getTitle()}</title>
-        </Helmet>
+      <div className="collection-add-sketch">
+        <div className="quick-add-wrapper">
+          <Helmet>
+            <title>{this.getTitle()}</title>
+          </Helmet>
 
-        {content}
+          {content}
+        </div>
       </div>
     );
   }
