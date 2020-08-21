@@ -10,7 +10,7 @@ export const mobileEnabled = () => (window.process.env.MOBILE_ENABLED === true);
  * The created function returns a Component (props => jsx)
  */
 export const createMobileFirst = store => (MobileComponent, Fallback) => props => (
-  <MediaQuery minDeviceWidth={770}>
+  <MediaQuery minWidth={770}>
     {matches => ((matches || (store && store.getState().editorAccessibility.forceDesktop) || (!mobileEnabled()))
       ? <Fallback {...props} />
       : <MobileComponent {...props} />)}
