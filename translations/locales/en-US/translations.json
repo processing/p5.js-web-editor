@@ -364,8 +364,8 @@
   "Collection": {
     "Title": "p5.js Web Editor | My collections",
     "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'s collections",
-    "ShareURL_Share": "Share",
-    "ShareURL_Link": "Link to Collection",
+    "Share": "Share",
+    "URLLink": "Link to Collection",
     "AddSketch": "Add Sketch",
     "DeleteFromCollection": "Are you sure you want to remove {{name_sketch}} from this collection?",
     "SketchDeleted": "Sketch deleted",

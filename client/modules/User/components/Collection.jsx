@@ -57,11 +57,11 @@ const ShareURL = ({ value, t }) => {
         onClick={() => setShowURL(!showURL)}
         iconAfter={<DropdownArrowIcon />}
       >
-        {t('Collection.ShareURL_Share')}
+        {t('Collection.Share')}
       </Button>
       { showURL &&
         <div className="collection__share-dropdown">
-          <CopyableInput value={value} label={t('Collection.ShareURL_Link')} />
+          <CopyableInput value={value} label={t('Collection.URLLink')} />
         </div>
       }
     </div>

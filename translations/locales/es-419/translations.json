@@ -364,8 +364,8 @@
   "Collection": {
     "Title": "p5.js Web Editor | Mis colecciones",
     "AnothersTitle": "Editor Web p5.js | Colecciones de {{anotheruser}}",
-    "ShareURL_Share": "Compartir",
-    "ShareURL_Link": "Liga a la Colección",
+    "Share": "Compartir",
+    "URLLink": "Liga a la Colección",
     "AddSketch": "Agregar Bosquejo",
     "DeleteFromCollection": "¿Estás seguro que quieres remover {{name_sketch}} de esta colección?",
     "SketchDeleted": "El bosquejo fue eliminado",
