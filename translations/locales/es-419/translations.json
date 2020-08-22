@@ -88,7 +88,8 @@
     "SketchSaved": "Bosquejo guardado.",
     "SketchFailedSave": "Fallo al guardar el bosquejo.",
     "AutosaveEnabled": "Grabado automático activado.",
-    "LangChange": "Lenguaje cambiado"
+    "LangChange": "Lenguaje cambiado",
+    "SettingsSaved": "Configuración guardada."
   },
   "Toolbar": {
     "Preview": "Vista previa",
@@ -198,12 +199,18 @@
   },
   "Common": {
     "Error": "Error",
+    "ErrorARIA": "Error",
     "Save": "Guardar",
     "p5logoARIA": "Logo p5.js ",
-    "DeleteConfirmation": "¿Estás que quieres borrar {{name}}?"
+    "DeleteConfirmation": "¿Estás seguro que quieres borrar {{name}}?"
   },
   "IDEView": {
-    "SubmitFeedback": "Enviar retroalimentación"
+    "SubmitFeedback": "Enviar retroalimentación",
+    "SubmitFeedbackARIA": "Enviar retroalimentación",
+    "AddCollectionTitle": "Agregar a colección",
+    "AddCollectionARIA":"Agregar a colección",
+    "ShareTitle": "Compartir",
+    "ShareARIA":"compartir"
   },
   "NewFileModal": {
     "Title": "Crear Archivo",
@@ -234,7 +241,7 @@
   "ResetPasswordView": {
     "Title": "Editor Web p5.js | Regenerar Contraseña",
     "Reset": "Regenerar Contraseña",
-    "Submitted": "Your password reset email should arrive shortly. If you don't see it, check\n            in your spam folder as sometimes it can end up there.",
+    "Submitted": "Tu correo para regenerar la contraseña debe llegar pronto. Si no lo ves, revisa\n tu carpeta de spam puesto que algunas veces puede terminar ahí.",
     "Login": "Ingresa",
     "LoginOr": "o",
     "SignUp": "Registráte"
@@ -282,7 +289,7 @@
     "AccessTokensTab": "Tokens de acceso"
   },
   "APIKeyForm": {
-    "ConfirmDelete": "¿Estas seguro que quieres borrar {{key_label}}?",
+    "ConfirmDelete": "¿Estás seguro que quieres borrar {{key_label}}?",
     "Summary": " Los Tokens de acceso personal actuan como tu contraseña para permitir\n  a scripts automáticos acceder al  API del Editor. Crea un token por cada script \n que necesite acceso.",
     "CreateToken": "Crear nuevo token",
     "TokenLabel": "¿Para que es este token?",
@@ -356,5 +363,116 @@
     "Present": "Presentar",
     "Fullscreen": "Pantalla Completa",
     "Edit": "Editar"
+  },
+  "CollectionView": {
+    "TitleCreate": "Crear colección",
+    "TitleDefault": "colección"
+  },
+  "Collection": {
+    "Title": "p5.js Web Editor | Mis colecciones",
+    "AnothersTitle": "Editor Web p5.js | Colecciones de {{anotheruser}}",
+    "Share": "Compartir",
+    "URLLink": "Liga a la Colección",
+    "AddSketch": "Agregar Bosquejo",
+    "DeleteFromCollection": "¿Estás seguro que quieres remover {{name_sketch}} de esta colección?",
+    "SketchDeleted": "El bosquejo fue eliminado",
+    "SketchRemoveARIA": "Remover bosquejo de la colección",
+    "DescriptionPlaceholder": "Agregar descripción",
+    "Description": "descripción",
+    "NumSketches": "{{count}} bosquejo",
+    "NumSketches_plural": "{{count}} bosquejos",
+    "By":"Colección por ",
+    "NoSketches": "No hay bosquejos en la colección",
+    "HeaderName": "Nombre",
+    "HeaderCreatedAt": "Fecha de agregación",
+    "HeaderUser": "Propietario",
+    "DirectionAscendingARIA": "Ascendente",
+    "DirectionDescendingARIA": "Descendente",
+    "ButtonLabelAscendingARIA": "Ordenar por {{displayName}} ascendente.",
+    "ButtonLabelDescendingARIA": "Ordenar por {{displayName}} descendente."
+  },
+  "AddToCollectionList": {
+    "Title": "p5.js Web Editor | Mis colecciones",
+    "AnothersTitle": "Editor Web p5.js | Colecciones de {{anotheruser}}",
+    "Empty": "No hay colecciones"
+  },
+  "CollectionCreate": {
+    "Title": "Editor Web p5.js | Crear colección",
+    "FormError": "No se pudo crear colección",
+    "FormLabel": "Nombre colección ",
+    "FormLabelARIA": "nombre de la colección",
+    "NameRequired": "Se requiere nombre de colección",
+    "Description": "Descripción (opcional)",
+    "DescriptionARIA": "descripción",
+    "DescriptionPlaceholder": "Mis bosquejos favoritos",
+    "SubmitCollectionCreate": "Crear colección"
+  },
+  "DashboardView": {
+    "CreateCollection": "Crear colección",
+    "NewSketch": "Nuevo bosquejo",
+    "CreateCollectionOverlay": "Crear colección"
+  },
+  "DashboardTabSwitcher": {
+    "Sketches": "Bosquejos",
+    "Collections": "Colecciones ",
+    "Assets": "Assets"
+  },
+  "CollectionList": {
+    "Title": "p5.js Web Editor | Mis colecciones",
+    "AnothersTitle": "Editor Web p5.js | Colecciones de {{anotheruser}}",
+    "NoCollections": "No hay colecciones.",
+    "HeaderName": "Nombre",
+    "HeaderCreatedAt": "Fecha Creación",
+    "HeaderCreatedAt_mobile": "Creación",
+    "HeaderUpdatedAt": "Fecha Actualización",
+    "HeaderUpdatedAt_mobile": "Actualización",
+    "HeaderNumItems": "# bosquejos",
+    "HeaderNumItems_mobile": "Bosquejos",
+    "DirectionAscendingARIA": "Ascendente",
+    "DirectionDescendingARIA": "Descendente",
+    "ButtonLabelAscendingARIA": "Ordenar por {{displayName}} ascendente.",
+    "ButtonLabelDescendingARIA": "Ordenar por {{displayName}} descendente.",
+    "AddSketch": "Agregar Bosquejo"
+  },
+  "CollectionListRow": {
+    "ToggleCollectionOptionsARIA": "Alternar Abrir/Cerrar opciones de colección",
+    "AddSketch": "Agregar bosquejo",
+    "Delete": "Borrar",
+    "Rename": "Renombrar"
+  },
+  "Overlay": {
+    "AriaLabel": "Cerrar la capa {{title}}"
+  },
+  "QuickAddList":{
+    "ButtonLabelRemove": "Remove from collection",
+    "ButtonLabelAddToCollection": "Add to collection",
+    "View": "Ver"
+  },
+  "SketchList": {
+    "View": "Ver",
+    "Title": "p5.js Web Editor | Mis bosquejos",
+    "AnothersTitle": "Editor Web p5.js | Bosquejos de {{anotheruser}}",
+    "ToggleLabelARIA": "Alternar Abrir/Cerrar Opciones de Bosquejo",
+    "DropdownRename": "Renombrar",
+    "DropdownDownload": "Descargar",
+    "DropdownDuplicate": "Duplicar",
+    "DropdownAddToCollection": "Agregar a Colección",
+    "DropdownDelete": "Borrar",
+    "DirectionAscendingARIA": "Ascendente",
+    "DirectionDescendingARIA": "Descendente",
+    "ButtonLabelAscendingARIA": "Ordenar por {{displayName}} ascendente.",
+    "ButtonLabelDescendingARIA": "Ordenar por {{displayName}} descendente.",
+    "AddToCollectionOverlayTitle": "Agregar a colección",
+    "HeaderName": "Bosquejo",
+    "HeaderCreatedAt": "Fecha Creación",
+    "HeaderCreatedAt_mobile": "Creación",
+    "HeaderUpdatedAt": "Fecha Actualización",
+    "HeaderUpdatedAt_mobile": "Actualización",
+    "NoSketches": "No hay bosquejos."
+  },
+  "AddToCollectionSketchList": {
+    "Title": "p5.js Web Editor | Mis bosquejos",
+    "AnothersTitle": "Editor Web p5.js | Bosquejos de {{anotheruser}}",
+    "NoCollections": "No hay colecciones."
   }
 }
