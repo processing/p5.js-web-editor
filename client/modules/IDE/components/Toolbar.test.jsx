@@ -1,8 +1,7 @@
 import React from 'react';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import lodash from 'lodash';
 
-
+import { fireEvent, render, screen, waitFor } from '../../../test-utils';
 import { ToolbarComponent } from './Toolbar';
 
 const renderComponent = (extraProps = {}) => {

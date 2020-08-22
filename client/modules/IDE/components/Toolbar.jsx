@@ -226,5 +226,5 @@ const mapDispatchToProps = {
   ...projectActions,
 };
 
-export const ToolbarComponent = Toolbar;
-export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(Toolbar));
+export const ToolbarComponent = withTranslation()(Toolbar);
+export default connect(mapStateToProps, mapDispatchToProps)(ToolbarComponent);
