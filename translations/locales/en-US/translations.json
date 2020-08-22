@@ -88,7 +88,8 @@
     "SketchSaved": "Sketch saved.",
     "SketchFailedSave": "Failed to save sketch.",
     "AutosaveEnabled": "Autosave enabled.",
-    "LangChange": "Language changed"
+    "LangChange": "Language changed",
+    "SettingsSaved": "Settings saved."
   },
   "Toolbar": {
     "Preview": "Preview",
@@ -198,12 +199,18 @@
   },
   "Common": {
     "Error": "Error",
+    "ErrorARIA": "Error",
     "Save": "Save",
     "p5logoARIA": "p5.js Logo",
     "DeleteConfirmation": "Are you sure you want to delete {{name}}?"
   },
   "IDEView": {
-    "SubmitFeedback": "Submit Feedback"
+    "SubmitFeedback": "Submit Feedback",
+    "SubmitFeedbackARIA": "submit-feedback",
+    "AddCollectionTitle": "Add to collection",
+    "AddCollectionARIA":"add to collection",
+    "ShareTitle": "Share",
+    "ShareARIA":"share"
   },
   "NewFileModal": {
     "Title": "Create File",

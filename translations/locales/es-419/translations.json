@@ -88,7 +88,8 @@
     "SketchSaved": "Bosquejo guardado.",
     "SketchFailedSave": "Fallo al guardar el bosquejo.",
     "AutosaveEnabled": "Grabado automático activado.",
-    "LangChange": "Lenguaje cambiado"
+    "LangChange": "Lenguaje cambiado",
+    "SettingsSaved": "Configuración guardada."
   },
   "Toolbar": {
     "Preview": "Vista previa",
@@ -198,12 +199,18 @@
   },
   "Common": {
     "Error": "Error",
+    "ErrorARIA": "Error",
     "Save": "Guardar",
     "p5logoARIA": "Logo p5.js ",
     "DeleteConfirmation": "¿Estás seguro que quieres borrar {{name}}?"
   },
   "IDEView": {
-    "SubmitFeedback": "Enviar retroalimentación"
+    "SubmitFeedback": "Enviar retroalimentación",
+    "SubmitFeedbackARIA": "Enviar retroalimentación",
+    "AddCollectionTitle": "Agregar a colección",
+    "AddCollectionARIA":"Agregar a colección",
+    "ShareTitle": "Compartir",
+    "ShareARIA":"compartir"
   },
   "NewFileModal": {
     "Title": "Crear Archivo",
