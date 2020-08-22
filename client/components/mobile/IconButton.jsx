@@ -17,7 +17,7 @@ const IconButton = (props) => {
   const Icon = icon;
 
   return (<ButtonWrapper
-    iconBefore={<Icon />}
+    iconBefore={icon && <Icon />}
     kind={Button.kinds.inline}
     focusable="false"
     {...otherProps}
@@ -25,7 +25,11 @@ const IconButton = (props) => {
 };
 
 IconButton.propTypes = {
-  icon: PropTypes.func.isRequired
+  icon: PropTypes.func
+};
+
+IconButton.defaultProps = {
+  icon: null
 };
 
 export default IconButton;

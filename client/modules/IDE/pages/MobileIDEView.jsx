@@ -20,7 +20,7 @@ import { getHTMLFile } from '../reducers/files';
 
 // Local Imports
 import Editor from '../components/Editor';
-import { PlayIcon, MoreIcon, CircleFolderIcon } from '../../../common/icons';
+import { PlayIcon, MoreIcon } from '../../../common/icons';
 
 import IconButton from '../../../components/mobile/IconButton';
 import Header from '../../../components/mobile/Header';
@@ -63,18 +63,20 @@ const NavItem = styled.li`
   position: relative;
 `;
 
-const getNavOptions = (username = undefined) =>
+const getNavOptions = (username = undefined, logoutUser = () => {}) =>
   (username
     ? [
       { icon: PreferencesIcon, title: 'Preferences', href: '/mobile/preferences', },
       { icon: PreferencesIcon, title: 'My Stuff', href: `/mobile/${username}/sketches` },
       { icon: PreferencesIcon, title: 'Examples', href: '/mobile/p5/sketches' },
       { icon: PreferencesIcon, title: 'Original Editor', href: '/', },
+      { icon: PreferencesIcon, title: 'Logout', action: logoutUser, },
     ]
     : [
       { icon: PreferencesIcon, title: 'Preferences', href: '/mobile/preferences', },
       { icon: PreferencesIcon, title: 'Examples', href: '/mobile/p5/sketches' },
       { icon: PreferencesIcon, title: 'Original Editor', href: '/', },
+      { icon: PreferencesIcon, title: 'Login', href: '/login', },
     ]
   );
 
@@ -82,7 +84,7 @@ const MobileIDEView = (props) => {
   const {
     preferences, ide, editorAccessibility, project, updateLintMessage, clearLintMessage,
     selectedFile, updateFileContent, files, user, params,
-    closeEditorOptions, showEditorOptions,
+    closeEditorOptions, showEditorOptions, logoutUser,
     startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console,
     showRuntimeErrorWarning, hideRuntimeErrorWarning, startSketch, getProject, clearPersistedState, setUnsavedChanges
   } = props;
@@ -110,7 +112,7 @@ const MobileIDEView = (props) => {
 
   // Screen Modals
   const [toggleNavDropdown, NavDropDown] = useAsModal(<Dropdown
-    items={getNavOptions(username)}
+    items={getNavOptions(username, logoutUser)}
     align="right"
   />);
 
@@ -293,6 +295,8 @@ MobileIDEView.propTypes = {
     id: PropTypes.string,
     username: PropTypes.string,
   }).isRequired,
+
+  logoutUser: PropTypes.func.isRequired,
 
   setUnsavedChanges: PropTypes.func.isRequired,
   getProject: PropTypes.func.isRequired,

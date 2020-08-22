@@ -10,6 +10,7 @@ import LoginForm from '../components/LoginForm';
 import { validateLogin } from '../../../utils/reduxFormUtils';
 import SocialAuthButton from '../components/SocialAuthButton';
 import Nav from '../../../components/Nav';
+import ResponsiveForm from '../components/ResponsiveForm';
 
 class LoginView extends React.Component {
   constructor(props) {
@@ -27,36 +28,40 @@ class LoginView extends React.Component {
   }
 
   render() {
+    const isMobile = () => (window.innerWidth < 770);
     if (this.props.user.authenticated) {
       this.gotoHomePage();
       return null;
     }
+    // TODO: mobile currently forced to true
     return (
-      <div className="login">
-        <Nav layout="dashboard" />
-        <main className="form-container">
-          <Helmet>
-            <title>{this.props.t('LoginView.Title')}</title>
-          </Helmet>
-          <div className="form-container__content">
-            <h2 className="form-container__title">{this.props.t('LoginView.Login')}</h2>
-            <LoginForm {...this.props} />
-            <h2 className="form-container__divider">{this.props.t('LoginView.LoginOr')}</h2>
-            <div className="form-container__stack">
-              <SocialAuthButton service={SocialAuthButton.services.github} />
-              <SocialAuthButton service={SocialAuthButton.services.google} />
+      <ResponsiveForm mobile={isMobile() || this.props.mobile}>
+        <div className="login">
+          <Nav layout="dashboard" />
+          <main className="form-container">
+            <Helmet>
+              <title>{this.props.t('LoginView.Title')}</title>
+            </Helmet>
+            <div className="form-container__content">
+              <h2 className="form-container__title">{this.props.t('LoginView.Login')}</h2>
+              <LoginForm {...this.props} />
+              <h2 className="form-container__divider">{this.props.t('LoginView.LoginOr')}</h2>
+              <div className="form-container__stack">
+                <SocialAuthButton service={SocialAuthButton.services.github} />
+                <SocialAuthButton service={SocialAuthButton.services.google} />
+              </div>
+              <p className="form__navigation-options">
+                {this.props.t('LoginView.DontHaveAccount')}
+                <Link className="form__signup-button" to="/signup">{this.props.t('LoginView.SignUp')}</Link>
+              </p>
+              <p className="form__navigation-options">
+                {this.props.t('LoginView.ForgotPassword')}
+                <Link className="form__reset-password-button" to="/reset-password"> {this.props.t('LoginView.ResetPassword')}</Link>
+              </p>
             </div>
-            <p className="form__navigation-options">
-              {this.props.t('LoginView.DontHaveAccount')}
-              <Link className="form__signup-button" to="/signup">{this.props.t('LoginView.SignUp')}</Link>
-            </p>
-            <p className="form__navigation-options">
-              {this.props.t('LoginView.ForgotPassword')}
-              <Link className="form__reset-password-button" to="/reset-password"> {this.props.t('LoginView.ResetPassword')}</Link>
-            </p>
-          </div>
-        </main>
-      </div>
+          </main>
+        </div>
+      </ResponsiveForm>
     );
   }
 }
@@ -79,13 +84,15 @@ LoginView.propTypes = {
   user: PropTypes.shape({
     authenticated: PropTypes.bool
   }),
-  t: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
+  mobile: PropTypes.bool
 };
 
 LoginView.defaultProps = {
   user: {
     authenticated: false
-  }
+  },
+  mobile: false
 };
 
 export default withTranslation()(reduxForm({
