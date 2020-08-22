@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { browserHistory } from 'react-router';
+import { withTranslation } from 'react-i18next';
 
 import ExitIcon from '../../../images/exit.svg';
 
@@ -80,7 +81,7 @@ class Overlay extends React.Component {
               <h2 className="overlay__title">{title}</h2>
               <div className="overlay__actions">
                 {actions}
-                <button className="overlay__close-button" onClick={this.close} aria-label={`Close ${title} overlay`} >
+                <button className="overlay__close-button" onClick={this.close} aria-label={this.props.t('Overlay.AriaLabel', { title })}>
                   <ExitIcon focusable="false" aria-hidden="true" />
                 </button>
               </div>
@@ -101,6 +102,7 @@ Overlay.propTypes = {
   ariaLabel: PropTypes.string,
   previousPath: PropTypes.string,
   isFixedHeight: PropTypes.bool,
+  t: PropTypes.func.isRequired
 };
 
 Overlay.defaultProps = {
@@ -113,4 +115,4 @@ Overlay.defaultProps = {
   isFixedHeight: false,
 };
 
-export default Overlay;
+export default withTranslation()(Overlay);
