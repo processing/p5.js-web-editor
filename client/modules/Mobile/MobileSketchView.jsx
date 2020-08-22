@@ -18,11 +18,7 @@ import { getHTMLFile } from '../IDE/reducers/files';
 import { ExitIcon } from '../../common/icons';
 import { remSize } from '../../theme';
 import Footer from '../../components/mobile/Footer';
-
-const Content = styled.div`
-  z-index: 0;
-  margin-top: ${remSize(68)};
-`;
+import Content from './MobileViewContent';
 
 const MobileSketchView = () => {
   const { files, ide, preferences } = useSelector(state => state);

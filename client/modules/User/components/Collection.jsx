@@ -398,9 +398,10 @@ class Collection extends React.Component {
                     closeOverlay={this.hideAddSketches}
                     isFixedHeight
                   >
-                    <div className="collection-add-sketch">
-                      <AddToCollectionSketchList username={this.props.username} collection={this.props.collection} />
-                    </div>
+                    <AddToCollectionSketchList
+                      username={this.props.username}
+                      collection={this.props.collection}
+                    />
                   </Overlay>
                 )
               }
