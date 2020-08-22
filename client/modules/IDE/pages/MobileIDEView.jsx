@@ -63,19 +63,19 @@ const NavItem = styled.li`
   position: relative;
 `;
 
-const getNavOptions = (username = undefined, logoutUser = () => {}) =>
+const getNavOptions = (username = undefined, logoutUser = () => {}, toggleForceDesktop = () => {}) =>
   (username
     ? [
-      { icon: PreferencesIcon, title: 'Preferences', href: '/mobile/preferences', },
-      { icon: PreferencesIcon, title: 'My Stuff', href: `/mobile/${username}/sketches` },
-      { icon: PreferencesIcon, title: 'Examples', href: '/mobile/p5/sketches' },
-      { icon: PreferencesIcon, title: 'Original Editor', href: '/', },
+      { icon: PreferencesIcon, title: 'Preferences', href: '/preferences', },
+      { icon: PreferencesIcon, title: 'My Stuff', href: `/${username}/sketches` },
+      { icon: PreferencesIcon, title: 'Examples', href: '/p5/sketches' },
+      { icon: PreferencesIcon, title: 'Original Editor', action: toggleForceDesktop, },
       { icon: PreferencesIcon, title: 'Logout', action: logoutUser, },
     ]
     : [
-      { icon: PreferencesIcon, title: 'Preferences', href: '/mobile/preferences', },
-      { icon: PreferencesIcon, title: 'Examples', href: '/mobile/p5/sketches' },
-      { icon: PreferencesIcon, title: 'Original Editor', href: '/', },
+      { icon: PreferencesIcon, title: 'Preferences', href: '/preferences', },
+      { icon: PreferencesIcon, title: 'Examples', href: '/p5/sketches' },
+      { icon: PreferencesIcon, title: 'Original Editor', action: toggleForceDesktop, },
       { icon: PreferencesIcon, title: 'Login', href: '/login', },
     ]
   );
@@ -86,7 +86,8 @@ const MobileIDEView = (props) => {
     selectedFile, updateFileContent, files, user, params,
     closeEditorOptions, showEditorOptions, logoutUser,
     startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console,
-    showRuntimeErrorWarning, hideRuntimeErrorWarning, startSketch, getProject, clearPersistedState, setUnsavedChanges
+    showRuntimeErrorWarning, hideRuntimeErrorWarning, startSketch, getProject, clearPersistedState, setUnsavedChanges,
+    toggleForceDesktop
   } = props;
 
   const [tmController, setTmController] = useState(null); // eslint-disable-line
@@ -112,7 +113,7 @@ const MobileIDEView = (props) => {
 
   // Screen Modals
   const [toggleNavDropdown, NavDropDown] = useAsModal(<Dropdown
-    items={getNavOptions(username, logoutUser)}
+    items={getNavOptions(username, logoutUser, toggleForceDesktop)}
     align="right"
   />);
 
@@ -131,6 +132,7 @@ const MobileIDEView = (props) => {
         subtitle={selectedFile.name}
       >
         <NavItem>
+
           <IconButton
             onClick={toggleNavDropdown}
             icon={MoreIcon}
@@ -139,7 +141,7 @@ const MobileIDEView = (props) => {
           <NavDropDown />
         </NavItem>
         <li>
-          <IconButton to="/mobile/preview" onClick={() => { startSketch(); }} icon={PlayIcon} aria-label="Run sketch" />
+          <IconButton to="/preview" onClick={() => { startSketch(); }} icon={PlayIcon} aria-label="Run sketch" />
         </li>
       </Header>
 
@@ -289,6 +291,7 @@ MobileIDEView.propTypes = {
   showRuntimeErrorWarning: PropTypes.func.isRequired,
 
   hideRuntimeErrorWarning: PropTypes.func.isRequired,
+  toggleForceDesktop: PropTypes.func.isRequired,
 
   user: PropTypes.shape({
     authenticated: PropTypes.bool.isRequired,

@@ -91,7 +91,8 @@ Dropdown.propTypes = {
   items: PropTypes.arrayOf(PropTypes.shape({
     action: PropTypes.func,
     icon: PropTypes.func,
-    href: PropTypes.string
+    href: PropTypes.string,
+    title: PropTypes.string
   })),
 };
 

@@ -263,8 +263,6 @@ class SketchListRowBase extends React.Component {
       url = `/${username}/sketches/${slugify(sketch.name, '_')}`;
     }
 
-    if (this.props.mobile) url = `/mobile${url}`;
-
     const name = (
       <React.Fragment>
         <Link to={url}>

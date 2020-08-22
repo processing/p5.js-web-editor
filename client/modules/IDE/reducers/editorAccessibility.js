@@ -1,7 +1,8 @@
 import * as ActionTypes from '../../../constants';
 
 const initialState = {
-  lintMessages: []
+  lintMessages: [],
+  forceDesktop: false
 };
 let messageId = 0;
 
@@ -16,6 +17,8 @@ const editorAccessibility = (state = initialState, action) => {
       });
     case ActionTypes.CLEAR_LINT_MESSAGE:
       return Object.assign({}, state, { lintMessages: [] });
+    case ActionTypes.TOGGLE_FORCE_DESKTOP:
+      return Object.assign({}, state, { forceDesktop: !(state.forceDesktop) });
     default:
       return state;
   }

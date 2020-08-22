@@ -13,7 +13,6 @@ import SocialAuthButton from '../components/SocialAuthButton';
 import Nav from '../../../components/Nav';
 import ResponsiveForm from '../components/ResponsiveForm';
 
-const isMobile = () => (window.innerWidth < 770);
 
 class SignupView extends React.Component {
   gotoHomePage = () => {
@@ -26,29 +25,27 @@ class SignupView extends React.Component {
       return null;
     }
     return (
-      <ResponsiveForm mobile={isMobile() || this.props.mobile}>
-        <div className="signup">
-          <Nav layout="dashboard" />
-          <main className="form-container">
-            <Helmet>
-              <title>{this.props.t('SignupView.Title')}</title>
-            </Helmet>
-            <div className="form-container__content">
-              <h2 className="form-container__title">{this.props.t('SignupView.Description')}</h2>
-              <SignupForm {...this.props} />
-              <h2 className="form-container__divider">{this.props.t('SignupView.Or')}</h2>
-              <div className="form-container__stack">
-                <SocialAuthButton service={SocialAuthButton.services.github} />
-                <SocialAuthButton service={SocialAuthButton.services.google} />
-              </div>
-              <p className="form__navigation-options">
-                {this.props.t('SignupView.AlreadyHave')}
-                <Link className="form__login-button" to="/login">{this.props.t('SignupView.Login')}</Link>
-              </p>
+      <div className="signup">
+        <Nav layout="dashboard" />
+        <main className="form-container">
+          <Helmet>
+            <title>{this.props.t('SignupView.Title')}</title>
+          </Helmet>
+          <div className="form-container__content">
+            <h2 className="form-container__title">{this.props.t('SignupView.Description')}</h2>
+            <SignupForm {...this.props} />
+            <h2 className="form-container__divider">{this.props.t('SignupView.Or')}</h2>
+            <div className="form-container__stack">
+              <SocialAuthButton service={SocialAuthButton.services.github} />
+              <SocialAuthButton service={SocialAuthButton.services.google} />
             </div>
-          </main>
-        </div>
-      </ResponsiveForm>
+            <p className="form__navigation-options">
+              {this.props.t('SignupView.AlreadyHave')}
+              <Link className="form__login-button" to="/login">{this.props.t('SignupView.Login')}</Link>
+            </p>
+          </div>
+        </main>
+      </div>
     );
   }
 }
@@ -116,14 +113,12 @@ SignupView.propTypes = {
     authenticated: PropTypes.bool
   }),
   t: PropTypes.func.isRequired,
-  mobile: PropTypes.bool
 };
 
 SignupView.defaultProps = {
   user: {
     authenticated: false
   },
-  mobile: false
 };
 
 export default withTranslation()(reduxForm({
