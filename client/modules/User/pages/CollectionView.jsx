@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import { withTranslation } from 'react-i18next';
+
 import Nav from '../../../components/Nav';
 
 import CollectionCreate from '../components/CollectionCreate';
@@ -25,10 +27,10 @@ class CollectionView extends React.Component {
 
   pageTitle() {
     if (this.isCreatePage()) {
-      return 'Create collection';
+      return this.props.t('CollectionView.TitleCreate');
     }
 
-    return 'collection';
+    return this.props.t('CollectionView.TitleDefault');
   }
 
   isOwner() {
@@ -87,6 +89,7 @@ CollectionView.propTypes = {
   user: PropTypes.shape({
     username: PropTypes.string,
   }),
+  t: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CollectionView);
+export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(CollectionView));

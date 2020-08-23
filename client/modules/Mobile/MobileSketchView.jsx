@@ -39,7 +39,7 @@ const MobileSketchView = () => {
   return (
     <Screen fullscreen>
       <Header
-        leftButton={<IconButton to="/mobile" icon={ExitIcon} aria-label="Return to original editor" />}
+        leftButton={<IconButton to="/" icon={ExitIcon} aria-label="Return to original editor" />}
         title={projectName}
       />
       <Content>

@@ -69,7 +69,7 @@ const MobilePreferences = () => {
     <Screen fullscreen>
       <section>
         <Header transparent title="Preferences">
-          <IconButton to="/mobile" icon={ExitIcon} aria-label="Return to ide view" />
+          <IconButton to="/" icon={ExitIcon} aria-label="Return to ide view" />
         </Header>
         <section className="preferences">
           <Content>
