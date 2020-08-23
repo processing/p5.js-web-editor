@@ -478,7 +478,8 @@
   "Editor": {
     "OpenSketchARIA": "Open Sketch files navigation",
     "CloseSketchARIA": "Close Sketch files navigation",
-    "UnsavedChangesARIA": "Sketch has unsaved changes"
+    "UnsavedChangesARIA": "Sketch has unsaved changes",
+    "KeyUpLineNumber": "line {{lineNumber}}"
   },
   "EditorAccessibility": {
     "NoLintMessages": "There are no lint messages ",

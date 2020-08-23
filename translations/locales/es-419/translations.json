@@ -478,7 +478,8 @@
   "Editor": {
     "OpenSketchARIA": "Abrir navegación de archivos de bosquejo",
     "CloseSketchARIA": "Cerrar navegación de archivos de bosquejo",
-    "UnsavedChangesARIA": "El bosquejo tiene cambios sin guardar"
+    "UnsavedChangesARIA": "El bosquejo tiene cambios sin guardar",
+    "KeyUpLineNumber": "línea {{lineNumber}}"
   },
   "EditorAccessibility": {
     "NoLintMessages": "No hay mensajes de Lint",
