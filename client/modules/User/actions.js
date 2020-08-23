@@ -229,7 +229,7 @@ export function updateSettings(formValues) {
         dispatch(updateSettingsSuccess(response.data));
         browserHistory.push('/');
         dispatch(showToast(5500));
-        dispatch(setToastText('Settings saved.'));
+        dispatch(setToastText('Toast.SettingsSaved'));
       })
       .catch((error) => {
         const { response } = error;
