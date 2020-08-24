@@ -3,6 +3,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { withTranslation } from 'react-i18next';
 
 import * as ProjectActions from '../actions/project';
 import * as ProjectsActions from '../actions/projects';
@@ -42,9 +43,9 @@ class CollectionList extends React.Component {
 
   getTitle() {
     if (this.props.username === this.props.user.username) {
-      return 'p5.js Web Editor | My collections';
+      return this.props.t('AddToCollectionList.Title');
     }
-    return `p5.js Web Editor | ${this.props.username}'s collections`;
+    return this.props.t('AddToCollectionList.AnothersTitle', { anotheruser: this.props.username });
   }
 
   handleCollectionAdd = (collection) => {
@@ -74,10 +75,11 @@ class CollectionList extends React.Component {
           items={collectionWithSketchStatus}
           onAdd={this.handleCollectionAdd}
           onRemove={this.handleCollectionRemove}
+          t={this.props.t}
         />
       );
     } else {
-      content = 'No collections';
+      content = this.props.t('AddToCollectionList.Empty');
     }
 
     return (
@@ -135,7 +137,8 @@ CollectionList.propTypes = {
     owner: PropTypes.shape({
       id: PropTypes.string
     })
-  })
+  }),
+  t: PropTypes.func.isRequired
 };
 
 CollectionList.defaultProps = {
@@ -164,4 +167,4 @@ function mapDispatchToProps(dispatch) {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CollectionList);
+export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(CollectionList));

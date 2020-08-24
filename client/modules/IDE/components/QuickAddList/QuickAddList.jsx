@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
+import { withTranslation } from 'react-i18next';
 
 import Icons from './Icons';
 
 const Item = ({
-  isAdded, onSelect, name, url
+  isAdded, onSelect, name, url, t
 }) => {
   const buttonLabel = isAdded ? 'Remove from collection' : 'Add to collection';
   return (
@@ -20,7 +21,7 @@ const Item = ({
         target="_blank"
         onClick={e => e.stopPropogation()}
       >
-        View
+        {t('QuickAddList.View')}
       </Link>
     </li>
   );
@@ -37,10 +38,11 @@ Item.propTypes = {
   url: PropTypes.string.isRequired,
   isAdded: PropTypes.bool.isRequired,
   onSelect: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired
 };
 
 const QuickAddList = ({
-  items, onAdd, onRemove
+  items, onAdd, onRemove, t
 }) => {
   const handleAction = (item) => {
     if (item.isAdded) {
@@ -53,6 +55,7 @@ const QuickAddList = ({
   return (
     <ul className="quick-add">{items.map(item => (<Item
       key={item.id}
+      t={t}
       {...item}
       onSelect={
         (event) => {
@@ -70,6 +73,7 @@ QuickAddList.propTypes = {
   items: PropTypes.arrayOf(ItemType).isRequired,
   onAdd: PropTypes.func.isRequired,
   onRemove: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired
 };
 
-export default QuickAddList;
+export default withTranslation()(QuickAddList);
