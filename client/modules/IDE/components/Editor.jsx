@@ -137,8 +137,7 @@ class Editor extends React.Component {
     }, 1000));
 
     this._cm.on('keyup', () => {
-      const temp = `line ${parseInt((this._cm.getCursor().line) + 1, 10)}`;
-      // const temp = this.props.t('Editor.KeyUpLineNumber', { lineNumber: parseInt((this._cm.getCursor().line) + 1, 10) });
+      const temp = this.props.t('Editor.KeyUpLineNumber', { lineNumber: parseInt((this._cm.getCursor().line) + 1, 10) });
       document.getElementById('current-line').innerHTML = temp;
     });
 
