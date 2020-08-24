@@ -12,7 +12,7 @@ import * as IDEActions from '../actions/ide';
 import * as ProjectActions from '../actions/project';
 import * as ConsoleActions from '../actions/console';
 import * as PreferencesActions from '../actions/preferences';
-
+import * as EditorAccessibilityActions from '../actions/editorAccessibility';
 
 // Local Imports
 import Editor from '../components/Editor';
@@ -58,18 +58,20 @@ const NavItem = styled.li`
   position: relative;
 `;
 
-const getNavOptions = (username = undefined) =>
+const getNavOptions = (username = undefined, logoutUser = () => {}, toggleForceDesktop = () => {}) =>
   (username
     ? [
-      { icon: PreferencesIcon, title: 'Preferences', href: '/mobile/preferences', },
-      { icon: PreferencesIcon, title: 'My Stuff', href: `/mobile/${username}/sketches` },
-      { icon: PreferencesIcon, title: 'Examples', href: '/mobile/p5/sketches' },
-      { icon: PreferencesIcon, title: 'Original Editor', href: '/', },
+      { icon: PreferencesIcon, title: 'Preferences', href: '/preferences', },
+      { icon: PreferencesIcon, title: 'My Stuff', href: `/${username}/sketches` },
+      { icon: PreferencesIcon, title: 'Examples', href: '/p5/sketches' },
+      { icon: PreferencesIcon, title: 'Original Editor', action: toggleForceDesktop, },
+      { icon: PreferencesIcon, title: 'Logout', action: logoutUser, },
     ]
     : [
-      { icon: PreferencesIcon, title: 'Preferences', href: '/mobile/preferences', },
-      { icon: PreferencesIcon, title: 'Examples', href: '/mobile/p5/sketches' },
-      { icon: PreferencesIcon, title: 'Original Editor', href: '/', },
+      { icon: PreferencesIcon, title: 'Preferences', href: '/preferences', },
+      { icon: PreferencesIcon, title: 'Examples', href: '/p5/sketches' },
+      { icon: PreferencesIcon, title: 'Original Editor', action: toggleForceDesktop, },
+      { icon: PreferencesIcon, title: 'Login', href: '/login', },
     ]
   );
 
@@ -144,7 +146,7 @@ const handleGlobalKeydown = (props, cmController) => (e) => {
 
 const autosave = (autosaveInterval, setAutosaveInterval) => (props, prevProps) => {
   const {
-    autosaveProject, preferences, ide, selectedFile: file, project, user
+    autosaveProject, preferences, ide, selectedFile: file, project
   } = props;
 
   const { selectedFile: oldFile } = prevProps;
@@ -170,10 +172,23 @@ const autosave = (autosaveInterval, setAutosaveInterval) => (props, prevProps) =
   }
 };
 
+// ide, preferences, project, selectedFile, user, params, unsavedChanges, expandConsole, collapseConsole,
+// stopSketch, startSketch, getProject, clearPersistedState, autosaveProject, saveProject, files
+
 const MobileIDEView = (props) => {
+  // const {
+  //   preferences, ide, editorAccessibility, project, updateLintMessage, clearLintMessage,
+  //   selectedFile, updateFileContent, files, user, params,
+  //   closeEditorOptions, showEditorOptions, logoutUser,
+  //   startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console,
+  //   showRuntimeErrorWarning, hideRuntimeErrorWarning, startSketch, getProject, clearPersistedState, setUnsavedChanges,
+  //   toggleForceDesktop
+  // } = props;
+
   const {
     ide, preferences, project, selectedFile, user, params, unsavedChanges, expandConsole, collapseConsole,
-    stopSketch, startSketch, getProject, clearPersistedState, autosaveProject, saveProject, files
+    stopSketch, startSketch, getProject, clearPersistedState, autosaveProject, saveProject, files,
+    toggleForceDesktop, logoutUser
   } = props;
 
 
@@ -204,7 +219,7 @@ const MobileIDEView = (props) => {
 
   // Screen Modals
   const [toggleNavDropdown, NavDropDown] = useAsModal(<Dropdown
-    items={getNavOptions(username)}
+    items={getNavOptions(username, logoutUser, toggleForceDesktop)}
     align="right"
   />);
 
@@ -239,6 +254,7 @@ const MobileIDEView = (props) => {
         subtitle={filename}
       >
         <NavItem>
+
           <IconButton
             onClick={toggleNavDropdown}
             icon={MoreIcon}
@@ -247,7 +263,7 @@ const MobileIDEView = (props) => {
           <NavDropDown />
         </NavItem>
         <li>
-          <IconButton to="/mobile/preview" onClick={() => { startSketch(); }} icon={PlayIcon} aria-label="Run sketch" />
+          <IconButton to="/preview" onClick={() => { startSketch(); }} icon={PlayIcon} aria-label="Run sketch" />
         </li>
       </Header>
 
@@ -307,11 +323,21 @@ MobileIDEView.propTypes = {
     name: PropTypes.string.isRequired,
   }).isRequired,
 
+  files: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+  })).isRequired,
+
+  toggleForceDesktop: PropTypes.func.isRequired,
+
   user: PropTypes.shape({
     authenticated: PropTypes.bool.isRequired,
     id: PropTypes.string,
     username: PropTypes.string,
   }).isRequired,
+
+  logoutUser: PropTypes.func.isRequired,
 
   getProject: PropTypes.func.isRequired,
   clearPersistedState: PropTypes.func.isRequired,
@@ -320,10 +346,9 @@ MobileIDEView.propTypes = {
     username: PropTypes.string
   }).isRequired,
 
-  unsavedChanges: PropTypes.bool.isRequired,
-
   startSketch: PropTypes.func.isRequired,
-  stopSketch: PropTypes.func.isRequired,
+
+  unsavedChanges: PropTypes.bool.isRequired,
   autosaveProject: PropTypes.func.isRequired,
 
 
@@ -351,7 +376,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   ...ProjectActions,
   ...IDEActions,
   ...ConsoleActions,
-  ...PreferencesActions
+  ...PreferencesActions,
+  ...EditorAccessibilityActions
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MobileIDEView));

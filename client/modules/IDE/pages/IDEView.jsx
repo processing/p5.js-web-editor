@@ -418,15 +418,15 @@ class IDEView extends React.Component {
           <Overlay
             title={this.props.t('IDEView.SubmitFeedback')}
             previousPath={this.props.ide.previousPath}
-            ariaLabel="submit-feedback"
+            ariaLabel={this.props.t('IDEView.SubmitFeedbackARIA')}
           >
             <Feedback previousPath={this.props.ide.previousPath} />
           </Overlay>
         )}
         {this.props.location.pathname.match(/add-to-collection$/) && (
           <Overlay
-            ariaLabel="add to collection"
-            title="Add to collection"
+            ariaLabel={this.props.t('IDEView.AddCollectionARIA')}
+            title={this.props.t('IDEView.AddCollectionTitle')}
             previousPath={this.props.ide.previousPath}
             actions={<CollectionSearchbar />}
             isFixedHeight
@@ -440,8 +440,8 @@ class IDEView extends React.Component {
         )}
         {this.props.ide.shareModalVisible && (
           <Overlay
-            title="Share"
-            ariaLabel="share"
+            title={this.props.t('IDEView.ShareTitle')}
+            ariaLabel={this.props.t('IDEView.ShareARIA')}
             closeOverlay={this.props.closeShareModal}
           >
             <ShareModal
@@ -462,8 +462,8 @@ class IDEView extends React.Component {
         )}
         {this.props.ide.errorType && (
           <Overlay
-            title="Error"
-            ariaLabel={this.props.t('Common.Error')}
+            title={this.props.t('Common.Error')}
+            ariaLabel={this.props.t('Common.ErrorARIA')}
             closeOverlay={this.props.hideErrorModal}
           >
             <ErrorModal
