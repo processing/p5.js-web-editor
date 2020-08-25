@@ -474,5 +474,22 @@
     "Title": "p5.js Web Editor | Mis bosquejos",
     "AnothersTitle": "Editor Web p5.js | Bosquejos de {{anotheruser}}",
     "NoCollections": "No hay colecciones."
+  },
+  "Editor": {
+    "OpenSketchARIA": "Abrir navegación de archivos de bosquejo",
+    "CloseSketchARIA": "Cerrar navegación de archivos de bosquejo",
+    "UnsavedChangesARIA": "El bosquejo tiene cambios sin guardar",
+    "KeyUpLineNumber": "línea {{lineNumber}}"
+  },
+  "EditorAccessibility": {
+    "NoLintMessages": "No hay mensajes de Lint",
+    "CurrentLine": " Línea actual"
+  },
+  "Timer": {
+    "SavedJustNow": "Guardado: justo ahora",
+    "Saved15Seconds": "Guardado: hace 15 segundos",
+    "Saved25Seconds": "Guardado: hace 25 segundos",
+    "Saved35Seconds": "Guardado: hace 35 segundos",
+    "SavedAgo": "Guardado: hace {{timeAgo}}"
   }
 }

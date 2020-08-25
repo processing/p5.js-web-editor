@@ -474,5 +474,22 @@
     "Title": "p5.js Web Editor | My sketches",
     "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'s sketches",
     "NoCollections": "No collections."
+  },
+  "Editor": {
+    "OpenSketchARIA": "Open Sketch files navigation",
+    "CloseSketchARIA": "Close Sketch files navigation",
+    "UnsavedChangesARIA": "Sketch has unsaved changes",
+    "KeyUpLineNumber": "line {{lineNumber}}"
+  },
+  "EditorAccessibility": {
+    "NoLintMessages": "There are no lint messages ",
+    "CurrentLine": " Current line"
+  },
+  "Timer": {
+    "SavedJustNow": "Saved: just now",
+    "Saved15Seconds": "Saved: 15 seconds ago",
+    "Saved25Seconds": "Saved: 25 seconds ago",
+    "Saved35Seconds": "Saved: 35 seconds ago",
+    "SavedAgo": "Saved: {{timeAgo}} ago"
   }
 }
