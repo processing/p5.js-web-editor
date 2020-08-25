@@ -1,56 +1,20 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Decode, Encode, Hook, Unhook } from 'console-feed';
+import { Decode } from 'console-feed';
 import { isEqual } from 'lodash';
 import { dispatchConsoleEvent } from '../actions/console';
 import { stopSketch, expandConsole } from '../actions/console';
-import handleConsoleExpressions from '../../../utils/evaluateConsole';
+import { listen } from '../../../utils/dispatcher';
 
-function useMessageEvent(callback) {
-  useEffect(() => {
-    window.addEventListener('message', callback);
-    return () => window.removeEventListener('message', callback);
-  }, [callback]);
-}
-
-function MessageHandler() {
+function useHandleMessageEvent() {
   const dispatch = useDispatch();
 
-  const handleMessageEvent = useCallback((messageEvent) => {
-    if (messageEvent.origin !== window.origin) return;
-    if (Array.isArray(messageEvent.data)) {
-      const decodedMessages = messageEvent.data.map(message => Object.assign(
-        Decode(message.log),
-        { source: message.source }
-      ));
+  const handleMessageEvent = (data) => {
+    const { source, messages } = data;
+    if (source === 'sketch' && Array.isArray(messages)) {
+      const decodedMessages = messages.map(message => Decode(message.log));
       decodedMessages.every((message, index, arr) => {
-        const { data: args, source } = message;
-        if (source === 'console') {
-          let consoleInfo = '';
-          const consoleBuffer = [];
-          const LOGWAIT = 100;
-          Hook(window.console, (log) => {
-            consoleBuffer.push({
-              log,
-              source: 'sketch'
-            });
-          });
-          setInterval(() => {
-            if (consoleBuffer.length > 0) {
-              window.postMessage(consoleBuffer, '*');
-              consoleBuffer.length = 0;
-            }
-          }, LOGWAIT);
-          consoleInfo = handleConsoleExpressions(args);
-          Unhook(window.console);
-          if (!consoleInfo) {
-            return false;
-          }
-          window.postMessage([{
-            log: Encode({ method: 'result', data: Encode(consoleInfo) }),
-            source: 'sketch'
-          }], '*');
-        }
+        const { data: args } = message;
         let hasInfiniteLoop = false;
         Object.keys(args).forEach((key) => {
           if (typeof args[key] === 'string' && args[key].includes('Exiting potential infinite loop')) {
@@ -66,6 +30,7 @@ function MessageHandler() {
           Object.assign(message, { times: 1 });
           return false;
         }
+        // this should be done in the reducer probs
         const cur = Object.assign(message, { times: 1 });
         const nextIndex = index + 1;
         while (isEqual(cur.data, arr[nextIndex].data) && cur.method === arr[nextIndex].method) {
@@ -77,12 +42,20 @@ function MessageHandler() {
         }
         return true;
       });
-
       dispatch(dispatchConsoleEvent(decodedMessages));
     }
-  });
+  };
+  return handleMessageEvent;
+}
 
-  useMessageEvent(handleMessageEvent);
+function MessageHandler() {
+  const handleMessageEvent = useHandleMessageEvent();
+  useEffect(() => {
+    const unsubscribe = listen(handleMessageEvent);
+    return function cleanup() {
+      unsubscribe();
+    };
+  });
   return null;
 }
 

@@ -19,6 +19,7 @@ import {
 } from '../../../../server/utils/fileUtils';
 import { hijackConsoleErrorsScript, startTag, getAllScriptOffsets }
   from '../../../utils/consoleUtils';
+import { registerFrame } from '../../../utils/dispatcher';
 
 
 const shouldRenderSketch = (props, prevProps = undefined) => {
@@ -51,6 +52,7 @@ class PreviewFrame extends React.Component {
       isAccessibleOutputPlaying: this.props.isAccessibleOutputPlaying
     };
     if (shouldRenderSketch(props)) this.renderSketch();
+    registerFrame(this.iframe.current);
   }
 
   componentDidUpdate(prevProps) {

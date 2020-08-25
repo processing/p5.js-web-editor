@@ -144,7 +144,10 @@ const Console = ({ t }) => {
           })}
         </div>
         { isExpanded && isPlaying &&
-          <ConsoleInput theme={theme} />
+          <ConsoleInput
+            theme={theme}
+            dispatchConsoleEvent={dispatchConsoleEvent}
+          />
         }
       </div>
     </section>

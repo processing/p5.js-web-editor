@@ -4,6 +4,7 @@ import CodeMirror from 'codemirror';
 import { Encode } from 'console-feed';
 
 import RightArrowIcon from '../../../images/right-arrow.svg';
+import { dispatch } from '../../../utils/dispatcher';
 
 class ConsoleInput extends React.Component {
   componentDidMount() {
@@ -28,13 +29,21 @@ class ConsoleInput extends React.Component {
         if (value.trim(' ') === '') {
           return false;
         }
-        // need to get access to iframe here?
-        // could pass "evaluate console function"
-        // could make a component that handles all of this messaging
-        window.postMessage([{
-          log: Encode({ method: 'command', data: Encode(value) }),
-          source: 'console'
-        }], '*');
+        const messages = [{ log: { method: 'command', data: Encode(value) } }];
+        const consoleEvent = [{ method: 'command', data: Encode(value) }];
+        dispatch({
+          source: 'console',
+          messages
+        });
+        this.props.dispatchConsoleEvent(consoleEvent);
+
+        // // need to get access to iframe here?
+        // // could pass "evaluate console function"
+        // // could make a component that handles all of this messaging
+        // window.postMessage([{
+        //   log: Encode({ method: 'command', data: Encode(value) }),
+        //   source: 'console'
+        // }], '*');
 
         cm.setValue('');
       }
@@ -80,7 +89,8 @@ class ConsoleInput extends React.Component {
 }
 
 ConsoleInput.propTypes = {
-  theme: PropTypes.string.isRequired
+  theme: PropTypes.string.isRequired,
+  dispatchConsoleEvent: PropTypes.func.isRequired
 };
 
 
