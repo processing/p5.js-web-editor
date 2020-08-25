@@ -517,8 +517,8 @@
     "SavedAgo": "Saved: {{timeAgo}} ago"
   },
   "AddRemoveButton": {
-    "altAddARIA": "Add to collection",
-    "altRemoveARIA": "Remove from collection"
+    "AltAddARIA": "Add to collection",
+    "AltRemoveARIA": "Remove from collection"
   },
   "CopyableInput": {
     "CopiedARIA": "Copied to Clipboard!",

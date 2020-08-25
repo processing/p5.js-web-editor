@@ -468,8 +468,8 @@
     "AriaLabel": "Cerrar la capa {{title}}"
   },
   "QuickAddList":{
-    "ButtonLabelRemove": "Remove from collection",
-    "ButtonLabelAddToCollection": "Add to collection",
+    "ButtonLabelRemove": "Remover de colección",
+    "ButtonLabelAddToCollection": "Agregar a colección",
     "View": "Ver"
   },
   "SketchList": {
@@ -517,8 +517,8 @@
     "SavedAgo": "Guardado: hace {{timeAgo}}"
   },
   "AddRemoveButton": {
-    "altAddARIA": "Agregar a colección",
-    "altRemoveARIA": "Remover de colección"
+    "AltAddARIA": "Agregar a colección",
+    "AltRemoveARIA": "Remover de colección"
   },
   "CopyableInput": {
     "CopiedARIA": "¡Copiado en el portapapeles!",

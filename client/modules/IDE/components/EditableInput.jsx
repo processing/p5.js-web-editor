@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-
+import i18next from 'i18next';
 import EditIcon from '../../../images/pencil.svg';
+
 
 // TODO I think this needs a description prop so that it's accessible
 function EditableInput({
@@ -85,7 +86,7 @@ function EditableInput({
 }
 
 EditableInput.defaultProps = {
-  emptyPlaceholder: this.props.t('EditableInput.EmptyPlaceholder'),
+  emptyPlaceholder: i18next.t('EditableInput.EmptyPlaceholder'),
   InputComponent: 'input',
   inputProps: {},
   validate: () => true,
