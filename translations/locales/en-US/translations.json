@@ -500,18 +500,19 @@
     "NoCollections": "No collections."
   },
   "AddRemoveButton": {
-    "altAdd": "Add to collection",
-    "altRemove": "Remove from collection"
+    "altAddARIA": "Add to collection",
+    "altRemoveARIA": "Remove from collection"
   },
   "CopyableInput": {
     "CopiedARIA": "Copied to Clipboard!",
     "OpenViewTabARIA": "Open {{label}} view in new tab"
   },
   "EditableInput": {
-    "EditValue": "Edit {{displayValue}} value"
+    "EditValue": "Edit {{display}} value",
+    "EmptyPlaceholder": "No value"
   },
   "PreviewNav": {
-    "EditSketch": "Edit Sketch",
+    "EditSketchARIA": "Edit Sketch",
     "ByUser": "by"
   }
 }

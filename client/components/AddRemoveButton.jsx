@@ -7,7 +7,7 @@ import AddIcon from '../images/plus.svg';
 import RemoveIcon from '../images/minus.svg';
 
 const AddRemoveButton = ({ type, onClick, t }) => {
-  const alt = type === 'add' ? t('AddRemoveButton.altAdd') : t('AddRemoveButton.altRemove');
+  const alt = type === 'add' ? t('AddRemoveButton.altAddARIA') : t('AddRemoveButton.altRemoveARIA');
   const Icon = type === 'add' ? AddIcon : RemoveIcon;
 
   return (

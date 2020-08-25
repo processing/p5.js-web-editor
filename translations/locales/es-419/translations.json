@@ -500,18 +500,19 @@
     "NoCollections": "No hay colecciones."
   },
   "AddRemoveButton": {
-    "altAdd": "Agregar a colección",
-    "altRemove": "Remover de colección"
+    "altAddARIA": "Agregar a colección",
+    "altRemoveARIA": "Remover de colección"
   },
   "CopyableInput": {
     "CopiedARIA": "¡Copiado en el portapapeles!",
     "OpenViewTabARIA": "Abrir la vista {{label}} en nueva pestaña"
   },
   "EditableInput": {
-    "EditValue": "Editar valor de {{display}}"
+    "EditValue": "Editar valor de {{display}}",
+    "EmptyPlaceholder": "Sin valor"
   },
   "PreviewNav": {
-    "EditSketch": "Editar Bosquejo",
+    "EditSketchARIA": "Editar Bosquejo",
     "ByUser": "por"
   }
 }

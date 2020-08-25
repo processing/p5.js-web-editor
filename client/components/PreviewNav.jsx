@@ -17,7 +17,7 @@ const PreviewNav = ({ owner, project, t }) => (
       <Link className="nav__item" to={`/${owner.username}/sketches/`}>{owner.username}</Link>
     </div>
     <div className="nav__items-right">
-      <Link to={`/${owner.username}/sketches/${project.id}`} aria-label={t('PreviewNav.EditSketch')} >
+      <Link to={`/${owner.username}/sketches/${project.id}`} aria-label={t('PreviewNav.EditSketchARIA')} >
         <CodeIcon className="preview-nav__editor-svg" focusable="false" aria-hidden="true" />
       </Link>
     </div>

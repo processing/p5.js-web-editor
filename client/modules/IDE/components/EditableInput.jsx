@@ -85,7 +85,7 @@ function EditableInput({
 }
 
 EditableInput.defaultProps = {
-  emptyPlaceholder: 'No value',
+  emptyPlaceholder: this.props.t('EditableInput.EmptyPlaceholder'),
   InputComponent: 'input',
   inputProps: {},
   validate: () => true,
