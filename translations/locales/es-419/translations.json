@@ -114,6 +114,7 @@
     "Settings": "Configuración",
     "GeneralSettings": "Configuración general",
     "Accessibility": "Accesibilidad",
+    "AccessibleOutput": "Salida accesible",
     "Theme": "Modo de visualización",
     "LightTheme": "Claro",
     "LightThemeARIA": "Modo de visualización claro activado",
@@ -531,5 +532,25 @@
   "PreviewNav": {
     "EditSketchARIA": "Editar Bosquejo",
     "ByUser": "por"
+  },
+  "MobileNav":{
+    "Preferences": "Preferencias",
+    "MyStuff": "Mis cosas",
+    "Examples": "Ejemplos",
+    "OriginalEditor": "Editor Original",
+    "Login": "Ingresa",
+    "Logout": "Cerrar sesión"
+  },
+  "MobileDashboardView": {
+    "Examples": "Ejemplos",
+    "Sketches": "Bosquejos",
+    "Collections": "Colecciones",
+    "Assets": "Assets",
+    "MyStuff": "Mis cosas",
+    "CreateSketch": "Crear bosquejo",
+    "CreateCollection": "Crear colección"
+  },
+  "MobileSideBar": {
+    "Files": "Archivos"
   }
 }
