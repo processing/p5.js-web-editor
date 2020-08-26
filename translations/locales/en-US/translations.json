@@ -114,6 +114,7 @@
     "Settings": "Settings",
     "GeneralSettings": "General settings",
     "Accessibility": "Accessibility",
+    "AccessibleOutput": "Accessible Output",
     "Theme": "Theme",
     "LightTheme": "Light",
     "LightThemeARIA": "light theme on",
@@ -531,5 +532,25 @@
   "PreviewNav": {
     "EditSketchARIA": "Edit Sketch",
     "ByUser": "by"
+  },
+  "MobileNav":{
+    "Preferences": "Preferences",
+    "MyStuff": "My Stuff",
+    "Examples": "Examples",
+    "OriginalEditor": "Original Editor",
+    "Login": "Login",
+    "Logout": "Logout"
+  },
+  "MobileDashboardView": {
+    "Examples": "Examples",
+    "Sketches": "Sketches",
+    "Collections": "Collections",
+    "Assets": "Assets",
+    "MyStuff": "My Stuff",
+    "CreateSketch": "Create Sketch",
+    "CreateCollection": "Create Collection"
+  },
+  "MobileSideBar": {
+    "Files": "Files"
   }
 }

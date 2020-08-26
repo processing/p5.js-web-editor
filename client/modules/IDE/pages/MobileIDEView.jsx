@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 // Imports to be Refactored
@@ -63,22 +64,24 @@ const NavItem = styled.li`
   position: relative;
 `;
 
-const getNavOptions = (username = undefined, logoutUser = () => {}, toggleForceDesktop = () => {}) =>
-  (username
+const getNavOptions = (username = undefined, logoutUser = () => {}, toggleForceDesktop = () => {}) => {
+  const { t, i18n } = useTranslation();
+  return (username
     ? [
-      { icon: PreferencesIcon, title: 'Preferences', href: '/preferences', },
-      { icon: PreferencesIcon, title: 'My Stuff', href: `/${username}/sketches` },
-      { icon: PreferencesIcon, title: 'Examples', href: '/p5/sketches' },
-      { icon: PreferencesIcon, title: 'Original Editor', action: toggleForceDesktop, },
-      { icon: PreferencesIcon, title: 'Logout', action: logoutUser, },
+      { icon: PreferencesIcon, title: t('MobileNav.Preferences'), href: '/preferences', },
+      { icon: PreferencesIcon, title: t('MobileNav.MyStuff'), href: `/${username}/sketches` },
+      { icon: PreferencesIcon, title: t('MobileNav.Examples'), href: '/p5/sketches' },
+      { icon: PreferencesIcon, title: t('MobileNav.OriginalEditor'), action: toggleForceDesktop, },
+      { icon: PreferencesIcon, title: t('MobileNav.Logout'), action: logoutUser, },
     ]
     : [
-      { icon: PreferencesIcon, title: 'Preferences', href: '/preferences', },
-      { icon: PreferencesIcon, title: 'Examples', href: '/p5/sketches' },
-      { icon: PreferencesIcon, title: 'Original Editor', action: toggleForceDesktop, },
-      { icon: PreferencesIcon, title: 'Login', href: '/login', },
+      { icon: PreferencesIcon, title: t('MobileNav.Preferences'), href: '/preferences', },
+      { icon: PreferencesIcon, title: t('MobileNav.Examples'), href: '/p5/sketches' },
+      { icon: PreferencesIcon, title: t('MobileNav.OriginalEditor'), action: toggleForceDesktop, },
+      { icon: PreferencesIcon, title: t('MobileNav.Login'), href: '/login', },
     ]
   );
+};
 
 const MobileIDEView = (props) => {
   const {

@@ -1,11 +1,16 @@
-export const optionsOnOff = (name, onLabel = 'On', offLabel = 'Off') => [
-  {
-    value: true, label: onLabel, ariaLabel: `${name} on`, name: `${name}`, id: `${name}-on`.replace(' ', '-')
-  },
-  {
-    value: false, label: offLabel, ariaLabel: `${name} off`, name: `${name}`, id: `${name}-off`.replace(' ', '-')
-  },
-];
+import { useTranslation } from 'react-i18next';
+
+export const optionsOnOff = (name) => {
+  const { t, i18n } = useTranslation();
+  return [
+    {
+      value: true, label: t('Preferences.On'), ariaLabel: `${name} on`, name: `${name}`, id: `${name}-on`.replace(' ', '-')
+    },
+    {
+      value: false, label: t('Preferences.Off'), ariaLabel: `${name} off`, name: `${name}`, id: `${name}-off`.replace(' ', '-')
+    }
+  ];
+};
 
 export const optionsPickOne = (name, ...options) => options.map(option => ({
   value: option,
