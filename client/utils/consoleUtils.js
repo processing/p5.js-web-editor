@@ -38,22 +38,6 @@ export const hijackConsoleErrorsScript = (offs) => {
         }], '*');
       return false;
     };
-    // catch rejected promises
-    window.onunhandledrejection = function (event) {
-      if (event.reason && event.reason.message && event.reason.stack){
-        var errorNum = event.reason.stack.split('about:srcdoc:')[1].split(':')[0];
-        var fileInfo = getScriptOff(errorNum);
-        var data = event.reason.message + ' (' + fileInfo[1] + ': line ' + fileInfo[0] + ')';
-        window.parent.postMessage([{
-          log: [{
-            method: 'error',
-            data: [data],
-            id: Date.now().toString()
-          }],
-          source: fileInfo[1]
-        }], '*');
-      }
-    };
   `;
   return s;
 };
@@ -62,7 +46,7 @@ export const startTag = '@fs-';
 
 export const getAllScriptOffsets = (htmlFile) => {
   const offs = [];
-  const hijackConsoleErrorsScriptLength = 52;
+  const hijackConsoleErrorsScriptLength = 36;
   const embeddedJSStart = 'script crossorigin=""';
   let foundJSScript = true;
   let foundEmbeddedJS = true;
