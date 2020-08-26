@@ -86,7 +86,7 @@ class Toolbar extends React.Component {
             this.props.setTextOutput(true);
             this.props.setGridOutput(true);
           }}
-          aria-label="Play sketch"
+          aria-label={this.props.t('Toolbar.PlaySketchARIA')}
           disabled={this.props.infiniteLoop}
         >
           <PlayIcon focusable="false" aria-hidden="true" />
@@ -94,7 +94,7 @@ class Toolbar extends React.Component {
         <button
           className={playButtonClass}
           onClick={this.props.startSketch}
-          aria-label="Play only visual sketch"
+          aria-label={this.props.t('Toolbar.PlayOnlyVisualSketchARIA')}
           disabled={this.props.infiniteLoop}
         >
           <PlayIcon focusable="false" aria-hidden="true" />
@@ -102,7 +102,7 @@ class Toolbar extends React.Component {
         <button
           className={stopButtonClass}
           onClick={this.props.stopSketch}
-          aria-label="Stop sketch"
+          aria-label={this.props.t('Toolbar.StopSketchARIA')}
         >
           <StopIcon focusable="false" aria-hidden="true" />
         </button>
@@ -129,7 +129,7 @@ class Toolbar extends React.Component {
               }
             }}
             disabled={!canEditProjectName}
-            aria-label="Edit sketch name"
+            aria-label={this.props.t('Toolbar.EditSketchARIA')}
           >
             <span>{this.props.project.name}</span>
             {
@@ -145,7 +145,7 @@ class Toolbar extends React.Component {
             type="text"
             maxLength="128"
             className="toolbar__project-name-input"
-            aria-label="New sketch name"
+            aria-label={this.props.t('Toolbar.NewSketchNameARIA')}
             value={this.state.projectNameInputValue}
             onChange={this.handleProjectNameChange}
             ref={(element) => { this.projectNameInput = element; }}
@@ -165,7 +165,7 @@ class Toolbar extends React.Component {
         <button
           className={preferencesButtonClass}
           onClick={this.props.openPreferences}
-          aria-label="Open Preferences"
+          aria-label={this.props.t('Toolbar.OpenPreferencesARIA')}
         >
           <PreferencesIcon focusable="false" aria-hidden="true" />
         </button>
@@ -200,6 +200,7 @@ Toolbar.propTypes = {
   saveProject: PropTypes.func.isRequired,
   currentUser: PropTypes.string,
   t: PropTypes.func.isRequired
+
 };
 
 Toolbar.defaultProps = {
@@ -225,6 +226,5 @@ const mapDispatchToProps = {
   ...projectActions,
 };
 
-export const ToolbarComponent = Toolbar;
-// export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);
-export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(Toolbar));
+export const ToolbarComponent = withTranslation()(Toolbar);
+export default connect(mapStateToProps, mapDispatchToProps)(ToolbarComponent);

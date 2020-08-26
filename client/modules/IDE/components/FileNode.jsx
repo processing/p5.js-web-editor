@@ -67,7 +67,7 @@ FileName.propTypes = {
   name: PropTypes.string.isRequired
 };
 
-export class FileNode extends React.Component {
+class FileNode extends React.Component {
   constructor(props) {
     super(props);
 
@@ -419,4 +419,7 @@ const TranslatedFileNode = withTranslation()(FileNode);
 
 const ConnectedFileNode = connect(mapStateToProps, mapDispatchToProps)(TranslatedFileNode);
 
-export default ConnectedFileNode;
+export {
+  TranslatedFileNode as FileNode,
+  ConnectedFileNode as default
+};
