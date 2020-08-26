@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
+import { withTranslation } from 'react-i18next';
 import { updateSettings, initiateVerification, createApiKey, removeApiKey } from '../actions';
 
 import Button from '../../../common/Button';
@@ -17,7 +18,7 @@ import SketchList from '../../IDE/components/SketchList';
 import { CollectionSearchbar, SketchSearchbar } from '../../IDE/components/Searchbar';
 
 import CollectionCreate from '../components/CollectionCreate';
-import DashboardTabSwitcher, { TabKey } from '../components/DashboardTabSwitcher';
+import DashboardTabSwitcherPublic, { TabKey } from '../components/DashboardTabSwitcher';
 
 class DashboardView extends React.Component {
   static defaultProps = {
@@ -75,7 +76,7 @@ class DashboardView extends React.Component {
     browserHistory.push(`/${this.ownerName()}/collections`);
   }
 
-  renderActionButton(tabKey, username) {
+  renderActionButton(tabKey, username, t) {
     switch (tabKey) {
       case TabKey.assets:
         return this.isOwner() && <AssetSize />;
@@ -83,7 +84,7 @@ class DashboardView extends React.Component {
         return this.isOwner() && (
           <React.Fragment>
             <Button to={`/${username}/collections/create`}>
-              Create collection
+              {t('DashboardView.CreateCollection')}
             </Button>
             <CollectionSearchbar />
           </React.Fragment>);
@@ -91,7 +92,7 @@ class DashboardView extends React.Component {
       default:
         return (
           <React.Fragment>
-            {this.isOwner() && <Button to="/">New sketch</Button>}
+            {this.isOwner() && <Button to="/">{t('DashboardView.NewSketch')}</Button>}
             <SketchSearchbar />
           </React.Fragment>
         );
@@ -114,7 +115,7 @@ class DashboardView extends React.Component {
     const currentTab = this.selectedTabKey();
     const isOwner = this.isOwner();
     const { username } = this.props.params;
-    const actions = this.renderActionButton(currentTab, username);
+    const actions = this.renderActionButton(currentTab, username, this.props.t);
 
     return (
       <div className="dashboard">
@@ -124,7 +125,7 @@ class DashboardView extends React.Component {
           <div className="dashboard-header__header">
             <h2 className="dashboard-header__header__title">{this.ownerName()}</h2>
             <div className="dashboard-header__nav">
-              <DashboardTabSwitcher currentTab={currentTab} isOwner={isOwner} username={username} />
+              <DashboardTabSwitcherPublic currentTab={currentTab} isOwner={isOwner} username={username} />
               {actions &&
                 <div className="dashboard-header__actions">
                   {actions}
@@ -139,7 +140,7 @@ class DashboardView extends React.Component {
         </main>
         {this.isCollectionCreate() &&
           <Overlay
-            title="Create collection"
+            title={this.props.t('DashboardView.CreateCollectionOverlay')}
             closeOverlay={this.returnToDashboard}
           >
             <CollectionCreate />
@@ -176,6 +177,7 @@ DashboardView.propTypes = {
   user: PropTypes.shape({
     username: PropTypes.string,
   }),
+  t: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardView);
+export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(DashboardView));

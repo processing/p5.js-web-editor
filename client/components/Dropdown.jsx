@@ -36,9 +36,7 @@ const DropdownWrapper = styled.ul`
     background-color: ${prop('Button.hover.background')};
     color: ${prop('Button.hover.foreground')};
 
-    & button, & a {
-      color: ${prop('Button.hover.foreground')};
-    }
+    * { color: ${prop('Button.hover.foreground')}; }
   }
 
   li {
@@ -48,12 +46,21 @@ const DropdownWrapper = styled.ul`
     align-items: center;
 
     & button,
+    & button span,
     & a {
-      color: ${prop('primaryTextColor')};
-      width: 100%;
-      text-align: left;
       padding: ${remSize(8)} ${remSize(16)};
     }
+
+    * {
+      text-align: left;
+      justify-content: left;
+
+      color: ${prop('primaryTextColor')};
+      width: 100%;
+      justify-content: flex-start;
+    }
+
+    & button span { padding: 0px }
   }
 `;
 
@@ -63,24 +70,29 @@ const DropdownWrapper = styled.ul`
 const Dropdown = ({ items, align }) => (
   <DropdownWrapper align={align} >
     {/* className="nav__items-left" */}
-    {items && items.map(({ title, icon, href }) => (
+    {items && items.map(({
+      title, icon, href, action
+    }) => (
       <li key={`nav-${title && title.toLowerCase()}`}>
-        <Link to={href}>
-          {/* {MaybeIcon(icon, `Navigate to ${title}`)} */}
-          {title}
-        </Link>
+        {/* {MaybeIcon(icon, `Navigate to ${title}`)} */}
+        {href
+          ? <IconButton to={href}>{title}</IconButton>
+          : <IconButton onClick={() => action()}>{title}</IconButton>}
+
       </li>
     ))
     }
   </DropdownWrapper>
 );
 
+
 Dropdown.propTypes = {
   align: PropTypes.oneOf(['left', 'right']),
   items: PropTypes.arrayOf(PropTypes.shape({
     action: PropTypes.func,
     icon: PropTypes.func,
-    href: PropTypes.string
+    href: PropTypes.string,
+    title: PropTypes.string
   })),
 };
 
