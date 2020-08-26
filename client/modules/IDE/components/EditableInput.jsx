@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-
+import { withTranslation } from 'react-i18next';
+import i18next from 'i18next';
 import EditIcon from '../../../images/pencil.svg';
+
 
 // TODO I think this needs a description prop so that it's accessible
 function EditableInput({
@@ -58,7 +60,7 @@ function EditableInput({
       <button
         className="editable-input__label"
         onClick={beginEditing}
-        aria-label={`Edit ${displayValue} value`}
+        aria-label={this.props.t('EditableInput.EditValue', { display: displayValue })}
       >
         <span>{displayValue}</span>
         <EditIcon
@@ -84,7 +86,7 @@ function EditableInput({
 }
 
 EditableInput.defaultProps = {
-  emptyPlaceholder: 'No value',
+  emptyPlaceholder: i18next.t('EditableInput.EmptyPlaceholder'),
   InputComponent: 'input',
   inputProps: {},
   validate: () => true,
@@ -99,6 +101,7 @@ EditableInput.propTypes = {
   onChange: PropTypes.func.isRequired,
   validate: PropTypes.func,
   value: PropTypes.string,
+  t: PropTypes.func.isRequired
 };
 
-export default EditableInput;
+export default withTranslation()(EditableInput);
