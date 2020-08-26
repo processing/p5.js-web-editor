@@ -8,7 +8,7 @@ import Icons from './Icons';
 const Item = ({
   isAdded, onSelect, name, url, t
 }) => {
-  const buttonLabel = isAdded ? 'Remove from collection' : 'Add to collection';
+  const buttonLabel = isAdded ? t('QuickAddList.ButtonRemoveARIA') : t('QuickAddList.ButtonAddToCollectionARIA');
   return (
     <li className="quick-add__item" onClick={onSelect}> { /* eslint-disable-line */ }
       <button className="quick-add__item-toggle" onClick={onSelect} aria-label={buttonLabel}>
