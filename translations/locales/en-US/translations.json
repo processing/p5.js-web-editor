@@ -468,8 +468,8 @@
     "AriaLabel": "Close {{title}} overlay"
   },
   "QuickAddList":{
-    "ButtonLabelRemove": "Remove from collection",
-    "ButtonLabelAddToCollection": "Add to collection",
+    "ButtonRemoveARIA": "Remove from collection",
+    "ButtonAddToCollectionARIA": "Add to collection",
     "View": "View"
   },
   "SketchList": {

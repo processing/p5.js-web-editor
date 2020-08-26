@@ -468,8 +468,8 @@
     "AriaLabel": "Cerrar la capa {{title}}"
   },
   "QuickAddList":{
-    "ButtonLabelRemove": "Remover de colección",
-    "ButtonLabelAddToCollection": "Agregar a colección",
+    "ButtonRemoveARIA": "Remover de colección",
+    "ButtonAddToCollectionARIA": "Agregar a colección",
     "View": "Ver"
   },
   "SketchList": {
