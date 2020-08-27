@@ -32,7 +32,7 @@ function handleMessageEvent(e) {
     decodedMessages.forEach((message) => {
       const { data: args } = message;
       const consoleInfo = handleConsoleExpressions(args);
-      const resultMessages = [{ log: Encode({ method: 'result', data: Encode(consoleInfo) }) }];
+      const resultMessages = [{ log: Encode({ method: 'result', data: [consoleInfo] }) }];
       window.parent.postMessage({
         messages: resultMessages,
         source: 'sketch'
