@@ -52,7 +52,7 @@ class PreviewFrame extends React.Component {
       isAccessibleOutputPlaying: this.props.isAccessibleOutputPlaying
     };
     if (shouldRenderSketch(props)) this.renderSketch();
-    registerFrame(this.iframe.current);
+    registerFrame(this.iframe.current.contentWindow);
   }
 
   componentDidUpdate(prevProps) {

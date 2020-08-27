@@ -24,7 +24,6 @@ setInterval(() => {
 }, LOGWAIT);
 
 function handleMessageEvent(e) {
-  console.log('in preview entry handle message event');
   if (window.origin !== e.origin) return;
   const { data } = e;
   const { source, messages } = data;
