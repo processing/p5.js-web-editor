@@ -133,13 +133,11 @@
 .preview-console__body {
 	display: flex;
 	flex-direction: column-reverse;
+	height: calc(100% - #{30 / $base-font-size}rem);
 
 	.preview-console__message {
 		flex: 1 0 auto;
 		position: relative;
-	}
-
-	.preview-console__message {
 		@include themify() {
 			color: getThemifyVariable('console-logged-times-color');
 		}

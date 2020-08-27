@@ -36,15 +36,6 @@ class ConsoleInput extends React.Component {
           messages
         });
         this.props.dispatchConsoleEvent(consoleEvent);
-
-        // // need to get access to iframe here?
-        // // could pass "evaluate console function"
-        // // could make a component that handles all of this messaging
-        // window.postMessage([{
-        //   log: Encode({ method: 'command', data: Encode(value) }),
-        //   source: 'console'
-        // }], '*');
-
         cm.setValue('');
       }
       return true;

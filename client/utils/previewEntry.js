@@ -31,26 +31,7 @@ function handleMessageEvent(e) {
     const decodedMessages = messages.map(message => Decode(message.log));
     decodedMessages.forEach((message) => {
       const { data: args } = message;
-      //   let consoleInfo = '';
-      //   const consoleBuffer = [];
-      //   const LOGWAIT = 100;
-      //   Hook(window.console, (log) => {
-      //     consoleBuffer.push({
-      //       log,
-      //       source: 'sketch'
-      //     });
-      //   });
-      //   setInterval(() => {
-      //     if (consoleBuffer.length > 0) {
-      //       window.postMessage(consoleBuffer, '*');
-      //       consoleBuffer.length = 0;
-      //     }
-      //   }, LOGWAIT);
       const consoleInfo = handleConsoleExpressions(args);
-      //   Unhook(window.console);
-      //   if (!consoleInfo) {
-      //     return false;
-      //   }
       window.postMessage([{
         log: Encode({ method: 'result', data: Encode(consoleInfo) }),
         source: 'sketch'
