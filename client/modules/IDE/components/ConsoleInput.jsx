@@ -29,8 +29,8 @@ class ConsoleInput extends React.Component {
         if (value.trim(' ') === '') {
           return false;
         }
-        const messages = [{ log: Encode({ method: 'command', data: Encode(value) }) }];
-        const consoleEvent = [{ method: 'command', data: Encode(value) }];
+        const messages = [{ log: Encode({ method: 'command', data: [value] }) }];
+        const consoleEvent = [{ method: 'command', data: [value] }];
         dispatch({
           source: 'console',
           messages

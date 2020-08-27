@@ -6,15 +6,22 @@ function __makeEvaluateExpression(evalInClosure) {
 function evaluateExpression() {
   return __makeEvaluateExpression((expr) => {
     let newExpr = expr;
+    let result = null;
+    let error = false;
     try {
-      const wrapped = `(${expr})`;
-      const validate = new Function(wrapped); // eslint-disable-line
-      newExpr = wrapped; // eslint-disable-line
+      try {
+        const wrapped = `(${expr})`;
+        const validate = new Function(wrapped); // eslint-disable-line
+        newExpr = wrapped; // eslint-disable-line
+      } catch (e) {
+        // We shouldn't wrap the expression
+      }
+      result = (0, eval)(newExpr); // eslint-disable-line
     } catch (e) {
-      // We shouldn't wrap the expression
+      result = e;
+      error = true;
     }
-
-    return (0, eval)(newExpr); // eslint-disable-line
+    return { result, error };
   });
 }
 

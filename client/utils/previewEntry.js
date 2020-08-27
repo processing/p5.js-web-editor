@@ -31,8 +31,8 @@ function handleMessageEvent(e) {
     const decodedMessages = messages.map(message => Decode(message.log));
     decodedMessages.forEach((message) => {
       const { data: args } = message;
-      const consoleInfo = handleConsoleExpressions(args);
-      const resultMessages = [{ log: Encode({ method: 'result', data: [consoleInfo] }) }];
+      const { result, error } = handleConsoleExpressions(args);
+      const resultMessages = [{ log: Encode({ method: error ? 'error' : 'result', data: [result] }) }];
       window.parent.postMessage({
         messages: resultMessages,
         source: 'sketch'
