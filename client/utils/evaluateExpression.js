@@ -18,7 +18,7 @@ function evaluateExpression() {
       }
       result = (0, eval)(newExpr); // eslint-disable-line
     } catch (e) {
-      result = e;
+      result = `${e.name}: ${e.message}`;
       error = true;
     }
     return { result, error };
