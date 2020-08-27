@@ -6,6 +6,14 @@ import Backend from 'i18next-http-backend';
 const fallbackLng = ['en-US'];
 const availableLanguages = ['en-US', 'es-419'];
 
+export function languageKeyToLabel(lang) {
+  const languageMap = {
+    'en-US': 'English',
+    'es-419': 'Español'
+  };
+  return languageMap[lang];
+}
+
 const options = {
   loadPath: '/locales/{{lng}}/translations.json',
   requestOptions: { // used for fetch, can also be a function (payload) => ({ method: 'GET' })
