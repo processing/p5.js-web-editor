@@ -32,10 +32,11 @@ function handleMessageEvent(e) {
     decodedMessages.forEach((message) => {
       const { data: args } = message;
       const consoleInfo = handleConsoleExpressions(args);
-      window.postMessage([{
-        log: Encode({ method: 'result', data: Encode(consoleInfo) }),
+      const resultMessages = [{ log: Encode({ method: 'result', data: Encode(consoleInfo) }) }];
+      window.parent.postMessage({
+        messages: resultMessages,
         source: 'sketch'
-      }], window.origin);
+      }, window.origin);
     });
   }
 }
