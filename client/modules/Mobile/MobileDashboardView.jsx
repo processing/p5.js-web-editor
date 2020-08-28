@@ -139,7 +139,7 @@ const Panels = {
 
 
 const navOptions = (username) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   return [
     { title: t('MobileDashboardView.CreateSketch'), href: '/' },
     { title: t('MobileDashboardView.CreateCollection'), href: `/${username}/collections/create` }
@@ -166,7 +166,7 @@ const MobileDashboard = ({ params, location }) => {
   const user = useSelector(state => state.user);
   const { username: paramsUsername } = params;
   const { pathname } = location;
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const Tabs = Object.keys(Panels);
   const TabLabels = {

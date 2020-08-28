@@ -44,33 +44,33 @@ const MobilePreferences = () => {
     setTheme, setAutosave, setLinewrap, setTextOutput, setGridOutput, setSoundOutput, setLineNumbers, setLintWarning,
   } = bindActionCreators({ ...PreferencesActions, ...IdeActions }, useDispatch());
 
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const generalSettings = [
     {
-      title: t('Preferences.Theme'),
+      title: t('MobilePreferences.Theme'),
       value: theme,
       options: optionsPickOne(
-        t('Preferences.Theme'),
-        t('Preferences.LightTheme'),
-        t('Preferences.DarkTheme'),
-        t('Preferences.HighContrastTheme')
+        t('MobilePreferences.Theme'),
+        t('MobilePreferences.LightTheme'),
+        t('MobilePreferences.DarkTheme'),
+        t('MobilePreferences.HighContrastTheme')
       ),
       onSelect: x => setTheme(x) // setTheme
     },
-    preferenceOnOff(t('Preferences.Autosave'), autosave, setAutosave, 'autosave'),
-    preferenceOnOff(t('Preferences.WordWrap'), linewrap, setLinewrap, 'linewrap')
+    preferenceOnOff(t('MobilePreferences.Autosave'), autosave, setAutosave, 'autosave'),
+    preferenceOnOff(t('MobilePreferences.WordWrap'), linewrap, setLinewrap, 'linewrap')
   ];
 
   const outputSettings = [
-    preferenceOnOff(t('Preferences.PlainText'), textOutput, setTextOutput, 'text output'),
-    preferenceOnOff(t('Preferences.TableText'), gridOutput, setGridOutput, 'table output'),
-    preferenceOnOff(t('Preferences.Sound'), soundOutput, setSoundOutput, 'sound output')
+    preferenceOnOff(t('MobilePreferences.PlainText'), textOutput, setTextOutput, 'text output'),
+    preferenceOnOff(t('MobilePreferences.TableText'), gridOutput, setGridOutput, 'table output'),
+    preferenceOnOff(t('MobilePreferences.Sound'), soundOutput, setSoundOutput, 'sound output')
   ];
 
   const accessibilitySettings = [
-    preferenceOnOff(t('Preferences.LineNumbers'), lineNumbers, setLineNumbers),
-    preferenceOnOff(t('Preferences.LintWarningSound'), lintWarning, setLintWarning)
+    preferenceOnOff(t('MobilePreferences.LineNumbers'), lineNumbers, setLineNumbers),
+    preferenceOnOff(t('MobilePreferences.LintWarningSound'), lintWarning, setLintWarning)
   ];
 
   return (
@@ -81,14 +81,14 @@ const MobilePreferences = () => {
         </Header>
         <section className="preferences">
           <Content>
-            <SectionHeader>{t('Preferences.GeneralSettings')}</SectionHeader>
+            <SectionHeader>{t('MobilePreferences.GeneralSettings')}</SectionHeader>
             { generalSettings.map(option => <PreferencePicker key={`${option.title}wrapper`} {...option} />) }
 
-            <SectionHeader>{t('Preferences.Accessibility')}</SectionHeader>
+            <SectionHeader>{t('MobilePreferences.Accessibility')}</SectionHeader>
             { accessibilitySettings.map(option => <PreferencePicker key={`${option.title}wrapper`} {...option} />) }
 
-            <SectionHeader>{t('Preferences.AccessibleOutput')}</SectionHeader>
-            <SectionSubeader>{t('Preferences.UsedScreenReader')}</SectionSubeader>
+            <SectionHeader>{t('MobilePreferences.AccessibleOutput')}</SectionHeader>
+            <SectionSubeader>{t('MobilePreferences.UsedScreenReader')}</SectionSubeader>
             { outputSettings.map(option => <PreferencePicker key={`${option.title}wrapper`} {...option} />) }
 
           </Content>

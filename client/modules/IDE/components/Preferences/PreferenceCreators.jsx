@@ -1,13 +1,13 @@
 import { useTranslation } from 'react-i18next';
 
 export const optionsOnOff = (name) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   return [
     {
-      value: true, label: t('Preferences.On'), ariaLabel: `${name} on`, name: `${name}`, id: `${name}-on`.replace(' ', '-')
+      value: true, label: t('PreferenceCreators.On'), ariaLabel: `${name} on`, name: `${name}`, id: `${name}-on`.replace(' ', '-')
     },
     {
-      value: false, label: t('Preferences.Off'), ariaLabel: `${name} off`, name: `${name}`, id: `${name}-off`.replace(' ', '-')
+      value: false, label: t('PreferenceCreators.Off'), ariaLabel: `${name} off`, name: `${name}`, id: `${name}-off`.replace(' ', '-')
     }
   ];
 };

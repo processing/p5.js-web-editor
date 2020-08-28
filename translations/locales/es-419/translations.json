@@ -114,7 +114,6 @@
     "Settings": "Configuración",
     "GeneralSettings": "Configuración general",
     "Accessibility": "Accesibilidad",
-    "AccessibleOutput": "Salida accesible",
     "Theme": "Modo de visualización",
     "LightTheme": "Claro",
     "LightThemeARIA": "Modo de visualización claro activado",
@@ -533,7 +532,29 @@
     "EditSketchARIA": "Editar Bosquejo",
     "ByUser": "por"
   },
-  "MobileNav":{
+  "MobilePreferences": {
+    "Settings": "Configuración",
+    "GeneralSettings": "Configuración general",
+    "Accessibility": "Accesibilidad",
+    "AccessibleOutput": "Salida accesible",
+    "Theme": "Modo de visualización",
+    "LightTheme": "Claro",
+    "DarkTheme": "Oscuro",
+    "HighContrastTheme": "Alto contraste",
+    "Autosave": "Grabar automáticamente",
+    "WordWrap": "Ajuste automático de línea",
+    "LineNumbers": "Número de línea",
+    "LintWarningSound": "Sonido de alarma Lint",
+    "UsedScreenReader": "Uso con screen reader",
+    "PlainText": "Texto sin formato",
+    "TableText": "Tablero de texto",
+    "Sound": "Sonido"
+  },
+  "PreferenceCreators": {
+    "On": "Activar",
+    "Off": "Desactivar"
+  },
+  "MobileIDEView":{
     "Preferences": "Preferencias",
     "MyStuff": "Mis cosas",
     "Examples": "Ejemplos",
@@ -550,7 +571,7 @@
     "CreateSketch": "Crear bosquejo",
     "CreateCollection": "Crear colección"
   },
-  "MobileSideBar": {
+  "Explorer": {
     "Files": "Archivos"
   }
 }
