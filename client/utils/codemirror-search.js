@@ -49,7 +49,7 @@ export default function(CodeMirror) {
     else return false;
   }
 
-  function persistentDialog(cm, text, deflt, onEnter, onKeyDown) {
+  function persistentDialog(cm, text, deflt, onEnter, replaceOpened, onKeyDown) {
     var searchField = document.getElementsByClassName("CodeMirror-search-field")[0];
     if (!searchField) {
       cm.openDialog(text, onEnter, {
@@ -63,7 +63,7 @@ export default function(CodeMirror) {
         closeOnBlur: false
       });
 
-      searchField = document.getElementsByClassName("CodeMirror-search-field")[0];
+      searchField = document.getElementById("Find-input-field");
 
       var dialog = document.getElementsByClassName("CodeMirror-dialog")[0];
       var closeButton = dialog.getElementsByClassName("close")[0];
@@ -141,6 +141,35 @@ export default function(CodeMirror) {
         el.setAttribute('aria-checked', nextState);
         return nextState;
       }
+
+      var showReplaceButton = dialog.getElementsByClassName("CodeMirror-replace-button")[0];
+      var replaceDiv = dialog.getElementsByClassName("Replace-div")[0];
+      if (replaceOpened) {
+        replaceDiv.style.height = "138px";
+      }
+      CodeMirror.on(showReplaceButton, "click", function () {
+        if (replaceDiv.style.height === "0px") {
+          replaceDiv.style.height = "138px";
+        } else {
+          replaceDiv.style.height = "0px";
+        }
+      });
+
+      var replaceField = document.getElementById('Replace-input-field');
+      CodeMirror.on(replaceField, "keyup", function (e) {
+        if (e.keyCode == 13)  // if enter
+        {
+          startSearch(cm, getSearchState(cm), searchField.value);
+          replace(cm, parseString(searchField.value), parseString(replaceField.value));
+        }
+      })
+
+      var doReplaceButton = document.getElementById('Btn-replace');
+      CodeMirror.on(doReplaceButton, "click", function(e) {
+        startSearch(cm, getSearchState(cm), searchField.value);
+        replace(cm, parseString(searchField.value), parseString(replaceField.value));
+      })
+
     } else {
       searchField.focus();
       searchField.select();
@@ -232,59 +261,6 @@ export default function(CodeMirror) {
     return regexp;
   }
 
-  var queryDialog = `
-    <h3 class="CodeMirror-search-title">Find</h3>
-    <input type="text" class="search-input CodeMirror-search-field" placeholder="Find in files" />
-    <div class="CodeMirror-search-actions">
-      <div class="CodeMirror-search-modifiers button-wrap">
-        <button
-          title="Regular expression"
-          aria-label="Regular expression"
-          role="checkbox"
-          class="CodeMirror-search-modifier-button CodeMirror-regexp-button"
-        >
-          <span aria-hidden="true" class="button">.*</span>
-        </button>
-        <button
-          title="Case sensitive"
-          aria-label="Case sensitive"
-          role="checkbox"
-          class="CodeMirror-search-modifier-button CodeMirror-case-button"
-        >
-          <span aria-hidden="true" class="button">Aa</span>
-        </button>
-        <button
-          title="Whole words"
-          aria-label="Whole words"
-          role="checkbox"
-          class="CodeMirror-search-modifier-button CodeMirror-word-button"
-        >
-          <span aria-hidden="true" class="button">" "</span>
-        </button>
-      </div>
-      <div class="CodeMirror-search-nav">
-        <button class="CodeMirror-search-results"></button>
-        <button
-          title="Previous"
-          aria-label="Previous"
-          class="CodeMirror-search-button icon up-arrow prev"
-        >
-        </button>
-        <button
-          title="Next"
-          aria-label="Next"
-          class="CodeMirror-search-button icon down-arrow next"
-        >
-        </button>
-      </div>
-    </div>
-    <button
-      title="Close"
-      aria-label="Close"
-      class="CodeMirror-close-button close icon">
-    </button>
-  `;
-
   function startSearch(cm, state, originalQuery) {
     state.queryText = originalQuery;
     state.query = parseQuery(originalQuery, state);
@@ -298,6 +274,60 @@ export default function(CodeMirror) {
     }
     if (originalQuery) {
       return findNext(cm, false);
+    }
+  }
+
+  function doFindAndReplace(cm, rev, persistent, immediate, ignoreQuery, replaceOpened) {
+    var state = getSearchState(cm);
+    if (!ignoreQuery && state.query) {
+      console.log('Here');
+      return findNext(cm, rev);
+    }
+    var q = cm.getSelection() || state.lastQuery;
+    if (persistent && cm.openDialog) {
+      var hiding = null;
+      var searchNext = function(query, event) {
+        CodeMirror.e_stop(event);
+        if (!query) return;
+        if (query != state.queryText) {
+          startSearch(cm, state, query);
+          state.posFrom = state.posTo = cm.getCursor();
+        }
+        if (hiding) hiding.style.opacity = 1
+        findNext(cm, event.shiftKey, function(_, to) {
+          var dialog
+          if (to.line < 3 && document.querySelector &&
+            (dialog = cm.display.wrapper.querySelector(".CodeMirror-dialog")) &&
+            dialog.getBoundingClientRect().bottom - 4 > cm.cursorCoords(to, "window").top)
+            (hiding = dialog).style.opacity = 1
+        })
+      };
+      persistentDialog(cm, queryDialog, q, searchNext, replaceOpened, function(event, query) {
+        var keyName = CodeMirror.keyName(event)
+        var cmd = CodeMirror.keyMap[cm.getOption("keyMap")][keyName]
+        if (!cmd) cmd = cm.getOption('extraKeys')[keyName]
+        if (cmd == "findNext" || cmd == "findPrev" ||
+          cmd == "findPersistentNext" || cmd == "findPersistentPrev") {
+          CodeMirror.e_stop(event);
+          startSearch(cm, getSearchState(cm), query);
+          cm.execCommand(cmd);
+        } else if (cmd == "find" || cmd == "findPersistent") {
+          CodeMirror.e_stop(event);
+          searchNext(query, event);
+        }
+      });
+      if (immediate && q) {
+        startSearch(cm, state, q);
+        findNext(cm, rev);
+      }
+    } else {
+      dialog(cm, queryDialog, "Search for:", q, function(query) {
+        if (query && !state.query) cm.operation(function() {
+          startSearch(cm, state, query);
+          state.posFrom = state.posTo = cm.getCursor();
+          findNext(cm, rev);
+        });
+      });
     }
   }
 
@@ -382,12 +412,6 @@ export default function(CodeMirror) {
     if (state.annotate) { state.annotate.clear(); state.annotate = null; }
   });}
 
-  var replaceQueryDialog =
-    '<input type="text" class="search-input CodeMirror-search-field"/><div class="close icon"></div>';
-
-  var replacementQueryDialog = 'With: <input type="text" class="replace-input CodeMirror-search-field"/>';
-  var doReplaceConfirm = "Replace? <button>Yes</button> <button>No</button> <button>All</button> <button>Stop</button>";
-
   function replaceAll(cm, query, text) {
     cm.operation(function() {
       for (var cursor = getSearchCursor(cm, query); cursor.findNext();) {
@@ -399,60 +423,128 @@ export default function(CodeMirror) {
     });
   }
 
-  // TODO: This will need updating if replace is implemented
-  function replace(cm, all) {
+  function replace(cm, queryText, withText, all) {
+    if (!queryText) return;    
     const state = getSearchState(cm);
     var prevDialog = document.getElementsByClassName("CodeMirror-dialog")[0];
     if (prevDialog) {
       clearSearch(cm);
-      prevDialog.parentNode.removeChild(prevDialog);
-      cm.focus();
     }
+    prevDialog.parentNode.removeChild(prevDialog);
+    cm.focus();
     if (cm.getOption("readOnly")) return;
     var query = cm.getSelection() || state.lastQuery;
-    var dialogText = all ? "Replace all:" : "Replace:"
-    dialog(cm, dialogText + replaceQueryDialog, dialogText, query, function(query) {
-      if (!query) return;
-      query = parseQuery(query, state);
 
-      dialog(cm, replacementQueryDialog, "Replace with:", "", function(text) {
-        text = parseString(text)
-        if (all) {
-          replaceAll(cm, query, text)
-        } else {
-          clearSearch(cm);
-          var cursor = getSearchCursor(cm, query, cm.getCursor("from"));
-          var advance = function() {
-            var start = cursor.from(), match;
-            if (!(match = cursor.findNext())) {
-              cursor = getSearchCursor(cm, query);
-              if (!(match = cursor.findNext()) ||
-                (start && cursor.from().line == start.line && cursor.from().ch == start.ch)) return;
-            }
-            cm.setSelection(cursor.from(), cursor.to());
-            cm.scrollIntoView({from: cursor.from(), to: cursor.to()}, 60);
-            confirmDialog(cm, doReplaceConfirm, "Replace?",
-              [function() {doReplace(match);}, advance,
-                function() {replaceAll(cm, query, text)}]);
-          };
-          var doReplace = function(match) {
-            cursor.replace(typeof query == "string" ? text :
-              text.replace(/\$(\d)/g, function(_, i) {return match[i];}));
-            advance();
-          };
-          advance();
+    if (all) {
+      replaceAll(cm, query, withText)
+    } else {
+      clearSearch(cm);
+      var cursor = getSearchCursor(cm, query, cm.getCursor("from"));
+      var advance = function() {
+        var start = cursor.from(), match;
+        if (!(match = cursor.findNext())) {
+          cursor = getSearchCursor(cm, query);
+          if (!(match = cursor.findNext()) ||
+            (start && cursor.from().line == start.line && cursor.from().ch == start.ch)) return;
         }
-      });
-    });
+        cm.setSelection(cursor.from(), cursor.to());
+        cm.scrollIntoView({from: cursor.from(), to: cursor.to()}, 60);
+        confirmDialog(cm, doReplaceConfirm, "Replace?",
+          [function() {doReplace(match);}, advance,
+            function() {replaceAll(cm, query, withText)}]);
+      };
+      var doReplace = function(match) {
+        cursor.replace(typeof query == "string" ? withText :
+          withText.replace(/\$(\d)/g, function(_, i) {return match[i];}));
+        advance();
+      };
+      advance();
+    }
   }
 
-  CodeMirror.commands.find = function(cm) {doSearch(cm);};
-  CodeMirror.commands.findPersistent = function(cm) { doSearch(cm, false, true, false, true);};
-  CodeMirror.commands.findPersistentNext = function(cm) {doSearch(cm, false, true, true);};
-  CodeMirror.commands.findPersistentPrev = function(cm) {doSearch(cm, true, true, true);};
+  var doReplaceConfirm = "<button>Replace</button> <button>Skip</button> <button>Replace All</button> <button>Stop</button>";
+
+  var queryDialog = `
+    <h3 class="CodeMirror-search-title">Find</h3>
+    <input id="Find-input-field" type="text" class="search-input CodeMirror-search-field" placeholder="Find in files" />
+    <div class="CodeMirror-search-actions">
+      <div class="CodeMirror-search-modifiers button-wrap">
+        <button
+          title="Regular expression"
+          aria-label="Regular expression"
+          role="checkbox"
+          class="CodeMirror-search-modifier-button CodeMirror-regexp-button"
+        >
+          <span aria-hidden="true" class="button">.*</span>
+        </button>
+        <button
+          title="Case sensitive"
+          aria-label="Case sensitive"
+          role="checkbox"
+          class="CodeMirror-search-modifier-button CodeMirror-case-button"
+        >
+          <span aria-hidden="true" class="button">Aa</span>
+        </button>
+        <button
+          title="Whole words"
+          aria-label="Whole words"
+          role="checkbox"
+          class="CodeMirror-search-modifier-button CodeMirror-word-button"
+        >
+          <span aria-hidden="true" class="button">" "</span>
+        </button>
+        <button
+          title="Replace"
+          aria-label="Replace"
+          role="button"
+          class="CodeMirror-search-modifier-button CodeMirror-replace-button"
+        >
+          <span aria-hidden="true" class="button">Replace</span>
+        </button>
+      </div>
+      <div class="CodeMirror-search-nav">
+        <button class="CodeMirror-search-results"></button>
+        <button
+          title="Previous"
+          aria-label="Previous"
+          class="CodeMirror-search-button icon up-arrow prev"
+        >
+        </button>
+        <button
+          title="Next"
+          aria-label="Next"
+          class="CodeMirror-search-button icon down-arrow next"
+        >
+        </button>
+      </div>
+    </div>
+    <button
+      title="Close"
+      aria-label="Close"
+      class="CodeMirror-close-button close icon">
+    </button>
+    <div style="height: 0px; transition: 0.4s; overflow: hidden;" class="Replace-div">
+      <hr/>
+      <h3 class="CodeMirror-search-title">Replace</h3>
+      <input id="Replace-input-field" type="text" placeholder="Text to replace" class="search-input CodeMirror-search-field"/><div class="close icon"></div>
+      <button
+        title="Replace"
+        aria-label="Replace"
+        role="button"
+        id="Btn-replace"
+        class="CodeMirror-search-modifier-button CodeMirror-replace-button"
+      >
+        <span aria-hidden="true" class="button">Replace</span>
+      </button>
+    </div>
+  `;
+
+  CodeMirror.commands.findPersistent = function(cm) {doFindAndReplace(cm, false, true, false, true, false);};
+  CodeMirror.commands.findPersistentNext = function(cm) {doFindAndReplace(cm, false, true, false, true, false);};
+  CodeMirror.commands.findPersistentPrev = function(cm) {doFindAndReplace(cm, false, true, false, true, false);};
   CodeMirror.commands.findNext = doSearch;
   CodeMirror.commands.findPrev = function(cm) {doSearch(cm, true);};
   CodeMirror.commands.clearSearch = clearSearch;
-  CodeMirror.commands.replace = replace;
-  CodeMirror.commands.replaceAll = function(cm) {replace(cm, true);};
+  CodeMirror.commands.replace = function(cm) { doFindAndReplace(cm, false, true, false, true, true); };
+  CodeMirror.commands.replaceAll = function(cm) { doFindAndReplace(cm, false, true, false, true, true); };
 };
