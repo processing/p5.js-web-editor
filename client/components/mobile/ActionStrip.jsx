@@ -32,7 +32,7 @@ const ActionStrip = ({ actions }) => (
         icon={icon}
         aria-label={aria}
         key={`bottom-bar-${aria}`}
-        onClick={() => action()}
+        onClick={action}
       />))}
   </BottomBarContent>);
 

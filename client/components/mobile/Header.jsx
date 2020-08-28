@@ -38,7 +38,7 @@ const HeaderDiv = styled.div`
 
   .editor__unsaved-changes svg {
     width: ${remSize(16)};
-    padding: 0px;
+    padding: 0;
     vertical-align: top
   }
 `;

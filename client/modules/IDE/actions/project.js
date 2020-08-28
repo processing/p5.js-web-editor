@@ -188,7 +188,7 @@ export function saveProject(selectedFile = null, autosave = false, mobile = fals
 
         dispatch(setNewProject(synchedProject));
         dispatch(setUnsavedChanges(false));
-        browserHistory.push(`${mobile ? '/mobile' : ''}/${response.data.user.username}/sketches/${response.data.id}`);
+        browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
 
         if (hasChanges) {
           dispatch(setUnsavedChanges(true));
