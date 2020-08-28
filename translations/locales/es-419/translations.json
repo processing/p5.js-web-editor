@@ -341,6 +341,30 @@
     "Verified": "Concluido, tu correo electrónico ha sido verificado.",
     "InvalidState": "Algo salió mal."
   },
+  "AssetList": {
+    "Title": "Editor Web p5.js | Mis assets",
+    "ToggleOpenCloseARIA": "Alternar Abrir/Cerrar Opciones de Asset",
+    "Delete": "Borrar",
+    "OpenNewTab": "Abrir en Nueva Pestaña",
+    "NoUploadedAssets": "No has subido archivos.",
+    "HeaderName": "Nombre",
+    "HeaderSize": "Tamaño",
+    "HeaderSketch": "Bosquejo"
+  },
+  "Feedback": {
+    "Title": "Editor Web p5.js | Retroalimentación",
+    "ViaGithubHeader": "Vía Github Issues",
+    "ViaGithubDescription": " Si estas familiarizado con Github, este es nuestro método favorito para recibir reporte de errores y retroalimentación.",
+    "GoToGithub": "Ir a Github",
+    "ViaGoogleHeader": "Vía Formulario de Google",
+    "ViaGoogleDescription": "También puedes enviar tu retroalimetnación usando esta vía rapida.",
+    "GoToForm": "Ir a Formulario"
+  },
+  "Searchbar": {
+    "SearchSketch": "Buscar en bosquejos...",
+    "SearchCollection": "Buscar en colecciones...",
+    "ClearTerm": "limpiar"
+  },
   "UploadFileModal": {
     "Title": "Subir Archivo",
     "CloseButtonARIA": "Cerrar diálogo para subir archivo",
@@ -444,8 +468,8 @@
     "AriaLabel": "Cerrar la capa {{title}}"
   },
   "QuickAddList":{
-    "ButtonLabelRemove": "Remove from collection",
-    "ButtonLabelAddToCollection": "Add to collection",
+    "ButtonRemoveARIA": "Remover de colección",
+    "ButtonAddToCollectionARIA": "Agregar a colección",
     "View": "Ver"
   },
   "SketchList": {
@@ -474,5 +498,38 @@
     "Title": "p5.js Web Editor | Mis bosquejos",
     "AnothersTitle": "Editor Web p5.js | Bosquejos de {{anotheruser}}",
     "NoCollections": "No hay colecciones."
+  },
+  "Editor": {
+    "OpenSketchARIA": "Abrir navegación de archivos de bosquejo",
+    "CloseSketchARIA": "Cerrar navegación de archivos de bosquejo",
+    "UnsavedChangesARIA": "El bosquejo tiene cambios sin guardar",
+    "KeyUpLineNumber": "línea {{lineNumber}}"
+  },
+  "EditorAccessibility": {
+    "NoLintMessages": "No hay mensajes de Lint",
+    "CurrentLine": " Línea actual"
+  },
+  "Timer": {
+    "SavedJustNow": "Guardado: justo ahora",
+    "Saved15Seconds": "Guardado: hace 15 segundos",
+    "Saved25Seconds": "Guardado: hace 25 segundos",
+    "Saved35Seconds": "Guardado: hace 35 segundos",
+    "SavedAgo": "Guardado: hace {{timeAgo}}"
+  },
+  "AddRemoveButton": {
+    "AltAddARIA": "Agregar a colección",
+    "AltRemoveARIA": "Remover de colección"
+  },
+  "CopyableInput": {
+    "CopiedARIA": "¡Copiado en el portapapeles!",
+    "OpenViewTabARIA": "Abrir la vista {{label}} en nueva pestaña"
+  },
+  "EditableInput": {
+    "EditValue": "Editar valor de {{display}}",
+    "EmptyPlaceholder": "Sin valor"
+  },
+  "PreviewNav": {
+    "EditSketchARIA": "Editar Bosquejo",
+    "ByUser": "por"
   }
 }

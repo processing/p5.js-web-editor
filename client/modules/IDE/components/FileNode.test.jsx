@@ -1,5 +1,6 @@
 import React from 'react';
-import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+
+import { fireEvent, render, screen, waitFor, within } from '../../../test-utils';
 import { FileNode } from './FileNode';
 
 describe('<FileNode />', () => {
