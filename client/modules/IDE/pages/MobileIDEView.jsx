@@ -35,6 +35,7 @@ import ActionStrip from '../../../components/mobile/ActionStrip';
 import useAsModal from '../../../components/useAsModal';
 import { PreferencesIcon } from '../../../common/icons';
 import Dropdown from '../../../components/Dropdown';
+import FloatingPreview from '../../../components/mobile/FloatingPreview';
 
 const getRootFile = files => files && files.filter(file => file.name === 'root')[0];
 const getRootFileID = files => (root => root && root.id)(getRootFile(files));
@@ -179,6 +180,7 @@ const MobileIDEView = (props) => {
           provideController={setTmController}
           setUnsavedChanges={setUnsavedChanges}
         />
+        <FloatingPreview />
       </IDEWrapper>
 
       <Footer>
