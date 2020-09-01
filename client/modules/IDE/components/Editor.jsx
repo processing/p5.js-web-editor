@@ -87,7 +87,6 @@ class Editor extends React.Component {
     this.findNext = this.findNext.bind(this);
     this.findPrev = this.findPrev.bind(this);
     this.showReplace = this.showReplace.bind(this);
-    this.showReplaceAll = this.showReplaceAll.bind(this);
     this.getContent = this.getContent.bind(this);
   }
 
@@ -140,7 +139,6 @@ class Editor extends React.Component {
       [`${metaKey}-G`]: 'findNext',
       [`Shift-${metaKey}-G`]: 'findPrev',
       [`${metaKey}-R`]: 'replace',
-      [`Shift-${metaKey}-R`]: 'replaceAll',
     });
 
     this.initializeDocuments(this.props.files);
@@ -175,7 +173,6 @@ class Editor extends React.Component {
       findNext: this.findNext,
       findPrev: this.findPrev,
       showReplace: this.showReplace,
-      showReplaceAll: this.showReplaceAll,
       getContent: this.getContent
     });
   }
@@ -291,10 +288,6 @@ class Editor extends React.Component {
 
   showReplace() {
     this._cm.execCommand('replace');
-  }
-
-  showReplaceAll() {
-    this._cm.execCommand('replaceAll');
   }
 
   tidyCode() {

@@ -43,7 +43,6 @@ class Nav extends React.PureComponent {
     this.handleRun = this.handleRun.bind(this);
     this.handleFindPrevious = this.handleFindPrevious.bind(this);
     this.handleReplace = this.handleReplace.bind(this);
-    this.handleReplaceAll = this.handleReplaceAll.bind(this);
     this.handleStop = this.handleStop.bind(this);
     this.handleStartAccessible = this.handleStartAccessible.bind(this);
     this.handleStopAccessible = this.handleStopAccessible.bind(this);
@@ -138,11 +137,6 @@ class Nav extends React.PureComponent {
 
   handleReplace() {
     this.props.cmController.showReplace();
-    this.setDropdown('none');
-  }
-
-  handleReplaceAll() {
-    this.props.cmController.showReplaceAll();
     this.setDropdown('none');
   }
 
@@ -436,16 +430,6 @@ class Nav extends React.PureComponent {
               >
                 {this.props.t('Nav.Edit.Replace')}
                 <span className="nav__keyboard-shortcut">{metaKeyName}+R</span>
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onClick={this.handleReplaceAll}
-                onFocus={this.handleFocusForEdit}
-                onBlur={this.handleBlur}
-              >
-                {this.props.t('Nav.Edit.ReplaceAll')}
-                <span className="nav__keyboard-shortcut">{'\u21E7'}+{metaKeyName}+R</span>
               </button>
             </li>
           </ul>
@@ -810,7 +794,6 @@ Nav.propTypes = {
     findNext: PropTypes.func,
     findPrev: PropTypes.func,
     showReplace: PropTypes.func,
-    showReplaceAll: PropTypes.func,
     getContent: PropTypes.func
   }),
   startSketch: PropTypes.func.isRequired,
