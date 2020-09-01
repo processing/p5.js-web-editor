@@ -71,7 +71,11 @@ export default function(CodeMirror) {
       var state = getSearchState(cm);
 
       CodeMirror.on(searchField, "keyup", function (e) {
-        if (e.keyCode !== 13 && searchField.value.length > 1) { // not enter and more than 1 character to search
+        if (e.keyCode === 13) {
+          // If enter is pressed, then shift focus to replace field
+          replaceField.focus();
+        }
+        else if (e.keyCode !== 13 && searchField.value.length > 1) { // not enter and more than 1 character to search
           startSearch(cm, getSearchState(cm), searchField.value);
         } else if (searchField.value.length <= 1) {
           cm.display.wrapper.querySelector('.CodeMirror-search-results').innerText = '';
@@ -157,7 +161,7 @@ export default function(CodeMirror) {
 
       var replaceField = document.getElementById('Replace-input-field');
       CodeMirror.on(replaceField, "keyup", function (e) {
-        if (e.keyCode == 13)  // if enter
+        if (e.keyCode === 13)  // if enter
         {
           startSearch(cm, getSearchState(cm), searchField.value);
           replace(cm, parseString(searchField.value), parseString(replaceField.value));
@@ -168,6 +172,12 @@ export default function(CodeMirror) {
       CodeMirror.on(doReplaceButton, "click", function(e) {
         startSearch(cm, getSearchState(cm), searchField.value);
         replace(cm, parseString(searchField.value), parseString(replaceField.value));
+      })
+
+      var doReplaceAllButton = document.getElementById('Btn-replace-all');
+      CodeMirror.on(doReplaceAllButton, "click", function(e) {
+        startSearch(cm, getSearchState(cm), searchField.value);
+        replace(cm, parseString(searchField.value), parseString(replaceField.value), true);
       })
 
     } else {
@@ -482,6 +492,15 @@ export default function(CodeMirror) {
         class="CodeMirror-search-modifier-button CodeMirror-replace-button"
       >
         <span aria-hidden="true" class="button">Replace</span>
+      </button>
+      <button
+        title="Replace All"
+        aria-label="Replace All"
+        role="button"
+        id="Btn-replace-all"
+        class="CodeMirror-search-modifier-button CodeMirror-replace-button"
+      >
+        <span aria-hidden="true" class="button">Replace All</span>
       </button>
     </div>
   `;
