@@ -35,6 +35,12 @@ const HeaderDiv = styled.div`
   }
 
   & svg path { fill: ${textColor} !important; }
+
+  .editor__unsaved-changes svg {
+    width: ${remSize(16)};
+    padding: 0;
+    vertical-align: top
+  }
 `;
 
 const IconContainer = styled.div`
@@ -71,8 +77,9 @@ const Header = ({
   </HeaderDiv>
 );
 
+
 Header.propTypes = {
-  title: PropTypes.string,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   subtitle: PropTypes.string,
   leftButton: PropTypes.element,
   children: PropTypes.oneOfType([PropTypes.element, PropTypes.arrayOf(PropTypes.element)]),
