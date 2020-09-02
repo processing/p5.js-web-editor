@@ -61,13 +61,13 @@ class AssetListRowBase extends React.Component {
   handleAssetDelete = () => {
     const { key, name } = this.props.asset;
     this.closeOptions();
-    if (window.confirm(`Are you sure you want to delete "${name}"?`)) {
+    if (window.confirm(this.props.t('Common.DeleteConfirmation', { name }))) {
       this.props.deleteAssetRequest(key);
     }
   }
 
   render() {
-    const { asset, username } = this.props;
+    const { asset, username, t } = this.props;
     const { optionsOpen } = this.state;
     return (
       <tr className="asset-table__row" key={asset.key}>
@@ -86,7 +86,7 @@ class AssetListRowBase extends React.Component {
             onClick={this.toggleOptions}
             onBlur={this.onBlurComponent}
             onFocus={this.onFocusComponent}
-            aria-label={this.props.t('AssetList.ToggleOpenCloseARIA')}
+            aria-label={t('AssetList.ToggleOpenCloseARIA')}
           >
             <DownFilledTriangleIcon focusable="false" aria-hidden="true" />
           </button>
@@ -101,7 +101,7 @@ class AssetListRowBase extends React.Component {
                   onBlur={this.onBlurComponent}
                   onFocus={this.onFocusComponent}
                 >
-                  {this.props.t('AssetList.Delete')}
+                  {t('AssetList.Delete')}
                 </button>
               </li>
               <li>
@@ -112,7 +112,7 @@ class AssetListRowBase extends React.Component {
                   onFocus={this.onFocusComponent}
                   className="asset-table__action-option"
                 >
-                  {this.props.t('AssetList.OpenNewTab')}
+                  {t('AssetList.OpenNewTab')}
                 </Link>
               </li>
             </ul>}
@@ -194,7 +194,7 @@ class AssetList extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {assetList.map(asset => <AssetListRow asset={asset} key={asset.key} />)}
+              {assetList.map(asset => <AssetListRow asset={asset} key={asset.key} t={t} />)}
             </tbody>
           </table>}
       </article>
