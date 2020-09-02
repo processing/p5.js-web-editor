@@ -27,6 +27,8 @@ import { CSSLint } from 'csslint';
 import { HTMLHint } from 'htmlhint';
 import classNames from 'classnames';
 import { debounce } from 'lodash';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import '../../../utils/htmlmixed';
 import '../../../utils/p5-javascript';
 import '../../../utils/webGL-clike';
@@ -40,6 +42,16 @@ import beepUrl from '../../../sounds/audioAlert.mp3';
 import UnsavedChangesDotIcon from '../../../images/unsaved-changes-dot.svg';
 import RightArrowIcon from '../../../images/right-arrow.svg';
 import LeftArrowIcon from '../../../images/left-arrow.svg';
+import { getHTMLFile } from '../reducers/files';
+
+import * as FileActions from '../actions/files';
+import * as IDEActions from '../actions/ide';
+import * as ProjectActions from '../actions/project';
+import * as EditorAccessibilityActions from '../actions/editorAccessibility';
+import * as PreferencesActions from '../actions/preferences';
+import * as UserActions from '../../User/actions';
+import * as ToastActions from '../actions/toast';
+import * as ConsoleActions from '../actions/console';
 
 search(CodeMirror);
 
@@ -413,4 +425,47 @@ Editor.defaultProps = {
   consoleEvents: [],
 };
 
-export default withTranslation()(Editor);
+
+function mapStateToProps(state) {
+  return {
+    files: state.files,
+    file:
+      state.files.find(file => file.isSelectedFile) ||
+      state.files.find(file => file.name === 'sketch.js') ||
+      state.files.find(file => file.name !== 'root'),
+    htmlFile: getHTMLFile(state.files),
+    ide: state.ide,
+    preferences: state.preferences,
+    editorAccessibility: state.editorAccessibility,
+    user: state.user,
+    project: state.project,
+    toast: state.toast,
+    console: state.console,
+
+    ...state.preferences,
+    ...state.ide,
+    ...state.project,
+    ...state.editorAccessibility,
+    isExpanded: state.ide.consoleIsExpanded,
+    projectSavedTime: state.project.updatedAt
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    Object.assign(
+      {},
+      EditorAccessibilityActions,
+      FileActions,
+      ProjectActions,
+      IDEActions,
+      PreferencesActions,
+      UserActions,
+      ToastActions,
+      ConsoleActions
+    ),
+    dispatch
+  );
+}
+
+export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(Editor));
