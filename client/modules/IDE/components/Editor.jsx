@@ -446,7 +446,7 @@ function mapStateToProps(state) {
     ...state.ide,
     ...state.project,
     ...state.editorAccessibility,
-    isExpanded: state.ide.consoleIsExpanded,
+    isExpanded: state.ide.sidebarIsExpanded,
     projectSavedTime: state.project.updatedAt
   };
 }
