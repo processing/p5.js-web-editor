@@ -22,6 +22,7 @@ import UnsavedChangesDotIcon from '../../../images/unsaved-changes-dot.svg';
 
 import IconButton from '../../../components/mobile/IconButton';
 import Header from '../../../components/mobile/Header';
+import Toast from '../components/Toast';
 import Screen from '../../../components/mobile/MobileScreen';
 import Footer from '../../../components/mobile/Footer';
 import IDEWrapper from '../../../components/mobile/IDEWrapper';
@@ -188,7 +189,7 @@ const MobileIDEView = (props) => {
   const {
     ide, preferences, project, selectedFile, user, params, unsavedChanges, expandConsole, collapseConsole,
     stopSketch, startSketch, getProject, clearPersistedState, autosaveProject, saveProject, files,
-    toggleForceDesktop, logoutUser
+    toggleForceDesktop, logoutUser, toast
   } = props;
 
 
@@ -248,6 +249,7 @@ const MobileIDEView = (props) => {
 
   return (
     <Screen fullscreen>
+      {toast.isVisible && <Toast />}
       <Explorer />
       <Header
         title={withChangeDot(project.name, unsavedChanges)}
@@ -335,6 +337,10 @@ MobileIDEView.propTypes = {
     authenticated: PropTypes.bool.isRequired,
     id: PropTypes.string,
     username: PropTypes.string,
+  }).isRequired,
+
+  toast: PropTypes.shape({
+    isVisible: PropTypes.bool
   }).isRequired,
 
   logoutUser: PropTypes.func.isRequired,
