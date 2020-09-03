@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import { bindActionCreators } from 'redux';
 
 import * as IDEActions from '../actions/ide';
+import * as UserActions from '../../User/actions';
 import * as ProjectActions from '../actions/project';
 import * as ConsoleActions from '../actions/console';
 import * as PreferencesActions from '../actions/preferences';
@@ -248,6 +249,7 @@ const MobileIDEView = (props) => {
     },
     () => {
       if (showFloatingPreview) {
+        stopSketch();
         setShowFloatingPreview(false);
       } else {
         startSketch();
@@ -398,6 +400,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   ...ProjectActions,
   ...IDEActions,
   ...ConsoleActions,
+  ...UserActions,
   ...PreferencesActions,
   ...EditorAccessibilityActions
 }, dispatch);
