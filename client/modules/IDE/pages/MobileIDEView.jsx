@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
+import { withRouter, browserHistory } from 'react-router';
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -240,7 +240,13 @@ const MobileIDEView = (props) => {
 
   useEventListener('keydown', handleGlobalKeydown(props, cmController), false, [props]);
 
-  const playPressEvents = useLongPress(() => alert('haha'), startSketch);
+  const pressPlayEvents = useLongPress(
+    () => alert('haha'),
+    () => {
+      startSketch();
+      browserHistory.push('/preview');
+    }
+  );
 
   const projectActions =
     [{
@@ -267,7 +273,7 @@ const MobileIDEView = (props) => {
           <NavDropDown />
         </NavItem>
         <li>
-          <IconButton to="/preview" {...playPressEvents} icon={PlayIcon} aria-label="Run sketch" />
+          <IconButton {...pressPlayEvents} icon={PlayIcon} aria-label="Run sketch" />
         </li>
       </Header>
 
