@@ -28,7 +28,7 @@ const FloatingContainer = styled.div`
 
   position: absolute;
   display: flex;
-  z-index: 999;
+  z-index: 0;
   
 
   .preview-frame { position: relative }

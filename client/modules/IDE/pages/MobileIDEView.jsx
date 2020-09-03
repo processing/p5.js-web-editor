@@ -240,11 +240,19 @@ const MobileIDEView = (props) => {
 
   useEventListener('keydown', handleGlobalKeydown(props, cmController), false, [props]);
 
+  const [showFloatingPreview, setShowFloatingPreview] = useState(true);
   const pressPlayEvents = useLongPress(
-    () => alert('haha'),
     () => {
       startSketch();
-      browserHistory.push('/preview');
+      setShowFloatingPreview(!showFloatingPreview);
+    },
+    () => {
+      if (showFloatingPreview) {
+        setShowFloatingPreview(false);
+      } else {
+        startSketch();
+        browserHistory.push('/preview');
+      }
     }
   );
 
@@ -281,6 +289,9 @@ const MobileIDEView = (props) => {
         <Editor provideController={setCmController} />
       </IDEWrapper>
 
+      {showFloatingPreview && <FloatingPreview />}
+      {/* <FloatingPreview /> */}
+
       <Footer>
         {consoleIsExpanded && (
           <Expander expanded>
@@ -292,6 +303,7 @@ const MobileIDEView = (props) => {
     </Screen>
   );
 };
+
 
 const handleGlobalKeydownProps = {
   expandConsole: PropTypes.func.isRequired,
