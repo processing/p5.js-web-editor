@@ -35,7 +35,7 @@ import Dropdown from '../../../components/Dropdown';
 import FloatingPreview from '../../../components/mobile/FloatingPreview';
 
 
-import { useEffectWithComparison, useEventListener } from '../../../utils/custom-hooks';
+import { useEffectWithComparison, useEventListener, useLongPress } from '../../../utils/custom-hooks';
 
 import * as device from '../../../utils/device';
 
@@ -224,6 +224,7 @@ const MobileIDEView = (props) => {
     align="right"
   />);
 
+
   const [toggleExplorer, Explorer] = useAsModal(toggle =>
     (<MobileExplorer
       id={getRootFileID(files)}
@@ -238,6 +239,8 @@ const MobileIDEView = (props) => {
   });
 
   useEventListener('keydown', handleGlobalKeydown(props, cmController), false, [props]);
+
+  const playPressEvents = useLongPress(() => alert('haha'), startSketch);
 
   const projectActions =
     [{
@@ -264,7 +267,7 @@ const MobileIDEView = (props) => {
           <NavDropDown />
         </NavItem>
         <li>
-          <IconButton to="/preview" onClick={() => { startSketch(); }} icon={PlayIcon} aria-label="Run sketch" />
+          <IconButton to="/preview" {...playPressEvents} icon={PlayIcon} aria-label="Run sketch" />
         </li>
       </Header>
 

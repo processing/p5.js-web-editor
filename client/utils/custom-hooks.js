@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useCallback, useRef, useState } from 'react';
 
 export const noop = () => {};
 
@@ -53,7 +53,61 @@ export const useEffectWithComparison = (fn, props) => {
   }, Object.values(props));
 };
 
+// Creates a global event listener for the event
 export const useEventListener = (event, callback, useCapture = false, list = []) => useEffect(() => {
   document.addEventListener(event, callback, useCapture);
   return () => document.removeEventListener(event, callback, useCapture);
 }, list);
+
+const isTouchEvent = event => 'touches' in event;
+
+const preventDefault = (event) => {
+  if (!isTouchEvent(event)) return;
+
+  if (event.touches.length < 2 && event.preventDefault) {
+    event.preventDefault();
+  }
+};
+
+// Use Long Press: Creates a set of events based on a longPress and an onClick event creators.
+export const useLongPress = (onLongPress, onClick, { shouldPreventDefault = true, delay = 300 } = {}) => {
+  const [longPressTriggered, setLongPressTriggered] = useState(false);
+  const timeout = useRef();
+  const target = useRef();
+
+  const start = useCallback(
+    (event) => {
+      if (shouldPreventDefault && event.target) {
+        event.target.addEventListener('touchend', preventDefault, {
+          passive: false
+        });
+        target.current = event.target;
+      }
+      timeout.current = setTimeout(() => {
+        onLongPress(event);
+        setLongPressTriggered(true);
+      }, delay);
+    },
+    [onLongPress, delay, shouldPreventDefault]
+  );
+
+  const clear = useCallback(
+    (event, shouldTriggerClick = true) => {
+      if (timeout.current) clearTimeout(timeout.current);
+      if (shouldTriggerClick && !longPressTriggered) onClick();
+      setLongPressTriggered(false);
+      if (shouldPreventDefault && target.current) {
+        target.current.removeEventListener('touchend', preventDefault);
+      }
+    },
+    [shouldPreventDefault, onClick, longPressTriggered]
+  );
+
+  return {
+    onMouseDown: e => start(e),
+    onTouchStart: e => start(e),
+    onMouseUp: e => clear(e),
+    onMouseLeave: e => clear(e, false),
+    onTouchEnd: e => clear(e)
+  };
+};
