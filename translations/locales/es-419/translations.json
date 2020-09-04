@@ -43,8 +43,8 @@
       "My": "Mi",
       "MySketches": "Mis bosquejos",
       "MyCollections": "Mis colecciones",
-      "Asset": "Asset",
-      "MyAssets": "Mis assets",
+      "Asset": "Recurso",
+      "MyAssets": "Mis recursos",
       "LogOut": "Cerrar sesión"
     }
   },
@@ -342,11 +342,11 @@
     "InvalidState": "Algo salió mal."
   },
   "AssetList": {
-    "Title": "Editor Web p5.js | Mis assets",
-    "ToggleOpenCloseARIA": "Alternar Abrir/Cerrar Opciones de Asset",
+    "Title": "Editor Web p5.js | Mis recursos",
+    "ToggleOpenCloseARIA": "Alternar Abrir/Cerrar Opciones de Recurso",
     "Delete": "Borrar",
     "OpenNewTab": "Abrir en Nueva Pestaña",
-    "NoUploadedAssets": "No has subido archivos.",
+    "NoUploadedAssets": "No has subido recursos.",
     "HeaderName": "Nombre",
     "HeaderSize": "Tamaño",
     "HeaderSketch": "Bosquejo"
@@ -439,7 +439,7 @@
   "DashboardTabSwitcher": {
     "Sketches": "Bosquejos",
     "Collections": "Colecciones ",
-    "Assets": "Assets"
+    "Assets": "Recursos"
   },
   "CollectionList": {
     "Title": "p5.js Web Editor | Mis colecciones",
