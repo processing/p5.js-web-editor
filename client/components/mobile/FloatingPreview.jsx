@@ -19,14 +19,28 @@ import { remSize } from '../../theme';
 
 const maxDimension = 12;
 
+/* height: 100%; */
+// overflow: hidden;
+/* width: 100%; */
+/* display: flex; */
+/* align-items: flex-end; */
+/* justify-content: flex-end; */
+
 const FloatingContainer = styled.div`
+  & {
+    height: 20rem;
+    width: 20rem;
+    right: 1rem;
+    bottom: 4rem;
+    overflow: hidden;
+  };
   &, body, iframe, html {
     /* position: relative; */
-    height: 100%;
-    width: 100%;
+    /* height: 100%; */
+    /* width: 100%; */
   }
 
-  position: absolute;
+  position: fixed;
   display: flex;
   z-index: 0;
   
@@ -36,6 +50,7 @@ const FloatingContainer = styled.div`
   iframe {
     /* bottom: ${remSize(maxDimension + 64)}; */
     /* right: ${remSize(maxDimension + 64)}; */
+    
   }
 `;
 

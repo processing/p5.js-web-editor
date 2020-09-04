@@ -190,7 +190,7 @@ const MobileIDEView = (props) => {
   const {
     ide, preferences, project, selectedFile, user, params, unsavedChanges, expandConsole, collapseConsole,
     stopSketch, startSketch, getProject, clearPersistedState, autosaveProject, saveProject, files,
-    toggleForceDesktop, logoutUser
+    toggleForceDesktop, logoutUser, setAutorefresh
   } = props;
 
 
@@ -245,9 +245,11 @@ const MobileIDEView = (props) => {
   const pressPlayEvents = useLongPress(
     () => {
       startSketch();
+      setAutorefresh(true);
       setShowFloatingPreview(!showFloatingPreview);
     },
     () => {
+      setAutorefresh(false);
       if (showFloatingPreview) {
         stopSketch();
         setShowFloatingPreview(false);
@@ -374,7 +376,7 @@ MobileIDEView.propTypes = {
 
   unsavedChanges: PropTypes.bool.isRequired,
   autosaveProject: PropTypes.func.isRequired,
-
+  setAutorefresh: PropTypes.func.isRequired,
 
   ...handleGlobalKeydownProps
 };
