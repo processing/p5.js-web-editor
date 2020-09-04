@@ -3,6 +3,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { withTranslation } from 'react-i18next';
 // import find from 'lodash/find';
 import * as ProjectsActions from '../actions/projects';
 import * as CollectionsActions from '../actions/collections';
@@ -32,9 +33,9 @@ class SketchList extends React.Component {
 
   getSketchesTitle() {
     if (this.props.username === this.props.user.username) {
-      return 'p5.js Web Editor | My sketches';
+      return this.props.t('AddToCollectionSketchList.Title');
     }
-    return `p5.js Web Editor | ${this.props.username}'s sketches`;
+    return this.props.t('AddToCollectionSketchList.AnothersTitle', { anotheruser: this.props.username });
   }
 
   handleCollectionAdd = (sketch) => {
@@ -68,7 +69,7 @@ class SketchList extends React.Component {
         />
       );
     } else {
-      content = 'No collections';
+      content = this.props.t('AddToCollectionSketchList.NoCollections');
     }
 
     return (
@@ -113,6 +114,7 @@ SketchList.propTypes = {
   }).isRequired,
   addToCollection: PropTypes.func.isRequired,
   removeFromCollection: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired
 };
 
 SketchList.defaultProps = {
@@ -136,4 +138,4 @@ function mapDispatchToProps(dispatch) {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SketchList);
+export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(SketchList));

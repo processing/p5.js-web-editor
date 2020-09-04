@@ -11,6 +11,8 @@ import apiClient from '../../../utils/apiClient';
 import { validateSignup } from '../../../utils/reduxFormUtils';
 import SocialAuthButton from '../components/SocialAuthButton';
 import Nav from '../../../components/Nav';
+import ResponsiveForm from '../components/ResponsiveForm';
+
 
 class SignupView extends React.Component {
   gotoHomePage = () => {
@@ -110,13 +112,13 @@ SignupView.propTypes = {
   user: PropTypes.shape({
     authenticated: PropTypes.bool
   }),
-  t: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
 };
 
 SignupView.defaultProps = {
   user: {
     authenticated: false
-  }
+  },
 };
 
 export default withTranslation()(reduxForm({

@@ -343,46 +343,7 @@ class IDEView extends React.Component {
                 allowResize={this.props.ide.consoleIsExpanded}
                 className="editor-preview-subpanel"
               >
-                <Editor
-                  lintWarning={this.props.preferences.lintWarning}
-                  linewrap={this.props.preferences.linewrap}
-                  lintMessages={this.props.editorAccessibility.lintMessages}
-                  updateLintMessage={this.props.updateLintMessage}
-                  clearLintMessage={this.props.clearLintMessage}
-                  file={this.props.selectedFile}
-                  updateFileContent={this.props.updateFileContent}
-                  fontSize={this.props.preferences.fontSize}
-                  lineNumbers={this.props.preferences.lineNumbers}
-                  files={this.props.files}
-                  editorOptionsVisible={this.props.ide.editorOptionsVisible}
-                  showEditorOptions={this.props.showEditorOptions}
-                  closeEditorOptions={this.props.closeEditorOptions}
-                  showKeyboardShortcutModal={
-                    this.props.showKeyboardShortcutModal
-                  }
-                  setUnsavedChanges={this.props.setUnsavedChanges}
-                  isPlaying={this.props.ide.isPlaying}
-                  theme={this.props.preferences.theme}
-                  startRefreshSketch={this.props.startRefreshSketch}
-                  stopSketch={this.props.stopSketch}
-                  autorefresh={this.props.preferences.autorefresh}
-                  unsavedChanges={this.props.ide.unsavedChanges}
-                  projectSavedTime={this.props.project.updatedAt}
-                  isExpanded={this.props.ide.sidebarIsExpanded}
-                  expandSidebar={this.props.expandSidebar}
-                  collapseSidebar={this.props.collapseSidebar}
-                  isUserOwner={isUserOwner(this.props)}
-                  clearConsole={this.props.clearConsole}
-                  consoleEvents={this.props.console}
-                  showRuntimeErrorWarning={this.props.showRuntimeErrorWarning}
-                  hideRuntimeErrorWarning={this.props.hideRuntimeErrorWarning}
-                  runtimeErrorWarningVisible={
-                    this.props.ide.runtimeErrorWarningVisible
-                  }
-                  provideController={(ctl) => {
-                    this.cmController = ctl;
-                  }}
-                />
+                <Editor provideController={(ctl) => { this.cmController = ctl; }} />
                 <Console />
               </SplitPane>
               <section className="preview-frame-holder">
@@ -457,15 +418,15 @@ class IDEView extends React.Component {
           <Overlay
             title={this.props.t('IDEView.SubmitFeedback')}
             previousPath={this.props.ide.previousPath}
-            ariaLabel="submit-feedback"
+            ariaLabel={this.props.t('IDEView.SubmitFeedbackARIA')}
           >
             <Feedback previousPath={this.props.ide.previousPath} />
           </Overlay>
         )}
         {this.props.location.pathname.match(/add-to-collection$/) && (
           <Overlay
-            ariaLabel="add to collection"
-            title="Add to collection"
+            ariaLabel={this.props.t('IDEView.AddCollectionARIA')}
+            title={this.props.t('IDEView.AddCollectionTitle')}
             previousPath={this.props.ide.previousPath}
             actions={<CollectionSearchbar />}
             isFixedHeight
@@ -479,8 +440,8 @@ class IDEView extends React.Component {
         )}
         {this.props.ide.shareModalVisible && (
           <Overlay
-            title="Share"
-            ariaLabel="share"
+            title={this.props.t('IDEView.ShareTitle')}
+            ariaLabel={this.props.t('IDEView.ShareARIA')}
             closeOverlay={this.props.closeShareModal}
           >
             <ShareModal
@@ -501,8 +462,8 @@ class IDEView extends React.Component {
         )}
         {this.props.ide.errorType && (
           <Overlay
-            title="Error"
-            ariaLabel={this.props.t('Common.Error')}
+            title={this.props.t('Common.Error')}
+            ariaLabel={this.props.t('Common.ErrorARIA')}
             closeOverlay={this.props.hideErrorModal}
           >
             <ErrorModal
@@ -533,31 +494,25 @@ IDEView.propTypes = {
   }).isRequired,
   saveProject: PropTypes.func.isRequired,
   ide: PropTypes.shape({
-    isPlaying: PropTypes.bool.isRequired,
-    isAccessibleOutputPlaying: PropTypes.bool.isRequired,
-    consoleEvent: PropTypes.array, // eslint-disable-line
-    modalIsVisible: PropTypes.bool.isRequired,
-    sidebarIsExpanded: PropTypes.bool.isRequired,
-    consoleIsExpanded: PropTypes.bool.isRequired,
-    preferencesIsVisible: PropTypes.bool.isRequired,
-    projectOptionsVisible: PropTypes.bool.isRequired,
-    newFolderModalVisible: PropTypes.bool.isRequired,
+    errorType: PropTypes.string,
+    keyboardShortcutVisible: PropTypes.bool.isRequired,
     shareModalVisible: PropTypes.bool.isRequired,
     shareModalProjectId: PropTypes.string.isRequired,
     shareModalProjectName: PropTypes.string.isRequired,
     shareModalProjectUsername: PropTypes.string.isRequired,
-    editorOptionsVisible: PropTypes.bool.isRequired,
-    keyboardShortcutVisible: PropTypes.bool.isRequired,
-    unsavedChanges: PropTypes.bool.isRequired,
-    infiniteLoop: PropTypes.bool.isRequired,
-    previewIsRefreshing: PropTypes.bool.isRequired,
-    infiniteLoopMessage: PropTypes.string.isRequired,
-    projectSavedTime: PropTypes.string,
     previousPath: PropTypes.string.isRequired,
-    justOpenedProject: PropTypes.bool.isRequired,
-    errorType: PropTypes.string,
-    runtimeErrorWarningVisible: PropTypes.bool.isRequired,
+    previewIsRefreshing: PropTypes.bool.isRequired,
+    isPlaying: PropTypes.bool.isRequired,
+    isAccessibleOutputPlaying: PropTypes.bool.isRequired,
+    projectOptionsVisible: PropTypes.bool.isRequired,
+    preferencesIsVisible: PropTypes.bool.isRequired,
+    modalIsVisible: PropTypes.bool.isRequired,
     uploadFileModalVisible: PropTypes.bool.isRequired,
+    newFolderModalVisible: PropTypes.bool.isRequired,
+    justOpenedProject: PropTypes.bool.isRequired,
+    sidebarIsExpanded: PropTypes.bool.isRequired,
+    consoleIsExpanded: PropTypes.bool.isRequired,
+    unsavedChanges: PropTypes.bool.isRequired,
   }).isRequired,
   stopSketch: PropTypes.func.isRequired,
   project: PropTypes.shape({
@@ -572,11 +527,9 @@ IDEView.propTypes = {
   editorAccessibility: PropTypes.shape({
     lintMessages: PropTypes.array.isRequired, // eslint-disable-line
   }).isRequired,
-  updateLintMessage: PropTypes.func.isRequired,
-  clearLintMessage: PropTypes.func.isRequired,
   preferences: PropTypes.shape({
-    fontSize: PropTypes.number.isRequired,
     autosave: PropTypes.bool.isRequired,
+    fontSize: PropTypes.number.isRequired,
     linewrap: PropTypes.bool.isRequired,
     lineNumbers: PropTypes.bool.isRequired,
     lintWarning: PropTypes.bool.isRequired,
@@ -602,7 +555,6 @@ IDEView.propTypes = {
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
   })).isRequired,
-  updateFileContent: PropTypes.func.isRequired,
   selectedFile: PropTypes.shape({
     id: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
@@ -630,9 +582,6 @@ IDEView.propTypes = {
   closeNewFileModal: PropTypes.func.isRequired,
   createFolder: PropTypes.func.isRequired,
   closeShareModal: PropTypes.func.isRequired,
-  showEditorOptions: PropTypes.func.isRequired,
-  closeEditorOptions: PropTypes.func.isRequired,
-  showKeyboardShortcutModal: PropTypes.func.isRequired,
   closeKeyboardShortcutModal: PropTypes.func.isRequired,
   toast: PropTypes.shape({
     isVisible: PropTypes.bool.isRequired,
@@ -642,22 +591,14 @@ IDEView.propTypes = {
     setRouteLeaveHook: PropTypes.func,
   }).isRequired,
   route: PropTypes.oneOfType([PropTypes.object, PropTypes.element]).isRequired,
-  setUnsavedChanges: PropTypes.func.isRequired,
   setTheme: PropTypes.func.isRequired,
   endSketchRefresh: PropTypes.func.isRequired,
-  startRefreshSketch: PropTypes.func.isRequired,
   setBlobUrl: PropTypes.func.isRequired,
   setPreviousPath: PropTypes.func.isRequired,
-  console: PropTypes.arrayOf(PropTypes.shape({
-    method: PropTypes.string.isRequired,
-    args: PropTypes.arrayOf(PropTypes.string),
-  })).isRequired,
   clearConsole: PropTypes.func.isRequired,
   showErrorModal: PropTypes.func.isRequired,
   hideErrorModal: PropTypes.func.isRequired,
   clearPersistedState: PropTypes.func.isRequired,
-  showRuntimeErrorWarning: PropTypes.func.isRequired,
-  hideRuntimeErrorWarning: PropTypes.func.isRequired,
   startSketch: PropTypes.func.isRequired,
   openUploadFileModal: PropTypes.func.isRequired,
   closeUploadFileModal: PropTypes.func.isRequired,

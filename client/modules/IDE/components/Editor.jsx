@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import CodeMirror from 'codemirror';
 import beautifyJS from 'js-beautify';
+import { withTranslation } from 'react-i18next';
 import 'codemirror/mode/css/css';
 import 'codemirror/addon/selection/active-line';
 import 'codemirror/addon/lint/lint';
@@ -26,6 +27,8 @@ import { CSSLint } from 'csslint';
 import { HTMLHint } from 'htmlhint';
 import classNames from 'classnames';
 import { debounce } from 'lodash';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import '../../../utils/htmlmixed';
 import '../../../utils/p5-javascript';
 import '../../../utils/webGL-clike';
@@ -39,6 +42,16 @@ import beepUrl from '../../../sounds/audioAlert.mp3';
 import UnsavedChangesDotIcon from '../../../images/unsaved-changes-dot.svg';
 import RightArrowIcon from '../../../images/right-arrow.svg';
 import LeftArrowIcon from '../../../images/left-arrow.svg';
+import { getHTMLFile } from '../reducers/files';
+
+import * as FileActions from '../actions/files';
+import * as IDEActions from '../actions/ide';
+import * as ProjectActions from '../actions/project';
+import * as EditorAccessibilityActions from '../actions/editorAccessibility';
+import * as PreferencesActions from '../actions/preferences';
+import * as UserActions from '../../User/actions';
+import * as ToastActions from '../actions/toast';
+import * as ConsoleActions from '../actions/console';
 
 search(CodeMirror);
 
@@ -136,7 +149,7 @@ class Editor extends React.Component {
     }, 1000));
 
     this._cm.on('keyup', () => {
-      const temp = `line ${parseInt((this._cm.getCursor().line) + 1, 10)}`;
+      const temp = this.props.t('Editor.KeyUpLineNumber', { lineNumber: parseInt((this._cm.getCursor().line) + 1, 10) });
       document.getElementById('current-line').innerHTML = temp;
     });
 
@@ -317,14 +330,14 @@ class Editor extends React.Component {
       <section className={editorSectionClass} >
         <header className="editor__header">
           <button
-            aria-label="Open Sketch files navigation"
+            aria-label={this.props.t('Editor.OpenSketchARIA')}
             className="sidebar__contract"
             onClick={this.props.collapseSidebar}
           >
             <LeftArrowIcon focusable="false" aria-hidden="true" />
           </button>
           <button
-            aria-label="Close sketch files navigation"
+            aria-label={this.props.t('Editor.CloseSketchARIA')}
             className="sidebar__expand"
             onClick={this.props.expandSidebar}
           >
@@ -335,7 +348,7 @@ class Editor extends React.Component {
               {this.props.file.name}
               <span className="editor__unsaved-changes">
                 {this.props.unsavedChanges ?
-                  <UnsavedChangesDotIcon role="img" aria-label="Sketch has unsaved changes" focusable="false" /> :
+                  <UnsavedChangesDotIcon role="img" aria-label={this.props.t('Editor.UnsavedChangesARIA')} focusable="false" /> :
                   null}
               </span>
             </span>
@@ -403,7 +416,8 @@ Editor.propTypes = {
   showRuntimeErrorWarning: PropTypes.func.isRequired,
   hideRuntimeErrorWarning: PropTypes.func.isRequired,
   runtimeErrorWarningVisible: PropTypes.bool.isRequired,
-  provideController: PropTypes.func.isRequired
+  provideController: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired
 };
 
 Editor.defaultProps = {
@@ -411,4 +425,47 @@ Editor.defaultProps = {
   consoleEvents: [],
 };
 
-export default Editor;
+
+function mapStateToProps(state) {
+  return {
+    files: state.files,
+    file:
+      state.files.find(file => file.isSelectedFile) ||
+      state.files.find(file => file.name === 'sketch.js') ||
+      state.files.find(file => file.name !== 'root'),
+    htmlFile: getHTMLFile(state.files),
+    ide: state.ide,
+    preferences: state.preferences,
+    editorAccessibility: state.editorAccessibility,
+    user: state.user,
+    project: state.project,
+    toast: state.toast,
+    console: state.console,
+
+    ...state.preferences,
+    ...state.ide,
+    ...state.project,
+    ...state.editorAccessibility,
+    isExpanded: state.ide.sidebarIsExpanded,
+    projectSavedTime: state.project.updatedAt
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    Object.assign(
+      {},
+      EditorAccessibilityActions,
+      FileActions,
+      ProjectActions,
+      IDEActions,
+      PreferencesActions,
+      UserActions,
+      ToastActions,
+      ConsoleActions
+    ),
+    dispatch
+  );
+}
+
+export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(Editor));

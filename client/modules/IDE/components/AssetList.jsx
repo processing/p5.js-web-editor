@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import { Helmet } from 'react-helmet';
 import prettyBytes from 'pretty-bytes';
+import { withTranslation } from 'react-i18next';
 
 import Loader from '../../App/components/loader';
 import * as AssetActions from '../actions/assets';
@@ -60,13 +61,13 @@ class AssetListRowBase extends React.Component {
   handleAssetDelete = () => {
     const { key, name } = this.props.asset;
     this.closeOptions();
-    if (window.confirm(`Are you sure you want to delete "${name}"?`)) {
+    if (window.confirm(this.props.t('Common.DeleteConfirmation', { name }))) {
       this.props.deleteAssetRequest(key);
     }
   }
 
   render() {
-    const { asset, username } = this.props;
+    const { asset, username, t } = this.props;
     const { optionsOpen } = this.state;
     return (
       <tr className="asset-table__row" key={asset.key}>
@@ -85,7 +86,7 @@ class AssetListRowBase extends React.Component {
             onClick={this.toggleOptions}
             onBlur={this.onBlurComponent}
             onFocus={this.onFocusComponent}
-            aria-label="Toggle Open/Close Asset Options"
+            aria-label={t('AssetList.ToggleOpenCloseARIA')}
           >
             <DownFilledTriangleIcon focusable="false" aria-hidden="true" />
           </button>
@@ -100,7 +101,7 @@ class AssetListRowBase extends React.Component {
                   onBlur={this.onBlurComponent}
                   onFocus={this.onFocusComponent}
                 >
-                  Delete
+                  {t('AssetList.Delete')}
                 </button>
               </li>
               <li>
@@ -111,7 +112,7 @@ class AssetListRowBase extends React.Component {
                   onFocus={this.onFocusComponent}
                   className="asset-table__action-option"
                 >
-                  Open in New Tab
+                  {t('AssetList.OpenNewTab')}
                 </Link>
               </li>
             </ul>}
@@ -131,7 +132,8 @@ AssetListRowBase.propTypes = {
     size: PropTypes.number.isRequired
   }).isRequired,
   deleteAssetRequest: PropTypes.func.isRequired,
-  username: PropTypes.string.isRequired
+  username: PropTypes.string.isRequired,
+  t: PropTypes.func.isRequired
 };
 
 function mapStateToPropsAssetListRow(state) {
@@ -153,7 +155,7 @@ class AssetList extends React.Component {
   }
 
   getAssetsTitle() {
-    return 'p5.js Web Editor | My assets';
+    return this.props.t('AssetList.Title');
   }
 
   hasAssets() {
@@ -167,13 +169,13 @@ class AssetList extends React.Component {
 
   renderEmptyTable() {
     if (!this.props.loading && this.props.assetList.length === 0) {
-      return (<p className="asset-table__empty">No uploaded assets.</p>);
+      return (<p className="asset-table__empty">{this.props.t('AssetList.NoUploadedAssets')}</p>);
     }
     return null;
   }
 
   render() {
-    const { assetList } = this.props;
+    const { assetList, t } = this.props;
     return (
       <article className="asset-table-container">
         <Helmet>
@@ -185,14 +187,14 @@ class AssetList extends React.Component {
           <table className="asset-table">
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Size</th>
-                <th>Sketch</th>
+                <th>{t('AssetList.HeaderName')}</th>
+                <th>{t('AssetList.HeaderSize')}</th>
+                <th>{t('AssetList.HeaderSketch')}</th>
                 <th scope="col"></th>
               </tr>
             </thead>
             <tbody>
-              {assetList.map(asset => <AssetListRow asset={asset} key={asset.key} />)}
+              {assetList.map(asset => <AssetListRow asset={asset} key={asset.key} t={t} />)}
             </tbody>
           </table>}
       </article>
@@ -212,7 +214,8 @@ AssetList.propTypes = {
     sketchId: PropTypes.string
   })).isRequired,
   getAssets: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired
+  loading: PropTypes.bool.isRequired,
+  t: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -227,4 +230,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({}, AssetActions), dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AssetList);
+export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(AssetList));
