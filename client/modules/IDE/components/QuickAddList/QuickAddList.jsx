@@ -19,7 +19,7 @@ const Item = ({
         className="quick-add__item-view"
         to={url}
         target="_blank"
-        onClick={e => e.stopPropogation()}
+        onClick={e => e.stopPropagation()}
       >
         {t('QuickAddList.View')}
       </Link>
