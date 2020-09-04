@@ -249,7 +249,6 @@ const MobileIDEView = (props) => {
 
   return (
     <Screen fullscreen>
-      {toast.isVisible && <Toast />}
       <Explorer />
       <Header
         title={withChangeDot(project.name, unsavedChanges)}
@@ -268,6 +267,7 @@ const MobileIDEView = (props) => {
           <IconButton to="/preview" onClick={() => { startSketch(); }} icon={PlayIcon} aria-label="Run sketch" />
         </li>
       </Header>
+      {toast.isVisible && <Toast />}
 
       <IDEWrapper>
         <Editor provideController={setCmController} />
