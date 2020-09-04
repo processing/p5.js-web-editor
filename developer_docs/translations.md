@@ -27,7 +27,7 @@ In order to simplify the translations process the following rules of thumb were 
 ```
 * There are common texts that are present with `Common` prefix, try to check first if the exact label is already present there.
 * Every key follows PascalCase case style.
-* Every key that is used in an ARIA text should end with the suffix ‘ARIA’.
+* Every key that is used in an ARIA text should end with the suffix `ARIA`.
 * The order of keys inside of appearance should be order of in the order they appear in the source code
 
 ## Language Use
