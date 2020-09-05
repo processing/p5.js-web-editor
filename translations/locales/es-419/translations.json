@@ -99,7 +99,8 @@
     "PlayOnlyVisualSketchARIA": "Ejecutar bosquejo visual",
     "StopSketchARIA": "Detener bosquejo",
     "EditSketchARIA": "Editar nombre de bosquejo",
-    "NewSketchNameARIA": "Nuevo nombre de bosquejo"
+    "NewSketchNameARIA": "Nuevo nombre de bosquejo",
+    "By": " de "
   },
   "Console": {
     "Title": "Consola",

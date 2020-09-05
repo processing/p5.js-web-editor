@@ -99,7 +99,8 @@
     "PlayOnlyVisualSketchARIA": "Play only visual sketch",
     "StopSketchARIA": "Stop sketch",
     "EditSketchARIA": "Edit sketch name",
-    "NewSketchNameARIA": "New sketch name"
+    "NewSketchNameARIA": "New sketch name",
+    "By": " by "
   },
   "Console": {
     "Title": "Console",
