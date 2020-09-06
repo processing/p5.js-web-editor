@@ -5,6 +5,8 @@ import isValid from 'date-fns/isValid';
 import parseISO from 'date-fns/parseISO';
 import i18next from 'i18next';
 
+import { currentDateLocale } from '../i18n';
+
 function parse(maybeDate) {
   const date = maybeDate instanceof Date ? maybeDate : parseISO(maybeDate);
 
@@ -34,7 +36,8 @@ export default {
       }
 
       const timeAgo = formatDistanceToNow(parsed, {
-        includeSeconds: false
+        includeSeconds: false,
+        locale: currentDateLocale()
       });
       return i18next.t('formatDate.Ago', { timeAgo });
     }
@@ -46,7 +49,7 @@ export default {
     const formatType = showTime ? 'PPpp' : 'PP';
 
     if (parsed) {
-      return format(parsed, formatType);
+      return format(parsed, formatType, { locale: currentDateLocale() });
     }
 
     return '';
