@@ -1,8 +1,8 @@
-import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
-import differenceInMilliseconds from 'date-fns/difference_in_milliseconds';
+import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+import differenceInMilliseconds from 'date-fns/differenceInMilliseconds';
 import format from 'date-fns/format';
-import isValid from 'date-fns/is_valid';
-import parseISO from 'date-fns/parse';
+import isValid from 'date-fns/isValid';
+import parseISO from 'date-fns/parseISO';
 import i18next from 'i18next';
 
 function parse(maybeDate) {
@@ -33,8 +33,8 @@ export default {
         return i18next.t('formatDate.35Seconds');
       }
 
-      const timeAgo = distanceInWordsToNow(parsed, {
-        includeSeconds: true
+      const timeAgo = formatDistanceToNow(parsed, {
+        includeSeconds: false
       });
       return i18next.t('formatDate.Ago', { timeAgo });
     }
@@ -43,7 +43,7 @@ export default {
   },
   format(date, { showTime = true } = {}) {
     const parsed = parse(date);
-    const formatType = showTime ? 'MMM D, YYYY h:mm A' : 'MMM D, YYYY';
+    const formatType = showTime ? 'PPpp' : 'PP';
 
     if (parsed) {
       return format(parsed, formatType);

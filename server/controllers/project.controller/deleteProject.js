@@ -1,4 +1,4 @@
-import isBefore from 'date-fns/is_before';
+import isBefore from 'date-fns/isBefore';
 import Project from '../../models/project';
 import { deleteObjectsFromS3, getObjectKey } from '../aws.controller';
 import createApplicationErrorClass from '../../utils/createApplicationErrorClass';

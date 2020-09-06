@@ -2,7 +2,7 @@ import archiver from 'archiver';
 import format from 'date-fns/format';
 import isUrl from 'is-url';
 import jsdom, { serializeDocument } from 'jsdom';
-import isAfter from 'date-fns/is_after';
+import isAfter from 'date-fns/isAfter';
 import request from 'request';
 import slugify from 'slugify';
 import Project from '../models/project';
@@ -215,7 +215,7 @@ function buildZip(project, req, res) {
     res.status(500).send({ error: err.message });
   });
 
-  const currentTime = format(new Date(), 'YYYY_MM_DD_HH_mm_ss');
+  const currentTime = format(new Date(), 'yyyy_MM_dd_HH_mm_ss');
   project.slug = slugify(project.name, '_');
   res.attachment(`${generateFileSystemSafeName(project.slug)}_${currentTime}.zip`);
   zip.pipe(res);

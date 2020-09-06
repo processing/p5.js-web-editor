@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import differenceInMilliseconds from 'date-fns/difference_in_milliseconds';
+import differenceInMilliseconds from 'date-fns/differenceInMilliseconds';
 import find from 'lodash/find';
 import orderBy from 'lodash/orderBy';
 import { DIRECTION } from '../actions/sorting';
