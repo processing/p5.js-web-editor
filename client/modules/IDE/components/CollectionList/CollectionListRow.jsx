@@ -1,4 +1,3 @@
-import format from 'date-fns/format';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -9,10 +8,9 @@ import * as ProjectActions from '../../actions/project';
 import * as CollectionsActions from '../../actions/collections';
 import * as IdeActions from '../../actions/ide';
 import * as ToastActions from '../../actions/toast';
+import dates from '../../../../utils/formatDate';
 
 import DownFilledTriangleIcon from '../../../../images/down-filled-triangle.svg';
-
-const formatDateCell = (date, mobile = false) => format(new Date(date), 'MMM D, YYYY');
 
 class CollectionListRowBase extends React.Component {
   static projectInCollection(project, collection) {
@@ -214,8 +212,8 @@ class CollectionListRowBase extends React.Component {
             {this.renderCollectionName()}
           </span>
         </th>
-        <td>{mobile && 'Created: '}{format(new Date(collection.createdAt), 'MMM D, YYYY')}</td>
-        <td>{mobile && 'Updated: '}{formatDateCell(collection.updatedAt)}</td>
+        <td>{mobile && 'Created: '}{dates.format(collection.createdAt)}</td>
+        <td>{mobile && 'Updated: '}{dates.format(collection.updatedAt)}</td>
         <td>{mobile && '# sketches: '}{(collection.items || []).length}</td>
         <td className="sketch-list__dropdown-column">
           {this.renderActions()}
