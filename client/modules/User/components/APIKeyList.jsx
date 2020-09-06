@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
 import orderBy from 'lodash/orderBy';
 
 import { APIKeyPropType } from './APIKeyForm';
@@ -22,7 +21,7 @@ function APIKeyList({ apiKeys, onRemove, t }) {
       <tbody>
         {orderBy(apiKeys, ['createdAt'], ['desc']).map((key) => {
           const lastUsed = key.lastUsedAt ?
-            distanceInWordsToNow(new Date(key.lastUsedAt), { addSuffix: true }) :
+            dates.distanceInWordsToNow(new Date(key.lastUsedAt)) :
             t('APIKeyList.Never');
 
           return (

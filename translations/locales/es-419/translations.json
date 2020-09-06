@@ -510,11 +510,14 @@
     "CurrentLine": " Línea actual"
   },
   "Timer": {
-    "SavedJustNow": "Guardado: justo ahora",
-    "Saved15Seconds": "Guardado: hace 15 segundos",
-    "Saved25Seconds": "Guardado: hace 25 segundos",
-    "Saved35Seconds": "Guardado: hace 35 segundos",
-    "SavedAgo": "Guardado: hace {{timeAgo}}"
+    "SavedAgo": "Guardado: {{timeAgo}}"
+  },
+  "formatDate": {
+    "JustNow": "justo ahora",
+    "15Seconds": "hace 15 segundos",
+    "25Seconds": "hace 25 segundos",
+    "35Seconds": "hace 35 segundos",
+    "Ago": "hace {{timeAgo}}"
   },
   "AddRemoveButton": {
     "AltAddARIA": "Agregar a colección",
