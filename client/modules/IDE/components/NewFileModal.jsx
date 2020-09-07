@@ -20,10 +20,23 @@ class NewFileModal extends React.Component {
   constructor(props) {
     super(props);
     this.focusOnModal = this.focusOnModal.bind(this);
+    this.handleOutsideClick = this.handleOutsideClick.bind(this);
   }
 
   componentDidMount() {
     this.focusOnModal();
+    document.addEventListener('click', this.handleOutsideClick, false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this.handleOutsideClick, false);
+  }
+
+  handleOutsideClick(e) {
+    // ignore clicks on the component itself
+    if (e.path.includes(this.modal)) return;
+
+    this.props.closeNewFileModal();
   }
 
   focusOnModal() {

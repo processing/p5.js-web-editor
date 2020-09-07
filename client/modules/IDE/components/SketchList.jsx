@@ -433,7 +433,7 @@ class SketchList extends React.Component {
         {this._renderLoader()}
         {this._renderEmptyTable()}
         {this.hasSketches() &&
-          <table className="sketches-table" summary="table containing all saved projects">
+          <table className="sketches-table" summary={this.props.t('SketchList.TableSummary')}>
             <thead>
               <tr>
                 {this._renderFieldHeader('name', this.props.t('SketchList.HeaderName'))}
