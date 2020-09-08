@@ -83,7 +83,7 @@ export function signS3(req, res) {
   const acl = 'private';
   const policy = S3Policy.generate({
     acl,
-    key: filename,
+    key: `${req.body.userId}/${filename}`,
     bucket: process.env.S3_BUCKET,
     contentType: req.body.type,
     region: process.env.AWS_REGION,
