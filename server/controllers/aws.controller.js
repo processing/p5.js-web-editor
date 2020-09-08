@@ -17,8 +17,9 @@ const client = s3.createClient({
   },
 });
 
-const s3Bucket = process.env.S3_BUCKET_URL_BASE ||
-                 `https://s3-${process.env.AWS_REGION}.amazonaws.com/${process.env.S3_BUCKET}/`;
+const bucketBase = process.env.S3_BUCKET_URL_BASE;
+const s3Url = `https://s3-${process.env.AWS_REGION}.amazonaws.com/${process.env.S3_BUCKET}/`;
+const s3Bucket = bucketBase || s3Url;
 
 function getExtension(filename) {
   const i = filename.lastIndexOf('.');
@@ -26,16 +27,15 @@ function getExtension(filename) {
 }
 
 export function getObjectKey(url) {
-  const urlArray = url.split('/');
-  let objectKey;
-  if (urlArray.length === 5) {
-    const key = urlArray.pop();
-    const userId = urlArray.pop();
-    objectKey = `${userId}/${key}`;
-  } else {
-    const key = urlArray.pop();
-    objectKey = key;
+  const matchResults = url.split(s3Bucket);
+  // if, for some reason, the object is not using the default bucket url
+  if (matchResults.length === 1) {
+    if (bucketBase) {
+      return url.split(s3Url)[1];
+    }
+    return url.split(bucketBase)[1];
   }
+  const objectKey = matchResults[1];
   return objectKey;
 }
 
