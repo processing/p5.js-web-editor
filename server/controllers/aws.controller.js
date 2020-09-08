@@ -80,7 +80,7 @@ export function signS3(req, res) {
   }
   const fileExtension = getExtension(req.body.name);
   const filename = uuid.v4() + fileExtension;
-  const acl = 'private';
+  const acl = 'public-read';
   const policy = S3Policy.generate({
     acl,
     key: `${req.body.userId}/${filename}`,
@@ -89,7 +89,6 @@ export function signS3(req, res) {
     region: process.env.AWS_REGION,
     accessKey: process.env.AWS_ACCESS_KEY,
     secretKey: process.env.AWS_SECRET_KEY,
-    // metadata: {'x-amz-meta-lat': '41.891',...} (optional)
     metadata: []
   });
   res.json(policy);
