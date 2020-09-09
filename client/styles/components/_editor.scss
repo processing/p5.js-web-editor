@@ -87,16 +87,14 @@ pre.CodeMirror-line {
   position: fixed;
   top: 0;
   left: 50%;
-  margin-left: - #{365/2/$base-font-size}rem;
+  margin-left: - #{552/2/$base-font-size}rem;
 
   z-index: 10;
 
-  width: 100%;
-  max-width: #{365 / $base-font-size}rem;
-
+  width: 552px;
   font-family: Montserrat, sans-serif;
 
-  padding: #{14 / $base-font-size}rem #{20 / $base-font-size}rem #{14 / $base-font-size}rem #{18 / $base-font-size}rem;
+  padding: #{7 / $base-font-size}rem #{10 / $base-font-size}rem #{7 / $base-font-size}rem #{9 / $base-font-size}rem;
 
   border-radius: 2px;
 
@@ -105,6 +103,59 @@ pre.CodeMirror-line {
     box-shadow: 0 12px 12px 0 getThemifyVariable('shadow-color');
     border: solid 0.5px getThemifyVariable('modal-border-color');
   }
+}
+
+.CodeMirror-find-popup-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.Toggle-replace-btn-div {
+  height: 40px;
+  margin-right: 10px;
+  padding: 0;
+}
+.Toggle-replace-btn-div > button {
+  width: 100%;
+  height: 100%;
+}
+.CodeMirror-find-div {
+  padding: 0px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.CodeMirror-search-modifiers {
+  margin-left: 10px;
+}
+.CodeMirror-search-results {
+  margin: 0px 20px;
+  width: 75px;
+}
+.CodeMirror-find-controls {
+  display: flex;
+}
+
+.CodeMirror-replace-div {
+  display: flex;
+  width: 293px;
+  justify-content: center;
+  align-items: center;
+}
+.CodeMirror-replace-controls {
+  display: flex;
+}
+
+.CodeMirror-replace-options {
+  width: 552px;
+  height: 65px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.CodeMirror-replace-options button {
+  width: 200px;
 }
 
 .CodeMirror-search-title {
@@ -158,11 +209,11 @@ pre.CodeMirror-line {
     }
 
   }
-  width: #{35 / $base-font-size}rem;
-  height: #{35 / $base-font-size}rem;
+  width: #{25 / $base-font-size}rem;
+  height: #{25 / $base-font-size}rem;
 
   & + & {
-    margin-left: #{10 / $base-font-size}rem;
+    margin-left: #{3 / $base-font-size}rem;
   }
 
   word-break: keep-all;
@@ -223,10 +274,6 @@ pre.CodeMirror-line {
   Close button
 */
 .CodeMirror-close-button {
-  position: absolute;
-  top: #{14 / $base-font-size}rem;
-  right: #{18 / $base-font-size}rem;
-
   display: flex;
   flex-direction: row;
 }

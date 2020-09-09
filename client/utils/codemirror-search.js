@@ -78,7 +78,7 @@ export default function(CodeMirror) {
         else if (e.keyCode !== 13 && searchField.value.length > 1) { // not enter and more than 1 character to search
           startSearch(cm, getSearchState(cm), searchField.value);
         } else if (searchField.value.length <= 1) {
-          cm.display.wrapper.querySelector('.CodeMirror-search-results').innerText = '';
+          cm.display.wrapper.querySelector('.CodeMirror-search-results').innerText = 'No results';
         }
       });
 
@@ -147,15 +147,25 @@ export default function(CodeMirror) {
       }
 
       var showReplaceButton = dialog.getElementsByClassName("CodeMirror-replace-button")[0];
-      var replaceDiv = dialog.getElementsByClassName("Replace-div")[0];
+      var toggleReplaceBtnDiv = dialog.getElementsByClassName("Toggle-replace-btn-div")[0];
+      var replaceDiv = dialog.getElementsByClassName("CodeMirror-replace-div")[0];
       if (replaceOpened) {
-        replaceDiv.style.height = "138px";
+        replaceDiv.style.height = "50px";
+        toggleReplaceBtnDiv.style.height = "90px";
+        showReplaceButton.style.height = "90px";
+        showReplaceButton.innerHTML = "▼";
       }
       CodeMirror.on(showReplaceButton, "click", function () {
         if (replaceDiv.style.height === "0px") {
-          replaceDiv.style.height = "138px";
+          replaceDiv.style.height = "50px";
+          toggleReplaceBtnDiv.style.height = "90px";
+          showReplaceButton.style.height = "90px";
+          showReplaceButton.innerHTML = "▼";
         } else {
           replaceDiv.style.height = "0px";
+          toggleReplaceBtnDiv.style.height = "40px";
+          showReplaceButton.style.height = "40px";
+          showReplaceButton.innerHTML = "▶";
         }
       });
 
@@ -346,7 +356,7 @@ export default function(CodeMirror) {
     if (!cursor.find(rev)) {
       cursor = getSearchCursor(cm, state.query, rev ? CodeMirror.Pos(cm.lastLine()) : CodeMirror.Pos(cm.firstLine(), 0));
       if (!cursor.find(rev)) {
-        cm.display.wrapper.querySelector('.CodeMirror-search-results').innerText = '';
+        cm.display.wrapper.querySelector('.CodeMirror-search-results').innerText = 'No results';
         return;
       }
     }
@@ -419,89 +429,127 @@ export default function(CodeMirror) {
     }
   }
 
-  var doReplaceConfirm = "<button>Replace</button> <button>Skip</button> <button>Replace All</button> <button>Stop</button>";
+  var doReplaceConfirm = `
+    <div class="CodeMirror-replace-options">
+      <button
+        title="Replace"
+        aria-label="Replace"
+      >
+        Replace
+      </button>
+      <button
+        title="Skip"
+        aria-label="Skip"
+      >
+        Skip
+      </button>
+      <button
+        title="Replace All"
+        aria-label="Replace All"
+      >
+        Replace All
+      </button>
+      <button
+        title="Stop"
+        aria-label="Stop"
+      >
+        Stop
+      </button>
+    </div>
+  `;
 
   var queryDialog = `
-    <h3 class="CodeMirror-search-title">Find</h3>
-    <input id="Find-input-field" type="text" class="search-input CodeMirror-search-field" placeholder="Find in files" />
-    <div class="CodeMirror-search-actions">
-      <div class="CodeMirror-search-modifiers button-wrap">
-        <button
-          title="Regular expression"
-          aria-label="Regular expression"
-          role="checkbox"
-          class="CodeMirror-search-modifier-button CodeMirror-regexp-button"
-        >
-          <span aria-hidden="true" class="button">.*</span>
-        </button>
-        <button
-          title="Case sensitive"
-          aria-label="Case sensitive"
-          role="checkbox"
-          class="CodeMirror-search-modifier-button CodeMirror-case-button"
-        >
-          <span aria-hidden="true" class="button">Aa</span>
-        </button>
-        <button
-          title="Whole words"
-          aria-label="Whole words"
-          role="checkbox"
-          class="CodeMirror-search-modifier-button CodeMirror-word-button"
-        >
-          <span aria-hidden="true" class="button">" "</span>
-        </button>
+    <div class="CodeMirror-find-popup-container">
+      <div class="Toggle-replace-btn-div">
         <button
           title="Replace"
           aria-label="Replace"
           role="button"
           class="CodeMirror-search-modifier-button CodeMirror-replace-button"
         >
-          <span aria-hidden="true" class="button">Replace</span>
+          <span aria-hidden="true" class="button">▶</span>
         </button>
       </div>
-      <div class="CodeMirror-search-nav">
-        <button class="CodeMirror-search-results"></button>
-        <button
-          title="Previous"
-          aria-label="Previous"
-          class="CodeMirror-search-button icon up-arrow prev"
-        >
-        </button>
-        <button
-          title="Next"
-          aria-label="Next"
-          class="CodeMirror-search-button icon down-arrow next"
-        >
-        </button>
+      <div class="CodeMirror-find-input-fields">
+        <div class="CodeMirror-find-div">
+          <div class="CodeMirror-find-input">
+            <input id="Find-input-field" type="text" class="search-input CodeMirror-search-field" placeholder="Find in files" />
+          </div>
+          <div class="CodeMirror-find-controls">
+            <div class="CodeMirror-search-modifiers button-wrap">
+              <button
+                title="Regular expression"
+                aria-label="Regular expression"
+                role="checkbox"
+                class="CodeMirror-search-modifier-button CodeMirror-regexp-button"
+              >
+                <span aria-hidden="true" class="button">.*</span>
+              </button>
+              <button
+                title="Case sensitive"
+                aria-label="Case sensitive"
+                role="checkbox"
+                class="CodeMirror-search-modifier-button CodeMirror-case-button"
+              >
+                <span aria-hidden="true" class="button">Aa</span>
+              </button>
+              <button
+                title="Whole words"
+                aria-label="Whole words"
+                role="checkbox"
+                class="CodeMirror-search-modifier-button CodeMirror-word-button"
+              >
+                <span aria-hidden="true" class="button">" "</span>
+              </button>
+            </div>
+            <div class="CodeMirror-search-nav">
+              <button class="CodeMirror-search-results">No results</button>
+              <button
+                title="Previous"
+                aria-label="Previous"
+                class="CodeMirror-search-button icon up-arrow prev"
+              >
+              </button>
+              <button
+                title="Next"
+                aria-label="Next"
+                class="CodeMirror-search-button icon down-arrow next"
+              >
+              </button>
+            </div>
+            <div>
+              <button
+                title="Close"
+                aria-label="Close"
+                class="CodeMirror-close-button close icon">
+              </button>
+            </div>
+          </div>
+        </div>
+        <div style="height: 0px; overflow: hidden;" class="CodeMirror-replace-div">
+          <input id="Replace-input-field" type="text" placeholder="Text to replace" class="search-input CodeMirror-search-field"/><div class="close icon"></div>
+          <div class="CodeMirror-replace-controls">
+            <button
+              title="Replace"
+              aria-label="Replace"
+              role="button"
+              id="Btn-replace"
+              class="CodeMirror-search-modifier-button CodeMirror-replace-button"
+            >
+              <span aria-hidden="true" class="button">Replace</span>
+            </button>
+            <button
+              title="Replace All"
+              aria-label="Replace All"
+              role="button"
+              id="Btn-replace-all"
+              class="CodeMirror-search-modifier-button CodeMirror-replace-button"
+            >
+              <span aria-hidden="true" class="button">Replace All</span>
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
-    <button
-      title="Close"
-      aria-label="Close"
-      class="CodeMirror-close-button close icon">
-    </button>
-    <div style="height: 0px; transition: 0.4s; overflow: hidden;" class="Replace-div">
-      <hr/>
-      <h3 class="CodeMirror-search-title">Replace</h3>
-      <input id="Replace-input-field" type="text" placeholder="Text to replace" class="search-input CodeMirror-search-field"/><div class="close icon"></div>
-      <button
-        title="Replace"
-        aria-label="Replace"
-        role="button"
-        id="Btn-replace"
-        class="CodeMirror-search-modifier-button CodeMirror-replace-button"
-      >
-        <span aria-hidden="true" class="button">Replace</span>
-      </button>
-      <button
-        title="Replace All"
-        aria-label="Replace All"
-        role="button"
-        id="Btn-replace-all"
-        class="CodeMirror-search-modifier-button CodeMirror-replace-button"
-      >
-        <span aria-hidden="true" class="button">Replace All</span>
-      </button>
     </div>
   `;
 
