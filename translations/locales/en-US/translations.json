@@ -99,7 +99,8 @@
     "PlayOnlyVisualSketchARIA": "Play only visual sketch",
     "StopSketchARIA": "Stop sketch",
     "EditSketchARIA": "Edit sketch name",
-    "NewSketchNameARIA": "New sketch name"
+    "NewSketchNameARIA": "New sketch name",
+    "By": " by "
   },
   "Console": {
     "Title": "Console",
@@ -407,6 +408,7 @@
     "NumSketches_plural": "{{count}} sketches",
     "By":"Collection by ",
     "NoSketches": "No sketches in collection",
+    "TableSummary": "table containing all collections",
     "HeaderName": "Name",
     "HeaderCreatedAt": "Date Added",
     "HeaderUser": "Owner",
@@ -445,6 +447,7 @@
     "Title": "p5.js Web Editor | My collections",
     "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'s collections",
     "NoCollections": "No collections.",
+    "TableSummary": "table containing all collections",
     "HeaderName": "Name",
     "HeaderCreatedAt": "Date Created",
     "HeaderCreatedAt_mobile": "Created",
@@ -487,6 +490,7 @@
     "ButtonLabelAscendingARIA": "Sort by {{displayName}} ascending.",
     "ButtonLabelDescendingARIA": "Sort by {{displayName}} descending.",
     "AddToCollectionOverlayTitle": "Add to collection",
+    "TableSummary": "table containing all saved projects",
     "HeaderName": "Sketch",
     "HeaderCreatedAt": "Date Created",
     "HeaderCreatedAt_mobile": "Created",

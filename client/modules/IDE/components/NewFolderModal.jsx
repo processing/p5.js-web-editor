@@ -8,8 +8,25 @@ import NewFolderForm from './NewFolderForm';
 import ExitIcon from '../../../images/exit.svg';
 
 class NewFolderModal extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleOutsideClick = this.handleOutsideClick.bind(this);
+  }
+
   componentDidMount() {
     this.newFolderModal.focus();
+    document.addEventListener('click', this.handleOutsideClick, false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this.handleOutsideClick, false);
+  }
+
+  handleOutsideClick(e) {
+    // ignore clicks on the component itself
+    if (e.path.includes(this.newFolderModal)) return;
+
+    this.props.closeModal();
   }
 
   render() {
