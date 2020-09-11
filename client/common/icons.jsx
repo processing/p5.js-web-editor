@@ -12,6 +12,7 @@ import Exit from '../images/exit.svg';
 import DropdownArrow from '../images/down-filled-triangle.svg';
 import Preferences from '../images/preferences.svg';
 import Play from '../images/triangle-arrow-right.svg';
+import Stop from '../images/stop.svg';
 import More from '../images/more.svg';
 import Code from '../images/code.svg';
 import Save from '../images/save.svg';
@@ -89,6 +90,8 @@ export const MoreIcon = withLabel(More);
 export const TerminalIcon = withLabel(Terminal);
 export const CodeIcon = withLabel(Code);
 export const SaveIcon = withLabel(Save);
+
+export const StopIcon = withLabel(Stop);
 
 export const FolderIcon = withLabel(Folder);
 

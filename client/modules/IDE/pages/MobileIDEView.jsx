@@ -18,7 +18,7 @@ import * as EditorAccessibilityActions from '../actions/editorAccessibility';
 // Local Imports
 import Editor from '../components/Editor';
 
-import { PlayIcon, MoreIcon, FolderIcon, PreferencesIcon, TerminalIcon, SaveIcon } from '../../../common/icons';
+import { StopIcon, PlayIcon, MoreIcon, FolderIcon, PreferencesIcon, TerminalIcon, SaveIcon } from '../../../common/icons';
 import UnsavedChangesDotIcon from '../../../images/unsaved-changes-dot.svg';
 
 import IconButton from '../../../components/mobile/IconButton';
@@ -285,7 +285,7 @@ const MobileIDEView = (props) => {
           <NavDropDown />
         </NavItem>
         <li>
-          <IconButton {...pressPlayEvents} icon={PlayIcon} aria-label="Run sketch" />
+          <IconButton {...pressPlayEvents} icon={showFloatingPreview ? StopIcon : PlayIcon} aria-label="Run sketch" />
         </li>
       </Header>
 
