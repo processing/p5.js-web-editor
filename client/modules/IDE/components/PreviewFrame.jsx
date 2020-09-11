@@ -201,6 +201,11 @@ class PreviewFrame extends React.Component {
     this.addLoopProtect(sketchDoc);
     sketchDoc.head.insertBefore(consoleErrorsScript, sketchDoc.head.firstElement);
 
+    if (true) {
+      const resizeScript = sketchDoc.createElement('style');
+      resizeScript.innerHTML = '.p5Canvas { width: 100% !important; height: auto !important }';
+      sketchDoc.head.appendChild(resizeScript);
+    }
     return `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
   }
 

@@ -28,10 +28,10 @@ const maxDimension = 12;
 
 const FloatingContainer = styled.div`
   & {
-    height: 20rem;
-    width: 20rem;
-    right: 1rem;
-    bottom: 4rem;
+    height: ${remSize(160)};
+    width: ${remSize(160)};
+    right: ${remSize(8)};
+    bottom: ${remSize(8 + 48)};
     overflow: hidden;
   };
   &, body, iframe, html {
@@ -51,6 +51,11 @@ const FloatingContainer = styled.div`
     /* bottom: ${remSize(maxDimension + 64)}; */
     /* right: ${remSize(maxDimension + 64)}; */
     
+  }
+
+  iframe#canvas_frame, .preview-frame {
+    border-radius: 4px !important;
+    border: solid 1px #aaa !important;
   }
 `;
 
