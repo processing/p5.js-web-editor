@@ -80,6 +80,7 @@ export default () => {
         htmlFile={htmlFile}
         files={files}
         head={<link type="text/css" rel="stylesheet" href="/preview-styles.css" />}
+        resize
 
         content={selectedFile.content}
 
