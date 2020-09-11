@@ -371,7 +371,7 @@ class Collection extends React.Component {
             <div className="collection-table-wrapper">
               {this._renderEmptyTable()}
               {this.hasCollectionItems() &&
-                <table className="sketches-table" summary="table containing all collections">
+                <table className="sketches-table" summary={this.props.t('Collection.TableSummary')}>
                   <thead>
                     <tr>
                       {this._renderFieldHeader('name', this.props.t('Collection.HeaderName'))}
