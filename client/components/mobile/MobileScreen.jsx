@@ -5,11 +5,12 @@ import { remSize } from '../../theme';
 
 const ScreenWrapper = styled.div`
   .toast {
-    margin-top: ${props => remSize(props.slimheader ? 49 : 68)};
     font-size: ${remSize(12)};
-    z-index: 0.5;
-    width: 100%;
     padding: ${remSize(8)};
+
+    border-radius: ${remSize(4)};
+    width: 90%;
+    bottom: ${remSize(64)}
   }
 `;
 
