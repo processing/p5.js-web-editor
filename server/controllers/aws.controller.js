@@ -1,8 +1,11 @@
 import uuid from 'node-uuid';
 import S3Policy from 's3-policy-v4';
 import s3 from '@auth0/s3';
+import mongoose from 'mongoose';
 import { getProjectsForUserId } from './project.controller';
 import { findUserByUsername } from './user.controller';
+
+const { ObjectId } = mongoose.Types;
 
 const client = s3.createClient({
   maxAsyncS3: 20,
@@ -27,15 +30,12 @@ function getExtension(filename) {
 }
 
 export function getObjectKey(url) {
-  const matchResults = url.split(s3Bucket);
-  // if, for some reason, the object is not using the default bucket url
-  if (matchResults.length === 1) {
-    if (bucketBase) {
-      return url.split(s3Url)[1];
-    }
-    return url.split(bucketBase)[1];
+  const urlArray = url.split('/');
+  const objectKey = urlArray.pop();
+  const userId = urlArray.pop();
+  if (ObjectId.isValid(userId) && userId === new ObjectId(userId).toString()) {
+    return `${userId}/${objectKey}`;
   }
-  const objectKey = matchResults[1];
   return objectKey;
 }
 
