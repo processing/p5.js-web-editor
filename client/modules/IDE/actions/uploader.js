@@ -77,9 +77,6 @@ export function dropzoneSendingCallback(file, xhr, formData) {
       Object.keys(file.postData).forEach((key) => {
         formData.append(key, file.postData[key]);
       });
-      formData.append('Content-type', file.type);
-      formData.append('Content-length', '');
-      formData.append('acl', 'public-read');
     }
   };
 }
