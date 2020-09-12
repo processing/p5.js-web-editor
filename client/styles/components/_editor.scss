@@ -395,3 +395,7 @@ pre.CodeMirror-line {
 .editor__unsaved-changes {
   margin-left: #{2 / $base-font-size}rem;
 }
+
+.emmet-close-tag,.emmet-open-tag{
+  text-decoration: underline;
+}
