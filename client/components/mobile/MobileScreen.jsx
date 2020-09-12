@@ -10,7 +10,7 @@ const ScreenWrapper = styled.div`
 
     border-radius: ${remSize(4)};
     width: 90%;
-    bottom: unset;
+    top: unset;
     bottom: ${remSize(64)}
   }
 `;
