@@ -2,6 +2,7 @@ import { browserHistory } from 'react-router';
 import * as ActionTypes from '../../constants';
 import apiClient from '../../utils/apiClient';
 import { showErrorModal, justOpenedProject } from '../IDE/actions/ide';
+import { setLanguage } from '../IDE/actions/preferences';
 import { showToast, setToastText } from '../IDE/actions/toast';
 
 export function authError(error) {
@@ -59,6 +60,7 @@ export function validateAndLoginUser(previousPath, formProps, dispatch) {
           type: ActionTypes.SET_PREFERENCES,
           preferences: response.data.preferences
         });
+        setLanguage(response.data.preferences.language, { persistPreference: false });
         dispatch(justOpenedProject());
         browserHistory.push(previousPath);
         resolve();
@@ -80,8 +82,8 @@ export function getUser() {
           type: ActionTypes.SET_PREFERENCES,
           preferences: response.data.preferences
         });
-      })
-      .catch((error) => {
+        setLanguage(response.data.preferences.language, { persistPreference: false });
+      }).catch((error) => {
         const { response } = error;
         const message = response.message || response.data.error;
         dispatch(authError(message));
@@ -227,7 +229,7 @@ export function updateSettings(formValues) {
         dispatch(updateSettingsSuccess(response.data));
         browserHistory.push('/');
         dispatch(showToast(5500));
-        dispatch(setToastText('Settings saved.'));
+        dispatch(setToastText('Toast.SettingsSaved'));
       })
       .catch((error) => {
         const { response } = error;

@@ -1,19 +1,28 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 import EditIcon from '../../../images/pencil.svg';
+
 
 // TODO I think this needs a description prop so that it's accessible
 function EditableInput({
-  validate, value, emptyPlaceholder, InputComponent, inputProps, onChange
+  validate,
+  value,
+  emptyPlaceholder,
+  InputComponent,
+  inputProps,
+  onChange,
 }) {
   const [isEditing, setIsEditing] = React.useState(false);
   const [currentValue, setCurrentValue] = React.useState(value || '');
   const displayValue = currentValue || emptyPlaceholder;
   const hasValue = currentValue !== '';
-  const classes = `editable-input editable-input--${isEditing ? 'is-editing' : 'is-not-editing'} editable-input--${hasValue ? 'has-value' : 'has-placeholder'}`;
+  const classes = `editable-input editable-input--${
+    isEditing ? 'is-editing' : 'is-not-editing'
+  } editable-input--${hasValue ? 'has-value' : 'has-placeholder'}`;
   const inputRef = React.createRef();
-
+  const { t } = useTranslation();
   React.useEffect(() => {
     if (isEditing) {
       inputRef.current.focus();
@@ -51,10 +60,14 @@ function EditableInput({
       <button
         className="editable-input__label"
         onClick={beginEditing}
-        aria-label={`Edit ${displayValue} value`}
+        aria-label={t('EditableInput.EditValue', { display: displayValue })}
       >
         <span>{displayValue}</span>
-        <EditIcon className="editable-input__icon" focusable="false" aria-hidden="true" />
+        <EditIcon
+          className="editable-input__icon"
+          focusable="false"
+          aria-hidden="true"
+        />
       </button>
 
       <InputComponent
@@ -68,12 +81,12 @@ function EditableInput({
         ref={inputRef}
         value={currentValue}
       />
-    </span >
+    </span>
   );
 }
 
 EditableInput.defaultProps = {
-  emptyPlaceholder: 'No value',
+  emptyPlaceholder: i18next.t('EditableInput.EmptyPlaceholder'),
   InputComponent: 'input',
   inputProps: {},
   validate: () => true,
@@ -84,7 +97,7 @@ EditableInput.propTypes = {
   emptyPlaceholder: PropTypes.string,
   InputComponent: PropTypes.elementType,
   // eslint-disable-next-line react/forbid-prop-types
-  inputProps: PropTypes.object,
+  inputProps: PropTypes.object, // eslint-disable-line
   onChange: PropTypes.func.isRequired,
   validate: PropTypes.func,
   value: PropTypes.string,

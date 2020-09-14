@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import classNames from 'classnames';
@@ -20,6 +21,7 @@ import CollectionListRow from './CollectionListRow';
 
 import ArrowUpIcon from '../../../../images/sort-arrow-up.svg';
 import ArrowDownIcon from '../../../../images/sort-arrow-down.svg';
+
 
 class CollectionList extends React.Component {
   constructor(props) {
@@ -49,9 +51,9 @@ class CollectionList extends React.Component {
 
   getTitle() {
     if (this.props.username === this.props.user.username) {
-      return 'p5.js Web Editor | My collections';
+      return this.props.t('CollectionList.Title');
     }
-    return `p5.js Web Editor | ${this.props.username}'s collections`;
+    return this.props.t('CollectionList.AnothersTitle', { anotheruser: this.props.username });
   }
 
   showAddSketches = (collectionId) => {
@@ -77,7 +79,7 @@ class CollectionList extends React.Component {
 
   _renderEmptyTable() {
     if (!this.props.loading && this.props.collections.length === 0) {
-      return (<p className="sketches-table__empty">No collections.</p>);
+      return (<p className="sketches-table__empty">{this.props.t('CollectionList.NoCollections')}</p>);
     }
     return null;
   }
@@ -87,14 +89,14 @@ class CollectionList extends React.Component {
     let buttonLabel;
     if (field !== fieldName) {
       if (field === 'name') {
-        buttonLabel = `Sort by ${displayName} ascending.`;
+        buttonLabel = this.props.t('CollectionList.ButtonLabelAscendingARIA', { displayName });
       } else {
-        buttonLabel = `Sort by ${displayName} descending.`;
+        buttonLabel = this.props.t('CollectionList.ButtonLabelDescendingARIA', { displayName });
       }
     } else if (direction === SortingActions.DIRECTION.ASC) {
-      buttonLabel = `Sort by ${displayName} descending.`;
+      buttonLabel = this.props.t('CollectionList.ButtonLabelDescendingARIA', { displayName });
     } else {
-      buttonLabel = `Sort by ${displayName} ascending.`;
+      buttonLabel = this.props.t('CollectionList.ButtonLabelAscendingARIA', { displayName });
     }
     return buttonLabel;
   }
@@ -115,10 +117,10 @@ class CollectionList extends React.Component {
         >
           <span className={headerClass}>{displayName}</span>
           {field === fieldName && direction === SortingActions.DIRECTION.ASC &&
-            <ArrowUpIcon role="img" aria-label="Ascending" focusable="false" />
+            <ArrowUpIcon role="img" aria-label={this.props.t('CollectionList.DirectionAscendingARIA')} focusable="false" />
           }
           {field === fieldName && direction === SortingActions.DIRECTION.DESC &&
-            <ArrowDownIcon role="img" aria-label="Descending" focusable="false" />
+            <ArrowDownIcon role="img" aria-label={this.props.t('CollectionList.DirectionDescendingARIA')} focusable="false" />
           }
         </button>
       </th>
@@ -127,6 +129,7 @@ class CollectionList extends React.Component {
 
   render() {
     const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
+    const { mobile } = this.props;
 
     return (
       <article className="sketches-table-container">
@@ -137,19 +140,20 @@ class CollectionList extends React.Component {
         {this._renderLoader()}
         {this._renderEmptyTable()}
         {this.hasCollections() &&
-          <table className="sketches-table" summary="table containing all collections">
+          <table className="sketches-table" summary={this.props.t('CollectionList.TableSummary')}>
             <thead>
               <tr>
-                {this._renderFieldHeader('name', 'Name')}
-                {this._renderFieldHeader('createdAt', 'Date Created')}
-                {this._renderFieldHeader('updatedAt', 'Date Updated')}
-                {this._renderFieldHeader('numItems', '# sketches')}
+                {this._renderFieldHeader('name', this.props.t('CollectionList.HeaderName'))}
+                {this._renderFieldHeader('createdAt', this.props.t('CollectionList.HeaderCreatedAt', { context: mobile ? 'mobile' : '' }))}
+                {this._renderFieldHeader('updatedAt', this.props.t('CollectionList.HeaderUpdatedAt', { context: mobile ? 'mobile' : '' }))}
+                {this._renderFieldHeader('numItems', this.props.t('CollectionList.HeaderNumItems', { context: mobile ? 'mobile' : '' }))}
                 <th scope="col"></th>
               </tr>
             </thead>
             <tbody>
               {this.props.collections.map(collection =>
                 (<CollectionListRow
+                  mobile={mobile}
                   key={collection.id}
                   collection={collection}
                   user={this.props.user}
@@ -162,17 +166,15 @@ class CollectionList extends React.Component {
         {
           this.state.addingSketchesToCollectionId && (
             <Overlay
-              title="Add sketch"
+              title={this.props.t('CollectionList.AddSketch')}
               actions={<SketchSearchbar />}
               closeOverlay={this.hideAddSketches}
               isFixedHeight
             >
-              <div className="collection-add-sketch">
-                <AddToCollectionSketchList
-                  username={this.props.username}
-                  collection={find(this.props.collections, { id: this.state.addingSketchesToCollectionId })}
-                />
-              </div>
+              <AddToCollectionSketchList
+                username={this.props.username}
+                collection={find(this.props.collections, { id: this.state.addingSketchesToCollectionId })}
+              />
             </Overlay>
           )
         }
@@ -209,7 +211,9 @@ CollectionList.propTypes = {
     owner: PropTypes.shape({
       id: PropTypes.string
     })
-  })
+  }),
+  t: PropTypes.func.isRequired,
+  mobile: PropTypes.bool,
 };
 
 CollectionList.defaultProps = {
@@ -218,7 +222,8 @@ CollectionList.defaultProps = {
     id: undefined,
     owner: undefined
   },
-  username: undefined
+  username: undefined,
+  mobile: false
 };
 
 function mapStateToProps(state, ownProps) {
@@ -239,4 +244,4 @@ function mapDispatchToProps(dispatch) {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CollectionList);
+export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(CollectionList));

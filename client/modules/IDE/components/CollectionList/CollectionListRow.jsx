@@ -4,12 +4,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
+import { withTranslation } from 'react-i18next';
 import * as ProjectActions from '../../actions/project';
 import * as CollectionsActions from '../../actions/collections';
 import * as IdeActions from '../../actions/ide';
 import * as ToastActions from '../../actions/toast';
 
 import DownFilledTriangleIcon from '../../../../images/down-filled-triangle.svg';
+
+const formatDateCell = (date, mobile = false) => format(new Date(date), 'MMM D, YYYY');
 
 class CollectionListRowBase extends React.Component {
   static projectInCollection(project, collection) {
@@ -79,7 +82,7 @@ class CollectionListRowBase extends React.Component {
 
   handleCollectionDelete = () => {
     this.closeAll();
-    if (window.confirm(`Are you sure you want to delete "${this.props.collection.name}"?`)) {
+    if (window.confirm(this.props.t('Common.DeleteConfirmation', { name: this.props.collection.name }))) {
       this.props.deleteCollection(this.props.collection.id);
     }
   }
@@ -128,7 +131,7 @@ class CollectionListRowBase extends React.Component {
           onClick={this.toggleOptions}
           onBlur={this.onBlurComponent}
           onFocus={this.onFocusComponent}
-          aria-label="Toggle Open/Close collection options"
+          aria-label={this.props.t('CollectionListRow.ToggleCollectionOptionsARIA')}
         >
           <DownFilledTriangleIcon title="Menu" />
         </button>
@@ -143,7 +146,7 @@ class CollectionListRowBase extends React.Component {
                 onBlur={this.onBlurComponent}
                 onFocus={this.onFocusComponent}
               >
-                Add sketch
+                {this.props.t('CollectionListRow.AddSketch')}
               </button>
             </li>
             {userIsOwner &&
@@ -154,7 +157,7 @@ class CollectionListRowBase extends React.Component {
                   onBlur={this.onBlurComponent}
                   onFocus={this.onFocusComponent}
                 >
-                  Delete
+                  {this.props.t('CollectionListRow.Delete')}
                 </button>
               </li>}
             {userIsOwner &&
@@ -165,7 +168,7 @@ class CollectionListRowBase extends React.Component {
                   onBlur={this.onBlurComponent}
                   onFocus={this.onFocusComponent}
                 >
-                  Rename
+                  {this.props.t('CollectionListRow.Rename')}
                 </button>
               </li>}
           </ul>
@@ -199,7 +202,7 @@ class CollectionListRowBase extends React.Component {
   }
 
   render() {
-    const { collection } = this.props;
+    const { collection, mobile } = this.props;
 
     return (
       <tr
@@ -211,9 +214,9 @@ class CollectionListRowBase extends React.Component {
             {this.renderCollectionName()}
           </span>
         </th>
-        <td>{format(new Date(collection.createdAt), 'MMM D, YYYY')}</td>
-        <td>{format(new Date(collection.updatedAt), 'MMM D, YYYY')}</td>
-        <td>{(collection.items || []).length}</td>
+        <td>{mobile && 'Created: '}{format(new Date(collection.createdAt), 'MMM D, YYYY')}</td>
+        <td>{mobile && 'Updated: '}{formatDateCell(collection.updatedAt)}</td>
+        <td>{mobile && '# sketches: '}{(collection.items || []).length}</td>
         <td className="sketch-list__dropdown-column">
           {this.renderActions()}
         </td>
@@ -245,10 +248,16 @@ CollectionListRowBase.propTypes = {
   deleteCollection: PropTypes.func.isRequired,
   editCollection: PropTypes.func.isRequired,
   onAddSketches: PropTypes.func.isRequired,
+  mobile: PropTypes.bool,
+  t: PropTypes.func.isRequired
+};
+
+CollectionListRowBase.defaultProps = {
+  mobile: false,
 };
 
 function mapDispatchToPropsSketchListRow(dispatch) {
   return bindActionCreators(Object.assign({}, CollectionsActions, ProjectActions, IdeActions, ToastActions), dispatch);
 }
 
-export default connect(null, mapDispatchToPropsSketchListRow)(CollectionListRowBase);
+export default withTranslation()(connect(null, mapDispatchToPropsSketchListRow)(CollectionListRowBase));

@@ -33,18 +33,9 @@
     "Lang": "Lenguaje",
     "BackEditor": "Regresa al editor",
     "WarningUnsavedChanges": "¿Realmente quieres salir de la página? Tienes cambios sin guardar.",
-    "Login": {
-      "Login": "Ingresa",
-      "LoginOr": "o",
-      "SignUp": "registráte",
-      "Email": "correo electrónico",
-      "Username": "Identificación",
-      "LoginGithub": "Ingresa con Github",
-      "LoginGoogle": "Ingresa con Google",
-      "DontHaveAccount": "¿No tienes cuenta?",
-      "ForgotPassword": "¿Olvidaste tu contraseña?",
-      "ResetPassword": "Regenera tu contraseña"
-    },
+    "Login": "Ingresa",
+    "LoginOr": "o",
+    "SignUp": "Registráte",
     "Auth": {
       "Welcome": "Hola",
       "Hello": "Hola",
@@ -52,10 +43,33 @@
       "My": "Mi",
       "MySketches": "Mis bosquejos",
       "MyCollections": "Mis colecciones",
-      "Asset": "Asset",
-      "MyAssets": "Mis assets",
+      "Asset": "Recurso",
+      "MyAssets": "Mis recursos",
       "LogOut": "Cerrar sesión"
     }
+  },
+  "LoginForm": {
+    "UsernameOrEmail": "Correo o Identificación",
+    "UsernameOrEmailARIA": "Introduce Correo o Identificación",
+    "Password": "Contraseña",
+    "PasswordARIA": "Contraseña",
+    "Submit": "Ingresa"
+  },
+  "LoginView": {
+    "Title": " Editor Web p5.js  | Ingreso",
+    "Login": "Ingresa",
+    "LoginOr": "o",
+    "SignUp": "Registráte",
+    "Email": "correo electrónico",
+    "Username": "Identificación",
+    "DontHaveAccount": "¿No tienes cuenta? ",
+    "ForgotPassword": "¿Olvidaste tu contraseña? ",
+    "ResetPassword": "Regenera tu contraseña"
+  },
+  "SocialAuthButton": {
+    "Github": "Ingresa con Github",
+    "LogoARIA": "Logo de {{serviceauth}}",
+    "Google": "Ingresa con Google"
   },
   "About": {
     "Title": "Acerca de",
@@ -74,7 +88,8 @@
     "SketchSaved": "Bosquejo guardado.",
     "SketchFailedSave": "Fallo al guardar el bosquejo.",
     "AutosaveEnabled": "Grabado automático activado.",
-    "LangChange": "Lenguaje cambiado"
+    "LangChange": "Lenguaje cambiado",
+    "SettingsSaved": "Configuración guardada."
   },
   "Toolbar": {
     "Preview": "Vista previa",
@@ -84,7 +99,8 @@
     "PlayOnlyVisualSketchARIA": "Ejecutar bosquejo visual",
     "StopSketchARIA": "Detener bosquejo",
     "EditSketchARIA": "Editar nombre de bosquejo",
-    "NewSketchNameARIA": "Nuevo nombre de bosquejo"
+    "NewSketchNameARIA": "Nuevo nombre de bosquejo",
+    "By": " de "
   },
   "Console": {
     "Title": "Consola",
@@ -160,21 +176,364 @@
     }
   },
   "Sidebar": {
-    "Create": "Crear",
-    "EnterName": "Introduce un nombre",
-    "Add": "Agregar",
-    "Folder": "Directorio"
+    "Title": "Archivos de Bosquejo",
+    "ToggleARIA": "Alternar abrir/cerrar opciones de archivo de bosquejo",
+    "AddFolder": "Crear directorio",
+    "AddFolderARIA": "Agregar directorio",
+    "AddFile": "Crear archivo",
+    "AddFileARIA": "agregar archivo",
+    "UploadFile": "Subir archivo",
+    "UploadFileARIA": "Subir archivo"
+  },
+  "FileNode": {
+    "OpenFolderARIA": "Abrir contenidos del directorio",
+    "CloseFolderARIA": "Cerrar contenidos del directorio",
+    "ToggleFileOptionsARIA": "Alternar abrir/cerrar opciones de archivo",
+    "AddFolder": "Crear directorio",
+    "AddFolderARIA": "Agregar directorio",
+    "AddFile": "Crear archivo",
+    "AddFileARIA": "agregar archivo",
+    "UploadFile": "Subir archivo",
+    "UploadFileARIA": "Subir archivo",
+    "Rename": "Renombrar",
+    "Delete": "Borrar"
   },
   "Common": {
     "Error": "Error",
+    "ErrorARIA": "Error",
     "Save": "Guardar",
-    "p5logoARIA": "Logo p5.js "
+    "p5logoARIA": "Logo p5.js ",
+    "DeleteConfirmation": "¿Estás seguro que quieres borrar {{name}}?"
   },
   "IDEView": {
-    "SubmitFeedback": "Enviar retroalimentación"
+    "SubmitFeedback": "Enviar retroalimentación",
+    "SubmitFeedbackARIA": "Enviar retroalimentación",
+    "AddCollectionTitle": "Agregar a colección",
+    "AddCollectionARIA":"Agregar a colección",
+    "ShareTitle": "Compartir",
+    "ShareARIA":"compartir"
+  },
+  "NewFileModal": {
+    "Title": "Crear Archivo",
+    "CloseButtonARIA": "Cerrar diálogo de crear archivo",
+    "EnterName": "Por favor introduce un nombre",
+    "InvalidType": "Tipo de archivo inválido. Las extensiones válidas son .js, .css, .json, .txt, .csv, .tsv, .frag y .vert."
+  },
+  "NewFileForm": {
+    "AddFileSubmit": "Agregar Archivo",
+    "Placeholder": "Nombre"
+  },
+  "NewFolderModal": {
+    "Title": "Crear Directorio",
+    "CloseButtonARIA": "Cerrar Diálogo de Nuevo Directorio",
+    "EnterName": "Por favor introduce un nombre",
+    "EmptyName": " El nombre del directorio no debe contener solo espacios vacíos",
+    "InvalidExtension": "El nombre del directorio no debe contener una extensión"
+  },
+  "NewFolderForm": {
+    "AddFolderSubmit": "Agregar Directorio",
+    "Placeholder": "Nombre"
+  },
+  "ResetPasswordForm": {
+    "Email": "Correo electrónico usado al registrarse",
+    "EmailARIA": "correo electrónico",
+    "Submit": "Enviar correo para regenerar contraseña"
+  },
+  "ResetPasswordView": {
+    "Title": "Editor Web p5.js | Regenerar Contraseña",
+    "Reset": "Regenerar Contraseña",
+    "Submitted": "Tu correo para regenerar la contraseña debe llegar pronto. Si no lo ves, revisa\n tu carpeta de spam puesto que algunas veces puede terminar ahí.",
+    "Login": "Ingresa",
+    "LoginOr": "o",
+    "SignUp": "Registráte"
+  },
+  "ReduxFormUtils": {
+    "errorInvalidEmail": "Por favor introduce un correo electrónico válido",
+    "errorEmptyEmail": "Por favor introduce un correo electrónico",
+    "errorPasswordMismatch": "Las contraseñas deben coincidir",
+    "errorEmptyPassword": "Por favor introduce una contraseña",
+    "errorShortPassword": "La contraseña debe tener al menos 6 caracteres",
+    "errorConfirmPassword": "Por favor confirma una contraseña",
+    "errorNewPassword": "Por favor introduce una nueva contraseña o deja la actual contraseña vacía",
+    "errorEmptyUsername": "Por favor introduce tu identificación",
+    "errorLongUsername": "La identificación debe ser menor a 20 caracteres.",
+    "errorValidUsername": "La identificación debe consistir solamente de números, letras, puntos, guiones y guiones bajos."
+  },
+  "NewPasswordView": {
+    "Title": "Editor Web p5.js | Nueva Contraseña",
+    "Description": "Define una nueva contraseña",
+    "TokenInvalidOrExpired": "El token para regenerar la contraseña es inválido o ha expirado.",
+    "EmptyPassword": "Por favor introduce una contraseña",
+    "PasswordConfirmation": "Por favor confirma la contraseña",
+    "PasswordMismatch": "Las contraseña deben coincidir"
+  },
+  "AccountForm": {
+    "Email": "Correo Electrónico",
+    "EmailARIA": "correo electrónico",
+    "Unconfirmed": "Sin confirmar.",
+    "EmailSent": "Confirmación enviada, revisa tu correo electrónico.",
+    "Resend": "Reenviar correo de confirmación",
+    "UserName": "Nombre de Identificación",
+    "UserNameARIA": "Nombre de identificación",
+    "CurrentPassword": "Contraseña Actual",
+    "CurrentPasswordARIA": "Contraseña Actual",
+    "NewPassword": "Nueva Contraseña",
+    "NewPasswordARIA": "Nueva Contraseña",
+    "SubmitSaveAllSettings": "Guardar Todas Las Configuraciones"
+  },
+  "AccountView": {
+    "SocialLogin": "Identificacion usando redes sociales",
+    "SocialLoginDescription": "Usa tu cuenta de GitHub o Google para acceder al Editor Web de p5.js .",
+    "Title": "Editor Web p5.js | Configuración Cuenta",
+    "Settings": "Configuración de la Cuenta",
+    "AccountTab": "Cuenta",
+    "AccessTokensTab": "Tokens de acceso"
+  },
+  "APIKeyForm": {
+    "ConfirmDelete": "¿Estás seguro que quieres borrar {{key_label}}?",
+    "Summary": " Los Tokens de acceso personal actuan como tu contraseña para permitir\n  a scripts automáticos acceder al  API del Editor. Crea un token por cada script \n que necesite acceso.",
+    "CreateToken": "Crear nuevo token",
+    "TokenLabel": "¿Para que es este token?",
+    "TokenPlaceholder": "¿Para que es este token? p.e. Ejemplo para Importar un Archivo",
+    "CreateTokenSubmit": "Crear",
+    "NoTokens": "No tienes tokens.",
+    "NewTokenTitle": "Tu nuevo token de acceso",
+    "NewTokenInfo": "Asegurate de copiar tu token ahora mismo.\n ¡No podras verlo de nuevo!",
+    "ExistingTokensTitle": "Tokens existentes"
+  },
+  "APIKeyList": {
+    "Name": "Nombre",
+    "Created": "Creado en",
+    "LastUsed": "Usado por última vez",
+    "Actions": "Acciones",
+    "Never": "Nunca",
+    "DeleteARIA": "Borrar clave de API"
+  },
+  "NewPasswordForm": {
+    "Title": "Contraseña",
+    "TitleARIA": "Contraseña",
+    "ConfirmPassword": "Confirmar Contraseña",
+    "ConfirmPasswordARIA": "Confirmar contraseña",
+    "SubmitSetNewPassword": "Crear Nueva Contraseña"
+  },
+  "SignupForm": {
+    "Title": "Identificación",
+    "TitleARIA": "Identificación",
+    "Email": "Correo electrónico",
+    "EmailARIA": "correo electrónico",
+    "Password": "Contraseña",
+    "PasswordARIA": "contraseña",
+    "ConfirmPassword": "Confirma tu contraseña",
+    "ConfirmPasswordARIA": "Confirma tu contraseña",
+    "SubmitSignup": "Registráte"
+  },
+  "SignupView": {
+    "Title": " Editor Web p5.js | Registráte",
+    "Description": "Registráte",
+    "Or": "o",
+    "AlreadyHave": "¿Ya tienes cuenta? ",
+    "Login": "Ingresa"
+  },
+  "EmailVerificationView": {
+    "Title": "Editor Web p5.js | Correo de Verificación",
+    "Verify": "Verica tu correo",
+    "InvalidTokenNull": "La liga es inválida.",
+    "Checking": "Validando token, por favor espera...",
+    "Verified": "Concluido, tu correo electrónico ha sido verificado.",
+    "InvalidState": "Algo salió mal."
+  },
+  "AssetList": {
+    "Title": "Editor Web p5.js | Mis recursos",
+    "ToggleOpenCloseARIA": "Alternar Abrir/Cerrar Opciones de Recurso",
+    "Delete": "Borrar",
+    "OpenNewTab": "Abrir en Nueva Pestaña",
+    "NoUploadedAssets": "No has subido recursos.",
+    "HeaderName": "Nombre",
+    "HeaderSize": "Tamaño",
+    "HeaderSketch": "Bosquejo"
+  },
+  "Feedback": {
+    "Title": "Editor Web p5.js | Retroalimentación",
+    "ViaGithubHeader": "Vía Github Issues",
+    "ViaGithubDescription": " Si estas familiarizado con Github, este es nuestro método favorito para recibir reporte de errores y retroalimentación.",
+    "GoToGithub": "Ir a Github",
+    "ViaGoogleHeader": "Vía Formulario de Google",
+    "ViaGoogleDescription": "También puedes enviar tu retroalimetnación usando esta vía rapida.",
+    "GoToForm": "Ir a Formulario"
+  },
+  "Searchbar": {
+    "SearchSketch": "Buscar en bosquejos...",
+    "SearchCollection": "Buscar en colecciones...",
+    "ClearTerm": "limpiar"
+  },
+  "UploadFileModal": {
+    "Title": "Subir Archivo",
+    "CloseButtonARIA": "Cerrar diálogo para subir archivo",
+    "SizeLimitError": "Error: No puedes subir archivos. Has alcanzado el limite de tamaño total de {{sizeLimit}}.\n         Si quieres agregar más,por favor remueve alugnos que no estes usando en tus "
+  },
+  "FileUploader": {
+    "DictDefaultMessage": "Deposita los archivos aquí o haz click para usar el navegador de archivos"
+  },
+  "ErrorModal": {
+    "MessageLogin": "Para poder guardar bosquejos, debes ingresar a tu cuenta. Por favor ",
+    "Login": "Ingresa",
+    "LoginOr": " o ",
+    "SignUp": "Registráte",
+    "MessageLoggedOut": "Parece que has salido de tu cuenta. Por favor ",
+    "LogIn": "ingresa",
+    "SavedDifferentWindow": " El proyecto que has intentado guardar ha sido guardado desde otra ventana.\n  Por favor refresca la página para ver la versión más actual."
+  },
+  "ShareModal": {
+    "Embed": "Incrustar",
+    "Present": "Presentar",
+    "Fullscreen": "Pantalla Completa",
+    "Edit": "Editar"
+  },
+  "CollectionView": {
+    "TitleCreate": "Crear colección",
+    "TitleDefault": "colección"
+  },
+  "Collection": {
+    "Title": "p5.js Web Editor | Mis colecciones",
+    "AnothersTitle": "Editor Web p5.js | Colecciones de {{anotheruser}}",
+    "Share": "Compartir",
+    "URLLink": "Liga a la Colección",
+    "AddSketch": "Agregar Bosquejo",
+    "DeleteFromCollection": "¿Estás seguro que quieres remover {{name_sketch}} de esta colección?",
+    "SketchDeleted": "El bosquejo fue eliminado",
+    "SketchRemoveARIA": "Remover bosquejo de la colección",
+    "DescriptionPlaceholder": "Agregar descripción",
+    "Description": "descripción",
+    "NumSketches": "{{count}} bosquejo",
+    "NumSketches_plural": "{{count}} bosquejos",
+    "By":"Colección por ",
+    "NoSketches": "No hay bosquejos en la colección",
+    "TableSummary": "tabla que contiene todas las colecciones",
+    "HeaderName": "Nombre",
+    "HeaderCreatedAt": "Fecha de agregación",
+    "HeaderUser": "Propietario",
+    "DirectionAscendingARIA": "Ascendente",
+    "DirectionDescendingARIA": "Descendente",
+    "ButtonLabelAscendingARIA": "Ordenar por {{displayName}} ascendente.",
+    "ButtonLabelDescendingARIA": "Ordenar por {{displayName}} descendente."
+  },
+  "AddToCollectionList": {
+    "Title": "p5.js Web Editor | Mis colecciones",
+    "AnothersTitle": "Editor Web p5.js | Colecciones de {{anotheruser}}",
+    "Empty": "No hay colecciones"
+  },
+  "CollectionCreate": {
+    "Title": "Editor Web p5.js | Crear colección",
+    "FormError": "No se pudo crear colección",
+    "FormLabel": "Nombre colección ",
+    "FormLabelARIA": "nombre de la colección",
+    "NameRequired": "Se requiere nombre de colección",
+    "Description": "Descripción (opcional)",
+    "DescriptionARIA": "descripción",
+    "DescriptionPlaceholder": "Mis bosquejos favoritos",
+    "SubmitCollectionCreate": "Crear colección"
+  },
+  "DashboardView": {
+    "CreateCollection": "Crear colección",
+    "NewSketch": "Nuevo bosquejo",
+    "CreateCollectionOverlay": "Crear colección"
+  },
+  "DashboardTabSwitcher": {
+    "Sketches": "Bosquejos",
+    "Collections": "Colecciones ",
+    "Assets": "Recursos"
+  },
+  "CollectionList": {
+    "Title": "p5.js Web Editor | Mis colecciones",
+    "AnothersTitle": "Editor Web p5.js | Colecciones de {{anotheruser}}",
+    "NoCollections": "No hay colecciones.",
+    "TableSummary": "la tabla contiene todas las colecciones",
+    "HeaderName": "Nombre",
+    "HeaderCreatedAt": "Fecha Creación",
+    "HeaderCreatedAt_mobile": "Creación",
+    "HeaderUpdatedAt": "Fecha Actualización",
+    "HeaderUpdatedAt_mobile": "Actualización",
+    "HeaderNumItems": "# bosquejos",
+    "HeaderNumItems_mobile": "Bosquejos",
+    "DirectionAscendingARIA": "Ascendente",
+    "DirectionDescendingARIA": "Descendente",
+    "ButtonLabelAscendingARIA": "Ordenar por {{displayName}} ascendente.",
+    "ButtonLabelDescendingARIA": "Ordenar por {{displayName}} descendente.",
+    "AddSketch": "Agregar Bosquejo"
+  },
+  "CollectionListRow": {
+    "ToggleCollectionOptionsARIA": "Alternar Abrir/Cerrar opciones de colección",
+    "AddSketch": "Agregar bosquejo",
+    "Delete": "Borrar",
+    "Rename": "Renombrar"
+  },
+  "Overlay": {
+    "AriaLabel": "Cerrar la capa {{title}}"
+  },
+  "QuickAddList":{
+    "ButtonRemoveARIA": "Remover de colección",
+    "ButtonAddToCollectionARIA": "Agregar a colección",
+    "View": "Ver"
+  },
+  "SketchList": {
+    "View": "Ver",
+    "Title": "p5.js Web Editor | Mis bosquejos",
+    "AnothersTitle": "Editor Web p5.js | Bosquejos de {{anotheruser}}",
+    "ToggleLabelARIA": "Alternar Abrir/Cerrar Opciones de Bosquejo",
+    "DropdownRename": "Renombrar",
+    "DropdownDownload": "Descargar",
+    "DropdownDuplicate": "Duplicar",
+    "DropdownAddToCollection": "Agregar a Colección",
+    "DropdownDelete": "Borrar",
+    "DirectionAscendingARIA": "Ascendente",
+    "DirectionDescendingARIA": "Descendente",
+    "ButtonLabelAscendingARIA": "Ordenar por {{displayName}} ascendente.",
+    "ButtonLabelDescendingARIA": "Ordenar por {{displayName}} descendente.",
+    "AddToCollectionOverlayTitle": "Agregar a colección",
+    "TableSummary": "la tabla contiene todos los proyectos guardados",
+    "HeaderName": "Bosquejo",
+    "HeaderCreatedAt": "Fecha Creación",
+    "HeaderCreatedAt_mobile": "Creación",
+    "HeaderUpdatedAt": "Fecha Actualización",
+    "HeaderUpdatedAt_mobile": "Actualización",
+    "NoSketches": "No hay bosquejos."
+  },
+  "AddToCollectionSketchList": {
+    "Title": "p5.js Web Editor | Mis bosquejos",
+    "AnothersTitle": "Editor Web p5.js | Bosquejos de {{anotheruser}}",
+    "NoCollections": "No hay colecciones."
+  },
+  "Editor": {
+    "OpenSketchARIA": "Abrir navegación de archivos de bosquejo",
+    "CloseSketchARIA": "Cerrar navegación de archivos de bosquejo",
+    "UnsavedChangesARIA": "El bosquejo tiene cambios sin guardar",
+    "KeyUpLineNumber": "línea {{lineNumber}}"
+  },
+  "EditorAccessibility": {
+    "NoLintMessages": "No hay mensajes de Lint",
+    "CurrentLine": " Línea actual"
+  },
+  "Timer": {
+    "SavedJustNow": "Guardado: justo ahora",
+    "Saved15Seconds": "Guardado: hace 15 segundos",
+    "Saved25Seconds": "Guardado: hace 25 segundos",
+    "Saved35Seconds": "Guardado: hace 35 segundos",
+    "SavedAgo": "Guardado: hace {{timeAgo}}"
+  },
+  "AddRemoveButton": {
+    "AltAddARIA": "Agregar a colección",
+    "AltRemoveARIA": "Remover de colección"
+  },
+  "CopyableInput": {
+    "CopiedARIA": "¡Copiado en el portapapeles!",
+    "OpenViewTabARIA": "Abrir la vista {{label}} en nueva pestaña"
+  },
+  "EditableInput": {
+    "EditValue": "Editar valor de {{display}}",
+    "EmptyPlaceholder": "Sin valor"
+  },
+  "PreviewNav": {
+    "EditSketchARIA": "Editar Bosquejo",
+    "ByUser": "por"
   }
 }
-
-
-
-

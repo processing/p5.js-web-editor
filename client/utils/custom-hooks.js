@@ -28,7 +28,7 @@ export const useModalBehavior = (hideOverlay) => {
 
 
   const handleClickOutside = ({ target }) => {
-    if (ref && ref.current && !ref.current.contains(target)) {
+    if (ref && ref.current && !(ref.current.contains && ref.current.contains(target))) {
       hide();
     }
   };
@@ -40,3 +40,20 @@ export const useModalBehavior = (hideOverlay) => {
 
   return [visible, trigger, setRef];
 };
+
+// Usage: useEffectWithComparison((props, prevProps) => { ... }, { prop1, prop2 })
+// This hook basically applies useEffect but keeping track of the last value of relevant props
+// So you can passa a 2-param function to capture new and old values and do whatever with them.
+export const useEffectWithComparison = (fn, props) => {
+  const [prevProps, update] = useState({});
+
+  return useEffect(() => {
+    fn(props, prevProps);
+    update(props);
+  }, Object.values(props));
+};
+
+export const useEventListener = (event, callback, useCapture = false, list = []) => useEffect(() => {
+  document.addEventListener(event, callback, useCapture);
+  return () => document.removeEventListener(event, callback, useCapture);
+}, list);

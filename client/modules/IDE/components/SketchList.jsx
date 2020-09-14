@@ -2,6 +2,7 @@ import format from 'date-fns/format';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
@@ -21,6 +22,9 @@ import AddToCollectionList from './AddToCollectionList';
 import ArrowUpIcon from '../../../images/sort-arrow-up.svg';
 import ArrowDownIcon from '../../../images/sort-arrow-down.svg';
 import DownFilledTriangleIcon from '../../../images/down-filled-triangle.svg';
+
+
+const formatDateCell = (date, mobile = false) => format(new Date(date), mobile ? 'MMM D, YYYY' : 'MMM D, YYYY h:mm A');
 
 class SketchListRowBase extends React.Component {
   constructor(props) {
@@ -145,14 +149,14 @@ class SketchListRowBase extends React.Component {
 
   handleSketchDelete = () => {
     this.closeAll();
-    if (window.confirm(`Are you sure you want to delete "${this.props.sketch.name}"?`)) {
+    if (window.confirm(this.props.t('Common.DeleteConfirmation', { name: this.props.sketch.name }))) {
       this.props.deleteProject(this.props.sketch.id);
     }
   }
 
   renderViewButton = sketchURL => (
     <td className="sketch-list__dropdown-column">
-      <Link to={sketchURL}>View</Link>
+      <Link to={sketchURL}>{this.props.t('SketchList.View')}</Link>
     </td>
   )
 
@@ -167,7 +171,7 @@ class SketchListRowBase extends React.Component {
           onClick={this.toggleOptions}
           onBlur={this.onBlurComponent}
           onFocus={this.onFocusComponent}
-          aria-label="Toggle Open/Close Sketch Options"
+          aria-label={this.props.t('SketchList.ToggleLabelARIA')}
         >
           <DownFilledTriangleIcon focusable="false" aria-hidden="true" />
         </button>
@@ -183,7 +187,7 @@ class SketchListRowBase extends React.Component {
                 onBlur={this.onBlurComponent}
                 onFocus={this.onFocusComponent}
               >
-                Rename
+                {this.props.t('SketchList.DropdownRename')}
               </button>
             </li>}
             <li>
@@ -193,7 +197,7 @@ class SketchListRowBase extends React.Component {
                 onBlur={this.onBlurComponent}
                 onFocus={this.onFocusComponent}
               >
-                Download
+                {this.props.t('SketchList.DropdownDownload')}
               </button>
             </li>
             {this.props.user.authenticated &&
@@ -204,7 +208,7 @@ class SketchListRowBase extends React.Component {
                 onBlur={this.onBlurComponent}
                 onFocus={this.onFocusComponent}
               >
-                Duplicate
+                {this.props.t('SketchList.DropdownDuplicate')}
               </button>
             </li>}
             {this.props.user.authenticated &&
@@ -218,7 +222,7 @@ class SketchListRowBase extends React.Component {
                   onBlur={this.onBlurComponent}
                   onFocus={this.onFocusComponent}
                 >
-                  Add to collection
+                  {this.props.t('SketchList.DropdownAddToCollection')}
                 </button>
               </li>}
             { /* <li>
@@ -239,7 +243,7 @@ class SketchListRowBase extends React.Component {
                 onBlur={this.onBlurComponent}
                 onFocus={this.onFocusComponent}
               >
-                Delete
+                {this.props.t('SketchList.DropdownDelete')}
               </button>
             </li>}
           </ul>}
@@ -251,6 +255,7 @@ class SketchListRowBase extends React.Component {
     const {
       sketch,
       username,
+      mobile
     } = this.props;
     const { renameOpen, renameValue } = this.state;
     let url = `/${username}/sketches/${sketch.id}`;
@@ -287,8 +292,8 @@ class SketchListRowBase extends React.Component {
           <th scope="row">
             {name}
           </th>
-          <td>{format(new Date(sketch.createdAt), 'MMM D, YYYY h:mm A')}</td>
-          <td>{format(new Date(sketch.updatedAt), 'MMM D, YYYY h:mm A')}</td>
+          <td>{mobile && 'Created: '}{formatDateCell(sketch.createdAt, mobile)}</td>
+          <td>{mobile && 'Updated: '}{formatDateCell(sketch.updatedAt, mobile)}</td>
           {this.renderDropdown()}
         </tr>
       </React.Fragment>);
@@ -312,7 +317,13 @@ SketchListRowBase.propTypes = {
   cloneProject: PropTypes.func.isRequired,
   exportProjectAsZip: PropTypes.func.isRequired,
   changeProjectName: PropTypes.func.isRequired,
-  onAddToCollection: PropTypes.func.isRequired
+  onAddToCollection: PropTypes.func.isRequired,
+  mobile: PropTypes.bool,
+  t: PropTypes.func.isRequired
+};
+
+SketchListRowBase.defaultProps = {
+  mobile: false
 };
 
 function mapDispatchToPropsSketchListRow(dispatch) {
@@ -343,9 +354,9 @@ class SketchList extends React.Component {
 
   getSketchesTitle() {
     if (this.props.username === this.props.user.username) {
-      return 'p5.js Web Editor | My sketches';
+      return this.props.t('SketchList.Title');
     }
-    return `p5.js Web Editor | ${this.props.username}'s sketches`;
+    return this.props.t('SketchList.AnothersTitle', { anotheruser: this.props.username });
   }
 
   hasSketches() {
@@ -363,7 +374,7 @@ class SketchList extends React.Component {
 
   _renderEmptyTable() {
     if (!this.isLoading() && this.props.sketches.length === 0) {
-      return (<p className="sketches-table__empty">No sketches.</p>);
+      return (<p className="sketches-table__empty">{this.props.t('SketchList.NoSketches')}</p>);
     }
     return null;
   }
@@ -373,14 +384,14 @@ class SketchList extends React.Component {
     let buttonLabel;
     if (field !== fieldName) {
       if (field === 'name') {
-        buttonLabel = `Sort by ${displayName} ascending.`;
+        buttonLabel = this.props.t('SketchList.ButtonLabelAscendingARIA', { displayName });
       } else {
-        buttonLabel = `Sort by ${displayName} descending.`;
+        buttonLabel = this.props.t('SketchList.ButtonLabelDescendingARIA', { displayName });
       }
     } else if (direction === SortingActions.DIRECTION.ASC) {
-      buttonLabel = `Sort by ${displayName} descending.`;
+      buttonLabel = this.props.t('SketchList.ButtonLabelDescendingARIA', { displayName });
     } else {
-      buttonLabel = `Sort by ${displayName} ascending.`;
+      buttonLabel = this.props.t('SketchList.ButtonLabelAscendingARIA', { displayName });
     }
     return buttonLabel;
   }
@@ -401,10 +412,10 @@ class SketchList extends React.Component {
         >
           <span className={headerClass}>{displayName}</span>
           {field === fieldName && direction === SortingActions.DIRECTION.ASC &&
-            <ArrowUpIcon role="img" aria-label="Ascending" focusable="false" />
+            <ArrowUpIcon role="img" aria-label={this.props.t('SketchList.DirectionAscendingARIA')} focusable="false" />
           }
           {field === fieldName && direction === SortingActions.DIRECTION.DESC &&
-            <ArrowDownIcon role="img" aria-label="Descending" focusable="false" />
+            <ArrowDownIcon role="img" aria-label={this.props.t('SketchList.DirectionDescendingARIA')} focusable="false" />
           }
         </button>
       </th>
@@ -413,6 +424,7 @@ class SketchList extends React.Component {
 
   render() {
     const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
+    const { mobile } = this.props;
     return (
       <article className="sketches-table-container">
         <Helmet>
@@ -421,18 +433,19 @@ class SketchList extends React.Component {
         {this._renderLoader()}
         {this._renderEmptyTable()}
         {this.hasSketches() &&
-          <table className="sketches-table" summary="table containing all saved projects">
+          <table className="sketches-table" summary={this.props.t('SketchList.TableSummary')}>
             <thead>
               <tr>
-                {this._renderFieldHeader('name', 'Sketch')}
-                {this._renderFieldHeader('createdAt', 'Date Created')}
-                {this._renderFieldHeader('updatedAt', 'Date Updated')}
+                {this._renderFieldHeader('name', this.props.t('SketchList.HeaderName'))}
+                {this._renderFieldHeader('createdAt', this.props.t('SketchList.HeaderCreatedAt', { context: mobile ? 'mobile' : '' }))}
+                {this._renderFieldHeader('updatedAt', this.props.t('SketchList.HeaderUpdatedAt', { context: mobile ? 'mobile' : '' }))}
                 <th scope="col"></th>
               </tr>
             </thead>
             <tbody>
               {this.props.sketches.map(sketch =>
                 (<SketchListRow
+                  mobile={mobile}
                   key={sketch.id}
                   sketch={sketch}
                   user={this.props.user}
@@ -440,6 +453,7 @@ class SketchList extends React.Component {
                   onAddToCollection={() => {
                     this.setState({ sketchToAddToCollection: sketch });
                   }}
+                  t={this.props.t}
                 />))}
             </tbody>
           </table>}
@@ -447,7 +461,7 @@ class SketchList extends React.Component {
           this.state.sketchToAddToCollection &&
             <Overlay
               isFixedHeight
-              title="Add to collection"
+              title={this.props.t('SketchList.AddToCollectionOverlayTitle')}
               closeOverlay={() => this.setState({ sketchToAddToCollection: null })}
             >
               <AddToCollectionList
@@ -482,10 +496,13 @@ SketchList.propTypes = {
     field: PropTypes.string.isRequired,
     direction: PropTypes.string.isRequired
   }).isRequired,
+  mobile: PropTypes.bool,
+  t: PropTypes.func.isRequired
 };
 
 SketchList.defaultProps = {
-  username: undefined
+  username: undefined,
+  mobile: false,
 };
 
 function mapStateToProps(state) {
@@ -505,4 +522,4 @@ function mapDispatchToProps(dispatch) {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SketchList);
+export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(SketchList));

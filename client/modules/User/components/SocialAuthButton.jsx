@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
+import { withTranslation } from 'react-i18next';
 
 import { remSize } from '../../../theme';
 
@@ -10,11 +11,6 @@ import Button from '../../../common/Button';
 const authUrls = {
   github: '/auth/github',
   google: '/auth/google'
-};
-
-const labels = {
-  github: 'Login with GitHub',
-  google: 'Login with Google'
 };
 
 const linkLabels = {
@@ -42,8 +38,14 @@ const StyledButton = styled(Button)`
   width: ${remSize(300)};
 `;
 
-function SocialAuthButton({ service, linkStyle, isConnected }) {
+function SocialAuthButton({
+  service, linkStyle, isConnected, t
+}) {
   const ServiceIcon = icons[service];
+  const labels = {
+    github: t('SocialAuthButton.Github'),
+    google: t('SocialAuthButton.Google')
+  };
   let label;
   if (linkStyle) {
     label = isConnected ? linkLabels[service].connected : linkLabels[service].connect;
@@ -52,7 +54,7 @@ function SocialAuthButton({ service, linkStyle, isConnected }) {
   }
   return (
     <StyledButton
-      iconBefore={<ServiceIcon aria-label={`${service} logo`} />}
+      iconBefore={<ServiceIcon aria-label={t('SocialAuthButton.LogoARIA', { serviceauth: service })} />}
       href={authUrls[service]}
     >
       {label}
@@ -65,7 +67,8 @@ SocialAuthButton.services = services;
 SocialAuthButton.propTypes = {
   service: PropTypes.oneOf(['github', 'google']).isRequired,
   linkStyle: PropTypes.bool,
-  isConnected: PropTypes.bool
+  isConnected: PropTypes.bool,
+  t: PropTypes.func.isRequired
 };
 
 SocialAuthButton.defaultProps = {
@@ -73,4 +76,6 @@ SocialAuthButton.defaultProps = {
   isConnected: false
 };
 
-export default SocialAuthButton;
+const SocialAuthButtonPublic = withTranslation()(SocialAuthButton);
+SocialAuthButtonPublic.services = services;
+export default SocialAuthButtonPublic;

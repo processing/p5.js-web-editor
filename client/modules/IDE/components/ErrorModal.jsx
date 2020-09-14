@@ -1,15 +1,16 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router';
+import { withTranslation } from 'react-i18next';
 
 class ErrorModal extends React.Component {
   forceAuthentication() {
     return (
       <p>
-        In order to save sketches, you must be logged in. Please&nbsp;
-        <Link to="/login" onClick={this.props.closeModal}>Login</Link>
-        &nbsp;or&nbsp;
-        <Link to="/signup" onClick={this.props.closeModal}>Sign Up</Link>.
+        {this.props.t('ErrorModal.MessageLogin')}
+        <Link to="/login" onClick={this.props.closeModal}> {this.props.t('ErrorModal.Login')}</Link>
+        {this.props.t('ErrorModal.LoginOr')}
+        <Link to="/signup" onClick={this.props.closeModal}>{this.props.t('ErrorModal.SignUp')}</Link>.
       </p>
     );
   }
@@ -17,8 +18,8 @@ class ErrorModal extends React.Component {
   staleSession() {
     return (
       <p>
-        It looks like you&apos;ve been logged out. Please&nbsp;
-        <Link to="/login" onClick={this.props.closeModal}>log in</Link>.
+        {this.props.t('ErrorModal.MessageLoggedOut')}
+        <Link to="/login" onClick={this.props.closeModal}>{this.props.t('ErrorModal.LogIn')}</Link>.
       </p>
     );
   }
@@ -26,8 +27,7 @@ class ErrorModal extends React.Component {
   staleProject() {
     return (
       <p>
-        The project you have attempted to save has been saved from another window.
-        Please refresh the page to see the latest version.
+        {this.props.t('ErrorModal.SavedDifferentWindow')}
       </p>
     );
   }
@@ -51,7 +51,8 @@ class ErrorModal extends React.Component {
 
 ErrorModal.propTypes = {
   type: PropTypes.string.isRequired,
-  closeModal: PropTypes.func.isRequired
+  closeModal: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired
 };
 
-export default ErrorModal;
+export default withTranslation()(ErrorModal);

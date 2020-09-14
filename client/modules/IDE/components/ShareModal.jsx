@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { withTranslation } from 'react-i18next';
 import CopyableInput from './CopyableInput';
 
 class ShareModal extends React.PureComponent {
@@ -16,21 +17,21 @@ class ShareModal extends React.PureComponent {
           {projectName}
         </h3>
         <CopyableInput
-          label="Embed"
+          label={this.props.t('ShareModal.Embed')}
           value={`<iframe src="${hostname}/${ownerUsername}/embed/${projectId}"></iframe>`}
         />
         <CopyableInput
-          label="Present"
+          label={this.props.t('ShareModal.Present')}
           hasPreviewLink
           value={`${hostname}/${ownerUsername}/present/${projectId}`}
         />
         <CopyableInput
-          label="Fullscreen"
+          label={this.props.t('ShareModal.Fullscreen')}
           hasPreviewLink
           value={`${hostname}/${ownerUsername}/full/${projectId}`}
         />
         <CopyableInput
-          label="Edit"
+          label={this.props.t('ShareModal.Edit')}
           hasPreviewLink
           value={`${hostname}/${ownerUsername}/sketches/${projectId}`}
         />
@@ -42,7 +43,8 @@ class ShareModal extends React.PureComponent {
 ShareModal.propTypes = {
   projectId: PropTypes.string.isRequired,
   ownerUsername: PropTypes.string.isRequired,
-  projectName: PropTypes.string.isRequired
+  projectName: PropTypes.string.isRequired,
+  t: PropTypes.func.isRequired
 };
 
-export default ShareModal;
+export default withTranslation()(ShareModal);

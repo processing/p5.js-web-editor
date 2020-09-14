@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import apiClient from '../../../utils/apiClient';
 import * as ActionTypes from '../../../constants';
 
@@ -207,6 +208,25 @@ export function setAllAccessibleOutput(value) {
     dispatch(setTextOutput(value));
     dispatch(setGridOutput(value));
     dispatch(setSoundOutput(value));
+  };
+}
+
+export function setLanguage(value, { persistPreference = true } = {}) {
+  return (dispatch, getState) => {
+    i18next.changeLanguage(value);
+    dispatch({
+      type: ActionTypes.SET_LANGUAGE,
+      language: value
+    });
+    const state = getState();
+    if (persistPreference && state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          language: value
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
   };
 }
 
