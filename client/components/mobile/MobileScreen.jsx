@@ -9,8 +9,9 @@ const ScreenWrapper = styled.div`
     padding: ${remSize(8)};
 
     border-radius: ${remSize(4)};
-    width: 90%;
+    width: 92%;
     top: unset;
+    min-width: unset;
     bottom: ${remSize(64)}
   }
 `;
