@@ -146,25 +146,27 @@ export default function(CodeMirror) {
         return nextState;
       }
 
-      var showReplaceButton = dialog.getElementsByClassName("CodeMirror-replace-button")[0];
+      var showReplaceButton = dialog.getElementsByClassName("CodeMirror-replace-toggle-button")[0];
       var toggleReplaceBtnDiv = dialog.getElementsByClassName("Toggle-replace-btn-div")[0];
       var replaceDiv = dialog.getElementsByClassName("CodeMirror-replace-div")[0];
+      var replaceDivHeightOpened = "45px", replaceDivHeightClosed = "0px";
+      var toggleButtonHeightOpened = "80px", toggleButtonHeightClosed = "40px";
       if (replaceOpened) {
-        replaceDiv.style.height = "50px";
-        toggleReplaceBtnDiv.style.height = "90px";
-        showReplaceButton.style.height = "90px";
+        replaceDiv.style.height = replaceDivHeightOpened;
+        toggleReplaceBtnDiv.style.height = toggleButtonHeightOpened;
+        showReplaceButton.style.height = toggleButtonHeightOpened;
         showReplaceButton.innerHTML = "▼";
       }
       CodeMirror.on(showReplaceButton, "click", function () {
         if (replaceDiv.style.height === "0px") {
-          replaceDiv.style.height = "50px";
-          toggleReplaceBtnDiv.style.height = "90px";
-          showReplaceButton.style.height = "90px";
+          replaceDiv.style.height = replaceDivHeightOpened;
+          toggleReplaceBtnDiv.style.height = toggleButtonHeightOpened;
+          showReplaceButton.style.height = toggleButtonHeightOpened;
           showReplaceButton.innerHTML = "▼";
         } else {
-          replaceDiv.style.height = "0px";
-          toggleReplaceBtnDiv.style.height = "40px";
-          showReplaceButton.style.height = "40px";
+          replaceDiv.style.height = replaceDivHeightClosed;
+          toggleReplaceBtnDiv.style.height = toggleButtonHeightClosed;
+          showReplaceButton.style.height = toggleButtonHeightClosed;
           showReplaceButton.innerHTML = "▶";
         }
       });
@@ -465,7 +467,7 @@ export default function(CodeMirror) {
           title="Replace"
           aria-label="Replace"
           role="button"
-          class="CodeMirror-search-modifier-button CodeMirror-replace-button"
+          class="CodeMirror-search-modifier-button CodeMirror-replace-toggle-button"
         >
           <span aria-hidden="true" class="button">▶</span>
         </button>
@@ -534,18 +536,16 @@ export default function(CodeMirror) {
               aria-label="Replace"
               role="button"
               id="Btn-replace"
-              class="CodeMirror-search-modifier-button CodeMirror-replace-button"
+              class="CodeMirror-search-modifier-button CodeMirror-replace-button icon replace"
             >
-              <span aria-hidden="true" class="button">Replace</span>
             </button>
             <button
               title="Replace All"
               aria-label="Replace All"
               role="button"
               id="Btn-replace-all"
-              class="CodeMirror-search-modifier-button CodeMirror-replace-button"
+              class="CodeMirror-search-modifier-button CodeMirror-replace-button icon replace-all"
             >
-              <span aria-hidden="true" class="button">Replace All</span>
             </button>
           </div>
         </div>

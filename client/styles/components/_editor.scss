@@ -91,10 +91,10 @@ pre.CodeMirror-line {
 
   z-index: 10;
 
-  width: 552px;
+  width: 580px;
   font-family: Montserrat, sans-serif;
 
-  padding: #{7 / $base-font-size}rem #{10 / $base-font-size}rem #{7 / $base-font-size}rem #{9 / $base-font-size}rem;
+  padding: #{8 / $base-font-size}rem #{10 / $base-font-size}rem #{5 / $base-font-size}rem #{9 / $base-font-size}rem;
 
   border-radius: 2px;
 
@@ -112,7 +112,6 @@ pre.CodeMirror-line {
 }
 .Toggle-replace-btn-div {
   height: 40px;
-  margin-right: 10px;
   padding: 0;
 }
 .Toggle-replace-btn-div > button {
@@ -169,7 +168,7 @@ pre.CodeMirror-line {
 .CodeMirror-search-field {
   display: block;
   width: 100%;
-  margin-bottom: #{12 / $base-font-size}rem;
+  margin-bottom: #{4 / $base-font-size}rem;
   @include themify() {
     color: getThemifyVariable('input-text-color');
     background-color: getThemifyVariable('input-secondary-background-color');
@@ -209,8 +208,8 @@ pre.CodeMirror-line {
     }
 
   }
-  width: #{25 / $base-font-size}rem;
-  height: #{25 / $base-font-size}rem;
+  width: #{35 / $base-font-size}rem;
+  height: #{35 / $base-font-size}rem;
 
   & + & {
     margin-left: #{3 / $base-font-size}rem;
@@ -268,6 +267,26 @@ pre.CodeMirror-line {
 // Next button
 .CodeMirror-search-button.next::after {
   background-image: url(../images/down-arrow.svg?byUrl)
+}
+
+// Replace button
+.CodeMirror-replace-button::after {
+  display: block;
+  content: ' ';
+
+  width: 20px;
+  height: 20px;
+
+  @include icon();
+
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.CodeMirror-replace-button.replace::after {
+  background-image: url(../images/replace.svg?byUrl);
+}
+.CodeMirror-replace-button.replace-all::after {
+  background-image: url(../images/replace-all.svg?byUrl);
 }
 
 /*
