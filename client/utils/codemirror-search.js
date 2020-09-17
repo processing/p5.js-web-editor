@@ -28,6 +28,22 @@ export default function(CodeMirror) {
     }};
   }
 
+  function replaceOverlay(cursorFrom, cursorTo, flag) {
+    return {token: function(stream) {
+      if (!flag && cursorFrom.line == stream.lineOracle.line) {
+        if (stream.pos == 0) {
+          stream.pos = cursorFrom.ch;
+        } else {
+          stream.pos = cursorTo.ch;
+          flag = true;
+          return 'searching';
+        }
+      } else {
+        stream.skipToEnd();
+      }
+    }};
+  }
+
   function SearchState() {
     this.posFrom = this.posTo = this.lastQuery = this.query = null;
     this.overlay = null;
@@ -227,12 +243,19 @@ export default function(CodeMirror) {
             buttons[nextButton].focus();
           }
           if (e.keyCode === 27) { // esc
+            // Remove replace-overlay & focus on the editor.
+            const state = getSearchState(cm);
+            cm.removeOverlay(state.overlay, state.caseInsensitive);
             cm.focus();
           }
         });
         button.addEventListener("click", function () {
           if (index === buttons.length - 1) { // "done"
             lastSelectedIndex = 0;
+            // Remove replace-overlay & focus on the editor.
+            const state = getSearchState(cm);
+            cm.removeOverlay(state.overlay, state.caseInsensitive);
+            cm.focus();
           }
         })
       })(i);
@@ -416,7 +439,13 @@ export default function(CodeMirror) {
           if (!(match = cursor.findNext()) ||
             (start && cursor.from().line == start.line && cursor.from().ch == start.ch)) return;
         }
-        cm.setSelection(cursor.from(), cursor.to());
+
+        // Add an overlay to the text to be replaced.
+        cm.removeOverlay(state.overlay, state.caseInsensitive);
+        var flag = false;
+        state.overlay = replaceOverlay(cursor.from(), cursor.to(), flag);
+        cm.addOverlay(state.overlay);
+        
         cm.scrollIntoView({from: cursor.from(), to: cursor.to()}, 60);
         confirmDialog(cm, doReplaceConfirm, "Replace?",
           [function() {doReplace(match);}, advance,
