@@ -140,7 +140,7 @@ app.get('/auth/github/callback', (req, res, next) => {
   passport.authenticate('github', { failureRedirect: '/login' }, (err, user) => {
     if (err) {
       // use query string param to show error;
-      res.redirect('/account');
+      res.redirect('/account?error=github');
       return;
     }
 
@@ -159,7 +159,7 @@ app.get('/auth/google/callback', (req, res, next) => {
   passport.authenticate('google', { failureRedirect: '/login' }, (err, user) => {
     if (err) {
       // use query string param to show error;
-      res.redirect('/account');
+      res.redirect('/account?error=google');
       return;
     }
 

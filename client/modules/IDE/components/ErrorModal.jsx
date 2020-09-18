@@ -15,6 +15,15 @@ class ErrorModal extends React.Component {
     );
   }
 
+  oauthError() {
+    return (
+      <p>
+        {'There was an error linking your GitHub account. This account has already been linked'}
+        {' to another account.'}
+      </p>
+    );
+  }
+
   staleSession() {
     return (
       <p>
@@ -42,6 +51,8 @@ class ErrorModal extends React.Component {
             return this.staleSession();
           } else if (this.props.type === 'staleProject') {
             return this.staleProject();
+          } else if (this.props.type === 'oauthError') {
+            return this.oauthError();
           }
         })()}
       </div>

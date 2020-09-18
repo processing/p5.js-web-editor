@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Helmet } from 'react-helmet';
 import { withTranslation } from 'react-i18next';
+import { withRouter, browserHistory } from 'react-router';
+import { parse } from 'query-string';
 import { updateSettings, initiateVerification, createApiKey, removeApiKey } from '../actions';
 import AccountForm from '../components/AccountForm';
 import apiClient from '../../../utils/apiClient';
@@ -12,6 +14,8 @@ import { validateSettings } from '../../../utils/reduxFormUtils';
 import SocialAuthButton from '../components/SocialAuthButton';
 import APIKeyForm from '../components/APIKeyForm';
 import Nav from '../../../components/Nav';
+import ErrorModal from '../../IDE/components/ErrorModal';
+import Overlay from '../../App/components/Overlay';
 
 function SocialLoginPanel(props) {
   const { user } = props;
@@ -53,6 +57,9 @@ class AccountView extends React.Component {
   }
 
   render() {
+    const queryParams = parse(this.props.location.search);
+    const showError = !!queryParams.error;
+    const errorType = queryParams.error;
     const accessTokensUIEnabled = window.process.env.UI_ACCESS_TOKEN_ENABLED;
 
     return (
@@ -62,6 +69,20 @@ class AccountView extends React.Component {
         </Helmet>
 
         <Nav layout="dashboard" />
+
+        {showError &&
+          <Overlay
+            title="Error Linking Account"
+            ariaLabel="OAuth Error"
+            closeOverlay={() => {
+              browserHistory.push(this.props.location.pathname);
+            }}
+          >
+            <ErrorModal
+              type="oauthError"
+            />
+          </Overlay>
+        }
 
         <main className="account-settings">
           <header className="account-settings__header">
@@ -127,13 +148,17 @@ function asyncValidate(formProps, dispatch, props) {
 AccountView.propTypes = {
   previousPath: PropTypes.string.isRequired,
   theme: PropTypes.string.isRequired,
-  t: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
+  location: PropTypes.shape({
+    search: PropTypes.string.isRequired,
+    pathname: PropTypes.string.isRequired
+  }).isRequired
 };
 
-export default withTranslation()(reduxForm({
+export default withTranslation()(withRouter(reduxForm({
   form: 'updateAllSettings',
   fields: ['username', 'email', 'currentPassword', 'newPassword'],
   validate: validateSettings,
   asyncValidate,
   asyncBlurFields: ['username', 'email', 'currentPassword']
-}, mapStateToProps, mapDispatchToProps)(AccountView));
+}, mapStateToProps, mapDispatchToProps)(AccountView)));
