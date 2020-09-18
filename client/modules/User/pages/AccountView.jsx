@@ -73,7 +73,7 @@ class AccountView extends React.Component {
         {showError &&
           <Overlay
             title="Error Linking Account"
-            ariaLabel="OAuth Error"
+            ariaLabel="Error Lnking Account"
             closeOverlay={() => {
               browserHistory.push(this.props.location.pathname);
             }}

@@ -18,8 +18,8 @@ class ErrorModal extends React.Component {
   oauthError() {
     return (
       <p>
-        {'There was an error linking your GitHub account. This account has already been linked'}
-        {' to another account.'}
+        {'There was a problem linking your GitHub account to your p5.js Web Editor account.'}
+        {' Your GitHub account has already been linked to another p5.js Web Editor account.'}
       </p>
     );
   }
