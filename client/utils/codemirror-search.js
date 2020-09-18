@@ -534,7 +534,7 @@ export default function(CodeMirror) {
               </button>
             </div>
             <div class="CodeMirror-search-nav">
-              <button class="CodeMirror-search-results">No results</button>
+              <p class="CodeMirror-search-results">No results</p>
               <button
                 title="Previous"
                 aria-label="Previous"
@@ -548,7 +548,7 @@ export default function(CodeMirror) {
               >
               </button>
             </div>
-            <div>
+            <div class="CodeMirror-close-button-container">
               <button
                 title="Close"
                 aria-label="Close"
@@ -558,23 +558,25 @@ export default function(CodeMirror) {
           </div>
         </div>
         <div style="height: 0px; overflow: hidden;" class="CodeMirror-replace-div">
-          <input id="Replace-input-field" type="text" placeholder="Text to replace" class="search-input CodeMirror-search-field"/><div class="close icon"></div>
+          <input id="Replace-input-field" type="text" placeholder="Text to replace" class="search-input CodeMirror-search-field"/>
           <div class="CodeMirror-replace-controls">
             <button
               title="Replace"
               aria-label="Replace"
               role="button"
               id="Btn-replace"
-              class="CodeMirror-search-modifier-button CodeMirror-replace-button icon replace"
+              class="CodeMirror-search-modifier-button CodeMirror-replace-button"
             >
+              Replace
             </button>
             <button
               title="Replace All"
               aria-label="Replace All"
               role="button"
               id="Btn-replace-all"
-              class="CodeMirror-search-modifier-button CodeMirror-replace-button icon replace-all"
+              class="CodeMirror-search-modifier-button CodeMirror-replace-button"
             >
+              Replace All
             </button>
           </div>
         </div>
