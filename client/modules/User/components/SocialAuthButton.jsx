@@ -2,11 +2,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
 import { withTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 
 import { remSize } from '../../../theme';
-
 import { GithubIcon, GoogleIcon } from '../../../common/icons';
 import Button from '../../../common/Button';
+import { unlinkService } from '../actions';
 
 const authUrls = {
   github: '/auth/github',
@@ -16,11 +17,11 @@ const authUrls = {
 const linkLabels = {
   github: {
     connect: 'Connect GitHub Account',
-    connected: 'Re-link GitHub Account'
+    unlink: 'Unlink GitHub Account'
   },
   google: {
     connect: 'Connect Google Account',
-    connected: 'Re-link Google Account'
+    unlink: 'Unlink Google Account'
   }
 };
 
@@ -46,18 +47,33 @@ function SocialAuthButton({
     github: t('SocialAuthButton.Github'),
     google: t('SocialAuthButton.Google')
   };
-  let label;
+  const dispatch = useDispatch();
   if (linkStyle) {
-    label = isConnected ? linkLabels[service].connected : linkLabels[service].connect;
-  } else {
-    label = labels[service];
+    if (isConnected) {
+      return (
+        <StyledButton
+          iconBefore={<ServiceIcon aria-label={t('SocialAuthButton.LogoARIA', { serviceauth: service })} />}
+          onClick={() => { dispatch(unlinkService(service)); }}
+        >
+          {linkLabels[service].unlink}
+        </StyledButton>
+      );
+    }
+    return (
+      <StyledButton
+        iconBefore={<ServiceIcon aria-label={t('SocialAuthButton.LogoARIA', { serviceauth: service })} />}
+        href={authUrls[service]}
+      >
+        {linkLabels[service].connect}
+      </StyledButton>
+    );
   }
   return (
     <StyledButton
       iconBefore={<ServiceIcon aria-label={t('SocialAuthButton.LogoARIA', { serviceauth: service })} />}
       href={authUrls[service]}
     >
-      {label}
+      {labels[service]}
     </StyledButton>
   );
 }

@@ -337,3 +337,23 @@ export function updateSettings(req, res) {
   });
 }
 
+export function unlinkGithub(req, res) {
+  if (req.user) {
+    req.user.github = undefined;
+    req.user.tokens = req.user.tokens.filter(token => token.kind !== 'github');
+    saveUser(res, req.user);
+    return;
+  }
+  res.status(404).json({ success: false, message: 'You must be logged in to complete this action.' });
+}
+
+export function unlinkGoogle(req, res) {
+  if (req.user) {
+    req.user.google = undefined;
+    req.user.tokens = req.user.tokens.filter(token => token.kind !== 'google');
+    saveUser(res, req.user);
+    return;
+  }
+  res.status(404).json({ success: false, message: 'You must be logged in to complete this action.' });
+}
+
