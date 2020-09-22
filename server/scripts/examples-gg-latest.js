@@ -24,7 +24,6 @@ const defaultHTML =
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.dom.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.sound.min.js"></script>
-
     <!-- Generative Design Dependencies here -->
     <!-- GG Bundled -->
     <script src="https://cdn.jsdelivr.net/gh/generative-design/Code-Package-p5.js@${branchName}/libraries/gg-dep-bundle/gg-dep-bundle.js"></script>
@@ -38,13 +37,10 @@ const defaultHTML =
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
       crossorigin="anonymous"></script>
-
     <!-- sketch additions -->
-
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
-
     <!-- main -->
     <script src="sketch.js"></script>
   </body>
@@ -56,7 +52,6 @@ const defaultCSS =
   padding: 0;
   margin: 0;
 }
-
 canvas {
   vertical-align: top;
 }
@@ -114,12 +109,11 @@ function getCodePackage() {
     // url: 'https://api.github.com/repos/generative-design/Code-Package-p5.js/contents',
     url: `https://api.github.com/repos/generative-design/Code-Package-p5.js/contents${branchRef}`,
     // url: 'https://api.github.com/repos/generative-design/Code-Package-p5.js/contents?ref=pre-release',
-    qs: {
-      client_id: clientId,
-      client_secret: clientSecret
-    },
     method: 'GET',
-    headers,
+    headers: {
+      ...headers,
+      Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
+    },
     json: true
   };
 
@@ -144,12 +138,11 @@ function getSketchDirectories(sketchRootList) {
     // console.log(sketches)
     const options = {
       url: `https://api.github.com/repos/generative-design/Code-Package-p5.js/contents/${sketches.path}${branchRef}`,
-      qs: {
-        client_id: clientId,
-        client_secret: clientSecret
-      },
       method: 'GET',
-      headers,
+      headers: {
+        ...headers,
+        Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
+      },
       json: true
     };
 
@@ -179,12 +172,11 @@ function appendSketchItemLinks(sketchList) {
     const options = {
       // url: `${sketches.url}?client_id=${clientId}&client_secret=${clientSecret}`,
       url: `https://api.github.com/repos/generative-design/Code-Package-p5.js/contents/${sketches.path}${branchRef}`,
-      qs: {
-        client_id: clientId,
-        client_secret: clientSecret
-      },
       method: 'GET',
-      headers,
+      headers: {
+        ...headers,
+        Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
+      },
       json: true
     };
 
@@ -205,12 +197,11 @@ function getSketchItems(sketchList) {
     if (item.name === 'data') {
       const options = {
         url: `https://api.github.com/repos/generative-design/Code-Package-p5.js/contents/${item.path}${branchRef}`,
-        qs: {
-          client_id: clientId,
-          client_secret: clientSecret
-        },
         method: 'GET',
-        headers,
+        headers: {
+          ...headers,
+          Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
+        },
         json: true
       };
 
@@ -409,12 +400,11 @@ function getAllSketchContent(newProjectList) {
     ) {
       const options = {
         url: newProject.files[i].content,
-        qs: {
-          client_id: clientId,
-          client_secret: clientSecret
-        },
         method: 'GET',
-        headers
+        headers: {
+          ...headers,
+          Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
+        }
       };
 
       // console.log("CONVERT ME!")
