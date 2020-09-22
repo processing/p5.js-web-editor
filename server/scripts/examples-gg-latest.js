@@ -24,7 +24,6 @@ const defaultHTML =
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.dom.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.sound.min.js"></script>
-
     <!-- Generative Design Dependencies here -->
     <!-- GG Bundled -->
     <script src="https://cdn.jsdelivr.net/gh/generative-design/Code-Package-p5.js@${branchName}/libraries/gg-dep-bundle/gg-dep-bundle.js"></script>
@@ -38,13 +37,10 @@ const defaultHTML =
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
       crossorigin="anonymous"></script>
-
     <!-- sketch additions -->
-
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
-
     <!-- main -->
     <script src="sketch.js"></script>
   </body>
@@ -56,7 +52,6 @@ const defaultCSS =
   padding: 0;
   margin: 0;
 }
-
 canvas {
   vertical-align: top;
 }
