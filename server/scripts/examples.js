@@ -49,10 +49,12 @@ mongoose.connection.on('error', () => {
 function getCategories() {
   const categories = [];
   const options = {
-    url: `https://api.github.com/repos/processing/p5.js-website/contents/src/data/examples/en?client_id=${
-      clientId}&client_secret=${clientSecret}`,
+    url: 'https://api.github.com/repos/processing/p5.js-website/contents/src/data/examples/en',
     method: 'GET',
-    headers,
+    headers: {
+      ...headers,
+      Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
+    },
     json: true
   };
   return rp(options).then((res) => {
@@ -73,9 +75,12 @@ function getCategories() {
 function getSketchesInCategories(categories) {
   return Q.all(categories.map((category) => {
     const options = {
-      url: `${category.url.replace('?ref=main', '')}?client_id=${clientId}&client_secret=${clientSecret}`,
+      url: `${category.url.replace('?ref=main', '')}`,
       method: 'GET',
-      headers,
+      headers: {
+        ...headers,
+        Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
+      },
       json: true
     };
 
@@ -107,9 +112,12 @@ function getSketchesInCategories(categories) {
 function getSketchContent(projectsInAllCategories) {
   return Q.all(projectsInAllCategories.map(projectsInOneCategory => Q.all(projectsInOneCategory.map((project) => {
     const options = {
-      url: `${project.sketchUrl.replace('?ref=main', '')}?client_id=${clientId}&client_secret=${clientSecret}`,
+      url: `${project.sketchUrl.replace('?ref=main', '')}`,
       method: 'GET',
-      headers
+      headers: {
+        ...headers,
+        Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
+      }
     };
 
     return rp(options).then((res) => {
@@ -134,10 +142,12 @@ function getSketchContent(projectsInAllCategories) {
 
 function createProjectsInP5user(projectsInAllCategories) {
   const options = {
-    url: `https://api.github.com/repos/processing/p5.js-website/contents/src/data/examples/assets?client_id=${
-      clientId}&client_secret=${clientSecret}`,
+    url: 'https://api.github.com/repos/processing/p5.js-website/contents/src/data/examples/assets',
     method: 'GET',
-    headers,
+    headers: {
+      ...headers,
+      Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
+    },
     json: true
   };
 
