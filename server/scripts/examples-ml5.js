@@ -25,12 +25,11 @@ ok(editorApiUrl, 'EDITOR_API_URL is required');
 //
 const githubRequestOptions = {
   url: baseUrl,
-  qs: {
-    client_id: clientId,
-    client_secret: clientSecret
-  },
   method: 'GET',
-  headers,
+  headers: {
+    ...headers,
+    Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
+  },
   json: true
 };
 

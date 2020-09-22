@@ -114,12 +114,11 @@ function getCodePackage() {
     // url: 'https://api.github.com/repos/generative-design/Code-Package-p5.js/contents',
     url: `https://api.github.com/repos/generative-design/Code-Package-p5.js/contents${branchRef}`,
     // url: 'https://api.github.com/repos/generative-design/Code-Package-p5.js/contents?ref=pre-release',
-    qs: {
-      client_id: clientId,
-      client_secret: clientSecret
-    },
     method: 'GET',
-    headers,
+    headers: {
+      ...headers,
+      Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
+    },
     json: true
   };
 
@@ -144,12 +143,11 @@ function getSketchDirectories(sketchRootList) {
     // console.log(sketches)
     const options = {
       url: `https://api.github.com/repos/generative-design/Code-Package-p5.js/contents/${sketches.path}${branchRef}`,
-      qs: {
-        client_id: clientId,
-        client_secret: clientSecret
-      },
       method: 'GET',
-      headers,
+      headers: {
+        ...headers,
+        Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
+      },
       json: true
     };
 
@@ -179,12 +177,11 @@ function appendSketchItemLinks(sketchList) {
     const options = {
       // url: `${sketches.url}?client_id=${clientId}&client_secret=${clientSecret}`,
       url: `https://api.github.com/repos/generative-design/Code-Package-p5.js/contents/${sketches.path}${branchRef}`,
-      qs: {
-        client_id: clientId,
-        client_secret: clientSecret
-      },
       method: 'GET',
-      headers,
+      headers: {
+        ...headers,
+        Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
+      },
       json: true
     };
 
@@ -205,12 +202,11 @@ function getSketchItems(sketchList) {
     if (item.name === 'data') {
       const options = {
         url: `https://api.github.com/repos/generative-design/Code-Package-p5.js/contents/${item.path}${branchRef}`,
-        qs: {
-          client_id: clientId,
-          client_secret: clientSecret
-        },
         method: 'GET',
-        headers,
+        headers: {
+          ...headers,
+          Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
+        },
         json: true
       };
 
@@ -409,12 +405,11 @@ function getAllSketchContent(newProjectList) {
     ) {
       const options = {
         url: newProject.files[i].content,
-        qs: {
-          client_id: clientId,
-          client_secret: clientSecret
-        },
         method: 'GET',
-        headers
+        headers: {
+          ...headers,
+          Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
+        }
       };
 
       // console.log("CONVERT ME!")
