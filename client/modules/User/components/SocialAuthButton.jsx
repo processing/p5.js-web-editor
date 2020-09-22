@@ -14,17 +14,6 @@ const authUrls = {
   google: '/auth/google'
 };
 
-const linkLabels = {
-  github: {
-    connect: 'Connect GitHub Account',
-    unlink: 'Unlink GitHub Account'
-  },
-  google: {
-    connect: 'Connect Google Account',
-    unlink: 'Unlink Google Account'
-  }
-};
-
 const icons = {
   github: GithubIcon,
   google: GoogleIcon
@@ -35,6 +24,11 @@ const services = {
   google: 'google'
 };
 
+const servicesLabels = {
+  github: 'GitHub',
+  google: 'Google'
+};
+
 const StyledButton = styled(Button)`
   width: ${remSize(300)};
 `;
@@ -43,37 +37,38 @@ function SocialAuthButton({
   service, linkStyle, isConnected, t
 }) {
   const ServiceIcon = icons[service];
-  const labels = {
-    github: t('SocialAuthButton.Github'),
-    google: t('SocialAuthButton.Google')
-  };
+  const serviceLabel = servicesLabels[service];
+  const loginLabel = t('SocialAuthButton.Login', { serviceauth: serviceLabel });
+  const connectLabel = t('SocialAuthButton.Connect', { serviceauth: serviceLabel });
+  const unlinkLabel = t('SocialAuthButton.Unlink', { serviceauth: serviceLabel });
+  const ariaLabel = t('SocialAuthButton.LogoARIA', { serviceauth: service });
   const dispatch = useDispatch();
   if (linkStyle) {
     if (isConnected) {
       return (
         <StyledButton
-          iconBefore={<ServiceIcon aria-label={t('SocialAuthButton.LogoARIA', { serviceauth: service })} />}
+          iconBefore={<ServiceIcon aria-label={ariaLabel} />}
           onClick={() => { dispatch(unlinkService(service)); }}
         >
-          {linkLabels[service].unlink}
+          {unlinkLabel}
         </StyledButton>
       );
     }
     return (
       <StyledButton
-        iconBefore={<ServiceIcon aria-label={t('SocialAuthButton.LogoARIA', { serviceauth: service })} />}
+        iconBefore={<ServiceIcon aria-label={ariaLabel} />}
         href={authUrls[service]}
       >
-        {linkLabels[service].connect}
+        {connectLabel}
       </StyledButton>
     );
   }
   return (
     <StyledButton
-      iconBefore={<ServiceIcon aria-label={t('SocialAuthButton.LogoARIA', { serviceauth: service })} />}
+      iconBefore={<ServiceIcon aria-label={ariaLabel} />}
       href={authUrls[service]}
     >
-      {labels[service]}
+      {loginLabel}
     </StyledButton>
   );
 }

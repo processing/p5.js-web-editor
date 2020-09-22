@@ -16,10 +16,14 @@ class ErrorModal extends React.Component {
   }
 
   oauthError() {
+    const { t, service } = this.props;
+    const serviceLabels = {
+      github: 'GitHub',
+      google: 'Google'
+    };
     return (
       <p>
-        {'There was a problem linking your GitHub account to your p5.js Web Editor account.'}
-        {' Your GitHub account has already been linked to another p5.js Web Editor account.'}
+        {t('ErrorModal.LinkMessage', { serviceauth: serviceLabels[service] })}
       </p>
     );
   }
@@ -63,7 +67,12 @@ class ErrorModal extends React.Component {
 ErrorModal.propTypes = {
   type: PropTypes.string.isRequired,
   closeModal: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
+  service: PropTypes.string
+};
+
+ErrorModal.defaultProps = {
+  service: ''
 };
 
 export default withTranslation()(ErrorModal);

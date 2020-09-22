@@ -67,9 +67,10 @@
     "ResetPassword": "Regenera tu contraseña"
   },
   "SocialAuthButton": {
-    "Github": "Ingresa con Github",
-    "LogoARIA": "Logo de {{serviceauth}}",
-    "Google": "Ingresa con Google"
+    "Connect": "Conecta Cuenta {{serviceauth}}",
+    "Unlink": "Desvincular Cuenta {{serviceauth}}",
+    "Login": "Ingresa con {{serviceauth}}",
+    "LogoARIA": "Logo de {{serviceauth}}"
   },
   "About": {
     "Title": "Acerca de",
@@ -381,7 +382,9 @@
     "SignUp": "Registráte",
     "MessageLoggedOut": "Parece que has salido de tu cuenta. Por favor ",
     "LogIn": "ingresa",
-    "SavedDifferentWindow": " El proyecto que has intentado guardar ha sido guardado desde otra ventana.\n  Por favor refresca la página para ver la versión más actual."
+    "SavedDifferentWindow": " El proyecto que has intentado guardar ha sido guardado desde otra ventana.\n  Por favor refresca la página para ver la versión más actual.",
+    "LinkTitle": "Error Vinculando Cuenta",
+    "LinkMessage": "Hubo un problema vinculando tu cuenta de {{serviceauth}} con tu cuenta del Editor Web p5.js. Tu cuenta de {{serviceauth}} había sido vinculada previamente con otra cuenta del Editor Web p5.js."
   },
   "ShareModal": {
     "Embed": "Incrustar",
