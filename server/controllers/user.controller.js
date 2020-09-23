@@ -18,7 +18,9 @@ export function userResponse(user) {
     apiKeys: user.apiKeys,
     verified: user.verified,
     id: user._id,
-    totalSize: user.totalSize
+    totalSize: user.totalSize,
+    github: user.github,
+    google: user.google
   };
 }
 
@@ -93,12 +95,7 @@ export function createUser(req, res, next) {
 export function duplicateUserCheck(req, res) {
   const checkType = req.query.check_type;
   const value = req.query[checkType];
-  const query = {};
-  query[checkType] = value;
-  // Don't want to use findByEmailOrUsername here, because in this case we do
-  // want to use case-insensitive search for usernames to prevent username
-  // duplicates, which overrides the default behavior.
-  User.findOne(query).collation({ locale: 'en', strength: 2 }).exec((err, user) => {
+  User.findByEmailOrUsername(value, { caseInsensitive: true }, (err, user) => {
     if (user) {
       return res.json({
         exists: true,
@@ -338,5 +335,25 @@ export function updateSettings(req, res) {
       saveUser(res, user);
     }
   });
+}
+
+export function unlinkGithub(req, res) {
+  if (req.user) {
+    req.user.github = undefined;
+    req.user.tokens = req.user.tokens.filter(token => token.kind !== 'github');
+    saveUser(res, req.user);
+    return;
+  }
+  res.status(404).json({ success: false, message: 'You must be logged in to complete this action.' });
+}
+
+export function unlinkGoogle(req, res) {
+  if (req.user) {
+    req.user.google = undefined;
+    req.user.tokens = req.user.tokens.filter(token => token.kind !== 'google');
+    saveUser(res, req.user);
+    return;
+  }
+  res.status(404).json({ success: false, message: 'You must be logged in to complete this action.' });
 }
 
