@@ -1,4 +1,3 @@
-import format from 'date-fns/format';
 import PropTypes from 'prop-types';
 import React, { useState, useRef, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
@@ -23,6 +22,7 @@ import Overlay from '../../App/components/Overlay';
 import AddToCollectionSketchList from '../../IDE/components/AddToCollectionSketchList';
 import CopyableInput from '../../IDE/components/CopyableInput';
 import { SketchSearchbar } from '../../IDE/components/Searchbar';
+import dates from '../../../utils/formatDate';
 
 import ArrowUpIcon from '../../../images/sort-arrow-up.svg';
 import ArrowDownIcon from '../../../images/sort-arrow-down.svg';
@@ -101,7 +101,7 @@ const CollectionItemRowBase = ({
       <th scope="row">
         {name}
       </th>
-      <td>{format(new Date(item.createdAt), 'MMM D, YYYY h:mm A')}</td>
+      <td>{dates.format(item.createdAt)}</td>
       <td>{sketchOwnerUsername}</td>
       <td className="collection-row__action-column ">
         {isOwner &&

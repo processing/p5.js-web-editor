@@ -1,6 +1,6 @@
 import each from 'async/each';
 import mime from 'mime-types';
-import isBefore from 'date-fns/is_before';
+import isBefore from 'date-fns/isBefore';
 import Project from '../models/project';
 import { resolvePathToFile } from '../utils/filePath';
 import { deleteObjectsFromS3, getObjectKey } from './aws.controller';

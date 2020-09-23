@@ -517,11 +517,14 @@
     "CurrentLine": " Current line"
   },
   "Timer": {
-    "SavedJustNow": "Saved: just now",
-    "Saved15Seconds": "Saved: 15 seconds ago",
-    "Saved25Seconds": "Saved: 25 seconds ago",
-    "Saved35Seconds": "Saved: 35 seconds ago",
-    "SavedAgo": "Saved: {{timeAgo}} ago"
+    "SavedAgo": "Saved: {{timeAgo}}"
+  },
+  "formatDate": {
+    "JustNow": "just now",
+    "15Seconds": "15 seconds ago",
+    "25Seconds": "25 seconds ago",
+    "35Seconds": "35 seconds ago",
+    "Ago": "{{timeAgo}} ago"
   },
   "AddRemoveButton": {
     "AltAddARIA": "Add to collection",
