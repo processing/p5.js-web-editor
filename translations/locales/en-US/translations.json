@@ -67,9 +67,10 @@
     "ResetPassword": "Reset your password"
   },
   "SocialAuthButton": {
-    "Github": "Login with Github",
-    "LogoARIA": "{{serviceauth}} logo",
-    "Google": "Login with Google"
+    "Connect": "Connect {{serviceauth}} Account",
+    "Unlink": "Unlink {{serviceauth}} Account",
+    "Login": "Login with {{serviceauth}}",
+    "LogoARIA": "{{serviceauth}} logo"
   },
   "About": {
     "Title": "About",
@@ -99,7 +100,8 @@
     "PlayOnlyVisualSketchARIA": "Play only visual sketch",
     "StopSketchARIA": "Stop sketch",
     "EditSketchARIA": "Edit sketch name",
-    "NewSketchNameARIA": "New sketch name"
+    "NewSketchNameARIA": "New sketch name",
+    "By": " by "
   },
   "Console": {
     "Title": "Console",
@@ -380,7 +382,9 @@
     "SignUp": "Sign Up",
     "MessageLoggedOut": "It looks like you've been logged out. Please ",
     "LogIn": "log in",
-    "SavedDifferentWindow": "The project you have attempted to save has been saved from another window.\n        Please refresh the page to see the latest version."
+    "SavedDifferentWindow": "The project you have attempted to save has been saved from another window.\n        Please refresh the page to see the latest version.",
+    "LinkTitle": "Error Linking Account",
+    "LinkMessage": "There was a problem linking your {{serviceauth}} account to your p5.js Web Editor account. Your {{serviceauth}} account has already been linked to another p5.js Web Editor account."
   },
   "ShareModal": {
     "Embed": "Embed",
@@ -407,6 +411,7 @@
     "NumSketches_plural": "{{count}} sketches",
     "By":"Collection by ",
     "NoSketches": "No sketches in collection",
+    "TableSummary": "table containing all collections",
     "HeaderName": "Name",
     "HeaderCreatedAt": "Date Added",
     "HeaderUser": "Owner",
@@ -445,6 +450,7 @@
     "Title": "p5.js Web Editor | My collections",
     "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'s collections",
     "NoCollections": "No collections.",
+    "TableSummary": "table containing all collections",
     "HeaderName": "Name",
     "HeaderCreatedAt": "Date Created",
     "HeaderCreatedAt_mobile": "Created",
@@ -487,6 +493,7 @@
     "ButtonLabelAscendingARIA": "Sort by {{displayName}} ascending.",
     "ButtonLabelDescendingARIA": "Sort by {{displayName}} descending.",
     "AddToCollectionOverlayTitle": "Add to collection",
+    "TableSummary": "table containing all saved projects",
     "HeaderName": "Sketch",
     "HeaderCreatedAt": "Date Created",
     "HeaderCreatedAt_mobile": "Created",

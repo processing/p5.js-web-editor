@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
 import EditIcon from '../../../images/pencil.svg';
 
@@ -22,7 +22,7 @@ function EditableInput({
     isEditing ? 'is-editing' : 'is-not-editing'
   } editable-input--${hasValue ? 'has-value' : 'has-placeholder'}`;
   const inputRef = React.createRef();
-
+  const { t } = useTranslation();
   React.useEffect(() => {
     if (isEditing) {
       inputRef.current.focus();
@@ -60,7 +60,7 @@ function EditableInput({
       <button
         className="editable-input__label"
         onClick={beginEditing}
-        aria-label={this.props.t('EditableInput.EditValue', { display: displayValue })}
+        aria-label={t('EditableInput.EditValue', { display: displayValue })}
       >
         <span>{displayValue}</span>
         <EditIcon
@@ -101,7 +101,6 @@ EditableInput.propTypes = {
   onChange: PropTypes.func.isRequired,
   validate: PropTypes.func,
   value: PropTypes.string,
-  t: PropTypes.func.isRequired
 };
 
-export default withTranslation()(EditableInput);
+export default EditableInput;

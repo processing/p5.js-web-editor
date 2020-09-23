@@ -14,6 +14,7 @@ import { logoutUser } from '../modules/User/actions';
 
 import getConfig from '../utils/getConfig';
 import { metaKeyName, } from '../utils/metaKey';
+import { getIsUserOwner } from '../modules/IDE/selectors/users';
 
 import CaretLeftIcon from '../images/left-arrow.svg';
 import TriangleIcon from '../images/down-filled-triangle.svg';
@@ -215,10 +216,6 @@ class Nav extends React.PureComponent {
     }
   }
 
-  isUserOwner() {
-    return this.props.project.owner && this.props.project.owner.id === this.props.user.id;
-  }
-
   handleFocus(dropdown) {
     this.clearHideTimeout();
     this.setDropdown(dropdown);
@@ -283,7 +280,7 @@ class Nav extends React.PureComponent {
                 {this.props.t('Nav.File.New')}
               </button>
             </li>
-            { getConfig('LOGIN_ENABLED') && (!this.props.project.owner || this.isUserOwner()) &&
+            { getConfig('LOGIN_ENABLED') && (!this.props.project.owner || this.props.isUserOwner) &&
             <li className="nav__dropdown-item">
               <button
                 onClick={this.handleSave}
@@ -570,16 +567,6 @@ class Nav extends React.PureComponent {
               <button
                 onFocus={this.handleFocusForLang}
                 onBlur={this.handleBlur}
-                value="it"
-                onClick={e => this.handleLangSelection(e)}
-              >
-                Italian (Test Fallback)
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onFocus={this.handleFocusForLang}
-                onBlur={this.handleBlur}
                 value="en-US"
                 onClick={e => this.handleLangSelection(e)}
               >English
@@ -807,6 +794,7 @@ Nav.propTypes = {
   t: PropTypes.func.isRequired,
   setLanguage: PropTypes.func.isRequired,
   language: PropTypes.string.isRequired,
+  isUserOwner: PropTypes.bool.isRequired
 };
 
 Nav.defaultProps = {
@@ -828,7 +816,8 @@ function mapStateToProps(state) {
     user: state.user,
     unsavedChanges: state.ide.unsavedChanges,
     rootFile: state.files.filter(file => file.name === 'root')[0],
-    language: state.preferences.language
+    language: state.preferences.language,
+    isUserOwner: getIsUserOwner(state)
   };
 }
 

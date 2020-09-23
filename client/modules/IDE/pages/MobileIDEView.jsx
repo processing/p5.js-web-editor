@@ -23,6 +23,7 @@ import UnsavedChangesDotIcon from '../../../images/unsaved-changes-dot.svg';
 
 import IconButton from '../../../components/mobile/IconButton';
 import Header from '../../../components/mobile/Header';
+import Toast from '../components/Toast';
 import Screen from '../../../components/mobile/MobileScreen';
 import Footer from '../../../components/mobile/Footer';
 import IDEWrapper from '../../../components/mobile/IDEWrapper';
@@ -33,6 +34,7 @@ import { remSize } from '../../../theme';
 import ActionStrip from '../../../components/mobile/ActionStrip';
 import useAsModal from '../../../components/useAsModal';
 import Dropdown from '../../../components/Dropdown';
+import { getIsUserOwner } from '../selectors/users';
 
 
 import { useEffectWithComparison, useEventListener } from '../../../utils/custom-hooks';
@@ -78,12 +80,8 @@ const getNavOptions = (username = undefined, logoutUser = () => {}, toggleForceD
   );
 };
 
-
-const isUserOwner = ({ project, user }) =>
-  project && project.owner && project.owner.id === user.id;
-
-const canSaveProject = (project, user) =>
-  isUserOwner({ project, user }) || (user.authenticated && !project.owner);
+const canSaveProject = (isUserOwner, project, user) =>
+  isUserOwner || (user.authenticated && !project.owner);
 
 // TODO: This could go into <Editor />
 const handleGlobalKeydown = (props, cmController) => (e) => {
@@ -92,7 +90,7 @@ const handleGlobalKeydown = (props, cmController) => (e) => {
     setAllAccessibleOutput,
     saveProject, cloneProject, showErrorModal, startSketch, stopSketch,
     expandSidebar, collapseSidebar, expandConsole, collapseConsole,
-    closeNewFolderModal, closeUploadFileModal, closeNewFileModal
+    closeNewFolderModal, closeUploadFileModal, closeNewFileModal, isUserOwner
   } = props;
 
 
@@ -125,7 +123,7 @@ const handleGlobalKeydown = (props, cmController) => (e) => {
       // 83 === s
       e.preventDefault();
       e.stopPropagation();
-      if (canSaveProject(project, user)) saveProject(cmController.getContent(), false, true);
+      if (canSaveProject(isUserOwner, project, user)) saveProject(cmController.getContent(), false, true);
       else if (user.authenticated) cloneProject();
       else showErrorModal('forceAuthentication');
 
@@ -149,14 +147,14 @@ const handleGlobalKeydown = (props, cmController) => (e) => {
 
 const autosave = (autosaveInterval, setAutosaveInterval) => (props, prevProps) => {
   const {
-    autosaveProject, preferences, ide, selectedFile: file, project
+    autosaveProject, preferences, ide, selectedFile: file, project, isUserOwner
   } = props;
 
   const { selectedFile: oldFile } = prevProps;
 
   const doAutosave = () => autosaveProject(true);
 
-  if (isUserOwner(props) && project.id) {
+  if (props.isUserOwner && project.id) {
     if (preferences.autosave && ide.unsavedChanges && !ide.justOpenedProject) {
       if (file.name === oldFile.name && file.content !== oldFile.content) {
         if (autosaveInterval) {
@@ -191,7 +189,7 @@ const MobileIDEView = (props) => {
   const {
     ide, preferences, project, selectedFile, user, params, unsavedChanges, expandConsole, collapseConsole,
     stopSketch, startSketch, getProject, clearPersistedState, autosaveProject, saveProject, files,
-    toggleForceDesktop, logoutUser
+    toggleForceDesktop, logoutUser, toast, isUserOwner
   } = props;
 
 
@@ -236,7 +234,7 @@ const MobileIDEView = (props) => {
   // TODO: This behavior could move to <Editor />
   const [autosaveInterval, setAutosaveInterval] = useState(null);
   useEffectWithComparison(autosave(autosaveInterval, setAutosaveInterval), {
-    autosaveProject, preferences, ide, selectedFile, project, user
+    autosaveProject, preferences, ide, selectedFile, project, user, isUserOwner
   });
 
   useEventListener('keydown', handleGlobalKeydown(props, cmController), false, [props]);
@@ -269,6 +267,7 @@ const MobileIDEView = (props) => {
           <IconButton to="/preview" onClick={() => { startSketch(); }} icon={PlayIcon} aria-label="Run sketch" />
         </li>
       </Header>
+      {toast.isVisible && <Toast />}
 
       <IDEWrapper>
         <Editor provideController={setCmController} />
@@ -300,6 +299,7 @@ const handleGlobalKeydownProps = {
   closeNewFolderModal: PropTypes.func.isRequired,
   closeUploadFileModal: PropTypes.func.isRequired,
   closeNewFileModal: PropTypes.func.isRequired,
+  isUserOwner: PropTypes.bool.isRequired
 };
 
 MobileIDEView.propTypes = {
@@ -340,6 +340,10 @@ MobileIDEView.propTypes = {
     username: PropTypes.string,
   }).isRequired,
 
+  toast: PropTypes.shape({
+    isVisible: PropTypes.bool
+  }).isRequired,
+
   logoutUser: PropTypes.func.isRequired,
 
   getProject: PropTypes.func.isRequired,
@@ -353,6 +357,7 @@ MobileIDEView.propTypes = {
 
   unsavedChanges: PropTypes.bool.isRequired,
   autosaveProject: PropTypes.func.isRequired,
+  isUserOwner: PropTypes.bool.isRequired,
 
 
   ...handleGlobalKeydownProps
@@ -372,6 +377,7 @@ function mapStateToProps(state) {
     project: state.project,
     toast: state.toast,
     console: state.console,
+    isUserOwner: getIsUserOwner(state)
   };
 }
 

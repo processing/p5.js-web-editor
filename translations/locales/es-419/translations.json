@@ -43,8 +43,8 @@
       "My": "Mi",
       "MySketches": "Mis bosquejos",
       "MyCollections": "Mis colecciones",
-      "Asset": "Asset",
-      "MyAssets": "Mis assets",
+      "Asset": "Recurso",
+      "MyAssets": "Mis recursos",
       "LogOut": "Cerrar sesión"
     }
   },
@@ -67,9 +67,10 @@
     "ResetPassword": "Regenera tu contraseña"
   },
   "SocialAuthButton": {
-    "Github": "Ingresa con Github",
-    "LogoARIA": "Logo de {{serviceauth}}",
-    "Google": "Ingresa con Google"
+    "Connect": "Conecta Cuenta {{serviceauth}}",
+    "Unlink": "Desvincular Cuenta {{serviceauth}}",
+    "Login": "Ingresa con {{serviceauth}}",
+    "LogoARIA": "Logo de {{serviceauth}}"
   },
   "About": {
     "Title": "Acerca de",
@@ -99,7 +100,8 @@
     "PlayOnlyVisualSketchARIA": "Ejecutar bosquejo visual",
     "StopSketchARIA": "Detener bosquejo",
     "EditSketchARIA": "Editar nombre de bosquejo",
-    "NewSketchNameARIA": "Nuevo nombre de bosquejo"
+    "NewSketchNameARIA": "Nuevo nombre de bosquejo",
+    "By": " de "
   },
   "Console": {
     "Title": "Consola",
@@ -342,11 +344,11 @@
     "InvalidState": "Algo salió mal."
   },
   "AssetList": {
-    "Title": "Editor Web p5.js | Mis assets",
-    "ToggleOpenCloseARIA": "Alternar Abrir/Cerrar Opciones de Asset",
+    "Title": "Editor Web p5.js | Mis recursos",
+    "ToggleOpenCloseARIA": "Alternar Abrir/Cerrar Opciones de Recurso",
     "Delete": "Borrar",
     "OpenNewTab": "Abrir en Nueva Pestaña",
-    "NoUploadedAssets": "No has subido archivos.",
+    "NoUploadedAssets": "No has subido recursos.",
     "HeaderName": "Nombre",
     "HeaderSize": "Tamaño",
     "HeaderSketch": "Bosquejo"
@@ -380,7 +382,9 @@
     "SignUp": "Registráte",
     "MessageLoggedOut": "Parece que has salido de tu cuenta. Por favor ",
     "LogIn": "ingresa",
-    "SavedDifferentWindow": " El proyecto que has intentado guardar ha sido guardado desde otra ventana.\n  Por favor refresca la página para ver la versión más actual."
+    "SavedDifferentWindow": " El proyecto que has intentado guardar ha sido guardado desde otra ventana.\n  Por favor refresca la página para ver la versión más actual.",
+    "LinkTitle": "Error Vinculando Cuenta",
+    "LinkMessage": "Hubo un problema vinculando tu cuenta de {{serviceauth}} con tu cuenta del Editor Web p5.js. Tu cuenta de {{serviceauth}} había sido vinculada previamente con otra cuenta del Editor Web p5.js."
   },
   "ShareModal": {
     "Embed": "Incrustar",
@@ -407,6 +411,7 @@
     "NumSketches_plural": "{{count}} bosquejos",
     "By":"Colección por ",
     "NoSketches": "No hay bosquejos en la colección",
+    "TableSummary": "tabla que contiene todas las colecciones",
     "HeaderName": "Nombre",
     "HeaderCreatedAt": "Fecha de agregación",
     "HeaderUser": "Propietario",
@@ -439,12 +444,13 @@
   "DashboardTabSwitcher": {
     "Sketches": "Bosquejos",
     "Collections": "Colecciones ",
-    "Assets": "Assets"
+    "Assets": "Recursos"
   },
   "CollectionList": {
     "Title": "p5.js Web Editor | Mis colecciones",
     "AnothersTitle": "Editor Web p5.js | Colecciones de {{anotheruser}}",
     "NoCollections": "No hay colecciones.",
+    "TableSummary": "la tabla contiene todas las colecciones",
     "HeaderName": "Nombre",
     "HeaderCreatedAt": "Fecha Creación",
     "HeaderCreatedAt_mobile": "Creación",
@@ -487,6 +493,7 @@
     "ButtonLabelAscendingARIA": "Ordenar por {{displayName}} ascendente.",
     "ButtonLabelDescendingARIA": "Ordenar por {{displayName}} descendente.",
     "AddToCollectionOverlayTitle": "Agregar a colección",
+    "TableSummary": "la tabla contiene todos los proyectos guardados",
     "HeaderName": "Bosquejo",
     "HeaderCreatedAt": "Fecha Creación",
     "HeaderCreatedAt_mobile": "Creación",

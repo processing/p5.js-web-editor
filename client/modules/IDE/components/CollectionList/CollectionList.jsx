@@ -140,7 +140,7 @@ class CollectionList extends React.Component {
         {this._renderLoader()}
         {this._renderEmptyTable()}
         {this.hasCollections() &&
-          <table className="sketches-table" summary="table containing all collections">
+          <table className="sketches-table" summary={this.props.t('CollectionList.TableSummary')}>
             <thead>
               <tr>
                 {this._renderFieldHeader('name', this.props.t('CollectionList.HeaderName'))}

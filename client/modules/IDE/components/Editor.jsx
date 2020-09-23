@@ -43,6 +43,7 @@ import UnsavedChangesDotIcon from '../../../images/unsaved-changes-dot.svg';
 import RightArrowIcon from '../../../images/right-arrow.svg';
 import LeftArrowIcon from '../../../images/left-arrow.svg';
 import { getHTMLFile } from '../reducers/files';
+import { getIsUserOwner } from '../selectors/users';
 
 import * as FileActions from '../actions/files';
 import * as IDEActions from '../actions/ide';
@@ -411,7 +412,7 @@ Editor.propTypes = {
   isExpanded: PropTypes.bool.isRequired,
   collapseSidebar: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
-  isUserOwner: PropTypes.bool,
+  isUserOwner: PropTypes.bool.isRequired,
   clearConsole: PropTypes.func.isRequired,
   showRuntimeErrorWarning: PropTypes.func.isRequired,
   hideRuntimeErrorWarning: PropTypes.func.isRequired,
@@ -421,7 +422,6 @@ Editor.propTypes = {
 };
 
 Editor.defaultProps = {
-  isUserOwner: false,
   consoleEvents: [],
 };
 
@@ -446,8 +446,9 @@ function mapStateToProps(state) {
     ...state.ide,
     ...state.project,
     ...state.editorAccessibility,
-    isExpanded: state.ide.consoleIsExpanded,
-    projectSavedTime: state.project.updatedAt
+    isExpanded: state.ide.sidebarIsExpanded,
+    projectSavedTime: state.project.updatedAt,
+    isUserOwner: getIsUserOwner(state)
   };
 }
 
