@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 // Imports to be Refactored
@@ -60,22 +61,24 @@ const NavItem = styled.li`
   position: relative;
 `;
 
-const getNavOptions = (username = undefined, logoutUser = () => {}, toggleForceDesktop = () => {}) =>
-  (username
+const getNavOptions = (username = undefined, logoutUser = () => {}, toggleForceDesktop = () => {}) => {
+  const { t } = useTranslation();
+  return (username
     ? [
-      { icon: PreferencesIcon, title: 'Preferences', href: '/preferences', },
-      { icon: PreferencesIcon, title: 'My Stuff', href: `/${username}/sketches` },
-      { icon: PreferencesIcon, title: 'Examples', href: '/p5/sketches' },
-      { icon: PreferencesIcon, title: 'Original Editor', action: toggleForceDesktop, },
-      { icon: PreferencesIcon, title: 'Logout', action: logoutUser, },
+      { icon: PreferencesIcon, title: t('MobileIDEView.Preferences'), href: '/preferences', },
+      { icon: PreferencesIcon, title: t('MobileIDEView.MyStuff'), href: `/${username}/sketches` },
+      { icon: PreferencesIcon, title: t('MobileIDEView.Examples'), href: '/p5/sketches' },
+      { icon: PreferencesIcon, title: t('MobileIDEView.OriginalEditor'), action: toggleForceDesktop, },
+      { icon: PreferencesIcon, title: t('MobileIDEView.Logout'), action: logoutUser, },
     ]
     : [
-      { icon: PreferencesIcon, title: 'Preferences', href: '/preferences', },
-      { icon: PreferencesIcon, title: 'Examples', href: '/p5/sketches' },
-      { icon: PreferencesIcon, title: 'Original Editor', action: toggleForceDesktop, },
-      { icon: PreferencesIcon, title: 'Login', href: '/login', },
+      { icon: PreferencesIcon, title: t('MobileIDEView.Preferences'), href: '/preferences', },
+      { icon: PreferencesIcon, title: t('MobileIDEView.Examples'), href: '/p5/sketches' },
+      { icon: PreferencesIcon, title: t('MobileIDEView.OriginalEditor'), action: toggleForceDesktop, },
+      { icon: PreferencesIcon, title: t('MobileIDEView.Login'), href: '/login', },
     ]
   );
+};
 
 const canSaveProject = (isUserOwner, project, user) =>
   isUserOwner || (user.authenticated && !project.owner);

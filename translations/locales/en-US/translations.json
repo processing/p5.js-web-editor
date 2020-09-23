@@ -538,5 +538,47 @@
   "PreviewNav": {
     "EditSketchARIA": "Edit Sketch",
     "ByUser": "by"
+  },
+  "MobilePreferences": {
+    "Settings": "Settings",
+    "GeneralSettings": "General settings",
+    "Accessibility": "Accessibility",
+    "AccessibleOutput": "Accessible Output",
+    "Theme": "Theme",
+    "LightTheme": "Light",
+    "DarkTheme": "Dark",
+    "HighContrastTheme": "High Contrast",
+    "Autosave": "Autosave",
+    "WordWrap": "Word Wrap",
+    "LineNumbers": "Line numbers",
+    "LintWarningSound": "Lint warning sound",
+    "UsedScreenReader": "Used with screen reader",
+    "PlainText": "Plain-text",
+    "TableText": "Table-text",
+    "Sound": "Sound"
+  },
+  "PreferenceCreators": {
+    "On": "On",
+    "Off": "Off"
+  },
+  "MobileIDEView":{
+    "Preferences": "Preferences",
+    "MyStuff": "My Stuff",
+    "Examples": "Examples",
+    "OriginalEditor": "Original Editor",
+    "Login": "Login",
+    "Logout": "Logout"
+  },
+  "MobileDashboardView": {
+    "Examples": "Examples",
+    "Sketches": "Sketches",
+    "Collections": "Collections",
+    "Assets": "Assets",
+    "MyStuff": "My Stuff",
+    "CreateSketch": "Create Sketch",
+    "CreateCollection": "Create Collection"
+  },
+  "Explorer": {
+    "Files": "Files"
   }
 }

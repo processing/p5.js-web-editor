@@ -538,5 +538,47 @@
   "PreviewNav": {
     "EditSketchARIA": "Editar Bosquejo",
     "ByUser": "por"
+  },
+  "MobilePreferences": {
+    "Settings": "Configuración",
+    "GeneralSettings": "Configuración general",
+    "Accessibility": "Accesibilidad",
+    "AccessibleOutput": "Salida accesible",
+    "Theme": "Modo de visualización",
+    "LightTheme": "Claro",
+    "DarkTheme": "Oscuro",
+    "HighContrastTheme": "Alto contraste",
+    "Autosave": "Grabar automáticamente",
+    "WordWrap": "Ajuste automático de línea",
+    "LineNumbers": "Número de línea",
+    "LintWarningSound": "Sonido de alarma Lint",
+    "UsedScreenReader": "Uso con screen reader",
+    "PlainText": "Texto sin formato",
+    "TableText": "Tablero de texto",
+    "Sound": "Sonido"
+  },
+  "PreferenceCreators": {
+    "On": "Activar",
+    "Off": "Desactivar"
+  },
+  "MobileIDEView":{
+    "Preferences": "Preferencias",
+    "MyStuff": "Mis cosas",
+    "Examples": "Ejemplos",
+    "OriginalEditor": "Editor Original",
+    "Login": "Ingresa",
+    "Logout": "Cerrar sesión"
+  },
+  "MobileDashboardView": {
+    "Examples": "Ejemplos",
+    "Sketches": "Bosquejos",
+    "Collections": "Colecciones",
+    "Assets": "Assets",
+    "MyStuff": "Mis cosas",
+    "CreateSketch": "Crear bosquejo",
+    "CreateCollection": "Crear colección"
+  },
+  "Explorer": {
+    "Files": "Archivos"
   }
 }
