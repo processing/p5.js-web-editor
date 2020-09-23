@@ -147,6 +147,7 @@ const Console = ({ t }) => {
           <ConsoleInput
             theme={theme}
             dispatchConsoleEvent={dispatchConsoleEvent}
+            fontSize={fontSize}
           />
         }
       </div>

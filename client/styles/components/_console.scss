@@ -8,7 +8,6 @@
 	width: 100%;
 	height: 100%;
 	z-index: 1000;
-	overflow: hidden;
 	display: flex;
 	flex-direction: column;
 
@@ -41,9 +40,9 @@
 
 .preview-console__messages {
 	display: flex;
+	flex: 1;
 	flex-direction: column;
 	overflow-y: scroll;
-	margin-bottom: #{25 / $base-font-size}rem;
 }
 
 .preview-console__collapse {
@@ -132,7 +131,7 @@
 
 .preview-console__body {
 	display: flex;
-	flex-direction: column-reverse;
+	flex-direction: column;
 	height: calc(100% - #{30 / $base-font-size}rem);
 
 	.preview-console__message {

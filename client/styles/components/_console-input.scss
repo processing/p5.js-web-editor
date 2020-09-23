@@ -1,22 +1,15 @@
 .console__input {
-  padding-left: #{20 / $base-font-size}rem;
-  position: absolute;
-  bottom: 0;
-  height: #{22 / $base-font-size}rem;
   width: 100%;
+  display: flex;
+  align-items: center;
   @include themify() {
     background-color: getThemifyVariable('console-input-background-color');
   }
 }
 
 .console__input .console-active__arrow {
-  left: #{10 / $base-font-size}rem;
-  position: absolute;
-  top: #{4 / $base-font-size}rem;
-  & svg {
-    width: #{6 / $base-font-size}rem;
-    height: #{10 / $base-font-size}rem;
-  }
+  width: auto;
+  height: 55%;
   & g {
     @include themify() {
       fill: getThemifyVariable('console-active-arrow-color');  
@@ -24,10 +17,23 @@
   }
 }
 
+.console-active__arrow-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: #{10 / $base-font-size}rem;
+}
+
 .console__editor {
-  margin-left: #{8 / $base-font-size}rem;
-  height: #{20 / $base-font-size}rem;
-  line-height: #{20 / $base-font-size}rem;
+  margin-left: #{15 / $base-font-size}rem;
+  flex: 1;
+  & .CodeMirror {
+    height: auto;
+  }
+  & .CodeMirror-lines {
+    padding-top: #{2 / $base-font-size}rem;
+  }
 }
 
 .console__editor .CodeMirror {

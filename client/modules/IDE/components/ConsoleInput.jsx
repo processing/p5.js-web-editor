@@ -55,10 +55,14 @@ class ConsoleInput extends React.Component {
 
       return null;
     });
+
+    this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
   }
 
   componentDidUpdate(prevProps) {
     this._cm.setOption('theme', `p5-${this.props.theme}`);
+    this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
+    this._cm.refresh();
   }
 
   componentWillUnmount() {
@@ -72,7 +76,14 @@ class ConsoleInput extends React.Component {
       <div
         className="console__input"
       >
-        <RightArrowIcon className="console-active__arrow" focusable="false" aria-hidden="true" />
+        <div className="console-active__arrow-container">
+          <RightArrowIcon
+            className="console-active__arrow"
+            focusable="false"
+            aria-hidden="true"
+            style={{ width: `${this.props.fontSize}px` }}
+          />
+        </div>
         <div ref={(element) => { this.codemirrorContainer = element; }} className="console__editor" />
       </div>
     );
@@ -81,7 +92,8 @@ class ConsoleInput extends React.Component {
 
 ConsoleInput.propTypes = {
   theme: PropTypes.string.isRequired,
-  dispatchConsoleEvent: PropTypes.func.isRequired
+  dispatchConsoleEvent: PropTypes.func.isRequired,
+  fontSize: PropTypes.number.isRequired
 };
 
 
