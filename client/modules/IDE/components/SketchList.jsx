@@ -1,4 +1,3 @@
-import format from 'date-fns/format';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Helmet } from 'react-helmet';
@@ -8,6 +7,7 @@ import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import classNames from 'classnames';
 import slugify from 'slugify';
+import dates from '../../../utils/formatDate';
 import * as ProjectActions from '../actions/project';
 import * as ProjectsActions from '../actions/projects';
 import * as CollectionsActions from '../actions/collections';
@@ -24,7 +24,7 @@ import ArrowDownIcon from '../../../images/sort-arrow-down.svg';
 import DownFilledTriangleIcon from '../../../images/down-filled-triangle.svg';
 
 
-const formatDateCell = (date, mobile = false) => format(new Date(date), mobile ? 'MMM D, YYYY' : 'MMM D, YYYY h:mm A');
+const formatDateCell = (date, mobile = false) => dates.format(date, { showTime: !mobile });
 
 class SketchListRowBase extends React.Component {
   constructor(props) {
@@ -433,7 +433,7 @@ class SketchList extends React.Component {
         {this._renderLoader()}
         {this._renderEmptyTable()}
         {this.hasSketches() &&
-          <table className="sketches-table" summary="table containing all saved projects">
+          <table className="sketches-table" summary={this.props.t('SketchList.TableSummary')}>
             <thead>
               <tr>
                 {this._renderFieldHeader('name', this.props.t('SketchList.HeaderName'))}

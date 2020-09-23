@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import format from 'date-fns/format';
-import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
 import orderBy from 'lodash/orderBy';
 
 import { APIKeyPropType } from './APIKeyForm';
 
+import dates from '../../../utils/formatDate';
 import TrashCanIcon from '../../../images/trash-can.svg';
 
 function APIKeyList({ apiKeys, onRemove, t }) {
@@ -22,13 +21,13 @@ function APIKeyList({ apiKeys, onRemove, t }) {
       <tbody>
         {orderBy(apiKeys, ['createdAt'], ['desc']).map((key) => {
           const lastUsed = key.lastUsedAt ?
-            distanceInWordsToNow(new Date(key.lastUsedAt), { addSuffix: true }) :
+            dates.distanceInWordsToNow(new Date(key.lastUsedAt)) :
             t('APIKeyList.Never');
 
           return (
             <tr key={key.id}>
               <td>{key.label}</td>
-              <td>{format(new Date(key.createdAt), 'MMM D, YYYY h:mm A')}</td>
+              <td>{dates.format(key.createdAt)}</td>
               <td>{lastUsed}</td>
               <td className="api-key-list__action">
                 <button

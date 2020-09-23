@@ -2,6 +2,7 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import Backend from 'i18next-http-backend';
+import { enUS, es } from 'date-fns/locale';
 
 const fallbackLng = ['en-US'];
 const availableLanguages = ['en-US', 'es-419'];
@@ -12,6 +13,18 @@ export function languageKeyToLabel(lang) {
     'es-419': 'Español'
   };
   return languageMap[lang];
+}
+
+export function languageKeyToDateLocale(lang) {
+  const languageMap = {
+    'en-US': enUS,
+    'es-419': es
+  };
+  return languageMap[lang];
+}
+
+export function currentDateLocale() {
+  return languageKeyToDateLocale(i18n.language);
 }
 
 const options = {

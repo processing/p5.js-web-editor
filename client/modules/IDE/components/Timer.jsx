@@ -1,9 +1,9 @@
 import classNames from 'classnames';
-import differenceInMilliseconds from 'date-fns/difference_in_milliseconds';
-import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { withTranslation } from 'react-i18next';
+
+import dates from '../../../utils/formatDate';
 
 class Timer extends React.Component {
   constructor(props) {
@@ -22,20 +22,7 @@ class Timer extends React.Component {
   }
 
   showSavedTime() {
-    const now = new Date();
-    if (Math.abs(differenceInMilliseconds(now, this.props.projectSavedTime) < 10000)) {
-      return this.props.t('Timer.SavedJustNow');
-    } else if (differenceInMilliseconds(now, this.props.projectSavedTime) < 20000) {
-      return this.props.t('Timer.Saved15Seconds');
-    } else if (differenceInMilliseconds(now, this.props.projectSavedTime) < 30000) {
-      return this.props.t('Timer.Saved25Seconds');
-    } else if (differenceInMilliseconds(now, this.props.projectSavedTime) < 46000) {
-      return this.props.t('Timer.Saved35Seconds');
-    }
-
-    const timeAgo = distanceInWordsToNow(this.props.projectSavedTime, {
-      includeSeconds: true
-    });
+    const timeAgo = dates.distanceInWordsToNow(this.props.projectSavedTime);
     return this.props.t('Timer.SavedAgo', { timeAgo });
   }
 

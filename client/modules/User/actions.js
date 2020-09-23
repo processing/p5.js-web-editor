@@ -270,3 +270,20 @@ export function removeApiKey(keyId) {
         Promise.reject(new Error(response.data.error));
       });
 }
+
+export function unlinkService(service) {
+  return (dispatch) => {
+    if (!['github', 'google'].includes(service)) return;
+    apiClient.delete(`/auth/${service}`)
+      .then((response) => {
+        dispatch({
+          type: ActionTypes.AUTH_USER,
+          user: response.data
+        });
+      }).catch((error) => {
+        const { response } = error;
+        const message = response.message || response.data.error;
+        dispatch(authError(message));
+      });
+  };
+}

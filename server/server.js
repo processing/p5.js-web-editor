@@ -26,6 +26,7 @@ import aws from './routes/aws.routes';
 import serverRoutes from './routes/server.routes';
 import embedRoutes from './routes/embed.routes';
 import assetRoutes from './routes/asset.routes';
+import passportRoutes from './routes/passport.routes';
 import { requestsOfTypeJSON } from './utils/requestsOfType';
 
 import { renderIndex } from './views/index';
@@ -135,19 +136,10 @@ app.use('/', serverRoutes);
 app.use(assetRoutes);
 
 app.use('/', embedRoutes);
-app.get('/auth/github', passport.authenticate('github'));
-app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), (req, res) => {
-  res.redirect('/');
-});
-
-app.get('/auth/google', passport.authenticate('google'));
-app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
-  res.redirect('/');
-});
+app.use('/', passportRoutes);
 
 // configure passport
 require('./config/passport');
-// const passportConfig = require('./config/passport');
 
 // Connect to MongoDB
 mongoose.Promise = global.Promise;
@@ -190,7 +182,7 @@ app.get('*', (req, res) => {
 // start app
 app.listen(process.env.PORT, (error) => {
   if (!error) {
-    console.log(`p5js web editor is running on port: ${process.env.PORT}!`); // eslint-disable-line
+    console.log(`p5.js Web Editor is running on port: ${process.env.PORT}!`); // eslint-disable-line
   }
 });
 
