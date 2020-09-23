@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Helmet } from 'react-helmet';
 import { withTranslation } from 'react-i18next';
+import { withRouter, browserHistory } from 'react-router';
+import { parse } from 'query-string';
 import { updateSettings, initiateVerification, createApiKey, removeApiKey } from '../actions';
 import AccountForm from '../components/AccountForm';
 import apiClient from '../../../utils/apiClient';
@@ -12,8 +14,11 @@ import { validateSettings } from '../../../utils/reduxFormUtils';
 import SocialAuthButton from '../components/SocialAuthButton';
 import APIKeyForm from '../components/APIKeyForm';
 import Nav from '../../../components/Nav';
+import ErrorModal from '../../IDE/components/ErrorModal';
+import Overlay from '../../App/components/Overlay';
 
 function SocialLoginPanel(props) {
+  const { user } = props;
   return (
     <React.Fragment>
       <AccountForm {...props} />
@@ -24,12 +29,27 @@ function SocialLoginPanel(props) {
         {props.t('AccountView.SocialLoginDescription')}
       </p>
       <div className="account__social-stack">
-        <SocialAuthButton service={SocialAuthButton.services.github} />
-        <SocialAuthButton service={SocialAuthButton.services.google} />
+        <SocialAuthButton
+          service={SocialAuthButton.services.github}
+          linkStyle
+          isConnected={!!user.github}
+        />
+        <SocialAuthButton
+          service={SocialAuthButton.services.google}
+          linkStyle
+          isConnected={!!user.google}
+        />
       </div>
     </React.Fragment>
   );
 }
+
+SocialLoginPanel.propTypes = {
+  user: PropTypes.shape({
+    github: PropTypes.string,
+    google: PropTypes.string
+  }).isRequired
+};
 
 class AccountView extends React.Component {
   componentDidMount() {
@@ -37,6 +57,9 @@ class AccountView extends React.Component {
   }
 
   render() {
+    const queryParams = parse(this.props.location.search);
+    const showError = !!queryParams.error;
+    const errorType = queryParams.error;
     const accessTokensUIEnabled = window.process.env.UI_ACCESS_TOKEN_ENABLED;
 
     return (
@@ -46,6 +69,21 @@ class AccountView extends React.Component {
         </Helmet>
 
         <Nav layout="dashboard" />
+
+        {showError &&
+          <Overlay
+            title={this.props.t('ErrorModal.LinkTitle')}
+            ariaLabel={this.props.t('ErrorModal.LinkTitle')}
+            closeOverlay={() => {
+              browserHistory.push(this.props.location.pathname);
+            }}
+          >
+            <ErrorModal
+              type="oauthError"
+              service={errorType}
+            />
+          </Overlay>
+        }
 
         <main className="account-settings">
           <header className="account-settings__header">
@@ -111,13 +149,17 @@ function asyncValidate(formProps, dispatch, props) {
 AccountView.propTypes = {
   previousPath: PropTypes.string.isRequired,
   theme: PropTypes.string.isRequired,
-  t: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
+  location: PropTypes.shape({
+    search: PropTypes.string.isRequired,
+    pathname: PropTypes.string.isRequired
+  }).isRequired
 };
 
-export default withTranslation()(reduxForm({
+export default withTranslation()(withRouter(reduxForm({
   form: 'updateAllSettings',
   fields: ['username', 'email', 'currentPassword', 'newPassword'],
   validate: validateSettings,
   asyncValidate,
   asyncBlurFields: ['username', 'email', 'currentPassword']
-}, mapStateToProps, mapDispatchToProps)(AccountView));
+}, mapStateToProps, mapDispatchToProps)(AccountView)));

@@ -115,7 +115,7 @@ AccountForm.propTypes = {
     newPassword: PropTypes.object.isRequired, // eslint-disable-line
   }).isRequired,
   user: PropTypes.shape({
-    verified: PropTypes.number.isRequired,
+    verified: PropTypes.string.isRequired,
     emailVerificationInitiate: PropTypes.bool.isRequired,
   }).isRequired,
   handleSubmit: PropTypes.func.isRequired,

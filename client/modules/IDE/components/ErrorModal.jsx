@@ -15,6 +15,19 @@ class ErrorModal extends React.Component {
     );
   }
 
+  oauthError() {
+    const { t, service } = this.props;
+    const serviceLabels = {
+      github: 'GitHub',
+      google: 'Google'
+    };
+    return (
+      <p>
+        {t('ErrorModal.LinkMessage', { serviceauth: serviceLabels[service] })}
+      </p>
+    );
+  }
+
   staleSession() {
     return (
       <p>
@@ -42,6 +55,8 @@ class ErrorModal extends React.Component {
             return this.staleSession();
           } else if (this.props.type === 'staleProject') {
             return this.staleProject();
+          } else if (this.props.type === 'oauthError') {
+            return this.oauthError();
           }
         })()}
       </div>
@@ -52,7 +67,12 @@ class ErrorModal extends React.Component {
 ErrorModal.propTypes = {
   type: PropTypes.string.isRequired,
   closeModal: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
+  service: PropTypes.string
+};
+
+ErrorModal.defaultProps = {
+  service: ''
 };
 
 export default withTranslation()(ErrorModal);

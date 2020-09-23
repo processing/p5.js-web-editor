@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
+import { useTranslation } from 'react-i18next';
 
 import Screen from '../../components/mobile/MobileScreen';
 import Header from '../../components/mobile/Header';
@@ -137,10 +138,13 @@ const Panels = {
 };
 
 
-const navOptions = username => [
-  { title: 'Create Sketch', href: '/' },
-  { title: 'Create Collection', href: `/${username}/collections/create` }
-];
+const navOptions = (username) => {
+  const { t } = useTranslation();
+  return [
+    { title: t('MobileDashboardView.CreateSketch'), href: '/' },
+    { title: t('MobileDashboardView.CreateCollection'), href: `/${username}/collections/create` }
+  ];
+};
 
 
 const getPanel = (pathname) => {
@@ -162,8 +166,14 @@ const MobileDashboard = ({ params, location }) => {
   const user = useSelector(state => state.user);
   const { username: paramsUsername } = params;
   const { pathname } = location;
+  const { t } = useTranslation();
 
   const Tabs = Object.keys(Panels);
+  const TabLabels = {
+    sketches: t('MobileDashboardView.Sketches'),
+    collections: t('MobileDashboardView.Collections'),
+    assets: t('MobileDashboardView.Assets')
+  };
   const isExamples = paramsUsername === EXAMPLE_USERNAME;
   const panel = getPanel(pathname);
 
@@ -173,9 +183,10 @@ const MobileDashboard = ({ params, location }) => {
     align="right"
   />);
 
+
   return (
     <Screen fullscreen key={pathname}>
-      <Header slim inverted title={isExamples ? 'Examples' : 'My Stuff'}>
+      <Header slim inverted title={isExamples ? t('MobileDashboardView.Examples') : t('MobileDashboardView.MyStuff')}>
         <NavItem>
           <IconButton
             onClick={toggleNavDropdown}
@@ -205,7 +216,7 @@ const MobileDashboard = ({ params, location }) => {
                 selected={tab === panel}
                 to={pathname.replace(panel, tab)}
               >
-                <h3>{(isExamples && tab === 'Sketches') ? 'Examples' : tab}</h3>
+                <h3>{(isExamples && tab === 'Sketches') ? t('MobileDashboardView.Examples') : (TabLabels[tab] || tab)}</h3>
               </FooterTab>))
             }
           </FooterTabSwitcher>

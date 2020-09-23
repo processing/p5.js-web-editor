@@ -67,9 +67,10 @@
     "ResetPassword": "Reset your password"
   },
   "SocialAuthButton": {
-    "Github": "Login with Github",
-    "LogoARIA": "{{serviceauth}} logo",
-    "Google": "Login with Google"
+    "Connect": "Connect {{serviceauth}} Account",
+    "Unlink": "Unlink {{serviceauth}} Account",
+    "Login": "Login with {{serviceauth}}",
+    "LogoARIA": "{{serviceauth}} logo"
   },
   "About": {
     "Title": "About",
@@ -381,7 +382,9 @@
     "SignUp": "Sign Up",
     "MessageLoggedOut": "It looks like you've been logged out. Please ",
     "LogIn": "log in",
-    "SavedDifferentWindow": "The project you have attempted to save has been saved from another window.\n        Please refresh the page to see the latest version."
+    "SavedDifferentWindow": "The project you have attempted to save has been saved from another window.\n        Please refresh the page to see the latest version.",
+    "LinkTitle": "Error Linking Account",
+    "LinkMessage": "There was a problem linking your {{serviceauth}} account to your p5.js Web Editor account. Your {{serviceauth}} account has already been linked to another p5.js Web Editor account."
   },
   "ShareModal": {
     "Embed": "Embed",
@@ -538,5 +541,47 @@
   "PreviewNav": {
     "EditSketchARIA": "Edit Sketch",
     "ByUser": "by"
+  },
+  "MobilePreferences": {
+    "Settings": "Settings",
+    "GeneralSettings": "General settings",
+    "Accessibility": "Accessibility",
+    "AccessibleOutput": "Accessible Output",
+    "Theme": "Theme",
+    "LightTheme": "Light",
+    "DarkTheme": "Dark",
+    "HighContrastTheme": "High Contrast",
+    "Autosave": "Autosave",
+    "WordWrap": "Word Wrap",
+    "LineNumbers": "Line numbers",
+    "LintWarningSound": "Lint warning sound",
+    "UsedScreenReader": "Used with screen reader",
+    "PlainText": "Plain-text",
+    "TableText": "Table-text",
+    "Sound": "Sound"
+  },
+  "PreferenceCreators": {
+    "On": "On",
+    "Off": "Off"
+  },
+  "MobileIDEView":{
+    "Preferences": "Preferences",
+    "MyStuff": "My Stuff",
+    "Examples": "Examples",
+    "OriginalEditor": "Original Editor",
+    "Login": "Login",
+    "Logout": "Logout"
+  },
+  "MobileDashboardView": {
+    "Examples": "Examples",
+    "Sketches": "Sketches",
+    "Collections": "Collections",
+    "Assets": "Assets",
+    "MyStuff": "My Stuff",
+    "CreateSketch": "Create Sketch",
+    "CreateCollection": "Create Collection"
+  },
+  "Explorer": {
+    "Files": "Files"
   }
 }
