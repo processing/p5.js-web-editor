@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
 
@@ -24,6 +24,9 @@ import infoLightUrl from '../../../images/console-info-light.svg?byUrl';
 import infoDarkUrl from '../../../images/console-info-dark.svg?byUrl';
 import infoContrastUrl from '../../../images/console-info-contrast.svg?byUrl';
 import ConsoleInput from './ConsoleInput';
+
+import commandIconUrl from '../../../images/command.svg?byUrl';
+import resultIconUrl from '../../../images/result.svg?byUrl';
 
 import UpArrowIcon from '../../../images/up-arrow.svg';
 import DownArrowIcon from '../../../images/down-arrow.svg';
@@ -60,6 +63,8 @@ const getConsoleFeedStyle = (theme, times, fontSize) => {
     ARROW_FONT_SIZE: fontSize,
     LOG_ICON_WIDTH: fontSize,
     LOG_ICON_HEIGHT: 1.45 * fontSize,
+    LOG_COMMAND_ICON: `url(${commandIconUrl})`,
+    LOG_RESULT_ICON: `url(${resultIconUrl})`
   };
 
   if (times > 1) {
@@ -87,10 +92,10 @@ const Console = ({ t }) => {
     collapseConsole, expandConsole, clearConsole, dispatchConsoleEvent
   } = bindActionCreators({ ...IDEActions, ...ConsoleActions }, useDispatch());
 
-  useDidUpdate(() => {
-    clearConsole();
-    dispatchConsoleEvent(consoleEvents);
-  }, [theme, fontSize]);
+  // useEffect(() => {
+  //   clearConsole();
+  //   dispatchConsoleEvent(consoleEvents);
+  // }, [theme, fontSize]);
 
   const cm = useRef({});
 
@@ -138,6 +143,7 @@ const Console = ({ t }) => {
                 <ConsoleFeed
                   styles={getConsoleFeedStyle(theme, times, fontSize)}
                   logs={[consoleEvent]}
+                  key={Date.now()}
                 />
               </div>
             );

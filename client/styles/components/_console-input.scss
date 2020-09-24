@@ -9,10 +9,11 @@
 
 .console__input .console-active__arrow {
   width: auto;
-  height: 55%;
-  & g {
+  height: 38%;
+  & path {
     @include themify() {
-      fill: getThemifyVariable('console-active-arrow-color');  
+      fill: getThemifyVariable('console-active-arrow-color');
+      opacity: 1; 
     }
   }
 }

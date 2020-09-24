@@ -135,7 +135,6 @@
 	height: calc(100% - #{30 / $base-font-size}rem);
 
 	.preview-console__message {
-		flex: 1 0 auto;
 		position: relative;
 		@include themify() {
 			color: getThemifyVariable('console-logged-times-color');
