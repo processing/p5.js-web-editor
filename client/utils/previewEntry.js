@@ -17,7 +17,6 @@ setInterval(() => {
       messages: consoleBuffer,
       source: 'sketch'
     };
-    // this could import dispatch instead! wowowowow
     window.parent.postMessage(message, window.origin);
     consoleBuffer.length = 0;
   }

@@ -37,7 +37,9 @@ import DownArrowIcon from '../../../images/down-arrow.svg';
 
 import * as IDEActions from '../../IDE/actions/ide';
 import * as ConsoleActions from '../../IDE/actions/console';
-import { useDidUpdate } from '../../../utils/custom-hooks';
+import { useDidUpdate } from '../hooks/custom-hooks';
+import useHandleMessageEvent from '../hooks/useHandleMessageEvent';
+import { listen } from '../../../utils/dispatcher';
 
 const getConsoleFeedStyle = (theme, times, fontSize) => {
   const style = {
@@ -100,14 +102,17 @@ const Console = ({ t }) => {
     collapseConsole, expandConsole, clearConsole, dispatchConsoleEvent
   } = bindActionCreators({ ...IDEActions, ...ConsoleActions }, useDispatch());
 
-  // useEffect(() => {
-  //   clearConsole();
-  //   dispatchConsoleEvent(consoleEvents);
-  // }, [theme, fontSize]);
-
   const cm = useRef({});
 
   useDidUpdate(() => { cm.current.scrollTop = cm.current.scrollHeight; });
+
+  const handleMessageEvent = useHandleMessageEvent();
+  useEffect(() => {
+    const unsubscribe = listen(handleMessageEvent);
+    return function cleanup() {
+      unsubscribe();
+    };
+  });
 
   const consoleClass = classNames({
     'preview-console': true,

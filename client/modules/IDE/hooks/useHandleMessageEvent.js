@@ -1,12 +1,10 @@
-import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Decode } from 'console-feed';
 import { isEqual } from 'lodash';
 import { dispatchConsoleEvent } from '../actions/console';
 import { stopSketch, expandConsole } from '../actions/console';
-import { listen } from '../../../utils/dispatcher';
 
-function useHandleMessageEvent() {
+export default function useHandleMessageEvent() {
   const dispatch = useDispatch();
 
   const handleMessageEvent = (data) => {
@@ -47,16 +45,3 @@ function useHandleMessageEvent() {
   };
   return handleMessageEvent;
 }
-
-function MessageHandler() {
-  const handleMessageEvent = useHandleMessageEvent();
-  useEffect(() => {
-    const unsubscribe = listen(handleMessageEvent);
-    return function cleanup() {
-      unsubscribe();
-    };
-  });
-  return null;
-}
-
-export default MessageHandler;

@@ -34,7 +34,6 @@ import About from '../components/About';
 import AddToCollectionList from '../components/AddToCollectionList';
 import Feedback from '../components/Feedback';
 import { CollectionSearchbar } from '../components/Searchbar';
-import MessageHandler from '../components/MessageHandler';
 import { getIsUserOwner } from '../selectors/users';
 
 
@@ -258,7 +257,6 @@ class IDEView extends React.Component {
         <Helmet>
           <title>{getTitle(this.props)}</title>
         </Helmet>
-        <MessageHandler />
         {this.props.toast.isVisible && <Toast />}
         <Nav
           warnIfUnsavedChanges={this.handleUnsavedChanges}
