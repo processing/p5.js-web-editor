@@ -80,8 +80,6 @@ class IDEView extends React.Component {
       consoleSize: props.ide.consoleIsExpanded ? 150 : 29,
       sidebarSize: props.ide.sidebarIsExpanded ? 160 : 20,
     };
-
-    this.previewFrame = React.createRef();
   }
 
   componentDidMount() {
@@ -342,9 +340,7 @@ class IDEView extends React.Component {
                 className="editor-preview-subpanel"
               >
                 <Editor provideController={(ctl) => { this.cmController = ctl; }} />
-                <Console
-                  previewFrame={this.previewFrame.current}
-                />
+                <Console />
               </SplitPane>
               <section className="preview-frame-holder">
                 <header className="preview-frame__header">
@@ -389,7 +385,6 @@ class IDEView extends React.Component {
                     clearConsole={this.props.clearConsole}
                     cmController={this.cmController}
                     language={this.props.preferences.language}
-                    ref={this.previewFrame}
                   />
                 </div>
               </section>
