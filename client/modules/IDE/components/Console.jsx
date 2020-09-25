@@ -151,7 +151,7 @@ const Console = ({ t }) => {
                 <ConsoleFeed
                   styles={getConsoleFeedStyle(theme, times, fontSize)}
                   logs={[consoleEvent]}
-                  key={Date.now()}
+                  key={`${consoleEvent.id}-${theme}-${fontSize}`}
                 />
               </div>
             );
