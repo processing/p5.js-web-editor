@@ -25,4 +25,4 @@ function evaluateExpression() {
   });
 }
 
-export default evaluateExpression;
+export default evaluateExpression();

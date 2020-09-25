@@ -1,6 +1,6 @@
 import loopProtect from 'loop-protect';
 import { Hook, Decode, Encode } from 'console-feed';
-import handleConsoleExpressions from './evaluateConsole';
+import evaluateExpression from './evaluateExpression';
 
 window.loopProtect = loopProtect;
 
@@ -30,7 +30,7 @@ function handleMessageEvent(e) {
     const decodedMessages = messages.map(message => Decode(message.log));
     decodedMessages.forEach((message) => {
       const { data: args } = message;
-      const { result, error } = handleConsoleExpressions(args);
+      const { result, error } = evaluateExpression(args);
       const resultMessages = [{ log: Encode({ method: error ? 'error' : 'result', data: [result] }) }];
       window.parent.postMessage({
         messages: resultMessages,
