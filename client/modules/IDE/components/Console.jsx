@@ -25,8 +25,12 @@ import infoDarkUrl from '../../../images/console-info-dark.svg?byUrl';
 import infoContrastUrl from '../../../images/console-info-contrast.svg?byUrl';
 import ConsoleInput from './ConsoleInput';
 
-import commandIconUrl from '../../../images/command.svg?byUrl';
-import resultIconUrl from '../../../images/result.svg?byUrl';
+import commandLightUrl from '../../../images/console-command-light.svg?byUrl';
+import resultLightUrl from '../../../images/console-result-light.svg?byUrl';
+import commandDarkUrl from '../../../images/console-command-dark.svg?byUrl';
+import resultDarkUrl from '../../../images/console-result-dark.svg?byUrl';
+import commandContrastUrl from '../../../images/console-command-contrast.svg?byUrl';
+import resultContrastUrl from '../../../images/console-result-contrast.svg?byUrl';
 
 import UpArrowIcon from '../../../images/up-arrow.svg';
 import DownArrowIcon from '../../../images/down-arrow.svg';
@@ -43,28 +47,32 @@ const getConsoleFeedStyle = (theme, times, fontSize) => {
     LOG_WARN_ICON: `url(${warnLightUrl})`,
     LOG_ERROR_ICON: `url(${errorLightUrl})`,
     LOG_DEBUG_ICON: `url(${debugLightUrl})`,
-    LOG_INFO_ICON: `url(${infoLightUrl})`
+    LOG_INFO_ICON: `url(${infoLightUrl})`,
+    LOG_COMMAND_ICON: `url(${commandLightUrl})`,
+    LOG_RESULT_ICON: `url(${resultLightUrl})`
   };
   const CONSOLE_FEED_DARK_ICONS = {
     LOG_WARN_ICON: `url(${warnDarkUrl})`,
     LOG_ERROR_ICON: `url(${errorDarkUrl})`,
     LOG_DEBUG_ICON: `url(${debugDarkUrl})`,
-    LOG_INFO_ICON: `url(${infoDarkUrl})`
+    LOG_INFO_ICON: `url(${infoDarkUrl})`,
+    LOG_COMMAND_ICON: `url(${commandDarkUrl})`,
+    LOG_RESULT_ICON: `url(${resultDarkUrl})`
   };
   const CONSOLE_FEED_CONTRAST_ICONS = {
     LOG_WARN_ICON: `url(${warnContrastUrl})`,
     LOG_ERROR_ICON: `url(${errorContrastUrl})`,
     LOG_DEBUG_ICON: `url(${debugContrastUrl})`,
-    LOG_INFO_ICON: `url(${infoContrastUrl})`
+    LOG_INFO_ICON: `url(${infoContrastUrl})`,
+    LOG_COMMAND_ICON: `url(${commandContrastUrl})`,
+    LOG_RESULT_ICON: `url(${resultContrastUrl})`
   };
   const CONSOLE_FEED_SIZES = {
     TREENODE_LINE_HEIGHT: 1.2,
     BASE_FONT_SIZE: fontSize,
     ARROW_FONT_SIZE: fontSize,
     LOG_ICON_WIDTH: fontSize,
-    LOG_ICON_HEIGHT: 1.45 * fontSize,
-    LOG_COMMAND_ICON: `url(${commandIconUrl})`,
-    LOG_RESULT_ICON: `url(${resultIconUrl})`
+    LOG_ICON_HEIGHT: 1.45 * fontSize
   };
 
   if (times > 1) {
