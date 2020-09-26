@@ -28,22 +28,6 @@ export default function(CodeMirror) {
     }};
   }
 
-  function replaceOverlay(cursorFrom, cursorTo, flag) {
-    return {token: function(stream) {
-      if (!flag && cursorFrom.line == stream.lineOracle.line) {
-        if (stream.pos == 0) {
-          stream.pos = cursorFrom.ch;
-        } else {
-          stream.pos = cursorTo.ch;
-          flag = true;
-          return 'searching';
-        }
-      } else {
-        stream.skipToEnd();
-      }
-    }};
-  }
-
   function SearchState() {
     this.posFrom = this.posTo = this.lastQuery = this.query = null;
     this.overlay = null;
@@ -182,7 +166,7 @@ export default function(CodeMirror) {
           replaceDiv.style.height = replaceDivHeightClosed;
           toggleReplaceBtnDiv.style.height = toggleButtonHeightClosed;
           showReplaceButton.style.height = toggleButtonHeightClosed;
-          showReplaceButton.innerHTML = "▶";
+          showReplaceButton.innerHTML = "►";
         }
       }
 
@@ -277,49 +261,6 @@ export default function(CodeMirror) {
   function dialog(cm, text, shortText, deflt, f) {
     if (cm.openDialog) cm.openDialog(text, f, {value: deflt, selectValueOnOpen: true});
     else f(prompt(shortText, deflt));
-  }
-
-  var lastSelectedIndex = 0;
-  function confirmDialog(cm, text, shortText, fs) {
-    if (cm.openConfirm) cm.openConfirm(text, fs);
-    else if (confirm(shortText)) fs[0]();
-
-    var dialog = document.getElementsByClassName("CodeMirror-dialog")[0];
-    var buttons = dialog.getElementsByTagName("button");
-    buttons[lastSelectedIndex].focus();
-    for (var i = 0; i < buttons.length; i += 1) {
-      (function (index) {
-        var button = buttons[index];
-        button.addEventListener("focus", function (e) {
-          lastSelectedIndex = index === buttons.length - 1 ? 0 : index;
-        });
-        button.addEventListener("keyup", function (e) {
-          if (e.keyCode === 37) { // arrow left
-            var prevButton = index === 0 ? buttons.length - 1 : index - 1;
-            buttons[prevButton].focus();
-          }
-          if (e.keyCode === 39) { // arrow right
-            var nextButton = index === buttons.length - 1 ? 0 : index + 1;
-            buttons[nextButton].focus();
-          }
-          if (e.keyCode === 27) { // esc
-            // Remove replace-overlay & focus on the editor.
-            const state = getSearchState(cm);
-            cm.removeOverlay(state.overlay, state.caseInsensitive);
-            cm.focus();
-          }
-        });
-        button.addEventListener("click", function () {
-          if (index === buttons.length - 1) { // "done"
-            lastSelectedIndex = 0;
-            // Remove replace-overlay & focus on the editor.
-            const state = getSearchState(cm);
-            cm.removeOverlay(state.overlay, state.caseInsensitive);
-            cm.focus();
-          }
-        })
-      })(i);
-    }
   }
 
   function parseString(string) {
@@ -477,79 +418,6 @@ export default function(CodeMirror) {
     });
   }
 
-  function replace(cm, queryText, withText, all) {
-    if (!queryText) return;    
-    const state = getSearchState(cm);
-    var prevDialog = document.getElementsByClassName("CodeMirror-dialog")[0];
-    if (prevDialog) {
-      clearSearch(cm);
-    }
-    prevDialog.parentNode.removeChild(prevDialog);
-    cm.focus();
-    if (cm.getOption("readOnly")) return;
-    var query = parseQuery(queryText, state);
-    if (all) {
-      replaceAll(cm, query, withText)
-    } else {
-      clearSearch(cm);
-      var cursor = getSearchCursor(cm, query, cm.getCursor("from"));
-      var advance = function() {
-        var start = cursor.from(), match;
-        if (!(match = cursor.findNext())) {
-          cursor = getSearchCursor(cm, query);
-          if (!(match = cursor.findNext()) ||
-            (start && cursor.from().line == start.line && cursor.from().ch == start.ch)) return;
-        }
-
-        // Add an overlay to the text to be replaced.
-        cm.removeOverlay(state.overlay, state.caseInsensitive);
-        var flag = false;
-        state.overlay = replaceOverlay(cursor.from(), cursor.to(), flag);
-        cm.addOverlay(state.overlay);
-        
-        cm.scrollIntoView({from: cursor.from(), to: cursor.to()}, 60);
-        confirmDialog(cm, doReplaceConfirm, "Replace?",
-          [function() {doReplace(match);}, advance,
-            function() {replaceAll(cm, query, withText)}]);
-      };
-      var doReplace = function(match) {
-        cursor.replace(typeof query == "string" ? withText :
-          withText.replace(/\$(\d)/g, function(_, i) {return match[i];}));
-        advance();
-      };
-      advance();
-    }
-  }
-
-  var doReplaceConfirm = `
-    <div class="CodeMirror-replace-options">
-      <button
-        title="Replace"
-        aria-label="Replace"
-      >
-        Replace
-      </button>
-      <button
-        title="Skip"
-        aria-label="Skip"
-      >
-        Skip
-      </button>
-      <button
-        title="Replace All"
-        aria-label="Replace All"
-      >
-        Replace All
-      </button>
-      <button
-        title="Stop"
-        aria-label="Stop"
-      >
-        Stop
-      </button>
-    </div>
-  `;
-
   var queryDialog = `
     <div class="CodeMirror-find-popup-container">
       <div class="Toggle-replace-btn-div">
@@ -652,5 +520,4 @@ export default function(CodeMirror) {
   CodeMirror.commands.findPrev = function(cm) {doFindAndReplace(cm, true);};
   CodeMirror.commands.clearSearch = clearSearch;
   CodeMirror.commands.replace = function(cm) { doFindAndReplace(cm, false, true, false, true, true); };
-  CodeMirror.commands.replaceAll = function(cm) { doFindAndReplace(cm, false, true, false, true, true); };
 };
