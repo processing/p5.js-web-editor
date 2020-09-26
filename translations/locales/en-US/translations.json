@@ -16,8 +16,7 @@
       "Find": "Find",
       "FindNext": "Find Next",
       "FindPrevious": "Find Previous",
-      "Replace": "Replace",
-      "ReplaceAll": "Replace All"
+      "Replace": "Replace"
     },
     "Sketch": {
       "Title": "Sketch",
@@ -168,7 +167,6 @@
       "FindNextMatch": "Find Next Match",
       "FindPrevMatch": "Find Previous Match",
       "ReplaceTextMatch": "Replace Text Match",
-      "ReplaceAllTextMatches": "Replace All Text Matches",
       "IndentCodeLeft": "Indent Code Left",
       "IndentCodeRight": "Indent Code Right",
       "CommentLine": "Comment Line",

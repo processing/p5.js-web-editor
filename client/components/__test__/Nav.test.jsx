@@ -37,7 +37,6 @@ describe('Nav', () => {
       findNext: jest.fn(),
       findPrev: jest.fn(),
       showReplace: jest.fn(),
-      showReplaceAll: jest.fn(),
     },
     startSketch: jest.fn(),
     stopSketch: jest.fn(),
