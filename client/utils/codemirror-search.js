@@ -50,6 +50,7 @@ export default function(CodeMirror) {
     this.regexp = false;
     this.caseInsensitive = true;
     this.wholeWord = false;
+    this.replaceStarted = false;
   }
 
   function getSearchState(cm) {
@@ -89,6 +90,12 @@ export default function(CodeMirror) {
       CodeMirror.on(searchField, "keyup", function (e) {
         if (e.keyCode === 13) {
           // If enter is pressed, then shift focus to replace field
+          var state = getSearchState(cm);
+          startSearch(cm, state, searchField.value);
+          state.replaceStarted = true;
+          cm.focus();
+          CodeMirror.commands.findNext(cm);
+          searchField.blur();
           replaceField.focus();
         }
         else if (e.keyCode !== 13 && searchField.value.length > 1) { // not enter and more than 1 character to search
@@ -162,19 +169,11 @@ export default function(CodeMirror) {
         return nextState;
       }
 
-      var showReplaceButton = dialog.getElementsByClassName("CodeMirror-replace-toggle-button")[0];
-      var toggleReplaceBtnDiv = dialog.getElementsByClassName("Toggle-replace-btn-div")[0];
-      var replaceDiv = dialog.getElementsByClassName("CodeMirror-replace-div")[0];
-      var replaceDivHeightOpened = "45px", replaceDivHeightClosed = "0px";
-      var toggleButtonHeightOpened = "80px", toggleButtonHeightClosed = "40px";
-      if (replaceOpened) {
-        replaceDiv.style.height = replaceDivHeightOpened;
-        toggleReplaceBtnDiv.style.height = toggleButtonHeightOpened;
-        showReplaceButton.style.height = toggleButtonHeightOpened;
-        showReplaceButton.innerHTML = "▼";
-      }
-      CodeMirror.on(showReplaceButton, "click", function () {
-        if (replaceDiv.style.height === "0px") {
+      function toggleReplace(open) {
+        var replaceDivHeightOpened = "45px", replaceDivHeightClosed = "0px";
+        var toggleButtonHeightOpened = "80px", toggleButtonHeightClosed = "40px";
+
+        if (open) {
           replaceDiv.style.height = replaceDivHeightOpened;
           toggleReplaceBtnDiv.style.height = toggleButtonHeightOpened;
           showReplaceButton.style.height = toggleButtonHeightOpened;
@@ -185,27 +184,88 @@ export default function(CodeMirror) {
           showReplaceButton.style.height = toggleButtonHeightClosed;
           showReplaceButton.innerHTML = "▶";
         }
+      }
+
+      var showReplaceButton = dialog.getElementsByClassName("CodeMirror-replace-toggle-button")[0];
+      var toggleReplaceBtnDiv = dialog.getElementsByClassName("Toggle-replace-btn-div")[0];
+      var replaceDiv = dialog.getElementsByClassName("CodeMirror-replace-div")[0];
+      if (replaceOpened) {
+        toggleReplace(true);
+      }
+      CodeMirror.on(showReplaceButton, "click", function () {
+        if (replaceDiv.style.height === "0px") {
+          toggleReplace(true);
+        } else {
+          toggleReplace(false);
+        }
       });
 
       var replaceField = document.getElementById('Replace-input-field');
       CodeMirror.on(replaceField, "keyup", function (e) {
+        if (!searchField.value) {
+          searchField.focus();
+          return;
+        }
+        var state = getSearchState(cm);
+        var query = parseQuery(searchField.value, state);
+        var withText = parseString(replaceField.value);
         if (e.keyCode === 13)  // if enter
         {
-          startSearch(cm, getSearchState(cm), searchField.value);
-          replace(cm, parseString(searchField.value), parseString(replaceField.value));
+          var cursor = getSearchCursor(cm, query, cm.getCursor("from"));
+          var match = cursor.findNext();
+          cm.setSelection(cursor.from(), cursor.to());
+          doReplace(match, cursor, query, withText);
         }
       })
 
+      function doReplace(match, cursor, query, withText) {
+        cursor.replace(typeof query == "string" ? withText :
+          withText.replace(/\$(\d)/g, function(_, i) {return match[i];}));
+        cursor.findNext();
+        cm.focus();
+        CodeMirror.commands.findNext(cm);
+        searchField.blur();
+      };
+
       var doReplaceButton = document.getElementById('Btn-replace');
       CodeMirror.on(doReplaceButton, "click", function(e) {
-        startSearch(cm, getSearchState(cm), searchField.value);
-        replace(cm, parseString(searchField.value), parseString(replaceField.value));
+        if (!searchField.value) {
+          searchField.focus();
+          return;
+        }
+        var state = getSearchState(cm);
+        var query = parseQuery(searchField.value, state);
+        var withText = parseString(replaceField.value);
+        if (state.replaceStarted) {
+          var cursor = getSearchCursor(cm, query, cm.getCursor("from"));
+          var match = cursor.findNext();
+          cm.setSelection(cursor.from(), cursor.to());
+          doReplace(match, cursor, query, withText);
+        } else {
+          startSearch(cm, state, searchField.value);
+          state.replaceStarted = true;
+          cm.focus();
+          CodeMirror.commands.findNext(cm);
+          searchField.blur();
+        }
       })
 
       var doReplaceAllButton = document.getElementById('Btn-replace-all');
       CodeMirror.on(doReplaceAllButton, "click", function(e) {
-        startSearch(cm, getSearchState(cm), searchField.value);
-        replace(cm, parseString(searchField.value), parseString(replaceField.value), true);
+        if (!searchField.value) {
+          searchField.focus();
+          return;
+        }
+        var state = getSearchState(cm);
+        var query = parseQuery(searchField.value, state);
+        var withText = parseString(replaceField.value);
+        if (state.replaceStarted) {
+          replaceAll(cm, query, withText);
+          state.replaceStarted = false;
+        } else {
+          startSearch(cm, state, searchField.value);
+          state.replaceStarted = true;
+        }
       })
 
     } else {
@@ -399,6 +459,7 @@ export default function(CodeMirror) {
   function clearSearch(cm) {cm.operation(function() {
     var state = getSearchState(cm);
     state.lastQuery = state.queryText;
+    state.replaceStarted = false;
     if (!state.query) return;
     state.query = state.queryText = null;
     cm.removeOverlay(state.overlay);
