@@ -21,6 +21,7 @@ import 'codemirror/addon/search/matchesonscrollbar';
 import 'codemirror/addon/search/match-highlighter';
 import 'codemirror/addon/search/jump-to-line';
 import 'codemirror/addon/edit/matchbrackets';
+import 'codemirror/addon/edit/closebrackets';
 
 import { JSHINT } from 'jshint';
 import { CSSLint } from 'csslint';
@@ -104,6 +105,7 @@ class Editor extends React.Component {
       keyMap: 'sublime',
       highlightSelectionMatches: true, // highlight current search match
       matchBrackets: true,
+      autoCloseBrackets: this.props.autocloseBracketsQuotes,
       lint: {
         onUpdateLinting: ((annotations) => {
           this.props.hideRuntimeErrorWarning();
@@ -204,6 +206,9 @@ class Editor extends React.Component {
     }
     if (this.props.lineNumbers !== prevProps.lineNumbers) {
       this._cm.setOption('lineNumbers', this.props.lineNumbers);
+    }
+    if (this.props.autocloseBracketsQuotes !== prevProps.autocloseBracketsQuotes) {
+      this._cm.setOption('autoCloseBrackets', this.props.autocloseBracketsQuotes);
     }
 
     if (prevProps.consoleEvents !== this.props.consoleEvents) {
@@ -370,6 +375,7 @@ class Editor extends React.Component {
 }
 
 Editor.propTypes = {
+  autocloseBracketsQuotes: PropTypes.bool.isRequired,
   lineNumbers: PropTypes.bool.isRequired,
   lintWarning: PropTypes.bool.isRequired,
   linewrap: PropTypes.bool.isRequired,
