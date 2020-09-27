@@ -51,6 +51,24 @@ export function setLineNumbers(value) {
   };
 }
 
+export function setAutocloseBracketsQuotes(value) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.SET_AUTOCLOSE_BRACKETS_QUOTES,
+      value
+    });
+    const state = getState();
+    if (state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          autocloseBracketsQuotes: value
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
+  };
+}
+
 export function setAutosave(value) {
   return (dispatch, getState) => {
     dispatch({

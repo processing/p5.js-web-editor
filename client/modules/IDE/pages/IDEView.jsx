@@ -286,6 +286,8 @@ class IDEView extends React.Component {
               setSoundOutput={this.props.setSoundOutput}
               theme={this.props.preferences.theme}
               setTheme={this.props.setTheme}
+              autocloseBracketsQuotes={this.props.preferences.autocloseBracketsQuotes}
+              setAutocloseBracketsQuotes={this.props.setAutocloseBracketsQuotes}
             />
           </Overlay>
         )}
@@ -534,9 +536,11 @@ IDEView.propTypes = {
     soundOutput: PropTypes.bool.isRequired,
     theme: PropTypes.string.isRequired,
     autorefresh: PropTypes.bool.isRequired,
-    language: PropTypes.string.isRequired
+    language: PropTypes.string.isRequired,
+    autocloseBracketsQuotes: PropTypes.bool.isRequired
   }).isRequired,
   closePreferences: PropTypes.func.isRequired,
+  setAutocloseBracketsQuotes: PropTypes.func.isRequired,
   setFontSize: PropTypes.func.isRequired,
   setAutosave: PropTypes.func.isRequired,
   setLineNumbers: PropTypes.func.isRequired,
