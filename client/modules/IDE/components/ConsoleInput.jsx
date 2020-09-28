@@ -1,12 +1,23 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import CodeMirror from 'codemirror';
 import { Encode } from 'console-feed';
 
 import RightArrowIcon from '../../../images/right-arrow.svg';
 import { dispatch } from '../../../utils/dispatcher';
 
+// heavily inspired by
+// https://github.com/codesandbox/codesandbox-client/blob/92a1131f4ded6f7d9c16945dc7c18aa97c8ada27/packages/app/src/app/components/Preview/DevTools/Console/Input/index.tsx
+
 class ConsoleInput extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      commandHistory: [],
+      commandCursor: -1
+    };
+  }
+
   componentDidMount() {
     this._cm = CodeMirror(this.codemirrorContainer, { // eslint-disable-line
       theme: `p5-${this.props.theme}`,
@@ -16,15 +27,10 @@ class ConsoleInput extends React.Component {
       inputStyle: 'contenteditable'
     });
 
-    this._cm.setOption('extraKeys', {
-      Up: cm => cm.undo(),
-      Down: cm => cm.redo()
-    });
-
-    this._cm.setCursor({ line: 1, ch: 5 });
-
     this._cm.on('keydown', (cm, e) => {
-      if (e.keyCode === 13) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        e.stopPropagation();
         const value = cm.getValue();
         if (value.trim(' ') === '') {
           return false;
@@ -37,23 +43,51 @@ class ConsoleInput extends React.Component {
         });
         this.props.dispatchConsoleEvent(consoleEvent);
         cm.setValue('');
+        this.setState(state => ({
+          commandCursor: -1,
+          commandHistory: [value, ...state.commandHistory],
+        }));
+      } else if (e.key === 'ArrowUp') {
+        const lineNumber = this._cm.getDoc().getCursor().line;
+        if (lineNumber !== 0) {
+          return false;
+        }
+
+        // also need to set cursor position
+        this.setState((state) => {
+          const newCursor = Math.min(
+            state.commandCursor + 1,
+            state.commandHistory.length - 1
+          );
+          this._cm
+            .getDoc()
+            .setValue(state.commandHistory[newCursor] || '');
+          const cursorPos = this._cm.getDoc().getLine(0).length - 1;
+          console.log(cursorPos);
+          this._cm.setCursor({ line: 0, ch: cursorPos });
+          return { commandCursor: newCursor };
+        });
+      } else if (e.key === 'ArrowDown') {
+        const lineNumber = this._cm.getDoc().getCursor().line;
+        const lineCount = this._cm.getValue().split('\n').length;
+        if (lineNumber + 1 !== lineCount) {
+          return false;
+        }
+
+        // also need to set cursor position
+        this.setState((state) => {
+          const newCursor = Math.max(state.commandCursor - 1, -1);
+          this._cm
+            .getDoc()
+            .setValue(state.commandHistory[newCursor] || '');
+          const newLineCount = this._cm.getValue().split('\n').length;
+          const newLine = this._cm.getDoc().getLine(newLineCount);
+          const cursorPos = newLine ? newLine.length - 1 : 1;
+          this._cm.setCursor({ line: lineCount, ch: cursorPos });
+          return { commandCursor: newCursor };
+        });
       }
       return true;
-    });
-
-    this._cm.on('beforeChange', (cm, changeObj) => {
-      const typedNewLine = changeObj.origin === '+input' && changeObj.text.join('') === '';
-      if (typedNewLine) {
-        return changeObj.cancel();
-      }
-
-      const pastedNewLine = changeObj.origin === 'paste' && changeObj.text.length > 1;
-      if (pastedNewLine) {
-        const newText = changeObj.text.join(' ');
-        return changeObj.update(null, null, [newText]);
-      }
-
-      return null;
     });
 
     this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
@@ -68,8 +102,6 @@ class ConsoleInput extends React.Component {
   componentWillUnmount() {
     this._cm = null;
   }
-
-  // _cm: CodeMirror.Editor
 
   render() {
     return (
