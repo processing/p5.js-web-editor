@@ -13,7 +13,7 @@ const initialState = {
   theme: 'light',
   autorefresh: false,
   language: 'en-US',
-  autocloseBracketsQuotes: false
+  autocloseBracketsQuotes: true
 };
 
 const preferences = (state = initialState, action) => {
