@@ -53,7 +53,6 @@ class ConsoleInput extends React.Component {
           return false;
         }
 
-        // also need to set cursor position
         this.setState((state) => {
           const newCursor = Math.min(
             state.commandCursor + 1,
@@ -63,8 +62,7 @@ class ConsoleInput extends React.Component {
             .getDoc()
             .setValue(state.commandHistory[newCursor] || '');
           const cursorPos = this._cm.getDoc().getLine(0).length - 1;
-          console.log(cursorPos);
-          this._cm.setCursor({ line: 0, ch: cursorPos });
+          this._cm.getDoc().setCursor({ line: 0, ch: cursorPos });
           return { commandCursor: newCursor };
         });
       } else if (e.key === 'ArrowDown') {
@@ -74,7 +72,6 @@ class ConsoleInput extends React.Component {
           return false;
         }
 
-        // also need to set cursor position
         this.setState((state) => {
           const newCursor = Math.max(state.commandCursor - 1, -1);
           this._cm
@@ -83,7 +80,7 @@ class ConsoleInput extends React.Component {
           const newLineCount = this._cm.getValue().split('\n').length;
           const newLine = this._cm.getDoc().getLine(newLineCount);
           const cursorPos = newLine ? newLine.length - 1 : 1;
-          this._cm.setCursor({ line: lineCount, ch: cursorPos });
+          this._cm.getDoc().setCursor({ line: lineCount, ch: cursorPos });
           return { commandCursor: newCursor };
         });
       }
@@ -108,12 +105,15 @@ class ConsoleInput extends React.Component {
       <div
         className="console__input"
       >
-        <div className="console-active__arrow-container">
+        <div
+          className="console-active__arrow-container"
+          style={{ height: `${this.props.fontSize * 1.3333}px` }}
+        >
           <RightArrowIcon
             className="console-active__arrow"
             focusable="false"
             aria-hidden="true"
-            style={{ width: `${this.props.fontSize}px` }}
+            style={{ width: `${this.props.fontSize}px`, height: `${this.props.fontSize * 0.57}px` }}
           />
         </div>
         <div ref={(element) => { this.codemirrorContainer = element; }} className="console__editor" />

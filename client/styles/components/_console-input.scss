@@ -1,7 +1,7 @@
 .console__input {
   width: 100%;
   display: flex;
-  align-items: center;
+  align-items: start;
   @include themify() {
     background-color: getThemifyVariable('console-input-background-color');
   }
