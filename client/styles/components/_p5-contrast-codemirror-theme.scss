@@ -131,3 +131,7 @@ $p5-contrast-activeline: #999999;
   background-color: white;
   color: #333;
 }
+
+.cm-s-p5-contrast .CodeMirror-cursor {
+  border-left: 1px solid $p5-contrast-white;
+}
