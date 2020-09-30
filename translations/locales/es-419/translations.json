@@ -67,9 +67,10 @@
     "ResetPassword": "Regenera tu contraseña"
   },
   "SocialAuthButton": {
-    "Github": "Ingresa con Github",
-    "LogoARIA": "Logo de {{serviceauth}}",
-    "Google": "Ingresa con Google"
+    "Connect": "Conecta Cuenta {{serviceauth}}",
+    "Unlink": "Desvincular Cuenta {{serviceauth}}",
+    "Login": "Ingresa con {{serviceauth}}",
+    "LogoARIA": "Logo de {{serviceauth}}"
   },
   "About": {
     "Title": "Acerca de",
@@ -130,6 +131,9 @@
     "Autosave": "Grabar automáticamente",
     "On": "Activar",
     "AutosaveOnARIA": "Grabado automático activado",
+    "AutocloseBracketsQuotes": "Cerrar automáticamente llaves y comillas",
+    "AutocloseBracketsQuotesOnARIA": "Activar cierre automático de llaves y comillas",
+    "AutocloseBracketsQuotesOffARIA": "Desactivar cierre automático de llaves y comillas",
     "Off": "Desactivar",
     "AutosaveOffARIA": "Grabado automático desactivado",
     "WordWrap": "Ajuste automático de línea",
@@ -381,7 +385,9 @@
     "SignUp": "Registráte",
     "MessageLoggedOut": "Parece que has salido de tu cuenta. Por favor ",
     "LogIn": "ingresa",
-    "SavedDifferentWindow": " El proyecto que has intentado guardar ha sido guardado desde otra ventana.\n  Por favor refresca la página para ver la versión más actual."
+    "SavedDifferentWindow": " El proyecto que has intentado guardar ha sido guardado desde otra ventana.\n  Por favor refresca la página para ver la versión más actual.",
+    "LinkTitle": "Error Vinculando Cuenta",
+    "LinkMessage": "Hubo un problema vinculando tu cuenta de {{serviceauth}} con tu cuenta del Editor Web p5.js. Tu cuenta de {{serviceauth}} había sido vinculada previamente con otra cuenta del Editor Web p5.js."
   },
   "ShareModal": {
     "Embed": "Incrustar",
@@ -514,11 +520,14 @@
     "CurrentLine": " Línea actual"
   },
   "Timer": {
-    "SavedJustNow": "Guardado: justo ahora",
-    "Saved15Seconds": "Guardado: hace 15 segundos",
-    "Saved25Seconds": "Guardado: hace 25 segundos",
-    "Saved35Seconds": "Guardado: hace 35 segundos",
-    "SavedAgo": "Guardado: hace {{timeAgo}}"
+    "SavedAgo": "Guardado: {{timeAgo}}"
+  },
+  "formatDate": {
+    "JustNow": "justo ahora",
+    "15Seconds": "hace 15 segundos",
+    "25Seconds": "hace 25 segundos",
+    "35Seconds": "hace 35 segundos",
+    "Ago": "hace {{timeAgo}}"
   },
   "AddRemoveButton": {
     "AltAddARIA": "Agregar a colección",
@@ -535,5 +544,47 @@
   "PreviewNav": {
     "EditSketchARIA": "Editar Bosquejo",
     "ByUser": "por"
+  },
+  "MobilePreferences": {
+    "Settings": "Configuración",
+    "GeneralSettings": "Configuración general",
+    "Accessibility": "Accesibilidad",
+    "AccessibleOutput": "Salida accesible",
+    "Theme": "Modo de visualización",
+    "LightTheme": "Claro",
+    "DarkTheme": "Oscuro",
+    "HighContrastTheme": "Alto contraste",
+    "Autosave": "Grabar automáticamente",
+    "WordWrap": "Ajuste automático de línea",
+    "LineNumbers": "Número de línea",
+    "LintWarningSound": "Sonido de alarma Lint",
+    "UsedScreenReader": "Uso con screen reader",
+    "PlainText": "Texto sin formato",
+    "TableText": "Tablero de texto",
+    "Sound": "Sonido"
+  },
+  "PreferenceCreators": {
+    "On": "Activar",
+    "Off": "Desactivar"
+  },
+  "MobileIDEView":{
+    "Preferences": "Preferencias",
+    "MyStuff": "Mis cosas",
+    "Examples": "Ejemplos",
+    "OriginalEditor": "Editor Original",
+    "Login": "Ingresa",
+    "Logout": "Cerrar sesión"
+  },
+  "MobileDashboardView": {
+    "Examples": "Ejemplos",
+    "Sketches": "Bosquejos",
+    "Collections": "Colecciones",
+    "Assets": "Assets",
+    "MyStuff": "Mis cosas",
+    "CreateSketch": "Crear bosquejo",
+    "CreateCollection": "Crear colección"
+  },
+  "Explorer": {
+    "Files": "Archivos"
   }
 }

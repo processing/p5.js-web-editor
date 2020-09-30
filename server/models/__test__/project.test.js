@@ -1,5 +1,5 @@
 import mockingoose from 'mockingoose';
-import differenceInSeconds from 'date-fns/difference_in_seconds';
+import differenceInSeconds from 'date-fns/differenceInSeconds';
 
 import Project from '../project';
 

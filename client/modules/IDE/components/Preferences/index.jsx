@@ -203,6 +203,33 @@ class Preferences extends React.Component {
               </div>
             </div>
             <div className="preference">
+              <h4 className="preference__title">{this.props.t('Preferences.AutocloseBracketsQuotes')}</h4>
+              <div className="preference__options">
+                <input
+                  type="radio"
+                  onChange={() => this.props.setAutocloseBracketsQuotes(true)}
+                  aria-label={this.props.t('Preferences.AutocloseBracketsQuotesOnARIA')}
+                  name="autoclosebracketsquotes"
+                  id="autoclosebracketsquotes-on"
+                  className="preference__radio-button"
+                  value="On"
+                  checked={this.props.autocloseBracketsQuotes}
+                />
+                <label htmlFor="autoclosebracketsquotes-on" className="preference__option">{this.props.t('Preferences.On')}</label>
+                <input
+                  type="radio"
+                  onChange={() => this.props.setAutocloseBracketsQuotes(false)}
+                  aria-label={this.props.t('Preferences.AutocloseBracketsQuotesOffARIA')}
+                  name="autoclosebracketsquotes"
+                  id="autoclosebracketsquotes-off"
+                  className="preference__radio-button"
+                  value="Off"
+                  checked={!this.props.autocloseBracketsQuotes}
+                />
+                <label htmlFor="autoclosebracketsquotes-off" className="preference__option">{this.props.t('Preferences.Off')}</label>
+              </div>
+            </div>
+            <div className="preference">
               <h4 className="preference__title">{this.props.t('Preferences.WordWrap')}</h4>
               <div className="preference__options">
                 <input
@@ -361,6 +388,8 @@ Preferences.propTypes = {
   setLintWarning: PropTypes.func.isRequired,
   theme: PropTypes.string.isRequired,
   setTheme: PropTypes.func.isRequired,
+  autocloseBracketsQuotes: PropTypes.bool.isRequired,
+  setAutocloseBracketsQuotes: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
 };
 

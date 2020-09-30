@@ -21,6 +21,7 @@ import 'codemirror/addon/search/matchesonscrollbar';
 import 'codemirror/addon/search/match-highlighter';
 import 'codemirror/addon/search/jump-to-line';
 import 'codemirror/addon/edit/matchbrackets';
+import 'codemirror/addon/edit/closebrackets';
 
 import { JSHINT } from 'jshint';
 import { CSSLint } from 'csslint';
@@ -43,6 +44,7 @@ import UnsavedChangesDotIcon from '../../../images/unsaved-changes-dot.svg';
 import RightArrowIcon from '../../../images/right-arrow.svg';
 import LeftArrowIcon from '../../../images/left-arrow.svg';
 import { getHTMLFile } from '../reducers/files';
+import { getIsUserOwner } from '../selectors/users';
 
 import * as FileActions from '../actions/files';
 import * as IDEActions from '../actions/ide';
@@ -103,6 +105,7 @@ class Editor extends React.Component {
       keyMap: 'sublime',
       highlightSelectionMatches: true, // highlight current search match
       matchBrackets: true,
+      autoCloseBrackets: this.props.autocloseBracketsQuotes,
       lint: {
         onUpdateLinting: ((annotations) => {
           this.props.hideRuntimeErrorWarning();
@@ -188,6 +191,7 @@ class Editor extends React.Component {
       const oldDoc = this._cm.swapDoc(this._docs[this.props.file.id]);
       this._docs[prevProps.file.id] = oldDoc;
       this._cm.focus();
+
       if (!prevProps.unsavedChanges) {
         setTimeout(() => this.props.setUnsavedChanges(false), 400);
       }
@@ -203,6 +207,9 @@ class Editor extends React.Component {
     }
     if (this.props.lineNumbers !== prevProps.lineNumbers) {
       this._cm.setOption('lineNumbers', this.props.lineNumbers);
+    }
+    if (this.props.autocloseBracketsQuotes !== prevProps.autocloseBracketsQuotes) {
+      this._cm.setOption('autoCloseBrackets', this.props.autocloseBracketsQuotes);
     }
 
     if (prevProps.consoleEvents !== this.props.consoleEvents) {
@@ -369,6 +376,7 @@ class Editor extends React.Component {
 }
 
 Editor.propTypes = {
+  autocloseBracketsQuotes: PropTypes.bool.isRequired,
   lineNumbers: PropTypes.bool.isRequired,
   lintWarning: PropTypes.bool.isRequired,
   linewrap: PropTypes.bool.isRequired,
@@ -411,7 +419,7 @@ Editor.propTypes = {
   isExpanded: PropTypes.bool.isRequired,
   collapseSidebar: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
-  isUserOwner: PropTypes.bool,
+  isUserOwner: PropTypes.bool.isRequired,
   clearConsole: PropTypes.func.isRequired,
   showRuntimeErrorWarning: PropTypes.func.isRequired,
   hideRuntimeErrorWarning: PropTypes.func.isRequired,
@@ -421,7 +429,6 @@ Editor.propTypes = {
 };
 
 Editor.defaultProps = {
-  isUserOwner: false,
   consoleEvents: [],
 };
 
@@ -447,7 +454,8 @@ function mapStateToProps(state) {
     ...state.project,
     ...state.editorAccessibility,
     isExpanded: state.ide.sidebarIsExpanded,
-    projectSavedTime: state.project.updatedAt
+    projectSavedTime: state.project.updatedAt,
+    isUserOwner: getIsUserOwner(state)
   };
 }
 

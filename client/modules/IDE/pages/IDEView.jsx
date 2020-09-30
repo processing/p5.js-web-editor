@@ -34,15 +34,12 @@ import About from '../components/About';
 import AddToCollectionList from '../components/AddToCollectionList';
 import Feedback from '../components/Feedback';
 import { CollectionSearchbar } from '../components/Searchbar';
+import { getIsUserOwner } from '../selectors/users';
 
 
 function getTitle(props) {
   const { id } = props.project;
   return id ? `p5.js Web Editor | ${props.project.name}` : 'p5.js Web Editor';
-}
-
-function isUserOwner(props) {
-  return props.project.owner && props.project.owner.id === props.user.id;
 }
 
 function warnIfUnsavedChanges(props) {
@@ -138,7 +135,7 @@ class IDEView extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (isUserOwner(this.props) && this.props.project.id) {
+    if (this.props.isUserOwner && this.props.project.id) {
       if (
         this.props.preferences.autosave &&
         this.props.ide.unsavedChanges &&
@@ -151,7 +148,6 @@ class IDEView extends React.Component {
           if (this.autosaveInterval) {
             clearTimeout(this.autosaveInterval);
           }
-          console.log('will save project in 20 seconds');
           this.autosaveInterval = setTimeout(this.props.autosaveProject, 20000);
         }
       } else if (this.autosaveInterval && !this.props.preferences.autosave) {
@@ -182,7 +178,7 @@ class IDEView extends React.Component {
       e.preventDefault();
       e.stopPropagation();
       if (
-        isUserOwner(this.props) ||
+        this.props.isUserOwner ||
         (this.props.user.authenticated && !this.props.project.owner)
       ) {
         this.props.saveProject(this.cmController.getContent());
@@ -290,6 +286,8 @@ class IDEView extends React.Component {
               setSoundOutput={this.props.setSoundOutput}
               theme={this.props.preferences.theme}
               setTheme={this.props.setTheme}
+              autocloseBracketsQuotes={this.props.preferences.autocloseBracketsQuotes}
+              setAutocloseBracketsQuotes={this.props.setAutocloseBracketsQuotes}
             />
           </Overlay>
         )}
@@ -538,9 +536,11 @@ IDEView.propTypes = {
     soundOutput: PropTypes.bool.isRequired,
     theme: PropTypes.string.isRequired,
     autorefresh: PropTypes.bool.isRequired,
-    language: PropTypes.string.isRequired
+    language: PropTypes.string.isRequired,
+    autocloseBracketsQuotes: PropTypes.bool.isRequired
   }).isRequired,
   closePreferences: PropTypes.func.isRequired,
+  setAutocloseBracketsQuotes: PropTypes.func.isRequired,
   setFontSize: PropTypes.func.isRequired,
   setAutosave: PropTypes.func.isRequired,
   setLineNumbers: PropTypes.func.isRequired,
@@ -603,6 +603,7 @@ IDEView.propTypes = {
   openUploadFileModal: PropTypes.func.isRequired,
   closeUploadFileModal: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
+  isUserOwner: PropTypes.bool.isRequired
 };
 
 function mapStateToProps(state) {
@@ -620,6 +621,7 @@ function mapStateToProps(state) {
     project: state.project,
     toast: state.toast,
     console: state.console,
+    isUserOwner: getIsUserOwner(state)
   };
 }
 

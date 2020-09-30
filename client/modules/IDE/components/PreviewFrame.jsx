@@ -2,13 +2,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
 // import escapeStringRegexp from 'escape-string-regexp';
-import { isEqual } from 'lodash';
 import srcDoc from 'srcdoc-polyfill';
 import loopProtect from 'loop-protect';
 import { JSHINT } from 'jshint';
 import decomment from 'decomment';
 import classNames from 'classnames';
-import { Decode } from 'console-feed';
 import { getBlobUrl } from '../actions/files';
 import { resolvePathToFile } from '../../../../server/utils/filePath';
 import {
@@ -21,6 +19,7 @@ import {
 } from '../../../../server/utils/fileUtils';
 import { hijackConsoleErrorsScript, startTag, getAllScriptOffsets }
   from '../../../utils/consoleUtils';
+import { registerFrame } from '../../../utils/dispatcher';
 
 
 const shouldRenderSketch = (props, prevProps = undefined) => {
@@ -42,18 +41,18 @@ const shouldRenderSketch = (props, prevProps = undefined) => {
 class PreviewFrame extends React.Component {
   constructor(props) {
     super(props);
-    this.handleConsoleEvent = this.handleConsoleEvent.bind(this);
+
+    this.iframe = React.createRef();
   }
 
   componentDidMount() {
-    window.addEventListener('message', this.handleConsoleEvent);
-
     const props = {
       ...this.props,
       previewIsRefreshing: this.props.previewIsRefreshing,
       isAccessibleOutputPlaying: this.props.isAccessibleOutputPlaying
     };
     if (shouldRenderSketch(props)) this.renderSketch();
+    registerFrame(this.iframe.current.contentWindow);
   }
 
   componentDidUpdate(prevProps) {
@@ -63,49 +62,8 @@ class PreviewFrame extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('message', this.handleConsoleEvent);
-    const iframeBody = this.iframeElement.contentDocument.body;
+    const iframeBody = this.iframe.current.contentDocument.body;
     if (iframeBody) { ReactDOM.unmountComponentAtNode(iframeBody); }
-  }
-
-  handleConsoleEvent(messageEvent) {
-    if (Array.isArray(messageEvent.data)) {
-      const decodedMessages = messageEvent.data.map(message =>
-        Object.assign(Decode(message.log), {
-          source: message.source
-        }));
-
-      decodedMessages.every((message, index, arr) => {
-        const { data: args } = message;
-        let hasInfiniteLoop = false;
-        Object.keys(args).forEach((key) => {
-          if (typeof args[key] === 'string' && args[key].includes('Exiting potential infinite loop')) {
-            this.props.stopSketch();
-            this.props.expandConsole();
-            hasInfiniteLoop = true;
-          }
-        });
-        if (hasInfiniteLoop) {
-          return false;
-        }
-        if (index === arr.length - 1) {
-          Object.assign(message, { times: 1 });
-          return false;
-        }
-        const cur = Object.assign(message, { times: 1 });
-        const nextIndex = index + 1;
-        while (isEqual(cur.data, arr[nextIndex].data) && cur.method === arr[nextIndex].method) {
-          cur.times += 1;
-          arr.splice(nextIndex, 1);
-          if (nextIndex === arr.length) {
-            return false;
-          }
-        }
-        return true;
-      });
-
-      this.props.dispatchConsoleEvent(decodedMessages);
-    }
   }
 
   addLoopProtect(sketchDoc) {
@@ -331,7 +289,7 @@ class PreviewFrame extends React.Component {
   }
 
   renderSketch() {
-    const doc = this.iframeElement;
+    const doc = this.iframe.current;
     const localFiles = this.injectLocalFiles();
     if (this.props.isPlaying) {
       this.props.clearConsole();
@@ -360,7 +318,7 @@ class PreviewFrame extends React.Component {
         role="main"
         frameBorder="0"
         title="sketch preview"
-        ref={(element) => { this.iframeElement = element; }}
+        ref={this.iframe}
         sandbox={sandboxAttributes}
       />
     );
@@ -382,13 +340,10 @@ PreviewFrame.propTypes = {
     url: PropTypes.string,
     id: PropTypes.string.isRequired
   })).isRequired,
-  dispatchConsoleEvent: PropTypes.func.isRequired,
   endSketchRefresh: PropTypes.func.isRequired,
   previewIsRefreshing: PropTypes.bool.isRequired,
   fullView: PropTypes.bool,
   setBlobUrl: PropTypes.func.isRequired,
-  stopSketch: PropTypes.func.isRequired,
-  expandConsole: PropTypes.func.isRequired,
   clearConsole: PropTypes.func.isRequired,
   cmController: PropTypes.shape({
     getContent: PropTypes.func
