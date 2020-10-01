@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { bindActionCreators } from 'redux';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
-
 
 import * as ProjectActions from '../../modules/IDE/actions/project';
 import * as IDEActions from '../../modules/IDE/actions/ide';
@@ -13,6 +12,7 @@ import * as FilesActions from '../../modules/IDE/actions/files';
 import { getHTMLFile } from '../../modules/IDE/reducers/files';
 
 import PreviewFrame from '../../modules/IDE/components/PreviewFrame';
+import { useDraggable } from '../../modules/IDE/hooks/custom-hooks';
 
 import { ExitIcon } from '../../common/icons';
 import { remSize } from '../../theme';
@@ -40,9 +40,9 @@ const FloatingContainer = styled.div`
     /* width: 100%; */
   }
 
-  position: fixed;
+  position: absolute;
   display: flex;
-  z-index: 0;
+  z-index: 1;
   
 
   .preview-frame { position: relative }
@@ -74,8 +74,13 @@ export default () => {
     ...ProjectActions, ...IDEActions, ...PreferencesActions, ...ConsoleActions, ...FilesActions
   }, useDispatch());
 
+  const draggableRef = useRef({});
+  const setRef = (r) => { draggableRef.current = r; };
+  useDraggable(draggableRef);
+  // const DraggablePreview = () => <div ref={draggableRef} style={{ background: 'red', padding: 8 }}><FloatingPreview /></div>;
+
   return (
-    <FloatingContainer>
+    <FloatingContainer ref={setRef} >
       <PreviewFrame
         htmlFile={htmlFile}
         files={files}

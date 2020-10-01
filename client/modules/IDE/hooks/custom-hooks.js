@@ -116,8 +116,10 @@ export const useLongPress = (onLongPress, onClick, { shouldPreventDefault = true
 // and place the desired draggable component inside
 export function useDraggable(el) {
   const [{ dx, dy }, setOffset] = useState({ dx: 0, dy: 0 });
+  if (!el.current) return;
   useEffect(() => {
     const handleMouseDown = (event) => {
+      event.preventDefault();
       const startX = event.pageX - dx;
       const startY = event.pageY - dy;
       const handleMouseMove = (innerEvent) => {
@@ -126,13 +128,22 @@ export function useDraggable(el) {
         setOffset({ dx: newDx, dy: newDy });
       };
       document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('touchmove', handleMouseMove);
       document.addEventListener('mouseup', () => {
         document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('touchmove', handleMouseMove);
+      }, { once: true });
+      document.addEventListener('touchend', () => {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('touchmove', handleMouseMove);
       }, { once: true });
     };
+
     el.current.addEventListener('mousedown', handleMouseDown);
+    el.current.addEventListener('touchstart', handleMouseDown);
     return () => {
       el.current.removeEventListener('mousedown', handleMouseDown);
+      el.current.removeEventListener('touchstart', handleMouseDown);
     };
   }, [dx, dy]);
 

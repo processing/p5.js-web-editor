@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, browserHistory } from 'react-router';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -249,10 +249,6 @@ const MobileIDEView = (props) => {
     }
   );
 
-  const draggableRef = useRef();
-  useDraggable(draggableRef);
-  const DraggablePreview = () => <div ref={draggableRef} style={{ background: 'red', padding: 8 }}><FloatingPreview /></div>;
-
   const projectActions =
     [{
       icon: TerminalIcon, aria: 'Toggle console open/closed', action: consoleIsExpanded ? collapseConsole : expandConsole, inverted: true
@@ -287,8 +283,8 @@ const MobileIDEView = (props) => {
         <Editor provideController={setCmController} />
       </IDEWrapper>
 
-      {showFloatingPreview && <DraggablePreview />}
-      {/* <DraggablePreview /> */}
+      {showFloatingPreview && <FloatingPreview />}
+      {/* <FloatingPreview /> */}
 
       <Footer>
         {consoleIsExpanded && (
