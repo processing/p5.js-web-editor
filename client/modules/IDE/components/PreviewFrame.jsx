@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { useRef } from 'react';
 import ReactDOM from 'react-dom';
 // import escapeStringRegexp from 'escape-string-regexp';
 import srcDoc from 'srcdoc-polyfill';
@@ -20,7 +21,50 @@ import {
 import { hijackConsoleErrorsScript, startTag, getAllScriptOffsets }
   from '../../../utils/consoleUtils';
 import { registerFrame } from '../../../utils/dispatcher';
+import { useDraggable } from '../hooks/custom-hooks';
+// import styled from 'styled-components';
 
+
+const IFrame = (props) => {
+  const {
+    setRef, className, sandbox, draggable
+  } = props;
+
+  const ref = useRef();
+  // if (ref && draggable)
+  useDraggable(ref);
+
+  return (
+    <iframe
+      id="canvas_frame"
+      className={className}
+      aria-label="sketch output"
+      role="main"
+      frameBorder="0"
+      title="sketch preview"
+      ref={(r) => {
+        setRef(r);
+        ref.current = r;
+      }}
+      sandbox={sandbox}
+    />
+  );
+};
+
+IFrame.propTypes = {
+  setRef: PropTypes.any.isRequired, // eslint-disable-line
+  className: PropTypes.string.isRequired,
+  sandbox: PropTypes.string.isRequired, // eslint-disable-line
+  draggable: PropTypes.bool,
+  // ref: refProp: PropTypes.oneOfType([
+  //   PropTypes.func,
+  //   PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+  // ])
+};
+
+IFrame.defaultProps = {
+  draggable: false
+};
 
 const shouldRenderSketch = (props, prevProps = undefined) => {
   const { isPlaying, previewIsRefreshing, fullView } = props;
@@ -39,12 +83,11 @@ const shouldRenderSketch = (props, prevProps = undefined) => {
 };
 
 class PreviewFrame extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.iframe = React.createRef();
   }
-
   componentDidMount() {
     const props = {
       ...this.props,
@@ -64,6 +107,12 @@ class PreviewFrame extends React.Component {
   componentWillUnmount() {
     const iframeBody = this.iframe.current.contentDocument.body;
     if (iframeBody) { ReactDOM.unmountComponentAtNode(iframeBody); }
+  }
+
+  setRef(r) {
+    if (!this.iframe) this.iframe = React.createRef();
+
+    this.iframe.current = r;
   }
 
   addLoopProtect(sketchDoc) {
@@ -262,6 +311,7 @@ class PreviewFrame extends React.Component {
     });
   }
 
+
   resolveStyles(sketchDoc, files) {
     const inlineCSSInHTML = sketchDoc.getElementsByTagName('style');
     const inlineCSSInHTMLArray = Array.prototype.slice.call(inlineCSSInHTML);
@@ -303,6 +353,7 @@ class PreviewFrame extends React.Component {
     }
   }
 
+
   render() {
     const iframeClass = classNames({
       'preview-frame': true,
@@ -311,15 +362,11 @@ class PreviewFrame extends React.Component {
     const sandboxAttributes =
       'allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-forms allow-modals allow-downloads';
     return (
-      <iframe
-        id="canvas_frame"
+      <IFrame
         className={iframeClass}
-        aria-label="sketch output"
-        role="main"
-        frameBorder="0"
-        title="sketch preview"
-        ref={this.iframe}
+        setRef={r => this.setRef(r)}
         sandbox={sandboxAttributes}
+        draggable={this.props.draggable}
       />
     );
   }
@@ -348,13 +395,15 @@ PreviewFrame.propTypes = {
   cmController: PropTypes.shape({
     getContent: PropTypes.func
   }),
-  resize: PropTypes.bool
+  resize: PropTypes.bool,
+  draggable: PropTypes.bool
 };
 
 PreviewFrame.defaultProps = {
   fullView: false,
   cmController: {},
-  resize: false
+  resize: false,
+  draggable: false
 };
 
 export default PreviewFrame;

@@ -45,7 +45,7 @@ const FloatingContainer = styled.div`
   z-index: 1;
   
 
-  .preview-frame { position: relative }
+  // .preview-frame { position: relative }
 
   iframe {
     /* bottom: ${remSize(maxDimension + 64)}; */
@@ -55,7 +55,7 @@ const FloatingContainer = styled.div`
 
   iframe#canvas_frame, .preview-frame {
     border-radius: 4px !important;
-    border: solid 1px #aaa !important;
+    border: solid 8px #aaa !important;
   }
 `;
 
@@ -74,18 +74,19 @@ export default () => {
     ...ProjectActions, ...IDEActions, ...PreferencesActions, ...ConsoleActions, ...FilesActions
   }, useDispatch());
 
-  const draggableRef = useRef({});
-  const setRef = (r) => { draggableRef.current = r; };
-  useDraggable(draggableRef);
+  // const draggableRef = useRef({});
+  // const setRef = (r) => { draggableRef.current = r; };
+  // useDraggable(draggableRef);
   // const DraggablePreview = () => <div ref={draggableRef} style={{ background: 'red', padding: 8 }}><FloatingPreview /></div>;
 
   return (
-    <FloatingContainer ref={setRef} >
+    <FloatingContainer >
       <PreviewFrame
         htmlFile={htmlFile}
         files={files}
         head={<link type="text/css" rel="stylesheet" href="/preview-styles.css" />}
         resize
+        draggable
 
         content={selectedFile.content}
 
