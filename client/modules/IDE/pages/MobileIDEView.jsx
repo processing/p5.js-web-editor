@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, browserHistory } from 'react-router';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -39,7 +39,7 @@ import FloatingPreview from '../../../components/mobile/FloatingPreview';
 import { getIsUserOwner } from '../selectors/users';
 
 
-import { useEffectWithComparison, useEventListener, useLongPress } from '../hooks/custom-hooks';
+import { useEffectWithComparison, useEventListener, useLongPress, useDraggable } from '../hooks/custom-hooks';
 
 import * as device from '../../../utils/device';
 
@@ -48,7 +48,7 @@ const withChangeDot = (title, unsavedChanges = false) => (
     {title}
     <span className="editor__unsaved-changes">
       {unsavedChanges &&
-      <UnsavedChangesDotIcon role="img" aria-label="Sketch has unsaved changes" focusable="false" />}
+        <UnsavedChangesDotIcon role="img" aria-label="Sketch has unsaved changes" focusable="false" />}
     </span>
   </span>
 );
@@ -63,7 +63,7 @@ const NavItem = styled.li`
   position: relative;
 `;
 
-const getNavOptions = (username = undefined, logoutUser = () => {}, toggleForceDesktop = () => {}) => {
+const getNavOptions = (username = undefined, logoutUser = () => { }, toggleForceDesktop = () => { }) => {
   const { t } = useTranslation();
   return (username
     ? [
@@ -111,12 +111,12 @@ const handleGlobalKeydown = (props, cmController) => (e) => {
         e.preventDefault();
         e.stopPropagation();
         startSketch();
-      // 50 === 2
+        // 50 === 2
       } else if (e.keyCode === 50
       ) {
         e.preventDefault();
         setAllAccessibleOutput(false);
-      // 49 === 1
+        // 49 === 1
       } else if (e.keyCode === 49) {
         e.preventDefault();
         setAllAccessibleOutput(true);
@@ -129,7 +129,7 @@ const handleGlobalKeydown = (props, cmController) => (e) => {
       else if (user.authenticated) cloneProject();
       else showErrorModal('forceAuthentication');
 
-    // 13 === enter
+      // 13 === enter
     } else if (e.keyCode === 66) {
       e.preventDefault();
       if (!ide.sidebarIsExpanded) expandSidebar();
@@ -175,19 +175,7 @@ const autosave = (autosaveInterval, setAutosaveInterval) => (props, prevProps) =
   }
 };
 
-// ide, preferences, project, selectedFile, user, params, unsavedChanges, expandConsole, collapseConsole,
-// stopSketch, startSketch, getProject, clearPersistedState, autosaveProject, saveProject, files
-
 const MobileIDEView = (props) => {
-  // const {
-  //   preferences, ide, editorAccessibility, project, updateLintMessage, clearLintMessage,
-  //   selectedFile, updateFileContent, files, user, params,
-  //   closeEditorOptions, showEditorOptions, logoutUser,
-  //   startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console,
-  //   showRuntimeErrorWarning, hideRuntimeErrorWarning, startSketch, getProject, clearPersistedState, setUnsavedChanges,
-  //   toggleForceDesktop
-  // } = props;
-
   const {
     ide, preferences, project, selectedFile, user, params, unsavedChanges, expandConsole, collapseConsole,
     stopSketch, startSketch, getProject, clearPersistedState, autosaveProject, saveProject, files,
@@ -261,6 +249,10 @@ const MobileIDEView = (props) => {
     }
   );
 
+  const draggableRef = useRef();
+  useDraggable(draggableRef);
+  const DraggablePreview = () => <div ref={draggableRef} style={{ background: 'red', padding: 8 }}><FloatingPreview /></div>;
+
   const projectActions =
     [{
       icon: TerminalIcon, aria: 'Toggle console open/closed', action: consoleIsExpanded ? collapseConsole : expandConsole, inverted: true
@@ -295,8 +287,8 @@ const MobileIDEView = (props) => {
         <Editor provideController={setCmController} />
       </IDEWrapper>
 
-      {showFloatingPreview && <FloatingPreview />}
-      {/* <FloatingPreview /> */}
+      {showFloatingPreview && <DraggablePreview />}
+      {/* <DraggablePreview /> */}
 
       <Footer>
         {consoleIsExpanded && (
