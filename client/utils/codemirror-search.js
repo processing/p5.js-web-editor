@@ -9,6 +9,7 @@
 // Ctrl-G (or whatever is bound to findNext) press. You prevent a
 // replace by making sure the match is no longer selected when hitting
 // Ctrl-G.
+import i18n from '../i18n';
 
 export default function(CodeMirror) {
   "use strict";
@@ -232,58 +233,60 @@ export default function(CodeMirror) {
     return regexp;
   }
 
-  var queryDialog = `
-    <h3 class="CodeMirror-search-title">Find</h3>
-    <input type="text" class="search-input CodeMirror-search-field" placeholder="Find in files" />
-    <div class="CodeMirror-search-actions">
-      <div class="CodeMirror-search-modifiers button-wrap">
-        <button
-          title="Regular expression"
-          aria-label="Regular expression"
-          role="checkbox"
-          class="CodeMirror-search-modifier-button CodeMirror-regexp-button"
-        >
-          <span aria-hidden="true" class="button">.*</span>
-        </button>
-        <button
-          title="Case sensitive"
-          aria-label="Case sensitive"
-          role="checkbox"
-          class="CodeMirror-search-modifier-button CodeMirror-case-button"
-        >
-          <span aria-hidden="true" class="button">Aa</span>
-        </button>
-        <button
-          title="Whole words"
-          aria-label="Whole words"
-          role="checkbox"
-          class="CodeMirror-search-modifier-button CodeMirror-word-button"
-        >
-          <span aria-hidden="true" class="button">" "</span>
-        </button>
+  var getQueryDialog = function() {
+    return(`
+      <h3 class="CodeMirror-search-title">${i18n.t('Nav.Edit.Find')}</h3>
+      <input type="text" class="search-input CodeMirror-search-field" placeholder="Find in files" />
+      <div class="CodeMirror-search-actions">
+        <div class="CodeMirror-search-modifiers button-wrap">
+          <button
+            title="Regular expression"
+            aria-label="Regular expression"
+            role="checkbox"
+            class="CodeMirror-search-modifier-button CodeMirror-regexp-button"
+          >
+            <span aria-hidden="true" class="button">.*</span>
+          </button>
+          <button
+            title="Case sensitive"
+            aria-label="Case sensitive"
+            role="checkbox"
+            class="CodeMirror-search-modifier-button CodeMirror-case-button"
+          >
+            <span aria-hidden="true" class="button">Aa</span>
+          </button>
+          <button
+            title="Whole words"
+            aria-label="Whole words"
+            role="checkbox"
+            class="CodeMirror-search-modifier-button CodeMirror-word-button"
+          >
+            <span aria-hidden="true" class="button">" "</span>
+          </button>
+        </div>
+        <div class="CodeMirror-search-nav">
+          <button class="CodeMirror-search-results"></button>
+          <button
+            title="Previous"
+            aria-label="Previous"
+            class="CodeMirror-search-button icon up-arrow prev"
+          >
+          </button>
+          <button
+            title="Next"
+            aria-label="Next"
+            class="CodeMirror-search-button icon down-arrow next"
+          >
+          </button>
+        </div>
       </div>
-      <div class="CodeMirror-search-nav">
-        <button class="CodeMirror-search-results"></button>
-        <button
-          title="Previous"
-          aria-label="Previous"
-          class="CodeMirror-search-button icon up-arrow prev"
-        >
-        </button>
-        <button
-          title="Next"
-          aria-label="Next"
-          class="CodeMirror-search-button icon down-arrow next"
-        >
-        </button>
-      </div>
-    </div>
-    <button
-      title="Close"
-      aria-label="Close"
-      class="CodeMirror-close-button close icon">
-    </button>
-  `;
+      <button
+        title="Close"
+        aria-label="Close"
+        class="CodeMirror-close-button close icon">
+      </button>
+    `);
+  }
 
   function startSearch(cm, state, originalQuery) {
     state.queryText = originalQuery;
@@ -302,6 +305,7 @@ export default function(CodeMirror) {
   }
 
   function doSearch(cm, rev, persistent, immediate, ignoreQuery) {
+    var queryDialog = getQueryDialog();
     var state = getSearchState(cm);
     if (!ignoreQuery && state.query) return findNext(cm, rev);
     var q = cm.getSelection() || state.lastQuery;
