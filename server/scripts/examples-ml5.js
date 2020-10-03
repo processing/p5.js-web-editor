@@ -4,16 +4,16 @@ import Q from 'q';
 import { ok } from 'assert';
 
 // TODO: Change branchName if necessary
-const branchName = 'release';
+const branchName = 'development';
 const branchRef = `?ref=${branchName}`;
-const baseUrl = 'https://api.github.com/repos/ml5js/ml5-examples/contents';
+const baseUrl = 'https://api.github.com/repos/ml5js/ml5-library/contents';
 const clientId = process.env.GITHUB_ID;
 const clientSecret = process.env.GITHUB_SECRET;
 const editorUsername = process.env.ML5_EXAMPLES_USERNAME;
 const personalAccessToken = process.env.EDITOR_API_ACCESS_TOKEN;
 const editorApiUrl = process.env.EDITOR_API_URL;
 const headers = {
-  'User-Agent': 'p5js-web-editor/0.0.1'
+  'User-Agent': 'p5js-web-editor/0.0.1',
 };
 
 ok(clientId, 'GITHUB_ID is required');
@@ -25,12 +25,13 @@ ok(editorApiUrl, 'EDITOR_API_URL is required');
 //
 const githubRequestOptions = {
   url: baseUrl,
-  method: 'GET',
-  headers: {
-    ...headers,
-    Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
+  qs: {
+    client_id: clientId,
+    client_secret: clientSecret,
   },
-  json: true
+  method: 'GET',
+  headers,
+  json: true,
 };
 
 const editorRequestOptions = {
@@ -38,9 +39,9 @@ const editorRequestOptions = {
   method: 'GET',
   headers: {
     ...headers,
-    Authorization: `Basic ${Buffer.from(`${editorUsername}:${personalAccessToken}`).toString('base64')}`
+    Authorization: `Basic ${Buffer.from(`${editorUsername}:${personalAccessToken}`).toString('base64')}`,
   },
-  json: true
+  json: true,
 };
 
 /**
@@ -65,10 +66,7 @@ async function fetchFileContent(item) {
   const file = { url: item.url };
 
   // if it is an html or js file
-  if (
-    (file.url != null && name.endsWith('.html')) ||
-    name.endsWith('.js')
-  ) {
+  if ((file.url != null && name.endsWith('.html')) || name.endsWith('.js')) {
     const options = Object.assign({}, githubRequestOptions);
     options.url = `${file.url}`;
 
@@ -88,13 +86,14 @@ async function fetchFileContent(item) {
   }
 
   if (file.url) {
-    const cdnRef = `https://cdn.jsdelivr.net/gh/ml5js/ml5-examples@${branchName}${file.url.split(branchName)[1]}`;
+    const cdnRef = `https://cdn.jsdelivr.net/gh/ml5js/ml5-library@${branchName}${
+      file.url.split(branchName)[1]
+    }`;
     file.url = cdnRef;
   }
 
   return file;
 }
-
 
 /**
  * STEP 1: Get the top level cateogories
@@ -102,9 +101,8 @@ async function fetchFileContent(item) {
 async function getCategories() {
   try {
     const options = Object.assign({}, githubRequestOptions);
-    options.url = `${options.url}/p5js${branchRef}`;
+    options.url = `${options.url}/examples/p5js${branchRef}`;
     const results = await rp(options);
-
     return results;
   } catch (err) {
     return err;
@@ -174,7 +172,8 @@ async function traverseSketchTree(parentObject) {
  * @param {*} categoryExamples - all of the categories in an array
  */
 async function traverseSketchTreeAll(categoryExamples) {
-  const sketches = categoryExamples.map(async sketch => traverseSketchTree(sketch));
+  const sketches = categoryExamples.map(async sketch =>
+    traverseSketchTree(sketch));
 
   const result = await Q.all(sketches);
   return result;
@@ -191,7 +190,7 @@ function traverseAndFormat(parentObject) {
     // returns the files
     return {
       name: parent.name,
-      url: parent.download_url
+      url: parent.download_url,
     };
   }
 
@@ -200,13 +199,13 @@ function traverseAndFormat(parentObject) {
       // returns the files
       return {
         name: item.name,
-        url: item.download_url
+        url: item.download_url,
       };
     }
 
     const feat = {
       name: item.name,
-      children: traverseAndFormat(item)
+      children: traverseAndFormat(item),
     };
     return feat;
   });
@@ -219,22 +218,19 @@ function traverseAndFormat(parentObject) {
  * @param {*} projectFileTree
  */
 async function traverseAndDownload(projectFileTree) {
-  return projectFileTree.reduce(
-    async (previousPromise, item, idx) => {
-      const result = await previousPromise;
+  return projectFileTree.reduce(async (previousPromise, item, idx) => {
+    const result = await previousPromise;
 
-      if (Array.isArray(item.children)) {
-        result[item.name] = {
-          files: await traverseAndDownload(item.children)
-        };
-      } else {
-        result[item.name] = await fetchFileContent(item);
-      }
+    if (Array.isArray(item.children)) {
+      result[item.name] = {
+        files: await traverseAndDownload(item.children),
+      };
+    } else {
+      result[item.name] = await fetchFileContent(item);
+    }
 
-      return result;
-    },
-    {}
-  );
+    return result;
+  }, {});
 }
 
 /**
@@ -246,7 +242,7 @@ async function traverseAndDownload(projectFileTree) {
 async function formatSketchForStorage(sketch, user) {
   const newProject = {
     name: sketch.name,
-    files: {} // <== add files to this object
+    files: {}, // <== add files to this object
   };
 
   let projectFiles = traverseAndFormat(sketch);
@@ -359,16 +355,23 @@ async function createProjectsInP5User(filledProjectList, user) {
  * Delete existing and save
  */
 async function make() {
-  // Get the categories and their examples
-  const categories = await getCategories();
-  const categoryExamples = await getCategoryExamples(categories);
+  try {
+    // Get the categories and their examples
+    const categories = await getCategories();
+    const categoryExamples = await getCategoryExamples(categories);
 
-  const examplesWithResourceTree = await traverseSketchTreeAll(categoryExamples);
-  const formattedSketchList = await formatSketchForStorageAll(examplesWithResourceTree);
+    const examplesWithResourceTree = await traverseSketchTreeAll(categoryExamples);
 
-  await createProjectsInP5User(formattedSketchList);
-  console.log('done!');
-  process.exit();
+    const formattedSketchList = await formatSketchForStorageAll(examplesWithResourceTree);
+
+    await createProjectsInP5User(formattedSketchList);
+
+    console.log('done!');
+
+    process.exit();
+  } catch (err) {
+    process.exit();
+  }
 }
 
 /**
