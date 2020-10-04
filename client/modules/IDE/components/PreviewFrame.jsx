@@ -7,6 +7,8 @@ import loopProtect from 'loop-protect';
 import { JSHINT } from 'jshint';
 import decomment from 'decomment';
 import classNames from 'classnames';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { getBlobUrl } from '../actions/files';
 import { resolvePathToFile } from '../../../../server/utils/filePath';
 import {
@@ -20,6 +22,18 @@ import {
 import { hijackConsoleErrorsScript, startTag, getAllScriptOffsets }
   from '../../../utils/consoleUtils';
 import { registerFrame } from '../../../utils/dispatcher';
+
+import { getHTMLFile } from '../reducers/files';
+import { getIsUserOwner } from '../selectors/users';
+
+import * as FileActions from '../actions/files';
+import * as IDEActions from '../actions/ide';
+import * as ProjectActions from '../actions/project';
+import * as EditorAccessibilityActions from '../actions/editorAccessibility';
+import * as PreferencesActions from '../actions/preferences';
+import * as UserActions from '../../User/actions';
+import * as ToastActions from '../actions/toast';
+import * as ConsoleActions from '../actions/console';
 
 
 const shouldRenderSketch = (props, prevProps = undefined) => {
@@ -350,4 +364,43 @@ PreviewFrame.defaultProps = {
   cmController: {}
 };
 
-export default PreviewFrame;
+const mapStateToProps = state => ({
+  files: state.files,
+  file:
+    state.files.find(file => file.isSelectedFile) ||
+    state.files.find(file => file.name === 'sketch.js') ||
+    state.files.find(file => file.name !== 'root'),
+  htmlFile: getHTMLFile(state.files),
+  ide: state.ide,
+  preferences: state.preferences,
+  editorAccessibility: state.editorAccessibility,
+  user: state.user,
+  project: state.project,
+  toast: state.toast,
+  console: state.console,
+
+  ...state.preferences,
+  ...state.ide,
+  ...state.project,
+  ...state.editorAccessibility,
+  isExpanded: state.ide.sidebarIsExpanded,
+  projectSavedTime: state.project.updatedAt,
+  isUserOwner: getIsUserOwner(state)
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(
+  Object.assign(
+    {},
+    EditorAccessibilityActions,
+    FileActions,
+    ProjectActions,
+    IDEActions,
+    PreferencesActions,
+    UserActions,
+    ToastActions,
+    ConsoleActions
+  ),
+  dispatch
+);
+
+export default (connect(mapStateToProps, mapDispatchToProps)(PreviewFrame));
