@@ -24,7 +24,6 @@ import { hijackConsoleErrorsScript, startTag, getAllScriptOffsets }
 import { registerFrame } from '../../../utils/dispatcher';
 
 import { getHTMLFile } from '../reducers/files';
-import { getIsUserOwner } from '../selectors/users';
 
 import * as FileActions from '../actions/files';
 import * as IDEActions from '../actions/ide';
@@ -366,26 +365,11 @@ PreviewFrame.defaultProps = {
 
 const mapStateToProps = state => ({
   files: state.files,
-  file:
-    state.files.find(file => file.isSelectedFile) ||
-    state.files.find(file => file.name === 'sketch.js') ||
-    state.files.find(file => file.name !== 'root'),
   htmlFile: getHTMLFile(state.files),
-  ide: state.ide,
-  preferences: state.preferences,
-  editorAccessibility: state.editorAccessibility,
-  user: state.user,
-  project: state.project,
-  toast: state.toast,
-  console: state.console,
-
-  ...state.preferences,
   ...state.ide,
+  ...state.preferences,
   ...state.project,
-  ...state.editorAccessibility,
-  isExpanded: state.ide.sidebarIsExpanded,
-  projectSavedTime: state.project.updatedAt,
-  isUserOwner: getIsUserOwner(state)
+  ...state.editorAccessibility
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(
