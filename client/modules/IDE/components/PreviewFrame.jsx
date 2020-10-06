@@ -366,10 +366,12 @@ PreviewFrame.defaultProps = {
 const mapStateToProps = state => ({
   files: state.files,
   htmlFile: getHTMLFile(state.files),
-  ...state.ide,
-  ...state.preferences,
-  ...state.project,
-  ...state.editorAccessibility
+  isPlaying: state.ide.isPlaying,
+  isAccessibleOutputPlaying: state.ide.isAccessibleOutputPlaying,
+  previewIsRefreshing: state.ide.previewIsRefreshing,
+  textOutput: state.preferences.textOutput,
+  gridOutput: state.preferences.gridOutput,
+  soundOutput: state.preferences.soundOutput,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(
