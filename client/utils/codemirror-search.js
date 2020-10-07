@@ -236,28 +236,28 @@ export default function(CodeMirror) {
   var getQueryDialog = function() {
     return(`
       <h3 class="CodeMirror-search-title">${i18n.t('Nav.Edit.Find')}</h3>
-      <input type="text" class="search-input CodeMirror-search-field" placeholder="Find in files" />
+      <input type="text" class="search-input CodeMirror-search-field" placeholder="${i18n.t('FindAndReplace.FindPlaceholder')}" />
       <div class="CodeMirror-search-actions">
         <div class="CodeMirror-search-modifiers button-wrap">
           <button
-            title="Regular expression"
-            aria-label="Regular expression"
+            title="${i18n.t('FindAndReplace.Regex')}"
+            aria-label="${i18n.t('FindAndReplace.Regex')}"
             role="checkbox"
             class="CodeMirror-search-modifier-button CodeMirror-regexp-button"
           >
             <span aria-hidden="true" class="button">.*</span>
           </button>
           <button
-            title="Case sensitive"
-            aria-label="Case sensitive"
+            title="${i18n.t('FindAndReplace.CaseSensitive')}"
+            aria-label="${i18n.t('FindAndReplace.CaseSensitive')}"
             role="checkbox"
             class="CodeMirror-search-modifier-button CodeMirror-case-button"
           >
             <span aria-hidden="true" class="button">Aa</span>
           </button>
           <button
-            title="Whole words"
-            aria-label="Whole words"
+            title="${i18n.t('FindAndReplace.WholeWords')}"
+            aria-label="${i18n.t('FindAndReplace.WholeWords')}"
             role="checkbox"
             class="CodeMirror-search-modifier-button CodeMirror-word-button"
           >
@@ -267,22 +267,22 @@ export default function(CodeMirror) {
         <div class="CodeMirror-search-nav">
           <button class="CodeMirror-search-results"></button>
           <button
-            title="Previous"
-            aria-label="Previous"
+            title="${i18n.t('FindAndReplace.Previous')}"
+            aria-label="${i18n.t('FindAndReplace.Previous')}"
             class="CodeMirror-search-button icon up-arrow prev"
           >
           </button>
           <button
-            title="Next"
-            aria-label="Next"
+            title="${i18n.t('FindAndReplace.Next')}"
+            aria-label="${i18n.t('FindAndReplace.Next')}"
             class="CodeMirror-search-button icon down-arrow next"
           >
           </button>
         </div>
       </div>
       <button
-        title="Close"
-        aria-label="Close"
+        title="${i18n.t('FindAndReplace.Close')}"
+        aria-label="${i18n.t('FindAndReplace.Close')}"
         class="CodeMirror-close-button close icon">
       </button>
     `);
@@ -346,7 +346,7 @@ export default function(CodeMirror) {
         findNext(cm, rev);
       }
     } else {
-      dialog(cm, queryDialog, "Search for:", q, function(query) {
+      dialog(cm, queryDialog, `${i18n.t('FindAndReplace.Find')}`, q, function(query) {
         if (query && !state.query) cm.operation(function() {
           startSearch(cm, state, query);
           state.posFrom = state.posTo = cm.getCursor();

@@ -48,6 +48,16 @@
       "LogOut": "Log Out"
     }
   },
+  "FindAndReplace": {
+    "Find": "Find",
+    "FindPlaceholder": "Find in files",
+    "Regex": "Regular expression",
+    "CaseSensitive": "Case sensitive",
+    "WholeWords": "Whole words",
+    "Previous": "Previous",
+    "Next": "Next",
+    "Close": "Close"
+  },
   "LoginForm": {
     "UsernameOrEmail": "Email or Username",
     "UsernameOrEmailARIA": "Email or Username",

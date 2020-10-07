@@ -48,6 +48,16 @@
       "LogOut": "Cerrar sesión"
     }
   },
+  "FindAndReplace": {
+    "Find": "Buscar",
+    "FindPlaceholder": "Buscar en archivos",
+    "Regex": "Expresión regular",
+    "CaseSensitive": "Distingue mayúsculas y minúsculas",
+    "WholeWords": "Toda palabra",
+    "Previous": "Previo",
+    "Next": "Próximo",
+    "Close": "Cerca"
+  },
   "LoginForm": {
     "UsernameOrEmail": "Correo o Identificación",
     "UsernameOrEmailARIA": "Introduce Correo o Identificación",
