@@ -49,6 +49,20 @@
       "LogOut": "Log Out"
     }
   },
+  "CodemirrorFindAndReplace": {
+    "Find": "Find",
+    "FindPlaceholder": "Find in files",
+    "Replace": "Replace",
+    "ReplaceAll": "Replace All",
+    "ReplacePlaceholder": "Text to replace",
+    "Regex": "Regular expression",
+    "CaseSensitive": "Case sensitive",
+    "WholeWords": "Whole words",
+    "Previous": "Previous",
+    "Next": "Next",
+    "NoResults": "No results",
+    "Close": "Close"
+  },
   "LoginForm": {
     "UsernameOrEmail": "Email or Username",
     "UsernameOrEmailARIA": "Email or Username",

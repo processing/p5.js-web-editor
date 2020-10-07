@@ -40,7 +40,7 @@ i18n
   // .use(LanguageDetector)// to detect the language from currentBrowser
   .use(Backend) // to fetch the data from server
   .init({
-    lng: 'en-US',
+    lng: 'es-419',
     fallbackLng, // if user computer language is not on the list of available languages, than we will be using the fallback language specified earlier
     debug: false,
     backend: options,

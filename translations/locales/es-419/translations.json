@@ -49,6 +49,20 @@
       "LogOut": "Cerrar sesión"
     }
   },
+  "CodemirrorFindAndReplace": {
+    "Find": "Buscar",
+    "FindPlaceholder": "Buscar en archivos",
+    "Replace": "Reemplazar",
+    "ReplaceAll": "Reemplaza todo",
+    "ReplacePlaceholder": "Texto para reemplazar",
+    "Regex": "Expresión regular",
+    "CaseSensitive": "Distingue mayúsculas y minúsculas",
+    "WholeWords": "Toda palabra",
+    "Previous": "Previo",
+    "Next": "Próximo",
+    "NoResults": "No hay resultados",
+    "Close": "Cerca"
+  },
   "LoginForm": {
     "UsernameOrEmail": "Correo o Identificación",
     "UsernameOrEmailARIA": "Introduce Correo o Identificación",
