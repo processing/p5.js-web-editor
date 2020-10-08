@@ -54,14 +54,14 @@
     "FindPlaceholder": "Buscar en archivos",
     "Replace": "Reemplazar",
     "ReplaceAll": "Reemplaza todo",
-    "ReplacePlaceholder": "Texto para reemplazar",
+    "ReplacePlaceholder": "Texto a reemplazar",
     "Regex": "Expresión regular",
-    "CaseSensitive": "Distingue mayúsculas y minúsculas",
-    "WholeWords": "Toda palabra",
+    "CaseSensitive": "Distinguir mayúsculas y minúsculas",
+    "WholeWords": "Palabra completa",
     "Previous": "Previo",
     "Next": "Próximo",
     "NoResults": "No hay resultados",
-    "Close": "Cerca"
+    "Close": "Cerrar"
   },
   "LoginForm": {
     "UsernameOrEmail": "Correo o Identificación",
