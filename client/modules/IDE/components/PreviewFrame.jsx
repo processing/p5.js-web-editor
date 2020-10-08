@@ -366,13 +366,34 @@ PreviewFrame.defaultProps = {
 const mapStateToProps = state => ({
   files: state.files,
   htmlFile: getHTMLFile(state.files),
+  content:
+    (state.files.find(file => file.isSelectedFile) ||
+    state.files.find(file => file.name === 'sketch.js') ||
+    state.files.find(file => file.name !== 'root')).content,
   isPlaying: state.ide.isPlaying,
   isAccessibleOutputPlaying: state.ide.isAccessibleOutputPlaying,
   previewIsRefreshing: state.ide.previewIsRefreshing,
   textOutput: state.preferences.textOutput,
   gridOutput: state.preferences.gridOutput,
   soundOutput: state.preferences.soundOutput,
+  language: state.preferences.language,
+  autorefresh: state.preferences.autorefresh,
 });
+
+
+/*
+  setTextOutput={this.props.setTextOutput}
+  setGridOutput={this.props.setGridOutput}
+  setSoundOutput={this.props.setSoundOutput}
+  dispatchConsoleEvent={this.props.dispatchConsoleEvent}
+  endSketchRefresh={this.props.endSketchRefresh}
+  stopSketch={this.props.stopSketch}
+  setBlobUrl={this.props.setBlobUrl}
+  expandConsole={this.props.expandConsole}
+  clearConsole={this.props.clearConsole}
+  cmController={this.cmController}
+*/
+
 
 const mapDispatchToProps = dispatch => bindActionCreators(
   Object.assign(
