@@ -3,6 +3,7 @@ kind: Ingress
 metadata:
   name: editor-ingress
   annotations:
+    kubernetes.io/ingress.class: "gce"
     kubernetes.io/ingress.global-static-ip-name: "web-editor-ip"
 spec:
   backend:
@@ -134,15 +135,16 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     # type of authentication
-    ingress.kubernetes.io/auth-type: basic
+    nginx.ingress.kubernetes.io/auth-type: basic
     # name of the secret that contains the user/password definitions
-    ingress.kubernetes.io/auth-secret: basic-auth
+    nginx.ingress.kubernetes.io/auth-secret: basic-auth
     # message to display with an appropriate context why the authentication is required
-    ingress.kubernetes.io/auth-realm: 'Authentication Required - p5.js Web Editor Staging'
+    nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required - p5.js Web Editor Staging'
     # kubernetes.io/ingress.global-static-ip-name: "web-editor-staging-ip"
 spec:
   rules:
-  - http:
+  - host: stagingeditor.p5js.org
+    http:
       paths:
       - path: /
         backend:
