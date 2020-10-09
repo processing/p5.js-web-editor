@@ -363,7 +363,7 @@ class IDEView extends React.Component {
                       this.props.ide.isPlaying) ||
                       this.props.ide.isAccessibleOutputPlaying}
                   </div>
-                  <PreviewFrame />
+                  <PreviewFrame cmController={this.cmController} />
                 </div>
               </section>
             </SplitPane>

@@ -25,14 +25,10 @@ import { registerFrame } from '../../../utils/dispatcher';
 
 import { getHTMLFile } from '../reducers/files';
 
-import * as FileActions from '../actions/files';
-import * as IDEActions from '../actions/ide';
-import * as ProjectActions from '../actions/project';
-import * as EditorAccessibilityActions from '../actions/editorAccessibility';
-import * as PreferencesActions from '../actions/preferences';
-import * as UserActions from '../../User/actions';
-import * as ToastActions from '../actions/toast';
-import * as ConsoleActions from '../actions/console';
+import { stopSketch, expandConsole, endSketchRefresh } from '../actions/ide';
+import { setTextOutput, setGridOutput, setSoundOutput } from '../actions/preferences';
+import { setBlobUrl } from '../actions/files';
+import { clearConsole, dispatchConsoleEvent } from '../actions/console';
 
 
 const shouldRenderSketch = (props, prevProps = undefined) => {
@@ -381,31 +377,18 @@ const mapStateToProps = state => ({
 });
 
 
-/*
-  setTextOutput={this.props.setTextOutput}
-  setGridOutput={this.props.setGridOutput}
-  setSoundOutput={this.props.setSoundOutput}
-  dispatchConsoleEvent={this.props.dispatchConsoleEvent}
-  endSketchRefresh={this.props.endSketchRefresh}
-  stopSketch={this.props.stopSketch}
-  setBlobUrl={this.props.setBlobUrl}
-  expandConsole={this.props.expandConsole}
-  clearConsole={this.props.clearConsole}
-  cmController={this.cmController}
-*/
-
-
 const mapDispatchToProps = dispatch => bindActionCreators(
   Object.assign(
     {},
-    EditorAccessibilityActions,
-    FileActions,
-    ProjectActions,
-    IDEActions,
-    PreferencesActions,
-    UserActions,
-    ToastActions,
-    ConsoleActions
+    stopSketch,
+    expandConsole,
+    endSketchRefresh,
+    setTextOutput,
+    setGridOutput,
+    setSoundOutput,
+    setBlobUrl,
+    clearConsole,
+    dispatchConsoleEvent,
   ),
   dispatch
 );
