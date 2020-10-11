@@ -31,7 +31,6 @@ const IFrame = (props) => {
   } = props;
 
   const ref = useRef();
-  // if (ref && draggable)
   useDraggable(ref);
 
   return (

@@ -284,7 +284,6 @@ const MobileIDEView = (props) => {
       </IDEWrapper>
 
       {showFloatingPreview && <FloatingPreview />}
-      {/* <FloatingPreview /> */}
 
       <Footer>
         {consoleIsExpanded && (
