@@ -27,7 +27,7 @@ import { useDraggable } from '../hooks/custom-hooks';
 
 const IFrame = (props) => {
   const {
-    setRef, className, sandbox, draggable
+    setRef, className, sandbox
   } = props;
 
   const ref = useRef();
@@ -54,12 +54,8 @@ IFrame.propTypes = {
   setRef: PropTypes.any.isRequired, // eslint-disable-line
   className: PropTypes.string.isRequired,
   sandbox: PropTypes.string.isRequired, // eslint-disable-line
-  draggable: PropTypes.bool,
 };
 
-IFrame.defaultProps = {
-  draggable: false
-};
 
 const shouldRenderSketch = (props, prevProps = undefined) => {
   const { isPlaying, previewIsRefreshing, fullView } = props;
