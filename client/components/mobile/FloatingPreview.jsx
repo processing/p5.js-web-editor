@@ -14,17 +14,8 @@ import { getHTMLFile } from '../../modules/IDE/reducers/files';
 import PreviewFrame from '../../modules/IDE/components/PreviewFrame';
 import { useDraggable } from '../../modules/IDE/hooks/custom-hooks';
 
-import { ExitIcon } from '../../common/icons';
-import { remSize } from '../../theme';
+import { remSize, prop } from '../../theme';
 
-const maxDimension = 12;
-
-/* height: 100%; */
-// overflow: hidden;
-/* width: 100%; */
-/* display: flex; */
-/* align-items: flex-end; */
-/* justify-content: flex-end; */
 
 const FloatingContainer = styled.div`
   & {
@@ -33,6 +24,7 @@ const FloatingContainer = styled.div`
     right: ${remSize(8)};
     bottom: ${remSize(8 + 48)};
     overflow: hidden;
+    box-shadow: 0 4px 18px 0 ${prop('shadowColor')};
   };
 
   position: absolute;
