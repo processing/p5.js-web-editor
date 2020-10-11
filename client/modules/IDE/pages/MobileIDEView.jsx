@@ -230,7 +230,7 @@ const MobileIDEView = (props) => {
 
   useEventListener('keydown', handleGlobalKeydown(props, cmController), false, [props]);
 
-  const [showFloatingPreview, setShowFloatingPreview] = useState(true);
+  const [showFloatingPreview, setShowFloatingPreview] = useState(false);
   const pressPlayEvents = useLongPress(
     () => {
       startSketch();
