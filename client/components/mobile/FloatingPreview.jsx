@@ -34,28 +34,14 @@ const FloatingContainer = styled.div`
     bottom: ${remSize(8 + 48)};
     overflow: hidden;
   };
-  &, body, iframe, html {
-    /* position: relative; */
-    /* height: 100%; */
-    /* width: 100%; */
-  }
 
   position: absolute;
   display: flex;
   z-index: 1;
-  
 
-  // .preview-frame { position: relative }
-
-  iframe {
-    /* bottom: ${remSize(maxDimension + 64)}; */
-    /* right: ${remSize(maxDimension + 64)}; */
-    
-  }
 
   iframe#canvas_frame, .preview-frame {
     border-radius: 4px !important;
-    // border: solid 8px #aaa !important;
   }
 `;
 

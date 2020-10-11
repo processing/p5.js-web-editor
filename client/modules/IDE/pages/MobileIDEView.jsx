@@ -39,7 +39,7 @@ import FloatingPreview from '../../../components/mobile/FloatingPreview';
 import { getIsUserOwner } from '../selectors/users';
 
 
-import { useEffectWithComparison, useEventListener, useLongPress, useDraggable } from '../hooks/custom-hooks';
+import { useEffectWithComparison, useEventListener, useLongPress } from '../hooks/custom-hooks';
 
 import * as device from '../../../utils/device';
 

@@ -118,36 +118,53 @@ export function useDraggable(el) {
   const [{ dx, dy }, setOffset] = useState({ dx: 0, dy: 0 });
 
   useEffect(() => {
-    const handleMouseDown = (event) => {
+    // Implementation for Mouse Events
+    // const handleMouseDown = (event) => {
+    //   event.preventDefault();
+    //   const startX = event.pageX - dx;
+    //   const startY = event.pageY - dy;
+    //   const handleMouseMove = (innerEvent) => {
+    //     const newDx = innerEvent.pageX - startX;
+    //     const newDy = innerEvent.pageY - startY;
+    //     setOffset({ dx: newDx, dy: newDy });
+    //   };
+
+    //   document.addEventListener('mousemove', handleMouseMove);
+    //   document.addEventListener('mouseup', () => {
+    //     document.removeEventListener('mousemove', handleMouseMove);
+    //   }, { once: true });
+    // };
+
+    // el.current.addEventListener('mousedown', handleMouseDown);
+    // return () => {
+    //   el.current.removeEventListener('mousedown', handleMouseDown);
+    // };
+
+
+    const handleTouchDown = (event) => {
       event.preventDefault();
-      const startX = event.pageX - dx;
-      const startY = event.pageY - dy;
-      const handleMouseMove = (innerEvent) => {
-        const newDx = innerEvent.pageX - startX;
-        const newDy = innerEvent.pageY - startY;
+      const te = event.touches[0]; // get the actual touch event
+      const startX = te.pageX - dx;
+      const startY = te.pageY - dy;
+
+      const handleTouchMove = (innerEvent) => {
+        const ite = innerEvent.touches[0]; // get the actual touch event
+        const newDx = ite.pageX - startX;
+        const newDy = ite.pageY - startY;
         setOffset({ dx: newDx, dy: newDy });
       };
 
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', () => {
-        document.removeEventListener('mousemove', handleMouseMove);
+      document.addEventListener('touchmove', handleTouchMove);
+      document.addEventListener('touchend', () => {
+        document.removeEventListener('touchmove', handleTouchMove);
       }, { once: true });
-
-      // document.addEventListener('touchmove', handleMouseMove);
-      // document.addEventListener('touchend', () => {
-      //   document.removeEventListener('touchmove', handleMouseMove);
-      // }, { once: true });
     };
 
-    el.current.addEventListener('mousedown', handleMouseDown);
+
+    el.current.addEventListener('touchstart', handleTouchDown);
     return () => {
-      el.current.removeEventListener('mousedown', handleMouseDown);
+      el.current.removeEventListener('touchstart', handleTouchDown);
     };
-
-    // el.current.addEventListener('touchstart', handleMouseDown);
-    // return () => {
-    //   el.current.removeEventListener('touchstart', handleMouseDown);
-    // };
   }, [dx, dy]);
 
   useEffect(() => {

@@ -55,10 +55,6 @@ IFrame.propTypes = {
   className: PropTypes.string.isRequired,
   sandbox: PropTypes.string.isRequired, // eslint-disable-line
   draggable: PropTypes.bool,
-  // ref: refProp: PropTypes.oneOfType([
-  //   PropTypes.func,
-  //   PropTypes.shape({ current: PropTypes.instanceOf(Element) })
-  // ])
 };
 
 IFrame.defaultProps = {
