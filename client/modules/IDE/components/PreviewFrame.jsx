@@ -21,17 +21,12 @@ import {
 import { hijackConsoleErrorsScript, startTag, getAllScriptOffsets }
   from '../../../utils/consoleUtils';
 import { registerFrame } from '../../../utils/dispatcher';
-import { useDraggable } from '../hooks/custom-hooks';
-// import styled from 'styled-components';
-
 
 const IFrame = (props) => {
   const {
     setRef, className, sandbox
   } = props;
 
-  const ref = useRef();
-  useDraggable(ref);
 
   return (
     <iframe
@@ -41,10 +36,7 @@ const IFrame = (props) => {
       role="main"
       frameBorder="0"
       title="sketch preview"
-      ref={(r) => {
-        setRef(r);
-        ref.current = r;
-      }}
+      ref={setRef}
       sandbox={sandbox}
     />
   );

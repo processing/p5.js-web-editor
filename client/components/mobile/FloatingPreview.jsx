@@ -46,7 +46,6 @@ const FloatingContainer = styled.div`
 `;
 
 const Dragger = styled.div`
-  opacity: 0;
   position: absolute;
   height: 100%;
   width: 100%;
@@ -71,7 +70,6 @@ export default () => {
   const draggableRef = useRef({});
   const setRef = (r) => { draggableRef.current = r; };
   useDraggable(draggableRef);
-  // const DraggablePreview = () => <div ref={draggableRef} style={{ background: 'red', padding: 8 }}><FloatingPreview /></div>;
 
   return (
     <FloatingContainer ref={r => setRef(r)}>
