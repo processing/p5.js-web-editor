@@ -36,7 +36,6 @@ class FileUploader extends React.Component {
       sending: this.props.dropzoneSendingCallback,
       complete: this.props.dropzoneCompleteCallback,
       success: (file, response) => {
-        console.log(response);
         file.previewElement.querySelector('.dz-progress').remove();
       }
       // error: (file, errorMessage) => {
