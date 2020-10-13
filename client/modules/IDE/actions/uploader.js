@@ -38,6 +38,9 @@ export function dropzoneAcceptCallback(userId, file, done) {
       localIntercept(file).then((result) => {
         file.content = result; // eslint-disable-line
         done('Uploading plaintext file locally.');
+        file.previewElement.classList.remove('dz-error');
+        file.previewElement.classList.add('dz-success');
+        file.previewElement.querySelector('.dz-upload').style.width = '100%';
       })
         .catch((result) => {
           done(`Failed to download file ${file.name}: ${result}`);

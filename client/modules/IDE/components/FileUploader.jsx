@@ -9,7 +9,7 @@ import getConfig from '../../../utils/getConfig';
 import { fileExtensionsAndMimeTypes } from '../../../../server/utils/fileUtils';
 
 const s3Bucket = getConfig('S3_BUCKET_URL_BASE') ||
-  `https://s3-${getConfig('AWS_REGION')}.amazonaws.com/${getConfig('S3_BUCKET')}/`;
+                 `https://s3-${getConfig('AWS_REGION')}.amazonaws.com/${getConfig('S3_BUCKET')}/`;
 
 class FileUploader extends React.Component {
   componentDidMount() {
@@ -34,10 +34,7 @@ class FileUploader extends React.Component {
       dictDefaultMessage: this.props.t('FileUploader.DictDefaultMessage'),
       accept: this.props.dropzoneAcceptCallback.bind(this, userId),
       sending: this.props.dropzoneSendingCallback,
-      complete: this.props.dropzoneCompleteCallback,
-      success: (file, response) => {
-        file.previewElement.querySelector('.dz-progress').remove();
-      }
+      complete: this.props.dropzoneCompleteCallback
       // error: (file, errorMessage) => {
       //   console.log(file);
       //   console.log(errorMessage);
