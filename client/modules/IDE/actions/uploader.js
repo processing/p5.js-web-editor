@@ -40,6 +40,7 @@ export function dropzoneAcceptCallback(userId, file, done) {
         done('Uploading plaintext file locally.');
         file.previewElement.classList.remove('dz-error');
         file.previewElement.classList.add('dz-success');
+        file.previewElement.classList.add('dz-processing');
         file.previewElement.querySelector('.dz-upload').style.width = '100%';
       })
         .catch((result) => {
