@@ -377,20 +377,17 @@ const mapStateToProps = state => ({
 });
 
 
-const mapDispatchToProps = dispatch => bindActionCreators(
-  Object.assign(
-    {},
-    stopSketch,
-    expandConsole,
-    endSketchRefresh,
-    setTextOutput,
-    setGridOutput,
-    setSoundOutput,
-    setBlobUrl,
-    clearConsole,
-    dispatchConsoleEvent,
-  ),
-  dispatch
-);
+const mapDispatchToProps = {
+  stopSketch,
+  expandConsole,
+  endSketchRefresh,
+  setTextOutput,
+  setGridOutput,
+  setSoundOutput,
+  setBlobUrl,
+  clearConsole,
+  dispatchConsoleEvent
+};
+
 
 export default (connect(mapStateToProps, mapDispatchToProps)(PreviewFrame));
