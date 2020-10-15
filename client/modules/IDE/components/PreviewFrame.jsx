@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { useRef } from 'react';
 import ReactDOM from 'react-dom';
 // import escapeStringRegexp from 'escape-string-regexp';
 import srcDoc from 'srcdoc-polyfill';
@@ -8,7 +7,8 @@ import loopProtect from 'loop-protect';
 import { JSHINT } from 'jshint';
 import decomment from 'decomment';
 import classNames from 'classnames';
-import { getBlobUrl } from '../actions/files';
+import { connect } from 'react-redux';
+import { getBlobUrl, setBlobUrl } from '../actions/files';
 import { resolvePathToFile } from '../../../../server/utils/filePath';
 import {
   MEDIA_FILE_REGEX,
@@ -22,11 +22,14 @@ import { hijackConsoleErrorsScript, startTag, getAllScriptOffsets }
   from '../../../utils/consoleUtils';
 import { registerFrame } from '../../../utils/dispatcher';
 
-const IFrame = (props) => {
-  const {
-    setRef, className, sandbox
-  } = props;
+import { getHTMLFile } from '../reducers/files';
+import { stopSketch, expandConsole, endSketchRefresh } from '../actions/ide';
+import { setTextOutput, setGridOutput, setSoundOutput } from '../actions/preferences';
+import { clearConsole, dispatchConsoleEvent } from '../actions/console';
 
+
+const IFrame = (props) => {
+  const { setRef, className, sandbox } = props;
 
   return (
     <iframe
@@ -389,4 +392,35 @@ PreviewFrame.defaultProps = {
   draggable: false
 };
 
-export default PreviewFrame;
+const mapStateToProps = state => ({
+  files: state.files,
+  htmlFile: getHTMLFile(state.files),
+  content:
+    (state.files.find(file => file.isSelectedFile) ||
+    state.files.find(file => file.name === 'sketch.js') ||
+    state.files.find(file => file.name !== 'root')).content,
+  isPlaying: state.ide.isPlaying,
+  isAccessibleOutputPlaying: state.ide.isAccessibleOutputPlaying,
+  previewIsRefreshing: state.ide.previewIsRefreshing,
+  textOutput: state.preferences.textOutput,
+  gridOutput: state.preferences.gridOutput,
+  soundOutput: state.preferences.soundOutput,
+  language: state.preferences.language,
+  autorefresh: state.preferences.autorefresh,
+});
+
+
+const mapDispatchToProps = {
+  stopSketch,
+  expandConsole,
+  endSketchRefresh,
+  setTextOutput,
+  setGridOutput,
+  setSoundOutput,
+  setBlobUrl,
+  clearConsole,
+  dispatchConsoleEvent
+};
+
+
+export default (connect(mapStateToProps, mapDispatchToProps)(PreviewFrame));

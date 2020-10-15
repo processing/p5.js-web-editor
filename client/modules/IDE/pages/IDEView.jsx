@@ -363,31 +363,7 @@ class IDEView extends React.Component {
                       this.props.ide.isPlaying) ||
                       this.props.ide.isAccessibleOutputPlaying}
                   </div>
-                  <PreviewFrame
-                    htmlFile={this.props.htmlFile}
-                    files={this.props.files}
-                    content={this.props.selectedFile.content}
-                    isPlaying={this.props.ide.isPlaying}
-                    isAccessibleOutputPlaying={
-                      this.props.ide.isAccessibleOutputPlaying
-                    }
-                    textOutput={this.props.preferences.textOutput}
-                    gridOutput={this.props.preferences.gridOutput}
-                    soundOutput={this.props.preferences.soundOutput}
-                    setTextOutput={this.props.setTextOutput}
-                    setGridOutput={this.props.setGridOutput}
-                    setSoundOutput={this.props.setSoundOutput}
-                    dispatchConsoleEvent={this.props.dispatchConsoleEvent}
-                    autorefresh={this.props.preferences.autorefresh}
-                    previewIsRefreshing={this.props.ide.previewIsRefreshing}
-                    endSketchRefresh={this.props.endSketchRefresh}
-                    stopSketch={this.props.stopSketch}
-                    setBlobUrl={this.props.setBlobUrl}
-                    expandConsole={this.props.expandConsole}
-                    clearConsole={this.props.clearConsole}
-                    cmController={this.cmController}
-                    language={this.props.preferences.language}
-                  />
+                  <PreviewFrame cmController={this.cmController} />
                 </div>
               </section>
             </SplitPane>
@@ -566,7 +542,6 @@ IDEView.propTypes = {
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
   }).isRequired,
-  dispatchConsoleEvent: PropTypes.func.isRequired,
   newFile: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
   collapseSidebar: PropTypes.func.isRequired,
@@ -592,10 +567,7 @@ IDEView.propTypes = {
   }).isRequired,
   route: PropTypes.oneOfType([PropTypes.object, PropTypes.element]).isRequired,
   setTheme: PropTypes.func.isRequired,
-  endSketchRefresh: PropTypes.func.isRequired,
-  setBlobUrl: PropTypes.func.isRequired,
   setPreviousPath: PropTypes.func.isRequired,
-  clearConsole: PropTypes.func.isRequired,
   showErrorModal: PropTypes.func.isRequired,
   hideErrorModal: PropTypes.func.isRequired,
   clearPersistedState: PropTypes.func.isRequired,
