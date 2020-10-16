@@ -66,7 +66,6 @@ function warnIfUnsavedChanges(props) {
       return false;
     }
     props.setUnsavedChanges(false);
-    return true;
   }
   return true;
 }
@@ -247,7 +246,13 @@ class IDEView extends React.Component {
     }
   }
 
-  handleUnsavedChanges = () => warnIfUnsavedChanges(this.props);
+  handleUnsavedChanges = (event) => {
+    if (!warnIfUnsavedChanges(this.props)) {
+      // See https://developer.mozilla.org/en-US/docs/Web/API/WindowEventHandlers/onbeforeunload
+      event.preventDefault();
+      event.returnValue = undefined;
+    }
+  }
 
   render() {
     return (
