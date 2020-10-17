@@ -1,54 +1,50 @@
-import React, { PropTypes } from 'react';
-import InlineSVG from 'react-inlinesvg';
-const exitUrl = require('../../../images/exit.svg');
+import PropTypes from 'prop-types';
+import React from 'react';
+import { withTranslation } from 'react-i18next';
+import CopyableInput from './CopyableInput';
 
-class ShareModal extends React.Component {
-  componentDidMount() {
-    this.refs.shareModal.focus();
-  }
+class ShareModal extends React.PureComponent {
   render() {
+    const {
+      projectId,
+      ownerUsername,
+      projectName
+    } = this.props;
     const hostname = window.location.origin;
     return (
-      <section className="share-modal" ref="shareModal" tabIndex="0">
-        <header className="share-modal__header">
-          <h2>Share Sketch</h2>
-          <button className="about__exit-button" onClick={this.props.closeShareModal}>
-            <InlineSVG src={exitUrl} alt="Close Share Overlay" />
-          </button>
-        </header>
-        <div className="share-modal__section">
-          <label className="share-modal__label">Embed</label>
-          <input
-            type="text"
-            className="share-modal__input"
-            value={`<iframe src="${hostname}/embed/${this.props.projectId}"></iframe>`}
-          />
-        </div>
-        <div className="share-modal__section">
-          <label className="share-modal__label">Fullscreen</label>
-          <input
-            type="text"
-            className="share-modal__input"
-            value={`${hostname}/full/${this.props.projectId}`}
-          />
-        </div>
-        <div className="share-modal__section">
-          <label className="share-modal__label">Edit</label>
-          <input
-            type="text"
-            className="share-modal__input"
-            value={`${hostname}/${this.props.ownerUsername}/sketches/${this.props.projectId}`}
-          />
-        </div>
-      </section>
+      <div className="share-modal">
+        <h3 className="share-modal__project-name">
+          {projectName}
+        </h3>
+        <CopyableInput
+          label={this.props.t('ShareModal.Embed')}
+          value={`<iframe src="${hostname}/${ownerUsername}/embed/${projectId}"></iframe>`}
+        />
+        <CopyableInput
+          label={this.props.t('ShareModal.Present')}
+          hasPreviewLink
+          value={`${hostname}/${ownerUsername}/present/${projectId}`}
+        />
+        <CopyableInput
+          label={this.props.t('ShareModal.Fullscreen')}
+          hasPreviewLink
+          value={`${hostname}/${ownerUsername}/full/${projectId}`}
+        />
+        <CopyableInput
+          label={this.props.t('ShareModal.Edit')}
+          hasPreviewLink
+          value={`${hostname}/${ownerUsername}/sketches/${projectId}`}
+        />
+      </div>
     );
   }
 }
 
 ShareModal.propTypes = {
   projectId: PropTypes.string.isRequired,
-  closeShareModal: PropTypes.func.isRequired,
-  ownerUsername: PropTypes.string
+  ownerUsername: PropTypes.string.isRequired,
+  projectName: PropTypes.string.isRequired,
+  t: PropTypes.func.isRequired
 };
 
-export default ShareModal;
+export default withTranslation()(ShareModal);

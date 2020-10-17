@@ -1,0 +1,44 @@
+.preview-frame {
+  min-height: 100%;
+  min-width: 100%;
+  position: absolute;
+  border-width: 0;
+}
+
+.preview-frame--full-view {
+  position: relative;
+}
+
+.preview-frame-holder {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.preview-frame-overlay {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 10;
+  display: none;
+}
+
+.preview-frame__header {
+  height: #{29 / $base-font-size}rem;
+}
+
+.preview-frame__title {
+  @include themify() {
+    color: getThemifyVariable('secondary-text-color');
+  }
+  height: #{29 / $base-font-size}rem;
+  padding-top: #{7 / $base-font-size}rem;
+  padding-left: #{5 / $base-font-size}rem;
+  font-size: #{12 / $base-font-size}rem;
+  font-weight: normal;
+}
+
+.preview-frame__content {
+  position: relative;
+  flex: 1 1 0;
+}

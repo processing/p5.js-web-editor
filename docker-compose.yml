@@ -1,0 +1,55 @@
+version: '3.4'
+services:
+  mongo:
+    image: mongo:3.6
+    volumes:
+      - dbdata:/data/db
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    # uncomment the following line to pull the image from docker hub
+    # image: index.docker.io/catarak/p5.js-web-editor:latest
+    # uncomment the following lines if you don't want export all of the variables
+    # defined in your .env file for testing
+    # env_file:
+    #   - "$PWD/.env.production"
+    environment:
+      - API_URL
+      - MONGO_URL
+      - PORT
+      - SESSION_SECRET
+      - AWS_ACCESS_KEY
+      - AWS_SECRET_KEY
+      - S3_BUCKET
+      - AWS_REGION
+      - GITHUB_ID
+      - GITHUB_SECRET
+      - MAILGUN_DOMAIN
+      - MAILGUN_KEY
+      - EMAIL_SENDER
+      - EMAIL_VERIFY_SECRET_TOKEN
+      - S3_BUCKET_URL_BASE
+      - GG_EXAMPLES_USERNAME
+      - GG_EXAMPLES_PASS
+      - GG_EXAMPLES_EMAIL
+      - GOOGLE_ID
+      - GOOGLE_SECRET
+      - EXAMPLE_USER_EMAIL
+      - EXAMPLE_USER_PASSWORD
+      - ML5_EXAMPLES_USERNAME
+      - ML5_EXAMPLES_PASS
+      - ML5_EXAMPLES_EMAIL
+      # you can either set this in your .env or as an environment variables
+      # or here YOU CHOOSE
+      # - MONGO_URL=mongodb://mongo:27017/p5js-web-editor
+    volumes:
+      - .:/opt/node/app
+      - /opt/node/app/node_modules
+    ports:
+      - '8000:8000'
+    depends_on:
+      - mongo
+volumes:
+  dbdata:

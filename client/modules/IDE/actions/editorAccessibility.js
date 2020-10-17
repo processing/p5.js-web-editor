@@ -15,9 +15,8 @@ export function clearLintMessage() {
   };
 }
 
-export function updateLineNumber(lineNumber) {
+export function toggleForceDesktop() {
   return {
-    type: ActionTypes.UPDATE_LINENUMBER,
-    lineNumber
+    type: ActionTypes.TOGGLE_FORCE_DESKTOP
   };
 }

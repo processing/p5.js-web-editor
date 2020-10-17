@@ -10,6 +10,7 @@
     -moz-background-clip: padding;
     -webkit-background-clip: padding;
     background-clip: padding-box;
+    z-index: 9999;
 }
 
 // .Resizer:hover {
@@ -42,4 +43,9 @@
 .Resizer.vertical:hover {
     // border-left: 5px solid rgba(0, 0, 0, 0.5);
     // border-right: 5px solid rgba(0, 0, 0, 0.5);
+}
+
+.Resizer.vertical.disabled,
+.Resizer.horizontal.disabled{
+    cursor: default;
 }

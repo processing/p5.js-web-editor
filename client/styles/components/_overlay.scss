@@ -1,5 +1,5 @@
 .overlay {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -9,10 +9,50 @@
   overflow-y: hidden;
 }
 
-.overlay-content {
+.overlay__content {
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
+.overlay__body {
+  @extend %modal;
+  display: flex;
+  flex-wrap: wrap;
+  flex-flow: column;
+  max-height: 80%;
+  max-width: 65%;
+  position: relative;
+}
+
+.overlay__header {
+  display: flex;
+  justify-content: space-between;
+  padding: #{20 / $base-font-size}rem;
+  flex: 1 0 auto;
+}
+
+.overlay__actions {
+  display: flex;
+}
+
+.overlay__title {
+  font-size: #{21 / $base-font-size}rem;
+}
+
+.overlay__close-button {
+  @include icon();
+  padding: #{3 / $base-font-size}rem 0 #{3 / $base-font-size}rem #{10 / $base-font-size}rem;
+}
+
+/* Fixed height overlay */
+.overlay--is-fixed-height .overlay__body {
+  height: 80vh;
+}
+
+.overlay--is-fixed-height .overlay__header {
+  flex: 0;
+}
+

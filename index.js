@@ -1,8 +1,18 @@
 if (process.env.NODE_ENV === 'production') {
-  process.env.webpackAssets = JSON.stringify(require('./static/dist/manifest.json'));
-  process.env.webpackChunkAssets = JSON.stringify(require('./static/dist/chunk-manifest.json'));
+  process.env.webpackAssets = JSON.stringify(require('./dist/static/manifest.json'));
+  require('./dist/server.bundle.js');
+} else {
+  let parsed = require('dotenv').config();
+  require('@babel/register')({
+    presets: ["@babel/preset-env"]
+  });
+  require('@babel/polyfill');
+  //// in development, let .env values override those in the environment already (i.e. in docker-compose.yml)
+  // so commenting this out makes the docker container work.
+  // if (process.env.NODE_ENV === 'development') {
+  //   for (let key in parsed) {
+  //     process.env[key] = parsed[key];
+  //   }
+  // }
+  require('./server/server');
 }
-require('babel-register');
-require('babel-polyfill');
-require('dotenv').config();
-require('./server/server');

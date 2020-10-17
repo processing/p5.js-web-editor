@@ -1,0 +1,20 @@
+.preview-nav__editor-svg {
+  & svg {
+    width: #{22 / $base-font-size}rem;
+    height: #{22 / $base-font-size}rem;
+    @include themify() {
+        fill: getThemifyVariable('button-nav-inactive-color');
+    }
+    &:hover {
+      @include themify() {
+        fill: getThemifyVariable('button-background-hover-color');
+      }
+    }
+  }
+}
+
+.preview-nav {
+  .nav__item {
+    margin-left: #{5 / $base-font-size}rem;
+  }
+}

@@ -1,12 +1,14 @@
 import * as ActionTypes from '../../../constants';
 
-const consoleMax = 200;
+const consoleMax = 500;
 const initialState = [];
 
 const console = (state = initialState, action) => {
+  let messages;
   switch (action.type) {
     case ActionTypes.CONSOLE_EVENT:
-      return state.concat(action.event).slice(-consoleMax);
+      messages = [...action.event];
+      return state.concat(messages).slice(-consoleMax);
     case ActionTypes.CLEAR_CONSOLE:
       return [];
     default:

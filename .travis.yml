@@ -1,0 +1,50 @@
+sudo: required
+language: node_js
+node_js:
+ - "12.16.1"
+
+cache:
+  directories:
+    - "$HOME/google-cloud-sdk/"
+
+services:
+  - docker
+
+before_install:
+  - docker-compose -f docker-compose-development.yml up -d
+  - docker ps -a
+
+install: true
+
+jobs:
+  include:
+    - stage: test
+      name: "Linting"
+      script: docker-compose exec -T app npm run lint
+    - # stage name not required, will continue to use `test`
+      name: "Tests"
+      script: docker-compose exec -T app npm run test
+
+before_deploy:
+  - docker-compose stop
+  - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; export CLOUDSDK_CORE_DISABLE_PROMPTS=1; curl https://sdk.cloud.google.com | bash >/dev/null; fi
+  - source /home/travis/google-cloud-sdk/path.bash.inc
+  - gcloud --quiet version
+  - gcloud --quiet components update
+  - gcloud --quiet components update kubectl
+deploy:
+  - provider: script
+    script: ./deploy.sh
+    skip_cleanup: true
+    on:
+      branch: release
+      tags: true
+  - provider: script
+    script: ./deploy_staging.sh
+    skip_cleanup: true
+    on:
+      branch: develop
+
+env:
+  global:
+    - APP_IMAGE_NAME=p5js-web-editor_app

@@ -1,9 +1,10 @@
-import axios from 'axios';
+import apiClient from '../../../utils/apiClient';
+import getConfig from '../../../utils/getConfig';
 import { createFile } from './files';
-const textFileRegex = /(text\/|application\/json)/;
+import { TEXT_FILE_REGEX } from '../../../../server/utils/fileUtils';
 
-const s3BucketHttps = `https://s3-us-west-2.amazonaws.com/${process.env.S3_BUCKET}/`;
-const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
+const s3BucketHttps = getConfig('S3_BUCKET_URL_BASE') ||
+                      `https://s3-${getConfig('AWS_REGION')}.amazonaws.com/${getConfig('S3_BUCKET')}/`;
 const MAX_LOCAL_FILE_SIZE = 80000; // bytes, aka 80 KB
 
 function localIntercept(file, options = {}) {
@@ -30,65 +31,63 @@ function localIntercept(file, options = {}) {
   });
 }
 
-export function dropzoneAcceptCallback(file, done) {
+export function dropzoneAcceptCallback(userId, file, done) {
   return () => {
-    // for text files and small files
-    // check mime type
-    // if text, local interceptor
-    if (file.type.match(textFileRegex) && file.size < MAX_LOCAL_FILE_SIZE) {
-      localIntercept(file).then(result => {
+    // if a user would want to edit this file as text, local interceptor
+    if (file.name.match(TEXT_FILE_REGEX) && file.size < MAX_LOCAL_FILE_SIZE) {
+      localIntercept(file).then((result) => {
         file.content = result; // eslint-disable-line
         done('Uploading plaintext file locally.');
+        file.previewElement.classList.remove('dz-error');
+        file.previewElement.classList.add('dz-success');
+        file.previewElement.classList.add('dz-processing');
+        file.previewElement.querySelector('.dz-upload').style.width = '100%';
       })
-      .catch(result => {
-        done(`Failed to download file ${file.name}: ${result}`);
-        console.warn(file);
-      });
+        .catch((result) => {
+          done(`Failed to download file ${file.name}: ${result}`);
+          console.warn(file);
+        });
     } else {
       file.postData = []; // eslint-disable-line
-      axios.post(`${ROOT_URL}/S3/sign`, {
+      apiClient.post('/S3/sign', {
         name: file.name,
         type: file.type,
         size: file.size,
+        userId
         // _csrf: document.getElementById('__createPostToken').value
-      },
-        {
-          withCredentials: true
-        })
-      .then(response => {
-        file.custom_status = 'ready'; // eslint-disable-line
-        file.postData = response.data; // eslint-disable-line
-        file.s3 = response.data.key; // eslint-disable-line
-        file.previewTemplate.className += ' uploading'; // eslint-disable-line
-        done();
       })
-      .catch(response => {
-        file.custom_status = 'rejected'; // eslint-disable-line
-        if (response.data.responseText && response.data.responseText.message) {
-          done(response.data.responseText.message);
-        }
-        done('error preparing the upload');
-      });
+        .then((response) => {
+          file.custom_status = 'ready'; // eslint-disable-line
+          file.postData = response.data; // eslint-disable-line
+          file.s3 = response.data.key; // eslint-disable-line
+          file.previewTemplate.className += ' uploading'; // eslint-disable-line
+          done();
+        })
+        .catch((error) => {
+          const { response } = error;
+          file.custom_status = 'rejected'; // eslint-disable-line
+          if (response.data && response.data.responseText && response.data.responseText.message) {
+            done(response.data.responseText.message);
+          }
+          done('Error: Reached upload limit.');
+        });
     }
   };
 }
 
 export function dropzoneSendingCallback(file, xhr, formData) {
   return () => {
-    if (!file.type.match(textFileRegex) || file.size >= MAX_LOCAL_FILE_SIZE) {
-      Object.keys(file.postData).forEach(key => {
+    if (!file.name.match(TEXT_FILE_REGEX) || file.size >= MAX_LOCAL_FILE_SIZE) {
+      Object.keys(file.postData).forEach((key) => {
         formData.append(key, file.postData[key]);
       });
-      formData.append('Content-type', '');
-      formData.append('Content-length', '');
-      formData.append('acl', 'public-read');
     }
   };
 }
 
 export function dropzoneCompleteCallback(file) {
   return (dispatch, getState) => { // eslint-disable-line
-    if ((!file.type.match(textFileRegex) || file.size >= MAX_LOCAL_FILE_SIZE) && file.status !== 'error') {
+    if ((!file.name.match(TEXT_FILE_REGEX) || file.size >= MAX_LOCAL_FILE_SIZE) && file.status !== 'error') {
       let inputHidden = '<input type="hidden" name="attachments[]" value="';
       const json = {
         url: `${s3BucketHttps}${file.postData.key}`,

@@ -3,12 +3,10 @@ import * as SessionController from '../controllers/session.controller';
 
 const router = new Router();
 
-router.route('/login').post(SessionController.createSession);
+router.post('/login', SessionController.createSession);
 
-router.route('/session').get(SessionController.getSession);
+router.get('/session', SessionController.getSession);
 
-router.route('/logout').get(SessionController.destroySession);
+router.get('/logout', SessionController.destroySession);
 
 export default router;
-
-// TODO add github authentication stuff

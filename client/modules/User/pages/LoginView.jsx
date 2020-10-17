@@ -1,13 +1,15 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { reduxForm } from 'redux-form';
+import { Link, browserHistory } from 'react-router';
+import { Helmet } from 'react-helmet';
+import { withTranslation } from 'react-i18next';
 import { validateAndLoginUser } from '../actions';
 import LoginForm from '../components/LoginForm';
-// import GithubButton from '../components/GithubButton';
-import { Link, browserHistory } from 'react-router';
-import InlineSVG from 'react-inlinesvg';
-const exitUrl = require('../../../images/exit.svg');
-const logoUrl = require('../../../images/p5js-logo.svg');
-
+import { validateLogin } from '../../../utils/reduxFormUtils';
+import SocialAuthButton from '../components/SocialAuthButton';
+import Nav from '../../../components/Nav';
+import ResponsiveForm from '../components/ResponsiveForm';
 
 class LoginView extends React.Component {
   constructor(props) {
@@ -25,30 +27,35 @@ class LoginView extends React.Component {
   }
 
   render() {
+    if (this.props.user.authenticated) {
+      this.gotoHomePage();
+      return null;
+    }
     return (
-      <div className="form-container">
-        <div className="form-container__header">
-          <button className="form-container__logo-button" onClick={this.gotoHomePage}>
-            <InlineSVG src={logoUrl} alt="p5js Logo" />
-          </button>
-          <button className="form-container__exit-button" onClick={this.closeLoginPage}>
-            <InlineSVG src={exitUrl} alt="Close Login Page" />
-          </button>
-        </div>
-        <div className="form-container__content">
-          <h2 className="form-container__title">Log In</h2>
-          <LoginForm {...this.props} />
-          {/* <h2 className="form-container__divider">Or</h2>
-          <GithubButton buttonText="Login with Github" /> */}
-          <p className="form__navigation-options">
-            Don't have an account?&nbsp;
-            <Link className="form__signup-button" to="/signup">Sign Up</Link>
-          </p>
-          <p className="form__navigation-options">
-            Forgot your password?&nbsp;
-            <Link className="form__reset-password-button" to="/reset-password">Reset your password</Link>
-          </p>
-        </div>
+      <div className="login">
+        <Nav layout="dashboard" />
+        <main className="form-container">
+          <Helmet>
+            <title>{this.props.t('LoginView.Title')}</title>
+          </Helmet>
+          <div className="form-container__content">
+            <h2 className="form-container__title">{this.props.t('LoginView.Login')}</h2>
+            <LoginForm {...this.props} />
+            <h2 className="form-container__divider">{this.props.t('LoginView.LoginOr')}</h2>
+            <div className="form-container__stack">
+              <SocialAuthButton service={SocialAuthButton.services.github} />
+              <SocialAuthButton service={SocialAuthButton.services.google} />
+            </div>
+            <p className="form__navigation-options">
+              {this.props.t('LoginView.DontHaveAccount')}
+              <Link className="form__signup-button" to="/signup">{this.props.t('LoginView.SignUp')}</Link>
+            </p>
+            <p className="form__navigation-options">
+              {this.props.t('LoginView.ForgotPassword')}
+              <Link className="form__reset-password-button" to="/reset-password"> {this.props.t('LoginView.ResetPassword')}</Link>
+            </p>
+          </div>
+        </main>
       </div>
     );
   }
@@ -67,23 +74,22 @@ function mapDispatchToProps() {
   };
 }
 
-function validate(formProps) {
-  const errors = {};
-  if (!formProps.email) {
-    errors.email = 'Please enter an email';
-  }
-  if (!formProps.password) {
-    errors.password = 'Please enter a password';
-  }
-  return errors;
-}
-
 LoginView.propTypes = {
-  previousPath: PropTypes.string.isRequired
+  previousPath: PropTypes.string.isRequired,
+  user: PropTypes.shape({
+    authenticated: PropTypes.bool
+  }),
+  t: PropTypes.func.isRequired,
 };
 
-export default reduxForm({
+LoginView.defaultProps = {
+  user: {
+    authenticated: false
+  },
+};
+
+export default withTranslation()(reduxForm({
   form: 'login',
   fields: ['email', 'password'],
-  validate
-}, mapStateToProps, mapDispatchToProps)(LoginView);
+  validate: validateLogin
+}, mapStateToProps, mapDispatchToProps)(LoginView));

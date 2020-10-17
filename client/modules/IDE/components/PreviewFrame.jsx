@@ -1,155 +1,118 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import ReactDOM from 'react-dom';
 // import escapeStringRegexp from 'escape-string-regexp';
 import srcDoc from 'srcdoc-polyfill';
-
 import loopProtect from 'loop-protect';
+import { JSHINT } from 'jshint';
+import decomment from 'decomment';
+import classNames from 'classnames';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { getBlobUrl } from '../actions/files';
 import { resolvePathToFile } from '../../../../server/utils/filePath';
+import {
+  MEDIA_FILE_REGEX,
+  MEDIA_FILE_QUOTED_REGEX,
+  STRING_REGEX,
+  PLAINTEXT_FILE_REGEX,
+  EXTERNAL_LINK_REGEX,
+  NOT_EXTERNAL_LINK_REGEX
+} from '../../../../server/utils/fileUtils';
+import { hijackConsoleErrorsScript, startTag, getAllScriptOffsets }
+  from '../../../utils/consoleUtils';
+import { registerFrame } from '../../../utils/dispatcher';
 
-const startTag = '@fs-';
-const MEDIA_FILE_REGEX = /^('|")(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov|otf|ttf)('|")$/i;
-const MEDIA_FILE_REGEX_NO_QUOTES = /^(?!(http:\/\/|https:\/\/)).*\.(png|jpg|jpeg|gif|bmp|mp3|wav|aiff|ogg|json|txt|csv|svg|obj|mp4|ogg|webm|mov|otf|ttf)$/i;
-const STRING_REGEX = /(['"])((\\\1|.)*?)\1/gm;
-const TEXT_FILE_REGEX = /(.+\.json$|.+\.txt$|.+\.csv$)/i;
-const NOT_EXTERNAL_LINK_REGEX = /^(?!(http:\/\/|https:\/\/))/;
-const EXTERNAL_LINK_REGEX = /^(http:\/\/|https:\/\/)/;
+import { getHTMLFile } from '../reducers/files';
 
-function getAllScriptOffsets(htmlFile) {
-  const offs = [];
-  let found = true;
-  let lastInd = 0;
-  let ind = 0;
-  let endFilenameInd = 0;
-  let filename = '';
-  let lineOffset = 0;
-  while (found) {
-    ind = htmlFile.indexOf(startTag, lastInd);
-    if (ind === -1) {
-      found = false;
-    } else {
-      endFilenameInd = htmlFile.indexOf('.js', ind + startTag.length + 3);
-      filename = htmlFile.substring(ind + startTag.length, endFilenameInd);
-      // the length of hijackConsoleErrorsScript is 35 lines, already needed a -1 offset.
-      lineOffset = htmlFile.substring(0, ind).split('\n').length + 34;
-      offs.push([lineOffset, filename]);
-      lastInd = ind + 1;
-    }
-  }
-  return offs;
-}
+import { stopSketch, expandConsole, endSketchRefresh } from '../actions/ide';
+import { setTextOutput, setGridOutput, setSoundOutput } from '../actions/preferences';
+import { setBlobUrl } from '../actions/files';
+import { clearConsole, dispatchConsoleEvent } from '../actions/console';
 
-function hijackConsoleErrorsScript(offs) {
-  const s = `
-    function getScriptOff(line) {
-      var offs = ${offs};
-      var l = 0;
-      var file = '';
-      for (var i=0; i<offs.length; i++) {
-        var n = offs[i][0];
-        if (n < line && n > l) {
-          l = n;
-          file = offs[i][1];
-        }
-      }
-      return [line - l, file];
-    }
 
-    // catch reference errors, via http://stackoverflow.com/a/12747364/2994108
-    window.onerror = function (msg, url, lineNumber, columnNo, error) {
-        var string = msg.toLowerCase();
-        var substring = "script error";
-        var data = {};
+const shouldRenderSketch = (props, prevProps = undefined) => {
+  const { isPlaying, previewIsRefreshing, fullView } = props;
 
-        if (string.indexOf(substring) !== -1){
-          data = 'Script Error: See Browser Console for Detail';
-        } else {
-          var fileInfo = getScriptOff(lineNumber);
-          data = msg + ' (' + fileInfo[1] + ': line ' + fileInfo[0] + ')';
-        }
+  // if the user explicitly clicks on the play button
+  if (isPlaying && previewIsRefreshing) return true;
 
-        window.parent.postMessage([{
-          method: 'error',
-          arguments: data,
-          source: fileInfo[1]
-        }], '*');
-      return false;
-    };
-  `;
-  return s;
-}
+  if (!prevProps) return false;
+
+  return (props.isPlaying !== prevProps.isPlaying // if sketch starts or stops playing, want to rerender
+    || props.isAccessibleOutputPlaying !== prevProps.isAccessibleOutputPlaying // if user switches textoutput preferences
+    || props.textOutput !== prevProps.textOutput
+    || props.gridOutput !== prevProps.gridOutput
+    || props.soundOutput !== prevProps.soundOutput
+    || (fullView && props.files[0].id !== prevProps.files[0].id));
+};
 
 class PreviewFrame extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.iframe = React.createRef();
+  }
 
   componentDidMount() {
-    if (this.props.isPlaying) {
-      this.renderFrameContents();
-    }
-
-    if (this.props.dispatchConsoleEvent) {
-      window.addEventListener('message', (messageEvent) => {
-        messageEvent.data.forEach(message => {
-          const args = message.arguments;
-          Object.keys(args).forEach((key) => {
-            if (args[key].includes('Exiting potential infinite loop')) {
-              this.props.stopSketch();
-              this.props.expandConsole();
-            }
-          });
-        });
-        this.props.dispatchConsoleEvent(messageEvent.data);
-      });
-    }
+    const props = {
+      ...this.props,
+      previewIsRefreshing: this.props.previewIsRefreshing,
+      isAccessibleOutputPlaying: this.props.isAccessibleOutputPlaying
+    };
+    if (shouldRenderSketch(props)) this.renderSketch();
+    registerFrame(this.iframe.current.contentWindow);
   }
 
   componentDidUpdate(prevProps) {
-    // if sketch starts or stops playing, want to rerender
-    if (this.props.isPlaying !== prevProps.isPlaying) {
-      this.renderSketch();
-      return;
-    }
-
-    // if the user explicitly clicks on the play button
-    if (this.props.isPlaying && this.props.previewIsRefreshing) {
-      this.renderSketch();
-      return;
-    }
-
-    // if user switches textoutput preferences
-    if (this.props.isTextOutputPlaying !== prevProps.isTextOutputPlaying) {
-      this.renderSketch();
-      return;
-    }
-
-    if (this.props.textOutput !== prevProps.textOutput) {
-      this.renderSketch();
-      return;
-    }
-
-    if (this.props.fullView && this.props.files[0].id !== prevProps.files[0].id) {
-      this.renderSketch();
-      return;
-    }
-
+    if (shouldRenderSketch(this.props, prevProps)) this.renderSketch();
     // small bug - if autorefresh is on, and the usr changes files
     // in the sketch, preview will reload
   }
 
   componentWillUnmount() {
-    ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(this).contentDocument.body);
+    const iframeBody = this.iframe.current.contentDocument.body;
+    if (iframeBody) { ReactDOM.unmountComponentAtNode(iframeBody); }
   }
 
-  clearPreview() {
-    const doc = ReactDOM.findDOMNode(this);
-    doc.srcDoc = '';
+  addLoopProtect(sketchDoc) {
+    const scriptsInHTML = sketchDoc.getElementsByTagName('script');
+    const scriptsInHTMLArray = Array.prototype.slice.call(scriptsInHTML);
+    scriptsInHTMLArray.forEach((script) => {
+      script.innerHTML = this.jsPreprocess(script.innerHTML); // eslint-disable-line
+    });
+  }
+
+  jsPreprocess(jsText) {
+    let newContent = jsText;
+    // check the code for js errors before sending it to strip comments
+    // or loops.
+    JSHINT(newContent);
+
+    if (JSHINT.errors.length === 0) {
+      newContent = decomment(newContent, {
+        ignore: /\/\/\s*noprotect/g,
+        space: true
+      });
+      newContent = loopProtect(newContent);
+    }
+    return newContent;
+  }
+
+  mergeLocalFilesAndEditorActiveFile() {
+    const files = this.props.files.slice();
+    if (this.props.cmController.getContent) {
+      const activeFileInEditor = this.props.cmController.getContent();
+      files.find(file => file.id === activeFileInEditor.id).content = activeFileInEditor.content;
+    }
+    return files;
   }
 
   injectLocalFiles() {
     const htmlFile = this.props.htmlFile.content;
     let scriptOffs = [];
-
-    const resolvedFiles = this.resolveJSAndCSSLinks(this.props.files);
-
+    const files = this.mergeLocalFilesAndEditorActiveFile();
+    const resolvedFiles = this.resolveJSAndCSSLinks(files);
     const parser = new DOMParser();
     const sketchDoc = parser.parseFromString(htmlFile, 'text/html');
 
@@ -164,51 +127,45 @@ class PreviewFrame extends React.Component {
     this.resolveScripts(sketchDoc, resolvedFiles);
     this.resolveStyles(sketchDoc, resolvedFiles);
 
-    let scriptsToInject = [
-      '/loop-protect.min.js',
-      '/hijackConsole.js'
-    ];
-    if (this.props.isTextOutputPlaying || (this.props.textOutput !== 0 && this.props.isPlaying)) {
-      let interceptorScripts = [];
-      if (this.props.textOutput === 0) {
-        this.props.setTextOutput(1);
-      }
-      if (this.props.textOutput === 1) {
-        interceptorScripts = [
-          '/p5-interceptor/loadData.js',
-          '/p5-interceptor/intercept-helper-functions.js',
-          '/p5-interceptor/textInterceptor/interceptor-functions.js',
-          '/p5-interceptor/textInterceptor/intercept-p5.js',
-          '/p5-interceptor/ntc.min.js'
-        ];
-      } else if (this.props.textOutput === 2) {
-        interceptorScripts = [
-          '/p5-interceptor/loadData.js',
-          '/p5-interceptor/intercept-helper-functions.js',
-          '/p5-interceptor/gridInterceptor/interceptor-functions.js',
-          '/p5-interceptor/gridInterceptor/intercept-p5.js',
-          '/p5-interceptor/ntc.min.js'
-        ];
-      } else if (this.props.textOutput === 3) {
-        interceptorScripts = [
-          '/p5-interceptor/loadData.js',
-          '/p5-interceptor/soundInterceptor/intercept-p5.js'
-        ];
-      }
-      scriptsToInject = scriptsToInject.concat(interceptorScripts);
+    const accessiblelib = sketchDoc.createElement('script');
+    accessiblelib.setAttribute(
+      'src',
+      'https://cdn.rawgit.com/processing/p5.accessibility/v0.1.1/dist/p5-accessibility.js'
+    );
+    const accessibleOutputs = sketchDoc.createElement('section');
+    accessibleOutputs.setAttribute('id', 'accessible-outputs');
+    accessibleOutputs.setAttribute('aria-label', 'accessible-output');
+    if (this.props.textOutput) {
+      sketchDoc.body.appendChild(accessibleOutputs);
+      sketchDoc.body.appendChild(accessiblelib);
+      const textSection = sketchDoc.createElement('section');
+      textSection.setAttribute('id', 'textOutput-content');
+      sketchDoc.getElementById('accessible-outputs').appendChild(textSection);
+    }
+    if (this.props.gridOutput) {
+      sketchDoc.body.appendChild(accessibleOutputs);
+      sketchDoc.body.appendChild(accessiblelib);
+      const gridSection = sketchDoc.createElement('section');
+      gridSection.setAttribute('id', 'tableOutput-content');
+      sketchDoc.getElementById('accessible-outputs').appendChild(gridSection);
+    }
+    if (this.props.soundOutput) {
+      sketchDoc.body.appendChild(accessibleOutputs);
+      sketchDoc.body.appendChild(accessiblelib);
+      const soundSection = sketchDoc.createElement('section');
+      soundSection.setAttribute('id', 'soundOutput-content');
+      sketchDoc.getElementById('accessible-outputs').appendChild(soundSection);
     }
 
-    scriptsToInject.forEach(scriptToInject => {
-      const script = sketchDoc.createElement('script');
-      script.src = scriptToInject;
-      sketchDoc.head.appendChild(script);
-    });
+    const previewScripts = sketchDoc.createElement('script');
+    previewScripts.src = '/previewScripts.js';
+    sketchDoc.head.appendChild(previewScripts);
 
     const sketchDocString = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
     scriptOffs = getAllScriptOffsets(sketchDocString);
     const consoleErrorsScript = sketchDoc.createElement('script');
     consoleErrorsScript.innerHTML = hijackConsoleErrorsScript(JSON.stringify(scriptOffs));
-    // sketchDoc.head.appendChild(consoleErrorsScript);
+    this.addLoopProtect(sketchDoc);
     sketchDoc.head.insertBefore(consoleErrorsScript, sketchDoc.head.firstElement);
 
     return `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
@@ -217,10 +174,10 @@ class PreviewFrame extends React.Component {
   resolvePathsForElementsWithAttribute(attr, sketchDoc, files) {
     const elements = sketchDoc.querySelectorAll(`[${attr}]`);
     const elementsArray = Array.prototype.slice.call(elements);
-    elementsArray.forEach(element => {
-      if (element.getAttribute(attr).match(MEDIA_FILE_REGEX_NO_QUOTES)) {
+    elementsArray.forEach((element) => {
+      if (element.getAttribute(attr).match(MEDIA_FILE_REGEX)) {
         const resolvedFile = resolvePathToFile(element.getAttribute(attr), files);
-        if (resolvedFile) {
+        if (resolvedFile && resolvedFile.url) {
           element.setAttribute(attr, resolvedFile.url);
         }
       }
@@ -229,7 +186,7 @@ class PreviewFrame extends React.Component {
 
   resolveJSAndCSSLinks(files) {
     const newFiles = [];
-    files.forEach(file => {
+    files.forEach((file) => {
       const newFile = { ...file };
       if (file.name.match(/.*\.js$/i)) {
         newFile.content = this.resolveJSLinksInString(newFile.content, files);
@@ -245,37 +202,41 @@ class PreviewFrame extends React.Component {
     let newContent = content;
     let jsFileStrings = content.match(STRING_REGEX);
     jsFileStrings = jsFileStrings || [];
-    jsFileStrings.forEach(jsFileString => {
-      if (jsFileString.match(MEDIA_FILE_REGEX)) {
+    jsFileStrings.forEach((jsFileString) => {
+      if (jsFileString.match(MEDIA_FILE_QUOTED_REGEX)) {
         const filePath = jsFileString.substr(1, jsFileString.length - 2);
+        const quoteCharacter = jsFileString.substr(0, 1);
         const resolvedFile = resolvePathToFile(filePath, files);
+
         if (resolvedFile) {
           if (resolvedFile.url) {
-            newContent = newContent.replace(filePath, resolvedFile.url);
-          } else if (resolvedFile.name.match(TEXT_FILE_REGEX)) {
+            newContent = newContent.replace(jsFileString, quoteCharacter + resolvedFile.url + quoteCharacter);
+          } else if (resolvedFile.name.match(PLAINTEXT_FILE_REGEX)) {
             // could also pull file from API instead of using bloburl
             const blobURL = getBlobUrl(resolvedFile);
             this.props.setBlobUrl(resolvedFile, blobURL);
-            newContent = newContent.replace(filePath, blobURL);
+
+            newContent = newContent.replace(jsFileString, quoteCharacter + blobURL + quoteCharacter);
           }
         }
       }
     });
-    newContent = loopProtect(newContent);
-    return newContent;
+
+    return this.jsPreprocess(newContent);
   }
 
   resolveCSSLinksInString(content, files) {
     let newContent = content;
     let cssFileStrings = content.match(STRING_REGEX);
     cssFileStrings = cssFileStrings || [];
-    cssFileStrings.forEach(cssFileString => {
-      if (cssFileString.match(MEDIA_FILE_REGEX)) {
+    cssFileStrings.forEach((cssFileString) => {
+      if (cssFileString.match(MEDIA_FILE_QUOTED_REGEX)) {
         const filePath = cssFileString.substr(1, cssFileString.length - 2);
+        const quoteCharacter = cssFileString.substr(0, 1);
         const resolvedFile = resolvePathToFile(filePath, files);
         if (resolvedFile) {
           if (resolvedFile.url) {
-            newContent = newContent.replace(filePath, resolvedFile.url);
+            newContent = newContent.replace(cssFileString, quoteCharacter + resolvedFile.url + quoteCharacter);
           }
         }
       }
@@ -286,7 +247,7 @@ class PreviewFrame extends React.Component {
   resolveScripts(sketchDoc, files) {
     const scriptsInHTML = sketchDoc.getElementsByTagName('script');
     const scriptsInHTMLArray = Array.prototype.slice.call(scriptsInHTML);
-    scriptsInHTMLArray.forEach(script => {
+    scriptsInHTMLArray.forEach((script) => {
       if (script.getAttribute('src') && script.getAttribute('src').match(NOT_EXTERNAL_LINK_REGEX) !== null) {
         const resolvedFile = resolvePathToFile(script.getAttribute('src'), files);
         if (resolvedFile) {
@@ -299,6 +260,7 @@ class PreviewFrame extends React.Component {
           }
         }
       } else if (!(script.getAttribute('src') && script.getAttribute('src').match(EXTERNAL_LINK_REGEX)) !== null) {
+        script.setAttribute('crossorigin', '');
         script.innerHTML = this.resolveJSLinksInString(script.innerHTML, files); // eslint-disable-line
       }
     });
@@ -307,13 +269,13 @@ class PreviewFrame extends React.Component {
   resolveStyles(sketchDoc, files) {
     const inlineCSSInHTML = sketchDoc.getElementsByTagName('style');
     const inlineCSSInHTMLArray = Array.prototype.slice.call(inlineCSSInHTML);
-    inlineCSSInHTMLArray.forEach(style => {
+    inlineCSSInHTMLArray.forEach((style) => {
       style.innerHTML = this.resolveCSSLinksInString(style.innerHTML, files); // eslint-disable-line
     });
 
     const cssLinksInHTML = sketchDoc.querySelectorAll('link[rel="stylesheet"]');
     const cssLinksInHTMLArray = Array.prototype.slice.call(cssLinksInHTML);
-    cssLinksInHTMLArray.forEach(css => {
+    cssLinksInHTMLArray.forEach((css) => {
       if (css.getAttribute('href') && css.getAttribute('href').match(NOT_EXTERNAL_LINK_REGEX) !== null) {
         const resolvedFile = resolvePathToFile(css.getAttribute('href'), files);
         if (resolvedFile) {
@@ -331,9 +293,11 @@ class PreviewFrame extends React.Component {
   }
 
   renderSketch() {
-    const doc = ReactDOM.findDOMNode(this);
+    const doc = this.iframe.current;
+    const localFiles = this.injectLocalFiles();
     if (this.props.isPlaying) {
-      srcDoc.set(doc, this.injectLocalFiles());
+      this.props.clearConsole();
+      srcDoc.set(doc, localFiles);
       if (this.props.endSketchRefresh) {
         this.props.endSketchRefresh();
       }
@@ -343,26 +307,23 @@ class PreviewFrame extends React.Component {
     }
   }
 
-  renderFrameContents() {
-    const doc = ReactDOM.findDOMNode(this).contentDocument;
-    if (doc.readyState === 'complete') {
-      this.renderSketch();
-    } else {
-      setTimeout(this.renderFrameContents, 0);
-    }
-  }
-
   render() {
+    const iframeClass = classNames({
+      'preview-frame': true,
+      'preview-frame--full-view': this.props.fullView
+    });
+    const sandboxAttributes =
+      'allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-forms allow-modals allow-downloads';
     return (
       <iframe
-        className="preview-frame"
+        id="canvas_frame"
+        className={iframeClass}
         aria-label="sketch output"
         role="main"
-        tabIndex="0"
         frameBorder="0"
-        ref="iframe"
-        title="sketch output"
-        sandbox="allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-forms"
+        title="sketch preview"
+        ref={this.iframe}
+        sandbox={sandboxAttributes}
       />
     );
   }
@@ -370,23 +331,63 @@ class PreviewFrame extends React.Component {
 
 PreviewFrame.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
-  isTextOutputPlaying: PropTypes.bool.isRequired,
-  textOutput: PropTypes.number.isRequired,
-  setTextOutput: PropTypes.func.isRequired,
-  content: PropTypes.string,
+  isAccessibleOutputPlaying: PropTypes.bool.isRequired,
+  textOutput: PropTypes.bool.isRequired,
+  gridOutput: PropTypes.bool.isRequired,
+  soundOutput: PropTypes.bool.isRequired,
   htmlFile: PropTypes.shape({
     content: PropTypes.string.isRequired
-  }),
-  files: PropTypes.array.isRequired,
-  dispatchConsoleEvent: PropTypes.func,
-  children: PropTypes.element,
-  autorefresh: PropTypes.bool.isRequired,
+  }).isRequired,
+  files: PropTypes.arrayOf(PropTypes.shape({
+    content: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    url: PropTypes.string,
+    id: PropTypes.string.isRequired
+  })).isRequired,
   endSketchRefresh: PropTypes.func.isRequired,
   previewIsRefreshing: PropTypes.bool.isRequired,
   fullView: PropTypes.bool,
   setBlobUrl: PropTypes.func.isRequired,
-  stopSketch: PropTypes.func.isRequired,
-  expandConsole: PropTypes.func.isRequired
+  clearConsole: PropTypes.func.isRequired,
+  cmController: PropTypes.shape({
+    getContent: PropTypes.func
+  })
 };
 
-export default PreviewFrame;
+PreviewFrame.defaultProps = {
+  fullView: false,
+  cmController: {}
+};
+
+const mapStateToProps = state => ({
+  files: state.files,
+  htmlFile: getHTMLFile(state.files),
+  content:
+    (state.files.find(file => file.isSelectedFile) ||
+    state.files.find(file => file.name === 'sketch.js') ||
+    state.files.find(file => file.name !== 'root')).content,
+  isPlaying: state.ide.isPlaying,
+  isAccessibleOutputPlaying: state.ide.isAccessibleOutputPlaying,
+  previewIsRefreshing: state.ide.previewIsRefreshing,
+  textOutput: state.preferences.textOutput,
+  gridOutput: state.preferences.gridOutput,
+  soundOutput: state.preferences.soundOutput,
+  language: state.preferences.language,
+  autorefresh: state.preferences.autorefresh,
+});
+
+
+const mapDispatchToProps = {
+  stopSketch,
+  expandConsole,
+  endSketchRefresh,
+  setTextOutput,
+  setGridOutput,
+  setSoundOutput,
+  setBlobUrl,
+  clearConsole,
+  dispatchConsoleEvent
+};
+
+
+export default (connect(mapStateToProps, mapDispatchToProps)(PreviewFrame));

@@ -1,21 +1,24 @@
 .toast {
   background-color: $toast-background-color;
   color: $toast-text-color;
-  padding: #{20 / $base-font-size}rem;
-  position: absolute;
+  padding: #{10 / $base-font-size}rem;
+  position: fixed;
   top: 0;
-  right: 40%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  min-width: #{375 / $base-font-size}rem; //500px
+  font-size: #{20 / $base-font-size}rem;
   display: flex;
   z-index: 9999;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 6px 6px 0 rgba(0,0,0,0.10);
 }
 
 .toast__close {
   @include themify() {
-    @extend %icon;
+    @extend %icon-toast;
   }
-  color: $toast-text-color;
-  & g {
-    fill: $toast-text-color; 
-  }
-  margin-left: #{10 / $base-font-size}rem;
+  padding-top: #{10 / $base-font-size}rem;
+  margin-left: #{40 / $base-font-size}rem;
 }

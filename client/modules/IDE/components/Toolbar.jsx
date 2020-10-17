@@ -1,33 +1,53 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
-const InlineSVG = require('react-inlinesvg');
-const playUrl = require('../../../images/play.svg');
-const logoUrl = require('../../../images/p5js-logo.svg');
-const stopUrl = require('../../../images/stop.svg');
-const preferencesUrl = require('../../../images/preferences.svg');
-const editProjectNameUrl = require('../../../images/pencil.svg');
 import classNames from 'classnames';
+import { withTranslation } from 'react-i18next';
+import * as IDEActions from '../actions/ide';
+import * as preferenceActions from '../actions/preferences';
+import * as projectActions from '../actions/project';
+
+import PlayIcon from '../../../images/play.svg';
+import StopIcon from '../../../images/stop.svg';
+import PreferencesIcon from '../../../images/preferences.svg';
+import EditProjectNameIcon from '../../../images/pencil.svg';
 
 class Toolbar extends React.Component {
   constructor(props) {
     super(props);
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleProjectNameChange = this.handleProjectNameChange.bind(this);
+    this.handleProjectNameSave = this.handleProjectNameSave.bind(this);
+
+    this.state = {
+      projectNameInputValue: props.project.name,
+    };
   }
 
   handleKeyPress(event) {
     if (event.key === 'Enter') {
       this.props.hideEditProjectName();
+      this.projectNameInput.blur();
     }
   }
 
   handleProjectNameChange(event) {
-    this.props.setProjectName(event.target.value);
+    this.setState({ projectNameInputValue: event.target.value });
   }
 
-  validateProjectName() {
-    if (this.props.project.name === '') {
-      this.props.setProjectName(this.originalProjectName);
+  handleProjectNameSave() {
+    const newProjectName = this.state.projectNameInputValue.trim();
+    if (newProjectName.length === 0) {
+      this.setState({
+        projectNameInputValue: this.props.project.name,
+      });
+    } else {
+      this.props.setProjectName(newProjectName);
+      this.props.hideEditProjectName();
+      if (this.props.project.id) {
+        this.props.saveProject();
+      }
     }
   }
 
@@ -38,55 +58,53 @@ class Toolbar extends React.Component {
   }
 
   render() {
-    let playButtonClass = classNames({
+    const playButtonClass = classNames({
       'toolbar__play-button': true,
       'toolbar__play-button--selected': this.props.isPlaying
     });
-    let stopButtonClass = classNames({
+    const stopButtonClass = classNames({
       'toolbar__stop-button': true,
       'toolbar__stop-button--selected': !this.props.isPlaying
     });
-    let preferencesButtonClass = classNames({
+    const preferencesButtonClass = classNames({
       'toolbar__preferences-button': true,
       'toolbar__preferences-button--selected': this.props.preferencesIsVisible
     });
-    let nameContainerClass = classNames({
+    const nameContainerClass = classNames({
       'toolbar__project-name-container': true,
       'toolbar__project-name-container--editing': this.props.project.isEditingName
     });
 
+    const canEditProjectName = this.canEditProjectName();
+
     return (
       <div className="toolbar">
-        <InlineSVG className="toolbar__logo" src={logoUrl} alt="p5js Logo" />
         <button
           className="toolbar__play-sketch-button"
           onClick={() => {
-            this.props.clearConsole();
-            this.props.startTextOutput();
-            this.props.startSketchAndRefresh();
+            this.props.startAccessibleSketch();
+            this.props.setTextOutput(true);
+            this.props.setGridOutput(true);
           }}
-          aria-label="play sketch"
+          aria-label={this.props.t('Toolbar.PlaySketchARIA')}
           disabled={this.props.infiniteLoop}
         >
-          <InlineSVG src={playUrl} alt="Play Sketch" />
+          <PlayIcon focusable="false" aria-hidden="true" />
         </button>
         <button
           className={playButtonClass}
-          onClick={() => {
-            this.props.clearConsole();
-            this.props.startSketchAndRefresh();
-          }}
-          aria-label="play only visual sketch"
+          onClick={this.props.startSketch}
+          aria-label={this.props.t('Toolbar.PlayOnlyVisualSketchARIA')}
           disabled={this.props.infiniteLoop}
         >
-          <InlineSVG src={playUrl} alt="Play only visual Sketch" />
+          <PlayIcon focusable="false" aria-hidden="true" />
         </button>
         <button
           className={stopButtonClass}
-          onClick={() => { this.props.stopTextOutput(); this.props.stopSketch(); }}
-          aria-label="stop sketch"
+          onClick={this.props.stopSketch}
+          aria-label={this.props.t('Toolbar.StopSketchARIA')}
         >
-          <InlineSVG src={stopUrl} alt="Stop Sketch" />
+          <StopIcon focusable="false" aria-hidden="true" />
         </button>
         <div className="toolbar__autorefresh">
           <input
@@ -98,45 +116,47 @@ class Toolbar extends React.Component {
             }}
           />
           <label htmlFor="autorefresh" className="toolbar__autorefresh-label">
-            Auto-refresh
+            {this.props.t('Toolbar.Auto-refresh')}
           </label>
         </div>
         <div className={nameContainerClass}>
-          <a
+          <button
             className="toolbar__project-name"
-            href={this.props.owner ? `/${this.props.owner.username}/sketches/${this.props.project.id}` : ''}
-            onClick={(e) => {
-              if (this.canEditProjectName()) {
-                e.preventDefault();
-                this.originalProjectName = this.props.project.name;
+            onClick={() => {
+              if (canEditProjectName) {
                 this.props.showEditProjectName();
-                setTimeout(() => this.refs.projectNameInput.focus(), 0);
+                setTimeout(() => this.projectNameInput.focus(), 0);
               }
             }}
+            disabled={!canEditProjectName}
+            aria-label={this.props.t('Toolbar.EditSketchARIA')}
           >
-            {this.props.project.name}&nbsp;
-            {this.canEditProjectName() && <InlineSVG className="toolbar__edit-name-button" src={editProjectNameUrl} alt="Edit Project Name" />}
-          </a>
+            <span>{this.props.project.name}</span>
+            {
+              canEditProjectName &&
+              <EditProjectNameIcon
+                className="toolbar__edit-name-button"
+                focusable="false"
+                aria-hidden="true"
+              />
+            }
+          </button>
           <input
             type="text"
+            maxLength="128"
             className="toolbar__project-name-input"
-            value={this.props.project.name}
+            aria-label={this.props.t('Toolbar.NewSketchNameARIA')}
+            value={this.state.projectNameInputValue}
             onChange={this.handleProjectNameChange}
-            ref="projectNameInput"
-            onBlur={() => {
-              this.validateProjectName();
-              this.props.hideEditProjectName();
-              if (this.props.project.id) {
-                this.props.saveProject();
-              }
-            }}
+            ref={(element) => { this.projectNameInput = element; }}
+            onBlur={this.handleProjectNameSave}
             onKeyPress={this.handleKeyPress}
           />
           {(() => { // eslint-disable-line
             if (this.props.owner) {
               return (
                 <p className="toolbar__project-owner">
-                  by <Link to={`/${this.props.owner.username}/sketches`}>{this.props.owner.username}</Link>
+                  {this.props.t('Toolbar.By')} <Link to={`/${this.props.owner.username}/sketches`}>{this.props.owner.username}</Link>
                 </p>
               );
             }
@@ -145,9 +165,9 @@ class Toolbar extends React.Component {
         <button
           className={preferencesButtonClass}
           onClick={this.props.openPreferences}
-          aria-label="preferences"
+          aria-label={this.props.t('Toolbar.OpenPreferencesARIA')}
         >
-          <InlineSVG src={preferencesUrl} alt="Preferences" />
+          <PreferencesIcon focusable="false" aria-hidden="true" />
         </button>
       </div>
     );
@@ -157,10 +177,7 @@ class Toolbar extends React.Component {
 Toolbar.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   preferencesIsVisible: PropTypes.bool.isRequired,
-  startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
-  startTextOutput: PropTypes.func.isRequired,
-  stopTextOutput: PropTypes.func.isRequired,
   setProjectName: PropTypes.func.isRequired,
   openPreferences: PropTypes.func.isRequired,
   owner: PropTypes.shape({
@@ -169,17 +186,45 @@ Toolbar.propTypes = {
   project: PropTypes.shape({
     name: PropTypes.string.isRequired,
     isEditingName: PropTypes.bool,
-    id: PropTypes.string
+    id: PropTypes.string,
   }).isRequired,
   showEditProjectName: PropTypes.func.isRequired,
   hideEditProjectName: PropTypes.func.isRequired,
   infiniteLoop: PropTypes.bool.isRequired,
   autorefresh: PropTypes.bool.isRequired,
   setAutorefresh: PropTypes.func.isRequired,
-  startSketchAndRefresh: PropTypes.func.isRequired,
+  setTextOutput: PropTypes.func.isRequired,
+  setGridOutput: PropTypes.func.isRequired,
+  startSketch: PropTypes.func.isRequired,
+  startAccessibleSketch: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
   currentUser: PropTypes.string,
-  clearConsole: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired
+
 };
 
-export default Toolbar;
+Toolbar.defaultProps = {
+  owner: undefined,
+  currentUser: undefined
+};
+
+function mapStateToProps(state) {
+  return {
+    autorefresh: state.preferences.autorefresh,
+    currentUser: state.user.username,
+    infiniteLoop: state.ide.infiniteLoop,
+    isPlaying: state.ide.isPlaying,
+    owner: state.project.owner,
+    preferencesIsVisible: state.ide.preferencesIsVisible,
+    project: state.project,
+  };
+}
+
+const mapDispatchToProps = {
+  ...IDEActions,
+  ...preferenceActions,
+  ...projectActions,
+};
+
+export const ToolbarComponent = withTranslation()(Toolbar);
+export default connect(mapStateToProps, mapDispatchToProps)(ToolbarComponent);

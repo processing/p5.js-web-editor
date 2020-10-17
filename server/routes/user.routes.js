@@ -1,17 +1,32 @@
 import { Router } from 'express';
 import * as UserController from '../controllers/user.controller';
+import isAuthenticated from '../utils/isAuthenticated';
+
 const router = new Router();
 
-router.route('/signup').post(UserController.createUser);
+router.post('/signup', UserController.createUser);
 
-router.route('/signup/duplicate_check').get(UserController.duplicateUserCheck);
+router.get('/signup/duplicate_check', UserController.duplicateUserCheck);
 
-router.route('/preferences').put(UserController.updatePreferences);
+router.put('/preferences', isAuthenticated, UserController.updatePreferences);
 
-router.route('/reset-password').post(UserController.resetPasswordInitiate);
+router.post('/reset-password', UserController.resetPasswordInitiate);
 
-router.route('/reset-password/:token').get(UserController.validateResetPasswordToken);
+router.get('/reset-password/:token', UserController.validateResetPasswordToken);
 
-router.route('/reset-password/:token').post(UserController.updatePassword);
+router.post('/reset-password/:token', UserController.updatePassword);
+
+router.put('/account', isAuthenticated, UserController.updateSettings);
+
+router.post('/account/api-keys', isAuthenticated, UserController.createApiKey);
+
+router.delete('/account/api-keys/:keyId', isAuthenticated, UserController.removeApiKey);
+
+router.post('/verify/send', UserController.emailVerificationInitiate);
+
+router.get('/verify', UserController.verifyEmail);
+
+router.delete('/auth/github', UserController.unlinkGithub);
+router.delete('/auth/google', UserController.unlinkGoogle);
 
 export default router;

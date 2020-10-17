@@ -1,9 +1,15 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import Dropzone from 'dropzone';
-const s3Bucket = `https://s3-us-west-2.amazonaws.com/${process.env.S3_BUCKET}/`;
-import * as UploaderActions from '../actions/uploader';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { withTranslation } from 'react-i18next';
+import * as UploaderActions from '../actions/uploader';
+import getConfig from '../../../utils/getConfig';
+import { fileExtensionsAndMimeTypes } from '../../../../server/utils/fileUtils';
+
+const s3Bucket = getConfig('S3_BUCKET_URL_BASE') ||
+                 `https://s3-${getConfig('AWS_REGION')}.amazonaws.com/${getConfig('S3_BUCKET')}/`;
 
 class FileUploader extends React.Component {
   componentDidMount() {
@@ -12,6 +18,7 @@ class FileUploader extends React.Component {
   }
 
   createDropzone() {
+    const userId = this.props.project.owner ? this.props.project.owner.id : this.props.user.id;
     this.uploader = new Dropzone('div#uploader', {
       url: s3Bucket,
       method: 'post',
@@ -23,15 +30,11 @@ class FileUploader extends React.Component {
       maxThumbnailFilesize: 8, // 8 mb
       thumbnailWidth: 200,
       thumbnailHeight: 200,
-      // TODO what is a good list of MIME types????
-      acceptedFiles: `image/*,audio/*,text/javascript,text/html,text/css,
-      application/json,application/x-font-ttf,application/x-font-truetype,
-      text/plain,text/csv,.obj,video/webm,video/ogg,video/quicktime,video/mp4,
-      .otf,.ttf`,
-      dictDefaultMessage: 'Drop files here to upload or click to use the file browser',
-      accept: this.props.dropzoneAcceptCallback,
+      acceptedFiles: fileExtensionsAndMimeTypes,
+      dictDefaultMessage: this.props.t('FileUploader.DictDefaultMessage'),
+      accept: this.props.dropzoneAcceptCallback.bind(this, userId),
       sending: this.props.dropzoneSendingCallback,
-      complete: this.props.dropzoneCompleteCallback,
+      complete: this.props.dropzoneCompleteCallback
       // error: (file, errorMessage) => {
       //   console.log(file);
       //   console.log(errorMessage);
@@ -49,13 +52,33 @@ class FileUploader extends React.Component {
 FileUploader.propTypes = {
   dropzoneAcceptCallback: PropTypes.func.isRequired,
   dropzoneSendingCallback: PropTypes.func.isRequired,
-  dropzoneCompleteCallback: PropTypes.func.isRequired
+  dropzoneCompleteCallback: PropTypes.func.isRequired,
+  project: PropTypes.shape({
+    owner: PropTypes.shape({
+      id: PropTypes.string
+    })
+  }),
+  user: PropTypes.shape({
+    id: PropTypes.string
+  }),
+  t: PropTypes.func.isRequired
+};
+
+FileUploader.defaultProps = {
+  project: {
+    id: undefined,
+    owner: undefined
+  },
+  user: {
+    id: undefined
+  }
 };
 
 function mapStateToProps(state) {
   return {
     files: state.files,
-    project: state.project
+    project: state.project,
+    user: state.user
   };
 }
 
@@ -63,4 +86,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(UploaderActions, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FileUploader);
+export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(FileUploader));

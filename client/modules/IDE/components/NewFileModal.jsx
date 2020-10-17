@@ -1,11 +1,17 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators, compose } from 'redux';
 import { reduxForm } from 'redux-form';
+import { withTranslation } from 'react-i18next';
+import i18n from 'i18next';
 import NewFileForm from './NewFileForm';
-import classNames from 'classnames';
-import InlineSVG from 'react-inlinesvg';
-const exitUrl = require('../../../images/exit.svg');
+import { closeNewFileModal } from '../actions/ide';
+import { createFile } from '../actions/files';
+import { CREATE_FILE_REGEX } from '../../../../server/utils/fileUtils';
 
-import FileUploader from './FileUploader';
+import ExitIcon from '../../../images/exit.svg';
+
 
 // At some point this will probably be generalized to a generic modal
 // in which you can insert different content
@@ -14,45 +20,47 @@ class NewFileModal extends React.Component {
   constructor(props) {
     super(props);
     this.focusOnModal = this.focusOnModal.bind(this);
+    this.handleOutsideClick = this.handleOutsideClick.bind(this);
   }
 
   componentDidMount() {
     this.focusOnModal();
+    document.addEventListener('click', this.handleOutsideClick, false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this.handleOutsideClick, false);
+  }
+
+  handleOutsideClick(e) {
+    // ignore clicks on the component itself
+    if (e.path.includes(this.modal)) return;
+
+    this.props.closeNewFileModal();
   }
 
   focusOnModal() {
-    this.refs.modal.focus();
+    this.modal.focus();
   }
 
   render() {
-    const modalClass = classNames({
-      modal: true,
-      'modal--reduced': !this.props.canUploadMedia
-    });
     return (
-      <section className={modalClass} tabIndex="0" ref="modal">
+      <section className="modal" ref={(element) => { this.modal = element; }}>
         <div className="modal-content">
           <div className="modal__header">
-            <h2 className="modal__title">Add File</h2>
-            <button className="modal__exit-button" onClick={this.props.closeModal}>
-              <InlineSVG src={exitUrl} alt="Close New File Modal" />
+            <h2 className="modal__title">{this.props.t('NewFileModal.Title')}</h2>
+            <button
+              className="modal__exit-button"
+              onClick={this.props.closeNewFileModal}
+              aria-label={this.props.t('NewFileModal.CloseButtonARIA')}
+            >
+              <ExitIcon focusable="false" aria-hidden="true" />
             </button>
           </div>
           <NewFileForm
             focusOnModal={this.focusOnModal}
             {...this.props}
           />
-          {(() => {
-            if (this.props.canUploadMedia) {
-              return (
-                <div>
-                  <p className="modal__divider">OR</p>
-                  <FileUploader />
-                </div>
-              );
-            }
-            return '';
-          })()}
         </div>
       </section>
     );
@@ -60,25 +68,36 @@ class NewFileModal extends React.Component {
 }
 
 NewFileModal.propTypes = {
-  closeModal: PropTypes.func.isRequired,
-  canUploadMedia: PropTypes.bool.isRequired
+  createFile: PropTypes.func.isRequired,
+  closeNewFileModal: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired
 };
 
 function validate(formProps) {
   const errors = {};
 
   if (!formProps.name) {
-    errors.name = 'Please enter a name';
-  } else if (!formProps.name.match(/(.+\.js$|.+\.css$|.+\.json$|.+\.txt$|.+\.csv$)/i)) {
-    errors.name = 'File must be of type JavaScript, CSS, JSON, TXT, or CSV.';
+    errors.name = i18n.t('NewFileModal.EnterName');
+  } else if (!formProps.name.match(CREATE_FILE_REGEX)) {
+    errors.name = i18n.t('NewFileModal.InvalidType');
   }
 
   return errors;
 }
 
+function mapStateToProps() {
+  return {};
+}
 
-export default reduxForm({
-  form: 'new-file',
-  fields: ['name'],
-  validate
-})(NewFileModal);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ createFile, closeNewFileModal }, dispatch);
+}
+
+export default withTranslation()(compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  reduxForm({
+    form: 'new-file',
+    fields: ['name'],
+    validate
+  })
+)(NewFileModal));

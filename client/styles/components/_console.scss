@@ -3,43 +3,17 @@
 		background: getThemifyVariable('console-background-color');
 		border-color: getThemifyVariable('ide-border-color');
 	}
-	border-left: 1px solid;
-	border-right: 1px solid;
+	border-left: #{1 / $base-font-size}rem solid;
+	border-right: #{1 / $base-font-size}rem solid;
 	width: 100%;
 	height: 100%;
 	z-index: 1000;
-	overflow: hidden;
 	display: flex;
 	flex-direction: column;
 
 	& > {
 		position:relative;
 		text-align:left;
-	}
-
-	// assign styles to different types of console messages
-	.preview-console__log {
-		@include themify(){
-			color: getThemifyVariable('secondary-text-color');
-		}
-		flex: 1 0 auto;
-	}
-
-	.preview-console__undefined {
-		@include themify(){
-			color: getThemifyVariable('inactive-text-color');
-		}
-		flex: 1 0 auto;
-	}
-
-	.preview-console__error {
-		color: $console-error-color;
-		flex: 1 0 auto;
-	}
-
-	.preview-console__warn {
-		color: $console-warn-color;
-		flex: 1 0 auto;
 	}
 }
 
@@ -66,14 +40,20 @@
 
 .preview-console__messages {
 	display: flex;
+	flex: 1;
 	flex-direction: column;
-	overflow-y: auto;
+	overflow-y: scroll;
 }
 
 .preview-console__collapse {
 	padding-top: #{3 / $base-font-size}rem;
+	@include icon();
 	@include themify() {
-		@extend %icon;
+		& g,
+		& polygon,
+		& path {
+			fill: getThemifyVariable('secondary-text-color');
+		}
 	}
 	.preview-console--collapsed & {
 		display: none;
@@ -82,8 +62,13 @@
 
 .preview-console__expand {
 	padding-top: #{3 / $base-font-size}rem;
+	@include icon();
 	@include themify() {
-		@extend %icon;
+		& g,
+		& polygon,
+		& path {
+			fill: getThemifyVariable('secondary-text-color');
+		}
 	}
 	display: none;
 	.preview-console--collapsed & {
@@ -97,8 +82,62 @@
 }
 
 .preview-console__clear {
+	@include themify() {
+		@extend %link;
+		color: getThemifyVariable('secondary-text-color');
+		&:hover {
+			color: getThemifyVariable('heavy-text-color');
+		}
+	}
+	background: transparent;
+	border: none;
 	padding-right: #{10 / $base-font-size}rem;
 	.preview-console--collapsed & {
 		display: none;
+	}
+}
+
+.preview-console__logged-times {
+
+	font-weight: bold;
+	margin: #{2 / $base-font-size}rem 0 0 #{8 / $base-font-size}rem;
+	border-radius: #{10 / $base-font-size}rem;
+	padding: #{1 / $base-font-size}rem #{4 / $base-font-size}rem;
+	z-index: 100;
+	left: 0;
+	position: absolute;
+
+	.preview-console__message--info &, .preview-console__message--log & {
+		@include themify() {
+			background-color: getThemifyVariable('console-info-background-color');
+		}
+	}
+	.preview-console__message--warn & {
+		@include themify() {
+			background-color: getThemifyVariable('console-warn-background-color');
+		}
+	}
+	.preview-console__message--debug & {
+		@include themify() {
+			background-color: getThemifyVariable('console-debug-background-color');
+		}
+	}
+	.preview-console__message--error & {
+		@include themify() {
+			background-color: getThemifyVariable('console-error-background-color');
+		}
+	}
+}
+
+.preview-console__body {
+	display: flex;
+	flex-direction: column;
+	height: calc(100% - #{30 / $base-font-size}rem);
+
+	.preview-console__message {
+		position: relative;
+		@include themify() {
+			color: getThemifyVariable('console-logged-times-color');
+		}
 	}
 }

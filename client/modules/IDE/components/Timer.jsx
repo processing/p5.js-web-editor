@@ -1,6 +1,9 @@
-import React, { PropTypes } from 'react';
-import moment from 'moment';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { withTranslation } from 'react-i18next';
+
+import dates from '../../../utils/formatDate';
 
 class Timer extends React.Component {
   constructor(props) {
@@ -19,16 +22,8 @@ class Timer extends React.Component {
   }
 
   showSavedTime() {
-    if (Math.abs(moment().diff(this.props.projectSavedTime)) < 10000) {
-      return 'Saved: just now';
-    } else if (Math.abs(moment().diff(this.props.projectSavedTime)) < 20000) {
-      return 'Saved: 15 seconds ago';
-    } else if (Math.abs(moment().diff(this.props.projectSavedTime)) < 30000) {
-      return 'Saved: 25 seconds ago';
-    } else if (Math.abs(moment().diff(this.props.projectSavedTime)) < 46000) {
-      return 'Saved: 35 seconds ago';
-    }
-    return `Saved: ${moment(this.props.projectSavedTime).fromNow()}`;
+    const timeAgo = dates.distanceInWordsToNow(this.props.projectSavedTime);
+    return this.props.t('Timer.SavedAgo', { timeAgo });
   }
 
   render() {
@@ -46,7 +41,12 @@ class Timer extends React.Component {
 
 Timer.propTypes = {
   projectSavedTime: PropTypes.string.isRequired,
-  isUserOwner: PropTypes.bool
+  isUserOwner: PropTypes.bool,
+  t: PropTypes.func.isRequired
 };
 
-export default Timer;
+Timer.defaultProps = {
+  isUserOwner: false
+};
+
+export default withTranslation()(Timer);

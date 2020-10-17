@@ -1,11 +1,11 @@
-import * as ActionTypes from '../../../constants';
-import axios from 'axios';
 import objectID from 'bson-objectid';
 import blobUtil from 'blob-util';
-import { setUnsavedChanges } from './ide';
 import { reset } from 'redux-form';
+import apiClient from '../../../utils/apiClient';
+import * as ActionTypes from '../../../constants';
+import { setUnsavedChanges, closeNewFolderModal, closeNewFileModal } from './ide';
+import { setProjectSavedTime } from './project';
 
-const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
 function appendToFilename(filename, string) {
   const dotIndex = filename.lastIndexOf('.');
@@ -18,20 +18,20 @@ function createUniqueName(name, parentId, files) {
     .children.map(childFileId => files.find(file => file.id === childFileId));
   let testName = name;
   let index = 1;
-  let existingName = siblingFiles.find((file) => name === file.name);
+  let existingName = siblingFiles.find(file => name === file.name);
 
   while (existingName) {
     testName = appendToFilename(name, `-${index}`);
-    index++;
+    index += 1;
     existingName = siblingFiles.find((file) => testName === file.name); // eslint-disable-line
   }
   return testName;
 }
 
-export function updateFileContent(name, content) {
+export function updateFileContent(id, content) {
   return {
     type: ActionTypes.UPDATE_FILE_CONTENT,
-    name,
+    id,
     content
   };
 }
@@ -39,14 +39,7 @@ export function updateFileContent(name, content) {
 export function createFile(formProps) {
   return (dispatch, getState) => {
     const state = getState();
-    const selectedFile = state.files.find(file => file.isSelectedFile);
-    const rootFile = state.files.find(file => file.name === 'root');
-    let parentId;
-    if (selectedFile.fileType === 'folder') {
-      parentId = selectedFile.id;
-    } else {
-      parentId = rootFile.id;
-    }
+    const { parentId } = state.ide;
     if (state.project.id) {
       const postParams = {
         name: createUniqueName(formProps.name, parentId, state.files),
@@ -55,23 +48,28 @@ export function createFile(formProps) {
         parentId,
         children: []
       };
-      axios.post(`${ROOT_URL}/projects/${state.project.id}/files`, postParams, { withCredentials: true })
-        .then(response => {
+      apiClient.post(`/projects/${state.project.id}/files`, postParams)
+        .then((response) => {
           dispatch({
             type: ActionTypes.CREATE_FILE,
-            ...response.data,
+            ...response.data.updatedFile,
             parentId
           });
+          dispatch(setProjectSavedTime(response.data.project.updatedAt));
+          dispatch(closeNewFileModal());
           dispatch(reset('new-file'));
           // dispatch({
           //   type: ActionTypes.HIDE_MODAL
           // });
           dispatch(setUnsavedChanges(true));
         })
-        .catch(response => dispatch({
-          type: ActionTypes.ERROR,
-          error: response.data
-        }));
+        .catch((error) => {
+          const { response } = error;
+          dispatch({
+            type: ActionTypes.ERROR,
+            error: response.data
+          });
+        });
     } else {
       const id = objectID().toHexString();
       dispatch({
@@ -89,6 +87,7 @@ export function createFile(formProps) {
       //   type: ActionTypes.HIDE_MODAL
       // });
       dispatch(setUnsavedChanges(true));
+      dispatch(closeNewFileModal());
     }
   };
 }
@@ -96,14 +95,7 @@ export function createFile(formProps) {
 export function createFolder(formProps) {
   return (dispatch, getState) => {
     const state = getState();
-    const selectedFile = state.files.find(file => file.isSelectedFile);
-    const rootFile = state.files.find(file => file.name === 'root');
-    let parentId;
-    if (selectedFile.fileType === 'folder') {
-      parentId = selectedFile.id;
-    } else {
-      parentId = rootFile.id;
-    }
+    const { parentId } = state.ide;
     if (state.project.id) {
       const postParams = {
         name: createUniqueName(formProps.name, parentId, state.files),
@@ -112,21 +104,23 @@ export function createFolder(formProps) {
         parentId,
         fileType: 'folder'
       };
-      axios.post(`${ROOT_URL}/projects/${state.project.id}/files`, postParams, { withCredentials: true })
-        .then(response => {
+      apiClient.post(`/projects/${state.project.id}/files`, postParams)
+        .then((response) => {
           dispatch({
             type: ActionTypes.CREATE_FILE,
-            ...response.data,
+            ...response.data.updatedFile,
             parentId
           });
-          dispatch({
-            type: ActionTypes.CLOSE_NEW_FOLDER_MODAL
-          });
+          dispatch(setProjectSavedTime(response.data.project.updatedAt));
+          dispatch(closeNewFolderModal());
         })
-        .catch(response => dispatch({
-          type: ActionTypes.ERROR,
-          error: response.data
-        }));
+        .catch((error) => {
+          const { response } = error;
+          dispatch({
+            type: ActionTypes.ERROR,
+            error: response.data
+          });
+        });
     } else {
       const id = objectID().toHexString();
       dispatch({
@@ -140,46 +134,19 @@ export function createFolder(formProps) {
         fileType: 'folder',
         children: []
       });
-      dispatch({
-        type: ActionTypes.CLOSE_NEW_FOLDER_MODAL
-      });
+      dispatch(closeNewFolderModal());
     }
   };
 }
 
-export function showFileOptions(fileId) {
-  return {
-    type: ActionTypes.SHOW_FILE_OPTIONS,
-    id: fileId
-  };
-}
-
-export function hideFileOptions(fileId) {
-  return {
-    type: ActionTypes.HIDE_FILE_OPTIONS,
-    id: fileId
-  };
-}
-
-export function showEditFileName(id) {
-  return {
-    type: ActionTypes.SHOW_EDIT_FILE_NAME,
-    id
-  };
-}
-
-export function hideEditFileName(id) {
-  return {
-    type: ActionTypes.HIDE_EDIT_FILE_NAME,
-    id
-  };
-}
-
 export function updateFileName(id, name) {
-  return {
-    type: ActionTypes.UPDATE_FILE_NAME,
-    id,
-    name
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.UPDATE_FILE_NAME,
+      id,
+      name
+    });
   };
 }
 
@@ -192,15 +159,17 @@ export function deleteFile(id, parentId) {
           parentId
         }
       };
-      axios.delete(`${ROOT_URL}/projects/${state.project.id}/files/${id}`, deleteConfig, { withCredentials: true })
-        .then(() => {
+      apiClient.delete(`/projects/${state.project.id}/files/${id}`, deleteConfig)
+        .then((response) => {
+          dispatch(setProjectSavedTime(response.data.project.updatedAt));
           dispatch({
             type: ActionTypes.DELETE_FILE,
             id,
             parentId
           });
         })
-        .catch(response => {
+        .catch((error) => {
+          const { response } = error;
           dispatch({
             type: ActionTypes.ERROR,
             error: response.data
@@ -233,7 +202,7 @@ export function hideFolderChildren(id) {
 export function setBlobUrl(file, blobURL) {
   return {
     type: ActionTypes.SET_BLOB_URL,
-    name: file.name,
+    id: file.id,
     blobURL
   };
 }

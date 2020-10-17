@@ -14,6 +14,9 @@
   flex: 1 0 0px;
   display: flex;
   position: relative;
+
+  // create a stacking context to isolate z-index layering
+  z-index: 0;
 }
 
 .editor-console-container {
@@ -31,32 +34,8 @@
   @extend %hidden-element;
 }
 
-.text-output {
+.accessible-output {
 	@extend %hidden-element;
-}
-
-.preview-frame {
-  min-height: 100%;
-  min-width: 100%;
-  position: absolute;
-}
-
-
-.preview-frame-overlay {
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  z-index: 10;
-  display: none;
-}
-
-.preview-frame-placeholder {
-  width: #{400 / $base-font-size}rem;
-  height: #{400 / $base-font-size}rem;
-  position: absolute;
-  @include themify() {
-    background: getThemifyVariable('preview-placeholder-color');
-  }
 }
 
 .toolbar {

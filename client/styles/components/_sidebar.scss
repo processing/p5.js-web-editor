@@ -1,7 +1,6 @@
 .sidebar {
   display: flex;
   flex-flow: column;
-
 }
 
 .sidebar__header {
@@ -12,6 +11,7 @@
   align-items: center;
   height: #{29 / $base-font-size}rem;
   min-height: #{29 / $base-font-size}rem;
+  position: relative;
 }
 
 .sidebar__title {
@@ -25,9 +25,9 @@
 }
 
 .sidebar__add {
-  @include themify() {
-    @extend %icon;
-  }
+  width: #{20 / $base-font-size}rem;
+  height: #{20 / $base-font-size}rem;
+  @include icon();
   .sidebar--contracted & {
     display: none;
   }
@@ -48,39 +48,48 @@
 
 .sidebar__root-item {
   position: relative;
-  overflow-y: scroll;
+  overflow-y: auto;
   flex: 1 1 auto;
+  @include themify() {
+    border-top: 1px solid map-get($theme-map, 'ide-border-color');
+  }
+  .sidebar--contracted & {
+    border: none;
+  }
 }
 
 .sidebar__file-item {
-  height: #{20 / $base-font-size}rem;
   font-size: #{12 / $base-font-size}rem;
   cursor: pointer;
+  position: relative;
   @include themify() {
-    color: map-get($theme-map, 'inactive-text-color');
-    &:hover > .file-item__content .sidebar__file-item-name {
-      color: map-get($theme-map, 'primary-text-color');
-    }
-    &:hover > .file-item__content .sidebar__file-item-icon g {
-      fill: map-get($theme-map, 'primary-text-color');
+    color: map-get($theme-map, 'primary-text-color');
+    // TODO get this to not affect parent, need to move it into JS
+    &:hover:not(.sidebar__file-item--selected) > .file-item__content {
+      background-color: map-get($theme-map, 'file-hover-color');
     }
   }
+}
+
+.sidebar__file-item--folder {
+  z-index: 1;
 }
 
 // to indent each row in the file tree
 // not sure how to do this in a better way
 // it won't work if the file tree is too nested
 .file-item__spacer {
+  flex-shrink: 0;
   .sidebar__file-item & {
-    width: #{33 / $base-font-size}rem;
+    width: #{19 / $base-font-size}rem;
     .sidebar__file-item & {
-      width: #{53 / $base-font-size}rem;
+      width: #{39 / $base-font-size}rem;
       .sidebar__file-item & {
-        width: #{73 / $base-font-size}rem;
+        width: #{59 / $base-font-size}rem;
         .sidebar__file-item & {
-          width: #{93 / $base-font-size}rem;
+          width: #{79 / $base-font-size}rem;
           .sidebar__file-item & {
-            width: #{113 / $base-font-size}rem;
+            width: #{99 / $base-font-size}rem;
           }
         }
       }
@@ -101,54 +110,82 @@
   }
 }
 
+.sidebar__file-item-name--ellipsis {
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  min-width: #{7 / $base-font-size}rem;
+}
+
+.sidebar__file-item-name-text {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  min-width: #{50 / $base-font-size}rem;
+  white-space: nowrap;
+  text-align: left;
+}
+
 .sidebar__file-item-name {
   padding: #{4 / $base-font-size}rem 0;
+  padding-right: #{25 / $base-font-size}rem;
+  font-family: Inconsolata, monospace;
+  font-size: #{14 / $base-font-size}rem;
+  overflow: hidden;
   .sidebar__file-item--editing & {
     display: none;
+  }
+  &:before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    content: '';
+    width: 100%;
+  }
+  @include themify() {
+    color: map-get($theme-map, 'primary-text-color');
   }
 }
 
 .sidebar__file-item-show-options {
+  width: #{20 / $base-font-size}rem;
+  height: #{20 / $base-font-size}rem;
+  @include icon();
   @include themify() {
-    @extend %icon;
-    padding: #{4 / $base-font-size}rem 0;
+    margin-right: #{5 / $base-font-size}rem;
   }
   display: none;
   position: absolute;
-  right: #{6 / $base-font-size}rem;
+  right: 0;
   .sidebar__file-item--selected > .file-item__content & {
     display: inline-block;
+    .sidebar--cant-edit & {
+      display: none;
+    }
+  }
+  .sidebar__file-item:hover > .file-item__content & {
+    display: inline-block;
+    .sidebar--cant-edit & {
+      display: none;
+    }
   }
   & svg {
     width: #{10 / $base-font-size}rem;
   }
+  .sidebar__file-item--open > .file-item__content & {
+    display: inline-block;
+  }
 }
 
 .sidebar__file-item-options {
-  @extend %modal;
-  @include themify() {
-    background-color: getThemifyVariable('modal-background-color');
-    box-shadow: 0 0 18px getThemifyVariable('shadow-color');
-  }
-  position: absolute;
-  top: 95%;
-  left: #{15 / $base-font-size}rem;
-  right: #{0 / $base-font-size}rem;
+  @extend %dropdown-open-right;
   display: none;
-  z-index: 100;
-  padding: #{8 / $base-font-size}rem #{16 / $base-font-size}rem;
+  width: 100%;
+  max-width: #{180 / $base-font-size}rem;
   .sidebar__file-item--open > .file-item__content & {
-    display: block;
-  }
-}
-
-.sidebar__project-options li, .sidebar__file-item-options li {
-  padding: #{4 / $base-font-size}rem 0;
-}
-
-.sidebar__project-options a, .sidebar__file-item-options a {
-  @include themify() {
-    color: getThemifyVariable('secondary-text-color');
+    display: flex;
   }
 }
 
@@ -156,39 +193,53 @@
   display: none;
   padding: 0;
   border: 0;
-  width: calc(100% - #{100 / $base-font-size}rem);
+  width: calc(100% - #{63 / $base-font-size}rem);
+  font-family: Inconsolata, monospace;
+  font-size: #{14 / $base-font-size}rem;
   .sidebar__file-item--editing & {
     display: inline-block;
   }
 }
 
-.sidebar__expand {
-  @include themify() {
-    @extend %icon;
-  }
+.sidebar__expand,
+.sidebar__contract {
+  @include icon();
   position: absolute;
-  top: #{7 / $base-font-size}rem;
-  left: #{1 / $base-font-size}rem;
-  height: #{14 / $base-font-size}rem;
-  & svg {
-    height: #{14 / $base-font-size}rem;
+  top: #{2 / $base-font-size}rem;
+  left: #{0 / $base-font-size}rem;
+  height: #{25 / $base-font-size}rem;
+  width: #{49 / $base-font-size}rem;
+  border-radius: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @include themify() {
+    background-color: getThemifyVariable("toolbar-button-background-color");
+    & polygon, & path {
+      fill: getThemifyVariable("toolbar-button-color");
+    }
+    &:hover {
+      background-color: getThemifyVariable("button-background-hover-color");
+      & polygon, & path {
+        fill: getThemifyVariable("button-hover-color");
+      }
+    }
   }
+}
+
+.sidebar__expand {
   display: none;
+  &:hover {
+    cursor: e-resize;
+  }
   .sidebar--contracted & {
-    display: inline-block;
+    display: flex;
   }
 }
 
 .sidebar__contract {
-  @include themify() {
-    @extend %icon;
-  }
-  position: absolute;
-  top: #{7 / $base-font-size}rem;
-  left: #{34 / $base-font-size}rem;
-  height: #{14 / $base-font-size}rem;
-  & svg {
-    height: #{14 / $base-font-size}rem;
+  &:hover {
+    cursor: w-resize;
   }
   .sidebar--contracted & {
     display: none;
@@ -198,13 +249,16 @@
 .sidebar__icons {
   display: flex;
   align-items: center;
-  position: relative;
+  height: 100%;
+  .sidebar--cant-edit & {
+    display: none;
+  }
 }
 
 .sidebar__folder-icon {
   padding: #{4 / $base-font-size}rem 0;
   margin-right: #{5 / $base-font-size}rem;
-  & g {
+  & path {
     @include themify() {
       fill: map-get($theme-map, 'primary-text-color');
     }
@@ -217,14 +271,13 @@
 .sidebar__file-item-icon {
   padding: #{4 / $base-font-size}rem 0;
   margin-right: #{5 / $base-font-size}rem;
-  & g {
+  & path {
     @include themify() {
-      fill: getThemifyVariable('inactive-text-color');
+      fill: getThemifyVariable('secondary-text-color');
     }
   }
-  & svg {
-    height: #{10 / $base-font-size}rem;
-  }
+  background-color: transparent;
+  border: none;
 }
 
 .sidebar__file-item-closed {
@@ -243,24 +296,16 @@
   }
 }
 
-.sidebar__project-options {
-  @extend %modal;
-  @include themify() {
-    background-color: getThemifyVariable('modal-background-color');
-    box-shadow: 0 0 18px getThemifyVariable('shadow-color');
-  }
-  display: none;
-  position: absolute;
-  .sidebar--project-options & {
-    display: block;
-  }
-  top: #{22 / $base-font-size}rem;
-  right: #{-6 / $base-font-size}rem;
-  padding: #{8 / $base-font-size}rem #{16 / $base-font-size}rem;
-  width: #{145 / $base-font-size}rem;
-}
-
-
 .sidebar__file-item--closed .file-item__children {
   display: none;
+}
+
+.sidebar__project-options {
+  @extend %dropdown-open-right;
+  display: none;
+  width: 100%;
+  max-width: #{180 / $base-font-size}rem;
+  .sidebar--project-options & {
+    display: flex;
+  }
 }

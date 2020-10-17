@@ -2,133 +2,287 @@ $base-font-size: 12;
 
 //colors
 $p5js-pink: #ed225d;
+$processing-blue: #007BBB;
+$p5js-active-pink: #f10046;
 $white: #fff;
 $black: #000;
 $yellow: #F5DC23;
-$primary-text-color: #333;
+$orange: #ffa500;
+$red: #ff0000;
+$lightsteelblue: #B0C4DE;
+$dodgerblue: #1E90FF;
+// $icon-hover-color: #333;
+$p5-contrast-pink: #FFA9D9;
+
+$border-color: #B5B5B5;
+$outline-color: #0F9DD7;
+
+// Grayscale values
+$lightest: #FFF; // primary
+$lighter: #FBFBFB;
+
+$light: #F0F0F0; // primary
+$medium-light: #D9D9D9;
+$middle-light: #A6A6A6;
+
+// $middle-gray: #7D7D7D; // primary
+$middle-gray: #747474; // primary
+$middle-dark: #666;
+$medium-dark: #4D4D4D;
+
+$dark: #333; // primary
+$darker: #1C1C1C;
+$darkest: #000;
 
 $themes: (
   light: (
     logo-color: $p5js-pink,
-    primary-text-color: #333,
-    modal-button-color: #333,
-    heading-text-color: #333,
-    secondary-text-color: #6b6b6b,
-    inactive-text-color: #b5b5b5,
-    background-color: #fbfbfb,
-    preview-placeholder-color: #dcdcdc,
-    button-background-color: #f4f4f4,
+    logo-background-color: $lightest,
+    heavy-text-color: $darker,
+    primary-text-color: $dark,
+    secondary-text-color: $medium-dark,
+    inactive-text-color: $middle-dark,
+    dropzone-text-color: $dark,
+    modal-button-color: $dark,
+    background-color: $lighter,
+    button-background-color: $light,
+    button-secondary-background-color: $medium-light,
     button-color: $black,
-    button-border-color: #979797,
-    toolbar-button-color: $p5js-pink,
-    toolbar-button-background-color: #f4f4f4,
+    button-border-color: $middle-light,
+    toolbar-button-color: $dark,
+    toolbar-button-background-color: $medium-light,
     button-background-hover-color: $p5js-pink,
-    button-background-active-color: #f10046,
-    button-hover-color: $white,
-    button-active-color: $white,
-    modal-background-color: #f4f4f4,
-    modal-button-background-color: #e6e6e6,
-    modal-border-color: #B9D0E1,
-    icon-color: #8b8b8b,
-    icon-hover-color: #333,
+    button-background-active-color: $p5js-active-pink,
+    button-nav-inactive-color: $middle-gray,
+    button-hover-color: $lightest,
+    button-active-color: $lightest,
+    modal-background-color: $light,
+    preferences-button-background-color: $medium-light,
+    modal-border-color: $middle-light,
+    icon-color: $middle-gray,
+    icon-hover-color: $darker,
+    icon-toast-hover-color: $lightest,
     shadow-color: rgba(0, 0, 0, 0.16),
-    console-background-color: #eee,
-    console-header-background-color: #d6d6d6,
-    console-header-color: #b1b1b1,
-    ide-border-color: #f4f4f4,
-    editor-gutter-color: #f4f4f4,
-    file-selected-color: #f4f4f4,
-    input-text-color: #333,
-    input-border-color: #b5b5b5,
-    about-list-text-color: #4a4a4a,
+    console-background-color: $light,
+    console-input-background-color: $lightest,
+    console-color: $darker,
+    console-logged-times-color: $lightest,
+    console-arrow-color: $middle-gray,
+    console-active-arrow-color: #0071AD,
+    console-header-background-color: $medium-light,
+    console-header-color: $darker,
+    console-info-background-color: #5276B7,
+    console-warn-background-color: #996B00,
+    console-debug-background-color: #0071AD,
+    console-error-background-color: #D11518,
+    ide-border-color: $medium-light,
+    editor-gutter-color: $lighter,
+    file-hover-color: $light,
+    file-selected-color: $medium-light,
+    input-text-color: $dark,
+    input-background-color: $lightest,
+    input-secondary-background-color: $lightest,
+    input-border-color: $middle-light,
+    search-background-color: $lightest,
+    search-clear-background-color: $light,
+    search-hover-text-color: $lightest,
+    search-hover-background-color: $medium-dark,
+    keyboard-shortcut-color: $middle-gray,
+    nav-hover-color: $p5js-pink,
+    nav-border-color: $middle-light,
+    error-color: $p5js-pink,
+    table-row-stripe-color: $medium-light,
+    table-row-stripe-color-alternate: $medium-light,
+    codefold-icon-open: url(../images/triangle-arrow-down.svg?byUrl),
+    codefold-icon-closed: url(../images/triangle-arrow-right.svg?byUrl),
+
+    primary-button-color: $lightest,
+    primary-button-background-color: $p5js-pink,
+
+    table-button-color: $lightest,
+    table-button-background-color: $middle-gray,
+    table-button-active-color: $lightest,
+    table-button-background-active-color: #00A1D3,
+    table-button-hover-color: $lightest,
+    table-button-background-hover-color: $p5js-pink,
+
+    progress-bar-background-color: $middle-gray,
+    progress-bar-active-color: $p5js-active-pink,
+
+    form-title-color: rgba(51, 51, 51, 0.87),
+    form-secondary-title-color: $medium-dark,
+    form-input-text-color: $dark,
+    form-input-placeholder-text-color: $middle-light,
+    form-navigation-options-color: $middle-dark
   ),
   dark: (
     logo-color: $p5js-pink,
-    primary-text-color: $white,
-    modal-button-color: $white,
-    heading-text-color: $white,
-    secondary-text-color: #c2c2c2,
-    inactive-text-color: #b5b5b5,
-    background-color: #333,
-    preview-placeholder-color: #dcdcdc,
-    button-background-color: $white,
-    button-color: $black,
-    button-border-color: #979797,
-    toolbar-button-color: $p5js-pink,
-    toolbar-button-background-color: #424242,
+    logo-background-color: $lightest,
+    heavy-text-color: $lightest,
+    primary-text-color: $lightest,
+    dropzone-text-color: $black,
+    modal-button-color: $lightest,
+    secondary-text-color: $medium-light,
+    inactive-text-color: $middle-light,
+    background-color: $darker,
+    button-background-color: $dark,
+    button-secondary-background-color: $medium-dark,
+    button-color: $light,
+    button-border-color: $middle-dark,
+    toolbar-button-color: $lightest,
+    toolbar-button-background-color: $medium-dark,
     button-background-hover-color: $p5js-pink,
-    button-background-active-color: #f10046,
-    button-hover-color: $white,
-    button-active-color: $white,
-    modal-background-color: #444,
-    modal-button-background-color: #5f5f5f,
-    modal-border-color: #949494,
-    icon-color: #a9a9a9,
-    icon-hover-color: $white,
+    button-background-active-color: $p5js-active-pink,
+    button-nav-inactive-color: $middle-light,
+    button-hover-color: $lightest,
+    button-active-color: $lightest,
+    modal-background-color: $dark,
+    preferences-button-background-color: $middle-dark,
+    modal-border-color: $middle-dark,
+    icon-color: $middle-light,
+    icon-hover-color: $lightest,
+    icon-toast-hover-color: $lightest,
     shadow-color: rgba(0, 0, 0, 0.16),
-    console-background-color: #4f4f4f,
-    console-header-background-color: #3f3f3f,
-    console-header-color: #b5b5b5,
-    ide-border-color: #949494,
-    editor-gutter-color: #363636,
-    file-selected-color: #404040,
-    input-text-color: #333,
-    input-border-color: #b5b5b5,
-    about-list-text-color: #f4f4f4,
+    console-background-color: $dark,
+    console-input-background-color: $darker,
+    console-color: $lightest,
+    console-logged-times-color: $dark,
+    console-arrow-color: $medium-light,
+    console-active-arrow-color: #097BB3,
+    console-header-background-color: $medium-dark,
+    console-header-color: $lightest,
+    console-info-background-color: #5276B7,
+    console-warn-background-color: #966C08,
+    console-error-background-color: #DD3134,
+    console-debug-background-color: #097BB3,
+    ide-border-color: $middle-dark,
+    editor-gutter-color: $darker,
+    file-hover-color: $dark,
+    file-selected-color: $medium-dark,
+    input-text-color: $lightest,
+    input-background-color: $dark,
+    input-secondary-background-color: $medium-dark,
+    input-border-color: $middle-dark,
+    search-background-color: $lightest,
+    search-clear-background-color: $medium-dark,
+    search-hover-text-color: $lightest,
+    search-hover-background-color: $p5js-pink,
+    keyboard-shortcut-color: $middle-light,
+    nav-hover-color: $p5js-pink,
+    nav-border-color: $middle-dark,
+    error-color: $p5js-pink,
+    table-row-stripe-color: $dark,
+    table-row-stripe-color-alternate: $darker,
+    codefold-icon-open: url(../images/triangle-arrow-down-white.svg?byUrl),
+    codefold-icon-closed: url(../images/triangle-arrow-right-white.svg?byUrl),
+
+    primary-button-color: $lightest,
+    primary-button-background-color: $p5js-pink,
+
+    table-button-color: $lightest,
+    table-button-background-color: $middle-gray,
+    table-button-active-color: $lightest,
+    table-button-background-active-color: #00A1D3,
+    table-button-hover-color: $lightest,
+    table-button-background-hover-color: $p5js-pink,
+
+    progress-bar-background-color: $middle-gray,
+    progress-bar-active-color: $p5js-active-pink,
+
+    form-title-color: $lightest,
+    form-secondary-title-color: $medium-light,
+    form-navigation-options-color: $middle-light
   ),
   contrast: (
     logo-color: $yellow,
-    primary-text-color: $yellow,
-    modal-button-color: #333,
-    heading-text-color: #e1e1e1,
-    secondary-text-color: #e1e1e1,
-    inactive-text-color: #c1c1c1,
-    background-color: #333,
-    button-background-color: $white,
-    button-color: $black,
-    button-border-color: #979797,
-    toolbar-button-color: #333333,
-    toolbar-button-background-color: #C1C1C1,
+    logo-background-color: $darker,
+    heavy-text-color: $yellow,
+    primary-text-color: $lightest,
+    dropzone-text-color: $black,
+    modal-button-color: $dark,
+    secondary-text-color: $lighter,
+    inactive-text-color: $light,
+    background-color: $darker,
+    button-background-color: $dark,
+    button-secondary-background-color: $medium-dark,
+    button-color: $light,
+    button-border-color: $middle-dark,
+    toolbar-button-color: $dark,
+    toolbar-button-background-color: $medium-light,
     button-background-hover-color: $yellow,
-    button-background-active-color: #f10046,
-    button-hover-color: #333333,
-    button-active-color: #333333,
-    modal-background-color: #444,
-    modal-button-background-color: #C1C1C1,
-    modal-border-color: #949494,
-    icon-color: #a9a9a9,
+    button-background-active-color: $yellow,
+    button-nav-inactive-color: $light,
+    button-hover-color: $dark,
+    button-active-color: $dark,
+    modal-background-color: $dark,
+    preferences-button-background-color: $medium-light,
+    modal-border-color: $middle-dark,
+    icon-color: $medium-light,
     icon-hover-color: $yellow,
+    icon-toast-hover-color: $yellow,
     shadow-color: rgba(0, 0, 0, 0.16),
-    console-background-color: #4f4f4f,
-    console-header-background-color: #3f3f3f,
-    console-header-color: #b5b5b5,
-    ide-border-color: #949494,
-    editor-gutter-color: #454545,
-    file-selected-color: #404040,
-    input-text-color: #333,
-    input-border-color: #b5b5b5,
-    about-list-text-color: #f4f4f4,
+    console-background-color: $dark,
+    console-input-background-color: $darker,
+    console-color: $lightest,
+    console-logged-times-color: $darker,
+    console-arrow-color: $lightest,
+    console-active-arrow-color: $dodgerblue,
+    console-header-background-color: $medium-dark,
+    console-header-color: $lightest,
+    console-info-background-color: $lightsteelblue,
+    console-warn-background-color: $orange,
+    console-debug-background-color: $dodgerblue,
+    console-error-background-color: $red,
+    ide-border-color: $middle-dark,
+    editor-gutter-color: $darker,
+    file-hover-color: $dark,
+    file-selected-color: $medium-dark,
+    input-text-color: $lightest,
+    input-background-color: $dark,
+    input-secondary-background-color: $medium-dark,
+    input-border-color: $middle-dark,
+    search-background-color: $white,
+    search-clear-background-color: $medium-dark,
+    search-hover-text-color: $dark,
+    search-hover-background-color: $yellow,
+    keyboard-shortcut-color: $middle-light,
+    nav-hover-color: $yellow,
+    nav-border-color: $middle-dark,
+    error-color: $p5-contrast-pink,
+    table-row-stripe-color: $dark,
+    table-row-stripe-color-alternate: $darker,
+    codefold-icon-open: url(../images/triangle-arrow-down-white.svg?byUrl),
+    codefold-icon-closed: url(../images/triangle-arrow-right-white.svg?byUrl),
+
+    primary-button-color: $lightest,
+    primary-button-background-color: $p5js-pink,
+
+    table-button-color: $dark,
+    table-button-background-color: $middle-gray,
+    table-button-active-color: $dark,
+    table-button-background-active-color: #00FFFF,
+    table-button-hover-color: $dark,
+    table-button-background-hover-color: $yellow,
+
+    progress-bar-background-color: $middle-gray,
+    progress-bar-active-color: $p5js-active-pink,
+
+    form-title-color: $lightest,
+    form-secondary-title-color: $medium-light,
+    form-navigation-options-color: $middle-light
   )
 );
 
-$console-warn-color: #ffbe05;
-$console-error-color: #ff5f52;
+$toast-background-color: $medium-dark;
+$toast-text-color: $lightest;
 
-$toast-background-color: #979797;
-$toast-text-color: $white;
+$light-console-error-color: #D11518;
+$light-console-warn-color: #FAAF00;
+$light-console-debug-color: #0071AD;
 
-$form-title-color: rgba(51, 51, 51, 0.87);
-$secondary-form-title-color: #b5b5b5;
-$form-button-background-color: $white;
-$form-button-color: #f10046;
-$form-button-background-hover-color: $p5js-pink;
-$form-button-background-active-color: #f10046;
-$form-button-hover-color: $white;
-$form-button-active-color: $white;
-$form-navigation-options-color: #999999;
-
-$icon-color: #8b8b8b;
-$icon-hover-color: #333;
+$dark-console-error-color: #DF3A3D;
+$dark-console-warn-color: #F5BC38;
+$dark-console-debug-color: #0C99E2;
 
 $about-play-background-color: rgba(255, 255, 255, 0.7);
 $about-button-border-color: rgba(151, 151, 151, 0.7);

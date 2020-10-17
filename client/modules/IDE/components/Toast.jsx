@@ -1,18 +1,21 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import InlineSVG from 'react-inlinesvg';
-const exitUrl = require('../../../images/exit.svg');
+import { useTranslation } from 'react-i18next';
 import * as ToastActions from '../actions/toast';
 
+import ExitIcon from '../../../images/exit.svg';
+
 function Toast(props) {
+  const { t } = useTranslation();
   return (
     <section className="toast">
       <p>
-        {props.text}
+        {t(props.text)}
       </p>
-      <button className="toast__close" onClick={props.hideToast}>
-        <InlineSVG src={exitUrl} alt="Close Keyboard Shortcuts Overlay" />
+      <button className="toast__close" onClick={props.hideToast} aria-label="Close Alert" >
+        <ExitIcon focusable="false" aria-hidden="true" />
       </button>
     </section>
   );

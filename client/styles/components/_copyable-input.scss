@@ -1,0 +1,73 @@
+.copyable-input__value-container {
+  position: relative;
+}
+
+.copyable-input__tooltip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.copyable-input__value {
+  width: 100%;
+  font-size: #{16 / $base-font-size}rem;
+  .copyable-input--with-preview & {
+    border-radius: 2px 0 0 2px;
+  }
+}
+
+.copyable-input__label {
+  width: 100%;
+  font-size: #{12 / $base-font-size}rem;
+  padding-bottom: #{5 / $base-font-size}rem;
+  @include themify() {
+    color: getThemifyVariable('inactive-text-color');
+  }
+}
+
+.copyable-input__label-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.copyable-input {
+  padding-bottom: #{30 / $base-font-size}rem;
+  display: flex;
+}
+
+.copyable-input__value-container {
+  width: 100%;
+}
+
+.tooltipped::after {
+  @include themify() {
+    background-color: getThemifyVariable('button-background-hover-color');
+    color: getThemifyVariable('button-hover-color');
+  }
+  font-family: Montserrat, sans-serif;
+  font-size: #{12 / $base-font-size}rem;
+}
+
+.tooltipped-n::before,
+.tooltipped::before
+ {
+  @include themify() {
+    color: getThemifyVariable('button-background-hover-color');
+    border-top-color: getThemifyVariable('button-background-hover-color');
+  }
+}
+
+.copyable-input__preview {
+  @extend %button;
+  @include themify() {
+    align-self: flex-end;
+    border-radius: 0 2px 2px 0;
+    padding: #{2 / $base-font-size}rem 0;
+  }
+  & svg {
+    height: #{30 / $base-font-size}rem;
+    width: #{30 / $base-font-size}rem;
+  }
+}

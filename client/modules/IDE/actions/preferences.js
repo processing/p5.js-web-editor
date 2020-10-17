@@ -1,16 +1,18 @@
+import i18next from 'i18next';
+import apiClient from '../../../utils/apiClient';
 import * as ActionTypes from '../../../constants';
-import axios from 'axios';
-
-const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:8000/api' : '/api';
 
 function updatePreferences(formParams, dispatch) {
-  axios.put(`${ROOT_URL}/preferences`, formParams, { withCredentials: true })
+  apiClient.put('/preferences', formParams)
     .then(() => {
     })
-    .catch((response) => dispatch({
-      type: ActionTypes.ERROR,
-      error: response.data
-    }));
+    .catch((error) => {
+      const { response } = error;
+      dispatch({
+        type: ActionTypes.ERROR,
+        error: response.data
+      });
+    });
 }
 
 export function setFontSize(value) {
@@ -31,17 +33,17 @@ export function setFontSize(value) {
   };
 }
 
-export function setIndentation(value) {
+export function setLineNumbers(value) {
   return (dispatch, getState) => {
     dispatch({
-      type: ActionTypes.SET_INDENTATION,
+      type: ActionTypes.SET_LINE_NUMBERS,
       value
     });
     const state = getState();
     if (state.user.authenticated) {
       const formParams = {
         preferences: {
-          indentationAmount: value
+          lineNumbers: value
         }
       };
       updatePreferences(formParams, dispatch);
@@ -49,33 +51,17 @@ export function setIndentation(value) {
   };
 }
 
-export function indentWithTab() {
+export function setAutocloseBracketsQuotes(value) {
   return (dispatch, getState) => {
     dispatch({
-      type: ActionTypes.INDENT_WITH_TAB
+      type: ActionTypes.SET_AUTOCLOSE_BRACKETS_QUOTES,
+      value
     });
     const state = getState();
     if (state.user.authenticated) {
       const formParams = {
         preferences: {
-          isTabIndent: true
-        }
-      };
-      updatePreferences(formParams, dispatch);
-    }
-  };
-}
-
-export function indentWithSpace() {
-  return (dispatch, getState) => {
-    dispatch({
-      type: ActionTypes.INDENT_WITH_SPACE
-    });
-    const state = getState();
-    if (state.user.authenticated) {
-      const formParams = {
-        preferences: {
-          isTabIndent: false
+          autocloseBracketsQuotes: value
         }
       };
       updatePreferences(formParams, dispatch);
@@ -94,6 +80,24 @@ export function setAutosave(value) {
       const formParams = {
         preferences: {
           autosave: value
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
+  };
+}
+
+export function setLinewrap(value) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.SET_LINEWRAP,
+      value
+    });
+    const state = getState();
+    if (state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          linewrap: value
         }
       };
       updatePreferences(formParams, dispatch);
@@ -130,6 +134,42 @@ export function setTextOutput(value) {
       const formParams = {
         preferences: {
           textOutput: value
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
+  };
+}
+
+export function setGridOutput(value) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.SET_GRID_OUTPUT,
+      value
+    });
+    const state = getState();
+    if (state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          gridOutput: value
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
+  };
+}
+
+export function setSoundOutput(value) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.SET_SOUND_OUTPUT,
+      value
+    });
+    const state = getState();
+    if (state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          soundOutput: value
         }
       };
       updatePreferences(formParams, dispatch);
@@ -174,6 +214,33 @@ export function setAutorefresh(value) {
       const formParams = {
         preferences: {
           autorefresh: value
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
+  };
+}
+
+export function setAllAccessibleOutput(value) {
+  return (dispatch) => {
+    dispatch(setTextOutput(value));
+    dispatch(setGridOutput(value));
+    dispatch(setSoundOutput(value));
+  };
+}
+
+export function setLanguage(value, { persistPreference = true } = {}) {
+  return (dispatch, getState) => {
+    i18next.changeLanguage(value);
+    dispatch({
+      type: ActionTypes.SET_LANGUAGE,
+      language: value
+    });
+    const state = getState();
+    if (persistPreference && state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          language: value
         }
       };
       updatePreferences(formParams, dispatch);

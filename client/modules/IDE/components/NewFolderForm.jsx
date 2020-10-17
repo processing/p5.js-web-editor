@@ -1,5 +1,10 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { withTranslation } from 'react-i18next';
 import { domOnlyProps } from '../../../utils/reduxFormUtils';
+
+import Button from '../../../common/Button';
+
 
 class NewFolderForm extends React.Component {
   constructor(props) {
@@ -8,29 +13,42 @@ class NewFolderForm extends React.Component {
   }
 
   componentDidMount() {
-    this.refs.fileName.focus();
+    this.fileName.focus();
   }
 
   render() {
-    const { fields: { name }, handleSubmit } = this.props;
+    const {
+      fields: { name },
+      handleSubmit,
+    } = this.props;
     return (
       <form
         className="new-folder-form"
         onSubmit={(data) => {
           handleSubmit(this.createFolder)(data);
-          this.props.closeModal();
         }}
       >
-        <label className="new-folder-form__name-label" htmlFor="name">Name:</label>
-        <input
-          className="new-folder-form__name-input"
-          id="name"
-          type="text"
-          placeholder="Name"
-          ref="fileName"
-          {...domOnlyProps(name)}
-        />
-        <input type="submit" value="Add Folder" aria-label="add folder" />
+        <div className="new-folder-form__input-wrapper">
+          <label className="new-folder-form__name-label" htmlFor="name">
+            Name:
+          </label>
+          <input
+            className="new-folder-form__name-input"
+            id="name"
+            type="text"
+            maxLength="128"
+            placeholder={this.props.t('NewFolderForm.Placeholder')}
+            ref={(element) => { this.fileName = element; }}
+            {...domOnlyProps(name)}
+          />
+          <Button
+            type="submit"
+          >{this.props.t('NewFolderForm.AddFolderSubmit')}
+          </Button>
+        </div>
+        {name.touched && name.error && (
+          <span className="form-error">{name.error}</span>
+        )}
       </form>
     );
   }
@@ -42,7 +60,13 @@ NewFolderForm.propTypes = {
   }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   createFolder: PropTypes.func.isRequired,
-  closeModal: PropTypes.func.isRequired
+  closeModal: PropTypes.func.isRequired,
+  submitting: PropTypes.bool,
+  pristine: PropTypes.bool,
+  t: PropTypes.func.isRequired
 };
-
-export default NewFolderForm;
+NewFolderForm.defaultProps = {
+  submitting: false,
+  pristine: true,
+};
+export default withTranslation()(NewFolderForm);

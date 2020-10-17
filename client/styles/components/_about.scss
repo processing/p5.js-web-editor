@@ -1,35 +1,3 @@
-.about {
-  @extend %modal;
-  display: flex;
-  flex-wrap: wrap;
-  flex-flow: column;
-  width: #{720 / $base-font-size}rem;
-  outline: none;
-  & a {
-    color: $form-navigation-options-color;
-  }
-}
-
-.about__header {
-  display: flex;
-  justify-content: space-between;
-  padding-top: #{12 / $base-font-size}rem;
-  padding-right: #{14 / $base-font-size}rem;
-  padding-bottom: #{20 / $base-font-size}rem;
-  padding-left: #{21 / $base-font-size}rem;
-}
-
-.about__header-title {
-  font-size: #{38 / $base-font-size}rem;
-  font-weight: normal;
-}
-
-.about__exit-button {
-  @include themify() {
-    @extend %icon;
-  }
-}
-
 .about__logo {
   @include themify() {
     & path {
@@ -38,40 +6,45 @@
   }
 }
 
-.about__play-video {
-  padding-top: #{9 / $base-font-size}rem;
-  padding-left: #{5 / $base-font-size}rem;
-}
+// hello p5 video link button css
 
-.about__play-video-button {
-  @include themify() {
-    @extend %toolbar-button;
-    width: #{32 / $base-font-size}rem;
-    height: #{32 / $base-font-size}rem;
-    line-height: #{34 / $base-font-size}rem;
-    border-radius: #{24 / $base-font-size}rem;
-    background-color: $about-play-background-color;
-    border: solid 0.5px $about-button-border-color;
-    &:hover {
-      border-color: getThemifyVariable('button-background-hover-color');
-    }
-  }
-  padding-left: 2px;
-  margin-right: #{9 / $base-font-size}rem;
-  svg {
-    width: #{11 / $base-font-size}rem;
-    height: #{11 / $base-font-size}rem;
-  }
-}
+// .about__play-video {
+//   padding-top: #{9 / $base-font-size}rem;
+//   padding-left: #{5 / $base-font-size}rem;
+// }
+
+// .about__play-video-button {
+//   @include themify() {
+//     @extend %toolbar-button;
+//     width: #{32 / $base-font-size}rem;
+//     height: #{32 / $base-font-size}rem;
+//     line-height: #{34 / $base-font-size}rem;
+//     border-radius: #{24 / $base-font-size}rem;
+//     background-color: $about-play-background-color;
+//     border: solid 0.5px $about-button-border-color;
+//     &:hover {
+//       border-color: getThemifyVariable('button-background-hover-color');
+//     }
+//   }
+//   padding-left: 2px;
+//   margin-right: #{9 / $base-font-size}rem;
+//   svg {
+//     width: #{11 / $base-font-size}rem;
+//     height: #{11 / $base-font-size}rem;
+//     margin-left: #{1 / $base-font-size}rem;
+//   }
+// }
 
 .about__content {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  flex-wrap: wrap;
   padding-top: #{17 / $base-font-size}rem;
   padding-right: #{78 / $base-font-size}rem;
   padding-bottom: #{20 / $base-font-size}rem;
   padding-left: #{20 / $base-font-size}rem;
+  width: #{720 / $base-font-size}rem;
 }
 
 .about__content-column {
@@ -98,9 +71,6 @@
   @include themify() {
     padding-top: #{10 / $base-font-size}rem;
     font-size: #{16 / $base-font-size}rem;
-    & a {
-      color: getThemifyVariable(about-list-text-color);
-    }
   }
 }
 
@@ -111,6 +81,7 @@
   padding-right: #{20 / $base-font-size}rem;
   padding-bottom: #{21 / $base-font-size}rem;
   padding-left: #{291 / $base-font-size}rem;
+  width: 100%;
 }
 
 .about__footer-list {

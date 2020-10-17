@@ -1,12 +1,13 @@
 import * as ActionTypes from '../../../constants';
+import { clearConsole } from './console';
 
-export function startSketch() {
+export function startVisualSketch() {
   return {
     type: ActionTypes.START_SKETCH
   };
 }
 
-export function stopSketch() {
+export function stopVisualSketch() {
   return {
     type: ActionTypes.STOP_SKETCH
   };
@@ -20,7 +21,7 @@ export function startRefreshSketch() {
 
 export function startSketchAndRefresh() {
   return (dispatch) => {
-    dispatch(startSketch());
+    dispatch(startVisualSketch());
     dispatch(startRefreshSketch());
   };
 }
@@ -31,15 +32,15 @@ export function endSketchRefresh() {
   };
 }
 
-export function startTextOutput() {
+export function startAccessibleOutput() {
   return {
-    type: ActionTypes.START_TEXT_OUTPUT
+    type: ActionTypes.START_ACCESSIBLE_OUTPUT
   };
 }
 
-export function stopTextOutput() {
+export function stopAccessibleOutput() {
   return {
-    type: ActionTypes.STOP_TEXT_OUTPUT
+    type: ActionTypes.STOP_ACCESSIBLE_OUTPUT
   };
 }
 
@@ -61,15 +62,29 @@ export function resetSelectedFile(previousId) {
   };
 }
 
-export function newFile() {
+export function newFile(parentId) {
   return {
-    type: ActionTypes.SHOW_MODAL
+    type: ActionTypes.SHOW_MODAL,
+    parentId
   };
 }
 
 export function closeNewFileModal() {
   return {
     type: ActionTypes.HIDE_MODAL
+  };
+}
+
+export function openUploadFileModal(parentId) {
+  return {
+    type: ActionTypes.OPEN_UPLOAD_FILE_MODAL,
+    parentId
+  };
+}
+
+export function closeUploadFileModal() {
+  return {
+    type: ActionTypes.CLOSE_UPLOAD_FILE_MODAL
   };
 }
 
@@ -121,9 +136,10 @@ export function closeProjectOptions() {
   };
 }
 
-export function newFolder() {
+export function newFolder(parentId) {
   return {
-    type: ActionTypes.SHOW_NEW_FOLDER_MODAL
+    type: ActionTypes.SHOW_NEW_FOLDER_MODAL,
+    parentId
   };
 }
 
@@ -133,9 +149,17 @@ export function closeNewFolderModal() {
   };
 }
 
-export function showShareModal() {
-  return {
-    type: ActionTypes.SHOW_SHARE_MODAL
+export function showShareModal(projectId, projectName, ownerUsername) {
+  return (dispatch, getState) => {
+    const { project, user } = getState();
+    dispatch({
+      type: ActionTypes.SHOW_SHARE_MODAL,
+      payload: {
+        shareModalProjectId: projectId || project.id,
+        shareModalProjectName: projectName || project.name,
+        shareModalProjectUsername: ownerUsername || user.username
+      }
+    });
   };
 }
 
@@ -201,19 +225,6 @@ export function resetJustOpenedProject() {
   };
 }
 
-export function setProjectSavedTime(value) {
-  return {
-    type: ActionTypes.SET_PROJECT_SAVED_TIME,
-    value
-  };
-}
-
-export function resetProjectSavedTime() {
-  return {
-    type: ActionTypes.RESET_PROJECT_SAVED_TIME,
-  };
-}
-
 export function setPreviousPath(path) {
   return {
     type: ActionTypes.SET_PREVIOUS_PATH,
@@ -231,5 +242,39 @@ export function showErrorModal(modalType) {
 export function hideErrorModal() {
   return {
     type: ActionTypes.HIDE_ERROR_MODAL
+  };
+}
+
+export function hideRuntimeErrorWarning() {
+  return {
+    type: ActionTypes.HIDE_RUNTIME_ERROR_WARNING
+  };
+}
+
+export function showRuntimeErrorWarning() {
+  return {
+    type: ActionTypes.SHOW_RUNTIME_ERROR_WARNING
+  };
+}
+
+export function startSketch() {
+  return (dispatch) => {
+    dispatch(clearConsole());
+    dispatch(startSketchAndRefresh());
+  };
+}
+
+export function startAccessibleSketch() {
+  return (dispatch) => {
+    dispatch(clearConsole());
+    dispatch(startAccessibleOutput());
+    dispatch(startSketchAndRefresh());
+  };
+}
+
+export function stopSketch() {
+  return (dispatch) => {
+    dispatch(stopAccessibleOutput());
+    dispatch(stopVisualSketch());
   };
 }
