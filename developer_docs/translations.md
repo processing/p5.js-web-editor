@@ -12,7 +12,8 @@ In order to simplify the translations process the following rules of thumb were 
 * There is only one file to translate all the texts in any specific language, which is located under the directory, in respective locale [subdirectory](https://github.com/processing/p5.js-web-editor/tree/develop/translations/locales)
 * The new language code must be added to [client/i18n.js](https://github.com/processing/p5.js-web-editor/blob/develop/client/i18n.js#L7)
 * New languages will need to be selected using a dropdown in Nav component, specifically in function [renderLanguageMenu.](https://github.com/processing/p5.js-web-editor/blob/develop/client/components/Nav.jsx#L550)
- 
+* Need to add `TRANSLATIONS_ENABLED=true` to `.env` to activate dropdown for the languages.
+
 ## Translations
 
 * Every component should introduce its own subset of keys inside a dictionary named after the component. 
