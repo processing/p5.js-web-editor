@@ -3,7 +3,7 @@
 
 Documentation is also available in the following languages:
 
-[한국어](https://github.com/processing/p5.js-web-editor/blob/master/translations/ko)
+[한국어](https://github.com/processing/p5.js-web-editor/blob/develop/translations/ko)
 
 ## Welcome! 👋👋🏿👋🏽👋🏻👋🏾👋🏼
 
@@ -23,7 +23,7 @@ All contributors to the p5.js Web Editor are expected to follow the [Code of Con
 
 The p5.js Web Editor is a collaborative project created by many individuals, and you are invited to help. All types of involvement are welcome! Please check out the [contribution guide](./.github/CONTRIBUTING.md) for more details.
 
-Developers, check the [developer docs](https://github.com/processing/p5.js-web-editor/blob/master/developer_docs/) details about contributing code, bug fixes, and documentation. To start writing code, a great place to start is the [development guide](https://github.com/processing/p5.js-web-editor/blob/master/developer_docs/development.md).
+Developers, check the [developer docs](https://github.com/processing/p5.js-web-editor/blob/develop/developer_docs/) details about contributing code, bug fixes, and documentation. To start writing code, a great place to start is the [development guide](https://github.com/processing/p5.js-web-editor/blob/develop/developer_docs/development.md).
 
 ## Issues
 
