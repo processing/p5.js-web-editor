@@ -1,0 +1,590 @@
+{
+  "Nav": {
+    "File": {
+      "Title": "파일",
+      "New": "새 파일",
+      "Share": "공유하기",
+      "Duplicate": "복제하기",
+      "Open": "열기",
+      "Download": "다운로드",
+      "AddToCollection": "콜렉션 추가하기",
+      "Examples": "예제"
+    },
+    "Edit": {
+      "Title": "수정하기",
+      "TidyCode": "코드 정리",
+      "Find": "찾기",
+      "FindNext": "다음 내용 찾기",
+      "FindPrevious": "이전 내용 찾기"
+    },
+    "Sketch": {
+      "Title": "스케치",
+      "AddFile": "파일 추가",
+      "AddFolder": "폴더 추가",
+      "Run": "실행",
+      "Stop": "중지"
+    },
+    "Help": {
+      "Title": "도움",
+      "KeyboardShortcuts": "단축키",
+      "Reference": "레퍼런스",
+      "About": "소개"
+    },
+    "Lang": "언어",
+    "BackEditor": "에디터로 돌아가기",
+    "WarningUnsavedChanges": "Are you sure you want to leave this page? You have unsaved changes.",
+    "Login": "로그인",
+    "LoginOr": "또는",
+    "SignUp": "회원가입",
+    "Auth": {
+      "Welcome": "환영합니다!",
+      "Hello": "안녕하세요",
+      "MyAccount": "내 계정",
+      "My": "나의",
+      "MySketches": "나의 스케치",
+      "MyCollections": "나의 콜렉션",
+      "Asset": "애셋",
+      "MyAssets": "나의 애셋들",
+      "LogOut": "로그아웃"
+    }
+  },
+  "LoginForm": {
+    "UsernameOrEmail": "이메일 또는 아이디",
+    "UsernameOrEmailARIA": "이메일 또는 아이디",
+    "Password": "비밀번호",
+    "PasswordARIA": "비밀번호",
+    "Submit": "로그인"
+  },
+  "LoginView": {
+    "Title": "p5.js 웹에디터 | 로그인",
+    "Login": "로그인",
+    "LoginOr": "또는",
+    "SignUp": "회원가입",
+    "Email": "이메일",
+    "Username": "아이디",
+    "DontHaveAccount": "계정이 없나요? ",
+    "ForgotPassword": "비밀번호를 잊었나요? ",
+    "ResetPassword": "비밀번호 재설정"
+  },
+  "SocialAuthButton": {
+    "Connect": "Connect {{serviceauth}} Account",
+    "Unlink": "Unlink {{serviceauth}} Account",
+    "Login": "Login with {{serviceauth}}",
+    "LogoARIA": "{{serviceauth}} logo"
+  },
+  "About": {
+    "Title": "About",
+    "TitleHelmet": "p5.js Web Editor | About",
+    "Contribute": "Contribute",
+    "NewP5": "New to p5.js?",
+    "Report": "Report a bug",
+    "Learn": "Learn",
+    "Resources": "Resources",
+    "Libraries": "Libraries",
+    "Forum": "Forum",
+    "Examples": "Examples"
+  },
+  "Toast": {
+    "OpenedNewSketch": "새 스케치 열기 완료.",
+    "SketchSaved": "스케치 저장 완료.",
+    "SketchFailedSave": "스케치 저장 실패.",
+    "AutosaveEnabled": "자동 저장 활성화.",
+    "LangChange": "언어 변경",
+    "SettingsSaved": "설정 저장 완료."
+  },
+  "Toolbar": {
+    "Preview": "미리보기",
+    "Auto-refresh": "자동-새로고침",
+    "OpenPreferencesARIA": "Open Preferences",
+    "PlaySketchARIA": "스케치 실행",
+    "PlayOnlyVisualSketchARIA": "Play only visual sketch",
+    "StopSketchARIA": "스케치 실행 중지",
+    "EditSketchARIA": "스케치 이름 수정하기",
+    "NewSketchNameARIA": "새로운 스케치 이름",
+    "By": " 제작: "
+  },
+  "Console": {
+    "Title": "콘솔 Console",
+    "Clear": "비우기 Clear",
+    "ClearARIA": "콘솔 비우기 Clear console",
+    "Close": "닫기 Close",
+    "CloseARIA": "콘솔 닫기 Close console",
+    "Open": "열기 Open",
+    "OpenARIA": "콘솔 열기 Open console"
+  },
+  "Preferences": {
+    "Settings": "설정",
+    "GeneralSettings": "일반 설정 General settings",
+    "Accessibility": "접근성 Accessibility",
+    "Theme": "테마 Theme",
+    "LightTheme": "밝은 테마 Light",
+    "LightThemeARIA": "밝은 테마 켜짐 light theme on",
+    "DarkTheme": "어두운 테마 Dark",
+    "DarkThemeARIA": "어두운 테마 켜짐 dark theme on",
+    "HighContrastTheme": "고대비 테마 High Contrast",
+    "HighContrastThemeARIA": "고대비 테마 켜짐 high contrast theme on",
+    "TextSize": "문자 크기 Text Size",
+    "DecreaseFont": "줄이기 Decrease",
+    "DecreaseFontARIA": "폰트 크기 줄이기 decrease font size",
+    "IncreaseFont": "키우기 Increase",
+    "IncreaseFontARIA": "폰트 크기 키우기 increase font size",
+    "Autosave": "자동저장 Autosave",
+    "On": "켜기 On",
+    "AutosaveOnARIA": "자동저장 켜짐 autosave on",
+    "Off": "끄기 Off",
+    "AutosaveOffARIA": "자동저장 꺼짐 autosave off",
+    "AutocloseBracketsQuotes": "Autoclose Brackets and Quotes",
+    "AutocloseBracketsQuotesOnARIA": "autoclose brackets and quotes on",
+    "AutocloseBracketsQuotesOffARIA": "autoclose brackets and quotes off",
+    "WordWrap": "Word Wrap",
+    "LineWrapOnARIA": "linewrap on",
+    "LineWrapOffARIA": "linewrap off",
+    "LineNumbers": "Line numbers",
+    "LineNumbersOnARIA": "line numbers on",
+    "LineNumbersOffARIA": "line numbers off",
+    "LintWarningSound": "Lint warning sound",
+    "LintWarningOnARIA": "lint warning on",
+    "LintWarningOffARIA": "lint warning off",
+    "PreviewSound": "Preview sound",
+    "PreviewSoundARIA": "preview sound",
+    "AccessibleTextBasedCanvas": "Accessible text-based canvas",
+    "UsedScreenReader": "Used with screen reader",
+    "PlainText": "Plain-text",
+    "TextOutputARIA": "text output on",
+    "TableText": "Table-text",
+    "TableOutputARIA": "table output on",
+    "Sound": "Sound",
+    "SoundOutputARIA": "sound output on"
+  },
+  "KeyboardShortcuts": {
+    "Title": " 단축키",
+    "ShortcutsFollow": "Code editing keyboard shortcuts follow",
+    "SublimeText": "Sublime Text shortcuts",
+    "CodeEditing": {
+      "Tidy": "Tidy",
+      "FindText": "Find Text",
+      "FindNextMatch": "Find Next Match",
+      "FindPrevMatch": "Find Previous Match",
+      "IndentCodeLeft": "Indent Code Left",
+      "IndentCodeRight": "Indent Code Right",
+      "CommentLine": "Comment Line",
+      "FindNextTextMatch": "Find Next Text Match",
+      "FindPreviousTextMatch": "Find Previous Text Match",
+      "CodeEditing": "Code Editing"
+    },
+    "General": {
+      "StartSketch": "Start Sketch",
+      "StopSketch": "Stop Sketch",
+      "TurnOnAccessibleOutput": "Turn On Accessible Output",
+      "TurnOffAccessibleOutput": "Turn Off Accessible Output"
+    }
+  },
+  "Sidebar": {
+    "Title": "Sketch Files",
+    "ToggleARIA": "Toggle open/close sketch file options",
+    "AddFolder": "Create folder",
+    "AddFolderARIA": "add folder",
+    "AddFile": "Create file",
+    "AddFileARIA": "add file",
+    "UploadFile": "Upload file",
+    "UploadFileARIA": "upload file"
+  },
+  "FileNode": {
+    "OpenFolderARIA": "Open folder contents",
+    "CloseFolderARIA": "Close folder contents",
+    "ToggleFileOptionsARIA": "Toggle open/close file options",
+    "AddFolder": "Create folder",
+    "AddFolderARIA": "add folder",
+    "AddFile": "Create file",
+    "AddFileARIA": "add file",
+    "UploadFile": "Upload file",
+    "UploadFileARIA": "upload file",
+    "Rename": "Rename",
+    "Delete": "Delete"
+  },
+  "Common": {
+    "Error": "Error",
+    "ErrorARIA": "Error",
+    "Save": "Save",
+    "p5logoARIA": "p5.js Logo",
+    "DeleteConfirmation": "Are you sure you want to delete {{name}}?"
+  },
+  "IDEView": {
+    "SubmitFeedback": "Submit Feedback",
+    "SubmitFeedbackARIA": "submit-feedback",
+    "AddCollectionTitle": "Add to collection",
+    "AddCollectionARIA":"add to collection",
+    "ShareTitle": "Share",
+    "ShareARIA":"share"
+  },
+  "NewFileModal": {
+    "Title": "Create File",
+    "CloseButtonARIA": "Close New File Modal",
+    "EnterName": "Please enter a name",
+    "InvalidType": "Invalid file type. Valid extensions are .js, .css, .json, .txt, .csv, .tsv, .frag, and .vert."
+  },
+  "NewFileForm": {
+    "AddFileSubmit": "Add File",
+    "Placeholder": "Name"
+  },
+  "NewFolderModal": {
+    "Title": "Create Folder",
+    "CloseButtonARIA": "Close New Folder Modal",
+    "EnterName": "Please enter a name",
+    "EmptyName": "Folder name cannot contain only spaces",
+    "InvalidExtension": "Folder name cannot contain an extension"
+  },
+  "NewFolderForm": {
+    "AddFolderSubmit": "Add Folder",
+    "Placeholder": "Name"
+  },
+  "ResetPasswordForm": {
+    "Email": "Email used for registration",
+    "EmailARIA": "email",
+    "Submit": "Send Password Reset Email"
+  },
+  "ResetPasswordView": {
+    "Title": "p5.js Web Editor | Reset Password",
+    "Reset": "Reset Your Password",
+    "Submitted": "Your password reset email should arrive shortly. If you don't see it, check\n            in your spam folder as sometimes it can end up there.",
+    "Login": "Log In",
+    "LoginOr": "or",
+    "SignUp": "Sign Up"
+  },
+  "ReduxFormUtils": {
+    "errorInvalidEmail": "Please enter a valid email address",
+    "errorEmptyEmail": "Please enter an email",
+    "errorPasswordMismatch": "Passwords must match",
+    "errorEmptyPassword": "Please enter a password",
+    "errorShortPassword": "Password must be at least 6 characters",
+    "errorConfirmPassword": "Please enter a password confirmation",
+    "errorNewPassword": "Please enter a new password or leave the current password empty.",
+    "errorEmptyUsername": "Please enter a username.",
+    "errorLongUsername": "Username must be less than 20 characters.",
+    "errorValidUsername": "Username must only consist of numbers, letters, periods, dashes, and underscores."
+  },
+  "NewPasswordView": {
+    "Title": "p5.js Web Editor | New Password",
+    "Description": "Set a New Password",
+    "TokenInvalidOrExpired": "The password reset token is invalid or has expired.",
+    "EmptyPassword": "Please enter a password",
+    "PasswordConfirmation": "Please enter a password confirmation",
+    "PasswordMismatch": "Passwords must match"
+  },
+  "AccountForm": {
+    "Email": "Email",
+    "EmailARIA": "email",
+    "Unconfirmed": "Unconfirmed.",
+    "EmailSent": "Confirmation sent, check your email.",
+    "Resend": "Resend confirmation email",
+    "UserName": "User Name",
+    "UserNameARIA": "Username",
+    "CurrentPassword": "Current Password",
+    "CurrentPasswordARIA": "Current Password",
+    "NewPassword": "New Password",
+    "NewPasswordARIA": "New Password",
+    "SubmitSaveAllSettings": "Save All Settings"
+  },
+  "AccountView": {
+    "SocialLogin": "Social Login",
+    "SocialLoginDescription": "Use your GitHub or Google account to log into the p5.js Web Editor.",
+    "Title": "p5.js Web Editor | Account Settings",
+    "Settings": "Account Settings",
+    "AccountTab": "Account",
+    "AccessTokensTab": "Access Tokens"
+  },
+  "APIKeyForm": {
+    "ConfirmDelete": "Are you sure you want to delete {{key_label}}?",
+    "Summary": "Personal Access Tokens act like your password to allow automated\n          scripts to access the Editor API. Create a token for each script\n          that needs access.",
+    "CreateToken": "Create new token",
+    "TokenLabel": "What is this token for?",
+    "TokenPlaceholder": "What is this token for? e.g. Example import script",
+    "CreateTokenSubmit": "Create",
+    "NoTokens": "You have no existing tokens.",
+    "NewTokenTitle": "Your new access token",
+    "NewTokenInfo": "Make sure to copy your new personal access token now.\n                  You won’t be able to see it again!",
+    "ExistingTokensTitle": "Existing tokens"
+  },
+  "APIKeyList": {
+    "Name": "Name",
+    "Created": "Created on",
+    "LastUsed": "Last used",
+    "Actions": "Actions",
+    "Never": "Never",
+    "DeleteARIA": "Delete API Key"
+  },
+  "NewPasswordForm": {
+    "Title": "Password",
+    "TitleARIA": "Password",
+    "ConfirmPassword": "Confirm Password",
+    "ConfirmPasswordARIA": "Confirm Password",
+    "SubmitSetNewPassword": "Set New Password"
+  },
+  "SignupForm": {
+    "Title": "아이디 User Name",
+    "TitleARIA": "username",
+    "Email": "이메일 Email",
+    "EmailARIA": "email",
+    "Password": "비밀번호 Password",
+    "PasswordARIA": "password",
+    "ConfirmPassword": "비밀번호 확인 Confirm Password",
+    "ConfirmPasswordARIA": "Confirm password",
+    "SubmitSignup": "회원가입 Sign Up"
+  },
+  "SignupView": {
+    "Title": "p5.js 웹에디터 | 회원가입",
+    "Description": "회원가입",
+    "Or": "또는",
+    "AlreadyHave": "이미 계정이 있나요? Already have an account?",
+    "Login": "로그인"
+  },
+  "EmailVerificationView": {
+    "Title": "p5.js 웹에디터 | 이메일 확인 Email Verification",
+    "Verify": "Verify your email",
+    "InvalidTokenNull": "이 링크는 유효하지 않습니다. That link is invalid.",
+    "Checking": "Validating token, please wait...",
+    "Verified": "All done, your email address has been verified.",
+    "InvalidState": "Something went wrong."
+  },
+  "AssetList": {
+    "Title": "p5.js Web Editor | My assets",
+    "ToggleOpenCloseARIA": "Toggle Open/Close Asset Options",
+    "Delete": "Delete",
+    "OpenNewTab": "Open in New Tab",
+    "NoUploadedAssets": "No uploaded assets.",
+    "HeaderName": "Name",
+    "HeaderSize": "Size",
+    "HeaderSketch": "Sketch"
+  },
+  "Feedback": {
+    "Title": "p5.js Web Editor | Feedback",
+    "ViaGithubHeader": "Via Github Issues",
+    "ViaGithubDescription": "If you're familiar with Github, this is our preferred method for receiving bug reports and feedback.",
+    "GoToGithub": "Go to Github",
+    "ViaGoogleHeader": "Via Google Form",
+    "ViaGoogleDescription": "You can also submit this quick form.",
+    "GoToForm": "Go to Form"
+  },
+  "Searchbar": {
+    "SearchSketch": "Search sketches...",
+    "SearchCollection": "Search collections...",
+    "ClearTerm": "clear"
+  },
+  "UploadFileModal": {
+    "Title": "Upload File",
+    "CloseButtonARIA": "Close upload file modal",
+    "SizeLimitError": "Error: You cannot upload any more files. You have reached the total size limit of {{sizeLimit}}.\n                If you would like to upload more, please remove the ones you aren't using anymore by\n                in your "
+  },
+  "FileUploader": {
+    "DictDefaultMessage": "Drop files here or click to use the file browser"
+  },
+  "ErrorModal": {
+    "MessageLogin": "In order to save sketches, you must be logged in. Please ",
+    "Login": "Login",
+    "LoginOr": " or ",
+    "SignUp": "Sign Up",
+    "MessageLoggedOut": "It looks like you've been logged out. Please ",
+    "LogIn": "log in",
+    "SavedDifferentWindow": "The project you have attempted to save has been saved from another window.\n        Please refresh the page to see the latest version.",
+    "LinkTitle": "Error Linking Account",
+    "LinkMessage": "There was a problem linking your {{serviceauth}} account to your p5.js Web Editor account. Your {{serviceauth}} account has already been linked to another p5.js Web Editor account."
+  },
+  "ShareModal": {
+    "Embed": "Embed",
+    "Present": "Present",
+    "Fullscreen": "전체화면",
+    "Edit": "수정"
+  },
+  "CollectionView": {
+    "TitleCreate": "콜렉션 생성기",
+    "TitleDefault": "콜렉션"
+  },
+  "Collection": {
+    "Title": "p5.js Web Editor | My collections",
+    "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'s collections",
+    "Share": "공유하기",
+    "URLLink": "콜렉션 링크 Link to Collection",
+    "AddSketch": "스케치 추가하기 Add Sketch",
+    "DeleteFromCollection": "Are you sure you want to remove {{name_sketch}} from this collection?",
+    "SketchDeleted": "Sketch deleted",
+    "SketchRemoveARIA": "Remove sketch from collection",
+    "DescriptionPlaceholder": "Add description",
+    "Description": "description",
+    "NumSketches": "{{count}} sketch",
+    "NumSketches_plural": "{{count}} sketches",
+    "By":"Collection by ",
+    "NoSketches": "No sketches in collection",
+    "TableSummary": "table containing all collections",
+    "HeaderName": "Name",
+    "HeaderCreatedAt": "Date Added",
+    "HeaderUser": "Owner",
+    "DirectionAscendingARIA": "Ascending",
+    "DirectionDescendingARIA": "Descending",
+    "ButtonLabelAscendingARIA": "Sort by {{displayName}} ascending.",
+    "ButtonLabelDescendingARIA": "Sort by {{displayName}} descending."
+  },
+  "AddToCollectionList": {
+    "Title": "p5.js Web Editor | My collections",
+    "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'s collections",
+    "Empty": "No collections"
+  },
+  "CollectionCreate": {
+    "Title": "p5.js Web Editor | Create collection",
+    "FormError": "Couldn't create collection",
+    "FormLabel": "Collection name",
+    "FormLabelARIA": "name",
+    "NameRequired": "Collection name is required",
+    "Description": "Description (optional)",
+    "DescriptionARIA": "description",
+    "DescriptionPlaceholder": "My fave sketches",
+    "SubmitCollectionCreate": "Create collection"
+  },
+  "DashboardView": {
+    "CreateCollection": "Create collection",
+    "NewSketch": "New sketch",
+    "CreateCollectionOverlay": "Create collection"
+  },
+  "DashboardTabSwitcher": {
+    "Sketches": "Sketches",
+    "Collections": "Collections",
+    "Assets": "Assets"
+  },
+  "CollectionList": {
+    "Title": "p5.js Web Editor | My collections",
+    "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'s collections",
+    "NoCollections": "No collections.",
+    "TableSummary": "table containing all collections",
+    "HeaderName": "Name",
+    "HeaderCreatedAt": "Date Created",
+    "HeaderCreatedAt_mobile": "Created",
+    "HeaderUpdatedAt": "Date Updated",
+    "HeaderUpdatedAt_mobile": "Updated",
+    "HeaderNumItems": "# sketches",
+    "HeaderNumItems_mobile": "# sketches",
+    "DirectionAscendingARIA": "Ascending",
+    "DirectionDescendingARIA": "Descending",
+    "ButtonLabelAscendingARIA": "Sort by {{displayName}} ascending.",
+    "ButtonLabelDescendingARIA": "Sort by {{displayName}} descending.",
+    "AddSketch": "Add Sketch"
+  },
+  "CollectionListRow": {
+    "ToggleCollectionOptionsARIA": "Toggle Open/Close collection options",
+    "AddSketch": "Add sketch",
+    "Delete": "Delete",
+    "Rename": "Rename"
+  },
+  "Overlay": {
+    "AriaLabel": "Close {{title}} overlay"
+  },
+  "QuickAddList":{
+    "ButtonRemoveARIA": "Remove from collection",
+    "ButtonAddToCollectionARIA": "Add to collection",
+    "View": "View"
+  },
+  "SketchList": {
+    "View": "View",
+    "Title": "p5.js Web Editor | My sketches",
+    "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'s sketches",
+    "ToggleLabelARIA": "Toggle Open/Close Sketch Options",
+    "DropdownRename": "Rename",
+    "DropdownDownload": "Download",
+    "DropdownDuplicate": "Duplicate",
+    "DropdownAddToCollection": "Add to collection",
+    "DropdownDelete": "Delete",
+    "DirectionAscendingARIA": "Ascending",
+    "DirectionDescendingARIA": "Descending",
+    "ButtonLabelAscendingARIA": "Sort by {{displayName}} ascending.",
+    "ButtonLabelDescendingARIA": "Sort by {{displayName}} descending.",
+    "AddToCollectionOverlayTitle": "Add to collection",
+    "TableSummary": "table containing all saved projects",
+    "HeaderName": "Sketch",
+    "HeaderCreatedAt": "Date Created",
+    "HeaderCreatedAt_mobile": "Created",
+    "HeaderUpdatedAt": "Date Updated",
+    "HeaderUpdatedAt_mobile": "Updated",
+    "NoSketches": "No sketches."
+  },
+  "AddToCollectionSketchList": {
+    "Title": "p5.js Web Editor | My sketches",
+    "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'s sketches",
+    "NoCollections": "No collections."
+  },
+  "Editor": {
+    "OpenSketchARIA": "Open Sketch files navigation",
+    "CloseSketchARIA": "Close Sketch files navigation",
+    "UnsavedChangesARIA": "Sketch has unsaved changes",
+    "KeyUpLineNumber": "line {{lineNumber}}"
+  },
+  "EditorAccessibility": {
+    "NoLintMessages": "There are no lint messages ",
+    "CurrentLine": " Current line"
+  },
+  "Timer": {
+    "SavedAgo": "Saved: {{timeAgo}}"
+  },
+  "formatDate": {
+    "JustNow": "just now",
+    "15Seconds": "15 seconds ago",
+    "25Seconds": "25 seconds ago",
+    "35Seconds": "35 seconds ago",
+    "Ago": "{{timeAgo}} ago"
+  },
+  "AddRemoveButton": {
+    "AltAddARIA": "Add to collection",
+    "AltRemoveARIA": "Remove from collection"
+  },
+  "CopyableInput": {
+    "CopiedARIA": "Copied to Clipboard!",
+    "OpenViewTabARIA": "Open {{label}} view in new tab"
+  },
+  "EditableInput": {
+    "EditValue": "Edit {{display}} value",
+    "EmptyPlaceholder": "No value"
+  },
+  "PreviewNav": {
+    "EditSketchARIA": "Edit Sketch",
+    "ByUser": "by"
+  },
+  "MobilePreferences": {
+    "Settings": "Settings",
+    "GeneralSettings": "General settings",
+    "Accessibility": "Accessibility",
+    "AccessibleOutput": "Accessible Output",
+    "Theme": "Theme",
+    "LightTheme": "Light",
+    "DarkTheme": "Dark",
+    "HighContrastTheme": "High Contrast",
+    "Autosave": "Autosave",
+    "WordWrap": "Word Wrap",
+    "LineNumbers": "Line numbers",
+    "LintWarningSound": "Lint warning sound",
+    "UsedScreenReader": "Used with screen reader",
+    "PlainText": "Plain-text",
+    "TableText": "Table-text",
+    "Sound": "Sound"
+  },
+  "PreferenceCreators": {
+    "On": "On",
+    "Off": "Off"
+  },
+  "MobileIDEView":{
+    "Preferences": "Preferences",
+    "MyStuff": "My Stuff",
+    "Examples": "Examples",
+    "OriginalEditor": "Original Editor",
+    "Login": "Login",
+    "Logout": "Logout"
+  },
+  "MobileDashboardView": {
+    "Examples": "Examples",
+    "Sketches": "Sketches",
+    "Collections": "Collections",
+    "Assets": "Assets",
+    "MyStuff": "My Stuff",
+    "CreateSketch": "Create Sketch",
+    "CreateCollection": "Create Collection"
+  },
+  "Explorer": {
+    "Files": "Files"
+  }
+}
