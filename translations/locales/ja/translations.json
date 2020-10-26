@@ -339,9 +339,9 @@
       "Login": "ログイン"
     },
     "EmailVerificationView": {
-      "Title": "p5.js Web Editor | Email Verification",
-      "Verify": "Verify your email",
-      "InvalidTokenNull": "That link is invalid.",
+      "Title": "p5.js Web Editor | Eメール認証",
+      "Verify": "メールアドレスを確認してください",
+      "InvalidTokenNull": "そのリンクは無効です。",
       "Checking": "Validating token, please wait...",
       "Verified": "All done, your email address has been verified.",
       "InvalidState": "Something went wrong."
@@ -349,12 +349,12 @@
     "AssetList": {
       "Title": "p5.js Web Editor | マイアセット",
       "ToggleOpenCloseARIA": "Toggle Open/Close Asset Options",
-      "Delete": "Delete",
-      "OpenNewTab": "Open in New Tab",
-      "NoUploadedAssets": "No uploaded assets.",
+      "Delete": "削除",
+      "OpenNewTab": "新しいタブで開く",
+      "NoUploadedAssets": "アップロードされたアセットはありません。",
       "HeaderName": "Name",
-      "HeaderSize": "Size",
-      "HeaderSketch": "Sketch"
+      "HeaderSize": "サイズ",
+      "HeaderSketch": "スケッチ"
     },
     "Feedback": {
       "Title": "p5.js Web Editor | フィードバック",
@@ -371,22 +371,22 @@
       "ClearTerm": "clear"
     },
     "UploadFileModal": {
-      "Title": "Upload File",
+      "Title": "アップロードファイル",
       "CloseButtonARIA": "Close upload file modal",
-      "SizeLimitError": "Error: You cannot upload any more files. You have reached the total size limit of {{sizeLimit}}.\n                If you would like to upload more, please remove the ones you aren't using anymore by\n                in your "
+      "SizeLimitError": "エラー: You cannot upload any more files. You have reached the total size limit of {{sizeLimit}}.\n                If you would like to upload more, please remove the ones you aren't using anymore by\n                in your "
     },
     "FileUploader": {
-      "DictDefaultMessage": "Drop files here or click to use the file browser"
+      "DictDefaultMessage": "ここにファイルをドロップするか、クリックしてファイルブラウザを使用してください"
     },
     "ErrorModal": {
       "MessageLogin": "In order to save sketches, you must be logged in. Please ",
-      "Login": "Login",
+      "Login": "ログイン",
       "LoginOr": " or ",
       "SignUp": "サインアップ",
       "MessageLoggedOut": "It looks like you've been logged out. Please ",
       "LogIn": "ログイン",
       "SavedDifferentWindow": "The project you have attempted to save has been saved from another window.\n        Please refresh the page to see the latest version.",
-      "LinkTitle": "Error Linking Account",
+      "LinkTitle": "アカウントリンクエラー",
       "LinkMessage": "There was a problem linking your {{serviceauth}} account to your p5.js Web Editor account. Your {{serviceauth}} account has already been linked to another p5.js Web Editor account."
     },
     "ShareModal": {
@@ -431,9 +431,9 @@
     "CollectionCreate": {
       "Title": "p5.js Web Editor | コレクション作成",
       "FormError": "コレクションを作成することが出来ませんでした",
-      "FormLabel": "Collection name",
+      "FormLabel": "コレクション名",
       "FormLabelARIA": "name",
-      "NameRequired": "Collection name is required",
+      "NameRequired": "コレクション名は必須です",
       "Description": "Description (optional)",
       "DescriptionARIA": "description",
       "DescriptionPlaceholder": "My fave sketches",
@@ -441,7 +441,7 @@
     },
     "DashboardView": {
       "CreateCollection": "Create collection",
-      "NewSketch": "New sketch",
+      "NewSketch": "新しいスケッチ",
       "CreateCollectionOverlay": "Create collection"
     },
     "DashboardTabSwitcher": {
@@ -451,25 +451,25 @@
     },
     "CollectionList": {
       "Title": "p5.js Web Editor | マイコレクション",
-      "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'s collections",
+      "AnothersTitle": "p5.js Web Editor | {{anotheruser}}のコレクション",
       "NoCollections": "No collections.",
       "TableSummary": "table containing all collections",
-      "HeaderName": "Name",
-      "HeaderCreatedAt": "Date Created",
-      "HeaderCreatedAt_mobile": "Created",
-      "HeaderUpdatedAt": "Date Updated",
-      "HeaderUpdatedAt_mobile": "Updated",
-      "HeaderNumItems": "# sketches",
-      "HeaderNumItems_mobile": "# sketches",
-      "DirectionAscendingARIA": "Ascending",
-      "DirectionDescendingARIA": "Descending",
+      "HeaderName": "名前",
+      "HeaderCreatedAt": "作成日",
+      "HeaderCreatedAt_mobile": "作成されました",
+      "HeaderUpdatedAt": "更新日",
+      "HeaderUpdatedAt_mobile": "更新されました",
+      "HeaderNumItems": "# スケッチ",
+      "HeaderNumItems_mobile": "# スケッチ",
+      "DirectionAscendingARIA": "昇順",
+      "DirectionDescendingARIA": "降順",
       "ButtonLabelAscendingARIA": "Sort by {{displayName}} ascending.",
       "ButtonLabelDescendingARIA": "Sort by {{displayName}} descending.",
-      "AddSketch": "Add Sketch"
+      "AddSketch": "スケッチを追加"
     },
     "CollectionListRow": {
       "ToggleCollectionOptionsARIA": "Toggle Open/Close collection options",
-      "AddSketch": "Add sketch",
+      "AddSketch": "スケッチを追加",
       "Delete": "削除",
       "Rename": "名称変更"
     },
@@ -477,8 +477,8 @@
       "AriaLabel": "Close {{title}} overlay"
     },
     "QuickAddList":{
-      "ButtonRemoveARIA": "Remove from collection",
-      "ButtonAddToCollectionARIA": "Add to collection",
+      "ButtonRemoveARIA": "コレクションから削除",
+      "ButtonAddToCollectionARIA": "コレクションへ追加",
       "View": "View"
     },
     "SketchList": {
@@ -489,20 +489,20 @@
       "DropdownRename": "Rename",
       "DropdownDownload": "ダウンロード",
       "DropdownDuplicate": "複製",
-      "DropdownAddToCollection": "Add to collection",
-      "DropdownDelete": "Delete",
-      "DirectionAscendingARIA": "Ascending",
-      "DirectionDescendingARIA": "Descending",
+      "DropdownAddToCollection": "コレクションへ追加",
+      "DropdownDelete": "削除",
+      "DirectionAscendingARIA": "昇順",
+      "DirectionDescendingARIA": "降順",
       "ButtonLabelAscendingARIA": "Sort by {{displayName}} ascending.",
       "ButtonLabelDescendingARIA": "Sort by {{displayName}} descending.",
       "AddToCollectionOverlayTitle": "Add to collection",
       "TableSummary": "table containing all saved projects",
       "HeaderName": "スケッチ",
-      "HeaderCreatedAt": "Date Created",
-      "HeaderCreatedAt_mobile": "Created",
-      "HeaderUpdatedAt": "Date Updated",
-      "HeaderUpdatedAt_mobile": "Updated",
-      "NoSketches": "No sketches."
+      "HeaderCreatedAt": "作成日",
+      "HeaderCreatedAt_mobile": "作成されました",
+      "HeaderUpdatedAt": "更新日",
+      "HeaderUpdatedAt_mobile": "更新されました",
+      "NoSketches": "スケッチはありません"
     },
     "AddToCollectionSketchList": {
       "Title": "p5.js Web Editor | マイスケッチ",
