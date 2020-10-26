@@ -7,6 +7,8 @@ import loopProtect from 'loop-protect';
 import { JSHINT } from 'jshint';
 import decomment from 'decomment';
 import classNames from 'classnames';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { getBlobUrl } from '../actions/files';
 import { resolvePathToFile } from '../../../../server/utils/filePath';
 import {
@@ -20,6 +22,13 @@ import {
 import { hijackConsoleErrorsScript, startTag, getAllScriptOffsets }
   from '../../../utils/consoleUtils';
 import { registerFrame } from '../../../utils/dispatcher';
+
+import { getHTMLFile } from '../reducers/files';
+
+import { stopSketch, expandConsole, endSketchRefresh } from '../actions/ide';
+import { setTextOutput, setGridOutput, setSoundOutput } from '../actions/preferences';
+import { setBlobUrl } from '../actions/files';
+import { clearConsole, dispatchConsoleEvent } from '../actions/console';
 
 
 const shouldRenderSketch = (props, prevProps = undefined) => {
@@ -350,4 +359,51 @@ PreviewFrame.defaultProps = {
   cmController: {}
 };
 
-export default PreviewFrame;
+function mapStateToProps(state, ownProps) {
+  if (ownProps.fullView) {
+    return {
+      files: state.files,
+      htmlFile: getHTMLFile(state.files),
+      isPlaying: true,
+      isAccessibleOutputPlaying: false,
+      textOutput: false,
+      gridOutput: false,
+      soundOutput: false,
+      language: state.preferences.language,
+      autorefresh: false,
+      previewIsRefreshing: false
+    };
+  }
+  return {
+    files: state.files,
+    htmlFile: getHTMLFile(state.files),
+    content:
+      (state.files.find(file => file.isSelectedFile) ||
+      state.files.find(file => file.name === 'sketch.js') ||
+      state.files.find(file => file.name !== 'root')).content,
+    isPlaying: state.ide.isPlaying,
+    isAccessibleOutputPlaying: state.ide.isAccessibleOutputPlaying,
+    previewIsRefreshing: state.ide.previewIsRefreshing,
+    textOutput: state.preferences.textOutput,
+    gridOutput: state.preferences.gridOutput,
+    soundOutput: state.preferences.soundOutput,
+    language: state.preferences.language,
+    autorefresh: state.preferences.autorefresh
+  };
+}
+
+
+const mapDispatchToProps = {
+  stopSketch,
+  expandConsole,
+  endSketchRefresh,
+  setTextOutput,
+  setGridOutput,
+  setSoundOutput,
+  setBlobUrl,
+  clearConsole,
+  dispatchConsoleEvent
+};
+
+
+export default (connect(mapStateToProps, mapDispatchToProps)(PreviewFrame));
