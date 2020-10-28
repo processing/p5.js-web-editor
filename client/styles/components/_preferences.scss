@@ -2,7 +2,6 @@
   width: 100%;
   width: #{640 / $base-font-size}rem;
   max-width: 100%;
-  min-height: #{460 / $base-font-size}rem;
   max-height: 100%;
   z-index: 9999;
   padding: 0 #{20 / $base-font-size}rem #{2 / $base-font-size}rem #{20 /
@@ -10,6 +9,16 @@
   display: flex;
   flex-direction: column;
   outline: none;
+  height: calc(80vh - #{65 / $base-font-size}rem);
+  max-height: #{460 / $base-font-size}rem;
+  & .react-tabs {
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  & .react-tabs__tab-panel {
+    overflow-y: scroll;
+  }
 }
 
 .preferences__exit-button {

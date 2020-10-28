@@ -2,6 +2,7 @@
   padding: #{20 / $base-font-size}rem;
   padding-bottom: #{40 / $base-font-size}rem;
   width: #{450 / $base-font-size}rem;
+  overflow-y: scroll;
 }
 
 .keyboard-shortcuts-note {
