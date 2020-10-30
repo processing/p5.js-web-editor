@@ -22,6 +22,7 @@ import 'codemirror/addon/search/match-highlighter';
 import 'codemirror/addon/search/jump-to-line';
 import 'codemirror/addon/edit/matchbrackets';
 import 'codemirror/addon/edit/closebrackets';
+import 'codemirror/addon/selection/mark-selection';
 
 import { JSHINT } from 'jshint';
 import { CSSLint } from 'csslint';
@@ -37,7 +38,7 @@ import Timer from '../components/Timer';
 import EditorAccessibility from '../components/EditorAccessibility';
 import { metaKey, } from '../../../utils/metaKey';
 
-import search from '../../../utils/codemirror-search';
+import '../../../utils/codemirror-search';
 
 import beepUrl from '../../../sounds/audioAlert.mp3';
 import UnsavedChangesDotIcon from '../../../images/unsaved-changes-dot.svg';
@@ -54,8 +55,6 @@ import * as PreferencesActions from '../actions/preferences';
 import * as UserActions from '../../User/actions';
 import * as ToastActions from '../actions/toast';
 import * as ConsoleActions from '../actions/console';
-
-search(CodeMirror);
 
 const beautifyCSS = beautifyJS.css;
 const beautifyHTML = beautifyJS.html;
@@ -107,6 +106,7 @@ class Editor extends React.Component {
       highlightSelectionMatches: true, // highlight current search match
       matchBrackets: true,
       autoCloseBrackets: this.props.autocloseBracketsQuotes,
+      styleSelectedText: true,
       lint: {
         onUpdateLinting: ((annotations) => {
           this.props.hideRuntimeErrorWarning();
