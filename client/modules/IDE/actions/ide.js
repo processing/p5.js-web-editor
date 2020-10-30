@@ -88,6 +88,20 @@ export function closeUploadFileModal() {
   };
 }
 
+export function openUploadFileByURLModal(parentId) {
+  return {
+    type: ActionTypes.OPEN_UPLOAD_FILE_BY_URL_MODAL,
+    parentId
+  };
+}
+
+export function closeUploadFileByURLModal() {
+  return {
+    type: ActionTypes.CLOSE_UPLOAD_FILE_BY_URL_MODAL
+  };
+}
+
+
 export function expandSidebar() {
   return {
     type: ActionTypes.EXPAND_SIDEBAR

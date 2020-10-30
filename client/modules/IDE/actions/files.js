@@ -3,8 +3,10 @@ import blobUtil from 'blob-util';
 import { reset } from 'redux-form';
 import apiClient from '../../../utils/apiClient';
 import * as ActionTypes from '../../../constants';
-import { setUnsavedChanges, closeNewFolderModal, closeNewFileModal } from './ide';
+import { setUnsavedChanges, closeNewFolderModal, closeNewFileModal, closeUploadFileByURLModal } from './ide';
 import { setProjectSavedTime } from './project';
+import { CREATE_FILE_REGEX } from '../../../../server/utils/fileUtils';
+import { showToast, setToastText } from './toast';
 
 
 function appendToFilename(filename, string) {
@@ -88,6 +90,39 @@ export function createFile(formProps) {
       // });
       dispatch(setUnsavedChanges(true));
       dispatch(closeNewFileModal());
+    }
+  };
+}
+
+export function uploadFileByURL(data) {
+  return (dispatch, getState) => {
+    const fileUrlArray = data.url.split('/');
+    const fileName = fileUrlArray[fileUrlArray.length - 1];
+    const file = {
+      name: fileName
+    };
+    if (fileName.match(CREATE_FILE_REGEX)) {
+      fetch(data.url, {
+        method: 'GET'
+      })
+        .then(r => r.text())
+        .then((res) => {
+          file.content = res;
+          createFile(file)(dispatch, getState);
+          dispatch(showToast(2000));
+          dispatch(setToastText('UploadFileByURL.Success'));
+          dispatch(closeUploadFileByURLModal());
+        })
+        .catch((err) => {
+          dispatch(showToast(2000));
+          dispatch(setToastText('UploadFileByURL.Error'));
+        });
+    } else {
+      file.url = data.url;
+      createFile(file)(dispatch, getState);
+      dispatch(showToast(2000));
+      dispatch(setToastText('UploadFileByURL.Success'));
+      dispatch(closeUploadFileByURLModal());
     }
   };
 }

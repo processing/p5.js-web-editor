@@ -187,7 +187,9 @@
     "AddFile": "Create file",
     "AddFileARIA": "add file",
     "UploadFile": "Upload file",
-    "UploadFileARIA": "upload file"
+    "UploadFileARIA": "upload file",
+    "UploadFileByURL": "Upload file by URL",
+    "UploadFileByURLARIA": "upload file by url"
   },
   "FileNode": {
     "OpenFolderARIA": "Open folder contents",
@@ -199,6 +201,8 @@
     "AddFileARIA": "add file",
     "UploadFile": "Upload file",
     "UploadFileARIA": "upload file",
+    "UploadFileByURL": "Upload file by URL",
+    "UploadFileByURLARIA": "upload file by url",
     "Rename": "Rename",
     "Delete": "Delete"
   },
@@ -374,6 +378,20 @@
     "Title": "Upload File",
     "CloseButtonARIA": "Close upload file modal",
     "SizeLimitError": "Error: You cannot upload any more files. You have reached the total size limit of {{sizeLimit}}.\n                If you would like to upload more, please remove the ones you aren't using anymore by\n                in your "
+  },
+  "UploadFileByURL": {
+    "Success": "file added !",
+    "Error": "Failed to fetch resource !"
+  },
+  "UploadFileByURLModal": {
+    "Title": "Add a file",
+    "CloseButtonARIA": "Close upload file by URL modal",
+    "SizeLimitError": "Error: You cannot upload any more files. You have reached the total size limit of {{sizeLimit}}.\n                If you would like to upload more, please remove the ones you aren't using anymore by\n                in your "
+  },
+  "UploadFileByURLForm": {
+    "Label": "Copy the link (URL) below",
+    "Placeholder": "Be sure to include the whole link",
+    "Submit": "Add"
   },
   "FileUploader": {
     "DictDefaultMessage": "Drop files here or click to use the file browser"

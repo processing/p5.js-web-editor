@@ -187,7 +187,9 @@
     "AddFile": "Crear archivo",
     "AddFileARIA": "agregar archivo",
     "UploadFile": "Subir archivo",
-    "UploadFileARIA": "Subir archivo"
+    "UploadFileARIA": "Subir archivo",
+    "UploadFileByURL": "Subir archivo por URL",
+    "UploadFileByURLARIA": "Subir archivo por URL"
   },
   "FileNode": {
     "OpenFolderARIA": "Abrir contenidos del directorio",
@@ -199,6 +201,8 @@
     "AddFileARIA": "agregar archivo",
     "UploadFile": "Subir archivo",
     "UploadFileARIA": "Subir archivo",
+    "UploadFileByURL": "Subir archivo por URL",
+    "UploadFileByURLARIA": "subir archivo por URL",
     "Rename": "Renombrar",
     "Delete": "Borrar"
   },
@@ -374,6 +378,21 @@
     "Title": "Subir Archivo",
     "CloseButtonARIA": "Cerrar diálogo para subir archivo",
     "SizeLimitError": "Error: No puedes subir archivos. Has alcanzado el limite de tamaño total de {{sizeLimit}}.\n         Si quieres agregar más,por favor remueve alugnos que no estes usando en tus "
+  },
+  "UploadFileByURL": {
+    "Success": "archivo agregado !",
+    "Error": "No se pudo recuperar el recurso !"
+  },
+  "UploadFileByURLModal": {
+    "Title": "Agregar un archivo",
+    "CloseButtonARIA": "Cerrar diálogo para subir archivo",
+    "SizeLimitError": "Error: No puedes subir archivos. Has alcanzado el limite de tamaño total de {{sizeLimit}}.\n         Si quieres agregar más,por favor remueve alugnos que no estes usando en tus ",
+    "Label": "Copie el enlace (URL) a continuación"
+  },
+  "UploadFileByURLForm": {
+    "Label": "Copy the link (URL) below",
+    "Placeholder": "Be sure to include the whole link",
+    "Submit": "Add"
   },
   "FileUploader": {
     "DictDefaultMessage": "Deposita los archivos aquí o haz click para usar el navegador de archivos"

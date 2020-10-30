@@ -14,6 +14,7 @@ import Preferences from '../components/Preferences/index';
 import NewFileModal from '../components/NewFileModal';
 import NewFolderModal from '../components/NewFolderModal';
 import UploadFileModal from '../components/UploadFileModal';
+import UploadFileByURLModal from '../components/UploadFileByURLModal';// Update
 import ShareModal from '../components/ShareModal';
 import KeyboardShortcutModal from '../components/KeyboardShortcutModal';
 import ErrorModal from '../components/ErrorModal';
@@ -315,6 +316,8 @@ class IDEView extends React.Component {
               owner={this.props.project.owner}
               openUploadFileModal={this.props.openUploadFileModal}
               closeUploadFileModal={this.props.closeUploadFileModal}
+              openUploadFileByURLModal={this.props.openUploadFileByURLModal}
+              closeUploadFileByURLModal={this.props.closeUploadFileByURLModal}
             />
             <SplitPane
               split="vertical"
@@ -402,6 +405,9 @@ class IDEView extends React.Component {
         )}
         {this.props.ide.uploadFileModalVisible && (
           <UploadFileModal closeModal={this.props.closeUploadFileModal} />
+        )}
+        {this.props.ide.uploadFileByURLModalVisible && (
+          <UploadFileByURLModal closeModal={this.props.closeUploadFileByURLModal} />
         )}
         {this.props.location.pathname === '/about' && (
           <Overlay
@@ -506,6 +512,8 @@ IDEView.propTypes = {
     preferencesIsVisible: PropTypes.bool.isRequired,
     modalIsVisible: PropTypes.bool.isRequired,
     uploadFileModalVisible: PropTypes.bool.isRequired,
+    // Updates
+    uploadFileByURLModalVisible: PropTypes.bool.isRequired,
     newFolderModalVisible: PropTypes.bool.isRequired,
     justOpenedProject: PropTypes.bool.isRequired,
     sidebarIsExpanded: PropTypes.bool.isRequired,
@@ -602,6 +610,9 @@ IDEView.propTypes = {
   startSketch: PropTypes.func.isRequired,
   openUploadFileModal: PropTypes.func.isRequired,
   closeUploadFileModal: PropTypes.func.isRequired,
+  // updates
+  openUploadFileByURLModal: PropTypes.func.isRequired,
+  closeUploadFileByURLModal: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
   isUserOwner: PropTypes.bool.isRequired
 };

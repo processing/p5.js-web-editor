@@ -32,15 +32,34 @@
   margin-bottom: #{20 / $base-font-size}rem;
 }
 
-.new-folder-form__input-wrapper, .new-file-form__input-wrapper {
+.new-folder-form__input-wrapper,
+.new-file-form__input-wrapper {
   display: flex;
 }
 
-.new-file-form__name-label, .new-folder-form__name-label {
+.upload-file-by-url-form__input-wrapper,
+.upload-file-by-url-form__url-label,
+.upload-file-by-url-form__url-input {
+  display: block;
+}
+
+.upload-file-by-url-form__url-input {
+  margin-top: 15px;
+  width: 100%;
+}
+
+.upload-file-by-url-form__submit {
+  margin-top: 15px;
+  margin-left: auto;
+}
+
+.new-file-form__name-label,
+.new-folder-form__name-label {
   @extend %hidden-element;
 }
 
-.new-file-form__name-input, .new-folder-form__name-input {
+.new-file-form__name-input,
+.new-folder-form__name-input {
   margin-right: #{10 / $base-font-size}rem;
   flex: 1;
 }

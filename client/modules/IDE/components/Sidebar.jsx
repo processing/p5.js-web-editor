@@ -2,9 +2,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
 import { withTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import ConnectedFileNode from './FileNode';
-
+import { openUploadFileByURLModal } from '../actions/ide';
 import DownArrowIcon from '../../../images/down-filled-triangle.svg';
 
 class Sidebar extends React.Component {
@@ -116,19 +118,34 @@ class Sidebar extends React.Component {
               </li>
               {
                 this.props.user.authenticated &&
-                <li>
-                  <button
-                    aria-label={this.props.t('Sidebar.UploadFileARIA')}
-                    onClick={() => {
-                      this.props.openUploadFileModal(rootFile.id);
-                      setTimeout(this.props.closeProjectOptions, 0);
-                    }}
-                    onBlur={this.onBlurComponent}
-                    onFocus={this.onFocusComponent}
-                  >
-                    {this.props.t('Sidebar.UploadFile')}
-                  </button>
-                </li>
+                <React.Fragment>
+                  <li>
+                    <button
+                      aria-label={this.props.t('Sidebar.UploadFileARIA')}
+                      onClick={() => {
+                        this.props.openUploadFileModal(rootFile.id);
+                        setTimeout(this.props.closeProjectOptions, 0);
+                      }}
+                      onBlur={this.onBlurComponent}
+                      onFocus={this.onFocusComponent}
+                    >
+                      {this.props.t('Sidebar.UploadFile')}
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      aria-label={this.props.t('Sidebar.UploadFileByURLARIA')}
+                      onClick={() => {
+                        this.props.openUploadFileByURLModal(rootFile.id);
+                        setTimeout(this.props.closeProjectOptions, 0);
+                      }}
+                      onBlur={this.onBlurComponent}
+                      onFocus={this.onFocusComponent}
+                    >
+                      {this.props.t('Sidebar.UploadFileByURL')}
+                    </button>
+                  </li>
+                </React.Fragment>
               }
             </ul>
           </div>
@@ -155,6 +172,8 @@ Sidebar.propTypes = {
   closeProjectOptions: PropTypes.func.isRequired,
   newFolder: PropTypes.func.isRequired,
   openUploadFileModal: PropTypes.func.isRequired,
+  // Updates
+  openUploadFileByURLModal: PropTypes.func.isRequired,
   owner: PropTypes.shape({
     id: PropTypes.string
   }),
@@ -169,4 +188,12 @@ Sidebar.defaultProps = {
   owner: undefined
 };
 
-export default withTranslation()(Sidebar);
+function mapStateToProps(state) {
+  return {};
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ openUploadFileByURLModal }, dispatch);
+}
+
+export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(Sidebar));

@@ -24,7 +24,8 @@ const initialState = {
   previousPath: '/',
   errorType: undefined,
   runtimeErrorWarningVisible: true,
-  parentId: undefined
+  parentId: undefined,
+  uploadFileByURLModalVisible: false
 };
 
 const ide = (state = initialState, action) => {
@@ -118,6 +119,11 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { uploadFileModalVisible: true, parentId: action.parentId });
     case ActionTypes.CLOSE_UPLOAD_FILE_MODAL:
       return Object.assign({}, state, { uploadFileModalVisible: false });
+    case ActionTypes.OPEN_UPLOAD_FILE_BY_URL_MODAL:
+      return Object.assign({}, state, { uploadFileByURLModalVisible: true, parentId: action.parentId });
+    case ActionTypes.CLOSE_UPLOAD_FILE_BY_URL_MODAL:
+      return Object.assign({}, state, { uploadFileByURLModalVisible: false });
+
     default:
       return state;
   }

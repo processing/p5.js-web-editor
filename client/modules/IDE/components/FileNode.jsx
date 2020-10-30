@@ -153,6 +153,11 @@ class FileNode extends React.Component {
     setTimeout(this.hideFileOptions, 0);
   }
 
+  handleClickUploadFileByURL = () => {
+    this.props.openUploadFileByURLModal(this.props.id);
+    setTimeout(this.hideFileOptions, 0);
+  }
+
   handleClickDelete = () => {
     const prompt = this.props.t('Common.DeleteConfirmation', { name: this.props.name });
 
@@ -248,12 +253,12 @@ class FileNode extends React.Component {
         { !isRoot &&
           <div className="file-item__content" onContextMenu={this.toggleFileOptions}>
             <span className="file-item__spacer"></span>
-            { isFile &&
+            {isFile &&
               <span className="sidebar__file-item-icon">
                 <FileIcon focusable="false" aria-hidden="true" />
               </span>
             }
-            { isFolder &&
+            {isFolder &&
               <div className="sidebar__file-item--folder">
                 <button
                   className="sidebar__file-item-closed"
@@ -303,7 +308,7 @@ class FileNode extends React.Component {
             </button>
             <div className="sidebar__file-item-options">
               <ul title="file options">
-                { isFolder &&
+                {isFolder &&
                   <React.Fragment>
                     <li>
                       <button
@@ -327,17 +332,29 @@ class FileNode extends React.Component {
                         {t('FileNode.AddFile')}
                       </button>
                     </li>
-                    { this.props.authenticated &&
-                      <li>
-                        <button
-                          aria-label={t('FileNode.UploadFileARIA')}
-                          onClick={this.handleClickUploadFile}
-                          onBlur={this.onBlurComponent}
-                          onFocus={this.onFocusComponent}
-                        >
-                          {t('FileNode.UploadFile')}
-                        </button>
-                      </li>
+                    {this.props.authenticated &&
+                      <React.Fragment>
+                        <li>
+                          <button
+                            aria-label={t('FileNode.UploadFileARIA')}
+                            onClick={this.handleClickUploadFile}
+                            onBlur={this.onBlurComponent}
+                            onFocus={this.onFocusComponent}
+                          >
+                            {t('FileNode.UploadFile')}
+                          </button>
+                        </li>
+                        <li>
+                          <button
+                            aria-label={t('FileNode.UploadFileByURLARIA')}
+                            onClick={this.handleClickUploadFileByURL}
+                            onBlur={this.onBlurComponent}
+                            onFocus={this.onFocusComponent}
+                          >
+                            {t('FileNode.UploadFileByURL')}
+                          </button>
+                        </li>
+                      </React.Fragment>
                     }
                   </React.Fragment>
                 }
@@ -393,6 +410,7 @@ FileNode.propTypes = {
   hideFolderChildren: PropTypes.func.isRequired,
   canEdit: PropTypes.bool.isRequired,
   openUploadFileModal: PropTypes.func.isRequired,
+  openUploadFileByURLModal: PropTypes.func.isRequired,
   authenticated: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired,
   onClickFile: PropTypes.func
