@@ -15,7 +15,7 @@ import * as CollectionsActions from '../../IDE/actions/collections';
 import * as ToastActions from '../../IDE/actions/toast';
 import * as SortingActions from '../../IDE/actions/sorting';
 import * as IdeActions from '../../IDE/actions/ide';
-import { getCollection } from '../../IDE/selectors/collections';
+import getSortedCollections, { getCollection } from '../../IDE/selectors/collections';
 import Loader from '../../App/components/loader';
 import EditableInput from '../../IDE/components/EditableInput';
 import Overlay from '../../App/components/Overlay';
@@ -196,7 +196,7 @@ class Collection extends React.Component {
   }
 
   hasCollectionItems() {
-    return this.hasCollection() && this.props.collection.items.length > 0;
+    return this.hasCollection() && this.props.collection && this.props.collection.items.length > 0;
   }
 
   _renderLoader() {
@@ -303,8 +303,7 @@ class Collection extends React.Component {
 
   _renderEmptyTable() {
     const isLoading = this.props.loading;
-    const hasCollectionItems = this.props.collection != null &&
-      this.props.collection.items.length > 0;
+    const hasCollectionItems = this.props.collection != null && this.props.collection && this.props.collection.items.length > 0;
 
     if (!isLoading && !hasCollectionItems) {
       return (<p className="collection-empty-message">{this.props.t('Collection.NoSketches')}</p>);
@@ -332,7 +331,7 @@ class Collection extends React.Component {
   _renderFieldHeader(fieldName, displayName) {
     const { field, direction } = this.props.sorting;
     const headerClass = classNames({
-      'arrowDown': true,
+      'sketches-table__header': true,
       'sketches-table__header--selected': field === fieldName
     });
     const buttonLabel = this._getButtonLabel(fieldName, displayName);
@@ -459,7 +458,7 @@ Collection.defaultProps = {
 function mapStateToProps(state, ownProps) {
   return {
     user: state.user,
-    collection: getCollection(state, ownProps.collectionId),
+    collection: getSortedCollections(state, ownProps.collectionId),
     sorting: state.sorting,
     loading: state.loading,
     project: state.project
