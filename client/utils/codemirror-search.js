@@ -186,16 +186,6 @@ function persistentDialog(cm, text, deflt, onEnter, onKeyDown) {
 
     var replaceField = document.getElementById('Replace-input-field');
     CodeMirror.on(replaceField, "keyup", function (e) {
-      // if (e.keyCode === 13) {
-      //   // If enter is pressed, then shift focus to replace field
-      //   var state = getSearchState(cm);
-      //   startSearch(cm, state, searchField.value);
-      //   state.replaceStarted = true;
-      //   cm.focus();
-      //   CodeMirror.commands.findNext(cm);
-      //   searchField.blur();
-      //   replaceField.focus();
-      // }
       if (!searchField.value) {
         searchField.focus();
         return;
@@ -206,7 +196,12 @@ function persistentDialog(cm, text, deflt, onEnter, onKeyDown) {
       if (e.keyCode === 13)  // if enter
       {
         var cursor = getSearchCursor(cm, query, cm.getCursor("from"));
+        var start = cursor.from();
         var match = cursor.findNext();
+        if (!match) {
+          cursor = getSearchCursor(cm, query);
+          if (!(match = cursor.findNext()) || (start && cursor.from().line == start.line && cursor.from().ch == start.ch)) return;
+        }
         cm.setSelection(cursor.from(), cursor.to());
         state.replaceStarted = true;
         doReplace(match, cursor, query, withText);
@@ -217,9 +212,9 @@ function persistentDialog(cm, text, deflt, onEnter, onKeyDown) {
       cursor.replace(typeof query == "string" ? withText :
         withText.replace(/\$(\d)/g, function(_, i) {return match[i];}));
       cursor.findNext();
-      cm.focus();
+      // cm.focus();
       CodeMirror.commands.findNext(cm);
-      searchField.blur();
+      // searchField.blur();
     };
 
     var doReplaceButton = document.getElementById('Btn-replace');
