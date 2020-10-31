@@ -59,8 +59,7 @@ function isMouseClick(event) {
   else return false;
 }
 
-function persistentDialog(cm, text, deflt, onEnter, onKeyDown) {
-  var replaceOpened = false;
+function persistentDialog(cm, text, deflt, onEnter, replaceOpened, onKeyDown) {
   var searchField = document.getElementsByClassName("CodeMirror-search-field")[0];
   if (!searchField) {
     cm.openDialog(text, onEnter, {
@@ -335,7 +334,7 @@ function doSearch(cm, rev, persistent, immediate, ignoreQuery) {
           (hiding = dialog).style.opacity = 0.4;
       });
     };
-    persistentDialog(cm, queryDialog, q, searchNext, function (event, query) {
+    persistentDialog(cm, queryDialog, q, searchNext, false, function (event, query) {
       var keyName = CodeMirror.keyName(event);
       var cmd = CodeMirror.keyMap[cm.getOption('keyMap')][keyName];
       if (!cmd) cmd = cm.getOption('extraKeys')[keyName];
@@ -594,7 +593,9 @@ CodeMirror.commands.findPrev = function (cm) {
   doSearch(cm, true);
 };
 CodeMirror.commands.clearSearch = clearSearch;
-CodeMirror.commands.replace = doFindAndReplace;
+CodeMirror.commands.replace = function (cm) {
+  doFindAndReplace(cm, false, true, false, true, true);
+};
 CodeMirror.commands.replaceAll = function (cm) {
   doFindAndReplace(cm, true);
 };
