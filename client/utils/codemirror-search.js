@@ -224,8 +224,10 @@ function persistentDialog(cm, text, deflt, onEnter, replaceOpened, onKeyDown) {
       if (state.replaceStarted) {
         var cursor = getSearchCursor(cm, query, cm.getCursor("from"));
         var match = cursor.findNext();
-        cm.setSelection(cursor.from(), cursor.to());
-        doReplace(match, cursor, query, withText);
+        if (match) {
+          cm.setSelection(cursor.from(), cursor.to());
+          doReplace(match, cursor, query, withText);
+        }
       } else {
         startSearch(cm, state, searchField.value);
         state.replaceStarted = true;
