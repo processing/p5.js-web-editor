@@ -11,6 +11,11 @@
 // Ctrl-G.
 import i18n from '../i18n';
 import CodeMirror from 'codemirror';
+import triangleArrowRight from '../images/triangle-arrow-right.svg?byContent';
+import triangleArrowDown from '../images/triangle-arrow-down.svg?byContent';
+import downArrow from '../images/down-arrow.svg?byContent';
+import upArrow from '../images/up-arrow.svg?byContent';
+import exitIcon from '../images/exit.svg?byContent';
 
 function searchOverlay(query, caseInsensitive) {
   if (typeof query == 'string') query = new RegExp(query.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&'), caseInsensitive ? 'gi' : 'g');
@@ -156,12 +161,12 @@ function persistentDialog(cm, text, deflt, onEnter, replaceOpened, onKeyDown) {
         replaceDiv.style.height = replaceDivHeightOpened;
         toggleReplaceBtnDiv.style.height = toggleButtonHeightOpened;
         showReplaceButton.style.height = toggleButtonHeightOpened;
-        showReplaceButton.innerHTML = "▼";
+        showReplaceButton.innerHTML = triangleArrowDown;
       } else {
         replaceDiv.style.height = replaceDivHeightClosed;
         toggleReplaceBtnDiv.style.height = toggleButtonHeightClosed;
         showReplaceButton.style.height = toggleButtonHeightClosed;
-        showReplaceButton.innerHTML = "►";
+        showReplaceButton.innerHTML = triangleArrowRight;
       }
     }
 
@@ -493,7 +498,9 @@ var getQueryDialog = function() {
           role="button"
           class="CodeMirror-search-modifier-button CodeMirror-replace-toggle-button"
         >
-          <span aria-hidden="true" class="button">▶</span>
+          <span aria-hidden="true" class="button">
+            ${triangleArrowRight}
+          </span>
         </button>
       </div>
       <div class="CodeMirror-find-input-fields">
@@ -535,19 +542,29 @@ var getQueryDialog = function() {
                 aria-label="${i18n.t('CodemirrorFindAndReplace.Previous')}"
                 class="CodeMirror-search-button icon up-arrow prev"
               >
+                <span aria-hidden="true">
+                  ${upArrow}
+                </span>
               </button>
               <button
                 title="${i18n.t('CodemirrorFindAndReplace.Next')}"
                 aria-label="${i18n.t('CodemirrorFindAndReplace.Next')}"
                 class="CodeMirror-search-button icon down-arrow next"
               >
+                <span aria-hidden="true">
+                  ${downArrow}
+                </span>
               </button>
             </div>
             <div class="CodeMirror-close-button-container">
               <button
                 title="${i18n.t('CodemirrorFindAndReplace.Close')}"
                 aria-label="${i18n.t('CodemirrorFindAndReplace.Close')}"
-                class="CodeMirror-close-button close icon">
+                class="CodeMirror-close-button close icon"
+              >
+                <span aria-hidden="true">
+                  ${exitIcon}
+                </span>
               </button>
             </div>
           </div>
