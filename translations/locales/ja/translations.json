@@ -148,7 +148,7 @@
       "PreviewSound": "プレビューサウンド",
       "PreviewSoundARIA": "プレビューサウンド",
       "AccessibleTextBasedCanvas": "アクセスしやすいテキストベースのキャンバス",
-      "UsedScreenReader": "Used with screen reader",
+      "UsedScreenReader": "スクリーンリーダーと併用",
       "PlainText": "プレーンテキスト",
       "TextOutputARIA": "テキスト出力 オン",
       "TableText": "テーブルテキスト",
@@ -158,15 +158,15 @@
     },
     "KeyboardShortcuts": {
       "Title": " キーボードショートカット",
-      "ShortcutsFollow": "Code editing keyboard shortcuts follow",
+      "ShortcutsFollow": "コード編集のキーボードショートカットは以下の通りです",
       "SublimeText": "Sublime Text ショートカット",
       "CodeEditing": {
         "Tidy": "整形",
         "FindText": "テキスト検索",
         "FindNextMatch": "次の一致を検索",
         "FindPrevMatch": "前の一致を検索",
-        "IndentCodeLeft": "Indent Code Left",
-        "IndentCodeRight": "Indent Code Right",
+        "IndentCodeLeft": "インデント左揃え",
+        "IndentCodeRight": "インデント右揃え",
         "CommentLine": "コメントライン",
         "FindNextTextMatch": "次の一致するテキストを検索",
         "FindPreviousTextMatch": "前の一致するテキストを検索",
@@ -307,10 +307,10 @@
     },
     "APIKeyList": {
       "Name": "名前",
-      "Created": "Created on",
-      "LastUsed": "Last used",
-      "Actions": "Actions",
-      "Never": "Never",
+      "Created": "作成された",
+      "LastUsed": "最後に使用した",
+      "Actions": "アクション",
+      "Never": "一度も",
       "DeleteARIA": "APIキーを削除"
     },
     "NewPasswordForm": {
@@ -342,13 +342,13 @@
       "Title": "p5.js Web Editor | Eメール認証",
       "Verify": "メールアドレスを確認してください",
       "InvalidTokenNull": "そのリンクは無効です。",
-      "Checking": "Validating token, please wait...",
-      "Verified": "All done, your email address has been verified.",
-      "InvalidState": "Something went wrong."
+      "Checking": "トークンを検証中です、お待ちください...",
+      "Verified": "すべて完了しました、あなたのメールアドレスは確認されました。",
+      "InvalidState": "何か問題が発生しました。"
     },
     "AssetList": {
       "Title": "p5.js Web Editor | マイアセット",
-      "ToggleOpenCloseARIA": "Toggle Open/Close Asset Options",
+      "ToggleOpenCloseARIA": "アセットオプションの開閉を切り替え",
       "Delete": "削除",
       "OpenNewTab": "新しいタブで開く",
       "NoUploadedAssets": "アップロードされたアセットはありません。",
@@ -372,28 +372,28 @@
     },
     "UploadFileModal": {
       "Title": "アップロードファイル",
-      "CloseButtonARIA": "Close upload file modal",
-      "SizeLimitError": "エラー: You cannot upload any more files. You have reached the total size limit of {{sizeLimit}}.\n                If you would like to upload more, please remove the ones you aren't using anymore by\n                in your "
+      "CloseButtonARIA": "アップロードファイルモーダルを閉じる",
+      "SizeLimitError": "エラー: これ以上ファイルをアップロードすることはできません。{{sizeLimit}}の合計サイズの上限に達しました。\n                もっとアップロードしたい場合は、もう使っていないものを削除してください。 "
     },
     "FileUploader": {
       "DictDefaultMessage": "ここにファイルをドロップするか、クリックしてファイルブラウザを使用してください"
     },
     "ErrorModal": {
-      "MessageLogin": "In order to save sketches, you must be logged in. Please ",
+      "MessageLogin": "スケッチを保存するにはログインが必要です。ログインしてください。 ",
       "Login": "ログイン",
       "LoginOr": " or ",
       "SignUp": "サインアップ",
-      "MessageLoggedOut": "It looks like you've been logged out. Please ",
+      "MessageLoggedOut": "ログアウトされたようです。ログインしてください。 ",
       "LogIn": "ログイン",
-      "SavedDifferentWindow": "The project you have attempted to save has been saved from another window.\n        Please refresh the page to see the latest version.",
-      "LinkTitle": "アカウントリンクエラー",
-      "LinkMessage": "There was a problem linking your {{serviceauth}} account to your p5.js Web Editor account. Your {{serviceauth}} account has already been linked to another p5.js Web Editor account."
+      "SavedDifferentWindow": "保存しようとしたプロジェクトが別のウィンドウから保存されました。\n        最新版をご覧になるにはページを更新してください。",
+      "LinkTitle": "アカウント接続エラー",
+      "LinkMessage": "あなたの {{serviceauth}} アカウントとp5.js Web Editorアカウントの接続に問題がありました。 あなたの {{serviceauth}} アカウントは、すでに別のp5.js Web Editorアカウントに接続されています。"
     },
     "ShareModal": {
       "Embed": "埋め込み",
-      "Present": "Present",
+      "Present": "プレゼンモード",
       "Fullscreen": "フルスクリーン",
-      "Edit": "編集"
+      "Edit": "共同編集"
     },
     "CollectionView": {
       "TitleCreate": "コレクション作成",
@@ -401,27 +401,27 @@
     },
     "Collection": {
       "Title": "p5.js Web Editor | マイコレクション",
-      "AnothersTitle": "p5.js Web Editor | {{anotheruser}}のコレクション",
+      "AnothersTitle": "p5.js Web Editor | {{anotheruser}} のコレクション",
       "Share": "共有",
       "URLLink": "コレクションにリンクさせる",
       "AddSketch": "スケッチを追加する",
-      "DeleteFromCollection": "Are you sure you want to remove {{name_sketch}} from this collection?",
+      "DeleteFromCollection": "このコレクションから {{name_sketch}} を削除してもよろしいですか？",
       "SketchDeleted": "スケッチが削除されました",
-      "SketchRemoveARIA": "Remove sketch from collection",
-      "DescriptionPlaceholder": "Add description",
-      "Description": "description",
-      "NumSketches": "{{count}} sketch",
-      "NumSketches_plural": "{{count}} sketches",
-      "By":"Collection by ",
+      "SketchRemoveARIA": "コレクションからスケッチを削除する",
+      "DescriptionPlaceholder": "スケッチについて記述する",
+      "Description": "スケッチについて",
+      "NumSketches": "{{count}} スケッチ",
+      "NumSketches_plural": "{{count}} スケッチ",
+      "By":"コレクション ",
       "NoSketches": "コレクション内にスケッチがありません",
-      "TableSummary": "table containing all collections",
+      "TableSummary": "全コレクションのテーブル",
       "HeaderName": "名前",
-      "HeaderCreatedAt": "Date Added",
+      "HeaderCreatedAt": "追加された日付",
       "HeaderUser": "所有者",
-      "DirectionAscendingARIA": "Ascending",
-      "DirectionDescendingARIA": "Descending",
-      "ButtonLabelAscendingARIA": "Sort by {{displayName}} ascending.",
-      "ButtonLabelDescendingARIA": "Sort by {{displayName}} descending."
+      "DirectionAscendingARIA": "昇順",
+      "DirectionDescendingARIA": "降順",
+      "ButtonLabelAscendingARIA": "昇順に{{displayName}}で並び替えます。",
+      "ButtonLabelDescendingARIA": "降順に{{displayName}}で並び替えます。"
     },
     "AddToCollectionList": {
       "Title": "p5.js Web Editor | マイコレクション",
@@ -432,17 +432,17 @@
       "Title": "p5.js Web Editor | コレクション作成",
       "FormError": "コレクションを作成することが出来ませんでした",
       "FormLabel": "コレクション名",
-      "FormLabelARIA": "name",
+      "FormLabelARIA": "名前",
       "NameRequired": "コレクション名は必須です",
-      "Description": "Description (optional)",
-      "DescriptionARIA": "description",
-      "DescriptionPlaceholder": "My fave sketches",
-      "SubmitCollectionCreate": "Create collection"
+      "Description": "スケッチについて (任意)",
+      "DescriptionARIA": "スケッチについて",
+      "DescriptionPlaceholder": "お気に入りスケッチ",
+      "SubmitCollectionCreate": "コレクションを作成"
     },
     "DashboardView": {
-      "CreateCollection": "Create collection",
+      "CreateCollection": "コレクションを作成",
       "NewSketch": "新しいスケッチ",
-      "CreateCollectionOverlay": "Create collection"
+      "CreateCollectionOverlay": "コレクションを作成"
     },
     "DashboardTabSwitcher": {
       "Sketches": "スケッチ",
@@ -452,8 +452,8 @@
     "CollectionList": {
       "Title": "p5.js Web Editor | マイコレクション",
       "AnothersTitle": "p5.js Web Editor | {{anotheruser}}のコレクション",
-      "NoCollections": "No collections.",
-      "TableSummary": "table containing all collections",
+      "NoCollections": "コレクションがありません。",
+      "TableSummary": "全コレクションのテーブル",
       "HeaderName": "名前",
       "HeaderCreatedAt": "作成日",
       "HeaderCreatedAt_mobile": "作成されました",
@@ -463,18 +463,18 @@
       "HeaderNumItems_mobile": "# スケッチ",
       "DirectionAscendingARIA": "昇順",
       "DirectionDescendingARIA": "降順",
-      "ButtonLabelAscendingARIA": "Sort by {{displayName}} ascending.",
-      "ButtonLabelDescendingARIA": "Sort by {{displayName}} descending.",
+      "ButtonLabelAscendingARIA": "昇順に{{displayName}}で並び替えます。",
+      "ButtonLabelDescendingARIA": "降順に{{displayName}}で並び替えます。",
       "AddSketch": "スケッチを追加"
     },
     "CollectionListRow": {
-      "ToggleCollectionOptionsARIA": "Toggle Open/Close collection options",
+      "ToggleCollectionOptionsARIA": "開く/閉じるコレクションのオプションを切り替え",
       "AddSketch": "スケッチを追加",
       "Delete": "削除",
       "Rename": "名称変更"
     },
     "Overlay": {
-      "AriaLabel": "Close {{title}} overlay"
+      "AriaLabel": "{{title}} オーバーレイを閉じる"
     },
     "QuickAddList":{
       "ButtonRemoveARIA": "コレクションから削除",
@@ -483,20 +483,20 @@
     },
     "SketchList": {
       "View": "View",
-      "Title": "p5.js Web Editor | My sketches",
-      "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'s sketches",
-      "ToggleLabelARIA": "Toggle Open/Close Sketch Options",
-      "DropdownRename": "Rename",
+      "Title": "p5.js Web Editor | マイスケッチ",
+      "AnothersTitle": "p5.js Web Editor | {{anotheruser}} のスケッチ",
+      "ToggleLabelARIA": "開く/閉じるスケッチ オプションの切り替え",
+      "DropdownRename": "名前変更",
       "DropdownDownload": "ダウンロード",
       "DropdownDuplicate": "複製",
       "DropdownAddToCollection": "コレクションへ追加",
       "DropdownDelete": "削除",
       "DirectionAscendingARIA": "昇順",
       "DirectionDescendingARIA": "降順",
-      "ButtonLabelAscendingARIA": "Sort by {{displayName}} ascending.",
-      "ButtonLabelDescendingARIA": "Sort by {{displayName}} descending.",
-      "AddToCollectionOverlayTitle": "Add to collection",
-      "TableSummary": "table containing all saved projects",
+      "ButtonLabelAscendingARIA": "昇順に{{displayName}}で並び替えます。",
+      "ButtonLabelDescendingARIA": "降順に{{displayName}}で並び替えます。",
+      "AddToCollectionOverlayTitle": "コレクションへ追加",
+      "TableSummary": "保存されたすべてのプロジェクトを含むテーブル",
       "HeaderName": "スケッチ",
       "HeaderCreatedAt": "作成日",
       "HeaderCreatedAt_mobile": "作成されました",
@@ -506,21 +506,21 @@
     },
     "AddToCollectionSketchList": {
       "Title": "p5.js Web Editor | マイスケッチ",
-      "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'s sketches",
-      "NoCollections": "No collections."
+      "AnothersTitle": "p5.js Web Editor | {{anotheruser}} のスケッチ",
+      "NoCollections": "コレクションがありません。"
     },
     "Editor": {
-      "OpenSketchARIA": "Open Sketch files navigation",
-      "CloseSketchARIA": "Close Sketch files navigation",
-      "UnsavedChangesARIA": "Sketch has unsaved changes",
-      "KeyUpLineNumber": "line {{lineNumber}}"
+      "OpenSketchARIA": "スケッチファイルのナビゲーションを開く",
+      "CloseSketchARIA": "スケッチファイルのナビゲーションを閉じる",
+      "UnsavedChangesARIA": "スケッチに未保存の変更があります",
+      "KeyUpLineNumber": "{{lineNumber}} 行"
     },
     "EditorAccessibility": {
-      "NoLintMessages": "There are no lint messages ",
-      "CurrentLine": " Current line"
+      "NoLintMessages": "リントメッセージはありません ",
+      "CurrentLine": " 現在の行"
     },
     "Timer": {
-      "SavedAgo": "Saved: {{timeAgo}}"
+      "SavedAgo": "保存されました: {{timeAgo}}"
     },
     "formatDate": {
       "JustNow": "just now",
@@ -530,48 +530,48 @@
       "Ago": "{{timeAgo}}前"
     },
     "AddRemoveButton": {
-      "AltAddARIA": "Add to collection",
-      "AltRemoveARIA": "コレクションから削除する"
+      "AltAddARIA": "コレクションへ追加",
+      "AltRemoveARIA": "コレクションから削除"
     },
     "CopyableInput": {
       "CopiedARIA": "クリップボードへコピーしました！",
-      "OpenViewTabARIA": "Open {{label}} view in new tab"
+      "OpenViewTabARIA": "新しいタブで {{label}} ビューを開く"
     },
     "EditableInput": {
-      "EditValue": "Edit {{display}} value",
-      "EmptyPlaceholder": "No value"
+      "EditValue": "{{display}} 値を編集",
+      "EmptyPlaceholder": "値がありません"
     },
     "PreviewNav": {
       "EditSketchARIA": "スケッチを編集する",
-      "ByUser": "by"
+      "ByUser": "によって"
     },
     "MobilePreferences": {
       "Settings": "設定",
       "GeneralSettings": "一般設定",
       "Accessibility": "アクセシビリティ",
-      "AccessibleOutput": "Accessible Output",
+      "AccessibleOutput": "アクセス可能な出力",
       "Theme": "テーマ",
       "LightTheme": "ライト",
       "DarkTheme": "ダーク",
       "HighContrastTheme": "ハイコントラスト",
       "Autosave": "自動保存",
-      "WordWrap": "Word Wrap",
+      "WordWrap": "ワードラップ",
       "LineNumbers": "行番号",
-      "LintWarningSound": "Lint warning sound",
-      "UsedScreenReader": "Used with screen reader",
-      "PlainText": "Plain-text",
-      "TableText": "Table-text",
-      "Sound": "Sound"
+      "LintWarningSound": "リント警告音",
+      "UsedScreenReader": "スクリーンリーダーと併用",
+      "PlainText": "プレインテキスト",
+      "TableText": "テーブルテキスト",
+      "Sound": "サウンド"
     },
     "PreferenceCreators": {
-      "On": "On",
-      "Off": "Off"
+      "On": "オン",
+      "Off": "オフ"
     },
     "MobileIDEView":{
       "Preferences": "設定",
-      "MyStuff": "My Stuff",
+      "MyStuff": "マイスタッフ",
       "Examples": "サンプル",
-      "OriginalEditor": "Original Editor",
+      "OriginalEditor": "オリジナルエディター",
       "Login": "ログイン",
       "Logout": "ログアウト"
     },
@@ -588,4 +588,3 @@
       "Files": "ファイル"
     }
   }
-  
