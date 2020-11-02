@@ -274,22 +274,37 @@ function parseString(string) {
   });
 }
 
-function parseQuery(query) {
-  var isRE = query.match(/^\/(.*)\/([a-z]*)$/);
-  if (isRE) {
-    try {
-      query = new RegExp(isRE[1], isRE[2].indexOf('i') == -1 ? '' : 'i');
-    } catch (e) { } // Not a regular expression after all, do a string search
+function parseQuery(query, state) {
+  var emptyQuery = 'x^'; // matches nothing
+  if (query === '') { // empty string matches nothing
+    query = emptyQuery;
   } else {
-    query = parseString(query);
+    if (state.regexp === false) {
+      query = parseString(query);
+      query = query.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+    }
+    if (state.wholeWord) {
+      query += '\\b';
+    }
   }
-  if (typeof query == 'string' ? query == '' : query.test('')) query = /x^/;
-  return query;
+
+  var regexp;
+  try {
+    regexp = new RegExp(query, state.caseInsensitive ? "gi" : "g");
+  } catch (e) {
+    regexp = new RegExp(emptyQuery, 'g');
+  }
+  // If the resulting regexp will match everything, do not use it
+  if (regexp.test('')) {
+    return new RegExp(emptyQuery, 'g');
+  }
+  return regexp;
 }
 
 function startSearch(cm, state, query) {
   state.queryText = query;
-  state.query = parseQuery(query);
+  state.lastQuery = query;
+  state.query = parseQuery(query, state);
   cm.removeOverlay(state.overlay, state.caseInsensitive);
   state.overlay = searchOverlay(state.query, state.caseInsensitive);
   cm.addOverlay(state.overlay);
@@ -440,7 +455,6 @@ function findNext(cm, rev, callback) {
 function clearSearch(cm) {
   cm.operation(function() {
     var state = getSearchState(cm);
-    state.lastQuery = state.query;
     state.replaceStarted = false;
     if (!state.query) return;
     state.query = state.queryText = null;
