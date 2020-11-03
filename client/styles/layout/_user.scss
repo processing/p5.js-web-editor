@@ -15,6 +15,7 @@
 .new-password-container,
 .email-verification {
   height: 100%;
+	overflow: auto;
   @include themify() {
     color: getThemifyVariable('primary-text-color');
     background-color: getThemifyVariable('background-color');
