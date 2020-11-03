@@ -84,7 +84,7 @@ function persistentDialog(cm, text, deflt, onEnter, replaceOpened, onKeyDown) {
     CodeMirror.on(searchField, "keyup", function (e) {
       if (e.keyCode !== 13 && searchField.value.length > 1) { // not enter and more than 1 character to search
         startSearch(cm, getSearchState(cm), searchField.value);
-      } else if (searchField.value.length <= 1) {
+      } else if (searchField.value.length < 1) {
         cm.display.wrapper.querySelector('.CodeMirror-search-results').innerText = i18n.t('CodemirrorFindAndReplace.NoResults');
       }
     });
