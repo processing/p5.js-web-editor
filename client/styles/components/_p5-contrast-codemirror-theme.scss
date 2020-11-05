@@ -137,9 +137,11 @@ $p5-contrast-activeline: #999999;
 }
 
 .cm-s-p5-contrast .cm-searching {
-  background-color: $pink-contrast-opacity;  
+  // background-color: $p5js-pink-opacity;
+  background-color: $medium-dark;
 }
 
-.cm-s-p5-contrast .CodeMirror-selectedtext {
-  background-color: $orange-contrast-opacity;
+.cm-s-p5-contrast .cm-searching.CodeMirror-selectedtext {
+  // background-color: $medium-dark;
+  outline: #{1 / $base-font-size}rem solid $p5-contrast-white;
 }
