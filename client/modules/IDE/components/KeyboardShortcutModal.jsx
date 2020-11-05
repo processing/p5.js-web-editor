@@ -1,9 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { metaKeyName, } from '../../../utils/metaKey';
+import { metaKeyName, metaKey } from '../../../utils/metaKey';
 
 function KeyboardShortcutModal() {
   const { t } = useTranslation();
+  const replaceCommand = metaKey === 'Ctrl' ? `${metaKeyName} + H` : `${metaKeyName} + ⌥ + F`;
   return (
     <div className="keyboard-shortcuts">
       <h3 className="keyboard-shortcuts__title">{t('KeyboardShortcuts.CodeEditing.CodeEditing')}</h3>
@@ -35,7 +36,7 @@ function KeyboardShortcutModal() {
         </li>
         <li className="keyboard-shortcut-item">
           <span className="keyboard-shortcut__command">
-            {metaKeyName} + R
+            {replaceCommand}
           </span>
           <span>{t('KeyboardShortcuts.CodeEditing.ReplaceTextMatch')}</span>
         </li>

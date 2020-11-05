@@ -123,6 +123,7 @@ class Editor extends React.Component {
 
     delete this._cm.options.lint.options.errors;
 
+    const replaceCommand = metaKey === 'Ctrl' ? `${metaKey}-H` : `${metaKey}-Option-F`;
     this._cm.setOption('extraKeys', {
       Tab: (cm) => {
         // might need to specify and indent more?
@@ -138,7 +139,7 @@ class Editor extends React.Component {
       [`${metaKey}-F`]: 'findPersistent',
       [`${metaKey}-G`]: 'findNext',
       [`Shift-${metaKey}-G`]: 'findPrev',
-      [`${metaKey}-R`]: 'replace',
+      replaceCommand: 'replace',
     });
 
     this.initializeDocuments(this.props.files);
