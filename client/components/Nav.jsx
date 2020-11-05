@@ -13,7 +13,7 @@ import { setAllAccessibleOutput, setLanguage } from '../modules/IDE/actions/pref
 import { logoutUser } from '../modules/User/actions';
 
 import getConfig from '../utils/getConfig';
-import { metaKeyName, } from '../utils/metaKey';
+import { metaKeyName, metaKey } from '../utils/metaKey';
 import { getIsUserOwner } from '../modules/IDE/selectors/users';
 
 import CaretLeftIcon from '../images/left-arrow.svg';
@@ -257,6 +257,7 @@ class Nav extends React.PureComponent {
   }
 
   renderProjectMenu(navDropdownState) {
+    const replaceCommand = metaKey === 'Ctrl' ? `${metaKeyName}+H` : `${metaKeyName}+⌥+F`;
     return (
       <ul className="nav__items-left">
         <li className="nav__item-logo">
@@ -429,7 +430,7 @@ class Nav extends React.PureComponent {
                 onBlur={this.handleBlur}
               >
                 {this.props.t('Nav.Edit.Replace')}
-                <span className="nav__keyboard-shortcut">{metaKeyName}+R</span>
+                <span className="nav__keyboard-shortcut">{replaceCommand}</span>
               </button>
             </li>
           </ul>
