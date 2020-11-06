@@ -110,11 +110,11 @@ export function get404Sketch(callback) {
         // Fix links to assets
         htmlFile = htmlFile.replace(
           /'assets/g,
-          "'https://rawgit.com/processing/p5.js-website/master/dist/assets/examples/assets/"
+          "'https://rawgit.com/processing/p5.js-website/main/dist/assets/examples/assets/"
         );
         htmlFile = htmlFile.replace(
           /"assets/g,
-          '"https://rawgit.com/processing/p5.js-website/master/dist/assets/examples/assets/'
+          '"https://rawgit.com/processing/p5.js-website/main/dist/assets/examples/assets/'
         );
 
         // Change canvas size

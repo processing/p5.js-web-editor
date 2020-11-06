@@ -142,3 +142,12 @@ $p5-dark-error: #df3a3d;
 .cm-s-p5-dark .CodeMirror-cursor {
   border-left: 1px solid $p5-dark-white;
 }
+
+.cm-s-p5-dark .cm-searching {
+  background-color: $p5js-pink-opacity;
+}
+
+.cm-s-p5-dark .CodeMirror-selectedtext {
+  background-color: $medium-dark;
+}
+

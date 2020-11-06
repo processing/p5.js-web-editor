@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import { Decode } from 'console-feed';
 import { isEqual } from 'lodash';
 import { dispatchConsoleEvent } from '../actions/console';
-import { stopSketch, expandConsole } from '../actions/console';
+import { stopSketch, expandConsole } from '../actions/ide';
 
 export default function useHandleMessageEvent() {
   const dispatch = useDispatch();

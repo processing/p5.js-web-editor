@@ -87,16 +87,14 @@ pre.CodeMirror-line {
   position: fixed;
   top: 0;
   left: 50%;
-  margin-left: - #{365/2/$base-font-size}rem;
+  margin-left: - #{552/2/$base-font-size}rem;
 
   z-index: 10;
 
-  width: 100%;
-  max-width: #{365 / $base-font-size}rem;
-
+  width: 580px;
   font-family: Montserrat, sans-serif;
 
-  padding: #{14 / $base-font-size}rem #{20 / $base-font-size}rem #{14 / $base-font-size}rem #{18 / $base-font-size}rem;
+  padding: #{8 / $base-font-size}rem #{10 / $base-font-size}rem #{5 / $base-font-size}rem #{9 / $base-font-size}rem;
 
   border-radius: 2px;
 
@@ -105,6 +103,65 @@ pre.CodeMirror-line {
     box-shadow: 0 12px 12px 0 getThemifyVariable('shadow-color');
     border: solid 0.5px getThemifyVariable('modal-border-color');
   }
+}
+
+.CodeMirror-find-popup-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.Toggle-replace-btn-div {
+  height: #{40 / $base-font-size}rem;
+  padding: 0;
+}
+
+.Toggle-replace-btn-div > button {
+  width: 100%;
+  height: 100%;
+}
+
+.CodeMirror-find-div {
+  padding: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.CodeMirror-search-modifiers {
+  margin-left: #{10 / $base-font-size}rem;
+}
+
+.CodeMirror-search-results {
+  margin: 0 #{20 / $base-font-size}rem;
+  width: #{75 / $base-font-size}rem;
+  font-size: #{12/$base-font-size}rem;
+}
+
+.CodeMirror-find-controls {
+  display: flex;
+}
+
+.CodeMirror-replace-div {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.CodeMirror-replace-controls {
+  display: flex;
+  margin-left: #{10 / $base-font-size}rem;
+}
+
+.CodeMirror-replace-options {
+  width: #{552 / $base-font-size}rem;
+  height: #{65 / $base-font-size}rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.CodeMirror-replace-options button {
+  width: #{200 / $base-font-size}rem;
 }
 
 .CodeMirror-search-title {
@@ -118,12 +175,21 @@ pre.CodeMirror-line {
 .CodeMirror-search-field {
   display: block;
   width: 100%;
-  margin-bottom: #{12 / $base-font-size}rem;
+  max-width: #{166/$base-font-size}rem;
+  margin-bottom: #{4 / $base-font-size}rem;
   @include themify() {
     color: getThemifyVariable('input-text-color');
     background-color: getThemifyVariable('input-secondary-background-color');
     border: solid 0.5px getThemifyVariable('button-border-color');
+    &::placeholder {
+      color: getThemifyVariable('inactive-text-color');
+    }
   }
+}
+
+.CodeMirror-search-nav {
+  display: flex;
+  align-items: center;
 }
 
 .CodeMirror-search-count {
@@ -137,9 +203,6 @@ pre.CodeMirror-line {
   justify-content: space-between;
 }
 
-/*
-  
-*/
 .CodeMirror-search-modifiers {
   display: flex;
   justify-content: flex-end;
@@ -162,7 +225,7 @@ pre.CodeMirror-line {
   height: #{35 / $base-font-size}rem;
 
   & + & {
-    margin-left: #{10 / $base-font-size}rem;
+    margin-left: #{3 / $base-font-size}rem;
   }
 
   word-break: keep-all;
@@ -196,58 +259,20 @@ pre.CodeMirror-line {
   margin-right: #{10 / $base-font-size}rem;
 }
 
-.CodeMirror-search-button::after {
-  display: block;
-  content: ' ';
-
-  width: 14px;
-  height: 14px;
-
-  @include icon();
-
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-// Previous button
-.CodeMirror-search-button.prev::after {
-  background-image: url(../images/up-arrow.svg?byUrl)
-}
-
-// Next button
-.CodeMirror-search-button.next::after {
-  background-image: url(../images/down-arrow.svg?byUrl)
+.CodeMirror-search-match {
+  background: gold;
+  border-top: #{1 / $base-font-size}rem solid orange;
+  border-bottom: #{1 / $base-font-size}rem solid orange;
+  box-sizing: border-box;
+  opacity: .5;
 }
 
 /*
   Close button
 */
-.CodeMirror-close-button {
-  position: absolute;
-  top: #{14 / $base-font-size}rem;
-  right: #{18 / $base-font-size}rem;
-
+  .CodeMirror-close-button-container {
   display: flex;
-  flex-direction: row;
-}
-
-// Visually hide button text
-.CodeMirror-close-button .label {
-  @extend %hidden-element;
-}
-
-.CodeMirror-close-button:after {
-  display: block;
-  content: ' ';
-
-  width: 16px;
-  height: 16px;
-
-  margin-left: #{8 / $base-font-size}rem;
-
-  @include icon();
-
-  background: transparent url(../images/exit.svg?byUrl) no-repeat;
+  align-items: center;
 }
 
 // foldgutter
