@@ -112,7 +112,7 @@ pre.CodeMirror-line {
 }
 
 .Toggle-replace-btn-div {
-  height: 40px;
+  height: #{40 / $base-font-size}rem;
   padding: 0;
 }
 
@@ -122,7 +122,7 @@ pre.CodeMirror-line {
 }
 
 .CodeMirror-find-div {
-  padding: 0px;
+  padding: 0;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -130,12 +130,12 @@ pre.CodeMirror-line {
 }
 
 .CodeMirror-search-modifiers {
-  margin-left: 10px;
+  margin-left: #{10 / $base-font-size}rem;
 }
 
 .CodeMirror-search-results {
-  margin: 0px 20px;
-  width: 75px;
+  margin: 0 #{20 / $base-font-size}rem;
+  width: #{75 / $base-font-size}rem;
   font-size: #{12/$base-font-size}rem;
 }
 
@@ -154,14 +154,14 @@ pre.CodeMirror-line {
 }
 
 .CodeMirror-replace-options {
-  width: 552px;
-  height: 65px;
+  width: #{552 / $base-font-size}rem;
+  height: #{65 / $base-font-size}rem;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .CodeMirror-replace-options button {
-  width: 200px;
+  width: #{200 / $base-font-size}rem;
 }
 
 .CodeMirror-search-title {
@@ -261,8 +261,8 @@ pre.CodeMirror-line {
 
 .CodeMirror-search-match {
   background: gold;
-  border-top: 1px solid orange;
-  border-bottom: 1px solid orange;
+  border-top: #{1 / $base-font-size}rem solid orange;
+  border-bottom: #{1 / $base-font-size}rem solid orange;
   box-sizing: border-box;
   opacity: .5;
 }

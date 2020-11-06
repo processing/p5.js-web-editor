@@ -25,7 +25,7 @@
   max-height: 80%;
   max-width: 65%;
   position: relative;
-  padding-bottom: 25px;
+  padding-bottom: #{25 / $base-font-size}rem;
 }
 
 .overlay__header {
