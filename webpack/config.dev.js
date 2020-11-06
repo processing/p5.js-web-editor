@@ -97,6 +97,10 @@ module.exports = {
         test: /\.svg$/,
         oneOf: [
           {
+            resourceQuery: /byContent/,
+            use: 'raw-loader'
+          },
+          {
             resourceQuery: /byUrl/,
             use: 'file-loader'
           },

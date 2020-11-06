@@ -15,7 +15,8 @@
       "TidyCode": "Tidy Code",
       "Find": "Find",
       "FindNext": "Find Next",
-      "FindPrevious": "Find Previous"
+      "FindPrevious": "Find Previous",
+      "Replace": "Replace"
     },
     "Sketch": {
       "Title": "Sketch",
@@ -47,6 +48,20 @@
       "MyAssets": "My Assets",
       "LogOut": "Log Out"
     }
+  },
+  "CodemirrorFindAndReplace": {
+    "Find": "Find",
+    "FindPlaceholder": "Find in files",
+    "Replace": "Replace",
+    "ReplaceAll": "Replace All",
+    "ReplacePlaceholder": "Text to replace",
+    "Regex": "Regular expression",
+    "CaseSensitive": "Case sensitive",
+    "WholeWords": "Whole words",
+    "Previous": "Previous",
+    "Next": "Next",
+    "NoResults": "No results",
+    "Close": "Close"
   },
   "LoginForm": {
     "UsernameOrEmail": "Email or Username",
@@ -165,6 +180,7 @@
       "FindText": "Find Text",
       "FindNextMatch": "Find Next Match",
       "FindPrevMatch": "Find Previous Match",
+      "ReplaceTextMatch": "Replace Text Match",
       "IndentCodeLeft": "Indent Code Left",
       "IndentCodeRight": "Indent Code Right",
       "CommentLine": "Comment Line",
