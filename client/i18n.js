@@ -11,7 +11,7 @@ export function languageKeyToLabel(lang) {
   const languageMap = {
     'en-US': 'English',
     'es-419': 'Español',
-    'ja': 'Japanese'
+    'ja': '日本語'
   };
   return languageMap[lang];
 }

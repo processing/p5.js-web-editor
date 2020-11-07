@@ -15,7 +15,8 @@
         "TidyCode": "コード整形",
         "Find": "検索",
         "FindNext": "次を検索",
-        "FindPrevious": "前を検索"
+        "FindPrevious": "前を検索",
+        "Replace": "置換"
       },
       "Sketch": {
         "Title": "スケッチ",
@@ -47,6 +48,20 @@
         "MyAssets": "マイアセット",
         "LogOut": "ログアウト"
       }
+    },
+    "CodemirrorFindAndReplace": {
+      "Find": "検索",
+      "FindPlaceholder": "ファイル内検索",
+      "Replace": "置換",
+      "ReplaceAll": "全て置換",
+      "ReplacePlaceholder": "置換するテキスト",
+      "Regex": "正規表現",
+      "CaseSensitive": "大文字小文字を区別する",
+      "WholeWords": "全単語",
+      "Previous": "前",
+      "Next": "次",
+      "NoResults": "該当なし",
+      "Close": "閉じる"
     },
     "LoginForm": {
       "UsernameOrEmail": "eメールもしくはユーザ名",
@@ -165,6 +180,7 @@
         "FindText": "テキスト検索",
         "FindNextMatch": "次の一致を検索",
         "FindPrevMatch": "前の一致を検索",
+        "ReplaceTextMatch": "一致するテキストの置換",
         "IndentCodeLeft": "インデント左揃え",
         "IndentCodeRight": "インデント右揃え",
         "CommentLine": "コメントライン",
