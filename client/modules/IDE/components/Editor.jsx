@@ -22,6 +22,7 @@ import 'codemirror/addon/search/match-highlighter';
 import 'codemirror/addon/search/jump-to-line';
 import 'codemirror/addon/edit/matchbrackets';
 import 'codemirror/addon/edit/closebrackets';
+import 'codemirror/addon/selection/mark-selection';
 
 import { JSHINT } from 'jshint';
 import { CSSLint } from 'csslint';
@@ -37,7 +38,7 @@ import Timer from '../components/Timer';
 import EditorAccessibility from '../components/EditorAccessibility';
 import { metaKey, } from '../../../utils/metaKey';
 
-import search from '../../../utils/codemirror-search';
+import '../../../utils/codemirror-search';
 
 import beepUrl from '../../../sounds/audioAlert.mp3';
 import UnsavedChangesDotIcon from '../../../images/unsaved-changes-dot.svg';
@@ -54,8 +55,6 @@ import * as PreferencesActions from '../actions/preferences';
 import * as UserActions from '../../User/actions';
 import * as ToastActions from '../actions/toast';
 import * as ConsoleActions from '../actions/console';
-
-search(CodeMirror);
 
 const beautifyCSS = beautifyJS.css;
 const beautifyHTML = beautifyJS.html;
@@ -86,6 +85,7 @@ class Editor extends React.Component {
     this.showFind = this.showFind.bind(this);
     this.findNext = this.findNext.bind(this);
     this.findPrev = this.findPrev.bind(this);
+    this.showReplace = this.showReplace.bind(this);
     this.getContent = this.getContent.bind(this);
   }
 
@@ -106,6 +106,7 @@ class Editor extends React.Component {
       highlightSelectionMatches: true, // highlight current search match
       matchBrackets: true,
       autoCloseBrackets: this.props.autocloseBracketsQuotes,
+      styleSelectedText: true,
       lint: {
         onUpdateLinting: ((annotations) => {
           this.props.hideRuntimeErrorWarning();
@@ -122,6 +123,7 @@ class Editor extends React.Component {
 
     delete this._cm.options.lint.options.errors;
 
+    const replaceCommand = metaKey === 'Ctrl' ? `${metaKey}-H` : `${metaKey}-Option-F`;
     this._cm.setOption('extraKeys', {
       Tab: (cm) => {
         // might need to specify and indent more?
@@ -137,6 +139,7 @@ class Editor extends React.Component {
       [`${metaKey}-F`]: 'findPersistent',
       [`${metaKey}-G`]: 'findNext',
       [`Shift-${metaKey}-G`]: 'findPrev',
+      replaceCommand: 'replace',
     });
 
     this.initializeDocuments(this.props.files);
@@ -170,6 +173,7 @@ class Editor extends React.Component {
       showFind: this.showFind,
       findNext: this.findNext,
       findPrev: this.findPrev,
+      showReplace: this.showReplace,
       getContent: this.getContent
     });
   }
@@ -281,6 +285,10 @@ class Editor extends React.Component {
 
   showFind() {
     this._cm.execCommand('findPersistent');
+  }
+
+  showReplace() {
+    this._cm.execCommand('replace');
   }
 
   tidyCode() {
