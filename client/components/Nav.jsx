@@ -599,6 +599,16 @@ class Nav extends React.PureComponent {
                 Español
               </button>
             </li>
+            <li className="nav__dropdown-item">
+              <button
+                onFocus={this.handleFocusForLang}
+                onBlur={this.handleBlur}
+                value="ja"
+                onClick={e => this.handleLangSelection(e)}
+              >
+                日本語
+              </button>
+            </li>
           </ul>
         </li>
       </React.Fragment>
