@@ -57,6 +57,12 @@ function getCategories() {
     },
     json: true
   };
+
+  // log out github credentials
+  // console.log ("GITHUB CREDENTIAL")
+  // console.log(clientId)
+  // console.log(clientSecret)
+
   return rp(options).then((res) => {
     res.forEach((metadata) => {
       let category = '';
@@ -68,6 +74,7 @@ function getCategories() {
 
     return categories;
   }).catch((err) => {
+    // console.log("Error")
     throw err;
   });
 }

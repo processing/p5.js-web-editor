@@ -38,7 +38,9 @@ const ActionStrip = ({ actions }) => (
 
 ActionStrip.propTypes = {
   actions: PropTypes.arrayOf(PropTypes.shape({
-    icon: PropTypes.any,
+    //  comment the following line to avoid proptype 'any' forbidden
+    //  icon: PropTypes.any,
+    icon: PropTypes.objectOf(PropTypes.shape()),
     aria: PropTypes.string.isRequired,
     action: PropTypes.func.isRequired,
     inverted: PropTypes.bool

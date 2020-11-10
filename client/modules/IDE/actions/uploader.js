@@ -31,6 +31,14 @@ function localIntercept(file, options = {}) {
   });
 }
 
+function toBinary(string) {
+  const codeUnits = new Uint16Array(string.length);
+  for (let i = 0; i < codeUnits.length; i += 1) {
+    codeUnits[i] = string.charCodeAt(i);
+  }
+  return String.fromCharCode(...new Uint8Array(codeUnits.buffer));
+}
+
 export function dropzoneAcceptCallback(userId, file, done) {
   return () => {
     // if a user would want to edit this file as text, local interceptor
@@ -93,11 +101,20 @@ export function dropzoneCompleteCallback(file) {
         url: `${s3BucketHttps}${file.postData.key}`,
         originalFilename: file.name
       };
-      // console.log(json, JSON.stringify(json), JSON.stringify(json).replace('"', '\\"'));
-      inputHidden += `${window.btoa(JSON.stringify(json))}" />`;
-      // document.getElementById('uploader').appendChild(inputHidden);
-      document.getElementById('uploader').innerHTML += inputHidden;
 
+      let jsonStr = JSON.stringify(json);
+      // console.log(json, jsonStr, jsonStr.replace('"', '\\"'));
+
+      // convert the json string to binary data so that btoa can encode it
+      jsonStr = toBinary(jsonStr);
+      inputHidden += `${window.btoa(jsonStr)}" />`;
+
+      // inputHidden += `${window.btoa(JSON.stringify(json))}" />`;
+
+      // document.getElementById('uploader').appendChild(inputHidden);
+      // console.log(inputHidden);
+
+      document.getElementById('uploader').innerHTML += inputHidden;
       const formParams = {
         name: file.name,
         url: `${s3BucketHttps}${file.postData.key}`
