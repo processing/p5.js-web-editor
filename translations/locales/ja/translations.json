@@ -35,8 +35,8 @@
       "BackEditor": "エディタに戻る",
       "WarningUnsavedChanges": "このページを離れてもよろしいですか？未保存の変更があります。",
       "Login": "ログイン",
-      "LoginOr": "or",
-      "SignUp": "ユーザー登録",
+      "LoginOr": "もしくは",
+      "SignUp": "アカウント作成",
       "Auth": {
         "Welcome": "ようこそ",
         "Hello": "こんにちは",
@@ -64,8 +64,8 @@
       "Close": "閉じる"
     },
     "LoginForm": {
-      "UsernameOrEmail": "メールアドレスもしくはユーザ名",
-      "UsernameOrEmailARIA": "メールアドレスもしくはユーザ名",
+      "UsernameOrEmail": "メールアドレスもしくはユーザー名",
+      "UsernameOrEmailARIA": "メールアドレスもしくはユーザー名",
       "Password": "パスワード",
       "PasswordARIA": "パスワード",
       "Submit": "ログイン"
@@ -73,10 +73,10 @@
     "LoginView": {
       "Title": "p5.js ウェブエディタ | ログイン",
       "Login": "ログイン",
-      "LoginOr": "or",
-      "SignUp": "ユーザー登録",
+      "LoginOr": "もしくは",
+      "SignUp": "アカウント作成",
       "Email": "メールアドレス",
-      "Username": "ユーザ名",
+      "Username": "ユーザー名",
       "DontHaveAccount": "ユーザー登録してない場合",
       "ForgotPassword": "パスワードを忘れた場合",
       "ResetPassword": "パスワードの再設定"
@@ -94,7 +94,7 @@
       "NewP5": "p5.jsは初めて?",
       "Report": "バグレポート",
       "Learn": "p5.jsを学ぶ",
-      "Resources": "リソース",
+      "Resources": "参考資料",
       "Libraries": "ライブラリ",
       "Forum": "フォーラム",
       "Examples": "サンプルを開く"
@@ -109,7 +109,7 @@
     },
     "Toolbar": {
       "Preview": "プレビュー",
-      "Auto-refresh": "オートリフレッシュ",
+      "Auto-refresh": "自動更新",
       "OpenPreferencesARIA": "設定を開く",
       "PlaySketchARIA": "スケッチを実行",
       "PlayOnlyVisualSketchARIA": "ビジュアルスケッチのみ実行",
@@ -122,7 +122,7 @@
       "Title": "コンソール",
       "Clear": "クリア",
       "ClearARIA": "コンソールをクリア",
-      "Close": "Close",
+      "Close": "閉じる",
       "CloseARIA": "コンソールを閉じる",
       "Open": "開く",
       "OpenARIA": "コンソールを開く"
@@ -264,8 +264,8 @@
       "Reset": "パスワードをリセットする",
       "Submitted": "パスワードリセットのメールを送信しました。もし、見当たらない場合は\n            迷惑メールフォルダに入っている可能性がありますので、確認してください。",
       "Login": "ログイン",
-      "LoginOr": "or",
-      "SignUp": "ユーザー登録"
+      "LoginOr": "もしくは",
+      "SignUp": "アカウント作成"
     },
     "ReduxFormUtils": {
       "errorInvalidEmail": "無効なメールアドレスを入力してください",
@@ -337,15 +337,15 @@
       "SubmitSetNewPassword": "新しいパスワードを設定"
     },
     "SignupForm": {
-      "Title": "ユーザ名",
-      "TitleARIA": "ユーザ名",
+      "Title": "ユーザー名",
+      "TitleARIA": "ユーザー名",
       "Email": "メールアドレス",
       "EmailARIA": "メールアドレス",
       "Password": "パスワード",
       "PasswordARIA": "パスワード",
       "ConfirmPassword": "確認用パスワード",
       "ConfirmPasswordARIA": "確認用パスワード",
-      "SubmitSignup": "ユーザー"
+      "SubmitSignup": "アカウント作成"
     },
     "SignupView": {
       "Title": "p5.js Web Editor | ユーザー登録",
@@ -398,7 +398,7 @@
       "MessageLogin": "スケッチを保存するにはログインが必要です。ログインしてください。 ",
       "Login": "ログイン",
       "LoginOr": " or ",
-      "SignUp": "ユーザー登録",
+      "SignUp": "アカウント作成",
       "MessageLoggedOut": "ログアウトされたようです。ログインしてください。 ",
       "LogIn": "ログイン",
       "SavedDifferentWindow": "保存しようとしたプロジェクトが別のウィンドウから保存されました。\n        最新版をご覧になるにはページを更新してください。",
