@@ -268,23 +268,23 @@
       "SignUp": "サインアップ"
     },
     "ReduxFormUtils": {
-      "errorInvalidEmail": "無効なメールアドレスを入力して下さい",
-      "errorEmptyEmail": "メールアドレスを入力して下さい",
+      "errorInvalidEmail": "無効なメールアドレスを入力してください",
+      "errorEmptyEmail": "メールアドレスを入力してください",
       "errorPasswordMismatch": "パスワードが一致しません",
-      "errorEmptyPassword": "パスワードを入力して下さい",
-      "errorShortPassword": "パスワードは6文字以上にして下さい",
-      "errorConfirmPassword": "確認用のパスワードを入力して下さい",
-      "errorNewPassword": "新しいパスワードを入力するか、現在のパスワードを空欄のままにして下さい。",
-      "errorEmptyUsername": "ユーザー名を入力して下さい。",
-      "errorLongUsername": "ユーザー名は20文字以内にして下さい。",
+      "errorEmptyPassword": "パスワードを入力してください",
+      "errorShortPassword": "パスワードは6文字以上にしてください",
+      "errorConfirmPassword": "確認用のパスワードを入力してください",
+      "errorNewPassword": "新しいパスワードを入力するか、現在のパスワードを空欄のままにしてください。",
+      "errorEmptyUsername": "ユーザー名を入力してください。",
+      "errorLongUsername": "ユーザー名は20文字以内にしてください。",
       "errorValidUsername": "ユーザー名は、英数字、ピリオド(.)、ダッシュ(-)、アンダースコア(_)のみで構成されている必要があります。"
     },
     "NewPasswordView": {
       "Title": "p5.js Web Editor | 新しいパスワード",
       "Description": "新しいパスワードの設定",
       "TokenInvalidOrExpired": "パスワードリセットトークンが無効か、有効期限が切れています。",
-      "EmptyPassword": "パスワードを入力して下さい",
-      "PasswordConfirmation": "確認用のパスワードを入力して下さい",
+      "EmptyPassword": "パスワードを入力してください",
+      "PasswordConfirmation": "確認用のパスワードを入力してください",
       "PasswordMismatch": "パスワードは一致している必要があります"
     },
     "AccountForm": {
