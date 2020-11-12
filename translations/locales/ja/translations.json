@@ -36,7 +36,7 @@
       "WarningUnsavedChanges": "このページを離れてもよろしいですか？未保存の変更があります。",
       "Login": "ログイン",
       "LoginOr": "or",
-      "SignUp": "サインアップ",
+      "SignUp": "ユーザー登録",
       "Auth": {
         "Welcome": "ようこそ",
         "Hello": "こんにちは",
@@ -74,7 +74,7 @@
       "Title": "p5.js ウェブエディタ | ログイン",
       "Login": "ログイン",
       "LoginOr": "or",
-      "SignUp": "サインアップ",
+      "SignUp": "ユーザー登録",
       "Email": "メールアドレス",
       "Username": "ユーザ名",
       "DontHaveAccount": "ユーザー登録してない場合",
@@ -265,7 +265,7 @@
       "Submitted": "パスワードリセットのメールを送信しました。もし、見当たらない場合は\n            迷惑メールフォルダに入っている可能性がありますので、確認してください。",
       "Login": "ログイン",
       "LoginOr": "or",
-      "SignUp": "サインアップ"
+      "SignUp": "ユーザー登録"
     },
     "ReduxFormUtils": {
       "errorInvalidEmail": "無効なメールアドレスを入力してください",
@@ -345,11 +345,11 @@
       "PasswordARIA": "パスワード",
       "ConfirmPassword": "確認用パスワード",
       "ConfirmPasswordARIA": "確認用パスワード",
-      "SubmitSignup": "サインアップ"
+      "SubmitSignup": "ユーザー"
     },
     "SignupView": {
-      "Title": "p5.js Web Editor | サインアップ",
-      "Description": "サインアップ",
+      "Title": "p5.js Web Editor | ユーザー登録",
+      "Description": "ユーザー登録",
       "Or": "もしくは",
       "AlreadyHave": "既にアカウントをお持ちですか？",
       "Login": "ログイン"
@@ -398,7 +398,7 @@
       "MessageLogin": "スケッチを保存するにはログインが必要です。ログインしてください。 ",
       "Login": "ログイン",
       "LoginOr": " or ",
-      "SignUp": "サインアップ",
+      "SignUp": "ユーザー登録",
       "MessageLoggedOut": "ログアウトされたようです。ログインしてください。 ",
       "LogIn": "ログイン",
       "SavedDifferentWindow": "保存しようとしたプロジェクトが別のウィンドウから保存されました。\n        最新版をご覧になるにはページを更新してください。",
