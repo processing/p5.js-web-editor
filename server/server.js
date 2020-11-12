@@ -37,16 +37,6 @@ const MongoStore = connectMongo(session);
 
 app.get('/health', (req, res) => res.json({ success: true }));
 
-// For basic auth, in setting up beta editor
-if (process.env.BASIC_USERNAME && process.env.BASIC_PASSWORD) {
-  app.use(basicAuth({
-    users: {
-      [process.env.BASIC_USERNAME]: process.env.BASIC_PASSWORD
-    },
-    challenge: true
-  }));
-}
-
 const allowedCorsOrigins = [
   /p5js\.org$/,
 ];
@@ -75,23 +65,6 @@ app.use(corsMiddleware);
 // Enable pre-flight OPTIONS route for all end-points
 app.options('*', corsMiddleware);
 
-// Body parser, cookie parser, sessions, serve public assets
-app.use(
-  '/locales',
-  Express.static(
-    path.resolve(__dirname, '../dist/static/locales'),
-    {
-      // Browsers must revalidate for changes to the locale files
-      // It doesn't actually mean "don't cache this file"
-      // See: https://jakearchibald.com/2016/caching-best-practices/
-      setHeaders: res => res.setHeader('Cache-Control', 'no-cache')
-    }
-  )
-);
-app.use(Express.static(path.resolve(__dirname, '../dist/static'), {
-  maxAge: process.env.STATIC_MAX_AGE || (process.env.NODE_ENV === 'production' ? '1d' : '0')
-}));
-
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(cookieParser());
@@ -111,16 +84,7 @@ app.use(session({
   })
 }));
 
-app.use(passport.initialize());
-app.use(passport.session());
 app.use('/api/v1', requestsOfTypeJSON(), api);
-app.use('/editor', requestsOfTypeJSON(), users);
-app.use('/editor', requestsOfTypeJSON(), sessions);
-app.use('/editor', requestsOfTypeJSON(), files);
-app.use('/editor', requestsOfTypeJSON(), projects);
-app.use('/editor', requestsOfTypeJSON(), aws);
-app.use('/editor', requestsOfTypeJSON(), collections);
-
 // This is a temporary way to test access via Personal Access Tokens
 // Sending a valid username:<personal-access-token> combination will
 // return the user's information.
@@ -128,6 +92,42 @@ app.get(
   '/api/v1/auth/access-check',
   passport.authenticate('basic', { session: false }), (req, res) => res.json(req.user)
 );
+
+// For basic auth, but can't have double basic auth for API
+if (process.env.BASIC_USERNAME && process.env.BASIC_PASSWORD) {
+  app.use(basicAuth({
+    users: {
+      [process.env.BASIC_USERNAME]: process.env.BASIC_PASSWORD
+    },
+    challenge: true
+  }));
+}
+
+// Body parser, cookie parser, sessions, serve public assets
+app.use(
+  '/locales',
+  Express.static(
+    path.resolve(__dirname, '../dist/static/locales'),
+    {
+      // Browsers must revalidate for changes to the locale files
+      // It doesn't actually mean "don't cache this file"
+      // See: https://jakearchibald.com/2016/caching-best-practices/
+      setHeaders: res => res.setHeader('Cache-Control', 'no-cache')
+    }
+  )
+);
+app.use(Express.static(path.resolve(__dirname, '../dist/static'), {
+  maxAge: process.env.STATIC_MAX_AGE || (process.env.NODE_ENV === 'production' ? '1d' : '0')
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use('/editor', requestsOfTypeJSON(), users);
+app.use('/editor', requestsOfTypeJSON(), sessions);
+app.use('/editor', requestsOfTypeJSON(), files);
+app.use('/editor', requestsOfTypeJSON(), projects);
+app.use('/editor', requestsOfTypeJSON(), aws);
+app.use('/editor', requestsOfTypeJSON(), collections);
 
 // this is supposed to be TEMPORARY -- until i figure out
 // isomorphic rendering

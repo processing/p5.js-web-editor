@@ -127,29 +127,17 @@ metadata:
   labels:
     name: staging
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: staging-editor-ingress-with-auth
   namespace: staging
   annotations:
-    kubernetes.io/ingress.class: nginx
-    # type of authentication
-    nginx.ingress.kubernetes.io/auth-type: basic
-    # name of the secret that contains the user/password definitions
-    nginx.ingress.kubernetes.io/auth-secret: basic-auth
-    # message to display with an appropriate context why the authentication is required
-    nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required - p5.js Web Editor Staging'
-    # kubernetes.io/ingress.global-static-ip-name: "web-editor-staging-ip"
+    kubernetes.io/ingress.class: gce
+    kubernetes.io/ingress.global-static-ip-name: "web-editor-staging-ip"
 spec:
-  rules:
-  - host: stagingeditor.p5js.org
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: web-editor-node
-          servicePort: 8001
+  serviceName: web-editor-node
+  servicePort: 8001
 ---
 apiVersion: v1
 kind: Service
