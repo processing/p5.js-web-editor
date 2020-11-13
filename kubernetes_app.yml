@@ -3,7 +3,6 @@ kind: Ingress
 metadata:
   name: editor-ingress
   annotations:
-    kubernetes.io/ingress.class: "gce"
     kubernetes.io/ingress.global-static-ip-name: "web-editor-ip"
 spec:
   backend:
@@ -133,11 +132,11 @@ metadata:
   name: staging-editor-ingress-with-auth
   namespace: staging
   annotations:
-    kubernetes.io/ingress.class: gce
     kubernetes.io/ingress.global-static-ip-name: "web-editor-staging-ip"
 spec:
-  serviceName: web-editor-node
-  servicePort: 8001
+  backend:
+    serviceName: web-editor-node
+    servicePort: 8001
 ---
 apiVersion: v1
 kind: Service
