@@ -28,7 +28,7 @@
       "Help": {
         "Title": "ヘルプ",
         "KeyboardShortcuts": "キーボードショートカット",
-        "Reference": "リファレンス",
+        "Reference": "リファレンス（英語）",
         "About": "ウェブエディタについて"
       },
       "Lang": "言語",
@@ -74,12 +74,12 @@
       "Title": "p5.js ウェブエディタ | ログイン",
       "Login": "ログイン",
       "LoginOr": "もしくは",
-      "SignUp": "アカウント作成",
+      "SignUp": "アカウントを作成してください",
       "Email": "メールアドレス",
       "Username": "ユーザー名",
       "DontHaveAccount": "ユーザー登録してない場合",
       "ForgotPassword": "パスワードを忘れた場合",
-      "ResetPassword": "パスワードの再設定"
+      "ResetPassword": "パスワードを再設定してください"
     },
     "SocialAuthButton": {
       "Connect": "{{serviceauth}} アカウントへ接続",
@@ -91,7 +91,7 @@
       "Title": "ウェブエディタについて",
       "TitleHelmet": "p5.js Web Editor | ウェブエディタについて",
       "Contribute": "コントリビュート",
-      "NewP5": "p5.jsは初めて?",
+      "NewP5": "p5.jsは初めてですか?",
       "Report": "バグレポート",
       "Learn": "p5.jsを学ぶ",
       "Resources": "参考資料",
@@ -148,7 +148,7 @@
       "AutosaveOnARIA": "自動保存 オン",
       "Off": "オフ",
       "AutosaveOffARIA": "自動保存 オフ",
-      "AutocloseBracketsQuotes": "ブラケットとクウォートをオートクローズ",
+      "AutocloseBracketsQuotes": "括弧を自動的に閉じる",
       "AutocloseBracketsQuotesOnARIA": "括弧を自動的に閉じる オン",
       "AutocloseBracketsQuotesOffARIA": "括弧を自動的に閉じる オフ",
       "WordWrap": "ワードラップ",
@@ -157,7 +157,7 @@
       "LineNumbers": "行番号",
       "LineNumbersOnARIA": "行番号 表示",
       "LineNumbersOffARIA": "行番号 非表示",
-      "LintWarningSound": "リントワーニング音",
+      "LintWarningSound": "リント警告音",
       "LintWarningOnARIA": "リント オン",
       "LintWarningOffARIA": "リント オフ",
       "PreviewSound": "プレビューサウンド",
@@ -265,7 +265,7 @@
       "Submitted": "パスワードリセットのメールを送信しました。もし、見当たらない場合は\n            迷惑メールフォルダに入っている可能性がありますので、確認してください。",
       "Login": "ログイン",
       "LoginOr": "もしくは",
-      "SignUp": "アカウント作成"
+      "SignUp": "アカウントを作成する"
     },
     "ReduxFormUtils": {
       "errorInvalidEmail": "無効なメールアドレスを入力してください",
@@ -397,8 +397,8 @@
     "ErrorModal": {
       "MessageLogin": "スケッチを保存するにはログインが必要です。ログインしてください。 ",
       "Login": "ログイン",
-      "LoginOr": " or ",
-      "SignUp": "アカウント作成",
+      "LoginOr": " もしくは ",
+      "SignUp": "アカウントを作成してください",
       "MessageLoggedOut": "ログアウトされたようです。ログインしてください。 ",
       "LogIn": "ログイン",
       "SavedDifferentWindow": "保存しようとしたプロジェクトが別のウィンドウから保存されました。\n        最新版をご覧になるにはページを更新してください。",
@@ -518,7 +518,7 @@
       "HeaderCreatedAt_mobile": "作成",
       "HeaderUpdatedAt": "更新日",
       "HeaderUpdatedAt_mobile": "更新",
-      "NoSketches": "スケッチはありません"
+      "NoSketches": "スケッチがありません"
     },
     "AddToCollectionSketchList": {
       "Title": "p5.js Web Editor | マイスケッチ",
