@@ -80,3 +80,10 @@ name, you can also set it using this variable. I.e.:
 For more information on using a custom domain, see this documentation link:
 
 http://docs.aws.amazon.com/AmazonS3/latest/dev/VirtualHosting.html#VirtualHostingCustomURLs
+
+## Github API Configuration
+
+This is an optional part, unless you are working on the part of the project that requires you to work with Github API (i.e: login with your Github Account, make request to Github API to download example sketches,...). An overview about Github API can be found [here](https://developer.github.com/v3/)
+
+Since the new update of Github API, when you go to your Developers Settings, you will see two types of Apps `Github Apps` and `OAuth Apps`. For this project, you should create an OAuth App since some Github API calls will not accept your Credentials if you create a Github App. One of the key differences between the two is that while `Oauth Apps` act on your behalf, `Github Apps` act on its own. More differences between these two can be found [here](https://docs.github.com/en/free-pro-team@latest/developers/apps/differences-between-github-apps-and-oauth-apps)
+
