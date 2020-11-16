@@ -101,14 +101,12 @@ export function dropzoneCompleteCallback(file) {
         url: `${s3BucketHttps}${file.postData.key}`,
         originalFilename: file.name
       };
-      // console.log(json, JSON.stringify(json), JSON.stringify(json).replace('"', '\\"'));
+
       let jsonStr = JSON.stringify(json);
-      // console.log(json, jsonStr, jsonStr.replace('"', '\\"'));
 
       // convert the json string to binary data so that btoa can encode it
       jsonStr = toBinary(jsonStr);
       inputHidden += `${window.btoa(jsonStr)}" />`;
-      // document.getElementById('uploader').appendChild(inputHidden);
       document.getElementById('uploader').innerHTML += inputHidden;
 
       const formParams = {
