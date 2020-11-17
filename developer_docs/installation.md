@@ -26,7 +26,7 @@ _Note_: The installation steps assume you are using a Unix-like shell. If you ar
    * For Windows and Linux: [MongoDB Installation](https://docs.mongodb.com/manual/installation/)
 7. `$ cp .env.example .env`
 8. (Optional) Update `.env` with necessary keys to enable certain app behaviors, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
-9. `$ npm run fetch-examples` - this downloads the example sketches into a user called 'p5'. Note that you need to configure your Github API, details can be found in the [Github API Configuration] section(https://github.com/vulongphan/p5.js-web-editor/blob/fix/installation-guide-update/developer_docs/installation.md#github-api-configuration)
+9. Run `$ npm run fetch-examples` to download the example sketches into a user called 'p5'. Note that you need to configure your Github API, details can be found in the [Github API Configuration](https://github.com/vulongphan/p5.js-web-editor/blob/fix/installation-guide-update/developer_docs/installation.md#github-api-configuration) section
 10. `$ npm start`
 11. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
 12. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
@@ -47,7 +47,7 @@ Note that this takes up a significant amount of space on your machine. Make sure
 3. `$ docker-compose -f docker-compose-development.yml build`
 4. `$ cp .env.example .env`
 5. (Optional) Update `.env` with necessary keys to enable certain app behavoirs, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
-6. `$ docker-compose -f docker-compose-development.yml run --rm app npm run fetch-examples` - note that you need to configure your Github API, details can be found in the [Github API Configuration] section(https://github.com/vulongphan/p5.js-web-editor/blob/fix/installation-guide-update/developer_docs/installation.md#github-api-configuration)
+6. `$ docker-compose -f docker-compose-development.yml run --rm app npm run fetch-examples` -  note that you need to configure your Github API, details can be found in the [Github API Configuration](https://github.com/vulongphan/p5.js-web-editor/blob/fix/installation-guide-update/developer_docs/installation.md#github-api-configuration) section
 
 Now, anytime you wish to start the server with its dependencies, you can run:
 
