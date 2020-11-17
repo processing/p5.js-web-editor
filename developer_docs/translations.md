@@ -10,9 +10,46 @@ In order to simplify the translations process the following rules of thumb were 
 ## Technical Part
 
 * There is only one file to translate all the texts in any specific language, which is located under the directory, in respective locale [subdirectory](https://github.com/processing/p5.js-web-editor/tree/develop/translations/locales)
-* The new language code must be added to [client/i18n.js](https://github.com/processing/p5.js-web-editor/blob/develop/client/i18n.js#L7)
-* New languages will need to be selected using a dropdown in Nav component, specifically in function [renderLanguageMenu.](https://github.com/processing/p5.js-web-editor/blob/develop/client/components/Nav.jsx#L550)
+* The new language code must be added to [client/i18n.js](https://github.com/processing/p5.js-web-editor/blob/develop/client/i18n.js#L8)
+* New languages will need to be selected using a dropdown in Nav component, specifically in function [renderLanguageMenu.](https://github.com/processing/p5.js-web-editor/blob/develop/client/components/Nav.jsx#L611)
 * Need to add `TRANSLATIONS_ENABLED=true` to `.env` to activate dropdown for the languages.
+
+#### Nav.js
+Need to add the following code to add a new language as a dropdown menu.
+```js
+<li className="nav__dropdown-item">
+   <button
+      onFocus={this.handleFocusForLang}
+      onBlur={this.handleBlur}
+      value="newLanguageValue"
+      onClick={e => this.handleLangSelection(e)}
+   >
+      new language name in the new language ex: 日本語 (Japanese)
+   </button>
+</li>
+```
+
+#### i18n.js
+In terms of `i18n.js`, you will need to update 2 things. One is to import a new language from `date-fns/locale`. The other is to add a new language to `languageMap`.
+
+```js
+import { enUS, es, ja, newLanguage } from 'date-fns/locale';
+const availableLanguages = ['en-US', 'es-419', 'ja', 'newLanguage'];
+```
+
+```js
+export function languageKeyToDateLocale(lang) {
+  const languageMap = {
+    'en-US': enUS,
+    'es-419': es,
+    'ja': ja
+    'newLanguage': newLanguage
+  };
+  return languageMap[lang];
+}
+```
+
+
 
 ## Translations
 
