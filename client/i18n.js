@@ -37,8 +37,6 @@ const options = {
   allowMultiLoading: false, // set loadPath: '/locales/resources.json?lng={{lng}}&ns={{ns}}' to adapt to multiLoading
 };
 
-console.log('options', options);
-
 i18n
   .use(initReactI18next) // pass the i18n instance to react-i18next.
   // .use(LanguageDetector)// to detect the language from currentBrowser
