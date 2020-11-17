@@ -265,12 +265,12 @@ export function cloneProject(id) {
       if (!id) {
         resolve(getState());
       } else {
-        apiClient.get(`/projects/${id}`)
-          .then(res => res.json())
-          .then(data => resolve({
-            files: data.files,
+        const currentUser = getState().user.username;
+        apiClient.get(`/${currentUser}/projects/${id}`)
+          .then(res => resolve({
+            files: res.data.files,
             project: {
-              name: data.name
+              name: res.data.name
             }
           }));
       }
