@@ -83,7 +83,16 @@ http://docs.aws.amazon.com/AmazonS3/latest/dev/VirtualHosting.html#VirtualHostin
 
 ## Github API Configuration
 
-This is an optional part, unless you are working on the part of the project that requires you to work with Github API (i.e: login with your Github Account, make request to Github API to download example sketches,...). An overview about Github API can be found [here](https://developer.github.com/v3/)
+This is neccessary for step 9 in [Manual Installation](https://github.com/processing/p5.js-web-editor/blob/develop/developer_docs/installation.md#manual-installation) section and step 6 in [Docker Installation](https://github.com/processing/p5.js-web-editor/blob/6a6eeb21ef386c30a81ca6172b4557a4c92f5223/developer_docs/installation.md#docker-installation) section
 
-Since the new update of Github API, when you go to your Developers Settings, you will see two types of Apps `Github Apps` and `OAuth Apps`. For this project, you should create an OAuth App since some Github API calls will not accept your Credentials if you create a Github App. One of the key differences between the two is that while `Oauth Apps` act on your behalf, `Github Apps` act on its own. More differences between these two can be found [here](https://docs.github.com/en/free-pro-team@latest/developers/apps/differences-between-github-apps-and-oauth-apps)
+In this application, Github Credentials are used for:
+* Authentication with GitHub
+* Importing the p5.js examples to your local database
+* Rendering the 404 pages
+
+If you are working on a part of the application that requires one of the above uses then you will need to get GitHub API credentials.
+
+An overview about Github API can be found [here](https://developer.github.com/v3/).
+
+When you go to your Developers Settings, you will see two types of Apps `Github Apps` and `OAuth Apps`. For this application, you should create an OAuth App since some Github API calls will not accept your Credentials if you create a Github App. One of the key differences between the two is that while `Oauth Apps` act on your behalf, `Github Apps` act on its own. More differences between these two can be found [here](https://docs.github.com/en/free-pro-team@latest/developers/apps/differences-between-github-apps-and-oauth-apps)
 
