@@ -10,6 +10,8 @@ router.put('/projects/:project_id', isAuthenticated, ProjectController.updatePro
 
 router.get('/:username/projects/:project_id', ProjectController.getProject);
 
+router.get('/projects/:project_id', ProjectController.getProjectById);
+
 router.delete('/projects/:project_id', isAuthenticated, ProjectController.deleteProject);
 
 router.get('/projects', ProjectController.getProjects);

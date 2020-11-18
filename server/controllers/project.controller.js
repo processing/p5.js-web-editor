@@ -81,6 +81,17 @@ export function getProject(req, res) {
   });
 }
 
+export function getProjectById(req, res) {
+  Project.findById(req.params.project_id, (findProjectErr, project) => {
+    if (findProjectErr) {
+      console.log(findProjectErr);
+      res.status(404).json({ message: 'Project with that id does not exist' });
+      return;
+    }
+    res.json(project);
+  });
+}
+
 export function getProjectsForUserId(userId) {
   return new Promise((resolve, reject) => {
     Project.find({ user: userId })

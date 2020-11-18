@@ -265,8 +265,7 @@ export function cloneProject(id) {
       if (!id) {
         resolve(getState());
       } else {
-        const currentUser = getState().user.username;
-        apiClient.get(`/${currentUser}/projects/${id}`)
+        apiClient.get(`/projects/${id}`)
           .then(res => resolve({
             files: res.data.files,
             project: {
