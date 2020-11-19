@@ -83,16 +83,18 @@ For more information on using a custom domain, see this documentation link:
 
 http://docs.aws.amazon.com/AmazonS3/latest/dev/VirtualHosting.html#VirtualHostingCustomURLs
 
-## Github API Configuration
+## GitHub API Configuration
 
-In this application, Github Credentials are used for:
+In this application, GitHub credentials are used for:
 * Authentication with GitHub
 * Importing the p5.js examples to your local database
 * Rendering the 404 pages
 
-If you are working on a part of the application that requires one of the above uses then you will need to get GitHub API credentials.
+If you are working on a part of the application that requires one of the above uses, then you will need to get GitHub API credentials.
 
-An overview about Github API can be found [here](https://developer.github.com/v3/).
+When you go to the Developer settings in your GitHub account, you will see that you can create two types of Apps: `GitHub Apps` and `OAuth Apps` ([differences between GitHub Apps and OAuth Apps](https://docs.github.com/en/free-pro-team@latest/developers/apps/differences-between-github-apps-and-oauth-apps)). This project requires you to make an `OAuth App`. After clicking on "New OAuth App", you will need to fill in the following fields:
+- **Application name**: `p5.js Web Editor - Local`
+- **Homepage URL**: `http://localhost:8000`
+- **Authorization Callback URL**: `http://localhost:8000/auth/github/callback`
 
-When you go to your Developers Settings, you will see two types of Apps `Github Apps` and `OAuth Apps`. For this application, you should create an OAuth App since some Github API calls will not accept your Credentials if you create a Github App. One of the key differences between the two is that while `Oauth Apps` act on your behalf, `Github Apps` act on its own. More differences between these two can be found [here](https://docs.github.com/en/free-pro-team@latest/developers/apps/differences-between-github-apps-and-oauth-apps)
-
+If you would like to learn more about what you can do with the GitHub API, you can look at the [API documentation](https://developer.github.com/v3/).
