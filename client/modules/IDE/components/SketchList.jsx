@@ -139,7 +139,7 @@ class SketchListRowBase extends React.Component {
 
   handleSketchDuplicate = () => {
     this.closeAll();
-    this.props.cloneProject(this.props.sketch.id);
+    this.props.cloneProject(this.props.sketch);
   }
 
   handleSketchShare = () => {
