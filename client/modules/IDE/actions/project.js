@@ -258,64 +258,50 @@ function generateNewIdsForChildren(file, files) {
   file.children = newChildren; // eslint-disable-line
 }
 
-export function cloneProject(id) {
+export function cloneProject(project) {
   return (dispatch, getState) => {
     dispatch(setUnsavedChanges(false));
-    new Promise((resolve, reject) => {
-      if (!id) {
-        resolve(getState());
-      } else {
-        apiClient.get(`/projects/${id}`)
-          .then(res => res.json())
-          .then(data => resolve({
-            files: data.files,
-            project: {
-              name: data.name
-            }
-          }));
-      }
-    }).then((state) => {
-      const newFiles = state.files.map((file) => { // eslint-disable-line
-        return { ...file };
-      });
+    const state = getState();
+    const files = project ? project.files : state.files;
+    const projectName = project ? project.name : state.project.name;
+    const newFiles = files.map(file => ({ ...file }));
 
-      // generate new IDS for all files
-      const rootFile = newFiles.find(file => file.name === 'root');
-      const newRootFileId = objectID().toHexString();
-      rootFile.id = newRootFileId;
-      rootFile._id = newRootFileId;
-      generateNewIdsForChildren(rootFile, newFiles);
+    // generate new IDS for all files
+    const rootFile = newFiles.find(file => file.name === 'root');
+    const newRootFileId = objectID().toHexString();
+    rootFile.id = newRootFileId;
+    rootFile._id = newRootFileId;
+    generateNewIdsForChildren(rootFile, newFiles);
 
-      // duplicate all files hosted on S3
-      each(newFiles, (file, callback) => {
-        if (file.url && (file.url.includes(S3_BUCKET_URL_BASE) || file.url.includes(S3_BUCKET))) {
-          const formParams = {
-            url: file.url
-          };
-          apiClient.post('/S3/copy', formParams)
-            .then((response) => {
-              file.url = response.data.url;
-              callback(null);
-            });
-        } else {
-          callback(null);
-        }
-      }, (err) => {
-        // if not errors in duplicating the files on S3, then duplicate it
-        const formParams = Object.assign({}, { name: `${state.project.name} copy` }, { files: newFiles });
-        apiClient.post('/projects', formParams)
+    // duplicate all files hosted on S3
+    each(newFiles, (file, callback) => {
+      if (file.url && (file.url.includes(S3_BUCKET_URL_BASE) || file.url.includes(S3_BUCKET))) {
+        const formParams = {
+          url: file.url
+        };
+        apiClient.post('/S3/copy', formParams)
           .then((response) => {
-            browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
-            dispatch(setNewProject(response.data));
-          })
-          .catch((error) => {
-            const { response } = error;
-            dispatch({
-              type: ActionTypes.PROJECT_SAVE_FAIL,
-              error: response.data
-            });
+            file.url = response.data.url;
+            callback(null);
           });
-      });
+      } else {
+        callback(null);
+      }
+    }, (err) => {
+      // if not errors in duplicating the files on S3, then duplicate it
+      const formParams = Object.assign({}, { name: `${projectName} copy` }, { files: newFiles });
+      apiClient.post('/projects', formParams)
+        .then((response) => {
+          browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
+          dispatch(setNewProject(response.data));
+        })
+        .catch((error) => {
+          const { response } = error;
+          dispatch({
+            type: ActionTypes.PROJECT_SAVE_FAIL,
+            error: response.data
+          });
+        });
     });
   };
 }

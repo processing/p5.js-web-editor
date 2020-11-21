@@ -148,9 +148,11 @@ export function projectForUserExists(username, projectId, callback) {
       return;
     }
     Project.findOne({ user: user._id, $or: [{ _id: projectId }, { slug: projectId }] }, (innerErr, project) => {
-      if (project) {
-        callback(true);
+      if (!project) {
+        callback(false);
+        return;
       }
+      callback(true);
     });
   });
 }
