@@ -141,17 +141,6 @@ function getSketchContent(projectsInAllCategories) {
   }))));
 }
 
-// a function to await for the response that contains the content of asset file
-function doRequest(options) {
-  return new Promise(((resolve, reject) => {
-    rp(options).then((response) => {
-      resolve(response);
-    }).catch((error) => {
-      reject(error);
-    });
-  }));
-}
-
 function createProjectsInP5user(projectsInAllCategories) {
   const options = {
     url: 'https://api.github.com/repos/processing/p5.js-website/contents/src/data/examples/assets',
@@ -301,16 +290,16 @@ function createProjectsInP5user(projectsInAllCategories) {
                   json: true
                 };
 
-                // //a function to await for the response that contains the content of asset file
-                // function doRequest(options) {
-                //   return new Promise(function (resolve, reject) {
-                //     rp(options).then((response) => {
-                //       resolve(response);
-                //     }).catch((error) => {
-                //       reject(error);
-                //     })
-                //   })
-                // }
+                // a function to await for the response that contains the content of asset file
+                const doRequest = function (_options) {
+                  return new Promise(((resolve, reject) => {
+                    rp(_options).then((response) => {
+                      resolve(response);
+                    }).catch((error) => {
+                      reject(error);
+                    });
+                  }));
+                };
 
                 assetContent = await doRequest(assetOptions);
                 // push to the files array of the project only when response is received
