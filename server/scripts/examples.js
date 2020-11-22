@@ -132,7 +132,6 @@ function getSketchContent(projectsInAllCategories) {
         }
       } else {
         project.sketchContent = res;
-        // console.log("options.url: ", options.url);
       }
       return project;
     }).catch((err) => {
