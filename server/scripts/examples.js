@@ -291,9 +291,9 @@ function createProjectsInP5user(projectsInAllCategories) {
                 };
 
                 // a function to await for the response that contains the content of asset file
-                const doRequest = function (_options) {
+                const doRequest = function (optionsAsset) {
                   return new Promise(((resolve, reject) => {
-                    rp(_options).then((response) => {
+                    rp(optionsAsset).then((response) => {
                       resolve(response);
                     }).catch((error) => {
                       reject(error);
