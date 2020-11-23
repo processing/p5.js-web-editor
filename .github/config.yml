@@ -10,7 +10,7 @@ newIssueWelcomeComment: >
 
 # Comment to be posted to on PRs from first time contributors in your repository
 newPRWelcomeComment: >
-  🎉 Thanks for opening this pull request! Please check out our [contributing guidelines](https://github.com/processing/p5.js-web-editor/blob/master/.github/CONTRIBUTING.md) if you haven't already.
+  🎉 Thanks for opening this pull request! Please check out our [contributing guidelines](https://github.com/processing/p5.js-web-editor/blob/develop/.github/CONTRIBUTING.md) if you haven't already.
 
 # Configuration for first-pr-merge - https://github.com/behaviorbot/first-pr-merge
 

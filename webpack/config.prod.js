@@ -103,6 +103,10 @@ module.exports = [{
         test: /\.svg$/,
         oneOf: [
           {
+            resourceQuery: /byContent/,
+            use: 'raw-loader'
+          },
+          {
             resourceQuery: /byUrl/,
             use: 'file-loader'
           },
@@ -137,7 +141,11 @@ module.exports = [{
     ]
   },
   optimization: {
-    minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
+    minimize: true,
+    minimizer: [new TerserJSPlugin({
+      sourceMap: true,
+      parallel: true
+    }), new OptimizeCSSAssetsPlugin()],
   },
   plugins: [
     new ManifestPlugin({
@@ -161,6 +169,7 @@ module.exports = [{
     ]
   },
   target: 'web',
+  devtool: 'source-map',
   mode: 'production',
   output: {
     path: path.resolve(__dirname, '../dist/static'),
@@ -185,5 +194,12 @@ module.exports = [{
         }
       }
     ]
-  }
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserJSPlugin({
+      sourceMap: true,
+      parallel: true
+    })],
+  },
 }];

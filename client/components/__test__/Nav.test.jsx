@@ -35,7 +35,8 @@ describe('Nav', () => {
       tidyCode: jest.fn(),
       showFind: jest.fn(),
       findNext: jest.fn(),
-      findPrev: jest.fn()
+      findPrev: jest.fn(),
+      showReplace: jest.fn(),
     },
     startSketch: jest.fn(),
     stopSketch: jest.fn(),

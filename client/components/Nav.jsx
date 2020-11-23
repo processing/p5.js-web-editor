@@ -13,7 +13,7 @@ import { setAllAccessibleOutput, setLanguage } from '../modules/IDE/actions/pref
 import { logoutUser } from '../modules/User/actions';
 
 import getConfig from '../utils/getConfig';
-import { metaKeyName, } from '../utils/metaKey';
+import { metaKeyName, metaKey } from '../utils/metaKey';
 import { getIsUserOwner } from '../modules/IDE/selectors/users';
 
 import CaretLeftIcon from '../images/left-arrow.svg';
@@ -42,6 +42,7 @@ class Nav extends React.PureComponent {
     this.handleFindNext = this.handleFindNext.bind(this);
     this.handleRun = this.handleRun.bind(this);
     this.handleFindPrevious = this.handleFindPrevious.bind(this);
+    this.handleReplace = this.handleReplace.bind(this);
     this.handleStop = this.handleStop.bind(this);
     this.handleStartAccessible = this.handleStartAccessible.bind(this);
     this.handleStopAccessible = this.handleStopAccessible.bind(this);
@@ -131,6 +132,11 @@ class Nav extends React.PureComponent {
 
   handleFindPrevious() {
     this.props.cmController.findPrev();
+    this.setDropdown('none');
+  }
+
+  handleReplace() {
+    this.props.cmController.showReplace();
     this.setDropdown('none');
   }
 
@@ -251,6 +257,7 @@ class Nav extends React.PureComponent {
   }
 
   renderProjectMenu(navDropdownState) {
+    const replaceCommand = metaKey === 'Ctrl' ? `${metaKeyName}+H` : `${metaKeyName}+⌥+F`;
     return (
       <ul className="nav__items-left">
         <li className="nav__item-logo">
@@ -414,6 +421,16 @@ class Nav extends React.PureComponent {
               >
                 {this.props.t('Nav.Edit.FindPrevious')}
                 <span className="nav__keyboard-shortcut">{'\u21E7'}+{metaKeyName}+G</span>
+              </button>
+            </li>
+            <li className="nav__dropdown-item">
+              <button
+                onClick={this.handleReplace}
+                onFocus={this.handleFocusForEdit}
+                onBlur={this.handleBlur}
+              >
+                {this.props.t('Nav.Edit.Replace')}
+                <span className="nav__keyboard-shortcut">{replaceCommand}</span>
               </button>
             </li>
           </ul>
@@ -580,6 +597,16 @@ class Nav extends React.PureComponent {
                 onClick={e => this.handleLangSelection(e)}
               >
                 Español
+              </button>
+            </li>
+            <li className="nav__dropdown-item">
+              <button
+                onFocus={this.handleFocusForLang}
+                onBlur={this.handleBlur}
+                value="ja"
+                onClick={e => this.handleLangSelection(e)}
+              >
+                日本語
               </button>
             </li>
           </ul>
@@ -777,6 +804,7 @@ Nav.propTypes = {
     showFind: PropTypes.func,
     findNext: PropTypes.func,
     findPrev: PropTypes.func,
+    showReplace: PropTypes.func,
     getContent: PropTypes.func
   }),
   startSketch: PropTypes.func.isRequired,

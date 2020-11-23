@@ -42,30 +42,16 @@ function getTitle(props) {
   return id ? `p5.js Web Editor | ${props.project.name}` : 'p5.js Web Editor';
 }
 
-function warnIfUnsavedChanges(props) {
-  // eslint-disable-line
-  const { route } = props.route;
-  if (
-    route &&
-    route.action === 'PUSH' &&
-      (route.pathname === '/login' || route.pathname === '/signup')
-  ) {
-    // don't warn
-    props.persistState();
-    window.onbeforeunload = null;
-  } else if (
-    route &&
-    (props.location.pathname === '/login' ||
-      props.location.pathname === '/signup')
-  ) {
-    // don't warn
-    props.persistState();
-    window.onbeforeunload = null;
-  } else if (props.ide.unsavedChanges) {
+function warnIfUnsavedChanges(props, nextLocation) {
+  const toAuth = nextLocation &&
+    nextLocation.action === 'PUSH' &&
+    (nextLocation.pathname === '/login' || nextLocation.pathname === '/signup');
+  const onAuth = nextLocation &&
+    (props.location.pathname === '/login' || props.location.pathname === '/signup');
+  if (props.ide.unsavedChanges && (!toAuth && !onAuth)) {
     if (!window.confirm(props.t('Nav.WarningUnsavedChanges'))) {
       return false;
     }
-    props.setUnsavedChanges(false);
     return true;
   }
   return true;
@@ -103,7 +89,8 @@ class IDEView extends React.Component {
       this.handleUnsavedChanges
     );
 
-    window.onbeforeunload = this.handleUnsavedChanges;
+    // window.onbeforeunload = this.handleUnsavedChanges;
+    window.addEventListener('beforeunload', this.handleBeforeUnload);
 
     this.autosaveInterval = null;
   }
@@ -247,7 +234,16 @@ class IDEView extends React.Component {
     }
   }
 
-  handleUnsavedChanges = () => warnIfUnsavedChanges(this.props);
+  handleUnsavedChanges = nextLocation => warnIfUnsavedChanges(this.props, nextLocation);
+
+  handleBeforeUnload = (e) => {
+    const confirmationMessage = this.props.t('Nav.WarningUnsavedChanges');
+    if (this.props.ide.unsavedChanges) {
+      (e || window.event).returnValue = confirmationMessage;
+      return confirmationMessage;
+    }
+    return null;
+  }
 
   render() {
     return (
