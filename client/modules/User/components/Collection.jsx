@@ -28,9 +28,23 @@ import ArrowUpIcon from '../../../images/sort-arrow-up.svg';
 import ArrowDownIcon from '../../../images/sort-arrow-down.svg';
 import RemoveIcon from '../../../images/close.svg';
 
-const ShareURL = ({ value, t }) => {
+const ShareURL = ({
+  host, username, id, hasItems, t
+}) => {
   const [showURL, setShowURL] = useState(false);
   const node = useRef();
+  const linkToCollection = `${host}/${username}/collections/${id}`;
+  const linkToDownload = `${host}/editor/${username}/collections/${id}/zip`;
+
+  const downloadCollection = () => {
+    if (!hasItems) {
+      alert(t('Collection.DownloadError'));
+      return;
+    }
+    const win = window.open(linkToDownload, '_blank');
+    win.focus();
+    setShowURL(false);
+  };
 
   const handleClickOutside = (e) => {
     if (node.current.contains(e.target)) {
@@ -61,7 +75,13 @@ const ShareURL = ({ value, t }) => {
       </Button>
       { showURL &&
         <div className="collection__share-dropdown">
-          <CopyableInput value={value} label={t('Collection.URLLink')} />
+          <CopyableInput value={linkToCollection} label={t('Collection.URLLink')} />
+          <br />
+          <CopyableInput value={linkToDownload} label={t('Collection.DownloadLink')} />
+          <br />
+          <Button onClick={downloadCollection}>
+            {t('Collection.Download')}
+          </Button>
         </div>
       }
     </div>
@@ -69,7 +89,10 @@ const ShareURL = ({ value, t }) => {
 };
 
 ShareURL.propTypes = {
-  value: PropTypes.string.isRequired,
+  host: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  hasItems: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired
 };
 
@@ -212,7 +235,7 @@ class Collection extends React.Component {
     const hostname = window.location.origin;
     const { username } = this.props;
 
-    const baseURL = `${hostname}/${username}/collections/`;
+    // const baseURL = `${hostname}/${username}/collections/`;
 
     const handleEditCollectionName = (value) => {
       if (value === name) {
@@ -275,7 +298,7 @@ class Collection extends React.Component {
 
           <div className="collection-metadata__column--right">
             <p className="collection-metadata__share">
-              <ShareURL value={`${baseURL}${id}`} t={this.props.t} />
+              <ShareURL host={hostname} username={username} id={id} hasItems={this.props.collection.items.length > 0} t={this.props.t} />
             </p>
             {
               this.isOwner() &&

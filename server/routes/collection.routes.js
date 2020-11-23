@@ -17,4 +17,7 @@ router.delete('/collections/:id', isAuthenticated, CollectionController.removeCo
 router.post('/collections/:id/:projectId', isAuthenticated, CollectionController.addProjectToCollection);
 router.delete('/collections/:id/:projectId', isAuthenticated, CollectionController.removeProjectFromCollection);
 
+// Download collection
+router.get('/:username/collections/:id/zip', CollectionController.downloadCollectionAsZip);
+
 export default router;
