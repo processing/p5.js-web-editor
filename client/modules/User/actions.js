@@ -48,6 +48,13 @@ export function loginUserFailure(error) {
   };
 }
 
+export function setPreferences(preferences) {
+  return {
+    type: ActionTypes.SET_PREFERENCES,
+    preferences
+  };
+}
+
 export function validateAndLoginUser(previousPath, formProps, dispatch) {
   return new Promise((resolve, reject) => {
     loginUser(formProps)

@@ -1,15 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
 import { Link, browserHistory } from 'react-router';
 import { Helmet } from 'react-helmet';
 import { withTranslation } from 'react-i18next';
 import { validateAndLoginUser } from '../actions';
 import LoginForm from '../components/LoginForm';
-import { validateLogin } from '../../../utils/reduxFormUtils';
 import SocialAuthButton from '../components/SocialAuthButton';
 import Nav from '../../../components/Nav';
-import ResponsiveForm from '../components/ResponsiveForm';
 
 class LoginView extends React.Component {
   constructor(props) {
@@ -88,8 +86,4 @@ LoginView.defaultProps = {
   },
 };
 
-export default withTranslation()(reduxForm({
-  form: 'login',
-  fields: ['email', 'password'],
-  validate: validateLogin
-}, mapStateToProps, mapDispatchToProps)(LoginView));
+export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(LoginView));
