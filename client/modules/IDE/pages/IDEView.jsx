@@ -495,7 +495,7 @@ IDEView.propTypes = {
     updatedAt: PropTypes.string,
   }).isRequired,
   editorAccessibility: PropTypes.shape({
-    lintMessages: PropTypes.array.isRequired, // eslint-disable-line
+    lintMessages: PropTypes.objectOf(PropTypes.shape()),
   }).isRequired,
   preferences: PropTypes.shape({
     autosave: PropTypes.bool.isRequired,
