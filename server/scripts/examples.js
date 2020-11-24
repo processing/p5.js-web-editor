@@ -140,6 +140,91 @@ function getSketchContent(projectsInAllCategories) {
   }))));
 }
 
+async function addAssetsToProject(assets, response, project) {
+  /* eslint-disable no-await-in-loop */
+  for (let i = 0; i < assets.length; i += 1) { // iterate through each asset in the project in series (async/await functionality would not work with forEach() )
+    const assetNamePath = assets[i];
+    let assetName = assetNamePath.split('assets/')[1];
+    let assetUrl = '';
+    let assetContent = '';
+
+    response.forEach((asset) => {
+      if (asset.name === assetName || asset.name.split('.')[0] === assetName) {
+        assetName = asset.name;
+        assetUrl = asset.download_url;
+      }
+    });
+
+    if (assetName !== '') {
+      if (i === 0) {
+        const id = objectID().toHexString();
+        project.files.push({
+          name: 'assets',
+          id,
+          _id: id,
+          children: [],
+          fileType: 'folder'
+        });
+        // add assets folder inside root
+        project.files[0].children.push(id);
+      }
+
+      const fileID = objectID().toHexString();
+
+      if (assetName.slice(-5) === '.vert' || assetName.slice(-5) === '.frag') { // check if the file has .vert or .frag extension
+        const assetOptions = {
+          url: assetUrl,
+          method: 'GET',
+          headers: {
+            ...headers,
+            Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
+          },
+          json: true
+        };
+
+        // a function to await for the response that contains the content of asset file
+        const doRequest = function (optionsAsset) {
+          return new Promise(((resolve, reject) => {
+            rp(optionsAsset).then((res) => {
+              resolve(res);
+            }).catch((err) => {
+              reject(err);
+            });
+          }));
+        };
+
+        assetContent = await doRequest(assetOptions);
+        // push to the files array of the project only when response is received
+        project.files.push({
+          name: assetName,
+          content: assetContent,
+          id: fileID,
+          _id: fileID,
+          children: [],
+          fileType: 'file'
+        });
+        console.log(`create assets: ${assetName}`);
+        // add asset file inside the newly created assets folder at index 4
+        project.files[4].children.push(fileID);
+      } else { // for assets files that are not .vert or .frag extension
+        project.files.push({
+          name: assetName,
+          url: `https://cdn.jsdelivr.net/gh/processing/p5.js-website@main/src/data/examples/assets/${assetName}`,
+          id: fileID,
+          _id: fileID,
+          children: [],
+          fileType: 'file'
+        });
+        console.log(`create assets: ${assetName}`);
+        // add asset file inside the newly created assets folder at index 4
+        project.files[4].children.push(fileID);
+      }
+    }
+  }
+  /* eslint-disable no-await-in-loop */
+}
+
+
 function createProjectsInP5user(projectsInAllCategories) {
   const options = {
     url: 'https://api.github.com/repos/processing/p5.js-website/contents/src/data/examples/assets',
@@ -248,87 +333,7 @@ function createProjectsInP5user(projectsInAllCategories) {
           const assetsInProject = project.sketchContent.match(/assets\/[\w-]+\.[\w]*/g)
             || project.sketchContent.match(/asset\/[\w-]*/g) || [];
 
-          /* eslint-disable no-await-in-loop */
-          for (let i = 0; i < assetsInProject.length; i += 1) { // iterate through each asset in the project in series (async/await functionality would not work with forEach() )
-            const assetNamePath = assetsInProject[i];
-            let assetName = assetNamePath.split('assets/')[1];
-            let assetUrl = '';
-            let assetContent = '';
-
-            res.forEach((asset) => {
-              if (asset.name === assetName || asset.name.split('.')[0] === assetName) {
-                assetName = asset.name;
-                assetUrl = asset.download_url;
-              }
-            });
-
-            if (assetName !== '') {
-              if (i === 0) {
-                const id = objectID().toHexString();
-                newProject.files.push({
-                  name: 'assets',
-                  id,
-                  _id: id,
-                  children: [],
-                  fileType: 'folder'
-                });
-                // add assets folder inside root
-                newProject.files[0].children.push(id);
-              }
-
-              const fileID = objectID().toHexString();
-
-              if (assetName.slice(-5) === '.vert' || assetName.slice(-5) === '.frag') { // check if the file has .vert or .frag extension
-                const assetOptions = {
-                  url: assetUrl,
-                  method: 'GET',
-                  headers: {
-                    ...headers,
-                    Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
-                  },
-                  json: true
-                };
-
-                // a function to await for the response that contains the content of asset file
-                const doRequest = function (optionsAsset) {
-                  return new Promise(((resolve, reject) => {
-                    rp(optionsAsset).then((response) => {
-                      resolve(response);
-                    }).catch((error) => {
-                      reject(error);
-                    });
-                  }));
-                };
-
-                assetContent = await doRequest(assetOptions);
-                // push to the files array of the project only when response is received
-                newProject.files.push({
-                  name: assetName,
-                  content: assetContent,
-                  id: fileID,
-                  _id: fileID,
-                  children: [],
-                  fileType: 'file'
-                });
-                console.log(`create assets: ${assetName}`);
-                // add asset file inside the newly created assets folder at index 4
-                newProject.files[4].children.push(fileID);
-              } else { // for assets files that are not .vert or .frag extension
-                newProject.files.push({
-                  name: assetName,
-                  url: `https://cdn.jsdelivr.net/gh/processing/p5.js-website@main/src/data/examples/assets/${assetName}`,
-                  id: fileID,
-                  _id: fileID,
-                  children: [],
-                  fileType: 'file'
-                });
-                console.log(`create assets: ${assetName}`);
-                // add asset file inside the newly created assets folder at index 4
-                newProject.files[4].children.push(fileID);
-              }
-            }
-          }
-          /* eslint-disable no-await-in-loop */
+          await addAssetsToProject(assetsInProject, res, newProject);
 
           newProject.save((saveErr, savedProject) => {
             if (saveErr) throw saveErr;
