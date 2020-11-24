@@ -38,7 +38,7 @@ class LoginView extends React.Component {
           </Helmet>
           <div className="form-container__content">
             <h2 className="form-container__title">{this.props.t('LoginView.Login')}</h2>
-            <LoginForm {...this.props} />
+            <LoginForm />
             <h2 className="form-container__divider">{this.props.t('LoginView.LoginOr')}</h2>
             <div className="form-container__stack">
               <SocialAuthButton service={SocialAuthButton.services.github} />
@@ -66,12 +66,6 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps() {
-  return {
-    validateAndLoginUser
-  };
-}
-
 LoginView.propTypes = {
   previousPath: PropTypes.string.isRequired,
   user: PropTypes.shape({
@@ -86,4 +80,4 @@ LoginView.defaultProps = {
   },
 };
 
-export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(LoginView));
+export default withTranslation()(connect(mapStateToProps)(LoginView));

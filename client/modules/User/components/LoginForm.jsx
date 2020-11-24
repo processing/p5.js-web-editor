@@ -2,36 +2,38 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
+import { browserHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../../common/Button';
-
 import { validateLogin } from '../../../utils/reduxFormUtils';
 import { loginUser, loginUserSuccess, setPreferences } from '../actions';
 import { setLanguage } from '../../IDE/actions/preferences';
 import { justOpenedProject } from '../../IDE/actions/ide';
 
-function validateAndLoginUser() {
-  return new Promise((resolve, reject) => {
-    loginUser(formProps)
-      .then((response) => {
-        dispatch(loginUserSuccess(response.data));
-        dispatch(setPreferences(response.data.preferences));
-        dispatch(setLanguage(response.data.preferences.language, { persistPreference: false }));
-        dispatch(justOpenedProject());
-        browserHistory.push(props.previousPath);
-        resolve();
-      })
-      .catch(error =>
-        reject({ password: error.response.data.message, _error: 'Login failed!' })); // eslint-disable-line
-  });
-}
-
 function LoginForm(props) {
+  const dispatch = useDispatch();
+  const previousPath = useSelector(state => state.ide.previousPath);
+  function validateAndLoginUser(formProps) {
+    return new Promise((resolve, reject) => {
+      loginUser(formProps)
+        .then((response) => {
+          dispatch(loginUserSuccess(response.data));
+          dispatch(setPreferences(response.data.preferences));
+          dispatch(setLanguage(response.data.preferences.language, { persistPreference: false }));
+          dispatch(justOpenedProject());
+          browserHistory.push(previousPath);
+          resolve();
+        })
+        .catch(error =>
+          reject({ password: error.response.data.message, _error: 'Login failed!' })); // eslint-disable-line
+    });
+  }
+
   return (
     <Form
       fields={['email', 'password']}
       validate={validateLogin}
-      onSubmit={props.validateAndLoginUser.bind(this, props.previousPath)}
+      onSubmit={validateAndLoginUser}
     >
       {({
         handleSubmit, pristine, submitting
@@ -86,18 +88,7 @@ function LoginForm(props) {
 }
 
 LoginForm.propTypes = {
-  validateAndLoginUser: PropTypes.func.isRequired,
-  submitting: PropTypes.bool,
-  pristine: PropTypes.bool,
-  invalid: PropTypes.bool,
-  previousPath: PropTypes.string.isRequired,
   t: PropTypes.func.isRequired
-};
-
-LoginForm.defaultProps = {
-  submitting: false,
-  pristine: true,
-  invalid: false,
 };
 
 export default withTranslation()(LoginForm);
