@@ -54,8 +54,8 @@ function LoginForm(props) {
 
 LoginForm.propTypes = {
   fields: PropTypes.shape({
-    email: PropTypes.object.isRequired, // eslint-disable-line
-    password: PropTypes.object.isRequired, // eslint-disable-line
+    email: PropTypes.objectOf(PropTypes.shape()).isRequired,
+    password: PropTypes.objectOf(PropTypes.shape()).isRequired,
   }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   validateAndLoginUser: PropTypes.func.isRequired,
