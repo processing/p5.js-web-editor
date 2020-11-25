@@ -83,10 +83,10 @@ function SignupForm(props) {
 
 SignupForm.propTypes = {
   fields: PropTypes.shape({
-    username: PropTypes.object.isRequired, // eslint-disable-line
-    email: PropTypes.object.isRequired, // eslint-disable-line
-    password: PropTypes.object.isRequired, // eslint-disable-line
-    confirmPassword: PropTypes.object.isRequired, // eslint-disable-line
+    username: PropTypes.objectOf(PropTypes.shape()).isRequired,
+    email: PropTypes.objectOf(PropTypes.shape()).isRequired,
+    password: PropTypes.objectOf(PropTypes.shape()).isRequired,
+    confirmPassword: PropTypes.objectOf(PropTypes.shape()).isRequired,
   }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   signUpUser: PropTypes.func.isRequired,
