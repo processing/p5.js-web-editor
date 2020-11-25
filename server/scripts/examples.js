@@ -46,7 +46,7 @@ mongoose.connection.on('error', () => {
   process.exit(1);
 });
 
-function getCategories() {
+async function getCategories() {
   const categories = [];
   const options = {
     url: 'https://api.github.com/repos/processing/p5.js-website/contents/src/data/examples/en',
@@ -57,7 +57,8 @@ function getCategories() {
     },
     json: true
   };
-  return rp(options).then((res) => {
+  try {
+    const res = await rp(options);
     res.forEach((metadata) => {
       let category = '';
       for (let j = 1; j < metadata.name.split('_').length; j += 1) {
@@ -65,15 +66,14 @@ function getCategories() {
       }
       categories.push({ url: metadata.url, name: category.trim() });
     });
-
     return categories;
-  }).catch((err) => {
-    throw err;
-  });
+  } catch (error) {
+    throw error;
+  }
 }
 
 function getSketchesInCategories(categories) {
-  return Q.all(categories.map((category) => {
+  return Q.all(categories.map(async (category) => {
     const options = {
       url: `${category.url.replace('?ref=main', '')}`,
       method: 'GET',
@@ -83,8 +83,8 @@ function getSketchesInCategories(categories) {
       },
       json: true
     };
-
-    return rp(options).then((res) => {
+    try {
+      const res = await rp(options);
       const projectsInOneCategory = [];
       res.forEach((example) => {
         let projectName;
@@ -103,14 +103,14 @@ function getSketchesInCategories(categories) {
         }
       });
       return projectsInOneCategory;
-    }).catch((err) => {
-      throw err;
-    });
+    } catch (error) {
+      throw error;
+    }
   }));
 }
 
 function getSketchContent(projectsInAllCategories) {
-  return Q.all(projectsInAllCategories.map(projectsInOneCategory => Q.all(projectsInOneCategory.map((project) => {
+  return Q.all(projectsInAllCategories.map(projectsInOneCategory => Q.all(projectsInOneCategory.map(async (project) => {
     const options = {
       url: `${project.sketchUrl.replace('?ref=main', '')}`,
       method: 'GET',
@@ -119,8 +119,8 @@ function getSketchContent(projectsInAllCategories) {
         Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
       }
     };
-
-    return rp(options).then((res) => {
+    try {
+      const res = await rp(options);
       const noNumberprojectName = project.projectName.replace(/(\d+)/g, '');
       if (noNumberprojectName === 'Instance Mode: Instance Container ') {
         for (let i = 0; i < 4; i += 1) {
@@ -134,9 +134,9 @@ function getSketchContent(projectsInAllCategories) {
         project.sketchContent = res;
       }
       return project;
-    }).catch((err) => {
-      throw err;
-    });
+    } catch (error) {
+      throw error;
+    }
   }))));
 }
 
@@ -183,14 +183,13 @@ async function addAssetsToProject(assets, response, project) {
         };
 
         // a function to await for the response that contains the content of asset file
-        const doRequest = function (optionsAsset) {
-          return new Promise(((resolve, reject) => {
-            rp(optionsAsset).then((res) => {
-              resolve(res);
-            }).catch((err) => {
-              reject(err);
-            });
-          }));
+        const doRequest = async (optionsAsset) => {
+          try {
+            const res = await rp(optionsAsset);
+            return res;
+          } catch (error) {
+            throw error;
+          }
         };
 
         assetContent = await doRequest(assetOptions);
@@ -225,7 +224,7 @@ async function addAssetsToProject(assets, response, project) {
 }
 
 
-function createProjectsInP5user(projectsInAllCategories) {
+async function createProjectsInP5user(projectsInAllCategories) {
   const options = {
     url: 'https://api.github.com/repos/processing/p5.js-website/contents/src/data/examples/assets',
     method: 'GET',
@@ -236,7 +235,8 @@ function createProjectsInP5user(projectsInAllCategories) {
     json: true
   };
 
-  rp(options).then((res) => {
+  try {
+    const res = await rp(options);
     User.findOne({ username: 'p5' }, (err, user) => {
       if (err) throw err;
 
@@ -347,14 +347,14 @@ function createProjectsInP5user(projectsInAllCategories) {
         process.exit();
       });
     });
-  }).catch((err) => {
-    throw err;
-  });
+  } catch (error) {
+    throw error;
+  }
 }
 
 function getp5User() {
   console.log('Getting p5 user');
-  User.findOne({ username: 'p5' }, (err, user) => {
+  User.findOne({ username: 'p5' }, async (err, user) => {
     if (err) throw err;
 
     let p5User = user;
@@ -380,10 +380,11 @@ function getp5User() {
       });
     });
 
-    return getCategories()
-      .then(getSketchesInCategories)
-      .then(getSketchContent)
-      .then(createProjectsInP5user);
+    const categories = await getCategories();
+    const sketchesInCategories = await getSketchesInCategories(categories);
+    const sketchContent = await getSketchContent(sketchesInCategories);
+    const projects = createProjectsInP5user(sketchContent);
+    return projects;
   });
 }
 
