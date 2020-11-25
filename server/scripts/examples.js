@@ -3,7 +3,6 @@ import Q from 'q';
 import mongoose from 'mongoose';
 import objectID from 'bson-objectid';
 import shortid from 'shortid';
-import eachSeries from 'async/eachSeries';
 import User from '../models/user';
 import Project from '../models/project';
 
@@ -240,112 +239,109 @@ async function createProjectsInP5user(projectsInAllCategories) {
     User.findOne({ username: 'p5' }, (err, user) => {
       if (err) throw err;
 
-      eachSeries(projectsInAllCategories, (projectsInOneCategory, categoryCallback) => {
-        eachSeries(projectsInOneCategory, async (project, projectCallback) => {
-          let newProject;
-          const a = objectID().toHexString();
-          const b = objectID().toHexString();
-          const c = objectID().toHexString();
-          const r = objectID().toHexString();
-          const noNumberprojectName = project.projectName.replace(/(\d+)/g, '');
-          if (noNumberprojectName === 'Instance Mode: Instance Container ') {
-            newProject = new Project({
-              name: project.projectName,
-              user: user._id,
-              files: [
-                {
-                  name: 'root',
-                  id: r,
-                  _id: r,
-                  children: [a, b, c],
-                  fileType: 'folder'
-                },
-                {
-                  name: 'sketch.js',
-                  content: '// Instance Mode: Instance Container, please check its index.html file',
-                  id: a,
-                  _id: a,
-                  fileType: 'file',
-                  children: []
-                },
-                {
-                  name: 'index.html',
-                  content: project.sketchContent,
-                  isSelectedFile: true,
-                  id: b,
-                  _id: b,
-                  fileType: 'file',
-                  children: []
-                },
-                {
-                  name: 'style.css',
-                  content: defaultCSS,
-                  id: c,
-                  _id: c,
-                  fileType: 'file',
-                  children: []
-                }
-              ],
-              _id: shortid.generate()
-            });
-          } else {
-            newProject = new Project({
-              name: project.projectName,
-              user: user._id,
-              files: [
-                {
-                  name: 'root',
-                  id: r,
-                  _id: r,
-                  children: [a, b, c],
-                  fileType: 'folder'
-                },
-                {
-                  name: 'sketch.js',
-                  content: project.sketchContent,
-                  id: a,
-                  _id: a,
-                  isSelectedFile: true,
-                  fileType: 'file',
-                  children: []
-                },
-                {
-                  name: 'index.html',
-                  content: defaultHTML,
-                  id: b,
-                  _id: b,
-                  fileType: 'file',
-                  children: []
-                },
-                {
-                  name: 'style.css',
-                  content: defaultCSS,
-                  id: c,
-                  _id: c,
-                  fileType: 'file',
-                  children: []
-                }
-              ],
-              _id: shortid.generate()
-            });
-          }
-
-          const assetsInProject = project.sketchContent.match(/assets\/[\w-]+\.[\w]*/g)
-            || project.sketchContent.match(/asset\/[\w-]*/g) || [];
-
-          await addAssetsToProject(assetsInProject, res, newProject);
-
-          newProject.save((saveErr, savedProject) => {
-            if (saveErr) throw saveErr;
-            console.log(`Created a new project in p5 user: ${savedProject.name}`);
-            projectCallback();
+      Q.all(projectsInAllCategories.map(projectsInOneCategory => Q.all(projectsInOneCategory.map(async (project) => {
+        let newProject;
+        const a = objectID().toHexString();
+        const b = objectID().toHexString();
+        const c = objectID().toHexString();
+        const r = objectID().toHexString();
+        const noNumberprojectName = project.projectName.replace(/(\d+)/g, '');
+        if (noNumberprojectName === 'Instance Mode: Instance Container ') {
+          newProject = new Project({
+            name: project.projectName,
+            user: user._id,
+            files: [
+              {
+                name: 'root',
+                id: r,
+                _id: r,
+                children: [a, b, c],
+                fileType: 'folder'
+              },
+              {
+                name: 'sketch.js',
+                content: '// Instance Mode: Instance Container, please check its index.html file',
+                id: a,
+                _id: a,
+                fileType: 'file',
+                children: []
+              },
+              {
+                name: 'index.html',
+                content: project.sketchContent,
+                isSelectedFile: true,
+                id: b,
+                _id: b,
+                fileType: 'file',
+                children: []
+              },
+              {
+                name: 'style.css',
+                content: defaultCSS,
+                id: c,
+                _id: c,
+                fileType: 'file',
+                children: []
+              }
+            ],
+            _id: shortid.generate()
           });
-        }, (categoryErr) => {
-          categoryCallback();
+        } else {
+          newProject = new Project({
+            name: project.projectName,
+            user: user._id,
+            files: [
+              {
+                name: 'root',
+                id: r,
+                _id: r,
+                children: [a, b, c],
+                fileType: 'folder'
+              },
+              {
+                name: 'sketch.js',
+                content: project.sketchContent,
+                id: a,
+                _id: a,
+                isSelectedFile: true,
+                fileType: 'file',
+                children: []
+              },
+              {
+                name: 'index.html',
+                content: defaultHTML,
+                id: b,
+                _id: b,
+                fileType: 'file',
+                children: []
+              },
+              {
+                name: 'style.css',
+                content: defaultCSS,
+                id: c,
+                _id: c,
+                fileType: 'file',
+                children: []
+              }
+            ],
+            _id: shortid.generate()
+          });
+        }
+
+        const assetsInProject = project.sketchContent.match(/assets\/[\w-]+\.[\w]*/g)
+          || project.sketchContent.match(/asset\/[\w-]*/g) || [];
+
+        try {
+          await addAssetsToProject(assetsInProject, res, newProject);
+        } catch (error) {
+          throw error;
+        }
+
+        newProject.save((saveErr, savedProject) => {
+          if (saveErr) throw saveErr;
+          console.log(`Created a new project in p5 user: ${savedProject.name}`);
         });
-      }, (examplesErr) => {
-        process.exit();
-      });
+      }))));
     });
   } catch (error) {
     throw error;
