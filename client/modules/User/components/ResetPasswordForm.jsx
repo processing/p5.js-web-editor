@@ -37,7 +37,7 @@ function ResetPasswordForm(props) {
 
 ResetPasswordForm.propTypes = {
   fields: PropTypes.shape({
-    email: PropTypes.object.isRequired
+    email: PropTypes.objectOf(PropTypes.shape()).isRequired
   }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   initiateResetPassword: PropTypes.func.isRequired,
