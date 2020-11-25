@@ -7,7 +7,7 @@ import CopyableInput from '../../IDE/components/CopyableInput';
 import APIKeyList from './APIKeyList';
 
 export const APIKeyPropType = PropTypes.shape({
-  id: PropTypes.objectOf(PropTypes.shape()),
+  id: PropTypes.objectOf(PropTypes.shape()).isRequired,
   token: PropTypes.objectOf(PropTypes.shape()),
   label: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,

@@ -47,8 +47,8 @@ function NewPasswordForm(props) {
 
 NewPasswordForm.propTypes = {
   fields: PropTypes.shape({
-    password: PropTypes.objectOf(PropTypes.shape()),
-    confirmPassword: PropTypes.objectOf(PropTypes.shape()),
+    password: PropTypes.objectOf(PropTypes.shape()).isRequired,
+    confirmPassword: PropTypes.objectOf(PropTypes.shape()).isRequired,
   }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   updatePassword: PropTypes.func.isRequired,
