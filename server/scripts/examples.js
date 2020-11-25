@@ -8,7 +8,7 @@ import User from '../models/user';
 import Project from '../models/project';
 
 const defaultHTML =
-`<!DOCTYPE html>
+  `<!DOCTYPE html>
 <html lang="en">
   <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js"></script>
@@ -23,7 +23,7 @@ const defaultHTML =
 `;
 
 const defaultCSS =
-`html, body {
+  `html, body {
   margin: 0;
   padding: 0;
 }
@@ -140,6 +140,91 @@ function getSketchContent(projectsInAllCategories) {
   }))));
 }
 
+async function addAssetsToProject(assets, response, project) {
+  /* eslint-disable no-await-in-loop */
+  for (let i = 0; i < assets.length; i += 1) { // iterate through each asset in the project in series (async/await functionality would not work with forEach() )
+    const assetNamePath = assets[i];
+    let assetName = assetNamePath.split('assets/')[1];
+    let assetUrl = '';
+    let assetContent = '';
+
+    response.forEach((asset) => {
+      if (asset.name === assetName || asset.name.split('.')[0] === assetName) {
+        assetName = asset.name;
+        assetUrl = asset.download_url;
+      }
+    });
+
+    if (assetName !== '') {
+      if (i === 0) {
+        const id = objectID().toHexString();
+        project.files.push({
+          name: 'assets',
+          id,
+          _id: id,
+          children: [],
+          fileType: 'folder'
+        });
+        // add assets folder inside root
+        project.files[0].children.push(id);
+      }
+
+      const fileID = objectID().toHexString();
+
+      if (assetName.slice(-5) === '.vert' || assetName.slice(-5) === '.frag') { // check if the file has .vert or .frag extension
+        const assetOptions = {
+          url: assetUrl,
+          method: 'GET',
+          headers: {
+            ...headers,
+            Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
+          },
+          json: true
+        };
+
+        // a function to await for the response that contains the content of asset file
+        const doRequest = function (optionsAsset) {
+          return new Promise(((resolve, reject) => {
+            rp(optionsAsset).then((res) => {
+              resolve(res);
+            }).catch((err) => {
+              reject(err);
+            });
+          }));
+        };
+
+        assetContent = await doRequest(assetOptions);
+        // push to the files array of the project only when response is received
+        project.files.push({
+          name: assetName,
+          content: assetContent,
+          id: fileID,
+          _id: fileID,
+          children: [],
+          fileType: 'file'
+        });
+        console.log(`create assets: ${assetName}`);
+        // add asset file inside the newly created assets folder at index 4
+        project.files[4].children.push(fileID);
+      } else { // for assets files that are not .vert or .frag extension
+        project.files.push({
+          name: assetName,
+          url: `https://cdn.jsdelivr.net/gh/processing/p5.js-website@main/src/data/examples/assets/${assetName}`,
+          id: fileID,
+          _id: fileID,
+          children: [],
+          fileType: 'file'
+        });
+        console.log(`create assets: ${assetName}`);
+        // add asset file inside the newly created assets folder at index 4
+        project.files[4].children.push(fileID);
+      }
+    }
+  }
+  /* eslint-disable no-await-in-loop */
+}
+
+
 function createProjectsInP5user(projectsInAllCategories) {
   const options = {
     url: 'https://api.github.com/repos/processing/p5.js-website/contents/src/data/examples/assets',
@@ -156,7 +241,7 @@ function createProjectsInP5user(projectsInAllCategories) {
       if (err) throw err;
 
       eachSeries(projectsInAllCategories, (projectsInOneCategory, categoryCallback) => {
-        eachSeries(projectsInOneCategory, (project, projectCallback) => {
+        eachSeries(projectsInOneCategory, async (project, projectCallback) => {
           let newProject;
           const a = objectID().toHexString();
           const b = objectID().toHexString();
@@ -248,43 +333,7 @@ function createProjectsInP5user(projectsInAllCategories) {
           const assetsInProject = project.sketchContent.match(/assets\/[\w-]+\.[\w]*/g)
             || project.sketchContent.match(/asset\/[\w-]*/g) || [];
 
-          assetsInProject.forEach((assetNamePath, i) => {
-            let assetName = assetNamePath.split('assets/')[1];
-
-            res.forEach((asset) => {
-              if (asset.name === assetName || asset.name.split('.')[0] === assetName) {
-                assetName = asset.name;
-              }
-            });
-
-            if (assetName !== '') {
-              if (i === 0) {
-                const id = objectID().toHexString();
-                newProject.files.push({
-                  name: 'assets',
-                  id,
-                  _id: id,
-                  children: [],
-                  fileType: 'folder'
-                });
-                // add assets folder inside root
-                newProject.files[0].children.push(id);
-              }
-
-              const fileID = objectID().toHexString();
-              newProject.files.push({
-                name: assetName,
-                url: `https://cdn.jsdelivr.net/gh/processing/p5.js-website@main/src/data/examples/assets/${assetName}`,
-                id: fileID,
-                _id: fileID,
-                children: [],
-                fileType: 'file'
-              });
-              console.log(`create assets: ${assetName}`);
-              // add asset file inside the newly created assets folder at index 4
-              newProject.files[4].children.push(fileID);
-            }
-          });
+          await addAssetsToProject(assetsInProject, res, newProject);
 
           newProject.save((saveErr, savedProject) => {
             if (saveErr) throw saveErr;
@@ -304,6 +353,7 @@ function createProjectsInP5user(projectsInAllCategories) {
 }
 
 function getp5User() {
+  console.log('Getting p5 user');
   User.findOne({ username: 'p5' }, (err, user) => {
     if (err) throw err;
 
