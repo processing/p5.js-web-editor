@@ -1,0 +1,591 @@
+{
+    "Nav": {
+      "File": {
+        "Title": "Fichier",
+        "New": "Nouveau",
+        "Share": "Partager",
+        "Duplicate": "Dupliquer",
+        "Open": "Ouvrir",
+        "Download": "Télécharger",
+        "AddToCollection": "Ajouter à la collection",
+        "Examples": "Exemples"
+      },
+      "Edit": {
+        "Title": "Edition",
+        "TidyCode": "Nettoyer le code",
+        "Find": "Rechercher",
+        "FindNext": "Prochaine correspondance",
+        "FindPrevious": "Correspondance précédente"
+      },
+      "Sketch": {
+        "Title": "Croquis",
+        "AddFile": "Nouveau fichier",
+        "AddFolder": "Nouveau dossier",
+        "Run": "Exécuter",
+        "Stop": "Arrêter"
+      },
+      "Help": {
+        "Title": "Aide",
+        "KeyboardShortcuts": "Raccourcis clavier",
+        "Reference": "Référence",
+        "About": "À propos"
+      },
+      "Lang": "Langue",
+      "BackEditor": "Retour à l'éditeur",
+      "WarningUnsavedChanges": "Êtes-vous certain de vouloir quitter cette page? Vous avez des changements non enregistrés.",
+      "Login": "Se connecter",
+      "LoginOr": "ou",
+      "SignUp": "S'inscrire",
+      "Auth": {
+        "Welcome": "Bienvenue",
+        "Hello": "Bonjour",
+        "MyAccount": "compte",
+        "My": "Mon",
+        "MySketches": "Mes croquis",
+        "MyCollections": "Mes collections",
+        "Asset": "Ressources",
+        "MyAssets": "Mes ressources",
+        "LogOut": "Se déconnecter"
+      }
+    },
+    "LoginForm": {
+      "UsernameOrEmail": "Courriel ou nom d'utilisateur",
+      "UsernameOrEmailARIA": "Courriel ou nom d'utilisateur",
+      "Password": "Mot de passe",
+      "PasswordARIA": "Mot de passe",
+      "Submit": "Se connecter"
+    },
+    "LoginView": {
+      "Title": "Editeur web p5.js | Se connecter",
+      "Login": "Se connecter",
+      "LoginOr": "ou",
+      "SignUp": "S'enregistrer",
+      "Email": "courriel",
+      "Username": "Nom d'utilisateur",
+      "DontHaveAccount": "Vous n'avez pas encore de compte? ",
+      "ForgotPassword": "Mot de passe oublié? ",
+      "ResetPassword": "Réinitialiser son mot de passe"
+    },
+    "SocialAuthButton": {
+      "Connect": "Connecter au compte {{serviceauth}}",
+      "Unlink": "Se déconnecter du compte {{serviceauth}}",
+      "Login": "Se connecter via {{serviceauth}}",
+      "LogoARIA": "logo {{serviceauth}}"
+    },
+    "About": {
+      "Title": "À propos",
+      "TitleHelmet": "Éditeur web p5.js | À propos",
+      "Contribute": "Contribuer",
+      "NewP5": "Nouveau à p5.js?",
+      "Report": "Signaler un bogue",
+      "Learn": "Apprendre",
+      "Resources": "Ressources",
+      "Libraries": "Librairies",
+      "Forum": "Forum",
+      "Examples": "Exemples"
+    },
+    "Toast": {
+      "OpenedNewSketch": "Ouvrir un nouveau croquis.",
+      "SketchSaved": "Croquis sauvegardé.",
+      "SketchFailedSave": "Echec de la sauvegarde du croquis.",
+      "AutosaveEnabled": "Sauvegarde automatique activée.",
+      "LangChange": "Langue changée.",
+      "SettingsSaved": "Paramètres sauvegardés."
+    },
+    "Toolbar": {
+      "Preview": "Aperçu",
+      "Auto-refresh": "Actualisation automatique",
+      "OpenPreferencesARIA": "Ouvrir les préférences",
+      "PlaySketchARIA": "Exécuter le croquis",
+      "PlayOnlyVisualSketchARIA": "Exécuter seulement le croquis visuel",
+      "StopSketchARIA": "Arrêter le croquis",
+      "EditSketchARIA": "Éditer le nom du croquis",
+      "NewSketchNameARIA": "Nouveau nom de croquis",
+      "By": " par "
+    },
+    "Console": {
+      "Title": "Console",
+      "Clear": "Effacer",
+      "ClearARIA": "Effacer la console",
+      "Close": "Fermer",
+      "CloseARIA": "Fermer la console",
+      "Open": "Ouvrir",
+      "OpenARIA": "Ouvrir la console"
+    },
+    "Preferences": {
+      "Settings": "Paramètres",
+      "GeneralSettings": "Paramètres généraux",
+      "Accessibility": "Accessibilité",
+      "Theme": "Thème",
+      "LightTheme": "Clair",
+      "LightThemeARIA": "Thème clair activé",
+      "DarkTheme": "Sombre",
+      "DarkThemeARIA": "Thème sombre activé",
+      "HighContrastTheme": "Contraste élevé",
+      "HighContrastThemeARIA": "Thème contraste élevé activé",
+      "TextSize": "Taille du texte",
+      "DecreaseFont": "Diminuer",
+      "DecreaseFontARIA": "diminuer la taille de la police",
+      "IncreaseFont": "Augmenter",
+      "IncreaseFontARIA": "augmenter la taille de la police",
+      "Autosave": "Sauvegarde automatique",
+      "On": "Activer",
+      "AutosaveOnARIA": "sauvegarde automatique activée",
+      "Off": "Désactiver",
+      "AutosaveOffARIA": "sauvegarde automatique désactivée",
+      "AutocloseBracketsQuotes": "Fermeture automatique des crochets et des guillemets",
+      "AutocloseBracketsQuotesOnARIA": "fermeture automatique des crochets et des guillemets activée",
+      "AutocloseBracketsQuotesOffARIA": "fermeture automatique des crochets et des guillemets désactivée",
+      "WordWrap": "Retour à la ligne automatique",
+      "LineWrapOnARIA": "retour à la ligne automatique activé",
+      "LineWrapOffARIA": "retour à la ligne automatique désactivé",
+      "LineNumbers": "Numéros de lignes",
+      "LineNumbersOnARIA": "numéros de lignes activés",
+      "LineNumbersOffARIA": "numéros de lignes désactivés",
+      "LintWarningSound": "Son d'alarme Lint",
+      "LintWarningOnARIA": "son d'alarme Lint activé",
+      "LintWarningOffARIA": "son d'alarme Lint désactivé",
+      "PreviewSound": "Tester le son",
+      "PreviewSoundARIA": "Tester le son",
+      "AccessibleTextBasedCanvas": "Canvas textuel accessible",
+      "UsedScreenReader": "Utilisé avec un lecteur de text",
+      "PlainText": "Texte brut",
+      "TextOutputARIA": "sortie texte activée",
+      "TableText": "Tableau de texte",
+      "TableOutputARIA": "sortie tableau de texte activée",
+      "Sound": "Son",
+      "SoundOutputARIA": "sortie son activée"
+    },
+    "KeyboardShortcuts": {
+      "Title": " Raccourcis clavier",
+      "ShortcutsFollow": "Suivi des raccourcis clavier d'édition",
+      "SublimeText": "Raccourcis clavier Sublime",
+      "CodeEditing": {
+        "Tidy": "Nettoyer",
+        "FindText": "Rechercher",
+        "FindNextMatch": "Prochaine correspondance",
+        "FindPrevMatch": "Correspondance précédente",
+        "IndentCodeLeft": "Indenter le code à gauche",
+        "IndentCodeRight": "Indenter le code à droite",
+        "CommentLine": "Ligne de commentaire",
+        "FindNextTextMatch": "Prochaine correspondance texte",
+        "FindPreviousTextMatch": "Correspondance précédente texte",
+        "CodeEditing": "Édition de code"
+      },
+      "General": {
+        "StartSketch": "Exécuter le croquis",
+        "StopSketch": "Arrêter le croquis",
+        "TurnOnAccessibleOutput": "Activer la sortie accessible",
+        "TurnOffAccessibleOutput": "Désactiver la sortie accessible"
+      }
+    },
+    "Sidebar": {
+      "Title": "Fichiers croquis",
+      "ToggleARIA": "Alterner les options d'ouverture/fermeture du fichier croquis",
+      "AddFolder": "Créer un dossier",
+      "AddFolderARIA": "ajouter un dossier",
+      "AddFile": "Créer un fichier",
+      "AddFileARIA": "ajouter un fichier",
+      "UploadFile": "Téléverser un fichier",
+      "UploadFileARIA": "téléverser un fichier"
+    },
+    "FileNode": {
+      "OpenFolderARIA": "Ouvrir le contenu du dossier",
+      "CloseFolderARIA": "Fermer le contenu du dossier",
+      "ToggleFileOptionsARIA": "Alterner l'ouverture/fermeture des options de fichiers",
+      "AddFolder": "Créer un dossier",
+      "AddFolderARIA": "ajouter un dossier",
+      "AddFile": "Créer un fichier",
+      "AddFileARIA": "ajouter un fichier",
+      "UploadFile": "Téléverser un fichier",
+      "UploadFileARIA": "téléverser un fichier",
+      "Rename": "Renommer",
+      "Delete": "Supprimer"
+    },
+    "Common": {
+      "Error": "Erreur",
+      "ErrorARIA": "Erreur",
+      "Save": "Sauvegarder",
+      "p5logoARIA": "Logo p5.js",
+      "DeleteConfirmation": "Etes-vous sûr que vous voulez supprimer {{name}}?"
+    },
+    "IDEView": {
+      "SubmitFeedback": "Soumettre des commentaires",
+      "SubmitFeedbackARIA": "Soumettre des commentaires",
+      "AddCollectionTitle": "Ajouter à la collection",
+      "AddCollectionARIA":"Ajouter à la collection",
+      "ShareTitle": "Partager",
+      "ShareARIA":"partager"
+    },
+    "NewFileModal": {
+      "Title": "Créer un fichier",
+      "CloseButtonARIA": "Fermer la boîte de dialogue de création de fichier",
+      "EnterName": "Veuillez saisir un nom",
+      "InvalidType": "Type de fichier invalide. Les extensions valides sont .js, .css, .json, .txt, .csv, .tsv, .frag, and .vert."
+    },
+    "NewFileForm": {
+      "AddFileSubmit": "Ajouter un fichier",
+      "Placeholder": "Nom"
+    },
+    "NewFolderModal": {
+      "Title": "Créer un dossier",
+      "CloseButtonARIA": "Fermer la boîte de dialogue de création de dossier",
+      "EnterName": "Veuillez saisir un nom",
+      "EmptyName": "Le nom du dossier ne peut contenir uniquement des espaces",
+      "InvalidExtension": "Le nom du dossier ne peut contenir une extension"
+    },
+    "NewFolderForm": {
+      "AddFolderSubmit": "Ajouter un dossier",
+      "Placeholder": "Nom"
+    },
+    "ResetPasswordForm": {
+      "Email": "Courriel utilisé pour l'inscription",
+      "EmailARIA": "courriel",
+      "Submit": "Envoyer un courriel de réinitialisation du mot de passe"
+    },
+    "ResetPasswordView": {
+      "Title": "Éditeur web p5.js | Réinitialisation du mot de passe",
+      "Reset": "Réinitialiser votre mot de passe",
+      "Submitted": "Votre courriel de réinitialisation de mot de passe devrait arriver sous peu. Si vous ne le voyez pas, vérifiez\n            vos courriers indésirables, il est possible qu'il s'y retrouve.",
+      "Login": "Se connecter",
+      "LoginOr": "ou",
+      "SignUp": "S'enregistrer"
+    },
+    "ReduxFormUtils": {
+      "errorInvalidEmail": "Veuillez saisir une adresse courriel valide",
+      "errorEmptyEmail": "Veuillez saisir une adresse courriel",
+      "errorPasswordMismatch": "Les mots de passe doivent correspondre",
+      "errorEmptyPassword": "Veuillez saisir un mot de passe",
+      "errorShortPassword": "Le mot de passe doit comporter au moins 6 caractères",
+      "errorConfirmPassword": "Veuillez saisir une confirmation de mot de passe",
+      "errorNewPassword": "Veuillez saisir un nouveau mot de passe ou laisser le mot de passe actuel vide.",
+      "errorEmptyUsername": "Veuillez saisir un nom d'utilisateur.",
+      "errorLongUsername": "Le nom d'utilisateur doit comporter moins de 20 caractères.",
+      "errorValidUsername": "Le nom d'utilisateur ne peut qu'être composé de chiffres, de lettres, de points, de tirets et de traits de soulignement."
+    },
+    "NewPasswordView": {
+      "Title": "Éditeur Web p5.js | Nouveau mot de passe",
+      "Description": "Définir un nouveau mot de passe",
+      "TokenInvalidOrExpired": "Le jeton de réinitialisation du mot de passe n'est pas valide ou a expiré.",
+      "EmptyPassword": "Veuillez saisir un mot de passe",
+      "PasswordConfirmation": "Veuillez saisir une confirmation de mot de passe",
+      "PasswordMismatch": "les mots de passe doivent correspondre"
+    },
+    "AccountForm": {
+      "Email": "Courriel",
+      "EmailARIA": "courriel",
+      "Unconfirmed": "Non confirmé.",
+      "EmailSent": "Confirmation envoyée, vérifiez votre courriel.",
+      "Resend": "Renvoyer un courriel de confirmation",
+      "UserName": "Nom d'utilisateur",
+      "UserNameARIA": "Nom d'utilisateur",
+      "CurrentPassword": "Mot de passe actuel",
+      "CurrentPasswordARIA": "Mot de passe actuel",
+      "NewPassword": "Nouveau mot de passe",
+      "NewPasswordARIA": "Nouveau mot de passe",
+      "SubmitSaveAllSettings": "Sauvegarder tous les paramrètres"
+    },
+    "AccountView": {
+      "SocialLogin": "Identification à l'aide des réseaux sociaux",
+      "SocialLoginDescription": "Utilisez votre compte GitHub ou Google pour vous connecter à l'éditeur Web p5.js.",
+      "Title": "Éditeur web p5.js | Paramètres du compte",
+      "Settings": "Paramètres du compte",
+      "AccountTab": "Compte",
+      "AccessTokensTab": "Jetons d'accès"
+    },
+    "APIKeyForm": {
+      "ConfirmDelete": "Êtes-vous sûr de vouloir supprimer {{key_label}}?",
+      "Summary": "Les jetons d'accès personnels agissent comme votre mot de passe\n          pour permettre aux scripts automatisés d'accéder à l'API de l'éditeur.\n          Créez un jeton pour chaque script nécessitant un accès.",
+      "CreateToken": "Créer un nouveau jeton",
+      "TokenLabel": "À quoi sert ce jeton?",
+      "TokenPlaceholder": "À quoi sert ce jeton ? p. ex. Exemple de script d'importation",
+      "CreateTokenSubmit": "Créer",
+      "NoTokens": "Vous n'avez pas de jetons existants.",
+      "NewTokenTitle": "Votre nouveau jeton d'accès",
+      "NewTokenInfo": "Assurez-vous de copier votre nouveau jeton d'accès personnel.\n                  Vous ne pourrez plus revenir le voir!",
+      "ExistingTokensTitle": "Jetons existants"
+    },
+    "APIKeyList": {
+      "Name": "Nom",
+      "Created": "Créée le",
+      "LastUsed": "Dernière utilisation",
+      "Actions": "Actions",
+      "Never": "Jamais",
+      "DeleteARIA": "Supprimer la clé API"
+    },
+    "NewPasswordForm": {
+      "Title": "Mot de passe",
+      "TitleARIA": "Mot de passe",
+      "ConfirmPassword": "Confirmer le mot de passe",
+      "ConfirmPasswordARIA": "Confirmer le mot de passe",
+      "SubmitSetNewPassword": "Définir un nouveau mot de passe"
+    },
+    "SignupForm": {
+      "Title": "Nom d'utilisateur",
+      "TitleARIA": "nom d'utilisateur",
+      "Email": "Courriel",
+      "EmailARIA": "courriel",
+      "Password": "Mot de passe",
+      "PasswordARIA": "mot de passe",
+      "ConfirmPassword": "Confirmer le mot de passe",
+      "ConfirmPasswordARIA": "Confirmer le mot de passe",
+      "SubmitSignup": "S'inscrire"
+    },
+    "SignupView": {
+      "Title": "Éditeur web p5.js | S'inscrire",
+      "Description": "S'inscrire",
+      "Or": "Ou",
+      "AlreadyHave": "Vous avez déjà un compte?",
+      "Login": "Se connecter"
+    },
+    "EmailVerificationView": {
+      "Title": "Éditeur web p5.js | Vérification du courriel",
+      "Verify": "Vérifiez votre courriel",
+      "InvalidTokenNull": "Ce lien n'est pas valide.",
+      "Checking": "Validation du jeton, veuillez patienter...",
+      "Verified": "Ça y est, votre adresse courriel a été vérifiée.",
+      "InvalidState": "Quelque chose a mal tourné."
+    },
+    "AssetList": {
+      "Title": "Éditeur web p5.js | Mes ressources",
+      "ToggleOpenCloseARIA": "Activer/désactiver l'ouverture/fermeture des options ressources",
+      "Delete": "Supprimer",
+      "OpenNewTab": "Ouvrir dans un nouvel onglet",
+      "NoUploadedAssets": "Aucune ressource téléversée.",
+      "HeaderName": "Nom",
+      "HeaderSize": "Taille",
+      "HeaderSketch": "Croquis"
+    },
+    "Feedback": {
+      "Title": "Éditeur web p5.js | Commentaires",
+      "ViaGithubHeader": "Via Github Issues",
+      "ViaGithubDescription": "Si vous connaissez bien Github, c'est notre méthode préférée pour recevoir des rapports de bugs et des commentaires.",
+      "GoToGithub": "Aller à Github",
+      "ViaGoogleHeader": "Via Google Form",
+      "ViaGoogleDescription": "Vous pouvez également soumettre vos commentaires via ce formulaire.",
+      "GoToForm": "Aller au formulaire"
+    },
+    "Searchbar": {
+      "SearchSketch": "Chercher des croquis...",
+      "SearchCollection": "Chercher des collections...",
+      "ClearTerm": "effacer"
+    },
+    "UploadFileModal": {
+      "Title": "Téléverser un fichier",
+      "CloseButtonARIA": "Fermer la boîte de dialogue de téléversement de fichiers",
+      "SizeLimitError": "Erreur: Vous ne pouvez plus téléverser de fichiers. Vosu avez atteint la limite de taille totale de {{sizeLimit}}.\n                If you would like to upload more, please remove the ones you aren't using anymore by\n                in your "
+    },
+    "FileUploader": {
+      "DictDefaultMessage": "Déposez des fichiers ici ou cliquez pour utiliser le navigateur de fichiers"
+    },
+    "ErrorModal": {
+      "MessageLogin": "Pour pouvoir sauvegarder les croquis, vous devez être connecté. Veuillez ",
+      "Login": "Se connecter",
+      "LoginOr": " ou ",
+      "SignUp": "S'enregistrer",
+      "MessageLoggedOut": "Il semble que vous ayez été déconnecté. Veuillez ",
+      "LogIn": "Se connecter",
+      "SavedDifferentWindow": "Le projet que vous avez tenté de sauvegarder a été sauvegardé à partir d'une\n        autre fenêtre. Veuillez rafraîchir la page pour voir la dernière version.",
+      "LinkTitle": "Erreur de liaison de compte",
+      "LinkMessage": "Il y a eu un problème pour relier votre compte {{serviceauth}} à votre compte éditeur web p5.js. Votre compte {{serviceauth}} a déjà été lié à un autre compte de éditeur Web p5.js."
+    },
+    "ShareModal": {
+      "Embed": "Intégrer",
+      "Present": "Présenter",
+      "Fullscreen": "Plein écran",
+      "Edit": "Éditer"
+    },
+    "CollectionView": {
+      "TitleCreate": "Créer une collection",
+      "TitleDefault": "collection"
+    },
+    "Collection": {
+      "Title": "Éditeur web p5.js | Mes collections",
+      "AnothersTitle": "Éditeur web p5.js | Collections de {{anotheruser}}",
+      "Share": "Partager",
+      "URLLink": "Lien vers la collection",
+      "AddSketch": "Ajouter un croquis",
+      "DeleteFromCollection": "Êtes-vous sûr de vouloir supprimer {{name_sketch}} de cette collection?",
+      "SketchDeleted": "Croquis supprimé",
+      "SketchRemoveARIA": "Supprimer le croquis de la collection",
+      "DescriptionPlaceholder": "Ajouter une description",
+      "Description": "description",
+      "NumSketches": "{{count}} croquis",
+      "NumSketches_plural": "{{count}} croquis",
+      "By":"Collection par ",
+      "NoSketches": "Aucun croquis dans la collection",
+      "TableSummary": "tableau contenant toutes les collections",
+      "HeaderName": "Nom",
+      "HeaderCreatedAt": "Date ajoutée",
+      "HeaderUser": "Propriétaire",
+      "DirectionAscendingARIA": "Ascendant",
+      "DirectionDescendingARIA": "Descendant",
+      "ButtonLabelAscendingARIA": "Trier par {{displayName}} ascendant.",
+      "ButtonLabelDescendingARIA": "Trier par {{displayName}} descendant."
+    },
+    "AddToCollectionList": {
+      "Title": "Éditeur web p5.js | Mes collections",
+      "AnothersTitle": "Éditeur web p5.js | Collections de {{anotheruser}}",
+      "Empty": "Aucune collection"
+    },
+    "CollectionCreate": {
+      "Title": "Éditeur web p5.js | Créer une collection",
+      "FormError": "Impossible de créer une collection",
+      "FormLabel": "Nom de la collection",
+      "FormLabelARIA": "nom",
+      "NameRequired": "Le nom de la collection est requis",
+      "Description": "Description (optionel)",
+      "DescriptionARIA": "description",
+      "DescriptionPlaceholder": "Mes croquis préférés",
+      "SubmitCollectionCreate": "Créer la collection"
+    },
+    "DashboardView": {
+      "CreateCollection": "Créer une collection",
+      "NewSketch": "Nouveau croquis",
+      "CreateCollectionOverlay": "Créer une collection"
+    },
+    "DashboardTabSwitcher": {
+      "Sketches": "Croquis",
+      "Collections": "Collections",
+      "Assets": "Ressources"
+    },
+    "CollectionList": {
+      "Title": "Éditeur web p5.js | Mes collections",
+      "AnothersTitle": "Éditeur web p5.js | collections de {{anotheruser}}",
+      "NoCollections": "Aucune collection.",
+      "TableSummary": "tableau contenant toutes les collections",
+      "HeaderName": "Nom",
+      "HeaderCreatedAt": "Date de création",
+      "HeaderCreatedAt_mobile": "Créé",
+      "HeaderUpdatedAt": "Date de mise à jour",
+      "HeaderUpdatedAt_mobile": "Mise à jour",
+      "HeaderNumItems": "# croquis",
+      "HeaderNumItems_mobile": "# croquis",
+      "DirectionAscendingARIA": "Ascendant",
+      "DirectionDescendingARIA": "Descendant",
+      "ButtonLabelAscendingARIA": "Trier par {{displayName}} ascendant.",
+      "ButtonLabelDescendingARIA": "Trier par {{displayName}} descendant.",
+      "AddSketch": "Ajouter un croquis"
+    },
+    "CollectionListRow": {
+      "ToggleCollectionOptionsARIA": "Activer/désactiver l'ouverture/fermeture des options de collections",
+      "AddSketch": "Ajouter un croquis",
+      "Delete": "Supprimer",
+      "Rename": "Renommer"
+    },
+    "Overlay": {
+      "AriaLabel": "Fermer {{title}} superposé"
+    },
+    "QuickAddList":{
+      "ButtonRemoveARIA": "Supprimer de la collection",
+      "ButtonAddToCollectionARIA": "Ajouter à la collection",
+      "View": "Voir"
+    },
+    "SketchList": {
+      "View": "Voir",
+      "Title": "Éditeur web p5.js | Mes croquis",
+      "AnothersTitle": "Éditeur web p5.js | Croquis de {{anotheruser}}",
+      "ToggleLabelARIA": "Activer/désactiver l'ouverture/fermeture des options de croquis",
+      "DropdownRename": "Renommer",
+      "DropdownDownload": "Télécharger",
+      "DropdownDuplicate": "Dupliquer",
+      "DropdownAddToCollection": "Ajouter à la collection",
+      "DropdownDelete": "Supprimer",
+      "DirectionAscendingARIA": "Ascendant",
+      "DirectionDescendingARIA": "Descendant",
+      "ButtonLabelAscendingARIA": "Trier par {{displayName}} ascendant.",
+      "ButtonLabelDescendingARIA": "Trier par {{displayName}} descendant.",
+      "AddToCollectionOverlayTitle": "Ajouter à la collection",
+      "TableSummary": "tableau contenant toutes projets sauvegardés",
+      "HeaderName": "Croquis",
+      "HeaderCreatedAt": "Date de création",
+      "HeaderCreatedAt_mobile": "Créé",
+      "HeaderUpdatedAt": "Date de mise à jour",
+      "HeaderUpdatedAt_mobile": "mise à jour",
+      "NoSketches": "Aucun croquis."
+    },
+    "AddToCollectionSketchList": {
+      "Title": "Éditeur web p5.js | Mes croquis",
+      "AnothersTitle": "Éditeur web p5.js | Croquis de {{anotheruser}}",
+      "NoCollections": "Aucune collection."
+    },
+    "Editor": {
+      "OpenSketchARIA": "Ouvrir la navigation dans les fichiers croquis",
+      "CloseSketchARIA": "Fermer la navigation dans les fichiers croquis",
+      "UnsavedChangesARIA": "Le croquis a des modifications non sauvegardées",
+      "KeyUpLineNumber": "ligne {{lineNumber}}"
+    },
+    "EditorAccessibility": {
+      "NoLintMessages": "Il n'y a pas de messages lint ",
+      "CurrentLine": " Ligne actuelle"
+    },
+    "Timer": {
+      "SavedAgo": "Sauvegardé: {{timeAgo}}"
+    },
+    "formatDate": {
+      "JustNow": "à l'instant",
+      "15Seconds": "Il y a 15 secondes",
+      "25Seconds": "Il y a 25 secondes",
+      "35Seconds": "Il y a 35 secondes",
+      "Ago": "Il y a {{timeAgo}}"
+    },
+    "AddRemoveButton": {
+      "AltAddARIA": "Ajouter à la collection",
+      "AltRemoveARIA": "Supprimer de la collection"
+    },
+    "CopyableInput": {
+      "CopiedARIA": "Copié dans le presse-papiers!",
+      "OpenViewTabARIA": "Ouvrir la fenêtre {{label}} dans un nouvel onglet"
+    },
+    "EditableInput": {
+      "EditValue": "Modifier la valeur de {{display}}",
+      "EmptyPlaceholder": "Aucune valeur"
+    },
+    "PreviewNav": {
+      "EditSketchARIA": "Modifier le croquis",
+      "ByUser": "par"
+    },
+    "MobilePreferences": {
+      "Settings": "Paramètres",
+      "GeneralSettings": "Paramètres généraux",
+      "Accessibility": "Accessibilité",
+      "AccessibleOutput": "Sortie accessible",
+      "Theme": "Thème",
+      "LightTheme": "Clair",
+      "DarkTheme": "Sombre",
+      "HighContrastTheme": "Contraste élevé",
+      "Autosave": "Sauvegarde automatique",
+      "WordWrap": "Retour à la ligne automatique",
+      "LineNumbers": "Numéros de ligne",
+      "LintWarningSound": "Son d'alarme Lint",
+      "UsedScreenReader": "Utilisé avec un lecteur de text",
+      "PlainText": "Text brut",
+      "TableText": "Tableau de texte",
+      "Sound": "Son"
+    },
+    "PreferenceCreators": {
+      "On": "Activer",
+      "Off": "Désactiver"
+    },
+    "MobileIDEView":{
+      "Preferences": "Préférences",
+      "MyStuff": "Mes trucs",
+      "Examples": "Exemples",
+      "OriginalEditor": "Éditeur original",
+      "Login": "Se connecter",
+      "Logout": "Se déconnecter"
+    },
+    "MobileDashboardView": {
+      "Examples": "Exemples",
+      "Sketches": "Croquis",
+      "Collections": "Collections",
+      "Assets": "Ressources",
+      "MyStuff": "Mes trucs",
+      "CreateSketch": "Créer un croquis",
+      "CreateCollection": "Create une collection"
+    },
+    "Explorer": {
+      "Files": "Fichiers"
+    }
+  }
+  
