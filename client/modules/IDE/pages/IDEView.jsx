@@ -57,11 +57,90 @@ function warnIfUnsavedChanges(props, nextLocation) {
   return true;
 }
 
+function handleGlobalKeydown(e, props, cmController) {
+  // 83 === s
+  const isMac = navigator.userAgent.toLowerCase().indexOf('mac') !== -1;
+
+  if (
+    e.keyCode === 83 &&
+    ((e.metaKey && isMac) || (e.ctrlKey && !isMac))
+  ) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (
+      props.isUserOwner ||
+      (props.user.authenticated && !props.project.owner)
+    ) {
+      props.saveProject(cmController.getContent());
+    } else if (props.user.authenticated) {
+      props.cloneProject();
+    } else {
+      props.showErrorModal('forceAuthentication');
+    }
+    // 13 === enter
+  } else if (
+    e.keyCode === 13 &&
+    e.shiftKey &&
+    ((e.metaKey && isMac) || (e.ctrlKey && !isMac))
+  ) {
+    e.preventDefault();
+    e.stopPropagation();
+    props.stopSketch();
+  } else if (
+    e.keyCode === 13 &&
+    ((e.metaKey && isMac) || (e.ctrlKey && !isMac))
+  ) {
+    e.preventDefault();
+    e.stopPropagation();
+    props.startSketch();
+    // 50 === 2
+  } else if (
+    e.keyCode === 50 &&
+    ((e.metaKey && isMac) || (e.ctrlKey && !isMac)) &&
+    e.shiftKey
+  ) {
+    e.preventDefault();
+    props.setAllAccessibleOutput(false);
+    // 49 === 1
+  } else if (
+    e.keyCode === 49 &&
+    ((e.metaKey && isMac) || (e.ctrlKey && !isMac)) &&
+    e.shiftKey
+  ) {
+    e.preventDefault();
+    props.setAllAccessibleOutput(true);
+  } else if (
+    e.keyCode === 66 &&
+    ((e.metaKey && isMac) || (e.ctrlKey && !isMac))
+  ) {
+    e.preventDefault();
+    if (!props.ide.sidebarIsExpanded) {
+      props.expandSidebar();
+    } else {
+      props.collapseSidebar();
+    }
+  } else if (e.keyCode === 192 && e.ctrlKey) {
+    e.preventDefault();
+    if (props.ide.consoleIsExpanded) {
+      props.collapseConsole();
+    } else {
+      props.expandConsole();
+    }
+  } else if (e.keyCode === 27) {
+    if (props.ide.newFolderModalVisible) {
+      props.closeNewFolderModal();
+    } else if (props.ide.uploadFileModalVisible) {
+      props.closeUploadFileModal();
+    } else if (props.ide.modalIsVisible) {
+      props.closeNewFileModal();
+    }
+  }
+}
+
 class IDEView extends React.Component {
   constructor(props) {
     super(props);
-    this.handleGlobalKeydown = this.handleGlobalKeydown.bind(this);
-
+    this.globalKeyDownHandler = this.globalKeyDownHandler.bind(this);
     this.state = {
       consoleSize: props.ide.consoleIsExpanded ? 150 : 29,
       sidebarSize: props.ide.sidebarIsExpanded ? 160 : 20,
@@ -81,8 +160,7 @@ class IDEView extends React.Component {
       }
     }
 
-    this.isMac = navigator.userAgent.toLowerCase().indexOf('mac') !== -1;
-    document.addEventListener('keydown', this.handleGlobalKeydown, false);
+    document.addEventListener('keydown', this.globalKeyDownHandler, false);
 
     this.props.router.setRouteLeaveHook(
       this.props.route,
@@ -152,87 +230,12 @@ class IDEView extends React.Component {
     }
   }
   componentWillUnmount() {
-    document.removeEventListener('keydown', this.handleGlobalKeydown, false);
+    document.removeEventListener('keydown', this.globalKeyDownHandler, false);
     clearTimeout(this.autosaveInterval);
     this.autosaveInterval = null;
   }
-  handleGlobalKeydown(e) {
-    // 83 === s
-    if (
-      e.keyCode === 83 &&
-      ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))
-    ) {
-      e.preventDefault();
-      e.stopPropagation();
-      if (
-        this.props.isUserOwner ||
-        (this.props.user.authenticated && !this.props.project.owner)
-      ) {
-        this.props.saveProject(this.cmController.getContent());
-      } else if (this.props.user.authenticated) {
-        this.props.cloneProject();
-      } else {
-        this.props.showErrorModal('forceAuthentication');
-      }
-      // 13 === enter
-    } else if (
-      e.keyCode === 13 &&
-      e.shiftKey &&
-      ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))
-    ) {
-      e.preventDefault();
-      e.stopPropagation();
-      this.props.stopSketch();
-    } else if (
-      e.keyCode === 13 &&
-      ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))
-    ) {
-      e.preventDefault();
-      e.stopPropagation();
-      this.props.startSketch();
-      // 50 === 2
-    } else if (
-      e.keyCode === 50 &&
-      ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac)) &&
-      e.shiftKey
-    ) {
-      e.preventDefault();
-      this.props.setAllAccessibleOutput(false);
-      // 49 === 1
-    } else if (
-      e.keyCode === 49 &&
-      ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac)) &&
-      e.shiftKey
-    ) {
-      e.preventDefault();
-      this.props.setAllAccessibleOutput(true);
-    } else if (
-      e.keyCode === 66 &&
-      ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))
-    ) {
-      e.preventDefault();
-      if (!this.props.ide.sidebarIsExpanded) {
-        this.props.expandSidebar();
-      } else {
-        this.props.collapseSidebar();
-      }
-    } else if (e.keyCode === 192 && e.ctrlKey) {
-      e.preventDefault();
-      if (this.props.ide.consoleIsExpanded) {
-        this.props.collapseConsole();
-      } else {
-        this.props.expandConsole();
-      }
-    } else if (e.keyCode === 27) {
-      if (this.props.ide.newFolderModalVisible) {
-        this.props.closeNewFolderModal();
-      } else if (this.props.ide.uploadFileModalVisible) {
-        this.props.closeUploadFileModal();
-      } else if (this.props.ide.modalIsVisible) {
-        this.props.closeNewFileModal();
-      }
-    }
-  }
+
+  globalKeyDownHandler = e => handleGlobalKeydown(e, this.props, this.cmController);
 
   handleUnsavedChanges = nextLocation => warnIfUnsavedChanges(this.props, nextLocation);
 
@@ -462,7 +465,6 @@ IDEView.propTypes = {
     id: PropTypes.string,
     username: PropTypes.string,
   }).isRequired,
-  saveProject: PropTypes.func.isRequired,
   ide: PropTypes.shape({
     errorType: PropTypes.string,
     keyboardShortcutVisible: PropTypes.bool.isRequired,
@@ -521,7 +523,6 @@ IDEView.propTypes = {
   setTextOutput: PropTypes.func.isRequired,
   setGridOutput: PropTypes.func.isRequired,
   setSoundOutput: PropTypes.func.isRequired,
-  setAllAccessibleOutput: PropTypes.func.isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -539,18 +540,12 @@ IDEView.propTypes = {
     content: PropTypes.string.isRequired,
   }).isRequired,
   newFile: PropTypes.func.isRequired,
-  expandSidebar: PropTypes.func.isRequired,
-  collapseSidebar: PropTypes.func.isRequired,
-  cloneProject: PropTypes.func.isRequired,
-  expandConsole: PropTypes.func.isRequired,
-  collapseConsole: PropTypes.func.isRequired,
   deleteFile: PropTypes.func.isRequired,
   updateFileName: PropTypes.func.isRequired,
   openProjectOptions: PropTypes.func.isRequired,
   closeProjectOptions: PropTypes.func.isRequired,
   newFolder: PropTypes.func.isRequired,
   closeNewFolderModal: PropTypes.func.isRequired,
-  closeNewFileModal: PropTypes.func.isRequired,
   createFolder: PropTypes.func.isRequired,
   closeShareModal: PropTypes.func.isRequired,
   closeKeyboardShortcutModal: PropTypes.func.isRequired,
@@ -564,10 +559,8 @@ IDEView.propTypes = {
   route: PropTypes.oneOfType([PropTypes.object, PropTypes.element]).isRequired,
   setTheme: PropTypes.func.isRequired,
   setPreviousPath: PropTypes.func.isRequired,
-  showErrorModal: PropTypes.func.isRequired,
   hideErrorModal: PropTypes.func.isRequired,
   clearPersistedState: PropTypes.func.isRequired,
-  startSketch: PropTypes.func.isRequired,
   openUploadFileModal: PropTypes.func.isRequired,
   closeUploadFileModal: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
