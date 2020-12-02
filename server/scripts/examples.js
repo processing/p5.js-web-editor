@@ -341,7 +341,8 @@ async function createProjectsInP5user(projectsInAllCategories) {
           if (saveErr) throw saveErr;
           console.log(`Created a new project in p5 user: ${savedProject.name}`);
         });
-      }))));
+      }))))
+        .then(() => process.exit());
     });
   } catch (error) {
     throw error;
