@@ -503,92 +503,92 @@ var getQueryDialog = function() {
           </span>
         </button>
       </div>
-      <div class="CodeMirror-find-input-fields">
-        <div class="CodeMirror-find-div">
-          <div class="CodeMirror-find-input">
-            <input id="Find-input-field" type="text" class="search-input CodeMirror-search-field" placeholder="${i18n.t('CodemirrorFindAndReplace.FindPlaceholder')}" />
-          </div>
-          <div class="CodeMirror-find-controls">
-            <div class="CodeMirror-search-modifiers button-wrap">
-              <button
-                title="${i18n.t('CodemirrorFindAndReplace.Regex')}"
-                aria-label="${i18n.t('CodemirrorFindAndReplace.Regex')}"
-                role="checkbox"
-                class="CodeMirror-search-modifier-button CodeMirror-regexp-button"
-              >
-                <span aria-hidden="true" class="button">.*</span>
-              </button>
-              <button
-                title="${i18n.t('CodemirrorFindAndReplace.CaseSensitive')}"
-                aria-label="${i18n.t('CodemirrorFindAndReplace.CaseSensitive')}"
-                role="checkbox"
-                class="CodeMirror-search-modifier-button CodeMirror-case-button"
-              >
-                <span aria-hidden="true" class="button">Aa</span>
-              </button>
-              <button
-                title="${i18n.t('CodemirrorFindAndReplace.WholeWords')}"
-                aria-label="${i18n.t('CodemirrorFindAndReplace.WholeWords')}"
-                role="checkbox"
-                class="CodeMirror-search-modifier-button CodeMirror-word-button"
-              >
-                <span aria-hidden="true" class="button">" "</span>
-              </button>
-            </div>
-            <div class="CodeMirror-search-nav">
-              <p class="CodeMirror-search-results">${i18n.t('CodemirrorFindAndReplace.NoResults')}</p>
-              <button
-                title="${i18n.t('CodemirrorFindAndReplace.Previous')}"
-                aria-label="${i18n.t('CodemirrorFindAndReplace.Previous')}"
-                class="CodeMirror-search-button icon up-arrow prev"
-              >
-                <span aria-hidden="true">
-                  ${upArrow}
-                </span>
-              </button>
-              <button
-                title="${i18n.t('CodemirrorFindAndReplace.Next')}"
-                aria-label="${i18n.t('CodemirrorFindAndReplace.Next')}"
-                class="CodeMirror-search-button icon down-arrow next"
-              >
-                <span aria-hidden="true">
-                  ${downArrow}
-                </span>
-              </button>
-            </div>
-            <div class="CodeMirror-close-button-container">
-              <button
-                title="${i18n.t('CodemirrorFindAndReplace.Close')}"
-                aria-label="${i18n.t('CodemirrorFindAndReplace.Close')}"
-                class="CodeMirror-close-button close icon"
-              >
-                <span aria-hidden="true">
-                  ${exitIcon}
-                </span>
-              </button>
-            </div>
-          </div>
+      <div class="CodeMirror-search-inputs">
+        <div class="CodeMirror-find-input">
+          <input id="Find-input-field" type="text" class="search-input CodeMirror-search-field" placeholder="${i18n.t('CodemirrorFindAndReplace.FindPlaceholder')}" />
         </div>
-        <div style="height: 0px; overflow: hidden;" class="CodeMirror-replace-div">
+        <div class="CodeMirror-replace-input">
           <input id="Replace-input-field" type="text" placeholder="${i18n.t('CodemirrorFindAndReplace.ReplacePlaceholder')}" class="search-input CodeMirror-search-field"/>
-          <div class="CodeMirror-replace-controls">
+        </div>
+      </div>
+      <div class="CodeMirror-search-controls">
+        <div class="CodeMirror-replace-controls">
+          <button
+            title="${i18n.t('CodemirrorFindAndReplace.Replace')}"
+            aria-label="${i18n.t('CodemirrorFindAndReplace.Replace')}"
+            role="button"
+            id="Btn-replace"
+            class="CodeMirror-search-modifier-button CodeMirror-replace-button"
+          >
+            ${i18n.t('CodemirrorFindAndReplace.Replace')}
+          </button>
+          <button
+            title="${i18n.t('CodemirrorFindAndReplace.ReplaceAll')}"
+            aria-label="${i18n.t('CodemirrorFindAndReplace.ReplaceAll')}"
+            role="button"
+            id="Btn-replace-all"
+            class="CodeMirror-search-modifier-button CodeMirror-replace-button"
+          >
+            ${i18n.t('CodemirrorFindAndReplace.ReplaceAll')}
+          </button>
+        </div>
+        <div class="CodeMirror-find-controls">
+          <div class="CodeMirror-search-modifiers button-wrap">
             <button
-              title="${i18n.t('CodemirrorFindAndReplace.Replace')}"
-              aria-label="${i18n.t('CodemirrorFindAndReplace.Replace')}"
-              role="button"
-              id="Btn-replace"
-              class="CodeMirror-search-modifier-button CodeMirror-replace-button"
+              title="${i18n.t('CodemirrorFindAndReplace.Regex')}"
+              aria-label="${i18n.t('CodemirrorFindAndReplace.Regex')}"
+              role="checkbox"
+              class="CodeMirror-search-modifier-button CodeMirror-regexp-button"
             >
-              ${i18n.t('CodemirrorFindAndReplace.Replace')}
+              <span aria-hidden="true" class="button">.*</span>
             </button>
             <button
-              title="${i18n.t('CodemirrorFindAndReplace.ReplaceAll')}"
-              aria-label="${i18n.t('CodemirrorFindAndReplace.ReplaceAll')}"
-              role="button"
-              id="Btn-replace-all"
-              class="CodeMirror-search-modifier-button CodeMirror-replace-button"
+              title="${i18n.t('CodemirrorFindAndReplace.CaseSensitive')}"
+              aria-label="${i18n.t('CodemirrorFindAndReplace.CaseSensitive')}"
+              role="checkbox"
+              class="CodeMirror-search-modifier-button CodeMirror-case-button"
             >
-              ${i18n.t('CodemirrorFindAndReplace.ReplaceAll')}
+              <span aria-hidden="true" class="button">Aa</span>
+            </button>
+            <button
+              title="${i18n.t('CodemirrorFindAndReplace.WholeWords')}"
+              aria-label="${i18n.t('CodemirrorFindAndReplace.WholeWords')}"
+              role="checkbox"
+              class="CodeMirror-search-modifier-button CodeMirror-word-button"
+            >
+              <span aria-hidden="true" class="button">" "</span>
+            </button>
+          </div>
+          <div class="CodeMirror-search-nav">
+            <p class="CodeMirror-search-results">${i18n.t('CodemirrorFindAndReplace.NoResults')}</p>
+            <button
+              title="${i18n.t('CodemirrorFindAndReplace.Previous')}"
+              aria-label="${i18n.t('CodemirrorFindAndReplace.Previous')}"
+              class="CodeMirror-search-button icon up-arrow prev"
+            >
+              <span aria-hidden="true">
+                ${upArrow}
+              </span>
+            </button>
+            <button
+              title="${i18n.t('CodemirrorFindAndReplace.Next')}"
+              aria-label="${i18n.t('CodemirrorFindAndReplace.Next')}"
+              class="CodeMirror-search-button icon down-arrow next"
+            >
+              <span aria-hidden="true">
+                ${downArrow}
+              </span>
+            </button>
+          </div>
+          <div class="CodeMirror-close-button-container">
+            <button
+              title="${i18n.t('CodemirrorFindAndReplace.Close')}"
+              aria-label="${i18n.t('CodemirrorFindAndReplace.Close')}"
+              class="CodeMirror-close-button close icon"
+            >
+              <span aria-hidden="true">
+                ${exitIcon}
+              </span>
             </button>
           </div>
         </div>

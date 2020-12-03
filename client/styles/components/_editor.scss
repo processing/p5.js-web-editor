@@ -121,7 +121,7 @@ pre.CodeMirror-line {
   height: 100%;
 }
 
-.CodeMirror-find-div {
+.CodMirror-search-inputs {
   padding: 0;
   display: flex;
   justify-content: flex-start;
@@ -145,6 +145,13 @@ pre.CodeMirror-line {
 
 .CodeMirror-replace-div {
   display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.CodeMirror-search-controls {
+  width: 60%;
+  display: flex;
+  flex-wrap: wrap-reverse;
   justify-content: flex-start;
   align-items: center;
 }
