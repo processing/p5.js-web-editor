@@ -50,6 +50,7 @@
       }
     },
     "CodemirrorFindAndReplace": {
+      "ToggleReplace": "トグル置換",
       "Find": "検索",
       "FindPlaceholder": "ファイル内検索",
       "Replace": "置換",

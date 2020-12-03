@@ -186,10 +186,6 @@ function persistentDialog(cm, text, deflt, onEnter, replaceOpened, onKeyDown) {
 
     var replaceField = document.getElementById('Replace-input-field');
     CodeMirror.on(replaceField, "keyup", function (e) {
-      if (!searchField.value) {
-        searchField.focus();
-        return;
-      }
       var state = getSearchState(cm);
       var query = parseQuery(searchField.value, state);
       var withText = parseString(replaceField.value);
@@ -493,8 +489,8 @@ var getQueryDialog = function() {
     <div class="CodeMirror-find-popup-container">
       <div id="Btn-Toggle-replace-div" class="Toggle-replace-btn-div">
         <button
-          title="${i18n.t('CodemirrorFindAndReplace.Replace')}"
-          aria-label="${i18n.t('CodemirrorFindAndReplace.Replace')}"
+          title="${i18n.t('CodemirrorFindAndReplace.ToggleReplace')}"
+          aria-label="${i18n.t('CodemirrorFindAndReplace.ToggleReplace')}"
           role="button" id="Btn-Toggle-replace"
           class="CodeMirror-search-modifier-button CodeMirror-replace-toggle-button"
         >
