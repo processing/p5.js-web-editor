@@ -228,6 +228,7 @@ function persistentDialog(cm, text, deflt, onEnter, replaceOpened, onKeyDown) {
         if (match) {
           cm.setSelection(cursor.from(), cursor.to());
           doReplace(match, cursor, query, withText);
+          doReplaceButton.focus();
         }
       } else {
         startSearch(cm, state, searchField.value);
@@ -235,6 +236,7 @@ function persistentDialog(cm, text, deflt, onEnter, replaceOpened, onKeyDown) {
         cm.focus();
         CodeMirror.commands.findNext(cm);
         searchField.blur();
+        doReplaceButton.focus();
       }
     })
 
