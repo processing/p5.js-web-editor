@@ -236,124 +236,117 @@ async function createProjectsInP5user(projectsInAllCategories) {
 
   try {
     const res = await rp(options);
-    User.findOne({ username: 'p5' }, (err, user) => {
-      if (err) throw err;
-
-      Q.all(projectsInAllCategories.map(projectsInOneCategory => Q.all(projectsInOneCategory.map(async (project) => {
-        let newProject;
-        const a = objectID().toHexString();
-        const b = objectID().toHexString();
-        const c = objectID().toHexString();
-        const r = objectID().toHexString();
-        const noNumberprojectName = project.projectName.replace(/(\d+)/g, '');
-        if (noNumberprojectName === 'Instance Mode: Instance Container ') {
-          newProject = new Project({
-            name: project.projectName,
-            user: user._id,
-            files: [
-              {
-                name: 'root',
-                id: r,
-                _id: r,
-                children: [a, b, c],
-                fileType: 'folder'
-              },
-              {
-                name: 'sketch.js',
-                content: '// Instance Mode: Instance Container, please check its index.html file',
-                id: a,
-                _id: a,
-                fileType: 'file',
-                children: []
-              },
-              {
-                name: 'index.html',
-                content: project.sketchContent,
-                isSelectedFile: true,
-                id: b,
-                _id: b,
-                fileType: 'file',
-                children: []
-              },
-              {
-                name: 'style.css',
-                content: defaultCSS,
-                id: c,
-                _id: c,
-                fileType: 'file',
-                children: []
-              }
-            ],
-            _id: shortid.generate()
-          });
-        } else {
-          newProject = new Project({
-            name: project.projectName,
-            user: user._id,
-            files: [
-              {
-                name: 'root',
-                id: r,
-                _id: r,
-                children: [a, b, c],
-                fileType: 'folder'
-              },
-              {
-                name: 'sketch.js',
-                content: project.sketchContent,
-                id: a,
-                _id: a,
-                isSelectedFile: true,
-                fileType: 'file',
-                children: []
-              },
-              {
-                name: 'index.html',
-                content: defaultHTML,
-                id: b,
-                _id: b,
-                fileType: 'file',
-                children: []
-              },
-              {
-                name: 'style.css',
-                content: defaultCSS,
-                id: c,
-                _id: c,
-                fileType: 'file',
-                children: []
-              }
-            ],
-            _id: shortid.generate()
-          });
-        }
-
-        const assetsInProject = project.sketchContent.match(/assets\/[\w-]+\.[\w]*/g)
-          || project.sketchContent.match(/asset\/[\w-]*/g) || [];
-
-        try {
-          await addAssetsToProject(assetsInProject, res, newProject);
-        } catch (error) {
-          throw error;
-        }
-
-        newProject.save((saveErr, savedProject) => {
-          if (saveErr) throw saveErr;
-          console.log(`Created a new project in p5 user: ${savedProject.name}`);
+    const user = await User.findOne({ username: 'p5' }).exec();
+    Q.all(projectsInAllCategories.map(projectsInOneCategory => Q.all(projectsInOneCategory.map(async (project) => {
+      let newProject;
+      const a = objectID().toHexString();
+      const b = objectID().toHexString();
+      const c = objectID().toHexString();
+      const r = objectID().toHexString();
+      const noNumberprojectName = project.projectName.replace(/(\d+)/g, '');
+      if (noNumberprojectName === 'Instance Mode: Instance Container ') {
+        newProject = new Project({
+          name: project.projectName,
+          user: user._id,
+          files: [
+            {
+              name: 'root',
+              id: r,
+              _id: r,
+              children: [a, b, c],
+              fileType: 'folder'
+            },
+            {
+              name: 'sketch.js',
+              content: '// Instance Mode: Instance Container, please check its index.html file',
+              id: a,
+              _id: a,
+              fileType: 'file',
+              children: []
+            },
+            {
+              name: 'index.html',
+              content: project.sketchContent,
+              isSelectedFile: true,
+              id: b,
+              _id: b,
+              fileType: 'file',
+              children: []
+            },
+            {
+              name: 'style.css',
+              content: defaultCSS,
+              id: c,
+              _id: c,
+              fileType: 'file',
+              children: []
+            }
+          ],
+          _id: shortid.generate()
         });
-      }))))
-        .then(() => process.exit());
-    });
+      } else {
+        newProject = new Project({
+          name: project.projectName,
+          user: user._id,
+          files: [
+            {
+              name: 'root',
+              id: r,
+              _id: r,
+              children: [a, b, c],
+              fileType: 'folder'
+            },
+            {
+              name: 'sketch.js',
+              content: project.sketchContent,
+              id: a,
+              _id: a,
+              isSelectedFile: true,
+              fileType: 'file',
+              children: []
+            },
+            {
+              name: 'index.html',
+              content: defaultHTML,
+              id: b,
+              _id: b,
+              fileType: 'file',
+              children: []
+            },
+            {
+              name: 'style.css',
+              content: defaultCSS,
+              id: c,
+              _id: c,
+              fileType: 'file',
+              children: []
+            }
+          ],
+          _id: shortid.generate()
+        });
+      }
+
+      const assetsInProject = project.sketchContent.match(/assets\/[\w-]+\.[\w]*/g)
+        || project.sketchContent.match(/asset\/[\w-]*/g) || [];
+
+      try {
+        await addAssetsToProject(assetsInProject, res, newProject);
+        const savedProject = await newProject.save();
+        console.log(`Created a new project in p5 user: ${savedProject.name}`);
+      } catch (error) {
+        throw error;
+      }
+    }))))
+      .then(() => process.exit());
   } catch (error) {
     throw error;
   }
 }
 
-function getp5User() {
+async function getp5User() {
   console.log('Getting p5 user');
-  User.findOne({ username: 'p5' }, async (err, user) => {
-    if (err) throw err;
-
+  try {
+    const user = await User.findOne({ username: 'p5' }).exec();
     let p5User = user;
     if (!p5User) {
       p5User = new User({
@@ -361,28 +354,26 @@ function getp5User() {
         email: process.env.EXAMPLE_USER_EMAIL,
         password: process.env.EXAMPLE_USER_PASSWORD
       });
-      p5User.save((saveErr) => {
-        if (saveErr) throw saveErr;
-        console.log(`Created a user p5 ${p5User}`);
-      });
+      await p5User.save();
+      console.log(`Created a user p5 ${p5User}`);
     }
-
-    Project.find({ user: p5User._id }, (projectsErr, projects) => {
-      // if there are already some sketches, delete them
-      console.log('Deleting old projects...');
-      projects.forEach((project) => {
-        Project.remove({ _id: project._id }, (removeErr) => {
-          if (removeErr) throw removeErr;
-        });
-      });
+    const projects = await Project.find({ user: p5User._id }).exec();
+    console.log('Deleting old projects...');
+    projects.forEach(async (project) => {
+      try {
+        await Project.deleteOne({ _id: project._id });
+      } catch (error) {
+        throw error;
+      }
     });
-
     const categories = await getCategories();
     const sketchesInCategories = await getSketchesInCategories(categories);
     const sketchContent = await getSketchContent(sketchesInCategories);
-    const projects = createProjectsInP5user(sketchContent);
-    return projects;
-  });
+    const projectsInUser = createProjectsInP5user(sketchContent);
+    return projectsInUser;
+  } catch (error) {
+    throw error;
+  }
 }
 
 getp5User();
