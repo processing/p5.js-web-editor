@@ -154,30 +154,30 @@ function persistentDialog(cm, text, deflt, onEnter, replaceOpened, onKeyDown) {
     }
 
     function toggleReplace(open) {
-      var replaceDivHeightOpened = "45px", replaceDivHeightClosed = "0px";
       var toggleButtonHeightOpened = "80px", toggleButtonHeightClosed = "40px";
 
       if (open) {
-        replaceDiv.style.height = replaceDivHeightOpened;
+        replaceFieldDiv.style.display = replaceControlsDiv.style.display = '';
         toggleReplaceBtnDiv.style.height = toggleButtonHeightOpened;
-        showReplaceButton.style.height = toggleButtonHeightOpened;
-        showReplaceButton.innerHTML = triangleArrowDown;
+        toggleReplaceBtn.style.height = toggleButtonHeightOpened;
+        toggleReplaceBtn.innerHTML = triangleArrowDown;
       } else {
-        replaceDiv.style.height = replaceDivHeightClosed;
+        replaceFieldDiv.style.display = replaceControlsDiv.style.display = 'none';
         toggleReplaceBtnDiv.style.height = toggleButtonHeightClosed;
-        showReplaceButton.style.height = toggleButtonHeightClosed;
-        showReplaceButton.innerHTML = triangleArrowRight;
+        toggleReplaceBtn.style.height = toggleButtonHeightClosed;
+        toggleReplaceBtn.innerHTML = triangleArrowRight;
       }
     }
 
-    var showReplaceButton = dialog.getElementsByClassName("CodeMirror-replace-toggle-button")[0];
-    var toggleReplaceBtnDiv = dialog.getElementsByClassName("Toggle-replace-btn-div")[0];
-    var replaceDiv = dialog.getElementsByClassName("CodeMirror-replace-div")[0];
+    var toggleReplaceBtnDiv = document.getElementById('Btn-Toggle-replace-div');
+    var toggleReplaceBtn = document.getElementById('Btn-Toggle-replace')
+    var replaceFieldDiv = document.getElementById('Replace-input-div');
+    var replaceControlsDiv = document.getElementById('Replace-controls-div');
     if (replaceOpened) {
       toggleReplace(true);
     }
-    CodeMirror.on(showReplaceButton, "click", function () {
-      if (replaceDiv.style.height === "0px") {
+    CodeMirror.on(toggleReplaceBtn, "click", function () {
+      if (replaceFieldDiv.style.display === "none") {
         toggleReplace(true);
       } else {
         toggleReplace(false);
@@ -491,11 +491,11 @@ function replaceAll(cm, query, text) {
 var getQueryDialog = function() {
   return (`
     <div class="CodeMirror-find-popup-container">
-      <div class="Toggle-replace-btn-div">
+      <div id="Btn-Toggle-replace-div" class="Toggle-replace-btn-div">
         <button
           title="${i18n.t('CodemirrorFindAndReplace.Replace')}"
           aria-label="${i18n.t('CodemirrorFindAndReplace.Replace')}"
-          role="button"
+          role="button" id="Btn-Toggle-replace"
           class="CodeMirror-search-modifier-button CodeMirror-replace-toggle-button"
         >
           <span aria-hidden="true" class="button">
@@ -507,12 +507,13 @@ var getQueryDialog = function() {
         <div class="CodeMirror-find-input">
           <input id="Find-input-field" type="text" class="search-input CodeMirror-search-field" placeholder="${i18n.t('CodemirrorFindAndReplace.FindPlaceholder')}" />
         </div>
-        <div class="CodeMirror-replace-input">
+        <div style="display: none;" id="Replace-input-div"
+        class="CodeMirror-replace-input">
           <input id="Replace-input-field" type="text" placeholder="${i18n.t('CodemirrorFindAndReplace.ReplacePlaceholder')}" class="search-input CodeMirror-search-field"/>
         </div>
       </div>
       <div class="CodeMirror-search-controls">
-        <div class="CodeMirror-replace-controls">
+        <div style="display: none;" id="Replace-controls-div" class="CodeMirror-replace-controls">
           <button
             title="${i18n.t('CodemirrorFindAndReplace.Replace')}"
             aria-label="${i18n.t('CodemirrorFindAndReplace.Replace')}"

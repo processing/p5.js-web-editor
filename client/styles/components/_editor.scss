@@ -142,7 +142,10 @@ pre.CodeMirror-line {
 .CodeMirror-find-controls {
   display: flex;
 }
-
+.CodeMirror-search-inputs {
+  width: 30%;
+  margin-left: 10px;
+}
 .CodeMirror-replace-div {
   display: flex;
   justify-content: flex-start;
@@ -153,7 +156,7 @@ pre.CodeMirror-line {
   display: flex;
   flex-wrap: wrap-reverse;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-end;
 }
 .CodeMirror-replace-controls {
   display: flex;
