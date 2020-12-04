@@ -237,7 +237,7 @@ async function createProjectsInP5user(projectsInAllCategories) {
   try {
     const res = await rp(options);
     const user = await User.findOne({ username: 'p5' }).exec();
-    Q.all(projectsInAllCategories.map(projectsInOneCategory => Q.all(projectsInOneCategory.map(async (project) => {
+    await Q.all(projectsInAllCategories.map(projectsInOneCategory => Q.all(projectsInOneCategory.map(async (project) => {
       let newProject;
       const a = objectID().toHexString();
       const b = objectID().toHexString();
@@ -336,8 +336,8 @@ async function createProjectsInP5user(projectsInAllCategories) {
       } catch (error) {
         throw error;
       }
-    }))))
-      .then(() => process.exit());
+    }))));
+    process.exit();
   } catch (error) {
     throw error;
   }
