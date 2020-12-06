@@ -11,7 +11,6 @@ import apiClient from '../../../utils/apiClient';
 import { validateSignup } from '../../../utils/reduxFormUtils';
 import SocialAuthButton from '../components/SocialAuthButton';
 import Nav from '../../../components/Nav';
-import ResponsiveForm from '../components/ResponsiveForm';
 
 
 class SignupView extends React.Component {

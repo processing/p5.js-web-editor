@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
 import styled from 'styled-components';
-import { remSize, prop, common } from '../../theme';
+import { remSize, prop, } from '../../theme';
 import Header from './Header';
 import IconButton from './IconButton';
 import { ExitIcon } from '../../common/icons';

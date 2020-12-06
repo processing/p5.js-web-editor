@@ -9,7 +9,6 @@ import LoginForm from '../components/LoginForm';
 import { validateLogin } from '../../../utils/reduxFormUtils';
 import SocialAuthButton from '../components/SocialAuthButton';
 import Nav from '../../../components/Nav';
-import ResponsiveForm from '../components/ResponsiveForm';
 
 class LoginView extends React.Component {
   constructor(props) {

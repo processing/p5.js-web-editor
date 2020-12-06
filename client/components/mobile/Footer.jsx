@@ -1,6 +1,5 @@
-import React from 'react';
 import styled from 'styled-components';
-import { prop, grays } from '../../theme';
+import { prop } from '../../theme';
 
 
 const background = prop('MobilePanel.default.background');

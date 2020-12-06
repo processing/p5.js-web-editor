@@ -1,7 +1,6 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { useSelector, useDispatch } from 'react-redux';
-import styled from 'styled-components';
 import Header from '../../components/mobile/Header';
 import IconButton from '../../components/mobile/IconButton';
 import PreviewFrame from '../IDE/components/PreviewFrame';
@@ -16,7 +15,6 @@ import * as FilesActions from '../IDE/actions/files';
 import { getHTMLFile } from '../IDE/reducers/files';
 
 import { ExitIcon } from '../../common/icons';
-import { remSize } from '../../theme';
 import Footer from '../../components/mobile/Footer';
 import Content from './MobileViewContent';
 

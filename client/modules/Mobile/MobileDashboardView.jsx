@@ -21,7 +21,6 @@ import useAsModal from '../../components/useAsModal';
 import Dropdown from '../../components/Dropdown';
 import FooterTabSwitcher from '../../components/mobile/TabSwitcher';
 import FooterTab from '../../components/mobile/Tab';
-import Loader from '../App/components/loader';
 
 const EXAMPLE_USERNAME = 'p5';
 

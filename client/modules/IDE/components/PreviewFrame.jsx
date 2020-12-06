@@ -8,7 +8,6 @@ import loopProtect from 'loop-protect';
 import { JSHINT } from 'jshint';
 import decomment from 'decomment';
 import classNames from 'classnames';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Decode } from 'console-feed';
 import { getBlobUrl } from '../actions/files';
