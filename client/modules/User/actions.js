@@ -12,22 +12,8 @@ export function authError(error) {
   };
 }
 
-export function signUpUser(previousPath, formValues) {
-  return (dispatch) => {
-    apiClient.post('/signup', formValues)
-      .then((response) => {
-        dispatch({
-          type: ActionTypes.AUTH_USER,
-          user: response.data
-        });
-        dispatch(justOpenedProject());
-        browserHistory.push(previousPath);
-      })
-      .catch((error) => {
-        const { response } = error;
-        dispatch(authError(response.data.error));
-      });
-  };
+export function signUpUser(formValues) {
+  return apiClient.post('/signup', formValues);
 }
 
 export function loginUser(formValues) {
@@ -35,6 +21,13 @@ export function loginUser(formValues) {
 }
 
 export function loginUserSuccess(user) {
+  return {
+    type: ActionTypes.AUTH_USER,
+    user
+  };
+}
+
+export function authenticateUser(user) {
   return {
     type: ActionTypes.AUTH_USER,
     user

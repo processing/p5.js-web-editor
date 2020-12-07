@@ -36,7 +36,7 @@ function LoginForm(props) {
       onSubmit={validateAndLoginUser}
     >
       {({
-        handleSubmit, pristine, submitting
+        handleSubmit, pristine, submitting, invalid
       }) => (
         <form
           className="form"
@@ -78,7 +78,7 @@ function LoginForm(props) {
           </Field>
           <Button
             type="submit"
-            disabled={submitting || pristine}
+            disabled={submitting || invalid || pristine}
           >{props.t('LoginForm.Submit')}
           </Button>
         </form>
