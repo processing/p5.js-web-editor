@@ -82,6 +82,7 @@ function persistentDialog(cm, text, deflt, onEnter, replaceOpened, onKeyDown) {
     var state = getSearchState(cm);
 
     CodeMirror.on(searchField, "keyup", function (e) {
+      state.replaceStarted = false;
       if (e.keyCode !== 13 && searchField.value.length > 1) { // not enter and more than 1 character to search
         startSearch(cm, getSearchState(cm), searchField.value);
       } else if (searchField.value.length < 1) {
@@ -249,6 +250,9 @@ function persistentDialog(cm, text, deflt, onEnter, replaceOpened, onKeyDown) {
       var state = getSearchState(cm);
       var query = parseQuery(searchField.value, state);
       var withText = parseString(replaceField.value);
+      if (searchField.value.length > 1) {
+        state.replaceStarted = true;
+      }
       if (state.replaceStarted) {
         replaceAll(cm, query, withText);
         state.replaceStarted = false;
