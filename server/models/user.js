@@ -206,13 +206,13 @@ userSchema.statics.findByUsername = function findByUsername(username, options, c
  * @return {Promise<Object>} - Returns Promise fulfilled by User document
  */
 userSchema.statics.findByEmailOrUsername = function findByEmailOrUsername(value, options, cb) {
-  // do the case insensitive stuff
   let isEmail;
-  if (options.valueType) {
+  if (options && options.valueType) {
     isEmail = options.valueType === 'email';
   } else {
     isEmail = value.indexOf('@') > -1;
   }
+  // do the case insensitive stuff
   if ((arguments.length === 3 && options.caseInsensitive)
     || (arguments.length === 2 && typeof options === 'object' && options.caseInsensitive)) {
     const query = isEmail ? { email: value } : { username: value };

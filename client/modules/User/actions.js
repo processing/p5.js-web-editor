@@ -222,6 +222,10 @@ export function updateSettingsSuccess(user) {
   };
 }
 
+export function submitSettings(formValues) {
+  return apiClient.put('/account', formValues);
+}
+
 export function updateSettings(formValues) {
   return dispatch =>
     apiClient.put('/account', formValues)
