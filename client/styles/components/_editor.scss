@@ -121,14 +121,6 @@ pre.CodeMirror-line {
   height: 100%;
 }
 
-.CodMirror-search-inputs {
-  padding: 0;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  flex-wrap: nowrap;
-}
-
 .CodeMirror-search-modifiers {
   margin-left: #{10 / $base-font-size}rem;
 }
