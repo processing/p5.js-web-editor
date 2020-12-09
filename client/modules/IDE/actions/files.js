@@ -1,6 +1,5 @@
 import objectID from 'bson-objectid';
 import blobUtil from 'blob-util';
-import { reset } from 'redux-form';
 import apiClient from '../../../utils/apiClient';
 import * as ActionTypes from '../../../constants';
 import { setUnsavedChanges, closeNewFolderModal, closeNewFileModal } from './ide';
