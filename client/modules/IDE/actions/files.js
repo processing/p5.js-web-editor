@@ -73,51 +73,35 @@ export function submitFile(formProps, files, parentId, projectId) {
   });
 }
 
-export function createFolder(formProps) {
-  return (dispatch, getState) => {
-    const state = getState();
-    const { parentId } = state.ide;
-    if (state.project.id) {
-      const postParams = {
-        name: createUniqueName(formProps.name, parentId, state.files),
-        content: '',
-        children: [],
-        parentId,
-        fileType: 'folder'
-      };
-      apiClient.post(`/projects/${state.project.id}/files`, postParams)
-        .then((response) => {
-          dispatch({
-            type: ActionTypes.CREATE_FILE,
-            ...response.data.updatedFile,
-            parentId
-          });
-          dispatch(setProjectSavedTime(response.data.project.updatedAt));
-          dispatch(closeNewFolderModal());
-        })
-        .catch((error) => {
-          const { response } = error;
-          dispatch({
-            type: ActionTypes.ERROR,
-            error: response.data
-          });
-        });
-    } else {
-      const id = objectID().toHexString();
-      dispatch({
-        type: ActionTypes.CREATE_FILE,
-        name: createUniqueName(formProps.name, parentId, state.files),
-        id,
-        _id: id,
-        content: '',
-        // TODO pass parent id from File Tree
-        parentId,
-        fileType: 'folder',
-        children: []
-      });
-      dispatch(closeNewFolderModal());
-    }
+export function submitFolder(formProps, files, parentId, projectId) {
+  if (projectId) {
+    const postParams = {
+      name: createUniqueName(formProps.name, parentId, files),
+      content: '',
+      children: [],
+      parentId,
+      fileType: 'folder'
+    };
+    return apiClient.post(`/projects/${projectId}/files`, postParams)
+      .then(response => ({
+        file: response.data.updatedFile,
+        updatedAt: response.data.project.updatedAt
+      }));
+  }
+  const id = objectID().toHexString();
+  const file = {
+    type: ActionTypes.CREATE_FILE,
+    name: createUniqueName(formProps.name, parentId, files),
+    id,
+    _id: id,
+    content: '',
+    // TODO pass parent id from File Tree
+    fileType: 'folder',
+    children: []
   };
+  return Promise.resolve({
+    file
+  });
 }
 
 export function updateFileName(id, name) {

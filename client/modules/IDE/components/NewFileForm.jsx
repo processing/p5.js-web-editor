@@ -24,7 +24,6 @@ function NewFileForm() {
       if (updatedAt) dispatch(setProjectSavedTime(updatedAt));
       dispatch(closeNewFileModal());
       dispatch(setUnsavedChanges(true));
-      // reset form
     }).catch((error) => {
       const { response } = error;
       dispatch(createError(response.data));
