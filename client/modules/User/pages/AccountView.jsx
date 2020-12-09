@@ -20,7 +20,7 @@ function SocialLoginPanel(props) {
   const { user } = props;
   return (
     <React.Fragment>
-      <AccountForm {...props} />
+      <AccountForm />
       {/* eslint-disable-next-line react/prop-types */}
       <h2 className="form-container__divider">{props.t('AccountView.SocialLogin')}</h2>
       <p className="account__social-text">
