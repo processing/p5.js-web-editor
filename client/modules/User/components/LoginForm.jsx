@@ -2,38 +2,22 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
-import { browserHistory } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Button from '../../../common/Button';
 import { validateLogin } from '../../../utils/reduxFormUtils';
-import { loginUser, loginUserSuccess, setPreferences } from '../actions';
-import { setLanguage } from '../../IDE/actions/preferences';
-import { justOpenedProject } from '../../IDE/actions/ide';
+import { validateAndLoginUser } from '../actions';
 
 function LoginForm(props) {
   const dispatch = useDispatch();
-  const previousPath = useSelector(state => state.ide.previousPath);
-  function validateAndLoginUser(formProps) {
-    return new Promise((resolve, reject) => {
-      loginUser(formProps)
-        .then((response) => {
-          dispatch(loginUserSuccess(response.data));
-          dispatch(setPreferences(response.data.preferences));
-          dispatch(setLanguage(response.data.preferences.language, { persistPreference: false }));
-          dispatch(justOpenedProject());
-          browserHistory.push(previousPath);
-          resolve();
-        })
-        .catch(error =>
-          reject({ password: error.response.data.message, _error: 'Login failed!' })); // eslint-disable-line
-    });
+  function onSubmit(formProps) {
+    return dispatch(validateAndLoginUser(formProps));
   }
 
   return (
     <Form
       fields={['email', 'password']}
       validate={validateLogin}
-      onSubmit={validateAndLoginUser}
+      onSubmit={onSubmit}
     >
       {({
         handleSubmit, pristine, submitting, invalid

@@ -1,16 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 import { withTranslation } from 'react-i18next';
-import { updateSettings, initiateVerification, createApiKey, removeApiKey } from '../actions';
 
 import Button from '../../../common/Button';
-
 import Nav from '../../../components/Nav';
 import Overlay from '../../App/components/Overlay';
-
 import AssetList from '../../IDE/components/AssetList';
 import AssetSize from '../../IDE/components/AssetSize';
 import CollectionList from '../../IDE/components/CollectionList';
@@ -159,12 +155,6 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    updateSettings, initiateVerification, createApiKey, removeApiKey
-  }, dispatch);
-}
-
 DashboardView.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
@@ -180,4 +170,4 @@ DashboardView.propTypes = {
   t: PropTypes.func.isRequired
 };
 
-export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(DashboardView));
+export default withTranslation()(connect(mapStateToProps)(DashboardView));

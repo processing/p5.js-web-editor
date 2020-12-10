@@ -1,11 +1,9 @@
 import React, { useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Button from '../../../common/Button';
-import { submitFolder, createFile } from '../actions/files';
-import { setProjectSavedTime } from '../actions/project';
-import { closeNewFolderModal, setUnsavedChanges } from '../actions/ide';
+import { handleCreateFolder } from '../actions/files';
 
 function NewFolderForm() {
   const folderNameInput = useRef(null);
@@ -14,9 +12,6 @@ function NewFolderForm() {
   });
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const files = useSelector(state => state.files);
-  const parentId = useSelector(state => state.ide.parentId);
-  const projectId = useSelector(state => state.project.id);
 
   function validate(formProps) {
     const errors = {};
@@ -30,21 +25,15 @@ function NewFolderForm() {
     return errors;
   }
 
-  function handleCreateFolder(formProps) {
-    submitFolder(formProps, files, parentId, projectId).then((response) => {
-      const { file, updatedAt } = response;
-      dispatch(createFile(file, parentId));
-      if (updatedAt) dispatch(setProjectSavedTime(updatedAt));
-      dispatch(closeNewFolderModal());
-      dispatch(setUnsavedChanges(true));
-    });
+  function onSubmit(formProps) {
+    return dispatch(handleCreateFolder(formProps));
   }
 
   return (
     <Form
       fields={['name']}
       validate={validate}
-      onSubmit={handleCreateFolder}
+      onSubmit={onSubmit}
     >
       {({
         handleSubmit, invalid, submitting, touched, errors

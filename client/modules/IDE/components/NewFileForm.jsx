@@ -1,10 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { submitFile, createFile } from '../actions/files';
-import { setProjectSavedTime } from '../actions/project';
-import { closeNewFileModal, setUnsavedChanges, createError } from '../actions/ide';
+import { useDispatch } from 'react-redux';
+import { handleCreateFile } from '../actions/files';
 import { CREATE_FILE_REGEX } from '../../../../server/utils/fileUtils';
 
 import Button from '../../../common/Button';
@@ -12,22 +10,10 @@ import Button from '../../../common/Button';
 function NewFileForm() {
   const fileNameInput = useRef(null);
   const { t } = useTranslation();
-  const files = useSelector(state => state.files);
-  const parentId = useSelector(state => state.ide.parentId);
-  const projectId = useSelector(state => state.project.id);
   const dispatch = useDispatch();
 
-  function handleCreateFile(formProps) {
-    submitFile(formProps, files, parentId, projectId).then((response) => {
-      const { file, updatedAt } = response;
-      dispatch(createFile(file, parentId));
-      if (updatedAt) dispatch(setProjectSavedTime(updatedAt));
-      dispatch(closeNewFileModal());
-      dispatch(setUnsavedChanges(true));
-    }).catch((error) => {
-      const { response } = error;
-      dispatch(createError(response.data));
-    });
+  function onSubmit(formProps) {
+    return dispatch(handleCreateFile(formProps));
   }
 
   function validate(formProps) {
@@ -50,7 +36,7 @@ function NewFileForm() {
     <Form
       fields={['name']}
       validate={validate}
-      onSubmit={handleCreateFile}
+      onSubmit={onSubmit}
     >
       {({
         handleSubmit, errors, touched, invalid, submitting

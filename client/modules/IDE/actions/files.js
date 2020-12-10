@@ -4,6 +4,7 @@ import apiClient from '../../../utils/apiClient';
 import * as ActionTypes from '../../../constants';
 import { setUnsavedChanges, closeNewFolderModal, closeNewFileModal } from './ide';
 import { setProjectSavedTime } from './project';
+import { createError } from './ide';
 
 
 function appendToFilename(filename, string) {
@@ -72,6 +73,29 @@ export function submitFile(formProps, files, parentId, projectId) {
   });
 }
 
+export function handleCreateFile(formProps) {
+  return (dispatch, getState) => {
+    const state = getState();
+    const { files } = state;
+    const { parentId } = state.ide;
+    const projectId = state.project.id;
+    return new Promise((resolve, reject) => {
+      submitFile(formProps, files, parentId, projectId).then((response) => {
+        const { file, updatedAt } = response;
+        dispatch(createFile(file, parentId));
+        if (updatedAt) dispatch(setProjectSavedTime(updatedAt));
+        dispatch(closeNewFileModal());
+        dispatch(setUnsavedChanges(true));
+        resolve();
+      }).catch((error) => {
+        const { response } = error;
+        dispatch(createError(response.data));
+        reject();
+      });
+    });
+  };
+}
+
 export function submitFolder(formProps, files, parentId, projectId) {
   if (projectId) {
     const postParams = {
@@ -101,6 +125,29 @@ export function submitFolder(formProps, files, parentId, projectId) {
   return Promise.resolve({
     file
   });
+}
+
+export function handleCreateFolder(formProps) {
+  return (dispatch, getState) => {
+    const state = getState();
+    const { files } = state;
+    const { parentId } = state.ide;
+    const projectId = state.project.id;
+    return new Promise((resolve, reject) => {
+      submitFolder(formProps, files, parentId, projectId).then((response) => {
+        const { file, updatedAt } = response;
+        dispatch(createFile(file, parentId));
+        if (updatedAt) dispatch(setProjectSavedTime(updatedAt));
+        dispatch(closeNewFolderModal());
+        dispatch(setUnsavedChanges(true));
+        resolve();
+      }).catch((error) => {
+        const { response } = error;
+        dispatch(createError(response.data));
+        reject();
+      });
+    });
+  };
 }
 
 export function updateFileName(id, name) {

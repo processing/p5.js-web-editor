@@ -2,12 +2,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { browserHistory } from 'react-router';
+import { useDispatch } from 'react-redux';
 import { validateSignup } from '../../../utils/reduxFormUtils';
-import { signUpUser, authenticateUser, authError } from '../actions';
+import { validateAndSignUpUser } from '../actions';
 import Button from '../../../common/Button';
-import { justOpenedProject } from '../../IDE/actions/ide';
 import apiClient from '../../../utils/apiClient';
 
 function asyncValidate(fieldToValidate, value) {
@@ -34,29 +32,15 @@ function validateEmail(email) {
 
 function SignupForm(props) {
   const dispatch = useDispatch();
-  const previousPath = useSelector(state => state.ide.previousPath);
-  function validateAndsignUpUser(formValues) {
-    return new Promise((resolve, reject) => {
-      signUpUser(formValues)
-        .then((response) => {
-          dispatch(authenticateUser(response.data));
-          dispatch(justOpenedProject());
-          browserHistory.push(previousPath);
-          resolve();
-        })
-        .catch((error) => {
-          const { response } = error;
-          dispatch(authError(response.data.error));
-          reject();
-        });
-    });
+  function onSubmit(formProps) {
+    return dispatch(validateAndSignUpUser(formProps));
   }
 
   return (
     <Form
       fields={['username', 'email', 'password', 'confirmPassword']}
       validate={validateSignup}
-      onSubmit={validateAndsignUpUser}
+      onSubmit={onSubmit}
     >
       {({
         handleSubmit, pristine, submitting, invalid

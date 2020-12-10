@@ -2,11 +2,9 @@ import React from 'react';
 import { Form, Field } from 'react-final-form';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { browserHistory } from 'react-router';
 import Button from '../../../common/Button';
 import { validateSettings } from '../../../utils/reduxFormUtils';
-import { submitSettings, initiateVerification, updateSettingsSuccess } from '../actions';
-import { showToast, setToastText } from '../../IDE/actions/toast';
+import { updateSettings, initiateVerification } from '../actions';
 import apiClient from '../../../utils/apiClient';
 
 function asyncValidate(fieldToValidate, value) {
@@ -33,34 +31,25 @@ function AccountForm() {
     dispatch(initiateVerification());
   };
 
-  function validateUsername(username, _, meta) {
+  function validateUsername(username) {
     if (username === user.username) return '';
     return asyncValidate('username', username);
   }
 
-  function validateEmail(email, _, meta) {
+  function validateEmail(email) {
     if (email === user.email) return '';
     return asyncValidate('email', email);
   }
 
-  function updateSettings(formValues) {
-    return submitSettings(formValues).then((response) => {
-      dispatch(updateSettingsSuccess(response.data));
-      // browserHistory.push('/');
-      dispatch(showToast(5500));
-      dispatch(setToastText('Toast.SettingsSaved'));
-    })
-      .catch((error) => {
-        const { response } = error;
-        Promise.reject(new Error(response.data.error));
-      });
+  function onSubmit(formProps) {
+    return dispatch(updateSettings(formProps));
   }
 
   return (
     <Form
       fields={['username', 'email', 'currentPassword', 'newPassword']}
       validate={validateSettings}
-      onSubmit={updateSettings}
+      onSubmit={onSubmit}
     >
       {({
         handleSubmit, submitting, invalid, restart

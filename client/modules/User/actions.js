@@ -48,26 +48,45 @@ export function setPreferences(preferences) {
   };
 }
 
-export function validateAndLoginUser(previousPath, formProps, dispatch) {
-  return new Promise((resolve, reject) => {
-    loginUser(formProps)
-      .then((response) => {
-        dispatch({
-          type: ActionTypes.AUTH_USER,
-          user: response.data
+export function validateAndLoginUser(formProps) {
+  return (dispatch, getState) => {
+    const state = getState();
+    const { previousPath } = state.ide;
+    return new Promise((resolve, reject) => {
+      loginUser(formProps)
+        .then((response) => {
+          dispatch(loginUserSuccess(response.data));
+          dispatch(setPreferences(response.data.preferences));
+          dispatch(setLanguage(response.data.preferences.language, { persistPreference: false }));
+          dispatch(justOpenedProject());
+          browserHistory.push(previousPath);
+          resolve();
+        })
+        .catch(error =>
+          reject({ password: error.response.data.message, _error: 'Login failed!' })); // eslint-disable-line
+    });
+  };
+}
+
+export function validateAndSignUpUser(formValues) {
+  return (dispatch, getState) => {
+    const state = getState();
+    const { previousPath } = state.ide;
+    return new Promise((resolve, reject) => {
+      signUpUser(formValues)
+        .then((response) => {
+          dispatch(authenticateUser(response.data));
+          dispatch(justOpenedProject());
+          browserHistory.push(previousPath);
+          resolve();
+        })
+        .catch((error) => {
+          const { response } = error;
+          dispatch(authError(response.data.error));
+          reject();
         });
-        dispatch({
-          type: ActionTypes.SET_PREFERENCES,
-          preferences: response.data.preferences
-        });
-        setLanguage(response.data.preferences.language, { persistPreference: false });
-        dispatch(justOpenedProject());
-        browserHistory.push(previousPath);
-        resolve();
-      })
-      .catch(error =>
-        reject({ password: error.response.data.message, _error: 'Login failed!' })); // eslint-disable-line
-  });
+    });
+  };
 }
 
 export function getUser() {
@@ -125,22 +144,21 @@ export function logoutUser() {
 }
 
 export function initiateResetPassword(formValues) {
-  return (dispatch) => {
+  return dispatch => new Promise((resolve, reject) => {
     dispatch({
       type: ActionTypes.RESET_PASSWORD_INITIATE
     });
-    apiClient.post('/reset-password', formValues)
-      .then(() => {
-        // do nothing
-      })
+    return apiClient.post('/reset-password', formValues)
+      .then(() => resolve())
       .catch((error) => {
         const { response } = error;
         dispatch({
           type: ActionTypes.ERROR,
           message: response.data
         });
+        reject();
       });
-  };
+  });
 }
 
 export function initiateVerification() {
@@ -228,17 +246,16 @@ export function submitSettings(formValues) {
 
 export function updateSettings(formValues) {
   return dispatch =>
-    apiClient.put('/account', formValues)
-      .then((response) => {
+    new Promise((resolve, reject) =>
+      submitSettings(formValues).then((response) => {
         dispatch(updateSettingsSuccess(response.data));
-        browserHistory.push('/');
         dispatch(showToast(5500));
         dispatch(setToastText('Toast.SettingsSaved'));
-      })
-      .catch((error) => {
+        resolve();
+      }).catch((error) => {
         const { response } = error;
-        Promise.reject(new Error(response.data.error));
-      });
+        reject(response.data.error);
+      }));
 }
 
 export function createApiKeySuccess(user) {
