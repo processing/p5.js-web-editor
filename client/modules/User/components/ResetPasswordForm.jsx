@@ -11,7 +11,7 @@ function ResetPasswordForm(props) {
   const resetPasswordInitiate = useSelector(state => state.user.resetPasswordInitiate);
   const dispatch = useDispatch();
 
-  function submitInitiateResetPassword(formProps) {
+  function onSubmit(formProps) {
     dispatch(initiateResetPassword(formProps));
   }
 
@@ -19,7 +19,7 @@ function ResetPasswordForm(props) {
     <Form
       fields={['email']}
       validate={validateResetPassword}
-      onSubmit={submitInitiateResetPassword}
+      onSubmit={onSubmit}
     >
       {({
         handleSubmit, submitting, pristine, invalid

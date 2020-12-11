@@ -79,7 +79,7 @@ export function handleCreateFile(formProps) {
     const { files } = state;
     const { parentId } = state.ide;
     const projectId = state.project.id;
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       submitFile(formProps, files, parentId, projectId).then((response) => {
         const { file, updatedAt } = response;
         dispatch(createFile(file, parentId));
@@ -90,7 +90,7 @@ export function handleCreateFile(formProps) {
       }).catch((error) => {
         const { response } = error;
         dispatch(createError(response.data));
-        reject();
+        resolve({ error });
       });
     });
   };
@@ -133,7 +133,7 @@ export function handleCreateFolder(formProps) {
     const { files } = state;
     const { parentId } = state.ide;
     const projectId = state.project.id;
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       submitFolder(formProps, files, parentId, projectId).then((response) => {
         const { file, updatedAt } = response;
         dispatch(createFile(file, parentId));
@@ -144,7 +144,7 @@ export function handleCreateFolder(formProps) {
       }).catch((error) => {
         const { response } = error;
         dispatch(createError(response.data));
-        reject();
+        resolve({ error });
       });
     });
   };

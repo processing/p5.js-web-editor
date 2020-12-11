@@ -52,7 +52,7 @@ export function validateAndLoginUser(formProps) {
   return (dispatch, getState) => {
     const state = getState();
     const { previousPath } = state.ide;
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       loginUser(formProps)
         .then((response) => {
           dispatch(loginUserSuccess(response.data));
@@ -63,7 +63,7 @@ export function validateAndLoginUser(formProps) {
           resolve();
         })
         .catch(error =>
-          reject({ password: error.response.data.message, _error: 'Login failed!' })); // eslint-disable-line
+          resolve({ password: error.response.data.message, _error: 'Login failed!' }));
     });
   };
 }
@@ -72,7 +72,7 @@ export function validateAndSignUpUser(formValues) {
   return (dispatch, getState) => {
     const state = getState();
     const { previousPath } = state.ide;
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       signUpUser(formValues)
         .then((response) => {
           dispatch(authenticateUser(response.data));
@@ -83,7 +83,7 @@ export function validateAndSignUpUser(formValues) {
         .catch((error) => {
           const { response } = error;
           dispatch(authError(response.data.error));
-          reject();
+          resolve({ error });
         });
     });
   };
@@ -144,7 +144,7 @@ export function logoutUser() {
 }
 
 export function initiateResetPassword(formValues) {
-  return dispatch => new Promise((resolve, reject) => {
+  return dispatch => new Promise((resolve) => {
     dispatch({
       type: ActionTypes.RESET_PASSWORD_INITIATE
     });
@@ -156,7 +156,7 @@ export function initiateResetPassword(formValues) {
           type: ActionTypes.ERROR,
           message: response.data
         });
-        reject();
+        resolve({ error });
       });
   });
 }
@@ -221,18 +221,18 @@ export function validateResetPasswordToken(token) {
 }
 
 export function updatePassword(formValues, token) {
-  return dispatch => new Promise((resolve, reject) =>
+  return dispatch => new Promise(resolve =>
     apiClient.post(`/reset-password/${token}`, formValues)
       .then((response) => {
         dispatch(loginUserSuccess(response.data));
         browserHistory.push('/');
         resolve();
       })
-      .catch(() => {
+      .catch((error) => {
         dispatch({
           type: ActionTypes.INVALID_RESET_PASSWORD_TOKEN
         });
-        reject();
+        resolve({ error });
       }));
 }
 
@@ -249,7 +249,7 @@ export function submitSettings(formValues) {
 
 export function updateSettings(formValues) {
   return dispatch =>
-    new Promise((resolve, reject) =>
+    new Promise(resolve =>
       submitSettings(formValues).then((response) => {
         dispatch(updateSettingsSuccess(response.data));
         dispatch(showToast(5500));
@@ -257,7 +257,7 @@ export function updateSettings(formValues) {
         resolve();
       }).catch((error) => {
         const { response } = error;
-        reject(response.data.error);
+        resolve({ error });
       }));
 }
 
