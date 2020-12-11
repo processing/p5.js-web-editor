@@ -11,8 +11,8 @@ function ResetPasswordForm(props) {
   const resetPasswordInitiate = useSelector(state => state.user.resetPasswordInitiate);
   const dispatch = useDispatch();
 
-  function submitInitiateResetPassword() {
-    dispatch(initiateResetPassword());
+  function submitInitiateResetPassword(formProps) {
+    dispatch(initiateResetPassword(formProps));
   }
 
   return (

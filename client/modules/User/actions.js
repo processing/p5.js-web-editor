@@ -220,17 +220,20 @@ export function validateResetPasswordToken(token) {
   };
 }
 
-export function updatePassword(token, formValues) {
-  return (dispatch) => {
+export function updatePassword(formValues, token) {
+  return dispatch => new Promise((resolve, reject) =>
     apiClient.post(`/reset-password/${token}`, formValues)
       .then((response) => {
         dispatch(loginUserSuccess(response.data));
         browserHistory.push('/');
+        resolve();
       })
-      .catch(() => dispatch({
-        type: ActionTypes.INVALID_RESET_PASSWORD_TOKEN
+      .catch(() => {
+        dispatch({
+          type: ActionTypes.INVALID_RESET_PASSWORD_TOKEN
+        });
+        reject();
       }));
-  };
 }
 
 export function updateSettingsSuccess(user) {

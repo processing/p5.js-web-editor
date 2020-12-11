@@ -62,11 +62,7 @@ export function validateLogin(formProps) {
   return errors;
 }
 
-export function validateSignup(formProps) {
-  const errors = {};
-
-  validateNameEmail(formProps, errors);
-
+function validatePasswords(formProps, errors) {
   if (!formProps.password) {
     errors.password = i18n.t('ReduxFormUtils.errorEmptyPassword');
   }
@@ -80,6 +76,19 @@ export function validateSignup(formProps) {
   if (formProps.password !== formProps.confirmPassword && formProps.confirmPassword) {
     errors.confirmPassword = i18n.t('ReduxFormUtils.errorPasswordMismatch');
   }
+}
+
+export function validateNewPassword(formProps) {
+  const errors = {};
+  validatePasswords(formProps, errors);
+  return errors;
+}
+
+export function validateSignup(formProps) {
+  const errors = {};
+
+  validateNameEmail(formProps, errors);
+  validatePasswords(formProps, errors);
 
   return errors;
 }
