@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import { reducer as form } from 'redux-form';
 import files from './modules/IDE/reducers/files';
 import ide from './modules/IDE/reducers/ide';
 import preferences from './modules/IDE/reducers/preferences';
@@ -16,7 +15,6 @@ import loading from './modules/IDE/reducers/loading';
 import collections from './modules/IDE/reducers/collections';
 
 const rootReducer = combineReducers({
-  form,
   ide,
   files,
   preferences,
