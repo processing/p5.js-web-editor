@@ -62,6 +62,7 @@ const beautifyHTML = beautifyJS.html;
 window.JSHINT = JSHINT;
 window.CSSLint = CSSLint;
 window.HTMLHint = HTMLHint;
+delete CodeMirror.keyMap.sublime['Shift-Tab'];
 
 const IS_TAB_INDENT = false;
 const INDENTATION_AMOUNT = 2;
