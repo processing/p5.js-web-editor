@@ -304,10 +304,8 @@ class Editor extends React.Component {
     } else if (mode === 'htmlmixed') {
       this._cm.doc.setValue(beautifyHTML(this._cm.doc.getValue(), beautifyOptions));
     }
-    setTimeout(() => {
-      this._cm.focus();
-      this._cm.doc.setCursor({ line: currentPosition.line, ch: currentPosition.ch + INDENTATION_AMOUNT });
-    }, 0);
+    this._cm.focus();
+    this._cm.doc.setCursor({ line: currentPosition.line, ch: currentPosition.ch + INDENTATION_AMOUNT });
   }
 
   initializeDocuments(files) {
