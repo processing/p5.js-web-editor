@@ -147,7 +147,13 @@
 	}
 	margin-left: #{5 / $base-font-size}rem;
 	font-size: #{12 / $base-font-size}rem;
+	cursor: pointer;
 }
+
+#autorefresh{
+	cursor: pointer;
+}
+
 
 .toolbar__edit-name-button {
 	display: inline-block;
