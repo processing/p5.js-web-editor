@@ -115,6 +115,14 @@ class FileNode extends React.Component {
     } = this.props;
     if (name !== 'root' && !isDeleting) {
       setSelectedFile(id);
+
+      if (this.props.fileType === 'folder') {
+        if (this.props.isFolderClosed) {
+          this.showFolderChildren();
+        } else {
+          this.hideFolderChildren();
+        }
+      }
     }
 
     // debugger; // eslint-disable-line
