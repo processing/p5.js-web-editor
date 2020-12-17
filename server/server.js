@@ -79,7 +79,7 @@ app.use(session({
     secure: false,
   },
   store: new MongoStore({
-    url: mongoConnectionString,
+    mongooseConnection: mongoose.connection,
     autoReconnect: true
   })
 }));
