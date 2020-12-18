@@ -147,10 +147,9 @@
 	}
 	margin-left: #{5 / $base-font-size}rem;
 	font-size: #{12 / $base-font-size}rem;
-	cursor: pointer;
 }
 
-#autorefresh{
+.checkbox__autorefresh{
 	cursor: pointer;
 }
 
