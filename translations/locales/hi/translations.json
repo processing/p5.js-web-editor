@@ -260,46 +260,46 @@
       "Submit": "Send Password Reset Email"
     },
     "ResetPasswordView": {
-      "Title": "p5.js Web Editor | Reset Password",
-      "Reset": "Reset Your Password",
+      "Title": "p5.js वेब एडिटर | रीसेट पासवर्ड",
+      "Reset": "अपना पासवर्ड रीसेट करें",
       "Submitted": "Your password reset email should arrive shortly. If you don't see it, check\n            in your spam folder as sometimes it can end up there.",
-      "Login": "Log In",
-      "LoginOr": "or",
-      "SignUp": "Sign Up"
+      "Login": "लॉग इन",
+      "LoginOr": "या",
+      "SignUp": "साइन अप"
     },
     "ReduxFormUtils": {
-      "errorInvalidEmail": "Please enter a valid email address",
-      "errorEmptyEmail": "Please enter an email",
-      "errorPasswordMismatch": "Passwords must match",
-      "errorEmptyPassword": "Please enter a password",
+      "errorInvalidEmail": "कृपया वैध ईमेल एड्रेस लिखें",
+      "errorEmptyEmail": "कृपया ईमेल एड्रेस लिखें",
+      "errorPasswordMismatch": "पासवर्डों को मेल खाना अनिवार्य है",
+      "errorEmptyPassword": "कृपया पासवर्ड लिखें",
       "errorShortPassword": "Password must be at least 6 characters",
-      "errorConfirmPassword": "Please enter a password confirmation",
+      "errorConfirmPassword": "कृपया पासवर्ड कान्फर्मेशन दर्ज करें",
       "errorNewPassword": "Please enter a new password or leave the current password empty.",
-      "errorEmptyUsername": "Please enter a username.",
+      "errorEmptyUsername": "कृपया यूजरनेम लिखें",
       "errorLongUsername": "Username must be less than 20 characters.",
       "errorValidUsername": "Username must only consist of numbers, letters, periods, dashes, and underscores."
     },
     "NewPasswordView": {
-      "Title": "p5.js Web Editor | New Password",
-      "Description": "Set a New Password",
+      "Title": "p5.js वेब एडिटर | नया पासवर्ड",
+      "Description": "नया पासवर्ड सेट करें",
       "TokenInvalidOrExpired": "The password reset token is invalid or has expired.",
-      "EmptyPassword": "Please enter a password",
-      "PasswordConfirmation": "Please enter a password confirmation",
-      "PasswordMismatch": "Passwords must match"
+      "EmptyPassword": "कृपया पासवर्ड दर्ज करें",
+      "PasswordConfirmation": "कृपया पासवर्ड कान्फर्मेशन दर्ज करें",
+      "PasswordMismatch": "पासवर्डों को मेल खाना अनिवार्य है"
     },
     "AccountForm": {
-      "Email": "Email",
-      "EmailARIA": "email",
-      "Unconfirmed": "Unconfirmed.",
-      "EmailSent": "Confirmation sent, check your email.",
-      "Resend": "Resend confirmation email",
-      "UserName": "User Name",
-      "UserNameARIA": "Username",
-      "CurrentPassword": "Current Password",
-      "CurrentPasswordARIA": "Current Password",
-      "NewPassword": "New Password",
-      "NewPasswordARIA": "New Password",
-      "SubmitSaveAllSettings": "Save All Settings"
+      "Email": "ईमेल",
+      "EmailARIA": "ईमेल",
+      "Unconfirmed": "कन्फर्म नहीं है",
+      "EmailSent": "कान्फर्मेशन भेज दिया, अपना ईमेल देखें",
+      "Resend": "कान्फर्मेशन ईमेल दोबारा भेजें",
+      "UserName": "यूजरनेम",
+      "UserNameARIA": "यूजरनेम",
+      "CurrentPassword": "वर्तमान पासवर्ड",
+      "CurrentPasswordARIA": "वर्तमान पासवर्ड",
+      "NewPassword": "नया पासवर्ड",
+      "NewPasswordARIA": "नया पासवर्ड",
+      "SubmitSaveAllSettings": "सभी सेटिंग्स सेव करें"
     },
     "AccountView": {
       "SocialLogin": "Social Login",
@@ -330,29 +330,29 @@
       "DeleteARIA": "Delete API Key"
     },
     "NewPasswordForm": {
-      "Title": "Password",
-      "TitleARIA": "Password",
-      "ConfirmPassword": "Confirm Password",
-      "ConfirmPasswordARIA": "Confirm Password",
-      "SubmitSetNewPassword": "Set New Password"
+      "Title": "पासवर्ड",
+      "TitleARIA": "पासवर्ड",
+      "ConfirmPassword": "कन्फर्म पासवर्ड",
+      "ConfirmPasswordARIA": "कन्फर्म पासवर्ड",
+      "SubmitSetNewPassword": "नया पासवर्ड सेट करें"
     },
     "SignupForm": {
-      "Title": "User Name",
-      "TitleARIA": "username",
-      "Email": "Email",
-      "EmailARIA": "email",
-      "Password": "Password",
-      "PasswordARIA": "password",
-      "ConfirmPassword": "Confirm Password",
-      "ConfirmPasswordARIA": "Confirm password",
-      "SubmitSignup": "Sign Up"
+      "Title": "यूजरनेम",
+      "TitleARIA": "यूजरनेम",
+      "Email": "ईमेल",
+      "EmailARIA": "ईमेल",
+      "Password": "पासवर्ड",
+      "PasswordARIA": "पासवर्ड",
+      "ConfirmPassword": "कन्फर्म पासवर्ड",
+      "ConfirmPasswordARIA": "कन्फर्म पासवर्ड",
+      "SubmitSignup": "साइन अप"
     },
     "SignupView": {
-      "Title": "p5.js Web Editor | Signup",
-      "Description": "Sign Up",
-      "Or": "Or",
-      "AlreadyHave": "Already have an account?",
-      "Login": "Log In"
+      "Title": "p5.js वेब एडिटर | साइन अप",
+      "Description": "साइन अप",
+      "Or": "या",
+      "AlreadyHave": "पहले से ही अकाउंट है?",
+      "Login": "लॉग इन"
     },
     "EmailVerificationView": {
       "Title": "p5.js Web Editor | Email Verification",
