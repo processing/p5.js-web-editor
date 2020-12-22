@@ -15,7 +15,7 @@ function LoginForm(props) {
 
   return (
     <Form
-      fields={['email', 'password']}
+      fields={['email', 'password', 'remember']}
       validate={validateLogin}
       onSubmit={onSubmit}
     >
@@ -58,6 +58,18 @@ function LoginForm(props) {
                   <span className="form-error">{field.meta.error}</span>
                 )}
               </p>
+            )}
+          </Field>
+          <Field name="remember">
+            {field => (
+              <div className="form__field">
+                <p style={{ display: 'inline-block' }}>Remember me</p>
+                <input
+                  type="checkbox"
+                  id="remember-me"
+                  {...field.input}
+                />
+              </div>
             )}
           </Field>
           <Button

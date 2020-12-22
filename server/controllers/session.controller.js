@@ -10,6 +10,11 @@ export function createSession(req, res, next) {
     }
 
     req.logIn(user, (innerErr) => {
+      if (req.body.remember) {
+        req.session.cookie.originalMaxAge = 30 * 24 * 60 * 60 * 1000;
+      } else {
+        req.session.cookie.expires = false;
+      }
       if (innerErr) { return next(innerErr); }
       return res.json(userResponse(req.user));
     });
