@@ -147,7 +147,7 @@ const handleGlobalKeydown = (props, cmController) => (e) => {
 
 const autosave = (autosaveInterval, setAutosaveInterval) => (props, prevProps) => {
   const {
-    autosaveProject, preferences, ide, selectedFile: file, project, isUserOwner
+    autosaveProject, preferences, ide, selectedFile: file, project,
   } = props;
 
   const { selectedFile: oldFile } = prevProps;

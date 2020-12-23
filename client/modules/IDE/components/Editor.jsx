@@ -123,7 +123,6 @@ class Editor extends React.Component {
 
     delete this._cm.options.lint.options.errors;
 
-    const replaceCommand = metaKey === 'Ctrl' ? `${metaKey}-H` : `${metaKey}-Option-F`;
     this._cm.setOption('extraKeys', {
       Tab: (cm) => {
         // might need to specify and indent more?
