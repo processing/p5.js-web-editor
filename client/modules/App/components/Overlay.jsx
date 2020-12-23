@@ -81,7 +81,11 @@ class Overlay extends React.Component {
               <h2 className="overlay__title">{title}</h2>
               <div className="overlay__actions">
                 {actions}
-                <button className="overlay__close-button" onClick={this.close} aria-label={this.props.t('Overlay.AriaLabel', { title })}>
+                <button
+                  className="overlay__close-button"
+                  onClick={this.close}
+                  aria-label={this.props.t('Overlay.AriaLabel', { title })}
+                >
                   <ExitIcon focusable="false" aria-hidden="true" />
                 </button>
               </div>

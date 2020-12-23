@@ -51,7 +51,11 @@ class LoginView extends React.Component {
             </p>
             <p className="form__navigation-options">
               {this.props.t('LoginView.ForgotPassword')}
-              <Link className="form__reset-password-button" to="/reset-password"> {this.props.t('LoginView.ResetPassword')}</Link>
+              <Link
+                className="form__reset-password-button"
+                to="/reset-password"
+              > {this.props.t('LoginView.ResetPassword')}
+              </Link>
             </p>
           </div>
         </main>

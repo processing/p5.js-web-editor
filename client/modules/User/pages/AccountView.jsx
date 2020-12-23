@@ -94,7 +94,10 @@ class AccountView extends React.Component {
               <TabList>
                 <div className="tabs__titles">
                   <Tab><h4 className="tabs__title">{this.props.t('AccountView.AccountTab')}</h4></Tab>
-                  {accessTokensUIEnabled && <Tab><h4 className="tabs__title">{this.props.t('AccountView.AccessTokensTab')}</h4></Tab>}
+                  {accessTokensUIEnabled &&
+                  <Tab>
+                    <h4 className="tabs__title">{this.props.t('AccountView.AccessTokensTab')}</h4>
+                  </Tab>}
                 </div>
               </TabList>
               <TabPanel>

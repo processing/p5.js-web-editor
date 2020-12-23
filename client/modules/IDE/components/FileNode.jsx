@@ -223,7 +223,12 @@ class FileNode extends React.Component {
 
   renderChild = childId => (
     <li key={childId}>
-      <ConnectedFileNode id={childId} parentId={this.props.id} canEdit={this.props.canEdit} onClickFile={this.props.onClickFile} />
+      <ConnectedFileNode
+        id={childId}
+        parentId={this.props.id}
+        canEdit={this.props.canEdit}
+        onClickFile={this.props.onClickFile}
+      />
     </li>
   )
 

@@ -241,7 +241,10 @@ const MobileIDEView = (props) => {
 
   const projectActions =
     [{
-      icon: TerminalIcon, aria: 'Toggle console open/closed', action: consoleIsExpanded ? collapseConsole : expandConsole, inverted: true
+      icon: TerminalIcon,
+      aria: 'Toggle console open/closed',
+      action: consoleIsExpanded ? collapseConsole : expandConsole,
+      inverted: true
     },
     { icon: SaveIcon, aria: 'Save project', action: () => saveProject(cmController.getContent(), false, true) },
     { icon: FolderIcon, aria: 'Open files explorer', action: toggleExplorer }

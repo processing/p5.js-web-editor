@@ -40,7 +40,11 @@ function NewPasswordForm(props) {
           <span className="form-error">{confirmPassword.error}</span>
         )}
       </p>
-      <Button type="submit" disabled={submitting || invalid || pristine}>{t('NewPasswordForm.SubmitSetNewPassword')}</Button>
+      <Button
+        type="submit"
+        disabled={submitting || invalid || pristine}
+      >{t('NewPasswordForm.SubmitSetNewPassword')}
+      </Button>
     </form>
   );
 }

@@ -155,7 +155,10 @@ class Editor extends React.Component {
     }, 1000));
 
     this._cm.on('keyup', () => {
-      const temp = this.props.t('Editor.KeyUpLineNumber', { lineNumber: parseInt((this._cm.getCursor().line) + 1, 10) });
+      const temp = this.props.t(
+        'Editor.KeyUpLineNumber',
+        { lineNumber: parseInt((this._cm.getCursor().line) + 1, 10) }
+      );
       document.getElementById('current-line').innerHTML = temp;
     });
 
@@ -362,7 +365,11 @@ class Editor extends React.Component {
               {this.props.file.name}
               <span className="editor__unsaved-changes">
                 {this.props.unsavedChanges ?
-                  <UnsavedChangesDotIcon role="img" aria-label={this.props.t('Editor.UnsavedChangesARIA')} focusable="false" /> :
+                  <UnsavedChangesDotIcon
+                    role="img"
+                    aria-label={this.props.t('Editor.UnsavedChangesARIA')}
+                    focusable="false"
+                  /> :
                   null}
               </span>
             </span>

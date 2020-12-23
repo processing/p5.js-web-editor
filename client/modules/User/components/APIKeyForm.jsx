@@ -68,7 +68,9 @@ class APIKeyForm extends React.Component {
         <div className="api-key-form__section">
           <h3 className="api-key-form__title">{this.props.t('APIKeyForm.CreateToken')}</h3>
           <form className="form form--inline" onSubmit={this.addKey}>
-            <label htmlFor="keyLabel" className="form__label form__label--hidden ">{this.props.t('APIKeyForm.TokenLabel')}</label>
+            <label htmlFor="keyLabel" className="form__label form__label--hidden ">
+              {this.props.t('APIKeyForm.TokenLabel')}
+            </label>
             <input
               className="form__input"
               id="keyLabel"

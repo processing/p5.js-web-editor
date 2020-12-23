@@ -9,7 +9,10 @@ function KeyboardShortcutModal() {
     <div className="keyboard-shortcuts">
       <h3 className="keyboard-shortcuts__title">{t('KeyboardShortcuts.CodeEditing.CodeEditing')}</h3>
       <p className="keyboard-shortcuts__description">
-        {t('KeyboardShortcuts.ShortcutsFollow')} <a href="https://shortcuts.design/toolspage-sublimetext.html" target="_blank" rel="noopener noreferrer">{t('KeyboardShortcuts.SublimeText')}</a>.
+        {t('KeyboardShortcuts.ShortcutsFollow')}
+        <a href="https://shortcuts.design/toolspage-sublimetext.html" target="_blank" rel="noopener noreferrer">
+          {t('KeyboardShortcuts.SublimeText')}
+        </a>.
       </p>
       <ul className="keyboard-shortcuts__list">
         <li className="keyboard-shortcut-item">

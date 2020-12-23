@@ -215,7 +215,9 @@ const MobileDashboard = ({ params, location }) => {
                 selected={tab === panel}
                 to={pathname.replace(panel, tab)}
               >
-                <h3>{(isExamples && tab === 'Sketches') ? t('MobileDashboardView.Examples') : (TabLabels[tab] || tab)}</h3>
+                <h3>{(isExamples && tab === 'Sketches') ?
+                  t('MobileDashboardView.Examples') : (TabLabels[tab] || tab)}
+                </h3>
               </FooterTab>))
             }
           </FooterTabSwitcher>

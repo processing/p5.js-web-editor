@@ -71,7 +71,9 @@ class CollectionCreate extends React.Component {
               {invalid && <span className="form-error">{this.props.t('CollectionCreate.NameRequired')}</span>}
             </p>
             <p className="form__field">
-              <label htmlFor="description" className="form__label">{this.props.t('CollectionCreate.Description')}</label>
+              <label htmlFor="description" className="form__label">
+                {this.props.t('CollectionCreate.Description')}
+              </label>
               <textarea
                 className="form__input form__input-flexible-height"
                 aria-label={this.props.t('CollectionCreate.DescriptionARIA')}

@@ -415,7 +415,11 @@ class SketchList extends React.Component {
             <ArrowUpIcon role="img" aria-label={this.props.t('SketchList.DirectionAscendingARIA')} focusable="false" />
           }
           {field === fieldName && direction === SortingActions.DIRECTION.DESC &&
-            <ArrowDownIcon role="img" aria-label={this.props.t('SketchList.DirectionDescendingARIA')} focusable="false" />
+            <ArrowDownIcon
+              role="img"
+              aria-label={this.props.t('SketchList.DirectionDescendingARIA')}
+              focusable="false"
+            />
           }
         </button>
       </th>
@@ -437,8 +441,20 @@ class SketchList extends React.Component {
             <thead>
               <tr>
                 {this._renderFieldHeader('name', this.props.t('SketchList.HeaderName'))}
-                {this._renderFieldHeader('createdAt', this.props.t('SketchList.HeaderCreatedAt', { context: mobile ? 'mobile' : '' }))}
-                {this._renderFieldHeader('updatedAt', this.props.t('SketchList.HeaderUpdatedAt', { context: mobile ? 'mobile' : '' }))}
+                {this._renderFieldHeader(
+                  'createdAt',
+                  this.props.t(
+                    'SketchList.HeaderCreatedAt',
+                    { context: mobile ? 'mobile' : '' }
+                  )
+                )}
+                {this._renderFieldHeader(
+                  'updatedAt',
+                  this.props.t(
+                    'SketchList.HeaderUpdatedAt',
+                    { context: mobile ? 'mobile' : '' }
+                  )
+                )}
                 <th scope="col"></th>
               </tr>
             </thead>

@@ -270,7 +270,9 @@ class Collection extends React.Component {
               <Link to={`${hostname}/${username}/sketches`}>{owner.username}</Link>
             </p>
 
-            <p className="collection-metadata__user">{this.props.t('Collection.NumSketches', { count: items.length }) }</p>
+            <p className="collection-metadata__user">
+              {this.props.t('Collection.NumSketches', { count: items.length }) }
+            </p>
           </div>
 
           <div className="collection-metadata__column--right">
@@ -348,7 +350,11 @@ class Collection extends React.Component {
             <ArrowUpIcon role="img" aria-label={this.props.t('Collection.DirectionAscendingARIA')} focusable="false" />
           }
           {field === fieldName && direction === SortingActions.DIRECTION.DESC &&
-            <ArrowDownIcon role="img" aria-label={this.props.t('Collection.DirectionDescendingARIA')} focusable="false" />
+            <ArrowDownIcon
+              role="img"
+              aria-label={this.props.t('Collection.DirectionDescendingARIA')}
+              focusable="false"
+            />
           }
         </button>
       </th>

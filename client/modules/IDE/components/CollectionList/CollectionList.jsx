@@ -117,10 +117,18 @@ class CollectionList extends React.Component {
         >
           <span className={headerClass}>{displayName}</span>
           {field === fieldName && direction === SortingActions.DIRECTION.ASC &&
-            <ArrowUpIcon role="img" aria-label={this.props.t('CollectionList.DirectionAscendingARIA')} focusable="false" />
+            <ArrowUpIcon
+              role="img"
+              aria-label={this.props.t('CollectionList.DirectionAscendingARIA')}
+              focusable="false"
+            />
           }
           {field === fieldName && direction === SortingActions.DIRECTION.DESC &&
-            <ArrowDownIcon role="img" aria-label={this.props.t('CollectionList.DirectionDescendingARIA')} focusable="false" />
+            <ArrowDownIcon
+              role="img"
+              aria-label={this.props.t('CollectionList.DirectionDescendingARIA')}
+              focusable="false"
+            />
           }
         </button>
       </th>
@@ -144,9 +152,27 @@ class CollectionList extends React.Component {
             <thead>
               <tr>
                 {this._renderFieldHeader('name', this.props.t('CollectionList.HeaderName'))}
-                {this._renderFieldHeader('createdAt', this.props.t('CollectionList.HeaderCreatedAt', { context: mobile ? 'mobile' : '' }))}
-                {this._renderFieldHeader('updatedAt', this.props.t('CollectionList.HeaderUpdatedAt', { context: mobile ? 'mobile' : '' }))}
-                {this._renderFieldHeader('numItems', this.props.t('CollectionList.HeaderNumItems', { context: mobile ? 'mobile' : '' }))}
+                {this._renderFieldHeader(
+                  'createdAt',
+                  this.props.t(
+                    'CollectionList.HeaderCreatedAt',
+                    { context: mobile ? 'mobile' : '' }
+                  )
+                )}
+                {this._renderFieldHeader(
+                  'updatedAt',
+                  this.props.t(
+                    'CollectionList.HeaderUpdatedAt',
+                    { context: mobile ? 'mobile' : '' }
+                  )
+                )}
+                {this._renderFieldHeader(
+                  'numItems',
+                  this.props.t(
+                    'CollectionList.HeaderNumItems',
+                    { context: mobile ? 'mobile' : '' }
+                  )
+                )}
                 <th scope="col"></th>
               </tr>
             </thead>
