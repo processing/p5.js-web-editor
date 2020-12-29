@@ -194,19 +194,25 @@ userSchema.statics.findByUsername = function findByUsername(username, options, c
  *
  * Queries User collection using email or username with optional callback.
  * This function will determine automatically whether the data passed is
- * a username or email.
+ * a username or email, unless you specify options.valueType
  *
  * @param {string} value - Email or username
  * @param {Object} [options] - Optional options
  * @param {boolean} options.caseInsensitive - Does a caseInsensitive query rather than
  *                                          default query for username or email, defaults
  *                                          to false
+ * @param {("email"|"username")} options.valueType - Prevents automatic type inferrence
  * @callback [cb] - Optional error-first callback that passes User document
  * @return {Promise<Object>} - Returns Promise fulfilled by User document
  */
 userSchema.statics.findByEmailOrUsername = function findByEmailOrUsername(value, options, cb) {
+  let isEmail;
+  if (options && options.valueType) {
+    isEmail = options.valueType === 'email';
+  } else {
+    isEmail = value.indexOf('@') > -1;
+  }
   // do the case insensitive stuff
-  const isEmail = value.indexOf('@') > -1;
   if ((arguments.length === 3 && options.caseInsensitive)
     || (arguments.length === 2 && typeof options === 'object' && options.caseInsensitive)) {
     const query = isEmail ? { email: value } : { username: value };

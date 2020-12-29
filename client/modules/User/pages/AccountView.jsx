@@ -1,27 +1,26 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Helmet } from 'react-helmet';
 import { withTranslation } from 'react-i18next';
 import { withRouter, browserHistory } from 'react-router';
 import { parse } from 'query-string';
-import { updateSettings, initiateVerification, createApiKey, removeApiKey } from '../actions';
+import { createApiKey, removeApiKey } from '../actions';
 import AccountForm from '../components/AccountForm';
-import apiClient from '../../../utils/apiClient';
-import { validateSettings } from '../../../utils/reduxFormUtils';
 import SocialAuthButton from '../components/SocialAuthButton';
 import APIKeyForm from '../components/APIKeyForm';
 import Nav from '../../../components/Nav';
 import ErrorModal from '../../IDE/components/ErrorModal';
 import Overlay from '../../App/components/Overlay';
+import Toast from '../../IDE/components/Toast';
 
 function SocialLoginPanel(props) {
   const { user } = props;
   return (
     <React.Fragment>
-      <AccountForm {...props} />
+      <AccountForm />
       {/* eslint-disable-next-line react/prop-types */}
       <h2 className="form-container__divider">{props.t('AccountView.SocialLogin')}</h2>
       <p className="account__social-text">
@@ -67,6 +66,7 @@ class AccountView extends React.Component {
         <Helmet>
           <title>{this.props.t('AccountView.Title')}</title>
         </Helmet>
+        {this.props.toast.isVisible && <Toast />}
 
         <Nav layout="dashboard" />
 
@@ -121,32 +121,15 @@ function mapStateToProps(state) {
     previousPath: state.ide.previousPath,
     user: state.user,
     apiKeys: state.user.apiKeys,
-    theme: state.preferences.theme
+    theme: state.preferences.theme,
+    toast: state.toast
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    updateSettings, initiateVerification, createApiKey, removeApiKey
+    createApiKey, removeApiKey
   }, dispatch);
-}
-
-function asyncValidate(formProps, dispatch, props) {
-  const fieldToValidate = props.form._active;
-  if (fieldToValidate) {
-    const queryParams = {};
-    queryParams[fieldToValidate] = formProps[fieldToValidate];
-    queryParams.check_type = fieldToValidate;
-    return apiClient.get('/signup/duplicate_check', { params: queryParams })
-      .then((response) => {
-        if (response.data.exists) {
-          const error = {};
-          error[fieldToValidate] = response.data.message;
-          throw error;
-        }
-      });
-  }
-  return Promise.resolve(true).then(() => {});
 }
 
 AccountView.propTypes = {
@@ -156,13 +139,10 @@ AccountView.propTypes = {
   location: PropTypes.shape({
     search: PropTypes.string.isRequired,
     pathname: PropTypes.string.isRequired
+  }).isRequired,
+  toast: PropTypes.shape({
+    isVisible: PropTypes.bool.isRequired,
   }).isRequired
 };
 
-export default withTranslation()(withRouter(reduxForm({
-  form: 'updateAllSettings',
-  fields: ['username', 'email', 'currentPassword', 'newPassword'],
-  validate: validateSettings,
-  asyncValidate,
-  asyncBlurFields: ['username', 'email', 'currentPassword']
-}, mapStateToProps, mapDispatchToProps)(AccountView)));
+export default withTranslation()(withRouter(connect(mapStateToProps, mapDispatchToProps)(AccountView)));

@@ -31,7 +31,7 @@ If you have found a bug in the p5.js Web Editor, you can file it under the ["iss
 
 Please post bugs and feature requests in the correct repository:
 
-* p5.js library and p5.dom: [https://github.com/processing/p5.js/issues](https://github.com/processing/p5.js/issues)
+* p5.js library: [https://github.com/processing/p5.js/issues](https://github.com/processing/p5.js/issues)
 * p5.accessibility: [https://github.com/processing/p5.accessibility/issues](https://github.com/processing/p5.accessibility/issues)
 * p5.sound: [https://github.com/processing/p5.js-sound/issues](https://github.com/processing/p5.js-sound/issues)
 * p5.js website: [https://github.com/processing/p5.js-website/issues](https://github.com/processing/p5.js-website/issues)

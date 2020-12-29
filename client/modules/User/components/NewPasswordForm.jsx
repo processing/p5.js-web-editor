@@ -1,74 +1,77 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { withTranslation } from 'react-i18next';
-import { domOnlyProps } from '../../../utils/reduxFormUtils';
+import { Form, Field } from 'react-final-form';
+import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { validateNewPassword } from '../../../utils/reduxFormUtils';
+import { updatePassword } from '../actions';
 import Button from '../../../common/Button';
 
 function NewPasswordForm(props) {
-  const {
-    fields: { password, confirmPassword }, handleSubmit, submitting, invalid, pristine,
-    t
-  } = props;
+  const { resetPasswordToken } = props;
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+
+  function onSubmit(formProps) {
+    return dispatch(updatePassword(formProps, resetPasswordToken));
+  }
+
   return (
-    <form
-      className="form"
-      onSubmit={handleSubmit(props.updatePassword.bind(this, props.params.reset_password_token))}
+    <Form
+      fields={['password', 'confirmPassword']}
+      validate={validateNewPassword}
+      onSubmit={onSubmit}
     >
-      <p className="form__field">
-        <label htmlFor="password" className="form__label">{t('NewPasswordForm.Title')}</label>
-        <input
-          className="form__input"
-          aria-label={t('NewPasswordForm.TitleARIA')}
-          type="password"
-          id="Password"
-          {...domOnlyProps(password)}
-        />
-        {password.touched && password.error && (
-          <span className="form-error">{password.error}</span>
-        )}
-      </p>
-      <p className="form__field">
-        <label htmlFor="confirm password" className="form__label">{t('NewPasswordForm.ConfirmPassword')}</label>
-        <input
-          className="form__input"
-          type="password"
-          aria-label={t('NewPasswordForm.ConfirmPasswordARIA')}
-          id="confirm password"
-          {...domOnlyProps(confirmPassword)}
-        />
-        {confirmPassword.touched && confirmPassword.error && (
-          <span className="form-error">{confirmPassword.error}</span>
-        )}
-      </p>
-      <Button
-        type="submit"
-        disabled={submitting || invalid || pristine}
-      >{t('NewPasswordForm.SubmitSetNewPassword')}
-      </Button>
-    </form>
+      {({
+        handleSubmit, submitting, invalid, pristine
+      }) => (
+        <form
+          className="form"
+          onSubmit={handleSubmit}
+        >
+          <Field name="password">
+            {field => (
+              <p className="form__field">
+                <label htmlFor="password" className="form__label">{t('NewPasswordForm.Title')}</label>
+                <input
+                  className="form__input"
+                  aria-label={t('NewPasswordForm.TitleARIA')}
+                  type="password"
+                  id="Password"
+                  {...field.input}
+                />
+                {field.meta.touched && field.meta.error && (
+                  <span className="form-error">{field.meta.error}</span>
+                )}
+              </p>
+            )}
+          </Field>
+          <Field name="confirmPassword">
+            {field => (
+              <p className="form__field">
+                <label htmlFor="confirm password" className="form__label">{t('NewPasswordForm.ConfirmPassword')}</label>
+                <input
+                  className="form__input"
+                  type="password"
+                  aria-label={t('NewPasswordForm.ConfirmPasswordARIA')}
+                  id="confirm password"
+                  {...field.input}
+                />
+                {field.meta.touched && field.meta.error && (
+                  <span className="form-error">{field.meta.error}</span>
+                )}
+              </p>
+            )}
+          </Field>
+          <Button type="submit" disabled={submitting || invalid || pristine}>{t('NewPasswordForm.SubmitSetNewPassword')}</Button>
+        </form>
+      )}
+    </Form>
   );
 }
 
 NewPasswordForm.propTypes = {
-  fields: PropTypes.shape({
-    password: PropTypes.objectOf(PropTypes.shape()).isRequired,
-    confirmPassword: PropTypes.objectOf(PropTypes.shape()).isRequired,
-  }).isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  updatePassword: PropTypes.func.isRequired,
-  submitting: PropTypes.bool,
-  invalid: PropTypes.bool,
-  pristine: PropTypes.bool,
-  params: PropTypes.shape({
-    reset_password_token: PropTypes.string,
-  }).isRequired,
-  t: PropTypes.func.isRequired
+  resetPasswordToken: PropTypes.string.isRequired,
 };
 
-NewPasswordForm.defaultProps = {
-  invalid: false,
-  pristine: true,
-  submitting: false,
-};
-
-export default withTranslation()(NewPasswordForm);
+export default NewPasswordForm;
