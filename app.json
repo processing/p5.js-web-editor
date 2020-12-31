@@ -6,10 +6,6 @@
   "keywords": ["processing", "p5js", "p5.js"],
   "addons": [
     {
-      "plan": "mongolab:sandbox",
-      "as": "MONGO"
-    },
-    {
       "plan": "mailgun:starter",
       "as": "MAILGUN"
     }
