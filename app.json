@@ -69,7 +69,7 @@
     },
     "MONGO_URL": {
       "description": "MongoDB connection string",
-      "value": "placeholder"
+      "value": "you-must-change-this-to-a-real-connection-string"
     },
     "NODE_ENV": {
       "value": "production"
