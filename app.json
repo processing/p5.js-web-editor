@@ -67,6 +67,10 @@
       "description": "The Google Client Secret",
       "value": "placeholder"
     },
+    "MONGO_URL": {
+      "description": "MongoDB connection string",
+      "value": "placeholder"
+    },
     "NODE_ENV": {
       "value": "production"
     },
@@ -84,6 +88,6 @@
     }
   },
   "scripts": {
-    "postdeploy": "MONGO_URL=$MONGO_URI MAILGUN_KEY=$MAILGUN_API_KEY npm run fetch-examples:prod"
+    "postdeploy": "MAILGUN_KEY=$MAILGUN_API_KEY npm run fetch-examples:prod"
   }
 }
