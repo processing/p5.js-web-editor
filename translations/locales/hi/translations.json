@@ -11,12 +11,12 @@
         "Examples": "उदाहरण"
       },
       "Edit": {
-        "Title": "Edit",
-        "TidyCode": "Tidy Code",
-        "Find": "Find",
-        "FindNext": "Find Next",
-        "FindPrevious": "Find Previous",  
-        "Replace": "Replace"
+        "Title": "संपादित करे ",
+        "TidyCode": "साफ कोड",
+        "Find": "खोज",
+        "FindNext": "अगला खोजें",
+        "FindPrevious": "पिछला खोजें",  
+        "Replace": "बदली करें"
       },
       "Sketch": {
         "Title": "स्केच",
@@ -50,18 +50,18 @@
       }
     },
     "CodemirrorFindAndReplace": {
-      "Find": "Find",
-      "FindPlaceholder": "Find in files",
-      "Replace": "Replace",
-      "ReplaceAll": "Replace All",
-      "ReplacePlaceholder": "Text to replace",
-      "Regex": "Regular expression",
-      "CaseSensitive": "Case sensitive",
-      "WholeWords": "Whole words",
-      "Previous": "Previous",
-      "Next": "Next",
-      "NoResults": "No results",
-      "Close": "Close"
+      "Find": "खोज",
+      "FindPlaceholder": "फ़ाइलों में खोजें",
+      "Replace": "बदली करें",
+      "ReplaceAll": "सबको बदली करें",
+      "ReplacePlaceholder": "बदलने के लिए पाठ",
+      "Regex": "रेगुलर एक्सप्रेशन",
+      "CaseSensitive": "केस सेंसिटिव",
+      "WholeWords": "संपूर्ण शब्द",
+      "Previous": "पिछला",
+      "Next": "अगला",
+      "NoResults": "कोई परिणाम नहीं",
+      "Close": "बंद करे"
     },
     "LoginForm": {
       "UsernameOrEmail": "ईमेल या यूजरनेम",
@@ -82,10 +82,10 @@
       "ResetPassword": "पासवर्ड रीसेट करें"
     },
     "SocialAuthButton": {
-      "Connect": "Connect {{serviceauth}} Account",
-      "Unlink": "Unlink {{serviceauth}} Account",
-      "Login": "Login with {{serviceauth}}",
-      "LogoARIA": "{{serviceauth}} logo"
+      "Connect": "कनेक्ट {{serviceauth}} अकाउंट",
+      "Unlink": "अनलिंक {{serviceauth}} अकाउंट",
+      "Login": "{{serviceauth}} से लोगिन करें",
+      "LogoARIA": "{{serviceauth}} प्रतीक चिन्ह"
     },
     "About": {
       "Title": "के बारे में",
@@ -108,24 +108,24 @@
       "SettingsSaved": "सेटिंग्स सेव की"
     },
     "Toolbar": {
-      "Preview": "Preview",
-      "Auto-refresh": "Auto-refresh",
-      "OpenPreferencesARIA": "Open Preferences",
-      "PlaySketchARIA": "Play sketch",
-      "PlayOnlyVisualSketchARIA": "Play only visual sketch",
-      "StopSketchARIA": "Stop sketch",
-      "EditSketchARIA": "Edit sketch name",
-      "NewSketchNameARIA": "New sketch name",
-      "By": " by "
+      "Preview": "पूर्वावलोकन",
+      "Auto-refresh": "स्वयं रिफ़्रेश",
+      "OpenPreferencesARIA": "प्राथमिकताएँ खोलें",
+      "PlaySketchARIA": "स्केच चलाएं",
+      "PlayOnlyVisualSketchARIA": "केवल दृश्य स्केच चलाएं",
+      "StopSketchARIA": "स्केच बंद करे",
+      "EditSketchARIA": "स्केच नाम संपादित करें",
+      "NewSketchNameARIA": "नया स्केच नाम",
+      "By": " द्वारा "
     },
     "Console": {
-      "Title": "Console",
-      "Clear": "Clear",
-      "ClearARIA": "Clear console",
-      "Close": "Close",
-      "CloseARIA": "Close console",
-      "Open": "Open",
-      "OpenARIA": "Open console"
+      "Title": "कंसोल",
+      "Clear": "साफ़",
+      "ClearARIA": "साफ़ कंसोल",
+      "Close": "बंद करे",
+      "CloseARIA": "कंसोल बंद करे",
+      "Open": "खोले",
+      "OpenARIA": "कंसोल खोले"
     },
     "Preferences": {
       "Settings": "सेटिंग्स",
@@ -172,51 +172,51 @@
       "SoundOutputARIA": "sound output on"
     },
     "KeyboardShortcuts": {
-      "Title": " Keyboard Shortcuts",
-      "ShortcutsFollow": "Code editing keyboard shortcuts follow",
-      "SublimeText": "Sublime Text shortcuts",
+      "Title": " कीबोर्ड शॉर्टकट",
+      "ShortcutsFollow": "कोड संपादन कीबोर्ड शॉर्टकट अनुसरण करते हैं",
+      "SublimeText": "Sublime Text शॉर्टकट",
       "CodeEditing": {
-        "Tidy": "Tidy",
-        "FindText": "Find Text",
-        "FindNextMatch": "Find Next Match",
-        "FindPrevMatch": "Find Previous Match",
-        "ReplaceTextMatch": "Replace Text Match",
-        "IndentCodeLeft": "Indent Code Left",
-        "IndentCodeRight": "Indent Code Right",
-        "CommentLine": "Comment Line",
-        "FindNextTextMatch": "Find Next Text Match",
-        "FindPreviousTextMatch": "Find Previous Text Match",
-        "CodeEditing": "Code Editing"
+        "Tidy": "साफ",
+        "FindText": "शब्द ढूंढना",
+        "FindNextMatch": "अगला मिलान खोजें",
+        "FindPrevMatch": "पिछला मिलान ढूंढें",
+        "ReplaceTextMatch": "शब्द मिलान बदलें",
+        "IndentCodeLeft": "इंडेंट कोड लेफ्ट",
+        "IndentCodeRight": "इंडेंट कोड राइट",
+        "CommentLine": "टिप्पणी लाइन",
+        "FindNextTextMatch": "अगला शब्द मिलान खोजें",
+        "FindPreviousTextMatch": "पिछला शब्द मिलान खोजें",
+        "CodeEditing": "कोड संपादन"
       },
       "General": {
-        "StartSketch": "Start Sketch",
-        "StopSketch": "Stop Sketch",
-        "TurnOnAccessibleOutput": "Turn On Accessible Output",
-        "TurnOffAccessibleOutput": "Turn Off Accessible Output"
+        "StartSketch": "स्केच शुरू करें",
+        "StopSketch": "स्केच बंद करो",
+        "TurnOnAccessibleOutput": "Accessibile आउटपुट चालू करें",
+        "TurnOffAccessibleOutput": "Accessibile आउटपुट बंद करें"
       }
     },
     "Sidebar": {
-      "Title": "Sketch Files",
-      "ToggleARIA": "Toggle open/close sketch file options",
-      "AddFolder": "Create folder",
-      "AddFolderARIA": "add folder",
-      "AddFile": "Create file",
-      "AddFileARIA": "add file",
-      "UploadFile": "Upload file",
-      "UploadFileARIA": "upload file"
+      "Title": "स्केच फ़ाइलें",
+      "ToggleARIA": "खुले / बंद स्केच विकल्प टॉगल करें",
+      "AddFolder": "फ़ोल्डर बनाएँ",
+      "AddFolderARIA": "फ़ोल्डर जोड़ें",
+      "AddFile": "फ़ाइल बनाएँ",
+      "AddFileARIA": "फ़ाइल जोड़ें",
+      "UploadFile": "फ़ाइल अपलोड करें",
+      "UploadFileARIA": "फ़ाइल अपलोड करें"
     },
     "FileNode": {
-      "OpenFolderARIA": "Open folder contents",
-      "CloseFolderARIA": "Close folder contents",
-      "ToggleFileOptionsARIA": "Toggle open/close file options",
-      "AddFolder": "Create folder",
-      "AddFolderARIA": "add folder",
-      "AddFile": "Create file",
-      "AddFileARIA": "add file",
-      "UploadFile": "Upload file",
-      "UploadFileARIA": "upload file",
-      "Rename": "Rename",
-      "Delete": "Delete"
+      "OpenFolderARIA": "फ़ोल्डर सामग्री खोलें",
+      "CloseFolderARIA": "फ़ोल्डर सामग्री बंद करें",
+      "ToggleFileOptionsARIA": "खुले / बंद फ़ाइल विकल्प टॉगल करें",
+      "AddFolder": "फ़ोल्डर बनाएँ",
+      "AddFolderARIA": "फ़ोल्डर जोड़ें",
+      "AddFile": "फ़ाइल बनाएँ",
+      "AddFileARIA": "फ़ाइल जोड़ें",
+      "UploadFile": "फ़ाइल अपलोड करें",
+      "UploadFileARIA": "फ़ाइल अपलोड करें",
+      "Rename": "नाम बदलने",
+      "Delete": "मिटाना"
     },
     "Common": {
       "Error": "Error",
