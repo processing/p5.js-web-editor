@@ -22,7 +22,7 @@ export function languageKeyToDateLocale(lang) {
     'en-US': enUS,
     'es-419': es,
     'ja': ja,
-    'hi':hi
+    'hi': hi
   };
   return languageMap[lang];
 }
