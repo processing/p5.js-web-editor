@@ -128,6 +128,16 @@ export function validateSession() {
   };
 }
 
+export function resetProject(dispatch) {
+  dispatch({
+    type: ActionTypes.RESET_PROJECT
+  });
+  dispatch({
+    type: ActionTypes.CLEAR_CONSOLE
+  });
+  browserHistory.push('/');
+}
+
 export function logoutUser() {
   return (dispatch) => {
     apiClient.get('/logout')
@@ -135,6 +145,7 @@ export function logoutUser() {
         dispatch({
           type: ActionTypes.UNAUTH_USER
         });
+        resetProject(dispatch);
       })
       .catch((error) => {
         const { response } = error;
