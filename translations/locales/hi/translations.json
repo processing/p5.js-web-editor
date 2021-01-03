@@ -32,8 +32,8 @@
         "About": "के बारे में"
       },
       "Lang": "भाषा",
-      "BackEditor": "Back to Editor",
-      "WarningUnsavedChanges": "Are you sure you want to leave this page? You have unsaved changes.",
+      "BackEditor": "एडिटर पर वापस जाएं",
+      "WarningUnsavedChanges": "क्या आप इस पेज को छोड़ना चाहते हैं? आपके पास अनसेव्ड परिवर्तन हैं।",
       "Login": "लॉग इन",
       "LoginOr": "या",
       "SignUp": "साइन अप",
@@ -44,8 +44,8 @@
         "My": "मेरा",
         "MySketches": "मेरे स्केच",
         "MyCollections": "मेरे संग्रह",
-        "Asset": "Asset",
-        "MyAssets": "My Assets",
+        "Asset": "ऐसेट",
+        "MyAssets": "मेरे ऐसेट",
         "LogOut": "लॉग आउट"
       }
     },
@@ -65,9 +65,9 @@
     },
     "LoginForm": {
       "UsernameOrEmail": "ईमेल या यूजरनेम",
-      "UsernameOrEmailARIA": "Email or Username",
+      "UsernameOrEmailARIA": "ईमेल या यूजरनेम",
       "Password": "पासवर्ड",
-      "PasswordARIA": "Password",
+      "PasswordARIA": "पासवर्ड",
       "Submit": "लॉग इन"
     },
     "LoginView": {
@@ -91,19 +91,19 @@
       "Title": "के बारे में",
       "TitleHelmet": "p5.js वेब एडिटर | के बारे में",
       "Contribute": "योगदान",
-      "NewP5": "New to p5.js?",
+      "NewP5": "p5.js पर नये?",
       "Report": "बग रिपोर्ट",
       "Learn": "सीखें",
-      "Resources": "Resources",
-      "Libraries": "Libraries",
-      "Forum": "Forum",
+      "Resources": "रीसॉर्सेज़",
+      "Libraries": "लाइब्रेरीज़",
+      "Forum": "फोरम",
       "Examples": "उदाहरण"
     },
     "Toast": {
       "OpenedNewSketch": "नया स्केच खोला",
       "SketchSaved": "स्केच सेव किया",
       "SketchFailedSave": "स्केच सेव करने में असमर्थ",
-      "AutosaveEnabled": "Autosave enabled.",
+      "AutosaveEnabled": "ऑटोसेव चालू",
       "LangChange": "भाषा बदली",
       "SettingsSaved": "सेटिंग्स सेव की"
     },
@@ -130,7 +130,7 @@
     "Preferences": {
       "Settings": "सेटिंग्स",
       "GeneralSettings": "सामान्य सेटिंग्स",
-      "Accessibility": "Accessibility",
+      "Accessibility": "ऐक्सेसबिलिटी",
       "Theme": "थीम",
       "LightTheme": "लाइट",
       "LightThemeARIA": "लाइट थीम चालू",
@@ -140,36 +140,36 @@
       "HighContrastThemeARIA": "ज़्यादा कंट्रास्ट थीम चालू",
       "TextSize": "शब्दों का साइज",
       "DecreaseFont": "कम करें",
-      "DecreaseFontARIA": "decrease font size",
+      "DecreaseFontARIA": "फॉन्ट साइज़ कम करें",
       "IncreaseFont": "बढ़ाएं",
-      "IncreaseFontARIA": "increase font size",
+      "IncreaseFontARIA": "फॉन्ट साइज़ बढ़ाएं",
       "Autosave": "ऑटोसेव",
       "On": "चालू",
-      "AutosaveOnARIA": "ऑटोसेव on",
-      "Off": "Off",
-      "AutosaveOffARIA": "ऑटोसेव off",
-      "AutocloseBracketsQuotes": "Autoclose Brackets and Quotes",
-      "AutocloseBracketsQuotesOnARIA": "autoclose brackets and quotes on",
-      "AutocloseBracketsQuotesOffARIA": "autoclose brackets and quotes off",
-      "WordWrap": "Word Wrap",
-      "LineWrapOnARIA": "linewrap on",
-      "LineWrapOffARIA": "linewrap off",
-      "LineNumbers": "लाइन numbers",
-      "LineNumbersOnARIA": "line numbers on",
-      "LineNumbersOffARIA": "line numbers off",
-      "LintWarningSound": "Lint warning sound",
-      "LintWarningOnARIA": "lint warning on",
-      "LintWarningOffARIA": "lint warning off",
-      "PreviewSound": "Preview sound",
-      "PreviewSoundARIA": "preview sound",
-      "AccessibleTextBasedCanvas": "Accessible text-based canvas",
-      "UsedScreenReader": "Used with screen reader",
-      "PlainText": "Plain-text",
-      "TextOutputARIA": "text output on",
-      "TableText": "Table-text",
-      "TableOutputARIA": "table output on",
-      "Sound": "Sound",
-      "SoundOutputARIA": "sound output on"
+      "AutosaveOnARIA": "ऑटोसेव चालू",
+      "Off": "बंद",
+      "AutosaveOffARIA": "ऑटोसेव बंद",
+      "AutocloseBracketsQuotes": "ऑटोक्लोज ब्रैकिट और क्वोट",
+      "AutocloseBracketsQuotesOnARIA": "ऑटोक्लोज ब्रैकिट और क्वोट चालू",
+      "AutocloseBracketsQuotesOffARIA": "ऑटोक्लोज ब्रैकिट और क्वोट बंद",
+      "WordWrap": "वर्ड रैप",
+      "LineWrapOnARIA": "लाइनरैप चालू",
+      "LineWrapOffARIA": "लाइनरैप बंद",
+      "LineNumbers": "लाइन नम्बर्ज़",
+      "LineNumbersOnARIA": "लाइन नम्बर्ज़ चालू",
+      "LineNumbersOffARIA": "लाइन नम्बर्ज़ बंद",
+      "LintWarningSound": "लिन्ट वॉर्निंग साउन्ड",
+      "LintWarningOnARIA": "लिन्ट वॉर्निंग चालू",
+      "LintWarningOffARIA": "लिन्ट वॉर्निंग बंद",
+      "PreviewSound": "प्रीव्यू साउन्ड",
+      "PreviewSoundARIA": "प्रीव्यू साउन्ड",
+      "AccessibleTextBasedCanvas": "ऐक्सेसबल टेक्स्ट-आधारित कैन्वस",
+      "UsedScreenReader": "स्क्रीन रीडर के साथ उपयोग किया",
+      "PlainText": "प्लेन-टेक्स्ट",
+      "TextOutputARIA": "टेक्स्ट आउटपुट चालू",
+      "TableText": "टेबल-टेक्स्ट",
+      "TableOutputARIA": "टेबल आउटपुट चालू",
+      "Sound": "साउन्ड",
+      "SoundOutputARIA": "साउन्ड आउटपुट चालू"
     },
     "KeyboardShortcuts": {
       "Title": " Keyboard Shortcuts",
@@ -219,11 +219,11 @@
       "Delete": "Delete"
     },
     "Common": {
-      "Error": "Error",
-      "ErrorARIA": "Error",
+      "Error": "एरर",
+      "ErrorARIA": "एरर",
       "Save": "सेव",
-      "p5logoARIA": "p5.js Logo",
-      "DeleteConfirmation": "Are you sure you want to delete {{name}}?"
+      "p5logoARIA": "p5.js लोगो",
+      "DeleteConfirmation": "क्या आप पक्का {{name}} को डिलीट करना चाहते हैं?"
     },
     "IDEView": {
       "SubmitFeedback": "Submit Feedback",
@@ -255,14 +255,14 @@
       "Placeholder": "नाम"
     },
     "ResetPasswordForm": {
-      "Email": "Email used for registration",
-      "EmailARIA": "email",
-      "Submit": "Send Password Reset Email"
+      "Email": "रेजिस्ट्रेशन के लिए उपयोग किया गया ईमेल",
+      "EmailARIA": "ईमेल",
+      "Submit": "पासवर्ड रीसेट ईमेल भेजें"
     },
     "ResetPasswordView": {
       "Title": "p5.js वेब एडिटर | रीसेट पासवर्ड",
       "Reset": "अपना पासवर्ड रीसेट करें",
-      "Submitted": "Your password reset email should arrive shortly. If you don't see it, check\n            in your spam folder as sometimes it can end up there.",
+      "Submitted": "आपका पासवर्ड रीसेट ईमेल शीघ्र ही आ जाना चाहिए। यदि ईमेल ना दिखे, तो अपने स्पैम फ़ोल्डर जांचें।",
       "Login": "लॉग इन",
       "LoginOr": "या",
       "SignUp": "साइन अप"
@@ -272,17 +272,17 @@
       "errorEmptyEmail": "कृपया ईमेल एड्रेस लिखें",
       "errorPasswordMismatch": "पासवर्डों को मेल खाना अनिवार्य है",
       "errorEmptyPassword": "कृपया पासवर्ड लिखें",
-      "errorShortPassword": "Password must be at least 6 characters",
+      "errorShortPassword": "पासवर्ड कम से कम ६ अक्षरों का होना चाहिए",
       "errorConfirmPassword": "कृपया पासवर्ड कान्फर्मेशन दर्ज करें",
-      "errorNewPassword": "Please enter a new password or leave the current password empty.",
+      "errorNewPassword": "कृपया एक नया पासवर्ड दर्ज करें या वर्तमान पासवर्ड को खाली छोड़ दें।",
       "errorEmptyUsername": "कृपया यूजरनेम लिखें",
-      "errorLongUsername": "Username must be less than 20 characters.",
-      "errorValidUsername": "Username must only consist of numbers, letters, periods, dashes, and underscores."
+      "errorLongUsername": "यूजरनेम २० अक्षरों से कम होना चाहिए।",
+      "errorValidUsername": "यूजरनेम में केवल संख्या, अक्षर, पिरीअड्, डैश और अंडरस्कोर शामिल होना चाहिए।"
     },
     "NewPasswordView": {
       "Title": "p5.js वेब एडिटर | नया पासवर्ड",
       "Description": "नया पासवर्ड सेट करें",
-      "TokenInvalidOrExpired": "The password reset token is invalid or has expired.",
+      "TokenInvalidOrExpired":"पासवर्ड रीसेट टोकन अमान्य है या एक्सपायर हो गया है।",
       "EmptyPassword": "कृपया पासवर्ड दर्ज करें",
       "PasswordConfirmation": "कृपया पासवर्ड कान्फर्मेशन दर्ज करें",
       "PasswordMismatch": "पासवर्डों को मेल खाना अनिवार्य है"
@@ -310,24 +310,24 @@
       "AccessTokensTab": "Access Tokens"
     },
     "APIKeyForm": {
-      "ConfirmDelete": "Are you sure you want to delete {{key_label}}?",
-      "Summary": "Personal Access Tokens act like your password to allow automated\n          scripts to access the Editor API. Create a token for each script\n          that needs access.",
-      "CreateToken": "Create new token",
-      "TokenLabel": "What is this token for?",
-      "TokenPlaceholder": "What is this token for? e.g. Example import script",
-      "CreateTokenSubmit": "Create",
-      "NoTokens": "You have no existing tokens.",
-      "NewTokenTitle": "Your new access token",
-      "NewTokenInfo": "Make sure to copy your new personal access token now.\n                  You won’t be able to see it again!",
-      "ExistingTokensTitle": "Existing tokens"
+      "ConfirmDelete": "क्या आप वाकई {{key_label}} को डिलीट करना चाहते हैं ?",
+      "Summary": "पर्सनल एक्सेस टोकन पासवर्ड की तरह काम करते हैं और ऑटोमेटिड स्क्रिप्ट को एडिटर API की अनुमति देते हैं।\n प्रत्येक स्क्रिप्ट जिसे एक्सेस की आवश्यकता है, उसके लिए एक टोकन बनाएं।",
+      "CreateToken": "नया टोकन बनाएं",
+      "TokenLabel": "यह टोकन किस लिए है?",
+      "TokenPlaceholder": "यह टोकन किस लिए है? उदाहरण इम्पोर्ट स्क्रिप्ट",
+      "CreateTokenSubmit": "बनाएँ",
+      "NoTokens": "आपके पास कोई मौजूदा टोकन नहीं है।",
+      "NewTokenTitle": "आपका नया एक्सेस टोकन",
+      "NewTokenInfo": "अपना नया पर्सनल एक्सेस टोकन कॉपी करना सुनिश्चित करें।\n आप इसे फिर से नहीं देख पाएंगे!",
+      "ExistingTokensTitle": "मौजूदा टोकन"
     },
     "APIKeyList": {
-      "Name": "Name",
-      "Created": "Created on",
-      "LastUsed": "Last used",
-      "Actions": "Actions",
-      "Never": "Never",
-      "DeleteARIA": "Delete API Key"
+      "Name": "नाम",
+      "Created": "बनाने की तारीख",
+      "LastUsed": "आखरी इस्तेमाल",
+      "Actions": "ऐक्शन्ज़",
+      "Never": "कभी नहीं",
+      "DeleteARIA": "डिलीट API Key"
     },
     "NewPasswordForm": {
       "Title": "पासवर्ड",
@@ -357,20 +357,20 @@
     "EmailVerificationView": {
       "Title": "p5.js वेब एडिटर | ईमेल वेरीफिकेशन",
       "Verify": "अपना ईमेल वेरफाइ करें",
-      "InvalidTokenNull": "That link is invalid.",
-      "Checking": "Validating token, please wait...",
-      "Verified": "All done, your email address has been verified.",
-      "InvalidState": "Something went wrong."
+      "InvalidTokenNull": "वह लिंक अमान्य है।",
+      "Checking": "टोकन की पुष्टि की जा रही है, कृपया प्रतीक्षा करें...",
+      "Verified": "सबकुछ ठीक है। आपके ईमेल का पुष्टीकरण हो चुका है।",
+      "InvalidState": "कुछ गलत हो गया।"
     },
     "AssetList": {
-      "Title": "p5.js Web Editor | My assets",
-      "ToggleOpenCloseARIA": "Toggle Open/Close Asset Options",
-      "Delete": "Delete",
-      "OpenNewTab": "Open in New Tab",
-      "NoUploadedAssets": "No uploaded assets.",
-      "HeaderName": "Name",
-      "HeaderSize": "Size",
-      "HeaderSketch": "Sketch"
+      "Title": "p5.js वेब एडिटर | मेरे ऐसेट",
+      "ToggleOpenCloseARIA": "टॉगल ओपेन/क्लोज़ ऐसेट ऑप्शन्ज़",
+      "Delete": "डिलीट",
+      "OpenNewTab": "नये टैब में खोलें",
+      "NoUploadedAssets": "कोई ऐसेट अपलोड नही की।",
+      "HeaderName": "नाम",
+      "HeaderSize": "साइज़",
+      "HeaderSketch": "स्केच"
     },
     "Feedback": {
       "Title": "p5.js वेब एडिटर | फीडबैक",
@@ -395,15 +395,15 @@
       "DictDefaultMessage": "फ़ाइलों को यहाँ ड्रॉप करें या फ़ाइल ब्राउज़र का उपयोग करने के लिए क्लिक करें"
     },
     "ErrorModal": {
-      "MessageLogin": "In order to save sketches, you must be logged in. Please ",
+      "MessageLogin": "स्केच सेव करने के लिए, आपका लॉग इन करना अनिवार्य है। कृप्या ",
       "Login": "लॉग इन",
       "LoginOr": " या ",
       "SignUp": "साइन अप",
-      "MessageLoggedOut": "It looks like you've been logged out. Please ",
+      "MessageLoggedOut": "ऐसा लगता है कि आप लॉग आउट हो चुके हैं। कृप्या ",
       "LogIn": "लॉग इन",
-      "SavedDifferentWindow": "The project you have attempted to save has been saved from another window.\n        Please refresh the page to see the latest version.",
-      "LinkTitle": "Error Linking Account",
-      "LinkMessage": "There was a problem linking your {{serviceauth}} account to your p5.js Web Editor account. Your {{serviceauth}} account has already been linked to another p5.js Web Editor account."
+      "SavedDifferentWindow": "आपने जिस प्रोजेक्ट को सेव करने का प्रयास किया है, उसे किसी अन्य विंडो में सेव किया गया है।\n        कृपया नवीनतम संस्करण देखने के लिए पेज रीफ़्रेश करें।",
+      "LinkTitle": "अकाउंट लिंक करने में एरर",
+      "LinkMessage": "आपका {{serviceauth}} अकाउंट p5.js वेब एडिटर अकाउंट से जोड़ने में असमर्थ। आपका {{serviceauth}} अकाउंट पहले ही किसी अन्य p5.js वेब एडिटर अकाउंट से लिंक हो चुका है।"
     },
     "ShareModal": {
       "Embed": "एम्बेड",
@@ -421,23 +421,23 @@
       "Share": "शेयर",
       "URLLink": "संग्रह का लिंक",
       "AddSketch": "स्केच जोड़ें",
-      "DeleteFromCollection": "Are you sure you want to remove {{name_sketch}} from this collection?",
+      "DeleteFromCollection": "क्या आप वाकई {{name_sketch}} को इस संग्रह से हटाना चाहते हो?",
       "SketchDeleted": "स्केच डिलीट किया",
       "SketchRemoveARIA": "स्केच संग्रह से हटाएं",
       "DescriptionPlaceholder": "विवरण लिखें",
       "Description": "विवरण",
       "NumSketches": "{{count}} स्केच",
       "NumSketches_plural": "{{count}} स्केच",
-      "By":"Collection by ",
+      "By":"संग्रह का ओनर ",
       "NoSketches": "संग्रह मे कोई स्केच नहीं",
       "TableSummary": "सभी संग्रहों की तालिका",
       "HeaderName": "नाम",
-      "HeaderCreatedAt": "Date Added",
-      "HeaderUser": "ओनर्‌",
+      "HeaderCreatedAt": "ऐड करने की तारीख",
+      "HeaderUser": "ओनर",
       "DirectionAscendingARIA": "आरोही",
       "DirectionDescendingARIA": "अवरोही",
-      "ButtonLabelAscendingARIA": "Sort by {{displayName}} ascending.",
-      "ButtonLabelDescendingARIA": "Sort by {{displayName}} descending."
+      "ButtonLabelAscendingARIA": "{{displayName}} आरोही क्रम में।",
+      "ButtonLabelDescendingARIA": "{{displayName}} अवरोही क्रम में।"
     },
     "AddToCollectionList": {
       "Title": "p5.js वेब एडिटर | मेरे संग्रह",
@@ -463,25 +463,25 @@
     "DashboardTabSwitcher": {
       "Sketches": "स्केच",
       "Collections": "संग्रह",
-      "Assets": "Assets"
+      "Assets": "ऐसेट्स"
     },
     "CollectionList": {
       "Title": "p5.js वेब एडिटर | मेरे संग्रह",
       "AnothersTitle": "p5.js वेब एडिटर | {{anotheruser}} के संग्रह",
       "NoCollections": "कोई संग्रह नहीं",
-      "TableSummary": "table containing all collections",
-      "HeaderName": "Name",
-      "HeaderCreatedAt": "Date Created",
-      "HeaderCreatedAt_mobile": "Created",
-      "HeaderUpdatedAt": "Date Updated",
-      "HeaderUpdatedAt_mobile": "Updated",
-      "HeaderNumItems": "# sketches",
-      "HeaderNumItems_mobile": "# sketches",
-      "DirectionAscendingARIA": "Ascending",
-      "DirectionDescendingARIA": "Descending",
-      "ButtonLabelAscendingARIA": "Sort by {{displayName}} ascending.",
-      "ButtonLabelDescendingARIA": "Sort by {{displayName}} descending.",
-      "AddSketch": "Add Sketch"
+      "TableSummary": "सभी संग्रह युक्त तालिका",
+      "HeaderName": "नाम",
+      "HeaderCreatedAt": "बनाने की तारीख",
+      "HeaderCreatedAt_mobile": "बनाया गया",
+      "HeaderUpdatedAt": "अपडेट करने की तारिख",
+      "HeaderUpdatedAt_mobile": "अपडेट किया",
+      "HeaderNumItems": "# स्केच",
+      "HeaderNumItems_mobile": "# स्केच",
+      "DirectionAscendingARIA": "आरोही",
+      "DirectionDescendingARIA": "अवरोही",
+      "ButtonLabelAscendingARIA": "{{displayName}} आरोही क्रम में।",
+      "ButtonLabelDescendingARIA": "{{displayName}} अवरोही क्रम में।",
+      "AddSketch": "स्केच जोड़ें"
     },
     "CollectionListRow": {
       "ToggleCollectionOptionsARIA": "संग्रह ओपेन/क्लोज़ टॉगल ऑप्शन्ज़",
@@ -490,7 +490,7 @@
       "Rename": "नाम बदलें"
     },
     "Overlay": {
-      "AriaLabel": "Close {{title}} overlay"
+      "AriaLabel": "{{title}} ओवरले क्लोज करें"
     },
     "QuickAddList":{
       "ButtonRemoveARIA": "संग्रह से हटाएं",
@@ -509,15 +509,15 @@
       "DropdownDelete": "डिलीट",
       "DirectionAscendingARIA": "आरोही",
       "DirectionDescendingARIA": "अवरोही",
-      "ButtonLabelAscendingARIA": "Sort by {{displayName}} ascending.",
-      "ButtonLabelDescendingARIA": "Sort by {{displayName}} descending.",
+      "ButtonLabelAscendingARIA": "{{displayName}} आरोही क्रम में।",
+      "ButtonLabelDescendingARIA": "{{displayName}} अवरोही क्रम में।",
       "AddToCollectionOverlayTitle": "संग्रह में जोड़ें",
       "TableSummary": "सभी सेव किये गए स्केच की तालिका",
       "HeaderName": "स्केच",
-      "HeaderCreatedAt": "Date Created",
-      "HeaderCreatedAt_mobile": "Created",
-      "HeaderUpdatedAt": "Date Updated",
-      "HeaderUpdatedAt_mobile": "Updated",
+      "HeaderCreatedAt": "बनाने की तारीख",
+      "HeaderCreatedAt_mobile": "बनाया गया",
+      "HeaderUpdatedAt": "अपडेट करने की तारिख",
+      "HeaderUpdatedAt_mobile": "अपडेट किया",
       "NoSketches": "कोई स्केच नहीं"
     },
     "AddToCollectionSketchList": {
@@ -528,7 +528,7 @@
     "Editor": {
       "OpenSketchARIA": "स्केच फ़ाइलों का नेविगेशन खोलें",
       "CloseSketchARIA": "स्केच फ़ाइलों का नेविगेशन बंद करें",
-      "UnsavedChangesARIA": "Sketch has unsaved changes",
+      "UnsavedChangesARIA": "स्केच में अनसेव्ड परिवर्तन हैं",
       "KeyUpLineNumber": "लाइन {{lineNumber}}"
     },
     "EditorAccessibility": {
@@ -551,11 +551,11 @@
     },
     "CopyableInput": {
       "CopiedARIA": "क्लिपबोर्ड पर कॉपी किया!",
-      "OpenViewTabARIA": "Open {{label}} view in new tab"
+      "OpenViewTabARIA": "{{label}} व्यू नए टैब में खोलें"
     },
     "EditableInput": {
-      "EditValue": "Edit {{display}} value",
-      "EmptyPlaceholder": "कोई वेल्यू नहीं"
+      "EditValue": "एडीट {{display}} वैल्यू",
+      "EmptyPlaceholder": "कोई वैल्यू नहीं"
     },
     "PreviewNav": {
       "EditSketchARIA": "एडीट स्केच",
@@ -564,19 +564,19 @@
     "MobilePreferences": {
       "Settings": "सेटिंग्स",
       "GeneralSettings": "सामान्य सेटिंग्स",
-      "Accessibility": "Accessibility",
-      "AccessibleOutput": "Accessible Output",
+      "Accessibility": "ऐक्सेसबिलिटी",
+      "AccessibleOutput": "ऐक्सेसबल आउटपुट",
       "Theme": "थीम",
       "LightTheme": "लाइट",
       "DarkTheme": "डार्क",
       "HighContrastTheme": "ज़्यादा कंट्रास्ट",
       "Autosave": "ऑटोसेव",
-      "WordWrap": "Word Wrap",
-      "LineNumbers": "Line numbers",
-      "LintWarningSound": "Lint warning sound",
-      "UsedScreenReader": "Used with screen reader",
-      "PlainText": "Plain-text",
-      "TableText": "Table-text",
+      "WordWrap": "वर्ड रैप",
+      "LineNumbers": "लाइन नम्बर्ज़",
+      "LintWarningSound": "लिन्ट वॉर्निंग साउन्ड",
+      "UsedScreenReader": "स्क्रीन रीडर के साथ उपयोग किया",
+      "PlainText": "प्लेन-टेक्स्ट",
+      "TableText": "टेबल-टेक्स्ट",
       "Sound": "ध्वनि"
     },
     "PreferenceCreators": {
@@ -585,9 +585,9 @@
     },
     "MobileIDEView":{
       "Preferences": "प्राथमिकता",
-      "MyStuff": "My Stuff",
+      "MyStuff": "मेरा स्टफ",
       "Examples": "उदाहरण",
-      "OriginalEditor": "Original Editor",
+      "OriginalEditor": "ओरिजिनल एडिटर",
       "Login": "लॉग इन",
       "Logout": "लॉग आउट"
     },
@@ -595,8 +595,8 @@
       "Examples": "उदाहरण",
       "Sketches": "स्केच",
       "Collections": "संग्रह",
-      "Assets": "Assets",
-      "MyStuff": "My Stuff",
+      "Assets": "ऐसेट्स",
+      "MyStuff": "मेरा स्टफ",
       "CreateSketch": "स्केच बनाएँ",
       "CreateCollection": "संग्रह बनाएँ"
     },
