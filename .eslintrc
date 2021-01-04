@@ -1,5 +1,5 @@
 {
-	"extends": "airbnb",
+	"extends": ["airbnb", "prettier"],
 	"parser": "babel-eslint",
 	"env": {
     "browser": true,
@@ -60,10 +60,13 @@
         },
         "allowChildren": false
       }
+    ],
+    "prettier/prettier": [
+      "error"
     ]
   },
   "plugins": [
-    "react", "jsx-a11y", "import"
+    "react", "jsx-a11y", "import", "prettier"
   ],
   "settings": {
     "import/parser": "babel-eslint",

@@ -271,7 +271,7 @@ class FileNode extends React.Component {
                 </button>
               </div>
             }
-            <button
+              <button
               aria-label={this.state.updatedName}
               className="sidebar__file-item-name"
               onClick={this.handleFileClick}
