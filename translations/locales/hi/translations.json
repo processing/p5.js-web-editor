@@ -11,7 +11,7 @@
         "Examples": "उदाहरण"
       },
       "Edit": {
-        "Title": "संपादित करे ",
+        "Title": "संपादित करे",
         "TidyCode": "साफ कोड",
         "Find": "खोज",
         "FindNext": "अगला खोजें",
@@ -50,6 +50,7 @@
       }
     },
     "CodemirrorFindAndReplace": {
+      "ToggleReplace": "टॉगल बदली करें",
       "Find": "खोज",
       "FindPlaceholder": "फ़ाइलों में खोजें",
       "Replace": "बदली करें",
@@ -229,7 +230,7 @@
       "SubmitFeedback": "प्रतिपुष्टि दें",
       "SubmitFeedbackARIA": "प्रतिपुष्टि दें",
       "AddCollectionTitle": "संग्रह में जोड़े",
-"AddCollectionARIA":"संग्रह में जोड़े",
+      "AddCollectionARIA":"संग्रह में जोड़े",
       "ShareTitle": "शेयर",
       "ShareARIA":"शेयर"
     },
