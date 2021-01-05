@@ -121,14 +121,6 @@ pre.CodeMirror-line {
   height: 100%;
 }
 
-.CodeMirror-find-div {
-  padding: 0;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  flex-wrap: nowrap;
-}
-
 .CodeMirror-search-modifiers {
   margin-left: #{10 / $base-font-size}rem;
 }
@@ -142,11 +134,21 @@ pre.CodeMirror-line {
 .CodeMirror-find-controls {
   display: flex;
 }
-
+.CodeMirror-search-inputs {
+  width: 30%;
+  margin-left: 10px;
+}
 .CodeMirror-replace-div {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+}
+.CodeMirror-search-controls {
+  width: 60%;
+  display: flex;
+  flex-wrap: wrap-reverse;
+  justify-content: flex-start;
+  align-items: flex-end;
 }
 .CodeMirror-replace-controls {
   display: flex;
