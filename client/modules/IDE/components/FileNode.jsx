@@ -223,10 +223,12 @@ class FileNode extends React.Component {
   }
 
   showFolderChildren = () => {
+    this.props.setSelectedFile(this.props.id);
     this.props.showFolderChildren(this.props.id);
   }
 
   hideFolderChildren = () => {
+    this.props.setSelectedFile(this.props.id);
     this.props.hideFolderChildren(this.props.id);
   }
 
@@ -291,6 +293,7 @@ class FileNode extends React.Component {
               className="sidebar__file-item-name"
               onClick={this.handleFileClick}
               data-testid="file-name"
+              tabIndex={isFolder ? -1 : 0}
             >
               <FileName name={this.state.updatedName} />
             </button>
