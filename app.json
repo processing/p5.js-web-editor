@@ -8,6 +8,10 @@
     {
       "plan": "mailgun:starter",
       "as": "MAILGUN"
+    },
+    {
+      "plan": "fixie-socks:grip",
+      "as": "FIXIE"
     }
   ],
   "env": {
