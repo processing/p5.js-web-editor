@@ -20,7 +20,7 @@ Follow the [installation guide](./installation.md).
 * [Let's stop saying Master/Slave](https://medium.com/@mikebroberts/let-s-stop-saying-master-slave-10f1d1bf34df)
 
 As a person contributing code but not creating production releases (this is most people!), here's what you need to know:
-* The default branch is `develop`. All pull requests should be made to this branch. It should be stable, and all commits are visible at a staging sever.
+* The default branch is `develop`. All pull requests should be made to this branch. It should be stable, and all commits are visible at a staging server.
 * When working on a bug or feature, you should branch from the `develop` branch. When you're done, you should open a pull request from your feature branch to `develop`.
 * The `release` branch is the live production branch, and is the code deployed to editor.p5js.org. Changes to this branch should be made carefully, and will be done using git tags. 
 * Emergency hotfix changes should be branched from `release` and merged via a pull request to `release`. After a PR is merged, then the commits can be merged to `develop`.
@@ -74,7 +74,7 @@ Structure your commit message like this:
 
 ## Design
 - [Style Guide/Design System on Figma](https://github.com/processing/p5.js-web-editor/labels/good%20medium%20issues)
-- [Latest Design on Figma](https://www.figma.com/file/5KychMUfHlq97H0uDsen1U/p5-web-editor-2017.p.copy?node-id=0%3A1). Note that the current design on the website has diverged, are parts of this design will not be implemented, but it is still helpful to have around for reference.
+- [Latest Design on Figma](https://www.figma.com/file/5KychMUfHlq97H0uDsen1U/p5-web-editor-2017.p.copy?node-id=0%3A1). Note that the current design on the website has diverged, parts of this design will not be implemented, but it is still helpful to have around for reference.
 - [Mobile Designs](https://www.figma.com/file/5KychMUfHlq97H0uDsen1U/p5-web-editor-2017.p.copy?node-id=0%3A2529), [Responsive Designs](https://www.figma.com/file/5KychMUfHlq97H0uDsen1U/p5-web-editor-2017.p.copy?node-id=0%3A3292)
 
 ## Technologies Used
