@@ -1,11 +1,11 @@
 name: Deploy to staging
-environment: staging
 on:
   push:
     branches:
       - chore/github-actions
 jobs:
   push_to_registry:
+    environment: staging
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
     steps:
@@ -25,6 +25,6 @@ jobs:
           file: ./Dockerfile
           pull: true
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/p5.js-web-editor-staging:${{ GITHUB_SHA }}
+          tags: ${{ secrets.DOCKER_USERNAME }}/p5.js-web-editor-staging:${{ github.sha }}
           target: production
 
