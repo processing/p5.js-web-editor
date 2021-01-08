@@ -62,7 +62,11 @@ const beautifyHTML = beautifyJS.html;
 window.JSHINT = JSHINT;
 window.CSSLint = CSSLint;
 window.HTMLHint = HTMLHint;
-delete CodeMirror.keyMap.sublime['Shift-Tab'];
+
+
+// delete CodeMirror.keyMap.sublime['Shift-Cmd-F'];
+
+console.log(CodeMirror.keyMap.sublime);
 
 const IS_TAB_INDENT = false;
 const INDENTATION_AMOUNT = 2;
@@ -88,6 +92,7 @@ class Editor extends React.Component {
     this.findPrev = this.findPrev.bind(this);
     this.showReplace = this.showReplace.bind(this);
     this.getContent = this.getContent.bind(this);
+    this.handleKey = this.handleKey.bind(this);
   }
 
   componentDidMount() {
@@ -155,14 +160,21 @@ class Editor extends React.Component {
       }
     }, 1000));
 
-    this._cm.on('keyup', () => {
+    this.map = {};
+
+    this._cm.on('keyup', (_cm, e) => {
       const temp = this.props.t('Editor.KeyUpLineNumber', { lineNumber: parseInt((this._cm.getCursor().line) + 1, 10) });
       document.getElementById('current-line').innerHTML = temp;
+      this.handleKey(this.map, e);
     });
 
     this._cm.on('keydown', (_cm, e) => {
-      // 9 === Tab
-      if (e.keyCode === 9 && e.shiftKey) {
+      this.handleKey(this.map, e);
+      // 91 === Cmd
+      // 16 === Shift
+      // 70 === f
+      if (this.map[91] && this.map[16] && this.map[70]) {
+        e.preventDefault(); // prevent browser's default behaviour
         this.tidyCode();
       }
     });
@@ -192,7 +204,7 @@ class Editor extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.file.content !== prevProps.file.content &&
-        this.props.file.content !== this._cm.getValue()) {
+      this.props.file.content !== this._cm.getValue()) {
       const oldDoc = this._cm.swapDoc(this._docs[this.props.file.id]);
       this._docs[prevProps.file.id] = oldDoc;
       this._cm.focus();
@@ -325,6 +337,10 @@ class Editor extends React.Component {
       this.optionsButton.focus();
       this.props.showEditorOptions();
     }
+  }
+
+  handleKey(map, e) { // update the state of each key pressed and released
+    map[e.keyCode] = e.type === 'keydown';
   }
 
   render() {
