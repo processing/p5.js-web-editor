@@ -52,19 +52,9 @@ jobs:
           location: ${{ env.GKE_ZONE }}
           credentials: ${{ secrets.GKE_SA_KEY }}
 
-        # Set up kustomize
-      - name: Set up Kustomize
-        run: |-
-          curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
-          chmod u+x ./kustomize
-  
       # Deploy the Docker image to the GKE cluster
       - name: Deploy
         run: |-
-          ./kustomize edit set namespace staging
-          kubectl config set-context --current --namespace=staging
-          ./kustomize edit set image web-editor-app=index.docker.io/$IMAGE:$GITHUB_SHA
-          ./kustomize build . | kubectl apply -f -
-          kubectl rollout status deployment/$DEPLOYMENT_NAME
+          kubectl set image deployment/$DEPLOYMENT_NAME web-editor-app=index.docker.io/$IMAGE:$GITHUB_SHA --namespace=staging
           kubectl get services -o wide
 
