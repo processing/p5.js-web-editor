@@ -1,9 +1,9 @@
-name: Deploy to staging
+name: Deploy to production
 on:
   workflow_run:
     workflows: ["Test"]
     branches:
-      - develop
+      - release
     types:
       - completed
 env:
@@ -11,10 +11,10 @@ env:
   GKE_CLUSTER: p5js-web-editor-cluster
   GKE_ZONE: us-east1-c
   DEPLOYMENT_NAME: web-editor-node
-  IMAGE: ${{ secrets.DOCKER_USERNAME }}/p5.js-web-editor-staging
+  IMAGE: ${{ secrets.DOCKER_USERNAME }}/p5.js-web-editor
 jobs:
   push_to_registry:
-    environment: staging
+    environment: production
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
     steps:
@@ -58,6 +58,6 @@ jobs:
       # Deploy the Docker image to the GKE cluster
       - name: Deploy
         run: |-
-          kubectl set image deployment/$DEPLOYMENT_NAME web-editor-app=index.docker.io/$IMAGE:$GITHUB_SHA --namespace=staging
+          kubectl set image deployment/$DEPLOYMENT_NAME web-editor-app=index.docker.io/$IMAGE:$GITHUB_SHA
           kubectl get services -o wide
 
