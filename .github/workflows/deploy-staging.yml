@@ -61,8 +61,10 @@ jobs:
       # Deploy the Docker image to the GKE cluster
       - name: Deploy
         run: |-
-          ./kustomize edit set image web-editor-app=index.docker.io/$IMAGE:$GITHUB_SHA --namespace=staging
+          ./kustomize edit set namespace staging
+          kubectl config set-context --current --namespace=staging
+          ./kustomize edit set image web-editor-app=index.docker.io/$IMAGE:$GITHUB_SHA
           ./kustomize build . | kubectl apply -f -
-          kubectl rollout status deployment/$DEPLOYMENT_NAME --namespace=staging
-          kubectl get services -o wide --namespace=staging
+          kubectl rollout status deployment/$DEPLOYMENT_NAME
+          kubectl get services -o wide
 
