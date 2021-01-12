@@ -32,8 +32,8 @@ jobs:
           pull: true
           push: true
           tags: |
-            $IMAGE:${{ github.sha }}
-            $IMAGE:latest
+            ${{ env.IMAGE }}:${{ github.sha }}
+            ${{ env.IMAGE }}:latest
           target: production
       # Setup gcloud CLI
       - uses: google-github-actions/setup-gcloud@v0.2.0
