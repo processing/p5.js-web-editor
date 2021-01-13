@@ -1,6 +1,8 @@
 import passport from 'passport';
 
 import { userResponse } from './user.controller';
+import generateToken from '../utils/generateToken';
+import Token from '../models/token';
 
 export function createSession(req, res, next) {
   passport.authenticate('local', (err, user) => { // eslint-disable-line consistent-return
@@ -9,14 +11,25 @@ export function createSession(req, res, next) {
       return res.status(401).json({ message: 'Invalid username or password.' });
     }
 
-    req.logIn(user, (innerErr) => {
-      if (req.body.remember) {
-        req.session.cookie.originalMaxAge = 30 * 24 * 60 * 60 * 1000;
-      } else {
-        req.session.cookie.expires = false;
+    req.logIn(user, async (innerErr) => { // eslint-disable-line consistent-return
+      if (!req.body.remember) {
+        if (innerErr) { return next(innerErr); }
+        return res.json(userResponse(req.user));
       }
-      if (innerErr) { return next(innerErr); }
-      return res.json(userResponse(req.user));
+      if (req.body.remember) {
+        const value = generateToken(64);
+        const maxAge = 30 * 24 * 60 * 60 * 1000; // 30 days
+        const token = {
+          value,
+          user: user._id
+        };
+        await Token.create(token, (error, doc) => {
+          if (err) { return next(error); }
+          res.cookie('remember_me', value, { path: '/', maxAge });
+          if (innerErr) { return next(innerErr); }
+          return res.json(userResponse(req.user));
+        });
+      }
     });
   })(req, res, next);
 }
@@ -29,6 +42,7 @@ export function getSession(req, res) {
 }
 
 export function destroySession(req, res) {
+  res.clearCookie('remember_me');
   req.logout();
   res.json({ success: true });
 }

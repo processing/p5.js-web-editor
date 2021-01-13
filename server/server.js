@@ -122,6 +122,7 @@ app.use(Express.static(path.resolve(__dirname, '../dist/static'), {
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(passport.authenticate('remember-me'));
 app.use('/editor', requestsOfTypeJSON(), users);
 app.use('/editor', requestsOfTypeJSON(), sessions);
 app.use('/editor', requestsOfTypeJSON(), files);
