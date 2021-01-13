@@ -12,22 +12,8 @@ export function authError(error) {
   };
 }
 
-export function signUpUser(previousPath, formValues) {
-  return (dispatch) => {
-    apiClient.post('/signup', formValues)
-      .then((response) => {
-        dispatch({
-          type: ActionTypes.AUTH_USER,
-          user: response.data
-        });
-        dispatch(justOpenedProject());
-        browserHistory.push(previousPath);
-      })
-      .catch((error) => {
-        const { response } = error;
-        dispatch(authError(response.data.error));
-      });
-  };
+export function signUpUser(formValues) {
+  return apiClient.post('/signup', formValues);
 }
 
 export function loginUser(formValues) {
@@ -41,6 +27,13 @@ export function loginUserSuccess(user) {
   };
 }
 
+export function authenticateUser(user) {
+  return {
+    type: ActionTypes.AUTH_USER,
+    user
+  };
+}
+
 export function loginUserFailure(error) {
   return {
     type: ActionTypes.AUTH_ERROR,
@@ -48,26 +41,52 @@ export function loginUserFailure(error) {
   };
 }
 
-export function validateAndLoginUser(previousPath, formProps, dispatch) {
-  return new Promise((resolve, reject) => {
-    loginUser(formProps)
-      .then((response) => {
-        dispatch({
-          type: ActionTypes.AUTH_USER,
-          user: response.data
+export function setPreferences(preferences) {
+  return {
+    type: ActionTypes.SET_PREFERENCES,
+    preferences
+  };
+}
+
+export function validateAndLoginUser(formProps) {
+  return (dispatch, getState) => {
+    const state = getState();
+    const { previousPath } = state.ide;
+    return new Promise((resolve) => {
+      loginUser(formProps)
+        .then((response) => {
+          dispatch(loginUserSuccess(response.data));
+          dispatch(setPreferences(response.data.preferences));
+          dispatch(setLanguage(response.data.preferences.language, { persistPreference: false }));
+          dispatch(justOpenedProject());
+          browserHistory.push(previousPath);
+          resolve();
+        })
+        .catch(error =>
+          resolve({ password: error.response.data.message, _error: 'Login failed!' }));
+    });
+  };
+}
+
+export function validateAndSignUpUser(formValues) {
+  return (dispatch, getState) => {
+    const state = getState();
+    const { previousPath } = state.ide;
+    return new Promise((resolve) => {
+      signUpUser(formValues)
+        .then((response) => {
+          dispatch(authenticateUser(response.data));
+          dispatch(justOpenedProject());
+          browserHistory.push(previousPath);
+          resolve();
+        })
+        .catch((error) => {
+          const { response } = error;
+          dispatch(authError(response.data.error));
+          resolve({ error });
         });
-        dispatch({
-          type: ActionTypes.SET_PREFERENCES,
-          preferences: response.data.preferences
-        });
-        setLanguage(response.data.preferences.language, { persistPreference: false });
-        dispatch(justOpenedProject());
-        browserHistory.push(previousPath);
-        resolve();
-      })
-      .catch(error =>
-        reject({ password: error.response.data.message, _error: 'Login failed!' })); // eslint-disable-line
-  });
+    });
+  };
 }
 
 export function getUser() {
@@ -125,22 +144,21 @@ export function logoutUser() {
 }
 
 export function initiateResetPassword(formValues) {
-  return (dispatch) => {
+  return dispatch => new Promise((resolve) => {
     dispatch({
       type: ActionTypes.RESET_PASSWORD_INITIATE
     });
-    apiClient.post('/reset-password', formValues)
-      .then(() => {
-        // do nothing
-      })
+    return apiClient.post('/reset-password', formValues)
+      .then(() => resolve())
       .catch((error) => {
         const { response } = error;
         dispatch({
           type: ActionTypes.ERROR,
           message: response.data
         });
+        resolve({ error });
       });
-  };
+  });
 }
 
 export function initiateVerification() {
@@ -202,17 +220,20 @@ export function validateResetPasswordToken(token) {
   };
 }
 
-export function updatePassword(token, formValues) {
-  return (dispatch) => {
+export function updatePassword(formValues, token) {
+  return dispatch => new Promise(resolve =>
     apiClient.post(`/reset-password/${token}`, formValues)
       .then((response) => {
         dispatch(loginUserSuccess(response.data));
         browserHistory.push('/');
+        resolve();
       })
-      .catch(() => dispatch({
-        type: ActionTypes.INVALID_RESET_PASSWORD_TOKEN
+      .catch((error) => {
+        dispatch({
+          type: ActionTypes.INVALID_RESET_PASSWORD_TOKEN
+        });
+        resolve({ error });
       }));
-  };
 }
 
 export function updateSettingsSuccess(user) {
@@ -222,19 +243,22 @@ export function updateSettingsSuccess(user) {
   };
 }
 
+export function submitSettings(formValues) {
+  return apiClient.put('/account', formValues);
+}
+
 export function updateSettings(formValues) {
   return dispatch =>
-    apiClient.put('/account', formValues)
-      .then((response) => {
+    new Promise(resolve =>
+      submitSettings(formValues).then((response) => {
         dispatch(updateSettingsSuccess(response.data));
-        browserHistory.push('/');
         dispatch(showToast(5500));
         dispatch(setToastText('Toast.SettingsSaved'));
-      })
-      .catch((error) => {
+        resolve();
+      }).catch((error) => {
         const { response } = error;
-        Promise.reject(new Error(response.data.error));
-      });
+        resolve({ error });
+      }));
 }
 
 export function createApiKeySuccess(user) {

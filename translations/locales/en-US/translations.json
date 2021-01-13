@@ -50,6 +50,7 @@
     }
   },
   "CodemirrorFindAndReplace": {
+    "ToggleReplace": "Toggle Replace",
     "Find": "Find",
     "FindPlaceholder": "Find in files",
     "Replace": "Replace",

@@ -1,19 +1,26 @@
 import PropTypes from 'prop-types';
-import React from 'react';
-import { reduxForm } from 'redux-form';
+import React, { useEffect } from 'react';
 import classNames from 'classnames';
-import { bindActionCreators } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import { withTranslation } from 'react-i18next';
-import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
 import NewPasswordForm from '../components/NewPasswordForm';
-import * as UserActions from '../actions';
+import { validateResetPasswordToken } from '../actions';
 import Nav from '../../../components/Nav';
 
 function NewPasswordView(props) {
+  const { t } = useTranslation();
+  const resetPasswordToken = props.params.reset_password_token;
+  const resetPasswordInvalid = useSelector(state => state.user.resetPasswordInvalid);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(validateResetPasswordToken(resetPasswordToken));
+  }, [resetPasswordToken]);
+
   const newPasswordClass = classNames({
     'new-password': true,
-    'new-password--invalid': props.user.resetPasswordInvalid,
+    'new-password--invalid': resetPasswordInvalid,
     'form-container': true,
     'user': true
   });
@@ -22,13 +29,13 @@ function NewPasswordView(props) {
       <Nav layout="dashboard" />
       <div className={newPasswordClass}>
         <Helmet>
-          <title>{props.t('NewPasswordView.Title')}</title>
+          <title>{t('NewPasswordView.Title')}</title>
         </Helmet>
         <div className="form-container__content">
-          <h2 className="form-container__title">{props.t('NewPasswordView.Description')}</h2>
-          <NewPasswordForm {...props} />
+          <h2 className="form-container__title">{t('NewPasswordView.Description')}</h2>
+          <NewPasswordForm resetPasswordToken={resetPasswordToken} />
           <p className="new-password__invalid">
-            {props.t('NewPasswordView.TokenInvalidOrExpired')}
+            {t('NewPasswordView.TokenInvalidOrExpired')}
           </p>
         </div>
       </div>
@@ -39,43 +46,7 @@ function NewPasswordView(props) {
 NewPasswordView.propTypes = {
   params: PropTypes.shape({
     reset_password_token: PropTypes.string,
-  }).isRequired,
-  validateResetPasswordToken: PropTypes.func.isRequired,
-  user: PropTypes.shape({
-    resetPasswordInvalid: PropTypes.bool
-  }).isRequired,
-  t: PropTypes.func.isRequired
+  }).isRequired
 };
 
-function validate(formProps) {
-  const errors = {};
-
-  if (!formProps.password) {
-    errors.password = i18next.t('NewPasswordView.EmptyPassword');
-  }
-  if (!formProps.confirmPassword) {
-    errors.confirmPassword = i18next.t('NewPasswordView.PasswordConfirmation');
-  }
-
-  if (formProps.password !== formProps.confirmPassword) {
-    errors.password = i18next.t('NewPasswordView.PasswordMismatch');
-  }
-
-  return errors;
-}
-
-function mapStateToProps(state) {
-  return {
-    user: state.user
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(UserActions, dispatch);
-}
-
-export default withTranslation()(reduxForm({
-  form: 'new-password',
-  fields: ['password', 'confirmPassword'],
-  validate
-}, mapStateToProps, mapDispatchToProps)(NewPasswordView));
+export default NewPasswordView;
