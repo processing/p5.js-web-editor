@@ -60,4 +60,3 @@ jobs:
         run: |-
           kubectl set image deployment/$DEPLOYMENT_NAME web-editor-app=index.docker.io/$IMAGE:$GITHUB_SHA --namespace=staging
           kubectl get services -o wide
-
