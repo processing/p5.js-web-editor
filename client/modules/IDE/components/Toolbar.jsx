@@ -109,6 +109,7 @@ class Toolbar extends React.Component {
         <div className="toolbar__autorefresh">
           <input
             id="autorefresh"
+            className="checkbox__autorefresh"
             type="checkbox"
             checked={this.props.autorefresh}
             onChange={(event) => {

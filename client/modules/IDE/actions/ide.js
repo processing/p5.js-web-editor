@@ -278,3 +278,10 @@ export function stopSketch() {
     dispatch(stopVisualSketch());
   };
 }
+
+export function createError(error) {
+  return {
+    type: ActionTypes.ERROR,
+    error
+  };
+}
