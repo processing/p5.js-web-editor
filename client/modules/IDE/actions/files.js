@@ -2,7 +2,7 @@ import objectID from 'bson-objectid';
 import blobUtil from 'blob-util';
 import apiClient from '../../../utils/apiClient';
 import * as ActionTypes from '../../../constants';
-import { setUnsavedChanges, closeNewFolderModal, closeNewFileModal } from './ide';
+import { setUnsavedChanges, closeNewFolderModal, closeNewFileModal, setSelectedFile } from './ide';
 import { setProjectSavedTime } from './project';
 import { createError } from './ide';
 
@@ -86,6 +86,7 @@ export function handleCreateFile(formProps) {
         if (updatedAt) dispatch(setProjectSavedTime(updatedAt));
         dispatch(closeNewFileModal());
         dispatch(setUnsavedChanges(true));
+        dispatch(setSelectedFile(file.id));
         resolve();
       }).catch((error) => {
         const { response } = error;
