@@ -63,11 +63,6 @@ window.JSHINT = JSHINT;
 window.CSSLint = CSSLint;
 window.HTMLHint = HTMLHint;
 
-
-// delete CodeMirror.keyMap.sublime['Shift-Cmd-F'];
-
-console.log(CodeMirror.keyMap.sublime);
-
 const IS_TAB_INDENT = false;
 const INDENTATION_AMOUNT = 2;
 
@@ -173,7 +168,8 @@ class Editor extends React.Component {
       // 91 === Cmd
       // 16 === Shift
       // 70 === f
-      if (this.map[91] && this.map[16] && this.map[70]) {
+      // 17 === Ctrl
+      if (((metaKey === 'Cmd' && this.map[91]) || (metaKey === 'Ctrl' && this.map[17])) && this.map[16] && this.map[70]) {
         e.preventDefault(); // prevent browser's default behaviour
         this.tidyCode();
       }
@@ -339,7 +335,7 @@ class Editor extends React.Component {
     }
   }
 
-  handleKey(map, e) { // update the state of each key pressed and released
+  handleKey(map, e) { // update the 'keydown 'state of each key
     map[e.keyCode] = e.type === 'keydown';
   }
 
