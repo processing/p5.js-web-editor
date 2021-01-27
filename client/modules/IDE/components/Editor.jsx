@@ -93,7 +93,8 @@ class Editor extends React.Component {
   componentDidMount() {
     this.beep = new Audio(beepUrl);
     this.widgets = [];
-    this._cm = CodeMirror(this.codemirrorContainer, { // eslint-disable-line
+    this._cm = CodeMirror(this.codemirrorContainer, {
+      // eslint-disable-line
       theme: `p5-${this.props.theme}`,
       lineNumbers: this.props.lineNumbers,
       styleActiveLine: true,
@@ -141,7 +142,7 @@ class Editor extends React.Component {
       [`${metaKey}-F`]: 'findPersistent',
       [`${metaKey}-G`]: 'findNext',
       [`Shift-${metaKey}-G`]: 'findPrev',
-      replaceCommand: 'replace'
+      [replaceCommand]: 'replace'
     });
 
     this.initializeDocuments(this.props.files);
@@ -349,7 +350,10 @@ class Editor extends React.Component {
     this._docs = {};
     files.forEach((file) => {
       if (file.name !== 'root') {
-        this._docs[file.id] = CodeMirror.Doc(file.content, this.getFileMode(file.name)); // eslint-disable-line
+        this._docs[file.id] = CodeMirror.Doc(
+          file.content,
+          this.getFileMode(file.name)
+        ); // eslint-disable-line
       }
     });
   }

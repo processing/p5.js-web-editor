@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Sidebar from './Sidebar';
 import ConnectedFileNode from '../../modules/IDE/components/FileNode';

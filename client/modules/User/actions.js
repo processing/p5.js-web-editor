@@ -282,10 +282,7 @@ export function updateSettings(formValues) {
           dispatch(setToastText('Toast.SettingsSaved'));
           resolve();
         })
-        .catch((error) => {
-          const { response } = error;
-          resolve({ error });
-        })
+        .catch((error) => resolve({ error }))
     );
 }
 

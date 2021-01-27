@@ -174,7 +174,6 @@
     "friendly-words": "^1.1.10",
     "htmlhint": "^0.10.1",
     "i18next": "^19.4.5",
-    "i18next-browser-languagedetector": "^4.2.0",
     "i18next-http-backend": "^1.0.21",
     "is-url": "^1.2.4",
     "jest-express": "^1.11.0",

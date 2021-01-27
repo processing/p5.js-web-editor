@@ -227,7 +227,7 @@ const autosave = (autosaveInterval, setAutosaveInterval) => (
 
   const doAutosave = () => autosaveProject(true);
 
-  if (props.isUserOwner && project.id) {
+  if (isUserOwner && project.id) {
     if (preferences.autosave && ide.unsavedChanges && !ide.justOpenedProject) {
       if (file.name === oldFile.name && file.content !== oldFile.content) {
         if (autosaveInterval) {

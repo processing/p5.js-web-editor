@@ -19,12 +19,10 @@ import {
   SketchSearchbar,
   CollectionSearchbar
 } from '../IDE/components/Searchbar';
-import Button from '../../common/Button';
 import useAsModal from '../../components/useAsModal';
 import Dropdown from '../../components/Dropdown';
 import FooterTabSwitcher from '../../components/mobile/TabSwitcher';
 import FooterTab from '../../components/mobile/Tab';
-import Loader from '../App/components/loader';
 
 const EXAMPLE_USERNAME = 'p5';
 
@@ -148,10 +146,6 @@ const Subheader = styled.div`
   }
 `;
 
-const SubheaderButton = styled(Button)`
-  border-radius: 0px !important;
-`;
-
 const Panels = {
   sketches: SketchList,
   collections: CollectionList,
@@ -180,9 +174,6 @@ const getPanel = (pathname) => {
 const NavItem = styled.li`
   position: relative;
 `;
-
-const isOwner = (user, params) =>
-  user && params && user.username === params.username;
 
 const renderPanel = (name, props) =>
   ((Component) => Component && <Component {...props} mobile />)(Panels[name]);
