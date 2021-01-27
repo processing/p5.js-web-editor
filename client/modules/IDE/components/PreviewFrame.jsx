@@ -1,14 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import escapeStringRegexp from 'escape-string-regexp';
 import { isEqual } from 'lodash';
 import srcDoc from 'srcdoc-polyfill';
 import loopProtect from 'loop-protect';
 import { JSHINT } from 'jshint';
 import decomment from 'decomment';
 import classNames from 'classnames';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Decode } from 'console-feed';
 import { getBlobUrl } from '../actions/files';

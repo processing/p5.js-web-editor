@@ -10,7 +10,7 @@ import { collectionForUserExists } from '../controllers/collection.controller';
 
 const router = new Router();
 
-const fallback404 = (res) => (exists) =>
+const fallback404 = (res) => (exists) => // eslint-disable-line
   exists ? res.send(renderIndex()) : get404Sketch((html) => res.send(html));
 
 // this is intended to be a temporary file
