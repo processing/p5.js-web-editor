@@ -31,7 +31,7 @@ const App = () => (
 const HotApp = hot(App);
 
 render(
-  <Suspense fallback={(<Loader />)}>
+  <Suspense fallback={<Loader />}>
     <HotApp />
   </Suspense>,
   document.getElementById('root')

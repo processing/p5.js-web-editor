@@ -28,7 +28,9 @@ const githubRequestOptions = {
   method: 'GET',
   headers: {
     ...headers,
-    Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
+    Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString(
+      'base64'
+    )}`
   },
   json: true
 };
@@ -38,7 +40,9 @@ const editorRequestOptions = {
   method: 'GET',
   headers: {
     ...headers,
-    Authorization: `Basic ${Buffer.from(`${editorUsername}:${personalAccessToken}`).toString('base64')}`
+    Authorization: `Basic ${Buffer.from(
+      `${editorUsername}:${personalAccessToken}`
+    ).toString('base64')}`
   },
   json: true
 };
@@ -65,10 +69,7 @@ async function fetchFileContent(item) {
   const file = { url: item.url };
 
   // if it is an html or js file
-  if (
-    (file.url != null && name.endsWith('.html')) ||
-    name.endsWith('.js')
-  ) {
+  if ((file.url != null && name.endsWith('.html')) || name.endsWith('.js')) {
     const options = Object.assign({}, githubRequestOptions);
     options.url = `${file.url}`;
 
@@ -88,13 +89,14 @@ async function fetchFileContent(item) {
   }
 
   if (file.url) {
-    const cdnRef = `https://cdn.jsdelivr.net/gh/ml5js/ml5-examples@${branchName}${file.url.split(branchName)[1]}`;
+    const cdnRef = `https://cdn.jsdelivr.net/gh/ml5js/ml5-examples@${branchName}${
+      file.url.split(branchName)[1]
+    }`;
     file.url = cdnRef;
   }
 
   return file;
 }
-
 
 /**
  * STEP 1: Get the top level cateogories
@@ -162,7 +164,7 @@ async function traverseSketchTree(parentObject) {
 
   output.tree = await rp(options);
 
-  output.tree = output.tree.map(file => traverseSketchTree(file));
+  output.tree = output.tree.map((file) => traverseSketchTree(file));
 
   output.tree = await Q.all(output.tree);
 
@@ -174,7 +176,9 @@ async function traverseSketchTree(parentObject) {
  * @param {*} categoryExamples - all of the categories in an array
  */
 async function traverseSketchTreeAll(categoryExamples) {
-  const sketches = categoryExamples.map(async sketch => traverseSketchTree(sketch));
+  const sketches = categoryExamples.map(async (sketch) =>
+    traverseSketchTree(sketch)
+  );
 
   const result = await Q.all(sketches);
   return result;
@@ -219,22 +223,19 @@ function traverseAndFormat(parentObject) {
  * @param {*} projectFileTree
  */
 async function traverseAndDownload(projectFileTree) {
-  return projectFileTree.reduce(
-    async (previousPromise, item, idx) => {
-      const result = await previousPromise;
+  return projectFileTree.reduce(async (previousPromise, item, idx) => {
+    const result = await previousPromise;
 
-      if (Array.isArray(item.children)) {
-        result[item.name] = {
-          files: await traverseAndDownload(item.children)
-        };
-      } else {
-        result[item.name] = await fetchFileContent(item);
-      }
+    if (Array.isArray(item.children)) {
+      result[item.name] = {
+        files: await traverseAndDownload(item.children)
+      };
+    } else {
+      result[item.name] = await fetchFileContent(item);
+    }
 
-      return result;
-    },
-    {}
-  );
+    return result;
+  }, {});
 }
 
 /**
@@ -261,7 +262,7 @@ async function formatSketchForStorage(sketch, user) {
 function formatSketchForStorageAll(sketchWithItems, user) {
   let sketchList = sketchWithItems.slice(0);
 
-  sketchList = sketchList.map(sketch => formatSketchForStorage(sketch, user));
+  sketchList = sketchList.map((sketch) => formatSketchForStorage(sketch, user));
 
   return Promise.all(sketchList);
 }
@@ -363,8 +364,12 @@ async function make() {
   const categories = await getCategories();
   const categoryExamples = await getCategoryExamples(categories);
 
-  const examplesWithResourceTree = await traverseSketchTreeAll(categoryExamples);
-  const formattedSketchList = await formatSketchForStorageAll(examplesWithResourceTree);
+  const examplesWithResourceTree = await traverseSketchTreeAll(
+    categoryExamples
+  );
+  const formattedSketchList = await formatSketchForStorageAll(
+    examplesWithResourceTree
+  );
 
   await createProjectsInP5User(formattedSketchList);
   console.log('done!');
@@ -382,9 +387,13 @@ async function make() {
 // eslint-disable-next-line no-unused-vars
 async function test() {
   // read from file while testing
-  const examplesWithResourceTree = JSON.parse(fs.readFileSync('./ml5-examplesWithResourceTree.json'));
+  const examplesWithResourceTree = JSON.parse(
+    fs.readFileSync('./ml5-examplesWithResourceTree.json')
+  );
 
-  const formattedSketchList = await formatSketchForStorageAll(examplesWithResourceTree);
+  const formattedSketchList = await formatSketchForStorageAll(
+    examplesWithResourceTree
+  );
 
   await createProjectsInP5User(formattedSketchList);
   console.log('done!');

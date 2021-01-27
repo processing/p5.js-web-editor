@@ -10,14 +10,14 @@ const scope = 'sketch';
 function mapStateToProps(state) {
   return {
     searchLabel: i18next.t('Searchbar.SearchSketch'),
-    searchTerm: state.search[`${scope}SearchTerm`],
+    searchTerm: state.search[`${scope}SearchTerm`]
   };
 }
 
 function mapDispatchToProps(dispatch) {
   const actions = {
-    setSearchTerm: term => SortingActions.setSearchTerm(scope, term),
-    resetSearchTerm: () => SortingActions.resetSearchTerm(scope),
+    setSearchTerm: (term) => SortingActions.setSearchTerm(scope, term),
+    resetSearchTerm: () => SortingActions.resetSearchTerm(scope)
   };
   return bindActionCreators(Object.assign({}, actions), dispatch);
 }

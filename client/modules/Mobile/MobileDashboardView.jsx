@@ -15,7 +15,10 @@ import SketchList from '../IDE/components/SketchList';
 import CollectionList from '../IDE/components/CollectionList';
 import AssetList from '../IDE/components/AssetList';
 import Content from './MobileViewContent';
-import { SketchSearchbar, CollectionSearchbar } from '../IDE/components/Searchbar';
+import {
+  SketchSearchbar,
+  CollectionSearchbar
+} from '../IDE/components/Searchbar';
 import Button from '../../common/Button';
 import useAsModal from '../../components/useAsModal';
 import Dropdown from '../../components/Dropdown';
@@ -29,13 +32,14 @@ const EXAMPLE_USERNAME = 'p5';
 const ContentWrapper = styled(Content)`
   table {
     table-layout: fixed;
-    margin-bottom: ${remSize(120)}
+    margin-bottom: ${remSize(120)};
   }
-  
-  td ,thead button {
+
+  td,
+  thead button {
     font-size: ${remSize(10)};
     text-align: left;
-  };
+  }
 
   tbody th {
     font-size: ${remSize(16)};
@@ -44,61 +48,75 @@ const ContentWrapper = styled(Content)`
     font-weight: bold;
     display: flex;
     grid-area: name;
-  };
-
-  tbody td, thead th {
-    justify-self: center;
-    align-self: flex-end;
-    color: ${prop('primaryTextColor')}
   }
 
+  tbody td,
+  thead th {
+    justify-self: center;
+    align-self: flex-end;
+    color: ${prop('primaryTextColor')};
+  }
 
-  thead th svg { margin-left: ${remSize(8)} }
-  
-  
-  tbody td              { justify-self: start; text-align: start; padding: 0 }
-  tbody td:nth-child(2) { justify-self: start;  text-align: start; padding-left: ${remSize(12)}};
-  tbody td:last-child   {
+  thead th svg {
+    margin-left: ${remSize(8)};
+  }
+
+  tbody td {
+    justify-self: start;
+    text-align: start;
+    padding: 0;
+  }
+  tbody td:nth-child(2) {
+    justify-self: start;
+    text-align: start;
+    padding-left: ${remSize(12)};
+  }
+  tbody td:last-child {
     justify-self: end;
     text-align: end;
     grid-row-start: 1;
     grid-column-start: 3;
-  };
+  }
 
-  .sketch-list__dropdown-column { width: auto; };
+  .sketch-list__dropdown-column {
+    width: auto;
+  }
 
-  tbody { height: ${remSize(48)}; }
+  tbody {
+    height: ${remSize(48)};
+  }
 
   .sketches-table-container {
     background: ${prop('SketchList.background')};
-    }
+  }
   .sketches-table__row {
     background: ${prop('SketchList.card.background')} !important;
-    height: auto
+    height: auto;
   }
-  
-
 
   tr {
     align-self: start;
     display: grid;
     box-shadow: 0 0 18px 0 ${prop('shadowColor')};
-  };
+  }
 
   thead tr {
-    grid-template-columns: repeat(${props => props.fieldcount}, 1fr) 0fr;
-    ${props => props.noheader && 'display: none;'}
+    grid-template-columns: repeat(${(props) => props.fieldcount}, 1fr) 0fr;
+    ${(props) => props.noheader && 'display: none;'}
   }
 
   tbody tr {
     padding: ${remSize(8)};
     border-radius: ${remSize(4)};
-    grid-template-columns: repeat(${props => props.fieldcount - 1}) 1fr;
-    grid-template-areas: "name name name" "content content content";
-    grid-row-gap: ${remSize(12)}
+    grid-template-columns: repeat(${(props) => props.fieldcount - 1}) 1fr;
+    grid-template-areas: 'name name name' 'content content content';
+    grid-row-gap: ${remSize(12)};
   }
 
-  .loader-container { position: fixed ; padding-bottom: 32% }
+  .loader-container {
+    position: fixed;
+    padding-bottom: 32%;
+  }
 
   .sketches-table thead th {
     background-color: transparent;
@@ -110,21 +128,24 @@ const ContentWrapper = styled(Content)`
   }
 
   .asset-table thead tr {
-    height: ${remSize(32)}
+    height: ${remSize(32)};
   }
-
 `;
 
 const Subheader = styled.div`
   display: flex;
   flex-direction: row;
-  * { border-radius: 0px; }
+  * {
+    border-radius: 0px;
+  }
 
   .searchbar {
     display: flex;
     width: 100%;
   }
-  .searchbar__input { width: 100%; }
+  .searchbar__input {
+    width: 100%;
+  }
 `;
 
 const SubheaderButton = styled(Button)`
@@ -137,19 +158,22 @@ const Panels = {
   assets: AssetList
 };
 
-
 const navOptions = (username) => {
   const { t } = useTranslation();
   return [
     { title: t('MobileDashboardView.CreateSketch'), href: '/' },
-    { title: t('MobileDashboardView.CreateCollection'), href: `/${username}/collections/create` }
+    {
+      title: t('MobileDashboardView.CreateCollection'),
+      href: `/${username}/collections/create`
+    }
   ];
 };
 
-
 const getPanel = (pathname) => {
   const pathparts = pathname ? pathname.split('/') : [];
-  const matches = Object.keys(Panels).map(part => part.toLowerCase()).filter(part => pathparts.includes(part));
+  const matches = Object.keys(Panels)
+    .map((part) => part.toLowerCase())
+    .filter((part) => pathparts.includes(part));
   return matches && matches.length > 0 && matches[0];
 };
 
@@ -157,13 +181,14 @@ const NavItem = styled.li`
   position: relative;
 `;
 
+const isOwner = (user, params) =>
+  user && params && user.username === params.username;
 
-const isOwner = (user, params) => user && params && user.username === params.username;
-
-const renderPanel = (name, props) => (Component => (Component && <Component {...props} mobile />))(Panels[name]);
+const renderPanel = (name, props) =>
+  ((Component) => Component && <Component {...props} mobile />)(Panels[name]);
 
 const MobileDashboard = ({ params, location }) => {
-  const user = useSelector(state => state.user);
+  const user = useSelector((state) => state.user);
   const { username: paramsUsername } = params;
   const { pathname } = location;
   const { t } = useTranslation();
@@ -177,16 +202,21 @@ const MobileDashboard = ({ params, location }) => {
   const isExamples = paramsUsername === EXAMPLE_USERNAME;
   const panel = getPanel(pathname);
 
-
-  const [toggleNavDropdown, NavDropdown] = useAsModal(<Dropdown
-    items={navOptions(user.username)}
-    align="right"
-  />);
-
+  const [toggleNavDropdown, NavDropdown] = useAsModal(
+    <Dropdown items={navOptions(user.username)} align="right" />
+  );
 
   return (
     <Screen fullscreen key={pathname}>
-      <Header slim inverted title={isExamples ? t('MobileDashboardView.Examples') : t('MobileDashboardView.MyStuff')}>
+      <Header
+        slim
+        inverted
+        title={
+          isExamples
+            ? t('MobileDashboardView.Examples')
+            : t('MobileDashboardView.MyStuff')
+        }
+      >
         <NavItem>
           <IconButton
             onClick={toggleNavDropdown}
@@ -194,13 +224,15 @@ const MobileDashboard = ({ params, location }) => {
             aria-label="Options"
           />
           <NavDropdown />
-
         </NavItem>
         <IconButton to="/" icon={ExitIcon} aria-label="Return to ide view" />
       </Header>
 
-
-      <ContentWrapper slimheader fieldcount={panel === Tabs[1] ? 4 : 3} noheader={panel === Tabs[2]}>
+      <ContentWrapper
+        slimheader
+        fieldcount={panel === Tabs[1] ? 4 : 3}
+        noheader={panel === Tabs[2]}
+      >
         <Subheader>
           {panel === Tabs[0] && <SketchSearchbar />}
           {panel === Tabs[1] && <CollectionSearchbar />}
@@ -208,23 +240,27 @@ const MobileDashboard = ({ params, location }) => {
         {renderPanel(panel, { username: paramsUsername, key: pathname })}
       </ContentWrapper>
       <Footer>
-        {!isExamples &&
+        {!isExamples && (
           <FooterTabSwitcher>
-            {Tabs.map(tab => (
+            {Tabs.map((tab) => (
               <FooterTab
                 key={`tab-${tab}`}
                 selected={tab === panel}
                 to={pathname.replace(panel, tab)}
               >
-                <h3>{(isExamples && tab === 'Sketches') ? t('MobileDashboardView.Examples') : (TabLabels[tab] || tab)}</h3>
-              </FooterTab>))
-            }
+                <h3>
+                  {isExamples && tab === 'Sketches'
+                    ? t('MobileDashboardView.Examples')
+                    : TabLabels[tab] || tab}
+                </h3>
+              </FooterTab>
+            ))}
           </FooterTabSwitcher>
-        }
+        )}
       </Footer>
-    </Screen>);
+    </Screen>
+  );
 };
-
 
 MobileDashboard.propTypes = {
   location: PropTypes.shape({
@@ -235,6 +271,5 @@ MobileDashboard.propTypes = {
   })
 };
 MobileDashboard.defaultProps = { params: {} };
-
 
 export default withRouter(MobileDashboard);

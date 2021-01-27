@@ -20,15 +20,20 @@ export const useModalBehavior = (hideOverlay) => {
   const ref = useRef({});
 
   // Return values
-  const setRef = (r) => { ref.current = r; };
+  const setRef = (r) => {
+    ref.current = r;
+  };
   const [visible, setVisible] = useState(false);
   const trigger = () => setVisible(!visible);
 
   const hide = () => setVisible(false);
 
-
   const handleClickOutside = ({ target }) => {
-    if (ref && ref.current && !(ref.current.contains && ref.current.contains(target))) {
+    if (
+      ref &&
+      ref.current &&
+      !(ref.current.contains && ref.current.contains(target))
+    ) {
       hide();
     }
   };
@@ -53,7 +58,13 @@ export const useEffectWithComparison = (fn, props) => {
   }, Object.values(props));
 };
 
-export const useEventListener = (event, callback, useCapture = false, list = []) => useEffect(() => {
-  document.addEventListener(event, callback, useCapture);
-  return () => document.removeEventListener(event, callback, useCapture);
-}, list);
+export const useEventListener = (
+  event,
+  callback,
+  useCapture = false,
+  list = []
+) =>
+  useEffect(() => {
+    document.addEventListener(event, callback, useCapture);
+    return () => document.removeEventListener(event, callback, useCapture);
+  }, list);

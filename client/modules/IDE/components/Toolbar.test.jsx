@@ -5,35 +5,38 @@ import { fireEvent, render, screen, waitFor } from '../../../test-utils';
 import { ToolbarComponent } from './Toolbar';
 
 const renderComponent = (extraProps = {}) => {
-  const props = lodash.merge({
-    isPlaying: false,
-    preferencesIsVisible: false,
-    stopSketch: jest.fn(),
-    setProjectName: jest.fn(),
-    openPreferences: jest.fn(),
-    showEditProjectName: jest.fn(),
-    hideEditProjectName: jest.fn(),
-    infiniteLoop: false,
-    autorefresh: false,
-    setAutorefresh: jest.fn(),
-    setTextOutput: jest.fn(),
-    setGridOutput: jest.fn(),
-    startSketch: jest.fn(),
-    startAccessibleSketch: jest.fn(),
-    saveProject: jest.fn(),
-    currentUser: 'me',
-    originalProjectName: 'testname',
+  const props = lodash.merge(
+    {
+      isPlaying: false,
+      preferencesIsVisible: false,
+      stopSketch: jest.fn(),
+      setProjectName: jest.fn(),
+      openPreferences: jest.fn(),
+      showEditProjectName: jest.fn(),
+      hideEditProjectName: jest.fn(),
+      infiniteLoop: false,
+      autorefresh: false,
+      setAutorefresh: jest.fn(),
+      setTextOutput: jest.fn(),
+      setGridOutput: jest.fn(),
+      startSketch: jest.fn(),
+      startAccessibleSketch: jest.fn(),
+      saveProject: jest.fn(),
+      currentUser: 'me',
+      originalProjectName: 'testname',
 
-    owner: {
-      username: 'me'
+      owner: {
+        username: 'me'
+      },
+      project: {
+        name: 'testname',
+        isEditingName: false,
+        id: 'id'
+      },
+      t: jest.fn()
     },
-    project: {
-      name: 'testname',
-      isEditingName: false,
-      id: 'id',
-    },
-    t: jest.fn()
-  }, extraProps);
+    extraProps
+  );
 
   render(<ToolbarComponent {...props} />);
 
@@ -57,21 +60,27 @@ describe('<ToolbarComponent />', () => {
     fireEvent.click(sketchName);
 
     expect(sketchName).toBeDisabled();
-    await waitFor(() => expect(props.showEditProjectName).not.toHaveBeenCalled());
+    await waitFor(() =>
+      expect(props.showEditProjectName).not.toHaveBeenCalled()
+    );
   });
 
   it('sketch owner can change name', async () => {
     const props = renderComponent({ project: { isEditingName: true } });
 
     const sketchNameInput = screen.getByLabelText('New sketch name');
-    fireEvent.change(sketchNameInput, { target: { value: 'my new sketch name' } });
+    fireEvent.change(sketchNameInput, {
+      target: { value: 'my new sketch name' }
+    });
     fireEvent.blur(sketchNameInput);
 
-    await waitFor(() => expect(props.setProjectName).toHaveBeenCalledWith('my new sketch name'));
+    await waitFor(() =>
+      expect(props.setProjectName).toHaveBeenCalledWith('my new sketch name')
+    );
     await waitFor(() => expect(props.saveProject).toHaveBeenCalled());
   });
 
-  it('sketch owner can\'t change to empty name', async () => {
+  it("sketch owner can't change to empty name", async () => {
     const props = renderComponent({ project: { isEditingName: true } });
 
     const sketchNameInput = screen.getByLabelText('New sketch name');
