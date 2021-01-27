@@ -9,11 +9,13 @@ import Button from '../../../common/Button';
 import apiClient from '../../../utils/apiClient';
 
 function asyncValidate(fieldToValidate, value) {
-  if (!value || value.trim().length === 0) return `Please enter a ${fieldToValidate}.`;
+  if (!value || value.trim().length === 0)
+    return `Please enter a ${fieldToValidate}.`;
   const queryParams = {};
   queryParams[fieldToValidate] = value;
   queryParams.check_type = fieldToValidate;
-  return apiClient.get('/signup/duplicate_check', { params: queryParams })
+  return apiClient
+    .get('/signup/duplicate_check', { params: queryParams })
     .then((response) => {
       if (response.data.exists) {
         return response.data.message;
@@ -42,17 +44,18 @@ function SignupForm(props) {
       validate={validateSignup}
       onSubmit={onSubmit}
     >
-      {({
-        handleSubmit, pristine, submitting, invalid
-      }) => (
-        <form
-          className="form"
-          onSubmit={handleSubmit}
-        >
-          <Field name="username" validate={validateUsername} validateFields={[]}>
-            {field => (
+      {({ handleSubmit, pristine, submitting, invalid }) => (
+        <form className="form" onSubmit={handleSubmit}>
+          <Field
+            name="username"
+            validate={validateUsername}
+            validateFields={[]}
+          >
+            {(field) => (
               <p className="form__field">
-                <label htmlFor="username" className="form__label">{props.t('SignupForm.Title')}</label>
+                <label htmlFor="username" className="form__label">
+                  {props.t('SignupForm.Title')}
+                </label>
                 <input
                   className="form__input"
                   aria-label={props.t('SignupForm.TitleARIA')}
@@ -67,9 +70,11 @@ function SignupForm(props) {
             )}
           </Field>
           <Field name="email" validate={validateEmail} validateFields={[]}>
-            {field => (
+            {(field) => (
               <p className="form__field">
-                <label htmlFor="email" className="form__label">{props.t('SignupForm.Email')}</label>
+                <label htmlFor="email" className="form__label">
+                  {props.t('SignupForm.Email')}
+                </label>
                 <input
                   className="form__input"
                   aria-label={props.t('SignupForm.EmailARIA')}
@@ -84,9 +89,11 @@ function SignupForm(props) {
             )}
           </Field>
           <Field name="password">
-            {field => (
+            {(field) => (
               <p className="form__field">
-                <label htmlFor="password" className="form__label">{props.t('SignupForm.Password')}</label>
+                <label htmlFor="password" className="form__label">
+                  {props.t('SignupForm.Password')}
+                </label>
                 <input
                   className="form__input"
                   aria-label={props.t('SignupForm.PasswordARIA')}
@@ -101,9 +108,11 @@ function SignupForm(props) {
             )}
           </Field>
           <Field name="confirmPassword">
-            {field => (
+            {(field) => (
               <p className="form__field">
-                <label htmlFor="confirm password" className="form__label">{props.t('SignupForm.ConfirmPassword')}</label>
+                <label htmlFor="confirm password" className="form__label">
+                  {props.t('SignupForm.ConfirmPassword')}
+                </label>
                 <input
                   className="form__input"
                   type="password"
@@ -117,13 +126,10 @@ function SignupForm(props) {
               </p>
             )}
           </Field>
-          <Button
-            type="submit"
-            disabled={submitting || invalid || pristine}
-          >{props.t('SignupForm.SubmitSignup')}
+          <Button type="submit" disabled={submitting || invalid || pristine}>
+            {props.t('SignupForm.SubmitSignup')}
           </Button>
         </form>
-
       )}
     </Form>
   );

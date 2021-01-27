@@ -32,13 +32,19 @@ export function createApiKey(req, res) {
       }
 
       if (!req.body.label) {
-        sendFailure(400, 'Expected field \'label\' was not present in request body');
+        sendFailure(
+          400,
+          "Expected field 'label' was not present in request body"
+        );
         return;
       }
 
       const keyToBeHashed = await generateApiKey();
 
-      const addedApiKeyIndex = user.apiKeys.push({ label: req.body.label, hashedKey: keyToBeHashed });
+      const addedApiKeyIndex = user.apiKeys.push({
+        label: req.body.label,
+        hashedKey: keyToBeHashed
+      });
 
       user.save((saveErr) => {
         if (saveErr) {
@@ -46,15 +52,14 @@ export function createApiKey(req, res) {
           return;
         }
 
-        const apiKeys = user.apiKeys
-          .map((apiKey, index) => {
-            const fields = apiKey.toObject();
-            const shouldIncludeToken = index === addedApiKeyIndex - 1;
+        const apiKeys = user.apiKeys.map((apiKey, index) => {
+          const fields = apiKey.toObject();
+          const shouldIncludeToken = index === addedApiKeyIndex - 1;
 
-            return shouldIncludeToken ?
-              { ...fields, token: keyToBeHashed } :
-              fields;
-          });
+          return shouldIncludeToken
+            ? { ...fields, token: keyToBeHashed }
+            : fields;
+        });
 
         res.json({ apiKeys });
         resolve();
@@ -81,7 +86,9 @@ export function removeApiKey(req, res) {
         return;
       }
 
-      const keyToDelete = user.apiKeys.find(key => key.id === req.params.keyId);
+      const keyToDelete = user.apiKeys.find(
+        (key) => key.id === req.params.keyId
+      );
       if (!keyToDelete) {
         sendFailure(404, 'Key does not exist for user');
         return;

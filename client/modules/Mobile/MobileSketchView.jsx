@@ -21,44 +21,65 @@ import Footer from '../../components/mobile/Footer';
 import Content from './MobileViewContent';
 
 const MobileSketchView = () => {
-  const { files, ide, preferences } = useSelector(state => state);
+  const { files, ide, preferences } = useSelector((state) => state);
 
-  const htmlFile = useSelector(state => getHTMLFile(state.files));
-  const projectName = useSelector(state => state.project.name);
-  const selectedFile = useSelector(state => state.files.find(file => file.isSelectedFile) ||
-    state.files.find(file => file.name === 'sketch.js') ||
-    state.files.find(file => file.name !== 'root'));
+  const htmlFile = useSelector((state) => getHTMLFile(state.files));
+  const projectName = useSelector((state) => state.project.name);
+  const selectedFile = useSelector(
+    (state) =>
+      state.files.find((file) => file.isSelectedFile) ||
+      state.files.find((file) => file.name === 'sketch.js') ||
+      state.files.find((file) => file.name !== 'root')
+  );
 
   const {
-    setTextOutput, setGridOutput, setSoundOutput, dispatchConsoleEvent,
-    endSketchRefresh, stopSketch, setBlobUrl, expandConsole, clearConsole
-  } = bindActionCreators({
-    ...ProjectActions, ...IDEActions, ...PreferencesActions, ...ConsoleActions, ...FilesActions
-  }, useDispatch());
+    setTextOutput,
+    setGridOutput,
+    setSoundOutput,
+    dispatchConsoleEvent,
+    endSketchRefresh,
+    stopSketch,
+    setBlobUrl,
+    expandConsole,
+    clearConsole
+  } = bindActionCreators(
+    {
+      ...ProjectActions,
+      ...IDEActions,
+      ...PreferencesActions,
+      ...ConsoleActions,
+      ...FilesActions
+    },
+    useDispatch()
+  );
 
   return (
     <Screen fullscreen>
       <Header
-        leftButton={<IconButton to="/" icon={ExitIcon} aria-label="Return to original editor" />}
+        leftButton={
+          <IconButton
+            to="/"
+            icon={ExitIcon}
+            aria-label="Return to original editor"
+          />
+        }
         title={projectName}
       />
       <Content>
         <PreviewFrame
           htmlFile={htmlFile}
           files={files}
-          head={<link type="text/css" rel="stylesheet" href="/preview-styles.css" />}
-
+          head={
+            <link type="text/css" rel="stylesheet" href="/preview-styles.css" />
+          }
           content={selectedFile.content}
-
           isPlaying
           isAccessibleOutputPlaying={ide.isAccessibleOutputPlaying}
           previewIsRefreshing={ide.previewIsRefreshing}
-
           textOutput={preferences.textOutput}
           gridOutput={preferences.gridOutput}
           soundOutput={preferences.soundOutput}
           autorefresh={preferences.autorefresh}
-
           setTextOutput={setTextOutput}
           setGridOutput={setGridOutput}
           setSoundOutput={setSoundOutput}
@@ -73,7 +94,8 @@ const MobileSketchView = () => {
       <Footer>
         <Console />
       </Footer>
-    </Screen>);
+    </Screen>
+  );
 };
 
 export default MobileSketchView;

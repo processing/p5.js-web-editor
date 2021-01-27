@@ -7,7 +7,6 @@ import Header from './Header';
 import IconButton from './IconButton';
 import { ExitIcon } from '../../common/icons';
 
-
 const SidebarWrapper = styled.div`
   height: 100%;
   width: ${remSize(180)};
@@ -17,15 +16,20 @@ const SidebarWrapper = styled.div`
   left: 0;
 
   background: ${prop('backgroundColor')};
-  box-shadow: 0 6px 6px 0 rgba(0,0,0,0.10);
+  box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.1);
 `;
 
 const Sidebar = ({ title, onPressClose, children }) => (
   <SidebarWrapper>
-    {title &&
-    <Header slim title={title} fixed={false}>
-      <IconButton onClick={onPressClose} icon={ExitIcon} aria-label="Return to ide view" />
-    </Header>}
+    {title && (
+      <Header slim title={title} fixed={false}>
+        <IconButton
+          onClick={onPressClose}
+          icon={ExitIcon}
+          aria-label="Return to ide view"
+        />
+      </Header>
+    )}
     {children}
   </SidebarWrapper>
 );
@@ -33,7 +37,10 @@ const Sidebar = ({ title, onPressClose, children }) => (
 Sidebar.propTypes = {
   title: PropTypes.string,
   onPressClose: PropTypes.func,
-  children: PropTypes.oneOfType([PropTypes.element, PropTypes.arrayOf(PropTypes.element)]),
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element)
+  ])
 };
 
 Sidebar.defaultProps = {
@@ -41,6 +48,5 @@ Sidebar.defaultProps = {
   children: [],
   onPressClose: () => {}
 };
-
 
 export default Sidebar;
