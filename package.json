@@ -145,7 +145,7 @@
     "@babel/register": "^7.8.3",
     "archiver": "^1.1.0",
     "async": "^2.6.3",
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "babel-plugin-styled-components": "^1.10.6",
     "bcrypt-nodejs": "0.0.3",
     "blob-util": "^1.2.1",
