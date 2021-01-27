@@ -91,6 +91,6 @@ Structure your commit message like this:
 
  - For reference to the JavaScript style guide, see the [Airbnb Style Guide](https://github.com/airbnb/javascript), [React ESLint Plugin](https://github.com/yannickcr/eslint-plugin-react).
 
- - The ESLint configuration is based on a few popular React/Redux boilerplates. Open to suggestions on this. If in development, you're getting annoyed with ESLint, you can temporarily remove the `eslint-loader` it from `webpack/config.dev.js` in the JavaScript loader, or disable any line from eslint by commenting at the end of the line `// eslint-disable-line`.
+ - The ESLint configuration is based on a few popular React/Redux boilerplates. Open to suggestions on this. If in development, you're getting annoyed with ESLint, you can disable any line from eslint by commenting at the end of the line `// eslint-disable-line`.
 
  - [Jest](https://jestjs.io/) for unit tests and snapshot testing along with [Enzyme](https://airbnb.io/enzyme/) for testing React.
