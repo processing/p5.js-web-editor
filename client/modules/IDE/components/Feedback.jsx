@@ -12,8 +12,8 @@ function Feedback(props) {
       <div className="feedback__content-pane">
         <h2 className="feedback__content-pane-header">Via Github Issues</h2>
         <p className="feedback__content-pane-copy">
-          If you're familiar with Github, this is our preferred method for
-          receiving bug reports and feedback.
+          {`If you're familiar with Github, this is our preferred method for
+            receiving bug reports and feedback.`}
         </p>
         <p className="feedback__content-pane-copy">
           <a

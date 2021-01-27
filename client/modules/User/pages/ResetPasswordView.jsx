@@ -16,7 +16,7 @@ function ResetPasswordView() {
     'reset-password': true,
     'reset-password--submitted': resetPasswordInitiate,
     'form-container': true,
-    "user": true
+    user: true
   });
   return (
     <div className="reset-password-container">

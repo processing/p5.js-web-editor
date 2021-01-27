@@ -378,7 +378,7 @@ class Collection extends React.Component {
   _renderFieldHeader(fieldName, displayName) {
     const { field, direction } = this.props.sorting;
     const headerClass = classNames({
-      "arrowDown": true,
+      arrowDown: true,
       'sketches-table__header--selected': field === fieldName
     });
     const buttonLabel = this._getButtonLabel(fieldName, displayName);
@@ -392,20 +392,20 @@ class Collection extends React.Component {
           <span className={headerClass}>{displayName}</span>
           {field === fieldName &&
             direction === SortingActions.DIRECTION.ASC && (
-            <ArrowUpIcon
-              role="img"
-              aria-label={this.props.t('Collection.DirectionAscendingARIA')}
-              focusable="false"
-            />
-          )}
+              <ArrowUpIcon
+                role="img"
+                aria-label={this.props.t('Collection.DirectionAscendingARIA')}
+                focusable="false"
+              />
+            )}
           {field === fieldName &&
             direction === SortingActions.DIRECTION.DESC && (
-            <ArrowDownIcon
-              role="img"
-              aria-label={this.props.t('Collection.DirectionDescendingARIA')}
-              focusable="false"
-            />
-          )}
+              <ArrowDownIcon
+                role="img"
+                aria-label={this.props.t('Collection.DirectionDescendingARIA')}
+                focusable="false"
+              />
+            )}
         </button>
       </th>
     );

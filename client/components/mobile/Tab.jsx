@@ -8,9 +8,9 @@ export default styled(Link)`
 
   background: transparent;
   /* border-top: ${remSize(4)} solid ${(props) =>
-  prop(
-    props.selected ? 'colors.p5jsPink' : 'MobilePanel.default.background'
-  )}; */
+    prop(
+      props.selected ? 'colors.p5jsPink' : 'MobilePanel.default.background'
+    )}; */
   border-top: ${remSize(4)} solid
     ${(props) => (props.selected ? prop('TabHighlight') : 'transparent')};
 

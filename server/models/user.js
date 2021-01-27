@@ -86,22 +86,23 @@ const userSchema = new Schema(
  * Password hash middleware.
  */
 userSchema.pre('save', function checkPassword(next) {
-  // eslint-disable-line consistent-return
   const user = this;
   if (!user.isModified('password')) {
-    return next();
+    next();
+    return;
   }
   bcrypt.genSalt(10, (err, salt) => {
-    // eslint-disable-line consistent-return
     if (err) {
-      return next(err);
+      next(err);
+      return;
     }
     bcrypt.hash(user.password, salt, null, (innerErr, hash) => {
       if (innerErr) {
-        return next(innerErr);
+        next(innerErr);
+        return;
       }
       user.password = hash;
-      return next();
+      next();
     });
   });
 });
@@ -113,7 +114,8 @@ userSchema.pre('save', function checkApiKey(next) {
   // eslint-disable-line consistent-return
   const user = this;
   if (!user.isModified('apiKeys')) {
-    return next();
+    next();
+    return;
   }
   let hasNew = false;
   user.apiKeys.forEach((k) => {
@@ -122,19 +124,21 @@ userSchema.pre('save', function checkApiKey(next) {
       bcrypt.genSalt(10, (err, salt) => {
         // eslint-disable-line consistent-return
         if (err) {
-          return next(err);
+          next(err);
+          return;
         }
         bcrypt.hash(k.hashedKey, salt, null, (innerErr, hash) => {
           if (innerErr) {
-            return next(innerErr);
+            next(innerErr);
+            return;
           }
           k.hashedKey = hash;
-          return next();
+          next();
         });
       });
     }
   });
-  if (!hasNew) return next();
+  if (!hasNew) next();
 });
 
 userSchema.virtual('id').get(function idToString() {

@@ -24,7 +24,7 @@ function NewPasswordView(props) {
     'new-password': true,
     'new-password--invalid': resetPasswordInvalid,
     'form-container': true,
-    "user": true
+    user: true
   });
   return (
     <div className="new-password-container">

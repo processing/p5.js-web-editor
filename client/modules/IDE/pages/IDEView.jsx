@@ -362,8 +362,7 @@ class IDEView extends React.Component {
                     ref={(element) => {
                       this.overlay = element;
                     }}
-                  >
-                  </div>
+                  />
                   <div>
                     {((this.props.preferences.textOutput ||
                       this.props.preferences.gridOutput ||

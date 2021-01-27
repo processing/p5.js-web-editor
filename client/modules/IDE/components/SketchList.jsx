@@ -453,20 +453,20 @@ class SketchList extends React.Component {
           <span className={headerClass}>{displayName}</span>
           {field === fieldName &&
             direction === SortingActions.DIRECTION.ASC && (
-            <ArrowUpIcon
-              role="img"
-              aria-label={this.props.t('SketchList.DirectionAscendingARIA')}
-              focusable="false"
-            />
-          )}
+              <ArrowUpIcon
+                role="img"
+                aria-label={this.props.t('SketchList.DirectionAscendingARIA')}
+                focusable="false"
+              />
+            )}
           {field === fieldName &&
             direction === SortingActions.DIRECTION.DESC && (
-            <ArrowDownIcon
-              role="img"
-              aria-label={this.props.t('SketchList.DirectionDescendingARIA')}
-              focusable="false"
-            />
-          )}
+              <ArrowDownIcon
+                role="img"
+                aria-label={this.props.t('SketchList.DirectionDescendingARIA')}
+                focusable="false"
+              />
+            )}
         </button>
       </th>
     );

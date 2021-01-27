@@ -212,15 +212,15 @@ const Button = ({
 };
 
 Button.defaultProps = {
-  "children": null,
-  "disabled": false,
-  "iconAfter": null,
-  "iconBefore": null,
-  "kind": kinds.block,
-  "href": null,
+  children: null,
+  disabled: false,
+  iconAfter: null,
+  iconBefore: null,
+  kind: kinds.block,
+  href: null,
   'aria-label': null,
-  "to": null,
-  "type": 'button'
+  to: null,
+  type: 'button'
 };
 
 Button.kinds = kinds;
@@ -230,27 +230,27 @@ Button.propTypes = {
    * The visible part of the button, telling the user what
    * the action is
    */
-  "children": PropTypes.element,
+  children: PropTypes.element,
   /**
     If the button can be activated or not
   */
-  "disabled": PropTypes.bool,
+  disabled: PropTypes.bool,
   /**
    * SVG icon to place after child content
    */
-  "iconAfter": PropTypes.element,
+  iconAfter: PropTypes.element,
   /**
    * SVG icon to place before child content
    */
-  "iconBefore": PropTypes.element,
+  iconBefore: PropTypes.element,
   /**
    * The kind of button - determines how it appears visually
    */
-  "kind": PropTypes.oneOf(Object.values(kinds)),
+  kind: PropTypes.oneOf(Object.values(kinds)),
   /**
    * Specifying an href will use an <a> to link to the URL
    */
-  "href": PropTypes.string,
+  href: PropTypes.string,
   /*
    * An ARIA Label used for accessibility
    */
@@ -258,11 +258,11 @@ Button.propTypes = {
   /**
    * Specifying a to URL will use a react-router Link
    */
-  "to": PropTypes.string,
+  to: PropTypes.string,
   /**
    * If using a button, then type is defines the type of button
    */
-  "type": PropTypes.oneOf(['button', 'submit'])
+  type: PropTypes.oneOf(['button', 'submit'])
 };
 
 export default Button;

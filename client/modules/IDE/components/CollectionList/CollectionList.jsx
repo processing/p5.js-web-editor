@@ -134,24 +134,24 @@ class CollectionList extends React.Component {
           <span className={headerClass}>{displayName}</span>
           {field === fieldName &&
             direction === SortingActions.DIRECTION.ASC && (
-            <ArrowUpIcon
-              role="img"
-              aria-label={this.props.t(
-                'CollectionList.DirectionAscendingARIA'
-              )}
-              focusable="false"
-            />
-          )}
+              <ArrowUpIcon
+                role="img"
+                aria-label={this.props.t(
+                  'CollectionList.DirectionAscendingARIA'
+                )}
+                focusable="false"
+              />
+            )}
           {field === fieldName &&
             direction === SortingActions.DIRECTION.DESC && (
-            <ArrowDownIcon
-              role="img"
-              aria-label={this.props.t(
-                'CollectionList.DirectionDescendingARIA'
-              )}
-              focusable="false"
-            />
-          )}
+              <ArrowDownIcon
+                role="img"
+                aria-label={this.props.t(
+                  'CollectionList.DirectionDescendingARIA'
+                )}
+                focusable="false"
+              />
+            )}
         </button>
       </th>
     );

@@ -317,19 +317,19 @@ class Nav extends React.PureComponent {
             </li>
             {getConfig('LOGIN_ENABLED') &&
               (!this.props.project.owner || this.props.isUserOwner) && (
-              <li className="nav__dropdown-item">
-                <button
-                  onClick={this.handleSave}
-                  onFocus={this.handleFocusForFile}
-                  onBlur={this.handleBlur}
-                >
-                  {this.props.t('Common.Save')}
-                  <span className="nav__keyboard-shortcut">
-                    {metaKeyName}+S
-                  </span>
-                </button>
-              </li>
-            )}
+                <li className="nav__dropdown-item">
+                  <button
+                    onClick={this.handleSave}
+                    onFocus={this.handleFocusForFile}
+                    onBlur={this.handleBlur}
+                  >
+                    {this.props.t('Common.Save')}
+                    <span className="nav__keyboard-shortcut">
+                      {metaKeyName}+S
+                    </span>
+                  </button>
+                </li>
+              )}
             {this.props.project.id && this.props.user.authenticated && (
               <li className="nav__dropdown-item">
                 <button
@@ -378,17 +378,17 @@ class Nav extends React.PureComponent {
             {getConfig('UI_COLLECTIONS_ENABLED') &&
               this.props.user.authenticated &&
               this.props.project.id && (
-              <li className="nav__dropdown-item">
-                <Link
-                  to={`/${this.props.user.username}/sketches/${this.props.project.id}/add-to-collection`}
-                  onFocus={this.handleFocusForFile}
-                  onBlur={this.handleBlur}
-                  onClick={this.setDropdownForNone}
-                >
-                  {this.props.t('Nav.File.AddToCollection')}
-                </Link>
-              </li>
-            )}
+                <li className="nav__dropdown-item">
+                  <Link
+                    to={`/${this.props.user.username}/sketches/${this.props.project.id}/add-to-collection`}
+                    onFocus={this.handleFocusForFile}
+                    onBlur={this.handleBlur}
+                    onClick={this.setDropdownForNone}
+                  >
+                    {this.props.t('Nav.File.AddToCollection')}
+                  </Link>
+                </li>
+              )}
             {getConfig('EXAMPLES_ENABLED') && (
               <li className="nav__dropdown-item">
                 <Link
@@ -819,27 +819,27 @@ class Nav extends React.PureComponent {
   render() {
     const navDropdownState = {
       file: classNames({
-        "nav__item": true,
+        nav__item: true,
         'nav__item--open': this.state.dropdownOpen === 'file'
       }),
       edit: classNames({
-        "nav__item": true,
+        nav__item: true,
         'nav__item--open': this.state.dropdownOpen === 'edit'
       }),
       sketch: classNames({
-        "nav__item": true,
+        nav__item: true,
         'nav__item--open': this.state.dropdownOpen === 'sketch'
       }),
       help: classNames({
-        "nav__item": true,
+        nav__item: true,
         'nav__item--open': this.state.dropdownOpen === 'help'
       }),
       account: classNames({
-        "nav__item": true,
+        nav__item: true,
         'nav__item--open': this.state.dropdownOpen === 'account'
       }),
       lang: classNames({
-        "nav__item": true,
+        nav__item: true,
         'nav__item--open': this.state.dropdownOpen === 'lang'
       })
     };

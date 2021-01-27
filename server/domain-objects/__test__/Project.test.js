@@ -330,7 +330,7 @@ describe('transformFiles', () => {
       'index.html': {
         content: 'some contents'
       },
-      "data": {
+      data: {
         files: {
           'index.html': {
             content: 'different file'

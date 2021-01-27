@@ -65,7 +65,7 @@ class Sidebar extends React.Component {
   render() {
     const canEditProject = this.userCanEditProject();
     const sidebarClass = classNames({
-      "sidebar": true,
+      sidebar: true,
       'sidebar--contracted': !this.props.isExpanded,
       'sidebar--project-options': this.props.projectOptionsVisible,
       'sidebar--cant-edit': !canEditProject

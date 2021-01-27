@@ -17,17 +17,16 @@ import Overlay from '../../App/components/Overlay';
 import Toast from '../../IDE/components/Toast';
 
 function SocialLoginPanel(props) {
-  const { user } = props;
+  const { user, t } = props;
   return (
     <React.Fragment>
       <AccountForm />
-      {/* eslint-disable-next-line react/prop-types */}
       <h2 className="form-container__divider">
-        {props.t('AccountView.SocialLogin')}
+        {t('AccountView.SocialLogin')}
       </h2>
       <p className="account__social-text">
         {/* eslint-disable-next-line react/prop-types */}
-        {props.t('AccountView.SocialLoginDescription')}
+        {t('AccountView.SocialLoginDescription')}
       </p>
       <div className="account__social-stack">
         <SocialAuthButton
@@ -49,7 +48,8 @@ SocialLoginPanel.propTypes = {
   user: PropTypes.shape({
     github: PropTypes.string,
     google: PropTypes.string
-  }).isRequired
+  }).isRequired,
+  t: PropTypes.func.isRequired
 };
 
 class AccountView extends React.Component {

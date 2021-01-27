@@ -114,10 +114,10 @@ class Editor extends React.Component {
           this.updateLintingMessageAccessibility(annotations);
         },
         options: {
-          "asi": true,
-          "eqeqeq": false,
+          asi: true,
+          eqeqeq: false,
           '-W041': false,
-          "esversion": 7
+          esversion: 7
         }
       }
     });
@@ -365,7 +365,7 @@ class Editor extends React.Component {
 
   render() {
     const editorSectionClass = classNames({
-      "editor": true,
+      editor: true,
       'sidebar--contracted': !this.props.isExpanded,
       'editor--options': this.props.editorOptionsVisible
     });
@@ -417,8 +417,7 @@ class Editor extends React.Component {
             this.codemirrorContainer = element;
           }}
           className={editorHolderClass}
-        >
-        </article>
+        />
         <EditorAccessibility lintMessages={this.props.lintMessages} />
       </section>
     );

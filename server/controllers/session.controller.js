@@ -4,19 +4,21 @@ import { userResponse } from './user.controller';
 
 export function createSession(req, res, next) {
   passport.authenticate('local', (err, user) => {
-    // eslint-disable-line consistent-return
     if (err) {
-      return next(err);
+      next(err);
+      return;
     }
     if (!user) {
-      return res.status(401).json({ message: 'Invalid username or password.' });
+      res.status(401).json({ message: 'Invalid username or password.' });
+      return;
     }
 
     req.logIn(user, (innerErr) => {
       if (innerErr) {
-        return next(innerErr);
+        next(innerErr);
+        return;
       }
-      return res.json(userResponse(req.user));
+      res.json(userResponse(req.user));
     });
   })(req, res, next);
 }

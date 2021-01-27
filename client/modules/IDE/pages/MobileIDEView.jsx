@@ -85,54 +85,54 @@ const getNavOptions = (
   const { t } = useTranslation();
   return username
     ? [
-      {
-        icon: PreferencesIcon,
-        title: t('MobileIDEView.Preferences'),
-        href: '/preferences'
-      },
-      {
-        icon: PreferencesIcon,
-        title: t('MobileIDEView.MyStuff'),
-        href: `/${username}/sketches`
-      },
-      {
-        icon: PreferencesIcon,
-        title: t('MobileIDEView.Examples'),
-        href: '/p5/sketches'
-      },
-      {
-        icon: PreferencesIcon,
-        title: t('MobileIDEView.OriginalEditor'),
-        action: toggleForceDesktop
-      },
-      {
-        icon: PreferencesIcon,
-        title: t('MobileIDEView.Logout'),
-        action: logoutUser
-      }
-    ]
+        {
+          icon: PreferencesIcon,
+          title: t('MobileIDEView.Preferences'),
+          href: '/preferences'
+        },
+        {
+          icon: PreferencesIcon,
+          title: t('MobileIDEView.MyStuff'),
+          href: `/${username}/sketches`
+        },
+        {
+          icon: PreferencesIcon,
+          title: t('MobileIDEView.Examples'),
+          href: '/p5/sketches'
+        },
+        {
+          icon: PreferencesIcon,
+          title: t('MobileIDEView.OriginalEditor'),
+          action: toggleForceDesktop
+        },
+        {
+          icon: PreferencesIcon,
+          title: t('MobileIDEView.Logout'),
+          action: logoutUser
+        }
+      ]
     : [
-      {
-        icon: PreferencesIcon,
-        title: t('MobileIDEView.Preferences'),
-        href: '/preferences'
-      },
-      {
-        icon: PreferencesIcon,
-        title: t('MobileIDEView.Examples'),
-        href: '/p5/sketches'
-      },
-      {
-        icon: PreferencesIcon,
-        title: t('MobileIDEView.OriginalEditor'),
-        action: toggleForceDesktop
-      },
-      {
-        icon: PreferencesIcon,
-        title: t('MobileIDEView.Login'),
-        href: '/login'
-      }
-    ];
+        {
+          icon: PreferencesIcon,
+          title: t('MobileIDEView.Preferences'),
+          href: '/preferences'
+        },
+        {
+          icon: PreferencesIcon,
+          title: t('MobileIDEView.Examples'),
+          href: '/p5/sketches'
+        },
+        {
+          icon: PreferencesIcon,
+          title: t('MobileIDEView.OriginalEditor'),
+          action: toggleForceDesktop
+        },
+        {
+          icon: PreferencesIcon,
+          title: t('MobileIDEView.Login'),
+          href: '/login'
+        }
+      ];
 };
 
 const canSaveProject = (isUserOwner, project, user) =>

@@ -35,15 +35,16 @@ passport.use(
   new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
     User.findByEmailOrUsername(email)
       .then((user) => {
-        // eslint-disable-line consistent-return
         if (!user) {
-          return done(null, false, { msg: `Email ${email} not found.` });
+          done(null, false, { msg: `Email ${email} not found.` });
+          return;
         }
         user.comparePassword(password, (innerErr, isMatch) => {
           if (isMatch) {
-            return done(null, user);
+            done(null, user);
+            return;
           }
-          return done(null, false, { msg: 'Invalid email or password.' });
+          done(null, false, { msg: 'Invalid email or password.' });
         });
       })
       .catch((err) => done(null, false, { msg: err }));
@@ -56,20 +57,22 @@ passport.use(
 passport.use(
   new BasicStrategy((userid, key, done) => {
     User.findByUsername(userid, (err, user) => {
-      // eslint-disable-line consistent-return
       if (err) {
-        return done(err);
+        done(err);
+        return;
       }
       if (!user) {
-        return done(null, false);
+        done(null, false);
+        return;
       }
       user.findMatchingKey(key, (innerErr, isMatch, keyDocument) => {
         if (isMatch) {
           keyDocument.lastUsedAt = Date.now();
           user.save();
-          return done(null, user);
+          done(null, user);
+          return;
         }
-        return done(null, false, { msg: 'Invalid username or API key' });
+        done(null, false, { msg: 'Invalid username or API key' });
       });
     });
   })
