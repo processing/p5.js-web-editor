@@ -12,7 +12,7 @@
       },
       "Edit": {
         "Title": "संपादित करे",
-        "TidyCode": "साफ कोड",
+        "TidyCode": "कोड साफ़ करें",
         "Find": "खोज",
         "FindNext": "अगला खोजें",
         "FindPrevious": "पिछला खोजें",  
@@ -23,13 +23,13 @@
         "AddFile": "फाइल जोड़ें",
         "AddFolder": "फोल्डर जोड़ें",
         "Run": "चलाएं",
-        "Stop": "बंद करें"
+        "Stop": "रोकें"
       },
       "Help": {
         "Title": "मदद",
         "KeyboardShortcuts": "कीबोर्ड शॉर्टकट",
         "Reference": "रिफरेन्स",
-        "About": "के बारे में"
+        "About": "अधिक जानकारी"
       },
       "Lang": "भाषा",
       "BackEditor": "एडिटर पर वापस जाएं",
@@ -39,7 +39,7 @@
       "SignUp": "साइन अप",
       "Auth": {
         "Welcome": "स्वागत है",
-        "Hello": "नमस्कार",
+        "Hello": "नमस्ते",
         "MyAccount": "मेरा अकाउंट",
         "My": "मेरा",
         "MySketches": "मेरे स्केच",
@@ -95,7 +95,7 @@
       "NewP5": "p5.js पर नये?",
       "Report": "बग रिपोर्ट",
       "Learn": "सीखें",
-      "Resources": "रीसॉर्सेज़",
+      "Resources": "साधन",
       "Libraries": "लाइब्रेरीज़",
       "Forum": "फोरम",
       "Examples": "उदाहरण"
@@ -110,12 +110,12 @@
     },
     "Toolbar": {
       "Preview": "पूर्वावलोकन",
-      "Auto-refresh": "स्वयं रिफ़्रेश",
+      "Auto-refresh": "ऑटो-रिफ़्रेश",
       "OpenPreferencesARIA": "प्राथमिकताएँ खोलें",
       "PlaySketchARIA": "स्केच चलाएं",
       "PlayOnlyVisualSketchARIA": "केवल दृश्य स्केच चलाएं",
       "StopSketchARIA": "स्केच बंद करे",
-      "EditSketchARIA": "स्केच नाम संपादित करें",
+      "EditSketchARIA": "स्केच का नाम संपादित करें",
       "NewSketchNameARIA": "नया स्केच नाम",
       "By": " द्वारा "
     },
@@ -178,7 +178,7 @@
       "SublimeText": "Sublime Text शॉर्टकट",
       "CodeEditing": {
         "Tidy": "साफ",
-        "FindText": "शब्द ढूंढना",
+        "FindText": "शब्द ढूंढे",
         "FindNextMatch": "अगला मिलान खोजें",
         "FindPrevMatch": "पिछला मिलान ढूंढें",
         "ReplaceTextMatch": "शब्द मिलान बदलें",
@@ -191,7 +191,7 @@
       },
       "General": {
         "StartSketch": "स्केच शुरू करें",
-        "StopSketch": "स्केच बंद करो",
+        "StopSketch": "स्केच रोकें",
         "TurnOnAccessibleOutput": "Accessibile आउटपुट चालू करें",
         "TurnOffAccessibleOutput": "Accessibile आउटपुट बंद करें"
       }
@@ -357,7 +357,7 @@
     },
     "EmailVerificationView": {
       "Title": "p5.js वेब एडिटर | ईमेल वेरीफिकेशन",
-      "Verify": "अपना ईमेल वेरफाइ करें",
+      "Verify": "अपना ईमेल व्हेरिफाय करें",
       "InvalidTokenNull": "वह लिंक अमान्य है।",
       "Checking": "टोकन की पुष्टि की जा रही है, कृपया प्रतीक्षा करें...",
       "Verified": "सबकुछ ठीक है। आपके ईमेल का पुष्टीकरण हो चुका है।",
@@ -533,7 +533,7 @@
       "KeyUpLineNumber": "लाइन {{lineNumber}}"
     },
     "EditorAccessibility": {
-      "NoLintMessages": "कोई लिंट मैसिज नहीं ",
+      "NoLintMessages": "कोई लिंट मैसेज नहीं ",
       "CurrentLine": " वर्तमान लाइन"
     },
     "Timer": {
@@ -586,7 +586,7 @@
     },
     "MobileIDEView":{
       "Preferences": "प्राथमिकता",
-      "MyStuff": "मेरा स्टफ",
+      "MyStuff": "मेरे वस्तु",
       "Examples": "उदाहरण",
       "OriginalEditor": "ओरिजिनल एडिटर",
       "Login": "लॉग इन",
