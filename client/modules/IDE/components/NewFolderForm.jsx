@@ -30,21 +30,12 @@ function NewFolderForm() {
   }
 
   return (
-    <Form
-      fields={['name']}
-      validate={validate}
-      onSubmit={onSubmit}
-    >
-      {({
-        handleSubmit, invalid, submitting, touched, errors
-      }) => (
-        <form
-          className="new-folder-form"
-          onSubmit={handleSubmit}
-        >
+    <Form fields={['name']} validate={validate} onSubmit={onSubmit}>
+      {({ handleSubmit, invalid, submitting, touched, errors }) => (
+        <form className="new-folder-form" onSubmit={handleSubmit}>
           <div className="new-folder-form__input-wrapper">
             <Field name="name">
-              {field => (
+              {(field) => (
                 <React.Fragment>
                   <label className="new-folder-form__name-label" htmlFor="name">
                     Name:
@@ -61,17 +52,14 @@ function NewFolderForm() {
                 </React.Fragment>
               )}
             </Field>
-            <Button
-              type="submit"
-              disabled={invalid || submitting}
-            >{t('NewFolderForm.AddFolderSubmit')}
+            <Button type="submit" disabled={invalid || submitting}>
+              {t('NewFolderForm.AddFolderSubmit')}
             </Button>
           </div>
           {touched.name && errors.name && (
             <span className="form-error">{errors.name}</span>
           )}
         </form>
-
       )}
     </Form>
   );

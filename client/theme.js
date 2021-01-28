@@ -3,7 +3,7 @@ import lodash from 'lodash';
 export const Theme = {
   contrast: 'contrast',
   dark: 'dark',
-  light: 'light',
+  light: 'light'
 };
 
 export const colors = {
@@ -20,7 +20,7 @@ export const colors = {
   p5ContrastPink: ' #FFA9D9',
 
   borderColor: ' #B5B5B5',
-  outlineColor: '#0F9DD7',
+  outlineColor: '#0F9DD7'
 };
 
 export const grays = {
@@ -37,7 +37,7 @@ export const grays = {
 
   dark: '#333', // primary
   darker: '#1C1C1C',
-  darkest: '#000',
+  darkest: '#000'
 };
 
 export const common = {
@@ -45,9 +45,9 @@ export const common = {
   shadowColor: 'rgba(0, 0, 0, 0.16)'
 };
 
-export const remSize = size => `${size / common.baseFontSize}rem`;
+export const remSize = (size) => `${size / common.baseFontSize}rem`;
 
-export const prop = key => (props) => {
+export const prop = (key) => (props) => {
   const keypath = `theme.${key}`;
   const value = lodash.get(props, keypath);
 
@@ -57,7 +57,6 @@ export const prop = key => (props) => {
 
   return value;
 };
-
 
 export default {
   [Theme.light]: {
@@ -70,23 +69,23 @@ export default {
       default: {
         foreground: colors.black,
         background: grays.light,
-        border: grays.middleLight,
+        border: grays.middleLight
       },
       hover: {
         foreground: grays.lightest,
         background: colors.p5jsPink,
-        border: colors.p5jsPink,
+        border: colors.p5jsPink
       },
       active: {
         foreground: grays.lightest,
         background: colors.p5jsActivePink,
-        border: colors.p5jsActivePink,
+        border: colors.p5jsActivePink
       },
       disabled: {
         foreground: colors.black,
         background: grays.light,
-        border: grays.middleLight,
-      },
+        border: grays.middleLight
+      }
     },
     Icon: {
       default: grays.middleGray,
@@ -96,8 +95,8 @@ export default {
       default: {
         foreground: colors.black,
         background: grays.light,
-        border: grays.middleLight,
-      },
+        border: grays.middleLight
+      }
     },
     Modal: {
       background: grays.light,
@@ -123,23 +122,23 @@ export default {
       default: {
         foreground: grays.light,
         background: grays.dark,
-        border: grays.middleDark,
+        border: grays.middleDark
       },
       hover: {
         foreground: grays.lightest,
         background: colors.p5jsPink,
-        border: colors.p5jsPink,
+        border: colors.p5jsPink
       },
       active: {
         foreground: grays.lightest,
         background: colors.p5jsActivePink,
-        border: colors.p5jsActivePink,
+        border: colors.p5jsActivePink
       },
       disabled: {
         foreground: grays.light,
         background: grays.dark,
-        border: grays.middleDark,
-      },
+        border: grays.middleDark
+      }
     },
     Icon: {
       default: grays.middleLight,
@@ -149,8 +148,8 @@ export default {
       default: {
         foreground: grays.light,
         background: grays.dark,
-        border: grays.middleDark,
-      },
+        border: grays.middleDark
+      }
     },
     Modal: {
       background: grays.dark,
@@ -176,23 +175,23 @@ export default {
       default: {
         foreground: grays.light,
         background: grays.dark,
-        border: grays.middleDark,
+        border: grays.middleDark
       },
       hover: {
         foreground: grays.dark,
         background: colors.yellow,
-        border: colors.yellow,
+        border: colors.yellow
       },
       active: {
         foreground: grays.dark,
         background: colors.p5jsActivePink,
-        border: colors.p5jsActivePink,
+        border: colors.p5jsActivePink
       },
       disabled: {
         foreground: grays.light,
         background: grays.dark,
-        border: grays.middleDark,
-      },
+        border: grays.middleDark
+      }
     },
     Icon: {
       default: grays.mediumLight,
@@ -202,8 +201,8 @@ export default {
       default: {
         foreground: grays.light,
         background: grays.dark,
-        border: grays.middleDark,
-      },
+        border: grays.middleDark
+      }
     },
     Modal: {
       background: grays.dark,
@@ -218,5 +217,5 @@ export default {
         background: grays.dark
       }
     }
-  },
+  }
 };

@@ -13,7 +13,12 @@ function About(props) {
         <title> {t('About.TitleHelmet')} </title>
       </Helmet>
       <div className="about__content-column">
-        <SquareLogoIcon className="about__logo" role="img" aria-label={t('Common.p5logoARIA')} focusable="false" />
+        <SquareLogoIcon
+          className="about__logo"
+          role="img"
+          aria-label={t('Common.p5logoARIA')}
+          focusable="false"
+        />
       </div>
       <div className="about__content-column">
         <h3 className="about__content-column-title">{t('About.NewP5')}</h3>
@@ -23,7 +28,11 @@ function About(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <AsteriskIcon className="about__content-column-asterisk" aria-hidden="true" focusable="false" />
+            <AsteriskIcon
+              className="about__content-column-asterisk"
+              aria-hidden="true"
+              focusable="false"
+            />
             {t('About.Examples')}
           </a>
         </p>
@@ -33,7 +42,11 @@ function About(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <AsteriskIcon className="about__content-column-asterisk" aria-hidden="true" focusable="false" />
+            <AsteriskIcon
+              className="about__content-column-asterisk"
+              aria-hidden="true"
+              focusable="false"
+            />
             {t('About.Learn')}
           </a>
         </p>
@@ -46,7 +59,11 @@ function About(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <AsteriskIcon className="about__content-column-asterisk" aria-hidden="true" focusable="false" />
+            <AsteriskIcon
+              className="about__content-column-asterisk"
+              aria-hidden="true"
+              focusable="false"
+            />
             {t('About.Libraries')}
           </a>
         </p>
@@ -56,7 +73,11 @@ function About(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <AsteriskIcon className="about__content-column-asterisk" aria-hidden="true" focusable="false" />
+            <AsteriskIcon
+              className="about__content-column-asterisk"
+              aria-hidden="true"
+              focusable="false"
+            />
             {t('Nav.Help.Reference')}
           </a>
         </p>
@@ -66,7 +87,11 @@ function About(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <AsteriskIcon className="about__content-column-asterisk" aria-hidden="true" focusable="false" />
+            <AsteriskIcon
+              className="about__content-column-asterisk"
+              aria-hidden="true"
+              focusable="false"
+            />
             {t('About.Forum')}
           </a>
         </p>
@@ -77,7 +102,8 @@ function About(props) {
             href="https://github.com/processing/p5.js-web-editor"
             target="_blank"
             rel="noopener noreferrer"
-          >{t('About.Contribute')}
+          >
+            {t('About.Contribute')}
           </a>
         </p>
         <p className="about__footer-list">
@@ -85,7 +111,8 @@ function About(props) {
             href="https://github.com/processing/p5.js-web-editor/issues/new"
             target="_blank"
             rel="noopener noreferrer"
-          >{t('About.Report')}
+          >
+            {t('About.Report')}
           </a>
         </p>
         <p className="about__footer-list">
@@ -93,7 +120,8 @@ function About(props) {
             href="https://twitter.com/p5xjs?lang=en"
             target="_blank"
             rel="noopener noreferrer"
-          >Twitter
+          >
+            Twitter
           </a>
         </p>
       </div>

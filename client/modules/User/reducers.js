@@ -24,11 +24,17 @@ const user = (state = { authenticated: false }, action) => {
     case ActionTypes.EMAIL_VERIFICATION_INITIATE:
       return Object.assign({}, state, { emailVerificationInitiate: true });
     case ActionTypes.EMAIL_VERIFICATION_VERIFY:
-      return Object.assign({}, state, { emailVerificationTokenState: 'checking' });
+      return Object.assign({}, state, {
+        emailVerificationTokenState: 'checking'
+      });
     case ActionTypes.EMAIL_VERIFICATION_VERIFIED:
-      return Object.assign({}, state, { emailVerificationTokenState: 'verified' });
+      return Object.assign({}, state, {
+        emailVerificationTokenState: 'verified'
+      });
     case ActionTypes.EMAIL_VERIFICATION_INVALID:
-      return Object.assign({}, state, { emailVerificationTokenState: 'invalid' });
+      return Object.assign({}, state, {
+        emailVerificationTokenState: 'invalid'
+      });
     case ActionTypes.SETTINGS_UPDATED:
       return { ...state, ...action.user };
     case ActionTypes.API_KEY_REMOVED:

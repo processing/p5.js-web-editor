@@ -29,7 +29,11 @@ fileSchema.set('toJSON', {
 
 const projectSchema = new Schema(
   {
-    name: { type: String, default: "Hello p5.js, it's the server", maxlength: 128 },
+    name: {
+      type: String,
+      default: "Hello p5.js, it's the server",
+      maxlength: 128
+    },
     user: { type: Schema.Types.ObjectId, ref: 'User' },
     serveSecure: { type: Boolean, default: false },
     files: { type: [fileSchema] },
@@ -65,13 +69,14 @@ projectSchema.methods.isSlugUnique = async function isSlugUnique(cb) {
   const hasCallback = typeof cb === 'function';
 
   try {
-    const docsWithSlug = await project.model('Project')
+    const docsWithSlug = await project
+      .model('Project')
       .find({ user: project.user, slug: project.slug }, '_id')
       .exec();
 
     const result = {
       isUnique: docsWithSlug.length === 0,
-      conflictingIds: docsWithSlug.map(d => d._id) || []
+      conflictingIds: docsWithSlug.map((d) => d._id) || []
     };
 
     if (hasCallback) {

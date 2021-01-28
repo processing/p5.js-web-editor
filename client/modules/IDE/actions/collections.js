@@ -4,7 +4,6 @@ import * as ActionTypes from '../../../constants';
 import { startLoader, stopLoader } from './loader';
 import { setToastText, showToast } from './toast';
 
-
 const TOAST_DISPLAY_TIME_MS = 1500;
 
 // eslint-disable-next-line
@@ -18,7 +17,8 @@ export function getCollections(username) {
       url = '/collections';
     }
     console.log(url);
-    apiClient.get(url)
+    apiClient
+      .get(url)
       .then((response) => {
         dispatch({
           type: ActionTypes.SET_COLLECTIONS,
@@ -41,7 +41,8 @@ export function createCollection(collection) {
   return (dispatch) => {
     dispatch(startLoader());
     const url = '/collections';
-    return apiClient.post(url, collection)
+    return apiClient
+      .post(url, collection)
       .then((response) => {
         dispatch({
           type: ActionTypes.CREATE_COLLECTION
@@ -73,7 +74,8 @@ export function addToCollection(collectionId, projectId) {
   return (dispatch) => {
     dispatch(startLoader());
     const url = `/collections/${collectionId}/${projectId}`;
-    return apiClient.post(url)
+    return apiClient
+      .post(url)
       .then((response) => {
         dispatch({
           type: ActionTypes.ADD_TO_COLLECTION,
@@ -105,7 +107,8 @@ export function removeFromCollection(collectionId, projectId) {
   return (dispatch) => {
     dispatch(startLoader());
     const url = `/collections/${collectionId}/${projectId}`;
-    return apiClient.delete(url)
+    return apiClient
+      .delete(url)
       .then((response) => {
         dispatch({
           type: ActionTypes.REMOVE_FROM_COLLECTION,
@@ -136,7 +139,8 @@ export function removeFromCollection(collectionId, projectId) {
 export function editCollection(collectionId, { name, description }) {
   return (dispatch) => {
     const url = `/collections/${collectionId}`;
-    return apiClient.patch(url, { name, description })
+    return apiClient
+      .patch(url, { name, description })
       .then((response) => {
         dispatch({
           type: ActionTypes.EDIT_COLLECTION,
@@ -159,12 +163,13 @@ export function editCollection(collectionId, { name, description }) {
 export function deleteCollection(collectionId) {
   return (dispatch) => {
     const url = `/collections/${collectionId}`;
-    return apiClient.delete(url)
+    return apiClient
+      .delete(url)
       .then((response) => {
         dispatch({
           type: ActionTypes.DELETE_COLLECTION,
           payload: response.data,
-          collectionId,
+          collectionId
         });
         return response.data;
       })

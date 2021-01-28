@@ -9,7 +9,10 @@ import * as ProjectActions from '../actions/project';
 
 class FullView extends React.Component {
   componentDidMount() {
-    this.props.getProject(this.props.params.project_id, this.props.params.username);
+    this.props.getProject(
+      this.props.params.project_id,
+      this.props.params.username
+    );
   }
 
   render() {
@@ -19,13 +22,18 @@ class FullView extends React.Component {
           <title>{this.props.project.name}</title>
         </Helmet>
         <PreviewNav
-          owner={{ username: this.props.project.owner ? `${this.props.project.owner.username}` : '' }}
-          project={{ name: this.props.project.name, id: this.props.params.project_id }}
+          owner={{
+            username: this.props.project.owner
+              ? `${this.props.project.owner.username}`
+              : ''
+          }}
+          project={{
+            name: this.props.project.name,
+            id: this.props.params.project_id
+          }}
         />
         <main className="preview-frame-holder">
-          <PreviewFrame
-            fullView
-          />
+          <PreviewFrame fullView />
         </main>
       </div>
     );

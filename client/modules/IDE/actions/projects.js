@@ -12,7 +12,8 @@ export function getProjects(username) {
     } else {
       url = '/projects';
     }
-    apiClient.get(url)
+    apiClient
+      .get(url)
       .then((response) => {
         dispatch({
           type: ActionTypes.SET_PROJECTS,
