@@ -5,7 +5,8 @@ import * as ActionTypes from '../../../constants';
 import {
   setUnsavedChanges,
   closeNewFolderModal,
-  closeNewFileModal
+  closeNewFileModal,
+  setSelectedFile
 } from './ide';
 import { setProjectSavedTime } from './project';
 import { createError } from './ide';
@@ -96,6 +97,7 @@ export function handleCreateFile(formProps) {
           if (updatedAt) dispatch(setProjectSavedTime(updatedAt));
           dispatch(closeNewFileModal());
           dispatch(setUnsavedChanges(true));
+          dispatch(setSelectedFile(file.id));
           resolve();
         })
         .catch((error) => {
