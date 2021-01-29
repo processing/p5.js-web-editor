@@ -19,17 +19,14 @@ function LoginForm(props) {
       validate={validateLogin}
       onSubmit={onSubmit}
     >
-      {({
-        handleSubmit, pristine, submitting, invalid
-      }) => (
-        <form
-          className="form"
-          onSubmit={handleSubmit}
-        >
+      {({ handleSubmit, pristine, submitting, invalid }) => (
+        <form className="form" onSubmit={handleSubmit}>
           <Field name="email">
-            {field => (
+            {(field) => (
               <p className="form__field">
-                <label htmlFor="email" className="form__label">{props.t('LoginForm.UsernameOrEmail')}</label>
+                <label htmlFor="email" className="form__label">
+                  {props.t('LoginForm.UsernameOrEmail')}
+                </label>
                 <input
                   className="form__input"
                   aria-label={props.t('LoginForm.UsernameOrEmailARIA')}
@@ -44,9 +41,11 @@ function LoginForm(props) {
             )}
           </Field>
           <Field name="password">
-            {field => (
+            {(field) => (
               <p className="form__field">
-                <label htmlFor="password" className="form__label">{props.t('LoginForm.Password')}</label>
+                <label htmlFor="password" className="form__label">
+                  {props.t('LoginForm.Password')}
+                </label>
                 <input
                   className="form__input"
                   aria-label={props.t('LoginForm.PasswordARIA')}
@@ -60,10 +59,8 @@ function LoginForm(props) {
               </p>
             )}
           </Field>
-          <Button
-            type="submit"
-            disabled={submitting || invalid || pristine}
-          >{props.t('LoginForm.Submit')}
+          <Button type="submit" disabled={submitting || invalid || pristine}>
+            {props.t('LoginForm.Submit')}
           </Button>
         </form>
       )}

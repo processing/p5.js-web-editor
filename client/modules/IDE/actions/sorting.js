@@ -30,7 +30,7 @@ export function setSearchTerm(scope, searchTerm) {
   return {
     type: ActionTypes.SET_SEARCH_TERM,
     query: searchTerm,
-    scope,
+    scope
   };
 }
 

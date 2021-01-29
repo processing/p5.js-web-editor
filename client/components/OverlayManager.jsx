@@ -16,10 +16,9 @@ const OverlayManager = ({ overlay, hideOverlay }) => {
   return jsx && createPortal(jsx, document.body);
 };
 
-
 OverlayManager.propTypes = {
   overlay: PropTypes.string,
-  hideOverlay: PropTypes.func.isRequired,
+  hideOverlay: PropTypes.func.isRequired
 };
 
 OverlayManager.defaultProps = { overlay: null };
