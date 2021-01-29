@@ -5,7 +5,10 @@ export default function addProjectToCollection(req, res) {
   const owner = req.user._id;
   const { id: collectionId, projectId } = req.params;
 
-  const collectionPromise = Collection.findById(collectionId).populate('items.project', '_id');
+  const collectionPromise = Collection.findById(collectionId).populate(
+    'items.project',
+    '_id'
+  );
   const projectPromise = Project.findById(projectId);
 
   function sendFailure(code, message) {
@@ -32,7 +35,9 @@ export default function addProjectToCollection(req, res) {
       return null;
     }
 
-    const projectInCollection = collection.items.find(p => p.projectId === project._id);
+    const projectInCollection = collection.items.find(
+      (p) => p.projectId === project._id
+    );
 
     if (projectInCollection) {
       sendFailure(404, 'Project already in collection');
@@ -51,19 +56,17 @@ export default function addProjectToCollection(req, res) {
   }
 
   function populateReferences(collection) {
-    return Collection.populate(
-      collection,
-      [
-        { path: 'owner', select: ['id', 'username'] },
-        {
-          path: 'items.project',
-          select: ['id', 'name', 'slug'],
-          populate: {
-            path: 'user', select: ['username']
-          }
+    return Collection.populate(collection, [
+      { path: 'owner', select: ['id', 'username'] },
+      {
+        path: 'items.project',
+        select: ['id', 'name', 'slug'],
+        populate: {
+          path: 'user',
+          select: ['username']
         }
-      ]
-    );
+      }
+    ]);
   }
 
   return Promise.all([collectionPromise, projectPromise])

@@ -8,8 +8,11 @@ import * as UploaderActions from '../actions/uploader';
 import getConfig from '../../../utils/getConfig';
 import { fileExtensionsAndMimeTypes } from '../../../../server/utils/fileUtils';
 
-const s3Bucket = getConfig('S3_BUCKET_URL_BASE') ||
-                 `https://s3-${getConfig('AWS_REGION')}.amazonaws.com/${getConfig('S3_BUCKET')}/`;
+const s3Bucket =
+  getConfig('S3_BUCKET_URL_BASE') ||
+  `https://s3-${getConfig('AWS_REGION')}.amazonaws.com/${getConfig(
+    'S3_BUCKET'
+  )}/`;
 
 class FileUploader extends React.Component {
   componentDidMount() {
@@ -18,7 +21,9 @@ class FileUploader extends React.Component {
   }
 
   createDropzone() {
-    const userId = this.props.project.owner ? this.props.project.owner.id : this.props.user.id;
+    const userId = this.props.project.owner
+      ? this.props.project.owner.id
+      : this.props.user.id;
     this.uploader = new Dropzone('div#uploader', {
       url: s3Bucket,
       method: 'post',
@@ -43,9 +48,7 @@ class FileUploader extends React.Component {
   }
 
   render() {
-    return (
-      <div id="uploader" className="uploader dropzone"></div>
-    );
+    return <div id="uploader" className="uploader dropzone"></div>;
   }
 }
 
@@ -86,4 +89,6 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(UploaderActions, dispatch);
 }
 
-export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(FileUploader));
+export default withTranslation()(
+  connect(mapStateToProps, mapDispatchToProps)(FileUploader)
+);

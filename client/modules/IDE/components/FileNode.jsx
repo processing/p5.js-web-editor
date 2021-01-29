@@ -50,15 +50,11 @@ function FileName({ name }) {
   return (
     <span className="sidebar__file-item-name-text">
       <span>{firstLetter}</span>
-      {baseName.length > 2 &&
+      {baseName.length > 2 && (
         <span className="sidebar__file-item-name--ellipsis">{middleText}</span>
-      }
-      {baseName.length > 1 &&
-        <span>{lastLetter}</span>
-      }
-      {extension &&
-        <span>{extension}</span>
-      }
+      )}
+      {baseName.length > 1 && <span>{lastLetter}</span>}
+      {extension && <span>{extension}</span>}
     </span>
   );
 }
@@ -82,7 +78,7 @@ class FileNode extends React.Component {
 
   onFocusComponent = () => {
     this.setState({ isFocused: true });
-  }
+  };
 
   onBlurComponent = () => {
     this.setState({ isFocused: false });
@@ -91,12 +87,11 @@ class FileNode extends React.Component {
         this.hideFileOptions();
       }
     }, 200);
-  }
-
+  };
 
   setUpdatedName = (updatedName) => {
     this.setState({ updatedName });
-  }
+  };
 
   saveUpdatedFileName = () => {
     const { updatedName } = this.state;
@@ -105,69 +100,74 @@ class FileNode extends React.Component {
     if (updatedName !== name) {
       updateFileName(id, updatedName);
     }
-  }
+  };
 
   handleFileClick = (event) => {
     event.stopPropagation();
     const { isDeleting } = this.state;
-    const {
-      id, setSelectedFile, name, onClickFile
-    } = this.props;
+    const { id, setSelectedFile, name, onClickFile } = this.props;
     if (name !== 'root' && !isDeleting) {
       setSelectedFile(id);
     }
 
     // debugger; // eslint-disable-line
-    if (onClickFile) { onClickFile(); }
-  }
+    if (onClickFile) {
+      onClickFile();
+    }
+  };
 
   handleFileNameChange = (event) => {
     const newName = event.target.value;
     this.setUpdatedName(newName);
-  }
+  };
 
   handleFileNameBlur = () => {
     this.validateFileName();
     this.hideEditFileName();
-  }
+  };
 
   handleClickRename = () => {
     this.setUpdatedName(this.props.name);
     this.showEditFileName();
     setTimeout(() => this.fileNameInput.focus(), 0);
     setTimeout(() => this.hideFileOptions(), 0);
-  }
+  };
 
   handleClickAddFile = () => {
     this.props.newFile(this.props.id);
     setTimeout(() => this.hideFileOptions(), 0);
-  }
+  };
 
   handleClickAddFolder = () => {
     this.props.newFolder(this.props.id);
     setTimeout(() => this.hideFileOptions(), 0);
-  }
+  };
 
   handleClickUploadFile = () => {
     this.props.openUploadFileModal(this.props.id);
     setTimeout(this.hideFileOptions, 0);
-  }
+  };
 
   handleClickDelete = () => {
-    const prompt = this.props.t('Common.DeleteConfirmation', { name: this.props.name });
+    const prompt = this.props.t('Common.DeleteConfirmation', {
+      name: this.props.name
+    });
 
     if (window.confirm(prompt)) {
       this.setState({ isDeleting: true });
       this.props.resetSelectedFile(this.props.id);
-      setTimeout(() => this.props.deleteFile(this.props.id, this.props.parentId), 100);
+      setTimeout(
+        () => this.props.deleteFile(this.props.id, this.props.parentId),
+        100
+      );
     }
-  }
+  };
 
   handleKeyPress = (event) => {
     if (event.key === 'Enter') {
       this.hideEditFileName();
     }
-  }
+  };
 
   validateFileName = () => {
     const currentName = this.props.name;
@@ -177,16 +177,25 @@ class FileNode extends React.Component {
     const hasPeriod = updatedName.match(/\.+/);
     const hasNoExtension = oldFileExtension && !newFileExtension;
     const hasExtensionIfFolder = this.props.fileType === 'folder' && hasPeriod;
-    const notSameExtension = oldFileExtension && newFileExtension
-      && oldFileExtension[0].toLowerCase() !== newFileExtension[0].toLowerCase();
+    const notSameExtension =
+      oldFileExtension &&
+      newFileExtension &&
+      oldFileExtension[0].toLowerCase() !== newFileExtension[0].toLowerCase();
     const hasEmptyFilename = updatedName.trim() === '';
-    const hasOnlyExtension = newFileExtension && updatedName.trim() === newFileExtension[0];
-    if (hasEmptyFilename || hasNoExtension || notSameExtension || hasOnlyExtension || hasExtensionIfFolder) {
+    const hasOnlyExtension =
+      newFileExtension && updatedName.trim() === newFileExtension[0];
+    if (
+      hasEmptyFilename ||
+      hasNoExtension ||
+      notSameExtension ||
+      hasOnlyExtension ||
+      hasExtensionIfFolder
+    ) {
       this.setUpdatedName(currentName);
     } else {
       this.saveUpdatedFileName();
     }
-  }
+  };
 
   toggleFileOptions = (event) => {
     event.preventDefault();
@@ -199,33 +208,38 @@ class FileNode extends React.Component {
       this[`fileOptions-${this.props.id}`].focus();
       this.setState({ isOptionsOpen: true });
     }
-  }
+  };
 
   hideFileOptions = () => {
     this.setState({ isOptionsOpen: false });
-  }
+  };
 
   showEditFileName = () => {
     this.setState({ isEditingName: true });
-  }
+  };
 
   hideEditFileName = () => {
     this.setState({ isEditingName: false });
-  }
+  };
 
   showFolderChildren = () => {
     this.props.showFolderChildren(this.props.id);
-  }
+  };
 
   hideFolderChildren = () => {
     this.props.hideFolderChildren(this.props.id);
-  }
+  };
 
-  renderChild = childId => (
+  renderChild = (childId) => (
     <li key={childId}>
-      <ConnectedFileNode id={childId} parentId={this.props.id} canEdit={this.props.canEdit} onClickFile={this.props.onClickFile} />
+      <ConnectedFileNode
+        id={childId}
+        parentId={this.props.id}
+        canEdit={this.props.canEdit}
+        onClickFile={this.props.onClickFile}
+      />
     </li>
-  )
+  );
 
   render() {
     const itemClass = classNames({
@@ -244,33 +258,44 @@ class FileNode extends React.Component {
     const { t } = this.props;
 
     return (
-      <div className={itemClass} >
-        { !isRoot &&
-          <div className="file-item__content" onContextMenu={this.toggleFileOptions}>
+      <div className={itemClass}>
+        {!isRoot && (
+          <div
+            className="file-item__content"
+            onContextMenu={this.toggleFileOptions}
+          >
             <span className="file-item__spacer"></span>
-            { isFile &&
+            {isFile && (
               <span className="sidebar__file-item-icon">
                 <FileIcon focusable="false" aria-hidden="true" />
               </span>
-            }
-            { isFolder &&
+            )}
+            {isFolder && (
               <div className="sidebar__file-item--folder">
                 <button
                   className="sidebar__file-item-closed"
                   onClick={this.showFolderChildren}
                   aria-label={t('FileNode.OpenFolderARIA')}
                 >
-                  <FolderRightIcon className="folder-right" focusable="false" aria-hidden="true" />
+                  <FolderRightIcon
+                    className="folder-right"
+                    focusable="false"
+                    aria-hidden="true"
+                  />
                 </button>
                 <button
                   className="sidebar__file-item-open"
                   onClick={this.hideFolderChildren}
                   aria-label={t('FileNode.CloseFolderARIA')}
                 >
-                  <FolderDownIcon className="folder-down" focusable="false" aria-hidden="true" />
+                  <FolderDownIcon
+                    className="folder-down"
+                    focusable="false"
+                    aria-hidden="true"
+                  />
                 </button>
               </div>
-            }
+            )}
             <button
               aria-label={this.state.updatedName}
               className="sidebar__file-item-name"
@@ -286,14 +311,18 @@ class FileNode extends React.Component {
               value={this.state.updatedName}
               maxLength="128"
               onChange={this.handleFileNameChange}
-              ref={(element) => { this.fileNameInput = element; }}
+              ref={(element) => {
+                this.fileNameInput = element;
+              }}
               onBlur={this.handleFileNameBlur}
               onKeyPress={this.handleKeyPress}
             />
             <button
               className="sidebar__file-item-show-options"
               aria-label={t('FileNode.ToggleFileOptionsARIA')}
-              ref={(element) => { this[`fileOptions-${this.props.id}`] = element; }}
+              ref={(element) => {
+                this[`fileOptions-${this.props.id}`] = element;
+              }}
               tabIndex="0"
               onClick={this.toggleFileOptions}
               onBlur={this.onBlurComponent}
@@ -303,7 +332,7 @@ class FileNode extends React.Component {
             </button>
             <div className="sidebar__file-item-options">
               <ul title="file options">
-                { isFolder &&
+                {isFolder && (
                   <React.Fragment>
                     <li>
                       <button
@@ -327,7 +356,7 @@ class FileNode extends React.Component {
                         {t('FileNode.AddFile')}
                       </button>
                     </li>
-                    { this.props.authenticated &&
+                    {this.props.authenticated && (
                       <li>
                         <button
                           aria-label={t('FileNode.UploadFileARIA')}
@@ -338,9 +367,9 @@ class FileNode extends React.Component {
                           {t('FileNode.UploadFile')}
                         </button>
                       </li>
-                    }
+                    )}
                   </React.Fragment>
-                }
+                )}
                 <li>
                   <button
                     onClick={this.handleClickRename}
@@ -364,12 +393,12 @@ class FileNode extends React.Component {
               </ul>
             </div>
           </div>
-        }
-        { this.props.children &&
+        )}
+        {this.props.children && (
           <ul className="file-item__children">
             {this.props.children.map(this.renderChild)}
           </ul>
-        }
+        )}
       </div>
     );
   }
@@ -402,13 +431,18 @@ FileNode.defaultProps = {
   onClickFile: null,
   parentId: '0',
   isSelectedFile: false,
-  isFolderClosed: false,
+  isFolderClosed: false
 };
 
 function mapStateToProps(state, ownProps) {
   // this is a hack, state is updated before ownProps
-  const fileNode = state.files.find(file => file.id === ownProps.id) || { name: 'test', fileType: 'file' };
-  return Object.assign({}, fileNode, { authenticated: state.user.authenticated });
+  const fileNode = state.files.find((file) => file.id === ownProps.id) || {
+    name: 'test',
+    fileType: 'file'
+  };
+  return Object.assign({}, fileNode, {
+    authenticated: state.user.authenticated
+  });
 }
 
 function mapDispatchToProps(dispatch) {
@@ -417,9 +451,9 @@ function mapDispatchToProps(dispatch) {
 
 const TranslatedFileNode = withTranslation()(FileNode);
 
-const ConnectedFileNode = connect(mapStateToProps, mapDispatchToProps)(TranslatedFileNode);
+const ConnectedFileNode = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TranslatedFileNode);
 
-export {
-  TranslatedFileNode as FileNode,
-  ConnectedFileNode as default
-};
+export { TranslatedFileNode as FileNode, ConnectedFileNode as default };

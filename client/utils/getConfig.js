@@ -11,7 +11,8 @@ function getConfig(key, options = { warn: !isTestEnvironment() }) {
     throw new Error('"key" must be provided to getConfig()');
   }
 
-  const env = (typeof global !== 'undefined' ? global : window)?.process?.env || {};
+  const env =
+    (typeof global !== 'undefined' ? global : window)?.process?.env || {};
   const value = env[key];
 
   if (value == null && options?.warn !== false) {

@@ -1,7 +1,5 @@
-
 import React from 'react';
 import { render } from '@testing-library/react';
-
 
 import { NavComponent } from '../Nav';
 
@@ -36,7 +34,7 @@ describe('Nav', () => {
       showFind: jest.fn(),
       findNext: jest.fn(),
       findPrev: jest.fn(),
-      showReplace: jest.fn(),
+      showReplace: jest.fn()
     },
     startSketch: jest.fn(),
     stopSketch: jest.fn(),
