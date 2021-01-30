@@ -10,8 +10,8 @@
       "as": "MAILGUN"
     },
     {
-      "plan": "fixie-socks:grip",
-      "as": "FIXIE"
+      "plan": "quotaguardstatic:starter",
+      "as": "QG"
     }
   ],
   "env": {
