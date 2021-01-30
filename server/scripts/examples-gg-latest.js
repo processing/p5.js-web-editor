@@ -17,8 +17,7 @@ const branchRef = `?ref=${branchName}`;
 const clientId = process.env.GITHUB_ID;
 const clientSecret = process.env.GITHUB_SECRET;
 
-const defaultHTML =
-  `<!DOCTYPE html>
+const defaultHTML = `<!DOCTYPE html>
 <html lang="en">
   <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.min.js"></script>
@@ -47,8 +46,7 @@ const defaultHTML =
 </html>
 `;
 
-const defaultCSS =
-  `html, body {
+const defaultCSS = `html, body {
   padding: 0;
   margin: 0;
 }
@@ -61,10 +59,15 @@ const headers = { 'User-Agent': 'p5js-web-editor/0.0.1' };
 
 const mongoConnectionString = process.env.MONGO_URL;
 
-mongoose.connect(mongoConnectionString, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(mongoConnectionString, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 mongoose.set('useCreateIndex', true);
 mongoose.connection.on('error', () => {
-  console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
+  console.error(
+    'MongoDB Connection Error. Please make sure that MongoDB is running.'
+  );
   process.exit(1);
 });
 
@@ -78,10 +81,10 @@ const insert = function insert(_mainString, _insString, _pos) {
   const mainString = _mainString;
   let pos = _pos;
 
-  if (typeof (pos) === 'undefined') {
+  if (typeof pos === 'undefined') {
     pos = 0;
   }
-  if (typeof (insString) === 'undefined') {
+  if (typeof insString === 'undefined') {
     insString = '';
   }
   return mainString.slice(0, pos) + insString + mainString.slice(pos);
@@ -112,52 +115,67 @@ function getCodePackage() {
     method: 'GET',
     headers: {
       ...headers,
-      Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
+      Authorization: `Basic ${Buffer.from(
+        `${clientId}:${clientSecret}`
+      ).toString('base64')}`
     },
     json: true
   };
 
-  return rp(options).then((res) => {
-    res.forEach((metadata) => {
-      if (metadata.name.endsWith('P') === true || metadata.name.endsWith('M') === true) {
-        sketchRootList.push(metadata);
-      }
-    });
+  return rp(options)
+    .then((res) => {
+      res.forEach((metadata) => {
+        if (
+          metadata.name.endsWith('P') === true ||
+          metadata.name.endsWith('M') === true
+        ) {
+          sketchRootList.push(metadata);
+        }
+      });
 
-    return sketchRootList;
-  }).catch((err) => {
-    throw err;
-  });
+      return sketchRootList;
+    })
+    .catch((err) => {
+      throw err;
+    });
 }
 
 // 2. get the list of all the top-level sketch directories in P and M
 function getSketchDirectories(sketchRootList) {
   // console.log(sketchRootList);
 
-  return Q.all(sketchRootList.map((sketches) => {
-    // console.log(sketches)
-    const options = {
-      url: `https://api.github.com/repos/generative-design/Code-Package-p5.js/contents/${sketches.path}${branchRef}`,
-      method: 'GET',
-      headers: {
-        ...headers,
-        Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
-      },
-      json: true
-    };
+  return Q.all(
+    sketchRootList.map((sketches) => {
+      // console.log(sketches)
+      const options = {
+        url: `https://api.github.com/repos/generative-design/Code-Package-p5.js/contents/${sketches.path}${branchRef}`,
+        method: 'GET',
+        headers: {
+          ...headers,
+          Authorization: `Basic ${Buffer.from(
+            `${clientId}:${clientSecret}`
+          ).toString('base64')}`
+        },
+        json: true
+      };
 
-    return rp(options).then((res) => {
-      const sketchDirs = flatten(res);
+      return rp(options)
+        .then((res) => {
+          const sketchDirs = flatten(res);
 
-      return sketchDirs;
-    }).catch((err) => {
-      throw err;
-    });
-  })).then((output) => {
+          return sketchDirs;
+        })
+        .catch((err) => {
+          throw err;
+        });
+    })
+  ).then((output) => {
     const sketchList = [];
     output.forEach((l) => {
       l.forEach((i) => {
-        if (i.type === 'dir') { sketchList.push(i); }
+        if (i.type === 'dir') {
+          sketchList.push(i);
+        }
       });
     });
 
@@ -165,27 +183,30 @@ function getSketchDirectories(sketchRootList) {
   });
 }
 
-
 // 3. For each sketch item in the sketchList, append the tree contents to each item
 function appendSketchItemLinks(sketchList) {
-  return Q.all(sketchList.map((sketches) => {
-    const options = {
-      // url: `${sketches.url}?client_id=${clientId}&client_secret=${clientSecret}`,
-      url: `https://api.github.com/repos/generative-design/Code-Package-p5.js/contents/${sketches.path}${branchRef}`,
-      method: 'GET',
-      headers: {
-        ...headers,
-        Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
-      },
-      json: true
-    };
+  return Q.all(
+    sketchList.map((sketches) => {
+      const options = {
+        // url: `${sketches.url}?client_id=${clientId}&client_secret=${clientSecret}`,
+        url: `https://api.github.com/repos/generative-design/Code-Package-p5.js/contents/${sketches.path}${branchRef}`,
+        method: 'GET',
+        headers: {
+          ...headers,
+          Authorization: `Basic ${Buffer.from(
+            `${clientId}:${clientSecret}`
+          ).toString('base64')}`
+        },
+        json: true
+      };
 
-    return rp(options).then((res) => {
-      sketches.tree = res;
+      return rp(options).then((res) => {
+        sketches.tree = res;
 
-      return sketchList;
-    });
-  }));
+        return sketchList;
+      });
+    })
+  );
 }
 
 // 4. for each sketch item
@@ -235,47 +256,45 @@ function formatSketchForStorage(sketch, user) {
   const c = objectID().toHexString();
   const r = objectID().toHexString();
 
-
   const newProject = new Project({
     name: sketch.name,
     user: user._id,
-    files: [{
-      name: 'root',
-      id: r,
-      _id: r,
-      children: [a, b, c],
-      fileType: 'folder'
-    },
-    {
-      name: 'sketch.js',
-      content: getSketchDownloadUrl(sketch),
-      id: a,
-      _id: a,
-      isSelectedFile: true,
-      fileType: 'file',
-      children: []
-    },
-    {
-      name: 'index.html',
-      content: defaultHTML,
-      id: b,
-      _id: b,
-      fileType: 'file',
-      children: []
-    },
-    {
-      name: 'style.css',
-      content: defaultCSS,
-      id: c,
-      _id: c,
-      fileType: 'file',
-      children: []
-    }
+    files: [
+      {
+        name: 'root',
+        id: r,
+        _id: r,
+        children: [a, b, c],
+        fileType: 'folder'
+      },
+      {
+        name: 'sketch.js',
+        content: getSketchDownloadUrl(sketch),
+        id: a,
+        _id: a,
+        isSelectedFile: true,
+        fileType: 'file',
+        children: []
+      },
+      {
+        name: 'index.html',
+        content: defaultHTML,
+        id: b,
+        _id: b,
+        fileType: 'file',
+        children: []
+      },
+      {
+        name: 'style.css',
+        content: defaultCSS,
+        id: c,
+        _id: c,
+        fileType: 'file',
+        children: []
+      }
     ],
     _id: shortid.generate()
-
   });
-
 
   // get any additional js files url
   // TODO: this could probably be optimized - so many loops!
@@ -301,7 +320,8 @@ function formatSketchForStorage(sketch, user) {
         output[0].children.push(projectItem.id);
         //  add the JS reference to the defaultHTML
         output[2].content = insert(
-          output[2].content, `<script src='${item.name}'></script>`,
+          output[2].content,
+          `<script src='${item.name}'></script>`,
           output[2].content.search('<!-- sketch additions -->')
         );
       }
@@ -376,7 +396,6 @@ function formatAllSketches(sketchList) {
   });
 }
 
-
 // get all the sketch data content and download to the newProjects array
 function getAllSketchContent(newProjectList) {
   /* eslint-disable */
@@ -450,7 +469,6 @@ function createProjectsInP5user(newProjectList) {
   });
 }
 
-
 /* --- Main --- */
 // remove any of the old files and add the new stuffs to the UI
 function getp5User() {
@@ -480,19 +498,20 @@ function getp5User() {
       });
     });
 
-
     if (testMake === true) {
       // Run for Testing
       // Run for production
-      return getCodePackage()
-        .then(getSketchDirectories)
-        .then(appendSketchItemLinks)
-        .then(getSketchItems)
-        // .then(saveRetrievalToFile)
-        .then(formatAllSketches)
-        .then(getAllSketchContent)
-        // .then(saveNewProjectsToFile)
-        .then(createProjectsInP5user);
+      return (
+        getCodePackage()
+          .then(getSketchDirectories)
+          .then(appendSketchItemLinks)
+          .then(getSketchItems)
+          // .then(saveRetrievalToFile)
+          .then(formatAllSketches)
+          .then(getAllSketchContent)
+          // .then(saveNewProjectsToFile)
+          .then(createProjectsInP5user)
+      );
     }
     // Run for production
     return getCodePackage()
@@ -506,7 +525,6 @@ function getp5User() {
 }
 // Run the entire process
 getp5User();
-
 
 /* --- Tester Functions --- */
 /** * Tester Functions - IGNORE BELOW

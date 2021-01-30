@@ -29,7 +29,7 @@ class APIKeyForm extends React.Component {
     const { keyLabel } = this.state;
 
     this.setState({
-      keyLabel: '',
+      keyLabel: ''
     });
 
     this.props.createApiKey(keyLabel);
@@ -38,7 +38,9 @@ class APIKeyForm extends React.Component {
   }
 
   removeKey(key) {
-    const message = this.props.t('APIKeyForm.ConfirmDelete', { key_label: key.label });
+    const message = this.props.t('APIKeyForm.ConfirmDelete', {
+      key_label: key.label
+    });
 
     if (window.confirm(message)) {
       this.props.removeApiKey(key.id);
@@ -50,14 +52,18 @@ class APIKeyForm extends React.Component {
 
     if (hasApiKeys) {
       return (
-        <APIKeyList apiKeys={this.props.apiKeys} onRemove={this.removeKey} t={this.props.t} />
+        <APIKeyList
+          apiKeys={this.props.apiKeys}
+          onRemove={this.removeKey}
+          t={this.props.t}
+        />
       );
     }
     return <p>{this.props.t('APIKeyForm.NoTokens')}</p>;
   }
 
   render() {
-    const keyWithToken = this.props.apiKeys.find(k => !!k.token);
+    const keyWithToken = this.props.apiKeys.find((k) => !!k.token);
 
     return (
       <div className="api-key-form">
@@ -66,13 +72,22 @@ class APIKeyForm extends React.Component {
         </p>
 
         <div className="api-key-form__section">
-          <h3 className="api-key-form__title">{this.props.t('APIKeyForm.CreateToken')}</h3>
+          <h3 className="api-key-form__title">
+            {this.props.t('APIKeyForm.CreateToken')}
+          </h3>
           <form className="form form--inline" onSubmit={this.addKey}>
-            <label htmlFor="keyLabel" className="form__label form__label--hidden ">{this.props.t('APIKeyForm.TokenLabel')}</label>
+            <label
+              htmlFor="keyLabel"
+              className="form__label form__label--hidden "
+            >
+              {this.props.t('APIKeyForm.TokenLabel')}
+            </label>
             <input
               className="form__input"
               id="keyLabel"
-              onChange={(event) => { this.setState({ keyLabel: event.target.value }); }}
+              onChange={(event) => {
+                this.setState({ keyLabel: event.target.value });
+              }}
               placeholder={this.props.t('APIKeyForm.TokenPlaceholder')}
               type="text"
               value={this.state.keyLabel}
@@ -87,21 +102,26 @@ class APIKeyForm extends React.Component {
             </Button>
           </form>
 
-          {
-            keyWithToken && (
-              <div className="api-key-form__new-token">
-                <h4 className="api-key-form__new-token__title">{this.props.t('APIKeyForm.NewTokenTitle')}</h4>
-                <p className="api-key-form__new-token__info">
-                  {this.props.t('APIKeyForm.NewTokenInfo')}
-                </p>
-                <CopyableInput label={keyWithToken.label} value={keyWithToken.token} />
-              </div>
-            )
-          }
+          {keyWithToken && (
+            <div className="api-key-form__new-token">
+              <h4 className="api-key-form__new-token__title">
+                {this.props.t('APIKeyForm.NewTokenTitle')}
+              </h4>
+              <p className="api-key-form__new-token__info">
+                {this.props.t('APIKeyForm.NewTokenInfo')}
+              </p>
+              <CopyableInput
+                label={keyWithToken.label}
+                value={keyWithToken.token}
+              />
+            </div>
+          )}
         </div>
 
         <div className="api-key-form__section">
-          <h3 className="api-key-form__title">{this.props.t('APIKeyForm.ExistingTokensTitle')}</h3>
+          <h3 className="api-key-form__title">
+            {this.props.t('APIKeyForm.ExistingTokensTitle')}
+          </h3>
           {this.renderApiKeys()}
         </div>
       </div>

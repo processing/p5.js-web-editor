@@ -8,8 +8,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import classNames from 'classnames';
 import { Console as ConsoleFeed } from 'console-feed';
 import {
-  CONSOLE_FEED_WITHOUT_ICONS, CONSOLE_FEED_LIGHT_STYLES,
-  CONSOLE_FEED_DARK_STYLES, CONSOLE_FEED_CONTRAST_STYLES
+  CONSOLE_FEED_WITHOUT_ICONS,
+  CONSOLE_FEED_LIGHT_STYLES,
+  CONSOLE_FEED_DARK_STYLES,
+  CONSOLE_FEED_CONTRAST_STYLES
 } from '../../../styles/components/_console-feed.scss';
 import warnLightUrl from '../../../images/console-warn-light.svg?byUrl';
 import warnDarkUrl from '../../../images/console-warn-dark.svg?byUrl';
@@ -56,7 +58,7 @@ const getConsoleFeedStyle = (theme, times, fontSize) => {
     BASE_FONT_SIZE: fontSize,
     ARROW_FONT_SIZE: fontSize,
     LOG_ICON_WIDTH: fontSize,
-    LOG_ICON_HEIGHT: 1.45 * fontSize,
+    LOG_ICON_HEIGHT: 1.45 * fontSize
   };
 
   if (times > 1) {
@@ -64,23 +66,41 @@ const getConsoleFeedStyle = (theme, times, fontSize) => {
   }
   switch (theme) {
     case 'light':
-      return Object.assign(CONSOLE_FEED_LIGHT_STYLES, CONSOLE_FEED_LIGHT_ICONS, CONSOLE_FEED_SIZES, style);
+      return Object.assign(
+        CONSOLE_FEED_LIGHT_STYLES,
+        CONSOLE_FEED_LIGHT_ICONS,
+        CONSOLE_FEED_SIZES,
+        style
+      );
     case 'dark':
-      return Object.assign(CONSOLE_FEED_DARK_STYLES, CONSOLE_FEED_DARK_ICONS, CONSOLE_FEED_SIZES, style);
+      return Object.assign(
+        CONSOLE_FEED_DARK_STYLES,
+        CONSOLE_FEED_DARK_ICONS,
+        CONSOLE_FEED_SIZES,
+        style
+      );
     case 'contrast':
-      return Object.assign(CONSOLE_FEED_CONTRAST_STYLES, CONSOLE_FEED_CONTRAST_ICONS, CONSOLE_FEED_SIZES, style);
+      return Object.assign(
+        CONSOLE_FEED_CONTRAST_STYLES,
+        CONSOLE_FEED_CONTRAST_ICONS,
+        CONSOLE_FEED_SIZES,
+        style
+      );
     default:
       return '';
   }
 };
 
 const Console = ({ t }) => {
-  const consoleEvents = useSelector(state => state.console);
-  const isExpanded = useSelector(state => state.ide.consoleIsExpanded);
-  const { theme, fontSize } = useSelector(state => state.preferences);
+  const consoleEvents = useSelector((state) => state.console);
+  const isExpanded = useSelector((state) => state.ide.consoleIsExpanded);
+  const { theme, fontSize } = useSelector((state) => state.preferences);
 
   const {
-    collapseConsole, expandConsole, clearConsole, dispatchConsoleEvent
+    collapseConsole,
+    expandConsole,
+    clearConsole,
+    dispatchConsoleEvent
   } = bindActionCreators({ ...IDEActions, ...ConsoleActions }, useDispatch());
 
   useDidUpdate(() => {
@@ -90,7 +110,9 @@ const Console = ({ t }) => {
 
   const cm = useRef({});
 
-  useDidUpdate(() => { cm.current.scrollTop = cm.current.scrollHeight; });
+  useDidUpdate(() => {
+    cm.current.scrollTop = cm.current.scrollHeight;
+  });
 
   const consoleClass = classNames({
     'preview-console': true,
@@ -98,11 +120,15 @@ const Console = ({ t }) => {
   });
 
   return (
-    <section className={consoleClass} >
+    <section className={consoleClass}>
       <header className="preview-console__header">
         <h2 className="preview-console__header-title">{t('Console.Title')}</h2>
         <div className="preview-console__header-buttons">
-          <button className="preview-console__clear" onClick={clearConsole} aria-label={t('Console.ClearARIA')}>
+          <button
+            className="preview-console__clear"
+            onClick={clearConsole}
+            aria-label={t('Console.ClearARIA')}
+          >
             {t('Console.Clear')}
           </button>
           <button
@@ -112,7 +138,11 @@ const Console = ({ t }) => {
           >
             <DownArrowIcon focusable="false" aria-hidden="true" />
           </button>
-          <button className="preview-console__expand" onClick={expandConsole} aria-label={t('Console.OpenARIA')} >
+          <button
+            className="preview-console__expand"
+            onClick={expandConsole}
+            aria-label={t('Console.OpenARIA')}
+          >
             <UpArrowIcon focusable="false" aria-hidden="true" />
           </button>
         </div>
@@ -121,15 +151,18 @@ const Console = ({ t }) => {
         {consoleEvents.map((consoleEvent) => {
           const { method, times } = consoleEvent;
           return (
-            <div key={consoleEvent.id} className={`preview-console__message preview-console__message--${method}`}>
-              { times > 1 &&
-              <div
-                className="preview-console__logged-times"
-                style={{ fontSize, borderRadius: fontSize / 2 }}
-              >
-                {times}
-              </div>
-              }
+            <div
+              key={consoleEvent.id}
+              className={`preview-console__message preview-console__message--${method}`}
+            >
+              {times > 1 && (
+                <div
+                  className="preview-console__logged-times"
+                  style={{ fontSize, borderRadius: fontSize / 2 }}
+                >
+                  {times}
+                </div>
+              )}
               <ConsoleFeed
                 styles={getConsoleFeedStyle(theme, times, fontSize)}
                 logs={[consoleEvent]}
@@ -143,8 +176,7 @@ const Console = ({ t }) => {
 };
 
 Console.propTypes = {
-  t: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired
 };
-
 
 export default withTranslation()(Console);

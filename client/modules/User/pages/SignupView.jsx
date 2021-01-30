@@ -6,7 +6,6 @@ import SignupForm from '../components/SignupForm';
 import SocialAuthButton from '../components/SocialAuthButton';
 import Nav from '../../../components/Nav';
 
-
 function SignupView() {
   const { t } = useTranslation();
   return (
@@ -17,7 +16,9 @@ function SignupView() {
           <title>{t('SignupView.Title')}</title>
         </Helmet>
         <div className="form-container__content">
-          <h2 className="form-container__title">{t('SignupView.Description')}</h2>
+          <h2 className="form-container__title">
+            {t('SignupView.Description')}
+          </h2>
           <SignupForm />
           <h2 className="form-container__divider">{t('SignupView.Or')}</h2>
           <div className="form-container__stack">
@@ -26,7 +27,9 @@ function SignupView() {
           </div>
           <p className="form__navigation-options">
             {t('SignupView.AlreadyHave')}
-            <Link className="form__login-button" to="/login">{t('SignupView.Login')}</Link>
+            <Link className="form__login-button" to="/login">
+              {t('SignupView.Login')}
+            </Link>
           </p>
         </div>
       </main>

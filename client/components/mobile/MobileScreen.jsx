@@ -12,19 +12,22 @@ const ScreenWrapper = styled.div`
     width: 92%;
     top: unset;
     min-width: unset;
-    bottom: ${remSize(64)}
+    bottom: ${remSize(64)};
   }
 `;
 
 const Screen = ({ children, fullscreen, slimheader }) => (
-  <ScreenWrapper className={fullscreen && 'fullscreen-preview'} slimheader={slimheader}>
+  <ScreenWrapper
+    className={fullscreen && 'fullscreen-preview'}
+    slimheader={slimheader}
+  >
     {children}
   </ScreenWrapper>
 );
 
 Screen.defaultProps = {
   fullscreen: false,
-  slimheader: false,
+  slimheader: false
 };
 
 Screen.propTypes = {

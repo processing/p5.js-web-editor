@@ -17,7 +17,7 @@ class UploadFileModal extends React.Component {
     reachedTotalSizeLimit: PropTypes.bool.isRequired,
     closeModal: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired
-  }
+  };
 
   componentDidMount() {
     this.focusOnModal();
@@ -25,15 +25,21 @@ class UploadFileModal extends React.Component {
 
   focusOnModal = () => {
     this.modal.focus();
-  }
-
+  };
 
   render() {
     return (
-      <section className="modal" ref={(element) => { this.modal = element; }}>
+      <section
+        className="modal"
+        ref={(element) => {
+          this.modal = element;
+        }}
+      >
         <div className="modal-content">
           <div className="modal__header">
-            <h2 className="modal__title">{this.props.t('UploadFileModal.Title')}</h2>
+            <h2 className="modal__title">
+              {this.props.t('UploadFileModal.Title')}
+            </h2>
             <button
               className="modal__exit-button"
               onClick={this.props.closeModal}
@@ -42,18 +48,22 @@ class UploadFileModal extends React.Component {
               <ExitIcon focusable="false" aria-hidden="true" />
             </button>
           </div>
-          { this.props.reachedTotalSizeLimit &&
+          {this.props.reachedTotalSizeLimit && (
             <p>
-              {this.props.t('UploadFileModal.SizeLimitError', { sizeLimit: limitText })}
-              <Link to="/assets" onClick={this.props.closeModal}>assets</Link>
+              {this.props.t('UploadFileModal.SizeLimitError', {
+                sizeLimit: limitText
+              })}
+              <Link to="/assets" onClick={this.props.closeModal}>
+                assets
+              </Link>
               .
             </p>
-          }
-          { !this.props.reachedTotalSizeLimit &&
+          )}
+          {!this.props.reachedTotalSizeLimit && (
             <div>
               <FileUploader />
             </div>
-          }
+          )}
         </div>
       </section>
     );

@@ -5,10 +5,14 @@ import generateToken from '../utils/generateToken';
 import Token from '../models/token';
 
 export function createSession(req, res, next) {
-  passport.authenticate('local', (err, user) => { // eslint-disable-line consistent-return
-    if (err) { return next(err); }
+  passport.authenticate('local', (err, user) => {
+    if (err) {
+      next(err);
+      return;
+    }
     if (!user) {
-      return res.status(401).json({ message: 'Invalid username or password.' });
+      res.status(401).json({ message: 'Invalid username or password.' });
+      return;
     }
 
     req.logIn(user, async (innerErr) => { // eslint-disable-line consistent-return
@@ -30,6 +34,12 @@ export function createSession(req, res, next) {
           return res.json(userResponse(req.user));
         });
       }
+    req.logIn(user, (innerErr) => {
+      if (innerErr) {
+        next(innerErr);
+        return;
+      }
+      res.json(userResponse(req.user));
     });
   })(req, res, next);
 }
@@ -46,4 +56,3 @@ export function destroySession(req, res) {
   req.logout();
   res.json({ success: true });
 }
-
