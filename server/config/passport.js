@@ -9,6 +9,10 @@ import GoogleStrategy from 'passport-google-oauth20';
 import { BasicStrategy } from 'passport-http';
 
 import User from '../models/user';
+import generateToken from '../utils/generateToken';
+import Token from '../models/token';
+
+const RememberMeStrategy = require('passport-remember-me').Strategy;
 
 function generateUniqueUsername(username) {
   const adj =
@@ -266,6 +270,34 @@ passport.use(
           }
         }
       );
+    }
+  )
+);
+
+/**
+ * Passport Remember me Strategy
+ */
+passport.use(
+  new RememberMeStrategy(
+    (token, done) => {
+      Token.findOneAndRemove({ value: token })
+        .populate('user')
+        .exec((err, doc) => {
+          if (err) return done(err);
+          if (!doc) return done(null, false);
+          return done(null, doc.user);
+        });
+    },
+    (user, done) => {
+      const value = generateToken(64);
+      const token = new Token({
+        value,
+        user: user._id
+      });
+      token.save((err) => {
+        if (err) return done(err);
+        return done(null, value);
+      });
     }
   )
 );

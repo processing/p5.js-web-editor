@@ -193,6 +193,7 @@
     "passport-google-oauth20": "^1.0.0",
     "passport-http": "^0.3.0",
     "passport-local": "^1.0.0",
+    "passport-remember-me": "0.0.1",
     "pretty-bytes": "^3.0.1",
     "primer-tooltips": "^1.5.11",
     "prop-types": "^15.6.2",
