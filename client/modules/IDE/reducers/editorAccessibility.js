@@ -12,13 +12,16 @@ const editorAccessibility = (state = initialState, action) => {
       messageId += 1;
       return Object.assign({}, state, {
         lintMessages: state.lintMessages.concat({
-          severity: action.severity, line: action.line, message: action.message, id: messageId
+          severity: action.severity,
+          line: action.line,
+          message: action.message,
+          id: messageId
         })
       });
     case ActionTypes.CLEAR_LINT_MESSAGE:
       return Object.assign({}, state, { lintMessages: [] });
     case ActionTypes.TOGGLE_FORCE_DESKTOP:
-      return Object.assign({}, state, { forceDesktop: !(state.forceDesktop) });
+      return Object.assign({}, state, { forceDesktop: !state.forceDesktop });
     default:
       return state;
   }

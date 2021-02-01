@@ -3,7 +3,10 @@
  */
 import { Response } from 'jest-express';
 
-import Project, { createMock, createInstanceMock } from '../../../models/project';
+import Project, {
+  createMock,
+  createInstanceMock
+} from '../../../models/project';
 import createProject, { apiCreateProject } from '../createProject';
 
 jest.mock('../../../models/project');
@@ -23,9 +26,7 @@ describe('project.controller', () => {
     it('fails if create fails', (done) => {
       const error = new Error('An error');
 
-      ProjectMock
-        .expects('create')
-        .rejects(error);
+      ProjectMock.expects('create').rejects(error);
 
       const request = { user: {} };
       const response = new Response();
@@ -51,9 +52,7 @@ describe('project.controller', () => {
       };
       const response = new Response();
 
-
-      ProjectMock
-        .expects('create')
+      ProjectMock.expects('create')
         .withArgs({
           user: 'abc123',
           name: 'Wriggly worm',
@@ -92,13 +91,11 @@ describe('project.controller', () => {
         user: {}
       };
 
-      ProjectMock
-        .expects('create')
+      ProjectMock.expects('create')
         .withArgs({ user: 'abc123' })
         .resolves(result);
 
-      ProjectMock
-        .expects('populate')
+      ProjectMock.expects('populate')
         .withArgs(result)
         .yields(null, resultWithUser)
         .resolves(resultWithUser);
@@ -132,14 +129,9 @@ describe('project.controller', () => {
 
       const error = new Error('An error');
 
-      ProjectMock
-        .expects('create')
-        .resolves(result);
+      ProjectMock.expects('create').resolves(result);
 
-      ProjectMock
-        .expects('populate')
-        .yields(error)
-        .resolves(error);
+      ProjectMock.expects('populate').yields(error).resolves(error);
 
       const promise = createProject(request, response);
 
@@ -186,11 +178,12 @@ describe('project.controller', () => {
         files: []
       };
 
-      ProjectInstanceMock.expects('isSlugUnique')
-        .resolves({ isUnique: true, conflictingIds: [] });
+      ProjectInstanceMock.expects('isSlugUnique').resolves({
+        isUnique: true,
+        conflictingIds: []
+      });
 
-      ProjectInstanceMock.expects('save')
-        .resolves(new Project(result));
+      ProjectInstanceMock.expects('save').resolves(new Project(result));
 
       const promise = apiCreateProject(request, response);
 
@@ -231,11 +224,12 @@ describe('project.controller', () => {
         files: []
       };
 
-      ProjectInstanceMock.expects('isSlugUnique')
-        .resolves({ isUnique: false, conflictingIds: ['cde123'] });
+      ProjectInstanceMock.expects('isSlugUnique').resolves({
+        isUnique: false,
+        conflictingIds: ['cde123']
+      });
 
-      ProjectInstanceMock.expects('save')
-        .resolves(new Project(result));
+      ProjectInstanceMock.expects('save').resolves(new Project(result));
 
       const promise = apiCreateProject(request, response);
 
@@ -260,7 +254,7 @@ describe('project.controller', () => {
       const request = {
         user: { _id: 'abc123', username: 'alice' },
         params: {
-          username: 'dana',
+          username: 'dana'
         },
         body: {
           name: 'My sketch',
@@ -278,11 +272,12 @@ describe('project.controller', () => {
         files: []
       };
 
-      ProjectInstanceMock.expects('isSlugUnique')
-        .resolves({ isUnique: true, conflictingIds: [] });
+      ProjectInstanceMock.expects('isSlugUnique').resolves({
+        isUnique: true,
+        conflictingIds: []
+      });
 
-      ProjectInstanceMock.expects('save')
-        .resolves(new Project(result));
+      ProjectInstanceMock.expects('save').resolves(new Project(result));
 
       const promise = apiCreateProject(request, response);
 
@@ -323,7 +318,7 @@ describe('project.controller', () => {
         expect(responseBody.detail).not.toBeNull();
         expect(responseBody.errors.length).toBe(1);
         expect(responseBody.errors).toEqual([
-          { name: 'index.html', message: 'missing \'url\' or \'content\'' }
+          { name: 'index.html', message: "missing 'url' or 'content'" }
         ]);
 
         done();
@@ -352,7 +347,7 @@ describe('project.controller', () => {
 
         expect(response.status).toHaveBeenCalledWith(422);
         expect(responseBody.message).toBe('File Validation Failed');
-        expect(responseBody.detail).toBe('\'files\' must be an object');
+        expect(responseBody.detail).toBe("'files' must be an object");
 
         done();
       }
@@ -365,7 +360,7 @@ describe('project.controller', () => {
         user: { _id: 'abc123', username: 'alice' },
         params: { username: 'alice' },
         body: {
-          name: 'Wriggly worm',
+          name: 'Wriggly worm'
           // files: {} is missing
         }
       };
@@ -380,7 +375,7 @@ describe('project.controller', () => {
 
         expect(response.status).toHaveBeenCalledWith(422);
         expect(responseBody.message).toBe('File Validation Failed');
-        expect(responseBody.detail).toBe('\'files\' must be an object');
+        expect(responseBody.detail).toBe("'files' must be an object");
 
         done();
       }

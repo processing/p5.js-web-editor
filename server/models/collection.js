@@ -6,7 +6,7 @@ const { Schema } = mongoose;
 
 const collectedProjectSchema = new Schema(
   {
-    project: { type: Schema.Types.ObjectId, ref: 'Project' },
+    project: { type: Schema.Types.ObjectId, ref: 'Project' }
   },
   { timestamps: true, _id: true, usePushEach: true }
 );

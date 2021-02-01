@@ -11,7 +11,9 @@ import Nav from '../../../components/Nav';
 function NewPasswordView(props) {
   const { t } = useTranslation();
   const resetPasswordToken = props.params.reset_password_token;
-  const resetPasswordInvalid = useSelector(state => state.user.resetPasswordInvalid);
+  const resetPasswordInvalid = useSelector(
+    (state) => state.user.resetPasswordInvalid
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -22,7 +24,7 @@ function NewPasswordView(props) {
     'new-password': true,
     'new-password--invalid': resetPasswordInvalid,
     'form-container': true,
-    'user': true
+    user: true
   });
   return (
     <div className="new-password-container">
@@ -32,7 +34,9 @@ function NewPasswordView(props) {
           <title>{t('NewPasswordView.Title')}</title>
         </Helmet>
         <div className="form-container__content">
-          <h2 className="form-container__title">{t('NewPasswordView.Description')}</h2>
+          <h2 className="form-container__title">
+            {t('NewPasswordView.Description')}
+          </h2>
           <NewPasswordForm resetPasswordToken={resetPasswordToken} />
           <p className="new-password__invalid">
             {t('NewPasswordView.TokenInvalidOrExpired')}
@@ -45,7 +49,7 @@ function NewPasswordView(props) {
 
 NewPasswordView.propTypes = {
   params: PropTypes.shape({
-    reset_password_token: PropTypes.string,
+    reset_password_token: PropTypes.string
   }).isRequired
 };
 
