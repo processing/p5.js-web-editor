@@ -1,16 +1,19 @@
 import React from 'react';
 import { format, parse } from 'url';
 
-const findCurrentProtocol = () => (
-  parse(window.location.href).protocol
-);
+const findCurrentProtocol = () => parse(window.location.href).protocol;
 
-const redirectToProtocol = (protocol, { appendSource, disable = false } = {}) => {
+const redirectToProtocol = (
+  protocol,
+  { appendSource, disable = false } = {}
+) => {
   const currentProtocol = findCurrentProtocol();
 
   if (protocol !== currentProtocol) {
     if (disable === true) {
-      console.info(`forceProtocol: would have redirected from "${currentProtocol}" to "${protocol}"`);
+      console.info(
+        `forceProtocol: would have redirected from "${currentProtocol}" to "${protocol}"`
+      );
     } else {
       const url = parse(window.location.href, true /* parse query string */);
       url.protocol = protocol;
@@ -30,9 +33,13 @@ const redirectToProtocol = (protocol, { appendSource, disable = false } = {}) =>
  * disable: if true, the redirection will not happen but what should
  *          have happened will be logged to the console
  */
-const forceProtocol = ({ targetProtocol = 'https', sourceProtocol, disable = false }) => WrappedComponent => (
+const forceProtocol = ({
+  targetProtocol = 'https',
+  sourceProtocol,
+  disable = false
+}) => (WrappedComponent) =>
   class ForceProtocol extends React.Component {
-    static propTypes = {}
+    static propTypes = {};
 
     componentDidMount() {
       redirectToProtocol(targetProtocol, { appendSource: true, disable });
@@ -47,12 +54,11 @@ const forceProtocol = ({ targetProtocol = 'https', sourceProtocol, disable = fal
     render() {
       return <WrappedComponent {...this.props} />;
     }
-  }
-);
+  };
 
 const protocols = {
   http: 'http:',
-  https: 'https:',
+  https: 'https:'
 };
 
 const findSourceProtocol = (state, location) => {
@@ -72,5 +78,5 @@ export {
   findCurrentProtocol,
   findSourceProtocol,
   redirectToProtocol,
-  protocols,
+  protocols
 };

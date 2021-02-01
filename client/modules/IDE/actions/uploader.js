@@ -3,8 +3,11 @@ import getConfig from '../../../utils/getConfig';
 import { createFile } from './files';
 import { TEXT_FILE_REGEX } from '../../../../server/utils/fileUtils';
 
-const s3BucketHttps = getConfig('S3_BUCKET_URL_BASE') ||
-                      `https://s3-${getConfig('AWS_REGION')}.amazonaws.com/${getConfig('S3_BUCKET')}/`;
+const s3BucketHttps =
+  getConfig('S3_BUCKET_URL_BASE') ||
+  `https://s3-${getConfig('AWS_REGION')}.amazonaws.com/${getConfig(
+    'S3_BUCKET'
+  )}/`;
 const MAX_LOCAL_FILE_SIZE = 80000; // bytes, aka 80 KB
 
 function localIntercept(file, options = {}) {
@@ -43,27 +46,29 @@ export function dropzoneAcceptCallback(userId, file, done) {
   return () => {
     // if a user would want to edit this file as text, local interceptor
     if (file.name.match(TEXT_FILE_REGEX) && file.size < MAX_LOCAL_FILE_SIZE) {
-      localIntercept(file).then((result) => {
+      localIntercept(file)
+        .then((result) => {
         file.content = result; // eslint-disable-line
-        done('Uploading plaintext file locally.');
-        file.previewElement.classList.remove('dz-error');
-        file.previewElement.classList.add('dz-success');
-        file.previewElement.classList.add('dz-processing');
-        file.previewElement.querySelector('.dz-upload').style.width = '100%';
-      })
+          done('Uploading plaintext file locally.');
+          file.previewElement.classList.remove('dz-error');
+          file.previewElement.classList.add('dz-success');
+          file.previewElement.classList.add('dz-processing');
+          file.previewElement.querySelector('.dz-upload').style.width = '100%';
+        })
         .catch((result) => {
           done(`Failed to download file ${file.name}: ${result}`);
           console.warn(file);
         });
     } else {
       file.postData = []; // eslint-disable-line
-      apiClient.post('/S3/sign', {
-        name: file.name,
-        type: file.type,
-        size: file.size,
-        userId
-        // _csrf: document.getElementById('__createPostToken').value
-      })
+      apiClient
+        .post('/S3/sign', {
+          name: file.name,
+          type: file.type,
+          size: file.size,
+          userId
+          // _csrf: document.getElementById('__createPostToken').value
+        })
         .then((response) => {
           file.custom_status = 'ready'; // eslint-disable-line
           file.postData = response.data; // eslint-disable-line
@@ -74,7 +79,11 @@ export function dropzoneAcceptCallback(userId, file, done) {
         .catch((error) => {
           const { response } = error;
           file.custom_status = 'rejected'; // eslint-disable-line
-          if (response.data && response.data.responseText && response.data.responseText.message) {
+          if (
+            response.data &&
+            response.data.responseText &&
+            response.data.responseText.message
+          ) {
             done(response.data.responseText.message);
           }
           done('Error: Reached upload limit.');
@@ -95,7 +104,10 @@ export function dropzoneSendingCallback(file, xhr, formData) {
 
 export function dropzoneCompleteCallback(file) {
   return (dispatch, getState) => { // eslint-disable-line
-    if ((!file.name.match(TEXT_FILE_REGEX) || file.size >= MAX_LOCAL_FILE_SIZE) && file.status !== 'error') {
+    if (
+      (!file.name.match(TEXT_FILE_REGEX) || file.size >= MAX_LOCAL_FILE_SIZE) &&
+      file.status !== 'error'
+    ) {
       let inputHidden = '<input type="hidden" name="attachments[]" value="';
       const json = {
         url: `${s3BucketHttps}${file.postData.key}`,

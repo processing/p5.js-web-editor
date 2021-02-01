@@ -8,7 +8,9 @@ import Button from '../../../common/Button';
 
 function ResetPasswordForm(props) {
   const { t } = useTranslation();
-  const resetPasswordInitiate = useSelector(state => state.user.resetPasswordInitiate);
+  const resetPasswordInitiate = useSelector(
+    (state) => state.user.resetPasswordInitiate
+  );
   const dispatch = useDispatch();
 
   function onSubmit(formProps) {
@@ -21,17 +23,14 @@ function ResetPasswordForm(props) {
       validate={validateResetPassword}
       onSubmit={onSubmit}
     >
-      {({
-        handleSubmit, submitting, pristine, invalid
-      }) => (
-        <form
-          className="form"
-          onSubmit={handleSubmit}
-        >
+      {({ handleSubmit, submitting, pristine, invalid }) => (
+        <form className="form" onSubmit={handleSubmit}>
           <Field name="email">
-            {field => (
+            {(field) => (
               <p className="form__field">
-                <label htmlFor="email" className="form__label">{t('ResetPasswordForm.Email')}</label>
+                <label htmlFor="email" className="form__label">
+                  {t('ResetPasswordForm.Email')}
+                </label>
                 <input
                   className="form__input"
                   aria-label={t('ResetPasswordForm.EmailARIA')}
@@ -47,8 +46,11 @@ function ResetPasswordForm(props) {
           </Field>
           <Button
             type="submit"
-            disabled={submitting || invalid || pristine || resetPasswordInitiate}
-          >{t('ResetPasswordForm.Submit')}
+            disabled={
+              submitting || invalid || pristine || resetPasswordInitiate
+            }
+          >
+            {t('ResetPasswordForm.Submit')}
           </Button>
         </form>
       )}

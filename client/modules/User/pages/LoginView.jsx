@@ -25,11 +25,16 @@ function LoginView() {
           </div>
           <p className="form__navigation-options">
             {t('LoginView.DontHaveAccount')}
-            <Link className="form__signup-button" to="/signup">{t('LoginView.SignUp')}</Link>
+            <Link className="form__signup-button" to="/signup">
+              {t('LoginView.SignUp')}
+            </Link>
           </p>
           <p className="form__navigation-options">
             {t('LoginView.ForgotPassword')}
-            <Link className="form__reset-password-button" to="/reset-password"> {t('LoginView.ResetPassword')}</Link>
+            <Link className="form__reset-password-button" to="/reset-password">
+              {' '}
+              {t('LoginView.ResetPassword')}
+            </Link>
           </p>
         </div>
       </main>

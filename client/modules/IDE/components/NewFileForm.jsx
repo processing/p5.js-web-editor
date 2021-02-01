@@ -33,21 +33,12 @@ function NewFileForm() {
   });
 
   return (
-    <Form
-      fields={['name']}
-      validate={validate}
-      onSubmit={onSubmit}
-    >
-      {({
-        handleSubmit, errors, touched, invalid, submitting
-      }) => (
-        <form
-          className="new-file-form"
-          onSubmit={handleSubmit}
-        >
+    <Form fields={['name']} validate={validate} onSubmit={onSubmit}>
+      {({ handleSubmit, errors, touched, invalid, submitting }) => (
+        <form className="new-file-form" onSubmit={handleSubmit}>
           <div className="new-file-form__input-wrapper">
             <Field name="name">
-              {field => (
+              {(field) => (
                 <React.Fragment>
                   <label className="new-file-form__name-label" htmlFor="name">
                     Name:
@@ -64,10 +55,8 @@ function NewFileForm() {
                 </React.Fragment>
               )}
             </Field>
-            <Button
-              type="submit"
-              disabled={invalid || submitting}
-            >{t('NewFileForm.AddFileSubmit')}
+            <Button type="submit" disabled={invalid || submitting}>
+              {t('NewFileForm.AddFileSubmit')}
             </Button>
           </div>
           {touched.name && errors.name && (
