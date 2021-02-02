@@ -1,6 +1,6 @@
 import apiClient from '../../../utils/apiClient';
 import getConfig from '../../../utils/getConfig';
-import { createFile } from './files';
+import { handleCreateFile } from './files';
 import { TEXT_FILE_REGEX } from '../../../../server/utils/fileUtils';
 
 const s3BucketHttps =
@@ -48,7 +48,7 @@ export function dropzoneAcceptCallback(userId, file, done) {
     if (file.name.match(TEXT_FILE_REGEX) && file.size < MAX_LOCAL_FILE_SIZE) {
       localIntercept(file)
         .then((result) => {
-        file.content = result; // eslint-disable-line
+          file.content = result; // eslint-disable-line
           done('Uploading plaintext file locally.');
           file.previewElement.classList.remove('dz-error');
           file.previewElement.classList.add('dz-success');
@@ -103,7 +103,7 @@ export function dropzoneSendingCallback(file, xhr, formData) {
 }
 
 export function dropzoneCompleteCallback(file) {
-  return (dispatch, getState) => { // eslint-disable-line
+  return (dispatch) => { // eslint-disable-line
     if (
       (!file.name.match(TEXT_FILE_REGEX) || file.size >= MAX_LOCAL_FILE_SIZE) &&
       file.status !== 'error'
@@ -125,13 +125,13 @@ export function dropzoneCompleteCallback(file) {
         name: file.name,
         url: `${s3BucketHttps}${file.postData.key}`
       };
-      createFile(formParams)(dispatch, getState);
+      dispatch(handleCreateFile(formParams, false));
     } else if (file.content !== undefined) {
       const formParams = {
         name: file.name,
         content: file.content
       };
-      createFile(formParams)(dispatch, getState);
+      dispatch(handleCreateFile(formParams, false));
     }
   };
 }
