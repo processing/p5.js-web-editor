@@ -83,7 +83,7 @@ export function submitFile(formProps, files, parentId, projectId) {
   });
 }
 
-export function handleCreateFile(formProps) {
+export function handleCreateFile(formProps, setSelected = true) {
   return (dispatch, getState) => {
     const state = getState();
     const { files } = state;
@@ -97,7 +97,9 @@ export function handleCreateFile(formProps) {
           if (updatedAt) dispatch(setProjectSavedTime(updatedAt));
           dispatch(closeNewFileModal());
           dispatch(setUnsavedChanges(true));
-          dispatch(setSelectedFile(file.id));
+          if (setSelected) {
+            dispatch(setSelectedFile(file.id));
+          }
           resolve();
         })
         .catch((error) => {
