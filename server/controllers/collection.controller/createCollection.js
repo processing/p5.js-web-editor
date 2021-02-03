@@ -20,19 +20,17 @@ export default function createCollection(req, res) {
   }
 
   function populateReferences(newCollection) {
-    return Collection.populate(
-      newCollection,
-      [
-        { path: 'owner', select: ['id', 'username'] },
-        {
-          path: 'items.project',
-          select: ['id', 'name', 'slug'],
-          populate: {
-            path: 'user', select: ['username']
-          }
+    return Collection.populate(newCollection, [
+      { path: 'owner', select: ['id', 'username'] },
+      {
+        path: 'items.project',
+        select: ['id', 'name', 'slug'],
+        populate: {
+          path: 'user',
+          select: ['username']
         }
-      ]
-    );
+      }
+    ]);
   }
 
   if (owner == null) {

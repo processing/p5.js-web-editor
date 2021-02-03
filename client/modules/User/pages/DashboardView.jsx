@@ -11,14 +11,19 @@ import AssetList from '../../IDE/components/AssetList';
 import AssetSize from '../../IDE/components/AssetSize';
 import CollectionList from '../../IDE/components/CollectionList';
 import SketchList from '../../IDE/components/SketchList';
-import { CollectionSearchbar, SketchSearchbar } from '../../IDE/components/Searchbar';
+import {
+  CollectionSearchbar,
+  SketchSearchbar
+} from '../../IDE/components/Searchbar';
 
 import CollectionCreate from '../components/CollectionCreate';
-import DashboardTabSwitcherPublic, { TabKey } from '../components/DashboardTabSwitcher';
+import DashboardTabSwitcherPublic, {
+  TabKey
+} from '../components/DashboardTabSwitcher';
 
 class DashboardView extends React.Component {
   static defaultProps = {
-    user: null,
+    user: null
   };
 
   constructor(props) {
@@ -70,25 +75,30 @@ class DashboardView extends React.Component {
 
   returnToDashboard = () => {
     browserHistory.push(`/${this.ownerName()}/collections`);
-  }
+  };
 
   renderActionButton(tabKey, username, t) {
     switch (tabKey) {
       case TabKey.assets:
         return this.isOwner() && <AssetSize />;
       case TabKey.collections:
-        return this.isOwner() && (
-          <React.Fragment>
-            <Button to={`/${username}/collections/create`}>
-              {t('DashboardView.CreateCollection')}
-            </Button>
-            <CollectionSearchbar />
-          </React.Fragment>);
+        return (
+          this.isOwner() && (
+            <React.Fragment>
+              <Button to={`/${username}/collections/create`}>
+                {t('DashboardView.CreateCollection')}
+              </Button>
+              <CollectionSearchbar />
+            </React.Fragment>
+          )
+        );
       case TabKey.sketches:
       default:
         return (
           <React.Fragment>
-            {this.isOwner() && <Button to="/">{t('DashboardView.NewSketch')}</Button>}
+            {this.isOwner() && (
+              <Button to="/">{t('DashboardView.NewSketch')}</Button>
+            )}
             <SketchSearchbar />
           </React.Fragment>
         );
@@ -119,14 +129,18 @@ class DashboardView extends React.Component {
 
         <main className="dashboard-header">
           <div className="dashboard-header__header">
-            <h2 className="dashboard-header__header__title">{this.ownerName()}</h2>
+            <h2 className="dashboard-header__header__title">
+              {this.ownerName()}
+            </h2>
             <div className="dashboard-header__nav">
-              <DashboardTabSwitcherPublic currentTab={currentTab} isOwner={isOwner} username={username} />
-              {actions &&
-                <div className="dashboard-header__actions">
-                  {actions}
-                </div>
-              }
+              <DashboardTabSwitcherPublic
+                currentTab={currentTab}
+                isOwner={isOwner}
+                username={username}
+              />
+              {actions && (
+                <div className="dashboard-header__actions">{actions}</div>
+              )}
             </div>
           </div>
 
@@ -134,14 +148,14 @@ class DashboardView extends React.Component {
             {this.renderContent(currentTab, username)}
           </div>
         </main>
-        {this.isCollectionCreate() &&
+        {this.isCollectionCreate() && (
           <Overlay
             title={this.props.t('DashboardView.CreateCollectionOverlay')}
             closeOverlay={this.returnToDashboard}
           >
             <CollectionCreate />
           </Overlay>
-        }
+        )}
       </div>
     );
   }
@@ -151,21 +165,21 @@ function mapStateToProps(state) {
   return {
     previousPath: state.ide.previousPath,
     user: state.user,
-    theme: state.preferences.theme,
+    theme: state.preferences.theme
   };
 }
 
 DashboardView.propTypes = {
   location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
+    pathname: PropTypes.string.isRequired
   }).isRequired,
   params: PropTypes.shape({
-    username: PropTypes.string.isRequired,
+    username: PropTypes.string.isRequired
   }).isRequired,
   previousPath: PropTypes.string.isRequired,
   theme: PropTypes.string.isRequired,
   user: PropTypes.shape({
-    username: PropTypes.string,
+    username: PropTypes.string
   }),
   t: PropTypes.func.isRequired
 };

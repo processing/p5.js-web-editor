@@ -1,6 +1,5 @@
 import Collection from '../../models/collection';
 
-
 export default function createCollection(req, res) {
   const { id: collectionId } = req.params;
   const owner = req.user._id;
@@ -15,7 +14,10 @@ export default function createCollection(req, res) {
 
   function removeCollection(collection) {
     if (collection == null) {
-      sendFailure({ code: 404, message: 'Not found, or you user does not own this collection' });
+      sendFailure({
+        code: 404,
+        message: 'Not found, or you user does not own this collection'
+      });
       return null;
     }
 

@@ -5,17 +5,11 @@ import CopyableInput from './CopyableInput';
 
 class ShareModal extends React.PureComponent {
   render() {
-    const {
-      projectId,
-      ownerUsername,
-      projectName
-    } = this.props;
+    const { projectId, ownerUsername, projectName } = this.props;
     const hostname = window.location.origin;
     return (
       <div className="share-modal">
-        <h3 className="share-modal__project-name">
-          {projectName}
-        </h3>
+        <h3 className="share-modal__project-name">{projectName}</h3>
         <CopyableInput
           label={this.props.t('ShareModal.Embed')}
           value={`<iframe src="${hostname}/${ownerUsername}/embed/${projectId}"></iframe>`}
