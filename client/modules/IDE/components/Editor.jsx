@@ -87,7 +87,6 @@ class Editor extends React.Component {
     this.findPrev = this.findPrev.bind(this);
     this.showReplace = this.showReplace.bind(this);
     this.getContent = this.getContent.bind(this);
-    this.handleKey = this.handleKey.bind(this);
   }
 
   componentDidMount() {
@@ -155,22 +154,15 @@ class Editor extends React.Component {
       }
     }, 1000));
 
-    this.map = {};
-
     this._cm.on('keyup', (_cm, e) => {
       const temp = this.props.t('Editor.KeyUpLineNumber', { lineNumber: parseInt((this._cm.getCursor().line) + 1, 10) });
       document.getElementById('current-line').innerHTML = temp;
-      this.handleKey(this.map, e);
     });
 
     this._cm.on('keydown', (_cm, e) => {
-      this.handleKey(this.map, e);
-      // 91 === Cmd
-      // 16 === Shift
       // 70 === f
-      // 17 === Ctrl
-      if (((metaKey === 'Cmd' && this.map[91]) || (metaKey === 'Ctrl' && this.map[17])) && this.map[16] && this.map[70]) {
-        e.preventDefault(); // prevent browser's default behaviour
+      if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.keyCode === 70) {
+        e.preventDefault();
         this.tidyCode();
       }
     });
@@ -333,10 +325,6 @@ class Editor extends React.Component {
       this.optionsButton.focus();
       this.props.showEditorOptions();
     }
-  }
-
-  handleKey(map, e) { // update the 'keydown 'state of each key
-    map[e.keyCode] = e.type === 'keydown';
   }
 
   render() {
