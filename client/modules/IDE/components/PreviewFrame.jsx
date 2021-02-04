@@ -79,10 +79,10 @@ class PreviewFrame extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('message', this.handleConsoleEvent);
-    const iframeBody = this.iframeElement.contentDocument.body;
-    if (iframeBody) {
-      ReactDOM.unmountComponentAtNode(iframeBody);
-    }
+    // const iframeBody = this.iframeElement.contentDocument.body;
+    // if (iframeBody) {
+    //   ReactDOM.unmountComponentAtNode(iframeBody);
+    // }
   }
 
   handleConsoleEvent(messageEvent) {
@@ -282,13 +282,12 @@ class PreviewFrame extends React.Component {
             );
           } else if (resolvedFile.name.match(PLAINTEXT_FILE_REGEX)) {
             // could also pull file from API instead of using bloburl
-            const blobURL = getBlobUrl(resolvedFile);
-            this.props.setBlobUrl(resolvedFile, blobURL);
-
-            newContent = newContent.replace(
-              jsFileString,
-              quoteCharacter + blobURL + quoteCharacter
-            );
+            // const blobURL = getBlobUrl(resolvedFile);
+            // this.props.setBlobUrl(resolvedFile, blobURL);
+            // newContent = newContent.replace(
+            //   jsFileString,
+            //   quoteCharacter + blobURL + quoteCharacter
+            // );
           }
         }
       }
@@ -402,7 +401,7 @@ class PreviewFrame extends React.Component {
       'preview-frame--full-view': this.props.fullView
     });
     const sandboxAttributes =
-      'allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-forms allow-modals allow-downloads';
+      'allow-scripts allow-pointer-lock allow-popups allow-forms allow-modals allow-downloads';
     return (
       <iframe
         id="canvas_frame"
@@ -441,7 +440,7 @@ PreviewFrame.propTypes = {
   endSketchRefresh: PropTypes.func.isRequired,
   previewIsRefreshing: PropTypes.bool.isRequired,
   fullView: PropTypes.bool,
-  setBlobUrl: PropTypes.func.isRequired,
+  // setBlobUrl: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
   expandConsole: PropTypes.func.isRequired,
   clearConsole: PropTypes.func.isRequired,
