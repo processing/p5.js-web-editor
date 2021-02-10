@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useRef, useEffect, useMemo } from 'react';
 import ReactDOM from 'react-dom';
+import styled from 'styled-components';
 // import escapeStringRegexp from 'escape-string-regexp';
 import srcDoc from 'srcdoc-polyfill';
 import loopProtect from 'loop-protect';
@@ -8,8 +9,8 @@ import { JSHINT } from 'jshint';
 import decomment from 'decomment';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
-import { getBlobUrl } from '../actions/files';
-import { resolvePathToFile } from '../../../../server/utils/filePath';
+import { getBlobUrl } from '../IDE/actions/files';
+import { resolvePathToFile } from '../../../server/utils/filePath';
 import {
   MEDIA_FILE_REGEX,
   MEDIA_FILE_QUOTED_REGEX,
@@ -17,24 +18,28 @@ import {
   PLAINTEXT_FILE_REGEX,
   EXTERNAL_LINK_REGEX,
   NOT_EXTERNAL_LINK_REGEX
-} from '../../../../server/utils/fileUtils';
+} from '../../../server/utils/fileUtils';
 import {
   hijackConsoleErrorsScript,
   startTag,
   getAllScriptOffsets
-} from '../../../utils/consoleUtils';
-import { registerFrame } from '../../../utils/dispatcher';
+} from '../../utils/consoleUtils';
+import { registerFrame } from '../../utils/dispatcher';
 
-import { getHTMLFile } from '../reducers/files';
+import { getHTMLFile } from '../IDE/reducers/files';
 
-import { stopSketch, expandConsole, endSketchRefresh } from '../actions/ide';
+import {
+  stopSketch,
+  expandConsole,
+  endSketchRefresh
+} from '../IDE/actions/ide';
 import {
   setTextOutput,
   setGridOutput,
   setSoundOutput
-} from '../actions/preferences';
-import { setBlobUrl } from '../actions/files';
-import { clearConsole, dispatchConsoleEvent } from '../actions/console';
+} from '../IDE/actions/preferences';
+import { setBlobUrl } from '../IDE/actions/files';
+import { clearConsole, dispatchConsoleEvent } from '../IDE/actions/console';
 
 const shouldRenderSketch = (props, prevProps = undefined) => {
   const { isPlaying, previewIsRefreshing, fullView } = props;
@@ -53,6 +58,123 @@ const shouldRenderSketch = (props, prevProps = undefined) => {
     (fullView && props.files[0].id !== prevProps.files[0].id)
   );
 };
+
+const Frame = styled.iframe`
+  min-height: 100%;
+  min-width: 100%;
+  position: absolute;
+  border-width: 0;
+  ${({ fullView }) =>
+    fullView &&
+    `
+    position: relative;
+  `}
+`;
+
+function injectLocalFiles(files, htmlFile) {
+  const htmlFile = this.props.htmlFile.content;
+  let scriptOffs = [];
+  const files = this.mergeLocalFilesAndEditorActiveFile();
+  const resolvedFiles = this.resolveJSAndCSSLinks(files);
+  const parser = new DOMParser();
+  const sketchDoc = parser.parseFromString(htmlFile, 'text/html');
+
+  const base = sketchDoc.createElement('base');
+  base.href = `${window.location.href}/`;
+  sketchDoc.head.appendChild(base);
+
+  this.resolvePathsForElementsWithAttribute('src', sketchDoc, resolvedFiles);
+  this.resolvePathsForElementsWithAttribute('href', sketchDoc, resolvedFiles);
+  // should also include background, data, poster, but these are used way less often
+
+  this.resolveScripts(sketchDoc, resolvedFiles);
+  this.resolveStyles(sketchDoc, resolvedFiles);
+
+  const accessiblelib = sketchDoc.createElement('script');
+  accessiblelib.setAttribute(
+    'src',
+    'https://cdn.rawgit.com/processing/p5.accessibility/v0.1.1/dist/p5-accessibility.js'
+  );
+  const accessibleOutputs = sketchDoc.createElement('section');
+  accessibleOutputs.setAttribute('id', 'accessible-outputs');
+  accessibleOutputs.setAttribute('aria-label', 'accessible-output');
+  if (this.props.textOutput) {
+    sketchDoc.body.appendChild(accessibleOutputs);
+    sketchDoc.body.appendChild(accessiblelib);
+    const textSection = sketchDoc.createElement('section');
+    textSection.setAttribute('id', 'textOutput-content');
+    sketchDoc.getElementById('accessible-outputs').appendChild(textSection);
+  }
+  if (this.props.gridOutput) {
+    sketchDoc.body.appendChild(accessibleOutputs);
+    sketchDoc.body.appendChild(accessiblelib);
+    const gridSection = sketchDoc.createElement('section');
+    gridSection.setAttribute('id', 'tableOutput-content');
+    sketchDoc.getElementById('accessible-outputs').appendChild(gridSection);
+  }
+  if (this.props.soundOutput) {
+    sketchDoc.body.appendChild(accessibleOutputs);
+    sketchDoc.body.appendChild(accessiblelib);
+    const soundSection = sketchDoc.createElement('section');
+    soundSection.setAttribute('id', 'soundOutput-content');
+    sketchDoc.getElementById('accessible-outputs').appendChild(soundSection);
+  }
+
+  const previewScripts = sketchDoc.createElement('script');
+  previewScripts.src = '/previewScripts.js';
+  sketchDoc.head.appendChild(previewScripts);
+
+  const sketchDocString = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
+  scriptOffs = getAllScriptOffsets(sketchDocString);
+  const consoleErrorsScript = sketchDoc.createElement('script');
+  consoleErrorsScript.innerHTML = hijackConsoleErrorsScript(
+    JSON.stringify(scriptOffs)
+  );
+  this.addLoopProtect(sketchDoc);
+  sketchDoc.head.insertBefore(consoleErrorsScript, sketchDoc.head.firstElement);
+
+  return `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
+}
+
+function getHtmlFile(files) {
+  return files.filter((file) => file.name.match(/.*\.html$/i))[0];
+}
+
+function EmbedFrame({ files }) {
+  const iframe = useRef();
+  const htmlFile = useMemo(() => getHtmlFile(files), [files]);
+
+  function renderSketch() {
+    const doc = iframe.current;
+    const htmlDoc = injectLocalFiles(files, htmlFile);
+    srcDoc.set(doc, htmlDoc);
+    // if (this.props.isPlaying) {
+    //   this.props.clearConsole();
+    //   srcDoc.set(doc, htmlDoc);
+    //   if (this.props.endSketchRefresh) {
+    //     this.props.endSketchRefresh();
+    //   }
+    // } else {
+    //   doc.srcdoc = '';
+    //   srcDoc.set(doc, '  ');
+    // }
+  }
+
+  useEffect(renderSketch, [files]);
+  const sandboxAttributes =
+    'allow-scripts allow-pointer-lock allow-popups allow-forms allow-modals allow-downloads';
+  return (
+    <Frame
+      aria-label="Sketch Preview"
+      role="main"
+      frameBorder="0"
+      ref={iframe}
+      sandbox={sandboxAttributes}
+    />
+  );
+}
+
+export default EmbedFrame;
 
 class PreviewFrame extends React.Component {
   constructor(props) {
