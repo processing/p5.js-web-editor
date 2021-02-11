@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
-import InlineSVG from 'react-inlinesvg';
+import { withTranslation } from 'react-i18next';
+
 import ConnectedFileNode from './FileNode';
 
-const downArrowUrl = require('../../../images/down-filled-triangle.svg');
+import DownArrowIcon from '../../../images/down-filled-triangle.svg';
 
 class Sidebar extends React.Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class Sidebar extends React.Component {
     this.onFocusComponent = this.onFocusComponent.bind(this);
 
     this.state = {
-      isFocused: false,
+      isFocused: false
     };
   }
 
@@ -50,7 +51,10 @@ class Sidebar extends React.Component {
     let canEdit;
     if (!this.props.owner) {
       canEdit = true;
-    } else if (this.props.user.authenticated && this.props.owner.id === this.props.user.id) {
+    } else if (
+      this.props.user.authenticated &&
+      this.props.owner.id === this.props.user.id
+    ) {
       canEdit = true;
     } else {
       canEdit = false;
@@ -61,35 +65,40 @@ class Sidebar extends React.Component {
   render() {
     const canEditProject = this.userCanEditProject();
     const sidebarClass = classNames({
-      'sidebar': true,
+      sidebar: true,
       'sidebar--contracted': !this.props.isExpanded,
       'sidebar--project-options': this.props.projectOptionsVisible,
       'sidebar--cant-edit': !canEditProject
     });
-    const rootFile = this.props.files.filter(file => file.name === 'root')[0];
+    const rootFile = this.props.files.filter((file) => file.name === 'root')[0];
 
     return (
-      <nav className={sidebarClass} title="file-navigation" >
-        <div className="sidebar__header" onContextMenu={this.toggleProjectOptions}>
+      <section className={sidebarClass}>
+        <header
+          className="sidebar__header"
+          onContextMenu={this.toggleProjectOptions}
+        >
           <h3 className="sidebar__title">
-            <span>Sketch Files</span>
+            <span>{this.props.t('Sidebar.Title')}</span>
           </h3>
           <div className="sidebar__icons">
             <button
-              aria-label="add file or folder"
+              aria-label={this.props.t('Sidebar.ToggleARIA')}
               className="sidebar__add"
               tabIndex="0"
-              ref={(element) => { this.sidebarOptions = element; }}
+              ref={(element) => {
+                this.sidebarOptions = element;
+              }}
               onClick={this.toggleProjectOptions}
               onBlur={this.onBlurComponent}
               onFocus={this.onFocusComponent}
             >
-              <InlineSVG src={downArrowUrl} />
+              <DownArrowIcon focusable="false" aria-hidden="true" />
             </button>
             <ul className="sidebar__project-options">
               <li>
                 <button
-                  aria-label="add folder"
+                  aria-label={this.props.t('Sidebar.AddFolderARIA')}
                   onClick={() => {
                     this.props.newFolder(rootFile.id);
                     setTimeout(this.props.closeProjectOptions, 0);
@@ -97,12 +106,12 @@ class Sidebar extends React.Component {
                   onBlur={this.onBlurComponent}
                   onFocus={this.onFocusComponent}
                 >
-                  Add folder
+                  {this.props.t('Sidebar.AddFolder')}
                 </button>
               </li>
               <li>
                 <button
-                  aria-label="add file"
+                  aria-label={this.props.t('Sidebar.AddFileARIA')}
                   onClick={() => {
                     this.props.newFile(rootFile.id);
                     setTimeout(this.props.closeProjectOptions, 0);
@@ -110,26 +119,40 @@ class Sidebar extends React.Component {
                   onBlur={this.onBlurComponent}
                   onFocus={this.onFocusComponent}
                 >
-                  Add file
+                  {this.props.t('Sidebar.AddFile')}
                 </button>
               </li>
+              {this.props.user.authenticated && (
+                <li>
+                  <button
+                    aria-label={this.props.t('Sidebar.UploadFileARIA')}
+                    onClick={() => {
+                      this.props.openUploadFileModal(rootFile.id);
+                      setTimeout(this.props.closeProjectOptions, 0);
+                    }}
+                    onBlur={this.onBlurComponent}
+                    onFocus={this.onFocusComponent}
+                  >
+                    {this.props.t('Sidebar.UploadFile')}
+                  </button>
+                </li>
+              )}
             </ul>
           </div>
-        </div>
-        <ConnectedFileNode
-          id={rootFile.id}
-          canEdit={canEditProject}
-        />
-      </nav>
+        </header>
+        <ConnectedFileNode id={rootFile.id} canEdit={canEditProject} />
+      </section>
     );
   }
 }
 
 Sidebar.propTypes = {
-  files: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired
-  })).isRequired,
+  files: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired
+    })
+  ).isRequired,
   setSelectedFile: PropTypes.func.isRequired,
   isExpanded: PropTypes.bool.isRequired,
   projectOptionsVisible: PropTypes.bool.isRequired,
@@ -137,17 +160,19 @@ Sidebar.propTypes = {
   openProjectOptions: PropTypes.func.isRequired,
   closeProjectOptions: PropTypes.func.isRequired,
   newFolder: PropTypes.func.isRequired,
+  openUploadFileModal: PropTypes.func.isRequired,
   owner: PropTypes.shape({
     id: PropTypes.string
   }),
   user: PropTypes.shape({
     id: PropTypes.string,
     authenticated: PropTypes.bool.isRequired
-  }).isRequired
+  }).isRequired,
+  t: PropTypes.func.isRequired
 };
 
 Sidebar.defaultProps = {
   owner: undefined
 };
 
-export default Sidebar;
+export default withTranslation()(Sidebar);

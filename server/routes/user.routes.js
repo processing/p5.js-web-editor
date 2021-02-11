@@ -18,8 +18,19 @@ router.post('/reset-password/:token', UserController.updatePassword);
 
 router.put('/account', isAuthenticated, UserController.updateSettings);
 
+router.post('/account/api-keys', isAuthenticated, UserController.createApiKey);
+
+router.delete(
+  '/account/api-keys/:keyId',
+  isAuthenticated,
+  UserController.removeApiKey
+);
+
 router.post('/verify/send', UserController.emailVerificationInitiate);
 
 router.get('/verify', UserController.verifyEmail);
+
+router.delete('/auth/github', UserController.unlinkGithub);
+router.delete('/auth/google', UserController.unlinkGoogle);
 
 export default router;

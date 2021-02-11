@@ -1,7 +1,7 @@
 sudo: required
 language: node_js
 node_js:
- - "11.15.0"
+ - "12.16.1"
 
 cache:
   directories:
@@ -37,12 +37,13 @@ deploy:
     script: ./deploy.sh
     skip_cleanup: true
     on:
-      branch: master
+      branch: release
+      tags: true
   - provider: script
     script: ./deploy_staging.sh
     skip_cleanup: true
     on:
-      branch: feature/public-api
+      branch: develop
 
 env:
   global:

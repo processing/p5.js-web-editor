@@ -1,11 +1,13 @@
-import axios from 'axios';
-import { createFile } from './files';
+import apiClient from '../../../utils/apiClient';
+import getConfig from '../../../utils/getConfig';
+import { handleCreateFile } from './files';
 import { TEXT_FILE_REGEX } from '../../../../server/utils/fileUtils';
 
-const __process = (typeof global !== 'undefined' ? global : window).process;
-const s3BucketHttps = __process.env.S3_BUCKET_URL_BASE ||
-                      `https://s3-${__process.env.AWS_REGION}.amazonaws.com/${__process.env.S3_BUCKET}/`;
-const ROOT_URL = __process.env.API_URL;
+const s3BucketHttps =
+  getConfig('S3_BUCKET_URL_BASE') ||
+  `https://s3-${getConfig('AWS_REGION')}.amazonaws.com/${getConfig(
+    'S3_BUCKET'
+  )}/`;
 const MAX_LOCAL_FILE_SIZE = 80000; // bytes, aka 80 KB
 
 function localIntercept(file, options = {}) {
@@ -32,32 +34,41 @@ function localIntercept(file, options = {}) {
   });
 }
 
+function toBinary(string) {
+  const codeUnits = new Uint16Array(string.length);
+  for (let i = 0; i < codeUnits.length; i += 1) {
+    codeUnits[i] = string.charCodeAt(i);
+  }
+  return String.fromCharCode(...new Uint8Array(codeUnits.buffer));
+}
+
 export function dropzoneAcceptCallback(userId, file, done) {
   return () => {
     // if a user would want to edit this file as text, local interceptor
     if (file.name.match(TEXT_FILE_REGEX) && file.size < MAX_LOCAL_FILE_SIZE) {
-      localIntercept(file).then((result) => {
-        file.content = result; // eslint-disable-line
-        done('Uploading plaintext file locally.');
-      })
+      localIntercept(file)
+        .then((result) => {
+          file.content = result; // eslint-disable-line
+          done('Uploading plaintext file locally.');
+          file.previewElement.classList.remove('dz-error');
+          file.previewElement.classList.add('dz-success');
+          file.previewElement.classList.add('dz-processing');
+          file.previewElement.querySelector('.dz-upload').style.width = '100%';
+        })
         .catch((result) => {
           done(`Failed to download file ${file.name}: ${result}`);
           console.warn(file);
         });
     } else {
       file.postData = []; // eslint-disable-line
-      axios.post(
-        `${ROOT_URL}/S3/sign`, {
+      apiClient
+        .post('/S3/sign', {
           name: file.name,
           type: file.type,
           size: file.size,
           userId
-        // _csrf: document.getElementById('__createPostToken').value
-        },
-        {
-          withCredentials: true
-        }
-      )
+          // _csrf: document.getElementById('__createPostToken').value
+        })
         .then((response) => {
           file.custom_status = 'ready'; // eslint-disable-line
           file.postData = response.data; // eslint-disable-line
@@ -65,12 +76,17 @@ export function dropzoneAcceptCallback(userId, file, done) {
           file.previewTemplate.className += ' uploading'; // eslint-disable-line
           done();
         })
-        .catch((response) => {
-        file.custom_status = 'rejected'; // eslint-disable-line
-          if (response.data.responseText && response.data.responseText.message) {
+        .catch((error) => {
+          const { response } = error;
+          file.custom_status = 'rejected'; // eslint-disable-line
+          if (
+            response.data &&
+            response.data.responseText &&
+            response.data.responseText.message
+          ) {
             done(response.data.responseText.message);
           }
-          done('error preparing the upload');
+          done('Error: Reached upload limit.');
         });
     }
   };
@@ -82,37 +98,40 @@ export function dropzoneSendingCallback(file, xhr, formData) {
       Object.keys(file.postData).forEach((key) => {
         formData.append(key, file.postData[key]);
       });
-      formData.append('Content-type', file.type);
-      formData.append('Content-length', '');
-      formData.append('acl', 'public-read');
     }
   };
 }
 
 export function dropzoneCompleteCallback(file) {
-  return (dispatch, getState) => { // eslint-disable-line
-    if ((!file.name.match(TEXT_FILE_REGEX) || file.size >= MAX_LOCAL_FILE_SIZE) && file.status !== 'error') {
+  return (dispatch) => { // eslint-disable-line
+    if (
+      (!file.name.match(TEXT_FILE_REGEX) || file.size >= MAX_LOCAL_FILE_SIZE) &&
+      file.status !== 'error'
+    ) {
       let inputHidden = '<input type="hidden" name="attachments[]" value="';
       const json = {
         url: `${s3BucketHttps}${file.postData.key}`,
         originalFilename: file.name
       };
-      // console.log(json, JSON.stringify(json), JSON.stringify(json).replace('"', '\\"'));
-      inputHidden += `${window.btoa(JSON.stringify(json))}" />`;
-      // document.getElementById('uploader').appendChild(inputHidden);
+
+      let jsonStr = JSON.stringify(json);
+
+      // convert the json string to binary data so that btoa can encode it
+      jsonStr = toBinary(jsonStr);
+      inputHidden += `${window.btoa(jsonStr)}" />`;
       document.getElementById('uploader').innerHTML += inputHidden;
 
       const formParams = {
         name: file.name,
         url: `${s3BucketHttps}${file.postData.key}`
       };
-      createFile(formParams)(dispatch, getState);
+      dispatch(handleCreateFile(formParams, false));
     } else if (file.content !== undefined) {
       const formParams = {
         name: file.name,
         content: file.content
       };
-      createFile(formParams)(dispatch, getState);
+      dispatch(handleCreateFile(formParams, false));
     }
   };
 }

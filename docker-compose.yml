@@ -14,7 +14,7 @@ services:
     # uncomment the following lines if you don't want export all of the variables
     # defined in your .env file for testing
     # env_file:
-    #   - "$PWD/.env"
+    #   - "$PWD/.env.production"
     environment:
       - API_URL
       - MONGO_URL
@@ -38,7 +38,12 @@ services:
       - GOOGLE_SECRET
       - EXAMPLE_USER_EMAIL
       - EXAMPLE_USER_PASSWORD
-      - FORCE_TO_HTTPS
+      - ML5_EXAMPLES_USERNAME
+      - ML5_EXAMPLES_PASS
+      - ML5_EXAMPLES_EMAIL
+      - UI_ACCESS_TOKEN_ENABLED
+      - UPLOAD_LIMIT
+      - TRANSLATIONS_ENABLED
       # you can either set this in your .env or as an environment variables
       # or here YOU CHOOSE
       # - MONGO_URL=mongodb://mongo:27017/p5js-web-editor

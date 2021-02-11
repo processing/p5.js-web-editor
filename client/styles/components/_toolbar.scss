@@ -1,25 +1,34 @@
 .toolbar__play-button {
 	@include themify() {
 		@extend %toolbar-button;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 0 0 0 #{3 / $base-font-size}rem;
 		&--selected {
 			@extend %toolbar-button--selected;
 		}
 		&:disabled {
 			cursor: auto;
-			& g {
+			& g, & path {
 				fill: getThemifyVariable('button-border-color');
 			}
 			&:hover {
 				background-color: getThemifyVariable('toolbar-button-background-color');
-				& g {
+				& g, & path {
 					fill: getThemifyVariable('button-border-color');
 				}
 			}
 	    }
 	}
 	margin-right: #{15 / $base-font-size}rem;
-	& span {
-		padding-left: #{3 / $base-font-size}rem;
+	span {
+		padding-left: #{4 / $base-font-size}rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: #{20 / $base-font-size}rem;
+		height: #{20 / $base-font-size}rem;
 	}
 }
 
@@ -30,42 +39,62 @@
 .toolbar__stop-button {
 	@include themify() {
 		@extend %toolbar-button;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		margin-right: #{15 / $base-font-size}rem;
+		padding: 0;
 		&--selected {
 			@extend %toolbar-button--selected;
 		}
+	}
+	span {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: #{20 / $base-font-size}rem;
+		height: #{20 / $base-font-size}rem;
 	}
 }
 
 .toolbar__preferences-button {
 	@include themify() {
 		@extend %toolbar-button;
-		line-height: #{52 / $base-font-size}rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 0;
 		&--selected {
 			@extend %toolbar-button--selected;
-			line-height: #{52 / $base-font-size}rem;
 		}
 	}
-	line-height: #{52 / $base-font-size}rem;
 	margin-left: auto;
 	& span {
 		padding-left: #{1 / $base-font-size}rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: #{20 / $base-font-size}rem;
+		height: #{20 / $base-font-size}rem;
 	}
 }
 
 .toolbar__logo {
 	margin-right: #{30 / $base-font-size}rem;
 	@include themify() {
-		& g {
+		& g, & path {
 			fill: getThemifyVariable('logo-color');
 		}
 	}
 }
 
 .toolbar {
-	padding: #{20 / $base-font-size}rem #{34 / $base-font-size}rem;
+	padding: #{10 / $base-font-size}rem #{20 / $base-font-size}rem;
 	display: flex;
 	align-items: center;
+	@include themify() {
+		border-bottom: 1px dashed map-get($theme-map, 'nav-border-color');
+	}
 }
 
 .toolbar__project-name-container {
@@ -80,11 +109,11 @@
 
 .toolbar__project-name {
 	@include themify() {
-		color: getThemifyVariable('inactive-text-color');
+		color: getThemifyVariable('secondary-text-color');
 		&:hover {
-		color: getThemifyVariable('primary-text-color');
+		color: getThemifyVariable('logo-color');
 		  & .toolbar__edit-name-button path {
-		  	fill: getThemifyVariable('primary-text-color');
+		  	fill: getThemifyVariable('logo-color');
 		  }
 		}
 	}
@@ -108,13 +137,13 @@
 .toolbar__project-owner {
 	margin-left: #{5 / $base-font-size}rem;
 	@include themify() {
-		color: getThemifyVariable('inactive-text-color');
+		color: getThemifyVariable('secondary-text-color');
 	}
 }
 
 .toolbar__autorefresh-label {
 	@include themify() {
-		color: getThemifyVariable('inactive-text-color');
+		color: getThemifyVariable('secondary-text-color');
 	}
 	margin-left: #{5 / $base-font-size}rem;
 	font-size: #{12 / $base-font-size}rem;
@@ -125,44 +154,18 @@
 	align-items: center;
 }
 
-.toolbar__serve-secure {
-	margin-left: #{20 / $base-font-size}rem;
-}
-
-.toolbar__serve-secure-label {
-	@include themify() {
-		color: getThemifyVariable('inactive-text-color');
-	}
-	margin-left: #{5 / $base-font-size}rem;
-	font-size: #{12 / $base-font-size}rem;
-}
-
-.toolbar__serve-secure-help {
-	display: inline-block;
-	padding-top: 0;
-	padding-bottom: 0;
-	& svg {
-		width: #{10 / $base-font-size}rem;
-		height: #{10 / $base-font-size}rem;
-	}
-	@include themify() {
-		& path {
-			fill: getThemifyVariable('inactive-text-color');
-		}
-	}
+.checkbox__autorefresh{
+	cursor: pointer;
 }
 
 .toolbar__edit-name-button {
 	display: inline-block;
 	vertical-align: top;
+	width: #{18 / $base-font-size}rem;
 	height: #{18 / $base-font-size}rem;
-	& svg {
-		width: #{18 / $base-font-size}rem;
-		height: #{18 / $base-font-size}rem;
-	}
 	@include themify() {
 		& path {
-			fill: getThemifyVariable('inactive-text-color');
+			fill: getThemifyVariable('secondary-text-color');
 		}
 	}
 }

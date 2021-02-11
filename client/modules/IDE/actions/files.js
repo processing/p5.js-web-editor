@@ -1,26 +1,33 @@
-import axios from 'axios';
 import objectID from 'bson-objectid';
 import blobUtil from 'blob-util';
-import { reset } from 'redux-form';
+import apiClient from '../../../utils/apiClient';
 import * as ActionTypes from '../../../constants';
-import { setUnsavedChanges } from './ide';
+import {
+  setUnsavedChanges,
+  closeNewFolderModal,
+  closeNewFileModal,
+  setSelectedFile
+} from './ide';
 import { setProjectSavedTime } from './project';
-
-const __process = (typeof global !== 'undefined' ? global : window).process;
-const ROOT_URL = __process.env.API_URL;
+import { createError } from './ide';
 
 function appendToFilename(filename, string) {
   const dotIndex = filename.lastIndexOf('.');
   if (dotIndex === -1) return filename + string;
-  return filename.substring(0, dotIndex) + string + filename.substring(dotIndex);
+  return (
+    filename.substring(0, dotIndex) + string + filename.substring(dotIndex)
+  );
 }
 
 function createUniqueName(name, parentId, files) {
-  const siblingFiles = files.find(file => file.id === parentId)
-    .children.map(childFileId => files.find(file => file.id === childFileId));
+  const siblingFiles = files
+    .find((file) => file.id === parentId)
+    .children.map((childFileId) =>
+      files.find((file) => file.id === childFileId)
+    );
   let testName = name;
   let index = 1;
-  let existingName = siblingFiles.find(file => name === file.name);
+  let existingName = siblingFiles.find((file) => name === file.name);
 
   while (existingName) {
     testName = appendToFilename(name, `-${index}`);
@@ -38,110 +45,137 @@ export function updateFileContent(id, content) {
   };
 }
 
-export function createFile(formProps) {
-  return (dispatch, getState) => {
-    const state = getState();
-    const { parentId } = state.ide;
-    if (state.project.id) {
-      const postParams = {
-        name: createUniqueName(formProps.name, parentId, state.files),
-        url: formProps.url,
-        content: formProps.content || '',
-        parentId,
-        children: []
-      };
-      axios.post(`${ROOT_URL}/projects/${state.project.id}/files`, postParams, { withCredentials: true })
-        .then((response) => {
-          dispatch({
-            type: ActionTypes.CREATE_FILE,
-            ...response.data.updatedFile,
-            parentId
-          });
-          dispatch(setProjectSavedTime(response.data.project.updatedAt));
-          dispatch(reset('new-file'));
-          // dispatch({
-          //   type: ActionTypes.HIDE_MODAL
-          // });
-          dispatch(setUnsavedChanges(true));
-        })
-        .catch(response => dispatch({
-          type: ActionTypes.ERROR,
-          error: response.data
-        }));
-    } else {
-      const id = objectID().toHexString();
-      dispatch({
-        type: ActionTypes.CREATE_FILE,
-        name: createUniqueName(formProps.name, parentId, state.files),
-        id,
-        _id: id,
-        url: formProps.url,
-        content: formProps.content || '',
-        parentId,
-        children: []
-      });
-      dispatch(reset('new-file'));
-      // dispatch({
-      //   type: ActionTypes.HIDE_MODAL
-      // });
-      dispatch(setUnsavedChanges(true));
-    }
+export function createFile(file, parentId) {
+  return {
+    type: ActionTypes.CREATE_FILE,
+    ...file,
+    parentId
   };
 }
 
-export function createFolder(formProps) {
+export function submitFile(formProps, files, parentId, projectId) {
+  if (projectId) {
+    const postParams = {
+      name: createUniqueName(formProps.name, parentId, files),
+      url: formProps.url,
+      content: formProps.content || '',
+      parentId,
+      children: []
+    };
+    return apiClient
+      .post(`/projects/${projectId}/files`, postParams)
+      .then((response) => ({
+        file: response.data.updatedFile,
+        updatedAt: response.data.project.updatedAt
+      }));
+  }
+  const id = objectID().toHexString();
+  const file = {
+    name: createUniqueName(formProps.name, parentId, files),
+    id,
+    _id: id,
+    url: formProps.url,
+    content: formProps.content || '',
+    children: []
+  };
+  return Promise.resolve({
+    file
+  });
+}
+
+export function handleCreateFile(formProps, setSelected = true) {
   return (dispatch, getState) => {
     const state = getState();
+    const { files } = state;
     const { parentId } = state.ide;
-    if (state.project.id) {
-      const postParams = {
-        name: createUniqueName(formProps.name, parentId, state.files),
-        content: '',
-        children: [],
-        parentId,
-        fileType: 'folder'
-      };
-      axios.post(`${ROOT_URL}/projects/${state.project.id}/files`, postParams, { withCredentials: true })
+    const projectId = state.project.id;
+    return new Promise((resolve) => {
+      submitFile(formProps, files, parentId, projectId)
         .then((response) => {
-          dispatch({
-            type: ActionTypes.CREATE_FILE,
-            ...response.data.updatedFile,
-            parentId
-          });
-          dispatch(setProjectSavedTime(response.data.project.updatedAt));
-          dispatch({
-            type: ActionTypes.CLOSE_NEW_FOLDER_MODAL
-          });
+          const { file, updatedAt } = response;
+          dispatch(createFile(file, parentId));
+          if (updatedAt) dispatch(setProjectSavedTime(updatedAt));
+          dispatch(closeNewFileModal());
+          dispatch(setUnsavedChanges(true));
+          if (setSelected) {
+            dispatch(setSelectedFile(file.id));
+          }
+          resolve();
         })
-        .catch(response => dispatch({
-          type: ActionTypes.ERROR,
-          error: response.data
-        }));
-    } else {
-      const id = objectID().toHexString();
-      dispatch({
-        type: ActionTypes.CREATE_FILE,
-        name: createUniqueName(formProps.name, parentId, state.files),
-        id,
-        _id: id,
-        content: '',
-        // TODO pass parent id from File Tree
-        parentId,
-        fileType: 'folder',
-        children: []
-      });
-      dispatch({
-        type: ActionTypes.CLOSE_NEW_FOLDER_MODAL
-      });
-    }
+        .catch((error) => {
+          const { response } = error;
+          dispatch(createError(response.data));
+          resolve({ error });
+        });
+    });
+  };
+}
+
+export function submitFolder(formProps, files, parentId, projectId) {
+  if (projectId) {
+    const postParams = {
+      name: createUniqueName(formProps.name, parentId, files),
+      content: '',
+      children: [],
+      parentId,
+      fileType: 'folder'
+    };
+    return apiClient
+      .post(`/projects/${projectId}/files`, postParams)
+      .then((response) => ({
+        file: response.data.updatedFile,
+        updatedAt: response.data.project.updatedAt
+      }));
+  }
+  const id = objectID().toHexString();
+  const file = {
+    type: ActionTypes.CREATE_FILE,
+    name: createUniqueName(formProps.name, parentId, files),
+    id,
+    _id: id,
+    content: '',
+    // TODO pass parent id from File Tree
+    fileType: 'folder',
+    children: []
+  };
+  return Promise.resolve({
+    file
+  });
+}
+
+export function handleCreateFolder(formProps) {
+  return (dispatch, getState) => {
+    const state = getState();
+    const { files } = state;
+    const { parentId } = state.ide;
+    const projectId = state.project.id;
+    return new Promise((resolve) => {
+      submitFolder(formProps, files, parentId, projectId)
+        .then((response) => {
+          const { file, updatedAt } = response;
+          dispatch(createFile(file, parentId));
+          if (updatedAt) dispatch(setProjectSavedTime(updatedAt));
+          dispatch(closeNewFolderModal());
+          dispatch(setUnsavedChanges(true));
+          resolve();
+        })
+        .catch((error) => {
+          const { response } = error;
+          dispatch(createError(response.data));
+          resolve({ error });
+        });
+    });
   };
 }
 
 export function updateFileName(id, name) {
-  return {
-    type: ActionTypes.UPDATE_FILE_NAME,
-    id,
-    name
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.UPDATE_FILE_NAME,
+      id,
+      name
+    });
   };
 }
 
@@ -154,15 +188,18 @@ export function deleteFile(id, parentId) {
           parentId
         }
       };
-      axios.delete(`${ROOT_URL}/projects/${state.project.id}/files/${id}`, deleteConfig, { withCredentials: true })
-        .then(() => {
+      apiClient
+        .delete(`/projects/${state.project.id}/files/${id}`, deleteConfig)
+        .then((response) => {
+          dispatch(setProjectSavedTime(response.data.project.updatedAt));
           dispatch({
             type: ActionTypes.DELETE_FILE,
             id,
             parentId
           });
         })
-        .catch((response) => {
+        .catch((error) => {
+          const { response } = error;
           dispatch({
             type: ActionTypes.ERROR,
             error: response.data

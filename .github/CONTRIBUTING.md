@@ -15,12 +15,10 @@ Hello! We welcome community contributions to the p5.js Web Editor. Contributing 
     - [Issue Search and Tagging](#issue-search-and-tagging)
     - [Beginning Work](#beginning-work)
     - [Contribution Guides](#contribution-guides)
-  - [Writing Commit Messages](#writing-commit-messages)
-  - [Tips](#tips)
 
 ## Code of Conduct
 
-Please follow the guidelines in the [Code of Conduct](https://github.com/processing/p5.js-web-editor/blob/master/.github/CODE_OF_CONDUCT.md).
+Please follow the guidelines in the [Code of Conduct](https://github.com/processing/p5.js-web-editor/blob/develop/.github/CODE_OF_CONDUCT.md).
 
 ## How Can I Contribute?
 If you're new to open source, [read about how to contribute to open source](https://opensource.guide/how-to-contribute/).
@@ -33,6 +31,8 @@ Don't know where to begin? Here are some suggestions to get started:
   - Front end: React/Redux, CSS/Sass, CodeMirror
   - Back end: Node, Express, MongoDB, Jest, AWS
   - DevOps: Travis CI, Jest, Docker, Kubernetes, AWS
+  - Documentation
+  - Translations: Application and documentation
 * Use the [p5.js Web Editor](https://editor.p5js.org)! Find a bug? Think of something you think would add to the project? Open an issue.
 * Expand an existing issue. Sometimes issues are missing steps to reproduce, or need suggestions for potential solutions. Sometimes they need another voice saying, "this is really important!"
 * Try getting the project running locally on your computer by following the [installation steps](./../developer_docs/installation.md).
@@ -60,45 +60,9 @@ If you feel like an issue is tagged incorrectly (e.g. it's low priority and you 
 
 If you'd like to work on an issue, please comment on it to let the maintainers know, so that they can assign it to you. If someone else has already commented and taken up that issue, please refrain from working on it and submitting a PR without asking the maintainers as it leads to unnecessary duplication of effort.
 
-Then, follow the [installation guide](https://github.com/processing/p5.js-web-editor/blob/master/developer_docs/installation.md) to get the project building and working on your computer. 
+Then, look at the [development guide](https://github.com/processing/p5.js-web-editor/blob/develop/developer_docs/development.md) for instructions on how to install the project locally and follow the right development workflow.
 
 ### Contribution Guides
 
 * [https://guides.github.com/activities/hello-world/](https://guides.github.com/activities/hello-world/)
 * [https://guides.github.com/activities/forking/](https://guides.github.com/activities/forking/)
-
-## Writing Commit Messages
-
-Good commit messages serve at least three important purposes:
-
-* They speed up the reviewing process.
-* They help us write good release notes.
-* They help future maintainers understand your change and the reasons behind it.
-
-Structure your commit message like this:
-
- ```
- Short (50 chars or less) summary of changes ( involving Fixes #Issue-number keyword )
-
- More detailed explanatory text, if necessary. Wrap it to about 72
- characters or so. In some contexts, the first line is treated as the
- subject of an email and the rest of the text as the body. The blank
- line separating the summary from the body is critical (unless you omit
- the body entirely); tools like rebase can get confused if you run the
- two together.
-
- Further paragraphs come after blank lines.
-
-   - Bullet points are okay, too
-
-   - Typically a hyphen or asterisk is used for the bullet, preceded by a
-     single space, with blank lines in between, but conventions vary here
- ```
-
-* Write the summary line and description of what you have done in the imperative mode, that is as if you were commanding someone. Start the line with "Fix", "Add", "Change" instead of "Fixed", "Added", "Changed".
-* Always leave the second line blank.
-* Be as descriptive as possible in the description. It helps reasoning about the intention of commits and gives more context about why changes happened.
-
-## Tips
-
-* If it seems difficult to summarize what your commit does, it may be because it includes several logical changes or bug fixes, and are better split up into several commits using `git add -p`.

@@ -14,3 +14,9 @@ export function clearLintMessage() {
     type: ActionTypes.CLEAR_LINT_MESSAGE
   };
 }
+
+export function toggleForceDesktop() {
+  return {
+    type: ActionTypes.TOGGLE_FORCE_DESKTOP
+  };
+}

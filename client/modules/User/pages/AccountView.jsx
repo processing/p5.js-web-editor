@@ -1,55 +1,123 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { browserHistory } from 'react-router';
-import InlineSVG from 'react-inlinesvg';
-import axios from 'axios';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Helmet } from 'react-helmet';
-import { updateSettings, initiateVerification } from '../actions';
+import { withTranslation } from 'react-i18next';
+import { withRouter, browserHistory } from 'react-router';
+import { parse } from 'query-string';
+import { createApiKey, removeApiKey } from '../actions';
 import AccountForm from '../components/AccountForm';
-import { validateSettings } from '../../../utils/reduxFormUtils';
-import GithubButton from '../components/GithubButton';
+import SocialAuthButton from '../components/SocialAuthButton';
+import APIKeyForm from '../components/APIKeyForm';
+import Nav from '../../../components/Nav';
+import ErrorModal from '../../IDE/components/ErrorModal';
+import Overlay from '../../App/components/Overlay';
+import Toast from '../../IDE/components/Toast';
 
-const exitUrl = require('../../../images/exit.svg');
-const logoUrl = require('../../../images/p5js-logo.svg');
+function SocialLoginPanel(props) {
+  const { user, t } = props;
+  return (
+    <React.Fragment>
+      <AccountForm />
+      <h2 className="form-container__divider">
+        {t('AccountView.SocialLogin')}
+      </h2>
+      <p className="account__social-text">
+        {/* eslint-disable-next-line react/prop-types */}
+        {t('AccountView.SocialLoginDescription')}
+      </p>
+      <div className="account__social-stack">
+        <SocialAuthButton
+          service={SocialAuthButton.services.github}
+          linkStyle
+          isConnected={!!user.github}
+        />
+        <SocialAuthButton
+          service={SocialAuthButton.services.google}
+          linkStyle
+          isConnected={!!user.google}
+        />
+      </div>
+    </React.Fragment>
+  );
+}
 
+SocialLoginPanel.propTypes = {
+  user: PropTypes.shape({
+    github: PropTypes.string,
+    google: PropTypes.string
+  }).isRequired,
+  t: PropTypes.func.isRequired
+};
 
 class AccountView extends React.Component {
-  constructor(props) {
-    super(props);
-    this.closeAccountPage = this.closeAccountPage.bind(this);
-    this.gotoHomePage = this.gotoHomePage.bind(this);
-  }
-
-  closeAccountPage() {
-    browserHistory.push(this.props.previousPath);
-  }
-
-  gotoHomePage() {
-    browserHistory.push('/');
+  componentDidMount() {
+    document.body.className = this.props.theme;
   }
 
   render() {
+    const queryParams = parse(this.props.location.search);
+    const showError = !!queryParams.error;
+    const errorType = queryParams.error;
+    const accessTokensUIEnabled = window.process.env.UI_ACCESS_TOKEN_ENABLED;
+
     return (
-      <div className="form-container">
+      <div className="account-settings__container">
         <Helmet>
-          <title>p5.js Web Editor | Account</title>
+          <title>{this.props.t('AccountView.Title')}</title>
         </Helmet>
-        <div className="form-container__header">
-          <button className="form-container__logo-button" onClick={this.gotoHomePage}>
-            <InlineSVG src={logoUrl} alt="p5js Logo" />
-          </button>
-          <button className="form-container__exit-button" onClick={this.closeAccountPage}>
-            <InlineSVG src={exitUrl} alt="Close Account Page" />
-          </button>
-        </div>
-        <div className="form-container__content">
-          <h2 className="form-container__title">My Account</h2>
-          <AccountForm {...this.props} />
-          <h2 className="form-container__divider">Or</h2>
-          <GithubButton buttonText="Login with Github" />
-        </div>
+        {this.props.toast.isVisible && <Toast />}
+
+        <Nav layout="dashboard" />
+
+        {showError && (
+          <Overlay
+            title={this.props.t('ErrorModal.LinkTitle')}
+            ariaLabel={this.props.t('ErrorModal.LinkTitle')}
+            closeOverlay={() => {
+              browserHistory.push(this.props.location.pathname);
+            }}
+          >
+            <ErrorModal type="oauthError" service={errorType} />
+          </Overlay>
+        )}
+
+        <main className="account-settings">
+          <header className="account-settings__header">
+            <h1 className="account-settings__title">
+              {this.props.t('AccountView.Settings')}
+            </h1>
+          </header>
+          {accessTokensUIEnabled && (
+            <Tabs className="account__tabs">
+              <TabList>
+                <div className="tabs__titles">
+                  <Tab>
+                    <h4 className="tabs__title">
+                      {this.props.t('AccountView.AccountTab')}
+                    </h4>
+                  </Tab>
+                  {accessTokensUIEnabled && (
+                    <Tab>
+                      <h4 className="tabs__title">
+                        {this.props.t('AccountView.AccessTokensTab')}
+                      </h4>
+                    </Tab>
+                  )}
+                </div>
+              </TabList>
+              <TabPanel>
+                <SocialLoginPanel {...this.props} />
+              </TabPanel>
+              <TabPanel>
+                <APIKeyForm {...this.props} />
+              </TabPanel>
+            </Tabs>
+          )}
+          {!accessTokensUIEnabled && <SocialLoginPanel {...this.props} />}
+        </main>
       </div>
     );
   }
@@ -58,41 +126,37 @@ class AccountView extends React.Component {
 function mapStateToProps(state) {
   return {
     initialValues: state.user, // <- initialValues for reduxForm
+    previousPath: state.ide.previousPath,
     user: state.user,
-    previousPath: state.ide.previousPath
+    apiKeys: state.user.apiKeys,
+    theme: state.preferences.theme,
+    toast: state.toast
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ updateSettings, initiateVerification }, dispatch);
-}
-
-function asyncValidate(formProps, dispatch, props) {
-  const fieldToValidate = props.form._active;
-  if (fieldToValidate) {
-    const queryParams = {};
-    queryParams[fieldToValidate] = formProps[fieldToValidate];
-    queryParams.check_type = fieldToValidate;
-    return axios.get('/api/signup/duplicate_check', { params: queryParams })
-      .then((response) => {
-        if (response.data.exists) {
-          const error = {};
-          error[fieldToValidate] = response.data.message;
-          throw error;
-        }
-      });
-  }
-  return Promise.resolve(true).then(() => {});
+  return bindActionCreators(
+    {
+      createApiKey,
+      removeApiKey
+    },
+    dispatch
+  );
 }
 
 AccountView.propTypes = {
   previousPath: PropTypes.string.isRequired,
+  theme: PropTypes.string.isRequired,
+  t: PropTypes.func.isRequired,
+  location: PropTypes.shape({
+    search: PropTypes.string.isRequired,
+    pathname: PropTypes.string.isRequired
+  }).isRequired,
+  toast: PropTypes.shape({
+    isVisible: PropTypes.bool.isRequired
+  }).isRequired
 };
 
-export default reduxForm({
-  form: 'updateAllSettings',
-  fields: ['username', 'email', 'currentPassword', 'newPassword'],
-  validate: validateSettings,
-  asyncValidate,
-  asyncBlurFields: ['username', 'email', 'currentPassword']
-}, mapStateToProps, mapDispatchToProps)(AccountView);
+export default withTranslation()(
+  withRouter(connect(mapStateToProps, mapDispatchToProps)(AccountView))
+);

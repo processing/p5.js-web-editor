@@ -1,52 +1,61 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import { domOnlyProps } from '../../../utils/reduxFormUtils';
+import { useTranslation } from 'react-i18next';
+import { Form, Field } from 'react-final-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { validateResetPassword } from '../../../utils/reduxFormUtils';
+import { initiateResetPassword } from '../actions';
+import Button from '../../../common/Button';
 
 function ResetPasswordForm(props) {
-  const {
-    fields: { email }, handleSubmit, submitting, invalid, pristine
-  } = props;
+  const { t } = useTranslation();
+  const resetPasswordInitiate = useSelector(
+    (state) => state.user.resetPasswordInitiate
+  );
+  const dispatch = useDispatch();
+
+  function onSubmit(formProps) {
+    dispatch(initiateResetPassword(formProps));
+  }
+
   return (
-    <form className="form" onSubmit={handleSubmit(props.initiateResetPassword.bind(this))}>
-      <p className="form__field">
-        <label htmlFor="email" className="form__label">Email used for registration</label>
-        <input
-          className="form__input"
-          aria-label="email"
-          type="text"
-          id="email"
-          {...domOnlyProps(email)}
-        />
-        {email.touched && email.error && <span className="form-error">{email.error}</span>}
-      </p>
-      <input
-        type="submit"
-        disabled={submitting || invalid || pristine || props.user.resetPasswordInitiate}
-        value="Send Password Reset Email"
-        aria-label="Send email to reset password"
-      />
-    </form>
+    <Form
+      fields={['email']}
+      validate={validateResetPassword}
+      onSubmit={onSubmit}
+    >
+      {({ handleSubmit, submitting, pristine, invalid }) => (
+        <form className="form" onSubmit={handleSubmit}>
+          <Field name="email">
+            {(field) => (
+              <p className="form__field">
+                <label htmlFor="email" className="form__label">
+                  {t('ResetPasswordForm.Email')}
+                </label>
+                <input
+                  className="form__input"
+                  aria-label={t('ResetPasswordForm.EmailARIA')}
+                  type="text"
+                  id="email"
+                  {...field.input}
+                />
+                {field.meta.touched && field.meta.error && (
+                  <span className="form-error">{field.meta.error}</span>
+                )}
+              </p>
+            )}
+          </Field>
+          <Button
+            type="submit"
+            disabled={
+              submitting || invalid || pristine || resetPasswordInitiate
+            }
+          >
+            {t('ResetPasswordForm.Submit')}
+          </Button>
+        </form>
+      )}
+    </Form>
   );
 }
-
-ResetPasswordForm.propTypes = {
-  fields: PropTypes.shape({
-    email: PropTypes.object.isRequired
-  }).isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  initiateResetPassword: PropTypes.func.isRequired,
-  submitting: PropTypes.bool,
-  invalid: PropTypes.bool,
-  pristine: PropTypes.bool,
-  user: PropTypes.shape({
-    resetPasswordInitiate: PropTypes.bool
-  }).isRequired
-};
-
-ResetPasswordForm.defaultProps = {
-  submitting: false,
-  pristine: true,
-  invalid: false
-};
 
 export default ResetPasswordForm;

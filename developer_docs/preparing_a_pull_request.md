@@ -19,7 +19,7 @@ Make sure you're tracking upstream p5.js repository.
 
 If you see an error, you'll need to start tracking the main p5.js repo as an "upstream" remote repository. You'll only need to do this once! But, no harm is done if you run it a second time.
 
-    git remote add upstream https://github.com/processing/p5.js
+    git remote add upstream https://github.com/processing/p5.js-web-editor
 
 Then ask git about the latest changes.
 
@@ -28,11 +28,11 @@ Then ask git about the latest changes.
 ### Just in case: make a copy of your changes in a new branch
     git branch your-branch-name-backup
 
-### Apply changes from master branch, adds your changes *after*
-    git rebase upstream/master
+### Apply changes from develop branch, adds your changes *after*
+    git rebase upstream/develop
 
-### Switches back to master branch
-    git checkout master
+### Switches back to develop branch
+    git checkout develop
 
 ### Helps other contributors fully understand the changes that you made
     git commit -m "Fixed documentation typos"   
@@ -41,7 +41,7 @@ Then ask git about the latest changes.
     git status       
 
 ## CONFLICTS
-You may have some conflicts! It's okay. Feel free to ask for help. If merging with the latest upstream master causes conflicts, you can always make a pull request with the upstream repository, which makes the merge conflicts public.
+You may have some conflicts! It's okay. Feel free to ask for help. If merging with the latest upstream `develop` branch causes conflicts, you can always make a pull request with the upstream repository, which makes the merge conflicts public.
 
 ## And finally, for great glory
     git push --set-upstream origin your-branch-name-backup

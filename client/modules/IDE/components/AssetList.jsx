@@ -5,9 +5,154 @@ import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import { Helmet } from 'react-helmet';
 import prettyBytes from 'pretty-bytes';
+import { withTranslation } from 'react-i18next';
 
 import Loader from '../../App/components/loader';
 import * as AssetActions from '../actions/assets';
+import DownFilledTriangleIcon from '../../../images/down-filled-triangle.svg';
+
+class AssetListRowBase extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isFocused: false,
+      optionsOpen: false
+    };
+  }
+
+  onFocusComponent = () => {
+    this.setState({ isFocused: true });
+  };
+
+  onBlurComponent = () => {
+    this.setState({ isFocused: false });
+    setTimeout(() => {
+      if (!this.state.isFocused) {
+        this.closeOptions();
+      }
+    }, 200);
+  };
+
+  openOptions = () => {
+    this.setState({
+      optionsOpen: true
+    });
+  };
+
+  closeOptions = () => {
+    this.setState({
+      optionsOpen: false
+    });
+  };
+
+  toggleOptions = () => {
+    if (this.state.optionsOpen) {
+      this.closeOptions();
+    } else {
+      this.openOptions();
+    }
+  };
+
+  handleDropdownOpen = () => {
+    this.closeOptions();
+    this.openOptions();
+  };
+
+  handleAssetDelete = () => {
+    const { key, name } = this.props.asset;
+    this.closeOptions();
+    if (window.confirm(this.props.t('Common.DeleteConfirmation', { name }))) {
+      this.props.deleteAssetRequest(key);
+    }
+  };
+
+  render() {
+    const { asset, username, t } = this.props;
+    const { optionsOpen } = this.state;
+    return (
+      <tr className="asset-table__row" key={asset.key}>
+        <th scope="row">
+          <Link to={asset.url} target="_blank">
+            {asset.name}
+          </Link>
+        </th>
+        <td>{prettyBytes(asset.size)}</td>
+        <td>
+          {asset.sketchId && (
+            <Link to={`/${username}/sketches/${asset.sketchId}`}>
+              {asset.sketchName}
+            </Link>
+          )}
+        </td>
+        <td className="asset-table__dropdown-column">
+          <button
+            className="asset-table__dropdown-button"
+            onClick={this.toggleOptions}
+            onBlur={this.onBlurComponent}
+            onFocus={this.onFocusComponent}
+            aria-label={t('AssetList.ToggleOpenCloseARIA')}
+          >
+            <DownFilledTriangleIcon focusable="false" aria-hidden="true" />
+          </button>
+          {optionsOpen && (
+            <ul className="asset-table__action-dialogue">
+              <li>
+                <button
+                  className="asset-table__action-option"
+                  onClick={this.handleAssetDelete}
+                  onBlur={this.onBlurComponent}
+                  onFocus={this.onFocusComponent}
+                >
+                  {t('AssetList.Delete')}
+                </button>
+              </li>
+              <li>
+                <Link
+                  to={asset.url}
+                  target="_blank"
+                  onBlur={this.onBlurComponent}
+                  onFocus={this.onFocusComponent}
+                  className="asset-table__action-option"
+                >
+                  {t('AssetList.OpenNewTab')}
+                </Link>
+              </li>
+            </ul>
+          )}
+        </td>
+      </tr>
+    );
+  }
+}
+
+AssetListRowBase.propTypes = {
+  asset: PropTypes.shape({
+    key: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+    sketchId: PropTypes.string,
+    sketchName: PropTypes.string,
+    name: PropTypes.string.isRequired,
+    size: PropTypes.number.isRequired
+  }).isRequired,
+  deleteAssetRequest: PropTypes.func.isRequired,
+  username: PropTypes.string.isRequired,
+  t: PropTypes.func.isRequired
+};
+
+function mapStateToPropsAssetListRow(state) {
+  return {
+    username: state.user.username
+  };
+}
+
+function mapDispatchToPropsAssetListRow(dispatch) {
+  return bindActionCreators(AssetActions, dispatch);
+}
+
+const AssetListRow = connect(
+  mapStateToPropsAssetListRow,
+  mapDispatchToPropsAssetListRow
+)(AssetListRowBase);
 
 class AssetList extends React.Component {
   constructor(props) {
@@ -16,10 +161,7 @@ class AssetList extends React.Component {
   }
 
   getAssetsTitle() {
-    if (!this.props.username || this.props.username === this.props.user.username) {
-      return 'p5.js Web Editor | My assets';
-    }
-    return `p5.js Web Editor | ${this.props.username}'s assets`;
+    return this.props.t('AssetList.Title');
   }
 
   hasAssets() {
@@ -33,48 +175,42 @@ class AssetList extends React.Component {
 
   renderEmptyTable() {
     if (!this.props.loading && this.props.assetList.length === 0) {
-      return (<p className="asset-table__empty">No uploaded assets.</p>);
+      return (
+        <p className="asset-table__empty">
+          {this.props.t('AssetList.NoUploadedAssets')}
+        </p>
+      );
     }
     return null;
   }
 
   render() {
-    const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
-    const { assetList, totalSize } = this.props;
+    const { assetList, t } = this.props;
     return (
-      <div className="asset-table-container">
-        {/* Eventually, this copy should be Total / 250 MB Used */}
-        {this.hasAssets() &&
-          <p className="asset-table__total">{`${prettyBytes(totalSize)} Total`}</p>
-        }
+      <article className="asset-table-container">
         <Helmet>
           <title>{this.getAssetsTitle()}</title>
         </Helmet>
         {this.renderLoader()}
         {this.renderEmptyTable()}
-        {this.hasAssets() &&
+        {this.hasAssets() && (
           <table className="asset-table">
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Size</th>
-                <th>View</th>
-                <th>Sketch</th>
+                <th>{t('AssetList.HeaderName')}</th>
+                <th>{t('AssetList.HeaderSize')}</th>
+                <th>{t('AssetList.HeaderSketch')}</th>
+                <th scope="col"></th>
               </tr>
             </thead>
             <tbody>
-              {assetList.map(asset =>
-                (
-                  <tr className="asset-table__row" key={asset.key}>
-                    <td>{asset.name}</td>
-                    <td>{prettyBytes(asset.size)}</td>
-                    <td><Link to={asset.url} target="_blank">View</Link></td>
-                    <td><Link to={`/${username}/sketches/${asset.sketchId}`}>{asset.sketchName}</Link></td>
-                  </tr>
-                ))}
+              {assetList.map((asset) => (
+                <AssetListRow asset={asset} key={asset.key} t={t} />
+              ))}
             </tbody>
-          </table>}
-      </div>
+          </table>
+        )}
+      </article>
     );
   }
 }
@@ -83,24 +219,24 @@ AssetList.propTypes = {
   user: PropTypes.shape({
     username: PropTypes.string
   }).isRequired,
-  username: PropTypes.string.isRequired,
-  assetList: PropTypes.arrayOf(PropTypes.shape({
-    key: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
-    sketchName: PropTypes.string.isRequired,
-    sketchId: PropTypes.string.isRequired
-  })).isRequired,
-  totalSize: PropTypes.number.isRequired,
+  assetList: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired,
+      sketchName: PropTypes.string,
+      sketchId: PropTypes.string
+    })
+  ).isRequired,
   getAssets: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired
+  loading: PropTypes.bool.isRequired,
+  t: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
   return {
     user: state.user,
     assetList: state.assets.list,
-    totalSize: state.assets.totalSize,
     loading: state.loading
   };
 }
@@ -109,4 +245,6 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({}, AssetActions), dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AssetList);
+export default withTranslation()(
+  connect(mapStateToProps, mapDispatchToProps)(AssetList)
+);

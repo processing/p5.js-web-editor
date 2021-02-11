@@ -1,5 +1,12 @@
 # [p5.js Web Editor](https://editor.p5js.org)
 
+
+Documentation is also available in the following languages:
+
+[한국어](https://github.com/processing/p5.js-web-editor/blob/develop/translations/ko)
+
+## Welcome! 👋👋🏿👋🏽👋🏻👋🏾👋🏼
+
 The p5.js Web Editor is a platform for creative coding, with a focus on making coding accessible for as many people as possible, including artists, designers, educators, beginners, and anyone who wants to learn. Simply by opening the website you can get started writing p5.js sketches without downloading or configuring anything. The editor is designed with simplicity in mind by limiting features and frills. We strive to listen to the community to drive the editor’s development, and to be intentional with every change. The editor is free and open-source.
 
 We also strive to give the community as much ownership and control as possible. You can download your sketches so that you can edit them locally or host them elsewhere. You can also host your own version of the editor, giving you control over its data.
@@ -16,7 +23,7 @@ All contributors to the p5.js Web Editor are expected to follow the [Code of Con
 
 The p5.js Web Editor is a collaborative project created by many individuals, and you are invited to help. All types of involvement are welcome! Please check out the [contribution guide](./.github/CONTRIBUTING.md) for more details.
 
-Developers, check the [developer docs](https://github.com/processing/p5.js-web-editor/blob/master/developer_docs/) details about contributing code, bug fixes, and documentation. To start writing code, a great place to start is the [development guide](https://github.com/processing/p5.js-web-editor/blob/master/developer_docs/development.md).
+Developers, check the [developer docs](https://github.com/processing/p5.js-web-editor/blob/develop/developer_docs/) details about contributing code, bug fixes, and documentation. To start writing code, a great place to start is the [development guide](https://github.com/processing/p5.js-web-editor/blob/develop/developer_docs/development.md).
 
 ## Issues
 
@@ -24,7 +31,7 @@ If you have found a bug in the p5.js Web Editor, you can file it under the ["iss
 
 Please post bugs and feature requests in the correct repository:
 
-* p5.js library and p5.dom: [https://github.com/processing/p5.js/issues](https://github.com/processing/p5.js/issues)
+* p5.js library: [https://github.com/processing/p5.js/issues](https://github.com/processing/p5.js/issues)
 * p5.accessibility: [https://github.com/processing/p5.accessibility/issues](https://github.com/processing/p5.accessibility/issues)
 * p5.sound: [https://github.com/processing/p5.js-sound/issues](https://github.com/processing/p5.js-sound/issues)
 * p5.js website: [https://github.com/processing/p5.js-website/issues](https://github.com/processing/p5.js-website/issues)

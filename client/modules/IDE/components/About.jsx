@@ -1,40 +1,39 @@
 import React from 'react';
-import InlineSVG from 'react-inlinesvg';
 import { Helmet } from 'react-helmet';
-
-const squareLogoUrl = require('../../../images/p5js-square-logo.svg');
-// const playUrl = require('../../../images/play.svg');
-const asteriskUrl = require('../../../images/p5-asterisk.svg');
+import { useTranslation } from 'react-i18next';
+import SquareLogoIcon from '../../../images/p5js-square-logo.svg';
+// import PlayIcon from '../../../images/play.svg';
+import AsteriskIcon from '../../../images/p5-asterisk.svg';
 
 function About(props) {
+  const { t } = useTranslation();
   return (
     <div className="about__content">
       <Helmet>
-        <title>p5.js Web Editor | About</title>
+        <title> {t('About.TitleHelmet')} </title>
       </Helmet>
       <div className="about__content-column">
-        <InlineSVG className="about__logo" src={squareLogoUrl} alt="p5js Square Logo" />
-        {/* Video button to hello p5 video page */}
-        {/* <p className="about__play-video">
-          <a
-            href="http://hello.p5js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <InlineSVG className="about__play-video-button" src={playUrl} alt="Play Hello Video" />
-          Play hello! video</a>
-        </p>  */}
+        <SquareLogoIcon
+          className="about__logo"
+          role="img"
+          aria-label={t('Common.p5logoARIA')}
+          focusable="false"
+        />
       </div>
       <div className="about__content-column">
-        <h3 className="about__content-column-title">New to p5.js?</h3>
+        <h3 className="about__content-column-title">{t('About.NewP5')}</h3>
         <p className="about__content-column-list">
           <a
             href="https://p5js.org/examples/"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
-          Examples
+            <AsteriskIcon
+              className="about__content-column-asterisk"
+              aria-hidden="true"
+              focusable="false"
+            />
+            {t('About.Examples')}
           </a>
         </p>
         <p className="about__content-column-list">
@@ -43,21 +42,29 @@ function About(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
-          Learn
+            <AsteriskIcon
+              className="about__content-column-asterisk"
+              aria-hidden="true"
+              focusable="false"
+            />
+            {t('About.Learn')}
           </a>
         </p>
       </div>
       <div className="about__content-column">
-        <h3 className="about__content-column-title">Resources</h3>
+        <h3 className="about__content-column-title">{t('About.Resources')}</h3>
         <p className="about__content-column-list">
           <a
             href="https://p5js.org/libraries/"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
-          Libraries
+            <AsteriskIcon
+              className="about__content-column-asterisk"
+              aria-hidden="true"
+              focusable="false"
+            />
+            {t('About.Libraries')}
           </a>
         </p>
         <p className="about__content-column-list">
@@ -66,8 +73,12 @@ function About(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
-          Reference
+            <AsteriskIcon
+              className="about__content-column-asterisk"
+              aria-hidden="true"
+              focusable="false"
+            />
+            {t('Nav.Help.Reference')}
           </a>
         </p>
         <p className="about__content-column-list">
@@ -76,8 +87,12 @@ function About(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <InlineSVG className="about__content-column-asterisk" src={asteriskUrl} alt="p5 asterisk" />
-          Forum
+            <AsteriskIcon
+              className="about__content-column-asterisk"
+              aria-hidden="true"
+              focusable="false"
+            />
+            {t('About.Forum')}
           </a>
         </p>
       </div>
@@ -87,7 +102,8 @@ function About(props) {
             href="https://github.com/processing/p5.js-web-editor"
             target="_blank"
             rel="noopener noreferrer"
-          >Contribute
+          >
+            {t('About.Contribute')}
           </a>
         </p>
         <p className="about__footer-list">
@@ -95,7 +111,8 @@ function About(props) {
             href="https://github.com/processing/p5.js-web-editor/issues/new"
             target="_blank"
             rel="noopener noreferrer"
-          >Report a bug
+          >
+            {t('About.Report')}
           </a>
         </p>
         <p className="about__footer-list">
@@ -103,7 +120,8 @@ function About(props) {
             href="https://twitter.com/p5xjs?lang=en"
             target="_blank"
             rel="noopener noreferrer"
-          >Twitter
+          >
+            Twitter
           </a>
         </p>
       </div>

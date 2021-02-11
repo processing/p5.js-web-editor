@@ -9,11 +9,11 @@ const initialState = {
   preferencesIsVisible: false,
   projectOptionsVisible: false,
   newFolderModalVisible: false,
+  uploadFileModalVisible: false,
   shareModalVisible: false,
   shareModalProjectId: 'abcd',
   shareModalProjectName: 'My Cute Sketch',
   shareModalProjectUsername: 'p5_user',
-  sketchlistModalVisible: false,
   editorOptionsVisible: false,
   keyboardShortcutVisible: false,
   unsavedChanges: false,
@@ -40,7 +40,11 @@ const ide = (state = initialState, action) => {
     case ActionTypes.CONSOLE_EVENT:
       return Object.assign({}, state, { consoleEvent: action.event });
     case ActionTypes.SHOW_MODAL:
-      return Object.assign({}, state, { modalIsVisible: true, parentId: action.parentId });
+      return Object.assign({}, state, {
+        modalIsVisible: true,
+        parentId: action.parentId,
+        newFolderModalVisible: false
+      });
     case ActionTypes.HIDE_MODAL:
       return Object.assign({}, state, { modalIsVisible: false });
     case ActionTypes.COLLAPSE_SIDEBAR:
@@ -62,7 +66,11 @@ const ide = (state = initialState, action) => {
     case ActionTypes.CLOSE_PROJECT_OPTIONS:
       return Object.assign({}, state, { projectOptionsVisible: false });
     case ActionTypes.SHOW_NEW_FOLDER_MODAL:
-      return Object.assign({}, state, { newFolderModalVisible: true, parentId: action.parentId });
+      return Object.assign({}, state, {
+        newFolderModalVisible: true,
+        parentId: action.parentId,
+        modalIsVisible: false
+      });
     case ActionTypes.CLOSE_NEW_FOLDER_MODAL:
       return Object.assign({}, state, { newFolderModalVisible: false });
     case ActionTypes.SHOW_SHARE_MODAL:
@@ -70,7 +78,7 @@ const ide = (state = initialState, action) => {
         shareModalVisible: true,
         shareModalProjectId: action.payload.shareModalProjectId,
         shareModalProjectName: action.payload.shareModalProjectName,
-        shareModalProjectUsername: action.payload.shareModalProjectUsername,
+        shareModalProjectUsername: action.payload.shareModalProjectUsername
       });
     case ActionTypes.CLOSE_SHARE_MODAL:
       return Object.assign({}, state, { shareModalVisible: false });
@@ -85,9 +93,15 @@ const ide = (state = initialState, action) => {
     case ActionTypes.SET_UNSAVED_CHANGES:
       return Object.assign({}, state, { unsavedChanges: action.value });
     case ActionTypes.DETECT_INFINITE_LOOPS:
-      return Object.assign({}, state, { infiniteLoop: true, infiniteLoopMessage: action.message });
+      return Object.assign({}, state, {
+        infiniteLoop: true,
+        infiniteLoopMessage: action.message
+      });
     case ActionTypes.RESET_INFINITE_LOOPS:
-      return Object.assign({}, state, { infiniteLoop: false, infiniteLoopMessage: '' });
+      return Object.assign({}, state, {
+        infiniteLoop: false,
+        infiniteLoopMessage: ''
+      });
     case ActionTypes.START_SKETCH_REFRESH:
       return Object.assign({}, state, { previewIsRefreshing: true });
     case ActionTypes.END_SKETCH_REFRESH:
@@ -106,6 +120,13 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { runtimeErrorWarningVisible: false });
     case ActionTypes.SHOW_RUNTIME_ERROR_WARNING:
       return Object.assign({}, state, { runtimeErrorWarningVisible: true });
+    case ActionTypes.OPEN_UPLOAD_FILE_MODAL:
+      return Object.assign({}, state, {
+        uploadFileModalVisible: true,
+        parentId: action.parentId
+      });
+    case ActionTypes.CLOSE_UPLOAD_FILE_MODAL:
+      return Object.assign({}, state, { uploadFileModalVisible: false });
     default:
       return state;
   }

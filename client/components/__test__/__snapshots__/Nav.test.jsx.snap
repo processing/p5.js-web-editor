@@ -1,334 +1,229 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Nav renders correctly 1`] = `
-<nav
-  className="nav"
-  title="main-navigation"
->
-  <ul
-    className="nav__items-left"
-    title="project-menu"
-  >
-    <li
-      className="nav__item-logo"
+<DocumentFragment>
+  <header>
+    <nav
+      class="nav"
+      title="main-navigation"
     >
-      <span
-        className="isvg loading svg__logo"
-      />
-    </li>
-    <li
-      className="nav__item"
-    >
-      <button
-        onBlur={[Function]}
-        onClick={[Function]}
-        onFocus={[Function]}
-        onMouseOver={[Function]}
-      >
-        <span
-          className="nav__item-header"
-        >
-          File
-        </span>
-        <span
-          className="isvg loading nav__item-header-triangle"
-        />
-      </button>
       <ul
-        className="nav__dropdown"
+        class="nav__items-left"
       >
         <li
-          className="nav__dropdown-item"
+          class="nav__item-logo"
         >
-          <button
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-          >
-            New
-          </button>
+          <test-file-stub
+            classname="svg__logo"
+            focusable="false"
+            role="img"
+          />
         </li>
         <li
-          className="nav__dropdown-item"
+          class="nav__item"
         >
-          <button
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-          >
-            Duplicate
+          <button>
+            <span
+              class="nav__item-header"
+            />
+            <test-file-stub
+              aria-hidden="true"
+              classname="nav__item-header-triangle"
+              focusable="false"
+            />
           </button>
+          <ul
+            class="nav__dropdown"
+          >
+            <li
+              class="nav__dropdown-item"
+            >
+              <button />
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button />
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button />
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button />
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <a />
+            </li>
+          </ul>
         </li>
         <li
-          className="nav__dropdown-item"
+          class="nav__item"
         >
-          <button
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-          >
-            Share
+          <button>
+            <span
+              class="nav__item-header"
+            />
+            <test-file-stub
+              aria-hidden="true"
+              classname="nav__item-header-triangle"
+              focusable="false"
+            />
           </button>
+          <ul
+            class="nav__dropdown"
+          >
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                <span
+                  class="nav__keyboard-shortcut"
+                >
+                  ⇧+Tab
+                </span>
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                <span
+                  class="nav__keyboard-shortcut"
+                >
+                  ⌃+F
+                </span>
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                <span
+                  class="nav__keyboard-shortcut"
+                >
+                  ⌃+G
+                </span>
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                <span
+                  class="nav__keyboard-shortcut"
+                >
+                  ⇧+⌃+G
+                </span>
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                <span
+                  class="nav__keyboard-shortcut"
+                >
+                  ⌃+H
+                </span>
+              </button>
+            </li>
+          </ul>
         </li>
         <li
-          className="nav__dropdown-item"
+          class="nav__item"
         >
-          <button
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-          >
-            Download
+          <button>
+            <span
+              class="nav__item-header"
+            />
+            <test-file-stub
+              aria-hidden="true"
+              classname="nav__item-header-triangle"
+              focusable="false"
+            />
           </button>
+          <ul
+            class="nav__dropdown"
+          >
+            <li
+              class="nav__dropdown-item"
+            >
+              <button />
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button />
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                <span
+                  class="nav__keyboard-shortcut"
+                >
+                  ⌃+Enter
+                </span>
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                <span
+                  class="nav__keyboard-shortcut"
+                >
+                  ⇧+⌃+Enter
+                </span>
+              </button>
+            </li>
+          </ul>
         </li>
         <li
-          className="nav__dropdown-item"
+          class="nav__item"
         >
-          <a
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            style={Object {}}
+          <button>
+            <span
+              class="nav__item-header"
+            />
+            <test-file-stub
+              aria-hidden="true"
+              classname="nav__item-header-triangle"
+              focusable="false"
+            />
+          </button>
+          <ul
+            class="nav__dropdown"
           >
-            Open
-          </a>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button />
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <a
+                href="https://p5js.org/reference/"
+                rel="noopener noreferrer"
+                target="_blank"
+              />
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <a />
+            </li>
+          </ul>
         </li>
       </ul>
-    </li>
-    <li
-      className="nav__item"
-    >
-      <button
-        onBlur={[Function]}
-        onClick={[Function]}
-        onFocus={[Function]}
-        onMouseOver={[Function]}
-      >
-        <span
-          className="nav__item-header"
-        >
-          Edit
-        </span>
-        <span
-          className="isvg loading nav__item-header-triangle"
-        />
-      </button>
-      <ul
-        className="nav__dropdown"
-      >
-        <li
-          className="nav__dropdown-item"
-        >
-          <button
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-          >
-            Tidy Code
-            <span
-              className="nav__keyboard-shortcut"
-            >
-              ⇧
-              +Tab
-            </span>
-          </button>
-        </li>
-        <li
-          className="nav__dropdown-item"
-        >
-          <button
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-          >
-            Find
-            <span
-              className="nav__keyboard-shortcut"
-            >
-              Ctrl
-              +F
-            </span>
-          </button>
-        </li>
-        <li
-          className="nav__dropdown-item"
-        >
-          <button
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-          >
-            Find Next
-            <span
-              className="nav__keyboard-shortcut"
-            >
-              Ctrl
-              +G
-            </span>
-          </button>
-        </li>
-        <li
-          className="nav__dropdown-item"
-        >
-          <button
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-          >
-            Find Previous
-            <span
-              className="nav__keyboard-shortcut"
-            >
-              ⇧
-              +
-              Ctrl
-              +G
-            </span>
-          </button>
-        </li>
-      </ul>
-    </li>
-    <li
-      className="nav__item"
-    >
-      <button
-        onBlur={[Function]}
-        onClick={[Function]}
-        onFocus={[Function]}
-        onMouseOver={[Function]}
-      >
-        <span
-          className="nav__item-header"
-        >
-          Sketch
-        </span>
-        <span
-          className="isvg loading nav__item-header-triangle"
-        />
-      </button>
-      <ul
-        className="nav__dropdown"
-      >
-        <li
-          className="nav__dropdown-item"
-        >
-          <button
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-          >
-            Add File
-          </button>
-        </li>
-        <li
-          className="nav__dropdown-item"
-        >
-          <button
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-          >
-            Add Folder
-          </button>
-        </li>
-        <li
-          className="nav__dropdown-item"
-        >
-          <button
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-          >
-            Run
-            <span
-              className="nav__keyboard-shortcut"
-            >
-              Ctrl
-              +Enter
-            </span>
-          </button>
-        </li>
-        <li
-          className="nav__dropdown-item"
-        >
-          <button
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-          >
-            Stop
-            <span
-              className="nav__keyboard-shortcut"
-            >
-              ⇧
-              +
-              Ctrl
-              +Enter
-            </span>
-          </button>
-        </li>
-      </ul>
-    </li>
-    <li
-      className="nav__item"
-    >
-      <button
-        onBlur={[Function]}
-        onClick={[Function]}
-        onFocus={[Function]}
-        onMouseOver={[Function]}
-      >
-        <span
-          className="nav__item-header"
-        >
-          Help
-        </span>
-        <span
-          className="isvg loading nav__item-header-triangle"
-        />
-      </button>
-      <ul
-        className="nav__dropdown"
-      >
-        <li
-          className="nav__dropdown-item"
-        >
-          <button
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-          >
-            Keyboard Shortcuts
-          </button>
-        </li>
-        <li
-          className="nav__dropdown-item"
-        >
-          <a
-            href="https://p5js.org/reference/"
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Reference
-          </a>
-        </li>
-        <li
-          className="nav__dropdown-item"
-        >
-          <a
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            style={Object {}}
-          >
-            About
-          </a>
-        </li>
-      </ul>
-    </li>
-  </ul>
-</nav>
+    </nav>
+  </header>
+</DocumentFragment>
 `;

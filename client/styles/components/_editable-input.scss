@@ -1,0 +1,46 @@
+.editable-input {
+  height: 70%;
+  display: flex;
+  align-items: center;
+}
+
+button.editable-input__label {
+  display: flex;
+
+  @include themify() {
+    color: getThemifyVariable('inactive-text-color');
+    & path {
+      fill: getThemifyVariable('inactive-text-color');
+    }
+    &:hover {
+    color: getThemifyVariable('logo-color');
+      & path {
+        fill: getThemifyVariable('logo-color');
+      }
+    }
+  }
+  cursor: pointer;
+  line-height: #{18 / $base-font-size}rem;
+
+  font-size: unset;
+  font-weight: unset;
+}
+
+.editable-input__input {
+  width: 100%;
+}
+
+.editable-input__icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.editable-input--is-not-editing .editable-input__input,
+.editable-input--is-editing .editable-input__label {
+  display: none;
+}
+
+.editable-input--is-editing .editable-input__input,
+.editable-input--is-not-editing .editable-input__label {
+  display: flex;
+}

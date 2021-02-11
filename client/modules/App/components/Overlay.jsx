@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import InlineSVG from 'react-inlinesvg';
 import { browserHistory } from 'react-router';
+import { withTranslation } from 'react-i18next';
 
-const exitUrl = require('../../../images/exit.svg');
+import ExitIcon from '../../../images/exit.svg';
 
 class Overlay extends React.Component {
   constructor(props) {
@@ -51,7 +51,8 @@ class Overlay extends React.Component {
   close() {
     // Only close if it is the last (and therefore the topmost overlay)
     const overlays = document.getElementsByClassName('overlay');
-    if (this.node.parentElement.parentElement !== overlays[overlays.length - 1]) return;
+    if (this.node.parentElement.parentElement !== overlays[overlays.length - 1])
+      return;
 
     if (!this.props.closeOverlay) {
       browserHistory.push(this.props.previousPath);
@@ -61,25 +62,32 @@ class Overlay extends React.Component {
   }
 
   render() {
-    const {
-      ariaLabel,
-      title,
-      children
-    } = this.props;
+    const { ariaLabel, title, children, actions, isFixedHeight } = this.props;
     return (
-      <div className="overlay">
+      <div
+        className={`overlay ${isFixedHeight ? 'overlay--is-fixed-height' : ''}`}
+      >
         <div className="overlay__content">
           <section
             role="main"
             aria-label={ariaLabel}
-            ref={(node) => { this.node = node; }}
+            ref={(node) => {
+              this.node = node;
+            }}
             className="overlay__body"
           >
             <header className="overlay__header">
               <h2 className="overlay__title">{title}</h2>
-              <button className="overlay__close-button" onClick={this.close} >
-                <InlineSVG src={exitUrl} alt="close overlay" />
-              </button>
+              <div className="overlay__actions">
+                {actions}
+                <button
+                  className="overlay__close-button"
+                  onClick={this.close}
+                  aria-label={this.props.t('Overlay.AriaLabel', { title })}
+                >
+                  <ExitIcon focusable="false" aria-hidden="true" />
+                </button>
+              </div>
             </header>
             {children}
           </section>
@@ -91,18 +99,23 @@ class Overlay extends React.Component {
 
 Overlay.propTypes = {
   children: PropTypes.element,
+  actions: PropTypes.element,
   closeOverlay: PropTypes.func,
   title: PropTypes.string,
   ariaLabel: PropTypes.string,
-  previousPath: PropTypes.string
+  previousPath: PropTypes.string,
+  isFixedHeight: PropTypes.bool,
+  t: PropTypes.func.isRequired
 };
 
 Overlay.defaultProps = {
   children: null,
+  actions: null,
   title: 'Modal',
   closeOverlay: null,
   ariaLabel: 'modal',
-  previousPath: '/'
+  previousPath: '/',
+  isFixedHeight: false
 };
 
-export default Overlay;
+export default withTranslation()(Overlay);

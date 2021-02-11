@@ -1,102 +1,56 @@
 import PropTypes from 'prop-types';
-import React from 'react';
-import { reduxForm } from 'redux-form';
+import React, { useEffect } from 'react';
 import classNames from 'classnames';
-import { browserHistory } from 'react-router';
-import InlineSVG from 'react-inlinesvg';
-import { bindActionCreators } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
+import { useTranslation } from 'react-i18next';
 import NewPasswordForm from '../components/NewPasswordForm';
-import * as UserActions from '../actions';
+import { validateResetPasswordToken } from '../actions';
+import Nav from '../../../components/Nav';
 
-const exitUrl = require('../../../images/exit.svg');
-const logoUrl = require('../../../images/p5js-logo.svg');
+function NewPasswordView(props) {
+  const { t } = useTranslation();
+  const resetPasswordToken = props.params.reset_password_token;
+  const resetPasswordInvalid = useSelector(
+    (state) => state.user.resetPasswordInvalid
+  );
+  const dispatch = useDispatch();
 
-class NewPasswordView extends React.Component {
-  constructor(props) {
-    super(props);
-    this.gotoHomePage = this.gotoHomePage.bind(this);
-  }
+  useEffect(() => {
+    dispatch(validateResetPasswordToken(resetPasswordToken));
+  }, [resetPasswordToken]);
 
-  componentDidMount() {
-    // need to check if this is a valid token
-    this.props.validateResetPasswordToken(this.props.params.reset_password_token);
-  }
-
-  gotoHomePage() {
-    browserHistory.push('/');
-  }
-
-  render() {
-    const newPasswordClass = classNames({
-      'new-password': true,
-      'new-password--invalid': this.props.user.resetPasswordInvalid,
-      'form-container': true
-    });
-    return (
+  const newPasswordClass = classNames({
+    'new-password': true,
+    'new-password--invalid': resetPasswordInvalid,
+    'form-container': true,
+    user: true
+  });
+  return (
+    <div className="new-password-container">
+      <Nav layout="dashboard" />
       <div className={newPasswordClass}>
         <Helmet>
-          <title>p5.js Web Editor | New Password</title>
+          <title>{t('NewPasswordView.Title')}</title>
         </Helmet>
-        <div className="form-container__header">
-          <button className="form-container__logo-button" onClick={this.gotoHomePage}>
-            <InlineSVG src={logoUrl} alt="p5js Logo" />
-          </button>
-          <button className="form-container__exit-button" onClick={this.gotoHomePage}>
-            <InlineSVG src={exitUrl} alt="Close NewPassword Page" />
-          </button>
-        </div>
         <div className="form-container__content">
-          <h2 className="form-container__title">Set a New Password</h2>
-          <NewPasswordForm {...this.props} />
+          <h2 className="form-container__title">
+            {t('NewPasswordView.Description')}
+          </h2>
+          <NewPasswordForm resetPasswordToken={resetPasswordToken} />
           <p className="new-password__invalid">
-            The password reset token is invalid or has expired.
+            {t('NewPasswordView.TokenInvalidOrExpired')}
           </p>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 NewPasswordView.propTypes = {
   params: PropTypes.shape({
-    reset_password_token: PropTypes.string,
-  }).isRequired,
-  validateResetPasswordToken: PropTypes.func.isRequired,
-  user: PropTypes.shape({
-    resetPasswordInvalid: PropTypes.bool
+    reset_password_token: PropTypes.string
   }).isRequired
 };
 
-function validate(formProps) {
-  const errors = {};
-
-  if (!formProps.password) {
-    errors.password = 'Please enter a password';
-  }
-  if (!formProps.confirmPassword) {
-    errors.confirmPassword = 'Please enter a password confirmation';
-  }
-
-  if (formProps.password !== formProps.confirmPassword) {
-    errors.password = 'Passwords must match';
-  }
-
-  return errors;
-}
-
-function mapStateToProps(state) {
-  return {
-    user: state.user
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(UserActions, dispatch);
-}
-
-export default reduxForm({
-  form: 'new-password',
-  fields: ['password', 'confirmPassword'],
-  validate
-}, mapStateToProps, mapDispatchToProps)(NewPasswordView);
+export default NewPasswordView;

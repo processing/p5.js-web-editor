@@ -1,5 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 if (process.env.NODE_ENV === 'development') {
   require('dotenv').config();
@@ -19,7 +21,7 @@ module.exports = {
       './client/index.jsx',
     ],
     previewScripts: [
-       path.resolve(__dirname, '../client/utils/previewEntry.js')
+      path.resolve(__dirname, '../client/utils/previewEntry.js')
     ]
   },
   output: {
@@ -35,12 +37,21 @@ module.exports = {
     ]
   },
   plugins: [
+    new ESLintPlugin({
+      extensions: ['js', 'jsx']
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('development')
       }
-    })
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: path.resolve(__dirname, '../translations/locales'), to: path.resolve(__dirname, 'locales') }
+      ]
+    }
+    )
   ],
   module: {
     rules: [
@@ -53,23 +64,14 @@ module.exports = {
             cacheDirectory: true,
             plugins: ['react-hot-loader/babel'],
           }
-        }, {
-          loader: 'eslint-loader'
         }]
-        // use: {
-        //   loader: 'babel-loader',
-        //   options: {
-        //     cacheDirectory: true,
-        //     plugins: ['react-hot-loader/babel'],
-        //   }
-        // }
       },
       {
         test: /main\.scss$/,
         use: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
-        test: /\.(svg|mp3)$/,
+        test: /\.(mp3)$/,
         use: 'file-loader'
       },
       {
@@ -80,11 +82,36 @@ module.exports = {
             name: '[name].[ext]',
             outputPath: 'images/'
           }
-         }
+        }
       },
       {
-        test: /fonts\/.*\.(eot|svg|ttf|woff|woff2)$/,
+        test: /fonts\/.*\.(eot|ttf|woff|woff2)$/,
         use: 'file-loader'
+      },
+      {
+        test: /\.svg$/,
+        oneOf: [
+          {
+            resourceQuery: /byContent/,
+            use: 'raw-loader'
+          },
+          {
+            resourceQuery: /byUrl/,
+            use: 'file-loader'
+          },
+          {
+            use: {
+              loader: '@svgr/webpack',
+              options: {
+                svgoConfig: {
+                  plugins: {
+                    removeViewBox: false
+                  }
+                }
+              }
+            }
+          }
+        ]
       },
       {
         test: /_console-feed.scss/,

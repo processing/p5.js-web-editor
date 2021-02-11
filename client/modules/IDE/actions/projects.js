@@ -1,9 +1,6 @@
-import axios from 'axios';
+import apiClient from '../../../utils/apiClient';
 import * as ActionTypes from '../../../constants';
 import { startLoader, stopLoader } from './loader';
-
-const __process = (typeof global !== 'undefined' ? global : window).process;
-const ROOT_URL = __process.env.API_URL;
 
 // eslint-disable-next-line
 export function getProjects(username) {
@@ -11,11 +8,12 @@ export function getProjects(username) {
     dispatch(startLoader());
     let url;
     if (username) {
-      url = `${ROOT_URL}/${username}/projects`;
+      url = `/${username}/projects`;
     } else {
-      url = `${ROOT_URL}/projects`;
+      url = '/projects';
     }
-    axios.get(url, { withCredentials: true })
+    apiClient
+      .get(url)
       .then((response) => {
         dispatch({
           type: ActionTypes.SET_PROJECTS,
@@ -23,7 +21,8 @@ export function getProjects(username) {
         });
         dispatch(stopLoader());
       })
-      .catch((response) => {
+      .catch((error) => {
+        const { response } = error;
         dispatch({
           type: ActionTypes.ERROR,
           error: response.data

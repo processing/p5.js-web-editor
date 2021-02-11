@@ -10,18 +10,16 @@
 //light gray: #f4f4f4
 //dark gray: #b5b5b5
 
-$p5-light-lightbrown: #A67F59;
-$p5-light-brown: #704F21;
+$p5-light-brown: #7A5A3A;
 $p5-light-black: #333333;
-$p5-light-pink: #D9328F;
-$p5-light-gray: #A0A0A0;
-$p5-light-lightblue: #00A1D3;
-$p5-light-darkblue: #2D7BB6;
-$p5-light-white: #FDFDFD;
-$p5-light-orange: #EE9900;
-$p5-light-lightgray: #E0D7D1;
-$p5-light-darkgray: #666666;
-$p5-light-green: #58a10b;
+$p5-light-pink: #D52889;
+$p5-light-gray: #666;
+$p5-light-blue: #0B7CA9;
+$p5-light-white: $lighter;
+$p5-light-orange: #A06801;
+$p5-light-lightgray: $middle-gray;
+$p5-light-green: #47820A;
+
 
 $p5-light-gutter: #f4f4f4;
 $p5-light-number: #b5b5b5;
@@ -33,23 +31,23 @@ $p5-light-activeline: rgb(207, 207, 207);
   color: $p5-light-black;
 }
 
-.cm-s-p5-light .cm-comment {
-  color: $p5-light-gray;
+.cm-s-p5-light span .cm-comment {
+  color: $p5-light-lightgray;
 }
 
-.cm-s-p5-light .cm-def {
-  color: $p5-light-lightblue;
+.cm-s-p5-light span .cm-def {
+  color: $p5-light-blue;
 }
 
-.cm-s-p5-light .cm-string {
+.cm-s-p5-light span .cm-string {
   color: $p5-light-green;
 }
 
-.cm-s-p5-light .cm-string-2 {
+.cm-s-p5-light span .cm-string-2 {
   color: $p5-light-orange;
 }
 
-.cm-s-p5-light .cm-number {
+.cm-s-p5-light span .cm-number {
   color: $p5-light-black;
 }
 
@@ -57,70 +55,71 @@ $p5-light-activeline: rgb(207, 207, 207);
   color: $p5-light-brown;
 }
 
-.cm-s-p5-light .cm-variable {
-  color: $p5-light-lightblue;
+.cm-s-p5-light span .cm-variable {
+  color: $p5-light-blue;
 }
 
-.cm-s-p5-light .cm-variable2 {
+.cm-s-p5-light span .cm-variable2 {
   color: $p5-light-black;
 }
 
-.cm-s-p5-light .cm-property {
+.cm-s-p5-light span .cm-property {
   color: $p5-light-black;
 }
 
-.cm-s-p5-light .cm-atom {
+.cm-s-p5-light span .cm-atom {
   color: $p5-light-pink;
 }
 
-.cm-s-p5-light .cm-operator {
-  color: $p5-light-lightbrown;
+.cm-s-p5-light span .cm-operator {
+  color: $p5-light-brown;
 }
 
 .cm-s-p5-light .cm-linenumber {
   color: $p5-light-number;
 }
 
-.cm-s-p5-light .CodeMirror-selected {
+.cm-s-p5-light div .CodeMirror-selected {
   background-color: $p5-light-selected;
 }
 
 .cm-s-p5-light .CodeMirror-activeline-background {
-  background-color: #F3F3F3;
+  background-color: $light;
 }
 
 .cm-s-p5-light .CodeMirror-activeline-gutter {
-  background-color: #ECECEC;
+  background-color: $light;
+  border-right: 1px solid $medium-light;
 }
 
 .cm-s-p5-light .cm-error {
   color: #f00;
 }
 
-.cm-s-p5-light .CodeMirror-matchingbracket {
+.cm-s-p5-light span .CodeMirror-matchingbracket {
   outline: 1px solid $p5-light-gray;
   outline-offset: 1px;
   color: $p5-light-black !important;
 }
 
-.cm-s-p5-light .cm-qualifier {
-  color: $p5-light-lightblue;
+.cm-s-p5-light span .cm-qualifier {
+  color: $p5-light-blue;
 }
 
-.cm-s-p5-light .cm-tag {
+.cm-s-p5-light span .cm-tag {
   color: $p5-light-pink;
 }
 
-.cm-s-p5-light .cm-builtin {
-  color: $p5-light-lightblue;
+.cm-s-p5-light span .cm-builtin {
+  color: $p5-light-blue;
 }
 
-.cm-s-p5-light .cm-attribute {
+.cm-s-p5-light span .cm-attribute {
   color: $p5-light-black;
 }
 
 .cm-s-p5-light .cm-p5-function {
-  color: $p5-light-darkblue;
+  color: $p5-light-blue;
   font-weight: bold;
 }
 
@@ -131,4 +130,16 @@ $p5-light-activeline: rgb(207, 207, 207);
 .cm-s-p5-light .CodeMirror-foldmarker {
   background-color: #333;
   color: white;
+}
+
+.cm-s-p5-light .CodeMirror-cursor {
+  border-left: 1px solid $p5-light-black;
+}
+
+.cm-s-p5-light .cm-searching {
+  background-color: $p5js-pink-opacity;
+}
+
+.cm-s-p5-light .CodeMirror-selectedtext {
+  background-color: $medium-light;
 }

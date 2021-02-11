@@ -16,14 +16,17 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import config from '../webpack/config.dev';
 
 // Import all required modules
+import api from './routes/api.routes';
 import users from './routes/user.routes';
 import sessions from './routes/session.routes';
 import projects from './routes/project.routes';
 import files from './routes/file.routes';
+import collections from './routes/collection.routes';
 import aws from './routes/aws.routes';
 import serverRoutes from './routes/server.routes';
 import embedRoutes from './routes/embed.routes';
 import assetRoutes from './routes/asset.routes';
+import passportRoutes from './routes/passport.routes';
 import { requestsOfTypeJSON } from './utils/requestsOfType';
 
 import { renderIndex } from './views/index';
@@ -34,27 +37,22 @@ const MongoStore = connectMongo(session);
 
 app.get('/health', (req, res) => res.json({ success: true }));
 
-// For basic auth, in setting up beta editor
-if (process.env.BASIC_USERNAME && process.env.BASIC_PASSWORD) {
-  app.use(basicAuth({
-    users: {
-      [process.env.BASIC_USERNAME]: process.env.BASIC_PASSWORD
-    },
-    challenge: true
-  }));
-}
+const allowedCorsOrigins = [/p5js\.org$/];
 
-const corsOriginsWhitelist = [
-  /p5js\.org$/,
-];
+// to allow client-only development
+if (process.env.CORS_ALLOW_LOCALHOST === 'true') {
+  allowedCorsOrigins.push(/localhost/);
+}
 
 // Run Webpack dev server in development mode
 if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(config);
-  app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
+  app.use(
+    webpackDevMiddleware(compiler, {
+      publicPath: config.output.publicPath
+    })
+  );
   app.use(webpackHotMiddleware(compiler));
-
-  corsOriginsWhitelist.push(/localhost/);
 }
 
 const mongoConnectionString = process.env.MONGO_URL;
@@ -63,69 +61,105 @@ app.set('trust proxy', true);
 // Enable Cross-Origin Resource Sharing (CORS) for all origins
 const corsMiddleware = cors({
   credentials: true,
-  origin: corsOriginsWhitelist,
+  origin: allowedCorsOrigins
 });
 app.use(corsMiddleware);
 // Enable pre-flight OPTIONS route for all end-points
 app.options('*', corsMiddleware);
 
-// Body parser, cookie parser, sessions, serve public assets
-
-app.use(Express.static(path.resolve(__dirname, '../dist/static'), {
-  maxAge: process.env.STATIC_MAX_AGE || (process.env.NODE_ENV === 'production' ? '1d' : '0')
-}));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(cookieParser());
-app.use(session({
-  resave: true,
-  saveUninitialized: false,
-  secret: process.env.SESSION_SECRET,
-  proxy: true,
-  name: 'sessionId',
-  cookie: {
-    httpOnly: true,
-    secure: false,
-  },
-  store: new MongoStore({
-    url: mongoConnectionString,
-    autoReconnect: true
+app.use(
+  session({
+    resave: true,
+    saveUninitialized: false,
+    secret: process.env.SESSION_SECRET,
+    proxy: true,
+    name: 'sessionId',
+    cookie: {
+      httpOnly: true,
+      secure: false
+    },
+    store: new MongoStore({
+      mongooseConnection: mongoose.connection,
+      autoReconnect: true
+    })
   })
-}));
+);
+
+app.use('/api/v1', requestsOfTypeJSON(), api);
+// This is a temporary way to test access via Personal Access Tokens
+// Sending a valid username:<personal-access-token> combination will
+// return the user's information.
+app.get(
+  '/api/v1/auth/access-check',
+  passport.authenticate('basic', { session: false }),
+  (req, res) => res.json(req.user)
+);
+
+// For basic auth, but can't have double basic auth for API
+if (process.env.BASIC_USERNAME && process.env.BASIC_PASSWORD) {
+  app.use(
+    basicAuth({
+      users: {
+        [process.env.BASIC_USERNAME]: process.env.BASIC_PASSWORD
+      },
+      challenge: true
+    })
+  );
+}
+
+// Body parser, cookie parser, sessions, serve public assets
+app.use(
+  '/locales',
+  Express.static(path.resolve(__dirname, '../dist/static/locales'), {
+    // Browsers must revalidate for changes to the locale files
+    // It doesn't actually mean "don't cache this file"
+    // See: https://jakearchibald.com/2016/caching-best-practices/
+    setHeaders: (res) => res.setHeader('Cache-Control', 'no-cache')
+  })
+);
+app.use(
+  Express.static(path.resolve(__dirname, '../dist/static'), {
+    maxAge:
+      process.env.STATIC_MAX_AGE ||
+      (process.env.NODE_ENV === 'production' ? '1d' : '0')
+  })
+);
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/api', requestsOfTypeJSON(), users);
-app.use('/api', requestsOfTypeJSON(), sessions);
-app.use('/api', requestsOfTypeJSON(), files);
-app.use('/api', requestsOfTypeJSON(), projects);
-app.use('/api', requestsOfTypeJSON(), aws);
-app.use(assetRoutes);
+app.use('/editor', requestsOfTypeJSON(), users);
+app.use('/editor', requestsOfTypeJSON(), sessions);
+app.use('/editor', requestsOfTypeJSON(), files);
+app.use('/editor', requestsOfTypeJSON(), projects);
+app.use('/editor', requestsOfTypeJSON(), aws);
+app.use('/editor', requestsOfTypeJSON(), collections);
+
 // this is supposed to be TEMPORARY -- until i figure out
 // isomorphic rendering
 app.use('/', serverRoutes);
 
-app.use('/', embedRoutes);
-app.get('/auth/github', passport.authenticate('github'));
-app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), (req, res) => {
-  res.redirect('/');
-});
+app.use(assetRoutes);
 
-app.get('/auth/google', passport.authenticate('google'));
-app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
-  res.redirect('/');
-});
+app.use('/', embedRoutes);
+app.use('/', passportRoutes);
 
 // configure passport
 require('./config/passport');
-// const passportConfig = require('./config/passport');
 
 // Connect to MongoDB
 mongoose.Promise = global.Promise;
-mongoose.connect(mongoConnectionString, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(mongoConnectionString, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 mongoose.set('useCreateIndex', true);
 mongoose.connection.on('error', () => {
-  console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
+  console.error(
+    'MongoDB Connection Error. Please make sure that MongoDB is running.'
+  );
   process.exit(1);
 });
 
@@ -143,12 +177,11 @@ app.use('/api', (error, req, res, next) => {
   next(error);
 });
 
-
 // Handle missing routes.
 app.get('*', (req, res) => {
   res.status(404);
   if (req.accepts('html')) {
-    get404Sketch(html => res.send(html));
+    get404Sketch((html) => res.send(html));
     return;
   }
   if (req.accepts('json')) {
@@ -161,7 +194,7 @@ app.get('*', (req, res) => {
 // start app
 app.listen(process.env.PORT, (error) => {
   if (!error) {
-    console.log(`p5js web editor is running on port: ${process.env.PORT}!`); // eslint-disable-line
+    console.log(`p5.js Web Editor is running on port: ${process.env.PORT}!`); // eslint-disable-line
   }
 });
 

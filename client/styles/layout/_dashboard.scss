@@ -1,0 +1,24 @@
+.dashboard {
+	display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  @include themify() {
+    color: getThemifyVariable('primary-text-color');
+    background-color: getThemifyVariable('background-color');
+  }
+  height: 100%;
+}
+
+.dashboard-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  max-width: #{1012 / $base-font-size}rem;
+  margin: 0 auto;
+  width: 100%;
+
+  @include themify() {
+    border: 1px solid getThemifyVariable('modal-border-color');
+  }
+}

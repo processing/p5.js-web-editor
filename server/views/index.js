@@ -29,6 +29,12 @@ export function renderIndex() {
         window.process.env.CLIENT = true;
         window.process.env.LOGIN_ENABLED = ${process.env.LOGIN_ENABLED === 'false' ? false : true};
         window.process.env.EXAMPLES_ENABLED = ${process.env.EXAMPLES_ENABLED === 'false' ? false : true};
+        window.process.env.UI_ACCESS_TOKEN_ENABLED = ${process.env.UI_ACCESS_TOKEN_ENABLED === 'false' ? false : true};
+        window.process.env.UI_COLLECTIONS_ENABLED = ${process.env.UI_COLLECTIONS_ENABLED === 'false' ? false : true};
+        window.process.env.UPLOAD_LIMIT = ${process.env.UPLOAD_LIMIT ? `${process.env.UPLOAD_LIMIT}` : undefined};
+        window.process.env.MOBILE_ENABLED = ${process.env.MOBILE_ENABLED ? `${process.env.MOBILE_ENABLED}` : undefined};
+        window.process.env.TRANSLATIONS_ENABLED = ${process.env.TRANSLATIONS_ENABLED === 'true' ? true : false}; 
+
       </script>
     </head>
     <body>

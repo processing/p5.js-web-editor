@@ -54,7 +54,9 @@ export function setSelectedFile(fileId) {
 export function resetSelectedFile(previousId) {
   return (dispatch, getState) => {
     const state = getState();
-    const newId = state.files.find(file => file.name !== 'root' && file.id !== previousId).id;
+    const newId = state.files.find(
+      (file) => file.name !== 'root' && file.id !== previousId
+    ).id;
     dispatch({
       type: ActionTypes.SET_SELECTED_FILE,
       selectedFile: newId
@@ -72,6 +74,19 @@ export function newFile(parentId) {
 export function closeNewFileModal() {
   return {
     type: ActionTypes.HIDE_MODAL
+  };
+}
+
+export function openUploadFileModal(parentId) {
+  return {
+    type: ActionTypes.OPEN_UPLOAD_FILE_MODAL,
+    parentId
+  };
+}
+
+export function closeUploadFileModal() {
+  return {
+    type: ActionTypes.CLOSE_UPLOAD_FILE_MODAL
   };
 }
 
@@ -202,7 +217,7 @@ export function resetInfiniteLoops() {
 
 export function justOpenedProject() {
   return {
-    type: ActionTypes.JUST_OPENED_PROJECT,
+    type: ActionTypes.JUST_OPENED_PROJECT
   };
 }
 
@@ -263,5 +278,12 @@ export function stopSketch() {
   return (dispatch) => {
     dispatch(stopAccessibleOutput());
     dispatch(stopVisualSketch());
+  };
+}
+
+export function createError(error) {
+  return {
+    type: ActionTypes.ERROR,
+    error
   };
 }
