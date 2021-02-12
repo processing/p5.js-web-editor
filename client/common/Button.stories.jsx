@@ -21,42 +21,45 @@ export const AllFeatures = () => (
 );
 
 export const SubmitButton = () => (
-  <Button type="submit" label="submit">This is a submit button</Button>
+  <Button type="submit" label="submit">
+    This is a submit button
+  </Button>
 );
 
-export const DefaultTypeButton = () => <Button label="login" onClick={action('onClick')}>Log In</Button>;
+export const DefaultTypeButton = () => (
+  <Button label="login" onClick={action('onClick')}>
+    Log In
+  </Button>
+);
 
-export const DisabledButton = () => <Button disabled label="login" onClick={action('onClick')}>Log In</Button>;
+export const DisabledButton = () => (
+  <Button disabled label="login" onClick={action('onClick')}>
+    Log In
+  </Button>
+);
 
 export const AnchorButton = () => (
-  <Button href="http://p5js.org" label="submit">Actually an anchor</Button>
+  <Button href="http://p5js.org" label="submit">
+    Actually an anchor
+  </Button>
 );
 
 export const ReactRouterLink = () => (
-  <Button to="./somewhere" label="submit">Actually a Link</Button>
+  <Button to="./somewhere" label="submit">
+    Actually a Link
+  </Button>
 );
 
 export const ButtonWithIconBefore = () => (
-  <Button
-    iconBefore={<GithubIcon aria-label="Github logo" />}
-  >
-    Create
-  </Button>
+  <Button iconBefore={<GithubIcon aria-label="Github logo" />}>Create</Button>
 );
 
 export const ButtonWithIconAfter = () => (
-  <Button
-    iconAfter={<GithubIcon aria-label="Github logo" />}
-  >
-    Create
-  </Button>
+  <Button iconAfter={<GithubIcon aria-label="Github logo" />}>Create</Button>
 );
 
 export const InlineButtonWithIconAfter = () => (
-  <Button
-    iconAfter={<DropdownArrowIcon />}
-    kind={Button.kinds.inline}
-  >
+  <Button iconAfter={<DropdownArrowIcon />} kind={Button.kinds.inline}>
     File name
   </Button>
 );

@@ -3,9 +3,9 @@ import apiClient from '../../../utils/apiClient';
 import * as ActionTypes from '../../../constants';
 
 function updatePreferences(formParams, dispatch) {
-  apiClient.put('/preferences', formParams)
-    .then(() => {
-    })
+  apiClient
+    .put('/preferences', formParams)
+    .then(() => {})
     .catch((error) => {
       const { response } = error;
       dispatch({
@@ -44,6 +44,24 @@ export function setLineNumbers(value) {
       const formParams = {
         preferences: {
           lineNumbers: value
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
+  };
+}
+
+export function setAutocloseBracketsQuotes(value) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.SET_AUTOCLOSE_BRACKETS_QUOTES,
+      value
+    });
+    const state = getState();
+    if (state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          autocloseBracketsQuotes: value
         }
       };
       updatePreferences(formParams, dispatch);
@@ -229,4 +247,3 @@ export function setLanguage(value, { persistPreference = true } = {}) {
     }
   };
 }
-

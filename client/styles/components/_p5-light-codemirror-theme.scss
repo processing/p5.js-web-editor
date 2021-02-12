@@ -131,3 +131,15 @@ $p5-light-activeline: rgb(207, 207, 207);
   background-color: #333;
   color: white;
 }
+
+.cm-s-p5-light .CodeMirror-cursor {
+  border-left: 1px solid $p5-light-black;
+}
+
+.cm-s-p5-light .cm-searching {
+  background-color: $p5js-pink-opacity;
+}
+
+.cm-s-p5-light .CodeMirror-selectedtext {
+  background-color: $medium-light;
+}

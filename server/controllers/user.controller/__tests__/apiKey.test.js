@@ -22,16 +22,12 @@ describe('user.controller', () => {
     UserInstanceMock.restore();
   });
 
-
   describe('createApiKey', () => {
-    it('returns an error if user doesn\'t exist', () => {
+    it("returns an error if user doesn't exist", () => {
       const request = { user: { id: '1234' } };
       const response = new Response();
 
-      UserMock
-        .expects('findById')
-        .withArgs('1234')
-        .yields(null, null);
+      UserMock.expects('findById').withArgs('1234').yields(null, null);
 
       createApiKey(request, response);
 
@@ -45,16 +41,13 @@ describe('user.controller', () => {
       const request = { user: { id: '1234' }, body: {} };
       const response = new Response();
 
-      UserMock
-        .expects('findById')
-        .withArgs('1234')
-        .yields(null, new User());
+      UserMock.expects('findById').withArgs('1234').yields(null, new User());
 
       createApiKey(request, response);
 
       expect(response.status).toHaveBeenCalledWith(400);
       expect(response.json).toHaveBeenCalledWith({
-        error: 'Expected field \'label\' was not present in request body'
+        error: "Expected field 'label' was not present in request body"
       });
     });
 
@@ -67,13 +60,9 @@ describe('user.controller', () => {
 
       const user = new User();
 
-      UserMock
-        .expects('findById')
-        .withArgs('1234')
-        .yields(null, user);
+      UserMock.expects('findById').withArgs('1234').yields(null, user);
 
-      UserInstanceMock.expects('save')
-        .yields();
+      UserInstanceMock.expects('save').yields();
 
       function expectations() {
         const lastKey = last(user.apiKeys);
@@ -101,14 +90,11 @@ describe('user.controller', () => {
   });
 
   describe('removeApiKey', () => {
-    it('returns an error if user doesn\'t exist', () => {
+    it("returns an error if user doesn't exist", () => {
       const request = { user: { id: '1234' } };
       const response = new Response();
 
-      UserMock
-        .expects('findById')
-        .withArgs('1234')
-        .yields(null, null);
+      UserMock.expects('findById').withArgs('1234').yields(null, null);
 
       removeApiKey(request, response);
 
@@ -118,7 +104,7 @@ describe('user.controller', () => {
       });
     });
 
-    it('returns an error if specified key doesn\'t exist', () => {
+    it("returns an error if specified key doesn't exist", () => {
       const request = {
         user: { id: '1234' },
         params: { keyId: 'not-a-real-key' }
@@ -126,10 +112,7 @@ describe('user.controller', () => {
       const response = new Response();
       const user = new User();
 
-      UserMock
-        .expects('findById')
-        .withArgs('1234')
-        .yields(null, user);
+      UserMock.expects('findById').withArgs('1234').yields(null, user);
 
       removeApiKey(request, response);
 
@@ -153,14 +136,9 @@ describe('user.controller', () => {
       };
       const response = new Response();
 
-      UserMock
-        .expects('findById')
-        .withArgs('1234')
-        .yields(null, user);
+      UserMock.expects('findById').withArgs('1234').yields(null, user);
 
-      UserInstanceMock
-        .expects('save')
-        .yields();
+      UserInstanceMock.expects('save').yields();
 
       removeApiKey(request, response);
 

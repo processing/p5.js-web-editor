@@ -41,7 +41,9 @@ class App extends React.Component {
   render() {
     return (
       <div className="app">
-        {this.state.isMounted && !window.devToolsExtension && getConfig('NODE_ENV') === 'development' && <DevTools />}
+        {this.state.isMounted &&
+          !window.devToolsExtension &&
+          getConfig('NODE_ENV') === 'development' && <DevTools />}
         {this.props.children}
       </div>
     );
@@ -53,13 +55,13 @@ App.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string,
     state: PropTypes.shape({
-      skipSavingPath: PropTypes.bool,
-    }),
+      skipSavingPath: PropTypes.bool
+    })
   }).isRequired,
   setPreviousPath: PropTypes.func.isRequired,
   setLanguage: PropTypes.func.isRequired,
   language: PropTypes.string,
-  theme: PropTypes.string,
+  theme: PropTypes.string
 };
 
 App.defaultProps = {
@@ -68,9 +70,9 @@ App.defaultProps = {
   theme: 'light'
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   theme: state.preferences.theme,
-  language: state.preferences.language,
+  language: state.preferences.language
 });
 
 const mapDispatchToProps = { setPreviousPath, setLanguage };

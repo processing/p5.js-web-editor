@@ -16,7 +16,7 @@ p5.js 웹 에디터의 모든 컨트리뷰터들은 다음의 [행동 수칙](./
 
 p5.js 웹 에디터는 다수의 개인들에 의해 만들어진 협력 프로젝트이며, 여러분 역시 도움을 주실 수 있습니다. 모든 종류의 참여를 환영합니다! 더 자세한 사항을 위해서는 [기여 안내](./.github/CONTRIBUTING.md)를 확인하시기 바랍니다.
 
-개발자 분들은 코드 기여, 버그 수정, 문서화에 대한 세부 사항을 [개발자 문서](https://github.com/processing/p5.js-web-editor/blob/master/developer_docs/)에서 확인하시기 바랍니다. 코드 작성을 시작하기 위한 좋은 시작점은 [개발 안내](https://github.com/processing/p5.js-web-editor/blob/master/developer_docs/development.md)를 살펴보는 것입니다.
+개발자 분들은 코드 기여, 버그 수정, 문서화에 대한 세부 사항을 [개발자 문서](https://github.com/processing/p5.js-web-editor/blob/develop/developer_docs/)에서 확인하시기 바랍니다. 코드 작성을 시작하기 위한 좋은 시작점은 [개발 안내](https://github.com/processing/p5.js-web-editor/blob/develop/developer_docs/development.md)를 살펴보는 것입니다.
 
 ## 이슈
 

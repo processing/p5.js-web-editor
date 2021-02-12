@@ -15,7 +15,8 @@
       "TidyCode": "Tidy Code",
       "Find": "Find",
       "FindNext": "Find Next",
-      "FindPrevious": "Find Previous"
+      "FindPrevious": "Find Previous",
+      "Replace": "Replace"
     },
     "Sketch": {
       "Title": "Sketch",
@@ -48,6 +49,21 @@
       "LogOut": "Log Out"
     }
   },
+  "CodemirrorFindAndReplace": {
+    "ToggleReplace": "Toggle Replace",
+    "Find": "Find",
+    "FindPlaceholder": "Find in files",
+    "Replace": "Replace",
+    "ReplaceAll": "Replace All",
+    "ReplacePlaceholder": "Text to replace",
+    "Regex": "Regular expression",
+    "CaseSensitive": "Case sensitive",
+    "WholeWords": "Whole words",
+    "Previous": "Previous",
+    "Next": "Next",
+    "NoResults": "No results",
+    "Close": "Close"
+  },
   "LoginForm": {
     "UsernameOrEmail": "Email or Username",
     "UsernameOrEmailARIA": "Email or Username",
@@ -67,9 +83,10 @@
     "ResetPassword": "Reset your password"
   },
   "SocialAuthButton": {
-    "Github": "Login with Github",
-    "LogoARIA": "{{serviceauth}} logo",
-    "Google": "Login with Google"
+    "Connect": "Connect {{serviceauth}} Account",
+    "Unlink": "Unlink {{serviceauth}} Account",
+    "Login": "Login with {{serviceauth}}",
+    "LogoARIA": "{{serviceauth}} logo"
   },
   "About": {
     "Title": "About",
@@ -132,6 +149,9 @@
     "AutosaveOnARIA": "autosave on",
     "Off": "Off",
     "AutosaveOffARIA": "autosave off",
+    "AutocloseBracketsQuotes": "Autoclose Brackets and Quotes",
+    "AutocloseBracketsQuotesOnARIA": "autoclose brackets and quotes on",
+    "AutocloseBracketsQuotesOffARIA": "autoclose brackets and quotes off",
     "WordWrap": "Word Wrap",
     "LineWrapOnARIA": "linewrap on",
     "LineWrapOffARIA": "linewrap off",
@@ -161,6 +181,7 @@
       "FindText": "Find Text",
       "FindNextMatch": "Find Next Match",
       "FindPrevMatch": "Find Previous Match",
+      "ReplaceTextMatch": "Replace Text Match",
       "IndentCodeLeft": "Indent Code Left",
       "IndentCodeRight": "Indent Code Right",
       "CommentLine": "Comment Line",
@@ -381,7 +402,9 @@
     "SignUp": "Sign Up",
     "MessageLoggedOut": "It looks like you've been logged out. Please ",
     "LogIn": "log in",
-    "SavedDifferentWindow": "The project you have attempted to save has been saved from another window.\n        Please refresh the page to see the latest version."
+    "SavedDifferentWindow": "The project you have attempted to save has been saved from another window.\n        Please refresh the page to see the latest version.",
+    "LinkTitle": "Error Linking Account",
+    "LinkMessage": "There was a problem linking your {{serviceauth}} account to your p5.js Web Editor account. Your {{serviceauth}} account has already been linked to another p5.js Web Editor account."
   },
   "ShareModal": {
     "Embed": "Embed",
@@ -514,11 +537,14 @@
     "CurrentLine": " Current line"
   },
   "Timer": {
-    "SavedJustNow": "Saved: just now",
-    "Saved15Seconds": "Saved: 15 seconds ago",
-    "Saved25Seconds": "Saved: 25 seconds ago",
-    "Saved35Seconds": "Saved: 35 seconds ago",
-    "SavedAgo": "Saved: {{timeAgo}} ago"
+    "SavedAgo": "Saved: {{timeAgo}}"
+  },
+  "formatDate": {
+    "JustNow": "just now",
+    "15Seconds": "15 seconds ago",
+    "25Seconds": "25 seconds ago",
+    "35Seconds": "35 seconds ago",
+    "Ago": "{{timeAgo}} ago"
   },
   "AddRemoveButton": {
     "AltAddARIA": "Add to collection",
@@ -535,5 +561,47 @@
   "PreviewNav": {
     "EditSketchARIA": "Edit Sketch",
     "ByUser": "by"
+  },
+  "MobilePreferences": {
+    "Settings": "Settings",
+    "GeneralSettings": "General settings",
+    "Accessibility": "Accessibility",
+    "AccessibleOutput": "Accessible Output",
+    "Theme": "Theme",
+    "LightTheme": "Light",
+    "DarkTheme": "Dark",
+    "HighContrastTheme": "High Contrast",
+    "Autosave": "Autosave",
+    "WordWrap": "Word Wrap",
+    "LineNumbers": "Line numbers",
+    "LintWarningSound": "Lint warning sound",
+    "UsedScreenReader": "Used with screen reader",
+    "PlainText": "Plain-text",
+    "TableText": "Table-text",
+    "Sound": "Sound"
+  },
+  "PreferenceCreators": {
+    "On": "On",
+    "Off": "Off"
+  },
+  "MobileIDEView":{
+    "Preferences": "Preferences",
+    "MyStuff": "My Stuff",
+    "Examples": "Examples",
+    "OriginalEditor": "Original Editor",
+    "Login": "Login",
+    "Logout": "Logout"
+  },
+  "MobileDashboardView": {
+    "Examples": "Examples",
+    "Sketches": "Sketches",
+    "Collections": "Collections",
+    "Assets": "Assets",
+    "MyStuff": "My Stuff",
+    "CreateSketch": "Create Sketch",
+    "CreateCollection": "Create Collection"
+  },
+  "Explorer": {
+    "Files": "Files"
   }
 }

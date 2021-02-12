@@ -7,14 +7,14 @@ import mg from 'nodemailer-mailgun-transport';
 
 const auth = {
   api_key: process.env.MAILGUN_KEY,
-  domain: process.env.MAILGUN_DOMAIN,
+  domain: process.env.MAILGUN_DOMAIN
 };
 
 class Mail {
   constructor() {
     this.client = nodemailer.createTransport(mg({ auth }));
     this.sendOptions = {
-      from: process.env.EMAIL_SENDER,
+      from: process.env.EMAIL_SENDER
     };
   }
 
@@ -31,13 +31,12 @@ class Mail {
       to: data.to,
       subject: data.subject,
       from: this.sendOptions.from,
-      html: data.html,
+      html: data.html
     };
 
-    return this.sendMail(mailOptions)
-      .then((err, res) => {
-        callback(err, res);
-      });
+    return this.sendMail(mailOptions).then((err, res) => {
+      callback(err, res);
+    });
   }
 
   send(data, callback) {
