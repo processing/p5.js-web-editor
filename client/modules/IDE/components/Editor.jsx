@@ -110,10 +110,10 @@ class Editor extends React.Component {
       keyMap: 'sublime',
       highlightSelectionMatches: true, // highlight current search match
       matchBrackets: true,
-      mode: 'text/html',
       emmet: {
-        preview: true,
-        markTagPairs: true
+        preview: ['html'],
+        markTagPairs: true,
+        autoRenameTags: true
       },
       autoCloseBrackets: this.props.autocloseBracketsQuotes,
       styleSelectedText: true,
