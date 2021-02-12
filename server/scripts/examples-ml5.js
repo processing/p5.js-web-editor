@@ -78,9 +78,16 @@ async function fetchFileContent(item) {
       options.url !== ''
     ) {
       file.content = await rp(options);
+
       // NOTE: remove the URL property if there's content
       // Otherwise the p5 editor will try to pull from that url
       if (file.content !== null) delete file.url;
+
+      // Replace localhost references with references to the currently published version.
+      file.content = file.content.replace(
+        /http:\/\/localhost(:[0-9]+)\/ml5.js/g,
+        'https://unpkg.com/ml5@latest/dist/ml5.min.js'
+      );
     }
 
     return file;
@@ -124,7 +131,7 @@ async function getCategoryExamples(sketchRootList) {
     // let options = Object.assign({url: `${requestOptions.url}/${categories.path}${branchRef}`}, requestOptions)
     const options = Object.assign({}, githubRequestOptions);
     options.url = `${options.url}${categories.path}${branchRef}`;
-    // console.log(options)
+
     const sketchDirs = await rp(options);
 
     try {
