@@ -284,7 +284,7 @@ class Editor extends React.Component {
       mode = 'javascript';
     } else if (fileName.match(/.+\.css$/i)) {
       mode = 'css';
-    } else if (fileName.match(/.+\.html$/i)) {
+    } else if (fileName.match(/.+\.(html|xml)$/i)) {
       mode = 'htmlmixed';
     } else if (fileName.match(/.+\.json$/i)) {
       mode = 'application/json';
