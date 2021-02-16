@@ -238,7 +238,7 @@
       "Title": "ファイル作成",
       "CloseButtonARIA": "新規ファイルモーダルを閉じる",
       "EnterName": "ファイル名を入力してください",
-      "InvalidType": "ファイルタイプが無効です。有効な拡張子は、.js、.css、.json、.txt、.csv、.tsv、.frag、.vertです。"
+      "InvalidType": "ファイルタイプが無効です。有効な拡張子は、.js、.css、.json、.xml、.txt、.csv、.tsv、.frag、.vertです。"
     },
     "NewFileForm": {
       "AddFileSubmit": "ファイルを追加",

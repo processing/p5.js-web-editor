@@ -46,7 +46,8 @@ describe('Nav', () => {
     },
     t: jest.fn(),
     setLanguage: jest.fn(),
-    language: 'en-US'
+    language: 'en-US',
+    isUserOwner: true
   };
 
   it('renders correctly', () => {
