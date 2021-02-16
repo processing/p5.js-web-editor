@@ -71,4 +71,4 @@ export const TEXT_FILE_REGEX = /.+\.(json|txt|csv|tsv|vert|frag|js|css|html|htm|
 export const NOT_EXTERNAL_LINK_REGEX = /^(?!(http:\/\/|https:\/\/))/;
 export const EXTERNAL_LINK_REGEX = /^(http:\/\/|https:\/\/)/;
 
-export const CREATE_FILE_REGEX = /.+\.(json|txt|csv|tsv|js|css|frag|vert|xml)$/i;
+export const CREATE_FILE_REGEX = /.+\.(json|txt|csv|tsv|js|css|frag|vert|xml|html|htm)$/i;
