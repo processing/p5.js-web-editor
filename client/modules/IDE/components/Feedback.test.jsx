@@ -1,9 +1,12 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import { render, unmountComponentAtNode } from 'react-dom';
+import { unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
+import lodash from 'lodash';
 
-import { FeedbackTestComponent } from './Feedback';
+import { fireEvent, render, screen, waitFor } from '../../../test-utils';
+
+import Feedback from './Feedback';
 
 let container = null;
 beforeEach(() => {
@@ -19,11 +22,25 @@ afterEach(() => {
   container = null;
 });
 
-it('It mounts successfully and changes the meta title to Feedback.Title', () => {
+const renderComponent = (extraProps = {}) => {
+  const props = lodash.merge(
+    {
+      t: jest.fn()
+    },
+    extraProps
+  );
+
+  render(<Feedback {...props} />, container);
+
+  return props;
+};
+
+it('It mounts successfully and changes the meta title to p5.js Web Editor | Feedback', () => {
   act(() => {
-    render(<FeedbackTestComponent t={(key) => key} />, container);
+    renderComponent();
   });
 
   const helmet = Helmet.peek();
-  expect(helmet.title).toEqual('Feedback.Title');
+  console.log(helmet.title);
+  expect(helmet.title).toEqual('p5.js Web Editor | Feedback');
 });

@@ -55,5 +55,4 @@ Feedback.propTypes = {
   t: PropTypes.func.isRequired
 };
 
-export { Feedback as FeedbackTestComponent };
 export default withTranslation()(Feedback);
