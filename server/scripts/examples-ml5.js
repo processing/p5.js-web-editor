@@ -3,13 +3,12 @@ import rp from 'request-promise';
 import Q from 'q';
 import { ok } from 'assert';
 
-// TODO: Change branchName if necessary
-const branchName = 'release';
+const branchName = 'main';
 const branchRef = `?ref=${branchName}`;
-const baseUrl = 'https://api.github.com/repos/ml5js/ml5-examples/contents';
+const baseUrl = 'https://api.github.com/repos/ml5js/ml5-library/contents';
 const clientId = process.env.GITHUB_ID;
 const clientSecret = process.env.GITHUB_SECRET;
-const editorUsername = process.env.ML5_EXAMPLES_USERNAME;
+const editorUsername = process.env.ML5_LIBRARY_USERNAME;
 const personalAccessToken = process.env.EDITOR_API_ACCESS_TOKEN;
 const editorApiUrl = process.env.EDITOR_API_URL;
 const headers = {
@@ -18,7 +17,7 @@ const headers = {
 
 ok(clientId, 'GITHUB_ID is required');
 ok(clientSecret, 'GITHUB_SECRET is required');
-ok(editorUsername, 'ML5_EXAMPLES_USERNAME is required');
+ok(editorUsername, 'ML5_LIBRARY_USERNAME is required');
 ok(personalAccessToken, 'EDITOR_API_ACCESS_TOKEN is required');
 ok(editorApiUrl, 'EDITOR_API_URL is required');
 
@@ -79,9 +78,16 @@ async function fetchFileContent(item) {
       options.url !== ''
     ) {
       file.content = await rp(options);
+
       // NOTE: remove the URL property if there's content
       // Otherwise the p5 editor will try to pull from that url
       if (file.content !== null) delete file.url;
+
+      // Replace localhost references with references to the currently published version.
+      file.content = file.content.replace(
+        /http:\/\/localhost(:[0-9]+)\/ml5.js/g,
+        'https://unpkg.com/ml5@latest/dist/ml5.min.js'
+      );
     }
 
     return file;
@@ -89,7 +95,7 @@ async function fetchFileContent(item) {
   }
 
   if (file.url) {
-    const cdnRef = `https://cdn.jsdelivr.net/gh/ml5js/ml5-examples@${branchName}${
+    const cdnRef = `https://cdn.jsdelivr.net/gh/ml5js/ml5-library@${branchName}${
       file.url.split(branchName)[1]
     }`;
     file.url = cdnRef;
@@ -104,7 +110,7 @@ async function fetchFileContent(item) {
 async function getCategories() {
   try {
     const options = Object.assign({}, githubRequestOptions);
-    options.url = `${options.url}/p5js${branchRef}`;
+    options.url = `${options.url}/examples/p5js${branchRef}`;
     const results = await rp(options);
 
     return results;
@@ -125,7 +131,7 @@ async function getCategoryExamples(sketchRootList) {
     // let options = Object.assign({url: `${requestOptions.url}/${categories.path}${branchRef}`}, requestOptions)
     const options = Object.assign({}, githubRequestOptions);
     options.url = `${options.url}${categories.path}${branchRef}`;
-    // console.log(options)
+
     const sketchDirs = await rp(options);
 
     try {
@@ -158,7 +164,7 @@ async function traverseSketchTree(parentObject) {
   if (parentObject.type !== 'dir') {
     return output;
   }
-  // let options = `https://api.github.com/repos/ml5js/ml5-examples/contents/${sketches.path}${branchRef}`
+  // let options = `https://api.github.com/repos/ml5js/ml5-library/contents/examples/p5js/${sketches.path}${branchRef}`
   const options = Object.assign({}, githubRequestOptions);
   options.url = `${options.url}${parentObject.path}${branchRef}`;
 
@@ -353,7 +359,7 @@ async function createProjectsInP5User(filledProjectList, user) {
 
 /**
  * MAKE
- * Get all the sketches from the ml5-examples repo
+ * Get all the sketches from the ml5-library repo
  * Get the p5 examples
  * Dive down into each sketch and get all the files
  * Format the sketch files to be save to the db
@@ -378,7 +384,7 @@ async function make() {
 
 /**
  * TEST - same as make except reads from file for testing purposes
- * Get all the sketches from the ml5-examples repo
+ * Get all the sketches from the ml5-library repo
  * Get the p5 examples
  * Dive down into each sketch and get all the files
  * Format the sketch files to be save to the db
@@ -414,7 +420,7 @@ async function test() {
  */
 
 if (process.env.NODE_ENV === 'development') {
-  // test()
+  // test();
   make(); // replace with test() if you don't want to run all the fetch functions over and over
 } else {
   make();

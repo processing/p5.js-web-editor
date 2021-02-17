@@ -236,7 +236,7 @@
       "Title": "फ़ाइल बनाएँ",
       "CloseButtonARIA": "नई फ़ाइल मोडल बंद करें",
       "EnterName": "कृपया एक नाम दर्ज करें",
-      "InvalidType": "अमान्य फ़ाइल प्रकार। मान्य एक्सटेंशन हैं .js, .css, .json, .txt, .csv, .tsv, .frag, और .vert."
+      "InvalidType": "अमान्य फ़ाइल प्रकार। मान्य एक्सटेंशन हैं .js, .css, .json, .xml, .txt, .csv, .tsv, .frag, और .vert."
     },
     "NewFileForm": {
       "AddFileSubmit": "फाइल जोडें",
