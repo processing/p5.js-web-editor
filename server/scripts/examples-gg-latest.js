@@ -1,4 +1,4 @@
-import rp from 'request-promise';
+import axios from 'axios';
 import Q from 'q';
 import mongoose from 'mongoose';
 import objectID from 'bson-objectid';
@@ -106,7 +106,7 @@ const insert = function insert(_mainString, _insString, _pos) {
 /* --- data processing --- */
 // 1. first get the top level directories P and M
 // https://api.github.com/repos/generative-design/Code-Package-p5.js/contents?ref=pre-release
-function getCodePackage() {
+async function getCodePackage() {
   const sketchRootList = [];
   const options = {
     // url: 'https://api.github.com/repos/generative-design/Code-Package-p5.js/contents',
@@ -118,26 +118,23 @@ function getCodePackage() {
       Authorization: `Basic ${Buffer.from(
         `${clientId}:${clientSecret}`
       ).toString('base64')}`
-    },
-    json: true
+    }
   };
 
-  return rp(options)
-    .then((res) => {
-      res.forEach((metadata) => {
-        if (
-          metadata.name.endsWith('P') === true ||
-          metadata.name.endsWith('M') === true
-        ) {
-          sketchRootList.push(metadata);
-        }
-      });
-
-      return sketchRootList;
-    })
-    .catch((err) => {
-      throw err;
+  try {
+    const { data } = await axios.request(options);
+    data.forEach((metadata) => {
+      if (
+        metadata.name.endsWith('P') === true ||
+        metadata.name.endsWith('M') === true
+      ) {
+        sketchRootList.push(metadata);
+      }
     });
+    return sketchRootList;
+  } catch (err) {
+    throw err;
+  }
 }
 
 // 2. get the list of all the top-level sketch directories in P and M
@@ -145,7 +142,7 @@ function getSketchDirectories(sketchRootList) {
   // console.log(sketchRootList);
 
   return Q.all(
-    sketchRootList.map((sketches) => {
+    sketchRootList.map(async (sketches) => {
       // console.log(sketches)
       const options = {
         url: `https://api.github.com/repos/generative-design/Code-Package-p5.js/contents/${sketches.path}${branchRef}`,
@@ -155,19 +152,16 @@ function getSketchDirectories(sketchRootList) {
           Authorization: `Basic ${Buffer.from(
             `${clientId}:${clientSecret}`
           ).toString('base64')}`
-        },
-        json: true
+        }
       };
 
-      return rp(options)
-        .then((res) => {
-          const sketchDirs = flatten(res);
-
-          return sketchDirs;
-        })
-        .catch((err) => {
-          throw err;
-        });
+      try {
+        const { data } = await axios.request(options);
+        const sketchDirs = flatten(data);
+        return sketchDirs;
+      } catch (err) {
+        throw err;
+      }
     })
   ).then((output) => {
     const sketchList = [];
@@ -186,7 +180,7 @@ function getSketchDirectories(sketchRootList) {
 // 3. For each sketch item in the sketchList, append the tree contents to each item
 function appendSketchItemLinks(sketchList) {
   return Q.all(
-    sketchList.map((sketches) => {
+    sketchList.map(async (sketches) => {
       const options = {
         // url: `${sketches.url}?client_id=${clientId}&client_secret=${clientSecret}`,
         url: `https://api.github.com/repos/generative-design/Code-Package-p5.js/contents/${sketches.path}${branchRef}`,
@@ -196,15 +190,16 @@ function appendSketchItemLinks(sketchList) {
           Authorization: `Basic ${Buffer.from(
             `${clientId}:${clientSecret}`
           ).toString('base64')}`
-        },
-        json: true
+        }
       };
 
-      return rp(options).then((res) => {
-        sketches.tree = res;
-
+      try {
+        const { data } = await axios.request(options);
+        sketches.tree = data;
         return sketchList;
-      });
+      } catch (err) {
+        throw err;
+      }
     })
   );
 }
@@ -214,7 +209,7 @@ function getSketchItems(sketchList) {
   // const completeSketchPkg = [];
 
   /* eslint-disable */
-  return Q.all(sketchList[0].map(sketch => Q.all(sketch.tree.map((item) => {
+  return Q.all(sketchList[0].map(async sketch => Q.all(sketch.tree.map((item) => {
     if (item.name === 'data') {
       const options = {
         url: `https://api.github.com/repos/generative-design/Code-Package-p5.js/contents/${item.path}${branchRef}`,
@@ -222,16 +217,16 @@ function getSketchItems(sketchList) {
         headers: {
           ...headers,
           Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
-        },
-        json: true
+        }
       };
 
-      return rp(options).then((res) => {
-        sketch.data = res;
+      try {
+        const { data } = axios.request(options);
+        sketch.data = data;
         return sketch;
-      }).catch((err) => {
+      } catch (err) {
         throw err;
-      });
+      }
     }
     // pass
   })))).then(() => sketchList[0]);
@@ -399,7 +394,7 @@ function formatAllSketches(sketchList) {
 // get all the sketch data content and download to the newProjects array
 function getAllSketchContent(newProjectList) {
   /* eslint-disable */
-  return Q.all(newProjectList.map(newProject => Q.all(newProject.files.map((sketchFile, i) => {
+  return Q.all(newProjectList.map(newProject => Q.all(newProject.files.map(async (sketchFile, i) => {
     /*
       sketchFile.name.endsWith(".mp4") !== true &&
       sketchFile.name.endsWith(".ogg") !== true &&
@@ -427,12 +422,13 @@ function getAllSketchContent(newProjectList) {
       };
 
       // console.log("CONVERT ME!")
-      return rp(options).then((res) => {
-        newProject.files[i].content = res;
+      try {
+        const { data } = await axios.request(options);
+        newProject.files[i].content = data;
         return newProject;
-      }).catch((err) => {
+      } catch (err) {
         throw err;
-      });
+      }
     }
     if (newProject.files[i].url) {
       return new Promise((resolve, reject) => {
