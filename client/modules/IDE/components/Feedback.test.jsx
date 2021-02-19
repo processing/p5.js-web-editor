@@ -30,6 +30,9 @@ const renderComponent = (extraProps = {}) => {
     extraProps
   );
 
+  // equivalent to this below
+  // const props = {...extraProps, t:jest.fn()}
+
   render(<Feedback {...props} />, container);
 
   return props;
@@ -41,6 +44,5 @@ it('It mounts successfully and changes the meta title to p5.js Web Editor | Feed
   });
 
   const helmet = Helmet.peek();
-  console.log(helmet.title);
   expect(helmet.title).toEqual('p5.js Web Editor | Feedback');
 });
