@@ -112,7 +112,7 @@ async function fetchFileContent(item) {
 async function getCategories() {
   try {
     const options = Object.assign({}, githubRequestOptions);
-    options.url = `${options.url}/p5js${branchRef}`;
+    options.url = `${options.url}/examples/p5js${branchRef}`;
     const { data } = await axios.request(options);
 
     return data;
