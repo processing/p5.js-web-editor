@@ -7,6 +7,9 @@ const { origin } = window;
 
 export function registerFrame(newFrame) {
   frame = newFrame;
+  return () => {
+    frame = null;
+  }
 }
 
 function notifyListener(message) {

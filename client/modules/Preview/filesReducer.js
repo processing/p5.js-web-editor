@@ -31,6 +31,23 @@ canvas {
 }
 `;
 
+// https://gist.github.com/fnky/7d044b94070a35e552f3c139cdf80213
+export function useSelectors(state, mapStateToSelectors) {
+  const selectors = useMemo(() => mapStateToSelectors(state), [state]);
+  return selectors;
+}
+
+export function mapStateToSelectors(state) {
+  return {
+    getHTMLFile: () =>
+      state.filter((file) => file.name.match(/.*\.html$/i))[0],
+    getJSFiles: (state) =>
+      state.filter((file) => file.name.match(/.*\.js$/i)),
+    getCSSFiles: (state) =>
+      state.filter((file) => file.name.match(/.*\.css$/i))
+  };
+}
+
 export function initialState() {
   const a = objectID().toHexString();
   const b = objectID().toHexString();

@@ -4,12 +4,19 @@ import { hot } from 'react-hot-loader/root';
 import loopProtect from 'loop-protect';
 import { Hook } from 'console-feed';
 import { listen } from '../../utils/dispatcher';
-import { filesReducer, initialState, setFiles } from './filesReducer';
+import {
+  filesReducer,
+  initialState,
+  setFiles,
+  useSelectors,
+  mapStateToSelectors
+} from './filesReducer';
 import EmbedFrame from './EmbedFrame';
 
 const App = () => {
   const [state, dispatch] = useReducer(filesReducer, [], initialState);
-  function handleRenderEvent(message) {
+  function handleMessageEvent(message) {
+    // types are start, stop, setFiles. Kind of like a reducer
     const { type, files } = message;
     if (type === 'render') {
       dispatch(setFiles(files));
