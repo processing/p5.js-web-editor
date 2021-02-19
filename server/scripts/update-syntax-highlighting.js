@@ -1,11 +1,11 @@
 const fs = require('fs');
 const process = require('process');
-const request = require('request');
+const axios = require('axios');
 
-request('https://p5js.org/reference/data.json', (err, res) => {
-  if (!err) {
-    const result = res.toJSON();
-    const data = JSON.parse(result.body);
+axios
+  .get('https://p5js.org/reference/data.json')
+  .then((response) => {
+    const { data } = response;
 
     const arr = data.classitems;
     const p5VariableKeywords = {};
@@ -50,7 +50,7 @@ request('https://p5js.org/reference/data.json', (err, res) => {
         }
       }
     );
-  } else {
-    console.log("Error!! Couldn't fetch the data.json file");
-  }
-});
+  })
+  .catch((err) => {
+    throw err;
+  });

@@ -212,6 +212,7 @@ class Editor extends React.Component {
       const oldDoc = this._cm.swapDoc(this._docs[this.props.file.id]);
       this._docs[prevProps.file.id] = oldDoc;
       this._cm.focus();
+
       if (!prevProps.unsavedChanges) {
         setTimeout(() => this.props.setUnsavedChanges(false), 400);
       }
@@ -288,7 +289,7 @@ class Editor extends React.Component {
       mode = 'javascript';
     } else if (fileName.match(/.+\.css$/i)) {
       mode = 'css';
-    } else if (fileName.match(/.+\.html$/i)) {
+    } else if (fileName.match(/.+\.(html|xml)$/i)) {
       mode = 'htmlmixed';
     } else if (fileName.match(/.+\.json$/i)) {
       mode = 'application/json';
