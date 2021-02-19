@@ -313,7 +313,7 @@ async function createProject(project) {
   const options = Object.assign({}, editorRequestOptions);
   options.method = 'POST';
   options.url = `${options.url}/sketches`;
-  options.body = project;
+  options.data = project;
 
   try {
     const { data } = await axios.request(options);
