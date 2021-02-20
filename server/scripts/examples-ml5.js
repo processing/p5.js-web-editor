@@ -1,5 +1,5 @@
 import fs from 'fs';
-import rp from 'request-promise';
+import axios from 'axios';
 import Q from 'q';
 import { ok } from 'assert';
 
@@ -30,8 +30,7 @@ const githubRequestOptions = {
     Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString(
       'base64'
     )}`
-  },
-  json: true
+  }
 };
 
 const editorRequestOptions = {
@@ -42,8 +41,7 @@ const editorRequestOptions = {
     Authorization: `Basic ${Buffer.from(
       `${editorUsername}:${personalAccessToken}`
     ).toString('base64')}`
-  },
-  json: true
+  }
 };
 
 /**
@@ -77,8 +75,12 @@ async function fetchFileContent(item) {
       options.url !== null ||
       options.url !== ''
     ) {
-      file.content = await rp(options);
-
+      try {
+        const { data } = await axios.request(options);
+        file.content = data;
+      } catch (err) {
+        throw err;
+      }
       // NOTE: remove the URL property if there's content
       // Otherwise the p5 editor will try to pull from that url
       if (file.content !== null) delete file.url;
@@ -111,9 +113,9 @@ async function getCategories() {
   try {
     const options = Object.assign({}, githubRequestOptions);
     options.url = `${options.url}/examples/p5js${branchRef}`;
-    const results = await rp(options);
+    const { data } = await axios.request(options);
 
-    return results;
+    return data;
   } catch (err) {
     return err;
   }
@@ -131,11 +133,11 @@ async function getCategoryExamples(sketchRootList) {
     // let options = Object.assign({url: `${requestOptions.url}/${categories.path}${branchRef}`}, requestOptions)
     const options = Object.assign({}, githubRequestOptions);
     options.url = `${options.url}${categories.path}${branchRef}`;
-
-    const sketchDirs = await rp(options);
+    // console.log(options)
 
     try {
-      const result = flatten(sketchDirs);
+      const { data } = await axios.request(options);
+      const result = flatten(data);
 
       return result;
     } catch (err) {
@@ -168,7 +170,12 @@ async function traverseSketchTree(parentObject) {
   const options = Object.assign({}, githubRequestOptions);
   options.url = `${options.url}${parentObject.path}${branchRef}`;
 
-  output.tree = await rp(options);
+  try {
+    const { data } = await axios.request(options);
+    output.tree = data;
+  } catch (err) {
+    throw err;
+  }
 
   output.tree = output.tree.map((file) => traverseSketchTree(file));
 
@@ -280,9 +287,12 @@ async function getProjectsList() {
   const options = Object.assign({}, editorRequestOptions);
   options.url = `${options.url}/sketches`;
 
-  const results = await rp(options);
-
-  return results.sketches;
+  try {
+    const { data } = await axios.request(options);
+    return data.sketches;
+  } catch (err) {
+    throw err;
+  }
 }
 
 /**
@@ -293,24 +303,26 @@ async function deleteProject(project) {
   options.method = 'DELETE';
   options.url = `${options.url}/sketches/${project.id}`;
 
-  const results = await rp(options);
-
-  return results;
+  try {
+    const { data } = await axios.request(options);
+    return data;
+  } catch (err) {
+    throw err;
+  }
 }
 
 /**
  * Create a new project
  */
 async function createProject(project) {
+  const options = Object.assign({}, editorRequestOptions);
+  options.method = 'POST';
+  options.url = `${options.url}/sketches`;
+  options.data = project;
+
   try {
-    const options = Object.assign({}, editorRequestOptions);
-    options.method = 'POST';
-    options.url = `${options.url}/sketches`;
-    options.body = project;
-
-    const results = await rp(options);
-
-    return results;
+    const { data } = await axios.request(options);
+    return data;
   } catch (err) {
     throw err;
   }
