@@ -31,6 +31,7 @@ import { requestsOfTypeJSON } from './utils/requestsOfType';
 
 import { renderIndex } from './views/index';
 import { get404Sketch } from './views/404Page';
+import logger from './winston';
 
 const app = new Express();
 const MongoStore = connectMongo(session);
@@ -194,7 +195,7 @@ app.get('*', (req, res) => {
 // start app
 app.listen(process.env.PORT, (error) => {
   if (!error) {
-    console.log(`p5.js Web Editor is running on port: ${process.env.PORT}!`); // eslint-disable-line
+    logger.info(`p5.js Web Editor is running on port: ${process.env.PORT}!`); // eslint-disable-line
   }
 });
 
