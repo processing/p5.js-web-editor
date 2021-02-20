@@ -41,13 +41,13 @@ const AssetSize = ({ totalSize }) => {
 };
 
 AssetSize.propTypes = {
-  totalSize: PropTypes.number.isRequired,
+  totalSize: PropTypes.number.isRequired
 };
 
 function mapStateToProps(state) {
   return {
     user: state.user,
-    totalSize: state.user.totalSize || state.assets.totalSize,
+    totalSize: state.user.totalSize || state.assets.totalSize
   };
 }
 

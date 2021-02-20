@@ -9,12 +9,11 @@ function draw() {
   background(220);
 }`;
 
-const defaultHTML =
-`<!DOCTYPE html>
+const defaultHTML = `<!DOCTYPE html>
 <html lang="en">
   <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/addons/p5.sound.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.2.0/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.2.0/addons/p5.sound.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="utf-8" />
 
@@ -25,8 +24,7 @@ const defaultHTML =
 </html>
 `;
 
-const defaultCSS =
-`html, body {
+const defaultCSS = `html, body {
   margin: 0;
   padding: 0;
 }
@@ -73,21 +71,28 @@ const initialState = () => {
       _id: c,
       fileType: 'file',
       children: []
-    }];
+    }
+  ];
 };
 
 function getAllDescendantIds(state, nodeId) {
-  return state.find(file => file.id === nodeId).children
-    .reduce((acc, childId) => (
-      [...acc, childId, ...getAllDescendantIds(state, childId)]
-    ), []);
+  return state
+    .find((file) => file.id === nodeId)
+    .children.reduce(
+      (acc, childId) => [
+        ...acc,
+        childId,
+        ...getAllDescendantIds(state, childId)
+      ],
+      []
+    );
 }
 
 function deleteChild(state, parentId, id) {
   const newState = state.map((file) => {
     if (file.id === parentId) {
       const newFile = Object.assign({}, file);
-      newFile.children = newFile.children.filter(child => child !== id);
+      newFile.children = newFile.children.filter((child) => child !== id);
       return newFile;
     }
     return file;
@@ -111,9 +116,9 @@ function deleteMany(state, ids) {
 }
 
 function sortedChildrenId(state, children) {
-  const childrenArray = state.filter(file => children.includes(file.id));
+  const childrenArray = state.filter((file) => children.includes(file.id));
   childrenArray.sort((a, b) => (a.name > b.name ? 1 : -1));
-  return childrenArray.map(child => child.id);
+  return childrenArray.map((child) => child.id);
 }
 
 function updateParent(state, action) {
@@ -162,8 +167,7 @@ const files = (state, action) => {
       return [...action.files];
     case ActionTypes.RESET_PROJECT:
       return initialState();
-    case ActionTypes.CREATE_FILE: // eslint-disable-line
-    {
+    case ActionTypes.CREATE_FILE: {
       const newState = [
         ...updateParent(state, action),
         {
@@ -174,7 +178,8 @@ const files = (state, action) => {
           url: action.url,
           children: action.children,
           fileType: action.fileType || 'file'
-        }];
+        }
+      ];
       return newState.map((file) => {
         if (file.id === action.parentId) {
           file.children = sortedChildrenId(newState, file.children);
@@ -182,8 +187,7 @@ const files = (state, action) => {
         return file;
       });
     }
-    case ActionTypes.UPDATE_FILE_NAME:
-    {
+    case ActionTypes.UPDATE_FILE_NAME: {
       const newState = renameFile(state, action);
       return newState.map((file) => {
         if (file.children.includes(action.id)) {
@@ -192,9 +196,11 @@ const files = (state, action) => {
         return file;
       });
     }
-    case ActionTypes.DELETE_FILE:
-    {
-      const newState = deleteMany(state, [action.id, ...getAllDescendantIds(state, action.id)]);
+    case ActionTypes.DELETE_FILE: {
+      const newState = deleteMany(state, [
+        action.id,
+        ...getAllDescendantIds(state, action.id)
+      ]);
       return deleteChild(newState, action.parentId, action.id);
       // const newState = state.map((file) => {
       //   if (file.id === action.parentId) {
@@ -234,9 +240,12 @@ const files = (state, action) => {
   }
 };
 
-export const getHTMLFile = state => state.filter(file => file.name.match(/.*\.html$/i))[0];
-export const getJSFiles = state => state.filter(file => file.name.match(/.*\.js$/i));
-export const getCSSFiles = state => state.filter(file => file.name.match(/.*\.css$/i));
-export const getLinkedFiles = state => state.filter(file => file.url);
+export const getHTMLFile = (state) =>
+  state.filter((file) => file.name.match(/.*\.html$/i))[0];
+export const getJSFiles = (state) =>
+  state.filter((file) => file.name.match(/.*\.js$/i));
+export const getCSSFiles = (state) =>
+  state.filter((file) => file.name.match(/.*\.css$/i));
+export const getLinkedFiles = (state) => state.filter((file) => file.url);
 
 export default files;

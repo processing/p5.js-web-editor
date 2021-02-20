@@ -10,12 +10,15 @@ export default function useHandleMessageEvent() {
   const handleMessageEvent = (data) => {
     const { source, messages } = data;
     if (source === 'sketch' && Array.isArray(messages)) {
-      const decodedMessages = messages.map(message => Decode(message.log));
+      const decodedMessages = messages.map((message) => Decode(message.log));
       decodedMessages.every((message, index, arr) => {
         const { data: args } = message;
         let hasInfiniteLoop = false;
         Object.keys(args).forEach((key) => {
-          if (typeof args[key] === 'string' && args[key].includes('Exiting potential infinite loop')) {
+          if (
+            typeof args[key] === 'string' &&
+            args[key].includes('Exiting potential infinite loop')
+          ) {
             dispatch(stopSketch());
             dispatch(expandConsole());
             hasInfiniteLoop = true;
@@ -31,7 +34,10 @@ export default function useHandleMessageEvent() {
         // this should be done in the reducer probs
         const cur = Object.assign(message, { times: 1 });
         const nextIndex = index + 1;
-        while (isEqual(cur.data, arr[nextIndex].data) && cur.method === arr[nextIndex].method) {
+        while (
+          isEqual(cur.data, arr[nextIndex].data) &&
+          cur.method === arr[nextIndex].method
+        ) {
           cur.times += 1;
           arr.splice(nextIndex, 1);
           if (nextIndex === arr.length) {

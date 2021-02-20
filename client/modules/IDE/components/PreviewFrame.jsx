@@ -2,15 +2,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
 // import escapeStringRegexp from 'escape-string-regexp';
-import { isEqual } from 'lodash';
 import srcDoc from 'srcdoc-polyfill';
 import loopProtect from 'loop-protect';
 import { JSHINT } from 'jshint';
 import decomment from 'decomment';
 import classNames from 'classnames';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Decode } from 'console-feed';
 import { getBlobUrl } from '../actions/files';
 import { resolvePathToFile } from '../../../../server/utils/filePath';
 import {
@@ -21,16 +18,23 @@ import {
   EXTERNAL_LINK_REGEX,
   NOT_EXTERNAL_LINK_REGEX
 } from '../../../../server/utils/fileUtils';
-import { hijackConsoleErrorsScript, startTag, getAllScriptOffsets }
-  from '../../../utils/consoleUtils';
+import {
+  hijackConsoleErrorsScript,
+  startTag,
+  getAllScriptOffsets
+} from '../../../utils/consoleUtils';
+import { registerFrame } from '../../../utils/dispatcher';
 
 import { getHTMLFile } from '../reducers/files';
 
 import { stopSketch, expandConsole, endSketchRefresh } from '../actions/ide';
-import { setTextOutput, setGridOutput, setSoundOutput } from '../actions/preferences';
+import {
+  setTextOutput,
+  setGridOutput,
+  setSoundOutput
+} from '../actions/preferences';
 import { setBlobUrl } from '../actions/files';
 import { clearConsole, dispatchConsoleEvent } from '../actions/console';
-
 
 const shouldRenderSketch = (props, prevProps = undefined) => {
   const { isPlaying, previewIsRefreshing, fullView } = props;
@@ -40,29 +44,31 @@ const shouldRenderSketch = (props, prevProps = undefined) => {
 
   if (!prevProps) return false;
 
-  return (props.isPlaying !== prevProps.isPlaying // if sketch starts or stops playing, want to rerender
-    || props.isAccessibleOutputPlaying !== prevProps.isAccessibleOutputPlaying // if user switches textoutput preferences
-    || props.textOutput !== prevProps.textOutput
-    || props.gridOutput !== prevProps.gridOutput
-    || props.soundOutput !== prevProps.soundOutput
-    || (fullView && props.files[0].id !== prevProps.files[0].id));
+  return (
+    props.isPlaying !== prevProps.isPlaying || // if sketch starts or stops playing, want to rerender
+    props.isAccessibleOutputPlaying !== prevProps.isAccessibleOutputPlaying || // if user switches textoutput preferences
+    props.textOutput !== prevProps.textOutput ||
+    props.gridOutput !== prevProps.gridOutput ||
+    props.soundOutput !== prevProps.soundOutput ||
+    (fullView && props.files[0].id !== prevProps.files[0].id)
+  );
 };
 
 class PreviewFrame extends React.Component {
   constructor(props) {
     super(props);
-    this.handleConsoleEvent = this.handleConsoleEvent.bind(this);
+
+    this.iframe = React.createRef();
   }
 
   componentDidMount() {
-    window.addEventListener('message', this.handleConsoleEvent);
-
     const props = {
       ...this.props,
       previewIsRefreshing: this.props.previewIsRefreshing,
       isAccessibleOutputPlaying: this.props.isAccessibleOutputPlaying
     };
     if (shouldRenderSketch(props)) this.renderSketch();
+    registerFrame(this.iframe.current.contentWindow);
   }
 
   componentDidUpdate(prevProps) {
@@ -72,48 +78,9 @@ class PreviewFrame extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('message', this.handleConsoleEvent);
-    const iframeBody = this.iframeElement.contentDocument.body;
-    if (iframeBody) { ReactDOM.unmountComponentAtNode(iframeBody); }
-  }
-
-  handleConsoleEvent(messageEvent) {
-    if (Array.isArray(messageEvent.data)) {
-      const decodedMessages = messageEvent.data.map(message =>
-        Object.assign(Decode(message.log), {
-          source: message.source
-        }));
-
-      decodedMessages.every((message, index, arr) => {
-        const { data: args } = message;
-        let hasInfiniteLoop = false;
-        Object.keys(args).forEach((key) => {
-          if (typeof args[key] === 'string' && args[key].includes('Exiting potential infinite loop')) {
-            this.props.stopSketch();
-            this.props.expandConsole();
-            hasInfiniteLoop = true;
-          }
-        });
-        if (hasInfiniteLoop) {
-          return false;
-        }
-        if (index === arr.length - 1) {
-          Object.assign(message, { times: 1 });
-          return false;
-        }
-        const cur = Object.assign(message, { times: 1 });
-        const nextIndex = index + 1;
-        while (isEqual(cur.data, arr[nextIndex].data) && cur.method === arr[nextIndex].method) {
-          cur.times += 1;
-          arr.splice(nextIndex, 1);
-          if (nextIndex === arr.length) {
-            return false;
-          }
-        }
-        return true;
-      });
-
-      this.props.dispatchConsoleEvent(decodedMessages);
+    const iframeBody = this.iframe.current.contentDocument.body;
+    if (iframeBody) {
+      ReactDOM.unmountComponentAtNode(iframeBody);
     }
   }
 
@@ -145,7 +112,8 @@ class PreviewFrame extends React.Component {
     const files = this.props.files.slice();
     if (this.props.cmController.getContent) {
       const activeFileInEditor = this.props.cmController.getContent();
-      files.find(file => file.id === activeFileInEditor.id).content = activeFileInEditor.content;
+      files.find((file) => file.id === activeFileInEditor.id).content =
+        activeFileInEditor.content;
     }
     return files;
   }
@@ -206,9 +174,14 @@ class PreviewFrame extends React.Component {
     const sketchDocString = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
     scriptOffs = getAllScriptOffsets(sketchDocString);
     const consoleErrorsScript = sketchDoc.createElement('script');
-    consoleErrorsScript.innerHTML = hijackConsoleErrorsScript(JSON.stringify(scriptOffs));
+    consoleErrorsScript.innerHTML = hijackConsoleErrorsScript(
+      JSON.stringify(scriptOffs)
+    );
     this.addLoopProtect(sketchDoc);
-    sketchDoc.head.insertBefore(consoleErrorsScript, sketchDoc.head.firstElement);
+    sketchDoc.head.insertBefore(
+      consoleErrorsScript,
+      sketchDoc.head.firstElement
+    );
 
     return `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
   }
@@ -218,7 +191,10 @@ class PreviewFrame extends React.Component {
     const elementsArray = Array.prototype.slice.call(elements);
     elementsArray.forEach((element) => {
       if (element.getAttribute(attr).match(MEDIA_FILE_REGEX)) {
-        const resolvedFile = resolvePathToFile(element.getAttribute(attr), files);
+        const resolvedFile = resolvePathToFile(
+          element.getAttribute(attr),
+          files
+        );
         if (resolvedFile && resolvedFile.url) {
           element.setAttribute(attr, resolvedFile.url);
         }
@@ -252,13 +228,19 @@ class PreviewFrame extends React.Component {
 
         if (resolvedFile) {
           if (resolvedFile.url) {
-            newContent = newContent.replace(jsFileString, quoteCharacter + resolvedFile.url + quoteCharacter);
+            newContent = newContent.replace(
+              jsFileString,
+              quoteCharacter + resolvedFile.url + quoteCharacter
+            );
           } else if (resolvedFile.name.match(PLAINTEXT_FILE_REGEX)) {
             // could also pull file from API instead of using bloburl
             const blobURL = getBlobUrl(resolvedFile);
             this.props.setBlobUrl(resolvedFile, blobURL);
 
-            newContent = newContent.replace(jsFileString, quoteCharacter + blobURL + quoteCharacter);
+            newContent = newContent.replace(
+              jsFileString,
+              quoteCharacter + blobURL + quoteCharacter
+            );
           }
         }
       }
@@ -278,7 +260,10 @@ class PreviewFrame extends React.Component {
         const resolvedFile = resolvePathToFile(filePath, files);
         if (resolvedFile) {
           if (resolvedFile.url) {
-            newContent = newContent.replace(cssFileString, quoteCharacter + resolvedFile.url + quoteCharacter);
+            newContent = newContent.replace(
+              cssFileString,
+              quoteCharacter + resolvedFile.url + quoteCharacter
+            );
           }
         }
       }
@@ -290,8 +275,14 @@ class PreviewFrame extends React.Component {
     const scriptsInHTML = sketchDoc.getElementsByTagName('script');
     const scriptsInHTMLArray = Array.prototype.slice.call(scriptsInHTML);
     scriptsInHTMLArray.forEach((script) => {
-      if (script.getAttribute('src') && script.getAttribute('src').match(NOT_EXTERNAL_LINK_REGEX) !== null) {
-        const resolvedFile = resolvePathToFile(script.getAttribute('src'), files);
+      if (
+        script.getAttribute('src') &&
+        script.getAttribute('src').match(NOT_EXTERNAL_LINK_REGEX) !== null
+      ) {
+        const resolvedFile = resolvePathToFile(
+          script.getAttribute('src'),
+          files
+        );
         if (resolvedFile) {
           if (resolvedFile.url) {
             script.setAttribute('src', resolvedFile.url);
@@ -301,7 +292,12 @@ class PreviewFrame extends React.Component {
             script.innerHTML = resolvedFile.content; // eslint-disable-line
           }
         }
-      } else if (!(script.getAttribute('src') && script.getAttribute('src').match(EXTERNAL_LINK_REGEX)) !== null) {
+      } else if (
+        !(
+          script.getAttribute('src') &&
+          script.getAttribute('src').match(EXTERNAL_LINK_REGEX)
+        ) !== null
+      ) {
         script.setAttribute('crossorigin', '');
         script.innerHTML = this.resolveJSLinksInString(script.innerHTML, files); // eslint-disable-line
       }
@@ -318,7 +314,10 @@ class PreviewFrame extends React.Component {
     const cssLinksInHTML = sketchDoc.querySelectorAll('link[rel="stylesheet"]');
     const cssLinksInHTMLArray = Array.prototype.slice.call(cssLinksInHTML);
     cssLinksInHTMLArray.forEach((css) => {
-      if (css.getAttribute('href') && css.getAttribute('href').match(NOT_EXTERNAL_LINK_REGEX) !== null) {
+      if (
+        css.getAttribute('href') &&
+        css.getAttribute('href').match(NOT_EXTERNAL_LINK_REGEX) !== null
+      ) {
         const resolvedFile = resolvePathToFile(css.getAttribute('href'), files);
         if (resolvedFile) {
           if (resolvedFile.url) {
@@ -335,7 +334,7 @@ class PreviewFrame extends React.Component {
   }
 
   renderSketch() {
-    const doc = this.iframeElement;
+    const doc = this.iframe.current;
     const localFiles = this.injectLocalFiles();
     if (this.props.isPlaying) {
       this.props.clearConsole();
@@ -364,7 +363,7 @@ class PreviewFrame extends React.Component {
         role="main"
         frameBorder="0"
         title="sketch preview"
-        ref={(element) => { this.iframeElement = element; }}
+        ref={this.iframe}
         sandbox={sandboxAttributes}
       />
     );
@@ -380,23 +379,22 @@ PreviewFrame.propTypes = {
   htmlFile: PropTypes.shape({
     content: PropTypes.string.isRequired
   }).isRequired,
-  files: PropTypes.arrayOf(PropTypes.shape({
-    content: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    url: PropTypes.string,
-    id: PropTypes.string.isRequired
-  })).isRequired,
-  dispatchConsoleEvent: PropTypes.func.isRequired,
+  files: PropTypes.arrayOf(
+    PropTypes.shape({
+      content: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      url: PropTypes.string,
+      id: PropTypes.string.isRequired
+    })
+  ).isRequired,
   endSketchRefresh: PropTypes.func.isRequired,
   previewIsRefreshing: PropTypes.bool.isRequired,
   fullView: PropTypes.bool,
   setBlobUrl: PropTypes.func.isRequired,
-  stopSketch: PropTypes.func.isRequired,
-  expandConsole: PropTypes.func.isRequired,
   clearConsole: PropTypes.func.isRequired,
   cmController: PropTypes.shape({
     getContent: PropTypes.func
-  }),
+  })
 };
 
 PreviewFrame.defaultProps = {
@@ -422,10 +420,11 @@ function mapStateToProps(state, ownProps) {
   return {
     files: state.files,
     htmlFile: getHTMLFile(state.files),
-    content:
-      (state.files.find(file => file.isSelectedFile) ||
-      state.files.find(file => file.name === 'sketch.js') ||
-      state.files.find(file => file.name !== 'root')).content,
+    content: (
+      state.files.find((file) => file.isSelectedFile) ||
+      state.files.find((file) => file.name === 'sketch.js') ||
+      state.files.find((file) => file.name !== 'root')
+    ).content,
     isPlaying: state.ide.isPlaying,
     isAccessibleOutputPlaying: state.ide.isAccessibleOutputPlaying,
     previewIsRefreshing: state.ide.previewIsRefreshing,
@@ -436,7 +435,6 @@ function mapStateToProps(state, ownProps) {
     autorefresh: state.preferences.autorefresh
   };
 }
-
 
 const mapDispatchToProps = {
   stopSketch,
@@ -450,5 +448,4 @@ const mapDispatchToProps = {
   dispatchConsoleEvent
 };
 
-
-export default (connect(mapStateToProps, mapDispatchToProps)(PreviewFrame));
+export default connect(mapStateToProps, mapDispatchToProps)(PreviewFrame);
