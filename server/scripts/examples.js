@@ -1,4 +1,4 @@
-import rp from 'request-promise';
+import axios from 'axios';
 import Q from 'q';
 import mongoose from 'mongoose';
 import objectID from 'bson-objectid';
@@ -9,8 +9,8 @@ import Project from '../models/project';
 const defaultHTML = `<!DOCTYPE html>
 <html lang="en">
   <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/addons/p5.sound.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.2.0/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.2.0/addons/p5.sound.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="utf-8" />
   </head>
@@ -59,12 +59,11 @@ async function getCategories() {
       Authorization: `Basic ${Buffer.from(
         `${clientId}:${clientSecret}`
       ).toString('base64')}`
-    },
-    json: true
+    }
   };
   try {
-    const res = await rp(options);
-    res.forEach((metadata) => {
+    const { data } = await axios.request(options);
+    data.forEach((metadata) => {
       let category = '';
       for (let j = 1; j < metadata.name.split('_').length; j += 1) {
         category += `${metadata.name.split('_')[j]} `;
@@ -92,9 +91,9 @@ function getSketchesInCategories(categories) {
         json: true
       };
       try {
-        const res = await rp(options);
+        const { data } = await axios.request(options);
         const projectsInOneCategory = [];
-        res.forEach((example) => {
+        data.forEach((example) => {
           let projectName;
           if (example.name === '02_Instance_Container.js') {
             for (let i = 1; i < 5; i += 1) {
@@ -147,7 +146,7 @@ function getSketchContent(projectsInAllCategories) {
             }
           };
           try {
-            const res = await rp(options);
+            const { data } = await axios.request(options);
             const noNumberprojectName = project.projectName.replace(
               /(\d+)/g,
               ''
@@ -155,7 +154,7 @@ function getSketchContent(projectsInAllCategories) {
             if (noNumberprojectName === 'Instance Mode: Instance Container ') {
               for (let i = 0; i < 4; i += 1) {
                 const splitedRes = `${
-                  res.split('*/')[1].split('</html>')[i]
+                  data.split('*/')[1].split('</html>')[i]
                 }</html>\n`;
                 project.sketchContent = splitedRes.replace(
                   'p5.js',
@@ -163,7 +162,7 @@ function getSketchContent(projectsInAllCategories) {
                 );
               }
             } else {
-              project.sketchContent = res;
+              project.sketchContent = data;
             }
             return project;
           } catch (error) {
@@ -217,15 +216,14 @@ async function addAssetsToProject(assets, response, project) {
             Authorization: `Basic ${Buffer.from(
               `${clientId}:${clientSecret}`
             ).toString('base64')}`
-          },
-          json: true
+          }
         };
 
         // a function to await for the response that contains the content of asset file
         const doRequest = async (optionsAsset) => {
           try {
-            const res = await rp(optionsAsset);
-            return res;
+            const { data } = await axios.request(optionsAsset);
+            return data;
           } catch (error) {
             throw error;
           }
@@ -273,12 +271,11 @@ async function createProjectsInP5user(projectsInAllCategories) {
       Authorization: `Basic ${Buffer.from(
         `${clientId}:${clientSecret}`
       ).toString('base64')}`
-    },
-    json: true
+    }
   };
 
   try {
-    const res = await rp(options);
+    const { data } = await axios.request(options);
     const user = await User.findOne({ username: 'p5' }).exec();
     await Q.all(
       projectsInAllCategories.map((projectsInOneCategory) =>
@@ -382,7 +379,7 @@ async function createProjectsInP5user(projectsInAllCategories) {
               [];
 
             try {
-              await addAssetsToProject(assetsInProject, res, newProject);
+              await addAssetsToProject(assetsInProject, data, newProject);
               const savedProject = await newProject.save();
               console.log(
                 `Created a new project in p5 user: ${savedProject.name}`
