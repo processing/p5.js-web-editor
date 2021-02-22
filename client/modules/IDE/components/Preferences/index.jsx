@@ -170,13 +170,17 @@ class Preferences extends React.Component {
                 onClick={this.decreaseFontSize}
                 aria-label={this.props.t('Preferences.DecreaseFontARIA')}
                 disabled={this.state.fontSize <= 8}
+                data-testid="font-minus-button"
               >
                 <MinusIcon focusable="false" aria-hidden="true" />
                 <h6 className="preference__label">
                   {this.props.t('Preferences.DecreaseFont')}
                 </h6>
               </button>
-              <form onSubmit={this.onFontInputSubmit}>
+              <form
+                onSubmit={this.onFontInputSubmit}
+                data-testid="font-size-form"
+              >
                 <input
                   className="preference__value"
                   aria-live="polite"
@@ -190,6 +194,7 @@ class Preferences extends React.Component {
                   onClick={() => {
                     this.fontSizeInput.select();
                   }}
+                  data-testid="font-size-text-field"
                 />
               </form>
               <button
@@ -197,6 +202,7 @@ class Preferences extends React.Component {
                 onClick={this.increaseFontSize}
                 aria-label={this.props.t('Preferences.IncreaseFontARIA')}
                 disabled={this.state.fontSize >= 36}
+                data-testid="font-plus-button"
               >
                 <PlusIcon focusable="false" aria-hidden="true" />
                 <h6 className="preference__label">
@@ -218,6 +224,7 @@ class Preferences extends React.Component {
                   className="preference__radio-button"
                   value="On"
                   checked={this.props.autosave}
+                  data-testid="autosave-true-radio"
                 />
                 <label htmlFor="autosave-on" className="preference__option">
                   {this.props.t('Preferences.On')}
@@ -231,6 +238,7 @@ class Preferences extends React.Component {
                   className="preference__radio-button"
                   value="Off"
                   checked={!this.props.autosave}
+                  data-testid="autosave-false-radio"
                 />
                 <label htmlFor="autosave-off" className="preference__option">
                   {this.props.t('Preferences.Off')}
@@ -253,6 +261,7 @@ class Preferences extends React.Component {
                   className="preference__radio-button"
                   value="On"
                   checked={this.props.autocloseBracketsQuotes}
+                  data-testid="autoclose-true-radio"
                 />
                 <label
                   htmlFor="autoclosebracketsquotes-on"
@@ -271,6 +280,7 @@ class Preferences extends React.Component {
                   className="preference__radio-button"
                   value="Off"
                   checked={!this.props.autocloseBracketsQuotes}
+                  data-testid="autoclose-false-radio"
                 />
                 <label
                   htmlFor="autoclosebracketsquotes-off"
