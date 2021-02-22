@@ -29,10 +29,6 @@ const renderComponent = (extraProps = {}) => {
     },
     extraProps
   );
-
-  // equivalent to this below
-  // const props = {...extraProps, t:jest.fn()}
-
   render(<Feedback {...props} />, container);
 
   return props;
