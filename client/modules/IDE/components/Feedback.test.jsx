@@ -4,7 +4,7 @@ import { unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import lodash from 'lodash';
 
-import { fireEvent, render, screen, waitFor } from '../../../test-utils';
+import { render } from '../../../test-utils';
 
 import Feedback from './Feedback';
 
