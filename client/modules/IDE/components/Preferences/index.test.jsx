@@ -1,7 +1,7 @@
 import React from 'react';
 import { unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
-import { fireEvent, render, screen, waitFor } from '../../../../test-utils';
+import { fireEvent, render, screen } from '../../../../test-utils';
 import Preferences from './index';
 
 /* props to pass in:
@@ -57,19 +57,17 @@ const renderComponent = (extraProps = {}, container) => {
     setSoundOutput: jest.fn(),
     ...extraProps
   };
-  render(<Preferences {...props} />, container);
+  render(<Preferences {...props} />, { container });
 
   return props;
 };
 
-// TODOS
-// do I need to think about the component functions? like increaseFontSize?
-// is that possible?
 describe('<Preferences />', () => {
   let container = null;
   beforeEach(() => {
     // setup a DOM element as a render target
     container = document.createElement('div');
+    container.classList.add('testing-container');
     document.body.appendChild(container);
   });
 
@@ -82,98 +80,104 @@ describe('<Preferences />', () => {
 
   describe('font tests', () => {
     it('font size increase button says increase', () => {
-      let props;
-      // render the component with autosave set to false as default
+      // render the component
       act(() => {
-        props = renderComponent({ fontSize: 12 }, container);
+        renderComponent({}, container);
       });
 
-      // get ahold of the radio buttons for toggling autosave
+      // get ahold of the button for increasing text size
       const fontPlusButton = screen.getByTestId('font-plus-button');
 
-      // make button says "Increase"
+      // check that button says says "Increase"
       expect(fontPlusButton.textContent.toLowerCase()).toBe('increase');
     });
 
     it('increase font size by 2 when clicking plus button', () => {
       let props;
-      // render the component with autosave set to false as default
+      // render the component with font size set to 12
       act(() => {
         props = renderComponent({ fontSize: 12 }, container);
       });
 
-      // get ahold of the radio buttons for toggling autosave
+      // get ahold of the button for increasing text size
       const fontPlusButton = screen.getByTestId('font-plus-button');
 
+      // click the button
       act(() => {
         fireEvent.click(fontPlusButton);
       });
 
+      // expect that setFontSize has been called once with the argument 14
       expect(props.setFontSize).toHaveBeenCalledTimes(1);
       expect(props.setFontSize.mock.calls[0][0]).toBe(14);
     });
 
     it('font size decrease button says decrease', () => {
-      let props;
-      // render the component with autosave set to false as default
+      // render the component with font size set to 12
       act(() => {
-        props = renderComponent({ fontSize: 12 }, container);
+        renderComponent({ fontSize: 12 }, container);
       });
 
-      // get ahold of the radio buttons for toggling autosave
+      // get ahold of the button for decreasing font size
       const fontPlusButton = screen.getByTestId('font-minus-button');
 
-      // make button says "decrease"
+      // check that button says "decrease"
       expect(fontPlusButton.textContent.toLowerCase()).toBe('decrease');
     });
 
     it('decrease font size by 2 when clicking minus button', () => {
       let props;
-      // render the component with autosave set to false as default
+      // render the component with font size set to 12
       act(() => {
         props = renderComponent({ fontSize: 12 }, container);
       });
 
-      // get ahold of the radio buttons for toggling autosave
+      // get ahold of the button for decreasing text size
       const fontMinusButton = screen.getByTestId('font-minus-button');
 
+      // click it
       act(() => {
         fireEvent.click(fontMinusButton);
       });
 
+      // expect that setFontSize would have been called once with argument 10
       expect(props.setFontSize).toHaveBeenCalledTimes(1);
       expect(props.setFontSize.mock.calls[0][0]).toBe(10);
     });
 
     it('font text field changes on manual text input', () => {
       let props;
-      // render the component with autosave set to false as default
+      // render the component with font size set to 12
       act(() => {
         props = renderComponent({ fontSize: 12 }, container);
       });
 
-      // get ahold of the radio buttons for toggling autosave
+      // get ahold of the text field
       const input = screen.getByTestId('font-size-text-field');
 
+      // change input to 24
       act(() => {
         fireEvent.change(input, { target: { value: '24' } });
       });
+
+      // submit form
       act(() => {
         fireEvent.submit(screen.getByTestId('font-size-form'));
       });
 
+      // expect that setFontSize was called once with 24
       expect(props.setFontSize).toHaveBeenCalledTimes(1);
       expect(props.setFontSize.mock.calls[0][0]).toBe(24);
     });
 
     it('font size CAN NOT go over 36', () => {
       let props;
-      // render the component with autosave set to false as default
+      // render the component
       act(() => {
         props = renderComponent({ fontSize: 12 }, container);
       });
 
-      // get ahold of the radio buttons for toggling autosave
+      // get ahold of the text field
       const input = screen.getByTestId('font-size-text-field');
 
       act(() => {
@@ -192,12 +196,12 @@ describe('<Preferences />', () => {
 
     it('font size CAN NOT go under 8', () => {
       let props;
-      // render the component with autosave set to false as default
+      // render the component
       act(() => {
         props = renderComponent({ fontSize: 12 }, container);
       });
 
-      // get ahold of the radio buttons for toggling autosave
+      // get ahold of the text field
       const input = screen.getByTestId('font-size-text-field');
 
       act(() => {
@@ -218,38 +222,39 @@ describe('<Preferences />', () => {
     // h and then i, but it tests the same idea
     it('font size input field does NOT take non-integers', () => {
       let props;
-      // render the component with autosave set to false as default
+      // render the component
       act(() => {
         props = renderComponent({ fontSize: 12 }, container);
       });
 
-      // get ahold of the radio buttons for toggling autosave
+      // get ahold of the text field
       const input = screen.getByTestId('font-size-text-field');
 
       act(() => {
         fireEvent.change(input, { target: { value: 'hi' } });
       });
 
+      // it shouldnt have changed at all
       expect(input.value).toBe('12');
 
+      // we hit submit
       act(() => {
         fireEvent.submit(screen.getByTestId('font-size-form'));
       });
 
+      // it still sets the font size but it's still 12
       expect(props.setFontSize).toHaveBeenCalledTimes(1);
       expect(props.setFontSize.mock.calls[0][0]).toBe(12);
     });
 
-    // this case is a bit synthetic because we wouldn't be able to type
-    // h and then i, but it tests the same idea
     it('font size input field does NOT take "-"', () => {
       let props;
-      // render the component with autosave set to false as default
+      // render the component
       act(() => {
         props = renderComponent({ fontSize: 12 }, container);
       });
 
-      // get ahold of the radio buttons for toggling autosave
+      // get ahold of the text field
       const input = screen.getByTestId('font-size-text-field');
 
       act(() => {
@@ -277,7 +282,7 @@ describe('<Preferences />', () => {
     expect(checkedRadio.checked).toBe(true);
     expect(uncheckedRadio.checked).toBe(false);
 
-    // click om the one already selected, the false one
+    // click on the one already selected
     act(() => {
       fireEvent.click(checkedRadio);
     });
@@ -293,7 +298,7 @@ describe('<Preferences />', () => {
       fireEvent.click(uncheckedRadio);
     });
 
-    // expect that the setAutosave function was called with the value true
+    // expect that the setter function was called with the value true
     expect(setter).toHaveBeenCalledTimes(1);
     expect(setter.mock.calls[0][0]).toBe(setterExpectedArgument);
   };
@@ -466,10 +471,9 @@ describe('<Preferences />', () => {
 
   describe('can toggle between general settings and accessibility tabs successfully', () => {
     it('can toggle sucessfully', () => {
-      let props;
       // render the component with lineNumbers prop set to false
       act(() => {
-        props = renderComponent({}, container);
+        renderComponent({}, container);
       });
 
       // switch to accessibility
@@ -656,9 +660,8 @@ describe('<Preferences />', () => {
     });
 
     it('multiple checkboxes can be selected', () => {
-      let props;
       act(() => {
-        props = renderComponent(
+        renderComponent(
           { textOutput: true, soundOutput: true, gridOutput: true },
           container
         );
@@ -679,9 +682,8 @@ describe('<Preferences />', () => {
     });
 
     it('none of the checkboxes can be selected', () => {
-      let props;
       act(() => {
-        props = renderComponent(
+        renderComponent(
           { textOutput: false, soundOutput: false, gridOutput: false },
           container
         );
