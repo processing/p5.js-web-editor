@@ -100,12 +100,12 @@ class Preferences extends React.Component {
           <TabList>
             <div className="tabs__titles">
               <Tab>
-                <h4 className="tabs__title">
+                <h4 className="tabs__title" data-testid="general-settings-tab">
                   {this.props.t('Preferences.GeneralSettings')}
                 </h4>
               </Tab>
               <Tab>
-                <h4 className="tabs__title">
+                <h4 className="tabs__title" data-testid="accessibility-tab">
                   {this.props.t('Preferences.Accessibility')}
                 </h4>
               </Tab>
@@ -126,6 +126,7 @@ class Preferences extends React.Component {
                   className="preference__radio-button"
                   value="light"
                   checked={this.props.theme === 'light'}
+                  data-testid="theme-light-radio"
                 />
                 <label htmlFor="light-theme-on" className="preference__option">
                   {this.props.t('Preferences.LightTheme')}
@@ -139,6 +140,7 @@ class Preferences extends React.Component {
                   className="preference__radio-button"
                   value="dark"
                   checked={this.props.theme === 'dark'}
+                  data-testid="theme-dark-radio"
                 />
                 <label htmlFor="dark-theme-on" className="preference__option">
                   {this.props.t('Preferences.DarkTheme')}
@@ -152,6 +154,7 @@ class Preferences extends React.Component {
                   className="preference__radio-button"
                   value="contrast"
                   checked={this.props.theme === 'contrast'}
+                  data-testid="theme-contrast-radio"
                 />
                 <label
                   htmlFor="high-contrast-theme-on"
@@ -304,6 +307,7 @@ class Preferences extends React.Component {
                   className="preference__radio-button"
                   value="On"
                   checked={this.props.linewrap}
+                  data-testid="linewrap-true-radio"
                 />
                 <label htmlFor="linewrap-on" className="preference__option">
                   {this.props.t('Preferences.On')}
@@ -317,6 +321,7 @@ class Preferences extends React.Component {
                   className="preference__radio-button"
                   value="Off"
                   checked={!this.props.linewrap}
+                  data-testid="linewrap-false-radio"
                 />
                 <label htmlFor="linewrap-off" className="preference__option">
                   {this.props.t('Preferences.Off')}
@@ -339,6 +344,7 @@ class Preferences extends React.Component {
                   className="preference__radio-button"
                   value="On"
                   checked={this.props.lineNumbers}
+                  data-testid="lineNumbers-true-radio"
                 />
                 <label htmlFor="line-numbers-on" className="preference__option">
                   {this.props.t('Preferences.On')}
@@ -352,6 +358,7 @@ class Preferences extends React.Component {
                   className="preference__radio-button"
                   value="Off"
                   checked={!this.props.lineNumbers}
+                  data-testid="lineNumbers-false-radio"
                 />
                 <label
                   htmlFor="line-numbers-off"
@@ -375,6 +382,7 @@ class Preferences extends React.Component {
                   className="preference__radio-button"
                   value="On"
                   checked={this.props.lintWarning}
+                  data-testid="lintWarning-true-radio"
                 />
                 <label htmlFor="lint-warning-on" className="preference__option">
                   {this.props.t('Preferences.On')}
@@ -388,6 +396,7 @@ class Preferences extends React.Component {
                   className="preference__radio-button"
                   value="Off"
                   checked={!this.props.lintWarning}
+                  data-testid="lintWarning-false-radio"
                 />
                 <label
                   htmlFor="lint-warning-off"
@@ -423,6 +432,7 @@ class Preferences extends React.Component {
                   id="text-output-on"
                   value="On"
                   checked={this.props.textOutput}
+                  data-testid="text-output-checkbox"
                 />
                 <label
                   htmlFor="text-output-on"
@@ -440,6 +450,7 @@ class Preferences extends React.Component {
                   id="table-output-on"
                   value="On"
                   checked={this.props.gridOutput}
+                  data-testid="grid-output-checkbox"
                 />
                 <label
                   htmlFor="table-output-on"
@@ -457,6 +468,7 @@ class Preferences extends React.Component {
                   id="sound-output-on"
                   value="On"
                   checked={this.props.soundOutput}
+                  data-testid="sound-output-checkbox"
                 />
                 <label
                   htmlFor="sound-output-on"
