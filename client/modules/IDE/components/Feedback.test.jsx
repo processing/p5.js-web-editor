@@ -29,8 +29,7 @@ const renderComponent = (extraProps = {}) => {
     },
     extraProps
   );
-  render(<Feedback {...props} />, container);
-
+  render(<Feedback {...props} />, { container });
   return props;
 };
 
