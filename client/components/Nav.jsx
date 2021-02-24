@@ -42,9 +42,7 @@ class Nav extends React.PureComponent {
     this.handleFind = this.handleFind.bind(this);
     this.handleAddFile = this.handleAddFile.bind(this);
     this.handleAddFolder = this.handleAddFolder.bind(this);
-    this.handleFindNext = this.handleFindNext.bind(this);
     this.handleRun = this.handleRun.bind(this);
-    this.handleFindPrevious = this.handleFindPrevious.bind(this);
     this.handleReplace = this.handleReplace.bind(this);
     this.handleStop = this.handleStop.bind(this);
     this.handleStartAccessible = this.handleStartAccessible.bind(this);
@@ -125,16 +123,6 @@ class Nav extends React.PureComponent {
 
   handleFind() {
     this.props.cmController.showFind();
-    this.setDropdown('none');
-  }
-
-  handleFindNext() {
-    this.props.cmController.findNext();
-    this.setDropdown('none');
-  }
-
-  handleFindPrevious() {
-    this.props.cmController.findPrev();
     this.setDropdown('none');
   }
 
@@ -434,7 +422,9 @@ class Nav extends React.PureComponent {
                 onBlur={this.handleBlur}
               >
                 {this.props.t('Nav.Edit.TidyCode')}
-                <span className="nav__keyboard-shortcut">{'\u21E7'}+Tab</span>
+                <span className="nav__keyboard-shortcut">
+                  {metaKeyName}+{'\u21E7'}+F
+                </span>
               </button>
             </li>
             <li className="nav__dropdown-item">
@@ -445,28 +435,6 @@ class Nav extends React.PureComponent {
               >
                 {this.props.t('Nav.Edit.Find')}
                 <span className="nav__keyboard-shortcut">{metaKeyName}+F</span>
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onClick={this.handleFindNext}
-                onFocus={this.handleFocusForEdit}
-                onBlur={this.handleBlur}
-              >
-                {this.props.t('Nav.Edit.FindNext')}
-                <span className="nav__keyboard-shortcut">{metaKeyName}+G</span>
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onClick={this.handleFindPrevious}
-                onFocus={this.handleFocusForEdit}
-                onBlur={this.handleBlur}
-              >
-                {this.props.t('Nav.Edit.FindPrevious')}
-                <span className="nav__keyboard-shortcut">
-                  {'\u21E7'}+{metaKeyName}+G
-                </span>
               </button>
             </li>
             <li className="nav__dropdown-item">
