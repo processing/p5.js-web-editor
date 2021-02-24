@@ -85,7 +85,7 @@ exports[`Nav renders correctly 1`] = `
                 <span
                   class="nav__keyboard-shortcut"
                 >
-                  ⇧+Tab
+                  ⌃+⇧+F
                 </span>
               </button>
             </li>
