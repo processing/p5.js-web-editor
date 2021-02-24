@@ -62,7 +62,6 @@ const beautifyHTML = beautifyJS.html;
 window.JSHINT = JSHINT;
 window.CSSLint = CSSLint;
 window.HTMLHint = HTMLHint;
-delete CodeMirror.keyMap.sublime['Shift-Tab'];
 
 const IS_TAB_INDENT = false;
 const INDENTATION_AMOUNT = 2;
@@ -168,8 +167,14 @@ class Editor extends React.Component {
     });
 
     this._cm.on('keydown', (_cm, e) => {
-      // 9 === Tab
-      if (e.keyCode === 9 && e.shiftKey) {
+      // 70 === f
+      if (
+        ((metaKey === 'Cmd' && e.metaKey) ||
+          (metaKey === 'Ctrl' && e.ctrlKey)) &&
+        e.shiftKey &&
+        e.keyCode === 70
+      ) {
+        e.preventDefault();
         this.tidyCode();
       }
     });
