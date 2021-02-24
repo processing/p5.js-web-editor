@@ -9,7 +9,7 @@ import {
   initialState,
   setFiles,
   useSelectors,
-  mapStateToSelectors
+  getFileSelectors
 } from './filesReducer';
 import EmbedFrame from './EmbedFrame';
 
@@ -24,6 +24,8 @@ const App = () => {
       // render iframe baby
     }
   }
+  // return <EmbedFrame />;
+  return <h1>Is this working?</h1>;
 };
 
 const HotApp = hot(App);

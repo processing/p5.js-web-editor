@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+import objectID from 'bson-objectid';
 
 const defaultSketch = `function setup() {
   createCanvas(400, 400);
@@ -37,14 +39,11 @@ export function useSelectors(state, mapStateToSelectors) {
   return selectors;
 }
 
-export function mapStateToSelectors(state) {
+export function getFileSelectors(state) {
   return {
-    getHTMLFile: () =>
-      state.filter((file) => file.name.match(/.*\.html$/i))[0],
-    getJSFiles: (state) =>
-      state.filter((file) => file.name.match(/.*\.js$/i)),
-    getCSSFiles: (state) =>
-      state.filter((file) => file.name.match(/.*\.css$/i))
+    getHTMLFile: () => state.filter((file) => file.name.match(/.*\.html$/i))[0],
+    getJSFiles: () => state.filter((file) => file.name.match(/.*\.js$/i)),
+    getCSSFiles: () => state.filter((file) => file.name.match(/.*\.css$/i))
   };
 }
 
@@ -88,7 +87,7 @@ export function initialState() {
       children: []
     }
   ];
-};
+}
 
 function sortedChildrenId(state, children) {
   const childrenArray = state.filter((file) => children.includes(file.id));

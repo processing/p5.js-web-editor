@@ -20,6 +20,13 @@ module.exports = {
       'react-hot-loader/patch',
       './client/index.jsx',
     ],
+    'preview-app': [
+      'core-js/modules/es6.promise',
+      'core-js/modules/es6.array.iterator',
+      'webpack-hot-middleware/client',
+      'react-hot-loader/patch',
+      './client/modules/Preview/previewIndex.jsx',
+    ],
     previewScripts: [
       path.resolve(__dirname, '../client/utils/previewEntry.js')
     ]
