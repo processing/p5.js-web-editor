@@ -1,10 +1,34 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import getConfig from '../../../utils/getConfig';
 
-function PreviewFrame() {
+function PreviewFrame({ fullView }) {
+  const iframeClass = classNames({
+    'preview-frame': true,
+    'preview-frame--full-view': fullView
+  });
   const frameUrl = getConfig('PREVIEW_URL');
-  return <iframe title="preview-frame" src={frameUrl} />;
+  const sandboxAttributes =
+    'allow-scripts allow-pointer-lock allow-popups allow-forms allow-modals allow-downloads allow-same-origin';
+  return (
+    <iframe
+      title="sketch preview"
+      src={frameUrl}
+      className={iframeClass}
+      sandbox={sandboxAttributes}
+      frameBorder="0"
+    />
+  );
 }
+
+PreviewFrame.propTypes = {
+  fullView: PropTypes.bool
+};
+
+PreviewFrame.defaultProps = {
+  fullView: false
+};
 
 export default PreviewFrame;
 

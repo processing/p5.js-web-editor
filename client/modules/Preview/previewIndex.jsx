@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useState } from 'react';
 import { render } from 'react-dom';
 import { hot } from 'react-hot-loader/root';
 import loopProtect from 'loop-protect';
@@ -15,6 +15,7 @@ import EmbedFrame from './EmbedFrame';
 
 const App = () => {
   const [state, dispatch] = useReducer(filesReducer, [], initialState);
+  const [isPlaying, setIsPlaying] = useState(true);
   function handleMessageEvent(message) {
     // types are start, stop, setFiles. Kind of like a reducer
     const { type, files } = message;
@@ -24,8 +25,7 @@ const App = () => {
       // render iframe baby
     }
   }
-  // return <EmbedFrame />;
-  return <h1>Is this working?</h1>;
+  return <EmbedFrame files={state} isPlaying={isPlaying} />;
 };
 
 const HotApp = hot(App);

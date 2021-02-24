@@ -5,7 +5,7 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import config from '../webpack/config.dev';
 
-import { renderPreviewIndex } from './views/previewIndex';
+import renderPreviewIndex from './views/previewIndex';
 
 const app = new Express();
 

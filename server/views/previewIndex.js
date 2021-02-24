@@ -1,4 +1,4 @@
-export function renderPreviewIndex() {
+function renderPreviewIndex() {
   return `
     <!DOCTYPE html>
     <html lang="en">
@@ -14,3 +14,5 @@ export function renderPreviewIndex() {
     </html>
   `;
 }
+
+export default renderPreviewIndex;

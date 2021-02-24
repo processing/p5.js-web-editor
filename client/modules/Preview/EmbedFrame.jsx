@@ -231,7 +231,7 @@ function addLoopProtect(sketchDoc) {
   const scriptsInHTML = sketchDoc.getElementsByTagName('script');
   const scriptsInHTMLArray = Array.prototype.slice.call(scriptsInHTML);
   scriptsInHTMLArray.forEach((script) => {
-    script.innerHTML = this.jsPreprocess(script.innerHTML); // eslint-disable-line
+    script.innerHTML = jsPreprocess(script.innerHTML); // eslint-disable-line
   });
 }
 
@@ -318,7 +318,9 @@ function EmbedFrame({ files, isPlaying }) {
   function renderSketch() {
     const doc = iframe.current;
     if (isPlaying) {
+      console.log('calling inject local files');
       const htmlDoc = injectLocalFiles(files, htmlFile);
+      console.log('setting srcdoc');
       srcDoc.set(doc, htmlDoc);
     } else {
       doc.srcdoc = '';
