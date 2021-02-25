@@ -8,7 +8,9 @@ import Button from '../../../common/Button';
 import Nav from '../../../components/Nav';
 import Overlay from '../../App/components/Overlay';
 import AssetSize from '../../IDE/components/AssetSize';
-import Table from '../../IDE/components/Table';
+import SketchTable from '../../IDE/components/SketchTable';
+import CollectionTable from '../../IDE/components/CollectionTable';
+import AssetsTable from '../../IDE/components/AssetsTable';
 
 import CollectionCreate from '../components/CollectionCreate';
 import DashboardTabSwitcherPublic, {
@@ -114,54 +116,29 @@ class DashboardView extends React.Component {
   }
 
   renderContent(tabKey, username) {
-    const CollectionListeaderRow = [
-      { field: 'name', name: 'CollectionList.HeaderName' },
-      { field: 'createdAt', name: 'CollectionList.HeaderCreatedAt' },
-      { field: 'updatedAt', name: 'CollectionList.HeaderUpdatedAt' },
-      { field: 'numItems', name: 'CollectionList.HeaderNumItems' }
-    ];
-    const SketchListHeaderRow = [
-      { field: 'name', name: 'SketchList.HeaderName' },
-      { field: 'createdAt', name: 'SketchList.HeaderCreatedAt' },
-      { field: 'updatedAt', name: 'SketchList.HeaderUpdatedAt' }
-    ];
-    const AssetListRowHeader = [
-      { field: 'name', name: 'AssetList.HeaderName' },
-      { field: 'size', name: 'AssetList.HeaderSize' },
-      { field: 'sketchName', name: 'AssetList.HeaderSketch' }
-    ];
     switch (tabKey) {
       case TabKey.assets:
         return (
-          <Table
+          <AssetsTable
             key={username}
             username={username}
-            headerRow={AssetListRowHeader}
-            dataRows={this.props.assetList}
-            listType="AssetList"
             searchTerm={this.state.searchTerm}
           />
         );
       case TabKey.collections:
         return (
-          <Table
+          <CollectionTable
             key={username}
             username={username}
-            headerRow={CollectionListeaderRow}
-            dataRows={this.props.collections}
-            listType="CollectionList"
             searchTerm={this.state.searchTerm}
           />
         );
       case TabKey.sketches:
       default:
         return (
-          <Table
+          <SketchTable
             key={username}
             username={username}
-            headerRow={SketchListHeaderRow}
-            dataRows={this.props.sketches}
-            listType="SketchList"
             searchTerm={this.state.searchTerm}
           />
         );
@@ -216,10 +193,7 @@ function mapStateToProps(state) {
   return {
     previousPath: state.ide.previousPath,
     user: state.user,
-    theme: state.preferences.theme,
-    collections: state.collections,
-    sketches: state.sketches,
-    assetList: state.assets.list
+    theme: state.preferences.theme
   };
 }
 
@@ -235,32 +209,6 @@ DashboardView.propTypes = {
   user: PropTypes.shape({
     username: PropTypes.string
   }),
-  collections: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      description: PropTypes.string,
-      createdAt: PropTypes.string.isRequired,
-      updatedAt: PropTypes.string.isRequired
-    })
-  ).isRequired,
-  sketches: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      createdAt: PropTypes.string.isRequired,
-      updatedAt: PropTypes.string.isRequired
-    })
-  ).isRequired,
-  assetList: PropTypes.arrayOf(
-    PropTypes.shape({
-      key: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      url: PropTypes.string.isRequired,
-      sketchName: PropTypes.string,
-      sketchId: PropTypes.string
-    })
-  ).isRequired,
   t: PropTypes.func.isRequired
 };
 
