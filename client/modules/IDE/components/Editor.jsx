@@ -359,7 +359,7 @@ class Editor extends React.Component {
     this._cm.focus();
     this._cm.doc.setCursor({
       line: currentPosition.line,
-      ch: currentPosition.ch + INDENTATION_AMOUNT
+      ch: currentPosition.ch
     });
   }
 
