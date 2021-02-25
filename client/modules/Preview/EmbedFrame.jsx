@@ -10,6 +10,7 @@ import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { getBlobUrl } from '../IDE/actions/files';
 import { resolvePathToFile } from '../../../server/utils/filePath';
+import getConfig from '../../utils/getConfig';
 import {
   MEDIA_FILE_REGEX,
   MEDIA_FILE_QUOTED_REGEX,
@@ -23,7 +24,7 @@ import {
   startTag,
   getAllScriptOffsets
 } from '../../utils/consoleUtils';
-import { registerFrame } from '../../utils/dispatcher';
+import { registerFrame, MessageTypes } from '../../utils/dispatcher';
 
 import { getHTMLFile } from '../IDE/reducers/files';
 
@@ -308,12 +309,15 @@ function EmbedFrame({ files, isPlaying }) {
   const iframe = useRef();
   const htmlFile = useMemo(() => getHtmlFile(files), [files]);
 
-  useEffect(() => {
-    const unsubscribe = registerFrame(iframe.current.contentWindow);
-    return () => {
-      unsubscribe();
-    };
-  });
+  // useEffect(() => {
+  //   const unsubscribe = registerFrame(
+  //     iframe.current.contentWindow,
+  //     getConfig('PREVIEW_URL')
+  //   );
+  //   return () => {
+  //     unsubscribe();
+  //   };
+  // });
 
   function renderSketch() {
     const doc = iframe.current;

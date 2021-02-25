@@ -1,9 +1,10 @@
-import React, { useReducer, useState } from 'react';
+import React, { useReducer, useState, useEffect } from 'react';
 import { render } from 'react-dom';
 import { hot } from 'react-hot-loader/root';
 import loopProtect from 'loop-protect';
 import { Hook } from 'console-feed';
-import { listen } from '../../utils/dispatcher';
+import { createGlobalStyle } from 'styled-components';
+import { listen, MessageTypes } from '../../utils/dispatcher';
 import {
   filesReducer,
   initialState,
@@ -13,19 +14,44 @@ import {
 } from './filesReducer';
 import EmbedFrame from './EmbedFrame';
 
+const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0;
+  }
+`;
+
 const App = () => {
   const [state, dispatch] = useReducer(filesReducer, [], initialState);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   function handleMessageEvent(message) {
-    // types are start, stop, setFiles. Kind of like a reducer
-    const { type, files } = message;
-    if (type === 'render') {
-      dispatch(setFiles(files));
-      // use preview frame to create srcdoc
-      // render iframe baby
+    console.log('embedframe received message event');
+    const { type, payload } = message;
+    switch (type) {
+      case MessageTypes.FILES:
+        dispatch(setFiles(payload.files));
+        break;
+      case MessageTypes.START:
+        setIsPlaying(true);
+        break;
+      case MessageTypes.STOP:
+        setIsPlaying(false);
+        break;
+      default:
+        break;
     }
   }
-  return <EmbedFrame files={state} isPlaying={isPlaying} />;
+  useEffect(() => {
+    const unsubscribe = listen(handleMessageEvent);
+    return function cleanup() {
+      unsubscribe();
+    };
+  });
+  return (
+    <React.Fragment>
+      <GlobalStyle />
+      <EmbedFrame files={state} isPlaying={isPlaying} />
+    </React.Fragment>
+  );
 };
 
 const HotApp = hot(App);

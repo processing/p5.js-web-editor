@@ -3,12 +3,22 @@
 
 let frame = null;
 let listener = null;
-const { origin } = window;
+// const { origin } = window;
+let origin = null;
 
-export function registerFrame(newFrame) {
+export const MessageTypes = {
+  START: 'START',
+  STOP: 'STOP',
+  FILES: 'FILES'
+};
+
+// could instead register multiple frames here
+export function registerFrame(newFrame, newOrigin) {
   frame = newFrame;
+  origin = newOrigin;
   return () => {
     frame = null;
+    origin = null;
   };
 }
 
@@ -23,7 +33,7 @@ function notifyFrame(message) {
   }
 }
 
-export function dispatch(message) {
+export function dispatchMessage(message) {
   if (!message) return;
 
   notifyListener(message);
@@ -41,9 +51,13 @@ export function listen(callback) {
 }
 
 function eventListener(e) {
+  console.log('in event listener');
   const { data } = e;
+  console.log(e);
 
-  if (data && e.origin === origin) {
+  // should also store origin of parent? idk
+  // if (data && e.origin === origin) {
+  if (data) {
     notifyListener(data);
   }
 }

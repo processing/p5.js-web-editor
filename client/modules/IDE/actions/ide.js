@@ -1,5 +1,6 @@
 import * as ActionTypes from '../../../constants';
 import { clearConsole } from './console';
+import { dispatchMessage, MessageTypes } from '../../../utils/dispatcher';
 
 export function startVisualSketch() {
   return {
@@ -262,7 +263,12 @@ export function showRuntimeErrorWarning() {
 export function startSketch() {
   return (dispatch) => {
     dispatch(clearConsole());
-    dispatch(startSketchAndRefresh());
+    // instead, need to dispatch message event
+    // dispatch(startSketchAndRefresh());
+    dispatch(startVisualSketch());
+    dispatchMessage({
+      type: MessageTypes.START
+    });
   };
 }
 
@@ -276,6 +282,9 @@ export function startAccessibleSketch() {
 
 export function stopSketch() {
   return (dispatch) => {
+    dispatchMessage({
+      type: MessageTypes.STOP
+    });
     dispatch(stopAccessibleOutput());
     dispatch(stopVisualSketch());
   };
