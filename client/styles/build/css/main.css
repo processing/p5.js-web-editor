@@ -2452,6 +2452,11 @@ span.CodeMirror-selectedtext {
   width: 100%;
   text-align: center; }
 
+.uploaderAid {
+  display: flex;
+  height: 100%;
+  width: 100%; }
+
 .share-modal {
   padding: 1.66667rem;
   width: 41.66667rem; }

@@ -86,9 +86,11 @@ export function submitFile(formProps, files, parentId, projectId) {
 export function handleCreateFile(formProps, setSelected = true) {
   return (dispatch, getState) => {
     const state = getState();
+    console.log(state);
     const { files } = state;
     const { parentId } = state.ide;
     const projectId = state.project.id;
+    console.log(files, projectId, parentId);
     return new Promise((resolve) => {
       submitFile(formProps, files, parentId, projectId)
         .then((response) => {

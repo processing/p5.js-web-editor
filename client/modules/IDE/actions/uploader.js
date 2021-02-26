@@ -1,6 +1,7 @@
 import apiClient from '../../../utils/apiClient';
 import getConfig from '../../../utils/getConfig';
 import { handleCreateFile } from './files';
+import { newFolder } from './ide';
 import { TEXT_FILE_REGEX } from '../../../../server/utils/fileUtils';
 
 const s3BucketHttps =
@@ -93,6 +94,7 @@ export function dropzoneAcceptCallback(userId, file, done) {
 }
 
 export function dropzoneSendingCallback(file, xhr, formData) {
+  console.log(file);
   return () => {
     if (!file.name.match(TEXT_FILE_REGEX) || file.size >= MAX_LOCAL_FILE_SIZE) {
       Object.keys(file.postData).forEach((key) => {
@@ -102,8 +104,9 @@ export function dropzoneSendingCallback(file, xhr, formData) {
   };
 }
 
-export function dropzoneCompleteCallback(file) {
+export function dropzoneCompleteCallback(elementId, parentId, file) {
   return (dispatch) => { // eslint-disable-line
+    dispatch(newFolder(parentId));
     if (
       (!file.name.match(TEXT_FILE_REGEX) || file.size >= MAX_LOCAL_FILE_SIZE) &&
       file.status !== 'error'
@@ -119,7 +122,7 @@ export function dropzoneCompleteCallback(file) {
       // convert the json string to binary data so that btoa can encode it
       jsonStr = toBinary(jsonStr);
       inputHidden += `${window.btoa(jsonStr)}" />`;
-      document.getElementById('uploader').innerHTML += inputHidden;
+      document.getElementById(elementId).innerHTML += inputHidden;
 
       const formParams = {
         name: file.name,

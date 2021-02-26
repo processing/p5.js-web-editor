@@ -24,6 +24,7 @@ class FileUploader extends React.Component {
     const userId = this.props.project.owner
       ? this.props.project.owner.id
       : this.props.user.id;
+    const elementId = 'uploader';
     this.uploader = new Dropzone('div#uploader', {
       url: s3Bucket,
       method: 'post',
@@ -39,7 +40,7 @@ class FileUploader extends React.Component {
       dictDefaultMessage: this.props.t('FileUploader.DictDefaultMessage'),
       accept: this.props.dropzoneAcceptCallback.bind(this, userId),
       sending: this.props.dropzoneSendingCallback,
-      complete: this.props.dropzoneCompleteCallback
+      complete: this.props.dropzoneCompleteCallback.bind(this, elementId)
       // error: (file, errorMessage) => {
       //   console.log(file);
       //   console.log(errorMessage);
