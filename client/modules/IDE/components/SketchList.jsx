@@ -449,6 +449,7 @@ class SketchList extends React.Component {
           className="sketch-list__sort-button"
           onClick={() => this.props.toggleDirectionForField(fieldName)}
           aria-label={buttonLabel}
+          data-testid={`toggle-direction-${fieldName}`}
         >
           <span className={headerClass}>{displayName}</span>
           {field === fieldName &&
