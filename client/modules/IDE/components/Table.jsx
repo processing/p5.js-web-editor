@@ -7,19 +7,12 @@ import { bindActionCreators } from 'redux';
 import classNames from 'classnames';
 import differenceInMilliseconds from 'date-fns/differenceInMilliseconds';
 import orderBy from 'lodash/orderBy';
-import find from 'lodash/find';
 import * as ProjectActions from '../actions/project';
 import * as ProjectsActions from '../actions/projects';
 import * as CollectionsActions from '../actions/collections';
 import * as ToastActions from '../actions/toast';
 import * as AssetActions from '../actions/assets';
 import Loader from '../../App/components/loader';
-import Overlay from '../../App/components/Overlay';
-import AddToCollectionSketchList from './AddToCollectionSketchList';
-import AddToCollectionList from './AddToCollectionList';
-import { SketchSearchbar } from './Searchbar';
-
-import TableRow from './TableRow';
 
 import ArrowUpIcon from '../../../images/sort-arrow-up.svg';
 import ArrowDownIcon from '../../../images/sort-arrow-down.svg';
@@ -33,18 +26,8 @@ class Table extends React.Component {
   constructor(props) {
     super(props);
 
-    if (props.projectId) {
-      props.getProject(props.projectId);
-    }
-    if (this.props.listType === 'CollectionList')
-      this.props.getCollections(this.props.username);
-    if (this.props.listType === 'SketchList')
-      this.props.getProjects(this.props.username);
-    if (this.props.listType === 'AssetList') this.props.getAssets();
-
     this.state = {
       hasLoadedData: false,
-      addingSketchesToCollectionId: null,
       sorting: {
         field: 'createdAt',
         direction: DIRECTION.DESC
@@ -124,18 +107,6 @@ class Table extends React.Component {
       return result;
     });
     return sortedDataRows;
-  };
-
-  showAddSketches = (collectionId) => {
-    this.setState({
-      addingSketchesToCollectionId: collectionId
-    });
-  };
-
-  hideAddSketches = () => {
-    this.setState({
-      addingSketchesToCollectionId: null
-    });
   };
 
   hasDataRows() {
@@ -269,12 +240,6 @@ class Table extends React.Component {
   };
 
   render() {
-    const username =
-      this.props.username !== undefined
-        ? this.props.username
-        : this.props.user.username;
-    const { mobile } = this.props;
-
     return (
       <article className="sketches-table-container">
         <Helmet>
@@ -300,53 +265,9 @@ class Table extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {this.getSortedDataRows().map((dataRow) => (
-                <TableRow
-                  mobile={mobile}
-                  key={dataRow.id}
-                  dataRow={dataRow}
-                  user={this.props.user}
-                  username={username}
-                  project={this.props.project}
-                  onAddSketches={() => this.showAddSketches(dataRow.id)}
-                  listType={this.props.listType}
-                  onAddToCollection={() => {
-                    this.setState({ sketchToAddToCollection: dataRow });
-                  }}
-                />
-              ))}
+              {this.getSortedDataRows().map((dataRow) => dataRow.row)}
             </tbody>
           </table>
-        )}
-        {this.state.addingSketchesToCollectionId && (
-          <Overlay
-            title={this.props.t('CollectionList.AddSketch')}
-            actions={<SketchSearchbar />}
-            closeOverlay={this.hideAddSketches}
-            isFixedHeight
-          >
-            <AddToCollectionSketchList
-              username={this.props.username}
-              collection={find(this.getSortedDataRows(), {
-                id: this.state.addingSketchesToCollectionId
-              })}
-            />
-          </Overlay>
-        )}
-        {this.state.sketchToAddToCollection && (
-          <Overlay
-            isFixedHeight
-            title={this.props.t('SketchList.AddToCollectionOverlayTitle')}
-            closeOverlay={() =>
-              this.setState({ sketchToAddToCollection: null })
-            }
-          >
-            <AddToCollectionList
-              project={this.state.sketchToAddToCollection}
-              username={this.props.username}
-              user={this.props.user}
-            />
-          </Overlay>
         )}
       </article>
     );
@@ -358,11 +279,6 @@ Table.propTypes = {
     username: PropTypes.string,
     authenticated: PropTypes.bool.isRequired
   }).isRequired,
-  projectId: PropTypes.string,
-  getCollections: PropTypes.func.isRequired,
-  getProjects: PropTypes.func.isRequired,
-  getProject: PropTypes.func.isRequired,
-  getAssets: PropTypes.func.isRequired,
   dataRows: PropTypes.oneOfType(
     [
       PropTypes.arrayOf(
@@ -400,18 +316,15 @@ Table.propTypes = {
       id: PropTypes.string
     })
   }),
-  t: PropTypes.func.isRequired,
-  mobile: PropTypes.bool
+  t: PropTypes.func.isRequired
 };
 
 Table.defaultProps = {
-  projectId: undefined,
   project: {
     id: undefined,
     owner: undefined
   },
-  username: undefined,
-  mobile: false
+  username: undefined
 };
 
 function mapStateToProps(state, ownProps) {

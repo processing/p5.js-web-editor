@@ -350,6 +350,10 @@ function mapDispatchToPropsSketchListRow(dispatch) {
   );
 }
 
+export default withTranslation()(
+  connect(null, mapDispatchToPropsSketchListRow)(SketchListRowBase)
+);
+
 const SketchListRow = connect(
   null,
   mapDispatchToPropsSketchListRow
@@ -601,7 +605,3 @@ function mapDispatchToProps(dispatch) {
     dispatch
   );
 }
-
-export default withTranslation()(
-  connect(mapStateToProps, mapDispatchToProps)(SketchList)
-);

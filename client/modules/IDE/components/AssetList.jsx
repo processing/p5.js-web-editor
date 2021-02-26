@@ -154,6 +154,13 @@ const AssetListRow = connect(
   mapDispatchToPropsAssetListRow
 )(AssetListRowBase);
 
+export default withTranslation()(
+  connect(
+    mapStateToPropsAssetListRow,
+    mapDispatchToPropsAssetListRow
+  )(AssetListRowBase)
+);
+
 class AssetList extends React.Component {
   constructor(props) {
     super(props);
@@ -244,7 +251,3 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({}, AssetActions), dispatch);
 }
-
-export default withTranslation()(
-  connect(mapStateToProps, mapDispatchToProps)(AssetList)
-);
