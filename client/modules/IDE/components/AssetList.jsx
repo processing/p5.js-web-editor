@@ -3,11 +3,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
-import { Helmet } from 'react-helmet';
 import prettyBytes from 'pretty-bytes';
 import { withTranslation } from 'react-i18next';
 
-import Loader from '../../App/components/loader';
 import * as AssetActions from '../actions/assets';
 import DownFilledTriangleIcon from '../../../images/down-filled-triangle.svg';
 
@@ -149,105 +147,9 @@ function mapDispatchToPropsAssetListRow(dispatch) {
   return bindActionCreators(AssetActions, dispatch);
 }
 
-const AssetListRow = connect(
-  mapStateToPropsAssetListRow,
-  mapDispatchToPropsAssetListRow
-)(AssetListRowBase);
-
 export default withTranslation()(
   connect(
     mapStateToPropsAssetListRow,
     mapDispatchToPropsAssetListRow
   )(AssetListRowBase)
 );
-
-class AssetList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.props.getAssets();
-  }
-
-  getAssetsTitle() {
-    return this.props.t('AssetList.Title');
-  }
-
-  hasAssets() {
-    return !this.props.loading && this.props.assetList.length > 0;
-  }
-
-  renderLoader() {
-    if (this.props.loading) return <Loader />;
-    return null;
-  }
-
-  renderEmptyTable() {
-    if (!this.props.loading && this.props.assetList.length === 0) {
-      return (
-        <p className="asset-table__empty">
-          {this.props.t('AssetList.NoUploadedAssets')}
-        </p>
-      );
-    }
-    return null;
-  }
-
-  render() {
-    const { assetList, t } = this.props;
-    return (
-      <article className="asset-table-container">
-        <Helmet>
-          <title>{this.getAssetsTitle()}</title>
-        </Helmet>
-        {this.renderLoader()}
-        {this.renderEmptyTable()}
-        {this.hasAssets() && (
-          <table className="asset-table">
-            <thead>
-              <tr>
-                <th>{t('AssetList.HeaderName')}</th>
-                <th>{t('AssetList.HeaderSize')}</th>
-                <th>{t('AssetList.HeaderSketch')}</th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {assetList.map((asset) => (
-                <AssetListRow asset={asset} key={asset.key} t={t} />
-              ))}
-            </tbody>
-          </table>
-        )}
-      </article>
-    );
-  }
-}
-
-AssetList.propTypes = {
-  user: PropTypes.shape({
-    username: PropTypes.string
-  }).isRequired,
-  assetList: PropTypes.arrayOf(
-    PropTypes.shape({
-      key: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      url: PropTypes.string.isRequired,
-      sketchName: PropTypes.string,
-      sketchId: PropTypes.string
-    })
-  ).isRequired,
-  getAssets: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
-  t: PropTypes.func.isRequired
-};
-
-function mapStateToProps(state) {
-  return {
-    user: state.user,
-    assetList: state.assets.list,
-    loading: state.loading
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}, AssetActions), dispatch);
-}
