@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import * as CollectionsActions from '../actions/collections';
 import * as ProjectActions from '../actions/project';
 import Table from './Table';
-import CollectionListRow from './CollectionList/CollectionListRow';
+import CollectionListRow from './CollectionListRow';
 import Overlay from '../../App/components/Overlay';
 import AddToCollectionSketchList from './AddToCollectionSketchList';
 import SearchBar from './Searchbar/SearchBar';

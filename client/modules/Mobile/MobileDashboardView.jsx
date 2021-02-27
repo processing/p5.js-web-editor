@@ -11,9 +11,9 @@ import IconButton from '../../components/mobile/IconButton';
 import { ExitIcon, MoreIcon } from '../../common/icons';
 import Footer from '../../components/mobile/Footer';
 import { remSize, prop } from '../../theme';
-import SketchList from '../IDE/components/SketchList';
-import CollectionList from '../IDE/components/CollectionList';
-import AssetList from '../IDE/components/AssetList';
+import SketchTable from '../IDE/components/SketchTable';
+import CollectionTable from '../IDE/components/CollectionTable';
+import AssetsTable from '../IDE/components/AssetsTable';
 import Content from './MobileViewContent';
 import {
   SketchSearchbar,
@@ -147,9 +147,9 @@ const Subheader = styled.div`
 `;
 
 const Panels = {
-  sketches: SketchList,
-  collections: CollectionList,
-  assets: AssetList
+  sketches: SketchTable,
+  collections: CollectionTable,
+  assets: AssetsTable
 };
 
 const navOptions = (username) => {

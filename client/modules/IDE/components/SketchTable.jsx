@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as ProjectsActions from '../actions/projects';
 import Table from './Table';
-import SketchListRow from './SketchList';
+import SketchListRow from './SketchListRow';
 import Overlay from '../../App/components/Overlay';
 import AddToCollectionList from './AddToCollectionList';
 import SearchBar from './Searchbar/SearchBar';

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as AssetActions from '../actions/assets';
 import Table from './Table';
-import AssetListRow from './AssetList';
+import AssetListRow from './AssetListRow';
 
 class AssetsTable extends React.Component {
   constructor(props) {
