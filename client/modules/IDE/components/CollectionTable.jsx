@@ -25,6 +25,15 @@ class CollectionTable extends React.Component {
     };
   }
 
+  getTitle() {
+    if (this.props.username === this.props.user.username) {
+      return this.props.t(`CollectionList.Title`);
+    }
+    return this.props.t(`CollectionList.AnothersTitle`, {
+      anotheruser: this.props.username
+    });
+  }
+
   showAddSketches = (collectionId) => {
     this.setState({
       addingSketchesToCollectionId: collectionId
@@ -38,13 +47,31 @@ class CollectionTable extends React.Component {
   };
 
   render() {
-    const CollectionListHeaderRow = [
-      { field: 'name', name: 'CollectionList.HeaderName' },
-      { field: 'createdAt', name: 'CollectionList.HeaderCreatedAt' },
-      { field: 'updatedAt', name: 'CollectionList.HeaderUpdatedAt' },
-      { field: 'numItems', name: 'CollectionList.HeaderNumItems' }
-    ];
     const { user, username, collections, searchTerm, mobile } = this.props;
+
+    const extras = {
+      emptyTableText: this.props.t('CollectionList.NoCollections'),
+      title: this.getTitle(),
+      summary: this.props.t('CollectionList.TableSummary'),
+      buttonAscAriaLable: 'CollectionList.ButtonLabelAscendingARIA',
+      buttonDescAriaLable: 'CollectionList.ButtonLabelDescendingARIA',
+      arrowUpIconAriaLable: 'CollectionList.DirectionAscendingARIA',
+      arrowDownIconAriaLable: 'CollectionList.DirectionDescendingARIA'
+    };
+
+    const CollectionListHeaderRow = [
+      { field: 'name', name: this.props.t('CollectionList.HeaderName') },
+      {
+        field: 'createdAt',
+        name: this.props.t('CollectionList.HeaderCreatedAt')
+      },
+      {
+        field: 'updatedAt',
+        name: this.props.t('CollectionList.HeaderUpdatedAt')
+      },
+      { field: 'numItems', name: this.props.t('CollectionList.HeaderNumItems') }
+    ];
+
     const collectionTableRows = collections.map((collection) => ({
       ...collection,
       row: (
@@ -59,6 +86,7 @@ class CollectionTable extends React.Component {
         />
       )
     }));
+
     return (
       <div>
         <Table
@@ -66,8 +94,8 @@ class CollectionTable extends React.Component {
           username={username}
           headerRow={CollectionListHeaderRow}
           dataRows={collectionTableRows}
-          listType="CollectionList"
           searchTerm={searchTerm}
+          extras={extras}
         />
         {this.state.addingSketchesToCollectionId && (
           <Overlay

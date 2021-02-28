@@ -71,17 +71,6 @@ class Table extends React.Component {
     );
   };
 
-  getTitle() {
-    if (this.props.listType === 'AssetList')
-      return this.props.t('AssetList.Title');
-    if (this.props.username === this.props.user.username) {
-      return this.props.t(`${this.props.listType}.Title`);
-    }
-    return this.props.t(`${this.props.listType}.AnothersTitle`, {
-      anotheruser: this.props.username
-    });
-  }
-
   sortDataRows = (dataRows, field, direction) => {
     if (field === 'name') {
       if (direction === DIRECTION.DESC) {
@@ -122,15 +111,12 @@ class Table extends React.Component {
   }
 
   _renderEmptyTable() {
-    let text;
-    if (this.props.listType === 'CollectionList')
-      text = 'CollectionList.NoCollections';
-    else if (this.props.listType === 'SketchList')
-      text = 'SketchList.NoSketches';
-    else if (this.props.listType === 'AssetList')
-      text = 'AssetList.NoUploadedAssets';
     if (!this.props.loading && this.getSortedDataRows().length === 0) {
-      return <p className="sketches-table__empty">{this.props.t(text)}</p>;
+      return (
+        <p className="sketches-table__empty">
+          {this.props.t(this.props.extras.emptyTableText)}
+        </p>
+      );
     }
     return null;
   }
@@ -177,24 +163,23 @@ class Table extends React.Component {
 
   _getButtonLabel = (fieldName, displayName) => {
     const { field, direction } = this.state.sorting;
-    const list = this.props.listType;
     let buttonLabel;
     if (field !== fieldName) {
       if (field === 'name') {
-        buttonLabel = this.props.t(`${list}.ButtonLabelAscendingARIA`, {
+        buttonLabel = this.props.t(this.props.extras.buttonAscAriaLable, {
           displayName
         });
       } else {
-        buttonLabel = this.props.t(`${list}.ButtonLabelDescendingARIA`, {
+        buttonLabel = this.props.t(this.props.extras.buttonDescAriaLable, {
           displayName
         });
       }
     } else if (direction === DIRECTION.ASC) {
-      buttonLabel = this.props.t(`${list}.ButtonLabelDescendingARIA`, {
+      buttonLabel = this.props.t(this.props.extras.buttonDescAriaLable, {
         displayName
       });
     } else {
-      buttonLabel = this.props.t(`${list}.ButtonLabelAscendingARIA`, {
+      buttonLabel = this.props.t(this.props.extras.buttonAscAriaLable, {
         displayName
       });
     }
@@ -219,18 +204,14 @@ class Table extends React.Component {
           {field === fieldName && direction === DIRECTION.ASC && (
             <ArrowUpIcon
               role="img"
-              aria-label={this.props.t(
-                `${this.props.listType}.DirectionAscendingARIA`
-              )}
+              aria-label={this.props.extras.arrowUpIconAriaLable}
               focusable="false"
             />
           )}
           {field === fieldName && direction === DIRECTION.DESC && (
             <ArrowDownIcon
               role="img"
-              aria-label={this.props.t(
-                `${this.props.listType}.DirectionDescendingARIA`
-              )}
+              aria-label={this.props.extras.arrowDownIconAriaLable}
               focusable="false"
             />
           )}
@@ -243,23 +224,16 @@ class Table extends React.Component {
     return (
       <article className="sketches-table-container">
         <Helmet>
-          <title>{this.getTitle()}</title>
+          <title>{this.props.extras.title}</title>
         </Helmet>
         {this._renderLoader()}
         {this._renderEmptyTable()}
         {this.hasDataRows() && (
-          <table
-            className="sketches-table"
-            summary={this.props.t(`${this.props.listType}.TableSummary`)}
-          >
+          <table className="sketches-table" summary={this.props.extras.summary}>
             <thead>
               <tr>
                 {this.props.headerRow.map((col, index) =>
-                  this._renderFieldHeader(
-                    col.field,
-                    this.props.t(col.name),
-                    index
-                  )
+                  this._renderFieldHeader(col.field, col.name, index)
                 )}
                 <th scope="col"></th>
               </tr>
@@ -306,9 +280,7 @@ Table.propTypes = {
       name: PropTypes.string.isRequired
     })
   ).isRequired,
-  listType: PropTypes.string.isRequired,
   searchTerm: PropTypes.string.isRequired,
-  username: PropTypes.string,
   loading: PropTypes.bool.isRequired,
   project: PropTypes.shape({
     id: PropTypes.string,
@@ -316,6 +288,15 @@ Table.propTypes = {
       id: PropTypes.string
     })
   }),
+  extras: PropTypes.shape({
+    emptyTableText: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    summary: PropTypes.string,
+    buttonAscAriaLable: PropTypes.string,
+    buttonDescAriaLable: PropTypes.string,
+    arrowUpIconAriaLable: PropTypes.string,
+    arrowDownIconAriaLable: PropTypes.string
+  }).isRequired,
   t: PropTypes.func.isRequired
 };
 
@@ -323,8 +304,7 @@ Table.defaultProps = {
   project: {
     id: undefined,
     owner: undefined
-  },
-  username: undefined
+  }
 };
 
 function mapStateToProps(state, ownProps) {

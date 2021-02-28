@@ -13,12 +13,24 @@ class AssetsTable extends React.Component {
     this.props.getAssets();
   }
   render() {
-    const AssetListRowHeader = [
-      { field: 'name', name: 'AssetList.HeaderName' },
-      { field: 'size', name: 'AssetList.HeaderSize' },
-      { field: 'sketchName', name: 'AssetList.HeaderSketch' }
-    ];
     const { username, assetList, searchTerm, mobile, user } = this.props;
+
+    const AssetListRowHeader = [
+      { field: 'name', name: this.props.t('AssetList.HeaderName') },
+      { field: 'size', name: this.props.t('AssetList.HeaderSize') },
+      { field: 'sketchName', name: this.props.t('AssetList.HeaderSketch') }
+    ];
+
+    const extras = {
+      emptyTableText: this.props.t('AssetList.NoUploadedAssets'),
+      title: this.props.t('AssetList.Title'),
+      summary: this.props.t('AssetList.TableSummary'),
+      buttonAscAriaLable: 'AssetList.ButtonLabelAscendingARIA',
+      buttonDescAriaLable: 'AssetList.ButtonLabelDescendingARIA',
+      arrowUpIconAriaLable: 'AssetList.DirectionAscendingARIA',
+      arrowDownIconAriaLable: 'AssetList.DirectionDescendingARIA'
+    };
+
     const assetTableRows = assetList.map((asset) => ({
       ...asset,
       row: (
@@ -38,8 +50,8 @@ class AssetsTable extends React.Component {
         username={username}
         headerRow={AssetListRowHeader}
         dataRows={assetTableRows}
-        listType="AssetList"
         searchTerm={searchTerm}
+        extras={extras}
       />
     );
   }
@@ -73,7 +85,8 @@ AssetsTable.propTypes = {
   getAssets: PropTypes.func.isRequired,
   username: PropTypes.string,
   searchTerm: PropTypes.string.isRequired,
-  mobile: PropTypes.bool
+  mobile: PropTypes.bool,
+  t: PropTypes.func.isRequired
 };
 
 AssetsTable.defaultProps = {

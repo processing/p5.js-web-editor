@@ -19,12 +19,17 @@ class SketchTable extends React.Component {
       sketchToAddToCollection: null
     };
   }
+
+  getTitle() {
+    if (this.props.username === this.props.user.username) {
+      return this.props.t(`SketchList.Title`);
+    }
+    return this.props.t(`SketchList.AnothersTitle`, {
+      anotheruser: this.props.username
+    });
+  }
+
   render() {
-    const SketchListHeaderRow = [
-      { field: 'name', name: 'SketchList.HeaderName' },
-      { field: 'createdAt', name: 'SketchList.HeaderCreatedAt' },
-      { field: 'updatedAt', name: 'SketchList.HeaderUpdatedAt' }
-    ];
     const {
       username,
       sketches,
@@ -34,6 +39,23 @@ class SketchTable extends React.Component {
       project,
       t
     } = this.props;
+
+    const extras = {
+      emptyTableText: this.props.t('SketchList.NoSketches'),
+      title: this.getTitle(),
+      summary: this.props.t('SketchList.TableSummary'),
+      buttonAscAriaLable: 'SketchList.ButtonLabelAscendingARIA',
+      buttonDescAriaLable: 'SketchList.ButtonLabelDescendingARIA',
+      arrowUpIconAriaLable: 'SketchList.DirectionAscendingARIA',
+      arrowDownIconAriaLable: 'SketchList.DirectionDescendingARIA'
+    };
+
+    const SketchListHeaderRow = [
+      { field: 'name', name: this.props.t('SketchList.HeaderName') },
+      { field: 'createdAt', name: this.props.t('SketchList.HeaderCreatedAt') },
+      { field: 'updatedAt', name: this.props.t('SketchList.HeaderUpdatedAt') }
+    ];
+
     const sketchTableRows = sketches.map((sketch) => ({
       ...sketch,
       row: (
@@ -51,6 +73,7 @@ class SketchTable extends React.Component {
         />
       )
     }));
+
     return (
       <div>
         <Table
@@ -58,8 +81,8 @@ class SketchTable extends React.Component {
           username={username}
           headerRow={SketchListHeaderRow}
           dataRows={sketchTableRows}
-          listType="SketchList"
           searchTerm={searchTerm}
+          extras={extras}
         />
         {this.state.sketchToAddToCollection && (
           <Overlay
