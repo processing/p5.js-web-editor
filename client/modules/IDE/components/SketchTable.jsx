@@ -10,6 +10,11 @@ import Overlay from '../../App/components/Overlay';
 import AddToCollectionList from './AddToCollectionList';
 import SearchBar from './Searchbar/SearchBar';
 
+const DIRECTION = {
+  ASC: 'ASCENDING',
+  DESC: 'DESCENDING'
+};
+
 class SketchTable extends React.Component {
   constructor(props) {
     super(props);
@@ -50,10 +55,28 @@ class SketchTable extends React.Component {
       arrowDownIconAriaLable: 'SketchList.DirectionDescendingARIA'
     };
 
+    const sorting = {
+      field: 'createdAt',
+      type: 'date',
+      direction: DIRECTION.DESC
+    };
+
     const SketchListHeaderRow = [
-      { field: 'name', name: this.props.t('SketchList.HeaderName') },
-      { field: 'createdAt', name: this.props.t('SketchList.HeaderCreatedAt') },
-      { field: 'updatedAt', name: this.props.t('SketchList.HeaderUpdatedAt') }
+      {
+        field: 'name',
+        name: this.props.t('SketchList.HeaderName'),
+        type: 'string'
+      },
+      {
+        field: 'createdAt',
+        name: this.props.t('SketchList.HeaderCreatedAt'),
+        type: 'date'
+      },
+      {
+        field: 'updatedAt',
+        name: this.props.t('SketchList.HeaderUpdatedAt'),
+        type: 'date'
+      }
     ];
 
     const sketchTableRows = sketches.map((sketch) => ({
@@ -83,6 +106,7 @@ class SketchTable extends React.Component {
           dataRows={sketchTableRows}
           searchTerm={searchTerm}
           extras={extras}
+          sorting={sorting}
         />
         {this.state.sketchToAddToCollection && (
           <Overlay

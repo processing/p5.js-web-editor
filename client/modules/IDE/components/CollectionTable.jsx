@@ -12,6 +12,11 @@ import Overlay from '../../App/components/Overlay';
 import AddToCollectionSketchList from './AddToCollectionSketchList';
 import SearchBar from './Searchbar/SearchBar';
 
+const DIRECTION = {
+  ASC: 'ASCENDING',
+  DESC: 'DESCENDING'
+};
+
 class CollectionTable extends React.Component {
   constructor(props) {
     super(props);
@@ -59,21 +64,38 @@ class CollectionTable extends React.Component {
       arrowDownIconAriaLable: 'CollectionList.DirectionDescendingARIA'
     };
 
+    const sorting = {
+      field: 'createdAt',
+      type: 'date',
+      direction: DIRECTION.DESC
+    };
+
     const CollectionListHeaderRow = [
-      { field: 'name', name: this.props.t('CollectionList.HeaderName') },
+      {
+        field: 'name',
+        name: this.props.t('CollectionList.HeaderName'),
+        type: 'string'
+      },
       {
         field: 'createdAt',
-        name: this.props.t('CollectionList.HeaderCreatedAt')
+        name: this.props.t('CollectionList.HeaderCreatedAt'),
+        type: 'date'
       },
       {
         field: 'updatedAt',
-        name: this.props.t('CollectionList.HeaderUpdatedAt')
+        name: this.props.t('CollectionList.HeaderUpdatedAt'),
+        type: 'date'
       },
-      { field: 'numItems', name: this.props.t('CollectionList.HeaderNumItems') }
+      {
+        field: 'sketchCount',
+        name: this.props.t('CollectionList.HeaderNumItems'),
+        type: 'number'
+      }
     ];
 
     const collectionTableRows = collections.map((collection) => ({
       ...collection,
+      sketchCount: (collection.items || []).length,
       row: (
         <CollectionListRow
           mobile={mobile}
@@ -96,6 +118,7 @@ class CollectionTable extends React.Component {
           dataRows={collectionTableRows}
           searchTerm={searchTerm}
           extras={extras}
+          sorting={sorting}
         />
         {this.state.addingSketchesToCollectionId && (
           <Overlay

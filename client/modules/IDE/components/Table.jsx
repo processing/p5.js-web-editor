@@ -29,8 +29,7 @@ class Table extends React.Component {
     this.state = {
       hasLoadedData: false,
       sorting: {
-        field: 'createdAt',
-        direction: DIRECTION.DESC
+        ...this.props.sorting
       }
     };
   }
@@ -63,39 +62,31 @@ class Table extends React.Component {
   };
 
   getSortedDataRows = () => {
-    const { field, direction } = this.state.sorting;
+    const { field, type, direction } = this.state.sorting;
     return this.sortDataRows(
       this.getFilteredDataRows(this.props.dataRows, this.props.searchTerm),
       field,
+      type,
       direction
     );
   };
 
-  sortDataRows = (dataRows, field, direction) => {
-    if (field === 'name') {
-      if (direction === DIRECTION.DESC) {
-        return orderBy(dataRows, 'name', 'desc');
-      }
-      return orderBy(dataRows, 'name', 'asc');
-    } else if (field === 'numItems') {
-      if (direction === DIRECTION.DESC) {
-        return orderBy(dataRows, 'items.length', 'desc');
-      }
-      return orderBy(dataRows, 'items.length', 'asc');
-    } else if (field === 'size') {
-      if (direction === DIRECTION.DESC) {
-        return orderBy(dataRows, 'size', 'desc');
-      }
-      return orderBy(dataRows, 'size', 'asc');
+  sortDataRows = (dataRows, field, type, direction) => {
+    if (type === 'date') {
+      const sortedDataRows = [...dataRows].sort((a, b) => {
+        const result =
+          direction === DIRECTION.ASC
+            ? differenceInMilliseconds(new Date(a[field]), new Date(b[field]))
+            : differenceInMilliseconds(new Date(b[field]), new Date(a[field]));
+        return result;
+      });
+      return sortedDataRows;
     }
-    const sortedDataRows = [...dataRows].sort((a, b) => {
-      const result =
-        direction === DIRECTION.ASC
-          ? differenceInMilliseconds(new Date(a[field]), new Date(b[field]))
-          : differenceInMilliseconds(new Date(b[field]), new Date(a[field]));
-      return result;
-    });
-    return sortedDataRows;
+    return orderBy(
+      dataRows,
+      `${field}`,
+      direction === DIRECTION.ASC ? 'asc' : 'desc'
+    );
   };
 
   hasDataRows() {
@@ -121,7 +112,7 @@ class Table extends React.Component {
     return null;
   }
 
-  _toggleDirectionForField(field) {
+  _toggleDirectionForField(field, type) {
     if (field && field !== this.state.sorting.field) {
       if (field === 'name') {
         this.setState({
@@ -129,6 +120,7 @@ class Table extends React.Component {
           sorting: {
             ...this.state.sorting,
             field,
+            type,
             direction: DIRECTION.ASC
           }
         });
@@ -138,6 +130,7 @@ class Table extends React.Component {
           sorting: {
             ...this.state.sorting,
             field,
+            type,
             direction: DIRECTION.DESC
           }
         });
@@ -186,7 +179,7 @@ class Table extends React.Component {
     return buttonLabel;
   };
 
-  _renderFieldHeader = (fieldName, displayName, index) => {
+  _renderFieldHeader = (fieldName, displayName, type, index) => {
     const { field, direction } = this.state.sorting;
     const headerClass = classNames({
       'sketches-table__header': true,
@@ -197,7 +190,7 @@ class Table extends React.Component {
       <th scope="col" key={index}>
         <button
           className="sketch-list__sort-button"
-          onClick={() => this._toggleDirectionForField(fieldName)}
+          onClick={() => this._toggleDirectionForField(fieldName, type)}
           aria-label={buttonLabel}
         >
           <span className={headerClass}>{displayName}</span>
@@ -233,7 +226,7 @@ class Table extends React.Component {
             <thead>
               <tr>
                 {this.props.headerRow.map((col, index) =>
-                  this._renderFieldHeader(col.field, col.name, index)
+                  this._renderFieldHeader(col.field, col.name, col.type, index)
                 )}
                 <th scope="col"></th>
               </tr>
@@ -296,6 +289,11 @@ Table.propTypes = {
     buttonDescAriaLable: PropTypes.string,
     arrowUpIconAriaLable: PropTypes.string,
     arrowDownIconAriaLable: PropTypes.string
+  }).isRequired,
+  sorting: PropTypes.shape({
+    field: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    direction: PropTypes.string.isRequired
   }).isRequired,
   t: PropTypes.func.isRequired
 };

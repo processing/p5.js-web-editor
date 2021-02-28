@@ -7,6 +7,11 @@ import * as AssetActions from '../actions/assets';
 import Table from './Table';
 import AssetListRow from './AssetListRow';
 
+const DIRECTION = {
+  ASC: 'ASCENDING',
+  DESC: 'DESCENDING'
+};
+
 class AssetsTable extends React.Component {
   constructor(props) {
     super(props);
@@ -16,9 +21,21 @@ class AssetsTable extends React.Component {
     const { username, assetList, searchTerm, mobile, user } = this.props;
 
     const AssetListRowHeader = [
-      { field: 'name', name: this.props.t('AssetList.HeaderName') },
-      { field: 'size', name: this.props.t('AssetList.HeaderSize') },
-      { field: 'sketchName', name: this.props.t('AssetList.HeaderSketch') }
+      {
+        field: 'name',
+        name: this.props.t('AssetList.HeaderName'),
+        type: 'string'
+      },
+      {
+        field: 'size',
+        name: this.props.t('AssetList.HeaderSize'),
+        type: 'number'
+      },
+      {
+        field: 'sketchName',
+        name: this.props.t('AssetList.HeaderSketch'),
+        type: 'string'
+      }
     ];
 
     const extras = {
@@ -29,6 +46,12 @@ class AssetsTable extends React.Component {
       buttonDescAriaLable: 'AssetList.ButtonLabelDescendingARIA',
       arrowUpIconAriaLable: 'AssetList.DirectionAscendingARIA',
       arrowDownIconAriaLable: 'AssetList.DirectionDescendingARIA'
+    };
+
+    const sorting = {
+      field: 'name',
+      type: 'string',
+      direction: DIRECTION.ASC
     };
 
     const assetTableRows = assetList.map((asset) => ({
@@ -52,6 +75,7 @@ class AssetsTable extends React.Component {
         dataRows={assetTableRows}
         searchTerm={searchTerm}
         extras={extras}
+        sorting={sorting}
       />
     );
   }
