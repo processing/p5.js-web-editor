@@ -8,7 +8,7 @@ import Table from './Table';
 import SketchListRow from './SketchListRow';
 import Overlay from '../../App/components/Overlay';
 import AddToCollectionList from './AddToCollectionList';
-import SearchBar from './Searchbar/SearchBar';
+import { CollectionSearchbar } from './Searchbar';
 
 const DIRECTION = {
   ASC: 'ASCENDING',
@@ -112,7 +112,7 @@ class SketchTable extends React.Component {
           <Overlay
             isFixedHeight
             title={this.props.t('SketchList.AddToCollectionOverlayTitle')}
-            actions={<SearchBar />}
+            actions={<CollectionSearchbar />}
             closeOverlay={() =>
               this.setState({ sketchToAddToCollection: null })
             }
@@ -133,7 +133,8 @@ function mapStateToProps(state) {
   return {
     sketches: state.sketches,
     user: state.user,
-    project: state.project
+    project: state.project,
+    searchTerm: state.search.sketchSearchTerm
   };
 }
 

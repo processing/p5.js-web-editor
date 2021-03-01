@@ -16,7 +16,10 @@ import CollectionCreate from '../components/CollectionCreate';
 import DashboardTabSwitcherPublic, {
   TabKey
 } from '../components/DashboardTabSwitcher';
-import SearchBar from '../../IDE/components/Searchbar/SearchBar';
+import {
+  SketchSearchbar,
+  CollectionSearchbar
+} from '../../IDE/components/Searchbar';
 
 class DashboardView extends React.Component {
   static defaultProps = {
@@ -27,11 +30,7 @@ class DashboardView extends React.Component {
     super(props);
     this.closeAccountPage = this.closeAccountPage.bind(this);
     this.gotoHomePage = this.gotoHomePage.bind(this);
-    this.state = {
-      searchTerm: ''
-    };
   }
-
   componentDidMount() {
     document.body.className = this.props.theme;
   }
@@ -43,10 +42,6 @@ class DashboardView extends React.Component {
   gotoHomePage() {
     browserHistory.push('/');
   }
-
-  handleChangeSearchTerm = (val) => {
-    this.setState({ searchTerm: val });
-  };
 
   selectedTabKey() {
     const path = this.props.location.pathname;
@@ -92,10 +87,7 @@ class DashboardView extends React.Component {
               <Button to={`/${username}/collections/create`}>
                 {t('DashboardView.CreateCollection')}
               </Button>
-              <SearchBar
-                onChangeSearchTerm={this.handleChangeSearchTerm}
-                searchTerm={this.state.searchTerm}
-              />
+              <CollectionSearchbar />
             </React.Fragment>
           )
         );
@@ -106,10 +98,7 @@ class DashboardView extends React.Component {
             {this.isOwner() && (
               <Button to="/">{t('DashboardView.NewSketch')}</Button>
             )}
-            <SearchBar
-              onChangeSearchTerm={this.handleChangeSearchTerm}
-              searchTerm={this.state.searchTerm}
-            />
+            <SketchSearchbar />
           </React.Fragment>
         );
     }
@@ -118,30 +107,12 @@ class DashboardView extends React.Component {
   renderContent(tabKey, username) {
     switch (tabKey) {
       case TabKey.assets:
-        return (
-          <AssetsTable
-            key={username}
-            username={username}
-            searchTerm={this.state.searchTerm}
-          />
-        );
+        return <AssetsTable key={username} username={username} />;
       case TabKey.collections:
-        return (
-          <CollectionTable
-            key={username}
-            username={username}
-            searchTerm={this.state.searchTerm}
-          />
-        );
+        return <CollectionTable key={username} username={username} />;
       case TabKey.sketches:
       default:
-        return (
-          <SketchTable
-            key={username}
-            username={username}
-            searchTerm={this.state.searchTerm}
-          />
-        );
+        return <SketchTable key={username} username={username} />;
     }
   }
 
