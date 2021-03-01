@@ -1,7 +1,7 @@
 import apiClient from '../../../utils/apiClient';
 import getConfig from '../../../utils/getConfig';
 import { handleCreateFile } from './files';
-import { newFolder } from './ide';
+import { newFile } from './ide';
 import { TEXT_FILE_REGEX } from '../../../../server/utils/fileUtils';
 
 const s3BucketHttps =
@@ -94,7 +94,6 @@ export function dropzoneAcceptCallback(userId, file, done) {
 }
 
 export function dropzoneSendingCallback(file, xhr, formData) {
-  console.log(file);
   return () => {
     if (!file.name.match(TEXT_FILE_REGEX) || file.size >= MAX_LOCAL_FILE_SIZE) {
       Object.keys(file.postData).forEach((key) => {
@@ -104,9 +103,43 @@ export function dropzoneSendingCallback(file, xhr, formData) {
   };
 }
 
-export function dropzoneCompleteCallback(elementId, parentId, file) {
+export function dropzoneCompleteCallback(elementId, file) {
   return (dispatch) => { // eslint-disable-line
-    dispatch(newFolder(parentId));
+    if (
+      (!file.name.match(TEXT_FILE_REGEX) || file.size >= MAX_LOCAL_FILE_SIZE) &&
+      file.status !== 'error'
+    ) {
+      let inputHidden = '<input type="hidden" name="attachments[]" value="';
+      const json = {
+        url: `${s3BucketHttps}${file.postData.key}`,
+        originalFilename: file.name
+      };
+
+      let jsonStr = JSON.stringify(json);
+
+      // convert the json string to binary data so that btoa can encode it
+      jsonStr = toBinary(jsonStr);
+      inputHidden += `${window.btoa(jsonStr)}" />`;
+      document.getElementById(elementId).innerHTML += inputHidden;
+
+      const formParams = {
+        name: file.name,
+        url: `${s3BucketHttps}${file.postData.key}`
+      };
+      dispatch(handleCreateFile(formParams, false));
+    } else if (file.content !== undefined) {
+      const formParams = {
+        name: file.name,
+        content: file.content
+      };
+      dispatch(handleCreateFile(formParams, false));
+    }
+  };
+}
+
+export function dropzoneCompleteCallbackAid(elementId, parentId, file) {
+  return (dispatch) => { // eslint-disable-line
+    dispatch(newFile(parentId));
     if (
       (!file.name.match(TEXT_FILE_REGEX) || file.size >= MAX_LOCAL_FILE_SIZE) &&
       file.status !== 'error'
