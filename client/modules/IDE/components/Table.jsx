@@ -273,7 +273,7 @@ Table.propTypes = {
       name: PropTypes.string.isRequired
     })
   ).isRequired,
-  searchTerm: PropTypes.string.isRequired,
+  searchTerm: PropTypes.string,
   loading: PropTypes.bool.isRequired,
   project: PropTypes.shape({
     id: PropTypes.string,
@@ -302,7 +302,8 @@ Table.defaultProps = {
   project: {
     id: undefined,
     owner: undefined
-  }
+  },
+  searchTerm: ''
 };
 
 function mapStateToProps(state, ownProps) {
