@@ -14,8 +14,6 @@
 }
 
 .quick-add__item {
-  display: flex;
-  align-items: center;
   height: #{64 / $base-font-size}rem;
   padding-right: #{24 / $base-font-size}rem;
 

@@ -4,15 +4,19 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withTranslation } from 'react-i18next';
-
+// import find from 'lodash/find';
 import * as ProjectActions from '../actions/project';
 import * as ProjectsActions from '../actions/projects';
 import * as CollectionsActions from '../actions/collections';
 import * as ToastActions from '../actions/toast';
-import * as SortingActions from '../actions/sorting';
 import getSortedCollections from '../selectors/collections';
-import Loader from '../../App/components/loader';
-import QuickAddList from './QuickAddList';
+import Item from './QuickAddList';
+import Table from './Table';
+
+const DIRECTION = {
+  ASC: 'ASCENDING',
+  DESC: 'DESCENDING'
+};
 
 const projectInCollection = (project, collection) =>
   collection.items.find((item) => item.projectId === project.id) != null;
@@ -26,19 +30,6 @@ class CollectionList extends React.Component {
     }
 
     this.props.getCollections(this.props.username);
-
-    this.state = {
-      hasLoadedData: false
-    };
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.loading === true && this.props.loading === false) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({
-        hasLoadedData: true
-      });
-    }
   }
 
   getTitle() {
@@ -60,7 +51,6 @@ class CollectionList extends React.Component {
 
   render() {
     const { collections, project } = this.props;
-    const hasCollections = collections.length > 0;
     const collectionWithSketchStatus = collections.map((collection) => ({
       ...collection,
       url: `/${collection.owner.username}/collections/${collection.id}`,
@@ -69,20 +59,73 @@ class CollectionList extends React.Component {
 
     let content = null;
 
-    if (this.props.loading && !this.state.hasLoadedData) {
-      content = <Loader />;
-    } else if (hasCollections) {
-      content = (
-        <QuickAddList
-          items={collectionWithSketchStatus}
-          onAdd={this.handleCollectionAdd}
-          onRemove={this.handleCollectionRemove}
+    const headerRow = [
+      {
+        name: '',
+        field: '',
+        type: 'nonSortable'
+      },
+      {
+        name: this.props.t('CollectionList.HeaderName'),
+        field: 'name',
+        type: 'string'
+      },
+      {
+        name: '',
+        field: '',
+        type: 'nonSortable'
+      }
+    ];
+
+    const sorting = {
+      field: 'name',
+      type: 'string',
+      direction: DIRECTION.DESC
+    };
+
+    const extras = {
+      emptyTableText: this.props.t('CollectionList.NoCollections'),
+      title: this.getTitle(),
+      summary: this.props.t('CollectionList.TableSummary'),
+      buttonAscAriaLable: 'CollectionList.ButtonLabelAscendingARIA',
+      buttonDescAriaLable: 'CollectionList.ButtonLabelDescendingARIA',
+      arrowUpIconAriaLable: 'CollectionList.DirectionAscendingARIA',
+      arrowDownIconAriaLable: 'CollectionList.DirectionDescendingARIA'
+    };
+
+    const handleAction = (collection) => {
+      if (collection.isAdded) {
+        this.handleCollectionRemove(collection);
+      } else {
+        this.handleCollectionAdd(collection);
+      }
+    };
+
+    const dataRows = collectionWithSketchStatus.map((collection) => ({
+      ...collection,
+      row: (
+        <Item
+          key={collection.id}
           t={this.props.t}
+          {...collection}
+          onSelect={(event) => {
+            event.stopPropagation();
+            event.currentTarget.blur();
+            handleAction(collection);
+          }}
         />
-      );
-    } else {
-      content = this.props.t('AddToCollectionList.Empty');
-    }
+      )
+    }));
+    content = (
+      <Table
+        key={this.props.username}
+        username={this.props.username}
+        headerRow={headerRow}
+        dataRows={dataRows}
+        extras={extras}
+        sorting={sorting}
+      />
+    );
 
     return (
       <div className="collection-add-sketch">
@@ -135,7 +178,6 @@ CollectionList.propTypes = {
     })
   ).isRequired,
   username: PropTypes.string,
-  loading: PropTypes.bool.isRequired,
   project: PropTypes.shape({
     id: PropTypes.string,
     owner: PropTypes.shape({
@@ -157,8 +199,6 @@ function mapStateToProps(state, ownProps) {
   return {
     user: state.user,
     collections: getSortedCollections(state),
-    sorting: state.sorting,
-    loading: state.loading,
     project: ownProps.project || state.project,
     projectId: ownProps && ownProps.params ? ownProps.prams.project_id : null
   };
@@ -171,8 +211,7 @@ function mapDispatchToProps(dispatch) {
       CollectionsActions,
       ProjectsActions,
       ProjectActions,
-      ToastActions,
-      SortingActions
+      ToastActions
     ),
     dispatch
   );

@@ -4,34 +4,22 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withTranslation } from 'react-i18next';
-// import find from 'lodash/find';
 import * as ProjectsActions from '../actions/projects';
 import * as CollectionsActions from '../actions/collections';
 import * as ToastActions from '../actions/toast';
-import * as SortingActions from '../actions/sorting';
 import getSortedSketches from '../selectors/projects';
-import Loader from '../../App/components/loader';
-import QuickAddList from './QuickAddList';
+import Item from './QuickAddList';
+import Table from './Table';
+
+const DIRECTION = {
+  ASC: 'ASCENDING',
+  DESC: 'DESCENDING'
+};
 
 class SketchList extends React.Component {
   constructor(props) {
     super(props);
     this.props.getProjects(this.props.username);
-
-    this.state = {
-      isInitialDataLoad: true
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (
-      this.props.sketches !== nextProps.sketches &&
-      Array.isArray(nextProps.sketches)
-    ) {
-      this.setState({
-        isInitialDataLoad: false
-      });
-    }
   }
 
   getSketchesTitle() {
@@ -56,7 +44,6 @@ class SketchList extends React.Component {
     null;
 
   render() {
-    const hasSketches = this.props.sketches.length > 0;
     const sketchesWithAddedStatus = this.props.sketches.map((sketch) => ({
       ...sketch,
       isAdded: this.inCollection(sketch),
@@ -65,19 +52,73 @@ class SketchList extends React.Component {
 
     let content = null;
 
-    if (this.props.loading && this.state.isInitialDataLoad) {
-      content = <Loader />;
-    } else if (hasSketches) {
-      content = (
-        <QuickAddList
-          items={sketchesWithAddedStatus}
-          onAdd={this.handleCollectionAdd}
-          onRemove={this.handleCollectionRemove}
+    const headerRow = [
+      {
+        name: '',
+        field: '',
+        type: 'nonSortable'
+      },
+      {
+        name: this.props.t('SketchList.HeaderName'),
+        field: 'name',
+        type: 'string'
+      },
+      {
+        name: '',
+        field: '',
+        type: 'nonSortable'
+      }
+    ];
+
+    const sorting = {
+      field: 'name',
+      type: 'string',
+      direction: DIRECTION.DESC
+    };
+
+    const extras = {
+      emptyTableText: this.props.t('SketchList.NoSketches'),
+      title: this.getSketchesTitle(),
+      summary: this.props.t('SketchList.TableSummary'),
+      buttonAscAriaLable: 'SketchList.ButtonLabelAscendingARIA',
+      buttonDescAriaLable: 'SketchList.ButtonLabelDescendingARIA',
+      arrowUpIconAriaLable: 'SketchList.DirectionAscendingARIA',
+      arrowDownIconAriaLable: 'SketchList.DirectionDescendingARIA'
+    };
+
+    const handleAction = (sketch) => {
+      if (sketch.isAdded) {
+        this.handleCollectionRemove(sketch);
+      } else {
+        this.handleCollectionAdd(sketch);
+      }
+    };
+
+    const dataRows = sketchesWithAddedStatus.map((sketch) => ({
+      ...sketch,
+      row: (
+        <Item
+          key={sketch.id}
+          t={this.props.t}
+          {...sketch}
+          onSelect={(event) => {
+            event.stopPropagation();
+            event.currentTarget.blur();
+            handleAction(sketch);
+          }}
         />
-      );
-    } else {
-      content = this.props.t('AddToCollectionSketchList.NoCollections');
-    }
+      )
+    }));
+    content = (
+      <Table
+        key={this.props.username}
+        username={this.props.username}
+        headerRow={headerRow}
+        dataRows={dataRows}
+        extras={extras}
+        sorting={sorting}
+      />
+    );
 
     return (
       <div className="collection-add-sketch">
@@ -118,11 +159,6 @@ SketchList.propTypes = {
     )
   }).isRequired,
   username: PropTypes.string,
-  loading: PropTypes.bool.isRequired,
-  sorting: PropTypes.shape({
-    field: PropTypes.string.isRequired,
-    direction: PropTypes.string.isRequired
-  }).isRequired,
   addToCollection: PropTypes.func.isRequired,
   removeFromCollection: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired
@@ -136,21 +172,13 @@ function mapStateToProps(state) {
   return {
     user: state.user,
     sketches: getSortedSketches(state),
-    sorting: state.sorting,
-    loading: state.loading,
     project: state.project
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
-    Object.assign(
-      {},
-      ProjectsActions,
-      CollectionsActions,
-      ToastActions,
-      SortingActions
-    ),
+    Object.assign({}, ProjectsActions, CollectionsActions, ToastActions),
     dispatch
   );
 }
