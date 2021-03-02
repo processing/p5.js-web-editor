@@ -76,6 +76,11 @@ class SketchTable extends React.Component {
         field: 'updatedAt',
         name: this.props.t('SketchList.HeaderUpdatedAt'),
         type: 'date'
+      },
+      {
+        field: '',
+        name: '',
+        type: 'nonSortable'
       }
     ];
 
@@ -98,7 +103,7 @@ class SketchTable extends React.Component {
     }));
 
     return (
-      <div>
+      <React.Fragment>
         <Table
           key={username}
           username={username}
@@ -124,7 +129,7 @@ class SketchTable extends React.Component {
             />
           </Overlay>
         )}
-      </div>
+      </React.Fragment>
     );
   }
 }

@@ -186,7 +186,11 @@ class Table extends React.Component {
       'sketches-table__header--selected': field === fieldName
     });
     const buttonLabel = this._getButtonLabel(fieldName, displayName);
-    return (
+    return type === 'nonSortable' ? (
+      <th scope="col" key={index}>
+        {displayName}
+      </th>
+    ) : (
       <th scope="col" key={index}>
         <button
           className="sketch-list__sort-button"
@@ -228,7 +232,6 @@ class Table extends React.Component {
                 {this.props.headerRow.map((col, index) =>
                   this._renderFieldHeader(col.field, col.name, col.type, index)
                 )}
-                <th scope="col"></th>
               </tr>
             </thead>
             <tbody>

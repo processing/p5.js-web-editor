@@ -90,6 +90,11 @@ class CollectionTable extends React.Component {
         field: 'sketchCount',
         name: this.props.t('CollectionList.HeaderNumItems'),
         type: 'number'
+      },
+      {
+        field: '',
+        name: '',
+        type: 'nonSortable'
       }
     ];
 
@@ -110,7 +115,7 @@ class CollectionTable extends React.Component {
     }));
 
     return (
-      <div>
+      <React.Fragment>
         <Table
           key={username}
           username={username}
@@ -135,7 +140,7 @@ class CollectionTable extends React.Component {
             />
           </Overlay>
         )}
-      </div>
+      </React.Fragment>
     );
   }
 }

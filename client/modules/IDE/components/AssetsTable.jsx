@@ -35,6 +35,11 @@ class AssetsTable extends React.Component {
         field: 'sketchName',
         name: this.props.t('AssetList.HeaderSketch'),
         type: 'string'
+      },
+      {
+        field: '',
+        name: '',
+        type: 'nonSortable'
       }
     ];
 
