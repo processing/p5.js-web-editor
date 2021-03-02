@@ -11,7 +11,11 @@ function deleteFilesFromS3(files) {
   deleteObjectsFromS3(
     files
       .filter((file) => {
-        if (file.url) {
+        if (
+          file.url &&
+          (file.url.includes(process.env.S3_BUCKET_URL_BASE) ||
+            file.url.includes(process.env.S3_BUCKET))
+        ) {
           if (
             !process.env.S3_DATE ||
             (process.env.S3_DATE &&

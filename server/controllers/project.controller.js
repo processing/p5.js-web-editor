@@ -3,7 +3,7 @@ import format from 'date-fns/format';
 import isUrl from 'is-url';
 import jsdom, { serializeDocument } from 'jsdom';
 import isAfter from 'date-fns/isAfter';
-import request from 'request';
+import axios from 'axios';
 import slugify from 'slugify';
 import Project from '../models/project';
 import User from '../models/user';
@@ -125,7 +125,7 @@ export function getProjectsForUserId(userId) {
 export function getProjectAsset(req, res) {
   Project.findById(req.params.project_id)
     .populate('user', 'username')
-    .exec((err, project) => { // eslint-disable-line
+    .exec(async (err, project) => { // eslint-disable-line
       if (err) {
         return res
           .status(404)
@@ -145,15 +145,15 @@ export function getProjectAsset(req, res) {
       if (!resolvedFile.url) {
         return res.send(resolvedFile.content);
       }
-      request(
-        { method: 'GET', url: resolvedFile.url, encoding: null },
-        (innerErr, response, body) => {
-          if (innerErr) {
-            return res.status(404).send({ message: 'Asset does not exist' });
-          }
-          return res.send(body);
-        }
-      );
+
+      try {
+        const { data } = await axios.get(resolvedFile.url, {
+          responseType: 'arraybuffer'
+        });
+        res.send(data);
+      } catch (error) {
+        res.status(404).send({ message: 'Asset does not exist' });
+      }
     });
 }
 
@@ -198,7 +198,7 @@ function bundleExternalLibs(project, zip, callback) {
   let numScriptsResolved = 0;
   let numScriptTags = 0;
 
-  function resolveScriptTagSrc(scriptTag, document) {
+  async function resolveScriptTagSrc(scriptTag, document) {
     const path = scriptTag.src.split('/');
     const filename = path[path.length - 1];
     const { src } = scriptTag;
@@ -212,23 +212,21 @@ function bundleExternalLibs(project, zip, callback) {
       return;
     }
 
-    request(
-      { method: 'GET', url: src, encoding: null },
-      (err, response, body) => {
-        if (err) {
-          console.log(err);
-        } else {
-          zip.append(body, { name: filename });
-          scriptTag.src = filename;
-        }
+    try {
+      const { data } = await axios.get(src, {
+        responseType: 'arraybuffer'
+      });
+      zip.append(data, { name: filename });
+      scriptTag.src = filename;
+    } catch (err) {
+      console.log(err);
+    }
 
-        numScriptsResolved += 1;
-        if (numScriptsResolved === numScriptTags) {
-          indexHtml.content = serializeDocument(document);
-          callback();
-        }
-      }
-    );
+    numScriptsResolved += 1;
+    if (numScriptsResolved === numScriptTags) {
+      indexHtml.content = serializeDocument(document);
+      callback();
+    }
   }
 
   jsdom.env(indexHtml.content, (innerErr, window) => {
@@ -264,7 +262,7 @@ function buildZip(project, req, res) {
   );
   zip.pipe(res);
 
-  function addFileToZip(file, path) {
+  async function addFileToZip(file, path) {
     if (file.fileType === 'folder') {
       const newPath = file.name === 'root' ? path : `${path}${file.name}/`;
       file.children.forEach((fileId) => {
@@ -274,16 +272,18 @@ function buildZip(project, req, res) {
         })();
       });
     } else if (file.url) {
-      request(
-        { method: 'GET', url: file.url, encoding: null },
-        (err, response, body) => {
-          zip.append(body, { name: `${path}${file.name}` });
-          numCompletedFiles += 1;
-          if (numCompletedFiles === numFiles) {
-            zip.finalize();
-          }
-        }
-      );
+      try {
+        const { data } = await axios.get(file.url, {
+          responseType: 'arraybuffer'
+        });
+        zip.append(data, { name: `${path}${file.name}` });
+      } catch (err) {
+        console.log(err);
+      }
+      numCompletedFiles += 1;
+      if (numCompletedFiles === numFiles) {
+        zip.finalize();
+      }
     } else {
       zip.append(file.content, { name: `${path}${file.name}` });
       numCompletedFiles += 1;
