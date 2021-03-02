@@ -51,9 +51,7 @@ export function listen(callback) {
 }
 
 function eventListener(e) {
-  console.log('in event listener');
   const { data } = e;
-  console.log(e);
 
   // should also store origin of parent? idk
   // if (data && e.origin === origin) {

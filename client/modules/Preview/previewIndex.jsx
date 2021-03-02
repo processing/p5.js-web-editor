@@ -28,7 +28,7 @@ const App = () => {
     const { type, payload } = message;
     switch (type) {
       case MessageTypes.FILES:
-        dispatch(setFiles(payload.files));
+        dispatch(setFiles(payload));
         break;
       case MessageTypes.START:
         setIsPlaying(true);
