@@ -173,9 +173,15 @@
 		text-decoration: none;
 		color: getThemifyVariable('inactive-text-color');
 		cursor: pointer;
+		& g, & path {
+			fill: getThemifyVariable('inactive-text-color');
+		}
 		&:hover {
 			text-decoration: none;
 			color: getThemifyVariable('heavy-text-color');
+			& g, & path {
+				fill: getThemifyVariable('heavy-text-color');
+			}
 		}
 	}
 }

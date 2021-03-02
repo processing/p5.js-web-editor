@@ -54,7 +54,8 @@ export function setNewProject(project) {
 export function getProject(id, username) {
   return (dispatch, getState) => {
     dispatch(justOpenedProject());
-    apiClient.get(`/${username}/projects/${id}`)
+    apiClient
+      .get(`/${username}/projects/${id}`)
       .then((response) => {
         dispatch(setProject(response.data));
         dispatch(setUnsavedChanges(false));
@@ -72,7 +73,7 @@ export function getProject(id, username) {
 export function persistState() {
   return (dispatch, getState) => {
     dispatch({
-      type: ActionTypes.PERSIST_STATE,
+      type: ActionTypes.PERSIST_STATE
     });
     const state = getState();
     saveState(state);
@@ -82,7 +83,7 @@ export function persistState() {
 export function clearPersistedState() {
   return (dispatch) => {
     dispatch({
-      type: ActionTypes.CLEAR_PERSISTED_STATE,
+      type: ActionTypes.CLEAR_PERSISTED_STATE
     });
     clearState();
   };
@@ -110,8 +111,12 @@ export function projectSaveSuccess() {
 function getSynchedProject(currentState, responseProject) {
   let hasChanges = false;
   const synchedProject = Object.assign({}, responseProject);
-  const currentFiles = currentState.files.map(({ name, children, content }) => ({ name, children, content }));
-  const responseFiles = responseProject.files.map(({ name, children, content }) => ({ name, children, content }));
+  const currentFiles = currentState.files.map(
+    ({ name, children, content }) => ({ name, children, content })
+  );
+  const responseFiles = responseProject.files.map(
+    ({ name, children, content }) => ({ name, children, content })
+  );
   if (!isEqual(currentFiles, responseFiles)) {
     synchedProject.files = currentState.files;
     hasChanges = true;
@@ -126,29 +131,43 @@ function getSynchedProject(currentState, responseProject) {
   };
 }
 
-export function saveProject(selectedFile = null, autosave = false, mobile = false) {
+export function saveProject(
+  selectedFile = null,
+  autosave = false,
+  mobile = false
+) {
   return (dispatch, getState) => {
     const state = getState();
     if (state.project.isSaving) {
       return Promise.resolve();
     }
     dispatch(startSavingProject());
-    if (state.user.id && state.project.owner && state.project.owner.id !== state.user.id) {
+    if (
+      state.user.id &&
+      state.project.owner &&
+      state.project.owner.id !== state.user.id
+    ) {
       return Promise.reject();
     }
     const formParams = Object.assign({}, state.project);
     formParams.files = [...state.files];
 
     if (selectedFile) {
-      const fileToUpdate = formParams.files.find(file => file.id === selectedFile.id);
+      const fileToUpdate = formParams.files.find(
+        (file) => file.id === selectedFile.id
+      );
       fileToUpdate.content = selectedFile.content;
     }
     if (state.project.id) {
-      return apiClient.put(`/projects/${state.project.id}`, formParams)
+      return apiClient
+        .put(`/projects/${state.project.id}`, formParams)
         .then((response) => {
           dispatch(endSavingProject());
           dispatch(setUnsavedChanges(false));
-          const { hasChanges, synchedProject } = getSynchedProject(getState(), response.data);
+          const { hasChanges, synchedProject } = getSynchedProject(
+            getState(),
+            response.data
+          );
           if (hasChanges) {
             dispatch(setUnsavedChanges(true));
           }
@@ -158,7 +177,10 @@ export function saveProject(selectedFile = null, autosave = false, mobile = fals
             if (state.ide.justOpenedProject && state.preferences.autosave) {
               dispatch(showToast(5500));
               dispatch(setToastText('Toast.SketchSaved'));
-              setTimeout(() => dispatch(setToastText('Toast.AutosaveEnabled')), 1500);
+              setTimeout(
+                () => dispatch(setToastText('Toast.AutosaveEnabled')),
+                1500
+              );
               dispatch(resetJustOpenedProject());
             } else {
               dispatch(showToast(1500));
@@ -181,14 +203,20 @@ export function saveProject(selectedFile = null, autosave = false, mobile = fals
         });
     }
 
-    return apiClient.post('/projects', formParams)
+    return apiClient
+      .post('/projects', formParams)
       .then((response) => {
         dispatch(endSavingProject());
-        const { hasChanges, synchedProject } = getSynchedProject(getState(), response.data);
+        const { hasChanges, synchedProject } = getSynchedProject(
+          getState(),
+          response.data
+        );
 
         dispatch(setNewProject(synchedProject));
         dispatch(setUnsavedChanges(false));
-        browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
+        browserHistory.push(
+          `/${response.data.user.username}/sketches/${response.data.id}`
+        );
 
         if (hasChanges) {
           dispatch(setUnsavedChanges(true));
@@ -199,7 +227,10 @@ export function saveProject(selectedFile = null, autosave = false, mobile = fals
           if (state.preferences.autosave) {
             dispatch(showToast(5500));
             dispatch(setToastText('Toast.SketchSaved'));
-            setTimeout(() => dispatch(setToastText('Toast.AutosaveEnabled')), 1500);
+            setTimeout(
+              () => dispatch(setToastText('Toast.AutosaveEnabled')),
+              1500
+            );
             dispatch(resetJustOpenedProject());
           } else {
             dispatch(showToast(1500));
@@ -248,7 +279,7 @@ export function newProject() {
 function generateNewIdsForChildren(file, files) {
   const newChildren = [];
   file.children.forEach((childId) => {
-    const child = files.find(childFile => childFile.id === childId);
+    const child = files.find((childFile) => childFile.id === childId);
     const newId = objectID().toHexString();
     child.id = newId;
     child._id = newId;
@@ -258,54 +289,54 @@ function generateNewIdsForChildren(file, files) {
   file.children = newChildren; // eslint-disable-line
 }
 
-export function cloneProject(id) {
+export function cloneProject(project) {
   return (dispatch, getState) => {
     dispatch(setUnsavedChanges(false));
-    new Promise((resolve, reject) => {
-      if (!id) {
-        resolve(getState());
-      } else {
-        apiClient.get(`/projects/${id}`)
-          .then(res => res.json())
-          .then(data => resolve({
-            files: data.files,
-            project: {
-              name: data.name
-            }
-          }));
-      }
-    }).then((state) => {
-      const newFiles = state.files.map((file) => { // eslint-disable-line
-        return { ...file };
-      });
+    const state = getState();
+    const files = project ? project.files : state.files;
+    const projectName = project ? project.name : state.project.name;
+    const newFiles = files.map((file) => ({ ...file }));
 
-      // generate new IDS for all files
-      const rootFile = newFiles.find(file => file.name === 'root');
-      const newRootFileId = objectID().toHexString();
-      rootFile.id = newRootFileId;
-      rootFile._id = newRootFileId;
-      generateNewIdsForChildren(rootFile, newFiles);
+    // generate new IDS for all files
+    const rootFile = newFiles.find((file) => file.name === 'root');
+    const newRootFileId = objectID().toHexString();
+    rootFile.id = newRootFileId;
+    rootFile._id = newRootFileId;
+    generateNewIdsForChildren(rootFile, newFiles);
 
-      // duplicate all files hosted on S3
-      each(newFiles, (file, callback) => {
-        if (file.url && (file.url.includes(S3_BUCKET_URL_BASE) || file.url.includes(S3_BUCKET))) {
+    // duplicate all files hosted on S3
+    each(
+      newFiles,
+      (file, callback) => {
+        if (
+          file.url &&
+          (file.url.includes(S3_BUCKET_URL_BASE) ||
+            file.url.includes(S3_BUCKET))
+        ) {
           const formParams = {
             url: file.url
           };
-          apiClient.post('/S3/copy', formParams)
-            .then((response) => {
-              file.url = response.data.url;
-              callback(null);
-            });
+          apiClient.post('/S3/copy', formParams).then((response) => {
+            file.url = response.data.url;
+            callback(null);
+          });
         } else {
           callback(null);
         }
-      }, (err) => {
+      },
+      (err) => {
         // if not errors in duplicating the files on S3, then duplicate it
-        const formParams = Object.assign({}, { name: `${state.project.name} copy` }, { files: newFiles });
-        apiClient.post('/projects', formParams)
+        const formParams = Object.assign(
+          {},
+          { name: `${projectName} copy` },
+          { files: newFiles }
+        );
+        apiClient
+          .post('/projects', formParams)
           .then((response) => {
-            browserHistory.push(`/${response.data.user.username}/sketches/${response.data.id}`);
+            browserHistory.push(
+              `/${response.data.user.username}/sketches/${response.data.id}`
+            );
             dispatch(setNewProject(response.data));
           })
           .catch((error) => {
@@ -315,8 +346,8 @@ export function cloneProject(id) {
               error: response.data
             });
           });
-      });
-    });
+      }
+    );
   };
 }
 
@@ -342,7 +373,8 @@ export function setProjectSavedTime(updatedAt) {
 export function changeProjectName(id, newName) {
   return (dispatch, getState) => {
     const state = getState();
-    apiClient.put(`/projects/${id}`, { name: newName })
+    apiClient
+      .put(`/projects/${id}`, { name: newName })
       .then((response) => {
         if (response.status === 200) {
           dispatch({
@@ -369,7 +401,8 @@ export function changeProjectName(id, newName) {
 
 export function deleteProject(id) {
   return (dispatch, getState) => {
-    apiClient.delete(`/projects/${id}`)
+    apiClient
+      .delete(`/projects/${id}`)
       .then(() => {
         const state = getState();
         if (id === state.project.id) {

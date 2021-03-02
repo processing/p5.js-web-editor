@@ -1,63 +1,71 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { metaKeyName, } from '../../../utils/metaKey';
+import { metaKeyName, metaKey } from '../../../utils/metaKey';
 
 function KeyboardShortcutModal() {
   const { t } = useTranslation();
+  const replaceCommand =
+    metaKey === 'Ctrl' ? `${metaKeyName} + H` : `${metaKeyName} + ⌥ + F`;
   return (
     <div className="keyboard-shortcuts">
-      <h3 className="keyboard-shortcuts__title">{t('KeyboardShortcuts.CodeEditing.CodeEditing')}</h3>
+      <h3 className="keyboard-shortcuts__title">
+        {t('KeyboardShortcuts.CodeEditing.CodeEditing')}
+      </h3>
       <p className="keyboard-shortcuts__description">
-        {t('KeyboardShortcuts.ShortcutsFollow')} <a href="https://shortcuts.design/toolspage-sublimetext.html" target="_blank" rel="noopener noreferrer">{t('KeyboardShortcuts.SublimeText')}</a>.
+        {t('KeyboardShortcuts.ShortcutsFollow')}{' '}
+        <a
+          href="https://shortcuts.design/toolspage-sublimetext.html"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {t('KeyboardShortcuts.SublimeText')}
+        </a>
+        .
       </p>
       <ul className="keyboard-shortcuts__list">
         <li className="keyboard-shortcut-item">
-          <span className="keyboard-shortcut__command">{'\u21E7'} + Tab</span>
+          <span className="keyboard-shortcut__command">
+            {metaKeyName} + {'\u21E7'} + F
+          </span>
           <span>{t('KeyboardShortcuts.CodeEditing.Tidy')}</span>
         </li>
         <li className="keyboard-shortcut-item">
-          <span className="keyboard-shortcut__command">
-            {metaKeyName} + F
-          </span>
+          <span className="keyboard-shortcut__command">{metaKeyName} + F</span>
           <span>{t('KeyboardShortcuts.CodeEditing.FindText')}</span>
         </li>
         <li className="keyboard-shortcut-item">
-          <span className="keyboard-shortcut__command">
-            {metaKeyName} + G
-          </span>
+          <span className="keyboard-shortcut__command">{metaKeyName} + G</span>
           <span>{t('KeyboardShortcuts.CodeEditing.FindNextTextMatch')}</span>
         </li>
         <li className="keyboard-shortcut-item">
           <span className="keyboard-shortcut__command">
             {metaKeyName} + {'\u21E7'} + G
           </span>
-          <span>{t('KeyboardShortcuts.CodeEditing.FindPreviousTextMatch')}</span>
+          <span>
+            {t('KeyboardShortcuts.CodeEditing.FindPreviousTextMatch')}
+          </span>
         </li>
         <li className="keyboard-shortcut-item">
-          <span className="keyboard-shortcut__command">
-            {metaKeyName} + [
-          </span>
+          <span className="keyboard-shortcut__command">{replaceCommand}</span>
+          <span>{t('KeyboardShortcuts.CodeEditing.ReplaceTextMatch')}</span>
+        </li>
+        <li className="keyboard-shortcut-item">
+          <span className="keyboard-shortcut__command">{metaKeyName} + [</span>
           <span>{t('KeyboardShortcuts.CodeEditing.IndentCodeLeft')}</span>
         </li>
         <li className="keyboard-shortcut-item">
-          <span className="keyboard-shortcut__command">
-            {metaKeyName} + ]
-          </span>
+          <span className="keyboard-shortcut__command">{metaKeyName} + ]</span>
           <span>{t('KeyboardShortcuts.CodeEditing.IndentCodeRight')}</span>
         </li>
         <li className="keyboard-shortcut-item">
-          <span className="keyboard-shortcut__command">
-            {metaKeyName} + /
-          </span>
+          <span className="keyboard-shortcut__command">{metaKeyName} + /</span>
           <span>{t('KeyboardShortcuts.CodeEditing.CommentLine')}</span>
         </li>
       </ul>
       <h3 className="keyboard-shortcuts__title">General</h3>
       <ul className="keyboard-shortcuts__list">
         <li className="keyboard-shortcut-item">
-          <span className="keyboard-shortcut__command">
-            {metaKeyName} + S
-          </span>
+          <span className="keyboard-shortcut__command">{metaKeyName} + S</span>
           <span>{t('Common.Save')}</span>
         </li>
         <li className="keyboard-shortcut-item">

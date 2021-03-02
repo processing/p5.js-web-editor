@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
 import styled from 'styled-components';
-import { remSize, prop, common } from '../theme';
+import { remSize, prop } from '../theme';
 import IconButton from './mobile/IconButton';
-import Button from '../common/Button';
 
 const DropdownWrapper = styled.ul`
   background-color: ${prop('Modal.background')};
@@ -13,11 +11,11 @@ const DropdownWrapper = styled.ul`
   color: ${prop('primaryTextColor')};
 
   position: absolute;
-  right: ${props => (props.right ? 0 : 'initial')};
-  left: ${props => (props.left ? 0 : 'initial')};
+  right: ${(props) => (props.right ? 0 : 'initial')};
+  left: ${(props) => (props.left ? 0 : 'initial')};
 
-  ${props => (props.align === 'right' && 'right: 0;')}
-  ${props => (props.align === 'left' && 'left: 0;')}
+  ${(props) => props.align === 'right' && 'right: 0;'}
+  ${(props) => props.align === 'left' && 'left: 0;'}
 
 
   text-align: left;
@@ -28,15 +26,20 @@ const DropdownWrapper = styled.ul`
   z-index: 2;
   border-radius: ${remSize(6)};
 
-  & li:first-child { border-radius: ${remSize(5)} ${remSize(5)} 0 0; }
-  & li:last-child  { border-radius: 0 0 ${remSize(5)} ${remSize(5)}; }
+  & li:first-child {
+    border-radius: ${remSize(5)} ${remSize(5)} 0 0;
+  }
+  & li:last-child {
+    border-radius: 0 0 ${remSize(5)} ${remSize(5)};
+  }
 
   & li:hover {
-    
     background-color: ${prop('Button.hover.background')};
     color: ${prop('Button.hover.foreground')};
 
-    * { color: ${prop('Button.hover.foreground')}; }
+    * {
+      color: ${prop('Button.hover.foreground')};
+    }
   }
 
   li {
@@ -60,7 +63,9 @@ const DropdownWrapper = styled.ul`
       justify-content: flex-start;
     }
 
-    & button span { padding: 0px }
+    & button span {
+      padding: 0px;
+    }
   }
 `;
 
@@ -68,32 +73,32 @@ const DropdownWrapper = styled.ul`
 // const MaybeIcon = (Element, label) => Element && <Element aria-label={label} />;
 
 const Dropdown = ({ items, align }) => (
-  <DropdownWrapper align={align} >
+  <DropdownWrapper align={align}>
     {/* className="nav__items-left" */}
-    {items && items.map(({
-      title, icon, href, action
-    }) => (
-      <li key={`nav-${title && title.toLowerCase()}`}>
-        {/* {MaybeIcon(icon, `Navigate to ${title}`)} */}
-        {href
-          ? <IconButton to={href}>{title}</IconButton>
-          : <IconButton onClick={() => action()}>{title}</IconButton>}
-
-      </li>
-    ))
-    }
+    {items &&
+      items.map(({ title, icon, href, action }) => (
+        <li key={`nav-${title && title.toLowerCase()}`}>
+          {/* {MaybeIcon(icon, `Navigate to ${title}`)} */}
+          {href ? (
+            <IconButton to={href}>{title}</IconButton>
+          ) : (
+            <IconButton onClick={() => action()}>{title}</IconButton>
+          )}
+        </li>
+      ))}
   </DropdownWrapper>
 );
 
-
 Dropdown.propTypes = {
   align: PropTypes.oneOf(['left', 'right']),
-  items: PropTypes.arrayOf(PropTypes.shape({
-    action: PropTypes.func,
-    icon: PropTypes.func,
-    href: PropTypes.string,
-    title: PropTypes.string
-  })),
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      action: PropTypes.func,
+      icon: PropTypes.func,
+      href: PropTypes.string,
+      title: PropTypes.string
+    })
+  )
 };
 
 Dropdown.defaultProps = {

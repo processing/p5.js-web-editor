@@ -14,8 +14,7 @@
       "Title": "Editar",
       "TidyCode": "Ordenar código",
       "Find": "Buscar",
-      "FindNext": "Buscar siguiente",
-      "FindPrevious": "Buscar anterior"
+      "Replace": "Reemplazar"
     },
     "Sketch": {
       "Title": "Bosquejo",
@@ -47,6 +46,21 @@
       "MyAssets": "Mis recursos",
       "LogOut": "Cerrar sesión"
     }
+  },
+  "CodemirrorFindAndReplace": {
+    "ToggleReplace": "Alternar reemplazar",
+    "Find": "Buscar",
+    "FindPlaceholder": "Buscar en archivos",
+    "Replace": "Reemplazar",
+    "ReplaceAll": "Reemplaza todo",
+    "ReplacePlaceholder": "Texto a reemplazar",
+    "Regex": "Expresión regular",
+    "CaseSensitive": "Distinguir mayúsculas y minúsculas",
+    "WholeWords": "Palabra completa",
+    "Previous": "Previo",
+    "Next": "Próximo",
+    "NoResults": "No hay resultados",
+    "Close": "Cerrar"
   },
   "LoginForm": {
     "UsernameOrEmail": "Correo o Identificación",
@@ -165,6 +179,7 @@
       "FindText": "Encontrar texto",
       "FindNextMatch": "Encontrar siguiente ocurrencia",
       "FindPrevMatch": "Encontrar ocurrencia previa",
+      "ReplaceTextMatch": "Reemplazar coincidencia de texto",
       "IndentCodeLeft": "Indentar código a la izquierda",
       "IndentCodeRight": "Indentar código a la derecha",
       "CommentLine": "Comentar línea de código",
@@ -221,7 +236,7 @@
     "Title": "Crear Archivo",
     "CloseButtonARIA": "Cerrar diálogo de crear archivo",
     "EnterName": "Por favor introduce un nombre",
-    "InvalidType": "Tipo de archivo inválido. Las extensiones válidas son .js, .css, .json, .txt, .csv, .tsv, .frag y .vert."
+    "InvalidType": "Tipo de archivo inválido. Las extensiones válidas son .js, .css, .json, .xml, .txt, .csv, .tsv, .frag y .vert."
   },
   "NewFileForm": {
     "AddFileSubmit": "Agregar Archivo",

@@ -33,11 +33,7 @@ class CopyableInput extends React.Component {
   }
 
   render() {
-    const {
-      label,
-      value,
-      hasPreviewLink
-    } = this.props;
+    const { label, value, hasPreviewLink } = this.props;
     const copyableInputClass = classNames({
       'copyable-input': true,
       'copyable-input--with-preview': hasPreviewLink
@@ -47,24 +43,29 @@ class CopyableInput extends React.Component {
         <div
           className="copyable-input__value-container tooltipped-no-delay"
           aria-label={this.props.t('CopyableInput.CopiedARIA')}
-          ref={(element) => { this.tooltip = element; }}
+          ref={(element) => {
+            this.tooltip = element;
+          }}
           onMouseLeave={this.onMouseLeaveHandler}
         >
-          <label className="copyable-input__label" htmlFor={`copyable-input__value-${label}`}>
-            <div className="copyable-input__label-container">
-              {label}
-            </div>
+          <label
+            className="copyable-input__label"
+            htmlFor={`copyable-input__value-${label}`}
+          >
+            <div className="copyable-input__label-container">{label}</div>
             <input
               type="text"
               className="copyable-input__value"
               id={`copyable-input__value-${label}`}
               value={value}
-              ref={(element) => { this.input = element; }}
+              ref={(element) => {
+                this.input = element;
+              }}
               readOnly
             />
           </label>
         </div>
-        {hasPreviewLink &&
+        {hasPreviewLink && (
           <a
             target="_blank"
             rel="noopener noreferrer"
@@ -74,7 +75,7 @@ class CopyableInput extends React.Component {
           >
             <ShareIcon focusable="false" aria-hidden="true" />
           </a>
-        }
+        )}
       </div>
     );
   }

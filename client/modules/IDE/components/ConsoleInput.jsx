@@ -35,7 +35,9 @@ class ConsoleInput extends React.Component {
         if (value.trim(' ') === '') {
           return false;
         }
-        const messages = [{ log: Encode({ method: 'command', data: [value] }) }];
+        const messages = [
+          { log: Encode({ method: 'command', data: [value] }) }
+        ];
         const consoleEvent = [{ method: 'command', data: [value] }];
         dispatch({
           source: 'console',
@@ -43,9 +45,9 @@ class ConsoleInput extends React.Component {
         });
         this.props.dispatchConsoleEvent(consoleEvent);
         cm.setValue('');
-        this.setState(state => ({
+        this.setState((state) => ({
           commandCursor: -1,
-          commandHistory: [value, ...state.commandHistory],
+          commandHistory: [value, ...state.commandHistory]
         }));
       } else if (e.key === 'ArrowUp') {
         const lineNumber = this._cm.getDoc().getCursor().line;
@@ -58,9 +60,7 @@ class ConsoleInput extends React.Component {
             state.commandCursor + 1,
             state.commandHistory.length - 1
           );
-          this._cm
-            .getDoc()
-            .setValue(state.commandHistory[newCursor] || '');
+          this._cm.getDoc().setValue(state.commandHistory[newCursor] || '');
           const cursorPos = this._cm.getDoc().getLine(0).length - 1;
           this._cm.getDoc().setCursor({ line: 0, ch: cursorPos });
           return { commandCursor: newCursor };
@@ -74,9 +74,7 @@ class ConsoleInput extends React.Component {
 
         this.setState((state) => {
           const newCursor = Math.max(state.commandCursor - 1, -1);
-          this._cm
-            .getDoc()
-            .setValue(state.commandHistory[newCursor] || '');
+          this._cm.getDoc().setValue(state.commandHistory[newCursor] || '');
           const newLineCount = this._cm.getValue().split('\n').length;
           const newLine = this._cm.getDoc().getLine(newLineCount);
           const cursorPos = newLine ? newLine.length - 1 : 1;
@@ -87,12 +85,16 @@ class ConsoleInput extends React.Component {
       return true;
     });
 
-    this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
+    this._cm.getWrapperElement().style[
+      'font-size'
+    ] = `${this.props.fontSize}px`;
   }
 
   componentDidUpdate(prevProps) {
     this._cm.setOption('theme', `p5-${this.props.theme}`);
-    this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
+    this._cm.getWrapperElement().style[
+      'font-size'
+    ] = `${this.props.fontSize}px`;
     this._cm.refresh();
   }
 
@@ -102,9 +104,7 @@ class ConsoleInput extends React.Component {
 
   render() {
     return (
-      <div
-        className="console__input"
-      >
+      <div className="console__input">
         <div
           className="console-active__arrow-container"
           style={{ height: `${this.props.fontSize * 1.3333}px` }}
@@ -113,10 +113,18 @@ class ConsoleInput extends React.Component {
             className="console-active__arrow"
             focusable="false"
             aria-hidden="true"
-            style={{ width: `${this.props.fontSize}px`, height: `${this.props.fontSize * 0.57}px` }}
+            style={{
+              width: `${this.props.fontSize}px`,
+              height: `${this.props.fontSize * 0.57}px`
+            }}
           />
         </div>
-        <div ref={(element) => { this.codemirrorContainer = element; }} className="console__editor" />
+        <div
+          ref={(element) => {
+            this.codemirrorContainer = element;
+          }}
+          className="console__editor"
+        />
       </div>
     );
   }
@@ -127,6 +135,5 @@ ConsoleInput.propTypes = {
   dispatchConsoleEvent: PropTypes.func.isRequired,
   fontSize: PropTypes.number.isRequired
 };
-
 
 export default ConsoleInput;

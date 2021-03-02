@@ -1,5 +1,6 @@
 function __makeEvaluateExpression(evalInClosure) {
-  return expr => evalInClosure(`
+  return (expr) =>
+    evalInClosure(`
     ${expr}`);
 }
 
