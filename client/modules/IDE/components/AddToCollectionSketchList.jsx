@@ -8,7 +8,7 @@ import * as ProjectsActions from '../actions/projects';
 import * as CollectionsActions from '../actions/collections';
 import * as ToastActions from '../actions/toast';
 import getSortedSketches from '../selectors/projects';
-import Item from './QuickAddList';
+import Item from './AddToListRow';
 import Table from './Table';
 
 const DIRECTION = {
