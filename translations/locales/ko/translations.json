@@ -3,16 +3,16 @@
     "File": {
       "Title": "파일",
       "New": "새 파일",
-      "Share": "공유하기",
-      "Duplicate": "복제하기",
+      "Share": "공유",
+      "Duplicate": "복제",
       "Open": "열기",
       "Download": "다운로드",
-      "AddToCollection": "콜렉션 추가하기",
+      "AddToCollection": "콜렉션 추가",
       "Examples": "예제"
     },
     "Edit": {
-      "Title": "수정하기",
-      "TidyCode": "코드 정리",
+      "Title": "수정",
+      "TidyCode": "깔끔한 코드",
       "Find": "찾기",
       "FindNext": "다음 내용 찾기",
       "FindPrevious": "이전 내용 찾기"
@@ -25,14 +25,14 @@
       "Stop": "중지"
     },
     "Help": {
-      "Title": "도움",
+      "Title": "도움말",
       "KeyboardShortcuts": "단축키",
       "Reference": "레퍼런스",
       "About": "소개"
     },
     "Lang": "언어",
     "BackEditor": "에디터로 돌아가기",
-    "WarningUnsavedChanges": "이 페이지를 나가길 원하나요? 아직 저장되지 않은 변경사항이 있습니다.",
+    "WarningUnsavedChanges": "이 페이지를 나가시겠습니까? 아직 저장되지 않은 변경사항이 있습니다.",
     "Login": "로그인",
     "LoginOr": "또는",
     "SignUp": "회원가입",
@@ -74,12 +74,12 @@
   },
   "About": {
     "Title": "소개",
-    "TitleHelmet": "p5.js Web Editor | 소개",
+    "TitleHelmet": "p5.js 웹에디터 | 소개",
     "Contribute": "기여하기",
     "NewP5": "p5.js가 처음인가요?",
     "Report": "버그 리포트",
     "Learn": "배우기",
-    "Resources": "리소스",
+    "Resources": "연관 자료",
     "Libraries": "라이브러리",
     "Forum": "포럼",
     "Examples": "예제"
@@ -94,7 +94,7 @@
   },
   "Toolbar": {
     "Preview": "미리보기",
-    "Auto-refresh": "자동-새로고침",
+    "Auto-refresh": "자동 새로고침",
     "OpenPreferencesARIA": "Open Preferences",
     "PlaySketchARIA": "스케치 실행",
     "PlayOnlyVisualSketchARIA": "Play only visual sketch",
@@ -114,7 +114,7 @@
   },
   "Preferences": {
     "Settings": "설정",
-    "GeneralSettings": "일반 설정",
+    "GeneralSettings": "일반",
     "Accessibility": "접근성",
     "Theme": "테마",
     "LightTheme": "밝은 테마",
@@ -126,7 +126,7 @@
     "TextSize": "글자 크기",
     "DecreaseFont": "줄이기",
     "DecreaseFontARIA": "폰트 크기 줄이기",
-    "IncreaseFont": "키우기 Increase",
+    "IncreaseFont": "키우기",
     "IncreaseFontARIA": "폰트 크기 키우기",
     "Autosave": "자동저장",
     "On": "켜기",
@@ -203,11 +203,11 @@
     "Delete": "Delete"
   },
   "Common": {
-    "Error": "Error",
-    "ErrorARIA": "Error",
-    "Save": "Save",
-    "p5logoARIA": "p5.js Logo",
-    "DeleteConfirmation": "Are you sure you want to delete {{name}}?"
+    "Error": "에러",
+    "ErrorARIA": "에러",
+    "Save": "저장",
+    "p5logoARIA": "p5.js 로고",
+    "DeleteConfirmation": "{{name}}를 지우시겠습니까?"
   },
   "IDEView": {
     "SubmitFeedback": "Submit Feedback",
@@ -218,24 +218,24 @@
     "ShareARIA":"share"
   },
   "NewFileModal": {
-    "Title": "Create File",
+    "Title": "파일 생성",
     "CloseButtonARIA": "Close New File Modal",
     "EnterName": "Please enter a name",
     "InvalidType": "Invalid file type. Valid extensions are .js, .css, .json, .txt, .csv, .tsv, .frag, and .vert."
   },
   "NewFileForm": {
-    "AddFileSubmit": "Add File",
+    "AddFileSubmit": "파일 추가",
     "Placeholder": "Name"
   },
   "NewFolderModal": {
-    "Title": "Create Folder",
+    "Title": "폴더 생성",
     "CloseButtonARIA": "Close New Folder Modal",
     "EnterName": "Please enter a name",
     "EmptyName": "Folder name cannot contain only spaces",
     "InvalidExtension": "Folder name cannot contain an extension"
   },
   "NewFolderForm": {
-    "AddFolderSubmit": "Add Folder",
+    "AddFolderSubmit": "폴더 추가",
     "Placeholder": "Name"
   },
   "ResetPasswordForm": {
@@ -321,27 +321,27 @@
     "SubmitSetNewPassword": "Set New Password"
   },
   "SignupForm": {
-    "Title": "아이디 User Name",
+    "Title": "아이디",
     "TitleARIA": "username",
     "Email": "이메일 Email",
     "EmailARIA": "email",
-    "Password": "비밀번호 Password",
+    "Password": "비밀번호",
     "PasswordARIA": "password",
-    "ConfirmPassword": "비밀번호 확인 Confirm Password",
+    "ConfirmPassword": "비밀번호 확인",
     "ConfirmPasswordARIA": "Confirm password",
-    "SubmitSignup": "회원가입 Sign Up"
+    "SubmitSignup": "회원가입"
   },
   "SignupView": {
     "Title": "p5.js 웹에디터 | 회원가입",
     "Description": "회원가입",
     "Or": "또는",
-    "AlreadyHave": "이미 계정이 있나요? Already have an account?",
+    "AlreadyHave": "이미 계정이 있나요?",
     "Login": "로그인"
   },
   "EmailVerificationView": {
-    "Title": "p5.js 웹에디터 | 이메일 확인 Email Verification",
+    "Title": "p5.js 웹에디터 | 이메일 확인",
     "Verify": "Verify your email",
-    "InvalidTokenNull": "이 링크는 유효하지 않습니다. That link is invalid.",
+    "InvalidTokenNull": "이 링크는 유효하지 않습니다.",
     "Checking": "Validating token, please wait...",
     "Verified": "All done, your email address has been verified.",
     "InvalidState": "Something went wrong."
@@ -390,7 +390,7 @@
     "LinkMessage": "There was a problem linking your {{serviceauth}} account to your p5.js Web Editor account. Your {{serviceauth}} account has already been linked to another p5.js Web Editor account."
   },
   "ShareModal": {
-    "Embed": "Embed",
+    "Embed": "임베드",
     "Present": "Present",
     "Fullscreen": "전체화면",
     "Edit": "수정"
