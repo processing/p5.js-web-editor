@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import CodeMirror from 'codemirror';
+import emmet from '@emmetio/codemirror-plugin';
 import beautifyJS from 'js-beautify';
 import { withTranslation } from 'react-i18next';
 import 'codemirror/mode/css/css';
@@ -56,6 +57,8 @@ import * as UserActions from '../../User/actions';
 import * as ToastActions from '../actions/toast';
 import * as ConsoleActions from '../actions/console';
 
+emmet(CodeMirror);
+
 const beautifyCSS = beautifyJS.css;
 const beautifyHTML = beautifyJS.html;
 
@@ -106,6 +109,11 @@ class Editor extends React.Component {
       keyMap: 'sublime',
       highlightSelectionMatches: true, // highlight current search match
       matchBrackets: true,
+      emmet: {
+        preview: ['html'],
+        markTagPairs: true,
+        autoRenameTags: true
+      },
       autoCloseBrackets: this.props.autocloseBracketsQuotes,
       styleSelectedText: true,
       lint: {
@@ -128,6 +136,7 @@ class Editor extends React.Component {
       metaKey === 'Ctrl' ? `${metaKey}-H` : `${metaKey}-Option-F`;
     this._cm.setOption('extraKeys', {
       Tab: (cm) => {
+        if (!cm.execCommand('emmetExpandAbbreviation')) return;
         // might need to specify and indent more?
         const selection = cm.doc.getSelection();
         if (selection.length > 0) {
@@ -136,6 +145,8 @@ class Editor extends React.Component {
           cm.replaceSelection(' '.repeat(INDENTATION_AMOUNT));
         }
       },
+      Enter: 'emmetInsertLineBreak',
+      Esc: 'emmetResetAbbreviation',
       [`${metaKey}-Enter`]: () => null,
       [`Shift-${metaKey}-Enter`]: () => null,
       [`${metaKey}-F`]: 'findPersistent',
