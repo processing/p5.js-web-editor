@@ -28,8 +28,7 @@ class Sidebar extends React.Component {
     this.onFocusComponent = this.onFocusComponent.bind(this);
 
     this.state = {
-      isFocused: false,
-      rootFile: props.files.filter((file) => file.name === 'root')[0]
+      isFocused: false
     };
   }
 
@@ -66,16 +65,14 @@ class Sidebar extends React.Component {
       thumbnailWidth: 200,
       thumbnailHeight: 200,
       acceptedFiles: fileExtensionsAndMimeTypes,
-      dictDefaultMessage: this.props.t(''),
+      dictDefaultMessage: this.props.t('FileUploader.DictDefaultMessage'),
       accept: this.props.dropzoneAcceptCallback.bind(this, userId),
-      complete: this.props.dropzoneCompleteCallbackAid.bind(
-        this,
-        elementId,
-        this.state.rootFile.id
-      ),
-      sending: this.props.dropzoneSendingCallback
+      sending: this.props.dropzoneSendingCallback,
+      complete: (file) => {
+        this.props.dropzoneCompleteCallback(elementId, file);
+        this.uploader.removeFile(file);
+      }
     });
-    this.uploader.removeAllFiles();
   }
 
   resetSelectedFile() {
@@ -115,6 +112,7 @@ class Sidebar extends React.Component {
       'sidebar--project-options': this.props.projectOptionsVisible,
       'sidebar--cant-edit': !canEditProject
     });
+    const rootFile = this.props.files.filter((file) => file.name === 'root')[0];
     return (
       <section className={sidebarClass}>
         <header
@@ -144,7 +142,7 @@ class Sidebar extends React.Component {
                   <button
                     aria-label={this.props.t('Sidebar.AddFolderARIA')}
                     onClick={() => {
-                      this.props.newFolder(this.state.rootFile.id);
+                      this.props.newFolder(rootFile.id);
                       setTimeout(this.props.closeProjectOptions, 0);
                     }}
                     onBlur={this.onBlurComponent}
@@ -157,7 +155,7 @@ class Sidebar extends React.Component {
                   <button
                     aria-label={this.props.t('Sidebar.AddFileARIA')}
                     onClick={() => {
-                      this.props.newFile(this.state.rootFile.id);
+                      this.props.newFile(rootFile.id);
                       setTimeout(this.props.closeProjectOptions, 0);
                     }}
                     onBlur={this.onBlurComponent}
@@ -171,7 +169,7 @@ class Sidebar extends React.Component {
                     <button
                       aria-label={this.props.t('Sidebar.UploadFileARIA')}
                       onClick={() => {
-                        this.props.openUploadFileModal(this.state.rootFile.id);
+                        this.props.openUploadFileModal(rootFile.id);
                         setTimeout(this.props.closeProjectOptions, 0);
                       }}
                       onBlur={this.onBlurComponent}
@@ -185,10 +183,7 @@ class Sidebar extends React.Component {
             </div>
           </div>
         </header>
-        <ConnectedFileNode
-          id={this.state.rootFile.id}
-          canEdit={canEditProject}
-        />
+        <ConnectedFileNode id={rootFile.id} canEdit={canEditProject} />
         <div className="uploaderAid dropzone" id="uploaderAid"></div>
       </section>
     );
@@ -220,7 +215,7 @@ Sidebar.propTypes = {
   t: PropTypes.func.isRequired,
   dropzoneAcceptCallback: PropTypes.func.isRequired,
   dropzoneSendingCallback: PropTypes.func.isRequired,
-  dropzoneCompleteCallbackAid: PropTypes.func.isRequired
+  dropzoneCompleteCallback: PropTypes.func.isRequired
 };
 
 Sidebar.defaultProps = {

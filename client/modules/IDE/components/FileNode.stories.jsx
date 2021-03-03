@@ -15,6 +15,7 @@ export const Show = () => (
     name="File name"
     fileType="jpeg"
     isSelectedFile
+    setParentId={action('setParentId')}
     isFolderClosed={false}
     setSelectedFile={action('setSelectedFile')}
     deleteFile={action('deleteFile')}

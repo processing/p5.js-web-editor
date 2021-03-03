@@ -105,9 +105,26 @@ class FileNode extends React.Component {
   handleFileClick = (event) => {
     event.stopPropagation();
     const { isDeleting } = this.state;
-    const { id, setSelectedFile, name, onClickFile } = this.props;
+    const {
+      id,
+      parentId,
+      setSelectedFile,
+      fileType,
+      setParentId,
+      name,
+      onClickFile
+    } = this.props;
     if (name !== 'root' && !isDeleting) {
-      setSelectedFile(id);
+      console.log(parentId);
+      console.log(id);
+      if (fileType !== 'folder') {
+        setParentId(parentId);
+        setSelectedFile(id);
+      } else {
+        console.log('called here');
+        setParentId(id);
+        setSelectedFile(id);
+      }
     }
 
     // debugger; // eslint-disable-line
@@ -413,6 +430,7 @@ FileNode.propTypes = {
   isSelectedFile: PropTypes.bool,
   isFolderClosed: PropTypes.bool,
   setSelectedFile: PropTypes.func.isRequired,
+  setParentId: PropTypes.func.isRequired,
   deleteFile: PropTypes.func.isRequired,
   updateFileName: PropTypes.func.isRequired,
   resetSelectedFile: PropTypes.func.isRequired,

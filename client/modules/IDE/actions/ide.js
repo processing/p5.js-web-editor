@@ -64,6 +64,13 @@ export function resetSelectedFile(previousId) {
   };
 }
 
+export function setParentId(parentId) {
+  return {
+    type: ActionTypes.SET_PARENT_ID,
+    parentId
+  };
+}
+
 export function newFile(parentId) {
   return {
     type: ActionTypes.SHOW_MODAL,

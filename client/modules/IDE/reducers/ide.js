@@ -45,6 +45,8 @@ const ide = (state = initialState, action) => {
         parentId: action.parentId,
         newFolderModalVisible: false
       });
+    case ActionTypes.SET_PARENT_ID:
+      return Object.assign({}, state, { parentId: action.parentId });
     case ActionTypes.HIDE_MODAL:
       return Object.assign({}, state, { modalIsVisible: false });
     case ActionTypes.COLLAPSE_SIDEBAR:
