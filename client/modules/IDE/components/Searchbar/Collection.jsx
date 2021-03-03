@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import i18next from 'i18next';
-import * as SortingActions from '../../actions/sorting';
+import * as SearchingActions from '../../actions/search';
 
 import Searchbar from './Searchbar';
 
@@ -16,8 +16,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   const actions = {
-    setSearchTerm: (term) => SortingActions.setSearchTerm(scope, term),
-    resetSearchTerm: () => SortingActions.resetSearchTerm(scope)
+    setSearchTerm: (term) => SearchingActions.setSearchTerm(scope, term),
+    resetSearchTerm: () => SearchingActions.resetSearchTerm(scope)
   };
   return bindActionCreators(Object.assign({}, actions), dispatch);
 }

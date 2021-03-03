@@ -7,7 +7,6 @@ import { withTranslation } from 'react-i18next';
 import * as ProjectsActions from '../actions/projects';
 import * as CollectionsActions from '../actions/collections';
 import * as ToastActions from '../actions/toast';
-import getSortedSketches from '../selectors/projects';
 import Item from './AddToListRow';
 import Table from './Table';
 
@@ -171,8 +170,8 @@ SketchList.defaultProps = {
 function mapStateToProps(state) {
   return {
     user: state.user,
-    sketches: getSortedSketches(state),
-    project: state.project
+    project: state.project,
+    sketches: state.sketches
   };
 }
 

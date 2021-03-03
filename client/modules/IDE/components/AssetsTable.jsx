@@ -18,7 +18,7 @@ class AssetsTable extends React.Component {
     this.props.getAssets();
   }
   render() {
-    const { username, assetList, searchTerm, mobile, user } = this.props;
+    const { username, assetList, mobile, user } = this.props;
 
     const AssetListRowHeader = [
       {
@@ -78,7 +78,6 @@ class AssetsTable extends React.Component {
         username={username}
         headerRow={AssetListRowHeader}
         dataRows={assetTableRows}
-        searchTerm={searchTerm}
         extras={extras}
         sorting={sorting}
       />
@@ -113,7 +112,6 @@ AssetsTable.propTypes = {
   ).isRequired,
   getAssets: PropTypes.func.isRequired,
   username: PropTypes.string,
-  searchTerm: PropTypes.string.isRequired,
   mobile: PropTypes.bool,
   t: PropTypes.func.isRequired
 };

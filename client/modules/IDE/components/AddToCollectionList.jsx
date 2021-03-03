@@ -9,7 +9,6 @@ import * as ProjectActions from '../actions/project';
 import * as ProjectsActions from '../actions/projects';
 import * as CollectionsActions from '../actions/collections';
 import * as ToastActions from '../actions/toast';
-import getSortedCollections from '../selectors/collections';
 import Item from './AddToListRow';
 import Table from './Table';
 
@@ -198,7 +197,7 @@ CollectionList.defaultProps = {
 function mapStateToProps(state, ownProps) {
   return {
     user: state.user,
-    collections: getSortedCollections(state),
+    collections: state.collections,
     project: ownProps.project || state.project,
     projectId: ownProps && ownProps.params ? ownProps.prams.project_id : null
   };

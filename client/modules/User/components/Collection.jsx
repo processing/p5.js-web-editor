@@ -13,7 +13,7 @@ import * as ProjectsActions from '../../IDE/actions/projects';
 import * as CollectionsActions from '../../IDE/actions/collections';
 import * as ToastActions from '../../IDE/actions/toast';
 import * as IdeActions from '../../IDE/actions/ide';
-import { getCollection } from '../../IDE/selectors/collections';
+import getCollection from '../../IDE/selectors/collections';
 import Loader from '../../App/components/loader';
 import EditableInput from '../../IDE/components/EditableInput';
 import Overlay from '../../App/components/Overlay';
