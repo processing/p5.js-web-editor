@@ -336,16 +336,20 @@ class Editor extends React.Component {
   }
 
   prettierFormatWithCursor(parser, plugins) {
-    const { formatted, cursorOffset } = prettier.formatWithCursor(
-      this._cm.doc.getValue(),
-      {
-        cursorOffset: this._cm.doc.indexFromPos(this._cm.doc.getCursor()),
-        parser,
-        plugins
-      }
-    );
-    this._cm.doc.setValue(formatted);
-    return cursorOffset;
+    try {
+      const { formatted, cursorOffset } = prettier.formatWithCursor(
+        this._cm.doc.getValue(),
+        {
+          cursorOffset: this._cm.doc.indexFromPos(this._cm.doc.getCursor()),
+          parser,
+          plugins
+        }
+      );
+      this._cm.doc.setValue(formatted);
+      return cursorOffset;
+    } catch (error) {
+      return null;
+    }
   }
 
   tidyCode() {
@@ -359,7 +363,8 @@ class Editor extends React.Component {
       cursorOffset = this.prettierFormatWithCursor('html', [htmlParser]);
     }
     this._cm.focus();
-    this._cm.doc.setCursor(this._cm.doc.posFromIndex(cursorOffset));
+    if (cursorOffset)
+      this._cm.doc.setCursor(this._cm.doc.posFromIndex(cursorOffset));
   }
 
   initializeDocuments(files) {
