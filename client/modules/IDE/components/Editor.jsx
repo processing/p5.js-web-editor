@@ -3,7 +3,7 @@ import React from 'react';
 import CodeMirror from 'codemirror';
 import emmet from '@emmetio/codemirror-plugin';
 import prettier from 'prettier';
-import parserBabel from 'prettier/parser-babel';
+import babelParser from 'prettier/parser-babel';
 import htmlParser from 'prettier/parser-html';
 import cssParser from 'prettier/parser-postcss';
 import { withTranslation } from 'react-i18next';
@@ -335,36 +335,31 @@ class Editor extends React.Component {
     this._cm.execCommand('replace');
   }
 
+  prettierFormatWithCursor(parser, plugins) {
+    const { formatted, cursorOffset } = prettier.formatWithCursor(
+      this._cm.doc.getValue(),
+      {
+        cursorOffset: this._cm.doc.indexFromPos(this._cm.doc.getCursor()),
+        parser,
+        plugins
+      }
+    );
+    this._cm.doc.setValue(formatted);
+    return cursorOffset;
+  }
+
   tidyCode() {
     const mode = this._cm.getOption('mode');
-    const currentPosition = this._cm.doc.getCursor();
+    let cursorOffset;
     if (mode === 'javascript') {
-      this._cm.doc.setValue(
-        prettier.format(this._cm.doc.getValue(), {
-          parser: 'babel',
-          plugins: [parserBabel]
-        })
-      );
+      cursorOffset = this.prettierFormatWithCursor('babel', [babelParser]);
     } else if (mode === 'css') {
-      this._cm.doc.setValue(
-        prettier.format(this._cm.doc.getValue(), {
-          parser: 'css',
-          plugins: [cssParser]
-        })
-      );
+      cursorOffset = this.prettierFormatWithCursor('css', [cssParser]);
     } else if (mode === 'htmlmixed') {
-      this._cm.doc.setValue(
-        prettier.format(this._cm.doc.getValue(), {
-          parser: 'html',
-          plugins: [htmlParser]
-        })
-      );
+      cursorOffset = this.prettierFormatWithCursor('html', [htmlParser]);
     }
     this._cm.focus();
-    this._cm.doc.setCursor({
-      line: currentPosition.line,
-      ch: currentPosition.ch
-    });
+    this._cm.doc.setCursor(this._cm.doc.posFromIndex(cursorOffset));
   }
 
   initializeDocuments(files) {
