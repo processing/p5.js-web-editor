@@ -346,25 +346,23 @@ class Editor extends React.Component {
         }
       );
       this._cm.doc.setValue(formatted);
-      return cursorOffset;
+      if (cursorOffset) {
+        this._cm.doc.setCursor(this._cm.doc.posFromIndex(cursorOffset));
+      }
     } catch (error) {
-      return null;
+      console.error(error);
     }
   }
 
   tidyCode() {
     const mode = this._cm.getOption('mode');
-    let cursorOffset;
     if (mode === 'javascript') {
-      cursorOffset = this.prettierFormatWithCursor('babel', [babelParser]);
+      this.prettierFormatWithCursor('babel', [babelParser]);
     } else if (mode === 'css') {
-      cursorOffset = this.prettierFormatWithCursor('css', [cssParser]);
+      this.prettierFormatWithCursor('css', [cssParser]);
     } else if (mode === 'htmlmixed') {
-      cursorOffset = this.prettierFormatWithCursor('html', [htmlParser]);
+      this.prettierFormatWithCursor('html', [htmlParser]);
     }
-    this._cm.focus();
-    if (cursorOffset)
-      this._cm.doc.setCursor(this._cm.doc.posFromIndex(cursorOffset));
   }
 
   initializeDocuments(files) {
