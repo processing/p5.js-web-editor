@@ -2,7 +2,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import CodeMirror from 'codemirror';
 import emmet from '@emmetio/codemirror-plugin';
-import beautifyJS from 'js-beautify';
+import prettier from 'prettier';
+import parserBabel from 'prettier/parser-babel';
+import htmlParser from 'prettier/parser-html';
+import cssParser from 'prettier/parser-postcss';
 import { withTranslation } from 'react-i18next';
 import 'codemirror/mode/css/css';
 import 'codemirror/addon/selection/active-line';
@@ -59,14 +62,10 @@ import * as ConsoleActions from '../actions/console';
 
 emmet(CodeMirror);
 
-const beautifyCSS = beautifyJS.css;
-const beautifyHTML = beautifyJS.html;
-
 window.JSHINT = JSHINT;
 window.CSSLint = CSSLint;
 window.HTMLHint = HTMLHint;
 
-const IS_TAB_INDENT = false;
 const INDENTATION_AMOUNT = 2;
 
 class Editor extends React.Component {
@@ -337,23 +336,28 @@ class Editor extends React.Component {
   }
 
   tidyCode() {
-    const beautifyOptions = {
-      indent_size: INDENTATION_AMOUNT,
-      indent_with_tabs: IS_TAB_INDENT
-    };
     const mode = this._cm.getOption('mode');
     const currentPosition = this._cm.doc.getCursor();
     if (mode === 'javascript') {
       this._cm.doc.setValue(
-        beautifyJS(this._cm.doc.getValue(), beautifyOptions)
+        prettier.format(this._cm.doc.getValue(), {
+          parser: 'babel',
+          plugins: [parserBabel]
+        })
       );
     } else if (mode === 'css') {
       this._cm.doc.setValue(
-        beautifyCSS(this._cm.doc.getValue(), beautifyOptions)
+        prettier.format(this._cm.doc.getValue(), {
+          parser: 'css',
+          plugins: [cssParser]
+        })
       );
     } else if (mode === 'htmlmixed') {
       this._cm.doc.setValue(
-        beautifyHTML(this._cm.doc.getValue(), beautifyOptions)
+        prettier.format(this._cm.doc.getValue(), {
+          parser: 'html',
+          plugins: [htmlParser]
+        })
       );
     }
     this._cm.focus();
