@@ -45,6 +45,11 @@ export const common = {
   shadowColor: 'rgba(0, 0, 0, 0.16)'
 };
 
+export const toastColors = {
+  background: grays.mediumDark,
+  text: grays.lightest
+};
+
 export const remSize = (size) => `${size / common.baseFontSize}rem`;
 
 export const prop = (key) => (props) => {
@@ -110,6 +115,9 @@ export default {
       card: {
         background: grays.lighter
       }
+    },
+    Toast: {
+      iconHover: grays.lightest
     }
   },
   [Theme.dark]: {
@@ -163,6 +171,9 @@ export default {
       card: {
         background: grays.dark
       }
+    },
+    Toast: {
+      iconHover: grays.lightest
     }
   },
   [Theme.contrast]: {
@@ -216,6 +227,9 @@ export default {
       card: {
         background: grays.dark
       }
+    },
+    Toast: {
+      iconHover: colors.yellow
     }
   }
 };

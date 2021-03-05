@@ -93,6 +93,6 @@
     @extend %button;
     padding: #{7 / $base-font-size}rem #{13 / $base-font-size}rem;
     font-size: #{16 / $base-font-size}rem;
-    border: #{0.5 / $base-font-size}rem solid $toast-background-color;
+    border: #{0.5 / $base-font-size}rem solid $about-background-color;
   }
 }
