@@ -62,7 +62,6 @@ $themes: (
     modal-border-color: $middle-light,
     icon-color: $middle-gray,
     icon-hover-color: $darker,
-    icon-toast-hover-color: $lightest,
     shadow-color: rgba(0, 0, 0, 0.16),
     console-background-color: $light,
     console-color: $lightest,
@@ -140,7 +139,6 @@ $themes: (
     modal-border-color: $middle-dark,
     icon-color: $middle-light,
     icon-hover-color: $lightest,
-    icon-toast-hover-color: $lightest,
     shadow-color: rgba(0, 0, 0, 0.16),
     console-background-color: $dark,
     console-color: $lightest,
@@ -216,7 +214,6 @@ $themes: (
     modal-border-color: $middle-dark,
     icon-color: $medium-light,
     icon-hover-color: $yellow,
-    icon-toast-hover-color: $yellow,
     shadow-color: rgba(0, 0, 0, 0.16),
     console-background-color: $dark,
     console-color: $black,
@@ -268,8 +265,7 @@ $themes: (
   )
 );
 
-$toast-background-color: $medium-dark;
-$toast-text-color: $lightest;
+$about-background-color: $medium-dark;
 
 $light-console-error-color: #D11518;
 $light-console-warn-color: #FAAF00;
