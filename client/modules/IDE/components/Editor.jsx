@@ -346,9 +346,8 @@ class Editor extends React.Component {
         }
       );
       this._cm.doc.setValue(formatted);
-      if (cursorOffset) {
-        this._cm.doc.setCursor(this._cm.doc.posFromIndex(cursorOffset));
-      }
+      this._cm.focus();
+      this._cm.doc.setCursor(this._cm.doc.posFromIndex(cursorOffset));
     } catch (error) {
       console.error(error);
     }
