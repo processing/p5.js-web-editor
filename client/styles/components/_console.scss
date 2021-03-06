@@ -3,17 +3,26 @@
 		background: getThemifyVariable('console-background-color');
 		border-color: getThemifyVariable('ide-border-color');
 	}
-	border-left: #{1 / $base-font-size}rem solid;
-	border-right: #{1 / $base-font-size}rem solid;
+	border-left: 1px solid;
+	border-right: 1px solid;
 	width: 100%;
 	height: 100%;
 	z-index: 1000;
+	overflow: hidden;
 	display: flex;
 	flex-direction: column;
 
 	& > {
 		position:relative;
 		text-align:left;
+	}
+
+	.preview-console__message {
+		@include themify() {
+			color: getThemifyVariable('console-color');
+		}
+		flex: 1 0 auto;
+		position: relative;
 	}
 }
 
@@ -40,7 +49,6 @@
 
 .preview-console__messages {
 	display: flex;
-	flex: 1;
 	flex-direction: column;
 	overflow-y: auto;
 }
@@ -101,7 +109,6 @@
 
 	font-weight: bold;
 	margin: #{2 / $base-font-size}rem 0 0 #{8 / $base-font-size}rem;
-	border-radius: #{10 / $base-font-size}rem;
 	padding: #{1 / $base-font-size}rem #{4 / $base-font-size}rem;
 	z-index: 100;
 	left: 0;
@@ -125,19 +132,6 @@
 	.preview-console__message--error & {
 		@include themify() {
 			background-color: getThemifyVariable('console-error-background-color');
-		}
-	}
-}
-
-.preview-console__body {
-	display: flex;
-	flex-direction: column;
-	height: calc(100% - #{30 / $base-font-size}rem);
-
-	.preview-console__message {
-		position: relative;
-		@include themify() {
-			color: getThemifyVariable('console-logged-times-color');
 		}
 	}
 }
