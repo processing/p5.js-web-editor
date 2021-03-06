@@ -46,7 +46,7 @@ import { getIsUserOwner } from '../selectors/users';
 import {
   useEffectWithComparison,
   useEventListener
-} from '../hooks/custom-hooks';
+} from '../../../utils/custom-hooks';
 
 import * as device from '../../../utils/device';
 
