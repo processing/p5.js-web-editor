@@ -1,9 +1,17 @@
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { withTranslation } from 'react-i18next';
+import styled from 'styled-components';
 
+import { remSize, prop } from '../../../theme';
 import dates from '../../../utils/formatDate';
+
+const TimerWrapper = styled.span`
+  font-size: ${remSize(12)};
+  padding-right: ${remSize(30)};
+  color: ${prop('Text.inactive')};
+  display: ${(props) => (props.isVisible ? '' : 'none')};
+`;
 
 class Timer extends React.Component {
   constructor(props) {
@@ -27,14 +35,10 @@ class Timer extends React.Component {
   }
 
   render() {
-    const timerClass = classNames({
-      'timer__saved-time': true,
-      'timer__saved-time--notOwner': !this.props.isUserOwner
-    });
     return (
-      <span className={timerClass}>
+      <TimerWrapper isVisible={this.props.isUserOwner}>
         {this.props.projectSavedTime !== '' ? this.showSavedTime() : null}
-      </span>
+      </TimerWrapper>
     );
   }
 }

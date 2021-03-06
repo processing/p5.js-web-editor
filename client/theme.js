@@ -109,12 +109,15 @@ export default {
     },
     Separator: grays.middleLight,
 
-    TabHighlight: colors.p5jsPink,
     SketchList: {
       background: grays.lighter,
       card: {
         background: grays.lighter
       }
+    },
+    TabHighlight: colors.p5jsPink,
+    Text: {
+      inactive: grays.middleDark
     },
     Toast: {
       iconHover: grays.lightest
@@ -165,12 +168,15 @@ export default {
     },
     Separator: grays.middleDark,
 
-    TabHighlight: colors.p5jsPink,
     SketchList: {
       background: grays.darker,
       card: {
         background: grays.dark
       }
+    },
+    TabHighlight: colors.p5jsPink,
+    Text: {
+      inactive: grays.middleLight
     },
     Toast: {
       iconHover: grays.lightest
@@ -221,12 +227,15 @@ export default {
     },
     Separator: grays.middleDark,
 
-    TabHighlight: grays.darker,
     SketchList: {
       background: colors.yellow,
       card: {
         background: grays.dark
       }
+    },
+    TabHighlight: grays.darker,
+    Text: {
+      inactive: grays.light
     },
     Toast: {
       iconHover: colors.yellow
