@@ -1,17 +1,57 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
+import { remSize, prop } from '../../../theme';
 import { metaKeyName, metaKey } from '../../../utils/metaKey';
+
+const KeyboardShortcutsWrapper = styled.div`
+  padding: ${remSize(20)};
+  margin-right: ${remSize(20)};
+  padding-bottom: ${remSize(40)};
+  width: ${remSize(450)};
+  overflow-y: scroll;
+`;
+const KeyboardShortcutsTitle = styled.h3`
+  padding-bottom: ${remSize(10)};
+  :not(:first-of-type) {
+    border-top: 1px dashed ${prop('Button.default.border')};
+    padding-top: ${remSize(10)};
+  }
+`;
+const KeyboardShortcutsDescription = styled.p`
+  padding-bottom: ${remSize(10)};
+`;
+const KeyboardShortcutsList = styled.ul`
+  :not(:last-of-type) {
+    padding-bottom: ${remSize(10)};
+  }
+`;
+const KeyboardShortcutsItem = styled.li`
+  display: flex;
+  align-items: baseline;
+  & + & {
+    margin-top: ${remSize(10)};
+  }
+`;
+const KeyboardShortcutsCommand = styled.span`
+  font-weight: bold;
+  text-align: right;
+  margin-right: ${remSize(10)};
+  padding: ${remSize(3)};
+  border: 1px solid ${prop('Button.default.border')};
+  border-radius: 3px;
+`;
 
 function KeyboardShortcutModal() {
   const { t } = useTranslation();
   const replaceCommand =
     metaKey === 'Ctrl' ? `${metaKeyName} + H` : `${metaKeyName} + ⌥ + F`;
   return (
-    <div className="keyboard-shortcuts">
-      <h3 className="keyboard-shortcuts__title">
+    <KeyboardShortcutsWrapper>
+      <KeyboardShortcutsTitle>
         {t('KeyboardShortcuts.CodeEditing.CodeEditing')}
-      </h3>
-      <p className="keyboard-shortcuts__description">
+      </KeyboardShortcutsTitle>
+      <KeyboardShortcutsDescription>
         {t('KeyboardShortcuts.ShortcutsFollow')}{' '}
         <a
           href="https://shortcuts.design/toolspage-sublimetext.html"
@@ -21,79 +61,79 @@ function KeyboardShortcutModal() {
           {t('KeyboardShortcuts.SublimeText')}
         </a>
         .
-      </p>
-      <ul className="keyboard-shortcuts__list">
-        <li className="keyboard-shortcut-item">
-          <span className="keyboard-shortcut__command">
+      </KeyboardShortcutsDescription>
+      <KeyboardShortcutsList>
+        <KeyboardShortcutsItem>
+          <KeyboardShortcutsCommand>
             {metaKeyName} + {'\u21E7'} + F
-          </span>
+          </KeyboardShortcutsCommand>
           <span>{t('KeyboardShortcuts.CodeEditing.Tidy')}</span>
-        </li>
-        <li className="keyboard-shortcut-item">
-          <span className="keyboard-shortcut__command">{metaKeyName} + F</span>
+        </KeyboardShortcutsItem>
+        <KeyboardShortcutsItem>
+          <KeyboardShortcutsCommand>{metaKeyName} + F</KeyboardShortcutsCommand>
           <span>{t('KeyboardShortcuts.CodeEditing.FindText')}</span>
-        </li>
-        <li className="keyboard-shortcut-item">
-          <span className="keyboard-shortcut__command">{metaKeyName} + G</span>
+        </KeyboardShortcutsItem>
+        <KeyboardShortcutsItem>
+          <KeyboardShortcutsCommand>{metaKeyName} + G</KeyboardShortcutsCommand>
           <span>{t('KeyboardShortcuts.CodeEditing.FindNextTextMatch')}</span>
-        </li>
-        <li className="keyboard-shortcut-item">
-          <span className="keyboard-shortcut__command">
+        </KeyboardShortcutsItem>
+        <KeyboardShortcutsItem>
+          <KeyboardShortcutsCommand>
             {metaKeyName} + {'\u21E7'} + G
-          </span>
+          </KeyboardShortcutsCommand>
           <span>
             {t('KeyboardShortcuts.CodeEditing.FindPreviousTextMatch')}
           </span>
-        </li>
-        <li className="keyboard-shortcut-item">
-          <span className="keyboard-shortcut__command">{replaceCommand}</span>
+        </KeyboardShortcutsItem>
+        <KeyboardShortcutsItem>
+          <KeyboardShortcutsCommand>{replaceCommand}</KeyboardShortcutsCommand>
           <span>{t('KeyboardShortcuts.CodeEditing.ReplaceTextMatch')}</span>
-        </li>
-        <li className="keyboard-shortcut-item">
-          <span className="keyboard-shortcut__command">{metaKeyName} + [</span>
+        </KeyboardShortcutsItem>
+        <KeyboardShortcutsItem>
+          <KeyboardShortcutsCommand>{metaKeyName} + [</KeyboardShortcutsCommand>
           <span>{t('KeyboardShortcuts.CodeEditing.IndentCodeLeft')}</span>
-        </li>
-        <li className="keyboard-shortcut-item">
-          <span className="keyboard-shortcut__command">{metaKeyName} + ]</span>
+        </KeyboardShortcutsItem>
+        <KeyboardShortcutsItem>
+          <KeyboardShortcutsCommand>{metaKeyName} + ]</KeyboardShortcutsCommand>
           <span>{t('KeyboardShortcuts.CodeEditing.IndentCodeRight')}</span>
-        </li>
-        <li className="keyboard-shortcut-item">
-          <span className="keyboard-shortcut__command">{metaKeyName} + /</span>
+        </KeyboardShortcutsItem>
+        <KeyboardShortcutsItem>
+          <KeyboardShortcutsCommand>{metaKeyName} + /</KeyboardShortcutsCommand>
           <span>{t('KeyboardShortcuts.CodeEditing.CommentLine')}</span>
-        </li>
-      </ul>
-      <h3 className="keyboard-shortcuts__title">General</h3>
-      <ul className="keyboard-shortcuts__list">
-        <li className="keyboard-shortcut-item">
-          <span className="keyboard-shortcut__command">{metaKeyName} + S</span>
+        </KeyboardShortcutsItem>
+      </KeyboardShortcutsList>
+      <KeyboardShortcutsTitle>General</KeyboardShortcutsTitle>
+      <KeyboardShortcutsList>
+        <KeyboardShortcutsItem>
+          <KeyboardShortcutsCommand>{metaKeyName} + S</KeyboardShortcutsCommand>
           <span>{t('Common.Save')}</span>
-        </li>
-        <li className="keyboard-shortcut-item">
-          <span className="keyboard-shortcut__command">
+        </KeyboardShortcutsItem>
+        <KeyboardShortcutsItem>
+          <KeyboardShortcutsCommand>
             {metaKeyName} + Enter
-          </span>
+          </KeyboardShortcutsCommand>
           <span>{t('KeyboardShortcuts.General.StartSketch')}</span>
-        </li>
-        <li className="keyboard-shortcut-item">
-          <span className="keyboard-shortcut__command">
+        </KeyboardShortcutsItem>
+        <KeyboardShortcutsItem>
+          <KeyboardShortcutsCommand>
             {metaKeyName} + {'\u21E7'} + Enter
-          </span>
+          </KeyboardShortcutsCommand>
           <span>{t('KeyboardShortcuts.General.StopSketch')}</span>
-        </li>
-        <li className="keyboard-shortcut-item">
-          <span className="keyboard-shortcut__command">
+        </KeyboardShortcutsItem>
+        <KeyboardShortcutsItem>
+          <KeyboardShortcutsCommand>
             {metaKeyName} + {'\u21E7'} + 1
-          </span>
+          </KeyboardShortcutsCommand>
           <span>{t('KeyboardShortcuts.General.TurnOnAccessibleOutput')}</span>
-        </li>
-        <li className="keyboard-shortcut-item">
-          <span className="keyboard-shortcut__command">
+        </KeyboardShortcutsItem>
+        <KeyboardShortcutsItem>
+          <KeyboardShortcutsCommand>
             {metaKeyName} + {'\u21E7'} + 2
-          </span>
+          </KeyboardShortcutsCommand>
           <span>{t('KeyboardShortcuts.General.TurnOffAccessibleOutput')}</span>
-        </li>
-      </ul>
-    </div>
+        </KeyboardShortcutsItem>
+      </KeyboardShortcutsList>
+    </KeyboardShortcutsWrapper>
   );
 }
 
