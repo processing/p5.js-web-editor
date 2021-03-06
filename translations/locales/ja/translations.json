@@ -14,8 +14,6 @@
         "Title": "編集",
         "TidyCode": "コード整形",
         "Find": "検索",
-        "FindNext": "次を検索",
-        "FindPrevious": "前を検索",
         "Replace": "置換"
       },
       "Sketch": {
@@ -50,6 +48,7 @@
       }
     },
     "CodemirrorFindAndReplace": {
+      "ToggleReplace": "置換の切り替え",
       "Find": "検索",
       "FindPlaceholder": "ファイル内検索",
       "Replace": "置換",
@@ -237,7 +236,7 @@
       "Title": "ファイル作成",
       "CloseButtonARIA": "新規ファイルモーダルを閉じる",
       "EnterName": "ファイル名を入力してください",
-      "InvalidType": "ファイルタイプが無効です。有効な拡張子は、.js、.css、.json、.txt、.csv、.tsv、.frag、.vertです。"
+      "InvalidType": "ファイルタイプが無効です。有効な拡張子は、.js、.css、.json、.xml、.txt、.csv、.tsv、.frag、.vertです。"
     },
     "NewFileForm": {
       "AddFileSubmit": "ファイルを追加",

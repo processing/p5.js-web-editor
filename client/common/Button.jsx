@@ -8,7 +8,7 @@ import { remSize, prop } from '../theme';
 const kinds = {
   block: 'block',
   icon: 'icon',
-  inline: 'inline',
+  inline: 'inline'
 };
 
 // The '&&&' will increase the specificity of the
@@ -34,7 +34,7 @@ const StyledButton = styled.button`
     svg * {
       fill: ${prop('Button.default.foreground')};
     }
-    
+
     &:hover:not(:disabled) {
       color: ${prop('Button.hover.foreground')};
       background-color: ${prop('Button.hover.background')};
@@ -115,7 +115,7 @@ const StyledIconButton = styled.button`
     border-radius: 50%;
     padding: ${remSize(8)} ${remSize(25)};
     line-height: 1;
-    
+
     &:hover:not(:disabled) {
       color: ${prop('Button.hover.foreground')};
       background-color: ${prop('Button.hover.background')};
@@ -150,10 +150,24 @@ const StyledIconButton = styled.button`
  * A Button performs an primary action
  */
 const Button = ({
-  children, href, kind, iconBefore, iconAfter, 'aria-label': ariaLabel, to, type, ...props
+  children,
+  href,
+  kind,
+  iconBefore,
+  iconAfter,
+  'aria-label': ariaLabel,
+  to,
+  type,
+  ...props
 }) => {
   const hasChildren = React.Children.count(children) > 0;
-  const content = <>{iconBefore}{hasChildren && <span>{children}</span>}{iconAfter}</>;
+  const content = (
+    <>
+      {iconBefore}
+      {hasChildren && <span>{children}</span>}
+      {iconAfter}
+    </>
+  );
   let StyledComponent = StyledButton;
 
   if (kind === kinds.inline) {
@@ -177,22 +191,36 @@ const Button = ({
   }
 
   if (to) {
-    return <StyledComponent kind={kind} as={Link} aria-label={ariaLabel} to={to} {...props}>{content}</StyledComponent>;
+    return (
+      <StyledComponent
+        kind={kind}
+        as={Link}
+        aria-label={ariaLabel}
+        to={to}
+        {...props}
+      >
+        {content}
+      </StyledComponent>
+    );
   }
 
-  return <StyledComponent kind={kind} aria-label={ariaLabel} type={type} {...props}>{content}</StyledComponent>;
+  return (
+    <StyledComponent kind={kind} aria-label={ariaLabel} type={type} {...props}>
+      {content}
+    </StyledComponent>
+  );
 };
 
 Button.defaultProps = {
-  'children': null,
-  'disabled': false,
-  'iconAfter': null,
-  'iconBefore': null,
-  'kind': kinds.block,
-  'href': null,
+  children: null,
+  disabled: false,
+  iconAfter: null,
+  iconBefore: null,
+  kind: kinds.block,
+  href: null,
   'aria-label': null,
-  'to': null,
-  'type': 'button',
+  to: null,
+  type: 'button'
 };
 
 Button.kinds = kinds;
@@ -202,27 +230,27 @@ Button.propTypes = {
    * The visible part of the button, telling the user what
    * the action is
    */
-  'children': PropTypes.element,
+  children: PropTypes.element,
   /**
     If the button can be activated or not
   */
-  'disabled': PropTypes.bool,
+  disabled: PropTypes.bool,
   /**
    * SVG icon to place after child content
    */
-  'iconAfter': PropTypes.element,
+  iconAfter: PropTypes.element,
   /**
    * SVG icon to place before child content
    */
-  'iconBefore': PropTypes.element,
+  iconBefore: PropTypes.element,
   /**
    * The kind of button - determines how it appears visually
    */
-  'kind': PropTypes.oneOf(Object.values(kinds)),
+  kind: PropTypes.oneOf(Object.values(kinds)),
   /**
    * Specifying an href will use an <a> to link to the URL
    */
-  'href': PropTypes.string,
+  href: PropTypes.string,
   /*
    * An ARIA Label used for accessibility
    */
@@ -230,11 +258,11 @@ Button.propTypes = {
   /**
    * Specifying a to URL will use a react-router Link
    */
-  'to': PropTypes.string,
+  to: PropTypes.string,
   /**
    * If using a button, then type is defines the type of button
    */
-  'type': PropTypes.oneOf(['button', 'submit']),
+  type: PropTypes.oneOf(['button', 'submit'])
 };
 
 export default Button;

@@ -78,7 +78,9 @@ export const getAllScriptOffsets = (htmlFile) => {
     } else {
       endFilenameInd = htmlFile.indexOf('.js', ind + startTag.length + 1);
       filename = htmlFile.substring(ind + startTag.length, endFilenameInd);
-      lineOffset = htmlFile.substring(0, ind).split('\n').length + hijackConsoleErrorsScriptLength;
+      lineOffset =
+        htmlFile.substring(0, ind).split('\n').length +
+        hijackConsoleErrorsScriptLength;
       offs.push([lineOffset, filename]);
       lastInd = ind + 1;
     }

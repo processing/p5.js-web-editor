@@ -121,14 +121,6 @@ pre.CodeMirror-line {
   height: 100%;
 }
 
-.CodeMirror-find-div {
-  padding: 0;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  flex-wrap: nowrap;
-}
-
 .CodeMirror-search-modifiers {
   margin-left: #{10 / $base-font-size}rem;
 }
@@ -142,11 +134,21 @@ pre.CodeMirror-line {
 .CodeMirror-find-controls {
   display: flex;
 }
-
+.CodeMirror-search-inputs {
+  width: 30%;
+  margin-left: 10px;
+}
 .CodeMirror-replace-div {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+}
+.CodeMirror-search-controls {
+  width: 60%;
+  display: flex;
+  flex-wrap: wrap-reverse;
+  justify-content: flex-start;
+  align-items: flex-end;
 }
 .CodeMirror-replace-controls {
   display: flex;
@@ -419,4 +421,43 @@ pre.CodeMirror-line {
 
 .editor__unsaved-changes {
   margin-left: #{2 / $base-font-size}rem;
+}
+
+/** Inline abbreviation preview */
+
+.emmet-abbreviation-preview {
+  @extend %modal;
+  position: absolute;
+  @include themify() {
+    background: getThemifyVariable('background-color');
+  }
+  & .CodeMirror-lines {
+    padding: 0;
+  }
+  & .CodeMirror {
+    height: auto;
+    max-width: #{400 / $base-font-size}rem;
+    max-height: #{300 / $base-font-size}rem;
+    border: none;
+  }
+}
+
+.emmet-abbreviation-preview:not(.has-error) .emmet-abbreviation-preview-error {
+    display: none;
+}
+
+.emmet-abbreviation-preview.has-error .CodeMirror {
+    display: none;
+}
+
+.emmet-abbreviation-preview .CodeMirror-cursors {
+    visibility: hidden !important;
+}
+
+.emmet-abbreviation-preview .emmet-error-snippet-message {
+    padding: 5px;
+}
+
+.emmet-open-tag, .emmet-close-tag {
+    text-decoration: underline;
 }
