@@ -40,7 +40,10 @@ export function listen(callback) {
 function eventListener(e) {
   const { data } = e;
 
-  if (data && e.origin === origin) {
+  // Removing the origin check for now
+  // I wonder if this is what is breaking production
+  // if (data && e.origin === origin) {
+  if (data) {
     notifyListener(data);
   }
 }
