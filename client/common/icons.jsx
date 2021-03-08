@@ -29,28 +29,27 @@ import CircleInfo from '../images/circle-info.svg';
 // could also give these a default size, color, etc. based on the theme
 // Need to add size to these - like small icon, medium icon, large icon. etc.
 function withLabel(SvgComponent) {
-  const Icon = (props) => {
-    const StyledIcon = styled(SvgComponent)`
-      &&& {
-        color: ${prop('Icon.default')};
+  const StyledIcon = styled(SvgComponent)`
+    &&& {
+      color: ${prop('Icon.default')};
+      & g,
+      & path,
+      & polygon {
+        opacity: 1;
+        fill: ${prop('Icon.default')};
+      }
+      &:hover {
+        color: ${prop('Icon.hover')};
         & g,
         & path,
         & polygon {
           opacity: 1;
-          fill: ${prop('Icon.default')};
-        }
-        &:hover {
-          color: ${prop('Icon.hover')};
-          & g,
-          & path,
-          & polygon {
-            opacity: 1;
-            fill: ${prop('Icon.hover')};
-          }
+          fill: ${prop('Icon.hover')};
         }
       }
-    `;
-
+    }
+  `;
+  const Icon = (props) => {
     const { 'aria-label': ariaLabel } = props;
     if (ariaLabel) {
       return (
