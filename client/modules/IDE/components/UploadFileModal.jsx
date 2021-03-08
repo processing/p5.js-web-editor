@@ -7,7 +7,7 @@ import prettyBytes from 'pretty-bytes';
 import getConfig from '../../../utils/getConfig';
 import FileUploader from './FileUploader';
 import { getreachedTotalSizeLimit } from '../selectors/users';
-import ExitIcon from '../../../images/exit.svg';
+import Modal from './Modal';
 
 const limit = getConfig('UPLOAD_LIMIT') || 250000000;
 const limitText = prettyBytes(limit);
@@ -29,43 +29,29 @@ class UploadFileModal extends React.Component {
 
   render() {
     return (
-      <section
-        className="modal"
-        ref={(element) => {
-          this.modal = element;
-        }}
+      <Modal
+        setRef={(element) => (this.modal = element)}
+        title={this.props.t('UploadFileModal.Title')}
+        closeModal={this.props.closeModal}
+        closeButtonAria={this.props.t('UploadFileModal.CloseButtonARIA')}
       >
-        <div className="modal-content">
-          <div className="modal__header">
-            <h2 className="modal__title">
-              {this.props.t('UploadFileModal.Title')}
-            </h2>
-            <button
-              className="modal__exit-button"
-              onClick={this.props.closeModal}
-              aria-label={this.props.t('UploadFileModal.CloseButtonARIA')}
-            >
-              <ExitIcon focusable="false" aria-hidden="true" />
-            </button>
+        {this.props.reachedTotalSizeLimit && (
+          <p>
+            {this.props.t('UploadFileModal.SizeLimitError', {
+              sizeLimit: limitText
+            })}
+            <Link to="/assets" onClick={this.props.closeModal}>
+              assets
+            </Link>
+            .
+          </p>
+        )}
+        {!this.props.reachedTotalSizeLimit && (
+          <div>
+            <FileUploader />
           </div>
-          {this.props.reachedTotalSizeLimit && (
-            <p>
-              {this.props.t('UploadFileModal.SizeLimitError', {
-                sizeLimit: limitText
-              })}
-              <Link to="/assets" onClick={this.props.closeModal}>
-                assets
-              </Link>
-              .
-            </p>
-          )}
-          {!this.props.reachedTotalSizeLimit && (
-            <div>
-              <FileUploader />
-            </div>
-          )}
-        </div>
-      </section>
+        )}
+      </Modal>
     );
   }
 }

@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { withTranslation } from 'react-i18next';
 import NewFileForm from './NewFileForm';
 import { closeNewFileModal } from '../actions/ide';
-import ExitIcon from '../../../images/exit.svg';
+import Modal from './Modal';
 
 // At some point this will probably be generalized to a generic modal
 // in which you can insert different content
@@ -39,28 +39,14 @@ class NewFileModal extends React.Component {
 
   render() {
     return (
-      <section
-        className="modal"
-        ref={(element) => {
-          this.modal = element;
-        }}
+      <Modal
+        setRef={(element) => (this.modal = element)}
+        title={this.props.t('NewFileModal.Title')}
+        closeModal={this.props.closeNewFileModal}
+        closeButtonAria={this.props.t('NewFileModal.CloseButtonARIA')}
       >
-        <div className="modal-content">
-          <div className="modal__header">
-            <h2 className="modal__title">
-              {this.props.t('NewFileModal.Title')}
-            </h2>
-            <button
-              className="modal__exit-button"
-              onClick={this.props.closeNewFileModal}
-              aria-label={this.props.t('NewFileModal.CloseButtonARIA')}
-            >
-              <ExitIcon focusable="false" aria-hidden="true" />
-            </button>
-          </div>
-          <NewFileForm focusOnModal={this.focusOnModal} />
-        </div>
-      </section>
+        <NewFileForm focusOnModal={this.focusOnModal} />
+      </Modal>
     );
   }
 }

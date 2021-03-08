@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import NewFolderForm from './NewFolderForm';
-import ExitIcon from '../../../images/exit.svg';
+import Modal from './Modal';
 
 class NewFolderModal extends React.Component {
   constructor(props) {
@@ -28,28 +28,14 @@ class NewFolderModal extends React.Component {
 
   render() {
     return (
-      <section
-        className="modal"
-        ref={(element) => {
-          this.newFolderModal = element;
-        }}
+      <Modal
+        setRef={(element) => (this.newFolderModal = element)}
+        title={this.props.t('NewFolderModal.Title')}
+        closeModal={this.props.closeModal}
+        closeButtonAria={this.props.t('NewFolderModal.CloseButtonARIA')}
       >
-        <div className="modal-content-folder">
-          <div className="modal__header">
-            <h2 className="modal__title">
-              {this.props.t('NewFolderModal.Title')}
-            </h2>
-            <button
-              className="modal__exit-button"
-              onClick={this.props.closeModal}
-              aria-label={this.props.t('NewFolderModal.CloseButtonARIA')}
-            >
-              <ExitIcon focusable="false" aria-hidden="true" />
-            </button>
-          </div>
-          <NewFolderForm />
-        </div>
-      </section>
+        <NewFolderForm />
+      </Modal>
     );
   }
 }
