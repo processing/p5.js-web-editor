@@ -96,6 +96,11 @@ export default {
       default: grays.middleGray,
       hover: grays.darker
     },
+    Input: {
+      background: grays.lightest,
+      borderColor: grays.middleLight,
+      textColor: grays.dark
+    },
     MobilePanel: {
       default: {
         foreground: colors.black,
@@ -107,8 +112,14 @@ export default {
       background: grays.light,
       border: grays.middleLight
     },
+    Search: {
+      clearBackgroundColor: grays.light,
+      hover: {
+        textColor: grays.lightest,
+        backgroundColor: grays.mediumDark
+      }
+    },
     Separator: grays.middleLight,
-
     SketchList: {
       background: grays.lighter,
       card: {
@@ -155,6 +166,11 @@ export default {
       default: grays.middleLight,
       hover: grays.lightest
     },
+    Input: {
+      background: grays.dark,
+      borderColor: grays.middleDark,
+      textColor: grays.lightest
+    },
     MobilePanel: {
       default: {
         foreground: grays.light,
@@ -166,8 +182,14 @@ export default {
       background: grays.dark,
       border: grays.middleDark
     },
+    Search: {
+      clearBackgroundColor: grays.mediumDark,
+      hover: {
+        textColor: grays.lightest,
+        backgroundColor: colors.p5jsPink
+      }
+    },
     Separator: grays.middleDark,
-
     SketchList: {
       background: grays.darker,
       card: {
@@ -214,6 +236,11 @@ export default {
       default: grays.mediumLight,
       hover: colors.yellow
     },
+    Input: {
+      background: grays.dark,
+      borderColor: grays.middleDark,
+      textColor: grays.lightest
+    },
     MobilePanel: {
       default: {
         foreground: grays.light,
@@ -225,8 +252,14 @@ export default {
       background: grays.dark,
       border: grays.middleDark
     },
+    Search: {
+      clearBackgroundColor: grays.mediumDark,
+      hover: {
+        textColor: grays.dark,
+        backgroundColor: colors.yellow
+      }
+    },
     Separator: grays.middleDark,
-
     SketchList: {
       background: colors.yellow,
       card: {
