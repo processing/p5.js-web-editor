@@ -101,6 +101,9 @@ export default {
       borderColor: grays.middleLight,
       textColor: grays.dark
     },
+    Logo: {
+      color: colors.p5jsPink
+    },
     MobilePanel: {
       default: {
         foreground: colors.black,
@@ -171,6 +174,9 @@ export default {
       borderColor: grays.middleDark,
       textColor: grays.lightest
     },
+    Logo: {
+      color: colors.p5jsPink
+    },
     MobilePanel: {
       default: {
         foreground: grays.light,
@@ -240,6 +246,9 @@ export default {
       background: grays.dark,
       borderColor: grays.middleDark,
       textColor: grays.lightest
+    },
+    Logo: {
+      color: colors.yellow
     },
     MobilePanel: {
       default: {
