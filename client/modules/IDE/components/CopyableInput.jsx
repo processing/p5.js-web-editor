@@ -3,8 +3,56 @@ import React from 'react';
 import Clipboard from 'clipboard';
 import classNames from 'classnames';
 import { withTranslation } from 'react-i18next';
-
+import styled from 'styled-components';
+import { remSize, prop } from '../../../theme';
 import ShareIcon from '../../../images/share.svg';
+import Button from '../../../common/Button';
+
+const CopyableInputWrapper = styled.div`
+  padding-bottom: ${remSize(30)};
+  display: flex;
+  .tooltipped::after {
+    background-color: ${prop('Button.hover.background')};
+    color: ${prop('Button.hover.foreground')};
+    font-family: Montserrat, sans-serif;
+    font-size: #{12 / $base-font-size}rem;
+  }
+
+  .tooltipped-n::before,
+  .tooltipped::before {
+    color: ${prop('Button.hover.background')};
+    border-top-color: ${prop('Button.hover.background')};
+  }
+`;
+const CopyableInputValueContainer = styled.div`
+  width: 100%;
+  /* position: relative; */
+`;
+const CopyableInputLabel = styled.label`
+  width: 100%;
+  font-size: ${remSize(12)};
+  padding-bottom: ${remSize(5)};
+  color: ${prop('Text.inactive')};
+`;
+const CopyableInputLabelValue = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+const CopyableInputValue = styled.input`
+  width: 100%;
+  font-size: ${remSize(16)};
+  border-radius: ${(props) => (props.hasPreviewLink ? '2px 0 0 2px' : '')};
+`;
+const CopyableInputPreview = styled(Button)`
+  align-self: flex-end;
+  border-radius: 0 2px 2px 0 !important;
+  padding: ${remSize(2)} 0 !important;
+  line-height: unset !important;
+  & svg {
+    height: ${remSize(30)};
+    width: ${remSize(30)};
+  }
+`;
 
 class CopyableInput extends React.Component {
   constructor(props) {
@@ -39,44 +87,40 @@ class CopyableInput extends React.Component {
       'copyable-input--with-preview': hasPreviewLink
     });
     return (
-      <div className={copyableInputClass}>
-        <div
-          className="copyable-input__value-container tooltipped-no-delay"
+      <CopyableInputWrapper className={copyableInputClass}>
+        <CopyableInputValueContainer
+          className="tooltipped-no-delay"
           aria-label={this.props.t('CopyableInput.CopiedARIA')}
           ref={(element) => {
             this.tooltip = element;
           }}
           onMouseLeave={this.onMouseLeaveHandler}
         >
-          <label
-            className="copyable-input__label"
-            htmlFor={`copyable-input__value-${label}`}
-          >
-            <div className="copyable-input__label-container">{label}</div>
-            <input
+          <CopyableInputLabel htmlFor={`copyable-input__value-${label}`}>
+            <CopyableInputLabelValue>{label}</CopyableInputLabelValue>
+            <CopyableInputValue
               type="text"
-              className="copyable-input__value"
               id={`copyable-input__value-${label}`}
               value={value}
               ref={(element) => {
                 this.input = element;
               }}
               readOnly
+              hasPreviewLink={hasPreviewLink}
             />
-          </label>
-        </div>
+          </CopyableInputLabel>
+        </CopyableInputValueContainer>
         {hasPreviewLink && (
-          <a
+          <CopyableInputPreview
             target="_blank"
             rel="noopener noreferrer"
             href={value}
-            className="copyable-input__preview"
             aria-label={this.props.t('CopyableInput.CopiedARIA', { label })}
           >
             <ShareIcon focusable="false" aria-hidden="true" />
-          </a>
+          </CopyableInputPreview>
         )}
-      </div>
+      </CopyableInputWrapper>
     );
   }
 }
