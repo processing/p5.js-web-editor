@@ -18,7 +18,7 @@ const Explorer = ({ id, canEdit, onPressClose }) => {
 };
 
 Explorer.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   onPressClose: PropTypes.func,
   canEdit: PropTypes.bool
 };
