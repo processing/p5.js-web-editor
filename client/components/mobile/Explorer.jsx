@@ -7,7 +7,7 @@ import ConnectedFileNode from '../../modules/IDE/components/FileNode';
 const Explorer = ({ id, canEdit, onPressClose }) => {
   const { t } = useTranslation();
   return (
-    <Sidebar title={t('Explorer.Files')} onPressClose={onPressClose}>
+    <Sidebar title={t('Nav.Auth.Hello')} onPressClose={onPressClose}>
       <ConnectedFileNode
         id={id}
         canEdit={canEdit}
