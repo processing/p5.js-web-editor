@@ -13,7 +13,8 @@ function setAssets(assets, totalSize) {
 export function getAssets() {
   return (dispatch) => {
     dispatch(startLoader());
-    apiClient.get('/S3/objects')
+    apiClient
+      .get('/S3/objects')
       .then((response) => {
         dispatch(setAssets(response.data.assets, response.data.totalSize));
         dispatch(stopLoader());
@@ -36,7 +37,8 @@ export function deleteAsset(assetKey) {
 
 export function deleteAssetRequest(assetKey) {
   return (dispatch) => {
-    apiClient.delete(`/S3/${assetKey}`)
+    apiClient
+      .delete(`/S3/${assetKey}`)
       .then((response) => {
         dispatch(deleteAsset(assetKey));
       })

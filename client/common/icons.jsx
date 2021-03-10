@@ -23,7 +23,6 @@ import CircleTerminal from '../images/circle-terminal.svg';
 import CircleFolder from '../images/circle-folder.svg';
 import CircleInfo from '../images/circle-info.svg';
 
-
 // HOC that adds the right web accessibility props
 // https://www.scottohara.me/blog/2019/05/22/contextual-images-svgs-and-a11y.html
 
@@ -34,13 +33,17 @@ function withLabel(SvgComponent) {
     const StyledIcon = styled(SvgComponent)`
       &&& {
         color: ${prop('Icon.default')};
-        & g, & path, & polygon {
+        & g,
+        & path,
+        & polygon {
           opacity: 1;
           fill: ${prop('Icon.default')};
         }
         &:hover {
           color: ${prop('Icon.hover')};
-          & g, & path, & polygon {
+          & g,
+          & path,
+          & polygon {
             opacity: 1;
             fill: ${prop('Icon.hover')};
           }
@@ -50,18 +53,16 @@ function withLabel(SvgComponent) {
 
     const { 'aria-label': ariaLabel } = props;
     if (ariaLabel) {
-      return (<StyledIcon
-        {...props}
-        aria-label={ariaLabel}
-        role="img"
-        focusable="false"
-      />);
+      return (
+        <StyledIcon
+          {...props}
+          aria-label={ariaLabel}
+          role="img"
+          focusable="false"
+        />
+      );
     }
-    return (<StyledIcon
-      {...props}
-      aria-hidden
-      focusable="false"
-    />);
+    return <StyledIcon {...props} aria-hidden focusable="false" />;
   };
 
   Icon.propTypes = {
