@@ -244,18 +244,20 @@ class Nav extends React.PureComponent {
             className="svg__logo"
           />
         </li>
-        <li className="nav__item nav__item--no-icon">
-          <Link to="/" className="nav__back-link">
-            <CaretLeftIcon
-              className="nav__back-icon"
-              focusable="false"
-              aria-hidden="true"
-            />
-            <span className="nav__item-header">
-              {this.props.t('Nav.BackEditor')}
-            </span>
-          </Link>
-        </li>
+        {this.props.disableBackToEditor ? null : (
+          <li className="nav__item nav__item--no-icon">
+            <Link to="/" className="nav__back-link">
+              <CaretLeftIcon
+                className="nav__back-icon"
+                focusable="false"
+                aria-hidden="true"
+              />
+              <span className="nav__item-header">
+                {this.props.t('Nav.BackEditor')}
+              </span>
+            </Link>
+          </li>
+        )}
       </ul>
     );
   }
@@ -887,7 +889,8 @@ Nav.propTypes = {
   t: PropTypes.func.isRequired,
   setLanguage: PropTypes.func.isRequired,
   language: PropTypes.string.isRequired,
-  isUserOwner: PropTypes.bool.isRequired
+  isUserOwner: PropTypes.bool.isRequired,
+  disableBackToEditor: PropTypes.bool
 };
 
 Nav.defaultProps = {
@@ -900,7 +903,8 @@ Nav.defaultProps = {
   warnIfUnsavedChanges: undefined,
   params: {
     username: undefined
-  }
+  },
+  disableBackToEditor: false
 };
 
 function mapStateToProps(state) {

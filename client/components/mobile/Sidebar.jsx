@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useTranslation } from 'react-i18next';
 import { remSize, prop } from '../../theme';
-import LogoIcon from '../../images/p5js-logo-small.svg';
-import SidebarHeader from './SidebarHeader';
+import Nav from '../Nav';
 
 const SidebarWrapper = styled.div`
   height: 100%;
@@ -18,27 +16,14 @@ const SidebarWrapper = styled.div`
   box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.1);
 `;
 
-const Sidebar = ({ title, children }) => {
-  const { t } = useTranslation();
-  return (
-    <SidebarWrapper>
-      {title && (
-        <SidebarHeader title={title}>
-          <LogoIcon
-            role="img"
-            aria-label={t('Common.p5logoARIA')}
-            focusable="false"
-            className="svg__logo"
-          />
-        </SidebarHeader>
-      )}
-      {children}
-    </SidebarWrapper>
-  );
-};
+const Sidebar = ({ children }) => (
+  <SidebarWrapper>
+    <Nav layout="dashboard" disableBackToEditor />
+    {children}
+  </SidebarWrapper>
+);
 
 Sidebar.propTypes = {
-  title: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.element,
     PropTypes.arrayOf(PropTypes.element)
@@ -46,7 +31,6 @@ Sidebar.propTypes = {
 };
 
 Sidebar.defaultProps = {
-  title: null,
   children: []
 };
 

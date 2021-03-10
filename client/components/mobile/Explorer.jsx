@@ -17,7 +17,7 @@ const SubHeader = styled.h3`
 const Explorer = ({ id, canEdit, onPressClose }) => {
   const { t } = useTranslation();
   return (
-    <Sidebar title={t('Nav.Auth.Hello')}>
+    <Sidebar>
       <SidebarMenu title="Menu" />
       <SubHeader>{t('Sidebar.Title')}</SubHeader>
       <ConnectedFileNode
