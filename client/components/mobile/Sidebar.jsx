@@ -18,7 +18,7 @@ const SidebarWrapper = styled.div`
   box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.1);
 `;
 
-const Sidebar = ({ title, onPressClose, children }) => {
+const Sidebar = ({ title, children }) => {
   const { t } = useTranslation();
   return (
     <SidebarWrapper>
@@ -39,7 +39,6 @@ const Sidebar = ({ title, onPressClose, children }) => {
 
 Sidebar.propTypes = {
   title: PropTypes.string,
-  onPressClose: PropTypes.func,
   children: PropTypes.oneOfType([
     PropTypes.element,
     PropTypes.arrayOf(PropTypes.element)
@@ -48,8 +47,7 @@ Sidebar.propTypes = {
 
 Sidebar.defaultProps = {
   title: null,
-  children: [],
-  onPressClose: () => {}
+  children: []
 };
 
 export default Sidebar;
