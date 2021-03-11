@@ -101,7 +101,7 @@ class PreviewFrame extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('message', this.handleConsoleEvent);
-    const iframeBody = this.iframeElement.contentDocument.body;
+    const iframeBody = this.iframe.current.contentDocument.body;
     if (iframeBody) {
       ReactDOM.unmountComponentAtNode(iframeBody);
     }
@@ -416,7 +416,7 @@ class PreviewFrame extends React.Component {
   }
 
   renderSketch() {
-    const doc = this.iframeElement;
+    const doc = this.iframe.current;
     const localFiles = this.injectLocalFiles();
     if (this.props.isPlaying) {
       this.props.clearConsole();
@@ -444,9 +444,6 @@ class PreviewFrame extends React.Component {
         role="main"
         frameBorder="0"
         title="sketch preview"
-        ref={(element) => {
-          this.iframeElement = element;
-        }}
         setRef={(r) => this.setRef(r)}
         sandbox={sandboxAttributes}
         draggable={this.props.draggable}
