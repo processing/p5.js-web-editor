@@ -378,10 +378,7 @@ class IDEView extends React.Component {
         </main>
         {this.props.ide.modalIsVisible && <NewFileModal />}
         {this.props.ide.newFolderModalVisible && (
-          <NewFolderModal
-            closeModal={this.props.closeNewFolderModal}
-            createFolder={this.props.createFolder}
-          />
+          <NewFolderModal closeModal={this.props.closeNewFolderModal} />
         )}
         {this.props.ide.uploadFileModalVisible && (
           <UploadFileModal closeModal={this.props.closeUploadFileModal} />
@@ -505,9 +502,6 @@ IDEView.propTypes = {
     }),
     updatedAt: PropTypes.string
   }).isRequired,
-  editorAccessibility: PropTypes.shape({
-    lintMessages: PropTypes.objectOf(PropTypes.shape()).isRequired
-  }).isRequired,
   preferences: PropTypes.shape({
     autosave: PropTypes.bool.isRequired,
     fontSize: PropTypes.number.isRequired,
@@ -564,7 +558,6 @@ IDEView.propTypes = {
   newFolder: PropTypes.func.isRequired,
   closeNewFolderModal: PropTypes.func.isRequired,
   closeNewFileModal: PropTypes.func.isRequired,
-  createFolder: PropTypes.func.isRequired,
   closeShareModal: PropTypes.func.isRequired,
   closeKeyboardShortcutModal: PropTypes.func.isRequired,
   toast: PropTypes.shape({
