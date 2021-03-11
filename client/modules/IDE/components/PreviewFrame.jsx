@@ -32,7 +32,6 @@ import {
   setGridOutput,
   setSoundOutput
 } from '../actions/preferences';
-import { setBlobUrl } from '../actions/files';
 import { clearConsole, dispatchConsoleEvent } from '../actions/console';
 
 const IFrame = (props) => {
@@ -108,6 +107,12 @@ class PreviewFrame extends React.Component {
     }
   }
 
+  setRef(r) {
+    if (!this.iframe) this.iframe = React.createRef();
+
+    this.iframe.current = r;
+  }
+
   handleConsoleEvent(messageEvent) {
     if (Array.isArray(messageEvent.data)) {
       const decodedMessages = messageEvent.data.map((message) =>
@@ -153,12 +158,6 @@ class PreviewFrame extends React.Component {
 
       this.props.dispatchConsoleEvent(decodedMessages);
     }
-  }
-
-  setRef(r) {
-    if (!this.iframe) this.iframe = React.createRef();
-
-    this.iframe.current = r;
   }
 
   addLoopProtect(sketchDoc) {

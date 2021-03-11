@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useRef, useState } from 'react';
+import { useEffect, useCallback, useRef, useState } from 'react';
 
 export const noop = () => {};
 

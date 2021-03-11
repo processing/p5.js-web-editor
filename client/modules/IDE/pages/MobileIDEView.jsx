@@ -50,7 +50,7 @@ import {
   useEffectWithComparison,
   useEventListener,
   useLongPress
-} from '../hooks/custom-hooks';
+} from '../../../utils/custom-hooks';
 
 import * as device from '../../../utils/device';
 
@@ -270,6 +270,7 @@ const MobileIDEView = (props) => {
     files,
     toggleForceDesktop,
     logoutUser,
+    setAutorefresh,
     toast,
     isUserOwner
   } = props;
