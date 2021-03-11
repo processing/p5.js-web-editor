@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
+import { withRouter, browserHistory } from 'react-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -10,6 +10,7 @@ import styled from 'styled-components';
 import { bindActionCreators } from 'redux';
 
 import * as IDEActions from '../actions/ide';
+import * as UserActions from '../../User/actions';
 import * as ProjectActions from '../actions/project';
 import * as ConsoleActions from '../actions/console';
 import * as PreferencesActions from '../actions/preferences';
@@ -19,6 +20,7 @@ import * as EditorAccessibilityActions from '../actions/editorAccessibility';
 import Editor from '../components/Editor';
 
 import {
+  StopIcon,
   PlayIcon,
   MoreIcon,
   FolderIcon,
@@ -41,12 +43,14 @@ import { remSize } from '../../../theme';
 import ActionStrip from '../../../components/mobile/ActionStrip';
 import useAsModal from '../../../components/useAsModal';
 import Dropdown from '../../../components/Dropdown';
+import FloatingPreview from '../../../components/mobile/FloatingPreview';
 import { getIsUserOwner } from '../selectors/users';
 
 import {
   useEffectWithComparison,
-  useEventListener
-} from '../../../utils/custom-hooks';
+  useEventListener,
+  useLongPress
+} from '../hooks/custom-hooks';
 
 import * as device from '../../../utils/device';
 
@@ -246,19 +250,7 @@ const autosave = (autosaveInterval, setAutosaveInterval) => (
   }
 };
 
-// ide, preferences, project, selectedFile, user, params, unsavedChanges, expandConsole, collapseConsole,
-// stopSketch, startSketch, getProject, clearPersistedState, autosaveProject, saveProject, files
-
 const MobileIDEView = (props) => {
-  // const {
-  //   preferences, ide, editorAccessibility, project, updateLintMessage, clearLintMessage,
-  //   selectedFile, updateFileContent, files, user, params,
-  //   closeEditorOptions, showEditorOptions, logoutUser,
-  //   startRefreshSketch, stopSketch, expandSidebar, collapseSidebar, clearConsole, console,
-  //   showRuntimeErrorWarning, hideRuntimeErrorWarning, startSketch, getProject, clearPersistedState, setUnsavedChanges,
-  //   toggleForceDesktop
-  // } = props;
-
   const {
     ide,
     preferences,
@@ -342,6 +334,25 @@ const MobileIDEView = (props) => {
     props
   ]);
 
+  const [showFloatingPreview, setShowFloatingPreview] = useState(false);
+  const pressPlayEvents = useLongPress(
+    () => {
+      startSketch();
+      setAutorefresh(true);
+      setShowFloatingPreview(!showFloatingPreview);
+    },
+    () => {
+      setAutorefresh(false);
+      if (showFloatingPreview) {
+        stopSketch();
+        setShowFloatingPreview(false);
+      } else {
+        startSketch();
+        browserHistory.push('/preview');
+      }
+    }
+  );
+
   const projectActions = [
     {
       icon: TerminalIcon,
@@ -374,11 +385,8 @@ const MobileIDEView = (props) => {
         </NavItem>
         <li>
           <IconButton
-            to="/preview"
-            onClick={() => {
-              startSketch();
-            }}
-            icon={PlayIcon}
+            {...pressPlayEvents}
+            icon={showFloatingPreview ? StopIcon : PlayIcon}
             aria-label="Run sketch"
           />
         </li>
@@ -388,6 +396,8 @@ const MobileIDEView = (props) => {
       <IDEWrapper>
         <Editor provideController={setCmController} />
       </IDEWrapper>
+
+      {showFloatingPreview && <FloatingPreview />}
 
       <Footer>
         {consoleIsExpanded && (
@@ -473,6 +483,7 @@ MobileIDEView.propTypes = {
 
   unsavedChanges: PropTypes.bool.isRequired,
   autosaveProject: PropTypes.func.isRequired,
+  setAutorefresh: PropTypes.func.isRequired,
   isUserOwner: PropTypes.bool.isRequired,
 
   ...handleGlobalKeydownProps
@@ -502,6 +513,7 @@ const mapDispatchToProps = (dispatch) =>
       ...ProjectActions,
       ...IDEActions,
       ...ConsoleActions,
+      ...UserActions,
       ...PreferencesActions,
       ...EditorAccessibilityActions
     },
