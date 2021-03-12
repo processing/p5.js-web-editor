@@ -1,0 +1,136 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Sketchlist /> snapshot testing 1`] = `
+<DocumentFragment>
+  <article
+    class="sketches-table-container"
+  >
+    <table
+      class="sketches-table"
+      summary="table containing all saved projects"
+    >
+      <thead>
+        <tr>
+          <th
+            scope="col"
+          >
+            <button
+              aria-label="Sort by Sketch descending."
+              class="sketch-list__sort-button"
+              data-testid="toggle-direction-name"
+            >
+              <span
+                class="sketches-table__header"
+              >
+                Sketch
+              </span>
+            </button>
+          </th>
+          <th
+            scope="col"
+          >
+            <button
+              aria-label="Sort by Date Created ascending."
+              class="sketch-list__sort-button"
+              data-testid="toggle-direction-createdAt"
+            >
+              <span
+                class="sketches-table__header sketches-table__header--selected"
+              >
+                Date Created
+              </span>
+              <test-file-stub
+                aria-label="Descending"
+                focusable="false"
+                role="img"
+              />
+            </button>
+          </th>
+          <th
+            scope="col"
+          >
+            <button
+              aria-label="Sort by Date Updated descending."
+              class="sketch-list__sort-button"
+              data-testid="toggle-direction-updatedAt"
+            >
+              <span
+                class="sketches-table__header"
+              >
+                Date Updated
+              </span>
+            </button>
+          </th>
+          <th
+            scope="col"
+          />
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          class="sketches-table__row"
+        >
+          <th
+            scope="row"
+          >
+            <a>
+              testsketch1
+            </a>
+          </th>
+          <td>
+            Feb 25, 2021, 11:58:14 PM
+          </td>
+          <td>
+            Feb 25, 2021, 11:58:29 PM
+          </td>
+          <td
+            class="sketch-list__dropdown-column"
+          >
+            <button
+              aria-label="Toggle Open/Close Sketch Options"
+              class="sketch-list__dropdown-button"
+              data-testid="sketch-list-toggle-options-arrow"
+            >
+              <test-file-stub
+                aria-hidden="true"
+                focusable="false"
+              />
+            </button>
+          </td>
+        </tr>
+        <tr
+          class="sketches-table__row"
+        >
+          <th
+            scope="row"
+          >
+            <a>
+              testsketch2
+            </a>
+          </th>
+          <td>
+            Feb 23, 2021, 12:40:43 PM
+          </td>
+          <td>
+            Feb 23, 2021, 12:40:43 PM
+          </td>
+          <td
+            class="sketch-list__dropdown-column"
+          >
+            <button
+              aria-label="Toggle Open/Close Sketch Options"
+              class="sketch-list__dropdown-button"
+              data-testid="sketch-list-toggle-options-arrow"
+            >
+              <test-file-stub
+                aria-hidden="true"
+                focusable="false"
+              />
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </article>
+</DocumentFragment>
+`;
