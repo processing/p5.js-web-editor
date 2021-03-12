@@ -9,7 +9,7 @@ import decomment from 'decomment';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { Decode } from 'console-feed';
-import { getBlobUrl } from '../actions/files';
+import { getBlobUrl, setBlobUrl } from '../actions/files';
 import { resolvePathToFile } from '../../../../server/utils/filePath';
 import {
   MEDIA_FILE_REGEX,
@@ -26,15 +26,36 @@ import {
 } from '../../../utils/consoleUtils';
 
 import { getHTMLFile } from '../reducers/files';
-
 import { stopSketch, expandConsole, endSketchRefresh } from '../actions/ide';
 import {
   setTextOutput,
   setGridOutput,
   setSoundOutput
 } from '../actions/preferences';
-import { setBlobUrl } from '../actions/files';
 import { clearConsole, dispatchConsoleEvent } from '../actions/console';
+
+const IFrame = (props) => {
+  const { setRef, className, sandbox } = props;
+
+  return (
+    <iframe
+      id="canvas_frame"
+      className={className}
+      aria-label="sketch output"
+      role="main"
+      frameBorder="0"
+      title="sketch preview"
+      ref={setRef}
+      sandbox={sandbox}
+    />
+  );
+};
+
+IFrame.propTypes = {
+  setRef: PropTypes.any.isRequired, // eslint-disable-line
+  className: PropTypes.string.isRequired,
+  sandbox: PropTypes.string.isRequired // eslint-disable-line
+};
 
 const shouldRenderSketch = (props, prevProps = undefined) => {
   const { isPlaying, previewIsRefreshing, fullView } = props;
@@ -58,6 +79,7 @@ class PreviewFrame extends React.Component {
   constructor(props) {
     super(props);
     this.handleConsoleEvent = this.handleConsoleEvent.bind(this);
+    this.iframe = React.createRef();
   }
 
   componentDidMount() {
@@ -79,10 +101,16 @@ class PreviewFrame extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('message', this.handleConsoleEvent);
-    const iframeBody = this.iframeElement.contentDocument.body;
+    const iframeBody = this.iframe.current.contentDocument.body;
     if (iframeBody) {
       ReactDOM.unmountComponentAtNode(iframeBody);
     }
+  }
+
+  setRef(r) {
+    if (!this.iframe) this.iframe = React.createRef();
+
+    this.iframe.current = r;
   }
 
   handleConsoleEvent(messageEvent) {
@@ -231,6 +259,12 @@ class PreviewFrame extends React.Component {
       sketchDoc.head.firstElement
     );
 
+    if (this.props.resize) {
+      const resizeScript = sketchDoc.createElement('style');
+      resizeScript.innerHTML =
+        '.p5Canvas { width: 100% !important; height: auto !important }';
+      sketchDoc.head.appendChild(resizeScript);
+    }
     return `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
   }
 
@@ -382,7 +416,7 @@ class PreviewFrame extends React.Component {
   }
 
   renderSketch() {
-    const doc = this.iframeElement;
+    const doc = this.iframe.current;
     const localFiles = this.injectLocalFiles();
     if (this.props.isPlaying) {
       this.props.clearConsole();
@@ -404,17 +438,15 @@ class PreviewFrame extends React.Component {
     const sandboxAttributes =
       'allow-scripts allow-pointer-lock allow-same-origin allow-popups allow-forms allow-modals allow-downloads';
     return (
-      <iframe
-        id="canvas_frame"
+      <IFrame
         className={iframeClass}
         aria-label="sketch output"
         role="main"
         frameBorder="0"
         title="sketch preview"
-        ref={(element) => {
-          this.iframeElement = element;
-        }}
+        setRef={(r) => this.setRef(r)}
         sandbox={sandboxAttributes}
+        draggable={this.props.draggable}
       />
     );
   }
@@ -447,12 +479,16 @@ PreviewFrame.propTypes = {
   clearConsole: PropTypes.func.isRequired,
   cmController: PropTypes.shape({
     getContent: PropTypes.func
-  })
+  }),
+  resize: PropTypes.bool,
+  draggable: PropTypes.bool
 };
 
 PreviewFrame.defaultProps = {
   fullView: false,
-  cmController: {}
+  cmController: {},
+  resize: false,
+  draggable: false
 };
 
 function mapStateToProps(state, ownProps) {

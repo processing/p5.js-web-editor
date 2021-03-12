@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useCallback, useRef, useState } from 'react';
 
 export const noop = () => {};
 
@@ -58,6 +58,7 @@ export const useEffectWithComparison = (fn, props) => {
   }, Object.values(props));
 };
 
+// Creates a global event listener for the event
 export const useEventListener = (
   event,
   callback,
@@ -68,3 +69,122 @@ export const useEventListener = (
     document.addEventListener(event, callback, useCapture);
     return () => document.removeEventListener(event, callback, useCapture);
   }, list);
+
+const isTouchEvent = (event) => 'touches' in event;
+
+const preventDefault = (event) => {
+  if (!isTouchEvent(event)) return;
+
+  if (event.touches.length < 2 && event.preventDefault) {
+    event.preventDefault();
+  }
+};
+
+// Use Long Press: Creates a set of events based on a longPress and an onClick event creators.
+export const useLongPress = (
+  onLongPress,
+  onClick,
+  { shouldPreventDefault = true, delay = 300 } = {}
+) => {
+  const [longPressTriggered, setLongPressTriggered] = useState(false);
+  const timeout = useRef();
+  const target = useRef();
+
+  const start = useCallback(
+    (event) => {
+      if (shouldPreventDefault && event.target) {
+        event.target.addEventListener('touchend', preventDefault, {
+          passive: false
+        });
+        target.current = event.target;
+      }
+      timeout.current = setTimeout(() => {
+        onLongPress(event);
+        setLongPressTriggered(true);
+      }, delay);
+    },
+    [onLongPress, delay, shouldPreventDefault]
+  );
+
+  const clear = useCallback(
+    (event, shouldTriggerClick = true) => {
+      if (timeout.current) clearTimeout(timeout.current);
+      if (shouldTriggerClick && !longPressTriggered) onClick();
+      setLongPressTriggered(false);
+      if (shouldPreventDefault && target.current) {
+        target.current.removeEventListener('touchend', preventDefault);
+      }
+    },
+    [shouldPreventDefault, onClick, longPressTriggered]
+  );
+
+  return {
+    onMouseDown: (e) => start(e),
+    onTouchStart: (e) => start(e),
+    onMouseUp: (e) => clear(e),
+    onMouseLeave: (e) => clear(e, false),
+    onTouchEnd: (e) => clear(e)
+  };
+};
+
+// Use Draggable: Receives a Ref (useRef), returns a Ref, which you can pass to a <div ref={...} />
+// and place the desired draggable component inside
+export function useDraggable(el) {
+  const [{ dx, dy }, setOffset] = useState({ dx: 0, dy: 0 });
+
+  useEffect(() => {
+    // Implementation for Mouse Events
+    // const handleMouseDown = (event) => {
+    //   event.preventDefault();
+    //   const startX = event.pageX - dx;
+    //   const startY = event.pageY - dy;
+    //   const handleMouseMove = (innerEvent) => {
+    //     const newDx = innerEvent.pageX - startX;
+    //     const newDy = innerEvent.pageY - startY;
+    //     setOffset({ dx: newDx, dy: newDy });
+    //   };
+
+    //   document.addEventListener('mousemove', handleMouseMove);
+    //   document.addEventListener('mouseup', () => {
+    //     document.removeEventListener('mousemove', handleMouseMove);
+    //   }, { once: true });
+    // };
+
+    // el.current.addEventListener('mousedown', handleMouseDown);
+    // return () => {
+    //   el.current.removeEventListener('mousedown', handleMouseDown);
+    // };
+
+    const handleTouchDown = (event) => {
+      event.preventDefault();
+      const te = event.touches[0]; // get the actual touch event
+      const startX = te.pageX - dx;
+      const startY = te.pageY - dy;
+
+      const handleTouchMove = (innerEvent) => {
+        const ite = innerEvent.touches[0]; // get the actual touch event
+        const newDx = ite.pageX - startX;
+        const newDy = ite.pageY - startY;
+        setOffset({ dx: newDx, dy: newDy });
+      };
+
+      document.addEventListener('touchmove', handleTouchMove);
+      document.addEventListener(
+        'touchend',
+        () => {
+          document.removeEventListener('touchmove', handleTouchMove);
+        },
+        { once: true }
+      );
+    };
+
+    el.current.addEventListener('touchstart', handleTouchDown);
+    return () => {
+      el.current.removeEventListener('touchstart', handleTouchDown);
+    };
+  }, [dx, dy]);
+
+  useEffect(() => {
+    el.current.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
+  }, [dx, dy]);
+}
