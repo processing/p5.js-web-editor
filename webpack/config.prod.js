@@ -11,6 +11,8 @@ if (process.env.NODE_ENV === "development") {
   require('dotenv').config();
 }
 
+const sharedObj = {};
+
 module.exports = [{
   devtool: 'source-map',
   mode: 'production',
@@ -156,6 +158,8 @@ module.exports = [{
   plugins: [
     new WebpackManifestPlugin({
       basePath: '/',
+      filename: 'manifest.json',
+      seed: sharedObj
     }),
     new MiniCssExtractPlugin({
       filename: 'app.[hash].css',
@@ -170,7 +174,7 @@ module.exports = [{
 },
 {
   entry: {
-    app: [
+    previewScripts: [
       path.resolve(__dirname, '../client/utils/previewEntry.js')
     ]
   },
@@ -179,7 +183,7 @@ module.exports = [{
   mode: 'production',
   output: {
     path: path.resolve(__dirname, '../dist/static'),
-    filename: 'previewScripts.js',
+    filename: 'previewScripts.[hash].js',
     publicPath: '/'
   },
   resolve: {
@@ -208,4 +212,11 @@ module.exports = [{
       parallel: true
     })],
   },
+  plugins: [
+    new WebpackManifestPlugin({
+      basePath: '/',
+      filename: 'manifest.json',
+      seed: sharedObj
+    })
+  ]
 }];

@@ -34,7 +34,7 @@ export function renderIndex() {
         window.process.env.UPLOAD_LIMIT = ${process.env.UPLOAD_LIMIT ? `${process.env.UPLOAD_LIMIT}` : undefined};
         window.process.env.MOBILE_ENABLED = ${process.env.MOBILE_ENABLED ? `${process.env.MOBILE_ENABLED}` : undefined};
         window.process.env.TRANSLATIONS_ENABLED = ${process.env.TRANSLATIONS_ENABLED === 'true' ? true : false}; 
-
+        window.process.env.PREVIEW_SCRIPTS_URL = '${process.env.NODE_ENV === 'production' ? `${assetsManifest['/previewScripts.js']}` : '/previewScripts.js'}';
       </script>
     </head>
     <body>
