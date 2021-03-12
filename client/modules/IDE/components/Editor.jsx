@@ -85,8 +85,6 @@ class Editor extends React.Component {
       }
     }, 2000);
     this.showFind = this.showFind.bind(this);
-    this.findNext = this.findNext.bind(this);
-    this.findPrev = this.findPrev.bind(this);
     this.showReplace = this.showReplace.bind(this);
     this.getContent = this.getContent.bind(this);
   }
@@ -196,8 +194,6 @@ class Editor extends React.Component {
     this.props.provideController({
       tidyCode: this.tidyCode,
       showFind: this.showFind,
-      findNext: this.findNext,
-      findPrev: this.findPrev,
       showReplace: this.showReplace,
       getContent: this.getContent
     });
@@ -315,16 +311,6 @@ class Editor extends React.Component {
     const content = this._cm.getValue();
     const updatedFile = Object.assign({}, this.props.file, { content });
     return updatedFile;
-  }
-
-  findPrev() {
-    this._cm.focus();
-    this._cm.execCommand('findPrev');
-  }
-
-  findNext() {
-    this._cm.focus();
-    this._cm.execCommand('findNext');
   }
 
   showFind() {
