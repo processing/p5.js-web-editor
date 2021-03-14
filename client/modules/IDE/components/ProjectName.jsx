@@ -28,18 +28,20 @@ const EditNameButton = styled(EditProjectNameIcon)`
 `;
 
 const Name = styled.button`
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  color: ${prop('secondaryTextColor')};
-  &:hover {
-    color: ${prop('logoColor')};
-    & ${EditNameButton} path {
-      fill: ${prop('logoColor')};
+  &&& {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: ${prop('secondaryTextColor')};
+    &:hover {
+      color: ${prop('logoColor')};
+      & ${EditNameButton} path {
+        fill: ${prop('logoColor')};
+      }
     }
-  }
 
-  ${({ isEditingName }) => isEditingName && `display: none;`}
+    ${({ isEditingName }) => isEditingName && `display: none;`}
+  }
 `;
 
 const Input = styled.input`
