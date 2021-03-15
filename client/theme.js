@@ -110,6 +110,16 @@ export default {
       card: {
         background: grays.lighter
       }
+    },
+    logoColor: {
+      default: {
+        fill: colors.p5jsPink,
+        stroke: colors.p5jsPink
+      },
+      hover: {
+        fill: grays.darker,
+        stroke: colors.p5jsPink
+      }
     }
   },
   [Theme.dark]: {
@@ -163,6 +173,16 @@ export default {
       card: {
         background: grays.dark
       }
+    },
+    logoColor: {
+      default: {
+        fill: colors.p5jsPink,
+        stroke: colors.p5jsPink
+      },
+      hover: {
+        fill: grays.lightest,
+        stroke: colors.p5jsPink
+      }
     }
   },
   [Theme.contrast]: {
@@ -215,6 +235,16 @@ export default {
       background: colors.yellow,
       card: {
         background: grays.dark
+      }
+    },
+    logoColor: {
+      default: {
+        fill: colors.yellow,
+        stroke: colors.yellow
+      },
+      hover: {
+        fill: colors.yellow,
+        stroke: colors.yellow
       }
     }
   }
