@@ -56,7 +56,7 @@ export function createCollection(collection) {
         const pathname = `/${newCollection.owner.username}/collections/${newCollection.id}`;
         const location = { pathname, state: { skipSavingPath: true } };
 
-        browserHistory.push(location);
+        browserHistory.replace(location);
       })
       .catch((error) => {
         const { response } = error;
