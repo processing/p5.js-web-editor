@@ -1,6 +1,9 @@
 import React from 'react';
 import lodash from 'lodash';
+import { Provider } from 'react-redux';
 
+import configureStore from '../../../store';
+import ThemeProvider from '../../App/components/ThemeProvider';
 import { fireEvent, render, screen, waitFor } from '../../../test-utils';
 import { ToolbarComponent } from './Toolbar';
 
@@ -38,7 +41,11 @@ const renderComponent = (extraProps = {}) => {
     extraProps
   );
 
-  render(<ToolbarComponent {...props} />);
+  const initialState = window.__INITIAL_STATE__;
+
+  const store = configureStore(initialState);
+
+  render(<Provider store={store}><ThemeProvider><ToolbarComponent {...props} /></ThemeProvider></Provider>);
 
   return props;
 };
