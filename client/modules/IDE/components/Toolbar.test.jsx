@@ -45,8 +45,13 @@ const renderComponent = (extraProps = {}) => {
 
   const store = configureStore(initialState);
 
-  render(<Provider store={store}><ThemeProvider><ToolbarComponent {...props} /></ThemeProvider></Provider>);
-
+  render(
+    <Provider store={store}>
+      <ThemeProvider>
+        <ToolbarComponent {...props} />
+      </ThemeProvider>
+    </Provider>
+  );
   return props;
 };
 
