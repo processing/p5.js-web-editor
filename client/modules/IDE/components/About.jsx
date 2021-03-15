@@ -35,12 +35,20 @@ const AboutContentColumnTitle = styled.h3`
   padding-left: ${remSize(17)};
 `;
 
-const AboutContentColumnAsterisk = styled(AsteriskIcon)`
+const AboutLink = styled.a`
   &&& {
-    padding-right: ${remSize(5)};
+    & svg {
+      padding-right: ${remSize(5)};
+    }
     & path {
       fill: ${({ theme }) => theme.logoColor.default.fill};
       stroke: ${({ theme }) => theme.logoColor.default.stroke};
+    }
+    &:hover {
+      & path {
+        fill: ${({ theme }) => theme.logoColor.hover.fill};
+        stroke: ${({ theme }) => theme.logoColor.hover.stroke};
+      }
     }
   }
 `;
@@ -81,24 +89,24 @@ function About(props) {
       <AboutContentColumn>
         <AboutContentColumnTitle>{t('About.NewP5')}</AboutContentColumnTitle>
         <AboutContentColumnList>
-          <a
+          <AboutLink
             href="https://p5js.org/examples/"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <AboutContentColumnAsterisk aria-hidden="true" focusable="false" />
+            <AsteriskIcon aria-hidden="true" focusable="false" />
             {t('About.Examples')}
-          </a>
+          </AboutLink>
         </AboutContentColumnList>
         <AboutContentColumnList>
-          <a
+          <AboutLink
             href="https://p5js.org/learn/"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <AboutContentColumnAsterisk aria-hidden="true" focusable="false" />
+            <AsteriskIcon aria-hidden="true" focusable="false" />
             {t('About.Learn')}
-          </a>
+          </AboutLink>
         </AboutContentColumnList>
       </AboutContentColumn>
       <AboutContentColumn>
@@ -106,63 +114,63 @@ function About(props) {
           {t('About.Resources')}
         </AboutContentColumnTitle>
         <AboutContentColumnList>
-          <a
+          <AboutLink
             href="https://p5js.org/libraries/"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <AboutContentColumnAsterisk aria-hidden="true" focusable="false" />
+            <AsteriskIcon aria-hidden="true" focusable="false" />
             {t('About.Libraries')}
-          </a>
+          </AboutLink>
         </AboutContentColumnList>
         <AboutContentColumnList>
-          <a
+          <AboutLink
             href="https://p5js.org/reference/"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <AboutContentColumnAsterisk aria-hidden="true" focusable="false" />
+            <AsteriskIcon aria-hidden="true" focusable="false" />
             {t('Nav.Help.Reference')}
-          </a>
+          </AboutLink>
         </AboutContentColumnList>
         <AboutContentColumnList>
-          <a
+          <AboutLink
             href="https://discourse.processing.org/"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <AboutContentColumnAsterisk aria-hidden="true" focusable="false" />
+            <AsteriskIcon aria-hidden="true" focusable="false" />
             {t('About.Forum')}
-          </a>
+          </AboutLink>
         </AboutContentColumnList>
       </AboutContentColumn>
       <AboutFooter>
         <AboutFooterList>
-          <a
+          <AboutLink
             href="https://github.com/processing/p5.js-web-editor"
             target="_blank"
             rel="noopener noreferrer"
           >
             {t('About.Contribute')}
-          </a>
+          </AboutLink>
         </AboutFooterList>
         <AboutFooterList>
-          <a
+          <AboutLink
             href="https://github.com/processing/p5.js-web-editor/issues/new"
             target="_blank"
             rel="noopener noreferrer"
           >
             {t('About.Report')}
-          </a>
+          </AboutLink>
         </AboutFooterList>
         <AboutFooterList>
-          <a
+          <AboutLink
             href="https://twitter.com/p5xjs?lang=en"
             target="_blank"
             rel="noopener noreferrer"
           >
             Twitter
-          </a>
+          </AboutLink>
         </AboutFooterList>
       </AboutFooter>
     </AboutContentContainer>
