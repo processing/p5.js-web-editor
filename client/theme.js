@@ -63,6 +63,7 @@ export default {
     colors,
     ...common,
     primaryTextColor: grays.dark,
+    inactiveTextColor: grays.middleDark,
     backgroundColor: grays.lighter,
 
     Button: {
@@ -120,12 +121,17 @@ export default {
         fill: grays.darker,
         stroke: colors.p5jsPink
       }
+    },
+    tableRowStripeColor: {
+      default: grays.mediumLight,
+      alternate: grays.mediumLight
     }
   },
   [Theme.dark]: {
     colors,
     ...common,
     primaryTextColor: grays.lightest,
+    inactiveTextColor: grays.middleLight,
     backgroundColor: grays.darker,
 
     Button: {
@@ -183,12 +189,17 @@ export default {
         fill: grays.lightest,
         stroke: colors.p5jsPink
       }
+    },
+    tableRowStripeColor: {
+      default: grays.dark,
+      alternate: grays.darker
     }
   },
   [Theme.contrast]: {
     colors,
     ...common,
     primaryTextColor: grays.lightest,
+    inactiveTextColor: grays.light,
     backgroundColor: grays.darker,
 
     Button: {
@@ -246,6 +257,10 @@ export default {
         fill: colors.yellow,
         stroke: colors.yellow
       }
+    },
+    tableRowStripeColor: {
+      default: grays.dark,
+      alternate: grays.darker
     }
   }
 };
