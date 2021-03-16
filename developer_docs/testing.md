@@ -78,6 +78,20 @@ Want to get started writing a test for a new file or an existing file, but not s
 3. If it is, see the redux section below on how to write tests for that.
 4. If it's not, see the section below on writing tests for unconnected components.
 
+For any type of component, you might want to consider testing:
+- User input results in the class's method being called. 
+  ```
+  //component is the return value of calling render()
+  const spy1 = jest.spyOn(component.instance(), 'func1');
+  act(() => {
+    fireEvent.click(screen.getByTestId("testid"));
+  });
+  expect(spy1).toHaveBeenCalledTimes(1);
+  ``` 
+- The text or divs that you expect to be on the page are actually there.
+- a previously saved snapshot of the HTML matches a snapshot taken during testing.
+- what else?? help!
+
 ### For Redux action creators or reducers
 See the [redux section](#Testing-Redux) below :)
 
@@ -244,10 +258,10 @@ This folder contains the inital redux states that you can provide to the ``redux
 
 ### jest configs in package.json
 
-this i dont know much about yet but want to understand
+in progress
 
 ## Testing plain components
-If it doesn't contain ``connect(mapStateToProps, mapDispatchToProps)(ComponentName)`` or use hooks like ``useSelector``, then your component is not connected to Redux and testing your component will be simpler and might look something like this:
+If it doesn't contain ``connect(mapStateToProps, mapDispatchToProps)(ComponentName)`` or use hooks like ``useSelector``, then your component is not directly using Redux and testing your component will be simpler and might look something like this:
 
 ```
 import React from 'react';
@@ -319,17 +333,6 @@ Consider what you want to test. Some possible things might be:
   expect(yourMockFunction).toHaveBeenCalledTimes(1);
   expect(yourMockFunction.mock.calls[0][0]).toBe(argument);
   ``` 
-- User input results in the class's method being called. 
-  ```
-  //component is the return value of calling render()
-  const spy1 = jest.spyOn(component.instance(), 'func1');
-  act(() => {
-    fireEvent.click(screen.getByTestId("testid"));
-  });
-  expect(spy1).toHaveBeenCalledTimes(1);
-  ``` 
-- The text or divs that you expect to be on the page are actually there.
-- a previously saved snapshot of the HTML matches a snapshot taken during testing.
 - what else???? help!
 
 ## Testing Redux
@@ -427,18 +430,6 @@ Some things to consider testing:
     
     expect(store.getActions()).toEqual(expect.arrayContaining(expectedAction));
     ```
-- User input results in the class's method being called. 
-  ```
-  //component is the return value of calling render()
-  const spy1 = jest.spyOn(component.instance(), 'func1');
-  act(() => {
-    fireEvent.click(screen.getByTestId("testid"));
-  });
-  expect(spy1).toHaveBeenCalledTimes(1);
-  ``` 
-- The text or divs that you expect to be on the page are actually there.
-- a previously saved snapshot of the HTML matches a snapshot taken during testing.
-- what else???? help!
 
 ## How to handle API calls in tests
 
