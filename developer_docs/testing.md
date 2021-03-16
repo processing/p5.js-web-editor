@@ -78,6 +78,7 @@ Want to get started writing a test for a new file or an existing file, but not s
 3. If it is, see the redux section below on how to write tests for that.
 4. If it's not, see the section below on writing tests for unconnected components.
 
+### What to test
 For any type of component, you might want to consider testing:
 - User input results in the class's method being called. 
   ```
