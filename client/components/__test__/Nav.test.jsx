@@ -3,6 +3,8 @@ import { render } from '@testing-library/react';
 
 import { NavComponent } from '../Nav';
 
+jest.mock('../../i18n');
+
 describe('Nav', () => {
   const props = {
     newProject: jest.fn(),

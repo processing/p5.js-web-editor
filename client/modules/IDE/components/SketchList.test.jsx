@@ -24,16 +24,15 @@ jest.mock('../../../i18n');
  */
 
 describe('<Sketchlist />', () => {
-  let store;
   let container;
   const mockStore = configureStore([thunk]);
+  const store = mockStore(initialTestState);
 
   beforeEach(() => {
     // setup a DOM element as a render target
     container = document.createElement('div');
     document.body.appendChild(container);
     axios.get.mockImplementationOnce((x) => Promise.resolve({ data: 'foo' }));
-    store = mockStore(initialTestState);
   });
 
   afterEach(() => {

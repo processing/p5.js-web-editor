@@ -8,8 +8,8 @@ Many files still don't have tests, so if you're looking to get started as a cont
 ## What's in this document
 - [Testing dependencies](#testing-dependencies)
 - [Useful testing commands](#Useful-testing-commands)
-- [When to run tests](#When-to-run-tests)
 - [Why write tests](#Why-write-tests)
+- [When to run tests](#When-to-run-tests)
 - [Writing a test](#Writing-a-test)
 - [Files to be aware of](#Files-to-be-aware-of)
 - [Testing plain components](#Testing-plain-components)
@@ -55,10 +55,6 @@ npm run test -- Sketchlist.test.js -u
 
 Find more commands in the [Jest documentation](https://jestjs.io/docs/cli).
 
-## When to run tests
-
-Are they actually being run automaticlly???
-
 ## Why write tests
 - Good place to start if you're learning the codebase because it's harder to mess up production code
 - Benefits all future contributors by allowing them to check their changes for errors
@@ -67,20 +63,39 @@ Are they actually being run automaticlly???
 - Good practice for large projects
 - Many of the existing components don't have tests yet, and you could write one :-)
 
+## When to run tests
+
+When you make a git commit, the tests will be run automatically for you. 
+
+When you modify an existing component, it's a good idea to run the test suite to make sure it didn't make any changes that break the rest of the application. If they did break some tests, you would either have to fix a bug component or update the tests to match the new expected functionality.
+
 ## Writing a test
 Want to get started writing a test for a new file or an existing file, but not sure how?
 ### For React components
-
+(the below assumes we're using proposed folder structure 1)
 1. Make a new file in the ``__tests__`` folder that's directly adjacent to your file. For example, if ``example.jsx`` is in ``src/components``, then you would make a file called ``example.test.jsx`` in ``src/components/__tests__``
 2. Check if the component is connected to redux or not.
 3. If it is, see the redux section below on how to write tests for that.
 4. If it's not, see the section below on writing tests for unconnected components.
 
 ### For Redux action creators or reducers
-See the redux section below :)
+See the [redux section](#Testing-Redux) below :)
 
-### For server side code
-lol no clue how to do this yet
+### Troubleshooting
+1. Check if the component makes any API calls. If it's using axios, jest should already be set up to replace the axios library with a mocked version; however, you may want to [mock](https://jestjs.io/docs/mock-function-api#mockfnmockimplementationoncefn) the axios.get() function with your own version so that GET calls "return" whatever data makes sense for that test. 
+
+    ```
+    axios.get.mockImplementationOnce(
+      (x) => Promise.resolve({ data: 'foo' })
+    );
+    ```
+You can see it used in the context of a test [here](../client/modules/IDE/components/SketchList.test.jsx).
+
+2. If the component makes use of the formatDate util, some of the functions in that rely on the ``./client/i18n.js`` file that also makes an ajax request, which sometimes leads to an ERRCONNECTED error on the console, even though your tests pass. You can fix it by adding a mock for that specific i18n file:
+    ```
+    jest.mock('_path_to_file_/i18n');
+    ```
+You can see it used in the context of a test [here](../client/modules/IDE/components/SketchList.test.jsx).
 
 ## Files to be aware of
 
@@ -224,7 +239,6 @@ function reduxRender(
 ```
 
 
-
 ### redux_test_stores
 This folder contains the inital redux states that you can provide to the ``reduxRender`` function when testing. For example, if you want to render the SketchList component with a username of ``happydog`` and some sample sketches, ``redux_test_stores\test_store.js`` contains a definition for that state that you can import and provide to the renderer. 
 
@@ -233,59 +247,226 @@ This folder contains the inital redux states that you can provide to the ``redux
 this i dont know much about yet but want to understand
 
 ## Testing plain components
-If it doesn't export connect()__stuffhere_ or use redux hooks like adfasdf, then testing your component will be simpler and will look like this:
+If it doesn't export connect()___ or use redux hooks like ___, then testing your component will be simpler and might look something like this:
 
+```
+import React from 'react';
+import { unmountComponentAtNode } from 'react-dom';
+import { act } from 'react-dom/test-utils';
+import { fireEvent, render, screen } from '../../../../test-utils';
+import FakePreferences from './index';
+
+/* a helper function to render the components with the
+ * props that that component needs to be passed in
+ * if you want to access the rendered component itself
+ * you'd have to modify it a little to return the what
+ * gets returned from the render function, along with the props, which is what it's returning now.
+ * the default props in this can be overwritten by using extraProps
+ */
+const renderComponent = (extraProps = {}, container) => {
+  // if we want to overwrite any of these props, we can do it with extraProps because later keys overwrite earlier ones in the spread operator
+  const props = {
+    t: jest.fn(),
+    fontSize: 12,
+    autosave: false,
+    setFontSize: jest.fn(),
+    setAutosave: jest.fn(),
+    ...extraProps
+  };
+  render(<FakePreferences {...props} />, { container });
+
+  return props;
+};
+
+describe('<FakePreferences />', () => {
+  let container = null;
+  beforeEach(() => {
+    // setup a DOM element as a render target
+    container = document.createElement('div');
+    container.classList.add('testing-container');
+    document.body.appendChild(container);
+  });
+
+  afterEach(() => {
+    // cleanup on exiting
+    unmountComponentAtNode(container);
+    container.remove();
+    container = null;
+  });
+
+  describe('font tests', () => {
+    it('font size increase button says increase', () => {
+      let props;
+      // render the component
+      act(() => {
+        props = renderComponent({fontSize: 15}, container);
+      });
+      
+      //I do tests here. 
+      //you can access mock functions from props
+      //for example, props.setFontSize
+      
+    });
+  });
+```
+
+Consider what you want to test. Some possible things might be:
+- User input results in the expected function being called with the expected argument. 
+  ```
+  act(() => {
+    fireEvent.click(screen.getByTestId("testid"));
+  });
+  expect(yourMockFunction).toHaveBeenCalledTimes(1);
+  expect(yourMockFunction.mock.calls[0][0]).toBe(argument);
+  ``` 
+- User input results in the class's method being called. 
+  ```
+  //component is the return value of calling render()
+  const spy1 = jest.spyOn(component.instance(), 'func1');
+  act(() => {
+    fireEvent.click(screen.getByTestId("testid"));
+  });
+  expect(spy1).toHaveBeenCalledTimes(1);
+  ``` 
+- The text or divs that you expect to be on the page are actually there.
+- a previously saved snapshot of the HTML matches a snapshot taken during testing.
+- what else???? help!
 
 ## Testing Redux
 
-split up testing between:
+When testing redux, the general guidance [1] seems to suggest splitting up testing between:
 1. action creators
 2. reducers
 3. connected components
 
+Testing reducers and action creators is covered pretty well in [Redux's documentation](https://redux.js.org/recipes/writing-tests). An example of testing an action creator can be found at [projects.test.js](../client/modules/IDE/components/actions/__tests__/projects.test.jsx)
 
-4. unconnected components
+### Connected Components
 
-### action creators
-write example code here
-- can show cassie projects.test.js because that one is working :)
+Although it's possible to export the components as unconnected components for testing (and in this case you would just manually pass in the props that redux provides), the codebase is being migrated to use hooks, and in this case, that approach no longer works. It also doesn't work if we render components that have connected subcomponents. Thus, for consistency, we suggest testing all redux components while they're connected to redux. We can do this with redux-mock-store.
 
-### reducers
-write example code here
-### connected components
-3 approaches im trying for sketchlist
-- mock all of axios, let it run the action creators as usual, redux-mock-store and then render component
-- export unconnected component and use that 
-  - this method didn't work because the subcomponent that was also redux connected failed. I could use shallow rendering but that's not supported in react-testing-library (I think)
-- mock getProjects itself so it never calls apiClient at all
+This works like so:
+1. Import the reduxRender function from ``client/test_utils.js`` 
+2. Configure the mock store. 
+```
+import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 
-each has its own errors :/ i realized that the third approach is flawed because a lot of the functions rely on apiClient. Also, apiClient calls axios.create before any of the tests even run at all. overall, only mocking getProjects is a fragile solution
+
+const mockStore = configureStore([thunk]);
+```
+3. Create a mock store. There's an initial state that you can import from ``client/redux_test_stores/test_store.js`` 
+```
+store = mockStore(initialTestState);
+```
+3. Render the component with reduxRender and the store that you just created.
+```
+reduxRender(<SketchList username="happydog1" />, {store, container});
+```
+4. Test things! You may need to use jest to mock certain functions if the component is making API calls.
+
+All together, it might look something like this.
+
+```
+import React from 'react';
+import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import { unmountComponentAtNode } from 'react-dom';
+import { act } from 'react-dom/test-utils';
+import MyComponent from './MyComponent';
+import { reduxRender, fireEvent, screen } from '../../../test-utils';
+import { initialTestState } from '../../../redux_test_stores/test_store';
+
+describe(<MyComponent />, () => {
+  let store;
+  let container;
+  const mockStore = configureStore([thunk]);
+  store = mockStore(initialTestState);
+
+  beforeEach(() => {
+    // setup a DOM element as a render target
+    container = document.createElement('div');
+    document.body.appendChild(container);
+  });
+
+  afterEach(() => {
+    // cleanup on exiting
+    unmountComponentAtNode(container);
+    container.remove();
+    container = null;
+    store.clearActions();
+  });
+
+  it('stuff about the test', () => {
+    let component;
+    act(() => {
+      component = reduxRender(<MyComponent sampleprop="foo" />, {
+        store,
+        container
+      });
+    });
+
+    //your tests go here
+  });
+
+})
+```
+
+Some things to consider testing:
+- User input results in the expected redux action.
+    ```
+    act(() => {
+      component = reduxRender(<SketchList username="happydog2" />, {
+        store,
+        container
+      });
+    });
+    act(() => {
+      fireEvent.click(screen.getByTestId('toggle-direction-createdAt'));
+    });
+    const expectedAction = [{ type: 'TOGGLE_DIRECTION', field: 'createdAt' }];
+    
+    expect(store.getActions()).toEqual(expect.arrayContaining(expectedAction));
+    ```
+- User input results in the class's method being called. 
+  ```
+  //component is the return value of calling render()
+  const spy1 = jest.spyOn(component.instance(), 'func1');
+  act(() => {
+    fireEvent.click(screen.getByTestId("testid"));
+  });
+  expect(spy1).toHaveBeenCalledTimes(1);
+  ``` 
+- The text or divs that you expect to be on the page are actually there.
+- a previously saved snapshot of the HTML matches a snapshot taken during testing.
+- what else???? help!
 
 ## How to handle API calls in tests
 
-doesnt seem to like it when you make calls in a test
-so we mock axios
-also a little trickery in i18n .use(Backend)
-- editor uses axios, we mock the whole library and jest automatically does this since we have a axios.js file in the __mocks__ folder at the root of the client folder. 
-- the benefit of this is that you can control exactly what happens when any axios function gets called, and you can check how many times it's been called. 
-- [see this for more](https://stackoverflow.com/questions/51393952/mock-inner-axios-create/51414152#51414152)
-- [and this too](https://medium.com/asos-techblog/how-to-test-your-react-redux-application-48d90481a253)
+Some tests throw errors if a part of the client-side code tries to make an API call or AJAX request. Our solution to this is to use jest to replace those functions with [mock functions](https://jestjs.io/docs/mock-functions). 
+
+The code in question for the client side is mostly related to the axios library. We mock the whole library - jest automatically does this since we have an ``axios.js`` file in the ``__mocks__`` folder at the root of the client folder. [1][2]
+
+The benefit of this is that you can control exactly what happens when any axios function gets called, and you can check how many times it's been called. 
+
+A few components also import ``./client/i18n.js`` (or ``./client/utils/formatDate``, which imports the first file), in which the ``i18n.use(Backend)`` line can sometimes throw a sneaky ERRCONNECTED error. You can resolve this by mocking that file as described in [this section](#Troubleshooting).
 
 ## Some more background on tests
 
 ### test driven development (TDD)
+BDD???
 
 ### snapshot testing
-want to make an example 
+You can save a snapshot of what the HTML looks like when the component is rendered.
 
 ### integration tests
+Testing multiple components together. A small example is rendering a parent component and a child component within that.
 
 ### unit tests
-
-### mocking functions
-Sometimes you might want to mock a function
+Most of our tests are of this type. In this, you're testing a the functionality of a single component and no more.
 
 ## Internationalization
+Project uses i18n.
 
 ## Tips
 1. Make test fail at least once to make sure it was a meaningful test
@@ -296,6 +477,6 @@ Sometimes you might want to mock a function
 - stuff
 
 ## References
-[1] stuff here
-
-[2] stuff here
+-https://willowtreeapps.com/ideas/best-practices-for-unit-testing-with-a-react-redux-approach
+- [More info on this method](https://stackoverflow.com/questions/51393952/mock-inner-axios-create/51414152#51414152)
+- [and this too](https://medium.com/asos-techblog/how-to-test-your-react-redux-application-48d90481a253)

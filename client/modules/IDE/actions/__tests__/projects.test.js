@@ -10,9 +10,6 @@ import {
   mockProjects
 } from '../../../../redux_test_stores/test_store';
 
-// look into this
-// https://willowtreeapps.com/ideas/best-practices-for-unit-testing-with-a-react-redux-approach
-
 const mockStore = configureStore([thunk]);
 
 describe('projects action creator tests', () => {
