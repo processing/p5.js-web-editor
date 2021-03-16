@@ -247,7 +247,7 @@ This folder contains the inital redux states that you can provide to the ``redux
 this i dont know much about yet but want to understand
 
 ## Testing plain components
-If it doesn't export connect()___ or use redux hooks like ___, then testing your component will be simpler and might look something like this:
+If it doesn't contain ``connect(mapStateToProps, mapDispatchToProps)(ComponentName)`` or use hooks like ``useSelector``, then your component is not connected to Redux and testing your component will be simpler and might look something like this:
 
 ```
 import React from 'react';
