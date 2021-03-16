@@ -6,10 +6,44 @@ import { Link } from 'react-router';
 import { Helmet } from 'react-helmet';
 import prettyBytes from 'pretty-bytes';
 import { withTranslation } from 'react-i18next';
+import styled from 'styled-components';
 
 import Loader from '../../App/components/loader';
 import * as AssetActions from '../actions/assets';
 import DownFilledTriangleIcon from '../../../images/down-filled-triangle.svg';
+import { remSize } from '../../../theme';
+
+const AssetTableRow = styled.tr`
+  margin: ${remSize(10)};
+  height: ${remSize(72)};
+  font-size: ${remSize(16)};
+
+  &:nth-child(odd) {
+    background: ${({ theme }) => theme.tableRowStripeColor.default};
+  }
+  th {
+    &:nth-child(1) {
+      padding-left: ${remSize(12)};
+    }
+  }
+  a {
+    color: ${({ theme }) => theme.primaryTextColor};
+  }
+`;
+
+const AssetTableDropdownColumn = styled.td`
+  width: ${remSize(60)};
+  position: relative;
+`;
+
+const assetTableDropdownButton = styled.button`
+  width: ${remSize(25)};
+  height: ${remSize(25)};
+  & polygon,
+  & path {
+    fill: ${({ theme }) => theme.inactiveTextColor};
+  }
+`;
 
 class AssetListRowBase extends React.Component {
   constructor(props) {
@@ -70,7 +104,7 @@ class AssetListRowBase extends React.Component {
     const { asset, username, t } = this.props;
     const { optionsOpen } = this.state;
     return (
-      <tr className="asset-table__row" key={asset.key}>
+      <AssetTableRow key={asset.key}>
         <th scope="row">
           <Link to={asset.url} target="_blank">
             {asset.name}
@@ -84,16 +118,15 @@ class AssetListRowBase extends React.Component {
             </Link>
           )}
         </td>
-        <td className="asset-table__dropdown-column">
-          <button
-            className="asset-table__dropdown-button"
+        <AssetTableDropdownColumn>
+          <assetTableDropdownButton
             onClick={this.toggleOptions}
             onBlur={this.onBlurComponent}
             onFocus={this.onFocusComponent}
             aria-label={t('AssetList.ToggleOpenCloseARIA')}
           >
             <DownFilledTriangleIcon focusable="false" aria-hidden="true" />
-          </button>
+          </assetTableDropdownButton>
           {optionsOpen && (
             <ul className="asset-table__action-dialogue">
               <li>
@@ -119,8 +152,8 @@ class AssetListRowBase extends React.Component {
               </li>
             </ul>
           )}
-        </td>
-      </tr>
+        </AssetTableDropdownColumn>
+      </AssetTableRow>
     );
   }
 }
