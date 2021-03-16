@@ -334,7 +334,7 @@ Consider what you want to test. Some possible things might be:
 
 ## Testing Redux
 
-When testing redux, the general guidance [1] seems to suggest splitting up testing between:
+When testing redux, the general guidance [[1]](#References) seems to suggest splitting up testing between:
 1. action creators
 2. reducers
 3. connected components
@@ -378,10 +378,9 @@ import { reduxRender, fireEvent, screen } from '../../../test-utils';
 import { initialTestState } from '../../../redux_test_stores/test_store';
 
 describe(<MyComponent />, () => {
-  let store;
   let container;
   const mockStore = configureStore([thunk]);
-  store = mockStore(initialTestState);
+  const store = mockStore(initialTestState);
 
   beforeEach(() => {
     // setup a DOM element as a render target
@@ -445,7 +444,7 @@ Some things to consider testing:
 
 Some tests throw errors if a part of the client-side code tries to make an API call or AJAX request. Our solution to this is to use jest to replace those functions with [mock functions](https://jestjs.io/docs/mock-functions). 
 
-The code in question for the client side is mostly related to the axios library. We mock the whole library - jest automatically does this since we have an ``axios.js`` file in the ``__mocks__`` folder at the root of the client folder. [1][2]
+The code in question for the client side is mostly related to the axios library. We mock the whole library - jest automatically does this since we have an ``axios.js`` file in the ``__mocks__`` folder at the root of the client folder. [[2]](#References)
 
 The benefit of this is that you can control exactly what happens when any axios function gets called, and you can check how many times it's been called. 
 
@@ -466,7 +465,7 @@ Testing multiple components together. A small example is rendering a parent comp
 Most of our tests are of this type. In this, you're testing a the functionality of a single component and no more.
 
 ## Internationalization
-Project uses i18n.
+This project uses i18next for internationalization. If you import the render function with the i18n wrapper from ``test_utils.js``, it's set up to use English, so the components with be rendered with English text and you should be able to count on this to test for specific strings.
 
 ## Tips
 1. Make test fail at least once to make sure it was a meaningful test
@@ -477,6 +476,6 @@ Project uses i18n.
 - stuff
 
 ## References
--https://willowtreeapps.com/ideas/best-practices-for-unit-testing-with-a-react-redux-approach
-- [More info on this method](https://stackoverflow.com/questions/51393952/mock-inner-axios-create/51414152#51414152)
-- [and this too](https://medium.com/asos-techblog/how-to-test-your-react-redux-application-48d90481a253)
+1. [Best practices for unit testing with a react redux approach](https://willowtreeapps.com/ideas/best-practices-for-unit-testing-with-a-react-redux-approach)
+
+2. [How to test your react-redux application (this article also references axios)](https://medium.com/asos-techblog/how-to-test-your-react-redux-application-48d90481a253)
