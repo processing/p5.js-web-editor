@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withTranslation } from 'react-i18next';
+import styled from 'styled-components';
 // import find from 'lodash/find';
 import * as ProjectsActions from '../actions/projects';
 import * as CollectionsActions from '../actions/collections';
@@ -12,7 +13,18 @@ import * as SortingActions from '../actions/sorting';
 import getSortedSketches from '../selectors/projects';
 import Loader from '../../App/components/loader';
 import QuickAddList from './QuickAddList';
+import { remSize } from '../../../theme';
 
+const CollectionAddSketch = styled.div`
+  min-width: ${remSize(600)};
+  overflow: scroll;
+`;
+
+const QuickAddWrapper = styled.div`
+  min-width: ${remSize(600)};
+  padding: ${remSize(24)};
+  height: 100%;
+`;
 class SketchList extends React.Component {
   constructor(props) {
     super(props);
@@ -81,14 +93,14 @@ class SketchList extends React.Component {
     }
 
     return (
-      <div className="collection-add-sketch">
-        <div className="quick-add-wrapper">
+      <CollectionAddSketch>
+        <QuickAddWrapper>
           <Helmet>
             <title>{this.getSketchesTitle()}</title>
           </Helmet>
           {content}
-        </div>
-      </div>
+        </QuickAddWrapper>
+      </CollectionAddSketch>
     );
   }
 }
