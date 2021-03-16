@@ -472,8 +472,7 @@ This project uses i18next for internationalization. If you import the render fun
 2. "If you or another developer change the component in a way that it changes its behaviour at least one test should fail." -  [How to Unit Test in React](https://itnext.io/how-to-unit-test-in-react-72e911e2b8d)
 
 ## More Resources
-- stuff
-- stuff
+- any other resources for learning about tests here?
 
 ## References
 1. [Best practices for unit testing with a react redux approach](https://willowtreeapps.com/ideas/best-practices-for-unit-testing-with-a-react-redux-approach)
