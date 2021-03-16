@@ -642,7 +642,7 @@ class Nav extends React.PureComponent {
                 onFocus={this.handleFocusForLang}
                 onBlur={this.handleBlur}
                 value="pt-BR"
-                onClick={e => this.handleLangSelection(e)}
+                onClick={(e) => this.handleLangSelection(e)}
               >
                 Português
               </button>
