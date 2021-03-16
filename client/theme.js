@@ -125,6 +125,10 @@ export default {
     tableRowStripeColor: {
       default: grays.mediumLight,
       alternate: grays.mediumLight
+    },
+    toolbarButton: {
+      color: grays.dark,
+      backgroundColor: grays.mediumLight
     }
   },
   [Theme.dark]: {
@@ -193,6 +197,10 @@ export default {
     tableRowStripeColor: {
       default: grays.dark,
       alternate: grays.darker
+    },
+    toolbarButton: {
+      color: grays.lightest,
+      backgroundColor: grays.mediumDark
     }
   },
   [Theme.contrast]: {
@@ -261,6 +269,10 @@ export default {
     tableRowStripeColor: {
       default: grays.dark,
       alternate: grays.darker
+    },
+    toolbarButton: {
+      color: grays.dark,
+      backgroundColor: grays.mediumLight
     }
   }
 };
