@@ -75,8 +75,8 @@ Want to get started writing a test for a new file or an existing file, but not s
 (the below assumes we're using proposed folder structure 1)
 1. Make a new file in the ``__tests__`` folder that's directly adjacent to your file. For example, if ``example.jsx`` is in ``src/components``, then you would make a file called ``example.test.jsx`` in ``src/components/__tests__``
 2. Check if the component is connected to redux or not.
-3. If it is, see the redux section below on how to write tests for that.
-4. If it's not, see the section below on writing tests for unconnected components.
+3. If it is, see the [redux section](#Testing-Redux) below on how to write tests for that.
+4. If it's not, see the [section below on writing tests for unconnected components](#Testing-plain-components).
 
 ### What to test
 For any type of component, you might want to consider testing:
