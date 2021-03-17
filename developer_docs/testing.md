@@ -65,7 +65,7 @@ Find more commands in the [Jest documentation](https://jestjs.io/docs/cli).
 
 ## When to run tests
 
-When you make a git commit, the tests will be run automatically for you. 
+When you make a git commit, the tests will be run automatically for you (maybe?). Tests will also be made when you make a PR. 
 
 When you modify an existing component, it's a good idea to run the test suite to make sure it didn't make any changes that break the rest of the application. If they did break some tests, you would either have to fix a bug component or update the tests to match the new expected functionality.
 
