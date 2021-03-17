@@ -185,3 +185,56 @@ export const link = css`
     }
   }
 `;
+
+export const dropdownOpen = css`
+  background-color: ${({ theme }) => theme.Modal.background};
+  border: ${({ theme }) => `1px solid ${theme.Modal.border}`};
+  box-shadow: ${({ theme }) => `0 0 18px 0 ${theme.common.shadowColor}`};
+  color: ${({ theme }) => theme.primaryTextColor};
+  text-align: left;
+  width: ${remSize(180)};
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  top: 95%;
+  height: auto;
+  z-index: 9999;
+  border-radius: ${remSize(6)};
+  & li:first-child {
+    border-radius: ${remSize(5)} ${remSize(5)} 0 0;
+  }
+  & li:last-child {
+    border-radius: 0 0 ${remSize(5)} ${remSize(5)};
+  }
+  & li {
+    & button,
+    & a {
+      color: ${({ theme }) => theme.primaryTextColor};
+      width: 100%;
+      text-align: left;
+      padding: ${remSize(8)} ${remSize(16)};
+    }
+    height: ${remSize(35)};
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  & li:hover {
+    background-color: ${({ theme }) => theme.Button.hover.background};
+    color: ${({ theme }) => theme.Button.hover.foreground};
+    & button,
+    & a {
+      color: ${({ theme }) => theme.Button.hover.foreground};
+    }
+  }
+`;
+
+export const dropdownOpenLeft = css`
+  ${dropdownOpen};
+  left: 0;
+`;
+
+export const dropdownOpenRight = css`
+  ${dropdownOpen};
+  right: 0;
+`;
