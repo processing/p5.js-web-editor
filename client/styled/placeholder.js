@@ -77,3 +77,35 @@ export const noneThemifyIconWithHover = css`
   }
   ${noneThemifyIcon}
 `;
+
+export const button = css`
+  background-color: ${({ theme }) => theme.Button.default.background};
+  color: ${({ theme }) => theme.Button.default.foreground};
+  cursor: pointer;
+  border: ${({ theme }) => `2px solid ${theme.Button.default.border}`};
+  border-radius: 2px;
+  padding: ${remSize(10)} ${remSize(30)};
+  & g,
+  & path {
+    fill: ${({ theme }) => theme.Button.default.foreground};
+    opacity: 1;
+  }
+  &:not(disabled):hover {
+    border-color: ${({ theme }) => theme.Button.hover.border};
+    background-color: ${({ theme }) => theme.Button.hover.background};
+    color: ${({ theme }) => theme.Button.hover.foreground};
+    & g,
+    & path {
+      fill: ${({ theme }) => theme.Button.hover.foreground};
+    }
+  }
+  &:not(disabled):active {
+    border-color: ${({ theme }) => theme.Button.active.border};
+    background-color: ${({ theme }) => theme.Button.active.background};
+    color: ${({ theme }) => theme.Button.active.foreground};
+    & g,
+    & path {
+      fill: ${({ theme }) => theme.Button.active.foreground};
+    }
+  }
+`;
