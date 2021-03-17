@@ -30,27 +30,27 @@ Many files still don't have tests, so if you're looking to get started as a cont
 ## Useful testing commands
 Run the whole test suite
 ```
-npm run test
+$ npm run test
 ```
 
 -----
 
 [Run tests that match the pattern](https://stackoverflow.com/questions/28725955/how-do-i-test-a-single-file-using-jest/28775887). Useful if you're writing one specific test and want to only run that one. 
 ```
-npm run test -- someFileName
+$ npm run test -- someFileName
 ```
 
 -----
 Run the tests but update the snapshot if they don't match.
 
 ```
-npm run test -- -u
+$ npm run test -- -u
 ```
 
 ----
 For example, if you wanted to run just the SketchList test but also update the snapshot, you could do:
 ```
-npm run test -- Sketchlist.test.js -u
+$ npm run test -- Sketchlist.test.js -u
 ```
 
 Find more commands in the [Jest documentation](https://jestjs.io/docs/cli).
@@ -81,7 +81,7 @@ Want to get started writing a test for a new file or an existing file, but not s
 ### What to test
 For any type of component, you might want to consider testing:
 - User input results in the class's method being called. 
-  ```
+  ```js
   //component is the return value of calling render()
   const spy1 = jest.spyOn(component.instance(), 'func1');
   act(() => {
@@ -99,18 +99,18 @@ See the [redux section](#Testing-Redux) below :)
 ### Troubleshooting
 1. Check if the component makes any API calls. If it's using axios, jest should already be set up to replace the axios library with a mocked version; however, you may want to [mock](https://jestjs.io/docs/mock-function-api#mockfnmockimplementationoncefn) the axios.get() function with your own version so that GET calls "return" whatever data makes sense for that test. 
 
-    ```
+    ```js
     axios.get.mockImplementationOnce(
       (x) => Promise.resolve({ data: 'foo' })
     );
     ```
-You can see it used in the context of a test [here](../client/modules/IDE/components/SketchList.test.jsx).
+You can see it used in the context of a test [in the SketchList.test.jsx file](../client/modules/IDE/components/SketchList.test.jsx).
 
 2. If the component makes use of the formatDate util, some of the functions in that rely on the ``./client/i18n.js`` file that also makes an ajax request, which sometimes leads to an ERRCONNECTED error on the console, even though your tests pass. You can fix it by adding a mock for that specific i18n file:
-    ```
+    ```js
     jest.mock('_path_to_file_/i18n');
     ```
-You can see it used in the context of a test [here](../client/modules/IDE/components/SketchList.test.jsx).
+You can also see it used in the context of a test [in the SketchList.test.jsx file](../client/modules/IDE/components/SketchList.test.jsx).
 
 ## Files to be aware of
 
@@ -218,11 +218,11 @@ It exports a render function with a i18n wrapper as ``render`` and a render func
 Thus, in your component test files, instead of calling ``import {functions you want} from 'react-testing-libary'`` importing react-testing library might look something like this:
 
 If your component only needs i18n and not redux:
-```
+```js
 import { render, fireEvent, screen, waitFor } from '../../../test-utils';
 ```
 If your component needs i18n and redux:
-```
+```js
 import { reduxRender, fireEvent, screen, waitFor } from '../../../test-utils';
 ```
 
@@ -230,7 +230,7 @@ Redux and i18next are made accessible by placing wrappers around the component. 
 
 For example, the exported render function that adds a wrapper for both redux and i18n looks roughly like this:
 
-```
+```js
 function reduxRender(
   ui,
   {
@@ -264,7 +264,7 @@ in progress
 ## Testing plain components
 If it doesn't contain ``connect(mapStateToProps, mapDispatchToProps)(ComponentName)`` or use hooks like ``useSelector``, then your component is not directly using Redux and testing your component will be simpler and might look something like this:
 
-```
+```js
 import React from 'react';
 import { unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
@@ -327,7 +327,7 @@ describe('<FakePreferences />', () => {
 
 Consider what you want to test. Some possible things might be:
 - User input results in the expected function being called with the expected argument. 
-  ```
+  ```js
   act(() => {
     fireEvent.click(screen.getByTestId("testid"));
   });
@@ -352,7 +352,7 @@ Although it's possible to export the components as unconnected components for te
 This works like so:
 1. Import the reduxRender function from ``client/test_utils.js`` 
 2. Configure the mock store. 
-```
+```js
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
@@ -360,18 +360,18 @@ import thunk from 'redux-thunk';
 const mockStore = configureStore([thunk]);
 ```
 3. Create a mock store. There's an initial state that you can import from ``client/redux_test_stores/test_store.js`` 
-```
+```js
 store = mockStore(initialTestState);
 ```
 3. Render the component with reduxRender and the store that you just created.
-```
+```js
 reduxRender(<SketchList username="happydog1" />, {store, container});
 ```
 4. Test things! You may need to use jest to mock certain functions if the component is making API calls.
 
 All together, it might look something like this.
 
-```
+```js
 import React from 'react';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -417,7 +417,7 @@ describe(<MyComponent />, () => {
 
 Some things to consider testing:
 - User input results in the expected redux action.
-    ```
+    ```js
     act(() => {
       component = reduxRender(<SketchList username="happydog2" />, {
         store,
