@@ -77,6 +77,8 @@ Want to get started writing a test for a new file or an existing file, but not s
 2. Check if the component is connected to redux or not.
 3. If it is, see the [redux section](#Testing-Redux) below on how to write tests for that.
 4. If it's not, see the [section below on writing tests for unconnected components](#Testing-plain-components).
+5. If you're testing UI elements, there are many ways of querying for them, but you can add a data-testid attribute to the component in the source code and use ``getByTestId("testid")`` to retrieve it.
+)
 
 ### What to test
 For any type of component, you might want to consider testing:
