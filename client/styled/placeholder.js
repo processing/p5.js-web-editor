@@ -53,3 +53,27 @@ export const iconToast = css`
   cursor: pointer;
   padding: 0;
 `;
+
+export const noneThemifyIcon = css`
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+`;
+
+export const noneThemifyIconWithHover = css`
+  color: ${({ theme }) => theme.grays.mediumDark};
+  & g,
+  & path {
+    fill: ${({ theme }) => theme.grays.mediumDark};
+  }
+  &:hover {
+    color: ${({ theme }) => theme.colors.p5jsPink};
+    & g,
+    & path {
+      opacity: 1;
+      fill: ${({ theme }) => theme.colors.p5jsPink};
+    }
+  }
+  ${noneThemifyIcon}
+`;

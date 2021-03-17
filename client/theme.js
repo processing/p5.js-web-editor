@@ -61,6 +61,7 @@ export const prop = (key) => (props) => {
 export default {
   [Theme.light]: {
     colors,
+    grays,
     ...common,
     primaryTextColor: grays.dark,
     inactiveTextColor: grays.middleDark,
@@ -138,6 +139,7 @@ export default {
   },
   [Theme.dark]: {
     colors,
+    grays,
     ...common,
     primaryTextColor: grays.lightest,
     inactiveTextColor: grays.middleLight,
@@ -215,6 +217,7 @@ export default {
   },
   [Theme.contrast]: {
     colors,
+    grays,
     ...common,
     primaryTextColor: grays.lightest,
     inactiveTextColor: grays.light,
