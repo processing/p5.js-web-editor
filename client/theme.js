@@ -129,7 +129,12 @@ export default {
     toolbarButton: {
       color: grays.dark,
       backgroundColor: grays.mediumLight
-    }
+    },
+    toast: {
+      textColor: grays.lightest,
+      backgroundColor: grays.mediumDark
+    },
+    iconToastHoverColor: grays.lightest
   },
   [Theme.dark]: {
     colors,
@@ -201,7 +206,12 @@ export default {
     toolbarButton: {
       color: grays.lightest,
       backgroundColor: grays.mediumDark
-    }
+    },
+    toast: {
+      textColor: grays.lightest,
+      backgroundColor: grays.mediumDark
+    },
+    iconToastHoverColor: grays.lightest
   },
   [Theme.contrast]: {
     colors,
@@ -273,6 +283,11 @@ export default {
     toolbarButton: {
       color: grays.dark,
       backgroundColor: grays.mediumLight
-    }
+    },
+    toast: {
+      textColor: grays.lightest,
+      backgroundColor: grays.mediumDark
+    },
+    iconToastHoverColor: colors.yellow
   }
 };

@@ -34,4 +34,22 @@ export const toolbarButton = css`
   }
 `;
 
-export const iconToast = css``;
+export const iconToast = css`
+  color: ${({ theme }) => theme.toast.textColor};
+  & g,
+  & path {
+    fill: ${({ theme }) => theme.toast.textColor};
+  }
+  &:hover {
+    color: ${({ theme }) => theme.iconToastHoverColor};
+    & g,
+    & path {
+      opacity: 1;
+      fill: ${({ theme }) => theme.iconToastHoverColor};
+    }
+  }
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+`;
