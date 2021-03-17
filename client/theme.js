@@ -65,6 +65,7 @@ export default {
     ...common,
     primaryTextColor: grays.dark,
     inactiveTextColor: grays.middleDark,
+    heavyTextColor: grays.darker,
     backgroundColor: grays.lighter,
 
     Button: {
@@ -145,6 +146,7 @@ export default {
     ...common,
     primaryTextColor: grays.lightest,
     inactiveTextColor: grays.middleLight,
+    heavyTextColor: grays.lightest,
     backgroundColor: grays.darker,
 
     Button: {
@@ -225,6 +227,7 @@ export default {
     ...common,
     primaryTextColor: grays.lightest,
     inactiveTextColor: grays.light,
+    heavyTextColor: grays.yellow,
     backgroundColor: grays.darker,
 
     Button: {

@@ -134,3 +134,54 @@ export const preferencesButton = css`
     background-color: ${({ theme }) => theme.preferencesButtonBackgroundColor};
   }
 `;
+
+export const preferenceOption = css`
+  background-color: transparent;
+  color: ${({ theme }) => theme.inactiveTextColor};
+  &:hover {
+    color: ${({ theme }) => theme.heavyTextColor};
+  }
+  font-size: ${remSize(12)};
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
+  margin-bottom: ${remSize(5)};
+  padding-right: ${remSize(5)};
+  border: 0;
+  list-style-type: none;
+`;
+
+export const modal = css`
+  background-color: ${({ theme }) => theme.Modal.background};
+  border: ${({ theme }) => `1px solid ${theme.Modal.border}`};
+  box-shadow: ${({ theme }) => `0 12px 12px ${theme.common.shadowColor}`};
+  border-radius: 2px;
+  z-index: 20;
+`;
+
+export const hiddenElement = css`
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+`;
+
+export const link = css`
+  text-decoration: none;
+  color: ${({ theme }) => theme.inactiveTextColor};
+  cursor: pointer;
+  & g,
+  & path {
+    fill: ${({ theme }) => theme.inactiveTextColor};
+  }
+  &:hover {
+    text-decoration: none;
+    color: ${({ theme }) => theme.heavyTextColor};
+    & g,
+    & path {
+      fill: ${({ theme }) => theme.heavyTextColor};
+    }
+  }
+`;
