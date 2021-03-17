@@ -102,7 +102,8 @@ export default {
     },
     Modal: {
       background: grays.light,
-      border: grays.middleLight
+      border: grays.middleLight,
+      button: grays.dark
     },
     Separator: grays.middleLight,
 
@@ -135,7 +136,8 @@ export default {
       textColor: grays.lightest,
       backgroundColor: grays.mediumDark
     },
-    iconToastHoverColor: grays.lightest
+    iconToastHoverColor: grays.lightest,
+    preferencesButtonBackgroundColor: grays.mediumLight
   },
   [Theme.dark]: {
     colors,
@@ -180,7 +182,8 @@ export default {
     },
     Modal: {
       background: grays.dark,
-      border: grays.middleDark
+      border: grays.middleDark,
+      button: grays.lightest
     },
     Separator: grays.middleDark,
 
@@ -213,7 +216,8 @@ export default {
       textColor: grays.lightest,
       backgroundColor: grays.mediumDark
     },
-    iconToastHoverColor: grays.lightest
+    iconToastHoverColor: grays.lightest,
+    preferencesButtonBackgroundColor: grays.middleDark
   },
   [Theme.contrast]: {
     colors,
@@ -258,7 +262,8 @@ export default {
     },
     Modal: {
       background: grays.dark,
-      border: grays.middleDark
+      border: grays.middleDark,
+      button: grays.dark
     },
     Separator: grays.middleDark,
 
@@ -291,6 +296,7 @@ export default {
       textColor: grays.lightest,
       backgroundColor: grays.mediumDark
     },
-    iconToastHoverColor: colors.yellow
+    iconToastHoverColor: colors.yellow,
+    preferencesButtonBackgroundColor: grays.mediumLight
   }
 };

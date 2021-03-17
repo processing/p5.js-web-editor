@@ -109,3 +109,28 @@ export const button = css`
     }
   }
 `;
+
+export const preferencesButton = css`
+  ${toolbarButton};
+  color: ${({ theme }) => theme.primaryTextColor};
+  background-color: ${({ theme }) => theme.preferencesButtonBackgroundColor};
+  padding: 0;
+  margin-bottom: ${remSize(28)};
+  line-height: ${remSize(50)};
+  & g,
+  & path {
+    fill: ${({ theme }) => theme.Modal.button};
+  }
+  &:enabled:hover {
+    background-color: ${({ theme }) => theme.Button.hover.background};
+    color: ${({ theme }) => theme.Button.hover.foreground};
+    & g,
+    & path {
+      fill: ${({ theme }) => theme.Button.hover.foreground};
+    }
+  }
+  &:disabled:hover {
+    cursor: not-allowed;
+    background-color: ${({ theme }) => theme.preferencesButtonBackgroundColor};
+  }
+`;
