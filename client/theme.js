@@ -62,7 +62,10 @@ export default {
   [Theme.light]: {
     colors,
     ...common,
+    logoColor: colors.p5jsPink,
     primaryTextColor: grays.dark,
+    secondaryTextColor: grays.mediumDark,
+    inactiveTextColor: grays.middleDark,
     backgroundColor: grays.lighter,
 
     Button: {
@@ -115,7 +118,10 @@ export default {
   [Theme.dark]: {
     colors,
     ...common,
+    logoColor: colors.p5jsPink,
     primaryTextColor: grays.lightest,
+    secondaryTextColor: grays.mediumLight,
+    inactiveTextColor: grays.middleLight,
     backgroundColor: grays.darker,
 
     Button: {
@@ -168,7 +174,10 @@ export default {
   [Theme.contrast]: {
     colors,
     ...common,
+    logoColor: colors.yellow,
     primaryTextColor: grays.lightest,
+    secondaryTextColor: grays.lighter,
+    inactiveTextColor: grays.light,
     backgroundColor: grays.darker,
 
     Button: {

@@ -1,188 +1,94 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
 import classNames from 'classnames';
 import { withTranslation } from 'react-i18next';
 import * as IDEActions from '../actions/ide';
 import * as preferenceActions from '../actions/preferences';
 import * as projectActions from '../actions/project';
 
+import ProjectName from '../components/ProjectName';
+
 import PlayIcon from '../../../images/play.svg';
 import StopIcon from '../../../images/stop.svg';
 import PreferencesIcon from '../../../images/preferences.svg';
-import EditProjectNameIcon from '../../../images/pencil.svg';
 
-class Toolbar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-    this.handleProjectNameChange = this.handleProjectNameChange.bind(this);
-    this.handleProjectNameSave = this.handleProjectNameSave.bind(this);
+const Toolbar = (props) => {
+  const playButtonClass = classNames({
+    'toolbar__play-button': true,
+    'toolbar__play-button--selected': props.isPlaying
+  });
+  const stopButtonClass = classNames({
+    'toolbar__stop-button': true,
+    'toolbar__stop-button--selected': !props.isPlaying
+  });
+  const preferencesButtonClass = classNames({
+    'toolbar__preferences-button': true,
+    'toolbar__preferences-button--selected': props.preferencesIsVisible
+  });
 
-    this.state = {
-      projectNameInputValue: props.project.name
-    };
-  }
-
-  handleKeyPress(event) {
-    if (event.key === 'Enter') {
-      this.props.hideEditProjectName();
-      this.projectNameInput.blur();
-    }
-  }
-
-  handleProjectNameChange(event) {
-    this.setState({ projectNameInputValue: event.target.value });
-  }
-
-  handleProjectNameSave() {
-    const newProjectName = this.state.projectNameInputValue.trim();
-    if (newProjectName.length === 0) {
-      this.setState({
-        projectNameInputValue: this.props.project.name
-      });
-    } else {
-      this.props.setProjectName(newProjectName);
-      this.props.hideEditProjectName();
-      if (this.props.project.id) {
-        this.props.saveProject();
-      }
-    }
-  }
-
-  canEditProjectName() {
-    return (
-      (this.props.owner &&
-        this.props.owner.username &&
-        this.props.owner.username === this.props.currentUser) ||
-      !this.props.owner ||
-      !this.props.owner.username
-    );
-  }
-
-  render() {
-    const playButtonClass = classNames({
-      'toolbar__play-button': true,
-      'toolbar__play-button--selected': this.props.isPlaying
-    });
-    const stopButtonClass = classNames({
-      'toolbar__stop-button': true,
-      'toolbar__stop-button--selected': !this.props.isPlaying
-    });
-    const preferencesButtonClass = classNames({
-      'toolbar__preferences-button': true,
-      'toolbar__preferences-button--selected': this.props.preferencesIsVisible
-    });
-    const nameContainerClass = classNames({
-      'toolbar__project-name-container': true,
-      'toolbar__project-name-container--editing': this.props.project
-        .isEditingName
-    });
-
-    const canEditProjectName = this.canEditProjectName();
-
-    return (
-      <div className="toolbar">
-        <button
-          className="toolbar__play-sketch-button"
-          onClick={() => {
-            this.props.startAccessibleSketch();
-            this.props.setTextOutput(true);
-            this.props.setGridOutput(true);
+  return (
+    <div className="toolbar">
+      <button
+        className="toolbar__play-sketch-button"
+        onClick={() => {
+          props.startAccessibleSketch();
+          props.setTextOutput(true);
+          props.setGridOutput(true);
+        }}
+        aria-label={props.t('Toolbar.PlaySketchARIA')}
+        disabled={props.infiniteLoop}
+      >
+        <PlayIcon focusable="false" aria-hidden="true" />
+      </button>
+      <button
+        className={playButtonClass}
+        onClick={props.startSketch}
+        aria-label={props.t('Toolbar.PlayOnlyVisualSketchARIA')}
+        disabled={props.infiniteLoop}
+      >
+        <PlayIcon focusable="false" aria-hidden="true" />
+      </button>
+      <button
+        className={stopButtonClass}
+        onClick={props.stopSketch}
+        aria-label={props.t('Toolbar.StopSketchARIA')}
+      >
+        <StopIcon focusable="false" aria-hidden="true" />
+      </button>
+      <div className="toolbar__autorefresh">
+        <input
+          id="autorefresh"
+          className="checkbox__autorefresh"
+          type="checkbox"
+          checked={props.autorefresh}
+          onChange={(event) => {
+            props.setAutorefresh(event.target.checked);
           }}
-          aria-label={this.props.t('Toolbar.PlaySketchARIA')}
-          disabled={this.props.infiniteLoop}
-        >
-          <PlayIcon focusable="false" aria-hidden="true" />
-        </button>
-        <button
-          className={playButtonClass}
-          onClick={this.props.startSketch}
-          aria-label={this.props.t('Toolbar.PlayOnlyVisualSketchARIA')}
-          disabled={this.props.infiniteLoop}
-        >
-          <PlayIcon focusable="false" aria-hidden="true" />
-        </button>
-        <button
-          className={stopButtonClass}
-          onClick={this.props.stopSketch}
-          aria-label={this.props.t('Toolbar.StopSketchARIA')}
-        >
-          <StopIcon focusable="false" aria-hidden="true" />
-        </button>
-        <div className="toolbar__autorefresh">
-          <input
-            id="autorefresh"
-            className="checkbox__autorefresh"
-            type="checkbox"
-            checked={this.props.autorefresh}
-            onChange={(event) => {
-              this.props.setAutorefresh(event.target.checked);
-            }}
-          />
-          <label htmlFor="autorefresh" className="toolbar__autorefresh-label">
-            {this.props.t('Toolbar.Auto-refresh')}
-          </label>
-        </div>
-        <div className={nameContainerClass}>
-          <button
-            className="toolbar__project-name"
-            onClick={() => {
-              if (canEditProjectName) {
-                this.props.showEditProjectName();
-                setTimeout(() => this.projectNameInput.focus(), 0);
-              }
-            }}
-            disabled={!canEditProjectName}
-            aria-label={this.props.t('Toolbar.EditSketchARIA')}
-          >
-            <span>{this.props.project.name}</span>
-            {canEditProjectName && (
-              <EditProjectNameIcon
-                className="toolbar__edit-name-button"
-                focusable="false"
-                aria-hidden="true"
-              />
-            )}
-          </button>
-          <input
-            type="text"
-            maxLength="128"
-            className="toolbar__project-name-input"
-            aria-label={this.props.t('Toolbar.NewSketchNameARIA')}
-            value={this.state.projectNameInputValue}
-            onChange={this.handleProjectNameChange}
-            ref={(element) => {
-              this.projectNameInput = element;
-            }}
-            onBlur={this.handleProjectNameSave}
-            onKeyPress={this.handleKeyPress}
-          />
-          {(() => { // eslint-disable-line
-            if (this.props.owner) {
-              return (
-                <p className="toolbar__project-owner">
-                  {this.props.t('Toolbar.By')}{' '}
-                  <Link to={`/${this.props.owner.username}/sketches`}>
-                    {this.props.owner.username}
-                  </Link>
-                </p>
-              );
-            }
-          })()}
-        </div>
-        <button
-          className={preferencesButtonClass}
-          onClick={this.props.openPreferences}
-          aria-label={this.props.t('Toolbar.OpenPreferencesARIA')}
-        >
-          <PreferencesIcon focusable="false" aria-hidden="true" />
-        </button>
+        />
+        <label htmlFor="autorefresh" className="toolbar__autorefresh-label">
+          {props.t('Toolbar.Auto-refresh')}
+        </label>
       </div>
-    );
-  }
-}
+      <ProjectName
+        owner={props.owner}
+        currentUser={props.currentUser}
+        project={props.project}
+        showEditProjectName={props.showEditProjectName}
+        setProjectName={props.setProjectName}
+        hideEditProjectName={props.hideEditProjectName}
+        saveProject={props.saveProject}
+      />
+      <button
+        className={preferencesButtonClass}
+        onClick={props.openPreferences}
+        aria-label={props.t('Toolbar.OpenPreferencesARIA')}
+      >
+        <PreferencesIcon focusable="false" aria-hidden="true" />
+      </button>
+    </div>
+  );
+};
 
 Toolbar.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
