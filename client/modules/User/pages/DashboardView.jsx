@@ -73,7 +73,6 @@ class DashboardView extends React.Component {
   }
 
   toggleCollectionCreate() {
-    console.log('toggle called', this.state);
     this.setState((prevState) => ({
       isCollectionCreate: !prevState.isCollectionCreate
     }));
