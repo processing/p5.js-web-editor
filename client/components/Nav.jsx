@@ -877,8 +877,6 @@ Nav.propTypes = {
   cmController: PropTypes.shape({
     tidyCode: PropTypes.func,
     showFind: PropTypes.func,
-    findNext: PropTypes.func,
-    findPrev: PropTypes.func,
     showReplace: PropTypes.func,
     getContent: PropTypes.func
   }),
