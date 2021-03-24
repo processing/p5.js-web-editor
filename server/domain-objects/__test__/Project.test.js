@@ -2,6 +2,7 @@ import find from 'lodash/find';
 
 import {
   containsRootHtmlFile,
+  containsValidFileExtension,
   toModel,
   transformFiles,
   FileValidationError
@@ -39,6 +40,29 @@ describe('domain-objects/Project', () => {
           }
         })
       ).toBe(false);
+    });
+  });
+
+  describe('containsValidFileExtension', () => {
+    it('returns false for at least one file that is not .html, .js or .css extension', () => {
+      expect(
+        containsValidFileExtension({
+          'index.html': { content: 'some content' },
+          'sketch.js': { content: 'some content' },
+          'style.css': { content: 'some content' },
+          'test.txt': { content: 'some content' }
+        })
+      ).toBe(false);
+    });
+
+    it('returns true for all files that are either .html, .js or .css extension', () => {
+      expect(
+        containsValidFileExtension({
+          'index.html': { content: 'some content' },
+          'sketch.js': { content: 'some content' },
+          'style.css': { content: 'some content' }
+        })
+      ).toBe(true);
     });
   });
 

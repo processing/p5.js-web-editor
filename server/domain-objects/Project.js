@@ -114,20 +114,19 @@ export function containsRootHtmlFile(tree) {
 }
 
 /**
- * A function to check for valid file extension, so first we will get an array of all files in the project
- * @param {*} object
- * @returns
+ * A function to check for valid file extension
+ *
  */
 export function containsValidFileExtension(tree) {
-  let files = transformFiles(tree);
-  files = files.filter(
+  const filesFolders = transformFiles(tree);
+  const filesTotal = filesFolders.filter((data) => data.fileType === 'file');
+  const filesValid = filesTotal.filter(
     (file) =>
-      file.fileType === 'file' &&
-      (!/\.html$/.test(file.name) ||
-        !/\.js$/.test(file.name) ||
-        !/\.css$/.test(file.name))
+      /\.html$/.test(file.name) ||
+      /\.js$/.test(file.name) ||
+      /\.css$/.test(file.name)
   );
-  if (files.length > 0) return false;
+  if (filesValid.length < filesTotal.length) return false;
   return true;
 }
 
