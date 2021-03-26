@@ -90,4 +90,14 @@ describe('<ToolbarComponent />', () => {
     await waitFor(() => expect(props.setProjectName).not.toHaveBeenCalled());
     await waitFor(() => expect(props.saveProject).not.toHaveBeenCalled());
   });
+
+  it('sketch is stopped when stop button is clicked', async () => {
+    const props = renderComponent({ isPlaying: true });
+
+    const stopButton = screen.getByLabelText('Stop sketch');
+
+    fireEvent.click(stopButton);
+
+    await waitFor(() => expect(props.stopSketch).toHaveBeenCalled());
+  });
 });
