@@ -1,5 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100;0,200;0,400;1,100;1,200;1,300&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;1,100;1,400&display=swap');
+
+body {
+  font-family: 'Poppins';
+}
+
 .CodeMirror {
-  font-family: Inconsolata, monospace;
+  font-family: 'JetBrains Mono', Inconsolata, monospace;
   height: 100%;
 }
 
