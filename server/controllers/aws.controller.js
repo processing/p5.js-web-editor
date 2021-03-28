@@ -17,15 +17,16 @@ const client = s3.createClient({
     accessKeyId: `${process.env.AWS_ACCESS_KEY}`,
     secretAccessKey: `${process.env.AWS_SECRET_KEY}`,
     region: `${process.env.AWS_REGION}`
-  },
+  }
 });
 
-const s3Bucket = process.env.S3_BUCKET_URL_BASE ||
+const s3Bucket =
+  process.env.S3_BUCKET_URL_BASE ||
   `https://s3-${process.env.AWS_REGION}.amazonaws.com/${process.env.S3_BUCKET}/`;
 
 function getExtension(filename) {
   const i = filename.lastIndexOf('.');
-  return (i < 0) ? '' : filename.substr(i);
+  return i < 0 ? '' : filename.substr(i);
 }
 
 export function getObjectKey(url) {
@@ -44,8 +45,8 @@ export function deleteObjectsFromS3(keyList, callback) {
     const params = {
       Bucket: `${process.env.S3_BUCKET}`,
       Delete: {
-        Objects: keys,
-      },
+        Objects: keys
+      }
     };
     const del = client.deleteObjects(params);
     del.on('end', () => {
@@ -74,7 +75,9 @@ export function deleteObjectFromS3(req, res) {
 export function signS3(req, res) {
   const limit = process.env.UPLOAD_LIMIT || 250000000;
   if (req.user.totalSize > limit) {
-    res.status(403).send({ message: 'user has uploaded the maximum size of assets.' });
+    res
+      .status(403)
+      .send({ message: 'user has uploaded the maximum size of assets.' });
     return;
   }
   const fileExtension = getExtension(req.body.name);
@@ -104,7 +107,11 @@ export function copyObjectInS3(url, userId) {
     };
     client.s3.headObject(headParams, (headErr) => {
       if (headErr) {
-        reject(new Error(`Object with key ${process.env.S3_BUCKET}/${objectKey} does not exist.`));
+        reject(
+          new Error(
+            `Object with key ${process.env.S3_BUCKET}/${objectKey} does not exist.`
+          )
+        );
         return;
       }
       const params = {
@@ -142,7 +149,11 @@ export function moveObjectToUserInS3(url, userId) {
     };
     client.s3.headObject(headParams, (headErr) => {
       if (headErr) {
-        reject(new Error(`Object with key ${process.env.S3_BUCKET}/${objectKey} does not exist.`));
+        reject(
+          new Error(
+            `Object with key ${process.env.S3_BUCKET}/${objectKey} does not exist.`
+          )
+        );
         return;
       }
       const params = {
@@ -171,48 +182,57 @@ export function listObjectsInS3ForUser(userId) {
         Prefix: `${userId}/`
       }
     };
-    client.listObjects(params)
+    client
+      .listObjects(params)
       .on('data', (data) => {
-        assets = assets.concat(data.Contents.map(object => ({ key: object.Key, size: object.Size })));
+        assets = assets.concat(
+          data.Contents.map((object) => ({
+            key: object.Key,
+            size: object.Size
+          }))
+        );
       })
       .on('end', () => {
         resolve();
       });
-  }).then(() => getProjectsForUserId(userId)).then((projects) => {
-    const projectAssets = [];
-    let totalSize = 0;
-    assets.forEach((asset) => {
-      const name = asset.key.split('/').pop();
-      const foundAsset = {
-        key: asset.key,
-        name,
-        size: asset.size,
-        url: `${process.env.S3_BUCKET_URL_BASE}${asset.key}`
-      };
-      totalSize += asset.size;
-      projects.some((project) => {
-        let found = false;
-        project.files.some((file) => {
-          if (!file.url) return false;
-          if (file.url.includes(asset.key)) {
-            found = true;
-            foundAsset.name = file.name;
-            foundAsset.sketchName = project.name;
-            foundAsset.sketchId = project.id;
-            foundAsset.url = file.url;
-            return true;
-          }
-          return false;
+  })
+    .then(() => getProjectsForUserId(userId))
+    .then((projects) => {
+      const projectAssets = [];
+      let totalSize = 0;
+      assets.forEach((asset) => {
+        const name = asset.key.split('/').pop();
+        const foundAsset = {
+          key: asset.key,
+          name,
+          size: asset.size,
+          url: `${process.env.S3_BUCKET_URL_BASE}${asset.key}`
+        };
+        totalSize += asset.size;
+        projects.some((project) => {
+          let found = false;
+          project.files.some((file) => {
+            if (!file.url) return false;
+            if (file.url.includes(asset.key)) {
+              found = true;
+              foundAsset.name = file.name;
+              foundAsset.sketchName = project.name;
+              foundAsset.sketchId = project.id;
+              foundAsset.url = file.url;
+              return true;
+            }
+            return false;
+          });
+          return found;
         });
-        return found;
+        projectAssets.push(foundAsset);
       });
-      projectAssets.push(foundAsset);
+      return Promise.resolve({ assets: projectAssets, totalSize });
+    })
+    .catch((err) => {
+      console.log('got an error');
+      console.log(err);
     });
-    return Promise.resolve({ assets: projectAssets, totalSize });
-  }).catch((err) => {
-    console.log('got an error');
-    console.log(err);
-  });
 }
 
 export function listObjectsInS3ForUserRequestHandler(req, res) {

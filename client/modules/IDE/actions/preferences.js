@@ -3,9 +3,9 @@ import apiClient from '../../../utils/apiClient';
 import * as ActionTypes from '../../../constants';
 
 function updatePreferences(formParams, dispatch) {
-  apiClient.put('/preferences', formParams)
-    .then(() => {
-    })
+  apiClient
+    .put('/preferences', formParams)
+    .then(() => {})
     .catch((error) => {
       const { response } = error;
       dispatch({
@@ -247,4 +247,3 @@ export function setLanguage(value, { persistPreference = true } = {}) {
     }
   };
 }
-

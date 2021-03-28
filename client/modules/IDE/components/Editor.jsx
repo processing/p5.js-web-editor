@@ -1,7 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import CodeMirror from 'codemirror';
-import beautifyJS from 'js-beautify';
+import emmet from '@emmetio/codemirror-plugin';
+import prettier from 'prettier';
+import babelParser from 'prettier/parser-babel';
+import htmlParser from 'prettier/parser-html';
+import cssParser from 'prettier/parser-postcss';
 import { withTranslation } from 'react-i18next';
 import 'codemirror/mode/css/css';
 import 'codemirror/addon/selection/active-line';
@@ -36,7 +40,7 @@ import '../../../utils/p5-javascript';
 import '../../../utils/webGL-clike';
 import Timer from '../components/Timer';
 import EditorAccessibility from '../components/EditorAccessibility';
-import { metaKey, } from '../../../utils/metaKey';
+import { metaKey } from '../../../utils/metaKey';
 
 import '../../../utils/codemirror-search';
 
@@ -56,15 +60,12 @@ import * as UserActions from '../../User/actions';
 import * as ToastActions from '../actions/toast';
 import * as ConsoleActions from '../actions/console';
 
-const beautifyCSS = beautifyJS.css;
-const beautifyHTML = beautifyJS.html;
+emmet(CodeMirror);
 
 window.JSHINT = JSHINT;
 window.CSSLint = CSSLint;
 window.HTMLHint = HTMLHint;
-delete CodeMirror.keyMap.sublime['Shift-Tab'];
 
-const IS_TAB_INDENT = false;
 const INDENTATION_AMOUNT = 2;
 
 class Editor extends React.Component {
@@ -76,7 +77,7 @@ class Editor extends React.Component {
       this.props.clearLintMessage();
       annotations.forEach((x) => {
         if (x.from.line > -1) {
-          this.props.updateLintMessage(x.severity, (x.from.line + 1), x.message);
+          this.props.updateLintMessage(x.severity, x.from.line + 1, x.message);
         }
       });
       if (this.props.lintMessages.length > 0 && this.props.lintWarning) {
@@ -84,8 +85,6 @@ class Editor extends React.Component {
       }
     }, 2000);
     this.showFind = this.showFind.bind(this);
-    this.findNext = this.findNext.bind(this);
-    this.findPrev = this.findPrev.bind(this);
     this.showReplace = this.showReplace.bind(this);
     this.getContent = this.getContent.bind(this);
   }
@@ -93,7 +92,8 @@ class Editor extends React.Component {
   componentDidMount() {
     this.beep = new Audio(beepUrl);
     this.widgets = [];
-    this._cm = CodeMirror(this.codemirrorContainer, { // eslint-disable-line
+    this._cm = CodeMirror(this.codemirrorContainer, {
+      // eslint-disable-line
       theme: `p5-${this.props.theme}`,
       lineNumbers: this.props.lineNumbers,
       styleActiveLine: true,
@@ -106,27 +106,34 @@ class Editor extends React.Component {
       keyMap: 'sublime',
       highlightSelectionMatches: true, // highlight current search match
       matchBrackets: true,
+      emmet: {
+        preview: ['html'],
+        markTagPairs: true,
+        autoRenameTags: true
+      },
       autoCloseBrackets: this.props.autocloseBracketsQuotes,
       styleSelectedText: true,
       lint: {
-        onUpdateLinting: ((annotations) => {
+        onUpdateLinting: (annotations) => {
           this.props.hideRuntimeErrorWarning();
           this.updateLintingMessageAccessibility(annotations);
-        }),
+        },
         options: {
-          'asi': true,
-          'eqeqeq': false,
+          asi: true,
+          eqeqeq: false,
           '-W041': false,
-          'esversion': 7
+          esversion: 7
         }
       }
     });
 
     delete this._cm.options.lint.options.errors;
 
-    const replaceCommand = metaKey === 'Ctrl' ? `${metaKey}-H` : `${metaKey}-Option-F`;
+    const replaceCommand =
+      metaKey === 'Ctrl' ? `${metaKey}-H` : `${metaKey}-Option-F`;
     this._cm.setOption('extraKeys', {
       Tab: (cm) => {
+        if (!cm.execCommand('emmetExpandAbbreviation')) return;
         // might need to specify and indent more?
         const selection = cm.doc.getSelection();
         if (selection.length > 0) {
@@ -135,45 +142,58 @@ class Editor extends React.Component {
           cm.replaceSelection(' '.repeat(INDENTATION_AMOUNT));
         }
       },
+      Enter: 'emmetInsertLineBreak',
+      Esc: 'emmetResetAbbreviation',
       [`${metaKey}-Enter`]: () => null,
       [`Shift-${metaKey}-Enter`]: () => null,
       [`${metaKey}-F`]: 'findPersistent',
-      [`${metaKey}-G`]: 'findNext',
-      [`Shift-${metaKey}-G`]: 'findPrev',
-      replaceCommand: 'replace',
+      [`${metaKey}-G`]: 'findPersistentNext',
+      [`Shift-${metaKey}-G`]: 'findPersistentPrev',
+      [replaceCommand]: 'replace'
     });
 
     this.initializeDocuments(this.props.files);
     this._cm.swapDoc(this._docs[this.props.file.id]);
 
-    this._cm.on('change', debounce(() => {
-      this.props.setUnsavedChanges(true);
-      this.props.updateFileContent(this.props.file.id, this._cm.getValue());
-      if (this.props.autorefresh && this.props.isPlaying) {
-        this.props.clearConsole();
-        this.props.startRefreshSketch();
-      }
-    }, 1000));
+    this._cm.on(
+      'change',
+      debounce(() => {
+        this.props.setUnsavedChanges(true);
+        this.props.updateFileContent(this.props.file.id, this._cm.getValue());
+        if (this.props.autorefresh && this.props.isPlaying) {
+          this.props.clearConsole();
+          this.props.startRefreshSketch();
+        }
+      }, 1000)
+    );
 
     this._cm.on('keyup', () => {
-      const temp = this.props.t('Editor.KeyUpLineNumber', { lineNumber: parseInt((this._cm.getCursor().line) + 1, 10) });
+      const temp = this.props.t('Editor.KeyUpLineNumber', {
+        lineNumber: parseInt(this._cm.getCursor().line + 1, 10)
+      });
       document.getElementById('current-line').innerHTML = temp;
     });
 
     this._cm.on('keydown', (_cm, e) => {
-      // 9 === Tab
-      if (e.keyCode === 9 && e.shiftKey) {
+      // 70 === f
+      if (
+        ((metaKey === 'Cmd' && e.metaKey) ||
+          (metaKey === 'Ctrl' && e.ctrlKey)) &&
+        e.shiftKey &&
+        e.keyCode === 70
+      ) {
+        e.preventDefault();
         this.tidyCode();
       }
     });
 
-    this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
+    this._cm.getWrapperElement().style[
+      'font-size'
+    ] = `${this.props.fontSize}px`;
 
     this.props.provideController({
       tidyCode: this.tidyCode,
       showFind: this.showFind,
-      findNext: this.findNext,
-      findPrev: this.findPrev,
       showReplace: this.showReplace,
       getContent: this.getContent
     });
@@ -191,17 +211,22 @@ class Editor extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.file.content !== prevProps.file.content &&
-        this.props.file.content !== this._cm.getValue()) {
+    if (
+      this.props.file.content !== prevProps.file.content &&
+      this.props.file.content !== this._cm.getValue()
+    ) {
       const oldDoc = this._cm.swapDoc(this._docs[this.props.file.id]);
       this._docs[prevProps.file.id] = oldDoc;
       this._cm.focus();
+
       if (!prevProps.unsavedChanges) {
         setTimeout(() => this.props.setUnsavedChanges(false), 400);
       }
     }
     if (this.props.fontSize !== prevProps.fontSize) {
-      this._cm.getWrapperElement().style['font-size'] = `${this.props.fontSize}px`;
+      this._cm.getWrapperElement().style[
+        'font-size'
+      ] = `${this.props.fontSize}px`;
     }
     if (this.props.linewrap !== prevProps.linewrap) {
       this._cm.setOption('lineWrapping', this.props.linewrap);
@@ -212,8 +237,13 @@ class Editor extends React.Component {
     if (this.props.lineNumbers !== prevProps.lineNumbers) {
       this._cm.setOption('lineNumbers', this.props.lineNumbers);
     }
-    if (this.props.autocloseBracketsQuotes !== prevProps.autocloseBracketsQuotes) {
-      this._cm.setOption('autoCloseBrackets', this.props.autocloseBracketsQuotes);
+    if (
+      this.props.autocloseBracketsQuotes !== prevProps.autocloseBracketsQuotes
+    ) {
+      this._cm.setOption(
+        'autoCloseBrackets',
+        this.props.autocloseBracketsQuotes
+      );
     }
 
     if (prevProps.consoleEvents !== this.props.consoleEvents) {
@@ -225,18 +255,28 @@ class Editor extends React.Component {
     if (this.props.runtimeErrorWarningVisible) {
       this.props.consoleEvents.forEach((consoleEvent) => {
         if (consoleEvent.method === 'error') {
-          if (consoleEvent.data &&
+          if (
+            consoleEvent.data &&
             consoleEvent.data[0] &&
             consoleEvent.data[0].indexOf &&
-            consoleEvent.data[0].indexOf(')') > -1) {
+            consoleEvent.data[0].indexOf(')') > -1
+          ) {
             const n = consoleEvent.data[0].replace(')', '').split(' ');
             const lineNumber = parseInt(n[n.length - 1], 10) - 1;
             const { source } = consoleEvent;
             const fileName = this.props.file.name;
-            const errorFromJavaScriptFile = (`${source}.js` === fileName);
-            const errorFromIndexHTML = ((source === fileName) && (fileName === 'index.html'));
-            if (!Number.isNaN(lineNumber) && (errorFromJavaScriptFile || errorFromIndexHTML)) {
-              this._cm.addLineClass(lineNumber, 'background', 'line-runtime-error');
+            const errorFromJavaScriptFile = `${source}.js` === fileName;
+            const errorFromIndexHTML =
+              source === fileName && fileName === 'index.html';
+            if (
+              !Number.isNaN(lineNumber) &&
+              (errorFromJavaScriptFile || errorFromIndexHTML)
+            ) {
+              this._cm.addLineClass(
+                lineNumber,
+                'background',
+                'line-runtime-error'
+              );
             }
           }
         }
@@ -255,7 +295,7 @@ class Editor extends React.Component {
       mode = 'javascript';
     } else if (fileName.match(/.+\.css$/i)) {
       mode = 'css';
-    } else if (fileName.match(/.+\.html$/i)) {
+    } else if (fileName.match(/.+\.(html|xml)$/i)) {
       mode = 'htmlmixed';
     } else if (fileName.match(/.+\.json$/i)) {
       mode = 'application/json';
@@ -273,16 +313,6 @@ class Editor extends React.Component {
     return updatedFile;
   }
 
-  findPrev() {
-    this._cm.focus();
-    this._cm.execCommand('findPrev');
-  }
-
-  findNext() {
-    this._cm.focus();
-    this._cm.execCommand('findNext');
-  }
-
   showFind() {
     this._cm.execCommand('findPersistent');
   }
@@ -291,29 +321,43 @@ class Editor extends React.Component {
     this._cm.execCommand('replace');
   }
 
-  tidyCode() {
-    const beautifyOptions = {
-      indent_size: INDENTATION_AMOUNT,
-      indent_with_tabs: IS_TAB_INDENT
-    };
-    const mode = this._cm.getOption('mode');
-    const currentPosition = this._cm.doc.getCursor();
-    if (mode === 'javascript') {
-      this._cm.doc.setValue(beautifyJS(this._cm.doc.getValue(), beautifyOptions));
-    } else if (mode === 'css') {
-      this._cm.doc.setValue(beautifyCSS(this._cm.doc.getValue(), beautifyOptions));
-    } else if (mode === 'htmlmixed') {
-      this._cm.doc.setValue(beautifyHTML(this._cm.doc.getValue(), beautifyOptions));
+  prettierFormatWithCursor(parser, plugins) {
+    try {
+      const { formatted, cursorOffset } = prettier.formatWithCursor(
+        this._cm.doc.getValue(),
+        {
+          cursorOffset: this._cm.doc.indexFromPos(this._cm.doc.getCursor()),
+          parser,
+          plugins
+        }
+      );
+      this._cm.doc.setValue(formatted);
+      this._cm.focus();
+      this._cm.doc.setCursor(this._cm.doc.posFromIndex(cursorOffset));
+    } catch (error) {
+      console.error(error);
     }
-    this._cm.focus();
-    this._cm.doc.setCursor({ line: currentPosition.line, ch: currentPosition.ch + INDENTATION_AMOUNT });
+  }
+
+  tidyCode() {
+    const mode = this._cm.getOption('mode');
+    if (mode === 'javascript') {
+      this.prettierFormatWithCursor('babel', [babelParser]);
+    } else if (mode === 'css') {
+      this.prettierFormatWithCursor('css', [cssParser]);
+    } else if (mode === 'htmlmixed') {
+      this.prettierFormatWithCursor('html', [htmlParser]);
+    }
   }
 
   initializeDocuments(files) {
     this._docs = {};
     files.forEach((file) => {
       if (file.name !== 'root') {
-        this._docs[file.id] = CodeMirror.Doc(file.content, this.getFileMode(file.name)); // eslint-disable-line
+        this._docs[file.id] = CodeMirror.Doc(
+          file.content,
+          this.getFileMode(file.name)
+        ); // eslint-disable-line
       }
     });
   }
@@ -329,18 +373,19 @@ class Editor extends React.Component {
 
   render() {
     const editorSectionClass = classNames({
-      'editor': true,
+      editor: true,
       'sidebar--contracted': !this.props.isExpanded,
       'editor--options': this.props.editorOptionsVisible
     });
 
     const editorHolderClass = classNames({
       'editor-holder': true,
-      'editor-holder--hidden': this.props.file.fileType === 'folder' || this.props.file.url
+      'editor-holder--hidden':
+        this.props.file.fileType === 'folder' || this.props.file.url
     });
 
     return (
-      <section className={editorSectionClass} >
+      <section className={editorSectionClass}>
         <header className="editor__header">
           <button
             aria-label={this.props.t('Editor.OpenSketchARIA')}
@@ -360,9 +405,13 @@ class Editor extends React.Component {
             <span>
               {this.props.file.name}
               <span className="editor__unsaved-changes">
-                {this.props.unsavedChanges ?
-                  <UnsavedChangesDotIcon role="img" aria-label={this.props.t('Editor.UnsavedChangesARIA')} focusable="false" /> :
-                  null}
+                {this.props.unsavedChanges ? (
+                  <UnsavedChangesDotIcon
+                    role="img"
+                    aria-label={this.props.t('Editor.UnsavedChangesARIA')}
+                    focusable="false"
+                  />
+                ) : null}
               </span>
             </span>
             <Timer
@@ -371,11 +420,13 @@ class Editor extends React.Component {
             />
           </div>
         </header>
-        <article ref={(element) => { this.codemirrorContainer = element; }} className={editorHolderClass} >
-        </article>
-        <EditorAccessibility
-          lintMessages={this.props.lintMessages}
+        <article
+          ref={(element) => {
+            this.codemirrorContainer = element;
+          }}
+          className={editorHolderClass}
         />
+        <EditorAccessibility lintMessages={this.props.lintMessages} />
       </section>
     );
   }
@@ -386,16 +437,20 @@ Editor.propTypes = {
   lineNumbers: PropTypes.bool.isRequired,
   lintWarning: PropTypes.bool.isRequired,
   linewrap: PropTypes.bool.isRequired,
-  lintMessages: PropTypes.arrayOf(PropTypes.shape({
-    severity: PropTypes.string.isRequired,
-    line: PropTypes.number.isRequired,
-    message: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired
-  })).isRequired,
-  consoleEvents: PropTypes.arrayOf(PropTypes.shape({
-    method: PropTypes.string.isRequired,
-    args: PropTypes.arrayOf(PropTypes.string)
-  })),
+  lintMessages: PropTypes.arrayOf(
+    PropTypes.shape({
+      severity: PropTypes.string.isRequired,
+      line: PropTypes.number.isRequired,
+      message: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired
+    })
+  ).isRequired,
+  consoleEvents: PropTypes.arrayOf(
+    PropTypes.shape({
+      method: PropTypes.string.isRequired,
+      args: PropTypes.arrayOf(PropTypes.string)
+    })
+  ),
   updateLintMessage: PropTypes.func.isRequired,
   clearLintMessage: PropTypes.func.isRequired,
   updateFileContent: PropTypes.func.isRequired,
@@ -417,11 +472,13 @@ Editor.propTypes = {
   theme: PropTypes.string.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
   projectSavedTime: PropTypes.string.isRequired,
-  files: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired
-  })).isRequired,
+  files: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      content: PropTypes.string.isRequired
+    })
+  ).isRequired,
   isExpanded: PropTypes.bool.isRequired,
   collapseSidebar: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
@@ -435,17 +492,16 @@ Editor.propTypes = {
 };
 
 Editor.defaultProps = {
-  consoleEvents: [],
+  consoleEvents: []
 };
-
 
 function mapStateToProps(state) {
   return {
     files: state.files,
     file:
-      state.files.find(file => file.isSelectedFile) ||
-      state.files.find(file => file.name === 'sketch.js') ||
-      state.files.find(file => file.name !== 'root'),
+      state.files.find((file) => file.isSelectedFile) ||
+      state.files.find((file) => file.name === 'sketch.js') ||
+      state.files.find((file) => file.name !== 'root'),
     htmlFile: getHTMLFile(state.files),
     ide: state.ide,
     preferences: state.preferences,
@@ -482,4 +538,6 @@ function mapDispatchToProps(dispatch) {
   );
 }
 
-export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(Editor));
+export default withTranslation()(
+  connect(mapStateToProps, mapDispatchToProps)(Editor)
+);

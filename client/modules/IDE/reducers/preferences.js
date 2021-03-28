@@ -1,6 +1,5 @@
 import * as ActionTypes from '../../../constants';
 
-
 const initialState = {
   fontSize: 18,
   autosave: true,
@@ -43,7 +42,9 @@ const preferences = (state = initialState, action) => {
     case ActionTypes.SET_LANGUAGE:
       return Object.assign({}, state, { language: action.language });
     case ActionTypes.SET_AUTOCLOSE_BRACKETS_QUOTES:
-      return Object.assign({}, state, { autocloseBracketsQuotes: action.value });
+      return Object.assign({}, state, {
+        autocloseBracketsQuotes: action.value
+      });
     default:
       return state;
   }

@@ -44,6 +44,14 @@ textarea {
 	}
 }
 
+input::selection,
+textarea::selection {
+	@include themify() {
+		color: getThemifyVariable('input-selection-text-color');
+		background-color: getThemifyVariable('input-selection-background-color');
+	}
+}
+
 button[type="submit"],
 input[type="submit"] {
 	@include themify() {

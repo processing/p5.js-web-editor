@@ -3,7 +3,8 @@ import { generateProjectName } from '../../../utils/generateRandomName';
 
 const initialState = () => {
   const generatedString = generateProjectName();
-  const generatedName = generatedString.charAt(0).toUpperCase() + generatedString.slice(1);
+  const generatedName =
+    generatedString.charAt(0).toUpperCase() + generatedString.slice(1);
   return {
     name: generatedName,
     updatedAt: '',
