@@ -19,14 +19,17 @@ class SketchList extends React.Component {
     this.props.getProjects(this.props.username);
 
     this.state = {
-      isInitialDataLoad: true,
+      isInitialDataLoad: true
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.sketches !== nextProps.sketches && Array.isArray(nextProps.sketches)) {
+    if (
+      this.props.sketches !== nextProps.sketches &&
+      Array.isArray(nextProps.sketches)
+    ) {
       this.setState({
-        isInitialDataLoad: false,
+        isInitialDataLoad: false
       });
     }
   }
@@ -35,25 +38,30 @@ class SketchList extends React.Component {
     if (this.props.username === this.props.user.username) {
       return this.props.t('AddToCollectionSketchList.Title');
     }
-    return this.props.t('AddToCollectionSketchList.AnothersTitle', { anotheruser: this.props.username });
+    return this.props.t('AddToCollectionSketchList.AnothersTitle', {
+      anotheruser: this.props.username
+    });
   }
 
   handleCollectionAdd = (sketch) => {
     this.props.addToCollection(this.props.collection.id, sketch.id);
-  }
+  };
 
   handleCollectionRemove = (sketch) => {
     this.props.removeFromCollection(this.props.collection.id, sketch.id);
-  }
+  };
 
-  inCollection = sketch => this.props.collection.items.find(item => item.project.id === sketch.id) != null
+  inCollection = (sketch) =>
+    this.props.collection.items.find((item) =>
+      item.isDeleted ? false : item.project.id === sketch.id
+    ) != null;
 
   render() {
     const hasSketches = this.props.sketches.length > 0;
-    const sketchesWithAddedStatus = this.props.sketches.map(sketch => ({
+    const sketchesWithAddedStatus = this.props.sketches.map((sketch) => ({
       ...sketch,
       isAdded: this.inCollection(sketch),
-      url: `/${this.props.username}/sketches/${sketch.id}`,
+      url: `/${this.props.username}/sketches/${sketch.id}`
     }));
 
     let content = null;
@@ -91,20 +99,24 @@ SketchList.propTypes = {
     authenticated: PropTypes.bool.isRequired
   }).isRequired,
   getProjects: PropTypes.func.isRequired,
-  sketches: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    createdAt: PropTypes.string.isRequired,
-    updatedAt: PropTypes.string.isRequired
-  })).isRequired,
+  sketches: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      createdAt: PropTypes.string.isRequired,
+      updatedAt: PropTypes.string.isRequired
+    })
+  ).isRequired,
   collection: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    items: PropTypes.arrayOf(PropTypes.shape({
-      project: PropTypes.shape({
-        id: PropTypes.string.isRequired,
-      }),
-    })),
+    items: PropTypes.arrayOf(
+      PropTypes.shape({
+        project: PropTypes.shape({
+          id: PropTypes.string.isRequired
+        })
+      })
+    )
   }).isRequired,
   username: PropTypes.string,
   loading: PropTypes.bool.isRequired,
@@ -133,9 +145,17 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
-    Object.assign({}, ProjectsActions, CollectionsActions, ToastActions, SortingActions),
+    Object.assign(
+      {},
+      ProjectsActions,
+      CollectionsActions,
+      ToastActions,
+      SortingActions
+    ),
     dispatch
   );
 }
 
-export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(SketchList));
+export default withTranslation()(
+  connect(mapStateToProps, mapDispatchToProps)(SketchList)
+);

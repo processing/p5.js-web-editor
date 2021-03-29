@@ -6,21 +6,18 @@ import { ThemeProvider } from 'styled-components';
 import theme, { Theme } from '../../../theme';
 
 const Provider = ({ children, currentTheme }) => (
-  <ThemeProvider theme={{ ...theme[currentTheme] }}>
-    {children}
-  </ThemeProvider>
+  <ThemeProvider theme={{ ...theme[currentTheme] }}>{children}</ThemeProvider>
 );
 
 Provider.propTypes = {
   children: PropTypes.node.isRequired,
-  currentTheme: PropTypes.oneOf(Object.keys(Theme)).isRequired,
+  currentTheme: PropTypes.oneOf(Object.keys(Theme)).isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    currentTheme: state.preferences.theme,
+    currentTheme: state.preferences.theme
   };
 }
-
 
 export default connect(mapStateToProps)(Provider);

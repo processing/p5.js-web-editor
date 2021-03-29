@@ -36,19 +36,21 @@ import Feedback from '../components/Feedback';
 import { CollectionSearchbar } from '../components/Searchbar';
 import { getIsUserOwner } from '../selectors/users';
 
-
 function getTitle(props) {
   const { id } = props.project;
   return id ? `p5.js Web Editor | ${props.project.name}` : 'p5.js Web Editor';
 }
 
 function warnIfUnsavedChanges(props, nextLocation) {
-  const toAuth = nextLocation &&
+  const toAuth =
+    nextLocation &&
     nextLocation.action === 'PUSH' &&
     (nextLocation.pathname === '/login' || nextLocation.pathname === '/signup');
-  const onAuth = nextLocation &&
-    (props.location.pathname === '/login' || props.location.pathname === '/signup');
-  if (props.ide.unsavedChanges && (!toAuth && !onAuth)) {
+  const onAuth =
+    nextLocation &&
+    (props.location.pathname === '/login' ||
+      props.location.pathname === '/signup');
+  if (props.ide.unsavedChanges && !toAuth && !onAuth) {
     if (!window.confirm(props.t('Nav.WarningUnsavedChanges'))) {
       return false;
     }
@@ -64,7 +66,7 @@ class IDEView extends React.Component {
 
     this.state = {
       consoleSize: props.ide.consoleIsExpanded ? 150 : 29,
-      sidebarSize: props.ide.sidebarIsExpanded ? 160 : 20,
+      sidebarSize: props.ide.sidebarIsExpanded ? 160 : 20
     };
   }
 
@@ -99,16 +101,9 @@ class IDEView extends React.Component {
     if (nextProps.location !== this.props.location) {
       this.props.setPreviousPath(this.props.location.pathname);
     }
-
-    if (this.props.ide.consoleIsExpanded !== nextProps.ide.consoleIsExpanded) {
-      this.setState({
-        consoleSize: nextProps.ide.consoleIsExpanded ? 150 : 29,
-      });
-    }
-
     if (this.props.ide.sidebarIsExpanded !== nextProps.ide.sidebarIsExpanded) {
       this.setState({
-        sidebarSize: nextProps.ide.sidebarIsExpanded ? 160 : 20,
+        sidebarSize: nextProps.ide.sidebarIsExpanded ? 160 : 20
       });
     }
   }
@@ -148,7 +143,8 @@ class IDEView extends React.Component {
 
     if (this.props.route.path !== prevProps.route.path) {
       this.props.router.setRouteLeaveHook(this.props.route, () =>
-        warnIfUnsavedChanges(this.props));
+        warnIfUnsavedChanges(this.props)
+      );
     }
   }
   componentWillUnmount() {
@@ -234,7 +230,8 @@ class IDEView extends React.Component {
     }
   }
 
-  handleUnsavedChanges = nextLocation => warnIfUnsavedChanges(this.props, nextLocation);
+  handleUnsavedChanges = (nextLocation) =>
+    warnIfUnsavedChanges(this.props, nextLocation);
 
   handleBeforeUnload = (e) => {
     const confirmationMessage = this.props.t('Nav.WarningUnsavedChanges');
@@ -243,7 +240,7 @@ class IDEView extends React.Component {
       return confirmationMessage;
     }
     return null;
-  }
+  };
 
   render() {
     return (
@@ -282,7 +279,9 @@ class IDEView extends React.Component {
               setSoundOutput={this.props.setSoundOutput}
               theme={this.props.preferences.theme}
               setTheme={this.props.setTheme}
-              autocloseBracketsQuotes={this.props.preferences.autocloseBracketsQuotes}
+              autocloseBracketsQuotes={
+                this.props.preferences.autocloseBracketsQuotes
+              }
               setAutocloseBracketsQuotes={this.props.setAutocloseBracketsQuotes}
             />
           </Overlay>
@@ -291,7 +290,7 @@ class IDEView extends React.Component {
           <SplitPane
             split="vertical"
             size={this.state.sidebarSize}
-            onChange={size => this.setState({ sidebarSize: size })}
+            onChange={(size) => this.setState({ sidebarSize: size })}
             onDragFinished={this._handleSidebarPaneOnDragFinished}
             allowResize={this.props.ide.sidebarIsExpanded}
             minSize={125}
@@ -325,24 +324,32 @@ class IDEView extends React.Component {
                 borderLeftWidth: '2px',
                 borderRightWidth: '2px',
                 width: '2px',
-                margin: '0px 0px',
+                margin: '0px 0px'
               }}
             >
               <SplitPane
                 split="horizontal"
                 primary="second"
-                size={this.state.consoleSize}
+                size={
+                  this.props.ide.consoleIsExpanded ? this.state.consoleSize : 29
+                }
                 minSize={29}
-                onChange={size => this.setState({ consoleSize: size })}
+                onChange={(size) => this.setState({ consoleSize: size })}
                 allowResize={this.props.ide.consoleIsExpanded}
                 className="editor-preview-subpanel"
               >
-                <Editor provideController={(ctl) => { this.cmController = ctl; }} />
+                <Editor
+                  provideController={(ctl) => {
+                    this.cmController = ctl;
+                  }}
+                />
                 <Console />
               </SplitPane>
               <section className="preview-frame-holder">
                 <header className="preview-frame__header">
-                  <h2 className="preview-frame__title">{this.props.t('Toolbar.Preview')}</h2>
+                  <h2 className="preview-frame__title">
+                    {this.props.t('Toolbar.Preview')}
+                  </h2>
                 </header>
                 <div className="preview-frame__content">
                   <div
@@ -350,8 +357,7 @@ class IDEView extends React.Component {
                     ref={(element) => {
                       this.overlay = element;
                     }}
-                  >
-                  </div>
+                  />
                   <div>
                     {((this.props.preferences.textOutput ||
                       this.props.preferences.gridOutput ||
@@ -367,10 +373,7 @@ class IDEView extends React.Component {
         </main>
         {this.props.ide.modalIsVisible && <NewFileModal />}
         {this.props.ide.newFolderModalVisible && (
-          <NewFolderModal
-            closeModal={this.props.closeNewFolderModal}
-            createFolder={this.props.createFolder}
-          />
+          <NewFolderModal closeModal={this.props.closeNewFolderModal} />
         )}
         {this.props.ide.uploadFileModalVisible && (
           <UploadFileModal closeModal={this.props.closeUploadFileModal} />
@@ -451,16 +454,16 @@ IDEView.propTypes = {
   params: PropTypes.shape({
     project_id: PropTypes.string,
     username: PropTypes.string,
-    reset_password_token: PropTypes.string,
+    reset_password_token: PropTypes.string
   }).isRequired,
   location: PropTypes.shape({
-    pathname: PropTypes.string,
+    pathname: PropTypes.string
   }).isRequired,
   getProject: PropTypes.func.isRequired,
   user: PropTypes.shape({
     authenticated: PropTypes.bool.isRequired,
     id: PropTypes.string,
-    username: PropTypes.string,
+    username: PropTypes.string
   }).isRequired,
   saveProject: PropTypes.func.isRequired,
   ide: PropTypes.shape({
@@ -482,7 +485,7 @@ IDEView.propTypes = {
     justOpenedProject: PropTypes.bool.isRequired,
     sidebarIsExpanded: PropTypes.bool.isRequired,
     consoleIsExpanded: PropTypes.bool.isRequired,
-    unsavedChanges: PropTypes.bool.isRequired,
+    unsavedChanges: PropTypes.bool.isRequired
   }).isRequired,
   stopSketch: PropTypes.func.isRequired,
   project: PropTypes.shape({
@@ -490,12 +493,9 @@ IDEView.propTypes = {
     name: PropTypes.string.isRequired,
     owner: PropTypes.shape({
       username: PropTypes.string,
-      id: PropTypes.string,
+      id: PropTypes.string
     }),
-    updatedAt: PropTypes.string,
-  }).isRequired,
-  editorAccessibility: PropTypes.shape({
-    lintMessages: PropTypes.objectOf(PropTypes.shape()).isRequired,
+    updatedAt: PropTypes.string
   }).isRequired,
   preferences: PropTypes.shape({
     autosave: PropTypes.bool.isRequired,
@@ -522,21 +522,23 @@ IDEView.propTypes = {
   setGridOutput: PropTypes.func.isRequired,
   setSoundOutput: PropTypes.func.isRequired,
   setAllAccessibleOutput: PropTypes.func.isRequired,
-  files: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-  })).isRequired,
+  files: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      content: PropTypes.string.isRequired
+    })
+  ).isRequired,
   selectedFile: PropTypes.shape({
     id: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
   }).isRequired,
   setSelectedFile: PropTypes.func.isRequired,
   htmlFile: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired
   }).isRequired,
   newFile: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
@@ -551,15 +553,14 @@ IDEView.propTypes = {
   newFolder: PropTypes.func.isRequired,
   closeNewFolderModal: PropTypes.func.isRequired,
   closeNewFileModal: PropTypes.func.isRequired,
-  createFolder: PropTypes.func.isRequired,
   closeShareModal: PropTypes.func.isRequired,
   closeKeyboardShortcutModal: PropTypes.func.isRequired,
   toast: PropTypes.shape({
-    isVisible: PropTypes.bool.isRequired,
+    isVisible: PropTypes.bool.isRequired
   }).isRequired,
   autosaveProject: PropTypes.func.isRequired,
   router: PropTypes.shape({
-    setRouteLeaveHook: PropTypes.func,
+    setRouteLeaveHook: PropTypes.func
   }).isRequired,
   route: PropTypes.oneOfType([PropTypes.object, PropTypes.element]).isRequired,
   setTheme: PropTypes.func.isRequired,
@@ -578,9 +579,9 @@ function mapStateToProps(state) {
   return {
     files: state.files,
     selectedFile:
-      state.files.find(file => file.isSelectedFile) ||
-      state.files.find(file => file.name === 'sketch.js') ||
-      state.files.find(file => file.name !== 'root'),
+      state.files.find((file) => file.isSelectedFile) ||
+      state.files.find((file) => file.name === 'sketch.js') ||
+      state.files.find((file) => file.name !== 'root'),
     htmlFile: getHTMLFile(state.files),
     ide: state.ide,
     preferences: state.preferences,
@@ -610,5 +611,6 @@ function mapDispatchToProps(dispatch) {
   );
 }
 
-
-export default withTranslation()(withRouter(connect(mapStateToProps, mapDispatchToProps)(IDEView)));
+export default withTranslation()(
+  withRouter(connect(mapStateToProps, mapDispatchToProps)(IDEView))
+);

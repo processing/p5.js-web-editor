@@ -1,6 +1,12 @@
 import React from 'react';
 
-import { fireEvent, render, screen, waitFor, within } from '../../../test-utils';
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within
+} from '../../../test-utils';
 import { FileNode } from './FileNode';
 
 describe('<FileNode />', () => {
@@ -36,7 +42,7 @@ describe('<FileNode />', () => {
       showFolderChildren: jest.fn(),
       hideFolderChildren: jest.fn(),
       openUploadFileModal: jest.fn(),
-      setProjectName: jest.fn(),
+      setProjectName: jest.fn()
     };
 
     render(<FileNode {...props} />);
@@ -60,7 +66,9 @@ describe('<FileNode />', () => {
 
       changeName(newName);
 
-      await waitFor(() => expect(props.updateFileName).toHaveBeenCalledWith(props.id, newName));
+      await waitFor(() =>
+        expect(props.updateFileName).toHaveBeenCalledWith(props.id, newName)
+      );
       await expectFileNameToBe(newName);
     });
 
@@ -111,7 +119,9 @@ describe('<FileNode />', () => {
 
       changeName(newName);
 
-      await waitFor(() => expect(props.updateFileName).toHaveBeenCalledWith(props.id, newName));
+      await waitFor(() =>
+        expect(props.updateFileName).toHaveBeenCalledWith(props.id, newName)
+      );
       await expectFileNameToBe(newName);
     });
 

@@ -22,17 +22,14 @@ function NewPasswordForm(props) {
       validate={validateNewPassword}
       onSubmit={onSubmit}
     >
-      {({
-        handleSubmit, submitting, invalid, pristine
-      }) => (
-        <form
-          className="form"
-          onSubmit={handleSubmit}
-        >
+      {({ handleSubmit, submitting, invalid, pristine }) => (
+        <form className="form" onSubmit={handleSubmit}>
           <Field name="password">
-            {field => (
+            {(field) => (
               <p className="form__field">
-                <label htmlFor="password" className="form__label">{t('NewPasswordForm.Title')}</label>
+                <label htmlFor="password" className="form__label">
+                  {t('NewPasswordForm.Title')}
+                </label>
                 <input
                   className="form__input"
                   aria-label={t('NewPasswordForm.TitleARIA')}
@@ -47,9 +44,11 @@ function NewPasswordForm(props) {
             )}
           </Field>
           <Field name="confirmPassword">
-            {field => (
+            {(field) => (
               <p className="form__field">
-                <label htmlFor="confirm password" className="form__label">{t('NewPasswordForm.ConfirmPassword')}</label>
+                <label htmlFor="confirm password" className="form__label">
+                  {t('NewPasswordForm.ConfirmPassword')}
+                </label>
                 <input
                   className="form__input"
                   type="password"
@@ -63,7 +62,9 @@ function NewPasswordForm(props) {
               </p>
             )}
           </Field>
-          <Button type="submit" disabled={submitting || invalid || pristine}>{t('NewPasswordForm.SubmitSetNewPassword')}</Button>
+          <Button type="submit" disabled={submitting || invalid || pristine}>
+            {t('NewPasswordForm.SubmitSetNewPassword')}
+          </Button>
         </form>
       )}
     </Form>
@@ -71,7 +72,7 @@ function NewPasswordForm(props) {
 }
 
 NewPasswordForm.propTypes = {
-  resetPasswordToken: PropTypes.string.isRequired,
+  resetPasswordToken: PropTypes.string.isRequired
 };
 
 export default NewPasswordForm;

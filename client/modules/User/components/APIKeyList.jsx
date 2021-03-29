@@ -20,9 +20,9 @@ function APIKeyList({ apiKeys, onRemove, t }) {
       </thead>
       <tbody>
         {orderBy(apiKeys, ['createdAt'], ['desc']).map((key) => {
-          const lastUsed = key.lastUsedAt ?
-            dates.distanceInWordsToNow(new Date(key.lastUsedAt)) :
-            t('APIKeyList.Never');
+          const lastUsed = key.lastUsedAt
+            ? dates.distanceInWordsToNow(new Date(key.lastUsedAt))
+            : t('APIKeyList.Never');
 
           return (
             <tr key={key.id}>
