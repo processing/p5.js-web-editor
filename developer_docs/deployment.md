@@ -45,13 +45,14 @@ _Note_: The installation steps assume you are using a Unix-like shell. If you ar
 
 If you are interested in hosting and deploying your own p5.js Web Editor instance, you can! It would be the same as the official editor instance at editor.p5js.org, except with a different domain, and you would be in charge of the maintenance. We recommend using Heroku and MongoDB Atlas as you can host it for free.
 
-1. Sign up for a free MongoDB Atlas account at: [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
-2. Follow the Atlas getting started guide to set up a free tier cluster: [Atlas Getting Started](https://docs.atlas.mongodb.com/getting-started)
-3. In your Atlas project, click "Connect" to your cluster, then choose the "Connect your application" connection method, and finally select the "Node.js Driver" option to generate your connection string (i.e. `mongodb+srv://p5js-web-editor:<password>@cluster0.kral2.mongodb.net/<dbname>?retryWrites=true&w=majority`). Copy the connection string and replace both `<password>` and `<dbname>`.
-4. Sign up for a free Heroku account at: [Heroku](https://www.heroku.com/)
-5. Click here: [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/processing/p5.js-web-editor/tree/develop)
-6. Enter a unique *App name*, this will become part of the url (i.e. https://app-name.herokuapp.com/)
-7. Use your connection string from Step 3 to set the `MONGO_URL` configuration variable.
-8. Update any other configuration variables, or accept the defaults for a quick evaluation (they can be changed later to enable full functionality)
-9. Click on the "Deploy app" button
-10. When complete, click on the "View" button
+1. Get started by following the guide for [Using MongoDB Atlas on Heroku](https://developer.mongodb.com/how-to/use-atlas-on-heroku/)
+2. In your Atlas project, click "Connect" to your cluster, then choose the "Connect your application" connection method, and finally select the "Node.js Driver" option to generate your connection string (i.e. `mongodb+srv://p5js-web-editor:<password>@cluster0.kral2.mongodb.net/<dbname>?retryWrites=true&w=majority`). Copy the connection string and replace both `<password>` and `<dbname>`.
+3. Sign up for a free Heroku account at: [Heroku](https://www.heroku.com/)
+4. Click here: [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/processing/p5.js-web-editor/tree/develop)
+5. Enter a unique *App name*, this will become part of the url (i.e. https://app-name.herokuapp.com/)
+6. Use your connection string from Step 2 to set the `MONGO_URL` configuration variable.
+7. Update any other configuration variables, or accept the defaults for a quick evaluation (they can be changed later to enable full functionality)
+8. Click on the "Deploy app" button
+9. When complete, click on the "View" button
+
+A note of caution: allowing access to your database from anywhere is not a good idea for production deployments.
