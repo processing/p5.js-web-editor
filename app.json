@@ -8,10 +8,6 @@
     {
       "plan": "mailgun:starter",
       "as": "MAILGUN"
-    },
-    {
-      "plan": "quotaguardstatic:starter",
-      "as": "QG"
     }
   ],
   "env": {
