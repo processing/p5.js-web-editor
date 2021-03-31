@@ -101,13 +101,6 @@ class IDEView extends React.Component {
     if (nextProps.location !== this.props.location) {
       this.props.setPreviousPath(this.props.location.pathname);
     }
-
-    if (this.props.ide.consoleIsExpanded !== nextProps.ide.consoleIsExpanded) {
-      this.setState({
-        consoleSize: nextProps.ide.consoleIsExpanded ? 150 : 29
-      });
-    }
-
     if (this.props.ide.sidebarIsExpanded !== nextProps.ide.sidebarIsExpanded) {
       this.setState({
         sidebarSize: nextProps.ide.sidebarIsExpanded ? 160 : 20
@@ -337,7 +330,9 @@ class IDEView extends React.Component {
               <SplitPane
                 split="horizontal"
                 primary="second"
-                size={this.state.consoleSize}
+                size={
+                  this.props.ide.consoleIsExpanded ? this.state.consoleSize : 29
+                }
                 minSize={29}
                 onChange={(size) => this.setState({ consoleSize: size })}
                 allowResize={this.props.ide.consoleIsExpanded}
