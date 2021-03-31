@@ -86,6 +86,7 @@ function resolvePathsForElementsWithAttribute(attr, sketchDoc, files) {
 
 function resolveCSSLinksInString(content, files) {
   let newContent = content;
+  console.log(content);
   let cssFileStrings = content.match(STRING_REGEX);
   cssFileStrings = cssFileStrings || [];
   cssFileStrings.forEach((cssFileString) => {
@@ -285,9 +286,9 @@ function injectLocalFiles(files, htmlFile) {
   // }
 
   // TODO extra stuff to inject
-  // const previewScripts = sketchDoc.createElement('script');
-  // previewScripts.src = '/previewScripts.js';
-  // sketchDoc.head.appendChild(previewScripts);
+  const previewScripts = sketchDoc.createElement('script');
+  previewScripts.src = getConfig('PREVIEW_SCRIPTS_URL');
+  sketchDoc.head.appendChild(previewScripts);
 
   const sketchDocString = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
   scriptOffs = getAllScriptOffsets(sketchDocString);
@@ -322,9 +323,7 @@ function EmbedFrame({ files, isPlaying }) {
   function renderSketch() {
     const doc = iframe.current;
     if (isPlaying) {
-      console.log('calling inject local files');
       const htmlDoc = injectLocalFiles(files, htmlFile);
-      console.log('setting srcdoc');
       srcDoc.set(doc, htmlDoc);
     } else {
       doc.srcdoc = '';

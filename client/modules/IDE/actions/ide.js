@@ -263,21 +263,7 @@ export function showRuntimeErrorWarning() {
 export function startSketch() {
   return (dispatch, getState) => {
     dispatch(clearConsole());
-    // instead, need to dispatch message event
-    // dispatch(startSketchAndRefresh());
     dispatch(startVisualSketch());
-    // need to update file to latest before playing? but when?
-    // right before? there's no guarantee it'll be done before
-    // making the srcdoc
-    // maybe send it together? idk man
-    // oh but it's reactive to file changes so it's okay?
-    // maybe only send over files if autorefresh is off?
-    // need to trigger like, a re-render event, you know?
-    // like a refreshing state or something
-    // whenever sketches get updated
-    // cases:
-    // hit play, refresh sketch
-    // need to make sure the latest is in embed frame
     const state = getState();
     dispatchMessage({
       type: MessageTypes.FILES,

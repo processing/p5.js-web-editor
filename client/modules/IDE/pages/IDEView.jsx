@@ -185,6 +185,7 @@ class IDEView extends React.Component {
     ) {
       e.preventDefault();
       e.stopPropagation();
+      this.syncFileContent();
       this.props.startSketch();
       // 50 === 2
     } else if (
@@ -242,6 +243,11 @@ class IDEView extends React.Component {
     return null;
   };
 
+  syncFileContent = () => {
+    const file = this.cmController.getContent();
+    this.props.updateFileContent(file.id, file.content);
+  };
+
   render() {
     return (
       <div className="ide">
@@ -253,7 +259,10 @@ class IDEView extends React.Component {
           warnIfUnsavedChanges={this.handleUnsavedChanges}
           cmController={this.cmController}
         />
-        <Toolbar key={this.props.project.id} />
+        <Toolbar
+          syncFileContent={this.syncFileContent}
+          key={this.props.project.id}
+        />
         {this.props.ide.preferencesIsVisible && (
           <Overlay
             title={this.props.t('Preferences.Settings')}
@@ -548,6 +557,7 @@ IDEView.propTypes = {
   collapseConsole: PropTypes.func.isRequired,
   deleteFile: PropTypes.func.isRequired,
   updateFileName: PropTypes.func.isRequired,
+  updateFileContent: PropTypes.func.isRequired,
   openProjectOptions: PropTypes.func.isRequired,
   closeProjectOptions: PropTypes.func.isRequired,
   newFolder: PropTypes.func.isRequired,
