@@ -1,13 +1,14 @@
 # Testing
-For an initial basic overview of testing for React apps, [you can read what the React developers have to say about it](https://reactjs.org/docs/testing.html).
+For an initial basic overview of testing for React apps, [you can read what the React developers have to say about it](https://reactjs.org/docs/testing.html). We use both unit tests and integration tests.
 
 We are testing React components by rendering the component trees in a simplified test environment and making assertions on what gets rendered and what functions get called.
 
-Many files still don't have tests, so if you're looking to get started as a contributor, this would be a great place to start!
+Many files still don't have tests, so **if you're looking to get started as a contributor, this would be a great place to start!** 
 
 ## What's in this document
 - [Testing dependencies](#testing-dependencies)
 - [Useful testing commands](#Useful-testing-commands)
+- [Our testing methods](#Our-testing-methods)
 - [Why write tests](#Why-write-tests)
 - [When to run tests](#When-to-run-tests)
 - [Writing a test](#Writing-a-test)
@@ -15,8 +16,8 @@ Many files still don't have tests, so if you're looking to get started as a cont
 - [Testing plain components](#Testing-plain-components)
 - [Testing Redux](#Testing-Redux)
 - [How to handle API calls in tests](#How-to-handle-API-calls-in-tests)
-- [Some more background on tests](#Some-more-background-on-tests)
 - [Internationalization](#internationalization)
+- [Useful terminology to know](#Useful-terminology-to-know)
 - [Tips](#Tips)
 - [More resources](#More-resources)
 - [References](#References)
@@ -55,24 +56,42 @@ $ npm run test -- Sketchlist.test.js -u
 
 Find more commands in the [Jest documentation](https://jestjs.io/docs/cli).
 
+## Our testing methods
+
+### Unit tests
+In unit tests, you're testing a the functionality of a single component and no more. They provide lots of feedback on the specific component that you're testing, with the cost of high [redundant coverage](https://github.com/testdouble/contributing-tests/wiki/Redundant-Coverage) and more time spent refactoring tests when components get rewritten. **Not every file needs a unit test.** Unit tests are most important for components that are either:
+1. User facing (like a text input field or a user form component)
+2. Used across multiple components like a reusable dropdown menu or reusable table element
+
+In both of these cases, the component being tested is not merely an implementation detail and is being used more extensively, it's important for the unit tests to test the error cases that could occur to ensure that the component is robust. For example, for a user-facing input field that should only take positive numbers, a unit test would want to cover what happens when users enter negative numbers or letters.
+
+### Integration tests
+Testing multiple components together. A small example is rendering a parent component in order to test the interactions between children components. Generally, they validate how multiple units of your application work together. Jest, which is what we use, uses jsdom under the hood to emulate common browser APIs with less overhead than automation like a headless browser, and its mocking tools can stub out external API calls. We use integration tests to maximize coverage and to make sure all the pieces play nice together. We want our integration tests to cover the testing of components that don't have unit tests because they're only used in one place and are merely an implementation detail. The integration tests can test the "happy path" flow, while we expect the unit tests to have tested the error cases already.
+
+See [this great article on CSS tricks](https://css-tricks.com/react-integration-testing-greater-coverage-fewer-tests/) about integration tests for more information about this.
+
+To reiterate, we use integration tests to test our "happy path" flows and maximize coverage on individual components that are only used once. We use unit tests to test the robustness of user-facing components and reusable components. 
+
+### Snapshot testing
+You can save a snapshot of what the HTML looks like when the component is rendered.
+
 ## Why write tests
-- Good place to start if you're learning the codebase because it's harder to mess up production code
-- Benefits all future contributors by allowing them to check their changes for errors
-- Increased usage: Most code with only ever have a single invocation point, but this means that code might not be particularly robust and lead to bugs if a different devleoper reuses it in a different context. Writing tests increases the usage of the code in question and may improve the long-term durability, along with leading developers to refactor their code to be more usable. [[3]](#References)
-- Lets you check your own work and feel more comfortable sumbitting PRs
-- Catches easy-to-miss errors
-- Good practice for large projects
+- Good place to start if you're learning the codebase.
+- Benefits all future contributors by allowing them to check their changes for errors.
+- Increased usage: Most code with only ever have a single invocation point, but this means that code might not be particularly robust and lead to bugs if a different developer reuses it in a different context. Writing tests increases the usage of the code in question and may improve the long-term durability, along with leading developers to refactor their code to be more usable. [[3]](#References)
+- Lets you check your own work and feel more comfortable sumbitting PRs.
+- Catches easy-to-miss errors.
+- Good practice for large projects.
 - Many of the existing components don't have tests yet, and you could write one :-)
 
 ## When to run tests
 
-When you make a git commit, the tests will be run automatically for you (maybe? check with Cassie again). Tests will also be run when you make a PR and if you fail any tests it blocks the merge. 
+When you ``git push`` your code, the tests will be run automatically for you. Tests will also be run when you make a PR and if you fail any tests it blocks the merge. 
 
 When you modify an existing component, it's a good idea to run the test suite to make sure it didn't make any changes that break the rest of the application. If they did break some tests, you would either have to fix a bug component or update the tests to match the new expected functionality.
 
 ## Writing a test
 Want to get started writing a test for a new file or an existing file, but not sure how?
-
 
 ### For React components
 1. Make a new file directly adjacent to your file. For example, if ``example.jsx`` is ``src/components/example.jsx``, then you would make a file called ``example.test.jsx`` at ``src/components/example.test.jsx``
@@ -80,21 +99,13 @@ Want to get started writing a test for a new file or an existing file, but not s
 3. If it is, see the [redux section](#Testing-Redux) below on how to write tests for that.
 4. If it's not, see the [section below on writing tests for unconnected components](#Testing-plain-components).
 )
-5. "Arange, Act, Assert:" In other words, *arrange* the set up for the test, *act* out whatever the subject's supposed to do, and *assert* on the results. [[3]](#References)
-
-### In every test file
-Maybe we want to add these as comments??
-- What behavior is and isn't covered by the suites What dependencies should be replaced with mocks and what should be left realistic 
-- The primary design benefit (if any) of these tests 
-- The primary regression protection (if any) provided by these tests 
-- What an example test should look like 
-- The maximum permissible elapsed time for a run of an individual test or for the full suit
+5. "Arange, Act, Assert:" In other words, *arrange* the setup for the test, *act* out whatever the subject's supposed to do, and *assert* on the results. [[3]](#References)
 
 ### Consistency across tests
 > "Teams that adopt a rigid and consistent structure to each test tend to more readily understand each test, because every deviation from the norm can be trusted to be meaningful and somehow specific to the nature of the subject."
 - We want to default to using meaningless test data stored in the redux-test-stores folder. 
 - Be sure to follow the folder structure
-- Follow the rendering guidelines set up for the components in this README.
+- Follow the rendering guidelines set up for the components in this ["Writing a Test"](#Writing-a-test) section.
 
 ### Querying for elements
 Read about the recommended order of priority for queries in [the testing library docs](https://testing-library.com/docs/guide-which-query/#priority). We recommend using roles and text, or labels. You can use this [handy extension](https://chrome.google.com/webstore/detail/testing-playground/hejbmebodbijjdhflfknehhcgaklhano/related) to do this.
@@ -103,10 +114,11 @@ Read about the recommended order of priority for queries in [the testing library
 ### What to test
 For any type of component, you might want to consider testing:
 - The text or divs that you expect to be on the page are actually there. You can use [Queries](https://testing-library.com/docs/queries/about/) for this. 
-- a previously saved snapshot of the HTML matches a snapshot taken during testing.
-- what else?? help!
+- If it's an integration test, you could consider testing the "happy path" flow. For example, in a login form, you would test how a user might enter their username and password and then enter that information.
+- Generally, you want to focus your testing on "user input" -> "expected output" instead of making sure the middle steps work as you would expect. This might mean that you don't need to check that the state changes or class-specific methods occur. This is so that if some of the small details in the implementation of the component changes in the future, the tests can remain the same.
+- more details on testing behavior in the component-specific sections
 
->Only test the behaviors you know you need to care about. For example, if the desired behavior of a particular edge case doesn't truly matter yet or isn't fully understood, don't write a test for it yet. Doing so would restrict the freedom to refactor the implementation. Additionally, it will send the signal to future readers that this behavior is actually critical, when it very well might not be (perhaps a form of [accidental creativity]()). [[3]](#References)
+>Only test the behaviors you know you need to care about. For example, if the desired behavior of a particular edge case doesn't truly matter yet or isn't fully understood, don't write a test for it yet. Doing so would restrict the freedom to refactor the implementation. Additionally, it will send the signal to future readers that this behavior is actually critical, when it very well might not be. [[3]](#References)
 
 **Don't test unreachable edge cases:** You would have to add code to your original implementation to guard against these cases. The future proofing and the added cost to the codebase "is generally not worth their preceived potential benefits" [[3]](#References)
 
@@ -242,10 +254,6 @@ function reduxRender(
 ### redux_test_stores
 This folder contains the inital redux states that you can provide to the ``reduxRender`` function when testing. For example, if you want to render the SketchList component with a username of ``happydog`` and some sample sketches, ``redux_test_stores\test_store.js`` contains a definition for that state that you can import and provide to the renderer. 
 
-### jest configs in package.json
-
-in progress
-
 ## Testing plain components
 If it doesn't contain ``connect(mapStateToProps, mapDispatchToProps)(ComponentName)`` or use hooks like ``useSelector``, then your component is not directly using Redux and testing your component will be simpler and might look something like this:
 
@@ -319,7 +327,6 @@ Consider what you want to test. Some possible things might be:
   expect(yourMockFunction).toHaveBeenCalledTimes(1);
   expect(yourMockFunction.mock.calls[0][0]).toBe(argument);
   ``` 
-- what else???? help!
 
 ## Testing Redux
 
@@ -427,21 +434,8 @@ The benefit of this is that you can control exactly what happens when any axios 
 
 A few components also import ``./client/i18n.js`` (or ``./client/utils/formatDate``, which imports the first file), in which the ``i18n.use(Backend)`` line can sometimes throw a sneaky ERRCONNECTED error. You can resolve this by mocking that file as described in [this section](#Troubleshooting).
 
-## Some more background on tests
 
-### Test Driven Development (TDD)
-Do we want a section here about TDD history? 
-
-### snapshot testing
-You can save a snapshot of what the HTML looks like when the component is rendered.
-
-### integration tests
-Testing multiple components together. A small example is rendering a parent component in order to test the interactions between children components. For frontend development, integration tests might focus on end-to-end flows using Puppeter or another type of headless browser testing. We don't do this just yet.
-
-### unit tests
-Most of our tests are of this type. In this, you're testing a the functionality of a single component and no more. They provide lots of feedback on the specific component that you're testing, with the cost of high [redundant coverage](https://github.com/testdouble/contributing-tests/wiki/Redundant-Coverage) and more time spent refactoring tests when components get rewritten.
-
-### Other terminology for mocking
+## Useful terminology to know
 Thanks [Test Double Wiki](https://github.com/testdouble/contributing-tests/wiki/Test-Double) for the definitions.
 #### Test double
 Broadest available term to describe any fake thing used in place of a real thing for a test.
@@ -465,6 +459,7 @@ This project uses i18next for internationalization. If you import the render fun
 1. Make test fail at least once to make sure it was a meaningful test
 2. "If you or another developer change the component in a way that it changes its behaviour at least one test should fail." -  [How to Unit Test in React](https://itnext.io/how-to-unit-test-in-react-72e911e2b8d)
 3. Avoid using numbers or data that seem "special" in your tests. For example, if you were checking the "age" variable in a component is a integer, but checked it as so ``expect(person.ageValidator(18)).toBe(true)``, the reader might assume that the number 18 had some significance to the function because it's a significant age. It would be better to have used 1234.
+4. Tests should help other developers understand the expected behavior of the component that it's testing
 
 ## More Resources
 - [React Testing Library Cheatsheet](https://testing-library.com/docs/react-testing-library/cheatsheet/)
