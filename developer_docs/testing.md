@@ -270,9 +270,7 @@ describe('<MyComponent />', () => {
   let subjectProps = {
     t: jest.fn(),
     fontSize: 12,
-    autosave: false,
-    setFontSize: jest.fn(),
-    setAutosave: jest.fn(),
+    setFontSize: jest.fn()
   };
 
   const subject = () => {
@@ -301,20 +299,22 @@ describe('<MyComponent />', () => {
       subject();
     });
     
-    //I do tests here. 
-    //you can access mock functions from subjectProps. For example, subjectProps.setFontSize
+    /* Tests go here!
+     * You can access mock functions from subjectProps. 
+     * For example, subjectProps.setFontSize
+     */
   
   });
 
   describe('test with a different prop', () => {
-      let subjectProps = {...subjectProps, fontSize: 14}
+    let subjectProps = {...subjectProps, fontSize: 14}
 
-      it("here's that test with a different prop", () => {
-        act(() => {
-          subject();
-        });
-        //test here
-      })
+    it("here's that test with a different prop", () => {
+      act(() => {
+        subject();
+      });
+      //test here
+    });
   });
 
 });
@@ -365,20 +365,33 @@ reduxRender(<SketchList username="happydog1" />, {store, container});
 
 All together, it might look something like this.
 
+
+*MyReduxComponent.test.jsx*
 ```js
 import React from 'react';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
-import MyComponent from './MyComponent';
+import MyReduxComponent from './MyReduxComponent';
 import { reduxRender, fireEvent, screen } from '../../../test-utils';
 import { initialTestState } from '../../../redux_test_stores/test_store';
 
-describe(<MyComponent />, () => {
-  let container;
+describe('<MyReduxComponent />', () => {
+  let container = null;
   const mockStore = configureStore([thunk]);
   const store = mockStore(initialTestState);
+
+  let subjectProps = {
+    sampleprop: "foo"
+  };
+
+  const subject = () => {
+    reduxRender(<MyComponent {...subjectProps} />, {
+        store,
+        container
+      });
+  };
 
   beforeEach(() => {
     // setup a DOM element as a render target
@@ -391,22 +404,39 @@ describe(<MyComponent />, () => {
     unmountComponentAtNode(container);
     container.remove();
     container = null;
+
+    //reset the mocks in subjectProps
+    jest.clearAllMocks();
+
+    //clear the mock store too
     store.clearActions();
   });
-
-  it('stuff about the test', () => {
-    let component;
+    
+  it('I am the test description', () => {
+    // render the component
     act(() => {
-      component = reduxRender(<MyComponent sampleprop="foo" />, {
-        store,
-        container
-      });
+      subject();
     });
-
-    //your tests go here
+    
+    /* Tests go here!
+     * You can access mock functions from subjectProps. 
+     * For example, subjectProps.setFontSize
+     */
+  
   });
 
-})
+  describe('test with a different prop', () => {
+    let subjectProps = {...subjectProps, fontSize: 14}
+
+    it("here's that test with a different prop", () => {
+      act(() => {
+        subject();
+      });
+      //test here
+    });
+  });
+
+});
 ```
 
 Some things to consider testing:
