@@ -59,11 +59,11 @@ Find more commands in the [Jest documentation](https://jestjs.io/docs/cli).
 ## Our testing methods
 
 ### Unit tests
-In unit tests, you're testing a the functionality of a single component and no more. They provide lots of feedback on the specific component that you're testing, with the cost of high [redundant coverage](https://github.com/testdouble/contributing-tests/wiki/Redundant-Coverage) and more time spent refactoring tests when components get rewritten. **Not every file needs a unit test.** Unit tests are most important for components that are either:
+In unit tests, you're testing the functionality of a single component and no more. They provide lots of feedback on the specific component that you're testing, with the cost of high [redundant coverage](https://github.com/testdouble/contributing-tests/wiki/Redundant-Coverage) and more time spent refactoring tests when components get rewritten. **Not every file needs a unit test.** Unit tests are most important for components that are either:
 1. User facing (like a text input field or a user form component)
 2. Used across multiple components like a reusable dropdown menu or reusable table element
 
-In both of these cases, the component being tested is not merely an implementation detail and is being used more extensively, it's important for the unit tests to test the error cases that could occur to ensure that the component is robust. For example, for a user-facing input field that should only take positive numbers, a unit test would want to cover what happens when users enter negative numbers or letters.
+In both of these cases, the component being tested is not merely an implementation detail. Thus, it's important for the unit tests to test the error cases that could occur to ensure that the component is robust. For example, for a user-facing input field that should only take positive numbers, a unit test would want to cover what happens when users enter negative numbers or letters.
 
 ### Integration tests
 Testing multiple components together. A small example is rendering a parent component in order to test the interactions between children components. Generally, they validate how multiple units of your application work together. Jest, which is what we use, uses jsdom under the hood to emulate common browser APIs with less overhead than automation like a headless browser, and its mocking tools can stub out external API calls. We use integration tests to maximize coverage and to make sure all the pieces play nice together. We want our integration tests to cover the testing of components that don't have unit tests because they're only used in one place and are merely an implementation detail. The integration tests can test the "happy path" flow, while we expect the unit tests to have tested the error cases already.
@@ -98,14 +98,14 @@ Want to get started writing a test for a new file or an existing file, but not s
 2. Check if the component is connected to redux or not.
 3. If it is, see the [redux section](#Testing-Redux) below on how to write tests for that.
 4. If it's not, see the [section below on writing tests for unconnected components](#Testing-plain-components).
-)
+
 5. "Arange, Act, Assert:" In other words, *arrange* the setup for the test, *act* out whatever the subject's supposed to do, and *assert* on the results. [[3]](#References)
 
-### Consistency across tests
-> "Teams that adopt a rigid and consistent structure to each test tend to more readily understand each test, because every deviation from the norm can be trusted to be meaningful and somehow specific to the nature of the subject."
-- We want to default to using meaningless test data stored in the redux-test-stores folder. 
-- Be sure to follow the folder structure
-- Follow the rendering guidelines set up for the components in this ["Writing a Test"](#Writing-a-test) section.
+### For Redux action creators or reducers
+See the [redux section](#Testing-Redux) below :)
+
+### For utility files
+You might still want to write tests for non-component or non-redux files, such as modules with utility functions. What gets tested in this case depends a lot on the module itself, but generally, you would import the module and test the functions within it.
 
 ### Querying for elements
 Read about the recommended order of priority for queries in [the testing library docs](https://testing-library.com/docs/guide-which-query/#priority). We recommend using roles and text, or labels. You can use this [handy extension](https://chrome.google.com/webstore/detail/testing-playground/hejbmebodbijjdhflfknehhcgaklhano/related) to do this.
@@ -113,7 +113,11 @@ Read about the recommended order of priority for queries in [the testing library
 
 ### What to test
 For any type of component, you might want to consider testing:
-- The text or divs that you expect to be on the page are actually there. You can use [Queries](https://testing-library.com/docs/queries/about/) for this. 
+- The text or divs that you expect to be on the page are actually there. You can use [Queries](https://testing-library.com/docs/queries/about/) for this. Assertions should make use of the toBeInTheDocument() matcher when asserting that an element exists:
+    ```
+    expect(screen.getByText('Hello World')).toBeInTheDocument();
+    expect(screen.queryByText('Does not exist')).not.toBeInTheDocument();
+    ```
 - If it's an integration test, you could consider testing the "happy path" flow. For example, in a login form, you would test how a user might enter their username and password and then enter that information.
 - Generally, you want to focus your testing on "user input" -> "expected output" instead of making sure the middle steps work as you would expect. This might mean that you don't need to check that the state changes or class-specific methods occur. This is so that if some of the small details in the implementation of the component changes in the future, the tests can remain the same.
 - more details on testing behavior in the component-specific sections
@@ -125,13 +129,14 @@ For any type of component, you might want to consider testing:
 **Make sure your tests are sufficient:** You want to make sure your test actually specifies all the behaviors you want to ensure the code exhibits. For example, testing that ``1+1 > 0`` would be correct, but insufficient. [[3]](#References)
 
 ### File structure
-Each test should have a top-level ```describe`` block to group related blocks together, with the name of the component under test.
-*example.test.ts*
+Each test should have a top-level ``describe`` block to group related blocks together, with the name of the component under test.
+
+*Example.test.ts*
 
 ```js
-import example from './example';
+import Example from './Example';
 
-describe('example', () => {   
+describe('<Example.jsx/>', () => {   
   it('creates a new example', () => {
     //your tests here
   }); 
@@ -139,9 +144,12 @@ describe('example', () => {
 
 ```
 
+### Consistency across tests
+> "Teams that adopt a rigid and consistent structure to each test tend to more readily understand each test, because every deviation from the norm can be trusted to be meaningful and somehow specific to the nature of the subject."
+- We want to default to using meaningless test data stored in the redux-test-stores folder. 
+- Be sure to follow the [folder structure](#Folder-structure)
+- Follow the rendering guidelines set up for the components in this [Writing a Test](#Writing-a-test) section.
 
-### For Redux action creators or reducers
-See the [redux section](#Testing-Redux) below :)
 
 ### Troubleshooting
 1. Check if the component makes any API calls. If it's using axios, jest should already be set up to replace the axios library with a mocked version; however, you may want to [mock](https://jestjs.io/docs/mock-function-api#mockfnmockimplementationoncefn) the axios.get() function with your own version so that GET calls "return" whatever data makes sense for that test. 
@@ -163,6 +171,9 @@ You can also see it used in the context of a test [in the SketchList.test.jsx fi
 
 ### Folder structure
 All tests are directly adjacent to the files that they are testing, as described in the [React docs](https://reactjs.org/docs/faq-structure.html#grouping-by-file-type). For example, if you're testing ``examplefolder/Sketchlist.test.jsx``, the test would be in ``examplefolder/Sketchlist.test.jsx``. This is so that the tests are as close as possible to the files. This also means that any snapshot files will be stored in the same folder, such as ``examplefolder/__snapshots__/Sketchlist.test.jsx.snap``
+
+CASSIE - WHERE DO WE PUT THE INTEGRATION TESTS?
+Integration tests can be placed in the ``__tests__`` folder that's at the root of the client folder. They should be called ``ComponentName.test.integration.jsx``
 
 Manual mocks are in ``__mocks__`` folders are adjacent to the modules that they're mocking.
 
@@ -255,8 +266,9 @@ function reduxRender(
 This folder contains the inital redux states that you can provide to the ``reduxRender`` function when testing. For example, if you want to render the SketchList component with a username of ``happydog`` and some sample sketches, ``redux_test_stores\test_store.js`` contains a definition for that state that you can import and provide to the renderer. 
 
 ## Testing plain components
-If it doesn't contain ``connect(mapStateToProps, mapDispatchToProps)(ComponentName)`` or use hooks like ``useSelector``, then your component is not directly using Redux and testing your component will be simpler and might look something like this:
+If it doesn't contain ``connect(mapStateToProps, mapDispatchToProps)(ComponentName)`` or use hooks like ``useSelector``, then your component is not directly using Redux and testing your component will be simpler and might look something like the code below. Notably, we descibe the component being tested as the [subject under test](http://xunitpatterns.com/SUT.html) by creating a function called ``subject`` that renders the component with the subject dependencies (the props) that are defined in the same scope. They're declared with ``let`` so that they can be overwritten in a nested ``describe``block that tests different dependencies. This keeps the subject function consistent between test suites and explicitly declares variables that can affect the outcome of the test.
 
+*MyComponent.test.jsx*
 ```js
 import React from 'react';
 import { unmountComponentAtNode } from 'react-dom';
@@ -274,7 +286,7 @@ describe('<MyComponent />', () => {
   };
 
   const subject = () => {
-    render(<FakePreferences {...subjectProps} />, { container });
+    render(<MyComponent {...subjectProps} />, { container });
   };
 
   beforeEach(() => {
@@ -307,7 +319,7 @@ describe('<MyComponent />', () => {
   });
 
   describe('test with a different prop', () => {
-    let subjectProps = {...subjectProps, fontSize: 14}
+    subjectProps = {...subjectProps, fontSize: 14}
 
     it("here's that test with a different prop", () => {
       act(() => {
@@ -321,7 +333,7 @@ describe('<MyComponent />', () => {
 ```
 
 Consider what you want to test. Some possible things might be:
-- User input results in the expected function being called with the expected argument. 
+- User input results in the [expected function being called with the expected argument](https://jestjs.io/docs/mock-functions). 
   ```js
   act(() => {
     fireEvent.click(screen.getByLabelText('Username'));
@@ -426,7 +438,9 @@ describe('<MyReduxComponent />', () => {
   });
 
   describe('test with a different prop', () => {
-    let subjectProps = {...subjectProps, fontSize: 14}
+    subjectProps = {
+      sampleprop: "boo!"
+    }
 
     it("here's that test with a different prop", () => {
       act(() => {
