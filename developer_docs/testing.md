@@ -119,6 +119,7 @@ For any type of component, you might want to consider testing:
     expect(screen.queryByText('Does not exist')).not.toBeInTheDocument();
     ```
 - If it's an integration test, you could consider testing the "happy path" flow. For example, in a login form, you would test how a user might enter their username and password and then enter that information.
+- If it's a unit test, you could test possible error cases to ensure that the module being tested is robust and resistant to user or developer error.
 - Generally, you want to focus your testing on "user input" -> "expected output" instead of making sure the middle steps work as you would expect. This might mean that you don't need to check that the state changes or class-specific methods occur. This is so that if some of the small details in the implementation of the component changes in the future, the tests can remain the same.
 - more details on testing behavior in the component-specific sections
 
@@ -173,7 +174,7 @@ You can also see it used in the context of a test [in the SketchList.test.jsx fi
 All tests are directly adjacent to the files that they are testing, as described in the [React docs](https://reactjs.org/docs/faq-structure.html#grouping-by-file-type). For example, if you're testing ``examplefolder/Sketchlist.test.jsx``, the test would be in ``examplefolder/Sketchlist.test.jsx``. This is so that the tests are as close as possible to the files. This also means that any snapshot files will be stored in the same folder, such as ``examplefolder/__snapshots__/Sketchlist.test.jsx.snap``
 
 CASSIE - WHERE DO WE PUT THE INTEGRATION TESTS?
-Integration tests can be placed in the ``__tests__`` folder that's at the root of the client folder. They should be called ``ComponentName.test.integration.jsx``
+Integration tests should be adjacent to the components they're testing. They should be called ``ComponentName.integration.test.jsx``
 
 Manual mocks are in ``__mocks__`` folders are adjacent to the modules that they're mocking.
 
@@ -271,13 +272,11 @@ If it doesn't contain ``connect(mapStateToProps, mapDispatchToProps)(ComponentNa
 *MyComponent.test.jsx*
 ```js
 import React from 'react';
-import { unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import { fireEvent, render, screen } from '../../../../test-utils';
 import MyComponent from './MyComponent';
 
 describe('<MyComponent />', () => {
-  let container = null;
 
   let subjectProps = {
     t: jest.fn(),
@@ -286,21 +285,10 @@ describe('<MyComponent />', () => {
   };
 
   const subject = () => {
-    render(<MyComponent {...subjectProps} />, { container });
+    render(<MyComponent {...subjectProps} />);
   };
 
-  beforeEach(() => {
-    // setup a DOM element as a render target
-    container = document.createElement('div');
-    document.body.appendChild(container);
-  });
-
   afterEach(() => {
-    // cleanup on exiting
-    unmountComponentAtNode(container);
-    container.remove();
-    container = null;
-
     //reset the mocks in subjectProps
     jest.clearAllMocks();
   });
@@ -319,7 +307,10 @@ describe('<MyComponent />', () => {
   });
 
   describe('test with a different prop', () => {
-    subjectProps = {...subjectProps, fontSize: 14}
+    
+    beforeAll(() => {
+      subjectProps = {...subjectProps, fontSize: 14}
+    });
 
     it("here's that test with a different prop", () => {
       act(() => {
@@ -371,7 +362,7 @@ store = mockStore(initialTestState);
 ```
 3. Render the component with reduxRender and the store that you just created.
 ```js
-reduxRender(<SketchList username="happydog1" />, {store, container});
+reduxRender(<SketchList username="happydog1" />, {store});
 ```
 4. Test things! You may need to use jest to mock certain functions if the component is making API calls.
 
@@ -383,14 +374,12 @@ All together, it might look something like this.
 import React from 'react';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import MyReduxComponent from './MyReduxComponent';
 import { reduxRender, fireEvent, screen } from '../../../test-utils';
 import { initialTestState } from '../../../redux_test_stores/test_store';
 
 describe('<MyReduxComponent />', () => {
-  let container = null;
   const mockStore = configureStore([thunk]);
   const store = mockStore(initialTestState);
 
@@ -399,27 +388,10 @@ describe('<MyReduxComponent />', () => {
   };
 
   const subject = () => {
-    reduxRender(<MyComponent {...subjectProps} />, {
-        store,
-        container
-      });
+    reduxRender(<MyComponent {...subjectProps} />, {store});
   };
 
-  beforeEach(() => {
-    // setup a DOM element as a render target
-    container = document.createElement('div');
-    document.body.appendChild(container);
-  });
-
   afterEach(() => {
-    // cleanup on exiting
-    unmountComponentAtNode(container);
-    container.remove();
-    container = null;
-
-    //reset the mocks in subjectProps
-    jest.clearAllMocks();
-
     //clear the mock store too
     store.clearActions();
   });
@@ -438,10 +410,11 @@ describe('<MyReduxComponent />', () => {
   });
 
   describe('test with a different prop', () => {
-    subjectProps = {
-      sampleprop: "boo!"
-    }
 
+    beforeAll(() => {
+      subjectProps = {...subjectProps, fontSize: 14}
+    });
+    
     it("here's that test with a different prop", () => {
       act(() => {
         subject();
@@ -457,10 +430,7 @@ Some things to consider testing:
 - User input results in the expected redux action.
     ```js
     act(() => {
-      component = reduxRender(<SketchList username="happydog2" />, {
-        store,
-        container
-      });
+      component = reduxRender(<SketchList username="happydog2" />, {store});
     });
     act(() => {
       fireEvent.click(screen.getByTestId('toggle-direction-createdAt'));
@@ -509,6 +479,7 @@ This project uses i18next for internationalization. If you import the render fun
 
 ## More Resources
 - [React Testing Library Cheatsheet](https://testing-library.com/docs/react-testing-library/cheatsheet/)
+- [React connected component test](https://www.robinwieruch.de/react-connected-component-test)
 
 ## References
 1. [Best practices for unit testing with a react redux approach](https://willowtreeapps.com/ideas/best-practices-for-unit-testing-with-a-react-redux-approach)
