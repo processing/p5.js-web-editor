@@ -262,36 +262,26 @@ import React from 'react';
 import { unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import { fireEvent, render, screen } from '../../../../test-utils';
-import FakePreferences from './index';
+import MyComponent from './MyComponent';
 
-/* a helper function to render the components with the
- * props that that component needs to be passed in
- * if you want to access the rendered component itself
- * you'd have to modify it a little to return the what
- * gets returned from the render function, along with the props, which is what it's returning now.
- * the default props in this can be overwritten by using extraProps
- */
-const renderComponent = (extraProps = {}, container) => {
-  // if we want to overwrite any of these props, we can do it with extraProps because later keys overwrite earlier ones in the spread operator
-  const props = {
+describe('<MyComponent />', () => {
+  let container = null;
+
+  let subjectProps = {
     t: jest.fn(),
     fontSize: 12,
     autosave: false,
     setFontSize: jest.fn(),
     setAutosave: jest.fn(),
-    ...extraProps
   };
-  render(<FakePreferences {...props} />, { container });
 
-  return props;
-};
+  const subject = () => {
+    render(<FakePreferences {...subjectProps} />, { container });
+  };
 
-describe('<FakePreferences />', () => {
-  let container = null;
   beforeEach(() => {
     // setup a DOM element as a render target
     container = document.createElement('div');
-    container.classList.add('testing-container');
     document.body.appendChild(container);
   });
 
@@ -300,22 +290,34 @@ describe('<FakePreferences />', () => {
     unmountComponentAtNode(container);
     container.remove();
     container = null;
+
+    //reset the mocks in subjectProps
+    jest.clearAllMocks();
+  });
+    
+  it('I am the test description', () => {
+    // render the component
+    act(() => {
+      subject();
+    });
+    
+    //I do tests here. 
+    //you can access mock functions from subjectProps. For example, subjectProps.setFontSize
+  
   });
 
-  describe('font tests', () => {
-    it('font size increase button says increase', () => {
-      let props;
-      // render the component
-      act(() => {
-        props = renderComponent({fontSize: 15}, container);
-      });
-      
-      //I do tests here. 
-      //you can access mock functions from props
-      //for example, props.setFontSize
-      
-    });
+  describe('test with a different prop', () => {
+      let subjectProps = {...subjectProps, fontSize: 14}
+
+      it("here's that test with a different prop", () => {
+        act(() => {
+          subject();
+        });
+        //test here
+      })
   });
+
+});
 ```
 
 Consider what you want to test. Some possible things might be:
