@@ -24,7 +24,6 @@ const App = () => {
   const [state, dispatch] = useReducer(filesReducer, [], initialState);
   const [isPlaying, setIsPlaying] = useState(false);
   function handleMessageEvent(message) {
-    console.log('embedframe received message event');
     const { type, payload } = message;
     switch (type) {
       case MessageTypes.FILES:

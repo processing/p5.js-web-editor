@@ -19,11 +19,7 @@ import {
   EXTERNAL_LINK_REGEX,
   NOT_EXTERNAL_LINK_REGEX
 } from '../../../server/utils/fileUtils';
-import {
-  hijackConsoleErrorsScript,
-  startTag,
-  getAllScriptOffsets
-} from '../../utils/consoleUtils';
+import { startTag, getAllScriptOffsets } from '../../utils/consoleUtils';
 import { registerFrame, MessageTypes } from '../../utils/dispatcher';
 
 import { getHTMLFile } from '../IDE/reducers/files';
@@ -86,7 +82,6 @@ function resolvePathsForElementsWithAttribute(attr, sketchDoc, files) {
 
 function resolveCSSLinksInString(content, files) {
   let newContent = content;
-  console.log(content);
   let cssFileStrings = content.match(STRING_REGEX);
   cssFileStrings = cssFileStrings || [];
   cssFileStrings.forEach((cssFileString) => {
@@ -293,11 +288,12 @@ function injectLocalFiles(files, htmlFile) {
   const sketchDocString = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
   scriptOffs = getAllScriptOffsets(sketchDocString);
   const consoleErrorsScript = sketchDoc.createElement('script');
-  consoleErrorsScript.innerHTML = hijackConsoleErrorsScript(
-    JSON.stringify(scriptOffs)
-  );
+  consoleErrorsScript.innerHTML = `
+    window.offs = ${JSON.stringify(scriptOffs)};
+    window.editorOrigin = '${getConfig('EDITOR_URL')}';
+  `;
   addLoopProtect(sketchDoc);
-  sketchDoc.head.insertBefore(consoleErrorsScript, sketchDoc.head.firstElement);
+  sketchDoc.head.prepend(consoleErrorsScript);
 
   return `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
 }

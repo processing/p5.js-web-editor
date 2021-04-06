@@ -19,6 +19,7 @@ function renderPreviewIndex() {
               ? `${assetsManifest['/previewScripts.js']}`
               : '/previewScripts.js'
           }';
+          window.process.env.EDITOR_URL = '${process.env.EDITOR_URL}';
         </script>
         </head>
       <body>
