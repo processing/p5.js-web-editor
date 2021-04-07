@@ -6,9 +6,6 @@ import srcDoc from 'srcdoc-polyfill';
 import loopProtect from 'loop-protect';
 import { JSHINT } from 'jshint';
 import decomment from 'decomment';
-import classNames from 'classnames';
-import { connect } from 'react-redux';
-import { getBlobUrl } from '../IDE/actions/files';
 import { resolvePathToFile } from '../../../server/utils/filePath';
 import getConfig from '../../utils/getConfig';
 import {
@@ -20,40 +17,6 @@ import {
   NOT_EXTERNAL_LINK_REGEX
 } from '../../../server/utils/fileUtils';
 import { startTag, getAllScriptOffsets } from '../../utils/consoleUtils';
-import { registerFrame, MessageTypes } from '../../utils/dispatcher';
-
-import { getHTMLFile } from '../IDE/reducers/files';
-
-import {
-  stopSketch,
-  expandConsole,
-  endSketchRefresh
-} from '../IDE/actions/ide';
-import {
-  setTextOutput,
-  setGridOutput,
-  setSoundOutput
-} from '../IDE/actions/preferences';
-import { setBlobUrl } from '../IDE/actions/files';
-import { clearConsole, dispatchConsoleEvent } from '../IDE/actions/console';
-
-const shouldRenderSketch = (props, prevProps = undefined) => {
-  const { isPlaying, previewIsRefreshing, fullView } = props;
-
-  // if the user explicitly clicks on the play button
-  if (isPlaying && previewIsRefreshing) return true;
-
-  if (!prevProps) return false;
-
-  return (
-    props.isPlaying !== prevProps.isPlaying || // if sketch starts or stops playing, want to rerender
-    props.isAccessibleOutputPlaying !== prevProps.isAccessibleOutputPlaying || // if user switches textoutput preferences
-    props.textOutput !== prevProps.textOutput ||
-    props.gridOutput !== prevProps.gridOutput ||
-    props.soundOutput !== prevProps.soundOutput ||
-    (fullView && props.files[0].id !== prevProps.files[0].id)
-  );
-};
 
 const Frame = styled.iframe`
   min-height: 100%;
@@ -135,14 +98,10 @@ function resolveJSLinksInString(content, files) {
             quoteCharacter + resolvedFile.url + quoteCharacter
           );
         } else if (resolvedFile.name.match(PLAINTEXT_FILE_REGEX)) {
-          // could also pull file from API instead of using bloburl
-          // TODO not using redux for the blob url bb
-          // const blobURL = getBlobUrl(resolvedFile);
-          // this.props.setBlobUrl(resolvedFile, blobURL);
-          // newContent = newContent.replace(
-          //   jsFileString,
-          //   quoteCharacter + blobURL + quoteCharacter
-          // );
+          newContent = newContent.replace(
+            jsFileString,
+            quoteCharacter + resolvedFile.blobUrl + quoteCharacter
+          );
         }
       }
     }
@@ -249,38 +208,6 @@ function injectLocalFiles(files, htmlFile) {
   resolveScripts(sketchDoc, resolvedFiles);
   resolveStyles(sketchDoc, resolvedFiles);
 
-  // TODO p5.accessibility
-  // const accessiblelib = sketchDoc.createElement('script');
-  // accessiblelib.setAttribute(
-  //   'src',
-  //   'https://cdn.rawgit.com/processing/p5.accessibility/v0.1.1/dist/p5-accessibility.js'
-  // );
-  // const accessibleOutputs = sketchDoc.createElement('section');
-  // accessibleOutputs.setAttribute('id', 'accessible-outputs');
-  // accessibleOutputs.setAttribute('aria-label', 'accessible-output');
-  // if (this.props.textOutput) {
-  //   sketchDoc.body.appendChild(accessibleOutputs);
-  //   sketchDoc.body.appendChild(accessiblelib);
-  //   const textSection = sketchDoc.createElement('section');
-  //   textSection.setAttribute('id', 'textOutput-content');
-  //   sketchDoc.getElementById('accessible-outputs').appendChild(textSection);
-  // }
-  // if (this.props.gridOutput) {
-  //   sketchDoc.body.appendChild(accessibleOutputs);
-  //   sketchDoc.body.appendChild(accessiblelib);
-  //   const gridSection = sketchDoc.createElement('section');
-  //   gridSection.setAttribute('id', 'tableOutput-content');
-  //   sketchDoc.getElementById('accessible-outputs').appendChild(gridSection);
-  // }
-  // if (this.props.soundOutput) {
-  //   sketchDoc.body.appendChild(accessibleOutputs);
-  //   sketchDoc.body.appendChild(accessiblelib);
-  //   const soundSection = sketchDoc.createElement('section');
-  //   soundSection.setAttribute('id', 'soundOutput-content');
-  //   sketchDoc.getElementById('accessible-outputs').appendChild(soundSection);
-  // }
-
-  // TODO extra stuff to inject
   const previewScripts = sketchDoc.createElement('script');
   previewScripts.src = getConfig('PREVIEW_SCRIPTS_URL');
   sketchDoc.head.appendChild(previewScripts);
@@ -306,16 +233,6 @@ function EmbedFrame({ files, isPlaying }) {
   const iframe = useRef();
   const htmlFile = useMemo(() => getHtmlFile(files), [files]);
 
-  // useEffect(() => {
-  //   const unsubscribe = registerFrame(
-  //     iframe.current.contentWindow,
-  //     getConfig('PREVIEW_URL')
-  //   );
-  //   return () => {
-  //     unsubscribe();
-  //   };
-  // });
-
   function renderSketch() {
     const doc = iframe.current;
     if (isPlaying) {
@@ -329,7 +246,7 @@ function EmbedFrame({ files, isPlaying }) {
 
   useEffect(renderSketch, [files, isPlaying]);
   const sandboxAttributes =
-    'allow-scripts allow-pointer-lock allow-popups allow-forms allow-modals allow-downloads';
+    'allow-scripts allow-pointer-lock allow-popups allow-forms allow-modals allow-downloads allow-same-origin';
   return (
     <Frame
       aria-label="Sketch Preview"

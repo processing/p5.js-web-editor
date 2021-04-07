@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 import objectID from 'bson-objectid';
+import blobUtil from 'blob-util';
+import { PLAINTEXT_FILE_REGEX } from '../../../server/utils/fileUtils';
 
 const defaultSketch = `function setup() {
   createCanvas(400, 400);
@@ -102,10 +104,30 @@ export function setFiles(files) {
   };
 }
 
+export function createBlobUrl(file) {
+  if (file.blobUrl) {
+    blobUtil.revokeObjectURL(file.blobUrl);
+  }
+
+  const fileBlob = blobUtil.createBlob([file.content], { type: 'text/plain' });
+  const blobURL = blobUtil.createObjectURL(fileBlob);
+  return blobURL;
+}
+
+export function createBlobUrls(state) {
+  return state.map((file) => {
+    if (file.name.match(PLAINTEXT_FILE_REGEX)) {
+      const blobUrl = createBlobUrl(file);
+      return { ...file, blobUrl };
+    }
+    return file;
+  });
+}
+
 export function filesReducer(state, action) {
   switch (action.type) {
     case 'SET_FILES':
-      return action.files;
+      return createBlobUrls(action.files);
     default:
       return state.map((file) => {
         file.children = sortedChildrenId(state, file.children);
