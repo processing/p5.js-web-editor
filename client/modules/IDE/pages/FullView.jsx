@@ -5,14 +5,14 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PreviewFrame from '../components/PreviewFrame';
 import PreviewNav from '../../../components/PreviewNav';
-import * as ProjectActions from '../actions/project';
+import { getProject } from '../actions/project';
+import { startSketch } from '../actions/ide';
 
 class FullView extends React.Component {
   componentDidMount() {
-    this.props.getProject(
-      this.props.params.project_id,
-      this.props.params.username
-    );
+    this.props
+      .getProject(this.props.params.project_id, this.props.params.username)
+      .then(this.props.startSketch);
   }
 
   render() {
@@ -51,7 +51,8 @@ FullView.propTypes = {
       username: PropTypes.string
     })
   }).isRequired,
-  getProject: PropTypes.func.isRequired
+  getProject: PropTypes.func.isRequired,
+  startSketch: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -61,7 +62,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(ProjectActions, dispatch);
+  return bindActionCreators({ getProject, startSketch }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FullView);
