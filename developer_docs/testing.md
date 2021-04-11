@@ -66,11 +66,11 @@ In unit tests, you're testing the functionality of a single component and no mor
 In both of these cases, the component being tested is not merely an implementation detail. Thus, it's important for the unit tests to test the error cases that could occur to ensure that the component is robust. For example, for a user-facing input field that should only take positive numbers, a unit test would want to cover what happens when users enter negative numbers or letters.
 
 ### Integration tests
-Testing multiple components together. A small example is rendering a parent component in order to test the interactions between children components. Generally, they validate how multiple units of your application work together. Jest, which is what we use, uses jsdom under the hood to emulate common browser APIs with less overhead than automation like a headless browser, and its mocking tools can stub out external API calls. We use integration tests to maximize coverage and to make sure all the pieces play nice together. We want our integration tests to cover the testing of components that don't have unit tests because they're only used in one place and are merely an implementation detail. The integration tests can test the "happy path" flow, while we expect the unit tests to have tested the error cases already.
+Testing multiple components together. A small example is rendering a parent component in order to test the interactions between children components. Generally, they validate how multiple units of your application work together. Jest, which is what we use, uses jsdom under the hood to emulate common browser APIs with less overhead than automation like a headless browser, and its mocking tools can stub out external API calls. We use integration tests to maximize coverage and to make sure all the pieces play nice together. We want our integration tests to cover the testing of components that don't have unit tests because they're only used in one place and are merely an implementation detail. The integration tests can test the expected user flows, while we expect the unit tests to have tested the error cases more rigorously.
 
 See [this great article on CSS tricks](https://css-tricks.com/react-integration-testing-greater-coverage-fewer-tests/) about integration tests for more information about this.
 
-To reiterate, we use integration tests to test our "happy path" flows and maximize coverage on individual components that are only used once. We use unit tests to test the robustness of user-facing components and reusable components. 
+To reiterate, we use integration tests to maximize coverage on individual components that are only used once. We use unit tests to test the robustness of user-facing components and reusable components. 
 
 ### Snapshot testing
 You can save a snapshot of what the HTML looks like when the component is rendered.
@@ -173,7 +173,6 @@ You can also see it used in the context of a test [in the SketchList.test.jsx fi
 ### Folder structure
 All tests are directly adjacent to the files that they are testing, as described in the [React docs](https://reactjs.org/docs/faq-structure.html#grouping-by-file-type). For example, if you're testing ``examplefolder/Sketchlist.test.jsx``, the test would be in ``examplefolder/Sketchlist.test.jsx``. This is so that the tests are as close as possible to the files. This also means that any snapshot files will be stored in the same folder, such as ``examplefolder/__snapshots__/Sketchlist.test.jsx.snap``
 
-CASSIE - WHERE DO WE PUT THE INTEGRATION TESTS?
 Integration tests should be adjacent to the components they're testing. They should be called ``ComponentName.integration.test.jsx``
 
 Manual mocks are in ``__mocks__`` folders are adjacent to the modules that they're mocking.
