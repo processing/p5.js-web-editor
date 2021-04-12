@@ -261,7 +261,7 @@ function reduxRender(
 
 
 ### testData
-This folder contains the test data that you can use in your tests, including inital redux states that you can provide to the ``reduxRender`` function when testing. For example, if you want to render the SketchList component with a username of ``happydog`` and some sample sketches, ``redux_test_stores\test_store.js`` contains a definition for that state that you can import and provide to the renderer. The folder also contains test data that you can use for msw server so that the server returns json with the correct format and fields. 
+This folder contains the test data that you can use in your tests, including inital redux states that you can provide to the ``reduxRender`` function when testing. For example, if you want to render the SketchList component with a username of ``happydog`` and some sample sketches, ``testData/testReduxStore.js`` contains a definition for that state that you can import and provide to the renderer. The folder also contains test data that you can use for ``msw`` server so that the server returns json with the correct format and fields. 
 
 ## Testing plain components
 If it doesn't contain ``connect(mapStateToProps, mapDispatchToProps)(ComponentName)`` or use hooks like ``useSelector``, then your component is not directly using Redux and testing your component will be simpler and might look something like the code below. Notably, we descibe the component being tested as the [subject under test](http://xunitpatterns.com/SUT.html) by creating a function called ``subject`` that renders the component with the subject dependencies (the props) that are defined in the same scope. They're declared with ``let`` so that they can be overwritten in a nested ``describe``block that tests different dependencies. This keeps the subject function consistent between test suites and explicitly declares variables that can affect the outcome of the test.
@@ -341,7 +341,7 @@ Testing reducers and action creators is covered pretty well in [Redux's document
 
 ### Connected Components
 
-Although it's possible to export the components as unconnected components for testing (and in this case you would just manually pass in the props that redux provides), the codebase is being migrated to use hooks, and in this case, that approach no longer works. It also doesn't work if we render components that have connected subcomponents. Thus, for consistency, we suggest testing all redux components while they're connected to redux. We can do this with redux-mock-store.
+Although it's possible to export the components as unconnected components for testing (and in this case you would just manually pass in the props that redux provides), the codebase is being migrated to use hooks, and in this case, that approach no longer works. It also doesn't work if we render components that have connected subcomponents. Thus, for consistency, we suggest testing all redux components while they're connected to redux. We can do this with ``redux-mock-store``.
 
 This works like so:
 1. Import the reduxRender function from ``client/test_utils.js`` 
@@ -353,7 +353,7 @@ import thunk from 'redux-thunk';
 
 const mockStore = configureStore([thunk]);
 ```
-3. Create a mock store. There's an initial state that you can import from ``client/redux_test_stores/test_store.js`` 
+3. Create a mock store. There's an initial state that you can import from ``client/testData/testReduxStore.js`` 
 ```js
 store = mockStore(initialTestState);
 ```
@@ -441,6 +441,8 @@ Some things to consider testing:
 
 Some tests throw errors if a part of the client-side code tries to make an API call or AJAX request. Our solution to this is to use the [Mock Service Worker library](https://mswjs.io/) to mock the API requests by intercepting requests on the network level [[2]](#References). It can handle API calls and return appropriate data (you can see what shape of data gets returned by looking through the server files). There is some test data available in the ``client/testData/testServerResponse.js`` file, but you may need to edit the file to add a new json response if an appropriate one doesn't exist already. The example code below sets up a server to respond to a GET request at ``/exampleendpoint`` by returning ``{data: foo}`` You can see it in the context of a test [in the SketchList.test.jsx file](../client/modules/IDE/components/SketchList.test.jsx).
 
+There's a longer explaination of the benefits of ``msw`` in [this article by Kent C Dodds](https://kentcdodds.com/blog/stop-mocking-fetch).
+
 ```js
 // setup for the msw
 const server = setupServer(
@@ -454,7 +456,7 @@ afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 ```
 
-If the component makes use of the formatDate util, some of the functions in that rely on the ``./client/i18n.js`` file that also makes an ajax request, which sometimes leads to an ERRCONNECTED error on the console, even though your tests pass. You can fix it by adding a mock for that specific i18n file:
+If the component makes use of the ``formatDate`` util, some of the functions in that rely on the ``./client/i18n.js`` file that also makes an ajax request, which sometimes leads to an ERRCONNECTED error on the console, even though your tests pass. You can fix it by adding a mock for that specific i18n file:
 ```js
 jest.mock('_path_to_file_/i18n');
 ```
