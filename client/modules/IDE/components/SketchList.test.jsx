@@ -6,7 +6,7 @@ import { rest } from 'msw';
 import { act } from 'react-dom/test-utils';
 import SketchList from './SketchList';
 import { reduxRender, fireEvent, screen, within } from '../../../test-utils';
-import { initialTestState } from '../../../redux_test_stores/test_store';
+import { initialTestState } from '../../../testData/testReduxStore';
 
 jest.mock('../../../i18n');
 

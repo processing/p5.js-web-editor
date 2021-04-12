@@ -4,11 +4,10 @@ import {
   act,
   fireEvent,
   prettyDOM,
-  render,
   screen,
   within
 } from '@testing-library/react';
-import userResponse from './redux_test_stores/test_server_responses';
+import userResponse from './testData/testServerResponses';
 
 // need to mock this file or it'll throw ERRCONNECTED
 jest.mock('./i18n');

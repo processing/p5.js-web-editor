@@ -8,7 +8,7 @@ import * as ActionTypes from '../../../../constants';
 import {
   initialTestState,
   mockProjects
-} from '../../../../redux_test_stores/test_store';
+} from '../../../../testData/testReduxStore';
 
 const mockStore = configureStore([thunk]);
 

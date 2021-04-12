@@ -11,7 +11,7 @@ import {
   within,
   prettyDOM
 } from '../../../test-utils';
-import { initialTestState } from '../../../redux_test_stores/test_store';
+import { initialTestState } from '../../../testData/testReduxStore';
 
 jest.mock('../../../i18n');
 

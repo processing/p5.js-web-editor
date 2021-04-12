@@ -1,4 +1,6 @@
 # Testing
+This guide lists out the tools and methods that we use to test the p5 editor project. It focuses mainly on the client side project, but some of it applies to the server tests too.
+
 For an initial basic overview of testing for React apps, [you can read what the React developers have to say about it](https://reactjs.org/docs/testing.html). We use both unit tests and integration tests.
 
 We are testing React components by rendering the component trees in a simplified test environment and making assertions on what gets rendered and what functions get called.
@@ -12,6 +14,7 @@ Many files still don't have tests, so **if you're looking to get started as a co
 - [Why write tests](#Why-write-tests)
 - [When to run tests](#When-to-run-tests)
 - [Writing a test](#Writing-a-test)
+- [What to test](#What-to-test)
 - [Files to be aware of](#Files-to-be-aware-of)
 - [Testing plain components](#Testing-plain-components)
 - [Testing Redux](#Testing-Redux)
@@ -27,6 +30,7 @@ Many files still don't have tests, so **if you're looking to get started as a co
 1. [Jest](https://jestjs.io/)
 2. [react-testing-library](https://testing-library.com/docs/react-testing-library/intro/)
 3. [redux-mock-store](https://github.com/reduxjs/redux-mock-store)
+4. [msw](https://github.com/mswjs/msw)
 
 ## Useful testing commands
 Run the whole test suite
@@ -73,7 +77,7 @@ See [this great article on CSS tricks](https://css-tricks.com/react-integration-
 To reiterate, we use integration tests to maximize coverage on individual components that are only used once. We use unit tests to test the robustness of user-facing components and reusable components. 
 
 ### Snapshot testing
-You can save a snapshot of what the HTML looks like when the component is rendered.
+You can save a snapshot of what the HTML looks like when the component is rendered. It doesn't hurt to add them to your tests, but they can be brittle.
 
 ## Why write tests
 - Good place to start if you're learning the codebase.
@@ -110,25 +114,6 @@ You might still want to write tests for non-component or non-redux files, such a
 ### Querying for elements
 Read about the recommended order of priority for queries in [the testing library docs](https://testing-library.com/docs/guide-which-query/#priority). We recommend using roles and text, or labels. You can use this [handy extension](https://chrome.google.com/webstore/detail/testing-playground/hejbmebodbijjdhflfknehhcgaklhano/related) to do this.
 
-
-### What to test
-For any type of component, you might want to consider testing:
-- The text or divs that you expect to be on the page are actually there. You can use [Queries](https://testing-library.com/docs/queries/about/) for this. Assertions should make use of the toBeInTheDocument() matcher when asserting that an element exists:
-    ```
-    expect(screen.getByText('Hello World')).toBeInTheDocument();
-    expect(screen.queryByText('Does not exist')).not.toBeInTheDocument();
-    ```
-- If it's an integration test, you could consider testing the "happy path" flow. For example, in a login form, you would test how a user might enter their username and password and then enter that information.
-- If it's a unit test, you could test possible error cases to ensure that the module being tested is robust and resistant to user or developer error.
-- Generally, you want to focus your testing on "user input" -> "expected output" instead of making sure the middle steps work as you would expect. This might mean that you don't need to check that the state changes or class-specific methods occur. This is so that if some of the small details in the implementation of the component changes in the future, the tests can remain the same.
-- more details on testing behavior in the component-specific sections
-
->Only test the behaviors you know you need to care about. For example, if the desired behavior of a particular edge case doesn't truly matter yet or isn't fully understood, don't write a test for it yet. Doing so would restrict the freedom to refactor the implementation. Additionally, it will send the signal to future readers that this behavior is actually critical, when it very well might not be. [[3]](#References)
-
-**Don't test unreachable edge cases:** You would have to add code to your original implementation to guard against these cases. The future proofing and the added cost to the codebase "is generally not worth their preceived potential benefits" [[3]](#References)
-
-**Make sure your tests are sufficient:** You want to make sure your test actually specifies all the behaviors you want to ensure the code exhibits. For example, testing that ``1+1 > 0`` would be correct, but insufficient. [[3]](#References)
-
 ### File structure
 Each test should have a top-level ``describe`` block to group related blocks together, with the name of the component under test.
 
@@ -153,27 +138,40 @@ describe('<Example.jsx/>', () => {
 
 
 ### Troubleshooting
-1. Check if the component makes any API calls. If it's using axios, jest should already be set up to replace the axios library with a mocked version; however, you may want to [mock](https://jestjs.io/docs/mock-function-api#mockfnmockimplementationoncefn) the axios.get() function with your own version so that GET calls "return" whatever data makes sense for that test. 
+1. If you are having network errors like ERRCONNECTED or something like ``Cannot read property 'then' of undefined`` as a result of an ``apiClient`` function, then please view the [How to handle API calls in tests](#How-to-handle-API-calls-in-tests) section.
 
+2. In some cases, window functions are not defined because the client tests run in the context of ``jsdom`` and not a real browser. In this case, you want to define the function as a no op. [See this post for more information.](https://stackoverflow.com/questions/57311971/error-not-implemented-window-scrollto-how-do-we-remove-this-error-from-jest-t)
     ```js
-    axios.get.mockImplementationOnce(
-      (x) => Promise.resolve({ data: 'foo' })
-    );
+    const noop = () => {};
+    Object.defineProperty(window, 'focus', { value: noop, writable: true });
     ```
-You can see it used in the context of a test [in the SketchList.test.jsx file](../client/modules/IDE/components/SketchList.test.jsx).
 
-2. If the component makes use of the formatDate util, some of the functions in that rely on the ``./client/i18n.js`` file that also makes an ajax request, which sometimes leads to an ERRCONNECTED error on the console, even though your tests pass. You can fix it by adding a mock for that specific i18n file:
-    ```js
-    jest.mock('_path_to_file_/i18n');
+3. If you see a ``range(...).getBoundingClientRect is not a function``  error, this is probably related to the CodeMirror code editor, and there is a fix in [this Github Issues post](https://github.com/jsdom/jsdom/issues/3002).
+
+## What to test
+For any type of component, you might want to consider testing:
+- The text or divs that you expect to be on the page are actually there. You can use [Queries](https://testing-library.com/docs/queries/about/) for this. Assertions should make use of the toBeInTheDocument() matcher when asserting that an element exists:
     ```
-You can also see it used in the context of a test [in the SketchList.test.jsx file](../client/modules/IDE/components/SketchList.test.jsx).
+    expect(screen.getByText('Hello World')).toBeInTheDocument();
+    expect(screen.queryByText('Does not exist')).not.toBeInTheDocument();
+    ```
+- If it's an integration test, you could consider testing the "happy path" flow. For example, in a login form, you would test how a user might enter their username and password and then enter that information.
+- If it's a unit test, you could test possible error cases to ensure that the module being tested is robust and resistant to user or developer error.
+- Generally, you want to focus your testing on "user input" -> "expected output" instead of making sure the middle steps work as you would expect. This might mean that you don't need to check that the state changes or class-specific methods occur. This is so that if some of the small details in the implementation of the component changes in the future, the tests can remain the same.
+- more details on testing behavior in the component-specific sections
+
+>Only test the behaviors you know you need to care about. For example, if the desired behavior of a particular edge case doesn't truly matter yet or isn't fully understood, don't write a test for it yet. Doing so would restrict the freedom to refactor the implementation. Additionally, it will send the signal to future readers that this behavior is actually critical, when it very well might not be. [[3]](#References)
+
+**Don't test unreachable edge cases:** You would have to add code to your original implementation to guard against these cases. The future proofing and the added cost to the codebase "is generally not worth their preceived potential benefits" [[3]](#References)
+
+**Make sure your tests are sufficient:** You want to make sure your test actually specifies all the behaviors you want to ensure the code exhibits. For example, testing that ``1+1 > 0`` would be correct, but insufficient. [[3]](#References)
 
 ## Files to be aware of
 
 ### Folder structure
-All tests are directly adjacent to the files that they are testing, as described in the [React docs](https://reactjs.org/docs/faq-structure.html#grouping-by-file-type). For example, if you're testing ``examplefolder/Sketchlist.test.jsx``, the test would be in ``examplefolder/Sketchlist.test.jsx``. This is so that the tests are as close as possible to the files. This also means that any snapshot files will be stored in the same folder, such as ``examplefolder/__snapshots__/Sketchlist.test.jsx.snap``
+All tests are directly adjacent to the files that they are testing, as described in the [React docs](https://reactjs.org/docs/faq-structure.html#grouping-by-file-type). For example, if you're testing ``examplefolder/Sketchlist.jsx``, the test would be in ``examplefolder/Sketchlist.unit.test.jsx``. This is so that the tests are as close as possible to the files. This also means that any snapshot files will be stored in the same folder, such as ``examplefolder/__snapshots__/Sketchlist.unit.test.jsx.snap``
 
-Integration tests should be adjacent to the components they're testing. They should be called ``ComponentName.integration.test.jsx``
+Integration tests should be adjacent to the components they're testing. They should be called ``ComponentName.integration.test.jsx``. Unit tests should be called ``ComponentName.unit.test.jsx``.
 
 Manual mocks are in ``__mocks__`` folders are adjacent to the modules that they're mocking.
 
@@ -185,7 +183,6 @@ Node modules are mocked in the ``__mocks__`` folder at the root of the client fo
 .
 └── client
     ├── __mocks__
-    │   ├── axios.js
     |   ├── i18n.js
     |   └── ...other Node modules you want to mock
     ├── modules
@@ -195,23 +192,24 @@ Node modules are mocked in the ``__mocks__`` folder at the root of the client fo
     │   │   │   │   ├── projects.js
     │   │   │   │   └─ ... other action creator mocks   
     │   │   │   ├── projects.js 
-    │   │   │   ├── projects.test.js  
+    │   │   │   ├── projects.unit.test.js  
     │   │   │   └─ ... other action creator files 
     │   │   ├── components  
     │   │   │   ├── __snapshots__
-    │   │   │   │   ├── SketchList.test.jsx.snap  
+    │   │   │   │   ├── SketchList.unit.test.jsx.snap  
     │   │   │   │   └─ ... other snapshots   
     │   │   │   ├── SketchList.jsx  
-    │   │   │   ├── SketchList.test.jsx     
+    │   │   │   ├── SketchList.unit.test.jsx     
     │   │   │   └── ... and more component files 
     │   │   ├── reducers
-    │   │   │   ├── assets.test.js
+    │   │   │   ├── assets.unit.test.js
     │   │   │   ├── assets.js
     │   │   │   └── ...more reducers
     │   └── ... more folders
-    ├── redux_test_stores
-    |   ├── test_store.js
-    │   └── ...any other redux states you want to test
+    ├── testData
+    |   ├── testReduxStore.js
+    |   ├── testServerResponses.js
+    │   └── ...any other placeholder data
     ├── i18n-test.js
     ├── jest.setup.js
     ├── test-utils.js
@@ -262,8 +260,8 @@ function reduxRender(
 ```
 
 
-### redux_test_stores
-This folder contains the inital redux states that you can provide to the ``reduxRender`` function when testing. For example, if you want to render the SketchList component with a username of ``happydog`` and some sample sketches, ``redux_test_stores\test_store.js`` contains a definition for that state that you can import and provide to the renderer. 
+### testData
+This folder contains the test data that you can use in your tests, including inital redux states that you can provide to the ``reduxRender`` function when testing. For example, if you want to render the SketchList component with a username of ``happydog`` and some sample sketches, ``redux_test_stores\test_store.js`` contains a definition for that state that you can import and provide to the renderer. The folder also contains test data that you can use for msw server so that the server returns json with the correct format and fields. 
 
 ## Testing plain components
 If it doesn't contain ``connect(mapStateToProps, mapDispatchToProps)(ComponentName)`` or use hooks like ``useSelector``, then your component is not directly using Redux and testing your component will be simpler and might look something like the code below. Notably, we descibe the component being tested as the [subject under test](http://xunitpatterns.com/SUT.html) by creating a function called ``subject`` that renders the component with the subject dependencies (the props) that are defined in the same scope. They're declared with ``let`` so that they can be overwritten in a nested ``describe``block that tests different dependencies. This keeps the subject function consistent between test suites and explicitly declares variables that can affect the outcome of the test.
@@ -376,7 +374,7 @@ import thunk from 'redux-thunk';
 import { act } from 'react-dom/test-utils';
 import MyReduxComponent from './MyReduxComponent';
 import { reduxRender, fireEvent, screen } from '../../../test-utils';
-import { initialTestState } from '../../../redux_test_stores/test_store';
+import { initialTestState } from '../../../testData/testReduxStore';
 
 describe('<MyReduxComponent />', () => {
   const mockStore = configureStore([thunk]);
@@ -441,17 +439,31 @@ Some things to consider testing:
 
 ## How to handle API calls in tests
 
-Some tests throw errors if a part of the client-side code tries to make an API call or AJAX request. Our solution to this is to use jest to replace those functions with [mock functions](https://jestjs.io/docs/mock-functions). 
+Some tests throw errors if a part of the client-side code tries to make an API call or AJAX request. Our solution to this is to use the [Mock Service Worker library](https://mswjs.io/) to mock the API requests by intercepting requests on the network level [[2]](#References). It can handle API calls and return appropriate data (you can see what shape of data gets returned by looking through the server files). There is some test data available in the ``client/testData/testServerResponse.js`` file, but you may need to edit the file to add a new json response if an appropriate one doesn't exist already. The example code below sets up a server to respond to a GET request at ``/exampleendpoint`` by returning ``{data: foo}`` You can see it in the context of a test [in the SketchList.test.jsx file](../client/modules/IDE/components/SketchList.test.jsx).
 
-The code in question for the client side is mostly related to the axios library. We mock the whole library - jest automatically does this since we have an ``axios.js`` file in the ``__mocks__`` folder at the root of the client folder. [[2]](#References)
+```js
+// setup for the msw
+const server = setupServer(
+  rest.get(`/exampleendpoint`, (req, res, ctx) =>
+    res(ctx.json({ data: 'foo' }))
+  )
+);
 
-The benefit of this is that you can control exactly what happens when any axios function gets called, and you can check how many times it's been called. 
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
+```
 
-A few components also import ``./client/i18n.js`` (or ``./client/utils/formatDate``, which imports the first file), in which the ``i18n.use(Backend)`` line can sometimes throw a sneaky ERRCONNECTED error. You can resolve this by mocking that file as described in [this section](#Troubleshooting).
+If the component makes use of the formatDate util, some of the functions in that rely on the ``./client/i18n.js`` file that also makes an ajax request, which sometimes leads to an ERRCONNECTED error on the console, even though your tests pass. You can fix it by adding a mock for that specific i18n file:
+```js
+jest.mock('_path_to_file_/i18n');
+```
+You can see it used in the context of a test [in the SketchList.test.jsx file](../client/modules/IDE/components/SketchList.test.jsx).
 
 
 ## Useful terminology to know
-Thanks [Test Double Wiki](https://github.com/testdouble/contributing-tests/wiki/Test-Double) for the definitions.
+Thanks [Test Double Wiki](https://github.com/testdouble/contributing-tests/wiki/Test-Double) for the definitions. You might see some of these words used in testing library documentation, so here are short definitions for them.
+
 #### Test double
 Broadest available term to describe any fake thing used in place of a real thing for a test.
 #### Stub
@@ -479,11 +491,12 @@ This project uses i18next for internationalization. If you import the render fun
 ## More Resources
 - [React Testing Library Cheatsheet](https://testing-library.com/docs/react-testing-library/cheatsheet/)
 - [React connected component test](https://www.robinwieruch.de/react-connected-component-test)
+- https://blog.bitsrc.io/testing-a-redux-hooked-app-a8e9d1609061
 
 ## References
 1. [Best practices for unit testing with a react redux approach](https://willowtreeapps.com/ideas/best-practices-for-unit-testing-with-a-react-redux-approach)
 
-2. [How to test your react-redux application (this article also references axios)](https://medium.com/asos-techblog/how-to-test-your-react-redux-application-48d90481a253)
+2. [React testing library example intro](https://testing-library.com/docs/react-testing-library/example-intro/#full-example)
 
 3. [Testing Double Wiki (Special thanks to this wiki for being such a comprehensive guide to the history of testing and best practices.)](https://github.com/testdouble/contributing-tests/wiki/Tests%27-Influence-on-Design)
 

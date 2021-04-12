@@ -1,6 +1,6 @@
 import * as ActionTypes from '../../../../constants';
 import { startLoader, stopLoader } from '../loader';
-import { mockProjects } from '../../../../redux_test_stores/test_store';
+import { mockProjects } from '../../../../testData/testReduxStore';
 
 // eslint-disable-next-line
 export function getProjects(username) {
