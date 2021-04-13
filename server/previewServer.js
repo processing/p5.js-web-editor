@@ -4,7 +4,7 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import config from '../webpack/config.dev';
-
+import embedRoutes from './routes/embed.routes';
 import renderPreviewIndex from './views/previewIndex';
 
 const app = new Express();
@@ -31,6 +31,8 @@ app.use(
 app.get('/', (req, res) => {
   res.send(renderPreviewIndex());
 });
+
+app.use('/', embedRoutes);
 
 app.listen(process.env.PREVIEW_PORT, (error) => {
   if (!error) {

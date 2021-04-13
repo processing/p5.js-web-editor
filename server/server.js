@@ -24,7 +24,7 @@ import files from './routes/file.routes';
 import collections from './routes/collection.routes';
 import aws from './routes/aws.routes';
 import serverRoutes from './routes/server.routes';
-import embedRoutes from './routes/embed.routes';
+import redirectEmbedRoutes from './routes/redirectEmbed.routes';
 import assetRoutes from './routes/asset.routes';
 import passportRoutes from './routes/passport.routes';
 import { requestsOfTypeJSON } from './utils/requestsOfType';
@@ -143,7 +143,7 @@ app.use('/', serverRoutes);
 
 app.use(assetRoutes);
 
-app.use('/', embedRoutes);
+app.use('/', redirectEmbedRoutes);
 app.use('/', passportRoutes);
 
 // configure passport
