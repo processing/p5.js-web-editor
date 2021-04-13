@@ -9,7 +9,8 @@ let origin = null;
 export const MessageTypes = {
   START: 'START',
   STOP: 'STOP',
-  FILES: 'FILES'
+  FILES: 'FILES',
+  REGISTER: 'REGISTER'
 };
 
 // could instead register multiple frames here
@@ -36,7 +37,7 @@ function notifyFrame(message) {
 export function dispatchMessage(message) {
   if (!message) return;
 
-  notifyListener(message);
+  // notifyListener(message);
   notifyFrame(message);
 }
 

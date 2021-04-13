@@ -2,9 +2,15 @@ import React, { useReducer, useState, useEffect } from 'react';
 import { render } from 'react-dom';
 import { hot } from 'react-hot-loader/root';
 import { createGlobalStyle } from 'styled-components';
-import { listen, MessageTypes } from '../../utils/dispatcher';
+import {
+  registerFrame,
+  listen,
+  MessageTypes,
+  dispatchMessage
+} from '../../utils/dispatcher';
 import { filesReducer, initialState, setFiles } from './filesReducer';
 import EmbedFrame from './EmbedFrame';
+import getConfig from '../../utils/getConfig';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -15,6 +21,8 @@ const GlobalStyle = createGlobalStyle`
 const App = () => {
   const [state, dispatch] = useReducer(filesReducer, [], initialState);
   const [isPlaying, setIsPlaying] = useState(false);
+  registerFrame(window.parent, getConfig('EDITOR_URL'));
+
   function handleMessageEvent(message) {
     const { type, payload } = message;
     switch (type) {
@@ -27,10 +35,14 @@ const App = () => {
       case MessageTypes.STOP:
         setIsPlaying(false);
         break;
+      case MessageTypes.REGISTER:
+        dispatchMessage({ type: MessageTypes.REGISTER });
+        break;
       default:
         break;
     }
   }
+
   useEffect(() => {
     const unsubscribe = listen(handleMessageEvent);
     return function cleanup() {
