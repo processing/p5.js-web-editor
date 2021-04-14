@@ -266,8 +266,11 @@ export function startSketch() {
     dispatch(startVisualSketch());
     const state = getState();
     dispatchMessage({
-      type: MessageTypes.FILES,
-      payload: state.files
+      type: MessageTypes.SKETCH,
+      payload: {
+        files: state.files,
+        basePath: window.location.pathname
+      }
     });
     dispatchMessage({
       type: MessageTypes.START

@@ -9,6 +9,7 @@ export const MessageTypes = {
   START: 'START',
   STOP: 'STOP',
   FILES: 'FILES',
+  SKETCH: 'SKETCH',
   REGISTER: 'REGISTER',
   EXECUTE: 'EXECUTE'
 };

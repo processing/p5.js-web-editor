@@ -192,14 +192,14 @@ function addLoopProtect(sketchDoc) {
   });
 }
 
-function injectLocalFiles(files, htmlFile) {
+function injectLocalFiles(files, htmlFile, basePath) {
   let scriptOffs = [];
   const resolvedFiles = resolveJSAndCSSLinks(files);
   const parser = new DOMParser();
   const sketchDoc = parser.parseFromString(htmlFile.content, 'text/html');
 
   const base = sketchDoc.createElement('base');
-  base.href = `${window.location.href}/`;
+  base.href = `${basePath}/`;
   sketchDoc.head.appendChild(base);
 
   resolvePathsForElementsWithAttribute('src', sketchDoc, resolvedFiles);
@@ -230,7 +230,7 @@ function getHtmlFile(files) {
   return files.filter((file) => file.name.match(/.*\.html$/i))[0];
 }
 
-function EmbedFrame({ files, isPlaying }) {
+function EmbedFrame({ files, isPlaying, basePath }) {
   const iframe = useRef();
   const htmlFile = useMemo(() => getHtmlFile(files), [files]);
 
@@ -247,7 +247,7 @@ function EmbedFrame({ files, isPlaying }) {
   function renderSketch() {
     const doc = iframe.current;
     if (isPlaying) {
-      const htmlDoc = injectLocalFiles(files, htmlFile);
+      const htmlDoc = injectLocalFiles(files, htmlFile, basePath);
       srcDoc.set(doc, htmlDoc);
     } else {
       doc.srcdoc = '';
@@ -275,7 +275,8 @@ EmbedFrame.propTypes = {
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
   }).isRequired,
-  isPlaying: PropTypes.bool.isRequired
+  isPlaying: PropTypes.bool.isRequired,
+  basePath: PropTypes.string.isRequired
 };
 
 export default EmbedFrame;

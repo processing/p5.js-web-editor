@@ -21,13 +21,15 @@ const GlobalStyle = createGlobalStyle`
 const App = () => {
   const [state, dispatch] = useReducer(filesReducer, [], initialState);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [basePath, setBasePath] = useState('');
   registerFrame(window.parent, getConfig('EDITOR_URL'));
 
   function handleMessageEvent(message) {
     const { type, payload } = message;
     switch (type) {
-      case MessageTypes.FILES:
-        dispatch(setFiles(payload));
+      case MessageTypes.SKETCH:
+        dispatch(setFiles(payload.files));
+        setBasePath(payload.basePath);
         break;
       case MessageTypes.START:
         setIsPlaying(true);
@@ -55,7 +57,7 @@ const App = () => {
   return (
     <React.Fragment>
       <GlobalStyle />
-      <EmbedFrame files={state} isPlaying={isPlaying} />
+      <EmbedFrame files={state} isPlaying={isPlaying} basePath={basePath} />
     </React.Fragment>
   );
 };

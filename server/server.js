@@ -141,8 +141,6 @@ app.use('/editor', requestsOfTypeJSON(), collections);
 // isomorphic rendering
 app.use('/', serverRoutes);
 
-app.use(assetRoutes);
-
 app.use('/', redirectEmbedRoutes);
 app.use('/', passportRoutes);
 
