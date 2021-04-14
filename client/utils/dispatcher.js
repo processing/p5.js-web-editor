@@ -1,25 +1,24 @@
 // Inspired by
 // https://github.com/codesandbox/codesandbox-client/blob/master/packages/codesandbox-api/src/dispatcher/index.ts
 
-let frame = null;
+const frames = {};
+let frameIndex = 1;
 let listener = null;
-// const { origin } = window;
-let origin = null;
 
 export const MessageTypes = {
   START: 'START',
   STOP: 'STOP',
   FILES: 'FILES',
-  REGISTER: 'REGISTER'
+  REGISTER: 'REGISTER',
+  EXECUTE: 'EXECUTE'
 };
 
-// could instead register multiple frames here
 export function registerFrame(newFrame, newOrigin) {
-  frame = newFrame;
-  origin = newOrigin;
+  const frameId = frameIndex;
+  frameIndex += 1;
+  frames[frameId] = { frame: newFrame, origin: newOrigin };
   return () => {
-    frame = null;
-    origin = null;
+    delete frames[frameId];
   };
 }
 
@@ -27,18 +26,23 @@ function notifyListener(message) {
   if (listener) listener(message);
 }
 
-function notifyFrame(message) {
+function notifyFrames(message) {
   const rawMessage = JSON.parse(JSON.stringify(message));
-  if (frame && frame.postMessage) {
-    frame.postMessage(rawMessage, origin);
-  }
+  Object.keys(frames).forEach((frameId) => {
+    const { frame, origin } = frames[frameId];
+    if (frame && frame.postMessage) {
+      frame.postMessage(rawMessage, origin);
+    }
+  });
 }
 
 export function dispatchMessage(message) {
   if (!message) return;
 
+  // maybe one day i will understand why in the codesandbox
+  // code they leave notifyListeners in here?
   // notifyListener(message);
-  notifyFrame(message);
+  notifyFrames(message);
 }
 
 /**

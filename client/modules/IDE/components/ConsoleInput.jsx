@@ -4,7 +4,7 @@ import CodeMirror from 'codemirror';
 import { Encode } from 'console-feed';
 
 import RightArrowIcon from '../../../images/right-arrow.svg';
-import { dispatchMessage } from '../../../utils/dispatcher';
+import { dispatchMessage, MessageTypes } from '../../../utils/dispatcher';
 
 // heavily inspired by
 // https://github.com/codesandbox/codesandbox-client/blob/92a1131f4ded6f7d9c16945dc7c18aa97c8ada27/packages/app/src/app/components/Preview/DevTools/Console/Input/index.tsx
@@ -41,8 +41,11 @@ class ConsoleInput extends React.Component {
         ];
         const consoleEvent = [{ method: 'command', data: [value] }];
         dispatchMessage({
-          source: 'console',
-          messages
+          type: MessageTypes.EXECUTE,
+          payload: {
+            source: 'console',
+            messages
+          }
         });
         this.props.dispatchConsoleEvent(consoleEvent);
         cm.setValue('');

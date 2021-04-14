@@ -38,6 +38,9 @@ const App = () => {
       case MessageTypes.REGISTER:
         dispatchMessage({ type: MessageTypes.REGISTER });
         break;
+      case MessageTypes.EXECUTE:
+        dispatchMessage(payload);
+        break;
       default:
         break;
     }

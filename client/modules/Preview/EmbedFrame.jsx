@@ -17,6 +17,7 @@ import {
   NOT_EXTERNAL_LINK_REGEX
 } from '../../../server/utils/fileUtils';
 import { startTag, getAllScriptOffsets } from '../../utils/consoleUtils';
+import { registerFrame } from '../../utils/dispatcher';
 
 const Frame = styled.iframe`
   min-height: 100%;
@@ -232,6 +233,16 @@ function getHtmlFile(files) {
 function EmbedFrame({ files, isPlaying }) {
   const iframe = useRef();
   const htmlFile = useMemo(() => getHtmlFile(files), [files]);
+
+  useEffect(() => {
+    const unsubscribe = registerFrame(
+      iframe.current.contentWindow,
+      window.origin
+    );
+    return () => {
+      unsubscribe();
+    };
+  });
 
   function renderSketch() {
     const doc = iframe.current;
