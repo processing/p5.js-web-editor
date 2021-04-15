@@ -24,8 +24,12 @@ function renderPreviewIndex() {
         </head>
       <body>
         <div id="root" class="root-app">
-          <script src="/preview-app.js"></script>
         </div>
+        <script src='${
+          process.env.NODE_ENV === 'production'
+            ? `${assetsManifest['/previewApp.js']}`
+            : '/previewApp.js'
+        }'></script>
       </body>
     </html>
   `;
