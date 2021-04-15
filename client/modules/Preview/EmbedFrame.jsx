@@ -256,25 +256,24 @@ function EmbedFrame({ files, isPlaying, basePath }) {
   }
 
   useEffect(renderSketch, [files, isPlaying]);
-  const sandboxAttributes =
-    'allow-scripts allow-pointer-lock allow-popups allow-forms allow-modals allow-downloads allow-same-origin';
   return (
     <Frame
       aria-label="Sketch Preview"
       role="main"
       frameBorder="0"
       ref={iframe}
-      sandbox={sandboxAttributes}
     />
   );
 }
 
 EmbedFrame.propTypes = {
-  files: PropTypes.arrayOf({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired
-  }).isRequired,
+  files: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      content: PropTypes.string.isRequired
+    })
+  ).isRequired,
   isPlaying: PropTypes.bool.isRequired,
   basePath: PropTypes.string.isRequired
 };

@@ -22,13 +22,20 @@ function PreviewFrame({ fullView }) {
   });
 
   const frameUrl = previewUrl;
-  const sandboxAttributes =
-    'allow-scripts allow-pointer-lock allow-popups allow-forms allow-modals allow-downloads allow-same-origin';
+  const sandboxAttributes = `allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups 
+    allow-presentation allow-same-origin allow-scripts allow-top-navigation-by-user-activation`;
+  const allow =
+    'accelerometer; autoplay; camera; encrypted-media; geolocation; gyroscope; microphone; magnetometer; midi; vr;';
   return (
     <Frame
       title="sketch preview"
       src={frameUrl}
       sandbox={sandboxAttributes}
+      allow={allow}
+      scrolling="auto"
+      allowtransparency
+      allowpaymentrequest
+      allowFullScreen
       frameBorder="0"
       ref={iframe}
       fullView={fullView}
