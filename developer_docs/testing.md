@@ -22,6 +22,7 @@ Many files still don't have tests, so **if you're looking to get started as a co
 - [Internationalization](#internationalization)
 - [Useful terminology to know](#Useful-terminology-to-know)
 - [Tips](#Tips)
+- [Files to start with](#Files-to-start-with)
 - [More resources](#More-resources)
 - [References](#References)
 
@@ -219,7 +220,7 @@ Node modules are mocked in the ``__mocks__`` folder at the root of the client fo
 ### test-utils.js
 This file overwrites the default react-testing-library's render function so that components rendered through the new render function have access i18next and redux. It exports the rest of react-testing-library as is.
 
-It exports a render function with a i18n wrapper as ``render`` and a render function with a wrapper for both redux and i18n as ``reduxRender``
+It exports a render function with a i18n wrapper as ``render`` and a render function with a wrapper for both redux and i18n as ``reduxRender``.
 
 Thus, in your component test files, instead of calling ``import {functions you want} from 'react-testing-libary'`` importing react-testing library might look something like this:
 
@@ -257,6 +258,12 @@ function reduxRender(
 
   return render(ui, { wrapper: Wrapper, ...renderOptions });
 }
+```
+
+Then, if you want to call the render function with the wrapper with the Redux Provider, you can do this, once you have a [store made with redux-mock-store](#Connected-Components):
+
+```js
+reduxRender(<SketchList {...subjectProps} />, { store });
 ```
 
 
@@ -462,6 +469,9 @@ jest.mock('_path_to_file_/i18n');
 ```
 You can see it used in the context of a test [in the SketchList.test.jsx file](../client/modules/IDE/components/SketchList.test.jsx).
 
+## Internationalization
+This project uses i18next for internationalization. If you import the render function with the i18n wrapper from ``test_utils.js``, it's set up to use English, so the components with be rendered with English text and you should be able to count on this to test for specific strings.
+
 
 ## Useful terminology to know
 Thanks [Test Double Wiki](https://github.com/testdouble/contributing-tests/wiki/Test-Double) for the definitions. You might see some of these words used in testing library documentation, so here are short definitions for them.
@@ -481,14 +491,19 @@ some methods but not others. Partial mocks are widely considered to be an anti-p
 #### Spy
 Records every invocation made against it and can verify certain interactions took place after the fact.
 
-## Internationalization
-This project uses i18next for internationalization. If you import the render function with the i18n wrapper from ``test_utils.js``, it's set up to use English, so the components with be rendered with English text and you should be able to count on this to test for specific strings.
-
 ## Tips
 1. Make test fail at least once to make sure it was a meaningful test
 2. "If you or another developer change the component in a way that it changes its behaviour at least one test should fail." -  [How to Unit Test in React](https://itnext.io/how-to-unit-test-in-react-72e911e2b8d)
 3. Avoid using numbers or data that seem "special" in your tests. For example, if you were checking the "age" variable in a component is a integer, but checked it as so ``expect(person.ageValidator(18)).toBe(true)``, the reader might assume that the number 18 had some significance to the function because it's a significant age. It would be better to have used 1234.
 4. Tests should help other developers understand the expected behavior of the component that it's testing
+
+## Files to start with
+
+These files still need tests! If you want to contribute by writing tests, please consider starting with these:
+
+1. Integration test for LoginView.jsx
+2. Integration test for SignupView.jsx
+3. Tests for route switching in routes.jsx
 
 ## More Resources
 - [React Testing Library Cheatsheet](https://testing-library.com/docs/react-testing-library/cheatsheet/)
