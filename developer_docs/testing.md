@@ -501,9 +501,11 @@ Records every invocation made against it and can verify certain interactions too
 
 These files still need tests! If you want to contribute by writing tests, please consider starting with these:
 
-1. Integration test for LoginView.jsx
-2. Integration test for SignupView.jsx
-3. Tests for route switching in routes.jsx
+- [ ] Integration test for LoginView.jsx
+
+- [ ] Integration test for SignupView.jsx
+
+- [ ] Tests for route switching in routes.jsx
 
 ## More Resources
 - [React Testing Library Cheatsheet](https://testing-library.com/docs/react-testing-library/cheatsheet/)
