@@ -68,7 +68,9 @@ describe('<Preferences />', () => {
       });
 
       // get ahold of the button for increasing text size
-      const fontPlusButton = screen.getByTestId('font-plus-button');
+      const fontPlusButton = screen.getByRole('button', {
+        name: /increase font size/i
+      });
 
       // check that button says says "Increase"
       expect(fontPlusButton.textContent.toLowerCase()).toBe('increase');
@@ -81,7 +83,9 @@ describe('<Preferences />', () => {
       });
 
       // get ahold of the button for increasing text size
-      const fontPlusButton = screen.getByTestId('font-plus-button');
+      const fontPlusButton = screen.getByRole('button', {
+        name: /increase font size/i
+      });
 
       // click the button
       act(() => {
@@ -100,7 +104,9 @@ describe('<Preferences />', () => {
       });
 
       // get ahold of the button for decreasing font size
-      const fontPlusButton = screen.getByTestId('font-minus-button');
+      const fontPlusButton = screen.getByRole('button', {
+        name: /decrease font size/i
+      });
 
       // check that button says "decrease"
       expect(fontPlusButton.textContent.toLowerCase()).toBe('decrease');
@@ -113,7 +119,9 @@ describe('<Preferences />', () => {
       });
 
       // get ahold of the button for decreasing text size
-      const fontMinusButton = screen.getByTestId('font-minus-button');
+      const fontMinusButton = screen.getByRole('button', {
+        name: /decrease font size/i
+      });
 
       // click it
       act(() => {
@@ -133,6 +141,7 @@ describe('<Preferences />', () => {
 
       // get ahold of the text field
       const input = screen.getByTestId('font-size-text-field');
+      // const input = screen.getByRole("textbox", {name: /decrease font size/i});
 
       // change input to 24
       act(() => {
@@ -289,10 +298,14 @@ describe('<Preferences />', () => {
           subject();
         });
 
-        const themeRadioCurrent = screen.getByTestId('theme-dark-radio');
+        const themeRadioCurrent = screen.getByRole('radio', {
+          name: /dark theme on/i
+        });
         expect(themeRadioCurrent.checked).toBe(true);
 
-        const themeRadioAfter = screen.getByTestId('theme-light-radio');
+        const themeRadioAfter = screen.getByRole('radio', {
+          name: /light theme on/i
+        });
         act(() => {
           fireEvent.click(themeRadioAfter);
         });
@@ -312,10 +325,14 @@ describe('<Preferences />', () => {
           subject();
         });
 
-        const themeRadioCurrent = screen.getByTestId('theme-light-radio');
+        const themeRadioCurrent = screen.getByRole('radio', {
+          name: /light theme on/i
+        });
         expect(themeRadioCurrent.checked).toBe(true);
 
-        const themeRadioAfter = screen.getByTestId('theme-dark-radio');
+        const themeRadioAfter = screen.getByRole('radio', {
+          name: /dark theme on/i
+        });
         act(() => {
           fireEvent.click(themeRadioAfter);
         });
@@ -328,10 +345,14 @@ describe('<Preferences />', () => {
         act(() => {
           subject();
         });
-        const themeRadioCurrent = screen.getByTestId('theme-light-radio');
+        const themeRadioCurrent = screen.getByRole('radio', {
+          name: /light theme on/i
+        });
         expect(themeRadioCurrent.checked).toBe(true);
 
-        const themeRadioAfter = screen.getByTestId('theme-contrast-radio');
+        const themeRadioAfter = screen.getByRole('radio', {
+          name: /high contrast theme on/i
+        });
         act(() => {
           fireEvent.click(themeRadioAfter);
         });
@@ -349,8 +370,12 @@ describe('<Preferences />', () => {
       });
 
       // get ahold of the radio buttons for toggling autosave
-      const autosaveRadioFalse = screen.getByTestId('autosave-false-radio');
-      const autosaveRadioTrue = screen.getByTestId('autosave-true-radio');
+      const autosaveRadioFalse = screen.getByRole('radio', {
+        name: /autosave off/i
+      });
+      const autosaveRadioTrue = screen.getByRole('radio', {
+        name: /autosave on/i
+      });
 
       testToggle(
         autosaveRadioFalse,
@@ -367,8 +392,12 @@ describe('<Preferences />', () => {
       });
 
       // get ahold of the radio buttons for toggling autocloseBracketsQuotes
-      const autocloseRadioFalse = screen.getByTestId('autoclose-false-radio');
-      const autocloseRadioTrue = screen.getByTestId('autoclose-true-radio');
+      const autocloseRadioFalse = screen.getByRole('radio', {
+        name: /autoclose brackets and quotes off/i
+      });
+      const autocloseRadioTrue = screen.getByRole('radio', {
+        name: /autoclose brackets and quotes on/i
+      });
 
       testToggle(
         autocloseRadioFalse,
@@ -390,8 +419,12 @@ describe('<Preferences />', () => {
         });
 
         // get ahold of the radio buttons for toggling autosave
-        const autosaveRadioFalse = screen.getByTestId('autosave-false-radio');
-        const autosaveRadioTrue = screen.getByTestId('autosave-true-radio');
+        const autosaveRadioFalse = screen.getByRole('radio', {
+          name: /autosave off/i
+        });
+        const autosaveRadioTrue = screen.getByRole('radio', {
+          name: /autosave on/i
+        });
 
         testToggle(
           autosaveRadioTrue,
@@ -413,8 +446,12 @@ describe('<Preferences />', () => {
         });
 
         // get ahold of the radio buttons for toggling autocloseBracketsQuotes
-        const autocloseRadioFalse = screen.getByTestId('autoclose-false-radio');
-        const autocloseRadioTrue = screen.getByTestId('autoclose-true-radio');
+        const autocloseRadioFalse = screen.getByRole('radio', {
+          name: /autoclose brackets and quotes off/i
+        });
+        const autocloseRadioTrue = screen.getByRole('radio', {
+          name: /autoclose brackets and quotes on/i
+        });
 
         testToggle(
           autocloseRadioTrue,
@@ -437,8 +474,12 @@ describe('<Preferences />', () => {
         });
 
         // get ahold of the radio buttons for toggling autocloseBracketsQuotes
-        const linewrapRadioFalse = screen.getByTestId('linewrap-false-radio');
-        const linewrapRadioTrue = screen.getByTestId('linewrap-true-radio');
+        const linewrapRadioFalse = screen.getByRole('radio', {
+          name: /linewrap off/i
+        });
+        const linewrapRadioTrue = screen.getByRole('radio', {
+          name: /linewrap on/i
+        });
 
         testToggle(
           linewrapRadioFalse,
@@ -461,8 +502,12 @@ describe('<Preferences />', () => {
         });
 
         // get ahold of the radio buttons for toggling autocloseBracketsQuotes
-        const linewrapRadioFalse = screen.getByTestId('linewrap-false-radio');
-        const linewrapRadioTrue = screen.getByTestId('linewrap-true-radio');
+        const linewrapRadioFalse = screen.getByRole('radio', {
+          name: /linewrap off/i
+        });
+        const linewrapRadioTrue = screen.getByRole('radio', {
+          name: /linewrap on/i
+        });
 
         testToggle(
           linewrapRadioTrue,
@@ -483,21 +528,27 @@ describe('<Preferences />', () => {
 
       // switch to accessibility
       act(() => {
-        fireEvent.click(screen.getByTestId('accessibility-tab'));
+        fireEvent.click(
+          screen.getByRole('heading', { name: /accessibility/i })
+        );
       });
 
-      const accessibilityElement1 = screen.getByTestId(
-        'lineNumbers-false-radio'
-      );
-      expect(accessibilityElement1).toBeTruthy();
+      const accessibilityElement1 = screen.getByRole('radio', {
+        name: /line numbers on/i
+      });
+      expect(accessibilityElement1).toBeInTheDocument();
 
       // switch back
       act(() => {
-        fireEvent.click(screen.getByTestId('general-settings-tab'));
+        fireEvent.click(
+          screen.getByRole('heading', { name: /general settings/i })
+        );
       });
 
-      const accessibilityElement2 = screen.getByTestId('linewrap-false-radio');
-      expect(accessibilityElement2).toBeTruthy();
+      const generalElement1 = screen.getByRole('radio', {
+        name: /linewrap on/i
+      });
+      expect(generalElement1).toBeInTheDocument();
     });
   });
 
@@ -515,16 +566,18 @@ describe('<Preferences />', () => {
 
         // switch tabs
         act(() => {
-          fireEvent.click(screen.getByTestId('accessibility-tab'));
+          fireEvent.click(
+            screen.getByRole('heading', { name: /accessibility/i })
+          );
         });
 
         // get ahold of the radio buttons for toggling linenumber settings
-        const lineNumbersRadioFalse = screen.getByTestId(
-          'lineNumbers-false-radio'
-        );
-        const lineNumbersRadioTrue = screen.getByTestId(
-          'lineNumbers-true-radio'
-        );
+        const lineNumbersRadioFalse = screen.getByRole('radio', {
+          name: /line numbers off/i
+        });
+        const lineNumbersRadioTrue = screen.getByRole('radio', {
+          name: /line numbers on/i
+        });
 
         testToggle(
           lineNumbersRadioFalse,
@@ -548,16 +601,18 @@ describe('<Preferences />', () => {
 
         // switch tabs
         act(() => {
-          fireEvent.click(screen.getByTestId('accessibility-tab'));
+          fireEvent.click(
+            screen.getByRole('heading', { name: /accessibility/i })
+          );
         });
 
-        // get ahold of the radio buttons for toggling autocloseBracketsQuotes
-        const lineNumbersRadioFalse = screen.getByTestId(
-          'lineNumbers-false-radio'
-        );
-        const lineNumbersRadioTrue = screen.getByTestId(
-          'lineNumbers-true-radio'
-        );
+        // get ahold of the radio buttons for toggling linenumber settings
+        const lineNumbersRadioFalse = screen.getByRole('radio', {
+          name: /line numbers off/i
+        });
+        const lineNumbersRadioTrue = screen.getByRole('radio', {
+          name: /line numbers on/i
+        });
 
         testToggle(
           lineNumbersRadioTrue,
@@ -581,16 +636,18 @@ describe('<Preferences />', () => {
 
         // switch tabs
         act(() => {
-          fireEvent.click(screen.getByTestId('accessibility-tab'));
+          fireEvent.click(
+            screen.getByRole('heading', { name: /accessibility/i })
+          );
         });
 
-        // get ahold of the radio buttons for toggling autocloseBracketsQuotes
-        const lintWarningRadioFalse = screen.getByTestId(
-          'lintWarning-false-radio'
-        );
-        const lintWarningRadioTrue = screen.getByTestId(
-          'lintWarning-true-radio'
-        );
+        // get ahold of the radio buttons for toggling line warning
+        const lintWarningRadioFalse = screen.getByRole('radio', {
+          name: /lint warning off/i
+        });
+        const lintWarningRadioTrue = screen.getByRole('radio', {
+          name: /lint warning on/i
+        });
 
         testToggle(
           lintWarningRadioFalse,
@@ -614,16 +671,18 @@ describe('<Preferences />', () => {
 
         // switch tabs
         act(() => {
-          fireEvent.click(screen.getByTestId('accessibility-tab'));
+          fireEvent.click(
+            screen.getByRole('heading', { name: /accessibility/i })
+          );
         });
 
-        // get ahod of lthe radio buttons for toggling autocloseBracketsQuotes
-        const lintWarningRadioFalse = screen.getByTestId(
-          'lintWarning-false-radio'
-        );
-        const lintWarningRadioTrue = screen.getByTestId(
-          'lintWarning-true-radio'
-        );
+        // get ahold of the radio buttons for toggling line warning
+        const lintWarningRadioFalse = screen.getByRole('radio', {
+          name: /lint warning off/i
+        });
+        const lintWarningRadioTrue = screen.getByRole('radio', {
+          name: /lint warning on/i
+        });
 
         testToggle(
           lintWarningRadioTrue,
@@ -634,12 +693,12 @@ describe('<Preferences />', () => {
       });
     });
 
-    const testCheckbox = (testid, startState, setter) => {
+    const testCheckbox = (arialabel, startState, setter) => {
       props = {
         ...props,
-        textOutput: startState && testid === 'text-output-checkbox',
-        soundOutput: startState && testid === 'sound-output-checkbox',
-        gridOutput: startState && testid === 'grid-output-checkbox'
+        textOutput: startState && arialabel === 'text output on',
+        soundOutput: startState && arialabel === 'sound output on',
+        gridOutput: startState && arialabel === 'table output on'
       };
 
       act(() => {
@@ -648,10 +707,12 @@ describe('<Preferences />', () => {
 
       // switch tabs
       act(() => {
-        fireEvent.click(screen.getByTestId('accessibility-tab'));
+        fireEvent.click(
+          screen.getByRole('heading', { name: /accessibility/i })
+        );
       });
 
-      const testedCheckbox = screen.getByTestId(testid);
+      const testedCheckbox = screen.getByRole('checkbox', { name: arialabel });
 
       if (startState) {
         expect(testedCheckbox.checked).toBe(true);
@@ -668,27 +729,27 @@ describe('<Preferences />', () => {
     };
 
     it('clicking on text output checkbox to unselect it', () => {
-      testCheckbox('text-output-checkbox', true, 'setTextOutput');
+      testCheckbox('text output on', true, 'setTextOutput');
     });
 
     it('clicking on text output checkbox to select it', () => {
-      testCheckbox('text-output-checkbox', false, 'setTextOutput');
+      testCheckbox('text output on', false, 'setTextOutput');
     });
 
     it('clicking on sound output checkbox to unselect it', () => {
-      testCheckbox('sound-output-checkbox', true, 'setSoundOutput');
+      testCheckbox('sound output on', true, 'setSoundOutput');
     });
 
     it('clicking on sound output checkbox to select it', () => {
-      testCheckbox('sound-output-checkbox', false, 'setSoundOutput');
+      testCheckbox('sound output on', false, 'setSoundOutput');
     });
 
     it('clicking on grid output checkbox to unselect it', () => {
-      testCheckbox('grid-output-checkbox', true, 'setGridOutput');
+      testCheckbox('table output on', true, 'setGridOutput');
     });
 
     it('clicking on grid output checkbox to select it', () => {
-      testCheckbox('grid-output-checkbox', false, 'setGridOutput');
+      testCheckbox('table output on', false, 'setGridOutput');
     });
 
     describe('multiple checkboxes can be selected', () => {
@@ -708,12 +769,20 @@ describe('<Preferences />', () => {
 
         // switch tabs
         act(() => {
-          fireEvent.click(screen.getByTestId('accessibility-tab'));
+          fireEvent.click(
+            screen.getByRole('heading', { name: /accessibility/i })
+          );
         });
 
-        const textOutputCheckbox = screen.getByTestId('text-output-checkbox');
-        const soundOutputCheckbox = screen.getByTestId('sound-output-checkbox');
-        const gridOutputCheckbox = screen.getByTestId('grid-output-checkbox');
+        const textOutputCheckbox = screen.getByRole('checkbox', {
+          name: 'text output on'
+        });
+        const soundOutputCheckbox = screen.getByRole('checkbox', {
+          name: 'sound output on'
+        });
+        const gridOutputCheckbox = screen.getByRole('checkbox', {
+          name: 'table output on'
+        });
 
         expect(textOutputCheckbox.checked).toBe(true);
         expect(soundOutputCheckbox.checked).toBe(true);
@@ -737,12 +806,20 @@ describe('<Preferences />', () => {
 
         // switch tabs
         act(() => {
-          fireEvent.click(screen.getByTestId('accessibility-tab'));
+          fireEvent.click(
+            screen.getByRole('heading', { name: /accessibility/i })
+          );
         });
 
-        const textOutputCheckbox = screen.getByTestId('text-output-checkbox');
-        const soundOutputCheckbox = screen.getByTestId('sound-output-checkbox');
-        const gridOutputCheckbox = screen.getByTestId('grid-output-checkbox');
+        const textOutputCheckbox = screen.getByRole('checkbox', {
+          name: 'text output on'
+        });
+        const soundOutputCheckbox = screen.getByRole('checkbox', {
+          name: 'sound output on'
+        });
+        const gridOutputCheckbox = screen.getByRole('checkbox', {
+          name: 'table output on'
+        });
 
         expect(textOutputCheckbox.checked).toBe(false);
         expect(soundOutputCheckbox.checked).toBe(false);
