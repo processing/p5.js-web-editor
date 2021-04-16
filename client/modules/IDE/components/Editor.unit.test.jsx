@@ -14,19 +14,6 @@ import { initialTestState } from '../../../testData/testReduxStore';
 
 jest.mock('../../../i18n');
 
-// const server = setupServer(
-//   rest.get(`/${initialTestState.user.username}/projects`, (req, res, ctx) =>
-//     // it just needs to return something so it doesn't throw an error
-//     // Sketchlist tries to grab projects on creation but for the unit test
-//     // we just feed those in as part of the initial state
-//     res(ctx.json({ data: 'foo' }))
-//   )
-// );
-
-// beforeAll(() => server.listen());
-// afterEach(() => server.resetHandlers());
-// afterAll(() => server.close());
-
 describe('<Editor />', () => {
   const mockStore = configureStore([thunk]);
   const store = mockStore(initialTestState);
