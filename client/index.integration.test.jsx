@@ -1,13 +1,25 @@
 import { setupServer } from 'msw/node';
 import { rest } from 'msw';
+import React from 'react';
+import { Router, browserHistory } from 'react-router';
+
 import {
+  reduxRender,
   act,
+  waitFor,
   fireEvent,
-  prettyDOM,
   screen,
   within
-} from '@testing-library/react';
-import userResponse from './testData/testServerResponses';
+} from './test-utils';
+import configureStore from './store';
+import routes from './routes';
+import * as Actions from './modules/User/actions';
+import { userResponse } from './testData/testServerResponses';
+
+// setup for the app
+const history = browserHistory;
+const initialState = window.__INITIAL_STATE__;
+const store = configureStore(initialState);
 
 // need to mock this file or it'll throw ERRCONNECTED
 jest.mock('./i18n');
@@ -15,7 +27,8 @@ jest.mock('./i18n');
 // setup for the msw fake server
 const server = setupServer(
   rest.get('/session', (req, res, ctx) =>
-    res(ctx.json(userResponse.userResponse))
+    // console.log("called server get session");
+    res(ctx.json(userResponse))
   )
 );
 
@@ -27,6 +40,7 @@ beforeAll(() =>
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
+// below are fixes for jsdom-specific errors
 // https://stackoverflow.com/questions/57311971/error-not-implemented-window-scrollto-how-do-we-remove-this-error-from-jest-t
 const noop = () => {};
 Object.defineProperty(window, 'focus', { value: noop, writable: true });
@@ -46,17 +60,29 @@ document.createRange = () => {
   return range;
 };
 
+// start testing
 describe('index.jsx integration', () => {
-  let container = null;
+  // the subject under test
+  const subject = () =>
+    reduxRender(<Router history={history} routes={routes(store)} />, { store });
 
-  // we only run the setup once because require only works once
-  beforeAll(() => {
-    // setup a DOM element as a render target
-    container = document.createElement('div');
-    container.id = 'root';
-    document.body.appendChild(container);
-    // eslint-disable-next-line global-require
-    require('./index');
+  // spy on this function and wait for it to be called before making assertions
+  const spy = jest.spyOn(Actions, 'getUser');
+
+  beforeEach(async () => {
+    // console.log("TRYING TO SPY ON GETUSER");
+
+    act(() => {
+      subject();
+    });
+
+    // console.log("WAITING....");
+    await waitFor(() => expect(spy).toHaveBeenCalledTimes(1));
+    // console.log("SPY DONE");
+  });
+
+  afterEach(() => {
+    spy.mockClear();
   });
 
   it('navbar items and the dropdowns in the navbar exist', () => {
@@ -158,7 +184,7 @@ describe('index.jsx integration', () => {
 
     // expect(screen.getByText("createCanvas")).toBeInTheDocument();
     const codeeditor = screen.getByRole('article');
-    console.log(prettyDOM(codeeditor));
+    // console.log(prettyDOM(codeeditor));
     expect(indexHTMLButton).toBeInTheDocument();
 
     const startingeditorcode = codeeditor.textContent;

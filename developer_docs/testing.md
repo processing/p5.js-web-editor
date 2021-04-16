@@ -112,7 +112,7 @@ See the [redux section](#Testing-Redux) below :)
 You might still want to write tests for non-component or non-redux files, such as modules with utility functions. What gets tested in this case depends a lot on the module itself, but generally, you would import the module and test the functions within it.
 
 ### Querying for elements
-Read about the recommended order of priority for queries in [the testing library docs](https://testing-library.com/docs/guide-which-query/#priority). We recommend using roles and text, or labels. You can use this [handy extension](https://chrome.google.com/webstore/detail/testing-playground/hejbmebodbijjdhflfknehhcgaklhano/related) to do this.
+Read about the recommended order of priority for queries in [the testing library docs](https://testing-library.com/docs/guide-which-query/#priority). We recommend using roles and text, or labels. You can use this [handy extension called Testing Playground](https://chrome.google.com/webstore/detail/testing-playground/hejbmebodbijjdhflfknehhcgaklhano/related) to do this.
 
 ### File structure
 Each test should have a top-level ``describe`` block to group related blocks together, with the name of the component under test.
@@ -439,7 +439,7 @@ Some things to consider testing:
 
 ## How to handle API calls in tests
 
-Some tests throw errors if a part of the client-side code tries to make an API call or AJAX request. Our solution to this is to use the [Mock Service Worker library](https://mswjs.io/) to mock the API requests by intercepting requests on the network level [[2]](#References). It can handle API calls and return appropriate data (you can see what shape of data gets returned by looking through the server files). There is some test data available in the ``client/testData/testServerResponse.js`` file, but you may need to edit the file to add a new json response if an appropriate one doesn't exist already. The example code below sets up a server to respond to a GET request at ``/exampleendpoint`` by returning ``{data: foo}`` You can see it in the context of a test [in the SketchList.test.jsx file](../client/modules/IDE/components/SketchList.test.jsx).
+Some tests throw errors if a part of the client-side code tries to make an API call. Our solution to this is to use the [Mock Service Worker library](https://mswjs.io/) to mock the API requests by intercepting requests on the network level [[2]](#References). It can handle API calls and return appropriate data (you can see what shape of data gets returned by looking through the server files). There is some test data available in the ``client/testData/testServerResponse.js`` file, but you may need to edit the file to add a new json response if an appropriate one doesn't exist already. The example code below sets up a server to respond to a GET request at ``/exampleendpoint`` by returning ``{data: foo}`` You can see it in the context of a test [in the SketchList.test.jsx file](../client/modules/IDE/components/SketchList.test.jsx).
 
 There's a longer explaination of the benefits of ``msw`` in [this article by Kent C Dodds](https://kentcdodds.com/blog/stop-mocking-fetch).
 

@@ -298,6 +298,7 @@ class Editor extends React.Component {
 
   getContent() {
     const content = this._cm.getValue();
+    console.log(content);
     const updatedFile = Object.assign({}, this.props.file, { content });
     return updatedFile;
   }

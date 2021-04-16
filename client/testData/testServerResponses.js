@@ -1,6 +1,8 @@
 // test data to use with msw
 
-const userResponse = {
+export const sketchResponse = {};
+
+export const userResponse = {
   email: 'happydog@example.com',
   username: 'happydog',
   preferences: {
@@ -26,5 +28,3 @@ const userResponse = {
   github: 'githubusername',
   google: 'googleusername'
 };
-
-export default { userResponse };

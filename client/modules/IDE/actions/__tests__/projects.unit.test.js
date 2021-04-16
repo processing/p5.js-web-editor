@@ -1,8 +1,8 @@
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import axios from 'axios';
-import { unmountComponentAtNode } from 'react-dom';
-import { act } from 'react-dom/test-utils';
+import { setupServer } from 'msw/node';
+import { rest } from 'msw';
+
 import * as ProjectActions from '../projects';
 import * as ActionTypes from '../../../../constants';
 import {
@@ -11,6 +11,16 @@ import {
 } from '../../../../testData/testReduxStore';
 
 const mockStore = configureStore([thunk]);
+
+const server = setupServer(
+  rest.get(`/${initialTestState.user.username}/projects`, (req, res, ctx) =>
+    res(ctx.json(mockProjects))
+  )
+);
+
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
 
 describe('projects action creator tests', () => {
   let store;
@@ -21,11 +31,6 @@ describe('projects action creator tests', () => {
 
   it('creates GET_PROJECTS after successfuly fetching projects', () => {
     store = mockStore(initialTestState);
-
-    axios.get.mockImplementationOnce((x) => {
-      console.log('get was called with ', x);
-      return Promise.resolve({ data: mockProjects });
-    });
 
     const expectedActions = [
       { type: ActionTypes.START_LOADING },
