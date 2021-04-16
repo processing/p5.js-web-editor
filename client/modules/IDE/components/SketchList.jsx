@@ -179,6 +179,7 @@ class SketchListRowBase extends React.Component {
   renderDropdown = () => {
     const { optionsOpen } = this.state;
     const userIsOwner = this.props.user.username === this.props.username;
+
     return (
       <td className="sketch-list__dropdown-column">
         <button
@@ -187,7 +188,6 @@ class SketchListRowBase extends React.Component {
           onBlur={this.onBlurComponent}
           onFocus={this.onFocusComponent}
           aria-label={this.props.t('SketchList.ToggleLabelARIA')}
-          data-testid="sketch-list-toggle-options-arrow"
         >
           <DownFilledTriangleIcon focusable="false" aria-hidden="true" />
         </button>
@@ -449,7 +449,6 @@ class SketchList extends React.Component {
           className="sketch-list__sort-button"
           onClick={() => this.props.toggleDirectionForField(fieldName)}
           aria-label={buttonLabel}
-          data-testid={`toggle-direction-${fieldName}`}
         >
           <span className={headerClass}>{displayName}</span>
           {field === fieldName &&
