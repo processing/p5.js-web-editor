@@ -70,15 +70,11 @@ describe('index.jsx integration', () => {
   const spy = jest.spyOn(Actions, 'getUser');
 
   beforeEach(async () => {
-    // console.log("TRYING TO SPY ON GETUSER");
-
     act(() => {
       subject();
     });
 
-    // console.log("WAITING....");
     await waitFor(() => expect(spy).toHaveBeenCalledTimes(1));
-    // console.log("SPY DONE");
   });
 
   afterEach(() => {
@@ -175,23 +171,5 @@ describe('index.jsx integration', () => {
       fireEvent.click(stopButton);
     });
     expect(preview.getAttribute('srcdoc')).toMatch(/(^|")\s*($|")/);
-  });
-
-  it('clicking on a file in the sidebar changes the text content of the codemirror editor', () => {
-    const indexHTMLButton = screen.getByRole('button', {
-      name: 'index.html'
-    });
-
-    // expect(screen.getByText("createCanvas")).toBeInTheDocument();
-    const codeeditor = screen.getByRole('article');
-    // console.log(prettyDOM(codeeditor));
-    expect(indexHTMLButton).toBeInTheDocument();
-
-    const startingeditorcode = codeeditor.textContent;
-    console.log(startingeditorcode);
-    act(() => {
-      fireEvent.click(indexHTMLButton);
-    });
-    expect(startingeditorcode).not.toBe(codeeditor.textContent);
   });
 });
