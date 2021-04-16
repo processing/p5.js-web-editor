@@ -3,12 +3,12 @@ import thunk from 'redux-thunk';
 import { setupServer } from 'msw/node';
 import { rest } from 'msw';
 
-import * as ProjectActions from '../projects';
-import * as ActionTypes from '../../../../constants';
+import * as ProjectActions from './projects';
+import * as ActionTypes from '../../../constants';
 import {
   initialTestState,
   mockProjects
-} from '../../../../testData/testReduxStore';
+} from '../../../testData/testReduxStore';
 
 const mockStore = configureStore([thunk]);
 

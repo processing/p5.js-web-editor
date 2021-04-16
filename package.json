@@ -53,8 +53,8 @@
           "<rootDir>/client/jest.setup.js"
         ],
         "moduleNameMapper": {
-          "^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)(|\\?byContent|\\?byUrl)$": "<rootDir>/client/__test__/mocks/fileMock.js",
-          "\\.(css|less|scss)$": "<rootDir>/client/__test__/mocks/styleMock.js"
+          "^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)(|\\?byContent|\\?byUrl)$": "<rootDir>/client/__mocks__/fileMock.js",
+          "\\.(css|less|scss)$": "<rootDir>/client/__mocks__/styleMock.js"
         },
         "testMatch": [
           "<rootDir>/client/**/*.test.(js|jsx)"
