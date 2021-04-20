@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import { NavComponent } from '../Nav';
+import { NavComponent } from './Nav';
 
 describe('Nav', () => {
   const props = {
