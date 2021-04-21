@@ -422,7 +422,9 @@ class Nav extends React.PureComponent {
                 onBlur={this.handleBlur}
               >
                 {this.props.t('Nav.Edit.TidyCode')}
-                <span className="nav__keyboard-shortcut">{'\u21E7'}+Tab</span>
+                <span className="nav__keyboard-shortcut">
+                  {metaKeyName}+{'\u21E7'}+F
+                </span>
               </button>
             </li>
             <li className="nav__dropdown-item">
@@ -865,8 +867,6 @@ Nav.propTypes = {
   cmController: PropTypes.shape({
     tidyCode: PropTypes.func,
     showFind: PropTypes.func,
-    findNext: PropTypes.func,
-    findPrev: PropTypes.func,
     showReplace: PropTypes.func,
     getContent: PropTypes.func
   }),
