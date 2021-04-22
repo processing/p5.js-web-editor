@@ -75,10 +75,10 @@ exports[`<Sketchlist /> snapshot testing 1`] = `
             </a>
           </th>
           <td>
-            Feb 25, 2021, 11:58:14 PM
+            Feb 26, 2021, 4:58:14 AM
           </td>
           <td>
-            Feb 25, 2021, 11:58:29 PM
+            Feb 26, 2021, 4:58:29 AM
           </td>
           <td
             class="sketch-list__dropdown-column"
@@ -105,10 +105,10 @@ exports[`<Sketchlist /> snapshot testing 1`] = `
             </a>
           </th>
           <td>
-            Feb 23, 2021, 12:40:43 PM
+            Feb 23, 2021, 5:40:43 PM
           </td>
           <td>
-            Feb 23, 2021, 12:40:43 PM
+            Feb 23, 2021, 5:40:43 PM
           </td>
           <td
             class="sketch-list__dropdown-column"

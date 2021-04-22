@@ -2,17 +2,17 @@ const mockProjects = [
   {
     name: 'testsketch1',
     _id: 'testid1',
-    updatedAt: '2021-02-26T04:58:29.390Z',
+    updatedAt: '2021-02-26T04:58:29',
     files: [],
-    createdAt: '2021-02-26T04:58:14.136Z',
+    createdAt: '2021-02-26T04:58:14',
     id: 'testid1'
   },
   {
     name: 'testsketch2',
     _id: 'testid2',
-    updatedAt: '2021-02-23T17:40:43.789Z',
+    updatedAt: '2021-02-23T17:40:43',
     files: [],
-    createdAt: '2021-02-23T17:40:43.789Z',
+    createdAt: '2021-02-23T17:40:43',
     id: 'testid2'
   }
 ];
