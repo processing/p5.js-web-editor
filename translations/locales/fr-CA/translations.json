@@ -15,7 +15,7 @@
         "TidyCode": "Nettoyer le code",
         "Find": "Rechercher",
         "FindNext": "Prochaine correspondance",
-        "FindPrevious": "Correspondance précédente"
+        "Replace": "Remplacer"
       },
       "Sketch": {
         "Title": "Croquis",
@@ -47,6 +47,21 @@
         "MyAssets": "Mes ressources",
         "LogOut": "Se déconnecter"
       }
+    },
+    "CodemirrorFindAndReplace": {
+      "ToggleReplace": "Activer/désactiver le remplacement",
+      "Find": "Rechercher",
+      "FindPlaceholder": "Trouver dans les fichiers",
+      "Replace": "Remplacer",
+      "ReplaceAll": "Remplacer tout",
+      "ReplacePlaceholder": "Texte à remplacer",
+      "Regex": "Expression régulière",
+      "CaseSensitive": "Sensible à la casse",
+      "WholeWords": "Mots entiers",
+      "Previous": "Précédent",
+      "Next": "Suivant",
+      "NoResults": "Aucun résultat",
+      "Close": "Fermer"
     },
     "LoginForm": {
       "UsernameOrEmail": "Courriel ou nom d'utilisateur",
@@ -163,9 +178,10 @@
       "CodeEditing": {
         "Tidy": "Nettoyer",
         "FindText": "Rechercher",
-        "FindNextMatch": "Prochaine correspondance",
+        "FindNextMatch": "Correspondance suivante",
         "FindPrevMatch": "Correspondance précédente",
         "IndentCodeLeft": "Indenter le code à gauche",
+        "ReplaceTextMatch": "Remplacer la correspondance",
         "IndentCodeRight": "Indenter le code à droite",
         "CommentLine": "Ligne de commentaire",
         "FindNextTextMatch": "Prochaine correspondance texte",
