@@ -12,7 +12,7 @@ export function languageKeyToLabel(lang) {
     'es-419': 'Español',
     ja: '日本語',
     hi: 'हिन्दी',
-    'fr-CA': 'French'
+    'fr-CA': 'Français'
   };
   return languageMap[lang];
 }
