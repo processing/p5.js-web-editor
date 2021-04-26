@@ -144,9 +144,9 @@
       "IncreaseFont": "Augmenter",
       "IncreaseFontARIA": "augmenter la taille de la police",
       "Autosave": "Sauvegarde automatique",
-      "On": "Activer",
+      "On": "Activé",
       "AutosaveOnARIA": "sauvegarde automatique activée",
-      "Off": "Désactiver",
+      "Off": "Désactivé",
       "AutosaveOffARIA": "sauvegarde automatique désactivée",
       "AutocloseBracketsQuotes": "Fermeture automatique des crochets et des guillemets",
       "AutocloseBracketsQuotesOnARIA": "fermeture automatique des crochets et des guillemets activée",
@@ -173,8 +173,8 @@
     },
     "KeyboardShortcuts": {
       "Title": " Raccourcis clavier",
-      "ShortcutsFollow": "Suivi des raccourcis clavier d'édition",
-      "SublimeText": "Raccourcis clavier Sublime",
+      "ShortcutsFollow": "Les raccourcis clavier de l'éditeur suivent",
+      "SublimeText": "les raccourcis de Sublime Text",
       "CodeEditing": {
         "Tidy": "Nettoyer",
         "FindText": "Rechercher",
@@ -184,8 +184,8 @@
         "ReplaceTextMatch": "Remplacer la correspondance",
         "IndentCodeRight": "Indenter le code à droite",
         "CommentLine": "Ligne de commentaire",
-        "FindNextTextMatch": "Prochaine correspondance texte",
-        "FindPreviousTextMatch": "Correspondance précédente texte",
+        "FindNextTextMatch": "Correspondance texte suivante",
+        "FindPreviousTextMatch": "Correspondance texte précédente",
         "CodeEditing": "Édition de code"
       },
       "General": {
@@ -580,8 +580,8 @@
       "Sound": "Son"
     },
     "PreferenceCreators": {
-      "On": "Activer",
-      "Off": "Désactiver"
+      "On": "Activé",
+      "Off": "Désactivé"
     },
     "MobileIDEView":{
       "Preferences": "Préférences",
