@@ -39,8 +39,9 @@ class SketchList extends React.Component {
   };
 
   inCollection = (sketch) =>
-    this.props.collection.items.find((item) => item.project.id === sketch.id) !=
-    null;
+    this.props.collection.items.find((item) =>
+      item.isDeleted ? false : item.project.id === sketch.id
+    ) != null;
 
   render() {
     const sketchesWithAddedStatus = this.props.sketches.map((sketch) => ({

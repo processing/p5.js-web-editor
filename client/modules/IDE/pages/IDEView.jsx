@@ -101,13 +101,6 @@ class IDEView extends React.Component {
     if (nextProps.location !== this.props.location) {
       this.props.setPreviousPath(this.props.location.pathname);
     }
-
-    if (this.props.ide.consoleIsExpanded !== nextProps.ide.consoleIsExpanded) {
-      this.setState({
-        consoleSize: nextProps.ide.consoleIsExpanded ? 150 : 29
-      });
-    }
-
     if (this.props.ide.sidebarIsExpanded !== nextProps.ide.sidebarIsExpanded) {
       this.setState({
         sidebarSize: nextProps.ide.sidebarIsExpanded ? 160 : 20
@@ -337,7 +330,9 @@ class IDEView extends React.Component {
               <SplitPane
                 split="horizontal"
                 primary="second"
-                size={this.state.consoleSize}
+                size={
+                  this.props.ide.consoleIsExpanded ? this.state.consoleSize : 29
+                }
                 minSize={29}
                 onChange={(size) => this.setState({ consoleSize: size })}
                 allowResize={this.props.ide.consoleIsExpanded}
@@ -378,10 +373,7 @@ class IDEView extends React.Component {
         </main>
         {this.props.ide.modalIsVisible && <NewFileModal />}
         {this.props.ide.newFolderModalVisible && (
-          <NewFolderModal
-            closeModal={this.props.closeNewFolderModal}
-            createFolder={this.props.createFolder}
-          />
+          <NewFolderModal closeModal={this.props.closeNewFolderModal} />
         )}
         {this.props.ide.uploadFileModalVisible && (
           <UploadFileModal closeModal={this.props.closeUploadFileModal} />
@@ -505,9 +497,6 @@ IDEView.propTypes = {
     }),
     updatedAt: PropTypes.string
   }).isRequired,
-  editorAccessibility: PropTypes.shape({
-    lintMessages: PropTypes.objectOf(PropTypes.shape()).isRequired
-  }).isRequired,
   preferences: PropTypes.shape({
     autosave: PropTypes.bool.isRequired,
     fontSize: PropTypes.number.isRequired,
@@ -564,7 +553,6 @@ IDEView.propTypes = {
   newFolder: PropTypes.func.isRequired,
   closeNewFolderModal: PropTypes.func.isRequired,
   closeNewFileModal: PropTypes.func.isRequired,
-  createFolder: PropTypes.func.isRequired,
   closeShareModal: PropTypes.func.isRequired,
   closeKeyboardShortcutModal: PropTypes.func.isRequired,
   toast: PropTypes.shape({

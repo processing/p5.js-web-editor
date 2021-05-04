@@ -35,6 +35,7 @@ import {
 } from '../actions/preferences';
 import { setBlobUrl } from '../actions/files';
 import { clearConsole, dispatchConsoleEvent } from '../actions/console';
+import getConfig from '../../../utils/getConfig';
 
 const shouldRenderSketch = (props, prevProps = undefined) => {
   const { isPlaying, previewIsRefreshing, fullView } = props;
@@ -168,7 +169,7 @@ class PreviewFrame extends React.Component {
     }
 
     const previewScripts = sketchDoc.createElement('script');
-    previewScripts.src = '/previewScripts.js';
+    previewScripts.src = getConfig('PREVIEW_SCRIPTS_URL');
     sketchDoc.head.appendChild(previewScripts);
 
     const sketchDocString = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;

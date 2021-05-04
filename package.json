@@ -1,6 +1,6 @@
 {
   "name": "p5.js-web-editor",
-  "version": "1.2.2",
+  "version": "1.3.1",
   "description": "The web editor for p5.js.",
   "scripts": {
     "clean": "rimraf dist",
@@ -53,7 +53,8 @@
           "<rootDir>/client/jest.setup.js"
         ],
         "moduleNameMapper": {
-          "^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/client/__test__/mocks/fileMock.js"
+          "^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)(|\\?byContent|\\?byUrl)$": "<rootDir>/client/__mocks__/fileMock.js",
+          "\\.(css|less|scss)$": "<rootDir>/client/__mocks__/styleMock.js"
         },
         "testMatch": [
           "<rootDir>/client/**/*.test.(js|jsx)"
@@ -115,6 +116,7 @@
     "jest": "^26.0.1",
     "lint-staged": "^10.1.3",
     "mini-css-extract-plugin": "^1.3.4",
+    "msw": "^0.28.1",
     "node-sass": "^5.0.0",
     "nodemon": "^2.0.7",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
@@ -122,8 +124,8 @@
     "postcss-focus": "^4.0.0",
     "postcss-loader": "^4.2.0",
     "postcss-preset-env": "^6.7.0",
-    "prettier": "^2.2.1",
     "react-test-renderer": "^16.12.0",
+    "redux-mock-store": "^1.5.4",
     "rimraf": "^2.7.1",
     "sass-loader": "^10.1.1",
     "storybook-addon-theme-playground": "^1.2.0",
@@ -177,7 +179,6 @@
     "i18next-http-backend": "^1.0.21",
     "is-url": "^1.2.4",
     "jest-express": "^1.11.0",
-    "js-beautify": "^1.10.3",
     "jsdom": "^9.8.3",
     "jshint": "^2.11.0",
     "lodash": "^4.17.19",
@@ -185,7 +186,7 @@
     "mime-types": "^2.1.26",
     "mjml": "^3.3.2",
     "mockingoose": "^2.13.2",
-    "mongoose": "^5.9.2",
+    "mongoose": "^5.12.3",
     "node-uuid": "^1.4.7",
     "nodemailer": "^2.6.4",
     "nodemailer-mailgun-transport": "^1.4.0",
@@ -194,6 +195,7 @@
     "passport-google-oauth20": "^1.0.0",
     "passport-http": "^0.3.0",
     "passport-local": "^1.0.0",
+    "prettier": "^2.2.1",
     "pretty-bytes": "^3.0.1",
     "primer-tooltips": "^1.5.11",
     "prop-types": "^15.6.2",
