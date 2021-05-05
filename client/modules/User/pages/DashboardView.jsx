@@ -32,7 +32,7 @@ class DashboardView extends React.Component {
     this.gotoHomePage = this.gotoHomePage.bind(this);
     this.toggleCollectionCreate = this.toggleCollectionCreate.bind(this);
     this.state = {
-      isCollectionCreate: false
+      collectionCreateVisible: false
     };
   }
 
@@ -74,7 +74,7 @@ class DashboardView extends React.Component {
 
   toggleCollectionCreate() {
     this.setState((prevState) => ({
-      isCollectionCreate: !prevState.isCollectionCreate
+      collectionCreateVisible: !prevState.collectionCreateVisible
     }));
   }
 
@@ -149,7 +149,7 @@ class DashboardView extends React.Component {
             {this.renderContent(currentTab, username)}
           </div>
         </main>
-        {this.state.isCollectionCreate && (
+        {this.state.collectionCreateVisible && (
           <Overlay
             title={this.props.t('DashboardView.CreateCollectionOverlay')}
             closeOverlay={this.toggleCollectionCreate}
