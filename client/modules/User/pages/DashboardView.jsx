@@ -30,6 +30,10 @@ class DashboardView extends React.Component {
     super(props);
     this.closeAccountPage = this.closeAccountPage.bind(this);
     this.gotoHomePage = this.gotoHomePage.bind(this);
+    this.toggleCollectionCreate = this.toggleCollectionCreate.bind(this);
+    this.state = {
+      collectionCreateVisible: false
+    };
   }
 
   componentDidMount() {
@@ -68,14 +72,11 @@ class DashboardView extends React.Component {
     return this.props.user.username === this.props.params.username;
   }
 
-  isCollectionCreate() {
-    const path = this.props.location.pathname;
-    return /collections\/create$/.test(path);
+  toggleCollectionCreate() {
+    this.setState((prevState) => ({
+      collectionCreateVisible: !prevState.collectionCreateVisible
+    }));
   }
-
-  returnToDashboard = () => {
-    browserHistory.push(`/${this.ownerName()}/collections`);
-  };
 
   renderActionButton(tabKey, username, t) {
     switch (tabKey) {
@@ -85,7 +86,7 @@ class DashboardView extends React.Component {
         return (
           this.isOwner() && (
             <React.Fragment>
-              <Button to={`/${username}/collections/create`}>
+              <Button onClick={this.toggleCollectionCreate}>
                 {t('DashboardView.CreateCollection')}
               </Button>
               <CollectionSearchbar />
@@ -148,10 +149,10 @@ class DashboardView extends React.Component {
             {this.renderContent(currentTab, username)}
           </div>
         </main>
-        {this.isCollectionCreate() && (
+        {this.state.collectionCreateVisible && (
           <Overlay
             title={this.props.t('DashboardView.CreateCollectionOverlay')}
-            closeOverlay={this.returnToDashboard}
+            closeOverlay={this.toggleCollectionCreate}
           >
             <CollectionCreate />
           </Overlay>
