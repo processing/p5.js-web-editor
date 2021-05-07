@@ -12,7 +12,7 @@ export function getProjects(username) {
     } else {
       url = '/projects';
     }
-    apiClient
+    return apiClient
       .get(url)
       .then((response) => {
         dispatch({

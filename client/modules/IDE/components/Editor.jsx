@@ -2,7 +2,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import CodeMirror from 'codemirror';
 import emmet from '@emmetio/codemirror-plugin';
-import beautifyJS from 'js-beautify';
+import prettier from 'prettier';
+import babelParser from 'prettier/parser-babel';
+import htmlParser from 'prettier/parser-html';
+import cssParser from 'prettier/parser-postcss';
 import { withTranslation } from 'react-i18next';
 import 'codemirror/mode/css/css';
 import 'codemirror/addon/selection/active-line';
@@ -59,14 +62,10 @@ import * as ConsoleActions from '../actions/console';
 
 emmet(CodeMirror);
 
-const beautifyCSS = beautifyJS.css;
-const beautifyHTML = beautifyJS.html;
-
 window.JSHINT = JSHINT;
 window.CSSLint = CSSLint;
 window.HTMLHint = HTMLHint;
 
-const IS_TAB_INDENT = false;
 const INDENTATION_AMOUNT = 2;
 
 class Editor extends React.Component {
@@ -86,8 +85,6 @@ class Editor extends React.Component {
       }
     }, 2000);
     this.showFind = this.showFind.bind(this);
-    this.findNext = this.findNext.bind(this);
-    this.findPrev = this.findPrev.bind(this);
     this.showReplace = this.showReplace.bind(this);
     this.getContent = this.getContent.bind(this);
   }
@@ -150,8 +147,8 @@ class Editor extends React.Component {
       [`${metaKey}-Enter`]: () => null,
       [`Shift-${metaKey}-Enter`]: () => null,
       [`${metaKey}-F`]: 'findPersistent',
-      [`${metaKey}-G`]: 'findNext',
-      [`Shift-${metaKey}-G`]: 'findPrev',
+      [`${metaKey}-G`]: 'findPersistentNext',
+      [`Shift-${metaKey}-G`]: 'findPersistentPrev',
       [replaceCommand]: 'replace'
     });
 
@@ -197,8 +194,6 @@ class Editor extends React.Component {
     this.props.provideController({
       tidyCode: this.tidyCode,
       showFind: this.showFind,
-      findNext: this.findNext,
-      findPrev: this.findPrev,
       showReplace: this.showReplace,
       getContent: this.getContent
     });
@@ -223,6 +218,7 @@ class Editor extends React.Component {
       const oldDoc = this._cm.swapDoc(this._docs[this.props.file.id]);
       this._docs[prevProps.file.id] = oldDoc;
       this._cm.focus();
+
       if (!prevProps.unsavedChanges) {
         setTimeout(() => this.props.setUnsavedChanges(false), 400);
       }
@@ -317,16 +313,6 @@ class Editor extends React.Component {
     return updatedFile;
   }
 
-  findPrev() {
-    this._cm.focus();
-    this._cm.execCommand('findPrev');
-  }
-
-  findNext() {
-    this._cm.focus();
-    this._cm.execCommand('findNext');
-  }
-
   showFind() {
     this._cm.execCommand('findPersistent');
   }
@@ -335,31 +321,33 @@ class Editor extends React.Component {
     this._cm.execCommand('replace');
   }
 
-  tidyCode() {
-    const beautifyOptions = {
-      indent_size: INDENTATION_AMOUNT,
-      indent_with_tabs: IS_TAB_INDENT
-    };
-    const mode = this._cm.getOption('mode');
-    const currentPosition = this._cm.doc.getCursor();
-    if (mode === 'javascript') {
-      this._cm.doc.setValue(
-        beautifyJS(this._cm.doc.getValue(), beautifyOptions)
+  prettierFormatWithCursor(parser, plugins) {
+    try {
+      const { formatted, cursorOffset } = prettier.formatWithCursor(
+        this._cm.doc.getValue(),
+        {
+          cursorOffset: this._cm.doc.indexFromPos(this._cm.doc.getCursor()),
+          parser,
+          plugins
+        }
       );
-    } else if (mode === 'css') {
-      this._cm.doc.setValue(
-        beautifyCSS(this._cm.doc.getValue(), beautifyOptions)
-      );
-    } else if (mode === 'htmlmixed') {
-      this._cm.doc.setValue(
-        beautifyHTML(this._cm.doc.getValue(), beautifyOptions)
-      );
+      this._cm.doc.setValue(formatted);
+      this._cm.focus();
+      this._cm.doc.setCursor(this._cm.doc.posFromIndex(cursorOffset));
+    } catch (error) {
+      console.error(error);
     }
-    this._cm.focus();
-    this._cm.doc.setCursor({
-      line: currentPosition.line,
-      ch: currentPosition.ch + INDENTATION_AMOUNT
-    });
+  }
+
+  tidyCode() {
+    const mode = this._cm.getOption('mode');
+    if (mode === 'javascript') {
+      this.prettierFormatWithCursor('babel', [babelParser]);
+    } else if (mode === 'css') {
+      this.prettierFormatWithCursor('css', [cssParser]);
+    } else if (mode === 'htmlmixed') {
+      this.prettierFormatWithCursor('html', [htmlParser]);
+    }
   }
 
   initializeDocuments(files) {
