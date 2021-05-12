@@ -18,6 +18,10 @@ import {
 } from '../../../server/utils/fileUtils';
 import { startTag, getAllScriptOffsets } from '../../utils/consoleUtils';
 import { registerFrame } from '../../utils/dispatcher';
+import { createBlobUrl } from './filesReducer';
+
+let objectUrls = {};
+let objectPaths = {};
 
 const Frame = styled.iframe`
   min-height: 100%;
@@ -124,9 +128,16 @@ function resolveScripts(sketchDoc, files) {
         if (resolvedFile.url) {
           script.setAttribute('src', resolvedFile.url);
         } else {
-          script.setAttribute('data-tag', `${startTag}${resolvedFile.name}`);
-          script.removeAttribute('src');
-          script.innerHTML = resolvedFile.content; // eslint-disable-line
+          // in the future, when using y.js, could remake the blob for only the file(s)
+          // that changed
+          const blobUrl = createBlobUrl(resolvedFile);
+          script.setAttribute('src', blobUrl);
+          const blobPath = blobUrl.split('/').pop();
+          objectUrls[blobUrl] = resolvedFile.name;
+          objectPaths[blobPath] = resolvedFile.name;
+          // script.setAttribute('data-tag', `${startTag}${resolvedFile.name}`);
+          // script.removeAttribute('src');
+          // script.innerHTML = resolvedFile.content; // eslint-disable-line
         }
       }
     } else if (
@@ -194,12 +205,14 @@ function addLoopProtect(sketchDoc) {
 
 function injectLocalFiles(files, htmlFile, basePath) {
   let scriptOffs = [];
+  objectUrls = {};
+  objectPaths = {};
   const resolvedFiles = resolveJSAndCSSLinks(files);
   const parser = new DOMParser();
   const sketchDoc = parser.parseFromString(htmlFile.content, 'text/html');
 
   const base = sketchDoc.createElement('base');
-  base.href = `${basePath}/`;
+  base.href = `${basePath}`;
   sketchDoc.head.appendChild(base);
 
   resolvePathsForElementsWithAttribute('src', sketchDoc, resolvedFiles);
@@ -218,6 +231,8 @@ function injectLocalFiles(files, htmlFile, basePath) {
   const consoleErrorsScript = sketchDoc.createElement('script');
   consoleErrorsScript.innerHTML = `
     window.offs = ${JSON.stringify(scriptOffs)};
+    window.objectUrls = ${JSON.stringify(objectUrls)};
+    window.objectPaths = ${JSON.stringify(objectPaths)};
     window.editorOrigin = '${getConfig('EDITOR_URL')}';
   `;
   addLoopProtect(sketchDoc);

@@ -75,22 +75,17 @@ function getScriptOff(line) {
   return [line - l, file];
 }
 // catch reference errors, via http://stackoverflow.com/a/12747364/2994108
-window.onerror = function onError(msg, url, lineNumber, columnNo, error) {
-  // var string = msg.toLowerCase();
-  // var substring = "script error";
-  let data = {};
-  let fileInfo;
-  if (url.match(EXTERNAL_LINK_REGEX) !== null && error.stack) {
-    const errorNum = error.stack.split('about:srcdoc:')[1].split(':')[0];
-    fileInfo = getScriptOff(errorNum);
-    data = `${msg} (${fileInfo[1]}: line ${fileInfo[0]})`;
-  } else {
-    fileInfo = getScriptOff(lineNumber);
-    data = `${msg} (${fileInfo[1]}: line ${fileInfo[0]})`;
-  }
+window.onerror = function onError(msg, source, lineNumber, columnNo, error) {
+  const urls = Object.keys(window.objectUrls);
+  let data = '';
+  urls.forEach((url) => {
+    if (error.stack.match(url)) {
+      data = error.stack.replaceAll(url, window.objectUrls[url]);
+    }
+  });
   editor.postMessage(
     {
-      source: fileInfo[1],
+      source: 'sketch',
       messages: [
         {
           log: [
@@ -110,12 +105,16 @@ window.onerror = function onError(msg, url, lineNumber, columnNo, error) {
 // catch rejected promises
 window.onunhandledrejection = function onUnhandledRejection(event) {
   if (event.reason && event.reason.message && event.reason.stack) {
-    const errorNum = event.reason.stack.split('about:srcdoc:')[1].split(':')[0];
-    const fileInfo = getScriptOff(errorNum);
-    const data = `${event.reason.message} (${fileInfo[1]}: line ${fileInfo[0]})`;
+    const urls = Object.keys(window.objectUrls);
+    let data = '';
+    urls.forEach((url) => {
+      if (event.reason.stack.match(url)) {
+        data = event.reason.stack.replaceAll(url, window.objectUrls[url]);
+      }
+    });
     editor.postMessage(
       {
-        source: fileInfo[1],
+        source: 'sketch',
         messages: [
           {
             log: [
@@ -132,3 +131,18 @@ window.onunhandledrejection = function onUnhandledRejection(event) {
     );
   }
 };
+
+// Monkeypatch p5._friendlyError
+// const friendlyError = window.p5._friendlyError;
+// window.p5._friendlyError = function (message, method, color) {
+//   const urls = Object.keys(window.objectUrls);
+//   const paths = Object.keys(window.objectPaths);
+//   let newMessage = message;
+//   urls.forEach((url) => {
+//     newMessage = newMessage.replaceAll(url, window.objectUrls[url]);
+//   });
+//   paths.forEach((path) => {
+//     newMessage = newMessage.replaceAll(path, window.objectPaths[path]);
+//   });
+//   friendlyError.apply(window.p5, [newMessage, method, color]);
+// };
