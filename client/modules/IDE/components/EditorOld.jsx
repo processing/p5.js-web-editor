@@ -39,7 +39,7 @@ import '../../../utils/htmlmixed';
 import '../../../utils/p5-javascript';
 import '../../../utils/webGL-clike';
 import Timer from '../components/Timer';
-import EditorAccessibility from '../components/EditorAccessibility';
+import EditorAccessibility from './Editor/EditorAccessibility';
 import { metaKey } from '../../../utils/metaKey';
 
 import '../../../utils/codemirror-search';
