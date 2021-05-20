@@ -362,20 +362,10 @@ class Editor extends React.Component {
     });
   }
 
-  toggleEditorOptions() {
-    if (this.props.editorOptionsVisible) {
-      this.props.closeEditorOptions();
-    } else {
-      this.optionsButton.focus();
-      this.props.showEditorOptions();
-    }
-  }
-
   render() {
     const editorSectionClass = classNames({
       editor: true,
-      'sidebar--contracted': !this.props.isExpanded,
-      'editor--options': this.props.editorOptionsVisible
+      'sidebar--contracted': !this.props.isExpanded
     });
 
     const editorHolderClass = classNames({
@@ -462,9 +452,6 @@ Editor.propTypes = {
     fileType: PropTypes.string.isRequired,
     url: PropTypes.string
   }).isRequired,
-  editorOptionsVisible: PropTypes.bool.isRequired,
-  showEditorOptions: PropTypes.func.isRequired,
-  closeEditorOptions: PropTypes.func.isRequired,
   setUnsavedChanges: PropTypes.func.isRequired,
   startRefreshSketch: PropTypes.func.isRequired,
   autorefresh: PropTypes.bool.isRequired,
