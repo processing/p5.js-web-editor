@@ -32,7 +32,6 @@ const initialTestState = {
     shareModalProjectId: 'abcd',
     shareModalProjectName: 'My Cute Sketch',
     shareModalProjectUsername: 'p5_user',
-    editorOptionsVisible: false,
     keyboardShortcutVisible: false,
     unsavedChanges: false,
     infiniteLoop: false,
