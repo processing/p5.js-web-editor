@@ -14,7 +14,6 @@ const initialState = {
   shareModalProjectId: 'abcd',
   shareModalProjectName: 'My Cute Sketch',
   shareModalProjectUsername: 'p5_user',
-  editorOptionsVisible: false,
   keyboardShortcutVisible: false,
   unsavedChanges: false,
   infiniteLoop: false,
@@ -82,10 +81,6 @@ const ide = (state = initialState, action) => {
       });
     case ActionTypes.CLOSE_SHARE_MODAL:
       return Object.assign({}, state, { shareModalVisible: false });
-    case ActionTypes.SHOW_EDITOR_OPTIONS:
-      return Object.assign({}, state, { editorOptionsVisible: true });
-    case ActionTypes.CLOSE_EDITOR_OPTIONS:
-      return Object.assign({}, state, { editorOptionsVisible: false });
     case ActionTypes.SHOW_KEYBOARD_SHORTCUT_MODAL:
       return Object.assign({}, state, { keyboardShortcutVisible: true });
     case ActionTypes.CLOSE_KEYBOARD_SHORTCUT_MODAL:
