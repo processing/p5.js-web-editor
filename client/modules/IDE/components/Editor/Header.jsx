@@ -1,40 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import UnsavedChangesDotIcon from '../../../images/unsaved-changes-dot.svg';
-import RightArrowIcon from '../../../images/right-arrow.svg';
-import LeftArrowIcon from '../../../images/left-arrow.svg';
+import { useDispatch, useSelector } from 'react-redux';
+import UnsavedChangesDotIcon from '../../../../images/unsaved-changes-dot.svg';
+import RightArrowIcon from '../../../../images/right-arrow.svg';
+import LeftArrowIcon from '../../../../images/left-arrow.svg';
 import Timer from '../Timer';
+import { collapseSidebar, expandSidebar } from '../../actions/ide';
 
 export default function Header(props) {
-  const {
-    collapseSidebar,
-    expandSidebar,
-    file,
-    unsavedChanges,
-    projectSavedTime,
-    isUserOwner
-  } = props;
+  const { fileName, isUserOwner } = props;
   const { t } = useTranslation();
+  const projectSavedTime = useSelector((state) => state.project.updatedAt);
+  const unsavedChanges = useSelector((state) => state.ide.unsavedChanges);
+  const dispatch = useDispatch();
   return (
     <header className="editor__header">
       <button
         aria-label={t('Editor.OpenSketchARIA')}
         className="sidebar__contract"
-        onClick={collapseSidebar}
+        onClick={() => dispatch(collapseSidebar())}
       >
         <LeftArrowIcon focusable="false" aria-hidden="true" />
       </button>
       <button
         aria-label={t('Editor.CloseSketchARIA')}
         className="sidebar__expand"
-        onClick={expandSidebar}
+        onClick={() => dispatch(expandSidebar())}
       >
         <RightArrowIcon focusable="false" aria-hidden="true" />
       </button>
       <div className="editor__file-name">
         <span>
-          {file.name}
+          {fileName}
           <span className="editor__unsaved-changes">
             {unsavedChanges ? (
               <UnsavedChangesDotIcon
@@ -52,12 +50,6 @@ export default function Header(props) {
 }
 
 Header.propTypes = {
-  collapseSidebar: PropTypes.func.isRequired,
-  expandSidebar: PropTypes.func.isRequired,
-  file: PropTypes.shape({
-    name: PropTypes.string.isRequired
-  }).isRequired,
-  unsavedChanges: PropTypes.bool.isRequired,
-  projectSavedTime: PropTypes.string.isRequired,
+  fileName: PropTypes.string.isRequired,
   isUserOwner: PropTypes.bool.isRequired
 };
