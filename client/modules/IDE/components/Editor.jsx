@@ -332,9 +332,9 @@ class Editor extends React.Component {
 
   showHint(_cm) {
     const hintOptions = {
-      completeSingle: false,
-      completeOnSingleClick: false,
-      closeOnUnfocus: false
+      completeSingle: false
+      // completeOnSingleClick: false,
+      // closeOnUnfocus: false
       // closeOnPick: false
     };
 
