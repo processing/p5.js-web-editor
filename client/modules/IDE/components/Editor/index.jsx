@@ -1,19 +1,24 @@
 import React, { useEffect, useRef } from 'react';
-// import { EditorState } from '@codemirror/state';
+// import { Compartment } from '@codemirror/state';
 import { EditorState, basicSetup } from '@codemirror/basic-setup';
 import { EditorView, keymap } from '@codemirror/view';
 import { javascript } from '@codemirror/lang-javascript';
 import { defaultTabBinding } from '@codemirror/commands';
 import { html } from '@codemirror/lang-html';
 import { css } from '@codemirror/lang-css';
+import { json } from '@codemirror/lang-json';
+import { cpp } from '@codemirror/lang-cpp';
 // import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Header from './Header';
 import EditorAccessibility from './EditorAccessibility';
 import { getIsUserOwner } from '../../selectors/users';
 // import getSelectedFile from '../../selectors/files';
+import { setUnsavedChanges, startRefreshSketch } from '../../actions/ide';
+import { updateFileContent } from '../../actions/files';
+import { clearConsole } from '../../actions/console';
 
 function getSelectedFile(state) {
   return (
@@ -23,6 +28,42 @@ function getSelectedFile(state) {
   );
 }
 
+function getLanguageMode(fileName) {
+  let mode;
+  if (fileName.match(/.+\.js$/i)) {
+    mode = javascript();
+  } else if (fileName.match(/.+\.css$/i)) {
+    mode = css();
+  } else if (fileName.match(/.+\.(html|xml)$/i)) {
+    mode = html();
+  } else if (fileName.match(/.+\.json$/i)) {
+    mode = json();
+  } else if (fileName.match(/.+\.(frag|vert)$/i)) {
+    mode = cpp();
+  } else {
+    mode = null;
+  }
+  return mode;
+}
+
+function getFileState(state, file, extensions = []) {
+  if (!state[file.id]) {
+    state[file.id] = EditorState.create({
+      doc: file.content,
+      // maybe will have to copy over extensions? idk
+      // store extensions separately? probs
+      extensions: [
+        basicSetup,
+        getLanguageMode(file.name),
+        keymap.of([defaultTabBinding]),
+        EditorState.tabSize.of(2),
+        ...extensions
+      ]
+    });
+  }
+  return state[file.id];
+}
+
 export default function Editor({ provideController }) {
   const sidebarIsExpanded = useSelector((state) => state.ide.sidebarIsExpanded);
   const file = useSelector(getSelectedFile);
@@ -30,6 +71,9 @@ export default function Editor({ provideController }) {
   const lintMessages = useSelector(
     (state) => state.editorAccessibility.lintMessages
   );
+  const autorefresh = useSelector((state) => state.preferences.autorefresh);
+  const isPlaying = useSelector((state) => state.ide.isPlaying);
+  const dispatch = useDispatch();
   const editorSectionClass = classNames({
     editor: true,
     'sidebar--contracted': !sidebarIsExpanded
@@ -39,24 +83,47 @@ export default function Editor({ provideController }) {
     'editor-holder--hidden': file.fileType === 'folder' || file.url
   });
 
-  const editorHolder = useRef(null);
-
-  useEffect(() => {
-    const state = EditorState.create({
-      doc: file.content,
-      extensions: [
-        basicSetup,
-        javascript(),
-        keymap.of([defaultTabBinding]),
-        EditorState.tabSize.of(2)
-      ]
+  // does this need to be debounced??
+  function onUpdate() {
+    return EditorView.updateListener.of((viewUpdate) => {
+      const { doc } = viewUpdate.state;
+      const value = doc.toString();
+      dispatch(setUnsavedChanges(true));
+      dispatch(updateFileContent(file.id, value));
+      if (autorefresh && isPlaying) {
+        dispatch(clearConsole());
+        dispatch(startRefreshSketch());
+      }
     });
+  }
 
-    const view = new EditorView({
-      state,
+  const editorHolder = useRef(null);
+  const editor = useRef(null);
+  const state = {};
+
+  // let view;
+
+  // i think i need to create a new editor state for each file
+  // Or, if the entire state (undo history, etc) should be reset
+  // cm.setState(EditorState.create({doc: text, extensions: ...}))
+  // but get rid of them when new project comes in
+  useEffect(() => {
+    const fileState = getFileState(state, file, [onUpdate()]);
+    // const fileState = getFileState(state, file);
+
+    editor.current = new EditorView({
+      state: fileState,
       parent: editorHolder.current
     });
+
+    return () => {
+      editor.current.destroy();
+    };
   }, []);
+
+  useEffect(() => {
+    editor.current.setState(getFileState(state, file));
+  }, [file]);
 
   // stub this out for now
   provideController({
