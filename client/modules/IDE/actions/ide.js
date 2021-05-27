@@ -172,18 +172,6 @@ export function closeShareModal() {
   };
 }
 
-export function showEditorOptions() {
-  return {
-    type: ActionTypes.SHOW_EDITOR_OPTIONS
-  };
-}
-
-export function closeEditorOptions() {
-  return {
-    type: ActionTypes.CLOSE_EDITOR_OPTIONS
-  };
-}
-
 export function showKeyboardShortcutModal() {
   return {
     type: ActionTypes.SHOW_KEYBOARD_SHORTCUT_MODAL
