@@ -12,7 +12,7 @@
     },
     "Edit": {
       "Title": "Bearbeiten",
-      "TidyCode": "Code aufräumen",
+      "TidyCode": "Code formatieren",
       "Find": "Finden",
       "Replace": "Ersetzen"
     },
@@ -31,7 +31,7 @@
     },
     "Lang": "Sprache",
     "BackEditor": "Zurück zum Editor",
-    "WarningUnsavedChanges": "Bist du sicher, dass du die Seite verlassen willst? Du hast ungesicherte Änderungen.",
+    "WarningUnsavedChanges": "Bist Du sicher, dass Du die Seite verlassen willst? Du hast ungesicherte Änderungen.",
     "Login": "Anmelden",
     "LoginOr": "oder",
     "SignUp": "Registrieren",
@@ -55,7 +55,7 @@
     "ReplaceAll": "Alle Ersetzen",
     "ReplacePlaceholder": "Ersetzen mit",
     "Regex": "Regulärer Ausdruck",
-    "CaseSensitive": "Groß- Kleinschreibung beachten",
+    "CaseSensitive": "Groß-/Kleinschreibung beachten",
     "WholeWords": "Ganze Worte",
     "Previous": "Vorheriges",
     "Next": "Nächstes",
@@ -74,8 +74,8 @@
     "Login": "Einloggen",
     "LoginOr": "oder",
     "SignUp": "Registrieren",
-    "Email": "email",
-    "Username": "nutzername",
+    "Email": "E-Mail",
+    "Username": "Nutzername",
     "DontHaveAccount": "Noch keinen Account? ",
     "ForgotPassword": "Passwort vergessen?",
     "ResetPassword": "Passwort zurücksetzen"
@@ -101,8 +101,8 @@
   "Toast": {
     "OpenedNewSketch": "Neuer Sketch geöffnet.",
     "SketchSaved": "Sketch gesichert.",
-    "SketchFailedSave": "Fehler beim sichern deines Sketches.",
-    "AutosaveEnabled": "Automatisches sichern aktiviert.",
+    "SketchFailedSave": "Fehler beim Sichern Deines Sketches.",
+    "AutosaveEnabled": "Automatisches Sichern aktiviert.",
     "LangChange": "Sprache geändert",
     "SettingsSaved": "Einstellungen gespeichert."
   },
@@ -156,7 +156,7 @@
     "LineNumbers": "Zeilennummerierung",
     "LineNumbersOnARIA": "Zeilennummerierung an",
     "LineNumbersOffARIA": "Zeilennummerierung aus",
-    "LintWarningSound": "Lint Warnton",
+    "LintWarningSound": "Lint-Warnton",
     "LintWarningOnARIA": "lint Warnton an",
     "LintWarningOffARIA": "lint Warnton aus",
     "PreviewSound": "Warnton anhören",
@@ -172,7 +172,7 @@
   },
   "KeyboardShortcuts": {
     "Title": "Tastenkürzel",
-    "ShortcutsFollow": "Die Tastenkürzel zum editieren des Codes folgen den",
+    "ShortcutsFollow": "Die Tastenkürzel zum Editieren des Codes folgen den",
     "SublimeText": "Sublime Tastenkürzeln",
     "CodeEditing": {
       "Tidy": "Code aufräumen",
@@ -183,8 +183,8 @@
       "IndentCodeLeft": "Code links einrücken",
       "IndentCodeRight": "Code rechts einrücken",
       "CommentLine": "Kommentar einfügen",
-      "FindNextTextMatch": "Nächsten Text Treffer finden",
-      "FindPreviousTextMatch": "Vorherigen Text Treffer finden",
+      "FindNextTextMatch": "Nächsten Text-Treffer finden",
+      "FindPreviousTextMatch": "Vorherigen Text-Treffer finden",
       "CodeEditing": "Code editieren"
     },
     "General": {
@@ -222,7 +222,7 @@
     "ErrorARIA": "Fehler",
     "Save": "Speichern",
     "p5logoARIA": "p5.js Logo",
-    "DeleteConfirmation": "Bist du sicher, dass du {{name}} löschen möchtest?"
+    "DeleteConfirmation": "Bist Du sicher, dass Du {{name}} löschen möchtest?"
   },
   "IDEView": {
     "SubmitFeedback": "Feedback abgeben",
@@ -246,7 +246,7 @@
     "Title": "Neuer Ordner",
     "CloseButtonARIA": "Neuer Ordner Fenster schließen",
     "EnterName": "Bitte gib einen Namen ein",
-    "EmptyName": "Der Ordner Name kann keine Leerzeichen enthalten",
+    "EmptyName": "Der Ordnername kann keine Leerzeichen enthalten",
     "InvalidExtension": "Der Ordnername kann keine Datei-Endung enthalten"
   },
   "NewFolderForm": {
@@ -254,14 +254,14 @@
     "Placeholder": "Name"
   },
   "ResetPasswordForm": {
-    "Email": "E-Mail, die zum registrieren verwendet wurde.",
+    "Email": "E-Mail, die zum Registrieren verwendet wurde.",
     "EmailARIA": "email",
     "Submit": "Passwort an E-Mail senden"
   },
   "ResetPasswordView": {
     "Title": "p5.js Web Editor | Passwort zurücksetzen",
     "Reset": "Passwort zurücksetzen",
-    "Submitted": "Die E-Mail zum zurücksetzen deines Passwort, sollte in kürze eintreffen. Wenn Du sie nicht \n findest, schau in Deinem Spam Ordner nach.",
+    "Submitted": "Die E-Mail zum Zurücksetzen Deines Passworts sollte in Kürze eintreffen. Wenn Du sie nicht \n findest, schau in Deinem Spam-Ordner nach.",
     "Login": "Einloggen",
     "LoginOr": "oder",
     "SignUp": "Registrieren"
@@ -290,7 +290,7 @@
     "Email": "E-Mail",
     "EmailARIA": "email",
     "Unconfirmed": "Unbestätigt.",
-    "EmailSent": "Bestätigung gesendet, schau in deine E-Mails.",
+    "EmailSent": "Bestätigung gesendet, schau in Deine E-Mails.",
     "Resend": "Bestätigung erneut senden",
     "UserName": "Nutzername",
     "UserNameARIA": "nutzername",
@@ -302,7 +302,7 @@
   },
   "AccountView": {
     "SocialLogin": "Social Login",
-    "SocialLoginDescription": "Nutze deinen GitHub oder Google Account um dich beim p5.js Web Editor anzumelden.",
+    "SocialLoginDescription": "Nutze Deinen GitHub oder Google Account um dich beim p5.js Web Editor anzumelden.",
     "Title": "p5.js Web Editor | Account Einstellungen",
     "Settings": "Account Einstellungen",
     "AccountTab": "Account",
@@ -310,7 +310,7 @@
   },
   "APIKeyForm": {
     "ConfirmDelete": "Bist Du dir sicher, dass Du {{key_label}} löschen willst?",
-    "Summary": "Persönliche Zugangstoken fungieren wie Dein Passwort. \n Sie erlauben automatisierten Skripten Zugang zur Editor API. \n Erstelle einen Token für jedes Skript, das Zugang benötigt.",
+    "Summary": "Persönliche Zugangstoken fungieren wie Dein Passwort. \n Sie erlauben automatisierten Skripten Zugang zur Editor-API. \n Erstelle einen Token für jedes Skript, das Zugang benötigt.",
     "CreateToken": "Neuen Token erstellen",
     "TokenLabel": "Wofür wird dieser Token genutzt?",
     "TokenPlaceholder": "Wofür wird dieser Token genutzt? Z.B. um Skripte zu importieren.",
@@ -350,15 +350,15 @@
     "Title": "p5.js Web Editor | Registrieren",
     "Description": "Registrieren",
     "Or": "Oder",
-    "AlreadyHave": "Hast Du bereits einen Account?",
+    "AlreadyHave": "Hast Du bereits einen Account? ",
     "Login": "Anmelden"
   },
   "EmailVerificationView": {
     "Title": "p5.js Web Editor | E-Mail Bestätigung",
-    "Verify": "Bestätige deine E-Mail",
+    "Verify": "Bestätige Deine E-Mail",
     "InvalidTokenNull": "Der Link ist ungültig.",
     "Checking": "Überprüfe Token, bitte warten...",
-    "Verified": "Geschafft, deine E-Mailadresse wurde bestätigt.",
+    "Verified": "Geschafft, Deine E-Mailadresse wurde bestätigt.",
     "InvalidState": "Etwas ist schief gelaufen."
   },
   "AssetList": {
@@ -395,15 +395,15 @@
   },
 
   "ErrorModal": {
-    "MessageLogin": "Um Deinen Sketch sichern zu können musst du angemeldet sein. Bitte ",
+    "MessageLogin": "Um Deinen Sketch sichern zu können musst Du angemeldet sein. Bitte ",
     "Login": "Melde Dich an",
     "LoginOr": " oder ",
     "SignUp": "Registriere Dich",
     "MessageLoggedOut": "Es scheint als hättest Du Dich abgemeldet. Bitte ",
     "LogIn": "melde Dich an",
     "SavedDifferentWindow": "Das Projekt, dass Du speichern möchtest, wurde in einem anderen Fenster gespeichert. \n        Bitte lade die Seite neu um die aktuelle Version zu sehen.",
-    "LinkTitle": "Fehler beim verbinden deines Accounts",
-    "LinkMessage": "Es gab einen Fehler, beim verbinden deines {{serviceauth}} Accounts mit deinem p5.js Web Editor Account. Dein {{serviceauth}} wurde bereits mit einem anderen p5.js Web Editor Account verknüpft."
+    "LinkTitle": "Fehler beim Verbinden Deines Accounts",
+    "LinkMessage": "Es gab einen Fehler beim Verbinden Deines {{serviceauth}} Accounts mit Deinem p5.js Web Editor Account. Dein {{serviceauth}} wurde bereits mit einem anderen p5.js Web Editor Account verknüpft."
   },
   "ShareModal": {
     "Embed": "Einbetten",
@@ -421,7 +421,7 @@
     "Share": "Teilen",
     "URLLink": "Link zur Sammlung",
     "AddSketch": "Sketch hinzufügen",
-    "DeleteFromCollection": "Bist Du sicher, dass du {{name_sketch}} aus dieser Sammlung entfernen willst?",
+    "DeleteFromCollection": "Bist Du sicher, dass Du {{name_sketch}} aus dieser Sammlung entfernen willst?",
     "SketchDeleted": "Sketch gelöscht",
     "SketchRemoveARIA": "Sketch aus der Sammlung entfernen",
     "DescriptionPlaceholder": "Beschreibung hinzufügen",
@@ -532,7 +532,7 @@
     "KeyUpLineNumber": "Zeile {{lineNumber}}"
   },
   "EditorAccessibility": {
-    "NoLintMessages": "Keine Lint Warnungen vorhanden ",
+    "NoLintMessages": "Keine Lint-Warnungen vorhanden ",
     "CurrentLine": " Aktuelle Zeile"
   },
   "Timer": {
@@ -573,7 +573,7 @@
     "Autosave": "Automatisches Speichern",
     "WordWrap": "Wortumbruch",
     "LineNumbers": "Zeilennummerierung",
-    "LintWarningSound": "Lint Warnton",
+    "LintWarningSound": "Lint-Warnton",
     "UsedScreenReader": "Nutzung mit Bildschirmlesegerät ",
     "PlainText": "Nur Text",
     "TableText": "Tabellarisch",
@@ -587,7 +587,7 @@
     "Preferences": "Einstellungen",
     "MyStuff": "Mein Zeug",
     "Examples": "Beispiele",
-    "OriginalEditor": "Original Editor",
+    "OriginalEditor": "Original-Editor",
     "Login": "Anmelden",
     "Logout": "Abmelden"
   },
