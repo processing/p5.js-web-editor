@@ -46,7 +46,7 @@ function getLanguageMode(fileName) {
   return mode;
 }
 
-function getFileState(state, file, extensions = []) {
+function getFileState(state, file, customExtensions = []) {
   if (!state[file.id]) {
     state[file.id] = EditorState.create({
       doc: file.content,
@@ -57,12 +57,14 @@ function getFileState(state, file, extensions = []) {
         getLanguageMode(file.name),
         keymap.of([defaultTabBinding]),
         EditorState.tabSize.of(2),
-        ...extensions
+        ...customExtensions
       ]
     });
   }
   return state[file.id];
 }
+
+const fileStates = {};
 
 export default function Editor({ provideController }) {
   const sidebarIsExpanded = useSelector((state) => state.ide.sidebarIsExpanded);
@@ -84,22 +86,22 @@ export default function Editor({ provideController }) {
   });
 
   // does this need to be debounced??
-  function onUpdate() {
-    return EditorView.updateListener.of((viewUpdate) => {
-      const { doc } = viewUpdate.state;
-      const value = doc.toString();
-      dispatch(setUnsavedChanges(true));
-      dispatch(updateFileContent(file.id, value));
-      if (autorefresh && isPlaying) {
-        dispatch(clearConsole());
-        dispatch(startRefreshSketch());
+  const onUpdate = () =>
+    EditorView.updateListener.of((viewUpdate) => {
+      if (viewUpdate.docChanged) {
+        const { doc } = viewUpdate.state;
+        const value = doc.toString();
+        dispatch(setUnsavedChanges(true));
+        dispatch(updateFileContent(file.id, value));
+        if (autorefresh && isPlaying) {
+          dispatch(clearConsole());
+          dispatch(startRefreshSketch());
+        }
       }
     });
-  }
 
   const editorHolder = useRef(null);
   const editor = useRef(null);
-  const state = {};
 
   // let view;
 
@@ -108,7 +110,7 @@ export default function Editor({ provideController }) {
   // cm.setState(EditorState.create({doc: text, extensions: ...}))
   // but get rid of them when new project comes in
   useEffect(() => {
-    const fileState = getFileState(state, file, [onUpdate()]);
+    const fileState = getFileState(fileStates, file, [onUpdate()]);
     // const fileState = getFileState(state, file);
 
     editor.current = new EditorView({
@@ -122,8 +124,8 @@ export default function Editor({ provideController }) {
   }, []);
 
   useEffect(() => {
-    editor.current.setState(getFileState(state, file));
-  }, [file]);
+    editor.current.setState(getFileState(fileStates, file, [onUpdate()]));
+  }, [file.id]);
 
   // stub this out for now
   provideController({
