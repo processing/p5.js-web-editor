@@ -85,23 +85,25 @@ export default function Editor({ provideController }) {
     'editor-holder--hidden': file.fileType === 'folder' || file.url
   });
 
+  const editorHolder = useRef(null);
+  const editor = useRef(null);
+
   // does this need to be debounced??
   const onUpdate = () =>
     EditorView.updateListener.of((viewUpdate) => {
+      // editor.current.state, or let's inspect viewUpdate
       if (viewUpdate.docChanged) {
         const { doc } = viewUpdate.state;
         const value = doc.toString();
         dispatch(setUnsavedChanges(true));
         dispatch(updateFileContent(file.id, value));
+        fileStates[file.id] = viewUpdate.state;
         if (autorefresh && isPlaying) {
           dispatch(clearConsole());
           dispatch(startRefreshSketch());
         }
       }
     });
-
-  const editorHolder = useRef(null);
-  const editor = useRef(null);
 
   // let view;
 
