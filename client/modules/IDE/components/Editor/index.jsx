@@ -1,13 +1,31 @@
 import React, { useEffect, useRef } from 'react';
-// import { Compartment } from '@codemirror/state';
-import { EditorState, basicSetup } from '@codemirror/basic-setup';
-import { EditorView, keymap } from '@codemirror/view';
+import { EditorState, Compartment } from '@codemirror/state';
+// import { EditorState, basicSetup } from '@codemirror/basic-setup';
+import {
+  EditorView,
+  keymap,
+  highlightSpecialChars,
+  drawSelection,
+  highlightActiveLine
+} from '@codemirror/view';
+import { history, historyKeymap } from '@codemirror/history';
+import { foldGutter, foldKeymap } from '@codemirror/fold';
+import { indentOnInput } from '@codemirror/language';
 import { javascript } from '@codemirror/lang-javascript';
-import { defaultTabBinding } from '@codemirror/commands';
+import { defaultKeymap, defaultTabBinding } from '@codemirror/commands';
+import { bracketMatching } from '@codemirror/matchbrackets';
+import { closeBrackets, closeBracketsKeymap } from '@codemirror/closebrackets';
 import { html } from '@codemirror/lang-html';
 import { css } from '@codemirror/lang-css';
 import { json } from '@codemirror/lang-json';
 import { cpp } from '@codemirror/lang-cpp';
+import { lineNumbers, highlightActiveLineGutter } from '@codemirror/gutter';
+import { searchKeymap, highlightSelectionMatches } from '@codemirror/search';
+import { autocompletion, completionKeymap } from '@codemirror/autocomplete';
+import { commentKeymap } from '@codemirror/comment';
+import { rectangularSelection } from '@codemirror/rectangular-selection';
+import { defaultHighlightStyle } from '@codemirror/highlight';
+import { lintKeymap } from '@codemirror/lint';
 // import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -19,6 +37,15 @@ import { getIsUserOwner } from '../../selectors/users';
 import { setUnsavedChanges, startRefreshSketch } from '../../actions/ide';
 import { updateFileContent } from '../../actions/files';
 import { clearConsole } from '../../actions/console';
+
+const fileStates = {};
+const lineNumbersState = new Compartment();
+
+const editorTheme = EditorView.theme({
+  '&': { maxHeight: '100%', height: '100%' },
+  '.cm-scroller': { overflow: 'auto' },
+  '.cm-content, .cm-gutter': { minHeight: '100%' }
+});
 
 function getSelectedFile(state) {
   return (
@@ -53,18 +80,41 @@ function getFileState(state, file, customExtensions = []) {
       // maybe will have to copy over extensions? idk
       // store extensions separately? probs
       extensions: [
-        basicSetup,
+        highlightActiveLineGutter(),
+        highlightSpecialChars(),
+        history(),
+        foldGutter(),
+        drawSelection(),
+        EditorState.allowMultipleSelections.of(true),
+        indentOnInput(),
+        defaultHighlightStyle.fallback,
+        bracketMatching(),
+        closeBrackets(),
+        autocompletion(),
+        rectangularSelection(),
+        highlightActiveLine(),
+        highlightSelectionMatches(),
+        keymap.of([
+          ...closeBracketsKeymap,
+          ...defaultKeymap,
+          ...searchKeymap,
+          ...historyKeymap,
+          ...foldKeymap,
+          ...commentKeymap,
+          ...completionKeymap,
+          ...lintKeymap,
+          defaultTabBinding
+        ]),
         getLanguageMode(file.name),
-        keymap.of([defaultTabBinding]),
         EditorState.tabSize.of(2),
+        editorTheme,
+        lineNumbersState.of(lineNumbers()),
         ...customExtensions
       ]
     });
   }
   return state[file.id];
 }
-
-const fileStates = {};
 
 export default function Editor({ provideController }) {
   const sidebarIsExpanded = useSelector((state) => state.ide.sidebarIsExpanded);
@@ -75,6 +125,9 @@ export default function Editor({ provideController }) {
   );
   const autorefresh = useSelector((state) => state.preferences.autorefresh);
   const isPlaying = useSelector((state) => state.ide.isPlaying);
+  const lineNumbersEnabled = useSelector(
+    (state) => state.preferences.lineNumbers
+  );
   const dispatch = useDispatch();
   const editorSectionClass = classNames({
     editor: true,
@@ -126,6 +179,19 @@ export default function Editor({ provideController }) {
   }, []);
 
   useEffect(() => {
+    // how do i dispatch a change to a state that's not in the cm editor rn?
+    // maybe state.update?
+    // yes, which is literally the same function footprint
+    const value = lineNumbersEnabled ? lineNumbers() : [];
+    editor.current.dispatch({
+      effects: lineNumbersState.reconfigure(value)
+    });
+    // need to iterate through all of the editor states and update them?
+    // it says state.update returns a transaction... but how do i get the new state?
+    // yes, it's in Transaction.state. cool cool.
+  }, [lineNumbersEnabled]);
+
+  useEffect(() => {
     editor.current.setState(getFileState(fileStates, file, [onUpdate()]));
   }, [file.id]);
 
@@ -134,7 +200,11 @@ export default function Editor({ provideController }) {
     tidyCode: () => {},
     showFind: () => {},
     showReplace: () => {},
-    getContent: () => {}
+    getContent: () => {
+      const content = editor.current.state.doc.toString();
+      const updatedFile = Object.assign({}, file, { content });
+      return updatedFile;
+    }
   });
 
   return (
