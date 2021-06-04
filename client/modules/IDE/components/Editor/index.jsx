@@ -11,7 +11,7 @@ import {
 import { history, historyKeymap } from '@codemirror/history';
 import { foldGutter, foldKeymap } from '@codemirror/fold';
 import { indentOnInput } from '@codemirror/language';
-import { javascript } from '@codemirror/lang-javascript';
+import { javascript, esLint } from '@codemirror/lang-javascript';
 import { defaultKeymap, defaultTabBinding } from '@codemirror/commands';
 import { bracketMatching } from '@codemirror/matchbrackets';
 import { closeBrackets, closeBracketsKeymap } from '@codemirror/closebrackets';
@@ -25,7 +25,8 @@ import { autocompletion, completionKeymap } from '@codemirror/autocomplete';
 import { commentKeymap } from '@codemirror/comment';
 import { rectangularSelection } from '@codemirror/rectangular-selection';
 import { defaultHighlightStyle } from '@codemirror/highlight';
-import { lintKeymap } from '@codemirror/lint';
+import { lintKeymap, linter } from '@codemirror/lint';
+import Linter from 'eslint4b';
 // import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -40,6 +41,14 @@ import { clearConsole } from '../../actions/console';
 
 const fileStates = {};
 const lineNumbersState = new Compartment();
+const eslinter = new Linter();
+const eslintConfig = {
+  env: {
+    browser: true,
+    es2021: true
+  },
+  extends: ['p5js', 'p5js/sound']
+};
 
 const editorTheme = EditorView.theme({
   '&': { maxHeight: '100%', height: '100%' },
@@ -94,6 +103,7 @@ function getFileState(state, file, customExtensions = []) {
         rectangularSelection(),
         highlightActiveLine(),
         highlightSelectionMatches(),
+        linter(esLint(eslinter, eslintConfig)),
         keymap.of([
           ...closeBracketsKeymap,
           ...defaultKeymap,
