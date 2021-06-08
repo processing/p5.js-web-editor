@@ -252,6 +252,7 @@ export function startSketch() {
   return (dispatch, getState) => {
     dispatch(clearConsole());
     dispatch(startVisualSketch());
+    dispatch(showRuntimeErrorWarning());
     const state = getState();
     dispatchMessage({
       type: MessageTypes.SKETCH,

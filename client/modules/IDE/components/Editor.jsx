@@ -115,7 +115,6 @@ class Editor extends React.Component {
       styleSelectedText: true,
       lint: {
         onUpdateLinting: (annotations) => {
-          this.props.hideRuntimeErrorWarning();
           this.updateLintingMessageAccessibility(annotations);
         },
         options: {
@@ -159,6 +158,7 @@ class Editor extends React.Component {
       'change',
       debounce(() => {
         this.props.setUnsavedChanges(true);
+        this.props.hideRuntimeErrorWarning();
         this.props.updateFileContent(this.props.file.id, this._cm.getValue());
         if (this.props.autorefresh && this.props.isPlaying) {
           this.props.clearConsole();
@@ -246,12 +246,6 @@ class Editor extends React.Component {
       );
     }
 
-    if (prevProps.consoleEvents !== this.props.consoleEvents) {
-      this.props.showRuntimeErrorWarning();
-    }
-    for (let i = 0; i < this._cm.lineCount(); i += 1) {
-      this._cm.removeLineClass(i, 'background', 'line-runtime-error');
-    }
     if (this.props.runtimeErrorWarningVisible) {
       this.props.consoleEvents.forEach((consoleEvent) => {
         if (consoleEvent.method === 'error') {
@@ -261,26 +255,24 @@ class Editor extends React.Component {
             consoleEvent.data[0].indexOf &&
             consoleEvent.data[0].indexOf(')') > -1
           ) {
-            const n = consoleEvent.data[0].replace(')', '').split(' ');
-            const lineNumber = parseInt(n[n.length - 1], 10) - 1;
-            const { source } = consoleEvent;
-            const fileName = this.props.file.name;
-            const errorFromJavaScriptFile = `${source}.js` === fileName;
-            const errorFromIndexHTML =
-              source === fileName && fileName === 'index.html';
-            if (
-              !Number.isNaN(lineNumber) &&
-              (errorFromJavaScriptFile || errorFromIndexHTML)
-            ) {
-              this._cm.addLineClass(
-                lineNumber,
-                'background',
-                'line-runtime-error'
-              );
-            }
+            const sourceAndLoc = consoleEvent.data[0]
+              .split('\n')[1]
+              .split('(')[1]
+              .split(')')[0];
+            const [source, line, column] = sourceAndLoc.split(':');
+            const lineNumber = parseInt(line, 10) - 1;
+            this._cm.addLineClass(
+              lineNumber,
+              'background',
+              'line-runtime-error'
+            );
           }
         }
       });
+    } else {
+      for (let i = 0; i < this._cm.lineCount(); i += 1) {
+        this._cm.removeLineClass(i, 'background', 'line-runtime-error');
+      }
     }
   }
 
@@ -440,7 +432,7 @@ Editor.propTypes = {
       method: PropTypes.string.isRequired,
       args: PropTypes.arrayOf(PropTypes.string)
     })
-  ),
+  ).isRequired,
   updateLintMessage: PropTypes.func.isRequired,
   clearLintMessage: PropTypes.func.isRequired,
   updateFileContent: PropTypes.func.isRequired,
@@ -471,15 +463,11 @@ Editor.propTypes = {
   expandSidebar: PropTypes.func.isRequired,
   isUserOwner: PropTypes.bool.isRequired,
   clearConsole: PropTypes.func.isRequired,
-  showRuntimeErrorWarning: PropTypes.func.isRequired,
+  // showRuntimeErrorWarning: PropTypes.func.isRequired,
   hideRuntimeErrorWarning: PropTypes.func.isRequired,
   runtimeErrorWarningVisible: PropTypes.bool.isRequired,
   provideController: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired
-};
-
-Editor.defaultProps = {
-  consoleEvents: []
 };
 
 function mapStateToProps(state) {
@@ -496,7 +484,7 @@ function mapStateToProps(state) {
     user: state.user,
     project: state.project,
     toast: state.toast,
-    console: state.console,
+    consoleEvents: state.console,
 
     ...state.preferences,
     ...state.ide,
