@@ -246,30 +246,54 @@ class Editor extends React.Component {
       );
     }
 
-    if (this.props.runtimeErrorWarningVisible) {
-      this.props.consoleEvents.forEach((consoleEvent) => {
-        if (consoleEvent.method === 'error') {
-          if (
-            consoleEvent.data &&
-            consoleEvent.data[0] &&
-            consoleEvent.data[0].indexOf &&
-            consoleEvent.data[0].indexOf(')') > -1
-          ) {
-            const sourceAndLoc = consoleEvent.data[0]
-              .split('\n')[1]
-              .split('(')[1]
-              .split(')')[0];
-            const [source, line, column] = sourceAndLoc.split(':');
-            const lineNumber = parseInt(line, 10) - 1;
-            this._cm.addLineClass(
-              lineNumber,
-              'background',
-              'line-runtime-error'
-            );
+    if (this.props.consoleEvents.length !== prevProps.consoleEvents.length) {
+      if (this.props.runtimeErrorWarningVisible) {
+        // todo here, need to select the right file
+
+        this.props.consoleEvents.forEach((consoleEvent) => {
+          if (consoleEvent.method === 'error') {
+            if (consoleEvent.data && consoleEvent.data[0]) {
+              let sourceAndLoc;
+              if (
+                consoleEvent.data[0].indexOf &&
+                consoleEvent.data[0].indexOf(')') > -1
+              ) {
+                sourceAndLoc = consoleEvent.data[0] // eslint-disable-line
+                  .split('\n')[1]
+                  .split('(')[1]
+                  .split(')')[0];
+              } else {
+                sourceAndLoc = consoleEvent.data[0] // eslint-disable-line
+                  .split('\n')[1]
+                  .split('at ')[1];
+              }
+              const [source, line] = sourceAndLoc.split(':');
+
+              // get the file that this message is coming from, and then select it
+              const sourceArray = source.split('/');
+              const fileName = sourceArray.slice(-1)[0];
+              const filePath = sourceArray.slice(0, -1).join('/');
+              const fileWithError = this.props.files.find(
+                (f) => f.name === fileName && f.filePath === filePath
+              );
+              this.props.setSelectedFile(fileWithError.id);
+              const lineNumber = parseInt(line, 10) - 1;
+              this._cm.addLineClass(
+                lineNumber,
+                'background',
+                'line-runtime-error'
+              );
+            }
           }
+        });
+      } else {
+        for (let i = 0; i < this._cm.lineCount(); i += 1) {
+          this._cm.removeLineClass(i, 'background', 'line-runtime-error');
         }
-      });
-    } else {
+      }
+    }
+
+    if (this.props.file.id !== prevProps.file.id) {
       for (let i = 0; i < this._cm.lineCount(); i += 1) {
         this._cm.removeLineClass(i, 'background', 'line-runtime-error');
       }
@@ -467,7 +491,8 @@ Editor.propTypes = {
   hideRuntimeErrorWarning: PropTypes.func.isRequired,
   runtimeErrorWarningVisible: PropTypes.bool.isRequired,
   provideController: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
+  setSelectedFile: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

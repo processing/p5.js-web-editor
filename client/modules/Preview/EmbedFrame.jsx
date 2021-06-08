@@ -133,9 +133,10 @@ function resolveScripts(sketchDoc, files) {
           const blobUrl = createBlobUrl(resolvedFile);
           script.setAttribute('src', blobUrl);
           const blobPath = blobUrl.split('/').pop();
-          objectUrls[blobUrl] = `${resolvedFile.filePath}${
-            resolvedFile.filePath.length > 0 ? '/' : ''
-          }${resolvedFile.name}`;
+          // objectUrls[blobUrl] = `${resolvedFile.filePath}${
+          //   resolvedFile.filePath.length > 0 ? '/' : ''
+          // }${resolvedFile.name}`;
+          objectUrls[blobUrl] = `${resolvedFile.filePath}/${resolvedFile.name}`;
           objectPaths[blobPath] = resolvedFile.name;
           // script.setAttribute('data-tag', `${startTag}${resolvedFile.name}`);
           // script.removeAttribute('src');

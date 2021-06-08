@@ -147,7 +147,8 @@ function renameFile(state, action) {
 function setFilePath(files, fileId, path) {
   const file = files.find((f) => f.id === fileId);
   file.filePath = path;
-  const newPath = `${path}${path.length > 0 ? '/' : ''}${file.name}`;
+  // const newPath = `${path}${path.length > 0 ? '/' : ''}${file.name}`;
+  const newPath = `${path}/${file.name}`;
   if (file.children.length === 0) return;
   file.children.forEach((childFileId) => {
     setFilePath(files, childFileId, newPath);
@@ -192,11 +193,15 @@ const files = (state, action) => {
       return initialState();
     case ActionTypes.CREATE_FILE: {
       const parentFile = state.find((file) => file.id === action.parentId);
+      // const filePath =
+      //   parentFile.name === 'root'
+      //     ? ''
+      //     : `${parentFile.filePath}${parentFile.filePath.length > 0 ? '/' : ''}
+      //     ${parentFile.name}`;
       const filePath =
         parentFile.name === 'root'
           ? ''
-          : `${parentFile.filePath}${parentFile.filePath.length > 0 ? '/' : ''}
-          ${parentFile.name}`;
+          : `${parentFile.filePath}/${parentFile.name}`;
       const newState = [
         ...updateParent(state, action),
         {
@@ -220,8 +225,9 @@ const files = (state, action) => {
     case ActionTypes.UPDATE_FILE_NAME: {
       const newState = renameFile(state, action);
       const updatedFile = newState.find((file) => file.id === action.id);
-      const childPath = `${updatedFile.filePath}
-      ${updatedFile.filePath.length > 0 ? '/' : ''}${updatedFile.name}`;
+      // const childPath = `${updatedFile.filePath}
+      // ${updatedFile.filePath.length > 0 ? '/' : ''}${updatedFile.name}`;
+      const childPath = `${updatedFile.filePath}/${updatedFile.name}`;
       updatedFile.children.forEach((childId) => {
         setFilePath(newState, action.id, childPath);
       });
