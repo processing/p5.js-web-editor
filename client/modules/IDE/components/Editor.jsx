@@ -262,10 +262,12 @@ class Editor extends React.Component {
                   .split('\n')[1]
                   .split('(')[1]
                   .split(')')[0];
-              } else {
+              } else if (consoleEvent.data[0].indexOf('at ') > -1) {
                 sourceAndLoc = consoleEvent.data[0] // eslint-disable-line
                   .split('\n')[1]
                   .split('at ')[1];
+              } else {
+                return;
               }
               const [source, line] = sourceAndLoc.split(':');
 

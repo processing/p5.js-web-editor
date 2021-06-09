@@ -1,7 +1,6 @@
 import loopProtect from 'loop-protect';
 import { Hook, Decode, Encode } from 'console-feed';
 import evaluateExpression from './evaluateExpression';
-import { EXTERNAL_LINK_REGEX } from '../../server/utils/fileUtils';
 
 // should postMessage user the dispatcher? does the parent window need to
 // be registered as a frame? or a just a listener?
@@ -10,6 +9,7 @@ import { EXTERNAL_LINK_REGEX } from '../../server/utils/fileUtils';
 // const { editor } = window;
 const editor = window.parent.parent;
 const { editorOrigin } = window;
+const htmlOffset = 12;
 // const editorOrigin = '*';
 // const editorOrigin = 'http://localhost:8000';
 // so this works??
@@ -77,12 +77,16 @@ function getScriptOff(line) {
 // catch reference errors, via http://stackoverflow.com/a/12747364/2994108
 window.onerror = function onError(msg, source, lineNumber, columnNo, error) {
   const urls = Object.keys(window.objectUrls);
-  let data = '';
+  let data = error.stack;
   urls.forEach((url) => {
     if (error.stack.match(url)) {
       data = error.stack.replaceAll(url, window.objectUrls[url]);
     }
   });
+  if (data.match('about:srcdoc')) {
+    data = data.replaceAll('about:srcdoc', 'index.html');
+    data = data.replace(`:${lineNumber}:`, `:${lineNumber - htmlOffset}:`);
+  }
   editor.postMessage(
     {
       source: 'sketch',
@@ -106,12 +110,13 @@ window.onerror = function onError(msg, source, lineNumber, columnNo, error) {
 window.onunhandledrejection = function onUnhandledRejection(event) {
   if (event.reason && event.reason.message && event.reason.stack) {
     const urls = Object.keys(window.objectUrls);
-    let data = '';
+    let data = event.reason.stack;
     urls.forEach((url) => {
       if (event.reason.stack.match(url)) {
         data = event.reason.stack.replaceAll(url, window.objectUrls[url]);
       }
     });
+    data = data.replaceAll('about:srcdoc', 'index.html');
     editor.postMessage(
       {
         source: 'sketch',
