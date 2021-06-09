@@ -162,7 +162,7 @@ class Editor extends React.Component {
         this.props.updateFileContent(this.props.file.id, this._cm.getValue());
         if (this.props.autorefresh && this.props.isPlaying) {
           this.props.clearConsole();
-          this.props.startRefreshSketch();
+          this.props.startSketch();
         }
       }, 1000)
     );
@@ -473,7 +473,7 @@ Editor.propTypes = {
     url: PropTypes.string
   }).isRequired,
   setUnsavedChanges: PropTypes.func.isRequired,
-  startRefreshSketch: PropTypes.func.isRequired,
+  startSketch: PropTypes.func.isRequired,
   autorefresh: PropTypes.bool.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   theme: PropTypes.string.isRequired,
