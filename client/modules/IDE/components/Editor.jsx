@@ -267,6 +267,7 @@ class Editor extends React.Component {
                   .split('\n')[1]
                   .split('at ')[1];
               } else {
+                this.props.expandConsole();
                 return;
               }
               const [source, line] = sourceAndLoc.split(':');
@@ -279,6 +280,7 @@ class Editor extends React.Component {
                 (f) => f.name === fileName && f.filePath === filePath
               );
               this.props.setSelectedFile(fileWithError.id);
+              this.props.expandConsole();
               const lineNumber = parseInt(line, 10) - 1;
               this._cm.addLineClass(
                 lineNumber,
@@ -494,7 +496,8 @@ Editor.propTypes = {
   runtimeErrorWarningVisible: PropTypes.bool.isRequired,
   provideController: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
-  setSelectedFile: PropTypes.func.isRequired
+  setSelectedFile: PropTypes.func.isRequired,
+  expandConsole: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
