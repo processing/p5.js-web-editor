@@ -4,7 +4,15 @@ import Backend from 'i18next-http-backend';
 import { enUS, es, ja, hi, ptBR, de, uk } from 'date-fns/locale';
 
 const fallbackLng = ['en-US'];
-const availableLanguages = ['en-US', 'es-419', 'ja', 'hi', 'pt-BR', 'de', 'uk-UA'];
+const availableLanguages = [
+  'en-US',
+  'es-419',
+  'ja',
+  'hi',
+  'pt-BR',
+  'de',
+  'uk-UA'
+];
 
 export function languageKeyToLabel(lang) {
   const languageMap = {
