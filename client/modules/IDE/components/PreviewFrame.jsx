@@ -22,8 +22,8 @@ function PreviewFrame({ fullView }) {
   });
 
   const frameUrl = previewUrl;
-  const sandboxAttributes = `allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups 
-    allow-presentation allow-same-origin allow-scripts allow-top-navigation-by-user-activation`;
+  const sandboxAttributes = `allow-forms allow-modals allow-pointer-lock allow-popups 
+    allow-same-origin allow-scripts allow-top-navigation-by-user-activation`;
   const allow =
     'accelerometer; autoplay; camera; encrypted-media; geolocation; gyroscope; microphone; magnetometer; midi; vr;';
   return (

@@ -149,7 +149,7 @@ function resolveScripts(sketchDoc, files) {
         script.getAttribute('src').match(EXTERNAL_LINK_REGEX)
       ) !== null
     ) {
-      script.setAttribute('crossorigin', '');
+      // script.setAttribute('crossorigin', '');
       script.innerHTML = resolveJSLinksInString(script.innerHTML, files); // eslint-disable-line
     }
   });
@@ -266,7 +266,10 @@ function EmbedFrame({ files, isPlaying, basePath }) {
     const doc = iframe.current;
     if (isPlaying) {
       const htmlDoc = injectLocalFiles(files, htmlFile, basePath);
-      srcDoc.set(doc, htmlDoc);
+      // BRO FOR SOME REASON YOU HAVE TO DO THIS TO GET IT TO WORK ON SAFARI
+      setTimeout(() => {
+        srcDoc.set(doc, htmlDoc);
+      }, 0);
     } else {
       doc.srcdoc = '';
       srcDoc.set(doc, '  ');
