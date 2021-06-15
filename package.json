@@ -175,7 +175,7 @@
     "express-session": "^1.17.0",
     "final-form": "^4.20.1",
     "friendly-words": "^1.1.10",
-    "fuse.js": "^3.6.1",
+    "fuse.js": "^6.4.6",
     "htmlhint": "^0.10.1",
     "i18next": "^19.4.5",
     "i18next-http-backend": "^1.0.21",
