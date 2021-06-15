@@ -21,6 +21,7 @@
     "fetch-examples-gg:prod": "cross-env NODE_ENV=production node ./dist/fetch-examples-gg.bundle.js",
     "fetch-examples-ml5:prod": "cross-env NODE_ENV=production node ./dist/fetch-examples-ml5.bundle.js",
     "update-syntax-highlighting": "node ./server/scripts/update-syntax-highlighting.js",
+    "update-p5-hinter": "node ./server/scripts/update-p5-hinter.js",
     "heroku-postbuild": "touch .env; npm run build",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
@@ -174,6 +175,7 @@
     "express-session": "^1.17.0",
     "final-form": "^4.20.1",
     "friendly-words": "^1.1.10",
+    "fuse.js": "^3.6.1",
     "htmlhint": "^0.10.1",
     "i18next": "^19.4.5",
     "i18next-http-backend": "^1.0.21",

@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import CodeMirror from 'codemirror';
+import Fuse from 'fuse.js';
 import emmet from '@emmetio/codemirror-plugin';
 import prettier from 'prettier';
 import babelParser from 'prettier/parser-babel';
@@ -27,6 +28,7 @@ import 'codemirror/addon/search/jump-to-line';
 import 'codemirror/addon/edit/matchbrackets';
 import 'codemirror/addon/edit/closebrackets';
 import 'codemirror/addon/selection/mark-selection';
+import 'codemirror/addon/hint/css-hint';
 
 import { JSHINT } from 'jshint';
 import { CSSLint } from 'csslint';
@@ -41,6 +43,8 @@ import '../../../utils/webGL-clike';
 import Timer from '../components/Timer';
 import EditorAccessibility from '../components/EditorAccessibility';
 import { metaKey } from '../../../utils/metaKey';
+import './EditorShowHint';
+import * as hinter from '../../../utils/p5-hinter';
 
 import '../../../utils/codemirror-search';
 
@@ -126,6 +130,10 @@ class Editor extends React.Component {
         }
       }
     });
+    this.hinter = new Fuse(hinter.p5Hinter, {
+      threshold: 0.2,
+      keys: ['text']
+    });
 
     delete this._cm.options.lint.options.errors;
 
@@ -175,15 +183,20 @@ class Editor extends React.Component {
     });
 
     this._cm.on('keydown', (_cm, e) => {
-      // 70 === f
       if (
         ((metaKey === 'Cmd' && e.metaKey) ||
           (metaKey === 'Ctrl' && e.ctrlKey)) &&
         e.shiftKey &&
-        e.keyCode === 70
+        e.key === 'f'
       ) {
         e.preventDefault();
         this.tidyCode();
+      }
+
+      // Show hint
+      const mode = this._cm.getOption('mode');
+      if (/^[a-z]$/i.test(e.key) && (mode === 'css' || mode === 'javascript')) {
+        this.showHint(_cm);
       }
     });
 
@@ -315,6 +328,39 @@ class Editor extends React.Component {
 
   showFind() {
     this._cm.execCommand('findPersistent');
+  }
+
+  showHint(_cm) {
+    const hintOptions = {
+      completeSingle: false,
+      completeOnSingleClick: false,
+      closeOnUnfocus: false
+      // closeOnPick: false
+    };
+
+    // CSS
+    if (_cm.options.mode === 'css') {
+      CodeMirror.showHint(_cm, CodeMirror.hint.css, hintOptions);
+      return;
+    }
+
+    // JavaScript
+    CodeMirror.showHint(
+      _cm,
+      () => {
+        const c = _cm.getCursor();
+        const token = _cm.getTokenAt(c);
+
+        const hints = this.hinter.search(token.string);
+
+        return {
+          list: hints,
+          from: CodeMirror.Pos(c.line, token.start),
+          to: CodeMirror.Pos(c.line, c.ch)
+        };
+      },
+      hintOptions
+    );
   }
 
   showReplace() {
