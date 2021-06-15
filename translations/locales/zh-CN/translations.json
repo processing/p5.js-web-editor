@@ -1,0 +1,605 @@
+{
+  "Nav": {
+    "File": {
+      "Title": "文件",
+      "New": "新建项目",
+      "Share": "分享",
+      "Duplicate": "复制项目",
+      "Open": "打开",
+      "Download": "下载",
+      "AddToCollection": "添加到集合",
+      "Examples": "范例"
+    },
+    "Edit": {
+      "Title": "编辑",
+      "TidyCode": "对齐代码",
+      "Find": "查找",
+      "Replace": "替换"
+    },
+    "Sketch": {
+      "Title": "项目",
+      "AddFile": "新建文件",
+      "AddFolder": "新建文件夹",
+      "Run": "运行",
+      "Stop": "停止运行"
+    },
+    "Help": {
+      "Title": "帮助",
+      "KeyboardShortcuts": "快捷键",
+      "Reference": "参考文档",
+      "About": "关于"
+    },
+    "Lang": "语言",
+    "BackEditor": "回到编辑器",
+    "WarningUnsavedChanges": "您确定要离开吗？您还有未保存的修改哦。",
+    "Login": "登陆",
+    "LoginOr": "或",
+    "SignUp": "注册",
+    "Auth": {
+      "Welcome": "欢迎",
+      "Hello": "嗨",
+      "MyAccount": "我的账号",
+      "My": "我的",
+      "MySketches": "我的绘图",
+      "MyCollections": "我的集合",
+      "Asset": "资产",
+      "MyAssets": "我的资产",
+      "LogOut": "登出"
+    }
+  },
+  "CodemirrorFindAndReplace": {
+    "ToggleReplace": "开关替换选项",
+    "Find": "查找",
+    "FindPlaceholder": "在文件中查找",
+    "Replace": "替换",
+    "ReplaceAll": "替换全部",
+    "ReplacePlaceholder": "替换为",
+    "Regex": "正则表达式",
+    "CaseSensitive": "区分大小写",
+    "WholeWords": "整个单词",
+    "Previous": "上一个",
+    "Next": "下一个",
+    "NoResults": "没有找到",
+    "Close": "关闭"
+  },
+  "LoginForm": {
+    "UsernameOrEmail": "邮箱或用户名",
+    "UsernameOrEmailARIA": "邮箱或用户名",
+    "Password": "密码",
+    "PasswordARIA": "密码",
+    "Submit": "登陆"
+  },
+  "LoginView": {
+    "Title": "p5.js 在线编辑器 ｜ 登陆",
+    "Login": "登陆",
+    "LoginOr": "或",
+    "SignUp": "注册",
+    "Email": "邮箱",
+    "Username": "用户名",
+    "DontHaveAccount": "还没有账号？",
+    "ForgotPassword": "忘记密码？",
+    "ResetPassword": "重置密码"
+  },
+  "SocialAuthButton": {
+    "Connect": "链接 {{serviceauth}} 账号",
+    "Unlink": "取消 {{serviceauth}} 链接",
+    "Login": "使用 {{serviceauth}} 登陆",
+    "LogoARIA": "{{serviceauth}} 图标"
+  },
+  "About": {
+    "Title": "关于",
+    "TitleHelmet": "p5.js 在线编辑器 ｜ 关于",
+    "Contribute": "贡献",
+    "NewP5": "p5.js 新手？",
+    "Report": "报告问题",
+    "Learn": "学习",
+    "Resources": "资源",
+    "Libraries": "第三方库",
+    "Forum": "论坛",
+    "Examples": "范例"
+  },
+  "Toast": {
+    "OpenedNewSketch": "打开了新项目。",
+    "SketchSaved": "项目保存成功。",
+    "SketchFailedSave": "项目保存失败。",
+    "AutosaveEnabled": "自动保存已打开。",
+    "LangChange": "语言已更改",
+    "SettingsSaved": "设置保存成功。"
+  },
+  "Toolbar": {
+    "Preview": "预览",
+    "Auto-refresh": "自动刷新",
+    "OpenPreferencesARIA": "打开设置",
+    "PlaySketchARIA": "运行",
+    "PlayOnlyVisualSketchARIA": "只运行图形项目",
+    "StopSketchARIA": "停止运行",
+    "EditSketchARIA": "修改项目名称",
+    "NewSketchNameARIA": "新项目名称",
+    "By": "作者 "
+  },
+  "Console": {
+    "Title": "控制台",
+    "Clear": "清空",
+    "ClearARIA": "清空控制台",
+    "Close": "关闭",
+    "CloseARIA": "关闭控制台",
+    "Open": "打开",
+    "OpenARIA": "打开控制台"
+  },
+  "Preferences": {
+    "Settings": "设置",
+    "GeneralSettings": "通用",
+    "Accessibility": "包容性设计",
+    "Theme": "主题",
+    "LightTheme": "明亮",
+    "LightThemeARIA": "打开明亮主题",
+    "DarkTheme": "暗黑",
+    "DarkThemeARIA": "打开暗黑主题",
+    "HighContrastTheme": "高对比度",
+    "HighContrastThemeARIA": "打开高对比度主题",
+    "TextSize": "字体大小",
+    "DecreaseFont": "减小",
+    "DecreaseFontARIA": "减小字体大小",
+    "IncreaseFont": "增大",
+    "IncreaseFontARIA": "增大字体大小",
+    "Autosave": "自动保存",
+    "On": "打开",
+    "AutosaveOnARIA": "打开自动保存",
+    "Off": "关闭",
+    "AutosaveOffARIA": "关闭自动保存",
+    "AutocloseBracketsQuotes": "自动添加反括号和反引号",
+    "AutocloseBracketsQuotesOnARIA": "打开自动添加反括号和反引号",
+    "AutocloseBracketsQuotesOffARIA": "关闭自动添加反括号和反引号",
+    "WordWrap": "自动提行",
+    "LineWrapOnARIA": "打开自动提行",
+    "LineWrapOffARIA": "关闭自动提行",
+    "LineNumbers": "行号",
+    "LineNumbersOnARIA": "打开行号",
+    "LineNumbersOffARIA": "关闭行号",
+    "LintWarningSound": "纠码器（Lint）警告音",
+    "LintWarningOnARIA": "打开纠码器警告音",
+    "LintWarningOffARIA": "关闭纠码器警告音",
+    "PreviewSound": "预览音",
+    "PreviewSoundARIA": "预览音",
+    "AccessibleTextBasedCanvas": "无障碍文字画布",
+    "UsedScreenReader": "结合屏幕阅读器使用",
+    "PlainText": "纯文本",
+    "TextOutputARIA": "打开文字输出",
+    "TableText": "表格文本",
+    "TableOutputARIA": "打开表格文本",
+    "Sound": "声音",
+    "SoundOutputARIA": "打开声音"
+  },
+  "KeyboardShortcuts": {
+    "Title": "快捷键",
+    "ShortcutsFollow": "编辑器快捷键参考 ",
+    "SublimeText": "Sublime Text 快捷键",
+    "CodeEditing": {
+      "Tidy": "对齐代码",
+      "FindText": "查找",
+      "FindNextMatch": "查找下一个",
+      "FindPrevMatch": "查找上一个",
+      "ReplaceTextMatch": "替换",
+      "IndentCodeLeft": "代码向左缩进",
+      "IndentCodeRight": "代码向右缩进",
+      "CommentLine": "注释（或取消注释）行",
+      "FindNextTextMatch": "查找下一个符合的文字",
+      "FindPreviousTextMatch": "查找上一个符合的文字",
+      "CodeEditing": "代码编辑"
+    },
+    "General": {
+      "StartSketch": "运行项目",
+      "StopSketch": "停止运行",
+      "TurnOnAccessibleOutput": "打开无障碍输出",
+      "TurnOffAccessibleOutput": "关闭无障碍输出"
+    }
+  },
+  "Sidebar": {
+    "Title": "项目文件",
+    "ToggleARIA": "开关项目文件选项",
+    "AddFolder": "新建文件夹",
+    "AddFolderARIA": "新建文件夹",
+    "AddFile": "新建文件",
+    "AddFileARIA": "新建文件",
+    "UploadFile": "上传文件",
+    "UploadFileARIA": "上传文件"
+  },
+  "FileNode": {
+    "OpenFolderARIA": "展开文件夹",
+    "CloseFolderARIA": "合上文件夹",
+    "ToggleFileOptionsARIA": "开关文件选项",
+    "AddFolder": "新建文件夹",
+    "AddFolderARIA": "新建文件夹",
+    "AddFile": "新建文件",
+    "AddFileARIA": "新建文件",
+    "UploadFile": "上传文件",
+    "UploadFileARIA": "上传文件",
+    "Rename": "重命名",
+    "Delete": "删除"
+  },
+  "Common": {
+    "Error": "错误",
+    "ErrorARIA": "错误",
+    "Save": "保存",
+    "p5logoARIA": "p5.js 图标",
+    "DeleteConfirmation": "您确定要删除 {{name}} 吗？"
+  },
+  "IDEView": {
+    "SubmitFeedback": "提交反馈",
+    "SubmitFeedbackARIA": "提交反馈",
+    "AddCollectionTitle": "添加到集合",
+    "AddCollectionARIA":"添加到集合",
+    "ShareTitle": "分享",
+    "ShareARIA":"分享"
+  },
+  "NewFileModal": {
+    "Title": "新建文件",
+    "CloseButtonARIA": "取消新建文件",
+    "EnterName": "请输入名称",
+    "InvalidType": "不支持的格式。支持的格式有 .js, .css, .json, .xml, .txt, .csv, .tsv, .frag, .vert 。"
+  },
+  "NewFileForm": {
+    "AddFileSubmit": "新建文件",
+    "Placeholder": "名称"
+  },
+  "NewFolderModal": {
+    "Title": "新建文件夹",
+    "CloseButtonARIA": "取消新建文件夹",
+    "EnterName": "请输入名称",
+    "EmptyName": "文件夹名称不能含有空格",
+    "InvalidExtension": "文件夹名称不能含有空格"
+  },
+  "NewFolderForm": {
+    "AddFolderSubmit": "新建文件夹",
+    "Placeholder": "名称"
+  },
+  "ResetPasswordForm": {
+    "Email": "注册时使用的邮箱",
+    "EmailARIA": "邮箱",
+    "Submit": "发送重置密码邮件"
+  },
+  "ResetPasswordView": {
+    "Title": "p5.js 在线编辑器 ｜ 重置密码",
+    "Reset": "重置密码",
+    "Submitted": "您应该很快会收到重置的邮件。如果您没有在收件箱看到它, 请在垃圾邮件箱中找找。",
+    "Login": "登陆",
+    "LoginOr": "或",
+    "SignUp": "注册"
+  },
+  "ReduxFormUtils": {
+    "errorInvalidEmail": "请输入正确的邮箱地址",
+    "errorEmptyEmail": "请输入一个邮箱地址",
+    "errorPasswordMismatch": "两次输入的密码必须相同",
+    "errorEmptyPassword": "请输入一个密码",
+    "errorShortPassword": "密码至少六位",
+    "errorConfirmPassword": "请再次输入密码以确认",
+    "errorNewPassword": "请输入一个新密码或保持当前密码为空",
+    "errorEmptyUsername": "请输入一个用户名",
+    "errorLongUsername": "用户名至多20位",
+    "errorValidUsername": "用户名只能含有数字，字母，和某些标点符号（. - _）。"
+  },
+  "NewPasswordView": {
+    "Title": "p5.js 在线编辑器 ｜ 新密码",
+    "Description": "设置新密码",
+    "TokenInvalidOrExpired": "验证码无效或已过期。",
+    "EmptyPassword": "请输入一个密码",
+    "PasswordConfirmation": "请再次输入密码",
+    "PasswordMismatch": "两次输入的密码必须相同"
+  },
+  "AccountForm": {
+    "Email": "邮箱",
+    "EmailARIA": "邮箱",
+    "Unconfirmed": "未确认。",
+    "EmailSent": "确认邮件已发送，请查收。",
+    "Resend": "再次发送确认邮件",
+    "UserName": "用户名",
+    "UserNameARIA": "用户名",
+    "CurrentPassword": "当前密码",
+    "CurrentPasswordARIA": "当前密码",
+    "NewPassword": "新密码",
+    "NewPasswordARIA": "新密码",
+    "SubmitSaveAllSettings": "保存所有设置"
+  },
+  "AccountView": {
+    "SocialLogin": "第三方登陆",
+    "SocialLoginDescription": "使用您的 GitHub 或谷歌账号登陆 p5.js 在线编辑器。",
+    "Title": "p5.js 在线编辑器 ｜ 账号设置",
+    "Settings": "账号设置",
+    "AccountTab": "账号",
+    "AccessTokensTab": "访问令牌"
+  },
+  "APIKeyForm": {
+    "ConfirmDelete": "您确定要删除 {{key_label}} 吗？",
+    "Summary": "个人访问令牌就像您的密码一样，允许自动脚本访问编辑器的 API。请为每个需要访问的脚本创建一个令牌。",
+    "CreateToken": "新建令牌（Access Token）",
+    "TokenLabel": "这个令牌有什么用？",
+    "TokenPlaceholder": "这个令牌有什么用？例如，演示导入脚本。",
+    "CreateTokenSubmit": "新建",
+    "NoTokens": "您还没有令牌。",
+    "NewTokenTitle": "您的新令牌",
+    "NewTokenInfo": "请务必立即复制这个新的个人访问令牌。您将无法再次看到它！",
+    "ExistingTokensTitle": "现有令牌"
+  },
+  "APIKeyList": {
+    "Name": "名称",
+    "Created": "创建于",
+    "LastUsed": "上次使用",
+    "Actions": "操作",
+    "Never": "从未",
+    "DeleteARIA": "删除 API 密匙"
+  },
+  "NewPasswordForm": {
+    "Title": "密码",
+    "TitleARIA": "密码",
+    "ConfirmPassword": "确认密码",
+    "ConfirmPasswordARIA": "确认密码",
+    "SubmitSetNewPassword": "设置新密码"
+  },
+  "SignupForm": {
+    "Title": "用户名",
+    "TitleARIA": "用户名",
+    "Email": "邮箱",
+    "EmailARIA": "邮箱",
+    "Password": "密码",
+    "PasswordARIA": "密码",
+    "ConfirmPassword": "确认密码",
+    "ConfirmPasswordARIA": "确认密码",
+    "SubmitSignup": "注册"
+  },
+  "SignupView": {
+    "Title": "p5.js 在线编辑器 ｜ 注册",
+    "Description": "注册",
+    "Or": "或",
+    "AlreadyHave": "已经有账户了？",
+    "Login": "登陆"
+  },
+  "EmailVerificationView": {
+    "Title": "p5.js 在线编辑器 ｜ 确认邮箱",
+    "Verify": "确认您的邮箱",
+    "InvalidTokenNull": "这个链接是无效的。",
+    "Checking": "正在验证令牌，请耐心等待……",
+    "Verified": "完成！您的邮箱地址已验证成功。",
+    "InvalidState": "出了一些问题。"
+  },
+  "AssetList": {
+    "Title": "p5.js 在线编辑器 ｜ 我的项目",
+    "ToggleOpenCloseARIA": "开关资产选项",
+    "Delete": "删除",
+    "OpenNewTab": "在新标签页中打开",
+    "NoUploadedAssets": "没有上传的资产。",
+    "HeaderName": "名称",
+    "HeaderSize": "大小",
+    "HeaderSketch": "项目"
+  },
+  "Feedback": {
+    "Title": "p5.js 在线编辑器 ｜ 反馈",
+    "ViaGithubHeader": "通过提交 GitHub 问题（Issue）",
+    "ViaGithubDescription": "如果您熟悉 Github，这是我们接收错误报告和反馈的首选方法。",
+    "GoToGithub": "前往 Github",
+    "ViaGoogleHeader": "通过谷歌表单",
+    "ViaGoogleDescription": "您也可以便捷地提交一个表单。",
+    "GoToForm": "前往表单"
+  },
+  "Searchbar": {
+    "SearchSketch": "搜索项目……",
+    "SearchCollection": "搜索集合……",
+    "ClearTerm": "清空"
+  },
+  "UploadFileModal": {
+    "Title": "上传文件",
+    "CloseButtonARIA": "取消上传文件",
+    "SizeLimitError": "错误：您无法再上传任何文件。您已达到 {{sizeLimit}} 的总容量限制。如果您想上传更多，请删除您不再使用的那些"
+  },
+  "FileUploader": {
+    "DictDefaultMessage": "将文件拖放到此处或单击以使用文件浏览器"
+  },
+  "ErrorModal": {
+    "MessageLogin": "您需要登陆账号以保存。",
+    "Login": "登陆",
+    "LoginOr": " 或 ",
+    "SignUp": "注册",
+    "MessageLoggedOut": "您似乎已退出登录。请",
+    "LogIn": "登陆",
+    "SavedDifferentWindow": "您尝试保存的项目已在另一个窗口保存。请刷新页面以查看最新版本。",
+    "LinkTitle": "链接帐户时出错",
+    "LinkMessage": "将您的 {{serviceauth}} 帐户链接到您的 p5.js 在线编辑器帐户时出现错误：您的 {{serviceauth}} 帐户已链接到另一个 p5.js 在线编辑器帐户。"
+  },
+  "ShareModal": {
+    "Embed": "嵌入",
+    "Present": "展示",
+    "Fullscreen": "全屏",
+    "Edit": "编辑"
+  },
+  "CollectionView": {
+    "TitleCreate": "新建集合",
+    "TitleDefault": "集合"
+  },
+  "Collection": {
+    "Title": "p5.js 在线编辑器 ｜ 我的集合",
+    "AnothersTitle": "p5.js 在线编辑器 ｜ {{anotheruser}} 的集合",
+    "Share": "分享",
+    "URLLink": "集合链接",
+    "AddSketch": "添加项目",
+    "DeleteFromCollection": "您确定要从此集合中删除 {{name_sketch}} 吗？",
+    "SketchDeleted": "项目已删除",
+    "SketchRemoveARIA": "从集合中移除项目",
+    "DescriptionPlaceholder": "添加描述",
+    "Description": "描述",
+    "NumSketches": "{{count}} 个项目",
+    "NumSketches_plural": "{{count}} 个项目",
+    "By":"集合创建者 ",
+    "NoSketches": "集合中没有项目",
+    "TableSummary": "包含所有集合的表格",
+    "HeaderName": "名称",
+    "HeaderCreatedAt": "创建于",
+    "HeaderUser": "所有者",
+    "DirectionAscendingARIA": "升序",
+    "DirectionDescendingARIA": "降序",
+    "ButtonLabelAscendingARIA": "按 {{displayName}} 升序排列。",
+    "ButtonLabelDescendingARIA": "按 {{displayName}} 降序排列。"
+  },
+  "AddToCollectionList": {
+    "Title": "p5.js 在线编辑器 ｜ 我的集合",
+    "AnothersTitle": "p5.js 在线编辑器 ｜ {{anotheruser}} 的集合",
+    "Empty": "没有集合"
+  },
+  "CollectionCreate": {
+    "Title": "p5.js 在线编辑器 ｜ 创建集合",
+    "FormError": "不能创建集合",
+    "FormLabel": "集合名称",
+    "FormLabelARIA": "名称",
+    "NameRequired": "集合名称为必填项",
+    "Description": "描述（选填）",
+    "DescriptionARIA": "描述",
+    "DescriptionPlaceholder": "我最喜欢的绘图！",
+    "SubmitCollectionCreate": "新建集合"
+  },
+  "DashboardView": {
+    "CreateCollection": "新建集合",
+    "NewSketch": "新建项目",
+    "CreateCollectionOverlay": "新建集合"
+  },
+  "DashboardTabSwitcher": {
+    "Sketches": "项目",
+    "Collections": "集合",
+    "Assets": "资产"
+  },
+  "CollectionList": {
+    "Title": "p5.js 在线编辑器 ｜ 我的集合",
+    "AnothersTitle": "p5.js 在线编辑器 ｜ {{anotheruser}} 的集合",
+    "NoCollections": "没有集合。",
+    "TableSummary": "包含所有集合的表格",
+    "HeaderName": "名称",
+    "HeaderCreatedAt": "创建于",
+    "HeaderCreatedAt_mobile": "创建于",
+    "HeaderUpdatedAt": "更新于",
+    "HeaderUpdatedAt_mobile": "更新于",
+    "HeaderNumItems": "项目数",
+    "HeaderNumItems_mobile": "项目数",
+    "DirectionAscendingARIA": "升序",
+    "DirectionDescendingARIA": "降序",
+    "ButtonLabelAscendingARIA": "按 {{displayName}} 升序排列。",
+    "ButtonLabelDescendingARIA": "按 {{displayName}} 降序排列。",
+    "AddSketch": "添加项目"
+  },
+  "CollectionListRow": {
+    "ToggleCollectionOptionsARIA": "开关集合选项",
+    "AddSketch": "添加项目",
+    "Delete": "删除",
+    "Rename": "重命名"
+  },
+  "Overlay": {
+    "AriaLabel": "关闭 {{title}} 覆盖"
+  },
+  "QuickAddList":{
+    "ButtonRemoveARIA": "从集合中移除",
+    "ButtonAddToCollectionARIA": "添加到集合",
+    "View": "查看"
+  },
+  "SketchList": {
+    "View": "查看",
+    "Title": "p5.js 在线编辑器 ｜ 我的项目",
+    "AnothersTitle": "p5.js 在线编辑器 ｜ {{anotheruser}} 的项目",
+    "ToggleLabelARIA": "开关项目选项",
+    "DropdownRename": "重命名",
+    "DropdownDownload": "下载",
+    "DropdownDuplicate": "复制",
+    "DropdownAddToCollection": "添加到集合",
+    "DropdownDelete": "删除",
+    "DirectionAscendingARIA": "升序",
+    "DirectionDescendingARIA": "降序",
+    "ButtonLabelAscendingARIA": "按 {{displayName}} 升序排列。",
+    "ButtonLabelDescendingARIA": "按 {{displayName}} 降序排列。",
+    "AddToCollectionOverlayTitle": "添加到集合",
+    "TableSummary": "包含所有已保存项目的表格",
+    "HeaderName": "项目",
+    "HeaderCreatedAt": "创建于",
+    "HeaderCreatedAt_mobile": "创建于",
+    "HeaderUpdatedAt": "更新于",
+    "HeaderUpdatedAt_mobile": "更新于",
+    "NoSketches": "没有项目。"
+  },
+  "AddToCollectionSketchList": {
+    "Title": "p5.js 在线编辑器 ｜ 我的项目",
+    "AnothersTitle": "p5.js 在线编辑器 ｜ {{anotheruser}} 的项目",
+    "NoCollections": "没有集合。"
+  },
+  "Editor": {
+    "OpenSketchARIA": "打开项目文件导航",
+    "CloseSketchARIA": "关闭项目文件导航",
+    "UnsavedChangesARIA": "项目中有未保存的修改",
+    "KeyUpLineNumber": "第{{lineNumber}}行"
+  },
+  "EditorAccessibility": {
+    "NoLintMessages": "没有纠错器消息",
+    "CurrentLine": "当前行"
+  },
+  "Timer": {
+    "SavedAgo": "保存于 {{timeAgo}}"
+  },
+  "formatDate": {
+    "JustNow": "刚刚",
+    "15Seconds": "15秒 以前",
+    "25Seconds": "25秒 以前",
+    "35Seconds": "35秒 以前",
+    "Ago": "{{timeAgo}} 以前"
+  },
+  "AddRemoveButton": {
+    "AltAddARIA": "添加到集合",
+    "AltRemoveARIA": "从集合中移除"
+  },
+  "CopyableInput": {
+    "CopiedARIA": "已复制到剪贴板！",
+    "OpenViewTabARIA": "在新标签页中打开 {{label}} 视图"
+  },
+  "EditableInput": {
+    "EditValue": "编辑 {{display}} 参数",
+    "EmptyPlaceholder": "没有参数"
+  },
+  "PreviewNav": {
+    "EditSketchARIA": "编辑项目",
+    "ByUser": "作者 "
+  },
+  "MobilePreferences": {
+    "Settings": "设置",
+    "GeneralSettings": "通用",
+    "Accessibility": "包容性",
+    "AccessibleOutput": "无障碍输出",
+    "Theme": "主题",
+    "LightTheme": "明亮",
+    "DarkTheme": "暗黑",
+    "HighContrastTheme": "高对比度",
+    "Autosave": "自动保存",
+    "WordWrap": "自动提行",
+    "LineNumbers": "行号",
+    "LintWarningSound": "纠码器（Lint）警告音",
+    "UsedScreenReader": "结合屏幕阅读器使用",
+    "PlainText": "纯文本",
+    "TableText": "表格文本",
+    "Sound": "声音"
+  },
+  "PreferenceCreators": {
+    "On": "打开",
+    "Off": "关闭"
+  },
+  "MobileIDEView":{
+    "Preferences": "设置",
+    "MyStuff": "我的",
+    "Examples": "范例",
+    "OriginalEditor": "原编辑器",
+    "Login": "登陆",
+    "Logout": "登出"
+  },
+  "MobileDashboardView": {
+    "Examples": "范例",
+    "Sketches": "项目",
+    "Collections": "集合",
+    "Assets": "资产",
+    "MyStuff": "我的",
+    "CreateSketch": "新建项目",
+    "CreateCollection": "新建集合"
+  },
+  "Explorer": {
+    "Files": "文件"
+  }
+}
