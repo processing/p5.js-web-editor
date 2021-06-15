@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import objectID from 'bson-objectid';
 import blobUtil from 'blob-util';
+import mime from 'mime-types';
 import { PLAINTEXT_FILE_REGEX } from '../../../server/utils/fileUtils';
 
 const defaultSketch = `function setup() {
@@ -109,7 +110,8 @@ export function createBlobUrl(file) {
     blobUtil.revokeObjectURL(file.blobUrl);
   }
 
-  const fileBlob = blobUtil.createBlob([file.content], { type: 'text/plain' });
+  const mimeType = mime.lookup(file.name);
+  const fileBlob = blobUtil.createBlob([file.content], { type: mimeType });
   const blobURL = blobUtil.createObjectURL(fileBlob);
   return blobURL;
 }

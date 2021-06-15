@@ -1,5 +1,6 @@
 import loopProtect from 'loop-protect';
 import { Hook, Decode, Encode } from 'console-feed';
+import StackTrace from 'stacktrace-js';
 import evaluateExpression from './evaluateExpression';
 
 // should postMessage user the dispatcher? does the parent window need to
@@ -14,6 +15,10 @@ const htmlOffset = 12;
 // const editorOrigin = 'http://localhost:8000';
 // so this works??
 // maybe i have to pass the parent window??? idk man
+// console.log(window.location);
+window.objectUrls[window.location.href] = '/index.html';
+const blobPath = window.location.href.split('/').pop();
+window.objectPaths[blobPath] = 'index.html';
 
 window.loopProtect = loopProtect;
 
@@ -83,8 +88,7 @@ window.onerror = function onError(msg, source, lineNumber, columnNo, error) {
       data = error.stack.replaceAll(url, window.objectUrls[url]);
     }
   });
-  if (data.match('about:srcdoc')) {
-    data = data.replaceAll('about:srcdoc', 'index.html');
+  if (data.match('index.html')) {
     data = data.replace(`:${lineNumber}:`, `:${lineNumber - htmlOffset}:`);
   }
   editor.postMessage(
@@ -109,31 +113,38 @@ window.onerror = function onError(msg, source, lineNumber, columnNo, error) {
 // catch rejected promises
 window.onunhandledrejection = function onUnhandledRejection(event) {
   if (event.reason && event.reason.message && event.reason.stack) {
-    const urls = Object.keys(window.objectUrls);
-    let data = event.reason.stack;
-    urls.forEach((url) => {
-      if (event.reason.stack.match(url)) {
-        data = event.reason.stack.replaceAll(url, window.objectUrls[url]);
-      }
+    StackTrace.fromError(event.reason).then((stackLines) => {
+      let data = `${event.reason.name}: ${event.reason.message}`;
+      stackLines.forEach((stackLine) => {
+        const { fileName, functionName, lineNumber, columnNumber } = stackLine;
+        const resolvedFileName = window.objectUrls[fileName] || fileName;
+        const resolvedFuncName = functionName || '(anonymous function)';
+        let line;
+        if (lineNumber && columnNumber) {
+          line = `\n    at ${resolvedFuncName} (${resolvedFileName}:${lineNumber}:${columnNumber})`;
+        } else {
+          line = `\n    at ${resolvedFuncName} (${resolvedFileName})`;
+        }
+        data = data.concat(line);
+      });
+      editor.postMessage(
+        {
+          source: 'sketch',
+          messages: [
+            {
+              log: [
+                {
+                  method: 'error',
+                  data: [data],
+                  id: Date.now().toString()
+                }
+              ]
+            }
+          ]
+        },
+        editorOrigin
+      );
     });
-    data = data.replaceAll('about:srcdoc', 'index.html');
-    editor.postMessage(
-      {
-        source: 'sketch',
-        messages: [
-          {
-            log: [
-              {
-                method: 'error',
-                data: [data],
-                id: Date.now().toString()
-              }
-            ]
-          }
-        ]
-      },
-      editorOrigin
-    );
   }
 };
 

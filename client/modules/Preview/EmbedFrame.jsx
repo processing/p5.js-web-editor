@@ -226,7 +226,9 @@ function injectLocalFiles(files, htmlFile, basePath) {
   resolveStyles(sketchDoc, resolvedFiles);
 
   const previewScripts = sketchDoc.createElement('script');
-  previewScripts.src = getConfig('PREVIEW_SCRIPTS_URL');
+  previewScripts.src = `${window.location.origin}${getConfig(
+    'PREVIEW_SCRIPTS_URL'
+  )}`;
   sketchDoc.head.appendChild(previewScripts);
 
   const sketchDocString = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
@@ -266,13 +268,22 @@ function EmbedFrame({ files, isPlaying, basePath }) {
     const doc = iframe.current;
     if (isPlaying) {
       const htmlDoc = injectLocalFiles(files, htmlFile, basePath);
-      // BRO FOR SOME REASON YOU HAVE TO DO THIS TO GET IT TO WORK ON SAFARI
+      const generatedHtmlFile = {
+        name: 'index.html',
+        content: htmlDoc
+      };
+      const htmlUrl = createBlobUrl(generatedHtmlFile);
       setTimeout(() => {
-        srcDoc.set(doc, htmlDoc);
+        doc.src = htmlUrl;
       }, 0);
+      // BRO FOR SOME REASON YOU HAVE TO DO THIS TO GET IT TO WORK ON SAFARI
+      // setTimeout(() => {
+      //   srcDoc.set(doc, htmlDoc);
+      // }, 0);
     } else {
-      doc.srcdoc = '';
-      srcDoc.set(doc, '  ');
+      doc.src = '';
+      // doc.srcdoc = '';
+      // srcDoc.set(doc, '  ');
     }
   }
 
