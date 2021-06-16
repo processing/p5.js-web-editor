@@ -7,6 +7,7 @@ import babelParser from 'prettier/parser-babel';
 import htmlParser from 'prettier/parser-html';
 import cssParser from 'prettier/parser-postcss';
 import { withTranslation } from 'react-i18next';
+import StackTrace from 'stacktrace-js';
 import 'codemirror/mode/css/css';
 import 'codemirror/addon/selection/active-line';
 import 'codemirror/addon/lint/lint';
@@ -252,42 +253,25 @@ class Editor extends React.Component {
 
         this.props.consoleEvents.forEach((consoleEvent) => {
           if (consoleEvent.method === 'error') {
-            if (consoleEvent.data && consoleEvent.data[0]) {
-              let sourceAndLoc;
-              if (
-                consoleEvent.data[0].indexOf &&
-                consoleEvent.data[0].indexOf(')') > -1
-              ) {
-                sourceAndLoc = consoleEvent.data[0] // eslint-disable-line
-                  .split('\n')[1]
-                  .split('(')[1]
-                  .split(')')[0];
-              } else if (consoleEvent.data[0].indexOf('at ') > -1) {
-                sourceAndLoc = consoleEvent.data[0] // eslint-disable-line
-                  .split('\n')[1]
-                  .split('at ')[1];
-              } else {
+            StackTrace.fromError(new Error(consoleEvent.data[0])).then(
+              (stackLines) => {
                 this.props.expandConsole();
-                return;
+                const line = stackLines.find((l) => l.fileName.startsWith('/'));
+                if (!line) return;
+                const fileNameArray = line.fileName.split('/');
+                const fileName = fileNameArray.slice(-1)[0];
+                const filePath = fileNameArray.slice(0, -1).join('/');
+                const fileWithError = this.props.files.find(
+                  (f) => f.name === fileName && f.filePath === filePath
+                );
+                this.props.setSelectedFile(fileWithError.id);
+                this._cm.addLineClass(
+                  line.lineNumber - 1,
+                  'background',
+                  'line-runtime-error'
+                );
               }
-              const [source, line] = sourceAndLoc.split(':');
-
-              // get the file that this message is coming from, and then select it
-              const sourceArray = source.split('/');
-              const fileName = sourceArray.slice(-1)[0];
-              const filePath = sourceArray.slice(0, -1).join('/');
-              const fileWithError = this.props.files.find(
-                (f) => f.name === fileName && f.filePath === filePath
-              );
-              this.props.setSelectedFile(fileWithError.id);
-              this.props.expandConsole();
-              const lineNumber = parseInt(line, 10) - 1;
-              this._cm.addLineClass(
-                lineNumber,
-                'background',
-                'line-runtime-error'
-              );
-            }
+            );
           }
         });
       } else {

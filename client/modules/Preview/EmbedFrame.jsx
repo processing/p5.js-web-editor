@@ -149,7 +149,7 @@ function resolveScripts(sketchDoc, files) {
         script.getAttribute('src').match(EXTERNAL_LINK_REGEX)
       ) !== null
     ) {
-      // script.setAttribute('crossorigin', '');
+      script.setAttribute('crossorigin', '');
       script.innerHTML = resolveJSLinksInString(script.innerHTML, files); // eslint-disable-line
     }
   });
@@ -215,7 +215,7 @@ function injectLocalFiles(files, htmlFile, basePath) {
   const sketchDoc = parser.parseFromString(htmlFile.content, 'text/html');
 
   const base = sketchDoc.createElement('base');
-  base.href = `${basePath}`;
+  base.href = `${window.origin}${basePath}/`;
   sketchDoc.head.appendChild(base);
 
   resolvePathsForElementsWithAttribute('src', sketchDoc, resolvedFiles);
@@ -229,6 +229,7 @@ function injectLocalFiles(files, htmlFile, basePath) {
   previewScripts.src = `${window.location.origin}${getConfig(
     'PREVIEW_SCRIPTS_URL'
   )}`;
+  previewScripts.setAttribute('crossorigin', '');
   sketchDoc.head.appendChild(previewScripts);
 
   const sketchDocString = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
