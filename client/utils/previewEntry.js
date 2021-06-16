@@ -111,40 +111,42 @@ window.onerror = function onError(msg, source, lineNumber, columnNo, error) {
   return false;
 };
 // catch rejected promises
-window.onunhandledrejection = function onUnhandledRejection(event) {
-  if (event.reason && event.reason.message && event.reason.stack) {
-    StackTrace.fromError(event.reason).then((stackLines) => {
-      let data = `${event.reason.name}: ${event.reason.message}`;
-      stackLines.forEach((stackLine) => {
-        const { fileName, functionName, lineNumber, columnNumber } = stackLine;
-        const resolvedFileName = window.objectUrls[fileName] || fileName;
-        const resolvedFuncName = functionName || '(anonymous function)';
-        let line;
-        if (lineNumber && columnNumber) {
-          line = `\n    at ${resolvedFuncName} (${resolvedFileName}:${lineNumber}:${columnNumber})`;
-        } else {
-          line = `\n    at ${resolvedFuncName} (${resolvedFileName})`;
-        }
-        data = data.concat(line);
-      });
-      editor.postMessage(
-        {
-          source: 'sketch',
-          messages: [
-            {
-              log: [
-                {
-                  method: 'error',
-                  data: [data],
-                  id: Date.now().toString()
-                }
-              ]
-            }
-          ]
-        },
-        editorOrigin
-      );
+window.onunhandledrejection = async function onUnhandledRejection(event) {
+  if (event.reason && event.reason.message) {
+    let stackLines = [];
+    if (event.reason.stack) {
+      stackLines = await StackTrace.fromError(event.reason);
+    }
+    let data = `${event.reason.name}: ${event.reason.message}`;
+    stackLines.forEach((stackLine) => {
+      const { fileName, functionName, lineNumber, columnNumber } = stackLine;
+      const resolvedFileName = window.objectUrls[fileName] || fileName;
+      const resolvedFuncName = functionName || '(anonymous function)';
+      let line;
+      if (lineNumber && columnNumber) {
+        line = `\n    at ${resolvedFuncName} (${resolvedFileName}:${lineNumber}:${columnNumber})`;
+      } else {
+        line = `\n    at ${resolvedFuncName} (${resolvedFileName})`;
+      }
+      data = data.concat(line);
     });
+    editor.postMessage(
+      {
+        source: 'sketch',
+        messages: [
+          {
+            log: [
+              {
+                method: 'error',
+                data: [data],
+                id: Date.now().toString()
+              }
+            ]
+          }
+        ]
+      },
+      editorOrigin
+    );
   }
 };
 

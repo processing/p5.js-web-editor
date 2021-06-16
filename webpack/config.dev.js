@@ -26,6 +26,7 @@ module.exports = {
       './client/modules/Preview/previewIndex.jsx',
     ],
     previewScripts: [
+      '@babel/polyfill',
       path.resolve(__dirname, '../client/utils/previewEntry.js')
     ]
   },
