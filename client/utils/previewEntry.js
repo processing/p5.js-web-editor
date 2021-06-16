@@ -11,11 +11,6 @@ import evaluateExpression from './evaluateExpression';
 const editor = window.parent.parent;
 const { editorOrigin } = window;
 const htmlOffset = 12;
-// const editorOrigin = '*';
-// const editorOrigin = 'http://localhost:8000';
-// so this works??
-// maybe i have to pass the parent window??? idk man
-// console.log(window.location);
 window.objectUrls[window.location.href] = '/index.html';
 const blobPath = window.location.href.split('/').pop();
 window.objectPaths[blobPath] = 'index.html';
@@ -66,19 +61,6 @@ function handleMessageEvent(e) {
 
 window.addEventListener('message', handleMessageEvent);
 
-function getScriptOff(line) {
-  const { offs } = window;
-  let l = 0;
-  let file = '';
-  for (let i = 0; i < offs.length; i += 1) {
-    const n = offs[i][0];
-    if (n < line && n > l) {
-      l = n;
-      [, file] = offs[i];
-    }
-  }
-  return [line - l, file];
-}
 // catch reference errors, via http://stackoverflow.com/a/12747364/2994108
 window.onerror = function onError(msg, source, lineNumber, columnNo, error) {
   const urls = Object.keys(window.objectUrls);

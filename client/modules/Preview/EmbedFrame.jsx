@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useRef, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
-// import escapeStringRegexp from 'escape-string-regexp';
-import srcDoc from 'srcdoc-polyfill';
 import loopProtect from 'loop-protect';
 import { JSHINT } from 'jshint';
 import decomment from 'decomment';
@@ -16,7 +14,7 @@ import {
   EXTERNAL_LINK_REGEX,
   NOT_EXTERNAL_LINK_REGEX
 } from '../../../server/utils/fileUtils';
-import { startTag, getAllScriptOffsets } from '../../utils/consoleUtils';
+import { getAllScriptOffsets } from '../../utils/consoleUtils';
 import { registerFrame } from '../../utils/dispatcher';
 import { createBlobUrl } from './filesReducer';
 
