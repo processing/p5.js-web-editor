@@ -36,6 +36,12 @@ app.get('/', (req, res) => {
 app.use('/', embedRoutes);
 app.use('/', assetRoutes);
 
+// Handle missing routes.
+app.get('*', (req, res) => {
+  res.status(404);
+  res.type('txt').send('Not found.');
+});
+
 app.listen(process.env.PREVIEW_PORT, (error) => {
   if (!error) {
     console.log(
