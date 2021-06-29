@@ -1,4 +1,5 @@
 import Express from 'express';
+import mongoose from 'mongoose';
 import path from 'path';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
@@ -9,6 +10,23 @@ import assetRoutes from './routes/asset.routes';
 import renderPreviewIndex from './views/previewIndex';
 
 const app = new Express();
+
+// This also works if you take out the mongoose connection
+// but i have no idea why
+const mongoConnectionString = process.env.MONGO_URL;
+// Connect to MongoDB
+mongoose.Promise = global.Promise;
+mongoose.connect(mongoConnectionString, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+mongoose.set('useCreateIndex', true);
+mongoose.connection.on('error', () => {
+  console.error(
+    'MongoDB Connection Error. Please make sure that MongoDB is running.'
+  );
+  process.exit(1);
+});
 
 // Run Webpack dev server in development mode
 if (process.env.NODE_ENV === 'development') {
