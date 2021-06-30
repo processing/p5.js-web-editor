@@ -253,25 +253,26 @@ class Editor extends React.Component {
 
         this.props.consoleEvents.forEach((consoleEvent) => {
           if (consoleEvent.method === 'error') {
-            StackTrace.fromError(new Error(consoleEvent.data[0])).then(
-              (stackLines) => {
-                this.props.expandConsole();
-                const line = stackLines.find((l) => l.fileName.startsWith('/'));
-                if (!line) return;
-                const fileNameArray = line.fileName.split('/');
-                const fileName = fileNameArray.slice(-1)[0];
-                const filePath = fileNameArray.slice(0, -1).join('/');
-                const fileWithError = this.props.files.find(
-                  (f) => f.name === fileName && f.filePath === filePath
-                );
-                this.props.setSelectedFile(fileWithError.id);
-                this._cm.addLineClass(
-                  line.lineNumber - 1,
-                  'background',
-                  'line-runtime-error'
-                );
-              }
-            );
+            const errorObj = { stack: consoleEvent.data[0] };
+            StackTrace.fromError(errorObj).then((stackLines) => {
+              this.props.expandConsole();
+              const line = stackLines.find(
+                (l) => l.fileName && l.fileName.startsWith('/')
+              );
+              if (!line) return;
+              const fileNameArray = line.fileName.split('/');
+              const fileName = fileNameArray.slice(-1)[0];
+              const filePath = fileNameArray.slice(0, -1).join('/');
+              const fileWithError = this.props.files.find(
+                (f) => f.name === fileName && f.filePath === filePath
+              );
+              this.props.setSelectedFile(fileWithError.id);
+              this._cm.addLineClass(
+                line.lineNumber - 1,
+                'background',
+                'line-runtime-error'
+              );
+            });
           }
         });
       } else {
