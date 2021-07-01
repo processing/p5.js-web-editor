@@ -133,16 +133,16 @@ window.onunhandledrejection = async function onUnhandledRejection(event) {
 };
 
 // Monkeypatch p5._friendlyError
-// const friendlyError = window.p5._friendlyError;
-// window.p5._friendlyError = function (message, method, color) {
-//   const urls = Object.keys(window.objectUrls);
-//   const paths = Object.keys(window.objectPaths);
-//   let newMessage = message;
-//   urls.forEach((url) => {
-//     newMessage = newMessage.replaceAll(url, window.objectUrls[url]);
-//   });
-//   paths.forEach((path) => {
-//     newMessage = newMessage.replaceAll(path, window.objectPaths[path]);
-//   });
-//   friendlyError.apply(window.p5, [newMessage, method, color]);
-// };
+const { _report } = window.p5;
+window.p5._report = function resolvedReport(message, method, color) {
+  const urls = Object.keys(window.objectUrls);
+  const paths = Object.keys(window.objectPaths);
+  let newMessage = message;
+  urls.forEach((url) => {
+    newMessage = newMessage.replaceAll(url, window.objectUrls[url]);
+  });
+  paths.forEach((path) => {
+    newMessage = newMessage.replaceAll(path, window.objectPaths[path]);
+  });
+  _report.apply(window.p5, [newMessage, method, color]);
+};
