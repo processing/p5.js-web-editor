@@ -247,12 +247,12 @@ class Editor extends React.Component {
       );
     }
 
-    if (this.props.consoleEvents.length !== prevProps.consoleEvents.length) {
-      if (this.props.runtimeErrorWarningVisible) {
-        // todo here, need to select the right file
-
+    if (this.props.runtimeErrorWarningVisible) {
+      if (this.props.consoleEvents.length !== prevProps.consoleEvents.length) {
         this.props.consoleEvents.forEach((consoleEvent) => {
           if (consoleEvent.method === 'error') {
+            // It doesn't work if you create a new Error, but this works
+            // LOL
             const errorObj = { stack: consoleEvent.data[0] };
             StackTrace.fromError(errorObj).then((stackLines) => {
               this.props.expandConsole();
