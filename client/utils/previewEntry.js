@@ -62,17 +62,24 @@ function handleMessageEvent(e) {
 window.addEventListener('message', handleMessageEvent);
 
 // catch reference errors, via http://stackoverflow.com/a/12747364/2994108
-window.onerror = function onError(msg, source, lineNumber, columnNo, error) {
-  const urls = Object.keys(window.objectUrls);
+window.onerror = async function onError(
+  msg,
+  source,
+  lineNumber,
+  columnNo,
+  error
+) {
+  // maybe i can use error.stack sometime but i'm having a hard time triggering
+  // this function
+
   let data = error.stack;
-  urls.forEach((url) => {
-    if (error.stack.match(url)) {
-      data = error.stack.replaceAll(url, window.objectUrls[url]);
-    }
-  });
-  if (data.match('index.html')) {
-    data = data.replace(`:${lineNumber}:`, `:${lineNumber - htmlOffset}:`);
+  const resolvedFileName = window.objectUrls[source];
+  let resolvedLineNo = lineNumber;
+  if (window.objectUrls[source] === 'index.html') {
+    resolvedLineNo = lineNumber - htmlOffset;
   }
+  const line = `\n    at ${resolvedFileName}:${resolvedLineNo}:${columnNo}`;
+  data = data.concat(line);
   editor.postMessage(
     {
       source: 'sketch',
