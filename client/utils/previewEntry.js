@@ -72,7 +72,7 @@ window.onerror = async function onError(
   // maybe i can use error.stack sometime but i'm having a hard time triggering
   // this function
 
-  let data = error.stack;
+  let data = `${error.name}: ${error.message}`;
   const resolvedFileName = window.objectUrls[source];
   let resolvedLineNo = lineNumber;
   if (window.objectUrls[source] === 'index.html') {
