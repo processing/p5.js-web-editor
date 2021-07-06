@@ -204,7 +204,8 @@ function addLoopProtect(sketchDoc) {
   });
 }
 
-function injectLocalFiles(files, htmlFile, basePath) {
+function injectLocalFiles(files, htmlFile, options) {
+  const { basePath, gridOutput, textOutput } = options;
   let scriptOffs = [];
   objectUrls = {};
   objectPaths = {};
@@ -222,6 +223,29 @@ function injectLocalFiles(files, htmlFile, basePath) {
 
   resolveScripts(sketchDoc, resolvedFiles);
   resolveStyles(sketchDoc, resolvedFiles);
+
+  const accessiblelib = sketchDoc.createElement('script');
+  accessiblelib.setAttribute(
+    'src',
+    'https://cdn.jsdelivr.net/gh/processing/p5.accessibility@v0.1.1/dist/p5.accessibility.js'
+  );
+  const accessibleOutputs = sketchDoc.createElement('section');
+  accessibleOutputs.setAttribute('id', 'accessible-outputs');
+  accessibleOutputs.setAttribute('aria-label', 'accessible-output');
+  if (textOutput || gridOutput) {
+    sketchDoc.body.appendChild(accessibleOutputs);
+    sketchDoc.body.appendChild(accessiblelib);
+    if (textOutput) {
+      const textSection = sketchDoc.createElement('section');
+      textSection.setAttribute('id', 'textOutput-content');
+      sketchDoc.getElementById('accessible-outputs').appendChild(textSection);
+    }
+    if (gridOutput) {
+      const gridSection = sketchDoc.createElement('section');
+      gridSection.setAttribute('id', 'tableOutput-content');
+      sketchDoc.getElementById('accessible-outputs').appendChild(gridSection);
+    }
+  }
 
   const previewScripts = sketchDoc.createElement('script');
   previewScripts.src = `${window.location.origin}${getConfig(
@@ -249,7 +273,7 @@ function getHtmlFile(files) {
   return files.filter((file) => file.name.match(/.*\.html$/i))[0];
 }
 
-function EmbedFrame({ files, isPlaying, basePath }) {
+function EmbedFrame({ files, isPlaying, basePath, gridOutput, textOutput }) {
   const iframe = useRef();
   const htmlFile = useMemo(() => getHtmlFile(files), [files]);
 
@@ -266,23 +290,22 @@ function EmbedFrame({ files, isPlaying, basePath }) {
   function renderSketch() {
     const doc = iframe.current;
     if (isPlaying) {
-      const htmlDoc = injectLocalFiles(files, htmlFile, basePath);
+      const htmlDoc = injectLocalFiles(files, htmlFile, {
+        basePath,
+        gridOutput,
+        textOutput
+      });
       const generatedHtmlFile = {
         name: 'index.html',
         content: htmlDoc
       };
       const htmlUrl = createBlobUrl(generatedHtmlFile);
+      // BRO FOR SOME REASON YOU HAVE TO DO THIS TO GET IT TO WORK ON SAFARI
       setTimeout(() => {
         doc.src = htmlUrl;
       }, 0);
-      // BRO FOR SOME REASON YOU HAVE TO DO THIS TO GET IT TO WORK ON SAFARI
-      // setTimeout(() => {
-      //   srcDoc.set(doc, htmlDoc);
-      // }, 0);
     } else {
       doc.src = '';
-      // doc.srcdoc = '';
-      // srcDoc.set(doc, '  ');
     }
   }
 
@@ -306,7 +329,9 @@ EmbedFrame.propTypes = {
     })
   ).isRequired,
   isPlaying: PropTypes.bool.isRequired,
-  basePath: PropTypes.string.isRequired
+  basePath: PropTypes.string.isRequired,
+  gridOutput: PropTypes.bool.isRequired,
+  textOutput: PropTypes.bool.isRequired
 };
 
 export default EmbedFrame;

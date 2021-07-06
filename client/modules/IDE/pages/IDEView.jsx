@@ -282,10 +282,8 @@ class IDEView extends React.Component {
               setLintWarning={this.props.setLintWarning}
               textOutput={this.props.preferences.textOutput}
               gridOutput={this.props.preferences.gridOutput}
-              soundOutput={this.props.preferences.soundOutput}
               setTextOutput={this.props.setTextOutput}
               setGridOutput={this.props.setGridOutput}
-              setSoundOutput={this.props.setSoundOutput}
               theme={this.props.preferences.theme}
               setTheme={this.props.setTheme}
               autocloseBracketsQuotes={
@@ -369,8 +367,7 @@ class IDEView extends React.Component {
                   />
                   <div>
                     {((this.props.preferences.textOutput ||
-                      this.props.preferences.gridOutput ||
-                      this.props.preferences.soundOutput) &&
+                      this.props.preferences.gridOutput) &&
                       this.props.ide.isPlaying) ||
                       this.props.ide.isAccessibleOutputPlaying}
                   </div>
@@ -514,7 +511,6 @@ IDEView.propTypes = {
     lintWarning: PropTypes.bool.isRequired,
     textOutput: PropTypes.bool.isRequired,
     gridOutput: PropTypes.bool.isRequired,
-    soundOutput: PropTypes.bool.isRequired,
     theme: PropTypes.string.isRequired,
     autorefresh: PropTypes.bool.isRequired,
     language: PropTypes.string.isRequired,
@@ -529,7 +525,6 @@ IDEView.propTypes = {
   setLintWarning: PropTypes.func.isRequired,
   setTextOutput: PropTypes.func.isRequired,
   setGridOutput: PropTypes.func.isRequired,
-  setSoundOutput: PropTypes.func.isRequired,
   setAllAccessibleOutput: PropTypes.func.isRequired,
   files: PropTypes.arrayOf(
     PropTypes.shape({

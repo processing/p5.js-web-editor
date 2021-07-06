@@ -22,6 +22,8 @@ const App = () => {
   const [state, dispatch] = useReducer(filesReducer, [], initialState);
   const [isPlaying, setIsPlaying] = useState(false);
   const [basePath, setBasePath] = useState('');
+  const [textOutput, setTextOutput] = useState(false);
+  const [gridOutput, setGridOutput] = useState(false);
   registerFrame(window.parent, getConfig('EDITOR_URL'));
 
   function handleMessageEvent(message) {
@@ -30,6 +32,8 @@ const App = () => {
       case MessageTypes.SKETCH:
         dispatch(setFiles(payload.files));
         setBasePath(payload.basePath);
+        setTextOutput(payload.textOutput);
+        setGridOutput(payload.gridOutput);
         break;
       case MessageTypes.START:
         setIsPlaying(true);
@@ -57,7 +61,13 @@ const App = () => {
   return (
     <React.Fragment>
       <GlobalStyle />
-      <EmbedFrame files={state} isPlaying={isPlaying} basePath={basePath} />
+      <EmbedFrame
+        files={state}
+        isPlaying={isPlaying}
+        basePath={basePath}
+        gridOutput={gridOutput}
+        textOutput={textOutput}
+      />
     </React.Fragment>
   );
 };

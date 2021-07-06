@@ -106,7 +106,11 @@ window.onunhandledrejection = async function onUnhandledRejection(event) {
       const resolvedFuncName = functionName || '(anonymous function)';
       let line;
       if (lineNumber && columnNumber) {
-        line = `\n    at ${resolvedFuncName} (${resolvedFileName}:${lineNumber}:${columnNumber})`;
+        let resolvedLineNumber = lineNumber;
+        if (resolvedFileName === 'index.html') {
+          resolvedLineNumber = lineNumber - htmlOffset;
+        }
+        line = `\n    at ${resolvedFuncName} (${resolvedFileName}:${resolvedLineNumber}:${columnNumber})`;
       } else {
         line = `\n    at ${resolvedFuncName} (${resolvedFileName})`;
       }
@@ -140,6 +144,21 @@ window.p5._report = function resolvedReport(message, method, color) {
   let newMessage = message;
   urls.forEach((url) => {
     newMessage = newMessage.replaceAll(url, window.objectUrls[url]);
+    if (newMessage.match('index.html')) {
+      const onLineRegex = /on line (?<lineNo>.\d) in/gm;
+      const lineNoRegex = /index\.html:(?<lineNo>.\d):/gm;
+      const match = onLineRegex.exec(newMessage);
+      const line = match.groups.lineNo;
+      const resolvedLine = parseInt(line, 10) - htmlOffset;
+      newMessage = newMessage.replace(
+        onLineRegex,
+        `on line ${resolvedLine} in`
+      );
+      newMessage = newMessage.replace(
+        lineNoRegex,
+        `index.html:${resolvedLine}:`
+      );
+    }
   });
   paths.forEach((path) => {
     newMessage = newMessage.replaceAll(path, window.objectPaths[path]);

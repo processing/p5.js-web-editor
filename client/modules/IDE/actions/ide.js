@@ -258,7 +258,9 @@ export function startSketch() {
       type: MessageTypes.SKETCH,
       payload: {
         files: state.files,
-        basePath: window.location.pathname
+        basePath: window.location.pathname,
+        gridOutput: state.preferences.gridOutput,
+        textOutput: state.preferences.textOutput
       }
     });
     dispatchMessage({
