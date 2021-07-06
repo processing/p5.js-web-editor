@@ -253,7 +253,7 @@ class Editor extends React.Component {
           if (consoleEvent.method === 'error') {
             // It doesn't work if you create a new Error, but this works
             // LOL
-            const errorObj = { stack: consoleEvent.data[0] };
+            const errorObj = { stack: consoleEvent.data[0].toString() };
             StackTrace.fromError(errorObj).then((stackLines) => {
               this.props.expandConsole();
               const line = stackLines.find(

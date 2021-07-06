@@ -214,7 +214,7 @@ function injectLocalFiles(files, htmlFile, options) {
   const sketchDoc = parser.parseFromString(htmlFile.content, 'text/html');
 
   const base = sketchDoc.createElement('base');
-  base.href = `${window.origin}${basePath}/`;
+  base.href = `${window.origin}${basePath}${basePath.length > 1 && '/'}`;
   sketchDoc.head.appendChild(base);
 
   resolvePathsForElementsWithAttribute('src', sketchDoc, resolvedFiles);
