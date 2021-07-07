@@ -2,6 +2,7 @@ import Express from 'express';
 import mongoose from 'mongoose';
 import path from 'path';
 import webpack from 'webpack';
+import cors from 'cors';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import config from '../webpack/config.dev';
@@ -27,6 +28,26 @@ mongoose.connection.on('error', () => {
   );
   process.exit(1);
 });
+
+const allowedCorsOrigins = [
+  /p5js\.org$/,
+  process.env.EDITOR_URL,
+  process.env.PREVIEW_URL
+];
+
+// to allow client-only development
+if (process.env.CORS_ALLOW_LOCALHOST === 'true') {
+  allowedCorsOrigins.push(/localhost/);
+}
+
+// Enable Cross-Origin Resource Sharing (CORS)
+const corsMiddleware = cors({
+  credentials: true,
+  origin: allowedCorsOrigins
+});
+app.use(corsMiddleware);
+// Enable pre-flight OPTIONS route for all end-points
+app.options('*', corsMiddleware);
 
 // Run Webpack dev server in development mode
 if (process.env.NODE_ENV === 'development') {

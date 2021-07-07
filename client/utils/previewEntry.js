@@ -71,15 +71,19 @@ window.onerror = async function onError(
 ) {
   // maybe i can use error.stack sometime but i'm having a hard time triggering
   // this function
-
-  let data = `${error.name}: ${error.message}`;
-  const resolvedFileName = window.objectUrls[source];
-  let resolvedLineNo = lineNumber;
-  if (window.objectUrls[source] === 'index.html') {
-    resolvedLineNo = lineNumber - htmlOffset;
+  let data;
+  if (!error) {
+    data = msg;
+  } else {
+    data = `${error.name}: ${error.message}`;
+    const resolvedFileName = window.objectUrls[source];
+    let resolvedLineNo = lineNumber;
+    if (window.objectUrls[source] === 'index.html') {
+      resolvedLineNo = lineNumber - htmlOffset;
+    }
+    const line = `\n    at ${resolvedFileName}:${resolvedLineNo}:${columnNo}`;
+    data = data.concat(line);
   }
-  const line = `\n    at ${resolvedFileName}:${resolvedLineNo}:${columnNo}`;
-  data = data.concat(line);
   editor.postMessage(
     {
       source: 'sketch',
