@@ -149,7 +149,7 @@ metadata:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: staging-editor-ingress-with-auth
+  name: staging-editor-ingress
   namespace: staging
   annotations:
     kubernetes.io/ingress.global-static-ip-name: "web-editor-staging-ip"
@@ -161,7 +161,7 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: staging-editor-ingress-with-auth
+  name: staging-preview-ingress
   namespace: staging
   annotations:
     kubernetes.io/ingress.global-static-ip-name: "preview-staging-ip"
