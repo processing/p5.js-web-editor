@@ -36,9 +36,12 @@ spec:
   type: NodePort
   ports:
   - port: 8000
+    ## TODO uncomment for prod
+    # name: editor-port
     targetPort: 8000
   ## TODO uncommment for prod
   # - port: 8002
+  #   name: preview-port
   #   targetPort: 8002
   selector:
     app: web-editor
@@ -181,8 +184,10 @@ spec:
   type: NodePort
   ports:
   - port: 8001
+    name: editor-port
     targetPort: 8000
   - port: 8003
+    name: preview-port
     targetPort: 8002
   selector:
     app: web-editor
