@@ -7,6 +7,7 @@ import babelParser from 'prettier/parser-babel';
 import htmlParser from 'prettier/parser-html';
 import cssParser from 'prettier/parser-postcss';
 import { withTranslation } from 'react-i18next';
+import StackTrace from 'stacktrace-js';
 import 'codemirror/mode/css/css';
 import 'codemirror/addon/selection/active-line';
 import 'codemirror/addon/lint/lint';
@@ -115,7 +116,6 @@ class Editor extends React.Component {
       styleSelectedText: true,
       lint: {
         onUpdateLinting: (annotations) => {
-          this.props.hideRuntimeErrorWarning();
           this.updateLintingMessageAccessibility(annotations);
         },
         options: {
@@ -159,10 +159,11 @@ class Editor extends React.Component {
       'change',
       debounce(() => {
         this.props.setUnsavedChanges(true);
+        this.props.hideRuntimeErrorWarning();
         this.props.updateFileContent(this.props.file.id, this._cm.getValue());
         if (this.props.autorefresh && this.props.isPlaying) {
           this.props.clearConsole();
-          this.props.startRefreshSketch();
+          this.props.startSketch();
         }
       }, 1000)
     );
@@ -246,41 +247,45 @@ class Editor extends React.Component {
       );
     }
 
-    if (prevProps.consoleEvents !== this.props.consoleEvents) {
-      this.props.showRuntimeErrorWarning();
-    }
-    for (let i = 0; i < this._cm.lineCount(); i += 1) {
-      this._cm.removeLineClass(i, 'background', 'line-runtime-error');
-    }
     if (this.props.runtimeErrorWarningVisible) {
-      this.props.consoleEvents.forEach((consoleEvent) => {
-        if (consoleEvent.method === 'error') {
-          if (
-            consoleEvent.data &&
-            consoleEvent.data[0] &&
-            consoleEvent.data[0].indexOf &&
-            consoleEvent.data[0].indexOf(')') > -1
-          ) {
-            const n = consoleEvent.data[0].replace(')', '').split(' ');
-            const lineNumber = parseInt(n[n.length - 1], 10) - 1;
-            const { source } = consoleEvent;
-            const fileName = this.props.file.name;
-            const errorFromJavaScriptFile = `${source}.js` === fileName;
-            const errorFromIndexHTML =
-              source === fileName && fileName === 'index.html';
-            if (
-              !Number.isNaN(lineNumber) &&
-              (errorFromJavaScriptFile || errorFromIndexHTML)
-            ) {
+      if (this.props.consoleEvents.length !== prevProps.consoleEvents.length) {
+        this.props.consoleEvents.forEach((consoleEvent) => {
+          if (consoleEvent.method === 'error') {
+            // It doesn't work if you create a new Error, but this works
+            // LOL
+            const errorObj = { stack: consoleEvent.data[0].toString() };
+            StackTrace.fromError(errorObj).then((stackLines) => {
+              this.props.expandConsole();
+              const line = stackLines.find(
+                (l) => l.fileName && l.fileName.startsWith('/')
+              );
+              if (!line) return;
+              const fileNameArray = line.fileName.split('/');
+              const fileName = fileNameArray.slice(-1)[0];
+              const filePath = fileNameArray.slice(0, -1).join('/');
+              const fileWithError = this.props.files.find(
+                (f) => f.name === fileName && f.filePath === filePath
+              );
+              this.props.setSelectedFile(fileWithError.id);
               this._cm.addLineClass(
-                lineNumber,
+                line.lineNumber - 1,
                 'background',
                 'line-runtime-error'
               );
-            }
+            });
           }
+        });
+      } else {
+        for (let i = 0; i < this._cm.lineCount(); i += 1) {
+          this._cm.removeLineClass(i, 'background', 'line-runtime-error');
         }
-      });
+      }
+    }
+
+    if (this.props.file.id !== prevProps.file.id) {
+      for (let i = 0; i < this._cm.lineCount(); i += 1) {
+        this._cm.removeLineClass(i, 'background', 'line-runtime-error');
+      }
     }
   }
 
@@ -440,7 +445,7 @@ Editor.propTypes = {
       method: PropTypes.string.isRequired,
       args: PropTypes.arrayOf(PropTypes.string)
     })
-  ),
+  ).isRequired,
   updateLintMessage: PropTypes.func.isRequired,
   clearLintMessage: PropTypes.func.isRequired,
   updateFileContent: PropTypes.func.isRequired,
@@ -453,7 +458,7 @@ Editor.propTypes = {
     url: PropTypes.string
   }).isRequired,
   setUnsavedChanges: PropTypes.func.isRequired,
-  startRefreshSketch: PropTypes.func.isRequired,
+  startSketch: PropTypes.func.isRequired,
   autorefresh: PropTypes.bool.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   theme: PropTypes.string.isRequired,
@@ -471,15 +476,13 @@ Editor.propTypes = {
   expandSidebar: PropTypes.func.isRequired,
   isUserOwner: PropTypes.bool.isRequired,
   clearConsole: PropTypes.func.isRequired,
-  showRuntimeErrorWarning: PropTypes.func.isRequired,
+  // showRuntimeErrorWarning: PropTypes.func.isRequired,
   hideRuntimeErrorWarning: PropTypes.func.isRequired,
   runtimeErrorWarningVisible: PropTypes.bool.isRequired,
   provideController: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired
-};
-
-Editor.defaultProps = {
-  consoleEvents: []
+  t: PropTypes.func.isRequired,
+  setSelectedFile: PropTypes.func.isRequired,
+  expandConsole: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -496,7 +499,7 @@ function mapStateToProps(state) {
     user: state.user,
     project: state.project,
     toast: state.toast,
-    console: state.console,
+    consoleEvents: state.console,
 
     ...state.preferences,
     ...state.ide,
