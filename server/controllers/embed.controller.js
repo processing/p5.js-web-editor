@@ -26,7 +26,7 @@ export function serveProject(req, res) {
       const sketchDoc = window.document;
 
       const base = sketchDoc.createElement('base');
-      const fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
+      const fullUrl = `//${req.get('host')}${req.originalUrl}`;
       base.href = `${fullUrl}/`;
       sketchDoc.head.appendChild(base);
 

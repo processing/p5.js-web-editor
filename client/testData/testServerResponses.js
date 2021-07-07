@@ -15,7 +15,6 @@ export const userResponse = {
     lintWarning: false,
     textOutput: false,
     gridOutput: false,
-    soundOutput: false,
     theme: 'light',
     autorefresh: false,
     language: 'en-US',

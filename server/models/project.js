@@ -93,4 +93,5 @@ projectSchema.methods.isSlugUnique = async function isSlugUnique(cb) {
   }
 };
 
-export default mongoose.model('Project', projectSchema);
+export default mongoose.models.Project ||
+  mongoose.model('Project', projectSchema);
