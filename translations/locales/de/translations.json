@@ -166,9 +166,7 @@
     "PlainText": "Nur Text",
     "TextOutputARIA": "Text Ausgabe an",
     "TableText": "Tabellarisch",
-    "TableOutputARIA": "Tabellarische Ausgabe an",
-    "Sound": "Sound",
-    "SoundOutputARIA": "sound Ausgabe an"
+    "TableOutputARIA": "Tabellarische Ausgabe an"
   },
   "KeyboardShortcuts": {
     "Title": "Tastenkürzel",

@@ -68,7 +68,7 @@ const initialTestState = {
     },
     {
       name: 'index.html',
-      content: `<!DOCTYPE html> <html lang="en"> <head> <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.3.1/p5.js"></script> <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/addons/p5.sound.min.js"></script> <link rel="stylesheet" type="text/css" href="style.css"> <meta charset="utf-8" /> </head> <body> <script src="sketch.js"></script> </body> </html>`,
+      content: `<!DOCTYPE html> <html lang="en"> <head> <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script> <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"></script> <link rel="stylesheet" type="text/css" href="style.css"> <meta charset="utf-8" /> </head> <body> <script src="sketch.js"></script> </body> </html>`,
       id: '606fc1c46045e19ca2ee2646',
       _id: '606fc1c46045e19ca2ee2646',
       fileType: 'file',
@@ -92,7 +92,6 @@ const initialTestState = {
     lintWarning: false,
     textOutput: false,
     gridOutput: false,
-    soundOutput: false,
     theme: 'light',
     autorefresh: false,
     language: 'en-US',

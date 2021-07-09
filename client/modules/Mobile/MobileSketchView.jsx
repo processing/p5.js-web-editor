@@ -33,7 +33,6 @@ const MobileSketchView = () => {
   const {
     setTextOutput,
     setGridOutput,
-    setSoundOutput,
     dispatchConsoleEvent,
     endSketchRefresh,
     stopSketch,
@@ -76,11 +75,9 @@ const MobileSketchView = () => {
           previewIsRefreshing={ide.previewIsRefreshing}
           textOutput={preferences.textOutput}
           gridOutput={preferences.gridOutput}
-          soundOutput={preferences.soundOutput}
           autorefresh={preferences.autorefresh}
           setTextOutput={setTextOutput}
           setGridOutput={setGridOutput}
-          setSoundOutput={setSoundOutput}
           dispatchConsoleEvent={dispatchConsoleEvent}
           endSketchRefresh={endSketchRefresh}
           stopSketch={stopSketch}

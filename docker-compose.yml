@@ -13,37 +13,42 @@ services:
     # image: index.docker.io/catarak/p5.js-web-editor:latest
     # uncomment the following lines if you don't want export all of the variables
     # defined in your .env file for testing
-    # env_file:
+    env_file:
     #   - "$PWD/.env.production"
-    environment:
-      - API_URL
-      - MONGO_URL
-      - PORT
-      - SESSION_SECRET
-      - AWS_ACCESS_KEY
-      - AWS_SECRET_KEY
-      - S3_BUCKET
-      - AWS_REGION
-      - GITHUB_ID
-      - GITHUB_SECRET
-      - MAILGUN_DOMAIN
-      - MAILGUN_KEY
-      - EMAIL_SENDER
-      - EMAIL_VERIFY_SECRET_TOKEN
-      - S3_BUCKET_URL_BASE
-      - GG_EXAMPLES_USERNAME
-      - GG_EXAMPLES_PASS
-      - GG_EXAMPLES_EMAIL
-      - GOOGLE_ID
-      - GOOGLE_SECRET
-      - EXAMPLE_USER_EMAIL
-      - EXAMPLE_USER_PASSWORD
-      - ML5_EXAMPLES_USERNAME
-      - ML5_EXAMPLES_PASS
-      - ML5_EXAMPLES_EMAIL
-      - UI_ACCESS_TOKEN_ENABLED
-      - UPLOAD_LIMIT
-      - TRANSLATIONS_ENABLED
+      - "$PWD/.env"
+    # environment:
+    #   - API_URL
+    #   - AWS_ACCESS_KEY
+    #   - AWS_REGION
+    #   - AWS_SECRET_KEY
+    #   - EMAIL_SENDER
+    #   - EMAIL_VERIFY_SECRET_TOKEN
+    #   - EXAMPLE_USER_EMAIL
+    #   - EXAMPLE_USER_PASSWORD
+    #   - GG_EXAMPLES_USERNAME
+    #   - GG_EXAMPLES_EMAIL
+    #   - GG_EXAMPLES_PASS
+    #   - GITHUB_ID
+    #   - GITHUB_SECRET
+    #   - GOOGLE_ID
+    #   - GOOGLE_SECRET
+    #   - MAILGUN_DOMAIN
+    #   - MAILGUN_KEY
+    #   - ML5_EXAMPLES_USERNAME
+    #   - ML5_EXAMPLES_EMAIL
+    #   - ML5_EXAMPLES_PASS
+    #   - MOBILE_EMABLED
+    #   - MONGO_URL
+    #   - PORT
+    #   - PREVIEW_PORT
+    #   - EDITOR_URL
+    #   - PREVIEW_URL
+    #   - S3_BUCKET
+    #   - S3_BUCKET_URL_BASE
+    #   - SESSION_SECRET
+    #   - TRANSLATIONS_ENABLED
+    #   - UI_ACCESS_TOKEN_ENABLED
+    #   - UPLOAD_LIMIT
       # you can either set this in your .env or as an environment variables
       # or here YOU CHOOSE
       # - MONGO_URL=mongodb://mongo:27017/p5js-web-editor
@@ -52,6 +57,7 @@ services:
       - /opt/node/app/node_modules
     ports:
       - '8000:8000'
+      - '8002:8002'
     depends_on:
       - mongo
 volumes:
