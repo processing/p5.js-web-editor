@@ -141,26 +141,30 @@ export function deleteFile(req, res) {
 }
 
 export function getFileContent(req, res) {
-  Project.findById(req.params.project_id, (err, project) => {
-    if (err || project === null) {
-      res.status(404).send({
-        success: false,
-        message: 'Project with that id does not exist.'
-      });
-      return;
+  const projectId = req.params.project_id;
+  Project.findOne(
+    { $or: [{ _id: projectId }, { slug: projectId }] },
+    (err, project) => {
+      if (err || project === null) {
+        res.status(404).send({
+          success: false,
+          message: 'Project with that id does not exist.'
+        });
+        return;
+      }
+      const filePath = req.params[0];
+      const resolvedFile = resolvePathToFile(filePath, project.files);
+      if (!resolvedFile) {
+        res.status(404).send({
+          success: false,
+          message: 'File with that name and path does not exist.'
+        });
+        return;
+      }
+      const contentType =
+        mime.lookup(resolvedFile.name) || 'application/octet-stream';
+      res.set('Content-Type', contentType);
+      res.send(resolvedFile.content);
     }
-    const filePath = req.params[0];
-    const resolvedFile = resolvePathToFile(filePath, project.files);
-    if (!resolvedFile) {
-      res.status(404).send({
-        success: false,
-        message: 'File with that name and path does not exist.'
-      });
-      return;
-    }
-    const contentType =
-      mime.lookup(resolvedFile.name) || 'application/octet-stream';
-    res.set('Content-Type', contentType);
-    res.send(resolvedFile.content);
-  });
+  );
 }
