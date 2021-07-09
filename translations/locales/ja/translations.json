@@ -166,9 +166,7 @@
       "PlainText": "プレーンテキスト",
       "TextOutputARIA": "テキスト出力 オン",
       "TableText": "テーブルテキスト",
-      "TableOutputARIA": "テーブルテキスト出力 オン",
-      "Sound": "サウンド",
-      "SoundOutputARIA": "サウンド出力 オン"
+      "TableOutputARIA": "テーブルテキスト出力 オン"
     },
     "KeyboardShortcuts": {
       "Title": " キーボードショートカット",

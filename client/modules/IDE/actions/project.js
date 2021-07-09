@@ -54,7 +54,7 @@ export function setNewProject(project) {
 export function getProject(id, username) {
   return (dispatch, getState) => {
     dispatch(justOpenedProject());
-    apiClient
+    return apiClient
       .get(`/${username}/projects/${id}`)
       .then((response) => {
         dispatch(setProject(response.data));
