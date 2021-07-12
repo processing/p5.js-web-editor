@@ -166,9 +166,7 @@
     "PlainText": "Texto sin formato",
     "TextOutputARIA": "Salida de texto activado",
     "TableText": "Tablero de texto",
-    "TableOutputARIA": "Salida de tablero activado",
-    "Sound": "Sonido",
-    "SoundOutputARIA": "Salida de sonido activado"
+    "TableOutputARIA": "Salida de tablero activado"
   },
   "KeyboardShortcuts": {
     "Title": " Atajos de teclado",

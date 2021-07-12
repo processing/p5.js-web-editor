@@ -437,23 +437,6 @@ class Preferences extends React.Component {
                 >
                   {this.props.t('Preferences.TableText')}
                 </label>
-                <input
-                  type="checkbox"
-                  onChange={(event) => {
-                    this.props.setSoundOutput(event.target.checked);
-                  }}
-                  aria-label={this.props.t('Preferences.SoundOutputARIA')}
-                  name="sound output"
-                  id="sound-output-on"
-                  value="On"
-                  checked={this.props.soundOutput}
-                />
-                <label
-                  htmlFor="sound-output-on"
-                  className="preference__option preference__canvas"
-                >
-                  {this.props.t('Preferences.Sound')}
-                </label>
               </div>
             </div>
           </TabPanel>
@@ -474,10 +457,8 @@ Preferences.propTypes = {
   setLinewrap: PropTypes.func.isRequired,
   textOutput: PropTypes.bool.isRequired,
   gridOutput: PropTypes.bool.isRequired,
-  soundOutput: PropTypes.bool.isRequired,
   setTextOutput: PropTypes.func.isRequired,
   setGridOutput: PropTypes.func.isRequired,
-  setSoundOutput: PropTypes.func.isRequired,
   lintWarning: PropTypes.bool.isRequired,
   setLintWarning: PropTypes.func.isRequired,
   theme: PropTypes.string.isRequired,

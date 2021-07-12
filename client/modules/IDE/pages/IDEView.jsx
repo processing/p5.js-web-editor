@@ -185,6 +185,7 @@ class IDEView extends React.Component {
     ) {
       e.preventDefault();
       e.stopPropagation();
+      this.syncFileContent();
       this.props.startSketch();
       // 50 === 2
     } else if (
@@ -242,6 +243,11 @@ class IDEView extends React.Component {
     return null;
   };
 
+  syncFileContent = () => {
+    const file = this.cmController.getContent();
+    this.props.updateFileContent(file.id, file.content);
+  };
+
   render() {
     return (
       <div className="ide">
@@ -253,7 +259,10 @@ class IDEView extends React.Component {
           warnIfUnsavedChanges={this.handleUnsavedChanges}
           cmController={this.cmController}
         />
-        <Toolbar key={this.props.project.id} />
+        <Toolbar
+          syncFileContent={this.syncFileContent}
+          key={this.props.project.id}
+        />
         {this.props.ide.preferencesIsVisible && (
           <Overlay
             title={this.props.t('Preferences.Settings')}
@@ -273,10 +282,8 @@ class IDEView extends React.Component {
               setLintWarning={this.props.setLintWarning}
               textOutput={this.props.preferences.textOutput}
               gridOutput={this.props.preferences.gridOutput}
-              soundOutput={this.props.preferences.soundOutput}
               setTextOutput={this.props.setTextOutput}
               setGridOutput={this.props.setGridOutput}
-              setSoundOutput={this.props.setSoundOutput}
               theme={this.props.preferences.theme}
               setTheme={this.props.setTheme}
               autocloseBracketsQuotes={
@@ -360,8 +367,7 @@ class IDEView extends React.Component {
                   />
                   <div>
                     {((this.props.preferences.textOutput ||
-                      this.props.preferences.gridOutput ||
-                      this.props.preferences.soundOutput) &&
+                      this.props.preferences.gridOutput) &&
                       this.props.ide.isPlaying) ||
                       this.props.ide.isAccessibleOutputPlaying}
                   </div>
@@ -505,7 +511,6 @@ IDEView.propTypes = {
     lintWarning: PropTypes.bool.isRequired,
     textOutput: PropTypes.bool.isRequired,
     gridOutput: PropTypes.bool.isRequired,
-    soundOutput: PropTypes.bool.isRequired,
     theme: PropTypes.string.isRequired,
     autorefresh: PropTypes.bool.isRequired,
     language: PropTypes.string.isRequired,
@@ -520,7 +525,6 @@ IDEView.propTypes = {
   setLintWarning: PropTypes.func.isRequired,
   setTextOutput: PropTypes.func.isRequired,
   setGridOutput: PropTypes.func.isRequired,
-  setSoundOutput: PropTypes.func.isRequired,
   setAllAccessibleOutput: PropTypes.func.isRequired,
   files: PropTypes.arrayOf(
     PropTypes.shape({
@@ -548,6 +552,7 @@ IDEView.propTypes = {
   collapseConsole: PropTypes.func.isRequired,
   deleteFile: PropTypes.func.isRequired,
   updateFileName: PropTypes.func.isRequired,
+  updateFileContent: PropTypes.func.isRequired,
   openProjectOptions: PropTypes.func.isRequired,
   closeProjectOptions: PropTypes.func.isRequired,
   newFolder: PropTypes.func.isRequired,
