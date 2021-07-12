@@ -149,30 +149,32 @@ window.onunhandledrejection = async function onUnhandledRejection(event) {
 
 // Monkeypatch p5._friendlyError
 const { _report } = window.p5;
-window.p5._report = function resolvedReport(message, method, color) {
-  const urls = Object.keys(window.objectUrls);
-  const paths = Object.keys(window.objectPaths);
-  let newMessage = message;
-  urls.forEach((url) => {
-    newMessage = newMessage.replaceAll(url, window.objectUrls[url]);
-    if (newMessage.match('index.html')) {
-      const onLineRegex = /on line (?<lineNo>.\d) in/gm;
-      const lineNoRegex = /index\.html:(?<lineNo>.\d):/gm;
-      const match = onLineRegex.exec(newMessage);
-      const line = match.groups.lineNo;
-      const resolvedLine = parseInt(line, 10) - htmlOffset;
-      newMessage = newMessage.replace(
-        onLineRegex,
-        `on line ${resolvedLine} in`
-      );
-      newMessage = newMessage.replace(
-        lineNoRegex,
-        `index.html:${resolvedLine}:`
-      );
-    }
-  });
-  paths.forEach((path) => {
-    newMessage = newMessage.replaceAll(path, window.objectPaths[path]);
-  });
-  _report.apply(window.p5, [newMessage, method, color]);
-};
+if (_report) {
+  window.p5._report = function resolvedReport(message, method, color) {
+    const urls = Object.keys(window.objectUrls);
+    const paths = Object.keys(window.objectPaths);
+    let newMessage = message;
+    urls.forEach((url) => {
+      newMessage = newMessage.replaceAll(url, window.objectUrls[url]);
+      if (newMessage.match('index.html')) {
+        const onLineRegex = /on line (?<lineNo>.\d) in/gm;
+        const lineNoRegex = /index\.html:(?<lineNo>.\d):/gm;
+        const match = onLineRegex.exec(newMessage);
+        const line = match.groups.lineNo;
+        const resolvedLine = parseInt(line, 10) - htmlOffset;
+        newMessage = newMessage.replace(
+          onLineRegex,
+          `on line ${resolvedLine} in`
+        );
+        newMessage = newMessage.replace(
+          lineNoRegex,
+          `index.html:${resolvedLine}:`
+        );
+      }
+    });
+    paths.forEach((path) => {
+      newMessage = newMessage.replaceAll(path, window.objectPaths[path]);
+    });
+    _report.apply(window.p5, [newMessage, method, color]);
+  };
+}
