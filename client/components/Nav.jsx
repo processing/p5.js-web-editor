@@ -621,6 +621,16 @@ class Nav extends React.PureComponent {
               <button
                 onFocus={this.handleFocusForLang}
                 onBlur={this.handleBlur}
+                value="de"
+                onClick={(e) => this.handleLangSelection(e)}
+              >
+                Deutsch
+              </button>
+            </li>
+            <li className="nav__dropdown-item">
+              <button
+                onFocus={this.handleFocusForLang}
+                onBlur={this.handleBlur}
                 value="en-US"
                 onClick={(e) => this.handleLangSelection(e)}
               >
@@ -651,6 +661,16 @@ class Nav extends React.PureComponent {
               <button
                 onFocus={this.handleFocusForLang}
                 onBlur={this.handleBlur}
+                value="hi"
+                onClick={(e) => this.handleLangSelection(e)}
+              >
+                हिन्दी
+              </button>
+            </li>
+            <li className="nav__dropdown-item">
+              <button
+                onFocus={this.handleFocusForLang}
+                onBlur={this.handleBlur}
                 value="ja"
                 onClick={(e) => this.handleLangSelection(e)}
               >
@@ -661,10 +681,10 @@ class Nav extends React.PureComponent {
               <button
                 onFocus={this.handleFocusForLang}
                 onBlur={this.handleBlur}
-                value="hi"
+                value="pt-BR"
                 onClick={(e) => this.handleLangSelection(e)}
               >
-                हिन्दी
+                Português
               </button>
             </li>
           </ul>
@@ -877,8 +897,6 @@ Nav.propTypes = {
   cmController: PropTypes.shape({
     tidyCode: PropTypes.func,
     showFind: PropTypes.func,
-    findNext: PropTypes.func,
-    findPrev: PropTypes.func,
     showReplace: PropTypes.func,
     getContent: PropTypes.func
   }),

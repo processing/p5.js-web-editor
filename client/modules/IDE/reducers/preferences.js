@@ -8,7 +8,6 @@ const initialState = {
   lintWarning: false,
   textOutput: false,
   gridOutput: false,
-  soundOutput: false,
   theme: 'light',
   autorefresh: false,
   language: 'en-US',
@@ -29,8 +28,6 @@ const preferences = (state = initialState, action) => {
       return Object.assign({}, state, { textOutput: action.value });
     case ActionTypes.SET_GRID_OUTPUT:
       return Object.assign({}, state, { gridOutput: action.value });
-    case ActionTypes.SET_SOUND_OUTPUT:
-      return Object.assign({}, state, { soundOutput: action.value });
     case ActionTypes.SET_PREFERENCES:
       return action.preferences;
     case ActionTypes.SET_THEME:

@@ -101,13 +101,6 @@ class IDEView extends React.Component {
     if (nextProps.location !== this.props.location) {
       this.props.setPreviousPath(this.props.location.pathname);
     }
-
-    if (this.props.ide.consoleIsExpanded !== nextProps.ide.consoleIsExpanded) {
-      this.setState({
-        consoleSize: nextProps.ide.consoleIsExpanded ? 150 : 29
-      });
-    }
-
     if (this.props.ide.sidebarIsExpanded !== nextProps.ide.sidebarIsExpanded) {
       this.setState({
         sidebarSize: nextProps.ide.sidebarIsExpanded ? 160 : 20
@@ -192,6 +185,7 @@ class IDEView extends React.Component {
     ) {
       e.preventDefault();
       e.stopPropagation();
+      this.syncFileContent();
       this.props.startSketch();
       // 50 === 2
     } else if (
@@ -249,6 +243,11 @@ class IDEView extends React.Component {
     return null;
   };
 
+  syncFileContent = () => {
+    const file = this.cmController.getContent();
+    this.props.updateFileContent(file.id, file.content);
+  };
+
   render() {
     return (
       <div className="ide">
@@ -260,7 +259,10 @@ class IDEView extends React.Component {
           warnIfUnsavedChanges={this.handleUnsavedChanges}
           cmController={this.cmController}
         />
-        <Toolbar key={this.props.project.id} />
+        <Toolbar
+          syncFileContent={this.syncFileContent}
+          key={this.props.project.id}
+        />
         {this.props.ide.preferencesIsVisible && (
           <Overlay
             title={this.props.t('Preferences.Settings')}
@@ -280,10 +282,8 @@ class IDEView extends React.Component {
               setLintWarning={this.props.setLintWarning}
               textOutput={this.props.preferences.textOutput}
               gridOutput={this.props.preferences.gridOutput}
-              soundOutput={this.props.preferences.soundOutput}
               setTextOutput={this.props.setTextOutput}
               setGridOutput={this.props.setGridOutput}
-              setSoundOutput={this.props.setSoundOutput}
               theme={this.props.preferences.theme}
               setTheme={this.props.setTheme}
               autocloseBracketsQuotes={
@@ -337,7 +337,9 @@ class IDEView extends React.Component {
               <SplitPane
                 split="horizontal"
                 primary="second"
-                size={this.state.consoleSize}
+                size={
+                  this.props.ide.consoleIsExpanded ? this.state.consoleSize : 29
+                }
                 minSize={29}
                 onChange={(size) => this.setState({ consoleSize: size })}
                 allowResize={this.props.ide.consoleIsExpanded}
@@ -365,8 +367,7 @@ class IDEView extends React.Component {
                   />
                   <div>
                     {((this.props.preferences.textOutput ||
-                      this.props.preferences.gridOutput ||
-                      this.props.preferences.soundOutput) &&
+                      this.props.preferences.gridOutput) &&
                       this.props.ide.isPlaying) ||
                       this.props.ide.isAccessibleOutputPlaying}
                   </div>
@@ -378,10 +379,7 @@ class IDEView extends React.Component {
         </main>
         {this.props.ide.modalIsVisible && <NewFileModal />}
         {this.props.ide.newFolderModalVisible && (
-          <NewFolderModal
-            closeModal={this.props.closeNewFolderModal}
-            createFolder={this.props.createFolder}
-          />
+          <NewFolderModal closeModal={this.props.closeNewFolderModal} />
         )}
         {this.props.ide.uploadFileModalVisible && (
           <UploadFileModal closeModal={this.props.closeUploadFileModal} />
@@ -505,9 +503,6 @@ IDEView.propTypes = {
     }),
     updatedAt: PropTypes.string
   }).isRequired,
-  editorAccessibility: PropTypes.shape({
-    lintMessages: PropTypes.objectOf(PropTypes.shape()).isRequired
-  }).isRequired,
   preferences: PropTypes.shape({
     autosave: PropTypes.bool.isRequired,
     fontSize: PropTypes.number.isRequired,
@@ -516,7 +511,6 @@ IDEView.propTypes = {
     lintWarning: PropTypes.bool.isRequired,
     textOutput: PropTypes.bool.isRequired,
     gridOutput: PropTypes.bool.isRequired,
-    soundOutput: PropTypes.bool.isRequired,
     theme: PropTypes.string.isRequired,
     autorefresh: PropTypes.bool.isRequired,
     language: PropTypes.string.isRequired,
@@ -531,7 +525,6 @@ IDEView.propTypes = {
   setLintWarning: PropTypes.func.isRequired,
   setTextOutput: PropTypes.func.isRequired,
   setGridOutput: PropTypes.func.isRequired,
-  setSoundOutput: PropTypes.func.isRequired,
   setAllAccessibleOutput: PropTypes.func.isRequired,
   files: PropTypes.arrayOf(
     PropTypes.shape({
@@ -559,12 +552,12 @@ IDEView.propTypes = {
   collapseConsole: PropTypes.func.isRequired,
   deleteFile: PropTypes.func.isRequired,
   updateFileName: PropTypes.func.isRequired,
+  updateFileContent: PropTypes.func.isRequired,
   openProjectOptions: PropTypes.func.isRequired,
   closeProjectOptions: PropTypes.func.isRequired,
   newFolder: PropTypes.func.isRequired,
   closeNewFolderModal: PropTypes.func.isRequired,
   closeNewFileModal: PropTypes.func.isRequired,
-  createFolder: PropTypes.func.isRequired,
   closeShareModal: PropTypes.func.isRequired,
   closeKeyboardShortcutModal: PropTypes.func.isRequired,
   toast: PropTypes.shape({

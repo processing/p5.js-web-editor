@@ -9,6 +9,18 @@ spec:
     serviceName: web-editor-node
     servicePort: 8000
 ---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: preview-editor-ingress
+  annotations:
+    # need to make another global static ip
+    kubernetes.io/ingress.global-static-ip-name: "preview-editor-ip"
+spec:
+  backend:
+    serviceName: web-editor-node
+    servicePort: 8002
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -22,7 +34,11 @@ spec:
   type: NodePort
   ports:
   - port: 8000
+    name: editor-port
     targetPort: 8000
+  - port: 8002
+    name: preview-port
+    targetPort: 8002
   selector:
     app: web-editor
 ---
@@ -129,7 +145,7 @@ metadata:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: staging-editor-ingress-with-auth
+  name: staging-editor-ingress
   namespace: staging
   annotations:
     kubernetes.io/ingress.global-static-ip-name: "web-editor-staging-ip"
@@ -137,6 +153,18 @@ spec:
   backend:
     serviceName: web-editor-node
     servicePort: 8001
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: staging-preview-ingress
+  namespace: staging
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: "preview-staging-ip"
+spec:
+  backend:
+    serviceName: web-editor-node
+    servicePort: 8003
 ---
 apiVersion: v1
 kind: Service
@@ -152,7 +180,11 @@ spec:
   type: NodePort
   ports:
   - port: 8001
+    name: editor-port
     targetPort: 8000
+  - port: 8003
+    name: preview-port
+    targetPort: 8002
   selector:
     app: web-editor
 ---

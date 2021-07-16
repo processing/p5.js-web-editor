@@ -98,8 +98,6 @@ const routes = (store) => (
       path="/:username/collections"
       component={mobileFirst(MobileDashboardView, DashboardView)}
     />
-
-    <Route path="/:username/collections/create" component={DashboardView} />
     <Route
       path="/:username/collections/:collection_id"
       component={CollectionView}

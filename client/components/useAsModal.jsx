@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useModalBehavior } from '../utils/custom-hooks';
+import { useModalBehavior } from '../modules/IDE/hooks/custom-hooks';
 
 const BackgroundOverlay = styled.div`
   position: fixed;
