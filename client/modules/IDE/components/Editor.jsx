@@ -9,6 +9,7 @@ import cssParser from 'prettier/parser-postcss';
 import { withTranslation } from 'react-i18next';
 import StackTrace from 'stacktrace-js';
 import 'codemirror/mode/css/css';
+import 'codemirror/mode/clike/clike';
 import 'codemirror/addon/selection/active-line';
 import 'codemirror/addon/lint/lint';
 import 'codemirror/addon/lint/javascript-lint';
@@ -38,7 +39,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import '../../../utils/htmlmixed';
 import '../../../utils/p5-javascript';
-import '../../../utils/webGL-clike';
 import Timer from '../components/Timer';
 import EditorAccessibility from '../components/EditorAccessibility';
 import { metaKey } from '../../../utils/metaKey';
@@ -304,8 +304,10 @@ class Editor extends React.Component {
       mode = 'htmlmixed';
     } else if (fileName.match(/.+\.json$/i)) {
       mode = 'application/json';
-    } else if (fileName.match(/.+\.(frag|vert)$/i)) {
-      mode = 'clike';
+    } else if (fileName.match(/.+\.(frag|glsl)$/i)) {
+      mode = 'x-shader/x-fragment';
+    } else if (fileName.match(/.+\.(vert)$/i)) {
+      mode = 'x-shader/x-vertex';
     } else {
       mode = 'text/plain';
     }
