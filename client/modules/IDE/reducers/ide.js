@@ -22,7 +22,7 @@ const initialState = {
   justOpenedProject: false,
   previousPath: '/',
   errorType: undefined,
-  runtimeErrorWarningVisible: true,
+  runtimeErrorWarningVisible: false,
   parentId: undefined
 };
 

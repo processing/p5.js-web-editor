@@ -11,9 +11,7 @@ if (process.env.NODE_ENV === "development") {
   require('dotenv').config();
 }
 
-const sharedObj = {};
-
-module.exports = [{
+module.exports = {
   devtool: 'source-map',
   mode: 'production',
   entry: {
@@ -22,6 +20,16 @@ module.exports = [{
       'core-js/modules/es6.promise',
       'core-js/modules/es6.array.iterator',
       path.resolve(__dirname, '../client/index.jsx')
+    ],
+    'previewApp': [
+      '@babel/polyfill',
+      'core-js/modules/es6.promise',
+      'core-js/modules/es6.array.iterator',
+      path.resolve(__dirname, '../client/modules/Preview/previewIndex.jsx')
+    ],
+    previewScripts: [
+      '@babel/polyfill',
+      path.resolve(__dirname, '../client/utils/previewEntry.js')
     ]
   },
   output: {
@@ -158,8 +166,7 @@ module.exports = [{
   plugins: [
     new WebpackManifestPlugin({
       basePath: '/',
-      filename: 'manifest.json',
-      seed: sharedObj
+      filename: 'manifest.json'
     }),
     new MiniCssExtractPlugin({
       filename: 'app.[hash].css',
@@ -171,52 +178,4 @@ module.exports = [{
     }
     )
   ]
-},
-{
-  entry: {
-    previewScripts: [
-      path.resolve(__dirname, '../client/utils/previewEntry.js')
-    ]
-  },
-  target: 'web',
-  devtool: 'source-map',
-  mode: 'production',
-  output: {
-    path: path.resolve(__dirname, '../dist/static'),
-    filename: 'previewScripts.[hash].js',
-    publicPath: '/'
-  },
-  resolve: {
-    extensions: ['*', '.js', '.jsx'],
-    modules: [
-      'client',
-      'node_modules',
-    ],
-  },
-  module: {
-    rules: [
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader',
-        options: {
-          babelrc: true
-        }
-      }
-    ]
-  },
-  optimization: {
-    minimize: true,
-    minimizer: [new TerserJSPlugin({
-      sourceMap: true,
-      parallel: true
-    })],
-  },
-  plugins: [
-    new WebpackManifestPlugin({
-      basePath: '/',
-      filename: 'manifest.json',
-      seed: sharedObj
-    })
-  ]
-}];
+};

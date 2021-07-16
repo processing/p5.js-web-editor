@@ -87,6 +87,7 @@ class Toolbar extends React.Component {
         <button
           className="toolbar__play-sketch-button"
           onClick={() => {
+            this.props.syncFileContent();
             this.props.startAccessibleSketch();
             this.props.setTextOutput(true);
             this.props.setGridOutput(true);
@@ -98,7 +99,10 @@ class Toolbar extends React.Component {
         </button>
         <button
           className={playButtonClass}
-          onClick={this.props.startSketch}
+          onClick={() => {
+            this.props.syncFileContent();
+            this.props.startSketch();
+          }}
           aria-label={this.props.t('Toolbar.PlayOnlyVisualSketchARIA')}
           disabled={this.props.infiniteLoop}
         >
@@ -159,7 +163,7 @@ class Toolbar extends React.Component {
             onBlur={this.handleProjectNameSave}
             onKeyPress={this.handleKeyPress}
           />
-          {(() => { // eslint-disable-line
+          {(() => {
             if (this.props.owner) {
               return (
                 <p className="toolbar__project-owner">
@@ -170,6 +174,7 @@ class Toolbar extends React.Component {
                 </p>
               );
             }
+            return null;
           })()}
         </div>
         <button
@@ -209,7 +214,8 @@ Toolbar.propTypes = {
   startAccessibleSketch: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
   currentUser: PropTypes.string,
-  t: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
+  syncFileContent: PropTypes.func.isRequired
 };
 
 Toolbar.defaultProps = {

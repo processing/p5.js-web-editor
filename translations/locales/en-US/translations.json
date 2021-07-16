@@ -166,9 +166,7 @@
     "PlainText": "Plain-text",
     "TextOutputARIA": "text output on",
     "TableText": "Table-text",
-    "TableOutputARIA": "table output on",
-    "Sound": "Sound",
-    "SoundOutputARIA": "sound output on"
+    "TableOutputARIA": "table output on"
   },
   "KeyboardShortcuts": {
     "Title": " Keyboard Shortcuts",

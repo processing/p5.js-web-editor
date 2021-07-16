@@ -123,7 +123,8 @@ export function getProjectsForUserId(userId) {
 }
 
 export function getProjectAsset(req, res) {
-  Project.findById(req.params.project_id)
+  const projectId = req.params.project_id;
+  Project.findOne({ $or: [{ _id: projectId }, { slug: projectId }] })
     .populate('user', 'username')
     .exec(async (err, project) => { // eslint-disable-line
       if (err) {

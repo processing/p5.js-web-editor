@@ -71,7 +71,6 @@ const userSchema = new Schema(
       lintWarning: { type: Boolean, default: false },
       textOutput: { type: Boolean, default: false },
       gridOutput: { type: Boolean, default: false },
-      soundOutput: { type: Boolean, default: false },
       theme: { type: String, default: 'light' },
       autorefresh: { type: Boolean, default: false },
       language: { type: String, default: 'en-US' },
@@ -306,4 +305,4 @@ userSchema.statics.EmailConfirmation = EmailConfirmationStates;
 userSchema.index({ username: 1 }, { collation: { locale: 'en', strength: 2 } });
 userSchema.index({ email: 1 }, { collation: { locale: 'en', strength: 2 } });
 
-export default mongoose.model('User', userSchema);
+export default mongoose.models.User || mongoose.model('User', userSchema);

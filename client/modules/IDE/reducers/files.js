@@ -12,8 +12,8 @@ function draw() {
 const defaultHTML = `<!DOCTYPE html>
 <html lang="en">
   <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.3.1/p5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/addons/p5.sound.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="utf-8" />
 
@@ -54,7 +54,8 @@ const initialState = () => {
       _id: a,
       isSelectedFile: true,
       fileType: 'file',
-      children: []
+      children: [],
+      filePath: ''
     },
     {
       name: 'index.html',
@@ -62,7 +63,8 @@ const initialState = () => {
       id: b,
       _id: b,
       fileType: 'file',
-      children: []
+      children: [],
+      filePath: ''
     },
     {
       name: 'style.css',
@@ -70,7 +72,8 @@ const initialState = () => {
       id: c,
       _id: c,
       fileType: 'file',
-      children: []
+      children: [],
+      filePath: ''
     }
   ];
 };
@@ -141,6 +144,27 @@ function renameFile(state, action) {
   });
 }
 
+function setFilePath(files, fileId, path) {
+  const file = files.find((f) => f.id === fileId);
+  file.filePath = path;
+  // const newPath = `${path}${path.length > 0 ? '/' : ''}${file.name}`;
+  const newPath = `${path}/${file.name}`;
+  if (file.children.length === 0) return;
+  file.children.forEach((childFileId) => {
+    setFilePath(files, childFileId, newPath);
+  });
+}
+
+function setFilePaths(files) {
+  const updatedFiles = [...files];
+  const rootPath = '';
+  const rootFile = files.find((f) => f.name === 'root');
+  rootFile.children.forEach((fileId) => {
+    setFilePath(updatedFiles, fileId, rootPath);
+  });
+  return updatedFiles;
+}
+
 const files = (state, action) => {
   if (state === undefined) {
     state = initialState(); // eslint-disable-line
@@ -162,12 +186,22 @@ const files = (state, action) => {
         return Object.assign({}, file, { blobURL: action.blobURL });
       });
     case ActionTypes.NEW_PROJECT:
-      return [...action.files];
+      return setFilePaths(action.files);
     case ActionTypes.SET_PROJECT:
-      return [...action.files];
+      return setFilePaths(action.files);
     case ActionTypes.RESET_PROJECT:
       return initialState();
     case ActionTypes.CREATE_FILE: {
+      const parentFile = state.find((file) => file.id === action.parentId);
+      // const filePath =
+      //   parentFile.name === 'root'
+      //     ? ''
+      //     : `${parentFile.filePath}${parentFile.filePath.length > 0 ? '/' : ''}
+      //     ${parentFile.name}`;
+      const filePath =
+        parentFile.name === 'root'
+          ? ''
+          : `${parentFile.filePath}/${parentFile.name}`;
       const newState = [
         ...updateParent(state, action),
         {
@@ -177,7 +211,8 @@ const files = (state, action) => {
           content: action.content,
           url: action.url,
           children: action.children,
-          fileType: action.fileType || 'file'
+          fileType: action.fileType || 'file',
+          filePath
         }
       ];
       return newState.map((file) => {
@@ -189,6 +224,13 @@ const files = (state, action) => {
     }
     case ActionTypes.UPDATE_FILE_NAME: {
       const newState = renameFile(state, action);
+      const updatedFile = newState.find((file) => file.id === action.id);
+      // const childPath = `${updatedFile.filePath}
+      // ${updatedFile.filePath.length > 0 ? '/' : ''}${updatedFile.name}`;
+      const childPath = `${updatedFile.filePath}/${updatedFile.name}`;
+      updatedFile.children.forEach((childId) => {
+        setFilePath(newState, action.id, childPath);
+      });
       return newState.map((file) => {
         if (file.children.includes(action.id)) {
           file.children = sortedChildrenId(newState, file.children);
