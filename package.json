@@ -1,6 +1,6 @@
 {
   "name": "p5.js-web-editor",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "The web editor for p5.js.",
   "scripts": {
     "clean": "rimraf dist",
