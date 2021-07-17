@@ -156,7 +156,7 @@
     "LineNumbers": "行号",
     "LineNumbersOnARIA": "打开行号",
     "LineNumbersOffARIA": "关闭行号",
-    "LintWarningSound": "纠码器（Lint）警告音",
+    "LintWarningSound": "纠码器警告音",
     "LintWarningOnARIA": "打开纠码器警告音",
     "LintWarningOffARIA": "关闭纠码器警告音",
     "PreviewSound": "预览音",
@@ -166,9 +166,7 @@
     "PlainText": "纯文本",
     "TextOutputARIA": "打开文字输出",
     "TableText": "表格文本",
-    "TableOutputARIA": "打开表格文本",
-    "Sound": "声音",
-    "SoundOutputARIA": "打开声音"
+    "TableOutputARIA": "打开表格文本"
   },
   "KeyboardShortcuts": {
     "Title": "快捷键",
@@ -531,7 +529,7 @@
     "KeyUpLineNumber": "第{{lineNumber}}行"
   },
   "EditorAccessibility": {
-    "NoLintMessages": "没有纠错器消息",
+    "NoLintMessages": "没有纠码器消息",
     "CurrentLine": "当前行"
   },
   "Timer": {
@@ -572,7 +570,7 @@
     "Autosave": "自动保存",
     "WordWrap": "自动提行",
     "LineNumbers": "行号",
-    "LintWarningSound": "纠码器（Lint）警告音",
+    "LintWarningSound": "纠码器警告音",
     "UsedScreenReader": "结合屏幕阅读器使用",
     "PlainText": "纯文本",
     "TableText": "表格文本",
