@@ -1,4 +1,4 @@
-FROM node:12.16.1 as base
+FROM node:14.17.3 as base
 ENV APP_HOME=/usr/src/app \
   TERM=xterm
 RUN mkdir -p $APP_HOME
