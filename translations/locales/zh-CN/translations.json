@@ -308,10 +308,10 @@
   },
   "APIKeyForm": {
     "ConfirmDelete": "您确定要删除 {{key_label}} 吗？",
-    "Summary": "个人访问令牌就像您的密码一样，允许自动脚本访问编辑器的 API。请为每个需要访问的脚本创建一个令牌。",
+    "Summary": "个人访问令牌就像您的密码一样，允许自动代码访问编辑器的 API。请为每个需要访问的自动代码创建一个令牌。",
     "CreateToken": "新建令牌（Access Token）",
     "TokenLabel": "这个令牌有什么用？",
-    "TokenPlaceholder": "这个令牌有什么用？例如，演示导入脚本。",
+    "TokenPlaceholder": "这个令牌有什么用？例如，演示导入代码。",
     "CreateTokenSubmit": "新建",
     "NoTokens": "您还没有令牌。",
     "NewTokenTitle": "您的新令牌",
