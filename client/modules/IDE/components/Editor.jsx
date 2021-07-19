@@ -212,10 +212,7 @@ class Editor extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (
-      this.props.file.content !== prevProps.file.content &&
-      this.props.file.content !== this._cm.getValue()
-    ) {
+    if (this.props.file.id !== prevProps.file.id) {
       const oldDoc = this._cm.swapDoc(this._docs[this.props.file.id]);
       this._docs[prevProps.file.id] = oldDoc;
       this._cm.focus();
