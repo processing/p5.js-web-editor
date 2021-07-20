@@ -12,7 +12,7 @@ export default function createProject(req, res) {
 
   projectValues = Object.assign(projectValues, req.body);
 
-  function sendFailure() {
+  function sendFailure(err) {
     res.status(400).json({ success: false });
   }
 
