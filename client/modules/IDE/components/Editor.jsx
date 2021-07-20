@@ -28,6 +28,7 @@ import 'codemirror/addon/search/jump-to-line';
 import 'codemirror/addon/edit/matchbrackets';
 import 'codemirror/addon/edit/closebrackets';
 import 'codemirror/addon/selection/mark-selection';
+import 'codemirror-colorpicker';
 
 import { JSHINT } from 'jshint';
 import { CSSLint } from 'csslint';
@@ -124,6 +125,10 @@ class Editor extends React.Component {
           '-W041': false,
           esversion: 7
         }
+      },
+      colorpicker: {
+        type: 'sketch',
+        mode: 'edit'
       }
     });
 
@@ -149,7 +154,8 @@ class Editor extends React.Component {
       [`${metaKey}-F`]: 'findPersistent',
       [`${metaKey}-G`]: 'findPersistentNext',
       [`Shift-${metaKey}-G`]: 'findPersistentPrev',
-      [replaceCommand]: 'replace'
+      [replaceCommand]: 'replace',
+      [`${metaKey}-K`]: (cm, event) => cm.state.colorpicker.popup_color_picker()
     });
 
     this.initializeDocuments(this.props.files);
