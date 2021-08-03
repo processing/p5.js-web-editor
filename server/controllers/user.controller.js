@@ -17,7 +17,8 @@ export function userResponse(user) {
     id: user._id,
     totalSize: user.totalSize,
     github: user.github,
-    google: user.google
+    google: user.google,
+    cookieConsent: user.cookieConsent
   };
 }
 
