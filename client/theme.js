@@ -66,25 +66,49 @@ export default {
     backgroundColor: grays.lighter,
 
     Button: {
-      default: {
-        foreground: colors.black,
-        background: grays.light,
-        border: grays.middleLight
+      primary: {
+        default: {
+          foreground: colors.black,
+          background: grays.light,
+          border: grays.middleLight
+        },
+        hover: {
+          foreground: grays.lightest,
+          background: colors.p5jsPink,
+          border: colors.p5jsPink
+        },
+        active: {
+          foreground: grays.lightest,
+          background: colors.p5jsActivePink,
+          border: colors.p5jsActivePink
+        },
+        disabled: {
+          foreground: colors.black,
+          background: grays.light,
+          border: grays.middleLight
+        }
       },
-      hover: {
-        foreground: grays.lightest,
-        background: colors.p5jsPink,
-        border: colors.p5jsPink
-      },
-      active: {
-        foreground: grays.lightest,
-        background: colors.p5jsActivePink,
-        border: colors.p5jsActivePink
-      },
-      disabled: {
-        foreground: colors.black,
-        background: grays.light,
-        border: grays.middleLight
+      secondary: {
+        default: {
+          foreground: grays.lightest,
+          background: colors.p5jsPink,
+          border: colors.p5jsPink
+        },
+        hover: {
+          foreground: grays.lightest,
+          background: colors.p5jsPink,
+          border: colors.p5jsPink
+        },
+        active: {
+          foreground: grays.lightest,
+          background: colors.p5jsActivePink,
+          border: colors.p5jsActivePink
+        },
+        disabled: {
+          foreground: colors.black,
+          background: grays.light,
+          border: grays.middleLight
+        }
       }
     },
     Icon: {
@@ -119,25 +143,49 @@ export default {
     backgroundColor: grays.darker,
 
     Button: {
-      default: {
-        foreground: grays.light,
-        background: grays.dark,
-        border: grays.middleDark
+      primary: {
+        default: {
+          foreground: grays.light,
+          background: grays.dark,
+          border: grays.middleDark
+        },
+        hover: {
+          foreground: grays.lightest,
+          background: colors.p5jsPink,
+          border: colors.p5jsPink
+        },
+        active: {
+          foreground: grays.lightest,
+          background: colors.p5jsActivePink,
+          border: colors.p5jsActivePink
+        },
+        disabled: {
+          foreground: grays.light,
+          background: grays.dark,
+          border: grays.middleDark
+        }
       },
-      hover: {
-        foreground: grays.lightest,
-        background: colors.p5jsPink,
-        border: colors.p5jsPink
-      },
-      active: {
-        foreground: grays.lightest,
-        background: colors.p5jsActivePink,
-        border: colors.p5jsActivePink
-      },
-      disabled: {
-        foreground: grays.light,
-        background: grays.dark,
-        border: grays.middleDark
+      secondary: {
+        default: {
+          foreground: grays.lightest,
+          background: colors.p5jsPink,
+          border: colors.p5jsPink
+        },
+        hover: {
+          foreground: grays.lightest,
+          background: colors.p5jsPink,
+          border: colors.p5jsPink
+        },
+        active: {
+          foreground: grays.lightest,
+          background: colors.p5jsActivePink,
+          border: colors.p5jsActivePink
+        },
+        disabled: {
+          foreground: grays.light,
+          background: grays.dark,
+          border: grays.middleDark
+        }
       }
     },
     Icon: {
@@ -172,25 +220,49 @@ export default {
     backgroundColor: grays.darker,
 
     Button: {
-      default: {
-        foreground: grays.light,
-        background: grays.dark,
-        border: grays.middleDark
+      primary: {
+        default: {
+          foreground: grays.light,
+          background: grays.dark,
+          border: grays.middleDark
+        },
+        hover: {
+          foreground: grays.dark,
+          background: colors.yellow,
+          border: colors.yellow
+        },
+        active: {
+          foreground: grays.dark,
+          background: colors.p5jsActivePink,
+          border: colors.p5jsActivePink
+        },
+        disabled: {
+          foreground: grays.light,
+          background: grays.dark,
+          border: grays.middleDark
+        }
       },
-      hover: {
-        foreground: grays.dark,
-        background: colors.yellow,
-        border: colors.yellow
-      },
-      active: {
-        foreground: grays.dark,
-        background: colors.p5jsActivePink,
-        border: colors.p5jsActivePink
-      },
-      disabled: {
-        foreground: grays.light,
-        background: grays.dark,
-        border: grays.middleDark
+      secondary: {
+        default: {
+          foreground: grays.dark,
+          background: colors.yellow,
+          border: colors.yellow
+        },
+        hover: {
+          foreground: grays.dark,
+          background: colors.yellow,
+          border: colors.yellow
+        },
+        active: {
+          foreground: grays.dark,
+          background: colors.p5jsActivePink,
+          border: colors.p5jsActivePink
+        },
+        disabled: {
+          foreground: grays.light,
+          background: grays.dark,
+          border: grays.middleDark
+        }
       }
     },
     Icon: {

@@ -127,7 +127,9 @@ function CookieConsent() {
             allow.
           </CookieConsentCopy>
           <CookieConsentButtons>
-            <Button onClick={acceptAllCookies}>Allow All</Button>
+            <Button kind={Button.kinds.secondary} onClick={acceptAllCookies}>
+              Allow All
+            </Button>
             <Button onClick={acceptEssentialCookies}>Allow Essential</Button>
           </CookieConsentButtons>
         </CookieConsentContent>
