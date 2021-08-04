@@ -12,6 +12,7 @@
     "build:client": "cross-env NODE_ENV=production webpack --config webpack/config.prod.js",
     "build:server": "cross-env NODE_ENV=production webpack --config webpack/config.server.js",
     "build:examples": "cross-env NODE_ENV=production webpack --config webpack/config.examples.js",
+    "build:client:standalone": "cross-env NODE_ENV=production webpack --config webpack/config.prod.standalone.js",
     "test": "jest",
     "test:ci": "npm run lint && npm run test",
     "fetch-examples": "cross-env NODE_ENV=development node ./server/scripts/fetch-examples.js",
@@ -62,7 +63,7 @@
       }
     ]
   },
-  "main": "index.js",
+  "main": "./dist/p5.js",
   "author": "Cassie Tarakajian",
   "license": "LGPL-2.1",
   "repository": {
@@ -138,6 +139,10 @@
   "engines": {
     "node": "12.16.1",
     "npm": "6.13.4"
+  },
+  "peerDependencies": {
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   },
   "dependencies": {
     "@auth0/s3": "^1.0.0",

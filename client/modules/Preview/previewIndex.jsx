@@ -1,7 +1,7 @@
 import React, { useReducer, useState, useEffect } from 'react';
-import { render } from 'react-dom';
-import { hot } from 'react-hot-loader/root';
-import { createGlobalStyle } from 'styled-components';
+// import { render } from 'react-dom';
+// import { hot } from 'react-hot-loader/root';
+// import { createGlobalStyle } from 'styled-components';
 import {
   registerFrame,
   listen,
@@ -12,11 +12,11 @@ import { filesReducer, initialState, setFiles } from './filesReducer';
 import EmbedFrame from './EmbedFrame';
 import getConfig from '../../utils/getConfig';
 
-const GlobalStyle = createGlobalStyle`
-  body {
-    margin: 0;
-  }
-`;
+// const GlobalStyle = createGlobalStyle`
+//   body {
+//     margin: 0;
+//   }
+// `;
 
 const App = () => {
   const [state, dispatch] = useReducer(filesReducer, [], initialState);
@@ -60,7 +60,7 @@ const App = () => {
   });
   return (
     <React.Fragment>
-      <GlobalStyle />
+      {/* <GlobalStyle /> */}
       <EmbedFrame
         files={state}
         isPlaying={isPlaying}
@@ -72,6 +72,12 @@ const App = () => {
   );
 };
 
-const HotApp = hot(App);
+export const P5Preview = () => (
+  <div>
+    <App />
+  </div>
+);
 
-render(<HotApp />, document.getElementById('root'));
+// const HotApp = hot(App);
+
+// render(<HotApp />, document.getElementById('root'));

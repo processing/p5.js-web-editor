@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
-import { render } from 'react-dom';
-import { hot } from 'react-hot-loader/root';
+// import { render } from 'react-dom';
+// import { hot } from 'react-hot-loader/root';
 import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 
@@ -28,11 +28,17 @@ const App = () => (
   </Provider>
 );
 
-const HotApp = hot(App);
-
-render(
+export const P5Editor = () => (
   <Suspense fallback={<Loader />}>
-    <HotApp />
-  </Suspense>,
-  document.getElementById('root')
+    <App />
+  </Suspense>
 );
+
+// const HotApp = hot(App);
+
+// render(
+//   <Suspense fallback={<Loader />}>
+//     <HotApp />
+//   </Suspense>,
+//   document.getElementById('root')
+// );
