@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
 import styled from 'styled-components';
+import ReactGA from 'react-ga';
 import getConfig from '../../../utils/getConfig';
 import { setUserCookieConsent } from '../actions';
 import { remSize, prop } from '../../../theme';
@@ -61,7 +62,6 @@ function CookieConsent() {
   function acceptAllCookies() {
     if (user.authenticated) {
       dispatch(setUserCookieConsent('all'));
-      return;
     }
     setBrowserCookieConsent('all');
     Cookies.set('p5-cookie-consent', 'all', { expires: 365 });
@@ -70,10 +70,12 @@ function CookieConsent() {
   function acceptEssentialCookies() {
     if (user.authenticated) {
       dispatch(setUserCookieConsent('essential'));
-      return;
     }
     setBrowserCookieConsent('essential');
     Cookies.set('p5-cookie-consent', 'essential', { expires: 365 });
+    Cookies.remove('_ga');
+    Cookies.remove('_gat');
+    Cookies.remove('_gid');
   }
 
   function mergeCookieConsent() {
@@ -94,6 +96,17 @@ function CookieConsent() {
     } else {
       initializeCookieConsent();
     }
+
+    if (p5CookieConsent === 'essential') {
+      ReactGA.initialize(getConfig('GA_MEASUREMENT_ID'), {
+        gaOptions: {
+          storage: 'none'
+        }
+      });
+    } else {
+      ReactGA.initialize(getConfig('GA_MEASUREMENT_ID'));
+    }
+    ReactGA.pageview(window.location.pathname + window.location.search);
   }, []);
 
   useEffect(() => {
@@ -101,11 +114,12 @@ function CookieConsent() {
   }, [user.authenticated]);
 
   // Turn off Google Analytics
-  useEffect(() => {
-    if (cookieConsent === 'essential' || user.cookieConsent === 'essential') {
-      window[`ga-disable-${getConfig('GA_MEASUREMENT_ID')}`] = true;
-    }
-  }, [cookieConsent, user.cookieConsent]);
+  // useEffect(() => {
+  //   if (cookieConsent === 'all' || user.cookieConsent === 'all') {
+  //     ReactGA.initialize(getConfig('GA_MEASUREMENT_ID'));
+  //     ReactGA.pageview(window.location.pathname + window.location.search);
+  //   }
+  // }, [cookieConsent, user.cookieConsent]);
 
   const showCookieConsent =
     (user.authenticated && user.cookieConsent === 'none') ||
