@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
 import styled from 'styled-components';
 import ReactGA from 'react-ga';
+import { Transition } from 'react-transition-group';
 import getConfig from '../../../utils/getConfig';
 import { setUserCookieConsent } from '../actions';
 import { remSize, prop } from '../../../theme';
@@ -10,7 +11,13 @@ import Button from '../../../common/Button';
 
 const CookieConsentContainer = styled.div`
   position: fixed;
-  bottom: 0;
+  transition: 1.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+  bottom: ${({ state }) => {
+    if (state === 'entered') {
+      return '0';
+    }
+    return remSize(-200);
+  }};
   left: 0;
   right: 0;
   z-index: 9999;
@@ -47,6 +54,7 @@ const CookieConsentButtons = styled.div`
 function CookieConsent() {
   const user = useSelector((state) => state.user);
   const [cookieConsent, setBrowserCookieConsent] = useState('none');
+  const [inProp, setInProp] = useState(false);
   const dispatch = useDispatch();
 
   function initializeCookieConsent() {
@@ -73,6 +81,7 @@ function CookieConsent() {
     }
     setBrowserCookieConsent('essential');
     Cookies.set('p5-cookie-consent', 'essential', { expires: 365 });
+    // Remove Google Analytics Cookies
     Cookies.remove('_ga');
     Cookies.remove('_gat');
     Cookies.remove('_gid');
@@ -113,42 +122,45 @@ function CookieConsent() {
     mergeCookieConsent();
   }, [user.authenticated]);
 
-  // Turn off Google Analytics
-  // useEffect(() => {
-  //   if (cookieConsent === 'all' || user.cookieConsent === 'all') {
-  //     ReactGA.initialize(getConfig('GA_MEASUREMENT_ID'));
-  //     ReactGA.pageview(window.location.pathname + window.location.search);
-  //   }
-  // }, [cookieConsent, user.cookieConsent]);
-
-  const showCookieConsent =
-    (user.authenticated && user.cookieConsent === 'none') ||
-    (!user.authenticated && cookieConsent === 'none');
-
-  if (!showCookieConsent) return null;
+  useEffect(() => {
+    if (cookieConsent !== 'none') {
+      setInProp(false);
+    } else {
+      setInProp(true);
+    }
+  }, [cookieConsent]);
 
   return (
-    <CookieConsentContainer>
-      <CookieConsentDialog role="dialog" tabIndex="0">
-        {/* <button aria-label="Close" tabIndex="0"></button> */}
-        <CookieConsentHeader>Cookies</CookieConsentHeader>
-        <CookieConsentContent>
-          <CookieConsentCopy>
-            The p5.js Editor uses cookies. Some are essential to the website
-            functionality and allow you to manage an account and preferences.
-            Others are used for analytics allow us to gather information and
-            make improvements. You can decide which cookies you would like to
-            allow.
-          </CookieConsentCopy>
-          <CookieConsentButtons>
-            <Button kind={Button.kinds.secondary} onClick={acceptAllCookies}>
-              Allow All
-            </Button>
-            <Button onClick={acceptEssentialCookies}>Allow Essential</Button>
-          </CookieConsentButtons>
-        </CookieConsentContent>
-      </CookieConsentDialog>
-    </CookieConsentContainer>
+    <Transition in={inProp} timeout={500}>
+      {(state) => (
+        <CookieConsentContainer state={state}>
+          <CookieConsentDialog role="dialog" tabIndex="0">
+            {/* <button aria-label="Close" tabIndex="0"></button> */}
+            <CookieConsentHeader>Cookies</CookieConsentHeader>
+            <CookieConsentContent>
+              <CookieConsentCopy>
+                The p5.js Editor uses cookies. Some are essential to the website
+                functionality and allow you to manage an account and
+                preferences. Others are used for analytics allow us to gather
+                information and make improvements. You can decide which cookies
+                you would like to allow.
+              </CookieConsentCopy>
+              <CookieConsentButtons>
+                <Button
+                  kind={Button.kinds.secondary}
+                  onClick={acceptAllCookies}
+                >
+                  Allow All
+                </Button>
+                <Button onClick={acceptEssentialCookies}>
+                  Allow Essential
+                </Button>
+              </CookieConsentButtons>
+            </CookieConsentContent>
+          </CookieConsentDialog>
+        </CookieConsentContainer>
+      )}
+    </Transition>
   );
 }
 // TODO need to merge browser cookie with user when u login

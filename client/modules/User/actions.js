@@ -341,8 +341,19 @@ export function unlinkService(service) {
 
 export function setUserCookieConsent(cookieConsent) {
   // maybe also send this to the server rn?
-  return {
-    type: ActionTypes.SET_COOKIE_CONSENT,
-    cookieConsent
+  return (dispatch) => {
+    apiClient
+      .put('/cookie-consent', { cookieConsent })
+      .then(() => {
+        dispatch({
+          type: ActionTypes.SET_COOKIE_CONSENT,
+          cookieConsent
+        });
+      })
+      .catch((error) => {
+        const { response } = error;
+        const message = response.message || response.data.error;
+        dispatch(authError(message));
+      });
   };
 }
