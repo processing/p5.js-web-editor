@@ -305,11 +305,9 @@ function parseQuery(query, state) {
   }
   // If the resulting regexp will match everything, do not use it
   if (regexp.test('')) {
-  
     return new RegExp(emptyQuery, 'g');
   }
   return regexp;
-  
 }
 
 function startSearch(cm, state, query) {
