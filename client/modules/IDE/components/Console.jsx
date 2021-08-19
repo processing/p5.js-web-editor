@@ -114,7 +114,24 @@ const Console = ({ t }) => {
   const isExpanded = useSelector((state) => state.ide.consoleIsExpanded);
   const isPlaying = useSelector((state) => state.ide.isPlaying);
   const { theme, fontSize } = useSelector((state) => state.preferences);
-
+  const dataCompare = (data1, data2) => {
+    if (data1.length !== data2.length) {
+      return false;
+    }
+    for (let i = 0; i < data1.length; i += 1) {
+      if (data1[i] !== data2[i]) {
+        return false;
+      }
+    }
+    return true;
+  };
+  for (let i = 1; i < consoleEvents.length; i += 1) {
+    if (dataCompare(consoleEvents[i].data, consoleEvents[i - 1].data)) {
+      consoleEvents[i - 1].times += consoleEvents[i].times;
+      consoleEvents.splice(i, 1);
+      i -= 1;
+    }
+  }
   const {
     collapseConsole,
     expandConsole,
