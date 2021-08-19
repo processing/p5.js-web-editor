@@ -133,4 +133,8 @@ router.get('/:username/collections', (req, res) => {
   );
 });
 
+router.get('/privacy-policy', (req, res) => {
+  res.send(renderIndex());
+});
+
 export default router;
