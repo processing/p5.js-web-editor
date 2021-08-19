@@ -279,6 +279,7 @@ function parseString(string) {
   return string.replace(/\\(.)/g, function (_, ch) {
     if (ch == 'n') return '\n';
     if (ch == 'r') return '\r';
+    console.log(ch);
     return ch;
   });
 }
@@ -293,7 +294,7 @@ function parseQuery(query, state) {
       query = query.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
     }
     if (state.wholeWord) {
-      query += '\\b';
+      query = '\\b' + query + '\\b';
     }
   }
 
@@ -305,12 +306,16 @@ function parseQuery(query, state) {
   }
   // If the resulting regexp will match everything, do not use it
   if (regexp.test('')) {
+  
     return new RegExp(emptyQuery, 'g');
   }
+  console.log('2->'+ regexp);
   return regexp;
+  
 }
 
 function startSearch(cm, state, query) {
+  console.log('startSearch');
   state.queryText = query;
   state.lastQuery = query;
   state.query = parseQuery(query, state);
