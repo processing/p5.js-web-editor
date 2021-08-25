@@ -137,4 +137,8 @@ router.get('/privacy-policy', (req, res) => {
   res.send(renderIndex());
 });
 
+router.get('/terms-of-use', (req, res) => {
+  res.send(renderIndex());
+});
+
 export default router;

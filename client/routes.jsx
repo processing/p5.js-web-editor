@@ -18,6 +18,7 @@ import DashboardView from './modules/User/pages/DashboardView';
 import createRedirectWithUsername from './components/createRedirectWithUsername';
 import MobileDashboardView from './modules/Mobile/MobileDashboardView';
 import PrivacyPolicy from './modules/IDE/pages/PrivacyPolicy';
+import TermsOfUse from './modules/IDE/pages/TermsOfUse';
 import { getUser } from './modules/User/actions';
 import { stopSketch } from './modules/IDE/actions/ide';
 import {
@@ -119,6 +120,7 @@ const routes = (store) => (
     <Route path="/preview" component={MobileSketchView} />
     <Route path="/preferences" component={MobilePreferences} />
     <Route path="privacy-policy" component={PrivacyPolicy} />
+    <Route path="terms-of-use" component={TermsOfUse} />
   </Route>
 );
 
