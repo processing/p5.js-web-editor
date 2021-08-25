@@ -174,7 +174,7 @@
     "express-session": "^1.17.0",
     "final-form": "^4.20.1",
     "friendly-words": "^1.1.10",
-    "htmlhint": "^0.10.1",
+    "htmlhint": "^0.15.1",
     "i18next": "^19.4.5",
     "i18next-http-backend": "^1.0.21",
     "is-url": "^1.2.4",
