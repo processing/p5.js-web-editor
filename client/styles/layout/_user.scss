@@ -16,6 +16,8 @@
 .email-verification {
   height: 100%;
 	overflow: auto;
+  display: flex;
+  flex-direction: column;
   @include themify() {
     color: getThemifyVariable('primary-text-color');
     background-color: getThemifyVariable('background-color');

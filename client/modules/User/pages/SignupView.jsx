@@ -26,7 +26,12 @@ function SignupView() {
             <SocialAuthButton service={SocialAuthButton.services.google} />
           </div>
           <p className="form__navigation-options">
-            {t('SignupView.AlreadyHave')}
+            By signing up, you agree to the p5.js Editor&apos;s{' '}
+            <Link to="/terms-of-use">Terms of Use</Link> and{' '}
+            <Link to="/privacy-policy">Privacy Policy</Link>.
+          </p>
+          <p className="form__navigation-options">
+            {t('SignupView.AlreadyHave')}{' '}
             <Link className="form__login-button" to="/login">
               {t('SignupView.Login')}
             </Link>
