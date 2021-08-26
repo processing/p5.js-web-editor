@@ -23,6 +23,16 @@ function About(props) {
       <div className="about__content-column">
         <h3 className="about__content-column-title">{t('About.NewP5')}</h3>
         <p className="about__content-column-list">
+          <a href="https://p5js.org/" target="_blank" rel="noopener noreferrer">
+            <AsteriskIcon
+              className="about__content-column-asterisk"
+              aria-hidden="true"
+              focusable="false"
+            />
+            Home
+          </a>
+        </p>
+        <p className="about__content-column-list">
           <a
             href="https://p5js.org/examples/"
             target="_blank"
@@ -48,6 +58,34 @@ function About(props) {
               focusable="false"
             />
             {t('About.Learn')}
+          </a>
+        </p>
+        <p className="about__content-column-list">
+          <a
+            href="https://twitter.com/p5xjs?lang=en"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <AsteriskIcon
+              className="about__content-column-asterisk"
+              aria-hidden="true"
+              focusable="false"
+            />
+            Twitter
+          </a>
+        </p>
+        <p className="about__content-column-list">
+          <a
+            href="https://www.instagram.com/p5xjs/?hl=en"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <AsteriskIcon
+              className="about__content-column-asterisk"
+              aria-hidden="true"
+              focusable="false"
+            />
+            Instagram
           </a>
         </p>
       </div>
@@ -95,6 +133,40 @@ function About(props) {
             {t('About.Forum')}
           </a>
         </p>
+        <p className="about__content-column-list">
+          <a
+            href="https://discord.com/invite/SHQ8dH25r9"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <AsteriskIcon
+              className="about__content-column-asterisk"
+              aria-hidden="true"
+              focusable="false"
+            />
+            Discord
+          </a>
+        </p>
+        <p className="about__content-column-list">
+          <a href="/privacy-policy" target="_blank" rel="noopener noreferrer">
+            <AsteriskIcon
+              className="about__content-column-asterisk"
+              aria-hidden="true"
+              focusable="false"
+            />
+            Privacy Policy
+          </a>
+        </p>
+        <p className="about__content-column-list">
+          <a href="/terms-of-use" target="_blank" rel="noopener noreferrer">
+            <AsteriskIcon
+              className="about__content-column-asterisk"
+              aria-hidden="true"
+              focusable="false"
+            />
+            Terms of Use
+          </a>
+        </p>
       </div>
       <div className="about__footer">
         <p className="about__footer-list">
@@ -113,15 +185,6 @@ function About(props) {
             rel="noopener noreferrer"
           >
             {t('About.Report')}
-          </a>
-        </p>
-        <p className="about__footer-list">
-          <a
-            href="https://twitter.com/p5xjs?lang=en"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Twitter
           </a>
         </p>
       </div>
