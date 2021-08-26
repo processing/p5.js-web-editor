@@ -106,16 +106,18 @@ function CookieConsent() {
       initializeCookieConsent();
     }
 
-    if (p5CookieConsent === 'essential') {
-      ReactGA.initialize(getConfig('GA_MEASUREMENT_ID'), {
-        gaOptions: {
-          storage: 'none'
-        }
-      });
-    } else {
-      ReactGA.initialize(getConfig('GA_MEASUREMENT_ID'));
+    if (getConfig('GA_MEASUREMENT_ID')) {
+      if (p5CookieConsent === 'essential') {
+        ReactGA.initialize(getConfig('GA_MEASUREMENT_ID'), {
+          gaOptions: {
+            storage: 'none'
+          }
+        });
+      } else {
+        ReactGA.initialize(getConfig('GA_MEASUREMENT_ID'));
+      }
+      ReactGA.pageview(window.location.pathname + window.location.search);
     }
-    ReactGA.pageview(window.location.pathname + window.location.search);
   }, []);
 
   useEffect(() => {
