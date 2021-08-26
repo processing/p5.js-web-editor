@@ -15,6 +15,7 @@ COPY ./webpack ./webpack
 COPY client ./client
 COPY server ./server
 COPY translations/locales ./translations/locales
+COPY public ./public
 CMD ["npm", "start"]
 
 FROM development as build

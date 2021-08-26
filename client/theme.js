@@ -8,7 +8,9 @@ export const Theme = {
 
 export const colors = {
   p5jsPink: '#ed225d',
-  processingBlue: '#007BBB',
+  processingBlueDark: '#28347D',
+  processingBlue: '#2D67F6',
+  processingBlueLight: '#8DADF9',
   p5jsActivePink: '#f10046',
   white: '#fff',
   black: '#000',
@@ -134,6 +136,9 @@ export default {
       card: {
         background: grays.lighter
       }
+    },
+    Policy: {
+      link: colors.processingBlue
     }
   },
   [Theme.dark]: {
@@ -211,6 +216,9 @@ export default {
       card: {
         background: grays.dark
       }
+    },
+    Policy: {
+      link: colors.processingBlueLight
     }
   },
   [Theme.contrast]: {
@@ -288,6 +296,9 @@ export default {
       card: {
         background: grays.dark
       }
+    },
+    Policy: {
+      link: colors.processingBlueLight
     }
   }
 };

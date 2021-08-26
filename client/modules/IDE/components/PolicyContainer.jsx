@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import ReactMarkdown from 'react-markdown';
 import remarkSlug from 'remark-slug';
 import PropTypes from 'prop-types';
-import { remSize } from '../../../theme';
+import { remSize, prop } from '../../../theme';
 
 const PolicyContainerMain = styled.main`
   max-width: ${remSize(700)};
@@ -33,6 +33,9 @@ const PolicyContainerMain = styled.main`
     padding-inline-start: 40px;
     margin-block-start: 1em;
     margin-block-end: 1em;
+  }
+  & a {
+    color: ${prop('Policy.link')};
   }
 `;
 
