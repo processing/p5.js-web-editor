@@ -27,7 +27,6 @@ const defaultHTML = `<!DOCTYPE html>
 const defaultCSS = `html, body {
   margin: 0;
   padding: 0;
-  background-color: #dcdcdc;
 }
 canvas {
   display: block;

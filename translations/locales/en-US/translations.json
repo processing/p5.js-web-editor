@@ -234,7 +234,7 @@
     "Title": "Create File",
     "CloseButtonARIA": "Close New File Modal",
     "EnterName": "Please enter a name",
-    "InvalidType": "Invalid file type. Valid extensions are .js, .css, .json, .xml, .txt, .csv, .tsv, .frag, and .vert."
+    "InvalidType": "Invalid file type. Valid extensions are .js, .css, .json, .xml, .txt, .csv, .tsv, .frag, .vert and .stl."
   },
   "NewFileForm": {
     "AddFileSubmit": "Add File",
