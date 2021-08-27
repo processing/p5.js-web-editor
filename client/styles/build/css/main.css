@@ -71,7 +71,7 @@
       fill: #333333; }
 
 .light .editor__options-button, .dark .editor__options-button, .contrast .editor__options-button, .light .preferences__exit-button, .dark .preferences__exit-button, .contrast .preferences__exit-button, .light .sketch-list__exit-button, .dark .sketch-list__exit-button, .contrast .sketch-list__exit-button, .light .sidebar__add, .dark .sidebar__add, .contrast .sidebar__add, .light .sidebar__file-item-show-options, .dark .sidebar__file-item-show-options, .contrast .sidebar__file-item-show-options, .light .sidebar__expand, .dark .sidebar__expand, .contrast .sidebar__expand, .light .sidebar__contract, .dark .sidebar__contract, .contrast .sidebar__contract, .light .modal__exit-button, .dark .modal__exit-button, .contrast .modal__exit-button, .light .keyboard-shortcuts__close, .dark .keyboard-shortcuts__close, .contrast .keyboard-shortcuts__close, .light .preview-console__collapse, .dark .preview-console__collapse, .contrast .preview-console__collapse, .light .preview-console__expand, .dark .preview-console__expand, .contrast .preview-console__expand, .light .about__exit-button, .dark .about__exit-button, .contrast .about__exit-button, .light .toast__close, .dark .toast__close, .contrast .toast__close, .light .force-authentication__exit-button, .dark .force-authentication__exit-button, .contrast .force-authentication__exit-button {
-  background-color: white;
+  background-color: transparent;
   border: none;
   cursor: pointer;
   padding: 0; }
