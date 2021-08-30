@@ -4,6 +4,7 @@ ENV APP_HOME=/usr/src/app \
 RUN mkdir -p $APP_HOME
 WORKDIR $APP_HOME
 EXPOSE 8000
+EXPOSE 8002
 
 FROM base as development
 ENV NODE_ENV development
