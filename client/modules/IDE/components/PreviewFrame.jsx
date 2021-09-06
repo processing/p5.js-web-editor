@@ -25,7 +25,7 @@ function PreviewFrame({ fullView }) {
   const sandboxAttributes = `allow-forms allow-modals allow-pointer-lock allow-popups 
     allow-same-origin allow-scripts allow-top-navigation-by-user-activation allow-downloads`;
   const allow =
-    'accelerometer; autoplay; camera; encrypted-media; geolocation; gyroscope; microphone; magnetometer; midi; vr;';
+    'accelerometer; autoplay; camera; encrypted-media; geolocation; gyroscope; microphone; magnetometer; midi; vr; serial;';
   return (
     <Frame
       title="sketch preview"
