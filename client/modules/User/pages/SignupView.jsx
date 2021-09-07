@@ -5,11 +5,12 @@ import { useTranslation } from 'react-i18next';
 import SignupForm from '../components/SignupForm';
 import SocialAuthButton from '../components/SocialAuthButton';
 import Nav from '../../../components/Nav';
+import RootPage from '../../../components/RootPage';
 
 function SignupView() {
   const { t } = useTranslation();
   return (
-    <div className="signup">
+    <RootPage>
       <Nav layout="dashboard" />
       <main className="form-container">
         <Helmet>
@@ -38,7 +39,7 @@ function SignupView() {
           </p>
         </div>
       </main>
-    </div>
+    </RootPage>
   );
 }
 

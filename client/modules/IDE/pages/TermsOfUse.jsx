@@ -3,6 +3,7 @@ import Helmet from 'react-helmet';
 import axios from 'axios';
 import Nav from '../../../components/Nav';
 import PolicyContainer from '../components/PolicyContainer';
+import RootPage from '../../../components/RootPage';
 
 function TermsOfUse() {
   const [termsOfUse, setTermsOfUse] = useState('');
@@ -16,8 +17,10 @@ function TermsOfUse() {
       <Helmet>
         <title>Terms of Use</title>
       </Helmet>
-      <Nav layout="dashboard" />
-      <PolicyContainer policy={termsOfUse} />
+      <RootPage>
+        <Nav layout="dashboard" />
+        <PolicyContainer policy={termsOfUse} />
+      </RootPage>
     </>
   );
 }

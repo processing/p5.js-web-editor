@@ -27,6 +27,7 @@ const CookieConsentDialog = styled.div`
   width: 100%;
   height: 100%;
   background: ${prop('Modal.background')};
+  color: ${prop('primaryTextColor')};
   border-top: 1px solid ${prop('Separator')};
   padding: ${remSize(40)} ${remSize(60)};
 `;

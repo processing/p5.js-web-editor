@@ -3,6 +3,7 @@ import Helmet from 'react-helmet';
 import axios from 'axios';
 import Nav from '../../../components/Nav';
 import PolicyContainer from '../components/PolicyContainer';
+import RootPage from '../../../components/RootPage';
 
 function PrivacyPolicy() {
   const [privacyPolicy, setPrivacyPolicy] = useState('');
@@ -16,8 +17,10 @@ function PrivacyPolicy() {
       <Helmet>
         <title>Privacy Policy</title>
       </Helmet>
-      <Nav layout="dashboard" />
-      <PolicyContainer policy={privacyPolicy} />
+      <RootPage>
+        <Nav layout="dashboard" />
+        <PolicyContainer policy={privacyPolicy} />
+      </RootPage>
     </>
   );
 }
