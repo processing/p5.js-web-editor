@@ -143,9 +143,10 @@ function CookieConsent() {
               <CookieConsentCopy>
                 The p5.js Editor uses cookies. Some are essential to the website
                 functionality and allow you to manage an account and
-                preferences. Others are used for analytics allow us to gather
-                information and make improvements. You can decide which cookies
-                you would like to allow.
+                preferences. Others are not essential—they are used for
+                analytics and allow us to learn more about our community. We
+                never sell this data or use it for advertising. You can decide
+                which cookies you would like to allow.
               </CookieConsentCopy>
               <CookieConsentButtons>
                 <Button
