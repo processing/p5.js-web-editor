@@ -12,6 +12,7 @@ import {
   MessageTypes
 } from '../../../utils/dispatcher';
 import useInterval from '../hooks/useInterval';
+import RootPage from '../../../components/RootPage';
 
 function FullView(props) {
   const dispatch = useDispatch();
@@ -45,7 +46,7 @@ function FullView(props) {
     };
   }, []);
   return (
-    <div className="fullscreen-preview">
+    <RootPage style={{ flexWrap: 'initial' }}>
       <Helmet>
         <title>{project.name}</title>
       </Helmet>
@@ -61,7 +62,7 @@ function FullView(props) {
       <main className="preview-frame-holder">
         <PreviewFrame fullView />
       </main>
-    </div>
+    </RootPage>
   );
 }
 

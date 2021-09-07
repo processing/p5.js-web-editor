@@ -20,6 +20,7 @@ const displays = {
 // general global styles
 const StyledButton = styled.button`
   &&& {
+    font-weight: bold;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -3,7 +3,7 @@ import { prop } from '../theme';
 
 const RootPage = styled.div`
   height: 100%;
-  overflow: auto;
+  flex-wrap: wrap;
   display: flex;
   flex-direction: column;
   color: ${prop('primaryTextColor')};

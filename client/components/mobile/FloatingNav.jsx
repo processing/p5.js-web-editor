@@ -16,7 +16,7 @@ const FloatingContainer = styled.div`
     width: ${remSize(32)};
   }
   svg > path {
-    fill: ${prop('Button.default.background')} !important;
+    fill: ${prop('Button.primary.default.background')} !important;
   }
 `;
 
