@@ -41,7 +41,9 @@ const CookieConsentContent = styled.div`
   justify-content: space-between;
 `;
 
-const CookieConsentCopy = styled.p``;
+const CookieConsentCopy = styled.p`
+  line-height: 1.5em;
+`;
 
 const CookieConsentButtons = styled.div`
   display: flex;
@@ -145,9 +147,11 @@ function CookieConsent() {
                 The p5.js Editor uses cookies. Some are essential to the website
                 functionality and allow you to manage an account and
                 preferences. Others are not essential—they are used for
-                analytics and allow us to learn more about our community. We
-                never sell this data or use it for advertising. You can decide
-                which cookies you would like to allow.
+                analytics and allow us to learn more about our community.{' '}
+                <strong>
+                  We never sell this data or use it for advertising.
+                </strong>{' '}
+                You can decide which cookies you would like to allow.
               </CookieConsentCopy>
               <CookieConsentButtons>
                 <Button
