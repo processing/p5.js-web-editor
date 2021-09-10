@@ -119,8 +119,8 @@ const routes = (store) => (
     {/* Mobile-only Routes */}
     <Route path="/preview" component={MobileSketchView} />
     <Route path="/preferences" component={MobilePreferences} />
-    <Route path="privacy-policy" component={PrivacyPolicy} />
-    <Route path="terms-of-use" component={TermsOfUse} />
+    <Route path="/privacy-policy" component={PrivacyPolicy} />
+    <Route path="/terms-of-use" component={TermsOfUse} />
   </Route>
 );
 

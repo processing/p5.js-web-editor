@@ -1,6 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router';
 import SquareLogoIcon from '../../../images/p5js-square-logo.svg';
 // import PlayIcon from '../../../images/play.svg';
 import AsteriskIcon from '../../../images/p5-asterisk.svg';
@@ -148,24 +149,24 @@ function About(props) {
           </a>
         </p>
         <p className="about__content-column-list">
-          <a href="/privacy-policy" target="_blank" rel="noopener noreferrer">
+          <Link to="/privacy-policy">
             <AsteriskIcon
               className="about__content-column-asterisk"
               aria-hidden="true"
               focusable="false"
             />
             Privacy Policy
-          </a>
+          </Link>
         </p>
         <p className="about__content-column-list">
-          <a href="/terms-of-use" target="_blank" rel="noopener noreferrer">
+          <Link to="/terms-of-use">
             <AsteriskIcon
               className="about__content-column-asterisk"
               aria-hidden="true"
               focusable="false"
             />
             Terms of Use
-          </a>
+          </Link>
         </p>
       </div>
       <div className="about__footer">

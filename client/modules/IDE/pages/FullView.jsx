@@ -46,7 +46,7 @@ function FullView(props) {
     };
   }, []);
   return (
-    <RootPage style={{ flexWrap: 'initial' }}>
+    <RootPage>
       <Helmet>
         <title>{project.name}</title>
       </Helmet>
