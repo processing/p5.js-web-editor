@@ -126,7 +126,8 @@ export default {
     },
     Modal: {
       background: grays.light,
-      border: grays.middleLight
+      border: grays.middleLight,
+      separator: grays.middleDark
     },
     Separator: grays.middleLight,
 
@@ -206,7 +207,8 @@ export default {
     },
     Modal: {
       background: grays.dark,
-      border: grays.middleDark
+      border: grays.middleDark,
+      separator: grays.middleLight
     },
     Separator: grays.middleDark,
 
@@ -286,7 +288,8 @@ export default {
     },
     Modal: {
       background: grays.dark,
-      border: grays.middleDark
+      border: grays.middleDark,
+      separator: grays.light
     },
     Separator: grays.middleDark,
 
