@@ -6,15 +6,15 @@ import { enUS, es, ja, hi, ptBR, de, frCA, zhCN, uk } from 'date-fns/locale';
 
 const fallbackLng = ['en-US'];
 const availableLanguages = [
+  'de',
   'en-US',
   'es-419',
-  'ja',
-  'hi',
-  'pt-BR',
-  'zh-CN',
-  'de',
   'fr-CA',
-  'uk-UA'
+  'hi',
+  'ja',
+  'pt-BR',
+  'uk-UA',
+  'zh-CN'
 ];
 
 export function languageKeyToLabel(lang) {
@@ -26,9 +26,8 @@ export function languageKeyToLabel(lang) {
     hi: 'हिन्दी',
     ja: '日本語',
     'pt-BR': 'Português',
-    'zh-CN': '简体中文',
-    de: 'Deutsch',
-    'uk-UA': 'Українська'
+    'uk-UA': 'Українська',
+    'zh-CN': '简体中文'
   };
   return languageMap[lang];
 }
@@ -40,11 +39,10 @@ export function languageKeyToDateLocale(lang) {
     'es-419': es,
     'fr-CA': frCA,
     hi,
-    de,
     ja,
     'pt-BR': ptBR,
-    'zh-CN': zhCN,
-    'uk-UA': uk
+    'uk-UA': uk,
+    'zh-CN': zhCN
   };
   return languageMap[lang];
 }
