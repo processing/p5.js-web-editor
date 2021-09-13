@@ -122,6 +122,7 @@ const routes = (store) => (
     <Route path="/preferences" component={MobilePreferences} />
     <Route path="/privacy-policy" component={Legal} />
     <Route path="/terms-of-use" component={Legal} />
+    <Route path="/code-of-conduct" component={Legal} />
   </Route>
 );
 

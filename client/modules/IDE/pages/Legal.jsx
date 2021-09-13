@@ -5,6 +5,7 @@ import { browserHistory } from 'react-router';
 import styled from 'styled-components';
 import PrivacyPolicy from './PrivacyPolicy';
 import TermsOfUse from './TermsOfUse';
+import CodeOfConduct from './CodeOfConduct';
 import RootPage from '../../../components/RootPage';
 import Nav from '../../../components/Nav';
 import { remSize, prop } from '../../../theme';
@@ -32,8 +33,10 @@ function Legal({ location }) {
   useEffect(() => {
     if (location.pathname === '/privacy-policy') {
       setSelectedIndex(0);
-    } else {
+    } else if (location.pathname === '/terms-of-use') {
       setSelectedIndex(1);
+    } else {
+      setSelectedIndex(2);
     }
   }, [location]);
 
@@ -45,6 +48,9 @@ function Legal({ location }) {
     } else if (index === 1) {
       setSelectedIndex(1);
       browserHistory.push('/terms-of-use');
+    } else if (index === 2) {
+      setSelectedIndex(2);
+      browserHistory.push('/code-of-conduct');
     }
   }
 
@@ -59,12 +65,18 @@ function Legal({ location }) {
           <Tab>
             <TabTitle>Terms of Use</TabTitle>
           </Tab>
+          <Tab>
+            <TabTitle>Code of Conduct</TabTitle>
+          </Tab>
         </StyledTabList>
         <TabPanel>
           <PrivacyPolicy />
         </TabPanel>
         <TabPanel>
           <TermsOfUse />
+        </TabPanel>
+        <TabPanel>
+          <CodeOfConduct />
         </TabPanel>
       </Tabs>
     </RootPage>

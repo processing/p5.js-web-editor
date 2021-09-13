@@ -168,6 +168,16 @@ function About(props) {
             Terms of Use
           </Link>
         </p>
+        <p className="about__content-column-list">
+          <Link to="/code-of-conduct">
+            <AsteriskIcon
+              className="about__content-column-asterisk"
+              aria-hidden="true"
+              focusable="false"
+            />
+            Code of Conduct
+          </Link>
+        </p>
       </div>
       <div className="about__footer">
         <p className="about__footer-list">

@@ -141,4 +141,8 @@ router.get('/terms-of-use', (req, res) => {
   res.send(renderIndex());
 });
 
+router.get('/code-of-conduct', (req, res) => {
+  res.send(renderIndex());
+});
+
 export default router;
