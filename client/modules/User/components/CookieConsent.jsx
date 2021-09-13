@@ -6,7 +6,7 @@ import ReactGA from 'react-ga';
 import { Transition } from 'react-transition-group';
 import getConfig from '../../../utils/getConfig';
 import { setUserCookieConsent } from '../actions';
-import { remSize, prop } from '../../../theme';
+import { remSize, prop, device } from '../../../theme';
 import Button from '../../../common/Button';
 
 const CookieConsentContainer = styled.div`
@@ -16,7 +16,7 @@ const CookieConsentContainer = styled.div`
     if (state === 'entered') {
       return '0';
     }
-    return remSize(-200);
+    return remSize(-300);
   }};
   left: 0;
   right: 0;
@@ -29,7 +29,10 @@ const CookieConsentDialog = styled.div`
   background: ${prop('Modal.background')};
   color: ${prop('primaryTextColor')};
   border-top: 1px solid ${prop('Separator')};
-  padding: ${remSize(40)} ${remSize(60)};
+  padding: ${remSize(20)} ${remSize(30)};
+  @media ${device.desktop} {
+    padding: ${remSize(40)} ${remSize(60)};
+  }
 `;
 
 const CookieConsentHeader = styled.h2`
@@ -39,18 +42,28 @@ const CookieConsentHeader = styled.h2`
 const CookieConsentContent = styled.div`
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
+  @media ${device.desktop} {
+    flex-direction: row;
+  }
 `;
 
 const CookieConsentCopy = styled.p`
   line-height: 1.5em;
+  margin-bottom: ${remSize(20)};
+  @media ${device.desktop} {
+    margin-bottom: 0;
+  }
 `;
 
 const CookieConsentButtons = styled.div`
   display: flex;
   align-items: center;
-  margin-left: ${remSize(60)};
   & button:not(:last-child) {
     margin-right: ${remSize(20)};
+  }
+  @media ${device.desktop} {
+    margin-left: ${remSize(60)};
   }
 `;
 

@@ -47,6 +47,10 @@ export const common = {
   shadowColor: 'rgba(0, 0, 0, 0.16)'
 };
 
+export const device = {
+  desktop: `(min-width: 770px)`
+};
+
 export const remSize = (size) => `${size / common.baseFontSize}rem`;
 
 export const prop = (key) => (props) => {
