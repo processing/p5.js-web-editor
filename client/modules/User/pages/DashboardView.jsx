@@ -134,7 +134,7 @@ class DashboardView extends React.Component {
     const actions = this.renderActionButton(currentTab, username, this.props.t);
 
     return (
-      <RootPage>
+      <RootPage fixedHeight="100%">
         <Nav layout="dashboard" />
 
         <main className="dashboard-header">

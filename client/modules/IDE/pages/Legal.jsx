@@ -17,10 +17,13 @@ const StyledTabList = styled(TabList)`
   border-bottom: 1px solid ${prop('Modal.separator')};
 `;
 
-const StyledTab = styled(Tab)`
+const TabTitle = styled.p`
+  padding: 0 ${remSize(5)} ${remSize(5)} ${remSize(5)};
   cursor: pointer;
-  & p {
-    padding: 0 ${remSize(5)} ${remSize(5)} ${remSize(5)};
+  color: ${prop('inactiveTextColor')};
+  &:hover,
+  &:focus {
+    color: ${prop('primaryTextColor')};
   }
 `;
 
@@ -50,12 +53,12 @@ function Legal({ location }) {
       <Nav layout="dashboard" />
       <Tabs selectedIndex={selectedIndex} onSelect={onSelect}>
         <StyledTabList>
-          <StyledTab className="react-tabs__tab">
-            <p>Privacy Policy</p>
-          </StyledTab>
-          <StyledTab className="react-tabs__tab">
-            <p>Terms of Use</p>
-          </StyledTab>
+          <Tab>
+            <TabTitle>Privacy Policy</TabTitle>
+          </Tab>
+          <Tab>
+            <TabTitle>Terms of Use</TabTitle>
+          </Tab>
         </StyledTabList>
         <TabPanel>
           <PrivacyPolicy />
