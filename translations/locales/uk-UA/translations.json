@@ -1,0 +1,605 @@
+{
+  "Nav": {
+    "File": {
+      "Title": "Файл",
+      "New": "Новий",
+      "Share": "Поширити",
+      "Duplicate": "Зробити копію",
+      "Open": "відкрити",
+      "Download": "Завантажити",
+      "AddToCollection": "Додати у колекцію",
+      "Examples": "Приклади"
+    },
+    "Edit": {
+      "Title": "Редагувати",
+      "TidyCode": "Охайний код",
+      "Find": "Знайти",
+      "Replace": "Замінити"
+    },
+    "Sketch": {
+      "Title": "Скетч",
+      "AddFile": "Додати файл",
+      "AddFolder": "Додати папку",
+      "Run": "Запустити",
+      "Stop": "Зупинити"
+    },
+    "Help": {
+      "Title": "Довідка",
+      "KeyboardShortcuts": "Комбінації клавіш",
+      "Reference": "Довідник з функцій",
+      "About": "Про p5.js"
+    },
+    "Lang": "Мова",
+    "BackEditor": "Повернутися в редактор",
+    "WarningUnsavedChanges": "Ви впевнені, що хочете залишити цю сторінку? У вас є незбережені зміни.",
+    "Login": "Увійти",
+    "LoginOr": "або",
+    "SignUp": "Зареєструватися",
+    "Auth": {
+      "Welcome": "Раді бачити",
+      "Hello": "Привіт",
+      "MyAccount": "Мій акаунт",
+      "My": "Мій",
+      "MySketches": "Мої скетчі",
+      "MyCollections": "Мої колекції",
+      "Asset": "Файл",
+      "MyAssets": "Мої файли",
+      "LogOut": "Вийти"
+    }
+  },
+  "CodemirrorFindAndReplace": {
+    "ToggleReplace": "Увімкнути заміну",
+    "Find": "Знайти",
+    "FindPlaceholder": "Знайти у файлах",
+    "Replace": "Замінити",
+    "ReplaceAll": "Замінити все",
+    "ReplacePlaceholder": "Текст для заміни",
+    "Regex": "Регулярний вираз",
+    "CaseSensitive": "З урахуванням регістру",
+    "WholeWords": "Слова повністю",
+    "Previous": "Попередній",
+    "Next": "Наступний",
+    "NoResults": "Жодних результатів",
+    "Close": "Закрити"
+  },
+  "LoginForm": {
+    "UsernameOrEmail": "Електронна пошта або ім'я користувача",
+    "UsernameOrEmailARIA": "Електронна пошта або ім'я користувача",
+    "Password": "Пароль",
+    "PasswordARIA": "Пароль",
+    "Submit": "Увійти"
+  },
+  "LoginView": {
+    "Title": "p5.js Web Editor | Вхід",
+    "Login": "Увійти",
+    "LoginOr": "або",
+    "SignUp": "Зареєструватися",
+    "Email": "електронна пошта",
+    "Username": "ім'я користувача",
+    "DontHaveAccount": "Не маєте облікового запису? ",
+    "ForgotPassword": "Забули свій пароль? ",
+    "ResetPassword": "Скинути пароль"
+  },
+  "SocialAuthButton": {
+    "Connect": "Підключити {{serviceauth}} акаунт",
+    "Unlink": "Від'єднати {{serviceauth}} акаунт",
+    "Login": "Увійти за допомогою {{serviceauth}}",
+    "LogoARIA": "{{serviceauth}} логотип"
+  },
+  "About": {
+    "Title": "Про редактор",
+    "TitleHelmet": "p5.js Web Editor | Про редактор",
+    "Contribute": "Внесок",
+    "NewP5": "Початківець в p5.js?",
+    "Report": "Повідомити про помилку",
+    "Learn": "Посібники",
+    "Resources": "Ресурси",
+    "Libraries": "Бібліотеки",
+    "Forum": "Форум",
+    "Examples": "Приклади"
+  },
+  "Toast": {
+    "OpenedNewSketch": "Відкрито новий скетч.",
+    "SketchSaved": "Скетч збережено.",
+    "SketchFailedSave": "Не вдалося зберегти скетч.",
+    "AutosaveEnabled": "Автозбереження увімкнено.",
+    "LangChange": "Мова змінена",
+    "SettingsSaved": "Налаштування збережено."
+  },
+  "Toolbar": {
+    "Preview": "Перегляд",
+    "Auto-refresh": "Автоматичне оновлення",
+    "OpenPreferencesARIA": "Відкрити \"Налаштування\"",
+    "PlaySketchARIA": "Запустити скетч",
+    "PlayOnlyVisualSketchARIA": "Запустити лише візуальний скетч",
+    "StopSketchARIA": "Зупинити скетч",
+    "EditSketchARIA": "Редагувати ім'я скетча",
+    "NewSketchNameARIA": "Нове ім'я скетча",
+    "By": " користувачем "
+  },
+  "Console": {
+    "Title": "Консоль",
+    "Clear": "Очистити",
+    "ClearARIA": "Очистити консоль",
+    "Close": "Закрити",
+    "CloseARIA": "Закрити консоль",
+    "Open": "Вікдрити",
+    "OpenARIA": "Відкрити консоль"
+  },
+  "Preferences": {
+    "Settings": "Налаштування",
+    "GeneralSettings": "Загальні налаштування",
+    "Accessibility": "Інші параметри",
+    "Theme": "Тема",
+    "LightTheme": "Світла",
+    "LightThemeARIA": "світла тема на",
+    "DarkTheme": "Темна",
+    "DarkThemeARIA": "темна тема на",
+    "HighContrastTheme": "Високий контраст",
+    "HighContrastThemeARIA": "висококонтрастна тема на",
+    "TextSize": "Розмір тексту",
+    "DecreaseFont": "Зменшити",
+    "DecreaseFontARIA": "зменшити розмір шрифту",
+    "IncreaseFont": "Збільшити",
+    "IncreaseFontARIA": "збільшити розмір шрифту",
+    "Autosave": "Автозбереження",
+    "On": "Так",
+    "AutosaveOnARIA": "автозбереження увімкнено",
+    "Off": "Ні",
+    "AutosaveOffARIA": "автозбереження вимкнено",
+    "AutocloseBracketsQuotes": "Автоматично закривати дужки та лапки",
+    "AutocloseBracketsQuotesOnARIA": "автоматично закривати дужки та лапки",
+    "AutocloseBracketsQuotesOffARIA": "автоматично закривати дужки та лапки",
+    "WordWrap": "Перенесення слів",
+    "LineWrapOnARIA": "перенесення рядків увімкнено",
+    "LineWrapOffARIA": "перенесення рядків вимкнено",
+    "LineNumbers": "Номери рядків",
+    "LineNumbersOnARIA": "номери рядків вимкнено",
+    "LineNumbersOffARIA": "номери рядків вимкнено",
+    "LintWarningSound": "Звук попередження",
+    "LintWarningOnARIA": "звук попередження увімкнено",
+    "LintWarningOffARIA": "звук попередження вимкнено",
+    "PreviewSound": "Прослухати",
+    "PreviewSoundARIA": "прослухати",
+    "AccessibleTextBasedCanvas": "Доступ до вмісту полотна",
+    "UsedScreenReader": "Використовується з програмою зчитування з екрана",
+    "PlainText": "Простий текст",
+    "TextOutputARIA": "текст виводиться на",
+    "TableText": "Таблиця",
+    "TableOutputARIA": "виведення таблиці на",
+    "Sound": "Звук",
+    "SoundOutputARIA": "виведення звуку увімкнено"
+  },
+  "KeyboardShortcuts": {
+    "Title": " Комбінації клавіш",
+    "ShortcutsFollow": "Далі йдуть комбінації клавіш для",
+    "SublimeText": "Sublime Text",
+    "CodeEditing": {
+      "Tidy": "Очистити",
+      "FindText": "Знайти текст",
+      "FindNextMatch": "Знайти наступний збіг",
+      "FindPrevMatch": "Знайти попередній збіг",
+      "ReplaceTextMatch": "Замінити текст",
+      "IndentCodeLeft": "Відступ зліва",
+      "IndentCodeRight": "Відступ справа",
+      "CommentLine": "Коментар",
+      "FindNextTextMatch": "Знайти наступний збіг тексту",
+      "FindPreviousTextMatch": "Знайти попередній збіг тексту",
+      "CodeEditing": "Редагування коду"
+    },
+    "General": {
+      "StartSketch": "Запустити",
+      "StopSketch": "Зупинити",
+      "TurnOnAccessibleOutput": "Увімкнути доступне виведення",
+      "TurnOffAccessibleOutput": "Вимкнути доступне виведення"
+    }
+  },
+  "Sidebar": {
+    "Title": "Файли скетча",
+    "ToggleARIA": "Відкрити/закрити параметри скетч-файла",
+    "AddFolder": "Додати папку",
+    "AddFolderARIA": "додати папку",
+    "AddFile": "Додати файл",
+    "AddFileARIA": "додати файл",
+    "UploadFile": "Завантажити файл",
+    "UploadFileARIA": "завантажити файл"
+  },
+  "FileNode": {
+    "OpenFolderARIA": "Показати вміст папки",
+    "CloseFolderARIA": "Сховати вміст папки",
+    "ToggleFileOptionsARIA": "Відкрити/закрити параметри файла",
+    "AddFolder": "Додати папку",
+    "AddFolderARIA": "додати папку",
+    "AddFile": "Додати файл",
+    "AddFileARIA": "додати файл",
+    "UploadFile": "Завантажити файл",
+    "UploadFileARIA": "завантажити файл",
+    "Rename": "Перейменувати",
+    "Delete": "Видалити"
+  },
+  "Common": {
+    "Error": "Помилка",
+    "ErrorARIA": "Помилка",
+    "Save": "Зберегти",
+    "p5logoARIA": "p5.js логотип",
+    "DeleteConfirmation": "Ви впевнені, що хочете видалити {{name}}?"
+  },
+  "IDEView": {
+    "SubmitFeedback": "Надіслати відгук",
+    "SubmitFeedbackARIA": "надіслати відгук",
+    "AddCollectionTitle": "Додати у колекцію",
+    "AddCollectionARIA":"додати у колекцію",
+    "ShareTitle": "Поширити",
+    "ShareARIA":"поширити"
+  },
+  "NewFileModal": {
+    "Title": "Додати файл",
+    "CloseButtonARIA": "Закрити",
+    "EnterName": "Введіть ім'я файла",
+    "InvalidType": "Некоректний тип файлу. Підтримувані формати: .js, .css, .json, .xml, .txt, .csv, .tsv, .frag та .vert."
+  },
+  "NewFileForm": {
+    "AddFileSubmit": "Створити",
+    "Placeholder": "Ім'я файла"
+  },
+  "NewFolderModal": {
+    "Title": "Додати папку",
+    "CloseButtonARIA": "Закрити",
+    "EnterName": "Введіть ім'я папки",
+    "EmptyName": "Ім'я папки не може містити лише пробіли",
+    "InvalidExtension": "Ім'я папки не може містити розширення"
+  },
+  "NewFolderForm": {
+    "AddFolderSubmit": "Створити",
+    "Placeholder": "Ім'я"
+  },
+  "ResetPasswordForm": {
+    "Email": "Адреса електронної пошти, яка використовується для реєстрації",
+    "EmailARIA": "електронна пошта",
+    "Submit": "Надіслати електронний лист для скидання пароля"
+  },
+  "ResetPasswordView": {
+    "Title": "p5.js Web Editor | Скинути пароль",
+    "Reset": "Скинути пароль",
+    "Submitted": "Лист для скидання пароля має надійти незабаром на вашу електронну пошту.\n            Якщо лист не прийшов, перевірте папку із спамом.",
+    "Login": "Увійти",
+    "LoginOr": "або",
+    "SignUp": "Зареєструватися"
+  },
+  "ReduxFormUtils": {
+    "errorInvalidEmail": "Будь ласка, введіть дійсну адресу електронної пошти",
+    "errorEmptyEmail": "Введіть адресу електронної пошти",
+    "errorPasswordMismatch": "Паролі повинні збігатися",
+    "errorEmptyPassword": "Введіть пароль",
+    "errorShortPassword": "Пароль повинен містити щонайменше 6 символів",
+    "errorConfirmPassword": "Введіть підтвердження пароля",
+    "errorNewPassword": "Введіть новий пароль або залиште поточний пароль порожнім.",
+    "errorEmptyUsername": "Введіть ім'я користувача.",
+    "errorLongUsername": "Ім'я користувача має містити менше 20 символів.",
+    "errorValidUsername": "Ім'я користувача має складатися лише з цифр, літер, крапок, тире та символа підкреслення."
+  },
+  "NewPasswordView": {
+    "Title": "p5.js Web Editor | Новий пароль",
+    "Description": "Встановити новий пароль",
+    "TokenInvalidOrExpired": "Помилка скидання пароля або термін дії минув.",
+    "EmptyPassword": "Введіть пароль",
+    "PasswordConfirmation": "Введіть підтвердження пароля",
+    "PasswordMismatch": "Паролі повинні збігатися"
+  },
+  "AccountForm": {
+    "Email": "Електронна пошта",
+    "EmailARIA": "електронна пошта",
+    "Unconfirmed": "Непідтверджено.",
+    "EmailSent": "Підтвердження надіслано, перевірте свою електронну пошту.",
+    "Resend": "Повторно підтвердити електронну пошту",
+    "UserName": "Ім'я користувача",
+    "UserNameARIA": "Ім'я користувача",
+    "CurrentPassword": "Поточний пароль",
+    "CurrentPasswordARIA": "Поточний пароль",
+    "NewPassword": "Новий пароль",
+    "NewPasswordARIA": "Новий пароль",
+    "SubmitSaveAllSettings": "Зберегти всі налаштування"
+  },
+  "AccountView": {
+    "SocialLogin": "Увійти через соціальну мережу",
+    "SocialLoginDescription": "Використовуйте свій обліковий запис GitHub або Google, щоб увійти у p5.js Web Editor.",
+    "Title": "p5.js Web Editor | Налаштування акаунта",
+    "Settings": "Налаштування акаунта",
+    "AccountTab": "Акаунт",
+    "AccessTokensTab": "Ключі"
+  },
+  "APIKeyForm": {
+    "ConfirmDelete": "Ви впевнені, що хочете видалити {{key_label}}?",
+    "Summary": "Ключі доступу діють як ваш пароль, щоб скриптам мати\n          автоматичний доступ до API редактора. Створіть ключ для кожного скрипта,\n          який потребує доступу.",
+    "CreateToken": "Створити новий ключ",
+    "TokenLabel": "Для чого цей ключ?",
+    "TokenPlaceholder": "Для чого цей ключ? Приклад імпорту скрипта",
+    "CreateTokenSubmit": "Створити",
+    "NoTokens": "У вас немає існуючих ключів.",
+    "NewTokenTitle": "Ваш новий ключ доступу",
+    "NewTokenInfo": "Переконайтеся, що скопіювали зараз новий ключ доступу.\n                  Ви не зможете побачити це знову!",
+    "ExistingTokensTitle": "Існуючі улючі"
+  },
+  "APIKeyList": {
+    "Name": "Ім'я",
+    "Created": "Створено",
+    "LastUsed": "Останнє використання",
+    "Actions": "Дії",
+    "Never": "Ніколи",
+    "DeleteARIA": "Видалити API-ключ"
+  },
+  "NewPasswordForm": {
+    "Title": "Пароль",
+    "TitleARIA": "Пароль",
+    "ConfirmPassword": "Підтвердити пароль",
+    "ConfirmPasswordARIA": "Підтвердити пароль",
+    "SubmitSetNewPassword": "Встановити новий пароль"
+  },
+  "SignupForm": {
+    "Title": "Ім'я користувача",
+    "TitleARIA": "ім'я користувача",
+    "Email": "Електронна пошта",
+    "EmailARIA": "електронна пошта",
+    "Password": "Пароль",
+    "PasswordARIA": "пароль",
+    "ConfirmPassword": "Підтвердити пароль",
+    "ConfirmPasswordARIA": "Підтвердити пароль",
+    "SubmitSignup": "Зареєструватися"
+  },
+  "SignupView": {
+    "Title": "p5.js Web Editor | Реєстрація",
+    "Description": "Реєстрація",
+    "Or": "Або",
+    "AlreadyHave": "Ви вже маєте акаунт? ",
+    "Login": "Увійти"
+  },
+  "EmailVerificationView": {
+    "Title": "p5.js Web Editor | Підтвердження електронної пошти",
+    "Verify": "Підтвердьте свою електронну адресу",
+    "InvalidTokenNull": "Це посилання недійсне.",
+    "Checking": "Перевірка ключа, зачекайте...",
+    "Verified": "Готово, ваша електронна адреса підтверджена.",
+    "InvalidState": "Щось пішло не так."
+  },
+  "AssetList": {
+    "Title": "p5.js Web Editor | Мої файли",
+    "ToggleOpenCloseARIA": "Увімкнути/вимкнути параметри файлів",
+    "Delete": "Видалити",
+    "OpenNewTab": "Відкрити у новій вкладці",
+    "NoUploadedAssets": "Файли відсутні.",
+    "HeaderName": "Ім'я",
+    "HeaderSize": "Розмір",
+    "HeaderSketch": "Скетч"
+  },
+  "Feedback": {
+    "Title": "p5.js Web Editor | Зворотний зв'язок",
+    "ViaGithubHeader": "Через Github Issues",
+    "ViaGithubDescription": "Якщо ви знайомі з Github, це наш найкращий спосіб отримання звітів про помилки та відгуків.",
+    "GoToGithub": "Перейти на Github",
+    "ViaGoogleHeader": "За допомогою Google-форми",
+    "ViaGoogleDescription": "Ви також можете надіслати цю швидку форму.",
+    "GoToForm": "Перейти у форму"
+  },
+  "Searchbar": {
+    "SearchSketch": "Шукати серед скетчів...",
+    "SearchCollection": "Шукати в колекціях...",
+    "ClearTerm": "очистити"
+  },
+  "UploadFileModal": {
+    "Title": "Завантажити файл",
+    "CloseButtonARIA": "Закрити вікно завантаження",
+    "SizeLimitError": "Помилка: Ви не можете завантажити більше файлів. Ви досягли обмеження загального розміру {{sizeLimit}}.\n                Якщо ви хочете завантажити більше файлів, видаліть ті, якими ви вже не користуєтесь\n                у вашому "
+  },
+  "FileUploader": {
+    "DictDefaultMessage": "Перетягніть сюди файли або натисніть, щоб завантажити файли"
+  },
+  "ErrorModal": {
+    "MessageLogin": "Щоб зберігати скетчі, ви повинні увійти в систему. Будь ласка, оберіть ",
+    "Login": "Увійти",
+    "LoginOr": " або ",
+    "SignUp": "Зареєструватися",
+    "MessageLoggedOut": "Схоже, ви вийшли із системи. Будь ласка, оберіть ",
+    "LogIn": "Увійти",
+    "SavedDifferentWindow": "Проєкт, який ви намагалися зберегти, було збережено у іншому вікні.\n        Оновіть сторінку, щоб побачити останню версію.",
+    "LinkTitle": "Помилка зв'язування облікового запису",
+    "LinkMessage": "Не вдалося пов'язати ваш обліковий запис {{serviceauth}} з вашим обліковим записом p5.js Web Editor. Ваш обліковий запис {{serviceauth}} вже пов'язаний з іншим обліковим записом p5.js Web Editor."
+  },
+  "ShareModal": {
+    "Embed": "Вбудувати",
+    "Present": "Демонструвати",
+    "Fullscreen": "На увесь екран",
+    "Edit": "Редагувати"
+  },
+  "CollectionView": {
+    "TitleCreate": "Створити колекцію",
+    "TitleDefault": "колекція"
+  },
+  "Collection": {
+    "Title": "p5.js Web Editor | Мої колекції",
+    "AnothersTitle": "p5.js Web Editor | Колекції {{anotheruser}}",
+    "Share": "Поділитися",
+    "URLLink": "Посилання на колекцію",
+    "AddSketch": "Додати скетч",
+    "DeleteFromCollection": "Ви впевнені, що хочете видалити {{name_sketch}} з цієї колекції?",
+    "SketchDeleted": "Скетч видалено",
+    "SketchRemoveARIA": "Видалити скетч із колекції",
+    "DescriptionPlaceholder": "Додати опис",
+    "Description": "опис",
+    "NumSketches": "{{count}} скетч",
+    "NumSketches_plural": "{{count}} скетчів",
+    "By":"Колекція від ",
+    "NoSketches": "Немає скетчів у колекції",
+    "TableSummary": "таблиця, що містить усі колекції",
+    "HeaderName": "Ім'я",
+    "HeaderCreatedAt": "Дату додано",
+    "HeaderUser": "Власник",
+    "DirectionAscendingARIA": "За зростанням",
+    "DirectionDescendingARIA": "За спаданням",
+    "ButtonLabelAscendingARIA": "Сортувати {{displayName}} за зростанням.",
+    "ButtonLabelDescendingARIA": "Сортувати {{displayName}} за спаданням."
+  },
+  "AddToCollectionList": {
+    "Title": "p5.js Web Editor | Мої колекції",
+    "AnothersTitle": "p5.js Web Editor | Колекції {{anotheruser}}",
+    "Empty": "Немає колекцій"
+  },
+  "CollectionCreate": {
+    "Title": "p5.js Web Editor | Створити колекцію",
+    "FormError": "Не вдалося створити колекцію",
+    "FormLabel": "Ім'я колекції",
+    "FormLabelARIA": "ім'я",
+    "NameRequired": "Назва колекції обов'язкова",
+    "Description": "Опис (за бажанням)",
+    "DescriptionARIA": "опис",
+    "DescriptionPlaceholder": "Мої улюблені скетчі",
+    "SubmitCollectionCreate": "Створити колекцію"
+  },
+  "DashboardView": {
+    "CreateCollection": "Створити колекцію",
+    "NewSketch": "Новий скетч",
+    "CreateCollectionOverlay": "Створити колекцію"
+  },
+  "DashboardTabSwitcher": {
+    "Sketches": "Скетчі",
+    "Collections": "Колекції",
+    "Assets": "Файли"
+  },
+  "CollectionList": {
+    "Title": "p5.js Web Editor | Мої колекції",
+    "AnothersTitle": "p5.js Web Editor | Колекції {{anotheruser}}",
+    "NoCollections": "Немає колекцій.",
+    "TableSummary": "таблиця, що містить усі колекції",
+    "HeaderName": "Ім'я",
+    "HeaderCreatedAt": "Дата створення",
+    "HeaderCreatedAt_mobile": "Створено",
+    "HeaderUpdatedAt": "Дата оновлення",
+    "HeaderUpdatedAt_mobile": "Оновлено",
+    "HeaderNumItems": "# скетчі",
+    "HeaderNumItems_mobile": "# скетчі",
+    "DirectionAscendingARIA": "За зростанням",
+    "DirectionDescendingARIA": "За спаданням",
+    "ButtonLabelAscendingARIA": "Сортувати {{displayName}} за зростанням.",
+    "ButtonLabelDescendingARIA": "Сортувати {{displayName}} за спаданням.",
+    "AddSketch": "Додати скетч"
+  },
+  "CollectionListRow": {
+    "ToggleCollectionOptionsARIA": "Увімкнути/вимкнути параметри колекції",
+    "AddSketch": "Додати скетч",
+    "Delete": "Видалити",
+    "Rename": "Перейменувати"
+  },
+  "Overlay": {
+    "AriaLabel": "Закрити {{title}}"
+  },
+  "QuickAddList":{
+    "ButtonRemoveARIA": "Видалити з колекції",
+    "ButtonAddToCollectionARIA": "Додати у колекцію",
+    "View": "Перегляд"
+  },
+  "SketchList": {
+    "View": "Перегляд",
+    "Title": "p5.js Web Editor | Мої скетчі",
+    "AnothersTitle": "p5.js Web Editor | Скетчі {{anotheruser}}",
+    "ToggleLabelARIA": "Відкрити/закрити параметри скетчу",
+    "DropdownRename": "Перейменувати",
+    "DropdownDownload": "Завантажити",
+    "DropdownDuplicate": "Зробити копію",
+    "DropdownAddToCollection": "Додати у колекцію",
+    "DropdownDelete": "Видалити",
+    "DirectionAscendingARIA": "За зростанням",
+    "DirectionDescendingARIA": "За спаданням",
+    "ButtonLabelAscendingARIA": "Сортувати {{displayName}} за зростанням.",
+    "ButtonLabelDescendingARIA": "Сортувати {{displayName}} за спаданням.",
+    "AddToCollectionOverlayTitle": "Додати у колекцію",
+    "TableSummary": "таблиця, що містить усі збережені проєкти",
+    "HeaderName": "Скетч",
+    "HeaderCreatedAt": "Дата створення",
+    "HeaderCreatedAt_mobile": "Створено",
+    "HeaderUpdatedAt": "Дата оновлення",
+    "HeaderUpdatedAt_mobile": "Оновлено",
+    "NoSketches": "Немає скетчів."
+  },
+  "AddToCollectionSketchList": {
+    "Title": "p5.js Web Editor | Мої скетчі",
+    "AnothersTitle": "p5.js Web Editor | Скетчі {{anotheruser}}",
+    "NoCollections": "Немає колекцій."
+  },
+  "Editor": {
+    "OpenSketchARIA": "Відкрити навігацію скетчами",
+    "CloseSketchARIA": "Закрити навігацію скетчами",
+    "UnsavedChangesARIA": "Скетч має незбережені зміни",
+    "KeyUpLineNumber": "рядок {{lineNumber}}"
+  },
+  "EditorAccessibility": {
+    "NoLintMessages": "Жодних повідомлень ",
+    "CurrentLine": " Поточний рядок"
+  },
+  "Timer": {
+    "SavedAgo": "Збережено: {{timeAgo}}"
+  },
+  "formatDate": {
+    "JustNow": "щойно",
+    "15Seconds": "15 секунд тому",
+    "25Seconds": "25 секунд тому",
+    "35Seconds": "35 секунд тому",
+    "Ago": "{{timeAgo}} тому"
+  },
+  "AddRemoveButton": {
+    "AltAddARIA": "Додати в колекцію",
+    "AltRemoveARIA": "Видалити з колекції"
+  },
+  "CopyableInput": {
+    "CopiedARIA": "Скопійовано в буфер обміну!",
+    "OpenViewTabARIA": "Переглянути {{label}} у новій вкладці"
+  },
+  "EditableInput": {
+    "EditValue": "Редагувати {{display}} значення",
+    "EmptyPlaceholder": "Немає значення"
+  },
+  "PreviewNav": {
+    "EditSketchARIA": "Редагувати скетч",
+    "ByUser": "користувачем"
+  },
+  "MobilePreferences": {
+    "Settings": "Налаштування",
+    "GeneralSettings": "Загальні налаштування",
+    "Accessibility": "Доступність",
+    "AccessibleOutput": "Доступне виведення",
+    "Theme": "Тема",
+    "LightTheme": "Світла",
+    "DarkTheme": "Темна",
+    "HighContrastTheme": "Високий контраст",
+    "Autosave": "Автозбереження",
+    "WordWrap": "Переноси слів",
+    "LineNumbers": "Номери рядків",
+    "LintWarningSound": "Звук попередження",
+    "UsedScreenReader": "Використовується з програмою зчитування з екрана",
+    "PlainText": "Простий текст",
+    "TableText": "Текст у таблиці",
+    "Sound": "Звук"
+  },
+  "PreferenceCreators": {
+    "On": "Так",
+    "Off": "Ні"
+  },
+  "MobileIDEView":{
+    "Preferences": "Налаштування",
+    "MyStuff": "Мої матеріали",
+    "Examples": "Приклади",
+    "OriginalEditor": "Редактор",
+    "Login": "Увійти",
+    "Logout": "Вийти"
+  },
+  "MobileDashboardView": {
+    "Examples": "Приклади",
+    "Sketches": "Скетчі",
+    "Collections": "Колекції",
+    "Assets": "Файли",
+    "MyStuff": "Мої матеріали",
+    "CreateSketch": "Створити скетч",
+    "CreateCollection": "Створити колекцію"
+  },
+  "Explorer": {
+    "Files": "Файли"
+  }
+}
