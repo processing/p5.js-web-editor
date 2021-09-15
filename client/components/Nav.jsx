@@ -707,6 +707,16 @@ class Nav extends React.PureComponent {
                 简体中文
               </button>
             </li>
+            <li className="nav__dropdown-item">
+              <button
+                onFocus={this.handleFocusForLang}
+                onBlur={this.handleBlur}
+                value="zh-TW"
+                onClick={(e) => this.handleLangSelection(e)}
+              >
+                正體中文
+              </button>
+            </li>
           </ul>
         </li>
       </React.Fragment>
