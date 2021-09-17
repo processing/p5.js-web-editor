@@ -1,6 +1,5 @@
 import { useDispatch } from 'react-redux';
 import { Decode } from 'console-feed';
-import { isEqual } from 'lodash';
 import { dispatchConsoleEvent } from '../actions/console';
 import { stopSketch, expandConsole } from '../actions/ide';
 
@@ -26,23 +25,6 @@ export default function useHandleMessageEvent() {
         });
         if (hasInfiniteLoop) {
           return false;
-        }
-        if (index === arr.length - 1) {
-          Object.assign(message, { times: 1 });
-          return false;
-        }
-        // this should be done in the reducer probs
-        const cur = Object.assign(message, { times: 1 });
-        const nextIndex = index + 1;
-        while (
-          isEqual(cur.data, arr[nextIndex].data) &&
-          cur.method === arr[nextIndex].method
-        ) {
-          cur.times += 1;
-          arr.splice(nextIndex, 1);
-          if (nextIndex === arr.length) {
-            return false;
-          }
         }
         return true;
       });
