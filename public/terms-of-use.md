@@ -188,7 +188,7 @@ Unless otherwise noted on the Website, all content, data, or other information p
 
 ### Our License to User Content
 
-All user-generated content you submit to Processing Foundation is licensed to and through Processing Foundation under the Creative Commons Attribution-ShareAlike 2.0 license (located at [https://creativecommons.org/licenses/by-sa/2.0/](https://creativecommons.org/licenses/by-sa/2.0/) ). This allows others to view and remix your content. This license also allows the Processing Foundation to display, distribute, and reproduce your content on the Scratch website, through social media channels, and elsewhere. If you do not want to license your content under this license, then do not share it with Processing Foundation. 
+All user-generated content you submit to Processing Foundation is licensed to and through Processing Foundation under the Creative Commons Attribution-ShareAlike 2.0 license (located at [https://creativecommons.org/licenses/by-sa/2.0/](https://creativecommons.org/licenses/by-sa/2.0/) ). This allows others to view and remix your content. This license also allows the Processing Foundation to display, distribute, and reproduce your content on the p5.js website, through social media channels, and elsewhere. If you do not want to license your content under this license, then do not share it with Processing Foundation. 
 
 
 ## DMCA Infringement Notices
@@ -273,7 +273,7 @@ Each party agrees to pay its half of all the applicable filing fees and arbitrat
 
 Nothing in this section shall prevent either party from seeking injunctive or equitable relief from the courts for matters related to intellectual property rights or unauthorized access to the Service.
 
-**To the extent permitted by law, all claims must be brought in the parties’ individual capacity, and not as a plaintiff or class member in any purported class or representative proceeding, and, unless the parties agree otherwise, the arbitrator may not consolidate more than one person’s claims. you agree that, by entering into these terms, you and the Processing Foundation are each waiving the right to a trial by jury or to participate in a class action.**
+**To the extent permitted by law, all claims must be brought in the parties’ individual capacity, and not as a plaintiff or class member in any purported class or representative proceeding, and, unless the parties agree otherwise, the arbitrator may not consolidate more than one person’s claims. You agree that, by entering into these terms, you and the Processing Foundation are each waiving the right to a trial by jury or to participate in a class action.**
 
 
 ## Waiver and Severability
