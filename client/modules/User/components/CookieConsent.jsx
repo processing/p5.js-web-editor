@@ -4,6 +4,7 @@ import Cookies from 'js-cookie';
 import styled from 'styled-components';
 import ReactGA from 'react-ga';
 import { Transition } from 'react-transition-group';
+import { Link } from 'react-router';
 import getConfig from '../../../utils/getConfig';
 import { setUserCookieConsent } from '../actions';
 import { remSize, prop, device } from '../../../theme';
@@ -53,6 +54,9 @@ const CookieConsentCopy = styled.p`
   margin-bottom: ${remSize(20)};
   @media ${device.desktop} {
     margin-bottom: 0;
+  }
+  & a {
+    color: ${prop('Policy.link')};
   }
 `;
 
@@ -164,7 +168,8 @@ function CookieConsent() {
                 <strong>
                   We never sell this data or use it for advertising.
                 </strong>{' '}
-                You can decide which cookies you would like to allow.
+                You can decide which cookies you would like to allow, and learn
+                more in our <Link to="/privacy-policy">Privacy Policy</Link>.
               </CookieConsentCopy>
               <CookieConsentButtons>
                 <Button

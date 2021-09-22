@@ -293,6 +293,11 @@ You can set your browser to refuse all or some browser cookies, or to alert you 
 Mobile browsers may collect real-time information about the location of your device for geo-fencing, mileage tracking, or similar purposes. If you do not want us to collect this information, you may decline our request or disable location services in your mobile device’s settings, if requested. However, opting out of the collection of location information will cause location-based features to be disabled and the online and/or mobile browsing may not function properly. 
 
 
+### Analytics
+
+We may use third-party web analytics (Google Analytics) to better understand the users that interact with our Website. You can opt out of analytics by installing the [Google Analytics Opt-out Browser Add-on](https://tools.google.com/dlpage/gaoptout), which prohibits data transmission to Google Analytics.
+
+
 ### Promotional offers from the Processing Foundation 
 
 If you do not wish to have your email address or other contact information used by the Processing Foundation to promote our own yearly donation drive and other promotional events, you can contact us to opt-out. If we have sent you a promotional email, you may opt out using the unsubscribe or opt-out link in the email, if applicable, or by sending us a return email asking to be omitted from future email distributions. This opt out does not apply to information provided to p5.js as a result of your use of the Website or other transactions.
@@ -300,7 +305,7 @@ If you do not wish to have your email address or other contact information used 
 
 ## How We Respond To "Do Not Track" Signals
 
-Your online browser settings may allow you to automatically transmit a “Do Not Track” signal to websites and online services you visit. Our Website does not respond to a “Do Not Track” signal from a visitor’s browser. If you would like to find out more about “Do Not Track,” please visit [www.allaboutdnt.com](http://www.allaboutdnt.com).
+Your online browser settings may allow you to automatically transmit a “Do Not Track” signal to websites and online services you visit. Our Website does not respond to a “Do Not Track” signal from a visitor’s browser because this [browser feature has been deprecated](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/doNotTrack). If you would like to find out more about “Do Not Track,” please visit [www.allaboutdnt.com](http://www.allaboutdnt.com).
 
 
 ## Contact information
