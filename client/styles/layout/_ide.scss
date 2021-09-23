@@ -1,14 +1,3 @@
-.ide {
-	display: flex;
-  flex-direction: column;
-  height: 100%;
-  flex-wrap: wrap;
-  @include themify() {
-    color: getThemifyVariable('primary-text-color');
-    background-color: getThemifyVariable('background-color');
-  }
-}
-
 .editor-preview-container {
   width: 100%;
   flex: 1 0 0px;

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { remSize } from '../../theme';
+import { remSize, prop } from '../../theme';
 
 const ScreenWrapper = styled.div`
   .toast {
@@ -14,13 +14,19 @@ const ScreenWrapper = styled.div`
     min-width: unset;
     bottom: ${remSize(64)};
   }
+  ${({ fullscreen }) =>
+    fullscreen &&
+    `
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-flow: column;
+    background-color: ${prop('backgroundColor')}
+  `}
 `;
 
 const Screen = ({ children, fullscreen, slimheader }) => (
-  <ScreenWrapper
-    className={fullscreen && 'fullscreen-preview'}
-    slimheader={slimheader}
-  >
+  <ScreenWrapper fullscreen={fullscreen} slimheader={slimheader}>
     {children}
   </ScreenWrapper>
 );

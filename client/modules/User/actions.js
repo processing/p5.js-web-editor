@@ -20,13 +20,6 @@ export function loginUser(formValues) {
   return apiClient.post('/login', formValues);
 }
 
-export function loginUserSuccess(user) {
-  return {
-    type: ActionTypes.AUTH_USER,
-    user
-  };
-}
-
 export function authenticateUser(user) {
   return {
     type: ActionTypes.AUTH_USER,
@@ -55,7 +48,7 @@ export function validateAndLoginUser(formProps) {
     return new Promise((resolve) => {
       loginUser(formProps)
         .then((response) => {
-          dispatch(loginUserSuccess(response.data));
+          dispatch(authenticateUser(response.data));
           dispatch(setPreferences(response.data.preferences));
           dispatch(
             setLanguage(response.data.preferences.language, {
@@ -102,10 +95,7 @@ export function getUser() {
     apiClient
       .get('/session')
       .then((response) => {
-        dispatch({
-          type: ActionTypes.AUTH_USER,
-          user: response.data
-        });
+        dispatch(authenticateUser(response.data));
         dispatch({
           type: ActionTypes.SET_PREFERENCES,
           preferences: response.data.preferences
@@ -259,7 +249,7 @@ export function updatePassword(formValues, token) {
       apiClient
         .post(`/reset-password/${token}`, formValues)
         .then((response) => {
-          dispatch(loginUserSuccess(response.data));
+          dispatch(authenticateUser(response.data));
           browserHistory.push('/');
           resolve();
         })
@@ -339,9 +329,25 @@ export function unlinkService(service) {
     apiClient
       .delete(`/auth/${service}`)
       .then((response) => {
+        dispatch(authenticateUser(response.data));
+      })
+      .catch((error) => {
+        const { response } = error;
+        const message = response.message || response.data.error;
+        dispatch(authError(message));
+      });
+  };
+}
+
+export function setUserCookieConsent(cookieConsent) {
+  // maybe also send this to the server rn?
+  return (dispatch) => {
+    apiClient
+      .put('/cookie-consent', { cookieConsent })
+      .then(() => {
         dispatch({
-          type: ActionTypes.AUTH_USER,
-          user: response.data
+          type: ActionTypes.SET_COOKIE_CONSENT,
+          cookieConsent
         });
       })
       .catch((error) => {
