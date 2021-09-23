@@ -76,7 +76,12 @@ const userSchema = new Schema(
       language: { type: String, default: 'en-US' },
       autocloseBracketsQuotes: { type: Boolean, default: true }
     },
-    totalSize: { type: Number, default: 0 }
+    totalSize: { type: Number, default: 0 },
+    cookieConsent: {
+      type: String,
+      enum: ['none', 'essential', 'all'],
+      default: 'none'
+    }
   },
   { timestamps: true, usePushEach: true }
 );

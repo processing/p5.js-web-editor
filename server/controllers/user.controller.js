@@ -17,7 +17,8 @@ export function userResponse(user) {
     id: user._id,
     totalSize: user.totalSize,
     github: user.github,
-    google: user.google
+    google: user.google,
+    cookieConsent: user.cookieConsent
   };
 }
 
@@ -410,5 +411,22 @@ export function unlinkGoogle(req, res) {
   res.status(404).json({
     success: false,
     message: 'You must be logged in to complete this action.'
+  });
+}
+
+export function updateCookieConsent(req, res) {
+  User.findById(req.user.id, (err, user) => {
+    if (err) {
+      res.status(500).json({ error: err });
+      return;
+    }
+    if (!user) {
+      res.status(404).json({ error: 'Document not found' });
+      return;
+    }
+
+    const { cookieConsent } = req.body;
+    user.cookieConsent = cookieConsent;
+    saveUser(res, user);
   });
 }

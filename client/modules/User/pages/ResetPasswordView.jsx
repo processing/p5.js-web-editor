@@ -6,6 +6,7 @@ import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import ResetPasswordForm from '../components/ResetPasswordForm';
 import Nav from '../../../components/Nav';
+import RootPage from '../../../components/RootPage';
 
 function ResetPasswordView() {
   const { t } = useTranslation();
@@ -19,7 +20,7 @@ function ResetPasswordView() {
     user: true
   });
   return (
-    <div className="reset-password-container">
+    <RootPage>
       <Nav layout="dashboard" />
       <div className={resetPasswordClass}>
         <Helmet>
@@ -44,7 +45,7 @@ function ResetPasswordView() {
           </p>
         </div>
       </div>
-    </div>
+    </RootPage>
   );
 }
 

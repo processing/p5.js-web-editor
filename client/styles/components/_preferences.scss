@@ -140,6 +140,12 @@
   & + & {
     margin-left: #{45 / $base-font-size}rem;
   }
+  &:hover {
+    @include themify() {
+      border-bottom: #{4 / $base-font-size}rem solid
+        getThemifyVariable("button-background-hover-color");
+    }
+  }
 }
 
 .preference__subheading {
