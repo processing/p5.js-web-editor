@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import ReactGA from 'react-ga';
 import { Transition } from 'react-transition-group';
 import { Link } from 'react-router';
+import { Trans, useTranslation } from 'react-i18next';
 import getConfig from '../../../utils/getConfig';
 import { setUserCookieConsent } from '../actions';
 import { remSize, prop, device } from '../../../theme';
@@ -76,6 +77,7 @@ function CookieConsent() {
   const [cookieConsent, setBrowserCookieConsent] = useState('none');
   const [inProp, setInProp] = useState(false);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   function initializeCookieConsent() {
     if (user.authenticated) {
@@ -157,29 +159,23 @@ function CookieConsent() {
       {(state) => (
         <CookieConsentContainer state={state}>
           <CookieConsentDialog role="dialog" tabIndex="0">
-            {/* <button aria-label="Close" tabIndex="0"></button> */}
-            <CookieConsentHeader>Cookies</CookieConsentHeader>
+            <CookieConsentHeader>{t('Cookies.Header')}</CookieConsentHeader>
             <CookieConsentContent>
               <CookieConsentCopy>
-                The p5.js Editor uses cookies. Some are essential to the website
-                functionality and allow you to manage an account and
-                preferences. Others are not essential—they are used for
-                analytics and allow us to learn more about our community.{' '}
-                <strong>
-                  We never sell this data or use it for advertising.
-                </strong>{' '}
-                You can decide which cookies you would like to allow, and learn
-                more in our <Link to="/privacy-policy">Privacy Policy</Link>.
+                <Trans
+                  i18nKey="Cookies.Body"
+                  components={[<Link to="/privacy-policy" />]}
+                />
               </CookieConsentCopy>
               <CookieConsentButtons>
                 <Button
                   kind={Button.kinds.secondary}
                   onClick={acceptAllCookies}
                 >
-                  Allow All
+                  {t('Cookies.AllowAll')}
                 </Button>
                 <Button onClick={acceptEssentialCookies}>
-                  Allow Essential
+                  {t('Cookies.AllowEssential')}
                 </Button>
               </CookieConsentButtons>
             </CookieConsentContent>
@@ -189,6 +185,5 @@ function CookieConsent() {
     </Transition>
   );
 }
-// TODO need to merge browser cookie with user when u login
 
 export default CookieConsent;

@@ -155,7 +155,7 @@ function About(props) {
               aria-hidden="true"
               focusable="false"
             />
-            Privacy Policy
+            {t('About.PrivacyPolicy')}
           </Link>
         </p>
         <p className="about__content-column-list">
@@ -165,7 +165,7 @@ function About(props) {
               aria-hidden="true"
               focusable="false"
             />
-            Terms of Use
+            {t('About.TermsOfUse')}
           </Link>
         </p>
         <p className="about__content-column-list">
@@ -175,7 +175,7 @@ function About(props) {
               aria-hidden="true"
               focusable="false"
             />
-            Code of Conduct
+            {t('About.CodeOfConduct')}
           </Link>
         </p>
       </div>
