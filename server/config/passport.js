@@ -117,7 +117,8 @@ passport.use(
       clientSecret: process.env.GITHUB_SECRET,
       callbackURL: '/auth/github/callback',
       passReqToCallback: true,
-      scope: ['user:email']
+      scope: ['user:email'],
+      allRawEmails: true
     },
     (req, accessToken, refreshToken, profile, done) => {
       User.findOne({ github: profile.id }, (findByGithubErr, existingUser) => {
@@ -149,8 +150,18 @@ passport.use(
           }
           req.user.save((saveErr) => done(null, req.user));
         } else {
-          User.findByEmail(emails, (findByEmailErr, existingEmailUser) => {
-            if (existingEmailUser) {
+          User.findAllByEmails(emails, (findByEmailErr, existingEmailUsers) => {
+            if (existingEmailUsers.length) {
+              let existingEmailUser;
+              // Handle case where user has made multiple p5.js Editor accounts,
+              // with emails that are connected to the same GitHub account
+              if (existingEmailUsers.length > 1) {
+                existingEmailUser = existingEmailUsers.find(
+                  (u) => (u.email = primaryEmail)
+                );
+              } else {
+                [existingEmailUser] = existingEmailUsers;
+              }
               existingEmailUser.email = existingEmailUser.email || primaryEmail;
               existingEmailUser.github = profile.id;
               existingEmailUser.username =
