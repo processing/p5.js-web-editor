@@ -10,6 +10,9 @@ import { BasicStrategy } from 'passport-http';
 
 import User from '../models/user';
 
+const accountSuspensionMessage =
+  'Account has been suspended. Please contact privacy@p5js.org if you believe this is an error.';
+
 function generateUniqueUsername(username) {
   const adj =
     friendlyWords.predicates[
@@ -39,9 +42,7 @@ passport.use(
           done(null, false, { msg: `Email ${email} not found.` });
           return;
         } else if (user.banned) {
-          const msg =
-            'Account has been suspended. Please contact privacy@p5js.org if you believe this is an error.';
-          done(null, false, { msg });
+          done(null, false, { msg: accountSuspensionMessage });
           return;
         }
         user.comparePassword(password, (innerErr, isMatch) => {
@@ -71,9 +72,7 @@ passport.use(
         return;
       }
       if (user.banned) {
-        const msg =
-          'Account has been suspended. Please contact privacy@p5js.org if you believe this is an error.';
-        done(null, false, { msg });
+        done(null, false, { msg: accountSuspensionMessage });
         return;
       }
       user.findMatchingKey(key, (innerErr, isMatch, keyDocument) => {
@@ -129,9 +128,7 @@ passport.use(
             );
             return;
           } else if (existingUser.banned) {
-            const msg =
-              'Account has been suspended. Please contact privacy@p5js.org if you believe this is an error.';
-            done(new Error(msg));
+            done(new Error(accountSuspensionMessage));
             return;
           }
           done(null, existingUser);
@@ -140,7 +137,6 @@ passport.use(
 
         const emails = getVerifiedEmails(profile.emails);
         const primaryEmail = getPrimaryEmail(profile.emails);
-        console.log(profile);
 
         if (req.user) {
           if (!req.user.github) {
@@ -161,6 +157,10 @@ passport.use(
                 );
               } else {
                 [existingEmailUser] = existingEmailUsers;
+              }
+              if (existingEmailUser.banned) {
+                done(new Error(accountSuspensionMessage));
+                return;
               }
               existingEmailUser.email = existingEmailUser.email || primaryEmail;
               existingEmailUser.github = profile.id;
@@ -225,9 +225,7 @@ passport.use(
               );
               return;
             } else if (existingUser.banned) {
-              const msg =
-                'Account has been suspended. Please contact privacy@p5js.org if you believe this is an error.';
-              done(new Error(msg));
+              done(new Error(accountSuspensionMessage));
               return;
             }
             done(null, existingUser);
@@ -257,6 +255,10 @@ passport.use(
                     // what if a username is already taken from the display name too?
                     // then, append a random friendly word?
                     if (existingEmailUser) {
+                      if (existingEmailUser.banned) {
+                        done(new Error(accountSuspensionMessage));
+                        return;
+                      }
                       existingEmailUser.email =
                         existingEmailUser.email || primaryEmail;
                       existingEmailUser.google = profile._json.emails[0].value;
