@@ -19,7 +19,13 @@ function LoginForm(props) {
       validate={validateLogin}
       onSubmit={onSubmit}
     >
-      {({ handleSubmit, pristine, submitting, invalid }) => (
+      {({
+        handleSubmit,
+        submitError,
+        pristine,
+        submitting,
+        modifiedSinceLastSubmit
+      }) => (
         <form className="form" onSubmit={handleSubmit}>
           <Field name="email">
             {(field) => (
@@ -59,7 +65,10 @@ function LoginForm(props) {
               </p>
             )}
           </Field>
-          <Button type="submit" disabled={submitting || invalid || pristine}>
+          {submitError && !modifiedSinceLastSubmit && (
+            <span className="form-error">{submitError}</span>
+          )}
+          <Button type="submit" disabled={submitting || pristine}>
             {props.t('LoginForm.Submit')}
           </Button>
         </form>

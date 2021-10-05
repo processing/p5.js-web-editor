@@ -1,4 +1,5 @@
 import { browserHistory } from 'react-router';
+import { FORM_ERROR } from 'final-form';
 import * as ActionTypes from '../../constants';
 import apiClient from '../../utils/apiClient';
 import { showErrorModal, justOpenedProject } from '../IDE/actions/ide';
@@ -61,8 +62,7 @@ export function validateAndLoginUser(formProps) {
         })
         .catch((error) =>
           resolve({
-            password: error.response.data.message,
-            _error: 'Login failed!'
+            [FORM_ERROR]: error.response.data.message
           })
         );
     });
