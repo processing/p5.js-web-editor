@@ -38,6 +38,11 @@ passport.use(
         if (!user) {
           done(null, false, { msg: `Email ${email} not found.` });
           return;
+        } else if (user.banned) {
+          const msg =
+            'Account has been suspended. Please contact privacy@p5js.org if you believe this is an error.';
+          done(null, false, { msg });
+          return;
         }
         user.comparePassword(password, (innerErr, isMatch) => {
           if (isMatch) {
@@ -63,6 +68,12 @@ passport.use(
       }
       if (!user) {
         done(null, false);
+        return;
+      }
+      if (user.banned) {
+        const msg =
+          'Account has been suspended. Please contact privacy@p5js.org if you believe this is an error.';
+        done(null, false, { msg });
         return;
       }
       user.findMatchingKey(key, (innerErr, isMatch, keyDocument) => {
@@ -116,6 +127,11 @@ passport.use(
               new Error('GitHub account is already linked to another account.')
             );
             return;
+          } else if (existingUser.banned) {
+            const msg =
+              'Account has been suspended. Please contact privacy@p5js.org if you believe this is an error.';
+            done(new Error(msg));
+            return;
           }
           done(null, existingUser);
           return;
@@ -123,6 +139,7 @@ passport.use(
 
         const emails = getVerifiedEmails(profile.emails);
         const primaryEmail = getPrimaryEmail(profile.emails);
+        console.log(profile);
 
         if (req.user) {
           if (!req.user.github) {
@@ -196,11 +213,15 @@ passport.use(
                 )
               );
               return;
+            } else if (existingUser.banned) {
+              const msg =
+                'Account has been suspended. Please contact privacy@p5js.org if you believe this is an error.';
+              done(new Error(msg));
+              return;
             }
             done(null, existingUser);
             return;
           }
-
           const primaryEmail = profile._json.emails[0].value;
 
           if (req.user) {
