@@ -81,7 +81,8 @@ const userSchema = new Schema(
       type: String,
       enum: ['none', 'essential', 'all'],
       default: 'none'
-    }
+    },
+    banned: { type: Boolean, default: false }
   },
   { timestamps: true, usePushEach: true }
 );
