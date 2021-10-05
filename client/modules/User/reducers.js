@@ -41,6 +41,8 @@ const user = (state = { authenticated: false }, action) => {
       return { ...state, ...action.user };
     case ActionTypes.API_KEY_CREATED:
       return { ...state, ...action.user };
+    case ActionTypes.SET_COOKIE_CONSENT:
+      return { ...state, cookieConsent: action.cookieConsent };
     default:
       return state;
   }
