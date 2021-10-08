@@ -46,7 +46,7 @@ function FullView(props) {
     };
   }, []);
   return (
-    <RootPage>
+    <RootPage fixedHeight="100%">
       <Helmet>
         <title>{project.name}</title>
       </Helmet>
