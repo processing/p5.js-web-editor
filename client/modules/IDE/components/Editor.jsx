@@ -155,7 +155,11 @@ class Editor extends React.Component {
       [`${metaKey}-G`]: 'findPersistentNext',
       [`Shift-${metaKey}-G`]: 'findPersistentPrev',
       [replaceCommand]: 'replace',
-      [`${metaKey}-K`]: (cm, event) => cm.state.colorpicker.popup_color_picker()
+      // Cassie Tarakajian: If you don't set a default color, then when you
+      // choose a color, it deletes characters inline. This is a
+      // hack to prevent that.
+      [`${metaKey}-K`]: (cm, event) =>
+        cm.state.colorpicker.popup_color_picker({ length: 0 })
     });
 
     this.initializeDocuments(this.props.files);
