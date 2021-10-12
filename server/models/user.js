@@ -76,7 +76,13 @@ const userSchema = new Schema(
       language: { type: String, default: 'en-US' },
       autocloseBracketsQuotes: { type: Boolean, default: true }
     },
-    totalSize: { type: Number, default: 0 }
+    totalSize: { type: Number, default: 0 },
+    cookieConsent: {
+      type: String,
+      enum: ['none', 'essential', 'all'],
+      default: 'none'
+    },
+    banned: { type: Boolean, default: false }
   },
   { timestamps: true, usePushEach: true }
 );
@@ -200,6 +206,23 @@ userSchema.statics.findByEmail = function findByEmail(email, cb) {
   // Email addresses should be case-insensitive unique
   // In MongoDB, you must use collation in order to do a case-insensitive query
   return this.findOne(query).collation({ locale: 'en', strength: 2 }).exec(cb);
+};
+
+/**
+ *
+ * Queries User collection by emails and returns all Users that match.
+ *
+ * @param {string[]} emails - Array of email strings
+ * @callback [cb] - Optional error-first callback that passes User document
+ * @return {Promise<Object>} - Returns Promise fulfilled by User document
+ */
+userSchema.statics.findAllByEmails = function findAllByEmails(emails, cb) {
+  const query = {
+    email: { $in: emails }
+  };
+  // Email addresses should be case-insensitive unique
+  // In MongoDB, you must use collation in order to do a case-insensitive query
+  return this.find(query).collation({ locale: 'en', strength: 2 }).exec(cb);
 };
 
 /**

@@ -11,6 +11,7 @@ import AssetList from '../../IDE/components/AssetList';
 import AssetSize from '../../IDE/components/AssetSize';
 import CollectionList from '../../IDE/components/CollectionList';
 import SketchList from '../../IDE/components/SketchList';
+import RootPage from '../../../components/RootPage';
 import * as ProjectActions from '../../IDE/actions/project';
 import {
   CollectionSearchbar,
@@ -133,7 +134,7 @@ class DashboardView extends React.Component {
     const actions = this.renderActionButton(currentTab, username, this.props.t);
 
     return (
-      <div className="dashboard">
+      <RootPage fixedHeight="100%">
         <Nav layout="dashboard" />
 
         <main className="dashboard-header">
@@ -165,7 +166,7 @@ class DashboardView extends React.Component {
             <CollectionCreate />
           </Overlay>
         )}
-      </div>
+      </RootPage>
     );
   }
 }

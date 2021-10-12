@@ -1,6 +1,6 @@
 import * as ActionTypes from '../../../constants';
 
-const consoleMax = 500;
+const consoleMax = 5000;
 const initialState = [];
 
 const console = (state = initialState, action) => {

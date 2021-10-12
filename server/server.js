@@ -131,6 +131,7 @@ app.use(
       (process.env.NODE_ENV === 'production' ? '1d' : '0')
   })
 );
+app.use(Express.static(path.resolve(__dirname, '../public')));
 
 app.use(passport.initialize());
 app.use(passport.session());

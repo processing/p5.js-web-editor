@@ -1,0 +1,603 @@
+{
+  "Nav": {
+    "File": {
+      "Title": "檔案",
+      "New": "新增",
+      "Share": "分享",
+      "Duplicate": "建立副本",
+      "Open": "開啟",
+      "Download": "下載",
+      "AddToCollection": "加入作品集",
+      "Examples": "範例"
+    },
+    "Edit": {
+      "Title": "編輯",
+      "TidyCode": "用 Tidy 調整程式碼",
+      "Find": "尋找",
+      "Replace": "取代"
+    },
+    "Sketch": {
+      "Title": "草稿",
+      "AddFile": "新增檔案",
+      "AddFolder": "新增資料夾",
+      "Run": "執行",
+      "Stop": "停止"
+    },
+    "Help": {
+      "Title": "說明",
+      "KeyboardShortcuts": "快捷鍵",
+      "Reference": "參考文件",
+      "About": "關於"
+    },
+    "Lang": "語言",
+    "BackEditor": "回到編輯器",
+    "WarningUnsavedChanges": "有尚未儲存的修改, 確定要離開此頁面嗎？",
+    "Login": "登入",
+    "LoginOr": "或是",
+    "SignUp": "註冊帳號",
+    "Auth": {
+      "Welcome": "歡迎",
+      "Hello": "您好",
+      "MyAccount": "我的帳號",
+      "My": "我的",
+      "MySketches": "我的草稿",
+      "MyCollections": "我的作品集",
+      "Asset": "資產",
+      "MyAssets": "我的資產",
+      "LogOut": "登出"
+    }
+  },
+  "CodemirrorFindAndReplace": {
+    "ToggleReplace": "切換取代",
+    "Find": "尋找",
+    "FindPlaceholder": "在檔案中尋找",
+    "Replace": "單次取代",
+    "ReplaceAll": "全部取代",
+    "ReplacePlaceholder": "取代成",
+    "Regex": "規則表達式",
+    "CaseSensitive": "區分大小寫",
+    "WholeWords": "完整單字",
+    "Previous": "上一個",
+    "Next": "下一個",
+    "NoResults": "沒有找到",
+    "Close": "關閉"
+  },
+  "LoginForm": {
+    "UsernameOrEmail": "電子郵件或使用者名稱",
+    "UsernameOrEmailARIA": "電子郵件或使用者名稱",
+    "Password": "密碼",
+    "PasswordARIA": "密碼",
+    "Submit": "登入"
+  },
+  "LoginView": {
+    "Title": "p5.js Web Editor | 登入",
+    "Login": "登入",
+    "LoginOr": "或",
+    "SignUp": "註冊",
+    "Email": "電子郵件",
+    "Username": "使用者名稱",
+    "DontHaveAccount": "還沒有帳號嗎？",
+    "ForgotPassword": "忘記密碼？",
+    "ResetPassword": "重新設定密碼"
+  },
+  "SocialAuthButton": {
+    "Connect": "連結 {{serviceauth}} 帳號",
+    "Unlink": "停止連結 {{serviceauth}} 帳號",
+    "Login": "以 {{serviceauth}} 登入",
+    "LogoARIA": "{{serviceauth}} 標誌"
+  },
+  "About": {
+    "Title": "關於",
+    "TitleHelmet": "p5.js Web Editor | 關於",
+    "Contribute": "貢獻",
+    "NewP5": "p5.js 新手？",
+    "Report": "回報臭蟲",
+    "Learn": "學習",
+    "Resources": "資源",
+    "Libraries": "程式庫",
+    "Forum": "論壇",
+    "Examples": "範例"
+  },
+  "Toast": {
+    "OpenedNewSketch": "已開啟新草稿",
+    "SketchSaved": "草稿已儲存",
+    "SketchFailedSave": "草稿儲存失敗",
+    "AutosaveEnabled": "已啟用自動儲存",
+    "LangChange": "已辨更語系",
+    "SettingsSaved": "已儲存設定"
+  },
+  "Toolbar": {
+    "Preview": "預覽",
+    "Auto-refresh": "自動重新整理",
+    "OpenPreferencesARIA": "開啟偏好設定",
+    "PlaySketchARIA": "執行",
+    "PlayOnlyVisualSketchARIA": "Play only visual sketch",
+    "StopSketchARIA": "停止",
+    "EditSketchARIA": "編輯草稿名稱",
+    "NewSketchNameARIA": "新草稿名稱",
+    "By": " 作者： "
+  },
+  "Console": {
+    "Title": "主控台",
+    "Clear": "清除",
+    "ClearARIA": "清除主控台內容",
+    "Close": "關閉",
+    "CloseARIA": "關閉主控台",
+    "Open": "Open",
+    "OpenARIA": "Open console"
+  },
+  "Preferences": {
+    "Settings": "設定",
+    "GeneralSettings": "一般設定",
+    "Accessibility": "協助工具",
+    "Theme": "主題",
+    "LightTheme": "亮色",
+    "LightThemeARIA": "啟用亮色主題",
+    "DarkTheme": "暗色",
+    "DarkThemeARIA": "啟用暗色主題",
+    "HighContrastTheme": "高對比",
+    "HighContrastThemeARIA": "啟用高對比主題",
+    "TextSize": "文字大小",
+    "DecreaseFont": "變小",
+    "DecreaseFontARIA": "將字體變小",
+    "IncreaseFont": "變大",
+    "IncreaseFontARIA": "將字體變大",
+    "Autosave": "自動儲存",
+    "On": "啟用",
+    "AutosaveOnARIA": "自動儲存",
+    "Off": "停用",
+    "AutosaveOffARIA": "不自動儲存",
+    "AutocloseBracketsQuotes": "自動加上括號與引號",
+    "AutocloseBracketsQuotesOnARIA": "自動加上括號與引號",
+    "AutocloseBracketsQuotesOffARIA": "不自動加上括號與引號",
+    "WordWrap": "折行",
+    "LineWrapOnARIA": "啟用自動折行",
+    "LineWrapOffARIA": "停用自動折行",
+    "LineNumbers": "行號",
+    "LineNumbersOnARIA": "顯示行號",
+    "LineNumbersOffARIA": "不顯示行號",
+    "LintWarningSound": "Lint 警示聲",
+    "LintWarningOnARIA": "發出 lint 警示聲",
+    "LintWarningOffARIA": "不要發出 lint 警示聲",
+    "PreviewSound": "測試警示聲",
+    "PreviewSoundARIA": "測試警示聲",
+    "AccessibleTextBasedCanvas": "文字畫布協助工具",
+    "UsedScreenReader": "搭配螢幕報讀軟體",
+    "PlainText": "純文字",
+    "TextOutputARIA": "讀出文字輸出",
+    "TableText": "表格文字",
+    "TableOutputARIA": "讀出表格文字"
+  },
+  "KeyboardShortcuts": {
+    "Title": " 鍵盤快捷鍵",
+    "ShortcutsFollow": "編輯程式的快捷鍵依循",
+    "SublimeText": "Sublime Text 快捷鍵",
+    "CodeEditing": {
+      "Tidy": "Tidy",
+      "FindText": "尋找文字",
+      "FindNextMatch": "尋找下一個相符處",
+      "FindPrevMatch": "尋找上一個相符處",
+      "ReplaceTextMatch": "取代相符的文字",
+      "IndentCodeLeft": "向左縮排",
+      "IndentCodeRight": "向右縮排",
+      "CommentLine": "將此行變成註解",
+      "FindNextTextMatch": "尋找下一個相符的文字",
+      "FindPreviousTextMatch": "尋找上一個相符的文字",
+      "CodeEditing": "編輯程式碼"
+    },
+    "General": {
+      "StartSketch": "執行草稿",
+      "StopSketch": "停止草稿",
+      "TurnOnAccessibleOutput": "啟用輔助輸出",
+      "TurnOffAccessibleOutput": "停用輔助輸出"
+    }
+  },
+  "Sidebar": {
+    "Title": "草稿檔案",
+    "ToggleARIA": "切換開啟/關閉草稿檔案選項",
+    "AddFolder": "建立資料夾",
+    "AddFolderARIA": "新增資料夾",
+    "AddFile": "建立檔案",
+    "AddFileARIA": "新增檔案",
+    "UploadFile": "上傳檔案",
+    "UploadFileARIA": "上傳檔案"
+  },
+  "FileNode": {
+    "OpenFolderARIA": "開啟資料夾",
+    "CloseFolderARIA": "關閉資料夾",
+    "ToggleFileOptionsARIA": "切換開啟/關閉檔案選項",
+    "AddFolder": "建立資料夾",
+    "AddFolderARIA": "新增資料夾",
+    "AddFile": "建立檔案",
+    "AddFileARIA": "新增檔案",
+    "UploadFile": "上傳檔案",
+    "UploadFileARIA": "上傳檔案",
+    "Rename": "重新命名",
+    "Delete": "刪除"
+  },
+  "Common": {
+    "Error": "錯誤",
+    "ErrorARIA": "錯誤",
+    "Save": "儲存",
+    "p5logoARIA": "p5.js 標誌",
+    "DeleteConfirmation": "確定要刪除 {{name}}？"
+  },
+  "IDEView": {
+    "SubmitFeedback": "提交回饋資訊",
+    "SubmitFeedbackARIA": "提交回饋資訊",
+    "AddCollectionTitle": "加入作品集",
+    "AddCollectionARIA":"加入作品即",
+    "ShareTitle": "分享",
+    "ShareARIA":"分享"
+  },
+  "NewFileModal": {
+    "Title": "建立檔案",
+    "CloseButtonARIA": "關閉建立檔案交談窗",
+    "EnterName": "請輸入檔名",
+    "InvalidType": "檔案類型錯誤, 只能接受 .js, .css, .json, .xml, .txt, .csv, .tsv, .frag, 或是 .vert 副檔名"
+  },
+  "NewFileForm": {
+    "AddFileSubmit": "建立新檔案",
+    "Placeholder": "名稱"
+  },
+  "NewFolderModal": {
+    "Title": "建立資料夾",
+    "CloseButtonARIA": "關閉建立資料夾交談窗",
+    "EnterName": "請輸入資料夾名稱",
+    "EmptyName": "資料夾名稱中不能只有空白",
+    "InvalidExtension": "資料夾名稱不能包含副檔名"
+  },
+  "NewFolderForm": {
+    "AddFolderSubmit": "建立新資料夾",
+    "Placeholder": "名稱"
+  },
+  "ResetPasswordForm": {
+    "Email": "註冊時填入的電子郵件",
+    "EmailARIA": "電子郵件",
+    "Submit": "寄送重設密碼的電子郵件"
+  },
+  "ResetPasswordView": {
+    "Title": "p5.js Web Editor | 重設密碼",
+    "Reset": "重設密碼",
+    "Submitted": "重設密碼郵件稍後寄到, 若沒收到\n            請檢查是否被丟到垃圾郵件資料夾",
+    "Login": "登入",
+    "LoginOr": "或是",
+    "SignUp": "註冊"
+  },
+  "ReduxFormUtils": {
+    "errorInvalidEmail": "請輸入正確的電子郵件信箱",
+    "errorEmptyEmail": "請輸入電子郵件信箱",
+    "errorPasswordMismatch": "密碼必須相符",
+    "errorEmptyPassword": "請輸入密碼",
+    "errorShortPassword": "密碼至少要有 6 個字元",
+    "errorConfirmPassword": "請再輸入一次密碼確認正確性",
+    "errorNewPassword": "請輸入新密碼或讓目前密碼欄位留空",
+    "errorEmptyUsername": "請輸入使用者名稱",
+    "errorLongUsername": "使用者名稱最多只能 20 個字元",
+    "errorValidUsername": "使用者名稱只能有數字、字母、英文句點、減號以及底線符號"
+  },
+  "NewPasswordView": {
+    "Title": "p5.js Web Editor | 新密碼",
+    "Description": "設定新密碼",
+    "TokenInvalidOrExpired": "重設新密碼的權杖錯誤或是已經過期",
+    "EmptyPassword": "請輸入新的密碼",
+    "PasswordConfirmation": "請再輸入一次密碼確認正確性",
+    "PasswordMismatch": "密碼必須相符"
+  },
+  "AccountForm": {
+    "Email": "電子郵件",
+    "EmailARIA": "電子郵件",
+    "Unconfirmed": "尚未確認",
+    "EmailSent": "已寄送確認信, 請檢查你的信箱",
+    "Resend": "重新寄送確認信",
+    "UserName": "使用者名稱",
+    "UserNameARIA": "使用者名稱",
+    "CurrentPassword": "目前密碼",
+    "CurrentPasswordARIA": "目前密碼",
+    "NewPassword": "新密碼",
+    "NewPasswordARIA": "新密碼",
+    "SubmitSaveAllSettings": "儲存所有設定"
+  },
+  "AccountView": {
+    "SocialLogin": "以社群帳號登入",
+    "SocialLoginDescription": "使用你的 GitHub 或 Google 帳號登入 p5.js Web Editor.",
+    "Title": "p5.js Web Editor | 帳號設定",
+    "Settings": "帳號設定",
+    "AccountTab": "帳號",
+    "AccessTokensTab": "存取權杖"
+  },
+  "APIKeyForm": {
+    "ConfirmDelete": "確定要刪除 {{key_label}}？",
+    "Summary": "個人存取權杖用起來就像是你的密碼, 可讓\n          自動化腳本存取編輯器的 API, 請為個別的自動化腳本建立\n          專屬的權杖",
+    "CreateToken": "建立新權杖",
+    "TokenLabel": "此權杖的用途？",
+    "TokenPlaceholder": "此權杖的用途？例如匯入範例的自動化腳本",
+    "CreateTokenSubmit": "建立",
+    "NoTokens": "你沒有任何權杖",
+    "NewTokenTitle": "你的新存取權杖",
+    "NewTokenInfo": "請記得複製新個人存取權杖\n                  之後就不會再看到它了！",
+    "ExistingTokensTitle": "既有的權杖"
+  },
+  "APIKeyList": {
+    "Name": "名稱",
+    "Created": "建立時間：",
+    "LastUsed": "最近使用時間：",
+    "Actions": "動作",
+    "Never": "永不",
+    "DeleteARIA": "刪除 API 權杖"
+  },
+  "NewPasswordForm": {
+    "Title": "密碼",
+    "TitleARIA": "密碼",
+    "ConfirmPassword": "確認密碼",
+    "ConfirmPasswordARIA": "確認密碼",
+    "SubmitSetNewPassword": "設定新密碼"
+  },
+  "SignupForm": {
+    "Title": "使用者名稱",
+    "TitleARIA": "使用者名稱",
+    "Email": "電子郵件",
+    "EmailARIA": "電子郵件",
+    "Password": "密碼",
+    "PasswordARIA": "密碼",
+    "ConfirmPassword": "確認密碼",
+    "ConfirmPasswordARIA": "確認密碼",
+    "SubmitSignup": "註冊"
+  },
+  "SignupView": {
+    "Title": "p5.js Web Editor | 註冊",
+    "Description": "註冊",
+    "Or": "或是",
+    "AlreadyHave": "已經有帳號？",
+    "Login": "登入"
+  },
+  "EmailVerificationView": {
+    "Title": "p5.js Web Editor | 驗證電子郵件",
+    "Verify": "驗證你的電子郵件",
+    "InvalidTokenNull": "連結無效",
+    "Checking": "驗證權杖中, 請稍後...",
+    "Verified": "完成, 你的電子郵件已經通過驗證",
+    "InvalidState": "有地方出錯了"
+  },
+  "AssetList": {
+    "Title": "p5.js Web Editor | 我的資產",
+    "ToggleOpenCloseARIA": "切換開啟/關閉資產選項",
+    "Delete": "刪除",
+    "OpenNewTab": "以新分頁開啟",
+    "NoUploadedAssets": "尚未上傳資產",
+    "HeaderName": "名稱",
+    "HeaderSize": "大小",
+    "HeaderSketch": "草稿"
+  },
+  "Feedback": {
+    "Title": "p5.js Web Editor | 回饋",
+    "ViaGithubHeader": "透過 Github Issues",
+    "ViaGithubDescription": "如果你熟悉 Github, 這是我們接受臭蟲報告與回饋的偏好方式",
+    "GoToGithub": "前往 Github",
+    "ViaGoogleHeader": "透過 Google 表單",
+    "ViaGoogleDescription": "你也可以利用表單回饋資訊",
+    "GoToForm": "前往表單"
+  },
+  "Searchbar": {
+    "SearchSketch": "搜尋草稿...",
+    "SearchCollection": "搜尋作品集...",
+    "ClearTerm": "清除"
+  },
+  "UploadFileModal": {
+    "Title": "上傳檔案",
+    "CloseButtonARIA": "關閉上傳表單的交談窗",
+    "SizeLimitError": "錯誤：無法再上傳檔案, 已到限制總量 {{sizeLimit}}。\n                若要再上傳檔案, 請先移除不再需要使用的檔案"
+  },
+  "FileUploader": {
+    "DictDefaultMessage": "拖放檔案到這裡或按一下使用檔案瀏瀏覽器"
+  },
+  "ErrorModal": {
+    "MessageLogin": "請先登入才能儲存草稿",
+    "Login": "登入",
+    "LoginOr": "或是",
+    "SignUp": "註冊",
+    "MessageLoggedOut": "你似乎已經登出",
+    "LogIn": "登入",
+    "SavedDifferentWindow": "你想儲存的專案已經在另一個視窗儲存過, \n        請重新整理頁面載入最新的內容",
+    "LinkTitle": "錯誤連結的帳號",
+    "LinkMessage": "連結你的 {{serviceauth}} 帳號到 p5.js Web Editor 帳號時發生問題, 你的 {{serviceauth}} 帳號已經連結到另一個 p5.js Web Editor 帳號了"
+  },
+  "ShareModal": {
+    "Embed": "內嵌",
+    "Present": "展示",
+    "Fullscreen": "全螢幕",
+    "Edit": "編輯"
+  },
+  "CollectionView": {
+    "TitleCreate": "建立作品集",
+    "TitleDefault": "作品集"
+  },
+  "Collection": {
+    "Title": "p5.js Web Editor | 我的作品集",
+    "AnothersTitle": "p5.js Web Editor | {{anotheruser}} 的作品集",
+    "Share": "分享",
+    "URLLink": "作品集連結",
+    "AddSketch": "新增草稿",
+    "DeleteFromCollection": "確定要從本作品集移除 {{name_sketch}}？",
+    "SketchDeleted": "已刪除草稿",
+    "SketchRemoveARIA": "從作品集移除草稿",
+    "DescriptionPlaceholder": "新增說明",
+    "Description": "說明",
+    "NumSketches": "{{count}} 個草稿",
+    "NumSketches_plural": "{{count}} 個草稿",
+    "By":"作品集作者：",
+    "NoSketches": "作品集中沒有草稿",
+    "TableSummary": "作品集彙總表",
+    "HeaderName": "名稱",
+    "HeaderCreatedAt": "建立日期",
+    "HeaderUser": "作者",
+    "DirectionAscendingARIA": "升序",
+    "DirectionDescendingARIA": "降序",
+    "ButtonLabelAscendingARIA": "以 {{displayName}} 升序排列",
+    "ButtonLabelDescendingARIA": "以 {{displayName}} 降序排列"
+  },
+  "AddToCollectionList": {
+    "Title": "p5.js Web Editor | 我的作品集",
+    "AnothersTitle": "p5.js Web Editor | {{anotheruser}} 的作品集",
+    "Empty": "沒有作品集"
+  },
+  "CollectionCreate": {
+    "Title": "p5.js Web Editor | 建立作品集",
+    "FormError": "無法建立作品集",
+    "FormLabel": "作品集名稱",
+    "FormLabelARIA": "名稱",
+    "NameRequired": "一定要有作品集名稱",
+    "Description": "說明 (可不填)",
+    "DescriptionARIA": "說明",
+    "DescriptionPlaceholder": "我最愛的草稿",
+    "SubmitCollectionCreate": "建立作品集"
+  },
+  "DashboardView": {
+    "CreateCollection": "建立作品集",
+    "NewSketch": "新草稿",
+    "CreateCollectionOverlay": "建立作品集"
+  },
+  "DashboardTabSwitcher": {
+    "Sketches": "草稿",
+    "Collections": "作品集",
+    "Assets": "資產"
+  },
+  "CollectionList": {
+    "Title": "p5.js Web Editor | 我的作品集",
+    "AnothersTitle": "p5.js Web Editor | {{anotheruser}} 的作品集",
+    "NoCollections": "沒有作品集",
+    "TableSummary": "作品集彙總表",
+    "HeaderName": "名稱",
+    "HeaderCreatedAt": "建立日期",
+    "HeaderCreatedAt_mobile": "建立",
+    "HeaderUpdatedAt": "更新日期",
+    "HeaderUpdatedAt_mobile": "更新",
+    "HeaderNumItems": "草稿數",
+    "HeaderNumItems_mobile": "草稿數",
+    "DirectionAscendingARIA": "升序",
+    "DirectionDescendingARIA": "降序",
+    "ButtonLabelAscendingARIA": "以 {{displayName}} 升序",
+    "ButtonLabelDescendingARIA": "以 {{displayName}} 降序",
+    "AddSketch": "新增草稿"
+  },
+  "CollectionListRow": {
+    "ToggleCollectionOptionsARIA": "切換開啟/關閉作品集選項",
+    "AddSketch": "新增草稿",
+    "Delete": "刪除",
+    "Rename": "重新命名"
+  },
+  "Overlay": {
+    "AriaLabel": "關閉 {{title}} 重疊"
+  },
+  "QuickAddList":{
+    "ButtonRemoveARIA": "從作品集中移除",
+    "ButtonAddToCollectionARIA": "加入作品集",
+    "View": "檢視"
+  },
+  "SketchList": {
+    "View": "檢視",
+    "Title": "p5.js Web Editor | 我的草稿",
+    "AnothersTitle": "p5.js Web Editor | {{anotheruser}} 的草稿",
+    "ToggleLabelARIA": "切換開啟/關閉草稿選項",
+    "DropdownRename": "重新命名",
+    "DropdownDownload": "下載",
+    "DropdownDuplicate": "建立副本",
+    "DropdownAddToCollection": "加入作品集",
+    "DropdownDelete": "刪除",
+    "DirectionAscendingARIA": "升序",
+    "DirectionDescendingARIA": "降序",
+    "ButtonLabelAscendingARIA": "以 {{displayName}} 升序排列",
+    "ButtonLabelDescendingARIA": "以 {{displayName}} 降序排列",
+    "AddToCollectionOverlayTitle": "加入作品集",
+    "TableSummary": "已儲存專案彙總表",
+    "HeaderName": "草稿",
+    "HeaderCreatedAt": "建立日期",
+    "HeaderCreatedAt_mobile": "建立",
+    "HeaderUpdatedAt": "更新日期",
+    "HeaderUpdatedAt_mobile": "更新",
+    "NoSketches": "沒有草稿"
+  },
+  "AddToCollectionSketchList": {
+    "Title": "p5.js Web Editor | 我的草稿",
+    "AnothersTitle": "p5.js Web Editor | {{anotheruser}} 的草稿",
+    "NoCollections": "沒有作品集"
+  },
+  "Editor": {
+    "OpenSketchARIA": "開啟草稿檔案導覽列",
+    "CloseSketchARIA": "關閉草稿檔案導覽列",
+    "UnsavedChangesARIA": "草稿內有尚未儲存的變更",
+    "KeyUpLineNumber": "第 {{lineNumber}} 行"
+  },
+  "EditorAccessibility": {
+    "NoLintMessages": "沒有語法檢查的錯誤 ",
+    "CurrentLine": " 目前行"
+  },
+  "Timer": {
+    "SavedAgo": "已儲存: {{timeAgo}}"
+  },
+  "formatDate": {
+    "JustNow": "剛剛",
+    "15Seconds": "15 秒前",
+    "25Seconds": "25 秒前",
+    "35Seconds": "35 秒前",
+    "Ago": "{{timeAgo}} 前"
+  },
+  "AddRemoveButton": {
+    "AltAddARIA": "加入作品集",
+    "AltRemoveARIA": "從作品集中移除"
+  },
+  "CopyableInput": {
+    "CopiedARIA": "複製到剪貼簿",
+    "OpenViewTabARIA": "在新分頁中檢視 {{label}}"
+  },
+  "EditableInput": {
+    "EditValue": "編輯 {{display}} 值",
+    "EmptyPlaceholder": "沒有值"
+  },
+  "PreviewNav": {
+    "EditSketchARIA": "編輯草稿",
+    "ByUser": "作者："
+  },
+  "MobilePreferences": {
+    "Settings": "設定",
+    "GeneralSettings": "一般設定",
+    "Accessibility": "輔助工具",
+    "AccessibleOutput": "輔助輸出",
+    "Theme": "主題",
+    "LightTheme": "亮色",
+    "DarkTheme": "暗色",
+    "HighContrastTheme": "高對比",
+    "Autosave": "自動儲存",
+    "WordWrap": "折行",
+    "LineNumbers": "行號",
+    "LintWarningSound": "語法檢查警示聲",
+    "UsedScreenReader": "搭配螢幕報讀軟體使用",
+    "PlainText": "純文字",
+    "TableText": "表格文字",
+    "Sound": "聲"
+  },
+  "PreferenceCreators": {
+    "On": "啟用",
+    "Off": "停用"
+  },
+  "MobileIDEView":{
+    "Preferences": "偏好設定",
+    "MyStuff": "我的資料",
+    "Examples": "範例",
+    "OriginalEditor": "原始的編輯器",
+    "Login": "登入",
+    "Logout": "登出"
+  },
+  "MobileDashboardView": {
+    "Examples": "範例",
+    "Sketches": "草稿",
+    "Collections": "作品集",
+    "Assets": "資產",
+    "MyStuff": "我的資料",
+    "CreateSketch": "建立草稿",
+    "CreateCollection": "建立作品集"
+  },
+  "Explorer": {
+    "Files": "檔案"
+  }
+}
