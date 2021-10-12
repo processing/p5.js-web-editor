@@ -1,18 +1,18 @@
 {
   "Nav": {
     "File": {
-      "Title": "File",
-      "New": "New",
-      "Share": "Share",
-      "Duplicate": "Duplicate",
-      "Open": "Open",
-      "Download": "Download",
-      "AddToCollection": "Add to Collection",
-      "Examples": "Examples"
+      "Title": "Arkiv",
+      "New": "Ny",
+      "Share": "Dela",
+      "Duplicate": "Duplicera",
+      "Open": "Öppna",
+      "Download": "Ladda ner",
+      "AddToCollection": "Lägg till i Collection",
+      "Examples": "Exampel"
     },
     "Edit": {
-      "Title": "Edit",
-      "TidyCode": "Tidy Code",
+      "Title": "Redigera",
+      "TidyCode": "Städa upp kod",
       "Find": "Find",
       "Replace": "Replace"
     },
