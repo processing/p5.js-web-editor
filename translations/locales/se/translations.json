@@ -102,23 +102,23 @@
     "CodeOfConduct": "Uppförandekod"
   },
   "Toast": {
-    "OpenedNewSketch": "Opened new sketch.",
-    "SketchSaved": "Sketch saved.",
-    "SketchFailedSave": "Failed to save sketch.",
-    "AutosaveEnabled": "Autosave enabled.",
-    "LangChange": "Language changed",
-    "SettingsSaved": "Settings saved."
+    "OpenedNewSketch": "Öppnat ny sketch.",
+    "SketchSaved": "Sketch sparad.",
+    "SketchFailedSave": "Misslyckades spara sketch.",
+    "AutosaveEnabled": "Autospara aktiverat.",
+    "LangChange": "Språk bytt.",
+    "SettingsSaved": "Sparat inställningar."
   },
   "Toolbar": {
-    "Preview": "Preview",
-    "Auto-refresh": "Auto-refresh",
-    "OpenPreferencesARIA": "Open Preferences",
-    "PlaySketchARIA": "Play sketch",
-    "PlayOnlyVisualSketchARIA": "Play only visual sketch",
-    "StopSketchARIA": "Stop sketch",
-    "EditSketchARIA": "Edit sketch name",
-    "NewSketchNameARIA": "New sketch name",
-    "By": " by "
+    "Preview": "Förhandsvisning",
+    "Auto-refresh": "Automatisk uppdatering",
+    "OpenPreferencesARIA": "Öppna preferenser",
+    "PlaySketchARIA": "Kör sketch",
+    "PlayOnlyVisualSketchARIA": "Kör bara visuell sketch",
+    "StopSketchARIA": "Stoppa sketch",
+    "EditSketchARIA": "Redigera sketchnamn",
+    "NewSketchNameARIA": "Nytt sketchnamn",
+    "By": " genom "
   },
   "Console": {
     "Title": "Console",
