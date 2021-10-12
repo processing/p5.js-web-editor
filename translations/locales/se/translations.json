@@ -7,67 +7,67 @@
       "Duplicate": "Duplicera",
       "Open": "Öppna",
       "Download": "Ladda ner",
-      "AddToCollection": "Lägg till i Collection",
-      "Examples": "Exampel"
+      "AddToCollection": "Lägg till i samlingar",
+      "Examples": "Exempel"
     },
     "Edit": {
       "Title": "Redigera",
-      "TidyCode": "Städa upp kod",
-      "Find": "Find",
-      "Replace": "Replace"
+      "TidyCode": "Formatera kod",
+      "Find": "Sök",
+      "Replace": "Ersätt"
     },
     "Sketch": {
       "Title": "Sketch",
-      "AddFile": "Add File",
-      "AddFolder": "Add Folder",
-      "Run": "Run",
-      "Stop": "Stop"
+      "AddFile": "Lägg till fil",
+      "AddFolder": "Lägg till mapp",
+      "Run": "Kör",
+      "Stop": "Stoppa"
     },
     "Help": {
-      "Title": "Help",
-      "KeyboardShortcuts": "Keyboard Shortcuts",
-      "Reference": "Reference",
-      "About": "About"
+      "Title": "Hjälp",
+      "KeyboardShortcuts": "Tangentbordsgenvägar",
+      "Reference": "Referens",
+      "About": "Om"
     },
-    "Lang": "Language",
-    "BackEditor": "Back to Editor",
-    "WarningUnsavedChanges": "Are you sure you want to leave this page? You have unsaved changes.",
-    "Login": "Log in",
-    "LoginOr": "or",
-    "SignUp": "Sign up",
+    "Lang": "Språk",
+    "BackEditor": "Tillbaka till editor",
+    "WarningUnsavedChanges": "Är du säker på att du vill lämna sidan? Det finns osparade ändringar.",
+    "Login": "Logga in",
+    "LoginOr": "eller",
+    "SignUp": "Registrera dig",
     "Auth": {
-      "Welcome": "Welcome",
-      "Hello": "Hello",
-      "MyAccount": "My Account",
-      "My": "My",
-      "MySketches": "My Sketches",
-      "MyCollections": "My Collections",
-      "Asset": "Asset",
-      "MyAssets": "My Assets",
-      "LogOut": "Log Out"
+      "Welcome": "Välkommen",
+      "Hello": "Hej",
+      "MyAccount": "Mitt konto",
+      "My": "Mina",
+      "MySketches": "Mina sketcher",
+      "MyCollections": "Mina samlingar",
+      "Asset": "Resurs",
+      "MyAssets": "Mina resurser",
+      "LogOut": "Logga ut"
     }
   },
   "CodemirrorFindAndReplace": {
-    "ToggleReplace": "Toggle Replace",
-    "Find": "Find",
-    "FindPlaceholder": "Find in files",
-    "Replace": "Replace",
-    "ReplaceAll": "Replace All",
-    "ReplacePlaceholder": "Text to replace",
+    "ToggleReplace": "Växla ersätt",
+    "Find": "Sök",
+    "FindPlaceholder": "Sök i filer",
+    "Replace": "Ersätt",
+    "ReplaceAll": "Ersätt alla",
+    "ReplacePlaceholder": "Text att ersätta",
     "Regex": "Regular expression",
-    "CaseSensitive": "Case sensitive",
-    "WholeWords": "Whole words",
-    "Previous": "Previous",
-    "Next": "Next",
-    "NoResults": "No results",
-    "Close": "Close"
+    "CaseSensitive": "Skiftlägeskänsligt",
+    "WholeWords": "Hela ord",
+    "Previous": "Föregående",
+    "Next": "Nästa",
+    "NoResults": "Inget resultat",
+    "Close": "Stäng"
   },
   "LoginForm": {
-    "UsernameOrEmail": "Email or Username",
-    "UsernameOrEmailARIA": "Email or Username",
-    "Password": "Password",
-    "PasswordARIA": "Password",
-    "Submit": "Log In"
+    "UsernameOrEmail": "E-post eller användarnamn",
+    "UsernameOrEmailARIA": "E-post eller användarnamn",
+    "Password": "Lösenord",
+    "PasswordARIA": "Lösenord",
+    "Submit": "Logga in"
   },
   "LoginView": {
     "Title": "p5.js Web Editor | Login",
