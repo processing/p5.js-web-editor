@@ -91,7 +91,7 @@
     "TitleHelmet": "p5.js Webb editor | Om",
     "Contribute": "Bidra",
     "NewP5": "Nybörjare med p5.js?",
-    "Report": "Rapportera en bug",
+    "Report": "Rapportera en bugg",
     "Learn": "Lär dig",
     "Resources": "Resurser",
     "Libraries": "Bibliotek",
@@ -382,8 +382,8 @@
     "GoToForm": "Gå till formulär"
   },
   "Searchbar": {
-    "SearchSketch": "Search sketches...",
-    "SearchCollection": "Search collections...",
+    "SearchSketch": "Sök sketcher...",
+    "SearchCollection": "Sök samlingar...",
     "ClearTerm": "rensa"
   },
   "UploadFileModal": {
@@ -611,7 +611,7 @@
   },
   "Legal": {
     "PrivacyPolicy": "Integritetspolicy",
-    "TermsOfUse": "Användarvillkor",
+    "TermsOfUse": "Villkor för användning",
     "CodeOfConduct": "Uppförandekod"
   }
 }
