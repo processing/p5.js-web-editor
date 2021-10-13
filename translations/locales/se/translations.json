@@ -7,7 +7,7 @@
       "Duplicate": "Duplicera",
       "Open": "Öppna",
       "Download": "Ladda ner",
-      "AddToCollection": "Lägg till i samlingar",
+      "AddToCollection": "Lägg till i samling",
       "Examples": "Exempel"
     },
     "Edit": {
@@ -54,7 +54,7 @@
     "Replace": "Ersätt",
     "ReplaceAll": "Ersätt alla",
     "ReplacePlaceholder": "Text att ersätta",
-    "Regex": "Regular expression",
+    "Regex": "Reguljära uttryck",
     "CaseSensitive": "Skiftlägeskänsligt",
     "WholeWords": "Hela ord",
     "Previous": "Föregående",
@@ -118,7 +118,7 @@
     "StopSketchARIA": "Stoppa sketch",
     "EditSketchARIA": "Redigera sketchnamn",
     "NewSketchNameARIA": "Nytt sketchnamn",
-    "By": " genom "
+    "By": " av "
   },
   "Console": {
     "Title": "Konsoll",
@@ -162,10 +162,10 @@
     "LintWarningSound": "Lint varningsljud",
     "LintWarningOnARIA": "Lint varning på",
     "LintWarningOffARIA": "Lint varning av",
-    "PreviewSound": "Förhandsvisningsljud",
-    "PreviewSoundARIA": "Förhandsvisningsljud",
+    "PreviewSound": "Förhandsvisning ljud",
+    "PreviewSoundARIA": "Förhandsvisning ljud",
     "AccessibleTextBasedCanvas": "Tillgänglig textbaserad canvas",
-    "UsedScreenReader": "Använd med skärmläsare",
+    "UsedScreenReader": "Används med skärmläsare",
     "PlainText": "Oformatterad text",
     "TextOutputARIA": "text-output på",
     "TableText": "Tabelltext",
@@ -199,9 +199,9 @@
     "Title": "Sketchfiler",
     "ToggleARIA": "Växla öppna/stäng sketchfilsalternativ",
     "AddFolder": "Skapa mapp",
-    "AddFolderARIA": "lägg till mapp",
+    "AddFolderARIA": "skapa mapp",
     "AddFile": "Skapa fil",
-    "AddFileARIA": "lägg till fil",
+    "AddFileARIA": "skapa fil",
     "UploadFile": "Ladda upp fil",
     "UploadFileARIA": "ladda upp fil"
   },
@@ -269,7 +269,7 @@
   },
   "ReduxFormUtils": {
     "errorInvalidEmail": "Ange en giltig e-postadress",
-    "errorEmptyEmail": "Ange en e-mailadress",
+    "errorEmptyEmail": "Ange en e-postadress",
     "errorPasswordMismatch": "Lösenorden måste vara samma",
     "errorEmptyPassword": "Ange ett lösenord",
     "errorShortPassword": "Lösenordet måste vara minst 6 tecken",
@@ -452,7 +452,7 @@
     "NameRequired": "Ett namn på samlingen är nödvändigt",
     "Description": "Beskrivning (valfritt)",
     "DescriptionARIA": "beskrivning",
-    "DescriptionPlaceholder": "Mina favvo-sketcher",
+    "DescriptionPlaceholder": "Mina favorit-sketcher",
     "SubmitCollectionCreate": "Skapa samling"
   },
   "DashboardView": {
