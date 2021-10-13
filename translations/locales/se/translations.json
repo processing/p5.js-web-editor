@@ -160,8 +160,8 @@
     "LineNumbersOnARIA": "radnummer på",
     "LineNumbersOffARIA": "radnummer av",
     "LintWarningSound": "Lint varningsljud",
-    "LintWarningOnARIA": "lint varning på",
-    "LintWarningOffARIA": "lint varning av",
+    "LintWarningOnARIA": "Lint varning på",
+    "LintWarningOffARIA": "Lint varning av",
     "PreviewSound": "Förhandsvisningsljud",
     "PreviewSoundARIA": "Förhandsvisningsljud",
     "AccessibleTextBasedCanvas": "Tillgänglig textbaserad canvas",
@@ -403,7 +403,7 @@
     "LogIn": "logga in",
     "SavedDifferentWindow": "Det projekt du försöker spara har sparats från ett annat fönster.\n        Var god ladda om sidan för att se den senaste versionen.",
     "LinkTitle": "Fel vid kontolänkning",
-    "LinkMessage": "Det uppstod ett problem vid länkning av ditt {{serviceauth}}-konto till ditt p5.js Webb editor-konto. Ditt {{serviceauth}} konto har redan länkats till ett annat p5.js Webb editor-konto."
+    "LinkMessage": "Det uppstod ett problem vid länkning av ditt {{serviceauth}}-konto till ditt p5.js Webb editor-konto. Ditt {{serviceauth}}-konto har redan länkats till ett annat p5.js Webb editor-konto."
   },
   "ShareModal": {
     "Embed": "Bädda in",
@@ -532,7 +532,7 @@
     "KeyUpLineNumber": "rad {{lineNumber}}"
   },
   "EditorAccessibility": {
-    "NoLintMessages": "Det finns inga lint-meddelanden ",
+    "NoLintMessages": "Det finns inga Lint-meddelanden ",
     "CurrentLine": " Aktuell rad"
   },
   "Timer": {
@@ -615,3 +615,4 @@
     "CodeOfConduct": "Uppförandekod"
   }
 }
+
