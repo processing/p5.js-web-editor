@@ -378,240 +378,240 @@
     "ViaGithubDescription": "Om du är bekant med Github är detta vår föredragna metod för att ta emot bugg-rapportering och feedback.",
     "GoToGithub": "Gå till Github",
     "ViaGoogleHeader": "Via Google Form",
-    "ViaGoogleDescription": "Du kan också skicka detta snabba formulär.",
+    "ViaGoogleDescription": "Du kan också skicka detta formulär.",
     "GoToForm": "Gå till formulär"
   },
   "Searchbar": {
     "SearchSketch": "Search sketches...",
     "SearchCollection": "Search collections...",
-    "ClearTerm": "clear"
+    "ClearTerm": "rensa"
   },
   "UploadFileModal": {
-    "Title": "Upload File",
-    "CloseButtonARIA": "Close upload file modal",
-    "SizeLimitError": "Error: You cannot upload any more files. You have reached the total size limit of {{sizeLimit}}.\n                If you would like to upload more, please remove the ones you aren't using anymore by\n                in your "
+    "Title": "Ladda upp fil",
+    "CloseButtonARIA": "Stäng ladda upp fil modal",
+    "SizeLimitError": "Error: Du kan inte ladda upp fler filer. Du har nått den totala storleksbegränsningen {{sizeLimit}}.\n                Om du vill ladda upp flera filer, var god radera de filer som du inte längre använder genom\n                i din "
   },
   "FileUploader": {
-    "DictDefaultMessage": "Drop files here or click to use the file browser"
+    "DictDefaultMessage": "Släpp filerna här eller klicka för att använda filhanteraren"
   },
   "ErrorModal": {
-    "MessageLogin": "In order to save sketches, you must be logged in. Please ",
-    "Login": "Login",
-    "LoginOr": " or ",
-    "SignUp": "Sign Up",
-    "MessageLoggedOut": "It looks like you've been logged out. Please ",
-    "LogIn": "log in",
-    "SavedDifferentWindow": "The project you have attempted to save has been saved from another window.\n        Please refresh the page to see the latest version.",
-    "LinkTitle": "Error Linking Account",
-    "LinkMessage": "There was a problem linking your {{serviceauth}} account to your p5.js Web Editor account. Your {{serviceauth}} account has already been linked to another p5.js Web Editor account."
+    "MessageLogin": "För att spara sketcher måste du vara inloggad. Var god ",
+    "Login": "logga in",
+    "LoginOr": " eller ",
+    "SignUp": "registrera dig",
+    "MessageLoggedOut": "Det ser ut som att du har blivit utloggad. Var god ",
+    "LogIn": "logga in",
+    "SavedDifferentWindow": "Det projekt du försöker spara har sparats från ett annat fönster.\n        Var god ladda om sidan för att se den senaste versionen.",
+    "LinkTitle": "Fel vid kontolänkning",
+    "LinkMessage": "Det uppstod ett problem vid länkning av ditt {{serviceauth}}-konto till ditt p5.js Webb editor-konto. Ditt {{serviceauth}} konto har redan länkats till ett annat p5.js Webb editor-konto."
   },
   "ShareModal": {
-    "Embed": "Embed",
-    "Present": "Present",
-    "Fullscreen": "Fullscreen",
-    "Edit": "Edit"
+    "Embed": "Bädda in",
+    "Present": "Presentera",
+    "Fullscreen": "Fullskärm",
+    "Edit": "Redigera"
   },
   "CollectionView": {
-    "TitleCreate": "Create collection",
-    "TitleDefault": "collection"
+    "TitleCreate": "Skapa samling",
+    "TitleDefault": "samling"
   },
   "Collection": {
-    "Title": "p5.js Web Editor | My collections",
-    "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'s collections",
-    "Share": "Share",
-    "URLLink": "Link to Collection",
-    "AddSketch": "Add Sketch",
-    "DeleteFromCollection": "Are you sure you want to remove {{name_sketch}} from this collection?",
-    "SketchDeleted": "Sketch deleted",
-    "SketchRemoveARIA": "Remove sketch from collection",
-    "DescriptionPlaceholder": "Add description",
-    "Description": "description",
+    "Title": "p5.js Webb editor | Mina samlingar",
+    "AnothersTitle": "p5.js Webb editor | {{anotheruser}}:s samlingar",
+    "Share": "Dela",
+    "URLLink": "Länk till samling",
+    "AddSketch": "Lägg till sketch",
+    "DeleteFromCollection": "Är du säker på att du vill radera {{name_sketch}} från den här samlingen?",
+    "SketchDeleted": "Sketchen är raderad",
+    "SketchRemoveARIA": "Radera sketch från samling",
+    "DescriptionPlaceholder": "Lägg till beskrivning",
+    "Description": "beskrivning",
     "NumSketches": "{{count}} sketch",
-    "NumSketches_plural": "{{count}} sketches",
-    "By":"Collection by ",
-    "NoSketches": "No sketches in collection",
-    "TableSummary": "table containing all collections",
-    "HeaderName": "Name",
-    "HeaderCreatedAt": "Date Added",
-    "HeaderUser": "Owner",
-    "DirectionAscendingARIA": "Ascending",
-    "DirectionDescendingARIA": "Descending",
-    "ButtonLabelAscendingARIA": "Sort by {{displayName}} ascending.",
-    "ButtonLabelDescendingARIA": "Sort by {{displayName}} descending."
+    "NumSketches_plural": "{{count}} sketcher",
+    "By":"Samling av",
+    "NoSketches": "Inga sketcher i samling",
+    "TableSummary": "tabell med alla samlingar",
+    "HeaderName": "Namn",
+    "HeaderCreatedAt": "Datum skapad",
+    "HeaderUser": "Ägare",
+    "DirectionAscendingARIA": "Stigande",
+    "DirectionDescendingARIA": "Fallande",
+    "ButtonLabelAscendingARIA": "Sortera efter {{displayName}} stigande.",
+    "ButtonLabelDescendingARIA": "Sortera efter {{displayName}} fallande."
   },
   "AddToCollectionList": {
-    "Title": "p5.js Web Editor | My collections",
-    "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'s collections",
-    "Empty": "No collections"
+    "Title": "p5.js Webb editor | Mina samlingar",
+    "AnothersTitle": "p5.js Webb editor | {{anotheruser}}:s samlingar",
+    "Empty": "Inga samlingar"
   },
   "CollectionCreate": {
-    "Title": "p5.js Web Editor | Create collection",
-    "FormError": "Couldn't create collection",
-    "FormLabel": "Collection name",
-    "FormLabelARIA": "name",
-    "NameRequired": "Collection name is required",
-    "Description": "Description (optional)",
-    "DescriptionARIA": "description",
-    "DescriptionPlaceholder": "My fave sketches",
-    "SubmitCollectionCreate": "Create collection"
+    "Title": "p5.js Webb editor | Skapa samling",
+    "FormError": "Kunde inte skapa samling",
+    "FormLabel": "Namn på samling",
+    "FormLabelARIA": "namn",
+    "NameRequired": "Ett namn på samlingen är nödvändigt",
+    "Description": "Beskrivning (valfritt)",
+    "DescriptionARIA": "beskrivning",
+    "DescriptionPlaceholder": "Mina favvo-sketcher",
+    "SubmitCollectionCreate": "Skapa samling"
   },
   "DashboardView": {
-    "CreateCollection": "Create collection",
-    "NewSketch": "New sketch",
-    "CreateCollectionOverlay": "Create collection"
+    "CreateCollection": "Skapa samling",
+    "NewSketch": "Ny sketch",
+    "CreateCollectionOverlay": "Skapa samling"
   },
   "DashboardTabSwitcher": {
-    "Sketches": "Sketches",
-    "Collections": "Collections",
-    "Assets": "Assets"
+    "Sketches": "Sketcher",
+    "Collections": "Samlingar",
+    "Assets": "Resurser"
   },
   "CollectionList": {
-    "Title": "p5.js Web Editor | My collections",
-    "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'s collections",
-    "NoCollections": "No collections.",
-    "TableSummary": "table containing all collections",
-    "HeaderName": "Name",
-    "HeaderCreatedAt": "Date Created",
-    "HeaderCreatedAt_mobile": "Created",
-    "HeaderUpdatedAt": "Date Updated",
-    "HeaderUpdatedAt_mobile": "Updated",
-    "HeaderNumItems": "# sketches",
-    "HeaderNumItems_mobile": "# sketches",
-    "DirectionAscendingARIA": "Ascending",
-    "DirectionDescendingARIA": "Descending",
-    "ButtonLabelAscendingARIA": "Sort by {{displayName}} ascending.",
-    "ButtonLabelDescendingARIA": "Sort by {{displayName}} descending.",
-    "AddSketch": "Add Sketch"
+    "Title": "p5.js Webb editor | Mina samlingar",
+    "AnothersTitle": "p5.js Webb editor | {{anotheruser}}:s samlingar",
+    "NoCollections": "Inga samlingar.",
+    "TableSummary": "tabell med alla samlingar",
+    "HeaderName": "Namn",
+    "HeaderCreatedAt": "Datum skapad",
+    "HeaderCreatedAt_mobile": "Skapad",
+    "HeaderUpdatedAt": "Datum Uppdaterad",
+    "HeaderUpdatedAt_mobile": "Uppdaterad",
+    "HeaderNumItems": "# sketcher",
+    "HeaderNumItems_mobile": "# sketcher",
+    "DirectionAscendingARIA": "Stigande",
+    "DirectionDescendingARIA": "Fallande",
+    "ButtonLabelAscendingARIA": "Sortera på {{displayName}} stigande.",
+    "ButtonLabelDescendingARIA": "Sortera på {{displayName}} fallande.",
+    "AddSketch": "Lägg till sketch"
   },
   "CollectionListRow": {
-    "ToggleCollectionOptionsARIA": "Toggle Open/Close collection options",
-    "AddSketch": "Add sketch",
-    "Delete": "Delete",
-    "Rename": "Rename"
+    "ToggleCollectionOptionsARIA": "Växla öppna/stäng alternativ för samling",
+    "AddSketch": "Lägg till sketch",
+    "Delete": "Radera",
+    "Rename": "Ändra namn"
   },
   "Overlay": {
-    "AriaLabel": "Close {{title}} overlay"
+    "AriaLabel": "Stäng {{title}} övre lager"
   },
   "QuickAddList":{
-    "ButtonRemoveARIA": "Remove from collection",
-    "ButtonAddToCollectionARIA": "Add to collection",
-    "View": "View"
+    "ButtonRemoveARIA": "Ta bort från samling",
+    "ButtonAddToCollectionARIA": "Lägg till i samling",
+    "View": "Granska"
   },
   "SketchList": {
-    "View": "View",
-    "Title": "p5.js Web Editor | My sketches",
-    "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'s sketches",
-    "ToggleLabelARIA": "Toggle Open/Close Sketch Options",
-    "DropdownRename": "Rename",
-    "DropdownDownload": "Download",
-    "DropdownDuplicate": "Duplicate",
-    "DropdownAddToCollection": "Add to collection",
-    "DropdownDelete": "Delete",
-    "DirectionAscendingARIA": "Ascending",
-    "DirectionDescendingARIA": "Descending",
-    "ButtonLabelAscendingARIA": "Sort by {{displayName}} ascending.",
-    "ButtonLabelDescendingARIA": "Sort by {{displayName}} descending.",
-    "AddToCollectionOverlayTitle": "Add to collection",
-    "TableSummary": "table containing all saved projects",
+    "View": "Granska",
+    "Title": "p5.js Webb editor | Mina sketcher",
+    "AnothersTitle": "p5.js Webb editor | {{anotheruser}}:s sketcher",
+    "ToggleLabelARIA": "Växla öppna/stäng alternativ för sketch",
+    "DropdownRename": "Byt namn",
+    "DropdownDownload": "Ladda ner",
+    "DropdownDuplicate": "Duplicera",
+    "DropdownAddToCollection": "Lägg till i samling",
+    "DropdownDelete": "Radera",
+    "DirectionAscendingARIA": "Stigande",
+    "DirectionDescendingARIA": "Fallande",
+    "ButtonLabelAscendingARIA": "Sortera på {{displayName}} stigande.",
+    "ButtonLabelDescendingARIA": "Sortera på {{displayName}} fallande.",
+    "AddToCollectionOverlayTitle": "Lägg till i samling",
+    "TableSummary": "tabell med alla sparade projekt",
     "HeaderName": "Sketch",
-    "HeaderCreatedAt": "Date Created",
-    "HeaderCreatedAt_mobile": "Created",
-    "HeaderUpdatedAt": "Date Updated",
-    "HeaderUpdatedAt_mobile": "Updated",
-    "NoSketches": "No sketches."
+    "HeaderCreatedAt": "Datum skapad",
+    "HeaderCreatedAt_mobile": "Skapad",
+    "HeaderUpdatedAt": "Datum uppdaterad",
+    "HeaderUpdatedAt_mobile": "Uppdaterad",
+    "NoSketches": "Inga sketcher."
   },
   "AddToCollectionSketchList": {
-    "Title": "p5.js Web Editor | My sketches",
-    "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'s sketches",
-    "NoCollections": "No collections."
+    "Title": "p5.js Webb editor | Mina sketcher",
+    "AnothersTitle": "p5.js Webb editor | {{anotheruser}}:s sketcher",
+    "NoCollections": "Inga samlingar."
   },
   "Editor": {
-    "OpenSketchARIA": "Open Sketch files navigation",
-    "CloseSketchARIA": "Close Sketch files navigation",
-    "UnsavedChangesARIA": "Sketch has unsaved changes",
-    "KeyUpLineNumber": "line {{lineNumber}}"
+    "OpenSketchARIA": "Öppna filnavigation för sketch",
+    "CloseSketchARIA": "Stäng filnavigation för sketch",
+    "UnsavedChangesARIA": "Sketchen har osparade ändringar",
+    "KeyUpLineNumber": "rad {{lineNumber}}"
   },
   "EditorAccessibility": {
-    "NoLintMessages": "There are no lint messages ",
-    "CurrentLine": " Current line"
+    "NoLintMessages": "Det finns inga lint-meddelanden ",
+    "CurrentLine": " Aktuell rad"
   },
   "Timer": {
-    "SavedAgo": "Saved: {{timeAgo}}"
+    "SavedAgo": "Sparad: {{timeAgo}}"
   },
   "formatDate": {
-    "JustNow": "just now",
-    "15Seconds": "15 seconds ago",
-    "25Seconds": "25 seconds ago",
-    "35Seconds": "35 seconds ago",
-    "Ago": "{{timeAgo}} ago"
+    "JustNow": "just nu",
+    "15Seconds": "för 15 sekunder sen",
+    "25Seconds": "för 25 sekunder sen",
+    "35Seconds": "för 35 sekunder sen",
+    "Ago": "{{timeAgo}} sen"
   },
   "AddRemoveButton": {
-    "AltAddARIA": "Add to collection",
-    "AltRemoveARIA": "Remove from collection"
+    "AltAddARIA": "Lägg till i samling",
+    "AltRemoveARIA": "Ta bort från samling"
   },
   "CopyableInput": {
-    "CopiedARIA": "Copied to Clipboard!",
-    "OpenViewTabARIA": "Open {{label}} view in new tab"
+    "CopiedARIA": "Kopierat till urklipp!",
+    "OpenViewTabARIA": "Öppna {{label}}-vy i ny flik"
   },
   "EditableInput": {
-    "EditValue": "Edit {{display}} value",
-    "EmptyPlaceholder": "No value"
+    "EditValue": "Redigera {{display}} värde",
+    "EmptyPlaceholder": "Inget värde"
   },
   "PreviewNav": {
-    "EditSketchARIA": "Edit Sketch",
-    "ByUser": "by"
+    "EditSketchARIA": "Redigera sketch",
+    "ByUser": "av"
   },
   "MobilePreferences": {
-    "Settings": "Settings",
-    "GeneralSettings": "General settings",
-    "Accessibility": "Accessibility",
-    "AccessibleOutput": "Accessible Output",
-    "Theme": "Theme",
-    "LightTheme": "Light",
-    "DarkTheme": "Dark",
-    "HighContrastTheme": "High Contrast",
-    "Autosave": "Autosave",
-    "WordWrap": "Word Wrap",
-    "LineNumbers": "Line numbers",
-    "LintWarningSound": "Lint warning sound",
-    "UsedScreenReader": "Used with screen reader",
-    "PlainText": "Plain-text",
-    "TableText": "Table-text",
-    "Sound": "Sound"
+    "Settings": "Inställningar",
+    "GeneralSettings": "Allmänna inställningar",
+    "Accessibility": "Tillgänglighet",
+    "AccessibleOutput": "Tillgänglig output",
+    "Theme": "Tema",
+    "LightTheme": "Ljust",
+    "DarkTheme": "Mörkt",
+    "HighContrastTheme": "Hög kontrast",
+    "Autosave": "Autospara",
+    "WordWrap": "Radbrytning",
+    "LineNumbers": "Radnummer",
+    "LintWarningSound": "Lint varningsljud",
+    "UsedScreenReader": "Använd med skärmläsare",
+    "PlainText": "Oformatterad text",
+    "TableText": "tabelltext",
+    "Sound": "Ljud"
   },
   "PreferenceCreators": {
-    "On": "On",
-    "Off": "Off"
+    "On": "På",
+    "Off": "Av"
   },
   "MobileIDEView":{
-    "Preferences": "Preferences",
-    "MyStuff": "My Stuff",
-    "Examples": "Examples",
-    "OriginalEditor": "Original Editor",
-    "Login": "Login",
-    "Logout": "Logout"
+    "Preferences": "Preferenser",
+    "MyStuff": "Mina saker",
+    "Examples": "Exempel",
+    "OriginalEditor": "Originaleditor",
+    "Login": "Logga in",
+    "Logout": "Logga ut"
   },
   "MobileDashboardView": {
-    "Examples": "Examples",
-    "Sketches": "Sketches",
-    "Collections": "Collections",
-    "Assets": "Assets",
-    "MyStuff": "My Stuff",
-    "CreateSketch": "Create Sketch",
-    "CreateCollection": "Create Collection"
+    "Examples": "Exempel",
+    "Sketches": "Sketcher",
+    "Collections": "Samlingar",
+    "Assets": "Resurser",
+    "MyStuff": "Mina saker",
+    "CreateSketch": "Skapa sketch",
+    "CreateCollection": "Skapa samling"
   },
   "Explorer": {
-    "Files": "Files"
+    "Files": "Filer"
   },
   "Cookies": {
     "Header": "Cookies",
-    "Body": "The p5.js Editor uses cookies. Some are essential to the website functionality and allow you to manage an account and preferences. Others are not essential—they are used for analytics and allow us to learn more about our community. <strong> We never sell this data or use it for advertising. </strong> You can decide which cookies you would like to allow, and learn more in our <0>Privacy Policy<0>.",
-    "AllowAll": "Allow All",
-    "AllowEssential": "Allow Essential"
+    "Body": "p5.js editor använder cookies. Vissa är nödvändiga för webbplatsens funktionalitet och tillåter dig att hantera ditt konto och preferenser. Andra är inte nödvändiga - de används för analys som gör att vi kan lära oss mer om vårt community. <strong> Vi säljer inte denna data och använder inte heller datan för reklam. </strong> Du kan själv avgöra vilka cookies du vill tillåta och läsa mer i vår <0>Integritetspolicy<0>.",
+    "AllowAll": "Tillåt alla",
+    "AllowEssential": "Tillåt nödvändiga"
   },
   "Legal": {
-    "PrivacyPolicy": "Privacy Policy",
-    "TermsOfUse": "Terms of Use",
-    "CodeOfConduct": "Code of Conduct"
+    "PrivacyPolicy": "Integritetspolicy",
+    "TermsOfUse": "Användarvillkor",
+    "CodeOfConduct": "Uppförandekod"
   }
 }
