@@ -186,7 +186,8 @@
       "CommentLine": "Comment Line",
       "FindNextTextMatch": "Find Next Text Match",
       "FindPreviousTextMatch": "Find Previous Text Match",
-      "CodeEditing": "Code Editing"
+      "CodeEditing": "Code Editing",
+      "ColorPicker": "Show Inline Color Picker"
     },
     "General": {
       "StartSketch": "Start Sketch",

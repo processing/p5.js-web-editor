@@ -135,7 +135,7 @@ class Toolbar extends React.Component {
             onClick={() => {
               if (canEditProjectName) {
                 this.props.showEditProjectName();
-                setTimeout(() => this.projectNameInput.focus(), 0);
+                setTimeout(() => this.projectNameInput.focus(), 100);
               }
             }}
             disabled={!canEditProjectName}
