@@ -39,7 +39,7 @@ export function languageKeyToLabel(lang) {
     hi: 'हिन्दी',
     ja: '日本語',
     'pt-BR': 'Português',
-    'sv': 'Svenska',
+    sv: 'Svenska',
     'uk-UA': 'Українська',
     'zh-CN': '简体中文',
     'zh-TW': '正體中文'
@@ -56,7 +56,7 @@ export function languageKeyToDateLocale(lang) {
     hi,
     ja,
     'pt-BR': ptBR,
-    'sv',
+    sv,
     'uk-UA': uk,
     'zh-CN': zhCN,
     'zh-TW': zhTW
