@@ -53,4 +53,5 @@ collectionSchema.pre('save', function generateSlug(next) {
   return next();
 });
 
-export default mongoose.model('Collection', collectionSchema);
+export default mongoose.models.Collection ||
+  mongoose.model('Collection', collectionSchema);

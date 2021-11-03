@@ -166,9 +166,7 @@
       "PlainText": "प्लेन-टेक्स्ट",
       "TextOutputARIA": "टेक्स्ट आउटपुट चालू",
       "TableText": "टेबल-टेक्स्ट",
-      "TableOutputARIA": "टेबल आउटपुट चालू",
-      "Sound": "साउन्ड",
-      "SoundOutputARIA": "साउन्ड आउटपुट चालू"
+      "TableOutputARIA": "टेबल आउटपुट चालू"
     },
     "KeyboardShortcuts": {
       "Title": " कीबोर्ड शॉर्टकट",

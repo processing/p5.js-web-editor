@@ -59,7 +59,7 @@ export const ButtonWithIconAfter = () => (
 );
 
 export const InlineButtonWithIconAfter = () => (
-  <Button iconAfter={<DropdownArrowIcon />} kind={Button.kinds.inline}>
+  <Button iconAfter={<DropdownArrowIcon />} display={Button.displays.inline}>
     File name
   </Button>
 );
@@ -68,6 +68,6 @@ export const InlineIconOnlyButton = () => (
   <Button
     aria-label="Add to collection"
     iconBefore={<PlusIcon />}
-    kind={Button.kinds.inline}
+    display={Button.displays.inline}
   />
 );

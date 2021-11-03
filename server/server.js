@@ -24,7 +24,7 @@ import files from './routes/file.routes';
 import collections from './routes/collection.routes';
 import aws from './routes/aws.routes';
 import serverRoutes from './routes/server.routes';
-import embedRoutes from './routes/embed.routes';
+import redirectEmbedRoutes from './routes/redirectEmbed.routes';
 import assetRoutes from './routes/asset.routes';
 import passportRoutes from './routes/passport.routes';
 import { requestsOfTypeJSON } from './utils/requestsOfType';
@@ -37,7 +37,11 @@ const MongoStore = connectMongo(session);
 
 app.get('/health', (req, res) => res.json({ success: true }));
 
-const allowedCorsOrigins = [/p5js\.org$/];
+const allowedCorsOrigins = [
+  /p5js\.org$/,
+  process.env.EDITOR_URL,
+  process.env.PREVIEW_URL
+];
 
 // to allow client-only development
 if (process.env.CORS_ALLOW_LOCALHOST === 'true') {
@@ -127,6 +131,7 @@ app.use(
       (process.env.NODE_ENV === 'production' ? '1d' : '0')
   })
 );
+app.use(Express.static(path.resolve(__dirname, '../public')));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -141,9 +146,7 @@ app.use('/editor', requestsOfTypeJSON(), collections);
 // isomorphic rendering
 app.use('/', serverRoutes);
 
-app.use(assetRoutes);
-
-app.use('/', embedRoutes);
+app.use('/', redirectEmbedRoutes);
 app.use('/', passportRoutes);
 
 // configure passport

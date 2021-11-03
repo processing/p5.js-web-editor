@@ -1,27 +1,65 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import Backend from 'i18next-http-backend';
-import { enUS, es, ja, hi } from 'date-fns/locale';
+import {
+  enUS,
+  es,
+  ja,
+  hi,
+  ptBR,
+  de,
+  frCA,
+  zhCN,
+  zhTW,
+  uk,
+  sv
+} from 'date-fns/locale';
 
 const fallbackLng = ['en-US'];
-const availableLanguages = ['en-US', 'es-419', 'ja', 'hi'];
+const availableLanguages = [
+  'de',
+  'en-US',
+  'es-419',
+  'fr-CA',
+  'hi',
+  'ja',
+  'pt-BR',
+  'sv',
+  'uk-UA',
+  'zh-CN',
+  'zh-TW'
+];
 
 export function languageKeyToLabel(lang) {
   const languageMap = {
+    de: 'Deutsch',
     'en-US': 'English',
     'es-419': 'Español',
+    'fr-CA': 'Français',
+    hi: 'हिन्दी',
     ja: '日本語',
-    hi: 'हिन्दी'
+    'pt-BR': 'Português',
+    sv: 'Svenska',
+    'uk-UA': 'Українська',
+    'zh-CN': '简体中文',
+    'zh-TW': '正體中文'
   };
   return languageMap[lang];
 }
 
 export function languageKeyToDateLocale(lang) {
   const languageMap = {
+    de,
     'en-US': enUS,
     'es-419': es,
+    'fr-CA': frCA,
+    hi,
     ja,
-    hi
+    'pt-BR': ptBR,
+    sv,
+    'uk-UA': uk,
+    'zh-CN': zhCN,
+    'zh-TW': zhTW
   };
   return languageMap[lang];
 }

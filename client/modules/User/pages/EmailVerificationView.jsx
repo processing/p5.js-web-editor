@@ -8,6 +8,7 @@ import get from 'lodash/get';
 import { Helmet } from 'react-helmet';
 import { verifyEmailConfirmation } from '../actions';
 import Nav from '../../../components/Nav';
+import RootPage from '../../../components/RootPage';
 
 class EmailVerificationView extends React.Component {
   static defaultProps = {
@@ -39,7 +40,7 @@ class EmailVerificationView extends React.Component {
     }
 
     return (
-      <div className="email-verification">
+      <RootPage>
         <Nav layout="dashboard" />
         <div className="form-container">
           <Helmet>
@@ -52,7 +53,7 @@ class EmailVerificationView extends React.Component {
             {status}
           </div>
         </div>
-      </div>
+      </RootPage>
     );
   }
 }

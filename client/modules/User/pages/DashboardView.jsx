@@ -11,6 +11,8 @@ import AssetList from '../../IDE/components/AssetList';
 import AssetSize from '../../IDE/components/AssetSize';
 import CollectionList from '../../IDE/components/CollectionList';
 import SketchList from '../../IDE/components/SketchList';
+import RootPage from '../../../components/RootPage';
+import * as ProjectActions from '../../IDE/actions/project';
 import {
   CollectionSearchbar,
   SketchSearchbar
@@ -29,7 +31,12 @@ class DashboardView extends React.Component {
   constructor(props) {
     super(props);
     this.closeAccountPage = this.closeAccountPage.bind(this);
+    this.createNewSketch = this.createNewSketch.bind(this);
     this.gotoHomePage = this.gotoHomePage.bind(this);
+    this.toggleCollectionCreate = this.toggleCollectionCreate.bind(this);
+    this.state = {
+      collectionCreateVisible: false
+    };
   }
 
   componentDidMount() {
@@ -38,6 +45,10 @@ class DashboardView extends React.Component {
 
   closeAccountPage() {
     browserHistory.push(this.props.previousPath);
+  }
+
+  createNewSketch() {
+    this.props.newProject();
   }
 
   gotoHomePage() {
@@ -68,14 +79,11 @@ class DashboardView extends React.Component {
     return this.props.user.username === this.props.params.username;
   }
 
-  isCollectionCreate() {
-    const path = this.props.location.pathname;
-    return /collections\/create$/.test(path);
+  toggleCollectionCreate() {
+    this.setState((prevState) => ({
+      collectionCreateVisible: !prevState.collectionCreateVisible
+    }));
   }
-
-  returnToDashboard = () => {
-    browserHistory.push(`/${this.ownerName()}/collections`);
-  };
 
   renderActionButton(tabKey, username, t) {
     switch (tabKey) {
@@ -85,7 +93,7 @@ class DashboardView extends React.Component {
         return (
           this.isOwner() && (
             <React.Fragment>
-              <Button to={`/${username}/collections/create`}>
+              <Button onClick={this.toggleCollectionCreate}>
                 {t('DashboardView.CreateCollection')}
               </Button>
               <CollectionSearchbar />
@@ -97,7 +105,9 @@ class DashboardView extends React.Component {
         return (
           <React.Fragment>
             {this.isOwner() && (
-              <Button to="/">{t('DashboardView.NewSketch')}</Button>
+              <Button onClick={this.createNewSketch}>
+                {t('DashboardView.NewSketch')}
+              </Button>
             )}
             <SketchSearchbar />
           </React.Fragment>
@@ -124,7 +134,7 @@ class DashboardView extends React.Component {
     const actions = this.renderActionButton(currentTab, username, this.props.t);
 
     return (
-      <div className="dashboard">
+      <RootPage fixedHeight="100%">
         <Nav layout="dashboard" />
 
         <main className="dashboard-header">
@@ -148,15 +158,15 @@ class DashboardView extends React.Component {
             {this.renderContent(currentTab, username)}
           </div>
         </main>
-        {this.isCollectionCreate() && (
+        {this.state.collectionCreateVisible && (
           <Overlay
             title={this.props.t('DashboardView.CreateCollectionOverlay')}
-            closeOverlay={this.returnToDashboard}
+            closeOverlay={this.toggleCollectionCreate}
           >
             <CollectionCreate />
           </Overlay>
         )}
-      </div>
+      </RootPage>
     );
   }
 }
@@ -169,7 +179,12 @@ function mapStateToProps(state) {
   };
 }
 
+const mapDispatchToProps = {
+  ...ProjectActions
+};
+
 DashboardView.propTypes = {
+  newProject: PropTypes.func.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired
   }).isRequired,
@@ -184,4 +199,6 @@ DashboardView.propTypes = {
   t: PropTypes.func.isRequired
 };
 
-export default withTranslation()(connect(mapStateToProps)(DashboardView));
+export default withTranslation()(
+  connect(mapStateToProps, mapDispatchToProps)(DashboardView)
+);
