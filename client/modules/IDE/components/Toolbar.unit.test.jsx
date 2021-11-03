@@ -99,4 +99,12 @@ describe('<ToolbarComponent />', () => {
 
     await waitFor(() => expect(props.startSketch).toHaveBeenCalled());
   });
+
+  it('sketch content is synched when play button is clicked', async () => {
+    const props = renderComponent();
+    const playButton = screen.getByLabelText('Play only visual sketch');
+    fireEvent.click(playButton);
+
+    await waitFor(() => expect(props.syncFileContent).toHaveBeenCalled());
+  });
 });
