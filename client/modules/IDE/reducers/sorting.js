@@ -20,7 +20,11 @@ const sorting = (state = initialState, action) => {
       }
       return { ...state, direction: DIRECTION.ASC };
     case ActionTypes.SET_SORTING:
-      return { ...state, field: action.payload.field, direction: action.payload.direction };
+      return {
+        ...state,
+        field: action.payload.field,
+        direction: action.payload.direction
+      };
     default:
       return state;
   }

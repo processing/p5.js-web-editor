@@ -20,7 +20,7 @@
   
 ## 행동 수칙
 
-[행동 수칙](https://github.com/processing/p5.js-web-editor/blob/master/.github/CODE_OF_CONDUCT.md)에 있는 가이드라인을 따라주시기 바랍니다.
+[행동 수칙](https://github.com/processing/p5.js-web-editor/blob/develop/.github/CODE_OF_CONDUCT.md)에 있는 가이드라인을 따라주시기 바랍니다.
 
 ## 어떻게 기여할 수 있을까요?
 만약 오픈 소스에 기여하는 게 처음이신 경우라면, [오픈 소스에 어떻게 기여할 수 있는지](https://opensource.guide/how-to-contribute/)를 읽어주시기 바랍니다.
@@ -60,7 +60,7 @@
 
 어떤 이슈를 위한 작업을 시작하고 싶다면, 해당 이슈에 댓글을 달아서 관리자들에게 이를 알려 이슈를 할당 받으시기 바랍니다. 만약 다른 사람이 이미 해당 이슈에 댓글을 달았고 작업을 하기로 되어 있다면, 불필요한 중복 문제를 피하기 위해 해당 이슈와 관련된 작업을 하거나 관리자에게 묻지 않은 채로 풀 리퀘스트를 제출하는 일은 삼가주시기 바랍니다.
 
-이제 여러분의 컴퓨터에서 프로젝트를 빌드하고 작업을 하기 위해 [설치 가이드](https://github.com/processing/p5.js-web-editor/blob/master/developer_docs/installation.md)를 따라 주시기 바랍니다.
+이제 여러분의 컴퓨터에서 프로젝트를 빌드하고 작업을 하기 위해 [설치 가이드](https://github.com/processing/p5.js-web-editor/blob/develop/developer_docs/installation.md)를 따라 주시기 바랍니다.
 
 ### 기여 가이드
 

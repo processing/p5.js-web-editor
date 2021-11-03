@@ -28,7 +28,7 @@
   top: 0;
   left: 0;
   bottom: 0;
-  width: calc(var(--percent) * 100%);
+  width: calc(var(--percent, 1) * 100%);
 
   @include themify() {
     background-color: getThemifyVariable('progress-bar-active-color');

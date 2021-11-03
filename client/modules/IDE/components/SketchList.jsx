@@ -1,12 +1,13 @@
-import format from 'date-fns/format';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import classNames from 'classnames';
 import slugify from 'slugify';
+import dates from '../../../utils/formatDate';
 import * as ProjectActions from '../actions/project';
 import * as ProjectsActions from '../actions/projects';
 import * as CollectionsActions from '../actions/collections';
@@ -22,6 +23,9 @@ import ArrowUpIcon from '../../../images/sort-arrow-up.svg';
 import ArrowDownIcon from '../../../images/sort-arrow-down.svg';
 import DownFilledTriangleIcon from '../../../images/down-filled-triangle.svg';
 
+const formatDateCell = (date, mobile = false) =>
+  dates.format(date, { showTime: !mobile });
+
 class SketchListRowBase extends React.Component {
   constructor(props) {
     super(props);
@@ -29,14 +33,14 @@ class SketchListRowBase extends React.Component {
       optionsOpen: false,
       renameOpen: false,
       renameValue: props.sketch.name,
-      isFocused: false,
+      isFocused: false
     };
     this.renameInput = React.createRef();
   }
 
   onFocusComponent = () => {
     this.setState({ isFocused: true });
-  }
+  };
 
   onBlurComponent = () => {
     this.setState({ isFocused: false });
@@ -45,19 +49,19 @@ class SketchListRowBase extends React.Component {
         this.closeAll();
       }
     }, 200);
-  }
+  };
 
   openOptions = () => {
     this.setState({
       optionsOpen: true
     });
-  }
+  };
 
   closeOptions = () => {
     this.setState({
       optionsOpen: false
     });
-  }
+  };
 
   toggleOptions = () => {
     if (this.state.optionsOpen) {
@@ -65,96 +69,112 @@ class SketchListRowBase extends React.Component {
     } else {
       this.openOptions();
     }
-  }
+  };
 
   openRename = () => {
-    this.setState({
-      renameOpen: true,
-      renameValue: this.props.sketch.name
-    }, () => this.renameInput.current.focus());
-  }
+    this.setState(
+      {
+        renameOpen: true,
+        renameValue: this.props.sketch.name
+      },
+      () => this.renameInput.current.focus()
+    );
+  };
 
   closeRename = () => {
     this.setState({
       renameOpen: false
     });
-  }
+  };
 
   closeAll = () => {
     this.setState({
       renameOpen: false,
       optionsOpen: false
     });
-  }
+  };
 
   handleRenameChange = (e) => {
     this.setState({
       renameValue: e.target.value
     });
-  }
+  };
 
   handleRenameEnter = (e) => {
     if (e.key === 'Enter') {
       this.updateName();
       this.closeAll();
     }
-  }
+  };
 
   handleRenameBlur = () => {
     this.updateName();
     this.closeAll();
-  }
+  };
 
   updateName = () => {
     const isValid = this.state.renameValue.trim().length !== 0;
     if (isValid) {
-      this.props.changeProjectName(this.props.sketch.id, this.state.renameValue.trim());
+      this.props.changeProjectName(
+        this.props.sketch.id,
+        this.state.renameValue.trim()
+      );
     }
-  }
+  };
 
   resetSketchName = () => {
     this.setState({
       renameValue: this.props.sketch.name,
       renameOpen: false
     });
-  }
+  };
 
   handleDropdownOpen = () => {
     this.closeAll();
     this.openOptions();
-  }
+  };
 
   handleRenameOpen = () => {
     this.closeAll();
     this.openRename();
-  }
+  };
 
   handleSketchDownload = () => {
     this.props.exportProjectAsZip(this.props.sketch.id);
-  }
+  };
 
   handleSketchDuplicate = () => {
     this.closeAll();
-    this.props.cloneProject(this.props.sketch.id);
-  }
+    this.props.cloneProject(this.props.sketch);
+  };
 
   handleSketchShare = () => {
     this.closeAll();
-    this.props.showShareModal(this.props.sketch.id, this.props.sketch.name, this.props.username);
-  }
+    this.props.showShareModal(
+      this.props.sketch.id,
+      this.props.sketch.name,
+      this.props.username
+    );
+  };
 
   handleSketchDelete = () => {
     this.closeAll();
-    if (window.confirm(`Are you sure you want to delete "${this.props.sketch.name}"?`)) {
+    if (
+      window.confirm(
+        this.props.t('Common.DeleteConfirmation', {
+          name: this.props.sketch.name
+        })
+      )
+    ) {
       this.props.deleteProject(this.props.sketch.id);
     }
-  }
+  };
 
-  renderViewButton = sketchURL => (
+  renderViewButton = (sketchURL) => (
     <td className="sketch-list__dropdown-column">
-      <Link to={sketchURL}>View</Link>
+      <Link to={sketchURL}>{this.props.t('SketchList.View')}</Link>
     </td>
-  )
+  );
 
   renderDropdown = () => {
     const { optionsOpen } = this.state;
@@ -167,25 +187,24 @@ class SketchListRowBase extends React.Component {
           onClick={this.toggleOptions}
           onBlur={this.onBlurComponent}
           onFocus={this.onFocusComponent}
-          aria-label="Toggle Open/Close Sketch Options"
+          aria-label={this.props.t('SketchList.ToggleLabelARIA')}
         >
           <DownFilledTriangleIcon focusable="false" aria-hidden="true" />
         </button>
-        {optionsOpen &&
-          <ul
-            className="sketch-list__action-dialogue"
-          >
-            {userIsOwner &&
-            <li>
-              <button
-                className="sketch-list__action-option"
-                onClick={this.handleRenameOpen}
-                onBlur={this.onBlurComponent}
-                onFocus={this.onFocusComponent}
-              >
-                Rename
-              </button>
-            </li>}
+        {optionsOpen && (
+          <ul className="sketch-list__action-dialogue">
+            {userIsOwner && (
+              <li>
+                <button
+                  className="sketch-list__action-option"
+                  onClick={this.handleRenameOpen}
+                  onBlur={this.onBlurComponent}
+                  onFocus={this.onFocusComponent}
+                >
+                  {this.props.t('SketchList.DropdownRename')}
+                </button>
+              </li>
+            )}
             <li>
               <button
                 className="sketch-list__action-option"
@@ -193,21 +212,22 @@ class SketchListRowBase extends React.Component {
                 onBlur={this.onBlurComponent}
                 onFocus={this.onFocusComponent}
               >
-                Download
+                {this.props.t('SketchList.DropdownDownload')}
               </button>
             </li>
-            {this.props.user.authenticated &&
-            <li>
-              <button
-                className="sketch-list__action-option"
-                onClick={this.handleSketchDuplicate}
-                onBlur={this.onBlurComponent}
-                onFocus={this.onFocusComponent}
-              >
-                Duplicate
-              </button>
-            </li>}
-            {this.props.user.authenticated &&
+            {this.props.user.authenticated && (
+              <li>
+                <button
+                  className="sketch-list__action-option"
+                  onClick={this.handleSketchDuplicate}
+                  onBlur={this.onBlurComponent}
+                  onFocus={this.onFocusComponent}
+                >
+                  {this.props.t('SketchList.DropdownDuplicate')}
+                </button>
+              </li>
+            )}
+            {this.props.user.authenticated && (
               <li>
                 <button
                   className="sketch-list__action-option"
@@ -218,10 +238,11 @@ class SketchListRowBase extends React.Component {
                   onBlur={this.onBlurComponent}
                   onFocus={this.onFocusComponent}
                 >
-                  Add to collection
+                  {this.props.t('SketchList.DropdownAddToCollection')}
                 </button>
-              </li>}
-            { /* <li>
+              </li>
+            )}
+            {/* <li>
               <button
                 className="sketch-list__action-option"
                 onClick={this.handleSketchShare}
@@ -230,28 +251,27 @@ class SketchListRowBase extends React.Component {
               >
                 Share
               </button>
-            </li> */ }
-            {userIsOwner &&
-            <li>
-              <button
-                className="sketch-list__action-option"
-                onClick={this.handleSketchDelete}
-                onBlur={this.onBlurComponent}
-                onFocus={this.onFocusComponent}
-              >
-                Delete
-              </button>
-            </li>}
-          </ul>}
+            </li> */}
+            {userIsOwner && (
+              <li>
+                <button
+                  className="sketch-list__action-option"
+                  onClick={this.handleSketchDelete}
+                  onBlur={this.onBlurComponent}
+                  onFocus={this.onFocusComponent}
+                >
+                  {this.props.t('SketchList.DropdownDelete')}
+                </button>
+              </li>
+            )}
+          </ul>
+        )}
       </td>
     );
-  }
+  };
 
   render() {
-    const {
-      sketch,
-      username,
-    } = this.props;
+    const { sketch, username, mobile } = this.props;
     const { renameOpen, renameValue } = this.state;
     let url = `/${username}/sketches/${sketch.id}`;
     if (username === 'p5') {
@@ -260,20 +280,17 @@ class SketchListRowBase extends React.Component {
 
     const name = (
       <React.Fragment>
-        <Link to={url}>
-          {renameOpen ? '' : sketch.name}
-        </Link>
-        {renameOpen
-        &&
-        <input
-          value={renameValue}
-          onChange={this.handleRenameChange}
-          onKeyUp={this.handleRenameEnter}
-          onBlur={this.handleRenameBlur}
-          onClick={e => e.stopPropagation()}
-          ref={this.renameInput}
-        />
-        }
+        <Link to={url}>{renameOpen ? '' : sketch.name}</Link>
+        {renameOpen && (
+          <input
+            value={renameValue}
+            onChange={this.handleRenameChange}
+            onKeyUp={this.handleRenameEnter}
+            onBlur={this.handleRenameBlur}
+            onClick={(e) => e.stopPropagation()}
+            ref={this.renameInput}
+          />
+        )}
       </React.Fragment>
     );
 
@@ -284,14 +301,19 @@ class SketchListRowBase extends React.Component {
           key={sketch.id}
           onClick={this.handleRowClick}
         >
-          <th scope="row">
-            {name}
-          </th>
-          <td>{format(new Date(sketch.createdAt), 'MMM D, YYYY h:mm A')}</td>
-          <td>{format(new Date(sketch.updatedAt), 'MMM D, YYYY h:mm A')}</td>
+          <th scope="row">{name}</th>
+          <td>
+            {mobile && 'Created: '}
+            {formatDateCell(sketch.createdAt, mobile)}
+          </td>
+          <td>
+            {mobile && 'Updated: '}
+            {formatDateCell(sketch.updatedAt, mobile)}
+          </td>
           {this.renderDropdown()}
         </tr>
-      </React.Fragment>);
+      </React.Fragment>
+    );
   }
 }
 
@@ -312,14 +334,26 @@ SketchListRowBase.propTypes = {
   cloneProject: PropTypes.func.isRequired,
   exportProjectAsZip: PropTypes.func.isRequired,
   changeProjectName: PropTypes.func.isRequired,
-  onAddToCollection: PropTypes.func.isRequired
+  onAddToCollection: PropTypes.func.isRequired,
+  mobile: PropTypes.bool,
+  t: PropTypes.func.isRequired
+};
+
+SketchListRowBase.defaultProps = {
+  mobile: false
 };
 
 function mapDispatchToPropsSketchListRow(dispatch) {
-  return bindActionCreators(Object.assign({}, ProjectActions, IdeActions), dispatch);
+  return bindActionCreators(
+    Object.assign({}, ProjectActions, IdeActions),
+    dispatch
+  );
 }
 
-const SketchListRow = connect(null, mapDispatchToPropsSketchListRow)(SketchListRowBase);
+const SketchListRow = connect(
+  null,
+  mapDispatchToPropsSketchListRow
+)(SketchListRowBase);
 
 class SketchList extends React.Component {
   constructor(props) {
@@ -328,24 +362,29 @@ class SketchList extends React.Component {
     this.props.resetSorting();
 
     this.state = {
-      isInitialDataLoad: true,
+      isInitialDataLoad: true
     };
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.sketches !== prevProps.sketches && Array.isArray(this.props.sketches)) {
+    if (
+      this.props.sketches !== prevProps.sketches &&
+      Array.isArray(this.props.sketches)
+    ) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({
-        isInitialDataLoad: false,
+        isInitialDataLoad: false
       });
     }
   }
 
   getSketchesTitle() {
     if (this.props.username === this.props.user.username) {
-      return 'p5.js Web Editor | My sketches';
+      return this.props.t('SketchList.Title');
     }
-    return `p5.js Web Editor | ${this.props.username}'s sketches`;
+    return this.props.t('SketchList.AnothersTitle', {
+      anotheruser: this.props.username
+    });
   }
 
   hasSketches() {
@@ -363,7 +402,11 @@ class SketchList extends React.Component {
 
   _renderEmptyTable() {
     if (!this.isLoading() && this.props.sketches.length === 0) {
-      return (<p className="sketches-table__empty">No sketches.</p>);
+      return (
+        <p className="sketches-table__empty">
+          {this.props.t('SketchList.NoSketches')}
+        </p>
+      );
     }
     return null;
   }
@@ -373,17 +416,25 @@ class SketchList extends React.Component {
     let buttonLabel;
     if (field !== fieldName) {
       if (field === 'name') {
-        buttonLabel = `Sort by ${displayName} ascending.`;
+        buttonLabel = this.props.t('SketchList.ButtonLabelAscendingARIA', {
+          displayName
+        });
       } else {
-        buttonLabel = `Sort by ${displayName} descending.`;
+        buttonLabel = this.props.t('SketchList.ButtonLabelDescendingARIA', {
+          displayName
+        });
       }
     } else if (direction === SortingActions.DIRECTION.ASC) {
-      buttonLabel = `Sort by ${displayName} descending.`;
+      buttonLabel = this.props.t('SketchList.ButtonLabelDescendingARIA', {
+        displayName
+      });
     } else {
-      buttonLabel = `Sort by ${displayName} ascending.`;
+      buttonLabel = this.props.t('SketchList.ButtonLabelAscendingARIA', {
+        displayName
+      });
     }
     return buttonLabel;
-  }
+  };
 
   _renderFieldHeader = (fieldName, displayName) => {
     const { field, direction } = this.props.sorting;
@@ -400,19 +451,33 @@ class SketchList extends React.Component {
           aria-label={buttonLabel}
         >
           <span className={headerClass}>{displayName}</span>
-          {field === fieldName && direction === SortingActions.DIRECTION.ASC &&
-            <ArrowUpIcon role="img" aria-label="Ascending" focusable="false" />
-          }
-          {field === fieldName && direction === SortingActions.DIRECTION.DESC &&
-            <ArrowDownIcon role="img" aria-label="Descending" focusable="false" />
-          }
+          {field === fieldName &&
+            direction === SortingActions.DIRECTION.ASC && (
+              <ArrowUpIcon
+                role="img"
+                aria-label={this.props.t('SketchList.DirectionAscendingARIA')}
+                focusable="false"
+              />
+            )}
+          {field === fieldName &&
+            direction === SortingActions.DIRECTION.DESC && (
+              <ArrowDownIcon
+                role="img"
+                aria-label={this.props.t('SketchList.DirectionDescendingARIA')}
+                focusable="false"
+              />
+            )}
         </button>
       </th>
     );
-  }
+  };
 
   render() {
-    const username = this.props.username !== undefined ? this.props.username : this.props.user.username;
+    const username =
+      this.props.username !== undefined
+        ? this.props.username
+        : this.props.user.username;
+    const { mobile } = this.props;
     return (
       <article className="sketches-table-container">
         <Helmet>
@@ -420,19 +485,36 @@ class SketchList extends React.Component {
         </Helmet>
         {this._renderLoader()}
         {this._renderEmptyTable()}
-        {this.hasSketches() &&
-          <table className="sketches-table" summary="table containing all saved projects">
+        {this.hasSketches() && (
+          <table
+            className="sketches-table"
+            summary={this.props.t('SketchList.TableSummary')}
+          >
             <thead>
               <tr>
-                {this._renderFieldHeader('name', 'Sketch')}
-                {this._renderFieldHeader('createdAt', 'Date Created')}
-                {this._renderFieldHeader('updatedAt', 'Date Updated')}
+                {this._renderFieldHeader(
+                  'name',
+                  this.props.t('SketchList.HeaderName')
+                )}
+                {this._renderFieldHeader(
+                  'createdAt',
+                  this.props.t('SketchList.HeaderCreatedAt', {
+                    context: mobile ? 'mobile' : ''
+                  })
+                )}
+                {this._renderFieldHeader(
+                  'updatedAt',
+                  this.props.t('SketchList.HeaderUpdatedAt', {
+                    context: mobile ? 'mobile' : ''
+                  })
+                )}
                 <th scope="col"></th>
               </tr>
             </thead>
             <tbody>
-              {this.props.sketches.map(sketch =>
-                (<SketchListRow
+              {this.props.sketches.map((sketch) => (
+                <SketchListRow
+                  mobile={mobile}
                   key={sketch.id}
                   sketch={sketch}
                   user={this.props.user}
@@ -440,23 +522,27 @@ class SketchList extends React.Component {
                   onAddToCollection={() => {
                     this.setState({ sketchToAddToCollection: sketch });
                   }}
-                />))}
+                  t={this.props.t}
+                />
+              ))}
             </tbody>
-          </table>}
-        {
-          this.state.sketchToAddToCollection &&
-            <Overlay
-              isFixedHeight
-              title="Add to collection"
-              closeOverlay={() => this.setState({ sketchToAddToCollection: null })}
-            >
-              <AddToCollectionList
-                project={this.state.sketchToAddToCollection}
-                username={this.props.username}
-                user={this.props.user}
-              />
-            </Overlay>
-        }
+          </table>
+        )}
+        {this.state.sketchToAddToCollection && (
+          <Overlay
+            isFixedHeight
+            title={this.props.t('SketchList.AddToCollectionOverlayTitle')}
+            closeOverlay={() =>
+              this.setState({ sketchToAddToCollection: null })
+            }
+          >
+            <AddToCollectionList
+              project={this.state.sketchToAddToCollection}
+              username={this.props.username}
+              user={this.props.user}
+            />
+          </Overlay>
+        )}
       </article>
     );
   }
@@ -468,12 +554,14 @@ SketchList.propTypes = {
     authenticated: PropTypes.bool.isRequired
   }).isRequired,
   getProjects: PropTypes.func.isRequired,
-  sketches: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    createdAt: PropTypes.string.isRequired,
-    updatedAt: PropTypes.string.isRequired
-  })).isRequired,
+  sketches: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      createdAt: PropTypes.string.isRequired,
+      updatedAt: PropTypes.string.isRequired
+    })
+  ).isRequired,
   username: PropTypes.string,
   loading: PropTypes.bool.isRequired,
   toggleDirectionForField: PropTypes.func.isRequired,
@@ -482,10 +570,13 @@ SketchList.propTypes = {
     field: PropTypes.string.isRequired,
     direction: PropTypes.string.isRequired
   }).isRequired,
+  mobile: PropTypes.bool,
+  t: PropTypes.func.isRequired
 };
 
 SketchList.defaultProps = {
-  username: undefined
+  username: undefined,
+  mobile: false
 };
 
 function mapStateToProps(state) {
@@ -500,9 +591,17 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
-    Object.assign({}, ProjectsActions, CollectionsActions, ToastActions, SortingActions),
+    Object.assign(
+      {},
+      ProjectsActions,
+      CollectionsActions,
+      ToastActions,
+      SortingActions
+    ),
     dispatch
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SketchList);
+export default withTranslation()(
+  connect(mapStateToProps, mapDispatchToProps)(SketchList)
+);

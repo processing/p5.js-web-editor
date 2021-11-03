@@ -6,9 +6,13 @@ import { Link } from 'react-router';
 import { remSize, prop } from '../theme';
 
 const kinds = {
+  primary: 'primary',
+  secondary: 'secondary'
+};
+
+const displays = {
   block: 'block',
-  icon: 'icon',
-  inline: 'inline',
+  inline: 'inline'
 };
 
 // The '&&&' will increase the specificity of the
@@ -16,6 +20,7 @@ const kinds = {
 // general global styles
 const StyledButton = styled.button`
   &&& {
+    font-weight: bold;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,45 +28,49 @@ const StyledButton = styled.button`
     width: max-content;
     text-decoration: none;
 
-    color: ${prop('Button.default.foreground')};
-    background-color: ${prop('Button.default.background')};
+    color: ${({ kind }) => prop(`Button.${kind}.default.foreground`)};
+    background-color: ${({ kind }) =>
+      prop(`Button.${kind}.default.background`)};
     cursor: pointer;
-    border: 2px solid ${prop('Button.default.border')};
+    border: 2px solid ${({ kind }) => prop(`Button.${kind}.default.border`)};
     border-radius: 2px;
     padding: ${remSize(8)} ${remSize(25)};
     line-height: 1;
 
     svg * {
-      fill: ${prop('Button.default.foreground')};
+      fill: ${({ kind }) => prop(`Button.${kind}.default.foreground`)};
     }
-    
+
     &:hover:not(:disabled) {
-      color: ${prop('Button.hover.foreground')};
-      background-color: ${prop('Button.hover.background')};
-      border-color: ${prop('Button.hover.border')};
+      color: ${({ kind }) => prop(`Button.${kind}.hover.foreground`)};
+      background-color: ${({ kind }) =>
+        prop(`Button.${kind}.hover.background`)};
+      border-color: ${({ kind }) => prop(`Button.${kind}.hover.border`)};
 
       svg * {
-        fill: ${prop('Button.hover.foreground')};
+        fill: ${({ kind }) => prop(`Button.${kind}.hover.foreground`)};
       }
     }
 
     &:active:not(:disabled) {
-      color: ${prop('Button.active.foreground')};
-      background-color: ${prop('Button.active.background')};
+      color: ${({ kind }) => prop(`Button.${kind}.active.foreground`)};
+      background-color: ${({ kind }) =>
+        prop(`Button.${kind}.active.background`)};
 
       svg * {
-        fill: ${prop('Button.active.foreground')};
+        fill: ${({ kind }) => prop(`Button.${kind}.active.foreground`)};
       }
     }
 
     &:disabled {
-      color: ${prop('Button.disabled.foreground')};
-      background-color: ${prop('Button.disabled.background')};
-      border-color: ${prop('Button.disabled.border')};
+      color: ${({ kind }) => prop(`Button.${kind}.disabled.foreground`)};
+      background-color: ${({ kind }) =>
+        prop(`Button.${kind}.disabled.background`)};
+      border-color: ${({ kind }) => prop(`Button.${kind}.disabled.border`)};
       cursor: not-allowed;
 
       svg * {
-        fill: ${prop('Button.disabled.foreground')};
+        fill: ${({ kind }) => prop(`Button.${kind}.disabled.foreground`)};
       }
     }
 
@@ -108,35 +117,38 @@ const StyledIconButton = styled.button`
     height: ${remSize(32)}px;
     text-decoration: none;
 
-    color: ${prop('Button.default.foreground')};
-    background-color: ${prop('Button.hover.background')};
+    color: ${({ kind }) => prop(`Button.${kind}.default.foreground`)};
+    background-color: ${({ kind }) => prop(`Button.${kind}.hover.background`)};
     cursor: pointer;
     border: 1px solid transparent;
     border-radius: 50%;
     padding: ${remSize(8)} ${remSize(25)};
     line-height: 1;
-    
+
     &:hover:not(:disabled) {
-      color: ${prop('Button.hover.foreground')};
-      background-color: ${prop('Button.hover.background')};
+      color: ${({ kind }) => prop(`Button.${kind}.hover.foreground`)};
+      background-color: ${({ kind }) =>
+        prop(`Button.${kind}.hover.background`)};
 
       svg * {
-        fill: ${prop('Button.hover.foreground')};
+        fill: ${({ kind }) => prop(`Button.${kind}.hover.foreground`)};
       }
     }
 
     &:active:not(:disabled) {
-      color: ${prop('Button.active.foreground')};
-      background-color: ${prop('Button.active.background')};
+      color: ${({ kind }) => prop(`Button.${kind}.active.foreground`)};
+      background-color: ${({ kind }) =>
+        prop(`Button.${kind}.active.background`)};
 
       svg * {
-        fill: ${prop('Button.active.foreground')};
+        fill: ${({ kind }) => prop(`Button.${kind}.active.foreground`)};
       }
     }
 
     &:disabled {
-      color: ${prop('Button.disabled.foreground')};
-      background-color: ${prop('Button.disabled.background')};
+      color: ${({ kind }) => prop(`Button.${kind}.disabled.foreground`)};
+      background-color: ${({ kind }) =>
+        prop(`Button.${kind}.disabled.background`)};
       cursor: not-allowed;
     }
 
@@ -150,15 +162,33 @@ const StyledIconButton = styled.button`
  * A Button performs an primary action
  */
 const Button = ({
-  children, href, kind, iconBefore, iconAfter, 'aria-label': ariaLabel, to, type, ...props
+  children,
+  display,
+  href,
+  kind,
+  iconBefore,
+  iconAfter,
+  iconOnly,
+  'aria-label': ariaLabel,
+  to,
+  type,
+  ...props
 }) => {
   const hasChildren = React.Children.count(children) > 0;
-  const content = <>{iconBefore}{hasChildren && <span>{children}</span>}{iconAfter}</>;
+  const content = (
+    <>
+      {iconBefore}
+      {hasChildren && <span>{children}</span>}
+      {iconAfter}
+    </>
+  );
   let StyledComponent = StyledButton;
 
-  if (kind === kinds.inline) {
+  if (display === displays.inline) {
     StyledComponent = StyledInlineButton;
-  } else if (kind === kinds.icon) {
+  }
+
+  if (iconOnly) {
     StyledComponent = StyledIconButton;
   }
 
@@ -166,6 +196,7 @@ const Button = ({
     return (
       <StyledComponent
         kind={kind}
+        display={display}
         as="a"
         aria-label={ariaLabel}
         href={href}
@@ -177,52 +208,84 @@ const Button = ({
   }
 
   if (to) {
-    return <StyledComponent kind={kind} as={Link} aria-label={ariaLabel} to={to} {...props}>{content}</StyledComponent>;
+    return (
+      <StyledComponent
+        kind={kind}
+        display={display}
+        as={Link}
+        aria-label={ariaLabel}
+        to={to}
+        {...props}
+      >
+        {content}
+      </StyledComponent>
+    );
   }
 
-  return <StyledComponent kind={kind} aria-label={ariaLabel} type={type} {...props}>{content}</StyledComponent>;
+  return (
+    <StyledComponent
+      kind={kind}
+      display={display}
+      aria-label={ariaLabel}
+      type={type}
+      {...props}
+    >
+      {content}
+    </StyledComponent>
+  );
 };
 
 Button.defaultProps = {
-  'children': null,
-  'disabled': false,
-  'iconAfter': null,
-  'iconBefore': null,
-  'kind': kinds.block,
-  'href': null,
+  children: null,
+  disabled: false,
+  display: displays.block,
+  iconAfter: null,
+  iconBefore: null,
+  iconOnly: false,
+  kind: kinds.primary,
+  href: null,
   'aria-label': null,
-  'to': null,
-  'type': 'button',
+  to: null,
+  type: 'button'
 };
 
 Button.kinds = kinds;
+Button.displays = displays;
 
 Button.propTypes = {
   /**
    * The visible part of the button, telling the user what
    * the action is
    */
-  'children': PropTypes.element,
+  children: PropTypes.element,
   /**
     If the button can be activated or not
   */
-  'disabled': PropTypes.bool,
+  disabled: PropTypes.bool,
+  /**
+   * The display type of the button—inline or block
+   */
+  display: PropTypes.string,
   /**
    * SVG icon to place after child content
    */
-  'iconAfter': PropTypes.element,
+  iconAfter: PropTypes.element,
   /**
    * SVG icon to place before child content
    */
-  'iconBefore': PropTypes.element,
+  iconBefore: PropTypes.element,
+  /**
+   * If the button content is only an SVG icon
+   */
+  iconOnly: PropTypes.bool,
   /**
    * The kind of button - determines how it appears visually
    */
-  'kind': PropTypes.oneOf(Object.values(kinds)),
+  kind: PropTypes.oneOf(Object.values(kinds)),
   /**
    * Specifying an href will use an <a> to link to the URL
    */
-  'href': PropTypes.string,
+  href: PropTypes.string,
   /*
    * An ARIA Label used for accessibility
    */
@@ -230,11 +293,11 @@ Button.propTypes = {
   /**
    * Specifying a to URL will use a react-router Link
    */
-  'to': PropTypes.string,
+  to: PropTypes.string,
   /**
    * If using a button, then type is defines the type of button
    */
-  'type': PropTypes.oneOf(['button', 'submit']),
+  type: PropTypes.oneOf(['button', 'submit'])
 };
 
 export default Button;

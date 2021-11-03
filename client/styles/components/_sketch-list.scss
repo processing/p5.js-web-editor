@@ -85,6 +85,10 @@
   }
 }
 
+.sketches-table__row.is-deleted > * {
+  font-style: italic;
+}
+
 .sketches-table thead {
   font-size: #{12 / $base-font-size}rem;
   @include themify() {

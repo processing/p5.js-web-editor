@@ -1,10 +1,11 @@
+import i18next from 'i18next';
 import apiClient from '../../../utils/apiClient';
 import * as ActionTypes from '../../../constants';
 
 function updatePreferences(formParams, dispatch) {
-  apiClient.put('/preferences', formParams)
-    .then(() => {
-    })
+  apiClient
+    .put('/preferences', formParams)
+    .then(() => {})
     .catch((error) => {
       const { response } = error;
       dispatch({
@@ -43,6 +44,24 @@ export function setLineNumbers(value) {
       const formParams = {
         preferences: {
           lineNumbers: value
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
+  };
+}
+
+export function setAutocloseBracketsQuotes(value) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.SET_AUTOCLOSE_BRACKETS_QUOTES,
+      value
+    });
+    const state = getState();
+    if (state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          autocloseBracketsQuotes: value
         }
       };
       updatePreferences(formParams, dispatch);
@@ -140,24 +159,6 @@ export function setGridOutput(value) {
   };
 }
 
-export function setSoundOutput(value) {
-  return (dispatch, getState) => {
-    dispatch({
-      type: ActionTypes.SET_SOUND_OUTPUT,
-      value
-    });
-    const state = getState();
-    if (state.user.authenticated) {
-      const formParams = {
-        preferences: {
-          soundOutput: value
-        }
-      };
-      updatePreferences(formParams, dispatch);
-    }
-  };
-}
-
 export function setTheme(value) {
   // return {
   //   type: ActionTypes.SET_THEME,
@@ -206,7 +207,24 @@ export function setAllAccessibleOutput(value) {
   return (dispatch) => {
     dispatch(setTextOutput(value));
     dispatch(setGridOutput(value));
-    dispatch(setSoundOutput(value));
   };
 }
 
+export function setLanguage(value, { persistPreference = true } = {}) {
+  return (dispatch, getState) => {
+    i18next.changeLanguage(value);
+    dispatch({
+      type: ActionTypes.SET_LANGUAGE,
+      language: value
+    });
+    const state = getState();
+    if (persistPreference && state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          language: value
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
+  };
+}

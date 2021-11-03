@@ -8,4 +8,3 @@ export default function isAuthenticated(req, res, next) {
     message: 'You must be logged in in order to perform the requested action.'
   });
 }
-

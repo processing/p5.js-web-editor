@@ -23,6 +23,10 @@
   align-items: center;
 }
 
+.preview-nav__editor-svg {
+  @include icon();
+}
+
 // .nav__items-left,
 // .nav__items-right {
 //   & button, & a {
@@ -113,7 +117,7 @@
   padding-right: #{20 / $base-font-size}rem;
 
   & .nav__dropdown {
-    width: #{122 / $base-font-size}rem;
+    width: #{125 / $base-font-size}rem;
   }
 }
 

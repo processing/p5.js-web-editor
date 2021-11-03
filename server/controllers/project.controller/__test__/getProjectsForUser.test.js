@@ -4,7 +4,9 @@
 import { Request, Response } from 'jest-express';
 
 import { createMock } from '../../../models/user';
-import getProjectsForUser, { apiGetProjectsForUser } from '../../project.controller/getProjectsForUser';
+import getProjectsForUser, {
+  apiGetProjectsForUser
+} from '../../project.controller/getProjectsForUser';
 
 jest.mock('../../../models/user');
 jest.mock('../../aws.controller');
@@ -43,8 +45,7 @@ describe('project.controller', () => {
       request.setParams({ username: 'abc123' });
       const response = new Response();
 
-      UserMock
-        .expects('findOne')
+      UserMock.expects('findOne')
         .withArgs({ username: 'abc123' })
         .yields(null, null);
 
@@ -52,7 +53,9 @@ describe('project.controller', () => {
 
       function expectations() {
         expect(response.status).toHaveBeenCalledWith(404);
-        expect(response.json).toHaveBeenCalledWith({ message: 'User with that username does not exist.' });
+        expect(response.json).toHaveBeenCalledWith({
+          message: 'User with that username does not exist.'
+        });
 
         done();
       }
@@ -65,8 +68,7 @@ describe('project.controller', () => {
       request.setParams({ username: 'abc123' });
       const response = new Response();
 
-      UserMock
-        .expects('findOne')
+      UserMock.expects('findOne')
         .withArgs({ username: 'abc123' })
         .yields(new Error(), null);
 
@@ -74,7 +76,9 @@ describe('project.controller', () => {
 
       function expectations() {
         expect(response.status).toHaveBeenCalledWith(500);
-        expect(response.json).toHaveBeenCalledWith({ message: 'Error fetching projects' });
+        expect(response.json).toHaveBeenCalledWith({
+          message: 'Error fetching projects'
+        });
 
         done();
       }
@@ -103,14 +107,12 @@ describe('project.controller', () => {
       promise.then(expectations, expectations).catch(expectations);
     });
 
-
     it('returns 404 if user does not exist', (done) => {
       const request = new Request();
       request.setParams({ username: 'abc123' });
       const response = new Response();
 
-      UserMock
-        .expects('findOne')
+      UserMock.expects('findOne')
         .withArgs({ username: 'abc123' })
         .yields(null, null);
 
@@ -118,7 +120,9 @@ describe('project.controller', () => {
 
       function expectations() {
         expect(response.status).toHaveBeenCalledWith(404);
-        expect(response.json).toHaveBeenCalledWith({ message: 'User with that username does not exist.' });
+        expect(response.json).toHaveBeenCalledWith({
+          message: 'User with that username does not exist.'
+        });
 
         done();
       }
@@ -131,8 +135,7 @@ describe('project.controller', () => {
       request.setParams({ username: 'abc123' });
       const response = new Response();
 
-      UserMock
-        .expects('findOne')
+      UserMock.expects('findOne')
         .withArgs({ username: 'abc123' })
         .yields(new Error(), null);
 
@@ -140,7 +143,9 @@ describe('project.controller', () => {
 
       function expectations() {
         expect(response.status).toHaveBeenCalledWith(500);
-        expect(response.json).toHaveBeenCalledWith({ message: 'Error fetching projects' });
+        expect(response.json).toHaveBeenCalledWith({
+          message: 'Error fetching projects'
+        });
 
         done();
       }
