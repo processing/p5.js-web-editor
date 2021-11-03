@@ -22,6 +22,7 @@ const renderComponent = (extraProps = {}) => {
       startSketch: jest.fn(),
       startAccessibleSketch: jest.fn(),
       saveProject: jest.fn(),
+      syncFileContent: jest.fn(),
       currentUser: 'me',
       originalProjectName: 'testname',
 
@@ -94,7 +95,6 @@ describe('<ToolbarComponent />', () => {
   it('sketch is started when play button is clicked', async () => {
     const props = renderComponent();
     const playButton = screen.getByLabelText('Play only visual sketch');
-
     fireEvent.click(playButton);
 
     await waitFor(() => expect(props.startSketch).toHaveBeenCalled());
