@@ -92,6 +92,16 @@ describe('<ToolbarComponent />', () => {
     await waitFor(() => expect(props.saveProject).not.toHaveBeenCalled());
   });
 
+  it('sketch is stopped when stop button is clicked', async () => {
+    const props = renderComponent({ isPlaying: true });
+
+    const stopButton = screen.getByLabelText('Stop sketch');
+
+    fireEvent.click(stopButton);
+
+    await waitFor(() => expect(props.stopSketch).toHaveBeenCalled());
+  });
+
   it('sketch is started when play button is clicked', async () => {
     const props = renderComponent();
     const playButton = screen.getByLabelText('Play only visual sketch');
