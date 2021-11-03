@@ -34,11 +34,11 @@ const DropdownWrapper = styled.ul`
   }
 
   & li:hover {
-    background-color: ${prop('Button.hover.background')};
-    color: ${prop('Button.hover.foreground')};
+    background-color: ${prop('Button.primary.hover.background')};
+    color: ${prop('Button.primary.hover.foreground')};
 
     * {
-      color: ${prop('Button.hover.foreground')};
+      color: ${prop('Button.primary.hover.foreground')};
     }
   }
 

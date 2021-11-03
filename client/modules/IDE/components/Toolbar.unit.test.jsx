@@ -53,7 +53,7 @@ describe('<ToolbarComponent />', () => {
     await waitFor(() => expect(props.showEditProjectName).toHaveBeenCalled());
   });
 
-  it('non-owner can\t switch to sketch editing mode', async () => {
+  it("non-owner can't switch to sketch editing mode", async () => {
     const props = renderComponent({ currentUser: 'not-me' });
     const sketchName = screen.getByLabelText('Edit sketch name');
 

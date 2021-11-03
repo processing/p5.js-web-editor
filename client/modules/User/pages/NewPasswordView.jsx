@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import NewPasswordForm from '../components/NewPasswordForm';
 import { validateResetPasswordToken } from '../actions';
 import Nav from '../../../components/Nav';
+import RootPage from '../../../components/RootPage';
 
 function NewPasswordView(props) {
   const { t } = useTranslation();
@@ -27,7 +28,7 @@ function NewPasswordView(props) {
     user: true
   });
   return (
-    <div className="new-password-container">
+    <RootPage>
       <Nav layout="dashboard" />
       <div className={newPasswordClass}>
         <Helmet>
@@ -43,7 +44,7 @@ function NewPasswordView(props) {
           </p>
         </div>
       </div>
-    </div>
+    </RootPage>
   );
 }
 

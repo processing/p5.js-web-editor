@@ -8,7 +8,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import classNames from 'classnames';
 import { Console as ConsoleFeed } from 'console-feed';
 import {
-  CONSOLE_FEED_WITHOUT_ICONS,
   CONSOLE_FEED_LIGHT_STYLES,
   CONSOLE_FEED_DARK_STYLES,
   CONSOLE_FEED_CONTRAST_STYLES
@@ -43,7 +42,7 @@ import { useDidUpdate } from '../hooks/custom-hooks';
 import useHandleMessageEvent from '../hooks/useHandleMessageEvent';
 import { listen } from '../../../utils/dispatcher';
 
-const getConsoleFeedStyle = (theme, times, fontSize) => {
+const getConsoleFeedStyle = (theme, fontSize) => {
   const style = {
     BASE_FONT_FAMILY: 'Inconsolata, monospace'
   };
@@ -73,33 +72,30 @@ const getConsoleFeedStyle = (theme, times, fontSize) => {
   };
   const CONSOLE_FEED_SIZES = {
     TREENODE_LINE_HEIGHT: 1.2,
-    BASE_FONT_SIZE: fontSize,
-    ARROW_FONT_SIZE: fontSize,
-    LOG_ICON_WIDTH: fontSize,
-    LOG_ICON_HEIGHT: 1.45 * fontSize
+    BASE_FONT_SIZE: `${fontSize}px`,
+    ARROW_FONT_SIZE: `${fontSize}px`,
+    LOG_ICON_WIDTH: `${fontSize}px`,
+    LOG_ICON_HEIGHT: `${1.45 * fontSize}px`
   };
 
-  if (times > 1) {
-    Object.assign(style, CONSOLE_FEED_WITHOUT_ICONS);
-  }
   switch (theme) {
     case 'light':
       return Object.assign(
-        CONSOLE_FEED_LIGHT_STYLES,
+        CONSOLE_FEED_LIGHT_STYLES || {},
         CONSOLE_FEED_LIGHT_ICONS,
         CONSOLE_FEED_SIZES,
         style
       );
     case 'dark':
       return Object.assign(
-        CONSOLE_FEED_DARK_STYLES,
+        CONSOLE_FEED_DARK_STYLES || {},
         CONSOLE_FEED_DARK_ICONS,
         CONSOLE_FEED_SIZES,
         style
       );
     case 'contrast':
       return Object.assign(
-        CONSOLE_FEED_CONTRAST_STYLES,
+        CONSOLE_FEED_CONTRAST_STYLES || {},
         CONSOLE_FEED_CONTRAST_ICONS,
         CONSOLE_FEED_SIZES,
         style
@@ -114,7 +110,6 @@ const Console = ({ t }) => {
   const isExpanded = useSelector((state) => state.ide.consoleIsExpanded);
   const isPlaying = useSelector((state) => state.ide.isPlaying);
   const { theme, fontSize } = useSelector((state) => state.preferences);
-
   const {
     collapseConsole,
     expandConsole,
@@ -170,30 +165,16 @@ const Console = ({ t }) => {
         </div>
       </header>
       <div className="preview-console__body">
-        <div ref={cm} className="preview-console__messages">
-          {consoleEvents.map((consoleEvent) => {
-            const { method, times } = consoleEvent;
-            return (
-              <div
-                key={consoleEvent.id}
-                className={`preview-console__message preview-console__message--${method}`}
-              >
-                {times > 1 && (
-                  <div
-                    className="preview-console__logged-times"
-                    style={{ fontSize, borderRadius: fontSize / 2 }}
-                  >
-                    {times}
-                  </div>
-                )}
-                <ConsoleFeed
-                  styles={getConsoleFeedStyle(theme, times, fontSize)}
-                  logs={[consoleEvent]}
-                  key={`${consoleEvent.id}-${theme}-${fontSize}`}
-                />
-              </div>
-            );
-          })}
+        <div
+          ref={cm}
+          className="preview-console__messages"
+          style={{ fontSize }}
+        >
+          <ConsoleFeed
+            styles={getConsoleFeedStyle(theme, fontSize)}
+            logs={consoleEvents}
+            key={`${theme}-${fontSize}`}
+          />
         </div>
         {isExpanded && isPlaying && (
           <ConsoleInput

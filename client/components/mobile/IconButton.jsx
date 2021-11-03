@@ -19,7 +19,7 @@ const IconButton = (props) => {
   return (
     <ButtonWrapper
       iconBefore={icon && <Icon />}
-      kind={Button.kinds.inline}
+      display={Button.displays.inline}
       focusable="false"
       {...otherProps}
     />

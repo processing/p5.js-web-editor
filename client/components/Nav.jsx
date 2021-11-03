@@ -621,6 +621,16 @@ class Nav extends React.PureComponent {
               <button
                 onFocus={this.handleFocusForLang}
                 onBlur={this.handleBlur}
+                value="de"
+                onClick={(e) => this.handleLangSelection(e)}
+              >
+                Deutsch
+              </button>
+            </li>
+            <li className="nav__dropdown-item">
+              <button
+                onFocus={this.handleFocusForLang}
+                onBlur={this.handleBlur}
                 value="en-US"
                 onClick={(e) => this.handleLangSelection(e)}
               >
@@ -641,10 +651,20 @@ class Nav extends React.PureComponent {
               <button
                 onFocus={this.handleFocusForLang}
                 onBlur={this.handleBlur}
-                value="pt-BR"
+                value="fr-CA"
                 onClick={(e) => this.handleLangSelection(e)}
               >
-                Português
+                Français
+              </button>
+            </li>
+            <li className="nav__dropdown-item">
+              <button
+                onFocus={this.handleFocusForLang}
+                onBlur={this.handleBlur}
+                value="hi"
+                onClick={(e) => this.handleLangSelection(e)}
+              >
+                हिन्दी
               </button>
             </li>
             <li className="nav__dropdown-item">
@@ -661,10 +681,50 @@ class Nav extends React.PureComponent {
               <button
                 onFocus={this.handleFocusForLang}
                 onBlur={this.handleBlur}
-                value="hi"
+                value="pt-BR"
                 onClick={(e) => this.handleLangSelection(e)}
               >
-                हिन्दी
+                Português
+              </button>
+            </li>
+            <li className="nav__dropdown-item">
+              <button
+                onFocus={this.handleFocusForLang}
+                onBlur={this.handleBlur}
+                value="sv"
+                onClick={(e) => this.handleLangSelection(e)}
+              >
+                Svenska
+              </button>
+            </li>
+            <li className="nav__dropdown-item">
+              <button
+                onFocus={this.handleFocusForLang}
+                onBlur={this.handleBlur}
+                value="uk-UA"
+                onClick={(e) => this.handleLangSelection(e)}
+              >
+                Українська
+              </button>
+            </li>
+            <li className="nav__dropdown-item">
+              <button
+                onFocus={this.handleFocusForLang}
+                onBlur={this.handleBlur}
+                value="zh-CN"
+                onClick={(e) => this.handleLangSelection(e)}
+              >
+                简体中文
+              </button>
+            </li>
+            <li className="nav__dropdown-item">
+              <button
+                onFocus={this.handleFocusForLang}
+                onBlur={this.handleBlur}
+                value="zh-TW"
+                onClick={(e) => this.handleLangSelection(e)}
+              >
+                正體中文
               </button>
             </li>
           </ul>

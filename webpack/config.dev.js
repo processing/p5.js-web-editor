@@ -7,8 +7,6 @@ if (process.env.NODE_ENV === 'development') {
   require('dotenv').config();
 }
 
-
-// react hmr being fucked up has to do with the multiple entries!!! cool.
 module.exports = {
   mode: 'development',
   devtool: 'cheap-module-eval-source-map',
@@ -20,7 +18,15 @@ module.exports = {
       'react-hot-loader/patch',
       './client/index.jsx',
     ],
+    'previewApp': [
+      'core-js/modules/es6.promise',
+      'core-js/modules/es6.array.iterator',
+      'webpack-hot-middleware/client',
+      'react-hot-loader/patch',
+      './client/modules/Preview/previewIndex.jsx',
+    ],
     previewScripts: [
+      '@babel/polyfill',
       path.resolve(__dirname, '../client/utils/previewEntry.js')
     ]
   },

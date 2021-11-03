@@ -11,6 +11,8 @@ import AssetList from '../../IDE/components/AssetList';
 import AssetSize from '../../IDE/components/AssetSize';
 import CollectionList from '../../IDE/components/CollectionList';
 import SketchList from '../../IDE/components/SketchList';
+import RootPage from '../../../components/RootPage';
+import * as ProjectActions from '../../IDE/actions/project';
 import {
   CollectionSearchbar,
   SketchSearchbar
@@ -29,6 +31,7 @@ class DashboardView extends React.Component {
   constructor(props) {
     super(props);
     this.closeAccountPage = this.closeAccountPage.bind(this);
+    this.createNewSketch = this.createNewSketch.bind(this);
     this.gotoHomePage = this.gotoHomePage.bind(this);
     this.toggleCollectionCreate = this.toggleCollectionCreate.bind(this);
     this.state = {
@@ -42,6 +45,10 @@ class DashboardView extends React.Component {
 
   closeAccountPage() {
     browserHistory.push(this.props.previousPath);
+  }
+
+  createNewSketch() {
+    this.props.newProject();
   }
 
   gotoHomePage() {
@@ -98,7 +105,9 @@ class DashboardView extends React.Component {
         return (
           <React.Fragment>
             {this.isOwner() && (
-              <Button to="/">{t('DashboardView.NewSketch')}</Button>
+              <Button onClick={this.createNewSketch}>
+                {t('DashboardView.NewSketch')}
+              </Button>
             )}
             <SketchSearchbar />
           </React.Fragment>
@@ -125,7 +134,7 @@ class DashboardView extends React.Component {
     const actions = this.renderActionButton(currentTab, username, this.props.t);
 
     return (
-      <div className="dashboard">
+      <RootPage fixedHeight="100%">
         <Nav layout="dashboard" />
 
         <main className="dashboard-header">
@@ -157,7 +166,7 @@ class DashboardView extends React.Component {
             <CollectionCreate />
           </Overlay>
         )}
-      </div>
+      </RootPage>
     );
   }
 }
@@ -170,7 +179,12 @@ function mapStateToProps(state) {
   };
 }
 
+const mapDispatchToProps = {
+  ...ProjectActions
+};
+
 DashboardView.propTypes = {
+  newProject: PropTypes.func.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired
   }).isRequired,
@@ -185,4 +199,6 @@ DashboardView.propTypes = {
   t: PropTypes.func.isRequired
 };
 
-export default withTranslation()(connect(mapStateToProps)(DashboardView));
+export default withTranslation()(
+  connect(mapStateToProps, mapDispatchToProps)(DashboardView)
+);

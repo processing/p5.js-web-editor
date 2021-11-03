@@ -372,41 +372,6 @@ pre.CodeMirror-line {
   height: #{29 / $base-font-size}rem;
 }
 
-.editor__options-button {
-  @include icon();
-  position: absolute;
-  top: #{10 / $base-font-size}rem;
-  right: #{2 / $base-font-size}rem;
-  z-index: 1;
-}
-
-
-.editor__options {
-  display: none;
-  @extend %modal;
-  position: absolute;
-  right: #{0 / $base-font-size}rem;
-  padding: #{8 / $base-font-size}rem #{20 / $base-font-size}rem;
-  font-size: #{12 / $base-font-size}rem;
-  @include themify() {
-    background-color: getThemifyVariable('modal-background-color');
-    box-shadow: 0 0 18px getThemifyVariable('shadow-color');
-  }
-  .editor--options & {
-    display: block;
-  }
-}
-
-.editor__options li {
-  padding: #{4 / $base-font-size}rem 0;
-}
-
-.editor__options a {
-  @include themify() {
-    color: getThemifyVariable('secondary-text-color');
-  }
-}
-
 .editor__file-name {
   @include themify() {
     color: getThemifyVariable('primary-text-color');
