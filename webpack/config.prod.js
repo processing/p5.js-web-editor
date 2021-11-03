@@ -173,7 +173,8 @@ module.exports = {
     }),
     new CopyWebpackPlugin({
       patterns: [
-        { from: path.resolve(__dirname, '../translations/locales'), to: path.resolve(__dirname, '../dist/static/locales') }
+        { from: path.resolve(__dirname, '../translations/locales'), to: path.resolve(__dirname, '../dist/static/locales') },
+        { from: path.resolve(__dirname, '../public'), to: path.resolve(__dirname, '../dist/static') }
       ]
     }
     )

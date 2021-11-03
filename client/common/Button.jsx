@@ -6,8 +6,12 @@ import { Link } from 'react-router';
 import { remSize, prop } from '../theme';
 
 const kinds = {
+  primary: 'primary',
+  secondary: 'secondary'
+};
+
+const displays = {
   block: 'block',
-  icon: 'icon',
   inline: 'inline'
 };
 
@@ -16,6 +20,7 @@ const kinds = {
 // general global styles
 const StyledButton = styled.button`
   &&& {
+    font-weight: bold;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,45 +28,49 @@ const StyledButton = styled.button`
     width: max-content;
     text-decoration: none;
 
-    color: ${prop('Button.default.foreground')};
-    background-color: ${prop('Button.default.background')};
+    color: ${({ kind }) => prop(`Button.${kind}.default.foreground`)};
+    background-color: ${({ kind }) =>
+      prop(`Button.${kind}.default.background`)};
     cursor: pointer;
-    border: 2px solid ${prop('Button.default.border')};
+    border: 2px solid ${({ kind }) => prop(`Button.${kind}.default.border`)};
     border-radius: 2px;
     padding: ${remSize(8)} ${remSize(25)};
     line-height: 1;
 
     svg * {
-      fill: ${prop('Button.default.foreground')};
+      fill: ${({ kind }) => prop(`Button.${kind}.default.foreground`)};
     }
 
     &:hover:not(:disabled) {
-      color: ${prop('Button.hover.foreground')};
-      background-color: ${prop('Button.hover.background')};
-      border-color: ${prop('Button.hover.border')};
+      color: ${({ kind }) => prop(`Button.${kind}.hover.foreground`)};
+      background-color: ${({ kind }) =>
+        prop(`Button.${kind}.hover.background`)};
+      border-color: ${({ kind }) => prop(`Button.${kind}.hover.border`)};
 
       svg * {
-        fill: ${prop('Button.hover.foreground')};
+        fill: ${({ kind }) => prop(`Button.${kind}.hover.foreground`)};
       }
     }
 
     &:active:not(:disabled) {
-      color: ${prop('Button.active.foreground')};
-      background-color: ${prop('Button.active.background')};
+      color: ${({ kind }) => prop(`Button.${kind}.active.foreground`)};
+      background-color: ${({ kind }) =>
+        prop(`Button.${kind}.active.background`)};
 
       svg * {
-        fill: ${prop('Button.active.foreground')};
+        fill: ${({ kind }) => prop(`Button.${kind}.active.foreground`)};
       }
     }
 
     &:disabled {
-      color: ${prop('Button.disabled.foreground')};
-      background-color: ${prop('Button.disabled.background')};
-      border-color: ${prop('Button.disabled.border')};
+      color: ${({ kind }) => prop(`Button.${kind}.disabled.foreground`)};
+      background-color: ${({ kind }) =>
+        prop(`Button.${kind}.disabled.background`)};
+      border-color: ${({ kind }) => prop(`Button.${kind}.disabled.border`)};
       cursor: not-allowed;
 
       svg * {
-        fill: ${prop('Button.disabled.foreground')};
+        fill: ${({ kind }) => prop(`Button.${kind}.disabled.foreground`)};
       }
     }
 
@@ -108,8 +117,8 @@ const StyledIconButton = styled.button`
     height: ${remSize(32)}px;
     text-decoration: none;
 
-    color: ${prop('Button.default.foreground')};
-    background-color: ${prop('Button.hover.background')};
+    color: ${({ kind }) => prop(`Button.${kind}.default.foreground`)};
+    background-color: ${({ kind }) => prop(`Button.${kind}.hover.background`)};
     cursor: pointer;
     border: 1px solid transparent;
     border-radius: 50%;
@@ -117,26 +126,29 @@ const StyledIconButton = styled.button`
     line-height: 1;
 
     &:hover:not(:disabled) {
-      color: ${prop('Button.hover.foreground')};
-      background-color: ${prop('Button.hover.background')};
+      color: ${({ kind }) => prop(`Button.${kind}.hover.foreground`)};
+      background-color: ${({ kind }) =>
+        prop(`Button.${kind}.hover.background`)};
 
       svg * {
-        fill: ${prop('Button.hover.foreground')};
+        fill: ${({ kind }) => prop(`Button.${kind}.hover.foreground`)};
       }
     }
 
     &:active:not(:disabled) {
-      color: ${prop('Button.active.foreground')};
-      background-color: ${prop('Button.active.background')};
+      color: ${({ kind }) => prop(`Button.${kind}.active.foreground`)};
+      background-color: ${({ kind }) =>
+        prop(`Button.${kind}.active.background`)};
 
       svg * {
-        fill: ${prop('Button.active.foreground')};
+        fill: ${({ kind }) => prop(`Button.${kind}.active.foreground`)};
       }
     }
 
     &:disabled {
-      color: ${prop('Button.disabled.foreground')};
-      background-color: ${prop('Button.disabled.background')};
+      color: ${({ kind }) => prop(`Button.${kind}.disabled.foreground`)};
+      background-color: ${({ kind }) =>
+        prop(`Button.${kind}.disabled.background`)};
       cursor: not-allowed;
     }
 
@@ -151,10 +163,12 @@ const StyledIconButton = styled.button`
  */
 const Button = ({
   children,
+  display,
   href,
   kind,
   iconBefore,
   iconAfter,
+  iconOnly,
   'aria-label': ariaLabel,
   to,
   type,
@@ -170,9 +184,11 @@ const Button = ({
   );
   let StyledComponent = StyledButton;
 
-  if (kind === kinds.inline) {
+  if (display === displays.inline) {
     StyledComponent = StyledInlineButton;
-  } else if (kind === kinds.icon) {
+  }
+
+  if (iconOnly) {
     StyledComponent = StyledIconButton;
   }
 
@@ -180,6 +196,7 @@ const Button = ({
     return (
       <StyledComponent
         kind={kind}
+        display={display}
         as="a"
         aria-label={ariaLabel}
         href={href}
@@ -194,6 +211,7 @@ const Button = ({
     return (
       <StyledComponent
         kind={kind}
+        display={display}
         as={Link}
         aria-label={ariaLabel}
         to={to}
@@ -205,7 +223,13 @@ const Button = ({
   }
 
   return (
-    <StyledComponent kind={kind} aria-label={ariaLabel} type={type} {...props}>
+    <StyledComponent
+      kind={kind}
+      display={display}
+      aria-label={ariaLabel}
+      type={type}
+      {...props}
+    >
       {content}
     </StyledComponent>
   );
@@ -214,9 +238,11 @@ const Button = ({
 Button.defaultProps = {
   children: null,
   disabled: false,
+  display: displays.block,
   iconAfter: null,
   iconBefore: null,
-  kind: kinds.block,
+  iconOnly: false,
+  kind: kinds.primary,
   href: null,
   'aria-label': null,
   to: null,
@@ -224,6 +250,7 @@ Button.defaultProps = {
 };
 
 Button.kinds = kinds;
+Button.displays = displays;
 
 Button.propTypes = {
   /**
@@ -236,6 +263,10 @@ Button.propTypes = {
   */
   disabled: PropTypes.bool,
   /**
+   * The display type of the button—inline or block
+   */
+  display: PropTypes.string,
+  /**
    * SVG icon to place after child content
    */
   iconAfter: PropTypes.element,
@@ -243,6 +274,10 @@ Button.propTypes = {
    * SVG icon to place before child content
    */
   iconBefore: PropTypes.element,
+  /**
+   * If the button content is only an SVG icon
+   */
+  iconOnly: PropTypes.bool,
   /**
    * The kind of button - determines how it appears visually
    */

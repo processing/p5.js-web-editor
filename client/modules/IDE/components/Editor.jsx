@@ -29,6 +29,7 @@ import 'codemirror/addon/search/jump-to-line';
 import 'codemirror/addon/edit/matchbrackets';
 import 'codemirror/addon/edit/closebrackets';
 import 'codemirror/addon/selection/mark-selection';
+import 'codemirror-colorpicker';
 
 import { JSHINT } from 'jshint';
 import { CSSLint } from 'csslint';
@@ -124,6 +125,10 @@ class Editor extends React.Component {
           '-W041': false,
           esversion: 7
         }
+      },
+      colorpicker: {
+        type: 'sketch',
+        mode: 'edit'
       }
     });
 
@@ -149,7 +154,12 @@ class Editor extends React.Component {
       [`${metaKey}-F`]: 'findPersistent',
       [`${metaKey}-G`]: 'findPersistentNext',
       [`Shift-${metaKey}-G`]: 'findPersistentPrev',
-      [replaceCommand]: 'replace'
+      [replaceCommand]: 'replace',
+      // Cassie Tarakajian: If you don't set a default color, then when you
+      // choose a color, it deletes characters inline. This is a
+      // hack to prevent that.
+      [`${metaKey}-K`]: (cm, event) =>
+        cm.state.colorpicker.popup_color_picker({ length: 0 })
     });
 
     this.initializeDocuments(this.props.files);

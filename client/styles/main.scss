@@ -8,6 +8,7 @@
 
 @import 'node_modules/codemirror/lib/codemirror';
 @import 'node_modules/codemirror/addon/lint/lint';
+@import 'node_modules/codemirror-colorpicker/addon/codemirror-colorpicker';
 @import 'node_modules/dropzone/dist/dropzone';
 @import 'node_modules/primer-tooltips/build/build';
 
@@ -57,5 +58,3 @@
 
 @import 'layout/dashboard';
 @import 'layout/ide';
-@import 'layout/fullscreen';
-@import 'layout/user';
