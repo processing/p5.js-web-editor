@@ -17,13 +17,21 @@ import RootPage from '../../../components/RootPage';
 function FullView(props) {
   const dispatch = useDispatch();
   const project = useSelector((state) => state.project);
+  const [isRendered, setIsRendered] = useState(false);
 
   useEffect(() => {
     dispatch(getProject(props.params.project_id, props.params.username));
   }, []);
 
+  useEffect(() => {
+    // if (isRendered) prevents startSketch() from being called twice
+    // this calls startSketch if REGISTER happens before sketch is fetched
+    if (isRendered) {
+      dispatch(startSketch());
+    }
+  }, [project.id]);
+
   // send register event until iframe is loaded and sends a message back.
-  const [isRendered, setIsRendered] = useState(false);
   const clearInterval = useInterval(() => {
     dispatchMessage({ type: MessageTypes.REGISTER });
   }, 100);
