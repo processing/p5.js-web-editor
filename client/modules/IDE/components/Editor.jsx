@@ -45,7 +45,7 @@ import '../../../utils/p5-javascript';
 import Timer from '../components/Timer';
 import EditorAccessibility from '../components/EditorAccessibility';
 import { metaKey } from '../../../utils/metaKey';
-import './EditorShowHint';
+import './show-hint';
 import * as hinter from '../../../utils/p5-hinter';
 
 import '../../../utils/codemirror-search';
