@@ -346,9 +346,10 @@ class Editor extends React.Component {
 
   showHint(_cm) {
     const hintOptions = {
+      _fontSize: this.props.fontSize,
       completeSingle: false
       // completeOnSingleClick: false,
-      // closeOnUnfocus: false
+      // closeOnUnfocus: false,
       // closeOnPick: false
     };
 

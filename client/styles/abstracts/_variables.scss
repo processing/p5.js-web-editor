@@ -116,7 +116,22 @@ $themes: (
     form-secondary-title-color: $medium-dark,
     form-input-text-color: $dark,
     form-input-placeholder-text-color: $middle-light,
-    form-navigation-options-color: $middle-dark
+    form-navigation-options-color: $middle-dark,
+
+    hint-background-color: $white,
+    hint-text-color: $dark,
+    hint-item-border-bottom: 1px solid $lighter,
+    hint-fun-text-color: #0B7CA9,
+    hint-var-text-color: #D52889,
+    hint-type-text-color: $middle-dark,
+    hint-arrow-color: $lightest,
+    hint-arrow-background-color: $p5js-pink,
+    hint-item-hover-background-color: #f4f4f4,
+    hint-item-active-text-color: unset,
+    hint-item-active-background-color: #cfcfcf,
+    hint-item-active-type-text-color: $white,
+    hint-item-active-outline: none,
+    hint-item-active-outline-offset: 0
   ),
   dark: (
     logo-color: $p5js-pink,
@@ -196,7 +211,22 @@ $themes: (
 
     form-title-color: $lightest,
     form-secondary-title-color: $medium-light,
-    form-navigation-options-color: $middle-light
+    form-navigation-options-color: $middle-light,
+
+    hint-background-color: $darker,
+    hint-text-color: #E0D7D1,
+    hint-item-border-bottom: 1px solid $middle-dark,
+    hint-fun-text-color: #0F9DD7,
+    hint-var-text-color: #DE4A9B,
+    hint-type-text-color: #E0D7D1,
+    hint-arrow-color: #FDFDFD,
+    hint-arrow-background-color: $p5js-pink,
+    hint-item-hover-background-color: $middle-dark,
+    hint-item-active-text-color: $darker,
+    hint-item-active-background-color: #cfcfcf,
+    hint-item-active-type-text-color: $middle-dark,
+    hint-item-active-outline: none,
+    hint-item-active-outline-offset: 0
   ),
   contrast: (
     logo-color: $yellow,
@@ -276,7 +306,22 @@ $themes: (
 
     form-title-color: $lightest,
     form-secondary-title-color: $medium-light,
-    form-navigation-options-color: $middle-light
+    form-navigation-options-color: $middle-light,
+
+    hint-background-color: $darker,
+    hint-text-color: #c1c1c1,
+    hint-item-border-bottom: 1px solid #333,
+    hint-fun-text-color: #00FFFF,
+    hint-var-text-color: #FFA9D9,
+    hint-type-text-color: #c1c1c1,
+    hint-arrow-color: #333,
+    hint-arrow-background-color: #F5DC23,
+    hint-item-hover-background-color: #454545,
+    hint-item-active-text-color: #FDFDFD,
+    hint-item-active-background-color: unset,
+    hint-item-active-type-text-color: #FDFDFD,
+    hint-item-active-outline: 2px solid #FDFDFD,
+    hint-item-active-outline-offset: -2px
   )
 );
 

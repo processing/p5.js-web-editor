@@ -174,7 +174,7 @@
 
   function getText(completion) {
     if (typeof completion == "string") return completion;
-    else return completion.text;
+    else return completion.item.text;
   }
 
   function buildKeyMap(completion, handle) {
@@ -235,23 +235,30 @@
     var ownerDocument = cm.getInputField().ownerDocument;
     var parentWindow = ownerDocument.defaultView || ownerDocument.parentWindow;
 
+    var fontSize = completion.options._fontSize;
+
     var hints = this.hints = ownerDocument.createElement("ul");
+    hints.setAttribute("role", "listbox")
+    hints.setAttribute("aria-expanded", "true")
     var theme = completion.cm.options.theme;
     hints.className = "CodeMirror-hints " + theme;
     this.selectedHint = data.selectedHint || 0;
 
     var completions = data.list;
+
     for (var i = 0; i < completions.length; ++i) {
       var elt = hints.appendChild(ownerDocument.createElement("li")), cur = completions[i];
       var className = HINT_ELEMENT_CLASS + (i != this.selectedHint ? "" : " " + ACTIVE_HINT_ELEMENT_CLASS);
       if (cur.className != null) className = cur.className + " " + className;
       elt.className = className;
+      if (i == this.selectedHint) elt.setAttribute("aria-selected", "true")
+      elt.setAttribute("role", "option")
       if (cur.render) cur.render(elt, data, cur);
       else {
         const e = ownerDocument.createElement('p');
         const name = getText(cur);
-        if (cur.type) {
-          cur.displayText = `<span class="${cur.type}-name hint-name">${name}</span><span class="hint-type">${cur.type}</span>*`;
+        if (cur.item && cur.item.type) {
+          cur.displayText = `<span class="${cur.item.type}-name hint-name">${name}</span><span class="hint-type">${cur.item.type}</span>*`;
           cur.displayText = cur.displayText.replace('*', `<a href="https://p5js.org/reference/#/p5/${name}" onclick="event.stopPropagation()" target="_blank">&#10132;</a>`);
         }
         elt.appendChild(e);
@@ -280,6 +287,7 @@
     var winW = parentWindow.innerWidth || Math.max(ownerDocument.body.offsetWidth, ownerDocument.documentElement.offsetWidth);
     var winH = parentWindow.innerHeight || Math.max(ownerDocument.body.offsetHeight, ownerDocument.documentElement.offsetHeight);
     container.appendChild(hints);
+    cm.getInputField().setAttribute("aria-autocomplete", "list")
 
     var box = completion.options.moveOnOverlap ? hints.getBoundingClientRect() : new DOMRect();
     var scrolls = completion.options.paddingForScrollbar ? hints.scrollHeight > hints.clientHeight + 1 : false;
@@ -377,6 +385,9 @@
       this.completion.widget = null;
       if (this.hints.parentNode) this.hints.parentNode.removeChild(this.hints);
       this.completion.cm.removeKeyMap(this.keyMap);
+      var input = this.completion.cm.getInputField()
+      input.removeAttribute("aria-activedescendant")
+      input.removeAttribute("aria-owns")
 
       var cm = this.completion.cm;
       if (this.completion.options.closeOnUnfocus) {
@@ -404,9 +415,14 @@
         i = avoidWrap ? 0  : this.data.list.length - 1;
       if (this.selectedHint == i) return;
       var node = this.hints.childNodes[this.selectedHint];
-      if (node) node.className = node.className.replace(" " + ACTIVE_HINT_ELEMENT_CLASS, "");
+      if (node) {
+        node.className = node.className.replace(" " + ACTIVE_HINT_ELEMENT_CLASS, "");
+        node.removeAttribute("aria-selected")
+      }
       node = this.hints.childNodes[this.selectedHint = i];
       node.className += " " + ACTIVE_HINT_ELEMENT_CLASS;
+      node.setAttribute("aria-selected", "true")
+      this.completion.cm.getInputField().setAttribute("aria-activedescendant", node.id)
       this.scrollToActive()
       CodeMirror.signal(this.data, "select", this.data.list[this.selectedHint], node);
     },
