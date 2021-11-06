@@ -3,12 +3,15 @@ import friendlyWords from 'friendly-words';
 import lodash from 'lodash';
 
 import passport from 'passport';
-import GitHubStrategy from 'passport-github';
+import GitHubStrategy from 'passport-github2';
 import LocalStrategy from 'passport-local';
 import GoogleStrategy from 'passport-google-oauth20';
 import { BasicStrategy } from 'passport-http';
 
 import User from '../models/user';
+
+const accountSuspensionMessage =
+  'Account has been suspended. Please contact privacy@p5js.org if you believe this is an error.';
 
 function generateUniqueUsername(username) {
   const adj =
@@ -38,6 +41,9 @@ passport.use(
         if (!user) {
           done(null, false, { msg: `Email ${email} not found.` });
           return;
+        } else if (user.banned) {
+          done(null, false, { msg: accountSuspensionMessage });
+          return;
         }
         user.comparePassword(password, (innerErr, isMatch) => {
           if (isMatch) {
@@ -63,6 +69,10 @@ passport.use(
       }
       if (!user) {
         done(null, false);
+        return;
+      }
+      if (user.banned) {
+        done(null, false, { msg: accountSuspensionMessage });
         return;
       }
       user.findMatchingKey(key, (innerErr, isMatch, keyDocument) => {
@@ -106,7 +116,8 @@ passport.use(
       clientSecret: process.env.GITHUB_SECRET,
       callbackURL: '/auth/github/callback',
       passReqToCallback: true,
-      scope: ['user:email']
+      scope: ['user:email'],
+      allRawEmails: true
     },
     (req, accessToken, refreshToken, profile, done) => {
       User.findOne({ github: profile.id }, (findByGithubErr, existingUser) => {
@@ -115,6 +126,9 @@ passport.use(
             done(
               new Error('GitHub account is already linked to another account.')
             );
+            return;
+          } else if (existingUser.banned) {
+            done(new Error(accountSuspensionMessage));
             return;
           }
           done(null, existingUser);
@@ -132,8 +146,22 @@ passport.use(
           }
           req.user.save((saveErr) => done(null, req.user));
         } else {
-          User.findByEmail(emails, (findByEmailErr, existingEmailUser) => {
-            if (existingEmailUser) {
+          User.findAllByEmails(emails, (findByEmailErr, existingEmailUsers) => {
+            if (existingEmailUsers.length) {
+              let existingEmailUser;
+              // Handle case where user has made multiple p5.js Editor accounts,
+              // with emails that are connected to the same GitHub account
+              if (existingEmailUsers.length > 1) {
+                existingEmailUser = existingEmailUsers.find(
+                  (u) => (u.email = primaryEmail)
+                );
+              } else {
+                [existingEmailUser] = existingEmailUsers;
+              }
+              if (existingEmailUser.banned) {
+                done(new Error(accountSuspensionMessage));
+                return;
+              }
               existingEmailUser.email = existingEmailUser.email || primaryEmail;
               existingEmailUser.github = profile.id;
               existingEmailUser.username =
@@ -180,7 +208,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET,
-      callbackURL: '/auth/google/callback',
+      callbackURL: 'https://editor.p5js.org/auth/google/callback',
       passReqToCallback: true,
       scope: ['openid email']
     },
@@ -196,11 +224,13 @@ passport.use(
                 )
               );
               return;
+            } else if (existingUser.banned) {
+              done(new Error(accountSuspensionMessage));
+              return;
             }
             done(null, existingUser);
             return;
           }
-
           const primaryEmail = profile._json.emails[0].value;
 
           if (req.user) {
@@ -225,6 +255,10 @@ passport.use(
                     // what if a username is already taken from the display name too?
                     // then, append a random friendly word?
                     if (existingEmailUser) {
+                      if (existingEmailUser.banned) {
+                        done(new Error(accountSuspensionMessage));
+                        return;
+                      }
                       existingEmailUser.email =
                         existingEmailUser.email || primaryEmail;
                       existingEmailUser.google = profile._json.emails[0].value;

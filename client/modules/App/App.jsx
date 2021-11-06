@@ -5,6 +5,7 @@ import getConfig from '../../utils/getConfig';
 import DevTools from './components/DevTools';
 import { setPreviousPath } from '../IDE/actions/ide';
 import { setLanguage } from '../IDE/actions/preferences';
+import CookieConsent from '../User/components/CookieConsent';
 
 class App extends React.Component {
   constructor(props, context) {
@@ -41,6 +42,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="app">
+        <CookieConsent />
         {this.state.isMounted &&
           !window.devToolsExtension &&
           getConfig('NODE_ENV') === 'development' && <DevTools />}

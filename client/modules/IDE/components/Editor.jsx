@@ -31,6 +31,7 @@ import 'codemirror/addon/edit/matchbrackets';
 import 'codemirror/addon/edit/closebrackets';
 import 'codemirror/addon/selection/mark-selection';
 import 'codemirror/addon/hint/css-hint';
+import 'codemirror-colorpicker';
 
 import { JSHINT } from 'jshint';
 import { CSSLint } from 'csslint';
@@ -128,6 +129,10 @@ class Editor extends React.Component {
           '-W041': false,
           esversion: 7
         }
+      },
+      colorpicker: {
+        type: 'sketch',
+        mode: 'edit'
       }
     });
     this.hinter = new Fuse(hinter.p5Hinter, {
@@ -157,7 +162,12 @@ class Editor extends React.Component {
       [`${metaKey}-F`]: 'findPersistent',
       [`${metaKey}-G`]: 'findPersistentNext',
       [`Shift-${metaKey}-G`]: 'findPersistentPrev',
-      [replaceCommand]: 'replace'
+      [replaceCommand]: 'replace',
+      // Cassie Tarakajian: If you don't set a default color, then when you
+      // choose a color, it deletes characters inline. This is a
+      // hack to prevent that.
+      [`${metaKey}-K`]: (cm, event) =>
+        cm.state.colorpicker.popup_color_picker({ length: 0 })
     });
 
     this.initializeDocuments(this.props.files);
@@ -225,10 +235,7 @@ class Editor extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (
-      this.props.file.content !== prevProps.file.content &&
-      this.props.file.content !== this._cm.getValue()
-    ) {
+    if (this.props.file.id !== prevProps.file.id) {
       const oldDoc = this._cm.swapDoc(this._docs[this.props.file.id]);
       this._docs[prevProps.file.id] = oldDoc;
       this._cm.focus();
