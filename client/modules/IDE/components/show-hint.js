@@ -227,7 +227,19 @@
     }
   }
 
+  function displayHint(name, type) {
+    return `<p>\
+<span class="${type}-name hint-name">${name}</span>\
+<span class="hint-hidden">, </span>\
+<span class="hint-type">${type}</span>\
+<span class="hint-hidden">, </span>\
+<a href="https://p5js.org/reference/#/p5/${name}" role="link" onclick="event.stopPropagation()" target="_blank">\
+<span class="hint-hidden">open ${name} reference</span>\
+<span aria-hidden="true">&#10132;</span></a></p>`;
+  }
+
   function Widget(completion, data) {
+    this.id = "cm-complete-" + Math.floor(Math.random(1e6));
     this.completion = completion;
     this.data = data;
     this.picked = false;
@@ -240,6 +252,7 @@
     var hints = this.hints = ownerDocument.createElement("ul");
     hints.setAttribute("role", "listbox")
     hints.setAttribute("aria-expanded", "true")
+    hints.id = this.id
     var theme = completion.cm.options.theme;
     hints.className = "CodeMirror-hints " + theme;
     this.selectedHint = data.selectedHint || 0;
@@ -252,14 +265,14 @@
       if (cur.className != null) className = cur.className + " " + className;
       elt.className = className;
       if (i == this.selectedHint) elt.setAttribute("aria-selected", "true")
+      elt.id = this.id + "-" + i
       elt.setAttribute("role", "option")
       if (cur.render) cur.render(elt, data, cur);
       else {
         const e = ownerDocument.createElement('p');
         const name = getText(cur);
         if (cur.item && cur.item.type) {
-          cur.displayText = `<span class="${cur.item.type}-name hint-name">${name}</span><span class="hint-type">${cur.item.type}</span>*`;
-          cur.displayText = cur.displayText.replace('*', `<a href="https://p5js.org/reference/#/p5/${name}" onclick="event.stopPropagation()" target="_blank">&#10132;</a>`);
+          cur.displayText = displayHint(name, cur.item.type);
         }
         elt.appendChild(e);
         e.outerHTML = cur.displayText || getText(cur);
@@ -288,6 +301,8 @@
     var winH = parentWindow.innerHeight || Math.max(ownerDocument.body.offsetHeight, ownerDocument.documentElement.offsetHeight);
     container.appendChild(hints);
     cm.getInputField().setAttribute("aria-autocomplete", "list")
+    cm.getInputField().setAttribute("aria-owns", this.id)
+    cm.getInputField().setAttribute("aria-activedescendant", this.id + "-" + this.selectedHint)
 
     var box = completion.options.moveOnOverlap ? hints.getBoundingClientRect() : new DOMRect();
     var scrolls = completion.options.paddingForScrollbar ? hints.scrollHeight > hints.clientHeight + 1 : false;

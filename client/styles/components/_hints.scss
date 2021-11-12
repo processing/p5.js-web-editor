@@ -78,6 +78,10 @@
       float: right;
       margin: 0 calc(2rem + #{5 / $base-font-size}rem) 0 0;
     }
+
+    .hint-hidden {
+      @extend %hidden-element;
+    }
   
     a {
       position: absolute;
