@@ -14,13 +14,14 @@ class ShareModal extends React.PureComponent {
         <h3 className="share-modal__project-name">{projectName}</h3>
         <CopyableInput
           label={this.props.t('ShareModal.Embed')}
-          value={`<iframe src="${previewUrl}/${ownerUsername}/embed/${projectId}"></iframe>`}
+          value={`<iframe src="${hostname}/${ownerUsername}/full/${projectId}"></iframe>`}
         />
-        <CopyableInput
+        {/* CAT removing due to phishing issues */}
+        {/* <CopyableInput
           label={this.props.t('ShareModal.Present')}
           hasPreviewLink
           value={`${previewUrl}/${ownerUsername}/present/${projectId}`}
-        />
+        /> */}
         <CopyableInput
           label={this.props.t('ShareModal.Fullscreen')}
           hasPreviewLink
