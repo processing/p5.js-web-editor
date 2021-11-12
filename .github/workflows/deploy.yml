@@ -2,8 +2,8 @@ name: Deploy to production
 on:
   workflow_run:
     workflows: ["Test"]
-    tags:
-      - '*'
+    branches:
+      - release
     types:
       - completed
 env:
