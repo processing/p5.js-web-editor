@@ -194,7 +194,6 @@ class Editor extends React.Component {
     });
 
     this._cm.on('keydown', (_cm, e) => {
-      console.log(e);
       if (
         ((metaKey === 'Cmd' && e.metaKey) ||
           (metaKey === 'Ctrl' && e.ctrlKey)) &&
