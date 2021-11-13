@@ -194,6 +194,7 @@ class Editor extends React.Component {
     });
 
     this._cm.on('keydown', (_cm, e) => {
+      console.log(e);
       if (
         ((metaKey === 'Cmd' && e.metaKey) ||
           (metaKey === 'Ctrl' && e.ctrlKey)) &&
@@ -354,14 +355,14 @@ class Editor extends React.Component {
             `.CodeMirror-hint-active a`
           );
           if (activeItem) {
-            activeItem.click();
+            activeItem.focus();
           } else {
             e.pick();
           }
         }
-      }
+      },
+      closeOnUnfocus: false
       // completeOnSingleClick: false,
-      // closeOnUnfocus: false,
       // closeOnPick: false
     };
 
