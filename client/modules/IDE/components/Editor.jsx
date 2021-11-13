@@ -347,7 +347,19 @@ class Editor extends React.Component {
   showHint(_cm) {
     const hintOptions = {
       _fontSize: this.props.fontSize,
-      completeSingle: false
+      completeSingle: false,
+      extraKeys: {
+        Tab: (cm, e) => {
+          const activeItem = document.querySelector(
+            `.CodeMirror-hint-active a`
+          );
+          if (activeItem) {
+            activeItem.click();
+          } else {
+            e.pick();
+          }
+        }
+      }
       // completeOnSingleClick: false,
       // closeOnUnfocus: false,
       // closeOnPick: false
