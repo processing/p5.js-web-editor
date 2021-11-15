@@ -7,6 +7,13 @@ import { setPreviousPath } from '../IDE/actions/ide';
 import { setLanguage } from '../IDE/actions/preferences';
 import CookieConsent from '../User/components/CookieConsent';
 
+function hideCookieConsent(pathname) {
+  if (pathname.includes('/full/') || pathname.includes('/embed/')) {
+    return true;
+  }
+  return false;
+}
+
 class App extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -40,9 +47,10 @@ class App extends React.Component {
   }
 
   render() {
+    const hide = hideCookieConsent(this.props.location.pathname);
     return (
       <div className="app">
-        <CookieConsent />
+        <CookieConsent hide={hide} />
         {this.state.isMounted &&
           !window.devToolsExtension &&
           getConfig('NODE_ENV') === 'development' && <DevTools />}

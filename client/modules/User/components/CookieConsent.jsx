@@ -6,6 +6,7 @@ import ReactGA from 'react-ga';
 import { Transition } from 'react-transition-group';
 import { Link } from 'react-router';
 import { Trans, useTranslation } from 'react-i18next';
+import { PropTypes } from 'prop-types';
 import getConfig from '../../../utils/getConfig';
 import { setUserCookieConsent } from '../actions';
 import { remSize, prop, device } from '../../../theme';
@@ -72,7 +73,7 @@ const CookieConsentButtons = styled.div`
   }
 `;
 
-function CookieConsent() {
+function CookieConsent({ hide }) {
   const user = useSelector((state) => state.user);
   const [cookieConsent, setBrowserCookieConsent] = useState('none');
   const [inProp, setInProp] = useState(false);
@@ -154,6 +155,8 @@ function CookieConsent() {
     }
   }, [cookieConsent]);
 
+  if (hide) return null;
+
   return (
     <Transition in={inProp} timeout={500}>
       {(state) => (
@@ -185,5 +188,13 @@ function CookieConsent() {
     </Transition>
   );
 }
+
+CookieConsent.propTypes = {
+  hide: PropTypes.bool
+};
+
+CookieConsent.defaultProps = {
+  hide: false
+};
 
 export default CookieConsent;
