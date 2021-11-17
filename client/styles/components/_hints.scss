@@ -42,6 +42,15 @@
     a {
       color: getThemifyVariable('hint-arrow-color');
       background: getThemifyVariable('hint-arrow-background-color');
+
+      &:hover, &:active {
+        background: getThemifyVariable('hint-arrow-background-active-color');
+      }
+
+      &.focused-hint-link {
+        outline: 2px solid getThemifyVariable('hint-arrow-focus-outline-color');
+        outline-offset: -2px;
+      }
     }
   
     li.CodeMirror-hint-active {
@@ -51,7 +60,16 @@
       outline-offset: getThemifyVariable('hint-item-active-outline-offset');
   
       .hint-type {
-        color: getThemifyVariable('hint-item-active-type-text-color:');
+        color: getThemifyVariable('hint-item-active-type-text-color');
+      }
+
+      &.unfocused {
+        background: getThemifyVariable('hint-background-color') !important;
+        outline: unset !important;
+
+        .hint-type {
+          color: getThemifyVariable('hint-type-text-color') !important;
+        }
       }
     }
   
@@ -92,17 +110,12 @@
       margin: 0;
       padding-top: 0.4rem;
       text-align: center;
-      opacity: 0.75;
       outline: none;
       z-index: 1;
     }
   
     a:focus, a:active {
       outline: 0;
-    }
-  
-    a:hover, a:active {
-      opacity: 1;
     }
   }
 }

@@ -136,7 +136,7 @@ class Editor extends React.Component {
       }
     });
     this.hinter = new Fuse(hinter.p5Hinter, {
-      threshold: 0.2,
+      threshold: 0.05,
       keys: ['text']
     });
 
@@ -345,19 +345,62 @@ class Editor extends React.Component {
   }
 
   showHint(_cm) {
+    let focusedLinkElement = null;
+    const setFocusedLinkElement = (set) => {
+      if (set && !focusedLinkElement) {
+        const activeItemLink = document.querySelector(
+          `.CodeMirror-hint-active a`
+        );
+        if (activeItemLink) {
+          focusedLinkElement = activeItemLink;
+          focusedLinkElement.classList.add('focused-hint-link');
+          focusedLinkElement.parentElement.parentElement.classList.add(
+            'unfocused'
+          );
+        }
+      }
+    };
+    const removeFocusedLinkElement = () => {
+      if (focusedLinkElement) {
+        focusedLinkElement.classList.remove('focused-hint-link');
+        focusedLinkElement.parentElement.parentElement.classList.remove(
+          'unfocused'
+        );
+        focusedLinkElement = null;
+        return true;
+      }
+      return false;
+    };
+
     const hintOptions = {
       _fontSize: this.props.fontSize,
       completeSingle: false,
       extraKeys: {
-        Tab: (cm, e) => {
-          const activeItem = document.querySelector(
+        'Shift-Right': (cm, e) => {
+          const activeItemLink = document.querySelector(
             `.CodeMirror-hint-active a`
           );
-          if (activeItem) {
-            activeItem.focus();
-          } else {
-            e.pick();
-          }
+          if (activeItemLink) activeItemLink.click();
+        },
+        Right: (cm, e) => {
+          setFocusedLinkElement(true);
+        },
+        Left: (cm, e) => {
+          removeFocusedLinkElement();
+        },
+        Up: (cm, e) => {
+          const onLink = removeFocusedLinkElement();
+          e.moveFocus(-1);
+          setFocusedLinkElement(onLink);
+        },
+        Down: (cm, e) => {
+          const onLink = removeFocusedLinkElement();
+          e.moveFocus(1);
+          setFocusedLinkElement(onLink);
+        },
+        Enter: (cm, e) => {
+          if (focusedLinkElement) focusedLinkElement.click();
+          else e.pick();
         }
       },
       closeOnUnfocus: false
