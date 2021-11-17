@@ -49,6 +49,7 @@
       },
       {
         "displayName": "client",
+        "testEnvironment": "jsdom",
         "setupFilesAfterEnv": [
           "<rootDir>/client/jest.setup.js"
         ],
@@ -97,8 +98,8 @@
     "@storybook/addons": "^5.3.21",
     "@storybook/react": "^5.3.21",
     "@svgr/webpack": "^5.5.0",
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^10.4.9",
+    "@testing-library/jest-dom": "^5.15.0",
+    "@testing-library/react": "^12.1.2",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^9.0.0",
     "babel-loader": "^8.2.2",
@@ -113,10 +114,10 @@
     "eslint-plugin-react": "^7.24.0",
     "file-loader": "^6.2.0",
     "husky": "^4.3.8",
-    "jest": "^26.0.1",
+    "jest": "^27.3.1",
     "lint-staged": "^10.5.4",
     "mini-css-extract-plugin": "^1.6.2",
-    "msw": "^0.28.1",
+    "msw": "^0.35.0",
     "node-sass": "^6.0.1",
     "nodemon": "^2.0.12",
     "optimize-css-assets-webpack-plugin": "^5.0.8",
