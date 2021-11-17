@@ -1,7 +1,7 @@
 sudo: required
 language: node_js
 node_js:
- - "14.17.3"
+ - "16.13.0"
 
 cache:
   directories:
