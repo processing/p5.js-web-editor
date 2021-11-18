@@ -42,7 +42,6 @@ const MobilePreferences = () => {
     linewrap,
     textOutput,
     gridOutput,
-    soundOutput,
     lineNumbers,
     lintWarning
   } = useSelector((state) => state.preferences);
@@ -54,7 +53,6 @@ const MobilePreferences = () => {
     setLinewrap,
     setTextOutput,
     setGridOutput,
-    setSoundOutput,
     setLineNumbers,
     setLintWarning
   } = bindActionCreators(
@@ -102,12 +100,6 @@ const MobilePreferences = () => {
       gridOutput,
       setGridOutput,
       'table output'
-    ),
-    preferenceOnOff(
-      t('MobilePreferences.Sound'),
-      soundOutput,
-      setSoundOutput,
-      'sound output'
     )
   ];
 
