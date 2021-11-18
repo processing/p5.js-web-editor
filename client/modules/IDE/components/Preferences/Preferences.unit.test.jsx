@@ -736,14 +736,6 @@ describe('<Preferences />', () => {
       testCheckbox('text output on', false, 'setTextOutput');
     });
 
-    it('clicking on sound output checkbox to unselect it', () => {
-      testCheckbox('sound output on', true, 'setSoundOutput');
-    });
-
-    it('clicking on sound output checkbox to select it', () => {
-      testCheckbox('sound output on', false, 'setSoundOutput');
-    });
-
     it('clicking on grid output checkbox to unselect it', () => {
       testCheckbox('table output on', true, 'setGridOutput');
     });
@@ -757,7 +749,6 @@ describe('<Preferences />', () => {
         props = {
           ...props,
           textOutput: true,
-          soundOutput: true,
           gridOutput: true
         };
       });
@@ -777,15 +768,11 @@ describe('<Preferences />', () => {
         const textOutputCheckbox = screen.getByRole('checkbox', {
           name: 'text output on'
         });
-        const soundOutputCheckbox = screen.getByRole('checkbox', {
-          name: 'sound output on'
-        });
         const gridOutputCheckbox = screen.getByRole('checkbox', {
           name: 'table output on'
         });
 
         expect(textOutputCheckbox.checked).toBe(true);
-        expect(soundOutputCheckbox.checked).toBe(true);
         expect(gridOutputCheckbox.checked).toBe(true);
       });
     });
@@ -795,7 +782,6 @@ describe('<Preferences />', () => {
         props = {
           ...props,
           textOutput: false,
-          soundOutput: false,
           gridOutput: false
         };
       });
@@ -814,15 +800,11 @@ describe('<Preferences />', () => {
         const textOutputCheckbox = screen.getByRole('checkbox', {
           name: 'text output on'
         });
-        const soundOutputCheckbox = screen.getByRole('checkbox', {
-          name: 'sound output on'
-        });
         const gridOutputCheckbox = screen.getByRole('checkbox', {
           name: 'table output on'
         });
 
         expect(textOutputCheckbox.checked).toBe(false);
-        expect(soundOutputCheckbox.checked).toBe(false);
         expect(gridOutputCheckbox.checked).toBe(false);
       });
     });
