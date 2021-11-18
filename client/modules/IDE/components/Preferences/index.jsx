@@ -176,12 +176,19 @@ class Preferences extends React.Component {
                   {this.props.t('Preferences.DecreaseFont')}
                 </h6>
               </button>
-              <form onSubmit={this.onFontInputSubmit}>
+              <form
+                onSubmit={this.onFontInputSubmit}
+                aria-label={this.props.t('Preferences.SetFontSize')}
+              >
+                <label htmlFor="font-size-value" className="preference--hidden">
+                  {this.props.t('Preferences.FontSize')}
+                </label>
                 <input
                   className="preference__value"
                   aria-live="polite"
                   aria-atomic="true"
                   value={this.state.fontSize}
+                  id="font-size-value"
                   onChange={this.onFontInputChange}
                   type="text"
                   ref={(element) => {
