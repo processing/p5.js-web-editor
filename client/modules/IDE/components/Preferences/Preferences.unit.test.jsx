@@ -140,8 +140,7 @@ describe('<Preferences />', () => {
       });
 
       // get ahold of the text field
-      const input = screen.getByTestId('font-size-text-field');
-      // const input = screen.getByRole("textbox", {name: /decrease font size/i});
+      const input = screen.getByRole('textbox', { name: /font size/i });
 
       // change input to 24
       act(() => {
@@ -150,7 +149,11 @@ describe('<Preferences />', () => {
 
       // submit form
       act(() => {
-        fireEvent.submit(screen.getByTestId('font-size-form'));
+        fireEvent.submit(
+          screen.getByRole('form', {
+            name: /set font size/i
+          })
+        );
       });
 
       // expect that setFontSize was called once with 24
@@ -165,7 +168,7 @@ describe('<Preferences />', () => {
       });
 
       // get ahold of the text field
-      const input = screen.getByTestId('font-size-text-field');
+      const input = screen.getByRole('textbox', { name: /font size/i });
 
       act(() => {
         fireEvent.change(input, { target: { value: '100' } });
@@ -174,7 +177,11 @@ describe('<Preferences />', () => {
       expect(input.value).toBe('100');
 
       act(() => {
-        fireEvent.submit(screen.getByTestId('font-size-form'));
+        fireEvent.submit(
+          screen.getByRole('form', {
+            name: /set font size/i
+          })
+        );
       });
 
       expect(props.setFontSize).toHaveBeenCalledTimes(1);
@@ -188,7 +195,7 @@ describe('<Preferences />', () => {
       });
 
       // get ahold of the text field
-      const input = screen.getByTestId('font-size-text-field');
+      const input = screen.getByRole('textbox', { name: /font size/i });
 
       act(() => {
         fireEvent.change(input, { target: { value: '0' } });
@@ -197,7 +204,11 @@ describe('<Preferences />', () => {
       expect(input.value).toBe('0');
 
       act(() => {
-        fireEvent.submit(screen.getByTestId('font-size-form'));
+        fireEvent.submit(
+          screen.getByRole('form', {
+            name: /set font size/i
+          })
+        );
       });
 
       expect(props.setFontSize).toHaveBeenCalledTimes(1);
@@ -213,7 +224,7 @@ describe('<Preferences />', () => {
       });
 
       // get ahold of the text field
-      const input = screen.getByTestId('font-size-text-field');
+      const input = screen.getByRole('textbox', { name: /font size/i });
 
       act(() => {
         fireEvent.change(input, { target: { value: 'hi' } });
@@ -224,7 +235,11 @@ describe('<Preferences />', () => {
 
       // we hit submit
       act(() => {
-        fireEvent.submit(screen.getByTestId('font-size-form'));
+        fireEvent.submit(
+          screen.getByRole('form', {
+            name: /set font size/i
+          })
+        );
       });
 
       // it still sets the font size but it's still 12
@@ -239,7 +254,7 @@ describe('<Preferences />', () => {
       });
 
       // get ahold of the text field
-      const input = screen.getByTestId('font-size-text-field');
+      const input = screen.getByRole('textbox', { name: /font size/i });
 
       act(() => {
         fireEvent.change(input, { target: { value: '-' } });
@@ -248,7 +263,11 @@ describe('<Preferences />', () => {
       expect(input.value).toBe('12');
 
       act(() => {
-        fireEvent.submit(screen.getByTestId('font-size-form'));
+        fireEvent.submit(
+          screen.getByRole('form', {
+            name: /set font size/i
+          })
+        );
       });
 
       expect(props.setFontSize).toHaveBeenCalledTimes(1);
