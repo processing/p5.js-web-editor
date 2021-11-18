@@ -197,7 +197,6 @@ class Preferences extends React.Component {
                   onClick={() => {
                     this.fontSizeInput.select();
                   }}
-                  data-testid="font-size-text-field"
                 />
               </form>
               <button
