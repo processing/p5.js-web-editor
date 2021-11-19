@@ -228,7 +228,7 @@
   }
 
   function displayHint(name, type) {
-    return `<p>\
+    return `<p class="${type}-item">\
 <span class="${type}-name hint-name">${name}</span>\
 <span class="hint-hidden">, </span>\
 <span class="hint-type">${type}</span>\
@@ -275,7 +275,7 @@
           cur.displayText = displayHint(name, cur.item.type);
         }
         elt.appendChild(e);
-        e.outerHTML = cur.displayText || getText(cur);
+        e.outerHTML = cur.displayText || `<span class="plain-hint-item">${getText(cur)}<span>`;
       }
       elt.hintId = i;
     }

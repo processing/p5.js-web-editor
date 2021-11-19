@@ -24,7 +24,7 @@
 
     .CodeMirror-hint {
       color: getThemifyVariable('hint-text-color');
-      border-bottom: getThemifyVariable('hint-item-border-bottom');
+      border-bottom: #{1 / $base-font-size}rem solid getThemifyVariable('hint-item-border-bottom-color');
     }
   
     .fun-name {
@@ -43,33 +43,35 @@
       color: getThemifyVariable('hint-arrow-color');
       background: getThemifyVariable('hint-arrow-background-color');
 
-      &:hover, &:active {
+      &:hover, &:active, &.focused-hint-link {
         background: getThemifyVariable('hint-arrow-background-active-color');
       }
 
       &.focused-hint-link {
-        outline: 2px solid getThemifyVariable('hint-arrow-focus-outline-color');
-        outline-offset: -2px;
+        outline: #{4 / $base-font-size}rem solid getThemifyVariable('hint-arrow-focus-outline-color');
+        outline-offset: #{-2 / $base-font-size}rem;
       }
     }
   
-    li.CodeMirror-hint-active {
-      color: getThemifyVariable('hint-item-active-text-color');
+    li.CodeMirror-hint-active:not(.unfocused) {
       background: getThemifyVariable('hint-item-active-background-color');
       outline: getThemifyVariable('hint-item-active-outline');
       outline-offset: getThemifyVariable('hint-item-active-outline-offset');
-  
-      .hint-type {
-        color: getThemifyVariable('hint-item-active-type-text-color');
+
+      .fun-item {
+        border-bottom: #{2 / $base-font-size}rem solid getThemifyVariable('hint-fun-active-border-bottom-color');
       }
 
-      &.unfocused {
-        background: getThemifyVariable('hint-background-color') !important;
-        outline: unset !important;
+      .var-item {
+        border-bottom: #{2 / $base-font-size}rem solid getThemifyVariable('hint-var-active-border-bottom-color');
+      }
 
-        .hint-type {
-          color: getThemifyVariable('hint-type-text-color') !important;
-        }
+      .hint-name {
+        color: getThemifyVariable('hint-item-active-text-color');
+      }
+  
+      .hint-type, .plain-hint-item {
+        color: getThemifyVariable('hint-item-active-type-text-color');
       }
     }
   
@@ -81,20 +83,34 @@
   .CodeMirror-hint {
     position: relative;
     margin: 0;
-    padding: 0.5rem 0 0.5rem #{5 / $base-font-size}rem;
+    padding: 0;
     height: 2rem;
-    font-size: inherit;
     white-space: pre;
     cursor: pointer;
-    border-bottom: #{1 / $base-font-size}rem solid;
+
+    &:only-child, &:last-child {
+      border-bottom: none !important;
+    }
+
+    p {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
   
-    .hint-name{
-      font-weight: bold;
+    .hint-name, .plain-hint-item {
+      display: inline-block;
+      margin: 0.4rem auto 0.4rem 0.4rem;
+      font-size: 1.2rem;
+      line-height: 100%;
+      font-weight: 700;
     }
   
     .hint-type {
       float: right;
-      margin: 0 calc(2rem + #{5 / $base-font-size}rem) 0 0;
+      margin: 0.5rem 2.4rem 0.5rem auto;
+      font-size: 1rem;
+      line-height: 100%;
     }
 
     .hint-hidden {
@@ -109,6 +125,8 @@
       width: calc(2rem - #{1 / $base-font-size}rem);
       margin: 0;
       padding-top: 0.4rem;
+      font-size: 1.2rem;
+      line-height: 100%;
       text-align: center;
       outline: none;
       z-index: 1;
