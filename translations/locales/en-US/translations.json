@@ -145,6 +145,8 @@
     "DecreaseFontARIA": "decrease font size",
     "IncreaseFont": "Increase",
     "IncreaseFontARIA": "increase font size",
+    "FontSize": "Font Size",
+    "SetFontSize": "set font size",
     "Autosave": "Autosave",
     "On": "On",
     "AutosaveOnARIA": "autosave on",

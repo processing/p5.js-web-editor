@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 
 import Nav from '../../../components/Nav';
+import RootPage from '../../../components/RootPage';
 
 import CollectionCreate from '../components/CollectionCreate';
 import Collection from '../components/Collection';
@@ -57,11 +58,11 @@ class CollectionView extends React.Component {
 
   render() {
     return (
-      <div className="dashboard">
+      <RootPage>
         <Nav layout="dashboard" />
 
         {this.renderContent()}
-      </div>
+      </RootPage>
     );
   }
 }

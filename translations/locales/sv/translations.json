@@ -1,0 +1,618 @@
+{
+  "Nav": {
+    "File": {
+      "Title": "Arkiv",
+      "New": "Ny",
+      "Share": "Dela",
+      "Duplicate": "Duplicera",
+      "Open": "Öppna",
+      "Download": "Ladda ner",
+      "AddToCollection": "Lägg till i samling",
+      "Examples": "Exempel"
+    },
+    "Edit": {
+      "Title": "Redigera",
+      "TidyCode": "Formatera kod",
+      "Find": "Sök",
+      "Replace": "Ersätt"
+    },
+    "Sketch": {
+      "Title": "Sketch",
+      "AddFile": "Lägg till fil",
+      "AddFolder": "Lägg till mapp",
+      "Run": "Kör",
+      "Stop": "Stoppa"
+    },
+    "Help": {
+      "Title": "Hjälp",
+      "KeyboardShortcuts": "Tangentbordsgenvägar",
+      "Reference": "Referens",
+      "About": "Om"
+    },
+    "Lang": "Språk",
+    "BackEditor": "Tillbaka till editor",
+    "WarningUnsavedChanges": "Är du säker på att du vill lämna sidan? Det finns osparade ändringar.",
+    "Login": "Logga in",
+    "LoginOr": "eller",
+    "SignUp": "Registrera dig",
+    "Auth": {
+      "Welcome": "Välkommen",
+      "Hello": "Hej",
+      "MyAccount": "Mitt konto",
+      "My": "Mina",
+      "MySketches": "Mina sketcher",
+      "MyCollections": "Mina samlingar",
+      "Asset": "Resurs",
+      "MyAssets": "Mina resurser",
+      "LogOut": "Logga ut"
+    }
+  },
+  "CodemirrorFindAndReplace": {
+    "ToggleReplace": "Växla ersätt",
+    "Find": "Sök",
+    "FindPlaceholder": "Sök i filer",
+    "Replace": "Ersätt",
+    "ReplaceAll": "Ersätt alla",
+    "ReplacePlaceholder": "Text att ersätta",
+    "Regex": "Reguljära uttryck",
+    "CaseSensitive": "Skiftlägeskänsligt",
+    "WholeWords": "Hela ord",
+    "Previous": "Föregående",
+    "Next": "Nästa",
+    "NoResults": "Inget resultat",
+    "Close": "Stäng"
+  },
+  "LoginForm": {
+    "UsernameOrEmail": "E-post eller användarnamn",
+    "UsernameOrEmailARIA": "E-post eller användarnamn",
+    "Password": "Lösenord",
+    "PasswordARIA": "Lösenord",
+    "Submit": "Logga in"
+  },
+  "LoginView": {
+    "Title": "p5.js Webb editor | Logga in",
+    "Login": "Logga in",
+    "LoginOr": "eller",
+    "SignUp": "Registrera dig",
+    "Email": "E-post",
+    "Username": "användarnamn",
+    "DontHaveAccount": "Har du inget konto? ",
+    "ForgotPassword": "Har du glömt ditt lösenord? ",
+    "ResetPassword": "Återställ ditt lösenord"
+  },
+  "SocialAuthButton": {
+    "Connect": "Koppla {{serviceauth}} konto",
+    "Unlink": "Koppla bort {{serviceauth}} konto",
+    "Login": "Logga in med {{serviceauth}}",
+    "LogoARIA": "{{serviceauth}} logo"
+  },
+  "About": {
+    "Title": "Om",
+    "TitleHelmet": "p5.js Webb editor | Om",
+    "Contribute": "Bidra",
+    "NewP5": "Nybörjare med p5.js?",
+    "Report": "Rapportera en bugg",
+    "Learn": "Lär dig",
+    "Resources": "Resurser",
+    "Libraries": "Bibliotek",
+    "Forum": "Forum",
+    "Examples": "Examples",
+    "PrivacyPolicy": "Integritetspolicy",
+    "TermsOfUse": "Villkor för användning",
+    "CodeOfConduct": "Uppförandekod"
+  },
+  "Toast": {
+    "OpenedNewSketch": "Öppnat ny sketch.",
+    "SketchSaved": "Sketch sparad.",
+    "SketchFailedSave": "Misslyckades spara sketch.",
+    "AutosaveEnabled": "Autospara aktiverat.",
+    "LangChange": "Språk bytt.",
+    "SettingsSaved": "Sparat inställningar."
+  },
+  "Toolbar": {
+    "Preview": "Förhandsvisning",
+    "Auto-refresh": "Automatisk uppdatering",
+    "OpenPreferencesARIA": "Öppna preferenser",
+    "PlaySketchARIA": "Kör sketch",
+    "PlayOnlyVisualSketchARIA": "Kör bara visuell sketch",
+    "StopSketchARIA": "Stoppa sketch",
+    "EditSketchARIA": "Redigera sketchnamn",
+    "NewSketchNameARIA": "Nytt sketchnamn",
+    "By": " av "
+  },
+  "Console": {
+    "Title": "Konsoll",
+    "Clear": "Rensa",
+    "ClearARIA": "Rensa konsoll",
+    "Close": "Stäng",
+    "CloseARIA": "Stäng konsoll",
+    "Open": "Öppna",
+    "OpenARIA": "Öppna konsoll"
+  },
+  "Preferences": {
+    "Settings": "Inställningar",
+    "GeneralSettings": "Allmänna inställningar",
+    "Accessibility": "Tillgänglighet",
+    "Theme": "Tema",
+    "LightTheme": "Ljust",
+    "LightThemeARIA": "ljust tema på",
+    "DarkTheme": "Mörkt",
+    "DarkThemeARIA": "mörkt tema på",
+    "HighContrastTheme": "Hög Kontrast",
+    "HighContrastThemeARIA": "hög kontrast-tema på",
+    "TextSize": "Textstorlek",
+    "DecreaseFont": "Minska",
+    "DecreaseFontARIA": "minska fontstorlek",
+    "IncreaseFont": "Öka",
+    "IncreaseFontARIA": "öka fontstorlek",
+    "Autosave": "Autospara",
+    "On": "På",
+    "AutosaveOnARIA": "autospara på",
+    "Off": "Av",
+    "AutosaveOffARIA": "autospara av",
+    "AutocloseBracketsQuotes": "Automatisk stängnging av parenteser och citattecken",
+    "AutocloseBracketsQuotesOnARIA": "automatisk stängnging av parenteser och citattecken på",
+    "AutocloseBracketsQuotesOffARIA": "automatisk stängnging av parenteser och citattecken av",
+    "WordWrap": "Radbrytning",
+    "LineWrapOnARIA": "radbrytning på",
+    "LineWrapOffARIA": "radbrytning av",
+    "LineNumbers": "Radnummer",
+    "LineNumbersOnARIA": "radnummer på",
+    "LineNumbersOffARIA": "radnummer av",
+    "LintWarningSound": "Lint varningsljud",
+    "LintWarningOnARIA": "Lint varning på",
+    "LintWarningOffARIA": "Lint varning av",
+    "PreviewSound": "Förhandsvisning ljud",
+    "PreviewSoundARIA": "Förhandsvisning ljud",
+    "AccessibleTextBasedCanvas": "Tillgänglig textbaserad canvas",
+    "UsedScreenReader": "Används med skärmläsare",
+    "PlainText": "Oformatterad text",
+    "TextOutputARIA": "text-output på",
+    "TableText": "Tabelltext",
+    "TableOutputARIA": "tabell-output på"
+  },
+  "KeyboardShortcuts": {
+    "Title": "Tangentbordsgenvägar",
+    "ShortcutsFollow": "Tangentbordsgenvägar för kodredigering följer",
+    "SublimeText": "Sublime Text-genvägar",
+    "CodeEditing": {
+      "Tidy": "Formatera",
+      "FindText": "Sök text",
+      "FindNextMatch": "Sök nästa matchning",
+      "FindPrevMatch": "Sök Föregående matchning",
+      "ReplaceTextMatch": "Ersätt textmatchning",
+      "IndentCodeLeft": "Indentera kod vänster",
+      "IndentCodeRight": "Indentera kod höger",
+      "CommentLine": "Kommentera rad",
+      "FindNextTextMatch": "Sök nästa textmatchning",
+      "FindPreviousTextMatch": "Sök föregående textmatchning",
+      "CodeEditing": "kodredigering"
+    },
+    "General": {
+      "StartSketch": "Kör sketch",
+      "StopSketch": "Stoppa sketch",
+      "TurnOnAccessibleOutput": "Sätt på tillgänglig output",
+      "TurnOffAccessibleOutput": "Stäng av tillgänglig output"
+    }
+  },
+  "Sidebar": {
+    "Title": "Sketchfiler",
+    "ToggleARIA": "Växla öppna/stäng sketchfilsalternativ",
+    "AddFolder": "Skapa mapp",
+    "AddFolderARIA": "skapa mapp",
+    "AddFile": "Skapa fil",
+    "AddFileARIA": "skapa fil",
+    "UploadFile": "Ladda upp fil",
+    "UploadFileARIA": "ladda upp fil"
+  },
+  "FileNode": {
+    "OpenFolderARIA": "Öppna mapp",
+    "CloseFolderARIA": "Stäng mapp",
+    "ToggleFileOptionsARIA": "Växla öppna/stäng filalternativ",
+    "AddFolder": "Skapa mapp",
+    "AddFolderARIA": "skapa mapp",
+    "AddFile": "Skapa fil",
+    "AddFileARIA": "skapa fil",
+    "UploadFile": "Ladda upp fil",
+    "UploadFileARIA": "ladda upp fil",
+    "Rename": "Byt namn",
+    "Delete": "Radera"
+  },
+  "Common": {
+    "Error": "Error",
+    "ErrorARIA": "Error",
+    "Save": "Spara",
+    "p5logoARIA": "p5.js Logo",
+    "DeleteConfirmation": "Är du säker på att du vill radera {{name}}?"
+  },
+  "IDEView": {
+    "SubmitFeedback": "Skicka feedback",
+    "SubmitFeedbackARIA": "skicka-feedback",
+    "AddCollectionTitle": "Lägg till i samling",
+    "AddCollectionARIA":"lägg till i samling",
+    "ShareTitle": "Dela",
+    "ShareARIA":"dela"
+  },
+  "NewFileModal": {
+    "Title": "Skapa fil",
+    "CloseButtonARIA": "Stäng ny fil Modal",
+    "EnterName": "Skriv in ett namn",
+    "InvalidType": "Felaktig filtyp. Giltiga filändelser är .js, .css, .json, .xml, .txt, .csv, .tsv, .frag, och .vert."
+  },
+  "NewFileForm": {
+    "AddFileSubmit": "Lägg till fil",
+    "Placeholder": "Namn"
+  },
+  "NewFolderModal": {
+    "Title": "Skapa mapp",
+    "CloseButtonARIA": "Stäng ny mapp Modal",
+    "EnterName": "Skriv in ett namn",
+    "EmptyName": "Mappnamnet kan inte vara tomt",
+    "InvalidExtension": "Mappnamnet kan inte innehålla en filändelse"
+  },
+  "NewFolderForm": {
+    "AddFolderSubmit": "Lägg till mapp",
+    "Placeholder": "Namn"
+  },
+  "ResetPasswordForm": {
+    "Email": "E-post som använts för registrering",
+    "EmailARIA": "e-post",
+    "Submit": "Skicka e-post med lösenordsåterställning"
+  },
+  "ResetPasswordView": {
+    "Title": "p5.js Webb editor | Återställ lösenord",
+    "Reset": "Återställ ditt lösenord",
+    "Submitted": "Du bör få e-post med återställning av lösenord inom kort. Om du inte ser det, kontrollera din spam-mapp då det kan ha hamnat där.",
+    "Login": "Logga in",
+    "LoginOr": "eller",
+    "SignUp": "Registrera dig"
+  },
+  "ReduxFormUtils": {
+    "errorInvalidEmail": "Ange en giltig e-postadress",
+    "errorEmptyEmail": "Ange en e-postadress",
+    "errorPasswordMismatch": "Lösenorden måste vara samma",
+    "errorEmptyPassword": "Ange ett lösenord",
+    "errorShortPassword": "Lösenordet måste vara minst 6 tecken",
+    "errorConfirmPassword": "Ange en lösenordsbekräftelse",
+    "errorNewPassword": "Ange ett nytt lösenord eller lämna det nuvarande lösenordet tomt.",
+    "errorEmptyUsername": "Ange ett användarnamn.",
+    "errorLongUsername": "Användarnamnet får innehålla högst 19 tecken.",
+    "errorValidUsername": "Användarnamnet får bara innehålla siffror, bokstäver, punkter, bindestreck och understreck."
+  },
+  "NewPasswordView": {
+    "Title": "p5.js Webb editor | Nytt lösenord",
+    "Description": "Ange ett nytt lösenord",
+    "TokenInvalidOrExpired": "Koden för återställning av lösenord har upphört att gälla.",
+    "EmptyPassword": "Ange ett lösenord",
+    "PasswordConfirmation": "Ange en lösenordsbekräftelse",
+    "PasswordMismatch": "Lösenorden måste vara samma"
+  },
+  "AccountForm": {
+    "Email": "E-post",
+    "EmailARIA": "e-post",
+    "Unconfirmed": "Inte bekräftad.",
+    "EmailSent": "Bekräftelse skickad, kontollera din e-post.",
+    "Resend": "Återsänd e-post med bekräftelse",
+    "UserName": "Användarnamn",
+    "UserNameARIA": "Användarnamn",
+    "CurrentPassword": "Nuvarande lösenord",
+    "CurrentPasswordARIA": "Nuvarande lösenord",
+    "NewPassword": "Nytt lösenord",
+    "NewPasswordARIA": "Nytt lösenord",
+    "SubmitSaveAllSettings": "Spara alla inställningar"
+  },
+  "AccountView": {
+    "SocialLogin": "Social inloggning",
+    "SocialLoginDescription": "Använd ditt GitHub- eller Googlekonto för att logga in till p5.js Webb editor.",
+    "Title": "p5.js Webb editor | Kontoinställningar",
+    "Settings": "Kontoinställningar",
+    "AccountTab": "Konto",
+    "AccessTokensTab": "Tokens för åtkomst"
+  },
+  "APIKeyForm": {
+    "ConfirmDelete": "Är du säker på att du vill radera {{key_label}}?",
+    "Summary": "Personliga åtkomst-tokens fungerar som lösenord för att tillåta automatiserade\n          skript att få tillgång till editorns API. Skapa ett token för varje skript\n          som behöver tillgång.",
+    "CreateToken": "Skapa nytt token",
+    "TokenLabel": "Vad används detta token till?",
+    "TokenPlaceholder": "Vad används detta token till? T.ex. Exempel för import-skript",
+    "CreateTokenSubmit": "Skapa",
+    "NoTokens": "Du har inga tokens för närvarande.",
+    "NewTokenTitle": "Ditt nya token för åtkomst",
+    "NewTokenInfo": "Se till att kopiera ditt nya personliga åtkomst-token nu.\n                  Du kommer inte att kunna se det igen!",
+    "ExistingTokensTitle": "Existerande tokens"
+  },
+  "APIKeyList": {
+    "Name": "Namn",
+    "Created": "Skapad",
+    "LastUsed": "Senast använd",
+    "Actions": "Händelser",
+    "Never": "Aldrig",
+    "DeleteARIA": "Radera API-nyckel"
+  },
+  "NewPasswordForm": {
+    "Title": "Lösenord",
+    "TitleARIA": "Lösenord",
+    "ConfirmPassword": "Bekräfta lösenord",
+    "ConfirmPasswordARIA": "Bekräfta lösenord",
+    "SubmitSetNewPassword": "Ange nytt lösenord"
+  },
+  "SignupForm": {
+    "Title": "Användarnamn",
+    "TitleARIA": "användarnamn",
+    "Email": "E-post",
+    "EmailARIA": "e-post",
+    "Password": "Lösenord",
+    "PasswordARIA": "lösenord",
+    "ConfirmPassword": "Bekräfta lösenord",
+    "ConfirmPasswordARIA": "Bekräfta lösenord",
+    "SubmitSignup": "Registrera dig"
+  },
+  "SignupView": {
+    "Title": "p5.js Webb editor | Registrering",
+    "Description": "Registrering",
+    "Or": "Eller",
+    "AlreadyHave": "Har du redan ett konto?",
+    "Login": "Logga in"
+  },
+  "EmailVerificationView": {
+    "Title": "p5.js Webb editor | E-postbekräftelse",
+    "Verify": "Verifiera din e-post",
+    "InvalidTokenNull": "Den länken är ogiltig.",
+    "Checking": "Validerar token, var god vänta...",
+    "Verified": "Allt klart, din e-postadress är verifierad.",
+    "InvalidState": "Någonting gick fel."
+  },
+  "AssetList": {
+    "Title": "p5.js Webb editor | Mina resurser",
+    "ToggleOpenCloseARIA": "Växla öppna/stäng alternativ för resurser",
+    "Delete": "Radera",
+    "OpenNewTab": "Öppna i ny flik",
+    "NoUploadedAssets": "Inga uppladdade resurser.",
+    "HeaderName": "Namn",
+    "HeaderSize": "Storlek",
+    "HeaderSketch": "Sketch"
+  },
+  "Feedback": {
+    "Title": "p5.js Webb editor | Feedback",
+    "ViaGithubHeader": "Via Github Issues",
+    "ViaGithubDescription": "Om du är bekant med Github är detta vår föredragna metod för att ta emot bugg-rapportering och feedback.",
+    "GoToGithub": "Gå till Github",
+    "ViaGoogleHeader": "Via Google Form",
+    "ViaGoogleDescription": "Du kan också skicka detta formulär.",
+    "GoToForm": "Gå till formulär"
+  },
+  "Searchbar": {
+    "SearchSketch": "Sök sketcher...",
+    "SearchCollection": "Sök samlingar...",
+    "ClearTerm": "rensa"
+  },
+  "UploadFileModal": {
+    "Title": "Ladda upp fil",
+    "CloseButtonARIA": "Stäng ladda upp fil modal",
+    "SizeLimitError": "Error: Du kan inte ladda upp fler filer. Du har nått den totala storleksbegränsningen {{sizeLimit}}.\n                Om du vill ladda upp flera filer, var god radera de filer som du inte längre använder genom\n                i din "
+  },
+  "FileUploader": {
+    "DictDefaultMessage": "Släpp filerna här eller klicka för att använda filhanteraren"
+  },
+  "ErrorModal": {
+    "MessageLogin": "För att spara sketcher måste du vara inloggad. Var god ",
+    "Login": "logga in",
+    "LoginOr": " eller ",
+    "SignUp": "registrera dig",
+    "MessageLoggedOut": "Det ser ut som att du har blivit utloggad. Var god ",
+    "LogIn": "logga in",
+    "SavedDifferentWindow": "Det projekt du försöker spara har sparats från ett annat fönster.\n        Var god ladda om sidan för att se den senaste versionen.",
+    "LinkTitle": "Fel vid kontolänkning",
+    "LinkMessage": "Det uppstod ett problem vid länkning av ditt {{serviceauth}}-konto till ditt p5.js Webb editor-konto. Ditt {{serviceauth}}-konto har redan länkats till ett annat p5.js Webb editor-konto."
+  },
+  "ShareModal": {
+    "Embed": "Bädda in",
+    "Present": "Presentera",
+    "Fullscreen": "Fullskärm",
+    "Edit": "Redigera"
+  },
+  "CollectionView": {
+    "TitleCreate": "Skapa samling",
+    "TitleDefault": "samling"
+  },
+  "Collection": {
+    "Title": "p5.js Webb editor | Mina samlingar",
+    "AnothersTitle": "p5.js Webb editor | {{anotheruser}}:s samlingar",
+    "Share": "Dela",
+    "URLLink": "Länk till samling",
+    "AddSketch": "Lägg till sketch",
+    "DeleteFromCollection": "Är du säker på att du vill radera {{name_sketch}} från den här samlingen?",
+    "SketchDeleted": "Sketchen är raderad",
+    "SketchRemoveARIA": "Radera sketch från samling",
+    "DescriptionPlaceholder": "Lägg till beskrivning",
+    "Description": "beskrivning",
+    "NumSketches": "{{count}} sketch",
+    "NumSketches_plural": "{{count}} sketcher",
+    "By":"Samling av",
+    "NoSketches": "Inga sketcher i samling",
+    "TableSummary": "tabell med alla samlingar",
+    "HeaderName": "Namn",
+    "HeaderCreatedAt": "Datum skapad",
+    "HeaderUser": "Ägare",
+    "DirectionAscendingARIA": "Stigande",
+    "DirectionDescendingARIA": "Fallande",
+    "ButtonLabelAscendingARIA": "Sortera efter {{displayName}} stigande.",
+    "ButtonLabelDescendingARIA": "Sortera efter {{displayName}} fallande."
+  },
+  "AddToCollectionList": {
+    "Title": "p5.js Webb editor | Mina samlingar",
+    "AnothersTitle": "p5.js Webb editor | {{anotheruser}}:s samlingar",
+    "Empty": "Inga samlingar"
+  },
+  "CollectionCreate": {
+    "Title": "p5.js Webb editor | Skapa samling",
+    "FormError": "Kunde inte skapa samling",
+    "FormLabel": "Namn på samling",
+    "FormLabelARIA": "namn",
+    "NameRequired": "Ett namn på samlingen är nödvändigt",
+    "Description": "Beskrivning (valfritt)",
+    "DescriptionARIA": "beskrivning",
+    "DescriptionPlaceholder": "Mina favorit-sketcher",
+    "SubmitCollectionCreate": "Skapa samling"
+  },
+  "DashboardView": {
+    "CreateCollection": "Skapa samling",
+    "NewSketch": "Ny sketch",
+    "CreateCollectionOverlay": "Skapa samling"
+  },
+  "DashboardTabSwitcher": {
+    "Sketches": "Sketcher",
+    "Collections": "Samlingar",
+    "Assets": "Resurser"
+  },
+  "CollectionList": {
+    "Title": "p5.js Webb editor | Mina samlingar",
+    "AnothersTitle": "p5.js Webb editor | {{anotheruser}}:s samlingar",
+    "NoCollections": "Inga samlingar.",
+    "TableSummary": "tabell med alla samlingar",
+    "HeaderName": "Namn",
+    "HeaderCreatedAt": "Datum skapad",
+    "HeaderCreatedAt_mobile": "Skapad",
+    "HeaderUpdatedAt": "Datum Uppdaterad",
+    "HeaderUpdatedAt_mobile": "Uppdaterad",
+    "HeaderNumItems": "# sketcher",
+    "HeaderNumItems_mobile": "# sketcher",
+    "DirectionAscendingARIA": "Stigande",
+    "DirectionDescendingARIA": "Fallande",
+    "ButtonLabelAscendingARIA": "Sortera på {{displayName}} stigande.",
+    "ButtonLabelDescendingARIA": "Sortera på {{displayName}} fallande.",
+    "AddSketch": "Lägg till sketch"
+  },
+  "CollectionListRow": {
+    "ToggleCollectionOptionsARIA": "Växla öppna/stäng alternativ för samling",
+    "AddSketch": "Lägg till sketch",
+    "Delete": "Radera",
+    "Rename": "Ändra namn"
+  },
+  "Overlay": {
+    "AriaLabel": "Stäng {{title}} övre lager"
+  },
+  "QuickAddList":{
+    "ButtonRemoveARIA": "Ta bort från samling",
+    "ButtonAddToCollectionARIA": "Lägg till i samling",
+    "View": "Granska"
+  },
+  "SketchList": {
+    "View": "Granska",
+    "Title": "p5.js Webb editor | Mina sketcher",
+    "AnothersTitle": "p5.js Webb editor | {{anotheruser}}:s sketcher",
+    "ToggleLabelARIA": "Växla öppna/stäng alternativ för sketch",
+    "DropdownRename": "Byt namn",
+    "DropdownDownload": "Ladda ner",
+    "DropdownDuplicate": "Duplicera",
+    "DropdownAddToCollection": "Lägg till i samling",
+    "DropdownDelete": "Radera",
+    "DirectionAscendingARIA": "Stigande",
+    "DirectionDescendingARIA": "Fallande",
+    "ButtonLabelAscendingARIA": "Sortera på {{displayName}} stigande.",
+    "ButtonLabelDescendingARIA": "Sortera på {{displayName}} fallande.",
+    "AddToCollectionOverlayTitle": "Lägg till i samling",
+    "TableSummary": "tabell med alla sparade projekt",
+    "HeaderName": "Sketch",
+    "HeaderCreatedAt": "Datum skapad",
+    "HeaderCreatedAt_mobile": "Skapad",
+    "HeaderUpdatedAt": "Datum uppdaterad",
+    "HeaderUpdatedAt_mobile": "Uppdaterad",
+    "NoSketches": "Inga sketcher."
+  },
+  "AddToCollectionSketchList": {
+    "Title": "p5.js Webb editor | Mina sketcher",
+    "AnothersTitle": "p5.js Webb editor | {{anotheruser}}:s sketcher",
+    "NoCollections": "Inga samlingar."
+  },
+  "Editor": {
+    "OpenSketchARIA": "Öppna filnavigation för sketch",
+    "CloseSketchARIA": "Stäng filnavigation för sketch",
+    "UnsavedChangesARIA": "Sketchen har osparade ändringar",
+    "KeyUpLineNumber": "rad {{lineNumber}}"
+  },
+  "EditorAccessibility": {
+    "NoLintMessages": "Det finns inga Lint-meddelanden ",
+    "CurrentLine": " Aktuell rad"
+  },
+  "Timer": {
+    "SavedAgo": "Sparad: {{timeAgo}}"
+  },
+  "formatDate": {
+    "JustNow": "just nu",
+    "15Seconds": "för 15 sekunder sen",
+    "25Seconds": "för 25 sekunder sen",
+    "35Seconds": "för 35 sekunder sen",
+    "Ago": "{{timeAgo}} sen"
+  },
+  "AddRemoveButton": {
+    "AltAddARIA": "Lägg till i samling",
+    "AltRemoveARIA": "Ta bort från samling"
+  },
+  "CopyableInput": {
+    "CopiedARIA": "Kopierat till urklipp!",
+    "OpenViewTabARIA": "Öppna {{label}}-vy i ny flik"
+  },
+  "EditableInput": {
+    "EditValue": "Redigera {{display}} värde",
+    "EmptyPlaceholder": "Inget värde"
+  },
+  "PreviewNav": {
+    "EditSketchARIA": "Redigera sketch",
+    "ByUser": "av"
+  },
+  "MobilePreferences": {
+    "Settings": "Inställningar",
+    "GeneralSettings": "Allmänna inställningar",
+    "Accessibility": "Tillgänglighet",
+    "AccessibleOutput": "Tillgänglig output",
+    "Theme": "Tema",
+    "LightTheme": "Ljust",
+    "DarkTheme": "Mörkt",
+    "HighContrastTheme": "Hög kontrast",
+    "Autosave": "Autospara",
+    "WordWrap": "Radbrytning",
+    "LineNumbers": "Radnummer",
+    "LintWarningSound": "Lint varningsljud",
+    "UsedScreenReader": "Använd med skärmläsare",
+    "PlainText": "Oformatterad text",
+    "TableText": "tabelltext",
+    "Sound": "Ljud"
+  },
+  "PreferenceCreators": {
+    "On": "På",
+    "Off": "Av"
+  },
+  "MobileIDEView":{
+    "Preferences": "Preferenser",
+    "MyStuff": "Mina saker",
+    "Examples": "Exempel",
+    "OriginalEditor": "Originaleditor",
+    "Login": "Logga in",
+    "Logout": "Logga ut"
+  },
+  "MobileDashboardView": {
+    "Examples": "Exempel",
+    "Sketches": "Sketcher",
+    "Collections": "Samlingar",
+    "Assets": "Resurser",
+    "MyStuff": "Mina saker",
+    "CreateSketch": "Skapa sketch",
+    "CreateCollection": "Skapa samling"
+  },
+  "Explorer": {
+    "Files": "Filer"
+  },
+  "Cookies": {
+    "Header": "Cookies",
+    "Body": "p5.js editor använder cookies. Vissa är nödvändiga för webbplatsens funktionalitet och tillåter dig att hantera ditt konto och preferenser. Andra är inte nödvändiga - de används för analys som gör att vi kan lära oss mer om vårt community. <strong> Vi säljer inte denna data och använder inte heller datan för reklam. </strong> Du kan själv avgöra vilka cookies du vill tillåta och läsa mer i vår <0>Integritetspolicy<0>.",
+    "AllowAll": "Tillåt alla",
+    "AllowEssential": "Tillåt nödvändiga"
+  },
+  "Legal": {
+    "PrivacyPolicy": "Integritetspolicy",
+    "TermsOfUse": "Villkor för användning",
+    "CodeOfConduct": "Uppförandekod"
+  }
+}
+
