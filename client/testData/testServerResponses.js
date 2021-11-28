@@ -6,7 +6,7 @@ export const userResponse = {
   email: 'happydog@example.com',
   username: 'happydog',
   preferences: {
-    fontSize: 18,
+    fontSize: { editor: 18, console: 18 },
     lineNumbers: true,
     indentationAmount: 2,
     isTabIndent: false,

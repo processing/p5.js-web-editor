@@ -1,10 +1,16 @@
 import React from 'react';
 import { act } from 'react-dom/test-utils';
-import { fireEvent, render, screen } from '../../../../test-utils';
+import { bindActionCreators } from 'redux';
+import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import * as ActionTypes from '../../../../constants';
+import { fireEvent, reduxRender, screen } from '../../../../test-utils';
+import { initialTestState } from '../../../../testData/testReduxStore';
+import { setFontSize } from '../../actions/preferences';
 import Preferences from './index';
 
 /* props to pass in:
- * - this.props.fontSize : number
+ * - this.props.fontSize : { editor: number, console: number }
  * - this.props.autosave : bool
  * - this.props.autocloseBracketsQuotes : bool
  * - this.props.linewrap : bool
@@ -16,7 +22,7 @@ import Preferences from './index';
  * - this.props.soundOutput : bool
  * - t from internationalization
  *
- * - this.props.setFontSize(fontsize : number)
+ * - this.props.setFontSize(fontsize : number, target : 'editor' | 'console)
  * - this.props.setAutosave(value : bool)
  * - this.props.setAutocloseBracketsQuotes(value: bool)
  * - this.props.setLinewrap(value : bool)
@@ -30,9 +36,12 @@ import Preferences from './index';
  */
 
 describe('<Preferences />', () => {
+  const mockStore = configureStore([thunk]);
+  const store = mockStore(initialTestState);
+
   let props = {
     t: jest.fn(),
-    fontSize: 12,
+    fontSize: { editor: 12, console: 12 },
     autosave: false,
     autocloseBracketsQuotes: false,
     linewrap: false,
@@ -42,7 +51,7 @@ describe('<Preferences />', () => {
     textOutput: false,
     gridOutput: false,
     soundOutput: false,
-    setFontSize: jest.fn(),
+    setFontSize: bindActionCreators(setFontSize, store.dispatch),
     setAutosave: jest.fn(),
     setAutocloseBracketsQuotes: jest.fn(),
     setLinewrap: jest.fn(),
@@ -54,224 +63,524 @@ describe('<Preferences />', () => {
     setSoundOutput: jest.fn()
   };
 
-  const subject = () => render(<Preferences {...props} />);
+  const subject = () => reduxRender(<Preferences {...props} />, { store });
 
   afterEach(() => {
     jest.clearAllMocks();
+    store.clearActions();
   });
 
   describe('font tests', () => {
-    it('font size increase button says increase', () => {
-      // render the component
-      act(() => {
-        subject();
+    describe('editor font size', () => {
+      it('font size increase button says increase', () => {
+        // render the component
+        act(() => {
+          subject();
+        });
+
+        // get ahold of the button for increasing text size
+        const fontPlusButton = screen.getByRole('button', {
+          name: /increase editor font size/i
+        });
+
+        // check that button says says "Increase"
+        expect(fontPlusButton.textContent.toLowerCase()).toBe('increase');
       });
 
-      // get ahold of the button for increasing text size
-      const fontPlusButton = screen.getByRole('button', {
-        name: /increase font size/i
+      it('increase font size by 2 when clicking plus button', () => {
+        // render the component with font size set to 12
+        act(() => {
+          subject();
+        });
+
+        // get ahold of the button for increasing text size
+        const fontPlusButton = screen.getByRole('button', {
+          name: /increase editor font size/i
+        });
+
+        // click the button
+        act(() => {
+          fireEvent.click(fontPlusButton);
+        });
+
+        expect(store.getActions()).toEqual([
+          {
+            type: ActionTypes.SET_FONT_SIZE,
+            value: 14,
+            target: 'editor'
+          }
+        ]);
       });
 
-      // check that button says says "Increase"
-      expect(fontPlusButton.textContent.toLowerCase()).toBe('increase');
+      it('font size decrease button says decrease', () => {
+        // render the component with font size set to 12
+        act(() => {
+          subject();
+        });
+
+        // get ahold of the button for decreasing font size
+        const fontPlusButton = screen.getByRole('button', {
+          name: /decrease editor font size/i
+        });
+
+        // check that button says "decrease"
+        expect(fontPlusButton.textContent.toLowerCase()).toBe('decrease');
+      });
+
+      it('decrease font size by 2 when clicking minus button', () => {
+        // render the component with font size set to 12
+        act(() => {
+          subject();
+        });
+
+        // get ahold of the button for decreasing text size
+        const fontMinusButton = screen.getByRole('button', {
+          name: /decrease editor font size/i
+        });
+
+        // click it
+        act(() => {
+          fireEvent.click(fontMinusButton);
+        });
+
+        expect(store.getActions()).toEqual([
+          {
+            type: ActionTypes.SET_FONT_SIZE,
+            value: 10,
+            target: 'editor'
+          }
+        ]);
+      });
+
+      it('font text field changes on manual text input', () => {
+        // render the component with font size set to 12
+        act(() => {
+          subject();
+        });
+
+        // get ahold of the text field
+        const input = screen.getByRole('textbox', {
+          name: /editor font size/i
+        });
+
+        // change input to 24
+        act(() => {
+          fireEvent.change(input, { target: { value: '24' } });
+        });
+
+        // submit form
+        act(() => {
+          fireEvent.submit(
+            screen.getByRole('form', {
+              name: /set editor font size/i
+            })
+          );
+        });
+
+        expect(store.getActions()).toEqual([
+          {
+            type: ActionTypes.SET_FONT_SIZE,
+            value: 24,
+            target: 'editor'
+          }
+        ]);
+      });
+
+      it('font size CAN NOT go over 36', () => {
+        // render the component
+        act(() => {
+          subject();
+        });
+
+        // get ahold of the text field
+        const input = screen.getByRole('textbox', {
+          name: /editor font size/i
+        });
+
+        act(() => {
+          fireEvent.change(input, { target: { value: '100' } });
+        });
+
+        expect(input.value).toBe('100');
+
+        act(() => {
+          fireEvent.submit(
+            screen.getByRole('form', {
+              name: /set editor font size/i
+            })
+          );
+        });
+
+        expect(store.getActions()).toEqual([
+          {
+            type: ActionTypes.SET_FONT_SIZE,
+            value: 36,
+            target: 'editor'
+          }
+        ]);
+      });
+
+      it('font size CAN NOT go under 8', () => {
+        // render the component
+        act(() => {
+          subject();
+        });
+
+        // get ahold of the text field
+        const input = screen.getByRole('textbox', {
+          name: /editor font size/i
+        });
+
+        act(() => {
+          fireEvent.change(input, { target: { value: '0' } });
+        });
+
+        expect(input.value).toBe('0');
+
+        act(() => {
+          fireEvent.submit(
+            screen.getByRole('form', {
+              name: /set editor font size/i
+            })
+          );
+        });
+
+        expect(store.getActions()).toEqual([
+          {
+            type: ActionTypes.SET_FONT_SIZE,
+            value: 8,
+            target: 'editor'
+          }
+        ]);
+      });
+
+      // this case is a bit synthetic because we wouldn't be able to type
+      // h and then i, but it tests the same idea
+      it('font size input field does NOT take non-integers', () => {
+        // render the component
+        act(() => {
+          subject();
+        });
+
+        // get ahold of the text field
+        const input = screen.getByRole('textbox', {
+          name: /editor font size/i
+        });
+
+        act(() => {
+          fireEvent.change(input, { target: { value: 'hi' } });
+        });
+
+        // it shouldnt have changed at all
+        expect(input.value).toBe('12');
+
+        // we hit submit
+        act(() => {
+          fireEvent.submit(
+            screen.getByRole('form', {
+              name: /set editor font size/i
+            })
+          );
+        });
+
+        expect(store.getActions()).toEqual([
+          {
+            type: ActionTypes.SET_FONT_SIZE,
+            value: 12,
+            target: 'editor'
+          }
+        ]);
+      });
+
+      it('font size input field does NOT take "-"', () => {
+        // render the component
+        act(() => {
+          subject();
+        });
+
+        // get ahold of the text field
+        const input = screen.getByRole('textbox', {
+          name: /editor font size/i
+        });
+
+        act(() => {
+          fireEvent.change(input, { target: { value: '-' } });
+        });
+
+        expect(input.value).toBe('12');
+
+        act(() => {
+          fireEvent.submit(
+            screen.getByRole('form', {
+              name: /set editor font size/i
+            })
+          );
+        });
+
+        expect(store.getActions()).toEqual([
+          {
+            type: ActionTypes.SET_FONT_SIZE,
+            value: 12,
+            target: 'editor'
+          }
+        ]);
+      });
     });
 
-    it('increase font size by 2 when clicking plus button', () => {
-      // render the component with font size set to 12
-      act(() => {
-        subject();
+    describe('console font size', () => {
+      it('font size increase button says increase', () => {
+        // render the component
+        act(() => {
+          subject();
+        });
+
+        // get ahold of the button for increasing text size
+        const fontPlusButton = screen.getByRole('button', {
+          name: /increase console font size/i
+        });
+
+        // check that button says says "Increase"
+        expect(fontPlusButton.textContent.toLowerCase()).toBe('increase');
       });
 
-      // get ahold of the button for increasing text size
-      const fontPlusButton = screen.getByRole('button', {
-        name: /increase font size/i
+      it('increase font size by 2 when clicking plus button', () => {
+        // render the component with font size set to 12
+        act(() => {
+          subject();
+        });
+
+        // get ahold of the button for increasing text size
+        const fontPlusButton = screen.getByRole('button', {
+          name: /increase console font size/i
+        });
+
+        // click the button
+        act(() => {
+          fireEvent.click(fontPlusButton);
+        });
+
+        expect(store.getActions()).toEqual([
+          {
+            type: ActionTypes.SET_FONT_SIZE,
+            value: 14,
+            target: 'console'
+          }
+        ]);
       });
 
-      // click the button
-      act(() => {
-        fireEvent.click(fontPlusButton);
+      it('font size decrease button says decrease', () => {
+        // render the component with font size set to 12
+        act(() => {
+          subject();
+        });
+
+        // get ahold of the button for decreasing font size
+        const fontPlusButton = screen.getByRole('button', {
+          name: /decrease console font size/i
+        });
+
+        // check that button says "decrease"
+        expect(fontPlusButton.textContent.toLowerCase()).toBe('decrease');
       });
 
-      // expect that setFontSize has been called once with the argument 14
-      expect(props.setFontSize).toHaveBeenCalledTimes(1);
-      expect(props.setFontSize.mock.calls[0][0]).toBe(14);
-    });
+      it('decrease font size by 2 when clicking minus button', () => {
+        // render the component with font size set to 12
+        act(() => {
+          subject();
+        });
 
-    it('font size decrease button says decrease', () => {
-      // render the component with font size set to 12
-      act(() => {
-        subject();
+        // get ahold of the button for decreasing text size
+        const fontMinusButton = screen.getByRole('button', {
+          name: /decrease console font size/i
+        });
+
+        // click it
+        act(() => {
+          fireEvent.click(fontMinusButton);
+        });
+
+        expect(store.getActions()).toEqual([
+          {
+            type: ActionTypes.SET_FONT_SIZE,
+            value: 10,
+            target: 'console'
+          }
+        ]);
       });
 
-      // get ahold of the button for decreasing font size
-      const fontPlusButton = screen.getByRole('button', {
-        name: /decrease font size/i
+      it('font text field changes on manual text input', () => {
+        // render the component with font size set to 12
+        act(() => {
+          subject();
+        });
+
+        // get ahold of the text field
+        const input = screen.getByRole('textbox', {
+          name: /console font size/i
+        });
+
+        // change input to 24
+        act(() => {
+          fireEvent.change(input, { target: { value: '24' } });
+        });
+
+        // submit form
+        act(() => {
+          fireEvent.submit(
+            screen.getByRole('form', {
+              name: /set console font size/i
+            })
+          );
+        });
+
+        expect(store.getActions()).toEqual([
+          {
+            type: ActionTypes.SET_FONT_SIZE,
+            value: 24,
+            target: 'console'
+          }
+        ]);
       });
 
-      // check that button says "decrease"
-      expect(fontPlusButton.textContent.toLowerCase()).toBe('decrease');
-    });
+      it('font size CAN NOT go over 36', () => {
+        // render the component
+        act(() => {
+          subject();
+        });
 
-    it('decrease font size by 2 when clicking minus button', () => {
-      // render the component with font size set to 12
-      act(() => {
-        subject();
+        // get ahold of the text field
+        const input = screen.getByRole('textbox', {
+          name: /console font size/i
+        });
+
+        act(() => {
+          fireEvent.change(input, { target: { value: '100' } });
+        });
+
+        expect(input.value).toBe('100');
+
+        act(() => {
+          fireEvent.submit(
+            screen.getByRole('form', {
+              name: /set console font size/i
+            })
+          );
+        });
+
+        expect(store.getActions()).toEqual([
+          {
+            type: ActionTypes.SET_FONT_SIZE,
+            value: 36,
+            target: 'console'
+          }
+        ]);
       });
 
-      // get ahold of the button for decreasing text size
-      const fontMinusButton = screen.getByRole('button', {
-        name: /decrease font size/i
+      it('font size CAN NOT go under 8', () => {
+        // render the component
+        act(() => {
+          subject();
+        });
+
+        // get ahold of the text field
+        const input = screen.getByRole('textbox', {
+          name: /console font size/i
+        });
+
+        act(() => {
+          fireEvent.change(input, { target: { value: '0' } });
+        });
+
+        expect(input.value).toBe('0');
+
+        act(() => {
+          fireEvent.submit(
+            screen.getByRole('form', {
+              name: /set console font size/i
+            })
+          );
+        });
+
+        expect(store.getActions()).toEqual([
+          {
+            type: ActionTypes.SET_FONT_SIZE,
+            value: 8,
+            target: 'console'
+          }
+        ]);
       });
 
-      // click it
-      act(() => {
-        fireEvent.click(fontMinusButton);
+      // this case is a bit synthetic because we wouldn't be able to type
+      // h and then i, but it tests the same idea
+      it('font size input field does NOT take non-integers', () => {
+        // render the component
+        act(() => {
+          subject();
+        });
+
+        // get ahold of the text field
+        const input = screen.getByRole('textbox', {
+          name: /console font size/i
+        });
+
+        act(() => {
+          fireEvent.change(input, { target: { value: 'hi' } });
+        });
+
+        // it shouldnt have changed at all
+        expect(input.value).toBe('12');
+
+        // we hit submit
+        act(() => {
+          fireEvent.submit(
+            screen.getByRole('form', {
+              name: /set console font size/i
+            })
+          );
+        });
+
+        expect(store.getActions()).toEqual([
+          {
+            type: ActionTypes.SET_FONT_SIZE,
+            value: 12,
+            target: 'console'
+          }
+        ]);
       });
 
-      // expect that setFontSize would have been called once with argument 10
-      expect(props.setFontSize).toHaveBeenCalledTimes(1);
-      expect(props.setFontSize.mock.calls[0][0]).toBe(10);
-    });
+      it('font size input field does NOT take "-"', () => {
+        // render the component
+        act(() => {
+          subject();
+        });
 
-    it('font text field changes on manual text input', () => {
-      // render the component with font size set to 12
-      act(() => {
-        subject();
+        // get ahold of the text field
+        const input = screen.getByRole('textbox', {
+          name: /console font size/i
+        });
+
+        act(() => {
+          fireEvent.change(input, { target: { value: '-' } });
+        });
+
+        expect(input.value).toBe('12');
+
+        act(() => {
+          fireEvent.submit(
+            screen.getByRole('form', {
+              name: /set console font size/i
+            })
+          );
+        });
+
+        expect(store.getActions()).toEqual([
+          {
+            type: ActionTypes.SET_FONT_SIZE,
+            value: 12,
+            target: 'console'
+          }
+        ]);
       });
-
-      // get ahold of the text field
-      const input = screen.getByRole('textbox', { name: /font size/i });
-
-      // change input to 24
-      act(() => {
-        fireEvent.change(input, { target: { value: '24' } });
-      });
-
-      // submit form
-      act(() => {
-        fireEvent.submit(
-          screen.getByRole('form', {
-            name: /set font size/i
-          })
-        );
-      });
-
-      // expect that setFontSize was called once with 24
-      expect(props.setFontSize).toHaveBeenCalledTimes(1);
-      expect(props.setFontSize.mock.calls[0][0]).toBe(24);
-    });
-
-    it('font size CAN NOT go over 36', () => {
-      // render the component
-      act(() => {
-        subject();
-      });
-
-      // get ahold of the text field
-      const input = screen.getByRole('textbox', { name: /font size/i });
-
-      act(() => {
-        fireEvent.change(input, { target: { value: '100' } });
-      });
-
-      expect(input.value).toBe('100');
-
-      act(() => {
-        fireEvent.submit(
-          screen.getByRole('form', {
-            name: /set font size/i
-          })
-        );
-      });
-
-      expect(props.setFontSize).toHaveBeenCalledTimes(1);
-      expect(props.setFontSize.mock.calls[0][0]).toBe(36);
-    });
-
-    it('font size CAN NOT go under 8', () => {
-      // render the component
-      act(() => {
-        subject();
-      });
-
-      // get ahold of the text field
-      const input = screen.getByRole('textbox', { name: /font size/i });
-
-      act(() => {
-        fireEvent.change(input, { target: { value: '0' } });
-      });
-
-      expect(input.value).toBe('0');
-
-      act(() => {
-        fireEvent.submit(
-          screen.getByRole('form', {
-            name: /set font size/i
-          })
-        );
-      });
-
-      expect(props.setFontSize).toHaveBeenCalledTimes(1);
-      expect(props.setFontSize.mock.calls[0][0]).toBe(8);
-    });
-
-    // this case is a bit synthetic because we wouldn't be able to type
-    // h and then i, but it tests the same idea
-    it('font size input field does NOT take non-integers', () => {
-      // render the component
-      act(() => {
-        subject();
-      });
-
-      // get ahold of the text field
-      const input = screen.getByRole('textbox', { name: /font size/i });
-
-      act(() => {
-        fireEvent.change(input, { target: { value: 'hi' } });
-      });
-
-      // it shouldnt have changed at all
-      expect(input.value).toBe('12');
-
-      // we hit submit
-      act(() => {
-        fireEvent.submit(
-          screen.getByRole('form', {
-            name: /set font size/i
-          })
-        );
-      });
-
-      // it still sets the font size but it's still 12
-      expect(props.setFontSize).toHaveBeenCalledTimes(1);
-      expect(props.setFontSize.mock.calls[0][0]).toBe(12);
-    });
-
-    it('font size input field does NOT take "-"', () => {
-      // render the component
-      act(() => {
-        subject();
-      });
-
-      // get ahold of the text field
-      const input = screen.getByRole('textbox', { name: /font size/i });
-
-      act(() => {
-        fireEvent.change(input, { target: { value: '-' } });
-      });
-
-      expect(input.value).toBe('12');
-
-      act(() => {
-        fireEvent.submit(
-          screen.getByRole('form', {
-            name: /set font size/i
-          })
-        );
-      });
-
-      expect(props.setFontSize).toHaveBeenCalledTimes(1);
-      expect(props.setFontSize.mock.calls[0][0]).toBe(12);
     });
   });
 

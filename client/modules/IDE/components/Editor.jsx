@@ -516,7 +516,8 @@ function mapStateToProps(state) {
     ...state.editorAccessibility,
     isExpanded: state.ide.sidebarIsExpanded,
     projectSavedTime: state.project.updatedAt,
-    isUserOwner: getIsUserOwner(state)
+    isUserOwner: getIsUserOwner(state),
+    fontSize: state.preferences.fontSize.editor
   };
 }
 

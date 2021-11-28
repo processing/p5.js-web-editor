@@ -1,7 +1,7 @@
 import * as ActionTypes from '../../../constants';
 
 const initialState = {
-  fontSize: 18,
+  fontSize: { editor: 18, console: 18 },
   autosave: true,
   linewrap: true,
   lineNumbers: true,
@@ -17,7 +17,14 @@ const initialState = {
 const preferences = (state = initialState, action) => {
   switch (action.type) {
     case ActionTypes.SET_FONT_SIZE:
-      return Object.assign({}, state, { fontSize: action.value });
+      console.log(state.fontSize);
+      return {
+        ...state,
+        fontSize: {
+          ...state.fontSize,
+          [action.target]: action.value
+        }
+      };
     case ActionTypes.SET_AUTOSAVE:
       return Object.assign({}, state, { autosave: action.value });
     case ActionTypes.SET_LINEWRAP:

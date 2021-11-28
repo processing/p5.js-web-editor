@@ -62,7 +62,10 @@ const userSchema = new Schema(
     tokens: Array,
     apiKeys: { type: [apiKeySchema] },
     preferences: {
-      fontSize: { type: Number, default: 18 },
+      fontSize: {
+        editor: { type: Number, default: 18 },
+        console: { type: Number, default: 18 }
+      },
       lineNumbers: { type: Boolean, default: true },
       indentationAmount: { type: Number, default: 2 },
       isTabIndent: { type: Boolean, default: false },

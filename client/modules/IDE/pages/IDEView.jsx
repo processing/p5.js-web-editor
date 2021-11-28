@@ -506,7 +506,10 @@ IDEView.propTypes = {
   }).isRequired,
   preferences: PropTypes.shape({
     autosave: PropTypes.bool.isRequired,
-    fontSize: PropTypes.number.isRequired,
+    fontSize: PropTypes.shape({
+      editor: PropTypes.number.isRequired,
+      console: PropTypes.number.isRequired
+    }).isRequired,
     linewrap: PropTypes.bool.isRequired,
     lineNumbers: PropTypes.bool.isRequired,
     lintWarning: PropTypes.bool.isRequired,

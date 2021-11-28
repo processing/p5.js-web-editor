@@ -85,7 +85,7 @@ const initialTestState = {
     }
   ],
   preferences: {
-    fontSize: 18,
+    fontSize: { editor: 18, console: 18 },
     autosave: true,
     linewrap: true,
     lineNumbers: true,

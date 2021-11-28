@@ -109,7 +109,10 @@ const Console = ({ t }) => {
   const consoleEvents = useSelector((state) => state.console);
   const isExpanded = useSelector((state) => state.ide.consoleIsExpanded);
   const isPlaying = useSelector((state) => state.ide.isPlaying);
-  const { theme, fontSize } = useSelector((state) => state.preferences);
+  const { theme, fontSize } = useSelector((state) => ({
+    theme: state.preferences.theme,
+    fontSize: state.preferences.fontSize.console
+  }));
   const {
     collapseConsole,
     expandConsole,

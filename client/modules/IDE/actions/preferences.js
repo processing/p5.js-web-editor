@@ -15,17 +15,19 @@ function updatePreferences(formParams, dispatch) {
     });
 }
 
-export function setFontSize(value) {
-  return (dispatch, getState) => { // eslint-disable-line
+export function setFontSize(value, target) {
+  return (dispatch, getState) => {
+    // eslint-disable-line
     dispatch({
       type: ActionTypes.SET_FONT_SIZE,
-      value
+      value,
+      target
     });
     const state = getState();
     if (state.user.authenticated) {
       const formParams = {
         preferences: {
-          fontSize: value
+          fontSize: { [target]: value }
         }
       };
       updatePreferences(formParams, dispatch);

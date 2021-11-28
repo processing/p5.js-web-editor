@@ -25,22 +25,26 @@ class Preferences extends React.Component {
     this.setFontSize = this.setFontSize.bind(this);
 
     this.state = {
-      fontSize: props.fontSize
+      fontSize: {
+        ...props.fontSize
+      }
     };
   }
 
-  onFontInputChange(event) {
+  onFontInputChange(event, fontSizeTarget) {
     const INTEGER_REGEX = /^[0-9\b]+$/;
     if (event.target.value === '' || INTEGER_REGEX.test(event.target.value)) {
-      this.setState({
-        fontSize: event.target.value
-      });
+      const nextFontSize = {
+        ...this.state.fontSize,
+        [fontSizeTarget]: event.target.value
+      };
+      this.setState({ fontSize: nextFontSize });
     }
   }
 
-  onFontInputSubmit(event) {
+  onFontInputSubmit(event, fontSizeTarget) {
     event.preventDefault();
-    let value = parseInt(this.state.fontSize, 10);
+    let value = parseInt(this.state.fontSize[fontSizeTarget], 10);
     if (Number.isNaN(value)) {
       value = 16;
     }
@@ -50,22 +54,22 @@ class Preferences extends React.Component {
     if (value < 8) {
       value = 8;
     }
-    this.setFontSize(value);
+    this.setFontSize(value, fontSizeTarget);
   }
 
-  setFontSize(value) {
-    this.setState({ fontSize: value });
-    this.props.setFontSize(value);
+  setFontSize(value, target) {
+    this.setState({ fontSize: { ...this.state.fontSize, [target]: value } });
+    this.props.setFontSize(value, target);
   }
 
-  decreaseFontSize() {
-    const newValue = this.state.fontSize - 2;
-    this.setFontSize(newValue);
+  decreaseFontSize(target) {
+    const newValue = this.state.fontSize[target] - 2;
+    this.setFontSize(newValue, target);
   }
 
-  increaseFontSize() {
-    const newValue = this.state.fontSize + 2;
-    this.setFontSize(newValue);
+  increaseFontSize(target) {
+    const newValue = this.state.fontSize[target] + 2;
+    this.setFontSize(newValue, target);
   }
 
   handleUpdateAutosave(event) {
@@ -163,13 +167,15 @@ class Preferences extends React.Component {
             </div>
             <div className="preference">
               <h4 className="preference__title">
-                {this.props.t('Preferences.TextSize')}
+                {this.props.t('Preferences.EditorTextSize')}
               </h4>
               <button
                 className="preference__minus-button"
-                onClick={this.decreaseFontSize}
-                aria-label={this.props.t('Preferences.DecreaseFontARIA')}
-                disabled={this.state.fontSize <= 8}
+                onClick={(e) => {
+                  this.decreaseFontSize('editor', e);
+                }}
+                aria-label={this.props.t('Preferences.DecreaseEditorFontARIA')}
+                disabled={this.state.fontSize.editor <= 8}
               >
                 <MinusIcon focusable="false" aria-hidden="true" />
                 <h6 className="preference__label">
@@ -177,33 +183,103 @@ class Preferences extends React.Component {
                 </h6>
               </button>
               <form
-                onSubmit={this.onFontInputSubmit}
-                aria-label={this.props.t('Preferences.SetFontSize')}
+                onSubmit={(e) => {
+                  this.onFontInputSubmit(e, 'editor');
+                }}
+                aria-label={this.props.t('Preferences.SetEditorFontSize')}
               >
-                <label htmlFor="font-size-value" className="preference--hidden">
-                  {this.props.t('Preferences.FontSize')}
+                <label
+                  htmlFor="editor-font-size-value"
+                  className="preference--hidden"
+                >
+                  {this.props.t('Preferences.EditorFontSize')}
                 </label>
                 <input
                   className="preference__value"
                   aria-live="polite"
                   aria-atomic="true"
-                  value={this.state.fontSize}
-                  id="font-size-value"
-                  onChange={this.onFontInputChange}
+                  value={this.state.fontSize.editor}
+                  id="editor-font-size-value"
+                  onChange={(e) => {
+                    this.onFontInputChange(e, 'editor');
+                  }}
                   type="text"
                   ref={(element) => {
-                    this.fontSizeInput = element;
+                    this.editorFontSizeInput = element;
                   }}
                   onClick={() => {
-                    this.fontSizeInput.select();
+                    this.editorFontSizeInput.select();
                   }}
                 />
               </form>
               <button
                 className="preference__plus-button"
-                onClick={this.increaseFontSize}
-                aria-label={this.props.t('Preferences.IncreaseFontARIA')}
-                disabled={this.state.fontSize >= 36}
+                onClick={() => {
+                  this.increaseFontSize('editor');
+                }}
+                aria-label={this.props.t('Preferences.IncreaseEditorFontARIA')}
+                disabled={this.state.fontSize.editor >= 36}
+              >
+                <PlusIcon focusable="false" aria-hidden="true" />
+                <h6 className="preference__label">
+                  {this.props.t('Preferences.IncreaseFont')}
+                </h6>
+              </button>
+            </div>
+            <div className="preference">
+              <h4 className="preference__title">
+                {this.props.t('Preferences.ConsoleTextSize')}
+              </h4>
+              <button
+                className="preference__minus-button"
+                onClick={() => {
+                  this.decreaseFontSize('console');
+                }}
+                aria-label={this.props.t('Preferences.DecreaseConsoleFontARIA')}
+                disabled={this.state.fontSize.console <= 8}
+              >
+                <MinusIcon focusable="false" aria-hidden="true" />
+                <h6 className="preference__label">
+                  {this.props.t('Preferences.DecreaseFont')}
+                </h6>
+              </button>
+              <form
+                onSubmit={(e) => {
+                  this.onFontInputSubmit(e, 'console');
+                }}
+                aria-label={this.props.t('Preferences.SetConsoleFontSize')}
+              >
+                <label
+                  htmlFor="console-font-size-value"
+                  className="preference--hidden"
+                >
+                  {this.props.t('Preferences.ConsoleFontSize')}
+                </label>
+                <input
+                  className="preference__value"
+                  aria-live="polite"
+                  aria-atomic="true"
+                  value={this.state.fontSize.console}
+                  id="console-font-size-value"
+                  onChange={(e) => {
+                    this.onFontInputChange(e, 'console');
+                  }}
+                  type="text"
+                  ref={(element) => {
+                    this.consoleFontSizeInput = element;
+                  }}
+                  onClick={() => {
+                    this.consoleFontSizeInput.select();
+                  }}
+                />
+              </form>
+              <button
+                className="preference__plus-button"
+                onClick={() => {
+                  this.increaseFontSize('console');
+                }}
+                aria-label={this.props.t('Preferences.IncreaseConsoleFontARIA')}
+                disabled={this.state.fontSize.console >= 36}
               >
                 <PlusIcon focusable="false" aria-hidden="true" />
                 <h6 className="preference__label">
@@ -454,7 +530,10 @@ class Preferences extends React.Component {
 }
 
 Preferences.propTypes = {
-  fontSize: PropTypes.number.isRequired,
+  fontSize: PropTypes.shape({
+    editor: PropTypes.number.isRequired,
+    console: PropTypes.number.isRequired
+  }).isRequired,
   lineNumbers: PropTypes.bool.isRequired,
   setFontSize: PropTypes.func.isRequired,
   autosave: PropTypes.bool.isRequired,
