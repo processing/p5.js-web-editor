@@ -3,20 +3,31 @@ import Project from '../../models/project';
 import { deleteObjectsFromS3, getObjectKey } from '../aws.controller';
 import createApplicationErrorClass from '../../utils/createApplicationErrorClass';
 
-const ProjectDeletionError = createApplicationErrorClass('ProjectDeletionError');
+const ProjectDeletionError = createApplicationErrorClass(
+  'ProjectDeletionError'
+);
 
 function deleteFilesFromS3(files) {
-  deleteObjectsFromS3(files.filter((file) => {
-    if (file.url) {
-      if (!process.env.S3_DATE || (
-        process.env.S3_DATE &&
-        isBefore(new Date(process.env.S3_DATE), new Date(file.createdAt)))) {
-        return true;
-      }
-    }
-    return false;
-  })
-    .map(file => getObjectKey(file.url)));
+  deleteObjectsFromS3(
+    files
+      .filter((file) => {
+        if (
+          file.url &&
+          (file.url.includes(process.env.S3_BUCKET_URL_BASE) ||
+            file.url.includes(process.env.S3_BUCKET))
+        ) {
+          if (
+            !process.env.S3_DATE ||
+            (process.env.S3_DATE &&
+              isBefore(new Date(process.env.S3_DATE), new Date(file.createdAt)))
+          ) {
+            return true;
+          }
+        }
+        return false;
+      })
+      .map((file) => getObjectKey(file.url))
+  );
 }
 
 export default function deleteProject(req, res) {
@@ -25,7 +36,11 @@ export default function deleteProject(req, res) {
   }
 
   function sendProjectNotFound() {
-    sendFailure(new ProjectDeletionError('Project with that id does not exist', { code: 404 }));
+    sendFailure(
+      new ProjectDeletionError('Project with that id does not exist', {
+        code: 404
+      })
+    );
   }
 
   function handleProjectDeletion(project) {
@@ -35,7 +50,12 @@ export default function deleteProject(req, res) {
     }
 
     if (!project.user.equals(req.user._id)) {
-      sendFailure(new ProjectDeletionError('Authenticated user does not match owner of project', { code: 403 }));
+      sendFailure(
+        new ProjectDeletionError(
+          'Authenticated user does not match owner of project',
+          { code: 403 }
+        )
+      );
       return;
     }
 

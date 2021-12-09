@@ -18,7 +18,14 @@ import * as EditorAccessibilityActions from '../actions/editorAccessibility';
 // Local Imports
 import Editor from '../components/Editor';
 
-import { PlayIcon, MoreIcon, FolderIcon, PreferencesIcon, TerminalIcon, SaveIcon } from '../../../common/icons';
+import {
+  PlayIcon,
+  MoreIcon,
+  FolderIcon,
+  PreferencesIcon,
+  TerminalIcon,
+  SaveIcon
+} from '../../../common/icons';
 import UnsavedChangesDotIcon from '../../../images/unsaved-changes-dot.svg';
 
 import IconButton from '../../../components/mobile/IconButton';
@@ -36,8 +43,10 @@ import useAsModal from '../../../components/useAsModal';
 import Dropdown from '../../../components/Dropdown';
 import { getIsUserOwner } from '../selectors/users';
 
-
-import { useEffectWithComparison, useEventListener } from '../../../utils/custom-hooks';
+import {
+  useEffectWithComparison,
+  useEventListener
+} from '../hooks/custom-hooks';
 
 import * as device from '../../../utils/device';
 
@@ -45,39 +54,85 @@ const withChangeDot = (title, unsavedChanges = false) => (
   <span>
     {title}
     <span className="editor__unsaved-changes">
-      {unsavedChanges &&
-      <UnsavedChangesDotIcon role="img" aria-label="Sketch has unsaved changes" focusable="false" />}
+      {unsavedChanges && (
+        <UnsavedChangesDotIcon
+          role="img"
+          aria-label="Sketch has unsaved changes"
+          focusable="false"
+        />
+      )}
     </span>
   </span>
 );
-const getRootFile = files => files && files.filter(file => file.name === 'root')[0];
-const getRootFileID = files => (root => root && root.id)(getRootFile(files));
+const getRootFile = (files) =>
+  files && files.filter((file) => file.name === 'root')[0];
+const getRootFileID = (files) =>
+  ((root) => root && root.id)(getRootFile(files));
 
 const Expander = styled.div`
-  height: ${props => (props.expanded ? remSize(160) : remSize(27))};
+  height: ${(props) => (props.expanded ? remSize(160) : remSize(27))};
 `;
 
 const NavItem = styled.li`
   position: relative;
 `;
 
-const getNavOptions = (username = undefined, logoutUser = () => {}, toggleForceDesktop = () => {}) => {
+const getNavOptions = (
+  username = undefined,
+  logoutUser = () => {},
+  toggleForceDesktop = () => {}
+) => {
   const { t } = useTranslation();
-  return (username
+  return username
     ? [
-      { icon: PreferencesIcon, title: t('MobileIDEView.Preferences'), href: '/preferences', },
-      { icon: PreferencesIcon, title: t('MobileIDEView.MyStuff'), href: `/${username}/sketches` },
-      { icon: PreferencesIcon, title: t('MobileIDEView.Examples'), href: '/p5/sketches' },
-      { icon: PreferencesIcon, title: t('MobileIDEView.OriginalEditor'), action: toggleForceDesktop, },
-      { icon: PreferencesIcon, title: t('MobileIDEView.Logout'), action: logoutUser, },
-    ]
+        {
+          icon: PreferencesIcon,
+          title: t('MobileIDEView.Preferences'),
+          href: '/preferences'
+        },
+        {
+          icon: PreferencesIcon,
+          title: t('MobileIDEView.MyStuff'),
+          href: `/${username}/sketches`
+        },
+        {
+          icon: PreferencesIcon,
+          title: t('MobileIDEView.Examples'),
+          href: '/p5/sketches'
+        },
+        {
+          icon: PreferencesIcon,
+          title: t('MobileIDEView.OriginalEditor'),
+          action: toggleForceDesktop
+        },
+        {
+          icon: PreferencesIcon,
+          title: t('MobileIDEView.Logout'),
+          action: logoutUser
+        }
+      ]
     : [
-      { icon: PreferencesIcon, title: t('MobileIDEView.Preferences'), href: '/preferences', },
-      { icon: PreferencesIcon, title: t('MobileIDEView.Examples'), href: '/p5/sketches' },
-      { icon: PreferencesIcon, title: t('MobileIDEView.OriginalEditor'), action: toggleForceDesktop, },
-      { icon: PreferencesIcon, title: t('MobileIDEView.Login'), href: '/login', },
-    ]
-  );
+        {
+          icon: PreferencesIcon,
+          title: t('MobileIDEView.Preferences'),
+          href: '/preferences'
+        },
+        {
+          icon: PreferencesIcon,
+          title: t('MobileIDEView.Examples'),
+          href: '/p5/sketches'
+        },
+        {
+          icon: PreferencesIcon,
+          title: t('MobileIDEView.OriginalEditor'),
+          action: toggleForceDesktop
+        },
+        {
+          icon: PreferencesIcon,
+          title: t('MobileIDEView.Login'),
+          href: '/login'
+        }
+      ];
 };
 
 const canSaveProject = (isUserOwner, project, user) =>
@@ -86,18 +141,29 @@ const canSaveProject = (isUserOwner, project, user) =>
 // TODO: This could go into <Editor />
 const handleGlobalKeydown = (props, cmController) => (e) => {
   const {
-    user, project, ide,
+    user,
+    project,
+    ide,
     setAllAccessibleOutput,
-    saveProject, cloneProject, showErrorModal, startSketch, stopSketch,
-    expandSidebar, collapseSidebar, expandConsole, collapseConsole,
-    closeNewFolderModal, closeUploadFileModal, closeNewFileModal, isUserOwner
+    saveProject,
+    cloneProject,
+    showErrorModal,
+    startSketch,
+    stopSketch,
+    expandSidebar,
+    collapseSidebar,
+    expandConsole,
+    collapseConsole,
+    closeNewFolderModal,
+    closeUploadFileModal,
+    closeNewFileModal,
+    isUserOwner
   } = props;
-
 
   const isMac = device.isMac();
 
   // const ctrlDown = (e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac);
-  const ctrlDown = (isMac ? e.metaKey : e.ctrlKey);
+  const ctrlDown = isMac ? e.metaKey : e.ctrlKey;
 
   if (ctrlDown) {
     if (e.shiftKey) {
@@ -109,12 +175,11 @@ const handleGlobalKeydown = (props, cmController) => (e) => {
         e.preventDefault();
         e.stopPropagation();
         startSketch();
-      // 50 === 2
-      } else if (e.keyCode === 50
-      ) {
+        // 50 === 2
+      } else if (e.keyCode === 50) {
         e.preventDefault();
         setAllAccessibleOutput(false);
-      // 49 === 1
+        // 49 === 1
       } else if (e.keyCode === 49) {
         e.preventDefault();
         setAllAccessibleOutput(true);
@@ -123,11 +188,12 @@ const handleGlobalKeydown = (props, cmController) => (e) => {
       // 83 === s
       e.preventDefault();
       e.stopPropagation();
-      if (canSaveProject(isUserOwner, project, user)) saveProject(cmController.getContent(), false, true);
+      if (canSaveProject(isUserOwner, project, user))
+        saveProject(cmController.getContent(), false, true);
       else if (user.authenticated) cloneProject();
       else showErrorModal('forceAuthentication');
 
-    // 13 === enter
+      // 13 === enter
     } else if (e.keyCode === 66) {
       e.preventDefault();
       if (!ide.sidebarIsExpanded) expandSidebar();
@@ -144,17 +210,24 @@ const handleGlobalKeydown = (props, cmController) => (e) => {
   }
 };
 
-
-const autosave = (autosaveInterval, setAutosaveInterval) => (props, prevProps) => {
+const autosave = (autosaveInterval, setAutosaveInterval) => (
+  props,
+  prevProps
+) => {
   const {
-    autosaveProject, preferences, ide, selectedFile: file, project, isUserOwner
+    autosaveProject,
+    preferences,
+    ide,
+    selectedFile: file,
+    project,
+    isUserOwner
   } = props;
 
   const { selectedFile: oldFile } = prevProps;
 
   const doAutosave = () => autosaveProject(true);
 
-  if (props.isUserOwner && project.id) {
+  if (isUserOwner && project.id) {
     if (preferences.autosave && ide.unsavedChanges && !ide.justOpenedProject) {
       if (file.name === oldFile.name && file.content !== oldFile.content) {
         if (autosaveInterval) {
@@ -187,11 +260,27 @@ const MobileIDEView = (props) => {
   // } = props;
 
   const {
-    ide, preferences, project, selectedFile, user, params, unsavedChanges, expandConsole, collapseConsole,
-    stopSketch, startSketch, getProject, clearPersistedState, autosaveProject, saveProject, files,
-    toggleForceDesktop, logoutUser, toast, isUserOwner
+    ide,
+    preferences,
+    project,
+    selectedFile,
+    user,
+    params,
+    unsavedChanges,
+    expandConsole,
+    collapseConsole,
+    stopSketch,
+    startSketch,
+    getProject,
+    clearPersistedState,
+    autosaveProject,
+    saveProject,
+    files,
+    toggleForceDesktop,
+    logoutUser,
+    toast,
+    isUserOwner
   } = props;
-
 
   const [cmController, setCmController] = useState(null); // eslint-disable-line
 
@@ -219,33 +308,54 @@ const MobileIDEView = (props) => {
   }, [params, project, username]);
 
   // Screen Modals
-  const [toggleNavDropdown, NavDropDown] = useAsModal(<Dropdown
-    items={getNavOptions(username, logoutUser, toggleForceDesktop)}
-    align="right"
-  />);
+  const [toggleNavDropdown, NavDropDown] = useAsModal(
+    <Dropdown
+      items={getNavOptions(username, logoutUser, toggleForceDesktop)}
+      align="right"
+    />
+  );
 
-  const [toggleExplorer, Explorer] = useAsModal(toggle =>
-    (<MobileExplorer
-      id={getRootFileID(files)}
-      canEdit={false}
-      onPressClose={toggle}
-    />), true);
+  const [toggleExplorer, Explorer] = useAsModal(
+    (toggle) => (
+      <MobileExplorer
+        id={getRootFileID(files)}
+        canEdit={false}
+        onPressClose={toggle}
+      />
+    ),
+    true
+  );
 
   // TODO: This behavior could move to <Editor />
   const [autosaveInterval, setAutosaveInterval] = useState(null);
   useEffectWithComparison(autosave(autosaveInterval, setAutosaveInterval), {
-    autosaveProject, preferences, ide, selectedFile, project, user, isUserOwner
+    autosaveProject,
+    preferences,
+    ide,
+    selectedFile,
+    project,
+    user,
+    isUserOwner
   });
 
-  useEventListener('keydown', handleGlobalKeydown(props, cmController), false, [props]);
+  useEventListener('keydown', handleGlobalKeydown(props, cmController), false, [
+    props
+  ]);
 
-  const projectActions =
-    [{
-      icon: TerminalIcon, aria: 'Toggle console open/closed', action: consoleIsExpanded ? collapseConsole : expandConsole, inverted: true
+  const projectActions = [
+    {
+      icon: TerminalIcon,
+      aria: 'Toggle console open/closed',
+      action: consoleIsExpanded ? collapseConsole : expandConsole,
+      inverted: true
     },
-    { icon: SaveIcon, aria: 'Save project', action: () => saveProject(cmController.getContent(), false, true) },
+    {
+      icon: SaveIcon,
+      aria: 'Save project',
+      action: () => saveProject(cmController.getContent(), false, true)
+    },
     { icon: FolderIcon, aria: 'Open files explorer', action: toggleExplorer }
-    ];
+  ];
 
   return (
     <Screen fullscreen>
@@ -255,7 +365,6 @@ const MobileIDEView = (props) => {
         subtitle={filename}
       >
         <NavItem>
-
           <IconButton
             onClick={toggleNavDropdown}
             icon={MoreIcon}
@@ -264,7 +373,14 @@ const MobileIDEView = (props) => {
           <NavDropDown />
         </NavItem>
         <li>
-          <IconButton to="/preview" onClick={() => { startSketch(); }} icon={PlayIcon} aria-label="Run sketch" />
+          <IconButton
+            to="/preview"
+            onClick={() => {
+              startSketch();
+            }}
+            icon={PlayIcon}
+            aria-label="Run sketch"
+          />
         </li>
       </Header>
       {toast.isVisible && <Toast />}
@@ -304,40 +420,40 @@ const handleGlobalKeydownProps = {
 
 MobileIDEView.propTypes = {
   ide: PropTypes.shape({
-    consoleIsExpanded: PropTypes.bool.isRequired,
+    consoleIsExpanded: PropTypes.bool.isRequired
   }).isRequired,
 
-  preferences: PropTypes.shape({
-  }).isRequired,
+  preferences: PropTypes.shape({}).isRequired,
 
   project: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string.isRequired,
     owner: PropTypes.shape({
       username: PropTypes.string,
-      id: PropTypes.string,
-    }),
+      id: PropTypes.string
+    })
   }).isRequired,
-
 
   selectedFile: PropTypes.shape({
     id: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
   }).isRequired,
 
-  files: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-  })).isRequired,
+  files: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      content: PropTypes.string.isRequired
+    })
+  ).isRequired,
 
   toggleForceDesktop: PropTypes.func.isRequired,
 
   user: PropTypes.shape({
     authenticated: PropTypes.bool.isRequired,
     id: PropTypes.string,
-    username: PropTypes.string,
+    username: PropTypes.string
   }).isRequired,
 
   toast: PropTypes.shape({
@@ -359,16 +475,15 @@ MobileIDEView.propTypes = {
   autosaveProject: PropTypes.func.isRequired,
   isUserOwner: PropTypes.bool.isRequired,
 
-
   ...handleGlobalKeydownProps
 };
 
 function mapStateToProps(state) {
   return {
     selectedFile:
-      state.files.find(file => file.isSelectedFile) ||
-      state.files.find(file => file.name === 'sketch.js') ||
-      state.files.find(file => file.name !== 'root'),
+      state.files.find((file) => file.isSelectedFile) ||
+      state.files.find((file) => file.name === 'sketch.js') ||
+      state.files.find((file) => file.name !== 'root'),
     ide: state.ide,
     files: state.files,
     unsavedChanges: state.ide.unsavedChanges,
@@ -381,12 +496,18 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  ...ProjectActions,
-  ...IDEActions,
-  ...ConsoleActions,
-  ...PreferencesActions,
-  ...EditorAccessibilityActions
-}, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      ...ProjectActions,
+      ...IDEActions,
+      ...ConsoleActions,
+      ...PreferencesActions,
+      ...EditorAccessibilityActions
+    },
+    dispatch
+  );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MobileIDEView));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(MobileIDEView)
+);

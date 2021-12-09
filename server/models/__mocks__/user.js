@@ -18,12 +18,11 @@ export function createInstanceMock() {
   // See: https://stackoverflow.com/questions/40962960/sinon-mock-of-mongoose-save-method-for-all-future-instances-of-a-model-with-pro
   Object.defineProperty(User.prototype, 'save', {
     value: User.prototype.save,
-    configurable: true,
+    configurable: true
   });
 
   return sinon.mock(User.prototype);
 }
-
 
 // Re-export the model, it will be
 // altered by mockingoose whenever

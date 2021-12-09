@@ -6,7 +6,7 @@ const { Schema } = mongoose;
 
 const collectedProjectSchema = new Schema(
   {
-    project: { type: Schema.Types.ObjectId, ref: 'Project' },
+    project: { type: Schema.Types.ObjectId, ref: 'Project' }
   },
   { timestamps: true, _id: true, usePushEach: true }
 );
@@ -53,4 +53,5 @@ collectionSchema.pre('save', function generateSlug(next) {
   return next();
 });
 
-export default mongoose.model('Collection', collectionSchema);
+export default mongoose.models.Collection ||
+  mongoose.model('Collection', collectionSchema);

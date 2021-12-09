@@ -8,9 +8,13 @@ export default {
 };
 
 export const Github = () => (
-  <SocialAuthButton service={SocialAuthButton.services.github}>Log in with Github</SocialAuthButton>
+  <SocialAuthButton service={SocialAuthButton.services.github}>
+    Log in with Github
+  </SocialAuthButton>
 );
 
 export const Google = () => (
-  <SocialAuthButton service={SocialAuthButton.services.google}>Sign up with Google</SocialAuthButton>
+  <SocialAuthButton service={SocialAuthButton.services.google}>
+    Sign up with Google
+  </SocialAuthButton>
 );

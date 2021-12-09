@@ -1,32 +1,32 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Helmet } from 'react-helmet';
 import { withTranslation } from 'react-i18next';
 import { withRouter, browserHistory } from 'react-router';
 import { parse } from 'query-string';
-import { updateSettings, initiateVerification, createApiKey, removeApiKey } from '../actions';
+import { createApiKey, removeApiKey } from '../actions';
 import AccountForm from '../components/AccountForm';
-import apiClient from '../../../utils/apiClient';
-import { validateSettings } from '../../../utils/reduxFormUtils';
 import SocialAuthButton from '../components/SocialAuthButton';
 import APIKeyForm from '../components/APIKeyForm';
 import Nav from '../../../components/Nav';
 import ErrorModal from '../../IDE/components/ErrorModal';
 import Overlay from '../../App/components/Overlay';
+import Toast from '../../IDE/components/Toast';
 
 function SocialLoginPanel(props) {
-  const { user } = props;
+  const { user, t } = props;
   return (
     <React.Fragment>
-      <AccountForm {...props} />
-      {/* eslint-disable-next-line react/prop-types */}
-      <h2 className="form-container__divider">{props.t('AccountView.SocialLogin')}</h2>
+      <AccountForm />
+      <h2 className="form-container__divider">
+        {t('AccountView.SocialLogin')}
+      </h2>
       <p className="account__social-text">
         {/* eslint-disable-next-line react/prop-types */}
-        {props.t('AccountView.SocialLoginDescription')}
+        {t('AccountView.SocialLoginDescription')}
       </p>
       <div className="account__social-stack">
         <SocialAuthButton
@@ -48,7 +48,8 @@ SocialLoginPanel.propTypes = {
   user: PropTypes.shape({
     github: PropTypes.string,
     google: PropTypes.string
-  }).isRequired
+  }).isRequired,
+  t: PropTypes.func.isRequired
 };
 
 class AccountView extends React.Component {
@@ -67,10 +68,11 @@ class AccountView extends React.Component {
         <Helmet>
           <title>{this.props.t('AccountView.Title')}</title>
         </Helmet>
+        {this.props.toast.isVisible && <Toast />}
 
         <Nav layout="dashboard" />
 
-        {showError &&
+        {showError && (
           <Overlay
             title={this.props.t('ErrorModal.LinkTitle')}
             ariaLabel={this.props.t('ErrorModal.LinkTitle')}
@@ -78,23 +80,32 @@ class AccountView extends React.Component {
               browserHistory.push(this.props.location.pathname);
             }}
           >
-            <ErrorModal
-              type="oauthError"
-              service={errorType}
-            />
+            <ErrorModal type="oauthError" service={errorType} />
           </Overlay>
-        }
+        )}
 
         <main className="account-settings">
           <header className="account-settings__header">
-            <h1 className="account-settings__title">{this.props.t('AccountView.Settings')}</h1>
+            <h1 className="account-settings__title">
+              {this.props.t('AccountView.Settings')}
+            </h1>
           </header>
-          {accessTokensUIEnabled &&
+          {accessTokensUIEnabled && (
             <Tabs className="account__tabs">
               <TabList>
                 <div className="tabs__titles">
-                  <Tab><h4 className="tabs__title">{this.props.t('AccountView.AccountTab')}</h4></Tab>
-                  {accessTokensUIEnabled && <Tab><h4 className="tabs__title">{this.props.t('AccountView.AccessTokensTab')}</h4></Tab>}
+                  <Tab>
+                    <h4 className="tabs__title">
+                      {this.props.t('AccountView.AccountTab')}
+                    </h4>
+                  </Tab>
+                  {accessTokensUIEnabled && (
+                    <Tab>
+                      <h4 className="tabs__title">
+                        {this.props.t('AccountView.AccessTokensTab')}
+                      </h4>
+                    </Tab>
+                  )}
                 </div>
               </TabList>
               <TabPanel>
@@ -104,8 +115,8 @@ class AccountView extends React.Component {
                 <APIKeyForm {...this.props} />
               </TabPanel>
             </Tabs>
-          }
-          { !accessTokensUIEnabled && <SocialLoginPanel {...this.props} /> }
+          )}
+          {!accessTokensUIEnabled && <SocialLoginPanel {...this.props} />}
         </main>
       </div>
     );
@@ -118,32 +129,19 @@ function mapStateToProps(state) {
     previousPath: state.ide.previousPath,
     user: state.user,
     apiKeys: state.user.apiKeys,
-    theme: state.preferences.theme
+    theme: state.preferences.theme,
+    toast: state.toast
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    updateSettings, initiateVerification, createApiKey, removeApiKey
-  }, dispatch);
-}
-
-function asyncValidate(formProps, dispatch, props) {
-  const fieldToValidate = props.form._active;
-  if (fieldToValidate) {
-    const queryParams = {};
-    queryParams[fieldToValidate] = formProps[fieldToValidate];
-    queryParams.check_type = fieldToValidate;
-    return apiClient.get('/signup/duplicate_check', { params: queryParams })
-      .then((response) => {
-        if (response.data.exists) {
-          const error = {};
-          error[fieldToValidate] = response.data.message;
-          throw error;
-        }
-      });
-  }
-  return Promise.resolve(true).then(() => {});
+  return bindActionCreators(
+    {
+      createApiKey,
+      removeApiKey
+    },
+    dispatch
+  );
 }
 
 AccountView.propTypes = {
@@ -153,13 +151,12 @@ AccountView.propTypes = {
   location: PropTypes.shape({
     search: PropTypes.string.isRequired,
     pathname: PropTypes.string.isRequired
+  }).isRequired,
+  toast: PropTypes.shape({
+    isVisible: PropTypes.bool.isRequired
   }).isRequired
 };
 
-export default withTranslation()(withRouter(reduxForm({
-  form: 'updateAllSettings',
-  fields: ['username', 'email', 'currentPassword', 'newPassword'],
-  validate: validateSettings,
-  asyncValidate,
-  asyncBlurFields: ['username', 'email', 'currentPassword']
-}, mapStateToProps, mapDispatchToProps)(AccountView)));
+export default withTranslation()(
+  withRouter(connect(mapStateToProps, mapDispatchToProps)(AccountView))
+);

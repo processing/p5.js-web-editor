@@ -1,9 +1,9 @@
-
 import React from 'react';
 import { render } from '@testing-library/react';
 
+import { NavComponent } from './Nav';
 
-import { NavComponent } from '../Nav';
+jest.mock('../i18n');
 
 describe('Nav', () => {
   const props = {
@@ -36,7 +36,7 @@ describe('Nav', () => {
       showFind: jest.fn(),
       findNext: jest.fn(),
       findPrev: jest.fn(),
-      showReplace: jest.fn(),
+      showReplace: jest.fn()
     },
     startSketch: jest.fn(),
     stopSketch: jest.fn(),
@@ -48,7 +48,8 @@ describe('Nav', () => {
     },
     t: jest.fn(),
     setLanguage: jest.fn(),
-    language: 'en-US'
+    language: 'en-US',
+    isUserOwner: true
   };
 
   it('renders correctly', () => {

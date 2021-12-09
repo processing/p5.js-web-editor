@@ -10,11 +10,10 @@ function Feedback(props) {
         <title>{this.props.t('Feedback.Title')}</title>
       </Helmet>
       <div className="feedback__content-pane">
-        <h2 className="feedback__content-pane-header">
-          Via Github Issues
-        </h2>
+        <h2 className="feedback__content-pane-header">Via Github Issues</h2>
         <p className="feedback__content-pane-copy">
-          {'If you\'re familiar with Github, this is our preferred method for receiving bug reports and feedback.'}
+          {`If you're familiar with Github, this is our preferred method for
+            receiving bug reports and feedback.`}
         </p>
         <p className="feedback__content-pane-copy">
           <a
@@ -24,14 +23,16 @@ function Feedback(props) {
             className="feedback__github-link"
           >
             Go to Github
-            <GitHubLogo className="feedback__github-logo" focusable="false" aria-hidden="true" />
+            <GitHubLogo
+              className="feedback__github-logo"
+              focusable="false"
+              aria-hidden="true"
+            />
           </a>
         </p>
       </div>
       <div className="feedback__content-pane">
-        <h2 className="feedback__content-pane-header">
-          Via Google Form
-        </h2>
+        <h2 className="feedback__content-pane-header">Via Google Form</h2>
         <p className="feedback__content-pane-copy">
           You can also submit this quick form.
         </p>
@@ -40,7 +41,8 @@ function Feedback(props) {
             href="https://docs.google.com/forms/d/e/1FAIpQLSexU8W2EIhXjktl-_XzwjH6vgnelHirH4Yn4liN5BXltPWqBg/viewform"
             target="_blank"
             rel="noopener noreferrer"
-          >Go to Form
+          >
+            Go to Form
           </a>
         </p>
       </div>

@@ -3,9 +3,9 @@ import apiClient from '../../../utils/apiClient';
 import * as ActionTypes from '../../../constants';
 
 function updatePreferences(formParams, dispatch) {
-  apiClient.put('/preferences', formParams)
-    .then(() => {
-    })
+  apiClient
+    .put('/preferences', formParams)
+    .then(() => {})
     .catch((error) => {
       const { response } = error;
       dispatch({
@@ -159,24 +159,6 @@ export function setGridOutput(value) {
   };
 }
 
-export function setSoundOutput(value) {
-  return (dispatch, getState) => {
-    dispatch({
-      type: ActionTypes.SET_SOUND_OUTPUT,
-      value
-    });
-    const state = getState();
-    if (state.user.authenticated) {
-      const formParams = {
-        preferences: {
-          soundOutput: value
-        }
-      };
-      updatePreferences(formParams, dispatch);
-    }
-  };
-}
-
 export function setTheme(value) {
   // return {
   //   type: ActionTypes.SET_THEME,
@@ -225,7 +207,6 @@ export function setAllAccessibleOutput(value) {
   return (dispatch) => {
     dispatch(setTextOutput(value));
     dispatch(setGridOutput(value));
-    dispatch(setSoundOutput(value));
   };
 }
 
@@ -247,4 +228,3 @@ export function setLanguage(value, { persistPreference = true } = {}) {
     }
   };
 }
-

@@ -5,7 +5,6 @@ import { withTranslation } from 'react-i18next';
 import i18next from 'i18next';
 import SearchIcon from '../../../../images/magnifyingglass.svg';
 
-
 class Searchbar extends React.Component {
   constructor(props) {
     super(props);
@@ -23,7 +22,7 @@ class Searchbar extends React.Component {
     this.setState({ searchValue: '' }, () => {
       this.props.resetSearchTerm();
     });
-  }
+  };
 
   searchChange = () => {
     this.props.setSearchTerm(this.state.searchValue.trim());
@@ -33,14 +32,22 @@ class Searchbar extends React.Component {
     this.setState({ searchValue: e.target.value }, () => {
       this.throttledSearchChange(this.state.searchValue.trim());
     });
-  }
+  };
 
   render() {
     const { searchValue } = this.state;
     return (
-      <div className={`searchbar ${searchValue === '' ? 'searchbar--is-empty' : ''}`}>
+      <div
+        className={`searchbar ${
+          searchValue === '' ? 'searchbar--is-empty' : ''
+        }`}
+      >
         <div className="searchbar__button">
-          <SearchIcon className="searchbar__icon" focusable="false" aria-hidden="true" />
+          <SearchIcon
+            className="searchbar__icon"
+            focusable="false"
+            aria-hidden="true"
+          />
         </div>
         <input
           className="searchbar__input"
@@ -52,7 +59,8 @@ class Searchbar extends React.Component {
         <button
           className="searchbar__clear-button"
           onClick={this.handleResetSearch}
-        >{this.props.t('Searchbar.ClearTerm')}
+        >
+          {this.props.t('Searchbar.ClearTerm')}
         </button>
       </div>
     );

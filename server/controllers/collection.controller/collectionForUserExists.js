@@ -1,7 +1,11 @@
 import Collection from '../../models/collection';
 import User from '../../models/user';
 
-export default function collectionForUserExists(username, collectionId, callback) {
+export default function collectionForUserExists(
+  username,
+  collectionId,
+  callback
+) {
   function sendFailure() {
     callback(false);
   }
@@ -22,8 +26,5 @@ export default function collectionForUserExists(username, collectionId, callback
     return Collection.findOne({ _id: collectionId, owner });
   }
 
-  return findUser()
-    .then(findCollection)
-    .then(sendSuccess)
-    .catch(sendFailure);
+  return findUser().then(findCollection).then(sendSuccess).catch(sendFailure);
 }

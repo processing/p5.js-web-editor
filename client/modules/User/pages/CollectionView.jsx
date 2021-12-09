@@ -4,13 +4,14 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 
 import Nav from '../../../components/Nav';
+import RootPage from '../../../components/RootPage';
 
 import CollectionCreate from '../components/CollectionCreate';
 import Collection from '../components/Collection';
 
 class CollectionView extends React.Component {
   static defaultProps = {
-    user: null,
+    user: null
   };
 
   componentDidMount() {
@@ -57,11 +58,11 @@ class CollectionView extends React.Component {
 
   render() {
     return (
-      <div className="dashboard">
+      <RootPage>
         <Nav layout="dashboard" />
 
         {this.renderContent()}
-      </div>
+      </RootPage>
     );
   }
 }
@@ -79,17 +80,19 @@ function mapDispatchToProps(dispatch) {
 
 CollectionView.propTypes = {
   location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
+    pathname: PropTypes.string.isRequired
   }).isRequired,
   params: PropTypes.shape({
     collection_id: PropTypes.string.isRequired,
-    username: PropTypes.string.isRequired,
+    username: PropTypes.string.isRequired
   }).isRequired,
   theme: PropTypes.string.isRequired,
   user: PropTypes.shape({
-    username: PropTypes.string,
+    username: PropTypes.string
   }),
   t: PropTypes.func.isRequired
 };
 
-export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(CollectionView));
+export default withTranslation()(
+  connect(mapStateToProps, mapDispatchToProps)(CollectionView)
+);

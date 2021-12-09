@@ -1,6 +1,5 @@
 import * as ActionTypes from '../../../constants';
 
-
 const initialState = {
   fontSize: 18,
   autosave: true,
@@ -9,7 +8,6 @@ const initialState = {
   lintWarning: false,
   textOutput: false,
   gridOutput: false,
-  soundOutput: false,
   theme: 'light',
   autorefresh: false,
   language: 'en-US',
@@ -30,8 +28,6 @@ const preferences = (state = initialState, action) => {
       return Object.assign({}, state, { textOutput: action.value });
     case ActionTypes.SET_GRID_OUTPUT:
       return Object.assign({}, state, { gridOutput: action.value });
-    case ActionTypes.SET_SOUND_OUTPUT:
-      return Object.assign({}, state, { soundOutput: action.value });
     case ActionTypes.SET_PREFERENCES:
       return action.preferences;
     case ActionTypes.SET_THEME:
@@ -43,7 +39,9 @@ const preferences = (state = initialState, action) => {
     case ActionTypes.SET_LANGUAGE:
       return Object.assign({}, state, { language: action.language });
     case ActionTypes.SET_AUTOCLOSE_BRACKETS_QUOTES:
-      return Object.assign({}, state, { autocloseBracketsQuotes: action.value });
+      return Object.assign({}, state, {
+        autocloseBracketsQuotes: action.value
+      });
     default:
       return state;
   }

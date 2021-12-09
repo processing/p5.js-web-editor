@@ -1,13 +1,12 @@
 const webpack = require('webpack');
 const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 if (process.env.NODE_ENV === 'development') {
   require('dotenv').config();
 }
 
-
-// react hmr being fucked up has to do with the multiple entries!!! cool.
 module.exports = {
   mode: 'development',
   devtool: 'cheap-module-eval-source-map',
@@ -19,8 +18,16 @@ module.exports = {
       'react-hot-loader/patch',
       './client/index.jsx',
     ],
+    'previewApp': [
+      'core-js/modules/es6.promise',
+      'core-js/modules/es6.array.iterator',
+      'webpack-hot-middleware/client',
+      'react-hot-loader/patch',
+      './client/modules/Preview/previewIndex.jsx',
+    ],
     previewScripts: [
-       path.resolve(__dirname, '../client/utils/previewEntry.js')
+      '@babel/polyfill',
+      path.resolve(__dirname, '../client/utils/previewEntry.js')
     ]
   },
   output: {
@@ -36,6 +43,9 @@ module.exports = {
     ]
   },
   plugins: [
+    new ESLintPlugin({
+      extensions: ['js', 'jsx']
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
@@ -43,10 +53,10 @@ module.exports = {
       }
     }),
     new CopyWebpackPlugin({
-        patterns: [
-          {from: path.resolve(__dirname, '../translations/locales') , to: path.resolve(__dirname, 'locales')}
-        ]
-      }
+      patterns: [
+        { from: path.resolve(__dirname, '../translations/locales'), to: path.resolve(__dirname, 'locales') }
+      ]
+    }
     )
   ],
   module: {
@@ -60,16 +70,7 @@ module.exports = {
             cacheDirectory: true,
             plugins: ['react-hot-loader/babel'],
           }
-        }, {
-          loader: 'eslint-loader'
         }]
-        // use: {
-        //   loader: 'babel-loader',
-        //   options: {
-        //     cacheDirectory: true,
-        //     plugins: ['react-hot-loader/babel'],
-        //   }
-        // }
       },
       {
         test: /main\.scss$/,
@@ -87,7 +88,7 @@ module.exports = {
             name: '[name].[ext]',
             outputPath: 'images/'
           }
-         }
+        }
       },
       {
         test: /fonts\/.*\.(eot|ttf|woff|woff2)$/,

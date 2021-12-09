@@ -3,12 +3,17 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { prop, remSize } from '../../theme';
 
-
-const PreferenceTitle = styled.h4.attrs(props => ({ ...props, className: 'preference__title' }))`
+const PreferenceTitle = styled.h4.attrs((props) => ({
+  ...props,
+  className: 'preference__title'
+}))`
   color: ${prop('primaryTextColor')};
 `;
 
-const Preference = styled.div.attrs(props => ({ ...props, className: 'preference' }))`
+const Preference = styled.div.attrs((props) => ({
+  ...props,
+  className: 'preference'
+}))`
   flex-wrap: nowrap !important;
   align-items: baseline !important;
   justify-items: space-between;
@@ -18,14 +23,12 @@ const OptionLabel = styled.label.attrs({ className: 'preference__option' })`
   font-size: ${remSize(14)} !important;
 `;
 
-const PreferencePicker = ({
-  title, value, onSelect, options,
-}) => (
+const PreferencePicker = ({ title, value, onSelect, options }) => (
   <Preference>
     <PreferenceTitle>{title}</PreferenceTitle>
     <div className="preference__options">
-      {options.map(option => (
-        <React.Fragment key={`${option.name}-${option.id}`} >
+      {options.map((option) => (
+        <React.Fragment key={`${option.name}-${option.id}`}>
           <input
             type="radio"
             onChange={() => onSelect(option.value)}
@@ -43,7 +46,8 @@ const PreferencePicker = ({
           >
             {option.label}
           </OptionLabel>
-        </React.Fragment>))}
+        </React.Fragment>
+      ))}
     </div>
   </Preference>
 );
@@ -55,13 +59,15 @@ PreferencePicker.defaultProps = {
 PreferencePicker.propTypes = {
   title: PropTypes.string.isRequired,
   value: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
-  options: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string,
-    name: PropTypes.string,
-    label: PropTypes.string,
-    ariaLabel: PropTypes.string,
-  })),
-  onSelect: PropTypes.func.isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string,
+      label: PropTypes.string,
+      ariaLabel: PropTypes.string
+    })
+  ),
+  onSelect: PropTypes.func.isRequired
 };
 
 export default PreferencePicker;

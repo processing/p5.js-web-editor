@@ -33,14 +33,16 @@ const StyledButton = styled(Button)`
   width: ${remSize(300)};
 `;
 
-function SocialAuthButton({
-  service, linkStyle, isConnected, t
-}) {
+function SocialAuthButton({ service, linkStyle, isConnected, t }) {
   const ServiceIcon = icons[service];
   const serviceLabel = servicesLabels[service];
   const loginLabel = t('SocialAuthButton.Login', { serviceauth: serviceLabel });
-  const connectLabel = t('SocialAuthButton.Connect', { serviceauth: serviceLabel });
-  const unlinkLabel = t('SocialAuthButton.Unlink', { serviceauth: serviceLabel });
+  const connectLabel = t('SocialAuthButton.Connect', {
+    serviceauth: serviceLabel
+  });
+  const unlinkLabel = t('SocialAuthButton.Unlink', {
+    serviceauth: serviceLabel
+  });
   const ariaLabel = t('SocialAuthButton.LogoARIA', { serviceauth: service });
   const dispatch = useDispatch();
   if (linkStyle) {
@@ -48,7 +50,9 @@ function SocialAuthButton({
       return (
         <StyledButton
           iconBefore={<ServiceIcon aria-label={ariaLabel} />}
-          onClick={() => { dispatch(unlinkService(service)); }}
+          onClick={() => {
+            dispatch(unlinkService(service));
+          }}
         >
           {unlinkLabel}
         </StyledButton>

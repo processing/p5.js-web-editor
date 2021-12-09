@@ -14,7 +14,6 @@ const initialState = {
   shareModalProjectId: 'abcd',
   shareModalProjectName: 'My Cute Sketch',
   shareModalProjectUsername: 'p5_user',
-  editorOptionsVisible: false,
   keyboardShortcutVisible: false,
   unsavedChanges: false,
   infiniteLoop: false,
@@ -23,7 +22,7 @@ const initialState = {
   justOpenedProject: false,
   previousPath: '/',
   errorType: undefined,
-  runtimeErrorWarningVisible: true,
+  runtimeErrorWarningVisible: false,
   parentId: undefined
 };
 
@@ -78,14 +77,10 @@ const ide = (state = initialState, action) => {
         shareModalVisible: true,
         shareModalProjectId: action.payload.shareModalProjectId,
         shareModalProjectName: action.payload.shareModalProjectName,
-        shareModalProjectUsername: action.payload.shareModalProjectUsername,
+        shareModalProjectUsername: action.payload.shareModalProjectUsername
       });
     case ActionTypes.CLOSE_SHARE_MODAL:
       return Object.assign({}, state, { shareModalVisible: false });
-    case ActionTypes.SHOW_EDITOR_OPTIONS:
-      return Object.assign({}, state, { editorOptionsVisible: true });
-    case ActionTypes.CLOSE_EDITOR_OPTIONS:
-      return Object.assign({}, state, { editorOptionsVisible: false });
     case ActionTypes.SHOW_KEYBOARD_SHORTCUT_MODAL:
       return Object.assign({}, state, { keyboardShortcutVisible: true });
     case ActionTypes.CLOSE_KEYBOARD_SHORTCUT_MODAL:
@@ -93,9 +88,15 @@ const ide = (state = initialState, action) => {
     case ActionTypes.SET_UNSAVED_CHANGES:
       return Object.assign({}, state, { unsavedChanges: action.value });
     case ActionTypes.DETECT_INFINITE_LOOPS:
-      return Object.assign({}, state, { infiniteLoop: true, infiniteLoopMessage: action.message });
+      return Object.assign({}, state, {
+        infiniteLoop: true,
+        infiniteLoopMessage: action.message
+      });
     case ActionTypes.RESET_INFINITE_LOOPS:
-      return Object.assign({}, state, { infiniteLoop: false, infiniteLoopMessage: '' });
+      return Object.assign({}, state, {
+        infiniteLoop: false,
+        infiniteLoopMessage: ''
+      });
     case ActionTypes.START_SKETCH_REFRESH:
       return Object.assign({}, state, { previewIsRefreshing: true });
     case ActionTypes.END_SKETCH_REFRESH:
@@ -115,7 +116,10 @@ const ide = (state = initialState, action) => {
     case ActionTypes.SHOW_RUNTIME_ERROR_WARNING:
       return Object.assign({}, state, { runtimeErrorWarningVisible: true });
     case ActionTypes.OPEN_UPLOAD_FILE_MODAL:
-      return Object.assign({}, state, { uploadFileModalVisible: true, parentId: action.parentId });
+      return Object.assign({}, state, {
+        uploadFileModalVisible: true,
+        parentId: action.parentId
+      });
     case ActionTypes.CLOSE_UPLOAD_FILE_MODAL:
       return Object.assign({}, state, { uploadFileModalVisible: false });
     default:
