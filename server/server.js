@@ -198,6 +198,8 @@ app.get('*', (req, res) => {
 app.listen(process.env.PORT, (error) => {
   if (!error) {
     console.log(`p5.js Web Editor is running on port: ${process.env.PORT}!`); // eslint-disable-line
+  } else {
+    console.log(error);
   }
 });
 
