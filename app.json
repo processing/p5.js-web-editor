@@ -6,10 +6,6 @@
   "keywords": ["processing", "p5js", "p5.js"],
   "addons": [
     {
-      "plan": "mongolab:sandbox",
-      "as": "MONGO"
-    },
-    {
       "plan": "mailgun:starter",
       "as": "MAILGUN"
     }
@@ -71,6 +67,10 @@
       "description": "The Google Client Secret",
       "value": "placeholder"
     },
+    "MONGO_URL": {
+      "description": "MongoDB connection string",
+      "value": "you-must-change-this-to-a-real-connection-string"
+    },
     "NODE_ENV": {
       "value": "production"
     },
@@ -88,6 +88,6 @@
     }
   },
   "scripts": {
-    "postdeploy": "MONGO_URL=$MONGO_URI MAILGUN_KEY=$MAILGUN_API_KEY npm run fetch-examples:prod"
+    "postdeploy": "MAILGUN_KEY=$MAILGUN_API_KEY npm run fetch-examples:prod"
   }
 }
