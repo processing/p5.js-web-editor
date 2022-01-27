@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as CollectionsActions from '../../IDE/actions/collections';
@@ -24,23 +25,23 @@ class CollectionCreate extends React.Component {
   }
 
   getTitle() {
-    return 'p5.js Web Editor | Create collection';
+    return this.props.t('CollectionCreate.Title');
   }
 
-  handleTextChange = field => (evt) => {
+  handleTextChange = (field) => (evt) => {
     this.setState({
       collection: {
         ...this.state.collection,
-        [field]: evt.target.value,
+        [field]: evt.target.value
       }
     });
-  }
+  };
 
   handleCreateCollection = (event) => {
     event.preventDefault();
 
     this.props.createCollection(this.state.collection);
-  }
+  };
 
   render() {
     const { generatedCollectionName, creationError } = this.state;
@@ -55,34 +56,50 @@ class CollectionCreate extends React.Component {
         </Helmet>
         <div className="sketches-table-container">
           <form className="form" onSubmit={this.handleCreateCollection}>
-            {creationError && <span className="form-error">Couldn&apos;t create collection</span>}
+            {creationError && (
+              <span className="form-error">
+                {this.props.t('CollectionCreate.FormError')}
+              </span>
+            )}
             <p className="form__field">
-              <label htmlFor="name" className="form__label">Collection name</label>
+              <label htmlFor="name" className="form__label">
+                {this.props.t('CollectionCreate.FormLabel')}
+              </label>
               <input
                 className="form__input"
-                aria-label="name"
+                aria-label={this.props.t('CollectionCreate.FormLabelARIA')}
                 type="text"
                 id="name"
                 value={name}
                 placeholder={generatedCollectionName}
                 onChange={this.handleTextChange('name')}
               />
-              {invalid && <span className="form-error">Collection name is required</span>}
+              {invalid && (
+                <span className="form-error">
+                  {this.props.t('CollectionCreate.NameRequired')}
+                </span>
+              )}
             </p>
             <p className="form__field">
-              <label htmlFor="description" className="form__label">Description (optional)</label>
+              <label htmlFor="description" className="form__label">
+                {this.props.t('CollectionCreate.Description')}
+              </label>
               <textarea
                 className="form__input form__input-flexible-height"
-                aria-label="description"
+                aria-label={this.props.t('CollectionCreate.DescriptionARIA')}
                 type="text"
                 id="description"
                 value={description}
                 onChange={this.handleTextChange('description')}
-                placeholder="My fave sketches"
+                placeholder={this.props.t(
+                  'CollectionCreate.DescriptionPlaceholder'
+                )}
                 rows="4"
               />
             </p>
-            <Button type="submit" disabled={invalid}>Create collection</Button>
+            <Button type="submit" disabled={invalid}>
+              {this.props.t('CollectionCreate.SubmitCollectionCreate')}
+            </Button>
           </form>
         </div>
       </div>
@@ -95,12 +112,13 @@ CollectionCreate.propTypes = {
     username: PropTypes.string,
     authenticated: PropTypes.bool.isRequired
   }).isRequired,
-  createCollection: PropTypes.func.isRequired
+  createCollection: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
   return {
-    user: state.user,
+    user: state.user
   };
 }
 
@@ -108,4 +126,6 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({}, CollectionsActions), dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CollectionCreate);
+export default withTranslation()(
+  connect(mapStateToProps, mapDispatchToProps)(CollectionCreate)
+);

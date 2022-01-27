@@ -1,15 +1,14 @@
 import fs from 'fs';
-import rp from 'request-promise';
+import axios from 'axios';
 import Q from 'q';
 import { ok } from 'assert';
 
-// TODO: Change branchName if necessary
-const branchName = 'release';
+const branchName = 'main';
 const branchRef = `?ref=${branchName}`;
-const baseUrl = 'https://api.github.com/repos/ml5js/ml5-examples/contents';
+const baseUrl = 'https://api.github.com/repos/ml5js/ml5-library/contents';
 const clientId = process.env.GITHUB_ID;
 const clientSecret = process.env.GITHUB_SECRET;
-const editorUsername = process.env.ML5_EXAMPLES_USERNAME;
+const editorUsername = process.env.ML5_LIBRARY_USERNAME;
 const personalAccessToken = process.env.EDITOR_API_ACCESS_TOKEN;
 const editorApiUrl = process.env.EDITOR_API_URL;
 const headers = {
@@ -18,20 +17,20 @@ const headers = {
 
 ok(clientId, 'GITHUB_ID is required');
 ok(clientSecret, 'GITHUB_SECRET is required');
-ok(editorUsername, 'ML5_EXAMPLES_USERNAME is required');
+ok(editorUsername, 'ML5_LIBRARY_USERNAME is required');
 ok(personalAccessToken, 'EDITOR_API_ACCESS_TOKEN is required');
 ok(editorApiUrl, 'EDITOR_API_URL is required');
 
 //
 const githubRequestOptions = {
   url: baseUrl,
-  qs: {
-    client_id: clientId,
-    client_secret: clientSecret
-  },
   method: 'GET',
-  headers,
-  json: true
+  headers: {
+    ...headers,
+    Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString(
+      'base64'
+    )}`
+  }
 };
 
 const editorRequestOptions = {
@@ -39,9 +38,10 @@ const editorRequestOptions = {
   method: 'GET',
   headers: {
     ...headers,
-    Authorization: `Basic ${Buffer.from(`${editorUsername}:${personalAccessToken}`).toString('base64')}`
-  },
-  json: true
+    Authorization: `Basic ${Buffer.from(
+      `${editorUsername}:${personalAccessToken}`
+    ).toString('base64')}`
+  }
 };
 
 /**
@@ -66,10 +66,7 @@ async function fetchFileContent(item) {
   const file = { url: item.url };
 
   // if it is an html or js file
-  if (
-    (file.url != null && name.endsWith('.html')) ||
-    name.endsWith('.js')
-  ) {
+  if ((file.url != null && name.endsWith('.html')) || name.endsWith('.js')) {
     const options = Object.assign({}, githubRequestOptions);
     options.url = `${file.url}`;
 
@@ -78,10 +75,21 @@ async function fetchFileContent(item) {
       options.url !== null ||
       options.url !== ''
     ) {
-      file.content = await rp(options);
+      try {
+        const { data } = await axios.request(options);
+        file.content = data;
+      } catch (err) {
+        throw err;
+      }
       // NOTE: remove the URL property if there's content
       // Otherwise the p5 editor will try to pull from that url
       if (file.content !== null) delete file.url;
+
+      // Replace localhost references with references to the currently published version.
+      file.content = file.content.replace(
+        /http:\/\/localhost(:[0-9]+)\/ml5.js/g,
+        'https://unpkg.com/ml5@latest/dist/ml5.min.js'
+      );
     }
 
     return file;
@@ -89,13 +97,14 @@ async function fetchFileContent(item) {
   }
 
   if (file.url) {
-    const cdnRef = `https://cdn.jsdelivr.net/gh/ml5js/ml5-examples@${branchName}${file.url.split(branchName)[1]}`;
+    const cdnRef = `https://cdn.jsdelivr.net/gh/ml5js/ml5-library@${branchName}${
+      file.url.split(branchName)[1]
+    }`;
     file.url = cdnRef;
   }
 
   return file;
 }
-
 
 /**
  * STEP 1: Get the top level cateogories
@@ -103,10 +112,10 @@ async function fetchFileContent(item) {
 async function getCategories() {
   try {
     const options = Object.assign({}, githubRequestOptions);
-    options.url = `${options.url}/p5js${branchRef}`;
-    const results = await rp(options);
+    options.url = `${options.url}/examples/p5js${branchRef}`;
+    const { data } = await axios.request(options);
 
-    return results;
+    return data;
   } catch (err) {
     return err;
   }
@@ -125,10 +134,10 @@ async function getCategoryExamples(sketchRootList) {
     const options = Object.assign({}, githubRequestOptions);
     options.url = `${options.url}${categories.path}${branchRef}`;
     // console.log(options)
-    const sketchDirs = await rp(options);
 
     try {
-      const result = flatten(sketchDirs);
+      const { data } = await axios.request(options);
+      const result = flatten(data);
 
       return result;
     } catch (err) {
@@ -157,13 +166,18 @@ async function traverseSketchTree(parentObject) {
   if (parentObject.type !== 'dir') {
     return output;
   }
-  // let options = `https://api.github.com/repos/ml5js/ml5-examples/contents/${sketches.path}${branchRef}`
+  // let options = `https://api.github.com/repos/ml5js/ml5-library/contents/examples/p5js/${sketches.path}${branchRef}`
   const options = Object.assign({}, githubRequestOptions);
   options.url = `${options.url}${parentObject.path}${branchRef}`;
 
-  output.tree = await rp(options);
+  try {
+    const { data } = await axios.request(options);
+    output.tree = data;
+  } catch (err) {
+    throw err;
+  }
 
-  output.tree = output.tree.map(file => traverseSketchTree(file));
+  output.tree = output.tree.map((file) => traverseSketchTree(file));
 
   output.tree = await Q.all(output.tree);
 
@@ -175,7 +189,9 @@ async function traverseSketchTree(parentObject) {
  * @param {*} categoryExamples - all of the categories in an array
  */
 async function traverseSketchTreeAll(categoryExamples) {
-  const sketches = categoryExamples.map(async sketch => traverseSketchTree(sketch));
+  const sketches = categoryExamples.map(async (sketch) =>
+    traverseSketchTree(sketch)
+  );
 
   const result = await Q.all(sketches);
   return result;
@@ -220,22 +236,19 @@ function traverseAndFormat(parentObject) {
  * @param {*} projectFileTree
  */
 async function traverseAndDownload(projectFileTree) {
-  return projectFileTree.reduce(
-    async (previousPromise, item, idx) => {
-      const result = await previousPromise;
+  return projectFileTree.reduce(async (previousPromise, item, idx) => {
+    const result = await previousPromise;
 
-      if (Array.isArray(item.children)) {
-        result[item.name] = {
-          files: await traverseAndDownload(item.children)
-        };
-      } else {
-        result[item.name] = await fetchFileContent(item);
-      }
+    if (Array.isArray(item.children)) {
+      result[item.name] = {
+        files: await traverseAndDownload(item.children)
+      };
+    } else {
+      result[item.name] = await fetchFileContent(item);
+    }
 
-      return result;
-    },
-    {}
-  );
+    return result;
+  }, {});
 }
 
 /**
@@ -262,7 +275,7 @@ async function formatSketchForStorage(sketch, user) {
 function formatSketchForStorageAll(sketchWithItems, user) {
   let sketchList = sketchWithItems.slice(0);
 
-  sketchList = sketchList.map(sketch => formatSketchForStorage(sketch, user));
+  sketchList = sketchList.map((sketch) => formatSketchForStorage(sketch, user));
 
   return Promise.all(sketchList);
 }
@@ -274,9 +287,12 @@ async function getProjectsList() {
   const options = Object.assign({}, editorRequestOptions);
   options.url = `${options.url}/sketches`;
 
-  const results = await rp(options);
-
-  return results.sketches;
+  try {
+    const { data } = await axios.request(options);
+    return data.sketches;
+  } catch (err) {
+    throw err;
+  }
 }
 
 /**
@@ -287,24 +303,26 @@ async function deleteProject(project) {
   options.method = 'DELETE';
   options.url = `${options.url}/sketches/${project.id}`;
 
-  const results = await rp(options);
-
-  return results;
+  try {
+    const { data } = await axios.request(options);
+    return data;
+  } catch (err) {
+    throw err;
+  }
 }
 
 /**
  * Create a new project
  */
 async function createProject(project) {
+  const options = Object.assign({}, editorRequestOptions);
+  options.method = 'POST';
+  options.url = `${options.url}/sketches`;
+  options.data = project;
+
   try {
-    const options = Object.assign({}, editorRequestOptions);
-    options.method = 'POST';
-    options.url = `${options.url}/sketches`;
-    options.body = project;
-
-    const results = await rp(options);
-
-    return results;
+    const { data } = await axios.request(options);
+    return data;
   } catch (err) {
     throw err;
   }
@@ -353,7 +371,7 @@ async function createProjectsInP5User(filledProjectList, user) {
 
 /**
  * MAKE
- * Get all the sketches from the ml5-examples repo
+ * Get all the sketches from the ml5-library repo
  * Get the p5 examples
  * Dive down into each sketch and get all the files
  * Format the sketch files to be save to the db
@@ -364,8 +382,12 @@ async function make() {
   const categories = await getCategories();
   const categoryExamples = await getCategoryExamples(categories);
 
-  const examplesWithResourceTree = await traverseSketchTreeAll(categoryExamples);
-  const formattedSketchList = await formatSketchForStorageAll(examplesWithResourceTree);
+  const examplesWithResourceTree = await traverseSketchTreeAll(
+    categoryExamples
+  );
+  const formattedSketchList = await formatSketchForStorageAll(
+    examplesWithResourceTree
+  );
 
   await createProjectsInP5User(formattedSketchList);
   console.log('done!');
@@ -374,7 +396,7 @@ async function make() {
 
 /**
  * TEST - same as make except reads from file for testing purposes
- * Get all the sketches from the ml5-examples repo
+ * Get all the sketches from the ml5-library repo
  * Get the p5 examples
  * Dive down into each sketch and get all the files
  * Format the sketch files to be save to the db
@@ -383,9 +405,13 @@ async function make() {
 // eslint-disable-next-line no-unused-vars
 async function test() {
   // read from file while testing
-  const examplesWithResourceTree = JSON.parse(fs.readFileSync('./ml5-examplesWithResourceTree.json'));
+  const examplesWithResourceTree = JSON.parse(
+    fs.readFileSync('./ml5-examplesWithResourceTree.json')
+  );
 
-  const formattedSketchList = await formatSketchForStorageAll(examplesWithResourceTree);
+  const formattedSketchList = await formatSketchForStorageAll(
+    examplesWithResourceTree
+  );
 
   await createProjectsInP5User(formattedSketchList);
   console.log('done!');
@@ -406,7 +432,7 @@ async function test() {
  */
 
 if (process.env.NODE_ENV === 'development') {
-  // test()
+  // test();
   make(); // replace with test() if you don't want to run all the fetch functions over and over
 } else {
   make();

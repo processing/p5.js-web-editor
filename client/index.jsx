@@ -8,7 +8,7 @@ import configureStore from './store';
 import routes from './routes';
 import ThemeProvider from './modules/App/components/ThemeProvider';
 import Loader from './modules/App/components/loader';
-import i18n from './i18n';
+import './i18n';
 
 require('./styles/main.scss');
 
@@ -31,7 +31,7 @@ const App = () => (
 const HotApp = hot(App);
 
 render(
-  <Suspense fallback={(<Loader />)}>
+  <Suspense fallback={<Loader />}>
     <HotApp />
   </Suspense>,
   document.getElementById('root')

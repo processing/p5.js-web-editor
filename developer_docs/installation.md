@@ -26,11 +26,12 @@ _Note_: The installation steps assume you are using a Unix-like shell. If you ar
    * For Windows and Linux: [MongoDB Installation](https://docs.mongodb.com/manual/installation/)
 7. `$ cp .env.example .env`
 8. (Optional) Update `.env` with necessary keys to enable certain app behaviors, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
-9. `$ npm run fetch-examples` - this downloads the example sketches into a user called 'p5'
-10. `$ npm start`
-11. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
-12. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
-13. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
+9. Run `$ npm run fetch-examples` to download the example sketches into a user called 'p5'. Note that you need to configure your GitHub Credentials, which you can do by following the [Github API Configuration](#github-api-configuration) section.
+10. Enable Prettier in your text editor by following [this guide](https://prettier.io/docs/en/editors.html).
+11. `$ npm start`
+12. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
+13. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
+14. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
 
 ## Docker Installation
 
@@ -47,20 +48,21 @@ Note that this takes up a significant amount of space on your machine. Make sure
 3. `$ docker-compose -f docker-compose-development.yml build`
 4. `$ cp .env.example .env`
 5. (Optional) Update `.env` with necessary keys to enable certain app behavoirs, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
-6. `$ docker-compose -f docker-compose-development.yml run --rm app npm run fetch-examples`
+6. `$ docker-compose -f docker-compose-development.yml run --rm app npm run fetch-examples` -  note that you need to configure your GitHub Credentials, which you can do by following the [Github API Configuration](#github-api-configuration) section.
+7. Enable Prettier in your text editor by following [this guide](https://prettier.io/docs/en/editors.html).
 
 Now, anytime you wish to start the server with its dependencies, you can run:
 
-7. `$ docker-compose -f docker-compose-development.yml up`
-8. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
+8. `$ docker-compose -f docker-compose-development.yml up`
+9. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
 
 To open a terminal/shell in the running Docker server (i.e. after `docker-compose up` has been run):
 
-9. `$ docker-compose -f docker-compose-development.yml exec app bash -l`
+10. `$ docker-compose -f docker-compose-development.yml exec app bash -l`
 
 If you don't have the full server environment running, you can launch a one-off container instance (and have it automatically deleted after you're done using it):
 
-10. `$ docker-compose -f docker-compose-development.yml run app --rm bash -l`
+11. `$ docker-compose -f docker-compose-development.yml run app --rm bash -l`
 
 ## S3 Bucket Configuration
 
@@ -80,3 +82,19 @@ name, you can also set it using this variable. I.e.:
 For more information on using a custom domain, see this documentation link:
 
 http://docs.aws.amazon.com/AmazonS3/latest/dev/VirtualHosting.html#VirtualHostingCustomURLs
+
+## GitHub API Configuration
+
+In this application, GitHub credentials are used for:
+* Authentication with GitHub
+* Importing the p5.js examples to your local database
+* Rendering the 404 pages
+
+If you are working on a part of the application that requires one of the above uses, then you will need to get GitHub API credentials.
+
+When you go to the Developer settings in your GitHub account, you will see that you can create two types of Apps: `GitHub Apps` and `OAuth Apps` ([differences between GitHub Apps and OAuth Apps](https://docs.github.com/en/free-pro-team@latest/developers/apps/differences-between-github-apps-and-oauth-apps)). This project requires you to make an `OAuth App`. After clicking on "New OAuth App", you will need to fill in the following fields:
+- **Application name**: `p5.js Web Editor - Local`
+- **Homepage URL**: `http://localhost:8000`
+- **Authorization Callback URL**: `http://localhost:8000/auth/github/callback`
+
+If you would like to learn more about what you can do with the GitHub API, you can look at the [API documentation](https://developer.github.com/v3/).

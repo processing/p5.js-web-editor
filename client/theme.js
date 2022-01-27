@@ -3,12 +3,14 @@ import lodash from 'lodash';
 export const Theme = {
   contrast: 'contrast',
   dark: 'dark',
-  light: 'light',
+  light: 'light'
 };
 
 export const colors = {
   p5jsPink: '#ed225d',
-  processingBlue: '#007BBB',
+  processingBlueDark: '#28347D',
+  processingBlue: '#2D67F6',
+  processingBlueLight: '#8DADF9',
   p5jsActivePink: '#f10046',
   white: '#fff',
   black: '#000',
@@ -20,7 +22,7 @@ export const colors = {
   p5ContrastPink: ' #FFA9D9',
 
   borderColor: ' #B5B5B5',
-  outlineColor: '#0F9DD7',
+  outlineColor: '#0F9DD7'
 };
 
 export const grays = {
@@ -37,7 +39,7 @@ export const grays = {
 
   dark: '#333', // primary
   darker: '#1C1C1C',
-  darkest: '#000',
+  darkest: '#000'
 };
 
 export const common = {
@@ -45,9 +47,13 @@ export const common = {
   shadowColor: 'rgba(0, 0, 0, 0.16)'
 };
 
-export const remSize = size => `${size / common.baseFontSize}rem`;
+export const device = {
+  desktop: `(min-width: 770px)`
+};
 
-export const prop = key => (props) => {
+export const remSize = (size) => `${size / common.baseFontSize}rem`;
+
+export const prop = (key) => (props) => {
   const keypath = `theme.${key}`;
   const value = lodash.get(props, keypath);
 
@@ -58,35 +64,59 @@ export const prop = key => (props) => {
   return value;
 };
 
-
 export default {
   [Theme.light]: {
     colors,
     ...common,
     primaryTextColor: grays.dark,
+    inactiveTextColor: grays.middleDark,
     backgroundColor: grays.lighter,
 
     Button: {
-      default: {
-        foreground: colors.black,
-        background: grays.light,
-        border: grays.middleLight,
+      primary: {
+        default: {
+          foreground: colors.black,
+          background: grays.light,
+          border: grays.middleLight
+        },
+        hover: {
+          foreground: grays.lightest,
+          background: colors.p5jsPink,
+          border: colors.p5jsPink
+        },
+        active: {
+          foreground: grays.lightest,
+          background: colors.p5jsActivePink,
+          border: colors.p5jsActivePink
+        },
+        disabled: {
+          foreground: colors.black,
+          background: grays.light,
+          border: grays.middleLight
+        }
       },
-      hover: {
-        foreground: grays.lightest,
-        background: colors.p5jsPink,
-        border: colors.p5jsPink,
-      },
-      active: {
-        foreground: grays.lightest,
-        background: colors.p5jsActivePink,
-        border: colors.p5jsActivePink,
-      },
-      disabled: {
-        foreground: colors.black,
-        background: grays.light,
-        border: grays.middleLight,
-      },
+      secondary: {
+        default: {
+          foreground: grays.lightest,
+          background: colors.p5jsPink,
+          border: colors.p5jsPink
+        },
+        hover: {
+          foreground: grays.lightest,
+          background: colors.p5jsPink,
+          border: colors.p5jsPink
+        },
+        active: {
+          foreground: grays.lightest,
+          background: colors.p5jsActivePink,
+          border: colors.p5jsActivePink
+        },
+        disabled: {
+          foreground: colors.black,
+          background: grays.light,
+          border: grays.middleLight
+        }
+      }
     },
     Icon: {
       default: grays.middleGray,
@@ -96,12 +126,13 @@ export default {
       default: {
         foreground: colors.black,
         background: grays.light,
-        border: grays.middleLight,
-      },
+        border: grays.middleLight
+      }
     },
     Modal: {
       background: grays.light,
-      border: grays.middleLight
+      border: grays.middleLight,
+      separator: grays.middleDark
     },
     Separator: grays.middleLight,
 
@@ -111,35 +142,63 @@ export default {
       card: {
         background: grays.lighter
       }
+    },
+    Policy: {
+      link: colors.processingBlue
     }
   },
   [Theme.dark]: {
     colors,
     ...common,
     primaryTextColor: grays.lightest,
+    inactiveTextColor: grays.middleLight,
     backgroundColor: grays.darker,
 
     Button: {
-      default: {
-        foreground: grays.light,
-        background: grays.dark,
-        border: grays.middleDark,
+      primary: {
+        default: {
+          foreground: grays.light,
+          background: grays.dark,
+          border: grays.middleDark
+        },
+        hover: {
+          foreground: grays.lightest,
+          background: colors.p5jsPink,
+          border: colors.p5jsPink
+        },
+        active: {
+          foreground: grays.lightest,
+          background: colors.p5jsActivePink,
+          border: colors.p5jsActivePink
+        },
+        disabled: {
+          foreground: grays.light,
+          background: grays.dark,
+          border: grays.middleDark
+        }
       },
-      hover: {
-        foreground: grays.lightest,
-        background: colors.p5jsPink,
-        border: colors.p5jsPink,
-      },
-      active: {
-        foreground: grays.lightest,
-        background: colors.p5jsActivePink,
-        border: colors.p5jsActivePink,
-      },
-      disabled: {
-        foreground: grays.light,
-        background: grays.dark,
-        border: grays.middleDark,
-      },
+      secondary: {
+        default: {
+          foreground: grays.lightest,
+          background: colors.p5jsPink,
+          border: colors.p5jsPink
+        },
+        hover: {
+          foreground: grays.lightest,
+          background: colors.p5jsPink,
+          border: colors.p5jsPink
+        },
+        active: {
+          foreground: grays.lightest,
+          background: colors.p5jsActivePink,
+          border: colors.p5jsActivePink
+        },
+        disabled: {
+          foreground: grays.light,
+          background: grays.dark,
+          border: grays.middleDark
+        }
+      }
     },
     Icon: {
       default: grays.middleLight,
@@ -149,12 +208,13 @@ export default {
       default: {
         foreground: grays.light,
         background: grays.dark,
-        border: grays.middleDark,
-      },
+        border: grays.middleDark
+      }
     },
     Modal: {
       background: grays.dark,
-      border: grays.middleDark
+      border: grays.middleDark,
+      separator: grays.middleLight
     },
     Separator: grays.middleDark,
 
@@ -164,35 +224,63 @@ export default {
       card: {
         background: grays.dark
       }
+    },
+    Policy: {
+      link: colors.processingBlueLight
     }
   },
   [Theme.contrast]: {
     colors,
     ...common,
     primaryTextColor: grays.lightest,
+    inactiveTextColor: grays.light,
     backgroundColor: grays.darker,
 
     Button: {
-      default: {
-        foreground: grays.light,
-        background: grays.dark,
-        border: grays.middleDark,
+      primary: {
+        default: {
+          foreground: grays.light,
+          background: grays.dark,
+          border: grays.middleDark
+        },
+        hover: {
+          foreground: grays.dark,
+          background: colors.yellow,
+          border: colors.yellow
+        },
+        active: {
+          foreground: grays.dark,
+          background: colors.p5jsActivePink,
+          border: colors.p5jsActivePink
+        },
+        disabled: {
+          foreground: grays.light,
+          background: grays.dark,
+          border: grays.middleDark
+        }
       },
-      hover: {
-        foreground: grays.dark,
-        background: colors.yellow,
-        border: colors.yellow,
-      },
-      active: {
-        foreground: grays.dark,
-        background: colors.p5jsActivePink,
-        border: colors.p5jsActivePink,
-      },
-      disabled: {
-        foreground: grays.light,
-        background: grays.dark,
-        border: grays.middleDark,
-      },
+      secondary: {
+        default: {
+          foreground: grays.dark,
+          background: colors.yellow,
+          border: colors.yellow
+        },
+        hover: {
+          foreground: grays.dark,
+          background: colors.yellow,
+          border: colors.yellow
+        },
+        active: {
+          foreground: grays.dark,
+          background: colors.p5jsActivePink,
+          border: colors.p5jsActivePink
+        },
+        disabled: {
+          foreground: grays.light,
+          background: grays.dark,
+          border: grays.middleDark
+        }
+      }
     },
     Icon: {
       default: grays.mediumLight,
@@ -202,12 +290,13 @@ export default {
       default: {
         foreground: grays.light,
         background: grays.dark,
-        border: grays.middleDark,
-      },
+        border: grays.middleDark
+      }
     },
     Modal: {
       background: grays.dark,
-      border: grays.middleDark
+      border: grays.middleDark,
+      separator: grays.light
     },
     Separator: grays.middleDark,
 
@@ -217,6 +306,9 @@ export default {
       card: {
         background: grays.dark
       }
+    },
+    Policy: {
+      link: colors.processingBlueLight
     }
-  },
+  }
 };

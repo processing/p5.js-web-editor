@@ -32,7 +32,8 @@ function validateNameEmail(formProps, errors) {
     errors.email = i18n.t('ReduxFormUtils.errorEmptyEmail');
   } else if (
     // eslint-disable-next-line max-len
-    !formProps.email.match(EMAIL_REGEX)) {
+    !formProps.email.match(EMAIL_REGEX)
+  ) {
     errors.email = i18n.t('ReduxFormUtils.errorInvalidEmail');
   }
 }
@@ -62,11 +63,7 @@ export function validateLogin(formProps) {
   return errors;
 }
 
-export function validateSignup(formProps) {
-  const errors = {};
-
-  validateNameEmail(formProps, errors);
-
+function validatePasswords(formProps, errors) {
   if (!formProps.password) {
     errors.password = i18n.t('ReduxFormUtils.errorEmptyPassword');
   }
@@ -77,9 +74,25 @@ export function validateSignup(formProps) {
     errors.confirmPassword = i18n.t('ReduxFormUtils.errorConfirmPassword');
   }
 
-  if (formProps.password !== formProps.confirmPassword && formProps.confirmPassword) {
+  if (
+    formProps.password !== formProps.confirmPassword &&
+    formProps.confirmPassword
+  ) {
     errors.confirmPassword = i18n.t('ReduxFormUtils.errorPasswordMismatch');
   }
+}
+
+export function validateNewPassword(formProps) {
+  const errors = {};
+  validatePasswords(formProps, errors);
+  return errors;
+}
+
+export function validateSignup(formProps) {
+  const errors = {};
+
+  validateNameEmail(formProps, errors);
+  validatePasswords(formProps, errors);
 
   return errors;
 }
@@ -89,7 +102,8 @@ export function validateResetPassword(formProps) {
     errors.email = i18n.t('ReduxFormUtils.errorEmptyEmail');
   } else if (
     // eslint-disable-next-line max-len
-    !formProps.email.match(EMAIL_REGEX)) {
+    !formProps.email.match(EMAIL_REGEX)
+  ) {
     errors.email = i18n.t('ReduxFormUtils.errorInvalidEmail');
   }
   return errors;

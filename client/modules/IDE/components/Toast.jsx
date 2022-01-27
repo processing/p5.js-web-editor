@@ -11,10 +11,12 @@ function Toast(props) {
   const { t } = useTranslation();
   return (
     <section className="toast">
-      <p>
-        {t(props.text)}
-      </p>
-      <button className="toast__close" onClick={props.hideToast} aria-label="Close Alert" >
+      <p>{t(props.text)}</p>
+      <button
+        className="toast__close"
+        onClick={props.hideToast}
+        aria-label="Close Alert"
+      >
         <ExitIcon focusable="false" aria-hidden="true" />
       </button>
     </section>

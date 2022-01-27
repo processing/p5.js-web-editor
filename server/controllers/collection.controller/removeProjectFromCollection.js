@@ -23,7 +23,7 @@ export default function addProjectToCollection(req, res) {
       return null;
     }
 
-    const project = collection.items.find(p => p.projectId === projectId);
+    const project = collection.items.find((p) => p.projectId === projectId);
 
     if (project != null) {
       project.remove();
@@ -37,19 +37,17 @@ export default function addProjectToCollection(req, res) {
   }
 
   function populateReferences(collection) {
-    return Collection.populate(
-      collection,
-      [
-        { path: 'owner', select: ['id', 'username'] },
-        {
-          path: 'items.project',
-          select: ['id', 'name', 'slug'],
-          populate: {
-            path: 'user', select: ['username']
-          }
+    return Collection.populate(collection, [
+      { path: 'owner', select: ['id', 'username'] },
+      {
+        path: 'items.project',
+        select: ['id', 'name', 'slug'],
+        populate: {
+          path: 'user',
+          select: ['username']
         }
-      ]
-    );
+      }
+    ]);
   }
 
   return Collection.findById(collectionId)

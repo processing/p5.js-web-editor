@@ -3,11 +3,13 @@
  */
 import { Request, Response } from 'jest-express';
 
-import Project, { createMock, createInstanceMock } from '../../../models/project';
+import Project, {
+  createMock,
+  createInstanceMock
+} from '../../../models/project';
 import User from '../../../models/user';
 import deleteProject from '../../project.controller/deleteProject';
 import { deleteObjectsFromS3 } from '../../aws.controller';
-
 
 jest.mock('../../../models/project');
 jest.mock('../../aws.controller');
@@ -38,9 +40,7 @@ describe('project.controller', () => {
 
       const response = new Response();
 
-      ProjectMock
-        .expects('findById')
-        .resolves(project);
+      ProjectMock.expects('findById').resolves(project);
 
       const promise = deleteProject(request, response);
 
@@ -67,9 +67,7 @@ describe('project.controller', () => {
 
       const response = new Response();
 
-      ProjectMock
-        .expects('findById')
-        .resolves(null);
+      ProjectMock.expects('findById').resolves(null);
 
       const promise = deleteProject(request, response);
 
@@ -96,12 +94,9 @@ describe('project.controller', () => {
 
       const response = new Response();
 
-      ProjectMock
-        .expects('findById')
-        .resolves(project);
+      ProjectMock.expects('findById').resolves(project);
 
-      ProjectInstanceMock.expects('remove')
-        .yields();
+      ProjectInstanceMock.expects('remove').yields();
 
       const promise = deleteProject(request, response);
 

@@ -3,7 +3,7 @@
 
 Documentation is also available in the following languages:
 
-[한국어](https://github.com/processing/p5.js-web-editor/blob/master/translations/ko)
+[한국어](https://github.com/processing/p5.js-web-editor/blob/develop/translations/ko)
 
 ## Welcome! 👋👋🏿👋🏽👋🏻👋🏾👋🏼
 
@@ -23,7 +23,7 @@ All contributors to the p5.js Web Editor are expected to follow the [Code of Con
 
 The p5.js Web Editor is a collaborative project created by many individuals, and you are invited to help. All types of involvement are welcome! Please check out the [contribution guide](./.github/CONTRIBUTING.md) for more details.
 
-Developers, check the [developer docs](https://github.com/processing/p5.js-web-editor/blob/master/developer_docs/) details about contributing code, bug fixes, and documentation. To start writing code, a great place to start is the [development guide](https://github.com/processing/p5.js-web-editor/blob/master/developer_docs/development.md).
+Developers, check the [developer docs](https://github.com/processing/p5.js-web-editor/blob/develop/developer_docs/) details about contributing code, bug fixes, and documentation. To start writing code, a great place to start is the [development guide](https://github.com/processing/p5.js-web-editor/blob/develop/developer_docs/development.md).
 
 ## Issues
 
@@ -31,7 +31,7 @@ If you have found a bug in the p5.js Web Editor, you can file it under the ["iss
 
 Please post bugs and feature requests in the correct repository:
 
-* p5.js library and p5.dom: [https://github.com/processing/p5.js/issues](https://github.com/processing/p5.js/issues)
+* p5.js library: [https://github.com/processing/p5.js/issues](https://github.com/processing/p5.js/issues)
 * p5.accessibility: [https://github.com/processing/p5.accessibility/issues](https://github.com/processing/p5.accessibility/issues)
 * p5.sound: [https://github.com/processing/p5.js-sound/issues](https://github.com/processing/p5.js-sound/issues)
 * p5.js website: [https://github.com/processing/p5.js-website/issues](https://github.com/processing/p5.js-website/issues)

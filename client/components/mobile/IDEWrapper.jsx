@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { remSize } from '../../theme';
 
@@ -7,5 +6,7 @@ import { remSize } from '../../theme';
 export default styled.div`
   z-index: 0;
   margin-top: ${remSize(16)};
-  .CodeMirror-sizer > * { padding-bottom: ${remSize(320)}; };
+  .CodeMirror-sizer > * {
+    padding-bottom: ${remSize(320)};
+  }
 `;

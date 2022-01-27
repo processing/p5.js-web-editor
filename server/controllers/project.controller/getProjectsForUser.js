@@ -36,10 +36,12 @@ function getProjectsForUserName(username) {
 export default function getProjectsForUser(req, res) {
   if (req.params.username) {
     return getProjectsForUserName(req.params.username)
-      .then(projects => res.json(projects))
+      .then((projects) => res.json(projects))
       .catch((err) => {
         if (err instanceof UserNotFoundError) {
-          res.status(404).json({ message: 'User with that username does not exist.' });
+          res
+            .status(404)
+            .json({ message: 'User with that username does not exist.' });
         } else {
           res.status(500).json({ message: 'Error fetching projects' });
         }
@@ -55,12 +57,14 @@ export function apiGetProjectsForUser(req, res) {
   if (req.params.username) {
     return getProjectsForUserName(req.params.username)
       .then((projects) => {
-        const asApiObjects = projects.map(p => toApiProjectObject(p));
+        const asApiObjects = projects.map((p) => toApiProjectObject(p));
         res.json({ sketches: asApiObjects });
       })
       .catch((err) => {
         if (err instanceof UserNotFoundError) {
-          res.status(404).json({ message: 'User with that username does not exist.' });
+          res
+            .status(404)
+            .json({ message: 'User with that username does not exist.' });
         } else {
           res.status(500).json({ message: 'Error fetching projects' });
         }

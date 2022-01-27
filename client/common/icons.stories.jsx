@@ -12,7 +12,5 @@ export const AllIcons = () => {
   const names = Object.keys(icons);
 
   const SelectedIcon = icons[select('name', names, names[0])];
-  return (
-    <SelectedIcon />
-  );
+  return <SelectedIcon />;
 };

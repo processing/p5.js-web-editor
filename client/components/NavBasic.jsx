@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { withTranslation } from 'react-i18next';
 
 import LogoIcon from '../images/p5js-logo-small.svg';
 import ArrowIcon from '../images/triangle-arrow-left.svg';
@@ -7,16 +8,27 @@ import ArrowIcon from '../images/triangle-arrow-left.svg';
 class NavBasic extends React.PureComponent {
   static defaultProps = {
     onBack: null
-  }
+  };
 
   render() {
     return (
-      <nav className="nav" title="main-navigation" ref={(node) => { this.node = node; }}>
+      <nav
+        className="nav"
+        title="main-navigation"
+        ref={(node) => {
+          this.node = node;
+        }}
+      >
         <ul className="nav__items-left">
           <li className="nav__item-logo">
-            <LogoIcon role="img" aria-label="p5.js Logo" focusable="false" className="svg__logo" />
+            <LogoIcon
+              role="img"
+              aria-label={this.props.t('Common.p5logoARIA')}
+              focusable="false"
+              className="svg__logo"
+            />
           </li>
-          { this.props.onBack && (
+          {this.props.onBack && (
             <li className="nav__item">
               <button onClick={this.props.onBack}>
                 <span className="nav__item-header">
@@ -24,8 +36,8 @@ class NavBasic extends React.PureComponent {
                 </span>
                 Back to the editor
               </button>
-            </li>)
-          }
+            </li>
+          )}
         </ul>
       </nav>
     );
@@ -34,6 +46,7 @@ class NavBasic extends React.PureComponent {
 
 NavBasic.propTypes = {
   onBack: PropTypes.func,
+  t: PropTypes.func.isRequired
 };
 
-export default NavBasic;
+export default withTranslation()(NavBasic);

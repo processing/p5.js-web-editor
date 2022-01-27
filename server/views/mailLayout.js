@@ -8,7 +8,7 @@ export default ({
   directLinkText,
   noteText,
   meta
-}) => (
+}) =>
   `
 <mjml>
   <mj-head>
@@ -62,5 +62,4 @@ export default ({
     </mj-container>
   </mj-body>
 </mjml>
-`
-);
+`;

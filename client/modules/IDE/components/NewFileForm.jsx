@@ -1,69 +1,71 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import { withTranslation } from 'react-i18next';
-import { domOnlyProps } from '../../../utils/reduxFormUtils';
+import React, { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Form, Field } from 'react-final-form';
+import { useDispatch } from 'react-redux';
+import { handleCreateFile } from '../actions/files';
+import { CREATE_FILE_REGEX } from '../../../../server/utils/fileUtils';
 
 import Button from '../../../common/Button';
 
-class NewFileForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.createFile = this.props.createFile.bind(this);
+function NewFileForm() {
+  const fileNameInput = useRef(null);
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+
+  function onSubmit(formProps) {
+    return dispatch(handleCreateFile(formProps));
   }
 
-  componentDidMount() {
-    this.fileName.focus();
+  function validate(formProps) {
+    const errors = {};
+
+    if (!formProps.name) {
+      errors.name = t('NewFileModal.EnterName');
+    } else if (!formProps.name.match(CREATE_FILE_REGEX)) {
+      errors.name = t('NewFileModal.InvalidType');
+    }
+
+    return errors;
   }
 
-  render() {
-    const {
-      fields: { name },
-      handleSubmit,
-    } = this.props;
-    return (
-      <form
-        className="new-file-form"
-        onSubmit={(data) => {
-          this.props.focusOnModal();
-          handleSubmit(this.createFile)(data);
-        }}
-      >
-        <div className="new-file-form__input-wrapper">
-          <label className="new-file-form__name-label" htmlFor="name">
-            Name:
-          </label>
-          <input
-            className="new-file-form__name-input"
-            id="name"
-            type="text"
-            placeholder={this.props.t('NewFileForm.Placeholder')}
-            maxLength="128"
-            {...domOnlyProps(name)}
-            ref={(element) => {
-              this.fileName = element;
-            }}
-          />
-          <Button
-            type="submit"
-          >{this.props.t('NewFileForm.AddFileSubmit')}
-          </Button>
-        </div>
-        {name.touched && name.error && (
-          <span className="form-error">{name.error}</span>
-        )}
-      </form>
-    );
-  }
+  useEffect(() => {
+    fileNameInput.current.focus();
+  });
+
+  return (
+    <Form fields={['name']} validate={validate} onSubmit={onSubmit}>
+      {({ handleSubmit, errors, touched, invalid, submitting }) => (
+        <form className="new-file-form" onSubmit={handleSubmit}>
+          <div className="new-file-form__input-wrapper">
+            <Field name="name">
+              {(field) => (
+                <React.Fragment>
+                  <label className="new-file-form__name-label" htmlFor="name">
+                    Name:
+                  </label>
+                  <input
+                    className="new-file-form__name-input"
+                    id="name"
+                    type="text"
+                    placeholder={t('NewFileForm.Placeholder')}
+                    maxLength="128"
+                    {...field.input}
+                    ref={fileNameInput}
+                  />
+                </React.Fragment>
+              )}
+            </Field>
+            <Button type="submit" disabled={invalid || submitting}>
+              {t('NewFileForm.AddFileSubmit')}
+            </Button>
+          </div>
+          {touched.name && errors.name && (
+            <span className="form-error">{errors.name}</span>
+          )}
+        </form>
+      )}
+    </Form>
+  );
 }
 
-NewFileForm.propTypes = {
-  fields: PropTypes.shape({
-    name: PropTypes.object.isRequired
-  }).isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  createFile: PropTypes.func.isRequired,
-  focusOnModal: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired
-};
-
-export default withTranslation()(NewFileForm);
+export default NewFileForm;

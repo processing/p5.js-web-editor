@@ -6,24 +6,24 @@ function draw() {
   background(220);
 }`;
 
-const defaultHTML =
-  `<!DOCTYPE html>
-<html>
+const defaultHTML = `<!DOCTYPE html>
+<html lang="en">
   <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/addons/p5.sound.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="utf-8" />
 
   </head>
   <body>
+    <main>
+    </main>
     <script src="sketch.js"></script>
   </body>
 </html>
 `;
 
-const defaultCSS =
-  `html, body {
+const defaultCSS = `html, body {
   margin: 0;
   padding: 0;
 }

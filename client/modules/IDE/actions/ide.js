@@ -1,5 +1,6 @@
 import * as ActionTypes from '../../../constants';
 import { clearConsole } from './console';
+import { dispatchMessage, MessageTypes } from '../../../utils/dispatcher';
 
 export function startVisualSketch() {
   return {
@@ -54,7 +55,9 @@ export function setSelectedFile(fileId) {
 export function resetSelectedFile(previousId) {
   return (dispatch, getState) => {
     const state = getState();
-    const newId = state.files.find(file => file.name !== 'root' && file.id !== previousId).id;
+    const newId = state.files.find(
+      (file) => file.name !== 'root' && file.id !== previousId
+    ).id;
     dispatch({
       type: ActionTypes.SET_SELECTED_FILE,
       selectedFile: newId
@@ -169,18 +172,6 @@ export function closeShareModal() {
   };
 }
 
-export function showEditorOptions() {
-  return {
-    type: ActionTypes.SHOW_EDITOR_OPTIONS
-  };
-}
-
-export function closeEditorOptions() {
-  return {
-    type: ActionTypes.CLOSE_EDITOR_OPTIONS
-  };
-}
-
 export function showKeyboardShortcutModal() {
   return {
     type: ActionTypes.SHOW_KEYBOARD_SHORTCUT_MODAL
@@ -215,7 +206,7 @@ export function resetInfiniteLoops() {
 
 export function justOpenedProject() {
   return {
-    type: ActionTypes.JUST_OPENED_PROJECT,
+    type: ActionTypes.JUST_OPENED_PROJECT
   };
 }
 
@@ -258,9 +249,23 @@ export function showRuntimeErrorWarning() {
 }
 
 export function startSketch() {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch(clearConsole());
-    dispatch(startSketchAndRefresh());
+    dispatch(startVisualSketch());
+    dispatch(showRuntimeErrorWarning());
+    const state = getState();
+    dispatchMessage({
+      type: MessageTypes.SKETCH,
+      payload: {
+        files: state.files,
+        basePath: window.location.pathname,
+        gridOutput: state.preferences.gridOutput,
+        textOutput: state.preferences.textOutput
+      }
+    });
+    dispatchMessage({
+      type: MessageTypes.START
+    });
   };
 }
 
@@ -274,7 +279,17 @@ export function startAccessibleSketch() {
 
 export function stopSketch() {
   return (dispatch) => {
+    dispatchMessage({
+      type: MessageTypes.STOP
+    });
     dispatch(stopAccessibleOutput());
     dispatch(stopVisualSketch());
+  };
+}
+
+export function createError(error) {
+  return {
+    type: ActionTypes.ERROR,
+    error
   };
 }

@@ -23,6 +23,10 @@
   align-items: center;
 }
 
+.preview-nav__editor-svg {
+  @include icon();
+}
+
 // .nav__items-left,
 // .nav__items-right {
 //   & button, & a {

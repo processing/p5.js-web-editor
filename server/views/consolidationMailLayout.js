@@ -11,7 +11,7 @@ export default ({
   resetPasswordText,
   noteText,
   meta
-}) => (
+}) =>
   `
 <mjml>
   <mj-head>
@@ -74,5 +74,4 @@ export default ({
     </mj-container>
   </mj-body>
 </mjml>
-`
-);
+`;

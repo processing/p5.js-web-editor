@@ -1,106 +1,84 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Helmet from 'react-helmet';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PreviewFrame from '../components/PreviewFrame';
 import PreviewNav from '../../../components/PreviewNav';
-import { getHTMLFile, getJSFiles, getCSSFiles } from '../reducers/files';
-import * as ProjectActions from '../actions/project';
+import { getProject } from '../actions/project';
+import { startSketch } from '../actions/ide';
+import {
+  listen,
+  dispatchMessage,
+  MessageTypes
+} from '../../../utils/dispatcher';
+import useInterval from '../hooks/useInterval';
+import RootPage from '../../../components/RootPage';
 
-class FullView extends React.Component {
-  componentDidMount() {
-    this.props.getProject(this.props.params.project_id, this.props.params.username);
+function FullView(props) {
+  const dispatch = useDispatch();
+  const project = useSelector((state) => state.project);
+  const [isRendered, setIsRendered] = useState(false);
+
+  useEffect(() => {
+    dispatch(getProject(props.params.project_id, props.params.username));
+  }, []);
+
+  useEffect(() => {
+    // if (isRendered) prevents startSketch() from being called twice
+    // this calls startSketch if REGISTER happens before sketch is fetched
+    if (isRendered) {
+      dispatch(startSketch());
+    }
+  }, [project.id]);
+
+  // send register event until iframe is loaded and sends a message back.
+  const clearInterval = useInterval(() => {
+    dispatchMessage({ type: MessageTypes.REGISTER });
+  }, 100);
+  if (isRendered) {
+    clearInterval();
   }
 
-  ident = () => {}
-
-  render() {
-    return (
-      <div className="fullscreen-preview">
-        <Helmet>
-          <title>{this.props.project.name}</title>
-        </Helmet>
-        <PreviewNav
-          owner={{ username: this.props.project.owner ? `${this.props.project.owner.username}` : '' }}
-          project={{ name: this.props.project.name, id: this.props.params.project_id }}
-        />
-        <main className="preview-frame-holder">
-          <PreviewFrame
-            htmlFile={this.props.htmlFile}
-            jsFiles={this.props.jsFiles}
-            cssFiles={this.props.cssFiles}
-            files={this.props.files}
-            head={
-              <link type="text/css" rel="stylesheet" href="/preview-styles.css" />
-            }
-            fullView
-            isPlaying
-            isAccessibleOutputPlaying={false}
-            textOutput={false}
-            gridOutput={false}
-            soundOutput={false}
-            dispatchConsoleEvent={this.ident}
-            endSketchRefresh={this.ident}
-            previewIsRefreshing={false}
-            setBlobUrl={this.ident}
-            stopSketch={this.ident}
-            expandConsole={this.ident}
-            clearConsole={this.ident}
-          />
-        </main>
-      </div>
-    );
+  function handleMessageEvent(message) {
+    if (message.type === MessageTypes.REGISTER) {
+      if (!isRendered) {
+        setIsRendered(true);
+        dispatch(startSketch());
+      }
+    }
   }
+  useEffect(() => {
+    const unsubscribe = listen(handleMessageEvent);
+    return function cleanup() {
+      unsubscribe();
+    };
+  }, []);
+  return (
+    <RootPage fixedHeight="100%">
+      <Helmet>
+        <title>{project.name}</title>
+      </Helmet>
+      <PreviewNav
+        owner={{
+          username: project.owner ? `${project.owner.username}` : ''
+        }}
+        project={{
+          name: project.name,
+          id: props.params.project_id
+        }}
+      />
+      <main className="preview-frame-holder">
+        <PreviewFrame fullView />
+      </main>
+    </RootPage>
+  );
 }
 
 FullView.propTypes = {
   params: PropTypes.shape({
     project_id: PropTypes.string,
     username: PropTypes.string
-  }).isRequired,
-  project: PropTypes.shape({
-    name: PropTypes.string,
-    owner: PropTypes.shape({
-      username: PropTypes.string
-    })
-  }).isRequired,
-  htmlFile: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
-  }).isRequired,
-  jsFiles: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
-  })).isRequired,
-  cssFiles: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
-  })).isRequired,
-  getProject: PropTypes.func.isRequired,
-  files: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
-  })).isRequired,
+  }).isRequired
 };
 
-function mapStateToProps(state) {
-  return {
-    user: state.user,
-    htmlFile: getHTMLFile(state.files),
-    jsFiles: getJSFiles(state.files),
-    cssFiles: getCSSFiles(state.files),
-    project: state.project,
-    files: state.files
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(ProjectActions, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(FullView);
+export default FullView;
