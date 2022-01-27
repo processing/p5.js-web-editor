@@ -25,7 +25,7 @@ _Note_: The installation steps assume you are using a Unix-like shell. If you ar
    * For Mac OSX with [homebrew](http://brew.sh/): `brew tap mongodb/brew` then `brew install mongodb-community` and finally start the server with `brew services start mongodb-community` or you can visit the installation guide here [Installation Guide For MacOS](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/)
    * For Windows and Linux: [MongoDB Installation](https://docs.mongodb.com/manual/installation/)
 7. `$ cp .env.example .env`
-8. (Optional) Update `.env` with necessary keys to enable certain app behaviors, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
+8. (Optional) Update `.env` with necessary keys to enable certain app behaviours, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
 9. Run `$ npm run fetch-examples` to download the example sketches into a user called 'p5'. Note that you need to configure your GitHub Credentials, which you can do by following the [Github API Configuration](#github-api-configuration) section.
 10. Enable Prettier in your text editor by following [this guide](https://prettier.io/docs/en/editors.html).
 11. `$ npm start`
@@ -47,7 +47,7 @@ Note that this takes up a significant amount of space on your machine. Make sure
 2. Clone this repository and cd into it
 3. `$ docker-compose -f docker-compose-development.yml build`
 4. `$ cp .env.example .env`
-5. (Optional) Update `.env` with necessary keys to enable certain app behavoirs, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
+5. (Optional) Update `.env` with necessary keys to enable certain app behaviours, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
 6. `$ docker-compose -f docker-compose-development.yml run --rm app npm run fetch-examples` -  note that you need to configure your GitHub Credentials, which you can do by following the [Github API Configuration](#github-api-configuration) section.
 7. Enable Prettier in your text editor by following [this guide](https://prettier.io/docs/en/editors.html).
 
@@ -66,12 +66,12 @@ If you don't have the full server environment running, you can launch a one-off 
 
 ## S3 Bucket Configuration
 
-Note that this is optional, unless you are working on the part of the application that allows a user to upload images, videos, etc. Please refer to the following [gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) to set up an S3 bucket to be used with this project.
+Note that this is optional unless you are working on the part of the application that allows a user to upload images, videos, etc. Please refer to the following [gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3) to set up an S3 bucket to be used with this project.
 
 If your S3 bucket is in the US East (N Virginia) region (us-east-1), you'll
 need to set a custom URL base for it, because it does not follow the standard
 naming pattern as the rest of the regions. Instead, add the following to your
-environment/.env file, changing `BUCKET_NAME` to your bucket name. This is necessary because this override is currently treated as the full path to the bucket rather than as a proper base url:
+environment/.env file, changing `BUCKET_NAME` to your bucket name. This is necessary because this override is currently treated as the full path to the bucket rather than as a proper base URL:
 `S3_BUCKET_URL_BASE=https://s3.amazonaws.com/{BUCKET_NAME}/`
 
 If you've configured your S3 bucket and DNS records to use a custom domain

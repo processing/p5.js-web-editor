@@ -1,12 +1,12 @@
 # Proposed Public API extensions
 
-This describes proposed extensions to the Public API. None of these extensions are confirmed, but are recorded here for reference and discussion. 
+This describes proposed extensions to the Public API. None of these extensions is confirmed but is recorded here for reference and discussion. 
 
 Refer to [Public API](./public_api.md) for the current version of the API.
 
 # Authentication
 
-- Support for sending tokens can via the `Authorization: Bearer {your_access_token}` HTTP header instead of just Basic Auth
+- Support for sending tokens can be via the `Authorization: Bearer {your_access_token}` HTTP header instead of just Basic Auth
 
 # API Access
 
@@ -22,7 +22,7 @@ Refer to [Public API](./public_api.md) for the current version of the API.
 Fetch a sketch.
 
 ### Request format
-No body.
+Nobody.
 
 ### Response format
 Returns `Sketch`.
@@ -56,7 +56,7 @@ Replace the sketch with an entirely new one, maintaining the same ID. Any existi
 See `Sketch` in Models above.
 
 ### Response format
-No body.
+Nobody.
 
 ### Example
 
@@ -90,7 +90,7 @@ Update the sketch whilst maintaining existing data:
 See `Sketch` in Models above.
 
 ### Response format
-No body.
+Nobody.
 
 ### Example
 Change the name of the sketch
@@ -131,7 +131,7 @@ Files within a sketch can be individually accessed via their `path` e.g. `data/s
 Fetch the contents of a file.
 
 ### Request format
-No body.
+Nobody.
 
 ### Response format
 Returns file contents.
@@ -154,15 +154,15 @@ Returns file contents.
 
 ## `PATCH /:user/sketches/:id/files/:path` 
 
-Update the name or contents a file or directory.
+Update the name or contents of a file or directory.
 
 ### Request format
 See `File` and `Directory` above.
 
 ### Response format
-No body.
+Nobody.
 
-### Example: Change file name
+### Example: Change the file name
 
     PATCH /p5/sketches/Ckhf0APpg/files/assets/something.js
     
@@ -206,13 +206,13 @@ Files are added to the directory, in addition to what is there.
 
 ## `DELETE /:user/:sketches/files/:path`
 
-Delete a file/directory, and it’s contents.
+Delete a file/directory, and its contents.
 
 ### Request format
-No body.
+Nobody.
 
 ### Response format
-No body.
+Nobody.
 
 ### Example: Delete file
 
