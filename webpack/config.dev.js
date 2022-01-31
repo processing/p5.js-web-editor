@@ -1,9 +1,10 @@
 const webpack = require('webpack');
+const fs = require('fs');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development' && fs.existsSync('.env')) {
   require('dotenv').config();
 }
 

@@ -180,6 +180,19 @@ app.use('/api', (error, req, res, next) => {
   next(error);
 });
 
+// start the preview server
+const previewApp = require('./previewServer').default;
+  
+if (process.env.NODE_ENV === 'development' &&
+    process.env.UNSAFE_PREVIEW_PROXY) {
+  // Hosting in an environment where you cannot listen on multiple ports or set
+  // up subdomain mappings?
+  app.use(
+    '/preview',
+    previewApp
+  );
+}
+
 // Handle missing routes.
 app.get('*', (req, res) => {
   res.status(404);

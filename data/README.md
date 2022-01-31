@@ -1,0 +1,1 @@
+This directory exists as a location to store Mongodb data in environments with a local Mongodb instance.

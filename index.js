@@ -1,9 +1,11 @@
+const fs = require('fs');
+
 if (process.env.NODE_ENV === 'production') {
   process.env.webpackAssets = JSON.stringify(require('./dist/static/manifest.json'));
   require('./dist/server.bundle.js');
   require('./dist/previewServer.bundle.js');
 } else {
-  let parsed = require('dotenv').config();
+  let parsed = fs.existsSync('.env') ? require('dotenv').config() : {};
   require('@babel/register')({
     presets: ["@babel/preset-env"]
   });
@@ -16,5 +18,4 @@ if (process.env.NODE_ENV === 'production') {
   //   }
   // }
   require('./server/server');
-  require('./server/previewServer');
 }
