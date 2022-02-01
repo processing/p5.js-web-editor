@@ -263,6 +263,11 @@ export function exportProjectAsZip(projectId) {
   win.focus();
 }
 
+export function exportAllProjectsAsZip(username) {
+  const win = window.open(`${ROOT_URL}/${username}/projects/zip`, '_blank');
+  win.focus();
+}
+
 export function resetProject() {
   return {
     type: ActionTypes.RESET_PROJECT

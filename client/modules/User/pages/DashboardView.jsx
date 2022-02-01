@@ -32,6 +32,7 @@ class DashboardView extends React.Component {
     super(props);
     this.closeAccountPage = this.closeAccountPage.bind(this);
     this.createNewSketch = this.createNewSketch.bind(this);
+    this.downloadAll = this.downloadAll.bind(this);
     this.gotoHomePage = this.gotoHomePage.bind(this);
     this.toggleCollectionCreate = this.toggleCollectionCreate.bind(this);
     this.state = {
@@ -49,6 +50,10 @@ class DashboardView extends React.Component {
 
   createNewSketch() {
     this.props.newProject();
+  }
+
+  downloadAll() {
+    this.props.exportProjectsAsZip();
   }
 
   gotoHomePage() {
@@ -109,6 +114,7 @@ class DashboardView extends React.Component {
                 {t('DashboardView.NewSketch')}
               </Button>
             )}
+            <Button onClick={this.downloadAll}>Download All</Button>
             <SketchSearchbar />
           </React.Fragment>
         );
@@ -185,6 +191,7 @@ const mapDispatchToProps = {
 
 DashboardView.propTypes = {
   newProject: PropTypes.func.isRequired,
+  exportProjectsAsZip: PropTypes.func.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired
   }).isRequired,
