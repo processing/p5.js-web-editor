@@ -263,8 +263,8 @@ export function exportProjectAsZip(projectId) {
   win.focus();
 }
 
-export function exportAllProjectsAsZip(username) {
-  const win = window.open(`${ROOT_URL}/${username}/projects/zip`, '_blank');
+export function exportAllProjectsAsZip(user) {
+  const win = window.open(`${ROOT_URL}/${user.id}/projects/all/zip`, '_blank');
   win.focus();
 }
 

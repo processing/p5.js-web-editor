@@ -53,7 +53,7 @@ class DashboardView extends React.Component {
   }
 
   downloadAll() {
-    this.props.exportProjectsAsZip();
+    this.props.exportAllProjectsAsZip(this.props.user);
   }
 
   gotoHomePage() {
@@ -191,7 +191,7 @@ const mapDispatchToProps = {
 
 DashboardView.propTypes = {
   newProject: PropTypes.func.isRequired,
-  exportProjectsAsZip: PropTypes.func.isRequired,
+  exportAllProjectsAsZip: PropTypes.func.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired
   }).isRequired,

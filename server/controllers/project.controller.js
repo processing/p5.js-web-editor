@@ -9,6 +9,7 @@ import Project from '../models/project';
 import User from '../models/user';
 import { resolvePathToFile } from '../utils/filePath';
 import generateFileSystemSafeName from '../utils/generateFileSystemSafeName';
+import { zip } from 'lodash';
 
 export {
   default as createProject,
@@ -299,9 +300,42 @@ function buildZip(project, req, res) {
   });
 }
 
+function combineProjects(projects) {
+  let parentFolder = {
+    name: "root",
+    fileType: "folder",
+    children: []
+  }
+
+  let parentProject = {
+    name: "p5_projects_export_all",
+    files:  [parentFolder]
+  }
+
+  projects.forEach(project => {
+    const { files, name } = project;
+    const rootFile = files.find((file) => file.name === 'root');
+    
+    rootFile.name = name;
+    parentProject.files.push(...files);
+    parentFolder.children.push(rootFile.id);
+  });
+  
+  return parentProject;
+}
+
 export function downloadProjectAsZip(req, res) {
   Project.findById(req.params.project_id, (err, project) => {
     // save project to some path
     buildZip(project, req, res);
+  });
+}
+
+export function downloadAllProjectsAsZip(req, res) {
+  getProjectsForUserId(req.params.user_id).then(projects => { 
+    const combinedProjects = combineProjects(projects);
+    buildZip(combinedProjects, req, res);
+  }).catch(err => {
+    console.log(err);
   });
 }
