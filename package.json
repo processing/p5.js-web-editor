@@ -5,6 +5,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "start": "cross-env BABEL_DISABLE_CACHE=1 NODE_ENV=development nodemon index.js",
+    "start:frontend-server": "cross-env webpack-dev-server --config ./webpack/config.dev-only-server.js",
     "start:prod": "cross-env NODE_ENV=production node index.js",
     "lint": "eslint client server --ext .jsx --ext .js",
     "lint-fix": "eslint client server --ext .jsx --ext .js --fix",
@@ -131,7 +132,8 @@
     "storybook-addon-theme-playground": "^1.2.0",
     "style-loader": "^2.0.0",
     "terser-webpack-plugin": "^4.2.3",
-    "webpack-cli": "^4.4.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4",
     "webpack-manifest-plugin": "^3.0.0",
     "webpack-node-externals": "^2.5.0"
   },
