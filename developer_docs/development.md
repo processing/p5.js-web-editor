@@ -5,6 +5,7 @@ A guide for adding code to this project.
 - [Development](#development)
   - [Installation](#installation)
   - [Development Workflow](#development-workflow)
+    - [Frontend Development](#frontend-development)
   - [Tests](#tests)
   - [Committing Code](#committing-code)
     - [General Rules](#general-rules)
@@ -22,10 +23,26 @@ Follow the [installation guide](./installation.md).
 As a person contributing code but not creating production releases (this is most people!), here's what you need to know:
 * The default branch is `develop`. All pull requests should be made to this branch. It should be stable, and all commits are visible at a staging server.
 * When working on a bug or feature, you should branch from the `develop` branch. When you're done, you should open a pull request from your feature branch to `develop`.
-* The `release` branch is the live production branch, and is the code deployed to editor.p5js.org. Changes to this branch should be made carefully, and will be done using git tags. 
+* The `release` branch is the live production branch, and is the code deployed to editor.p5js.org. Changes to this branch should be made carefully, and will be done using git tags.
 * Emergency hotfix changes should be branched from `release` and merged via a pull request to `release`. After a PR is merged, then the commits can be merged to `develop`.
 
 See the [release guide](./release.md) for information about creating a release.
+
+### Frontend Development
+
+If you are only making changes to HTML/CSS/JS in the `/client` folder, you might not need to run Docker or a database.
+
+You can run a live-reloading server development using this command in the terminal:
+
+```bash
+npm run start:frontend-server
+```
+
+If you are only modifying individual React components, you may be able to development your component in the [Storybook](https://storybook.js.org/docs/react/get-started/introduction).
+
+```bash
+npm run storybook
+```
 
 ## Tests
 To run the test suite simply run `npm test` (after installing dependencies with `npm install`)
@@ -79,15 +96,15 @@ Structure your commit message like this:
 
 ## Technologies Used
 
-**MERN stack** - MongoDB, Express, React/Redux, and Node. 
- 
+**MERN stack** - MongoDB, Express, React/Redux, and Node.
+
  - For a reference to the **file structure format** this project is using, please look at the [Mern Starter](https://github.com/Hashnode/mern-starter).
 
- - This project does not use CSS Modules, styled-components, or other CSS-in-JS libraries, but uses Sass. [BEM guidelines and naming conventions](http://getbem.com/) are followed. 
- 
+ - This project does not use CSS Modules, styled-components, or other CSS-in-JS libraries, but uses Sass. [BEM guidelines and naming conventions](http://getbem.com/) are followed.
+
  - For common and reusable styles, write OOSCSS (Object-Oriented SCSS) with placeholders and mixins. For organizing styles, follow the [7-1 Pattern](https://sass-guidelin.es/#the-7-1-pattern) for Sass.
 
- - We're using [ES6](http://es6-features.org/) and transpiling to ES5 using [Babel](https://babeljs.io/). 
+ - We're using [ES6](http://es6-features.org/) and transpiling to ES5 using [Babel](https://babeljs.io/).
 
  - For reference to the JavaScript style guide, see the [Airbnb Style Guide](https://github.com/airbnb/javascript), [React ESLint Plugin](https://github.com/yannickcr/eslint-plugin-react).
 
