@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import * as EmbedController from '../controllers/embed.controller';
+// import * as EmbedController from '../controllers/embed.controller';
 
 const editorUrl = process.env.EDITOR_URL;
 

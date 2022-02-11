@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 const router = new Router();
-const previewUrl = process.env.PREVIEW_URL;
+// const previewUrl = process.env.PREVIEW_URL;
 
 router.get('/:username/embed/:project_id', (req, res) => {
   const { username, project_id: projectId } = req.params;
