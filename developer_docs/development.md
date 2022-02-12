@@ -35,7 +35,7 @@ If you are only making changes to HTML/CSS/JS in the `/client` folder, you might
 You can run a live-reloading server development using this command in the terminal:
 
 ```bash
-npm run start:frontend-server
+npm run start-frontend-server
 ```
 
 If you are only modifying individual React components, you may be able to development your component in the [Storybook](https://storybook.js.org/docs/react/get-started/introduction).
