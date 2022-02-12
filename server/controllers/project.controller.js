@@ -217,7 +217,12 @@ function bundleExternalLibs(project, zip, callback) {
       const { data } = await axios.get(src, {
         responseType: 'arraybuffer'
       });
-      zip.append(data, { name: filename });
+      zip.append(
+        data, 
+        { 
+          name: project.projectName ? `${project.projectName}/${filename}` : filename 
+        }
+      );
       scriptTag.src = filename;
     } catch (err) {
       console.log(err);
@@ -233,6 +238,7 @@ function bundleExternalLibs(project, zip, callback) {
   jsdom.env(indexHtml.content, (innerErr, window) => {
     const indexHtmlDoc = window.document;
     const scriptTags = indexHtmlDoc.getElementsByTagName('script');
+
     numScriptTags = scriptTags.length;
     for (let i = 0; i < numScriptTags; i += 1) {
       resolveScriptTagSrc(scriptTags[i], indexHtmlDoc);
@@ -244,7 +250,7 @@ function bundleExternalLibs(project, zip, callback) {
   });
 }
 
-function buildZip(project, req, res) {
+function buildZip(project, req, res, isBundle=false) {
   const zip = archiver('zip');
   const rootFile = project.files.find((file) => file.name === 'root');
   const numFiles = project.files.filter((file) => file.fileType !== 'folder')
@@ -294,9 +300,31 @@ function buildZip(project, req, res) {
     }
   }
 
-  bundleExternalLibs(project, zip, () => {
-    addFileToZip(rootFile, '/');
-  });
+  if (isBundle) {
+    for (let i = 0; i < rootFile.children.length; i++) {
+      const childId = rootFile.children[i];
+      const projectRoot = files.find(file => file.id === childId);
+      const projectFiles = files.filter(file => projectRoot.children.includes(file.id));
+  
+      bundleExternalLibs(
+        {
+          files: projectFiles,
+          projectName: projectRoot.name
+        },
+        zip,
+        i === rootFile.children.length - 1 ?
+        () => { return } :
+        () => {
+          addFileToZip(rootFile, '/');
+        }
+      )
+    }
+    
+  } else {
+    bundleExternalLibs(project, zip, () => {
+      addFileToZip(rootFile, '/');
+    });
+  }
 }
 
 function combineProjects(projects) {
@@ -333,7 +361,7 @@ export function downloadAllProjectsAsZip(req, res) {
   getProjectsForUserId(req.params.user_id)
     .then((projects) => {
       const combinedProjects = combineProjects(projects);
-      buildZip(combinedProjects, req, res);
+      buildZip(combinedProjects, req, res, true);
     })
     .catch((err) => {
       console.log(err);
