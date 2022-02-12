@@ -26,6 +26,9 @@ router.get('/:username/projects', ProjectController.getProjectsForUser);
 
 router.get('/projects/:project_id/zip', ProjectController.downloadProjectAsZip);
 
-router.get('/:user_id/projects/all/zip', ProjectController.downloadAllProjectsAsZip);
+router.get(
+  '/:user_id/projects/all/zip',
+  ProjectController.downloadAllProjectsAsZip
+);
 
 export default router;

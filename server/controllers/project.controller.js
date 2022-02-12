@@ -217,12 +217,11 @@ function bundleExternalLibs(project, zip, callback) {
       const { data } = await axios.get(src, {
         responseType: 'arraybuffer'
       });
-      zip.append(
-        data, 
-        { 
-          name: project.projectName ? `${project.projectName}/${filename}` : filename 
-        }
-      );
+      zip.append(data, {
+        name: project.projectName
+          ? `${project.projectName}/${filename}`
+          : filename
+      });
       scriptTag.src = filename;
     } catch (err) {
       console.log(err);
@@ -250,7 +249,7 @@ function bundleExternalLibs(project, zip, callback) {
   });
 }
 
-function buildZip(project, req, res, isBundle=false) {
+function buildZip(project, req, res, isBundle = false) {
   const zip = archiver('zip');
   const rootFile = project.files.find((file) => file.name === 'root');
   const numFiles = project.files.filter((file) => file.fileType !== 'folder')
@@ -301,25 +300,26 @@ function buildZip(project, req, res, isBundle=false) {
   }
 
   if (isBundle) {
-    for (let i = 0; i < rootFile.children.length; i++) {
+    for (let i = 0; i < rootFile.children.length; i += 1) {
       const childId = rootFile.children[i];
-      const projectRoot = files.find(file => file.id === childId);
-      const projectFiles = files.filter(file => projectRoot.children.includes(file.id));
-  
+      const projectRoot = files.find((file) => file.id === childId);
+      const projectFiles = files.filter((file) =>
+        projectRoot.children.includes(file.id)
+      );
+
       bundleExternalLibs(
         {
           files: projectFiles,
           projectName: projectRoot.name
         },
         zip,
-        i === rootFile.children.length - 1 ?
-        () => { return } :
-        () => {
-          addFileToZip(rootFile, '/');
-        }
-      )
+        i === rootFile.children.length - 1
+          ? () => {}
+          : () => {
+              addFileToZip(rootFile, '/');
+            }
+      );
     }
-    
   } else {
     bundleExternalLibs(project, zip, () => {
       addFileToZip(rootFile, '/');
