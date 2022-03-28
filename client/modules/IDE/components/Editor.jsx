@@ -345,9 +345,11 @@ class Editor extends React.Component {
           plugins
         }
       );
+      const { left, top } = this._cm.getScrollInfo();
       this._cm.doc.setValue(formatted);
       this._cm.focus();
       this._cm.doc.setCursor(this._cm.doc.posFromIndex(cursorOffset));
+      this._cm.scrollTo(left, top);
     } catch (error) {
       console.error(error);
     }
