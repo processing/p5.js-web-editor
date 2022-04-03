@@ -36,6 +36,7 @@ import Feedback from '../components/Feedback';
 import { CollectionSearchbar } from '../components/Searchbar';
 import { getIsUserOwner } from '../selectors/users';
 import RootPage from '../../../components/RootPage';
+import Notification from '../../User/components/Notification';
 
 function getTitle(props) {
   const { id } = props.project;
@@ -252,6 +253,7 @@ class IDEView extends React.Component {
   render() {
     return (
       <RootPage>
+        <Notification />
         <Helmet>
           <title>{getTitle(this.props)}</title>
         </Helmet>
