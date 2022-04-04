@@ -145,6 +145,8 @@
     "DecreaseFontARIA": "decrease font size",
     "IncreaseFont": "Increase",
     "IncreaseFontARIA": "increase font size",
+    "FontSize": "Font Size",
+    "SetFontSize": "set font size",
     "Autosave": "Autosave",
     "On": "On",
     "AutosaveOnARIA": "autosave on",
@@ -186,7 +188,8 @@
       "CommentLine": "Comment Line",
       "FindNextTextMatch": "Find Next Text Match",
       "FindPreviousTextMatch": "Find Previous Text Match",
-      "CodeEditing": "Code Editing"
+      "CodeEditing": "Code Editing",
+      "ColorPicker": "Show Inline Color Picker"
     },
     "General": {
       "StartSketch": "Start Sketch",

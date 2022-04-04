@@ -19,6 +19,8 @@ const defaultHTML = `<!DOCTYPE html>
 
   </head>
   <body>
+    <main>
+    </main>
     <script src="sketch.js"></script>
   </body>
 </html>

@@ -11,7 +11,8 @@ import {
   frCA,
   zhCN,
   zhTW,
-  uk
+  uk,
+  sv
 } from 'date-fns/locale';
 
 const fallbackLng = ['en-US'];
@@ -23,6 +24,7 @@ const availableLanguages = [
   'hi',
   'ja',
   'pt-BR',
+  'sv',
   'uk-UA',
   'zh-CN',
   'zh-TW'
@@ -37,6 +39,7 @@ export function languageKeyToLabel(lang) {
     hi: 'हिन्दी',
     ja: '日本語',
     'pt-BR': 'Português',
+    sv: 'Svenska',
     'uk-UA': 'Українська',
     'zh-CN': '简体中文',
     'zh-TW': '正體中文'
@@ -53,6 +56,7 @@ export function languageKeyToDateLocale(lang) {
     hi,
     ja,
     'pt-BR': ptBR,
+    sv,
     'uk-UA': uk,
     'zh-CN': zhCN,
     'zh-TW': zhTW
