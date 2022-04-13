@@ -71,6 +71,7 @@
     "url": "git+https://github.com/catarak/p5.js-web-editor.git"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.17.0",
     "@babel/plugin-proposal-class-properties": "^7.14.5",
     "@babel/plugin-proposal-decorators": "^7.14.5",
     "@babel/plugin-proposal-do-expressions": "^7.14.5",
@@ -143,7 +144,6 @@
   "dependencies": {
     "@auth0/s3": "^1.0.0",
     "@babel/core": "^7.14.6",
-    "@babel/eslint-parser": "^7.17.0",
     "@babel/polyfill": "^7.12.1",
     "@babel/register": "^7.14.5",
     "@emmetio/codemirror-plugin": "^1.2.4",
