@@ -35,6 +35,7 @@ import AddToCollectionList from '../components/AddToCollectionList';
 import Feedback from '../components/Feedback';
 import { CollectionSearchbar } from '../components/Searchbar';
 import { getIsUserOwner } from '../selectors/users';
+import RootPage from '../../../components/RootPage';
 
 function getTitle(props) {
   const { id } = props.project;
@@ -250,7 +251,7 @@ class IDEView extends React.Component {
 
   render() {
     return (
-      <div className="ide">
+      <RootPage>
         <Helmet>
           <title>{getTitle(this.props)}</title>
         </Helmet>
@@ -451,7 +452,7 @@ class IDEView extends React.Component {
             />
           </Overlay>
         )}
-      </div>
+      </RootPage>
     );
   }
 }

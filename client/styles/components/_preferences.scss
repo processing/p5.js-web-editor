@@ -140,6 +140,12 @@
   & + & {
     margin-left: #{45 / $base-font-size}rem;
   }
+  &:hover {
+    @include themify() {
+      border-bottom: #{4 / $base-font-size}rem solid
+        getThemifyVariable("button-background-hover-color");
+    }
+  }
 }
 
 .preference__subheading {
@@ -242,20 +248,3 @@ input[type="number"]::-webkit-outer-spin-button {
   padding-right: #{14 / $base-font-size}rem;
 }
 
-.preference__serve-secure {
-  display: flex;
-  align-items: center;
-}
-
-.serve-secure__icon {
-  @include icon();
-  & svg {
-    height: #{24 / $base-font-size}rem;
-    width: #{24 / $base-font-size}rem;
-  }
-}
-
-.serve-secture__tooltip:after {
-  text-align: left;
-  font-size: #{12 / $base-font-size}rem;
-}

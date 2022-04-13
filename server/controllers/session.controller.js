@@ -24,7 +24,7 @@ export function createSession(req, res, next) {
 }
 
 export function getSession(req, res) {
-  if (req.user) {
+  if (req.user && !req.user.banned) {
     return res.json(userResponse(req.user));
   }
   return res.status(404).send({ message: 'Session does not exist' });

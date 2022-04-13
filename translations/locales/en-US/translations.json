@@ -96,7 +96,10 @@
     "Resources": "Resources",
     "Libraries": "Libraries",
     "Forum": "Forum",
-    "Examples": "Examples"
+    "Examples": "Examples",
+    "PrivacyPolicy": "Privacy Policy",
+    "TermsOfUse": "Terms of Use",
+    "CodeOfConduct": "Code of Conduct"
   },
   "Toast": {
     "OpenedNewSketch": "Opened new sketch.",
@@ -142,6 +145,8 @@
     "DecreaseFontARIA": "decrease font size",
     "IncreaseFont": "Increase",
     "IncreaseFontARIA": "increase font size",
+    "FontSize": "Font Size",
+    "SetFontSize": "set font size",
     "Autosave": "Autosave",
     "On": "On",
     "AutosaveOnARIA": "autosave on",
@@ -183,7 +188,8 @@
       "CommentLine": "Comment Line",
       "FindNextTextMatch": "Find Next Text Match",
       "FindPreviousTextMatch": "Find Previous Text Match",
-      "CodeEditing": "Code Editing"
+      "CodeEditing": "Code Editing",
+      "ColorPicker": "Show Inline Color Picker"
     },
     "General": {
       "StartSketch": "Start Sketch",
@@ -599,5 +605,16 @@
   },
   "Explorer": {
     "Files": "Files"
+  },
+  "Cookies": {
+    "Header": "Cookies",
+    "Body": "The p5.js Editor uses cookies. Some are essential to the website functionality and allow you to manage an account and preferences. Others are not essential—they are used for analytics and allow us to learn more about our community. <strong> We never sell this data or use it for advertising. </strong> You can decide which cookies you would like to allow, and learn more in our <0>Privacy Policy<0>.",
+    "AllowAll": "Allow All",
+    "AllowEssential": "Allow Essential"
+  },
+  "Legal": {
+    "PrivacyPolicy": "Privacy Policy",
+    "TermsOfUse": "Terms of Use",
+    "CodeOfConduct": "Code of Conduct"
   }
 }
