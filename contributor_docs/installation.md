@@ -6,7 +6,7 @@ Follow these instructions to set up your development environment, which you need
 
 _Note_: The installation steps assume you are using a Unix-like shell. If you are using Windows, you will need to use `copy` instead of `cp`.
 
-1. Install Node.js. The recommended way is to Node through [nvm](https://github.com/nvm-sh/nvm). You can also install [node.js](https://nodejs.org/download/release/v16.13.0/) version 16.13.0 directly from the Node.js website.
+1. Install Node.js. The recommended way is to Node through [nvm](https://github.com/nvm-sh/nvm). You can also install [node.js](https://nodejs.org/download/release/v16.14.2/) version 16.14.2 directly from the Node.js website.
 2. [Fork](https://help.github.com/articles/fork-a-repo) the [p5.js Web Editor repository](https://github.com/processing/p5.js-web-editor) into your own GitHub account.
 3. [Clone](https://help.github.com/articles/cloning-a-repository/) your new fork of the repository from GitHub onto your local computer.
 
@@ -14,7 +14,7 @@ _Note_: The installation steps assume you are using a Unix-like shell. If you ar
    $ git clone https://github.com/YOUR_USERNAME/p5.js-web-editor.git
    ```
 
-4. If you are using nvm, run `$ nvm use` to set your Node version to 16.13.0
+4. If you are using nvm, run `$ nvm use` to set your Node version to 16.14.2
 5. Navigate into the project folder and install all its necessary dependencies with npm.
 
    ```
