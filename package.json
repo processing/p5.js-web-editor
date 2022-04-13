@@ -137,8 +137,8 @@
     "webpack-node-externals": "^2.5.2"
   },
   "engines": {
-    "node": "16.13.0",
-    "npm": "8.1.2"
+    "node": "16.14.2",
+    "npm": "8.5.0"
   },
   "dependencies": {
     "@auth0/s3": "^1.0.0",
