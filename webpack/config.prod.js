@@ -139,20 +139,6 @@ module.exports = {
           }
         }
       ]
-    },
-    {
-      test: /_console-feed.scss/,
-      use: {
-        loader: 'sass-extract-loader',
-        options: {
-          plugins: [{
-            plugin: 'sass-extract-js',
-            options: {
-              camelCase: false
-            }
-          }]
-        }
-      }
     }
     ]
   },
