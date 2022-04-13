@@ -102,7 +102,6 @@
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^12.1.2",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-eslint": "^9.0.0",
     "babel-loader": "^8.2.2",
     "babel-plugin-transform-react-remove-prop-types": "^0.2.12",
     "css-loader": "^5.2.7",
@@ -144,6 +143,7 @@
   "dependencies": {
     "@auth0/s3": "^1.0.0",
     "@babel/core": "^7.14.6",
+    "@babel/eslint-parser": "^7.17.0",
     "@babel/polyfill": "^7.12.1",
     "@babel/register": "^7.14.5",
     "@emmetio/codemirror-plugin": "^1.2.4",
