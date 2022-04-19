@@ -12,21 +12,17 @@ module.exports = {
   devtool: 'cheap-module-eval-source-map',
   entry: {
     app: [
-      'core-js/modules/es6.promise',
-      'core-js/modules/es6.array.iterator',
       'webpack-hot-middleware/client',
       'react-hot-loader/patch',
       './client/index.jsx',
     ],
     'previewApp': [
-      'core-js/modules/es6.promise',
-      'core-js/modules/es6.array.iterator',
       'webpack-hot-middleware/client',
       'react-hot-loader/patch',
       './client/modules/Preview/previewIndex.jsx',
     ],
     previewScripts: [
-      '@babel/polyfill',
+      'regenerator-runtime/runtime',
       path.resolve(__dirname, '../client/utils/previewEntry.js')
     ]
   },
