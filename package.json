@@ -190,7 +190,7 @@
     "jshint": "^2.13.0",
     "lodash": "^4.17.21",
     "loop-protect": "github:catarak/loop-protect",
-    "mime-types": "^2.1.31",
+    "mime": "^3.0.0",
     "mjml": "^3.3.2",
     "mockingoose": "^2.15.2",
     "mongoose": "^5.13.3",

@@ -38,7 +38,6 @@ module.exports = {
       'node_modules'
     ],
     fallback: {
-      "path": require.resolve("path-browserify"),
       "os": require.resolve("os-browserify/browser")
     }
   },
