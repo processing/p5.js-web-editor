@@ -170,7 +170,7 @@
     "cross-env": "^5.2.1",
     "csslint": "^1.0.5",
     "date-fns": "^2.22.1",
-    "decomment": "^0.8.7",
+    "decomment": "^0.9.5",
     "dotenv": "^2.0.0",
     "dropzone": "^4.3.0",
     "escape-string-regexp": "^1.0.5",
