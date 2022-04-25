@@ -16,19 +16,15 @@ module.exports = {
   mode: 'production',
   entry: {
     app: [
-      '@babel/polyfill',
-      'core-js/modules/es6.promise',
-      'core-js/modules/es6.array.iterator',
+      'regenerator-runtime/runtime',
       path.resolve(__dirname, '../client/index.jsx')
     ],
     'previewApp': [
-      '@babel/polyfill',
-      'core-js/modules/es6.promise',
-      'core-js/modules/es6.array.iterator',
+      'regenerator-runtime/runtime',
       path.resolve(__dirname, '../client/modules/Preview/previewIndex.jsx')
     ],
     previewScripts: [
-      '@babel/polyfill',
+      'regenerator-runtime/runtime',
       path.resolve(__dirname, '../client/utils/previewEntry.js')
     ]
   },
@@ -139,20 +135,6 @@ module.exports = {
           }
         }
       ]
-    },
-    {
-      test: /_console-feed.scss/,
-      use: {
-        loader: 'sass-extract-loader',
-        options: {
-          plugins: [{
-            plugin: 'sass-extract-js',
-            options: {
-              camelCase: false
-            }
-          }]
-        }
-      }
     }
     ]
   },

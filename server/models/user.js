@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
-
-const bcrypt = require('bcrypt-nodejs');
+import bcrypt from 'bcryptjs';
 
 const EmailConfirmationStates = {
   Verified: 'verified',
@@ -101,7 +100,7 @@ userSchema.pre('save', function checkPassword(next) {
       next(err);
       return;
     }
-    bcrypt.hash(user.password, salt, null, (innerErr, hash) => {
+    bcrypt.hash(user.password, salt, (innerErr, hash) => {
       if (innerErr) {
         next(innerErr);
         return;
@@ -132,7 +131,7 @@ userSchema.pre('save', function checkApiKey(next) {
           next(err);
           return;
         }
-        bcrypt.hash(k.hashedKey, salt, null, (innerErr, hash) => {
+        bcrypt.hash(k.hashedKey, salt, (innerErr, hash) => {
           if (innerErr) {
             next(innerErr);
             return;
