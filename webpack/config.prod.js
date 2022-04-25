@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const postcssPresetEnv = require('postcss-preset-env');
 const postcssFocus = require('postcss-focus');
@@ -30,7 +30,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, '../dist/static'),
-    filename: '[name].[hash].js',
+    filename: '[name].[contenthash].js',
     publicPath: '/'
   },
 
@@ -39,7 +39,11 @@ module.exports = {
     modules: [
       'client',
       'node_modules',
-    ]
+    ],
+    fallback: {
+      "path": require.resolve("path-browserify"),
+      "os": require.resolve("os-browserify/browser")
+    }
   },
   module: {
     rules: [{
@@ -127,9 +131,12 @@ module.exports = {
             loader: '@svgr/webpack',
             options: {
               svgoConfig: {
-                plugins: {
-                  removeViewBox: false
-                }
+                plugins: [
+                  {
+                    name: 'removeViewBox',
+                    active: false
+                  },
+                ],
               }
             }
           }
@@ -141,9 +148,11 @@ module.exports = {
   optimization: {
     minimize: true,
     minimizer: [new TerserJSPlugin({
-      sourceMap: true,
+      terserOptions: {
+        sourceMap: true
+      },
       parallel: true
-    }), new OptimizeCSSAssetsPlugin()],
+    }), new CssMinimizerPlugin()],
   },
   plugins: [
     new WebpackManifestPlugin({
@@ -151,7 +160,7 @@ module.exports = {
       filename: 'manifest.json'
     }),
     new MiniCssExtractPlugin({
-      filename: 'app.[hash].css',
+      filename: 'app.[contenthash].css',
     }),
     new CopyWebpackPlugin({
       patterns: [

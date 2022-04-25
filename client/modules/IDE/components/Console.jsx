@@ -37,13 +37,6 @@ import { useDidUpdate } from '../hooks/custom-hooks';
 import useHandleMessageEvent from '../hooks/useHandleMessageEvent';
 import { listen } from '../../../utils/dispatcher';
 
-const CONSOLE_FEED_WITHOUT_ICONS = {
-  LOG_WARN_ICON: 'none',
-  LOG_ERROR_ICON: 'none',
-  LOG_DEBUG_ICON: 'none',
-  LOG_INFO_ICON: 'none'
-};
-
 const CONSOLE_FEED_LIGHT_STYLES = {
   BASE_BACKGROUND_COLOR: '',
   LOG_ERROR_BACKGROUND: 'hsl(0, 100%, 97%)',

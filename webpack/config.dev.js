@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === 'development') {
 
 module.exports = {
   mode: 'development',
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'eval-cheap-module-source-map',
   entry: {
     app: [
       'webpack-hot-middleware/client',
@@ -36,7 +36,11 @@ module.exports = {
     modules: [
       'client',
       'node_modules'
-    ]
+    ],
+    fallback: {
+      "path": require.resolve("path-browserify"),
+      "os": require.resolve("os-browserify/browser")
+    }
   },
   plugins: [
     new ESLintPlugin({
@@ -106,9 +110,12 @@ module.exports = {
               loader: '@svgr/webpack',
               options: {
                 svgoConfig: {
-                  plugins: {
-                    removeViewBox: false
-                  }
+                  plugins: [
+                    {
+                      name: 'removeViewBox',
+                      active: false
+                    },
+                  ],
                 }
               }
             }
