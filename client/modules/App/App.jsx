@@ -15,9 +15,11 @@ function hideCookieConsent(pathname) {
 }
 
 class App extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-    this.state = { isMounted: false };
+  constructor(props) {
+    super(props);
+    this.state = {
+      isMounted: false
+    };
   }
 
   componentDidMount() {
@@ -25,24 +27,22 @@ class App extends React.Component {
     document.body.className = this.props.theme;
   }
 
-  componentWillReceiveProps(nextProps) {
-    const locationWillChange = nextProps.location !== this.props.location;
-    const shouldSkipRemembering =
-      nextProps.location.state &&
-      nextProps.location.state.skipSavingPath === true;
-
-    if (locationWillChange && !shouldSkipRemembering) {
-      this.props.setPreviousPath(this.props.location.pathname);
-    }
-
-    if (this.props.language !== nextProps.language) {
-      this.props.setLanguage(nextProps.language, { persistPreference: false });
-    }
-  }
-
   componentDidUpdate(prevProps) {
     if (this.props.theme !== prevProps.theme) {
       document.body.className = this.props.theme;
+    }
+
+    const locationWillChange = this.props.location !== prevProps.location;
+    const shouldSkipRemembering =
+      this.props.location.state &&
+      this.props.location.state.skipSavingPath === true;
+
+    if (locationWillChange && !shouldSkipRemembering) {
+      this.props.setPreviousPath(prevProps.location.pathname);
+    }
+
+    if (prevProps.language !== this.props.language) {
+      this.props.setLanguage(this.props.language, { persistPreference: false });
     }
   }
 
