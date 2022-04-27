@@ -66,8 +66,8 @@ class IDEView extends React.Component {
     this.handleGlobalKeydown = this.handleGlobalKeydown.bind(this);
 
     this.state = {
-      consoleSize: props.ide.consoleIsExpanded ? 150 : 29,
-      sidebarSize: props.ide.sidebarIsExpanded ? 160 : 20
+      consoleSize: 150,
+      sidebarSize: 160
     };
   }
 
@@ -96,17 +96,6 @@ class IDEView extends React.Component {
     window.addEventListener('beforeunload', this.handleBeforeUnload);
 
     this.autosaveInterval = null;
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.location !== this.props.location) {
-      this.props.setPreviousPath(this.props.location.pathname);
-    }
-    if (this.props.ide.sidebarIsExpanded !== nextProps.ide.sidebarIsExpanded) {
-      this.setState({
-        sidebarSize: nextProps.ide.sidebarIsExpanded ? 160 : 20
-      });
-    }
   }
 
   componentWillUpdate(nextProps) {
@@ -297,7 +286,9 @@ class IDEView extends React.Component {
         <main className="editor-preview-container">
           <SplitPane
             split="vertical"
-            size={this.state.sidebarSize}
+            size={
+              this.props.ide.sidebarIsExpanded ? this.state.sidebarSize : 20
+            }
             onChange={(size) => this.setState({ sidebarSize: size })}
             onDragFinished={this._handleSidebarPaneOnDragFinished}
             allowResize={this.props.ide.sidebarIsExpanded}
@@ -570,7 +561,6 @@ IDEView.propTypes = {
   }).isRequired,
   route: PropTypes.oneOfType([PropTypes.object, PropTypes.element]).isRequired,
   setTheme: PropTypes.func.isRequired,
-  setPreviousPath: PropTypes.func.isRequired,
   showErrorModal: PropTypes.func.isRequired,
   hideErrorModal: PropTypes.func.isRequired,
   clearPersistedState: PropTypes.func.isRequired,
