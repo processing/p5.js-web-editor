@@ -16,22 +16,13 @@ import QuickAddList from './QuickAddList';
 class SketchList extends React.Component {
   constructor(props) {
     super(props);
-    this.props.getProjects(this.props.username);
+    this.props.getProjects(this.props.username).then(() => {
+      this.setState({ isInitialDataLoad: false });
+    });
 
     this.state = {
       isInitialDataLoad: true
     };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (
-      this.props.sketches !== nextProps.sketches &&
-      Array.isArray(nextProps.sketches)
-    ) {
-      this.setState({
-        isInitialDataLoad: false
-      });
-    }
   }
 
   getSketchesTitle() {
