@@ -15,7 +15,7 @@ class EmailVerificationView extends React.Component {
     emailVerificationTokenState: null
   };
 
-  componentWillMount() {
+  componentDidMount() {
     const verificationToken = this.verificationToken();
     if (verificationToken != null) {
       this.props.verifyEmailConfirmation(verificationToken);
