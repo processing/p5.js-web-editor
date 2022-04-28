@@ -98,15 +98,14 @@ class IDEView extends React.Component {
     this.autosaveInterval = null;
   }
 
-  componentWillUpdate(nextProps) {
-    if (nextProps.params.project_id && !this.props.params.project_id) {
-      if (nextProps.params.project_id !== nextProps.project.id) {
-        this.props.getProject(nextProps.params.project_id);
+  componentDidUpdate(prevProps) {
+    // if the url has changed to open a new sketch
+    if (this.props.params.project_id && !prevProps.params.project_id) {
+      if (this.props.params.project_id !== this.props.project.id) {
+        this.props.getProject(this.props.params.project_id);
       }
     }
-  }
 
-  componentDidUpdate(prevProps) {
     if (this.props.isUserOwner && this.props.project.id) {
       if (
         this.props.preferences.autosave &&
