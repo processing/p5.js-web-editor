@@ -210,18 +210,17 @@ class Editor extends React.Component {
     });
   }
 
-  componentWillUpdate(nextProps) {
-    // check if files have changed
-    if (this.props.files[0].id !== nextProps.files[0].id) {
-      // then need to make CodeMirror documents
-      this.initializeDocuments(nextProps.files);
-    }
-    if (this.props.files.length !== nextProps.files.length) {
-      this.initializeDocuments(nextProps.files);
-    }
-  }
-
   componentDidUpdate(prevProps) {
+    // check if files have changed
+    if (this.props.files[0].id !== prevProps.files[0].id) {
+      // then need to make CodeMirror documents
+      this.initializeDocuments(this.props.files);
+    }
+    // if a new file was added
+    if (this.props.files.length !== prevProps.files.length) {
+      this.initializeDocuments(this.props.files);
+    }
+
     if (this.props.file.id !== prevProps.file.id) {
       const oldDoc = this._cm.swapDoc(this._docs[this.props.file.id]);
       this._docs[prevProps.file.id] = oldDoc;
