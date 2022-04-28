@@ -175,10 +175,13 @@ function CookieConsent({ hide }) {
                   kind={Button.kinds.secondary}
                   onClick={acceptAllCookies}
                 >
-                  {t('Cookies.AllowAll')}
+                  <>{t('Cookies.AllowAll')}</>
                 </Button>
-                <Button onClick={acceptEssentialCookies}>
-                  {t('Cookies.AllowEssential')}
+                <Button
+                  kind={Button.kinds.primary}
+                  onClick={acceptEssentialCookies}
+                >
+                  <>{t('Cookies.AllowEssential')}</>
                 </Button>
               </CookieConsentButtons>
             </CookieConsentContent>
