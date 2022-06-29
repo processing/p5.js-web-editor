@@ -159,7 +159,8 @@ class Editor extends React.Component {
       // choose a color, it deletes characters inline. This is a
       // hack to prevent that.
       [`${metaKey}-K`]: (cm, event) =>
-        cm.state.colorpicker.popup_color_picker({ length: 0 })
+        cm.state.colorpicker.popup_color_picker({ length: 0 }),
+      [`${metaKey}-.`]: 'toggleComment' // Note: most adblockers use the shortcut ctrl+.
     });
 
     this.initializeDocuments(this.props.files);
