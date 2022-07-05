@@ -35,9 +35,9 @@ Don't know where to begin? Here are some suggestions to get started:
   - Translations: Application and documentation
 * Use the [p5.js Web Editor](https://editor.p5js.org)! Find a bug? Think of something you think would add to the project? Open an issue.
 * Expand an existing issue. Sometimes issues are missing steps to reproduce, or need suggestions for potential solutions. Sometimes they need another voice saying, "this is really important!"
-* Try getting the project running locally on your computer by following the [installation steps](./../developer_docs/installation.md).
-* Look through the documentation in the [developer docs](../developer_docs/). Is there anything that could be expanded? Is there anything missing?
-* Look at the [development guide](./../developer_docs/development.md).
+* Try getting the project running locally on your computer by following the [installation steps](./../contributor_docs/installation.md).
+* Look through the documentation in the [developer docs](../contributor_docs/). Is there anything that could be expanded? Is there anything missing?
+* Look at the [development guide](./../contributor_docs/development.md).
 
 ### Good First Issues
 For first-time contributors or those who want to start with a small task, [check out the list of good first issues](https://github.com/processing/p5.js-web-editor/labels/good%20first%20issue), or [issues that need documentation of steps to reproduce](https://github.com/processing/p5.js-web-editor/issues?q=is%3Aissue+is%3Aopen+label%3A%22needs+steps+to+reproduce%22). If the issue has not been assigned to anyone, then you can work on it! It's okay to not know how to fix an issue, and feel free to ask questions about to approach the problem! We are all here to learn and make something awesome. Someone from the community would help you out and these are great issues for learning about the web editor, its file structure and its development process.
@@ -60,7 +60,7 @@ If you feel like an issue is tagged incorrectly (e.g. it's low priority and you 
 
 If you'd like to work on an issue, please comment on it to let the maintainers know, so that they can assign it to you. If someone else has already commented and taken up that issue, please refrain from working on it and submitting a PR without asking the maintainers as it leads to unnecessary duplication of effort.
 
-Then, look at the [development guide](https://github.com/processing/p5.js-web-editor/blob/develop/developer_docs/development.md) for instructions on how to install the project locally and follow the right development workflow.
+Then, look at the [development guide](https://github.com/processing/p5.js-web-editor/blob/develop/contributor_docs/development.md) for instructions on how to install the project locally and follow the right development workflow.
 
 ### Contribution Guides
 
