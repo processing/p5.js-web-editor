@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import CodeMirror from 'codemirror';
 import emmet from '@emmetio/codemirror-plugin';
-import prettier from 'prettier';
+import prettier from 'prettier/standalone';
 import babelParser from 'prettier/parser-babel';
 import htmlParser from 'prettier/parser-html';
 import cssParser from 'prettier/parser-postcss';

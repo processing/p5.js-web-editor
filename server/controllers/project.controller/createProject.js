@@ -12,22 +12,17 @@ export default function createProject(req, res) {
 
   projectValues = Object.assign(projectValues, req.body);
 
-  function sendFailure() {
+  function sendFailure(err) {
     res.status(400).json({ success: false });
   }
 
   function populateUserData(newProject) {
-    return Project.populate(
-      newProject,
-      { path: 'user', select: 'username' },
-      (err, newProjectWithUser) => {
-        if (err) {
-          sendFailure();
-          return;
-        }
-        res.json(newProjectWithUser);
-      }
-    );
+    return Project.populate(newProject, {
+      path: 'user',
+      select: 'username'
+    }).then((newProjectWithUser) => {
+      res.json(newProjectWithUser);
+    });
   }
 
   return Project.create(projectValues)

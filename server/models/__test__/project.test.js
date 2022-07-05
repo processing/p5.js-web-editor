@@ -1,7 +1,8 @@
-import mockingoose from 'mockingoose';
 import differenceInSeconds from 'date-fns/differenceInSeconds';
 
 import Project from '../project';
+
+const mockingoose = require('mockingoose');
 
 const datesWithinSeconds = (first, second) =>
   differenceInSeconds(first, second) < 2;
