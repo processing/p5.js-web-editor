@@ -1,4 +1,4 @@
-import uuid from 'node-uuid';
+import { v4 as uuidv4 } from 'uuid';
 import S3Policy from 's3-policy-v4';
 import s3 from '@auth0/s3';
 import mongoose from 'mongoose';
@@ -81,7 +81,7 @@ export function signS3(req, res) {
     return;
   }
   const fileExtension = getExtension(req.body.name);
-  const filename = uuid.v4() + fileExtension;
+  const filename = uuidv4() + fileExtension;
   const acl = 'public-read';
   const policy = S3Policy.generate({
     acl,
@@ -100,7 +100,7 @@ export function copyObjectInS3(url, userId) {
   return new Promise((resolve, reject) => {
     const objectKey = getObjectKey(url);
     const fileExtension = getExtension(objectKey);
-    const newFilename = uuid.v4() + fileExtension;
+    const newFilename = uuidv4() + fileExtension;
     const headParams = {
       Bucket: `${process.env.S3_BUCKET}`,
       Key: `${objectKey}`
@@ -142,7 +142,7 @@ export function moveObjectToUserInS3(url, userId) {
   return new Promise((resolve, reject) => {
     const objectKey = getObjectKey(url);
     const fileExtension = getExtension(objectKey);
-    const newFilename = uuid.v4() + fileExtension;
+    const newFilename = uuidv4() + fileExtension;
     const headParams = {
       Bucket: `${process.env.S3_BUCKET}`,
       Key: `${objectKey}`

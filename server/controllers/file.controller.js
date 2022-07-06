@@ -1,5 +1,5 @@
 import each from 'async/each';
-import mime from 'mime-types';
+import mime from 'mime';
 import isBefore from 'date-fns/isBefore';
 import Project from '../models/project';
 import { resolvePathToFile } from '../utils/filePath';
@@ -162,7 +162,7 @@ export function getFileContent(req, res) {
         return;
       }
       const contentType =
-        mime.lookup(resolvedFile.name) || 'application/octet-stream';
+        mime.getType(resolvedFile.name) || 'application/octet-stream';
       res.set('Content-Type', contentType);
       res.send(resolvedFile.content);
     }
