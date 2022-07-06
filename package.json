@@ -186,7 +186,7 @@
     "is-url": "^1.2.4",
     "jest-express": "^1.12.0",
     "js-cookie": "^2.2.1",
-    "jsdom": "^9.8.3",
+    "jsdom": "^16.5.0",
     "jshint": "^2.13.0",
     "lodash": "^4.17.21",
     "loop-protect": "github:catarak/loop-protect",
