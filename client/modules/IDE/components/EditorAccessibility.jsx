@@ -1,46 +1,38 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
-class EditorAccessibility extends React.Component {
-  componentDidMount() {}
-  render() {
-    const messages = [];
-    if (this.props.lintMessages.length > 0) {
-      this.props.lintMessages.forEach((lintMessage, i) => {
-        messages.push(
-          <li key={lintMessage.id}>
-            {lintMessage.severity} in line
-            {lintMessage.line} :{lintMessage.message}
-          </li>
-        );
-      });
-    } else {
-      messages.push(
-        <li key={0}>{this.props.t('EditorAccessibility.NoLintMessages')}</li>
-      );
-    }
-    return (
-      <div className="editor-accessibility">
-        <ul className="editor-lintmessages" title="lint messages">
-          {messages}
-        </ul>
-        <p>
+const EditorAccessibility = ({ lintMessages = [] }) => {
+  const { t } = useTranslation();
+  return (
+    <div className="editor-accessibility">
+      <ul className="editor-lintmessages" title="lint messages">
+        {lintMessages.length > 0 ? (
+          lintMessages.map((lintMessage) => (
+            <li key={lintMessage.id}>
+              {lintMessage.severity} in line
+              {lintMessage.line} :{lintMessage.message}
+            </li>
+          ))
+        ) : (
+          <li key={0}>{t('EditorAccessibility.NoLintMessages')}</li>
+        )}
+      </ul>
+      <p>
+        {' '}
+        {t('EditorAccessibility.CurrentLine')}
+        <span
+          className="editor-linenumber"
+          aria-live="polite"
+          aria-atomic="true"
+          id="current-line"
+        >
           {' '}
-          {this.props.t('EditorAccessibility.CurrentLine')}
-          <span
-            className="editor-linenumber"
-            aria-live="polite"
-            aria-atomic="true"
-            id="current-line"
-          >
-            {' '}
-          </span>
-        </p>
-      </div>
-    );
-  }
-}
+        </span>
+      </p>
+    </div>
+  );
+};
 
 EditorAccessibility.propTypes = {
   lintMessages: PropTypes.arrayOf(
@@ -50,8 +42,7 @@ EditorAccessibility.propTypes = {
       message: PropTypes.string.isRequired,
       id: PropTypes.number.isRequired
     })
-  ).isRequired,
-  t: PropTypes.func.isRequired
+  ).isRequired
 };
 
-export default withTranslation()(EditorAccessibility);
+export default EditorAccessibility;

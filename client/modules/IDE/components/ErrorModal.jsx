@@ -1,28 +1,29 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
-class ErrorModal extends React.Component {
-  forceAuthentication() {
+const ErrorModal = ({ type, service, closeModal }) => {
+  const { t } = useTranslation();
+
+  function forceAuthentication() {
     return (
       <p>
-        {this.props.t('ErrorModal.MessageLogin')}
-        <Link to="/login" onClick={this.props.closeModal}>
+        {t('ErrorModal.MessageLogin')}
+        <Link to="/login" onClick={closeModal}>
           {' '}
-          {this.props.t('ErrorModal.Login')}
+          {t('ErrorModal.Login')}
         </Link>
-        {this.props.t('ErrorModal.LoginOr')}
-        <Link to="/signup" onClick={this.props.closeModal}>
-          {this.props.t('ErrorModal.SignUp')}
+        {t('ErrorModal.LoginOr')}
+        <Link to="/signup" onClick={closeModal}>
+          {t('ErrorModal.SignUp')}
         </Link>
         .
       </p>
     );
   }
 
-  oauthError() {
-    const { t, service } = this.props;
+  function oauthError() {
     const serviceLabels = {
       github: 'GitHub',
       google: 'Google'
@@ -34,45 +35,42 @@ class ErrorModal extends React.Component {
     );
   }
 
-  staleSession() {
+  function staleSession() {
     return (
       <p>
-        {this.props.t('ErrorModal.MessageLoggedOut')}
-        <Link to="/login" onClick={this.props.closeModal}>
-          {this.props.t('ErrorModal.LogIn')}
+        {t('ErrorModal.MessageLoggedOut')}
+        <Link to="/login" onClick={closeModal}>
+          {t('ErrorModal.LogIn')}
         </Link>
         .
       </p>
     );
   }
 
-  staleProject() {
-    return <p>{this.props.t('ErrorModal.SavedDifferentWindow')}</p>;
+  function staleProject() {
+    return <p>{t('ErrorModal.SavedDifferentWindow')}</p>;
   }
 
-  render() {
-    return (
-      <div className="error-modal__content">
-        {(() => { // eslint-disable-line
-          if (this.props.type === 'forceAuthentication') {
-            return this.forceAuthentication();
-          } else if (this.props.type === 'staleSession') {
-            return this.staleSession();
-          } else if (this.props.type === 'staleProject') {
-            return this.staleProject();
-          } else if (this.props.type === 'oauthError') {
-            return this.oauthError();
-          }
-        })()}
-      </div>
-    );
-  }
-}
+  return (
+    <div className="error-modal__content">
+      {(() => { // eslint-disable-line
+        if (type === 'forceAuthentication') {
+          return forceAuthentication();
+        } else if (type === 'staleSession') {
+          return staleSession();
+        } else if (type === 'staleProject') {
+          return staleProject();
+        } else if (type === 'oauthError') {
+          return oauthError();
+        }
+      })()}
+    </div>
+  );
+};
 
 ErrorModal.propTypes = {
   type: PropTypes.string.isRequired,
   closeModal: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired,
   service: PropTypes.string
 };
 
@@ -80,4 +78,4 @@ ErrorModal.defaultProps = {
   service: ''
 };
 
-export default withTranslation()(ErrorModal);
+export default ErrorModal;

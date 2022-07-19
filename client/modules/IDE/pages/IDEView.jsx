@@ -400,7 +400,7 @@ class IDEView extends React.Component {
             previousPath={this.props.ide.previousPath}
             ariaLabel={this.props.t('IDEView.SubmitFeedbackARIA')}
           >
-            <Feedback previousPath={this.props.ide.previousPath} />
+            <Feedback />
           </Overlay>
         )}
         {this.props.location.pathname.match(/add-to-collection$/) && (
