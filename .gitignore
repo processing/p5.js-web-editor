@@ -16,6 +16,7 @@ cert_chain.crt
 localhost.crt
 localhost.key
 privkey.pem
+terraform/.terraform/
 
 storybook-static
 duplicates.json
