@@ -1,7 +1,7 @@
-import archiver from 'archiver';
+import JSZip from 'jszip';
 import format from 'date-fns/format';
 import isUrl from 'is-url';
-import jsdom, { serializeDocument } from 'jsdom';
+import { JSDOM } from 'jsdom';
 import isAfter from 'date-fns/isAfter';
 import axios from 'axios';
 import slugify from 'slugify';
@@ -194,109 +194,71 @@ export function projectForUserExists(username, projectId, callback) {
   });
 }
 
-function bundleExternalLibs(project, zip, callback) {
-  const indexHtml = project.files.find((file) => file.name.match(/\.html$/));
-  let numScriptsResolved = 0;
-  let numScriptTags = 0;
+// function getExternalLibs(project) {
+//   const indexHtml = project.files.find((file) => file.name === "index.html");
+//   const { window } = new JSDOM(indexHtml.content);
+//   const scriptTags = window.document.getElementsByTagName('script');
+//   const libs = [];
 
-  async function resolveScriptTagSrc(scriptTag, document) {
-    const path = scriptTag.src.split('/');
-    const filename = path[path.length - 1];
-    const { src } = scriptTag;
+//   Object.values(scriptTags).forEach((tag) => {
+//     const { src } = tag;
 
-    if (!isUrl(src)) {
-      numScriptsResolved += 1;
-      if (numScriptsResolved === numScriptTags) {
-        indexHtml.content = serializeDocument(document);
-        callback();
-      }
-      return;
-    }
+//     if (!isUrl(src)) return;
 
-    try {
-      const { data } = await axios.get(src, {
-        responseType: 'arraybuffer'
-      });
-      zip.append(data, { name: filename });
-      scriptTag.src = filename;
-    } catch (err) {
-      console.log(err);
-    }
+//     const path = src.split('/');
+//     const filename = path[path.length - 1];
 
-    numScriptsResolved += 1;
-    if (numScriptsResolved === numScriptTags) {
-      indexHtml.content = serializeDocument(document);
-      callback();
-    }
+//     libs.push({
+//       name: filename,
+//       url: src
+//     });
+//   });
+
+//   return libs;
+// }
+
+async function addFileToZip(file, files, zip, path = '') {
+  if (file.fileType === 'folder') {
+    const newPath = file.name === 'root' ? path : `${path}${file.name}/`;
+    file.children.forEach((fileId) => {
+      const childFile = files.find((f) => f.id === fileId);
+      addFileToZip(childFile, files, zip, newPath);
+    });
+  } else if (file.url) {
+    console.log(`file: ${JSON.stringify(file)}`);
+    const { data } = await axios.get(file.url);
+    zip.file(`${path}${file.name}`, data);
+  } else {
+    zip.file(`${path}${file.name}`, file.content);
   }
-
-  jsdom.env(indexHtml.content, (innerErr, window) => {
-    const indexHtmlDoc = window.document;
-    const scriptTags = indexHtmlDoc.getElementsByTagName('script');
-    numScriptTags = scriptTags.length;
-    for (let i = 0; i < numScriptTags; i += 1) {
-      resolveScriptTagSrc(scriptTags[i], indexHtmlDoc);
-    }
-    if (numScriptTags === 0) {
-      indexHtml.content = serializeDocument(document);
-      callback();
-    }
-  });
 }
 
-function buildZip(project, req, res) {
-  const zip = archiver('zip');
-  const rootFile = project.files.find((file) => file.name === 'root');
-  const numFiles = project.files.filter((file) => file.fileType !== 'folder')
-    .length;
-  const { files } = project;
-  let numCompletedFiles = 0;
+async function buildZip(project, req, res) {
+  try {
+    const zip = new JSZip();
+    const currentTime = format(new Date(), 'yyyy_MM_dd_HH_mm_ss');
+    project.slug = slugify(project.name, '_');
+    const zipFileName = `${generateFileSystemSafeName(
+      project.slug
+    )}_${currentTime}.zip`;
+    const { files } = project;
+    const root = files.find((file) => file.name === 'root');
+    // const libs = getExternalLibs(project);
 
-  zip.on('error', (err) => {
-    res.status(500).send({ error: err.message });
-  });
+    // libs.forEach((lib) => addFileToZip(lib, files, zip));
+    addFileToZip(root, files, zip);
 
-  const currentTime = format(new Date(), 'yyyy_MM_dd_HH_mm_ss');
-  project.slug = slugify(project.name, '_');
-  res.attachment(
-    `${generateFileSystemSafeName(project.slug)}_${currentTime}.zip`
-  );
-  zip.pipe(res);
-
-  async function addFileToZip(file, path) {
-    if (file.fileType === 'folder') {
-      const newPath = file.name === 'root' ? path : `${path}${file.name}/`;
-      file.children.forEach((fileId) => {
-        const childFile = files.find((f) => f.id === fileId);
-        (() => {
-          addFileToZip(childFile, newPath);
-        })();
-      });
-    } else if (file.url) {
-      try {
-        const { data } = await axios.get(file.url, {
-          responseType: 'arraybuffer'
-        });
-        zip.append(data, { name: `${path}${file.name}` });
-      } catch (err) {
-        console.log(err);
-      }
-      numCompletedFiles += 1;
-      if (numCompletedFiles === numFiles) {
-        zip.finalize();
-      }
-    } else {
-      zip.append(file.content, { name: `${path}${file.name}` });
-      numCompletedFiles += 1;
-      if (numCompletedFiles === numFiles) {
-        zip.finalize();
-      }
-    }
+    const base64 = await zip.generateAsync({ type: 'base64' });
+    const buff = Buffer.from(base64, 'base64');
+    res.writeHead(200, {
+      'Content-Type': 'application/zip',
+      'Content-disposition': `attachment; filename=${zipFileName}`
+    });
+    res.end(buff);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(err);
   }
-
-  bundleExternalLibs(project, zip, () => {
-    addFileToZip(rootFile, '/');
-  });
 }
 
 export function downloadProjectAsZip(req, res) {
