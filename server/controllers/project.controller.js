@@ -194,43 +194,64 @@ export function projectForUserExists(username, projectId, callback) {
   });
 }
 
-// function getExternalLibs(project) {
-//   const indexHtml = project.files.find((file) => file.name === "index.html");
-//   const { window } = new JSDOM(indexHtml.content);
-//   const scriptTags = window.document.getElementsByTagName('script');
-//   const libs = [];
+function bundleExternalLibs(project) {
+  const indexHtml = project.files.find((file) => file.name === 'index.html');
+  const { window } = new JSDOM(indexHtml.content);
+  const scriptTags = window.document.getElementsByTagName('script');
 
-//   Object.values(scriptTags).forEach((tag) => {
-//     const { src } = tag;
+  Object.values(scriptTags).forEach(async ({ src }, i) => {
+    if (!isUrl(src)) return;
 
-//     if (!isUrl(src)) return;
+    const path = src.split('/');
+    const filename = path[path.length - 1];
 
-//     const path = src.split('/');
-//     const filename = path[path.length - 1];
-
-//     libs.push({
-//       name: filename,
-//       url: src
-//     });
-//   });
-
-//   return libs;
-// }
-
-async function addFileToZip(file, files, zip, path = '') {
-  if (file.fileType === 'folder') {
-    const newPath = file.name === 'root' ? path : `${path}${file.name}/`;
-    file.children.forEach((fileId) => {
-      const childFile = files.find((f) => f.id === fileId);
-      addFileToZip(childFile, files, zip, newPath);
+    project.files.push({
+      name: filename,
+      url: src
     });
-  } else if (file.url) {
-    console.log(`file: ${JSON.stringify(file)}`);
-    const { data } = await axios.get(file.url);
-    zip.file(`${path}${file.name}`, data);
-  } else {
-    zip.file(`${path}${file.name}`, file.content);
-  }
+
+    const libId = project.files.find((file) => file.name === filename).id;
+    project.files.find((file) => file.name === 'root').children.push(libId);
+  });
+}
+
+function addFileToZip(file, files, zip, path = '') {
+  return new Promise((resolve, reject) => {
+    if (file.fileType === 'folder') {
+      const newPath = file.name === 'root' ? path : `${path}${file.name}/`;
+      const numChildFiles = file.children.filter((f) => f.fileType !== 'folder')
+        .length;
+      let childrenAdded = 0;
+
+      file.children.forEach(async (fileId) => {
+        const childFile = files.find((f) => f.id === fileId);
+
+        try {
+          await addFileToZip(childFile, files, zip, newPath);
+          childrenAdded += 1;
+
+          if (childrenAdded === numChildFiles) {
+            resolve();
+          }
+        } catch (err) {
+          reject(err);
+        }
+      });
+    } else if (file.url) {
+      axios
+        .get(file.url)
+        .then(({ data }) => {
+          zip.file(`${path}${file.name}`, data);
+          resolve();
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } else {
+      zip.file(`${path}${file.name}`, file.content);
+      resolve();
+    }
+  });
 }
 
 async function buildZip(project, req, res) {
@@ -243,10 +264,9 @@ async function buildZip(project, req, res) {
     )}_${currentTime}.zip`;
     const { files } = project;
     const root = files.find((file) => file.name === 'root');
-    // const libs = getExternalLibs(project);
 
-    // libs.forEach((lib) => addFileToZip(lib, files, zip));
-    addFileToZip(root, files, zip);
+    bundleExternalLibs(project);
+    await addFileToZip(root, files, zip);
 
     const base64 = await zip.generateAsync({ type: 'base64' });
     const buff = Buffer.from(base64, 'base64');
