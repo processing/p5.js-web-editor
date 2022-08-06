@@ -379,12 +379,8 @@ class IDEView extends React.Component {
           </SplitPane>
         </main>
         {this.props.ide.modalIsVisible && <NewFileModal />}
-        {this.props.ide.newFolderModalVisible && (
-          <NewFolderModal closeModal={this.props.closeNewFolderModal} />
-        )}
-        {this.props.ide.uploadFileModalVisible && (
-          <UploadFileModal closeModal={this.props.closeUploadFileModal} />
-        )}
+        {this.props.ide.newFolderModalVisible && <NewFolderModal />}
+        {this.props.ide.uploadFileModalVisible && <UploadFileModal />}
         {this.props.location.pathname === '/about' && (
           <Overlay
             title={this.props.t('About.Title')}
