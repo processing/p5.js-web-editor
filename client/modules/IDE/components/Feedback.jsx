@@ -1,13 +1,14 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import GitHubLogo from '../../../images/github.svg';
 
-function Feedback(props) {
+export default function Feedback() {
+  const { t } = useTranslation();
   return (
     <div className="feedback__content">
       <Helmet>
-        <title>{this.props.t('Feedback.Title')}</title>
+        <title>{t('Feedback.Title')}</title>
       </Helmet>
       <div className="feedback__content-pane">
         <h2 className="feedback__content-pane-header">Via Github Issues</h2>
@@ -49,5 +50,3 @@ function Feedback(props) {
     </div>
   );
 }
-
-export default withTranslation()(Feedback);

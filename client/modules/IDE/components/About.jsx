@@ -6,7 +6,7 @@ import SquareLogoIcon from '../../../images/p5js-square-logo.svg';
 // import PlayIcon from '../../../images/play.svg';
 import AsteriskIcon from '../../../images/p5-asterisk.svg';
 
-function About(props) {
+function About() {
   const { t } = useTranslation();
   return (
     <div className="about__content">
