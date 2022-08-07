@@ -1,0 +1,55 @@
+import mapKeys from 'lodash/mapKeys';
+import { useCallback, useEffect, useRef } from 'react';
+
+/**
+ * Attaches keydown handlers to the global document.
+ *
+ * Handles Mac/PC switching of Ctrl to Cmd.
+ *
+ * @param {Record<string, (e: KeyboardEvent) => void>} keyHandlers - an object
+ * which maps from the key to its event handler.  The object keys are a combination
+ * of the key and prefixes `ctrl-` `shift-` (ie. 'ctrl-f', 'ctrl-shift-f')
+ * and the values are the function to call when that specific key is pressed.
+ */
+export default function useKeyDownHandlers(keyHandlers) {
+  /**
+   * Instead of memoizing the handlers, use a ref and call the current
+   * handler at the time of the event.
+   */
+  const handlers = useRef(keyHandlers);
+
+  useEffect(() => {
+    handlers.current = mapKeys(keyHandlers, (value, key) => key.toLowerCase());
+  }, [keyHandlers]);
+
+  /**
+   * Will call all matching handlers, starting with the most specific: 'ctrl-shift-f' => 'ctrl-f' => 'f'.
+   * Can use e.stopPropagation() to prevent subsequent handlers.
+   * @type {(function(KeyboardEvent): void)}
+   */
+  const handleEvent = useCallback((e) => {
+    const isMac = navigator.userAgent.toLowerCase().indexOf('mac') !== -1;
+    const isCtrl = isMac ? e.metaKey && this.isMac : e.ctrlKey;
+    if (e.shiftKey && isCtrl) {
+      handlers.current[`ctrl-shift-${e.key.toLowerCase()}`]?.(e);
+    }
+    if (isCtrl) {
+      handlers.current[`ctrl-${e.key.toLowerCase()}`]?.(e);
+    }
+    handlers.current[e.key.toLowerCase()]?.(e);
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleEvent);
+
+    return () => document.removeEventListener('keydown', handleEvent);
+  }, [handleEvent]);
+}
+
+/**
+ * Component version can be used in class components where hooks can't be used.
+ */
+export const DocumentKeyDown = ({ handlers }) => {
+  useKeyDownHandlers(handlers);
+  return null;
+};

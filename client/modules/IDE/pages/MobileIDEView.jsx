@@ -30,6 +30,7 @@ import UnsavedChangesDotIcon from '../../../images/unsaved-changes-dot.svg';
 
 import IconButton from '../../../components/mobile/IconButton';
 import Header from '../../../components/mobile/Header';
+import { useIDEKeyHandlers } from '../components/IDEKeyHandlers';
 import Toast from '../components/Toast';
 import Screen from '../../../components/mobile/MobileScreen';
 import Footer from '../../../components/mobile/Footer';
@@ -43,12 +44,7 @@ import useAsModal from '../../../components/useAsModal';
 import Dropdown from '../../../components/Dropdown';
 import { getIsUserOwner } from '../selectors/users';
 
-import {
-  useEffectWithComparison,
-  useEventListener
-} from '../hooks/custom-hooks';
-
-import * as device from '../../../utils/device';
+import { useEffectWithComparison } from '../hooks/custom-hooks';
 
 const withChangeDot = (title, unsavedChanges = false) => (
   <span>
@@ -133,81 +129,6 @@ const getNavOptions = (
           href: '/login'
         }
       ];
-};
-
-const canSaveProject = (isUserOwner, project, user) =>
-  isUserOwner || (user.authenticated && !project.owner);
-
-// TODO: This could go into <Editor />
-const handleGlobalKeydown = (props, cmController) => (e) => {
-  const {
-    user,
-    project,
-    ide,
-    setAllAccessibleOutput,
-    saveProject,
-    cloneProject,
-    showErrorModal,
-    startSketch,
-    stopSketch,
-    expandSidebar,
-    collapseSidebar,
-    expandConsole,
-    collapseConsole,
-    closeNewFolderModal,
-    closeUploadFileModal,
-    closeNewFileModal,
-    isUserOwner
-  } = props;
-
-  const isMac = device.isMac();
-
-  // const ctrlDown = (e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac);
-  const ctrlDown = isMac ? e.metaKey : e.ctrlKey;
-
-  if (ctrlDown) {
-    if (e.shiftKey) {
-      if (e.keyCode === 13) {
-        e.preventDefault();
-        e.stopPropagation();
-        stopSketch();
-      } else if (e.keyCode === 13) {
-        e.preventDefault();
-        e.stopPropagation();
-        startSketch();
-        // 50 === 2
-      } else if (e.keyCode === 50) {
-        e.preventDefault();
-        setAllAccessibleOutput(false);
-        // 49 === 1
-      } else if (e.keyCode === 49) {
-        e.preventDefault();
-        setAllAccessibleOutput(true);
-      }
-    } else if (e.keyCode === 83) {
-      // 83 === s
-      e.preventDefault();
-      e.stopPropagation();
-      if (canSaveProject(isUserOwner, project, user))
-        saveProject(cmController.getContent(), false, true);
-      else if (user.authenticated) cloneProject();
-      else showErrorModal('forceAuthentication');
-
-      // 13 === enter
-    } else if (e.keyCode === 66) {
-      e.preventDefault();
-      if (!ide.sidebarIsExpanded) expandSidebar();
-      else collapseSidebar();
-    }
-  } else if (e.keyCode === 192 && e.ctrlKey) {
-    e.preventDefault();
-    if (ide.consoleIsExpanded) collapseConsole();
-    else expandConsole();
-  } else if (e.keyCode === 27) {
-    if (ide.newFolderModalVisible) closeNewFolderModal();
-    else if (ide.uploadFileModalVisible) closeUploadFileModal();
-    else if (ide.modalIsVisible) closeNewFileModal();
-  }
 };
 
 const autosave = (autosaveInterval, setAutosaveInterval) => (
@@ -337,9 +258,9 @@ const MobileIDEView = (props) => {
     isUserOwner
   });
 
-  useEventListener('keydown', handleGlobalKeydown(props, cmController), false, [
-    props
-  ]);
+  useIDEKeyHandlers({
+    getContent: () => cmController.getContent()
+  });
 
   const projectActions = [
     {
