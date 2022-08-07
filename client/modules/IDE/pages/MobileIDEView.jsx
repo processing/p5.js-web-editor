@@ -7,8 +7,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 // Imports to be Refactored
-import { bindActionCreators } from 'redux';
-
+import * as UserActions from '../../User/actions';
 import * as IDEActions from '../actions/ide';
 import * as ProjectActions from '../actions/project';
 import * as ConsoleActions from '../actions/console';
@@ -42,6 +41,7 @@ import { remSize } from '../../../theme';
 import ActionStrip from '../../../components/mobile/ActionStrip';
 import useAsModal from '../../../components/useAsModal';
 import Dropdown from '../../../components/Dropdown';
+import { selectActiveFile } from '../selectors/files';
 import { getIsUserOwner } from '../selectors/users';
 
 import { useEffectWithComparison } from '../hooks/custom-hooks';
@@ -321,23 +321,6 @@ const MobileIDEView = (props) => {
   );
 };
 
-const handleGlobalKeydownProps = {
-  expandConsole: PropTypes.func.isRequired,
-  collapseConsole: PropTypes.func.isRequired,
-  expandSidebar: PropTypes.func.isRequired,
-  collapseSidebar: PropTypes.func.isRequired,
-
-  setAllAccessibleOutput: PropTypes.func.isRequired,
-  saveProject: PropTypes.func.isRequired,
-  cloneProject: PropTypes.func.isRequired,
-  showErrorModal: PropTypes.func.isRequired,
-
-  closeNewFolderModal: PropTypes.func.isRequired,
-  closeUploadFileModal: PropTypes.func.isRequired,
-  closeNewFileModal: PropTypes.func.isRequired,
-  isUserOwner: PropTypes.bool.isRequired
-};
-
 MobileIDEView.propTypes = {
   ide: PropTypes.shape({
     consoleIsExpanded: PropTypes.bool.isRequired
@@ -386,20 +369,20 @@ MobileIDEView.propTypes = {
   }).isRequired,
 
   startSketch: PropTypes.func.isRequired,
+  stopSketch: PropTypes.func.isRequired,
 
   unsavedChanges: PropTypes.bool.isRequired,
   autosaveProject: PropTypes.func.isRequired,
   isUserOwner: PropTypes.bool.isRequired,
 
-  ...handleGlobalKeydownProps
+  expandConsole: PropTypes.func.isRequired,
+  collapseConsole: PropTypes.func.isRequired,
+  saveProject: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    selectedFile:
-      state.files.find((file) => file.isSelectedFile) ||
-      state.files.find((file) => file.name === 'sketch.js') ||
-      state.files.find((file) => file.name !== 'root'),
+    selectedFile: selectActiveFile(state),
     ide: state.ide,
     files: state.files,
     unsavedChanges: state.ide.unsavedChanges,
@@ -411,17 +394,14 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators(
-    {
-      ...ProjectActions,
-      ...IDEActions,
-      ...ConsoleActions,
-      ...PreferencesActions,
-      ...EditorAccessibilityActions
-    },
-    dispatch
-  );
+const mapDispatchToProps = {
+  ...ProjectActions,
+  ...IDEActions,
+  ...ConsoleActions,
+  ...PreferencesActions,
+  ...EditorAccessibilityActions,
+  ...UserActions
+};
 
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(MobileIDEView)

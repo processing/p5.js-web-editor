@@ -51,6 +51,7 @@ import UnsavedChangesDotIcon from '../../../images/unsaved-changes-dot.svg';
 import RightArrowIcon from '../../../images/right-arrow.svg';
 import LeftArrowIcon from '../../../images/left-arrow.svg';
 import { getHTMLFile } from '../reducers/files';
+import { selectActiveFile } from '../selectors/files';
 
 import * as FileActions from '../actions/files';
 import * as IDEActions from '../actions/ide';
@@ -493,10 +494,7 @@ Editor.propTypes = {
 function mapStateToProps(state) {
   return {
     files: state.files,
-    file:
-      state.files.find((file) => file.isSelectedFile) ||
-      state.files.find((file) => file.name === 'sketch.js') ||
-      state.files.find((file) => file.name !== 'root'),
+    file: selectActiveFile(state),
     htmlFile: getHTMLFile(state.files),
     ide: state.ide,
     preferences: state.preferences,

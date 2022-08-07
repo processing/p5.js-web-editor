@@ -14,6 +14,7 @@ import {
   setLanguage
 } from '../modules/IDE/actions/preferences';
 import { DocumentKeyDown } from '../modules/IDE/hooks/useKeyDownHandlers';
+import { selectRootFile } from '../modules/IDE/selectors/files';
 import { logoutUser } from '../modules/User/actions';
 
 import getConfig from '../utils/getConfig';
@@ -997,7 +998,7 @@ function mapStateToProps(state) {
     project: state.project,
     user: state.user,
     unsavedChanges: state.ide.unsavedChanges,
-    rootFile: state.files.filter((file) => file.name === 'root')[0],
+    rootFile: selectRootFile(state),
     language: state.preferences.language,
     isUserOwner: getIsUserOwner(state)
   };

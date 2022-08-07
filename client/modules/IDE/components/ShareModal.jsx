@@ -1,11 +1,19 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import CopyableInput from './CopyableInput';
 // import getConfig from '../../../utils/getConfig';
 
-const ShareModal = ({ projectId, ownerUsername, projectName }) => {
+export default function ShareModal() {
   const { t } = useTranslation();
+
+  // TODO: store these as nested properties instead of top-level
+  const projectId = useSelector((state) => state.ide.shareModalProjectId);
+  const projectName = useSelector((state) => state.ide.shareModalProjectName);
+  const ownerUsername = useSelector(
+    (state) => state.ide.shareModalProjectUsername
+  );
+
   const hostname = window.location.origin;
   // const previewUrl = getConfig('PREVIEW_URL');
   return (
@@ -17,10 +25,10 @@ const ShareModal = ({ projectId, ownerUsername, projectName }) => {
       />
       {/* CAT removing due to phishing issues */}
       {/* <CopyableInput
-        label={t('ShareModal.Present')}
-        hasPreviewLink
-        value={`${previewUrl}/${ownerUsername}/present/${projectId}`}
-      /> */}
+          label={t('ShareModal.Present')}
+          hasPreviewLink
+          value={`${previewUrl}/${ownerUsername}/present/${projectId}`}
+        /> */}
       <CopyableInput
         label={t('ShareModal.Fullscreen')}
         hasPreviewLink
@@ -33,12 +41,4 @@ const ShareModal = ({ projectId, ownerUsername, projectName }) => {
       />
     </div>
   );
-};
-
-ShareModal.propTypes = {
-  projectId: PropTypes.string.isRequired,
-  ownerUsername: PropTypes.string.isRequired,
-  projectName: PropTypes.string.isRequired
-};
-
-export default ShareModal;
+}
