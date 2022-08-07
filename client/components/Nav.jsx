@@ -13,6 +13,7 @@ import {
   setAllAccessibleOutput,
   setLanguage
 } from '../modules/IDE/actions/preferences';
+import { DocumentKeyDown } from '../modules/IDE/hooks/useKeyDownHandlers';
 import { logoutUser } from '../modules/User/actions';
 
 import getConfig from '../utils/getConfig';
@@ -63,28 +64,18 @@ class Nav extends React.PureComponent {
     this.toggleDropdownForLang = this.toggleDropdown.bind(this, 'lang');
     this.handleFocusForLang = this.handleFocus.bind(this, 'lang');
     this.handleLangSelection = this.handleLangSelection.bind(this);
-
-    this.closeDropDown = this.closeDropDown.bind(this);
   }
 
   componentDidMount() {
     document.addEventListener('mousedown', this.handleClick, false);
-    document.addEventListener('keydown', this.closeDropDown, false);
   }
   componentWillUnmount() {
     document.removeEventListener('mousedown', this.handleClick, false);
-    document.removeEventListener('keydown', this.closeDropDown, false);
   }
   setDropdown(dropdown) {
     this.setState({
       dropdownOpen: dropdown
     });
-  }
-
-  closeDropDown(e) {
-    if (e.keyCode === 27) {
-      this.setDropdown('none');
-    }
   }
 
   handleClick(e) {
@@ -904,6 +895,11 @@ class Nav extends React.PureComponent {
           {this.renderLeftLayout(navDropdownState)}
           {this.renderUserMenu(navDropdownState)}
         </nav>
+        <DocumentKeyDown
+          handlers={{
+            escape: () => this.setDropdown('none')
+          }}
+        />
       </header>
     );
   }

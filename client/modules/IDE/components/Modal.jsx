@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef } from 'react';
 import ExitIcon from '../../../images/exit.svg';
+import useKeyDownHandlers from '../hooks/useKeyDownHandlers';
 
 // Common logic from NewFolderModal, NewFileModal, UploadFileModal
 
@@ -29,6 +30,8 @@ const Modal = ({
       document.removeEventListener('click', handleOutsideClick, false);
     };
   }, []);
+
+  useKeyDownHandlers({ escape: onClose });
 
   return (
     <section className="modal" ref={modalRef}>
