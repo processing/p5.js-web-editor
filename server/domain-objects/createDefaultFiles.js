@@ -4,6 +4,7 @@ const defaultSketch = `function setup() {
 
 function draw() {
   background(220);
+  describe('A gray square');
 }`;
 
 const defaultHTML = `<!DOCTYPE html>
