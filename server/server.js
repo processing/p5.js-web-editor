@@ -25,7 +25,6 @@ import collections from './routes/collection.routes';
 import aws from './routes/aws.routes';
 import serverRoutes from './routes/server.routes';
 import redirectEmbedRoutes from './routes/redirectEmbed.routes';
-import assetRoutes from './routes/asset.routes';
 import passportRoutes from './routes/passport.routes';
 import { requestsOfTypeJSON } from './utils/requestsOfType';
 
