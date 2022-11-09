@@ -239,7 +239,9 @@ function addFileToZip(file, files, zip, path = '') {
       });
     } else if (file.url) {
       axios
-        .get(file.url)
+        .get(file.url, {
+          responseType: 'arraybuffer'
+        })
         .then(({ data }) => {
           zip.file(`${path}${file.name}`, data);
           resolve();
