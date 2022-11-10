@@ -1,9 +1,11 @@
-import mockingoose from 'mockingoose';
-import differenceInSeconds from 'date-fns/difference_in_seconds';
+import differenceInSeconds from 'date-fns/differenceInSeconds';
 
 import Project from '../project';
 
-const datesWithinSeconds = (first, second) => differenceInSeconds(first, second) < 2;
+const mockingoose = require('mockingoose');
+
+const datesWithinSeconds = (first, second) =>
+  differenceInSeconds(first, second) < 2;
 
 describe('models/project', () => {
   beforeEach(() => {
@@ -96,6 +98,5 @@ describe('models/project', () => {
     });
   });
 
-  describe('fileSchema', () => {
-  });
+  describe('fileSchema', () => {});
 });

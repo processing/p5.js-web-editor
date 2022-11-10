@@ -1,13 +1,13 @@
 import { createSelector } from 'reselect';
-import differenceInMilliseconds from 'date-fns/difference_in_milliseconds';
+import differenceInMilliseconds from 'date-fns/differenceInMilliseconds';
 import find from 'lodash/find';
 import orderBy from 'lodash/orderBy';
 import { DIRECTION } from '../actions/sorting';
 
-const getCollections = state => state.collections;
-const getField = state => state.sorting.field;
-const getDirection = state => state.sorting.direction;
-const getSearchTerm = state => state.search.collectionSearchTerm;
+const getCollections = (state) => state.collections;
+const getField = (state) => state.sorting.field;
+const getDirection = (state) => state.sorting.direction;
+const getSearchTerm = (state) => state.search.collectionSearchTerm;
 
 const getFilteredCollections = createSelector(
   getCollections,
@@ -18,14 +18,18 @@ const getFilteredCollections = createSelector(
         const smallCollection = {
           name: collection.name
         };
-        return { ...collection, searchString: Object.values(smallCollection).join(' ').toLowerCase() };
+        return {
+          ...collection,
+          searchString: Object.values(smallCollection).join(' ').toLowerCase()
+        };
       });
-      return searchStrings.filter(collection => collection.searchString.includes(search.toLowerCase()));
+      return searchStrings.filter((collection) =>
+        collection.searchString.includes(search.toLowerCase())
+      );
     }
     return collections;
   }
 );
-
 
 const getSortedCollections = createSelector(
   getFilteredCollections,
@@ -37,6 +41,11 @@ const getSortedCollections = createSelector(
         return orderBy(collections, 'name', 'desc');
       }
       return orderBy(collections, 'name', 'asc');
+    } else if (field === 'numItems') {
+      if (direction === DIRECTION.DESC) {
+        return orderBy(collections, 'items.length', 'desc');
+      }
+      return orderBy(collections, 'items.length', 'asc');
     }
     const sortedCollections = [...collections].sort((a, b) => {
       const result =

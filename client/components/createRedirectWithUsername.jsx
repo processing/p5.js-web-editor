@@ -16,12 +16,14 @@ const RedirectToUser = ({ username, url = '/:username/sketches' }) => {
 
 function mapStateToProps(state) {
   return {
-    username: state.user ? state.user.username : null,
+    username: state.user ? state.user.username : null
   };
 }
 
 const ConnectedRedirectToUser = connect(mapStateToProps)(RedirectToUser);
 
-const createRedirectWithUsername = url => props => <ConnectedRedirectToUser {...props} url={url} />;
+const createRedirectWithUsername = (url) => (props) => (
+  <ConnectedRedirectToUser {...props} url={url} />
+);
 
 export default createRedirectWithUsername;

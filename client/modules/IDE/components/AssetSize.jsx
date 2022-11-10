@@ -3,8 +3,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import prettyBytes from 'pretty-bytes';
 
-const __process = (typeof global !== 'undefined' ? global : window).process;
-const limit = __process.env.UPLOAD_LIMIT || 250000000;
+import getConfig from '../../../utils/getConfig';
+
+const limit = getConfig('UPLOAD_LIMIT') || 250000000;
 const MAX_SIZE_B = limit;
 
 const formatPercent = (percent) => {
@@ -29,22 +30,24 @@ const AssetSize = ({ totalSize }) => {
   const percentSize = percentValue < 1 ? percentValue : 1;
 
   return (
-    <div className="asset-size" style={{ '--percent': percentSize }}>
-      <div className="asset-size-bar" />
-      <p className="asset-current">{currentSize} ({percent})</p>
+    <div className="asset-size">
+      <div className="asset-size-bar" style={{ '--percent': percentSize }} />
+      <p className="asset-current">
+        {currentSize} ({percent})
+      </p>
       <p className="asset-max">Max: {sizeLimit}</p>
     </div>
   );
 };
 
 AssetSize.propTypes = {
-  totalSize: PropTypes.number.isRequired,
+  totalSize: PropTypes.number.isRequired
 };
 
 function mapStateToProps(state) {
   return {
     user: state.user,
-    totalSize: state.user.totalSize || state.assets.totalSize,
+    totalSize: state.user.totalSize || state.assets.totalSize
   };
 }
 

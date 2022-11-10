@@ -6,6 +6,7 @@
   "env": {
     "production": {
       "plugins": [
+        "babel-plugin-styled-components",
         "transform-react-remove-prop-types",
         "@babel/plugin-transform-react-constant-elements",
         "@babel/plugin-transform-react-inline-elements",
@@ -39,7 +40,8 @@
         ],
         "@babel/plugin-proposal-nullish-coalescing-operator",
         "@babel/plugin-proposal-do-expressions",
-        "@babel/plugin-proposal-function-bind"
+        "@babel/plugin-proposal-function-bind",
+        ["@babel/plugin-proposal-private-methods", { "loose": true }]
       ],
       "presets": [
         "@babel/preset-env",
@@ -48,6 +50,7 @@
     },
     "development": {
       "plugins": [
+        "babel-plugin-styled-components",
         "react-hot-loader/babel"
       ]
     }
@@ -83,6 +86,8 @@
     ],
     "@babel/plugin-proposal-nullish-coalescing-operator",
     "@babel/plugin-proposal-do-expressions",
-    "@babel/plugin-proposal-function-bind"
+    "@babel/plugin-proposal-function-bind",
+    ["@babel/plugin-proposal-private-methods", { "loose": true }],
+    ["@babel/plugin-proposal-private-property-in-object", { "loose": true }]
   ]
 }

@@ -5,8 +5,12 @@ import createId from '../utils/createId';
 import createApplicationErrorClass from '../utils/createApplicationErrorClass';
 import createDefaultFiles from './createDefaultFiles';
 
-export const FileValidationError = createApplicationErrorClass('FileValidationError');
-export const ProjectValidationError = createApplicationErrorClass('ProjectValidationError');
+export const FileValidationError = createApplicationErrorClass(
+  'FileValidationError'
+);
+export const ProjectValidationError = createApplicationErrorClass(
+  'ProjectValidationError'
+);
 
 /**
  * This converts between a mongoose Project model
@@ -16,7 +20,7 @@ export const ProjectValidationError = createApplicationErrorClass('ProjectValida
 export function toApi(model) {
   return {
     id: model.id,
-    name: model.name,
+    name: model.name
   };
 }
 
@@ -63,7 +67,7 @@ function transformFilesInner(tree = {}, parentNode) {
       } else if (typeof params.content === 'string') {
         file.content = params.content;
       } else {
-        errors.push({ name, message: 'missing \'url\' or \'content\'' });
+        errors.push({ name, message: "missing 'url' or 'content'" });
       }
 
       files.push(file);
@@ -89,10 +93,12 @@ export function transformFiles(tree = {}) {
   const { files, errors } = transformFilesInner(withRoot);
 
   if (errors.length > 0) {
-    const message = `${errors.length} files failed validation. See error.files for individual errors.
+    const message = `${
+      errors.length
+    } files failed validation. See error.files for individual errors.
     
     Errors:
-      ${errors.map(e => `* ${e.name}: ${e.message}`).join('\n')}
+      ${errors.map((e) => `* ${e.name}: ${e.message}`).join('\n')}
 `;
     const error = new FileValidationError(message);
     error.files = errors;
@@ -104,7 +110,7 @@ export function transformFiles(tree = {}) {
 }
 
 export function containsRootHtmlFile(tree) {
-  return Object.keys(tree).find(name => /\.html$/.test(name)) != null;
+  return Object.keys(tree).find((name) => /\.html$/.test(name)) != null;
 }
 
 /**
@@ -123,7 +129,7 @@ export function toModel(object) {
 
     files = transformFiles(tree);
   } else {
-    throw new FileValidationError('\'files\' must be an object');
+    throw new FileValidationError("'files' must be an object");
   }
 
   const projectValues = pick(object, ['user', 'name', 'slug']);

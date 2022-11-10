@@ -1,27 +1,42 @@
-import archiver from 'archiver';
+import JSZip from 'jszip';
 import format from 'date-fns/format';
 import isUrl from 'is-url';
-import jsdom, { serializeDocument } from 'jsdom';
-import isAfter from 'date-fns/is_after';
-import request from 'request';
+import { JSDOM } from 'jsdom';
+import isAfter from 'date-fns/isAfter';
+import axios from 'axios';
 import slugify from 'slugify';
 import Project from '../models/project';
 import User from '../models/user';
 import { resolvePathToFile } from '../utils/filePath';
 import generateFileSystemSafeName from '../utils/generateFileSystemSafeName';
 
-export { default as createProject, apiCreateProject } from './project.controller/createProject';
+export {
+  default as createProject,
+  apiCreateProject
+} from './project.controller/createProject';
 export { default as deleteProject } from './project.controller/deleteProject';
-export { default as getProjectsForUser, apiGetProjectsForUser } from './project.controller/getProjectsForUser';
+export {
+  default as getProjectsForUser,
+  apiGetProjectsForUser
+} from './project.controller/getProjectsForUser';
 
 export function updateProject(req, res) {
   Project.findById(req.params.project_id, (findProjectErr, project) => {
     if (!project.user.equals(req.user._id)) {
-      res.status(403).send({ success: false, message: 'Session does not match owner of project.' });
+      res.status(403).send({
+        success: false,
+        message: 'Session does not match owner of project.'
+      });
       return;
     }
-    if (req.body.updatedAt && isAfter(new Date(project.updatedAt), req.body.updatedAt)) {
-      res.status(409).send({ success: false, message: 'Attempted to save stale version of project.' });
+    if (
+      req.body.updatedAt &&
+      isAfter(new Date(project.updatedAt), new Date(req.body.updatedAt))
+    ) {
+      res.status(409).send({
+        success: false,
+        message: 'Attempted to save stale version of project.'
+      });
       return;
     }
     Project.findByIdAndUpdate(
@@ -30,27 +45,33 @@ export function updateProject(req, res) {
         $set: req.body
       },
       {
-        new: true
+        new: true,
+        runValidators: true
       }
     )
       .populate('user', 'username')
       .exec((updateProjectErr, updatedProject) => {
         if (updateProjectErr) {
           console.log(updateProjectErr);
-          res.json({ success: false });
+          res.status(400).json({ success: false });
           return;
         }
-        if (req.body.files && updatedProject.files.length !== req.body.files.length) {
-          const oldFileIds = updatedProject.files.map(file => file.id);
-          const newFileIds = req.body.files.map(file => file.id);
-          const staleIds = oldFileIds.filter(id => newFileIds.indexOf(id) === -1);
+        if (
+          req.body.files &&
+          updatedProject.files.length !== req.body.files.length
+        ) {
+          const oldFileIds = updatedProject.files.map((file) => file.id);
+          const newFileIds = req.body.files.map((file) => file.id);
+          const staleIds = oldFileIds.filter(
+            (id) => newFileIds.indexOf(id) === -1
+          );
           staleIds.forEach((staleId) => {
             updatedProject.files.id(staleId).remove();
           });
           updatedProject.save((innerErr, savedProject) => {
             if (innerErr) {
               console.log(innerErr);
-              res.json({ success: false });
+              res.status(400).json({ success: false });
               return;
             }
             res.json(savedProject);
@@ -63,25 +84,28 @@ export function updateProject(req, res) {
 }
 
 export function getProject(req, res) {
-  const projectId = req.params.project_id;
-  Project.findById(projectId)
-    .populate('user', 'username')
-    .exec((err, project) => { // eslint-disable-line
-      if (err) {
-        return res.status(404).send({ message: 'Project with that id does not exist' });
-      } else if (!project) {
-        Project.findOne({ slug: projectId })
-          .populate('user', 'username')
-          .exec((innerErr, projectBySlug) => {
-            if (innerErr || !projectBySlug) {
-              return res.status(404).send({ message: 'Project with that id does not exist' });
-            }
-            return res.json(projectBySlug);
-          });
-      } else {
+  const { project_id: projectId, username } = req.params;
+  User.findByUsername(username, (err, user) => { // eslint-disable-line
+    if (!user) {
+      return res
+        .status(404)
+        .send({ message: 'Project with that username does not exist' });
+    }
+    Project.findOne({
+      user: user._id,
+      $or: [{ _id: projectId }, { slug: projectId }]
+    })
+      .populate('user', 'username')
+      .exec((err, project) => { // eslint-disable-line
+        if (err) {
+          console.log(err);
+          return res
+            .status(404)
+            .send({ message: 'Project with that id does not exist' });
+        }
         return res.json(project);
-      }
-    });
+      });
+  });
 }
 
 export function getProjectsForUserId(userId) {
@@ -99,14 +123,19 @@ export function getProjectsForUserId(userId) {
 }
 
 export function getProjectAsset(req, res) {
-  Project.findById(req.params.project_id)
+  const projectId = req.params.project_id;
+  Project.findOne({ $or: [{ _id: projectId }, { slug: projectId }] })
     .populate('user', 'username')
-    .exec((err, project) => { // eslint-disable-line
+    .exec(async (err, project) => { // eslint-disable-line
       if (err) {
-        return res.status(404).send({ message: 'Project with that id does not exist' });
+        return res
+          .status(404)
+          .send({ message: 'Project with that id does not exist' });
       }
       if (!project) {
-        return res.status(404).send({ message: 'Project with that id does not exist' });
+        return res
+          .status(404)
+          .send({ message: 'Project with that id does not exist' });
       }
 
       const filePath = req.params[0];
@@ -117,21 +146,23 @@ export function getProjectAsset(req, res) {
       if (!resolvedFile.url) {
         return res.send(resolvedFile.content);
       }
-      request({ method: 'GET', url: resolvedFile.url, encoding: null }, (innerErr, response, body) => {
-        if (innerErr) {
-          return res.status(404).send({ message: 'Asset does not exist' });
-        }
-        return res.send(body);
-      });
+
+      try {
+        const { data } = await axios.get(resolvedFile.url, {
+          responseType: 'arraybuffer'
+        });
+        res.send(data);
+      } catch (error) {
+        res.status(404).send({ message: 'Asset does not exist' });
+      }
     });
 }
 
 export function getProjects(req, res) {
   if (req.user) {
-    getProjectsForUserId(req.user._id)
-      .then((projects) => {
-        res.json(projects);
-      });
+    getProjectsForUserId(req.user._id).then((projects) => {
+      res.json(projects);
+    });
   } else {
     // could just move this to client side
     res.json([]);
@@ -139,127 +170,117 @@ export function getProjects(req, res) {
 }
 
 export function projectExists(projectId, callback) {
-  Project.findById(projectId, (err, project) => (
+  Project.findById(projectId, (err, project) =>
     project ? callback(true) : callback(false)
-  ));
+  );
 }
 
 export function projectForUserExists(username, projectId, callback) {
-  User.findOne({ username }, (err, user) => {
+  User.findByUsername(username, (err, user) => {
     if (!user) {
       callback(false);
       return;
     }
-    Project.findOne({ _id: projectId, user: user._id }, (innerErr, project) => {
-      if (project) {
-        callback(true);
-        return;
-      }
-      Project.findOne({ slug: projectId, user: user._id }, (slugError, projectBySlug) => {
-        if (projectBySlug) {
-          callback(true);
+    Project.findOne(
+      { user: user._id, $or: [{ _id: projectId }, { slug: projectId }] },
+      (innerErr, project) => {
+        if (!project) {
+          callback(false);
           return;
         }
-        callback(false);
-      });
-    });
+        callback(true);
+      }
+    );
   });
 }
 
-function bundleExternalLibs(project, zip, callback) {
-  const indexHtml = project.files.find(file => file.name === 'index.html');
-  let numScriptsResolved = 0;
-  let numScriptTags = 0;
+function bundleExternalLibs(project) {
+  const indexHtml = project.files.find((file) => file.name === 'index.html');
+  const { window } = new JSDOM(indexHtml.content);
+  const scriptTags = window.document.getElementsByTagName('script');
 
-  function resolveScriptTagSrc(scriptTag, document) {
-    const path = scriptTag.src.split('/');
+  Object.values(scriptTags).forEach(async ({ src }, i) => {
+    if (!isUrl(src)) return;
+
+    const path = src.split('/');
     const filename = path[path.length - 1];
-    const { src } = scriptTag;
 
-    if (!isUrl(src)) {
-      numScriptsResolved += 1;
-      if (numScriptsResolved === numScriptTags) {
-        indexHtml.content = serializeDocument(document);
-        callback();
-      }
-      return;
-    }
-
-    request({ method: 'GET', url: src, encoding: null }, (err, response, body) => {
-      if (err) {
-        console.log(err);
-      } else {
-        zip.append(body, { name: filename });
-        scriptTag.src = filename;
-      }
-
-      numScriptsResolved += 1;
-      if (numScriptsResolved === numScriptTags) {
-        indexHtml.content = serializeDocument(document);
-        callback();
-      }
+    project.files.push({
+      name: filename,
+      url: src
     });
-  }
 
-  jsdom.env(indexHtml.content, (innerErr, window) => {
-    const indexHtmlDoc = window.document;
-    const scriptTags = indexHtmlDoc.getElementsByTagName('script');
-    numScriptTags = scriptTags.length;
-    for (let i = 0; i < numScriptTags; i += 1) {
-      resolveScriptTagSrc(scriptTags[i], indexHtmlDoc);
-    }
-    if (numScriptTags === 0) {
-      indexHtml.content = serializeDocument(document);
-      callback();
-    }
+    const libId = project.files.find((file) => file.name === filename).id;
+    project.files.find((file) => file.name === 'root').children.push(libId);
   });
 }
 
-function buildZip(project, req, res) {
-  const zip = archiver('zip');
-  const rootFile = project.files.find(file => file.name === 'root');
-  const numFiles = project.files.filter(file => file.fileType !== 'folder').length;
-  const { files } = project;
-  let numCompletedFiles = 0;
-
-  zip.on('error', (err) => {
-    res.status(500).send({ error: err.message });
-  });
-
-  const currentTime = format(new Date(), 'YYYY_MM_DD_HH_mm_ss');
-  project.slug = slugify(project.name, '_');
-  res.attachment(`${generateFileSystemSafeName(project.slug)}_${currentTime}.zip`);
-  zip.pipe(res);
-
-  function addFileToZip(file, path) {
+function addFileToZip(file, files, zip, path = '') {
+  return new Promise((resolve, reject) => {
     if (file.fileType === 'folder') {
       const newPath = file.name === 'root' ? path : `${path}${file.name}/`;
-      file.children.forEach((fileId) => {
-        const childFile = files.find(f => f.id === fileId);
-        (() => {
-          addFileToZip(childFile, newPath);
-        })();
-      });
-    } else if (file.url) {
-      request({ method: 'GET', url: file.url, encoding: null }, (err, response, body) => {
-        zip.append(body, { name: `${path}${file.name}` });
-        numCompletedFiles += 1;
-        if (numCompletedFiles === numFiles) {
-          zip.finalize();
+      const numChildFiles = file.children.filter((f) => f.fileType !== 'folder')
+        .length;
+      let childrenAdded = 0;
+
+      file.children.forEach(async (fileId) => {
+        const childFile = files.find((f) => f.id === fileId);
+
+        try {
+          await addFileToZip(childFile, files, zip, newPath);
+          childrenAdded += 1;
+
+          if (childrenAdded === numChildFiles) {
+            resolve();
+          }
+        } catch (err) {
+          reject(err);
         }
       });
+    } else if (file.url) {
+      axios
+        .get(file.url, {
+          responseType: 'arraybuffer'
+        })
+        .then(({ data }) => {
+          zip.file(`${path}${file.name}`, data);
+          resolve();
+        })
+        .catch((err) => {
+          reject(err);
+        });
     } else {
-      zip.append(file.content, { name: `${path}${file.name}` });
-      numCompletedFiles += 1;
-      if (numCompletedFiles === numFiles) {
-        zip.finalize();
-      }
+      zip.file(`${path}${file.name}`, file.content);
+      resolve();
     }
-  }
-
-  bundleExternalLibs(project, zip, () => {
-    addFileToZip(rootFile, '/');
   });
+}
+
+async function buildZip(project, req, res) {
+  try {
+    const zip = new JSZip();
+    const currentTime = format(new Date(), 'yyyy_MM_dd_HH_mm_ss');
+    project.slug = slugify(project.name, '_');
+    const zipFileName = `${generateFileSystemSafeName(
+      project.slug
+    )}_${currentTime}.zip`;
+    const { files } = project;
+    const root = files.find((file) => file.name === 'root');
+
+    bundleExternalLibs(project);
+    await addFileToZip(root, files, zip);
+
+    const base64 = await zip.generateAsync({ type: 'base64' });
+    const buff = Buffer.from(base64, 'base64');
+    res.writeHead(200, {
+      'Content-Type': 'application/zip',
+      'Content-disposition': `attachment; filename=${zipFileName}`
+    });
+    res.end(buff);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
 }
 
 export function downloadProjectAsZip(req, res) {

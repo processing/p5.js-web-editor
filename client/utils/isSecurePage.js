@@ -1,6 +1,3 @@
-
-const isSecurePage = () => (
-  window.location.protocol === 'https:'
-);
+const isSecurePage = () => window.location.protocol === 'https:';
 
 export default isSecurePage;

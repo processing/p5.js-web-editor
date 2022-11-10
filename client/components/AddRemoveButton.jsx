@@ -1,17 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import InlineSVG from 'react-inlinesvg';
+import { withTranslation } from 'react-i18next';
 
-const addIcon = require('../images/plus.svg');
-const removeIcon = require('../images/minus.svg');
+import AddIcon from '../images/plus.svg';
+import RemoveIcon from '../images/minus.svg';
 
-const AddRemoveButton = ({ type, onClick }) => {
-  const alt = type === 'add' ? 'add to collection' : 'remove from collection';
-  const icon = type === 'add' ? addIcon : removeIcon;
+const AddRemoveButton = ({ type, onClick, t }) => {
+  const alt =
+    type === 'add'
+      ? t('AddRemoveButton.AltAddARIA')
+      : t('AddRemoveButton.AltRemoveARIA');
+  const Icon = type === 'add' ? AddIcon : RemoveIcon;
 
   return (
-    <button className="overlay__close-button" onClick={onClick}>
-      <InlineSVG src={icon} alt={alt} />
+    <button
+      className="overlay__close-button"
+      onClick={onClick}
+      aria-label={alt}
+    >
+      <Icon focusable="false" aria-hidden="true" />
     </button>
   );
 };
@@ -19,6 +26,7 @@ const AddRemoveButton = ({ type, onClick }) => {
 AddRemoveButton.propTypes = {
   type: PropTypes.oneOf(['add', 'remove']).isRequired,
   onClick: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired
 };
 
-export default AddRemoveButton;
+export default withTranslation()(AddRemoveButton);

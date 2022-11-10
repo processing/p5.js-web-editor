@@ -2,30 +2,35 @@ const webpack = require('webpack');
 const path = require('path');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const ManifestPlugin = require('webpack-manifest-plugin');
-const cssnext = require('postcss-cssnext');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
+const postcssPresetEnv = require('postcss-preset-env');
 const postcssFocus = require('postcss-focus');
-const postcssReporter = require('postcss-reporter');
-const cssnano = require('cssnano');
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 if (process.env.NODE_ENV === "development") {
   require('dotenv').config();
 }
 
-module.exports = [{
+module.exports = {
   devtool: 'source-map',
   mode: 'production',
   entry: {
     app: [
-      '@babel/polyfill',
-      'core-js/modules/es6.promise',
-      'core-js/modules/es6.array.iterator',
+      'regenerator-runtime/runtime',
       path.resolve(__dirname, '../client/index.jsx')
+    ],
+    'previewApp': [
+      'regenerator-runtime/runtime',
+      path.resolve(__dirname, '../client/modules/Preview/previewIndex.jsx')
+    ],
+    previewScripts: [
+      'regenerator-runtime/runtime',
+      path.resolve(__dirname, '../client/utils/previewEntry.js')
     ]
   },
   output: {
     path: path.resolve(__dirname, '../dist/static'),
-    filename: '[name].[hash].js',
+    filename: '[name].[contenthash].js',
     publicPath: '/'
   },
 
@@ -34,128 +39,134 @@ module.exports = [{
     modules: [
       'client',
       'node_modules',
-    ]
+    ],
+    fallback: {
+      "os": require.resolve("os-browserify/browser")
+    }
   },
   module: {
     rules: [{
-        test: /main\.scss$/,
-        exclude: /node_modules/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 2,
-              sourceMap: true
-            }
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
+      test: /main\.scss$/,
+      exclude: /node_modules/,
+      use: [
+        MiniCssExtractPlugin.loader,
+        {
+          loader: 'css-loader',
+          options: {
+            importLoaders: 2,
+            sourceMap: true
+          }
+        },
+        {
+          loader: 'postcss-loader',
+          options: {
+            postcssOptions: {
               plugins: () => [
-                postcssFocus(),
-                cssnext({
+                postcssPresetEnv({
                   browsers: ['last 2 versions', 'IE > 9']
                 }),
-                cssnano({
-                  autoprefixer: false
-                }),
-                postcssReporter({
-                  clearMessages: true
-                })
-              ],
-              sourceMap: true
-            }
-          },
-          {
-            loader: 'sass-loader',
-            options: {
-              sourceMap: true
-            }
+                postcssFocus()
+              ]
+              // plugins: () => [
+              //   postcssFocus(),
+              //   cssnext({
+              //     browsers: ['last 2 versions', 'IE > 9']
+              //   }),
+              //   cssnano({
+              //     autoprefixer: false
+              //   }),
+              //   postcssReporter({
+              //     clearMessages: true
+              //   })
+              // ],
+            },
+            sourceMap: true
           }
-        ]
-      },
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        use: 'babel-loader'
-      },
-      {
-        test: /\.(svg|mp3)$/,
-        use: 'file-loader'
-      },
-      {
-        test: /\.(png)$/,
-        use: {
-          loader: 'file-loader',
+        },
+        {
+          loader: 'sass-loader',
           options: {
-            name: '[name].[ext]',
-            outputPath: 'images/'
+            sourceMap: true
           }
         }
-      },
-      {
-        test: /fonts\/.*\.(eot|svg|ttf|woff|woff2)$/,
-        use: 'file-loader'
-      },
-      {
-        test: /_console-feed.scss/,
-        use: {
-          loader: 'sass-extract-loader',
-          options: {
-            plugins: [{
-              plugin: 'sass-extract-js',
-              options: {
-                camelCase: false
-              }
-            }]
-          }
+      ]
+    },
+    {
+      test: /\.jsx?$/,
+      exclude: /node_modules/,
+      use: 'babel-loader'
+    },
+    {
+      test: /\.(png)$/,
+      use: {
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+          outputPath: 'images/'
         }
       }
+    },
+    {
+      test: /\.mp3$/,
+      use: 'file-loader'
+    },
+    {
+      test: /fonts\/.*\.(eot|ttf|woff|woff2)$/,
+      use: 'file-loader'
+    },
+    {
+      test: /\.svg$/,
+      oneOf: [
+        {
+          resourceQuery: /byContent/,
+          use: 'raw-loader'
+        },
+        {
+          resourceQuery: /byUrl/,
+          use: 'file-loader'
+        },
+        {
+          use: {
+            loader: '@svgr/webpack',
+            options: {
+              svgoConfig: {
+                plugins: [
+                  {
+                    name: 'removeViewBox',
+                    active: false
+                  },
+                ],
+              }
+            }
+          }
+        }
+      ]
+    }
     ]
   },
   optimization: {
-    minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
+    minimize: true,
+    minimizer: [new TerserJSPlugin({
+      terserOptions: {
+        sourceMap: true
+      },
+      parallel: true
+    }), new CssMinimizerPlugin()],
   },
   plugins: [
-    new ManifestPlugin({
+    new WebpackManifestPlugin({
       basePath: '/',
+      filename: 'manifest.json'
     }),
     new MiniCssExtractPlugin({
-      filename: 'app.[hash].css',
-    })
+      filename: 'app.[contenthash].css',
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: path.resolve(__dirname, '../translations/locales'), to: path.resolve(__dirname, '../dist/static/locales') },
+        { from: path.resolve(__dirname, '../public'), to: path.resolve(__dirname, '../dist/static') }
+      ]
+    }
+    )
   ]
-},
-{
-  entry: {
-    app: [
-      path.resolve(__dirname, '../client/utils/previewEntry.js')
-    ]
-  },
-  target: 'web',
-  mode: 'production',
-  output: {
-    path: path.resolve(__dirname, '../dist/static'),
-    filename: 'previewScripts.js',
-    publicPath: '/'
-  },
-  resolve: {
-    extensions: ['*', '.js', '.jsx'],
-    modules: [
-      'client',
-      'node_modules',
-    ],
-  },
-  module: {
-    rules: [
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader',
-        options: {
-          babelrc: true
-        }
-      }
-    ]
-  }
-}];
+};

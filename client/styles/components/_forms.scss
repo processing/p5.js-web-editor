@@ -2,11 +2,15 @@
   display: block;
   padding-top: #{4 / $base-font-size}rem;
   width: #{300 / $base-font-size}rem;
-  font-size: #{9 / $base-font-size}rem;
+  font-size: #{12 / $base-font-size}rem;
   text-align: left;
   @include themify() {
     color: getThemifyVariable('error-color');
   }
+}
+
+.form > * + * {
+  margin-top: #{12 / $base-font-size}rem;
 }
 
 .form--inline {
@@ -53,6 +57,7 @@
   font-size: #{16 / $base-font-size}rem;
   @include themify() {
     color: getThemifyVariable('form-input-text-color');
+    background-color: getThemifyVariable('input-background-color');
   }
 }
 
@@ -78,20 +83,25 @@
 }
 
 .form [type="submit"] {
-  @extend %button;
-  padding: #{8 / $base-font-size}rem #{25 / $base-font-size}rem;
-  margin: #{39 / $base-font-size}rem 0 #{24 / $base-font-size}rem 0;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.form [type="submit"][disabled] {
-  cursor: not-allowed;
-}
+// .form [type="submit"] {
+//   @extend %button;
+//   padding: #{8 / $base-font-size}rem #{25 / $base-font-size}rem;
+//   margin: #{39 / $base-font-size}rem 0 #{24 / $base-font-size}rem 0;
+// }
 
-.form--inline [type="submit"] {
-  margin: 0 0 0 #{24 / $base-font-size}rem;
-}
+// .form [type="submit"][disabled] {
+//   cursor: not-allowed;
+// }
 
-.form [type="submit"][disabled],
-.form--inline [type="submit"][disabled] {
-  cursor: not-allowed;
-}
+// .form--inline [type="submit"] {
+//   margin: 0 0 0 #{24 / $base-font-size}rem;
+// }
+
+// .form [type="submit"][disabled],
+// .form--inline [type="submit"][disabled] {
+//   cursor: not-allowed;
+// }

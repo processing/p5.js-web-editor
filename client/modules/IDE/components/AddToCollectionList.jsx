@@ -3,6 +3,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { withTranslation } from 'react-i18next';
 
 import * as ProjectActions from '../actions/project';
 import * as ProjectsActions from '../actions/projects';
@@ -14,7 +15,7 @@ import Loader from '../../App/components/loader';
 import QuickAddList from './QuickAddList';
 
 const projectInCollection = (project, collection) =>
-  collection.items.find(item => item.project.id === project.id) != null;
+  collection.items.find((item) => item.projectId === project.id) != null;
 
 class CollectionList extends React.Component {
   constructor(props) {
@@ -27,7 +28,7 @@ class CollectionList extends React.Component {
     this.props.getCollections(this.props.username);
 
     this.state = {
-      hasLoadedData: false,
+      hasLoadedData: false
     };
   }
 
@@ -35,33 +36,35 @@ class CollectionList extends React.Component {
     if (prevProps.loading === true && this.props.loading === false) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({
-        hasLoadedData: true,
+        hasLoadedData: true
       });
     }
   }
 
   getTitle() {
     if (this.props.username === this.props.user.username) {
-      return 'p5.js Web Editor | My collections';
+      return this.props.t('AddToCollectionList.Title');
     }
-    return `p5.js Web Editor | ${this.props.username}'s collections`;
+    return this.props.t('AddToCollectionList.AnothersTitle', {
+      anotheruser: this.props.username
+    });
   }
 
   handleCollectionAdd = (collection) => {
     this.props.addToCollection(collection.id, this.props.project.id);
-  }
+  };
 
   handleCollectionRemove = (collection) => {
     this.props.removeFromCollection(collection.id, this.props.project.id);
-  }
+  };
 
   render() {
     const { collections, project } = this.props;
     const hasCollections = collections.length > 0;
-    const collectionWithSketchStatus = collections.map(collection => ({
+    const collectionWithSketchStatus = collections.map((collection) => ({
       ...collection,
       url: `/${collection.owner.username}/collections/${collection.id}`,
-      isAdded: projectInCollection(project, collection),
+      isAdded: projectInCollection(project, collection)
     }));
 
     let content = null;
@@ -74,19 +77,22 @@ class CollectionList extends React.Component {
           items={collectionWithSketchStatus}
           onAdd={this.handleCollectionAdd}
           onRemove={this.handleCollectionRemove}
+          t={this.props.t}
         />
       );
     } else {
-      content = 'No collections';
+      content = this.props.t('AddToCollectionList.Empty');
     }
 
     return (
-      <div className="quick-add-wrapper">
-        <Helmet>
-          <title>{this.getTitle()}</title>
-        </Helmet>
+      <div className="collection-add-sketch">
+        <div className="quick-add-wrapper">
+          <Helmet>
+            <title>{this.getTitle()}</title>
+          </Helmet>
 
-        {content}
+          {content}
+        </div>
       </div>
     );
   }
@@ -99,7 +105,7 @@ const ProjectShape = PropTypes.shape({
   updatedAt: PropTypes.string.isRequired,
   user: PropTypes.shape({
     username: PropTypes.string.isRequired
-  }).isRequired,
+  }).isRequired
 });
 
 const ItemsShape = PropTypes.shape({
@@ -118,14 +124,16 @@ CollectionList.propTypes = {
   getProject: PropTypes.func.isRequired,
   addToCollection: PropTypes.func.isRequired,
   removeFromCollection: PropTypes.func.isRequired,
-  collections: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    description: PropTypes.string,
-    createdAt: PropTypes.string.isRequired,
-    updatedAt: PropTypes.string.isRequired,
-    items: PropTypes.arrayOf(ItemsShape),
-  })).isRequired,
+  collections: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string,
+      createdAt: PropTypes.string.isRequired,
+      updatedAt: PropTypes.string.isRequired,
+      items: PropTypes.arrayOf(ItemsShape)
+    })
+  ).isRequired,
   username: PropTypes.string,
   loading: PropTypes.bool.isRequired,
   project: PropTypes.shape({
@@ -133,7 +141,8 @@ CollectionList.propTypes = {
     owner: PropTypes.shape({
       id: PropTypes.string
     })
-  })
+  }),
+  t: PropTypes.func.isRequired
 };
 
 CollectionList.defaultProps = {
@@ -151,15 +160,24 @@ function mapStateToProps(state, ownProps) {
     sorting: state.sorting,
     loading: state.loading,
     project: ownProps.project || state.project,
-    projectId: ownProps && ownProps.params ? ownProps.prams.project_id : null,
+    projectId: ownProps && ownProps.params ? ownProps.prams.project_id : null
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
-    Object.assign({}, CollectionsActions, ProjectsActions, ProjectActions, ToastActions, SortingActions),
+    Object.assign(
+      {},
+      CollectionsActions,
+      ProjectsActions,
+      ProjectActions,
+      ToastActions,
+      SortingActions
+    ),
     dispatch
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CollectionList);
+export default withTranslation()(
+  connect(mapStateToProps, mapDispatchToProps)(CollectionList)
+);

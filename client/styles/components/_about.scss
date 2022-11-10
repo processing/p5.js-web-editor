@@ -45,11 +45,6 @@
   padding-bottom: #{20 / $base-font-size}rem;
   padding-left: #{20 / $base-font-size}rem;
   width: #{720 / $base-font-size}rem;
-  & a {
-    @include themify() {
-      color: getThemifyVariable('form-navigation-options-color');
-    }
-  }
 }
 
 .about__content-column {
@@ -76,9 +71,6 @@
   @include themify() {
     padding-top: #{10 / $base-font-size}rem;
     font-size: #{16 / $base-font-size}rem;
-    & a {
-      color: getThemifyVariable(about-list-text-color);
-    }
   }
 }
 

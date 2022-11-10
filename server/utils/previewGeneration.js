@@ -61,7 +61,10 @@ export function resolveScripts(sketchDoc, files, projectId) {
   const scriptsInHTML = sketchDoc.getElementsByTagName('script');
   const scriptsInHTMLArray = Array.prototype.slice.call(scriptsInHTML);
   scriptsInHTMLArray.forEach((script) => {
-    if (script.getAttribute('src') && script.getAttribute('src').match(NOT_EXTERNAL_LINK_REGEX) !== null) {
+    if (
+      script.getAttribute('src') &&
+      script.getAttribute('src').match(NOT_EXTERNAL_LINK_REGEX) !== null
+    ) {
       const resolvedFile = resolvePathToFile(script.getAttribute('src'), files);
       if (resolvedFile) {
         if (resolvedFile.url) {
@@ -71,8 +74,17 @@ export function resolveScripts(sketchDoc, files, projectId) {
           script.innerHTML = resolvedFile.content;
         }
       }
-    } else if (!(script.getAttribute('src') && script.getAttribute('src').match(EXTERNAL_LINK_REGEX) !== null)) {
-      script.innerHTML = resolveLinksInString(script.innerHTML, files, projectId);
+    } else if (
+      !(
+        script.getAttribute('src') &&
+        script.getAttribute('src').match(EXTERNAL_LINK_REGEX) !== null
+      )
+    ) {
+      script.innerHTML = resolveLinksInString(
+        script.innerHTML,
+        files,
+        projectId
+      );
     }
   });
 }
@@ -87,7 +99,10 @@ export function resolveStyles(sketchDoc, files, projectId) {
   const cssLinksInHTML = sketchDoc.querySelectorAll('link[rel="stylesheet"]');
   const cssLinksInHTMLArray = Array.prototype.slice.call(cssLinksInHTML);
   cssLinksInHTMLArray.forEach((css) => {
-    if (css.getAttribute('href') && css.getAttribute('href').match(NOT_EXTERNAL_LINK_REGEX) !== null) {
+    if (
+      css.getAttribute('href') &&
+      css.getAttribute('href').match(NOT_EXTERNAL_LINK_REGEX) !== null
+    ) {
       const resolvedFile = resolvePathToFile(css.getAttribute('href'), files);
       if (resolvedFile) {
         if (resolvedFile.url) {

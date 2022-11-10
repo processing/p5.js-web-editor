@@ -1,12 +1,21 @@
 .collection-container {
   padding: #{24 / $base-font-size}rem #{66 / $base-font-size}rem;
+  position: relative;
   flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction:column;
+}
+
+.collection {
+  height: 100%;
   display: flex;
   flex-direction: column;
 }
 
 .collection-metadata {
-  width: #{1012 / $base-font-size}rem;
+  max-width: #{1012 / $base-font-size}rem;
+  width: 100%;
   margin: 0 auto;
   margin-bottom: #{24 / $base-font-size}rem;
 }
@@ -36,12 +45,8 @@
   // padding: #{8 / $base-font-size}rem 0;
 }
 
-.collection-metadata__name .editable-input__label span {
-  padding: 0.83333rem 0;
-
-  @include themify() {
-    color: getThemifyVariable('primary-text-color');
-  }
+.collection-metadata__name .editable-input__label {
+  padding: 0.83333rem #{7 / $base-font-size}rem;
 }
 
 .collection-metadata__name,
@@ -60,9 +65,9 @@
 }
 
 .collection-metadata__description {
-  margin-top: #{8 / $base-font-size}rem;
+  padding-top: #{8 / $base-font-size}rem;
   text-align: left;
-  font-size: 14px;
+  font-size: #{14 / $base-font-size}rem;
 }
 
 .collection-metadata__description .editable-input__label {
@@ -89,16 +94,6 @@
   position: relative;
 }
 
-.collection-share__button {
-  @extend %button;
-  display: flex;
-  align-items: center;
-}
-
-.collection-share__arrow {
-  margin-left: #{5 / $base-font-size}rem;
-}
-
 .collection-share .copyable-input {
   padding-bottom: 0;
 }
@@ -109,20 +104,28 @@
   width: #{350 / $base-font-size}rem;
 }
 
-.collection-metadata__add-button {
-  @extend %button;
-  flex-grow: 0;
-}
-
-.collection-table-wrapper {
-  width: #{1012 / $base-font-size}rem;
-  margin: 0 auto;
+.collection-content {
+  display: flex;
+  flex-direction: column;
   flex: 1;
+  overflow: hidden;
+  max-width: #{1012 / $base-font-size}rem;
+  margin: 0 auto;
+  width: 100%;
+
   @include themify() {
     border: 1px solid getThemifyVariable('modal-border-color');
   }
 }
 
+.collection-table-wrapper {
+  overflow-y: auto;
+  max-width: 100%;
+  min-height: 100%;
+}
+
+
+// maybe don't need this?
 [data-has-items=false] .collection-table-wrapper {
   display: flex;
   justify-content: center;
@@ -146,12 +149,12 @@
   @include icon();
   @include themify() {
     // icon graphic
-    polygon {
+    path {
       fill: getThemifyVariable('table-button-color');
     }
 
     // icon background circle
-    path {
+    path:first-child {
       fill: getThemifyVariable('table-button-background-color');
     }
 
@@ -162,11 +165,11 @@
 
     &:hover,
     &:focus {
-      polygon {
+      path {
         fill: getThemifyVariable('table-button-hover-color');
       }
 
-      path {
+      path:first-child {
         fill: getThemifyVariable('table-button-background-hover-color');
       }
     }

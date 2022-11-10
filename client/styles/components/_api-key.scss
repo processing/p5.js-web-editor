@@ -1,8 +1,5 @@
 .api-key-form__summary {
   padding-top: #{25 / $base-font-size}rem;
-  @include themify() {
-    color: getThemifyVariable('heading-text-color');
-  }
 }
 
 .api-key-form__section {
@@ -13,23 +10,6 @@
   padding: #{15 / $base-font-size}rem 0;
   font-size: #{21 / $base-font-size}rem;
   font-weight: bold;
-  @include themify() {
-    color: getThemifyVariable('heading-text-color');
-  }
-}
-
-.api-key-form__create-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.api-key-form__create-icon {
-  display: flex;
-}
-
-.api-key-form__create-button .isvg {
-  padding-right: 10px;
 }
 
 .api-key-list {
@@ -79,7 +59,7 @@
       position: initial;
       left: 0;
       top: 0;
-        & g {
+        & g, & path {
           opacity: 1;
           fill: getThemifyVariable('icon-color');
         }
@@ -88,7 +68,7 @@
 
 .api-key-list__delete-button:hover {
   @include themify() {
-      & g {
+      & g, & path {
         opacity: 1;
         fill: getThemifyVariable('icon-hover-color');
       }
@@ -99,9 +79,6 @@
   margin-bottom: #{10 / $base-font-size}rem;
   font-size: #{18 / $base-font-size}rem;
   font-weight: bold;
-  @include themify() {
-    color: getThemifyVariable('heading-text-color');
-  }
 }
 
 .api-key-form__new-token__info {

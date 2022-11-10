@@ -82,8 +82,8 @@
   height:#{25 / $base-font-size}rem;
 
   @include themify() {
-    & polygon {
-      fill: getThemifyVariable('dropdown-color');
+    & polygon, & path {
+      fill: getThemifyVariable('inactive-text-color');
     }
   }
 }

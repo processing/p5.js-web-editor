@@ -8,6 +8,7 @@
 
 @import 'node_modules/codemirror/lib/codemirror';
 @import 'node_modules/codemirror/addon/lint/lint';
+@import 'node_modules/codemirror-colorpicker/addon/codemirror-colorpicker';
 @import 'node_modules/dropzone/dist/dropzone';
 @import 'node_modules/primer-tooltips/build/build';
 
@@ -31,7 +32,6 @@
 @import 'components/resizer';
 @import 'components/overlay';
 @import 'components/about';
-@import 'components/github-button';
 @import 'components/forms';
 @import 'components/toast';
 @import 'components/timer';
@@ -45,6 +45,7 @@
 @import 'components/keyboard-shortcuts';
 @import 'components/copyable-input';
 @import 'components/feedback';
+@import 'components/console-input';
 @import 'components/loader';
 @import 'components/uploader';
 @import 'components/tabs';
@@ -57,5 +58,3 @@
 
 @import 'layout/dashboard';
 @import 'layout/ide';
-@import 'layout/fullscreen';
-@import 'layout/user';

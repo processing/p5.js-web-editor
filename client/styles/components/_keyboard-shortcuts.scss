@@ -1,7 +1,14 @@
 .keyboard-shortcuts {
   padding: #{20 / $base-font-size}rem;
+  margin-right: #{20 / $base-font-size}rem;
   padding-bottom: #{40 / $base-font-size}rem;
   width: #{450 / $base-font-size}rem;
+  overflow-y: scroll;
+}
+
+.keyboard-shortcuts-note {
+  text-align: center;
+  margin-bottom: 24px;
 }
 
 .keyboard-shortcut-item {
@@ -13,8 +20,31 @@
 }
 
 .keyboard-shortcut__command {
-  width: 50%;
   font-weight: bold;
   text-align: right;
-  padding-right: #{10 / $base-font-size}rem;
+  margin-right: #{10 / $base-font-size}rem;
+  padding: #{3 / $base-font-size}rem;
+  @include themify {
+    border: 1px solid getThemifyVariable("button-border-color");
+    border-radius: 3px;
+  }
+}
+
+.keyboard-shortcuts__title {
+  padding-bottom: #{10 / $base-font-size}rem;
+}
+
+.keyboard-shortcuts__description {
+  padding-bottom: #{10 / $base-font-size}rem;
+}
+
+.keyboard-shortcuts__list:not(:last-of-type) {
+  padding-bottom: #{10 / $base-font-size}rem;
+}
+
+.keyboard-shortcuts__title:not(:first-of-type) {
+  @include themify() {
+    border-top: 1px dashed getThemifyVariable("button-border-color");
+    padding-top: #{10 / $base-font-size}rem;
+  }
 }

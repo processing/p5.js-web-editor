@@ -5,8 +5,7 @@ const sketches = (state = [], action) => {
     case ActionTypes.SET_PROJECTS:
       return action.projects;
     case ActionTypes.DELETE_PROJECT:
-      return state.filter(sketch =>
-        sketch.id !== action.id);
+      return state.filter((sketch) => sketch.id !== action.id);
     case ActionTypes.RENAME_PROJECT: {
       return state.map((sketch) => {
         if (sketch.id === action.payload.id) {

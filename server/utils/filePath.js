@@ -5,7 +5,7 @@ export function resolvePathToFile(filePath, files) {
 
   const filePathArray = filePath.split('/');
   let resolvedFile;
-  let currentFile = files.find(file => file.name === 'root');
+  let currentFile = files.find((file) => file.name === 'root');
   filePathArray.some((filePathSegment, index) => {
     if (filePathSegment === '' || filePathSegment === '.') {
       return false;
@@ -14,9 +14,11 @@ export function resolvePathToFile(filePath, files) {
     }
 
     let foundChild = false;
-    const childFiles = currentFile.children.map(childFileId =>
-      files.find(file =>
-        file._id.valueOf().toString() === childFileId.valueOf()));
+    const childFiles = currentFile.children.map((childFileId) =>
+      files.find(
+        (file) => file._id.valueOf().toString() === childFileId.valueOf()
+      )
+    );
     childFiles.some((childFile) => {
       if (childFile.name === filePathSegment) {
         currentFile = childFile;

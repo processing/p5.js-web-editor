@@ -1,10 +1,8 @@
-import axios from 'axios';
+import { browserHistory } from 'react-router';
+import apiClient from '../../../utils/apiClient';
 import * as ActionTypes from '../../../constants';
 import { startLoader, stopLoader } from './loader';
 import { setToastText, showToast } from './toast';
-
-const __process = (typeof global !== 'undefined' ? global : window).process;
-const ROOT_URL = __process.env.API_URL;
 
 const TOAST_DISPLAY_TIME_MS = 1500;
 
@@ -14,11 +12,13 @@ export function getCollections(username) {
     dispatch(startLoader());
     let url;
     if (username) {
-      url = `${ROOT_URL}/${username}/collections`;
+      url = `/${username}/collections`;
     } else {
-      url = `${ROOT_URL}/collections`;
+      url = '/collections';
     }
-    axios.get(url, { withCredentials: true })
+    console.log(url);
+    apiClient
+      .get(url)
       .then((response) => {
         dispatch({
           type: ActionTypes.SET_COLLECTIONS,
@@ -26,7 +26,8 @@ export function getCollections(username) {
         });
         dispatch(stopLoader());
       })
-      .catch((response) => {
+      .catch((error) => {
+        const { response } = error;
         dispatch({
           type: ActionTypes.ERROR,
           error: response.data
@@ -39,28 +40,32 @@ export function getCollections(username) {
 export function createCollection(collection) {
   return (dispatch) => {
     dispatch(startLoader());
-    const url = `${ROOT_URL}/collections`;
-    return axios.post(url, collection, { withCredentials: true })
+    const url = '/collections';
+    return apiClient
+      .post(url, collection)
       .then((response) => {
         dispatch({
           type: ActionTypes.CREATE_COLLECTION
         });
         dispatch(stopLoader());
 
-        const collectionName = response.data.name;
-        dispatch(setToastText(`Created "${collectionName}"`));
+        const newCollection = response.data;
+        dispatch(setToastText(`Created "${newCollection.name}"`));
         dispatch(showToast(TOAST_DISPLAY_TIME_MS));
 
-        return response.data;
+        const pathname = `/${newCollection.owner.username}/collections/${newCollection.id}`;
+        const location = { pathname, state: { skipSavingPath: true } };
+
+        browserHistory.push(location);
       })
-      .catch((response) => {
+      .catch((error) => {
+        const { response } = error;
+        console.error('Error creating collection', response.data);
         dispatch({
           type: ActionTypes.ERROR,
           error: response.data
         });
         dispatch(stopLoader());
-
-        return response.data;
       });
   };
 }
@@ -68,8 +73,9 @@ export function createCollection(collection) {
 export function addToCollection(collectionId, projectId) {
   return (dispatch) => {
     dispatch(startLoader());
-    const url = `${ROOT_URL}/collections/${collectionId}/${projectId}`;
-    return axios.post(url, { withCredentials: true })
+    const url = `/collections/${collectionId}/${projectId}`;
+    return apiClient
+      .post(url)
       .then((response) => {
         dispatch({
           type: ActionTypes.ADD_TO_COLLECTION,
@@ -84,7 +90,8 @@ export function addToCollection(collectionId, projectId) {
 
         return response.data;
       })
-      .catch((response) => {
+      .catch((error) => {
+        const { response } = error;
         dispatch({
           type: ActionTypes.ERROR,
           error: response.data
@@ -99,8 +106,9 @@ export function addToCollection(collectionId, projectId) {
 export function removeFromCollection(collectionId, projectId) {
   return (dispatch) => {
     dispatch(startLoader());
-    const url = `${ROOT_URL}/collections/${collectionId}/${projectId}`;
-    return axios.delete(url, { withCredentials: true })
+    const url = `/collections/${collectionId}/${projectId}`;
+    return apiClient
+      .delete(url)
       .then((response) => {
         dispatch({
           type: ActionTypes.REMOVE_FROM_COLLECTION,
@@ -115,7 +123,8 @@ export function removeFromCollection(collectionId, projectId) {
 
         return response.data;
       })
-      .catch((response) => {
+      .catch((error) => {
+        const { response } = error;
         dispatch({
           type: ActionTypes.ERROR,
           error: response.data
@@ -129,8 +138,9 @@ export function removeFromCollection(collectionId, projectId) {
 
 export function editCollection(collectionId, { name, description }) {
   return (dispatch) => {
-    const url = `${ROOT_URL}/collections/${collectionId}`;
-    return axios.patch(url, { name, description }, { withCredentials: true })
+    const url = `/collections/${collectionId}`;
+    return apiClient
+      .patch(url, { name, description })
       .then((response) => {
         dispatch({
           type: ActionTypes.EDIT_COLLECTION,
@@ -138,7 +148,8 @@ export function editCollection(collectionId, { name, description }) {
         });
         return response.data;
       })
-      .catch((response) => {
+      .catch((error) => {
+        const { response } = error;
         dispatch({
           type: ActionTypes.ERROR,
           error: response.data
@@ -151,17 +162,19 @@ export function editCollection(collectionId, { name, description }) {
 
 export function deleteCollection(collectionId) {
   return (dispatch) => {
-    const url = `${ROOT_URL}/collections/${collectionId}`;
-    return axios.delete(url, { withCredentials: true })
+    const url = `/collections/${collectionId}`;
+    return apiClient
+      .delete(url)
       .then((response) => {
         dispatch({
           type: ActionTypes.DELETE_COLLECTION,
           payload: response.data,
-          collectionId,
+          collectionId
         });
         return response.data;
       })
-      .catch((response) => {
+      .catch((error) => {
+        const { response } = error;
         dispatch({
           type: ActionTypes.ERROR,
           error: response.data

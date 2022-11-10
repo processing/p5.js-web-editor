@@ -1,67 +1,52 @@
-
-import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router';
 import classNames from 'classnames';
-import { bindActionCreators } from 'redux';
-import { reduxForm } from 'redux-form';
+import { useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import * as UserActions from '../actions';
+import { useTranslation } from 'react-i18next';
 import ResetPasswordForm from '../components/ResetPasswordForm';
-import { validateResetPassword } from '../../../utils/reduxFormUtils';
 import Nav from '../../../components/Nav';
+import RootPage from '../../../components/RootPage';
 
-function ResetPasswordView(props) {
+function ResetPasswordView() {
+  const { t } = useTranslation();
+  const resetPasswordInitiate = useSelector(
+    (state) => state.user.resetPasswordInitiate
+  );
   const resetPasswordClass = classNames({
     'reset-password': true,
-    'reset-password--submitted': props.user.resetPasswordInitiate,
+    'reset-password--submitted': resetPasswordInitiate,
     'form-container': true,
-    'user': true
+    user: true
   });
   return (
-    <div className="reset-password-container">
+    <RootPage>
       <Nav layout="dashboard" />
       <div className={resetPasswordClass}>
         <Helmet>
-          <title>p5.js Web Editor | Reset Password</title>
+          <title>{t('ResetPasswordView.Title')}</title>
         </Helmet>
         <div className="form-container__content">
-          <h2 className="form-container__title">Reset Your Password</h2>
-          <ResetPasswordForm {...props} />
+          <h2 className="form-container__title">
+            {t('ResetPasswordView.Reset')}
+          </h2>
+          <ResetPasswordForm />
           <p className="reset-password__submitted">
-            Your password reset email should arrive shortly. If you don&apos;t see it, check
-            in your spam folder as sometimes it can end up there.
+            {t('ResetPasswordView.Submitted')}
           </p>
           <p className="form__navigation-options">
-            <Link className="form__login-button" to="/login">Log In</Link>
-            &nbsp;or&nbsp;
-            <Link className="form__signup-button" to="/signup">Sign Up</Link>
+            <Link className="form__login-button" to="/login">
+              {t('ResetPasswordView.Login')}
+            </Link>
+            &nbsp;{t('ResetPasswordView.LoginOr')}&nbsp;
+            <Link className="form__signup-button" to="/signup">
+              {t('ResetPasswordView.SignUp')}
+            </Link>
           </p>
         </div>
       </div>
-    </div>
+    </RootPage>
   );
 }
 
-ResetPasswordView.propTypes = {
-  resetPasswordReset: PropTypes.func.isRequired,
-  user: PropTypes.shape({
-    resetPasswordInitiate: PropTypes.bool
-  }).isRequired,
-};
-
-function mapStateToProps(state) {
-  return {
-    user: state.user
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(UserActions, dispatch);
-}
-
-export default reduxForm({
-  form: 'reset-password',
-  fields: ['email'],
-  validate: validateResetPassword
-}, mapStateToProps, mapDispatchToProps)(ResetPasswordView);
+export default ResetPasswordView;

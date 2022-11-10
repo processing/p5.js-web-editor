@@ -1,14 +1,3 @@
-.preview-frame {
-  min-height: 100%;
-  min-width: 100%;
-  position: absolute;
-  border-width: 0;
-}
-
-.preview-frame--full-view {
-  position: relative;
-}
-
 .preview-frame-holder {
   display: flex;
   flex-direction: column;
@@ -21,15 +10,6 @@
   position: absolute;
   z-index: 10;
   display: none;
-}
-
-.preview-frame-placeholder {
-  width: #{400 / $base-font-size}rem;
-  height: #{400 / $base-font-size}rem;
-  position: absolute;
-  @include themify() {
-    background: getThemifyVariable('preview-placeholder-color');
-  }
 }
 
 .preview-frame__header {
