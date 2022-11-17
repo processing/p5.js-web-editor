@@ -3,14 +3,7 @@ import { rest } from 'msw';
 import React from 'react';
 import { Router, browserHistory } from 'react-router';
 
-import {
-  reduxRender,
-  act,
-  waitFor,
-  fireEvent,
-  screen,
-  within
-} from './test-utils';
+import { reduxRender, act, waitFor, screen, within } from './test-utils';
 import configureStore from './store';
 import routes from './routes';
 import * as Actions from './modules/User/actions';

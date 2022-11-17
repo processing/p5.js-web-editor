@@ -8,8 +8,8 @@ on:
       - completed
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
-  GKE_CLUSTER: p5js-web-editor-cluster
-  GKE_ZONE: us-east1-c
+  GKE_CLUSTER: p5-gke-cluster
+  GKE_ZONE: us-east4
   DEPLOYMENT_NAME: web-editor-node
   IMAGE: ${{ secrets.DOCKER_USERNAME }}/p5.js-web-editor-staging
 jobs:
