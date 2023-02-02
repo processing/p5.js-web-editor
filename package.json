@@ -193,7 +193,7 @@
     "mime": "^3.0.0",
     "mjml": "^3.3.2",
     "mockingoose": "^2.15.2",
-    "mongoose": "^5.13.3",
+    "mongoose": "^5.13.15",
     "nodemailer": "^6.7.3",
     "nodemailer-mailgun-transport": "^2.1.3",
     "passport": "^0.3.2",
