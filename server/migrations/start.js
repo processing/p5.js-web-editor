@@ -1,5 +1,5 @@
 require('@babel/register');
-require('@babel/polyfill');
+require('regenerator-runtime/runtime');
 const path = require('path');
 require('dotenv').config({ path: path.resolve('.env.production') });
 require('./emailConsolidation');

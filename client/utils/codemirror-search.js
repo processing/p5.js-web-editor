@@ -293,7 +293,7 @@ function parseQuery(query, state) {
       query = query.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
     }
     if (state.wholeWord) {
-      query += '\\b';
+      query = '\\b' + query + '\\b';
     }
   }
 

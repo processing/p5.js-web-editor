@@ -4,11 +4,15 @@ const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
 
-  entry: ['@babel/polyfill', path.resolve(__dirname, '../server/server.js')],
-
+  entry: {
+    server:
+      ['regenerator-runtime/runtime', path.resolve(__dirname, '../server/server.js')],
+    previewServer:
+      ['regenerator-runtime/runtime', path.resolve(__dirname, '../server/previewServer.js')],
+  },
   output: {
     path: path.resolve(__dirname, '../dist/'),
-    filename: 'server.bundle.js',
+    filename: '[name].bundle.js',
   },
 
   target: 'node',

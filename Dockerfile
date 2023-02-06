@@ -1,9 +1,10 @@
-FROM node:12.16.1 as base
+FROM node:16.14.2 as base
 ENV APP_HOME=/usr/src/app \
   TERM=xterm
 RUN mkdir -p $APP_HOME
 WORKDIR $APP_HOME
 EXPOSE 8000
+EXPOSE 8002
 
 FROM base as development
 ENV NODE_ENV development
@@ -15,6 +16,7 @@ COPY ./webpack ./webpack
 COPY client ./client
 COPY server ./server
 COPY translations/locales ./translations/locales
+COPY public ./public
 CMD ["npm", "start"]
 
 FROM development as build

@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const postcssPresetEnv = require('postcss-preset-env');
 const postcssFocus = require('postcss-focus');
@@ -11,20 +11,26 @@ if (process.env.NODE_ENV === "development") {
   require('dotenv').config();
 }
 
-module.exports = [{
+module.exports = {
   devtool: 'source-map',
   mode: 'production',
   entry: {
     app: [
-      '@babel/polyfill',
-      'core-js/modules/es6.promise',
-      'core-js/modules/es6.array.iterator',
+      'regenerator-runtime/runtime',
       path.resolve(__dirname, '../client/index.jsx')
+    ],
+    'previewApp': [
+      'regenerator-runtime/runtime',
+      path.resolve(__dirname, '../client/modules/Preview/previewIndex.jsx')
+    ],
+    previewScripts: [
+      'regenerator-runtime/runtime',
+      path.resolve(__dirname, '../client/utils/previewEntry.js')
     ]
   },
   output: {
     path: path.resolve(__dirname, '../dist/static'),
-    filename: '[name].[hash].js',
+    filename: '[name].[contenthash].js',
     publicPath: '/'
   },
 
@@ -33,7 +39,10 @@ module.exports = [{
     modules: [
       'client',
       'node_modules',
-    ]
+    ],
+    fallback: {
+      "os": require.resolve("os-browserify/browser")
+    }
   },
   module: {
     rules: [{
@@ -121,91 +130,43 @@ module.exports = [{
             loader: '@svgr/webpack',
             options: {
               svgoConfig: {
-                plugins: {
-                  removeViewBox: false
-                }
+                plugins: [
+                  {
+                    name: 'removeViewBox',
+                    active: false
+                  },
+                ],
               }
             }
           }
         }
       ]
-    },
-    {
-      test: /_console-feed.scss/,
-      use: {
-        loader: 'sass-extract-loader',
-        options: {
-          plugins: [{
-            plugin: 'sass-extract-js',
-            options: {
-              camelCase: false
-            }
-          }]
-        }
-      }
     }
     ]
   },
   optimization: {
     minimize: true,
     minimizer: [new TerserJSPlugin({
-      sourceMap: true,
+      terserOptions: {
+        sourceMap: true
+      },
       parallel: true
-    }), new OptimizeCSSAssetsPlugin()],
+    }), new CssMinimizerPlugin()],
   },
   plugins: [
     new WebpackManifestPlugin({
       basePath: '/',
+      filename: 'manifest.json'
     }),
     new MiniCssExtractPlugin({
-      filename: 'app.[hash].css',
+      filename: 'app.[contenthash].css',
     }),
     new CopyWebpackPlugin({
       patterns: [
-        { from: path.resolve(__dirname, '../translations/locales'), to: path.resolve(__dirname, '../dist/static/locales') }
+        { from: path.resolve(__dirname, '../translations/locales'), to: path.resolve(__dirname, '../dist/static/locales') },
+        { from: path.resolve(__dirname, '../public'), to: path.resolve(__dirname, '../dist/static') }
       ]
     }
     )
   ]
-},
-{
-  entry: {
-    app: [
-      path.resolve(__dirname, '../client/utils/previewEntry.js')
-    ]
-  },
-  target: 'web',
-  devtool: 'source-map',
-  mode: 'production',
-  output: {
-    path: path.resolve(__dirname, '../dist/static'),
-    filename: 'previewScripts.js',
-    publicPath: '/'
-  },
-  resolve: {
-    extensions: ['*', '.js', '.jsx'],
-    modules: [
-      'client',
-      'node_modules',
-    ],
-  },
-  module: {
-    rules: [
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader',
-        options: {
-          babelrc: true
-        }
-      }
-    ]
-  },
-  optimization: {
-    minimize: true,
-    minimizer: [new TerserJSPlugin({
-      sourceMap: true,
-      parallel: true
-    })],
-  },
-}];
+};

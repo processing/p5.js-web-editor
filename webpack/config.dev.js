@@ -7,20 +7,22 @@ if (process.env.NODE_ENV === 'development') {
   require('dotenv').config();
 }
 
-
-// react hmr being fucked up has to do with the multiple entries!!! cool.
 module.exports = {
   mode: 'development',
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'eval-cheap-module-source-map',
   entry: {
     app: [
-      'core-js/modules/es6.promise',
-      'core-js/modules/es6.array.iterator',
       'webpack-hot-middleware/client',
       'react-hot-loader/patch',
       './client/index.jsx',
     ],
+    'previewApp': [
+      'webpack-hot-middleware/client',
+      'react-hot-loader/patch',
+      './client/modules/Preview/previewIndex.jsx',
+    ],
     previewScripts: [
+      'regenerator-runtime/runtime',
       path.resolve(__dirname, '../client/utils/previewEntry.js')
     ]
   },
@@ -34,7 +36,10 @@ module.exports = {
     modules: [
       'client',
       'node_modules'
-    ]
+    ],
+    fallback: {
+      "os": require.resolve("os-browserify/browser")
+    }
   },
   plugins: [
     new ESLintPlugin({
@@ -104,23 +109,17 @@ module.exports = {
               loader: '@svgr/webpack',
               options: {
                 svgoConfig: {
-                  plugins: {
-                    removeViewBox: false
-                  }
+                  plugins: [
+                    {
+                      name: 'removeViewBox',
+                      active: false
+                    },
+                  ],
                 }
               }
             }
           }
         ]
-      },
-      {
-        test: /_console-feed.scss/,
-        use: {
-          loader: 'sass-extract-loader',
-          options: {
-            plugins: [{ plugin: 'sass-extract-js', options: { camelCase: false } }]
-          }
-        }
       }
     ],
   },

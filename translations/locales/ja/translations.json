@@ -166,9 +166,7 @@
       "PlainText": "プレーンテキスト",
       "TextOutputARIA": "テキスト出力 オン",
       "TableText": "テーブルテキスト",
-      "TableOutputARIA": "テーブルテキスト出力 オン",
-      "Sound": "サウンド",
-      "SoundOutputARIA": "サウンド出力 オン"
+      "TableOutputARIA": "テーブルテキスト出力 オン"
     },
     "KeyboardShortcuts": {
       "Title": " キーボードショートカット",
@@ -601,5 +599,16 @@
     },
     "Explorer": {
       "Files": "ファイル"
-    }
+    },
+    "Cookies": {
+    "Header": "Cookies",
+    "Body": "p5.jsエディターはクッキーを使用しています。 いくつかの項目はウェブサイトの機能に不可欠であり、アカウントとプリファレンスを管理することが可能です。 そのほかの項目は不可欠ではありません—それらは分析され、私たちのコミュニティについてより理解するために利用されます。 <strong> 私たちがこのデータを販売したり、広告に使用したりすることは決してありません。 </strong> あなたはどのcookiesの利用を許可するか決めることができます。詳細については私たちの<0>プライバシーポリシー<0>をご参照ください。",
+    "AllowAll": "すべて許可",
+    "AllowEssential": "必須項目を許可"
+  },
+  "Legal": {
+    "PrivacyPolicy": "プライバシーポリシー",
+    "TermsOfUse": "利用規約",
+    "CodeOfConduct": "行動規範"
   }
+}

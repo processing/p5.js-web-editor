@@ -14,5 +14,6 @@
   "tabWidth": 2,
   "trailingComma": "none",
   "useTabs": false,
-  "quoteProps": "as-needed"
+  "quoteProps": "as-needed",
+  "endOfLine":"auto"
 }

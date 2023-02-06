@@ -10,8 +10,8 @@ import { collectionForUserExists } from '../controllers/collection.controller';
 
 const router = new Router();
 
-const fallback404 = (res) => (exists) => // eslint-disable-line
-  exists ? res.send(renderIndex()) : get404Sketch((html) => res.send(html));
+// const fallback404 = (res) => (exists) =>
+//   exists ? res.send(renderIndex()) : get404Sketch((html) => res.send(html));
 
 // this is intended to be a temporary file
 // until i figure out isomorphic rendering
@@ -121,23 +121,6 @@ router.get('/about', (req, res) => {
   res.send(renderIndex());
 });
 
-router.get('/:username/collections/create', (req, res) => {
-  userExists(req.params.username, (exists) => {
-    const isLoggedInUser =
-      req.user && req.user.username === req.params.username;
-    const canAccess = exists && isLoggedInUser;
-    return canAccess
-      ? res.send(renderIndex())
-      : get404Sketch((html) => res.send(html));
-  });
-});
-
-router.get('/:username/collections/create', (req, res) => {
-  userExists(req.params.username, (exists) =>
-    exists ? res.send(renderIndex()) : get404Sketch((html) => res.send(html))
-  );
-});
-
 router.get('/:username/collections/:id', (req, res) => {
   collectionForUserExists(req.params.username, req.params.id, (exists) =>
     exists ? res.send(renderIndex()) : get404Sketch((html) => res.send(html))
@@ -148,6 +131,18 @@ router.get('/:username/collections', (req, res) => {
   userExists(req.params.username, (exists) =>
     exists ? res.send(renderIndex()) : get404Sketch((html) => res.send(html))
   );
+});
+
+router.get('/privacy-policy', (req, res) => {
+  res.send(renderIndex());
+});
+
+router.get('/terms-of-use', (req, res) => {
+  res.send(renderIndex());
+});
+
+router.get('/code-of-conduct', (req, res) => {
+  res.send(renderIndex());
 });
 
 export default router;
