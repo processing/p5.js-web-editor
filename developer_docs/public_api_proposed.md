@@ -1,6 +1,6 @@
 # Proposed Public API extensions
 
-This describes proposed extensions to the Public API. None of these extensions is confirmed but is recorded here for reference and discussion. 
+This describes proposed extensions to the Public API. None of these extensions are confirmed, but they are recorded here for reference and discussion. 
 
 Refer to [Public API](./public_api.md) for the current version of the API.
 
