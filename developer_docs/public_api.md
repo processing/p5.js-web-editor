@@ -116,7 +116,7 @@ List a user’s sketches.
 This will not return the files within the sketch, just the sketch metadata.
 
 ### Request format
-Nobody.
+No body.
 
 ### Response format
     {
@@ -202,10 +202,10 @@ See `Sketch` in Models above.
 Delete a sketch and all its associated files.
 
 ### Request format
-Nobody
+No body
 
 ### Response format
-Nobody
+No body
 
 ### Example
 
