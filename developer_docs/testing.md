@@ -485,7 +485,7 @@ afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 ```
 
-If the component makes use of the `formatDate` util, some of the functions in that rely on the `client/i18n.js` file also make an AJAX request, which sometimes leads to an `ERRCONNECTED` error on the console, even though your tests pass. You can fix it by adding a mock for that specific i18n file:
+If the component makes use of the `formatDate` util, some of the functions in that rely on the `client/i18n.js` file, which also make an AJAX request. This sometimes leads to an `ERRCONNECTED` error on the console, even though your tests pass. You can fix it by adding a mock for that specific i18n file:
 ```js
 jest.mock('_path_to_file_/i18n');
 ```
