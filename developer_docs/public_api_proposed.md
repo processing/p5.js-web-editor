@@ -22,7 +22,7 @@ Refer to [Public API](./public_api.md) for the current version of the API.
 Fetch a sketch.
 
 ### Request format
-Nobody.
+No body.
 
 ### Response format
 Returns `Sketch`.
@@ -56,7 +56,7 @@ Replace the sketch with an entirely new one, maintaining the same ID. Any existi
 See `Sketch` in Models above.
 
 ### Response format
-Nobody.
+No body.
 
 ### Example
 
@@ -90,7 +90,7 @@ Update the sketch whilst maintaining existing data:
 See `Sketch` in Models above.
 
 ### Response format
-Nobody.
+No body.
 
 ### Example
 Change the name of the sketch
@@ -131,7 +131,7 @@ Files within a sketch can be individually accessed via their `path` e.g. `data/s
 Fetch the contents of a file.
 
 ### Request format
-Nobody.
+No body.
 
 ### Response format
 Returns file contents.
@@ -160,7 +160,7 @@ Update the name or contents of a file or directory.
 See `File` and `Directory` above.
 
 ### Response format
-Nobody.
+No body.
 
 ### Example: Change the file name
 
@@ -209,10 +209,10 @@ Files are added to the directory, in addition to what is there.
 Delete a file/directory, and its contents.
 
 ### Request format
-Nobody.
+No body.
 
 ### Response format
-Nobody.
+No body.
 
 ### Example: Delete file
 
