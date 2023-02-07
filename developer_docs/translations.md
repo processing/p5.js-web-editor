@@ -53,7 +53,7 @@ export function languageKeyToDateLocale(lang) {
 
 ## Translations
 
-* Every component should introduce its subset of keys inside a dictionary named after the component. 
+* Every component should introduce its own subset of keys inside a dictionary named after the component. 
    For instance: If you want to translate AssetList.jsx you need to introduce the following namespace in translations.json :
 ```json
  "AssetList": {
