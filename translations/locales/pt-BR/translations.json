@@ -53,11 +53,11 @@
     "FindPlaceholder": "Procurar em Arquivos",
     "Replace": "Alterar",
     "ReplaceAll": "Alterar Tudo",
-    "ReplacePlaceholder": "Text à ser Alterado",
+    "ReplacePlaceholder": "Texto a ser alterado",
     "Regex": "Expressão Regular",
     "CaseSensitive": "Distinguir Maiúsculas e Minúsculas",
     "WholeWords": "Palavras Completas",
-    "Previous": "Prévio",
+    "Previous": "Anterior",
     "Next": "`Próximo",
     "NoResults": "Não há Resultados",
     "Close": "Fechar"
@@ -83,19 +83,19 @@
   "SocialAuthButton": {
     "Connect": "Conectar {{serviceauth}} Conta",
     "Unlink": "Desvincular {{serviceauth}} Conta",
-    "Login": "Enrar com {{serviceauth}}",
+    "Login": "Entrar com {{serviceauth}}",
     "LogoARIA": "{{serviceauth}} logo"
   },
   "About": {
     "Title": "Sobre",
     "TitleHelmet": "Editor de Web p5.js | Sobre",
-    "Contribute": "Contrubuir",
+    "Contribute": "Contribuir",
     "NewP5": "Novo ao p5.js?",
     "Report": "Reportar um Erro",
     "Learn": "Aprender",
     "Resources": "Recursos",
     "Libraries": "Bibliotecas",
-    "Forum": "Forúm",
+    "Forum": "Fórum",
     "Examples": "Exemplos"
   },
   "Toast": {
@@ -151,8 +151,8 @@
     "AutocloseBracketsQuotesOnARIA": "fechar automaticamente chaves e aspas ativado",
     "AutocloseBracketsQuotesOffARIA": "fechar automaticamente chaves e aspas desativado",
     "WordWrap": "Ajuste Automático de Linhas",
-    "LineWrapOnARIA": "ajuste automatico de linhas ativado",
-    "LineWrapOffARIA": "ajuste automatico de linhas desativado",
+    "LineWrapOnARIA": "ajuste automático de linhas ativado",
+    "LineWrapOffARIA": "ajuste automático de linhas desativado",
     "LineNumbers": "Número de linhas",
     "LineNumbersOnARIA": "número de linhas ativado",
     "LineNumbersOffARIA": "número de linhas desativado",
@@ -164,7 +164,7 @@
     "AccessibleTextBasedCanvas": "Tela acessivel por texto",
     "UsedScreenReader": "Uso com screen reader",
     "PlainText": "Texto sem formatação",
-    "TextOutputARIA": "Saída de texto ativado",
+    "TextOutputARIA": "Saída de texto ativada",
     "TableText": "Tabela de texto",
     "TableOutputARIA": "tabela de texto ativada"
   },
@@ -243,7 +243,7 @@
   "NewFolderModal": {
     "Title": "Criar",
     "CloseButtonARIA": "Fechar Módulo de Criação de Pasta",
-    "EnterName": "Por favor coloque um nomes",
+    "EnterName": "Por favor coloque um nome",
     "EmptyName": "Nomes de pastas não podem conter apenas espaços",
     "InvalidExtension": "Nomes de pastas não podem conter extensões"
   },
@@ -252,7 +252,7 @@
     "Placeholder": "Nome"
   },
   "ResetPasswordForm": {
-    "Email": "Emal usado para conta",
+    "Email": "Email usado para conta",
     "EmailARIA": "email",
     "Submit": "Enviar Email Para Recuperar Senha"
   },
@@ -267,14 +267,14 @@
   "ReduxFormUtils": {
     "errorInvalidEmail": "Por favor coloque um endereço de email válido",
     "errorEmptyEmail": "Por favor coloque um endereço de email",
-    "errorPasswordMismatch": "Senhas devem conicidir",
+    "errorPasswordMismatch": "Senhas devem coincidir",
     "errorEmptyPassword": "Por favor coloque sua senha",
     "errorShortPassword": "Senha deve ter no mínimo 6 caracteres",
     "errorConfirmPassword": "Por favor coloque a senha de confirmação",
     "errorNewPassword": "Por favor, adicione uma senha nova ou deixe a atual em branco.",
     "errorEmptyUsername": "Por favor coloque um nome de usuário",
     "errorLongUsername": "Nome de usuário deve ter menos de 20 caracteres.",
-    "errorValidUsername": "Nome de usuário apenas pode consistir de números, letras, pontos, Hífens e linha sublinhada."
+    "errorValidUsername": "Nome de usuário pode apenas consistir de números, letras, pontos, Hífens e linha sublinhada."
   },
   "NewPasswordView": {
     "Title": "Editor de Web p5.js | Nova Senha",
@@ -294,7 +294,7 @@
     "UserNameARIA": "Nome de Usuário",
     "CurrentPassword": "Senha Atual",
     "CurrentPasswordARIA": "Senha Atual",
-    "NewPassword": "New Password",
+    "NewPassword": "Nova Senha",
     "NewPasswordARIA": "Nova Senha",
     "SubmitSaveAllSettings": "Salvar todas as Configurações"
   },
@@ -308,14 +308,14 @@
   },
   "APIKeyForm": {
     "ConfirmDelete": "Realmente quer apagar {{key_label}}?",
-    "Summary": "Tokens de Acesso Pessoal atual como sua senha para permitir que scripts automáticos\n acessem o API do editor. Criar um token para cada scripts \n que necessite asceso.",
+    "Summary": "Tokens de Acesso Pessoal atual como sua senha para permitir que scripts automáticos\n acessem o API do editor. Criar um token para cada scripts \n que necessite acesso.",
     "CreateToken": "Criar novo token",
     "TokenLabel": "Para que este token será utilizado?",
     "TokenPlaceholder": "Para que este token será utilizado? e.x. Exemplo para importar um arquivo",
     "CreateTokenSubmit": "Criar",
     "NoTokens": "Não há tokens existentes.",
-    "NewTokenTitle": "Seu novo token de asceso",
-    "NewTokenInfo": "Lembre-se de copiar seu novo token de ascesso pessoal agora.\nVocê não será capaz de vê-lo novamente!",
+    "NewTokenTitle": "Seu novo token de acesso",
+    "NewTokenInfo": "Lembre-se de copiar seu novo token de acesso pessoal agora.\nVocê não será capaz de vê-lo novamente!",
     "ExistingTokensTitle": "Tokens existentes"
   },
   "APIKeyList": {
