@@ -7,7 +7,7 @@ if (process.env.NODE_ENV === 'production') {
   require('@babel/register')({
     presets: ["@babel/preset-env"]
   });
-  require('@babel/polyfill');
+  require('regenerator-runtime/runtime');
   //// in development, let .env values override those in the environment already (i.e. in docker-compose.yml)
   // so commenting this out makes the docker container work.
   // if (process.env.NODE_ENV === 'development') {

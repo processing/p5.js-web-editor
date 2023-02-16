@@ -1,4 +1,4 @@
-import '@babel/polyfill';
+import 'regenerator-runtime/runtime';
 
 // See: https://github.com/testing-library/jest-dom
 // eslint-disable-next-line import/no-extraneous-dependencies

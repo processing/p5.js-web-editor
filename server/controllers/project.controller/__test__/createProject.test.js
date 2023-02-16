@@ -95,10 +95,7 @@ describe('project.controller', () => {
         .withArgs({ user: 'abc123' })
         .resolves(result);
 
-      ProjectMock.expects('populate')
-        .withArgs(result)
-        .yields(null, resultWithUser)
-        .resolves(resultWithUser);
+      ProjectMock.expects('populate').withArgs(result).resolves(resultWithUser);
 
       const promise = createProject(request, response);
 
