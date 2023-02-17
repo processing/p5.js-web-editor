@@ -50,13 +50,13 @@ function FileName({ name }) {
   return (
     <span className="sidebar__file-item-name-text">
       <span>{firstLetter}</span>
-      {middleText.charAt(0) === ' ' && <span>&nbsp;</span>}
       {baseName.length > 2 && (
         <span className="sidebar__file-item-name--ellipsis">
+          {middleText.charAt(0) === ' ' && <>&nbsp;</>}
           {middleText.trim()}
+          {middleText.charAt(middleText.length - 1) === ' ' && <>&nbsp;</>}
         </span>
       )}
-      {middleText.charAt(middleText.length - 1) === ' ' && <span>&nbsp;</span>}
       {baseName.length > 1 && <span>{lastLetter}</span>}
       {extension && <span>{extension}</span>}
     </span>
