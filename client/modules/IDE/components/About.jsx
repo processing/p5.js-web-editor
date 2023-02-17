@@ -30,10 +30,10 @@ function About(props) {
         />
         <div className="about__content-column">
           <p className="about__version-info">
-            Editor version: <span>v{packageData?.version}</span>
+            Web Editor: <span>v{packageData?.version}</span>
           </p>
           <p className="about__version-info">
-            p5.js version: <span>v{p5version}</span>
+            p5.js: <span>v{p5version}</span>
           </p>
         </div>
       </div>
