@@ -53,7 +53,6 @@ function FileName({ name }) {
       {baseName.length > 2 && (
         <span className="sidebar__file-item-name--ellipsis">{middleText}</span>
       )}
-      {middleText.charAt(middleText.length - 1) === ' ' && <span>&nbsp;</span>}
       {baseName.length > 1 && <span>{lastLetter}</span>}
       {extension && <span>{extension}</span>}
     </span>
