@@ -115,6 +115,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   min-width: #{7 / $base-font-size}rem;
+  white-space: pre;
 }
 
 .sidebar__file-item-name-text {
