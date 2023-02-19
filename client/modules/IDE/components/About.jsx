@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import SquareLogoIcon from '../../../images/p5js-square-logo.svg';
@@ -10,12 +10,10 @@ import packageData from '../../../../package.json';
 
 function About(props) {
   const { t } = useTranslation();
-  const [p5version, setP5version] = useState(0);
-  useEffect(() => {
-    axios
-      .get('https://cdn.jsdelivr.net/npm/p5/package.json')
-      .then((data) => setP5version(data?.data?.version));
-  }, []);
+  const p5version = useSelector((state) => {
+    const index = state.files.find((file) => file.name === 'index.html');
+    return index?.content.match(/\/p5\.js\/([\d.]+)\//)?.[1];
+  });
   return (
     <div className="about__content">
       <Helmet>
