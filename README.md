@@ -1,10 +1,5 @@
 # [p5.js Editor](https://editor.p5js.org)
 
-
-Documentation is also available in the following languages:
-
-[한국어](https://github.com/processing/p5.js-web-editor/blob/develop/translations/ko)
-
 ## Welcome! 👋👋🏿👋🏽👋🏻👋🏾👋🏼
 
 The p5.js Editor is a website for creating p5.js sketches, with a focus on making coding accessible and inclusive for artists, designers, educators, beginners, and anyone else! You can create, share, or remix p5.js sketches without needing to download or configure anything. It is designed with beginners in mind, limiting features and frills. The editor is free and open-source because we believe software, and the tools to learn it, should be accessible to everyone.
