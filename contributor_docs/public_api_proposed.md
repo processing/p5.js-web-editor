@@ -1,12 +1,12 @@
 # Proposed Public API extensions
 
-This describes proposed extensions to the Public API. None of these extensions are confirmed, but are recorded here for reference and discussion. 
+This describes proposed extensions to the Public API. None of these extensions are confirmed, but they are recorded here for reference and discussion. 
 
 Refer to [Public API](./public_api.md) for the current version of the API.
 
 # Authentication
 
-- Support for sending tokens can via the `Authorization: Bearer {your_access_token}` HTTP header instead of just Basic Auth
+- Support for sending tokens can be via the `Authorization: Bearer {your_access_token}` HTTP header instead of just Basic Auth
 
 # API Access
 
@@ -154,7 +154,7 @@ Returns file contents.
 
 ## `PATCH /:user/sketches/:id/files/:path` 
 
-Update the name or contents a file or directory.
+Update the name or contents of a file or directory.
 
 ### Request format
 See `File` and `Directory` above.
@@ -162,7 +162,7 @@ See `File` and `Directory` above.
 ### Response format
 No body.
 
-### Example: Change file name
+### Example: Change the file name
 
     PATCH /p5/sketches/Ckhf0APpg/files/assets/something.js
     
@@ -206,7 +206,7 @@ Files are added to the directory, in addition to what is there.
 
 ## `DELETE /:user/:sketches/files/:path`
 
-Delete a file/directory, and it’s contents.
+Delete a file/directory, and its contents.
 
 ### Request format
 No body.

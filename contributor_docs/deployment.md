@@ -17,7 +17,7 @@ WIP.
 
 These are the steps that happen when you deploy the application.
 
-1. Push to `develop` branch, or merge in a pull request to the `develop` branch.
+1. Push to the `develop` branch, or merge in a pull request to the `develop` branch.
 2. This triggers a build on [Travis CI](https://travis-ci.org/processing/p5.js-web-editor).
 3. Travis CI builds a (development) Docker image of the whole application.
 4. Travis CI runs some tests, which in this case, is just `npm run lint`. This could be updated in the future to include more extensive tests. If the tests fail, the build stops here.
@@ -47,7 +47,7 @@ If you are interested in hosting and deploying your own p5.js Web Editor instanc
 
 1. Sign up for a free account at: [Heroku](https://www.heroku.com/)
 2. Click here: [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/processing/p5.js-web-editor/tree/develop)
-3. Enter a unique *App name*, this will become part of the url (i.e. https://app-name.herokuapp.com/)
+3. Enter a unique *App name*, this will become part of the URL (i.e. https://app-name.herokuapp.com/)
 4. Update any configuration variables, or accept the defaults for a quick evaluation (they can be changed later to enable full functionality)
 5. Click on the "Deploy app" button
 6. When complete, click on the "View app" button
