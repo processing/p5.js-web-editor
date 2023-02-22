@@ -9,6 +9,7 @@ import routes from './routes';
 import ThemeProvider from './modules/App/components/ThemeProvider';
 import Loader from './modules/App/components/loader';
 import './i18n';
+import registerServiceWorker from './utils/serviceWorkerRegister';
 
 require('./styles/main.scss');
 
@@ -36,3 +37,5 @@ render(
   </Suspense>,
   document.getElementById('root')
 );
+
+registerServiceWorker();

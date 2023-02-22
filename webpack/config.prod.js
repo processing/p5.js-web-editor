@@ -6,8 +6,9 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const postcssPresetEnv = require('postcss-preset-env');
 const postcssFocus = require('postcss-focus');
-const CopyWebpackPlugin = require('copy-webpack-plugin')
-if (process.env.NODE_ENV === "development") {
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { InjectManifest } = require('workbox-webpack-plugin');
+if (process.env.NODE_ENV === 'development') {
   require('dotenv').config();
 }
 
@@ -19,7 +20,7 @@ module.exports = {
       'regenerator-runtime/runtime',
       path.resolve(__dirname, '../client/index.jsx')
     ],
-    'previewApp': [
+    previewApp: [
       'regenerator-runtime/runtime',
       path.resolve(__dirname, '../client/modules/Preview/previewIndex.jsx')
     ],
@@ -36,137 +37,146 @@ module.exports = {
 
   resolve: {
     extensions: ['.js', '.jsx'],
-    modules: [
-      'client',
-      'node_modules',
-    ],
+    modules: ['client', 'node_modules'],
     fallback: {
-      "os": require.resolve("os-browserify/browser")
+      os: require.resolve('os-browserify/browser')
     }
   },
   module: {
-    rules: [{
-      test: /main\.scss$/,
-      exclude: /node_modules/,
-      use: [
-        MiniCssExtractPlugin.loader,
-        {
-          loader: 'css-loader',
-          options: {
-            importLoaders: 2,
-            sourceMap: true
-          }
-        },
-        {
-          loader: 'postcss-loader',
-          options: {
-            postcssOptions: {
-              plugins: () => [
-                postcssPresetEnv({
-                  browsers: ['last 2 versions', 'IE > 9']
-                }),
-                postcssFocus()
-              ]
-              // plugins: () => [
-              //   postcssFocus(),
-              //   cssnext({
-              //     browsers: ['last 2 versions', 'IE > 9']
-              //   }),
-              //   cssnano({
-              //     autoprefixer: false
-              //   }),
-              //   postcssReporter({
-              //     clearMessages: true
-              //   })
-              // ],
-            },
-            sourceMap: true
-          }
-        },
-        {
-          loader: 'sass-loader',
-          options: {
-            sourceMap: true
-          }
-        }
-      ]
-    },
-    {
-      test: /\.jsx?$/,
-      exclude: /node_modules/,
-      use: 'babel-loader'
-    },
-    {
-      test: /\.(png)$/,
-      use: {
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]',
-          outputPath: 'images/'
-        }
-      }
-    },
-    {
-      test: /\.mp3$/,
-      use: 'file-loader'
-    },
-    {
-      test: /fonts\/.*\.(eot|ttf|woff|woff2)$/,
-      use: 'file-loader'
-    },
-    {
-      test: /\.svg$/,
-      oneOf: [
-        {
-          resourceQuery: /byContent/,
-          use: 'raw-loader'
-        },
-        {
-          resourceQuery: /byUrl/,
-          use: 'file-loader'
-        },
-        {
-          use: {
-            loader: '@svgr/webpack',
+    rules: [
+      {
+        test: /main\.scss$/,
+        exclude: /node_modules/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
             options: {
-              svgoConfig: {
-                plugins: [
-                  {
-                    name: 'removeViewBox',
-                    active: false
-                  },
-                ],
+              importLoaders: 2,
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: () => [
+                  postcssPresetEnv({
+                    browsers: ['last 2 versions', 'IE > 9']
+                  }),
+                  postcssFocus()
+                ]
+                // plugins: () => [
+                //   postcssFocus(),
+                //   cssnext({
+                //     browsers: ['last 2 versions', 'IE > 9']
+                //   }),
+                //   cssnano({
+                //     autoprefixer: false
+                //   }),
+                //   postcssReporter({
+                //     clearMessages: true
+                //   })
+                // ],
+              },
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true
+            }
+          }
+        ]
+      },
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: 'babel-loader'
+      },
+      {
+        test: /\.(png)$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'images/'
+          }
+        }
+      },
+      {
+        test: /\.mp3$/,
+        use: 'file-loader'
+      },
+      {
+        test: /fonts\/.*\.(eot|ttf|woff|woff2)$/,
+        use: 'file-loader'
+      },
+      {
+        test: /\.svg$/,
+        oneOf: [
+          {
+            resourceQuery: /byContent/,
+            use: 'raw-loader'
+          },
+          {
+            resourceQuery: /byUrl/,
+            use: 'file-loader'
+          },
+          {
+            use: {
+              loader: '@svgr/webpack',
+              options: {
+                svgoConfig: {
+                  plugins: [
+                    {
+                      name: 'removeViewBox',
+                      active: false
+                    }
+                  ]
+                }
               }
             }
           }
-        }
-      ]
-    }
+        ]
+      }
     ]
   },
   optimization: {
     minimize: true,
-    minimizer: [new TerserJSPlugin({
-      terserOptions: {
-        sourceMap: true
-      },
-      parallel: true
-    }), new CssMinimizerPlugin()],
+    minimizer: [
+      new TerserJSPlugin({
+        terserOptions: {
+          sourceMap: true
+        },
+        parallel: true
+      }),
+      new CssMinimizerPlugin()
+    ]
   },
   plugins: [
     new WebpackManifestPlugin({
       basePath: '/',
-      filename: 'manifest.json'
+      fileName: 'webpack-manifest.json'
+    }),
+    new InjectManifest({
+      swSrc: path.resolve(__dirname, '../client/utils/sw.js')
     }),
     new MiniCssExtractPlugin({
-      filename: 'app.[contenthash].css',
+      filename: 'app.[contenthash].css'
     }),
     new CopyWebpackPlugin({
       patterns: [
-        { from: path.resolve(__dirname, '../translations/locales'), to: path.resolve(__dirname, '../dist/static/locales') },
-        { from: path.resolve(__dirname, '../public'), to: path.resolve(__dirname, '../dist/static') }
+        {
+          from: path.resolve(__dirname, '../translations/locales'),
+          to: path.resolve(__dirname, '../dist/static/locales')
+        },
+        {
+          from: path.resolve(__dirname, '../public'),
+          to: path.resolve(__dirname, '../dist/static')
+        }
       ]
-    }
-    )
+    })
   ]
 };

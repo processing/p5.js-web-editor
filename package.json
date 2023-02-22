@@ -136,7 +136,8 @@
     "terser-webpack-plugin": "^5.3.1",
     "webpack-cli": "^4.9.2",
     "webpack-manifest-plugin": "^5.0.0",
-    "webpack-node-externals": "^3.0.0"
+    "webpack-node-externals": "^3.0.0",
+    "workbox-webpack-plugin": "^6.5.4"
   },
   "engines": {
     "node": "16.14.2",
@@ -241,6 +242,9 @@
     "webpack": "^5.72.0",
     "webpack-dev-middleware": "^5.3.1",
     "webpack-hot-middleware": "^2.25.1",
+    "workbox-core": "^6.5.4",
+    "workbox-precaching": "^6.5.4",
+    "workbox-window": "^6.5.4",
     "xhr": "^2.6.0"
   }
 }
