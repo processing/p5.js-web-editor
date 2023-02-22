@@ -74,7 +74,7 @@ The Processing Foundation is specifically invested in expanding the communities 
 
 With those principles in mind, we want to strongly suggest the use of non-gendered terms whenever possible. If it is not possible to avoid, use the most inclusive version. 
 For instance, in Spanish translation we tackled that problem with a particular rule of thumb:
-Avoid male-gendered words, use instead of the letter ‘e’, we used the ‘e’ approach vs other approaches like ‘x’ or ‘@’ because you also need to think about how screen readers would read the text aloud.
+Avoid male-gendered words: use instead the letter ‘e’. We used the ‘e’ approach vs other approaches like ‘x’ or ‘@’ because you also need to think about how screen readers would read the text aloud.
 
 ## Background
  
