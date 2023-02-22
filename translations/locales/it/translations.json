@@ -317,7 +317,7 @@
     "Summary": "I codici di accesso personali funzionano da password per permettere ai tuoi script\n          di accedere automaticamente all'API dell'Editor. Crea un codice per ogni script\n          che necessita dell'accesso.",
     "CreateToken": "Crea nuovo codice",
     "TokenLabel": "Per che cos'è questo codice?",
-    "TokenPlaceholder": ""Per che cos'è questo codice? i.e. Script importazione sketch",
+    "TokenPlaceholder": "Per che cos'è questo codice? i.e. Script importazione sketch",
     "CreateTokenSubmit": "Crea",
     "NoTokens": "Non hai codici esistenti.",
     "NewTokenTitle": "Il tuo nuovo codice di accesso",
