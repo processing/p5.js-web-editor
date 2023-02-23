@@ -16,6 +16,26 @@ Learn more about [our community](https://p5js.org/community/) and read our commu
 
 Make your first sketch in the [p5.js Editor](https://editor.p5js.org/)! Learn more about sketching with p5.js on the [Get Started](https://p5js.org/get-started/) and find everything you can do in the [Reference](https://p5js.org/reference/). You can also look at [examples](https://editor.p5js.org/p5/sketches) and remix them in the p5.js Editor.
 
+## Setting Development Environment
+
+- Clone the repo or download zip file
+```
+git clone https://github.com/processing/p5.js-web-editor.git
+cd p5.js-web-editor
+```
+- Intsall dependicies and running server
+```
+npm install
+npm run start
+```
+`Note`:- Use node version 16.14.2 and npm version 8.5.0 run the project
+
+- Testing using jest
+```
+npm run test
+```
+
+
 ## Issues
 
 If you have found a bug in the p5.js Web Editor, you can file it under the ["issues" tab](https://github.com/processing/p5.js-web-editor/issues). You can also request new features here. A set of templates for reporting issues and requesting features are provided to assist you (and us!). The p5.js Editor is maintained mostly by volunteers, so we thank you for your patience as we try to address your issues as soon as we can. Please post bugs and feature requests in the correct repository if you can:
