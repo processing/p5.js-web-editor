@@ -22,7 +22,7 @@ Follow the [installation guide](./installation.md).
 As a person contributing code but not creating production releases (this is most people!), here's what you need to know:
 * The default branch is `develop`. All pull requests should be made to this branch. It should be stable, and all commits are visible at a staging server.
 * When working on a bug or feature, you should branch from the `develop` branch. When you're done, you should open a pull request from your feature branch to `develop`.
-* The `release` branch is the live production branch, and is the code deployed to editor.p5js.org. Changes to this branch should be made carefully, and will be done using git tags. 
+* The `release` branch is the live production branch and is the code deployed to editor.p5js.org. Changes to this branch should be made carefully and will be done using git tags. 
 * Emergency hotfix changes should be branched from `release` and merged via a pull request to `release`. After a PR is merged, then the commits can be merged to `develop`.
 
 See the [release guide](./release.md) for information about creating a release.
@@ -68,7 +68,7 @@ Structure your commit message like this:
 * Write the summary line and description of what you have done in the imperative mode, that is as if you were commanding someone. Start the line with "Fix", "Add", "Change" instead of "Fixed", "Added", "Changed".
 * Link the GitHub issue you are working on in the summary line in brackets, e.g. [#123]
 * Always leave the second line blank.
-* Be as descriptive as possible in the description. It helps reasoning about the intention of commits and gives more context about why changes happened.
+* Be as descriptive as possible in the description. It helps to reason about the intention of commits and gives more context about why changes happened.
 * If it seems difficult to summarize what your commit does, it may be because it includes several logical changes or bug fixes, and are better split up into several commits using `git add -p`.
 * Note that you can connect multiple issues to a commit, if necessary: `[#123][#456] Add Button component`
 
