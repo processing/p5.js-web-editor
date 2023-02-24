@@ -18,22 +18,8 @@ Make your first sketch in the [p5.js Editor](https://editor.p5js.org/)! Learn mo
 
 ## Setting Development Environment
 
-- Clone the repo or download zip file
-```
-git clone https://github.com/processing/p5.js-web-editor.git
-cd p5.js-web-editor
-```
-- Intsall dependicies and running server
-```
-npm install
-npm run start
-```
-`Note`:- Use node version 16.14.2 and npm version 8.5.0 run the project
+- Refer here https://github.com/processing/p5.js-web-editor/blob/develop/contributor_docs/installation.md
 
-- Testing using jest
-```
-npm run test
-```
 
 
 ## Issues
