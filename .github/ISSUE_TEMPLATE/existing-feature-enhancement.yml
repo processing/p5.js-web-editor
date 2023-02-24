@@ -1,0 +1,16 @@
+name: 💡 Existing Feature Enhancement
+description: Suggest an improvement to an existing feature.
+labels: [ Enhancement ]
+body:
+  - type: textarea
+    attributes:
+      label: Increasing Access
+      description: How would this new feature help [increase access](https://github.com/processing/p5.js/blob/main/contributor_docs/access.md) to the p5.js Web Editor? (If you're not sure, you can type "Unsure" here and let others from the community offer their thoughts.)
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Feature enhancement details
+    validations:
+      required: true
