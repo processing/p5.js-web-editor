@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import SquareLogoIcon from '../../../images/p5js-square-logo.svg';
 // import PlayIcon from '../../../images/play.svg';
 import AsteriskIcon from '../../../images/p5-asterisk.svg';

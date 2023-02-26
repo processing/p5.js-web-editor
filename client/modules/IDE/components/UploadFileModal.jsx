@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import prettyBytes from 'pretty-bytes';
 import getConfig from '../../../utils/getConfig';

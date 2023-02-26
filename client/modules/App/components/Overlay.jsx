@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { browserHistory } from 'react-router';
 import { withTranslation } from 'react-i18next';
 
 import ExitIcon from '../../../images/exit.svg';
+import { withRouter } from '../../../utils/router-compatibilty';
 
 class Overlay extends React.Component {
   constructor(props) {
@@ -55,7 +55,7 @@ class Overlay extends React.Component {
       return;
 
     if (!this.props.closeOverlay) {
-      browserHistory.push(this.props.previousPath);
+      this.props.navigate(this.props.previousPath);
     } else {
       this.props.closeOverlay();
     }
@@ -105,7 +105,8 @@ Overlay.propTypes = {
   ariaLabel: PropTypes.string,
   previousPath: PropTypes.string,
   isFixedHeight: PropTypes.bool,
-  t: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
+  navigate: PropTypes.func.isRequired
 };
 
 Overlay.defaultProps = {
@@ -118,4 +119,4 @@ Overlay.defaultProps = {
   isFixedHeight: false
 };
 
-export default withTranslation()(Overlay);
+export default withRouter(withTranslation()(Overlay));

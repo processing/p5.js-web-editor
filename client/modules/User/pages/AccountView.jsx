@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Helmet } from 'react-helmet';
 import { withTranslation } from 'react-i18next';
-import { withRouter, browserHistory } from 'react-router';
 import { parse } from 'query-string';
 import { createApiKey, removeApiKey } from '../actions';
 import AccountForm from '../components/AccountForm';
@@ -15,6 +14,7 @@ import Nav from '../../../components/Nav';
 import ErrorModal from '../../IDE/components/ErrorModal';
 import Overlay from '../../App/components/Overlay';
 import Toast from '../../IDE/components/Toast';
+import { withRouter } from '../../../utils/router-compatibilty';
 
 function SocialLoginPanel(props) {
   const { user, t } = props;
@@ -77,7 +77,7 @@ class AccountView extends React.Component {
             title={this.props.t('ErrorModal.LinkTitle')}
             ariaLabel={this.props.t('ErrorModal.LinkTitle')}
             closeOverlay={() => {
-              browserHistory.push(this.props.location.pathname);
+              this.props.navigate(this.props.location.pathname);
             }}
           >
             <ErrorModal type="oauthError" service={errorType} />
@@ -152,6 +152,7 @@ AccountView.propTypes = {
     search: PropTypes.string.isRequired,
     pathname: PropTypes.string.isRequired
   }).isRequired,
+  navigate: PropTypes.func.isRequired,
   toast: PropTypes.shape({
     isVisible: PropTypes.bool.isRequired
   }).isRequired

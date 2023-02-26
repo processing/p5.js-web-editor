@@ -1,29 +1,23 @@
+import PropTypes from 'prop-types';
 import React from 'react';
-import { connect } from 'react-redux';
-import { browserHistory } from 'react-router';
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
-const RedirectToUser = ({ username, url = '/:username/sketches' }) => {
-  React.useEffect(() => {
-    if (username == null) {
-      return;
-    }
-
-    browserHistory.replace(url.replace(':username', username));
-  }, [username]);
-
-  return null;
+/**
+ * Sets the current username to the `:username` template in the provided URL,
+ * eg. `/:username/sketches` => `/p5/sketches`.
+ */
+const RedirectToUser = ({ url = '/:username/sketches' }) => {
+  const username = useSelector((state) =>
+    state.user ? state.user.username : null
+  );
+  return username ? (
+    <Navigate to={url.replace(':username', username)} replace />
+  ) : null;
 };
 
-function mapStateToProps(state) {
-  return {
-    username: state.user ? state.user.username : null
-  };
-}
+RedirectToUser.propTypes = {
+  url: PropTypes.string.isRequired
+};
 
-const ConnectedRedirectToUser = connect(mapStateToProps)(RedirectToUser);
-
-const createRedirectWithUsername = (url) => (props) => (
-  <ConnectedRedirectToUser {...props} url={url} />
-);
-
-export default createRedirectWithUsername;
+export default RedirectToUser;

@@ -1,7 +1,6 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { useSelector, useDispatch } from 'react-redux';
-import { withRouter } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
 import styled from 'styled-components';
@@ -154,4 +153,4 @@ const MobilePreferences = () => {
   );
 };
 
-export default withRouter(MobilePreferences);
+export default MobilePreferences;

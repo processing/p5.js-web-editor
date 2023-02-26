@@ -1,6 +1,8 @@
-import { Route, IndexRoute } from 'react-router';
-import React from 'react';
+import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useLocation, Outlet } from 'react-router-dom';
 
+import RedirectToUser from './components/createRedirectWithUsername';
 import App from './modules/App/App';
 import IDEView from './modules/IDE/pages/IDEView';
 import MobileIDEView from './modules/IDE/pages/MobileIDEView';
@@ -15,7 +17,6 @@ import NewPasswordView from './modules/User/pages/NewPasswordView';
 import AccountView from './modules/User/pages/AccountView';
 import CollectionView from './modules/User/pages/CollectionView';
 import DashboardView from './modules/User/pages/DashboardView';
-import createRedirectWithUsername from './components/createRedirectWithUsername';
 import MobileDashboardView from './modules/Mobile/MobileDashboardView';
 // import PrivacyPolicy from './modules/IDE/pages/PrivacyPolicy';
 // import TermsOfUse from './modules/IDE/pages/TermsOfUse';
@@ -28,102 +29,162 @@ import {
   userIsAuthorized
 } from './utils/auth';
 import { mobileFirst, responsiveForm } from './utils/responsive';
+import { ElementFromComponent } from './utils/router-compatibilty';
 
-const checkAuth = (store) => {
-  store.dispatch(getUser());
+/**
+ * Wrapper around App for handling legacy 'onChange' and 'onEnter' functionality,
+ * injecting the location prop, and rendering child route content.
+ */
+const Main = () => {
+  const location = useLocation();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, []);
+
+  // TODO: This short-circuit seems unnecessary - using the mobile <Switch /> navigator (future) should prevent this from being called
+  useEffect(() => {
+    if (location.pathname.includes('preview')) return;
+
+    dispatch(stopSketch());
+  }, [location.pathname]);
+
+  return (
+    <App location={location}>
+      <Outlet />
+    </App>
+  );
 };
 
-// TODO: This short-circuit seems unnecessary - using the mobile <Switch /> navigator (future) should prevent this from being called
-const onRouteChange = (store) => {
-  const path = window.location.pathname;
-  if (path.includes('preview')) return;
-
-  store.dispatch(stopSketch());
-};
-
-const routes = (store) => (
-  <Route
-    path="/"
-    component={App}
-    onChange={() => {
-      onRouteChange(store);
-    }}
-  >
-    <IndexRoute
-      onEnter={checkAuth(store)}
-      component={mobileFirst(MobileIDEView, IDEView)}
-    />
-
-    <Route
-      path="/login"
-      component={userIsNotAuthenticated(
-        mobileFirst(responsiveForm(LoginView), LoginView)
-      )}
-    />
-    <Route
-      path="/signup"
-      component={userIsNotAuthenticated(
-        mobileFirst(responsiveForm(SignupView), SignupView)
-      )}
-    />
-    <Route
-      path="/reset-password"
-      component={userIsNotAuthenticated(ResetPasswordView)}
-    />
-    <Route path="/verify" component={EmailVerificationView} />
-    <Route
-      path="/reset-password/:reset_password_token"
-      component={NewPasswordView}
-    />
-    <Route path="/projects/:project_id" component={IDEView} />
-    <Route path="/:username/full/:project_id" component={FullView} />
-    <Route path="/full/:project_id" component={FullView} />
-
-    <Route
-      path="/:username/assets"
-      component={userIsAuthenticated(
-        userIsAuthorized(mobileFirst(MobileDashboardView, DashboardView))
-      )}
-    />
-    <Route
-      path="/:username/sketches"
-      component={mobileFirst(MobileDashboardView, DashboardView)}
-    />
-    <Route
-      path="/:username/sketches/:project_id"
-      component={mobileFirst(MobileIDEView, IDEView)}
-    />
-    <Route
-      path="/:username/sketches/:project_id/add-to-collection"
-      component={mobileFirst(MobileIDEView, IDEView)}
-    />
-    <Route
-      path="/:username/collections"
-      component={mobileFirst(MobileDashboardView, DashboardView)}
-    />
-    <Route
-      path="/:username/collections/:collection_id"
-      component={CollectionView}
-    />
-
-    <Route
-      path="/sketches"
-      component={createRedirectWithUsername('/:username/sketches')}
-    />
-    <Route
-      path="/assets"
-      component={createRedirectWithUsername('/:username/assets')}
-    />
-    <Route path="/account" component={userIsAuthenticated(AccountView)} />
-    <Route path="/about" component={IDEView} />
-
-    {/* Mobile-only Routes */}
-    <Route path="/preview" component={MobileSketchView} />
-    <Route path="/preferences" component={MobilePreferences} />
-    <Route path="/privacy-policy" component={Legal} />
-    <Route path="/terms-of-use" component={Legal} />
-    <Route path="/code-of-conduct" component={Legal} />
-  </Route>
-);
+const routes = [
+  {
+    path: '/',
+    element: <Main />,
+    children: [
+      {
+        index: true,
+        element: (
+          <ElementFromComponent
+            component={mobileFirst(MobileIDEView, IDEView)}
+          />
+        )
+      },
+      {
+        path: '/login',
+        element: (
+          <ElementFromComponent
+            component={userIsNotAuthenticated(
+              mobileFirst(responsiveForm(LoginView), LoginView)
+            )}
+          />
+        )
+      },
+      {
+        path: '/signup',
+        element: (
+          <ElementFromComponent
+            component={userIsNotAuthenticated(
+              mobileFirst(responsiveForm(SignupView), SignupView)
+            )}
+          />
+        )
+      },
+      {
+        path: '/reset-password',
+        element: (
+          <ElementFromComponent
+            component={userIsNotAuthenticated(ResetPasswordView)}
+          />
+        )
+      },
+      { path: '/verify', element: <EmailVerificationView /> },
+      {
+        path: '/reset-password/:reset_password_token',
+        element: <NewPasswordView />
+      },
+      {
+        path: '/projects/:project_id',
+        element: <ElementFromComponent component={IDEView} />
+      },
+      { path: '/:username/full/:project_id', element: <FullView /> },
+      { path: '/full/:project_id', element: <FullView /> },
+      {
+        path: '/:username/assets',
+        element: (
+          <ElementFromComponent
+            component={userIsAuthenticated(
+              userIsAuthorized(mobileFirst(MobileDashboardView, DashboardView))
+            )}
+          />
+        )
+      },
+      {
+        path: '/:username/sketches',
+        element: (
+          <ElementFromComponent
+            component={mobileFirst(MobileDashboardView, DashboardView)}
+          />
+        )
+      },
+      {
+        path: '/:username/sketches/:project_id',
+        element: (
+          <ElementFromComponent
+            component={mobileFirst(MobileIDEView, IDEView)}
+          />
+        )
+      },
+      {
+        path: '/:username/sketches/:project_id/add-to-collection',
+        element: (
+          <ElementFromComponent
+            component={mobileFirst(MobileIDEView, IDEView)}
+          />
+        )
+      },
+      {
+        path: '/:username/collections',
+        element: (
+          <ElementFromComponent
+            component={mobileFirst(MobileDashboardView, DashboardView)}
+          />
+        )
+      },
+      {
+        path: '/:username/collections/:collection_id',
+        element: <ElementFromComponent component={CollectionView} />
+      },
+      {
+        path: '/sketches',
+        element: <RedirectToUser url="/:username/sketches" />
+      },
+      {
+        path: '/assets',
+        element: <RedirectToUser url="/:username/assets" />
+      },
+      {
+        path: '/account',
+        element: (
+          <ElementFromComponent component={userIsAuthenticated(AccountView)} />
+        )
+      },
+      {
+        path: '/about',
+        element: <ElementFromComponent component={IDEView} />
+      },
+      /* Mobile-only Routes */
+      { path: '/preview', element: <MobileSketchView /> },
+      { path: '/preferences', element: <MobilePreferences /> },
+      { path: '/privacy-policy', element: <Legal /> },
+      { path: '/terms-of-use', element: <Legal /> },
+      {
+        path: '/code-of-conduct',
+        element: <Legal />
+      }
+    ]
+  }
+];
 
 export default routes;

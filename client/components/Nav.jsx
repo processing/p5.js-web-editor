@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { withTranslation } from 'react-i18next';
 import { languageKeyToLabel } from '../i18n';
@@ -17,6 +16,7 @@ import { logoutUser } from '../modules/User/actions';
 
 import getConfig from '../utils/getConfig';
 import { metaKeyName, metaKey } from '../utils/metaKey';
+import { withRouter } from '../utils/router-compatibilty';
 import { getIsUserOwner } from '../modules/IDE/selectors/users';
 
 import CaretLeftIcon from '../images/left-arrow.svg';

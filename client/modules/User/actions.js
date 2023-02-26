@@ -1,6 +1,6 @@
-import { browserHistory } from 'react-router';
 import { FORM_ERROR } from 'final-form';
 import * as ActionTypes from '../../constants';
+import { navigate } from '../../router';
 import apiClient from '../../utils/apiClient';
 import { showErrorModal, justOpenedProject } from '../IDE/actions/ide';
 import { setLanguage } from '../IDE/actions/preferences';
@@ -57,7 +57,7 @@ export function validateAndLoginUser(formProps) {
             })
           );
           dispatch(justOpenedProject());
-          browserHistory.push(previousPath);
+          navigate(previousPath);
           resolve();
         })
         .catch((error) =>
@@ -78,7 +78,7 @@ export function validateAndSignUpUser(formValues) {
         .then((response) => {
           dispatch(authenticateUser(response.data));
           dispatch(justOpenedProject());
-          browserHistory.push(previousPath);
+          navigate(previousPath);
           resolve();
         })
         .catch((error) => {
@@ -138,7 +138,7 @@ export function resetProject(dispatch) {
   dispatch({
     type: ActionTypes.CLEAR_CONSOLE
   });
-  browserHistory.push('/');
+  navigate('/');
 }
 
 export function logoutUser() {
@@ -250,7 +250,7 @@ export function updatePassword(formValues, token) {
         .post(`/reset-password/${token}`, formValues)
         .then((response) => {
           dispatch(authenticateUser(response.data));
-          browserHistory.push('/');
+          navigate('/');
           resolve();
         })
         .catch((error) => {

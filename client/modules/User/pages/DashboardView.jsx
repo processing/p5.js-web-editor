@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router';
 import { withTranslation } from 'react-i18next';
 
 import Button from '../../../common/Button';
@@ -30,9 +29,7 @@ class DashboardView extends React.Component {
 
   constructor(props) {
     super(props);
-    this.closeAccountPage = this.closeAccountPage.bind(this);
     this.createNewSketch = this.createNewSketch.bind(this);
-    this.gotoHomePage = this.gotoHomePage.bind(this);
     this.toggleCollectionCreate = this.toggleCollectionCreate.bind(this);
     this.state = {
       collectionCreateVisible: false
@@ -43,16 +40,8 @@ class DashboardView extends React.Component {
     document.body.className = this.props.theme;
   }
 
-  closeAccountPage() {
-    browserHistory.push(this.props.previousPath);
-  }
-
   createNewSketch() {
     this.props.newProject();
-  }
-
-  gotoHomePage() {
-    browserHistory.push('/');
   }
 
   selectedTabKey() {
@@ -173,7 +162,6 @@ class DashboardView extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    previousPath: state.ide.previousPath,
     user: state.user,
     theme: state.preferences.theme
   };
@@ -191,7 +179,6 @@ DashboardView.propTypes = {
   params: PropTypes.shape({
     username: PropTypes.string.isRequired
   }).isRequired,
-  previousPath: PropTypes.string.isRequired,
   theme: PropTypes.string.isRequired,
   user: PropTypes.shape({
     username: PropTypes.string

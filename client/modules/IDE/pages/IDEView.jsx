@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 import SplitPane from 'react-split-pane';
@@ -618,5 +617,5 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default withTranslation()(
-  withRouter(connect(mapStateToProps, mapDispatchToProps)(IDEView))
+  connect(mapStateToProps, mapDispatchToProps)(IDEView)
 );

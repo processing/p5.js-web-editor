@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
+import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -265,7 +265,6 @@ const MobileIDEView = (props) => {
     project,
     selectedFile,
     user,
-    params,
     unsavedChanges,
     expandConsole,
     collapseConsole,
@@ -281,6 +280,8 @@ const MobileIDEView = (props) => {
     toast,
     isUserOwner
   } = props;
+
+  const params = useParams();
 
   const [cmController, setCmController] = useState(null); // eslint-disable-line
 
@@ -508,6 +509,4 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(MobileIDEView)
-);
+export default connect(mapStateToProps, mapDispatchToProps)(MobileIDEView);

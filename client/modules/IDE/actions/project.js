@@ -1,7 +1,7 @@
-import { browserHistory } from 'react-router';
 import objectID from 'bson-objectid';
 import each from 'async/each';
 import isEqual from 'lodash/isEqual';
+import { navigate } from '../../../router';
 import apiClient from '../../../utils/apiClient';
 import getConfig from '../../../utils/getConfig';
 import * as ActionTypes from '../../../constants';
@@ -214,7 +214,7 @@ export function saveProject(
 
         dispatch(setNewProject(synchedProject));
         dispatch(setUnsavedChanges(false));
-        browserHistory.push(
+        navigate(
           `/${response.data.user.username}/sketches/${response.data.id}`
         );
 
@@ -271,7 +271,7 @@ export function resetProject() {
 
 export function newProject() {
   setTimeout(() => {
-    browserHistory.push('/');
+    navigate('/');
   }, 0);
   return resetProject();
 }
@@ -334,7 +334,7 @@ export function cloneProject(project) {
         apiClient
           .post('/projects', formParams)
           .then((response) => {
-            browserHistory.push(
+            navigate(
               `/${response.data.user.username}/sketches/${response.data.id}`
             );
             dispatch(setNewProject(response.data));
