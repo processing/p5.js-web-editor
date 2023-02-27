@@ -227,7 +227,7 @@ function injectLocalFiles(files, htmlFile, options) {
   const accessiblelib = sketchDoc.createElement('script');
   accessiblelib.setAttribute(
     'src',
-    'https://cdn.jsdelivr.net/gh/processing/p5.accessibility@v0.1.1/dist/p5.accessibility.js'
+    'https://cdn.jsdelivr.net/gh/processing/p5.accessibility@0.1.1/dist/p5-accessibility.js'
   );
   const accessibleOutputs = sketchDoc.createElement('section');
   accessibleOutputs.setAttribute('id', 'accessible-outputs');
