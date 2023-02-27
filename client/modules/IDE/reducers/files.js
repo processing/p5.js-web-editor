@@ -7,6 +7,7 @@ const defaultSketch = `function setup() {
 
 function draw() {
   background(220);
+  describe("Write description of your project")
 }`;
 
 const defaultHTML = `<!DOCTYPE html>
