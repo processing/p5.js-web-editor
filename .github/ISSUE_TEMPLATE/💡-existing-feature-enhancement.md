@@ -1,8 +1,8 @@
 ---
-name: Existing Feature Enhancement
+name: "\U0001F4A1 Existing Feature Enhancement"
 about: This template is for suggesting an improvement for an existing feature.
 title: ''
-labels: enhancement
+labels: ''
 assignees: ''
 
 ---
