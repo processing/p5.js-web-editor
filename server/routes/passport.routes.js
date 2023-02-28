@@ -3,7 +3,12 @@ import passport from 'passport';
 
 const router = new Router();
 
-router.get('/auth/github', passport.authenticate('github'));
+router.get(
+  '/auth/github',
+  passport.authenticate('github', { failureRedirect: '/login' }, (req, res) => {
+    res.redirect('/');
+  })
+);
 router.get('/auth/github/callback', (req, res, next) => {
   passport.authenticate(
     'github',
