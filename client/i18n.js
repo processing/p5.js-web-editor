@@ -1,11 +1,14 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import Backend from 'i18next-http-backend';
+
 import {
   enUS,
   es,
   ja,
   hi,
+  it,
+  ko,
   ptBR,
   de,
   frCA,
@@ -22,7 +25,9 @@ const availableLanguages = [
   'es-419',
   'fr-CA',
   'hi',
+  'it',
   'ja',
+  'ko',
   'pt-BR',
   'sv',
   'uk-UA',
@@ -37,7 +42,9 @@ export function languageKeyToLabel(lang) {
     'es-419': 'Español',
     'fr-CA': 'Français',
     hi: 'हिन्दी',
+    it: 'Italiano',
     ja: '日本語',
+    ko: '한국어',
     'pt-BR': 'Português',
     sv: 'Svenska',
     'uk-UA': 'Українська',
@@ -54,7 +61,9 @@ export function languageKeyToDateLocale(lang) {
     'es-419': es,
     'fr-CA': frCA,
     hi,
+    it,
     ja,
+    ko,
     'pt-BR': ptBR,
     sv,
     'uk-UA': uk,
