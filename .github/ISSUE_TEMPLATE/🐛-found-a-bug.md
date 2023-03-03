@@ -1,6 +1,8 @@
 ---
-name: Found a Bug
-about: This template is for reporting bugs (broken or incorrect behavior). If you have questions about your own code, please visit our forum discourse.processing.org instead.
+name: "\U0001F41B Found a Bug"
+about: This template is for reporting bugs (broken or incorrect behavior). If you
+  have questions about your own code, please visit our forum discourse.processing.org
+  instead.
 title: ''
 labels: bug
 assignees: ''
