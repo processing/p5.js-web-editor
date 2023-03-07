@@ -16,9 +16,9 @@ Learn more about [our community](https://p5js.org/community/) and read our commu
 
 Make your first sketch in the [p5.js Editor](https://editor.p5js.org/)! Learn more about sketching with p5.js on the [Get Started](https://p5js.org/get-started/) and find everything you can do in the [Reference](https://p5js.org/reference/). You can also look at [examples](https://editor.p5js.org/p5/sketches) and remix them in the p5.js Editor.
 
-## Setting Development Environment
+## Setting Up the Development Environment
 
-- Refer here https://github.com/processing/p5.js-web-editor/blob/develop/contributor_docs/installation.md
+- Refer to [this documentation for setting up your environment](https://github.com/processing/p5.js-web-editor/blob/develop/contributor_docs/installation.md)
 
 
 
