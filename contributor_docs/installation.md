@@ -67,16 +67,8 @@ Note that this takes up a significant amount of space on your machine. Make sure
 =======
    * Mac: https://www.docker.com/docker-mac
    * Windows: https://www.docker.com/docker-windows
-2. Clone this repository and cd into it
-3. `$ docker-compose -f docker-compose-development.yml build`
-4. `$ cp .env.example .env`
-5. (Optional) Update `.env` with necessary keys to enable certain app behaviours, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
-6. `$ docker-compose -f docker-compose-development.yml run --rm app npm run fetch-examples` -  note that you need to configure your GitHub Credentials, which you can do by following the [Github API Configuration](#github-api-configuration) section.
-7. Enable Prettier in your text editor by following [this guide](https://prettier.io/docs/en/editors.html).
->>>>>>> 1129cb97b545e7fa0a7d463fcf3f1c596e1fbf49:developer_docs/installation.md
 
 Now, anytime you wish to start the server with its dependencies, you can run:
-
 9. `$ docker-compose -f docker-compose-development.yml up`
 10. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
 
