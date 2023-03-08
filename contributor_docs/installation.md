@@ -54,7 +54,6 @@ Using Docker, you can have a complete, consistent development environment withou
 Note that this takes up a significant amount of space on your machine. Make sure you have at least 5GB free.
 
 1. Install Docker for your operating system
-<<<<<<< HEAD:contributor_docs/installation.md
    * [Mac](https://www.docker.com/docker-mac)
    * [Windows](https://www.docker.com/docker-windows)
 2. Install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
@@ -64,7 +63,6 @@ Note that this takes up a significant amount of space on your machine. Make sure
 6. (Optional) Update `.env` with necessary keys to enable certain app behavoirs, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
 7. `$ docker-compose -f docker-compose-development.yml run --rm app npm run fetch-examples` -  note that you need to configure your GitHub Credentials, which you can do by following the [Github API Configuration](#github-api-configuration) section.
 8. Enable Prettier in your text editor by following [this guide](https://prettier.io/docs/en/editors.html).
-=======
    * Mac: https://www.docker.com/docker-mac
    * Windows: https://www.docker.com/docker-windows
 
