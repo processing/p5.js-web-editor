@@ -68,7 +68,8 @@ Note that this takes up a significant amount of space on your machine. Make sure
    * Mac: https://www.docker.com/docker-mac
    * Windows: https://www.docker.com/docker-windows
 
-Now, anytime you wish to start the server with its dependencies, you can run:
+Now, anytime you wish to start the server with its dependencies, you can run: 
+
 9. `$ docker-compose -f docker-compose-development.yml up`
 10. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
 
