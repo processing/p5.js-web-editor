@@ -26,7 +26,6 @@ import * as ProjectActions from '../actions/project';
 import * as EditorAccessibilityActions from '../actions/editorAccessibility';
 import * as PreferencesActions from '../actions/preferences';
 import * as UserActions from '../../User/actions';
-import * as ToastActions from '../actions/toast';
 import * as ConsoleActions from '../actions/console';
 import { getHTMLFile } from '../reducers/files';
 import Overlay from '../../App/components/Overlay';
@@ -255,7 +254,7 @@ class IDEView extends React.Component {
         <Helmet>
           <title>{getTitle(this.props)}</title>
         </Helmet>
-        {this.props.toast.isVisible && <Toast />}
+        <Toast />
         <Nav
           warnIfUnsavedChanges={this.handleUnsavedChanges}
           cmController={this.cmController}
@@ -396,7 +395,7 @@ class IDEView extends React.Component {
             previousPath={this.props.ide.previousPath}
             ariaLabel={this.props.t('IDEView.SubmitFeedbackARIA')}
           >
-            <Feedback previousPath={this.props.ide.previousPath} />
+            <Feedback />
           </Overlay>
         )}
         {this.props.location.pathname.match(/add-to-collection$/) && (
@@ -557,9 +556,6 @@ IDEView.propTypes = {
   closeNewFileModal: PropTypes.func.isRequired,
   closeShareModal: PropTypes.func.isRequired,
   closeKeyboardShortcutModal: PropTypes.func.isRequired,
-  toast: PropTypes.shape({
-    isVisible: PropTypes.bool.isRequired
-  }).isRequired,
   autosaveProject: PropTypes.func.isRequired,
   router: PropTypes.shape({
     setRouteLeaveHook: PropTypes.func
@@ -590,7 +586,6 @@ function mapStateToProps(state) {
     editorAccessibility: state.editorAccessibility,
     user: state.user,
     project: state.project,
-    toast: state.toast,
     console: state.console,
     isUserOwner: getIsUserOwner(state)
   };
@@ -606,7 +601,6 @@ function mapDispatchToProps(dispatch) {
       IDEActions,
       PreferencesActions,
       UserActions,
-      ToastActions,
       ConsoleActions
     ),
     dispatch
