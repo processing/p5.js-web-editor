@@ -68,7 +68,7 @@ class AccountView extends React.Component {
         <Helmet>
           <title>{this.props.t('AccountView.Title')}</title>
         </Helmet>
-        {this.props.toast.isVisible && <Toast />}
+        <Toast />
 
         <Nav layout="dashboard" />
 
@@ -129,8 +129,7 @@ function mapStateToProps(state) {
     previousPath: state.ide.previousPath,
     user: state.user,
     apiKeys: state.user.apiKeys,
-    theme: state.preferences.theme,
-    toast: state.toast
+    theme: state.preferences.theme
   };
 }
 
@@ -151,9 +150,6 @@ AccountView.propTypes = {
   location: PropTypes.shape({
     search: PropTypes.string.isRequired,
     pathname: PropTypes.string.isRequired
-  }).isRequired,
-  toast: PropTypes.shape({
-    isVisible: PropTypes.bool.isRequired
   }).isRequired
 };
 
