@@ -1,3 +1,4 @@
+import { THEME_KEY } from '../../../constants';
 import * as ActionTypes from '../../../constants';
 
 const initialState = {
@@ -8,7 +9,7 @@ const initialState = {
   lintWarning: false,
   textOutput: false,
   gridOutput: false,
-  theme: 'light',
+  theme: localStorage.getItem(THEME_KEY) || 'light',
   autorefresh: false,
   language: 'en-US',
   autocloseBracketsQuotes: true
@@ -31,6 +32,7 @@ const preferences = (state = initialState, action) => {
     case ActionTypes.SET_PREFERENCES:
       return action.preferences;
     case ActionTypes.SET_THEME:
+      localStorage.setItem(THEME_KEY, action.value);
       return Object.assign({}, state, { theme: action.value });
     case ActionTypes.SET_AUTOREFRESH:
       return Object.assign({}, state, { autorefresh: action.value });
