@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
-import { withTranslation } from 'react-i18next';
+import { useTranslation, withTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
 import Button from '../../../common/Button';
@@ -28,9 +28,10 @@ import ArrowUpIcon from '../../../images/sort-arrow-up.svg';
 import ArrowDownIcon from '../../../images/sort-arrow-down.svg';
 import RemoveIcon from '../../../images/close.svg';
 
-const ShareURL = ({ value, t }) => {
+const ShareURL = ({ value }) => {
   const [showURL, setShowURL] = useState(false);
   const node = useRef();
+  const { t } = useTranslation();
 
   const handleClickOutside = (e) => {
     if (node.current.contains(e.target)) {
@@ -69,17 +70,17 @@ const ShareURL = ({ value, t }) => {
 };
 
 ShareURL.propTypes = {
-  value: PropTypes.string.isRequired,
-  t: PropTypes.func.isRequired
+  value: PropTypes.string.isRequired
 };
 
 const CollectionItemRowBase = ({
   collection,
   item,
   isOwner,
-  removeFromCollection,
-  t
+  removeFromCollection
 }) => {
+  const { t } = useTranslation();
+
   const projectIsDeleted = item.isDeleted;
 
   const handleSketchRemove = () => {
@@ -150,8 +151,7 @@ CollectionItemRowBase.propTypes = {
     username: PropTypes.string,
     authenticated: PropTypes.bool.isRequired
   }).isRequired,
-  removeFromCollection: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired
+  removeFromCollection: PropTypes.func.isRequired
 };
 
 function mapDispatchToPropsSketchListRow(dispatch) {
@@ -310,7 +310,7 @@ class Collection extends React.Component {
 
           <div className="collection-metadata__column--right">
             <p className="collection-metadata__share">
-              <ShareURL value={`${baseURL}${id}`} t={this.props.t} />
+              <ShareURL value={`${baseURL}${id}`} />
             </p>
             {this.isOwner() && (
               <Button onClick={this.showAddSketches}>
@@ -460,7 +460,6 @@ class Collection extends React.Component {
                         username={this.getUsername()}
                         collection={this.props.collection}
                         isOwner={isOwner}
-                        t={this.props.t}
                       />
                     ))}
                   </tbody>

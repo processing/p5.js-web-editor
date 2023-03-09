@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Helmet } from 'react-helmet';
-import { withTranslation } from 'react-i18next';
+import { useTranslation, withTranslation } from 'react-i18next';
 import { withRouter, browserHistory } from 'react-router';
 import { parse } from 'query-string';
 import { createApiKey, removeApiKey } from '../actions';
@@ -16,8 +16,10 @@ import ErrorModal from '../../IDE/components/ErrorModal';
 import Overlay from '../../App/components/Overlay';
 import Toast from '../../IDE/components/Toast';
 
-function SocialLoginPanel(props) {
-  const { user, t } = props;
+function SocialLoginPanel() {
+  const { t } = useTranslation();
+  const isGithub = useSelector((state) => !!state.user.github);
+  const isGoogle = useSelector((state) => !!state.user.google);
   return (
     <React.Fragment>
       <AccountForm />
@@ -25,32 +27,23 @@ function SocialLoginPanel(props) {
         {t('AccountView.SocialLogin')}
       </h2>
       <p className="account__social-text">
-        {/* eslint-disable-next-line react/prop-types */}
         {t('AccountView.SocialLoginDescription')}
       </p>
       <div className="account__social-stack">
         <SocialAuthButton
           service={SocialAuthButton.services.github}
           linkStyle
-          isConnected={!!user.github}
+          isConnected={isGithub}
         />
         <SocialAuthButton
           service={SocialAuthButton.services.google}
           linkStyle
-          isConnected={!!user.google}
+          isConnected={isGoogle}
         />
       </div>
     </React.Fragment>
   );
 }
-
-SocialLoginPanel.propTypes = {
-  user: PropTypes.shape({
-    github: PropTypes.string,
-    google: PropTypes.string
-  }).isRequired,
-  t: PropTypes.func.isRequired
-};
 
 class AccountView extends React.Component {
   componentDidMount() {
@@ -68,7 +61,7 @@ class AccountView extends React.Component {
         <Helmet>
           <title>{this.props.t('AccountView.Title')}</title>
         </Helmet>
-        {this.props.toast.isVisible && <Toast />}
+        <Toast />
 
         <Nav layout="dashboard" />
 
@@ -109,14 +102,14 @@ class AccountView extends React.Component {
                 </div>
               </TabList>
               <TabPanel>
-                <SocialLoginPanel {...this.props} />
+                <SocialLoginPanel />
               </TabPanel>
               <TabPanel>
                 <APIKeyForm {...this.props} />
               </TabPanel>
             </Tabs>
           )}
-          {!accessTokensUIEnabled && <SocialLoginPanel {...this.props} />}
+          {!accessTokensUIEnabled && <SocialLoginPanel />}
         </main>
       </div>
     );
@@ -129,8 +122,7 @@ function mapStateToProps(state) {
     previousPath: state.ide.previousPath,
     user: state.user,
     apiKeys: state.user.apiKeys,
-    theme: state.preferences.theme,
-    toast: state.toast
+    theme: state.preferences.theme
   };
 }
 
@@ -151,9 +143,6 @@ AccountView.propTypes = {
   location: PropTypes.shape({
     search: PropTypes.string.isRequired,
     pathname: PropTypes.string.isRequired
-  }).isRequired,
-  toast: PropTypes.shape({
-    isVisible: PropTypes.bool.isRequired
   }).isRequired
 };
 

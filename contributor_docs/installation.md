@@ -25,7 +25,6 @@ _Note_: The installation steps assume you are using a Unix-like shell. If you ar
 7. Install MongoDB and make sure it is running
    * For Mac OSX with [homebrew](http://brew.sh/): `brew tap mongodb/brew` then `brew install mongodb-community` and finally start the server with `brew services start mongodb-community` or you can visit the installation guide here [Installation Guide For MacOS](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/)
    * For Windows and Linux: [MongoDB Installation](https://docs.mongodb.com/manual/installation/)
-<<<<<<< HEAD:contributor_docs/installation.md
 8. `$ cp .env.example .env`
 9. (Optional) Update `.env` with necessary keys to enable certain app behaviors, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
 10. Run `$ npm run fetch-examples` to download the example sketches into a user called 'p5'. Note that you need to configure your GitHub Credentials, which you can do by following the [Github API Configuration](#github-api-configuration) section.
@@ -34,16 +33,6 @@ _Note_: The installation steps assume you are using a Unix-like shell. If you ar
 13. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
 14. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
 15. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
-=======
-7. `$ cp .env.example .env`
-8. (Optional) Update `.env` with necessary keys to enable certain app behaviours, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
-9. Run `$ npm run fetch-examples` to download the example sketches into a user called 'p5'. Note that you need to configure your GitHub Credentials, which you can do by following the [Github API Configuration](#github-api-configuration) section.
-10. Enable Prettier in your text editor by following [this guide](https://prettier.io/docs/en/editors.html).
-11. `$ npm start`
-12. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
-13. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
-14. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
->>>>>>> 1129cb97b545e7fa0a7d463fcf3f1c596e1fbf49:developer_docs/installation.md
 
 ## Docker Installation
 
@@ -54,7 +43,6 @@ Using Docker, you can have a complete, consistent development environment withou
 Note that this takes up a significant amount of space on your machine. Make sure you have at least 5GB free.
 
 1. Install Docker for your operating system
-<<<<<<< HEAD:contributor_docs/installation.md
    * [Mac](https://www.docker.com/docker-mac)
    * [Windows](https://www.docker.com/docker-windows)
 2. Install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
@@ -64,16 +52,6 @@ Note that this takes up a significant amount of space on your machine. Make sure
 6. (Optional) Update `.env` with necessary keys to enable certain app behavoirs, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
 7. `$ docker-compose -f docker-compose-development.yml run --rm app npm run fetch-examples` -  note that you need to configure your GitHub Credentials, which you can do by following the [Github API Configuration](#github-api-configuration) section.
 8. Enable Prettier in your text editor by following [this guide](https://prettier.io/docs/en/editors.html).
-=======
-   * Mac: https://www.docker.com/docker-mac
-   * Windows: https://www.docker.com/docker-windows
-2. Clone this repository and cd into it
-3. `$ docker-compose -f docker-compose-development.yml build`
-4. `$ cp .env.example .env`
-5. (Optional) Update `.env` with necessary keys to enable certain app behaviours, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
-6. `$ docker-compose -f docker-compose-development.yml run --rm app npm run fetch-examples` -  note that you need to configure your GitHub Credentials, which you can do by following the [Github API Configuration](#github-api-configuration) section.
-7. Enable Prettier in your text editor by following [this guide](https://prettier.io/docs/en/editors.html).
->>>>>>> 1129cb97b545e7fa0a7d463fcf3f1c596e1fbf49:developer_docs/installation.md
 
 Now, anytime you wish to start the server with its dependencies, you can run:
 
