@@ -9,9 +9,9 @@
 		border: none;
 		outline: none;
 		background-color: getThemifyVariable('toolbar-button-background-color');
-		color: getThemifyVariable('toolbar-button-color');
+		color: getThemifyVariable('logo-color');
 		& g, & path {
-			fill: getThemifyVariable('toolbar-button-color');
+			fill: getThemifyVariable('logo-color');
 		}
 		&:hover {
 			background-color: getThemifyVariable('button-background-hover-color');

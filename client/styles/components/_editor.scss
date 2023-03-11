@@ -360,9 +360,9 @@ pre.CodeMirror-line {
   height: calc(100% - #{29 / $base-font-size}rem);
   width: 100%;
   position: absolute;
-  @include themify() {
-    border: 1px solid getThemifyVariable('ide-border-color');
-  }
+  // @include themify() {
+  //   border-right: 1px solid getThemifyVariable('ide-border-color');
+  // }
   &.editor-holder--hidden .CodeMirror {
     display: none;
   }
@@ -380,6 +380,7 @@ pre.CodeMirror-line {
   padding-top: #{7 / $base-font-size}rem;
   padding-left: #{56 / $base-font-size}rem;
   font-size: #{12 / $base-font-size}rem;
+  font-weight: 600;
   display: flex;
   justify-content: space-between;
 }

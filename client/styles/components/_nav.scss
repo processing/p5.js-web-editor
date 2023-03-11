@@ -46,6 +46,9 @@
   & button {
     padding: #{12 / $base-font-size}rem #{10 / $base-font-size}rem;
   }
+  .nav__item-header {
+    font-weight: 600;
+  }
 }
 
 .nav__item--no-icon {

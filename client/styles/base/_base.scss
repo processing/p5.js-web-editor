@@ -2,6 +2,26 @@
 	box-sizing: border-box;
 }
 
+::-webkit-scrollbar {
+	width: 7px;
+  }
+  /* Track */
+  ::-webkit-scrollbar-track {
+	@include themify() {
+		background-color: getThemifyVariable('modal-background-color');
+	}
+	border-radius: 999px;
+  }
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+	background: #b1b1b1;
+	border-radius: 99999px;
+  }
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+	background: #a8a8a8;
+}
+
 html, body {
 	font-size: #{$base-font-size}px;
 }
@@ -103,7 +123,8 @@ button:focus,
 input:focus,
 textarea:focus {
 	outline: none;
-	box-shadow: 0 0 0 1px $outline-color;
+	background-color: #ed225b2a;
+	border-radius: 5px;
 }
 
 // screen reader only class
