@@ -267,7 +267,7 @@ const Console = () => {
           style={{ fontSize }}
         >
           <ConsoleFeed
-            variant={theme === "light" ? "light" : "dark"}
+            variant={theme === 'light' ? 'light' : 'dark'}
             styles={getConsoleFeedStyle(theme, fontSize)}
             logs={consoleEvents}
             key={`${theme}-${fontSize}`}
