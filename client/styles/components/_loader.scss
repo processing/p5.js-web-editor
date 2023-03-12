@@ -4,6 +4,9 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	@include themify() {
+		background-color: getThemifyVariable('background-color');
+	}
 }
 
 

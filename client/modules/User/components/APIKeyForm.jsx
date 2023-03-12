@@ -52,11 +52,7 @@ class APIKeyForm extends React.Component {
 
     if (hasApiKeys) {
       return (
-        <APIKeyList
-          apiKeys={this.props.apiKeys}
-          onRemove={this.removeKey}
-          t={this.props.t}
-        />
+        <APIKeyList apiKeys={this.props.apiKeys} onRemove={this.removeKey} />
       );
     }
     return <p>{this.props.t('APIKeyForm.NoTokens')}</p>;
