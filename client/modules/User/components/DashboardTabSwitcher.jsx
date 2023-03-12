@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 
-const TabKey = {
+export const TabKey = {
   assets: 'assets',
   collections: 'collections',
   sketches: 'sketches'
@@ -31,39 +31,40 @@ Tab.propTypes = {
   to: PropTypes.string.isRequired
 };
 
-const DashboardTabSwitcher = ({ currentTab, isOwner, username, t }) => (
-  <ul className="dashboard-header__switcher">
-    <div className="dashboard-header__tabs">
-      <Tab
-        to={`/${username}/sketches`}
-        isSelected={currentTab === TabKey.sketches}
-      >
-        {t('DashboardTabSwitcher.Sketches')}
-      </Tab>
-      <Tab
-        to={`/${username}/collections`}
-        isSelected={currentTab === TabKey.collections}
-      >
-        {t('DashboardTabSwitcher.Collections')}
-      </Tab>
-      {isOwner && (
+const DashboardTabSwitcher = ({ currentTab, isOwner, username }) => {
+  const { t } = useTranslation();
+  return (
+    <ul className="dashboard-header__switcher">
+      <div className="dashboard-header__tabs">
         <Tab
-          to={`/${username}/assets`}
-          isSelected={currentTab === TabKey.assets}
+          to={`/${username}/sketches`}
+          isSelected={currentTab === TabKey.sketches}
         >
-          {t('DashboardTabSwitcher.Assets')}
+          {t('DashboardTabSwitcher.Sketches')}
         </Tab>
-      )}
-    </div>
-  </ul>
-);
+        <Tab
+          to={`/${username}/collections`}
+          isSelected={currentTab === TabKey.collections}
+        >
+          {t('DashboardTabSwitcher.Collections')}
+        </Tab>
+        {isOwner && (
+          <Tab
+            to={`/${username}/assets`}
+            isSelected={currentTab === TabKey.assets}
+          >
+            {t('DashboardTabSwitcher.Assets')}
+          </Tab>
+        )}
+      </div>
+    </ul>
+  );
+};
 
 DashboardTabSwitcher.propTypes = {
   currentTab: PropTypes.string.isRequired,
   isOwner: PropTypes.bool.isRequired,
-  username: PropTypes.string.isRequired,
-  t: PropTypes.func.isRequired
+  username: PropTypes.string.isRequired
 };
 
-const DashboardTabSwitcherPublic = withTranslation()(DashboardTabSwitcher);
-export { DashboardTabSwitcherPublic as default, TabKey };
+export default DashboardTabSwitcher;
