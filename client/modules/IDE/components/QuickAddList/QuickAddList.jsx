@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import Icons from './Icons';
 
-const Item = ({ isAdded, onSelect, name, url, t }) => {
+const Item = ({ isAdded, onSelect, name, url }) => {
+  const { t } = useTranslation();
   const buttonLabel = isAdded
     ? t('QuickAddList.ButtonRemoveARIA')
     : t('QuickAddList.ButtonAddToCollectionARIA');
@@ -41,11 +42,10 @@ Item.propTypes = {
   name: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
   isAdded: PropTypes.bool.isRequired,
-  onSelect: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired
+  onSelect: PropTypes.func.isRequired
 };
 
-const QuickAddList = ({ items, onAdd, onRemove, t }) => {
+const QuickAddList = ({ items, onAdd, onRemove }) => {
   const handleAction = (item) => {
     if (item.isAdded) {
       onRemove(item);
@@ -59,7 +59,6 @@ const QuickAddList = ({ items, onAdd, onRemove, t }) => {
       {items.map((item) => (
         <Item
           key={item.id}
-          t={t}
           {...item}
           onSelect={(event) => {
             event.stopPropagation();
@@ -75,8 +74,7 @@ const QuickAddList = ({ items, onAdd, onRemove, t }) => {
 QuickAddList.propTypes = {
   items: PropTypes.arrayOf(ItemType).isRequired,
   onAdd: PropTypes.func.isRequired,
-  onRemove: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired
+  onRemove: PropTypes.func.isRequired
 };
 
-export default withTranslation()(QuickAddList);
+export default QuickAddList;
