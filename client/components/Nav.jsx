@@ -278,6 +278,7 @@ class Nav extends React.PureComponent {
             onClick={this.toggleDropdownForFile}
             onBlur={this.handleBlur}
             onFocus={this.clearHideTimeout}
+            title="File"
             onMouseOver={() => {
               if (this.state.dropdownOpen !== 'none') {
                 this.setDropdown('file');
@@ -396,6 +397,7 @@ class Nav extends React.PureComponent {
             onClick={this.toggleDropdownForEdit}
             onBlur={this.handleBlur}
             onFocus={this.clearHideTimeout}
+            title="Edit"
             onMouseOver={() => {
               if (this.state.dropdownOpen !== 'none') {
                 this.setDropdown('edit');
@@ -454,6 +456,7 @@ class Nav extends React.PureComponent {
             onClick={this.toggleDropdownForSketch}
             onBlur={this.handleBlur}
             onFocus={this.clearHideTimeout}
+            title="Sketch"
             onMouseOver={() => {
               if (this.state.dropdownOpen !== 'none') {
                 this.setDropdown('sketch');
@@ -539,6 +542,7 @@ class Nav extends React.PureComponent {
             onClick={this.toggleDropdownForHelp}
             onBlur={this.handleBlur}
             onFocus={this.clearHideTimeout}
+            title="Help"
             onMouseOver={() => {
               if (this.state.dropdownOpen !== 'none') {
                 this.setDropdown('help');
@@ -600,6 +604,7 @@ class Nav extends React.PureComponent {
             onClick={this.toggleDropdownForLang}
             onBlur={this.handleBlur}
             onFocus={this.clearHideTimeout}
+            title="Language"
             onMouseOver={() => {
               if (this.state.dropdownOpen !== 'none') {
                 this.setDropdown('lang');
@@ -760,7 +765,7 @@ class Nav extends React.PureComponent {
           this.renderLanguageMenu(navDropdownState)}
         <li className="nav__item">
           <Link to="/login" className="nav__auth-button">
-            <span className="nav__item-header">
+            <span className="nav__item-header" title="Login">
               {this.props.t('Nav.Login')}
             </span>
           </Link>
@@ -768,7 +773,7 @@ class Nav extends React.PureComponent {
         <span className="nav__item-or">{this.props.t('Nav.LoginOr')}</span>
         <li className="nav__item">
           <Link to="/signup" className="nav__auth-button">
-            <span className="nav__item-header">
+            <span className="nav__item-header" title="SignUp">
               {this.props.t('Nav.SignUp')}
             </span>
           </Link>
