@@ -1,52 +1,46 @@
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
-import React from 'react';
-import { withTranslation } from 'react-i18next';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 
 import dates from '../../../utils/formatDate';
+import useInterval from '../hooks/useInterval';
+import { getIsUserOwner } from '../selectors/users';
 
-class Timer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.showSavedTime = this.showSavedTime.bind(this);
-  }
+const Timer = () => {
+  const projectSavedTime = useSelector((state) => state.project.updatedAt);
+  const isUserOwner = useSelector(getIsUserOwner);
 
-  componentDidMount() {
-    this.interval = setInterval(() => this.forceUpdate(), 10000);
-  }
+  const { t } = useTranslation();
 
-  componentWillUnmount() {
-    if (this.interval) {
-      clearInterval(this.interval);
-    }
-  }
+  const [timeAgo, setTimeAgo] = useState('');
 
-  showSavedTime() {
-    const timeAgo = dates.distanceInWordsToNow(this.props.projectSavedTime);
-    return this.props.t('Timer.SavedAgo', { timeAgo });
-  }
-
-  render() {
-    const timerClass = classNames({
-      'timer__saved-time': true,
-      'timer__saved-time--notOwner': !this.props.isUserOwner
-    });
-    return (
-      <span className={timerClass}>
-        {this.props.projectSavedTime !== '' ? this.showSavedTime() : null}
-      </span>
+  // Update immediately upon saving.
+  useEffect(() => {
+    setTimeAgo(
+      projectSavedTime ? dates.distanceInWordsToNow(projectSavedTime) : ''
     );
-  }
-}
+  }, [projectSavedTime]);
 
-Timer.propTypes = {
-  projectSavedTime: PropTypes.string.isRequired,
-  isUserOwner: PropTypes.bool,
-  t: PropTypes.func.isRequired
+  // Update every 10 seconds.
+  useInterval(
+    () =>
+      setTimeAgo(
+        projectSavedTime ? dates.distanceInWordsToNow(projectSavedTime) : ''
+      ),
+    10000
+  );
+
+  const timerClass = classNames({
+    'timer__saved-time': true,
+    'timer__saved-time--notOwner': !isUserOwner
+  });
+
+  return (
+    <span className={timerClass}>
+      {timeAgo ? t('Timer.SavedAgo', { timeAgo }) : null}
+    </span>
+  );
 };
 
-Timer.defaultProps = {
-  isUserOwner: false
-};
-
-export default withTranslation()(Timer);
+export default Timer;
