@@ -1,9 +1,10 @@
 import User from '../models/user';
 import Project from '../models/project';
 
-function insertErrorMessage(htmlFile) {
+function insertErrorMessage(htmlFile = '') {
   const html = htmlFile.split('</head>');
-  const metaDescription = 'A web editor for p5.js, a JavaScript library with the goal of making coding accessible to artists, designers, educators, and beginners.'; // eslint-disable-line
+  const metaDescription =
+    'A web editor for p5.js, a JavaScript library with the goal of making coding accessible to artists, designers, educators, and beginners.'; // eslint-disable-line
   html[0] = `
     ${html[0]}
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -49,7 +50,7 @@ function insertErrorMessage(htmlFile) {
       type='image/x-icon'
     >
   `;
-  const body = html[1].split('<body>');
+  const body = html[1]?.split('<body>') || [];
   html[1] = `
     ${body[0]}
     <body>
@@ -81,38 +82,38 @@ export function get404Sketch(callback) {
         let instanceMode = false;
 
         // Get sketch files
-        let htmlFile = sketch.files.filter((file) =>
+        let htmlFile = sketch?.files.filter((file) =>
           file.name.match(/.*\.html$/i)
         )[0].content;
-        const jsFiles = sketch.files.filter((file) =>
+        const jsFiles = sketch?.files.filter((file) =>
           file.name.match(/.*\.js$/i)
         );
-        const cssFiles = sketch.files.filter((file) =>
+        const cssFiles = sketch?.files.filter((file) =>
           file.name.match(/.*\.css$/i)
         );
-        const linkedFiles = sketch.files.filter((file) => file.url);
+        const linkedFiles = sketch?.files.filter((file) => file.url);
 
         instanceMode = jsFiles
-          .find((file) => file.name === 'sketch.js')
+          ?.find((file) => file.name === 'sketch.js')
           .content.includes('Instance Mode');
 
-        jsFiles.forEach((file) => {
+        jsFiles?.forEach((file) => {
           // Add js files as script tags
-          const html = htmlFile.split('</body>');
+          const html = htmlFile?.split('</body>');
           html[0] = `${html[0]}<script>${file.content}</script>`;
           htmlFile = html.join('</body>');
         });
 
-        cssFiles.forEach((file) => {
+        cssFiles?.forEach((file) => {
           // Add css files as style tags
-          const html = htmlFile.split('</head>');
+          const html = htmlFile?.split('</head>');
           html[0] = `${html[0]}<style>${file.content}</style>`;
           htmlFile = html.join('</head>');
         });
 
-        linkedFiles.forEach((file) => {
+        linkedFiles?.forEach((file) => {
           // Add linked files as link tags
-          const html = htmlFile.split('<head>');
+          const html = htmlFile?.split('<head>');
           html[1] = `<link href=${file.url}>${html[1]}`;
           htmlFile = html.join('<head>');
         });
@@ -121,17 +122,17 @@ export function get404Sketch(callback) {
         htmlFile = insertErrorMessage(htmlFile);
 
         // Fix links to assets
-        htmlFile = htmlFile.replace(
+        htmlFile = htmlFile?.replace(
           /'assets/g,
           "'https://rawgit.com/processing/p5.js-website/main/dist/assets/examples/assets/"
         );
-        htmlFile = htmlFile.replace(
+        htmlFile = htmlFile?.replace(
           /"assets/g,
           '"https://rawgit.com/processing/p5.js-website/main/dist/assets/examples/assets/'
         );
 
         // Change canvas size
-        htmlFile = htmlFile.replace(
+        htmlFile = htmlFile?.replace(
           /createCanvas\(\d+, ?\d+/g,
           instanceMode
             ? 'createCanvas(p.windowWidth, p.windowHeight'
