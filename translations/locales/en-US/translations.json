@@ -616,5 +616,11 @@
     "PrivacyPolicy": "Privacy Policy",
     "TermsOfUse": "Terms of Use",
     "CodeOfConduct": "Code of Conduct"
+  },
+  "NotFound": {
+    "Title": "404 Page Not Found | p5.js Web Editor",
+    "404PageNotFound": "404 Page Not Found",
+    "DoesNotExist": "The page you are trying to reach does not exist.",
+    "CheckURL": "Please check the URL or return to the <0>home page</0>."
   }
 }

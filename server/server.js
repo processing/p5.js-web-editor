@@ -29,7 +29,6 @@ import passportRoutes from './routes/passport.routes';
 import { requestsOfTypeJSON } from './utils/requestsOfType';
 
 import { renderIndex } from './views/index';
-import { get404Sketch } from './views/404Page';
 
 const app = new Express();
 const MongoStore = connectMongo(session);
@@ -183,7 +182,7 @@ app.use('/api', (error, req, res, next) => {
 app.get('*', (req, res) => {
   res.status(404);
   if (req.accepts('html')) {
-    get404Sketch((html) => res.send(html));
+    res.send(renderIndex());
     return;
   }
   if (req.accepts('json')) {

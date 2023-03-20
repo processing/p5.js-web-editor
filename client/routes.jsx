@@ -20,6 +20,7 @@ import MobileDashboardView from './modules/Mobile/MobileDashboardView';
 // import PrivacyPolicy from './modules/IDE/pages/PrivacyPolicy';
 // import TermsOfUse from './modules/IDE/pages/TermsOfUse';
 import Legal from './modules/IDE/pages/Legal';
+import NotFound from './modules/IDE/pages/NotFound';
 import { getUser } from './modules/User/actions';
 import { stopSketch } from './modules/IDE/actions/ide';
 import {
@@ -123,6 +124,7 @@ const routes = (store) => (
     <Route path="/privacy-policy" component={Legal} />
     <Route path="/terms-of-use" component={Legal} />
     <Route path="/code-of-conduct" component={Legal} />
+    <Route path="*" component={NotFound} />
   </Route>
 );
 
