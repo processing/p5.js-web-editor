@@ -1,20 +1,23 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import * as ToastActions from '../actions/toast';
+import { hideToast } from '../actions/toast';
 
 import ExitIcon from '../../../images/exit.svg';
 
-function Toast(props) {
+export default function Toast() {
+  const { text, isVisible } = useSelector((state) => state.toast);
+  const dispatch = useDispatch();
   const { t } = useTranslation();
+  if (!isVisible) {
+    return null;
+  }
   return (
     <section className="toast">
-      <p>{t(props.text)}</p>
+      <p>{t(text)}</p>
       <button
         className="toast__close"
-        onClick={props.hideToast}
+        onClick={() => dispatch(hideToast())}
         aria-label="Close Alert"
       >
         <ExitIcon focusable="false" aria-hidden="true" />
@@ -22,18 +25,3 @@ function Toast(props) {
     </section>
   );
 }
-
-Toast.propTypes = {
-  text: PropTypes.string.isRequired,
-  hideToast: PropTypes.func.isRequired
-};
-
-function mapStateToProps(state) {
-  return state.toast;
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(ToastActions, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Toast);
