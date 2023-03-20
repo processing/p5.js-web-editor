@@ -10,7 +10,7 @@ In order to simplify the translations process the following rules of thumb were 
 ## Technical Part
 
 * There is only one file to translate all the texts in any specific language, which is located under the directory, in the respective locale [subdirectory](https://github.com/processing/p5.js-web-editor/tree/develop/translations/locales)
-* The new language code must be added to [client/i18n.js](https://github.com/processing/p5.js-web-editor/blob/develop/client/i18n.js#L8)
+* The new language code must be added to [client/i18n.js](https://github.com/processing/p5.js-web-editor/blob/develop/client/i18n.js#L22)
 * New languages will need to be selected using a dropdown in the Nav component, specifically in function [renderLanguageMenu.](https://github.com/processing/p5.js-web-editor/blob/develop/client/components/Nav.jsx#L611)
 * Need to add `TRANSLATIONS_ENABLED=true` to `.env` to activate the dropdown for the languages.
 
@@ -42,7 +42,7 @@ export function languageKeyToDateLocale(lang) {
   const languageMap = {
     'en-US': enUS,
     'es-419': es,
-    'ja': ja
+    'ja': ja,
     'newLanguage': newLanguage
   };
   return languageMap[lang];
