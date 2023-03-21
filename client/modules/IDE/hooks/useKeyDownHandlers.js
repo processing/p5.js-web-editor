@@ -1,4 +1,5 @@
 import mapKeys from 'lodash/mapKeys';
+import PropTypes from 'prop-types';
 import { useCallback, useEffect, useRef } from 'react';
 
 /**
@@ -29,7 +30,7 @@ export default function useKeyDownHandlers(keyHandlers) {
    */
   const handleEvent = useCallback((e) => {
     const isMac = navigator.userAgent.toLowerCase().indexOf('mac') !== -1;
-    const isCtrl = isMac ? e.metaKey && this.isMac : e.ctrlKey;
+    const isCtrl = isMac ? e.metaKey : e.ctrlKey;
     if (e.shiftKey && isCtrl) {
       handlers.current[`ctrl-shift-${e.key.toLowerCase()}`]?.(e);
     }
@@ -48,8 +49,13 @@ export default function useKeyDownHandlers(keyHandlers) {
 
 /**
  * Component version can be used in class components where hooks can't be used.
+ *
+ * @param {Record<string, (e: KeyboardEvent) => void>} handlers
  */
 export const DocumentKeyDown = ({ handlers }) => {
   useKeyDownHandlers(handlers);
   return null;
+};
+DocumentKeyDown.propTypes = {
+  handlers: PropTypes.objectOf(PropTypes.func)
 };
