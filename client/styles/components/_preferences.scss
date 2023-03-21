@@ -17,7 +17,7 @@
     flex-direction: column;
   }
   & .react-tabs__tab-panel {
-    overflow-y: hidden;
+    overflow-y: auto;
   }
 }
 
