@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import classNames from 'classnames';
 import { withTranslation } from 'react-i18next';
 import { languageKeyToLabel } from '../i18n';
@@ -75,6 +75,7 @@ class Nav extends React.PureComponent {
     document.removeEventListener('mousedown', this.handleClick, false);
     document.removeEventListener('keydown', this.closeDropDown, false);
   }
+
   setDropdown(dropdown) {
     this.setState({
       dropdownOpen: dropdown
@@ -245,7 +246,14 @@ class Nav extends React.PureComponent {
           />
         </li>
         <li className="nav__item nav__item--no-icon">
-          <Link to="/" className="nav__back-link">
+          {/* <Link to="/" className="nav__back-link"> */}
+          <button
+            className="nav__back-link"
+            onClick={(e) => {
+              e.preventDefault();
+              browserHistory.goBack();
+            }}
+          >
             <CaretLeftIcon
               className="nav__back-icon"
               focusable="false"
@@ -254,7 +262,8 @@ class Nav extends React.PureComponent {
             <span className="nav__item-header">
               {this.props.t('Nav.BackEditor')}
             </span>
-          </Link>
+          </button>
+          {/* </Link> */}
         </li>
       </ul>
     );
