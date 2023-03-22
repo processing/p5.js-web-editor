@@ -246,7 +246,6 @@ class Nav extends React.PureComponent {
           />
         </li>
         <li className="nav__item nav__item--no-icon">
-          {/* <Link to="/" className="nav__back-link"> */}
           <button
             className="nav__back-link"
             onClick={(e) => {
@@ -263,7 +262,6 @@ class Nav extends React.PureComponent {
               {this.props.t('Nav.BackEditor')}
             </span>
           </button>
-          {/* </Link> */}
         </li>
       </ul>
     );
