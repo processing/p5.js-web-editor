@@ -18,6 +18,7 @@ import { logoutUser } from '../modules/User/actions';
 import getConfig from '../utils/getConfig';
 import { metaKeyName, metaKey } from '../utils/metaKey';
 import { getIsUserOwner } from '../modules/IDE/selectors/users';
+import { selectSketchPath } from '../modules/IDE/selectors/project';
 
 import CaretLeftIcon from '../images/left-arrow.svg';
 import TriangleIcon from '../images/down-filled-triangle.svg';
@@ -245,7 +246,7 @@ class Nav extends React.PureComponent {
           />
         </li>
         <li className="nav__item nav__item--no-icon">
-          <Link to="/" className="nav__back-link">
+          <Link to={this.props.editorLink} className="nav__back-link">
             <CaretLeftIcon
               className="nav__back-icon"
               focusable="false"
@@ -980,7 +981,8 @@ Nav.propTypes = {
   t: PropTypes.func.isRequired,
   setLanguage: PropTypes.func.isRequired,
   language: PropTypes.string.isRequired,
-  isUserOwner: PropTypes.bool.isRequired
+  isUserOwner: PropTypes.bool.isRequired,
+  editorLink: PropTypes.string
 };
 
 Nav.defaultProps = {
@@ -993,7 +995,8 @@ Nav.defaultProps = {
   warnIfUnsavedChanges: undefined,
   params: {
     username: undefined
-  }
+  },
+  editorLink: '/'
 };
 
 function mapStateToProps(state) {
@@ -1003,7 +1006,8 @@ function mapStateToProps(state) {
     unsavedChanges: state.ide.unsavedChanges,
     rootFile: state.files.filter((file) => file.name === 'root')[0],
     language: state.preferences.language,
-    isUserOwner: getIsUserOwner(state)
+    isUserOwner: getIsUserOwner(state),
+    editorLink: selectSketchPath(state)
   };
 }
 
