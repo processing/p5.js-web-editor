@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { renderIndex } from '../views/index';
+import { renderIndex, renderProjectIndex } from '../views/index';
 import { get404Sketch } from '../views/404Page';
 import { userExists } from '../controllers/user.controller';
 import {
@@ -40,8 +40,13 @@ router.get('/:username/sketches/:project_id/add-to-collection', (req, res) => {
 });
 
 router.get('/:username/sketches/:project_id', (req, res) => {
-  projectForUserExists(req.params.username, req.params.project_id, (exists) =>
-    exists ? res.send(renderIndex()) : get404Sketch((html) => res.send(html))
+  projectForUserExists(
+    req.params.username,
+    req.params.project_id,
+    (exists, projectName) =>
+      exists
+        ? res.send(renderProjectIndex(projectName, req.params.username))
+        : get404Sketch((html) => res.send(html))
   );
 });
 
