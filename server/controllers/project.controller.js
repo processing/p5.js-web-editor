@@ -85,7 +85,8 @@ export function updateProject(req, res) {
 
 export function getProject(req, res) {
   const { project_id: projectId, username } = req.params;
-  User.findByUsername(username, (err, user) => { // eslint-disable-line
+  // eslint-disable-next-line consistent-return
+  User.findByUsername(username, (err, user) => {
     if (!user) {
       return res
         .status(404)
@@ -96,7 +97,8 @@ export function getProject(req, res) {
       $or: [{ _id: projectId }, { slug: projectId }]
     })
       .populate('user', 'username')
-      .exec((err, project) => { // eslint-disable-line
+      // eslint-disable-next-line no-shadow
+      .exec((err, project) => {
         if (err) {
           console.log(err);
           return res
@@ -126,7 +128,8 @@ export function getProjectAsset(req, res) {
   const projectId = req.params.project_id;
   Project.findOne({ $or: [{ _id: projectId }, { slug: projectId }] })
     .populate('user', 'username')
-    .exec(async (err, project) => { // eslint-disable-line
+    // eslint-disable-next-line consistent-return
+    .exec(async (err, project) => {
       if (err) {
         return res
           .status(404)
@@ -188,7 +191,7 @@ export function projectForUserExists(username, projectId, callback) {
           callback(false);
           return;
         }
-        callback(true);
+        callback(true, project.name);
       }
     );
   });
