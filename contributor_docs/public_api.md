@@ -4,7 +4,7 @@ This API provides a way to programmatically import data into the p5.js Web Edito
 
 # Authentication
 
-Access to the API is available via a Personal Access Token, linked to an existing editor user account. Tokens can be created and deleted via logged-in user’s Settings page.
+Access to the API is available via a Personal Access Token, linked to an existing editor user account. Tokens can be created and deleted via the logged-in user’s Settings page.
 
 When contacting the API, the username and token must be sent with every request using basic auth.
 
@@ -139,7 +139,7 @@ No body.
 
 Create a new sketch.
 
-A sketch must contain at least one file with the `.html` extension. If none if provided in the payload, a default `index.html` and linked `style.css` file will be created automatically.
+A sketch must contain at least one file with the `.html` extension. If none is provided in the payload, a default `index.html` and linked `style.css` file will be created automatically.
 
 ### Request format
 See `Sketch` in Models above.
@@ -199,7 +199,7 @@ See `Sketch` in Models above.
 
 ## `DELETE /:user/sketches/:id`
 
-Delete a sketch and all it’s associated files.
+Delete a sketch and all its associated files.
 
 ### Request format
 No body

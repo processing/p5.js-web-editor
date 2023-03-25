@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
 import { remSize } from '../../../theme';
@@ -33,7 +33,9 @@ const StyledButton = styled(Button)`
   width: ${remSize(300)};
 `;
 
-function SocialAuthButton({ service, linkStyle, isConnected, t }) {
+function SocialAuthButton({ service, linkStyle, isConnected }) {
+  const { t } = useTranslation();
+
   const ServiceIcon = icons[service];
   const serviceLabel = servicesLabels[service];
   const loginLabel = t('SocialAuthButton.Login', { serviceauth: serviceLabel });
@@ -82,8 +84,7 @@ SocialAuthButton.services = services;
 SocialAuthButton.propTypes = {
   service: PropTypes.oneOf(['github', 'google']).isRequired,
   linkStyle: PropTypes.bool,
-  isConnected: PropTypes.bool,
-  t: PropTypes.func.isRequired
+  isConnected: PropTypes.bool
 };
 
 SocialAuthButton.defaultProps = {
@@ -91,6 +92,4 @@ SocialAuthButton.defaultProps = {
   isConnected: false
 };
 
-const SocialAuthButtonPublic = withTranslation()(SocialAuthButton);
-SocialAuthButtonPublic.services = services;
-export default SocialAuthButtonPublic;
+export default SocialAuthButton;

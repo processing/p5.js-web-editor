@@ -52,7 +52,6 @@ import RightArrowIcon from '../../../images/right-arrow.svg';
 import LeftArrowIcon from '../../../images/left-arrow.svg';
 import { getHTMLFile } from '../reducers/files';
 import { selectActiveFile } from '../selectors/files';
-import { getIsUserOwner } from '../selectors/users';
 
 import * as FileActions from '../actions/files';
 import * as IDEActions from '../actions/ide';
@@ -346,9 +345,11 @@ class Editor extends React.Component {
           plugins
         }
       );
+      const { left, top } = this._cm.getScrollInfo();
       this._cm.doc.setValue(formatted);
       this._cm.focus();
       this._cm.doc.setCursor(this._cm.doc.posFromIndex(cursorOffset));
+      this._cm.scrollTo(left, top);
     } catch (error) {
       console.error(error);
     }
@@ -419,10 +420,7 @@ class Editor extends React.Component {
                 ) : null}
               </span>
             </span>
-            <Timer
-              projectSavedTime={this.props.projectSavedTime}
-              isUserOwner={this.props.isUserOwner}
-            />
+            <Timer />
           </div>
         </header>
         <article
@@ -473,7 +471,6 @@ Editor.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   theme: PropTypes.string.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
-  projectSavedTime: PropTypes.string.isRequired,
   files: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -484,7 +481,6 @@ Editor.propTypes = {
   isExpanded: PropTypes.bool.isRequired,
   collapseSidebar: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
-  isUserOwner: PropTypes.bool.isRequired,
   clearConsole: PropTypes.func.isRequired,
   // showRuntimeErrorWarning: PropTypes.func.isRequired,
   hideRuntimeErrorWarning: PropTypes.func.isRequired,
@@ -512,9 +508,7 @@ function mapStateToProps(state) {
     ...state.ide,
     ...state.project,
     ...state.editorAccessibility,
-    isExpanded: state.ide.sidebarIsExpanded,
-    projectSavedTime: state.project.updatedAt,
-    isUserOwner: getIsUserOwner(state)
+    isExpanded: state.ide.sidebarIsExpanded
   };
 }
 

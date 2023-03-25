@@ -1,8 +1,8 @@
 ---
-name: New Feature Request
+name: "\U0001F331 New Feature Request"
 about: This template is for requesting a new feature be added.
 title: ''
-labels: feature request
+labels: ''
 assignees: ''
 
 ---
@@ -10,7 +10,7 @@ assignees: ''
 <!--
 Hi there!
 
-Thank you for contributing to the p5.js Editor project
+Thank you for contributing to the p5.js Editor project. 
 
 Until further notice, we will only add new features that increase access.
 

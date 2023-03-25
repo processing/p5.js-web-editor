@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import GitHubLogo from '../../../images/github.svg';
 
-export default function Feedback() {
+function Feedback() {
   const { t } = useTranslation();
   return (
     <div className="feedback__content">
@@ -50,3 +50,5 @@ export default function Feedback() {
     </div>
   );
 }
+
+export default Feedback;
