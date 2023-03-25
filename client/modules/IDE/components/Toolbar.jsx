@@ -18,6 +18,7 @@ class Toolbar extends React.Component {
     super(props);
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleProjectNameChange = this.handleProjectNameChange.bind(this);
+    this.handleProjectNameClick = this.handleProjectNameClick.bind(this);
     this.handleProjectNameSave = this.handleProjectNameSave.bind(this);
 
     this.state = {
@@ -34,6 +35,17 @@ class Toolbar extends React.Component {
 
   handleProjectNameChange(event) {
     this.setState({ projectNameInputValue: event.target.value });
+  }
+
+  handleProjectNameClick() {
+    if (this.canEditProjectName) {
+      this.props.showEditProjectName();
+      setTimeout(() => {
+        if (this.projectNameInput) {
+          this.projectNameInput.focus();
+        }
+      }, 140);
+    }
   }
 
   handleProjectNameSave() {
@@ -132,12 +144,7 @@ class Toolbar extends React.Component {
         <div className={nameContainerClass}>
           <button
             className="toolbar__project-name"
-            onClick={() => {
-              if (canEditProjectName) {
-                this.props.showEditProjectName();
-                setTimeout(() => this.projectNameInput.focus(), 140);
-              }
-            }}
+            onClick={this.handleProjectNameClick}
             disabled={!canEditProjectName}
             aria-label={this.props.t('Toolbar.EditSketchARIA')}
           >
