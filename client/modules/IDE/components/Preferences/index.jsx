@@ -1,4 +1,6 @@
+import classNames from 'classnames';
 import clamp from 'lodash/clamp';
+import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,7 +21,7 @@ import {
   setLinewrap
 } from '../../actions/preferences';
 
-export default function Preferences() {
+export default function Preferences({ className }) {
   const { t } = useTranslation();
 
   const dispatch = useDispatch();
@@ -68,7 +70,7 @@ export default function Preferences() {
   const fontSizeInputRef = useRef();
 
   return (
-    <section className="preferences">
+    <section className={classNames('preferences', className)}>
       <Helmet>
         <title>p5.js Web Editor | Preferences</title>
       </Helmet>
@@ -403,3 +405,11 @@ export default function Preferences() {
     </section>
   );
 }
+
+Preferences.propTypes = {
+  className: PropTypes.string
+};
+
+Preferences.defaultProps = {
+  className: ''
+};

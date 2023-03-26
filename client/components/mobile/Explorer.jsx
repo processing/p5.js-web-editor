@@ -1,15 +1,18 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import PropTypes from 'prop-types';
-import Sidebar from './Sidebar';
+import { useSelector } from 'react-redux';
 import ConnectedFileNode from '../../modules/IDE/components/FileNode';
+import { selectRootFile } from '../../modules/IDE/selectors/files';
+import Sidebar from './Sidebar';
 
-const Explorer = ({ id, canEdit, onPressClose }) => {
+const Explorer = ({ canEdit, onPressClose }) => {
   const { t } = useTranslation();
+  const root = useSelector(selectRootFile);
   return (
     <Sidebar title={t('Explorer.Files')} onPressClose={onPressClose}>
       <ConnectedFileNode
-        id={id}
+        id={root.id}
         canEdit={canEdit}
         onClickFile={() => onPressClose()}
       />
@@ -18,7 +21,6 @@ const Explorer = ({ id, canEdit, onPressClose }) => {
 };
 
 Explorer.propTypes = {
-  id: PropTypes.number.isRequired,
   onPressClose: PropTypes.func,
   canEdit: PropTypes.bool
 };

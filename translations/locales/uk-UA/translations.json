@@ -560,24 +560,6 @@
     "EditSketchARIA": "Редагувати скетч",
     "ByUser": "користувачем"
   },
-  "MobilePreferences": {
-    "Settings": "Налаштування",
-    "GeneralSettings": "Загальні налаштування",
-    "Accessibility": "Доступність",
-    "AccessibleOutput": "Доступне виведення",
-    "Theme": "Тема",
-    "LightTheme": "Світла",
-    "DarkTheme": "Темна",
-    "HighContrastTheme": "Високий контраст",
-    "Autosave": "Автозбереження",
-    "WordWrap": "Переноси слів",
-    "LineNumbers": "Номери рядків",
-    "LintWarningSound": "Звук попередження",
-    "UsedScreenReader": "Використовується з програмою зчитування з екрана",
-    "PlainText": "Простий текст",
-    "TableText": "Текст у таблиці",
-    "Sound": "Звук"
-  },
   "PreferenceCreators": {
     "On": "Так",
     "Off": "Ні"

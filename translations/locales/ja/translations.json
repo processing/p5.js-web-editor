@@ -558,24 +558,6 @@
       "EditSketchARIA": "スケッチを編集する",
       "ByUser": "によって"
     },
-    "MobilePreferences": {
-      "Settings": "設定",
-      "GeneralSettings": "一般設定",
-      "Accessibility": "アクセシビリティ",
-      "AccessibleOutput": "アクセシビリティ出力",
-      "Theme": "テーマ",
-      "LightTheme": "ライト",
-      "DarkTheme": "ダーク",
-      "HighContrastTheme": "ハイコントラスト",
-      "Autosave": "自動保存",
-      "WordWrap": "ワードラップ",
-      "LineNumbers": "行番号",
-      "LintWarningSound": "リント警告音",
-      "UsedScreenReader": "スクリーンリーダーと併用",
-      "PlainText": "プレーンテキスト",
-      "TableText": "テーブルテキスト",
-      "Sound": "サウンド"
-    },
     "PreferenceCreators": {
       "On": "オン",
       "Off": "オフ"

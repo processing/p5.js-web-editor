@@ -40,14 +40,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import '../../../utils/htmlmixed';
 import '../../../utils/p5-javascript';
-import Timer from '../components/Timer';
-import EditorAccessibility from '../components/EditorAccessibility';
 import { metaKey } from '../../../utils/metaKey';
-
 import '../../../utils/codemirror-search';
 
 import beepUrl from '../../../sounds/audioAlert.mp3';
-import UnsavedChangesDotIcon from '../../../images/unsaved-changes-dot.svg';
 import RightArrowIcon from '../../../images/right-arrow.svg';
 import LeftArrowIcon from '../../../images/left-arrow.svg';
 import { getHTMLFile } from '../reducers/files';
@@ -61,6 +57,10 @@ import * as PreferencesActions from '../actions/preferences';
 import * as UserActions from '../../User/actions';
 import * as ToastActions from '../actions/toast';
 import * as ConsoleActions from '../actions/console';
+
+import Timer from './Timer';
+import EditorAccessibility from './EditorAccessibility';
+import UnsavedChangesIndicator from './UnsavedChangesIndicator';
 
 emmet(CodeMirror);
 
@@ -410,15 +410,7 @@ class Editor extends React.Component {
           <div className="editor__file-name">
             <span>
               {this.props.file.name}
-              <span className="editor__unsaved-changes">
-                {this.props.unsavedChanges ? (
-                  <UnsavedChangesDotIcon
-                    role="img"
-                    aria-label={this.props.t('Editor.UnsavedChangesARIA')}
-                    focusable="false"
-                  />
-                ) : null}
-              </span>
+              <UnsavedChangesIndicator />
             </span>
             <Timer />
           </div>

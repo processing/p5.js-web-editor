@@ -558,24 +558,6 @@
     "EditSketchARIA": "編輯草稿",
     "ByUser": "作者："
   },
-  "MobilePreferences": {
-    "Settings": "設定",
-    "GeneralSettings": "一般設定",
-    "Accessibility": "輔助工具",
-    "AccessibleOutput": "輔助輸出",
-    "Theme": "主題",
-    "LightTheme": "亮色",
-    "DarkTheme": "暗色",
-    "HighContrastTheme": "高對比",
-    "Autosave": "自動儲存",
-    "WordWrap": "折行",
-    "LineNumbers": "行號",
-    "LintWarningSound": "語法檢查警示聲",
-    "UsedScreenReader": "搭配螢幕報讀軟體使用",
-    "PlainText": "純文字",
-    "TableText": "表格文字",
-    "Sound": "聲"
-  },
   "PreferenceCreators": {
     "On": "啟用",
     "Off": "停用"

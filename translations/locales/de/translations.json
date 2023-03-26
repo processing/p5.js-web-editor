@@ -559,24 +559,6 @@
     "EditSketchARIA": "Sketch bearbeiten",
     "ByUser": "von"
   },
-  "MobilePreferences": {
-    "Settings": "Einstellungen",
-    "GeneralSettings": "Allgemeine Einstellungen",
-    "Accessibility": "Bedienungshilfen",
-    "AccessibleOutput": "Bedienungshilfen Ausgabe",
-    "Theme": "Erscheinungsbild",
-    "LightTheme": "Hell",
-    "DarkTheme": "Dunkel",
-    "HighContrastTheme": "Hoher Kontrast",
-    "Autosave": "Automatisches Speichern",
-    "WordWrap": "Wortumbruch",
-    "LineNumbers": "Zeilennummerierung",
-    "LintWarningSound": "Lint-Warnton",
-    "UsedScreenReader": "Nutzung mit Bildschirmlesegerät ",
-    "PlainText": "Nur Text",
-    "TableText": "Tabellarisch",
-    "Sound": "Sound"
-  },
   "PreferenceCreators": {
     "On": "An",
     "Off": "Aus"

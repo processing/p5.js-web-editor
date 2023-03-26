@@ -115,6 +115,12 @@ export function collapseConsole() {
   };
 }
 
+export function toggleConsole() {
+  return {
+    type: ActionTypes.TOGGLE_CONSOLE
+  };
+}
+
 export function openPreferences() {
   return {
     type: ActionTypes.OPEN_PREFERENCES

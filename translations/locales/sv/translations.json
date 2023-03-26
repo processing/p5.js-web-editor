@@ -561,24 +561,6 @@
     "EditSketchARIA": "Redigera sketch",
     "ByUser": "av"
   },
-  "MobilePreferences": {
-    "Settings": "Inställningar",
-    "GeneralSettings": "Allmänna inställningar",
-    "Accessibility": "Tillgänglighet",
-    "AccessibleOutput": "Tillgänglig output",
-    "Theme": "Tema",
-    "LightTheme": "Ljust",
-    "DarkTheme": "Mörkt",
-    "HighContrastTheme": "Hög kontrast",
-    "Autosave": "Autospara",
-    "WordWrap": "Radbrytning",
-    "LineNumbers": "Radnummer",
-    "LintWarningSound": "Lint varningsljud",
-    "UsedScreenReader": "Använd med skärmläsare",
-    "PlainText": "Oformatterad text",
-    "TableText": "tabelltext",
-    "Sound": "Ljud"
-  },
   "PreferenceCreators": {
     "On": "På",
     "Off": "Av"

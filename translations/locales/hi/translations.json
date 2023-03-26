@@ -558,24 +558,6 @@
       "EditSketchARIA": "एडीट स्केच",
       "ByUser": "द्वारा"
     },
-    "MobilePreferences": {
-      "Settings": "सेटिंग्स",
-      "GeneralSettings": "सामान्य सेटिंग्स",
-      "Accessibility": "ऐक्सेसबिलिटी",
-      "AccessibleOutput": "ऐक्सेसबल आउटपुट",
-      "Theme": "थीम",
-      "LightTheme": "लाइट",
-      "DarkTheme": "डार्क",
-      "HighContrastTheme": "ज़्यादा कंट्रास्ट",
-      "Autosave": "ऑटोसेव",
-      "WordWrap": "वर्ड रैप",
-      "LineNumbers": "लाइन नम्बर्ज़",
-      "LintWarningSound": "लिन्ट वॉर्निंग साउन्ड",
-      "UsedScreenReader": "स्क्रीन रीडर के साथ उपयोग किया",
-      "PlainText": "प्लेन-टेक्स्ट",
-      "TableText": "टेबल-टेक्स्ट",
-      "Sound": "ध्वनि"
-    },
     "PreferenceCreators": {
       "On": "ऑन",
       "Off": "औफ"
@@ -601,4 +583,3 @@
       "Files": "फ़ाइलें"
     }
   }
- 

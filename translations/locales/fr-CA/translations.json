@@ -561,24 +561,6 @@
       "EditSketchARIA": "Modifier le croquis",
       "ByUser": "par"
     },
-    "MobilePreferences": {
-      "Settings": "Paramètres",
-      "GeneralSettings": "Paramètres généraux",
-      "Accessibility": "Accessibilité",
-      "AccessibleOutput": "Sortie accessible",
-      "Theme": "Thème",
-      "LightTheme": "Clair",
-      "DarkTheme": "Sombre",
-      "HighContrastTheme": "Contraste élevé",
-      "Autosave": "Sauvegarde automatique",
-      "WordWrap": "Retour à la ligne automatique",
-      "LineNumbers": "Numéros de ligne",
-      "LintWarningSound": "Son d'alarme Lint",
-      "UsedScreenReader": "Utilisé avec un lecteur de text",
-      "PlainText": "Text brut",
-      "TableText": "Tableau de texte",
-      "Sound": "Son"
-    },
     "PreferenceCreators": {
       "On": "Activé",
       "Off": "Désactivé"
@@ -604,4 +586,3 @@
       "Files": "Fichiers"
     }
   }
-  

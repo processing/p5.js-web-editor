@@ -558,24 +558,6 @@
     "EditSketchARIA": "编辑项目",
     "ByUser": "作者 "
   },
-  "MobilePreferences": {
-    "Settings": "设置",
-    "GeneralSettings": "通用",
-    "Accessibility": "包容性",
-    "AccessibleOutput": "无障碍输出",
-    "Theme": "主题",
-    "LightTheme": "明亮",
-    "DarkTheme": "暗黑",
-    "HighContrastTheme": "高对比度",
-    "Autosave": "自动保存",
-    "WordWrap": "自动提行",
-    "LineNumbers": "行号",
-    "LintWarningSound": "纠码器警告音",
-    "UsedScreenReader": "结合屏幕阅读器使用",
-    "PlainText": "纯文本",
-    "TableText": "表格文本",
-    "Sound": "声音"
-  },
   "PreferenceCreators": {
     "On": "打开",
     "Off": "关闭"

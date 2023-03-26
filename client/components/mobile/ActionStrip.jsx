@@ -45,7 +45,7 @@ const ActionStrip = ({ actions }) => (
 ActionStrip.propTypes = {
   actions: PropTypes.arrayOf(
     PropTypes.shape({
-      icon: PropTypes.component,
+      icon: PropTypes.elementType,
       aria: PropTypes.string.isRequired,
       action: PropTypes.func.isRequired,
       inverted: PropTypes.bool
