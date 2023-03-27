@@ -10,8 +10,8 @@ In order to simplify the translations process the following rules of thumb were 
 ## Technical Part
 
 * There is only one file to translate all the texts in any specific language, which is located under the directory, in the respective locale [subdirectory](https://github.com/processing/p5.js-web-editor/tree/develop/translations/locales)
-* The new language code must be added to [client/i18n.js](https://github.com/processing/p5.js-web-editor/blob/develop/client/i18n.js#L22)
-* New languages will need to be selected using a dropdown in the Nav component, specifically in function [renderLanguageMenu.](https://github.com/processing/p5.js-web-editor/blob/develop/client/components/Nav.jsx#L611)
+* The new language code must be added to [client/i18n.js](https://github.com/processing/p5.js-web-editor/blob/edae248eede21d7ad7702945929efbcdfeb4d9ea/client/i18n.js#L22)
+* New languages will need to be selected using a dropdown in the Nav component, specifically in function [renderLanguageMenu.](https://github.com/processing/p5.js-web-editor/blob/edae248eede21d7ad7702945929efbcdfeb4d9ea/client/components/Nav.jsx#L599)
 * Need to add `TRANSLATIONS_ENABLED=true` to `.env` to activate the dropdown for the languages.
 
 #### Nav.js
