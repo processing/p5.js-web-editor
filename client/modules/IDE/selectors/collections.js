@@ -1,4 +1,4 @@
-import { createSelector } from 'reselect';
+import { createSelector } from '@reduxjs/toolkit';
 import differenceInMilliseconds from 'date-fns/differenceInMilliseconds';
 import find from 'lodash/find';
 import orderBy from 'lodash/orderBy';

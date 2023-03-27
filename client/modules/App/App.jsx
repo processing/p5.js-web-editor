@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import getConfig from '../../utils/getConfig';
+import { showReduxDevTools } from '../../store';
 import DevTools from './components/DevTools';
 import { setPreviousPath } from '../IDE/actions/ide';
 import { setLanguage } from '../IDE/actions/preferences';
@@ -51,9 +51,7 @@ class App extends React.Component {
     return (
       <div className="app">
         <CookieConsent hide={hide} />
-        {this.state.isMounted &&
-          !window.devToolsExtension &&
-          getConfig('NODE_ENV') === 'development' && <DevTools />}
+        {this.state.isMounted && showReduxDevTools() && <DevTools />}
         {this.props.children}
       </div>
     );
