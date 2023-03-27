@@ -1,6 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import { bindActionCreators } from 'redux';
 
@@ -201,7 +200,8 @@ const getConsoleFeedStyle = (theme, fontSize) => {
   }
 };
 
-const Console = ({ t }) => {
+const Console = () => {
+  const { t } = useTranslation();
   const consoleEvents = useSelector((state) => state.console);
   const isExpanded = useSelector((state) => state.ide.consoleIsExpanded);
   const isPlaying = useSelector((state) => state.ide.isPlaying);
@@ -267,6 +267,7 @@ const Console = ({ t }) => {
           style={{ fontSize }}
         >
           <ConsoleFeed
+            variant={theme === 'light' ? 'light' : 'dark'}
             styles={getConsoleFeedStyle(theme, fontSize)}
             logs={consoleEvents}
             key={`${theme}-${fontSize}`}
@@ -284,8 +285,4 @@ const Console = ({ t }) => {
   );
 };
 
-Console.propTypes = {
-  t: PropTypes.func.isRequired
-};
-
-export default withTranslation()(Console);
+export default Console;

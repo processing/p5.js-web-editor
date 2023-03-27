@@ -59,12 +59,12 @@ class Preferences extends React.Component {
   }
 
   decreaseFontSize() {
-    const newValue = this.state.fontSize - 2;
+    const newValue = Number(this.state.fontSize) - 2;
     this.setFontSize(newValue);
   }
 
   increaseFontSize() {
-    const newValue = this.state.fontSize + 2;
+    const newValue = Number(this.state.fontSize) + 2;
     this.setFontSize(newValue);
   }
 

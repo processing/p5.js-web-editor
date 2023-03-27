@@ -22,7 +22,9 @@ exports[`Nav renders correctly 1`] = `
         <li
           class="nav__item"
         >
-          <button>
+          <button
+            title="File"
+          >
             <span
               class="nav__item-header"
             />
@@ -65,7 +67,9 @@ exports[`Nav renders correctly 1`] = `
         <li
           class="nav__item"
         >
-          <button>
+          <button
+            title="Edit"
+          >
             <span
               class="nav__item-header"
             />
@@ -116,7 +120,9 @@ exports[`Nav renders correctly 1`] = `
         <li
           class="nav__item"
         >
-          <button>
+          <button
+            title="Sketch"
+          >
             <span
               class="nav__item-header"
             />
@@ -166,7 +172,9 @@ exports[`Nav renders correctly 1`] = `
         <li
           class="nav__item"
         >
-          <button>
+          <button
+            title="Help"
+          >
             <span
               class="nav__item-header"
             />

@@ -257,7 +257,7 @@ Button.propTypes = {
    * The visible part of the button, telling the user what
    * the action is
    */
-  children: PropTypes.element,
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   /**
     If the button can be activated or not
   */
