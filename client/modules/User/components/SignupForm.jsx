@@ -1,6 +1,5 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import { useDispatch } from 'react-redux';
 import { validateSignup } from '../../../utils/reduxFormUtils';
@@ -32,7 +31,9 @@ function validateEmail(email) {
   return asyncValidate('email', email);
 }
 
-function SignupForm(props) {
+function SignupForm() {
+  const { t } = useTranslation();
+
   const dispatch = useDispatch();
   function onSubmit(formProps) {
     return dispatch(validateAndSignUpUser(formProps));
@@ -54,11 +55,11 @@ function SignupForm(props) {
             {(field) => (
               <p className="form__field">
                 <label htmlFor="username" className="form__label">
-                  {props.t('SignupForm.Title')}
+                  {t('SignupForm.Title')}
                 </label>
                 <input
                   className="form__input"
-                  aria-label={props.t('SignupForm.TitleARIA')}
+                  aria-label={t('SignupForm.TitleARIA')}
                   type="text"
                   id="username"
                   {...field.input}
@@ -73,11 +74,11 @@ function SignupForm(props) {
             {(field) => (
               <p className="form__field">
                 <label htmlFor="email" className="form__label">
-                  {props.t('SignupForm.Email')}
+                  {t('SignupForm.Email')}
                 </label>
                 <input
                   className="form__input"
-                  aria-label={props.t('SignupForm.EmailARIA')}
+                  aria-label={t('SignupForm.EmailARIA')}
                   type="text"
                   id="email"
                   {...field.input}
@@ -92,11 +93,11 @@ function SignupForm(props) {
             {(field) => (
               <p className="form__field">
                 <label htmlFor="password" className="form__label">
-                  {props.t('SignupForm.Password')}
+                  {t('SignupForm.Password')}
                 </label>
                 <input
                   className="form__input"
-                  aria-label={props.t('SignupForm.PasswordARIA')}
+                  aria-label={t('SignupForm.PasswordARIA')}
                   type="password"
                   id="password"
                   {...field.input}
@@ -111,12 +112,12 @@ function SignupForm(props) {
             {(field) => (
               <p className="form__field">
                 <label htmlFor="confirm password" className="form__label">
-                  {props.t('SignupForm.ConfirmPassword')}
+                  {t('SignupForm.ConfirmPassword')}
                 </label>
                 <input
                   className="form__input"
                   type="password"
-                  aria-label={props.t('SignupForm.ConfirmPasswordARIA')}
+                  aria-label={t('SignupForm.ConfirmPasswordARIA')}
                   id="confirm password"
                   {...field.input}
                 />
@@ -127,7 +128,7 @@ function SignupForm(props) {
             )}
           </Field>
           <Button type="submit" disabled={submitting || invalid || pristine}>
-            {props.t('SignupForm.SubmitSignup')}
+            {t('SignupForm.SubmitSignup')}
           </Button>
         </form>
       )}
@@ -135,8 +136,4 @@ function SignupForm(props) {
   );
 }
 
-SignupForm.propTypes = {
-  t: PropTypes.func.isRequired
-};
-
-export default withTranslation()(SignupForm);
+export default SignupForm;

@@ -1,13 +1,19 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import SquareLogoIcon from '../../../images/p5js-square-logo.svg';
 // import PlayIcon from '../../../images/play.svg';
 import AsteriskIcon from '../../../images/p5-asterisk.svg';
+import packageData from '../../../../package.json';
 
 function About(props) {
   const { t } = useTranslation();
+  const p5version = useSelector((state) => {
+    const index = state.files.find((file) => file.name === 'index.html');
+    return index?.content.match(/\/p5\.js\/([\d.]+)\//)?.[1];
+  });
   return (
     <div className="about__content">
       <Helmet>
@@ -20,6 +26,14 @@ function About(props) {
           aria-label={t('Common.p5logoARIA')}
           focusable="false"
         />
+        <div className="about__content-column">
+          <p className="about__version-info">
+            Web Editor: <span>v{packageData?.version}</span>
+          </p>
+          <p className="about__version-info">
+            p5.js: <span>v{p5version}</span>
+          </p>
+        </div>
       </div>
       <div className="about__content-column">
         <h3 className="about__content-column-title">{t('About.NewP5')}</h3>

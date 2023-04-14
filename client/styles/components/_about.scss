@@ -74,6 +74,24 @@
   }
 }
 
+.about__version-info {
+  @include themify() {
+    padding-top: #{8 / $base-font-size}rem;
+    font-size: #{16 / $base-font-size}rem;
+    span {
+      color: getThemifyVariable('logo-color');
+    }
+    &:first-child {
+      padding-top: #{30 /$base-font-size}rem;
+    }
+  }
+  // span {
+  //   @include themify() {
+  //     fill: getThemifyVariable('logo-color');
+  //   }
+  // }
+}
+
 .about__footer {
   display: flex;
   justify-content: space-between;
