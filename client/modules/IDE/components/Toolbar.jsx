@@ -41,9 +41,7 @@ class Toolbar extends React.Component {
     if (this.canEditProjectName) {
       this.props.showEditProjectName();
       setTimeout(() => {
-        if (this.projectNameInput) {
-          this.projectNameInput.focus();
-        }
+        this.projectNameInput?.focus();
       }, 140);
     }
   }
