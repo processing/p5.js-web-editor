@@ -238,7 +238,7 @@
     "styled-theming": "^2.2.0",
     "url": "^0.11.0",
     "uuid": "^8.3.2",
-    "webpack": "^5.72.0",
+    "webpack": "^5.76.0",
     "webpack-dev-middleware": "^5.3.1",
     "webpack-hot-middleware": "^2.25.1",
     "xhr": "^2.6.0"
