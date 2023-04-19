@@ -1,12 +1,12 @@
 # Proposed Public API extensions
 
-This describes proposed extensions to the Public API. None of these extensions are confirmed, but are recorded here for reference and discussion. 
+This describes proposed extensions to the Public API. None of these extensions are confirmed, but they are recorded here for reference and discussion. 
 
 Refer to [Public API](./public_api.md) for the current version of the API.
 
 # Authentication
 
-- Support for sending tokens can via the `Authorization: Bearer {your_access_token}` HTTP header instead of just Basic Auth
+- Support for sending tokens can be via the `Authorization: Bearer {your_access_token}` HTTP header instead of just Basic Auth
 
 # API Access
 
@@ -43,7 +43,7 @@ Returns `Sketch`.
 ### Responses
 
 | HTTP code     | Description                  |
-| ------------- | ---------------------------- |
+|---------------|------------------------------|
 | 200 OK        | Returns ID of created sketch |
 | 404 Not Found | Sketch does not exist        |
 
@@ -73,7 +73,7 @@ No body.
 ### Responses
 
 | HTTP code                | Description                                  |
-| ------------------------ | -------------------------------------------- |
+|--------------------------|----------------------------------------------|
 | 200 OK                   |                                              |
 | 404 Not Found            | Sketch does not exist                        |
 | 422 Unprocessable Entity | file validation failed, unsupported filetype |
@@ -116,7 +116,7 @@ Add a file to a sketch, or replace an existing file.
 ### Responses
 
 | HTTP code                | Description               |
-| ------------------------ | ------------------------- |
+|--------------------------|---------------------------|
 | 200 OK                   | Change were made          |
 | 404 Not Found            | Sketch does not exist     |
 | 422 Unprocessable Entity | Validation error of files |
@@ -147,14 +147,14 @@ Returns file contents.
 ### Responses
 
 | HTTP code     | Description                                                              |
-| ------------- | ------------------------------------------------------------------------ |
+|---------------|--------------------------------------------------------------------------|
 | 200 OK        | Returns body of the file with the content-type set by the file extension |
 | 404 Not Found | File does not exist                                                      |
 
 
 ## `PATCH /:user/sketches/:id/files/:path` 
 
-Update the name or contents a file or directory.
+Update the name or contents of a file or directory.
 
 ### Request format
 See `File` and `Directory` above.
@@ -162,7 +162,7 @@ See `File` and `Directory` above.
 ### Response format
 No body.
 
-### Example: Change file name
+### Example: Change the file name
 
     PATCH /p5/sketches/Ckhf0APpg/files/assets/something.js
     
@@ -198,7 +198,7 @@ Files are added to the directory, in addition to what is there.
 ### Responses
 
 | HTTP code                | Description                |
-| ------------------------ | -------------------------- |
+|--------------------------|----------------------------|
 | 200 OK                   | The changes have been made |
 | 404 Not Found            | Path does not exist        |
 | 422 Unprocessable Entity | Validation error of files  |
@@ -206,7 +206,7 @@ Files are added to the directory, in addition to what is there.
 
 ## `DELETE /:user/:sketches/files/:path`
 
-Delete a file/directory, and it’s contents.
+Delete a file/directory, and its contents.
 
 ### Request format
 No body.
@@ -230,7 +230,7 @@ The `assets` directory and everything within it, will be removed.
 ### Responses
 
 | HTTP code     | Description               |
-| ------------- | ------------------------- |
+|---------------|---------------------------|
 | 200 OK        | The item has been deleted |
 | 404 Not Found | Path does not exist       |
 

@@ -22,7 +22,7 @@ Follow the [installation guide](./installation.md).
 As a person contributing code but not creating production releases (this is most people!), here's what you need to know:
 * The default branch is `develop`. All pull requests should be made to this branch. It should be stable, and all commits are visible at a staging server.
 * When working on a bug or feature, you should branch from the `develop` branch. When you're done, you should open a pull request from your feature branch to `develop`.
-* The `release` branch is the live production branch, and is the code deployed to editor.p5js.org. Changes to this branch should be made carefully, and will be done using git tags. 
+* The `release` branch is the live production branch and is the code deployed to editor.p5js.org. Changes to this branch should be made carefully and will be done using git tags. 
 * Emergency hotfix changes should be branched from `release` and merged via a pull request to `release`. After a PR is merged, then the commits can be merged to `develop`.
 
 See the [release guide](./release.md) for information about creating a release.
@@ -30,7 +30,7 @@ See the [release guide](./release.md) for information about creating a release.
 ## Tests
 To run the test suite simply run `npm test` (after installing dependencies with `npm install`)
 
-A sample unit test could be found here: [Nav.test.jsx](../client/components/__test__/Nav.test.jsx).
+A sample unit test could be found here: [Nav.unit.test.jsx](../client/components/Nav.unit.test.jsx).
 
 ## Committing Code
 Inspired by [Git/GitHub commit standards & conventions](https://gist.github.com/digitaljhelms/3761873).
@@ -68,12 +68,12 @@ Structure your commit message like this:
 * Write the summary line and description of what you have done in the imperative mode, that is as if you were commanding someone. Start the line with "Fix", "Add", "Change" instead of "Fixed", "Added", "Changed".
 * Link the GitHub issue you are working on in the summary line in brackets, e.g. [#123]
 * Always leave the second line blank.
-* Be as descriptive as possible in the description. It helps reasoning about the intention of commits and gives more context about why changes happened.
+* Be as descriptive as possible in the description. It helps to reason about the intention of commits and gives more context about why changes happened.
 * If it seems difficult to summarize what your commit does, it may be because it includes several logical changes or bug fixes, and are better split up into several commits using `git add -p`.
 * Note that you can connect multiple issues to a commit, if necessary: `[#123][#456] Add Button component`
 
 ## Design
-- [Style Guide/Design System on Figma](https://github.com/processing/p5.js-web-editor/labels/good%20medium%20issues)
+- [Style Guide/Design System on Zeplin](https://scene.zeplin.io/project/55f746c54a02e1e50e0632c3)
 - [Latest Design on Figma](https://www.figma.com/file/5KychMUfHlq97H0uDsen1U/p5-web-editor-2017.p.copy?node-id=0%3A1). Note that the current design on the website has diverged, parts of this design will not be implemented, but it is still helpful to have around for reference.
 - [Mobile Designs](https://www.figma.com/file/5KychMUfHlq97H0uDsen1U/p5-web-editor-2017.p.copy?node-id=0%3A2529), [Responsive Designs](https://www.figma.com/file/5KychMUfHlq97H0uDsen1U/p5-web-editor-2017.p.copy?node-id=0%3A3292)
 
