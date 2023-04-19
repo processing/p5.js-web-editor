@@ -1,7 +1,7 @@
 # Testing
-This guide explains the tools and methods used to test the p5.js Editor. It focuses mainly on the client side, but some of it applies to the server tests too.
+This guide explains the tools and methods used to test the p5.js Editor. It focuses mainly on the client-side, but some of it applies to the server tests too.
 
-For basic overview of testing React Apps, [you can read what the React developers have to say about it](https://reactjs.org/docs/testing.html). There are both unit tests and integration tests.
+For a basic overview of testing React Apps, [you can read what the React developers have to say about it](https://reactjs.org/docs/testing.html). There are both unit tests and integration tests.
 
 We are testing React components by rendering the component trees in a simplified test environment and making assertions on what gets rendered and what functions get called.
 
@@ -91,7 +91,7 @@ Unit tests test the functionality of a single component and nothing else. They p
 1. User facing (like a text input field or a user form component)
 2. Used across multiple components like a reusable dropdown menu or reusable table element
 
-In both of these cases, the component being tested is not merely an implementation detail. Thus, it is important for the unit tests to test the error cases that could occur to ensure that the component is robust. For example, for a user-facing input field that should only take positive numbers, a unit test would want to cover what happens when users enter negative numbers or letters.
+In both of these cases, the component being tested is not merely an implementation detail. Thus, the unit tests need to test the error cases that could occur to ensure that the component is robust. For example, for a user-facing input field that should only take positive numbers, a unit test would want to cover what happens when users enter negative numbers or letters.
 
 ### Integration Tests
 Integration tests test multiple parts of the application together. A small example is rendering a parent component in order to test the interactions between children components. Generally, they validate how multiple units of your application work together. `Jest` uses `jsdom` under the hood to emulate common browser APIs with less overhead than automation like a headless browser, and its mocking tools can stub out external API calls. We use integration tests to maximize coverage and to make sure all the pieces play nice together. We want our integration tests to cover the testing of components that don't have unit tests because they're only used in one place and are merely an implementation detail. The integration tests can test the expected user flows, while we expect the unit tests to have tested the error cases more rigorously.
@@ -154,7 +154,7 @@ describe('<Example.jsx/>', () => {
 ```
 
 ### Consistency Across Tests
-> "Teams that adopt a rigid and consistent structure to each test tend to more readily understand each test, because every deviation from the norm can be trusted to be meaningful and somehow specific to the nature of the subject."
+> "Teams that adopt a rigid and consistent structure to each test tend to more readily understand each test because every deviation from the norm can be trusted to be meaningful and somehow specific to the nature of the subject."
 - We want to default to using meaningless test data stored in the redux-test-stores folder. 
 - Be sure to follow the [folder structure](#Folder-structure)
 - Follow the rendering guidelines set up for the components in this [Writing a Test](#Writing-a-test) section.
@@ -173,21 +173,21 @@ describe('<Example.jsx/>', () => {
 
 ## What to Test
 For any type of component, you might want to consider testing:
-- The text or divs that you expect to be on the page are actually there. You can use [Queries](https://testing-library.com/docs/queries/about/) for this. Assertions should make use of the toBeInTheDocument() matcher when asserting that an element exists:
+- The text or divs that you expect to be on the page are there. You can use [Queries](https://testing-library.com/docs/queries/about/) for this. Assertions should make use of the toBeInTheDocument() matcher when asserting that an element exists:
     ```
     expect(screen.getByText('Hello World')).toBeInTheDocument();
     expect(screen.queryByText('Does not exist')).not.toBeInTheDocument();
     ```
 - If it's an integration test, you could consider testing the "happy path" flow. For example, in a login form, you would test how a user might enter their username and password and then enter that information.
 - If it's a unit test, you could test possible error cases to ensure that the module being tested is robust and resistant to user or developer error.
-- Generally, you want to focus your testing on "user input" -> "expected output" instead of making sure the middle steps work as you would expect. This might mean that you don't need to check that the state changes or class-specific methods occur. This is so that if some of the small details in the implementation of the component changes in the future, the tests can remain the same.
-- More details on testing behavior in the component-specific sections
+- Generally, you want to focus your testing on "user input" -> "expected output" instead of making sure the middle steps work as you would expect. This might mean that you don't need to check that the state changes or class-specific methods occur. This is so that if some of the small details in the implementation of the component change in the future, the tests can remain the same.
+- More details on testing behaviour in the component-specific sections
 
->Only test the behaviors you know you need to care about. For example, if the desired behavior of a particular edge case doesn't truly matter yet or isn't fully understood, don't write a test for it yet. Doing so would restrict the freedom to refactor the implementation. Additionally, it will send the signal to future readers that this behavior is actually critical, when it very well might not be. [[3]](#References)
+>Only test the behaviours you know you need to care about. For example, if the desired behaviour of a particular edge case doesn't truly matter yet or isn't fully understood, don't write a test for it yet. Doing so would restrict the freedom to refactor the implementation. Additionally, it will send the signal to future readers that this behaviour is critical, when it very well might not be. [[3]](#References)
 
-**Don't test unreachable edge cases:** You would have to add code to your original implementation to guard against these cases. The future proofing and the added cost to the codebase "is generally not worth their perceived potential benefits" [[3]](#References)
+**Don't test unreachable edge cases:** You would have to add code to your original implementation to guard against these cases. The future-proofing and the added cost to the codebase "is generally not worth their perceived potential benefits" [[3]](#References)
 
-**Make sure your tests are sufficient:** You want to make sure your test actually specifies all the behaviors you want to ensure the code exhibits. For example, testing that `1+1 > 0` would be correct, but insufficient. [[3]](#References)
+**Make sure your tests are sufficient:** You want to make sure your test specifies all the behaviours you want to ensure the code exhibits. For example, testing that `1+1 > 0` would be correct, but insufficient. [[3]](#References)
 
 ## Files to be Aware of
 
@@ -370,7 +370,7 @@ Testing reducers and action creators is covered pretty well in [Redux's document
 
 ### Connected Components
 
-Although it's possible to export the components as unconnected components for testing (and in this case you would just manually pass in the props that redux provides), the codebase is being migrated to use hooks, and in this case, that approach no longer works. It also doesn't work if we render components that have connected subcomponents. Thus, for consistency, we suggest testing all redux components while they're connected to redux. We can do this with ``redux-mock-store``.
+Although it's possible to export the components as unconnected components for testing (and in this case, you would just manually pass in the props that redux provides), the codebase is being migrated to use hooks, and in this case, that approach no longer works. It also doesn't work if we render components that have connected subcomponents. Thus, for consistency, we suggest testing all redux components while they're connected to redux. We can do this with ``redux-mock-store``.
 
 This works like so:
 1. Import the reduxRender function from ``client/test_utils.js`` 
@@ -392,7 +392,7 @@ reduxRender(<SketchList username="happydog1" />, {store});
 ```
 4. Test things! You may need to use jest to mock certain functions if the component is making API calls.
 
-All together, it might look something like this.
+Altogether, it might look something like this.
 
 
 *MyReduxComponent.test.jsx*
@@ -468,7 +468,7 @@ Some things to consider testing:
 
 ## How to Handle API Calls in Tests
 
-Some tests throw errors if the client-side code tries to make an API call. This project uses the [Mock Service Worker library](https://mswjs.io/) to mock the API requests by intercepting requests on the network level [[2]](#References). It can handle API calls and return appropriate data (and you can see what shape of data gets returned by looking through the server files). There is some test data available in the `client/testData/testServerResponse.js` file, but you may need to edit the file to add a new json response if an appropriate one doesn't exist already. The example code below sets up a server to respond to a GET request at `/exampleendpoint` by returning `{data: foo}` You can see it in the context of a test [in the SketchList.test.jsx file](../client/modules/IDE/components/SketchList.test.jsx).
+Some tests throw errors if the client-side code tries to make an API call. This project uses the [Mock Service Worker library](https://mswjs.io/) to mock the API requests by intercepting requests on the network level [[2]](#References). It can handle API calls and return appropriate data (and you can see what shape of data gets returned by looking through the server files). There is some test data available in the `client/testData/testServerResponse.js` file, but you may need to edit the file to add a new JSON response if an appropriate one doesn't exist already. The example code below sets up a server to respond to a GET request at `/exampleendpoint` by returning `{data: foo}` You can see it in the context of a test [in the SketchList.test.jsx file](../client/modules/IDE/components/SketchList.test.jsx).
 
 There's a longer explanation of the benefits of `msw` in [this article by Kent C Dodds](https://kentcdodds.com/blog/stop-mocking-fetch).
 
@@ -485,14 +485,14 @@ afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 ```
 
-If the component makes use of the `formatDate` util, some of the functions in that rely on the `client/i18n.js` file that also makes an AJAX request, which sometimes leads to an `ERRCONNECTED` error on the console, even though your tests pass. You can fix it by adding a mock for that specific i18n file:
+If the component makes use of the `formatDate` util, some of the functions in that rely on the `client/i18n.js` file, which also make an AJAX request. This sometimes leads to an `ERRCONNECTED` error on the console, even though your tests pass. You can fix it by adding a mock for that specific i18n file:
 ```js
 jest.mock('_path_to_file_/i18n');
 ```
-You can see it used in the context of a test [in the SketchList.test.jsx file](../client/modules/IDE/components/SketchList.test.jsx).
+You can see it used in the context of a test [in the SketchList.test.jsx file](../client/modules/IDE/components/SketchList.unit.test.jsx).
 
 ## Internationalization
-This project uses i18next for internationalization. If you import the render function with the i18n wrapper from `test_utils.js`, it's set up to use English, so the components with be rendered with English text and you should be able to count on this to test for specific strings.
+This project uses i18next for internationalization. If you import the render function with the i18n wrapper from `test_utils.js`, it's set up to use English, so the components will be rendered with English text and you should be able to count on this to test for specific strings.
 
 
 ## Useful Terminology
@@ -514,9 +514,9 @@ some methods but not others. Partial mocks are widely considered to be an anti-p
 Records every invocation made against it and can verify certain interactions took place after the fact.
 
 ## Tips
-1. Make test fail at least once to make sure it was a meaningful test
-2. "If you or another developer change the component in a way that it changes its behavior at least one test should fail." -  [How to Unit Test in React](https://itnext.io/how-to-unit-test-in-react-72e911e2b8d)
-3. Avoid using numbers or data that seem "special" in your tests. For example, if you were checking the "age" variable in a component is a integer, but checked it as so `expect(person.ageValidator(18)).toBe(true)`, the reader might assume that the number 18 had some significance to the function because it's a significant age. It would be better to have used 1234.
+1. Make the test fail at least once to make sure it was a meaningful test
+2. "If you or another developer change the component in a way that it changes its behaviour at least one test should fail." -  [How to Unit Test in React](https://itnext.io/how-to-unit-test-in-react-72e911e2b8d)
+3. Avoid using numbers or data that seem "special" in your tests. For example, if you were checking the "age" variable in a component is an integer, but checked it as so `expect(person.ageValidator(18)).toBe(true)`, the reader might assume that the number 18 had some significance to the function because it's a significant age. It would be better to have used 1234.
 4. Tests should help other developers understand the expected behavior of the component that it's testing
 
 ## Files to Start With
@@ -534,7 +534,7 @@ These files still need tests! If you want to contribute by writing tests, please
 - https://blog.bitsrc.io/testing-a-redux-hooked-app-a8e9d1609061
 
 ## References
-1. [Best practices for unit testing with a react redux approach](https://willowtreeapps.com/ideas/best-practices-for-unit-testing-with-a-react-redux-approach)
+1. [Best practices for unit testing with a react-redux approach](https://willowtreeapps.com/ideas/best-practices-for-unit-testing-with-a-react-redux-approach)
 
 2. [React testing library example intro](https://testing-library.com/docs/react-testing-library/example-intro/#full-example)
 
