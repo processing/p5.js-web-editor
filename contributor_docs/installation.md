@@ -49,7 +49,7 @@ Note that this takes up a significant amount of space on your machine. Make sure
 3. Clone this repository and cd into it
 4. `$ docker-compose -f docker-compose-development.yml build`
 5. `$ cp .env.example .env`
-6. (Optional) Update `.env` with necessary keys to enable certain app behavoirs, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
+6. (Optional) Update `.env` with necessary keys to enable certain app behaviors, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
 7. `$ docker-compose -f docker-compose-development.yml run --rm app npm run fetch-examples` -  note that you need to configure your GitHub Credentials, which you can do by following the [Github API Configuration](#github-api-configuration) section.
 8. Enable Prettier in your text editor by following [this guide](https://prettier.io/docs/en/editors.html).
 
