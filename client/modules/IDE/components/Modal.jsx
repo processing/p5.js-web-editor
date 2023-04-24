@@ -16,13 +16,13 @@ const Modal = ({
 
   const handleOutsideClick = (e) => {
     // ignore clicks on the component itself
-    if (e.path.includes(modalRef.current)) return;
+    if (modalRef.current?.contains?.(e.target)) return;
 
     onClose();
   };
 
   useEffect(() => {
-    modalRef.current.focus();
+    modalRef.current?.focus();
     document.addEventListener('click', handleOutsideClick, false);
 
     return () => {
