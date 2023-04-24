@@ -22,7 +22,7 @@ The API is versioned and this version is indicated in the root URL path e.g. ver
 You must provide the version number when accessing the API.
 
 | Version | Release date |
-| ------- | ------------ |
+|---------|--------------|
 | v1      | Unreleased   |
 
 # Models
@@ -31,8 +31,8 @@ The API accepts and returns the following model objects, as JSON.
 
 ## Sketch
 
-| Name  |       Type        |                                     Description                                      |
-| ----- | ----------------- | ------------------------------------------------------------------------------------ |
+| Name  | Type              | Description                                                                          |
+|-------|-------------------|--------------------------------------------------------------------------------------|
 | name  | String            | The sketch’s title                                                                   |
 | files | DirectoryContents | The files and directories in this sketch. See `DirectoryContents` for the structure. |
 | slug  | String            | A path that can be used to access the sketch                                         |
@@ -71,7 +71,7 @@ A map of filenames to `File` or `Directory`. The key of each item is used as the
 This file is editable in the Editor UI and stored in the Editor's database.
 
 | Name    | Type         | Description                                |
-| ------- | ------------ | ------------------------------------------ |
+|---------|--------------|--------------------------------------------|
 | content | UTF-8 String | The contents of the file as a UTF-8 string |
 
     {
@@ -83,8 +83,8 @@ This file is editable in the Editor UI and stored in the Editor's database.
 This file is hosted elsewhere on the Internet. It appears in the Editor's listing and can be referenced using a proxy URL in the Editor.
 
 
-| Name | Type |                   Description                   |
-| ---- | ---- | ----------------------------------------------- |
+| Name | Type | Description                                     |
+|------|------|-------------------------------------------------|
 | url  | URL  | A valid URL pointing to a file hosted elsewhere |
 
     {
@@ -98,7 +98,7 @@ A `File` is either a `DirectFile` or `ReferencedFile`. The API supports both eve
 ## Directory
 
 | Name  | Type              | Description                     |
-| ----- | ----------------- | ------------------------------- |
+|-------|-------------------|---------------------------------|
 | files | DirectoryContents | A map of the directory contents |
 
     {
@@ -183,8 +183,8 @@ See `Sketch` in Models above.
 
 ### Responses
 
-|        HTTP code         |                               Body                                |
-| ------------------------ | ----------------------------------------------------------------- |
+| HTTP code                | Body                                                              |
+|--------------------------|-------------------------------------------------------------------|
 | 201 Created              | id of sketch                                                      |
 | 422 Unprocessable Entity | file validation failed, unsupported filetype, slug already exists |
 
@@ -214,6 +214,6 @@ No body
 ### Responses
 
 | HTTP code     | Description             |
-| ------------- | ----------------------- |
+|---------------|-------------------------|
 | 200 OK        | Sketch has been deleted |
 | 404 Not Found | Sketch does not exist   |

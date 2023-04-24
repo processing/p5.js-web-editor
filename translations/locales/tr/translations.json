@@ -1,0 +1,620 @@
+{
+  "Nav": {
+    "File": {
+      "Title": "Dosya",
+      "New": "Yeni",
+      "Share": "Paylaş",
+      "Duplicate": "Çoğalt",
+      "Open": "Aç",
+      "Download": "İndir",
+      "AddToCollection": "Koleksiyona Ekle",
+      "Examples": "Örnekler"
+    },
+    "Edit": {
+      "Title": "Düzenle",
+      "TidyCode": "Kodu Düzenle",
+      "Find": "Bul",
+      "Replace": "Değiştir"
+    },
+    "Sketch": {
+      "Title": "Eskiz",
+      "AddFile": "Dosya Ekle",
+      "AddFolder": "Klasör Ekle",
+      "Run": "Çalıştır",
+      "Stop": "Durdur"
+    },
+    "Help": {
+      "Title": "Yardım",
+      "KeyboardShortcuts": "Klavye Kısayolları",
+      "Reference": "Referans",
+      "About": "Hakkında"
+    },
+    "Lang": "Dil",
+    "BackEditor": "Editöre Dön",
+    "WarningUnsavedChanges": "Bu sayfadan çıkmak istediğinize emin misiniz? Kaydedilmemiş değişiklikleriniz var.",
+    "Login": "Giriş Yap",
+    "LoginOr": "veya",
+    "SignUp": "Kaydol",
+    "Auth": {
+      "Welcome": "Hoşgeldiniz",
+      "Hello": "Merhaba",
+      "MyAccount": "Hesabım",
+      "My": "Benim",
+      "MySketches": "Eskizlerim",
+      "MyCollections": "Koleksiyonlarım",
+      "Asset": "Varlık",
+      "MyAssets": "Varlıklarım",
+      "LogOut": "Çıkış Yap"
+    }
+  },
+  "CodemirrorFindAndReplace": {
+    "ToggleReplace": "Değiştirme Aç/Kapa",
+    "Find": "Bul",
+    "FindPlaceholder": "Dosyalarda bul",
+    "Replace": "Değiştir",
+    "ReplaceAll": "Tümünü Değiştir",
+    "ReplacePlaceholder": "Değiştirilecek metin",
+    "Regex": "Düzenli ifade",
+    "CaseSensitive": "Büyük/Küçük Harf Duyarlı",
+    "WholeWords": "Tüm Kelimeler",
+    "Previous": "Önceki",
+    "Next": "Sonraki",
+    "NoResults": "Sonuç Yok",
+    "Close": "Kapat"
+  },
+  "LoginForm": {
+    "UsernameOrEmail": "E-posta veya Kullanıcı Adı",
+    "UsernameOrEmailARIA": "E-posta veya Kullanıcı Adı",
+    "Password": "Parola",
+    "PasswordARIA": "Parola",
+    "Submit": "Giriş Yap"
+  },
+  "LoginView": {
+    "Title": "p5.js Web Editör | Giriş",
+    "Login": "Giriş Yap",
+    "LoginOr": "veya",
+    "SignUp": "Kaydol",
+    "Email": "e-posta",
+    "Username": "kullanıcı adı",
+    "DontHaveAccount": "Hesabınız yok mu? ",
+    "ForgotPassword": "Parolanızı unuttunuz mu? ",
+    "ResetPassword": "Parolanızı sıfırlayın"
+  },
+  "SocialAuthButton": {
+    "Connect": "{{serviceauth}} Hesabını Bağla",
+    "Unlink": "{{serviceauth}} Hesabının Bağlantısını Kaldır",
+    "Login": "{{serviceauth}} ile Giriş Yap",
+    "LogoARIA": "{{serviceauth}} logosu"
+  },
+  "About": {
+    "Title": "Hakkında",
+    "TitleHelmet": "p5.js Web Editör | Hakkında",
+    "Contribute": "Katkıda Bulun",
+    "NewP5": "p5.js'e yeni misiniz?",
+    "Report": "Bir hata bildir",
+    "Learn": "Öğren",
+    "Resources": "Kaynaklar",
+    "Libraries": "Kütüphaneler",
+    "Forum": "Forum",
+    "Examples": "Örnekler",
+    "PrivacyPolicy": "Gizlilik Politikası",
+    "TermsOfUse": "Kullanım Şartları",
+    "CodeOfConduct": "Davranış Kuralları"
+  },
+  "Toast": {
+    "OpenedNewSketch": "Yeni eskiz açıldı.",
+    "SketchSaved": "Eskiz kaydedildi.",
+    "SketchFailedSave": "Eskiz kaydedilemedi.",
+    "AutosaveEnabled": "Otomatik kaydetme etkin.",
+    "LangChange": "Dil değiştirildi",
+    "SettingsSaved": "Ayarlar kaydedildi."
+  },
+  "Toolbar": {
+    "Preview": "Önizleme",
+    "Auto-refresh": "Otomatik Yenile",
+    "OpenPreferencesARIA": "Tercihleri Aç",
+    "PlaySketchARIA": "Eskizi Çalıştır",
+    "PlayOnlyVisualSketchARIA": "Sadece Görsel Eskizi Çalıştır",
+    "StopSketchARIA": "Eskizi Durdur",
+    "EditSketchARIA": "Eskiz Adını Düzenle",
+    "NewSketchNameARIA": "Yeni Eskiz Adı",
+    "By": " tarafından "
+  },
+  "Console": {
+    "Title": "Konsol",
+    "Clear": "Temizle",
+    "ClearARIA": "Konsolu Temizle",
+    "Close": "Kapat",
+    "CloseARIA": "Konsolu Kapat",
+    "Open": "Aç",
+    "OpenARIA": "Konsolu Aç"
+  },
+  "Preferences": {
+    "Settings": "Ayarlar",
+    "GeneralSettings": "Genel Ayarlar",
+    "Accessibility": "Erişilebilirlik",
+    "Theme": "Tema",
+    "LightTheme": "Aydınlık",
+    "LightThemeARIA": "Aydınlık tema açık",
+    "DarkTheme": "Karanlık",
+    "DarkThemeARIA": "Karanlık tema açık",
+    "HighContrastTheme": "Yüksek Kontrast",
+    "HighContrastThemeARIA": "yüksek kontrast tema açık",
+    "TextSize": "Yazı Boyutu",
+    "DecreaseFont": "Azalt",
+    "DecreaseFontARIA": "yazı boyutunu azalt",
+    "IncreaseFont": "Artır",
+    "IncreaseFontARIA": "yazı boyutunu artır",
+    "FontSize": "Yazı Boyutu",
+    "SetFontSize": "yazı boyutunu ayarla",
+    "Autosave": "Otomatik Kaydet",
+    "On": "Açık",
+    "AutosaveOnARIA": "otomatik kaydetme açık",
+    "Off": "Kapalı",
+    "AutosaveOffARIA": "otomatik kaydetme kapalı",
+    "AutocloseBracketsQuotes": "Parantez ve Tırnakları Otomatik Kapat",
+    "AutocloseBracketsQuotesOnARIA": "parantez ve tırnakları otomatik kapatma açık",
+    "AutocloseBracketsQuotesOffARIA": "parantez ve tırnakları otomatik kapatma kapalı",
+    "WordWrap": "Sözcük Kaydırma",
+    "LineWrapOnARIA": "satır kaydırma açık",
+    "LineWrapOffARIA": "satır kaydırma kapalı",
+    "LineNumbers": "Satır Numaraları",
+    "LineNumbersOnARIA": "satır numaraları açık",
+    "LineNumbersOffARIA": "satır numaraları kapalı",
+    "LintWarningSound": "Lint Uyarı Sesi",
+    "LintWarningOnARIA": "lint uyarısı açık",
+    "LintWarningOffARIA": "lint uyarısı kapalı",
+    "PreviewSound": "Önizleme Sesi",
+    "PreviewSoundARIA": "önizleme sesi",
+    "AccessibleTextBasedCanvas": "Erişilebilir Metin Tabanlı Tuval",
+    "UsedScreenReader": "Ekran Okuyucu ile Kullanılır",
+    "PlainText": "Düz Metin",
+    "TextOutputARIA": "metin çıktısı açık",
+    "TableText": "Tablo Metni",
+    "TableOutputARIA": "tablo çıktısı açık"
+  },
+  "KeyboardShortcuts": {
+    "Title": " Klavye Kısayolları",
+    "ShortcutsFollow": "Kod düzenleme klavye kısayolları takip eder",
+    "SublimeText": "Sublime Text kısayolları",
+    "CodeEditing": {
+      "Tidy": "Düzenle",
+      "FindText": "Metin Bul",
+      "FindNextMatch": "Sonraki Eşleşmeyi Bul",
+      "FindPrevMatch": "Önceki Eşleşmeyi Bul",
+      "ReplaceTextMatch": "Metin Eşleşmesini Değiştir",
+      "IndentCodeLeft": "Kodu Sola Yasla",
+      "IndentCodeRight": "Kodu Sağa Yasla",
+      "CommentLine": "Satırı Yorumla",
+      "FindNextTextMatch": "Sonraki Metin Eşleşmesini Bul",
+      "FindPreviousTextMatch": "Önceki Metin Eşleşmesini Bul",
+      "CodeEditing": "Kod Düzenleme",
+      "ColorPicker": "Satır İçi Renk Seçiciyi Göster"
+    },
+    "General": {
+      "StartSketch": "Eskizi Başlat",
+      "StopSketch": "Eskizi Durdur",
+      "TurnOnAccessibleOutput": "Erişilebilir Çıktıyı Aç",
+      "TurnOffAccessibleOutput": "Erişilebilir Çıktıyı Kapat"
+    }
+  },
+  "Sidebar": {
+    "Title": "Eskiz Dosyaları",
+    "ToggleARIA": "Eskiz dosya seçeneklerini aç/kapat",
+    "AddFolder": "Klasör Oluştur",
+    "AddFolderARIA": "klasör ekle",
+    "AddFile": "Dosya Oluştur",
+    "AddFileARIA": "dosya ekle",
+    "UploadFile": "Dosya Yükle",
+    "UploadFileARIA": "dosya yükle"
+  },
+  "FileNode": {
+    "OpenFolderARIA": "Klasör İçeriğini Aç",
+    "CloseFolderARIA": "Klasör İçeriğini Kapat",
+    "ToggleFileOptionsARIA": "Dosya seçeneklerini aç/kapat",
+    "AddFolder": "Klasör Oluştur",
+    "AddFolderARIA": "klasör ekle",
+    "AddFile": "Dosya Oluştur",
+    "AddFileARIA": "dosya ekle",
+    "UploadFile": "Dosya Yükle",
+    "UploadFileARIA": "dosya yükle",
+    "Rename": "Yeniden Adlandır",
+    "Delete": "Sil"
+  },
+  "Common": {
+    "Error": "Hata",
+    "ErrorARIA": "Hata",
+    "Save": "Kaydet",
+    "p5logoARIA": "p5.js Logosu",
+    "DeleteConfirmation": "{{name}}'i silmek istediğinize emin misiniz?"
+  },
+  "IDEView": {
+    "SubmitFeedback": "Geribildirim Gönder",
+    "SubmitFeedbackARIA": "geribildirim-gonder",
+    "AddCollectionTitle": "Koleksiyona Ekle",
+    "AddCollectionARIA": "koleksiyona ekle",
+    "ShareTitle": "Paylaş",
+    "ShareARIA": "paylaş"
+  },
+  "NewFileModal": {
+    "Title": "Dosya Oluştur",
+    "CloseButtonARIA": "Yeni Dosya Modalını Kapat",
+    "EnterName": "Lütfen bir isim girin",
+    "InvalidType": "Geçersiz dosya türü. Geçerli uzantılar .js, .css, .json, .xml, .txt, .csv, .tsv, .frag ve .vert'tir."
+  },
+  "NewFileForm": {
+    "AddFileSubmit": "Dosya Ekle",
+    "Placeholder": "İsim"
+  },
+  "NewFolderModal": {
+    "Title": "Klasör Oluştur",
+    "CloseButtonARIA": "Yeni Klasör Modalını Kapat",
+    "EnterName": "Lütfen bir isim girin",
+    "EmptyName": "Klasör adı sadece boşluk içeremez",
+    "InvalidExtension": "Klasör adı bir uzantı içeremez"
+  },
+  "NewFolderForm": {
+    "AddFolderSubmit": "Klasör Ekle",
+    "Placeholder": "İsim"
+  },
+  "ResetPasswordForm": {
+    "Email": "Kayıt için kullanılan e-posta",
+    "EmailARIA": "e-posta",
+    "Submit": "Şifre Sıfırlama e-postası Gönder"
+  },
+  "ResetPasswordView": {
+    "Title": "p5.js Web Editörü | Şifreyi Sıfırla",
+    "Reset": "Şifrenizi Sıfırlayın",
+    "Submitted": "Şifre sıfırlama e-postanız yakında ulaşacaktır. Eğer göremezseniz,\n spam klasöründe olabilir.",
+    "Login": "Giriş Yap",
+    "LoginOr": "veya",
+    "SignUp": "Kayıt Ol"
+  },
+  "ReduxFormUtils": {
+    "errorInvalidEmail": "Lütfen geçerli bir e-posta adresi girin",
+    "errorEmptyEmail": "Lütfen bir e-posta adresi girin",
+    "errorPasswordMismatch": "Şifreler eşleşmiyor",
+    "errorEmptyPassword": "Lütfen bir şifre girin",
+    "errorShortPassword": "Şifre en az 6 karakter olmalıdır",
+    "errorConfirmPassword": "Lütfen şifrenizi doğrulayın",
+    "errorNewPassword": "Lütfen yeni bir şifre girin veya mevcut şifreyi boş bırakın.",
+    "errorEmptyUsername": "Lütfen bir kullanıcı adı girin.",
+    "errorLongUsername": "Kullanıcı adı 20 karakterden az olmalıdır.",
+    "errorValidUsername": "Kullanıcı adı sadece sayılar, harfler, noktalar, tireler ve alt çizgilerden oluşmalıdır."
+  },
+  "NewPasswordView": {
+    "Title": "p5.js Web Düzenleyici | Yeni Şifre",
+    "Description": "Yeni Şifre Belirle",
+    "TokenInvalidOrExpired": "Şifre sıfırlama bağlantısı geçersiz veya süresi dolmuş.",
+    "EmptyPassword": "Lütfen bir şifre girin",
+    "PasswordConfirmation": "Lütfen şifre onayını girin",
+    "PasswordMismatch": "Şifreler eşleşmiyor"
+  },
+  "AccountForm": {
+    "Email": "E-posta",
+    "EmailARIA": "e-posta",
+    "Unconfirmed": "Onaylanmamış.",
+    "EmailSent": "Onay e-postası gönderildi, e-postanızı kontrol edin.",
+    "Resend": "Onay e-postasını yeniden gönder",
+    "UserName": "Kullanıcı Adı",
+    "UserNameARIA": "Kullanıcı adı",
+    "CurrentPassword": "Mevcut Şifre",
+    "CurrentPasswordARIA": "Mevcut Şifre",
+    "NewPassword": "Yeni Şifre",
+    "NewPasswordARIA": "Yeni Şifre",
+    "SubmitSaveAllSettings": "Tüm Ayarları Kaydet"
+  },
+  "AccountView": {
+    "SocialLogin": "Sosyal Giriş",
+    "SocialLoginDescription": "GitHub veya Google hesabınızı kullanarak p5.js Web Düzenleyici'ne giriş yapın.",
+    "Title": "p5.js Web Düzenleyici | Hesap Ayarları",
+    "Settings": "Hesap Ayarları",
+    "AccountTab": "Hesap",
+    "AccessTokensTab": "Erişim Anahtarları"
+  },
+  "APIKeyForm": {
+    "ConfirmDelete": "{{key_label}} silmek istediğinizden emin misiniz?",
+    "Summary": "Kişisel Erişim Anahtarları, otomatik komutların Editör API'sine erişim sağlamak için şifreniz gibi davranır. Her otomatik komut için yeni bir anahtar oluşturun.",
+    "CreateToken": "Yeni anahtar oluştur",
+    "TokenLabel": "Bu anahtar ne için?",
+    "TokenPlaceholder": "Bu anahtar ne için? Örn. Örnek içe aktarma betiği",
+    "CreateTokenSubmit": "Oluştur",
+    "NoTokens": "Mevcut anahtarınız yok.",
+    "NewTokenTitle": "Yeni erişim anahtarınız",
+    "NewTokenInfo": "Yeni kişisel erişim anahtarınızı kopyaladığınızdan emin olun. Bir daha göremeyeceksiniz!",
+    "ExistingTokensTitle": "Mevcut anahtarlar"
+  },
+  "APIKeyList": {
+    "Name": "İsim",
+    "Created": "Oluşturulma tarihi",
+    "LastUsed": "Son kullanma",
+    "Actions": "Eylemler",
+    "Never": "Hiçbir zaman",
+    "DeleteARIA": "API Anahtarını Sil"
+  },
+  "NewPasswordForm": {
+    "Title": "Şifre",
+    "TitleARIA": "Şifre",
+    "ConfirmPassword": "Şifreyi Onayla",
+    "ConfirmPasswordARIA": "Şifreyi Onayla",
+    "SubmitSetNewPassword": "Yeni Şifreyi Ayarla"
+  },
+  "SignupForm": {
+    "Title": "Kullanıcı Adı",
+    "TitleARIA": "kullanıcı adı",
+    "Email": "E-posta",
+    "EmailARIA": "e-posta",
+    "Password": "Şifre",
+    "PasswordARIA": "şifre",
+    "ConfirmPassword": "Şifreyi Onayla",
+    "ConfirmPasswordARIA": "şifreyi onayla",
+    "SubmitSignup": "Kaydol"
+  },
+  "SignupView": {
+    "Title": "p5.js Web Düzenleyicisi | Kaydol",
+    "Description": "Kaydol",
+    "Or": "Veya",
+    "AlreadyHave": "Zaten bir hesabın var mı?",
+    "Login": "Giriş yap"
+  },
+  "EmailVerificationView": {
+    "Title": "p5.js Web Düzenleyicisi | E-posta Doğrulama",
+    "Verify": "E-postanızı doğrulayın",
+    "InvalidTokenNull": "Bağlantı geçersiz.",
+    "Checking": "Bağlantı doğrulanıyor, lütfen bekleyin...",
+    "Verified": "E-posta adresiniz doğrulandı.",
+    "InvalidState": "Bir şeyler yanlış gitti."
+  },
+  "AssetList": {
+    "Title": "p5.js Web Düzenleyicisi | Benim varlıklarım",
+    "ToggleOpenCloseARIA": "Varlık seçeneklerini aç/kapat",
+    "Delete": "Sil",
+    "OpenNewTab": "Yeni Sekmede Aç",
+    "NoUploadedAssets": "Yüklenen varlık yok.",
+    "HeaderName": "Adı",
+    "HeaderSize": "Boyutu",
+    "HeaderSketch": "Eskiz"
+  },
+  "Feedback": {
+    "Title": "p5.js Web Düzenleyicisi | Geri Bildirim",
+    "ViaGithubHeader": "Github Hataları ile",
+    "ViaGithubDescription": "Github'a aşina iseniz, geri bildirimlerinizi ve hata raporlarınızı buradan gönderebilirsiniz.",
+    "GoToGithub": "Github'a Git",
+    "ViaGoogleHeader": "Google Formu ile",
+    "ViaGoogleDescription": "Ayrıca bu hızlı formu doldurarak da geri bildirim gönderebilirsiniz.",
+    "GoToForm": "Form'a Git"
+  },
+  "Searchbar": {
+    "SearchSketch": "Eskizleri Ara...",
+    "SearchCollection": "Koleksiyonları Ara...",
+    "ClearTerm": "Temizle"
+  },
+  "UploadFileModal": {
+    "Title": "Dosya Yükle",
+    "CloseButtonARIA": "Dosya yükleme penceresini kapat",
+    "SizeLimitError": "Hata: Daha fazla dosya yükleyemezsiniz. Toplam boyut sınırına ulaştınız. \n Yüklemek isterseniz, lütfen artık kullanmadıklarınızı kaldırın. \n "
+  },
+  "FileUploader": {
+    "DictDefaultMessage": "Dosyaları buraya bırakın veya dosya tarayıcısını kullanmak için tıklayın"
+  },
+  "ErrorModal": {
+    "MessageLogin": "Eskizleri kaydetmek için giriş yapmalısınız. Lütfen ",
+    "Login": "Giriş Yap",
+    "LoginOr": " veya ",
+    "SignUp": "Kayıt Ol",
+    "MessageLoggedOut": "Çıkış yaptığınız görünüyor. Lütfen ",
+    "LogIn": "Giriş Yap",
+    "SavedDifferentWindow": "Kaydetmeye çalıştığınız proje başka bir pencereden kaydedilmiş.\n Lütfen en son sürümü görmek için sayfayı yenileyin.",
+    "LinkTitle": "Hesap Bağlantı Hatası",
+    "LinkMessage": "{{serviceauth}} hesabınızı p5.js Web Editor hesabınıza bağlama sorunu yaşandı. {{serviceauth}} hesabınız zaten başka bir p5.js Web Editor hesabına bağlı."
+  },
+  "ShareModal": {
+    "Embed": "Gömülü",
+    "Present": "Sunum",
+    "Fullscreen": "Tam Ekran",
+    "Edit": "Düzenle"
+  },
+  "CollectionView": {
+    "TitleCreate": "Koleksiyon Oluştur",
+    "TitleDefault": "koleksiyon"
+  },
+  "Collection": {
+    "Title": "p5.js Web Editor | Benim koleksiyonlarım",
+    "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'ın koleksiyonları",
+    "Share": "Paylaş",
+    "URLLink": "Koleksiyonun bağlantısı",
+    "AddSketch": "Eskiz ekle",
+    "DeleteFromCollection": "{{name_sketch}} eskizini koleksiyondan kaldırmak istediğinizden emin misiniz?",
+    "SketchDeleted": "Eskiz silindi",
+    "SketchRemoveARIA": "Eskiz koleksiyondan kaldır",
+    "DescriptionPlaceholder": "Açıklama ekle",
+    "Description": "açıklama",
+    "NumSketches": "{{count}} çizim",
+    "NumSketches_plural": "{{count}} çizimler",
+    "By": "Tarafından ",
+    "NoSketches": "Koleksiyonda eskiz yok",
+    "TableSummary": "tüm koleksiyonları içeren tablo",
+    "HeaderName": "İsim",
+    "HeaderCreatedAt": "Eklenme Tarihi",
+    "HeaderUser": "Sahibi",
+    "DirectionAscendingARIA": "Artan sıralama",
+    "DirectionDescendingARIA": "Azalan sıralama",
+    "ButtonLabelAscendingARIA": "{{displayName}} artan sıralama.",
+    "ButtonLabelDescendingARIA": "{{displayName}} azalan sıralama."
+  },
+  "AddToCollectionList": {
+    "Title": "p5.js Web Düzenleyicisi | Benim koleksiyonlarım",
+    "AnothersTitle": "p5.js Web Düzenleyicisi | {{anotheruser}}'ın koleksiyonları",
+    "Empty": "Koleksiyon yok"
+  },
+  "CollectionCreate": {
+    "Title": "p5.js Web Düzenleyicisi | Koleksiyon oluştur",
+    "FormError": "Koleksiyon oluşturulamadı",
+    "FormLabel": "Koleksiyon adı",
+    "FormLabelARIA": "ad",
+    "NameRequired": "Koleksiyon adı gereklidir",
+    "Description": "Açıklama (isteğe bağlı)",
+    "DescriptionARIA": "açıklama",
+    "DescriptionPlaceholder": "Favori eskizlerim",
+    "SubmitCollectionCreate": "Koleksiyon oluştur"
+  },
+  "DashboardView": {
+    "CreateCollection": "Koleksiyon oluştur",
+    "NewSketch": "Yeni eskiz",
+    "CreateCollectionOverlay": "Koleksiyon oluştur"
+  },
+  "DashboardTabSwitcher": {
+    "Sketches": "Eskizler",
+    "Collections": "Koleksiyonlar",
+    "Assets": "Varlıklar"
+  },
+  "CollectionList": {
+    "Title": "p5.js Web Düzenleyicisi | Benim koleksiyonlarım",
+    "AnothersTitle": "p5.js Web Düzenleyicisi | {{anotheruser}}'ın koleksiyonları",
+    "NoCollections": "Koleksiyon yok.",
+    "TableSummary": "tüm koleksiyonları içeren tablo",
+    "HeaderName": "Ad",
+    "HeaderCreatedAt": "Oluşturulma Tarihi",
+    "HeaderCreatedAt_mobile": "Oluşturulma",
+    "HeaderUpdatedAt": "Güncelleme Tarihi",
+    "HeaderUpdatedAt_mobile": "Güncelleme",
+    "HeaderNumItems": "# eskizler",
+    "HeaderNumItems_mobile": "# eskizler",
+    "DirectionAscendingARIA": "Artan sıralama",
+    "DirectionDescendingARIA": "Azalan sıralama",
+    "ButtonLabelAscendingARIA": "{{displayName}} artan sıralama.",
+    "ButtonLabelDescendingARIA": "{{displayName}} azalan sıralama.",
+    "AddSketch": "Eskiz ekle"
+  },
+  "CollectionListRow": {
+    "ToggleCollectionOptionsARIA": "Koleksiyon seçeneklerini aç/kapat",
+    "AddSketch": "Eskiz ekle",
+    "Delete": "Sil",
+    "Rename": "Yeniden adlandır"
+  },
+  "Overlay": {
+    "AriaLabel": "{{title}} kapama penceresi"
+  },
+  "QuickAddList": {
+    "ButtonRemoveARIA": "Koleksiyondan kaldır",
+    "ButtonAddToCollectionARIA": "Koleksiyona ekle",
+    "View": "Görüntüle"
+  },
+  "SketchList": {
+    "View": "Görünüm",
+    "Title": "p5.js Web Editörü | Benim eskizlerim",
+    "AnothersTitle": "p5.js Web Editörü | {{anotheruser}}'in eskizleri",
+    "ToggleLabelARIA": "Eskiz Seçeneklerini Aç/Kapa",
+    "DropdownRename": "Yeniden Adlandır",
+    "DropdownDownload": "İndir",
+    "DropdownDuplicate": "Kopyala",
+    "DropdownAddToCollection": "Koleksiyona Ekle",
+    "DropdownDelete": "Sil",
+    "DirectionAscendingARIA": "Artan",
+    "DirectionDescendingARIA": "Azalan",
+    "ButtonLabelAscendingARIA": "{{displayName}}'e göre artan sıralama.",
+    "ButtonLabelDescendingARIA": "{{displayName}}'e göre azalan sıralama.",
+    "AddToCollectionOverlayTitle": "Koleksiyona Ekle",
+    "TableSummary": "Tüm kaydedilmiş projeleri içeren tablo",
+    "HeaderName": "Eskiz",
+    "HeaderCreatedAt": "Oluşturma Tarihi",
+    "HeaderCreatedAt_mobile": "Oluşturulma",
+    "HeaderUpdatedAt": "Güncelleme Tarihi",
+    "HeaderUpdatedAt_mobile": "Güncelleme",
+    "NoSketches": "Eskiz yok."
+  },
+  "AddToCollectionSketchList": {
+    "Title": "p5.js Web Editörü | Benim eskizlerim",
+    "AnothersTitle": "p5.js Web Editörü | {{anotheruser}}'in eskizleri",
+    "NoCollections": "Koleksiyon yok."
+  },
+  "Editor": {
+    "OpenSketchARIA": "Eskiz dosyaları gezintisini aç",
+    "CloseSketchARIA": "Eskiz dosyaları gezintisini kapat",
+    "UnsavedChangesARIA": "Eskiz kaydedilmemiş değişiklikler içeriyor",
+    "KeyUpLineNumber": "{{lineNumber}}. satır"
+  },
+  "EditorAccessibility": {
+    "NoLintMessages": "Lint mesajı yok ",
+    "CurrentLine": " Şu anki satır"
+  },
+  "Timer": {
+    "SavedAgo": "Kaydedildi: {{timeAgo}}"
+  },
+  "formatDate": {
+    "JustNow": "az önce",
+    "15Seconds": "15 saniye önce",
+    "25Seconds": "25 saniye önce",
+    "35Seconds": "35 saniye önce",
+    "Ago": "{{timeAgo}} önce"
+  },
+  "AddRemoveButton": {
+    "AltAddARIA": "Koleksiyona ekle",
+    "AltRemoveARIA": "Koleksiyondan çıkar"
+  },
+  "CopyableInput": {
+    "CopiedARIA": "Panoya kopyalandı!",
+    "OpenViewTabARIA": "Yeni sekmede {{label}} görünümünü aç"
+  },
+  "EditableInput": {
+    "EditValue": "{{display}} değerini düzenle",
+    "EmptyPlaceholder": "Değer yok"
+  },
+  "PreviewNav": {
+    "EditSketchARIA": "Eskizi düzenle",
+    "ByUser": "tarafından"
+  },
+  "MobilePreferences": {
+    "Settings": "Ayarlar",
+    "GeneralSettings": "Genel ayarlar",
+    "Accessibility": "Erişilebilirlik",
+    "AccessibleOutput": "Erişilebilir Çıktı",
+    "Theme": "Tema",
+    "LightTheme": "Aydınlık",
+    "DarkTheme": "Karanlık",
+    "HighContrastTheme": "Yüksek Kontrast",
+    "Autosave": "Otomatik Kaydet",
+    "WordWrap": "Satır Kaydırma",
+    "LineNumbers": "Satır Numaraları",
+    "LintWarningSound": "Lint Uyarı Sesleri",
+    "UsedScreenReader": "Ekran Okuyucu ile kullanıldı",
+    "PlainText": "Düz Metin",
+    "TableText": "Tablo Metni",
+    "Sound": "Ses"
+  },
+  "PreferenceCreators": {
+    "On": "Açık",
+    "Off": "Kapalı"
+  },
+  "MobileIDEView": {
+    "Preferences": "Tercihler",
+    "MyStuff": "Benim Şeylerim",
+    "Examples": "Örnekler",
+    "OriginalEditor": "Orijinal Editör",
+    "Login": "Giriş Yap",
+    "Logout": "Çıkış Yap"
+  },
+  "MobileDashboardView": {
+    "Examples": "Örnekler",
+    "Sketches": "Eskizler",
+    "Collections": "Koleksiyonlar",
+    "Assets": "Varlıklar",
+    "MyStuff": "Benim Şeylerim",
+    "CreateSketch": "Eskiz Oluştur",
+    "CreateCollection": "Koleksiyon Oluştur"
+  },
+  "Explorer": {
+    "Files": "Dosyalar"
+  },
+  "Cookies": {
+    "Header": "Çerezler",
+    "Body": "p5.js Editörü çerezleri kullanır. Bazıları web sitesi işlevselliği için önemlidir ve hesabınızı ve tercihlerinizi yönetmenize olanak tanır. Diğerleri önemli değildir - analiz için kullanılırlar ve topluluğumuz hakkında daha fazla bilgi edinmemizi sağlarlar. <strong> Bu verileri asla satmıyoruz veya reklam için kullanmıyoruz. </strong> Hangi çerezlere izin vermek istediğinize karar verebilirsiniz ve <0>Gizlilik Politikamızda<0> daha fazla bilgi edinebilirsiniz.",
+    "AllowAll": "Tümüne İzin Ver",
+    "AllowEssential": "Önemli Olanlara İzin Ver"
+  },
+  "Legal": {
+    "PrivacyPolicy": "Gizlilik Politikası",
+    "TermsOfUse": "Kullanım Koşulları",
+    "CodeOfConduct": "Davranış Kuralları"
+  }
+}
