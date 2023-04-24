@@ -1,0 +1,76 @@
+name: 🐛 Found a Bug
+description: Report p5.js web editor bugs (broken or incorrect behaviour).
+labels: [ Bug ]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        - Please make sure to [search for existing issues](https://github.com/processing/p5.js-web-editor/issues) before filing a new one!
+
+  - type: input
+    attributes:
+      label: p5.js version
+      description: You can find this in the first line of the p5.js file.
+    validations:
+      required: false
+
+  - type: dropdown
+    attributes:
+      label: What is your operating system?
+      options:
+        - Windows
+        - Mac OS
+        - Linux
+        - Android
+        - iOS
+        - Other (specify if possible)
+    validations:
+      required: false
+
+  - type: input
+    attributes:
+      label: Web browser and version
+      description: |
+        In the address bar, on Chrome enter `chrome://version`, on Firefox enter `about:support`. On Safari, use `About Safari`.
+    validations:
+      required: false
+
+  - type: textarea
+    attributes:
+      label: Actual Behavior
+      placeholder: What is currently happening.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Expected Behavior
+      description: |
+        If you want to include screenshots, paste them into the markdown editor below.
+      placeholder: What were you expecting?
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Steps to reproduce
+      description: |
+        - Add steps to reproduce bugs or add information on the place where the feature should be implemented.
+        - Add links to a sample deployment or code.
+      value: "### Steps: 
+      
+              1.
+              2.
+              3.
+          
+              ### Snippet:
+              
+              ```js
+              
+              
+              // Paste your code here :)
+              
+              
+              ```"
+    validations:
+      required: true
