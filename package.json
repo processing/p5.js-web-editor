@@ -1,6 +1,6 @@
 {
   "name": "p5.js-web-editor",
-  "version": "2.5.0",
+  "version": "2.5.2",
   "description": "The web editor for p5.js.",
   "scripts": {
     "clean": "rimraf dist",
@@ -12,7 +12,7 @@
     "build:client": "cross-env NODE_ENV=production webpack --config webpack/config.prod.js",
     "build:server": "cross-env NODE_ENV=production webpack --config webpack/config.server.js",
     "build:examples": "cross-env NODE_ENV=production webpack --config webpack/config.examples.js",
-    "test": "jest",
+    "test": "jest --coverage",
     "test:ci": "npm run lint && npm run test",
     "fetch-examples": "cross-env NODE_ENV=development node ./server/scripts/fetch-examples.js",
     "fetch-examples-gg": "cross-env NODE_ENV=development node ./server/scripts/fetch-examples-gg.js",
@@ -238,7 +238,7 @@
     "styled-theming": "^2.2.0",
     "url": "^0.11.0",
     "uuid": "^8.3.2",
-    "webpack": "^5.72.0",
+    "webpack": "^5.76.0",
     "webpack-dev-middleware": "^5.3.1",
     "webpack-hot-middleware": "^2.25.1",
     "xhr": "^2.6.0"
