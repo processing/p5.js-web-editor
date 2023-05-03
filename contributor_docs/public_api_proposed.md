@@ -43,7 +43,7 @@ Returns `Sketch`.
 ### Responses
 
 | HTTP code     | Description                  |
-| ------------- | ---------------------------- |
+|---------------|------------------------------|
 | 200 OK        | Returns ID of created sketch |
 | 404 Not Found | Sketch does not exist        |
 
@@ -73,7 +73,7 @@ No body.
 ### Responses
 
 | HTTP code                | Description                                  |
-| ------------------------ | -------------------------------------------- |
+|--------------------------|----------------------------------------------|
 | 200 OK                   |                                              |
 | 404 Not Found            | Sketch does not exist                        |
 | 422 Unprocessable Entity | file validation failed, unsupported filetype |
@@ -116,7 +116,7 @@ Add a file to a sketch, or replace an existing file.
 ### Responses
 
 | HTTP code                | Description               |
-| ------------------------ | ------------------------- |
+|--------------------------|---------------------------|
 | 200 OK                   | Change were made          |
 | 404 Not Found            | Sketch does not exist     |
 | 422 Unprocessable Entity | Validation error of files |
@@ -147,7 +147,7 @@ Returns file contents.
 ### Responses
 
 | HTTP code     | Description                                                              |
-| ------------- | ------------------------------------------------------------------------ |
+|---------------|--------------------------------------------------------------------------|
 | 200 OK        | Returns body of the file with the content-type set by the file extension |
 | 404 Not Found | File does not exist                                                      |
 
@@ -198,7 +198,7 @@ Files are added to the directory, in addition to what is there.
 ### Responses
 
 | HTTP code                | Description                |
-| ------------------------ | -------------------------- |
+|--------------------------|----------------------------|
 | 200 OK                   | The changes have been made |
 | 404 Not Found            | Path does not exist        |
 | 422 Unprocessable Entity | Validation error of files  |
@@ -230,7 +230,7 @@ The `assets` directory and everything within it, will be removed.
 ### Responses
 
 | HTTP code     | Description               |
-| ------------- | ------------------------- |
+|---------------|---------------------------|
 | 200 OK        | The item has been deleted |
 | 404 Not Found | Path does not exist       |
 
