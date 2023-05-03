@@ -489,7 +489,7 @@ If the component makes use of the `formatDate` util, some of the functions in th
 ```js
 jest.mock('_path_to_file_/i18n');
 ```
-You can see it used in the context of a test [in the SketchList.test.jsx file](../client/modules/IDE/components/SketchList.test.jsx).
+You can see it used in the context of a test [in the SketchList.test.jsx file](../client/modules/IDE/components/SketchList.unit.test.jsx).
 
 ## Internationalization
 This project uses i18next for internationalization. If you import the render function with the i18n wrapper from `test_utils.js`, it's set up to use English, so the components will be rendered with English text and you should be able to count on this to test for specific strings.
