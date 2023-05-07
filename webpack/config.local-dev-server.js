@@ -36,17 +36,22 @@ module.exports = {
       chunks: ['app'], // name of chunk(s) corresponds to entry in config.dev.js
       template: resolveAppPath('public/index.html'), // templated using lodash.template
       filename: 'index.html',
-      // Variables
-      API_URL: process.env.API_URL,
-
-      LOGIN_ENABLED: process.env.LOGIN_ENABLED,
-      EXAMPLES_ENABLED: process.env.EXAMPLES_ENABLED,
-      UI_ACCESS_TOKEN_ENABLED: process.env.UI_ACCESS_TOKEN_ENABLED,
-      UI_COLLECTIONS_ENABLED: process.env.UI_COLLECTIONS_ENABLED,
-      UPLOAD_LIMIT: process.env.UPLOAD_LIMIT,
-      MOBILE_ENABLED: process.env.MOBILE_ENABLED,
-      PREVIEW_URL: `http://localhost:${PORT}/preview.html`,
-      TRANSLATIONS_ENABLED: process.env.TRANSLATIONS_ENABLED,
+      templateParameters: {
+        ENV_FROM_WEBPACK: JSON.stringify({
+          API_URL: process.env.API_URL,
+          LOGIN_ENABLED: process.env.LOGIN_ENABLED === 'true',
+          EXAMPLES_ENABLED: process.env.EXAMPLES_ENABLED === 'true',
+          UI_ACCESS_TOKEN_ENABLED: process.env.UI_ACCESS_TOKEN_ENABLED === 'true',
+          UI_COLLECTIONS_ENABLED: process.env.UI_COLLECTIONS_ENABLED === 'true',
+          UPLOAD_LIMIT: parseInt(process.env.UPLOAD_LIMIT),
+          MOBILE_ENABLED: process.env.MOBILE_ENABLED === 'true',
+          PREVIEW_URL: `http://localhost:${PORT}/preview.html`,
+          TRANSLATIONS_ENABLED: process.env.TRANSLATIONS_ENABLED === 'true',
+          // NODE_ENV controls the presence of the debug tool. Let's make it always visible for local testing.
+          NODE_ENV: 'development',
+          CLIENT: true // This is always true in the browser!
+        })
+      }
     }),
     new HtmlWebpackPlugin({
       inject: true,

@@ -19,32 +19,24 @@
       type="text/css"
     />
     <link rel='shortcut icon'
-    href='https://raw.githubusercontent.com/processing/p5.js-website-OLD/master/favicon.ico'
+    href='favicon.ico'
     type='image/x-icon' />
   </head>
   <body>
-    <div id="root" class="root-app"></div>
+    <div id="root" class="root-app" data-env='<%= ENV_FROM_WEBPACK %>'></div>
     <script>
         // See views/index.js for reference
         if (!window.process) {
           window.process = {};
         }
-        if (!window.process.env) {
+        try {
+          window.process.env = JSON.parse(
+            document.getElementById('root').dataset.env
+          );
+        } catch (e) {
+          alert('Environment variables not set. To view this file, run `npm run start-frontend-server`.')
           window.process.env = {};
         }
-
-        window.process.env.API_URL = '<%= htmlWebpackPlugin.options.API_URL %>';
-        // NODE_ENV controls the presence of the debug tool. Let's make it always visible for local testing.
-        window.process.env.NODE_ENV = 'development';
-        window.process.env.CLIENT = true; // This is always true in the browser!
-        window.process.env.LOGIN_ENABLED = '<%= htmlWebpackPlugin.options.LOGIN_ENABLED %>';
-        window.process.env.EXAMPLES_ENABLED = '<%= htmlWebpackPlugin.options.EXAMPLES_ENABLED %>';
-        window.process.env.UI_ACCESS_TOKEN_ENABLED = '<%= htmlWebpackPlugin.options.UI_ACCESS_TOKEN_ENABLED %>';
-        window.process.env.UI_COLLECTIONS_ENABLED = '<%= htmlWebpackPlugin.options.UI_COLLECTIONS_ENABLED %>';
-        window.process.env.UPLOAD_LIMIT = '<%= htmlWebpackPlugin.options.UPLOAD_LIMIT %>';
-        window.process.env.MOBILE_ENABLED = '<%= htmlWebpackPlugin.options.MOBILE_ENABLED %>';
-        window.process.env.PREVIEW_URL = "<%= htmlWebpackPlugin.options.PREVIEW_URL %>";
-        window.process.env.TRANSLATIONS_ENABLED = '<%= htmlWebpackPlugin.options.TRANSLATIONS_ENABLED %>';
       </script>
   </body>
 </html>
