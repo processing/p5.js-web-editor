@@ -11,7 +11,6 @@ import dates from '../../../utils/formatDate';
 import * as ProjectActions from '../actions/project';
 import * as ProjectsActions from '../actions/projects';
 import * as CollectionsActions from '../actions/collections';
-import * as ToastActions from '../actions/toast';
 import * as SortingActions from '../actions/sorting';
 import * as IdeActions from '../actions/ide';
 import getSortedSketches from '../selectors/projects';
@@ -591,13 +590,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
-    Object.assign(
-      {},
-      ProjectsActions,
-      CollectionsActions,
-      ToastActions,
-      SortingActions
-    ),
+    Object.assign({}, ProjectsActions, CollectionsActions, SortingActions),
     dispatch
   );
 }

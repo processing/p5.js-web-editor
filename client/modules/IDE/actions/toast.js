@@ -1,23 +1,10 @@
-import * as ActionTypes from '../../../constants';
+import { setToast, hideToast } from '../reducers/toast';
 
-export function hideToast() {
-  return {
-    type: ActionTypes.HIDE_TOAST
-  };
-}
+export const TOAST_DISPLAY_TIME_MS = 1500;
 
-export function showToast(time) {
-  return (dispatch) => {
-    dispatch({
-      type: ActionTypes.SHOW_TOAST
-    });
-    setTimeout(() => dispatch(hideToast()), time);
-  };
-}
-
-export function setToastText(text) {
-  return {
-    type: ActionTypes.SET_TOAST_TEXT,
-    text
-  };
-}
+export const showToast = (text, timeout = TOAST_DISPLAY_TIME_MS) => (
+  dispatch
+) => {
+  dispatch(setToast(text));
+  setTimeout(() => dispatch(hideToast()), timeout);
+};

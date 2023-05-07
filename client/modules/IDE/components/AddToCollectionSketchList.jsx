@@ -7,7 +7,6 @@ import { withTranslation } from 'react-i18next';
 // import find from 'lodash/find';
 import * as ProjectsActions from '../actions/projects';
 import * as CollectionsActions from '../actions/collections';
-import * as ToastActions from '../actions/toast';
 import * as SortingActions from '../actions/sorting';
 import getSortedSketches from '../selectors/projects';
 import Loader from '../../App/components/loader';
@@ -145,13 +144,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
-    Object.assign(
-      {},
-      ProjectsActions,
-      CollectionsActions,
-      ToastActions,
-      SortingActions
-    ),
+    Object.assign({}, ProjectsActions, CollectionsActions, SortingActions),
     dispatch
   );
 }
