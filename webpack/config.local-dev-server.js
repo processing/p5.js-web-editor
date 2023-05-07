@@ -26,6 +26,7 @@ module.exports = {
     compress: true,
     host: HOST,
     port: PORT,
+    historyApiFallback: true
   },
   plugins: [
     ...baseWebpack.plugins,
