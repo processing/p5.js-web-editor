@@ -39,10 +39,6 @@ class DashboardView extends React.Component {
     };
   }
 
-  componentDidMount() {
-    document.body.className = this.props.theme;
-  }
-
   closeAccountPage() {
     browserHistory.push(this.props.previousPath);
   }
@@ -174,8 +170,7 @@ class DashboardView extends React.Component {
 function mapStateToProps(state) {
   return {
     previousPath: state.ide.previousPath,
-    user: state.user,
-    theme: state.preferences.theme
+    user: state.user
   };
 }
 
@@ -192,7 +187,6 @@ DashboardView.propTypes = {
     username: PropTypes.string.isRequired
   }).isRequired,
   previousPath: PropTypes.string.isRequired,
-  theme: PropTypes.string.isRequired,
   user: PropTypes.shape({
     username: PropTypes.string
   }),
