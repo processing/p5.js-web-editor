@@ -158,14 +158,12 @@ CodeMirror.defineMode("javascript", function(config, parserConfig) {
     } else if (wordRE.test(ch)) {
       stream.eatWhile(wordRE);
       var word = stream.current()
-      if (state.lastType != ".") {
-        if (keywords.propertyIsEnumerable(word)) {
-          var kw = keywords[word]
-          return ret(kw.type, kw.style, word)
-        }
-        if (word == "async" && stream.match(/^(\s|\/\*.*?\*\/)*[\[\(\w]/, false))
-          return ret("async", "keyword", word)
+      if (keywords.propertyIsEnumerable(word)) {
+        var kw = keywords[word]
+        return ret(kw.type, kw.style, word)
       }
+      if (state.lastType != "." && word == "async" && stream.match(/^(\s|\/\*.*?\*\/)*[\[\(\w]/, false))
+        return ret("async", "keyword", word)
       return ret("variable", "variable", word)
     }
   }
@@ -285,6 +283,7 @@ CodeMirror.defineMode("javascript", function(config, parserConfig) {
       if (combinator(type, content)) {
         while(cc.length && cc[cc.length - 1].lex)
           cc.pop()();
+        if (style?.slice(0, 2) === "p5") return style;
         if (cx.marked) return cx.marked;
         if (type == "variable" && inScope(state, content)) return "variable-2";
         return style;

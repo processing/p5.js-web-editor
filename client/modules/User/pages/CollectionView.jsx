@@ -14,10 +14,6 @@ class CollectionView extends React.Component {
     user: null
   };
 
-  componentDidMount() {
-    document.body.className = this.props.theme;
-  }
-
   ownerName() {
     if (this.props.params.username) {
       return this.props.params.username;
@@ -69,8 +65,7 @@ class CollectionView extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    user: state.user,
-    theme: state.preferences.theme
+    user: state.user
   };
 }
 
@@ -86,7 +81,6 @@ CollectionView.propTypes = {
     collection_id: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired
   }).isRequired,
-  theme: PropTypes.string.isRequired,
   user: PropTypes.shape({
     username: PropTypes.string
   }),

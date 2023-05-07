@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import CodeMirror from 'codemirror';
 import emmet from '@emmetio/codemirror-plugin';
-import prettier from 'prettier';
+import prettier from 'prettier/standalone';
 import babelParser from 'prettier/parser-babel';
 import htmlParser from 'prettier/parser-html';
 import cssParser from 'prettier/parser-postcss';
@@ -51,7 +51,6 @@ import UnsavedChangesDotIcon from '../../../images/unsaved-changes-dot.svg';
 import RightArrowIcon from '../../../images/right-arrow.svg';
 import LeftArrowIcon from '../../../images/left-arrow.svg';
 import { getHTMLFile } from '../reducers/files';
-import { getIsUserOwner } from '../selectors/users';
 
 import * as FileActions from '../actions/files';
 import * as IDEActions from '../actions/ide';
@@ -159,7 +158,8 @@ class Editor extends React.Component {
       // choose a color, it deletes characters inline. This is a
       // hack to prevent that.
       [`${metaKey}-K`]: (cm, event) =>
-        cm.state.colorpicker.popup_color_picker({ length: 0 })
+        cm.state.colorpicker.popup_color_picker({ length: 0 }),
+      [`${metaKey}-.`]: 'toggleComment' // Note: most adblockers use the shortcut ctrl+.
     });
 
     this.initializeDocuments(this.props.files);
@@ -313,7 +313,7 @@ class Editor extends React.Component {
       mode = 'application/json';
     } else if (fileName.match(/.+\.(frag|glsl)$/i)) {
       mode = 'x-shader/x-fragment';
-    } else if (fileName.match(/.+\.(vert)$/i)) {
+    } else if (fileName.match(/.+\.(vert|stl)$/i)) {
       mode = 'x-shader/x-vertex';
     } else {
       mode = 'text/plain';
@@ -345,9 +345,11 @@ class Editor extends React.Component {
           plugins
         }
       );
+      const { left, top } = this._cm.getScrollInfo();
       this._cm.doc.setValue(formatted);
       this._cm.focus();
       this._cm.doc.setCursor(this._cm.doc.posFromIndex(cursorOffset));
+      this._cm.scrollTo(left, top);
     } catch (error) {
       console.error(error);
     }
@@ -418,10 +420,7 @@ class Editor extends React.Component {
                 ) : null}
               </span>
             </span>
-            <Timer
-              projectSavedTime={this.props.projectSavedTime}
-              isUserOwner={this.props.isUserOwner}
-            />
+            <Timer />
           </div>
         </header>
         <article
@@ -472,7 +471,6 @@ Editor.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   theme: PropTypes.string.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
-  projectSavedTime: PropTypes.string.isRequired,
   files: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -483,7 +481,6 @@ Editor.propTypes = {
   isExpanded: PropTypes.bool.isRequired,
   collapseSidebar: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
-  isUserOwner: PropTypes.bool.isRequired,
   clearConsole: PropTypes.func.isRequired,
   // showRuntimeErrorWarning: PropTypes.func.isRequired,
   hideRuntimeErrorWarning: PropTypes.func.isRequired,
@@ -514,9 +511,7 @@ function mapStateToProps(state) {
     ...state.ide,
     ...state.project,
     ...state.editorAccessibility,
-    isExpanded: state.ide.sidebarIsExpanded,
-    projectSavedTime: state.project.updatedAt,
-    isUserOwner: getIsUserOwner(state)
+    isExpanded: state.ide.sidebarIsExpanded
   };
 }
 

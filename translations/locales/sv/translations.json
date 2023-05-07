@@ -428,7 +428,7 @@
     "Description": "beskrivning",
     "NumSketches": "{{count}} sketch",
     "NumSketches_plural": "{{count}} sketcher",
-    "By":"Samling av",
+    "By":"Samling av ",
     "NoSketches": "Inga sketcher i samling",
     "TableSummary": "tabell med alla samlingar",
     "HeaderName": "Namn",

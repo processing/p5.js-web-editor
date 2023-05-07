@@ -6,9 +6,9 @@ module.exports = {
 
   entry: {
     server:
-      ['@babel/polyfill', path.resolve(__dirname, '../server/server.js')],
+      ['regenerator-runtime/runtime', path.resolve(__dirname, '../server/server.js')],
     previewServer:
-      ['@babel/polyfill', path.resolve(__dirname, '../server/previewServer.js')],
+      ['regenerator-runtime/runtime', path.resolve(__dirname, '../server/previewServer.js')],
   },
   output: {
     path: path.resolve(__dirname, '../dist/'),
