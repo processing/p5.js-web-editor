@@ -11,32 +11,24 @@ In order to simplify the translations process the following rules of thumb were 
 
 * There is only one file to translate all the texts in any specific language, which is located under the directory, in the respective locale [subdirectory](https://github.com/processing/p5.js-web-editor/tree/develop/translations/locales)
 * The new language code must be added to [client/i18n.js](https://github.com/processing/p5.js-web-editor/blob/edae248eede21d7ad7702945929efbcdfeb4d9ea/client/i18n.js#L22)
-* New languages will need to be selected using a dropdown in the Nav component, specifically in function [renderLanguageMenu.](https://github.com/processing/p5.js-web-editor/blob/edae248eede21d7ad7702945929efbcdfeb4d9ea/client/components/Nav.jsx#L599)
-* Need to add `TRANSLATIONS_ENABLED=true` to `.env` to activate the dropdown for the languages.
 
-#### Nav.js
-Need to add the following code to add a new language as a dropdown menu.
-```js
-<li className="nav__dropdown-item">
-   <button
-      onFocus={this.handleFocusForLang}
-      onBlur={this.handleBlur}
-      value="newLanguageValue"
-      onClick={e => this.handleLangSelection(e)}
-   >
-      new language name in the new language ex: 日本語 (Japanese)
-   </button>
-</li>
-```
+#### Language codes
+We use standard [IETF language codes](https://en.wikipedia.org/wiki/IETF_language_tag) to identify languages.  In most cases, the code is either two lowercase letters representing a language (`ja` for Japanese) or a language code followed by a hyphen and two uppercase letters for a country (`en-US` for American English).
 
 #### i18n.js
-In terms of `i18n.js`, you will need to update 2 things. One is to import a new language from `date-fns/locale`. The other is to add a new language to `languageMap`.
+In terms of `i18n.js`, you will need to update 4 things:
 
+1. Add the code for your language to the array of `availableLanguages`.
 ```js
-import { enUS, es, ja, newLanguage } from 'date-fns/locale';
 const availableLanguages = ['en-US', 'es-419', 'ja', 'newLanguage'];
 ```
 
+2. Import the locale for your language from `date-fns/locale`.  This is used to translate dates and times.
+```js
+import { enUS, es, ja, newLanguage } from 'date-fns/locale';
+```
+
+3. Associate the locale with the country code by adding it to the map in the `languageKeyToDateLocale` function.
 ```js
 export function languageKeyToDateLocale(lang) {
   const languageMap = {
@@ -49,7 +41,18 @@ export function languageKeyToDateLocale(lang) {
 }
 ```
 
-
+4. Add the name of your language to the map in the `languageKeyToLabel` function. This will determine what is shown in the dropdown menu.
+```js
+export function languageKeyToLabel(lang) {
+  const languageMap = {
+    'en-US': 'English',
+    'es-419': 'Español',
+    ja: '日本語',
+    'newLanguage': 'New Language Name'
+  };
+  return languageMap[lang];
+}
+```
 
 ## Translations
 

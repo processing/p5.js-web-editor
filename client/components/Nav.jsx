@@ -1,11 +1,11 @@
+import classNames from 'classnames';
+import { sortBy } from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { Link } from 'react-router';
-import classNames from 'classnames';
 import { withTranslation } from 'react-i18next';
-import { languageKeyToLabel } from '../i18n';
+import { connect } from 'react-redux';
+import { Link, withRouter } from 'react-router';
+import { availableLanguages, languageKeyToLabel } from '../i18n';
 import * as IDEActions from '../modules/IDE/actions/ide';
 import * as toastActions from '../modules/IDE/actions/toast';
 import * as projectActions from '../modules/IDE/actions/project';
@@ -623,146 +623,18 @@ class Nav extends React.PureComponent {
             />
           </button>
           <ul className="nav__dropdown">
-            <li className="nav__dropdown-item">
-              <button
-                onFocus={this.handleFocusForLang}
-                onBlur={this.handleBlur}
-                value="de"
-                onClick={(e) => this.handleLangSelection(e)}
-              >
-                Deutsch
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onFocus={this.handleFocusForLang}
-                onBlur={this.handleBlur}
-                value="en-US"
-                onClick={(e) => this.handleLangSelection(e)}
-              >
-                English
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onFocus={this.handleFocusForLang}
-                onBlur={this.handleBlur}
-                value="es-419"
-                onClick={(e) => this.handleLangSelection(e)}
-              >
-                Español
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onFocus={this.handleFocusForLang}
-                onBlur={this.handleBlur}
-                value="fr-CA"
-                onClick={(e) => this.handleLangSelection(e)}
-              >
-                Français
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onFocus={this.handleFocusForLang}
-                onBlur={this.handleBlur}
-                value="hi"
-                onClick={(e) => this.handleLangSelection(e)}
-              >
-                हिन्दी
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onFocus={this.handleFocusForLang}
-                onBlur={this.handleBlur}
-                value="ko"
-                onClick={(e) => this.handleLangSelection(e)}
-              >
-                한국어
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onFocus={this.handleFocusForLang}
-                onBlur={this.handleBlur}
-                value="it"
-                onClick={(e) => this.handleLangSelection(e)}
-              >
-                Italiano
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onFocus={this.handleFocusForLang}
-                onBlur={this.handleBlur}
-                value="ja"
-                onClick={(e) => this.handleLangSelection(e)}
-              >
-                日本語
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onFocus={this.handleFocusForLang}
-                onBlur={this.handleBlur}
-                value="pt-BR"
-                onClick={(e) => this.handleLangSelection(e)}
-              >
-                Português
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onFocus={this.handleFocusForLang}
-                onBlur={this.handleBlur}
-                value="sv"
-                onClick={(e) => this.handleLangSelection(e)}
-              >
-                Svenska
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onFocus={this.handleFocusForLang}
-                onBlur={this.handleBlur}
-                value="uk-UA"
-                onClick={(e) => this.handleLangSelection(e)}
-              >
-                Українська
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onFocus={this.handleFocusForLang}
-                onBlur={this.handleBlur}
-                value="zh-CN"
-                onClick={(e) => this.handleLangSelection(e)}
-              >
-                简体中文
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onFocus={this.handleFocusForLang}
-                onBlur={this.handleBlur}
-                value="zh-TW"
-                onClick={(e) => this.handleLangSelection(e)}
-              >
-                正體中文
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onFocus={this.handleFocusForLang}
-                onBlur={this.handleBlur}
-                value="tr"
-                onClick={(e) => this.handleLangSelection(e)}
-              >
-                Türkçe
-              </button>
-            </li>
+            {sortBy(availableLanguages).map((key) => (
+              <li className="nav__dropdown-item" key={key}>
+                <button
+                  onFocus={this.handleFocusForLang}
+                  onBlur={this.handleBlur}
+                  value={key}
+                  onClick={this.handleLangSelection}
+                >
+                  {languageKeyToLabel(key)}
+                </button>
+              </li>
+            ))}
           </ul>
         </li>
       </React.Fragment>
