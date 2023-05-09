@@ -11,6 +11,7 @@ In order to simplify the translations process the following rules of thumb were 
 
 * There is only one file to translate all the texts in any specific language, which is located under the directory, in the respective locale [subdirectory](https://github.com/processing/p5.js-web-editor/tree/develop/translations/locales)
 * The new language code must be added to [client/i18n.js](https://github.com/processing/p5.js-web-editor/blob/edae248eede21d7ad7702945929efbcdfeb4d9ea/client/i18n.js#L22)
+* Need to add `TRANSLATIONS_ENABLED=true` to `.env` to activate the dropdown for the languages.
 
 #### Language codes
 We use standard [IETF language codes](https://en.wikipedia.org/wiki/IETF_language_tag) to identify languages.  In most cases, the code is either two lowercase letters representing a language (`ja` for Japanese) or a language code followed by a hyphen and two uppercase letters for a country (`en-US` for American English).
