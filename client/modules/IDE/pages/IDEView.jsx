@@ -227,6 +227,10 @@ class IDEView extends React.Component {
         this.props.closeUploadFileModal();
       } else if (this.props.ide.modalIsVisible) {
         this.props.closeNewFileModal();
+      } else if (e.keyCode === 78 && ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))){
+        e.preventDefault();
+        this.props.newFile(this.props.files.filter(file => file.name === 'root')[0].id);
+        // 78 === n
       }
     }
   }
