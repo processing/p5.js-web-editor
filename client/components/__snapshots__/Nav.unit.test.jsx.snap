@@ -138,7 +138,13 @@ exports[`Nav renders correctly 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <button />
+              <button>
+                <span
+                  class="nav__keyboard-shortcut"
+                >
+                  ⌃+⇧+N
+                </span>
+              </button>
             </li>
             <li
               class="nav__dropdown-item"
