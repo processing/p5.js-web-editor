@@ -481,7 +481,9 @@ class Nav extends React.PureComponent {
                 onBlur={this.handleBlur}
               >
                 {this.props.t('Nav.Sketch.AddFile')}
-                <span className="nav__keyboard-shortcut">{metaKeyName}+{'\u21E7'}+N</span>
+                <span className="nav__keyboard-shortcut">
+                  {metaKeyName}+{'\u21E7'}+N
+                </span>
               </button>
             </li>
             <li className="nav__dropdown-item">
