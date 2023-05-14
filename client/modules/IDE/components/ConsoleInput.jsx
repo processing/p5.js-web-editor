@@ -19,7 +19,7 @@ class ConsoleInput extends React.Component {
   }
 
   componentDidMount() {
-    this._cm = CodeMirror(this.codemirrorContainer, {
+    this._cm5 = CodeMirror(this.codemirrorContainer, {
       // eslint-disable-line
       theme: `p5-${this.props.theme}`,
       scrollbarStyle: null,
@@ -28,7 +28,7 @@ class ConsoleInput extends React.Component {
       inputStyle: 'contenteditable'
     });
 
-    this._cm.on('keydown', (cm, e) => {
+    this._cm5.on('keydown', (cm, e) => {
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
         e.stopPropagation();
@@ -54,7 +54,7 @@ class ConsoleInput extends React.Component {
           commandHistory: [value, ...state.commandHistory]
         }));
       } else if (e.key === 'ArrowUp') {
-        const lineNumber = this._cm.getDoc().getCursor().line;
+        const lineNumber = this._cm5.getDoc().getCursor().line;
         if (lineNumber !== 0) {
           return false;
         }
@@ -64,46 +64,43 @@ class ConsoleInput extends React.Component {
             state.commandCursor + 1,
             state.commandHistory.length - 1
           );
-          this._cm.getDoc().setValue(state.commandHistory[newCursor] || '');
-          const cursorPos = this._cm.getDoc().getLine(0).length - 1;
-          this._cm.getDoc().setCursor({ line: 0, ch: cursorPos });
+          this._cm5.getDoc().setValue(state.commandHistory[newCursor] || '');
+          const cursorPos = this._cm5.getDoc().getLine(0).length - 1;
+          this._cm5.getDoc().setCursor({ line: 0, ch: cursorPos });
           return { commandCursor: newCursor };
         });
       } else if (e.key === 'ArrowDown') {
-        const lineNumber = this._cm.getDoc().getCursor().line;
-        const lineCount = this._cm.getValue().split('\n').length;
+        const lineNumber = this._cm.doc.lineAt(
+          this._cm.state.selection.main.head
+        ).number;
+        const lineCount = this._cm.doc.lines;
         if (lineNumber + 1 !== lineCount) {
           return false;
         }
 
         this.setState((state) => {
           const newCursor = Math.max(state.commandCursor - 1, -1);
-          this._cm.getDoc().setValue(state.commandHistory[newCursor] || '');
-          const newLineCount = this._cm.getValue().split('\n').length;
-          const newLine = this._cm.getDoc().getLine(newLineCount);
-          const cursorPos = newLine ? newLine.length - 1 : 1;
-          this._cm.getDoc().setCursor({ line: lineCount, ch: cursorPos });
+          this._cm5.getDoc().setValue(state.commandHistory[newCursor] || '');
+          const newLineCount = this._cm.doc.lines;
+          const newLine = this._cm.doc.line(newLineCount);
+          this.cm.dispatch({ selection: { anchor: newLine.to } });
           return { commandCursor: newCursor };
         });
       }
       return true;
     });
 
-    this._cm.getWrapperElement().style[
-      'font-size'
-    ] = `${this.props.fontSize}px`;
+    this._cm.dom.style['font-size'] = `${this.props.fontSize}px`;
   }
 
   componentDidUpdate(prevProps) {
-    this._cm.setOption('theme', `p5-${this.props.theme}`);
-    this._cm.getWrapperElement().style[
-      'font-size'
-    ] = `${this.props.fontSize}px`;
-    this._cm.refresh();
+    // this._cm5.setOption('theme', `p5-${this.props.theme}`);
+    this._cm.dom.style['font-size'] = `${this.props.fontSize}px`;
+    // this._cm5.refresh();
   }
 
   componentWillUnmount() {
-    this._cm = null;
+    this._cm5 = null;
   }
 
   render() {

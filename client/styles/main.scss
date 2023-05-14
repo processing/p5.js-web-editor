@@ -12,9 +12,8 @@
 @import 'node_modules/dropzone/dist/dropzone';
 @import 'node_modules/primer-tooltips/build/build';
 
-@import 'components/p5-light-codemirror-theme';
-@import 'components/p5-dark-codemirror-theme';
-@import 'components/p5-contrast-codemirror-theme';
+@import '../modules/CodeMirror/p5-dark-codemirror-theme';
+@import '../modules/CodeMirror/p5-contrast-codemirror-theme';
 @import 'components/account';
 @import 'components/api-key';
 @import 'components/editor';

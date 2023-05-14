@@ -273,7 +273,7 @@ const Console = () => {
             key={`${theme}-${fontSize}`}
           />
         </div>
-        {isExpanded && isPlaying && (
+        {isExpanded && isPlaying && false && (
           <ConsoleInput
             theme={theme}
             dispatchConsoleEvent={dispatchConsoleEvent}
