@@ -9,13 +9,13 @@
 // Ctrl-G (or whatever is bound to findNext) press. You prevent a
 // replace by making sure the match is no longer selected when hitting
 // Ctrl-G.
-import i18n from '../i18n';
+import i18n from '../../i18n';
 import CodeMirror from 'codemirror';
-import triangleArrowRight from '../images/triangle-arrow-right.svg?byContent';
-import triangleArrowDown from '../images/triangle-arrow-down.svg?byContent';
-import downArrow from '../images/down-arrow.svg?byContent';
-import upArrow from '../images/up-arrow.svg?byContent';
-import exitIcon from '../images/exit.svg?byContent';
+import triangleArrowRight from '../../images/triangle-arrow-right.svg?byContent';
+import triangleArrowDown from '../../images/triangle-arrow-down.svg?byContent';
+import downArrow from '../../images/down-arrow.svg?byContent';
+import upArrow from '../../images/up-arrow.svg?byContent';
+import exitIcon from '../../images/exit.svg?byContent';
 
 function searchOverlay(query, caseInsensitive) {
   if (typeof query == 'string') query = new RegExp(query.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&'), caseInsensitive ? 'gi' : 'g');

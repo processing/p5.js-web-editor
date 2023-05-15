@@ -1,69 +1,71 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import prettier from 'prettier/standalone';
+import { autocompletion, completeFromList } from '@codemirror/autocomplete';
+import { defaultKeymap, history, historyKeymap } from '@codemirror/commands';
+import { css } from '@codemirror/lang-css';
+import { html } from '@codemirror/lang-html';
+import { javascript } from '@codemirror/lang-javascript';
+import { json } from '@codemirror/lang-json';
+import {
+  syntaxHighlighting,
+  foldService,
+  bracketMatching
+} from '@codemirror/language';
+import { linter, lintGutter } from '@codemirror/lint';
+import { Compartment } from '@codemirror/state';
+import {
+  search,
+  openSearchPanel,
+  replaceNext,
+  setSearchQuery,
+  searchKeymap,
+  highlightSelectionMatches
+} from '@codemirror/search';
+import {
+  EditorView,
+  highlightActiveLine,
+  highlightActiveLineGutter,
+  keymap,
+  lineNumbers,
+  updateListener
+} from '@codemirror/view';
+import { classHighlighter } from '@lezer/highlight';
+import classNames from 'classnames';
+import { debounce } from 'lodash';
 import babelParser from 'prettier/parser-babel';
 import htmlParser from 'prettier/parser-html';
 import cssParser from 'prettier/parser-postcss';
+import prettier from 'prettier/standalone';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { createPortal } from 'react-dom';
 import { withTranslation } from 'react-i18next';
-import StackTrace from 'stacktrace-js';
-
-import { JSHINT } from 'jshint';
-import { CSSLint } from 'csslint';
-import { HTMLHint } from 'htmlhint';
-import classNames from 'classnames';
-import { debounce } from 'lodash';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
-import {
-  keymap,
-  lineNumbers,
-  lineNumberMarkers,
-  EditorView
-} from '@codemirror/view';
-import { defaultKeymap, history, historyKeymap } from '@codemirror/commands';
-import {
-  syntaxHighlighting,
-  defaultHighlightStyle
-} from '@codemirror/language';
-import { javascript } from '@codemirror/lang-javascript';
-import { html, htmlCompletionSource } from '@codemirror/lang-html';
-import { json, jsonParseLinter } from '@codemirror/lang-json';
-import { css, cssCompletionSource } from '@codemirror/lang-css';
-import { completeFromList, autocompletion } from '@codemirror/autocomplete';
-import { Compartment } from '@codemirror/state';
-
-import p5LightCodemirrorTheme, {
-  classHighlightStyle
-} from '../../CodeMirror/_p5-light-codemirror-theme';
-
-import Timer from '../components/Timer';
-import EditorAccessibility from '../components/EditorAccessibility';
-import { metaKey } from '../../../utils/metaKey';
-
-import beepUrl from '../../../sounds/audioAlert.mp3';
-import UnsavedChangesDotIcon from '../../../images/unsaved-changes-dot.svg';
-import RightArrowIcon from '../../../images/right-arrow.svg';
+import StackTrace from 'stacktrace-js';
 import LeftArrowIcon from '../../../images/left-arrow.svg';
-import { getHTMLFile } from '../reducers/files';
-
-import * as FileActions from '../actions/files';
-import * as IDEActions from '../actions/ide';
-import * as ProjectActions from '../actions/project';
-import * as EditorAccessibilityActions from '../actions/editorAccessibility';
-import * as PreferencesActions from '../actions/preferences';
-import * as UserActions from '../../User/actions';
-import * as ToastActions from '../actions/toast';
-import * as ConsoleActions from '../actions/console';
-
+import RightArrowIcon from '../../../images/right-arrow.svg';
+import UnsavedChangesDotIcon from '../../../images/unsaved-changes-dot.svg';
+import beepUrl from '../../../sounds/audioAlert.mp3';
+import { metaKey } from '../../../utils/metaKey';
 import {
   p5FunctionKeywords,
   p5VariableKeywords
 } from '../../../utils/p5-keywords';
-
-window.JSHINT = JSHINT;
-window.CSSLint = CSSLint;
-window.HTMLHint = HTMLHint;
+import p5LightCodemirrorTheme from '../../CodeMirror/_p5-light-codemirror-theme';
+import CoreStyled from '../../CodeMirror/CoreStyled';
+import CodeMirrorSearch from '../../CodeMirror/CodeMirrorSearch';
+import p5StylePlugin from '../../CodeMirror/highlightP5Vars';
+import lintSource from '../../CodeMirror/linting';
+import * as UserActions from '../../User/actions';
+import * as ConsoleActions from '../actions/console';
+import * as EditorAccessibilityActions from '../actions/editorAccessibility';
+import * as FileActions from '../actions/files';
+import * as IDEActions from '../actions/ide';
+import * as PreferencesActions from '../actions/preferences';
+import * as ProjectActions from '../actions/project';
+import * as ToastActions from '../actions/toast';
+import EditorAccessibility from '../components/EditorAccessibility';
+import Timer from '../components/Timer';
+import { getHTMLFile } from '../reducers/files';
 
 const INDENTATION_AMOUNT = 2;
 
@@ -86,10 +88,6 @@ const p5AutocompleteSource = completeFromList(
 const p5AutocompleteExt = autocompletion({
   override: [p5AutocompleteSource] // TODO: include native JS
 });
-
-console.log('source', p5AutocompleteSource);
-console.log('ext', p5AutocompleteExt);
-console.log('js', javascript());
 
 const getFileExtension = (fileName) =>
   fileName.match(/\.(\w+)$/)?.[1]?.toLowerCase();
@@ -114,6 +112,9 @@ const getLanguageSupport = (fileExtension) => {
       return [];
   }
 };
+
+const container = document.createElement('div');
+container.id = 'p5-search-panel';
 
 /**
  *  @property {CodeMirror} _cm5
@@ -145,20 +146,43 @@ class Editor extends React.Component {
     // TODO: see
     // https://codesandbox.io/s/codemirror6-vanilla-g78yw?file=/src/editor.js
     // https://discuss.codemirror.net/t/is-there-a-way-to-dynamically-remove-disable-extension/3454/6
-    this.language = new Compartment();
+    this.compartments = {
+      language: new Compartment(),
+      lineWrap: new Compartment(),
+      lineNumbers: new Compartment()
+    };
     const currentLangExt = getLanguageSupport(
       getFileExtension(this.props.file.name)
     );
     this._cm = new EditorView({
       extensions: [
         history(),
-        keymap.of([...defaultKeymap, ...historyKeymap]),
-        this.language.of(currentLangExt),
-        syntaxHighlighting(classHighlightStyle),
+        keymap.of([...defaultKeymap, ...historyKeymap, ...searchKeymap]),
+        this.compartments.language.of(currentLangExt),
+        this.compartments.lineWrap.of(
+          this.props.linewrap ? EditorView.lineWrapping : []
+        ),
+        this.compartments.lineNumbers.of(
+          this.props.lineNumbers ? lineNumbers() : []
+        ),
+        syntaxHighlighting(classHighlighter),
+        highlightActiveLine(),
+        highlightActiveLineGutter(),
         p5AutocompleteExt,
-        lineNumbers(),
         // TODO: switch
-        p5LightCodemirrorTheme
+        // p5LightCodemirrorTheme,
+        p5StylePlugin,
+        bracketMatching(),
+        linter(lintSource),
+        lintGutter(),
+        // TODO: remove
+        search({
+          top: true,
+          createPanel: () => ({
+            dom: container
+          })
+        })
+        // highlightSelectionMatches() // Not enabled currently, no sure if wanted
       ],
       parent: this.codemirrorContainer
     });
@@ -245,8 +269,6 @@ class Editor extends React.Component {
     });
 */
 
-    this._cm.dom.style['font-size'] = `${this.props.fontSize}px`;
-
     this.props.provideController({
       tidyCode: this.tidyCode,
       showFind: this.showFind,
@@ -266,22 +288,27 @@ class Editor extends React.Component {
     }
     if (this.props.file.name !== prevProps.file.name) {
       this._cm.dispatch({
-        effects: this.language.reconfigure(
+        effects: this.compartments.language.reconfigure(
           getLanguageSupport(getFileExtension(this.props.file.name))
         )
       });
     }
-    if (this.props.fontSize !== prevProps.fontSize) {
-      this._cm.dom.style['font-size'] = `${this.props.fontSize}px`;
-    }
     if (this.props.linewrap !== prevProps.linewrap) {
-      // this._cm5.setOption('lineWrapping', this.props.linewrap);
+      this._cm.dispatch({
+        effects: this.compartments.lineWrap.reconfigure(
+          this.props.linewrap ? EditorView.lineWrapping : []
+        )
+      });
     }
     if (this.props.theme !== prevProps.theme) {
       // this._cm5.setOption('theme', `p5-${this.props.theme}`);
     }
     if (this.props.lineNumbers !== prevProps.lineNumbers) {
-      // this._cm5.setOption('lineNumbers', this.props.lineNumbers);
+      this._cm.dispatch({
+        effects: this.compartments.lineNumbers.reconfigure(
+          this.props.lineNumbers ? lineNumbers() : []
+        )
+      });
     }
     if (
       this.props.autocloseBracketsQuotes !== prevProps.autocloseBracketsQuotes
@@ -374,11 +401,14 @@ class Editor extends React.Component {
   }
 
   showFind() {
-    // this._cm5.execCommand('findPersistent');
+    openSearchPanel(this._cm);
   }
 
   showReplace() {
     // this._cm5.execCommand('replace');
+    // TODO: how to open with replace section expanded?
+    // openSearchPanel(this._cm);
+    replaceNext(this._cm);
   }
 
   prettierFormatWithCursor(parser, plugins) {
@@ -436,7 +466,8 @@ class Editor extends React.Component {
     const editorHolderClass = classNames({
       'editor-holder': true,
       'editor-holder--hidden':
-        this.props.file.fileType === 'folder' || this.props.file.url
+        this.props.file.fileType === 'folder' || this.props.file.url,
+      [`cm-s-p5-${this.props.theme}`]: true
     });
 
     return (
@@ -472,12 +503,19 @@ class Editor extends React.Component {
             <Timer />
           </div>
         </header>
-        <article
+        <CoreStyled
           ref={(element) => {
             this.codemirrorContainer = element;
           }}
           className={editorHolderClass}
         />
+        {this._cm &&
+          createPortal(
+            <div className="CodeMirror-dialog CodeMirror-dialog-top">
+              <CodeMirrorSearch editor={this._cm} />
+            </div>,
+            container
+          )}
         <EditorAccessibility lintMessages={this.props.lintMessages} />
       </section>
     );
@@ -506,7 +544,6 @@ Editor.propTypes = {
   updateLintMessage: PropTypes.func.isRequired,
   clearLintMessage: PropTypes.func.isRequired,
   // updateFileContent: PropTypes.func.isRequired,
-  fontSize: PropTypes.number.isRequired,
   file: PropTypes.shape({
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,

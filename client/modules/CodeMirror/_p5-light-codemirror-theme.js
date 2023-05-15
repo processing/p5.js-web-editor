@@ -1,16 +1,14 @@
-import { EditorView } from '@codemirror/view';
 import { HighlightStyle } from '@codemirror/language';
+import { EditorView } from '@codemirror/view';
 import { tags } from '@lezer/highlight';
 import rootTheme, { colors, grays, remSize, Theme } from '../../theme';
 
 const pink = '#D52889';
 const blue = '#0B7CA9';
 
-export const p5LightSyntaxHighlight = HighlightStyle.define([]);
-
 const themeVars = rootTheme[Theme.light];
 
-export const classHighlightStyle = HighlightStyle.define([
+export const mixedHighlightStyle = HighlightStyle.define([
   { tag: tags.link, class: 'cm-link' },
   { tag: tags.heading, class: 'cm-heading' },
   { tag: tags.emphasis, class: 'cm-emphasis' },
@@ -49,7 +47,8 @@ export const classHighlightStyle = HighlightStyle.define([
   { tag: tags.comment, color: grays.middleGray },
   { tag: tags.meta, class: 'cm-meta' },
   { tag: tags.invalid, class: 'cm-invalid' },
-  { tag: tags.punctuation, class: 'cm-punctuation' }
+  { tag: tags.punctuation, class: 'cm-punctuation' },
+  { tag: tags.special(tags.variableName), class: 'p5-variable' }
 ]);
 
 const p5LightCodemirrorTheme = EditorView.theme(
@@ -86,10 +85,10 @@ const p5LightCodemirrorTheme = EditorView.theme(
       maxWidth: 'calc(100% - 2.7em)' // TODO
     },
     // copied from previous
-    '.cm-def': {
+    '.tok-definition': {
       color: blue
     },
-    '.cm-property': {
+    '.tok-propertyName': {
       color: grays.dark
     },
     '.cm-linenumber': {
@@ -98,17 +97,17 @@ const p5LightCodemirrorTheme = EditorView.theme(
     '.CodeMirror-selected': {
       backgroundColor: 'rgba(45, 123, 182, 25)'
     },
-    '.CodeMirror-activeline-background': {
+    '.cm-activeLine': {
       backgroundColor: grays.light
     },
-    '.CodeMirror-activeline-gutter': {
+    '.cm-activeLineGutter': {
       backgroundColor: grays.light,
       borderRight: `1px solid ${grays.mediumLight}`
     },
     '.cm-error': {
       color: colors.red
     },
-    '.CodeMirror-matchingbracket': {
+    '.cm-matchingBracket': {
       outline: `1px solid ${grays.mediumDark}`,
       outlineOffset: '1px',
       color: `${grays.dark} !important`
@@ -139,7 +138,7 @@ const p5LightCodemirrorTheme = EditorView.theme(
     '.CodeMirror-cursor': {
       borderLeft: `1px solid ${grays.dark}`
     },
-    '.cm-searching': {
+    '.cm-searchMatch': {
       backgroundColor: `${colors.p5jsPink}80`
     },
     '.CodeMirror-selectedtext': {

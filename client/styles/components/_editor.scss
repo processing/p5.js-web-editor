@@ -1,14 +1,13 @@
-.CodeMirror {
+.cm-editor {
   font-family: Inconsolata, monospace;
   height: 100%;
 }
 
-.CodeMirror-linenumbers {
+.cm-lineNumbers {
 	padding-right: #{10 / $base-font-size}rem;
-
 }
 
-.CodeMirror-linenumber {
+.cm-lineNumbers .cm-gutterElement {
 	width: #{32 / $base-font-size}rem;
   left: #{-3 / $base-font-size}rem !important;
   @include themify() {
@@ -16,18 +15,16 @@
   }
 }
 
-.CodeMirror-lines {
+.cm-scroller .cm-gutters, .cm-scroller .cm-content {
   padding-top: #{25 / $base-font-size}rem;
 }
 
-pre.CodeMirror-line {
-	padding-left: #{5 / $base-font-size}rem;
+.cm-gutter {
+  width: 100%;
 }
 
-.CodeMirror-gutter-wrapper {
-  right: 100%;
-  top: 0;
-  bottom: 0;
+.cm-line {
+	padding-left: #{5 / $base-font-size}rem;
 }
 
 .CodeMirror-lint-marker-warning, .CodeMirror-lint-marker-error, .CodeMirror-lint-marker-multiple {
@@ -51,7 +48,8 @@ pre.CodeMirror-line {
   background-color: rgb(255, 95, 82);
 }
 
-.CodeMirror-gutter-elt:not(.CodeMirror-linenumber) {
+// TODO .CodeMirror-gutter-elt:not(.CodeMirror-linenumber) {
+.cm-gutter:not(.cm-lineNumbers) .cm-gutterElement {
   opacity: 0.2;
   width: #{49 / $base-font-size}rem !important;
   height: 100%;
@@ -70,7 +68,7 @@ pre.CodeMirror-line {
   font-family: Montserrat, sans-serif;
 }
 
-.CodeMirror-gutters {
+.cm-gutters {
   @include themify() {
     background-color: getThemifyVariable('editor-gutter-color');
     border-color: getThemifyVariable('ide-border-color');
@@ -107,12 +105,12 @@ pre.CodeMirror-line {
 
 .CodeMirror-find-popup-container {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap-reverse;
   justify-content: space-between;
+  align-items: stretch;
 }
 
 .Toggle-replace-btn-div {
-  height: #{40 / $base-font-size}rem;
   padding: 0;
 }
 
@@ -146,7 +144,7 @@ pre.CodeMirror-line {
 .CodeMirror-search-controls {
   width: 60%;
   display: flex;
-  flex-wrap: wrap-reverse;
+  flex-wrap: wrap;
   justify-content: flex-start;
   align-items: flex-end;
 }
@@ -211,9 +209,7 @@ pre.CodeMirror-line {
   align-items: center;
 }
 
-.CodeMirror-regexp-button,
-.CodeMirror-case-button,
-.CodeMirror-word-button {
+.CodeMirror-search-modifier-button {
   @include themify() {
     // @extend %button;
     padding: #{2 / $base-font-size}rem #{7 / $base-font-size}rem;
@@ -232,19 +228,13 @@ pre.CodeMirror-line {
 
   word-break: keep-all;
   white-space: nowrap;
-}
 
-.CodeMirror-regexp-button .label,
-.CodeMirror-case-button .label,
-.CodeMirror-word-button .label {
-  @extend %hidden-element;
-}
-
-[aria-checked="true"] {
-  @include themify() {
-    color: getThemifyVariable("heavy-text-color");
-    background-color: getThemifyVariable("button-secondary-background-color");
-    border-color: getThemifyVariable("button-border-color");
+  &[aria-checked="true"] {
+    @include themify() {
+      color: getThemifyVariable("heavy-text-color");
+      background-color: getThemifyVariable("button-secondary-background-color");
+      border-color: getThemifyVariable("button-border-color");
+    }
   }
 }
 
@@ -261,6 +251,7 @@ pre.CodeMirror-line {
   margin-right: #{10 / $base-font-size}rem;
 }
 
+// LP: this is for the right gutter scrollbar -- need to implement
 .CodeMirror-search-match {
   background: gold;
   border-top: #{1 / $base-font-size}rem solid orange;
@@ -346,7 +337,7 @@ pre.CodeMirror-line {
 }
 
 
-.line-runtime-error + .CodeMirror-activeline-gutter {
+.line-runtime-error + .cm-activeLineGutter {
   background-color: rgb(255, 95, 82);
   opacity: 0.3;
 }

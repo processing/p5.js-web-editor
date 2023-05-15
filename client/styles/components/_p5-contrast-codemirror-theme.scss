@@ -31,47 +31,47 @@ $p5-contrast-activeline: #999999;
   color: $p5-contrast-white;
 }
 
-.cm-s-p5-contrast span .cm-comment {
+.cm-s-p5-contrast span.tok-comment {
   color: $p5-contrast-lightgray;
 }
 
-.cm-s-p5-contrast span .cm-def {
-  color: $p5-contrast-blue;
-}
-
-.cm-s-p5-contrast span .cm-string {
+.cm-s-p5-contrast span.tok-string {
   color: $p5-contrast-green;
 }
 
-.cm-s-p5-contrast span .cm-string-2 {
+.cm-s-p5-contrast span.tok-string2 {
   color: $p5-contrast-green;
 }
 
-.cm-s-p5-contrast span .cm-number {
+.cm-s-p5-contrast span.tok-number {
   color: $p5-contrast-pink;
 }
 
-.cm-s-p5-contrast span .cm-keyword {
+.cm-s-p5-contrast span.tok-keyword {
   color: $p5-contrast-yellow;
 }
 
-.cm-s-p5-contrast span .cm-variable {
+.cm-s-p5-contrast span.tok-variableName {
   color: $p5-contrast-white;
 }
 
-.cm-s-p5-contrast span .cm-variable-2 {
+.cm-s-p5-contrast span.tok-variableName2 {
   color: $p5-contrast-white;
 }
 
-.cm-s-p5-contrast span .cm-property {
+.cm-s-p5-contrast span.tok-definition {
+  color: $p5-contrast-blue;
+}
+
+.cm-s-p5-contrast span.tok-propertyName {
   color: $p5-contrast-white;
 }
 
-.cm-s-p5-contrast span .cm-atom {
+.cm-s-p5-contrast span.tok-atom {
   color: $p5-contrast-pink;
 }
 
-.cm-s-p5-contrast span .cm-operator {
+.cm-s-p5-contrast span.tok-operator {
   color: $p5-contrast-lightgray;
 }
 
@@ -83,11 +83,11 @@ $p5-contrast-activeline: #999999;
   background-color: $p5-contrast-selected;
 }
 
-.cm-s-p5-contrast .CodeMirror-activeline-background {
+.cm-s-p5-contrast .cm-activeLine {
   background-color: $dark;
 }
 
-.cm-s-p5-contrast .CodeMirror-activeline-gutter {
+.cm-s-p5-contrast .cm-activeLineGutter {
   background-color: $dark;
   border-right: 1px solid $middle-dark;
 }
@@ -96,7 +96,7 @@ $p5-contrast-activeline: #999999;
   color: #f00;
 }
 
-.cm-s-p5-contrast span .CodeMirror-matchingbracket {
+.cm-s-p5-contrast span .cm-matchingBracket {
   outline: 1px solid $p5-contrast-lightgray;
   outline-offset: 1px;
   color: $p5-contrast-white !important;
@@ -118,13 +118,17 @@ $p5-contrast-activeline: #999999;
   color: $p5-contrast-white;
 }
 
-.cm-s-p5-contrast .cm-p5-function {
-  color: $p5-contrast-blue;
+.cm-s-p5-contrast .p5-function {
+  &, & > .tok-variableName {
+    color: $p5-contrast-blue;
+  }
 }
 
-.cm-s-p5-contrast .cm-p5-variable {
-  color: $p5-contrast-pink;
-  font-weight: bold;
+.cm-s-p5-contrast .p5-variable {
+  &, & > .tok-variableName {
+    color: $p5-contrast-pink;
+    font-weight: bold;
+  }
 }
 
 .cm-s-p5-contrast .CodeMirror-foldmarker {
@@ -136,12 +140,12 @@ $p5-contrast-activeline: #999999;
   border-left: 1px solid $p5-contrast-white;
 }
 
-.cm-s-p5-contrast .cm-searching {
+.cm-s-p5-contrast .cm-searchMatch {
   // background-color: $p5js-pink-opacity;
   background-color: $medium-dark;
 }
 
-.cm-s-p5-contrast .cm-searching.CodeMirror-selectedtext {
+.cm-s-p5-contrast .cm-searchMatch.cm-searchMatch-selected {
   // background-color: $medium-dark;
   outline: #{1 / $base-font-size}rem solid $p5-contrast-white;
 }

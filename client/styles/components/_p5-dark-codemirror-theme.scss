@@ -36,47 +36,43 @@ $p5-dark-error: #df3a3d;
   color: $p5-dark-white;
 }
 
-.cm-s-p5-dark span.cm-comment {
+.cm-s-p5-dark span.tok-comment {
   color: $p5-dark-gray;
 }
 
-.cm-s-p5-dark span.cm-def {
-  color: $p5-dark-lightblue;
-}
-
-.cm-s-p5-dark span.cm-string {
+.cm-s-p5-dark span.tok-string {
   color: $p5-dark-green;
 }
 
-.cm-s-p5-dark span.cm-string-2 {
+.cm-s-p5-dark span.tok-string2 {
   color: $p5-dark-orange;
 }
 
-.cm-s-p5-dark span.cm-number {
+.cm-s-p5-dark span.tok-number {
   color: $p5-dark-white;
 }
 
-.cm-s-p5-dark span.cm-keyword {
+.cm-s-p5-dark span.tok-keyword {
   color: $p5-dark-goldbrown;
 }
 
-.cm-s-p5-dark span.cm-variable {
+.cm-s-p5-dark span.tok-variableName {
   color: $p5-dark-lightblue;
 }
 
-.cm-s-p5-dark span.cm-variable-2 {
+.cm-s-p5-dark span.tok-variableName2 {
   color: $p5-dark-white;
 }
 
-.cm-s-p5-dark span.cm-property {
+.cm-s-p5-dark span.tok-propertyName {
   color: $p5-dark-white;
 }
 
-.cm-s-p5-dark span.cm-atom {
+.cm-s-p5-dark span.tok-atom {
   color: $p5-dark-pink;
 }
 
-.cm-s-p5-dark span.cm-operator {
+.cm-s-p5-dark span.tok-operator {
   color: $p5-dark-white;
 }
 
@@ -88,16 +84,16 @@ $p5-dark-error: #df3a3d;
   background-color: $p5-dark-selected;
 }
 
-.cm-s-p5-dark .CodeMirror-activeline-background {
+.cm-s-p5-dark .cm-activeLine {
   background-color: $dark;
 }
 
-.cm-s-p5-dark .CodeMirror-activeline-gutter {
+.cm-s-p5-dark .cm-activeLineGutter {
   background-color: $dark;
   border-right: 1px solid $middle-dark;
 }
 
-.cm-s-p5-dark span.CodeMirror-matchingbracket {
+.cm-s-p5-dark span.cm-matchingBracket {
   outline: 1px solid $p5-dark-gray;
   outline-offset: 1px;
   color: $p5-dark-white !important;
@@ -124,14 +120,18 @@ $p5-dark-error: #df3a3d;
   color: $p5-dark-lightblue;
 }
 
-.cm-s-p5-dark .cm-p5-function {
-  color: $p5-dark-lightblue;
-  font-weight: bold !important;
+.cm-s-p5-dark .p5-function {
+  &, & > .tok-variableName {
+    color: $p5-dark-lightblue;
+    font-weight: bold !important;
+  }
 }
 
-.cm-s-p5-dark .cm-p5-variable {
-  color: $p5-dark-pink;
-  font-weight: bold;
+.cm-s-p5-dark .p5-variable {
+  &, & > .tok-variableName {
+    color: $p5-dark-pink;
+    font-weight: bold;
+  }
 }
 
 .cm-s-p5-dark .CodeMirror-foldmarker {
@@ -143,11 +143,11 @@ $p5-dark-error: #df3a3d;
   border-left: 1px solid $p5-dark-white;
 }
 
-.cm-s-p5-dark .cm-searching {
+.cm-s-p5-dark .cm-searchMatch {
   background-color: $p5js-pink-opacity;
 }
 
-.cm-s-p5-dark .CodeMirror-selectedtext {
+.cm-s-p5-dark .cm-searchMatch.cm-searchMatch-selected {
   background-color: $medium-dark;
 }
 
