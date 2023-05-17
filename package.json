@@ -158,7 +158,7 @@
     "@codemirror/search": "^6.4.0",
     "@codemirror/state": "^6.2.0",
     "@codemirror/view": "^6.11.2",
-    "@emmetio/codemirror-plugin": "^1.2.4",
+    "@emmetio/codemirror6-plugin": "^0.3.0",
     "@gatsbyjs/webpack-hot-middleware": "^2.25.3",
     "@lezer/highlight": "^1.1.4",
     "@redux-devtools/core": "^3.11.0",

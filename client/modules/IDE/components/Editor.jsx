@@ -1,45 +1,34 @@
 import { autocompletion, completeFromList } from '@codemirror/autocomplete';
 import { defaultKeymap, history, historyKeymap } from '@codemirror/commands';
-import { css } from '@codemirror/lang-css';
-import { html } from '@codemirror/lang-html';
-import { javascript } from '@codemirror/lang-javascript';
-import { json } from '@codemirror/lang-json';
-import {
-  syntaxHighlighting,
-  foldService,
-  bracketMatching
-} from '@codemirror/language';
+import { bracketMatching, syntaxHighlighting } from '@codemirror/language';
 import { linter, lintGutter } from '@codemirror/lint';
-import { Compartment } from '@codemirror/state';
 import {
-  search,
   openSearchPanel,
   replaceNext,
-  setSearchQuery,
-  searchKeymap,
-  highlightSelectionMatches
+  search,
+  searchKeymap
 } from '@codemirror/search';
+import { Compartment } from '@codemirror/state';
 import {
   EditorView,
   highlightActiveLine,
   highlightActiveLineGutter,
   keymap,
-  lineNumbers,
-  updateListener
+  lineNumbers
 } from '@codemirror/view';
+import {
+  abbreviationTracker,
+  emmetConfig,
+  expandAbbreviation
+} from '@emmetio/codemirror6-plugin';
 import { classHighlighter } from '@lezer/highlight';
 import classNames from 'classnames';
 import { debounce } from 'lodash';
-import babelParser from 'prettier/parser-babel';
-import htmlParser from 'prettier/parser-html';
-import cssParser from 'prettier/parser-postcss';
-import prettier from 'prettier/standalone';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { withTranslation } from 'react-i18next';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { connect, useDispatch } from 'react-redux';
 import StackTrace from 'stacktrace-js';
 import LeftArrowIcon from '../../../images/left-arrow.svg';
 import RightArrowIcon from '../../../images/right-arrow.svg';
@@ -50,22 +39,39 @@ import {
   p5FunctionKeywords,
   p5VariableKeywords
 } from '../../../utils/p5-keywords';
-import p5LightCodemirrorTheme from '../../CodeMirror/_p5-light-codemirror-theme';
-import CoreStyled from '../../CodeMirror/CoreStyled';
 import CodeMirrorSearch from '../../CodeMirror/CodeMirrorSearch';
+import CoreStyled from '../../CodeMirror/CoreStyled';
 import p5StylePlugin from '../../CodeMirror/highlightP5Vars';
+import tidyCode from '../../CodeMirror/tidyCode';
+import {
+  getFileExtension,
+  getLanguageSupport
+} from '../../CodeMirror/language';
 import lintSource from '../../CodeMirror/linting';
-import * as UserActions from '../../User/actions';
-import * as ConsoleActions from '../actions/console';
-import * as EditorAccessibilityActions from '../actions/editorAccessibility';
-import * as FileActions from '../actions/files';
-import * as IDEActions from '../actions/ide';
-import * as PreferencesActions from '../actions/preferences';
-import * as ProjectActions from '../actions/project';
-import * as ToastActions from '../actions/toast';
+import { clearConsole } from '../actions/console';
+import {
+  updateLintMessage,
+  clearLintMessage
+} from '../actions/editorAccessibility';
+import { updateFileContent } from '../actions/files';
+import {
+  setUnsavedChanges,
+  setSelectedFile,
+  expandSidebar,
+  collapseSidebar,
+  expandConsole,
+  startSketch,
+  showRuntimeErrorWarning,
+  hideRuntimeErrorWarning
+} from '../actions/ide';
 import EditorAccessibility from '../components/EditorAccessibility';
 import Timer from '../components/Timer';
-import { getHTMLFile } from '../reducers/files';
+
+// TODO: setup/check emmet & fix class names
+// https://github.com/emmetio/codemirror6-plugin/blob/de142116cbe4003c22a79436351ead9b600ae6e3/src/lib/syntax.ts#LL113C17-L113C28
+// https://docs.emmet.io/actions/
+
+// TODO: autocomplete prevents 'div' + tab from auto-closing
 
 const INDENTATION_AMOUNT = 2;
 
@@ -85,36 +91,33 @@ const p5AutocompleteSource = completeFromList(
     )
 );
 
+// TODO: only if language is js!!
 const p5AutocompleteExt = autocompletion({
   override: [p5AutocompleteSource] // TODO: include native JS
 });
 
-const getFileExtension = (fileName) =>
-  fileName.match(/\.(\w+)$/)?.[1]?.toLowerCase();
+const searchContainer = document.createElement('div');
+searchContainer.id = 'p5-search-panel';
 
-const getLanguageSupport = (fileExtension) => {
-  switch (fileExtension) {
-    case 'js':
-      return javascript({ jsx: false, typescript: false });
-    case 'ts':
-      return javascript({ jsx: false, typescript: true });
-    case 'jsx':
-      return javascript({ jsx: true, typescript: false });
-    case 'tsx':
-      return javascript({ jsx: true, typescript: true });
-    case 'css':
-      return css();
-    case 'html':
-      return html(); // Note: has many options
-    case 'json':
-      return json();
-    default:
-      return [];
-  }
+const EditorNew = ({ provideController }) => {
+  const dispatch = useDispatch();
+
+  const containerRef = useRef(null);
+
+  const editorRef = useRef(null);
+
+  const compartments = useRef({
+    language: new Compartment(),
+    lineWrap: new Compartment(),
+    lineNumbers: new Compartment(),
+    emmet: new Compartment(),
+    abbrTracker: new Compartment()
+  });
 };
 
-const container = document.createElement('div');
-container.id = 'p5-search-panel';
+EditorNew.propTypes = {
+  provideController: PropTypes.func.isRequired
+};
 
 /**
  *  @property {CodeMirror} _cm5
@@ -126,10 +129,12 @@ class Editor extends React.Component {
     this.tidyCode = this.tidyCode.bind(this);
 
     this.updateLintingMessageAccessibility = debounce((annotations) => {
-      this.props.clearLintMessage();
+      this.props.dispatch(clearLintMessage());
       annotations.forEach((x) => {
         if (x.from.line > -1) {
-          this.props.updateLintMessage(x.severity, x.from.line + 1, x.message);
+          this.props.dispatch(
+            updateLintMessage(x.severity, x.from.line + 1, x.message)
+          );
         }
       });
       if (this.props.lintMessages.length > 0 && this.props.lintWarning) {
@@ -149,21 +154,41 @@ class Editor extends React.Component {
     this.compartments = {
       language: new Compartment(),
       lineWrap: new Compartment(),
-      lineNumbers: new Compartment()
+      lineNumbers: new Compartment(),
+      emmet: new Compartment(),
+      abbrTracker: new Compartment()
     };
-    const currentLangExt = getLanguageSupport(
-      getFileExtension(this.props.file.name)
-    );
+    const fileExt = getFileExtension(this.props.file.name);
+    const currentLangSupport = getLanguageSupport(fileExt);
     this._cm = new EditorView({
       extensions: [
         history(),
-        keymap.of([...defaultKeymap, ...historyKeymap, ...searchKeymap]),
-        this.compartments.language.of(currentLangExt),
+        keymap.of([
+          ...defaultKeymap,
+          ...historyKeymap,
+          ...searchKeymap,
+          {
+            key: 'Mod-e', // TODO
+            run: expandAbbreviation
+          }
+        ]),
+        this.compartments.language.of(currentLangSupport),
         this.compartments.lineWrap.of(
           this.props.linewrap ? EditorView.lineWrapping : []
         ),
         this.compartments.lineNumbers.of(
           this.props.lineNumbers ? lineNumbers() : []
+        ),
+        this.compartments.emmet.of(
+          emmetConfig.of({
+            // Note: not all file extensions are valid
+            syntax: fileExt
+          })
+        ),
+        this.compartments.abbrTracker.of(
+          abbreviationTracker({
+            syntax: fileExt
+          })
         ),
         syntaxHighlighting(classHighlighter),
         highlightActiveLine(),
@@ -179,7 +204,7 @@ class Editor extends React.Component {
         search({
           top: true,
           createPanel: () => ({
-            dom: container
+            dom: searchContainer
           })
         })
         // highlightSelectionMatches() // Not enabled currently, no sure if wanted
@@ -231,15 +256,15 @@ class Editor extends React.Component {
     /* this._cm5.on(
       'change',
       debounce(() => {
-        this.props.setUnsavedChanges(true);
-        this.props.hideRuntimeErrorWarning();
-        this.props.updateFileContent(
+        this.props.dispatch(setUnsavedChanges(true));
+        this.props.dispatch(hideRuntimeErrorWarning());
+        this.props.dispatch(updateFileContent(
           this.props.file.id,
           this._cm.state.doc.toString()
-        );
+        ));
         if (this.props.autorefresh && this.props.isPlaying) {
-          this.props.clearConsole();
-          this.props.startSketch();
+          this.props.dispatch(clearConsole());
+          this.props.dispatch(startSketch());
         }
       }, 1000)
     );
@@ -283,14 +308,25 @@ class Editor extends React.Component {
       this._cm.focus();
 
       if (!prevProps.unsavedChanges) {
-        setTimeout(() => this.props.setUnsavedChanges(false), 400);
+        setTimeout(() => this.props.dispatch(setUnsavedChanges(false)), 400);
       }
     }
     if (this.props.file.name !== prevProps.file.name) {
+      const fileExt = getFileExtension(this.props.file.name);
       this._cm.dispatch({
-        effects: this.compartments.language.reconfigure(
-          getLanguageSupport(getFileExtension(this.props.file.name))
-        )
+        effects: [
+          this.compartments.language.reconfigure(getLanguageSupport(fileExt)),
+          this.compartments.emmet.reconfigure(
+            emmetConfig.of({
+              syntax: fileExt
+            })
+          ),
+          this.compartments.abbrTracker.reconfigure(
+            abbreviationTracker({
+              syntax: fileExt
+            })
+          )
+        ]
       });
     }
     if (this.props.linewrap !== prevProps.linewrap) {
@@ -327,7 +363,7 @@ class Editor extends React.Component {
             // LOL
             const errorObj = { stack: consoleEvent.data[0].toString() };
             StackTrace.fromError(errorObj).then((stackLines) => {
-              this.props.expandConsole();
+              this.props.dispatch(expandConsole());
               const line = stackLines.find(
                 (l) => l.fileName && l.fileName.startsWith('/')
               );
@@ -338,7 +374,7 @@ class Editor extends React.Component {
               const fileWithError = this.props.files.find(
                 (f) => f.name === fileName && f.filePath === filePath
               );
-              this.props.setSelectedFile(fileWithError.id);
+              this.props.dispatch(setSelectedFile(fileWithError.id));
               // TODO: instead of addLineClass, use line decorations:
               // https://codemirror.net/examples/zebra/
               // https://discuss.codemirror.net/t/how-to-add-line-class-to-a-specific-line-dynamically/6230
@@ -373,26 +409,6 @@ class Editor extends React.Component {
     this.props.provideController(null);
   }
 
-  getFileMode(fileName) {
-    let mode;
-    if (fileName.match(/.+\.js$/i)) {
-      mode = 'javascript';
-    } else if (fileName.match(/.+\.css$/i)) {
-      mode = 'css';
-    } else if (fileName.match(/.+\.(html|xml)$/i)) {
-      mode = 'htmlmixed';
-    } else if (fileName.match(/.+\.json$/i)) {
-      mode = 'application/json';
-    } else if (fileName.match(/.+\.(frag|glsl)$/i)) {
-      mode = 'x-shader/x-fragment';
-    } else if (fileName.match(/.+\.(vert|stl)$/i)) {
-      mode = 'x-shader/x-vertex';
-    } else {
-      mode = 'text/plain';
-    }
-    return mode;
-  }
-
   getContent() {
     return {
       ...this.props.file,
@@ -411,44 +427,8 @@ class Editor extends React.Component {
     replaceNext(this._cm);
   }
 
-  prettierFormatWithCursor(parser, plugins) {
-    try {
-      const { formatted, cursorOffset } = prettier.formatWithCursor(
-        this._cm.state.doc.toString(),
-        {
-          cursorOffset: this._cm.state.selection.main.head,
-          parser,
-          plugins
-        }
-      );
-      // const { left, top } = this._cm5.getScrollInfo();
-      this.replaceFileContent(formatted); // TODO: make sure this syncs to redux
-      this._cm.focus();
-      this._cm.dispatch({
-        selection: { anchor: cursorOffset }
-      });
-      // this._cm5.scrollTo(left, top);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
   tidyCode() {
-    const x = this._cm.state;
-    console.log(x);
-    // const mode = this._cm5.getOption('mode');
-    const mode = this.getFileMode(this.props.file.name);
-    if (mode === 'javascript') {
-      this.prettierFormatWithCursor('babel', [babelParser]);
-    } else if (mode === 'css') {
-      this.prettierFormatWithCursor('css', [cssParser]);
-    } else if (mode === 'htmlmixed') {
-      this.prettierFormatWithCursor('html', [htmlParser]);
-    }
-    // TODO: remove this, for dev only
-    else {
-      console.log(`No formatter for file type ${mode}`, this.props.file);
-    }
+    tidyCode(this._cm, this.props.file.name);
   }
 
   replaceFileContent(content) {
@@ -470,20 +450,22 @@ class Editor extends React.Component {
       [`cm-s-p5-${this.props.theme}`]: true
     });
 
+    const { t, dispatch } = this.props;
+
     return (
       <section className={editorSectionClass}>
         <header className="editor__header">
           <button
-            aria-label={this.props.t('Editor.OpenSketchARIA')}
+            aria-label={t('Editor.OpenSketchARIA')}
             className="sidebar__contract"
-            onClick={this.props.collapseSidebar}
+            onClick={() => dispatch(collapseSidebar())}
           >
             <LeftArrowIcon focusable="false" aria-hidden="true" />
           </button>
           <button
-            aria-label={this.props.t('Editor.CloseSketchARIA')}
+            aria-label={t('Editor.CloseSketchARIA')}
             className="sidebar__expand"
-            onClick={this.props.expandSidebar}
+            onClick={() => dispatch(expandSidebar())}
           >
             <RightArrowIcon focusable="false" aria-hidden="true" />
           </button>
@@ -494,7 +476,7 @@ class Editor extends React.Component {
                 {this.props.unsavedChanges ? (
                   <UnsavedChangesDotIcon
                     role="img"
-                    aria-label={this.props.t('Editor.UnsavedChangesARIA')}
+                    aria-label={t('Editor.UnsavedChangesARIA')}
                     focusable="false"
                   />
                 ) : null}
@@ -514,7 +496,7 @@ class Editor extends React.Component {
             <div className="CodeMirror-dialog CodeMirror-dialog-top">
               <CodeMirrorSearch editor={this._cm} />
             </div>,
-            container
+            searchContainer
           )}
         <EditorAccessibility lintMessages={this.props.lintMessages} />
       </section>
@@ -541,9 +523,6 @@ Editor.propTypes = {
       args: PropTypes.arrayOf(PropTypes.string)
     })
   ).isRequired,
-  updateLintMessage: PropTypes.func.isRequired,
-  clearLintMessage: PropTypes.func.isRequired,
-  // updateFileContent: PropTypes.func.isRequired,
   file: PropTypes.shape({
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
@@ -551,8 +530,6 @@ Editor.propTypes = {
     fileType: PropTypes.string.isRequired,
     url: PropTypes.string
   }).isRequired,
-  setUnsavedChanges: PropTypes.func.isRequired,
-  // startSketch: PropTypes.func.isRequired,
   // autorefresh: PropTypes.bool.isRequired,
   // isPlaying: PropTypes.bool.isRequired,
   theme: PropTypes.string.isRequired,
@@ -565,16 +542,10 @@ Editor.propTypes = {
     })
   ).isRequired,
   isExpanded: PropTypes.bool.isRequired,
-  collapseSidebar: PropTypes.func.isRequired,
-  expandSidebar: PropTypes.func.isRequired,
-  // clearConsole: PropTypes.func.isRequired,
-  // showRuntimeErrorWarning: PropTypes.func.isRequired,
-  // hideRuntimeErrorWarning: PropTypes.func.isRequired,
   runtimeErrorWarningVisible: PropTypes.bool.isRequired,
   provideController: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
-  setSelectedFile: PropTypes.func.isRequired,
-  expandConsole: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -584,40 +555,14 @@ function mapStateToProps(state) {
       state.files.find((file) => file.isSelectedFile) ||
       state.files.find((file) => file.name === 'sketch.js') ||
       state.files.find((file) => file.name !== 'root'),
-    htmlFile: getHTMLFile(state.files),
-    ide: state.ide,
-    preferences: state.preferences,
-    editorAccessibility: state.editorAccessibility,
-    user: state.user,
-    project: state.project,
-    toast: state.toast,
     consoleEvents: state.console,
-
     ...state.preferences,
     ...state.ide,
-    ...state.project,
-    ...state.editorAccessibility,
-    isExpanded: state.ide.sidebarIsExpanded
+    lintMessages: state.editorAccessibility.lintMessages,
+    unsavedChanges: state.ide.unsavedChanges,
+    isExpanded: state.ide.sidebarIsExpanded,
+    runtimeErrorWarningVisible: state.ide.runtimeErrorWarningVisible
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    Object.assign(
-      {},
-      EditorAccessibilityActions,
-      FileActions,
-      ProjectActions,
-      IDEActions,
-      PreferencesActions,
-      UserActions,
-      ToastActions,
-      ConsoleActions
-    ),
-    dispatch
-  );
-}
-
-export default withTranslation()(
-  connect(mapStateToProps, mapDispatchToProps)(Editor)
-);
+export default withTranslation()(connect(mapStateToProps)(Editor));

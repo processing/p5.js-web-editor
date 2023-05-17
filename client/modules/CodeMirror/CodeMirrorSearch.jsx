@@ -25,6 +25,9 @@ function isMouseClick(event) {
 }
 
 // TODO: codemirror event handlers won't take effect when the focus is on the react element.
+// Expand these keymaps: https://github.com/codemirror/search/blob/3c1346e213a9635f56f92b23066ea0638319de25/src/search.ts#L576
+// https://github.com/codemirror/view/blob/772e5a5102d96c25f54c4b9516e6a2d845336d65/src/keymap.ts#L34
+// https://github.com/codemirror/dev/issues/865
 
 // TODO: number of hits
 // https://discuss.codemirror.net/t/get-number-of-hits-of-searchquery/3939
