@@ -613,7 +613,6 @@ class Nav extends React.PureComponent {
             }}
           >
             <span className="nav__item-header">
-              {' '}
               {languageKeyToLabel(this.props.language)}
             </span>
             <TriangleIcon
