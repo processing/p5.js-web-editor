@@ -85,7 +85,6 @@ $p5-light-activeline: rgb(207, 207, 207);
 
 .cm-s-p5-light .cm-activeLineGutter {
   background-color: $light;
-  border-right: 1px solid $medium-light;
 }
 
 .cm-s-p5-light .cm-error {
@@ -128,7 +127,7 @@ $p5-light-activeline: rgb(207, 207, 207);
   }
 }
 
-.cm-s-p5-light .CodeMirror-foldmarker {
+.cm-s-p5-light .cm-foldPlaceholder {
   background-color: #333;
   color: white;
 }

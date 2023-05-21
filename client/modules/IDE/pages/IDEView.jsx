@@ -6,7 +6,7 @@ import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 import SplitPane from 'react-split-pane';
-import Editor from '../components/Editor';
+import EditorSection from '../components/EditorSection';
 import Sidebar from '../components/Sidebar';
 import PreviewFrame from '../components/PreviewFrame';
 import Toolbar from '../components/Toolbar';
@@ -35,6 +35,7 @@ import Feedback from '../components/Feedback';
 import { CollectionSearchbar } from '../components/Searchbar';
 import { getIsUserOwner } from '../selectors/users';
 import RootPage from '../../../components/RootPage';
+import CodeMirrorEditor from '../../CodeMirror/CodeMirrorEditor';
 
 function getTitle(props) {
   const { id } = props.project;
@@ -345,11 +346,13 @@ class IDEView extends React.Component {
                 allowResize={this.props.ide.consoleIsExpanded}
                 className="editor-preview-subpanel"
               >
-                <Editor
-                  provideController={(ctl) => {
-                    this.cmController = ctl;
-                  }}
-                />
+                <EditorSection>
+                  <CodeMirrorEditor
+                    provideController={(ctl) => {
+                      this.cmController = ctl;
+                    }}
+                  />
+                </EditorSection>
                 <Console />
               </SplitPane>
               <section className="preview-frame-holder">

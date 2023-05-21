@@ -1,9 +1,29 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import beepUrl from '../../../sounds/audioAlert.mp3';
+
+// TODO: need to pass down the line number (or store in redux) instead of modifying the DOM.
 
 const EditorAccessibility = ({ lintMessages = [] }) => {
   const { t } = useTranslation();
+
+  const audioWarningEnabled = useSelector(
+    (state) => state.preferences.lintWarning
+  );
+
+  // const lintMessages = useSelector((state) => state.editorAccessibility.lintMessages);
+
+  const beep = useRef(new Audio(beepUrl));
+
+  useEffect(() => {
+    if (audioWarningEnabled && lintMessages.length > 0) {
+      beep.play();
+      // TODO: check that this works.
+    }
+  }, [beep, lintMessages, audioWarningEnabled]);
+
   return (
     <div className="editor-accessibility">
       <ul className="editor-lintmessages" title="lint messages">

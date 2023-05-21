@@ -131,7 +131,7 @@ const p5LightCodemirrorTheme = EditorView.theme(
     '.cm-p5-variable': {
       color: pink
     },
-    '.CodeMirror-foldmarker': {
+    '.cm-foldPlaceholder': {
       backgroundColor: grays.dark,
       color: colors.white
     },

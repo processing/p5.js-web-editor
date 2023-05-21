@@ -89,7 +89,6 @@ $p5-contrast-activeline: #999999;
 
 .cm-s-p5-contrast .cm-activeLineGutter {
   background-color: $dark;
-  border-right: 1px solid $middle-dark;
 }
 
 .cm-s-p5-contrast .cm-error {
@@ -131,7 +130,7 @@ $p5-contrast-activeline: #999999;
   }
 }
 
-.cm-s-p5-contrast .CodeMirror-foldmarker {
+.cm-s-p5-contrast .cm-foldPlaceholder {
   background-color: white;
   color: #333;
 }

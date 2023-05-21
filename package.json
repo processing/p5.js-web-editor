@@ -164,6 +164,7 @@
     "@redux-devtools/core": "^3.11.0",
     "@redux-devtools/dock-monitor": "^2.1.0",
     "@redux-devtools/log-monitor": "^3.1.0",
+    "@uiw/codemirror-extensions-color": "^4.20.2",
     "async": "^3.2.3",
     "axios": "^0.21.2",
     "babel-plugin-styled-components": "^1.13.2",

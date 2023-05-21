@@ -29,22 +29,22 @@
 .console__editor {
   margin-left: #{15 / $base-font-size}rem;
   flex: 1;
-  & .CodeMirror {
+  & .cm-editor {
     height: auto;
   }
-  & .CodeMirror-lines {
+  & .cm-content {
     padding-top: #{2 / $base-font-size}rem;
   }
 }
 
-.console__editor .CodeMirror {
+.console__editor .cm-editor {
   border: none;
   font-family: Inconsolata,monospace;
   @include themify() {
     background-color: getThemifyVariable('console-input-background-color');
   }
 
-  .CodeMirror-line {
+  .cm-line {
     @include themify() {
       color: getThemifyVariable('console-color');
     }

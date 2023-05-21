@@ -1,6 +1,10 @@
-import { autocompletion, completeFromList } from '@codemirror/autocomplete';
 import { defaultKeymap, history, historyKeymap } from '@codemirror/commands';
-import { bracketMatching, syntaxHighlighting } from '@codemirror/language';
+import {
+  bracketMatching,
+  syntaxHighlighting,
+  codeFolding,
+  foldGutter
+} from '@codemirror/language';
 import { linter, lintGutter } from '@codemirror/lint';
 import {
   openSearchPanel,
@@ -8,13 +12,22 @@ import {
   search,
   searchKeymap
 } from '@codemirror/search';
-import { Compartment } from '@codemirror/state';
+import {
+  Compartment,
+  StateField,
+  StateEffect,
+  RangeSetBuilder
+} from '@codemirror/state';
 import {
   EditorView,
   highlightActiveLine,
   highlightActiveLineGutter,
   keymap,
-  lineNumbers
+  lineNumbers,
+  Decoration,
+  DecorationSet,
+  ViewUpdate,
+  ViewPlugin
 } from '@codemirror/view';
 import {
   abbreviationTracker,
@@ -22,34 +35,28 @@ import {
   expandAbbreviation
 } from '@emmetio/codemirror6-plugin';
 import { classHighlighter } from '@lezer/highlight';
+import { color, colorView, colorTheme } from '@uiw/codemirror-extensions-color';
 import classNames from 'classnames';
 import { debounce } from 'lodash';
 import PropTypes from 'prop-types';
 import React, { useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { withTranslation } from 'react-i18next';
 import { connect, useDispatch } from 'react-redux';
 import StackTrace from 'stacktrace-js';
-import beepUrl from '../../../sounds/audioAlert.mp3';
-import { metaKey } from '../../../utils/metaKey';
-import {
-  p5FunctionKeywords,
-  p5VariableKeywords
-} from '../../../utils/p5-keywords';
-import CodeMirrorSearch from '../../CodeMirror/CodeMirrorSearch';
-import CoreStyled from '../../CodeMirror/CoreStyled';
-import p5StylePlugin from '../../CodeMirror/highlightP5Vars';
-import tidyCode from '../../CodeMirror/tidyCode';
-import {
-  getFileExtension,
-  getLanguageSupport
-} from '../../CodeMirror/language';
-import lintSource from '../../CodeMirror/linting';
+import beepUrl from '../../sounds/audioAlert.mp3';
+import { metaKey } from '../../utils/metaKey';
+import { selectActiveFile } from '../IDE/selectors/files';
+import CodeMirrorSearch from './CodeMirrorSearch';
+import CoreStyled from './CoreStyled';
+import p5StylePlugin from './highlightP5Vars';
+import p5Autocomplete from './p5Autocomplete';
+import tidyCode from './tidyCode';
+import { getFileExtension, getLanguageSupport } from './language';
+import lintSource from './linting';
 import {
   updateLintMessage,
   clearLintMessage
-} from '../actions/editorAccessibility';
-import { updateFileContent } from '../actions/files';
+} from '../IDE/actions/editorAccessibility';
 import {
   setUnsavedChanges,
   setSelectedFile,
@@ -57,7 +64,13 @@ import {
   startSketch,
   showRuntimeErrorWarning,
   hideRuntimeErrorWarning
-} from '../actions/ide';
+} from '../IDE/actions/ide';
+import baseP5Theme from './baseTheme';
+import runtimeErrorExt, {
+  clearRuntimeErrorsEffect,
+  clearRuntimeErrors,
+  setRuntimeErrorsEffect
+} from './runtimeErrors';
 
 // TODO: setup/check emmet & fix class names
 // https://github.com/emmetio/codemirror6-plugin/blob/de142116cbe4003c22a79436351ead9b600ae6e3/src/lib/syntax.ts#LL113C17-L113C28
@@ -66,27 +79,6 @@ import {
 // TODO: autocomplete prevents 'div' + tab from auto-closing
 
 const INDENTATION_AMOUNT = 2;
-
-const p5AutocompleteSource = completeFromList(
-  Object.keys(p5FunctionKeywords)
-    .map((keyword) => ({
-      label: keyword,
-      type: 'function',
-      boost: 99 // TODO: detail
-    }))
-    .concat(
-      Object.keys(p5VariableKeywords).map((keyword) => ({
-        label: keyword,
-        type: 'constant',
-        boost: 50 // TODO: detail
-      }))
-    )
-);
-
-// TODO: only if language is js!!
-const p5AutocompleteExt = autocompletion({
-  override: [p5AutocompleteSource] // TODO: include native JS
-});
 
 const searchContainer = document.createElement('div');
 searchContainer.id = 'p5-search-panel';
@@ -168,9 +160,6 @@ class Editor extends React.Component {
         this.compartments.lineWrap.of(
           this.props.linewrap ? EditorView.lineWrapping : []
         ),
-        this.compartments.lineNumbers.of(
-          this.props.lineNumbers ? lineNumbers() : []
-        ),
         this.compartments.emmet.of(
           emmetConfig.of({
             // Note: not all file extensions are valid
@@ -185,20 +174,39 @@ class Editor extends React.Component {
         syntaxHighlighting(classHighlighter),
         highlightActiveLine(),
         highlightActiveLineGutter(),
-        p5AutocompleteExt,
+        p5Autocomplete,
         // TODO: switch
         // p5LightCodemirrorTheme,
+        baseP5Theme,
         p5StylePlugin,
         bracketMatching(),
         linter(lintSource),
         lintGutter(),
+        runtimeErrorExt,
+        // TODO: switch to an alpha bg to keep numbers visible. #00000005
+        this.compartments.lineNumbers.of(
+          this.props.lineNumbers ? lineNumbers() : []
+        ),
+        codeFolding(),
+        foldGutter({
+          /* markerDOM: (open) => {
+            const img = document.createElement('img');
+            img.src = arrowIconUrl;
+            img.style.transform = `rotate(${open ? '90deg' : 0})`;
+            return img;
+            // TODO: correct color based on theme
+          } */
+          openText: '▼',
+          closedText: '▶'
+        }),
         // TODO: remove
         search({
           top: true,
           createPanel: () => ({
             dom: searchContainer
           })
-        })
+        }),
+        color
         // highlightSelectionMatches() // Not enabled currently, no sure if wanted
       ],
       parent: this.codemirrorContainer
@@ -347,6 +355,7 @@ class Editor extends React.Component {
       ); */
     }
 
+    // TODO: figure out how it works currently with the show/hide.
     if (this.props.runtimeErrorWarningVisible) {
       if (this.props.consoleEvents.length !== prevProps.consoleEvents.length) {
         this.props.consoleEvents.forEach((consoleEvent) => {
@@ -367,30 +376,33 @@ class Editor extends React.Component {
                 (f) => f.name === fileName && f.filePath === filePath
               );
               this.props.dispatch(setSelectedFile(fileWithError.id));
+              // Note: will only show max 1 at a time.
               // TODO: instead of addLineClass, use line decorations:
               // https://codemirror.net/examples/zebra/
               // https://discuss.codemirror.net/t/how-to-add-line-class-to-a-specific-line-dynamically/6230
               // https://discuss.codemirror.net/t/equivalent-for-addlineclass-in-cm6/4356
               // https://discuss.codemirror.net/t/how-to-add-classes-to-lines/3039/3
-              /* this._cm5.addLineClass(
-                line.lineNumber - 1,
-                'background',
-                'line-runtime-error'
-              ); */
+              console.log('error', line);
+              // TODO: why doesn't the decoration show up?
+              this._cm.dispatch({
+                effects: [
+                  setRuntimeErrorsEffect.of({
+                    // TODO: pass the message and show it in a lint tooltip
+                    message: '',
+                    line: line.lineNumber
+                  })
+                ]
+              });
             });
           }
         });
       } else {
-        for (let i = 0; i < this._cm.state.doc.lines; i += 1) {
-          // this._cm5.removeLineClass(i, 'background', 'line-runtime-error');
-        }
+        clearRuntimeErrors(this._cm);
       }
     }
 
     if (this.props.file.id !== prevProps.file.id) {
-      for (let i = 0; i < this._cm.state.doc.lines; i += 1) {
-        // this._cm5.removeLineClass(i, 'background', 'line-runtime-error');
-      }
+      clearRuntimeErrors(this._cm);
     }
   }
 
@@ -502,10 +514,7 @@ Editor.propTypes = {
 function mapStateToProps(state) {
   return {
     files: state.files,
-    file:
-      state.files.find((file) => file.isSelectedFile) ||
-      state.files.find((file) => file.name === 'sketch.js') ||
-      state.files.find((file) => file.name !== 'root'),
+    file: selectActiveFile(state),
     consoleEvents: state.console,
     ...state.preferences,
     ...state.ide,

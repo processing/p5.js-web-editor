@@ -6,6 +6,9 @@ import PropTypes from 'prop-types';
 
 const StyledRoot = styled.article`
   font-size: ${(props) => props.fontSize}px;
+  .cm-editor.cm-focused {
+    outline: none;
+  }
 `;
 
 StyledRoot.propTypes = {
@@ -22,11 +25,11 @@ const ElementWithClasses = forwardRef((props, ref) => {
 
   return (
     <StyledRoot
-      className={classNames(`cm-s-p5-${theme}`, props.className)}
       fontSize={fontSize}
       lineWrap={lineWrap}
       lineNumbers={lineNumbers}
       {...props}
+      className={classNames(`cm-s-p5-${theme}`, props.className)}
       ref={ref}
     />
   );
