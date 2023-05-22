@@ -26,9 +26,9 @@ export default function configureStore(initialState) {
     compose(...enhancers)
   );
 
-  if (module.hot) {
+  if (import.meta.webpackHot) {
     // Enable Webpack hot module replacement for reducers
-    module.hot.accept('./reducers', () => {
+    import.meta.webpackHot.accept('./reducers', () => {
       const nextRootReducer = require('./reducers').default; // eslint-disable-line global-require
       store.replaceReducer(nextRootReducer);
     });

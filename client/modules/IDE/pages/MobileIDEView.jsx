@@ -171,10 +171,6 @@ const handleGlobalKeydown = (props, cmController) => (e) => {
         e.preventDefault();
         e.stopPropagation();
         stopSketch();
-      } else if (e.keyCode === 13) {
-        e.preventDefault();
-        e.stopPropagation();
-        startSketch();
         // 50 === 2
       } else if (e.keyCode === 50) {
         e.preventDefault();
