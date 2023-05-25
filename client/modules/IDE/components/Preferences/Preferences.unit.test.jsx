@@ -437,10 +437,10 @@ describe('<Preferences />', () => {
 
       // get ahold of the radio buttons for toggling autocompleteHinter
       const autocompleteRadioFalse = screen.getByRole('radio', {
-        name: /autocomplete off/i
+        name: /autocomplete hinter off/i
       });
       const autocompleteRadioTrue = screen.getByRole('radio', {
-        name: /autocomplete on/i
+        name: /autocomplete hinter on/i
       });
 
       testToggle(
@@ -519,10 +519,10 @@ describe('<Preferences />', () => {
 
         // get ahold of the radio buttons for toggling autocompleteHinter
         const autocompleteRadioFalse = screen.getByRole('radio', {
-          name: /autocomplete off/i
+          name: /autocomplete hinter off/i
         });
         const autocompleteRadioTrue = screen.getByRole('radio', {
-          name: /autocomplete on/i
+          name: /autocomplete hinter on/i
         });
 
         testToggle(
