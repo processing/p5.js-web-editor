@@ -134,6 +134,7 @@ class Editor extends React.Component {
         mode: 'edit'
       }
     });
+
     this.hinter = new Fuse(hinter.p5Hinter, {
       threshold: 0.05,
       keys: ['text']
@@ -266,6 +267,12 @@ class Editor extends React.Component {
         this.props.autocloseBracketsQuotes
       );
     }
+    if (this.props.autocompleteHinter !== prevProps.autocompleteHinter) {
+      if (!this.props.autocompleteHinter) {
+        // close the hinter window once the preference is turned off
+        CodeMirror.showHint(this._cm, () => {});
+      }
+    }
 
     if (this.props.runtimeErrorWarningVisible) {
       if (this.props.consoleEvents.length !== prevProps.consoleEvents.length) {
@@ -345,6 +352,11 @@ class Editor extends React.Component {
   }
 
   showHint(_cm) {
+    if (!this.props.autocompleteHinter) {
+      CodeMirror.showHint(_cm, () => {});
+      return;
+    }
+
     let focusedLinkElement = null;
     const setFocusedLinkElement = (set) => {
       if (set && !focusedLinkElement) {
@@ -539,6 +551,7 @@ class Editor extends React.Component {
 
 Editor.propTypes = {
   autocloseBracketsQuotes: PropTypes.bool.isRequired,
+  autocompleteHinter: PropTypes.bool.isRequired,
   lineNumbers: PropTypes.bool.isRequired,
   lintWarning: PropTypes.bool.isRequired,
   linewrap: PropTypes.bool.isRequired,
