@@ -1,3 +1,3 @@
 require('@babel/register');
-require('@babel/polyfill');
+require('regenerator-runtime/runtime');
 require('./db_reformat');

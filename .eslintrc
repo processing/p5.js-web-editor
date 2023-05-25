@@ -1,6 +1,6 @@
 {
 	"extends": ["airbnb", "prettier"],
-	"parser": "babel-eslint",
+	"parser": "@babel/eslint-parser",
 	"env": {
     "browser": true,
     "node": true,
@@ -69,7 +69,7 @@
     "react", "jsx-a11y", "import", "prettier"
   ],
   "settings": {
-    "import/parser": "babel-eslint",
+    "import/parser": "@babel/eslint-parser",
     "import/resolve": {
       "moduleDirectory": ["node_modules"]
     }

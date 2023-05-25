@@ -1,13 +1,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import orderBy from 'lodash/orderBy';
+import { useTranslation } from 'react-i18next';
 
 import { APIKeyPropType } from './APIKeyForm';
 
 import dates from '../../../utils/formatDate';
 import TrashCanIcon from '../../../images/trash-can.svg';
 
-function APIKeyList({ apiKeys, onRemove, t }) {
+function APIKeyList({ apiKeys, onRemove }) {
+  const { t } = useTranslation();
   return (
     <table className="api-key-list">
       <thead>
@@ -48,8 +50,7 @@ function APIKeyList({ apiKeys, onRemove, t }) {
 
 APIKeyList.propTypes = {
   apiKeys: PropTypes.arrayOf(PropTypes.shape(APIKeyPropType)).isRequired,
-  onRemove: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired
+  onRemove: PropTypes.func.isRequired
 };
 
 export default APIKeyList;

@@ -13,7 +13,7 @@ Pull-requests are easier when your code is up to date! You can use git rebase to
 
 
 ### Find out about changes
-Make sure you're tracking upstream p5.js repository.
+Make sure you're tracking the upstream p5.js repository.
 
     git remote show upstream
 
@@ -43,7 +43,7 @@ Then ask git about the latest changes.
 ## CONFLICTS
 You may have some conflicts! It's okay. Feel free to ask for help. If merging with the latest upstream `develop` branch causes conflicts, you can always make a pull request with the upstream repository, which makes the merge conflicts public.
 
-## And finally, for great glory
+## And finally, for the great glory
     git push --set-upstream origin your-branch-name-backup
 
 Here's a good reference on rebasing, in case you're intensely curious about the technical details. https://www.atlassian.com/git/tutorials/merging-vs-rebasing

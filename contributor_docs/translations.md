@@ -9,10 +9,10 @@ In order to simplify the translations process the following rules of thumb were 
 
 ## Technical Part
 
-* There is only one file to translate all the texts in any specific language, which is located under the directory, in respective locale [subdirectory](https://github.com/processing/p5.js-web-editor/tree/develop/translations/locales)
-* The new language code must be added to [client/i18n.js](https://github.com/processing/p5.js-web-editor/blob/develop/client/i18n.js#L8)
-* New languages will need to be selected using a dropdown in Nav component, specifically in function [renderLanguageMenu.](https://github.com/processing/p5.js-web-editor/blob/develop/client/components/Nav.jsx#L611)
-* Need to add `TRANSLATIONS_ENABLED=true` to `.env` to activate dropdown for the languages.
+* There is only one file to translate all the texts in any specific language, which is located under the directory, in the respective locale [subdirectory](https://github.com/processing/p5.js-web-editor/tree/develop/translations/locales)
+* The new language code must be added to [client/i18n.js](https://github.com/processing/p5.js-web-editor/blob/edae248eede21d7ad7702945929efbcdfeb4d9ea/client/i18n.js#L22)
+* New languages will need to be selected using a dropdown in the Nav component, specifically in function [renderLanguageMenu.](https://github.com/processing/p5.js-web-editor/blob/edae248eede21d7ad7702945929efbcdfeb4d9ea/client/components/Nav.jsx#L599)
+* Need to add `TRANSLATIONS_ENABLED=true` to `.env` to activate the dropdown for the languages.
 
 #### Nav.js
 Need to add the following code to add a new language as a dropdown menu.
@@ -42,7 +42,7 @@ export function languageKeyToDateLocale(lang) {
   const languageMap = {
     'en-US': enUS,
     'es-419': es,
-    'ja': ja
+    'ja': ja,
     'newLanguage': newLanguage
   };
   return languageMap[lang];
@@ -66,7 +66,7 @@ export function languageKeyToDateLocale(lang) {
 * There are common texts that are present with `Common` prefix, try to check first if the exact label is already present there.
 * Every key follows PascalCase case style.
 * Every key that is used in an ARIA text should end with the suffix `ARIA`.
-* The order of keys inside of appearance should be order of in the order they appear in the source code
+* The order of keys inside of appearance should be ordered in the order they appear in the source code
 
 ## Language Use
 
@@ -74,7 +74,7 @@ The Processing Foundation is specifically invested in expanding the communities 
 
 With those principles in mind, we want to strongly suggest the use of non-gendered terms whenever possible. If it is not possible to avoid, use the most inclusive version. 
 For instance, in Spanish translation we tackled that problem with a particular rule of thumb:
-Avoid male-gendered words, use instead the letter ‘e’  , we used the ‘e’ approach vs other approaches like ‘x’ or ‘@’ because you also need to think about how screen readers would read the text aloud.
+Avoid male-gendered words: use instead the letter ‘e’. We used the ‘e’ approach vs other approaches like ‘x’ or ‘@’ because you also need to think about how screen readers would read the text aloud.
 
 ## Background
  
