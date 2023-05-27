@@ -6,6 +6,26 @@ html, body {
 	font-size: #{$base-font-size}px;
 }
 
+/*Scrollbar theming */
+/* width */
+::-webkit-scrollbar {
+	width: 10px;
+  }
+  /* Track */
+  ::-webkit-scrollbar-track {
+	@include themify() {
+		color: getThemifyVariable('modal-border-color');
+	}
+  }
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+	background: #888;
+  }
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+	background: #555;
+}
+
 body, input, textarea {
 	@include themify() {
 		color: getThemifyVariable('primary-text-color');
