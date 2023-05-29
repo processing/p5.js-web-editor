@@ -99,12 +99,12 @@ class Nav extends React.PureComponent {
   }
 
   handleNew() {
-    const { unsavedChanges, warnIfUnsavedChanges } = this.props;
+    const { unsavedChanges } = this.props;
     if (!unsavedChanges) {
       this.props.showToast(1500);
       this.props.setToastText('Toast.OpenedNewSketch');
       this.props.newProject();
-    } else if (warnIfUnsavedChanges && warnIfUnsavedChanges()) {
+    } else if (window.confirm(this.props.t('Nav.WarningUnsavedChanges'))) {
       this.props.showToast(1500);
       this.props.setToastText('Toast.OpenedNewSketch');
       this.props.newProject();
@@ -952,7 +952,6 @@ Nav.propTypes = {
   showShareModal: PropTypes.func.isRequired,
   showErrorModal: PropTypes.func.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
-  warnIfUnsavedChanges: PropTypes.func,
   showKeyboardShortcutModal: PropTypes.func.isRequired,
   cmController: PropTypes.shape({
     tidyCode: PropTypes.func,
@@ -985,7 +984,6 @@ Nav.defaultProps = {
   },
   cmController: {},
   layout: 'project',
-  warnIfUnsavedChanges: undefined,
   params: {
     username: undefined
   }
