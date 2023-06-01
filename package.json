@@ -3,6 +3,7 @@
   "version": "2.5.0",
   "description": "The web editor for p5.js.",
   "scripts": {
+    "i": "npm install --legacy-peer-deps",
     "clean": "rimraf dist",
     "start": "cross-env BABEL_DISABLE_CACHE=1 NODE_ENV=development nodemon index.js",
     "start:prod": "cross-env NODE_ENV=production node index.js",
@@ -224,7 +225,6 @@
     "react-tabs": "^2.3.1",
     "react-transition-group": "^4.4.2",
     "redux": "^3.7.2",
-    "redux-auth-wrapper": "^2.1.0",
     "redux-thunk": "^2.3.0",
     "regenerator-runtime": "^0.13.9",
     "remark-slug": "^6.1.0",

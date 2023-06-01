@@ -25,8 +25,10 @@ import { getUser } from './modules/User/actions';
 import { stopSketch } from './modules/IDE/actions/ide';
 import {
   userIsAuthenticated,
+  userIsAuthorized,
   userIsNotAuthenticated,
-  userIsAuthorized
+  UserIsAuthenticated,
+  UserIsNotAuthenticated
 } from './utils/auth';
 import { mobileFirst, responsiveForm } from './utils/responsive';
 import { ElementFromComponent } from './utils/router-compatibilty';
@@ -94,9 +96,9 @@ const routes = [
       {
         path: '/reset-password',
         element: (
-          <ElementFromComponent
-            component={userIsNotAuthenticated(ResetPasswordView)}
-          />
+          <UserIsNotAuthenticated>
+            <ResetPasswordView />
+          </UserIsNotAuthenticated>
         )
       },
       { path: '/verify', element: <EmailVerificationView /> },
@@ -167,7 +169,9 @@ const routes = [
       {
         path: '/account',
         element: (
-          <ElementFromComponent component={userIsAuthenticated(AccountView)} />
+          <UserIsAuthenticated>
+            <AccountView />
+          </UserIsAuthenticated>
         )
       },
       {
