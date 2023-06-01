@@ -277,7 +277,6 @@ const MobileIDEView = (props) => {
     files,
     toggleForceDesktop,
     logoutUser,
-    toast,
     isUserOwner
   } = props;
 
@@ -384,7 +383,7 @@ const MobileIDEView = (props) => {
           />
         </li>
       </Header>
-      {toast.isVisible && <Toast />}
+      <Toast />
 
       <IDEWrapper>
         <Editor provideController={setCmController} />
@@ -457,10 +456,6 @@ MobileIDEView.propTypes = {
     username: PropTypes.string
   }).isRequired,
 
-  toast: PropTypes.shape({
-    isVisible: PropTypes.bool
-  }).isRequired,
-
   logoutUser: PropTypes.func.isRequired,
 
   getProject: PropTypes.func.isRequired,
@@ -491,7 +486,6 @@ function mapStateToProps(state) {
     preferences: state.preferences,
     user: state.user,
     project: state.project,
-    toast: state.toast,
     console: state.console,
     isUserOwner: getIsUserOwner(state)
   };

@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Helmet } from 'react-helmet';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { parse } from 'query-string';
 import { createApiKey, removeApiKey } from '../actions';
 import AccountForm from '../components/AccountForm';
@@ -16,8 +15,10 @@ import Overlay from '../../App/components/Overlay';
 import Toast from '../../IDE/components/Toast';
 import { withRouter } from '../../../utils/router-compatibilty';
 
-function SocialLoginPanel(props) {
-  const { user, t } = props;
+function SocialLoginPanel() {
+  const { t } = useTranslation();
+  const isGithub = useSelector((state) => !!state.user.github);
+  const isGoogle = useSelector((state) => !!state.user.google);
   return (
     <React.Fragment>
       <AccountForm />
@@ -25,139 +26,104 @@ function SocialLoginPanel(props) {
         {t('AccountView.SocialLogin')}
       </h2>
       <p className="account__social-text">
-        {/* eslint-disable-next-line react/prop-types */}
         {t('AccountView.SocialLoginDescription')}
       </p>
       <div className="account__social-stack">
         <SocialAuthButton
           service={SocialAuthButton.services.github}
           linkStyle
-          isConnected={!!user.github}
+          isConnected={isGithub}
         />
         <SocialAuthButton
           service={SocialAuthButton.services.google}
           linkStyle
-          isConnected={!!user.google}
+          isConnected={isGoogle}
         />
       </div>
     </React.Fragment>
   );
 }
 
-SocialLoginPanel.propTypes = {
-  user: PropTypes.shape({
-    github: PropTypes.string,
-    google: PropTypes.string
-  }).isRequired,
-  t: PropTypes.func.isRequired
-};
+function AccountView({ location, navigate }) {
+  const { t } = useTranslation();
 
-class AccountView extends React.Component {
-  componentDidMount() {
-    document.body.className = this.props.theme;
-  }
+  const queryParams = parse(location.search);
+  const showError = !!queryParams.error;
+  const errorType = queryParams.error;
+  const accessTokensUIEnabled = window.process.env.UI_ACCESS_TOKEN_ENABLED;
 
-  render() {
-    const queryParams = parse(this.props.location.search);
-    const showError = !!queryParams.error;
-    const errorType = queryParams.error;
-    const accessTokensUIEnabled = window.process.env.UI_ACCESS_TOKEN_ENABLED;
+  const apiKeys = useSelector((state) => state.user.apiKeys);
+  const dispatch = useDispatch();
 
-    return (
-      <div className="account-settings__container">
-        <Helmet>
-          <title>{this.props.t('AccountView.Title')}</title>
-        </Helmet>
-        {this.props.toast.isVisible && <Toast />}
+  return (
+    <div className="account-settings__container">
+      <Helmet>
+        <title>{t('AccountView.Title')}</title>
+      </Helmet>
+      <Toast />
 
-        <Nav layout="dashboard" />
+      <Nav layout="dashboard" />
 
-        {showError && (
-          <Overlay
-            title={this.props.t('ErrorModal.LinkTitle')}
-            ariaLabel={this.props.t('ErrorModal.LinkTitle')}
-            closeOverlay={() => {
-              this.props.navigate(this.props.location.pathname);
-            }}
-          >
-            <ErrorModal type="oauthError" service={errorType} />
-          </Overlay>
-        )}
+      {showError && (
+        <Overlay
+          title={t('ErrorModal.LinkTitle')}
+          ariaLabel={t('ErrorModal.LinkTitle')}
+          closeOverlay={() => {
+            navigate(location.pathname);
+          }}
+        >
+          <ErrorModal type="oauthError" service={errorType} />
+        </Overlay>
+      )}
 
-        <main className="account-settings">
-          <header className="account-settings__header">
-            <h1 className="account-settings__title">
-              {this.props.t('AccountView.Settings')}
-            </h1>
-          </header>
-          {accessTokensUIEnabled && (
-            <Tabs className="account__tabs">
-              <TabList>
-                <div className="tabs__titles">
+      <main className="account-settings">
+        <header className="account-settings__header">
+          <h1 className="account-settings__title">
+            {t('AccountView.Settings')}
+          </h1>
+        </header>
+        {accessTokensUIEnabled && (
+          <Tabs className="account__tabs">
+            <TabList>
+              <div className="tabs__titles">
+                <Tab>
+                  <h4 className="tabs__title">{t('AccountView.AccountTab')}</h4>
+                </Tab>
+                {accessTokensUIEnabled && (
                   <Tab>
                     <h4 className="tabs__title">
-                      {this.props.t('AccountView.AccountTab')}
+                      {t('AccountView.AccessTokensTab')}
                     </h4>
                   </Tab>
-                  {accessTokensUIEnabled && (
-                    <Tab>
-                      <h4 className="tabs__title">
-                        {this.props.t('AccountView.AccessTokensTab')}
-                      </h4>
-                    </Tab>
-                  )}
-                </div>
-              </TabList>
-              <TabPanel>
-                <SocialLoginPanel {...this.props} />
-              </TabPanel>
-              <TabPanel>
-                <APIKeyForm {...this.props} />
-              </TabPanel>
-            </Tabs>
-          )}
-          {!accessTokensUIEnabled && <SocialLoginPanel {...this.props} />}
-        </main>
-      </div>
-    );
-  }
-}
-
-function mapStateToProps(state) {
-  return {
-    initialValues: state.user, // <- initialValues for reduxForm
-    previousPath: state.ide.previousPath,
-    user: state.user,
-    apiKeys: state.user.apiKeys,
-    theme: state.preferences.theme,
-    toast: state.toast
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      createApiKey,
-      removeApiKey
-    },
-    dispatch
+                )}
+              </div>
+            </TabList>
+            <TabPanel>
+              <SocialLoginPanel />
+            </TabPanel>
+            <TabPanel>
+              <APIKeyForm
+                // TODO: it makes more sense to connect the APIKeyForm component directly -Linda
+                apiKeys={apiKeys}
+                createApiKey={() => dispatch(createApiKey)}
+                removeApiKey={() => dispatch(removeApiKey)}
+                t={t}
+              />
+            </TabPanel>
+          </Tabs>
+        )}
+        {!accessTokensUIEnabled && <SocialLoginPanel />}
+      </main>
+    </div>
   );
 }
 
 AccountView.propTypes = {
-  previousPath: PropTypes.string.isRequired,
-  theme: PropTypes.string.isRequired,
-  t: PropTypes.func.isRequired,
   location: PropTypes.shape({
     search: PropTypes.string.isRequired,
     pathname: PropTypes.string.isRequired
   }).isRequired,
-  navigate: PropTypes.func.isRequired,
-  toast: PropTypes.shape({
-    isVisible: PropTypes.bool.isRequired
-  }).isRequired
+  navigate: PropTypes.func.isRequired
 };
 
-export default withTranslation()(
-  withRouter(connect(mapStateToProps, mapDispatchToProps)(AccountView))
-);
+export default withRouter(AccountView);

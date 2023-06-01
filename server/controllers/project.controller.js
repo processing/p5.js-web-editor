@@ -222,7 +222,10 @@ function addFileToZip(file, files, zip, path = '') {
       const numChildFiles = file.children.filter((f) => f.fileType !== 'folder')
         .length;
       let childrenAdded = 0;
-
+      if (numChildFiles === 0) {
+        zip.folder(file.name);
+        resolve();
+      }
       file.children.forEach(async (fileId) => {
         const childFile = files.find((f) => f.id === fileId);
 

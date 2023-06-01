@@ -62,6 +62,10 @@ function KeyboardShortcutModal() {
           <span>{t('KeyboardShortcuts.CodeEditing.CommentLine')}</span>
         </li>
         <li className="keyboard-shortcut-item">
+          <span className="keyboard-shortcut__command">{metaKeyName} + .</span>
+          <span>{t('KeyboardShortcuts.CodeEditing.CommentLine')}</span>
+        </li>
+        <li className="keyboard-shortcut-item">
           <span className="keyboard-shortcut__command">{metaKeyName} + K</span>
           <span>{t('KeyboardShortcuts.CodeEditing.ColorPicker')}</span>
         </li>

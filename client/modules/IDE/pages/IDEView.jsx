@@ -29,7 +29,6 @@ import * as ProjectActions from '../actions/project';
 import * as EditorAccessibilityActions from '../actions/editorAccessibility';
 import * as PreferencesActions from '../actions/preferences';
 import * as UserActions from '../../User/actions';
-import * as ToastActions from '../actions/toast';
 import * as ConsoleActions from '../actions/console';
 import { getHTMLFile } from '../reducers/files';
 import Overlay from '../../App/components/Overlay';
@@ -268,7 +267,7 @@ class IDEView extends React.Component {
           <title>{getTitle(this.props)}</title>
         </Helmet>
         <WarnIfUnsavedChanges />
-        {this.props.toast.isVisible && <Toast />}
+        <Toast />
         <Nav cmController={this.cmController} />
         <Toolbar
           syncFileContent={this.syncFileContent}
@@ -389,12 +388,8 @@ class IDEView extends React.Component {
           </SplitPane>
         </main>
         {this.props.ide.modalIsVisible && <NewFileModal />}
-        {this.props.ide.newFolderModalVisible && (
-          <NewFolderModal closeModal={this.props.closeNewFolderModal} />
-        )}
-        {this.props.ide.uploadFileModalVisible && (
-          <UploadFileModal closeModal={this.props.closeUploadFileModal} />
-        )}
+        {this.props.ide.newFolderModalVisible && <NewFolderModal />}
+        {this.props.ide.uploadFileModalVisible && <UploadFileModal />}
         {this.props.location.pathname === '/about' && (
           <Overlay
             title={this.props.t('About.Title')}
@@ -410,7 +405,7 @@ class IDEView extends React.Component {
             previousPath={this.props.ide.previousPath}
             ariaLabel={this.props.t('IDEView.SubmitFeedbackARIA')}
           >
-            <Feedback previousPath={this.props.ide.previousPath} />
+            <Feedback />
           </Overlay>
         )}
         {this.props.location.pathname.match(/add-to-collection$/) && (
@@ -571,9 +566,6 @@ IDEView.propTypes = {
   closeNewFileModal: PropTypes.func.isRequired,
   closeShareModal: PropTypes.func.isRequired,
   closeKeyboardShortcutModal: PropTypes.func.isRequired,
-  toast: PropTypes.shape({
-    isVisible: PropTypes.bool.isRequired
-  }).isRequired,
   autosaveProject: PropTypes.func.isRequired,
   setTheme: PropTypes.func.isRequired,
   setPreviousPath: PropTypes.func.isRequired,
@@ -600,7 +592,6 @@ function mapStateToProps(state) {
     editorAccessibility: state.editorAccessibility,
     user: state.user,
     project: state.project,
-    toast: state.toast,
     console: state.console,
     isUserOwner: getIsUserOwner(state)
   };
@@ -616,7 +607,6 @@ function mapDispatchToProps(dispatch) {
       IDEActions,
       PreferencesActions,
       UserActions,
-      ToastActions,
       ConsoleActions
     ),
     dispatch
