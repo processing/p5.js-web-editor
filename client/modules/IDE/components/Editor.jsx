@@ -98,7 +98,6 @@ class Editor extends React.Component {
     this.beep = new Audio(beepUrl);
     this.widgets = [];
     this._cm = CodeMirror(this.codemirrorContainer, {
-      // eslint-disable-line
       theme: `p5-${this.props.theme}`,
       lineNumbers: this.props.lineNumbers,
       styleActiveLine: true,
@@ -416,8 +415,6 @@ class Editor extends React.Component {
         }
       },
       closeOnUnfocus: false
-      // completeOnSingleClick: false,
-      // closeOnPick: false
     };
 
     // CSS
@@ -597,7 +594,6 @@ Editor.propTypes = {
   collapseSidebar: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
   clearConsole: PropTypes.func.isRequired,
-  // showRuntimeErrorWarning: PropTypes.func.isRequired,
   hideRuntimeErrorWarning: PropTypes.func.isRequired,
   runtimeErrorWarningVisible: PropTypes.bool.isRequired,
   provideController: PropTypes.func.isRequired,
