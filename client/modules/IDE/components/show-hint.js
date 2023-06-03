@@ -323,13 +323,14 @@
       else {
         const e = ownerDocument.createElement('p');
         const name = getText(cur);
+
         if (cur.item && cur.item.type) {
           cur.displayText = displayHint(name, cur.item.type);
         }
+
         elt.appendChild(e);
         e.outerHTML =
-          cur.displayText ||
-          `<span class="plain-hint-item">${getText(cur)}<span>`;
+          cur.displayText || `<span class="plain-hint-item">${name}<span>`;
       }
       elt.hintId = i;
     }

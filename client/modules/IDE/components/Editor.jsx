@@ -417,29 +417,28 @@ class Editor extends React.Component {
       closeOnUnfocus: false
     };
 
-    // CSS
-    if (_cm.options.mode === 'css') {
+    if (_cm.options.mode === 'javascript') {
+      // JavaScript
+      CodeMirror.showHint(
+        _cm,
+        () => {
+          const c = _cm.getCursor();
+          const token = _cm.getTokenAt(c);
+
+          const hints = this.hinter.search(token.string);
+
+          return {
+            list: hints,
+            from: CodeMirror.Pos(c.line, token.start),
+            to: CodeMirror.Pos(c.line, c.ch)
+          };
+        },
+        hintOptions
+      );
+    } else if (_cm.options.mode === 'css') {
+      // CSS
       CodeMirror.showHint(_cm, CodeMirror.hint.css, hintOptions);
-      return;
     }
-
-    // JavaScript
-    CodeMirror.showHint(
-      _cm,
-      () => {
-        const c = _cm.getCursor();
-        const token = _cm.getTokenAt(c);
-
-        const hints = this.hinter.search(token.string);
-
-        return {
-          list: hints,
-          from: CodeMirror.Pos(c.line, token.start),
-          to: CodeMirror.Pos(c.line, c.ch)
-        };
-      },
-      hintOptions
-    );
   }
 
   showReplace() {
