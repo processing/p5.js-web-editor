@@ -204,7 +204,7 @@
   }
 
   function getText(completion) {
-    if (typeof completion == 'string') return completion;
+    if (typeof completion === 'string') return completion;
     else return completion.item.text;
   }
 
