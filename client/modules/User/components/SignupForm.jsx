@@ -62,6 +62,7 @@ function SignupForm() {
                   aria-label={t('SignupForm.TitleARIA')}
                   type="text"
                   id="username"
+                  autoComplete="username"
                   {...field.input}
                 />
                 {field.meta.touched && field.meta.error && (
@@ -79,8 +80,9 @@ function SignupForm() {
                 <input
                   className="form__input"
                   aria-label={t('SignupForm.EmailARIA')}
-                  type="text"
+                  type="email"
                   id="email"
+                  autoComplete="email"
                   {...field.input}
                 />
                 {field.meta.touched && field.meta.error && (
@@ -100,6 +102,7 @@ function SignupForm() {
                   aria-label={t('SignupForm.PasswordARIA')}
                   type="password"
                   id="password"
+                  autoComplete="new-password"
                   {...field.input}
                 />
                 {field.meta.touched && field.meta.error && (
@@ -119,6 +122,7 @@ function SignupForm() {
                   type="password"
                   aria-label={t('SignupForm.ConfirmPasswordARIA')}
                   id="confirm password"
+                  autoComplete="new-password"
                   {...field.input}
                 />
                 {field.meta.touched && field.meta.error && (
