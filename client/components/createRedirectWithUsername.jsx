@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
@@ -12,6 +13,15 @@ const RedirectToUser = ({ username, url = '/:username/sketches' }) => {
   }, [username]);
 
   return null;
+};
+
+RedirectToUser.propTypes = {
+  url: PropTypes.string.isRequired,
+  username: PropTypes.string
+};
+
+RedirectToUser.defaultProps = {
+  username: null
 };
 
 function mapStateToProps(state) {
