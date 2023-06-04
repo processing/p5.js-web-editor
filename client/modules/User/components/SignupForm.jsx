@@ -1,7 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Form, Field } from 'react-final-form';
+import { Form } from 'react-final-form';
 import { useDispatch } from 'react-redux';
+import FinalFormField from '../../../common/FinalFormField';
 import { validateSignup } from '../../../utils/reduxFormUtils';
 import { validateAndSignUpUser } from '../actions';
 import Button from '../../../common/Button';
@@ -47,86 +48,42 @@ function SignupForm() {
     >
       {({ handleSubmit, pristine, submitting, invalid }) => (
         <form className="form" onSubmit={handleSubmit}>
-          <Field
+          <FinalFormField
             name="username"
+            id="username"
+            type="text"
+            autoComplete="username"
+            label={t('SignupForm.Title')}
+            ariaLabel={t('SignupForm.TitleARIA')}
             validate={validateUsername}
             validateFields={[]}
-          >
-            {(field) => (
-              <p className="form__field">
-                <label htmlFor="username" className="form__label">
-                  {t('SignupForm.Title')}
-                </label>
-                <input
-                  className="form__input"
-                  aria-label={t('SignupForm.TitleARIA')}
-                  type="text"
-                  id="username"
-                  {...field.input}
-                />
-                {field.meta.touched && field.meta.error && (
-                  <span className="form-error">{field.meta.error}</span>
-                )}
-              </p>
-            )}
-          </Field>
-          <Field name="email" validate={validateEmail} validateFields={[]}>
-            {(field) => (
-              <p className="form__field">
-                <label htmlFor="email" className="form__label">
-                  {t('SignupForm.Email')}
-                </label>
-                <input
-                  className="form__input"
-                  aria-label={t('SignupForm.EmailARIA')}
-                  type="text"
-                  id="email"
-                  {...field.input}
-                />
-                {field.meta.touched && field.meta.error && (
-                  <span className="form-error">{field.meta.error}</span>
-                )}
-              </p>
-            )}
-          </Field>
-          <Field name="password">
-            {(field) => (
-              <p className="form__field">
-                <label htmlFor="password" className="form__label">
-                  {t('SignupForm.Password')}
-                </label>
-                <input
-                  className="form__input"
-                  aria-label={t('SignupForm.PasswordARIA')}
-                  type="password"
-                  id="password"
-                  {...field.input}
-                />
-                {field.meta.touched && field.meta.error && (
-                  <span className="form-error">{field.meta.error}</span>
-                )}
-              </p>
-            )}
-          </Field>
-          <Field name="confirmPassword">
-            {(field) => (
-              <p className="form__field">
-                <label htmlFor="confirm password" className="form__label">
-                  {t('SignupForm.ConfirmPassword')}
-                </label>
-                <input
-                  className="form__input"
-                  type="password"
-                  aria-label={t('SignupForm.ConfirmPasswordARIA')}
-                  id="confirm password"
-                  {...field.input}
-                />
-                {field.meta.touched && field.meta.error && (
-                  <span className="form-error">{field.meta.error}</span>
-                )}
-              </p>
-            )}
-          </Field>
+          />
+          <FinalFormField
+            name="email"
+            id="email"
+            type="email"
+            autoComplete="email"
+            label={t('SignupForm.Email')}
+            ariaLabel={t('SignupForm.EmailARIA')}
+            validate={validateEmail}
+            validateFields={[]}
+          />
+          <FinalFormField
+            name="password"
+            id="password"
+            type="password"
+            autoComplete="new-password"
+            label={t('SignupForm.Password')}
+            ariaLabel={t('SignupForm.PasswordARIA')}
+          />
+          <FinalFormField
+            name="confirmPassword"
+            id="confirmPassword"
+            type="password"
+            autoComplete="new-password"
+            label={t('SignupForm.ConfirmPassword')}
+            ariaLabel={t('SignupForm.ConfirmPasswordARIA')}
+          />
           <Button type="submit" disabled={submitting || invalid || pristine}>
             {t('SignupForm.SubmitSignup')}
           </Button>

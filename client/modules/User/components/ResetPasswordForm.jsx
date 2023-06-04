@@ -1,12 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Form, Field } from 'react-final-form';
+import { Form } from 'react-final-form';
 import { useDispatch, useSelector } from 'react-redux';
+import FinalFormField from '../../../common/FinalFormField';
 import { validateResetPassword } from '../../../utils/reduxFormUtils';
 import { initiateResetPassword } from '../actions';
 import Button from '../../../common/Button';
 
-function ResetPasswordForm(props) {
+function ResetPasswordForm() {
   const { t } = useTranslation();
   const resetPasswordInitiate = useSelector(
     (state) => state.user.resetPasswordInitiate
@@ -25,25 +26,14 @@ function ResetPasswordForm(props) {
     >
       {({ handleSubmit, submitting, pristine, invalid }) => (
         <form className="form" onSubmit={handleSubmit}>
-          <Field name="email">
-            {(field) => (
-              <p className="form__field">
-                <label htmlFor="email" className="form__label">
-                  {t('ResetPasswordForm.Email')}
-                </label>
-                <input
-                  className="form__input"
-                  aria-label={t('ResetPasswordForm.EmailARIA')}
-                  type="text"
-                  id="email"
-                  {...field.input}
-                />
-                {field.meta.touched && field.meta.error && (
-                  <span className="form-error">{field.meta.error}</span>
-                )}
-              </p>
-            )}
-          </Field>
+          <FinalFormField
+            name="email"
+            id="email"
+            type="email"
+            autoComplete="email"
+            label={t('ResetPasswordForm.Email')}
+            ariaLabel={t('ResetPasswordForm.EmailARIA')}
+          />
           <Button
             type="submit"
             disabled={
