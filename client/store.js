@@ -1,3 +1,4 @@
+/* eslint-disable import/no-import-module-exports */
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import DevTools from './modules/App/components/DevTools';
@@ -26,9 +27,9 @@ export default function configureStore(initialState) {
     compose(...enhancers)
   );
 
-  if (import.meta.webpackHot) {
+  if (module.hot) {
     // Enable Webpack hot module replacement for reducers
-    import.meta.webpackHot.accept('./reducers', () => {
+    module.hot.accept('./reducers', () => {
       const nextRootReducer = require('./reducers').default; // eslint-disable-line global-require
       store.replaceReducer(nextRootReducer);
     });
