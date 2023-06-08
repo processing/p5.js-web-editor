@@ -286,6 +286,55 @@
 <span aria-hidden="true">&#10132;</span></a></p>`;
   }
 
+  function getInlineHintSuggestion(focus, tokenLength) {
+    const suggestionItem = focus.item;
+    const baseCompletion = `<span class="inline-hinter-suggestion">${suggestionItem.text.slice(
+      tokenLength
+    )}</span>`;
+    if (suggestionItem.type !== 'fun') return baseCompletion;
+
+    // for functions
+    return (
+      baseCompletion +
+      '<span class="inline-hinter-suggestion-light">(' +
+      (suggestionItem.params && suggestionItem.params.length
+        ? suggestionItem.params.map(({ p, o }) => (o ? `[${p}]` : p)).join(', ')
+        : '') +
+      ')</span>'
+    );
+  }
+
+  function removeInlineHint(cm) {
+    if (cm.state.inlineHint) {
+      cm.state.inlineHint.clear();
+      cm.state.inlineHint = null;
+    }
+  }
+
+  function changeInlineHint(cm, focus) {
+    // Copilot-style inline suggestion for autocomplete feature
+    removeInlineHint(cm);
+
+    const cursor = cm.getCursor();
+    const token = cm.getTokenAt(cursor);
+
+    if (token && focus.item) {
+      const suggestionHTML = getInlineHintSuggestion(
+        focus,
+        token.string.length
+      );
+
+      const widgetElement = document.createElement('span');
+      widgetElement.className = 'autocomplete-inline-hinter';
+      widgetElement.innerHTML = suggestionHTML;
+
+      const widget = cm.setBookmark(cursor, { widget: widgetElement });
+      cm.state.inlineHint = widget;
+
+      cm.setCursor(cursor);
+    }
+  }
+
   function Widget(completion, data) {
     this.id = 'cm-complete-' + Math.floor(Math.random(1e6));
     this.completion = completion;
@@ -305,6 +354,9 @@
     var theme = completion.cm.options.theme;
     hints.className = 'CodeMirror-hints ' + theme;
     this.selectedHint = data.selectedHint || 0;
+
+    // Show inline hint
+    changeInlineHint(cm, data.list[this.selectedHint]);
 
     var completions = data.list;
 
@@ -431,10 +483,10 @@
     cm.addKeyMap(
       (this.keyMap = buildKeyMap(completion, {
         moveFocus: function (n, avoidWrap) {
-          widget.changeActive(widget.selectedHint + n, avoidWrap);
+          return widget.changeActive(widget.selectedHint + n, avoidWrap);
         },
         setFocus: function (n) {
-          widget.changeActive(n);
+          return widget.changeActive(n);
         },
         menuSize: function () {
           return widget.screenAmount();
@@ -540,6 +592,8 @@
         cm.off('focus', this.onFocus);
       }
       cm.off('scroll', this.onScroll);
+
+      removeInlineHint(cm);
     },
 
     disable: function () {
@@ -561,7 +615,12 @@
       if (i >= this.data.list.length)
         i = avoidWrap ? this.data.list.length - 1 : 0;
       else if (i < 0) i = avoidWrap ? 0 : this.data.list.length - 1;
-      if (this.selectedHint == i) return;
+
+      if (this.selectedHint == i) {
+        changeInlineHint(this.completion.cm, this.data.list[this.selectedHint]);
+        return this.data.list[this.selectedHint];
+      }
+
       var node = this.hints.childNodes[this.selectedHint];
       if (node) {
         node.className = node.className.replace(
@@ -583,6 +642,9 @@
         this.data.list[this.selectedHint],
         node
       );
+
+      changeInlineHint(this.completion.cm, this.data.list[this.selectedHint]);
+      return this.data.list[this.selectedHint];
     },
 
     scrollToActive: function () {

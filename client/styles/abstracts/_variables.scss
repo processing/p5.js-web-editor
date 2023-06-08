@@ -135,7 +135,9 @@ $themes: (
     hint-var-active-border-bottom-color: #D52889,
     hint-item-active-type-text-color: $white,
     hint-item-active-outline: none,
-    hint-item-active-outline-offset: 0
+    hint-item-active-outline-offset: 0,
+    hint-inline-text-color-light: $middle-light,
+    hint-inline-text-color: $middle-gray,
   ),
   dark: (
     logo-color: $p5js-pink,
@@ -234,7 +236,9 @@ $themes: (
     hint-var-active-border-bottom-color: #DE4A9B,
     hint-item-active-type-text-color: $darker,
     hint-item-active-outline: none,
-    hint-item-active-outline-offset: 0
+    hint-item-active-outline-offset: 0,
+    hint-inline-text-color-light: $middle-gray,
+    hint-inline-text-color: #cfcfcf,
   ),
   contrast: (
     logo-color: $yellow,
@@ -333,7 +337,9 @@ $themes: (
     hint-var-active-border-bottom-color: none,
     hint-item-active-type-text-color: $lighter,
     hint-item-active-outline: 2px solid $lighter,
-    hint-item-active-outline-offset: -2px
+    hint-item-active-outline-offset: -2px,
+    hint-inline-text-color-light: $middle-gray,
+    hint-inline-text-color: #cfcfcf,
   )
 );
 

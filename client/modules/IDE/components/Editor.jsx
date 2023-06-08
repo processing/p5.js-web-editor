@@ -269,7 +269,7 @@ class Editor extends React.Component {
     if (this.props.autocompleteHinter !== prevProps.autocompleteHinter) {
       if (!this.props.autocompleteHinter) {
         // close the hinter window once the preference is turned off
-        CodeMirror.showHint(this._cm, () => {});
+        CodeMirror.showHint(this._cm, () => {}, {});
       }
     }
 
@@ -352,7 +352,7 @@ class Editor extends React.Component {
 
   showHint(_cm) {
     if (!this.props.autocompleteHinter) {
-      CodeMirror.showHint(_cm, () => {});
+      CodeMirror.showHint(_cm, () => {}, {});
       return;
     }
 
@@ -425,7 +425,9 @@ class Editor extends React.Component {
           const c = _cm.getCursor();
           const token = _cm.getTokenAt(c);
 
-          const hints = this.hinter.search(token.string);
+          const hints = this.hinter
+            .search(token.string)
+            .filter((h) => h.item.text[0] === token.string[0]);
 
           return {
             list: hints,

@@ -160,3 +160,31 @@
     }
   }
 }
+
+// Inline hinter
+.CodeMirror-widget {
+  line-height: inherit;
+
+  @include themify() {
+    .autocomplete-inline-hinter {
+      // make the border left look like a cursor and animate like a cursor
+      border-left: #{1.2 / $base-font-size}rem solid getThemifyVariable(hint-inline-text-color);
+      animation: inline-hint-caret-blink 1s step-end infinite;
+      pointer-events: none;
+
+      .inline-hinter-suggestion {
+        color: getThemifyVariable(hint-inline-text-color);
+        font-style: italic;
+      }
+
+      .inline-hinter-suggestion-light {
+        color: getThemifyVariable(hint-inline-text-color-light);
+        font-style: italic;
+      }
+    }
+  }
+}
+
+@keyframes inline-hint-caret-blink {
+  50% { border-color: transparent; }
+}

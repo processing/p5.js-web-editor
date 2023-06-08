@@ -22,13 +22,22 @@ axios
         obj.itemtype
       ) {
         let type;
-        if (obj.itemtype === 'method') type = 'fun';
-        else if (obj.itemtype === 'property') type = 'var';
-        else type = 'attr';
+        let params = [];
+        if (obj.itemtype === 'method') {
+          type = 'fun';
+
+          params = obj.params?.map((param) => ({
+            p: param.name, // param name
+            o: param.optional ?? false // optional
+          }));
+        } else if (obj.itemtype === 'property') {
+          type = 'var';
+        } else type = 'attr';
 
         p5Keywords.push({
           text: obj.name,
-          type
+          type,
+          params
         });
       }
     });
