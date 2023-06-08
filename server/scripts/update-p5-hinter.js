@@ -6,6 +6,77 @@ const axios = require('axios');
 //   return d.split('\n')[0].replace('<p>', '');
 // };
 
+const reservedKeywords = [
+  'await',
+  'break',
+  'case',
+  'catch',
+  'class',
+  'const',
+  'continue',
+  'debugger',
+  'default',
+  'delete',
+  'do',
+  'else',
+  'export',
+  'extends',
+  'finally',
+  'for',
+  'function',
+  'if',
+  'import',
+  'in',
+  'instanceof',
+  'new',
+  'return',
+  'super',
+  'switch',
+  'this',
+  'throw',
+  'try',
+  'typeof',
+  'var',
+  'void',
+  'while',
+  'with',
+  'yield',
+  'let'
+];
+
+const reservedObjects = [
+  'Array',
+  'Boolean',
+  'Date',
+  'Error',
+  'Function',
+  'JSON',
+  'Math',
+  'Number',
+  'Object',
+  'RegExp',
+  'String',
+  'Promise',
+  'Set',
+  'Map',
+  'Symbol',
+  'WeakMap',
+  'WeakSet',
+  'ArrayBuffer',
+  'DataView',
+  'Int32Array',
+  'Uint32Array',
+  'Float32Array',
+  'window',
+  'document',
+  'navigator',
+  'console',
+  'localStorage',
+  'sessionStorage',
+  'history',
+  'location'
+];
+
 axios
   .get('https://p5js.org/reference/data.json')
   .then((response) => {
@@ -37,9 +108,26 @@ axios
         p5Keywords.push({
           text: obj.name,
           type,
-          params
+          params,
+          p5: true
         });
       }
+    });
+
+    reservedKeywords.forEach((keyword) => {
+      p5Keywords.push({
+        text: keyword,
+        type: 'keyword',
+        p5: false
+      });
+    });
+
+    reservedObjects.forEach((keyword) => {
+      p5Keywords.push({
+        text: keyword,
+        type: 'obj',
+        p5: false
+      });
     });
 
     const keywords = JSON.stringify(p5Keywords);

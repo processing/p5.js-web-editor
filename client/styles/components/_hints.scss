@@ -31,12 +31,16 @@
       height: 100%;
     }
   
-    .fun-name {
+    .fun-name, .obj-name {
       color: getThemifyVariable('hint-fun-text-color');
     }
   
     .var-name {
       color: getThemifyVariable('hint-var-text-color');
+    }
+
+    .keyword-name {
+      color: getThemifyVariable('hint-keyword-text-color');
     }
   
     .hint-type {
@@ -57,6 +61,11 @@
         outline-offset: #{-3 / $base-font-size}rem;
       }
     }
+
+    .no-link-placeholder {
+      background: getThemifyVariable('hint-no-link-background-color');
+      pointer-events: none;
+    }
   
     li.CodeMirror-hint-active:not(.unfocused) {
       background: getThemifyVariable('hint-item-active-background-color');
@@ -75,12 +84,16 @@
         color: getThemifyVariable('hint-item-active-text-color');
       }
 
-      .fun-name {
+      .fun-name, .obj-name {
         background-color: getThemifyVariable('hint-fun-text-color');
       }
     
       .var-name {
         background-color: getThemifyVariable('hint-var-text-color');
+      }
+
+      .keyword-name {
+        background-color: getThemifyVariable('hint-keyword-text-color');
       }
   
       .hint-type, .plain-hint-item {
@@ -140,7 +153,7 @@
       @extend %hidden-element;
     }
   
-    a {
+    a, .no-link-placeholder {
       position: absolute;
       top: 0;
       right: 0;
@@ -168,8 +181,8 @@
   @include themify() {
     .autocomplete-inline-hinter {
       // make the border left look like a cursor and animate like a cursor
-      border-left: #{1.2 / $base-font-size}rem solid getThemifyVariable(hint-inline-text-color);
-      animation: inline-hint-caret-blink 1s step-end infinite;
+      // border-left: #{1.2 / $base-font-size}rem solid getThemifyVariable(hint-inline-text-color);
+      // animation: inline-hint-caret-blink 1s step-end infinite;
       pointer-events: none;
 
       .inline-hinter-suggestion {

@@ -275,15 +275,19 @@
     }
   }
 
-  function displayHint(name, type) {
+  function displayHint(name, type, p5) {
     return `<p class="${type}-item">\
 <span class="${type}-name hint-name">${name}</span>\
 <span class="hint-hidden">, </span>\
 <span class="hint-type">${type}</span>\
 <span class="hint-hidden">, </span>\
-<a href="https://p5js.org/reference/#/p5/${name}" role="link" onclick="event.stopPropagation()" target="_blank">\
+${
+  p5
+    ? `<a href="https://p5js.org/reference/#/p5/${name}" role="link" onclick="event.stopPropagation()" target="_blank">\
 <span class="hint-hidden">open ${name} reference</span>\
-<span aria-hidden="true">&#10132;</span></a></p>`;
+<span aria-hidden="true">&#10132;</span></a>`
+    : `<span class="no-link-placeholder"><span class="hint-hidden">no reference for ${name}</span></span>`
+}</p>`;
   }
 
   function getInlineHintSuggestion(focus, tokenLength) {
@@ -377,7 +381,7 @@
         const name = getText(cur);
 
         if (cur.item && cur.item.type) {
-          cur.displayText = displayHint(name, cur.item.type);
+          cur.displayText = displayHint(name, cur.item.type, cur.item.p5);
         }
 
         elt.appendChild(e);
