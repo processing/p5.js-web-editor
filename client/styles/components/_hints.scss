@@ -35,7 +35,7 @@
       color: getThemifyVariable('hint-fun-text-color');
     }
   
-    .var-name {
+    .var-name, .boolean-name {
       color: getThemifyVariable('hint-var-text-color');
     }
 
@@ -88,7 +88,7 @@
         background-color: getThemifyVariable('hint-fun-text-color');
       }
     
-      .var-name {
+      .var-name, .boolean-name {
         background-color: getThemifyVariable('hint-var-text-color');
       }
 

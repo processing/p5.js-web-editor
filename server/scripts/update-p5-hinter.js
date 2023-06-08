@@ -7,74 +7,74 @@ const axios = require('axios');
 // };
 
 const reservedKeywords = [
-  'await',
-  'break',
-  'case',
-  'catch',
-  'class',
-  'const',
-  'continue',
-  'debugger',
-  'default',
-  'delete',
-  'do',
-  'else',
-  'export',
-  'extends',
-  'finally',
-  'for',
-  'function',
-  'if',
-  'import',
-  'in',
-  'instanceof',
-  'new',
-  'return',
-  'super',
-  'switch',
-  'this',
-  'throw',
-  'try',
-  'typeof',
-  'var',
-  'void',
-  'while',
-  'with',
-  'yield',
-  'let'
+  { name: 'await', p5DocPath: false },
+  { name: 'break', p5DocPath: false },
+  { name: 'case', p5DocPath: false },
+  { name: 'catch', p5DocPath: false },
+  { name: 'class', p5DocPath: 'class' },
+  { name: 'const', p5DocPath: 'const' },
+  { name: 'continue', p5DocPath: false },
+  { name: 'debugger', p5DocPath: false },
+  { name: 'default', p5DocPath: false },
+  { name: 'delete', p5DocPath: false },
+  { name: 'do', p5DocPath: false },
+  { name: 'else', p5DocPath: 'if-else' },
+  { name: 'export', p5DocPath: false },
+  { name: 'extends', p5DocPath: false },
+  { name: 'finally', p5DocPath: false },
+  { name: 'for', p5DocPath: 'for' },
+  { name: 'function', p5DocPath: 'function' },
+  { name: 'if', p5DocPath: 'if-else' },
+  { name: 'import', p5DocPath: false },
+  { name: 'in', p5DocPath: false },
+  { name: 'instanceof', p5DocPath: false },
+  { name: 'new', p5DocPath: false },
+  { name: 'return', p5DocPath: 'return' },
+  { name: 'super', p5DocPath: false },
+  { name: 'switch', p5DocPath: false },
+  { name: 'this', p5DocPath: false },
+  { name: 'throw', p5DocPath: false },
+  { name: 'try', p5DocPath: false },
+  { name: 'typeof', p5DocPath: false },
+  { name: 'var', p5DocPath: false },
+  { name: 'void', p5DocPath: false },
+  { name: 'while', p5DocPath: 'while' },
+  { name: 'with', p5DocPath: false },
+  { name: 'yield', p5DocPath: false },
+  { name: 'let', p5DocPath: 'let' }
 ];
 
 const reservedObjects = [
-  'Array',
-  'Boolean',
-  'Date',
-  'Error',
-  'Function',
-  'JSON',
-  'Math',
-  'Number',
-  'Object',
-  'RegExp',
-  'String',
-  'Promise',
-  'Set',
-  'Map',
-  'Symbol',
-  'WeakMap',
-  'WeakSet',
-  'ArrayBuffer',
-  'DataView',
-  'Int32Array',
-  'Uint32Array',
-  'Float32Array',
-  'window',
-  'document',
-  'navigator',
-  'console',
-  'localStorage',
-  'sessionStorage',
-  'history',
-  'location'
+  { name: 'Array', p5DocPath: false },
+  { name: 'Boolean', p5DocPath: false },
+  { name: 'Date', p5DocPath: false },
+  { name: 'Error', p5DocPath: false },
+  { name: 'Function', p5DocPath: false },
+  { name: 'JSON', p5DocPath: 'JSON' },
+  { name: 'Math', p5DocPath: false },
+  { name: 'Number', p5DocPath: false },
+  { name: 'Object', p5DocPath: false },
+  { name: 'RegExp', p5DocPath: false },
+  { name: 'String', p5DocPath: false },
+  { name: 'Promise', p5DocPath: false },
+  { name: 'Set', p5DocPath: false },
+  { name: 'Map', p5DocPath: false },
+  { name: 'Symbol', p5DocPath: false },
+  { name: 'WeakMap', p5DocPath: false },
+  { name: 'WeakSet', p5DocPath: false },
+  { name: 'ArrayBuffer', p5DocPath: false },
+  { name: 'DataView', p5DocPath: false },
+  { name: 'Int32Array', p5DocPath: false },
+  { name: 'Uint32Array', p5DocPath: false },
+  { name: 'Float32Array', p5DocPath: false },
+  { name: 'window', p5DocPath: false },
+  { name: 'document', p5DocPath: false },
+  { name: 'navigator', p5DocPath: false },
+  { name: 'console', p5DocPath: 'console' },
+  { name: 'localStorage', p5DocPath: false },
+  { name: 'sessionStorage', p5DocPath: false },
+  { name: 'history', p5DocPath: false },
+  { name: 'location', p5DocPath: false }
 ];
 
 axios
@@ -114,19 +114,27 @@ axios
       }
     });
 
+    ['true', 'false'].forEach((bol) => {
+      p5Keywords.push({
+        text: bol,
+        type: 'boolean',
+        p5: 'boolean'
+      });
+    });
+
     reservedKeywords.forEach((keyword) => {
       p5Keywords.push({
-        text: keyword,
+        text: keyword.name,
         type: 'keyword',
-        p5: false
+        p5: keyword.p5DocPath
       });
     });
 
     reservedObjects.forEach((keyword) => {
       p5Keywords.push({
-        text: keyword,
+        text: keyword.name,
         type: 'obj',
-        p5: false
+        p5: keyword.p5DocPath
       });
     });
 
