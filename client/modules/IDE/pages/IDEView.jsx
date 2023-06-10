@@ -290,6 +290,8 @@ class IDEView extends React.Component {
                 this.props.preferences.autocloseBracketsQuotes
               }
               setAutocloseBracketsQuotes={this.props.setAutocloseBracketsQuotes}
+              autocompleteHinter={this.props.preferences.autocompleteHinter}
+              setAutocompleteHinter={this.props.setAutocompleteHinter}
             />
           </Overlay>
         )}
@@ -495,10 +497,12 @@ IDEView.propTypes = {
     theme: PropTypes.string.isRequired,
     autorefresh: PropTypes.bool.isRequired,
     language: PropTypes.string.isRequired,
-    autocloseBracketsQuotes: PropTypes.bool.isRequired
+    autocloseBracketsQuotes: PropTypes.bool.isRequired,
+    autocompleteHinter: PropTypes.bool.isRequired
   }).isRequired,
   closePreferences: PropTypes.func.isRequired,
   setAutocloseBracketsQuotes: PropTypes.func.isRequired,
+  setAutocompleteHinter: PropTypes.func.isRequired,
   setFontSize: PropTypes.func.isRequired,
   setAutosave: PropTypes.func.isRequired,
   setLineNumbers: PropTypes.func.isRequired,

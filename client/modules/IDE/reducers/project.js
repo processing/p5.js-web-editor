@@ -37,10 +37,6 @@ const project = (state, action) => {
       };
     case ActionTypes.RESET_PROJECT:
       return initialState();
-    case ActionTypes.SHOW_EDIT_PROJECT_NAME:
-      return Object.assign({}, state, { isEditingName: true });
-    case ActionTypes.HIDE_EDIT_PROJECT_NAME:
-      return Object.assign({}, state, { isEditingName: false });
     case ActionTypes.SET_PROJECT_SAVED_TIME:
       return Object.assign({}, state, { updatedAt: action.value });
     case ActionTypes.START_SAVING_PROJECT:
