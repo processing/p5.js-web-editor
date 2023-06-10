@@ -31,7 +31,6 @@ const renderComponent = (extraProps = {}) => {
       },
       project: {
         name: 'testname',
-        isEditingName: false,
         id: 'id'
       },
       t: jest.fn()
@@ -46,28 +45,31 @@ const renderComponent = (extraProps = {}) => {
 
 describe('<ToolbarComponent />', () => {
   it('sketch owner can switch to sketch name editing mode', async () => {
-    const props = renderComponent();
+    renderComponent();
     const sketchName = screen.getByLabelText('Edit sketch name');
 
     fireEvent.click(sketchName);
 
-    await waitFor(() => expect(props.showEditProjectName).toHaveBeenCalled());
+    await waitFor(() => {
+      expect(screen.getByLabelText('New sketch name')).toHaveFocus();
+      expect(screen.getByLabelText('New sketch name')).toBeEnabled();
+    });
   });
 
   it("non-owner can't switch to sketch editing mode", async () => {
-    const props = renderComponent({ currentUser: 'not-me' });
+    renderComponent({ currentUser: 'not-me' });
     const sketchName = screen.getByLabelText('Edit sketch name');
 
     fireEvent.click(sketchName);
 
     expect(sketchName).toBeDisabled();
     await waitFor(() =>
-      expect(props.showEditProjectName).not.toHaveBeenCalled()
+      expect(screen.getByLabelText('New sketch name')).toBeDisabled()
     );
   });
 
   it('sketch owner can change name', async () => {
-    const props = renderComponent({ project: { isEditingName: true } });
+    const props = renderComponent();
 
     const sketchNameInput = screen.getByLabelText('New sketch name');
     fireEvent.change(sketchNameInput, {
@@ -82,7 +84,7 @@ describe('<ToolbarComponent />', () => {
   });
 
   it("sketch owner can't change to empty name", async () => {
-    const props = renderComponent({ project: { isEditingName: true } });
+    const props = renderComponent();
 
     const sketchNameInput = screen.getByLabelText('New sketch name');
     fireEvent.change(sketchNameInput, { target: { value: '' } });

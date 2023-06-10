@@ -351,18 +351,6 @@ export function cloneProject(project) {
   };
 }
 
-export function showEditProjectName() {
-  return {
-    type: ActionTypes.SHOW_EDIT_PROJECT_NAME
-  };
-}
-
-export function hideEditProjectName() {
-  return {
-    type: ActionTypes.HIDE_EDIT_PROJECT_NAME
-  };
-}
-
 export function setProjectSavedTime(updatedAt) {
   return {
     type: ActionTypes.SET_PROJECT_SAVED_TIME,

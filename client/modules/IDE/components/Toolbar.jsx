@@ -11,53 +11,19 @@ import * as projectActions from '../actions/project';
 import PlayIcon from '../../../images/play.svg';
 import StopIcon from '../../../images/stop.svg';
 import PreferencesIcon from '../../../images/preferences.svg';
-import EditProjectNameIcon from '../../../images/pencil.svg';
+import EditableInput from './EditableInput';
 
 class Toolbar extends React.Component {
   constructor(props) {
     super(props);
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-    this.handleProjectNameChange = this.handleProjectNameChange.bind(this);
-    this.handleProjectNameClick = this.handleProjectNameClick.bind(this);
     this.handleProjectNameSave = this.handleProjectNameSave.bind(this);
-
-    this.state = {
-      projectNameInputValue: props.project.name
-    };
   }
 
-  handleKeyPress(event) {
-    if (event.key === 'Enter') {
-      this.props.hideEditProjectName();
-      this.projectNameInput.blur();
-    }
-  }
-
-  handleProjectNameChange(event) {
-    this.setState({ projectNameInputValue: event.target.value });
-  }
-
-  handleProjectNameClick() {
-    if (this.canEditProjectName) {
-      this.props.showEditProjectName();
-      setTimeout(() => {
-        this.projectNameInput?.focus();
-      }, 140);
-    }
-  }
-
-  handleProjectNameSave() {
-    const newProjectName = this.state.projectNameInputValue.trim();
-    if (newProjectName.length === 0) {
-      this.setState({
-        projectNameInputValue: this.props.project.name
-      });
-    } else {
-      this.props.setProjectName(newProjectName);
-      this.props.hideEditProjectName();
-      if (this.props.project.id) {
-        this.props.saveProject();
-      }
+  handleProjectNameSave(value) {
+    const newProjectName = value.trim();
+    this.props.setProjectName(newProjectName);
+    if (this.props.project.id) {
+      this.props.saveProject();
     }
   }
 
@@ -83,11 +49,6 @@ class Toolbar extends React.Component {
     const preferencesButtonClass = classNames({
       'toolbar__preferences-button': true,
       'toolbar__preferences-button--selected': this.props.preferencesIsVisible
-    });
-    const nameContainerClass = classNames({
-      'toolbar__project-name-container': true,
-      'toolbar__project-name-container--editing': this.props.project
-        .isEditingName
     });
 
     const canEditProjectName = this.canEditProjectName();
@@ -139,34 +100,17 @@ class Toolbar extends React.Component {
             {this.props.t('Toolbar.Auto-refresh')}
           </label>
         </div>
-        <div className={nameContainerClass}>
-          <button
-            className="toolbar__project-name"
-            onClick={this.handleProjectNameClick}
+        <div className="toolbar__project-name-container">
+          <EditableInput
+            value={this.props.project.name}
             disabled={!canEditProjectName}
             aria-label={this.props.t('Toolbar.EditSketchARIA')}
-          >
-            <span>{this.props.project.name}</span>
-            {canEditProjectName && (
-              <EditProjectNameIcon
-                className="toolbar__edit-name-button"
-                focusable="false"
-                aria-hidden="true"
-              />
-            )}
-          </button>
-          <input
-            type="text"
-            maxLength="128"
-            className="toolbar__project-name-input"
-            aria-label={this.props.t('Toolbar.NewSketchNameARIA')}
-            value={this.state.projectNameInputValue}
-            onChange={this.handleProjectNameChange}
-            ref={(element) => {
-              this.projectNameInput = element;
+            inputProps={{
+              maxLength: 128,
+              'aria-label': this.props.t('Toolbar.NewSketchNameARIA')
             }}
-            onBlur={this.handleProjectNameSave}
-            onKeyPress={this.handleKeyPress}
+            validate={(text) => text.trim().length > 0}
+            onChange={this.handleProjectNameSave}
           />
           {(() => {
             if (this.props.owner) {
@@ -205,11 +149,8 @@ Toolbar.propTypes = {
   }),
   project: PropTypes.shape({
     name: PropTypes.string.isRequired,
-    isEditingName: PropTypes.bool,
     id: PropTypes.string
   }).isRequired,
-  showEditProjectName: PropTypes.func.isRequired,
-  hideEditProjectName: PropTypes.func.isRequired,
   infiniteLoop: PropTypes.bool.isRequired,
   autorefresh: PropTypes.bool.isRequired,
   setAutorefresh: PropTypes.func.isRequired,
