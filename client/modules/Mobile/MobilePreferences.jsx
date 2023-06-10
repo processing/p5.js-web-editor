@@ -40,6 +40,7 @@ const MobilePreferences = () => {
     theme,
     autosave,
     linewrap,
+    autocompleteHinter,
     textOutput,
     gridOutput,
     lineNumbers,
@@ -51,6 +52,7 @@ const MobilePreferences = () => {
     setTheme,
     setAutosave,
     setLinewrap,
+    setAutocompleteHinter,
     setTextOutput,
     setGridOutput,
     setLineNumbers,
@@ -79,6 +81,12 @@ const MobilePreferences = () => {
       autosave,
       setAutosave,
       'autosave'
+    ),
+    preferenceOnOff(
+      t('MobilePreferences.AutocompleteHinter'),
+      autocompleteHinter,
+      setAutocompleteHinter,
+      'autocompleteHinter'
     ),
     preferenceOnOff(
       t('MobilePreferences.WordWrap'),
