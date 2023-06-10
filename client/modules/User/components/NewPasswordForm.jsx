@@ -35,6 +35,7 @@ function NewPasswordForm(props) {
                   aria-label={t('NewPasswordForm.TitleARIA')}
                   type="password"
                   id="Password"
+                  autoComplete="new-password"
                   {...field.input}
                 />
                 {field.meta.touched && field.meta.error && (
@@ -54,6 +55,7 @@ function NewPasswordForm(props) {
                   type="password"
                   aria-label={t('NewPasswordForm.ConfirmPasswordARIA')}
                   id="confirm password"
+                  autoComplete="new-password"
                   {...field.input}
                 />
                 {field.meta.touched && field.meta.error && (

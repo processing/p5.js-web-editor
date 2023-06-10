@@ -57,7 +57,8 @@ const initialTestState = {
     theme: 'light',
     autorefresh: false,
     language: 'en-US',
-    autocloseBracketsQuotes: true
+    autocloseBracketsQuotes: true,
+    autocompleteHinter: true
   },
   user: {
     email: 'happydog@example.com',
