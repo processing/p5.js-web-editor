@@ -1,9 +1,9 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, reduxRender } from '../test-utils';
 
-import { NavComponent } from './Nav';
+import Nav, { NavComponent } from './Nav';
 
-jest.mock('../i18n');
+// jest.mock('../i18n');
 
 describe('Nav', () => {
   const props = {
@@ -54,6 +54,16 @@ describe('Nav', () => {
 
   it('renders correctly', () => {
     const { asFragment } = render(<NavComponent {...props} />);
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('renders editor version', () => {
+    const { asFragment } = reduxRender(<Nav />);
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('renders dashboard version', () => {
+    const { asFragment } = reduxRender(<Nav layout="dashboard" />);
     expect(asFragment()).toMatchSnapshot();
   });
 });

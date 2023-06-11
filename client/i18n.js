@@ -20,7 +20,8 @@ import {
 } from 'date-fns/locale';
 
 const fallbackLng = ['en-US'];
-const availableLanguages = [
+
+export const availableLanguages = [
   'de',
   'en-US',
   'es-419',

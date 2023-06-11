@@ -3,32 +3,9 @@ import Q from 'q';
 import mongoose from 'mongoose';
 import objectID from 'bson-objectid';
 import shortid from 'shortid';
+import { defaultCSS, defaultHTML } from '../domain-objects/createDefaultFiles';
 import User from '../models/user';
 import Project from '../models/project';
-
-const defaultHTML = `<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/addons/p5.sound.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <meta charset="utf-8" />
-  </head>
-  <body>
-    <main></main>
-    <script src="sketch.js"></script>
-  </body>
-</html>
-`;
-
-const defaultCSS = `html, body {
-  margin: 0;
-  padding: 0;
-}
-canvas {
-  display: block;
-}
-`;
 
 const clientId = process.env.GITHUB_ID;
 const clientSecret = process.env.GITHUB_SECRET;
