@@ -73,7 +73,6 @@ export function dropzoneAcceptCallback(userId, file, done) {
           file.custom_status = 'ready'; // eslint-disable-line
           file.postData = response.data; // eslint-disable-line
           file.s3 = response.data.key; // eslint-disable-line
-          file.previewTemplate.className += ' uploading'; // eslint-disable-line
           done();
         })
         .catch((error) => {
@@ -108,7 +107,9 @@ export function dropzoneCompleteCallback(file) {
       (!file.name.match(TEXT_FILE_REGEX) || file.size >= MAX_LOCAL_FILE_SIZE) &&
       file.status !== 'error'
     ) {
-      let inputHidden = '<input type="hidden" name="attachments[]" value="';
+      const input = document.createElement('input');
+      input.setAttribute('type', 'hidden');
+      input.setAttribute('name', 'attachments[]');
       const json = {
         url: `${s3BucketHttps}${file.postData.key}`,
         originalFilename: file.name
@@ -118,8 +119,8 @@ export function dropzoneCompleteCallback(file) {
 
       // convert the json string to binary data so that btoa can encode it
       jsonStr = toBinary(jsonStr);
-      inputHidden += `${window.btoa(jsonStr)}" />`;
-      document.getElementById('uploader').innerHTML += inputHidden;
+      input.setAttribute('value', window.btoa(jsonStr));
+      document.getElementById('uploader').appendChild(input);
 
       const formParams = {
         name: file.name,
