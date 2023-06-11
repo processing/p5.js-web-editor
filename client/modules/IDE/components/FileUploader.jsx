@@ -38,13 +38,9 @@ class FileUploader extends React.Component {
       acceptedFiles: fileExtensionsAndMimeTypes,
       dictDefaultMessage: this.props.t('FileUploader.DictDefaultMessage'),
       accept: this.props.dropzoneAcceptCallback.bind(this, userId),
-      sending: this.props.dropzoneSendingCallback,
-      complete: this.props.dropzoneCompleteCallback
-      // error: (file, errorMessage) => {
-      //   console.log(file);
-      //   console.log(errorMessage);
-      // }
+      sending: this.props.dropzoneSendingCallback
     });
+    this.uploader.on('complete', this.props.dropzoneCompleteCallback);
   }
 
   render() {
