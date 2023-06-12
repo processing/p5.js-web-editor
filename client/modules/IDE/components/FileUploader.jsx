@@ -29,6 +29,7 @@ class FileUploader extends React.Component {
       method: 'post',
       autoProcessQueue: true,
       clickable: true,
+      hiddenInputContainer: '#hidden-input-container',
       maxFiles: 6,
       parallelUploads: 2,
       maxFilesize: 5, // in mb
@@ -48,7 +49,12 @@ class FileUploader extends React.Component {
   }
 
   render() {
-    return <div id="uploader" className="uploader dropzone"></div>;
+    return (
+      <div>
+        <div id="uploader" className="uploader dropzone" />
+        <div id="hidden-input-container" />
+      </div>
+    );
   }
 }
 
