@@ -1,14 +1,9 @@
 import apiClient from '../../../utils/apiClient';
 import * as ActionTypes from '../../../constants';
 import { startLoader, stopLoader } from './loader';
+import { assetsActions } from '../reducers/assets';
 
-function setAssets(assets, totalSize) {
-  return {
-    type: ActionTypes.SET_ASSETS,
-    assets,
-    totalSize
-  };
-}
+const { setAssets, deleteAsset } = assetsActions;
 
 export function getAssets() {
   return (dispatch) => {
@@ -16,7 +11,12 @@ export function getAssets() {
     apiClient
       .get('/S3/objects')
       .then((response) => {
-        dispatch(setAssets(response.data.assets, response.data.totalSize));
+        dispatch(
+          setAssets({
+            list: response.data.assets,
+            totalSize: response.data.totalSize
+          })
+        );
         dispatch(stopLoader());
       })
       .catch(() => {
@@ -25,13 +25,6 @@ export function getAssets() {
         });
         dispatch(stopLoader());
       });
-  };
-}
-
-export function deleteAsset(assetKey) {
-  return {
-    type: ActionTypes.DELETE_ASSET,
-    key: assetKey
   };
 }
 
