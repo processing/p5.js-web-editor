@@ -1,31 +1,38 @@
-import PropTypes from 'prop-types';
-import React from 'react';
 import Dropzone from 'dropzone';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { withTranslation } from 'react-i18next';
-import * as UploaderActions from '../actions/uploader';
-import getConfig from '../../../utils/getConfig';
+import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
 import { fileExtensionsAndMimeTypes } from '../../../../server/utils/fileUtils';
+import { remSize } from '../../../theme';
+import {
+  dropzoneAcceptCallback,
+  dropzoneCompleteCallback,
+  dropzoneSendingCallback,
+  s3BucketHttps
+} from '../actions/uploader';
 
-const s3Bucket =
-  getConfig('S3_BUCKET_URL_BASE') ||
-  `https://s3-${getConfig('AWS_REGION')}.amazonaws.com/${getConfig(
-    'S3_BUCKET'
-  )}/`;
+Dropzone.autoDiscover = false;
 
-class FileUploader extends React.Component {
-  componentDidMount() {
-    this.createDropzone();
-    Dropzone.autoDiscover = false;
+// TODO: theming for dark vs. light theme
+// TODO: include color and background-color settings after migrating the themify variables.
+const StyledUploader = styled.div`
+  min-height: ${remSize(200)};
+  width: 100%;
+  text-align: center;
+  .dz-preview.dz-image-preview {
+    background-color: transparent;
   }
+`;
 
-  createDropzone() {
-    const userId = this.props.project.owner
-      ? this.props.project.owner.id
-      : this.props.user.id;
-    this.uploader = new Dropzone('div#uploader', {
-      url: s3Bucket,
+function FileUploader() {
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const userId = useSelector((state) => state.user.id);
+
+  useEffect(() => {
+    const uploader = new Dropzone('div#uploader', {
+      url: s3BucketHttps,
       method: 'post',
       autoProcessQueue: true,
       clickable: true,
@@ -36,55 +43,21 @@ class FileUploader extends React.Component {
       thumbnailWidth: 200,
       thumbnailHeight: 200,
       acceptedFiles: fileExtensionsAndMimeTypes,
-      dictDefaultMessage: this.props.t('FileUploader.DictDefaultMessage'),
-      accept: this.props.dropzoneAcceptCallback.bind(this, userId),
-      sending: this.props.dropzoneSendingCallback
+      dictDefaultMessage: t('FileUploader.DictDefaultMessage'),
+      accept: (file, done) => {
+        dropzoneAcceptCallback(userId, file, done);
+      },
+      sending: dropzoneSendingCallback
     });
-    this.uploader.on('complete', this.props.dropzoneCompleteCallback);
-  }
+    uploader.on('complete', (file) => {
+      dispatch(dropzoneCompleteCallback(file));
+    });
+    return () => {
+      uploader.destroy();
+    };
+  }, [userId, t, dispatch]);
 
-  render() {
-    return <div id="uploader" className="uploader dropzone"></div>;
-  }
+  return <StyledUploader id="uploader" className="dropzone" />;
 }
 
-FileUploader.propTypes = {
-  dropzoneAcceptCallback: PropTypes.func.isRequired,
-  dropzoneSendingCallback: PropTypes.func.isRequired,
-  dropzoneCompleteCallback: PropTypes.func.isRequired,
-  project: PropTypes.shape({
-    owner: PropTypes.shape({
-      id: PropTypes.string
-    })
-  }),
-  user: PropTypes.shape({
-    id: PropTypes.string
-  }),
-  t: PropTypes.func.isRequired
-};
-
-FileUploader.defaultProps = {
-  project: {
-    id: undefined,
-    owner: undefined
-  },
-  user: {
-    id: undefined
-  }
-};
-
-function mapStateToProps(state) {
-  return {
-    files: state.files,
-    project: state.project,
-    user: state.user
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(UploaderActions, dispatch);
-}
-
-export default withTranslation()(
-  connect(mapStateToProps, mapDispatchToProps)(FileUploader)
-);
+export default FileUploader;
