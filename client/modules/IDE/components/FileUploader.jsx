@@ -36,6 +36,7 @@ function FileUploader() {
       method: 'post',
       autoProcessQueue: true,
       clickable: true,
+      hiddenInputContainer: '#hidden-input-container',
       maxFiles: 6,
       parallelUploads: 2,
       maxFilesize: 5, // in mb
@@ -57,7 +58,12 @@ function FileUploader() {
     };
   }, [userId, t, dispatch]);
 
-  return <StyledUploader id="uploader" className="dropzone" />;
+  return (
+    <div>
+      <StyledUploader id="uploader" className="dropzone" />
+      <div id="hidden-input-container" />
+    </div>
+  );
 }
 
 export default FileUploader;
