@@ -26,7 +26,6 @@ import * as ProjectActions from '../actions/project';
 import * as EditorAccessibilityActions from '../actions/editorAccessibility';
 import * as PreferencesActions from '../actions/preferences';
 import * as UserActions from '../../User/actions';
-import * as ToastActions from '../actions/toast';
 import * as ConsoleActions from '../actions/console';
 import { getHTMLFile } from '../reducers/files';
 import Overlay from '../../App/components/Overlay';
@@ -255,7 +254,7 @@ class IDEView extends React.Component {
         <Helmet>
           <title>{getTitle(this.props)}</title>
         </Helmet>
-        {this.props.toast.isVisible && <Toast />}
+        <Toast />
         <Nav
           warnIfUnsavedChanges={this.handleUnsavedChanges}
           cmController={this.cmController}
@@ -291,6 +290,8 @@ class IDEView extends React.Component {
                 this.props.preferences.autocloseBracketsQuotes
               }
               setAutocloseBracketsQuotes={this.props.setAutocloseBracketsQuotes}
+              autocompleteHinter={this.props.preferences.autocompleteHinter}
+              setAutocompleteHinter={this.props.setAutocompleteHinter}
             />
           </Overlay>
         )}
@@ -379,12 +380,8 @@ class IDEView extends React.Component {
           </SplitPane>
         </main>
         {this.props.ide.modalIsVisible && <NewFileModal />}
-        {this.props.ide.newFolderModalVisible && (
-          <NewFolderModal closeModal={this.props.closeNewFolderModal} />
-        )}
-        {this.props.ide.uploadFileModalVisible && (
-          <UploadFileModal closeModal={this.props.closeUploadFileModal} />
-        )}
+        {this.props.ide.newFolderModalVisible && <NewFolderModal />}
+        {this.props.ide.uploadFileModalVisible && <UploadFileModal />}
         {this.props.location.pathname === '/about' && (
           <Overlay
             title={this.props.t('About.Title')}
@@ -400,7 +397,7 @@ class IDEView extends React.Component {
             previousPath={this.props.ide.previousPath}
             ariaLabel={this.props.t('IDEView.SubmitFeedbackARIA')}
           >
-            <Feedback previousPath={this.props.ide.previousPath} />
+            <Feedback />
           </Overlay>
         )}
         {this.props.location.pathname.match(/add-to-collection$/) && (
@@ -515,10 +512,12 @@ IDEView.propTypes = {
     theme: PropTypes.string.isRequired,
     autorefresh: PropTypes.bool.isRequired,
     language: PropTypes.string.isRequired,
-    autocloseBracketsQuotes: PropTypes.bool.isRequired
+    autocloseBracketsQuotes: PropTypes.bool.isRequired,
+    autocompleteHinter: PropTypes.bool.isRequired
   }).isRequired,
   closePreferences: PropTypes.func.isRequired,
   setAutocloseBracketsQuotes: PropTypes.func.isRequired,
+  setAutocompleteHinter: PropTypes.func.isRequired,
   setFontSize: PropTypes.func.isRequired,
   setAutosave: PropTypes.func.isRequired,
   setLineNumbers: PropTypes.func.isRequired,
@@ -561,9 +560,6 @@ IDEView.propTypes = {
   closeNewFileModal: PropTypes.func.isRequired,
   closeShareModal: PropTypes.func.isRequired,
   closeKeyboardShortcutModal: PropTypes.func.isRequired,
-  toast: PropTypes.shape({
-    isVisible: PropTypes.bool.isRequired
-  }).isRequired,
   autosaveProject: PropTypes.func.isRequired,
   router: PropTypes.shape({
     setRouteLeaveHook: PropTypes.func
@@ -594,7 +590,6 @@ function mapStateToProps(state) {
     editorAccessibility: state.editorAccessibility,
     user: state.user,
     project: state.project,
-    toast: state.toast,
     console: state.console,
     isUserOwner: getIsUserOwner(state)
   };
@@ -610,7 +605,6 @@ function mapDispatchToProps(dispatch) {
       IDEActions,
       PreferencesActions,
       UserActions,
-      ToastActions,
       ConsoleActions
     ),
     dispatch

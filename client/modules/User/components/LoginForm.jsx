@@ -1,13 +1,14 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import { useDispatch } from 'react-redux';
 import Button from '../../../common/Button';
 import { validateLogin } from '../../../utils/reduxFormUtils';
 import { validateAndLoginUser } from '../actions';
 
-function LoginForm(props) {
+function LoginForm() {
+  const { t } = useTranslation();
+
   const dispatch = useDispatch();
   function onSubmit(formProps) {
     return dispatch(validateAndLoginUser(formProps));
@@ -31,13 +32,14 @@ function LoginForm(props) {
             {(field) => (
               <p className="form__field">
                 <label htmlFor="email" className="form__label">
-                  {props.t('LoginForm.UsernameOrEmail')}
+                  {t('LoginForm.UsernameOrEmail')}
                 </label>
                 <input
                   className="form__input"
-                  aria-label={props.t('LoginForm.UsernameOrEmailARIA')}
+                  aria-label={t('LoginForm.UsernameOrEmailARIA')}
                   type="text"
                   id="email"
+                  autoComplete="username"
                   {...field.input}
                 />
                 {field.meta.touched && field.meta.error && (
@@ -50,13 +52,14 @@ function LoginForm(props) {
             {(field) => (
               <p className="form__field">
                 <label htmlFor="password" className="form__label">
-                  {props.t('LoginForm.Password')}
+                  {t('LoginForm.Password')}
                 </label>
                 <input
                   className="form__input"
-                  aria-label={props.t('LoginForm.PasswordARIA')}
+                  aria-label={t('LoginForm.PasswordARIA')}
                   type="password"
                   id="password"
+                  autoComplete="current-password"
                   {...field.input}
                 />
                 {field.meta.touched && field.meta.error && (
@@ -69,7 +72,7 @@ function LoginForm(props) {
             <span className="form-error">{submitError}</span>
           )}
           <Button type="submit" disabled={submitting || pristine}>
-            {props.t('LoginForm.Submit')}
+            {t('LoginForm.Submit')}
           </Button>
         </form>
       )}
@@ -77,8 +80,4 @@ function LoginForm(props) {
   );
 }
 
-LoginForm.propTypes = {
-  t: PropTypes.func.isRequired
-};
-
-export default withTranslation()(LoginForm);
+export default LoginForm;
