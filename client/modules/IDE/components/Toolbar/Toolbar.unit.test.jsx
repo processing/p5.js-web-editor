@@ -3,8 +3,13 @@ import { setupServer } from 'msw/node';
 import React from 'react';
 import lodash from 'lodash';
 
-import { fireEvent, reduxRender, screen, waitFor } from '../../../test-utils';
-import { selectProjectName } from '../selectors/project';
+import {
+  fireEvent,
+  reduxRender,
+  screen,
+  waitFor
+} from '../../../../test-utils';
+import { selectProjectName } from '../../selectors/project';
 import ToolbarComponent from './Toolbar';
 
 const server = setupServer(
