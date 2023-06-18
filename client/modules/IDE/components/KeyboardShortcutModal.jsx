@@ -62,6 +62,10 @@ function KeyboardShortcutModal() {
           <span>{t('KeyboardShortcuts.CodeEditing.CommentLine')}</span>
         </li>
         <li className="keyboard-shortcut-item">
+          <span className="keyboard-shortcut__command">{metaKeyName} + .</span>
+          <span>{t('KeyboardShortcuts.CodeEditing.CommentLine')}</span>
+        </li>
+        <li className="keyboard-shortcut-item">
           <span className="keyboard-shortcut__command">{metaKeyName} + K</span>
           <span>{t('KeyboardShortcuts.CodeEditing.ColorPicker')}</span>
         </li>
@@ -95,6 +99,10 @@ function KeyboardShortcutModal() {
             {metaKeyName} + {'\u21E7'} + 2
           </span>
           <span>{t('KeyboardShortcuts.General.TurnOffAccessibleOutput')}</span>
+        </li>
+        <li className="keyboard-shortcut-item">
+          <span className="keyboard-shortcut__command">{'\u21E7'} + Right</span>
+          <span>Go to Reference for Selected Item in Hinter</span>
         </li>
       </ul>
     </div>
