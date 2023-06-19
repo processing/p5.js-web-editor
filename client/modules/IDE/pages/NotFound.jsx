@@ -72,23 +72,13 @@ export default function NotFound() {
 
     return (sketch?.files || []).map((file) => ({
       ...file,
-      content: file.content
-        // Fix links to assets
-        .replace(
-          /'assets/g,
-          "'https://github.com/processing/p5.js-website/raw/main/src/data/examples/assets"
-        )
-        .replace(
-          /"assets/g,
-          '"https://github.com/processing/p5.js-website/raw/main/src/data/examples/assets'
-        )
-        // Change canvas size
-        .replace(
-          /createCanvas\(\d+, ?\d+/g,
-          instanceMode
-            ? 'createCanvas(p.windowWidth, p.windowHeight'
-            : 'createCanvas(windowWidth, windowHeight'
-        )
+      // Change canvas size
+      content: file.content.replace(
+        /createCanvas\(\d+, ?\d+/g,
+        instanceMode
+          ? 'createCanvas(p.windowWidth, p.windowHeight'
+          : 'createCanvas(windowWidth, windowHeight'
+      )
     }));
   }, [sketch]);
 
