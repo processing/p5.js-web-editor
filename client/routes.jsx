@@ -50,6 +50,9 @@ const routes = (store) => (
       onRouteChange(store);
     }}
   >
+    {window.__SERVER_404__ ? (
+      <Route path={window.__SERVER_404__} component={NotFound} />
+    ) : null}
     <IndexRoute
       onEnter={checkAuth(store)}
       component={mobileFirst(MobileIDEView, IDEView)}
