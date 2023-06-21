@@ -130,6 +130,7 @@ export default function NotFound() {
             files={files}
             textOutput={false}
             gridOutput={false}
+            sendMessages={false}
             isPlaying
             basePath={window.location.pathname}
           />

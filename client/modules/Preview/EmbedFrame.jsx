@@ -205,8 +205,7 @@ function addLoopProtect(sketchDoc) {
 }
 
 function injectLocalFiles(files, htmlFile, options) {
-  const { basePath, gridOutput, textOutput } = options;
-  let scriptOffs = [];
+  const { basePath, gridOutput, textOutput, sendMessages } = options;
   objectUrls = {};
   objectPaths = {};
   const resolvedFiles = resolveJSAndCSSLinks(files);
@@ -247,24 +246,28 @@ function injectLocalFiles(files, htmlFile, options) {
     }
   }
 
-  const previewScripts = sketchDoc.createElement('script');
-  previewScripts.src = `${window.location.origin}${getConfig(
-    'PREVIEW_SCRIPTS_URL'
-  )}`;
-  previewScripts.setAttribute('crossorigin', '');
-  sketchDoc.head.appendChild(previewScripts);
+  if (sendMessages) {
+    const previewScripts = sketchDoc.createElement('script');
+    previewScripts.src = `${window.location.origin}${getConfig(
+      'PREVIEW_SCRIPTS_URL'
+    )}`;
+    previewScripts.setAttribute('crossorigin', '');
+    sketchDoc.head.appendChild(previewScripts);
 
-  const sketchDocString = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
-  scriptOffs = getAllScriptOffsets(sketchDocString);
-  const consoleErrorsScript = sketchDoc.createElement('script');
-  consoleErrorsScript.innerHTML = `
-    window.offs = ${JSON.stringify(scriptOffs)};
-    window.objectUrls = ${JSON.stringify(objectUrls)};
-    window.objectPaths = ${JSON.stringify(objectPaths)};
-    window.editorOrigin = '${getConfig('EDITOR_URL')}';
-  `;
-  addLoopProtect(sketchDoc);
-  sketchDoc.head.prepend(consoleErrorsScript);
+    const sketchDocString = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
+    const scriptOffs = getAllScriptOffsets(sketchDocString);
+    const consoleErrorsScript = sketchDoc.createElement('script');
+    consoleErrorsScript.innerHTML = `
+      window.offs = ${JSON.stringify(scriptOffs)};
+      window.objectUrls = ${JSON.stringify(objectUrls)};
+      window.objectPaths = ${JSON.stringify(objectPaths)};
+      window.editorOrigin = '${getConfig('EDITOR_URL')}';
+    `;
+    addLoopProtect(sketchDoc);
+    sketchDoc.head.prepend(consoleErrorsScript);
+  } else {
+    addLoopProtect(sketchDoc);
+  }
 
   return `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
 }
@@ -273,7 +276,14 @@ function getHtmlFile(files) {
   return files.filter((file) => file.name.match(/.*\.html$/i))[0];
 }
 
-function EmbedFrame({ files, isPlaying, basePath, gridOutput, textOutput }) {
+function EmbedFrame({
+  files,
+  isPlaying,
+  basePath,
+  gridOutput,
+  textOutput,
+  sendMessages
+}) {
   const iframe = useRef();
   const htmlFile = useMemo(() => getHtmlFile(files), [files]);
 
@@ -293,7 +303,8 @@ function EmbedFrame({ files, isPlaying, basePath, gridOutput, textOutput }) {
       const htmlDoc = injectLocalFiles(files, htmlFile, {
         basePath,
         gridOutput,
-        textOutput
+        textOutput,
+        sendMessages
       });
       const generatedHtmlFile = {
         name: 'index.html',
@@ -331,7 +342,8 @@ EmbedFrame.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   basePath: PropTypes.string.isRequired,
   gridOutput: PropTypes.bool.isRequired,
-  textOutput: PropTypes.bool.isRequired
+  textOutput: PropTypes.bool.isRequired,
+  sendMessages: PropTypes.bool.isRequired
 };
 
 export default EmbedFrame;

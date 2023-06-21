@@ -68,6 +68,7 @@ const App = () => {
         basePath={basePath}
         gridOutput={gridOutput}
         textOutput={textOutput}
+        sendMessages
       />
     </React.Fragment>
   );
