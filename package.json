@@ -179,7 +179,7 @@
     "express-basic-auth": "^1.2.0",
     "express-session": "^1.17.2",
     "final-form": "^4.20.2",
-    "friendly-words": "^1.2.0",
+    "friendly-words": "^1.2.1",
     "fuse.js": "^6.6.2",
     "htmlhint": "^0.15.1",
     "i18next": "^19.9.2",
