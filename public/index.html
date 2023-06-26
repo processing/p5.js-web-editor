@@ -1,0 +1,42 @@
+<!-- Based on views/index.js  -->
+<!-- This template is only used for local development. -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="keywords" content="p5.js, p5.js web editor, web editor, processing, code editor" />
+      <meta name="description" content="A web editor for p5.js, a JavaScript library with the goal of making coding accessible to artists, designers, educators, and beginners." />
+    <title>p5.js Web Editor</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Inconsolata"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link rel='shortcut icon'
+    href='favicon.ico'
+    type='image/x-icon' />
+  </head>
+  <body>
+    <div id="root" class="root-app" data-env='<%= ENV_FROM_WEBPACK %>'></div>
+    <script>
+        // See views/index.js for reference
+        if (!window.process) {
+          window.process = {};
+        }
+        try {
+          window.process.env = JSON.parse(
+            document.getElementById('root').dataset.env
+          );
+        } catch (e) {
+          alert('Environment variables not set. To view this file, run `npm run start-frontend-server`.')
+          window.process.env = {};
+        }
+      </script>
+  </body>
+</html>
