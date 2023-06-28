@@ -445,9 +445,7 @@ function mapStateToProps(state, ownProps) {
   });
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign(FileActions, IDEActions), dispatch);
-}
+const mapDispatchToProps = { ...FileActions, ...IDEActions };
 
 const TranslatedFileNode = withTranslation()(FileNode);
 
@@ -456,4 +454,5 @@ const ConnectedFileNode = connect(
   mapDispatchToProps
 )(TranslatedFileNode);
 
-export { TranslatedFileNode as FileNode, ConnectedFileNode as default };
+export { TranslatedFileNode as FileNode };
+export default ConnectedFileNode;

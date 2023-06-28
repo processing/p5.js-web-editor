@@ -1,3 +1,4 @@
+/* eslint-disable import/no-import-module-exports */
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import DevTools from './modules/App/components/DevTools';
