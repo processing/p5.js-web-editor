@@ -86,7 +86,7 @@
 
 .collection-add-sketch {
   min-width: #{600 / $base-font-size}rem;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .collection-share {
