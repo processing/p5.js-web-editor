@@ -12,7 +12,7 @@
     "build:client": "cross-env NODE_ENV=production webpack --config webpack/config.prod.js",
     "build:server": "cross-env NODE_ENV=production webpack --config webpack/config.server.js",
     "build:examples": "cross-env NODE_ENV=production webpack --config webpack/config.examples.js",
-    "test": "jest --coverage",
+    "test": "jest",
     "test:ci": "npm run lint && npm run test",
     "fetch-examples": "cross-env NODE_ENV=development node ./server/scripts/fetch-examples.js",
     "fetch-examples-gg": "cross-env NODE_ENV=development node ./server/scripts/fetch-examples-gg.js",
