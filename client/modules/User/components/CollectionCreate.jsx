@@ -1,131 +1,86 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { withTranslation } from 'react-i18next';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as CollectionsActions from '../../IDE/actions/collections';
+import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 
 import { generateCollectionName } from '../../../utils/generateRandomName';
 import Button from '../../../common/Button';
+import { createCollection } from '../../IDE/actions/collections';
 
-class CollectionCreate extends React.Component {
-  constructor() {
-    super();
+const CollectionCreate = () => {
+  const generatedCollectionName = useMemo(() => generateCollectionName(), []);
 
-    const name = generateCollectionName();
+  const [name, setName] = useState(generatedCollectionName);
+  const [description, setDescription] = useState('');
 
-    this.state = {
-      generatedCollectionName: name,
-      collection: {
-        name,
-        description: ''
-      }
-    };
-  }
+  // TODO: error is never set!
+  // eslint-disable-next-line no-unused-vars
+  const [creationError, setCreationError] = useState();
 
-  getTitle() {
-    return this.props.t('CollectionCreate.Title');
-  }
+  const { t } = useTranslation();
 
-  handleTextChange = (field) => (evt) => {
-    this.setState({
-      collection: {
-        ...this.state.collection,
-        [field]: evt.target.value
-      }
-    });
-  };
+  const dispatch = useDispatch();
 
-  handleCreateCollection = (event) => {
+  const handleCreateCollection = (event) => {
     event.preventDefault();
 
-    this.props.createCollection(this.state.collection);
+    dispatch(createCollection({ name, description }));
   };
 
-  render() {
-    const { generatedCollectionName, creationError } = this.state;
-    const { name, description } = this.state.collection;
+  const invalid = name === '' || name == null;
 
-    const invalid = name === '' || name == null;
-
-    return (
-      <div className="collection-create">
-        <Helmet>
-          <title>{this.getTitle()}</title>
-        </Helmet>
-        <div className="sketches-table-container">
-          <form className="form" onSubmit={this.handleCreateCollection}>
-            {creationError && (
+  return (
+    <div className="collection-create">
+      <Helmet>
+        <title>{t('CollectionCreate.Title')}</title>
+      </Helmet>
+      <div className="sketches-table-container">
+        <form className="form" onSubmit={handleCreateCollection}>
+          {creationError && (
+            <span className="form-error">
+              {t('CollectionCreate.FormError')}
+            </span>
+          )}
+          <p className="form__field">
+            <label htmlFor="name" className="form__label">
+              {t('CollectionCreate.FormLabel')}
+            </label>
+            <input
+              className="form__input"
+              aria-label={t('CollectionCreate.FormLabelARIA')}
+              type="text"
+              id="name"
+              value={name}
+              placeholder={generatedCollectionName}
+              onChange={(e) => setName(e.target.value)}
+            />
+            {invalid && (
               <span className="form-error">
-                {this.props.t('CollectionCreate.FormError')}
+                {t('CollectionCreate.NameRequired')}
               </span>
             )}
-            <p className="form__field">
-              <label htmlFor="name" className="form__label">
-                {this.props.t('CollectionCreate.FormLabel')}
-              </label>
-              <input
-                className="form__input"
-                aria-label={this.props.t('CollectionCreate.FormLabelARIA')}
-                type="text"
-                id="name"
-                value={name}
-                placeholder={generatedCollectionName}
-                onChange={this.handleTextChange('name')}
-              />
-              {invalid && (
-                <span className="form-error">
-                  {this.props.t('CollectionCreate.NameRequired')}
-                </span>
-              )}
-            </p>
-            <p className="form__field">
-              <label htmlFor="description" className="form__label">
-                {this.props.t('CollectionCreate.Description')}
-              </label>
-              <textarea
-                className="form__input form__input-flexible-height"
-                aria-label={this.props.t('CollectionCreate.DescriptionARIA')}
-                type="text"
-                id="description"
-                value={description}
-                onChange={this.handleTextChange('description')}
-                placeholder={this.props.t(
-                  'CollectionCreate.DescriptionPlaceholder'
-                )}
-                rows="4"
-              />
-            </p>
-            <Button type="submit" disabled={invalid}>
-              {this.props.t('CollectionCreate.SubmitCollectionCreate')}
-            </Button>
-          </form>
-        </div>
+          </p>
+          <p className="form__field">
+            <label htmlFor="description" className="form__label">
+              {t('CollectionCreate.Description')}
+            </label>
+            <textarea
+              className="form__input form__input-flexible-height"
+              aria-label={t('CollectionCreate.DescriptionARIA')}
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder={t('CollectionCreate.DescriptionPlaceholder')}
+              rows="4"
+            />
+          </p>
+          <Button type="submit" disabled={invalid}>
+            {t('CollectionCreate.SubmitCollectionCreate')}
+          </Button>
+        </form>
       </div>
-    );
-  }
-}
-
-CollectionCreate.propTypes = {
-  user: PropTypes.shape({
-    username: PropTypes.string,
-    authenticated: PropTypes.bool.isRequired
-  }).isRequired,
-  createCollection: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired
+    </div>
+  );
 };
 
-function mapStateToProps(state, ownProps) {
-  return {
-    user: state.user
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}, CollectionsActions), dispatch);
-}
-
-export default withTranslation()(
-  connect(mapStateToProps, mapDispatchToProps)(CollectionCreate)
-);
+export default CollectionCreate;
