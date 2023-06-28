@@ -19,7 +19,7 @@ export const userResponse = {
     autorefresh: false,
     language: 'en-US',
     autocloseBracketsQuotes: true,
-    autocompleteHinter: true
+    autocompleteHinter: false
   },
   apiKeys: [],
   verified: 'verified',
