@@ -209,42 +209,42 @@
     "UploadFileARIA": "Fayl yüklə"
   },
   "FileNode": {
-    "OpenFolderARIA": "Klasör İçeriğini Aç",
-    "CloseFolderARIA": "Klasör İçeriğini Kapat",
-    "ToggleFileOptionsARIA": "Dosya seçeneklerini aç/kapat",
-    "AddFolder": "Klasör Oluştur",
-    "AddFolderARIA": "klasör ekle",
-    "AddFile": "Dosya Oluştur",
-    "AddFileARIA": "dosya ekle",
-    "UploadFile": "Dosya Yükle",
-    "UploadFileARIA": "dosya yükle",
-    "Rename": "Yeniden Adlandır",
+    "OpenFolderARIA": "Qovluğun daxilini aç",
+    "CloseFolderARIA": "Qovluğun daxilini bağla",
+    "ToggleFileOptionsARIA": "Fayl parametrlərini aç/bağla",
+    "AddFolder": "Qovluq yarat",
+    "AddFolderARIA": "Qovluq yarat",
+    "AddFile": "Fayl yarat",
+    "AddFileARIA": "Fayl yarat",
+    "UploadFile": "Fayl yüklə",
+    "UploadFileARIA": "Fayl yüklə",
+    "Rename": "Adını dəyiş",
     "Delete": "Sil"
   },
   "Common": {
-    "Error": "Hata",
-    "ErrorARIA": "Hata",
-    "Save": "Kaydet",
-    "p5logoARIA": "p5.js Logosu",
-    "DeleteConfirmation": "{{name}}'i silmek istediğinize emin misiniz?"
+    "Error": "Xəta",
+    "ErrorARIA": "Xəta",
+    "Save": "Yadda saxla",
+    "p5logoARIA": "p5.js loqosu",
+    "DeleteConfirmation": "{{name}} adlı faylı silmək istədiyinizə əminsiniz?"
   },
   "IDEView": {
-    "SubmitFeedback": "Geribildirim Gönder",
-    "SubmitFeedbackARIA": "geribildirim-gonder",
-    "AddCollectionTitle": "Koleksiyona Ekle",
-    "AddCollectionARIA": "koleksiyona ekle",
+    "SubmitFeedback": "Müraciət göndər",
+    "SubmitFeedbackARIA": "feedback-gonder",
+    "AddCollectionTitle": "Kolleksiyaya əlavə et",
+    "AddCollectionARIA": "Kolleksiyaya əlavə et",
     "ShareTitle": "Paylaş",
     "ShareARIA": "paylaş"
   },
   "NewFileModal": {
-    "Title": "Dosya Oluştur",
-    "CloseButtonARIA": "Yeni Dosya Modalını Kapat",
-    "EnterName": "Lütfen bir isim girin",
-    "InvalidType": "Geçersiz dosya türü. Geçerli uzantılar .js, .css, .json, .xml, .txt, .csv, .tsv, .frag ve .vert'tir."
+    "Title": "Fayl yarat",
+    "CloseButtonARIA": "Pəncərəni bağla",
+    "EnterName": "Xahiş edirik fayl adını daxil edin",
+    "InvalidType": "Dəstəklənməyən fayl formatı. Dəstəklənən fayl formatları: .js, .css, .json, .xml, .txt, .csv, .tsv, .frag, .vert."
   },
   "NewFileForm": {
-    "AddFileSubmit": "Dosya Ekle",
-    "Placeholder": "İsim"
+    "AddFileSubmit": "Fayl əlavə et",
+    "Placeholder": "Adı"
   },
   "NewFolderModal": {
     "Title": "Klasör Oluştur",
