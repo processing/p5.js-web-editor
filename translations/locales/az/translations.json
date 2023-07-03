@@ -174,39 +174,39 @@
     "TableOutputARIA": "aktivdir"
   },
   "KeyboardShortcuts": {
-    "Title": " Klavye Kısayolları",
-    "ShortcutsFollow": "Kod düzenleme klavye kısayolları takip eder",
-    "SublimeText": "Sublime Text kısayolları",
+    "Title": " Klaviatura qısayolları",
+    "ShortcutsFollow": "Kod redaktoru klaviatura qısayollarını izləyir",
+    "SublimeText": "Sublime Text qısayolları",
     "CodeEditing": {
-      "Tidy": "Düzenle",
-      "FindText": "Metin Bul",
-      "FindNextMatch": "Sonraki Eşleşmeyi Bul",
-      "FindPrevMatch": "Önceki Eşleşmeyi Bul",
-      "ReplaceTextMatch": "Metin Eşleşmesini Değiştir",
-      "IndentCodeLeft": "Kodu Sola Yasla",
-      "IndentCodeRight": "Kodu Sağa Yasla",
-      "CommentLine": "Satırı Yorumla",
-      "FindNextTextMatch": "Sonraki Metin Eşleşmesini Bul",
-      "FindPreviousTextMatch": "Önceki Metin Eşleşmesini Bul",
-      "CodeEditing": "Kod Düzenleme",
-      "ColorPicker": "Satır İçi Renk Seçiciyi Göster"
+      "Tidy": "Redaktə",
+      "FindText": "Axtarış",
+      "FindNextMatch": "Növbəti nəticə",
+      "FindPrevMatch": "Əvvəlki nəticə",
+      "ReplaceTextMatch": "Uyğun gələn mətni dəyişdir",
+      "IndentCodeLeft": "Kodu sola tərəf nizamla",
+      "IndentCodeRight": "Kodu sağa tərf nizamla",
+      "CommentLine": "Sətiri şərh et",
+      "FindNextTextMatch": "Növbəti mətn uyğunluğunu",
+      "FindPreviousTextMatch": "Əvvəlki mətn uyğunluğu",
+      "CodeEditing": "Kod redaktoru",
+      "ColorPicker": "Sətir daxilində rəng seçicini göstər"
     },
     "General": {
-      "StartSketch": "Eskizi Başlat",
-      "StopSketch": "Eskizi Durdur",
-      "TurnOnAccessibleOutput": "Erişilebilir Çıktıyı Aç",
-      "TurnOffAccessibleOutput": "Erişilebilir Çıktıyı Kapat"
+      "StartSketch": "Eskizi başla",
+      "StopSketch": "Eskizi dayandır",
+      "TurnOnAccessibleOutput": "Mümkün nəticəni aktivləşdir",
+      "TurnOffAccessibleOutput": "Mümkün nəticəni deaktivləşdir"
     }
   },
   "Sidebar": {
-    "Title": "Eskiz Dosyaları",
-    "ToggleARIA": "Eskiz dosya seçeneklerini aç/kapat",
-    "AddFolder": "Klasör Oluştur",
-    "AddFolderARIA": "klasör ekle",
-    "AddFile": "Dosya Oluştur",
-    "AddFileARIA": "dosya ekle",
-    "UploadFile": "Dosya Yükle",
-    "UploadFileARIA": "dosya yükle"
+    "Title": "Eskiz faylları",
+    "ToggleARIA": "Eskiz fayl parametrlərini aç/bağla",
+    "AddFolder": "Qovluq yarat",
+    "AddFolderARIA": "Qovluq yarat",
+    "AddFile": "Fayl yarat",
+    "AddFileARIA": "Fayl yarat",
+    "UploadFile": "Fayl yüklə",
+    "UploadFileARIA": "Fayl yüklə"
   },
   "FileNode": {
     "OpenFolderARIA": "Klasör İçeriğini Aç",
