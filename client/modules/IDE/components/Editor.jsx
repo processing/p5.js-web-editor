@@ -194,11 +194,12 @@ class Editor extends React.Component {
     });
 
     this._cm.on('keydown', (_cm, e) => {
+      // 70 === f
       if (
         ((metaKey === 'Cmd' && e.metaKey) ||
           (metaKey === 'Ctrl' && e.ctrlKey)) &&
         e.shiftKey &&
-        e.key === 'f'
+        e.key === '70'
       ) {
         e.preventDefault();
         this.tidyCode();
