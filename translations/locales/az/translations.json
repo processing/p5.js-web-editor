@@ -247,11 +247,11 @@
     "Placeholder": "Adı"
   },
   "NewFolderModal": {
-    "Title": "Klasör Oluştur",
-    "CloseButtonARIA": "Yeni Klasör Modalını Kapat",
-    "EnterName": "Lütfen bir isim girin",
-    "EmptyName": "Klasör adı sadece boşluk içeremez",
-    "InvalidExtension": "Klasör adı bir uzantı içeremez"
+    "Title": "Qovluq yarat",
+    "CloseButtonARIA": "Yeni qovluq pəncərəsini yarat",
+    "EnterName": "Xahiş edirik ad daxil edin",
+    "EmptyName": "Qovluq adı sadəcə boş simvoldan ibarət ola bilməz",
+    "InvalidExtension": "Qovluq adı fayl uzantısı ehtiva etməməlidir"
   },
   "NewFolderForm": {
     "AddFolderSubmit": "Klasör Ekle",
