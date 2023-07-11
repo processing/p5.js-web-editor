@@ -11,7 +11,8 @@ const initialState = {
   theme: 'light',
   autorefresh: false,
   language: 'en-US',
-  autocloseBracketsQuotes: true
+  autocloseBracketsQuotes: true,
+  autocompleteHinter: false
 };
 
 const preferences = (state = initialState, action) => {
@@ -41,6 +42,10 @@ const preferences = (state = initialState, action) => {
     case ActionTypes.SET_AUTOCLOSE_BRACKETS_QUOTES:
       return Object.assign({}, state, {
         autocloseBracketsQuotes: action.value
+      });
+    case ActionTypes.SET_AUTOCOMPLETE_HINTER:
+      return Object.assign({}, state, {
+        autocompleteHinter: action.value
       });
     default:
       return state;

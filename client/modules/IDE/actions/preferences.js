@@ -16,7 +16,8 @@ function updatePreferences(formParams, dispatch) {
 }
 
 export function setFontSize(value) {
-  return (dispatch, getState) => { // eslint-disable-line
+  return (dispatch, getState) => {
+    // eslint-disable-line
     dispatch({
       type: ActionTypes.SET_FONT_SIZE,
       value
@@ -62,6 +63,24 @@ export function setAutocloseBracketsQuotes(value) {
       const formParams = {
         preferences: {
           autocloseBracketsQuotes: value
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
+  };
+}
+
+export function setAutocompleteHinter(value) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.SET_AUTOCOMPLETE_HINTER,
+      value
+    });
+    const state = getState();
+    if (state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          autocompleteHinter: value
         }
       };
       updatePreferences(formParams, dispatch);

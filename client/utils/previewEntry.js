@@ -1,5 +1,5 @@
 import loopProtect from 'loop-protect';
-import { Hook, Decode, Encode } from 'console-feed';
+import { Hook, Decode, Encode } from '@nicksrandall/console-feed';
 import StackTrace from 'stacktrace-js';
 import evaluateExpression from './evaluateExpression';
 
