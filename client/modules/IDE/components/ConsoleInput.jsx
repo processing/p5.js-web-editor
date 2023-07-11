@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import CodeMirror from 'codemirror';
-import { Encode } from 'console-feed';
+import { Encode } from '@nicksrandall/console-feed';
 
 import RightArrowIcon from '../../../images/right-arrow.svg';
 import { dispatchMessage, MessageTypes } from '../../../utils/dispatcher';
