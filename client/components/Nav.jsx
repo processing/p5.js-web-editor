@@ -1,11 +1,10 @@
+import { sortBy } from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { Link } from 'react-router';
-import classNames from 'classnames';
 import { withTranslation } from 'react-i18next';
-import { languageKeyToLabel } from '../i18n';
+import { connect } from 'react-redux';
+import { Link, withRouter } from 'react-router';
+import { availableLanguages, languageKeyToLabel } from '../i18n';
 import * as IDEActions from '../modules/IDE/actions/ide';
 import * as toastActions from '../modules/IDE/actions/toast';
 import * as projectActions from '../modules/IDE/actions/project';
@@ -18,84 +17,23 @@ import { logoutUser } from '../modules/User/actions';
 import getConfig from '../utils/getConfig';
 import { metaKeyName, metaKey } from '../utils/metaKey';
 import { getIsUserOwner } from '../modules/IDE/selectors/users';
+import { selectSketchPath } from '../modules/IDE/selectors/project';
 
 import CaretLeftIcon from '../images/left-arrow.svg';
-import TriangleIcon from '../images/down-filled-triangle.svg';
 import LogoIcon from '../images/p5js-logo-small.svg';
+import NavDropdownMenu from './Nav/NavDropdownMenu';
+import NavMenuItem from './Nav/NavMenuItem';
+import NavBar from './Nav/NavBar';
 
 class Nav extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.state = {
-      dropdownOpen: 'none'
-    };
-    this.handleFocus = this.handleFocus.bind(this);
-    this.handleBlur = this.handleBlur.bind(this);
-    this.clearHideTimeout = this.clearHideTimeout.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-    this.handleClickOutside = this.handleClickOutside.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleNew = this.handleNew.bind(this);
     this.handleDuplicate = this.handleDuplicate.bind(this);
     this.handleShare = this.handleShare.bind(this);
     this.handleDownload = this.handleDownload.bind(this);
-    this.handleFind = this.handleFind.bind(this);
-    this.handleAddFile = this.handleAddFile.bind(this);
-    this.handleAddFolder = this.handleAddFolder.bind(this);
-    this.handleRun = this.handleRun.bind(this);
-    this.handleReplace = this.handleReplace.bind(this);
-    this.handleStop = this.handleStop.bind(this);
-    this.handleStartAccessible = this.handleStartAccessible.bind(this);
-    this.handleStopAccessible = this.handleStopAccessible.bind(this);
-    this.handleKeyboardShortcuts = this.handleKeyboardShortcuts.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
-    this.toggleDropdownForFile = this.toggleDropdown.bind(this, 'file');
-    this.handleFocusForFile = this.handleFocus.bind(this, 'file');
-    this.setDropdownForNone = this.setDropdown.bind(this, 'none');
-    this.toggleDropdownForEdit = this.toggleDropdown.bind(this, 'edit');
-    this.handleFocusForEdit = this.handleFocus.bind(this, 'edit');
-    this.toggleDropdownForSketch = this.toggleDropdown.bind(this, 'sketch');
-    this.handleFocusForSketch = this.handleFocus.bind(this, 'sketch');
-    this.toggleDropdownForHelp = this.toggleDropdown.bind(this, 'help');
-    this.handleFocusForHelp = this.handleFocus.bind(this, 'help');
-    this.toggleDropdownForAccount = this.toggleDropdown.bind(this, 'account');
-    this.handleFocusForAccount = this.handleFocus.bind(this, 'account');
-    this.toggleDropdownForLang = this.toggleDropdown.bind(this, 'lang');
-    this.handleFocusForLang = this.handleFocus.bind(this, 'lang');
     this.handleLangSelection = this.handleLangSelection.bind(this);
-
-    this.closeDropDown = this.closeDropDown.bind(this);
-  }
-
-  componentDidMount() {
-    document.addEventListener('mousedown', this.handleClick, false);
-    document.addEventListener('keydown', this.closeDropDown, false);
-  }
-  componentWillUnmount() {
-    document.removeEventListener('mousedown', this.handleClick, false);
-    document.removeEventListener('keydown', this.closeDropDown, false);
-  }
-  setDropdown(dropdown) {
-    this.setState({
-      dropdownOpen: dropdown
-    });
-  }
-
-  closeDropDown(e) {
-    if (e.keyCode === 27) {
-      this.setDropdown('none');
-    }
-  }
-
-  handleClick(e) {
-    if (!this.node) {
-      return;
-    }
-    if (this.node && this.node.contains(e.target)) {
-      return;
-    }
-
-    this.handleClickOutside();
   }
 
   handleNew() {
@@ -109,7 +47,6 @@ class Nav extends React.PureComponent {
       this.props.setToastText('Toast.OpenedNewSketch');
       this.props.newProject();
     }
-    this.setDropdown('none');
   }
 
   handleSave() {
@@ -118,75 +55,21 @@ class Nav extends React.PureComponent {
     } else {
       this.props.showErrorModal('forceAuthentication');
     }
-    this.setDropdown('none');
   }
 
-  handleFind() {
-    this.props.cmController.showFind();
-    this.setDropdown('none');
-  }
-
-  handleReplace() {
-    this.props.cmController.showReplace();
-    this.setDropdown('none');
-  }
-
-  handleAddFile() {
-    this.props.newFile(this.props.rootFile.id);
-    this.setDropdown('none');
-  }
-
-  handleAddFolder() {
-    this.props.newFolder(this.props.rootFile.id);
-    this.setDropdown('none');
-  }
-
-  handleRun() {
-    this.props.startSketch();
-    this.setDropdown('none');
-  }
-
-  handleStop() {
-    this.props.stopSketch();
-    this.setDropdown('none');
-  }
-
-  handleStartAccessible() {
-    this.props.setAllAccessibleOutput(true);
-    this.setDropdown('none');
-  }
-
-  handleStopAccessible() {
-    this.props.setAllAccessibleOutput(false);
-    this.setDropdown('none');
-  }
-
-  handleKeyboardShortcuts() {
-    this.props.showKeyboardShortcutModal();
-    this.setDropdown('none');
+  handleDuplicate() {
+    this.props.cloneProject();
   }
 
   handleLangSelection(event) {
     this.props.setLanguage(event.target.value);
     this.props.showToast(1500);
     this.props.setToastText('Toast.LangChange');
-    this.setDropdown('none');
-  }
-
-  handleLogout() {
-    this.props.logoutUser();
-    this.setDropdown('none');
   }
 
   handleDownload() {
     this.props.autosaveProject();
     projectActions.exportProjectAsZip(this.props.project.id);
-    this.setDropdown('none');
-  }
-
-  handleDuplicate() {
-    this.props.cloneProject();
-    this.setDropdown('none');
   }
 
   handleShare() {
@@ -196,44 +79,9 @@ class Nav extends React.PureComponent {
       this.props.project.name,
       username
     );
-    this.setDropdown('none');
   }
 
-  handleClickOutside() {
-    this.setState({
-      dropdownOpen: 'none'
-    });
-  }
-
-  toggleDropdown(dropdown) {
-    if (this.state.dropdownOpen === 'none') {
-      this.setState({
-        dropdownOpen: dropdown
-      });
-    } else {
-      this.setState({
-        dropdownOpen: 'none'
-      });
-    }
-  }
-
-  handleFocus(dropdown) {
-    this.clearHideTimeout();
-    this.setDropdown(dropdown);
-  }
-
-  clearHideTimeout() {
-    if (this.timer) {
-      clearTimeout(this.timer);
-      this.timer = null;
-    }
-  }
-
-  handleBlur() {
-    this.timer = setTimeout(this.setDropdown.bind(this, 'none'), 10);
-  }
-
-  renderDashboardMenu(navDropdownState) {
+  renderDashboardMenu() {
     return (
       <ul className="nav__items-left">
         <li className="nav__item-logo">
@@ -245,7 +93,7 @@ class Nav extends React.PureComponent {
           />
         </li>
         <li className="nav__item nav__item--no-icon">
-          <Link to="/" className="nav__back-link">
+          <Link to={this.props.editorLink} className="nav__back-link">
             <CaretLeftIcon
               className="nav__back-icon"
               focusable="false"
@@ -260,7 +108,7 @@ class Nav extends React.PureComponent {
     );
   }
 
-  renderProjectMenu(navDropdownState) {
+  renderProjectMenu() {
     const replaceCommand =
       metaKey === 'Ctrl' ? `${metaKeyName}+H` : `${metaKeyName}+⌥+F`;
     return (
@@ -273,496 +121,133 @@ class Nav extends React.PureComponent {
             className="svg__logo"
           />
         </li>
-        <li className={navDropdownState.file}>
-          <button
-            onClick={this.toggleDropdownForFile}
-            onBlur={this.handleBlur}
-            onFocus={this.clearHideTimeout}
-            title="File"
-            onMouseOver={() => {
-              if (this.state.dropdownOpen !== 'none') {
-                this.setDropdown('file');
-              }
-            }}
+        <NavDropdownMenu id="file" title={this.props.t('Nav.File.Title')}>
+          <NavMenuItem onClick={this.handleNew}>
+            {this.props.t('Nav.File.New')}
+          </NavMenuItem>
+          <NavMenuItem
+            hideIf={
+              !getConfig('LOGIN_ENABLED') ||
+              (this.props.project.owner && !this.props.isUserOwner)
+            }
+            onClick={this.handleSave}
           >
-            <span className="nav__item-header">
-              {this.props.t('Nav.File.Title')}
-            </span>
-            <TriangleIcon
-              className="nav__item-header-triangle"
-              focusable="false"
-              aria-hidden="true"
-            />
-          </button>
-          <ul className="nav__dropdown">
-            <li className="nav__dropdown-item">
-              <button
-                onClick={this.handleNew}
-                onFocus={this.handleFocusForFile}
-                onBlur={this.handleBlur}
-              >
-                {this.props.t('Nav.File.New')}
-              </button>
-            </li>
-            {getConfig('LOGIN_ENABLED') &&
-              (!this.props.project.owner || this.props.isUserOwner) && (
-                <li className="nav__dropdown-item">
-                  <button
-                    onClick={this.handleSave}
-                    onFocus={this.handleFocusForFile}
-                    onBlur={this.handleBlur}
-                  >
-                    {this.props.t('Common.Save')}
-                    <span className="nav__keyboard-shortcut">
-                      {metaKeyName}+S
-                    </span>
-                  </button>
-                </li>
-              )}
-            {this.props.project.id && this.props.user.authenticated && (
-              <li className="nav__dropdown-item">
-                <button
-                  onClick={this.handleDuplicate}
-                  onFocus={this.handleFocusForFile}
-                  onBlur={this.handleBlur}
-                >
-                  {this.props.t('Nav.File.Duplicate')}
-                </button>
-              </li>
-            )}
-            {this.props.project.id && (
-              <li className="nav__dropdown-item">
-                <button
-                  onClick={this.handleShare}
-                  onFocus={this.handleFocusForFile}
-                  onBlur={this.handleBlur}
-                >
-                  {this.props.t('Nav.File.Share')}
-                </button>
-              </li>
-            )}
-            {this.props.project.id && (
-              <li className="nav__dropdown-item">
-                <button
-                  onClick={this.handleDownload}
-                  onFocus={this.handleFocusForFile}
-                  onBlur={this.handleBlur}
-                >
-                  {this.props.t('Nav.File.Download')}
-                </button>
-              </li>
-            )}
-            {this.props.user.authenticated && (
-              <li className="nav__dropdown-item">
-                <Link
-                  to={`/${this.props.user.username}/sketches`}
-                  onFocus={this.handleFocusForFile}
-                  onBlur={this.handleBlur}
-                  onClick={this.setDropdownForNone}
-                >
-                  {this.props.t('Nav.File.Open')}
-                </Link>
-              </li>
-            )}
-            {getConfig('UI_COLLECTIONS_ENABLED') &&
-              this.props.user.authenticated &&
-              this.props.project.id && (
-                <li className="nav__dropdown-item">
-                  <Link
-                    to={`/${this.props.user.username}/sketches/${this.props.project.id}/add-to-collection`}
-                    onFocus={this.handleFocusForFile}
-                    onBlur={this.handleBlur}
-                    onClick={this.setDropdownForNone}
-                  >
-                    {this.props.t('Nav.File.AddToCollection')}
-                  </Link>
-                </li>
-              )}
-            {getConfig('EXAMPLES_ENABLED') && (
-              <li className="nav__dropdown-item">
-                <Link
-                  to="/p5/sketches"
-                  onFocus={this.handleFocusForFile}
-                  onBlur={this.handleBlur}
-                  onClick={this.setDropdownForNone}
-                >
-                  {this.props.t('Nav.File.Examples')}
-                </Link>
-              </li>
-            )}
-          </ul>
-        </li>
-        <li className={navDropdownState.edit}>
-          <button
-            onClick={this.toggleDropdownForEdit}
-            onBlur={this.handleBlur}
-            onFocus={this.clearHideTimeout}
-            title="Edit"
-            onMouseOver={() => {
-              if (this.state.dropdownOpen !== 'none') {
-                this.setDropdown('edit');
-              }
-            }}
+            {this.props.t('Common.Save')}
+            <span className="nav__keyboard-shortcut">{metaKeyName}+S</span>
+          </NavMenuItem>
+          <NavMenuItem
+            hideIf={!this.props.project.id || !this.props.user.authenticated}
+            onClick={this.handleDuplicate}
           >
-            <span className="nav__item-header">
-              {this.props.t('Nav.Edit.Title')}
-            </span>
-            <TriangleIcon
-              className="nav__item-header-triangle"
-              focusable="false"
-              aria-hidden="true"
-            />
-          </button>
-          <ul className="nav__dropdown">
-            <li className="nav__dropdown-item">
-              <button
-                onClick={() => {
-                  this.props.cmController.tidyCode();
-                  this.setDropdown('none');
-                }}
-                onFocus={this.handleFocusForEdit}
-                onBlur={this.handleBlur}
-              >
-                {this.props.t('Nav.Edit.TidyCode')}
-                <span className="nav__keyboard-shortcut">
-                  {metaKeyName}+{'\u21E7'}+F
-                </span>
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onClick={this.handleFind}
-                onFocus={this.handleFocusForEdit}
-                onBlur={this.handleBlur}
-              >
-                {this.props.t('Nav.Edit.Find')}
-                <span className="nav__keyboard-shortcut">{metaKeyName}+F</span>
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onClick={this.handleReplace}
-                onFocus={this.handleFocusForEdit}
-                onBlur={this.handleBlur}
-              >
-                {this.props.t('Nav.Edit.Replace')}
-                <span className="nav__keyboard-shortcut">{replaceCommand}</span>
-              </button>
-            </li>
-          </ul>
-        </li>
-        <li className={navDropdownState.sketch}>
-          <button
-            onClick={this.toggleDropdownForSketch}
-            onBlur={this.handleBlur}
-            onFocus={this.clearHideTimeout}
-            title="Sketch"
-            onMouseOver={() => {
-              if (this.state.dropdownOpen !== 'none') {
-                this.setDropdown('sketch');
-              }
-            }}
+            {this.props.t('Nav.File.Duplicate')}
+          </NavMenuItem>
+          <NavMenuItem
+            hideIf={!this.props.project.id}
+            onClick={this.handleShare}
           >
-            <span className="nav__item-header">
-              {this.props.t('Nav.Sketch.Title')}
-            </span>
-            <TriangleIcon
-              className="nav__item-header-triangle"
-              focusable="false"
-              aria-hidden="true"
-            />
-          </button>
-          <ul className="nav__dropdown">
-            <li className="nav__dropdown-item">
-              <button
-                onClick={this.handleAddFile}
-                onFocus={this.handleFocusForSketch}
-                onBlur={this.handleBlur}
-              >
-                {this.props.t('Nav.Sketch.AddFile')}
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onClick={this.handleAddFolder}
-                onFocus={this.handleFocusForSketch}
-                onBlur={this.handleBlur}
-              >
-                {this.props.t('Nav.Sketch.AddFolder')}
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onClick={this.handleRun}
-                onFocus={this.handleFocusForSketch}
-                onBlur={this.handleBlur}
-              >
-                {this.props.t('Nav.Sketch.Run')}
-                <span className="nav__keyboard-shortcut">
-                  {metaKeyName}+Enter
-                </span>
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onClick={this.handleStop}
-                onFocus={this.handleFocusForSketch}
-                onBlur={this.handleBlur}
-              >
-                {this.props.t('Nav.Sketch.Stop')}
-                <span className="nav__keyboard-shortcut">
-                  {'\u21E7'}+{metaKeyName}+Enter
-                </span>
-              </button>
-            </li>
-            {/* <li className="nav__dropdown-item">
-              <button
-                onClick={this.handleStartAccessible}
-                onFocus={this.handleFocusForSketch}
-                onBlur={this.handleBlur}
-              >
-                Start Accessible
-                <span className="nav__keyboard-shortcut">{'\u21E7'}+{metaKeyName}+1</span>
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onClick={this.handleStopAccessible}
-                onFocus={this.handleFocusForSketch}
-                onBlur={this.handleBlur}
-              >
-                Stop Accessible
-                <span className="nav__keyboard-shortcut">{'\u21E7'}+{metaKeyName}+2</span>
-              </button>
-            </li> */}
-          </ul>
-        </li>
-        <li className={navDropdownState.help}>
-          <button
-            onClick={this.toggleDropdownForHelp}
-            onBlur={this.handleBlur}
-            onFocus={this.clearHideTimeout}
-            title="Help"
-            onMouseOver={() => {
-              if (this.state.dropdownOpen !== 'none') {
-                this.setDropdown('help');
-              }
-            }}
+            {this.props.t('Nav.File.Share')}
+          </NavMenuItem>
+          <NavMenuItem
+            hideIf={!this.props.project.id}
+            onClick={this.handleDownload}
           >
-            <span className="nav__item-header">
-              {this.props.t('Nav.Help.Title')}
+            {this.props.t('Nav.File.Download')}
+          </NavMenuItem>
+          <NavMenuItem
+            hideIf={!this.props.user.authenticated}
+            href={`/${this.props.user.username}/sketches`}
+          >
+            {this.props.t('Nav.File.Open')}
+          </NavMenuItem>
+          <NavMenuItem
+            hideIf={
+              !getConfig('UI_COLLECTIONS_ENABLED') ||
+              !this.props.user.authenticated ||
+              !this.props.project.id
+            }
+            href={`/${this.props.user.username}/sketches/${this.props.project.id}/add-to-collection`}
+          >
+            {this.props.t('Nav.File.AddToCollection')}
+          </NavMenuItem>
+          <NavMenuItem
+            hideIf={!getConfig('EXAMPLES_ENABLED')}
+            href="/p5/sketches"
+          >
+            {this.props.t('Nav.File.Examples')}
+          </NavMenuItem>
+        </NavDropdownMenu>
+        <NavDropdownMenu id="edit" title={this.props.t('Nav.Edit.Title')}>
+          <NavMenuItem onClick={this.props.cmController.tidyCode}>
+            {this.props.t('Nav.Edit.TidyCode')}
+            <span className="nav__keyboard-shortcut">
+              {metaKeyName}+{'\u21E7'}+F
             </span>
-            <TriangleIcon
-              className="nav__item-header-triangle"
-              focusable="false"
-              aria-hidden="true"
-            />
-          </button>
-          <ul className="nav__dropdown">
-            <li className="nav__dropdown-item">
-              <button
-                onFocus={this.handleFocusForHelp}
-                onBlur={this.handleBlur}
-                onClick={this.handleKeyboardShortcuts}
-              >
-                {this.props.t('Nav.Help.KeyboardShortcuts')}
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <a
-                href="https://p5js.org/reference/"
-                target="_blank"
-                rel="noopener noreferrer"
-                onFocus={this.handleFocusForHelp}
-                onBlur={this.handleBlur}
-                onClick={this.setDropdownForNone}
-              >
-                {this.props.t('Nav.Help.Reference')}
-              </a>
-            </li>
-            <li className="nav__dropdown-item">
-              <Link
-                to="/about"
-                onFocus={this.handleFocusForHelp}
-                onBlur={this.handleBlur}
-                onClick={this.setDropdownForNone}
-              >
-                {this.props.t('Nav.Help.About')}
-              </Link>
-            </li>
-          </ul>
-        </li>
+          </NavMenuItem>
+          <NavMenuItem onClick={this.props.cmController.showFind}>
+            {this.props.t('Nav.Edit.Find')}
+            <span className="nav__keyboard-shortcut">{metaKeyName}+F</span>
+          </NavMenuItem>
+          <NavMenuItem onClick={this.props.cmController.showReplace}>
+            {this.props.t('Nav.Edit.Replace')}
+            <span className="nav__keyboard-shortcut">{replaceCommand}</span>
+          </NavMenuItem>
+        </NavDropdownMenu>
+        <NavDropdownMenu id="sketch" title={this.props.t('Nav.Sketch.Title')}>
+          <NavMenuItem
+            onClick={() => this.props.newFile(this.props.rootFile.id)}
+          >
+            {this.props.t('Nav.Sketch.AddFile')}
+          </NavMenuItem>
+          <NavMenuItem
+            onClick={() => this.props.newFolder(this.props.rootFile.id)}
+          >
+            {this.props.t('Nav.Sketch.AddFolder')}
+          </NavMenuItem>
+          <NavMenuItem onClick={this.props.startSketch}>
+            {this.props.t('Nav.Sketch.Run')}
+            <span className="nav__keyboard-shortcut">{metaKeyName}+Enter</span>
+          </NavMenuItem>
+          <NavMenuItem onClick={this.props.stopSketch}>
+            {this.props.t('Nav.Sketch.Stop')}
+            <span className="nav__keyboard-shortcut">
+              {'\u21E7'}+{metaKeyName}+Enter
+            </span>
+          </NavMenuItem>
+        </NavDropdownMenu>
+        <NavDropdownMenu id="help" title={this.props.t('Nav.Help.Title')}>
+          <NavMenuItem onClick={this.props.showKeyboardShortcutModal}>
+            {this.props.t('Nav.Help.KeyboardShortcuts')}
+          </NavMenuItem>
+          <NavMenuItem href="https://p5js.org/reference/">
+            {this.props.t('Nav.Help.Reference')}
+          </NavMenuItem>
+          <NavMenuItem href="/about">
+            {this.props.t('Nav.Help.About')}
+          </NavMenuItem>
+        </NavDropdownMenu>
       </ul>
     );
   }
 
-  renderLanguageMenu(navDropdownState) {
+  renderLanguageMenu() {
     return (
-      <React.Fragment>
-        <li className={navDropdownState.lang}>
-          <button
-            onClick={this.toggleDropdownForLang}
-            onBlur={this.handleBlur}
-            onFocus={this.clearHideTimeout}
-            title="Language"
-            onMouseOver={() => {
-              if (this.state.dropdownOpen !== 'none') {
-                this.setDropdown('lang');
-              }
-            }}
-          >
-            <span className="nav__item-header">
-              {' '}
-              {languageKeyToLabel(this.props.language)}
-            </span>
-            <TriangleIcon
-              className="nav__item-header-triangle"
-              focusable="false"
-              aria-hidden="true"
-            />
-          </button>
-          <ul className="nav__dropdown">
-            <li className="nav__dropdown-item">
-              <button
-                onFocus={this.handleFocusForLang}
-                onBlur={this.handleBlur}
-                value="de"
-                onClick={(e) => this.handleLangSelection(e)}
-              >
-                Deutsch
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onFocus={this.handleFocusForLang}
-                onBlur={this.handleBlur}
-                value="en-US"
-                onClick={(e) => this.handleLangSelection(e)}
-              >
-                English
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onFocus={this.handleFocusForLang}
-                onBlur={this.handleBlur}
-                value="es-419"
-                onClick={(e) => this.handleLangSelection(e)}
-              >
-                Español
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onFocus={this.handleFocusForLang}
-                onBlur={this.handleBlur}
-                value="fr-CA"
-                onClick={(e) => this.handleLangSelection(e)}
-              >
-                Français
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onFocus={this.handleFocusForLang}
-                onBlur={this.handleBlur}
-                value="hi"
-                onClick={(e) => this.handleLangSelection(e)}
-              >
-                हिन्दी
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onFocus={this.handleFocusForLang}
-                onBlur={this.handleBlur}
-                value="ko"
-                onClick={(e) => this.handleLangSelection(e)}
-              >
-                한국어
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onFocus={this.handleFocusForLang}
-                onBlur={this.handleBlur}
-                value="it"
-                onClick={(e) => this.handleLangSelection(e)}
-              >
-                Italiano
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onFocus={this.handleFocusForLang}
-                onBlur={this.handleBlur}
-                value="ja"
-                onClick={(e) => this.handleLangSelection(e)}
-              >
-                日本語
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onFocus={this.handleFocusForLang}
-                onBlur={this.handleBlur}
-                value="pt-BR"
-                onClick={(e) => this.handleLangSelection(e)}
-              >
-                Português
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onFocus={this.handleFocusForLang}
-                onBlur={this.handleBlur}
-                value="sv"
-                onClick={(e) => this.handleLangSelection(e)}
-              >
-                Svenska
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onFocus={this.handleFocusForLang}
-                onBlur={this.handleBlur}
-                value="uk-UA"
-                onClick={(e) => this.handleLangSelection(e)}
-              >
-                Українська
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onFocus={this.handleFocusForLang}
-                onBlur={this.handleBlur}
-                value="zh-CN"
-                onClick={(e) => this.handleLangSelection(e)}
-              >
-                简体中文
-              </button>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onFocus={this.handleFocusForLang}
-                onBlur={this.handleBlur}
-                value="zh-TW"
-                onClick={(e) => this.handleLangSelection(e)}
-              >
-                正體中文
-              </button>
-            </li>
-          </ul>
-        </li>
-      </React.Fragment>
+      <NavDropdownMenu
+        id="lang"
+        title={languageKeyToLabel(this.props.language)}
+      >
+        {sortBy(availableLanguages).map((key) => (
+          <NavMenuItem key={key} value={key} onClick={this.handleLangSelection}>
+            {languageKeyToLabel(key)}
+          </NavMenuItem>
+        ))}
+      </NavDropdownMenu>
     );
   }
 
-  renderUnauthenticatedUserMenu(navDropdownState) {
+  renderUnauthenticatedUserMenu() {
     return (
       <ul className="nav__items-right" title="user-menu">
-        {getConfig('TRANSLATIONS_ENABLED') &&
-          this.renderLanguageMenu(navDropdownState)}
+        {getConfig('TRANSLATIONS_ENABLED') && this.renderLanguageMenu()}
         <li className="nav__item">
           <Link to="/login" className="nav__auth-button">
             <span className="nav__item-header" title="Login">
@@ -782,154 +267,70 @@ class Nav extends React.PureComponent {
     );
   }
 
-  renderAuthenticatedUserMenu(navDropdownState) {
+  renderAuthenticatedUserMenu() {
     return (
       <ul className="nav__items-right" title="user-menu">
-        {getConfig('TRANSLATIONS_ENABLED') &&
-          this.renderLanguageMenu(navDropdownState)}
-        <li className={navDropdownState.account}>
-          <button
-            className="nav__item-header"
-            onClick={this.toggleDropdownForAccount}
-            onBlur={this.handleBlur}
-            onFocus={this.clearHideTimeout}
-            onMouseOver={() => {
-              if (this.state.dropdownOpen !== 'none') {
-                this.setDropdown('account');
-              }
-            }}
-          >
+        {getConfig('TRANSLATIONS_ENABLED') && this.renderLanguageMenu()}
+        <NavDropdownMenu
+          id="account"
+          title={
             <span>
               {this.props.t('Nav.Auth.Hello')}, {this.props.user.username}!
             </span>
-            <TriangleIcon
-              className="nav__item-header-triangle"
-              focusable="false"
-              aria-hidden="true"
-            />
-          </button>
-          <ul className="nav__dropdown">
-            <li className="nav__dropdown-item">
-              <Link
-                to={`/${this.props.user.username}/sketches`}
-                onFocus={this.handleFocusForAccount}
-                onBlur={this.handleBlur}
-                onClick={this.setDropdownForNone}
-              >
-                {this.props.t('Nav.Auth.MySketches')}
-              </Link>
-            </li>
-            {getConfig('UI_COLLECTIONS_ENABLED') && (
-              <li className="nav__dropdown-item">
-                <Link
-                  to={`/${this.props.user.username}/collections`}
-                  onFocus={this.handleFocusForAccount}
-                  onBlur={this.handleBlur}
-                  onClick={this.setDropdownForNone}
-                >
-                  {this.props.t('Nav.Auth.MyCollections')}
-                </Link>
-              </li>
-            )}
-            <li className="nav__dropdown-item">
-              <Link
-                to={`/${this.props.user.username}/assets`}
-                onFocus={this.handleFocusForAccount}
-                onBlur={this.handleBlur}
-                onClick={this.setDropdownForNone}
-              >
-                {this.props.t('Nav.Auth.MyAssets')}
-              </Link>
-            </li>
-            <li className="nav__dropdown-item">
-              <Link
-                to="/account"
-                onFocus={this.handleFocusForAccount}
-                onBlur={this.handleBlur}
-                onClick={this.setDropdownForNone}
-              >
-                {this.props.t('Preferences.Settings')}
-              </Link>
-            </li>
-            <li className="nav__dropdown-item">
-              <button
-                onClick={this.handleLogout}
-                onFocus={this.handleFocusForAccount}
-                onBlur={this.handleBlur}
-              >
-                {this.props.t('Nav.Auth.LogOut')}
-              </button>
-            </li>
-          </ul>
-        </li>
+          }
+        >
+          <NavMenuItem href={`/${this.props.user.username}/sketches`}>
+            {this.props.t('Nav.Auth.MySketches')}
+          </NavMenuItem>
+          <NavMenuItem
+            href={`/${this.props.user.username}/collections`}
+            hideIf={!getConfig('UI_COLLECTIONS_ENABLED')}
+          >
+            {this.props.t('Nav.Auth.MyCollections')}
+          </NavMenuItem>
+          <NavMenuItem href={`/${this.props.user.username}/assets`}>
+            {this.props.t('Nav.Auth.MyAssets')}
+          </NavMenuItem>
+          <NavMenuItem href="/account">
+            {this.props.t('Preferences.Settings')}
+          </NavMenuItem>
+          <NavMenuItem onClick={this.props.logoutUser}>
+            {this.props.t('Nav.Auth.LogOut')}
+          </NavMenuItem>
+        </NavDropdownMenu>
       </ul>
     );
   }
 
-  renderUserMenu(navDropdownState) {
+  renderUserMenu() {
     const isLoginEnabled = getConfig('LOGIN_ENABLED');
     const isAuthenticated = this.props.user.authenticated;
 
     if (isLoginEnabled && isAuthenticated) {
-      return this.renderAuthenticatedUserMenu(navDropdownState);
+      return this.renderAuthenticatedUserMenu();
     } else if (isLoginEnabled && !isAuthenticated) {
-      return this.renderUnauthenticatedUserMenu(navDropdownState);
+      return this.renderUnauthenticatedUserMenu();
     }
 
     return null;
   }
 
-  renderLeftLayout(navDropdownState) {
+  renderLeftLayout() {
     switch (this.props.layout) {
       case 'dashboard':
-        return this.renderDashboardMenu(navDropdownState);
+        return this.renderDashboardMenu();
       case 'project':
       default:
-        return this.renderProjectMenu(navDropdownState);
+        return this.renderProjectMenu();
     }
   }
 
   render() {
-    const navDropdownState = {
-      file: classNames({
-        nav__item: true,
-        'nav__item--open': this.state.dropdownOpen === 'file'
-      }),
-      edit: classNames({
-        nav__item: true,
-        'nav__item--open': this.state.dropdownOpen === 'edit'
-      }),
-      sketch: classNames({
-        nav__item: true,
-        'nav__item--open': this.state.dropdownOpen === 'sketch'
-      }),
-      help: classNames({
-        nav__item: true,
-        'nav__item--open': this.state.dropdownOpen === 'help'
-      }),
-      account: classNames({
-        nav__item: true,
-        'nav__item--open': this.state.dropdownOpen === 'account'
-      }),
-      lang: classNames({
-        nav__item: true,
-        'nav__item--open': this.state.dropdownOpen === 'lang'
-      })
-    };
-
     return (
-      <header>
-        <nav
-          className="nav"
-          title="main-navigation"
-          ref={(node) => {
-            this.node = node;
-          }}
-        >
-          {this.renderLeftLayout(navDropdownState)}
-          {this.renderUserMenu(navDropdownState)}
-        </nav>
-      </header>
+      <NavBar>
+        {this.renderLeftLayout()}
+        {this.renderUserMenu()}
+      </NavBar>
     );
   }
 }
@@ -967,7 +368,6 @@ Nav.propTypes = {
   }),
   startSketch: PropTypes.func.isRequired,
   stopSketch: PropTypes.func.isRequired,
-  setAllAccessibleOutput: PropTypes.func.isRequired,
   newFile: PropTypes.func.isRequired,
   newFolder: PropTypes.func.isRequired,
   layout: PropTypes.oneOf(['dashboard', 'project']),
@@ -980,7 +380,8 @@ Nav.propTypes = {
   t: PropTypes.func.isRequired,
   setLanguage: PropTypes.func.isRequired,
   language: PropTypes.string.isRequired,
-  isUserOwner: PropTypes.bool.isRequired
+  isUserOwner: PropTypes.bool.isRequired,
+  editorLink: PropTypes.string
 };
 
 Nav.defaultProps = {
@@ -993,7 +394,8 @@ Nav.defaultProps = {
   warnIfUnsavedChanges: undefined,
   params: {
     username: undefined
-  }
+  },
+  editorLink: '/'
 };
 
 function mapStateToProps(state) {
@@ -1003,7 +405,8 @@ function mapStateToProps(state) {
     unsavedChanges: state.ide.unsavedChanges,
     rootFile: state.files.filter((file) => file.name === 'root')[0],
     language: state.preferences.language,
-    isUserOwner: getIsUserOwner(state)
+    isUserOwner: getIsUserOwner(state),
+    editorLink: selectSketchPath(state)
   };
 }
 

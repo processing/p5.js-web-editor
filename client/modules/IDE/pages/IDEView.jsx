@@ -278,6 +278,8 @@ class IDEView extends React.Component {
                 this.props.preferences.autocloseBracketsQuotes
               }
               setAutocloseBracketsQuotes={this.props.setAutocloseBracketsQuotes}
+              autocompleteHinter={this.props.preferences.autocompleteHinter}
+              setAutocompleteHinter={this.props.setAutocompleteHinter}
             />
           </Overlay>
         )}
@@ -368,12 +370,8 @@ class IDEView extends React.Component {
           </SplitPane>
         </main>
         {this.props.ide.modalIsVisible && <NewFileModal />}
-        {this.props.ide.newFolderModalVisible && (
-          <NewFolderModal closeModal={this.props.closeNewFolderModal} />
-        )}
-        {this.props.ide.uploadFileModalVisible && (
-          <UploadFileModal closeModal={this.props.closeUploadFileModal} />
-        )}
+        {this.props.ide.newFolderModalVisible && <NewFolderModal />}
+        {this.props.ide.uploadFileModalVisible && <UploadFileModal />}
         {this.props.location.pathname === '/about' && (
           <Overlay
             title={this.props.t('About.Title')}
@@ -504,10 +502,12 @@ IDEView.propTypes = {
     theme: PropTypes.string.isRequired,
     autorefresh: PropTypes.bool.isRequired,
     language: PropTypes.string.isRequired,
-    autocloseBracketsQuotes: PropTypes.bool.isRequired
+    autocloseBracketsQuotes: PropTypes.bool.isRequired,
+    autocompleteHinter: PropTypes.bool.isRequired
   }).isRequired,
   closePreferences: PropTypes.func.isRequired,
   setAutocloseBracketsQuotes: PropTypes.func.isRequired,
+  setAutocompleteHinter: PropTypes.func.isRequired,
   setFontSize: PropTypes.func.isRequired,
   setAutosave: PropTypes.func.isRequired,
   setLineNumbers: PropTypes.func.isRequired,

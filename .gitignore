@@ -20,3 +20,5 @@ terraform/.terraform/
 
 storybook-static
 duplicates.json
+
+coverage
