@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { Decode } from '@nicksrandall/console-feed';
+import { Decode } from 'console-feed';
 import { dispatchConsoleEvent } from '../actions/console';
 import { stopSketch, expandConsole } from '../actions/ide';
 

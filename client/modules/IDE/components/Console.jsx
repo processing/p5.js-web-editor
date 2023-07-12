@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 
 import { useSelector, useDispatch } from 'react-redux';
 import classNames from 'classnames';
-import { Console as ConsoleFeed } from '@nicksrandall/console-feed';
+import { Console as ConsoleFeed } from 'console-feed';
 import warnLightUrl from '../../../images/console-warn-light.svg?byUrl';
 import warnDarkUrl from '../../../images/console-warn-dark.svg?byUrl';
 import warnContrastUrl from '../../../images/console-warn-contrast.svg?byUrl';
