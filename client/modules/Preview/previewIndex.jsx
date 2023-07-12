@@ -8,9 +8,10 @@ import {
   MessageTypes,
   dispatchMessage
 } from '../../utils/dispatcher';
-import { filesReducer, initialState, setFiles } from './filesReducer';
+import { filesReducer, setFiles } from './filesReducer';
 import EmbedFrame from './EmbedFrame';
 import getConfig from '../../utils/getConfig';
+import { initialState } from '../IDE/reducers/files';
 
 const GlobalStyle = createGlobalStyle`
   body {
