@@ -159,6 +159,7 @@ class Editor extends React.Component {
       [`${metaKey}-Enter`]: () => null,
       [`Shift-${metaKey}-Enter`]: () => null,
       [`${metaKey}-F`]: 'findPersistent',
+      [`Shift-${metaKey}-F`]: this.tidyCode,
       [`${metaKey}-G`]: 'findPersistentNext',
       [`Shift-${metaKey}-G`]: 'findPersistentPrev',
       [replaceCommand]: 'replace',
@@ -194,16 +195,6 @@ class Editor extends React.Component {
     });
 
     this._cm.on('keydown', (_cm, e) => {
-      if (
-        ((metaKey === 'Cmd' && e.metaKey) ||
-          (metaKey === 'Ctrl' && e.ctrlKey)) &&
-        e.shiftKey &&
-        e.key === 'f'
-      ) {
-        e.preventDefault();
-        this.tidyCode();
-      }
-
       // Show hint
       const mode = this._cm.getOption('mode');
       if (/^[a-z]$/i.test(e.key) && (mode === 'css' || mode === 'javascript')) {
