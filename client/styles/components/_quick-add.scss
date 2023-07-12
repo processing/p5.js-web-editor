@@ -6,7 +6,7 @@
 
 .quick-add {
   width: auto;
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 100%;
   @include themify() {
     border: 1px solid getThemifyVariable('modal-border-color');
