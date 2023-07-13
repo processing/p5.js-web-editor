@@ -74,8 +74,9 @@ function AccountForm() {
                 <input
                   className="form__input"
                   aria-label={t('AccountForm.EmailARIA')}
-                  type="text"
+                  type="email"
                   id="email"
+                  autoComplete="email"
                   {...field.input}
                 />
                 {field.meta.touched && field.meta.error && (
@@ -117,6 +118,7 @@ function AccountForm() {
                   aria-label={t('AccountForm.UserNameARIA')}
                   type="text"
                   id="username"
+                  autoComplete="username"
                   {...field.input}
                 />
                 {field.meta.touched && field.meta.error && (
@@ -136,6 +138,7 @@ function AccountForm() {
                   aria-label={t('AccountForm.CurrentPasswordARIA')}
                   type="password"
                   id="currentPassword"
+                  autoComplete="current-password"
                   {...field.input}
                 />
                 {field.meta.touched && field.meta.error && (
@@ -155,6 +158,7 @@ function AccountForm() {
                   aria-label={t('AccountForm.NewPasswordARIA')}
                   type="password"
                   id="newPassword"
+                  autoComplete="new-password"
                   {...field.input}
                 />
                 {field.meta.touched && field.meta.error && (
