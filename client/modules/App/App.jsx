@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import getConfig from '../../utils/getConfig';
 import DevTools from './components/DevTools';
 import { setPreviousPath } from '../IDE/actions/ide';
@@ -87,4 +88,4 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = { setPreviousPath, setLanguage };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
