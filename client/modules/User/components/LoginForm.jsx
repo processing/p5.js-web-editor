@@ -39,6 +39,7 @@ function LoginForm() {
                   aria-label={t('LoginForm.UsernameOrEmailARIA')}
                   type="text"
                   id="email"
+                  autoComplete="username"
                   {...field.input}
                 />
                 {field.meta.touched && field.meta.error && (
@@ -58,6 +59,7 @@ function LoginForm() {
                   aria-label={t('LoginForm.PasswordARIA')}
                   type="password"
                   id="password"
+                  autoComplete="current-password"
                   {...field.input}
                 />
                 {field.meta.touched && field.meta.error && (
