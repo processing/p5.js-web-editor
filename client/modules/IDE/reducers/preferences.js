@@ -12,7 +12,7 @@ const initialState = {
   autorefresh: false,
   language: 'en-US',
   autocloseBracketsQuotes: true,
-  autocompleteHinter: true
+  autocompleteHinter: false
 };
 
 const preferences = (state = initialState, action) => {

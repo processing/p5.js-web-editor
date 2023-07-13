@@ -48,7 +48,7 @@ function AccountView({ location }) {
   const { t } = useTranslation();
 
   const queryParams = parse(location.search);
-  const showError = !!queryParams.error;
+  const showError = !!queryParams.eryror;
   const errorType = queryParams.error;
   const accessTokensUIEnabled = window.process.env.UI_ACCESS_TOKEN_ENABLED;
 

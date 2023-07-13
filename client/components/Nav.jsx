@@ -30,6 +30,7 @@ class Nav extends React.PureComponent {
     super(props);
     this.handleSave = this.handleSave.bind(this);
     this.handleNew = this.handleNew.bind(this);
+    this.handleDuplicate = this.handleDuplicate.bind(this);
     this.handleShare = this.handleShare.bind(this);
     this.handleDownload = this.handleDownload.bind(this);
     this.handleLangSelection = this.handleLangSelection.bind(this);
@@ -54,6 +55,10 @@ class Nav extends React.PureComponent {
     } else {
       this.props.showErrorModal('forceAuthentication');
     }
+  }
+
+  handleDuplicate() {
+    this.props.cloneProject();
   }
 
   handleLangSelection(event) {
@@ -132,7 +137,7 @@ class Nav extends React.PureComponent {
           </NavMenuItem>
           <NavMenuItem
             hideIf={!this.props.project.id || !this.props.user.authenticated}
-            onClick={this.props.cloneProject}
+            onClick={this.handleDuplicate}
           >
             {this.props.t('Nav.File.Duplicate')}
           </NavMenuItem>
