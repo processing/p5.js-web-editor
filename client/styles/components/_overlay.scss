@@ -15,6 +15,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .overlay__body {
@@ -23,7 +24,7 @@
   flex-wrap: wrap;
   flex-flow: column;
   max-height: 80%;
-  max-width: 65%;
+  max-width: 90%;
   position: relative;
   padding-bottom: #{25 / $base-font-size}rem;
 }
