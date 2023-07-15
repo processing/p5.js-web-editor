@@ -1,8 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import Screen from '../../components/mobile/MobileScreen';
@@ -178,10 +177,10 @@ const NavItem = styled.li`
 const renderPanel = (name, props) =>
   ((Component) => Component && <Component {...props} mobile />)(Panels[name]);
 
-const MobileDashboard = ({ params, location }) => {
+const MobileDashboard = () => {
   const user = useSelector((state) => state.user);
-  const { username: paramsUsername } = params;
-  const { pathname } = location;
+  const { username: paramsUsername } = useParams();
+  const { pathname } = useLocation();
   const { t } = useTranslation();
 
   const Tabs = Object.keys(Panels);
@@ -253,14 +252,4 @@ const MobileDashboard = ({ params, location }) => {
   );
 };
 
-MobileDashboard.propTypes = {
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired
-  }).isRequired,
-  params: PropTypes.shape({
-    username: PropTypes.string.isRequired
-  })
-};
-MobileDashboard.defaultProps = { params: {} };
-
-export default withRouter(MobileDashboard);
+export default MobileDashboard;
