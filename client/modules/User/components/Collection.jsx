@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
@@ -9,6 +9,7 @@ import classNames from 'classnames';
 
 import Button from '../../../common/Button';
 import { DropdownArrowIcon } from '../../../common/icons';
+import useModalClose from '../../../common/useModalClose';
 import * as ProjectActions from '../../IDE/actions/project';
 import * as ProjectsActions from '../../IDE/actions/projects';
 import * as CollectionsActions from '../../IDE/actions/collections';
@@ -30,30 +31,12 @@ import RemoveIcon from '../../../images/close.svg';
 
 const ShareURL = ({ value }) => {
   const [showURL, setShowURL] = useState(false);
-  const node = useRef();
   const { t } = useTranslation();
-
-  const handleClickOutside = (e) => {
-    if (node.current.contains(e.target)) {
-      return;
-    }
-    setShowURL(false);
-  };
-
-  useEffect(() => {
-    if (showURL) {
-      document.addEventListener('mousedown', handleClickOutside);
-    } else {
-      document.removeEventListener('mousedown', handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [showURL]);
+  const close = useCallback(() => setShowURL(false), [setShowURL]);
+  const ref = useModalClose(close);
 
   return (
-    <div className="collection-share" ref={node}>
+    <div className="collection-share" ref={ref}>
       <Button
         onClick={() => setShowURL(!showURL)}
         iconAfter={<DropdownArrowIcon />}
