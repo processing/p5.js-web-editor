@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import getConfig from '../../utils/getConfig';
 import DevTools from './components/DevTools';
 import { setPreviousPath } from '../IDE/actions/ide';
@@ -14,51 +14,50 @@ function hideCookieConsent(pathname) {
   return false;
 }
 
-class App extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-    this.state = { isMounted: false };
-  }
+// TODO: get location from `useLocation` after upgrading react-router to v5.
+const App = ({ children, location }) => {
+  const dispatch = useDispatch();
 
-  componentDidMount() {
-    this.setState({ isMounted: true }); // eslint-disable-line react/no-did-mount-set-state
-    document.body.className = this.props.theme;
-  }
+  const theme = useSelector((state) => state.preferences.theme);
+  useEffect(() => {
+    document.body.className = theme;
+  }, [theme]);
 
-  componentWillReceiveProps(nextProps) {
-    const locationWillChange = nextProps.location !== this.props.location;
-    const shouldSkipRemembering =
-      nextProps.location.state &&
-      nextProps.location.state.skipSavingPath === true;
+  // TODO: this is only needed for the initial load and would be better handled elsewhere - Linda
+  const language = useSelector((state) => state.preferences.language);
+  useEffect(() => {
+    dispatch(setLanguage(language, { persistPreference: false }));
+  }, [language]);
 
-    if (locationWillChange && !shouldSkipRemembering) {
-      this.props.setPreviousPath(this.props.location.pathname);
+  // TODO: do we actually need this? - Linda
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => setIsMounted(true), []);
+
+  const previousLocationRef = useRef(location);
+  useEffect(() => {
+    const prevLocation = previousLocationRef.current;
+    const locationChanged =
+      prevLocation && prevLocation.pathname !== location.pathname;
+    const shouldSkipRemembering = location.state?.skipSavingPath === true;
+
+    if (locationChanged && !shouldSkipRemembering) {
+      dispatch(setPreviousPath(location.pathname));
     }
+    previousLocationRef.current = location;
+  }, [location]);
 
-    if (this.props.language !== nextProps.language) {
-      this.props.setLanguage(nextProps.language, { persistPreference: false });
-    }
-  }
+  const hide = hideCookieConsent(location.pathname);
 
-  componentDidUpdate(prevProps) {
-    if (this.props.theme !== prevProps.theme) {
-      document.body.className = this.props.theme;
-    }
-  }
-
-  render() {
-    const hide = hideCookieConsent(this.props.location.pathname);
-    return (
-      <div className="app">
-        <CookieConsent hide={hide} />
-        {this.state.isMounted &&
-          !window.devToolsExtension &&
-          getConfig('NODE_ENV') === 'development' && <DevTools />}
-        {this.props.children}
-      </div>
-    );
-  }
-}
+  return (
+    <div className="app">
+      <CookieConsent hide={hide} />
+      {isMounted &&
+        !window.devToolsExtension &&
+        getConfig('NODE_ENV') === 'development' && <DevTools />}
+      {children}
+    </div>
+  );
+};
 
 App.propTypes = {
   children: PropTypes.element,
@@ -67,24 +66,11 @@ App.propTypes = {
     state: PropTypes.shape({
       skipSavingPath: PropTypes.bool
     })
-  }).isRequired,
-  setPreviousPath: PropTypes.func.isRequired,
-  setLanguage: PropTypes.func.isRequired,
-  language: PropTypes.string,
-  theme: PropTypes.string
+  }).isRequired
 };
 
 App.defaultProps = {
-  children: null,
-  language: null,
-  theme: 'light'
+  children: null
 };
 
-const mapStateToProps = (state) => ({
-  theme: state.preferences.theme,
-  language: state.preferences.language
-});
-
-const mapDispatchToProps = { setPreviousPath, setLanguage };
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
