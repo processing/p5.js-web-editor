@@ -36,12 +36,11 @@ const App = ({ children, location }) => {
   const previousLocationRef = useRef(location);
   useEffect(() => {
     const prevLocation = previousLocationRef.current;
-    const locationChanged =
-      prevLocation && prevLocation.pathname !== location.pathname;
+    const locationChanged = prevLocation && prevLocation !== location;
     const shouldSkipRemembering = location.state?.skipSavingPath === true;
 
     if (locationChanged && !shouldSkipRemembering) {
-      dispatch(setPreviousPath(location.pathname));
+      dispatch(setPreviousPath(prevLocation.pathname));
     }
     previousLocationRef.current = location;
   }, [location]);
