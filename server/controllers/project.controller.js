@@ -219,8 +219,9 @@ function addFileToZip(file, files, zip, path = '') {
   return new Promise((resolve, reject) => {
     if (file.fileType === 'folder') {
       const newPath = file.name === 'root' ? path : `${path}${file.name}/`;
-      const numChildFiles = file.children.filter((f) => f.fileType !== 'folder')
-        .length;
+      const numChildFiles = file.children.filter(
+        (f) => f.fileType !== 'folder'
+      ).length;
       let childrenAdded = 0;
       if (numChildFiles === 0) {
         zip.folder(file.name);

@@ -11,10 +11,10 @@ function NavDropdownMenu({ id, title, children }) {
 
   const { createDropdownHandlers } = useContext(NavBarContext);
 
-  const handlers = useMemo(() => createDropdownHandlers(id), [
-    createDropdownHandlers,
-    id
-  ]);
+  const handlers = useMemo(
+    () => createDropdownHandlers(id),
+    [createDropdownHandlers, id]
+  );
 
   return (
     <li className={classNames('nav__item', isOpen && 'nav__item--open')}>

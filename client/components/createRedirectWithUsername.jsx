@@ -22,8 +22,7 @@ function mapStateToProps(state) {
 
 const ConnectedRedirectToUser = connect(mapStateToProps)(RedirectToUser);
 
-const createRedirectWithUsername = (url) => (props) => (
-  <ConnectedRedirectToUser {...props} url={url} />
-);
+const createRedirectWithUsername = (url) => (props) =>
+  <ConnectedRedirectToUser {...props} url={url} />;
 
 export default createRedirectWithUsername;

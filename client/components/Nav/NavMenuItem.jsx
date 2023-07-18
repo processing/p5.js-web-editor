@@ -8,10 +8,10 @@ function NavMenuItem({ hideIf, ...rest }) {
 
   const { createMenuItemHandlers } = useContext(NavBarContext);
 
-  const handlers = useMemo(() => createMenuItemHandlers(parent), [
-    createMenuItemHandlers,
-    parent
-  ]);
+  const handlers = useMemo(
+    () => createMenuItemHandlers(parent),
+    [createMenuItemHandlers, parent]
+  );
 
   if (hideIf) {
     return null;

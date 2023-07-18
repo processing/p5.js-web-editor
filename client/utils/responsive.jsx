@@ -20,8 +20,9 @@ export const mobileFirst = (MobileComponent, Fallback) => (props) => {
   );
 };
 
-export const responsiveForm = (DesktopComponent) => (props) => (
-  <ResponsiveForm>
-    <DesktopComponent {...props} />
-  </ResponsiveForm>
-);
+export const responsiveForm = (DesktopComponent) => (props) =>
+  (
+    <ResponsiveForm>
+      <DesktopComponent {...props} />
+    </ResponsiveForm>
+  );

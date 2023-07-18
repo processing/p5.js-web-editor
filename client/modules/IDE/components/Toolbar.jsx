@@ -86,8 +86,8 @@ class Toolbar extends React.Component {
     });
     const nameContainerClass = classNames({
       'toolbar__project-name-container': true,
-      'toolbar__project-name-container--editing': this.props.project
-        .isEditingName
+      'toolbar__project-name-container--editing':
+        this.props.project.isEditingName
     });
 
     const canEditProjectName = this.canEditProjectName();
