@@ -114,6 +114,7 @@ class Toolbar extends React.Component {
             this.props.startSketch();
           }}
           aria-label={this.props.t('Toolbar.PlayOnlyVisualSketchARIA')}
+          title={this.props.t('Toolbar.PlaySketchARIA')}
           disabled={this.props.infiniteLoop}
         >
           <PlayIcon focusable="false" aria-hidden="true" />
@@ -122,6 +123,7 @@ class Toolbar extends React.Component {
           className={stopButtonClass}
           onClick={this.props.stopSketch}
           aria-label={this.props.t('Toolbar.StopSketchARIA')}
+          title={this.props.t('Toolbar.StopSketchARIA')}
         >
           <StopIcon focusable="false" aria-hidden="true" />
         </button>
@@ -186,6 +188,7 @@ class Toolbar extends React.Component {
           className={preferencesButtonClass}
           onClick={this.props.openPreferences}
           aria-label={this.props.t('Toolbar.OpenPreferencesARIA')}
+          title={this.props.t('Toolbar.OpenPreferencesARIA')}
         >
           <PreferencesIcon focusable="false" aria-hidden="true" />
         </button>
