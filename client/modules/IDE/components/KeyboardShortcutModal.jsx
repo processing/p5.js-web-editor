@@ -100,6 +100,10 @@ function KeyboardShortcutModal() {
           </span>
           <span>{t('KeyboardShortcuts.General.TurnOffAccessibleOutput')}</span>
         </li>
+        <li className="keyboard-shortcut-item">
+          <span className="keyboard-shortcut__command">{'\u21E7'} + Right</span>
+          <span>Go to Reference for Selected Item in Hinter</span>
+        </li>
       </ul>
     </div>
   );

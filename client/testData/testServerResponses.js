@@ -18,7 +18,8 @@ export const userResponse = {
     theme: 'light',
     autorefresh: false,
     language: 'en-US',
-    autocloseBracketsQuotes: true
+    autocloseBracketsQuotes: true,
+    autocompleteHinter: false
   },
   apiKeys: [],
   verified: 'verified',
