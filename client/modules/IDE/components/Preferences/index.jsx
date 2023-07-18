@@ -169,6 +169,7 @@ class Preferences extends React.Component {
                 className="preference__minus-button"
                 onClick={this.decreaseFontSize}
                 aria-label={this.props.t('Preferences.DecreaseFontARIA')}
+                title={this.props.t('Preferences.DecreaseFontARIA')}
                 disabled={this.state.fontSize <= 8}
               >
                 <MinusIcon focusable="false" aria-hidden="true" />
@@ -203,6 +204,7 @@ class Preferences extends React.Component {
                 className="preference__plus-button"
                 onClick={this.increaseFontSize}
                 aria-label={this.props.t('Preferences.IncreaseFontARIA')}
+                title={this.props.t('Preferences.IncreaseFontARIA')}
                 disabled={this.state.fontSize >= 36}
               >
                 <PlusIcon focusable="false" aria-hidden="true" />
