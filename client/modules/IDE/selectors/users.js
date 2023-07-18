@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import getConfig from '../../../utils/getConfig';
 
-const getAuthenticated = (state) => state.user.authenticated;
+export const getAuthenticated = (state) => state.user.authenticated;
 const getTotalSize = (state) => state.user.totalSize;
 const getAssetsTotalSize = (state) => state.assets.totalSize;
 const getSketchOwner = (state) => state.project.owner;
@@ -38,4 +38,10 @@ export const getIsUserOwner = createSelector(
     if (!sketchOwner) return false;
     return sketchOwner.id === userId;
   }
+);
+
+export const selectCanEditSketch = createSelector(
+  getSketchOwner,
+  getIsUserOwner,
+  (sketchOwner, isOwner) => !sketchOwner || isOwner
 );
