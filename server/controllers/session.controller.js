@@ -30,7 +30,12 @@ export function getSession(req, res) {
   return res.status(404).send({ message: 'Session does not exist' });
 }
 
-export function destroySession(req, res) {
-  req.logout();
-  res.json({ success: true });
+export function destroySession(req, res, next) {
+  req.logout((err) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.json({ success: true });
+  });
 }
