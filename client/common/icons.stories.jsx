@@ -14,7 +14,7 @@ export default {
   }
 };
 
-export const AllIcons = (args) => {
-  const SelectedIcon = icons[args.variant];
+export const Icons = (args) => {
+  const SelectedIcon = icons[args.variant || 'CircleInfoIcon'];
   return <SelectedIcon />;
 };
