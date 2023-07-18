@@ -291,6 +291,49 @@ class Preferences extends React.Component {
             </div>
             <div className="preference">
               <h4 className="preference__title">
+                {this.props.t('Preferences.AutocompleteHinter')}
+              </h4>
+              <div className="preference__options">
+                <input
+                  type="radio"
+                  onChange={() => this.props.setAutocompleteHinter(true)}
+                  aria-label={this.props.t(
+                    'Preferences.AutocompleteHinterOnARIA'
+                  )}
+                  name="autocompletehinter"
+                  id="autocompletehinter-on"
+                  className="preference__radio-button"
+                  value="On"
+                  checked={this.props.autocompleteHinter}
+                />
+                <label
+                  htmlFor="autocompletehinter-on"
+                  className="preference__option"
+                >
+                  {this.props.t('Preferences.On')}
+                </label>
+                <input
+                  type="radio"
+                  onChange={() => this.props.setAutocompleteHinter(false)}
+                  aria-label={this.props.t(
+                    'Preferences.AutocompleteHinterOffARIA'
+                  )}
+                  name="autocompletehinter"
+                  id="autocompletehinter-off"
+                  className="preference__radio-button"
+                  value="Off"
+                  checked={!this.props.autocompleteHinter}
+                />
+                <label
+                  htmlFor="autocompletehinter-off"
+                  className="preference__option"
+                >
+                  {this.props.t('Preferences.Off')}
+                </label>
+              </div>
+            </div>
+            <div className="preference">
+              <h4 className="preference__title">
                 {this.props.t('Preferences.WordWrap')}
               </h4>
               <div className="preference__options">
@@ -474,6 +517,8 @@ Preferences.propTypes = {
   setTheme: PropTypes.func.isRequired,
   autocloseBracketsQuotes: PropTypes.bool.isRequired,
   setAutocloseBracketsQuotes: PropTypes.func.isRequired,
+  autocompleteHinter: PropTypes.bool.isRequired,
+  setAutocompleteHinter: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired
 };
 

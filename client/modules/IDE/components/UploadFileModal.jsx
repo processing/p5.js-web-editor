@@ -34,9 +34,7 @@ const UploadFileModal = () => {
           .
         </p>
       ) : (
-        <div>
-          <FileUploader />
-        </div>
+        <FileUploader />
       )}
     </Modal>
   );
