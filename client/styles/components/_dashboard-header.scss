@@ -62,9 +62,6 @@
   padding: 0 #{5 /$base-font-size}rem #{5 /$base-font-size}rem;
 }
 
-.dashboard-header__nav {
-}
-
 .dashboard-header__actions {
   display: flex;
   align-items: center;
@@ -72,6 +69,11 @@
   justify-content: space-between;
 }
 
+@media (max-width: 500px) {
+  .dashboard-header__actions {
+    flex-direction: column;
+  }
+}
 .dashboard-header__actions > *:not(:first-child) {
   margin-left: #{15 / $base-font-size}rem;
 }

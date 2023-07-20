@@ -31,10 +31,15 @@
 
 .collection-metadata__column--right {
   align-self: flex-end;
-
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+}
+
+@media (max-width: 529px) {
+  .collection-metadata__column--right {
+    flex-direction: column;
+  }
 }
 
 .collection-metadata__column--right > * {
