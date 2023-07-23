@@ -99,7 +99,6 @@
     "@storybook/addon-docs": "^7.0.24",
     "@storybook/addon-essentials": "^7.0.27",
     "@storybook/addon-interactions": "^7.0.27",
-    "@storybook/addon-knobs": "^7.0.2",
     "@storybook/addon-links": "^5.3.21",
     "@storybook/addons": "^5.3.21",
     "@storybook/blocks": "^7.0.27",
