@@ -46,6 +46,7 @@ export function PlayButton({ syncFileContent }) {
           dispatch(setGridOutput(true));
         }}
         aria-label={t('Toolbar.PlaySketchARIA')}
+        title={t('Toolbar.PlaySketchARIA')}
         disabled={infiniteLoop}
       >
         <PlayIcon focusable="false" aria-hidden="true" />
@@ -60,6 +61,7 @@ export function PlayButton({ syncFileContent }) {
           dispatch(startSketch());
         }}
         aria-label={t('Toolbar.PlayOnlyVisualSketchARIA')}
+        title={t('Toolbar.PlaySketchARIA')}
         disabled={infiniteLoop}
       >
         <PlayIcon focusable="false" aria-hidden="true" />
@@ -86,6 +88,7 @@ export function StopButton() {
       )}
       onClick={() => dispatch(stopSketch())}
       aria-label={t('Toolbar.StopSketchARIA')}
+      title={t('Toolbar.StopSketchARIA')}
     >
       <StopIcon focusable="false" aria-hidden="true" />
     </button>
@@ -178,6 +181,7 @@ export function PreferencesButton() {
       )}
       onClick={() => dispatch(openPreferences())}
       aria-label={t('Toolbar.OpenPreferencesARIA')}
+      title={t('Toolbar.OpenPreferencesARIA')}
     >
       <PreferencesIcon focusable="false" aria-hidden="true" />
     </button>
