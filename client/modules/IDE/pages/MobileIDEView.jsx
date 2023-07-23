@@ -210,43 +210,41 @@ const handleGlobalKeydown = (props, cmController) => (e) => {
   }
 };
 
-const autosave =
-  (autosaveInterval, setAutosaveInterval) => (props, prevProps) => {
-    const {
-      autosaveProject,
-      preferences,
-      ide,
-      selectedFile: file,
-      project,
-      isUserOwner
-    } = props;
+const autosave = (autosaveInterval, setAutosaveInterval) => (
+  props,
+  prevProps
+) => {
+  const {
+    autosaveProject,
+    preferences,
+    ide,
+    selectedFile: file,
+    project,
+    isUserOwner
+  } = props;
 
-    const { selectedFile: oldFile } = prevProps;
+  const { selectedFile: oldFile } = prevProps;
 
-    const doAutosave = () => autosaveProject(true);
+  const doAutosave = () => autosaveProject(true);
 
-    if (isUserOwner && project.id) {
-      if (
-        preferences.autosave &&
-        ide.unsavedChanges &&
-        !ide.justOpenedProject
-      ) {
-        if (file.name === oldFile.name && file.content !== oldFile.content) {
-          if (autosaveInterval) {
-            clearTimeout(autosaveInterval);
-          }
-          console.log('will save project in 20 seconds');
-          setAutosaveInterval(setTimeout(doAutosave, 20000));
+  if (isUserOwner && project.id) {
+    if (preferences.autosave && ide.unsavedChanges && !ide.justOpenedProject) {
+      if (file.name === oldFile.name && file.content !== oldFile.content) {
+        if (autosaveInterval) {
+          clearTimeout(autosaveInterval);
         }
-      } else if (autosaveInterval && !preferences.autosave) {
-        clearTimeout(autosaveInterval);
-        setAutosaveInterval(null);
+        console.log('will save project in 20 seconds');
+        setAutosaveInterval(setTimeout(doAutosave, 20000));
       }
-    } else if (autosaveInterval) {
+    } else if (autosaveInterval && !preferences.autosave) {
       clearTimeout(autosaveInterval);
       setAutosaveInterval(null);
     }
-  };
+  } else if (autosaveInterval) {
+    clearTimeout(autosaveInterval);
+    setAutosaveInterval(null);
+  }
+};
 
 // ide, preferences, project, selectedFile, user, params, unsavedChanges, expandConsole, collapseConsole,
 // stopSketch, startSketch, getProject, clearPersistedState, autosaveProject, saveProject, files

@@ -29,7 +29,8 @@ mongoose.connection.on('error', () => {
 async function getCategories() {
   const categories = [];
   const options = {
-    url: 'https://api.github.com/repos/processing/p5.js-website/contents/src/data/examples/en',
+    url:
+      'https://api.github.com/repos/processing/p5.js-website/contents/src/data/examples/en',
     method: 'GET',
     headers: {
       ...headers,
@@ -221,7 +222,8 @@ async function addAssetsToProject(assets, response, project) {
 
 async function createProjectsInP5user(projectsInAllCategories) {
   const options = {
-    url: 'https://api.github.com/repos/processing/p5.js-website/contents/src/data/examples/assets',
+    url:
+      'https://api.github.com/repos/processing/p5.js-website/contents/src/data/examples/assets',
     method: 'GET',
     headers: {
       ...headers,

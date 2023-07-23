@@ -40,8 +40,13 @@ function parseFileName(name) {
 }
 
 function FileName({ name }) {
-  const { baseName, firstLetter, lastLetter, middleText, extension } =
-    parseFileName(name);
+  const {
+    baseName,
+    firstLetter,
+    lastLetter,
+    middleText,
+    extension
+  } = parseFileName(name);
   return (
     <span className="sidebar__file-item-name-text">
       <span>{firstLetter}</span>
