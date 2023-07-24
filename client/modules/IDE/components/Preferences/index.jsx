@@ -10,14 +10,11 @@ import { withTranslation } from 'react-i18next';
 import PlusIcon from '../../../../images/plus.svg';
 import MinusIcon from '../../../../images/minus.svg';
 import beepUrl from '../../../../sounds/audioAlert.mp3';
+import OnOffToggle from './OnOffToggle';
 
 class Preferences extends React.Component {
   constructor(props) {
     super(props);
-    this.handleUpdateAutosave = this.handleUpdateAutosave.bind(this);
-    this.handleUpdateLinewrap = this.handleUpdateLinewrap.bind(this);
-    this.handleLintWarning = this.handleLintWarning.bind(this);
-    this.handleLineNumbers = this.handleLineNumbers.bind(this);
     this.onFontInputChange = this.onFontInputChange.bind(this);
     this.onFontInputSubmit = this.onFontInputSubmit.bind(this);
     this.increaseFontSize = this.increaseFontSize.bind(this);
@@ -66,26 +63,6 @@ class Preferences extends React.Component {
   increaseFontSize() {
     const newValue = Number(this.state.fontSize) + 2;
     this.setFontSize(newValue);
-  }
-
-  handleUpdateAutosave(event) {
-    const value = event.target.value === 'true';
-    this.props.setAutosave(value);
-  }
-
-  handleUpdateLinewrap(event) {
-    const value = event.target.value === 'true';
-    this.props.setLinewrap(value);
-  }
-
-  handleLintWarning(event) {
-    const value = event.target.value === 'true';
-    this.props.setLintWarning(value);
-  }
-
-  handleLineNumbers(event) {
-    const value = event.target.value === 'true';
-    this.props.setLineNumbers(value);
   }
 
   render() {
@@ -217,153 +194,45 @@ class Preferences extends React.Component {
               <h4 className="preference__title">
                 {this.props.t('Preferences.Autosave')}
               </h4>
-              <div className="preference__options">
-                <input
-                  type="radio"
-                  onChange={() => this.props.setAutosave(true)}
-                  aria-label={this.props.t('Preferences.AutosaveOnARIA')}
-                  name="autosave"
-                  id="autosave-on"
-                  className="preference__radio-button"
-                  value="On"
-                  checked={this.props.autosave}
-                />
-                <label htmlFor="autosave-on" className="preference__option">
-                  {this.props.t('Preferences.On')}
-                </label>
-                <input
-                  type="radio"
-                  onChange={() => this.props.setAutosave(false)}
-                  aria-label={this.props.t('Preferences.AutosaveOffARIA')}
-                  name="autosave"
-                  id="autosave-off"
-                  className="preference__radio-button"
-                  value="Off"
-                  checked={!this.props.autosave}
-                />
-                <label htmlFor="autosave-off" className="preference__option">
-                  {this.props.t('Preferences.Off')}
-                </label>
-              </div>
+              <OnOffToggle
+                value={this.props.autosave}
+                setValue={this.props.setAutosave}
+                name="autosave"
+                translationKey="Autosave"
+              />
             </div>
             <div className="preference">
               <h4 className="preference__title">
                 {this.props.t('Preferences.AutocloseBracketsQuotes')}
               </h4>
-              <div className="preference__options">
-                <input
-                  type="radio"
-                  onChange={() => this.props.setAutocloseBracketsQuotes(true)}
-                  aria-label={this.props.t(
-                    'Preferences.AutocloseBracketsQuotesOnARIA'
-                  )}
-                  name="autoclosebracketsquotes"
-                  id="autoclosebracketsquotes-on"
-                  className="preference__radio-button"
-                  value="On"
-                  checked={this.props.autocloseBracketsQuotes}
-                />
-                <label
-                  htmlFor="autoclosebracketsquotes-on"
-                  className="preference__option"
-                >
-                  {this.props.t('Preferences.On')}
-                </label>
-                <input
-                  type="radio"
-                  onChange={() => this.props.setAutocloseBracketsQuotes(false)}
-                  aria-label={this.props.t(
-                    'Preferences.AutocloseBracketsQuotesOffARIA'
-                  )}
-                  name="autoclosebracketsquotes"
-                  id="autoclosebracketsquotes-off"
-                  className="preference__radio-button"
-                  value="Off"
-                  checked={!this.props.autocloseBracketsQuotes}
-                />
-                <label
-                  htmlFor="autoclosebracketsquotes-off"
-                  className="preference__option"
-                >
-                  {this.props.t('Preferences.Off')}
-                </label>
-              </div>
+              <OnOffToggle
+                value={this.props.autocloseBracketsQuotes}
+                setValue={this.props.setAutocloseBracketsQuotes}
+                name="autoclosebracketsquotes"
+                translationKey="AutocloseBracketsQuotes"
+              />
             </div>
             <div className="preference">
               <h4 className="preference__title">
                 {this.props.t('Preferences.AutocompleteHinter')}
               </h4>
-              <div className="preference__options">
-                <input
-                  type="radio"
-                  onChange={() => this.props.setAutocompleteHinter(true)}
-                  aria-label={this.props.t(
-                    'Preferences.AutocompleteHinterOnARIA'
-                  )}
-                  name="autocompletehinter"
-                  id="autocompletehinter-on"
-                  className="preference__radio-button"
-                  value="On"
-                  checked={this.props.autocompleteHinter}
-                />
-                <label
-                  htmlFor="autocompletehinter-on"
-                  className="preference__option"
-                >
-                  {this.props.t('Preferences.On')}
-                </label>
-                <input
-                  type="radio"
-                  onChange={() => this.props.setAutocompleteHinter(false)}
-                  aria-label={this.props.t(
-                    'Preferences.AutocompleteHinterOffARIA'
-                  )}
-                  name="autocompletehinter"
-                  id="autocompletehinter-off"
-                  className="preference__radio-button"
-                  value="Off"
-                  checked={!this.props.autocompleteHinter}
-                />
-                <label
-                  htmlFor="autocompletehinter-off"
-                  className="preference__option"
-                >
-                  {this.props.t('Preferences.Off')}
-                </label>
-              </div>
+              <OnOffToggle
+                value={this.props.autocompleteHinter}
+                setValue={this.props.setAutocompleteHinter}
+                name="autocompletehinter"
+                translationKey="AutocompleteHinter"
+              />
             </div>
             <div className="preference">
               <h4 className="preference__title">
                 {this.props.t('Preferences.WordWrap')}
               </h4>
-              <div className="preference__options">
-                <input
-                  type="radio"
-                  onChange={() => this.props.setLinewrap(true)}
-                  aria-label={this.props.t('Preferences.LineWrapOnARIA')}
-                  name="linewrap"
-                  id="linewrap-on"
-                  className="preference__radio-button"
-                  value="On"
-                  checked={this.props.linewrap}
-                />
-                <label htmlFor="linewrap-on" className="preference__option">
-                  {this.props.t('Preferences.On')}
-                </label>
-                <input
-                  type="radio"
-                  onChange={() => this.props.setLinewrap(false)}
-                  aria-label={this.props.t('Preferences.LineWrapOffARIA')}
-                  name="linewrap"
-                  id="linewrap-off"
-                  className="preference__radio-button"
-                  value="Off"
-                  checked={!this.props.linewrap}
-                />
-                <label htmlFor="linewrap-off" className="preference__option">
-                  {this.props.t('Preferences.Off')}
-                </label>
-              </div>
+              <OnOffToggle
+                value={this.props.linewrap}
+                setValue={this.props.setLinewrap}
+                name="linewrap"
+                translationKey="LineWrap"
+              />
             </div>
           </TabPanel>
           <TabPanel>
@@ -371,72 +240,23 @@ class Preferences extends React.Component {
               <h4 className="preference__title">
                 {this.props.t('Preferences.LineNumbers')}
               </h4>
-              <div className="preference__options">
-                <input
-                  type="radio"
-                  onChange={() => this.props.setLineNumbers(true)}
-                  aria-label={this.props.t('Preferences.LineNumbersOnARIA')}
-                  name="line numbers"
-                  id="line-numbers-on"
-                  className="preference__radio-button"
-                  value="On"
-                  checked={this.props.lineNumbers}
-                />
-                <label htmlFor="line-numbers-on" className="preference__option">
-                  {this.props.t('Preferences.On')}
-                </label>
-                <input
-                  type="radio"
-                  onChange={() => this.props.setLineNumbers(false)}
-                  aria-label={this.props.t('Preferences.LineNumbersOffARIA')}
-                  name="line numbers"
-                  id="line-numbers-off"
-                  className="preference__radio-button"
-                  value="Off"
-                  checked={!this.props.lineNumbers}
-                />
-                <label
-                  htmlFor="line-numbers-off"
-                  className="preference__option"
-                >
-                  {this.props.t('Preferences.Off')}
-                </label>
-              </div>
+              <OnOffToggle
+                value={this.props.lineNumbers}
+                setValue={this.props.setLineNumbers}
+                name="line numbers"
+                translationKey="LineNumbers"
+              />
             </div>
             <div className="preference">
               <h4 className="preference__title">
                 {this.props.t('Preferences.LintWarningSound')}
               </h4>
-              <div className="preference__options">
-                <input
-                  type="radio"
-                  onChange={() => this.props.setLintWarning(true)}
-                  aria-label={this.props.t('Preferences.LintWarningOnARIA')}
-                  name="lint warning"
-                  id="lint-warning-on"
-                  className="preference__radio-button"
-                  value="On"
-                  checked={this.props.lintWarning}
-                />
-                <label htmlFor="lint-warning-on" className="preference__option">
-                  {this.props.t('Preferences.On')}
-                </label>
-                <input
-                  type="radio"
-                  onChange={() => this.props.setLintWarning(false)}
-                  aria-label={this.props.t('Preferences.LintWarningOffARIA')}
-                  name="lint warning"
-                  id="lint-warning-off"
-                  className="preference__radio-button"
-                  value="Off"
-                  checked={!this.props.lintWarning}
-                />
-                <label
-                  htmlFor="lint-warning-off"
-                  className="preference__option"
-                >
-                  {this.props.t('Preferences.Off')}
-                </label>
+              <OnOffToggle
+                value={this.props.lintWarning}
+                setValue={this.props.setLintWarning}
+                name="lint warning"
+                translationKey="LintWarning"
+              >
                 <button
                   className="preference__preview-button"
                   onClick={() => beep.play()}
@@ -444,7 +264,7 @@ class Preferences extends React.Component {
                 >
                   {this.props.t('Preferences.PreviewSound')}
                 </button>
-              </div>
+              </OnOffToggle>
             </div>
             <div className="preference">
               <h4 className="preference__title">
