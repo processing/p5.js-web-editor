@@ -39,3 +39,9 @@ export const getIsUserOwner = createSelector(
     return sketchOwner.id === userId;
   }
 );
+
+export const selectCanEditSketch = createSelector(
+  getSketchOwner,
+  getIsUserOwner,
+  (sketchOwner, isOwner) => !sketchOwner || isOwner
+);
