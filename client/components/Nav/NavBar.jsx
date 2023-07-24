@@ -33,7 +33,7 @@ function NavBar({ children }) {
   }, [nodeRef, setDropdownOpen]);
 
   useKeyDownHandlers({
-    'escape': () => setDropdownOpen('none')
+    escape: () => setDropdownOpen('none')
   });
 
   const clearHideTimeout = useCallback(() => {
