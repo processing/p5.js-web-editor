@@ -532,7 +532,6 @@ IDEView.propTypes = {
   hideErrorModal: PropTypes.func.isRequired,
   clearPersistedState: PropTypes.func.isRequired,
   startSketch: PropTypes.func.isRequired,
-  closeUploadFileModal: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
   isUserOwner: PropTypes.bool.isRequired
 };
