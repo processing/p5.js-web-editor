@@ -296,22 +296,7 @@ class IDEView extends React.Component {
             allowResize={this.props.ide.sidebarIsExpanded}
             minSize={125}
           >
-            <Sidebar
-              files={this.props.files}
-              setSelectedFile={this.props.setSelectedFile}
-              newFile={this.props.newFile}
-              isExpanded={this.props.ide.sidebarIsExpanded}
-              deleteFile={this.props.deleteFile}
-              updateFileName={this.props.updateFileName}
-              projectOptionsVisible={this.props.ide.projectOptionsVisible}
-              openProjectOptions={this.props.openProjectOptions}
-              closeProjectOptions={this.props.closeProjectOptions}
-              newFolder={this.props.newFolder}
-              user={this.props.user}
-              owner={this.props.project.owner}
-              openUploadFileModal={this.props.openUploadFileModal}
-              closeUploadFileModal={this.props.closeUploadFileModal}
-            />
+            <Sidebar />
             <SplitPane
               split="vertical"
               defaultSize="50%"
@@ -518,36 +503,22 @@ IDEView.propTypes = {
   setTextOutput: PropTypes.func.isRequired,
   setGridOutput: PropTypes.func.isRequired,
   setAllAccessibleOutput: PropTypes.func.isRequired,
-  files: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      content: PropTypes.string.isRequired
-    })
-  ).isRequired,
   selectedFile: PropTypes.shape({
     id: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired
   }).isRequired,
-  setSelectedFile: PropTypes.func.isRequired,
   htmlFile: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
   }).isRequired,
-  newFile: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
   collapseSidebar: PropTypes.func.isRequired,
   cloneProject: PropTypes.func.isRequired,
   expandConsole: PropTypes.func.isRequired,
   collapseConsole: PropTypes.func.isRequired,
-  deleteFile: PropTypes.func.isRequired,
-  updateFileName: PropTypes.func.isRequired,
   updateFileContent: PropTypes.func.isRequired,
-  openProjectOptions: PropTypes.func.isRequired,
-  closeProjectOptions: PropTypes.func.isRequired,
-  newFolder: PropTypes.func.isRequired,
   closeShareModal: PropTypes.func.isRequired,
   closeKeyboardShortcutModal: PropTypes.func.isRequired,
   autosaveProject: PropTypes.func.isRequired,
@@ -561,7 +532,6 @@ IDEView.propTypes = {
   hideErrorModal: PropTypes.func.isRequired,
   clearPersistedState: PropTypes.func.isRequired,
   startSketch: PropTypes.func.isRequired,
-  openUploadFileModal: PropTypes.func.isRequired,
   closeUploadFileModal: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
   isUserOwner: PropTypes.bool.isRequired
@@ -569,7 +539,6 @@ IDEView.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    files: state.files,
     selectedFile:
       state.files.find((file) => file.isSelectedFile) ||
       state.files.find((file) => file.name === 'sketch.js') ||
