@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 
 import ThemeProvider from '../client/modules/App/components/ThemeProvider';
 import configureStore from '../client/store';
+import '../client/i18n-test';
 import '../client/styles/build/css/main.css'
 
 const initialState = window.__INITIAL_STATE__;
