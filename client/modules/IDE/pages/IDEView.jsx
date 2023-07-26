@@ -406,11 +406,7 @@ class IDEView extends React.Component {
             ariaLabel={this.props.t('IDEView.ShareARIA')}
             closeOverlay={this.props.closeShareModal}
           >
-            <ShareModal
-              projectId={this.props.ide.shareModalProjectId}
-              projectName={this.props.ide.shareModalProjectName}
-              ownerUsername={this.props.ide.shareModalProjectUsername}
-            />
+            <ShareModal />
           </Overlay>
         )}
         {this.props.ide.keyboardShortcutVisible && (
@@ -459,9 +455,6 @@ IDEView.propTypes = {
     errorType: PropTypes.string,
     keyboardShortcutVisible: PropTypes.bool.isRequired,
     shareModalVisible: PropTypes.bool.isRequired,
-    shareModalProjectId: PropTypes.string.isRequired,
-    shareModalProjectName: PropTypes.string.isRequired,
-    shareModalProjectUsername: PropTypes.string.isRequired,
     previousPath: PropTypes.string.isRequired,
     previewIsRefreshing: PropTypes.bool.isRequired,
     isPlaying: PropTypes.bool.isRequired,
