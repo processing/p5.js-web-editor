@@ -158,25 +158,26 @@
   },
   "KeyboardShortcuts": {
     "Title": " 단축키",
-    "ShortcutsFollow": "Code editing keyboard shortcuts follow",
-    "SublimeText": "Sublime Text shortcuts",
+    "ShortcutsFollow": "코드 편집 키보드 단축키는 다음과 같습니다",
+    "SublimeText": "숭고한 텍스트 단축키",
     "CodeEditing": {
-      "Tidy": "Tidy",
-      "FindText": "Find Text",
-      "FindNextMatch": "Find Next Match",
-      "FindPrevMatch": "Find Previous Match",
-      "IndentCodeLeft": "Indent Code Left",
-      "IndentCodeRight": "Indent Code Right",
-      "CommentLine": "Comment Line",
-      "FindNextTextMatch": "Find Next Text Match",
-      "FindPreviousTextMatch": "Find Previous Text Match",
-      "CodeEditing": "Code Editing"
+      "Tidy": "깔끔한",
+      "FindText": "텍스트 찾기",
+      "FindNextMatch": "다음 경기 찾기",
+      "FindPrevMatch": "이전 경기 찾기",
+      "ReplaceTextMatch": "텍스트 일치 바꾸기",
+      "IndentCodeLeft": "코드 왼쪽 들여쓰기",
+      "IndentCodeRight": "코드 오른쪽 들여쓰기",
+      "CommentLine": "댓글 라인",
+      "FindNextTextMatch": "다음 텍스트 일치 찾기",
+      "FindPreviousTextMatch": "이전 텍스트 일치 찾기",
+      "CodeEditing": "코드 편집"
     },
     "General": {
-      "StartSketch": "Start Sketch",
-      "StopSketch": "Stop Sketch",
-      "TurnOnAccessibleOutput": "Turn On Accessible Output",
-      "TurnOffAccessibleOutput": "Turn Off Accessible Output"
+      "StartSketch": "스케치 시작",
+      "StopSketch": "스케치 중지",
+      "TurnOnAccessibleOutput": "접근 가능한 출력 켜기",
+      "TurnOffAccessibleOutput": "액세스 가능한 출력 끄기"
     }
   },
   "Sidebar": {
