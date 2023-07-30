@@ -69,9 +69,14 @@ const ErrorModal = ({ type, service, closeModal }) => {
 };
 
 ErrorModal.propTypes = {
-  type: PropTypes.string.isRequired,
+  type: PropTypes.oneOf([
+    'forceAuthentication',
+    'staleSession',
+    'staleProject',
+    'oauthError'
+  ]).isRequired,
   closeModal: PropTypes.func.isRequired,
-  service: PropTypes.string
+  service: PropTypes.oneOf(['google', 'github'])
 };
 
 ErrorModal.defaultProps = {
