@@ -51,7 +51,8 @@
 }
 
 .form__input {
-  width: 100%;
+  max-width: 90vw;
+  width: #{360 / $base-font-size}rem;
   height: #{40 / $base-font-size}rem;
   font-size: #{16 / $base-font-size}rem;
   @include themify() {
