@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { prop, remSize } from '../../theme';
 
 export default styled(Link)`
