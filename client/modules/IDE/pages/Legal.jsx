@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import { browserHistory } from 'react-router';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import PrivacyPolicy from './PrivacyPolicy';
@@ -9,6 +8,7 @@ import TermsOfUse from './TermsOfUse';
 import CodeOfConduct from './CodeOfConduct';
 import RootPage from '../../../components/RootPage';
 import Nav from '../../../components/Nav';
+import browserHistory from '../../../browserHistory';
 import { remSize, prop } from '../../../theme';
 
 const StyledTabList = styled(TabList)`
