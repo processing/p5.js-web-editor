@@ -74,6 +74,7 @@ const baseThemes = {
     primaryTextColor: grays.dark,
     inactiveTextColor: grays.middleDark,
     backgroundColor: grays.lighter,
+    logoColor: colors.p5jsPink,
 
     Button: {
       primary: {
@@ -156,6 +157,7 @@ const baseThemes = {
     primaryTextColor: grays.lightest,
     inactiveTextColor: grays.middleLight,
     backgroundColor: grays.darker,
+    logoColor: colors.p5jsPink,
 
     Button: {
       primary: {
@@ -238,6 +240,7 @@ export default {
   ...baseThemes,
   [Theme.contrast]: extend(baseThemes[Theme.dark], {
     inactiveTextColor: grays.light,
+    logoColor: colors.yellow,
 
     Button: {
       primary: {
