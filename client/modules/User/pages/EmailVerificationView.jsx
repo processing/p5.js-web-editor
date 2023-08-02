@@ -3,7 +3,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withTranslation } from 'react-i18next';
-import get from 'lodash/get';
 import { Helmet } from 'react-helmet';
 import browserHistory from '../../../browserHistory';
 import { verifyEmailConfirmation } from '../actions';
@@ -22,7 +21,11 @@ class EmailVerificationView extends React.Component {
     }
   }
 
-  verificationToken = () => get(this.props, 'location.query.t', null);
+  verificationToken = () => {
+    const { location } = this.props;
+    const searchParams = new URLSearchParams(location.search);
+    return searchParams.get('t');
+  };
 
   render() {
     let status = null;
@@ -80,7 +83,10 @@ EmailVerificationView.propTypes = {
     'invalid'
   ]),
   verifyEmailConfirmation: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
+  location: PropTypes.shape({
+    search: PropTypes.string.isRequired
+  }).isRequired
 };
 
 export default withTranslation()(
