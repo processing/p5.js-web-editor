@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useMemo, useState } from 'react';
 import Helmet from 'react-helmet';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Nav from '../../../components/Nav';
 import RootPage from '../../../components/RootPage';
