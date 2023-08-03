@@ -23,13 +23,13 @@ const AboutContent = styled.div`
     width: ${remSize(720)};
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 740px) {
     &&& {
       flex-direction: column;
       overflow-y: auto;
       overflow-x: hidden;
       width: 100%;
-      margin-right: ${remSize(15)};
+      margin-right: ${remSize(120)};
     }
   }
 `;
@@ -50,7 +50,10 @@ const AboutContentColumnTitle = styled.h3`
   }
 `;
 
-const AboutContentColumnAsterisk = styled(AsteriskIcon)`
+const AboutContentColumnAsterisk = styled(AsteriskIcon).attrs({
+  'aria-hidden': true,
+  focusable: false
+})`
   &&& {
     padding-right: ${remSize(5)};
     & path {
@@ -87,13 +90,13 @@ const AboutFooter = styled.div`
     display: flex;
     justify-content: space-between;
     padding-top: ${remSize(18)};
-    padding-right: ${remSize(20)};
+    padding-right: ${remSize(30)};
     padding-bottom: ${remSize(21)};
-    padding-left: ${remSize(20)};
+    padding-left: ${remSize(300)};
     width: 100%;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 740px) {
     &&& {
       flex-direction: column;
       padding-left: ${remSize(20)};
@@ -129,8 +132,7 @@ function About(props) {
         <title> {t('About.TitleHelmet')} </title>
       </Helmet>
       <AboutContentColumn>
-        <SquareLogoIcon
-          as={AboutLogo}
+        <AboutLogo
           role="img"
           aria-label={t('Common.p5logoARIA')}
           focusable="false"
@@ -148,11 +150,7 @@ function About(props) {
         <AboutContentColumnTitle>{t('About.NewP5')}</AboutContentColumnTitle>
         <AboutContentColumnList>
           <a href="https://p5js.org/" target="_blank" rel="noopener noreferrer">
-            <AsteriskIcon
-              as={AboutContentColumnAsterisk}
-              aria-hidden="true"
-              focusable="false"
-            />
+            <AboutContentColumnAsterisk />
             Home
           </a>
         </AboutContentColumnList>
@@ -162,11 +160,7 @@ function About(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <AsteriskIcon
-              as={AboutContentColumnAsterisk}
-              aria-hidden="true"
-              focusable="false"
-            />
+            <AboutContentColumnAsterisk />
             {t('About.Examples')}
           </a>
         </AboutContentColumnList>
@@ -176,11 +170,7 @@ function About(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <AsteriskIcon
-              as={AboutContentColumnAsterisk}
-              aria-hidden="true"
-              focusable="false"
-            />
+            <AboutContentColumnAsterisk />
             {t('About.Learn')}
           </a>
         </AboutContentColumnList>
@@ -190,11 +180,7 @@ function About(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <AsteriskIcon
-              as={AboutContentColumnAsterisk}
-              aria-hidden="true"
-              focusable="false"
-            />
+            <AboutContentColumnAsterisk />
             Twitter
           </a>
         </AboutContentColumnList>
@@ -204,11 +190,7 @@ function About(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <AsteriskIcon
-              as={AboutContentColumnAsterisk}
-              aria-hidden="true"
-              focusable="false"
-            />
+            <AboutContentColumnAsterisk />
             Instagram
           </a>
         </AboutContentColumnList>
@@ -223,11 +205,7 @@ function About(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <AsteriskIcon
-              as={AboutContentColumnAsterisk}
-              aria-hidden="true"
-              focusable="false"
-            />
+            <AboutContentColumnAsterisk />
             {t('About.Libraries')}
           </a>
         </AboutContentColumnList>
@@ -237,11 +215,7 @@ function About(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <AsteriskIcon
-              as={AboutContentColumnAsterisk}
-              aria-hidden="true"
-              focusable="false"
-            />
+            <AboutContentColumnAsterisk />
             {t('Nav.Help.Reference')}
           </a>
         </AboutContentColumnList>
@@ -251,11 +225,7 @@ function About(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <AsteriskIcon
-              as={AboutContentColumnAsterisk}
-              aria-hidden="true"
-              focusable="false"
-            />
+            <AboutContentColumnAsterisk />
             {t('About.Forum')}
           </a>
         </AboutContentColumnList>
@@ -265,67 +235,49 @@ function About(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <AsteriskIcon
-              as={AboutContentColumnAsterisk}
-              aria-hidden="true"
-              focusable="false"
-            />
+            <AboutContentColumnAsterisk />
             Discord
           </a>
         </AboutContentColumnList>
         <AboutContentColumnList>
           <Link to="/privacy-policy">
-            <AsteriskIcon
-              as={AboutContentColumnAsterisk}
-              aria-hidden="true"
-              focusable="false"
-            />
+            <AboutContentColumnAsterisk />
             {t('About.PrivacyPolicy')}
           </Link>
         </AboutContentColumnList>
         <AboutContentColumnList>
           <Link to="/terms-of-use">
-            <AsteriskIcon
-              as={AboutContentColumnAsterisk}
-              aria-hidden="true"
-              focusable="false"
-            />
+            <AboutContentColumnAsterisk />
             {t('About.TermsOfUse')}
           </Link>
         </AboutContentColumnList>
         <AboutContentColumnList>
           <Link to="/code-of-conduct">
-            <AsteriskIcon
-              as={AboutContentColumnAsterisk}
-              aria-hidden="true"
-              focusable="false"
-            />
+            <AboutContentColumnAsterisk />
             {t('About.CodeOfConduct')}
           </Link>
         </AboutContentColumnList>
       </AboutContentColumn>
-      <AboutContentColumn>
-        <AboutFooter>
-          <AboutFooterList>
-            <a
-              href="https://github.com/processing/p5.js-web-editor"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {t('About.Contribute')}
-            </a>
-          </AboutFooterList>
-          <AboutFooterList>
-            <a
-              href="https://github.com/processing/p5.js-web-editor/issues/new"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {t('About.Report')}
-            </a>
-          </AboutFooterList>
-        </AboutFooter>
-      </AboutContentColumn>
+      <AboutFooter>
+        <AboutFooterList>
+          <a
+            href="https://github.com/processing/p5.js-web-editor"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {t('About.Contribute')}
+          </a>
+        </AboutFooterList>
+        <AboutFooterList>
+          <a
+            href="https://github.com/processing/p5.js-web-editor/issues/new"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {t('About.Report')}
+          </a>
+        </AboutFooterList>
+      </AboutFooter>
     </AboutContent>
   );
 }
