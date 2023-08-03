@@ -169,29 +169,28 @@ export function getProjects(req, res) {
   }
 }
 
-export function projectExists(projectId, callback) {
-  Project.findById(projectId, (err, project) =>
-    project ? callback(true) : callback(false)
-  );
+/**
+ * @param {string} projectId
+ * @return {Promise<boolean>}
+ */
+export async function projectExists(projectId) {
+  const project = await Project.findById(projectId);
+  return project != null;
 }
 
-export function projectForUserExists(username, projectId, callback) {
-  User.findByUsername(username, (err, user) => {
-    if (!user) {
-      callback(false);
-      return;
-    }
-    Project.findOne(
-      { user: user._id, $or: [{ _id: projectId }, { slug: projectId }] },
-      (innerErr, project) => {
-        if (!project) {
-          callback(false);
-          return;
-        }
-        callback(true);
-      }
-    );
+/**
+ * @param {string} username
+ * @param {string} projectId
+ * @return {Promise<boolean>}
+ */
+export async function projectForUserExists(username, projectId) {
+  const user = await User.findByUsername(username);
+  if (!user) return false;
+  const project = await Project.findOne({
+    user: user._id,
+    $or: [{ _id: projectId }, { slug: projectId }]
   });
+  return project != null;
 }
 
 function bundleExternalLibs(project) {

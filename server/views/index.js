@@ -1,3 +1,5 @@
+import get404Sketch from './404Page';
+
 export function renderIndex() {
   const assetsManifest = process.env.webpackAssets && JSON.parse(process.env.webpackAssets);
   return `
@@ -46,3 +48,18 @@ export function renderIndex() {
   </html>
   `;
 }
+
+/**
+ * Send a 404 page if `exists` is false.
+ * @param {import('express').e.Request} req
+ * @param {import('express').e.Response} res
+ * @param {boolean} [exists]
+ */
+export default function sendHtml(req, res, exists = true) {
+  if (!exists) {
+    res.status(404);
+    get404Sketch((html) => res.send(html));
+  } else {
+    res.send(renderIndex());
+  }
+};
