@@ -1,6 +1,5 @@
 import React, { useReducer, useState, useEffect } from 'react';
 import { render } from 'react-dom';
-import { hot } from 'react-hot-loader/root';
 import { createGlobalStyle } from 'styled-components';
 import {
   registerFrame,
@@ -8,9 +7,10 @@ import {
   MessageTypes,
   dispatchMessage
 } from '../../utils/dispatcher';
-import { filesReducer, initialState, setFiles } from './filesReducer';
+import { filesReducer, setFiles } from './filesReducer';
 import EmbedFrame from './EmbedFrame';
 import getConfig from '../../utils/getConfig';
+import { initialState } from '../IDE/reducers/files';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -72,6 +72,4 @@ const App = () => {
   );
 };
 
-const HotApp = hot(App);
-
-render(<HotApp />, document.getElementById('root'));
+render(<App />, document.getElementById('root'));

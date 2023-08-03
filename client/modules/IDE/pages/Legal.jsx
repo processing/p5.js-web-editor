@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { useHistory, useLocation } from 'react-router-dom';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import { browserHistory } from 'react-router';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import PrivacyPolicy from './PrivacyPolicy';
@@ -29,9 +28,12 @@ const TabTitle = styled.p`
   }
 `;
 
-function Legal({ location }) {
+function Legal() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const { t } = useTranslation();
+  const location = useLocation();
+  const history = useHistory();
+
   useEffect(() => {
     if (location.pathname === '/privacy-policy') {
       setSelectedIndex(0);
@@ -46,13 +48,13 @@ function Legal({ location }) {
     if (index === lastIndex) return;
     if (index === 0) {
       setSelectedIndex(0);
-      browserHistory.push('/privacy-policy');
+      history.push('/privacy-policy');
     } else if (index === 1) {
       setSelectedIndex(1);
-      browserHistory.push('/terms-of-use');
+      history.push('/terms-of-use');
     } else if (index === 2) {
       setSelectedIndex(2);
-      browserHistory.push('/code-of-conduct');
+      history.push('/code-of-conduct');
     }
   }
 
@@ -84,11 +86,5 @@ function Legal({ location }) {
     </RootPage>
   );
 }
-
-Legal.propTypes = {
-  location: PropTypes.shape({
-    pathname: PropTypes.string
-  }).isRequired
-};
 
 export default Legal;
