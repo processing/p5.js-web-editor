@@ -23,46 +23,34 @@ router.get('/signup', (req, res) => {
   return res.send(renderIndex());
 });
 
-router.get('/projects/:project_id', async (req, res) => {
-  const exists = await projectExists(req.params.project_id);
-  sendHtml(req, res, exists);
+router.get('/projects/:project_id', (req, res) => {
+  projectExists(req.params.project_id, (exists) => sendHtml(req, res, exists));
 });
 
-router.get(
-  '/:username/sketches/:project_id/add-to-collection',
-  async (req, res) => {
-    const exists = await projectForUserExists(
-      req.params.username,
-      req.params.project_id
-    );
-    sendHtml(req, res, exists);
-  }
-);
-
-router.get('/:username/sketches/:project_id', async (req, res) => {
-  const exists = await projectForUserExists(
-    req.params.username,
-    req.params.project_id
+router.get('/:username/sketches/:project_id/add-to-collection', (req, res) => {
+  projectForUserExists(req.params.username, req.params.project_id, (exists) =>
+    sendHtml(req, res, exists)
   );
-  sendHtml(req, res, exists);
 });
 
-router.get('/:username/sketches', async (req, res) => {
-  const exists = await userExists(req.params.username);
-  sendHtml(req, res, exists);
-});
-
-router.get('/:username/full/:project_id', async (req, res) => {
-  const exists = await projectForUserExists(
-    req.params.username,
-    req.params.project_id
+router.get('/:username/sketches/:project_id', (req, res) => {
+  projectForUserExists(req.params.username, req.params.project_id, (exists) =>
+    sendHtml(req, res, exists)
   );
-  sendHtml(req, res, exists);
 });
 
-router.get('/full/:project_id', async (req, res) => {
-  const exists = await projectExists(req.params.project_id);
-  sendHtml(req, res, exists);
+router.get('/:username/sketches', (req, res) => {
+  userExists(req.params.username, (exists) => sendHtml(req, res, exists));
+});
+
+router.get('/:username/full/:project_id', (req, res) => {
+  projectForUserExists(req.params.username, req.params.project_id, (exists) =>
+    sendHtml(req, res, exists)
+  );
+});
+
+router.get('/full/:project_id', (req, res) => {
+  projectExists(req.params.project_id, (exists) => sendHtml(req, res, exists));
 });
 
 router.get('/login', (req, res) => {
@@ -100,11 +88,13 @@ router.get('/assets', (req, res) => {
   }
 });
 
-router.get('/:username/assets', async (req, res) => {
-  const exists = await userExists(req.params.username);
-  const isLoggedInUser = req.user && req.user.username === req.params.username;
-  const canAccess = exists && isLoggedInUser;
-  sendHtml(req, res, canAccess);
+router.get('/:username/assets', (req, res) => {
+  userExists(req.params.username, (exists) => {
+    const isLoggedInUser =
+      req.user && req.user.username === req.params.username;
+    const canAccess = exists && isLoggedInUser;
+    return sendHtml(req, res, canAccess);
+  });
 });
 
 router.get('/account', (req, res) => {
@@ -119,17 +109,14 @@ router.get('/about', (req, res) => {
   res.send(renderIndex());
 });
 
-router.get('/:username/collections/:id', async (req, res) => {
-  const exists = await collectionForUserExists(
-    req.params.username,
-    req.params.id
+router.get('/:username/collections/:id', (req, res) => {
+  collectionForUserExists(req.params.username, req.params.id, (exists) =>
+    sendHtml(req, res, exists)
   );
-  sendHtml(req, res, exists);
 });
 
-router.get('/:username/collections', async (req, res) => {
-  const exists = await userExists(req.params.username);
-  sendHtml(req, res, exists);
+router.get('/:username/collections', (req, res) => {
+  userExists(req.params.username, (exists) => sendHtml(req, res, exists));
 });
 
 router.get('/privacy-policy', (req, res) => {
