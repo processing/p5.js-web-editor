@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import getConfig from '../../utils/getConfig';
 import DevTools from './components/DevTools';
 import { setPreviousPath } from '../IDE/actions/ide';
@@ -14,9 +15,10 @@ function hideCookieConsent(pathname) {
   return false;
 }
 
-// TODO: get location from `useLocation` after upgrading react-router to v5.
-const App = ({ children, location }) => {
+const App = ({ children }) => {
   const dispatch = useDispatch();
+
+  const location = useLocation();
 
   const theme = useSelector((state) => state.preferences.theme);
   useEffect(() => {
@@ -59,13 +61,7 @@ const App = ({ children, location }) => {
 };
 
 App.propTypes = {
-  children: PropTypes.element,
-  location: PropTypes.shape({
-    pathname: PropTypes.string,
-    state: PropTypes.shape({
-      skipSavingPath: PropTypes.bool
-    })
-  }).isRequired
+  children: PropTypes.element
 };
 
 App.defaultProps = {
