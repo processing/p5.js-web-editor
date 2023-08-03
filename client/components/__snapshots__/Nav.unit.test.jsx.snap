@@ -57,7 +57,9 @@ exports[`Nav renders correctly 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <a />
+              <a
+                href="/new-user/sketches"
+              />
             </li>
           </ul>
         </li>
@@ -195,7 +197,9 @@ exports[`Nav renders correctly 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <a />
+              <a
+                href="/about"
+              />
             </li>
           </ul>
         </li>
@@ -229,6 +233,7 @@ exports[`Nav renders dashboard version 1`] = `
         >
           <a
             class="nav__back-link"
+            href="/"
           >
             <test-file-stub
               aria-hidden="true"
@@ -447,7 +452,9 @@ exports[`Nav renders editor version 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <a>
+              <a
+                href="/about"
+              >
                 About
               </a>
             </li>

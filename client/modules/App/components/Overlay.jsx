@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useCallback, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { browserHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import useModalClose from '../../../common/useModalClose';
 
@@ -20,6 +20,8 @@ const Overlay = ({
   const previousPath = useSelector((state) => state.ide.previousPath);
 
   const ref = useRef(null);
+
+  const browserHistory = useHistory();
 
   const close = useCallback(() => {
     const node = ref.current;

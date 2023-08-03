@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { useLocation, Prompt } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { withTranslation } from 'react-i18next';
+import { connect, useSelector } from 'react-redux';
+import { useTranslation, withTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 import SplitPane from 'react-split-pane';
 import Editor from '../components/Editor';
@@ -41,22 +41,37 @@ function getTitle(props) {
   return id ? `p5.js Web Editor | ${props.project.name}` : 'p5.js Web Editor';
 }
 
-function warnIfUnsavedChanges(props, nextLocation) {
-  const toAuth =
-    nextLocation &&
-    nextLocation.action === 'PUSH' &&
-    (nextLocation.pathname === '/login' || nextLocation.pathname === '/signup');
-  const onAuth =
-    nextLocation &&
-    (props.location.pathname === '/login' ||
-      props.location.pathname === '/signup');
-  if (props.ide.unsavedChanges && !toAuth && !onAuth) {
-    if (!window.confirm(props.t('Nav.WarningUnsavedChanges'))) {
-      return false;
-    }
-    return true;
-  }
-  return true;
+function isAuth(pathname) {
+  return pathname === '/login' || pathname === '/signup';
+}
+
+function isOverlay(pathname) {
+  return pathname === '/about' || pathname === '/feedback';
+}
+
+function WarnIfUnsavedChanges() {
+  const hasUnsavedChanges = useSelector((state) => state.ide.unsavedChanges);
+
+  const { t } = useTranslation();
+
+  const currentLocation = useLocation();
+
+  return (
+    <Prompt
+      when={hasUnsavedChanges}
+      message={(nextLocation) => {
+        if (
+          isAuth(nextLocation.pathname) ||
+          isAuth(currentLocation.pathname) ||
+          isOverlay(nextLocation.pathname) ||
+          isOverlay(currentLocation.pathname)
+        ) {
+          return true; // allow navigation
+        }
+        return t('Nav.WarningUnsavedChanges');
+      }}
+    />
+  );
 }
 
 class IDEView extends React.Component {
@@ -85,11 +100,6 @@ class IDEView extends React.Component {
 
     this.isMac = navigator.userAgent.toLowerCase().indexOf('mac') !== -1;
     document.addEventListener('keydown', this.handleGlobalKeydown, false);
-
-    this.props.router.setRouteLeaveHook(
-      this.props.route,
-      this.handleUnsavedChanges
-    );
 
     // window.onbeforeunload = this.handleUnsavedChanges;
     window.addEventListener('beforeunload', this.handleBeforeUnload);
@@ -139,12 +149,6 @@ class IDEView extends React.Component {
     } else if (this.autosaveInterval) {
       clearTimeout(this.autosaveInterval);
       this.autosaveInterval = null;
-    }
-
-    if (this.props.route.path !== prevProps.route.path) {
-      this.props.router.setRouteLeaveHook(this.props.route, () =>
-        warnIfUnsavedChanges(this.props)
-      );
     }
   }
   componentWillUnmount() {
@@ -223,9 +227,6 @@ class IDEView extends React.Component {
     }
   }
 
-  handleUnsavedChanges = (nextLocation) =>
-    warnIfUnsavedChanges(this.props, nextLocation);
-
   handleBeforeUnload = (e) => {
     const confirmationMessage = this.props.t('Nav.WarningUnsavedChanges');
     if (this.props.ide.unsavedChanges) {
@@ -246,11 +247,9 @@ class IDEView extends React.Component {
         <Helmet>
           <title>{getTitle(this.props)}</title>
         </Helmet>
+        <WarnIfUnsavedChanges currentLocation={this.props.location} />
         <Toast />
-        <Nav
-          warnIfUnsavedChanges={this.handleUnsavedChanges}
-          cmController={this.cmController}
-        />
+        <Nav cmController={this.cmController} />
         <Toolbar
           syncFileContent={this.syncFileContent}
           key={this.props.project.id}
@@ -522,10 +521,6 @@ IDEView.propTypes = {
   closeShareModal: PropTypes.func.isRequired,
   closeKeyboardShortcutModal: PropTypes.func.isRequired,
   autosaveProject: PropTypes.func.isRequired,
-  router: PropTypes.shape({
-    setRouteLeaveHook: PropTypes.func
-  }).isRequired,
-  route: PropTypes.oneOfType([PropTypes.object, PropTypes.element]).isRequired,
   setTheme: PropTypes.func.isRequired,
   setPreviousPath: PropTypes.func.isRequired,
   showErrorModal: PropTypes.func.isRequired,
@@ -570,5 +565,5 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default withTranslation()(
-  withRouter(connect(mapStateToProps, mapDispatchToProps)(IDEView))
+  connect(mapStateToProps, mapDispatchToProps)(IDEView)
 );
