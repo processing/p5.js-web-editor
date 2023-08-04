@@ -1,10 +1,9 @@
 import React from 'react';
-import { browserHistory, Route, Router, IndexRoute } from 'react-router';
+import { browserHistory, Route, Router } from 'react-router';
 import { Provider } from 'react-redux';
 import configureStore from '../store';
-import { render, screen, fireEvent, userEvent, waitFor } from '../test-utils';
+import { render, screen, fireEvent, waitFor } from '../test-utils';
 import ButtonOrLink from './ButtonOrLink';
-import routes from '../routes';
 
 describe('ButtonOrLink', () => {
   const clickHandler = jest.fn();
