@@ -16,8 +16,8 @@ import { metaKeyName, metaKey } from '../../../../utils/metaKey';
 import { getIsUserOwner } from '../../selectors/users';
 import { selectSketchPath } from '../../selectors/project';
 
-import CaretLeftIcon from '../images/left-arrow.svg';
-import LogoIcon from '../images/p5js-logo-small.svg';
+import CaretLeftIcon from '../../../../images/left-arrow.svg';
+import LogoIcon from '../../../../images/p5js-logo-small.svg';
 import NavDropdownMenu from '../../../../components/Nav/NavDropdownMenu';
 import NavMenuItem from '../../../../components/Nav/NavMenuItem';
 import NavBar from '../../../../components/Nav/NavBar';
