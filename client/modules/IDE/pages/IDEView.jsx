@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Prompt } from 'react-router-dom';
+import { useLocation, Prompt } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect, useSelector } from 'react-redux';
 import { useTranslation, withTranslation } from 'react-i18next';
@@ -50,10 +50,12 @@ function isOverlay(pathname) {
   return pathname === '/about' || pathname === '/feedback';
 }
 
-function WarnIfUnsavedChanges({ currentLocation }) {
+function WarnIfUnsavedChanges() {
   const hasUnsavedChanges = useSelector((state) => state.ide.unsavedChanges);
 
   const { t } = useTranslation();
+
+  const currentLocation = useLocation();
 
   return (
     <Prompt
@@ -72,12 +74,6 @@ function WarnIfUnsavedChanges({ currentLocation }) {
     />
   );
 }
-
-WarnIfUnsavedChanges.propTypes = {
-  currentLocation: PropTypes.shape({
-    pathname: PropTypes.string
-  }).isRequired
-};
 
 class IDEView extends React.Component {
   constructor(props) {

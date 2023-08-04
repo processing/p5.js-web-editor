@@ -1,6 +1,5 @@
 import React, { Suspense } from 'react';
 import { render } from 'react-dom';
-import { hot } from 'react-hot-loader/root';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 
@@ -30,11 +29,9 @@ const App = () => (
   </Provider>
 );
 
-const HotApp = hot(App);
-
 render(
   <Suspense fallback={<Loader />}>
-    <HotApp />
+    <App />
   </Suspense>,
   document.getElementById('root')
 );
