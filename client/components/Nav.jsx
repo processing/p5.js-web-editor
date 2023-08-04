@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router';
+import { Link } from 'react-router-dom';
 import { availableLanguages, languageKeyToLabel } from '../i18n';
 import * as IDEActions from '../modules/IDE/actions/ide';
 import * as toastActions from '../modules/IDE/actions/toast';
@@ -30,18 +30,19 @@ class Nav extends React.PureComponent {
     super(props);
     this.handleSave = this.handleSave.bind(this);
     this.handleNew = this.handleNew.bind(this);
+    this.handleDuplicate = this.handleDuplicate.bind(this);
     this.handleShare = this.handleShare.bind(this);
     this.handleDownload = this.handleDownload.bind(this);
     this.handleLangSelection = this.handleLangSelection.bind(this);
   }
 
   handleNew() {
-    const { unsavedChanges, warnIfUnsavedChanges } = this.props;
+    const { unsavedChanges } = this.props;
     if (!unsavedChanges) {
       this.props.showToast(1500);
       this.props.setToastText('Toast.OpenedNewSketch');
       this.props.newProject();
-    } else if (warnIfUnsavedChanges && warnIfUnsavedChanges()) {
+    } else if (window.confirm(this.props.t('Nav.WarningUnsavedChanges'))) {
       this.props.showToast(1500);
       this.props.setToastText('Toast.OpenedNewSketch');
       this.props.newProject();
@@ -56,6 +57,10 @@ class Nav extends React.PureComponent {
     }
   }
 
+  handleDuplicate() {
+    this.props.cloneProject();
+  }
+
   handleLangSelection(event) {
     this.props.setLanguage(event.target.value);
     this.props.showToast(1500);
@@ -68,11 +73,10 @@ class Nav extends React.PureComponent {
   }
 
   handleShare() {
-    const { username } = this.props.params;
     this.props.showShareModal(
       this.props.project.id,
       this.props.project.name,
-      username
+      this.props.project.owner.username
     );
   }
 
@@ -132,7 +136,7 @@ class Nav extends React.PureComponent {
           </NavMenuItem>
           <NavMenuItem
             hideIf={!this.props.project.id || !this.props.user.authenticated}
-            onClick={this.props.cloneProject}
+            onClick={this.handleDuplicate}
           >
             {this.props.t('Nav.File.Duplicate')}
           </NavMenuItem>
@@ -346,14 +350,14 @@ Nav.propTypes = {
     id: PropTypes.string,
     name: PropTypes.string,
     owner: PropTypes.shape({
-      id: PropTypes.string
+      id: PropTypes.string,
+      username: PropTypes.string
     })
   }),
   logoutUser: PropTypes.func.isRequired,
   showShareModal: PropTypes.func.isRequired,
   showErrorModal: PropTypes.func.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
-  warnIfUnsavedChanges: PropTypes.func,
   showKeyboardShortcutModal: PropTypes.func.isRequired,
   cmController: PropTypes.shape({
     tidyCode: PropTypes.func,
@@ -369,9 +373,6 @@ Nav.propTypes = {
   rootFile: PropTypes.shape({
     id: PropTypes.string.isRequired
   }).isRequired,
-  params: PropTypes.shape({
-    username: PropTypes.string
-  }),
   t: PropTypes.func.isRequired,
   setLanguage: PropTypes.func.isRequired,
   language: PropTypes.string.isRequired,
@@ -386,10 +387,6 @@ Nav.defaultProps = {
   },
   cmController: {},
   layout: 'project',
-  warnIfUnsavedChanges: undefined,
-  params: {
-    username: undefined
-  },
   editorLink: '/'
 };
 
@@ -415,6 +412,6 @@ const mapDispatchToProps = {
 };
 
 export default withTranslation()(
-  withRouter(connect(mapStateToProps, mapDispatchToProps)(Nav))
+  connect(mapStateToProps, mapDispatchToProps)(Nav)
 );
 export { Nav as NavComponent };

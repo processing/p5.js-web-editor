@@ -4,13 +4,3 @@
     color: getThemifyVariable('input-text-color');
   }
 }
-
-.dropzone .dz-preview.dz-image-preview {
-  background-color: transparent;
-}
-
-.uploader {
-  min-height: #{200 / $base-font-size}rem;
-  width: 100%;
-  text-align: center;
-}
