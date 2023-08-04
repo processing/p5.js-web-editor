@@ -1,6 +1,10 @@
 import React from 'react';
-import { render, screen, fireEvent } from '../test-utils';
+import { browserHistory, Route, Router, IndexRoute } from 'react-router';
+import { Provider } from 'react-redux';
+import configureStore from '../store';
+import { render, screen, fireEvent, userEvent, waitFor } from '../test-utils';
 import ButtonOrLink from './ButtonOrLink';
+import routes from '../routes';
 
 describe('ButtonOrLink', () => {
   const clickHandler = jest.fn();
@@ -25,8 +29,28 @@ describe('ButtonOrLink', () => {
     expect(link).toHaveAttribute('href', 'https://p5js.org');
   });
 
-  it('can render an internal link with react-router', () => {
-    render(<ButtonOrLink href="/about">About</ButtonOrLink>);
-    // TODO: how can this be tested? Needs a router provider?
+  it('can render an internal link with react-router', async () => {
+    const store = configureStore();
+    render(
+      <Provider store={store}>
+        <Router
+          history={browserHistory}
+          routes={
+            <Route
+              path="/"
+              component={() => <ButtonOrLink href="/about">About</ButtonOrLink>}
+            />
+          }
+        />
+      </Provider>
+    );
+
+    const link = screen.getByText('About');
+    fireEvent.click(link);
+    await waitFor(() =>
+      expect(browserHistory.getCurrentLocation()).toEqual(
+        expect.objectContaining({ pathname: '/about' })
+      )
+    );
   });
 });
