@@ -9,7 +9,7 @@ import SplitPane from 'react-split-pane';
 import Editor from '../components/Editor';
 import Sidebar from '../components/Sidebar';
 import PreviewFrame from '../components/PreviewFrame';
-import Toolbar from '../components/Toolbar';
+import Toolbar from '../components/Header/Toolbar';
 import Preferences from '../components/Preferences/index';
 import NewFileModal from '../components/NewFileModal';
 import NewFolderModal from '../components/NewFolderModal';
@@ -17,6 +17,7 @@ import UploadFileModal from '../components/UploadFileModal';
 import ShareModal from '../components/ShareModal';
 import KeyboardShortcutModal from '../components/KeyboardShortcutModal';
 import ErrorModal from '../components/ErrorModal';
+import Nav from '../components/Header/Nav';
 import Console from '../components/Console';
 import Toast from '../components/Toast';
 import * as FileActions from '../actions/files';
@@ -34,7 +35,6 @@ import Feedback from '../components/Feedback';
 import { CollectionSearchbar } from '../components/Searchbar';
 import { getIsUserOwner } from '../selectors/users';
 import RootPage from '../../../components/RootPage';
-import Nav from '../components/Header/Nav';
 
 function getTitle(props) {
   const { id } = props.project;
