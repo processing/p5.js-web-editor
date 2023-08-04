@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import LoginForm from '../components/LoginForm';
 import SocialAuthButton from '../components/SocialAuthButton';
-import Nav from '../../../components/Nav';
+import Nav from '../../IDE/components/Header/Nav';
 import RootPage from '../../../components/RootPage';
 
 function LoginView() {
