@@ -4,8 +4,8 @@ import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import LoginForm from '../components/LoginForm';
 import SocialAuthButton from '../components/SocialAuthButton';
-import Nav from '../../../components/Nav';
 import RootPage from '../../../components/RootPage';
+import Nav from '../../IDE/components/Header/Nav';
 
 function LoginView() {
   const { t } = useTranslation();

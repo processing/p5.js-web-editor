@@ -4,26 +4,23 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { availableLanguages, languageKeyToLabel } from '../i18n';
-import * as IDEActions from '../modules/IDE/actions/ide';
-import * as toastActions from '../modules/IDE/actions/toast';
-import * as projectActions from '../modules/IDE/actions/project';
-import {
-  setAllAccessibleOutput,
-  setLanguage
-} from '../modules/IDE/actions/preferences';
-import { logoutUser } from '../modules/User/actions';
+import { availableLanguages, languageKeyToLabel } from '../../../../i18n';
+import * as IDEActions from '../../actions/ide';
+import * as toastActions from '../../actions/toast';
+import * as projectActions from '../../actions/project';
+import { setAllAccessibleOutput, setLanguage } from '../../actions/preferences';
+import { logoutUser } from '../../../User/actions';
 
-import getConfig from '../utils/getConfig';
-import { metaKeyName, metaKey } from '../utils/metaKey';
-import { getIsUserOwner } from '../modules/IDE/selectors/users';
-import { selectSketchPath } from '../modules/IDE/selectors/project';
+import getConfig from '../../../../utils/getConfig';
+import { metaKeyName, metaKey } from '../../../../utils/metaKey';
+import { getIsUserOwner } from '../../selectors/users';
+import { selectSketchPath } from '../../selectors/project';
 
 import CaretLeftIcon from '../images/left-arrow.svg';
 import LogoIcon from '../images/p5js-logo-small.svg';
-import NavDropdownMenu from './Nav/NavDropdownMenu';
-import NavMenuItem from './Nav/NavMenuItem';
-import NavBar from './Nav/NavBar';
+import NavDropdownMenu from '../../../../components/Nav/NavDropdownMenu';
+import NavMenuItem from '../../../../components/Nav/NavMenuItem';
+import NavBar from '../../../../components/Nav/NavBar';
 
 class Nav extends React.PureComponent {
   constructor(props) {
