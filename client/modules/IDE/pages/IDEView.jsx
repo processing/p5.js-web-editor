@@ -17,7 +17,6 @@ import UploadFileModal from '../components/UploadFileModal';
 import ShareModal from '../components/ShareModal';
 import KeyboardShortcutModal from '../components/KeyboardShortcutModal';
 import ErrorModal from '../components/ErrorModal';
-import Nav from '../../../components/Nav';
 import Console from '../components/Console';
 import Toast from '../components/Toast';
 import * as FileActions from '../actions/files';
@@ -35,6 +34,7 @@ import Feedback from '../components/Feedback';
 import { CollectionSearchbar } from '../components/Searchbar';
 import { getIsUserOwner } from '../selectors/users';
 import RootPage from '../../../components/RootPage';
+import Nav from '../components/Header/Nav';
 
 function getTitle(props) {
   const { id } = props.project;
@@ -73,6 +73,8 @@ function WarnIfUnsavedChanges() {
     />
   );
 }
+
+export const CmControllerContext = React.createContext({});
 
 class IDEView extends React.Component {
   constructor(props) {
@@ -257,7 +259,9 @@ class IDEView extends React.Component {
         </Helmet>
         <WarnIfUnsavedChanges currentLocation={this.props.location} />
         <Toast />
-        <Nav cmController={this.cmController} />
+        <CmControllerContext.Provider value={{ current: this.cmController }}>
+          <Nav />
+        </CmControllerContext.Provider>
         <Toolbar
           syncFileContent={this.syncFileContent}
           key={this.props.project.id}
