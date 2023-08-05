@@ -17,7 +17,7 @@ import LogoIcon from '../../../../images/p5js-logo-small.svg';
 import { selectSketchPath } from '../../selectors/project';
 import { metaKey, metaKeyName } from '../../../../utils/metaKey';
 import { useSketchActions } from '../../hooks';
-import { getIsUserOwner } from '../../selectors/users';
+import { getAuthenticated, getIsUserOwner } from '../../selectors/users';
 import { cloneProject } from '../../actions/project';
 import {
   newFile,
@@ -63,10 +63,8 @@ LeftLayout.defaultProps = {
 };
 
 const UserMenu = () => {
-  const user = useSelector((state) => state.user);
-
   const isLoginEnabled = getConfig('LOGIN_ENABLED');
-  const isAuthenticated = user.authenticated;
+  const isAuthenticated = useSelector(getAuthenticated);
 
   if (isLoginEnabled && isAuthenticated) {
     return <AuthenticatedUserMenu />;
@@ -106,8 +104,10 @@ const DashboardMenu = () => {
 
 const ProjectMenu = (props) => {
   const isUserOwner = useSelector(getIsUserOwner);
-  const project = useSelector((state) => state?.project);
+  const project = useSelector((state) => state.project);
   const user = useSelector((state) => state.user);
+
+  const isUnsaved = !project?.id;
 
   // TODO: use selectRootFile selector
   const rootFile = useSelector(
@@ -145,21 +145,21 @@ const ProjectMenu = (props) => {
           hideIf={
             !getConfig('LOGIN_ENABLED') || (project?.owner && !isUserOwner)
           }
-          onClick={() => saveSketch(cmRef)}
+          onClick={() => saveSketch(cmRef.current)}
         >
           {t('Common.Save')}
           <span className="nav__keyboard-shortcut">{metaKeyName}+S</span>
         </NavMenuItem>
         <NavMenuItem
-          hideIf={!project?.id || !user.authenticated}
+          hideIf={isUnsaved || !user.authenticated}
           onClick={() => dispatch(cloneProject())}
         >
           {t('Nav.File.Duplicate')}
         </NavMenuItem>
-        <NavMenuItem hideIf={!project?.id} onClick={shareSketch}>
+        <NavMenuItem hideIf={isUnsaved} onClick={shareSketch}>
           {t('Nav.File.Share')}
         </NavMenuItem>
-        <NavMenuItem hideIf={!project?.id} onClick={downloadSketch}>
+        <NavMenuItem hideIf={isUnsaved} onClick={downloadSketch}>
           {t('Nav.File.Download')}
         </NavMenuItem>
         <NavMenuItem
@@ -172,7 +172,7 @@ const ProjectMenu = (props) => {
           hideIf={
             !getConfig('UI_COLLECTIONS_ENABLED') ||
             !user.authenticated ||
-            !project?.id
+            isUnsaved
           }
           href={`/${user.username}/sketches/${project?.id}/add-to-collection`}
         >
@@ -278,7 +278,7 @@ const UnauthenticatedUserMenu = () => {
 };
 
 const AuthenticatedUserMenu = () => {
-  const user = useSelector((state) => state.user);
+  const username = useSelector((state) => state.user.username);
 
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -290,20 +290,20 @@ const AuthenticatedUserMenu = () => {
         id="account"
         title={
           <span>
-            {t('Nav.Auth.Hello')}, {user.username}!
+            {t('Nav.Auth.Hello')}, {username}!
           </span>
         }
       >
-        <NavMenuItem href={`/${user.username}/sketches`}>
+        <NavMenuItem href={`/${username}/sketches`}>
           {t('Nav.Auth.MySketches')}
         </NavMenuItem>
         <NavMenuItem
-          href={`/${user.username}/collections`}
+          href={`/${username}/collections`}
           hideIf={!getConfig('UI_COLLECTIONS_ENABLED')}
         >
           {t('Nav.Auth.MyCollections')}
         </NavMenuItem>
-        <NavMenuItem href={`/${user.username}/assets`}>
+        <NavMenuItem href={`/${username}/assets`}>
           {t('Nav.Auth.MyAssets')}
         </NavMenuItem>
         <NavMenuItem href="/account">{t('Preferences.Settings')}</NavMenuItem>
