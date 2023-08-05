@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
@@ -38,6 +38,7 @@ const Toolbar = (props) => {
   const { changeSketchName, canEditProjectName } = useSketchActions();
 
   const projectNameInputRef = useRef();
+  const [nameInputValue, setNameInputValue] = useState(project.name);
 
   function handleKeyPress(event) {
     if (event.key === 'Enter') {
@@ -56,7 +57,7 @@ const Toolbar = (props) => {
   }
 
   function handleProjectNameSave() {
-    const newName = projectNameInputRef.current?.value;
+    const newName = nameInputValue;
     if (newName.length > 0) {
       dispatch(hideEditProjectName());
       changeSketchName(newName);
@@ -151,9 +152,11 @@ const Toolbar = (props) => {
           maxLength="128"
           className="toolbar__project-name-input"
           aria-label={t('Toolbar.NewSketchNameARIA')}
+          disabled={!canEditProjectName}
           ref={projectNameInputRef}
+          value={nameInputValue}
+          onChange={(e) => setNameInputValue(e.target.value)}
           onBlur={handleProjectNameSave}
-          onFocus={(event) => (event.target.value = project.name)}
           onKeyPress={handleKeyPress}
         />
         {(() => {
