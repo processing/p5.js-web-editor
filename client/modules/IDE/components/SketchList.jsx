@@ -545,9 +545,7 @@ class SketchList extends React.Component {
             }
           >
             <AddToCollectionList
-              project={this.state.sketchToAddToCollection}
-              username={this.props.username}
-              user={this.props.user}
+              projectId={this.state.sketchToAddToCollection.id}
             />
           </Overlay>
         )}

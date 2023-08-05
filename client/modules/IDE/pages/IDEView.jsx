@@ -396,11 +396,7 @@ class IDEView extends React.Component {
             actions={<CollectionSearchbar />}
             isFixedHeight
           >
-            <AddToCollectionList
-              projectId={this.props.params.project_id}
-              username={this.props.params.username}
-              user={this.props.user}
-            />
+            <AddToCollectionList projectId={this.props.params.project_id} />
           </Overlay>
         )}
         {this.props.ide.shareModalVisible && (
