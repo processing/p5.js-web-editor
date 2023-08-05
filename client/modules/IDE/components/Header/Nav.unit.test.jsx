@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, reduxRender } from '../test-utils';
+import { render, reduxRender } from '../../../../test-utils';
 
 import Nav, { NavComponent } from './Nav';
 
