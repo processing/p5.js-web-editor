@@ -1,17 +1,17 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { withTranslation } from 'react-i18next';
-import * as IDEActions from '../actions/ide';
-import * as preferenceActions from '../actions/preferences';
-import * as projectActions from '../actions/project';
+import * as IDEActions from '../../actions/ide';
+import * as preferenceActions from '../../actions/preferences';
+import * as projectActions from '../../actions/project';
 
-import PlayIcon from '../../../images/play.svg';
-import StopIcon from '../../../images/stop.svg';
-import PreferencesIcon from '../../../images/preferences.svg';
-import EditableInput from './EditableInput';
+import PlayIcon from '../../../../images/play.svg';
+import StopIcon from '../../../../images/stop.svg';
+import PreferencesIcon from '../../../../images/preferences.svg';
+import EditableInput from '../EditableInput';
 
 class Toolbar extends React.Component {
   constructor(props) {
