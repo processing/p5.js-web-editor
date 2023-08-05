@@ -159,25 +159,25 @@
   "KeyboardShortcuts": {
     "Title": " 단축키",
     "ShortcutsFollow": "코드 편집 키보드 단축키는 다음과 같습니다",
-    "SublimeText": "숭고한 텍스트 단축키",
+    "SublimeText": "서블라임 텍스트",
     "CodeEditing": {
-      "Tidy": "깔끔한",
+      "Tidy": "정돈하기",
       "FindText": "텍스트 찾기",
-      "FindNextMatch": "다음 경기 찾기",
-      "FindPrevMatch": "이전 경기 찾기",
-      "ReplaceTextMatch": "텍스트 일치 바꾸기",
+      "FindNextMatch": "다음 일치 항목 찾기",
+      "FindPrevMatch": "이전 일치 항목 찾기",
+      "ReplaceTextMatch": "텍스트 일치 항목 바꾸기",
       "IndentCodeLeft": "코드 왼쪽 들여쓰기",
       "IndentCodeRight": "코드 오른쪽 들여쓰기",
-      "CommentLine": "댓글 라인",
-      "FindNextTextMatch": "다음 텍스트 일치 찾기",
-      "FindPreviousTextMatch": "이전 텍스트 일치 찾기",
+      "CommentLine": "주석 처리",
+      "FindNextTextMatch": "다음 텍스트 일치 항목 찾기",
+      "FindPreviousTextMatch": "이전 텍스트 일치 항목 찾기",
       "CodeEditing": "코드 편집"
     },
     "General": {
       "StartSketch": "스케치 시작",
       "StopSketch": "스케치 중지",
-      "TurnOnAccessibleOutput": "접근 가능한 출력 켜기",
-      "TurnOffAccessibleOutput": "액세스 가능한 출력 끄기"
+      "TurnOnAccessibleOutput": "접근 가능한 출력 활성화",
+      "TurnOffAccessibleOutput": "접근 가능한 출력 비활성화"
     }
   },
   "Sidebar": {
