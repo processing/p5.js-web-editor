@@ -74,6 +74,8 @@ function WarnIfUnsavedChanges() {
   );
 }
 
+export const CmControllerContext = React.createContext({});
+
 class IDEView extends React.Component {
   constructor(props) {
     super(props);
@@ -257,7 +259,9 @@ class IDEView extends React.Component {
         </Helmet>
         <WarnIfUnsavedChanges currentLocation={this.props.location} />
         <Toast />
-        <Nav cmController={this.cmController} />
+        <CmControllerContext.Provider value={{ current: this.cmController }}>
+          <Nav />
+        </CmControllerContext.Provider>
         <Toolbar
           syncFileContent={this.syncFileContent}
           key={this.props.project.id}
