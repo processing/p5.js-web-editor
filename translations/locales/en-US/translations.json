@@ -195,10 +195,12 @@
       "ColorPicker": "Show Inline Color Picker"
     },
     "General": {
+      "General": "General",
       "StartSketch": "Start Sketch",
       "StopSketch": "Stop Sketch",
       "TurnOnAccessibleOutput": "Turn On Accessible Output",
-      "TurnOffAccessibleOutput": "Turn Off Accessible Output"
+      "TurnOffAccessibleOutput": "Turn Off Accessible Output",
+      "GoToReference": "Go to Reference for Selected Item in Hinter"
     }
   },
   "Sidebar": {
