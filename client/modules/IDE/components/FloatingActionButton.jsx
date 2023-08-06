@@ -51,8 +51,7 @@ const FloatingActionButton = (props) => {
         if (!isPlaying) {
           props.syncFileContent();
           dispatch(startSketch());
-        }
-        if (isPlaying) dispatch(stopSketch());
+        } else dispatch(stopSketch());
       }}
     >
       {isPlaying ? <StopIcon /> : <PlayIcon />}
