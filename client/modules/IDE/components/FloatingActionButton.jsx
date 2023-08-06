@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import PlayIcon from '../../../images/triangle-arrow-right.svg';
@@ -7,14 +8,14 @@ import StopIcon from '../../../images/stop.svg';
 import { prop, remSize } from '../../../theme';
 import { startSketch, stopSketch } from '../actions/ide';
 
-const Button = styled.div`
+const Button = styled.button`
   position: fixed;
   right: ${remSize(20)};
   bottom: ${remSize(20)};
   height: ${remSize(60)};
   width: ${remSize(60)};
   z-index: 3;
-  cursor: pointer;
+  padding: 0;
   ${prop('Button.secondary.default')};
   aspect-ratio: 1/1;
   border-radius: 99999px;
@@ -22,7 +23,7 @@ const Button = styled.div`
   justify-content: center;
   align-items: center;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  &[data-behaviour='stop'] {
+  &.stop {
     ${prop('Button.primary.default')}
     g {
       fill: ${prop('Button.primary.default.foreground')};
@@ -43,7 +44,7 @@ const FloatingActionButton = (props) => {
 
   return (
     <Button
-      data-behaviour={isPlaying ? 'stop' : 'run'}
+      className={classNames({ stop: isPlaying })}
       style={{ paddingLeft: isPlaying ? 0 : remSize(5) }}
       onClick={() => {
         if (!isPlaying) {
