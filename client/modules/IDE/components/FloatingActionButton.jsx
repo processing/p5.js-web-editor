@@ -22,8 +22,6 @@ const Button = styled.div`
   justify-content: center;
   align-items: center;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  /* scale: 0.75; */
-  /* padding-left: 1.8rem; */
   &[data-behaviour='stop'] {
     ${prop('Button.primary.default')}
     g {
@@ -34,7 +32,7 @@ const Button = styled.div`
     width: 35%;
     height: 35%;
     > g {
-      fill: white;
+      fill: ${prop('Button.primary.hover.foreground')};
     }
   }
 `;
