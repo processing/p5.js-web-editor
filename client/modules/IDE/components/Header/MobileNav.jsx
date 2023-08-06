@@ -2,10 +2,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router';
+import { useLocation } from 'react-router';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router';
 import { prop, remSize } from '../../../../theme';
-import AstriskIcon from '../../../../images/p5-asterisk.svg';
+import AsteriskIcon from '../../../../images/p5-asterisk.svg';
 import IconButton from '../../../../components/mobile/IconButton';
 import { AccountIcon, EditorIcon, MoreIcon } from '../../../../common/icons';
 import { newFile, newFolder, openPreferences } from '../../actions/ide';
@@ -145,7 +146,10 @@ const MobileNav = (props) => {
   const project = useSelector((state) => state.project);
   const user = useSelector((state) => state.user);
   const [title, setTitle] = useState();
-  const navigate = useNavigate();
+
+  // use the useNavigate hook in the react router v6
+  const history = useHistory();
+  const navigate = (url) => history.push(url);
 
   const { pathname } = useLocation();
   const editorLink = useSelector(selectSketchPath);
@@ -176,7 +180,7 @@ const MobileNav = (props) => {
     setTitle(resolveTitle(pathname));
   }, [pathname, project]);
 
-  const Logo = AstriskIcon;
+  const Logo = AsteriskIcon;
   return (
     <Nav>
       <LogoContainer>
@@ -221,7 +225,10 @@ const MobileNav = (props) => {
 const AccoutnMenu = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
+  // use the useNavigate hook in the react router v6
+  const history = useHistory();
+  const navigate = (url) => history.push(url);
 
   return (
     <div>
@@ -262,7 +269,8 @@ const MoreMenu = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { newSketch, saveSketch } = useSketchActions();
-  const navigate = useNavigate();
+  const history = useHistory();
+  const navigate = (url) => history.push(url);
 
   const cmRef = useContext(CmControllerContext);
 
