@@ -1,5 +1,4 @@
 import React from 'react';
-import { act } from 'react-dom/test-utils';
 import { fireEvent, render, screen } from '../../../../test-utils';
 import Preferences from './index';
 
@@ -66,9 +65,7 @@ describe('<Preferences />', () => {
   describe('font tests', () => {
     it('font size increase button says increase', () => {
       // render the component
-      act(() => {
-        subject();
-      });
+      subject();
 
       // get ahold of the button for increasing text size
       const fontPlusButton = screen.getByRole('button', {
@@ -76,14 +73,12 @@ describe('<Preferences />', () => {
       });
 
       // check that button says says "Increase"
-      expect(fontPlusButton.textContent.toLowerCase()).toBe('increase');
+      expect(fontPlusButton).toHaveTextContent(/increase/i);
     });
 
     it('increase font size by 2 when clicking plus button', () => {
       // render the component with font size set to 12
-      act(() => {
-        subject();
-      });
+      subject();
 
       // get ahold of the button for increasing text size
       const fontPlusButton = screen.getByRole('button', {
@@ -91,20 +86,16 @@ describe('<Preferences />', () => {
       });
 
       // click the button
-      act(() => {
-        fireEvent.click(fontPlusButton);
-      });
+      fireEvent.click(fontPlusButton);
 
       // expect that setFontSize has been called once with the argument 14
       expect(props.setFontSize).toHaveBeenCalledTimes(1);
-      expect(props.setFontSize.mock.calls[0][0]).toBe(14);
+      expect(props.setFontSize).toHaveBeenCalledWith(14);
     });
 
     it('font size decrease button says decrease', () => {
       // render the component with font size set to 12
-      act(() => {
-        subject();
-      });
+      subject();
 
       // get ahold of the button for decreasing font size
       const fontPlusButton = screen.getByRole('button', {
@@ -112,14 +103,12 @@ describe('<Preferences />', () => {
       });
 
       // check that button says "decrease"
-      expect(fontPlusButton.textContent.toLowerCase()).toBe('decrease');
+      expect(fontPlusButton).toHaveTextContent(/decrease/i);
     });
 
     it('decrease font size by 2 when clicking minus button', () => {
       // render the component with font size set to 12
-      act(() => {
-        subject();
-      });
+      subject();
 
       // get ahold of the button for decreasing text size
       const fontMinusButton = screen.getByRole('button', {
@@ -127,154 +116,122 @@ describe('<Preferences />', () => {
       });
 
       // click it
-      act(() => {
-        fireEvent.click(fontMinusButton);
-      });
+      fireEvent.click(fontMinusButton);
 
       // expect that setFontSize would have been called once with argument 10
       expect(props.setFontSize).toHaveBeenCalledTimes(1);
-      expect(props.setFontSize.mock.calls[0][0]).toBe(10);
+      expect(props.setFontSize).toHaveBeenCalledWith(10);
     });
 
     it('font text field changes on manual text input', () => {
       // render the component with font size set to 12
-      act(() => {
-        subject();
-      });
+      subject();
 
       // get ahold of the text field
       const input = screen.getByRole('textbox', { name: /font size/i });
 
       // change input to 24
-      act(() => {
-        fireEvent.change(input, { target: { value: '24' } });
-      });
+      fireEvent.change(input, { target: { value: '24' } });
 
       // submit form
-      act(() => {
-        fireEvent.submit(
-          screen.getByRole('form', {
-            name: /set font size/i
-          })
-        );
-      });
+      fireEvent.submit(
+        screen.getByRole('form', {
+          name: /set font size/i
+        })
+      );
 
       // expect that setFontSize was called once with 24
       expect(props.setFontSize).toHaveBeenCalledTimes(1);
-      expect(props.setFontSize.mock.calls[0][0]).toBe(24);
+      expect(props.setFontSize).toHaveBeenCalledWith(24);
     });
 
     it('font size CAN NOT go over 36', () => {
       // render the component
-      act(() => {
-        subject();
-      });
+      subject();
 
       // get ahold of the text field
       const input = screen.getByRole('textbox', { name: /font size/i });
 
-      act(() => {
-        fireEvent.change(input, { target: { value: '100' } });
-      });
+      fireEvent.change(input, { target: { value: '100' } });
 
-      expect(input.value).toBe('100');
+      expect(input).toHaveValue('100');
 
-      act(() => {
-        fireEvent.submit(
-          screen.getByRole('form', {
-            name: /set font size/i
-          })
-        );
-      });
+      fireEvent.submit(
+        screen.getByRole('form', {
+          name: /set font size/i
+        })
+      );
 
       expect(props.setFontSize).toHaveBeenCalledTimes(1);
-      expect(props.setFontSize.mock.calls[0][0]).toBe(36);
+      expect(props.setFontSize).toHaveBeenCalledWith(36);
     });
 
     it('font size CAN NOT go under 8', () => {
       // render the component
-      act(() => {
-        subject();
-      });
+      subject();
 
       // get ahold of the text field
       const input = screen.getByRole('textbox', { name: /font size/i });
 
-      act(() => {
-        fireEvent.change(input, { target: { value: '0' } });
-      });
+      fireEvent.change(input, { target: { value: '0' } });
 
-      expect(input.value).toBe('0');
+      expect(input).toHaveValue('0');
 
-      act(() => {
-        fireEvent.submit(
-          screen.getByRole('form', {
-            name: /set font size/i
-          })
-        );
-      });
+      fireEvent.submit(
+        screen.getByRole('form', {
+          name: /set font size/i
+        })
+      );
 
       expect(props.setFontSize).toHaveBeenCalledTimes(1);
-      expect(props.setFontSize.mock.calls[0][0]).toBe(8);
+      expect(props.setFontSize).toHaveBeenCalledWith(8);
     });
 
     // this case is a bit synthetic because we wouldn't be able to type
     // h and then i, but it tests the same idea
     it('font size input field does NOT take non-integers', () => {
       // render the component
-      act(() => {
-        subject();
-      });
+      subject();
 
       // get ahold of the text field
       const input = screen.getByRole('textbox', { name: /font size/i });
 
-      act(() => {
-        fireEvent.change(input, { target: { value: 'hi' } });
-      });
+      fireEvent.change(input, { target: { value: 'hi' } });
 
       // it shouldnt have changed at all
-      expect(input.value).toBe('12');
+      expect(input).toHaveValue('12');
 
       // we hit submit
-      act(() => {
-        fireEvent.submit(
-          screen.getByRole('form', {
-            name: /set font size/i
-          })
-        );
-      });
+      fireEvent.submit(
+        screen.getByRole('form', {
+          name: /set font size/i
+        })
+      );
 
       // it still sets the font size but it's still 12
       expect(props.setFontSize).toHaveBeenCalledTimes(1);
-      expect(props.setFontSize.mock.calls[0][0]).toBe(12);
+      expect(props.setFontSize).toHaveBeenCalledWith(12);
     });
 
     it('font size input field does NOT take "-"', () => {
       // render the component
-      act(() => {
-        subject();
-      });
+      subject();
 
       // get ahold of the text field
       const input = screen.getByRole('textbox', { name: /font size/i });
 
-      act(() => {
-        fireEvent.change(input, { target: { value: '-' } });
-      });
+      fireEvent.change(input, { target: { value: '-' } });
 
-      expect(input.value).toBe('12');
+      expect(input).toHaveValue('12');
 
-      act(() => {
-        fireEvent.submit(
-          screen.getByRole('form', {
-            name: /set font size/i
-          })
-        );
-      });
+      fireEvent.submit(
+        screen.getByRole('form', {
+          name: /set font size/i
+        })
+      );
 
       expect(props.setFontSize).toHaveBeenCalledTimes(1);
-      expect(props.setFontSize.mock.calls[0][0]).toBe(12);
+      expect(props.setFontSize).toHaveBeenCalledWith(12);
     });
   });
 
@@ -285,28 +242,24 @@ describe('<Preferences />', () => {
     setterExpectedArgument
   ) => {
     // make sure one is false and the other is true
-    expect(checkedRadio.checked).toBe(true);
-    expect(uncheckedRadio.checked).toBe(false);
+    expect(checkedRadio).toBeChecked();
+    expect(uncheckedRadio).not.toBeChecked();
 
     // click on the one already selected
-    act(() => {
-      fireEvent.click(checkedRadio);
-    });
+    fireEvent.click(checkedRadio);
 
     // the value has not changed so OnChange has not been called
     expect(setter).toHaveBeenCalledTimes(0);
     // this radio buttons should still be the same
-    expect(checkedRadio.checked).toBe(true);
-    expect(uncheckedRadio.checked).toBe(false);
+    expect(checkedRadio).toBeChecked();
+    expect(uncheckedRadio).not.toBeChecked();
 
     // now we click the other one that's not yet selected
-    act(() => {
-      fireEvent.click(uncheckedRadio);
-    });
+    fireEvent.click(uncheckedRadio);
 
     // expect that the setter function was called with the value true
     expect(setter).toHaveBeenCalledTimes(1);
-    expect(setter.mock.calls[0][0]).toBe(setterExpectedArgument);
+    expect(setter).toHaveBeenCalledWith(setterExpectedArgument);
   };
 
   describe('testing theme switching', () => {
@@ -316,24 +269,20 @@ describe('<Preferences />', () => {
       });
 
       it('switch to light', () => {
-        act(() => {
-          subject();
-        });
+        subject();
 
         const themeRadioCurrent = screen.getByRole('radio', {
           name: /dark theme on/i
         });
-        expect(themeRadioCurrent.checked).toBe(true);
+        expect(themeRadioCurrent).toBeChecked();
 
         const themeRadioAfter = screen.getByRole('radio', {
           name: /light theme on/i
         });
-        act(() => {
-          fireEvent.click(themeRadioAfter);
-        });
+        fireEvent.click(themeRadioAfter);
 
         expect(props.setTheme).toHaveBeenCalledTimes(1);
-        expect(props.setTheme.mock.calls[0][0]).toBe('light');
+        expect(props.setTheme).toHaveBeenCalledWith('light');
       });
     });
 
@@ -343,53 +292,44 @@ describe('<Preferences />', () => {
       });
 
       it('switch to dark', () => {
-        act(() => {
-          subject();
-        });
+        subject();
 
         const themeRadioCurrent = screen.getByRole('radio', {
           name: /light theme on/i
         });
-        expect(themeRadioCurrent.checked).toBe(true);
+        expect(themeRadioCurrent).toBeChecked();
 
         const themeRadioAfter = screen.getByRole('radio', {
           name: /dark theme on/i
         });
-        act(() => {
-          fireEvent.click(themeRadioAfter);
-        });
+        fireEvent.click(themeRadioAfter);
 
         expect(props.setTheme).toHaveBeenCalledTimes(1);
-        expect(props.setTheme.mock.calls[0][0]).toBe('dark');
+        expect(props.setTheme).toHaveBeenCalledWith('dark');
       });
 
       it('switch to contrast', () => {
-        act(() => {
-          subject();
-        });
+        subject();
+
         const themeRadioCurrent = screen.getByRole('radio', {
           name: /light theme on/i
         });
-        expect(themeRadioCurrent.checked).toBe(true);
+        expect(themeRadioCurrent).toBeChecked();
 
         const themeRadioAfter = screen.getByRole('radio', {
           name: /high contrast theme on/i
         });
-        act(() => {
-          fireEvent.click(themeRadioAfter);
-        });
+        fireEvent.click(themeRadioAfter);
 
         expect(props.setTheme).toHaveBeenCalledTimes(1);
-        expect(props.setTheme.mock.calls[0][0]).toBe('contrast');
+        expect(props.setTheme).toHaveBeenCalledWith('contrast');
       });
     });
   });
 
   describe('testing toggle UI elements on starting tab', () => {
     it('autosave toggle, starting at false', () => {
-      act(() => {
-        subject();
-      });
+      subject();
 
       // get ahold of the radio buttons for toggling autosave
       const autosaveRadioFalse = screen.getByRole('radio', {
@@ -409,9 +349,7 @@ describe('<Preferences />', () => {
 
     it('autocloseBracketsQuotes toggle, starting at false', () => {
       // render the component with autocloseBracketsQuotes prop set to false
-      act(() => {
-        subject();
-      });
+      subject();
 
       // get ahold of the radio buttons for toggling autocloseBracketsQuotes
       const autocloseRadioFalse = screen.getByRole('radio', {
@@ -431,9 +369,7 @@ describe('<Preferences />', () => {
 
     it('autocompleteHinter toggle, starting at false', () => {
       // render the component with autocompleteHinter prop set to false
-      act(() => {
-        subject();
-      });
+      subject();
 
       // get ahold of the radio buttons for toggling autocompleteHinter
       const autocompleteRadioFalse = screen.getByRole('radio', {
@@ -458,9 +394,7 @@ describe('<Preferences />', () => {
 
       it('autosave toggle, starting at true', () => {
         // render the component with autosave prop set to true
-        act(() => {
-          subject();
-        });
+        subject();
 
         // get ahold of the radio buttons for toggling autosave
         const autosaveRadioFalse = screen.getByRole('radio', {
@@ -485,9 +419,7 @@ describe('<Preferences />', () => {
       });
 
       it('autocloseBracketsQuotes toggle, starting at true', () => {
-        act(() => {
-          subject();
-        });
+        subject();
 
         // get ahold of the radio buttons for toggling autocloseBracketsQuotes
         const autocloseRadioFalse = screen.getByRole('radio', {
@@ -513,9 +445,7 @@ describe('<Preferences />', () => {
 
       it('autocompleteHinter toggle, starting at true', () => {
         // render the component with autocompleteHinter prop set to true
-        act(() => {
-          subject();
-        });
+        subject();
 
         // get ahold of the radio buttons for toggling autocompleteHinter
         const autocompleteRadioFalse = screen.getByRole('radio', {
@@ -541,9 +471,7 @@ describe('<Preferences />', () => {
 
       it('linewrap toggle, starting at false', () => {
         // render the component with linewrap prop set to false
-        act(() => {
-          subject();
-        });
+        subject();
 
         // get ahold of the radio buttons for toggling linewrap
         const linewrapRadioFalse = screen.getByRole('radio', {
@@ -569,9 +497,7 @@ describe('<Preferences />', () => {
 
       it('linewrap toggle, starting at true', () => {
         // render the component with linewrap prop set to false
-        act(() => {
-          subject();
-        });
+        subject();
 
         // get ahold of the radio buttons for toggling linewrap
         const linewrapRadioFalse = screen.getByRole('radio', {
@@ -594,16 +520,10 @@ describe('<Preferences />', () => {
   describe('can toggle between general settings and accessibility tabs successfully', () => {
     it('can toggle sucessfully', () => {
       // render the component with lineNumbers prop set to false
-      act(() => {
-        subject();
-      });
+      subject();
 
       // switch to accessibility
-      act(() => {
-        fireEvent.click(
-          screen.getByRole('heading', { name: /accessibility/i })
-        );
-      });
+      fireEvent.click(screen.getByRole('heading', { name: /accessibility/i }));
 
       const accessibilityElement1 = screen.getByRole('radio', {
         name: /line numbers on/i
@@ -611,11 +531,9 @@ describe('<Preferences />', () => {
       expect(accessibilityElement1).toBeInTheDocument();
 
       // switch back
-      act(() => {
-        fireEvent.click(
-          screen.getByRole('heading', { name: /general settings/i })
-        );
-      });
+      fireEvent.click(
+        screen.getByRole('heading', { name: /general settings/i })
+      );
 
       const generalElement1 = screen.getByRole('radio', {
         name: /linewrap on/i
@@ -632,16 +550,12 @@ describe('<Preferences />', () => {
 
       it('lineNumbers toggle, starting at false', () => {
         // render the component with lineNumbers prop set to false
-        act(() => {
-          subject();
-        });
+        subject();
 
         // switch tabs
-        act(() => {
-          fireEvent.click(
-            screen.getByRole('heading', { name: /accessibility/i })
-          );
-        });
+        fireEvent.click(
+          screen.getByRole('heading', { name: /accessibility/i })
+        );
 
         // get ahold of the radio buttons for toggling linenumber settings
         const lineNumbersRadioFalse = screen.getByRole('radio', {
@@ -667,16 +581,12 @@ describe('<Preferences />', () => {
 
       it('lineNumbers toggle, starting at true', () => {
         // render the component with lineNumbers prop set to false
-        act(() => {
-          subject();
-        });
+        subject();
 
         // switch tabs
-        act(() => {
-          fireEvent.click(
-            screen.getByRole('heading', { name: /accessibility/i })
-          );
-        });
+        fireEvent.click(
+          screen.getByRole('heading', { name: /accessibility/i })
+        );
 
         // get ahold of the radio buttons for toggling linenumber settings
         const lineNumbersRadioFalse = screen.getByRole('radio', {
@@ -702,16 +612,12 @@ describe('<Preferences />', () => {
 
       it('lintWarning toggle, starting at false', () => {
         // render the component with lintWarning prop set to false
-        act(() => {
-          subject();
-        });
+        subject();
 
         // switch tabs
-        act(() => {
-          fireEvent.click(
-            screen.getByRole('heading', { name: /accessibility/i })
-          );
-        });
+        fireEvent.click(
+          screen.getByRole('heading', { name: /accessibility/i })
+        );
 
         // get ahold of the radio buttons for toggling line warning
         const lintWarningRadioFalse = screen.getByRole('radio', {
@@ -737,16 +643,12 @@ describe('<Preferences />', () => {
 
       it('lintWarning toggle, starting at true', () => {
         // render the component with lintWarning prop set to false
-        act(() => {
-          subject();
-        });
+        subject();
 
         // switch tabs
-        act(() => {
-          fireEvent.click(
-            screen.getByRole('heading', { name: /accessibility/i })
-          );
-        });
+        fireEvent.click(
+          screen.getByRole('heading', { name: /accessibility/i })
+        );
 
         // get ahold of the radio buttons for toggling line warning
         const lintWarningRadioFalse = screen.getByRole('radio', {
@@ -773,31 +675,23 @@ describe('<Preferences />', () => {
         gridOutput: startState && arialabel === 'table output on'
       };
 
-      act(() => {
-        subject();
-      });
+      subject();
 
       // switch tabs
-      act(() => {
-        fireEvent.click(
-          screen.getByRole('heading', { name: /accessibility/i })
-        );
-      });
+      fireEvent.click(screen.getByRole('heading', { name: /accessibility/i }));
 
       const testedCheckbox = screen.getByRole('checkbox', { name: arialabel });
 
       if (startState) {
-        expect(testedCheckbox.checked).toBe(true);
+        expect(testedCheckbox).toBeChecked();
       } else {
-        expect(testedCheckbox.checked).toBe(false);
+        expect(testedCheckbox).not.toBeChecked();
       }
 
-      act(() => {
-        fireEvent.click(testedCheckbox);
-      });
+      fireEvent.click(testedCheckbox);
 
       expect(props[setter]).toHaveBeenCalledTimes(1);
-      expect(props[setter].mock.calls[0][0]).toBe(!startState);
+      expect(props[setter]).toHaveBeenCalledWith(!startState);
     };
 
     it('clicking on text output checkbox to unselect it', () => {
@@ -826,16 +720,12 @@ describe('<Preferences />', () => {
       });
 
       it('multiple checkboxes can be selected', () => {
-        act(() => {
-          subject();
-        });
+        subject();
 
         // switch tabs
-        act(() => {
-          fireEvent.click(
-            screen.getByRole('heading', { name: /accessibility/i })
-          );
-        });
+        fireEvent.click(
+          screen.getByRole('heading', { name: /accessibility/i })
+        );
 
         const textOutputCheckbox = screen.getByRole('checkbox', {
           name: 'text output on'
@@ -844,8 +734,8 @@ describe('<Preferences />', () => {
           name: 'table output on'
         });
 
-        expect(textOutputCheckbox.checked).toBe(true);
-        expect(gridOutputCheckbox.checked).toBe(true);
+        expect(textOutputCheckbox).toBeChecked();
+        expect(gridOutputCheckbox).toBeChecked();
       });
     });
 
@@ -858,16 +748,12 @@ describe('<Preferences />', () => {
         };
       });
       it('none of the checkboxes can be selected', () => {
-        act(() => {
-          subject();
-        });
+        subject();
 
         // switch tabs
-        act(() => {
-          fireEvent.click(
-            screen.getByRole('heading', { name: /accessibility/i })
-          );
-        });
+        fireEvent.click(
+          screen.getByRole('heading', { name: /accessibility/i })
+        );
 
         const textOutputCheckbox = screen.getByRole('checkbox', {
           name: 'text output on'
@@ -876,8 +762,8 @@ describe('<Preferences />', () => {
           name: 'table output on'
         });
 
-        expect(textOutputCheckbox.checked).toBe(false);
-        expect(gridOutputCheckbox.checked).toBe(false);
+        expect(textOutputCheckbox).not.toBeChecked();
+        expect(gridOutputCheckbox).not.toBeChecked();
       });
     });
   });

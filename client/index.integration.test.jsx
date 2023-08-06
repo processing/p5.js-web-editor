@@ -3,7 +3,7 @@ import { rest } from 'msw';
 import React from 'react';
 import Routing from './routes';
 
-import { reduxRender, act, waitFor, screen, within } from './test-utils';
+import { reduxRender, waitFor, screen, within } from './test-utils';
 import configureStore from './store';
 import * as Actions from './modules/User/actions';
 import { userResponse } from './testData/testServerResponses';
@@ -60,9 +60,8 @@ describe('index.jsx integration', () => {
   const spy = jest.spyOn(Actions, 'getUser');
 
   beforeEach(async () => {
-    act(() => {
-      subject();
-    });
+    // eslint-disable-next-line testing-library/no-render-in-setup
+    subject();
 
     await waitFor(() => expect(spy).toHaveBeenCalledTimes(1));
   });
@@ -151,18 +150,14 @@ describe('index.jsx integration', () => {
   //   });
   //   const preview = screen.getByRole('main', { name: /sketch preview/i });
   //   expect(preview.getAttribute('srcdoc')).toBeFalsy();
-  //   act(() => {
-  //     fireEvent.click(playButton);
-  //   });
+  //   fireEvent.click(playButton);
 
   //   expect(preview.getAttribute('srcdoc')).toBeTruthy();
 
   //   const stopButton = screen.getByRole('button', {
   //     name: /stop sketch/i
   //   });
-  //   act(() => {
-  //     fireEvent.click(stopButton);
-  //   });
+  //   fireEvent.click(stopButton);
   //   expect(preview.getAttribute('srcdoc')).toMatch(/(^|")\s*($|")/);
   // });
 });
