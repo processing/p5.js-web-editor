@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { sortBy } from 'lodash';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
 import { useTranslation } from 'react-i18next';
+import MediaQuery from 'react-responsive';
 import NavDropdownMenu from '../../../../components/Nav/NavDropdownMenu';
 import NavMenuItem from '../../../../components/Nav/NavMenuItem';
 import { availableLanguages, languageKeyToLabel } from '../../../../i18n';
@@ -28,12 +28,21 @@ import {
 } from '../../actions/ide';
 import { logoutUser } from '../../../User/actions';
 import { CmControllerContext } from '../../pages/IDEView';
+import MobileNav from './MobileNav';
 
 const Nav = ({ layout }) => (
-  <NavBar>
-    <LeftLayout layout={layout} />
-    <UserMenu />
-  </NavBar>
+  <MediaQuery minWidth={770}>
+    {(matches) =>
+      matches ? (
+        <NavBar>
+          <LeftLayout layout={layout} />
+          <UserMenu />
+        </NavBar>
+      ) : (
+        <MobileNav />
+      )
+    }
+  </MediaQuery>
 );
 
 Nav.propTypes = {
