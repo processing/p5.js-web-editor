@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import ResetPasswordForm from '../components/ResetPasswordForm';
-import Nav from '../../IDE/components/Header/Nav';
 import RootPage from '../../../components/RootPage';
+import Nav from '../../IDE/components/Header/Nav';
 
 function ResetPasswordView() {
   const { t } = useTranslation();
