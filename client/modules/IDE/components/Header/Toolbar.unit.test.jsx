@@ -74,7 +74,8 @@ describe('<ToolbarComponent />', () => {
 
     expect(sketchName).toBeDisabled();
     await waitFor(() =>
-      expect(screen.getByLabelText('New sketch name').disabled).toBe(true)
+      // expect(screen.getByLabelText('New sketch name').disabled).toBe(true)
+      expect(screen.getByLabelText('New sketch name')).toBeDisabled()
     );
   });
 

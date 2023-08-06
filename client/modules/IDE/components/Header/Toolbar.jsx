@@ -31,7 +31,7 @@ const Toolbar = (props) => {
     (state) => state.ide
   );
   const project = useSelector((state) => state.project);
-  const { autorefresh } = useSelector((state) => state.preferences);
+  const autorefresh = useSelector((state) => state.preferences.autorefresh);
   const dispatch = useDispatch();
 
   const { t } = useTranslation();
@@ -43,7 +43,7 @@ const Toolbar = (props) => {
   function handleKeyPress(event) {
     if (event.key === 'Enter') {
       dispatch(hideEditProjectName());
-      projectNameInputRef.current.blur();
+      projectNameInputRef.current?.blur();
     }
   }
 
@@ -101,7 +101,6 @@ const Toolbar = (props) => {
         onClick={() => {
           props.syncFileContent();
           dispatch(startSketch());
-          console.log('play button pressed');
         }}
         aria-label={t('Toolbar.PlayOnlyVisualSketchARIA')}
         title={t('Toolbar.PlaySketchARIA')}
