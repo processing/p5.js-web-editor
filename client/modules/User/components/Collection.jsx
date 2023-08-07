@@ -473,7 +473,6 @@ class Collection extends React.Component {
                   isFixedHeight
                 >
                   <AddToCollectionSketchList
-                    username={this.props.username}
                     collection={this.props.collection}
                   />
                 </Overlay>
