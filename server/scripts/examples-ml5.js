@@ -75,12 +75,9 @@ async function fetchFileContent(item) {
       options.url !== null ||
       options.url !== ''
     ) {
-      try {
-        const { data } = await axios.request(options);
-        file.content = data;
-      } catch (err) {
-        throw err;
-      }
+      const { data } = await axios.request(options);
+      file.content = data;
+
       // NOTE: remove the URL property if there's content
       // Otherwise the p5 editor will try to pull from that url
       if (file.content !== null) delete file.url;
@@ -107,18 +104,13 @@ async function fetchFileContent(item) {
 }
 
 /**
- * STEP 1: Get the top level cateogories
+ * STEP 1: Get the top level categories
  */
 async function getCategories() {
-  try {
-    const options = Object.assign({}, githubRequestOptions);
-    options.url = `${options.url}/examples/p5js${branchRef}`;
-    const { data } = await axios.request(options);
-
-    return data;
-  } catch (err) {
-    return err;
-  }
+  const options = Object.assign({}, githubRequestOptions);
+  options.url = `${options.url}/examples/p5js${branchRef}`;
+  const { data } = await axios.request(options);
+  return data;
 }
 
 /**
@@ -170,12 +162,8 @@ async function traverseSketchTree(parentObject) {
   const options = Object.assign({}, githubRequestOptions);
   options.url = `${options.url}${parentObject.path}${branchRef}`;
 
-  try {
-    const { data } = await axios.request(options);
-    output.tree = data;
-  } catch (err) {
-    throw err;
-  }
+  const { data } = await axios.request(options);
+  output.tree = data;
 
   output.tree = output.tree.map((file) => traverseSketchTree(file));
 
@@ -287,12 +275,8 @@ async function getProjectsList() {
   const options = Object.assign({}, editorRequestOptions);
   options.url = `${options.url}/sketches`;
 
-  try {
-    const { data } = await axios.request(options);
-    return data.sketches;
-  } catch (err) {
-    throw err;
-  }
+  const { data } = await axios.request(options);
+  return data.sketches;
 }
 
 /**
@@ -303,12 +287,8 @@ async function deleteProject(project) {
   options.method = 'DELETE';
   options.url = `${options.url}/sketches/${project.id}`;
 
-  try {
-    const { data } = await axios.request(options);
-    return data;
-  } catch (err) {
-    throw err;
-  }
+  const { data } = await axios.request(options);
+  return data;
 }
 
 /**
@@ -320,12 +300,8 @@ async function createProject(project) {
   options.url = `${options.url}/sketches`;
   options.data = project;
 
-  try {
-    const { data } = await axios.request(options);
-    return data;
-  } catch (err) {
-    throw err;
-  }
+  const { data } = await axios.request(options);
+  return data;
 }
 
 /**
