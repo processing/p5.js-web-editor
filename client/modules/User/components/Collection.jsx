@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useState, useRef, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { useTranslation, withTranslation } from 'react-i18next';
 import classNames from 'classnames';
