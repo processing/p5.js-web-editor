@@ -1,12 +1,5 @@
 import React from 'react';
-
-import {
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-  within
-} from '../../../test-utils';
+import { fireEvent, render, screen, waitFor } from '../../../test-utils';
 import { FileNode } from './FileNode';
 
 describe('<FileNode />', () => {
@@ -14,14 +7,14 @@ describe('<FileNode />', () => {
     const renameButton = screen.getByText(/Rename/i);
     fireEvent.click(renameButton);
 
-    const input = screen.getByTestId('input');
+    const input = screen.getByRole('textbox');
     fireEvent.change(input, { target: { value: newFileName } });
     fireEvent.blur(input);
   };
 
   const expectFileNameToBe = async (expectedName) => {
-    const name = screen.getByTestId('file-name');
-    await waitFor(() => within(name).queryByText(expectedName));
+    const name = await screen.findByRole('button', { name: expectedName });
+    expect(name).toBeInTheDocument();
   };
 
   const renderFileNode = (fileType, extraProps = {}) => {

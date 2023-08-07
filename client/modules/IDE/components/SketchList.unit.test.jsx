@@ -3,7 +3,6 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { setupServer } from 'msw/node';
 import { rest } from 'msw';
-import { act } from 'react-dom/test-utils';
 import SketchList from './SketchList';
 import { reduxRender, fireEvent, screen, within } from '../../../test-utils';
 import { initialTestState } from '../../../testData/testReduxStore';
@@ -37,30 +36,22 @@ describe('<Sketchlist />', () => {
   });
 
   it('has sample projects', () => {
-    act(() => {
-      subject();
-    });
+    subject();
     expect(screen.getByText('testsketch1')).toBeInTheDocument();
     expect(screen.getByText('testsketch2')).toBeInTheDocument();
   });
 
   it('clicking on date created row header dispatches a reordering action', () => {
-    act(() => {
-      subject();
-    });
+    subject();
 
-    act(() => {
-      fireEvent.click(screen.getByText(/date created/i));
-    });
+    fireEvent.click(screen.getByText(/date created/i));
 
     const expectedAction = [{ type: 'TOGGLE_DIRECTION', field: 'createdAt' }];
     expect(store.getActions()).toEqual(expect.arrayContaining(expectedAction));
   });
 
   it('clicking on dropdown arrow opens sketch options - sketches belong to user', () => {
-    act(() => {
-      subject();
-    });
+    subject();
 
     const row = screen.getByRole('row', {
       name: /testsketch1/
@@ -70,15 +61,13 @@ describe('<Sketchlist />', () => {
       name: 'Toggle Open/Close Sketch Options'
     });
 
-    act(() => {
-      fireEvent.click(dropdown);
-    });
+    fireEvent.click(dropdown);
 
-    expect(screen.queryByText('Rename')).toBeInTheDocument();
-    expect(screen.queryByText('Duplicate')).toBeInTheDocument();
-    expect(screen.queryByText('Download')).toBeInTheDocument();
-    expect(screen.queryByText('Add to collection')).toBeInTheDocument();
-    expect(screen.queryByText('Delete')).toBeInTheDocument();
+    expect(screen.getByText('Rename')).toBeInTheDocument();
+    expect(screen.getByText('Duplicate')).toBeInTheDocument();
+    expect(screen.getByText('Download')).toBeInTheDocument();
+    expect(screen.getByText('Add to collection')).toBeInTheDocument();
+    expect(screen.getByText('Delete')).toBeInTheDocument();
   });
 
   it('snapshot testing', () => {
@@ -92,9 +81,7 @@ describe('<Sketchlist />', () => {
     });
 
     it('clicking on dropdown arrow opens sketch options without Rename or Delete option', () => {
-      act(() => {
-        subject();
-      });
+      subject();
 
       const row = screen.getByRole('row', {
         name: /testsketch1/
@@ -104,14 +91,12 @@ describe('<Sketchlist />', () => {
         name: 'Toggle Open/Close Sketch Options'
       });
 
-      act(() => {
-        fireEvent.click(dropdown);
-      });
+      fireEvent.click(dropdown);
 
       expect(screen.queryByText('Rename')).not.toBeInTheDocument();
-      expect(screen.queryByText('Duplicate')).toBeInTheDocument();
-      expect(screen.queryByText('Download')).toBeInTheDocument();
-      expect(screen.queryByText('Add to collection')).toBeInTheDocument();
+      expect(screen.getByText('Duplicate')).toBeInTheDocument();
+      expect(screen.getByText('Download')).toBeInTheDocument();
+      expect(screen.getByText('Add to collection')).toBeInTheDocument();
       expect(screen.queryByText('Delete')).not.toBeInTheDocument();
     });
   });

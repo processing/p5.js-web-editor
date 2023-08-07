@@ -1,7 +1,6 @@
 import React from 'react';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { act } from 'react-dom/test-utils';
 import Editor from './Editor';
 import { reduxRender } from '../../../test-utils';
 import { initialTestState } from '../../../testData/testReduxStore';
@@ -21,8 +20,6 @@ describe('<Editor />', () => {
   });
 
   it('renders successfully', () => {
-    act(() => {
-      subject();
-    });
+    subject();
   });
 });

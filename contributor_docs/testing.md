@@ -298,7 +298,6 @@ If it doesn't contain `connect(mapStateToProps, mapDispatchToProps)(ComponentNam
 *MyComponent.test.jsx*
 ```js
 import React from 'react';
-import { act } from 'react-dom/test-utils';
 import { fireEvent, render, screen } from '../../../../test-utils';
 import MyComponent from './MyComponent';
 
@@ -321,9 +320,7 @@ describe('<MyComponent />', () => {
     
   it('I am the test description', () => {
     // render the component
-    act(() => {
-      subject();
-    });
+    subject();
     
     /* Tests go here!
      * You can access mock functions from subjectProps. 
@@ -339,9 +336,7 @@ describe('<MyComponent />', () => {
     });
 
     it("here's that test with a different prop", () => {
-      act(() => {
-        subject();
-      });
+      subject();
       //test here
     });
   });
@@ -352,11 +347,9 @@ describe('<MyComponent />', () => {
 Consider what you want to test. Some examples are:
 - User input results in the [expected function being called with the expected argument](https://jestjs.io/docs/mock-functions). 
   ```js
-  act(() => {
-    fireEvent.click(screen.getByLabelText('Username'));
-  });
+  fireEvent.click(screen.getByLabelText('Username'));
   expect(yourMockFunction).toHaveBeenCalledTimes(1);
-  expect(yourMockFunction.mock.calls[0][0]).toBe(argument);
+  expect(yourMockFunction).toHaveBeenCalledWith(argument);
   ``` 
 
 ## Testing Redux
@@ -400,7 +393,6 @@ Altogether, it might look something like this.
 import React from 'react';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { act } from 'react-dom/test-utils';
 import MyReduxComponent from './MyReduxComponent';
 import { reduxRender, fireEvent, screen } from '../../../test-utils';
 import { initialTestState } from '../../../testData/testReduxStore';
@@ -424,9 +416,7 @@ describe('<MyReduxComponent />', () => {
     
   it('I am the test description', () => {
     // render the component
-    act(() => {
-      subject();
-    });
+    subject();
     
     /* Tests go here!
      * You can access mock functions from subjectProps. 
@@ -442,9 +432,7 @@ describe('<MyReduxComponent />', () => {
     });
     
     it("here's that test with a different prop", () => {
-      act(() => {
-        subject();
-      });
+      subject();
       //test here
     });
   });
@@ -455,12 +443,9 @@ describe('<MyReduxComponent />', () => {
 Some things to consider testing:
 - User input results in the expected redux action.
     ```js
-    act(() => {
-      component = reduxRender(<SketchList username="happydog2" />, {store});
-    });
-    act(() => {
-      fireEvent.click(screen.getByTestId('toggle-direction-createdAt'));
-    });
+    const utils = reduxRender(<SketchList username="happydog2" />, {store});
+    fireEvent.click(screen.getByText(/date created/i));
+    
     const expectedAction = [{ type: 'TOGGLE_DIRECTION', field: 'createdAt' }];
     
     expect(store.getActions()).toEqual(expect.arrayContaining(expectedAction));
