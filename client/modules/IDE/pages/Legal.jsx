@@ -7,7 +7,7 @@ import PrivacyPolicy from './PrivacyPolicy';
 import TermsOfUse from './TermsOfUse';
 import CodeOfConduct from './CodeOfConduct';
 import RootPage from '../../../components/RootPage';
-import Nav from '../components/Header/Nav';
+import Nav from '../../IDE/components/Header/Nav';
 import { remSize, prop } from '../../../theme';
 
 const StyledTabList = styled(TabList)`
