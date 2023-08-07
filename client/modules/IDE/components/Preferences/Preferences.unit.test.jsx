@@ -26,9 +26,7 @@ describe('<Preferences />', () => {
   describe('font tests', () => {
     it('font size increase button says increase', () => {
       // render the component
-      act(() => {
-        subject({ fontSize: 12 });
-      });
+      subject({ fontSize: 12 });
 
       // get ahold of the button for increasing text size
       const fontPlusButton = screen.getByRole('button', {
@@ -41,9 +39,7 @@ describe('<Preferences />', () => {
 
     it('increase font size by 2 when clicking plus button', () => {
       // render the component with font size set to 12
-      act(() => {
-        subject({ fontSize: 12 });
-      });
+      subject({ fontSize: 12 });
 
       // get ahold of the button for increasing text size
       const fontPlusButton = screen.getByRole('button', {
@@ -62,9 +58,7 @@ describe('<Preferences />', () => {
 
     it('font size decrease button says decrease', () => {
       // render the component with font size set to 12
-      act(() => {
-        subject({ fontSize: 12 });
-      });
+      subject({ fontSize: 12 });
 
       // get ahold of the button for decreasing font size
       const fontPlusButton = screen.getByRole('button', {
@@ -77,9 +71,7 @@ describe('<Preferences />', () => {
 
     it('decrease font size by 2 when clicking minus button', () => {
       // render the component with font size set to 12
-      act(() => {
-        subject({ fontSize: 12 });
-      });
+      subject({ fontSize: 12 });
 
       // get ahold of the button for decreasing text size
       const fontMinusButton = screen.getByRole('button', {
@@ -98,9 +90,7 @@ describe('<Preferences />', () => {
 
     it('font text field changes on manual text input', () => {
       // render the component with font size set to 12
-      act(() => {
-        subject({ fontSize: 12 });
-      });
+      subject({ fontSize: 12 });
 
       // get ahold of the text field
       const input = screen.getByRole('textbox', { name: /font size/i });
@@ -126,9 +116,7 @@ describe('<Preferences />', () => {
 
     it('font size CAN NOT go over 36', () => {
       // render the component
-      act(() => {
-        subject({ fontSize: 12 });
-      });
+      subject({ fontSize: 12 });
 
       // get ahold of the text field
       const input = screen.getByRole('textbox', { name: /font size/i });
@@ -153,9 +141,7 @@ describe('<Preferences />', () => {
 
     it('font size CAN NOT go under 8', () => {
       // render the component
-      act(() => {
-        subject({ fontSize: 12 });
-      });
+      subject({ fontSize: 12 });
 
       // get ahold of the text field
       const input = screen.getByRole('textbox', { name: /font size/i });
@@ -182,9 +168,7 @@ describe('<Preferences />', () => {
     // h and then i, but it tests the same idea
     it('font size input field does NOT take non-integers', () => {
       // render the component
-      act(() => {
-        subject({ fontSize: 12 });
-      });
+      subject({ fontSize: 12 });
 
       // get ahold of the text field
       const input = screen.getByRole('textbox', { name: /font size/i });
@@ -212,9 +196,7 @@ describe('<Preferences />', () => {
 
     it('font size input field does NOT take "-"', () => {
       // render the component
-      act(() => {
-        subject({ fontSize: 12 });
-      });
+      subject({ fontSize: 12 });
 
       // get ahold of the text field
       const input = screen.getByRole('textbox', { name: /font size/i });
@@ -272,9 +254,7 @@ describe('<Preferences />', () => {
   describe('testing theme switching', () => {
     describe('dark mode', () => {
       it('switch to light', () => {
-        act(() => {
-          subject({ theme: 'dark' });
-        });
+        subject({ theme: 'dark' });
 
         const themeRadioCurrent = screen.getByRole('radio', {
           name: /dark theme on/i
@@ -295,9 +275,7 @@ describe('<Preferences />', () => {
 
     describe('light mode', () => {
       it('switch to dark', () => {
-        act(() => {
-          subject({ theme: 'light' });
-        });
+        subject({ theme: 'light' });
 
         const themeRadioCurrent = screen.getByRole('radio', {
           name: /light theme on/i
@@ -316,9 +294,8 @@ describe('<Preferences />', () => {
       });
 
       it('switch to contrast', () => {
-        act(() => {
-          subject({ theme: 'light' });
-        });
+        subject({ theme: 'light' });
+
         const themeRadioCurrent = screen.getByRole('radio', {
           name: /light theme on/i
         });
@@ -339,9 +316,7 @@ describe('<Preferences />', () => {
 
   describe('testing toggle UI elements on starting tab', () => {
     it('autosave toggle, starting at false', () => {
-      act(() => {
-        subject({ autosave: false });
-      });
+      subject({ autosave: false });
 
       // get ahold of the radio buttons for toggling autosave
       const autosaveRadioFalse = screen.getByRole('radio', {
@@ -361,9 +336,7 @@ describe('<Preferences />', () => {
 
     it('autocloseBracketsQuotes toggle, starting at false', () => {
       // render the component with autocloseBracketsQuotes prop set to false
-      act(() => {
-        subject({ autocloseBracketsQuotes: false });
-      });
+      subject({ autocloseBracketsQuotes: false });
 
       // get ahold of the radio buttons for toggling autocloseBracketsQuotes
       const autocloseRadioFalse = screen.getByRole('radio', {
@@ -383,9 +356,7 @@ describe('<Preferences />', () => {
 
     it('autocompleteHinter toggle, starting at false', () => {
       // render the component with autocompleteHinter prop set to false
-      act(() => {
-        subject({ autocompleteHinter: false });
-      });
+      subject({ autocompleteHinter: false });
 
       // get ahold of the radio buttons for toggling autocompleteHinter
       const autocompleteRadioFalse = screen.getByRole('radio', {
@@ -406,9 +377,7 @@ describe('<Preferences />', () => {
     describe('start autosave value at true', () => {
       it('autosave toggle, starting at true', () => {
         // render the component with autosave prop set to true
-        act(() => {
-          subject({ autosave: true });
-        });
+        subject({ autosave: true });
 
         // get ahold of the radio buttons for toggling autosave
         const autosaveRadioFalse = screen.getByRole('radio', {
@@ -429,9 +398,7 @@ describe('<Preferences />', () => {
 
     describe('start autoclose brackets value at true', () => {
       it('autocloseBracketsQuotes toggle, starting at true', () => {
-        act(() => {
-          subject({ autocloseBracketsQuotes: true });
-        });
+        subject({ autocloseBracketsQuotes: true });
 
         // get ahold of the radio buttons for toggling autocloseBracketsQuotes
         const autocloseRadioFalse = screen.getByRole('radio', {
@@ -453,9 +420,7 @@ describe('<Preferences />', () => {
     describe('start autocomplete hinter value at true', () => {
       it('autocompleteHinter toggle, starting at true', () => {
         // render the component with autocompleteHinter prop set to true
-        act(() => {
-          subject({ autocompleteHinter: true });
-        });
+        subject({ autocompleteHinter: true });
 
         // get ahold of the radio buttons for toggling autocompleteHinter
         const autocompleteRadioFalse = screen.getByRole('radio', {
@@ -477,9 +442,7 @@ describe('<Preferences />', () => {
     describe('start linewrap at false', () => {
       it('linewrap toggle, starting at false', () => {
         // render the component with linewrap prop set to false
-        act(() => {
-          subject({ linewrap: false });
-        });
+        subject({ linewrap: false });
 
         // get ahold of the radio buttons for toggling linewrap
         const linewrapRadioFalse = screen.getByRole('radio', {
@@ -501,9 +464,7 @@ describe('<Preferences />', () => {
     describe('start linewrap at true', () => {
       it('linewrap toggle, starting at true', () => {
         // render the component with linewrap prop set to false
-        act(() => {
-          subject({ linewrap: true });
-        });
+        subject({ linewrap: true });
 
         // get ahold of the radio buttons for toggling linewrap
         const linewrapRadioFalse = screen.getByRole('radio', {
@@ -526,9 +487,7 @@ describe('<Preferences />', () => {
   describe('can toggle between general settings and accessibility tabs successfully', () => {
     it('can toggle sucessfully', () => {
       // render the component with lineNumbers prop set to false
-      act(() => {
-        subject({ lineNumbers: false });
-      });
+      subject({ lineNumbers: false });
 
       // switch to accessibility
       act(() => {
@@ -560,9 +519,7 @@ describe('<Preferences />', () => {
     describe('starting linenumbers at false', () => {
       it('lineNumbers toggle, starting at false', () => {
         // render the component with lineNumbers prop set to false
-        act(() => {
-          subject({ lineNumbers: false });
-        });
+        subject({ lineNumbers: false });
 
         // switch tabs
         act(() => {
@@ -591,9 +548,7 @@ describe('<Preferences />', () => {
     describe('starting linenumbers at true', () => {
       it('lineNumbers toggle, starting at true', () => {
         // render the component with lineNumbers prop set to false
-        act(() => {
-          subject({ lineNumbers: true });
-        });
+        subject({ lineNumbers: true });
 
         // switch tabs
         act(() => {
@@ -622,9 +577,7 @@ describe('<Preferences />', () => {
     describe('starting lintWarning at false', () => {
       it('lintWarning toggle, starting at false', () => {
         // render the component with lintWarning prop set to false
-        act(() => {
-          subject({ lintWarning: false });
-        });
+        subject({ lintWarning: false });
 
         // switch tabs
         act(() => {
@@ -653,9 +606,7 @@ describe('<Preferences />', () => {
     describe('starting lintWarning at true', () => {
       it('lintWarning toggle, starting at true', () => {
         // render the component with lintWarning prop set to false
-        act(() => {
-          subject({ lintWarning: true });
-        });
+        subject({ lintWarning: true });
 
         // switch tabs
         act(() => {
@@ -682,12 +633,10 @@ describe('<Preferences />', () => {
     });
 
     const testCheckbox = (arialabel, startState, setter) => {
-      act(() => {
-        subject({
-          textOutput: startState && arialabel === 'text output on',
-          soundOutput: startState && arialabel === 'sound output on',
-          gridOutput: startState && arialabel === 'table output on'
-        });
+      subject({
+        textOutput: startState && arialabel === 'text output on',
+        soundOutput: startState && arialabel === 'sound output on',
+        gridOutput: startState && arialabel === 'table output on'
       });
 
       // switch tabs
@@ -731,11 +680,9 @@ describe('<Preferences />', () => {
 
     describe('multiple checkboxes can be selected', () => {
       it('multiple checkboxes can be selected', () => {
-        act(() => {
-          subject({
-            textOutput: true,
-            gridOutput: true
-          });
+        subject({
+          textOutput: true,
+          gridOutput: true
         });
 
         // switch tabs
@@ -759,11 +706,9 @@ describe('<Preferences />', () => {
 
     describe('none of the checkboxes can be selected', () => {
       it('none of the checkboxes can be selected', () => {
-        act(() => {
-          subject({
-            textOutput: false,
-            gridOutput: false
-          });
+        subject({
+          textOutput: false,
+          gridOutput: false
         });
 
         // switch tabs
