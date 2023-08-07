@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import Nav from '../../../components/Nav';
+import Nav from '../../IDE/components/Header/Nav';
 import RootPage from '../../../components/RootPage';
 import Collection from '../components/Collection';
 
