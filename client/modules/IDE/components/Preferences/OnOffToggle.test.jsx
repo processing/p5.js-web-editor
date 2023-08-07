@@ -1,5 +1,4 @@
 import React from 'react';
-import { act } from 'react-dom/test-utils';
 import { render, screen, fireEvent } from '../../../../test-utils';
 import OnOffToggle from './OnOffToggle';
 
@@ -43,9 +42,7 @@ describe('OnOffToggle', () => {
   it('does nothing when clicking the active value', () => {
     const { onButton } = subject(true);
 
-    act(() => {
-      fireEvent.click(onButton);
-    });
+    fireEvent.click(onButton);
 
     expect(setValue).not.toHaveBeenCalled();
   });
@@ -53,9 +50,7 @@ describe('OnOffToggle', () => {
   it('calls setValue when clicking the inactive value', () => {
     const { offButton } = subject(true);
 
-    act(() => {
-      fireEvent.click(offButton);
-    });
+    fireEvent.click(offButton);
 
     expect(setValue).toHaveBeenCalledTimes(1);
     expect(setValue).toHaveBeenCalledWith(false);
