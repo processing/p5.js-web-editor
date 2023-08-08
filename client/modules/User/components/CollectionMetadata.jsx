@@ -3,33 +3,26 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import Button from '../../../common/Button';
 import Overlay from '../../App/components/Overlay';
 import { editCollection } from '../../IDE/actions/collections';
 import AddToCollectionSketchList from '../../IDE/components/AddToCollectionSketchList';
 import EditableInput from '../../IDE/components/EditableInput';
 import { SketchSearchbar } from '../../IDE/components/Searchbar';
-import { getCollection } from '../../IDE/selectors/collections';
 import ShareURL from './CollectionShareButton';
 
-function CollectionMetadata({ collectionId }) {
+function CollectionMetadata({ collection, isOwner }) {
   const { t } = useTranslation();
 
   const dispatch = useDispatch();
 
-  const collection = useSelector((state) => getCollection(state, collectionId));
   const currentUsername = useSelector((state) => state.user.username);
 
   const [isAddingSketches, setIsAddingSketches] = useState(false);
 
-  if (!collection) {
-    return null;
-  }
-
   const { id, name, description, items, owner } = collection;
-  const { username } = owner;
-  const isOwner = !!currentUsername && currentUsername === username;
+  const { username: ownerUsername } = owner;
 
   const hostname = window.location.origin;
 
@@ -85,7 +78,7 @@ function CollectionMetadata({ collectionId }) {
 
           <p className="collection-metadata__user">
             {t('Collection.By')}
-            <Link to={`/${username}/sketches`}>{username}</Link>
+            <Link to={`/${ownerUsername}/sketches`}>{ownerUsername}</Link>
           </p>
 
           <p className="collection-metadata__user">
@@ -94,7 +87,7 @@ function CollectionMetadata({ collectionId }) {
         </div>
 
         <div className="collection-metadata__column--right">
-          <ShareURL value={`${hostname}/${username}/collections/${id}`} />
+          <ShareURL value={`${hostname}/${ownerUsername}/collections/${id}`} />
           {isOwner && (
             <Button onClick={() => setIsAddingSketches(true)}>
               {t('Collection.AddSketch')}
@@ -110,7 +103,7 @@ function CollectionMetadata({ collectionId }) {
           isFixedHeight
         >
           <AddToCollectionSketchList
-            username={username}
+            username={currentUsername}
             collection={collection}
           />
         </Overlay>
@@ -120,7 +113,17 @@ function CollectionMetadata({ collectionId }) {
 }
 
 CollectionMetadata.propTypes = {
-  collectionId: PropTypes.string.isRequired
+  collection: PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    slug: PropTypes.string,
+    description: PropTypes.string,
+    owner: PropTypes.shape({
+      username: PropTypes.string
+    }).isRequired,
+    items: PropTypes.arrayOf(PropTypes.shape({}))
+  }).isRequired,
+  isOwner: PropTypes.bool.isRequired
 };
 
 export default CollectionMetadata;
