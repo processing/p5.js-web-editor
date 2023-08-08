@@ -1,12 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import ResetPasswordForm from '../components/ResetPasswordForm';
-import Nav from '../../../components/Nav';
 import RootPage from '../../../components/RootPage';
+import Nav from '../../IDE/components/Header/Nav';
 
 function ResetPasswordView() {
   const { t } = useTranslation();

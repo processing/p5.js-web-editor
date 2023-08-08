@@ -2,14 +2,6 @@
   position: relative;
 }
 
-.copyable-input__tooltip {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-}
-
 .copyable-input__value {
   width: 100%;
   font-size: #{16 / $base-font-size}rem;

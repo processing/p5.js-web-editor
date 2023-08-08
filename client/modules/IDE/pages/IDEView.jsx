@@ -1,15 +1,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { useLocation, Prompt } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { withTranslation } from 'react-i18next';
+import { connect, useSelector } from 'react-redux';
+import { useTranslation, withTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 import SplitPane from 'react-split-pane';
 import Editor from '../components/Editor';
 import Sidebar from '../components/Sidebar';
 import PreviewFrame from '../components/PreviewFrame';
-import Toolbar from '../components/Toolbar';
+import Toolbar from '../components/Header/Toolbar';
 import Preferences from '../components/Preferences/index';
 import NewFileModal from '../components/NewFileModal';
 import NewFolderModal from '../components/NewFolderModal';
@@ -17,7 +17,7 @@ import UploadFileModal from '../components/UploadFileModal';
 import ShareModal from '../components/ShareModal';
 import KeyboardShortcutModal from '../components/KeyboardShortcutModal';
 import ErrorModal from '../components/ErrorModal';
-import Nav from '../../../components/Nav';
+import Nav from '../components/Header/Nav';
 import Console from '../components/Console';
 import Toast from '../components/Toast';
 import * as FileActions from '../actions/files';
@@ -41,23 +41,40 @@ function getTitle(props) {
   return id ? `p5.js Web Editor | ${props.project.name}` : 'p5.js Web Editor';
 }
 
-function warnIfUnsavedChanges(props, nextLocation) {
-  const toAuth =
-    nextLocation &&
-    nextLocation.action === 'PUSH' &&
-    (nextLocation.pathname === '/login' || nextLocation.pathname === '/signup');
-  const onAuth =
-    nextLocation &&
-    (props.location.pathname === '/login' ||
-      props.location.pathname === '/signup');
-  if (props.ide.unsavedChanges && !toAuth && !onAuth) {
-    if (!window.confirm(props.t('Nav.WarningUnsavedChanges'))) {
-      return false;
-    }
-    return true;
-  }
-  return true;
+function isAuth(pathname) {
+  return pathname === '/login' || pathname === '/signup';
 }
+
+function isOverlay(pathname) {
+  return pathname === '/about' || pathname === '/feedback';
+}
+
+function WarnIfUnsavedChanges() {
+  const hasUnsavedChanges = useSelector((state) => state.ide.unsavedChanges);
+
+  const { t } = useTranslation();
+
+  const currentLocation = useLocation();
+
+  return (
+    <Prompt
+      when={hasUnsavedChanges}
+      message={(nextLocation) => {
+        if (
+          isAuth(nextLocation.pathname) ||
+          isAuth(currentLocation.pathname) ||
+          isOverlay(nextLocation.pathname) ||
+          isOverlay(currentLocation.pathname)
+        ) {
+          return true; // allow navigation
+        }
+        return t('Nav.WarningUnsavedChanges');
+      }}
+    />
+  );
+}
+
+export const CmControllerContext = React.createContext({});
 
 class IDEView extends React.Component {
   constructor(props) {
@@ -85,11 +102,6 @@ class IDEView extends React.Component {
 
     this.isMac = navigator.userAgent.toLowerCase().indexOf('mac') !== -1;
     document.addEventListener('keydown', this.handleGlobalKeydown, false);
-
-    this.props.router.setRouteLeaveHook(
-      this.props.route,
-      this.handleUnsavedChanges
-    );
 
     // window.onbeforeunload = this.handleUnsavedChanges;
     window.addEventListener('beforeunload', this.handleBeforeUnload);
@@ -139,12 +151,6 @@ class IDEView extends React.Component {
     } else if (this.autosaveInterval) {
       clearTimeout(this.autosaveInterval);
       this.autosaveInterval = null;
-    }
-
-    if (this.props.route.path !== prevProps.route.path) {
-      this.props.router.setRouteLeaveHook(this.props.route, () =>
-        warnIfUnsavedChanges(this.props)
-      );
     }
   }
   componentWillUnmount() {
@@ -231,9 +237,6 @@ class IDEView extends React.Component {
     }
   }
 
-  handleUnsavedChanges = (nextLocation) =>
-    warnIfUnsavedChanges(this.props, nextLocation);
-
   handleBeforeUnload = (e) => {
     const confirmationMessage = this.props.t('Nav.WarningUnsavedChanges');
     if (this.props.ide.unsavedChanges) {
@@ -254,11 +257,11 @@ class IDEView extends React.Component {
         <Helmet>
           <title>{getTitle(this.props)}</title>
         </Helmet>
+        <WarnIfUnsavedChanges currentLocation={this.props.location} />
         <Toast />
-        <Nav
-          warnIfUnsavedChanges={this.handleUnsavedChanges}
-          cmController={this.cmController}
-        />
+        <CmControllerContext.Provider value={{ current: this.cmController }}>
+          <Nav />
+        </CmControllerContext.Provider>
         <Toolbar
           syncFileContent={this.syncFileContent}
           key={this.props.project.id}
@@ -304,22 +307,7 @@ class IDEView extends React.Component {
             allowResize={this.props.ide.sidebarIsExpanded}
             minSize={125}
           >
-            <Sidebar
-              files={this.props.files}
-              setSelectedFile={this.props.setSelectedFile}
-              newFile={this.props.newFile}
-              isExpanded={this.props.ide.sidebarIsExpanded}
-              deleteFile={this.props.deleteFile}
-              updateFileName={this.props.updateFileName}
-              projectOptionsVisible={this.props.ide.projectOptionsVisible}
-              openProjectOptions={this.props.openProjectOptions}
-              closeProjectOptions={this.props.closeProjectOptions}
-              newFolder={this.props.newFolder}
-              user={this.props.user}
-              owner={this.props.project.owner}
-              openUploadFileModal={this.props.openUploadFileModal}
-              closeUploadFileModal={this.props.closeUploadFileModal}
-            />
+            <Sidebar />
             <SplitPane
               split="vertical"
               defaultSize="50%"
@@ -526,52 +514,33 @@ IDEView.propTypes = {
   setTextOutput: PropTypes.func.isRequired,
   setGridOutput: PropTypes.func.isRequired,
   setAllAccessibleOutput: PropTypes.func.isRequired,
-  files: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      content: PropTypes.string.isRequired
-    })
-  ).isRequired,
   selectedFile: PropTypes.shape({
     id: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired
   }).isRequired,
-  setSelectedFile: PropTypes.func.isRequired,
   htmlFile: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
   }).isRequired,
-  newFile: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
   collapseSidebar: PropTypes.func.isRequired,
   cloneProject: PropTypes.func.isRequired,
   expandConsole: PropTypes.func.isRequired,
   collapseConsole: PropTypes.func.isRequired,
-  deleteFile: PropTypes.func.isRequired,
-  updateFileName: PropTypes.func.isRequired,
   updateFileContent: PropTypes.func.isRequired,
-  openProjectOptions: PropTypes.func.isRequired,
-  closeProjectOptions: PropTypes.func.isRequired,
-  newFolder: PropTypes.func.isRequired,
   closeNewFolderModal: PropTypes.func.isRequired,
   closeNewFileModal: PropTypes.func.isRequired,
   closeShareModal: PropTypes.func.isRequired,
   closeKeyboardShortcutModal: PropTypes.func.isRequired,
   autosaveProject: PropTypes.func.isRequired,
-  router: PropTypes.shape({
-    setRouteLeaveHook: PropTypes.func
-  }).isRequired,
-  route: PropTypes.oneOfType([PropTypes.object, PropTypes.element]).isRequired,
   setTheme: PropTypes.func.isRequired,
   setPreviousPath: PropTypes.func.isRequired,
   showErrorModal: PropTypes.func.isRequired,
   hideErrorModal: PropTypes.func.isRequired,
   clearPersistedState: PropTypes.func.isRequired,
   startSketch: PropTypes.func.isRequired,
-  openUploadFileModal: PropTypes.func.isRequired,
   closeUploadFileModal: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
   isUserOwner: PropTypes.bool.isRequired
@@ -579,7 +548,6 @@ IDEView.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    files: state.files,
     selectedFile:
       state.files.find((file) => file.isSelectedFile) ||
       state.files.find((file) => file.name === 'sketch.js') ||
@@ -612,5 +580,5 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default withTranslation()(
-  withRouter(connect(mapStateToProps, mapDispatchToProps)(IDEView))
+  connect(mapStateToProps, mapDispatchToProps)(IDEView)
 );

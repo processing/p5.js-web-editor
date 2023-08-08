@@ -1,10 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import SignupForm from '../components/SignupForm';
 import SocialAuthButton from '../components/SocialAuthButton';
-import Nav from '../../../components/Nav';
+import Nav from '../../IDE/components/Header/Nav';
 import RootPage from '../../../components/RootPage';
 
 function SignupView() {
