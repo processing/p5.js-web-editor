@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import Button from '../../../common/Button';
 import Overlay from '../../App/components/Overlay';
 import { editCollection } from '../../IDE/actions/collections';
