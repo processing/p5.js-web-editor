@@ -9,7 +9,12 @@ import { prop, remSize } from '../../../../theme';
 import AsteriskIcon from '../../../../images/p5-asterisk.svg';
 import IconButton from '../../../../components/mobile/IconButton';
 import { AccountIcon, EditorIcon, MoreIcon } from '../../../../common/icons';
-import { newFile, newFolder, openPreferences } from '../../actions/ide';
+import {
+  newFile,
+  newFolder,
+  openPreferences,
+  showKeyboardShortcutModal
+} from '../../actions/ide';
 import { logoutUser } from '../../../User/actions';
 import { useSketchActions } from '../../hooks';
 import { CmControllerContext } from '../../pages/IDEView';
@@ -305,7 +310,9 @@ const MoreMenu = () => {
         </li>
         <b>{t('Nav.Help.Title')}</b>
         <li>
-          <button>{t('Nav.Help.KeyboardShortcuts')}</button>
+          <button onClick={() => dispatch(showKeyboardShortcutModal())}>
+            {t('Nav.Help.KeyboardShortcuts')}
+          </button>
         </li>
         <li>
           <button
