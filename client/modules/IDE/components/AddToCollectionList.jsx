@@ -19,18 +19,16 @@ const projectInCollection = (project, collection) =>
   collection.items.find((item) => item.projectId === project.id) != null;
 
 const CollectionAddSketchWrapper = styled.div`
-  &&& {
-    min-width: ${remSize(600)};
-    overflow: auto;
-  }
+  width: ${remSize(600)};
+  max-width: 100%;
+  overflow: auto;
 `;
 
 const QuickAddWrapper = styled.div`
-  &&& {
-    min-width: ${remSize(600)};
-    padding: ${remSize(24)};
-    height: 100%;
-  }
+  width: ${remSize(600)};
+  max-width: 100%;
+  padding: ${remSize(24)};
+  height: 100%;
 `;
 
 class CollectionList extends React.Component {
@@ -106,7 +104,6 @@ class CollectionList extends React.Component {
           <Helmet>
             <title>{this.getTitle()}</title>
           </Helmet>
-
           {content}
         </QuickAddWrapper>
       </CollectionAddSketchWrapper>
