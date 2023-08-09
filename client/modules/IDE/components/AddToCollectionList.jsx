@@ -18,13 +18,13 @@ import { remSize } from '../../../theme';
 const projectInCollection = (project, collection) =>
   collection.items.find((item) => item.projectId === project.id) != null;
 
-const CollectionAddSketchWrapper = styled.div`
+export const CollectionAddSketchWrapper = styled.div`
   width: ${remSize(600)};
   max-width: 100%;
   overflow: auto;
 `;
 
-const QuickAddWrapper = styled.div`
+export const QuickAddWrapper = styled.div`
   width: ${remSize(600)};
   max-width: 100%;
   padding: ${remSize(24)};

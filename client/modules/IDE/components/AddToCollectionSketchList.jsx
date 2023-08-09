@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withTranslation } from 'react-i18next';
 // import find from 'lodash/find';
-import styled from 'styled-components';
 import * as ProjectsActions from '../actions/projects';
 import * as CollectionsActions from '../actions/collections';
 import * as ToastActions from '../actions/toast';
@@ -13,20 +12,10 @@ import * as SortingActions from '../actions/sorting';
 import getSortedSketches from '../selectors/projects';
 import Loader from '../../App/components/loader';
 import QuickAddList from './QuickAddList';
-import { remSize } from '../../../theme';
-
-const CollectionAddSketchWrapper = styled.div`
-  width: ${remSize(600)};
-  max-width: 100%;
-  overflow: auto;
-`;
-
-const QuickAddWrapper = styled.div`
-  width: ${remSize(600)};
-  max-width: 100%;
-  padding: ${remSize(24)};
-  height: 100%;
-`;
+import {
+  CollectionAddSketchWrapper,
+  QuickAddWrapper
+} from './AddToCollectionList';
 
 class SketchList extends React.Component {
   constructor(props) {
