@@ -89,8 +89,7 @@ const Options = styled.div`
       transform: scale(0);
       opacity: 0;
       transform-origin: top;
-      transition: opacity 100ms;
-      transition: transform 100ms 200ms;
+      transition: opacity 100ms, transform 100ms 200ms;
       display: flex;
       flex-direction: column;
       gap: ${remSize(2)};
