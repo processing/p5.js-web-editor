@@ -333,30 +333,4 @@ const MoreMenu = () => {
   );
 };
 
-MoreMenu.propTypes = {
-  cmController: PropTypes.shape({
-    tidyCode: PropTypes.func,
-    showFind: PropTypes.func,
-    showReplace: PropTypes.func,
-    getContent: PropTypes.func
-  })
-};
-
-MoreMenu.defaultProps = {
-  cmController: {}
-};
-
-MobileNav.propTypes = {
-  cmController: PropTypes.shape({
-    tidyCode: PropTypes.func,
-    showFind: PropTypes.func,
-    showReplace: PropTypes.func,
-    getContent: PropTypes.func
-  })
-};
-
-MobileNav.defaultProps = {
-  cmController: {}
-};
-
 export default MobileNav;
