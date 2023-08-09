@@ -152,6 +152,8 @@ const MobileNav = (props) => {
   const project = useSelector((state) => state.project);
   const user = useSelector((state) => state.user);
 
+  const { t } = useTranslation();
+
   const { pathname } = useLocation();
   const editorLink = useSelector(selectSketchPath);
 
@@ -161,14 +163,14 @@ const MobileNav = (props) => {
       case '/':
         return project.name;
       case '/login':
-        return 'Login';
+        return t('LoginView.Login');
       case '/signup':
-        return 'Signup';
+        return t('LoginView.SignUp');
       case '/account':
-        return 'Account Settings';
+        return t('AccountView.Settings');
       case '/p5/sketches':
       case '/p5/collections':
-        return 'Examples';
+        return t('Nav.File.Examples');
       case `/${user.username}/assets`:
       case `/${user.username}/collections`:
       case `/${user.username}/sketches`:
