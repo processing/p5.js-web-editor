@@ -1,8 +1,5 @@
 import React from 'react';
-import { browserHistory, Route, Router } from 'react-router';
-import { Provider } from 'react-redux';
-import configureStore from '../store';
-import { render, screen, fireEvent, waitFor } from '../test-utils';
+import { render, screen, fireEvent, waitFor, history } from '../test-utils';
 import ButtonOrLink from './ButtonOrLink';
 
 describe('ButtonOrLink', () => {
@@ -29,27 +26,11 @@ describe('ButtonOrLink', () => {
   });
 
   it('can render an internal link with react-router', async () => {
-    const store = configureStore();
-    render(
-      <Provider store={store}>
-        <Router
-          history={browserHistory}
-          routes={
-            <Route
-              path="/"
-              component={() => <ButtonOrLink href="/about">About</ButtonOrLink>}
-            />
-          }
-        />
-      </Provider>
-    );
+    render(<ButtonOrLink href="/about">About</ButtonOrLink>);
 
     const link = screen.getByText('About');
     fireEvent.click(link);
-    await waitFor(() =>
-      expect(browserHistory.getCurrentLocation()).toEqual(
-        expect.objectContaining({ pathname: '/about' })
-      )
-    );
+
+    await waitFor(() => expect(history.location.pathname).toEqual('/about'));
   });
 });
