@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -69,7 +69,6 @@ const Options = styled.div`
   }
 
   /* Drop Down menu */
-
   > div > button:focus + ul,
   > div > ul > button:focus ~ div > ul {
     transform: scale(1);
@@ -144,7 +143,6 @@ const Options = styled.div`
 const MobileNav = (props) => {
   const project = useSelector((state) => state.project);
   const user = useSelector((state) => state.user);
-  const [title, setTitle] = useState();
 
   // use the useNavigate hook in the react router v6
   const history = useHistory();
@@ -153,8 +151,9 @@ const MobileNav = (props) => {
   const { pathname } = useLocation();
   const editorLink = useSelector(selectSketchPath);
 
-  function resolveTitle(path) {
-    switch (path) {
+  // TODO: remove the switch and use a props like mobileTitle <Nav layout=“dashboard” mobileTitle={t(‘Login’)} />
+  function resolveTitle() {
+    switch (pathname) {
       case '/':
         return project.name;
       case '/login':
@@ -175,9 +174,7 @@ const MobileNav = (props) => {
     }
   }
 
-  useEffect(() => {
-    setTitle(resolveTitle(pathname));
-  }, [pathname, project]);
+  const title = useMemo(resolveTitle, [project, pathname]);
 
   const Logo = AsteriskIcon;
   return (
