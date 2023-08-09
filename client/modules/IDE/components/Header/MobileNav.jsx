@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useMemo } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 import { prop, remSize } from '../../../../theme';
 import AsteriskIcon from '../../../../images/p5-asterisk.svg';
 import IconButton from '../../../../components/mobile/IconButton';
@@ -125,7 +125,10 @@ const Options = styled.div`
       > li {
         display: flex;
         width: 100%;
-        > button {
+        a {
+          width: 100%;
+        }
+        button {
           width: 100%;
           padding: ${remSize(8)} ${remSize(15)} ${remSize(8)} ${remSize(10)};
           font-size: ${remSize(18)};
@@ -143,10 +146,6 @@ const Options = styled.div`
 const MobileNav = (props) => {
   const project = useSelector((state) => state.project);
   const user = useSelector((state) => state.user);
-
-  // use the useNavigate hook in the react router v6
-  const history = useHistory();
-  const navigate = (url) => history.push(url);
 
   const { pathname } = useLocation();
   const editorLink = useSelector(selectSketchPath);
@@ -190,27 +189,21 @@ const MobileNav = (props) => {
       </Title>
       <Options>
         {user.authenticated ? (
-          <AccoutnMenu />
+          <AccountMenu />
         ) : (
           <div>
-            <IconButton
-              onClick={() => {
-                navigate('/login');
-              }}
-              icon={AccountIcon}
-            />
+            <Link to="/login">
+              <IconButton icon={AccountIcon} />
+            </Link>
           </div>
         )}
         {title === project.name ? (
           <MoreMenu />
         ) : (
           <div>
-            <IconButton
-              onClick={() => {
-                navigate(editorLink);
-              }}
-              icon={EditorIcon}
-            />
+            <Link to={editorLink}>
+              <IconButton icon={EditorIcon} />
+            </Link>
           </div>
         )}
       </Options>
@@ -218,13 +211,9 @@ const MobileNav = (props) => {
   );
 };
 
-const AccoutnMenu = () => {
+const AccountMenu = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-
-  // use the useNavigate hook in the react router v6
-  const history = useHistory();
-  const navigate = (url) => history.push(url);
 
   return (
     <div>
@@ -232,22 +221,14 @@ const AccoutnMenu = () => {
       <ul>
         <li className="user">{user.username}</li>
         <li>
-          <button
-            onClick={() => {
-              navigate(`/${user.username}/sketches`);
-            }}
-          >
-            My Stuff
-          </button>
+          <Link to={`/${user.username}/sketches`}>
+            <button>My Stuff</button>
+          </Link>
         </li>
         <li>
-          <button
-            onClick={() => {
-              navigate(`/account`);
-            }}
-          >
-            Settings
-          </button>
+          <Link to="/account">
+            <button>Settings</button>
+          </Link>
         </li>
         <li>
           <button onClick={() => dispatch(logoutUser())}>Log Out</button>
@@ -265,8 +246,6 @@ const MoreMenu = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { newSketch, saveSketch } = useSketchActions();
-  const history = useHistory();
-  const navigate = (url) => history.push(url);
 
   const cmRef = useContext(CmControllerContext);
 
@@ -284,13 +263,9 @@ const MoreMenu = () => {
           </button>
         </li>
         <li>
-          <button
-            onClick={() => {
-              navigate(`/p5/sketches`);
-            }}
-          >
-            {t('Nav.File.Examples')}
-          </button>
+          <Link to="/p5/sketches">
+            <button>{t('Nav.File.Examples')}</button>
+          </Link>
         </li>
         <b>{t('Nav.Edit.Title')}</b>
         <li>
@@ -342,13 +317,9 @@ const MoreMenu = () => {
           </button>
         </li>
         <li>
-          <button
-            onClick={() => {
-              navigate(`/about`);
-            }}
-          >
-            {t('Nav.Help.About')}
-          </button>
+          <Link to="/about">
+            <button>{t('Nav.Help.About')}</button>
+          </Link>
         </li>
       </ul>
     </div>
