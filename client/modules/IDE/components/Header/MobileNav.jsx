@@ -3,8 +3,14 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import {
+  NavBarContext,
+  ParentMenuContext
+} from '../../../../components/Nav/contexts';
+import NavBar from '../../../../components/Nav/NavBar';
+import { useMenuProps } from '../../../../components/Nav/NavDropdownMenu';
+import NavMenuItem from '../../../../components/Nav/NavMenuItem';
 import { prop, remSize } from '../../../../theme';
 import AsteriskIcon from '../../../../images/p5-asterisk.svg';
 import IconButton from '../../../../components/mobile/IconButton';
@@ -20,7 +26,7 @@ import { useSketchActions } from '../../hooks';
 import { CmControllerContext } from '../../pages/IDEView';
 import { selectSketchPath } from '../../selectors/project';
 
-const Nav = styled.div`
+const Nav = styled(NavBar)`
   background: ${prop('MobilePanel.default.background')};
   color: ${prop('primaryTextColor')};
   padding: ${remSize(8)} 0;
@@ -33,6 +39,7 @@ const Nav = styled.div`
 `;
 
 const LogoContainer = styled.div`
+  cursor: pointer;
   width: ${remSize(28)};
   aspect-ratio: 1;
   margin-left: ${remSize(14)};
@@ -74,8 +81,7 @@ const Options = styled.div`
   }
 
   /* Drop Down menu */
-  > div > button:focus + ul,
-  > div > ul > button:focus ~ div > ul {
+  ul.opened {
     transform: scale(1);
     opacity: 1;
   }
@@ -130,9 +136,7 @@ const Options = styled.div`
       > li {
         display: flex;
         width: 100%;
-        a {
-          width: 100%;
-        }
+        a,
         button {
           width: 100%;
           padding: ${remSize(8)} ${remSize(15)} ${remSize(8)} ${remSize(10)};
@@ -148,7 +152,17 @@ const Options = styled.div`
   }
 `;
 
-const MobileNav = (props) => {
+const Logo = () => {
+  const { toggleDropdownOpen } = useContext(NavBarContext);
+
+  return (
+    <LogoContainer onClick={() => toggleDropdownOpen('more')}>
+      <AsteriskIcon />
+    </LogoContainer>
+  );
+};
+
+const MobileNav = () => {
   const project = useSelector((state) => state.project);
   const user = useSelector((state) => state.user);
 
@@ -182,12 +196,9 @@ const MobileNav = (props) => {
 
   const title = useMemo(resolveTitle, [project, pathname]);
 
-  const Logo = AsteriskIcon;
   return (
     <Nav>
-      <LogoContainer>
-        <Logo />
-      </LogoContainer>
+      <Logo />
       <Title>
         <h1>{title}</h1>
         {project?.owner && title === project.name && (
@@ -222,24 +233,22 @@ const AccountMenu = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
+  const { isOpen, handlers } = useMenuProps('account');
+
   return (
     <div>
-      <IconButton icon={AccountIcon} />
-      <ul>
-        <li className="user">{user.username}</li>
-        <li>
-          <Link to={`/${user.username}/sketches`}>
-            <button>My Stuff</button>
-          </Link>
-        </li>
-        <li>
-          <Link to="/account">
-            <button>Settings</button>
-          </Link>
-        </li>
-        <li>
-          <button onClick={() => dispatch(logoutUser())}>Log Out</button>
-        </li>
+      <IconButton icon={AccountIcon} {...handlers} />
+      <ul className={isOpen ? 'opened' : ''}>
+        <ParentMenuContext.Provider value="account">
+          <li className="user">{user.username}</li>
+          <NavMenuItem href={`/${user.username}/sketches`}>
+            My Stuff
+          </NavMenuItem>
+          <NavMenuItem href="/account">Settings</NavMenuItem>
+          <NavMenuItem onClick={() => dispatch(logoutUser())}>
+            Log Out
+          </NavMenuItem>
+        </ParentMenuContext.Provider>
       </ul>
     </div>
   );
@@ -256,80 +265,55 @@ const MoreMenu = () => {
 
   const cmRef = useContext(CmControllerContext);
 
+  const { isOpen, handlers } = useMenuProps('more');
+
   return (
     <div>
-      <IconButton icon={MoreIcon} />
-      <ul>
-        <b>{t('Nav.File.Title')}</b>
-        <li>
-          <button onClick={newSketch}>{t('Nav.File.New')}</button>
-        </li>
-        <li>
-          <button onClick={() => saveSketch(cmRef.current)}>
+      <IconButton icon={MoreIcon} {...handlers} />
+      <ul className={isOpen ? 'opened' : ''}>
+        <ParentMenuContext.Provider value="more">
+          <b>{t('Nav.File.Title')}</b>
+          <NavMenuItem onClick={newSketch}>{t('Nav.File.New')}</NavMenuItem>
+
+          <NavMenuItem onClick={() => saveSketch(cmRef.current)}>
             {t('Common.Save')}
-          </button>
-        </li>
-        <li>
-          <Link to="/p5/sketches">
-            <button>{t('Nav.File.Examples')}</button>
-          </Link>
-        </li>
-        <b>{t('Nav.Edit.Title')}</b>
-        <li>
-          <button onClick={cmRef.current?.tidyCode}>
+          </NavMenuItem>
+          <NavMenuItem href="/p5/sketches">
+            {t('Nav.File.Examples')}
+          </NavMenuItem>
+          <b>{t('Nav.Edit.Title')}</b>
+          <NavMenuItem onClick={cmRef.current?.tidyCode}>
             {t('Nav.Edit.TidyCode')}
-          </button>
-        </li>
-        <li>
-          <button onClick={cmRef.current?.showFind}>
+          </NavMenuItem>
+          <NavMenuItem onClick={cmRef.current?.showFind}>
             {t('Nav.Edit.Find')}
-          </button>
-        </li>
-        <b>{t('Nav.Sketch.Title')}</b>
-        <li>
-          <button onClick={() => dispatch(newFile(rootFile.id))}>
+          </NavMenuItem>
+          <b>{t('Nav.Sketch.Title')}</b>
+          <NavMenuItem onClick={() => dispatch(newFile(rootFile.id))}>
             {t('Nav.Sketch.AddFile')}
-          </button>
-        </li>
-        <li>
-          <button onClick={() => dispatch(newFolder(rootFile.id))}>
+          </NavMenuItem>
+          <NavMenuItem onClick={() => dispatch(newFolder(rootFile.id))}>
             {t('Nav.Sketch.AddFolder')}
-          </button>
-        </li>
-        {/* TODO: Add Translations */}
-        <b>Settings</b>
-        <li>
-          <button
+          </NavMenuItem>
+          {/* TODO: Add Translations */}
+          <b>Settings</b>
+          <NavMenuItem
             onClick={() => {
               dispatch(openPreferences());
             }}
           >
             Preferences
-          </button>
-        </li>
-        <li>
-          <button>Language</button>
-        </li>
-        <b>{t('Nav.Help.Title')}</b>
-        <li>
-          <button onClick={() => dispatch(showKeyboardShortcutModal())}>
+          </NavMenuItem>
+          <NavMenuItem>Language</NavMenuItem>
+          <b>{t('Nav.Help.Title')}</b>
+          <NavMenuItem onClick={() => dispatch(showKeyboardShortcutModal())}>
             {t('Nav.Help.KeyboardShortcuts')}
-          </button>
-        </li>
-        <li>
-          <button
-            onClick={() => {
-              window.location = 'https://p5js.org/reference/';
-            }}
-          >
+          </NavMenuItem>
+          <NavMenuItem href="https://p5js.org/reference/">
             {t('Nav.Help.Reference')}
-          </button>
-        </li>
-        <li>
-          <Link to="/about">
-            <button>{t('Nav.Help.About')}</button>
-          </Link>
-        </li>
+          </NavMenuItem>
+          <NavMenuItem href="/about">{t('Nav.Help.About')}</NavMenuItem>
+        </ParentMenuContext.Provider>
       </ul>
     </div>
   );
