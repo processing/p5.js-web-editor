@@ -4,10 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
-import {
-  NavBarContext,
-  ParentMenuContext
-} from '../../../../components/Nav/contexts';
+import { ParentMenuContext } from '../../../../components/Nav/contexts';
 import NavBar from '../../../../components/Nav/NavBar';
 import { useMenuProps } from '../../../../components/Nav/NavDropdownMenu';
 import NavMenuItem from '../../../../components/Nav/NavMenuItem';
@@ -39,7 +36,6 @@ const Nav = styled(NavBar)`
 `;
 
 const LogoContainer = styled.div`
-  cursor: pointer;
   width: ${remSize(28)};
   aspect-ratio: 1;
   margin-left: ${remSize(14)};
@@ -152,16 +148,6 @@ const Options = styled.div`
   }
 `;
 
-const Logo = () => {
-  const { toggleDropdownOpen } = useContext(NavBarContext);
-
-  return (
-    <LogoContainer onClick={() => toggleDropdownOpen('more')}>
-      <AsteriskIcon />
-    </LogoContainer>
-  );
-};
-
 const MobileNav = () => {
   const project = useSelector((state) => state.project);
   const user = useSelector((state) => state.user);
@@ -196,9 +182,12 @@ const MobileNav = () => {
 
   const title = useMemo(resolveTitle, [project, pathname]);
 
+  const Logo = AsteriskIcon;
   return (
     <Nav>
-      <Logo />
+      <LogoContainer>
+        <Logo />
+      </LogoContainer>
       <Title>
         <h1>{title}</h1>
         {project?.owner && title === project.name && (
