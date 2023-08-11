@@ -57,10 +57,6 @@
 /* Fixed height overlay */
 .overlay--is-fixed-height .overlay__body {
   height: 100vh;
-
-  @media (min-width: 770px) {
-    height: 80vh;
-  }
 }
 
 .overlay--is-fixed-height .overlay__header {
