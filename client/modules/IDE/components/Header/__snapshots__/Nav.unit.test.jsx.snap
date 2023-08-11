@@ -51,7 +51,7 @@ exports[`Nav renders dashboard version for mobile 1`] = `
       class="sc-lmgQwP efOkME"
     >
       <div
-        class="sc-iJCRrE iXgpaF"
+        class="sc-iJCRrE hBGqHH"
       >
         <test-file-stub />
       </div>
@@ -436,7 +436,7 @@ exports[`Nav renders editor version for mobile 1`] = `
       class="sc-lmgQwP efOkME"
     >
       <div
-        class="sc-iJCRrE iXgpaF"
+        class="sc-iJCRrE hBGqHH"
       >
         <test-file-stub />
       </div>
