@@ -66,6 +66,30 @@ Providers.propTypes = {
   children: PropTypes.element.isRequired
 };
 
+/**
+ * @typedef {import('@testing-library/react').RenderOptions} RenderOptions
+ * @typedef {import('@testing-library/react').RenderResult} RenderResult
+ */
+
+/**
+ * @typedef {object} CustomRenderOptions
+ * @extends RenderOptions
+ * @property {boolean} [mobile] - Can use options { mobile: true } or { mobile: false } to determine which `react-responsive` media queries will match.
+ * @property {number} [deviceWidth] - Can set a specific device width, if testing more than 2 breakpoints. ie. { deviceWidth: 700 }
+ */
+
+/**
+ * @typedef {object} ReduxRenderOptions
+ * @extends CustomRenderOptions
+ * @property [initialState] - Can pass in a partial initialState for the Redux store, to be shallow merged with the default state. // TODO: deep merge
+ * @property {import('redux').Store} [store] - Can use a custom store instance.
+ */
+
+/**
+ * @param {React.ReactElement} ui
+ * @param {ReduxRenderOptions & CustomRenderOptions & RenderOptions} [options]
+ * @return {RenderResult & { store: import('redux').Store }}
+ */
 function reduxRender(
   ui,
   { initialState, store = configureStore(initialState), ...renderOptions } = {}
@@ -91,6 +115,11 @@ function reduxRender(
   return { store, ...render(ui, { wrapper: Wrapper, ...renderOptions }) };
 }
 
+/**
+ * @param {React.ReactElement} ui
+ * @param {CustomRenderOptions & RenderOptions} [options]
+ * @return {RenderResult}
+ */
 const customRender = (ui, options) =>
   // Pass options to Provider, see: https://github.com/testing-library/react-testing-library/issues/780#issuecomment-687525893
   render(ui, {
