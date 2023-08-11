@@ -4,14 +4,14 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { withTranslation } from 'react-i18next';
-import * as IDEActions from '../actions/ide';
-import * as preferenceActions from '../actions/preferences';
-import * as projectActions from '../actions/project';
+import * as IDEActions from '../../actions/ide';
+import * as preferenceActions from '../../actions/preferences';
+import * as projectActions from '../../actions/project';
 
-import PlayIcon from '../../../images/play.svg';
-import StopIcon from '../../../images/stop.svg';
-import PreferencesIcon from '../../../images/preferences.svg';
-import EditProjectNameIcon from '../../../images/pencil.svg';
+import PlayIcon from '../../../../images/play.svg';
+import StopIcon from '../../../../images/stop.svg';
+import PreferencesIcon from '../../../../images/preferences.svg';
+import EditProjectNameIcon from '../../../../images/pencil.svg';
 
 class Toolbar extends React.Component {
   constructor(props) {
