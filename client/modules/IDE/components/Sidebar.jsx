@@ -9,6 +9,7 @@ import {
   openProjectOptions,
   openUploadFileModal
 } from '../actions/ide';
+import { selectRootFile } from '../selectors/files';
 import { getAuthenticated, selectCanEditSketch } from '../selectors/users';
 
 import ConnectedFileNode from './FileNode';
@@ -23,9 +24,7 @@ export default function SideBar() {
 
   const [isFocused, setIsFocused] = useState(false);
 
-  const files = useSelector((state) => state.files);
-  // TODO: use `selectRootFile` defined in another PR
-  const rootFile = files.filter((file) => file.name === 'root')[0];
+  const rootFile = useSelector(selectRootFile);
   const projectOptionsVisible = useSelector(
     (state) => state.ide.projectOptionsVisible
   );
