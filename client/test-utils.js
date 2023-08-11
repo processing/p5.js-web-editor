@@ -18,6 +18,7 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import { I18nextProvider } from 'react-i18next';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
+import { Context as ResponsiveContext } from 'react-responsive';
 
 import browserHistory from './browserHistory';
 import i18n from './i18n-test';
@@ -29,11 +30,34 @@ import theme, { Theme } from './theme';
 // eslint-disable-next-line import/no-extraneous-dependencies
 export * from '@testing-library/react';
 
-const Providers = ({ children }) => (
+const ResponsiveProvider = ({ children, mobile, deviceWidth }) => {
+  const width = deviceWidth ?? (mobile ? 400 : 1000);
+  return (
+    // eslint-disable-next-line react/jsx-filename-extension
+    <ResponsiveContext.Provider value={{ width }}>
+      {children}
+    </ResponsiveContext.Provider>
+  );
+};
+
+ResponsiveProvider.propTypes = {
+  children: PropTypes.element.isRequired,
+  mobile: PropTypes.bool,
+  deviceWidth: PropTypes.number
+};
+
+ResponsiveProvider.defaultProps = {
+  mobile: false,
+  deviceWidth: undefined
+};
+
+const Providers = ({ children, ...options }) => (
   // eslint-disable-next-line react/jsx-filename-extension
   <StyledThemeProvider theme={{ ...theme[Theme.light] }}>
     <I18nextProvider i18n={i18n}>
-      <Router history={browserHistory}>{children}</Router>
+      <ResponsiveProvider {...options}>
+        <Router history={browserHistory}>{children}</Router>
+      </ResponsiveProvider>
     </I18nextProvider>
   </StyledThemeProvider>
 );
@@ -51,7 +75,9 @@ function reduxRender(
       <I18nextProvider i18n={i18n}>
         <Provider store={store}>
           <ThemeProvider>
-            <Router history={browserHistory}>{children}</Router>
+            <ResponsiveProvider {...renderOptions}>
+              <Router history={browserHistory}>{children}</Router>
+            </ResponsiveProvider>
           </ThemeProvider>
         </Provider>
       </I18nextProvider>
@@ -66,7 +92,11 @@ function reduxRender(
 }
 
 const customRender = (ui, options) =>
-  render(ui, { wrapper: Providers, ...options });
+  // Pass options to Provider, see: https://github.com/testing-library/react-testing-library/issues/780#issuecomment-687525893
+  render(ui, {
+    wrapper: (props) => <Providers {...props} {...options} />,
+    ...options
+  });
 
 // override render method
 export { customRender as render, reduxRender };

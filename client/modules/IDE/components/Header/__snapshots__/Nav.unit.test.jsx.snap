@@ -1,265 +1,602 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Nav renders dashboard version 1`] = `
+exports[`Nav renders dashboard version for desktop 1`] = `
 <DocumentFragment>
-  <div
-    class="sc-lmgQwP efOkME"
-  >
-    <div
-      class="sc-iJCRrE hBGqHH"
+  <header>
+    <nav
+      class="nav"
     >
-      <test-file-stub />
-    </div>
-    <div
-      class="sc-giAqHp hOwdWj"
-    >
-      <h1>
-        Bustling pisces
-      </h1>
-    </div>
-    <div
-      class="sc-ezzafa ezUeqV"
-    >
-      <div>
-        <button
-          class="sc-jSFjdj fKQAQb sc-pNWdM fCGekV"
-          display="inline"
-          focusable="false"
-          kind="primary"
-          type="button"
+      <ul
+        class="nav__items-left"
+      >
+        <li
+          class="nav__item-logo"
         >
           <test-file-stub
-            aria-hidden="true"
-            classname="sc-fnVZcZ dgsepr"
+            aria-label="p5.js Logo"
+            classname="svg__logo"
             focusable="false"
+            role="img"
           />
-        </button>
-      </div>
-      <div>
-        <button
-          class="sc-jSFjdj fKQAQb sc-pNWdM fCGekV"
-          display="inline"
-          focusable="false"
-          kind="primary"
-          type="button"
+        </li>
+        <li
+          class="nav__item nav__item--no-icon"
         >
-          <test-file-stub
-            aria-hidden="true"
-            classname="sc-dIvrsQ xfuVF"
-            focusable="false"
-          />
-        </button>
-        <ul>
-          <b>
-            File
-          </b>
-          <li>
-            <button>
-              New
-            </button>
-          </li>
-          <li>
-            <button>
-              Save
-            </button>
-          </li>
-          <li>
-            <button>
-              Examples
-            </button>
-          </li>
-          <b>
-            Edit
-          </b>
-          <li>
-            <button>
-              Tidy Code
-            </button>
-          </li>
-          <li>
-            <button>
-              Find
-            </button>
-          </li>
-          <b>
-            Sketch
-          </b>
-          <li>
-            <button>
-              Add File
-            </button>
-          </li>
-          <li>
-            <button>
-              Add Folder
-            </button>
-          </li>
-          <b>
-            Settings
-          </b>
-          <li>
-            <button>
-              Preferences
-            </button>
-          </li>
-          <li>
-            <button>
-              Language
-            </button>
-          </li>
-          <b>
-            Help
-          </b>
-          <li>
-            <button>
-              Keyboard Shortcuts
-            </button>
-          </li>
-          <li>
-            <button>
-              Reference
-            </button>
-          </li>
-          <li>
-            <button>
-              About
-            </button>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
+          <a
+            class="nav__back-link"
+            href="/"
+          >
+            <test-file-stub
+              aria-hidden="true"
+              classname="nav__back-icon"
+              focusable="false"
+            />
+            <span
+              class="nav__item-header"
+            >
+              Back to Editor
+            </span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
 </DocumentFragment>
 `;
 
-exports[`Nav renders editor version 1`] = `
+exports[`Nav renders dashboard version for mobile 1`] = `
 <DocumentFragment>
-  <div
-    class="sc-lmgQwP efOkME"
-  >
-    <div
-      class="sc-iJCRrE hBGqHH"
+  <header>
+    <nav
+      class="sc-lmgQwP efOkME"
     >
-      <test-file-stub />
-    </div>
-    <div
-      class="sc-giAqHp hOwdWj"
+      <div
+        class="sc-iJCRrE iXgpaF"
+      >
+        <test-file-stub />
+      </div>
+      <div
+        class="sc-giAqHp hOwdWj"
+      >
+        <h1>
+          Test project name
+        </h1>
+      </div>
+      <div
+        class="sc-ezzafa cqyOEp"
+      >
+        <div>
+          <a
+            href="/login"
+          >
+            <button
+              class="sc-jSFjdj fKQAQb sc-pNWdM fCGekV"
+              display="inline"
+              focusable="false"
+              kind="primary"
+              type="button"
+            >
+              <test-file-stub
+                aria-hidden="true"
+                classname="sc-fnVZcZ dgsepr"
+                focusable="false"
+              />
+            </button>
+          </a>
+        </div>
+        <div>
+          <button
+            class="sc-jSFjdj fKQAQb sc-pNWdM fCGekV"
+            display="inline"
+            focusable="false"
+            kind="primary"
+            type="button"
+          >
+            <test-file-stub
+              aria-hidden="true"
+              classname="sc-dIvrsQ xfuVF"
+              focusable="false"
+            />
+          </button>
+          <ul
+            class=""
+          >
+            <b>
+              File
+            </b>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                New
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Save
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <a
+                href="/p5/sketches"
+              >
+                Examples
+              </a>
+            </li>
+            <b>
+              Edit
+            </b>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Tidy Code
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Find
+              </button>
+            </li>
+            <b>
+              Sketch
+            </b>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Add File
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Add Folder
+              </button>
+            </li>
+            <b>
+              Settings
+            </b>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Preferences
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Language
+              </button>
+            </li>
+            <b>
+              Help
+            </b>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Keyboard Shortcuts
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <a
+                href="https://p5js.org/reference/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Reference
+              </a>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <a
+                href="/about"
+              >
+                About
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+</DocumentFragment>
+`;
+
+exports[`Nav renders editor version for desktop 1`] = `
+<DocumentFragment>
+  <header>
+    <nav
+      class="nav"
     >
-      <h1>
-        Internal meteor
-      </h1>
-    </div>
-    <div
-      class="sc-ezzafa ezUeqV"
-    >
-      <div>
-        <button
-          class="sc-jSFjdj fKQAQb sc-pNWdM fCGekV"
-          display="inline"
-          focusable="false"
-          kind="primary"
-          type="button"
+      <ul
+        class="nav__items-left"
+      >
+        <li
+          class="nav__item-logo"
         >
           <test-file-stub
-            aria-hidden="true"
-            classname="sc-fnVZcZ dgsepr"
+            aria-label="p5.js Logo"
+            classname="svg__logo"
             focusable="false"
+            role="img"
           />
-        </button>
-      </div>
-      <div>
-        <button
-          class="sc-jSFjdj fKQAQb sc-pNWdM fCGekV"
-          display="inline"
-          focusable="false"
-          kind="primary"
-          type="button"
+        </li>
+        <li
+          class="nav__item"
         >
-          <test-file-stub
-            aria-hidden="true"
-            classname="sc-dIvrsQ xfuVF"
-            focusable="false"
-          />
-        </button>
-        <ul>
-          <b>
-            File
-          </b>
-          <li>
-            <button>
-              New
-            </button>
-          </li>
-          <li>
-            <button>
-              Save
-            </button>
-          </li>
-          <li>
-            <button>
-              Examples
-            </button>
-          </li>
-          <b>
-            Edit
-          </b>
-          <li>
-            <button>
-              Tidy Code
-            </button>
-          </li>
-          <li>
-            <button>
-              Find
-            </button>
-          </li>
-          <b>
-            Sketch
-          </b>
-          <li>
-            <button>
-              Add File
-            </button>
-          </li>
-          <li>
-            <button>
-              Add Folder
-            </button>
-          </li>
-          <b>
-            Settings
-          </b>
-          <li>
-            <button>
-              Preferences
-            </button>
-          </li>
-          <li>
-            <button>
-              Language
-            </button>
-          </li>
-          <b>
-            Help
-          </b>
-          <li>
-            <button>
-              Keyboard Shortcuts
-            </button>
-          </li>
-          <li>
-            <button>
-              Reference
-            </button>
-          </li>
-          <li>
-            <button>
-              About
-            </button>
-          </li>
-        </ul>
+          <button>
+            <span
+              class="nav__item-header"
+            >
+              File
+            </span>
+            <test-file-stub
+              aria-hidden="true"
+              classname="nav__item-header-triangle"
+              focusable="false"
+            />
+          </button>
+          <ul
+            class="nav__dropdown"
+          >
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                New
+              </button>
+            </li>
+          </ul>
+        </li>
+        <li
+          class="nav__item"
+        >
+          <button>
+            <span
+              class="nav__item-header"
+            >
+              Edit
+            </span>
+            <test-file-stub
+              aria-hidden="true"
+              classname="nav__item-header-triangle"
+              focusable="false"
+            />
+          </button>
+          <ul
+            class="nav__dropdown"
+          >
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Tidy Code
+                <span
+                  class="nav__keyboard-shortcut"
+                >
+                  ⌃+⇧+F
+                </span>
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Find
+                <span
+                  class="nav__keyboard-shortcut"
+                >
+                  ⌃+F
+                </span>
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Replace
+                <span
+                  class="nav__keyboard-shortcut"
+                >
+                  ⌃+H
+                </span>
+              </button>
+            </li>
+          </ul>
+        </li>
+        <li
+          class="nav__item"
+        >
+          <button>
+            <span
+              class="nav__item-header"
+            >
+              Sketch
+            </span>
+            <test-file-stub
+              aria-hidden="true"
+              classname="nav__item-header-triangle"
+              focusable="false"
+            />
+          </button>
+          <ul
+            class="nav__dropdown"
+          >
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Add File
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Add Folder
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Run
+                <span
+                  class="nav__keyboard-shortcut"
+                >
+                  ⌃+Enter
+                </span>
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Stop
+                <span
+                  class="nav__keyboard-shortcut"
+                >
+                  ⇧+⌃+Enter
+                </span>
+              </button>
+            </li>
+          </ul>
+        </li>
+        <li
+          class="nav__item"
+        >
+          <button>
+            <span
+              class="nav__item-header"
+            >
+              Help
+            </span>
+            <test-file-stub
+              aria-hidden="true"
+              classname="nav__item-header-triangle"
+              focusable="false"
+            />
+          </button>
+          <ul
+            class="nav__dropdown"
+          >
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Keyboard Shortcuts
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <a
+                href="https://p5js.org/reference/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Reference
+              </a>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <a
+                href="/about"
+              >
+                About
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </header>
+</DocumentFragment>
+`;
+
+exports[`Nav renders editor version for mobile 1`] = `
+<DocumentFragment>
+  <header>
+    <nav
+      class="sc-lmgQwP efOkME"
+    >
+      <div
+        class="sc-iJCRrE iXgpaF"
+      >
+        <test-file-stub />
       </div>
-    </div>
-  </div>
+      <div
+        class="sc-giAqHp hOwdWj"
+      >
+        <h1>
+          Test project name
+        </h1>
+      </div>
+      <div
+        class="sc-ezzafa cqyOEp"
+      >
+        <div>
+          <a
+            href="/login"
+          >
+            <button
+              class="sc-jSFjdj fKQAQb sc-pNWdM fCGekV"
+              display="inline"
+              focusable="false"
+              kind="primary"
+              type="button"
+            >
+              <test-file-stub
+                aria-hidden="true"
+                classname="sc-fnVZcZ dgsepr"
+                focusable="false"
+              />
+            </button>
+          </a>
+        </div>
+        <div>
+          <button
+            class="sc-jSFjdj fKQAQb sc-pNWdM fCGekV"
+            display="inline"
+            focusable="false"
+            kind="primary"
+            type="button"
+          >
+            <test-file-stub
+              aria-hidden="true"
+              classname="sc-dIvrsQ xfuVF"
+              focusable="false"
+            />
+          </button>
+          <ul
+            class=""
+          >
+            <b>
+              File
+            </b>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                New
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Save
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <a
+                href="/p5/sketches"
+              >
+                Examples
+              </a>
+            </li>
+            <b>
+              Edit
+            </b>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Tidy Code
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Find
+              </button>
+            </li>
+            <b>
+              Sketch
+            </b>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Add File
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Add Folder
+              </button>
+            </li>
+            <b>
+              Settings
+            </b>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Preferences
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Language
+              </button>
+            </li>
+            <b>
+              Help
+            </b>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Keyboard Shortcuts
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <a
+                href="https://p5js.org/reference/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Reference
+              </a>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <a
+                href="/about"
+              >
+                About
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
 </DocumentFragment>
 `;
