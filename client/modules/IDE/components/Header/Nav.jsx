@@ -14,6 +14,7 @@ import { setLanguage } from '../../actions/preferences';
 import NavBar from '../../../../components/Nav/NavBar';
 import CaretLeftIcon from '../../../../images/left-arrow.svg';
 import LogoIcon from '../../../../images/p5js-logo-small.svg';
+import { selectRootFile } from '../../selectors/files';
 import { selectSketchPath } from '../../selectors/project';
 import { metaKey, metaKeyName } from '../../../../utils/metaKey';
 import { useSketchActions } from '../../hooks';
@@ -111,17 +112,14 @@ const DashboardMenu = () => {
   );
 };
 
-const ProjectMenu = (props) => {
+const ProjectMenu = () => {
   const isUserOwner = useSelector(getIsUserOwner);
   const project = useSelector((state) => state.project);
   const user = useSelector((state) => state.user);
 
   const isUnsaved = !project?.id;
 
-  // TODO: use selectRootFile selector
-  const rootFile = useSelector(
-    (state) => state.files.filter((file) => file.name === 'root')[0]
-  );
+  const rootFile = useSelector(selectRootFile);
 
   const cmRef = useContext(CmControllerContext);
 
