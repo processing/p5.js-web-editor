@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import { sortBy } from 'lodash';
+import classNames from 'classnames';
 import { ParentMenuContext } from '../../../../components/Nav/contexts';
 import NavBar from '../../../../components/Nav/NavBar';
 import { useMenuProps } from '../../../../components/Nav/NavDropdownMenu';
@@ -180,6 +181,7 @@ const LanguageSelect = styled.div`
 
       &:hover,
       &:active,
+      &.current-language,
       &:focus {
         background-color: ${prop('Button.primary.hover.background')};
         color: ${prop('Button.primary.hover.foreground')};
@@ -288,6 +290,7 @@ const MoreMenu = () => {
   const rootFile = useSelector(
     (state) => state.files.filter((file) => file.name === 'root')[0]
   );
+  const language = useSelector((state) => state.preferences.language);
 
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -318,6 +321,10 @@ const MoreMenu = () => {
             <div>
               {sortBy(availableLanguages).map((key) => (
                 <button
+                  className={classNames({
+                    'current-language':
+                      languageKeyToLabel(key) === languageKeyToLabel(language)
+                  })}
                   aria-label={languageKeyToLabel(key)}
                   key={key}
                   onClick={handleLangSelection}
