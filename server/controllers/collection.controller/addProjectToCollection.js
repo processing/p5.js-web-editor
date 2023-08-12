@@ -1,15 +1,9 @@
 import Collection from '../../models/collection';
 import Project from '../../models/project';
 
-export default function addProjectToCollection(req, res) {
+export default async function addProjectToCollection(req, res) {
   const owner = req.user._id;
   const { id: collectionId, projectId } = req.params;
-
-  const collectionPromise = Collection.findById(collectionId).populate(
-    'items.project',
-    '_id'
-  );
-  const projectPromise = Project.findById(projectId);
 
   function sendFailure(code, message) {
     res.status(code).json({ success: false, message });
@@ -46,7 +40,6 @@ export default function addProjectToCollection(req, res) {
 
     try {
       collection.items.push({ project });
-
       return collection.save();
     } catch (error) {
       console.error(error);
@@ -69,9 +62,19 @@ export default function addProjectToCollection(req, res) {
     ]);
   }
 
-  return Promise.all([collectionPromise, projectPromise])
-    .then(updateCollection)
-    .then(populateReferences)
-    .then(sendSuccess)
-    .catch(sendFailure);
+  try {
+    const collection = await Collection.findById(collectionId).populate(
+      'items.project',
+      '_id'
+    );
+    const project = await Project.findById(projectId);
+
+    const updatedCollection = await updateCollection([collection, project]);
+    if (updatedCollection) {
+      const populatedCollection = await populateReferences(updatedCollection);
+      sendSuccess(populatedCollection);
+    }
+  } catch (error) {
+    sendFailure(500, error.message);
+  }
 }
