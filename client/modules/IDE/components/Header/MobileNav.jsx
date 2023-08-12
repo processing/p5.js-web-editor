@@ -1,9 +1,10 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
+import { sortBy } from 'lodash';
 import { ParentMenuContext } from '../../../../components/Nav/contexts';
 import NavBar from '../../../../components/Nav/NavBar';
 import { useMenuProps } from '../../../../components/Nav/NavDropdownMenu';
@@ -22,6 +23,10 @@ import { logoutUser } from '../../../User/actions';
 import { useSketchActions } from '../../hooks';
 import { CmControllerContext } from '../../pages/IDEView';
 import { selectSketchPath } from '../../selectors/project';
+import { availableLanguages, languageKeyToLabel } from '../../../../i18n';
+import { showToast } from '../../actions/toast';
+import { setLanguage } from '../../actions/preferences';
+import Overlay from '../../../App/components/Overlay';
 
 const Nav = styled(NavBar)`
   background: ${prop('MobilePanel.default.background')};
@@ -148,6 +153,41 @@ const Options = styled.div`
   }
 `;
 
+const LanguageSelect = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100%;
+  justify-content: center;
+
+  h3 {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  div {
+    display: flex;
+    gap: ${remSize(8)};
+    flex-direction: column;
+    position: block;
+    align-items: center;
+
+    button {
+      font-size: ${remSize(16)};
+      padding: ${remSize(8)} ${remSize(15)} ${remSize(8)} ${remSize(10)};
+      width: 100%;
+      max-width: 80vw;
+
+      &:hover,
+      &:active,
+      &:focus {
+        background-color: ${prop('Button.primary.hover.background')};
+        color: ${prop('Button.primary.hover.foreground')};
+      }
+    }
+  }
+`;
+
 const MobileNav = () => {
   const project = useSelector((state) => state.project);
   const user = useSelector((state) => state.user);
@@ -248,6 +288,7 @@ const MoreMenu = () => {
   const rootFile = useSelector(
     (state) => state.files.filter((file) => file.name === 'root')[0]
   );
+
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { newSketch, saveSketch } = useSketchActions();
@@ -256,8 +297,39 @@ const MoreMenu = () => {
 
   const { isOpen, handlers } = useMenuProps('more');
 
+  const [isLanguageModalVisible, setIsLanguageModalVisible] = useState(false);
+
+  function handleLangSelection(event) {
+    dispatch(setLanguage(event.target.value));
+    dispatch(showToast('Toast.LangChange'));
+    setIsLanguageModalVisible(false);
+  }
+
   return (
     <div>
+      {isLanguageModalVisible && (
+        <Overlay
+          // TODO: add translations
+          title="Select Language"
+          ariaLabel="Select Language"
+          closeOverlay={() => setIsLanguageModalVisible(false)}
+        >
+          <LanguageSelect>
+            <div>
+              {sortBy(availableLanguages).map((key) => (
+                <button
+                  aria-label={languageKeyToLabel(key)}
+                  key={key}
+                  onClick={handleLangSelection}
+                  value={key}
+                >
+                  {languageKeyToLabel(key)}
+                </button>
+              ))}
+            </div>
+          </LanguageSelect>
+        </Overlay>
+      )}
       <IconButton icon={MoreIcon} {...handlers} />
       <ul className={isOpen ? 'opened' : ''}>
         <ParentMenuContext.Provider value="more">
@@ -293,7 +365,9 @@ const MoreMenu = () => {
           >
             Preferences
           </NavMenuItem>
-          <NavMenuItem>Language</NavMenuItem>
+          <NavMenuItem onClick={() => setIsLanguageModalVisible(true)}>
+            Language
+          </NavMenuItem>
           <b>{t('Nav.Help.Title')}</b>
           <NavMenuItem onClick={() => dispatch(showKeyboardShortcutModal())}>
             {t('Nav.Help.KeyboardShortcuts')}
