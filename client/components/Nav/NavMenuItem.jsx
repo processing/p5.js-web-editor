@@ -19,7 +19,7 @@ function NavMenuItem({ hideIf, ...rest }) {
 
   return (
     <li className="nav__dropdown-item">
-      <ButtonOrLink {...rest} {...handlers} />
+      <ButtonOrLink {...rest} {...handlers} target="_blank" />
     </li>
   );
 }
