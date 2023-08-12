@@ -37,27 +37,37 @@ exports[`Nav renders correctly 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <button />
+              <button
+                target="_blank"
+              />
             </li>
             <li
               class="nav__dropdown-item"
             >
-              <button />
+              <button
+                target="_blank"
+              />
             </li>
             <li
               class="nav__dropdown-item"
             >
-              <button />
+              <button
+                target="_blank"
+              />
             </li>
             <li
               class="nav__dropdown-item"
             >
-              <button />
+              <button
+                target="_blank"
+              />
             </li>
             <li
               class="nav__dropdown-item"
             >
-              <a />
+              <a
+                target="_blank"
+              />
             </li>
           </ul>
         </li>
@@ -80,7 +90,9 @@ exports[`Nav renders correctly 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                target="_blank"
+              >
                 <span
                   class="nav__keyboard-shortcut"
                 >
@@ -91,7 +103,9 @@ exports[`Nav renders correctly 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                target="_blank"
+              >
                 <span
                   class="nav__keyboard-shortcut"
                 >
@@ -102,7 +116,9 @@ exports[`Nav renders correctly 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                target="_blank"
+              >
                 <span
                   class="nav__keyboard-shortcut"
                 >
@@ -131,17 +147,23 @@ exports[`Nav renders correctly 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <button />
+              <button
+                target="_blank"
+              />
             </li>
             <li
               class="nav__dropdown-item"
             >
-              <button />
+              <button
+                target="_blank"
+              />
             </li>
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                target="_blank"
+              >
                 <span
                   class="nav__keyboard-shortcut"
                 >
@@ -152,7 +174,9 @@ exports[`Nav renders correctly 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                target="_blank"
+              >
                 <span
                   class="nav__keyboard-shortcut"
                 >
@@ -181,7 +205,9 @@ exports[`Nav renders correctly 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <button />
+              <button
+                target="_blank"
+              />
             </li>
             <li
               class="nav__dropdown-item"
@@ -195,7 +221,9 @@ exports[`Nav renders correctly 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <a />
+              <a
+                target="_blank"
+              />
             </li>
           </ul>
         </li>
@@ -288,7 +316,9 @@ exports[`Nav renders editor version 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                target="_blank"
+              >
                 New
               </button>
             </li>
@@ -315,7 +345,9 @@ exports[`Nav renders editor version 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                target="_blank"
+              >
                 Tidy Code
                 <span
                   class="nav__keyboard-shortcut"
@@ -327,7 +359,9 @@ exports[`Nav renders editor version 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                target="_blank"
+              >
                 Find
                 <span
                   class="nav__keyboard-shortcut"
@@ -339,7 +373,9 @@ exports[`Nav renders editor version 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                target="_blank"
+              >
                 Replace
                 <span
                   class="nav__keyboard-shortcut"
@@ -371,21 +407,27 @@ exports[`Nav renders editor version 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                target="_blank"
+              >
                 Add File
               </button>
             </li>
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                target="_blank"
+              >
                 Add Folder
               </button>
             </li>
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                target="_blank"
+              >
                 Run
                 <span
                   class="nav__keyboard-shortcut"
@@ -397,7 +439,9 @@ exports[`Nav renders editor version 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                target="_blank"
+              >
                 Stop
                 <span
                   class="nav__keyboard-shortcut"
@@ -429,7 +473,9 @@ exports[`Nav renders editor version 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                target="_blank"
+              >
                 Keyboard Shortcuts
               </button>
             </li>
@@ -447,7 +493,9 @@ exports[`Nav renders editor version 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <a>
+              <a
+                target="_blank"
+              >
                 About
               </a>
             </li>
