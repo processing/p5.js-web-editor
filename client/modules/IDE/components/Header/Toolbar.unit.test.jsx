@@ -1,46 +1,56 @@
+import { rest } from 'msw';
+import { setupServer } from 'msw/node';
 import React from 'react';
 import lodash from 'lodash';
 
-import { fireEvent, render, screen, waitFor } from '../../../../test-utils';
-import { ToolbarComponent } from './Toolbar';
+import {
+  fireEvent,
+  reduxRender,
+  screen,
+  waitFor
+} from '../../../../test-utils';
+import { selectProjectName } from '../../selectors/project';
+import ToolbarComponent from './Toolbar';
 
-const renderComponent = (extraProps = {}) => {
-  const props = lodash.merge(
+const server = setupServer(
+  rest.put(`/projects/id`, (req, res, ctx) => res(ctx.json(req.body)))
+);
+
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
+
+const renderComponent = (extraState = {}) => {
+  const initialState = lodash.merge(
     {
-      isPlaying: false,
-      preferencesIsVisible: false,
-      stopSketch: jest.fn(),
-      setProjectName: jest.fn(),
-      openPreferences: jest.fn(),
-      showEditProjectName: jest.fn(),
-      hideEditProjectName: jest.fn(),
-      infiniteLoop: false,
-      autorefresh: false,
-      setAutorefresh: jest.fn(),
-      setTextOutput: jest.fn(),
-      setGridOutput: jest.fn(),
-      startSketch: jest.fn(),
-      startAccessibleSketch: jest.fn(),
-      saveProject: jest.fn(),
-      syncFileContent: jest.fn(),
-      currentUser: 'me',
-      originalProjectName: 'testname',
-
-      owner: {
-        username: 'me'
+      ide: {
+        isPlaying: false
+      },
+      user: {
+        authenticated: true,
+        username: 'me',
+        id: 'userId'
       },
       project: {
         name: 'testname',
-        id: 'id'
-      },
-      t: jest.fn()
+        id: 'id',
+        owner: {
+          username: 'me',
+          id: 'userId'
+        }
+      }
     },
-    extraProps
+    extraState
   );
 
-  render(<ToolbarComponent {...props} />);
+  const props = {
+    syncFileContent: jest.fn()
+  };
 
-  return props;
+  return {
+    ...props,
+    ...reduxRender(<ToolbarComponent {...props} />, { initialState })
+  };
 };
 
 describe('<ToolbarComponent />', () => {
@@ -57,19 +67,20 @@ describe('<ToolbarComponent />', () => {
   });
 
   it("non-owner can't switch to sketch editing mode", async () => {
-    renderComponent({ currentUser: 'not-me' });
+    renderComponent({ user: { username: 'not-me', id: 'not-me' } });
     const sketchName = screen.getByLabelText('Edit sketch name');
 
     fireEvent.click(sketchName);
 
     expect(sketchName).toBeDisabled();
     await waitFor(() =>
+      // expect(screen.getByLabelText('New sketch name').disabled).toBe(true)
       expect(screen.getByLabelText('New sketch name')).toBeDisabled()
     );
   });
 
   it('sketch owner can change name', async () => {
-    const props = renderComponent();
+    const { store } = renderComponent();
 
     const sketchNameInput = screen.getByLabelText('New sketch name');
     fireEvent.change(sketchNameInput, {
@@ -78,38 +89,38 @@ describe('<ToolbarComponent />', () => {
     fireEvent.blur(sketchNameInput);
 
     await waitFor(() =>
-      expect(props.setProjectName).toHaveBeenCalledWith('my new sketch name')
+      expect(selectProjectName(store.getState())).toBe('my new sketch name')
     );
-    await waitFor(() => expect(props.saveProject).toHaveBeenCalled());
   });
 
   it("sketch owner can't change to empty name", async () => {
-    const props = renderComponent();
+    const { store } = renderComponent();
 
     const sketchNameInput = screen.getByLabelText('New sketch name');
     fireEvent.change(sketchNameInput, { target: { value: '' } });
     fireEvent.blur(sketchNameInput);
 
-    await waitFor(() => expect(props.setProjectName).not.toHaveBeenCalled());
-    await waitFor(() => expect(props.saveProject).not.toHaveBeenCalled());
+    await waitFor(() =>
+      expect(selectProjectName(store.getState())).toBe('testname')
+    );
   });
 
   it('sketch is stopped when stop button is clicked', async () => {
-    const props = renderComponent({ isPlaying: true });
+    const { store } = renderComponent({ ide: { isPlaying: true } });
 
     const stopButton = screen.getByLabelText('Stop sketch');
 
     fireEvent.click(stopButton);
 
-    await waitFor(() => expect(props.stopSketch).toHaveBeenCalled());
+    await waitFor(() => expect(store.getState().ide.isPlaying).toBe(false));
   });
 
   it('sketch is started when play button is clicked', async () => {
-    const props = renderComponent();
+    const { store } = renderComponent();
     const playButton = screen.getByLabelText('Play only visual sketch');
     fireEvent.click(playButton);
 
-    await waitFor(() => expect(props.startSketch).toHaveBeenCalled());
+    await waitFor(() => expect(store.getState().ide.isPlaying).toBe(true));
   });
 
   it('sketch content is synched when play button is clicked', async () => {
