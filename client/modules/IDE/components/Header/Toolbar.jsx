@@ -15,12 +15,11 @@ import {
   setGridOutput,
   setTextOutput
 } from '../../actions/preferences';
-import { useSketchActions } from '../../hooks';
 
 import PlayIcon from '../../../../images/play.svg';
 import StopIcon from '../../../../images/stop.svg';
 import PreferencesIcon from '../../../../images/preferences.svg';
-import EditableInput from '../EditableInput';
+import ProjectName from './ProjectName';
 
 const Toolbar = (props) => {
   const { isPlaying, infiniteLoop, preferencesIsVisible } = useSelector(
@@ -31,7 +30,6 @@ const Toolbar = (props) => {
   const dispatch = useDispatch();
 
   const { t } = useTranslation();
-  const { changeSketchName, canEditProjectName } = useSketchActions();
 
   const playButtonClass = classNames({
     'toolbar__play-button': true,
@@ -96,17 +94,7 @@ const Toolbar = (props) => {
         </label>
       </div>
       <div className="toolbar__project-name-container">
-        <EditableInput
-          value={project.name}
-          disabled={!canEditProjectName}
-          aria-label={t('Toolbar.EditSketchARIA')}
-          inputProps={{
-            maxLength: 128,
-            'aria-label': t('Toolbar.NewSketchNameARIA')
-          }}
-          validate={(text) => text.trim().length > 0}
-          onChange={changeSketchName}
-        />
+        <ProjectName />
         {(() => {
           if (project.owner) {
             return (
