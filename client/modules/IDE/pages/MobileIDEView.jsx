@@ -41,6 +41,7 @@ import { remSize } from '../../../theme';
 import ActionStrip from '../../../components/mobile/ActionStrip';
 import useAsModal from '../../../components/useAsModal';
 import Dropdown from '../../../components/Dropdown';
+import { selectActiveFile } from '../selectors/files';
 import { getIsUserOwner } from '../selectors/users';
 
 import {
@@ -475,10 +476,7 @@ MobileIDEView.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    selectedFile:
-      state.files.find((file) => file.isSelectedFile) ||
-      state.files.find((file) => file.name === 'sketch.js') ||
-      state.files.find((file) => file.name !== 'root'),
+    selectedFile: selectActiveFile(state),
     ide: state.ide,
     files: state.files,
     unsavedChanges: state.ide.unsavedChanges,
