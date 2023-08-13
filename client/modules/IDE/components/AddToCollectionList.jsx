@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
 import Loader from '../../App/components/loader';
 import {
   addToCollection,
@@ -11,6 +12,20 @@ import {
 } from '../actions/collections';
 import getSortedCollections from '../selectors/collections';
 import QuickAddList from './QuickAddList';
+import { remSize } from '../../../theme';
+
+export const CollectionAddSketchWrapper = styled.div`
+  width: ${remSize(600)};
+  max-width: 100%;
+  overflow: auto;
+`;
+
+export const QuickAddWrapper = styled.div`
+  width: ${remSize(600)};
+  max-width: 100%;
+  padding: ${remSize(24)};
+  height: 100%;
+`;
 
 const AddToCollectionList = ({ projectId }) => {
   const { t } = useTranslation();
@@ -60,14 +75,14 @@ const AddToCollectionList = ({ projectId }) => {
   };
 
   return (
-    <div className="collection-add-sketch">
-      <div className="quick-add-wrapper">
+    <CollectionAddSketchWrapper>
+      <QuickAddWrapper>
         <Helmet>
           <title>{t('AddToCollectionList.Title')}</title>
         </Helmet>
         {getContent()}
-      </div>
-    </div>
+      </QuickAddWrapper>
+    </CollectionAddSketchWrapper>
   );
 };
 

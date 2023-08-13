@@ -33,6 +33,7 @@ import About from '../components/About';
 import AddToCollectionList from '../components/AddToCollectionList';
 import Feedback from '../components/Feedback';
 import { CollectionSearchbar } from '../components/Searchbar';
+import { selectActiveFile } from '../selectors/files';
 import { getIsUserOwner } from '../selectors/users';
 import RootPage from '../../../components/RootPage';
 
@@ -272,30 +273,7 @@ class IDEView extends React.Component {
             ariaLabel={this.props.t('Preferences.Settings')}
             closeOverlay={this.props.closePreferences}
           >
-            <Preferences
-              fontSize={this.props.preferences.fontSize}
-              setFontSize={this.props.setFontSize}
-              autosave={this.props.preferences.autosave}
-              linewrap={this.props.preferences.linewrap}
-              lineNumbers={this.props.preferences.lineNumbers}
-              setLineNumbers={this.props.setLineNumbers}
-              setAutosave={this.props.setAutosave}
-              setLinewrap={this.props.setLinewrap}
-              lintWarning={this.props.preferences.lintWarning}
-              setLintWarning={this.props.setLintWarning}
-              textOutput={this.props.preferences.textOutput}
-              gridOutput={this.props.preferences.gridOutput}
-              setTextOutput={this.props.setTextOutput}
-              setGridOutput={this.props.setGridOutput}
-              theme={this.props.preferences.theme}
-              setTheme={this.props.setTheme}
-              autocloseBracketsQuotes={
-                this.props.preferences.autocloseBracketsQuotes
-              }
-              setAutocloseBracketsQuotes={this.props.setAutocloseBracketsQuotes}
-              autocompleteHinter={this.props.preferences.autocompleteHinter}
-              setAutocompleteHinter={this.props.setAutocompleteHinter}
-            />
+            <Preferences />
           </Overlay>
         )}
         <main className="editor-preview-container">
@@ -500,15 +478,6 @@ IDEView.propTypes = {
     autocompleteHinter: PropTypes.bool.isRequired
   }).isRequired,
   closePreferences: PropTypes.func.isRequired,
-  setAutocloseBracketsQuotes: PropTypes.func.isRequired,
-  setAutocompleteHinter: PropTypes.func.isRequired,
-  setFontSize: PropTypes.func.isRequired,
-  setAutosave: PropTypes.func.isRequired,
-  setLineNumbers: PropTypes.func.isRequired,
-  setLinewrap: PropTypes.func.isRequired,
-  setLintWarning: PropTypes.func.isRequired,
-  setTextOutput: PropTypes.func.isRequired,
-  setGridOutput: PropTypes.func.isRequired,
   setAllAccessibleOutput: PropTypes.func.isRequired,
   selectedFile: PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -531,7 +500,6 @@ IDEView.propTypes = {
   closeShareModal: PropTypes.func.isRequired,
   closeKeyboardShortcutModal: PropTypes.func.isRequired,
   autosaveProject: PropTypes.func.isRequired,
-  setTheme: PropTypes.func.isRequired,
   setPreviousPath: PropTypes.func.isRequired,
   showErrorModal: PropTypes.func.isRequired,
   hideErrorModal: PropTypes.func.isRequired,
@@ -544,10 +512,7 @@ IDEView.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    selectedFile:
-      state.files.find((file) => file.isSelectedFile) ||
-      state.files.find((file) => file.name === 'sketch.js') ||
-      state.files.find((file) => file.name !== 'root'),
+    selectedFile: selectActiveFile(state),
     htmlFile: getHTMLFile(state.files),
     ide: state.ide,
     preferences: state.preferences,
