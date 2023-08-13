@@ -1,27 +1,24 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { withTranslation } from 'react-i18next';
-import { connect } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import classNames from 'classnames';
 import slugify from 'slugify';
+
+import TableBase from '../../../common/Table/TableBase';
 import dates from '../../../utils/formatDate';
-import * as ProjectActions from '../actions/project';
-import * as ProjectsActions from '../actions/projects';
-import * as CollectionsActions from '../actions/collections';
-import * as ToastActions from '../actions/toast';
-import * as SortingActions from '../actions/sorting';
-import * as IdeActions from '../actions/ide';
-import getSortedSketches from '../selectors/projects';
-import Loader from '../../App/components/loader';
 import Overlay from '../../App/components/Overlay';
+import * as IdeActions from '../actions/ide';
+import * as ProjectActions from '../actions/project';
+import { getProjects } from '../actions/projects';
+import { DIRECTION } from '../actions/sorting';
+import getSortedSketches from '../selectors/projects';
+import { selectCurrentUsername } from '../selectors/users';
 import AddToCollectionList from './AddToCollectionList';
 import getConfig from '../../../utils/getConfig';
 
-import ArrowUpIcon from '../../../images/sort-arrow-up.svg';
-import ArrowDownIcon from '../../../images/sort-arrow-down.svg';
 import DownFilledTriangleIcon from '../../../images/down-filled-triangle.svg';
 
 const ROOT_URL = getConfig('API_URL');
@@ -351,6 +348,12 @@ SketchListRowBase.defaultProps = {
   mobile: false
 };
 
+function mapStateToPropsSketchListRow(state) {
+  return {
+    user: state.user
+  };
+}
+
 function mapDispatchToPropsSketchListRow(dispatch) {
   return bindActionCreators(
     Object.assign({}, ProjectActions, IdeActions),
@@ -359,257 +362,112 @@ function mapDispatchToPropsSketchListRow(dispatch) {
 }
 
 const SketchListRow = connect(
-  null,
+  mapStateToPropsSketchListRow,
   mapDispatchToPropsSketchListRow
 )(SketchListRowBase);
 
-class SketchList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.props.getProjects(this.props.username);
-    this.props.resetSorting();
+const SketchList = ({ username, mobile }) => {
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
 
-    this.state = {
-      isInitialDataLoad: true
-    };
-  }
+  const currentUser = useSelector(selectCurrentUsername);
 
-  componentDidUpdate(prevProps) {
-    if (
-      this.props.sketches !== prevProps.sketches &&
-      Array.isArray(this.props.sketches)
-    ) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({
-        isInitialDataLoad: false
-      });
-    }
-  }
+  const sketches = useSelector(getSortedSketches);
 
-  getSketchesTitle() {
-    if (this.props.username === this.props.user.username) {
-      return this.props.t('SketchList.Title');
-    }
-    return this.props.t('SketchList.AnothersTitle', {
-      anotheruser: this.props.username
-    });
-  }
+  // TODO: combine with AddToCollectionSketchList
+  const loading = useSelector((state) => state.loading);
+  const [hasLoadedData, setHasLoadedData] = useState(false);
+  const showLoader = loading && !hasLoadedData;
 
-  hasSketches() {
-    return !this.isLoading() && this.props.sketches.length > 0;
-  }
+  useEffect(() => {
+    dispatch(getProjects(username)).then(() => setHasLoadedData(true));
+  }, [dispatch, username]);
 
-  isLoading() {
-    return this.props.loading && this.state.isInitialDataLoad;
-  }
+  const [sketchToAddToCollection, setSketchToAddToCollection] = useState(null);
 
-  _renderLoader() {
-    if (this.isLoading()) return <Loader />;
-    return null;
-  }
-
-  _renderEmptyTable() {
-    if (!this.isLoading() && this.props.sketches.length === 0) {
-      return (
-        <p className="sketches-table__empty">
-          {this.props.t('SketchList.NoSketches')}
-        </p>
-      );
-    }
-    return null;
-  }
-
-  _getButtonLabel = (fieldName, displayName) => {
-    const { field, direction } = this.props.sorting;
-    let buttonLabel;
-    if (field !== fieldName) {
-      if (field === 'name') {
-        buttonLabel = this.props.t('SketchList.ButtonLabelAscendingARIA', {
-          displayName
-        });
-      } else {
-        buttonLabel = this.props.t('SketchList.ButtonLabelDescendingARIA', {
-          displayName
-        });
-      }
-    } else if (direction === SortingActions.DIRECTION.ASC) {
-      buttonLabel = this.props.t('SketchList.ButtonLabelDescendingARIA', {
-        displayName
-      });
-    } else {
-      buttonLabel = this.props.t('SketchList.ButtonLabelAscendingARIA', {
-        displayName
-      });
-    }
-    return buttonLabel;
-  };
-
-  _renderFieldHeader = (fieldName, displayName) => {
-    const { field, direction } = this.props.sorting;
-    const headerClass = classNames({
-      'sketches-table__header': true,
-      'sketches-table__header--selected': field === fieldName
-    });
-    const buttonLabel = this._getButtonLabel(fieldName, displayName);
-    return (
-      <th scope="col">
-        <button
-          className="sketch-list__sort-button"
-          onClick={() => this.props.toggleDirectionForField(fieldName)}
-          aria-label={buttonLabel}
+  return (
+    <article className="sketches-table-container">
+      <Helmet>
+        <title>
+          {username === currentUser
+            ? t('SketchList.Title')
+            : t('SketchList.AnothersTitle', {
+                anotheruser: username
+              })}
+        </title>
+      </Helmet>
+      <TableBase
+        items={sketches}
+        isLoading={showLoader}
+        columns={[
+          {
+            field: 'name',
+            defaultOrder: DIRECTION.ASC,
+            title: t('SketchList.HeaderName')
+          },
+          {
+            field: 'createdAt',
+            defaultOrder: DIRECTION.DESC,
+            title: t('SketchList.HeaderCreatedAt', {
+              context: mobile ? 'mobile' : ''
+            }),
+            formatValue: (value) => formatDateCell(value, mobile)
+          },
+          {
+            field: 'updatedAt',
+            defaultOrder: DIRECTION.DESC,
+            title: t('SketchList.HeaderUpdatedAt', {
+              context: mobile ? 'mobile' : ''
+            }),
+            formatValue: (value) => formatDateCell(value, mobile)
+          }
+        ]}
+        addDropdownColumn
+        initialSort={{
+          field: 'createdAt',
+          direction: DIRECTION.DESC
+        }}
+        emptyMessage={t('SketchList.NoSketches')}
+        caption={t('SketchList.TableSummary')}
+        // TODO: figure out how to use the StandardTable -- needs dropdown and styling
+        renderRow={(sketch) => (
+          <SketchListRow
+            mobile={mobile}
+            key={sketch.id}
+            sketch={sketch}
+            username={username}
+            onAddToCollection={() => {
+              setSketchToAddToCollection(sketch);
+            }}
+            t={t}
+          />
+        )}
+      />
+      {sketchToAddToCollection && (
+        <Overlay
+          isFixedHeight
+          title={t('SketchList.AddToCollectionOverlayTitle')}
+          closeOverlay={() => {
+            setSketchToAddToCollection(null);
+          }}
         >
-          <span className={headerClass}>{displayName}</span>
-          {field === fieldName &&
-            direction === SortingActions.DIRECTION.ASC && (
-              <ArrowUpIcon
-                role="img"
-                aria-label={this.props.t('SketchList.DirectionAscendingARIA')}
-                focusable="false"
-              />
-            )}
-          {field === fieldName &&
-            direction === SortingActions.DIRECTION.DESC && (
-              <ArrowDownIcon
-                role="img"
-                aria-label={this.props.t('SketchList.DirectionDescendingARIA')}
-                focusable="false"
-              />
-            )}
-        </button>
-      </th>
-    );
-  };
-
-  render() {
-    const username =
-      this.props.username !== undefined
-        ? this.props.username
-        : this.props.user.username;
-    const { mobile } = this.props;
-    return (
-      <article className="sketches-table-container">
-        <Helmet>
-          <title>{this.getSketchesTitle()}</title>
-        </Helmet>
-        {this._renderLoader()}
-        {this._renderEmptyTable()}
-        {this.hasSketches() && (
-          <table
-            className="sketches-table"
-            summary={this.props.t('SketchList.TableSummary')}
-          >
-            <thead>
-              <tr>
-                {this._renderFieldHeader(
-                  'name',
-                  this.props.t('SketchList.HeaderName')
-                )}
-                {this._renderFieldHeader(
-                  'createdAt',
-                  this.props.t('SketchList.HeaderCreatedAt', {
-                    context: mobile ? 'mobile' : ''
-                  })
-                )}
-                {this._renderFieldHeader(
-                  'updatedAt',
-                  this.props.t('SketchList.HeaderUpdatedAt', {
-                    context: mobile ? 'mobile' : ''
-                  })
-                )}
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.props.sketches.map((sketch) => (
-                <SketchListRow
-                  mobile={mobile}
-                  key={sketch.id}
-                  sketch={sketch}
-                  user={this.props.user}
-                  username={username}
-                  onAddToCollection={() => {
-                    this.setState({ sketchToAddToCollection: sketch });
-                  }}
-                  t={this.props.t}
-                />
-              ))}
-            </tbody>
-          </table>
-        )}
-        {this.state.sketchToAddToCollection && (
-          <Overlay
-            isFixedHeight
-            title={this.props.t('SketchList.AddToCollectionOverlayTitle')}
-            closeOverlay={() =>
-              this.setState({ sketchToAddToCollection: null })
-            }
-          >
-            <AddToCollectionList
-              project={this.state.sketchToAddToCollection}
-              username={this.props.username}
-              user={this.props.user}
-            />
-          </Overlay>
-        )}
-      </article>
-    );
-  }
-}
+          <AddToCollectionList
+            project={sketchToAddToCollection}
+            username={username}
+          />
+        </Overlay>
+      )}
+    </article>
+  );
+};
 
 SketchList.propTypes = {
-  user: PropTypes.shape({
-    username: PropTypes.string,
-    authenticated: PropTypes.bool.isRequired
-  }).isRequired,
-  getProjects: PropTypes.func.isRequired,
-  sketches: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      createdAt: PropTypes.string.isRequired,
-      updatedAt: PropTypes.string.isRequired
-    })
-  ).isRequired,
-  username: PropTypes.string,
-  loading: PropTypes.bool.isRequired,
-  toggleDirectionForField: PropTypes.func.isRequired,
-  resetSorting: PropTypes.func.isRequired,
-  sorting: PropTypes.shape({
-    field: PropTypes.string.isRequired,
-    direction: PropTypes.string.isRequired
-  }).isRequired,
-  mobile: PropTypes.bool,
-  t: PropTypes.func.isRequired
+  username: PropTypes.string.isRequired,
+  mobile: PropTypes.bool
 };
 
 SketchList.defaultProps = {
-  username: undefined,
   mobile: false
 };
 
-function mapStateToProps(state) {
-  return {
-    user: state.user,
-    sketches: getSortedSketches(state),
-    sorting: state.sorting,
-    loading: state.loading,
-    project: state.project
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    Object.assign(
-      {},
-      ProjectsActions,
-      CollectionsActions,
-      ToastActions,
-      SortingActions
-    ),
-    dispatch
-  );
-}
-
-export default withTranslation()(
-  connect(mapStateToProps, mapDispatchToProps)(SketchList)
-);
+export default SketchList;

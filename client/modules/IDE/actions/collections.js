@@ -6,7 +6,6 @@ import { setToastText, showToast } from './toast';
 
 const TOAST_DISPLAY_TIME_MS = 1500;
 
-// eslint-disable-next-line
 export function getCollections(username) {
   return (dispatch) => {
     dispatch(startLoader());
@@ -16,8 +15,7 @@ export function getCollections(username) {
     } else {
       url = '/collections';
     }
-    console.log(url);
-    apiClient
+    return apiClient
       .get(url)
       .then((response) => {
         dispatch({
@@ -27,10 +25,9 @@ export function getCollections(username) {
         dispatch(stopLoader());
       })
       .catch((error) => {
-        const { response } = error;
         dispatch({
           type: ActionTypes.ERROR,
-          error: response.data
+          error: error?.response?.data
         });
         dispatch(stopLoader());
       });

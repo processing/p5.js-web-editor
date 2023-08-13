@@ -133,7 +133,7 @@ class CollectionListRowBase extends React.Component {
 
   renderActions = () => {
     const { optionsOpen } = this.state;
-    const userIsOwner = this.props.user.username === this.props.username;
+    const { userIsOwner } = this.props;
 
     return (
       <React.Fragment>
@@ -264,10 +264,7 @@ CollectionListRowBase.propTypes = {
     )
   }).isRequired,
   username: PropTypes.string.isRequired,
-  user: PropTypes.shape({
-    username: PropTypes.string,
-    authenticated: PropTypes.bool.isRequired
-  }).isRequired,
+  userIsOwner: PropTypes.bool.isRequired,
   deleteCollection: PropTypes.func.isRequired,
   editCollection: PropTypes.func.isRequired,
   onAddSketches: PropTypes.func.isRequired,

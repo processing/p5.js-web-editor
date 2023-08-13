@@ -5,15 +5,13 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { useTranslation, withTranslation } from 'react-i18next';
-import classNames from 'classnames';
 
 import Button from '../../../common/Button';
 import { DropdownArrowIcon } from '../../../common/icons';
+import TableBase from '../../../common/Table/TableBase';
 import * as ProjectActions from '../../IDE/actions/project';
-import * as ProjectsActions from '../../IDE/actions/projects';
 import * as CollectionsActions from '../../IDE/actions/collections';
-import * as ToastActions from '../../IDE/actions/toast';
-import * as SortingActions from '../../IDE/actions/sorting';
+import { DIRECTION } from '../../IDE/actions/sorting';
 import * as IdeActions from '../../IDE/actions/ide';
 import { getCollection } from '../../IDE/selectors/collections';
 import Loader from '../../App/components/loader';
@@ -24,8 +22,6 @@ import CopyableInput from '../../IDE/components/CopyableInput';
 import { SketchSearchbar } from '../../IDE/components/Searchbar';
 import dates from '../../../utils/formatDate';
 
-import ArrowUpIcon from '../../../images/sort-arrow-up.svg';
-import ArrowDownIcon from '../../../images/sort-arrow-down.svg';
 import RemoveIcon from '../../../images/close.svg';
 
 const ShareURL = ({ value }) => {
@@ -170,8 +166,6 @@ class Collection extends React.Component {
   constructor(props) {
     super(props);
     this.props.getCollections(this.props.username);
-    this.props.resetSorting();
-    this._renderFieldHeader = this._renderFieldHeader.bind(this);
     this.showAddSketches = this.showAddSketches.bind(this);
     this.hideAddSketches = this.hideAddSketches.bind(this);
 
@@ -335,85 +329,17 @@ class Collection extends React.Component {
     });
   }
 
-  _renderEmptyTable() {
-    const isLoading = this.props.loading;
-    const hasCollectionItems =
-      this.props.collection != null && this.props.collection.items.length > 0;
-
-    if (!isLoading && !hasCollectionItems) {
-      return (
-        <p className="collection-empty-message">
-          {this.props.t('Collection.NoSketches')}
-        </p>
-      );
-    }
-    return null;
-  }
-
-  _getButtonLabel = (fieldName, displayName) => {
-    const { field, direction } = this.props.sorting;
-    let buttonLabel;
-    if (field !== fieldName) {
-      if (field === 'name') {
-        buttonLabel = this.props.t('Collection.ButtonLabelAscendingARIA', {
-          displayName
-        });
-      } else {
-        buttonLabel = this.props.t('Collection.ButtonLabelDescendingARIA', {
-          displayName
-        });
-      }
-    } else if (direction === SortingActions.DIRECTION.ASC) {
-      buttonLabel = this.props.t('Collection.ButtonLabelDescendingARIA', {
-        displayName
-      });
-    } else {
-      buttonLabel = this.props.t('Collection.ButtonLabelAscendingARIA', {
-        displayName
-      });
-    }
-    return buttonLabel;
-  };
-
-  _renderFieldHeader(fieldName, displayName) {
-    const { field, direction } = this.props.sorting;
-    const headerClass = classNames({
-      arrowDown: true,
-      'sketches-table__header--selected': field === fieldName
-    });
-    const buttonLabel = this._getButtonLabel(fieldName, displayName);
-    return (
-      <th scope="col">
-        <button
-          className="sketch-list__sort-button"
-          onClick={() => this.props.toggleDirectionForField(fieldName)}
-          aria-label={buttonLabel}
-        >
-          <span className={headerClass}>{displayName}</span>
-          {field === fieldName &&
-            direction === SortingActions.DIRECTION.ASC && (
-              <ArrowUpIcon
-                role="img"
-                aria-label={this.props.t('Collection.DirectionAscendingARIA')}
-                focusable="false"
-              />
-            )}
-          {field === fieldName &&
-            direction === SortingActions.DIRECTION.DESC && (
-              <ArrowDownIcon
-                role="img"
-                aria-label={this.props.t('Collection.DirectionDescendingARIA')}
-                focusable="false"
-              />
-            )}
-        </button>
-      </th>
-    );
-  }
-
   render() {
     const title = this.hasCollection() ? this.getCollectionName() : null;
     const isOwner = this.isOwner();
+
+    // Need top-level string fields in order to sort.
+    const items = this.props.collection?.items?.map((item) => ({
+      ...item,
+      // 'zz' is a dumb hack to put deleted items last in the sort order
+      name: item.isDeleted ? 'zz' : item.project?.name,
+      owner: item.isDeleted ? 'zz' : item.project?.user?.username
+    }));
 
     return (
       <main
@@ -428,43 +354,44 @@ class Collection extends React.Component {
           {this.hasCollection() && this._renderCollectionMetadata()}
           <article className="collection-content">
             <div className="collection-table-wrapper">
-              {this._renderEmptyTable()}
-              {this.hasCollectionItems() && (
-                <table
-                  className="sketches-table"
-                  summary={this.props.t('Collection.TableSummary')}
-                >
-                  <thead>
-                    <tr>
-                      {this._renderFieldHeader(
-                        'name',
-                        this.props.t('Collection.HeaderName')
-                      )}
-                      {this._renderFieldHeader(
-                        'createdAt',
-                        this.props.t('Collection.HeaderCreatedAt')
-                      )}
-                      {this._renderFieldHeader(
-                        'user',
-                        this.props.t('Collection.HeaderUser')
-                      )}
-                      <th scope="col"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {this.props.collection.items.map((item) => (
-                      <CollectionItemRow
-                        key={item.id}
-                        item={item}
-                        user={this.props.user}
-                        username={this.getUsername()}
-                        collection={this.props.collection}
-                        isOwner={isOwner}
-                      />
-                    ))}
-                  </tbody>
-                </table>
-              )}
+              <TableBase
+                items={items}
+                isLoading={this.props.loading && !this.props.collection}
+                columns={[
+                  {
+                    field: 'name',
+                    title: this.props.t('Collection.HeaderName'),
+                    defaultOrder: DIRECTION.ASC
+                  },
+                  {
+                    field: 'createdAt',
+                    title: this.props.t('Collection.HeaderCreatedAt'),
+                    defaultOrder: DIRECTION.DESC
+                  },
+                  {
+                    field: 'owner',
+                    title: this.props.t('Collection.HeaderUser'),
+                    defaultOrder: DIRECTION.ASC
+                  }
+                ]}
+                addDropdownColumn
+                initialSort={{
+                  field: 'createdAt',
+                  direction: DIRECTION.DESC
+                }}
+                emptyMessage={this.props.t('Collection.NoSketches')}
+                caption={this.props.t('Collection.TableSummary')}
+                renderRow={(item) => (
+                  <CollectionItemRow
+                    key={item.id}
+                    item={item}
+                    user={this.props.user}
+                    username={this.getUsername()}
+                    collection={this.props.collection}
+                    isOwner={isOwner}
+                  />
+                )}
+              />
               {this.state.isAddingSketches && (
                 <Overlay
                   title={this.props.t('Collection.AddSketch')}
@@ -504,13 +431,7 @@ Collection.propTypes = {
   }),
   username: PropTypes.string,
   loading: PropTypes.bool.isRequired,
-  toggleDirectionForField: PropTypes.func.isRequired,
   editCollection: PropTypes.func.isRequired,
-  resetSorting: PropTypes.func.isRequired,
-  sorting: PropTypes.shape({
-    field: PropTypes.string.isRequired,
-    direction: PropTypes.string.isRequired
-  }).isRequired,
   t: PropTypes.func.isRequired
 };
 
@@ -529,25 +450,10 @@ function mapStateToProps(state, ownProps) {
   return {
     user: state.user,
     collection: getCollection(state, ownProps.collectionId),
-    sorting: state.sorting,
-    loading: state.loading,
-    project: state.project
+    loading: state.loading
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    Object.assign(
-      {},
-      CollectionsActions,
-      ProjectsActions,
-      ToastActions,
-      SortingActions
-    ),
-    dispatch
-  );
-}
-
 export default withTranslation()(
-  connect(mapStateToProps, mapDispatchToProps)(Collection)
+  connect(mapStateToProps, CollectionsActions)(Collection)
 );

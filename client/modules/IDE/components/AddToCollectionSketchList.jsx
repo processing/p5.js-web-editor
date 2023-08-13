@@ -8,7 +8,6 @@ import { withTranslation } from 'react-i18next';
 import * as ProjectsActions from '../actions/projects';
 import * as CollectionsActions from '../actions/collections';
 import * as ToastActions from '../actions/toast';
-import * as SortingActions from '../actions/sorting';
 import getSortedSketches from '../selectors/projects';
 import Loader from '../../App/components/loader';
 import QuickAddList from './QuickAddList';
@@ -120,10 +119,6 @@ SketchList.propTypes = {
   }).isRequired,
   username: PropTypes.string,
   loading: PropTypes.bool.isRequired,
-  sorting: PropTypes.shape({
-    field: PropTypes.string.isRequired,
-    direction: PropTypes.string.isRequired
-  }).isRequired,
   addToCollection: PropTypes.func.isRequired,
   removeFromCollection: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired
@@ -137,7 +132,6 @@ function mapStateToProps(state) {
   return {
     user: state.user,
     sketches: getSortedSketches(state),
-    sorting: state.sorting,
     loading: state.loading,
     project: state.project
   };
@@ -145,13 +139,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
-    Object.assign(
-      {},
-      ProjectsActions,
-      CollectionsActions,
-      ToastActions,
-      SortingActions
-    ),
+    Object.assign({}, ProjectsActions, CollectionsActions, ToastActions),
     dispatch
   );
 }
