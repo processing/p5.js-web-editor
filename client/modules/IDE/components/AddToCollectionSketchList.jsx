@@ -8,6 +8,10 @@ import { getProjects } from '../actions/projects';
 import getSortedSketches from '../selectors/projects';
 import Loader from '../../App/components/loader';
 import QuickAddList from './QuickAddList';
+import {
+  CollectionAddSketchWrapper,
+  QuickAddWrapper
+} from './AddToCollectionList';
 
 const AddToCollectionSketchList = ({ collection }) => {
   const { t } = useTranslation();
@@ -60,14 +64,14 @@ const AddToCollectionSketchList = ({ collection }) => {
   };
 
   return (
-    <div className="collection-add-sketch">
-      <div className="quick-add-wrapper">
+    <CollectionAddSketchWrapper>
+      <QuickAddWrapper>
         <Helmet>
           <title>{t('AddToCollectionSketchList.Title')}</title>
         </Helmet>
         {getContent()}
-      </div>
-    </div>
+      </QuickAddWrapper>
+    </CollectionAddSketchWrapper>
   );
 };
 
