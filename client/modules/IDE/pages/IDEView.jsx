@@ -9,7 +9,7 @@ import SplitPane from 'react-split-pane';
 import Editor from '../components/Editor';
 import Sidebar from '../components/Sidebar';
 import PreviewFrame from '../components/PreviewFrame';
-import Toolbar from '../components/Toolbar';
+import Toolbar from '../components/Header/Toolbar';
 import Preferences from '../components/Preferences/index';
 import NewFileModal from '../components/NewFileModal';
 import NewFolderModal from '../components/NewFolderModal';
@@ -17,7 +17,7 @@ import UploadFileModal from '../components/UploadFileModal';
 import ShareModal from '../components/ShareModal';
 import KeyboardShortcutModal from '../components/KeyboardShortcutModal';
 import ErrorModal from '../components/ErrorModal';
-import Nav from '../../../components/Nav';
+import Nav from '../components/Header/Nav';
 import Console from '../components/Console';
 import Toast from '../components/Toast';
 import * as FileActions from '../actions/files';
@@ -33,6 +33,7 @@ import About from '../components/About';
 import AddToCollectionList from '../components/AddToCollectionList';
 import Feedback from '../components/Feedback';
 import { CollectionSearchbar } from '../components/Searchbar';
+import { selectActiveFile } from '../selectors/files';
 import { getIsUserOwner } from '../selectors/users';
 import RootPage from '../../../components/RootPage';
 
@@ -73,6 +74,8 @@ function WarnIfUnsavedChanges() {
     />
   );
 }
+
+export const CmControllerContext = React.createContext({});
 
 class IDEView extends React.Component {
   constructor(props) {
@@ -249,7 +252,9 @@ class IDEView extends React.Component {
         </Helmet>
         <WarnIfUnsavedChanges currentLocation={this.props.location} />
         <Toast />
-        <Nav cmController={this.cmController} />
+        <CmControllerContext.Provider value={{ current: this.cmController }}>
+          <Nav />
+        </CmControllerContext.Provider>
         <Toolbar
           syncFileContent={this.syncFileContent}
           key={this.props.project.id}
@@ -260,30 +265,7 @@ class IDEView extends React.Component {
             ariaLabel={this.props.t('Preferences.Settings')}
             closeOverlay={this.props.closePreferences}
           >
-            <Preferences
-              fontSize={this.props.preferences.fontSize}
-              setFontSize={this.props.setFontSize}
-              autosave={this.props.preferences.autosave}
-              linewrap={this.props.preferences.linewrap}
-              lineNumbers={this.props.preferences.lineNumbers}
-              setLineNumbers={this.props.setLineNumbers}
-              setAutosave={this.props.setAutosave}
-              setLinewrap={this.props.setLinewrap}
-              lintWarning={this.props.preferences.lintWarning}
-              setLintWarning={this.props.setLintWarning}
-              textOutput={this.props.preferences.textOutput}
-              gridOutput={this.props.preferences.gridOutput}
-              setTextOutput={this.props.setTextOutput}
-              setGridOutput={this.props.setGridOutput}
-              theme={this.props.preferences.theme}
-              setTheme={this.props.setTheme}
-              autocloseBracketsQuotes={
-                this.props.preferences.autocloseBracketsQuotes
-              }
-              setAutocloseBracketsQuotes={this.props.setAutocloseBracketsQuotes}
-              autocompleteHinter={this.props.preferences.autocompleteHinter}
-              setAutocompleteHinter={this.props.setAutocompleteHinter}
-            />
+            <Preferences />
           </Overlay>
         )}
         <main className="editor-preview-container">
@@ -492,15 +474,6 @@ IDEView.propTypes = {
     autocompleteHinter: PropTypes.bool.isRequired
   }).isRequired,
   closePreferences: PropTypes.func.isRequired,
-  setAutocloseBracketsQuotes: PropTypes.func.isRequired,
-  setAutocompleteHinter: PropTypes.func.isRequired,
-  setFontSize: PropTypes.func.isRequired,
-  setAutosave: PropTypes.func.isRequired,
-  setLineNumbers: PropTypes.func.isRequired,
-  setLinewrap: PropTypes.func.isRequired,
-  setLintWarning: PropTypes.func.isRequired,
-  setTextOutput: PropTypes.func.isRequired,
-  setGridOutput: PropTypes.func.isRequired,
   setAllAccessibleOutput: PropTypes.func.isRequired,
   selectedFile: PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -521,7 +494,6 @@ IDEView.propTypes = {
   closeShareModal: PropTypes.func.isRequired,
   closeKeyboardShortcutModal: PropTypes.func.isRequired,
   autosaveProject: PropTypes.func.isRequired,
-  setTheme: PropTypes.func.isRequired,
   setPreviousPath: PropTypes.func.isRequired,
   showErrorModal: PropTypes.func.isRequired,
   hideErrorModal: PropTypes.func.isRequired,
@@ -533,10 +505,7 @@ IDEView.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    selectedFile:
-      state.files.find((file) => file.isSelectedFile) ||
-      state.files.find((file) => file.name === 'sketch.js') ||
-      state.files.find((file) => file.name !== 'root'),
+    selectedFile: selectActiveFile(state),
     htmlFile: getHTMLFile(state.files),
     ide: state.ide,
     preferences: state.preferences,
