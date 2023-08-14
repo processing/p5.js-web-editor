@@ -28,6 +28,7 @@ import { availableLanguages, languageKeyToLabel } from '../../../../i18n';
 import { showToast } from '../../actions/toast';
 import { setLanguage } from '../../actions/preferences';
 import Overlay from '../../../App/components/Overlay';
+import ProjectName from './ProjectName';
 
 const Nav = styled(NavBar)`
   background: ${prop('MobilePanel.default.background')};
@@ -63,7 +64,7 @@ const Title = styled.div`
   flex-direction: column;
   gap: ${remSize(2)};
 
-  > * {
+  * {
     padding: 0;
     margin: 0;
   }
@@ -231,7 +232,7 @@ const MobileNav = () => {
         <Logo />
       </LogoContainer>
       <Title>
-        <h1>{title}</h1>
+        <h1>{title === project.name ? <ProjectName /> : title}</h1>
         {project?.owner && title === project.name && (
           <h5>by {project?.owner?.username}</h5>
         )}
