@@ -44,6 +44,7 @@ import '../../../utils/htmlmixed';
 import '../../../utils/p5-javascript';
 import Timer from '../components/Timer';
 import EditorAccessibility from '../components/EditorAccessibility';
+import { selectActiveFile } from '../selectors/files';
 import AssetPreview from './AssetPreview';
 import { metaKey } from '../../../utils/metaKey';
 import './show-hint';
@@ -605,10 +606,7 @@ Editor.propTypes = {
 function mapStateToProps(state) {
   return {
     files: state.files,
-    file:
-      state.files.find((file) => file.isSelectedFile) ||
-      state.files.find((file) => file.name === 'sketch.js') ||
-      state.files.find((file) => file.name !== 'root'),
+    file: selectActiveFile(state),
     htmlFile: getHTMLFile(state.files),
     ide: state.ide,
     preferences: state.preferences,
