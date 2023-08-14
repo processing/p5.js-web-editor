@@ -85,15 +85,19 @@ exports[`<Sketchlist /> snapshot testing 1`] = `
           <td
             class="sketch-list__dropdown-column"
           >
-            <button
-              aria-label="Toggle Open/Close Sketch Options"
-              class="sketch-list__dropdown-button"
+            <div
+              class="sc-jSFjdj leDKmY"
             >
-              <test-file-stub
-                aria-hidden="true"
-                focusable="false"
-              />
-            </button>
+              <button
+                aria-label="Toggle Open/Close Sketch Options"
+                tabindex="0"
+              >
+                <test-file-stub
+                  aria-hidden="true"
+                  focusable="false"
+                />
+              </button>
+            </div>
           </td>
         </tr>
         <tr
@@ -117,15 +121,19 @@ exports[`<Sketchlist /> snapshot testing 1`] = `
           <td
             class="sketch-list__dropdown-column"
           >
-            <button
-              aria-label="Toggle Open/Close Sketch Options"
-              class="sketch-list__dropdown-button"
+            <div
+              class="sc-jSFjdj leDKmY"
             >
-              <test-file-stub
-                aria-hidden="true"
-                focusable="false"
-              />
-            </button>
+              <button
+                aria-label="Toggle Open/Close Sketch Options"
+                tabindex="0"
+              >
+                <test-file-stub
+                  aria-hidden="true"
+                  focusable="false"
+                />
+              </button>
+            </div>
           </td>
         </tr>
       </tbody>
