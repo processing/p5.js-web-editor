@@ -150,16 +150,9 @@ pre.CodeMirror-line {
   align-items: center;
 }
 .CodeMirror-search-controls {
-  width: 60%;
   display: flex;
-  flex-wrap: wrap-reverse;
-  justify-content: flex-start;
-  align-items: flex-end;
-
-  @media (max-width: 770px) {
-    align-items: center;
-    justify-content: end;
-  }
+  align-items: center;
+  justify-content: end;
 }
 .CodeMirror-replace-controls {
   display: flex;
@@ -222,7 +215,7 @@ pre.CodeMirror-line {
   align-items: center;
   margin-left: #{10 / $base-font-size}rem;
 
-  @media (max-width: 770px) {
+  @media (max-width: 579px) {
     display: none;
   }
 }
