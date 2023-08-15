@@ -160,6 +160,7 @@ const LanguageSelect = styled.div`
   flex-direction: column;
   position: relative;
   height: 100%;
+  overflow-y: auto;
   justify-content: center;
 
   h3 {
@@ -171,7 +172,6 @@ const LanguageSelect = styled.div`
     display: flex;
     gap: ${remSize(8)};
     flex-direction: column;
-    position: block;
     align-items: center;
 
     button {
@@ -320,20 +320,22 @@ const MoreMenu = () => {
         >
           <LanguageSelect>
             <div>
-              {sortBy(availableLanguages).map((key) => (
-                <button
-                  className={classNames({
-                    'current-language':
-                      languageKeyToLabel(key) === languageKeyToLabel(language)
-                  })}
-                  aria-label={languageKeyToLabel(key)}
-                  key={key}
-                  onClick={handleLangSelection}
-                  value={key}
-                >
-                  {languageKeyToLabel(key)}
-                </button>
-              ))}
+              {sortBy(availableLanguages).map((key) => {
+                const label = languageKeyToLabel(key);
+                return (
+                  <button
+                    className={classNames({
+                      'current-language': label === languageKeyToLabel(language)
+                    })}
+                    aria-label={label}
+                    key={key}
+                    onClick={handleLangSelection}
+                    value={key}
+                  >
+                    {label}
+                  </button>
+                );
+              })}
             </div>
           </LanguageSelect>
         </Overlay>
