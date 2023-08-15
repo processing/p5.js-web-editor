@@ -48,29 +48,55 @@ exports[`Nav renders dashboard version for mobile 1`] = `
 <DocumentFragment>
   <header>
     <nav
-      class="sc-lmgQwP efOkME"
+      class="sc-giAqHp deBDHC"
     >
       <div
-        class="sc-iJCRrE hBGqHH"
+        class="sc-ezzafa bKgrFx"
       >
         <test-file-stub />
       </div>
       <div
-        class="sc-giAqHp hOwdWj"
+        class="sc-bYwzuL lkVxhY"
       >
         <h1>
-          Test project name
+          <span
+            class="editable-input editable-input--is-not-editing editable-input--has-value "
+          >
+            <button
+              aria-hidden="false"
+              aria-label="Edit sketch name"
+              class="editable-input__label"
+            >
+              <span>
+                Test project name
+              </span>
+              <test-file-stub
+                aria-hidden="true"
+                classname="editable-input__icon"
+                focusable="false"
+              />
+            </button>
+            <input
+              aria-hidden="true"
+              aria-label="New sketch name"
+              class="editable-input__input"
+              disabled=""
+              maxlength="128"
+              type="text"
+              value="Test project name"
+            />
+          </span>
         </h1>
       </div>
       <div
-        class="sc-ezzafa cqyOEp"
+        class="sc-kLojOw casOUg"
       >
         <div>
           <a
             href="/login"
           >
             <button
-              class="sc-jSFjdj fKQAQb sc-pNWdM fCGekV"
+              class="sc-jSFjdj fKQAQb sc-kEqXSa Ycwjo"
               display="inline"
               focusable="false"
               kind="primary"
@@ -78,7 +104,7 @@ exports[`Nav renders dashboard version for mobile 1`] = `
             >
               <test-file-stub
                 aria-hidden="true"
-                classname="sc-fnVZcZ dgsepr"
+                classname="sc-bkbkJK caOeqb"
                 focusable="false"
               />
             </button>
@@ -86,7 +112,7 @@ exports[`Nav renders dashboard version for mobile 1`] = `
         </div>
         <div>
           <button
-            class="sc-jSFjdj fKQAQb sc-pNWdM fCGekV"
+            class="sc-jSFjdj fKQAQb sc-kEqXSa Ycwjo"
             display="inline"
             focusable="false"
             kind="primary"
@@ -94,7 +120,7 @@ exports[`Nav renders dashboard version for mobile 1`] = `
           >
             <test-file-stub
               aria-hidden="true"
-              classname="sc-dIvrsQ xfuVF"
+              classname="sc-dlMDgC dNinKf"
               focusable="false"
             />
           </button>
@@ -433,29 +459,55 @@ exports[`Nav renders editor version for mobile 1`] = `
 <DocumentFragment>
   <header>
     <nav
-      class="sc-lmgQwP efOkME"
+      class="sc-giAqHp deBDHC"
     >
       <div
-        class="sc-iJCRrE hBGqHH"
+        class="sc-ezzafa bKgrFx"
       >
         <test-file-stub />
       </div>
       <div
-        class="sc-giAqHp hOwdWj"
+        class="sc-bYwzuL lkVxhY"
       >
         <h1>
-          Test project name
+          <span
+            class="editable-input editable-input--is-not-editing editable-input--has-value "
+          >
+            <button
+              aria-hidden="false"
+              aria-label="Edit sketch name"
+              class="editable-input__label"
+            >
+              <span>
+                Test project name
+              </span>
+              <test-file-stub
+                aria-hidden="true"
+                classname="editable-input__icon"
+                focusable="false"
+              />
+            </button>
+            <input
+              aria-hidden="true"
+              aria-label="New sketch name"
+              class="editable-input__input"
+              disabled=""
+              maxlength="128"
+              type="text"
+              value="Test project name"
+            />
+          </span>
         </h1>
       </div>
       <div
-        class="sc-ezzafa cqyOEp"
+        class="sc-kLojOw casOUg"
       >
         <div>
           <a
             href="/login"
           >
             <button
-              class="sc-jSFjdj fKQAQb sc-pNWdM fCGekV"
+              class="sc-jSFjdj fKQAQb sc-kEqXSa Ycwjo"
               display="inline"
               focusable="false"
               kind="primary"
@@ -463,7 +515,7 @@ exports[`Nav renders editor version for mobile 1`] = `
             >
               <test-file-stub
                 aria-hidden="true"
-                classname="sc-fnVZcZ dgsepr"
+                classname="sc-bkbkJK caOeqb"
                 focusable="false"
               />
             </button>
@@ -471,7 +523,7 @@ exports[`Nav renders editor version for mobile 1`] = `
         </div>
         <div>
           <button
-            class="sc-jSFjdj fKQAQb sc-pNWdM fCGekV"
+            class="sc-jSFjdj fKQAQb sc-kEqXSa Ycwjo"
             display="inline"
             focusable="false"
             kind="primary"
@@ -479,7 +531,7 @@ exports[`Nav renders editor version for mobile 1`] = `
           >
             <test-file-stub
               aria-hidden="true"
-              classname="sc-dIvrsQ xfuVF"
+              classname="sc-dlMDgC dNinKf"
               focusable="false"
             />
           </button>
