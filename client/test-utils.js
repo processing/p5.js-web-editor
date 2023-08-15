@@ -16,15 +16,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
 import { I18nextProvider } from 'react-i18next';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import { Context as ResponsiveContext } from 'react-responsive';
 
-import browserHistory from './browserHistory';
 import i18n from './i18n-test';
 import ThemeProvider from './modules/App/components/ThemeProvider';
 import configureStore from './store';
 import theme, { Theme } from './theme';
+
+export const history = createMemoryHistory();
 
 // re-export everything
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -56,7 +58,7 @@ const Providers = ({ children, ...options }) => (
   <StyledThemeProvider theme={{ ...theme[Theme.light] }}>
     <I18nextProvider i18n={i18n}>
       <ResponsiveProvider {...options}>
-        <Router history={browserHistory}>{children}</Router>
+        <Router history={history}>{children}</Router>
       </ResponsiveProvider>
     </I18nextProvider>
   </StyledThemeProvider>
@@ -100,7 +102,7 @@ function reduxRender(
         <Provider store={store}>
           <ThemeProvider>
             <ResponsiveProvider {...renderOptions}>
-              <Router history={browserHistory}>{children}</Router>
+              <Router history={history}>{children}</Router>
             </ResponsiveProvider>
           </ThemeProvider>
         </Provider>
