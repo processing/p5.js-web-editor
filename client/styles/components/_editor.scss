@@ -91,6 +91,13 @@ pre.CodeMirror-line {
   left: 50%;
   margin-left: -#{552/2 / $base-font-size}rem;
 
+  @media (max-width: 770px) {
+    left: 0;
+    right: 0;
+    width: 100%;
+    margin-left: 0;
+  }
+
   // z-index: 20;
 
   width: 580px;
@@ -123,10 +130,6 @@ pre.CodeMirror-line {
   height: 100%;
 }
 
-.CodeMirror-search-modifiers {
-  margin-left: #{10 / $base-font-size}rem;
-}
-
 .CodeMirror-search-results {
   margin: 0 #{20 / $base-font-size}rem;
   width: #{75 / $base-font-size}rem;
@@ -135,6 +138,7 @@ pre.CodeMirror-line {
 
 .CodeMirror-find-controls {
   display: flex;
+  align-items: center;
 }
 .CodeMirror-search-inputs {
   width: 30%;
@@ -151,6 +155,11 @@ pre.CodeMirror-line {
   flex-wrap: wrap-reverse;
   justify-content: flex-start;
   align-items: flex-end;
+
+  @media (max-width: 770px) {
+    align-items: center;
+    justify-content: end;
+  }
 }
 .CodeMirror-replace-controls {
   display: flex;
@@ -211,6 +220,11 @@ pre.CodeMirror-line {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  margin-left: #{10 / $base-font-size}rem;
+
+  @media (max-width: 770px) {
+    display: none;
+  }
 }
 
 .CodeMirror-regexp-button,
