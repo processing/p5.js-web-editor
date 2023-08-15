@@ -161,7 +161,6 @@ const LanguageSelect = styled.div`
   position: relative;
   height: 100%;
   overflow-y: auto;
-  justify-content: center;
 
   h3 {
     text-align: center;
@@ -173,6 +172,7 @@ const LanguageSelect = styled.div`
     gap: ${remSize(8)};
     flex-direction: column;
     align-items: center;
+    margin: auto 0;
 
     button {
       font-size: ${remSize(16)};
