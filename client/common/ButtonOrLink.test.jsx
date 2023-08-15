@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '../test-utils';
+import { render, screen, fireEvent, waitFor, history } from '../test-utils';
 import ButtonOrLink from './ButtonOrLink';
 
 describe('ButtonOrLink', () => {
@@ -25,8 +25,12 @@ describe('ButtonOrLink', () => {
     expect(link).toHaveAttribute('href', 'https://p5js.org');
   });
 
-  it('can render an internal link with react-router', () => {
+  it('can render an internal link with react-router', async () => {
     render(<ButtonOrLink href="/about">About</ButtonOrLink>);
-    // TODO: how can this be tested? Needs a router provider?
+
+    const link = screen.getByText('About');
+    fireEvent.click(link);
+
+    await waitFor(() => expect(history.location.pathname).toEqual('/about'));
   });
 });
