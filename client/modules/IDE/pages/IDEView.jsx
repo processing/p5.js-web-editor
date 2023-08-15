@@ -36,6 +36,7 @@ import { CollectionSearchbar } from '../components/Searchbar';
 import { selectActiveFile } from '../selectors/files';
 import { getIsUserOwner } from '../selectors/users';
 import RootPage from '../../../components/RootPage';
+import Header from '../components/Header';
 
 function getTitle(props) {
   const { id } = props.project;
@@ -261,12 +262,11 @@ class IDEView extends React.Component {
         <WarnIfUnsavedChanges currentLocation={this.props.location} />
         <Toast />
         <CmControllerContext.Provider value={{ current: this.cmController }}>
-          <Nav />
+          <Header
+            syncFileContent={this.syncFileContent}
+            key={this.props.project.id}
+          />
         </CmControllerContext.Provider>
-        <Toolbar
-          syncFileContent={this.syncFileContent}
-          key={this.props.project.id}
-        />
         {this.props.ide.preferencesIsVisible && (
           <Overlay
             title={this.props.t('Preferences.Settings')}
