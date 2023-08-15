@@ -4,15 +4,14 @@
 }
 
 .CodeMirror-linenumbers {
-	padding-right: #{10 / $base-font-size}rem;
-
+  padding-right: #{10 / $base-font-size}rem;
 }
 
 .CodeMirror-linenumber {
-	width: #{32 / $base-font-size}rem;
+  width: #{32 / $base-font-size}rem;
   left: #{-3 / $base-font-size}rem !important;
   @include themify() {
-    color: getThemifyVariable('inactive-text-color');
+    color: getThemifyVariable("inactive-text-color");
   }
 }
 
@@ -21,7 +20,7 @@
 }
 
 pre.CodeMirror-line {
-	padding-left: #{5 / $base-font-size}rem;
+  padding-left: #{5 / $base-font-size}rem;
 }
 
 .CodeMirror-gutter-wrapper {
@@ -30,7 +29,9 @@ pre.CodeMirror-line {
   bottom: 0;
 }
 
-.CodeMirror-lint-marker-warning, .CodeMirror-lint-marker-error, .CodeMirror-lint-marker-multiple {
+.CodeMirror-lint-marker-warning,
+.CodeMirror-lint-marker-error,
+.CodeMirror-lint-marker-multiple {
   background-image: none;
   width: #{49 / $base-font-size}rem;
   position: absolute;
@@ -38,7 +39,8 @@ pre.CodeMirror-line {
   right: 100%;
 }
 
-.CodeMirror-lint-message-error, .CodeMirror-lint-message-warning {
+.CodeMirror-lint-message-error,
+.CodeMirror-lint-message-warning {
   background-image: none;
   padding-left: inherit;
 }
@@ -61,10 +63,10 @@ pre.CodeMirror-line {
 
 .CodeMirror-lint-tooltip {
   @include themify() {
-    background-color: getThemifyVariable('modal-background-color');
-    border: 1px solid getThemifyVariable('modal-border-color');
-    box-shadow: 0 12px 12px getThemifyVariable('shadow-color');
-    color: getThemifyVariable('primary-text-color');
+    background-color: getThemifyVariable("modal-background-color");
+    border: 1px solid getThemifyVariable("modal-border-color");
+    box-shadow: 0 12px 12px getThemifyVariable("shadow-color");
+    color: getThemifyVariable("primary-text-color");
   }
   border-radius: 2px;
   font-family: Montserrat, sans-serif;
@@ -72,8 +74,8 @@ pre.CodeMirror-line {
 
 .CodeMirror-gutters {
   @include themify() {
-    background-color: getThemifyVariable('editor-gutter-color');
-    border-color: getThemifyVariable('ide-border-color');
+    background-color: getThemifyVariable("editor-gutter-color");
+    border-color: getThemifyVariable("ide-border-color");
   }
   // left: 0 !important;
   width: #{48 / $base-font-size}rem;
@@ -87,9 +89,9 @@ pre.CodeMirror-line {
   position: fixed;
   top: 0;
   left: 50%;
-  margin-left: - #{552/2/$base-font-size}rem;
+  margin-left: -#{552/2 / $base-font-size}rem;
 
-  z-index: 10;
+  // z-index: 20;
 
   width: 580px;
   font-family: Montserrat, sans-serif;
@@ -99,9 +101,9 @@ pre.CodeMirror-line {
   border-radius: 2px;
 
   @include themify() {
-    background-color: getThemifyVariable('modal-background-color');
-    box-shadow: 0 12px 12px 0 getThemifyVariable('shadow-color');
-    border: solid 0.5px getThemifyVariable('modal-border-color');
+    background-color: getThemifyVariable("modal-background-color");
+    box-shadow: 0 12px 12px 0 getThemifyVariable("shadow-color");
+    border: solid 0.5px getThemifyVariable("modal-border-color");
   }
 }
 
@@ -128,7 +130,7 @@ pre.CodeMirror-line {
 .CodeMirror-search-results {
   margin: 0 #{20 / $base-font-size}rem;
   width: #{75 / $base-font-size}rem;
-  font-size: #{12/$base-font-size}rem;
+  font-size: #{12 / $base-font-size}rem;
 }
 
 .CodeMirror-find-controls {
@@ -177,14 +179,14 @@ pre.CodeMirror-line {
 .CodeMirror-search-field {
   display: block;
   width: 100%;
-  max-width: #{166/$base-font-size}rem;
+  max-width: #{166 / $base-font-size}rem;
   margin-bottom: #{4 / $base-font-size}rem;
   @include themify() {
-    color: getThemifyVariable('input-text-color');
-    background-color: getThemifyVariable('input-secondary-background-color');
-    border: solid 0.5px getThemifyVariable('button-border-color');
+    color: getThemifyVariable("input-text-color");
+    background-color: getThemifyVariable("input-secondary-background-color");
+    border: solid 0.5px getThemifyVariable("button-border-color");
     &::placeholder {
-      color: getThemifyVariable('inactive-text-color');
+      color: getThemifyVariable("inactive-text-color");
     }
   }
 }
@@ -221,7 +223,6 @@ pre.CodeMirror-line {
     &:hover {
       border-color: getThemifyVariable("button-border-color");
     }
-
   }
   width: #{35 / $base-font-size}rem;
   height: #{35 / $base-font-size}rem;
@@ -266,26 +267,30 @@ pre.CodeMirror-line {
   border-top: #{1 / $base-font-size}rem solid orange;
   border-bottom: #{1 / $base-font-size}rem solid orange;
   box-sizing: border-box;
-  opacity: .5;
+  opacity: 0.5;
 }
 
 /*
   Close button
 */
-  .CodeMirror-close-button-container {
+.CodeMirror-close-button-container {
   display: flex;
   align-items: center;
 }
 
 // foldgutter
 .CodeMirror-foldmarker {
-  text-shadow: -1px 0 #ed225d, 0 1px #ed225d, 1px 0 #ed225d, 0 -1px #ed225d;
-  color: #FFF;
+  text-shadow:
+    -1px 0 #ed225d,
+    0 1px #ed225d,
+    1px 0 #ed225d,
+    0 -1px #ed225d;
+  color: #fff;
   /* background-color: rgba(237, 34, 93, 0.42); */
   /* border-radius: 3px; */
   font-weight: bold;
   font-family: arial;
-  line-height: .3;
+  line-height: 0.3;
   cursor: pointer;
   opacity: 0.75;
 }
@@ -297,7 +302,7 @@ pre.CodeMirror-line {
   cursor: pointer;
   padding-bottom: 0.4em;
   text-align: right;
-  line-height: 1.0;
+  line-height: 1;
 }
 .CodeMirror-foldgutter-open:after {
   content: "\25BE";
@@ -306,20 +311,21 @@ pre.CodeMirror-line {
   content: "\25B8";
 }
 
-.CodeMirror-foldgutter-open, .CodeMirror-foldgutter-folded {
+.CodeMirror-foldgutter-open,
+.CodeMirror-foldgutter-folded {
   position: absolute;
   right: 100%;
 }
 
 .CodeMirror-foldgutter-open:after {
   @include themify() {
-    background-image: getThemifyVariable('codefold-icon-open');
+    background-image: getThemifyVariable("codefold-icon-open");
   }
 }
 
 .CodeMirror-foldgutter-folded:after {
   @include themify() {
-    background-image: getThemifyVariable('codefold-icon-closed');
+    background-image: getThemifyVariable("codefold-icon-closed");
   }
 }
 
@@ -345,7 +351,6 @@ pre.CodeMirror-line {
   font-family: serif;
 }
 
-
 .line-runtime-error + .CodeMirror-activeline-gutter {
   background-color: rgb(255, 95, 82);
   opacity: 0.3;
@@ -361,7 +366,7 @@ pre.CodeMirror-line {
   width: 100%;
   position: absolute;
   @include themify() {
-    border: 1px solid getThemifyVariable('ide-border-color');
+    border: 1px solid getThemifyVariable("ide-border-color");
   }
   &.editor-holder--hidden .CodeMirror {
     display: none;
@@ -374,7 +379,7 @@ pre.CodeMirror-line {
 
 .editor__file-name {
   @include themify() {
-    color: getThemifyVariable('primary-text-color');
+    color: getThemifyVariable("primary-text-color");
   }
   height: #{29 / $base-font-size}rem;
   padding-top: #{7 / $base-font-size}rem;
@@ -394,7 +399,7 @@ pre.CodeMirror-line {
   @extend %modal;
   position: absolute;
   @include themify() {
-    background: getThemifyVariable('background-color');
+    background: getThemifyVariable("background-color");
   }
   & .CodeMirror-lines {
     padding: 0;
@@ -408,21 +413,22 @@ pre.CodeMirror-line {
 }
 
 .emmet-abbreviation-preview:not(.has-error) .emmet-abbreviation-preview-error {
-    display: none;
+  display: none;
 }
 
 .emmet-abbreviation-preview.has-error .CodeMirror {
-    display: none;
+  display: none;
 }
 
 .emmet-abbreviation-preview .CodeMirror-cursors {
-    visibility: hidden !important;
+  visibility: hidden !important;
 }
 
 .emmet-abbreviation-preview .emmet-error-snippet-message {
-    padding: 5px;
+  padding: 5px;
 }
 
-.emmet-open-tag, .emmet-close-tag {
-    text-decoration: underline;
+.emmet-open-tag,
+.emmet-close-tag {
+  text-decoration: underline;
 }
