@@ -227,14 +227,6 @@ class IDEView extends React.Component {
       } else {
         this.props.expandConsole();
       }
-    } else if (e.keyCode === 27) {
-      if (this.props.ide.newFolderModalVisible) {
-        this.props.closeNewFolderModal();
-      } else if (this.props.ide.uploadFileModalVisible) {
-        this.props.closeUploadFileModal();
-      } else if (this.props.ide.modalIsVisible) {
-        this.props.closeNewFileModal();
-      }
     }
   }
 
@@ -499,8 +491,6 @@ IDEView.propTypes = {
   expandConsole: PropTypes.func.isRequired,
   collapseConsole: PropTypes.func.isRequired,
   updateFileContent: PropTypes.func.isRequired,
-  closeNewFolderModal: PropTypes.func.isRequired,
-  closeNewFileModal: PropTypes.func.isRequired,
   closeShareModal: PropTypes.func.isRequired,
   closeKeyboardShortcutModal: PropTypes.func.isRequired,
   autosaveProject: PropTypes.func.isRequired,
@@ -509,7 +499,6 @@ IDEView.propTypes = {
   hideErrorModal: PropTypes.func.isRequired,
   clearPersistedState: PropTypes.func.isRequired,
   startSketch: PropTypes.func.isRequired,
-  closeUploadFileModal: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
   isUserOwner: PropTypes.bool.isRequired
 };
