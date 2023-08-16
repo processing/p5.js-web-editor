@@ -1,133 +1,178 @@
-import React, { useRef, useState } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  closeProjectOptions,
-  newFile,
-  newFolder,
-  openProjectOptions,
-  openUploadFileModal
-} from '../actions/ide';
-import { selectRootFile } from '../selectors/files';
-import { getAuthenticated, selectCanEditSketch } from '../selectors/users';
+import { withTranslation } from 'react-i18next';
 
 import ConnectedFileNode from './FileNode';
 
 import DownArrowIcon from '../../../images/down-filled-triangle.svg';
 
-// TODO: use a generic Dropdown UI component
+class Sidebar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.resetSelectedFile = this.resetSelectedFile.bind(this);
+    this.toggleProjectOptions = this.toggleProjectOptions.bind(this);
+    this.onBlurComponent = this.onBlurComponent.bind(this);
+    this.onFocusComponent = this.onFocusComponent.bind(this);
 
-export default function SideBar() {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
+    this.state = {
+      isFocused: false
+    };
+  }
 
-  const [isFocused, setIsFocused] = useState(false);
-
-  const rootFile = useSelector(selectRootFile);
-  const projectOptionsVisible = useSelector(
-    (state) => state.ide.projectOptionsVisible
-  );
-  const isExpanded = useSelector((state) => state.ide.sidebarIsExpanded);
-  const canEditProject = useSelector(selectCanEditSketch);
-  const isAuthenticated = useSelector(getAuthenticated);
-
-  const sidebarOptionsRef = useRef(null);
-
-  const onBlurComponent = () => {
-    setIsFocused(false);
+  onBlurComponent() {
+    this.setState({ isFocused: false });
     setTimeout(() => {
-      if (!isFocused) {
-        dispatch(closeProjectOptions());
+      if (!this.state.isFocused) {
+        this.props.closeProjectOptions();
       }
     }, 200);
-  };
+  }
 
-  const onFocusComponent = () => {
-    setIsFocused(true);
-  };
+  onFocusComponent() {
+    this.setState({ isFocused: true });
+  }
 
-  const toggleProjectOptions = (e) => {
+  resetSelectedFile() {
+    this.props.setSelectedFile(this.props.files[1].id);
+  }
+
+  toggleProjectOptions(e) {
     e.preventDefault();
-    if (projectOptionsVisible) {
-      dispatch(closeProjectOptions());
+    if (this.props.projectOptionsVisible) {
+      this.props.closeProjectOptions();
     } else {
-      sidebarOptionsRef.current?.focus();
-      dispatch(openProjectOptions());
+      this.sidebarOptions.focus();
+      this.props.openProjectOptions();
     }
-  };
+  }
 
-  const sidebarClass = classNames({
-    sidebar: true,
-    'sidebar--contracted': !isExpanded,
-    'sidebar--project-options': projectOptionsVisible,
-    'sidebar--cant-edit': !canEditProject
-  });
+  userCanEditProject() {
+    let canEdit;
+    if (!this.props.owner) {
+      canEdit = true;
+    } else if (
+      this.props.user.authenticated &&
+      this.props.owner.id === this.props.user.id
+    ) {
+      canEdit = true;
+    } else {
+      canEdit = false;
+    }
+    return canEdit;
+  }
 
-  return (
-    <section className={sidebarClass}>
-      <header className="sidebar__header" onContextMenu={toggleProjectOptions}>
-        <h3 className="sidebar__title">
-          <span>{t('Sidebar.Title')}</span>
-        </h3>
-        <div className="sidebar__icons">
-          <button
-            aria-label={t('Sidebar.ToggleARIA')}
-            className="sidebar__add"
-            tabIndex="0"
-            ref={sidebarOptionsRef}
-            onClick={toggleProjectOptions}
-            onBlur={onBlurComponent}
-            onFocus={onFocusComponent}
-          >
-            <DownArrowIcon focusable="false" aria-hidden="true" />
-          </button>
-          <ul className="sidebar__project-options">
-            <li>
-              <button
-                aria-label={t('Sidebar.AddFolderARIA')}
-                onClick={() => {
-                  dispatch(newFolder(rootFile.id));
-                  setTimeout(() => dispatch(closeProjectOptions()), 0);
-                }}
-                onBlur={onBlurComponent}
-                onFocus={onFocusComponent}
-              >
-                {t('Sidebar.AddFolder')}
-              </button>
-            </li>
-            <li>
-              <button
-                aria-label={t('Sidebar.AddFileARIA')}
-                onClick={() => {
-                  dispatch(newFile(rootFile.id));
-                  setTimeout(() => dispatch(closeProjectOptions()), 0);
-                }}
-                onBlur={onBlurComponent}
-                onFocus={onFocusComponent}
-              >
-                {t('Sidebar.AddFile')}
-              </button>
-            </li>
-            {isAuthenticated && (
+  render() {
+    const canEditProject = this.userCanEditProject();
+    const sidebarClass = classNames({
+      sidebar: true,
+      'sidebar--contracted': !this.props.isExpanded,
+      'sidebar--project-options': this.props.projectOptionsVisible,
+      'sidebar--cant-edit': !canEditProject
+    });
+    const rootFile = this.props.files.filter((file) => file.name === 'root')[0];
+
+    return (
+      <section className={sidebarClass}>
+        <header
+          className="sidebar__header"
+          onContextMenu={this.toggleProjectOptions}
+        >
+          <h3 className="sidebar__title">
+            <span>{this.props.t('Sidebar.Title')}</span>
+          </h3>
+          <div className="sidebar__icons">
+            <button
+              aria-label={this.props.t('Sidebar.ToggleARIA')}
+              className="sidebar__add"
+              tabIndex="0"
+              ref={(element) => {
+                this.sidebarOptions = element;
+              }}
+              onClick={this.toggleProjectOptions}
+              onBlur={this.onBlurComponent}
+              onFocus={this.onFocusComponent}
+            >
+              <DownArrowIcon focusable="false" aria-hidden="true" />
+            </button>
+            <ul className="sidebar__project-options">
               <li>
                 <button
-                  aria-label={t('Sidebar.UploadFileARIA')}
+                  aria-label={this.props.t('Sidebar.AddFolderARIA')}
                   onClick={() => {
-                    dispatch(openUploadFileModal(rootFile.id));
-                    setTimeout(() => dispatch(closeProjectOptions()), 0);
+                    this.props.newFolder(rootFile.id);
+                    setTimeout(this.props.closeProjectOptions, 0);
                   }}
-                  onBlur={onBlurComponent}
-                  onFocus={onFocusComponent}
+                  onBlur={this.onBlurComponent}
+                  onFocus={this.onFocusComponent}
                 >
-                  {t('Sidebar.UploadFile')}
+                  {this.props.t('Sidebar.AddFolder')}
                 </button>
               </li>
-            )}
-          </ul>
-        </div>
-      </header>
-      <ConnectedFileNode id={rootFile.id} canEdit={canEditProject} />
-    </section>
-  );
+              <li>
+                <button
+                  aria-label={this.props.t('Sidebar.AddFileARIA')}
+                  onClick={() => {
+                    this.props.newFile(rootFile.id);
+                    setTimeout(this.props.closeProjectOptions, 0);
+                  }}
+                  onBlur={this.onBlurComponent}
+                  onFocus={this.onFocusComponent}
+                >
+                  {this.props.t('Sidebar.AddFile')}
+                </button>
+              </li>
+              {this.props.user.authenticated && (
+                <li>
+                  <button
+                    aria-label={this.props.t('Sidebar.UploadFileARIA')}
+                    onClick={() => {
+                      this.props.openUploadFileModal(rootFile.id);
+                      setTimeout(this.props.closeProjectOptions, 0);
+                    }}
+                    onBlur={this.onBlurComponent}
+                    onFocus={this.onFocusComponent}
+                  >
+                    {this.props.t('Sidebar.UploadFile')}
+                  </button>
+                </li>
+              )}
+            </ul>
+          </div>
+        </header>
+        <ConnectedFileNode id={rootFile.id} canEdit={canEditProject} />
+      </section>
+    );
+  }
 }
+
+Sidebar.propTypes = {
+  files: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired
+    })
+  ).isRequired,
+  setSelectedFile: PropTypes.func.isRequired,
+  isExpanded: PropTypes.bool.isRequired,
+  projectOptionsVisible: PropTypes.bool.isRequired,
+  newFile: PropTypes.func.isRequired,
+  openProjectOptions: PropTypes.func.isRequired,
+  closeProjectOptions: PropTypes.func.isRequired,
+  newFolder: PropTypes.func.isRequired,
+  openUploadFileModal: PropTypes.func.isRequired,
+  owner: PropTypes.shape({
+    id: PropTypes.string
+  }),
+  user: PropTypes.shape({
+    id: PropTypes.string,
+    authenticated: PropTypes.bool.isRequired
+  }).isRequired,
+  t: PropTypes.func.isRequired
+};
+
+Sidebar.defaultProps = {
+  owner: undefined
+};
+
+export default withTranslation()(Sidebar);

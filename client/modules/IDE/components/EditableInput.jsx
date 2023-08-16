@@ -11,9 +11,7 @@ function EditableInput({
   emptyPlaceholder,
   InputComponent,
   inputProps,
-  onChange,
-  disabled,
-  'aria-label': ariaLabel
+  onChange
 }) {
   const [isEditing, setIsEditing] = React.useState(false);
   const [currentValue, setCurrentValue] = React.useState(value || '');
@@ -21,24 +19,17 @@ function EditableInput({
   const hasValue = currentValue !== '';
   const classes = `editable-input editable-input--${
     isEditing ? 'is-editing' : 'is-not-editing'
-  } editable-input--${hasValue ? 'has-value' : 'has-placeholder'} ${
-    disabled ? 'editable-input--disabled' : ''
-  }`;
-  const inputRef = React.useRef();
+  } editable-input--${hasValue ? 'has-value' : 'has-placeholder'}`;
+  const inputRef = React.createRef();
   const { t } = useTranslation();
   React.useEffect(() => {
     if (isEditing) {
-      inputRef.current?.focus();
+      inputRef.current.focus();
     }
   }, [isEditing]);
 
   function beginEditing() {
     setIsEditing(true);
-  }
-
-  function cancelEditing() {
-    setIsEditing(false);
-    setCurrentValue(value);
   }
 
   function doneEditing() {
@@ -60,8 +51,6 @@ function EditableInput({
   function checkForKeyAction(event) {
     if (event.key === 'Enter') {
       doneEditing();
-    } else if (event.key === 'Escape' || event.key === 'Esc') {
-      cancelEditing();
     }
   }
 
@@ -70,11 +59,7 @@ function EditableInput({
       <button
         className="editable-input__label"
         onClick={beginEditing}
-        aria-label={
-          ariaLabel ?? t('EditableInput.EditValue', { display: displayValue })
-        }
-        aria-hidden={isEditing}
-        disabled={disabled}
+        aria-label={t('EditableInput.EditValue', { display: displayValue })}
       >
         <span>{displayValue}</span>
         <EditIcon
@@ -89,10 +74,9 @@ function EditableInput({
         type="text"
         {...inputProps}
         disabled={!isEditing}
-        aria-hidden={!isEditing}
         onBlur={doneEditing}
         onChange={updateValue}
-        onKeyDown={checkForKeyAction}
+        onKeyPress={checkForKeyAction}
         ref={inputRef}
         value={currentValue}
       />
@@ -105,9 +89,7 @@ EditableInput.defaultProps = {
   InputComponent: 'input',
   inputProps: {},
   validate: () => true,
-  value: '',
-  disabled: false,
-  'aria-label': undefined
+  value: ''
 };
 
 EditableInput.propTypes = {
@@ -117,9 +99,7 @@ EditableInput.propTypes = {
   inputProps: PropTypes.object, // eslint-disable-line
   onChange: PropTypes.func.isRequired,
   validate: PropTypes.func,
-  value: PropTypes.string,
-  disabled: PropTypes.bool,
-  'aria-label': PropTypes.string
+  value: PropTypes.string
 };
 
 export default EditableInput;

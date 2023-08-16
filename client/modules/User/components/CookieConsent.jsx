@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import styled from 'styled-components';
 import ReactGA from 'react-ga';
 import { Transition } from 'react-transition-group';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { Trans, useTranslation } from 'react-i18next';
 import { PropTypes } from 'prop-types';
 import getConfig from '../../../utils/getConfig';

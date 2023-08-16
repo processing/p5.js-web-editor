@@ -1,5 +1,5 @@
 {
-	"extends": ["airbnb", "prettier", "plugin:storybook/recommended"],
+	"extends": ["airbnb", "prettier"],
 	"parser": "@babel/eslint-parser",
 	"env": {
     "browser": true,
@@ -20,7 +20,6 @@
     "no-console": 0,
     "no-alert": 0,
     "no-underscore-dangle": 0,
-    "no-useless-catch": 2,
     "max-len": [1, 120, 2, {"ignoreComments": true, "ignoreTemplateLiterals": true}],
     "quote-props": [1, "as-needed"],
     "no-unused-vars": [1, {"vars": "local", "args": "none"}],

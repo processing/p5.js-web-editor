@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withTranslation } from 'react-i18next';
-import styled from 'styled-components';
+
 import * as ProjectActions from '../actions/project';
 import * as ProjectsActions from '../actions/projects';
 import * as CollectionsActions from '../actions/collections';
@@ -13,23 +13,9 @@ import * as SortingActions from '../actions/sorting';
 import getSortedCollections from '../selectors/collections';
 import Loader from '../../App/components/loader';
 import QuickAddList from './QuickAddList';
-import { remSize } from '../../../theme';
 
 const projectInCollection = (project, collection) =>
   collection.items.find((item) => item.projectId === project.id) != null;
-
-export const CollectionAddSketchWrapper = styled.div`
-  width: ${remSize(600)};
-  max-width: 100%;
-  overflow: auto;
-`;
-
-export const QuickAddWrapper = styled.div`
-  width: ${remSize(600)};
-  max-width: 100%;
-  padding: ${remSize(24)};
-  height: 100%;
-`;
 
 class CollectionList extends React.Component {
   constructor(props) {
@@ -99,14 +85,15 @@ class CollectionList extends React.Component {
     }
 
     return (
-      <CollectionAddSketchWrapper>
-        <QuickAddWrapper>
+      <div className="collection-add-sketch">
+        <div className="quick-add-wrapper">
           <Helmet>
             <title>{this.getTitle()}</title>
           </Helmet>
+
           {content}
-        </QuickAddWrapper>
-      </CollectionAddSketchWrapper>
+        </div>
+      </div>
     );
   }
 }

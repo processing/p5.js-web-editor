@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -41,7 +41,6 @@ import { remSize } from '../../../theme';
 import ActionStrip from '../../../components/mobile/ActionStrip';
 import useAsModal from '../../../components/useAsModal';
 import Dropdown from '../../../components/Dropdown';
-import { selectActiveFile } from '../selectors/files';
 import { getIsUserOwner } from '../selectors/users';
 
 import {
@@ -476,7 +475,10 @@ MobileIDEView.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    selectedFile: selectActiveFile(state),
+    selectedFile:
+      state.files.find((file) => file.isSelectedFile) ||
+      state.files.find((file) => file.name === 'sketch.js') ||
+      state.files.find((file) => file.name !== 'root'),
     ide: state.ide,
     files: state.files,
     unsavedChanges: state.ide.unsavedChanges,

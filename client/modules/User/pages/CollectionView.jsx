@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 
-import Nav from '../../IDE/components/Header/Nav';
+import Nav from '../../../components/Nav';
 import RootPage from '../../../components/RootPage';
 
 import CollectionCreate from '../components/CollectionCreate';

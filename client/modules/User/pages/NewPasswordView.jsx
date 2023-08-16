@@ -1,18 +1,17 @@
+import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
 import NewPasswordForm from '../components/NewPasswordForm';
 import { validateResetPasswordToken } from '../actions';
-import Nav from '../../IDE/components/Header/Nav';
+import Nav from '../../../components/Nav';
 import RootPage from '../../../components/RootPage';
 
-function NewPasswordView() {
+function NewPasswordView(props) {
   const { t } = useTranslation();
-  const params = useParams();
-  const resetPasswordToken = params.reset_password_token;
+  const resetPasswordToken = props.params.reset_password_token;
   const resetPasswordInvalid = useSelector(
     (state) => state.user.resetPasswordInvalid
   );
@@ -48,5 +47,11 @@ function NewPasswordView() {
     </RootPage>
   );
 }
+
+NewPasswordView.propTypes = {
+  params: PropTypes.shape({
+    reset_password_token: PropTypes.string
+  }).isRequired
+};
 
 export default NewPasswordView;

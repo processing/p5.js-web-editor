@@ -98,23 +98,40 @@
 }
 
 .toolbar__project-name-container {
+	@include themify() {
+		border-color: getThemifyVariable('inactive-text-color');
+	}
 	margin-left: #{10 / $base-font-size}rem;
 	padding-left: #{10 / $base-font-size}rem;
   display: flex;
   align-items: center;
 }
 
-.toolbar .editable-input__label {
+.toolbar__project-name {
 	@include themify() {
 		color: getThemifyVariable('secondary-text-color');
-		& path {
-			fill: getThemifyVariable('secondary-text-color');
+		&:hover {
+		color: getThemifyVariable('logo-color');
+		  & .toolbar__edit-name-button path {
+		  	fill: getThemifyVariable('logo-color');
+		  }
 		}
+	}
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+
+	.toolbar__project-name-container--editing & {
+		display: none;
 	}
 }
 
-.toolbar .editable-input__input {
-	border: 0;
+.toolbar__project-name-input {
+	display: none;
+	border: 0px;
+	.toolbar__project-name-container--editing & {
+		display: block;
+	}
 }
 
 .toolbar__project-owner {
@@ -141,5 +158,17 @@
 	cursor: pointer;
 	@include themify(){
 		color:getThemifyVariable('logo-color');
+	}
+}
+
+.toolbar__edit-name-button {
+	display: inline-block;
+	vertical-align: top;
+	width: #{18 / $base-font-size}rem;
+	height: #{18 / $base-font-size}rem;
+	@include themify() {
+		& path {
+			fill: getThemifyVariable('secondary-text-color');
+		}
 	}
 }

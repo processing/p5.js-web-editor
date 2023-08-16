@@ -6,7 +6,6 @@
 
 button.editable-input__label {
   display: flex;
-  align-items: center;
 
   @include themify() {
     color: getThemifyVariable('inactive-text-color');
@@ -34,13 +33,6 @@ button.editable-input__label {
 .editable-input__icon {
   width: 1.5rem;
   height: 1.5rem;
-}
-
-.editable-input--disabled {
-  pointer-events: none;
-  .editable-input__icon {
-    display: none;
-  }
 }
 
 .editable-input--is-not-editing .editable-input__input,

@@ -2,12 +2,13 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { browserHistory } from 'react-router';
 import { withTranslation } from 'react-i18next';
+import get from 'lodash/get';
 import { Helmet } from 'react-helmet';
-import browserHistory from '../../../browserHistory';
 import { verifyEmailConfirmation } from '../actions';
+import Nav from '../../../components/Nav';
 import RootPage from '../../../components/RootPage';
-import Nav from '../../IDE/components/Header/Nav';
 
 class EmailVerificationView extends React.Component {
   static defaultProps = {
@@ -21,11 +22,7 @@ class EmailVerificationView extends React.Component {
     }
   }
 
-  verificationToken = () => {
-    const { location } = this.props;
-    const searchParams = new URLSearchParams(location.search);
-    return searchParams.get('t');
-  };
+  verificationToken = () => get(this.props, 'location.query.t', null);
 
   render() {
     let status = null;
@@ -83,10 +80,7 @@ EmailVerificationView.propTypes = {
     'invalid'
   ]),
   verifyEmailConfirmation: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired,
-  location: PropTypes.shape({
-    search: PropTypes.string.isRequired
-  }).isRequired
+  t: PropTypes.func.isRequired
 };
 
 export default withTranslation()(

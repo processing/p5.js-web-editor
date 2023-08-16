@@ -30,7 +30,7 @@ See the [release guide](./release.md) for information about creating a release.
 ## Tests
 To run the test suite simply run `npm test` (after installing dependencies with `npm install`)
 
-A sample unit test could be found here: [Nav.unit.test.jsx](../client/modules/IDE/components/Header/Nav.unit.test.jsx).
+A sample unit test could be found here: [Nav.unit.test.jsx](../client/components/Nav.unit.test.jsx).
 
 ## Committing Code
 Inspired by [Git/GitHub commit standards & conventions](https://gist.github.com/digitaljhelms/3761873).

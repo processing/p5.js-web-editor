@@ -1,5 +1,6 @@
 import React, { useReducer, useState, useEffect } from 'react';
 import { render } from 'react-dom';
+import { hot } from 'react-hot-loader/root';
 import { createGlobalStyle } from 'styled-components';
 import {
   registerFrame,
@@ -72,4 +73,6 @@ const App = () => {
   );
 };
 
-render(<App />, document.getElementById('root'));
+const HotApp = hot(App);
+
+render(<HotApp />, document.getElementById('root'));
