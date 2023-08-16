@@ -276,7 +276,6 @@ class FileNode extends React.Component {
                   className="sidebar__file-item-closed"
                   onClick={this.showFolderChildren}
                   aria-label={t('FileNode.OpenFolderARIA')}
-                  title={t('FileNode.OpenFolderARIA')}
                 >
                   <FolderRightIcon
                     className="folder-right"
@@ -288,7 +287,6 @@ class FileNode extends React.Component {
                   className="sidebar__file-item-open"
                   onClick={this.hideFolderChildren}
                   aria-label={t('FileNode.CloseFolderARIA')}
-                  title={t('FileNode.CloseFolderARIA')}
                 >
                   <FolderDownIcon
                     className="folder-down"

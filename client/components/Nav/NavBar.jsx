@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import { MenuOpenContext, NavBarContext } from './contexts';
 
-function NavBar({ children, className }) {
+function NavBar({ children }) {
   const [dropdownOpen, setDropdownOpen] = useState('none');
 
   const timerRef = useRef(null);
@@ -55,15 +55,6 @@ function NavBar({ children, className }) {
     timerRef.current = setTimeout(() => setDropdownOpen('none'), 10);
   }, [timerRef, setDropdownOpen]);
 
-  const toggleDropdownOpen = useCallback(
-    (dropdown) => {
-      setDropdownOpen((prevState) =>
-        prevState === dropdown ? 'none' : dropdown
-      );
-    },
-    [setDropdownOpen]
-  );
-
   const contextValue = useMemo(
     () => ({
       createDropdownHandlers: (dropdown) => ({
@@ -73,7 +64,9 @@ function NavBar({ children, className }) {
           );
         },
         onClick: () => {
-          toggleDropdownOpen(dropdown);
+          setDropdownOpen((prevState) =>
+            prevState === 'none' ? dropdown : 'none'
+          );
         },
         onBlur: handleBlur,
         onFocus: clearHideTimeout
@@ -87,16 +80,15 @@ function NavBar({ children, className }) {
           clearHideTimeout();
           setDropdownOpen(dropdown);
         }
-      }),
-      toggleDropdownOpen
+      })
     }),
-    [setDropdownOpen, toggleDropdownOpen, clearHideTimeout, handleBlur]
+    [setDropdownOpen, clearHideTimeout, handleBlur]
   );
 
   return (
     <NavBarContext.Provider value={contextValue}>
       <header>
-        <nav className={className} ref={nodeRef}>
+        <nav className="nav" ref={nodeRef}>
           <MenuOpenContext.Provider value={dropdownOpen}>
             {children}
           </MenuOpenContext.Provider>
@@ -107,13 +99,11 @@ function NavBar({ children, className }) {
 }
 
 NavBar.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string
+  children: PropTypes.node
 };
 
 NavBar.defaultProps = {
-  children: null,
-  className: 'nav'
+  children: null
 };
 
 export default NavBar;

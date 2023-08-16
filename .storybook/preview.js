@@ -1,22 +1,31 @@
 import React from 'react';
-import { Provider } from 'react-redux';
+import { addDecorator, addParameters } from '@storybook/react';
+import { withKnobs } from "@storybook/addon-knobs";
+import { withThemePlayground } from 'storybook-addon-theme-playground';
+import { ThemeProvider } from "styled-components";
 
-import ThemeProvider from '../client/modules/App/components/ThemeProvider';
-import configureStore from '../client/store';
-import '../client/i18n-test';
-import '../client/styles/build/css/main.css'
+import theme, { Theme } from '../client/theme';
 
-const initialState = window.__INITIAL_STATE__;
+addDecorator(withKnobs);
 
-const store = configureStore(initialState);
+const themeConfigs = Object.values(Theme).map(
+  name => {
+    return { name, theme: theme[name] };
+  }
+);
 
-export const decorators = [
-  (Story) => (
-    <Provider store={store}>
-      <ThemeProvider>
-        <Story />
-      </ThemeProvider>
-    </Provider>
-  ),
-]
+addDecorator(withThemePlayground({
+  theme: themeConfigs,
+  provider: ThemeProvider
+}));
 
+addParameters({
+  options: {
+    /**
+     * display the top-level grouping as a "root" in the sidebar
+     */
+    showRoots: true,
+  },
+})
+
+// addDecorator(storyFn => <ThemeProvider theme={theme}>{storyFn()}</ThemeProvider>);

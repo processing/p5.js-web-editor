@@ -6,6 +6,5 @@ export const MenuOpenContext = createContext('none');
 
 export const NavBarContext = createContext({
   createDropdownHandlers: () => ({}),
-  createMenuItemHandlers: () => ({}),
-  toggleDropdownOpen: () => {}
+  createMenuItemHandlers: () => ({})
 });

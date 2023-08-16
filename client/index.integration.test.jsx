@@ -1,14 +1,16 @@
 import { setupServer } from 'msw/node';
 import { rest } from 'msw';
 import React from 'react';
-import Routing from './routes';
+import { Router, browserHistory } from 'react-router';
 
 import { reduxRender, act, waitFor, screen, within } from './test-utils';
 import configureStore from './store';
+import routes from './routes';
 import * as Actions from './modules/User/actions';
 import { userResponse } from './testData/testServerResponses';
 
 // setup for the app
+const history = browserHistory;
 const initialState = window.__INITIAL_STATE__;
 const store = configureStore(initialState);
 
@@ -54,7 +56,8 @@ document.createRange = () => {
 // start testing
 describe('index.jsx integration', () => {
   // the subject under test
-  const subject = () => reduxRender(<Routing />, { store });
+  const subject = () =>
+    reduxRender(<Router history={history} routes={routes(store)} />, { store });
 
   // spy on this function and wait for it to be called before making assertions
   const spy = jest.spyOn(Actions, 'getUser');

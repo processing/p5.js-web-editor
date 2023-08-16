@@ -4,7 +4,7 @@ import React, { useContext, useMemo } from 'react';
 import TriangleIcon from '../../images/down-filled-triangle.svg';
 import { MenuOpenContext, NavBarContext, ParentMenuContext } from './contexts';
 
-export function useMenuProps(id) {
+function NavDropdownMenu({ id, title, children }) {
   const activeMenu = useContext(MenuOpenContext);
 
   const isOpen = id === activeMenu;
@@ -15,12 +15,6 @@ export function useMenuProps(id) {
     createDropdownHandlers,
     id
   ]);
-
-  return { isOpen, handlers };
-}
-
-function NavDropdownMenu({ id, title, children }) {
-  const { isOpen, handlers } = useMenuProps(id);
 
   return (
     <li className={classNames('nav__item', isOpen && 'nav__item--open')}>

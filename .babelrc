@@ -51,16 +51,7 @@
     "development": {
       "plugins": [
         "babel-plugin-styled-components",
-        "react-refresh/babel"
-      ],
-      "presets": [
-        [
-          "@babel/preset-react",
-          {
-            "development": true,
-            "runtime": "automatic"
-          }
-        ]
+        "react-hot-loader/babel"
       ]
     }
   },

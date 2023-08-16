@@ -1,15 +1,16 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation } from 'react-router-dom';
+import { withRouter, browserHistory } from 'react-router';
 import { parse } from 'query-string';
 import { createApiKey, removeApiKey } from '../actions';
 import AccountForm from '../components/AccountForm';
 import SocialAuthButton from '../components/SocialAuthButton';
 import APIKeyForm from '../components/APIKeyForm';
-import Nav from '../../IDE/components/Header/Nav';
+import Nav from '../../../components/Nav';
 import ErrorModal from '../../IDE/components/ErrorModal';
 import Overlay from '../../App/components/Overlay';
 import Toast from '../../IDE/components/Toast';
@@ -43,10 +44,9 @@ function SocialLoginPanel() {
   );
 }
 
-function AccountView() {
+function AccountView({ location }) {
   const { t } = useTranslation();
 
-  const location = useLocation();
   const queryParams = parse(location.search);
   const showError = !!queryParams.error;
   const errorType = queryParams.error;
@@ -54,7 +54,6 @@ function AccountView() {
 
   const apiKeys = useSelector((state) => state.user.apiKeys);
   const dispatch = useDispatch();
-  const history = useHistory();
 
   return (
     <div className="account-settings__container">
@@ -70,7 +69,7 @@ function AccountView() {
           title={t('ErrorModal.LinkTitle')}
           ariaLabel={t('ErrorModal.LinkTitle')}
           closeOverlay={() => {
-            history.push(location.pathname);
+            browserHistory.push(location.pathname);
           }}
         >
           <ErrorModal type="oauthError" service={errorType} />
@@ -119,4 +118,11 @@ function AccountView() {
   );
 }
 
-export default AccountView;
+AccountView.propTypes = {
+  location: PropTypes.shape({
+    search: PropTypes.string.isRequired,
+    pathname: PropTypes.string.isRequired
+  }).isRequired
+};
+
+export default withRouter(AccountView);

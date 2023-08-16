@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { browserHistory } from 'react-router';
 import { withTranslation } from 'react-i18next';
 
-import browserHistory from '../../../browserHistory';
 import ExitIcon from '../../../images/exit.svg';
 
 class Overlay extends React.Component {

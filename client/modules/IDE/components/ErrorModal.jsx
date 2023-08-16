@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
 const ErrorModal = ({ type, service, closeModal }) => {
@@ -69,14 +69,9 @@ const ErrorModal = ({ type, service, closeModal }) => {
 };
 
 ErrorModal.propTypes = {
-  type: PropTypes.oneOf([
-    'forceAuthentication',
-    'staleSession',
-    'staleProject',
-    'oauthError'
-  ]).isRequired,
+  type: PropTypes.string.isRequired,
   closeModal: PropTypes.func.isRequired,
-  service: PropTypes.oneOf(['google', 'github'])
+  service: PropTypes.string
 };
 
 ErrorModal.defaultProps = {

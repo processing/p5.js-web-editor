@@ -12,7 +12,7 @@ import basicAuth from 'express-basic-auth';
 // Webpack Requirements
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from '@gatsbyjs/webpack-hot-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
 import config from '../webpack/config.dev';
 
 // Import all required modules
@@ -55,7 +55,7 @@ if (process.env.NODE_ENV === 'development') {
       publicPath: config.output.publicPath
     })
   );
-  app.use(webpackHotMiddleware(compiler, { log: false }));
+  app.use(webpackHotMiddleware(compiler));
 }
 
 const mongoConnectionString = process.env.MONGO_URL;

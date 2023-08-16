@@ -121,16 +121,20 @@ async function getCodePackage() {
     }
   };
 
-  const { data } = await axios.request(options);
-  data.forEach((metadata) => {
-    if (
-      metadata.name.endsWith('P') === true ||
-      metadata.name.endsWith('M') === true
-    ) {
-      sketchRootList.push(metadata);
-    }
-  });
-  return sketchRootList;
+  try {
+    const { data } = await axios.request(options);
+    data.forEach((metadata) => {
+      if (
+        metadata.name.endsWith('P') === true ||
+        metadata.name.endsWith('M') === true
+      ) {
+        sketchRootList.push(metadata);
+      }
+    });
+    return sketchRootList;
+  } catch (err) {
+    throw err;
+  }
 }
 
 // 2. get the list of all the top-level sketch directories in P and M
@@ -151,9 +155,13 @@ function getSketchDirectories(sketchRootList) {
         }
       };
 
-      const { data } = await axios.request(options);
-      const sketchDirs = flatten(data);
-      return sketchDirs;
+      try {
+        const { data } = await axios.request(options);
+        const sketchDirs = flatten(data);
+        return sketchDirs;
+      } catch (err) {
+        throw err;
+      }
     })
   ).then((output) => {
     const sketchList = [];
@@ -185,9 +193,13 @@ function appendSketchItemLinks(sketchList) {
         }
       };
 
-      const { data } = await axios.request(options);
-      sketches.tree = data;
-      return sketchList;
+      try {
+        const { data } = await axios.request(options);
+        sketches.tree = data;
+        return sketchList;
+      } catch (err) {
+        throw err;
+      }
     })
   );
 }
@@ -208,9 +220,13 @@ function getSketchItems(sketchList) {
         }
       };
 
-      const { data } = axios.request(options);
-      sketch.data = data;
-      return sketch;
+      try {
+        const { data } = axios.request(options);
+        sketch.data = data;
+        return sketch;
+      } catch (err) {
+        throw err;
+      }
     }
     // pass
   })))).then(() => sketchList[0]);
@@ -406,9 +422,13 @@ function getAllSketchContent(newProjectList) {
       };
 
       // console.log("CONVERT ME!")
-      const { data } = await axios.request(options);
-      newProject.files[i].content = data;
-      return newProject;
+      try {
+        const { data } = await axios.request(options);
+        newProject.files[i].content = data;
+        return newProject;
+      } catch (err) {
+        throw err;
+      }
     }
     if (newProject.files[i].url) {
       return new Promise((resolve, reject) => {
@@ -424,8 +444,9 @@ function getAllSketchContent(newProjectList) {
         resolve(newProject);
       });
     }
-  }))
-  )).then(() => newProjectList);
+  })).catch((err) => {
+    throw err;
+  }))).then(() => newProjectList);
   /* eslint-enable */
 }
 
