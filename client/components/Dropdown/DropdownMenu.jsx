@@ -50,7 +50,9 @@ const DropdownMenu = forwardRef(
           <DropdownWrapper
             className={classes.list}
             align={align}
-            onMouseUp={close}
+            onMouseUp={() => {
+              setTimeout(close, 0);
+            }}
             onBlur={handleBlur}
             onFocus={handleFocus}
           >
