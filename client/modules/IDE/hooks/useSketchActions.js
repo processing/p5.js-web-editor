@@ -10,12 +10,13 @@ import {
 } from '../actions/project';
 import { showToast } from '../actions/toast';
 import { showErrorModal, showShareModal } from '../actions/ide';
+import { selectCanEditSketch } from '../selectors/users';
 
 const useSketchActions = () => {
   const unsavedChanges = useSelector((state) => state.ide.unsavedChanges);
   const authenticated = useSelector((state) => state.user.authenticated);
   const project = useSelector((state) => state.project);
-  const currentUser = useSelector((state) => state.user.username);
+  const canEditProjectName = useSelector(selectCanEditSketch);
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const params = useParams();
@@ -40,7 +41,7 @@ const useSketchActions = () => {
 
   function downloadSketch() {
     dispatch(autosaveProject());
-    dispatch(exportProjectAsZip(project.id));
+    exportProjectAsZip(project.id);
   }
 
   function shareSketch() {
@@ -54,16 +55,6 @@ const useSketchActions = () => {
       dispatch(setProjectName(newProjectName));
       if (project.id) dispatch(saveProject());
     }
-  }
-
-  function canEditProjectName() {
-    return (
-      (project.owner &&
-        project.owner.username &&
-        project.owner.username === currentUser) ||
-      !project.owner ||
-      !project.owner.username
-    );
   }
 
   return {

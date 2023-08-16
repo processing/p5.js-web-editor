@@ -34,8 +34,10 @@ import About from '../components/About';
 import AddToCollectionList from '../components/AddToCollectionList';
 import Feedback from '../components/Feedback';
 import { CollectionSearchbar } from '../components/Searchbar';
+import { selectActiveFile } from '../selectors/files';
 import { getIsUserOwner } from '../selectors/users';
 import RootPage from '../../../components/RootPage';
+import Header from '../components/Header';
 
 function getTitle(props) {
   const { id } = props.project;
@@ -179,42 +181,18 @@ class IDEView extends React.Component {
         <WarnIfUnsavedChanges currentLocation={this.props.location} />
         <Toast />
         <CmControllerContext.Provider value={{ current: this.cmController }}>
-          <Nav />
+          <Header
+            syncFileContent={this.syncFileContent}
+            key={this.props.project.id}
+          />
         </CmControllerContext.Provider>
-        <Toolbar
-          syncFileContent={this.syncFileContent}
-          key={this.props.project.id}
-        />
         {this.props.ide.preferencesIsVisible && (
           <Overlay
             title={this.props.t('Preferences.Settings')}
             ariaLabel={this.props.t('Preferences.Settings')}
             closeOverlay={this.props.closePreferences}
           >
-            <Preferences
-              fontSize={this.props.preferences.fontSize}
-              setFontSize={this.props.setFontSize}
-              autosave={this.props.preferences.autosave}
-              linewrap={this.props.preferences.linewrap}
-              lineNumbers={this.props.preferences.lineNumbers}
-              setLineNumbers={this.props.setLineNumbers}
-              setAutosave={this.props.setAutosave}
-              setLinewrap={this.props.setLinewrap}
-              lintWarning={this.props.preferences.lintWarning}
-              setLintWarning={this.props.setLintWarning}
-              textOutput={this.props.preferences.textOutput}
-              gridOutput={this.props.preferences.gridOutput}
-              setTextOutput={this.props.setTextOutput}
-              setGridOutput={this.props.setGridOutput}
-              theme={this.props.preferences.theme}
-              setTheme={this.props.setTheme}
-              autocloseBracketsQuotes={
-                this.props.preferences.autocloseBracketsQuotes
-              }
-              setAutocloseBracketsQuotes={this.props.setAutocloseBracketsQuotes}
-              autocompleteHinter={this.props.preferences.autocompleteHinter}
-              setAutocompleteHinter={this.props.setAutocompleteHinter}
-            />
+            <Preferences />
           </Overlay>
         )}
         <main className="editor-preview-container">
@@ -445,7 +423,6 @@ IDEView.propTypes = {
   closeShareModal: PropTypes.func.isRequired,
   closeKeyboardShortcutModal: PropTypes.func.isRequired,
   autosaveProject: PropTypes.func.isRequired,
-  setTheme: PropTypes.func.isRequired,
   setPreviousPath: PropTypes.func.isRequired,
   hideErrorModal: PropTypes.func.isRequired,
   clearPersistedState: PropTypes.func.isRequired,
@@ -455,10 +432,7 @@ IDEView.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    selectedFile:
-      state.files.find((file) => file.isSelectedFile) ||
-      state.files.find((file) => file.name === 'sketch.js') ||
-      state.files.find((file) => file.name !== 'root'),
+    selectedFile: selectActiveFile(state),
     htmlFile: getHTMLFile(state.files),
     ide: state.ide,
     preferences: state.preferences,
