@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import prettyBytes from 'pretty-bytes';
 import { withTranslation } from 'react-i18next';

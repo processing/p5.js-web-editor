@@ -3,7 +3,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import classNames from 'classnames';
 import slugify from 'slugify';
@@ -18,10 +18,13 @@ import getSortedSketches from '../selectors/projects';
 import Loader from '../../App/components/loader';
 import Overlay from '../../App/components/Overlay';
 import AddToCollectionList from './AddToCollectionList';
+import getConfig from '../../../utils/getConfig';
 
 import ArrowUpIcon from '../../../images/sort-arrow-up.svg';
 import ArrowDownIcon from '../../../images/sort-arrow-down.svg';
 import DownFilledTriangleIcon from '../../../images/down-filled-triangle.svg';
+
+const ROOT_URL = getConfig('API_URL');
 
 const formatDateCell = (date, mobile = false) =>
   dates.format(date, { showTime: !mobile });
@@ -140,7 +143,13 @@ class SketchListRowBase extends React.Component {
   };
 
   handleSketchDownload = () => {
-    this.props.exportProjectAsZip(this.props.sketch.id);
+    const { sketch } = this.props;
+    const downloadLink = document.createElement('a');
+    downloadLink.href = `${ROOT_URL}/projects/${sketch.id}/zip`;
+    downloadLink.download = `${sketch.name}.zip`;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
   };
 
   handleSketchDuplicate = () => {
@@ -332,7 +341,6 @@ SketchListRowBase.propTypes = {
   deleteProject: PropTypes.func.isRequired,
   showShareModal: PropTypes.func.isRequired,
   cloneProject: PropTypes.func.isRequired,
-  exportProjectAsZip: PropTypes.func.isRequired,
   changeProjectName: PropTypes.func.isRequired,
   onAddToCollection: PropTypes.func.isRequired,
   mobile: PropTypes.bool,
