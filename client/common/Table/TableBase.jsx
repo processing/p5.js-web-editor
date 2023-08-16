@@ -61,7 +61,7 @@ function TableBase({
           {addDropdownColumn && <StyledHeaderCell scope="col" />}
         </tr>
       </thead>
-      <tbody>{sortedItems.map((item) => renderRow(item))}</tbody>
+      <tbody>{sortedItems.map((item) => renderRow(item, columns))}</tbody>
     </table>
   );
 }

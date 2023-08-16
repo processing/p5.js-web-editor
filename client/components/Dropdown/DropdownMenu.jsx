@@ -35,7 +35,11 @@ const DropdownMenu = forwardRef(
     };
 
     return (
-      <div ref={anchorRef} className={className}>
+      <div
+        ref={anchorRef}
+        className={className}
+        style={{ position: 'relative' }}
+      >
         <button
           className={classes.button}
           aria-label={ariaLabel}
@@ -50,7 +54,9 @@ const DropdownMenu = forwardRef(
           <DropdownWrapper
             className={classes.list}
             align={align}
-            onMouseUp={close}
+            onMouseUp={() => {
+              setTimeout(close, 100);
+            }}
             onBlur={handleBlur}
             onFocus={handleFocus}
           >
