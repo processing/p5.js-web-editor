@@ -12,6 +12,9 @@ import dates from '../../../../utils/formatDate';
 
 import DownFilledTriangleIcon from '../../../../images/down-filled-triangle.svg';
 
+const formatDateCell = (date, mobile = false) =>
+  dates.format(date, { showTime: !mobile });
+
 class CollectionListRowBase extends React.Component {
   static projectInCollection(project, collection) {
     return (
@@ -228,14 +231,8 @@ class CollectionListRowBase extends React.Component {
             {this.renderCollectionName()}
           </span>
         </th>
-        <td>
-          {mobile && 'Created: '}
-          {dates.format(collection.createdAt)}
-        </td>
-        <td>
-          {mobile && 'Updated: '}
-          {dates.format(collection.updatedAt)}
-        </td>
+        <td>{formatDateCell(collection.createdAt, mobile)}</td>
+        <td>{formatDateCell(collection.updatedAt, mobile)}</td>
         <td>
           {mobile && '# sketches: '}
           {(collection.items || []).length}
