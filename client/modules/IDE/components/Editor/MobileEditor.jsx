@@ -5,7 +5,7 @@ export const EditorContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding-bottom: 5.5rem;
+  padding-bottom: 5rem;
   transform: ${(props) =>
     props.expanded ? 'translateX(50%)' : 'translateX(0)'};
 
