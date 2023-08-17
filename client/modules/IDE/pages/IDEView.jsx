@@ -101,13 +101,10 @@ const IDEView = (props) => {
   let overlay = null;
 
   const autosaveIntervalRef = useRef(null);
-  const prevPropsRef = useRef({
-    selectedFileName: selectedFile.name,
-    selectedFileContent: selectedFile.content,
-    location: props.location,
-    sidebarIsExpanded: ide.sidebarSize,
-    project_id: props.params.project_id
-  });
+
+  const prevFileNameRef = useRef(selectedFile.name);
+  const prevFileContentRef = useRef(selectedFile.content);
+  const locationRef = useRef(props.location);
 
   const syncFileContent = () => {
     const file = cmRef.current.getContent();
@@ -128,61 +125,50 @@ const IDEView = (props) => {
 
   // for setting previous location
   useEffect(() => {
-    if (props.location !== prevPropsRef.current.location) {
-      dispatch(setPreviousPath(prevPropsRef.current.location.pathname));
-    }
-
-    prevPropsRef.current.location = props.location;
+    dispatch(setPreviousPath(locationRef.current.pathname));
+    console.log(locationRef.current.pathname);
   }, [props.location]);
 
-  // for the sidebar size behaviour
+  // for the sidebar size behavior
   useEffect(() => {
-    if (!ide.sidebarIsExpanded) {
-      prevPropsRef.current.sidebarSize = sidebarSize;
-      setSidebarSize(20);
-    }
     if (ide.sidebarIsExpanded) {
-      setSidebarSize(
-        prevPropsRef.current.sidebarSize > 160
-          ? prevPropsRef.current.sidebarSize
-          : 160
-      );
+      setSidebarSize((prev) => (prev < 160 ? 160 : sidebarSize));
     }
   }, [ide.sidebarIsExpanded]);
 
   // For autosave
   useEffect(() => {
-    if (
-      isUserOwner &&
-      project.id &&
-      preferences.autosave &&
-      ide.unsavedChanges &&
-      !ide.justOpenedProject
-    ) {
+    let autosaveTimeout;
+
+    const handleAutosave = () => {
       if (
-        selectedFile.name === prevPropsRef.current.selectedFileName &&
-        selectedFile.content !== prevPropsRef.current.selectedFileContent
+        isUserOwner &&
+        project.id &&
+        preferences.autosave &&
+        ide.unsavedChanges &&
+        !ide.justOpenedProject &&
+        selectedFile.name === prevFileNameRef.current &&
+        selectedFile.content !== prevFileContentRef.current
       ) {
-        if (autosaveIntervalRef.current) {
-          clearTimeout(autosaveIntervalRef.current);
-        }
-        autosaveIntervalRef.current = setTimeout(
-          dispatch(autosaveProject()),
-          20000
-        );
+        dispatch(autosaveProject());
       }
-    } else if (autosaveIntervalRef.current && !preferences.autosave) {
+    };
+
+    if (autosaveIntervalRef.current) {
       clearTimeout(autosaveIntervalRef.current);
-      autosaveIntervalRef.current = null;
     }
 
-    prevPropsRef.current.selectedFileName = selectedFile.name;
-    prevPropsRef.current.selectedFileContent = selectedFile.content;
+    if (preferences.autosave) {
+      autosaveTimeout = setTimeout(handleAutosave, 20000);
+    }
+
+    autosaveIntervalRef.current = autosaveTimeout;
+    prevFileNameRef.current = selectedFile.name;
+    prevFileContentRef.current = selectedFile.content;
 
     return () => {
-      if (autosaveIntervalRef.current) {
-        clearTimeout(autosaveIntervalRef.current);
-        autosaveIntervalRef.current = null;
+      if (autosaveTimeout) {
+        clearTimeout(autosaveTimeout);
       }
     };
   }, [
@@ -192,7 +178,9 @@ const IDEView = (props) => {
     ide.unsavedChanges,
     ide.justOpenedProject,
     selectedFile.name,
-    selectedFile.content
+    selectedFile.content,
+    dispatch,
+    autosaveProject
   ]);
 
   return (
@@ -212,7 +200,7 @@ const IDEView = (props) => {
             <main className="editor-preview-container">
               <SplitPane
                 split="vertical"
-                size={sidebarSize}
+                size={ide.sidebarIsExpanded ? sidebarSize : 20}
                 onChange={(size) => {
                   setSidebarSize(size);
                 }}
