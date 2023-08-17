@@ -13,7 +13,14 @@ import NavMenuItem from '../../../../components/Nav/NavMenuItem';
 import { prop, remSize } from '../../../../theme';
 import AsteriskIcon from '../../../../images/p5-asterisk.svg';
 import IconButton from '../../../../components/mobile/IconButton';
-import { AccountIcon, EditorIcon, MoreIcon } from '../../../../common/icons';
+import {
+  AccountIcon,
+  EditorIcon,
+  MoreIcon,
+  CloseIcon,
+  ExitIcon,
+  crossIcon
+} from '../../../../common/icons';
 import {
   newFile,
   newFolder,
@@ -237,26 +244,40 @@ const MobileNav = () => {
           <h5>by {project?.owner?.username}</h5>
         )}
       </Title>
-      <Options>
-        {user.authenticated ? (
-          <AccountMenu />
-        ) : (
-          <div>
-            <Link to="/login">
-              <IconButton icon={AccountIcon} />
-            </Link>
-          </div>
-        )}
-        {title === project.name ? (
-          <MoreMenu />
-        ) : (
+
+      {/* check if the user is in login page */}
+      {pathname === '/login' || pathname === '/signup' ? (
+        // showing the login page
+        <Options>
           <div>
             <Link to={editorLink}>
-              <IconButton icon={EditorIcon} />
+              <IconButton icon={crossIcon} />
             </Link>
           </div>
-        )}
-      </Options>
+        </Options>
+      ) : (
+        <Options>
+          {/* checking if user is logged in or not */}
+          {user.authenticated ? (
+            <AccountMenu />
+          ) : (
+            <div>
+              <Link to="/login">
+                <IconButton icon={AccountIcon} />
+              </Link>
+            </div>
+          )}
+          {title === project.name ? (
+            <MoreMenu />
+          ) : (
+            <div>
+              <Link to={editorLink}>
+                <IconButton icon={EditorIcon} />
+              </Link>
+            </div>
+          )}
+        </Options>
+      )}
     </Nav>
   );
 };
