@@ -234,7 +234,7 @@ class CollectionListRowBase extends React.Component {
         <td>{formatDateCell(collection.createdAt, mobile)}</td>
         <td>{formatDateCell(collection.updatedAt, mobile)}</td>
         <td>
-          {mobile && '# sketches: '}
+          {mobile && 'sketches: '}
           {(collection.items || []).length}
         </td>
         <td className="sketch-list__dropdown-column">{this.renderActions()}</td>
