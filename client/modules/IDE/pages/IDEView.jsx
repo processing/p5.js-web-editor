@@ -94,11 +94,12 @@ const IDEView = (props) => {
   const [sidebarSize, setSidebarSize] = useState(
     ide.sidebarIsExpanded ? 160 : 20
   );
+  const [isOverlayVisible, setIsOverlayVisible] = useState(true);
+
   const rootFile = useSelector(selectRootFile);
   const canEditProject = useSelector(selectCanEditSketch);
 
   const cmRef = useRef({});
-  let overlay = null;
 
   const autosaveIntervalRef = useRef(null);
 
@@ -211,10 +212,11 @@ const IDEView = (props) => {
                   split="vertical"
                   defaultSize="50%"
                   onChange={() => {
-                    overlay.style.display = 'block';
+                    setIsOverlayVisible(true);
                   }}
                   onDragFinished={() => {
-                    overlay.style.display = 'none';
+                    // overlayRef.current.style.display = 'none';
+                    setIsOverlayVisible(false);
                   }}
                   resizerStyle={{
                     borderLeftWidth: '2px',
@@ -248,9 +250,7 @@ const IDEView = (props) => {
                     <div className="preview-frame__content">
                       <div
                         className="preview-frame-overlay"
-                        ref={(element) => {
-                          overlay = element;
-                        }}
+                        style={{ display: isOverlayVisible ? 'block' : 'none' }}
                       />
                       <div>
                         {((preferences.textOutput || preferences.gridOutput) &&
