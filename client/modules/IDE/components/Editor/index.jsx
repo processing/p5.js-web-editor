@@ -40,32 +40,32 @@ import classNames from 'classnames';
 import { debounce } from 'lodash';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import '../../../utils/htmlmixed';
-import '../../../utils/p5-javascript';
-import Timer from '../components/Timer';
-import EditorAccessibility from '../components/EditorAccessibility';
-import { selectActiveFile } from '../selectors/files';
-import AssetPreview from './AssetPreview';
-import { metaKey } from '../../../utils/metaKey';
-import './show-hint';
-import * as hinter from '../../../utils/p5-hinter';
+import '../../../../utils/htmlmixed';
+import '../../../../utils/p5-javascript';
+import Timer from '../Timer';
+import EditorAccessibility from '../EditorAccessibility';
+import { selectActiveFile } from '../../selectors/files';
+import AssetPreview from '../AssetPreview';
+import { metaKey } from '../../../../utils/metaKey';
+import '../show-hint';
+import * as hinter from '../../../../utils/p5-hinter';
 
-import '../../../utils/codemirror-search';
+import '../../../../utils/codemirror-search';
 
-import beepUrl from '../../../sounds/audioAlert.mp3';
-import UnsavedChangesDotIcon from '../../../images/unsaved-changes-dot.svg';
-import RightArrowIcon from '../../../images/right-arrow.svg';
-import LeftArrowIcon from '../../../images/left-arrow.svg';
-import { getHTMLFile } from '../reducers/files';
+import beepUrl from '../../../../sounds/audioAlert.mp3';
+import UnsavedChangesDotIcon from '../../../../images/unsaved-changes-dot.svg';
+import RightArrowIcon from '../../../../images/right-arrow.svg';
+import LeftArrowIcon from '../../../../images/left-arrow.svg';
+import { getHTMLFile } from '../../reducers/files';
 
-import * as FileActions from '../actions/files';
-import * as IDEActions from '../actions/ide';
-import * as ProjectActions from '../actions/project';
-import * as EditorAccessibilityActions from '../actions/editorAccessibility';
-import * as PreferencesActions from '../actions/preferences';
-import * as UserActions from '../../User/actions';
-import * as ToastActions from '../actions/toast';
-import * as ConsoleActions from '../actions/console';
+import * as FileActions from '../../actions/files';
+import * as IDEActions from '../../actions/ide';
+import * as ProjectActions from '../../actions/project';
+import * as EditorAccessibilityActions from '../../actions/editorAccessibility';
+import * as PreferencesActions from '../../actions/preferences';
+import * as UserActions from '../../../User/actions';
+import * as ToastActions from '../../actions/toast';
+import * as ConsoleActions from '../../actions/console';
 
 emmet(CodeMirror);
 
