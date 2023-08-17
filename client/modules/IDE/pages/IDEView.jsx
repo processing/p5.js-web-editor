@@ -7,16 +7,11 @@ import { useTranslation, withTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 import SplitPane from 'react-split-pane';
 import Editor from '../components/Editor';
-import IDEKeyHandlers from '../components/IDEKeyHandlers';
+import IDEOverlays from '../components/IDEOverlays';
 import Sidebar from '../components/Sidebar';
 import PreviewFrame from '../components/PreviewFrame';
-import Preferences from '../components/Preferences/index';
-import NewFileModal from '../components/NewFileModal';
-import NewFolderModal from '../components/NewFolderModal';
-import UploadFileModal from '../components/UploadFileModal';
-import ShareModal from '../components/ShareModal';
-import KeyboardShortcutModal from '../components/KeyboardShortcutModal';
-import ErrorModal from '../components/ErrorModal';
+import Toolbar from '../components/Header/Toolbar';
+import Nav from '../components/Header/Nav';
 import Console from '../components/Console';
 import Toast from '../components/Toast';
 import * as FileActions from '../actions/files';
@@ -27,15 +22,11 @@ import * as PreferencesActions from '../actions/preferences';
 import * as UserActions from '../../User/actions';
 import * as ConsoleActions from '../actions/console';
 import { getHTMLFile } from '../reducers/files';
-import Overlay from '../../App/components/Overlay';
-import About from '../components/About';
-import AddToCollectionList from '../components/AddToCollectionList';
-import Feedback from '../components/Feedback';
-import { CollectionSearchbar } from '../components/Searchbar';
-import { selectActiveFile } from '../selectors/files';
 import { getIsUserOwner } from '../selectors/users';
 import RootPage from '../../../components/RootPage';
 import Header from '../components/Header';
+import { selectActiveFile } from '../selectors/files';
+import IDEKeyHandlers from '../components/IDEKeyHandlers';
 
 function getTitle(props) {
   const { id } = props.project;
@@ -184,15 +175,6 @@ class IDEView extends React.Component {
             key={this.props.project.id}
           />
         </CmControllerContext.Provider>
-        {this.props.ide.preferencesIsVisible && (
-          <Overlay
-            title={this.props.t('Preferences.Settings')}
-            ariaLabel={this.props.t('Preferences.Settings')}
-            closeOverlay={this.props.closePreferences}
-          >
-            <Preferences />
-          </Overlay>
-        )}
         <main className="editor-preview-container">
           <SplitPane
             split="vertical"
@@ -262,76 +244,7 @@ class IDEView extends React.Component {
             </SplitPane>
           </SplitPane>
         </main>
-        {this.props.ide.modalIsVisible && <NewFileModal />}
-        {this.props.ide.newFolderModalVisible && <NewFolderModal />}
-        {this.props.ide.uploadFileModalVisible && <UploadFileModal />}
-        {this.props.location.pathname === '/about' && (
-          <Overlay
-            title={this.props.t('About.Title')}
-            previousPath={this.props.ide.previousPath}
-            ariaLabel={this.props.t('About.Title')}
-          >
-            <About previousPath={this.props.ide.previousPath} />
-          </Overlay>
-        )}
-        {this.props.location.pathname === '/feedback' && (
-          <Overlay
-            title={this.props.t('IDEView.SubmitFeedback')}
-            previousPath={this.props.ide.previousPath}
-            ariaLabel={this.props.t('IDEView.SubmitFeedbackARIA')}
-          >
-            <Feedback />
-          </Overlay>
-        )}
-        {this.props.location.pathname.match(/add-to-collection$/) && (
-          <Overlay
-            ariaLabel={this.props.t('IDEView.AddCollectionARIA')}
-            title={this.props.t('IDEView.AddCollectionTitle')}
-            previousPath={this.props.ide.previousPath}
-            actions={<CollectionSearchbar />}
-            isFixedHeight
-          >
-            <AddToCollectionList
-              projectId={this.props.params.project_id}
-              username={this.props.params.username}
-              user={this.props.user}
-            />
-          </Overlay>
-        )}
-        {this.props.ide.shareModalVisible && (
-          <Overlay
-            title={this.props.t('IDEView.ShareTitle')}
-            ariaLabel={this.props.t('IDEView.ShareARIA')}
-            closeOverlay={this.props.closeShareModal}
-          >
-            <ShareModal
-              projectId={this.props.ide.shareModalProjectId}
-              projectName={this.props.ide.shareModalProjectName}
-              ownerUsername={this.props.ide.shareModalProjectUsername}
-            />
-          </Overlay>
-        )}
-        {this.props.ide.keyboardShortcutVisible && (
-          <Overlay
-            title={this.props.t('KeyboardShortcuts.Title')}
-            ariaLabel={this.props.t('KeyboardShortcuts.Title')}
-            closeOverlay={this.props.closeKeyboardShortcutModal}
-          >
-            <KeyboardShortcutModal />
-          </Overlay>
-        )}
-        {this.props.ide.errorType && (
-          <Overlay
-            title={this.props.t('Common.Error')}
-            ariaLabel={this.props.t('Common.ErrorARIA')}
-            closeOverlay={this.props.hideErrorModal}
-          >
-            <ErrorModal
-              type={this.props.ide.errorType}
-              closeModal={this.props.hideErrorModal}
-            />
-          </Overlay>
-        )}
+        <IDEOverlays />
       </RootPage>
     );
   }
@@ -397,7 +310,6 @@ IDEView.propTypes = {
     autocloseBracketsQuotes: PropTypes.bool.isRequired,
     autocompleteHinter: PropTypes.bool.isRequired
   }).isRequired,
-  closePreferences: PropTypes.func.isRequired,
   selectedFile: PropTypes.shape({
     id: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
@@ -409,11 +321,8 @@ IDEView.propTypes = {
     content: PropTypes.string.isRequired
   }).isRequired,
   updateFileContent: PropTypes.func.isRequired,
-  closeShareModal: PropTypes.func.isRequired,
-  closeKeyboardShortcutModal: PropTypes.func.isRequired,
   autosaveProject: PropTypes.func.isRequired,
   setPreviousPath: PropTypes.func.isRequired,
-  hideErrorModal: PropTypes.func.isRequired,
   clearPersistedState: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
   isUserOwner: PropTypes.bool.isRequired
