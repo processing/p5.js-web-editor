@@ -126,7 +126,6 @@ const IDEView = (props) => {
   // for setting previous location
   useEffect(() => {
     dispatch(setPreviousPath(locationRef.current.pathname));
-    console.log(locationRef.current.pathname);
   }, [props.location]);
 
   // for the sidebar size behavior
