@@ -27,7 +27,7 @@ import { selectActiveFile, selectRootFile } from '../selectors/files';
 import { getIsUserOwner, selectCanEditSketch } from '../selectors/users';
 import RootPage from '../../../components/RootPage';
 import Header from '../components/Header';
-// import FloatingActionButton from '../components/FloatingActionButton';
+import FloatingActionButton from '../components/FloatingActionButton';
 import EditorV2 from '../components/Editor';
 import {
   EditorSidebarWrapper,
@@ -278,7 +278,7 @@ const IDEView = (props) => {
             </main>
           ) : (
             <>
-              {/* <FloatingActionButton syncFileContent={syncFileContent} /> */}
+              <FloatingActionButton syncFileContent={syncFileContent} />
               <PreviewWrapper show={ide.isPlaying}>
                 <SplitPane
                   style={{ position: 'static' }}
