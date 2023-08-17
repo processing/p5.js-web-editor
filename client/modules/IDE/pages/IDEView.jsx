@@ -1,10 +1,6 @@
 import PropTypes from 'prop-types';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import {
-  useBeforeUnload,
-  unstable_useBlocker as useBlocker,
-  useLocation
-} from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import { useLocation, Prompt } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
@@ -58,52 +54,27 @@ function isOverlay(pathname) {
 
 function WarnIfUnsavedChanges() {
   const hasUnsavedChanges = useSelector((state) => state.ide.unsavedChanges);
+
   const { t } = useTranslation();
 
   const currentLocation = useLocation();
 
-  // blocker handles internal navigation between pages.
-  const blocker = useBlocker(hasUnsavedChanges);
-
-  useEffect(() => {
-    if (blocker.state === 'blocked') {
-      const nextLocation = blocker.location;
-      if (
-        isAuth(nextLocation.pathname) ||
-        isAuth(currentLocation.pathname) ||
-        isOverlay(nextLocation.pathname) ||
-        isOverlay(currentLocation.pathname)
-      ) {
-        blocker.proceed();
-      } else {
-        const didConfirm = window.confirm(t('Nav.WarningUnsavedChanges'));
-        if (didConfirm) {
-          blocker.proceed();
-        } else {
-          blocker.reset();
+  return (
+    <Prompt
+      when={hasUnsavedChanges}
+      message={(nextLocation) => {
+        if (
+          isAuth(nextLocation.pathname) ||
+          isAuth(currentLocation.pathname) ||
+          isOverlay(nextLocation.pathname) ||
+          isOverlay(currentLocation.pathname)
+        ) {
+          return true; // allow navigation
         }
-      }
-    }
-  }, [blocker, currentLocation.pathname, t, hasUnsavedChanges]);
-
-  // beforeunload handles closing or refreshing the window.
-  const handleUnload = useCallback(
-    (e) => {
-      if (hasUnsavedChanges) {
-        // See: https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event#browser_compatibility
-        e.preventDefault();
-        const confirmationMessage = t('Nav.WarningUnsavedChanges');
-        e.returnValue = confirmationMessage;
-        return confirmationMessage;
-      }
-      return null;
-    },
-    [t, hasUnsavedChanges]
+        return t('Nav.WarningUnsavedChanges');
+      }}
+    />
   );
-
-  useBeforeUnload(handleUnload);
-
-  return null;
 }
 
 export const CmControllerContext = React.createContext({});
