@@ -48,15 +48,15 @@ exports[`Nav renders dashboard version for mobile 1`] = `
 <DocumentFragment>
   <header>
     <nav
-      class="sc-giAqHp deBDHC"
+      class="sc-hiKfDv eXEPUW"
     >
       <div
-        class="sc-ezzafa bKgrFx"
+        class="sc-gXfVKN coiywI"
       >
         <test-file-stub />
       </div>
       <div
-        class="sc-bYwzuL lkVxhY"
+        class="sc-cBoqAE hmUVIc"
       >
         <h1>
           <span
@@ -89,14 +89,14 @@ exports[`Nav renders dashboard version for mobile 1`] = `
         </h1>
       </div>
       <div
-        class="sc-kLojOw casOUg"
+        class="sc-ciSkZP fgpVGS"
       >
         <div>
           <a
             href="/login"
           >
             <button
-              class="sc-jSFjdj fKQAQb sc-kEqXSa Ycwjo"
+              class="sc-giAqHp kSxYdy sc-bYwzuL emttUq"
               display="inline"
               focusable="false"
               kind="primary"
@@ -104,7 +104,7 @@ exports[`Nav renders dashboard version for mobile 1`] = `
             >
               <test-file-stub
                 aria-hidden="true"
-                classname="sc-bkbkJK caOeqb"
+                classname="sc-fFSPTT fFhSuZ"
                 focusable="false"
               />
             </button>
@@ -112,7 +112,7 @@ exports[`Nav renders dashboard version for mobile 1`] = `
         </div>
         <div>
           <button
-            class="sc-jSFjdj fKQAQb sc-kEqXSa Ycwjo"
+            class="sc-giAqHp kSxYdy sc-bYwzuL emttUq"
             display="inline"
             focusable="false"
             kind="primary"
@@ -120,7 +120,7 @@ exports[`Nav renders dashboard version for mobile 1`] = `
           >
             <test-file-stub
               aria-hidden="true"
-              classname="sc-dlMDgC dNinKf"
+              classname="sc-hHEiqL bceCuH"
               focusable="false"
             />
           </button>
@@ -459,15 +459,15 @@ exports[`Nav renders editor version for mobile 1`] = `
 <DocumentFragment>
   <header>
     <nav
-      class="sc-giAqHp deBDHC"
+      class="sc-hiKfDv eXEPUW"
     >
       <div
-        class="sc-ezzafa bKgrFx"
+        class="sc-gXfVKN coiywI"
       >
         <test-file-stub />
       </div>
       <div
-        class="sc-bYwzuL lkVxhY"
+        class="sc-cBoqAE hmUVIc"
       >
         <h1>
           <span
@@ -500,14 +500,14 @@ exports[`Nav renders editor version for mobile 1`] = `
         </h1>
       </div>
       <div
-        class="sc-kLojOw casOUg"
+        class="sc-ciSkZP fgpVGS"
       >
         <div>
           <a
             href="/login"
           >
             <button
-              class="sc-jSFjdj fKQAQb sc-kEqXSa Ycwjo"
+              class="sc-giAqHp kSxYdy sc-bYwzuL emttUq"
               display="inline"
               focusable="false"
               kind="primary"
@@ -515,7 +515,7 @@ exports[`Nav renders editor version for mobile 1`] = `
             >
               <test-file-stub
                 aria-hidden="true"
-                classname="sc-bkbkJK caOeqb"
+                classname="sc-fFSPTT fFhSuZ"
                 focusable="false"
               />
             </button>
@@ -523,7 +523,7 @@ exports[`Nav renders editor version for mobile 1`] = `
         </div>
         <div>
           <button
-            class="sc-jSFjdj fKQAQb sc-kEqXSa Ycwjo"
+            class="sc-giAqHp kSxYdy sc-bYwzuL emttUq"
             display="inline"
             focusable="false"
             kind="primary"
@@ -531,7 +531,7 @@ exports[`Nav renders editor version for mobile 1`] = `
           >
             <test-file-stub
               aria-hidden="true"
-              classname="sc-dlMDgC dNinKf"
+              classname="sc-hHEiqL bceCuH"
               focusable="false"
             />
           </button>
