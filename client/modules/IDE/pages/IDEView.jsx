@@ -400,15 +400,6 @@ IDEView.propTypes = {
     autocompleteHinter: PropTypes.bool.isRequired
   }).isRequired,
   closePreferences: PropTypes.func.isRequired,
-  setAutocloseBracketsQuotes: PropTypes.func.isRequired,
-  setAutocompleteHinter: PropTypes.func.isRequired,
-  setFontSize: PropTypes.func.isRequired,
-  setAutosave: PropTypes.func.isRequired,
-  setLineNumbers: PropTypes.func.isRequired,
-  setLinewrap: PropTypes.func.isRequired,
-  setLintWarning: PropTypes.func.isRequired,
-  setTextOutput: PropTypes.func.isRequired,
-  setGridOutput: PropTypes.func.isRequired,
   selectedFile: PropTypes.shape({
     id: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
