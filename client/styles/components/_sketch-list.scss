@@ -56,6 +56,11 @@
             right: 0;
             width: auto;
             margin: #{8 / $base-font-size}rem;
+
+            .sketch-list__dropdown-button {
+              transform: rotateZ(90deg) translateX(-30%);
+              transform-origin: center;
+            }
           }
         }
       }

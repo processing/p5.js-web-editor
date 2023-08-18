@@ -11,6 +11,7 @@ import * as ToastActions from '../../actions/toast';
 import dates from '../../../../utils/formatDate';
 
 import DownFilledTriangleIcon from '../../../../images/down-filled-triangle.svg';
+import MoreIconSvg from '../../../../images/more.svg';
 
 const formatDateCell = (date, mobile = false) =>
   dates.format(date, { showTime: !mobile });
@@ -149,7 +150,11 @@ class CollectionListRowBase extends React.Component {
             'CollectionListRow.ToggleCollectionOptionsARIA'
           )}
         >
-          <DownFilledTriangleIcon title="Menu" />
+          {this.props.mobile ? (
+            <MoreIconSvg focusable="false" aria-hidden="true" />
+          ) : (
+            <DownFilledTriangleIcon focusable="false" aria-hidden="true" />
+          )}
         </button>
         {optionsOpen && (
           <ul className="sketch-list__action-dialogue">

@@ -23,6 +23,7 @@ import getConfig from '../../../utils/getConfig';
 import ArrowUpIcon from '../../../images/sort-arrow-up.svg';
 import ArrowDownIcon from '../../../images/sort-arrow-down.svg';
 import DownFilledTriangleIcon from '../../../images/down-filled-triangle.svg';
+import MoreIconSvg from '../../../images/more.svg';
 
 const ROOT_URL = getConfig('API_URL');
 
@@ -198,7 +199,11 @@ class SketchListRowBase extends React.Component {
           onFocus={this.onFocusComponent}
           aria-label={this.props.t('SketchList.ToggleLabelARIA')}
         >
-          <DownFilledTriangleIcon focusable="false" aria-hidden="true" />
+          {this.props.mobile ? (
+            <MoreIconSvg focusable="false" aria-hidden="true" />
+          ) : (
+            <DownFilledTriangleIcon focusable="false" aria-hidden="true" />
+          )}
         </button>
         {optionsOpen && (
           <ul className="sketch-list__action-dialogue">
